@@ -76,7 +76,10 @@ public class ClassGenerator {
 					String name = (String)attrNames.get(j);
 					buffer.append("public void set").append(name.substring(0, 1).toUpperCase());
 					buffer.append(name.substring(1)).append("(").append(attrTypes.get(j));
-					buffer.append(" ").append(name).append(") {\n\tthis.values.put(\"");
+					buffer.append(" ").append(name).append(") {\n\t");
+					buffer.append("if (!this.values.get(\"").append(name).append("\").equals(");
+					buffer.append(name).append(")) {\n\t\tthis.modified = UPDATED;\n\t}");
+					buffer.append("\n\tthis.values.put(\"");
 					buffer.append(name).append("\", ").append(name).append(");\n}\n");
 					oStream.write(buffer.toString().getBytes());
 				}

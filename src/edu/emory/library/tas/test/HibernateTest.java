@@ -62,7 +62,7 @@ public class HibernateTest {
 				Voyage v = Voyage.loadMostRecent(id);
 				if (v != null) {
 					v.setShipname(v.getShipname() + "-");
-					v.setModified(Voyage.MODIFIED);
+					v.setModified(Voyage.UPDATED);
 					v.save();
 				} else {
 					System.out.println("Empty result for given id - cannot update");
