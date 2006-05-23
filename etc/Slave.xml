@@ -1,0 +1,6 @@
+<class name="Slave">
+	<attribute name="iid" type="Long" userLabel=""/>
+	<attribute name="slaveId" type="Long" userLabel="Slave ID"/>
+	<attribute name="voyageId" type="Long" userLabel="Voyage ID"/>
+	<attribute name="name" type="String" userLabel="Slave name"/>
+</class>

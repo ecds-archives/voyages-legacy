@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<class name="Voyage">
+	<attribute name="voyageId" type="Long" userLabel="Voyage ID"/>
+	<attribute name="shipname" type="String" userLabel="Ship name"/>
+	<attribute name="iid" type="Long" userLabel=""/>
+	<attribute name="revisionId" type="Long" userLabel=""/>
+	<attribute name="majselpt" type="Integer" userLabel="majselpt"/>
+	<attribute name="majbuypt" type="Integer" userLabel="majbuypt"/>
+	<attribute name="yearaf" type="Integer" userLabel="yearaf"/>
+	<attribute name="tslmtimp" type="Integer" userLabel="tslmtimp"/>
+	<attribute name="vymrtimp" type="Integer" userLabel="vymrtimp"/>
+</class>
