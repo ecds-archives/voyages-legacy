@@ -35,6 +35,7 @@ public class HibernateConnector {
 
 	/**
 	 * Gets instance of HibernateConnector
+	 * 
 	 * @return HibernateConnector object
 	 */
 	public static synchronized HibernateConnector getConnector() {
@@ -46,18 +47,22 @@ public class HibernateConnector {
 
 	/**
 	 * Prepares query for voyage.
-	 * @param session Hibernate session
-	 * @param p_voyage Voyage providing voyage id
-	 * @param p_option option
+	 * 
+	 * @param session
+	 *            Hibernate session
+	 * @param p_voyage
+	 *            Voyage providing voyage id
+	 * @param p_option
+	 *            option
 	 * @return Query object
 	 */
 	private Query getVoyageIndexByVoyageQuery(Session session, Voyage p_voyage,
 			int p_option) {
-		
+
 		StringBuffer where = new StringBuffer("");
 		boolean first = true;
 
-		//Check if condition on ID is needed
+		// Check if condition on ID is needed
 		if (p_voyage != null) {
 			where.append("where ");
 			where.append("vid=");
@@ -66,7 +71,7 @@ public class HibernateConnector {
 			first = false;
 		}
 
-		//Recognize APPROVED/NOT APPROVED
+		// Recognize APPROVED/NOT APPROVED
 		if ((p_option & 6) != (APPROVED_AND_NOT_APPROVED & 6)) {
 
 			int flag;
@@ -85,8 +90,8 @@ public class HibernateConnector {
 			where.append(flag);
 			where.append(" ");
 		}
-		
-		//Recognize history/no history
+
+		// Recognize history/no history
 		if ((p_option & 1) == (WITHOUT_HISTORY & 1)) {
 			String oldWhere = where.toString();
 			if (!first) {
@@ -95,22 +100,26 @@ public class HibernateConnector {
 				where.append("where ");
 			}
 			first = false;
-			where.append(" (vid, global_rev_id) = some" + 
-					" (select voyageId, max(revisionId) from VoyageIndex " + oldWhere + 
-					" group by vid)");
+			where.append(" (vid, global_rev_id) = some"
+					+ " (select voyageId, max(revisionId) from VoyageIndex "
+					+ oldWhere + " group by vid)");
 		}
 
-		//Create query
-		Query query = session.createQuery("from VoyageIndex " + where + " order by vid, global_rev_id");
+		// Create query
+		Query query = session.createQuery("from VoyageIndex " + where
+				+ " order by vid, global_rev_id");
 
 		return query;
 	}
-	
+
 	/**
 	 * Prepares response - parses list of objects
-	 * @param list		list of objects
-	 * @param p_option	option
-	 * @return			table of objects that should be returned
+	 * 
+	 * @param list
+	 *            list of objects
+	 * @param p_option
+	 *            option
+	 * @return table of objects that should be returned
 	 */
 	public VoyageIndex[] prepareResponse(List list, int p_option) {
 		return (VoyageIndex[]) list.toArray(new VoyageIndex[] {});
@@ -118,9 +127,12 @@ public class HibernateConnector {
 
 	/**
 	 * Gets VoyageIndex object with voyage id as id in provided Voyage.
-	 * @param p_voyage	Voyage with ID (null if all voyages should be returned)
-	 * @param p_option  option
-	 * @return	table of VoyageIndex objects
+	 * 
+	 * @param p_voyage
+	 *            Voyage with ID (null if all voyages should be returned)
+	 * @param p_option
+	 *            option
+	 * @return table of VoyageIndex objects
 	 */
 	public VoyageIndex[] getVoyageIndexByVoyage(Voyage p_voyage, int p_option) {
 
@@ -135,10 +147,14 @@ public class HibernateConnector {
 	}
 
 	/**
-	 * Gets Scrollable result of VoyageIndex objects with voyage id as id in provided Voyage.
-	 * @param p_voyage	Voyage with ID (null if all voyages should be returned)
-	 * @param p_option  option
-	 * @return	table of VoyageIndex objects
+	 * Gets Scrollable result of VoyageIndex objects with voyage id as id in
+	 * provided Voyage.
+	 * 
+	 * @param p_voyage
+	 *            Voyage with ID (null if all voyages should be returned)
+	 * @param p_option
+	 *            option
+	 * @return table of VoyageIndex objects
 	 */
 	public ScrollableResults scrollVoyageIndexByVoyage(Voyage p_voyage,
 			int p_option) {
@@ -155,8 +171,10 @@ public class HibernateConnector {
 
 	/**
 	 * Gets VoyageIndex of object having given slave as child.
-	 * @param p_slave	Slave object
-	 * @return	VoyageIndex object
+	 * 
+	 * @param p_slave
+	 *            Slave object
+	 * @return VoyageIndex object
 	 */
 	public VoyageIndex getVoyageIndexBySlave(Slave p_slave) {
 		throw new UnsupportedOperationException("Not yet implemented!");
@@ -171,84 +189,89 @@ public class HibernateConnector {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 
-		//Check if we really create new row
+		// Check if we really create new row
 		List tmpResponse = session.createQuery(
 				"from VoyageIndex where vid=:vid order by global_rev_id")
 				.setParameter("vid", p_voyage.getVoyageId().toString()).list();
 		if (tmpResponse.size() == 0) {
 			p_voyage.setRevisionId(new Long(0));
 		} else {
-			throw new InvalidParameterException("Cannot create - record already in DB!. Call updateVoyage()");
+			throw new InvalidParameterException(
+					"Cannot create - record already in DB!. Call updateVoyage()");
 		}
 
-		//Create slaves
+		// Create slaves
 		Set slaves = p_voyage.getSlaves();
 		for (Iterator iter = slaves.iterator(); iter.hasNext();) {
 			session.save(iter.next());
 		}
-		
-		//Create Voyage
+
+		// Create Voyage
 		session.save(p_voyage.getVoyage());
-		
-		//Create Voyage Index 
+
+		// Create Voyage Index
 		session.save(p_voyage);
 
-		//Commit changes
+		// Commit changes
 		transaction.commit();
 	}
 
 	public void updateVoyage(VoyageIndex p_voyage) {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 
-		//check for last revision ID
+		// check for last revision ID
 		List tmpResponse = session.createQuery(
 				"from VoyageIndex where vid=:vid order by global_rev_id")
 				.setParameter("vid", p_voyage.getVoyageId().toString()).list();
 
-		//Increment revision ID
+		// Increment revision ID
 		if (tmpResponse.size() == 0) {
-			throw new InvalidParameterException("Cannot update - no record in DB. Call createVoyage()");
+			throw new InvalidParameterException(
+					"Cannot update - no record in DB. Call createVoyage()");
 		} else {
 			Long max = ((VoyageIndex) tmpResponse.get(tmpResponse.size() - 1))
 					.getRevisionId();
 			p_voyage.setRevisionId(new Long(max.longValue() + 1));
 		}
-		
-		//Modify slaves
+
+		// Modify slaves
 		Set slaves = p_voyage.getSlaves();
 		Set newSlaves = new HashSet();
+		boolean slaveSaved = false;
 		for (Iterator iter = slaves.iterator(); iter.hasNext();) {
-			//Create new records for changed/created slaves 
-			Slave slave = (Slave)iter.next();			
-			if (slave.getModified() == Slave.CREATED) {
-				Slave newSlave = (Slave)slave.clone();
+			// Create new records for changed/created slaves
+			Slave slave = (Slave) iter.next();
+			if (slave.getModified() == Slave.CREATED
+					|| slave.getModified() == Slave.UPDATED) {
+				Slave newSlave = (Slave) slave.clone();
 				newSlaves.add(newSlave);
-				session.save(slave);
-			} else if (slave.getModified() == Slave.UPDATED) {
-				Slave newSlave = (Slave)slave.clone();
-				newSlaves.add(newSlave);
+				slaveSaved = true;
 				session.save(slave);
 			} else {
 				newSlaves.add(slave);
 			}
-			
-		}
-		//Update slaves list
-		p_voyage.setSlaves(newSlaves);
-		
-		//Modify voyage if needed
-		if (p_voyage.getVoyage().getModified() == Voyage.MODIFIED) {
-			Voyage newVoyage = (Voyage)p_voyage.getVoyage().clone();
-			p_voyage.setVoyage(newVoyage);
-			session.save(newVoyage);
+
 		}
 
-		//Save new revision of record
-		session.save(p_voyage);
-		
-		//Commit changes
+		if (p_voyage.getVoyage().getModified() == Voyage.UPDATED
+				|| p_voyage.getVoyage().wereSlavesModified() || slaveSaved) {
+			// Update slaves list
+			p_voyage.setSlaves(newSlaves);
+
+			// Modify voyage if needed
+			if (p_voyage.getVoyage().getModified() == Voyage.UPDATED) {
+				Voyage newVoyage = (Voyage) p_voyage.getVoyage().clone();
+				p_voyage.setVoyage(newVoyage);
+				session.save(newVoyage);
+			}
+
+			// Save new revision of record
+			session.save(p_voyage);
+		}
+
+		// Commit changes
 		transaction.commit();
 	}
 
