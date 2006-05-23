@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
-import java.util.List;
-
-import org.hibernate.Session;
 
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
