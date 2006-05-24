@@ -13,7 +13,7 @@ public abstract class AbstractDescriptiveObject {
 	/**
 	 * Current attribute values.
 	 */
-	protected static Map values = new HashMap();
+	protected Map values = new HashMap();
 	
 	/**
 	 * Types of attributes.
@@ -30,7 +30,7 @@ public abstract class AbstractDescriptiveObject {
 	 * @param p_attrName attribut name
 	 * @return Object representing current attribute value
 	 */
-	public static Object getAttrValue(String p_attrName) {
+	public Object getAttrValue(String p_attrName) {
 		return values.get(p_attrName);
 	}
 
@@ -39,7 +39,7 @@ public abstract class AbstractDescriptiveObject {
 	 * @param p_attrName	attribut name
 	 * @param p_attrValue	new attribute value
 	 */
-	public static void setAttrValue(String p_attrName, Object p_attrValue) {
+	public void setAttrValue(String p_attrName, Object p_attrValue) {
 		values.put(p_attrName, p_attrValue);
 	}
 
@@ -66,14 +66,14 @@ public abstract class AbstractDescriptiveObject {
 	 * @return String[] with attribute names
 	 */
 	public static String[] getAllAttrNames() {
-		return (String[])values.keySet().toArray(new String[] {});
+		return (String[])types.keySet().toArray(new String[] {});
 	}
 
 	/**
 	 * Gets values of all attributes.
 	 * @return Map of values
 	 */
-	public static Map getAllAttrValues() {
+	public Map getAllAttrValues() {
 		return values;
 	}
 }
