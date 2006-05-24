@@ -6,12 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import edu.emory.library.tas.ColumnMetadata;
+import edu.emory.library.tas.Slave;
+import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.util.StringUtils;
 
 public class Import
 {
 	
-	private ColumnMetadata[] matchColumns(String csvFileName, ColumnMetadata[] cols) throws IOException
+	private String[] matchColumns(String csvFileName, String[] cols) throws IOException
 	{
 		
 		// open
@@ -22,7 +24,7 @@ public class Import
 		String[] header = csv.getRow();
 		
 		// prepare ouput array
-		ColumnMetadata csvCols[] = new ColumnMetadata[header.length]; 
+		String csvCols[] = new String[header.length]; 
 		for (int i=0; i<csvCols.length; i++) csvCols[i] = null;
 
 		// match
@@ -30,7 +32,7 @@ public class Import
 		{
 			for (int j=0; j<cols.length; j++)
 			{
-				if (cols[j].getName().compareTo(header[i]) == 0)
+				if (cols[j].compareTo(header[i]) == 0)
 				{
 					csvCols[i] = cols[j];
 					break;
@@ -47,31 +49,27 @@ public class Import
 	public void runImport(String voyagesFileName, String slavesFileName) throws FileNotFoundException, IOException
 	{
 		
-		// temporary, eventualy 350 fields
-		ColumnMetadata[] voyageCols = new ColumnMetadata[3]; 
-		voyageCols[0] = new ColumnMetadata("voyageid", ColumnMetadata.TYPE_NUMBER);
-		voyageCols[1] = new ColumnMetadata("shipname", ColumnMetadata.TYPE_STRING);
-		voyageCols[2] = new ColumnMetadata("captaina", ColumnMetadata.TYPE_STRING);
-
-		// temporary, eventualy 62 fields
-		ColumnMetadata[] slaveCols = new ColumnMetadata[4];
-		slaveCols[0] = new ColumnMetadata("voyageid", ColumnMetadata.TYPE_NUMBER);
-		slaveCols[1] = new ColumnMetadata("slaveid", ColumnMetadata.TYPE_NUMBER);
-		slaveCols[2] = new ColumnMetadata("sexage", ColumnMetadata.TYPE_NUMBER);
-		slaveCols[3] = new ColumnMetadata("age", ColumnMetadata.TYPE_NUMBER);
-		
 		// do we have both files
 		boolean voyagesPresent = voyagesFileName!=null;
 		boolean slavesPresent = slavesFileName!=null;
 
-		// sort colums by the order in the CSV files
-		ColumnMetadata voyageCsvCols[] = matchColumns(voyagesFileName, voyageCols);
-		ColumnMetadata slaveCsvCols[] = matchColumns(slavesFileName, slaveCols);
+		// sort colums by the order in the CSV files 
+		// and find the index in VID in both
+		String voyageCsvCols[] = null;
+		String slaveCsvCols[] = null;
+		int voyageVidIdx = -1;
+		int slaveVidIdx = -1;
+		if (voyagesPresent)
+		{
+			voyageCsvCols = matchColumns(voyagesFileName, Voyage.getAllAttrNames());
+			voyageVidIdx = StringUtils.indexOf("voyageid", voyageCsvCols);
+		}
+		if (slavesPresent)
+		{
+			slaveCsvCols = matchColumns(slavesFileName, Slave.getAllAttrNames());
+			slaveVidIdx = StringUtils.indexOf("voyageid", slaveCsvCols);
+		}
 		
-		// find the index of VoyageId
-		int voyageVidIdx = ColumnMetadata.indexOf(voyageCsvCols, "voyageid");
-		int slaveVidIdx = ColumnMetadata.indexOf(slaveCsvCols, "voyageid");
-
 		// sort voyages
 		System.out.print("Sorting voyages ... ");
 		String voyagesSortedFileName = voyagesFileName + ".sorted";
@@ -246,8 +244,9 @@ public class Import
 				mainVid = saveVoyage ? voyageVid : slaveVid;   
 				
 				// load from db ...
-				// Voyage v = Voyage.loadFromDb(mainVid);
 				System.out.print("VID = " + mainVid);
+				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid));
+				if (voyage == null) voyage = Voyage.createNew(new Long(mainVid));
 		
 				// we have information about the voyage
 				if (saveVoyage)
