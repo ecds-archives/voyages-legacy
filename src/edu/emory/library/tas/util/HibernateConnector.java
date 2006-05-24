@@ -29,6 +29,10 @@ public class HibernateConnector {
 
 	public static final int APPROVED_AND_NOT_APPROVED = 1;
 
+	static {
+		HibernateUtil.getSessionFactory();
+	}
+	
 	private HibernateConnector() {
 
 	}

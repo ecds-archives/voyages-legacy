@@ -10,7 +10,15 @@
         	<generator class="native"/>
         </id>       
         <property name="voyageId" column="vid"/>
-        <property name="shipname" column="ship_name"/>                        
+        <property name="shipname" column="ship_name"/>
+        <property name="captainA" column="captaina"/>                        
+        <property name="captainB" column="captainb"/>
+        <property name="captainC" column="captainc"/>
+        <many-to-one name="portdep" class="PortLocation" column="portdep" unique="true" lazy="false"/>
+        <property name="datedepC" column="datedepc"/>
+        <property name="datedepB" column="datedepb"/>
+        <property name="datedepA" column="datedepa"/>
+        <property name="datepl" column="datepl"/>
         
     </class>
     
