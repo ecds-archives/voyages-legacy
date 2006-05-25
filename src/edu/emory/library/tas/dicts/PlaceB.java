@@ -1,4 +1,6 @@
-package edu.emory.library.tas;
+package edu.emory.library.tas.dicts;
+
+import edu.emory.library.tas.Dictionary;
 
 public class PlaceB extends Dictionary {
 

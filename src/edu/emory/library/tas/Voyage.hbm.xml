@@ -20,6 +20,8 @@
         <property name="datedepA" column="datedepa"/>
         <property name="datepl" column="datepl"/>
         
+        
+        
     </class>
     
 </hibernate-mapping>

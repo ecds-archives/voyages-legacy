@@ -1,5 +1,18 @@
 package edu.emory.library.tas;
 
+import edu.emory.library.tas.dicts.BodyPt;
+import edu.emory.library.tas.dicts.Country;
+import edu.emory.library.tas.dicts.MarkDegree;
+import edu.emory.library.tas.dicts.MarkNumber;
+import edu.emory.library.tas.dicts.MarkSize;
+import edu.emory.library.tas.dicts.MarkType;
+import edu.emory.library.tas.dicts.Nation;
+import edu.emory.library.tas.dicts.OtherMark;
+import edu.emory.library.tas.dicts.PlaceA;
+import edu.emory.library.tas.dicts.PlaceB;
+import edu.emory.library.tas.dicts.SexAge;
+import edu.emory.library.tas.dicts.SpecialMark;
+
 /**
  * Slave object.
  * @author Pawel Jurczyk

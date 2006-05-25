@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import edu.emory.library.tas.dicts.PortLocation;
 import edu.emory.library.tas.util.HibernateConnector;
 
 public class Voyage extends AbstractDescriptiveObject {
