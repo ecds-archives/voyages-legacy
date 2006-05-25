@@ -8,19 +8,342 @@
     <class name="edu.emory.library.tas.Voyage" table="voyages">
         <id name="iid" column="iid">
         	<generator class="native"/>
-        </id>       
-        <property name="voyageId" column="vid"/>
-        <property name="shipname" column="ship_name"/>
-        <property name="captainA" column="captaina"/>                        
-        <property name="captainB" column="captainb"/>
-        <property name="captainC" column="captainc"/>
-        <many-to-one name="portdep" class="edu.emory.library.tas.PortLocation" column="portdep" unique="true" lazy="false"/>
-        <property name="datedepC" column="datedepc"/>
-        <property name="datedepB" column="datedepb"/>
-        <property name="datedepA" column="datedepa"/>
-        <property name="datepl" column="datepl"/>
-        
-        
+        </id>                       
+
+	<property name="voyageId" type="Long" userLabel="Voyage ID"/>
+	<property name="shipName" type="String" userLabel="Ship name"/>
+	<property name="iid" type="Long" userLabel=""/>
+	<property name="revisionId" type="Long" userLabel=""/>
+
+  	<property name="captaina varchar(40),
+  	<property name="captainb varchar(40),
+  	<property name="captainc varchar(40),    
+  	<property name="datedep date,
+    <property name="nppretra int2,
+    <property name="d1slatr date,  
+    <property name="dlslatrb date,
+    <property name="npprior int2,
+    <property name="tslavesp int4,
+    <property name="tslavesd int4,
+    <property name="sladvoy int4,
+    <property name="slaarriv int4,
+    <property name="datarr3 date,
+    <property name="slas32 int4,
+    <property name="datarr32 date,
+    <property name="slas36 int4,
+    <property name="datarr33 date,
+    <property name="slas39 int4,
+    <property name="ddepamb date,
+    <property name="datarr4 date,
+    <property name="fate int8,
+    <property name="sourcea varchar(40),
+    <property name="sourceb varchar(40),
+    <property name="sourcec varchar(40),
+    <property name="sourced varchar(40),
+    <property name="sourcee varchar(40),
+    <property name="sourcef varchar(40),
+    <property name="sourceg varchar(40),
+    <property name="sourceh varchar(40),
+    <property name="sourcei varchar(40),
+    <property name="sourcej varchar(40),
+    <property name="sourcek varchar(40),
+    <property name="sourcel varchar(40),
+    <property name="sourcem varchar(40),
+    <property name="sourcen varchar(40),
+    <property name="sourceo varchar(40),
+    <property name="sourcep varchar(40),
+    <property name="sourceq varchar(40),
+    <property name="sourcer varchar(40),
+    <property name="slintend int4,
+    <property name="tonnage int4,
+    <property name="crewdied int4,
+    <property name="ncar13 int4,
+    <property name="ncar15 int4,
+    <property name="ncar17 int4,
+    <property name="sladamer int4,
+    <property name="saild1 int4,
+    <property name="saild2 int4,
+    <property name="saild3 int4,
+    <property name="saild4 int4,
+    <property name="saild5 int4,
+    <property name="ndesert int4,
+  	<property name="slinten2 int4,
+  	<property name="guns int4,
+  	<property name="voyage int4,
+  	<property name="crew1 int4,
+  	<property name="child2 int4,
+  	<property name="child3 int4,
+  	<property name="yrreg int4,
+  	<property name="crew3 int4,
+  	<property name="crew4 int4,
+  	<property name="crew5 int4,
+  	<property name="adult1 int4,
+  	<property name="child1 int4,
+  	<property name="female1 int4,
+  	<property name="male1 int4,
+  	<property name="men1 int4,
+  	<property name="women1 int4,
+  	<property name="female2 int4,
+  	<property name="male2 int4,
+  	<property name="men2 int4,
+  	<property name="women2 int4,
+  	<property name="boy2 int4,
+  	<property name="girl2 int4,
+  	<property name="female3 int4,
+  	<property name="male3 int4,
+  	<property name="men3 int4,
+  	<property name="women3 int4,
+  	<property name="boy3 int4,
+  	<property name="girl3 int4,
+  	<property name="female4 int4,
+  	<property name="male4 int4,
+  	<property name="men4 int4,
+  	<property name="women4 int4,
+  	<property name="boy4 int4,
+  	<property name="girl4 int4,
+  	<property name="child4 int4,
+  	<property name="female6 int4,
+  	<property name="male6 int4,
+  	<property name="men6 int4,
+  	<property name="women6 int4,
+  	<property name="boy6 int4,
+  	<property name="girl6 int4,
+  	<property name="child6 int4,
+  	<property name="crew2 int4,
+  	<property name="infantm3 int4,
+  	<property name="infantf3 int4,
+  	<property name="sladafri int4,
+  	<property name="sladied5 int4,
+  	<property name="sladied4 int4,
+  	<property name="sladied2 int4,
+  	<property name="sladied1 int4,
+  	<property name="sladied3 int4,
+  	<property name="sladied6 int4,
+  	<property name="insurrec int8,
+  	<property name="adult3 int4,
+  	<property name="ownera varchar(40),
+  	<property name="ownerb varchar(40),
+  	<property name="ownerc varchar(40),
+  	<property name="ownerd varchar(40),
+  	<property name="ownere varchar(40),
+  	<property name="ownerf varchar(40),
+  	<property name="ownerg varchar(40),
+  	<property name="ownerh varchar(40),
+  	<property name="owneri varchar(40),
+  	<property name="ownerj varchar(40),
+  	<property name="ownerk varchar(40),
+  	<property name="ownerl varchar(40),
+  	<property name="ownerm varchar(40),
+  	<property name="ownern varchar(40),
+  	<property name="ownero varchar(40),
+  	<property name="ownerp varchar(40),
+  	<property name="yearaf int4,
+  	<property name="yeardep int4,
+  	<property name="yearam int4,
+    <property name="tonmod float8,
+    <property name="vymrtimp int8,
+    <property name="tslmtimp int8,
+  	<property name="sla32imp int2,
+  	<property name="sla36imp int2,
+  	<property name="imprat int4,
+    <property name="regdis11 int8,
+    <property name="regdis21 int8,
+  	<property name="sla39imp int4,
+  	<property name="ncr15imp int4,
+  	<property name="ncr17imp int4,
+  	<property name="exprat float8,
+  	<property name="male1imp int4,
+  	<property name="feml1imp int4,
+  	<property name="chil1imp int4,
+  	<property name="malrat1 float8,
+  	<property name="chilrat1 float8,
+  	<property name="slavemx1 int4,
+  	<property name="slavema1 int4,
+  	<property name="male3imp int4,
+  	<property name="feml3imp int4,
+  	<property name="chil3imp int4,
+  	<property name="chilrat3 float8,
+  	<property name="malrat3 float8,
+  	<property name="slavemx3 int4,
+  	<property name="slavema3 int4,
+  	<property name="adlt3imp int4,
+  	<property name="vymrtrat float8,
+  	<property name="slaximp int4,
+  	<property name="slamimp int4,
+  	<property name="voy2imp int4,
+  	<property name="voy1imp int4,
+  	<property name="malrat7 float8,
+  	<property name="chilrat7 float8,
+  	<property name="sourcex varchar(255),
+  	<property name="p int8,
+  	<property name="men8 int4,
+  	<property name="women8 int4,
+  	<property name="boy8 int4,
+  	<property name="girl8 int4,
+  	<property name="behrflag int4,
+  	<property name="price int8,
+  	<property name="uppguine float8,
+  	<property name="voyagimp float8,
+  	<property name="timcoast float8,
+  	<property name="slavpday float8,
+  	<property name="rountrip float8,
+  	<property name="slavpvoy float8,
+  	<property name="slxp1000 float8,
+    <property name="insurre2 float8,
+    <property name="timslave float8,
+    <property name="toncateg int8,
+    <property name="evgreen int8,
+    <property name="womrat1 float8,
+    <property name="womrat3 float8,
+    <property name="womrat7 float8,
+    <property name="menrat7 float8,
+    <property name="menrat3 float8,
+    <property name="menrat1 float8,
+    <property name="girlrat1 float8,
+    <property name="girlrat3 float8,
+    <property name="girlrat7 float8,
+    <property name="boyrat7 float8,
+    <property name="boyrat3 float8,
+    <property name="boyrat1 float8,
+    <property name="behmimp2 int4,
+    <property name="behximp2 float8,
+    <property name="poundprice float8,
+    <property name="termmth int8,
+    <property name="intrate int8,
+    <property name="cashpric float8,
+    <property name="jamcaspr float8,
+    <property name="locurlmnl float8,
+    <property name="exchrate varchar(10),
+    <property name="frencpri float8,
+    <property name="frnprinl float8,
+    <property name="nonpay float8,
+    <property name="seneg float8,
+    <property name="sl float8,
+    <property name="wwc float8,
+    <property name="slperton float8,
+    <property name="tonpercr float8,
+    <property name="portugus float8,
+    <property name="manol int8,
+    <property name="portug2 float8,
+    <property name="deptamer float8,
+    <property name="girl5 int4,
+    <property name="boy5 int4,
+    <property name="men5 int4,
+    <property name="women5 int4,
+    <property name="child5 int4,
+    <property name="male5 int4,
+    <property name="female5 int4,
+    <property name="arrport2 int4,
+    <property name="nsp int8,
+    <property name="nna int8,
+    <property name="infant3 int8,
+    <property name="infants3 int4,
+    <property name="infant1 int4,
+    <property name="kleimerg float8,
+    <property name="kleimerg2 float8,
+    <property name="adult5 int4,
+    <property name="bahijelm float8,
+    <property name="adult2 int4,
+    <property name="adult4 int4,
+    <property name="infant4 int4,
+    <property name="voyageid2 float8,
+    <property name="newmina int8,
+    <property name="crew int2,
+    <property name="guns2 int2,
+    <property name="men7 int4,
+    <property name="male7 int4,
+    <property name="female7 int4,
+    <property name="women7 int4,
+    <property name="adult7 int4,
+    <property name="boy7 int4,
+    <property name="girl7 int4,
+    <property name="child7 int4,
+    <property name="voy3imp int8,
+    <property name="slavcapt float8,
+    <property name="majbycon float8,
+    <property name="tabexpo int2,
+    <property name="rice float8,
+    <property name="slavemx7 float8,
+    <property name="spanishamer float8,
+    <property name="year25a float8,
+    <property name="menvymrtrat float8,
+    <property name="womenvymrtrat float8,
+    <property name="boyvymrtrat float8,
+    <property name="girlvymrtrat float8,
+    <property name="cubaperiod float8,
+    <many-to-one name="datepl" class="edu.emory.library.tas.dicts.DepDefinition" unique="true" lazy="false"/>
+    <many-to-one name="embport" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+    <many-to-one name="arrport" class="edu.emory.library.tas.dicts.IntDisembPort" unique="true" lazy="false"/>
+    <many-to-one name="plac1tra" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+    <many-to-one name="destin" class="edu.emory.library.tas.dicts.RetPort" unique="true" lazy="false"/>
+    <many-to-one name="plac2tra" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+    <many-to-one name="plac3tra" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+    <many-to-one name="npafttra" class="edu.emory.library.tas.dicts.OldWorldPlace" unique="true" lazy="false"/>
+    <many-to-one name="sla1port" class="edu.emory.library.tas.dicts.FirstDemPort" unique="true" lazy="false"/>
+    <many-to-one name="adpsale1" class="edu.emory.library.tas.dicts.SecondDemPort" unique="true" lazy="false"/>
+    <many-to-one name="adpsale2" class="edu.emory.library.tas.dicts.ThirdDemPort" unique="true" lazy="false"/>
+    <many-to-one name="portret" class="edu.emory.library.tas.dicts.RetPort" unique="true" lazy="false"/>
+    <many-to-one name="tontype" class="edu.emory.library.tas.dicts.TonesType" unique="true" lazy="false"/>
+    <many-to-one name="national" class="edu.emory.library.tas.dicts.ShipNationality" unique="true" lazy="false"/>
+    <many-to-one name="embport2" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+    <many-to-one name="portdep" class="edu.emory.library.tas.dicts.DeparturePort" unique="true" lazy="false"/>
+    <many-to-one name="rig" class="edu.emory.library.tas.dicts.VesselRig" unique="true" lazy="false"/>
+    <many-to-one name="placcons" class="edu.emory.library.tas.dicts.RetPort" unique="true" lazy="false"/>
+    <many-to-one name="majselpt" class="edu.emory.library.tas.dicts.FirstDemPort" unique="true" lazy="false"/>
+    <many-to-one name="majbuypt" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+    <many-to-one name="natinimp" class="edu.emory.library.tas.dicts.ImputedNation" unique="true" lazy="false"/>
+    <many-to-one name="deptreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="retrnreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="regisreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="year100" class="edu.emory.library.tas.dicts.Year100" unique="true" lazy="false"/>
+    <many-to-one name="year5" class="edu.emory.library.tas.dicts.Year5" unique="true" lazy="false"/>
+    <many-to-one name="year25" class="edu.emory.library.tas.dicts.Year25" unique="true" lazy="false"/>  
+    <many-to-one name="regem1" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="regem2" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="regem3" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="embreg" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="embreg2" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="majbuyrg" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="majbuyimp" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="regdis1" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="regdis2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="regdis3" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="regarrp" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="majselrg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="fate2" class="edu.emory.library.tas.dicts.Fate2" unique="true" lazy="false"/>
+    <many-to-one name="fate3" class="edu.emory.library.tas.dicts.Fate3" unique="true" lazy="false"/>
+    <many-to-one name="fate4" class="edu.emory.library.tas.dicts.Fate4" unique="true" lazy="false"/>
+    <many-to-one name="mjselimp" class="edu.emory.library.tas.dicts.ImpPrincipalRegion" unique="true" lazy="false"/>
+    <many-to-one name="deptreg1" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="mjselreg1" class="edu.emory.library.tas.dicts.DemBroadRegion" unique="true" lazy="false"/>
+    <many-to-one name="constreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+    <many-to-one name="status" class="edu.emory.library.tas.dicts.Status" unique="true" lazy="false"/>
+    <many-to-one name="majbyim3" class="edu.emory.library.tas.dicts.MajByIm" unique="true" lazy="false"/>
+  
+  		<many-to-one name="editor" class="edu.emory.library.tas.dicts.Editor" unique="true" lazy="false"/>
+  		<many-to-one name="mjbyptimp" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+  		<many-to-one name="newf" class="edu.emory.library.tas.dicts.New" unique="true" lazy="false"/>
+  		<many-to-one name="filter_$" class="edu.emory.library.tas.dicts.Filter" unique="true" lazy="false"/>
+  		<many-to-one name="natinim3" class="edu.emory.library.tas.dicts.Natinim3" unique="true" lazy="false"/>
+  		<many-to-one name="mjselrg2" class="edu.emory.library.tas.dicts.Mjselrg2" unique="true" lazy="false"/>
+  		<many-to-one name="newamreg" class="edu.emory.library.tas.dicts.Newamreg" unique="true" lazy="false"/>
+  		<many-to-one name="yearches" class="edu.emory.library.tas.dicts.Yearches" unique="true" lazy="false"/>
+  		<many-to-one name="gc" class="edu.emory.library.tas.dicts.Gc" unique="true" lazy="false"/>
+  		<many-to-one name="angola" class="edu.emory.library.tas.dicts.Angola" unique="true" lazy="false"/>
+  		<many-to-one name="seafrica" class="edu.emory.library.tas.dicts.Seafrica" unique="true" lazy="false"/>
+  		<many-to-one name="regarrp2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+  		<many-to-one name="userid" class="edu.emory.library.tas.dicts.Userid" unique="true" lazy="false"/>
+  		<many-to-one name="xmimpflag" class="edu.emory.library.tas.dicts.XmimpFlag" unique="true" lazy="false"/>
+  		<many-to-one name="temp2" class="edu.emory.library.tas.dicts.Temp2" unique="true" lazy="false"/>
+  		<many-to-one name="flag2" class="edu.emory.library.tas.dicts.Flag2" unique="true" lazy="false"/>
+  		<many-to-one name="primarylast" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
+  		<many-to-one name="primarylast1" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
+  		<many-to-one name="carib" class="edu.emory.library.tas.dicts.Carib" unique="true" lazy="false"/>
+  		<many-to-one name="natinim4" class="edu.emory.library.tas.dicts.Natinim4" unique="true" lazy="false"/>
+  		<many-to-one name="us" class="edu.emory.library.tas.dicts.Us" unique="true" lazy="false"/>
+  		<many-to-one name="mjselim2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+  		<many-to-one name="temp" class="edu.emory.library.tas.dicts.Temp" unique="true" lazy="false"/>
+
         
     </class>
     
