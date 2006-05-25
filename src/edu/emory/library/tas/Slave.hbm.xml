@@ -16,6 +16,7 @@
   		<property name="age"/>
   		<property name="feet"/>
   		<property name="inch"/>
+  		<property name="ageinf"/>
   		<many-to-one name="country" class="edu.emory.library.tas.Country" unique="true" lazy="false"/>
   		<property name="name"/>
   		<property name="unclear"/>
