@@ -10,6 +10,7 @@
         <id name="id" column="oid">
         	<generator class="native"/>
         </id>
+        <property name="type" column="obj_type"/>
         <property name="name" column="name"/>
     </class>
 

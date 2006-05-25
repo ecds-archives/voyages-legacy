@@ -282,4 +282,38 @@ public class HibernateConnector {
 	public void approveVoyage(VoyageIndex p_voyage) {
 
 	}
+	
+	public Object[] loadObjects(String p_objType, String[] params, String[] values, boolean[] strings) {
+		
+		StringBuffer where = params.length != 0 ? new StringBuffer("where "):new StringBuffer("");
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		
+		for (int i = 0; i < params.length; i++) {
+			if (i != 0) {
+				where.append("and ");
+			}
+			where.append(params[i]).append(" = ");
+			if (strings[i]) {
+				where.append("\"");
+			}
+			where.append(values[i]);
+			if (strings[i]) {
+				where.append("\" ");
+			}
+		}
+		
+		Query query = session.createQuery("from " + p_objType + where.toString());
+		List list = query.list();
+		
+		transaction.commit();
+		
+		if (list.size() != 0) {
+			return list.toArray();
+		} else {
+			return new Object[] {};
+		}
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 
+import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
@@ -66,6 +67,11 @@ public class HibernateTest {
 					v.save();
 				} else {
 					System.out.println("Empty result for given id - cannot update");
+				}
+			} else if (command.equals("dictionary")) {
+				Dictionary[] dicts = Dictionary.loadDictionary("PortLocation");
+				for (int i = 0; i < dicts.length; i++) {
+					System.out.println("Dict: " + dicts[i]);
 				}
 			}
 			

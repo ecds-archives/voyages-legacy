@@ -14,7 +14,7 @@
         <property name="captainA" column="captaina"/>                        
         <property name="captainB" column="captainb"/>
         <property name="captainC" column="captainc"/>
-        <many-to-one name="portdep" class="PortLocation" column="portdep" unique="true" lazy="false"/>
+        <many-to-one name="portdep" class="edu.emory.library.tas.PortLocation" column="portdep" unique="true" lazy="false"/>
         <property name="datedepC" column="datedepc"/>
         <property name="datedepB" column="datedepb"/>
         <property name="datedepA" column="datedepa"/>
