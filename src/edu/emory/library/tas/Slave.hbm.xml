@@ -11,7 +11,64 @@
         	<generator class="native"/>
         </id>
         <property name="slaveId" column="sid"/>
-        <property name="name" column="slave_name"/>
-    </class>
-
+        <property name="slaveName" column="slave_name"/>
+		<many-to-one name="sexage" class="edu.emory.library.tas.SexAge" unique="true" lazy="false"/>
+  		<property name="age"/>
+  		<property name="feet"/>
+  		<property name="inch"/>
+  		<many-to-one name="country" class="edu.emory.library.tas.Country" unique="true" lazy="false"/>
+  		<property name="name"/>
+  		<property name="unclear"/>
+  		<property name="nameimp"/>
+  		<many-to-one name="natimp" class="edu.emory.library.tas.Nation" unique="true" lazy="false"/>
+  		<many-to-one name="bodypt1" class="edu.emory.library.tas.BodyPt" unique="true" lazy="false"/>
+  		<many-to-one name="placea1" class="edu.emory.library.tas.PlaceA" unique="true" lazy="false"/>
+  		<many-to-one name="placeb1" class="edu.emory.library.tas.PlaceB" unique="true" lazy="false"/>
+  		<many-to-one name="marksize" class="edu.emory.library.tas.MarkSize" unique="true" lazy="false"/>
+  		<many-to-one name="marktype" class="edu.emory.library.tas.MarkType" unique="true" lazy="false"/>
+  		<many-to-one name="marknumb" class="edu.emory.library.tas.MarkNumber" unique="true" lazy="false"/>
+  		<many-to-one name="markdegr" class="edu.emory.library.tas.MarkDegree" unique="true" lazy="false"/>
+  		<many-to-one name="othrmark" class="edu.emory.library.tas.OtherMark" unique="true" lazy="false"/>
+  		<many-to-one name="markspec" class="edu.emory.library.tas.SpecialMark" unique="true" lazy="false"/>
+  		<many-to-one name="bodypt2" class="edu.emory.library.tas.BodyPt" unique="true" lazy="false"/>
+  		<many-to-one name="placea2" class="edu.emory.library.tas.PlaveA" unique="true" lazy="false"/>
+  		<many-to-one name="placeb2" class="edu.emory.library.tas.PlaceB" unique="true" lazy="false"/>
+  		<many-to-one name="marksiz2" class="edu.emory.library.tas.MarkSize" unique="true" lazy="false"/>
+  		<many-to-one name="marktyp2" class="edu.emory.library.tas.MarkType" unique="true" lazy="false"/>
+  		<many-to-one name="marknum2" class="edu.emory.library.tas.MarkNumber" unique="true" lazy="false"/>
+  		<many-to-one name="markdeg2" class="edu.emory.library.tas.MarkDegree" unique="true" lazy="false"/>
+  		<many-to-one name="bodypt3" class="edu.emory.library.tas.MarkPt" unique="true" lazy="false"/>
+  		<many-to-one name="placea3" class="edu.emory.library.tas.PlaceA" unique="true" lazy="false"/>
+  		<many-to-one name="placeb3" class="edu.emory.library.tas.PlaceB" unique="true" lazy="false"/>
+  		<many-to-one name="marksiz3" class="edu.emory.library.tas.MarkSize" unique="true" lazy="false"/>
+  		<many-to-one name="marktyp3" class="edu.emory.library.tas.MarkType" unique="true" lazy="false"/>
+  		<many-to-one name="marknum3" class="edu.emory.library.tas.MarkNumber" unique="true" lazy="false"/>
+  		<many-to-one name="markdeg3" class="edu.emory.library.tas.MarkDegree" unique="true" lazy="false"/>
+  		<many-to-one name="bodypt4" class="edu.emory.library.tas.MarkPt" unique="true" lazy="false"/>
+  		<many-to-one name="bodypt5" class="edu.emory.library.tas.MarkPt" unique="true" lazy="false"/>
+  		<many-to-one name="bodypt6" class="edu.emory.library.tas.MarkPt" unique="true" lazy="false"/>
+  		<many-to-one name="placea4" class="edu.emory.library.tas.PlaceA" unique="true" lazy="false"/>
+  		<many-to-one name="placea5" class="edu.emory.library.tas.PlaceA" unique="true" lazy="false"/>
+  		<many-to-one name="placea6" class="edu.emory.library.tas.PlaceA" unique="true" lazy="false"/>
+  		<many-to-one name="placeb4" class="edu.emory.library.tas.PlaceB" unique="true" lazy="false"/>
+  		<many-to-one name="placeb5" class="edu.emory.library.tas.PlaceB" unique="true" lazy="false"/>
+  		<many-to-one name="placeb6" class="edu.emory.library.tas.PlaceB" unique="true" lazy="false"/>
+  		<many-to-one name="marksiz4" class="edu.emory.library.tas.MarkSize" unique="true" lazy="false"/>
+  		<many-to-one name="marksiz5" class="edu.emory.library.tas.MarkSize" unique="true" lazy="false"/>
+  		<many-to-one name="marksiz6" class="edu.emory.library.tas.MarkSize" unique="true" lazy="false"/>
+  		<many-to-one name="marktyp6" class="edu.emory.library.tas.MarkType" unique="true" lazy="false"/>
+  		<many-to-one name="marktyp5" class="edu.emory.library.tas.MarkType" unique="true" lazy="false"/>
+	  	<many-to-one name="marktyp4" class="edu.emory.library.tas.MarkType" unique="true" lazy="false"/>
+  		<many-to-one name="marknum4" class="edu.emory.library.tas.MarkNumber" unique="true" lazy="false"/>
+  		<many-to-one name="marknum5" class="edu.emory.library.tas.MarkNumber" unique="true" lazy="false"/>
+  		<many-to-one name="marknum6" class="edu.emory.library.tas.MarkNumber" unique="true" lazy="false"/>
+  		<many-to-one name="markdeg6" class="edu.emory.library.tas.MarkDegree" unique="true" lazy="false"/>
+		<many-to-one name="markdeg5" class="edu.emory.library.tas.MarkDegree" unique="true" lazy="false"/>
+  		<many-to-one name="markdeg4" class="edu.emory.library.tas.MarkDegree" unique="true" lazy="false"/>
+  		<property name="majselpt"/>
+  		<property name="source"/>
+  		<property name="majbuypt"/>
+  		<property name="datarr34"/>
+  		<property name="regem1"/>
+	</class>
 </hibernate-mapping>
