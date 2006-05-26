@@ -21,7 +21,7 @@
     <property name="nppretra"/>
     <property name="d1slatr"/>  
     <property name="dlslatrb"/>
-    <property name="npprior"/>
+    <property name="npprior"/>-->
     <property name="tslavesp"/>
     <property name="tslavesd"/>
     <property name="sladvoy"/>
@@ -342,7 +342,7 @@
   		<many-to-one name="natinim4" class="edu.emory.library.tas.dicts.Natinim4" unique="true" lazy="false"/>
   		<many-to-one name="us" class="edu.emory.library.tas.dicts.Us" unique="true" lazy="false"/>
   		<many-to-one name="mjselim2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-  		-->
+ 
   		
   		<many-to-one name="temp" class="edu.emory.library.tas.dicts.Temp" unique="true" lazy="false"/>
 
