@@ -12,6 +12,522 @@
         </id>
         <property name="type" column="obj_type"/>
         <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    
+    <class name="edu.emory.library.tas.dicts.Angola" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.BodyPt" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Carib" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Country" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.DemBroadRegion" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.DeparturePort" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.DepartureRegion" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.DepDefinition" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Editor" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.EmbRegion" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Fate2" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Fate3" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Fate4" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Filter" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.FirstDemPort" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Flag2" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Gc" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.ImpPrincipalRegion" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.ImputedNation" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.IntDisembPort" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.MajByIm" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.MarkDegree" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.MarkNumber" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.MarkSize" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.MarkType" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Mjselrg2" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Natinim3" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Natinim4" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Nation" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.New" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Newamreg" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.OldWorldPlace" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.OtherMark" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.PlaceA" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.PlaceB" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.PortLocation" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.PurchasePort" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.RetPort" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Seafrica" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.SecondDemPort" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.SexAge" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.ShipNationality" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.SpecialMark" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Status" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Temp" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Temp2" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.ThirdDemPort" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.TonesType" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Us" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Userid" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.VesselRig" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.XmimpFlag" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Year100" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Year25" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Year5" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dicts.Yearches" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    
+    <class name="edu.emory.library.tas.dicts.PrimaryLast" table="dictionary">
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
     </class>
 
 </hibernate-mapping>

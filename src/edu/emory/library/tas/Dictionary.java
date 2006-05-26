@@ -9,6 +9,8 @@ public class Dictionary {
 	private String name;
 
 	private Integer type;
+	
+	private Integer remoteId;
 
 	public static Dictionary[] loadDictionary(String p_dictionaryName,
 			String p_dictVal) {
@@ -74,5 +76,13 @@ public class Dictionary {
 
 	protected void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Integer getRemoteId() {
+		return remoteId;
+	}
+
+	public void setRemoteId(Integer remoteId) {
+		this.remoteId = remoteId;
 	}
 }
