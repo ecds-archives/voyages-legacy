@@ -17,6 +17,8 @@ public class AsciiFixedFormatRecordWriter extends RecordWriter
 	
 	public void writeRecord(Record record) throws IOException
 	{
+		if (record == null) return;
+		//wrt.write(AsciiFixedFormatRecordReader.buf, ((AsciiFixedFormatRecord)record).bufPtr, 2973);
 		wrt.write(((AsciiFixedFormatRecord)record).getLine());
 		wrt.write('\n');
 	}

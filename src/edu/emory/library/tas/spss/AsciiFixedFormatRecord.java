@@ -6,10 +6,13 @@ public class AsciiFixedFormatRecord extends Record
 	private char[] line;
 	private String key;
 	
+	//public int bufPtr;
+	
 	public AsciiFixedFormatRecord(String key, char[] line)
 	{
 		this.line = line;
 		this.key = key;
+		//this.bufPtr = bufPtr;
 	}
 	
 	public int compareTo(Record record)

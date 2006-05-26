@@ -23,6 +23,7 @@ public class RecordSorter
 	{
 		public int compare(Object recObj0, Object recObj1)
 		{
+			if (recObj0 == null || recObj1 == null) return 0;
 			Record rec0 = (Record)recObj0; 
 			Record rec1 = (Record)recObj1; 
 			return (rec0.compareTo(rec1));
@@ -87,12 +88,12 @@ public class RecordSorter
 		ArrayList tmpFiles = new ArrayList();
 		int nextTmpFileIdx = 0;
 		
-		// determine temp folder
-		if (tmpFolder == null)
-			tmpFolder = new File(inputFileName).getParent();
-		
 		// open input file
+		File inputFile = new File(inputFileName);
 		RecordReader reader = recordIO.createReader(new File(inputFileName));
+		
+		// determine temp folder
+		if (tmpFolder == null) tmpFolder = inputFile.getAbsoluteFile().getParent();
 
 		// generic poiter for small cycles
 		Record record;
@@ -105,17 +106,17 @@ public class RecordSorter
 		do
 		{
 			
-			// reset the the list of lines
+			// reset the list of lines
+			for (int i=0; i<recordCount; i++) records[i] = null;
 			recordCount = 0;
 			
 			// read lines
-			record = null;
 			while ((record = reader.readRecord()) != null)
 			{
 				records[recordCount++] = record;
 				if (recordCount == maxLines) break;
 			}
-				
+			
 			// in case we really read anything
 			if (recordCount > 0)
 			{
@@ -141,7 +142,7 @@ public class RecordSorter
 		// main structures for merge: list of 
 		// opened files and their first lines
 		RecordReader tmpReaders[] = new RecordReader[MAXMERGE];
-		Record currLines[] = new Record[MAXMERGE];
+		Record currRecords[] = new Record[MAXMERGE];
 		
 		// merge
 		while (tmpFiles.size() > 1)
@@ -151,7 +152,7 @@ public class RecordSorter
 			for (int i=0; i<MAXMERGE; i++)
 			{
 				tmpReaders[i] = null;
-				currLines[i] = null;
+				currRecords[i] = null;
 			}
 			
 			// open first MAXMERGE temp files
@@ -173,7 +174,7 @@ public class RecordSorter
 			
 			// read first lines
 			for (int i=0; i<mergeCount; i++)
-				currLines[i] = tmpReaders[i].readRecord();
+				currRecords[i] = tmpReaders[i].readRecord();
 			
 			// merge
 			int tmpLeft = mergeCount;
@@ -187,7 +188,7 @@ public class RecordSorter
 				{
 					if (tmpReaders[i] != null)
 					{
-						record = currLines[i];
+						record = currRecords[i];
 						if (minRecord == null || record.compareTo(minRecord) < 0)
 						{
 							minRecord = record;
@@ -203,13 +204,13 @@ public class RecordSorter
 				record = tmpReaders[minIdx].readRecord();
 				if (record != null)
 				{
-					currLines[minIdx] = record;
+					currRecords[minIdx] = record;
 				}
 				else
 				{
 					tmpReaders[minIdx].close();					
 					tmpReaders[minIdx] = null;					
-					currLines[minIdx] = null;
+					currRecords[minIdx] = null;
 					tmpLeft--;
 				}
 				
@@ -229,7 +230,7 @@ public class RecordSorter
 		}
 		
 		// rename last temp file to the output file
-		File outputFile = new File(getTmpFolder(), outputFileName);
+		File outputFile = new File(outputFileName);
 		((File)tmpFiles.get(0)).renameTo(outputFile);
 		
 	}
@@ -238,8 +239,10 @@ public class RecordSorter
 	{
 		
 		AsciiFixedFormatRecordIOFactory f = new AsciiFixedFormatRecordIOFactory(193, 198, 2973); 
-		RecordSorter s = new RecordSorter("voyages.csv", "voyages-sorted.csv", f);
-		//s.setMaxLines(2000);
+		RecordSorter s = new RecordSorter("D:\\Library\\SlaveTrade\\data\\voyages.dat", "D:\\Library\\SlaveTrade\\data\\voyages-sorted.dat", f);
+		//AsciiFixedFormatRecordIOFactory f = new AsciiFixedFormatRecordIOFactory(0, 1, 4); 
+		//RecordSorter s = new RecordSorter("D:\\Library\\SlaveTrade\\data\\test.dat", "D:\\Library\\SlaveTrade\\data\\test-sorted.dat", f);
+		s.setMaxLines(1000);
 		s.sort();
 		
 	}		
