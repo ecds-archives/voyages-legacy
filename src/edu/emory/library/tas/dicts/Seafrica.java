@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Seafrica extends Dictionary {
-	private static final Integer TYPE = new Integer(40);
-	private static final String NAME = "Seafrica";
+	public static final Integer TYPE = new Integer(40);
+	public static final String NAME = "Seafrica";
 	
 	public Seafrica() {
 		setType(TYPE);

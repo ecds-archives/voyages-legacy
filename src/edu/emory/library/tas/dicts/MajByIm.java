@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class MajByIm extends Dictionary {
-	private static final Integer TYPE = new Integer(21);
-	private static final String NAME = "MajByIm";
+	public static final Integer TYPE = new Integer(21);
+	public static final String NAME = "MajByIm";
 	
 	public MajByIm() {
 		setType(TYPE);

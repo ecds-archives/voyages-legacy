@@ -4,8 +4,8 @@ import edu.emory.library.tas.Dictionary;
 
 public class Nation extends Dictionary {
 
-	private static final Integer TYPE = new Integer(29);
-	private static final String NAME = "Nation";
+	public static final Integer TYPE = new Integer(29);
+	public static final String NAME = "Nation";
 	
 	public Nation() {
 		setType(TYPE);

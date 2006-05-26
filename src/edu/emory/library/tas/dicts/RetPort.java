@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class RetPort extends Dictionary {
-	private static final Integer TYPE = new Integer(39);
-	private static final String NAME = "RetPort";
+	public static final Integer TYPE = new Integer(39);
+	public static final String NAME = "RetPort";
 	
 	public RetPort() {
 		setType(TYPE);

@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Flag2 extends Dictionary {
-	private static final Integer TYPE = new Integer(16);
-	private static final String NAME = "Flag2";
+	public static final Integer TYPE = new Integer(16);
+	public static final String NAME = "Flag2";
 	
 	public Flag2() {
 		setType(TYPE);

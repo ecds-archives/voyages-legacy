@@ -4,8 +4,8 @@ import edu.emory.library.tas.Dictionary;
 
 public class MarkNumber extends Dictionary {
 
-	private static final Integer TYPE = new Integer(23);
-	private static final String NAME = "MarkNumber";
+	public static final Integer TYPE = new Integer(23);
+	public static final String NAME = "MarkNumber";
 	
 	public MarkNumber() {
 		setType(TYPE);

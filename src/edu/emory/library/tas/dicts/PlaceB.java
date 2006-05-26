@@ -4,8 +4,8 @@ import edu.emory.library.tas.Dictionary;
 
 public class PlaceB extends Dictionary {
 
-	private static final Integer TYPE = new Integer(35);
-	private static final String NAME = "PlaceB";
+	public static final Integer TYPE = new Integer(35);
+	public static final String NAME = "PlaceB";
 	
 	public PlaceB() {
 		setType(TYPE);

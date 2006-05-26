@@ -5,7 +5,7 @@ import edu.emory.library.tas.Dictionary;
 public class PortLocation extends Dictionary {
 	
 	public static final Integer TYPE = new Integer(36);
-	private static final String NAME = "PortLocation";
+	public static final String NAME = "PortLocation";
 	
 	public PortLocation() {
 		setType(TYPE);

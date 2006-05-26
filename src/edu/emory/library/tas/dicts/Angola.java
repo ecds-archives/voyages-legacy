@@ -4,7 +4,7 @@ import edu.emory.library.tas.Dictionary;
 
 public class Angola extends Dictionary {
 	public static final Integer TYPE = new Integer(1);
-	private static final String NAME = "Angola";
+	public static final String NAME = "Angola";
 	
 	public Angola() {
 		setType(TYPE);

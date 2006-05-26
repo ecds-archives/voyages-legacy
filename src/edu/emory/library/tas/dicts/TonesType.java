@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class TonesType extends Dictionary {
-	private static final Integer TYPE = new Integer(49);
-	private static final String NAME = "TonesType";
+	public static final Integer TYPE = new Integer(49);
+	public static final String NAME = "TonesType";
 	
 	public TonesType() {
 		setType(TYPE);

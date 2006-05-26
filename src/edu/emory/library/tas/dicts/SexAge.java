@@ -4,8 +4,8 @@ import edu.emory.library.tas.Dictionary;
 
 public class SexAge extends Dictionary {
 
-	private static final Integer TYPE = new Integer(42);
-	private static final String NAME = "SexAge";
+	public static final Integer TYPE = new Integer(42);
+	public static final String NAME = "SexAge";
 	
 	public SexAge() {
 		setType(TYPE);

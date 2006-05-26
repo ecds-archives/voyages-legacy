@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Natinim3 extends Dictionary {
-	private static final Integer TYPE = new Integer(27);
-	private static final String NAME = "Natinim3";
+	public static final Integer TYPE = new Integer(27);
+	public static final String NAME = "Natinim3";
 	
 	public Natinim3() {
 		setType(TYPE);

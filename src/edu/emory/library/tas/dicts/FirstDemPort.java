@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class FirstDemPort extends Dictionary {
-	private static final Integer TYPE = new Integer(15);
-	private static final String NAME = "FirstDemPort";
+	public static final Integer TYPE = new Integer(15);
+	public static final String NAME = "FirstDemPort";
 	
 	public FirstDemPort() {
 		setType(TYPE);

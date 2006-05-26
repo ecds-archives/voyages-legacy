@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Filter extends Dictionary {
-	private static final Integer TYPE = new Integer(14);
-	private static final String NAME = "Filter";
+	public static final Integer TYPE = new Integer(14);
+	public static final String NAME = "Filter";
 	
 	public Filter() {
 		setType(TYPE);

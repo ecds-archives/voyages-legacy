@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class PrimaryLast extends Dictionary {
-	private static final Integer TYPE = new Integer(37);
-	private static final String NAME = "PrimaryLast";
+	public static final Integer TYPE = new Integer(37);
+	public static final String NAME = "PrimaryLast";
 	
 	public PrimaryLast() {
 		setType(TYPE);

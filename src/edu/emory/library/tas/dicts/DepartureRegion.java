@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class DepartureRegion extends Dictionary {
-	private static final Integer TYPE = new Integer(7);
-	private static final String NAME = "DepartureRegion";
+	public static final Integer TYPE = new Integer(7);
+	public static final String NAME = "DepartureRegion";
 	
 	public DepartureRegion() {
 		setType(TYPE);

@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Status extends Dictionary {
-	private static final Integer TYPE = new Integer(45);
-	private static final String NAME = "Status";
+	public static final Integer TYPE = new Integer(45);
+	public static final String NAME = "Status";
 	
 	public Status() {
 		setType(TYPE);

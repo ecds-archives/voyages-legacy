@@ -4,8 +4,8 @@ import edu.emory.library.tas.Dictionary;
 
 public class BodyPt extends Dictionary {
 
-	private static final Integer TYPE = new Integer(2);
-	private static final String NAME = "DodyPt";
+	public static final Integer TYPE = new Integer(2);
+	public static final String NAME = "DodyPt";
 	
 	public BodyPt() {
 		setType(TYPE);

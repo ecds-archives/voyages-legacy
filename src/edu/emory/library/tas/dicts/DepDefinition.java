@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class DepDefinition extends Dictionary {
-	private static final Integer TYPE = new Integer(8);
-	private static final String NAME = "DepDefinition";
+	public static final Integer TYPE = new Integer(8);
+	public static final String NAME = "DepDefinition";
 	
 	public DepDefinition() {
 		setType(TYPE);

@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Fate2 extends Dictionary {
-	private static final Integer TYPE = new Integer(11);
-	private static final String NAME = "Fate2";
+	public static final Integer TYPE = new Integer(11);
+	public static final String NAME = "Fate2";
 	
 	public Fate2() {
 		setType(TYPE);

@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Mjselrg2 extends Dictionary {
-	private static final Integer TYPE = new Integer(26);
-	private static final String NAME = "Mjselrg2";
+	public static final Integer TYPE = new Integer(26);
+	public static final String NAME = "Mjselrg2";
 	
 	public Mjselrg2() {
 		setType(TYPE);

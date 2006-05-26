@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Carib extends Dictionary {
-	private static final Integer TYPE = new Integer(3);
-	private static final String NAME = "Carib";
+	public static final Integer TYPE = new Integer(3);
+	public static final String NAME = "Carib";
 	
 	public Carib() {
 		setType(TYPE);

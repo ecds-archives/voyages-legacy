@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class OldWorldPlace extends Dictionary {
-	private static final Integer TYPE = new Integer(32);
-	private static final String NAME = "OldWorldPlace";
+	public static final Integer TYPE = new Integer(32);
+	public static final String NAME = "OldWorldPlace";
 	
 	public OldWorldPlace() {
 		setType(TYPE);

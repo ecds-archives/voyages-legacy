@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Us extends Dictionary {
-	private static final Integer TYPE = new Integer(50);
-	private static final String NAME = "Us";
+	public static final Integer TYPE = new Integer(50);
+	public static final String NAME = "Us";
 	
 	public Us() {
 		setType(TYPE);

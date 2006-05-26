@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Newamreg extends Dictionary {
-	private static final Integer TYPE = new Integer(31);
-	private static final String NAME = "Newamreg";
+	public static final Integer TYPE = new Integer(31);
+	public static final String NAME = "Newamreg";
 	
 	public Newamreg() {
 		setType(TYPE);

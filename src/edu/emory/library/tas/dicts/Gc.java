@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Gc extends Dictionary {
-	private static final Integer TYPE = new Integer(17);
-	private static final String NAME = "Gc";
+	public static final Integer TYPE = new Integer(17);
+	public static final String NAME = "Gc";
 	
 	public Gc() {
 		setType(TYPE);
