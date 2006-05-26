@@ -3,7 +3,7 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Angola extends Dictionary {
-	private static final Integer TYPE = new Integer(2);
+	public static final Integer TYPE = new Integer(1);
 	private static final String NAME = "Angola";
 	
 	public Angola() {

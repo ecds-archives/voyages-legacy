@@ -12,15 +12,17 @@
         </id>
         <property name="slaveId" column="sid"/>
         <property name="slaveName" column="slave_name"/>
-		<many-to-one name="sexage" class="edu.emory.library.tas.dicts.SexAge" unique="true" lazy="false"/>
+		
   		<property name="age"/>
   		<property name="feet"/>
   		<property name="inch"/>
   		<property name="ageinf"/>
-  		<many-to-one name="country" class="edu.emory.library.tas.dicts.Country" unique="true" lazy="false"/>
   		<property name="name"/>
   		<property name="unclear"/>
   		<property name="nameimp"/>
+  		<!--
+  		<many-to-one name="sexage" class="edu.emory.library.tas.dicts.SexAge" unique="true" lazy="false"/>
+  		<many-to-one name="country" class="edu.emory.library.tas.dicts.Country" unique="true" lazy="false"/>
   		<many-to-one name="natimp" class="edu.emory.library.tas.dicts.Nation" unique="true" lazy="false"/>
   		<many-to-one name="bodypt1" class="edu.emory.library.tas.dicts.BodyPt" unique="true" lazy="false"/>
   		<many-to-one name="placea1" class="edu.emory.library.tas.dicts.PlaceA" unique="true" lazy="false"/>
@@ -66,6 +68,7 @@
   		<many-to-one name="markdeg6" class="edu.emory.library.tas.dicts.MarkDegree" unique="true" lazy="false"/>
 		<many-to-one name="markdeg5" class="edu.emory.library.tas.dicts.MarkDegree" unique="true" lazy="false"/>
   		<many-to-one name="markdeg4" class="edu.emory.library.tas.dicts.MarkDegree" unique="true" lazy="false"/>
+  		-->
   		<property name="majselpt"/>
   		<property name="source"/>
   		<property name="majbuypt"/>

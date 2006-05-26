@@ -14,10 +14,28 @@ public class Dictionary {
 
 	public static Dictionary[] loadDictionary(String p_dictionaryName,
 			String p_dictVal) {
-
+		
+		int dictType = -1;
+		try {
+			Class clazz = Class.forName("edu.emory.library.tas.dicts." + p_dictionaryName);
+			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
 		Object[] ret = HibernateConnector.getConnector().loadObjects(
-				p_dictionaryName, new String[] { "name" },
-				new String[] { p_dictVal }, new boolean[] { true });
+				p_dictionaryName, new String[] { "name", "obj_type" },
+				new String[] { p_dictVal, dictType + "" }, new boolean[] { true });
 
 		if (ret.length != 0) {
 			Dictionary[] dict = new Dictionary[ret.length];
@@ -29,12 +47,30 @@ public class Dictionary {
 			return new Dictionary[] {};
 		}
 	}
-
+	
 	public static Dictionary[] loadDictionary(String p_dictionaryName) {
 
+		int dictType = -1;
+		try {
+			Class clazz = Class.forName("edu.emory.library.tas.dicts." + p_dictionaryName);
+			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
 		Object[] ret = HibernateConnector.getConnector().loadObjects(
-				p_dictionaryName, new String[] {}, new String[] {},
-				new boolean[] {});
+				p_dictionaryName, new String[] {"obj_type"}, new String[] {dictType + ""},
+				new boolean[] {false});
 
 		if (ret.length != 0) {
 			Dictionary[] dict = new Dictionary[ret.length];
@@ -54,7 +90,7 @@ public class Dictionary {
 		return id;
 	}
 
-	private void setId(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -62,7 +98,7 @@ public class Dictionary {
 		return name;
 	}
 
-	private void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -84,5 +120,17 @@ public class Dictionary {
 
 	public void setRemoteId(Integer remoteId) {
 		this.remoteId = remoteId;
+	}
+	
+	public void save() {
+		HibernateConnector.getConnector().saveObject(this);
+	}
+	
+	public void delete() {
+		HibernateConnector.getConnector().deleteObject(this);
+	}
+	
+	public void update() {
+		HibernateConnector.getConnector().updateObject(this);
 	}
 }

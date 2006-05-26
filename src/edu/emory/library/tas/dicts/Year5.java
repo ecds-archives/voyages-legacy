@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Year5 extends Dictionary {
-	private static final Integer TYPE = new Integer(2);
-	private static final String NAME = "Year5";
+	public static final Integer TYPE = new Integer(56);
+	public static final String NAME = "Year5";
 	
 	public Year5() {
 		setType(TYPE);

@@ -4,7 +4,7 @@ import edu.emory.library.tas.Dictionary;
 
 public class PlaceA extends Dictionary {
 
-	private static final Integer TYPE = new Integer(2);
+	private static final Integer TYPE = new Integer(34);
 	private static final String NAME = "PlaceA";
 	
 	public PlaceA() {

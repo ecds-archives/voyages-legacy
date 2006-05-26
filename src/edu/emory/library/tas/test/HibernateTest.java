@@ -9,6 +9,9 @@ import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
+import edu.emory.library.tas.dicts.PortLocation;
+import edu.emory.library.tas.dicts.SecondDemPort;
+import edu.emory.library.tas.dicts.Temp;
 import edu.emory.library.tas.util.HibernateConnector;
 
 public class HibernateTest {
@@ -69,10 +72,28 @@ public class HibernateTest {
 					System.out.println("Empty result for given id - cannot update");
 				}
 			} else if (command.equals("dictionary")) {
-				Dictionary[] dicts = Dictionary.loadDictionary("PortLocation");
+				Dictionary[] dicts = Dictionary.loadDictionary("Temp");
 				for (int i = 0; i < dicts.length; i++) {
 					System.out.println("Dict: " + dicts[i]);
 				}
+			} else if (command.equals("testSaving")) {
+				Temp dic = new Temp();
+				dic.setRemoteId(new Integer(10));
+				dic.setName(System.currentTimeMillis() + "");
+				dic.save();
+				Voyage v = Voyage.loadMostRecent(new Long(1));
+				
+				if (v == null) {
+					System.out.println("No object!");
+				} else {
+					System.out.println("After loading: " + v);
+					v.setTemp(dic);
+					System.out.println("Has: " + v.getAdpsale1());
+					v.save();
+				}
+				
+				Voyage v_new = Voyage.loadMostRecent(new Long(1));
+				System.out.println("After loading: " + v_new);
 			}
 			
 			System.out.print("command:>");

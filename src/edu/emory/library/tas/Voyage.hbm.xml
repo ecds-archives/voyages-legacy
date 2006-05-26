@@ -11,9 +11,9 @@
         </id>                       
 
 	<property name="voyageId" column="vid"/>
-	<property name="shipName" column="shipname"/>
+	<property name="shipName" column="ship_name"/>
 	<!--property name="revisionId" column=""/-->
-
+<!--
   	<property name="captaina"/>
   	<property name="captainb"/>
   	<property name="captainc"/>    
@@ -270,6 +270,7 @@
     <property name="boyvymrtrat"/>
     <property name="girlvymrtrat"/>
     <property name="cubaperiod"/>
+    
     <many-to-one name="datepl" class="edu.emory.library.tas.dicts.DepDefinition" unique="true" lazy="false"/>
     <many-to-one name="embport" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
     <many-to-one name="arrport" class="edu.emory.library.tas.dicts.IntDisembPort" unique="true" lazy="false"/>
@@ -341,6 +342,8 @@
   		<many-to-one name="natinim4" class="edu.emory.library.tas.dicts.Natinim4" unique="true" lazy="false"/>
   		<many-to-one name="us" class="edu.emory.library.tas.dicts.Us" unique="true" lazy="false"/>
   		<many-to-one name="mjselim2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+  		-->
+  		
   		<many-to-one name="temp" class="edu.emory.library.tas.dicts.Temp" unique="true" lazy="false"/>
 
         

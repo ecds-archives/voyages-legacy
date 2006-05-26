@@ -2,5 +2,65 @@
 	<attribute name="iid" type="Long" userLabel=""/>
 	<attribute name="slaveId" type="Long" userLabel="Slave ID"/>
 	<attribute name="voyageId" type="Long" userLabel="Voyage ID"/>
-	<attribute name="name" type="String" userLabel="Slave name"/>
+	<attribute name="slaveName" type="String" userLabel="Slave name"/>
+	
+	<attribute name="sexage" type="SexAge" userLabel=""/>
+  	<attribute name="age" type="Integer" userLabel=""/>
+  	<attribute name="feet" type="Integer" userLabel=""/>
+  	<attribute name="inch" type="Integer" userLabel=""/>
+  	<property name="ageinf" type="Integer" userLabel=""/>
+  	<attribute name="country" type="Country" userLabel=""/>
+  	<attribute name="name" type="String" userLabel=""/>
+  	<attribute name="unclear" type="Integer" userLabel=""/>
+  	<attribute name="nameimp" type="String" userLabel=""/>
+  	<attribute name="natimp" type="Nation" userLabel=""/>
+  	<attribute name="bodypt1" type="BodyPt" userLabel=""/>
+  	<attribute name="placea1" type="PlaceA" userLabel=""/>
+  	<attribute name="placeb1" type="PlaceB" userLabel=""/>
+  	<attribute name="marksize" type="MarkSize" userLabel=""/>
+  	<attribute name="marktype" type="MarkType" userLabel=""/>
+  	<attribute name="marknumb" type="MarkNumber" userLabel=""/>
+  	<attribute name="markdegr" type="MarkDegree" userLabel=""/>
+  	<attribute name="othrmark" type="OtherMark" userLabel=""/>
+  	<attribute name="markspec" type="SpecialMark" userLabel=""/>
+  	<attribute name="bodypt2" type="BodyPt" userLabel=""/>
+  	<attribute name="placea2" type="PlaceA" userLabel=""/>
+  	<attribute name="placeb2" type="PlaceB" userLabel=""/>
+  	<attribute name="marksiz2" type="MarkSize" userLabel=""/>
+  	<attribute name="marktyp2" type="MarkType" userLabel=""/>
+  	<attribute name="marknum2" type="MarkNumber" userLabel=""/>
+  	<attribute name="markdeg2" type="MarkDegree" userLabel=""/>
+  	<attribute name="bodypt3" type="BodyPt" userLabel=""/>
+  	<attribute name="placea3" type="PlaceA" userLabel=""/>
+  	<attribute name="placeb3" type="PlaceB" userLabel=""/>
+  	<attribute name="marksiz3" type="MarkSize" userLabel=""/>
+  	<attribute name="marktyp3" type="MarkType" userLabel=""/>
+  	<attribute name="marknum3" type="MarkNumber" userLabel=""/>
+  	<attribute name="markdeg3" type="MarkDegree" userLabel=""/>
+  	<attribute name="bodypt4" type="BodyPt" userLabel=""/>
+  	<attribute name="bodypt5" type="BodyPt" userLabel=""/>
+  	<attribute name="bodypt6" type="BodyPt" userLabel=""/>
+  	<attribute name="placea4" type="PlaceA" userLabel=""/>
+  	<attribute name="placea5" type="PlaceA" userLabel=""/>
+  	<attribute name="placea6" type="PlaceA" userLabel=""/>
+  	<attribute name="placeb4" type="PlaceB" userLabel=""/>
+  	<attribute name="placeb5" type="PlaceB" userLabel=""/>
+  	<attribute name="placeb6" type="PlaceB" userLabel=""/>
+  	<attribute name="marksiz4" type="MarkSize" userLabel=""/>
+  	<attribute name="marksiz5" type="MarkSize" userLabel=""/>
+  	<attribute name="marksiz6" type="MarkSize" userLabel=""/>
+  	<attribute name="marktyp6" type="MarkType" userLabel=""/>
+  	<attribute name="marktyp5" type="MarkType" userLabel=""/>
+	<attribute name="marktyp4" type="MarkType" userLabel=""/>
+  	<attribute name="marknum4" type="MarkNumber" userLabel=""/>
+  	<attribute name="marknum5" type="MarkNumber" userLabel=""/>
+  	<attribute name="marknum6" type="MarkNumber" userLabel=""/>
+  	<attribute name="markdeg6" type="MarkDegree" userLabel=""/>
+	<attribute name="markdeg5" type="MarkDegree" userLabel=""/>
+  	<attribute name="markdeg4" type="MarkDegree" userLabel=""/>
+  	<attribute name="majselpt" type="Integer" userLabel=""/>
+  	<attribute name="source" type="String" userLabel=""/>
+  	<attribute name="majbuypt" type="Integer" userLabel=""/>
+  	<attribute name="datarr34" type="Integer" userLabel=""/>
+  	<attribute name="regem1" type="Integer" userLabel=""/>
 </class>

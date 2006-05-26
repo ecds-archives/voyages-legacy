@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class VesselRig extends Dictionary {
-	private static final Integer TYPE = new Integer(2);
-	private static final String NAME = "VesselRig";
+	public static final Integer TYPE = new Integer(52);
+	public static final String NAME = "VesselRig";
 	
 	public VesselRig() {
 		setType(TYPE);

@@ -222,7 +222,7 @@ public class Slave extends AbstractDescriptiveObject {
 	 * Gets String representation of object.
 	 */
 	public String toString() {
-		return "Slave " + getName();
+		return "Slave " + this.values;
 	}
 	
 	

@@ -4,7 +4,7 @@ import edu.emory.library.tas.Dictionary;
 
 public class SpecialMark extends Dictionary {
 
-	private static final Integer TYPE = new Integer(2);
+	private static final Integer TYPE = new Integer(44);
 	private static final String NAME = "SpecialMark";
 	
 	public SpecialMark() {

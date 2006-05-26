@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Temp extends Dictionary {
-	private static final Integer TYPE = new Integer(2);
-	private static final String NAME = "Temp";
+	public static final Integer TYPE = new Integer(46);
+	public static final String NAME = "Temp";
 	
 	public Temp() {
 		setType(TYPE);

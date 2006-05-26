@@ -766,7 +766,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * Creates new Voyage. Object will have new ID.
 	 */
 	public Voyage() {
-		this.created = true;
+		this.created = false;
 	}
 	
 	/**
@@ -902,9 +902,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Object clone() {
 		//Copy voyage itself
 		Voyage newVoyage = new Voyage();
-		newVoyage.setShipName(getShipName());
-		newVoyage.setVoyageId(getVoyageId());
+//		newVoyage.setShipName(getShipName());
+//		newVoyage.setVoyageId(getVoyageId());
 		newVoyage.setRevisionId(getRevisionId());
+		
+		newVoyage.values = this.values;
 		
 		//Copy slaves
 		Iterator iter = getSlaves().iterator();

@@ -3,7 +3,7 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class DemBroadRegion extends Dictionary {
-	private static final Integer TYPE = new Integer(2);
+	private static final Integer TYPE = new Integer(5);
 	private static final String NAME = "DemBroadRegion";
 	
 	public DemBroadRegion() {

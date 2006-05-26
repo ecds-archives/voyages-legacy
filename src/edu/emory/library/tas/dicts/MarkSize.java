@@ -4,7 +4,7 @@ import edu.emory.library.tas.Dictionary;
 
 public class MarkSize extends Dictionary {
 
-	private static final Integer TYPE = new Integer(2);
+	private static final Integer TYPE = new Integer(24);
 	private static final String NAME = "MarkSize";
 	
 	public MarkSize() {

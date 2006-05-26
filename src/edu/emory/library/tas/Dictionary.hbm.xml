@@ -14,9 +14,8 @@
         <property name="name" column="name"/>
         <property name="remoteId" column="remote_id"/>
     </class>
-    
-    
-    <class name="edu.emory.library.tas.dicts.Angola" table="dictionary">
+    <!--
+    <class name="edu.emory.library.tas.dicts.Angola" table="dictionary" where="obj_type=type">
         <id name="id" column="oid">
         	<generator class="native"/>
         </id>
@@ -411,7 +410,7 @@
         <property name="name" column="name"/>
         <property name="remoteId" column="remote_id"/>
     </class>
-    
+    -->
     <class name="edu.emory.library.tas.dicts.Temp" table="dictionary">
         <id name="id" column="oid">
         	<generator class="native"/>

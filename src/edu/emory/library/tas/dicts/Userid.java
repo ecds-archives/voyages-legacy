@@ -3,8 +3,8 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class Userid extends Dictionary {
-	private static final Integer TYPE = new Integer(2);
-	private static final String NAME = "Userid";
+	public static final Integer TYPE = new Integer(51);
+	public static final String NAME = "Userid";
 	
 	public Userid() {
 		setType(TYPE);

@@ -3,7 +3,7 @@ package edu.emory.library.tas.dicts;
 import edu.emory.library.tas.Dictionary;
 
 public class IntDisembPort extends Dictionary {
-	private static final Integer TYPE = new Integer(2);
+	private static final Integer TYPE = new Integer(20);
 	private static final String NAME = "IntDisembPort";
 	
 	public IntDisembPort() {

@@ -304,7 +304,7 @@ public class HibernateConnector {
 			}
 		}
 		
-		Query query = session.createQuery("from " + p_objType + where.toString());
+		Query query = session.createQuery("from " + p_objType + " " + where.toString());
 		List list = query.list();
 		
 		transaction.commit();
@@ -316,4 +316,31 @@ public class HibernateConnector {
 		}
 	}
 	
+	public void saveObject(Object obj) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		session.save(obj);
+		transaction.commit();
+	}
+	
+	public void updateObject(Object obj) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		session.update(obj);
+		transaction.commit();
+	}
+	
+	public void saveOrUpdateObject(Object obj) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		session.saveOrUpdate(obj);
+		transaction.commit();
+	}
+	
+	public void deleteObject(Object obj) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		session.delete(obj);
+		transaction.commit();
+	}
 }
