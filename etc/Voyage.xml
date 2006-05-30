@@ -1,268 +1,270 @@
 <?xml version="1.0"?>
-<class name="Voyage">
-    <attribute name="iid" type="Long" userLabel=""/>                    
+<class name="Voyage">                   
 
-	<attribute name="voyageId" type="Long" userLabel="Voyage ID"/>
-	<attribute name="shipName" type="String" userLabel="Ship name"/>
-	<attribute name="iid" type="Long" userLabel=""/>
-	<attribute name="revisionId" type="Long" userLabel=""/>
+	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric"/>
+	<attribute name="shipName" type="String" userLabel="Ship name" importType="string"/>
+	<attribute name="revisionId" type="Long" userLabel="" importType="numeric"/>
 
-  	<attribute name="captaina" type="String" userLabel=""/>
-  	<attribute name="captainb" type="String" userLabel=""/>
-  	<attribute name="captainc" type="String" userLabel=""/>  
-  	<attribute name="datedep" type="Date" userLabel=""/>
-    <attribute name="nppretra" type="Integer" userLabel=""/>
-    <attribute name="d1slatr" type="Date" userLabel=""/> 
-    <attribute name="dlslatrb" type="Date" userLabel=""/>
-    <attribute name="npprior" type="Integer" userLabel=""/>
-    <attribute name="tslavesp" type="Integer" userLabel=""/>
-    <attribute name="tslavesd" type="Integer" userLabel=""/>
-    <attribute name="sladvoy" type="Integer" userLabel=""/>
-    <attribute name="slaarriv" type="Integer" userLabel=""/>
-    <attribute name="rrdata3" type="Integer" userLabel=""/>
-    <attribute name="slas32" type="Integer" userLabel=""/>
-    <attribute name="datarr32" type="Date" userLabel=""/>
-    <attribute name="slas36" type="Integer" userLabel=""/>
-    <attribute name="datarr33" type="Date" userLabel=""/>
-    <attribute name="slas39" type="Integer" userLabel=""/>
-    <attribute name="ddepamb" type="Date" userLabel=""/>
-    <attribute name="datarr4" type="Date" userLabel=""/>
-    <attribute name="fate" type="Integer" userLabel=""/>
-    <attribute name="sourcea" type="String" userLabel=""/>
-    <attribute name="sourceb" type="String" userLabel=""/>
-    <attribute name="sourcec" type="String" userLabel=""/>
-    <attribute name="sourced" type="String" userLabel=""/>
-    <attribute name="sourcee" type="String" userLabel=""/>
-    <attribute name="sourcef" type="String" userLabel=""/>
-    <attribute name="sourceg" type="String" userLabel=""/>
-    <attribute name="sourceh" type="String" userLabel=""/>
-    <attribute name="sourcei" type="String" userLabel=""/>
-    <attribute name="sourcej" type="String" userLabel=""/>
-    <attribute name="sourcek" type="String" userLabel=""/>
-    <attribute name="sourcel" type="String" userLabel=""/>
-    <attribute name="sourcem" type="String" userLabel=""/>
-    <attribute name="sourcen" type="String" userLabel=""/>
-    <attribute name="sourceo" type="String" userLabel=""/>
-    <attribute name="sourcep" type="String" userLabel=""/>
-    <attribute name="sourceq" type="String" userLabel=""/>
-    <attribute name="sourcer" type="String" userLabel=""/>
-    <attribute name="slintend" type="Integer" userLabel=""/>
-    <attribute name="tonnage" type="Integer" userLabel=""/>
-    <attribute name="crewdied" type="Integer" userLabel=""/>
-    <attribute name="ncar13" type="Integer" userLabel=""/>
-    <attribute name="ncar15" type="Integer" userLabel=""/>
-    <attribute name="ncar17" type="Integer" userLabel=""/>
-    <attribute name="sladamer" type="Integer" userLabel=""/>
-    <attribute name="saild1" type="Integer" userLabel=""/>
-    <attribute name="saild2" type="Integer" userLabel=""/>
-    <attribute name="saild3" type="Integer" userLabel=""/> 
-    <attribute name="saild4" type="Integer" userLabel=""/> 
-    <attribute name="saild5" type="Integer" userLabel=""/> 
-    <attribute name="ndesert" type="Integer" userLabel=""/> 
-  	<attribute name="slinten2" type="Integer" userLabel=""/> 
-  	<attribute name="guns" type="Integer" userLabel=""/> 
-  	<attribute name="voyage" type="Integer" userLabel=""/> 
-  	<attribute name="crew1" type="Integer" userLabel=""/> 
-  	<attribute name="child2" type="Integer" userLabel=""/> 
-  	<attribute name="child3" type="Integer" userLabel=""/> 
-  	<attribute name="yrreg" type="Integer" userLabel=""/> 
-  	<attribute name="crew3" type="Integer" userLabel=""/> 
-  	<attribute name="crew4" type="Integer" userLabel=""/> 
-  	<attribute name="crew5" type="Integer" userLabel=""/> 
-  	<attribute name="adult1" type="Integer" userLabel=""/> 
-  	<attribute name="child1" type="Integer" userLabel=""/> 
-  	<attribute name="female1" type="Integer" userLabel=""/> 
-  	<attribute name="male1" type="Integer" userLabel=""/> 
-  	<attribute name="men1" type="Integer" userLabel=""/> 
-  	<attribute name="women1" type="Integer" userLabel=""/> 
-  	<attribute name="female2" type="Integer" userLabel=""/> 
-  	<attribute name="male2" type="Integer" userLabel=""/> 
-  	<attribute name="men2" type="Integer" userLabel=""/> 
-  	<attribute name="women2" type="Integer" userLabel=""/> 
-  	<attribute name="boy2" type="Integer" userLabel=""/> 
-  	<attribute name="girl2" type="Integer" userLabel=""/> 
-  	<attribute name="female3" type="Integer" userLabel=""/> 
-  	<attribute name="male3" type="Integer" userLabel=""/> 
-  	<attribute name="men3" type="Integer" userLabel=""/> 
-  	<attribute name="women3" type="Integer" userLabel=""/> 
-  	<attribute name="boy3" type="Integer" userLabel=""/> 
-  	<attribute name="girl3" type="Integer" userLabel=""/> 
-  	<attribute name="female4" type="Integer" userLabel=""/> 
-  	<attribute name="male4" type="Integer" userLabel=""/> 
-  	<attribute name="men4" type="Integer" userLabel=""/> 
-  	<attribute name="women4" type="Integer" userLabel=""/> 
-  	<attribute name="boy4" type="Integer" userLabel=""/> 
-  	<attribute name="girl4" type="Integer" userLabel=""/> 
-  	<attribute name="child4" type="Integer" userLabel=""/> 
-  	<attribute name="female6" type="Integer" userLabel=""/> 
-  	<attribute name="male6" type="Integer" userLabel=""/> 
-  	<attribute name="men6" type="Integer" userLabel=""/> 
-  	<attribute name="women6" type="Integer" userLabel=""/> 
-  	<attribute name="boy6" type="Integer" userLabel=""/> 
-  	<attribute name="girl6" type="Integer" userLabel=""/> 
-  	<attribute name="child6" type="Integer" userLabel=""/> 
-  	<attribute name="crew2" type="Integer" userLabel=""/> 
-  	<attribute name="infantm3" type="Integer" userLabel=""/> 
-  	<attribute name="infantf3" type="Integer" userLabel=""/> 
-  	<attribute name="sladafri" type="Integer" userLabel=""/> 
-  	<attribute name="sladied5" type="Integer" userLabel=""/> 
-  	<attribute name="sladied4" type="Integer" userLabel=""/> 
-  	<attribute name="sladied2" type="Integer" userLabel=""/> 
-  	<attribute name="sladied1" type="Integer" userLabel=""/> 
-  	<attribute name="sladied3" type="Integer" userLabel=""/> 
-  	<attribute name="sladied6" type="Integer" userLabel=""/> 
-  	<attribute name="insurrec" type="Integer" userLabel=""/> 
-  	<attribute name="adult3" type="Integer" userLabel=""/> 
-  	<attribute name="ownera" type="String" userLabel=""/> 
-  	<attribute name="ownerb" type="String" userLabel=""/> 
-  	<attribute name="ownerc" type="String" userLabel=""/> 
-  	<attribute name="ownerd" type="String" userLabel=""/> 
-  	<attribute name="ownere" type="String" userLabel=""/> 
-  	<attribute name="ownerf" type="String" userLabel=""/> 
-  	<attribute name="ownerg" type="String" userLabel=""/> 
-  	<attribute name="ownerh" type="String" userLabel=""/> 
-  	<attribute name="owneri" type="String" userLabel=""/> 
-  	<attribute name="ownerj" type="String" userLabel=""/> 
-  	<attribute name="ownerk" type="String" userLabel=""/> 
-  	<attribute name="ownerl" type="String" userLabel=""/> 
-  	<attribute name="ownerm" type="String" userLabel=""/> 
-  	<attribute name="ownern" type="String" userLabel=""/> 
-  	<attribute name="ownero" type="String" userLabel=""/> 
-  	<attribute name="ownerp" type="String" userLabel=""/> 
-  	<attribute name="yearaf" type="Integer" userLabel=""/> 
-  	<attribute name="yeardep" type="Integer" userLabel=""/> 
-  	<attribute name="yearam" type="Integer" userLabel=""/> 
-    <attribute name="tonmod" type="Float" userLabel=""/> 
-    <attribute name="vymrtimp" type="Integer" userLabel=""/> 
-    <attribute name="tslmtimp" type="Integer" userLabel=""/> 
-  	<attribute name="sla32imp" type="Integer" userLabel=""/> 
-  	<attribute name="sla36imp" type="Integer" userLabel=""/> 
-  	<attribute name="imprat" type="Integer" userLabel=""/> 
-    <attribute name="regdis11" type="Integer" userLabel=""/> 
-    <attribute name="regdis21" type="Integer" userLabel=""/> 
-  	<attribute name="sla39imp" type="Integer" userLabel=""/> 
-  	<attribute name="ncr15imp" type="Integer" userLabel=""/> 
-  	<attribute name="ncr17imp" type="Integer" userLabel=""/> 
-  	<attribute name="exprat" type="Float" userLabel=""/> 
-  	<attribute name="male1imp" type="Integer" userLabel=""/> 
-  	<attribute name="feml1imp" type="Integer" userLabel=""/> 
-  	<attribute name="chil1imp" type="Integer" userLabel=""/> 
-  	<attribute name="malrat1" type="Float" userLabel=""/> 
-  	<attribute name="chilrat1" type="Float" userLabel=""/> 
-  	<attribute name="slavemx1" type="Integer" userLabel=""/> 
-  	<attribute name="slavema1" type="Integer" userLabel=""/> 
-  	<attribute name="male3imp" type="Integer" userLabel=""/> 
-  	<attribute name="feml3imp" type="Integer" userLabel=""/> 
-  	<attribute name="chil3imp" type="Integer" userLabel=""/> 
-  	<attribute name="chilrat3" type="Float" userLabel=""/> 
-  	<attribute name="malrat3" type="Float" userLabel=""/> 
-  	<attribute name="slavemx3" type="Integer" userLabel=""/> 
-  	<attribute name="slavema3" type="Integer" userLabel=""/> 
-  	<attribute name="adlt3imp" type="Integer" userLabel=""/> 
-  	<attribute name="vymrtrat" type="Float" userLabel=""/> 
-  	<attribute name="slaximp" type="Integer" userLabel=""/> 
-  	<attribute name="slamimp" type="Integer" userLabel=""/> 
-  	<attribute name="voy2imp" type="Integer" userLabel=""/> 
-  	<attribute name="voy1imp" type="Integer" userLabel=""/> 
-  	<attribute name="malrat7" type="Float" userLabel=""/> 
-  	<attribute name="chilrat7" type="Float" userLabel=""/> 
-  	<attribute name="sourcex" type="String" userLabel=""/>
-  	<attribute name="p" type="Integer" userLabel=""/> 
-  	<attribute name="men8" type="Integer" userLabel=""/> 
-  	<attribute name="women8" type="Integer" userLabel=""/> 
-  	<attribute name="boy8" type="Integer" userLabel=""/> 
-  	<attribute name="girl8" type="Integer" userLabel=""/> 
-  	<attribute name="behrflag" type="Integer" userLabel=""/> 
-  	<attribute name="price" type="Integer" userLabel=""/> 
-  	<attribute name="uppguine" type="Float" userLabel=""/> 
-  	<attribute name="voyagimp" type="Float" userLabel=""/> 
-  	<attribute name="timcoast" type="Float" userLabel=""/> 
-  	<attribute name="slavpday" type="Float" userLabel=""/> 
-  	<attribute name="rountrip" type="Float" userLabel=""/> 
-  	<attribute name="slavpvoy" type="Float" userLabel=""/> 
-  	<attribute name="slxp1000" type="Float" userLabel=""/> 
-    <attribute name="insurre2" type="Float" userLabel=""/> 
-    <attribute name="timslave" type="Float" userLabel=""/> 
-    <attribute name="toncateg" type="Integer" userLabel=""/> 
-    <attribute name="evgreen" type="Integer" userLabel=""/> 
-    <attribute name="womrat1" type="Float" userLabel=""/> 
-    <attribute name="womrat3" type="Float" userLabel=""/> 
-    <attribute name="womrat7" type="Float" userLabel=""/> 
-    <attribute name="menrat7" type="Float" userLabel=""/> 
-    <attribute name="menrat3" type="Float" userLabel=""/> 
-    <attribute name="menrat1" type="Float" userLabel=""/> 
-    <attribute name="girlrat1" type="Float" userLabel=""/> 
-    <attribute name="girlrat3" type="Float" userLabel=""/> 
-    <attribute name="girlrat7" type="Float" userLabel=""/> 
-    <attribute name="boyrat7" type="Float" userLabel=""/> 
-    <attribute name="boyrat3" type="Float" userLabel=""/> 
-    <attribute name="boyrat1" type="Float" userLabel=""/> 
-    <attribute name="behmimp2" type="Integer" userLabel=""/> 
-    <attribute name="behximp2" type="Float" userLabel=""/> 
-    <attribute name="poundprice" type="Float" userLabel=""/> 
-    <attribute name="termmth" type="Integer" userLabel=""/> 
-    <attribute name="intrate" type="Integer" userLabel=""/> 
-    <attribute name="cashpric" type="Float" userLabel=""/> 
-    <attribute name="jamcaspr" type="Float" userLabel=""/> 
-    <attribute name="locurlmnl" type="Float" userLabel=""/> 
-    <attribute name="exchrate" type="String" userLabel=""/>
-    <attribute name="frencpri" type="Float" userLabel=""/> 
-    <attribute name="frnprinl" type="Float" userLabel=""/> 
-    <attribute name="nonpay" type="Float" userLabel=""/> 
-    <attribute name="seneg" type="Float" userLabel=""/> 
-    <attribute name="sl" type="Float" userLabel=""/> 
-    <attribute name="wwc" type="Float" userLabel=""/> 
-    <attribute name="slperton" type="Float" userLabel=""/> 
-    <attribute name="tonpercr" type="Float" userLabel=""/> 
-    <attribute name="portugus" type="Float" userLabel=""/> 
-    <attribute name="manol" type="Integer" userLabel=""/> 
-    <attribute name="portug2" type="Float" userLabel=""/> 
-    <attribute name="deptamer" type="Float" userLabel=""/> 
-    <attribute name="girl5" type="Integer" userLabel=""/> 
-    <attribute name="boy5" type="Integer" userLabel=""/> 
-    <attribute name="men5" type="Integer" userLabel=""/> 
-    <attribute name="women5" type="Integer" userLabel=""/> 
-    <attribute name="child5" type="Integer" userLabel=""/> 
-    <attribute name="male5" type="Integer" userLabel=""/> 
-    <attribute name="female5" type="Integer" userLabel=""/> 
-    <attribute name="arrport2" type="Integer" userLabel=""/> 
-    <attribute name="nsp" type="Integer" userLabel=""/> 
-    <attribute name="nna" type="Integer" userLabel=""/> 
-    <attribute name="infant3" type="Integer" userLabel=""/> 
-    <attribute name="infants3" type="Integer" userLabel=""/> 
-    <attribute name="infant1" type="Integer" userLabel=""/> 
-    <attribute name="kleimerg" type="Float" userLabel=""/> 
-    <attribute name="kleimerg2" type="Float" userLabel=""/> 
-    <attribute name="adult5" type="Integer" userLabel=""/> 
-    <attribute name="bahijelm" type="Float" userLabel=""/> 
-    <attribute name="adult2" type="Integer" userLabel=""/> 
-    <attribute name="adult4" type="Integer" userLabel=""/> 
-    <attribute name="infant4" type="Integer" userLabel=""/> 
-    <attribute name="voyageid2" type="Float" userLabel=""/> 
-    <attribute name="newmina" type="Integer" userLabel=""/> 
-    <attribute name="crew" type="Integer" userLabel=""/> 
-    <attribute name="guns2" type="Integer" userLabel=""/> 
-    <attribute name="men7" type="Integer" userLabel=""/> 
-    <attribute name="male7" type="Integer" userLabel=""/> 
-    <attribute name="female7" type="Integer" userLabel=""/> 
-    <attribute name="women7" type="Integer" userLabel=""/> 
-    <attribute name="adult7" type="Integer" userLabel=""/> 
-    <attribute name="boy7" type="Integer" userLabel=""/> 
-    <attribute name="girl7" type="Integer" userLabel=""/> 
-    <attribute name="child7" type="Integer" userLabel=""/> 
-    <attribute name="voy3imp" type="Integer" userLabel=""/> 
-    <attribute name="slavcapt" type="Float" userLabel=""/> 
-    <attribute name="majbycon" type="Float" userLabel=""/> 
-    <attribute name="tabexpo" type="Integer" userLabel=""/> 
-    <attribute name="rice" type="Float" userLabel=""/> 
-    <attribute name="slavemx7" type="Float" userLabel=""/> 
-    <attribute name="spanishamer" type="Float" userLabel=""/> 
-    <attribute name="year25a" type="Float" userLabel=""/> 
-    <attribute name="menvymrtrat" type="Float" userLabel=""/> 
-    <attribute name="womenvymrtrat" type="Float" userLabel=""/> 
-    <attribute name="boyvymrtrat" type="Float" userLabel=""/> 
-    <attribute name="girlvymrtrat" type="Float" userLabel=""/> 
-    <attribute name="cubaperiod" type="Float" userLabel=""/> 
+  	<attribute name="captaina" type="String" userLabel="" importType="string"/>
+  	<attribute name="captainb" type="String" userLabel="" importType="string"/>
+  	<attribute name="captainc" type="String" userLabel="" importType="string"/>  
+  	<attribute name="datedep" type="Date" userLabel="" importType="date" importDateYear="datedepc" importDateMonth="datedepb" importDateDay="datedepa"/>
+    <attribute name="nppretra" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="d1slatr" type="Date" userLabel="" importType="date" importDateYear="d1slatrc" importDateMonth="d1slatrb" importDateDay="d1slatra"/> 
+    <attribute name="dlslatrb" type="Date" userLabel="" importType="numeric"/>
+    <attribute name="npprior" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="tslavesp" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="tslavesd" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="sladvoy" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="slaarriv" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="rrdata31" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="rrdata33" importDateDay="rrdata32"/> 
+    <attribute name="slas32" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="datarr32" type="Date" userLabel="" importType="date" importDateYear="null" importDateMonth="datarr37" importDateDay="datarr36"/> 
+    <attribute name="slas36" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="datarr33" type="Date" userLabel="" importType="date" importDateYear="null" importDateMonth="datarr40" importDateDay="datarr39"/> 
+    <attribute name="slas39" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="ddepamb" type="Date" userLabel="" importType="date" importDateYear="ddepamc" importDateMonth="ddepamb" importDateDay="ddepama"/>
+    <attribute name="datarr4" type="Date" userLabel="" importType="date" importDateYear="datarr45" importDateMonth="datarr44" importDateDay="datarr43"/>
+    <attribute name="fate" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="sourcea" type="String" userLabel="" importType="string"/>
+    <attribute name="sourceb" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcec" type="String" userLabel="" importType="string"/>
+    <attribute name="sourced" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcee" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcef" type="String" userLabel="" importType="string"/>
+    <attribute name="sourceg" type="String" userLabel="" importType="string"/>
+    <attribute name="sourceh" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcei" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcej" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcek" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcel" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcem" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcen" type="String" userLabel="" importType="string"/>
+    <attribute name="sourceo" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcep" type="String" userLabel="" importType="string"/>
+    <attribute name="sourceq" type="String" userLabel="" importType="string"/>
+    <attribute name="sourcer" type="String" userLabel="" importType="string"/>
+    
+    <attribute name="slintend" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="tonnage" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="crewdied" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="ncar13" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="ncar15" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="ncar17" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="sladamer" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="saild1" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="saild2" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="saild3" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="saild4" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="saild5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="ndesert" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="slinten2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="guns" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="voyage" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="crew1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="child2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="child3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="yrreg" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="crew3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="crew4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="crew5" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="adult1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="child1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="female1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="male1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="men1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="women1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="female2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="male2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="men2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="women2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="boy2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="girl2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="female3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="male3" type="Integer" userLabel="" importType="numeric"/> 
+  	
+  	<attribute name="men3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="women3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="boy3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="girl3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="female4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="male4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="men4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="women4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="boy4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="girl4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="child4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="female6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="male6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="men6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="women6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="boy6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="girl6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="child6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="crew2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="infantm3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="infantf3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sladafri" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sladied5" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sladied4" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sladied2" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sladied1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sladied3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sladied6" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="insurrec" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="adult3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="ownera" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerb" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerc" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerd" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownere" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerf" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerg" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerh" type="String" userLabel="" importType="string"/> 
+  	<attribute name="owneri" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerj" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerk" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerl" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerm" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownern" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownero" type="String" userLabel="" importType="string"/> 
+  	<attribute name="ownerp" type="String" userLabel="" importType="string"/> 
+  	<attribute name="yearaf" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="yeardep" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="yearam" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="tonmod" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="vymrtimp" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="tslmtimp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sla32imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sla36imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="imprat" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="regdis11" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="regdis21" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sla39imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="ncr15imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="ncr17imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="exprat" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="male1imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="feml1imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="chil1imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="malrat1" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="chilrat1" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="slavemx1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="slavema1" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="male3imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="feml3imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="chil3imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="chilrat3" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="malrat3" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="slavemx3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="slavema3" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="adlt3imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="vymrtrat" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="slaximp" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="slamimp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="voy2imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="voy1imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="malrat7" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="chilrat7" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="sourcex" type="String" userLabel="" importType="string"/>
+  	<attribute name="p" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="men8" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="women8" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="boy8" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="girl8" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="behrflag" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="price" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="uppguine" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="voyagimp" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="timcoast" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="slavpday" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="rountrip" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="slavpvoy" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="slxp1000" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="insurre2" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="timslave" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="toncateg" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="evgreen" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="womrat1" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="womrat3" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="womrat7" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="menrat7" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="menrat3" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="menrat1" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="girlrat1" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="girlrat3" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="girlrat7" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="boyrat7" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="boyrat3" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="boyrat1" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="behmimp2" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="behximp2" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="poundprice" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="termmth" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="intrate" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="cashpric" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="jamcaspr" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="locurlmnl" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="exchrate" type="String" userLabel="" importType="string"/>
+    <attribute name="frencpri" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="frnprinl" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="nonpay" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="seneg" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="sl" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="wwc" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="slperton" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="tonpercr" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="portugus" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="manol" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="portug2" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="deptamer" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="girl5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="boy5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="men5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="women5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="child5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="male5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="female5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="arrport2" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="nsp" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="nna" type="Integer" userLabel="" importType="numeric"/>  
+    <attribute name="infant3" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="infants3" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="infant1" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="kleimerg" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="kleimerg2" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="adult5" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="bahijelm" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="adult2" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="adult4" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="infant4" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="voyageid2" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="newmina" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="crew" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="guns2" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="men7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="male7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="female7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="women7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="adult7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="boy7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="girl7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="child7" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="voy3imp" type="Integer" userLabel="" importType="numeric"/>
+    <attribute name="slavcapt" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="majbycon" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="tabexpo" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="rice" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="slavemx7" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="spanishamer" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="year25a" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="menvymrtrat" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="womenvymrtrat" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="boyvymrtrat" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="girlvymrtrat" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="cubaperiod" type="Float" userLabel="" importType="numeric"/> 
+    
+    
     <attribute name="datepl" type="DepDefinition" userLabel=""/>
     <attribute name="embport" type="PurchasePort" userLabel=""/>
     <attribute name="arrport" type="IntDisembPort" userLabel=""/>

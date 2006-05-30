@@ -10,96 +10,199 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.crimson.tree.XmlDocument;
+import org.jboss.mx.util.SchedulableRunnable;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import edu.emory.library.tas.SchemaColumn;
+
 public class ClassGenerator {
 
-	public static void main(String[] args) throws FileNotFoundException, IOException, SAXException {
+	public static void main(String[] args) throws FileNotFoundException,
+			IOException, SAXException {
 		if (args.length == 0) {
 			throw new RuntimeException("Provide list of xml files!");
 		}
-		
+
 		for (int i = 0; i < args.length; i++) {
 			String fileName = args[i];
 			File file = new File(fileName);
 			if (!file.exists() || !file.canRead()) {
-				System.out.println("File " + fileName + " does not exist or cannot be red!");
+				System.out.println("File " + fileName
+						+ " does not exist or cannot be red!");
 				continue;
 			}
-
-			XmlDocument document = XmlDocument.createXmlDocument(new FileInputStream(file), false);
+			XmlDocument document = null;
+			try {
+			document = XmlDocument.createXmlDocument(
+					new FileInputStream(file), false);
+			} catch (Exception e) {
+				System.out.println("File: " + fileName);
+				e.printStackTrace();
+			}
 			Node rootNode = document.getLastChild();
 			if (rootNode != null) {
-				String className = rootNode.getAttributes().getNamedItem("name").getNodeValue();
-				BufferedOutputStream oStream = 
-					new BufferedOutputStream(new FileOutputStream(className + ".tmpClass"));
+				String className = rootNode.getAttributes()
+						.getNamedItem("name").getNodeValue();
+				BufferedOutputStream oStream = new BufferedOutputStream(
+						new FileOutputStream(className + ".tmpClass"));
 				List attrNames = new ArrayList();
 				List attrTypes = new ArrayList();
 				List attrLabels = new ArrayList();
 				NodeList children = rootNode.getChildNodes();
+				StringBuffer types = new StringBuffer();
+				oStream.write("/** Static construction **/\n".getBytes());
 				for (int j = 0; j < children.getLength(); j++) {
 					Node child = children.item(j);
 					if (child.getNodeType() == Node.ELEMENT_NODE) {
-					String attrName = child.getAttributes().getNamedItem("name").getNodeValue();
-					String attrType = child.getAttributes().getNamedItem("type").getNodeValue();
-					String attrLabel = child.getAttributes().getNamedItem("userLabel").getNodeValue();
-					attrNames.add(attrName);
-					attrTypes.add(attrType);
-					attrLabels.add(attrLabel);
+						String attrName = child.getAttributes().getNamedItem(
+								"name").getNodeValue();
+						String attrType = child.getAttributes().getNamedItem(
+								"type").getNodeValue();
+						String attrLabel = child.getAttributes().getNamedItem(
+								"userLabel").getNodeValue();
+						attrNames.add(attrName);
+						attrTypes.add(attrType);
+						String attrImportType = (child.getAttributes()
+								.getNamedItem("importType") != null) ? child
+								.getAttributes().getNamedItem("importType")
+								.getNodeValue() : null;
+						String attrImportName = (child.getAttributes()
+								.getNamedItem("importName") != null) ? child
+								.getAttributes().getNamedItem("importName")
+								.getNodeValue() : null;
+						String attrImportDateYear = (child.getAttributes()
+								.getNamedItem("importDateYear") != null) ? child
+								.getAttributes().getNamedItem("importDateYear")
+								.getNodeValue()
+								: null;
+						String attrImportDateMonth = child.getAttributes()
+								.getNamedItem("importDateMonth") != null ? child
+								.getAttributes()
+								.getNamedItem("importDateMonth").getNodeValue()
+								: null;
+						String attrImportDateDay = child.getAttributes()
+								.getNamedItem("importDateDay") != null ? child
+								.getAttributes().getNamedItem("importDateDay")
+								.getNodeValue() : null;
+
+						types.append("types.put(\"");
+						types.append(attrName);
+						types.append("\", new SchemaColumn(");
+
+						int type = -1;
+						String dict = null;
+						if ("String".equals(attrType)) {
+							type = SchemaColumn.TYPE_STRING;
+						} else if ("Integer".equals(attrType)) {
+							type = SchemaColumn.TYPE_INTEGER;
+						} else if ("Long".equals(attrType)) {
+							type = SchemaColumn.TYPE_LONG;
+						} else if ("Date".equals(attrType)) {
+							type = SchemaColumn.TYPE_DATE;
+						} else {
+							type = SchemaColumn.TYPE_DICT;
+							dict = attrType;
+						}
+						int importType = -1;
+						if ("ignore".equals(attrImportType)
+								|| attrImportType == null) {
+							importType = SchemaColumn.IMPORT_TYPE_IGNORE;
+						} else if ("numeric".equals(attrImportType)) {
+							importType = SchemaColumn.IMPORT_TYPE_NUMERIC;
+						} else if ("date".equals(attrImportType)) {
+							importType = SchemaColumn.IMPORT_TYPE_DATE;
+						} else if ("string".equals(attrImportType)) {
+							importType = SchemaColumn.IMPORT_TYPE_STRING;
+						} else {
+							throw new RuntimeException("Wrong switch: "
+									+ attrImportType);
+						}
+
+						types.append("\"").append(attrName).append("\", ");
+						types.append(type).append(", ");
+						if (dict == null) {
+							types.append("null, ");
+						} else {
+							types.append("\"").append(dict).append("\", ");
+						}
+						types.append(importType).append(", ");
+						if (attrImportName != null) {
+							types.append("\"").append(attrImportName).append(
+									"\", ");
+						} else {
+							types.append("null, ");
+						}
+						if (attrImportDateDay != null) {
+							types.append("\"").append(attrImportDateDay)
+									.append("\", ");
+						} else {
+							types.append("null, ");
+						}
+						if (attrImportDateMonth != null) {
+							types.append("\"").append(attrImportDateMonth)
+									.append("\", ");
+						} else {
+							types.append("null, ");
+						}
+						if (attrImportType != null) {
+							types.append("\"").append(attrImportName).append(
+									"\", ");
+						} else {
+							types.append("null, ");
+						}
+						if (attrImportDateYear != null) {
+							types.append("\"").append(attrLabel).append(
+									"\"));\n");
+						} else {
+							types.append("null));\n");
+						}
 					}
 				}
-				
-				oStream.write("/** Static construction **/\n".getBytes());
-				StringBuffer types = new StringBuffer();
-				StringBuffer userLabels = new StringBuffer();
-				for (int j = 0; j < attrNames.size(); j++) {
-					types.append("types.put(\"");
-					types.append(attrNames.get(j));
-					types.append("\", \"");
-					types.append(attrTypes.get(j));
-					types.append("\");\n");
-					userLabels.append("userLabels.put(\"");
-					userLabels.append(attrNames.get(j));
-					userLabels.append("\", \"");
-					userLabels.append(attrLabels.get(j));
-					userLabels.append("\");\n");
-				}
+
 				oStream.write(types.toString().getBytes());
-				oStream.write(userLabels.toString().getBytes());
-				
-				
+
 				oStream.write("\n\n\n/** Getters/setters **/\n".getBytes());
 				for (int j = 0; j < attrNames.size(); j++) {
 					StringBuffer buffer = new StringBuffer();
-					String name = (String)attrNames.get(j);
-					buffer.append("public void set").append(name.substring(0, 1).toUpperCase());
-					buffer.append(name.substring(1)).append("(").append(attrTypes.get(j));
+					String name = (String) attrNames.get(j);
+					buffer.append("public void set").append(
+							name.substring(0, 1).toUpperCase());
+					buffer.append(name.substring(1)).append("(").append(
+							attrTypes.get(j));
 					buffer.append(" ").append(name).append(") {\n\t");
-					buffer.append("if ((").append(name).append(" == null && this.values.get(\"").append(name).append("\") != null");
-					buffer.append(") \n\t\t|| (").append(name).append(" != null && !").append(name).append(".equals(this.values.get(\"").append(name).append("\"))))");
+					buffer.append("if ((").append(name).append(
+							" == null && this.values.get(\"").append(name)
+							.append("\") != null");
+					buffer.append(") \n\t\t|| (").append(name).append(
+							" != null && !").append(name).append(
+							".equals(this.values.get(\"").append(name).append(
+							"\"))))");
 					buffer.append(" {\n\t\tthis.modified = UPDATED;\n\t}");
 					buffer.append("\n\tthis.values.put(\"");
-					buffer.append(name).append("\", ").append(name).append(");\n}\n");
+					buffer.append(name).append("\", ").append(name).append(
+							");\n}\n");
 					oStream.write(buffer.toString().getBytes());
 				}
 				for (int j = 0; j < attrNames.size(); j++) {
 					StringBuffer buffer = new StringBuffer();
-					String name = (String)attrNames.get(j);
-					buffer.append("public ").append(attrTypes.get(j)).append(" get");
+					String name = (String) attrNames.get(j);
+					buffer.append("public ").append(attrTypes.get(j)).append(
+							" get");
 					buffer.append(name.substring(0, 1).toUpperCase());
-					buffer.append(name.substring(1)).append("() {\n\treturn (").append(attrTypes.get(j));
-					buffer.append(")this.values.get(\"").append(name).append("\");\n}\n");
-					
+					buffer.append(name.substring(1)).append("() {\n\treturn (")
+							.append(attrTypes.get(j));
+					buffer.append(")this.values.get(\"").append(name).append(
+							"\");\n}\n");
+
 					oStream.write(buffer.toString().getBytes());
 				}
-								
+
 				oStream.flush();
 				oStream.close();
 			}
 		}
-		
-	}
 
+	}
 }

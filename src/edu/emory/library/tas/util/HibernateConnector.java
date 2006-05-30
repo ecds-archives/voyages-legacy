@@ -253,6 +253,7 @@ public class HibernateConnector {
 				newSlaves.add(newSlave);
 				slaveSaved = true;
 				session.save(slave);
+				
 			} else {
 				newSlaves.add(slave);
 			}

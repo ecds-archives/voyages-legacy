@@ -2,8 +2,6 @@ package edu.emory.library.tas;
 
 import java.util.Date;
 
-import org.dom4j.Node;
-
 public class SchemaColumn
 {
 	
@@ -148,5 +146,14 @@ public class SchemaColumn
 	{
 		return dictionary;
 	}
+
+
+	public String getUserLabel() {
+		return userLabel;
+	}
+
+
+	public void setUserLabel(String userLabel) {
+		this.userLabel = userLabel;
 
 }

@@ -1,17 +1,18 @@
 <class name="Slave">
-	<attribute name="iid" type="Long" userLabel=""/>
-	<attribute name="slaveId" type="Long" userLabel="Slave ID"/>
-	<attribute name="voyageId" type="Long" userLabel="Voyage ID"/>
-	<attribute name="slaveName" type="String" userLabel="Slave name"/>
+	<!--attribute name="iid" type="Long" userLabel="" importType="numeric" importName="iid" importDateDay ="" importDateMonth="" importDateYear=""/-->
+	<attribute name="iid" type="Long" userLabel="" importType="numeric"/>
+	<attribute name="slaveId" type="Long" userLabel="Slave ID"  importType="numeric"/>
+	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric"/>
+	<attribute name="slaveName" type="String" userLabel="Slave name" importType="string"/>
 	
 	<attribute name="sexage" type="SexAge" userLabel=""/>
-  	<attribute name="age" type="Integer" userLabel=""/>
-  	<attribute name="feet" type="Integer" userLabel=""/>
-  	<attribute name="inch" type="Integer" userLabel=""/>
-  	<property name="ageinf" type="Integer" userLabel=""/>
+  	<attribute name="age" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="feet" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="inch" type="Integer" userLabel="" importType="numeric"/>
+  	<property name="ageinf" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="country" type="Country" userLabel=""/>
-  	<attribute name="name" type="String" userLabel=""/>
-  	<attribute name="unclear" type="Integer" userLabel=""/>
+  	<attribute name="name" type="String" userLabel="" importType="string"/>
+  	<attribute name="unclear" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="nameimp" type="String" userLabel=""/>
   	<attribute name="natimp" type="Nation" userLabel=""/>
   	<attribute name="bodypt1" type="BodyPt" userLabel=""/>
@@ -58,9 +59,9 @@
   	<attribute name="markdeg6" type="MarkDegree" userLabel=""/>
 	<attribute name="markdeg5" type="MarkDegree" userLabel=""/>
   	<attribute name="markdeg4" type="MarkDegree" userLabel=""/>
-  	<attribute name="majselpt" type="Integer" userLabel=""/>
-  	<attribute name="source" type="String" userLabel=""/>
-  	<attribute name="majbuypt" type="Integer" userLabel=""/>
-  	<attribute name="datarr34" type="Integer" userLabel=""/>
-  	<attribute name="regem1" type="Integer" userLabel=""/>
+  	<attribute name="majselpt" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="source" type="String" userLabel="" importType="string"/>
+  	<attribute name="majbuypt" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="datarr34" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="regem1" type="Integer" userLabel="" importType="numeric"/>
 </class>
