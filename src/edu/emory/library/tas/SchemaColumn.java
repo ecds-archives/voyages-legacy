@@ -2,6 +2,8 @@ package edu.emory.library.tas;
 
 import java.util.Date;
 
+import org.dom4j.Node;
+
 public class SchemaColumn
 {
 	
@@ -14,22 +16,24 @@ public class SchemaColumn
 	public final static int TYPE_LONG = 1; 
 	public final static int TYPE_STRING = 2; 
 	public final static int TYPE_DATE = 3;
-	public final static int TYPE_DICT_LOCATION = 4;
-	public final static int TYPE_DICT_PORT = 5;
-	public final static int TYPE_DICT_FAITH = 6;
-
+	public final static int TYPE_DICT = 4;
+	
 	private String name;
 	private int type;
-	private boolean dictionary;
 	private int importType;
+	
+	private String dictionary;
+	
+	private String userLabel;
+	
 	private String importName;
 	private String importDateDay;
 	private String importDateMonth;
 	private String importDateYear;
 	
-	public SchemaColumn(String name, int type, boolean dictionary, int importType, String importName, String importDateDay, String importDateMonth, String importDateYear)
+	public SchemaColumn(String name, int type, String dictionary, int importType, String importName, String importDateDay, String importDateMonth, String importDateYear, String userLabel)
 	{
-		super();
+		this.userLabel = userLabel;
 		this.name = name;
 		this.type = type;
 		this.dictionary = dictionary;
@@ -40,13 +44,14 @@ public class SchemaColumn
 		this.importDateYear = importDateYear;
 	}
 	
+	
 	public Object parse(String[] values)
 	{
 		try
 		{
 
 			// base types
-			if (!dictionary)
+			if (!isDictinaory())
 			{
 				
 				switch (type)
@@ -79,19 +84,12 @@ public class SchemaColumn
 			// dictionary
 			else
 			{
-				
-				// lookup dictinary based on type and locate 
-				// in it the element corresponding to id, so
-				// something like:
-				//
-				// if (values.length != 1) return null;
-				// int id = Integer.parseInt(value);
-				// Dictionary d = Dictionary.lookup(type); 
-				// return d.loadItem(id); 
-				// 
-				// for now, just ...
-				
-				return null;
+				Dictionary dicts[] = Dictionary.loadDictionary(this.dictionary, new Integer(values[0]));
+				if (dicts.length == 0) {
+					return null;
+				} else {
+					return dicts[0];
+				}
 				
 			}
 		}
@@ -142,6 +140,11 @@ public class SchemaColumn
 	}
 	
 	public boolean isDictinaory()
+	{
+		return dictionary == null;
+	}
+	
+	public String getDictinaory()
 	{
 		return dictionary;
 	}

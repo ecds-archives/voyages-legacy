@@ -15,6 +15,16 @@ public class Dictionary {
 	public static Dictionary[] loadDictionary(String p_dictionaryName,
 			String p_dictVal) {
 		
+		return loadDictionaryInternal(p_dictionaryName, "name", p_dictVal);
+	}
+
+	public static Dictionary[] loadDictionary(String p_dictionaryName,
+			Integer p_dictVal) {
+		
+		return loadDictionaryInternal(p_dictionaryName, "remoteId", p_dictVal);
+	}
+	
+	private static Dictionary[] loadDictionaryInternal(String p_dictionaryName, String p_attrName, Object p_dictVal) {
 		int dictType = -1;
 		try {
 			Class clazz = Class.forName("edu.emory.library.tas.dicts." + p_dictionaryName);
@@ -34,8 +44,8 @@ public class Dictionary {
 		} 
 		
 		Object[] ret = HibernateConnector.getConnector().loadObjects(
-				p_dictionaryName, new String[] { "name", "obj_type" },
-				new String[] { p_dictVal, dictType + "" }, new boolean[] { true });
+				p_dictionaryName, new String[] { p_attrName, "obj_type" },
+				new String[] { p_dictVal.toString(), dictType + "" }, new boolean[] { true });
 
 		if (ret.length != 0) {
 			Dictionary[] dict = new Dictionary[ret.length];

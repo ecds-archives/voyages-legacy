@@ -21,11 +21,6 @@ public abstract class AbstractDescriptiveObject {
 	protected static Map types = new HashMap();
 	
 	/**
-	 * User labels of attributes.
-	 */
-	protected static Map userLabels = new HashMap();
-	
-	/**
 	 * Gets value of given attribute
 	 * @param p_attrName attribut name
 	 * @return Object representing current attribute value
@@ -43,22 +38,14 @@ public abstract class AbstractDescriptiveObject {
 		values.put(p_attrName, p_attrValue);
 	}
 
-	/**
-	 * Gets type of given attribute
-	 * @param p_attreName	attribute name
-	 * @return	String representing type of attribute
-	 */
-	public static String getAttrType(String p_attreName) {
-		return (String)types.get(p_attreName);
-	}
 
 	/**
-	 * Gets user label of given attribute.
+	 * Gets Schema of given attribute.
 	 * @param p_attrName	attribute name
 	 * @return	user label of attribute
 	 */
-	public static String getUserLabel(String p_attrName) {
-		return (String)userLabels.get(p_attrName);
+	public static SchemaColumn getSchemaColumn(String p_attrName) {
+		return (SchemaColumn)types.get(p_attrName);
 	}
 
 	/**
