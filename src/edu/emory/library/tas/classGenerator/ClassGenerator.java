@@ -105,7 +105,7 @@ public class ClassGenerator {
 							type = SchemaColumn.TYPE_DICT;
 							dict = attrType;
 						}
-						int importType = -1;
+						int importType = SchemaColumn.IMPORT_TYPE_STRING;
 						if ("ignore".equals(attrImportType)
 								|| attrImportType == null) {
 							importType = SchemaColumn.IMPORT_TYPE_IGNORE;
