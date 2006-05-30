@@ -155,5 +155,6 @@ public class SchemaColumn
 
 	public void setUserLabel(String userLabel) {
 		this.userLabel = userLabel;
+	}
 
 }
