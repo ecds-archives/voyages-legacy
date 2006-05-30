@@ -111,7 +111,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		types.put("tslavesd", "Integer");
 		types.put("sladvoy", "Integer");
 		types.put("slaarriv", "Integer");
-		types.put("datarr3", "Integer");
+		types.put("rrdata3", "Integer");
 		types.put("slas32", "Integer");
 		types.put("datarr32", "Date");
 		types.put("slas36", "Integer");
@@ -443,7 +443,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		userLabels.put("tslavesd", "");
 		userLabels.put("sladvoy", "");
 		userLabels.put("slaarriv", "");
-		userLabels.put("datarr3", "");
+		userLabels.put("rrdata3", "");
 		userLabels.put("slas32", "");
 		userLabels.put("datarr32", "");
 		userLabels.put("slas36", "");
@@ -1114,12 +1114,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("slaarriv", slaarriv);
 	}
-	public void setDatarr3(Integer datarr3) {
-		if ((datarr3 == null && this.values.get("datarr3") != null) 
-			|| (datarr3 != null && !datarr3.equals(this.values.get("datarr3")))) {
+	public void setRrdata3(Integer datarr3) {
+		if ((datarr3 == null && this.values.get("rrdata3") != null) 
+			|| (datarr3 != null && !datarr3.equals(this.values.get("rrdata3")))) {
 			this.modified = UPDATED;
 		}
-		this.values.put("datarr3", datarr3);
+		this.values.put("rrdata3", datarr3);
 	}
 	public void setSlas32(Integer slas32) {
 		if ((slas32 == null && this.values.get("slas32") != null) 
@@ -3367,8 +3367,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getSlaarriv() {
 		return (Integer)this.values.get("slaarriv");
 	}
-	public Integer getDatarr3() {
-		return (Integer)this.values.get("datarr3");
+	public Integer getRrdata3() {
+		return (Integer)this.values.get("rrdata3");
 	}
 	public Integer getSlas32() {
 		return (Integer)this.values.get("slas32");

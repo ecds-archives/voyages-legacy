@@ -19,7 +19,7 @@
     <attribute name="tslavesd" type="Integer" userLabel=""/>
     <attribute name="sladvoy" type="Integer" userLabel=""/>
     <attribute name="slaarriv" type="Integer" userLabel=""/>
-    <attribute name="datarr3" type="Integer" userLabel=""/>
+    <attribute name="rrdata3" type="Integer" userLabel=""/>
     <attribute name="slas32" type="Integer" userLabel=""/>
     <attribute name="datarr32" type="Date" userLabel=""/>
     <attribute name="slas36" type="Integer" userLabel=""/>

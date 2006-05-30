@@ -13,7 +13,7 @@
 	<property name="voyageId" column="vid"/>
 	<property name="shipName" column="ship_name"/>
 	<!--property name="revisionId" column=""/-->
-<!--
+
   	<property name="captaina"/>
   	<property name="captainb"/>
   	<property name="captainc"/>    
@@ -21,12 +21,12 @@
     <property name="nppretra"/>
     <property name="d1slatr"/>  
     <property name="dlslatrb"/>
-    <property name="npprior"/>-->
+    <property name="npprior"/>
     <property name="tslavesp"/>
     <property name="tslavesd"/>
     <property name="sladvoy"/>
     <property name="slaarriv"/>
-    <property name="datarr3"/>
+    <property name="rrdata3"/>
     <property name="slas32"/>
     <property name="datarr32"/>
     <property name="slas36"/>
