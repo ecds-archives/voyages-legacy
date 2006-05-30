@@ -3,7 +3,7 @@
 
 	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric"/>
 	<attribute name="shipName" type="String" userLabel="Ship name" importType="string"/>
-	<attribute name="revisionId" type="Long" userLabel="" importType="numeric"/>
+	<attribute name="revisionId" type="Long" userLabel="" importType="ignore"/>
 
   	<attribute name="captaina" type="String" userLabel="" importType="string"/>
   	<attribute name="captainb" type="String" userLabel="" importType="string"/>
@@ -19,9 +19,9 @@
     <attribute name="slaarriv" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="rrdata31" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="rrdata33" importDateDay="rrdata32"/> 
     <attribute name="slas32" type="Integer" userLabel="" importType="numeric"/>
-    <attribute name="datarr32" type="Date" userLabel="" importType="date" importDateYear="null" importDateMonth="datarr37" importDateDay="datarr36"/> 
+    <attribute name="datarr32" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="datarr37" importDateDay="datarr36"/> 
     <attribute name="slas36" type="Integer" userLabel="" importType="numeric"/>
-    <attribute name="datarr33" type="Date" userLabel="" importType="date" importDateYear="null" importDateMonth="datarr40" importDateDay="datarr39"/> 
+    <attribute name="datarr33" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="datarr40" importDateDay="datarr39"/> 
     <attribute name="slas39" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="ddepamb" type="Date" userLabel="" importType="date" importDateYear="ddepamc" importDateMonth="ddepamb" importDateDay="ddepama"/>
     <attribute name="datarr4" type="Date" userLabel="" importType="date" importDateYear="datarr45" importDateMonth="datarr44" importDateDay="datarr43"/>

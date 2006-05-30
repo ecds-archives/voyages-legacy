@@ -1,6 +1,6 @@
 <class name="Slave">
 	<!--attribute name="iid" type="Long" userLabel="" importType="numeric" importName="iid" importDateDay ="" importDateMonth="" importDateYear=""/-->
-	<attribute name="iid" type="Long" userLabel="" importType="numeric"/>
+	<attribute name="iid" type="Long" userLabel="" importType="ignore"/>
 	<attribute name="slaveId" type="Long" userLabel="Slave ID"  importType="numeric"/>
 	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric"/>
 	<attribute name="slaveName" type="String" userLabel="Slave name" importType="string"/>

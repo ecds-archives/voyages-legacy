@@ -86,7 +86,9 @@ public class ClassGenerator {
 								.getNamedItem("importDateDay") != null ? child
 								.getAttributes().getNamedItem("importDateDay")
 								.getNodeValue() : null;
-
+if (attrImportDateDay != null) {
+	int a = 0;
+}
 						types.append("types.put(\"");
 						types.append(attrName);
 						types.append("\", new SchemaColumn(");
@@ -146,17 +148,16 @@ public class ClassGenerator {
 						} else {
 							types.append("null, ");
 						}
-						if (attrImportType != null) {
-							types.append("\"").append(attrImportName).append(
+						if (attrImportDateYear != null) {
+							types.append("\"").append(attrImportDateYear).append(
 									"\", ");
 						} else {
 							types.append("null, ");
 						}
-						if (attrImportDateYear != null) {
-							types.append("\"").append(attrLabel).append(
-									"\"));\n");
-						} else {
+						if (attrLabel == null || attrLabel.equals("")) {
 							types.append("null));\n");
+						} else {
+							types.append("\"").append(attrLabel).append("\"));\n");
 						}
 					}
 				}
