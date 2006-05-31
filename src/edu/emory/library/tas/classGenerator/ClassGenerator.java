@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.crimson.tree.XmlDocument;
-import org.jboss.mx.util.SchedulableRunnable;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -101,18 +100,19 @@ if (attrImportDateDay != null) {
 							type = SchemaColumn.TYPE_INTEGER;
 						} else if ("Long".equals(attrType)) {
 							type = SchemaColumn.TYPE_LONG;
+						} else if ("Float".equals(attrType)) {
+							type = SchemaColumn.TYPE_FLOAT;
 						} else if ("Date".equals(attrType)) {
 							type = SchemaColumn.TYPE_DATE;
 						} else {
 							type = SchemaColumn.TYPE_DICT;
 							dict = attrType;
 						}
-						int importType = SchemaColumn.IMPORT_TYPE_STRING;
-						if ("ignore".equals(attrImportType)
-								|| attrImportType == null) {
-							importType = SchemaColumn.IMPORT_TYPE_IGNORE;
-						} else if ("numeric".equals(attrImportType)) {
+						int importType = SchemaColumn.IMPORT_TYPE_NUMERIC;
+						if ("numeric".equals(attrImportType) || attrImportType == null) {
 							importType = SchemaColumn.IMPORT_TYPE_NUMERIC;
+						} else if ("ignore".equals(attrImportType)) {
+							importType = SchemaColumn.IMPORT_TYPE_IGNORE;
 						} else if ("date".equals(attrImportType)) {
 							importType = SchemaColumn.IMPORT_TYPE_DATE;
 						} else if ("string".equals(attrImportType)) {

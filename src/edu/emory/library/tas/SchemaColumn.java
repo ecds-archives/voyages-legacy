@@ -12,6 +12,7 @@ public class SchemaColumn
 	
 	public final static int TYPE_INTEGER = 0;
 	public final static int TYPE_LONG = 1; 
+	public final static int TYPE_FLOAT = 5; 
 	public final static int TYPE_STRING = 2; 
 	public final static int TYPE_DATE = 3;
 	public final static int TYPE_DICT = 4;
@@ -60,12 +61,16 @@ public class SchemaColumn
 						
 					case TYPE_INTEGER:
 						if (values.length != 1) return null;
-						return new Integer(Integer.parseInt(values[0]));
+						return new Integer(values[0]);
 						
 					case TYPE_LONG:
 						if (values.length != 1) return null;
-						return new Long(Long.parseLong(values[0]));
+						return new Long(values[0]);
 						
+					case TYPE_FLOAT:
+						if (values.length != 1) return null;
+						return new Float(values[0]);
+
 					case TYPE_DATE:
 						if (values.length != 3) return null;
 						int day = Integer.parseInt(values[0]);
@@ -119,6 +124,7 @@ public class SchemaColumn
 	
 	public String getImportName()
 	{
+		if (importName == null) return name;
 		return importName;
 	}
 	
@@ -151,7 +157,6 @@ public class SchemaColumn
 	public String getUserLabel() {
 		return userLabel;
 	}
-
 
 	public void setUserLabel(String userLabel) {
 		this.userLabel = userLabel;

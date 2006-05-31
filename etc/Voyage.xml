@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <class name="Voyage">                   
 
-	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric"/>
-	<attribute name="shipName" type="String" userLabel="Ship name" importType="string"/>
+	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric" importName="voyageid" />
+	<attribute name="shipname" type="String" userLabel="Ship name" importType="string"/>
 	<attribute name="revisionId" type="Long" userLabel="" importType="ignore"/>
 
   	<attribute name="captaina" type="String" userLabel="" importType="string"/>
@@ -17,13 +17,13 @@
     <attribute name="tslavesd" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="sladvoy" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="slaarriv" type="Integer" userLabel="" importType="numeric"/>
-    <attribute name="rrdata31" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="rrdata33" importDateDay="rrdata32"/> 
+    <attribute name="rrdata31" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="datarr33" importDateDay="datarr32"/> 
     <attribute name="slas32" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="datarr32" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="datarr37" importDateDay="datarr36"/> 
     <attribute name="slas36" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="datarr33" type="Date" userLabel="" importType="date" importDateYear="datarr34" importDateMonth="datarr40" importDateDay="datarr39"/> 
     <attribute name="slas39" type="Integer" userLabel="" importType="numeric"/>
-    <attribute name="ddepamb" type="Date" userLabel="" importType="date" importDateYear="ddepamc" importDateMonth="ddepamb" importDateDay="ddepama"/>
+    <attribute name="ddepamb" type="Date" userLabel="" importType="date" importDateYear="ddepamc" importDateMonth="ddepamb" importDateDay="ddepam"/>
     <attribute name="datarr4" type="Date" userLabel="" importType="date" importDateYear="datarr45" importDateMonth="datarr44" importDateDay="datarr43"/>
     <attribute name="fate" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="sourcea" type="String" userLabel="" importType="string"/>
@@ -199,12 +199,12 @@
     <attribute name="boyrat1" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="behmimp2" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="behximp2" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="poundprice" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="poundprice" type="Float" userLabel="" importType="numeric" importName="__price" /> 
     <attribute name="termmth" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="intrate" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="cashpric" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="jamcaspr" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="locurlmnl" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="locurmnl" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="exchrate" type="String" userLabel="" importType="string"/>
     <attribute name="frencpri" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="frnprinl" type="Float" userLabel="" importType="numeric"/> 
@@ -232,13 +232,13 @@
     <attribute name="infants3" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="infant1" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="kleimerg" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="kleimerg2" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="klemerg2" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="adult5" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="bahijelm" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="adult2" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="adult4" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="infant4" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="voyageid2" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="voyagid2" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="newmina" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="crew" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="guns2" type="Integer" userLabel="" importType="numeric"/> 
@@ -298,7 +298,7 @@
     <attribute name="embreg" type="EmbRegion" userLabel=""/>
     <attribute name="embreg2" type="EmbRegion" userLabel=""/>
     <attribute name="majbuyrg" type="EmbRegion" userLabel=""/>
-    <attribute name="majbuyimp" type="EmbRegion" userLabel=""/>
+    <attribute name="majbyimp" type="EmbRegion" userLabel=""/>
     <attribute name="regdis1" type="DepartureRegion" userLabel=""/>
     <attribute name="regdis2" type="DepartureRegion" userLabel=""/>
     <attribute name="regdis3" type="DepartureRegion" userLabel=""/>
@@ -309,15 +309,15 @@
     <attribute name="fate4" type="Fate4" userLabel=""/>
     <attribute name="mjselimp" type="ImpPrincipalRegion" userLabel=""/>
     <attribute name="deptreg1" type="DepartureRegion" userLabel=""/>
-    <attribute name="mjselreg1" type="DemBroadRegion" userLabel=""/>
+    <attribute name="mjselrg1" type="DemBroadRegion" userLabel=""/>
     <attribute name="constreg" type="DepartureRegion" userLabel=""/>
     <attribute name="status" type="Status" userLabel=""/>
     <attribute name="majbyim3" type="MajByIm" userLabel=""/>
   
   		<attribute name="editor" type="Editor" userLabel=""/>
-  		<attribute name="mjbyptimp" type="PurchasePort" userLabel=""/>
-  		<attribute name="newf" type="New" userLabel=""/>
-  		<attribute name="filter_$" type="Filter" userLabel=""/>
+  		<!-- <attribute name="majbyimp" type="PurchasePort" userLabel=""/> -->
+  		<attribute name="newf" type="New" userLabel="" importName="new" />
+  		<attribute name="filter_$" type="Filter" userLabel="" importName="filter__"/>
   		<attribute name="natinim3" type="Natinim3" userLabel=""/>
   		<attribute name="mjselrg2" type="Mjselrg2" userLabel=""/>
   		<attribute name="newamreg" type="Newamreg" userLabel=""/>

@@ -204,10 +204,7 @@ public class Import
 
 	private void matchAndVerifySchema()
 	{
-		System.out.println("Voyages");
 		matchAndVerifySchemaInt(VOYAGE);
-		System.out.println("");
-		System.out.println("Slaves");
 		matchAndVerifySchemaInt(SLAVE);
 	}
 
@@ -228,6 +225,7 @@ public class Import
 	
 	private void updateDictionary(SchemaColumn col, STSchemaVariable var)
 	{
+		System.out.println("Inside: " + col.getName() + "(" + var.getLabels().size() + ")");
 		for (Iterator iterLabel = var.getLabels().iterator(); iterLabel.hasNext();)
 		{
 			
@@ -244,7 +242,13 @@ public class Import
 			else
 				dict = dicts[0];
 			
+			if (newDict)
+				System.out.println("Adding value: " + label.getKey() + " (" + label.getLabel() + ")");
+			else
+				System.out.println("Updating value: " + label.getKey() + " (" + label.getLabel() + ")");
+			
 			dict.setName(label.getLabel());
+			dict.setRemoteId(new Integer(label.getKey()));
 			
 			if (newDict)
 				dict.save();
@@ -280,6 +284,7 @@ public class Import
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 			if (col.getType() == SchemaColumn.TYPE_DICT)
 			{
+				System.out.println("Updating: " + col.getName() + " (" + col.getDictinaory() + ")");
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
 				updateDictionary(col, var);
 			}
@@ -716,14 +721,15 @@ public class Import
 //			System.out.print("Sorting data ...");
 //			sortFiles();
 //			System.out.println("done");
-//
-//			System.out.print("Updating dictionaries ...");
-//			updateDictionaties();
-//			System.out.println("done");
+
+			System.out.print("Updating dictionaries ...");
+			updateDictionaties();
+			System.out.println("done");
 			
 //			System.out.print("Importing data ...");
 //			importData();
 //			System.out.println("done");
+
 //			System.out.println("total number of voyages = " + totalNoOfVoyages);
 //			System.out.println("number of valid voyages = " + noOfValidVoyages);
 //			System.out.println("total number of slaves  = " + totalNoOfSlaves);

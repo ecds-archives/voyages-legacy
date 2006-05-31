@@ -15,7 +15,7 @@
         <property name="remoteId" column="remote_id"/>
     </class>
     
-    <class name="edu.emory.library.tas.dicts.Angola" table="dictionary" where="obj_type=type">
+    <class name="edu.emory.library.tas.dicts.Angola" table="dictionary">
         <id name="id" column="oid">
         	<generator class="native"/>
         </id>

@@ -11,7 +11,7 @@
         </id>                       
 
 	<property name="voyageId" column="vid"/>
-	<property name="shipName" column="ship_name"/>
+	<property name="shipname" column="ship_name"/>
 	<!--property name="revisionId" column=""/-->
 
   	<property name="captaina"/>
@@ -20,7 +20,7 @@
   	<property name="datedep"/>
     <property name="nppretra"/>
     <property name="d1slatr"/>  
-    <property name="dlslatrb"/>
+    <!--<property name="dlslatrb"/>-->
     <property name="npprior"/>
     <property name="tslavesp"/>
     <property name="tslavesd"/>
@@ -211,7 +211,7 @@
     <property name="intrate"/>
     <property name="cashpric"/>
     <property name="jamcaspr"/>
-    <property name="locurlmnl"/>
+    <property name="locurmnl"/>
     <property name="exchrate"/>
     <property name="frencpri"/>
     <property name="frnprinl"/>
@@ -239,13 +239,13 @@
     <property name="infants3"/>
     <property name="infant1"/>
     <property name="kleimerg"/>
-    <property name="kleimerg2"/>
+    <property name="klemerg2"/>
     <property name="adult5"/>
     <property name="bahijelm"/>
     <property name="adult2"/>
     <property name="adult4"/>
     <property name="infant4"/>
-    <property name="voyageid2"/>
+    <property name="voyagid2"/>
     <property name="newmina"/>
     <property name="crew"/>
     <property name="guns2"/>
@@ -304,7 +304,7 @@
     <many-to-one name="embreg" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
     <many-to-one name="embreg2" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
     <many-to-one name="majbuyrg" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-    <many-to-one name="majbuyimp" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
+    <many-to-one name="majbyimp" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
     <many-to-one name="regdis1" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
     <many-to-one name="regdis2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
     <many-to-one name="regdis3" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
@@ -315,13 +315,13 @@
     <many-to-one name="fate4" class="edu.emory.library.tas.dicts.Fate4" unique="true" lazy="false"/>
     <many-to-one name="mjselimp" class="edu.emory.library.tas.dicts.ImpPrincipalRegion" unique="true" lazy="false"/>
     <many-to-one name="deptreg1" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-    <many-to-one name="mjselreg1" class="edu.emory.library.tas.dicts.DemBroadRegion" unique="true" lazy="false"/>
+    <many-to-one name="mjselrg1" class="edu.emory.library.tas.dicts.DemBroadRegion" unique="true" lazy="false"/>
     <many-to-one name="constreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
     <many-to-one name="status" class="edu.emory.library.tas.dicts.Status" unique="true" lazy="false"/>
     <many-to-one name="majbyim3" class="edu.emory.library.tas.dicts.MajByIm" unique="true" lazy="false"/>
   
   		<many-to-one name="editor" class="edu.emory.library.tas.dicts.Editor" unique="true" lazy="false"/>
-  		<many-to-one name="mjbyptimp" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
+  		<!--<many-to-one name="mjbyptimp" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>-->
   		<many-to-one name="newf" class="edu.emory.library.tas.dicts.New" unique="true" lazy="false"/>
   		<many-to-one name="filter_$" class="edu.emory.library.tas.dicts.Filter" unique="true" lazy="false"/>
   		<many-to-one name="natinim3" class="edu.emory.library.tas.dicts.Natinim3" unique="true" lazy="false"/>

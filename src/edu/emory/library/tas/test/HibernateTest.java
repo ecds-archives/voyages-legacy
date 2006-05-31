@@ -33,7 +33,7 @@ public class HibernateTest {
 
 			if (command.equals("store")) {
 				Voyage v = Voyage.createNew(new Long(System.currentTimeMillis()));
-				v.setShipName("Ship: " + v.getVoyageId().longValue());
+				v.setShipname("Ship: " + v.getVoyageId().longValue());
 				v.setVoyageId(v.getVoyageId());
 				
 				Slave slave1 = Slave.createNew(new Long(System.currentTimeMillis()));
@@ -65,7 +65,7 @@ public class HibernateTest {
 				Long id = new Long(command.split(" ")[1]);
 				Voyage v = Voyage.loadMostRecent(id);
 				if (v != null) {
-					v.setShipName(v.getShipName() + "-");
+					v.setShipname(v.getShipname() + "-");
 					v.setModified(Voyage.UPDATED);
 					v.save();
 				} else {

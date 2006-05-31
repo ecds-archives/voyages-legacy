@@ -13,6 +13,7 @@ public class STSchemaReader
 	private Hashtable variables = null;
 	private Pattern regexVariable = null;
 	private Pattern regexLabel = null;
+	private Pattern regexTag = null;
 	
 	private final static int FIELD_NAME = 1; 
 	private final static int FIELD_START_COLUMN = 2; 
@@ -46,7 +47,12 @@ public class STSchemaReader
 			"(?:\\\\(\\w+))?" + // tag
 			"\\s*");
 
-		// regex for variable
+		// regex for tag
+		regexTag = Pattern.compile(
+			"\\s*" +
+			"\\\\(\\w+)");
+
+		// regex for label
 		regexLabel = Pattern.compile(
 			"\\s*" +
 			"(\\d+)" + // key
@@ -60,6 +66,7 @@ public class STSchemaReader
 					"(.*)" + // label without quotes
 				")" +
 			")");
+
 	}
 	
 	private void readSectionVariables(BufferedReader rdr) throws IOException, STSchemaException
@@ -147,11 +154,10 @@ public class STSchemaReader
 		String line = null;
 		while ((line = rdr.readLine()) != null)
 		{
-			line = line.trim();
-			if (line.length() > 0 && line.charAt(0) == '\\')
+			Matcher matcher = regexTag.matcher(line);
+			if (matcher.lookingAt())
 			{
-				line = line.substring(1);
-				STSchemaVariable var = (STSchemaVariable) variables.get(line);
+				STSchemaVariable var = (STSchemaVariable) variables.get(matcher.group(1));
 				if (var != null)
 				{
 					readVariableLabels(rdr, var);

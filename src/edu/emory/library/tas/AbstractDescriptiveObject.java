@@ -18,7 +18,8 @@ public abstract class AbstractDescriptiveObject {
 	/**
 	 * Types of attributes.
 	 */
-	protected static Map types = new HashMap();
+//	protected static Map types = null;
+//	public synchronized static void initTypes() {};
 	
 	/**
 	 * Gets value of given attribute
@@ -36,24 +37,6 @@ public abstract class AbstractDescriptiveObject {
 	 */
 	public void setAttrValue(String p_attrName, Object p_attrValue) {
 		values.put(p_attrName, p_attrValue);
-	}
-
-
-	/**
-	 * Gets Schema of given attribute.
-	 * @param p_attrName	attribute name
-	 * @return	user label of attribute
-	 */
-	public static SchemaColumn getSchemaColumn(String p_attrName) {
-		return (SchemaColumn)types.get(p_attrName);
-	}
-
-	/**
-	 * Gets a list of all valid attributes for object.
-	 * @return String[] with attribute names
-	 */
-	public static String[] getAllAttrNames() {
-		return (String[])types.keySet().toArray(new String[] {});
 	}
 
 	/**

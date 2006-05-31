@@ -1,9 +1,9 @@
 <class name="Slave">
 	<!--attribute name="iid" type="Long" userLabel="" importType="numeric" importName="iid" importDateDay ="" importDateMonth="" importDateYear=""/-->
 	<attribute name="iid" type="Long" userLabel="" importType="ignore"/>
-	<attribute name="slaveId" type="Long" userLabel="Slave ID"  importType="numeric"/>
-	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric"/>
-	<attribute name="slaveName" type="String" userLabel="Slave name" importType="string"/>
+	<attribute name="slaveId" type="Long" userLabel="Slave ID"  importType="numeric" importName="slaveid" />
+	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric" importName="voyageid" />
+	<attribute name="slaveName" type="String" userLabel="Slave name" importType="string" importName="name" />
 	
 	<attribute name="sexage" type="SexAge" userLabel=""/>
   	<attribute name="age" type="Integer" userLabel="" importType="numeric"/>
@@ -13,7 +13,7 @@
   	<attribute name="country" type="Country" userLabel=""/>
   	<attribute name="name" type="String" userLabel="" importType="string"/>
   	<attribute name="unclear" type="Integer" userLabel="" importType="numeric"/>
-  	<attribute name="nameimp" type="String" userLabel=""/>
+  	<attribute name="nameimp" type="String" userLabel="" importType="string"/>
   	<attribute name="natimp" type="Nation" userLabel=""/>
   	<attribute name="bodypt1" type="BodyPt" userLabel=""/>
   	<attribute name="placea1" type="PlaceA" userLabel=""/>
