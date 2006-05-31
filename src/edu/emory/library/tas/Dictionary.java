@@ -12,6 +12,31 @@ public class Dictionary {
 	
 	private Integer remoteId;
 
+	public static Dictionary createNew(String p_dictionaryName)
+	{
+		try
+		{
+			Class clazz = Class.forName("edu.emory.library.tas.dicts." + p_dictionaryName);
+			return (Dictionary) clazz.newInstance();
+		}
+		catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (InstantiationException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static Dictionary[] loadDictionary(String p_dictionaryName,
 			String p_dictVal) {
 		
