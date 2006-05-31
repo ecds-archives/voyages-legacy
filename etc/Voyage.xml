@@ -11,7 +11,7 @@
   	<attribute name="datedep" type="Date" userLabel="" importType="date" importDateYear="datedepc" importDateMonth="datedepb" importDateDay="datedepa"/>
     <attribute name="nppretra" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="d1slatr" type="Date" userLabel="" importType="date" importDateYear="d1slatrc" importDateMonth="d1slatrb" importDateDay="d1slatra"/> 
-    <attribute name="dlslatrb" type="Date" userLabel="" importType="numeric"/>
+    <!-- <attribute name="dlslatrb" type="Date" userLabel="" importType="numeric"/> -->
     <attribute name="npprior" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="tslavesp" type="Integer" userLabel="" importType="numeric"/>
     <attribute name="tslavesd" type="Integer" userLabel="" importType="numeric"/>
