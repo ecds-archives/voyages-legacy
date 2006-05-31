@@ -247,8 +247,7 @@ public class HibernateConnector {
 		for (Iterator iter = slaves.iterator(); iter.hasNext();) {
 			// Create new records for changed/created slaves
 			Slave slave = (Slave) iter.next();
-			if (slave.getModified() == Slave.CREATED
-					|| slave.getModified() == Slave.UPDATED) {
+			if (slave.getModified() == Slave.UPDATED) {
 				Slave newSlave = (Slave) slave.clone();
 				newSlaves.add(newSlave);
 				slaveSaved = true;

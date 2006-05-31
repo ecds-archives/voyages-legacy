@@ -88,7 +88,7 @@ public class STSchemaVariable
 	
 	public int getLength()
 	{
-		return startColumn - endColumn + 1;
+		return endColumn - startColumn + 1;
 	}
 
 	public void setType(int type)

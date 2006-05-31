@@ -145,7 +145,7 @@ public class SchemaColumn
 	
 	public boolean isDictinaory()
 	{
-		return dictionary == null;
+		return dictionary != null;
 	}
 	
 	public String getDictinaory()

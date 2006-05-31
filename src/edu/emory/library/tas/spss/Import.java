@@ -78,7 +78,7 @@ public class Import
 		for (int i=0; i<names.length; i++)
 		{
 			STSchemaVariable var = (STSchemaVariable) schema.get(names[i]);
-			width += var.getEndColumn() - var.getStartColumn() + 1;
+			width += var.getLength();
 		}
 		return width;
 	}
@@ -225,7 +225,7 @@ public class Import
 	
 	private void updateDictionary(SchemaColumn col, STSchemaVariable var)
 	{
-		System.out.println("Inside: " + col.getName() + "(" + var.getLabels().size() + ")");
+		//System.out.println("Inside: " + col.getName() + "(" + var.getLabels().size() + ")");
 		for (Iterator iterLabel = var.getLabels().iterator(); iterLabel.hasNext();)
 		{
 			
@@ -242,10 +242,10 @@ public class Import
 			else
 				dict = dicts[0];
 			
-			if (newDict)
-				System.out.println("Adding value: " + label.getKey() + " (" + label.getLabel() + ")");
-			else
-				System.out.println("Updating value: " + label.getKey() + " (" + label.getLabel() + ")");
+//			if (newDict)
+//				System.out.println("Adding value: " + label.getKey() + " (" + label.getLabel() + ")");
+//			else
+//				System.out.println("Updating value: " + label.getKey() + " (" + label.getLabel() + ")");
 			
 			dict.setName(label.getLabel());
 			dict.setRemoteId(new Integer(label.getKey()));
@@ -284,7 +284,7 @@ public class Import
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 			if (col.getType() == SchemaColumn.TYPE_DICT)
 			{
-				System.out.println("Updating: " + col.getName() + " (" + col.getDictinaory() + ")");
+				//System.out.println("Updating: " + col.getName() + " (" + col.getDictinaory() + ")");
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
 				updateDictionary(col, var);
 			}
@@ -300,6 +300,8 @@ public class Import
 	
 	private boolean updateValues(AbstractDescriptiveObject obj, char[] line)
 	{
+		
+		//System.out.println("Updating row ...");
 		
 		String dbSchemaNames[] = null;
 		Hashtable schema = null;
@@ -326,10 +328,25 @@ public class Import
 		for (int i=0; i<dbSchemaNames.length; i++)
 		{
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
+			//System.out.println("Updating column: " + col.getName());
 			
 			Object value = null;
 			
-			if (col.getType() == SchemaColumn.IMPORT_TYPE_DATE)
+			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE)
+			{
+				
+			}
+			
+			else if (col.getImportType() != SchemaColumn.IMPORT_TYPE_DATE)
+			{
+				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
+				value = col.parse(
+						new String(line,
+								var.getStartColumn()-1,
+								var.getLength()).trim());
+			}
+			
+			else
 			{
 				STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
 				STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
@@ -337,24 +354,15 @@ public class Import
 				value = col.parse(new String[]{
 						new String(
 								line,
-								varDay.getStartColumn(),
+								varDay.getStartColumn()-1,
 								varDay.getLength()).trim(),
 						new String(
 								line,
-								varMonth.getStartColumn(),
+								varMonth.getStartColumn()-1,
 								varMonth.getLength()).trim(),
 						new String(line,
-								varYear.getStartColumn(),
+								varYear.getStartColumn()-1,
 								varYear.getLength()).trim()});
-			}
-			
-			else
-			{
-				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
-				value = col.parse(
-						new String(line,
-								var.getStartColumn(),
-								var.getLength()).trim());
 			}
 			
 			if (value == null) valid = false;
@@ -375,6 +383,10 @@ public class Import
 	{
 		
 		ArrayList toRemove = new ArrayList();
+		
+//		System.out.println(voyage == null);
+//		System.out.println(voyage.getSlaves() == null);
+//		System.exit(1);
 		
 		for (Iterator iterSlave = voyage.getSlaves().iterator(); iterSlave.hasNext();)
 		{
@@ -509,9 +521,9 @@ public class Import
 				{
 					totalNoOfVoyages++;
 					
-					String currVoyageVid = ((AsciiFixedFormatRecord)voyageRecord).getKey().trim();
+					String currVoyageVid = ((AsciiFixedFormatRecord)voyageRecord).getKey();
 
-					boolean voyageHasVid = currVoyageVid.length() != 0;
+					boolean voyageHasVid = currVoyageVid.trim().length() != 0;
 					if (!voyageHasVid) noOfVoyagesWithoutVid++;
 					
 					boolean validVoyage = voyageHasVid; 
@@ -542,7 +554,7 @@ public class Import
 				{
 					totalNoOfSlaves ++;
 					
-					String currSlaveVid = ((AsciiFixedFormatRecord)slaveRecord).getKey().trim();
+					String currSlaveVid = ((AsciiFixedFormatRecord)slaveRecord).getKey();
 					
 					boolean slaveHasVid = currSlaveVid.trim().length() > 0;
 					boolean slaveHasSid = true;
@@ -637,8 +649,8 @@ public class Import
 				mainVid = saveVoyage ? voyageVid : slavesVid;
 				
 				// load voyage from db or create a new one
-				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid));
-				if (voyage == null) Voyage.createNew(new Long(mainVid));
+				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid.trim()));
+				if (voyage == null) voyage = Voyage.createNew(new Long(mainVid.trim()));
 
 				// update voyage
 				if (saveVoyage)
@@ -722,13 +734,13 @@ public class Import
 //			sortFiles();
 //			System.out.println("done");
 
-			System.out.print("Updating dictionaries ...");
-			updateDictionaties();
-			System.out.println("done");
-			
-//			System.out.print("Importing data ...");
-//			importData();
+//			System.out.print("Updating dictionaries ...");
+//			updateDictionaties();
 //			System.out.println("done");
+			
+			System.out.print("Importing data ...");
+			importData();
+			System.out.println("done");
 
 //			System.out.println("total number of voyages = " + totalNoOfVoyages);
 //			System.out.println("number of valid voyages = " + noOfValidVoyages);

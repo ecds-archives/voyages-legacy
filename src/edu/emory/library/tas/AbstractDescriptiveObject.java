@@ -11,15 +11,24 @@ import java.util.Map;
 public abstract class AbstractDescriptiveObject {
 	
 	/**
+	 * Modified flag.
+	 */
+	public static final int UPDATED = 1;
+	
+	/**
+	 * Unmodified flag.
+	 */
+	public static final int NOT_UPDATED = 0;
+
+	/**
+	 * Field informing whether object was modified/unmodified.
+	 */
+	protected int modified = NOT_UPDATED;
+
+	/**
 	 * Current attribute values.
 	 */
 	protected Map values = new HashMap();
-	
-	/**
-	 * Types of attributes.
-	 */
-//	protected static Map types = null;
-//	public synchronized static void initTypes() {};
 	
 	/**
 	 * Gets value of given attribute
@@ -36,6 +45,10 @@ public abstract class AbstractDescriptiveObject {
 	 * @param p_attrValue	new attribute value
 	 */
 	public void setAttrValue(String p_attrName, Object p_attrValue) {
+		if ((p_attrValue == null && this.values.get(p_attrName) != null) 
+				|| (p_attrValue != null && !p_attrValue.equals(this.values.get(p_attrName)))) {
+				this.modified = UPDATED;
+			}
 		values.put(p_attrName, p_attrValue);
 	}
 

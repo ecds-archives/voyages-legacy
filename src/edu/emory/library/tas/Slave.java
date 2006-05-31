@@ -24,16 +24,6 @@ import edu.emory.library.tas.dicts.SpecialMark;
 public class Slave extends AbstractDescriptiveObject {
 	
 	/**
-	 * Created constant.
-	 */
-	public static final int CREATED = 1;
-	
-	/**
-	 * Updated constant.
-	 */
-	public static final int UPDATED = 2;
-	
-	/**
 	 * Tells whether object has been updated or created.
 	 */
 	private int modified = 0;

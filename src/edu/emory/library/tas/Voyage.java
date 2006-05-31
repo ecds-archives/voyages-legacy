@@ -1,6 +1,6 @@
 package edu.emory.library.tas;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,24 +59,9 @@ import edu.emory.library.tas.util.HibernateConnector;
 public class Voyage extends AbstractDescriptiveObject {
 	
 	/**
-	 * Modified flag.
-	 */
-	public static final int UPDATED = 1;
-	
-	/**
-	 * Unmodified flag.
-	 */
-	public static final int NOT_UPDATED = 0;
-	
-	/**
 	 * Approved flag.
 	 */
 	private boolean approved = false;
-	
-	/**
-	 * Field informing whether object was modified/unmodified.
-	 */
-	private int modified = Voyage.NOT_UPDATED;
 	
 	/**
 	 * Field informing whether object's slaves were modified/unmodified.
