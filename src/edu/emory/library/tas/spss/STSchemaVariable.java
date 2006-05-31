@@ -11,6 +11,7 @@ public class STSchemaVariable
 	private int type;
 	private String label;
 	private String tag;
+	private boolean doImport;
 	private ArrayList labels = new ArrayList();
 	
 	public final static int TYPE_STRING = 0; 
@@ -85,6 +86,11 @@ public class STSchemaVariable
 		return endColumn;
 	}
 	
+	public int getLength()
+	{
+		return startColumn - endColumn + 1;
+	}
+
 	public void setType(int type)
 	{
 		this.type = type;
@@ -123,6 +129,16 @@ public class STSchemaVariable
 	public boolean hasLabels()
 	{
 		return labels != null && labels.size() > 0;
+	}
+
+	public void setDoImport(boolean doImport)
+	{
+		this.doImport = doImport;
+	}
+
+	public boolean isDoImport()
+	{
+		return doImport;
 	}
 
 }

@@ -3,14 +3,14 @@ package edu.emory.library.tas.spss;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class STSchemaReader
 {
 	
-	private ArrayList variables = null;
+	private Hashtable variables = null;
 	private Pattern regexVariable = null;
 	private Pattern regexLabel = null;
 	
@@ -35,9 +35,8 @@ public class STSchemaReader
 			"(\\w+)" + // field name
 			"\\s+" +
 			"(\\d+)" + // first column
-			"-" +
-			"(\\d+)" + // last column
-			"\\s+" +
+			"(?:-(\\d+))?" + // last column
+			"\\s*" +
 			"(?:\\((\\w+)\\))?" + // type
 			"\\s*" +
 			"(?:\\[(.+)\\])?" + // missing values
@@ -61,19 +60,9 @@ public class STSchemaReader
 					"(.*)" + // label without quotes
 				")" +
 			")");
-		
-		Matcher m = regexLabel.matcher("1 \"slave\"");
-		m.matches();
-		
-		System.out.println(m.group(0));
-		System.out.println(m.group(1));
-		System.out.println(m.group(2));
-		System.out.println(m.group(3));
-		System.out.println(m.group(4));
-		
 	}
 	
-	private void readSectionVariables(BufferedReader rdr) throws IOException
+	private void readSectionVariables(BufferedReader rdr) throws IOException, STSchemaException
 	{
 		String line = null;
 		while ((line = rdr.readLine()) != null)
@@ -87,7 +76,6 @@ public class STSchemaReader
 			{
 
 				STSchemaVariable var = new STSchemaVariable();
-				variables.add(var);
 
 				var.setName(
 					matcher.group(FIELD_NAME));
@@ -96,7 +84,9 @@ public class STSchemaReader
 					Integer.parseInt(matcher.group(FIELD_START_COLUMN)));
 				
 				var.setEndColumn(
-					Integer.parseInt(matcher.group(FIELD_END_COLUMN)));
+					matcher.group(FIELD_END_COLUMN) != null ?
+					Integer.parseInt(matcher.group(FIELD_END_COLUMN)) :
+					var.getStartColumn());
 				
 				String fieldType = matcher.group(FIELD_TYPE); 
 				var.setType(
@@ -110,6 +100,12 @@ public class STSchemaReader
 				var.setTag(
 					matcher.group(FIELD_TAG));
 
+				variables.put(var.getName(), var);
+
+			}
+			else
+			{
+				throw new STSchemaException("Error parsing line: " + line);
 			}
 			
 		}
@@ -155,23 +151,20 @@ public class STSchemaReader
 			if (line.length() > 0 && line.charAt(0) == '\\')
 			{
 				line = line.substring(1);
-				for (int i=0; i<variables.size(); i++)
+				STSchemaVariable var = (STSchemaVariable) variables.get(line);
+				if (var != null)
 				{
-					STSchemaVariable var = (STSchemaVariable)variables.get(i); 
-					if (var.hasTag() && var.getTag().compareTo(line) == 0)
-					{
-						readVariableLabels(rdr, var);
-					}
+					readVariableLabels(rdr, var);
 				}
 			}
 		}
 	}
 	
-	public ArrayList readSchema(String fileName) throws IOException
+	public Hashtable readSchema(String fileName) throws IOException, STSchemaException
 	{
 		
 		// prepare the list of variables
-		variables = new ArrayList();
+		variables = new Hashtable();
 		
 		// open file
 		BufferedReader rdr = new BufferedReader(new FileReader(fileName));
@@ -199,10 +192,15 @@ public class STSchemaReader
 
 	}
 		
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args) throws IOException, STSchemaException
 	{
-		//STSchemaReader sr = new STSchemaReader();
-		//ArrayList vars = sr.readSchema("../basecoy56.sts");
+//		STSchemaReader sr = new STSchemaReader();
+//		ArrayList vars = sr.readSchema("slaves.sts");
+//		for (int i=0; i<vars.size(); i++)
+//		{
+//			STSchemaVariable var = (STSchemaVariable)vars.get(i);
+//			System.out.println(var.getName());
+//		}
 	}
 
 }

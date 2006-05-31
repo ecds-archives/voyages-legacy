@@ -138,6 +138,9 @@ public class RecordSorter
 			
 		}
 		while (recordCount > 0);
+		
+		// we are done with splitting
+		reader.close();
 
 		// main structures for merge: list of 
 		// opened files and their first lines
@@ -231,17 +234,17 @@ public class RecordSorter
 		
 		// rename last temp file to the output file
 		File outputFile = new File(outputFileName);
-		((File)tmpFiles.get(0)).renameTo(outputFile);
+		File lastTmpFile = (File)(tmpFiles.get(0));
+		outputFile.delete();
+		lastTmpFile.renameTo(outputFile);
 		
 	}
 
 	public static void main(String[] args) throws IOException
 	{
 		
-		AsciiFixedFormatRecordIOFactory f = new AsciiFixedFormatRecordIOFactory(193, 198, 2973); 
-		RecordSorter s = new RecordSorter("D:\\Library\\SlaveTrade\\data\\voyages.dat", "D:\\Library\\SlaveTrade\\data\\voyages-sorted.dat", f);
-		//AsciiFixedFormatRecordIOFactory f = new AsciiFixedFormatRecordIOFactory(0, 1, 4); 
-		//RecordSorter s = new RecordSorter("D:\\Library\\SlaveTrade\\data\\test.dat", "D:\\Library\\SlaveTrade\\data\\test-sorted.dat", f);
+		AsciiFixedFormatRecordIOFactory f = new AsciiFixedFormatRecordIOFactory(1, 5, 227); 
+		RecordSorter s = new RecordSorter("slaves.dat", "slaves.dat", f);
 		s.setMaxLines(1000);
 		s.sort();
 		

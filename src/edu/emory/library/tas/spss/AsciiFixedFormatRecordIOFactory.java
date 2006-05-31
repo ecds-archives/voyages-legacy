@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class AsciiFixedFormatRecordIOFactory extends RecordIOFactory
 {
-
+	
 	private int startColumn;
 	private int endColumn;
 	private int columnsCount;

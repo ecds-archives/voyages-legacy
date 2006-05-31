@@ -36,7 +36,7 @@ public class AsciiFixedFormatRecordReader extends RecordReader
 		
 		// extract the key column
 		//String key = new String(buf, bufPtr+startColumn-columnsCount, endColumn-startColumn+1);
-		String key = new String(buf, startColumn, endColumn-startColumn+1);
+		String key = new String(buf, startColumn-1, endColumn-startColumn+1);
 		
 		// consume \n and \r
 		rdr.readLine();
