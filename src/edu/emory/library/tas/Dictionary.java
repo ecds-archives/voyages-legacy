@@ -168,4 +168,12 @@ public class Dictionary {
 	public void update() {
 		HibernateConnector.getConnector().updateObject(this);
 	}
+	
+	public boolean equals(Object that) {
+		if (that instanceof Dictionary) {
+			Dictionary dict = (Dictionary)that;
+			return dict.getId().equals(this.getId());
+		}
+		return false;
+	}
 }
