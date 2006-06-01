@@ -284,7 +284,7 @@ CREATE TABLE voyages
   vid int8 NOT NULL,
   ship_name text,
   iid int8 NOT NULL,
-  captaina varchar(40),
+  captaina varchar(60),
   captainb varchar(40),
   captainc varchar(40),
   portdep int8,
