@@ -387,10 +387,6 @@ public class Import
 		
 		ArrayList toRemove = new ArrayList();
 		
-//		System.out.println(voyage == null);
-//		System.out.println(voyage.getSlaves() == null);
-//		System.exit(1);
-		
 		for (Iterator iterSlave = voyage.getSlaves().iterator(); iterSlave.hasNext();)
 		{
 			Slave slave = (Slave) iterSlave.next();
@@ -462,9 +458,9 @@ public class Import
 		// variables for the main loop (see below)
 		Record voyageRecord = null;
 		Record slaveRecord = null;
-		String voyageVid = null;
-		String slavesVid = null;
-		String mainVid = null;
+		int voyageVid = 0;
+		int slavesVid = 0;
+		int mainVid = 0;
 		ArrayList slaves = new ArrayList(); 
 		boolean saveVoyage = false;
 		boolean saveSlaves = false;
@@ -519,7 +515,7 @@ public class Import
 			// if voyageVals == null -> there is no more voyages
 			if (readVoyage)
 			{
-				voyageVid = null;
+				voyageVid = 0;
 				while ((voyageRecord = voyagesRdr.readRecord()) != null)
 				{
 					totalNoOfVoyages++;
@@ -529,12 +525,13 @@ public class Import
 					boolean voyageHasVid = currVoyageVid.trim().length() != 0;
 					if (!voyageHasVid) noOfVoyagesWithoutVid++;
 					
-					boolean validVoyage = voyageHasVid; 
+					boolean validVoyage = voyageHasVid;
+					if (validVoyage) validVoyage = Integer.parseInt(currVoyageVid.trim()) >= 30000;
 					if (validVoyage) noOfValidVoyages++;
 					
 					if (validVoyage)
 					{
-						voyageVid = currVoyageVid;
+						voyageVid = Integer.parseInt(currVoyageVid.trim());
 						break;
 					}
 					
@@ -547,10 +544,10 @@ public class Import
 			if (readSlaves)
 			{
 				slaves.clear();
-				slavesVid = null;
+				slavesVid = 0;
 				if (slaveRecord != null)
 				{
-					slavesVid = ((AsciiFixedFormatRecord)slaveRecord).getKey().trim();
+					slavesVid = Integer.parseInt(((AsciiFixedFormatRecord)slaveRecord).getKey().trim());
 					slaves.add(slaveRecord);
 				}
 				while ((slaveRecord = slavesRdr.readRecord()) != null)
@@ -565,16 +562,18 @@ public class Import
 					if (!slaveHasSid) noOfSlavesWithoutSid++;
 
 					boolean validSlave = slaveHasVid && slaveHasSid;
+					if (validSlave) validSlave = Integer.parseInt(currSlaveVid.trim()) >= 30000;
 					if (validSlave) noOfValidSlaves++;
-
+					
 					if (validSlave)
 					{
-						if (slavesVid == null)
+						int currSlaveVidInt = Integer.parseInt(currSlaveVid.trim());
+						if (slavesVid == 0)
 						{
-							slavesVid = currSlaveVid;
+							slavesVid = currSlaveVidInt;
 							slaves.add(slaveRecord);
 						}
-						else if (slavesVid.compareTo(currSlaveVid) == 0)
+						else if (slavesVid == currSlaveVidInt)
 						{
 							slaves.add(slaveRecord);
 						}
@@ -590,8 +589,8 @@ public class Import
 			// and a sequence of slaves with the same vid
 			// (is there were anymore slaves), so for
 			// clarity, let's remeber this info in flags
-			boolean haveVoyage = voyageVid != null;
-			boolean haveSlaves = slavesVid != null;
+			boolean haveVoyage = voyageVid != 0;
+			boolean haveSlaves = slavesVid != 0;
 			
 			// end of voyages and slaves
 			if (!haveVoyage && !haveSlaves)
@@ -619,15 +618,14 @@ public class Import
 			// we have both still
 			else
 			{
-				int cmpVid = voyageVid.compareTo(slavesVid);
-				if (cmpVid == 0)
+				if (voyageVid == slavesVid)
 				{
 					saveVoyage = true;
 					readVoyage = true;
 					saveSlaves = true;
 					readSlaves = true;
 				}
-				else if (cmpVid < 0)
+				else if (voyageVid < slavesVid)
 				{
 					saveVoyage = true;
 					readVoyage = true;
@@ -652,8 +650,8 @@ public class Import
 				mainVid = saveVoyage ? voyageVid : slavesVid;
 				
 				// load voyage from db or create a new one
-				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid.trim()));
-				if (voyage == null) voyage = Voyage.createNew(new Long(mainVid.trim()));
+				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid));
+				if (voyage == null) voyage = Voyage.createNew(new Long(mainVid));
 
 				// update voyage
 				if (saveVoyage)
@@ -738,7 +736,7 @@ public class Import
 //			System.out.println("done");
 
 //			System.out.print("Updating dictionaries ...");
-//			updateDictionaties();
+			updateDictionaties();
 //			System.out.println("done");
 			
 			System.out.print("Importing data ...");
