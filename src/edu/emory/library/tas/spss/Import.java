@@ -365,8 +365,11 @@ public class Import
 								varYear.getLength()).trim()});
 			}
 			
+			
 			if (value == null) valid = false;
-			obj.setAttrValue(col.getName(), value);
+			if (col.getImportType() != SchemaColumn.IMPORT_TYPE_IGNORE) {
+				obj.setAttrValue(col.getName(), value);
+			}
 			
 		}
 		
