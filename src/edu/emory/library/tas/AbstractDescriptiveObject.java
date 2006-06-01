@@ -28,7 +28,7 @@ public abstract class AbstractDescriptiveObject {
 	/**
 	 * Current attribute values.
 	 */
-	protected Map values = new HashMap();
+	protected Map values = new HashMap(500);
 	
 	/**
 	 * Gets value of given attribute

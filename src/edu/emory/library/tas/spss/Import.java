@@ -11,10 +11,12 @@ import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.util.HibernateUtil;
 
 public class Import
 {
 	
+	private static final int VOYAGE_CACHE_SIZE = 100;
 	private static final int VOYAGE = 0;
 	private static final int SLAVE = 1;
 
@@ -328,16 +330,29 @@ public class Import
 		for (int i=0; i<dbSchemaNames.length; i++)
 		{
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
-			//System.out.println("Updating column: " + col.getName());
-			
 			Object value = null;
 			
-			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE)
+			// import dictionary (special case becuase of caching)
+			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC && col.getType() == SchemaColumn.TYPE_DICT)
 			{
+				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
+				String key =
+					new String(
+						line,
+						var.getStartColumn()-1,
+						var.getLength()).trim();
+
+				value = var.getDictionaryFromCache(key);
+				if (value == null)
+				{
+					value = col.parse(key);
+					if (value != null) var.addToDictionaryCache((Dictionary)value);
+				}
 				
 			}
 			
-			else if (col.getImportType() != SchemaColumn.IMPORT_TYPE_DATE)
+			// import any other numeric field or string field
+			else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
 			{
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
 				value = col.parse(
@@ -346,7 +361,8 @@ public class Import
 								var.getLength()).trim());
 			}
 			
-			else
+			// import date
+			else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_DATE)
 			{
 				STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
 				STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
@@ -367,9 +383,8 @@ public class Import
 			
 			
 			if (value == null) valid = false;
-			if (col.getImportType() != SchemaColumn.IMPORT_TYPE_IGNORE) {
+			if (col.getImportType() != SchemaColumn.IMPORT_TYPE_IGNORE)
 				obj.setAttrValue(col.getName(), value);
-			}
 			
 		}
 		
@@ -467,6 +482,10 @@ public class Import
 		boolean readVoyage = false;
 		boolean readSlaves = false;
 		
+		// cache
+		Voyage[] voyagesCache = null;
+		int cachePos = 0;
+		
 		// init stats
 		totalNoOfVoyages = 0;
 		noOfVoyagesWithoutVid = 0;
@@ -526,7 +545,7 @@ public class Import
 					if (!voyageHasVid) noOfVoyagesWithoutVid++;
 					
 					boolean validVoyage = voyageHasVid;
-					if (validVoyage) validVoyage = Integer.parseInt(currVoyageVid.trim()) >= 30000;
+					//if (validVoyage) validVoyage = Integer.parseInt(currVoyageVid.trim()) >= 30000;
 					if (validVoyage) noOfValidVoyages++;
 					
 					if (validVoyage)
@@ -562,7 +581,7 @@ public class Import
 					if (!slaveHasSid) noOfSlavesWithoutSid++;
 
 					boolean validSlave = slaveHasVid && slaveHasSid;
-					if (validSlave) validSlave = Integer.parseInt(currSlaveVid.trim()) >= 30000;
+					//if (validSlave) validSlave = Integer.parseInt(currSlaveVid.trim()) >= 30000;
 					if (validSlave) noOfValidSlaves++;
 					
 					if (validSlave)
@@ -649,9 +668,47 @@ public class Import
 				// determine VID
 				mainVid = saveVoyage ? voyageVid : slavesVid;
 				
+//				if (voyagesCache == null || cachePos == voyagesCache.length)
+//					voyagesCache = Voyage.loadMostRecent(new Long(mainVid), VOYAGE_CACHE_SIZE);
+				
 				// load voyage from db or create a new one
-				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid));
-				if (voyage == null) voyage = Voyage.createNew(new Long(mainVid));
+				Voyage voyage = null;
+				while (voyage == null)
+				{
+					
+					if (voyagesCache == null || cachePos == voyagesCache.length)
+					{
+						voyagesCache = Voyage.loadMostRecent(new Long(mainVid), VOYAGE_CACHE_SIZE);
+						cachePos = 0;
+						//HibernateUtil.getSessionFactory().getStatistics().logSummary();
+					}
+					
+					if (voyagesCache.length > 0)
+					{
+						for (; cachePos<voyagesCache.length; cachePos++)
+						{
+							if (voyagesCache[cachePos].getVoyageId().intValue() == mainVid)
+							{
+								voyage = voyagesCache[cachePos];
+								break;
+							}
+							if (voyagesCache[cachePos].getVoyageId().intValue() > mainVid)
+							{
+								voyage = Voyage.createNew(new Long(mainVid));
+								break;
+							}
+						}
+					}
+					else
+					{
+						voyage = Voyage.createNew(new Long(mainVid));
+					}
+					
+				}
+				
+				
+//				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid));
+//				if (voyage == null) voyage = Voyage.createNew(new Long(mainVid));
 
 				// update voyage
 				if (saveVoyage)
@@ -714,7 +771,7 @@ public class Import
 		slavesDataFileName = "slaves.dat";
 		slavesSortedDataFileName = "slaves-sorted.dat";
 		slavesSchemaFileName = "slaves.sts";
-
+		
 		// run import
 		try
 		{
@@ -736,7 +793,7 @@ public class Import
 //			System.out.println("done");
 
 //			System.out.print("Updating dictionaries ...");
-			updateDictionaties();
+//			updateDictionaties();
 //			System.out.println("done");
 			
 			System.out.print("Importing data ...");

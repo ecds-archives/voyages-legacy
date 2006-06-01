@@ -8,6 +8,7 @@ CREATE DATABASE tasdb
        TABLESPACE = pg_default;
 
 
+
 CREATE SEQUENCE hibernate_sequence
   INCREMENT 1
   MINVALUE 1
@@ -893,7 +894,12 @@ CREATE INDEX index_voyage_slaves
   USING btree
   (r_slave_id, r_voyage_index_id);
 
-
+ALTER TABLE hibernate_sequence OWNER TO tasuser;
+ALTER TABLE dictionary OWNER TO tasuser;
+ALTER TABLE slaves OWNER TO tasuser;
+ALTER TABLE voyage_slaves OWNER TO tasuser;
+ALTER TABLE voyages OWNER TO tasuser;
+ALTER TABLE voyages_index OWNER TO tasuser;
 
 
 
