@@ -49,9 +49,9 @@ public class HibernateTest {
 			} else if (command.equals("list")) {
 				try {
 					Voyage v = new Voyage();
-					v.setVoyageId(new Long(1));
+					v.setVoyageId(new Long(30001));
 					
-					VoyageIndex[] list = connector.getVoyageIndexByVoyage(null, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
+					VoyageIndex[] list = connector.getVoyageIndexByVoyage(v, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
 
 					for (int i = 0; i < list.length; i++) {
 						Object theVoyage = list[i];
@@ -94,6 +94,19 @@ public class HibernateTest {
 				
 				Voyage v_new = Voyage.loadMostRecent(new Long(1));
 				System.out.println("After loading: " + v_new);
+			} else if (command.equals("limit")) {
+				try {
+					
+					Voyage v[] = Voyage.loadMostRecent(new Long(30001), 10);
+
+					for (int i = 0; i < v.length; i++) {
+						Voyage theVoyage = v[i];
+						System.out.println(theVoyage.getVoyageId() + ": " + theVoyage);
+					}
+
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			System.out.print("command:>");

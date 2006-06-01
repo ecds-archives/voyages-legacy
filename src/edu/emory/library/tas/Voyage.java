@@ -525,6 +525,32 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 
 	/**
+	 * Loads most recent (not necessary active) voyage with given ID.
+	 * @param voyageId	voyuage ID
+	 * @return voyage object, null if there is no desired Voyage in DB
+	 */
+	public static Voyage[] loadMostRecent(Long voyageId, int p_packetSize) {
+		Voyage localVoyage = new Voyage();
+		localVoyage.setVoyageId(voyageId);
+		
+		//Load voyage from DB
+		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
+			.getVoyagesIndexSet(localVoyage, p_packetSize, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
+		
+		Voyage[] ret = new Voyage[voyageIndex.length];
+		//Prepare result
+		for (int i = 0; i < voyageIndex.length; i++) {
+			ret[i] = voyageIndex[i].getVoyage();
+			ret[i].setSlaves(voyageIndex[i].getSlaves());
+			ret[i].setRevisionId(voyageIndex[i].getRevisionId());
+			
+		}
+		cleanObject(ret);
+		
+		return ret;
+	}
+	
+	/**
 	 * Loads voyage with given ID and given revision ID.
 	 * @param voyageId	voyuage ID
 	 * @return voyage object, null if there is no desired Voyage in DB

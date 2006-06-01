@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
@@ -61,18 +62,26 @@ public class HibernateConnector {
 	 * @return Query object
 	 */
 	private Query getVoyageIndexByVoyageQuery(Session session, Voyage p_voyage,
-			int p_option) {
+			int p_fetchSize ,int p_option) {
 
 		StringBuffer where = new StringBuffer("");
 		boolean first = true;
-
+		
 		// Check if condition on ID is needed
 		if (p_voyage != null) {
-			where.append("where ");
-			where.append("vid=");
-			where.append(p_voyage.getVoyageId());
-			where.append(" ");
-			first = false;
+			if (p_fetchSize == -1) {
+				where.append("where ");
+				where.append("vid=");
+				where.append(p_voyage.getVoyageId());
+				where.append(" ");
+				first = false;
+			} else {
+				where.append("where ");
+				where.append("vid >= ");
+				where.append(p_voyage.getVoyageId());
+				where.append(" ");
+				first = false;
+			}
 		}
 
 		// Recognize APPROVED/NOT APPROVED
@@ -111,8 +120,12 @@ public class HibernateConnector {
 
 		// Create query
 		Query query = session.createQuery("from VoyageIndex " + where
-				+ " order by vid, global_rev_id");
+				+ " order by vid, global_rev_id ");
 
+		if (p_fetchSize != -1) {
+			query.setMaxResults(p_fetchSize);
+		}
+		
 		return query;
 	}
 
@@ -143,7 +156,7 @@ public class HibernateConnector {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
-				p_option);
+				 -1, p_option);
 		List list = query.list();
 		transaction.commit();
 
@@ -166,7 +179,7 @@ public class HibernateConnector {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
-				p_option);
+				-1, p_option);
 		ScrollableResults scroll = query.scroll();
 		transaction.commit();
 
@@ -342,5 +355,19 @@ public class HibernateConnector {
 		Transaction transaction = session.beginTransaction();
 		session.delete(obj);
 		transaction.commit();
+	}
+
+	public VoyageIndex[] getVoyagesIndexSet(Voyage p_voyage, int p_fetchSize, int p_option) {
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
+				p_fetchSize, p_option);
+		
+
+		List list = query.list();
+		transaction.commit();
+
+		return this.prepareResponse(list, p_option);
 	}
 }
