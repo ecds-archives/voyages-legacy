@@ -8,8 +8,12 @@ import java.util.Iterator;
 
 import edu.emory.library.tas.AbstractDescriptiveObject;
 import edu.emory.library.tas.Dictionary;
+import edu.emory.library.tas.InvalidDateException;
+import edu.emory.library.tas.InvalidNumberException;
+import edu.emory.library.tas.InvalidNumberOfValuesException;
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Slave;
+import edu.emory.library.tas.StringTooLongException;
 import edu.emory.library.tas.Voyage;
 
 public class Import
@@ -153,32 +157,14 @@ public class Import
 
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 
+			// ignoring
 			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE)
 			{
 				continue;
 			}
 			
-			else if (col.getType() != SchemaColumn.TYPE_DATE)
-			{
-				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName()); 
-				if (var == null)
-				{
-					System.out.println("missing field: " + col.getName());
-					// error: missing field
-				}
-				else if (!compareTypes(col.getImportType(), var.getType()))
-				{
-					System.out.println("type missmatch: " + col.getName());
-					// error: type missmatch
-				}
-				else
-				{
-					//System.out.println("field " + col.getName() + " ok");
-					// seems to be ok
-				}
-			}
-			
-			else
+			// date
+			else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_DATE)
 			{
 				STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay()); 
 				STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth()); 
@@ -188,6 +174,7 @@ public class Import
 					System.out.println("missing field: " + col.getName());
 					// error: missing field
 				}
+				
 				else if (varDay.getType() != STSchemaVariable.TYPE_NUMERIC || varMonth.getType() != STSchemaVariable.TYPE_NUMERIC || varYear.getType() != STSchemaVariable.TYPE_NUMERIC)
 				{
 					System.out.println("type missmatch: " + col.getName());
@@ -199,6 +186,33 @@ public class Import
 					// seems to be ok
 				}
 			}
+
+			// number or string
+			else
+			{
+				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName()); 
+				if (var == null)
+				{
+					System.out.println("missing field: " + col.getName());
+					// error: missing field
+				}
+				else if (compareTypes(col.getImportType(), var.getType()))
+				{
+					System.out.println("type missmatch: " + col.getName());
+					// error: type missmatch
+				}
+				else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING && var.getLength() > col.getImportLength())
+				{
+					System.out.println("string too long: " + col.getName());
+					// error: string too long
+				}
+				else
+				{
+					//System.out.println("field " + col.getName() + " ok");
+					// seems to be ok
+				}
+			}
+		
 		}
 		
 	}
@@ -328,63 +342,73 @@ public class Import
 		boolean valid = true;
 		for (int i=0; i<dbSchemaNames.length; i++)
 		{
-			
-			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
-			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE) continue;
-			
-//			// import dictionary (special case becuase of caching)
-//			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC && col.getType() == SchemaColumn.TYPE_DICT)
-//			{
-//				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
-//				String key =
-//					new String(
-//						line,
-//						var.getStartColumn()-1,
-//						var.getLength()).trim();
-//
-//				value = var.getDictionaryFromCache(key);
-//				if (value == null)
-//				{
-//					value = col.parse(key);
-//					if (value != null) var.addToDictionaryCache((Dictionary)value);
-//				}
-//				
-//			}
-			
+
 			Object value = null;
-
-			// import numeric or string field
-			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
-			{
-				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
-				value = col.parse(
-						new String(line,
-								var.getStartColumn()-1,
-								var.getLength()).trim());
-			}
+			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 			
-			// import date
-			else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_DATE)
+			// we are ignoring this field for import
+			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE)
+				continue;
+			
+			try
 			{
-				STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
-				STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
-				STSchemaVariable varYear = (STSchemaVariable) schema.get(col.getImportDateYear());
-				value = col.parse(new String[]{
-						new String(
-								line,
-								varDay.getStartColumn()-1,
-								varDay.getLength()).trim(),
-						new String(
-								line,
-								varMonth.getStartColumn()-1,
-								varMonth.getLength()).trim(),
-						new String(line,
-								varYear.getStartColumn()-1,
-								varYear.getLength()).trim()});
-			}
 
-			// update the object
-			obj.setAttrValue(col.getName(), value);
+				// import numeric or string field
+				if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
+				{
+					STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
+					value = col.parse(
+							new String(line,
+									var.getStartColumn()-1,
+									var.getLength()).trim());
+				}
+				
+				// import date
+				else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_DATE)
+				{
+					STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
+					STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
+					STSchemaVariable varYear = (STSchemaVariable) schema.get(col.getImportDateYear());
+					value = col.parse(new String[]{
+							new String(
+									line,
+									varDay.getStartColumn()-1,
+									varDay.getLength()).trim(),
+							new String(
+									line,
+									varMonth.getStartColumn()-1,
+									varMonth.getLength()).trim(),
+							new String(line,
+									varYear.getStartColumn()-1,
+									varYear.getLength()).trim()});
+				}
+				
+				// nonexisting dictionary value was inserted
+				if (col.getType() == SchemaColumn.TYPE_DICT && value != null && ((Dictionary)value).getId() == null)
+					// to log: new dictionary value inserted
+					;
+	
+				// update the object
+				obj.setAttrValue(col.getName(), value);
+			
+			}
+			catch (InvalidNumberOfValuesException inve)
+			{
+				// this cannot happen
+				// see the code above
+			}
+			catch (InvalidNumberException ine)
+			{
+				// to log: col.getImportName() has an invalid numeric value
+			}
+			catch (InvalidDateException ide)
+			{
+				// to log: ... have an invalid date value
+			}
+			catch (StringTooLongException stle)
+			{
+				// to log: col.getImportName() containt too long string
+			}
 			
 		}
 		
