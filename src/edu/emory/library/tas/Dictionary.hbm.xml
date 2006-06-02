@@ -7,7 +7,7 @@
 <hibernate-mapping>
 
 	<class name="edu.emory.library.tas.Dictionary" table="dictionary">
-		<cache usage="read-only" />
+		<cache usage="read-write" />
         <id name="id" column="oid">
         	<generator class="native"/>
         </id>
@@ -17,7 +17,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Angola" table="dictionary">
-        <cache usage="read-only" />
+        <cache usage="read-write" />
         <id name="id" column="oid">
         	<generator class="native"/>
         </id>
@@ -27,7 +27,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.BodyPt" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -36,7 +36,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Carib" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -45,7 +45,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Country" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -54,7 +54,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.DemBroadRegion" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -63,7 +63,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.DeparturePort" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -72,7 +72,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.DepartureRegion" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -81,7 +81,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.DepDefinition" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -90,7 +90,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Editor" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -99,7 +99,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.EmbRegion" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -108,7 +108,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Fate2" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -117,7 +117,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Fate3" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -126,7 +126,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Fate4" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -135,7 +135,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Filter" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -144,7 +144,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.FirstDemPort" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -153,7 +153,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Flag2" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -162,7 +162,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Gc" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -171,7 +171,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.ImpPrincipalRegion" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -180,7 +180,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.ImputedNation" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -189,7 +189,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.IntDisembPort" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -198,7 +198,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.MajByIm" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -207,7 +207,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.MarkDegree" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -216,7 +216,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.MarkNumber" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -225,7 +225,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.MarkSize" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -234,7 +234,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.MarkType" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -243,7 +243,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Mjselrg2" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -252,7 +252,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Natinim3" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -261,7 +261,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Natinim4" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -270,7 +270,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Nation" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -279,7 +279,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.New" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -288,7 +288,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Newamreg" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -297,7 +297,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.OldWorldPlace" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -306,7 +306,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.OtherMark" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -315,7 +315,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.PlaceA" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -324,7 +324,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.PlaceB" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -333,7 +333,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.PortLocation" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -342,7 +342,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.PurchasePort" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -351,7 +351,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.RetPort" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -360,7 +360,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Seafrica" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -369,7 +369,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.SecondDemPort" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -378,7 +378,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.SexAge" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -387,7 +387,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.ShipNationality" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -396,7 +396,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.SpecialMark" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -405,7 +405,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Status" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -414,7 +414,7 @@
     </class>
    
     <class name="edu.emory.library.tas.dicts.Temp" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -423,7 +423,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Temp2" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -432,7 +432,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.ThirdDemPort" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -441,7 +441,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.TonesType" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -450,7 +450,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Us" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -459,7 +459,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Userid" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -468,7 +468,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.VesselRig" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -477,7 +477,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.XmimpFlag" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -486,7 +486,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Year100" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -495,7 +495,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Year25" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -504,7 +504,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Year5" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -513,7 +513,7 @@
     </class>
     
     <class name="edu.emory.library.tas.dicts.Yearches" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
@@ -523,7 +523,7 @@
     
     
     <class name="edu.emory.library.tas.dicts.PrimaryLast" table="dictionary">
-        <cache usage="read-only" /><id name="id" column="oid">
+        <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
         <property name="type" column="obj_type"/>
