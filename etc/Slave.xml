@@ -3,17 +3,15 @@
 	<attribute name="iid" type="Long" userLabel="" importType="ignore"/>
 	<attribute name="slaveId" type="Long" userLabel="Slave ID"  importType="numeric" importName="slaveid" />
 	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric" importName="voyageid" />
-	<attribute name="slaveName" type="String" userLabel="Slave name" importType="string" importName="name" />
-	
 	<attribute name="sexage" type="SexAge" userLabel=""/>
   	<attribute name="age" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="feet" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="inch" type="Integer" userLabel="" importType="numeric"/>
   	<property name="ageinf" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="country" type="Country" userLabel=""/>
-  	<attribute name="name" type="String" userLabel="" importType="string"/>
+  	<attribute name="name" type="String" userLabel="" importType="string" importType="25" />
   	<attribute name="unclear" type="Integer" userLabel="" importType="numeric"/>
-  	<attribute name="nameimp" type="String" userLabel="" importType="string"/>
+  	<attribute name="nameimp" type="String" userLabel="" importType="string" importType="25" />
   	<attribute name="natimp" type="Nation" userLabel=""/>
   	<attribute name="bodypt1" type="BodyPt" userLabel=""/>
   	<attribute name="placea1" type="PlaceA" userLabel=""/>
@@ -60,7 +58,7 @@
 	<attribute name="markdeg5" type="MarkDegree" userLabel=""/>
   	<attribute name="markdeg4" type="MarkDegree" userLabel=""/>
   	<attribute name="majselpt" type="Integer" userLabel="" importType="numeric"/>
-  	<attribute name="source" type="String" userLabel="" importType="string"/>
+  	<attribute name="source" type="String" userLabel="" importType="string" importType="8"/>
   	<attribute name="majbuypt" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="datarr34" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="regem1" type="Integer" userLabel="" importType="numeric"/>
