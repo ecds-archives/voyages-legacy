@@ -85,9 +85,12 @@ public class ClassGenerator {
 								.getNamedItem("importDateDay") != null ? child
 								.getAttributes().getNamedItem("importDateDay")
 								.getNodeValue() : null;
-if (attrImportDateDay != null) {
-	int a = 0;
-}
+								
+						Integer length = child.getAttributes()
+								.getNamedItem("length") != null ? new Integer(child
+								.getAttributes().getNamedItem("length")
+								.getNodeValue()) : null;
+
 						types.append("types.put(\"");
 						types.append(attrName);
 						types.append("\", new SchemaColumn(");
@@ -155,9 +158,14 @@ if (attrImportDateDay != null) {
 							types.append("null, ");
 						}
 						if (attrLabel == null || attrLabel.equals("")) {
-							types.append("null));\n");
+							types.append("null, ");
 						} else {
-							types.append("\"").append(attrLabel).append("\"));\n");
+							types.append("\"").append(attrLabel).append("\", ");
+						}
+						if (length == null) {
+							types.append("-1));\n");
+						} else {
+							types.append(length.intValue()).append("));\n");
 						}
 					}
 				}
