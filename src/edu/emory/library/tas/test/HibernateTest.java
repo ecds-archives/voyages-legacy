@@ -13,6 +13,8 @@ import edu.emory.library.tas.dicts.PortLocation;
 import edu.emory.library.tas.dicts.SecondDemPort;
 import edu.emory.library.tas.dicts.Temp;
 import edu.emory.library.tas.util.HibernateConnector;
+import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
 
 public class HibernateTest {
 
@@ -48,14 +50,18 @@ public class HibernateTest {
 				v.save();
 			} else if (command.equals("list")) {
 				try {
-					Voyage v = new Voyage();
-					v.setVoyageId(new Long(30001));
+//					Voyage v = new Voyage();
+//					v.setVoyageId(new Long(30001));
 					
-					VoyageIndex[] list = connector.getVoyageIndexByVoyage(v, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
-
-					for (int i = 0; i < list.length; i++) {
-						Object theVoyage = list[i];
-						System.out.println("Event1: " + theVoyage);
+					//VoyageIndex[] list = connector.getVoyageIndexByVoyage(v, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
+					Voyage v = Voyage.loadMostRecent(new Long(2314));
+					
+					if (v != null) {
+						
+//						System.out.println("Event1: " + theVoyage);
+						System.out.println("Printing!");
+						System.out.println(((Slave)v.getSlaves().iterator().next()).getName());
+						System.out.println(v.getShipname() + "---" + v.getPortdep());
 					}
 
 				} catch (NullPointerException e) {
@@ -106,6 +112,43 @@ public class HibernateTest {
 
 				} catch (NullPointerException e) {
 					e.printStackTrace();
+				}
+			} else if (command.equals("query")) {
+//				Conditions cMain = new Conditions(Conditions.JOIN_AND);
+//				cMain.addCondition("first", "fsfs", Conditions.OP_EQUALS);
+//				cMain.addCondition("second", "ddd", Conditions.OP_LIKE);
+//				cMain.addCondition("third", new Integer(11), Conditions.OP_NOT_EQUALS);
+//				Conditions c1 = new Conditions(Conditions.JOIN_OR);
+//				c1.addCondition("first1", "fsfs", Conditions.OP_EQUALS);
+//				c1.addCondition("second1", new Integer(11), Conditions.OP_NOT_EQUALS);
+//				Conditions c11 = new Conditions(Conditions.JOIN_OR);
+//				c11.addCondition("first11", "fsfs", Conditions.OP_EQUALS);
+//				c11.addCondition("second11", new Integer(11), Conditions.OP_NOT_EQUALS);
+//				c1.addCondition(c11);
+//				Conditions c2 = new Conditions(Conditions.JOIN_NOT);
+//				c11.addCondition("first2", "fsfs", Conditions.OP_EQUALS);
+//				Conditions c21 = new Conditions(Conditions.JOIN_AND);
+//				c21.addCondition("final", new Float(2.55), Conditions.OP_SMALLER);
+//				c2.addCondition(c21);
+				
+//				cMain.addCondition(c1);
+//				cMain.addCondition(c2);
+				
+				
+				Conditions cMain = new Conditions(Conditions.JOIN_AND);
+				cMain.addCondition("voyage.shipname", "Pastora de Lima", Conditions.OP_EQUALS);
+				Conditions cL1 = new Conditions(Conditions.JOIN_OR);
+				cMain.addCondition(cL1);
+				cL1.addCondition("voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
+				cL1.addCondition("voyage.captaina", "Cunha%", Conditions.OP_LIKE);
+				
+				
+				QueryValue qValue = new QueryValue("VoyageIndex", cMain);
+				Object[] res = HibernateConnector.getConnector().loadObjects(qValue);
+				
+				System.out.println("Returned: " + res.length);
+				for (int i = 0; i < res.length; i++) {
+					System.out.println(" -> " + ((VoyageIndex)res[i]).getVoyage().getIid());
 				}
 			}
 			

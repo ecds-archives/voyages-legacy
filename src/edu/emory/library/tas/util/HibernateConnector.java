@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
+import edu.emory.library.tas.util.query.QueryValue;
 
 public class HibernateConnector {
 
@@ -153,7 +154,7 @@ public class HibernateConnector {
 	 */
 	public VoyageIndex[] getVoyageIndexByVoyage(Voyage p_voyage, int p_option) {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
 				 -1, p_option);
@@ -176,7 +177,7 @@ public class HibernateConnector {
 	public ScrollableResults scrollVoyageIndexByVoyage(Voyage p_voyage,
 			int p_option) {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
 				-1, p_option);
@@ -203,7 +204,7 @@ public class HibernateConnector {
 	 */
 	public void createVoyage(VoyageIndex p_voyage) {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 
 		// Check if we really create new row
@@ -235,7 +236,7 @@ public class HibernateConnector {
 
 	public void updateVoyage(VoyageIndex p_voyage) {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 
 		// check for last revision ID
@@ -300,7 +301,7 @@ public class HibernateConnector {
 		
 		StringBuffer where = params.length != 0 ? new StringBuffer("where "):new StringBuffer("");
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		
 		for (int i = 0; i < params.length; i++) {
@@ -329,29 +330,43 @@ public class HibernateConnector {
 		}
 	}
 	
+	public Object[] loadObjects(QueryValue p_query) {
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		System.out.println("My query: " + p_query.toString());
+		List list = p_query.getQuery(session).list();
+		transaction.commit();
+		
+		if (list.size() != 0) {
+			return list.toArray();
+		} else {
+			return new Object[] {};
+		}
+	}
+	
 	public void saveObject(Object obj) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(obj);
 		transaction.commit();
 	}
 	
 	public void updateObject(Object obj) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		session.update(obj);
 		transaction.commit();
 	}
 	
 	public void saveOrUpdateObject(Object obj) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		session.saveOrUpdate(obj);
 		transaction.commit();
 	}
 	
 	public void deleteObject(Object obj) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		session.delete(obj);
 		transaction.commit();
@@ -359,7 +374,7 @@ public class HibernateConnector {
 
 	public VoyageIndex[] getVoyagesIndexSet(Voyage p_voyage, int p_fetchSize, int p_option) {
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
 				p_fetchSize, p_option);
