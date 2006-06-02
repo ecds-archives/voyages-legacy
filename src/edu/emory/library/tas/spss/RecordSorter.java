@@ -243,7 +243,7 @@ public class RecordSorter
 	public static void main(String[] args) throws IOException
 	{
 		
-		AsciiFixedFormatRecordIOFactory f = new AsciiFixedFormatRecordIOFactory(1, 5, 227); 
+		RecordIOFactory f = new RecordIOFactory(1, 5, 227); 
 		RecordSorter s = new RecordSorter("slaves.dat", "slaves.dat", f);
 		s.setMaxLines(1000);
 		s.sort();

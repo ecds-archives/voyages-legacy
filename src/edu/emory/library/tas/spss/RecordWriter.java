@@ -1,10 +1,36 @@
 package edu.emory.library.tas.spss;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
-public abstract class RecordWriter
+public class RecordWriter
 {
-	public abstract void writeRecord(Record record) throws IOException;
-	public abstract void writeRecords(Record[] records) throws IOException;
-	public abstract void close() throws IOException;
+	protected BufferedWriter wrt;
+	
+	public RecordWriter(File file) throws IOException
+	{
+		wrt = new BufferedWriter(new FileWriter(file));
+	}
+	
+	public void writeRecord(Record record) throws IOException
+	{
+		if (record == null) return;
+		//wrt.write(AsciiFixedFormatRecordReader.buf, ((AsciiFixedFormatRecord)record).bufPtr, 2973);
+		wrt.write(record.getLine());
+		wrt.write('\n');
+	}
+	
+	public void writeRecords(Record[] records) throws IOException
+	{
+		for (int i=0; i<records.length; i++)
+			writeRecord(records[i]);
+	}
+	
+	public void close() throws IOException
+	{
+		wrt.close();
+	}
+	
 }

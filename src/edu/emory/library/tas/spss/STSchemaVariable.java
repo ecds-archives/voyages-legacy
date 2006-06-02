@@ -1,9 +1,6 @@
 package edu.emory.library.tas.spss;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-
-import edu.emory.library.tas.Dictionary;
 
 public class STSchemaVariable
 {
@@ -16,7 +13,7 @@ public class STSchemaVariable
 	private String tag;
 	private boolean doImport;
 	private ArrayList labels = new ArrayList();
-	private Hashtable dictionaryCache = new Hashtable();
+	//private Hashtable dictionaryCache = new Hashtable();
 	
 	public final static int TYPE_STRING = 0; 
 	public final static int TYPE_NUMERIC = 1; 
@@ -145,21 +142,21 @@ public class STSchemaVariable
 		return doImport;
 	}
 
-	public Dictionary getDictionaryFromCache(String key)
-	{
-		try
-		{
-			return (Dictionary) dictionaryCache.get(new Integer(key));
-		}
-		catch (NumberFormatException nfe)
-		{
-			return null;
-		}
-	}
-
-	public void addToDictionaryCache(Dictionary dict)
-	{
-		dictionaryCache.put(dict.getRemoteId(), dict);
-	}
+//	public Dictionary getDictionaryFromCache(String key)
+//	{
+//		try
+//		{
+//			return (Dictionary) dictionaryCache.get(new Integer(key));
+//		}
+//		catch (NumberFormatException nfe)
+//		{
+//			return null;
+//		}
+//	}
+//
+//	public void addToDictionaryCache(Dictionary dict)
+//	{
+//		dictionaryCache.put(dict.getRemoteId(), dict);
+//	}
 
 }

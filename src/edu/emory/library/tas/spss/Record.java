@@ -1,6 +1,39 @@
 package edu.emory.library.tas.spss;
 
-public abstract class Record
+public class Record
 {
-	public abstract int compareTo(Record record);
+	protected char[] line;
+	protected String key;
+
+	public Record(String key, char[] line)
+	{
+		this.line = line;
+		this.key = key;
+		//this.bufPtr = bufPtr;
+	}
+	
+	public int compareTo(Record record)
+	{
+		return this.key.compareTo(record.getKey());
+	}
+
+	public void setKey(String key)
+	{
+		this.key = key;
+	}
+
+	public String getKey()
+	{
+		return key;
+	}
+
+	public void setLine(char[] line)
+	{
+		this.line = line;
+	}
+
+	public char[] getLine()
+	{
+		return line;
+	}
 }

@@ -11,7 +11,6 @@ import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
-import edu.emory.library.tas.util.HibernateUtil;
 
 public class Import
 {
@@ -31,8 +30,8 @@ public class Import
 	private boolean slavesPresent;
 	STSchemaVariable voyagesVidVar;
 	STSchemaVariable slavesVidVar;
-	AsciiFixedFormatRecordIOFactory voyagesRecordIOFactory;
-	AsciiFixedFormatRecordIOFactory slavesRecordIOFactory;
+	RecordIOFactory voyagesRecordIOFactory;
+	RecordIOFactory slavesRecordIOFactory;
 
 	// schemas
 	private String voyagesSchemaFileName;
@@ -96,7 +95,7 @@ public class Import
 		// locate vid and create record io factory for voyages
 		voyagesVidVar = (STSchemaVariable)voyageSchema.get("voyageid"); 
 		int voyagesSchemaWidth = calculateSchemaWidth(voyageSchema); 
-		voyagesRecordIOFactory = new AsciiFixedFormatRecordIOFactory(
+		voyagesRecordIOFactory = new RecordIOFactory(
 			voyagesVidVar.getStartColumn(),
 			voyagesVidVar.getEndColumn(),
 			voyagesSchemaWidth);
@@ -104,7 +103,7 @@ public class Import
 		// locate vid create record io factory for slaves
 		slavesVidVar = (STSchemaVariable)slaveSchema.get("voyageid");
 		int slavesSchemaWidth = calculateSchemaWidth(slaveSchema); 
-		slavesRecordIOFactory = new AsciiFixedFormatRecordIOFactory(
+		slavesRecordIOFactory = new RecordIOFactory(
 			slavesVidVar.getStartColumn(),
 			slavesVidVar.getEndColumn(),
 			slavesSchemaWidth);
@@ -329,30 +328,33 @@ public class Import
 		boolean valid = true;
 		for (int i=0; i<dbSchemaNames.length; i++)
 		{
+			
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
+			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE) continue;
+			
+//			// import dictionary (special case becuase of caching)
+//			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC && col.getType() == SchemaColumn.TYPE_DICT)
+//			{
+//				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
+//				String key =
+//					new String(
+//						line,
+//						var.getStartColumn()-1,
+//						var.getLength()).trim();
+//
+//				value = var.getDictionaryFromCache(key);
+//				if (value == null)
+//				{
+//					value = col.parse(key);
+//					if (value != null) var.addToDictionaryCache((Dictionary)value);
+//				}
+//				
+//			}
+			
 			Object value = null;
-			
-			// import dictionary (special case becuase of caching)
-			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC && col.getType() == SchemaColumn.TYPE_DICT)
-			{
-				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
-				String key =
-					new String(
-						line,
-						var.getStartColumn()-1,
-						var.getLength()).trim();
 
-				value = var.getDictionaryFromCache(key);
-				if (value == null)
-				{
-					value = col.parse(key);
-					if (value != null) var.addToDictionaryCache((Dictionary)value);
-				}
-				
-			}
-			
-			// import any other numeric field or string field
-			else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
+			// import numeric or string field
+			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
 			{
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
 				value = col.parse(
@@ -380,11 +382,9 @@ public class Import
 								varYear.getStartColumn()-1,
 								varYear.getLength()).trim()});
 			}
-			
-			
-			if (value == null) valid = false;
-			if (col.getImportType() != SchemaColumn.IMPORT_TYPE_IGNORE)
-				obj.setAttrValue(col.getName(), value);
+
+			// update the object
+			obj.setAttrValue(col.getName(), value);
 			
 		}
 		
@@ -394,7 +394,7 @@ public class Import
 	
 	private void updateVoyage(Voyage voyage, Record voyageRecord)
 	{
-		updateValues(voyage, ((AsciiFixedFormatRecord) voyageRecord).getLine());
+		updateValues(voyage, voyageRecord.getLine());
 	}
 
 	private void removeDeletedSlaves(Voyage voyage, ArrayList slaves)
@@ -408,7 +408,7 @@ public class Import
 			boolean slaveFound = false;
 			for (int i=0; i<slaves.size(); i++)
 			{
-				Long slaveId = new Long(((AsciiFixedFormatRecord)slaves.get(i)).getKey().trim());
+				Long slaveId = new Long(((Record)slaves.get(i)).getKey().trim());
 				if (slave.getSlaveId().equals(slaveId))
 				{
 					slaveFound = true;
@@ -434,7 +434,7 @@ public class Import
 		
 		for (Iterator iterSlave = slaves.iterator(); iterSlave.hasNext();)
 		{
-			AsciiFixedFormatRecord slaveRecord = (AsciiFixedFormatRecord) iterSlave.next();
+			Record slaveRecord = (Record) iterSlave.next();
 			Long slaveId = new Long(slaveRecord.getKey().trim());
 			Slave slave = voyage.getSlave(slaveId);
 			if (slave != null)
@@ -450,7 +450,7 @@ public class Import
 		
 		for (Iterator iterSlave = slaves.iterator(); iterSlave.hasNext();)
 		{
-			AsciiFixedFormatRecord slaveRecord = (AsciiFixedFormatRecord) iterSlave.next();
+			Record slaveRecord = (Record) iterSlave.next();
 			Long slaveId = new Long(slaveRecord.getKey().trim());
 			Slave slave = voyage.getSlave(slaveId);
 			if (slave == null)
@@ -539,7 +539,7 @@ public class Import
 				{
 					totalNoOfVoyages++;
 					
-					String currVoyageVid = ((AsciiFixedFormatRecord)voyageRecord).getKey();
+					String currVoyageVid = voyageRecord.getKey();
 
 					boolean voyageHasVid = currVoyageVid.trim().length() != 0;
 					if (!voyageHasVid) noOfVoyagesWithoutVid++;
@@ -566,14 +566,14 @@ public class Import
 				slavesVid = 0;
 				if (slaveRecord != null)
 				{
-					slavesVid = Integer.parseInt(((AsciiFixedFormatRecord)slaveRecord).getKey().trim());
+					slavesVid = Integer.parseInt(slaveRecord.getKey().trim());
 					slaves.add(slaveRecord);
 				}
 				while ((slaveRecord = slavesRdr.readRecord()) != null)
 				{
 					totalNoOfSlaves ++;
 					
-					String currSlaveVid = ((AsciiFixedFormatRecord)slaveRecord).getKey();
+					String currSlaveVid = slaveRecord.getKey();
 					
 					boolean slaveHasVid = currSlaveVid.trim().length() > 0;
 					boolean slaveHasSid = true;
@@ -736,7 +736,7 @@ public class Import
 				if (saveVoyage)
 				{
 					System.out.print(", voyage = yes");
-					System.out.print(", shipname = " + new String(((AsciiFixedFormatRecord)voyageRecord).getLine(),200,58));
+					System.out.print(", shipname = " + new String(voyageRecord.getLine(),200,58));
 				}
 				if (saveSlaves)
 				{
