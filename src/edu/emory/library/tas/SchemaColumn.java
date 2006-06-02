@@ -19,18 +19,17 @@ public class SchemaColumn
 	
 	private String name;
 	private int type;
-	private int importType;
-	
 	private String dictionary;
-	
 	private String userLabel;
 	
+	private int importType;
 	private String importName;
 	private String importDateDay;
 	private String importDateMonth;
 	private String importDateYear;
+	private int importLength;
 	
-	public SchemaColumn(String name, int type, String dictionary, int importType, String importName, String importDateDay, String importDateMonth, String importDateYear, String userLabel)
+	public SchemaColumn(String name, int type, String dictionary, int importType, String importName, String importDateDay, String importDateMonth, String importDateYear, String userLabel, int importLength)
 	{
 		this.userLabel = userLabel;
 		this.name = name;
@@ -41,10 +40,10 @@ public class SchemaColumn
 		this.importDateDay = importDateDay;
 		this.importDateMonth = importDateMonth;
 		this.importDateYear = importDateYear;
+		this.importLength = importLength;
 	}
 	
-	
-	public Object parse(String[] values) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException
+	public Object parse(String[] values) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		
 		String value;
@@ -54,8 +53,11 @@ public class SchemaColumn
 				
 				if (values.length != 1 || values[0] == null)
 					throw new InvalidNumberOfValuesException();
-
+				
 				value = values[0].trim();
+				if (importLength != -1 && value.length() > importLength)
+					throw new StringTooLongException();
+				
 				return value;
 				
 			case TYPE_INTEGER:
@@ -177,7 +179,7 @@ public class SchemaColumn
 		
 	}
 
-	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException
+	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		return parse(new String[] {value});
 	}
@@ -208,6 +210,16 @@ public class SchemaColumn
 		return importType;
 	}
 	
+	public int getImportLength()
+	{
+		return importLength;
+	}
+	
+	public void setImportLength(int importLength)
+	{
+		this.importLength = importLength;
+	}
+
 	public String getName()
 	{
 		return name;
