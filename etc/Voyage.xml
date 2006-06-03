@@ -109,7 +109,7 @@
   	<attribute name="sladied6" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="insurrec" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="adult3" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="ownera" type="String" userLabel="" importType="string" length="40" /> 
+  	<attribute name="ownera" type="String" userLabel="" importType="string" length="60" /> 
   	<attribute name="ownerb" type="String" userLabel="" importType="string" length="40" /> 
   	<attribute name="ownerc" type="String" userLabel="" importType="string" length="40" /> 
   	<attribute name="ownerd" type="String" userLabel="" importType="string" length="40" /> 
@@ -201,7 +201,7 @@
     <attribute name="cashpric" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="jamcaspr" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="locurmnl" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="exchrate" type="String" userLabel="" importType="string"/>
+    <attribute name="exchrate" type="String" userLabel="" importType="string" length="10" />
     <attribute name="frencpri" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="frnprinl" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="nonpay" type="Float" userLabel="" importType="numeric"/> 

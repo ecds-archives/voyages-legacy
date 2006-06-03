@@ -196,7 +196,7 @@ public class Import
 					System.out.println("missing field: " + col.getName());
 					// error: missing field
 				}
-				else if (compareTypes(col.getImportType(), var.getType()))
+				else if (!compareTypes(col.getImportType(), var.getType()))
 				{
 					System.out.println("type missmatch: " + col.getName());
 					// error: type missmatch
@@ -299,7 +299,7 @@ public class Import
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 			if (col.getType() == SchemaColumn.TYPE_DICT)
 			{
-				//System.out.println("Updating: " + col.getName() + " (" + col.getDictinaory() + ")");
+				System.out.println("Updating: " + col.getName() + ", " + col.getDictinaory());
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
 				updateDictionary(col, var);
 			}
@@ -692,9 +692,6 @@ public class Import
 				// determine VID
 				mainVid = saveVoyage ? voyageVid : slavesVid;
 				
-//				if (voyagesCache == null || cachePos == voyagesCache.length)
-//					voyagesCache = Voyage.loadMostRecent(new Long(mainVid), VOYAGE_CACHE_SIZE);
-				
 				// load voyage from db or create a new one
 				Voyage voyage = null;
 				while (voyage == null)
@@ -730,10 +727,6 @@ public class Import
 					
 				}
 				
-				
-//				Voyage voyage = Voyage.loadMostRecent(new Long(mainVid));
-//				if (voyage == null) voyage = Voyage.createNew(new Long(mainVid));
-
 				// update voyage
 				if (saveVoyage)
 				{
@@ -800,29 +793,23 @@ public class Import
 		try
 		{
 			
-//			System.out.print("Converting files ...");
+//			System.out.println("Converting files ----------------------------");
 //			convertSpssFiles();
-//			System.out.println("done");
 
-			System.out.print("Loading schemas ...");
+			System.out.println("Loading schemas -----------------------------");
 			loadSchemas();
-			System.out.println("done");
 			
-			System.out.print("Matching schemas ...");
+			System.out.println("Matching schemas ----------------------------");
 			matchAndVerifySchema();
-			System.out.println("done");
 
-//			System.out.print("Sorting data ...");
+//			System.out.println("Sorting data --------------------------------");
 //			sortFiles();
-//			System.out.println("done");
 
-//			System.out.print("Updating dictionaries ...");
-//			updateDictionaties();
-//			System.out.println("done");
+			System.out.println("Updating dictionaries -----------------------");
+			updateDictionaties();
 			
-			System.out.print("Importing data ...");
+			System.out.println("Importing data ------------------------------");
 			importData();
-			System.out.println("done");
 
 //			System.out.println("total number of voyages = " + totalNoOfVoyages);
 //			System.out.println("number of valid voyages = " + noOfValidVoyages);

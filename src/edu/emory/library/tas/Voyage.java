@@ -1,7 +1,7 @@
 package edu.emory.library.tas;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,7 +34,6 @@ import edu.emory.library.tas.dicts.Natinim4;
 import edu.emory.library.tas.dicts.New;
 import edu.emory.library.tas.dicts.Newamreg;
 import edu.emory.library.tas.dicts.OldWorldPlace;
-import edu.emory.library.tas.dicts.PortLocation;
 import edu.emory.library.tas.dicts.PrimaryLast;
 import edu.emory.library.tas.dicts.PurchasePort;
 import edu.emory.library.tas.dicts.RetPort;
@@ -213,7 +212,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		types.put("sladied6", new SchemaColumn("sladied6", 0, null, 0, null, null, null, null, null, -1));
 		types.put("insurrec", new SchemaColumn("insurrec", 0, null, 0, null, null, null, null, null, -1));
 		types.put("adult3", new SchemaColumn("adult3", 0, null, 0, null, null, null, null, null, -1));
-		types.put("ownera", new SchemaColumn("ownera", 2, null, 1, null, null, null, null, null, 40));
+		types.put("ownera", new SchemaColumn("ownera", 2, null, 1, null, null, null, null, null, 60));
 		types.put("ownerb", new SchemaColumn("ownerb", 2, null, 1, null, null, null, null, null, 40));
 		types.put("ownerc", new SchemaColumn("ownerc", 2, null, 1, null, null, null, null, null, 40));
 		types.put("ownerd", new SchemaColumn("ownerd", 2, null, 1, null, null, null, null, null, 40));
@@ -305,7 +304,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		types.put("cashpric", new SchemaColumn("cashpric", 5, null, 0, null, null, null, null, null, -1));
 		types.put("jamcaspr", new SchemaColumn("jamcaspr", 5, null, 0, null, null, null, null, null, -1));
 		types.put("locurmnl", new SchemaColumn("locurmnl", 5, null, 0, null, null, null, null, null, -1));
-		types.put("exchrate", new SchemaColumn("exchrate", 2, null, 1, null, null, null, null, null, -1));
+		types.put("exchrate", new SchemaColumn("exchrate", 2, null, 1, null, null, null, null, null, 10));
 		types.put("frencpri", new SchemaColumn("frencpri", 5, null, 0, null, null, null, null, null, -1));
 		types.put("frnprinl", new SchemaColumn("frnprinl", 5, null, 0, null, null, null, null, null, -1));
 		types.put("nonpay", new SchemaColumn("nonpay", 5, null, 0, null, null, null, null, null, -1));

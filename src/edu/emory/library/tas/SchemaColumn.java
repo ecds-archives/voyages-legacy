@@ -55,6 +55,9 @@ public class SchemaColumn
 					throw new InvalidNumberOfValuesException();
 				
 				value = values[0].trim();
+				if (value.length() == 0)
+					return null;
+				
 				if (importLength != -1 && value.length() > importLength)
 					throw new StringTooLongException();
 				
@@ -169,6 +172,7 @@ public class SchemaColumn
 					Dictionary dict = Dictionary.createNew(dictionary);
 					dict.setRemoteId(remoteId);
 					dict.setName(remoteId.toString());
+					dict.save();
 					return dict;
 				}
 
