@@ -57,12 +57,13 @@ public class HibernateConnector {
 	 *            Hibernate session
 	 * @param p_voyage
 	 *            Voyage providing voyage id
+	 * @param p_firstResult TODO
 	 * @param p_option
 	 *            option
 	 * @return Query object
 	 */
 	private Query getVoyageIndexByVoyageQuery(Session session, Voyage p_voyage,
-			int p_fetchSize ,int p_option) {
+			int p_firstResult ,int p_fetchSize, int p_option) {
 
 		StringBuffer where = new StringBuffer("");
 		boolean first = true;
@@ -122,6 +123,10 @@ public class HibernateConnector {
 		Query query = session.createQuery("from VoyageIndex " + where
 				+ " order by vid, global_rev_id ");
 
+		if (p_firstResult != -1) {
+			query.setFirstResult(p_firstResult);
+		}
+
 		if (p_fetchSize != -1) {
 			query.setMaxResults(p_fetchSize);
 		}
@@ -156,7 +161,7 @@ public class HibernateConnector {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
-				 -1, p_option);
+				 -1, -1, p_option);
 		List list = query.list();
 		transaction.commit();
 
@@ -179,7 +184,7 @@ public class HibernateConnector {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
-				-1, p_option);
+				-1, -1, p_option);
 		ScrollableResults scroll = query.scroll();
 		transaction.commit();
 
@@ -376,7 +381,7 @@ public class HibernateConnector {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(session, p_voyage,
-				p_fetchSize, p_option);
+				-1, p_fetchSize, p_option);
 		
 
 		List list = query.list();
@@ -384,4 +389,19 @@ public class HibernateConnector {
 
 		return this.prepareResponse(list, p_option);
 	}
+
+	public VoyageIndex[] getVoyagesIndexSet(int p_firstResult, int p_fetchSize, int p_option) {
+		
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		Query query = this.getVoyageIndexByVoyageQuery(session, null,
+				p_firstResult, p_fetchSize, p_option);
+		
+
+		List list = query.list();
+		transaction.commit();
+
+		return this.prepareResponse(list, p_option);
+	}
+
 }

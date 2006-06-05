@@ -345,7 +345,6 @@
  
   		
   		<many-to-one name="temp" class="edu.emory.library.tas.dicts.Temp" unique="true" lazy="false"/>
-
         
     </class>
     

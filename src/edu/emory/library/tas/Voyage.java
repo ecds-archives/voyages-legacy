@@ -549,6 +549,25 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 	
+	public static Voyage[] loadAllMostRecent(int p_firstResult, int p_fetchSize) {
+		
+		//Load voyage from DB
+		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
+			.getVoyagesIndexSet(p_firstResult, p_fetchSize, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
+		
+		Voyage[] ret = new Voyage[voyageIndex.length];
+		//Prepare result
+		for (int i = 0; i < voyageIndex.length; i++) {
+			ret[i] = voyageIndex[i].getVoyage();
+			ret[i].setSlaves(voyageIndex[i].getSlaves());
+			ret[i].setRevisionId(voyageIndex[i].getRevisionId());
+			
+		}
+		cleanObject(ret);
+		
+		return ret;
+	}
+
 	/**
 	 * Loads voyage with given ID and given revision ID.
 	 * @param voyageId	voyuage ID
@@ -569,7 +588,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * @return
 	 */
 	public static List loadAllRevisions(Long voyageId, int p_option) {
-		int option = p_option & HibernateConnector.WITH_HISTORY;
+		int option = p_option | HibernateConnector.WITH_HISTORY;
 		Voyage localVoyage = new Voyage();
 		localVoyage.setVoyageId(voyageId);
 		

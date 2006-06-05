@@ -138,7 +138,7 @@ public class Dictionary {
 	}
 
 	public String toString() {
-		return "Dictionary val: " + name;
+		return name;
 	}
 
 	public Integer getType() {

@@ -793,6 +793,8 @@ public class Import
 		try
 		{
 			
+			long startTime = System.currentTimeMillis();
+			
 //			System.out.println("Converting files ----------------------------");
 //			convertSpssFiles();
 
@@ -817,6 +819,9 @@ public class Import
 //			System.out.println("number of valid slaves  = " + noOfValidSlaves);
 //			System.out.println("voyages with slaves     = " + noOfVoyagesWithSlaves);
 			
+			long endTime = System.currentTimeMillis();
+			System.out.println("Total time: " + (endTime - startTime));
+
 			if (false)
 			{
 				throw new IOException();
