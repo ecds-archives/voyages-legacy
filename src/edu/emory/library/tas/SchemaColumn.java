@@ -1,5 +1,6 @@
 package edu.emory.library.tas;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class SchemaColumn
@@ -129,14 +130,16 @@ public class SchemaColumn
 				if (day.length() == 0 || month.length() == 0 || year.length() == 0)
 					return null;
 
-				Calendar cal = Calendar.getInstance();
+				
 				try
 				{
-					cal.set(
-							Integer.parseInt(year),
+					Timestamp tstamp = new Timestamp(Integer.parseInt(year),
 							Integer.parseInt(month),
-							Integer.parseInt(day));
-					return cal.getTime();
+							Integer.parseInt(day),
+							0,0,0,0);
+					
+					
+					return tstamp;
 				}
 				catch (NumberFormatException nfe)
 				{
