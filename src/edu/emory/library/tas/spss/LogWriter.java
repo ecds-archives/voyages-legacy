@@ -43,7 +43,7 @@ public class LogWriter
 		writer.print(" ");
 		
 		// message
-		message = message.replaceAll("\r\n", " ").replaceAll("\r", " ").replaceAll("\n", " ");
+		message = message.replaceAll("\\r\\n", " ").replaceAll("\\r", " ").replaceAll("\\n", " ");
 		writer.println(message);
 
 	}

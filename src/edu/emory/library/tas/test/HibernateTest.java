@@ -26,7 +26,6 @@ import edu.emory.library.tas.dicts.Temp;
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
-import edu.emory.library.tas.web.test.HtmlWriter;
 
 public class HibernateTest {
 
