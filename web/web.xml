@@ -13,8 +13,13 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>dictionary</servlet-name>
-		<servlet-class>edu.emory.library.tas.web.test.DictionaryServlet</servlet-class>
+		<servlet-name>searchform</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.SearchFormServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>searchresults</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.SearchResultsServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -28,8 +33,13 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>dictionary</servlet-name>
-		<url-pattern>/dictionary</url-pattern>
+		<servlet-name>searchform</servlet-name>
+		<url-pattern>/searchform</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>searchresults</servlet-name>
+		<url-pattern>/searchresults</url-pattern>
 	</servlet-mapping>
 
 </web-app>
