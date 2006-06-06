@@ -72,13 +72,13 @@ public class HibernateConnector {
 		if (p_voyage != null) {
 			if (p_fetchSize == -1) {
 				where.append("where ");
-				where.append("vid=");
+				where.append("voyageindex.voyageId =");
 				where.append(p_voyage.getVoyageId());
 				where.append(" ");
 				first = false;
 			} else {
 				where.append("where ");
-				where.append("vid >= ");
+				where.append("voyageindex.voyageId >= ");
 				where.append(p_voyage.getVoyageId());
 				where.append(" ");
 				first = false;
@@ -114,14 +114,17 @@ public class HibernateConnector {
 				where.append("where ");
 			}
 			first = false;
-			where.append(" (vid, global_rev_id) = some"
+			where.append(" (voyageindex.voyageId, global_rev_id) = some"
 					+ " (select voyageId, max(revisionId) from VoyageIndex "
 					+ oldWhere + " group by vid)");
 		}
 
 		// Create query
-		Query query = session.createQuery("from VoyageIndex " + where
-				+ " order by vid, global_rev_id ");
+		Query query = session.createQuery(
+				"from VoyageIndex as voyageindex " + 
+				"left join fetch voyageindex.voyage " + 
+				where +
+				" order by voyage_index_id ");
 
 		if (p_firstResult != -1) {
 			query.setFirstResult(p_firstResult);

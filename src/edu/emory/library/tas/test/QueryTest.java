@@ -54,7 +54,7 @@ public class QueryTest
 		
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
-		Query query = session.createQuery("from Book as book left join fetch book.author");
+		Query query = session.createQuery("from Book as book left join fetch book.author as a");
 		
 		List list = query.list();
 		for (Iterator iter = list.iterator(); iter.hasNext();)

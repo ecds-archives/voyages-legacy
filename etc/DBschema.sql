@@ -900,8 +900,3 @@ ALTER TABLE slaves OWNER TO tasuser;
 ALTER TABLE voyage_slaves OWNER TO tasuser;
 ALTER TABLE voyages OWNER TO tasuser;
 ALTER TABLE voyages_index OWNER TO tasuser;
-
-
-
-
-

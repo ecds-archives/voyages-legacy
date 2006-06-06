@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.emory.library.tas.Voyage;
 
-public class Detail extends HttpServlet
+public class DetailServlet extends HttpServlet
 {
 
 	private static final long serialVersionUID = 1L;
@@ -72,13 +72,13 @@ public class Detail extends HttpServlet
 	
 	}
 	
-	public static void main(String[] args)
-	{
-		
-		Voyage voyage = Voyage.loadMostRecent(new Long(1));
-		voyage.setShipname("Titanic");
-		voyage.save();
-		
-	}
+//	public static void main(String[] args)
+//	{
+//		
+//		Voyage voyage = Voyage.loadMostRecent(new Long(1));
+//		voyage.setShipname("Titanic");
+//		voyage.save();
+//		
+//	}
 
 }

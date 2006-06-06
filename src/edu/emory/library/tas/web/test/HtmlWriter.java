@@ -130,5 +130,24 @@ public class HtmlWriter
 	{
 		element("th", text, new String[] {"href", "style", "class"}, new String[] {href, style, className});
 	}
+	
+	public void beginScript()
+	{
+		beginElement("script", new String[] {"language", "type"}, new String[] {"javascript", "text/javascript"});
+		out.println();
+	}
+
+	public void endScript()
+	{
+		endElement("script");
+		out.println();
+	}
+
+	public void addExternalScript(String src)
+	{
+		beginElement("script", new String[] {"language", "type", "src"}, new String[] {"javascript", "text/javascript", src});
+		endElement("script");
+		out.println();
+	}
 
 }

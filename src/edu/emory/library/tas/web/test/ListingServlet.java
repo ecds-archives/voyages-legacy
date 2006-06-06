@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.emory.library.tas.Voyage;
 
-public class Listing extends HttpServlet
+public class ListingServlet extends HttpServlet
 {
 
 	private static final long serialVersionUID = 1L;
