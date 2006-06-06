@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.emory.library.tas.util.query.Conditions;
+
 public class VoyageIndex {
 	
 	private Long id;
@@ -94,6 +96,30 @@ public class VoyageIndex {
 
 	public void setLatest_approved(Integer latest_approved) {
 		this.latest_approved = latest_approved;
+	}
+	
+	public static Conditions getRecentApproved() {
+		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		cond.addCondition("latest_approved", new Integer(1), Conditions.OP_EQUALS);
+		return cond;
+	}
+	
+	public static Conditions getRecent() {
+		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		cond.addCondition("latest", new Integer(1), Conditions.OP_EQUALS);
+		return cond;
+	}
+	
+	public static Conditions getApproved() {
+		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		cond.addCondition("flag", new Integer(1), Conditions.OP_EQUALS);
+		return cond;
+	}
+	
+	public static Conditions getNotApproved() {
+		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		cond.addCondition("flag", new Integer(0), Conditions.OP_EQUALS);
+		return cond;
 	}
 	
 }

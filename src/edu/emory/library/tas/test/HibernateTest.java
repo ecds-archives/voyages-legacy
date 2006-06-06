@@ -1,11 +1,20 @@
 package edu.emory.library.tas.test;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashSet;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DatasetGroup;
 
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.Slave;
@@ -171,72 +180,41 @@ public class HibernateTest {
 //				for (int i = 0; i < res.length && i < 20; i++) {
 //					System.out.println(" -> " + ((VoyageIndex)res[i]).getVoyage().getIid() + "  " + ((VoyageIndex)res[i]).getVoyage().getShipname());
 //				}
-			} else if (command.equals("serv")) {
-				HtmlWriter html = new HtmlWriter(new PrintWriter(new FileWriter("test")));
+			} else if (command.equals("chart")) {
+				Conditions cMain = new Conditions(Conditions.JOIN_AND);
+				Conditions cNot = new Conditions(Conditions.JOIN_NOT);
+				Conditions cNNull = new Conditions(Conditions.JOIN_AND);
+				cNNull.addCondition("voyage.slamimp", null, Conditions.OP_EQUALS);
+				cNot.addCondition(cNNull);
+				cMain.addCondition(cNot);
+				cMain.addCondition("voyage.voyageId", new Integer (100), Conditions.OP_SMALLER_OR_EQUAL);
 				
+				QueryValue qValue = new QueryValue("VoyageIndex", cMain);
+				qValue.addPopulatedAttribute("voyage.voyageId");
+				qValue.addPopulatedAttribute("voyage.slamimp");
 				
-				long t1 = System.currentTimeMillis();
-				Voyage[] voyages = Voyage.loadAllMostRecent(20000, 100);
+				Object[] objs =  HibernateConnector.getConnector().loadObjects(qValue);
 				
+				DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
 				
-				html.start("List");
-
-				html.beginTable(0, 0, 0);
-				html.beginTr();
-				
-				html.endTr();
-				html.endTable();
-				
-				html.out.println("<br>");
-
-				html.beginTable(0, 0, 0, "width: 100%", null);
-
-				html.beginTr();
-				html.th("ID");
-				html.th("Ship");
-				html.th("Captain");
-				html.th("Started");
-				html.th("Ended");
-				html.th("Embarked");
-				html.th("Disembarked");
-				html.th("From");
-				html.th("To");
-				html.endTr();
-				
-				
-				
-				for (int i = 0; i < voyages.length; i++)
-				{
-					Voyage voyage = voyages[i];
+				for (int i = 0; i < objs.length; i++) {
 					
-					html.beginTr();
-					html.tdWithHref(voyage.getVoyageId(), "detail?vid=" + voyage.getVoyageId());
-					
-					html.td(voyage.getShipname());
-					html.td(voyage.getCaptaina());
-
-					html.td(voyage.getYearaf());
-					html.td(voyage.getYearam());
-					
-					html.td(voyage.getSlaximp());
-					html.td(voyage.getSlamimp());
-					
-					if (voyage.getMajbuypt() != null) html.td(voyage.getMajbuypt().getName());
-					if (voyage.getMajselpt() != null) html.td(voyage.getMajselpt().getName());
-					
-					html.endTr();
-					
+					categoryDataset.addValue(((Integer)((Object[])objs[i])[1]).intValue(), ((Object[])objs[i])[0].toString(), "");
+				
 				}
-
-				html.endTable();
 				
-				html.end();
+				JFreeChart chart = ChartFactory.createBarChart("Sample Category Chart", // Title
+				                      "Voyages",              // X-Axis label
+				                      "# of slaves",                 // Y-Axis label
+				                      categoryDataset,         // Dataset
+				                      PlotOrientation.VERTICAL,
+				                      true, true, true                     // Show legend
+				                     );
 				
-				long t2 = System.currentTimeMillis();
 				
-				System.out.println("Returned: " + voyages.length + " time=" + (t2-t1));
 				
-			}
+				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
+			} 
 			
 			System.out.print("command:>");
 		}
