@@ -14,6 +14,8 @@
         <property name="flag" column="flag"/>
         <property name="voyageId" column="vid"/>
         <property name="revisionId" column="global_rev_id"/>
+        <property name="latest" column="latest"/>
+        <property name="latest_approved" column="latest_approved"/>
         
         <many-to-one name="voyage" class="edu.emory.library.tas.Voyage" column="r_voyage_iid" lazy="false" />
         <set name="slaves" table="voyage_slaves" lazy="false">

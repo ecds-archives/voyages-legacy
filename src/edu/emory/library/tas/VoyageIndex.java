@@ -12,6 +12,9 @@ public class VoyageIndex {
 	private Long voyageId;
 	private Long revisionId;
 	
+	private Integer latest = null;
+	private Integer latest_approved = null;
+	
 	private Voyage voyage;
 	private Set slaves = new HashSet();
 	
@@ -75,6 +78,22 @@ public class VoyageIndex {
 
 	public void setRevisionId(Long revisionId) {
 		this.revisionId = revisionId;
+	}
+
+	public Integer getLatest() {
+		return latest;
+	}
+
+	public void setLatest(Integer latest) {
+		this.latest = latest;
+	}
+
+	public Integer getLatest_approved() {
+		return latest_approved;
+	}
+
+	public void setLatest_approved(Integer latest_approved) {
+		this.latest_approved = latest_approved;
 	}
 	
 }

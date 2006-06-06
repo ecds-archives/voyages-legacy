@@ -72,13 +72,13 @@ public class HibernateConnector {
 		if (p_voyage != null) {
 			if (p_fetchSize == -1) {
 				where.append("where ");
-				where.append("voyageindex.voyageId =");
+				where.append("voyageIndex.voyage.voyageId = ");
 				where.append(p_voyage.getVoyageId());
 				where.append(" ");
 				first = false;
 			} else {
 				where.append("where ");
-				where.append("voyageindex.voyageId >= ");
+				where.append("voyageIndex.voyage.voyageId >= ");
 				where.append(p_voyage.getVoyageId());
 				where.append(" ");
 				first = false;
@@ -114,17 +114,17 @@ public class HibernateConnector {
 				where.append("where ");
 			}
 			first = false;
-			where.append(" (voyageindex.voyageId, global_rev_id) = some"
-					+ " (select voyageId, max(revisionId) from VoyageIndex "
-					+ oldWhere + " group by vid)");
+			if ((p_option & 6) == (APPROVED_AND_NOT_APPROVED & 6)) {
+				where.append("latest=1 ");
+			} else {
+				where.append("latest_approved=1 ");
+			}
 		}
 
 		// Create query
-		Query query = session.createQuery(
-				"from VoyageIndex as voyageindex " + 
-				"left join fetch voyageindex.voyage " + 
-				where +
-				" order by voyage_index_id ");
+		Query query = session.createQuery("from VoyageIndex as voyageIndex left join fetch voyageIndex.voyage " + where
+				+ " order by voyageIndex.voyageId"
+				);
 
 		if (p_firstResult != -1) {
 			query.setFirstResult(p_firstResult);
@@ -213,11 +213,15 @@ public class HibernateConnector {
 
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
-
+		
+		p_voyage.setLatest(new Integer(1));
+		p_voyage.setLatest_approved(new Integer(0));
+		
 		// Check if we really create new row
 		List tmpResponse = session.createQuery(
-				"from VoyageIndex where vid=:vid order by global_rev_id")
-				.setParameter("vid", p_voyage.getVoyageId().toString()).list();
+			"from VoyageIndex where vid=:vid and latest=1")
+			.setParameter("vid", p_voyage.getVoyageId().toString()).list();
+		
 		if (tmpResponse.size() == 0) {
 			p_voyage.setRevisionId(new Long(0));
 		} else {
@@ -248,9 +252,12 @@ public class HibernateConnector {
 
 		// check for last revision ID
 		List tmpResponse = session.createQuery(
-				"from VoyageIndex where vid=:vid order by global_rev_id")
-				.setParameter("vid", p_voyage.getVoyageId().toString()).list();
+				"from VoyageIndex where vid=:vid and latest=1")
+				.setParameter("vid", p_voyage.getVoyageId().toString()).list();		
 
+		p_voyage.setLatest(new Integer(1));
+		p_voyage.setLatest_approved(new Integer(0));
+		
 		// Increment revision ID
 		if (tmpResponse.size() == 0) {
 			throw new InvalidParameterException(
@@ -283,6 +290,8 @@ public class HibernateConnector {
 		if (p_voyage.getVoyage().getModified() == Voyage.UPDATED
 				|| p_voyage.getVoyage().wereSlavesModified() || slaveSaved) {
 			// Update slaves list
+			session.createQuery("update VoyageIndex set latest=0 where voyageId=" + p_voyage.getVoyageId().toString()).executeUpdate();
+			
 			p_voyage.setSlaves(newSlaves);
 
 			// Modify voyage if needed
@@ -340,7 +349,6 @@ public class HibernateConnector {
 	public Object[] loadObjects(QueryValue p_query) {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
-		System.out.println("My query: " + p_query.toString());
 		List list = p_query.getQuery(session).list();
 		transaction.commit();
 		

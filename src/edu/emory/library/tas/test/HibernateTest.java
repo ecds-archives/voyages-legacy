@@ -1,8 +1,10 @@
 package edu.emory.library.tas.test;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.HashSet;
 
 import edu.emory.library.tas.Dictionary;
@@ -15,6 +17,7 @@ import edu.emory.library.tas.dicts.Temp;
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.test.HtmlWriter;
 
 public class HibernateTest {
 
@@ -53,16 +56,28 @@ public class HibernateTest {
 //					Voyage v = new Voyage();
 //					v.setVoyageId(new Long(30001));
 					
-					//VoyageIndex[] list = connector.getVoyageIndexByVoyage(v, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
-					Voyage v = Voyage.loadMostRecent(new Long(2314));
+					long t1 = System.currentTimeMillis();
+//					VoyageIndex[] list = connector.getVoyagesIndexSet(0, 100, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
+//					Voyage v = Voyage.loadMostRecent(new Long(2314));
+					Voyage[] list = Voyage.loadAllMostRecent(0, 100);
 					
-					if (v != null) {
-						
-//						System.out.println("Event1: " + theVoyage);
-						System.out.println("Printing!");
-						System.out.println(((Slave)v.getSlaves().iterator().next()).getName());
-						System.out.println(v.getShipname() + "---" + v.getPortdep());
-					}
+					
+					long t2 = System.currentTimeMillis();
+					
+					System.out.println("Returned: " + list.length + " time=" + (t2-t1));
+					
+//					if (v != null) {
+//						
+////						System.out.println("Event1: " + theVoyage);
+//						System.out.println("Printing!");
+//						System.out.println(((Slave)v.getSlaves().iterator().next()).getName());
+//						System.out.println(v.getShipname() + "---" + v.getPortdep());
+//					}
+//					for (int i = 0; i < list.length; i++) {
+//						Voyage v = list[i].getVoyage();
+//						System.out.println("Printing!");
+//						System.out.println(v.getShipname() + "---" + v.getPortdep());
+//					}
 
 				} catch (NullPointerException e) {
 					e.printStackTrace();
@@ -136,20 +151,91 @@ public class HibernateTest {
 				
 				
 				Conditions cMain = new Conditions(Conditions.JOIN_AND);
-				cMain.addCondition("voyage.shipname", "Pastora de Lima", Conditions.OP_EQUALS);
-				Conditions cL1 = new Conditions(Conditions.JOIN_OR);
-				cMain.addCondition(cL1);
-				cL1.addCondition("voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
-				cL1.addCondition("voyage.captaina", "Cunha%", Conditions.OP_LIKE);
+				
+//				cMain.addCondition("voyage.shipname", "Pastora de Lima", Conditions.OP_EQUALS);
+//				Conditions cL1 = new Conditions(Conditions.JOIN_OR);
+//				cMain.addCondition(cL1);
+//				cL1.addCondition("voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
+//				cL1.addCondition("voyage.captaina", "Cunha%", Conditions.OP_LIKE);
 				
 				
 				QueryValue qValue = new QueryValue("VoyageIndex", cMain);
+//				qValue.setLimit(100);
+//				qValue.addPopulatedAttribute("voyage.shipname");
+//				qValue.addPopulatedAttribute("voyage.shipname");
+				long t1 = System.currentTimeMillis();
 				Object[] res = HibernateConnector.getConnector().loadObjects(qValue);
+				long t2 = System.currentTimeMillis();
 				
-				System.out.println("Returned: " + res.length);
-				for (int i = 0; i < res.length; i++) {
-					System.out.println(" -> " + ((VoyageIndex)res[i]).getVoyage().getIid());
+				System.out.println("Returned: " + res.length + " time=" + (t2-t1));
+//				for (int i = 0; i < res.length && i < 20; i++) {
+//					System.out.println(" -> " + ((VoyageIndex)res[i]).getVoyage().getIid() + "  " + ((VoyageIndex)res[i]).getVoyage().getShipname());
+//				}
+			} else if (command.equals("serv")) {
+				HtmlWriter html = new HtmlWriter(new PrintWriter(new FileWriter("test")));
+				
+				
+				long t1 = System.currentTimeMillis();
+				Voyage[] voyages = Voyage.loadAllMostRecent(20000, 100);
+				
+				
+				html.start("List");
+
+				html.beginTable(0, 0, 0);
+				html.beginTr();
+				
+				html.endTr();
+				html.endTable();
+				
+				html.out.println("<br>");
+
+				html.beginTable(0, 0, 0, "width: 100%", null);
+
+				html.beginTr();
+				html.th("ID");
+				html.th("Ship");
+				html.th("Captain");
+				html.th("Started");
+				html.th("Ended");
+				html.th("Embarked");
+				html.th("Disembarked");
+				html.th("From");
+				html.th("To");
+				html.endTr();
+				
+				
+				
+				for (int i = 0; i < voyages.length; i++)
+				{
+					Voyage voyage = voyages[i];
+					
+					html.beginTr();
+					html.tdWithHref(voyage.getVoyageId(), "detail?vid=" + voyage.getVoyageId());
+					
+					html.td(voyage.getShipname());
+					html.td(voyage.getCaptaina());
+
+					html.td(voyage.getYearaf());
+					html.td(voyage.getYearam());
+					
+					html.td(voyage.getSlaximp());
+					html.td(voyage.getSlamimp());
+					
+					if (voyage.getMajbuypt() != null) html.td(voyage.getMajbuypt().getName());
+					if (voyage.getMajselpt() != null) html.td(voyage.getMajselpt().getName());
+					
+					html.endTr();
+					
 				}
+
+				html.endTable();
+				
+				html.end();
+				
+				long t2 = System.currentTimeMillis();
+				
+				System.out.println("Returned: " + voyages.length + " time=" + (t2-t1));
+				
 			}
 			
 			System.out.print("command:>");
