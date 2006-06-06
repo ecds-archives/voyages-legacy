@@ -18,7 +18,7 @@
         <property name="latest_approved" column="latest_approved"/>
         
         <many-to-one name="voyage" class="edu.emory.library.tas.Voyage" column="r_voyage_iid" lazy="false" />
-        <set name="slaves" table="voyage_slaves" lazy="false">
+        <set name="slaves" table="voyage_slaves" lazy="true">
         	<key column="r_voyage_index_id"/>
         	<many-to-many column="r_slave_id" class="edu.emory.library.tas.Slave"/>
     	</set>

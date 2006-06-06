@@ -25,7 +25,7 @@ public class SearchFormServlet extends HttpServlet
 		
 		PrintWriter out = response.getWriter();
 		HtmlWriter html = new HtmlWriter(out);
-		html.start("Test");
+		html.start("Search form");
 		
 		String []dbNames = Voyage.getAllAttrNames();
 		
@@ -83,10 +83,11 @@ public class SearchFormServlet extends HttpServlet
 		html.addExternalScript("search.js");
 		
 		html.out.print(
-				"<form name=\"search\">" +
+				"<form name=\"search\" method=\"get\" action=\"searchresults\" target=\"results\">" +
 				"<select name=\"fields\"></select>" +
 				"<input type=\"button\" onclick=\"addCondition()\" value=\"Add\">" +
 				"<table border=\"1\" id=\"conditionsTable\"></table>" +
+				"<input type=\"submit\" value=\"Search\">" +
 				"</form>");
 		
 		html.end();
