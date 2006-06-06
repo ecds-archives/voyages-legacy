@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tas.dicts.Angola;
 import edu.emory.library.tas.dicts.Carib;
 import edu.emory.library.tas.dicts.DemBroadRegion;
@@ -54,6 +56,7 @@ import edu.emory.library.tas.dicts.Year25;
 import edu.emory.library.tas.dicts.Year5;
 import edu.emory.library.tas.dicts.Yearches;
 import edu.emory.library.tas.util.HibernateConnector;
+import edu.emory.library.tas.util.HibernateUtil;
 
 public class Voyage extends AbstractDescriptiveObject {
 	
@@ -474,9 +477,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	private static Voyage loadInternal(Voyage voyage, int option) {
 		Voyage localVoyage = null;
 		
+		Session session = HibernateUtil.getSession();
+		
 		//Load voyage from DB
 		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-			.getVoyageIndexByVoyage(voyage, option);
+			.getVoyageIndexByVoyage(session, voyage, option);
 		
 		//Prepare result
 		if (voyageIndex.length != 0) {
@@ -485,6 +490,7 @@ public class Voyage extends AbstractDescriptiveObject {
 			localVoyage.setRevisionId(voyageIndex[0].getRevisionId());
 			cleanObject(new Voyage[] {localVoyage});
 		}
+		session.close();
 		
 		return localVoyage;
 	}
@@ -532,9 +538,10 @@ public class Voyage extends AbstractDescriptiveObject {
 		Voyage localVoyage = new Voyage();
 		localVoyage.setVoyageId(voyageId);
 		
+		Session session = HibernateUtil.getSession();
 		//Load voyage from DB
 		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-			.getVoyagesIndexSet(localVoyage, p_packetSize, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
+			.getVoyagesIndexSet(session, localVoyage, p_packetSize, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
 		
 		Voyage[] ret = new Voyage[voyageIndex.length];
 		//Prepare result
@@ -545,15 +552,16 @@ public class Voyage extends AbstractDescriptiveObject {
 			
 		}
 		cleanObject(ret);
-		
+		session.close();
 		return ret;
 	}
 	
 	public static Voyage[] loadAllMostRecent(int p_firstResult, int p_fetchSize) {
 		
+		Session session = HibernateUtil.getSession();
 		//Load voyage from DB
 		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-			.getVoyagesIndexSet(p_firstResult, p_fetchSize, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
+			.getVoyagesIndexSet(session, p_firstResult, p_fetchSize, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
 		
 		Voyage[] ret = new Voyage[voyageIndex.length];
 		//Prepare result
@@ -564,7 +572,7 @@ public class Voyage extends AbstractDescriptiveObject {
 			
 		}
 		cleanObject(ret);
-		
+		session.close();
 		return ret;
 	}
 
@@ -592,9 +600,10 @@ public class Voyage extends AbstractDescriptiveObject {
 		Voyage localVoyage = new Voyage();
 		localVoyage.setVoyageId(voyageId);
 		
+		Session session = HibernateUtil.getSession();
 		//Load info from DB
 		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-			.getVoyageIndexByVoyage(localVoyage, option);
+			.getVoyageIndexByVoyage(session, localVoyage, option);
 		List list = new ArrayList();
 		//Prepare result
 		for (int i = 0; i < voyageIndex.length; i++) {
@@ -604,6 +613,7 @@ public class Voyage extends AbstractDescriptiveObject {
 			list.add(v);
 			cleanObject(new Voyage[] {v});
 		}
+		session.close();
 		//Return result
 		return list;
 	}

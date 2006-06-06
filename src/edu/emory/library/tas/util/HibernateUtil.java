@@ -21,7 +21,7 @@ public class HibernateUtil {
     }
 
     public synchronized static Session getSession() {
-    	return sessionFactory.getCurrentSession();
+    	return sessionFactory.openSession();
     }
     
     public static SessionFactory getSessionFactory() {
