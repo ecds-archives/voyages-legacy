@@ -1,0 +1,45 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
+
+	<servlet>
+		<servlet-name>listing</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.ListingServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>detail</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.DetailServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>searchform</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.SearchFormServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>searchresults</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.SearchResultsServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>listing</servlet-name>
+		<url-pattern>/listing</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>detail</servlet-name>
+		<url-pattern>/detail</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>searchform</servlet-name>
+		<url-pattern>/searchform</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>searchresults</servlet-name>
+		<url-pattern>/searchresults</url-pattern>
+	</servlet-mapping>
+
+</web-app>
