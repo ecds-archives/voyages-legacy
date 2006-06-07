@@ -1,6 +1,8 @@
+
 package edu.emory.library.tas.util.query;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Conditions {
@@ -76,7 +78,7 @@ public class Conditions {
 		this.subConditions.add(subCond);
 	}
 	
-	public StringBuffer getConditionHQL() {
+	public ConditionResponse getConditionHQL() {
 		int size = this.conditions.size() + this.subConditions.size();
 		if (this.joinCondition == JOIN_NOT && size != 1) {
 			throw new RuntimeException("With JOIN_NOT only one condition allowable!");
@@ -90,27 +92,33 @@ public class Conditions {
 			ret.append("not (");
 		}
 		
+		HashMap retMap = new HashMap();
+		
 		Iterator iter = this.conditions.iterator();
 		while (iter.hasNext()) {
 			Condition c = (Condition)iter.next();
 			String attr = c.attribute;
+			String val = attr.replaceAll("\\.", "") + this.hashCode();
 			Object value = c.value;
 			processed++;
 			ret.append(attr);
 			ret.append(c.op);
-			if (value instanceof String) {
-				if (c.op.equals(" like ")) {
-					ret.append("(");
-				}
-				ret.append("'");
-				ret.append(value);
-				ret.append("'");
-				if (c.op.equals(" like ")) {
-					ret.append(")");
-				}
-			} else {
-				ret.append(value);
-			}
+			ret.append(" :");
+			ret.append(val);
+			retMap.put(val, value);
+//			if (value instanceof String) {
+//				if (c.op.equals(" like ")) {
+//					ret.append("(");
+//				}
+//				ret.append("'");
+//				ret.append(value);
+//				ret.append("'");
+//				if (c.op.equals(" like ")) {
+//					ret.append(")");
+//				}
+//			} else {
+//				ret.append(value);
+//			}
 			if (processed < size) {
 				ret.append(this.joinCondition == JOIN_AND ? " and ":" or ");
 			}
@@ -118,13 +126,18 @@ public class Conditions {
 		
 		iter = this.subConditions.iterator();
 		while (iter.hasNext()) {
-			ret.append("(").append(((Conditions)iter.next()).getConditionHQL()).append(")");
+			ConditionResponse child = ((Conditions)iter.next()).getConditionHQL(); 
+			ret.append("(").append(child.conditionString).append(")");
+			retMap.putAll(child.properties);
 		}
 		
 		if (this.joinCondition == JOIN_NOT) {
 			ret.append(")");
 		}
 		
-		return ret;
+		ConditionResponse res = new ConditionResponse();
+		res.conditionString = ret;
+		res.properties = retMap;
+		return res;
 	}
 }

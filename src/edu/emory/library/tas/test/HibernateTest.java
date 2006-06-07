@@ -160,11 +160,11 @@ public class HibernateTest {
 				
 				Conditions cMain = new Conditions(Conditions.JOIN_AND);
 				
-//				cMain.addCondition("voyage.shipname", "Pastora de Lima", Conditions.OP_EQUALS);
-//				Conditions cL1 = new Conditions(Conditions.JOIN_OR);
-//				cMain.addCondition(cL1);
-//				cL1.addCondition("voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
-//				cL1.addCondition("voyage.captaina", "Cunha%", Conditions.OP_LIKE);
+				cMain.addCondition("voyage.shipname", "Pastora de Lima", Conditions.OP_EQUALS);
+				Conditions cL1 = new Conditions(Conditions.JOIN_AND);
+				cMain.addCondition(cL1);
+				cL1.addCondition("voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
+				cL1.addCondition("voyage.captaina", "Cunha%", Conditions.OP_LIKE);
 				
 				
 				QueryValue qValue = new QueryValue("VoyageIndex", cMain);

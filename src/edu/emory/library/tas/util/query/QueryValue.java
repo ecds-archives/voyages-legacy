@@ -14,8 +14,6 @@ public class QueryValue {
 	public static final int ORDER_ASC = 1;
 	public static final int ORDER_DESC = -1;
 	
-	
-	
 	private String object;
 	private Conditions conditions;
 	private String groupBy;
@@ -59,7 +57,7 @@ public class QueryValue {
 		this.conditions = cond;
 	}
 	
-	public String toString() {
+	public ConditionResponse toStringWithParams() {
 		StringBuffer buf = new StringBuffer();
 		
 		if (this.populateValues != null) {
@@ -76,9 +74,9 @@ public class QueryValue {
 		}
 		
 		buf.append("from ").append(this.object);
-		StringBuffer where = this.conditions.getConditionHQL();
-		if (!where.toString().trim().equals("")) {
-			buf.append(" where ").append(where);
+		ConditionResponse response = this.conditions.getConditionHQL();
+		if (!response.conditionString.toString().trim().equals("")) {
+			buf.append(" where ").append(response.conditionString);
 		}
 		
 		if (orderBy != null) {		
@@ -97,7 +95,10 @@ public class QueryValue {
 			buf.append(" group by ").append(groupBy);
 		}
 		
-		return buf.toString();
+		ConditionResponse res = new ConditionResponse();
+		res.conditionString = buf;
+		res.properties = response.properties;
+		return res;
 	}
 	
 	public void addPopulatedAttribute(String p_attrName) {
@@ -108,7 +109,16 @@ public class QueryValue {
 	}
 	
 	public Query getQuery(Session session) {
-		Query q = session.createQuery(toString());
+		ConditionResponse response = toStringWithParams();
+		System.out.println("My query: " + response.conditionString);
+		Query q = session.createQuery(response.conditionString.toString());
+		
+		Iterator iter = response.properties.keySet().iterator();
+		while (iter.hasNext()) {
+			String param = iter.next().toString();
+			q.setParameter(param, response.properties.get(param));
+		}
+		
 		if (this.limit != LIMIT_NO_LIMIT) {
 			q.setMaxResults(this.limit);
 		}
