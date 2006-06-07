@@ -8,13 +8,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashSet;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DatasetGroup;
+//import org.jfree.chart.ChartFactory;
+//import org.jfree.chart.ChartUtilities;
+//import org.jfree.chart.JFreeChart;
+//import org.jfree.chart.plot.PlotOrientation;
+//import org.jfree.data.category.CategoryDataset;
+//import org.jfree.data.category.DefaultCategoryDataset;
+//import org.jfree.data.general.DatasetGroup;
 
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.Slave;
@@ -180,39 +180,39 @@ public class HibernateTest {
 //					System.out.println(" -> " + ((VoyageIndex)res[i]).getVoyage().getIid() + "  " + ((VoyageIndex)res[i]).getVoyage().getShipname());
 //				}
 			} else if (command.equals("chart")) {
-				Conditions cMain = new Conditions(Conditions.JOIN_AND);
-				Conditions cNot = new Conditions(Conditions.JOIN_NOT);
-				Conditions cNNull = new Conditions(Conditions.JOIN_AND);
-				cNNull.addCondition("voyage.slamimp", null, Conditions.OP_EQUALS);
-				cNot.addCondition(cNNull);
-				cMain.addCondition(cNot);
-				cMain.addCondition("voyage.voyageId", new Integer (100), Conditions.OP_SMALLER_OR_EQUAL);
-				
-				QueryValue qValue = new QueryValue("VoyageIndex", cMain);
-				qValue.addPopulatedAttribute("voyage.voyageId");
-				qValue.addPopulatedAttribute("voyage.slamimp");
-				
-				Object[] objs =  HibernateConnector.getConnector().loadObjects(qValue);
-				
-				DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
-				
-				for (int i = 0; i < objs.length; i++) {
-					
-					categoryDataset.addValue(((Integer)((Object[])objs[i])[1]).intValue(), ((Object[])objs[i])[0].toString(), "");
-				
-				}
-				
-				JFreeChart chart = ChartFactory.createBarChart("Sample Category Chart", // Title
-				                      "Voyages",              // X-Axis label
-				                      "# of slaves",                 // Y-Axis label
-				                      categoryDataset,         // Dataset
-				                      PlotOrientation.VERTICAL,
-				                      true, true, true                     // Show legend
-				                     );
-				
-				
-				
-				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
+//				Conditions cMain = new Conditions(Conditions.JOIN_AND);
+//				Conditions cNot = new Conditions(Conditions.JOIN_NOT);
+//				Conditions cNNull = new Conditions(Conditions.JOIN_AND);
+//				cNNull.addCondition("voyage.slamimp", null, Conditions.OP_EQUALS);
+//				cNot.addCondition(cNNull);
+//				cMain.addCondition(cNot);
+//				cMain.addCondition("voyage.voyageId", new Integer (100), Conditions.OP_SMALLER_OR_EQUAL);
+//				
+//				QueryValue qValue = new QueryValue("VoyageIndex", cMain);
+//				qValue.addPopulatedAttribute("voyage.voyageId");
+//				qValue.addPopulatedAttribute("voyage.slamimp");
+//				
+//				Object[] objs =  HibernateConnector.getConnector().loadObjects(qValue);
+//				
+//				DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+//				
+//				for (int i = 0; i < objs.length; i++) {
+//					
+//					categoryDataset.addValue(((Integer)((Object[])objs[i])[1]).intValue(), ((Object[])objs[i])[0].toString(), "");
+//				
+//				}
+//				
+//				JFreeChart chart = ChartFactory.createBarChart("Sample Category Chart", // Title
+//				                      "Voyages",              // X-Axis label
+//				                      "# of slaves",                 // Y-Axis label
+//				                      categoryDataset,         // Dataset
+//				                      PlotOrientation.VERTICAL,
+//				                      true, true, true                     // Show legend
+//				                     );
+//				
+//				
+//				
+//				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
 			} 
 			
 			System.out.print("command:>");

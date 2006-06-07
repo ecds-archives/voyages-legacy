@@ -23,6 +23,8 @@ public class SearchFormServlet extends HttpServlet
 		
 		Utils.setEncodingToUTF8(response);
 		
+		Utils.getJSONRPCBridge(request.getSession());
+		
 		PrintWriter out = response.getWriter();
 		HtmlWriter html = new HtmlWriter(out);
 		html.start("Search form");

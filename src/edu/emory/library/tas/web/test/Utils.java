@@ -2,6 +2,9 @@ package edu.emory.library.tas.web.test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.metaparadigm.jsonrpc.JSONRPCBridge;
 
 public class Utils
 {
@@ -46,6 +49,25 @@ public class Utils
 	{
 		response.setCharacterEncoding("UTF8");
 		response.setContentType("text/html; charset=UTF-8");
+	}
+	
+	public static JSONRPCBridge getJSONRPCBridge(HttpSession session)
+	{
+		JSONRPCBridge bridge = (JSONRPCBridge)session.getAttribute("JSONRPCBridge");
+		if (bridge == null)
+		{
+		    bridge = new JSONRPCBridge();
+		    session.setAttribute("JSONRPCBridge", bridge);
+		}
+		try
+		{
+			bridge.registerClass("search", Search.class);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return bridge;
 	}
 
 }
