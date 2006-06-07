@@ -168,7 +168,7 @@ public class HibernateTest {
 				
 				
 				QueryValue qValue = new QueryValue("VoyageIndex", cMain);
-//				qValue.setLimit(100);
+				qValue.setLimit(100);
 //				qValue.addPopulatedAttribute("voyage.shipname");
 //				qValue.addPopulatedAttribute("voyage.shipname");
 				long t1 = System.currentTimeMillis();
