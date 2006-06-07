@@ -18,11 +18,13 @@ public class UploadServlet extends HttpServlet
 	{
 		try
 		{
+			
 			PrintWriter writer = response.getWriter();
 			writer.println("<html><head></head><body>");
 
 			Upload upload = new Upload(request, "C:\\");
-			upload.setSaveAs("file1", "voyages.dat");
+			upload.setSaveAs("file1", "abc.dat");
+			upload.setSaveAs("file2", "xyz.dat");
 			
 			if (upload.upload())
 			{

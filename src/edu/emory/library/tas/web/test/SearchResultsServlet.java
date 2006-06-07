@@ -123,7 +123,7 @@ public class SearchResultsServlet extends HttpServlet
 		long t2 = System.currentTimeMillis();
 		out.println("time = " + (t2 - t1));
 		
-		html.beginTable(0, 0, 0, "width: 100%", null);
+		html.beginTable(0, 0, 0, "width: 100%", "grid");
 
 		html.beginTr();
 		html.th("");

@@ -7,16 +7,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
+import edu.emory.library.tas.spss.LogWriter;
+
 public class Upload
 {
+	
+	private static long nextUploadId = 0;
+	private static Hashtable uploadsInfo = new Hashtable();
 
 	private final static int BUF_SIZE = 4*1024;
 	
+	private String uploadId = null;
+	private UploadInfo uploadInfo = null;
+
 	private byte[] boundary;
 	private byte[] newlineAndBoundary;
 	private ArrayList files = new ArrayList();
@@ -24,7 +33,8 @@ public class Upload
 	private HttpServletRequest request;
 	private String saveToDir = null;
 	private Map saveAs = null;
-	private ProgressIndicator progressIndicator = null;
+	
+	private LogWriter importLog = null;
 	
 	public Upload(HttpServletRequest request)
 	{
@@ -37,19 +47,19 @@ public class Upload
 		this.saveToDir = saveToDir;
 	}
 
-	public Upload(HttpServletRequest request, String saveToDir, ProgressIndicator progressIndicator)
+	public Upload(HttpServletRequest request, String saveToDir, LogWriter importLog)
 	{
 		this.request = request;
 		this.saveToDir = saveToDir;
-		this.progressIndicator = progressIndicator;
+		this.importLog = importLog;
 	}
 
-	public Upload(HttpServletRequest request, String saveToDir, Map saveAs, ProgressIndicator progressIndicator)
+	public Upload(HttpServletRequest request, String saveToDir, Map saveAs, LogWriter importLog)
 	{
 		this.request = request;
 		this.saveToDir = saveToDir;
 		this.saveAs = saveAs;
-		this.progressIndicator = progressIndicator;
+		this.importLog = importLog;
 	}
 
 	public String getSaveToDir()
@@ -78,14 +88,14 @@ public class Upload
 		saveAs.put(htmlFieldName, fileName);
 	}
 
-	public ProgressIndicator getProgressIndicator()
+	public LogWriter getProgressIndicator()
 	{
-		return progressIndicator;
+		return importLog;
 	}
 
-	public void setProgressIndicator(ProgressIndicator progressIndicator)
+	public void setProgressIndicator(LogWriter importLog)
 	{
-		this.progressIndicator = progressIndicator;
+		this.importLog = importLog;
 	}
 
 	private boolean findBoundary()
@@ -105,13 +115,16 @@ public class Upload
 
 	}
 	
-	private void updateProgressIndicator(UploadedFile currFile)
+	private boolean findUploadId()
 	{
-		if (progressIndicator != null)
-			progressIndicator.add(
-					"Uploading file: " +
-					currFile.getClientFileNameWithoutParent() + " " +
-					"(" + currFile.getFileSize() + "B)");
+
+		Pattern regex = Pattern.compile("UPLOAD=(\\d+)");
+		Matcher matcher = regex.matcher(request.getQueryString());
+
+		if (!matcher.find()) return false;
+		uploadId = matcher.group(1);
+		return true;
+	
 	}
 	
 	public boolean upload() throws IOException
@@ -144,11 +157,19 @@ public class Upload
 			if (!findBoundary())
 				throw new UploadErrorInternalException("Not a valid MIME. No boundary found.");
 			
+			// find upload id
+			if (findUploadId())
+				uploadInfo = createUploadInfo(uploadId, request.getContentLength());
+			
 			// the data should start with the boundary
 			splitter.gotoNextPart(boundary);
 			if ((read = splitter.getNextChunk()) != 0)
 				throw new UploadErrorInternalException("No first boundary found.");
-	
+
+			// update total bytes read
+			if (uploadId != null)
+				uploadInfo.updateProgress(boundary.length);
+			
 			// main loop
 			while (!done)
 			{
@@ -156,6 +177,10 @@ public class Upload
 				// comsume the extra newline before headers
 				splitter.gotoNextPart("\r\n".getBytes());
 				read = splitter.getNextChunk();
+				
+				// update total bytes read
+				if (uploadId != null)
+					uploadInfo.updateProgress(read + 2);
 
 				// end of the data?
 				if (read == 2 && buf[0] == '-' && buf[1] == '-')
@@ -180,6 +205,10 @@ public class Upload
 					splitter.gotoNextPart("\r\n".getBytes());
 					read = splitter.getNextChunk();
 					String headerLine = new String(buf, 0, read);
+					
+					// update total bytes read
+					if (uploadId != null)
+						uploadInfo.updateProgress(read + 2);
 				
 					// unexpected eof
 					if (read == -1)
@@ -211,18 +240,23 @@ public class Upload
 				if (contentDisp != null && contentDisp.getMainValue().equals("form-data") && contentDisp.getNamedPart("filename") != null)
 				{
 					
-					// are we supposed to save it under a given name?
+					// determine file name
 					String serverFileName = null;
 					if (saveAs != null)
+					{
 						serverFileName = (String) saveAs.get(contentDisp.getNamedPart("name"));
-					
-					// no -> generate random name
+						if (serverFileName != null && saveToDir != null)
+								serverFileName = saveToDir + File.separator + serverFileName;
+					}
 					if (serverFileName == null)
-						serverFileName = UUID.randomUUID().toString();
-					
-					// save to the given directory
-					if (saveToDir != null)
-						serverFileName = saveToDir + File.separator + serverFileName;
+					{
+						if (saveToDir != null)
+							serverFileName =
+								File.createTempFile("upload", null, new File(saveToDir)).getAbsolutePath();
+						else
+							serverFileName =
+								File.createTempFile("upload", null).getAbsolutePath();
+					}
 					
 					// create file record
 					currFile = new UploadedFile();
@@ -234,7 +268,17 @@ public class Upload
 					// open file
 					currFileStream = new BufferedOutputStream(new FileOutputStream(serverFileName));
 					
-					//System.out.println("Found file: " + contentDisp.getNamedPart("filename") + " -> " + serverFileName);
+					// show some progress
+					if (uploadId != null)
+						uploadInfo.updateNextFile(currFile.getClientFileNameWithoutParent());
+					
+					// log
+					if (importLog != null)
+						importLog.logInfo(
+								"Uploading of file " +
+								currFile.getClientFileNameWithoutParent() + " " +
+								"started.");
+					
 				}	
 				
 				
@@ -248,8 +292,12 @@ public class Upload
 					{
 						currFileStream.write(buf, 0, read);
 						currFile.incrementFileSize(read);
-						updateProgressIndicator(currFile);
 					}
+					
+					// update total bytes read
+					if (uploadId != null)
+						uploadInfo.updateFileProgress(read);
+
 					totalPartLength += read;
 				}
 				
@@ -257,24 +305,48 @@ public class Upload
 				if (read == -1)
 					throw new UploadErrorInternalException("Unexpected EOF while reading a file." + totalPartLength);
 	
-				// close file and add it to the list
+				// update total bytes read
+				if (uploadId != null)
+					uploadInfo.updateProgress(newlineAndBoundary.length);
+
+				// finalize file
 				if (currFile != null)
 				{
+
+					// close and add it to the list
 					currFileStream.close();
 					files.add(currFile);
+					
+					// log
+					if (importLog != null)
+						importLog.logInfo(
+								"File " + currFile.getClientFileNameWithoutParent() + " " + 
+								"succesfully uploaded. " + 
+								"Size " + currFile.getFileSize() + "B.");
+					
 				}
 	
 			}
 			
+			removeUploadInfo(uploadId);
 			return true;
 		
 		}
 		catch (UploadErrorInternalException ie)
 		{
-			System.out.println(ie.getMessage());
-			if (currFile != null) currFileStream.close();
+
+			removeUploadInfo(uploadId);
+
 			files.clear();
+			if (currFile != null)
+				currFileStream.close();
+			
+			if (importLog != null)
+				importLog.logError(
+						"Upload error. " + ie.getMessage());
+			
 			return false;
+			
 		}
 		
 	}
@@ -295,6 +367,30 @@ public class Upload
 			}
 		}
 		return null;
+	}
+	
+	public static synchronized String getNextUploadId()
+	{
+		nextUploadId++;
+		if (nextUploadId < 0) nextUploadId = 1;
+		return String.valueOf(nextUploadId);
+	}
+	
+	public static synchronized UploadInfo createUploadInfo(String uploadId, int expectedSize)
+	{
+		UploadInfo uploadInfo = new UploadInfo(expectedSize);
+		uploadsInfo.put(uploadId, uploadInfo);
+		return uploadInfo;
+	}
+
+	public static synchronized UploadInfo getUploadInfo(String uploadId)
+	{
+		return (UploadInfo) uploadsInfo.get(uploadId);
+	}
+
+	public static synchronized void removeUploadInfo(String uploadId)
+	{
+		if (uploadId != null) uploadsInfo.remove(uploadId);
 	}
 
 }
