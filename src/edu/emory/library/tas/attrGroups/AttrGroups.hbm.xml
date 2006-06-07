@@ -1,1 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+        
+<hibernate-mapping>
+    <class name="edu.emory.library.tas.attrGroups.Attribute" table="attributes">
+        <id name="id" column="iid">
+        	<generator class="native"/>
+        </id>                       
+		<property name="name" column="attr_name"/>		
+	</class>
+	
+	<class name="edu.emory.library.tas.attrGroups.Group" table="groups">
+        <id name="id" column="iid">
+        	<generator class="native"/>
+        </id>                       
+		<property name="name" column="group_name"/>
+		<set name="attributes" table="group_attributes" lazy="false">
+        	<key column="r_group_id"/>
+        	<many-to-many column="r_attribute_id" class="edu.emory.library.tas.attrGroups.Attribute"/>
+    	</set>
+	</class>
+		
+	<class name="edu.emory.library.tas.attrGroups.GroupSet" table="groupsets">
+        <id name="id" column="iid">
+        	<generator class="native"/>
+        </id>                       
+		<property name="name" column="attriset_name"/>		
+		<set name="groups" table="groupset_groups" lazy="false">
+        	<key column="r_groupset_id"/>
+        	<many-to-many column="r_group_id" class="edu.emory.library.tas.attrGroups.Group"/>
+    	</set>
+		
+	</class>
+	
+</hibernate-mapping>
