@@ -21,9 +21,41 @@
 		<servlet-name>searchresults</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.test.SearchResultsServlet</servlet-class>
 	</servlet>
+
+	<servlet>
+		<servlet-name>upload</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.upload.UploadServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>import</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.ImportServlet</servlet-class>
+		<!-- 
+		<init-param>
+			<param-name>imports.dir</param-name>
+			<param-value>C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\imports</param-value>
+		</init-param>
+		<init-param>
+			<param-name>classpath</param-name>
+			<param-value>C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\bin\;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-1.6.5.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-antlr-1.6.5.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-junit-1.6.5.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-launcher-1.6.5.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\antlr-2.7.6rc1.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-swing-1.6.5.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-2.2.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-analysis-2.2.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-attrs.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-attrs-2.2.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-tree-2.2.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-util-2.2.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-xml-2.2.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\c3p0-0.9.0.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\cglib-2.1.3.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\cleanimports.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\commons-collections-2.1.1.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\commons-logging-1.0.4.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\concurrent-1.3.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\connector.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\crimson.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\dom4j-1.6.1.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ehcache-1.1.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\hibernate3.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jaas.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jacc-1_0-fr.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jaxen-1.1-beta-7.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-cache.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-common.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-jmx.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-system.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jdbc2_0-stdext.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jgroups-2.2.8.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jsonrpc-1.0.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jta.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\junit-3.8.1.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\log4j-1.2.11.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\oscache-2.1.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\postgresql-8.1-405.jdbc3.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\proxool-0.8.3.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\servlet-api.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\swarmcache-1.0rc2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\syndiag2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\versioncheck.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\xerces-2.6.2.jar;C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\xml-apis.jar</param-value>
+		</init-param>
+		 -->
+		<init-param>
+			<param-name>imports.dir</param-name>
+			<param-value>D:\Library\SlaveTrade\imports</param-value>
+		</init-param>
+		<init-param>
+			<param-name>classpath</param-name>
+			<param-value>D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\build\classes\;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-1.6.5.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-antlr-1.6.5.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-junit-1.6.5.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-launcher-1.6.5.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\antlr-2.7.6rc1.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ant-swing-1.6.5.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-2.2.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-analysis-2.2.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-attrs.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-attrs-2.2.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-tree-2.2.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-util-2.2.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\asm-xml-2.2.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\c3p0-0.9.0.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\cglib-2.1.3.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\cleanimports.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\commons-collections-2.1.1.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\commons-logging-1.0.4.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\concurrent-1.3.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\connector.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\crimson.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\dom4j-1.6.1.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\ehcache-1.1.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\hibernate3.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jaas.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jacc-1_0-fr.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jaxen-1.1-beta-7.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-cache.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-common.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-jmx.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jboss-system.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jdbc2_0-stdext.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jgroups-2.2.8.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jsonrpc-1.0.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\jta.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\junit-3.8.1.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\log4j-1.2.11.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\oscache-2.1.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\postgresql-8.1-405.jdbc3.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\proxool-0.8.3.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\servlet-api.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\swarmcache-1.0rc2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\syndiag2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\versioncheck.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\xerces-2.6.2.jar;D:\Library\SlaveTrade\projects\TransAtlanticSlaveTrade\lib\xml-apis.jar</param-value>
+		</init-param>
+		<init-param>
+			<param-name>java.memory</param-name>
+			<param-value>256m</param-value>
+		</init-param>
+    </servlet>
 	
 	<servlet>
-		<servlet-name>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-name>
+		<servlet-name>JSONRPC</servlet-name>
 		<servlet-class>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-class>
 	</servlet>
 
@@ -48,7 +80,17 @@
 	</servlet-mapping>
 	
 	<servlet-mapping>
-		<servlet-name>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-name>
+		<servlet-name>upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>import</servlet-name>
+		<url-pattern>/import</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>JSONRPC</servlet-name>
 		<url-pattern>/JSON-RPC</url-pattern>
 	</servlet-mapping>
 

@@ -45,6 +45,9 @@ public class LogWriter
 		// message
 		message = message.replaceAll("\\r\\n", " ").replaceAll("\\r", " ").replaceAll("\\n", " ");
 		writer.println(message);
+		
+		// we want to see it
+		writer.flush();
 
 	}
 	

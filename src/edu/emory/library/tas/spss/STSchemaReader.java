@@ -112,13 +112,13 @@ public class STSchemaReader
 			}
 			else
 			{
-				throw new STSchemaException("Error parsing line: " + line);
+				throw new STSchemaException("Error parsing line: '" + line + "' while reading variables.");
 			}
 			
 		}
 	}
 	
-	private void readVariableLabels(BufferedReader rdr, STSchemaVariable var) throws IOException
+	private void readVariableLabels(BufferedReader rdr, STSchemaVariable var) throws IOException, STSchemaException
 	{
 		String line = null;
 		while ((line = rdr.readLine()) != null)
@@ -145,11 +145,15 @@ public class STSchemaReader
 					labelValue);
 				
 			}
+			else
+			{
+				throw new STSchemaException("Error parsing line: '" + line + "' while reading labels.");
+			}
 
 		}
 	}
 	
-	private void readSectionValueLabels(BufferedReader rdr) throws IOException
+	private void readSectionValueLabels(BufferedReader rdr) throws IOException, STSchemaException
 	{
 		String line = null;
 		while ((line = rdr.readLine()) != null)

@@ -7,7 +7,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Upload test</title>
+<title>Import</title>
 <link href="common.css" rel="stylesheet" type="text/css">
 
 <%

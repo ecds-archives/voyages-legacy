@@ -1,21 +1,21 @@
-body {
+body, input {
 	font-family: Verdana, sans-serif;
 	font-size: 8pt; }
 
 a {
 	color: #2211CC; }
 
-table {
+table.grid {
 	border-collapse: collapse; }
 	
-td, th {
+table.grid td, th {
 	padding: 4px;
 	border: 1px solid #CCCCCC; }
 	
-th {
+table.grid th {
 	background-color: #EEEEEE;
 	text-align: left; }
 	
-td.new-value {
+table.grid td.new-value {
 	font-style: italic;
 	background-color: #EEEEEE; }

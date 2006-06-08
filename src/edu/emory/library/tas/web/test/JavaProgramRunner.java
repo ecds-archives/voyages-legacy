@@ -11,6 +11,15 @@ public class JavaProgramRunner
 	private String startClass;
 	private String[] parameters;
 	
+	public JavaProgramRunner()
+	{
+	}
+	
+	public JavaProgramRunner(String startClass)
+	{
+		this.startClass = startClass;
+	}
+
 	public void run() throws IOException
 	{
 		
@@ -42,7 +51,7 @@ public class JavaProgramRunner
 		
 		// run import
 		Runtime runtime = Runtime.getRuntime();
-		runtime.exec((String[]) execParams.toArray(new String[0]));
+		runtime.exec((String[]) execParams.toArray(new String[] {""}));
 		
 	}
 	

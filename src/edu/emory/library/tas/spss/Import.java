@@ -38,6 +38,7 @@ public class Import
 	RecordIOFactory voyagesRecordIOFactory;
 	RecordIOFactory slavesRecordIOFactory;
 	private String workingDir;
+	private LogWriter log;
 
 	// schemas
 	private String voyagesSchemaFileName;
@@ -61,20 +62,30 @@ public class Import
 	{
 
 		// convert voyages
-		StatTransfer voyagesST = new StatTransfer();
-		voyagesST.setInputFileType("spss");
-		voyagesST.setInputFileName(voyagesSpssFileName);
-		voyagesST.setOutputFileType("stfixed");
-		voyagesST.setOutputFileName(voyagesSchemaFileName);
-		voyagesST.transfer();
+		if (voyagesSpssFileName != null)
+		{
+			log.logInfo("Converting voyages by StatTransfer.");
+			StatTransfer voyagesST = new StatTransfer();
+			voyagesST.setInputFileType("spss");
+			voyagesST.setInputFileName(voyagesSpssFileName);
+			voyagesST.setOutputFileType("stfixed");
+			voyagesST.setOutputFileName(voyagesSchemaFileName);
+			voyagesST.transfer();
+			log.logInfo("Voyages successfully converted.");
+		}
 		
 		// convert slaves
-		StatTransfer slavesST = new StatTransfer();
-		slavesST.setInputFileType("spss");
-		slavesST.setInputFileName(slavesSpssFileName);
-		slavesST.setOutputFileType("stfixed");
-		slavesST.setOutputFileName(slavesSchemaFileName);
-		slavesST.transfer();
+		if (slavesSpssFileName != null)
+		{
+			log.logInfo("Converting slaves by StatTransfer.");
+			StatTransfer slavesST = new StatTransfer();
+			slavesST.setInputFileType("spss");
+			slavesST.setInputFileName(slavesSpssFileName);
+			slavesST.setOutputFileType("stfixed");
+			slavesST.setOutputFileName(slavesSchemaFileName);
+			slavesST.transfer();
+			log.logInfo("Slaves successfully converted.");
+		}
 
 	}
 	
@@ -93,26 +104,43 @@ public class Import
 	private void loadSchemas() throws IOException, STSchemaException
 	{
 
-		// read schemas
 		STSchemaReader rdr = new STSchemaReader();
-		voyageSchema = rdr.readSchema(voyagesSchemaFileName);
-		slaveSchema = rdr.readSchema(slavesSchemaFileName);
-		
-		// locate vid and create record io factory for voyages
-		voyagesVidVar = (STSchemaVariable)voyageSchema.get("voyageid"); 
-		int voyagesSchemaWidth = calculateSchemaWidth(voyageSchema); 
-		voyagesRecordIOFactory = new RecordIOFactory(
-			voyagesVidVar.getStartColumn(),
-			voyagesVidVar.getEndColumn(),
-			voyagesSchemaWidth);
+
+		if (voyagesPresent)
+		{
+			log.logInfo("Reading data schema of voyages.");
+			
+			// read schemas
+			voyageSchema = rdr.readSchema(voyagesSchemaFileName);
+			
+			// locate vid and create record io factory for voyages
+			voyagesVidVar = (STSchemaVariable)voyageSchema.get("voyageid"); 
+			int voyagesSchemaWidth = calculateSchemaWidth(voyageSchema); 
+			voyagesRecordIOFactory = new RecordIOFactory(
+				voyagesVidVar.getStartColumn(),
+				voyagesVidVar.getEndColumn(),
+				voyagesSchemaWidth);
 	
-		// locate vid create record io factory for slaves
-		slavesVidVar = (STSchemaVariable)slaveSchema.get("voyageid");
-		int slavesSchemaWidth = calculateSchemaWidth(slaveSchema); 
-		slavesRecordIOFactory = new RecordIOFactory(
-			slavesVidVar.getStartColumn(),
-			slavesVidVar.getEndColumn(),
-			slavesSchemaWidth);
+			log.logInfo("Data schema successfully read.");
+		}
+
+		if (slavesPresent)
+		{
+			log.logInfo("Reading data schema of slaves.");
+
+			// read schemas
+			slaveSchema = rdr.readSchema(slavesSchemaFileName);
+			
+			// locate vid create record io factory for slaves
+			slavesVidVar = (STSchemaVariable)slaveSchema.get("voyageid");
+			int slavesSchemaWidth = calculateSchemaWidth(slaveSchema); 
+			slavesRecordIOFactory = new RecordIOFactory(
+				slavesVidVar.getStartColumn(),
+				slavesVidVar.getEndColumn(),
+				slavesSchemaWidth);
+			
+			log.logInfo("Data schema successfully read.");
+		}
 
 	}
 	
@@ -133,11 +161,13 @@ public class Import
 			(colType == SchemaColumn.IMPORT_TYPE_STRING && varType == STSchemaVariable.TYPE_STRING);
 	}
 	
-	private void matchAndVerifySchemaInt(int recordType)
+	private boolean matchAndVerifySchemaInt(int recordType)
 	{
 		
 		String dbSchemaNames[] = null;
-		Hashtable schema = null;		
+		Hashtable schema = null;
+		
+		boolean ok = true;
 		
 		if (recordType == VOYAGE)
 		{
@@ -151,7 +181,7 @@ public class Import
 		}
 		else
 		{
-			return;
+			return false;
 		}
 		
 		for (int i=0; i<dbSchemaNames.length; i++)
@@ -173,19 +203,13 @@ public class Import
 				STSchemaVariable varYear = (STSchemaVariable) schema.get(col.getImportDateYear()); 
 				if (varDay == null || varMonth == null || varYear == null)
 				{
-					System.out.println("missing field: " + col.getName());
-					// error: missing field
+					log.logError("Missing field: " + col.getName() + ".");
+					ok = false;
 				}
-				
 				else if (varDay.getType() != STSchemaVariable.TYPE_NUMERIC || varMonth.getType() != STSchemaVariable.TYPE_NUMERIC || varYear.getType() != STSchemaVariable.TYPE_NUMERIC)
 				{
-					System.out.println("type missmatch: " + col.getName());
-					// error: type missmatch
-				}
-				else
-				{
-					//System.out.println("field " + col.getName() + " ok");
-					// seems to be ok
+					log.logError("Type missmatch: " + col.getName() + ".");
+					ok = false;
 				}
 			}
 
@@ -195,50 +219,70 @@ public class Import
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName()); 
 				if (var == null)
 				{
-					System.out.println("missing field: " + col.getName());
-					// error: missing field
+					log.logError("Missing field: " + col.getName() + ".");
+					ok = false;
 				}
 				else if (!compareTypes(col.getImportType(), var.getType()))
 				{
-					System.out.println("type missmatch: " + col.getName());
-					// error: type missmatch
+					log.logError("Type missmatch: " + col.getName() + ".");
+					ok = false;
 				}
 				else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING && var.getLength() > col.getImportLength())
 				{
-					System.out.println("string too long: " + col.getName());
-					// error: string too long
-				}
-				else
-				{
-					//System.out.println("field " + col.getName() + " ok");
-					// seems to be ok
+					log.logError("String too long: " + col.getName() + ".");
+					ok = false;
 				}
 			}
 		
 		}
 		
+		return ok;
+		
 	}
 
-	private void matchAndVerifySchema()
+	private void matchAndVerifySchema() throws DataSchemaMissmatchException
 	{
-		matchAndVerifySchemaInt(VOYAGE);
-		matchAndVerifySchemaInt(SLAVE);
+
+		if (voyagesPresent)
+		{
+			log.logInfo("Matching data schema of voyages.");
+			if (!matchAndVerifySchemaInt(VOYAGE)) throw new DataSchemaMissmatchException();
+			log.logInfo("Data schema is OK.");
+		}
+		
+		if (slavesPresent)
+		{
+			log.logInfo("Matching data schema of slaves.");
+			if (!matchAndVerifySchemaInt(SLAVE)) throw new DataSchemaMissmatchException();
+			log.logInfo("Data schema is OK.");
+		}
+		
 	}
 
 	private void sortFiles() throws FileNotFoundException, IOException
 	{
 		
 		// sort voyages
-		RecordSorter voyagesSorter = new RecordSorter(voyagesDataFileName, voyagesSortedDataFileName, voyagesRecordIOFactory);
-		voyagesSorter.setTmpFolder(workingDir);
-		voyagesSorter.setMaxLines(1000);
-		voyagesSorter.sort();
+		if (voyagesPresent)
+		{
+			log.logInfo("Sorting voyages by VoyageID.");
+			RecordSorter voyagesSorter = new RecordSorter(voyagesDataFileName, voyagesSortedDataFileName, voyagesRecordIOFactory);
+			voyagesSorter.setTmpFolder(workingDir);
+			voyagesSorter.setMaxLines(1000);
+			voyagesSorter.sort();
+			log.logInfo("Voyages sorted.");
+		}
 		
 		// sort slaves
-		RecordSorter slavesSorter = new RecordSorter(slavesDataFileName, slavesSortedDataFileName, slavesRecordIOFactory);
-		voyagesSorter.setTmpFolder(workingDir);
-		slavesSorter.setMaxLines(5000);
-		slavesSorter.sort();
+		if (slavesPresent)
+		{
+			log.logInfo("Sorting slaves by VoyageID.");
+			RecordSorter slavesSorter = new RecordSorter(slavesDataFileName, slavesSortedDataFileName, slavesRecordIOFactory);
+			slavesSorter.setTmpFolder(workingDir);
+			slavesSorter.setMaxLines(5000);
+			slavesSorter.sort();
+			log.logInfo("Slaves sorted.");
+		}
 		
 	}
 	
@@ -303,7 +347,7 @@ public class Import
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 			if (col.getType() == SchemaColumn.TYPE_DICT)
 			{
-				System.out.println("Updating: " + col.getName() + ", " + col.getDictinaory());
+				// System.out.println("Updating: " + col.getName() + ", " + col.getDictinaory());
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
 				updateDictionary(col, var);
 			}
@@ -313,8 +357,21 @@ public class Import
 	
 	private void updateDictionaties()
 	{
-		updateDictionaties(VOYAGE);
-		updateDictionaties(SLAVE);
+		
+		if (voyagesPresent)
+		{
+			log.logInfo("Updating labels from voyages data file.");
+			updateDictionaties(VOYAGE);
+			log.logInfo("Labels updated.");
+		}
+		
+		if (slavesPresent)
+		{
+			log.logInfo("Updating labels from slaves data file.");
+			updateDictionaties(SLAVE);
+			log.logInfo("Labels updated.");
+		}
+		
 	}
 	
 	private boolean updateValues(AbstractDescriptiveObject obj, char[] line)
@@ -348,6 +405,11 @@ public class Import
 		{
 
 			Object value = null;
+			STSchemaVariable var = null;
+			STSchemaVariable varDay = null;
+			STSchemaVariable varMonth = null;
+			STSchemaVariable varYear = null;
+			
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 			
 			// we are ignoring this field for import
@@ -360,7 +422,7 @@ public class Import
 				// import numeric or string field
 				if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
 				{
-					STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
+					var = (STSchemaVariable) schema.get(col.getImportName());
 					value = col.parse(
 							new String(line,
 									var.getStartColumn()-1,
@@ -370,9 +432,9 @@ public class Import
 				// import date
 				else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_DATE)
 				{
-					STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
-					STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
-					STSchemaVariable varYear = (STSchemaVariable) schema.get(col.getImportDateYear());
+					varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
+					varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
+					varYear = (STSchemaVariable) schema.get(col.getImportDateYear());
 					value = col.parse(new String[]{
 							new String(
 									line,
@@ -389,8 +451,10 @@ public class Import
 				
 				// nonexisting dictionary value was inserted
 				if (col.getType() == SchemaColumn.TYPE_DICT && value != null && ((Dictionary)value).getId() == null)
-					// to log: new dictionary value inserted
-					;
+					log.logWarn(
+							"Nonexistent label '" +
+							((Dictionary)value).getName() +
+							"' inserted for variable " + col.getImportName() + ".");
 	
 				// update the object
 				obj.setAttrValue(col.getName(), value);
@@ -403,15 +467,26 @@ public class Import
 			}
 			catch (InvalidNumberException ine)
 			{
-				// to log: col.getImportName() has an invalid numeric value
+				log.logWarn(
+						"Invalid numeric value '" + value + "' " +
+						"in variable " +
+						var.getName() + ".");
 			}
 			catch (InvalidDateException ide)
 			{
-				// to log: ... have an invalid date value
+				log.logWarn(
+						"Invalid date value '" + value + "' " +
+						"in variables " +
+						varDay.getName() + ", " +
+						varMonth.getName() + ", " +
+						varYear.getName() + ".");
 			}
 			catch (StringTooLongException stle)
 			{
-				// to log: col.getImportName() containt too long string
+				log.logWarn(
+						"String '" + value + "' too long for " +
+						"in variable " +
+						var.getName() + ".");
 			}
 			
 		}
@@ -581,6 +656,10 @@ public class Import
 						voyageVid = Integer.parseInt(currVoyageVid.trim());
 						break;
 					}
+					else
+					{
+						log.logWarn("Invalid voyage on line " + totalNoOfVoyages + ". Skipping.");
+					}
 					
 				}
 			}
@@ -628,6 +707,10 @@ public class Import
 						{
 							break;
 						}
+					}
+					else
+					{
+						log.logWarn("Invalid slave on line " + totalNoOfSlaves + ". Skipping.");
 					}
 				}
 			}
@@ -753,18 +836,18 @@ public class Import
 					noOfVoyagesWithSlaves++;
 				
 				// debug
-				System.out.print("VID = " + mainVid);
-				if (saveVoyage)
-				{
-					System.out.print(", voyage = yes");
-					System.out.print(", shipname = " + new String(voyageRecord.getLine(),200,58));
-				}
-				if (saveSlaves)
-				{
-					System.out.print(", slaves = yes");
-					System.out.print(", number of slaves = " + slaves.size());
-				}
-				System.out.println();
+//				System.out.print("VID = " + mainVid);
+//				if (saveVoyage)
+//				{
+//					System.out.print(", voyage = yes");
+//					System.out.print(", shipname = " + new String(voyageRecord.getLine(),200,58));
+//				}
+//				if (saveSlaves)
+//				{
+//					System.out.print(", slaves = yes");
+//					System.out.print(", number of slaves = " + slaves.size());
+//				}
+//				System.out.println();
 			
 			}
 			
@@ -780,6 +863,7 @@ public class Import
 	{
 		
 		// remember files
+		this.log = log;
 		this.workingDir = workingDir;
 		this.voyagesSpssFileName = voyagesSpssFileName;
 		this.slavesSpssFileName = slavesSpssFileName;
@@ -798,8 +882,6 @@ public class Import
 		try
 		{
 			
-			long startTime = System.currentTimeMillis();
-			
 			log.startStage(LogItem.STAGE_CONVERSION);
 			convertSpssFiles();
 
@@ -812,36 +894,33 @@ public class Import
 			log.startStage(LogItem.STAGE_SORTING);
 			sortFiles();
 
-			log.startStage(LogItem.STAGE_IMPORTING);
+			log.startStage(LogItem.STAGE_UPDATING_LABELS);
 			updateDictionaties();
+			
+			log.startStage(LogItem.STAGE_IMPORTING_DATA);
 			importData();
 
-//			System.out.println("total number of voyages = " + totalNoOfVoyages);
-//			System.out.println("number of valid voyages = " + noOfValidVoyages);
-//			System.out.println("total number of slaves  = " + totalNoOfSlaves);
-//			System.out.println("number of valid slaves  = " + noOfValidSlaves);
-//			System.out.println("voyages with slaves     = " + noOfVoyagesWithSlaves);
+			log.logInfo("Import successfully completed.");
+			log.logInfo("Total number of voyages = " + totalNoOfVoyages);
+			log.logInfo("Number of valid voyages = " + noOfValidVoyages);
+			log.logInfo("Total number of slaves = " + totalNoOfSlaves);
+			log.logInfo("Number of valid slaves = " + noOfValidSlaves);
+			log.logInfo("Voyages with slaves = " + noOfVoyagesWithSlaves);
 			
-			long endTime = System.currentTimeMillis();
-			System.out.println("Total time: " + (endTime - startTime));
-
-			if (false)
-			{
-				throw new IOException();
-			}
-
-			if (false)
-			{
-				throw new STSchemaException(""); 
-			}
-
 		}
 		catch (IOException ioe)
 		{
-			// all problems when reading and writing files
+			log.logError("IO error: " + ioe.getMessage());
+			log.logInfo("Import terminated.");
 		}
 		catch (STSchemaException stse)
 		{
+			log.logError(stse.getMessage());
+			log.logInfo("Import terminated.");
+		}
+		catch (DataSchemaMissmatchException dsme)
+		{
+			log.logInfo("Import terminated.");
 		}
 		
 	}
