@@ -1,5 +1,6 @@
 package edu.emory.library.tas.spss;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class Import
 	STSchemaVariable slavesVidVar;
 	RecordIOFactory voyagesRecordIOFactory;
 	RecordIOFactory slavesRecordIOFactory;
+	private String workingDir;
 
 	// schemas
 	private String voyagesSchemaFileName;
@@ -228,11 +230,13 @@ public class Import
 		
 		// sort voyages
 		RecordSorter voyagesSorter = new RecordSorter(voyagesDataFileName, voyagesSortedDataFileName, voyagesRecordIOFactory);
+		voyagesSorter.setTmpFolder(workingDir);
 		voyagesSorter.setMaxLines(1000);
 		voyagesSorter.sort();
 		
 		// sort slaves
 		RecordSorter slavesSorter = new RecordSorter(slavesDataFileName, slavesSortedDataFileName, slavesRecordIOFactory);
+		voyagesSorter.setTmpFolder(workingDir);
 		slavesSorter.setMaxLines(5000);
 		slavesSorter.sort();
 		
@@ -772,22 +776,23 @@ public class Import
 
 	}
 
-	public void runImport(String voyagesSpssFileName, String slavesSpssFileName)
+	public void runImport(LogWriter log, String workingDir, String voyagesSpssFileName, String slavesSpssFileName)
 	{
 		
 		// remember files
+		this.workingDir = workingDir;
 		this.voyagesSpssFileName = voyagesSpssFileName;
 		this.slavesSpssFileName = slavesSpssFileName;
 		this.voyagesPresent = voyagesSpssFileName!=null;
 		this.slavesPresent = slavesSpssFileName!=null;
 		
 		// setup the other file names
-		voyagesDataFileName = "voyages.dat";
-		voyagesSortedDataFileName = "voyages-sorted.dat";
-		voyagesSchemaFileName = "voyages.sts";
-		slavesDataFileName = "slaves.dat";
-		slavesSortedDataFileName = "slaves-sorted.dat";
-		slavesSchemaFileName = "slaves.sts";
+		voyagesDataFileName = workingDir + File.separatorChar + "voyages.dat";
+		voyagesSortedDataFileName = workingDir + File.separatorChar + "voyages-sorted.dat";
+		voyagesSchemaFileName = workingDir + File.separatorChar + "voyages.sts";
+		slavesDataFileName = workingDir + File.separatorChar + "slaves.dat";
+		slavesSortedDataFileName = workingDir + File.separatorChar + "slaves-sorted.dat";
+		slavesSchemaFileName = workingDir + File.separatorChar + "slaves.sts";
 		
 		// run import
 		try
@@ -795,22 +800,20 @@ public class Import
 			
 			long startTime = System.currentTimeMillis();
 			
-//			System.out.println("Converting files ----------------------------");
-//			convertSpssFiles();
+			log.startStage(LogItem.STAGE_CONVERSION);
+			convertSpssFiles();
 
-			System.out.println("Loading schemas -----------------------------");
+			log.startStage(LogItem.STAGE_SCHEMA_LOADING);
 			loadSchemas();
 			
-			System.out.println("Matching schemas ----------------------------");
+			log.startStage(LogItem.STAGE_SCHEMA_MATCHING);
 			matchAndVerifySchema();
 
-//			System.out.println("Sorting data --------------------------------");
-//			sortFiles();
+			log.startStage(LogItem.STAGE_SORTING);
+			sortFiles();
 
-			System.out.println("Updating dictionaries -----------------------");
+			log.startStage(LogItem.STAGE_IMPORTING);
 			updateDictionaties();
-			
-			System.out.println("Importing data ------------------------------");
 			importData();
 
 //			System.out.println("total number of voyages = " + totalNoOfVoyages);
@@ -846,13 +849,24 @@ public class Import
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		
+		if (args.length != 4) return;
+		
 		Voyage.initTypes();
 		Slave.initTypes();
+
+		// extracts params
+		String workingDir = args[0];
+		String logFileName = args[1];
+		String voyagesFileName = args[2].equals("*") ? null : args[2]; 
+		String slavesFileName = args[3].equals("*") ? null : args[3];
 		
+		// crate a log
+		LogWriter log = new LogWriter(logFileName);
+		
+		// import
 		Import imp = new Import();
-		imp.runImport(
-			"C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\data\\basecoy56.sav",
-			"C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\data\\1Masterx18Countries.sav");
+		imp.runImport(log, workingDir, voyagesFileName, slavesFileName); 
+		log.close();
 		
 	}
 

@@ -12,7 +12,7 @@ public class LogWriter
 	
 	public LogWriter(String fileName) throws IOException
 	{
-		writer = new PrintWriter(new FileWriter(fileName));
+		writer = new PrintWriter(new FileWriter(fileName, true));
 	}
 
 	public void close()

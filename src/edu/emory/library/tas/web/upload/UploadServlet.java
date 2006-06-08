@@ -22,7 +22,7 @@ public class UploadServlet extends HttpServlet
 			PrintWriter writer = response.getWriter();
 			writer.println("<html><head></head><body>");
 
-			Upload upload = new Upload(request, "C:\\");
+			Upload upload = new Upload(request);
 			upload.setSaveAs("file1", "abc.dat");
 			upload.setSaveAs("file2", "xyz.dat");
 			
