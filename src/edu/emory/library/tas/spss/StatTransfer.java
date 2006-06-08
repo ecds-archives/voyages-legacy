@@ -1,7 +1,6 @@
 package edu.emory.library.tas.spss;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class StatTransfer
 {
@@ -10,29 +9,33 @@ public class StatTransfer
 	private String inputFileName;
 	private String outputFileType;
 	private String outputFileName;
+	private String exeStatTransfer;
+	private String stdoutStatTransfer;
+	private String erroutStatTransfer;
 	
-	public StatTransfer()
+	public StatTransfer(String exeStatTransfer)
 	{
+		this.exeStatTransfer = exeStatTransfer;
 	}
 	
-	public boolean transfer() throws IOException
+	public void transfer() throws IOException, StatTransferException, InterruptedException
 	{
 		
 		// parameters
-		int paramsCount = 5;
+		int paramsCount = 4;
 		if (inputFileType != null) paramsCount++;
 		if (outputFileType != null) paramsCount++;
 		String [] params = new String[paramsCount];
 		
 		// fill parameters
 		int i = 0;
-		params[i++] = "C:\\Program Files\\StatTransfer8\\st.exe";
+		params[i++] = exeStatTransfer;
 		if (inputFileType != null) params[i++] = inputFileType;
 		params[i++] = inputFileName;
 		if (outputFileType != null) params[i++] = outputFileType;
 		params[i++] = outputFileName;
 		params[i++] = "/Y"; // -y in Linux
-		params[i++] = "/Q"; // -q in Linux
+		//params[i++] = "/Q"; // -q in Linux
 		
 		// run
 		Process st = Runtime.getRuntime().exec(params);
@@ -42,13 +45,36 @@ public class StatTransfer
 		// the ouput is supresses by /Q (or -q),
 		// there are still some characters like \n
 		// probably when the program stops
-		InputStream io = st.getInputStream();
-		while (io.read() != -1);
+		StreamConsumer istrConsumer = new StreamConsumer(st.getInputStream());
+		StreamConsumer estrConsumer = new StreamConsumer(st.getErrorStream());
+		istrConsumer.start();
+		estrConsumer.start();
 		
-		// done, check exit code
-		return st.exitValue() != 0;
+		// does not work: deadlock
+//		InputStream es = st.getErrorStream();
+//		InputStream is = st.getInputStream();
+//		while (es.read() != -1);
+//		while (is.read() != -1);
+//		erroutStatTransfer = consumeStream(st.getErrorStream());
+//		stdoutStatTransfer = consumeStream(st.getInputStream());
+
+		// throw exception if problem
+		if (st.waitFor() != 0)
+			throw new StatTransferException();
 		
 	}
+	
+//	private String consumeStream(InputStream str) throws IOException
+//	{
+//		BufferedReader outReader = new BufferedReader(new InputStreamReader(str));
+//		StringWriter outputBuffer = new StringWriter();
+//		PrintWriter outputBufferPrinter = new PrintWriter(new StringWriter());
+//		String line = null;
+//		while ((line = outReader.readLine()) != null) outputBufferPrinter.println(line);
+//		outReader.close();
+//		outputBufferPrinter.close();
+//		return outputBuffer.getBuffer().toString();
+//	}
 
 	public void setInputFileType(String inputFileType)
 	{
@@ -88,6 +114,16 @@ public class StatTransfer
 	public String getOutputFileName()
 	{
 		return outputFileName;
+	}
+
+	public String getStatTransferErrout()
+	{
+		return erroutStatTransfer;
+	}
+
+	public String getStatTransferStdout()
+	{
+		return stdoutStatTransfer;
 	}
 
 }

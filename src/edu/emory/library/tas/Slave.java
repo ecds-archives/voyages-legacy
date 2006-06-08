@@ -59,9 +59,9 @@ public class Slave extends AbstractDescriptiveObject {
 		types.put("slaveId", new SchemaColumn("slaveId", 1, null, 0, "slaveid", null, null, null, "Slave ID", -1));
 		types.put("voyageId", new SchemaColumn("voyageId", 1, null, 0, "voyageid", null, null, null, "Voyage ID", -1));
 		types.put("sexage", new SchemaColumn("sexage", 4, "SexAge", 0, null, null, null, null, null, -1));
-		types.put("age", new SchemaColumn("age", 0, null, 0, null, null, null, null, null, -1));
+		types.put("age", new SchemaColumn("age", 5, null, 0, null, null, null, null, null, -1));
 		types.put("feet", new SchemaColumn("feet", 0, null, 0, null, null, null, null, null, -1));
-		types.put("inch", new SchemaColumn("inch", 0, null, 0, null, null, null, null, null, -1));
+		types.put("inch", new SchemaColumn("inch", 5, null, 0, null, null, null, null, null, -1));
 		types.put("ageinf", new SchemaColumn("ageinf", 0, null, 0, null, null, null, null, null, -1));
 		types.put("country", new SchemaColumn("country", 4, "Country", 0, null, null, null, null, null, -1));
 		types.put("name", new SchemaColumn("name", 2, null, 1, null, null, null, null, null, 25));
@@ -200,13 +200,6 @@ public class Slave extends AbstractDescriptiveObject {
 		}
 		this.values.put("voyageId", voyageId);
 	}
-	public void setSlaveName(String slaveName) {
-		if ((slaveName == null && this.values.get("slaveName") != null) 
-			|| (slaveName != null && !slaveName.equals(this.values.get("slaveName")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slaveName", slaveName);
-	}
 	public void setSexage(SexAge sexage) {
 		if ((sexage == null && this.values.get("sexage") != null) 
 			|| (sexage != null && !sexage.equals(this.values.get("sexage")))) {
@@ -214,7 +207,7 @@ public class Slave extends AbstractDescriptiveObject {
 		}
 		this.values.put("sexage", sexage);
 	}
-	public void setAge(Integer age) {
+	public void setAge(Float age) {
 		if ((age == null && this.values.get("age") != null) 
 			|| (age != null && !age.equals(this.values.get("age")))) {
 			this.modified = UPDATED;
@@ -228,7 +221,7 @@ public class Slave extends AbstractDescriptiveObject {
 		}
 		this.values.put("feet", feet);
 	}
-	public void setInch(Integer inch) {
+	public void setInch(Float inch) {
 		if ((inch == null && this.values.get("inch") != null) 
 			|| (inch != null && !inch.equals(this.values.get("inch")))) {
 			this.modified = UPDATED;
@@ -629,20 +622,17 @@ public class Slave extends AbstractDescriptiveObject {
 	public Long getVoyageId() {
 		return (Long)this.values.get("voyageId");
 	}
-	public String getSlaveName() {
-		return (String)this.values.get("slaveName");
-	}
 	public SexAge getSexage() {
 		return (SexAge)this.values.get("sexage");
 	}
-	public Integer getAge() {
-		return (Integer)this.values.get("age");
+	public Float getAge() {
+		return (Float)this.values.get("age");
 	}
 	public Integer getFeet() {
 		return (Integer)this.values.get("feet");
 	}
-	public Integer getInch() {
-		return (Integer)this.values.get("inch");
+	public Float getInch() {
+		return (Float)this.values.get("inch");
 	}
 	public Integer getAgeinf() {
 		return (Integer)this.values.get("ageinf");

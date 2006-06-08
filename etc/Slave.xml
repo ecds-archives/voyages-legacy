@@ -4,9 +4,9 @@
 	<attribute name="slaveId" type="Long" userLabel="Slave ID"  importType="numeric" importName="slaveid" />
 	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric" importName="voyageid" />
 	<attribute name="sexage" type="SexAge" userLabel=""/>
-  	<attribute name="age" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="age" type="Float" userLabel="" importType="numeric"/>
   	<attribute name="feet" type="Integer" userLabel="" importType="numeric"/>
-  	<attribute name="inch" type="Integer" userLabel="" importType="numeric"/>
+  	<attribute name="inch" type="Float" userLabel="" importType="numeric"/>
   	<property name="ageinf" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="country" type="Country" userLabel=""/>
   	<attribute name="name" type="String" userLabel="" importType="string" length="25" />

@@ -65,11 +65,12 @@ public class ImportServlet extends HttpServlet
 		log.close();
 		
 		// log and the data files as parameters
-		String[] params = new String[4];
+		String[] params = new String[5];
 		params[0] = importDir;
 		params[1] = logFileName;
-		params[2] = voyagesFile != null ? voyagesFile.getServerFileName() : "*";
-		params[3] = slavesFile != null ? slavesFile.getServerFileName() : "*";
+		params[2] = getInitParameter("stattransfer.exe");
+		params[3] = voyagesFile != null ? voyagesFile.getServerFileName() : "*";
+		params[4] = slavesFile != null ? slavesFile.getServerFileName() : "*";
 		
 		// run
 		JavaProgramRunner javaRunner = new JavaProgramRunner("edu.emory.library.tas.spss.Import");

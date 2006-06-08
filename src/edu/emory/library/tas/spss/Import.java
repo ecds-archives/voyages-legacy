@@ -2,7 +2,9 @@ package edu.emory.library.tas.spss;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -39,6 +41,7 @@ public class Import
 	RecordIOFactory slavesRecordIOFactory;
 	private String workingDir;
 	private LogWriter log;
+	private String exeStatTransfer;
 
 	// schemas
 	private String voyagesSchemaFileName;
@@ -58,14 +61,14 @@ public class Import
 	private int noOfSlavesWithoutSid;
 	private int noOfVoyagesWithSlaves;
 	
-	private void convertSpssFiles() throws IOException
+	private void convertSpssFiles() throws IOException, StatTransferException, InterruptedException
 	{
 
 		// convert voyages
 		if (voyagesSpssFileName != null)
 		{
 			log.logInfo("Converting voyages by StatTransfer.");
-			StatTransfer voyagesST = new StatTransfer();
+			StatTransfer voyagesST = new StatTransfer(exeStatTransfer);
 			voyagesST.setInputFileType("spss");
 			voyagesST.setInputFileName(voyagesSpssFileName);
 			voyagesST.setOutputFileType("stfixed");
@@ -78,7 +81,7 @@ public class Import
 		if (slavesSpssFileName != null)
 		{
 			log.logInfo("Converting slaves by StatTransfer.");
-			StatTransfer slavesST = new StatTransfer();
+			StatTransfer slavesST = new StatTransfer(exeStatTransfer);
 			slavesST.setInputFileType("spss");
 			slavesST.setInputFileName(slavesSpssFileName);
 			slavesST.setOutputFileType("stfixed");
@@ -166,6 +169,7 @@ public class Import
 		
 		String dbSchemaNames[] = null;
 		Hashtable schema = null;
+		String errorMsgDataFile = null;
 		
 		boolean ok = true;
 		
@@ -173,11 +177,13 @@ public class Import
 		{
 			dbSchemaNames = voyageDbSchemaNames;
 			schema = voyageSchema;
+			errorMsgDataFile = "voyages";
 		}
 		else if (recordType == SLAVE)
 		{
 			dbSchemaNames = slaveDbSchemaNames;
 			schema = slaveSchema;
+			errorMsgDataFile = "slaves";
 		}
 		else
 		{
@@ -203,13 +209,20 @@ public class Import
 				STSchemaVariable varYear = (STSchemaVariable) schema.get(col.getImportDateYear()); 
 				if (varDay == null || varMonth == null || varYear == null)
 				{
-					log.logError("Missing field: " + col.getName() + ".");
 					ok = false;
+					log.logError(
+							"Missing variable for database field " + col.getName() + " " +
+							"of type date " +
+							"in " + errorMsgDataFile + ".");
+
 				}
 				else if (varDay.getType() != STSchemaVariable.TYPE_NUMERIC || varMonth.getType() != STSchemaVariable.TYPE_NUMERIC || varYear.getType() != STSchemaVariable.TYPE_NUMERIC)
 				{
-					log.logError("Type missmatch: " + col.getName() + ".");
 					ok = false;
+					log.logError(
+							"Type missmatch for database field " + col.getName() + " " +
+							"of type date " +
+							"in " + errorMsgDataFile + ".");
 				}
 			}
 
@@ -219,18 +232,26 @@ public class Import
 				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName()); 
 				if (var == null)
 				{
-					log.logError("Missing field: " + col.getName() + ".");
 					ok = false;
+					log.logError(
+							"Missing field for database field " + col.getName() + " " +
+							"in " + errorMsgDataFile + ".");
 				}
 				else if (!compareTypes(col.getImportType(), var.getType()))
 				{
-					log.logError("Type missmatch: " + col.getName() + ".");
 					ok = false;
+					log.logError(
+							"Type missmatch for database field " + col.getName() + " " +
+							"in " + errorMsgDataFile + ".");
 				}
 				else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING && var.getLength() > col.getImportLength())
 				{
-					log.logError("String too long: " + col.getName() + ".");
 					ok = false;
+					log.logError(
+							"String too long for database field " + col.getName() + " " +
+							"in " + errorMsgDataFile + "." +
+							"Expected length = " + col.getImportLength() + ", " +
+							"Variable length = " + var.getLength() + ".");
 				}
 			}
 		
@@ -377,10 +398,10 @@ public class Import
 	private boolean updateValues(AbstractDescriptiveObject obj, char[] line)
 	{
 		
-		//System.out.println("Updating row ...");
-		
 		String dbSchemaNames[] = null;
 		Hashtable schema = null;
+		String errorMsgDataFile = null;
+		int recordNo = 0;
 		
 		int recordType;
 		if (obj instanceof Voyage)
@@ -388,12 +409,16 @@ public class Import
 			recordType = VOYAGE;
 			dbSchemaNames = voyageDbSchemaNames;
 			schema = voyageSchema;
+			errorMsgDataFile = "voyages";
+			recordNo = totalNoOfVoyages;
 		}
 		else if (obj instanceof Slave)
 		{
 			recordType = SLAVE;
 			dbSchemaNames = slaveDbSchemaNames;
 			schema = slaveSchema;
+			errorMsgDataFile = "slaves";
+			recordNo = totalNoOfSlaves;
 		}
 		else
 		{
@@ -404,12 +429,17 @@ public class Import
 		for (int i=0; i<dbSchemaNames.length; i++)
 		{
 
-			Object value = null;
+			Object parsedValue = null;
+			String columnValue = null;
+			String columnDayValue = null;
+			String columnMonthValue = null;
+			String columnYearValue = null;
 			STSchemaVariable var = null;
 			STSchemaVariable varDay = null;
 			STSchemaVariable varMonth = null;
 			STSchemaVariable varYear = null;
 			
+			// get db column
 			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
 			
 			// we are ignoring this field for import
@@ -423,10 +453,8 @@ public class Import
 				if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
 				{
 					var = (STSchemaVariable) schema.get(col.getImportName());
-					value = col.parse(
-							new String(line,
-									var.getStartColumn()-1,
-									var.getLength()).trim());
+					columnValue = new String(line, var.getStartColumn()-1, var.getLength()).trim();
+					parsedValue = col.parse(columnValue);
 				}
 				
 				// import date
@@ -435,29 +463,22 @@ public class Import
 					varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
 					varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
 					varYear = (STSchemaVariable) schema.get(col.getImportDateYear());
-					value = col.parse(new String[]{
-							new String(
-									line,
-									varDay.getStartColumn()-1,
-									varDay.getLength()).trim(),
-							new String(
-									line,
-									varMonth.getStartColumn()-1,
-									varMonth.getLength()).trim(),
-							new String(line,
-									varYear.getStartColumn()-1,
-									varYear.getLength()).trim()});
+					columnDayValue = new String(line, varDay.getStartColumn()-1, varDay.getLength()).trim();
+					columnMonthValue = new String(line, varMonth.getStartColumn()-1, varMonth.getLength()).trim();
+					columnYearValue = new String(line, varYear.getStartColumn()-1, varYear.getLength()).trim();
+					parsedValue = col.parse(new String[]{columnDayValue, columnMonthValue, columnYearValue});
 				}
 				
 				// nonexisting dictionary value was inserted
-				if (col.getType() == SchemaColumn.TYPE_DICT && value != null && ((Dictionary)value).getId() == null)
+				if (col.getType() == SchemaColumn.TYPE_DICT && parsedValue != null && ((Dictionary)parsedValue).getId() == null)
 					log.logWarn(
-							"Nonexistent label '" +
-							((Dictionary)value).getName() +
-							"' inserted for variable " + col.getImportName() + ".");
+							"Nonexistent label '" + ((Dictionary)parsedValue).getName() + "' " +
+							"inserted for variable " + col.getImportName() + " " +
+							"in " + errorMsgDataFile + " " +
+							"record = " + recordNo + ".");
 	
 				// update the object
-				obj.setAttrValue(col.getName(), value);
+				obj.setAttrValue(col.getName(), parsedValue);
 			
 			}
 			catch (InvalidNumberOfValuesException inve)
@@ -468,25 +489,28 @@ public class Import
 			catch (InvalidNumberException ine)
 			{
 				log.logWarn(
-						"Invalid numeric value '" + value + "' " +
-						"in variable " +
-						var.getName() + ".");
+						"Invalid numeric value '" + columnValue + "' " +
+						"in variable " + var.getName() + " " +
+						"in " + errorMsgDataFile + " " +
+						"record = " + recordNo + ".");
 			}
 			catch (InvalidDateException ide)
 			{
 				log.logWarn(
-						"Invalid date value '" + value + "' " +
-						"in variables " +
-						varDay.getName() + ", " +
-						varMonth.getName() + ", " +
-						varYear.getName() + ".");
+						"Invalid date " +
+						"day = '" + columnDayValue + "' in variable " + varDay.getName() + ", " +
+						"month = '" + columnMonthValue + "' in variable " + varMonth.getName() + ", " +
+						"year = '" + columnYearValue + "' in variable " + varYear.getName() + " " +
+						"in " + errorMsgDataFile + " " +
+						"record = " + recordNo + ".");
 			}
 			catch (StringTooLongException stle)
 			{
 				log.logWarn(
-						"String '" + value + "' too long for " +
-						"in variable " +
-						var.getName() + ".");
+						"String '" + parsedValue + "' too long " +
+						"in variable " + var.getName() + " " +
+						"in " + errorMsgDataFile + " " +
+						"record = " + recordNo + ".");
 			}
 			
 		}
@@ -859,11 +883,12 @@ public class Import
 
 	}
 
-	public void runImport(LogWriter log, String workingDir, String voyagesSpssFileName, String slavesSpssFileName)
+	public void runImport(LogWriter log, String workingDir, String exeStatTransfer, String voyagesSpssFileName, String slavesSpssFileName)
 	{
 		
 		// remember files
 		this.log = log;
+		this.exeStatTransfer = exeStatTransfer;
 		this.workingDir = workingDir;
 		this.voyagesSpssFileName = voyagesSpssFileName;
 		this.slavesSpssFileName = slavesSpssFileName;
@@ -922,13 +947,24 @@ public class Import
 		{
 			log.logInfo("Import terminated.");
 		}
+		catch (StatTransferException ste)
+		{
+			log.logError("The uploaded file is not proabably a valid SPSS file.");
+			log.logError(ste.getMessage());
+			log.logInfo("Import terminated.");
+		}
+		catch (InterruptedException ie)
+		{
+			log.logError(ie.getMessage());
+			log.logInfo("Import terminated.");
+		}
 		
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		
-		if (args.length != 4) return;
+		if (args.length != 5) return;
 		
 		Voyage.initTypes();
 		Slave.initTypes();
@@ -936,15 +972,16 @@ public class Import
 		// extracts params
 		String workingDir = args[0];
 		String logFileName = args[1];
-		String voyagesFileName = args[2].equals("*") ? null : args[2]; 
-		String slavesFileName = args[3].equals("*") ? null : args[3];
+		String exeStatTransfer = args[2];
+		String voyagesFileName = args[3].equals("*") ? null : args[3];
+		String slavesFileName = args[4].equals("*") ? null : args[4];
 		
 		// crate a log
 		LogWriter log = new LogWriter(logFileName);
 		
 		// import
 		Import imp = new Import();
-		imp.runImport(log, workingDir, voyagesFileName, slavesFileName); 
+		imp.runImport(log, workingDir, exeStatTransfer, voyagesFileName, slavesFileName); 
 		log.close();
 		
 	}

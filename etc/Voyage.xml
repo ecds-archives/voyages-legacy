@@ -131,13 +131,13 @@
     <attribute name="tonmod" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="vymrtimp" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="tslmtimp" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="sla32imp" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="sla36imp" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="imprat" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="sla32imp" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="sla36imp" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="imprat" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="regdis11" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="regdis21" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="sla39imp" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="ncr15imp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="ncr15imp" type="Float" userLabel="" importType="numeric"/> 
   	<attribute name="ncr17imp" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="exprat" type="Float" userLabel="" importType="numeric"/> 
   	<attribute name="male1imp" type="Integer" userLabel="" importType="numeric"/> 
@@ -156,8 +156,8 @@
   	<attribute name="slavema3" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="adlt3imp" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="vymrtrat" type="Float" userLabel="" importType="numeric"/> 
-  	<attribute name="slaximp" type="Integer" userLabel="" importType="numeric"/>
-  	<attribute name="slamimp" type="Integer" userLabel="" importType="numeric"/> 
+  	<attribute name="slaximp" type="Float" userLabel="" importType="numeric"/>
+  	<attribute name="slamimp" type="Float" userLabel="" importType="numeric"/> 
   	<attribute name="voy2imp" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="voy1imp" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="malrat7" type="Float" userLabel="" importType="numeric"/> 

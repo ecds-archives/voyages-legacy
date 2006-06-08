@@ -52,6 +52,7 @@ public class JavaProgramRunner
 		// run import
 		Runtime runtime = Runtime.getRuntime();
 		runtime.exec((String[]) execParams.toArray(new String[] {""}));
+		// p.getInputStream();
 		
 	}
 	

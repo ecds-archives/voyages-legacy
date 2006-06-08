@@ -11,8 +11,10 @@
         	<generator class="native"/>
         </id>
         <property name="slaveId" column="sid"/>
+        <!-- 
         <property name="slaveName" column="slave_name"/>
-		
+		 -->
+		 
   		<property name="age"/>
   		<property name="feet"/>
   		<property name="inch"/>
