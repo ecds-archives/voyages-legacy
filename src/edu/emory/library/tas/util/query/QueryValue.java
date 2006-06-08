@@ -6,6 +6,8 @@ import java.util.Iterator;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import edu.emory.library.tas.util.HibernateConnector;
+
 public class QueryValue {
 	
 	public static final int LIMIT_NO_LIMIT = -1;
@@ -125,4 +127,11 @@ public class QueryValue {
 		return q;
 	}
 	 
+	public Object[] executeQuery() {
+		return HibernateConnector.getConnector().loadObjects(this);
+	}
+	
+	public Object[] executeQuery(Session p_session) {
+		return HibernateConnector.getConnector().loadObjects(p_session, this);
+	}
 }

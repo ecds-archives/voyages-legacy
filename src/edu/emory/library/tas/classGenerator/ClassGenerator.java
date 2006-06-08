@@ -15,6 +15,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import edu.emory.library.tas.SchemaColumn;
+import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.ObjectType;
+import edu.emory.library.tas.util.HibernateConnector;
+import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
 
 public class ClassGenerator {
 
@@ -24,6 +29,9 @@ public class ClassGenerator {
 			throw new RuntimeException("Provide list of xml files!");
 		}
 
+		boolean shouldSave = "true".equals(System.getProperty("saveTypes"));
+		shouldSave=true;
+		
 		for (int i = 0; i < args.length; i++) {
 			String fileName = args[i];
 			File file = new File(fileName);
@@ -166,6 +174,26 @@ public class ClassGenerator {
 							types.append("-1));\n");
 						} else {
 							types.append(length.intValue()).append("));\n");
+						}
+						if (shouldSave) {
+							String objType = args[i].substring(args[i].lastIndexOf("/")+1, args[i].lastIndexOf("."));
+							Conditions c = new Conditions(Conditions.JOIN_AND);
+							c.addCondition("typeName", objType, Conditions.OP_EQUALS);
+							QueryValue qValue = new QueryValue("ObjectType", c);
+							Object[] otypes = HibernateConnector.getConnector().loadObjects(qValue);
+							ObjectType otype = null;
+							if (otypes.length != 0) {
+								otype = (ObjectType)otypes[0];
+							} else {
+								otype = new ObjectType();
+								otype.setTypeName(objType);
+								HibernateConnector.getConnector().saveObject(otype);
+							}
+							Attribute attr = new Attribute();
+							attr.setName(attrName);
+							attr.setUserLabel(attrLabel);
+							attr.setObjectType(otype);
+							HibernateConnector.getConnector().saveObject(attr);
 						}
 					}
 				}

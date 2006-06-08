@@ -20,6 +20,8 @@ import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
+import edu.emory.library.tas.attrGroups.Group;
+import edu.emory.library.tas.attrGroups.GroupSet;
 import edu.emory.library.tas.dicts.PortLocation;
 import edu.emory.library.tas.dicts.SecondDemPort;
 import edu.emory.library.tas.dicts.Temp;
@@ -213,6 +215,36 @@ public class HibernateTest {
 //				
 //				
 //				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
+			} else if ("tsave".equalsIgnoreCase(command)) {
+				GroupSet set = new GroupSet();
+				set.setName("new groupset " + System.currentTimeMillis());
+				Group group = new Group();
+				group.setName("new group " + System.currentTimeMillis());
+				
+				Conditions c = new Conditions(Conditions.JOIN_AND);
+				c.addCondition("name", "captain%", Conditions.OP_LIKE);
+				QueryValue qValue = new QueryValue("Attribute", c);  
+				Object [] aobjs = qValue.executeQuery();
+				c = new Conditions(Conditions.JOIN_AND);
+				c.addCondition("name", "ownera", Conditions.OP_EQUALS);
+				qValue = new QueryValue("Attribute", c);
+				Object[] aobjs1 = qValue.executeQuery();
+				
+				for (int i = 0; i < aobjs.length; i++) {
+					group.getAttributes().add(aobjs[i]);
+				}
+				set.getAttributes().add(aobjs1[0]);
+				set.getGroups().add(group);
+				HibernateConnector.getConnector().saveObject(group);
+				HibernateConnector.getConnector().saveObject(set);
+				
+			} else if ("tload".equalsIgnoreCase(command)) {
+				Conditions c = new Conditions(Conditions.JOIN_AND);
+				QueryValue qValue = new QueryValue("GroupSet", c);
+				Object [] ret = qValue.executeQuery();
+				for (int i = 0; i < ret.length; i++) {
+					System.out.println("Has: " + ret[i]);
+				}
 			} 
 			
 			System.out.print("command:>");

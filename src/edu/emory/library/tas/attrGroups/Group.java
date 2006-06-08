@@ -1,10 +1,12 @@
 package edu.emory.library.tas.attrGroups;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Group {
 	private Long id;
-	private Set attributes;
+	private String name;
+	private Set attributes = new HashSet();;
 	
 	public Group() {
 		
@@ -21,5 +23,17 @@ public class Group {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String toString() {
+		return "Group of attributes " + this.attributes;
 	}
 }
