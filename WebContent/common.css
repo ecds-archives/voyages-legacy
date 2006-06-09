@@ -19,3 +19,7 @@ table.grid th {
 table.grid td.new-value {
 	font-style: italic;
 	background-color: #EEEEEE; }
+	
+table.grid tr.head {
+	font-weight: bold;
+	background-color: #EEEEEE; }

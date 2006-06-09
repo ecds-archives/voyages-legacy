@@ -1,7 +1,7 @@
 /*
  * JSON-RPC JavaScript client
  *
- * $Id: jsonrpc.js,v 1.1 2006-06-07 18:05:22 pjurczy Exp $
+ * $Id$
  *
  * Copyright (c) 2003-2004 Jan-Klaas Kollhof
  * Copyright (c) 2005 Michael Clark, Metaparadigm Pte Ltd
