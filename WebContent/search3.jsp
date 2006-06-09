@@ -14,7 +14,7 @@
 <script language="javascript" type="text/javascript">
 
 var json = null;
-window.onload = newSearch; //restorePreviousState;
+window.onload = restorePreviousState;
 
 function ensureJSONRPC()
 {
@@ -27,12 +27,24 @@ function restorePreviousState()
 	json.Search.getLastQuery(lastQueryLoaded);
 }
 
-function lastQueryLoaded(result)
+function lastQueryLoaded(conditions)
 {
-	alert(result);
+	if (!conditions) return;
+	for (var i=0; i<conditions.length; i++)
+		addCondition(conditions[i].field, conditions[i].searchFor);
 }
 
-function addCondition()
+function addConditionSelectedCondition()
+{
+
+	var frm = document.forms["mainForm"];
+	var sel = frm.elements["fields"];
+	
+	addCondition(sel.options[sel.selectedIndex].value, "");
+
+}
+
+function addCondition(field, searchFor)
 {
 
 	var frame = document.getElementById("conditionsDiv");
@@ -45,7 +57,7 @@ function addCondition()
 	var textboxTd = tr.insertCell(1);
 	var removeTd = tr.insertCell(2);
 	
-	labelTd.innerHTML = field.label;
+	labelTd.innerHTML = field;
 	
 	var textbox = document.createElement("input");
 	textbox.type = "hidden";
@@ -54,8 +66,8 @@ function addCondition()
 
 	var textbox = document.createElement("input");
 	textbox.type = "text";
-	textbox.name = "field";
-	textbox.value = field.name;
+	textbox.name = "searchFor";
+	textbox.value = searchFor;
 	textboxTd.appendChild(textbox);
 
 	var removeBtn = document.createElement("input");
