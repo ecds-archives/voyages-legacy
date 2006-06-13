@@ -11,6 +11,7 @@ import edu.emory.library.tas.util.HibernateConnector;
 public class QueryValue {
 	
 	public static final int LIMIT_NO_LIMIT = -1;
+	public static final int FIRST_NO_FIRST = -1;
 	
 	public static final int ORDER_DEFAULT = 0;
 	public static final int ORDER_ASC = 1;
@@ -22,11 +23,12 @@ public class QueryValue {
 	private String orderBy;
 	private int order;
 	private int limit;
+	private int firstResult;
 	
 	private ArrayList populateValues = null;
 	
 	public QueryValue(String objType) {
-		this(objType, null);
+		this(objType, new Conditions(Conditions.JOIN_AND));
 	}
 	
 	public QueryValue(String objType, Conditions cond) {
@@ -37,10 +39,15 @@ public class QueryValue {
 		this.object = objType;
 		this.conditions = cond;
 		this.limit = limit;
+		this.firstResult = FIRST_NO_FIRST;
 	}
 	
 	public void setLimit(int limit) {
 		this.limit = limit;
+	}
+	
+	public void setFirstResult(int first) {
+		this.firstResult = first;
 	}
 	
 	public void setOrder(int order) {
@@ -112,7 +119,7 @@ public class QueryValue {
 	
 	public Query getQuery(Session session) {
 		ConditionResponse response = toStringWithParams();
-		System.out.println("My query: " + response.conditionString);
+		//System.out.println("My query: " + response.conditionString);
 		Query q = session.createQuery(response.conditionString.toString());
 		
 		Iterator iter = response.properties.keySet().iterator();
@@ -123,6 +130,9 @@ public class QueryValue {
 		
 		if (this.limit != LIMIT_NO_LIMIT) {
 			q.setMaxResults(this.limit);
+		}
+		if (this.firstResult != FIRST_NO_FIRST) {
+			q.setFirstResult(this.firstResult);
 		}
 		return q;
 	}
