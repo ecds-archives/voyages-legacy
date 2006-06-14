@@ -12,7 +12,7 @@ import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.components.pageScroller.UIResultPageScroller;
 
-public class UIStatisticResultTab extends UIOutput implements
+public class UITimeLineResultTab extends UIOutput implements
 		ConditionedTabbedComponent {
 
 	public void appyConditions(Conditions c, FacesContext context) {

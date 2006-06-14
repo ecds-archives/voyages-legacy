@@ -7,8 +7,8 @@
       <component-class>edu.emory.library.tas.web.components.tabs.UITableResultTab</component-class>
     </component>
     <component>
-      <component-type>StatisticResultTab</component-type>
-      <component-class>edu.emory.library.tas.web.components.tabs.UIStatisticResultTab</component-class>
+      <component-type>TimeLineResultTab</component-type>
+      <component-class>edu.emory.library.tas.web.components.tabs.UITimeLineResultTab</component-class>
     </component>
     <component>
       <component-type>ResultPageScroller</component-type>

@@ -32,8 +32,14 @@
     
     <tag>
       <name>stattab</name>
-      <tag-class>edu.emory.library.tas.web.components.tabs.StatisticResultTabTag</tag-class>
+      <tag-class>edu.emory.library.tas.web.components.tabs.TimeLineResultTabTag</tag-class>
       <body-content>JSP</body-content>
+      <attribute>
+	   <name>style</name>
+  	  </attribute>
+  	  <attribute>
+	   <name>styleClass</name>
+  	  </attribute>
     </tag>
     
     <tag>
