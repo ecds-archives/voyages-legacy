@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+"http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+  <faces-config>
+    <component>
+      <component-type>TableResultTab</component-type>
+      <component-class>edu.emory.library.tas.web.components.tabs.UITableResultTab</component-class>
+    </component>
+    <component>
+      <component-type>StatisticResultTab</component-type>
+      <component-class>edu.emory.library.tas.web.components.tabs.UIStatisticResultTab</component-class>
+    </component>
+    <component>
+      <component-type>ResultPageScroller</component-type>
+      <component-class>edu.emory.library.tas.web.components.pageScroller.UIResultPageScroller</component-class>
+    </component>
+    
+    
+     <managed-bean>
+	  <managed-bean-name>TableResultTabBean</managed-bean-name>
+	  <managed-bean-class>edu.emory.library.tas.web.components.tabs.TableResultTabBean</managed-bean-class>
+	  <managed-bean-scope>session</managed-bean-scope>
+	  <!-- 
+	  <managed-property>
+	   <property-name>current</property-name>
+	   <property-class>java.lang.Integer</property-class>
+	   <value>0</value>
+	  </managed-property>
+  	  <managed-property>
+	   <property-name>step</property-name>
+	   <property-class>java.lang.Integer</property-class>
+	   <value>10</value>
+	  </managed-property>
+   	  <managed-property>
+	   <property-name>condition</property-name>
+	   <property-class>java.lang.Integer</property-class>
+	   <null-value/>
+	  </managed-property>
+   	  <managed-property>
+	   <property-name>resultSize</property-name>
+	   <property-class>java.lang.Integer</property-class>
+	   <null-value/>
+	  </managed-property>
+ 	  <managed-property>
+	   <property-name>populatedAttributes</property-name>
+	   <property-class>java.lang.Integer</property-class>
+   	   <null-value/>
+	  </managed-property>
+	   -->
+	 </managed-bean>
+	    
+    <lifecycle/>
+    <application>
+      <locale-config/>
+    </application>
+    <factory/>
+    
+    <render-kit>
+
+<!--  <renderer>
+      <description>
+        Renderer for Stat component.
+      </description>
+      <component-family>STAT_FAMILY</component-family>
+      <renderer-type>STAT_RENDERER</renderer-type>
+      <renderer-class>edu.emory.library.tas.jsf.components.StatMainRenderer</renderer-class>
+    </renderer> -->
+  </render-kit>
+  </faces-config>
