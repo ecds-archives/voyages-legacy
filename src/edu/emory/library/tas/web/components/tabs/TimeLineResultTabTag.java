@@ -1,7 +1,6 @@
 package edu.emory.library.tas.web.components.tabs;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.webapp.UIComponentTag;
 
 public class TimeLineResultTabTag extends UIComponentTag {
@@ -14,7 +13,7 @@ public class TimeLineResultTabTag extends UIComponentTag {
 
 		super.setProperties(component);
 		
-		FacesContext context = FacesContext.getCurrentInstance();
+		//FacesContext context = FacesContext.getCurrentInstance();
     
 	}
 	

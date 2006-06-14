@@ -7,11 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tas.Voyage;
-import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.util.query.Conditions;
-import edu.emory.library.tas.util.query.QueryValue;
-import edu.emory.library.tas.web.components.pageScroller.UIResultPageScroller;
 
 public class UITableResultTab extends UIOutput implements
 		ConditionedTabbedComponent {

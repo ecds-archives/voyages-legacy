@@ -1,12 +1,47 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
+	
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/WEB-INF/faces-config.xml</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
+        <param-value>false</param-value>
+    </context-param>
 
 	<servlet>
 		<servlet-name>listing</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.test.ListingServlet</servlet-class>
 	</servlet>
 	
+    <listener>
+        <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+    </listener>
+	
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
 	<servlet>
 		<servlet-name>detail</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.test.DetailServlet</servlet-class>
@@ -59,11 +94,6 @@
     </servlet>
 	
 	<servlet>
-		<servlet-name>querybuilder</servlet-name>
-		<servlet-class>edu.emory.library.tas.web.QueryBuilder</servlet-class>
-	</servlet>
-
-	<servlet>
 		<servlet-name>JSONRPC</servlet-name>
 		<servlet-class>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-class>
 	</servlet>
@@ -98,10 +128,10 @@
 		<url-pattern>/import</url-pattern>
 	</servlet-mapping>
 
-	<servlet-mapping>
-		<servlet-name>querybuilder</servlet-name>
-		<url-pattern>/querybuilder</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>JSONRPC</servlet-name>

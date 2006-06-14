@@ -1,7 +1,6 @@
 package edu.emory.library.tas.web.components.tabs;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
