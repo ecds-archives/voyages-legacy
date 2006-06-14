@@ -178,9 +178,9 @@ public class HibernateTest {
 //				}
 //				qValue.addPopulatedAttribute("voyage.shipname");
 //				qValue.addPopulatedAttribute("voyage.shipname");
-				qValue.addPopulatedAttribute("v.voyage.shipname", false);
-				qValue.addPopulatedAttribute("v.voyage.ownere", false);
-				qValue.addPopulatedAttribute("v.voyage.arrport", true);
+//				qValue.addPopulatedAttribute("v.voyage.shipname", false);
+//				qValue.addPopulatedAttribute("v.voyage.ownere", false);
+//				qValue.addPopulatedAttribute("v.voyage.arrport", true);
 				
 				long t1 = System.currentTimeMillis();
 				Object[] res = HibernateConnector.getConnector().loadObjects(qValue);

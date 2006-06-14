@@ -72,7 +72,7 @@ public class SearchFormServlet extends HttpServlet
 					if (dictionaryValues > 0) out.print(",\n"); 
 					out.print("{");
 					out.print("id: " + dicts[j].getId() + ", ");
-					out.print("name: \"" + dicts[j].getName().replaceAll("\"", "\\\"") + "\"");
+					out.print("name: \"" + dicts[j].getName().replaceAll("\"", "\\\\\"") + "\"");
 					out.print("}");
 					dictionaryValues ++;
 				}
