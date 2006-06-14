@@ -161,26 +161,35 @@ public class HibernateTest {
 				
 				
 				Conditions cMain = new Conditions(Conditions.JOIN_AND);
+				cMain.addCondition("v.voyage.voyageId", new Long(104), Conditions.OP_SMALLER_OR_EQUAL);
+				cMain.addCondition(VoyageIndex.getRecent());
+//				cMain.addCondition("v.voyage.shipname", "Pa%", Conditions.OP_LIKE);
+//				Conditions cL1 = new Conditions(Conditions.JOIN_OR);
+//				cMain.addCondition(cL1);
+//				cL1.addCondition("v.voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
+//				cL1.addCondition("v.voyage.captaina", "Cunha%", Conditions.OP_LIKE);
 				
-				cMain.addCondition("voyage.shipname", "Pastora de Lima", Conditions.OP_EQUALS);
-				Conditions cL1 = new Conditions(Conditions.JOIN_AND);
-				cMain.addCondition(cL1);
-				cL1.addCondition("voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
-				cL1.addCondition("voyage.captaina", "Cunha%", Conditions.OP_LIKE);
 				
-				
-				QueryValue qValue = new QueryValue("VoyageIndex", cMain);
-				qValue.setLimit(100);
+				QueryValue qValue = new QueryValue("VoyageIndex as v", cMain);
+				qValue.setLimit(300);
+				String [] attrs = Voyage.getAllAttrNames();
+//				for (int i = 10; i < 115; i++) {
+//					qValue.addPopulatedAttribute("v.voyage." + attrs[i]);
+//				}
 //				qValue.addPopulatedAttribute("voyage.shipname");
 //				qValue.addPopulatedAttribute("voyage.shipname");
+				qValue.addPopulatedAttribute("v.voyage.shipname", false);
+				qValue.addPopulatedAttribute("v.voyage.ownere", false);
+				qValue.addPopulatedAttribute("v.voyage.arrport", true);
+				
 				long t1 = System.currentTimeMillis();
 				Object[] res = HibernateConnector.getConnector().loadObjects(qValue);
 				long t2 = System.currentTimeMillis();
 				
 				System.out.println("Returned: " + res.length + " time=" + (t2-t1));
-//				for (int i = 0; i < res.length && i < 20; i++) {
-//					System.out.println(" -> " + ((VoyageIndex)res[i]).getVoyage().getIid() + "  " + ((VoyageIndex)res[i]).getVoyage().getShipname());
-//				}
+				for (int i = 0; i < res.length && i < 20; i++) {
+					System.out.println(" -> " + (res[i]));
+				}
 			} else if (command.equals("chart")) {
 //				Conditions cMain = new Conditions(Conditions.JOIN_AND);
 //				Conditions cNot = new Conditions(Conditions.JOIN_NOT);

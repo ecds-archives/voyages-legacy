@@ -26,6 +26,7 @@ public class QueryValue {
 	private int firstResult;
 	
 	private ArrayList populateValues = null;
+	private ArrayList populateValuesDictInfo = null;
 	
 	public QueryValue(String objType) {
 		this(objType, new Conditions(Conditions.JOIN_AND));
@@ -68,21 +69,27 @@ public class QueryValue {
 	
 	public ConditionResponse toStringWithParams() {
 		StringBuffer buf = new StringBuffer();
-		
+		StringBuffer fetchClause = new StringBuffer();
 		if (this.populateValues != null) {
 			buf.append("select ");
 			boolean first = true;
 			Iterator iter = this.populateValues.iterator();
-			while (iter.hasNext()) {
+			Iterator iterInfo = this.populateValuesDictInfo.iterator();
+			while (iter.hasNext() && iterInfo.hasNext()) {
+				String attr = (String)iter.next();
 				if (!first) {
 					buf.append(",");
 				}
 				first = false;
-				buf.append(iter.next()).append(" ");
+				buf.append(attr).append(" ");
+				if (((Boolean)iterInfo.next()).booleanValue()) {
+					fetchClause.append(" left outer join ").append(attr);
+				}
 			}
 		}
 		
-		buf.append("from ").append(this.object);
+		
+		buf.append("from ").append(this.object).append(" ").append(fetchClause);
 		ConditionResponse response = this.conditions.getConditionHQL();
 		if (!response.conditionString.toString().trim().equals("")) {
 			buf.append(" where ").append(response.conditionString);
@@ -110,11 +117,15 @@ public class QueryValue {
 		return res;
 	}
 	
-	public void addPopulatedAttribute(String p_attrName) {
+	public void addPopulatedAttribute(String p_attrName, boolean dictionary) {
 		if (this.populateValues == null) {
 			this.populateValues = new ArrayList();
 		}
+		if (this.populateValuesDictInfo == null) {
+			this.populateValuesDictInfo = new ArrayList();
+		}
 		this.populateValues.add(p_attrName);
+		this.populateValuesDictInfo.add(new Boolean(dictionary));
 	}
 	
 	public Query getQuery(Session session) {
