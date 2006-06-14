@@ -54,7 +54,7 @@ table.history:hover {
 
 </style>
 
-<script language="javascript" type="text/javascript">
+<script language="javascript" type="text/javascript"><!--
 
 var json = null;
 
@@ -239,7 +239,8 @@ function search(newSearch)
 	for (var i=0; i<fields.length; i++)
 	{
 		var field = fields[i].value;
-		var searchFor = frm.elements[fields[i].value].value;
+		var searchFor = Form.getInputs(frm, "text", fields[i].value).pop().value;
+		//var searchFor = frm.elements[fields[i].value].value;
 		conditions.push(new Condition(field, searchFor));
 	}
 	
@@ -309,6 +310,7 @@ function Condition(field, searchFor)
 	this.searchFor = searchFor;
 }
 
+-->
 </script>
 
 </head>
