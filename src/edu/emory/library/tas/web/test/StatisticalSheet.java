@@ -12,12 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.util.HibernateConnector;
@@ -46,7 +40,7 @@ public class StatisticalSheet extends HttpServlet {
 		Object group = request.getParameter("attrGroup");
 		Object ser = request.getParameter("chartSeries");
 		
-		JFreeChart chart = null;
+//		JFreeChart chart = null;
 		
 		String[] series = new String[] {};
 		String nSeriesLong = "";
@@ -115,28 +109,28 @@ public class StatisticalSheet extends HttpServlet {
 			
 			Object [] objs = HibernateConnector.getConnector().loadObjects(qValue);
 			
-			DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+//			DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+//			
+//			for (int i = 0; i < objs.length; i++) {
+//				
+//				for (int j = 0; j < series.length; j++) {					
+//					float n = 0.0F;
+//					if (((Object[])objs[i])[j] != null) {
+//						n = ((Number)((Object[])objs[i])[j]).floatValue();
+//					}
+//					
+//					categoryDataset.addValue(n, ((Object[])objs[i])[series.length].toString(), series[j]);
+//				}
+//			
+//			}
 			
-			for (int i = 0; i < objs.length; i++) {
-				
-				for (int j = 0; j < series.length; j++) {					
-					float n = 0.0F;
-					if (((Object[])objs[i])[j] != null) {
-						n = ((Number)((Object[])objs[i])[j]).floatValue();
-					}
-					
-					categoryDataset.addValue(n, ((Object[])objs[i])[series.length].toString(), series[j]);
-				}
-			
-			}
-			
-			chart = ChartFactory.createBarChart("Sample Category Chart", // Title
-			                      "Voyages",              // X-Axis label
-			                      "# of slaves",                 // Y-Axis label
-			                      categoryDataset,         // Dataset
-			                      PlotOrientation.VERTICAL,
-			                      true, true, true                     // Show legend
-			                     );
+//			chart = ChartFactory.createBarChart("Sample Category Chart", // Title
+//			                      "Voyages",              // X-Axis label
+//			                      "# of slaves",                 // Y-Axis label
+//			                      categoryDataset,         // Dataset
+//			                      PlotOrientation.VERTICAL,
+//			                      true, true, true                     // Show legend
+//			                     );
 
 			
 			
@@ -233,15 +227,15 @@ public class StatisticalSheet extends HttpServlet {
 		
 		html.endTr();		
 		html.endTable();
-		if (chart != null) {
-			ServletContext context = session.getServletContext();
-			String realContextPath = context.getRealPath(request.getContextPath());
-			realContextPath = realContextPath.substring(0, realContextPath.lastIndexOf("/"));
-			System.out.println(realContextPath);
-			
-			ChartUtilities.saveChartAsPNG(new File(realContextPath + "/chart.png"), chart, 800, 600);
-			html.out.println("<img src=\"chart.png\" alt=\"Chart\">");
-		}
+//		if (chart != null) {
+//			ServletContext context = session.getServletContext();
+//			String realContextPath = context.getRealPath(request.getContextPath());
+//			realContextPath = realContextPath.substring(0, realContextPath.lastIndexOf("/"));
+//			System.out.println(realContextPath);
+//			
+//			ChartUtilities.saveChartAsPNG(new File(realContextPath + "/chart.png"), chart, 800, 600);
+//			html.out.println("<img src=\"chart.png\" alt=\"Chart\">");
+//		}
 		html.out.println("</form>");
 		html.out.println("</body>");
 		html.end();
