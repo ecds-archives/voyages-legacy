@@ -1,12 +1,16 @@
 package edu.emory.library.tas.web;
 
+import java.util.Iterator;
+
+import edu.emory.library.tas.util.query.Conditions;
+
 
 public class SearchBean
 {
 	
 	private History history = new History();
 	private Query workingQuery = new Query();
-	private Query currentQuery = new Query();
+	private Conditions currentConditions = null;
 	private String selectedAtttibute;
 	
 	public SearchBean()
@@ -23,15 +27,29 @@ public class SearchBean
 	public void search()
 	{
 		
-		// TODO: check if it is ok
-		// ...
+		// convert to condition
+		Conditions conditions = new Conditions();
+		try
+		{
+			for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
+			{
+				QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+				queryCondition.addToConditions(conditions);
+			}
+		}
+		catch (QueryInvalidValueException qive)
+		{
+			// to user: correct your query,
+			// you have a problem in qive.getAttributeName()
+			return;
+		}
 		
-		// copy to currentQuery
-		currentQuery = (Query) workingQuery.clone();
-
-		// add to historyList
+		// all ok -> set our property
+		currentConditions = conditions;
+		
+		// and add to history list
 		HistoryItem historyItem = new HistoryItem();
-		historyItem.setQuery(currentQuery);
+		historyItem.setQuery(workingQuery);
 		history.addItem(historyItem);
 	
 	}
@@ -57,14 +75,14 @@ public class SearchBean
 		this.selectedAtttibute = selectedAtttibute;
 	}
 
-	public Query getCurrentQuery()
+	public Conditions getCurrentConditions()
 	{
-		return currentQuery;
+		return currentConditions;
 	}
 
-	public void setCurrentQuery(Query currentQuery)
+	public void setCurrentConditions(Conditions currentQuery)
 	{
-		this.currentQuery = currentQuery;
+		this.currentConditions = currentQuery;
 	}
 
 	public Query getWorkingQuery()

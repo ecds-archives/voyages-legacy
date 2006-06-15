@@ -1,6 +1,8 @@
 package edu.emory.library.tas.web;
 
-public class QueryCondition
+import edu.emory.library.tas.util.query.Conditions;
+
+public abstract class QueryCondition
 {
 	
 	private String attributeName;
@@ -14,5 +16,7 @@ public class QueryCondition
 	{
 		return attributeName;
 	}
+	
+	public abstract void addToConditions(Conditions conditions) throws QueryInvalidValueException;
 
 }
