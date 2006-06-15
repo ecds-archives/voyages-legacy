@@ -51,14 +51,14 @@ public class UITableResultTab extends UIOutput implements
 			populatedAttributes = (String[]) vb.getValue(context);
 		}
 		
-		vb = this.getValueBinding("conditions");
-		if (vb != null) {
-			Conditions c = (Conditions) vb.getValue(context);
-			vb = this.getValueBinding("conditionsOut");
-			if (vb != null) {
-				vb.setValue(context, c);
-			}
-		}
+//		vb = this.getValueBinding("conditions");
+//		if (vb != null) {
+//			Conditions c = (Conditions) vb.getValue(context);
+//			vb = this.getValueBinding("conditionsOut");
+//			if (vb != null) {
+//				vb.setValue(context, c);
+//			}
+//		}
 		
 		vb = this.getValueBinding("results");
 		if (vb != null) {

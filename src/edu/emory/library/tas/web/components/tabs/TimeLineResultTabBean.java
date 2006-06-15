@@ -29,8 +29,8 @@ public class TimeLineResultTabBean {
 	
 	private Conditions conditions = new Conditions();
 	
-	private static final String[] aggregates = {"avg", "min", "max", "sum"};
-	private static final String[] aggregatesUL = {"Avg", "Min", "Max", "Sum"};
+	private static final String[] aggregates = {"avg", "min", "max", "sum", "count"};
+	private static final String[] aggregatesUL = {"Avg", "Min", "Max", "Sum", "Count"};
 	
 	private List voyageAttributes;
 	private List aggregateFunctions;
@@ -38,12 +38,11 @@ public class TimeLineResultTabBean {
 	private String chosenAggregate;
 	private String chosenAttribute;
 	private String chartPath;
+	private String chartPathLarge;
 	private boolean largeViewMode = false;
 	
 	public TimeLineResultTabBean() {
-		this.conditions.addCondition(VoyageIndex.getRecent());
-//		this.conditions.addCondition("vi.voyageId", new Long(100), Conditions.OP_SMALLER_OR_EQUAL);
-		
+		this.conditions.addCondition(VoyageIndex.getRecent());		
 		this.conditions.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
 		this.conditions.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
 	}
@@ -109,13 +108,15 @@ public class TimeLineResultTabBean {
 		try {
 			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
 			String path = ((ServletContext)servletContext.getContext()).getRealPath("/");
-			ChartUtilities.saveChartAsPNG(new File(path + "chart.png"), chart, 800, 600);
+			ChartUtilities.saveChartAsPNG(new File(path + "chart.png"), chart, 640, 480);
 			this.chartPath = "chart.png";
+			ChartUtilities.saveChartAsPNG(new File(path + "chartBig.png"), chart, 1280, 1024);
+			this.chartPathLarge = "chartBig.png";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return "Ple plep ple";
+		return null;
 	}
 
 	public String getChosenAggregate() {
@@ -135,7 +136,7 @@ public class TimeLineResultTabBean {
 	}
 
 	public String getChartPath() {
-		return chartPath;
+		return largeViewMode ? chartPathLarge : chartPath;
 	}
 
 	public void setChartPath(String chartPath) {
