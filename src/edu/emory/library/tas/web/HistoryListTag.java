@@ -70,4 +70,14 @@ public class HistoryListTag extends UIComponentTag
 		this.history = list;
 	}
 
+	public String getOnrestore()
+	{
+		return onrestore;
+	}
+
+	public void setOnrestore(String onrestore)
+	{
+		this.onrestore = onrestore;
+	}
+
 }

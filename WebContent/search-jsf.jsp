@@ -18,9 +18,20 @@
 		<tr>
 			<td valign="top">
 			
+     		    <h:selectOneMenu value="#{SearchBean.selectedAtttibute}">
+		        	<f:selectItems value="#{SearchBean.voyageAttributes}"/>
+		        </h:selectOneMenu>
+				<h:commandButton action="#{SearchBean.addQueryCondition}" value="Add" />
+		        
+		        <hr>
+
 				<s:queryBuilder query="#{SearchBean.workingQuery}" />
 				
-				<h:commandButton action="#{SearchBean.search}" />
+		        <hr>
+
+				<h:commandButton action="#{SearchBean.search}" value="Search" />
+
+		        <hr>
 
 				<s:historyList
 					ondelete="#{SearchBean.historyItemDelete}"

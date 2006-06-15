@@ -12,6 +12,7 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.PhaseId;
 
 public class HistoryListComponent extends UIComponentBase
 {
@@ -61,8 +62,19 @@ public class HistoryListComponent extends UIComponentBase
 			(String) externalContex.getRequestParameterMap().get(
 					getToDeleteHiddenFieldName(context));
 
+		String toRestoreId =
+			(String) externalContex.getRequestParameterMap().get(
+					getToRestoreHiddenFieldName(context));
+
 		if (toDeleteId != null && toDeleteId.length() != 0)
 			queueEvent(new HistoryItemDeleteEvent(this, toDeleteId));
+
+		if (toRestoreId != null && toRestoreId.length() != 0)
+		{
+			FacesEvent event = new HistoryItemRestoreEvent(this, toRestoreId); 
+			event.setPhaseId(PhaseId.INVOKE_APPLICATION);
+			queueEvent(event);
+		}
 
 	}
 	
@@ -74,6 +86,10 @@ public class HistoryListComponent extends UIComponentBase
 			if (ondelete != null)
 				ondelete.invoke(getFacesContext(), new Object[] {event});
 		
+		if (event instanceof HistoryItemRestoreEvent)
+			if (onrestore != null)
+				onrestore.invoke(getFacesContext(), new Object[] {event});
+
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException
@@ -83,6 +99,7 @@ public class HistoryListComponent extends UIComponentBase
 		UIForm form = UtilsJSF.getForm(this, context);
 		
 		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context), null);
+		UtilsJSF.encodeHiddenInput(this, writer, getToRestoreHiddenFieldName(context), null);
 		
 		writer.startElement("div", this);
 		writer.write("History");

@@ -23,6 +23,11 @@ public class QueryConditionRange extends QueryCondition
 	private String le;
 	private String eq;
 
+	public QueryConditionRange(String attributeName)
+	{
+		super(attributeName);
+	}
+
 	public QueryConditionRange(String attributeName, int type)
 	{
 		super(attributeName);

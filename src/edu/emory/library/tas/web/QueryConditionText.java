@@ -5,7 +5,7 @@ import edu.emory.library.tas.util.query.Conditions;
 public class QueryConditionText extends QueryCondition
 {
 	
-	private String value;
+	private String value = "";
 
 	public QueryConditionText(String attributeName)
 	{

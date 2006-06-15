@@ -1,7 +1,13 @@
 package edu.emory.library.tas.web;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import javax.faces.model.SelectItem;
+
+import edu.emory.library.tas.SchemaColumn;
+import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.util.query.Conditions;
 
 
@@ -15,13 +21,14 @@ public class SearchBean
 	
 	public SearchBean()
 	{
-		workingQuery.addCondition(new QueryConditionText("shipname"));
-		workingQuery.addCondition(new QueryConditionText("captaina"));
-		workingQuery.addCondition(new QueryConditionRange("sla32imp", QueryConditionRange.TYPE_EQ));
+//		workingQuery.addConditionOn("shipname");
+//		workingQuery.addConditionOn("captaina");
+//		workingQuery.addConditionOn("sla32imp");
 	}
 	
 	public void addQueryCondition()
 	{
+		workingQuery.addConditionOn(selectedAtttibute);
 	}
 	
 	public void search()
@@ -103,6 +110,21 @@ public class SearchBean
 	public void setHistory(History history)
 	{
 		this.history = history;
+	}
+
+	public List getVoyageAttributes()
+	{
+		List options = new ArrayList();
+		String[] dbNames = Voyage.getAllAttrNames();
+		for (int i = 0; i < dbNames.length; i++)
+		{
+			SchemaColumn col = Voyage.getSchemaColumn(dbNames[i]);
+			SelectItem selectItem = new SelectItem();
+			selectItem.setValue(col.getName());
+			selectItem.setLabel(col.getName());
+			options.add(selectItem);
+		}
+		return options;
 	}
 
 }
