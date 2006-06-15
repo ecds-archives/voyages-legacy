@@ -161,4 +161,8 @@ public class TimeLineResultTabBean {
 	public boolean getChartReady() {
 		return this.chartPath != null;
 	}
+	
+	public void setConditionsOut(Conditions c) {
+		System.out.println("set conditions out!");
+	}
 }

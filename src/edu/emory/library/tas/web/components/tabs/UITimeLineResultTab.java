@@ -8,6 +8,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
@@ -17,7 +18,7 @@ import edu.emory.library.tas.web.components.pageScroller.UIResultPageScroller;
 
 public class UITimeLineResultTab extends UIOutput implements
 		ConditionedTabbedComponent {
-
+	
 	public void appyConditions(Conditions c, FacesContext context) {
 		// TODO Auto-generated method stub
 
@@ -43,6 +44,15 @@ public class UITimeLineResultTab extends UIOutput implements
 		String styleClass = (String)getAttributes().get("styleClass");
 		if (styleClass!=null)
 			writer.writeAttribute("class", styleClass, null);
+		
+		ValueBinding vb = this.getValueBinding("conditions");
+		if (vb != null) {
+			Conditions c = (Conditions) vb.getValue(context);
+			vb = this.getValueBinding("conditionsOut");
+			if (vb != null) {
+				vb.setValue(context, c);
+			}
+		}
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException {
@@ -66,5 +76,4 @@ public class UITimeLineResultTab extends UIOutput implements
 		writer.endElement("table");
 		writer.endElement("div");
 	}
-
 }

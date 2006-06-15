@@ -27,6 +27,7 @@ import edu.emory.library.tas.dicts.SecondDemPort;
 import edu.emory.library.tas.dicts.Temp;
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
 
 public class HibernateTest {
@@ -161,7 +162,7 @@ public class HibernateTest {
 				
 				
 				Conditions cMain = new Conditions(Conditions.JOIN_AND);
-				cMain.addCondition("v.voyage.voyageId", new Long(104), Conditions.OP_SMALLER_OR_EQUAL);
+				cMain.addCondition("vi.voyageId", new Long(104), Conditions.OP_SMALLER_OR_EQUAL);
 				cMain.addCondition(VoyageIndex.getRecent());
 //				cMain.addCondition("v.voyage.shipname", "Pa%", Conditions.OP_LIKE);
 //				Conditions cL1 = new Conditions(Conditions.JOIN_OR);
@@ -169,14 +170,15 @@ public class HibernateTest {
 //				cL1.addCondition("v.voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
 //				cL1.addCondition("v.voyage.captaina", "Cunha%", Conditions.OP_LIKE);
 				
-				
-				QueryValue qValue = new QueryValue("VoyageIndex as v", cMain);
-				qValue.setLimit(300);
+				cMain.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+				QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", cMain);
 				String [] attrs = Voyage.getAllAttrNames();
 //				for (int i = 10; i < 115; i++) {
 //					qValue.addPopulatedAttribute("v.voyage." + attrs[i]);
 //				}
-//				qValue.addPopulatedAttribute("voyage.shipname");
+				//qValue.addPopulatedAttribute("vi.remoteVoyageId", false);
+				qValue.addPopulatedAttribute("sum(v.voyage)", false);
+				qValue.setGroupBy("v.datedep");
 //				qValue.addPopulatedAttribute("voyage.shipname");
 //				qValue.addPopulatedAttribute("v.voyage.shipname", false);
 //				qValue.addPopulatedAttribute("v.voyage.ownere", false);

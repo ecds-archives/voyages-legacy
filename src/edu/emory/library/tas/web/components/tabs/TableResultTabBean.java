@@ -106,4 +106,7 @@ public class TableResultTabBean {
 		return new Integer(this.results != null ? this.results.length : 0);
 	}
 
+	public void setConditionsOut(Conditions c) {
+		System.out.println("set conditions out!");
+	}
 }

@@ -49,17 +49,17 @@ public class UITableResultTab extends UIOutput implements
 		ValueBinding vb = this.getValueBinding("populatedAttributes");
 		if (vb != null) {
 			populatedAttributes = (String[]) vb.getValue(context);
-//			if (populatedAttributes == null) {
-//				String[] attrs = new String[] {"shipname", "captaina"};
-//				populatedAttributes = attrs;
-////				String[] attrs = Voyage.getAllAttrNames();
-////				populatedAttributes = new String[attrs.length - 100];
-////				for (int i = 100; i < attrs.length; i++) {
-////					populatedAttributes[i] = attrs[i];
-////				}
-//				this.applyPopulatedAttributes(attrs, context);
-//			}
 		}
+		
+		vb = this.getValueBinding("conditions");
+		if (vb != null) {
+			Conditions c = (Conditions) vb.getValue(context);
+			vb = this.getValueBinding("conditionsOut");
+			if (vb != null) {
+				vb.setValue(context, c);
+			}
+		}
+		
 		vb = this.getValueBinding("results");
 		if (vb != null) {
 			objs = (Object[]) vb.getValue(context);
@@ -100,5 +100,4 @@ public class UITableResultTab extends UIOutput implements
 		ResponseWriter writer = context.getResponseWriter();
 		writer.endElement("div");
 	}
-
 }

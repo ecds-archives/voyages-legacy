@@ -4,6 +4,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+import edu.emory.library.tas.util.query.Conditions;
+
 public class TableResultTabTag extends UIComponentTag {
 
 	private static final String TABLE_RESULT_TAB = "TableResultTab";
@@ -14,6 +16,9 @@ public class TableResultTabTag extends UIComponentTag {
 
 	private String style;
 	private String styleClass;
+
+	private String conditions;
+	private String conditionsOut;
 
 	public String getStyle() {
 		return style;
@@ -63,6 +68,24 @@ public class TableResultTabTag extends UIComponentTag {
 				component.getAttributes().put("styleClass", styleClass);
 			}
 		}
+		if (conditions != null) {
+			if (isValueReference(conditions)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(conditions);
+				component.setValueBinding("conditions", vb);
+			} else {
+				component.getAttributes().put("conditions", styleClass);
+			}
+		}
+		if (conditionsOut != null) {
+			if (isValueReference(conditionsOut)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(conditionsOut);
+				component.setValueBinding("conditionsOut", vb);
+			} else {
+				component.getAttributes().put("conditionsOut", styleClass);
+			}
+		}
 	}
 
 	public void release() {
@@ -100,5 +123,16 @@ public class TableResultTabTag extends UIComponentTag {
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
 	}
+	
+	public void setQuery(String c) {
+		this.conditions = c;
+	}
 
+	public String getConditionsOut() {
+		return conditionsOut;
+	}
+
+	public void setConditionsOut(String conditionsOut) {
+		this.conditionsOut = conditionsOut;
+	}
 }
