@@ -178,4 +178,42 @@ public class Conditions {
 		res.properties = retMap;
 		return res;
 	}
+	
+	public boolean equals(Object o) {
+		if (o instanceof Conditions) {
+			Conditions that = (Conditions)o;
+			return (this.conditions.equals(that.conditions) 
+					&& this.joinCondition == that.joinCondition
+					&& this.subConditions.equals(that));
+		}
+		return false;
+	}
+	
+	public Object clone() {
+		Conditions newC = new Conditions();
+		newC.conditions = (ArrayList) this.conditions.clone();
+		newC.joinCondition = this.joinCondition;
+		newC.subConditions = (ArrayList) this.subConditions.clone();
+		return newC;
+	}
+
+	public Conditions addAttributesPrefix(String prefix) {
+		Conditions newC = new Conditions();
+		ArrayList conditions = new ArrayList();
+		for (Iterator iter = newC.conditions.iterator(); iter.hasNext();) {
+			Condition condition = (Condition) iter.next();			
+			Condition newCondition = new Condition(prefix + condition.attribute, condition.op, condition.value);
+			conditions.add(newCondition);
+		}
+		ArrayList newSubconditions = new ArrayList();
+		for (Iterator iter = newC.subConditions.iterator(); iter.hasNext();) {
+			Conditions subConditions = (Conditions) iter.next();
+			newSubconditions.add(subConditions.addAttributesPrefix(prefix));			
+		}
+		newC.conditions = conditions;
+		newC.subConditions = newSubconditions;
+		newC.joinCondition = this.joinCondition;
+		return newC;
+	}
+	
 }

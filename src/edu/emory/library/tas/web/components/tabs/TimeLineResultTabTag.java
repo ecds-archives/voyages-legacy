@@ -46,7 +46,7 @@ public class TimeLineResultTabTag extends UIComponentTag {
 						.createValueBinding(conditions);
 				component.setValueBinding("conditions", vb);
 			} else {
-				component.getAttributes().put("conditions", styleClass);
+				component.getAttributes().put("conditions", conditions);
 			}
 		}
 		if (conditionsOut != null) {
@@ -55,7 +55,7 @@ public class TimeLineResultTabTag extends UIComponentTag {
 						.createValueBinding(conditionsOut);
 				component.setValueBinding("conditionsOut", vb);
 			} else {
-				component.getAttributes().put("conditionsOut", styleClass);
+				component.getAttributes().put("conditionsOut", conditionsOut);
 			}
 		}
     

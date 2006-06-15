@@ -45,14 +45,14 @@ public class UITimeLineResultTab extends UIOutput implements
 		if (styleClass!=null)
 			writer.writeAttribute("class", styleClass, null);
 		
-//		ValueBinding vb = this.getValueBinding("conditions");
-//		if (vb != null) {
-//			Conditions c = (Conditions) vb.getValue(context);
-//			vb = this.getValueBinding("conditionsOut");
-//			if (vb != null) {
-//				vb.setValue(context, c);
-//			}
-//		}
+		ValueBinding vb = this.getValueBinding("conditions");
+		if (vb != null) {
+			Conditions c = (Conditions) vb.getValue(context);
+			vb = this.getValueBinding("conditionsOut");
+			if (vb != null) {
+				vb.setValue(context, c);
+			}
+		}
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException {

@@ -17,45 +17,55 @@ public class TableResultTabBean {
 
 	private Conditions condition;
 
+	private boolean needQuery = false;
+
 	public TableResultTabBean() {
-		this.condition = new Conditions();
-		this.condition.addCondition(VoyageIndex.getRecent());
-//		this.populatedAttributes = Voyage.getAllAttrNames();
-		populatedAttributes = new String[] {"voyageId", "captaina", "captainb", "captainc", "ownere", "arrport"};
 		
-//		populatedAttributes = new String[100];
-//		String[] tmp = Voyage.getAllAttrNames();
-		
-//		for (int i = 0; i < this.populatedAttributes.length; i++) {
-//			this.populatedAttributes[i] = "voyage."
-//					+ this.populatedAttributes[i];
-//		}
+		populatedAttributes = new String[] { "voyageId", "captaina",
+				"captainb", "captainc", "ownere", "arrport" };
 	}
 
 	public String next() {
-		current += step;
+		if (current % step == 0 && this.condition != null) {
+			current += step;
+			this.needQuery = true;
+		}
+		
 		this.getResultsDB();
 		return null;
 	}
 
 	public String prev() {
-		current -= step;
+		if (current > 0 && this.condition != null) {
+			current -= step;
+			this.needQuery = true;
+		}
 		this.getResultsDB();
 		return null;
 	}
 
 	private void getResultsDB() {
-
-		QueryValue qValue = new QueryValue("VoyageIndex as v", this.condition);
-		qValue.setLimit(this.getStep().intValue());
-		qValue.setFirstResult(this.getCurrent().intValue());
-		if (this.populatedAttributes != null) {
-			for (int i = 0; i < this.populatedAttributes.length; i++) {
-				qValue.addPopulatedAttribute("v.voyage." + this.populatedAttributes[i], Voyage.getSchemaColumn(this.populatedAttributes[i]).isDictinaory());
+		if (needQuery) {
+			Conditions localCond = (Conditions)this.condition.addAttributesPrefix("voyage.");
+			
+			localCond.addCondition(VoyageIndex.getRecent());
+			
+			QueryValue qValue = new QueryValue("VoyageIndex as v",
+					localCond);
+			qValue.setLimit(this.getStep().intValue());
+			qValue.setFirstResult(this.getCurrent().intValue());
+			if (this.populatedAttributes != null) {
+				for (int i = 0; i < this.populatedAttributes.length; i++) {
+					qValue.addPopulatedAttribute("v.voyage."
+							+ this.populatedAttributes[i], Voyage
+							.getSchemaColumn(this.populatedAttributes[i])
+							.isDictinaory());
+				}
 			}
-		}
 
-		this.results = qValue.executeQuery();
+			this.results = qValue.executeQuery();
+			needQuery = false;
+		}
 
 	}
 
@@ -92,6 +102,7 @@ public class TableResultTabBean {
 	}
 
 	public Object[] getResults() {
+		this.getResultsDB();
 		return this.results;
 	}
 
@@ -106,7 +117,14 @@ public class TableResultTabBean {
 		return new Integer(this.results != null ? this.results.length : 0);
 	}
 
-	public void setConditionsOut(Conditions c) {
-		System.out.println("set conditions out!");
+	public void setConditions(Conditions c) {
+		if (c == null) {
+			needQuery = false;
+		} else if (c.equals(condition)) {
+			needQuery = false;
+		} else {
+			condition = c;
+			needQuery = true;
+		}
 	}
 }

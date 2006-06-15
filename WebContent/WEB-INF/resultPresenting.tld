@@ -33,6 +33,12 @@
 		<attribute>
 			<name>populatedAttributes</name>
 		</attribute>
+		<attribute>
+			<name>query</name>
+		</attribute>
+		<attribute>
+			<name>conditionsOut</name>
+		</attribute>
 	</tag>
 
 	<tag>
@@ -46,6 +52,12 @@
 		</attribute>
 		<attribute>
 			<name>styleClass</name>
+		</attribute>
+		<attribute>
+			<name>query</name>
+		</attribute>
+		<attribute>
+			<name>conditionsOut</name>
 		</attribute>
 	</tag>
 
