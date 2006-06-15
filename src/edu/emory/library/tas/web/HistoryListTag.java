@@ -12,6 +12,7 @@ public class HistoryListTag extends UIComponentTag
 	
 	private String history;
 	private String ondelete;
+	private String onrestore;
 	
 	protected void setProperties(UIComponent component)
 	{
@@ -29,6 +30,12 @@ public class HistoryListTag extends UIComponentTag
 		{
 			MethodBinding mb = app.createMethodBinding(ondelete, new Class[] {HistoryItemDeleteEvent.class});
 			historyList.setOndelete(mb);
+		}
+
+		if (onrestore != null && isValueReference(onrestore))
+		{
+			MethodBinding mb = app.createMethodBinding(onrestore, new Class[] {HistoryItemRestoreEvent.class});
+			historyList.setOnrestore(mb);
 		}
 
 	}

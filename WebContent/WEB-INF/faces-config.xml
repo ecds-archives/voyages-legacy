@@ -26,21 +26,28 @@
 	<component>
 		<component-type>TabBar</component-type>
 		<component-class>
-			edu.emory.library.tas.web.TabBar
+			edu.emory.library.tas.web.TabBarComponent
 		</component-class>
 	</component>
 	
 	<component>
 		<component-type>HistoryList</component-type>
 		<component-class>
-			edu.emory.library.tas.web.HistoryList
+			edu.emory.library.tas.web.HistoryListComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>Tab</component-type>
 		<component-class>
-			edu.emory.library.tas.web.Tab
+			edu.emory.library.tas.web.TabComponent
+		</component-class>
+	</component>
+	
+	<component>
+		<component-type>QueryBuilder</component-type>
+		<component-class>
+			edu.emory.library.tas.web.QueryBuilderComponent
 		</component-class>
 	</component>
 	

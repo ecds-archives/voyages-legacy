@@ -38,7 +38,13 @@ public class SearchBean
 	
 	public void historyItemDelete(HistoryItemDeleteEvent event)
 	{
-		history.deleteItem(event.getDeleteId());
+		history.deleteItem(event.getHistoryId());
+	}
+	
+	public void historyItemRestore(HistoryItemRestoreEvent event)
+	{
+		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
+		workingQuery = (Query) historyItem.getQuery().clone();
 	}
 	
 	public String getSelectedAtttibute()

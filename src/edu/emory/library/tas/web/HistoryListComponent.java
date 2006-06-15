@@ -18,6 +18,7 @@ public class HistoryListComponent extends UIComponentBase
 	
 	private History history;
 	private MethodBinding ondelete;
+	private MethodBinding onrestore;
 
 	public String getFamily()
 	{
@@ -26,9 +27,10 @@ public class HistoryListComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[2];
+		Object values[] = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = saveAttachedState(context, ondelete);
+		values[2] = saveAttachedState(context, onrestore);
 		return values;
 	}
 	
@@ -37,6 +39,7 @@ public class HistoryListComponent extends UIComponentBase
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
 		ondelete = (MethodBinding) restoreAttachedState(context, values[1]);
+		onrestore = (MethodBinding) restoreAttachedState(context, values[2]);
 	}
 	
 	private String getToDeleteHiddenFieldName(FacesContext context)
@@ -44,6 +47,11 @@ public class HistoryListComponent extends UIComponentBase
 		return getClientId(context) + "_to_delete";
 	}
 	
+	private String getToRestoreHiddenFieldName(FacesContext context)
+	{
+		return getClientId(context) + "_to_restore";
+	}
+
 	public void decode(FacesContext context)
 	{
 
@@ -56,17 +64,6 @@ public class HistoryListComponent extends UIComponentBase
 		if (toDeleteId != null && toDeleteId.length() != 0)
 			queueEvent(new HistoryItemDeleteEvent(this, toDeleteId));
 
-//		for (Iterator paramIter = context.getExternalContext().getRequestParameterNames(); paramIter.hasNext();)
-//		{
-//			String paramName = (String) paramIter.next();
-//			String deleteId = decodeDeleteId(paramName, context);
-//			if (deleteId != null)
-//			{
-//				queueEvent(new HistoryItemDeleteEvent(this, deleteId));
-//				break;
-//			}
-//		}
-		
 	}
 	
 	public void broadcast(FacesEvent event) throws AbortProcessingException
@@ -84,11 +81,8 @@ public class HistoryListComponent extends UIComponentBase
 		
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = UtilsJSF.getForm(this, context);
-
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("name", getToDeleteHiddenFieldName(context), null);
-		writer.endElement("input");
+		
+		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context), null);
 		
 		writer.startElement("div", this);
 		writer.write("History");
@@ -117,35 +111,42 @@ public class HistoryListComponent extends UIComponentBase
 	private void encodeDeleteButton(String historyId, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
-		StringBuffer js = new StringBuffer();
-		
-		js.append("document.");
-		js.append("forms['").append(form.getClientId(context)).append("'].");
-		js.append("elements['").append(getToDeleteHiddenFieldName(context)).append("'].value = ");
-		js.append("'").append(historyId).append("';");
-
-		js.append(" ");
-		js.append("document.");
-		js.append("forms['").append(form.getClientId(context)).append("'].");
-		js.append("submit();");
-		
-		js.append(" ");
-		js.append("return false;");
-		
+		String js = UtilsJSF.generateSubmitJavaScript(
+				context, form,
+				getToDeleteHiddenFieldName(context),
+				historyId);
+			
 		writer.startElement("a", this);
 		writer.writeAttribute("href", "#", null);
-		writer.writeAttribute("onclick", js.toString(), null);
+		writer.writeAttribute("onclick", js, null);
 		writer.write("del");
 		writer.endElement("a");
 		
 	}
 	
+	private void encodeRestoreButton(String historyId, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	{
+		
+		String js = UtilsJSF.generateSubmitJavaScript(
+				context, form,
+				getToRestoreHiddenFieldName(context),
+				historyId);
+		
+		writer.startElement("a", this);
+		writer.writeAttribute("href", "#", null);
+		writer.writeAttribute("onclick", js, null);
+		writer.write("res");
+		writer.endElement("a");
+		
+	}
+
 	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form) throws IOException
 	{
 		
 		if (item.getId() == null) return;
 		
 		encodeDeleteButton(item.getId(), context, form, writer);
+		encodeRestoreButton(item.getId(), context, form, writer);
 		
 		writer.startElement("div", this);
 		for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
@@ -159,27 +160,9 @@ public class HistoryListComponent extends UIComponentBase
 			}
 		}
 		writer.endElement("div");
-
-//		writer.startElement("input", this);
-//		writer.writeAttribute("type", "submit", null);
-//		writer.writeAttribute("name", encodeDeleteId(item, context), null);
-//		writer.writeAttribute("value", "Delete", null);
-//		writer.endElement("input");
 		
 	}
 	
-//	private String encodeDeleteId(HistoryItem item, FacesContext context)
-//	{
-//		return getClientId(context) + "_delete_" + item.getId();
-//	}
-//	
-//	private String decodeDeleteId(String value, FacesContext context)
-//	{
-//		String prefix = getClientId(context) + "_delete_";
-//		if (!value.startsWith(prefix)) return null;
-//		return value.substring(prefix.length());
-//	}
-
 	public History getItems()
 	{
         if (history != null) return history;
@@ -201,6 +184,16 @@ public class HistoryListComponent extends UIComponentBase
 	public void setOndelete(MethodBinding ondelete)
 	{
 		this.ondelete = ondelete;
+	}
+
+	public MethodBinding getOnrestore()
+	{
+		return onrestore;
+	}
+
+	public void setOnrestore(MethodBinding onrestore)
+	{
+		this.onrestore = onrestore;
 	}
 
 }

@@ -18,7 +18,14 @@
 		<tr>
 			<td valign="top">
 			
-				<s:historyList ondelete="#{SearchBean.HistoryItemDelete}" list="#{SearchBean.historyList}" />
+				<s:queryBuilder query="#{SearchBean.workingQuery}" />
+				
+				<h:commandButton action="#{SearchBean.search}" />
+
+				<s:historyList
+					ondelete="#{SearchBean.historyItemDelete}"
+					onrestore="#{SearchBean.historyItemRestore}"
+					history="#{SearchBean.history}" />
 			
 			</td>
 			<td valign="top">

@@ -4,17 +4,17 @@ import javax.faces.component.UIComponent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 
-public class HistoryItemDeleteEvent extends FacesEvent
+public class HistoryItemRestoreEvent extends FacesEvent
 {
-	
-	private static final long serialVersionUID = 7525094898372642047L;
 
+	private static final long serialVersionUID = 4734979705211084907L;
+	
 	private String historyId;
 
-	public HistoryItemDeleteEvent(UIComponent uiComponent, String deleteId)
+	public HistoryItemRestoreEvent(UIComponent uiComponent, String historyId)
 	{
 		super(uiComponent);
-		this.historyId = deleteId;
+		this.historyId = historyId;
 	}
 
 	public boolean isAppropriateListener(FacesListener faceslistener)
@@ -31,9 +31,9 @@ public class HistoryItemDeleteEvent extends FacesEvent
 		return historyId;
 	}
 
-	public void setHistoryId(String deleteId)
+	public void setHistoryId(String historyId)
 	{
-		this.historyId = deleteId;
+		this.historyId = historyId;
 	}
 
 }

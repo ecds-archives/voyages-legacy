@@ -25,18 +25,22 @@ public class History
 		
 	}
 	
-	public boolean deleteItem(String id)
+	public HistoryItem getHistoryItem(String historyId)
 	{
-		HistoryItem toDelete = null;
 		for (Iterator iterHistoryItem = items.iterator(); iterHistoryItem.hasNext();)
 		{
 			HistoryItem historyItem = (HistoryItem) iterHistoryItem.next();
-			if (id.equals(historyItem.getId()))
+			if (historyId.equals(historyItem.getId()))
 			{
-				toDelete = historyItem;
-				break;
+				return historyItem;
 			}
 		}
+		return null;
+	}
+	
+	public boolean deleteItem(String historyId)
+	{
+		HistoryItem toDelete = getHistoryItem(historyId);
 		if (toDelete != null)
 		{
 			items.remove(toDelete);

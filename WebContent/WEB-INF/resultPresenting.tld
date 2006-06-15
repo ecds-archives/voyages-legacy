@@ -107,10 +107,24 @@
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>list</name>
+			<name>history</name>
 		</attribute>
 		<attribute>
 			<name>ondelete</name>
+		</attribute>
+		<attribute>
+			<name>onrestore</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>queryBuilder</name>
+		<tag-class>
+			edu.emory.library.tas.web.QueryBuilderTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>query</name>
 		</attribute>
 	</tag>
 
