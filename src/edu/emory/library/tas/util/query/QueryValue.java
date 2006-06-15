@@ -130,7 +130,7 @@ public class QueryValue {
 	
 	public Query getQuery(Session session) {
 		ConditionResponse response = toStringWithParams();
-		//System.out.println("My query: " + response.conditionString);
+//		System.out.println("My query: " + response.conditionString);
 		Query q = session.createQuery(response.conditionString.toString());
 		
 		Iterator iter = response.properties.keySet().iterator();
