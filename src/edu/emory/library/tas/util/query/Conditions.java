@@ -18,6 +18,8 @@ public class Conditions {
 	public static final int OP_SMALLER = 5;
 	public static final int OP_SMALLER_OR_EQUAL = 6;
 	public static final int OP_LIKE = 7;
+	public static final int OP_IS = 8;
+	public static final int OP_IS_NOT = 9;
 	
 	private int joinCondition = JOIN_AND;
 	private ArrayList conditions = new ArrayList();
@@ -67,6 +69,12 @@ public class Conditions {
 		case OP_LIKE:
 			opStr = " like ";
 			break;
+		case OP_IS:
+			opStr = " is ";
+			break;
+		case OP_IS_NOT:
+			opStr = " is not ";
+			break;
 		default:
 			throw new RuntimeException("Wrong operand!");
 		}
@@ -97,6 +105,7 @@ public class Conditions {
 		Iterator iter = this.conditions.iterator();
 		while (iter.hasNext()) {
 			Condition c = (Condition)iter.next();
+			if (!(c.value instanceof DirectValue)) {
 			String attr = c.attribute;
 			String val = attr.replaceAll("\\.", "") + this.hashCode();
 			Object value = c.value;
@@ -119,6 +128,11 @@ public class Conditions {
 //			} else {
 //				ret.append(value);
 //			}
+			} else {
+				ret.append(c.attribute);
+				ret.append(c.op);
+				ret.append(c.value.toString());
+			}
 			if (processed < size) {
 				ret.append(this.joinCondition == JOIN_AND ? " and ":" or ");
 			}
