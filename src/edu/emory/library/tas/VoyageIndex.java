@@ -13,6 +13,7 @@ public class VoyageIndex {
 	private Integer flag;
 	private Long voyageId;
 	private Long revisionId;
+	private Long remoteVoyageId;
 	
 	private Integer latest = null;
 	private Integer latest_approved = null;
@@ -120,6 +121,14 @@ public class VoyageIndex {
 		Conditions cond = new Conditions(Conditions.JOIN_AND);
 		cond.addCondition("flag", new Integer(0), Conditions.OP_EQUALS);
 		return cond;
+	}
+
+	public Long getRemoteVoyageId() {
+		return remoteVoyageId;
+	}
+
+	public void setRemoteVoyageId(Long remoteVoyageId) {
+		this.remoteVoyageId = remoteVoyageId;
 	}
 	
 }
