@@ -28,13 +28,15 @@ public class HistoryList extends UIComponentBase
 	{
 		Object values[] = new Object[2];
 		values[0] = super.saveState(context);
-		values[1] = ondelete;
+		values[1] = saveAttachedState(context, ondelete);
 		return values;
 	}
 	
 	public void restoreState(FacesContext context, Object state)
 	{
-		super.restoreState(context, state);
+		Object values[] = (Object[]) state;
+		super.restoreState(context, values[0]);
+		ondelete = (MethodBinding) restoreAttachedState(context, values[1]);
 	}
 	
 	public void decode(FacesContext context)
@@ -75,7 +77,9 @@ public class HistoryList extends UIComponentBase
 		writer.endElement("div");
 		
 		// retrieve the list of items from a bean
-		List items = (List) getValueBinding("items").getValue(context);
+		ValueBinding vb = getValueBinding("list");
+		if (vb == null) return;
+		List items = (List) vb.getValue(context);
 		if (items == null) return;
 		
 		// render the list
@@ -89,6 +93,8 @@ public class HistoryList extends UIComponentBase
 	
 	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form) throws IOException
 	{
+		
+		if (item.getId() == null) return;
 		
 		writer.startElement("div", this);
 		

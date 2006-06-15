@@ -64,6 +64,9 @@ public class TabBar extends UIComponentBase
 		writer.endElement("input");
 
 		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
 		writer.startElement("tr", this);
 		
 	}
@@ -73,6 +76,7 @@ public class TabBar extends UIComponentBase
 		
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = UtilsJSF.getForm(this, context);
+		if (form == null) return;
 		
 		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
 		{

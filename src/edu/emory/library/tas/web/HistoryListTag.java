@@ -22,7 +22,7 @@ public class HistoryListTag extends UIComponentTag
 		if (list != null && isValueReference(list))
 		{
 			ValueBinding vb = app.createValueBinding(list);
-			component.setValueBinding("history", vb);
+			component.setValueBinding("list", vb);
 		}
 		
 		if (ondelete != null && isValueReference(ondelete))

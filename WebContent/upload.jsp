@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="edu.emory.library.tas.web.test.Utils" %>
 <%@ page import="edu.emory.library.tas.web.upload.Upload" %>
 <%@ page import="com.metaparadigm.jsonrpc.JSONRPCBridge" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

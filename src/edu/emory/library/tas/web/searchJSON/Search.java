@@ -1,4 +1,4 @@
-package edu.emory.library.tas.web.search3;
+package edu.emory.library.tas.web.searchJSON;
 
 import java.io.BufferedReader;
 import java.io.IOException;
