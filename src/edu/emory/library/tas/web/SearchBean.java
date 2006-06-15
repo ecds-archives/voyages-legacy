@@ -1,61 +1,46 @@
 package edu.emory.library.tas.web;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchBean
 {
 	
-	private List historyList = null;
-	private List currentWorkingQuery = null;
-	private List currentQuery = null;
+	private History history = new History();
+	private Query workingQuery = new Query();
+	private Query currentQuery = new Query();
 	private String selectedAtttibute;
 	
 	public SearchBean()
 	{
-
-		HistoryItem a = new HistoryItem();
-		a.setId("a");
-		
-		HistoryItem b = new HistoryItem();
-		b.setId("b");
-		
-		HistoryItem c = new HistoryItem();
-		c.setId("c");
-
-		historyList = new ArrayList();
-		historyList.add(a);
-		historyList.add(b);
-		historyList.add(c);
-		
+		workingQuery.addCondition(new QueryConditionText("shipname"));
+		workingQuery.addCondition(new QueryConditionText("captaina"));
+		workingQuery.addCondition(new QueryConditionRange("sla32imp", QueryConditionRange.TYPE_EQ));
 	}
 	
-	public void AddQueryCondition()
+	public void addQueryCondition()
 	{
-		
-		if (currentWorkingQuery == null)
-			currentWorkingQuery = new ArrayList();
-		
-		// from <select> -> create a new
-		// QueryCondition and insert it
-		// to currentQuery
-		
 	}
 	
-	public void HistoryItemDelete(HistoryItemDeleteEvent event)
+	public void search()
 	{
-	}
+		
+		// TODO: check if it is ok
+		// ...
+		
+		// copy to currentQuery
+		currentQuery = (Query) workingQuery.clone();
 
-	public List getHistoryList()
+		// add to historyList
+		HistoryItem historyItem = new HistoryItem();
+		historyItem.setQuery(currentQuery);
+		history.addItem(historyItem);
+	
+	}
+	
+	public void historyItemDelete(HistoryItemDeleteEvent event)
 	{
-		return historyList;
+		history.deleteItem(event.getDeleteId());
 	}
-
-	public void setHistoryList(List historyList)
-	{
-		this.historyList = historyList;
-	}
-
+	
 	public String getSelectedAtttibute()
 	{
 		return selectedAtttibute;
@@ -66,24 +51,34 @@ public class SearchBean
 		this.selectedAtttibute = selectedAtttibute;
 	}
 
-	public List getCurrentQuery()
+	public Query getCurrentQuery()
 	{
 		return currentQuery;
 	}
 
-	public void setCurrentQuery(List currentQuery)
+	public void setCurrentQuery(Query currentQuery)
 	{
 		this.currentQuery = currentQuery;
 	}
 
-	public List getCurrentWorkingQuery()
+	public Query getWorkingQuery()
 	{
-		return currentWorkingQuery;
+		return workingQuery;
 	}
 
-	public void setCurrentWorkingQuery(List currentWorkingQuery)
+	public void setWorkingQuery(Query currentWorkingQuery)
 	{
-		this.currentWorkingQuery = currentWorkingQuery;
+		this.workingQuery = currentWorkingQuery;
+	}
+
+	public History getHistory()
+	{
+		return history;
+	}
+
+	public void setHistory(History history)
+	{
+		this.history = history;
 	}
 
 }

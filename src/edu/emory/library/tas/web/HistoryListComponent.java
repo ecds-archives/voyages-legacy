@@ -2,10 +2,10 @@ package edu.emory.library.tas.web;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.MethodBinding;
@@ -16,7 +16,7 @@ import javax.faces.event.FacesEvent;
 public class HistoryListComponent extends UIComponentBase
 {
 	
-	private List items;
+	private History history;
 	private MethodBinding ondelete;
 
 	public String getFamily()
@@ -39,19 +39,33 @@ public class HistoryListComponent extends UIComponentBase
 		ondelete = (MethodBinding) restoreAttachedState(context, values[1]);
 	}
 	
+	private String getToDeleteHiddenFieldName(FacesContext context)
+	{
+		return getClientId(context) + "_to_delete";
+	}
+	
 	public void decode(FacesContext context)
 	{
 
-		for (Iterator paramIter = context.getExternalContext().getRequestParameterNames(); paramIter.hasNext();)
-		{
-			String paramName = (String) paramIter.next();
-			String deleteId = decodeDeleteId(paramName, context);
-			if (deleteId != null)
-			{
-				queueEvent(new HistoryItemDeleteEvent(this, deleteId));
-				break;
-			}
-		}
+		ExternalContext externalContex = context.getExternalContext();
+
+		String toDeleteId =
+			(String) externalContex.getRequestParameterMap().get(
+					getToDeleteHiddenFieldName(context));
+
+		if (toDeleteId != null && toDeleteId.length() != 0)
+			queueEvent(new HistoryItemDeleteEvent(this, toDeleteId));
+
+//		for (Iterator paramIter = context.getExternalContext().getRequestParameterNames(); paramIter.hasNext();)
+//		{
+//			String paramName = (String) paramIter.next();
+//			String deleteId = decodeDeleteId(paramName, context);
+//			if (deleteId != null)
+//			{
+//				queueEvent(new HistoryItemDeleteEvent(this, deleteId));
+//				break;
+//			}
+//		}
 		
 	}
 	
@@ -71,22 +85,23 @@ public class HistoryListComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = UtilsJSF.getForm(this, context);
 
-		// header
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("name", getToDeleteHiddenFieldName(context), null);
+		writer.endElement("input");
+		
 		writer.startElement("div", this);
 		writer.write("History");
 		writer.endElement("div");
 		
-		// retrieve the list of items from a bean
-		ValueBinding vb = getValueBinding("list");
-		if (vb == null) return;
-		List items = (List) vb.getValue(context);
-		if (items == null) return;
-		
-		// render the list
-		for (Iterator iter = items.iterator(); iter.hasNext();)
+		History history = getItems();
+		if (history != null)
 		{
-			HistoryItem item = (HistoryItem) iter.next();
-			encodeHistoryItem(item, writer, context, form);
+			for (Iterator iter = history.getItems().iterator(); iter.hasNext();)
+			{
+				HistoryItem item = (HistoryItem) iter.next();
+				encodeHistoryItem(item, writer, context, form);
+			}
 		}
 		
 	}
@@ -99,47 +114,83 @@ public class HistoryListComponent extends UIComponentBase
 	{
 	}
 	
+	private void encodeDeleteButton(String historyId, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	{
+		
+		StringBuffer js = new StringBuffer();
+		
+		js.append("document.");
+		js.append("forms['").append(form.getClientId(context)).append("'].");
+		js.append("elements['").append(getToDeleteHiddenFieldName(context)).append("'].value = ");
+		js.append("'").append(historyId).append("';");
+
+		js.append(" ");
+		js.append("document.");
+		js.append("forms['").append(form.getClientId(context)).append("'].");
+		js.append("submit();");
+		
+		js.append(" ");
+		js.append("return false;");
+		
+		writer.startElement("a", this);
+		writer.writeAttribute("href", "#", null);
+		writer.writeAttribute("onclick", js.toString(), null);
+		writer.write("del");
+		writer.endElement("a");
+		
+	}
+	
 	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form) throws IOException
 	{
 		
 		if (item.getId() == null) return;
 		
+		encodeDeleteButton(item.getId(), context, form, writer);
+		
 		writer.startElement("div", this);
-		
-		writer.write(item.getId());
-
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "submit", null);
-		writer.writeAttribute("name", encodeDeleteId(item, context), null);
-		writer.writeAttribute("value", "Delete", null);
-		writer.endElement("input");
-		
+		for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
+		{
+			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+			writer.write(queryCondition.getAttributeName());
+			if (iterQueryCondition.hasNext())
+			{
+				writer.startElement("br", this);
+				writer.endElement("br");
+			}
+		}
 		writer.endElement("div");
+
+//		writer.startElement("input", this);
+//		writer.writeAttribute("type", "submit", null);
+//		writer.writeAttribute("name", encodeDeleteId(item, context), null);
+//		writer.writeAttribute("value", "Delete", null);
+//		writer.endElement("input");
 		
 	}
 	
-	private String encodeDeleteId(HistoryItem item, FacesContext context)
+//	private String encodeDeleteId(HistoryItem item, FacesContext context)
+//	{
+//		return getClientId(context) + "_delete_" + item.getId();
+//	}
+//	
+//	private String decodeDeleteId(String value, FacesContext context)
+//	{
+//		String prefix = getClientId(context) + "_delete_";
+//		if (!value.startsWith(prefix)) return null;
+//		return value.substring(prefix.length());
+//	}
+
+	public History getItems()
 	{
-		return getClientId(context) + "_delete_" + item.getId();
-	}
-	
-	private String decodeDeleteId(String value, FacesContext context)
-	{
-		String prefix = getClientId(context) + "_delete_";
-		if (!value.startsWith(prefix)) return null;
-		return value.substring(prefix.length());
+        if (history != null) return history;
+        ValueBinding vb = getValueBinding("history");
+        if (vb == null) return null;
+        return (History) getValueBinding("history").getValue(getFacesContext());
 	}
 
-	public List getItems()
+	public void setItems(History items)
 	{
-        if (items != null) return items;
-        ValueBinding vb = getValueBinding("items");
-        return (List) (vb != null ? getValueBinding("items").getValue(getFacesContext()) : null);
-	}
-
-	public void setItems(List items)
-	{
-		this.items = items;
+		this.history = items;
 	}
 
 	public MethodBinding getOndelete()

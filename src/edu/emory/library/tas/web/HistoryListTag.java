@@ -10,7 +10,7 @@ import javax.faces.webapp.UIComponentTag;
 public class HistoryListTag extends UIComponentTag
 {
 	
-	private String list;
+	private String history;
 	private String ondelete;
 	
 	protected void setProperties(UIComponent component)
@@ -19,10 +19,10 @@ public class HistoryListTag extends UIComponentTag
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		HistoryListComponent historyList = (HistoryListComponent) component;
 		
-		if (list != null && isValueReference(list))
+		if (history != null && isValueReference(history))
 		{
-			ValueBinding vb = app.createValueBinding(list);
-			component.setValueBinding("list", vb);
+			ValueBinding vb = app.createValueBinding(history);
+			component.setValueBinding("history", vb);
 		}
 		
 		if (ondelete != null && isValueReference(ondelete))
@@ -53,14 +53,14 @@ public class HistoryListTag extends UIComponentTag
 		this.ondelete = ondelete;
 	}
 
-	public String getList()
+	public String getHistory()
 	{
-		return list;
+		return history;
 	}
 
-	public void setList(String list)
+	public void setHistory(String list)
 	{
-		this.list = list;
+		this.history = list;
 	}
 
 }
