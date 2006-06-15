@@ -91,6 +91,14 @@ public class HistoryList extends UIComponentBase
 		
 	}
 	
+	public void encodeChildren(FacesContext context) throws IOException
+	{
+	}
+	
+	public void encodeEnd(FacesContext context) throws IOException
+	{
+	}
+	
 	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form) throws IOException
 	{
 		
