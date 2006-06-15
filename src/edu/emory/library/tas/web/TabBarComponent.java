@@ -12,7 +12,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
 
-public class TabBar extends UIComponentBase
+public class TabBarComponent extends UIComponentBase
 {
 	
 	private static final String HIDDEN_FIELD_SUFFIX = "_selected_tab";
@@ -80,7 +80,7 @@ public class TabBar extends UIComponentBase
 		
 		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
 		{
-			Tab tab = (Tab) iterChild.next();
+			TabComponent tab = (TabComponent) iterChild.next();
 			
 			writer.startElement("td", this);
 			
@@ -114,7 +114,7 @@ public class TabBar extends UIComponentBase
 		return getClientId(context) + HIDDEN_FIELD_SUFFIX;
 	}
 	
-	private String createJavaScript(FacesContext context, UIForm form, Tab tab)
+	private String createJavaScript(FacesContext context, UIForm form, TabComponent tab)
 	{
 		StringBuffer js = new StringBuffer();
 		
@@ -150,7 +150,7 @@ public class TabBar extends UIComponentBase
 		if (tagId == null) return;
 		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
 		{
-			Tab tab = (Tab) iterChild.next();
+			TabComponent tab = (TabComponent) iterChild.next();
 			tab.setSelected(tagId.equals(tab.getTabId()));
 		}
 	}
@@ -159,7 +159,7 @@ public class TabBar extends UIComponentBase
 	{
 		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
 		{
-			Tab tab = (Tab) iterChild.next();
+			TabComponent tab = (TabComponent) iterChild.next();
 			if (tab.isSelected()) return tab.getTabId();
 		}
 		return null;

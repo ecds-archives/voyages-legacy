@@ -14,7 +14,7 @@ public class TabBarTag extends UIComponentTag
 	protected void setProperties(UIComponent component)
 	{
 		
-		TabBar tabBar = (TabBar) component;
+		TabBarComponent tabBar = (TabBarComponent) component;
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		
 		if (tabChanged != null && isValueReference(tabChanged))

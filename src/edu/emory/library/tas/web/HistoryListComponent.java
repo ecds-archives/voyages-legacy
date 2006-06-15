@@ -13,7 +13,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-public class HistoryList extends UIComponentBase
+public class HistoryListComponent extends UIComponentBase
 {
 	
 	private List items;

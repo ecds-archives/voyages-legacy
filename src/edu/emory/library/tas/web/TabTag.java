@@ -16,7 +16,7 @@ public class TabTag extends UIComponentTag
 	protected void setProperties(UIComponent component)
 	{
 		
-		Tab tab = (Tab) component;
+		TabComponent tab = (TabComponent) component;
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		
 		if (text != null && isValueReference(text))

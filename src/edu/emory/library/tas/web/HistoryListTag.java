@@ -17,7 +17,7 @@ public class HistoryListTag extends UIComponentTag
 	{
 		
 		Application app = FacesContext.getCurrentInstance().getApplication();
-		HistoryList historyList = (HistoryList) component;
+		HistoryListComponent historyList = (HistoryListComponent) component;
 		
 		if (list != null && isValueReference(list))
 		{

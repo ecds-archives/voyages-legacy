@@ -5,9 +5,9 @@ public class QueryConditionSimple extends QueryCondition
 	
 	private String value;
 
-	public QueryConditionSimple()
+	public QueryConditionSimple(String attributeName)
 	{
-		super();
+		super(attributeName);
 	}
 
 	public String getValue()

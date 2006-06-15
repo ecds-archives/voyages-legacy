@@ -1,6 +1,6 @@
 package edu.emory.library.tas.web;
 
-public class QueryConditionRange
+public class QueryConditionRange extends QueryCondition
 {
 	
 	public static final int TYPE_BETWEEN = 0;
@@ -15,14 +15,14 @@ public class QueryConditionRange
 	private Object le;
 	private Object eq;
 
-	public QueryConditionRange()
+	public QueryConditionRange(String attributeName)
 	{
-		super();
+		super(attributeName);
 	}
 
-	public QueryConditionRange(int type)
+	public QueryConditionRange(String attributeName, int type)
 	{
-		super();
+		super(attributeName);
 		this.type = type;
 	}
 

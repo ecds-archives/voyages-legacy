@@ -3,7 +3,7 @@ package edu.emory.library.tas.web;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 
-public class Tab extends UIComponentBase
+public class TabComponent extends UIComponentBase
 {
 	
 	private String text;

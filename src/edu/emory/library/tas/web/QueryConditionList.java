@@ -8,9 +8,9 @@ public class QueryConditionList extends QueryCondition
 	
 	private List values = new ArrayList();
 
-	public QueryConditionList()
+	public QueryConditionList(String attributeName)
 	{
-		super();
+		super(attributeName);
 	}
 
 	public List getValues()
