@@ -7,6 +7,7 @@ public class SearchBean
 {
 	
 	private List historyList = null;
+	private List currentQuery = null;
 	
 	public SearchBean()
 	{
@@ -27,6 +28,18 @@ public class SearchBean
 		
 	}
 	
+	public void AddQueryCondition()
+	{
+		
+		if (currentQuery == null)
+			currentQuery = new ArrayList();
+		
+		// from <select> -> create a new
+		// QueryCondition and insert it
+		// to currentQuery
+		
+	}
+	
 	public void HistoryItemDelete(HistoryItemDeleteEvent event)
 	{
 		
@@ -40,6 +53,16 @@ public class SearchBean
 	public void setHistoryList(List historyList)
 	{
 		this.historyList = historyList;
+	}
+
+	public List getCurrentQuery()
+	{
+		return currentQuery;
+	}
+
+	public void setCurrentQuery(List currentQuery)
+	{
+		this.currentQuery = currentQuery;
 	}
 
 }

@@ -15,7 +15,7 @@ import javax.faces.event.FacesEvent;
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
 
-public class ConditionList extends UIComponentBase
+public class QueryBuilderComponent extends UIComponentBase
 {
 
 	private List conditions = new ArrayList();
