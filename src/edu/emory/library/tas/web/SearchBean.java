@@ -7,7 +7,9 @@ public class SearchBean
 {
 	
 	private List historyList = null;
+	private List currentWorkingQuery = null;
 	private List currentQuery = null;
+	private String selectedAtttibute;
 	
 	public SearchBean()
 	{
@@ -31,8 +33,8 @@ public class SearchBean
 	public void AddQueryCondition()
 	{
 		
-		if (currentQuery == null)
-			currentQuery = new ArrayList();
+		if (currentWorkingQuery == null)
+			currentWorkingQuery = new ArrayList();
 		
 		// from <select> -> create a new
 		// QueryCondition and insert it
@@ -42,7 +44,6 @@ public class SearchBean
 	
 	public void HistoryItemDelete(HistoryItemDeleteEvent event)
 	{
-		
 	}
 
 	public List getHistoryList()
@@ -55,6 +56,16 @@ public class SearchBean
 		this.historyList = historyList;
 	}
 
+	public String getSelectedAtttibute()
+	{
+		return selectedAtttibute;
+	}
+
+	public void setSelectedAtttibute(String selectedAtttibute)
+	{
+		this.selectedAtttibute = selectedAtttibute;
+	}
+
 	public List getCurrentQuery()
 	{
 		return currentQuery;
@@ -63,6 +74,16 @@ public class SearchBean
 	public void setCurrentQuery(List currentQuery)
 	{
 		this.currentQuery = currentQuery;
+	}
+
+	public List getCurrentWorkingQuery()
+	{
+		return currentWorkingQuery;
+	}
+
+	public void setCurrentWorkingQuery(List currentWorkingQuery)
+	{
+		this.currentWorkingQuery = currentWorkingQuery;
 	}
 
 }

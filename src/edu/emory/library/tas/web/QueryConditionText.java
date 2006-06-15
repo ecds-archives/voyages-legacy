@@ -1,11 +1,11 @@
 package edu.emory.library.tas.web;
 
-public class QueryConditionSimple extends QueryCondition
+public class QueryConditionText extends QueryCondition
 {
 	
 	private String value;
 
-	public QueryConditionSimple(String attributeName)
+	public QueryConditionText(String attributeName)
 	{
 		super(attributeName);
 	}
