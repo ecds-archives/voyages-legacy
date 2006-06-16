@@ -29,6 +29,20 @@ public class UtilsJSF
 		writer.endElement("input");
 	}
 	
+	public static void encodeJavaScriptStart(UIComponent component, ResponseWriter writer) throws IOException
+	{
+		writer.startElement("script", component);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.writeAttribute("language", "javascript", null);
+		//writer.write("\n");
+	}
+
+	public static void encodeJavaScriptEnd(UIComponent component, ResponseWriter writer) throws IOException
+	{
+		//writer.write("\n");
+		writer.endElement("script");
+	}
+
 	public static String generateSubmitJS(FacesContext context, UIForm form, String name, String value)
 	{
 		

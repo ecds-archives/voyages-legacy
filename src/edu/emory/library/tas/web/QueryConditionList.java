@@ -1,6 +1,7 @@
 package edu.emory.library.tas.web;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.emory.library.tas.util.query.Conditions;
@@ -17,6 +18,13 @@ public class QueryConditionList extends QueryCondition
 
 	public void addToConditions(Conditions conditions) throws QueryInvalidValueException
 	{
+		Conditions subCondition = new Conditions(Conditions.JOIN_OR);
+		for (Iterator iterId = values.iterator(); iterId.hasNext();)
+		{
+			String id = (String) iterId.next();
+			subCondition.addCondition(getAttributeName(), id, Conditions.OP_EQUALS);
+		}
+		conditions.addCondition(subCondition);
 	}
 
 	public List getValues()

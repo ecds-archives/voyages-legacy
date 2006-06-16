@@ -139,5 +139,19 @@
 			<name>query</name>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<name>dictionatyList</name>
+		<tag-class>
+			edu.emory.library.tas.web.DictionaryListTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>list</name>
+		</attribute>
+		<attribute>
+			<name>attribute</name>
+		</attribute>
+	</tag>
 
 </taglib>

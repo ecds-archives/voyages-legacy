@@ -485,12 +485,20 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		
 		String attributeName = queryCondition.getAttributeName();
-		String userListHtmlName = getClientId(context) + attributeName + "_user_list";
-
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("name", getHtmlNameForList(attributeName, context), null);
-		writer.endElement("input");
+		String displayListHtmlName = getClientId(context) + attributeName + "_user_list";
+		
+		UtilsJSF.encodeHiddenInput(this, writer, getHtmlNameForList(attributeName, context), "");
+		
+		StringBuffer jsPopup = new StringBuffer();
+		jsPopup.append("window.open(");
+		jsPopup.append("'dictionary-list.faces");
+		jsPopup.append("?attributeName=").append(attributeName);
+		jsPopup.append("&formName=").append(form.getClientId(context));
+		jsPopup.append("&hiddenFieldName=").append(getHtmlNameForList(attributeName, context));
+		jsPopup.append("&displayFieldName=").append(displayListHtmlName);
+		jsPopup.append("', ");
+		jsPopup.append("'search-list', ");
+		jsPopup.append("'width=300,height=500,resizable=yes,scrollbars=no,status=no');");
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -509,10 +517,18 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", userListHtmlName, null);
+		writer.writeAttribute("name", displayListHtmlName, null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
+		writer.startElement("td", this);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("value", "Select", null);
+		writer.writeAttribute("onclick", jsPopup.toString(), null);
+		writer.endElement("input");
+		writer.endElement("td");
+
 		writer.endElement("tr");
 		writer.endElement("table");
 		
@@ -524,8 +540,8 @@ public class QueryBuilderComponent extends UIComponentBase
 		String attributeName = col.getName();
 		
 		String[] values =
-			(String[]) externalContext.getRequestParameterValuesMap().get(
-					getHtmlNameForList(attributeName, context));
+			((String) externalContext.getRequestParameterMap().get(
+					getHtmlNameForList(attributeName, context))).split(",");
 		
 		List list = new ArrayList();
 		for (int i = 0; i < values.length; i++) list.add(list);
