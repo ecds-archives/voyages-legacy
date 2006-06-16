@@ -10,7 +10,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
+import org.apache.myfaces.context.servlet.ServletExternalContextImpl;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -26,6 +28,8 @@ import edu.emory.library.tas.util.query.QueryValue;
 
 public class TimeLineResultTabBean {
 
+	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
+	
 	private Conditions conditions = new Conditions();
 
 	private static final String[] aggregates = { "avg", "min", "max", "sum",
@@ -42,15 +46,17 @@ public class TimeLineResultTabBean {
 
 	private String chosenAttribute;
 
-	private String chartPath;
-
-	private String chartPathLarge;
+//	private String chartPath;
+//
+//	private String chartPathLarge;
 
 	private boolean largeViewMode = false;
 
 	private boolean needQuery;
 
 	private boolean attributesChanged = false;
+	
+	private JFreeChart chart;
 
 	public TimeLineResultTabBean() {
 	}
@@ -121,27 +127,16 @@ public class TimeLineResultTabBean {
 
 			}
 
-			JFreeChart chart = ChartFactory.createLineChart(
+			chart = ChartFactory.createBarChart(
 					"Sample Category Chart", // Title
 					"Voyages", // X-Axis label
 					"# of slaves", // Y-Axis label
 					categoryDataset, // Dataset
 					PlotOrientation.VERTICAL, false, true, true);
 
-			try {
 				ExternalContext servletContext = FacesContext
 						.getCurrentInstance().getExternalContext();
-				String path = ((ServletContext) servletContext.getContext())
-						.getRealPath("/");
-				ChartUtilities.saveChartAsPNG(new File(path + "chart.png"),
-						chart, 640, 480);
-				this.chartPath = "chart.png";
-				ChartUtilities.saveChartAsPNG(new File(path + "chartBig.png"),
-						chart, 1280, 1024);
-				this.chartPathLarge = "chartBig.png";
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				((HttpSession)servletContext.getSession(true)).setAttribute("__chart__object", chart);
 			
 			this.needQuery = false;
 			this.attributesChanged = false;
@@ -174,11 +169,10 @@ public class TimeLineResultTabBean {
 	}
 
 	public String getChartPath() {
-		return largeViewMode ? chartPathLarge : chartPath;
+		return IMAGE_FEEDED_SERVLET + "?path=__chart__object";
 	}
-
-	public void setChartPath(String chartPath) {
-		this.chartPath = chartPath;
+	
+	public void setChartPath(String path) {		
 	}
 
 	public boolean getNormalView() {
@@ -198,7 +192,7 @@ public class TimeLineResultTabBean {
 	}
 
 	public boolean getChartReady() {
-		return this.chartPath != null;
+		return this.chart != null;
 	}
 
 	public void setConditions(Conditions c) {
