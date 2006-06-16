@@ -270,6 +270,61 @@ public class QueryBuilderComponent extends UIComponentBase
 
 		String attributeName = queryCondition.getAttributeName();
 		
+		String tdFromId = getClientId(context) + attributeName + "_td_from";
+		String tdDashId = getClientId(context) + attributeName + "_td_dash";
+		String tdToId = getClientId(context) + attributeName + "_td_to";
+		String tdLeId = getClientId(context) + attributeName + "_td_le";
+		String tdGeId = getClientId(context) + attributeName + "_td_ge";
+		String tdEqId = getClientId(context) + attributeName + "_td_eq";
+		
+		String htmlNameForRangeType = getHtmlNameForRangeType(attributeName, context);
+		String inputFromName = getHtmlNameForRangeFrom(attributeName, context);
+		String inputToName = getHtmlNameForRangeTo(attributeName, context);
+		String inputLeName = getHtmlNameForRangeLe(attributeName, context);
+		String inputGeName = getHtmlNameForRangeGe(attributeName, context);
+		String inputEqName = getHtmlNameForRangeEq(attributeName, context);
+		
+		StringBuffer js = new StringBuffer();
+
+		js.append("var type = ");
+		UtilsJSF.appendFormElementRefJS(js, context, form, htmlNameForRangeType);
+		js.append(".selectedIndex; ");
+		
+		UtilsJSF.appendElementRefJS(js, context, form, tdFromId);
+		js.append(".style.display = (type == 0) ? '' : 'none'; ");
+		
+//		UtilsJSF.appendFormElementRefJS(js, context, form, inputFromName);
+//		js.append(".type = (type == 0) ? 'hidden' : 'text'; ");
+		
+		UtilsJSF.appendElementRefJS(js, context, form, tdDashId);
+		js.append(".style.display = (type == 0) ? '' : 'none'; ");
+
+		UtilsJSF.appendElementRefJS(js, context, form, tdToId);
+		js.append(".style.display = (type == 0) ? '' : 'none'; ");
+
+//		UtilsJSF.appendFormElementRefJS(js, context, form, inputToName);
+//		js.append(".type = (type == 0) ? 'hidden' : 'text'; ");
+
+		UtilsJSF.appendElementRefJS(js, context, form, tdLeId);
+		js.append(".style.display = (type == 1) ? '' : 'none'; ");
+
+//		UtilsJSF.appendFormElementRefJS(js, context, form, inputLeName);
+//		js.append(".type = (type == 1) ? 'hidden' : 'text'; ");
+
+		UtilsJSF.appendElementRefJS(js, context, form, tdGeId);
+		js.append(".style.display = (type == 2) ? '' : 'none'; ");
+		
+//		UtilsJSF.appendFormElementRefJS(js, context, form, inputGeName);
+//		js.append(".type = (type == 2) ? 'hidden' : 'text'; ");
+
+		UtilsJSF.appendElementRefJS(js, context, form, tdEqId);
+		js.append(".style.display = (type == 3) ? '' : 'none'; ");
+
+//		UtilsJSF.appendFormElementRefJS(js, context, form, inputEqName);
+//		js.append(".type = (type == 3) ? 'hidden' : 'text'; ");
+
+		int type = queryCondition.getType();
+
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
@@ -286,29 +341,30 @@ public class QueryBuilderComponent extends UIComponentBase
 
 		writer.startElement("td", this);
 		writer.startElement("select", this);
-		writer.writeAttribute("name", getHtmlNameForRangeType(attributeName, context), null);
+		writer.writeAttribute("name", htmlNameForRangeType, null);
+		writer.writeAttribute("onchange", js.toString(), null);
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "between", null);
-		if (queryCondition.getType() == QueryConditionRange.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionRange.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
 		writer.write("Between");
 		writer.endElement("option");
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "le", null);
-		if (queryCondition.getType() == QueryConditionRange.TYPE_LE) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionRange.TYPE_LE) writer.writeAttribute("selected", "selected", null);
 		writer.write("at most");
 		writer.endElement("option");
 
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "ge", null);
-		if (queryCondition.getType() == QueryConditionRange.TYPE_GE) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionRange.TYPE_GE) writer.writeAttribute("selected", "selected", null);
 		writer.write("at least");
 		writer.endElement("option");
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "eq", null);
-		if (queryCondition.getType() == QueryConditionRange.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionRange.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
 		writer.write("is equal");
 		writer.endElement("option");
 		
@@ -316,45 +372,57 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("td");
 
 		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdFromId, null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", getHtmlNameForRangeFrom(attributeName, context), null);
+		writer.writeAttribute("name", inputFromName, null);
 		writer.writeAttribute("value", queryCondition.getFrom(), null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
 		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdDashId, null);
 		writer.write("-");
 		writer.endElement("td");
 
 		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdToId, null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", getHtmlNameForRangeTo(attributeName, context), null);
+		writer.writeAttribute("name", inputToName, null);
 		writer.writeAttribute("value", queryCondition.getTo(), null);
 		writer.endElement("input");
 		writer.endElement("td");
 
 		writer.startElement("td", this);
+		if (type != 1) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdLeId, null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", getHtmlNameForRangeLe(attributeName, context), null);
+		writer.writeAttribute("name", inputLeName, null);
 		writer.writeAttribute("value", queryCondition.getLe(), null);
 		writer.endElement("input");
 		writer.endElement("td");
 
 		writer.startElement("td", this);
+		if (type != 2) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdGeId, null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", getHtmlNameForRangeGe(attributeName, context), null);
+		writer.writeAttribute("name", inputGeName, null);
 		writer.writeAttribute("value", queryCondition.getGe(), null);
 		writer.endElement("input");
 		writer.endElement("td");
 
 		writer.startElement("td", this);
+		if (type != 3) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdEqId, null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", getHtmlNameForRangeEq(attributeName, context), null);
+		writer.writeAttribute("name", inputEqName, null);
 		writer.writeAttribute("value", queryCondition.getEq(), null);
 		writer.endElement("input");
 		writer.endElement("td");

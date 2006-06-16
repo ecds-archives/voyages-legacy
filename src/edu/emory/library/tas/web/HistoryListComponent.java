@@ -12,7 +12,6 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
-import javax.faces.event.PhaseId;
 
 public class HistoryListComponent extends UIComponentBase
 {
@@ -58,23 +57,17 @@ public class HistoryListComponent extends UIComponentBase
 
 		ExternalContext externalContex = context.getExternalContext();
 
-		String toDeleteId =
-			(String) externalContex.getRequestParameterMap().get(
-					getToDeleteHiddenFieldName(context));
-
-		String toRestoreId =
-			(String) externalContex.getRequestParameterMap().get(
-					getToRestoreHiddenFieldName(context));
+		String toDeleteId = (String) externalContex.getRequestParameterMap().get(
+				getToDeleteHiddenFieldName(context));
 
 		if (toDeleteId != null && toDeleteId.length() != 0)
 			queueEvent(new HistoryItemDeleteEvent(this, toDeleteId));
 
+		String toRestoreId = (String) externalContex.getRequestParameterMap().get(
+				getToRestoreHiddenFieldName(context));
+
 		if (toRestoreId != null && toRestoreId.length() != 0)
-		{
-			FacesEvent event = new HistoryItemRestoreEvent(this, toRestoreId); 
-			event.setPhaseId(PhaseId.INVOKE_APPLICATION);
-			queueEvent(event);
-		}
+			queueEvent(new HistoryItemRestoreEvent(this, toRestoreId));
 
 	}
 	
@@ -128,7 +121,7 @@ public class HistoryListComponent extends UIComponentBase
 	private void encodeDeleteButton(String historyId, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
-		String js = UtilsJSF.generateSubmitJavaScript(
+		String js = UtilsJSF.generateSubmitJS(
 				context, form,
 				getToDeleteHiddenFieldName(context),
 				historyId);
@@ -144,7 +137,7 @@ public class HistoryListComponent extends UIComponentBase
 	private void encodeRestoreButton(String historyId, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
-		String js = UtilsJSF.generateSubmitJavaScript(
+		String js = UtilsJSF.generateSubmitJS(
 				context, form,
 				getToRestoreHiddenFieldName(context),
 				historyId);

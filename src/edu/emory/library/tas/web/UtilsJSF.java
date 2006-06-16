@@ -29,22 +29,19 @@ public class UtilsJSF
 		writer.endElement("input");
 	}
 	
-	public static String generateSubmitJavaScript(FacesContext context, UIForm form, String name, String value)
+	public static String generateSubmitJS(FacesContext context, UIForm form, String name, String value)
 	{
 		
 		StringBuffer js = new StringBuffer();
 
 		if (name != null && value != null)
 		{
-			js.append("document.");
-			js.append("forms['").append(form.getClientId(context)).append("'].");
-			js.append("elements['").append(name).append("'].value = ");
+			appendFormElementValJS(js, context, form, name).append(" = ");
 			js.append("'").append(value).append("';");
 		}
 
 		if (js.length() > 0) js.append(" ");
-		js.append("document.");
-		js.append("forms['").append(form.getClientId(context)).append("'].");
+		appendFormElementRefJS(js, context, form, name).append(".");
 		js.append("submit();");
 		
 		if (js.length() > 0) js.append(" ");
@@ -53,6 +50,27 @@ public class UtilsJSF
 		return js.toString();
 	
 	}
+	
+	public static StringBuffer appendFormElementRefJS(StringBuffer js, FacesContext context, UIForm form, String name)
+	{
+		js.append("document.");
+		js.append("forms['").append(form.getClientId(context)).append("'].");
+		js.append("elements['").append(name).append("']");
+		return js;
+	}
 
+	public static StringBuffer appendFormElementValJS(StringBuffer js, FacesContext context, UIForm form, String name)
+	{
+		appendFormElementRefJS(js, context, form, name);
+		js.append(".value");
+		return js;
+	}
+	
+	public static StringBuffer appendElementRefJS(StringBuffer js, FacesContext context, UIForm form, String id)
+	{
+		js.append("document.");
+		js.append("getElementById('").append(id).append("')");
+		return js;
+	}
 
 }

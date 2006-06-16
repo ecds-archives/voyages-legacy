@@ -3,6 +3,7 @@ package edu.emory.library.tas.web;
 import javax.faces.component.UIComponent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
+import javax.faces.event.PhaseId;
 
 public class HistoryItemRestoreEvent extends FacesEvent
 {
@@ -15,6 +16,7 @@ public class HistoryItemRestoreEvent extends FacesEvent
 	{
 		super(uiComponent);
 		this.historyId = historyId;
+		this.setPhaseId(PhaseId.INVOKE_APPLICATION);
 	}
 
 	public boolean isAppropriateListener(FacesListener faceslistener)
