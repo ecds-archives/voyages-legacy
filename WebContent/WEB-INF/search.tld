@@ -22,6 +22,9 @@
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
 			<name>style</name>
 		</attribute>
 		<attribute>
@@ -47,6 +50,9 @@
 			edu.emory.library.tas.web.components.tabs.TimeLineResultTabTag
 		</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
 		<attribute>
 			<name>style</name>
 		</attribute>
@@ -85,7 +91,7 @@
 			<name>id</name>
 		</attribute>
 		<attribute>
-			<name>tabChanged</name>
+			<name>onTabChanged</name>
 		</attribute>
 	</tag>
 
@@ -122,10 +128,10 @@
 			<name>history</name>
 		</attribute>
 		<attribute>
-			<name>ondelete</name>
+			<name>onDelete</name>
 		</attribute>
 		<attribute>
-			<name>onrestore</name>
+			<name>onRestore</name>
 		</attribute>
 	</tag>
 

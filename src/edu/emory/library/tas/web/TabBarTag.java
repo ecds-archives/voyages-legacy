@@ -9,7 +9,7 @@ import javax.faces.webapp.UIComponentTag;
 public class TabBarTag extends UIComponentTag
 {
 
-	private String tabChanged;
+	private String onTabChanged;
 
 	protected void setProperties(UIComponent component)
 	{
@@ -17,9 +17,9 @@ public class TabBarTag extends UIComponentTag
 		TabBarComponent tabBar = (TabBarComponent) component;
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		
-		if (tabChanged != null && isValueReference(tabChanged))
+		if (onTabChanged != null && isValueReference(onTabChanged))
 		{
-			MethodBinding mb = app.createMethodBinding(tabChanged, new Class[] {TabChangeEvent.class});
+			MethodBinding mb = app.createMethodBinding(onTabChanged, new Class[] {TabChangeEvent.class});
 			tabBar.setTabChanged(mb);
 		}
 		
@@ -35,14 +35,14 @@ public class TabBarTag extends UIComponentTag
 		return null;
 	}
 
-	public String getTabChanged()
+	public String getOnTabChanged()
 	{
-		return tabChanged;
+		return onTabChanged;
 	}
 
-	public void setTabChanged(String tabChanged)
+	public void setOnTabChanged(String tabChanged)
 	{
-		this.tabChanged = tabChanged;
+		this.onTabChanged = tabChanged;
 	}
 	
 }

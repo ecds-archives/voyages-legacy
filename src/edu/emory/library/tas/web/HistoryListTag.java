@@ -11,8 +11,8 @@ public class HistoryListTag extends UIComponentTag
 {
 	
 	private String history;
-	private String ondelete;
-	private String onrestore;
+	private String onDelete;
+	private String onRestore;
 	
 	protected void setProperties(UIComponent component)
 	{
@@ -26,15 +26,15 @@ public class HistoryListTag extends UIComponentTag
 			component.setValueBinding("history", vb);
 		}
 		
-		if (ondelete != null && isValueReference(ondelete))
+		if (onDelete != null && isValueReference(onDelete))
 		{
-			MethodBinding mb = app.createMethodBinding(ondelete, new Class[] {HistoryItemDeleteEvent.class});
+			MethodBinding mb = app.createMethodBinding(onDelete, new Class[] {HistoryItemDeleteEvent.class});
 			historyList.setOndelete(mb);
 		}
 
-		if (onrestore != null && isValueReference(onrestore))
+		if (onRestore != null && isValueReference(onRestore))
 		{
-			MethodBinding mb = app.createMethodBinding(onrestore, new Class[] {HistoryItemRestoreEvent.class});
+			MethodBinding mb = app.createMethodBinding(onRestore, new Class[] {HistoryItemRestoreEvent.class});
 			historyList.setOnrestore(mb);
 		}
 
@@ -50,14 +50,14 @@ public class HistoryListTag extends UIComponentTag
 		return null;
 	}
 
-	public String getOndelete()
+	public String getOnDelete()
 	{
-		return ondelete;
+		return onDelete;
 	}
 
-	public void setOndelete(String ondelete)
+	public void setOnDelete(String ondelete)
 	{
-		this.ondelete = ondelete;
+		this.onDelete = ondelete;
 	}
 
 	public String getHistory()
@@ -70,14 +70,14 @@ public class HistoryListTag extends UIComponentTag
 		this.history = list;
 	}
 
-	public String getOnrestore()
+	public String getOnRestore()
 	{
-		return onrestore;
+		return onRestore;
 	}
 
-	public void setOnrestore(String onrestore)
+	public void setOnRestore(String onrestore)
 	{
-		this.onrestore = onrestore;
+		this.onRestore = onrestore;
 	}
 
 }

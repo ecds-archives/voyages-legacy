@@ -34,19 +34,20 @@
 		        <hr>
 
 				<s:historyList
-					ondelete="#{SearchBean.historyItemDelete}"
-					onrestore="#{SearchBean.historyItemRestore}"
+					onDelete="#{SearchBean.historyItemDelete}"
+					onRestore="#{SearchBean.historyItemRestore}"
 					history="#{SearchBean.history}" />
 			
 			</td>
 			<td valign="top">
 
-				<s:tabBar id="bar">
-					<s:tab text="Abc" tabId="abc" />
-					<s:tab text="Xyz" tabId="xyz" />
+				<s:tabBar id="bar" onTabChanged="#{SearchBean.moduleTabChanged}">
+					<s:tab text="Results listing" tabId="table" />
+					<s:tab text="Graphs" tabId="timeline" />
 				</s:tabBar>
 				
 				<s:tabletab
+					rendered="#{SearchBean.tableVisible}"
 		      		query="#{SearchBean.currentConditions}"
 		     		conditionsOut="#{TableResultTabBean.conditions}"
 		      		results="#{TableResultTabBean.results}"
@@ -58,20 +59,18 @@
 		      </s:tabletab>
 		
 		      <s:stattab 
+					rendered="#{SearchBean.timeLineVisible}"
 		      		query="#{SearchBean.currentConditions}" 
 		      		conditionsOut="#{TimeLineResultTabBean.conditions}">
 		        <h:panelGrid columns="1">
 			      	<h:panelGroup>
 				        <h:outputText value="Y axis value: "/>
-				        
 		     		    <h:selectOneMenu value="#{TimeLineResultTabBean.chosenAggregate}" id="tLAggregates">
 				        	<f:selectItems value="#{TimeLineResultTabBean.aggregateFunctions}"/>
 				        </h:selectOneMenu>
-			        	
 			    	    <h:selectOneMenu value="#{TimeLineResultTabBean.chosenAttribute}" id="tLAttributes">
 					        <f:selectItems value="#{TimeLineResultTabBean.voyageNumericAttributes}"/>		     
 				        </h:selectOneMenu>
-				        
 			        	<h:commandButton id="show_stat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}"/>
 		        	</h:panelGroup>
 		        	<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">

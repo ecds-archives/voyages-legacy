@@ -2,7 +2,6 @@ package edu.emory.library.tas.web;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
@@ -11,7 +10,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
-import javax.faces.event.FacesListener;
 
 
 public class TabBarComponent extends UIComponentBase
@@ -19,6 +17,7 @@ public class TabBarComponent extends UIComponentBase
 	
 	private static final String HIDDEN_FIELD_SUFFIX = "_selected_tab";
 	private MethodBinding tabChanged;
+	private String lastSelectedTabId;
 	
 	public boolean getRendersChildren()
 	{
@@ -32,9 +31,10 @@ public class TabBarComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[2];
+		Object values[] = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = saveAttachedState(context, tabChanged);
+		values[2] = lastSelectedTabId;
 		return values;
 	}
 	
@@ -43,34 +43,44 @@ public class TabBarComponent extends UIComponentBase
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
 		tabChanged = (MethodBinding) restoreAttachedState(context, values[1]);
+		lastSelectedTabId = (String) values[2];
 	}
 
 	public void broadcast(FacesEvent event) throws AbortProcessingException
 	{
 		super.broadcast(event);
 		
-		if (event instanceof TabChangeEvent)
-			if (tabChanged != null)
-				if (true)
-					tabChanged.invoke(getFacesContext(), new Object[] {event});
+		if (event instanceof TabChangeEvent && tabChanged != null)
+			tabChanged.invoke(getFacesContext(), new Object[] {event});
 		
 	}
 
 	public void decode(FacesContext context)
 	{
 		
-		String selectedTabId = (String) context.getExternalContext().getRequestParameterMap().get(getHiddenFieldName(context));
-		if (selectedTabId != null)
+		String newSelectedTabId = (String) context.getExternalContext().getRequestParameterMap().get(getHiddenFieldName(context));
+		if (newSelectedTabId != null)
 		{
-			queueEvent(new TabChangeEvent(this, selectedTabId));
-			setSelectedTagId(selectedTabId);
+			if (!newSelectedTabId.equals(lastSelectedTabId))
+			{
+				queueEvent(new TabChangeEvent(this, newSelectedTabId));
+				setSelectedTagId(newSelectedTabId);
+			}
 		}
 		
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException
 	{
-
+		
+		if (getSelectedTagId() == null)
+		{
+			if (getChildCount() > 0)
+			{
+				setSelectedTagId(((TabComponent) getChildren().get(0)).getTabId());
+			}
+		}
+		
 		ResponseWriter writer = context.getResponseWriter();
 		
 		writer.startElement("input", this);
@@ -146,13 +156,14 @@ public class TabBarComponent extends UIComponentBase
 		return js.toString(); 
 	}
 	
-	public void setSelectedTagId(String tagId)
+	public void setSelectedTagId(String tabId)
 	{
-		if (tagId == null) return;
+		if (tabId == null) return;
+		lastSelectedTabId = tabId;
 		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
 		{
 			TabComponent tab = (TabComponent) iterChild.next();
-			tab.setSelected(tagId.equals(tab.getTabId()));
+			tab.setSelected(tabId.equals(tab.getTabId()));
 		}
 	}
 	

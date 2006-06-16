@@ -9,7 +9,6 @@ import javax.faces.model.SelectItem;
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.util.query.Conditions;
-import edu.emory.library.tas.util.query.QueryValue;
 
 
 public class SearchBean
@@ -19,13 +18,8 @@ public class SearchBean
 	private Query workingQuery = new Query();
 	private Conditions currentConditions = null;
 	private String selectedAtttibute;
-	
-	public SearchBean()
-	{
-//		workingQuery.addConditionOn("shipname");
-//		workingQuery.addConditionOn("captaina");
-//		workingQuery.addConditionOn("sla32imp");
-	}
+	private boolean tableVisible = true;
+	private boolean timeLineVisible = false;
 	
 	public void addQueryCondition()
 	{
@@ -73,6 +67,12 @@ public class SearchBean
 	{
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
 		workingQuery = (Query) historyItem.getQuery().clone();
+	}
+	
+	public void moduleTabChanged(TabChangeEvent event)
+	{
+		tableVisible = event.getTabId().equals("table");
+		timeLineVisible = event.getTabId().equals("timeline");
 	}
 	
 	public String getSelectedAtttibute()
@@ -128,6 +128,26 @@ public class SearchBean
 			options.add(selectItem);
 		}
 		return options;
+	}
+
+	public boolean isTableVisible()
+	{
+		return tableVisible;
+	}
+
+	public void setTableVisible(boolean tableVisible)
+	{
+		this.tableVisible = tableVisible;
+	}
+
+	public boolean isTimeLineVisible()
+	{
+		return timeLineVisible;
+	}
+
+	public void setTimeLineVisible(boolean timeLineVisible)
+	{
+		this.timeLineVisible = timeLineVisible;
 	}
 
 }
