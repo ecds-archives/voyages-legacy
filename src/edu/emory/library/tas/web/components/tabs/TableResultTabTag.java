@@ -20,6 +20,8 @@ public class TableResultTabTag extends UIComponentTag {
 	private String conditions;
 	private String conditionsOut;
 
+	private String componentVisible;
+
 	public String getStyle() {
 		return style;
 	}
@@ -86,6 +88,16 @@ public class TableResultTabTag extends UIComponentTag {
 				component.getAttributes().put("conditionsOut", conditionsOut);
 			}
 		}
+		if (componentVisible != null) {
+			if (isValueReference(conditionsOut)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(componentVisible);
+				component.setValueBinding("componentVisible", vb);
+			} else {
+				component.getAttributes().put("componentVisible", componentVisible);
+			}
+		}
+		
 	}
 
 	public void release() {
@@ -134,5 +146,13 @@ public class TableResultTabTag extends UIComponentTag {
 
 	public void setConditionsOut(String conditionsOut) {
 		this.conditionsOut = conditionsOut;
+	}
+	
+	public String getComponentVisible() {
+		return componentVisible;
+	}
+
+	public void setComponentVisible(String componentVisible) {
+		this.componentVisible = componentVisible;
 	}
 }

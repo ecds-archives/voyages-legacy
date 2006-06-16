@@ -1,7 +1,8 @@
 package edu.emory.library.tas.web.components.tabs;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.Color;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,19 +10,20 @@ import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.myfaces.context.servlet.ServletExternalContextImpl;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.Year;
+import org.jfree.ui.RectangleInsets;
 
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
-import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
@@ -29,8 +31,6 @@ import edu.emory.library.tas.util.query.QueryValue;
 public class TimeLineResultTabBean {
 
 	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
-	
-	private Conditions conditions = new Conditions();
 
 	private static final String[] aggregates = { "avg", "min", "max", "sum",
 			"count" };
@@ -42,21 +42,21 @@ public class TimeLineResultTabBean {
 
 	private List aggregateFunctions;
 
-	private String chosenAggregate;
+	private String chosenAggregate = "sum";
 
-	private String chosenAttribute;
+	private String chosenAttribute = "sla32imp";
 
-//	private String chartPath;
-//
-//	private String chartPathLarge;
+	private Conditions conditions = null;
 
 	private boolean largeViewMode = false;
 
-	private boolean needQuery;
+	private boolean needQuery = false;
 
 	private boolean attributesChanged = false;
-	
+
 	private JFreeChart chart;
+
+	private Boolean componentVisible = new Boolean(false);
 
 	public TimeLineResultTabBean() {
 	}
@@ -101,13 +101,16 @@ public class TimeLineResultTabBean {
 	}
 
 	public String showTimeLine() {
-		if (this.needQuery || this.attributesChanged) {
-			
-			Conditions localCondition = this.conditions.addAttributesPrefix("v.");
-			localCondition.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
+		if (this.componentVisible.booleanValue()
+				&& (this.needQuery || this.attributesChanged)) {
+
+			Conditions localCondition = this.conditions
+					.addAttributesPrefix("v.");
+			localCondition
+					.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
 			localCondition.addCondition("vi.remoteVoyageId", new DirectValue(
 					"v.id"), Conditions.OP_EQUALS);
-			
+
 			QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v",
 					localCondition);
 			qValue.setGroupBy("date_trunc('year', v.datedep)");
@@ -118,26 +121,46 @@ public class TimeLineResultTabBean {
 					+ this.chosenAttribute + ")", false);
 			Object[] ret = qValue.executeQuery();
 
-			DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+			TimeSeriesCollection dataset = new TimeSeriesCollection();
+			TimeSeries timeseries = new TimeSeries("Years");
+			dataset.addSeries(timeseries);
 
 			for (int i = 0; i < ret.length; i++) {
 				Object[] row = (Object[]) ret[i];
 				String label = row[0] != null ? (row[0].toString()) : "null";
-				categoryDataset.addValue((Number) row[1], label, "");
+				timeseries.add(new Day((Date) row[0]), (Number) row[1]);
 
 			}
 
-			chart = ChartFactory.createBarChart(
-					"Sample Category Chart", // Title
-					"Voyages", // X-Axis label
-					"# of slaves", // Y-Axis label
-					categoryDataset, // Dataset
-					PlotOrientation.VERTICAL, false, true, true);
+			chart = ChartFactory.createTimeSeriesChart("Time statistics",
+					"Year of voyages", "" + this.chosenAggregate + "("
+							+ this.chosenAttribute + ")", dataset, false, true,
+					false);
 
-				ExternalContext servletContext = FacesContext
-						.getCurrentInstance().getExternalContext();
-				((HttpSession)servletContext.getSession(true)).setAttribute("__chart__object", chart);
 			
+			XYPlot xyplot = (XYPlot) chart.getPlot();
+			xyplot.setBackgroundPaint(Color.LIGHT_GRAY);
+			xyplot.setDomainGridlinePaint(Color.WHITE);
+			xyplot.setRangeGridlinePaint(Color.WHITE);
+			xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
+			xyplot.setDomainCrosshairVisible(true);
+			xyplot.setRangeCrosshairVisible(true);
+			// if(xyitemrenderer instanceof XYLineAndShapeRenderer)
+			// {
+			// XYLineAndShapeRenderer xylineandshaperenderer =
+			// (XYLineAndShapeRenderer)xyitemrenderer;
+			// // xylineandshaperenderer.setDefaultShapesVisible(true);
+			// // xylineandshaperenderer.setDefaultShapesFilled(true);
+			// }
+			DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
+			dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
+
+			
+			ExternalContext servletContext = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			((HttpSession) servletContext.getSession(true)).setAttribute(
+					"__chart__object", chart);
+
 			this.needQuery = false;
 			this.attributesChanged = false;
 		}
@@ -171,8 +194,8 @@ public class TimeLineResultTabBean {
 	public String getChartPath() {
 		return IMAGE_FEEDED_SERVLET + "?path=__chart__object";
 	}
-	
-	public void setChartPath(String path) {		
+
+	public void setChartPath(String path) {
 	}
 
 	public boolean getNormalView() {
@@ -196,13 +219,28 @@ public class TimeLineResultTabBean {
 	}
 
 	public void setConditions(Conditions c) {
-		if (c == null) {
-			needQuery = false;
-		} else if (c.equals(conditions)) {
-			needQuery = false;
+		if (c == null || c.equals(conditions)) {
+			return;
 		} else {
 			conditions = c;
 			needQuery = true;
+		}
+		showTimeLine();
+	}
+
+	public Boolean getComponentVisible() {
+		return componentVisible;
+	}
+
+	public void setComponentVisible(Boolean componentVisible) {
+		boolean shouldQuery = false;
+		if (this.componentVisible.booleanValue() == false
+				&& componentVisible.booleanValue() == true) {
+			shouldQuery = true;
+		}
+		this.componentVisible = componentVisible;
+		if (shouldQuery) {
+			this.showTimeLine();
 		}
 	}
 }

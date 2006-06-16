@@ -17,6 +17,8 @@ public class TableResultTabBean {
 
 	private Conditions condition;
 
+	private Boolean componentVisible = new Boolean(false);
+	
 	private boolean needQuery = false;
 
 	public TableResultTabBean() {
@@ -50,9 +52,8 @@ public class TableResultTabBean {
 			System.out.println("2: --------------------------------------");
 			System.out.println(this.condition.getConditionHQL().conditionString);
 		}
-		if (needQuery) {
-			Conditions localCond = (Conditions)this.condition.addAttributesPrefix("v.voyage.");
-			
+		if (this.componentVisible.booleanValue() && needQuery) {
+			Conditions localCond = (Conditions)this.condition.addAttributesPrefix("v.voyage.");			
 			localCond.addCondition(VoyageIndex.getRecent());
 
 			System.out.println("3: --------------------------------------");
@@ -140,5 +141,13 @@ public class TableResultTabBean {
 			condition = c;
 			needQuery = true;
 		}
+	}
+
+	public Boolean getComponentVisible() {
+		return componentVisible;
+	}
+
+	public void setComponentVisible(Boolean componentVisible) {
+		this.componentVisible = componentVisible;
 	}
 }

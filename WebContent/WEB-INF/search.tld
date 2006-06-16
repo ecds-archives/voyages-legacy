@@ -42,6 +42,9 @@
 		<attribute>
 			<name>conditionsOut</name>
 		</attribute>
+		<attribute>
+			<name>componentVisible</name>
+		</attribute>
 	</tag>
 
 	<tag>
@@ -64,6 +67,9 @@
 		</attribute>
 		<attribute>
 			<name>conditionsOut</name>
+		</attribute>
+		<attribute>
+			<name>componentVisible</name>
 		</attribute>
 	</tag>
 

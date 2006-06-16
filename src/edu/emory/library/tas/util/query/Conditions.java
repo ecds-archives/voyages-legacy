@@ -188,7 +188,7 @@ public class Conditions {
 			Conditions that = (Conditions)o;
 			return (this.conditions.equals(that.conditions) 
 					&& this.joinCondition == that.joinCondition
-					&& this.subConditions.equals(that));
+					&& this.subConditions.equals(that.subConditions));
 		}
 		return false;
 	}

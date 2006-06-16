@@ -51,7 +51,8 @@
 		      		query="#{SearchBean.currentConditions}"
 		     		conditionsOut="#{TableResultTabBean.conditions}"
 		      		results="#{TableResultTabBean.results}"
-		      		populatedAttributes="#{TableResultTabBean.populatedAttributes}">
+		      		populatedAttributes="#{TableResultTabBean.populatedAttributes}"
+		      		componentVisible="#{TableResultTabBean.componentVisible}">
 				<s:resultscroll resultFirst="#{TableResultTabBean.current}" resultSize="#{TableResultTabBean.resultSize}">
 					<h:commandLink id="prev_pack" value="Previous result set" action="#{TableResultTabBean.prev}"/>
 					<h:commandLink id="next_pack" value="Next result set" action="#{TableResultTabBean.next}"/>
@@ -61,7 +62,8 @@
 		      <s:stattab 
 					rendered="#{SearchBean.timeLineVisible}"
 		      		query="#{SearchBean.currentConditions}" 
-		      		conditionsOut="#{TimeLineResultTabBean.conditions}">
+		      		conditionsOut="#{TimeLineResultTabBean.conditions}"
+		      		componentVisible="#{TimeLineResultTabBean.componentVisible}">
 		        <h:panelGrid columns="1">
 			      	<h:panelGroup>
 				        <h:outputText value="Y axis value: "/>
@@ -74,8 +76,8 @@
 			        	<h:commandButton id="show_stat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}"/>
 		        	</h:panelGroup>
 		        	<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
-						<h:graphicImage value="#{TimeLineResultTabBean.chartPath}" rendered="#{TimeLineResultTabBean.normalView}"/>
-						<h:graphicImage value="#{TimeLineResultTabBean.chartPath}" rendered="#{TimeLineResultTabBean.largeView}"/>
+						<h:graphicImage value="#{TimeLineResultTabBean.chartPath}&height=480&width=640" rendered="#{TimeLineResultTabBean.normalView}"/>
+						<h:graphicImage value="#{TimeLineResultTabBean.chartPath}&height=1024&width=1280" rendered="#{TimeLineResultTabBean.largeView}"/>
 					</h:panelGroup>
 					<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
 						<h:commandButton id="enlarge" value="Enlarge" action="#{TimeLineResultTabBean.setLargeView}" rendered="#{TimeLineResultTabBean.normalView}"/>
