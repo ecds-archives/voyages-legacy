@@ -45,15 +45,24 @@ public class TableResultTabBean {
 	}
 
 	private void getResultsDB() {
+		if (this.condition != null)
+		{
+			System.out.println("2: --------------------------------------");
+			System.out.println(this.condition.getConditionHQL().conditionString);
+		}
 		if (needQuery) {
-			Conditions localCond = (Conditions)this.condition.addAttributesPrefix("voyage.");
+			Conditions localCond = (Conditions)this.condition.addAttributesPrefix("v.voyage.");
 			
 			localCond.addCondition(VoyageIndex.getRecent());
+
+			System.out.println("3: --------------------------------------");
+			System.out.println(localCond.getConditionHQL().conditionString);
 			
 			QueryValue qValue = new QueryValue("VoyageIndex as v",
 					localCond);
 			qValue.setLimit(this.getStep().intValue());
 			qValue.setFirstResult(this.getCurrent().intValue());
+			qValue.setOrderBy("v.voyageId");
 			if (this.populatedAttributes != null) {
 				for (int i = 0; i < this.populatedAttributes.length; i++) {
 					qValue.addPopulatedAttribute("v.voyage."
@@ -118,6 +127,11 @@ public class TableResultTabBean {
 	}
 
 	public void setConditions(Conditions c) {
+		if (c != null)
+		{
+			System.out.println("1: --------------------------------------");
+			System.out.println(c.getConditionHQL().conditionString);
+		}
 		if (c == null) {
 			needQuery = false;
 		} else if (c.equals(condition)) {
