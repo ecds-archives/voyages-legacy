@@ -498,7 +498,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		jsPopup.append("&displayFieldName=").append(displayListHtmlName);
 		jsPopup.append("', ");
 		jsPopup.append("'search-list', ");
-		jsPopup.append("'width=300,height=500,resizable=yes,scrollbars=no,status=no');");
+		jsPopup.append("'width=300,height=500,resizable=yes,scrollbars=yes,status=no');");
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -544,7 +544,7 @@ public class QueryBuilderComponent extends UIComponentBase
 					getHtmlNameForList(attributeName, context))).split(",");
 		
 		List list = new ArrayList();
-		for (int i = 0; i < values.length; i++) list.add(list);
+		for (int i = 0; i < values.length; i++) list.add(values[i]);
 
 		QueryConditionList queryCondition = new QueryConditionList(attributeName);
 		queryCondition.setValues(list);

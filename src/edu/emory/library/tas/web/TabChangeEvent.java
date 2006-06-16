@@ -3,6 +3,7 @@ package edu.emory.library.tas.web;
 import javax.faces.component.UIComponent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
+import javax.faces.event.PhaseId;
 
 public class TabChangeEvent extends FacesEvent
 {
@@ -15,6 +16,7 @@ public class TabChangeEvent extends FacesEvent
 	{
 		super(uiComponent);
 		this.tabId = tabId;
+		this.setPhaseId(PhaseId.INVOKE_APPLICATION);
 	}
 
 	public TabChangeEvent(UIComponent uiComponent)

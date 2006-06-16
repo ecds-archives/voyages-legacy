@@ -2,6 +2,7 @@ package edu.emory.library.tas.web;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
@@ -10,6 +11,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.FacesListener;
 
 
 public class TabBarComponent extends UIComponentBase
@@ -28,15 +30,29 @@ public class TabBarComponent extends UIComponentBase
 		return null;
 	}
 	
+	public Object saveState(FacesContext context)
+	{
+		Object values[] = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = saveAttachedState(context, tabChanged);
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object values[] = (Object[]) state;
+		super.restoreState(context, values[0]);
+		tabChanged = (MethodBinding) restoreAttachedState(context, values[1]);
+	}
+
 	public void broadcast(FacesEvent event) throws AbortProcessingException
 	{
 		super.broadcast(event);
 		
 		if (event instanceof TabChangeEvent)
-		{
-			FacesContext context = getFacesContext();
-			if (tabChanged != null) tabChanged.invoke(context, new Object[] {event});
-		}
+			if (tabChanged != null)
+				if (true)
+					tabChanged.invoke(getFacesContext(), new Object[] {event});
 		
 	}
 
@@ -128,21 +144,6 @@ public class TabBarComponent extends UIComponentBase
 		js.append("return false;");
 		
 		return js.toString(); 
-	}
-	
-	public Object saveState(FacesContext context)
-	{
-		Object values[] = new Object[2];
-		values[0] = super.saveState(context);
-		values[1] = saveAttachedState(context, tabChanged);
-		return values;
-	}
-	
-	public void restoreState(FacesContext context, Object state)
-	{
-		Object values[] = (Object[]) state;
-		super.restoreState(context, values[0]);
-		tabChanged = (MethodBinding) restoreAttachedState(context, values[1]);
 	}
 	
 	public void setSelectedTagId(String tagId)

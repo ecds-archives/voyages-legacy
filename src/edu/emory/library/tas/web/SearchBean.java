@@ -9,6 +9,7 @@ import javax.faces.model.SelectItem;
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
 
 
 public class SearchBean
@@ -50,6 +51,8 @@ public class SearchBean
 			// you have a problem in qive.getAttributeName()
 			return;
 		}
+
+		//System.out.println(conditions.getConditionHQL().conditionString);
 		
 		// all ok -> set our property
 		currentConditions = conditions;

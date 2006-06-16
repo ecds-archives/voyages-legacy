@@ -121,7 +121,7 @@ public class TimeLineResultTabBean {
 
 			}
 
-			JFreeChart chart = ChartFactory.createBarChart(
+			JFreeChart chart = ChartFactory.createLineChart(
 					"Sample Category Chart", // Title
 					"Voyages", // X-Axis label
 					"# of slaves", // Y-Axis label

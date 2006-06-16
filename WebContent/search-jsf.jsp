@@ -46,7 +46,7 @@
 					<s:tab text="Xyz" tabId="xyz" />
 				</s:tabBar>
 				
-		      <s:tabletab
+				<s:tabletab
 		      		query="#{SearchBean.currentConditions}"
 		     		conditionsOut="#{TableResultTabBean.conditions}"
 		      		results="#{TableResultTabBean.results}"

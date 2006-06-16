@@ -46,8 +46,7 @@ public class QueryConditionRange extends QueryCondition
 			{
 	
 				case QueryConditionRange.TYPE_BETWEEN:
-					Object fromConverted;
-					fromConverted = col.parse(from);
+					Object fromConverted = col.parse(from);
 					Object toConverted = col.parse(to);
 					conditions.addCondition(getAttributeName(), fromConverted, Conditions.OP_GREATER_OR_EQUAL);
 					conditions.addCondition(getAttributeName(), toConverted, Conditions.OP_SMALLER_OR_EQUAL);

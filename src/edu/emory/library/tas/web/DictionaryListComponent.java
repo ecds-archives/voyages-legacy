@@ -95,7 +95,7 @@ public class DictionaryListComponent extends UIComponentBase
 	
 				writer.startElement("td", this);
 				writer.startElement("input", this);
-				writer.writeAttribute("value", item.getId(), null);
+				writer.writeAttribute("value", item.getRemoteId(), null);
 				writer.writeAttribute("type", "checkbox", null);
 				writer.endElement("input");
 				writer.endElement("td");

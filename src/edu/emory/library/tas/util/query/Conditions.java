@@ -129,7 +129,7 @@ public class Conditions {
 				ret.append("null");
 			} else if (!(c.value instanceof DirectValue)) {
 				String attr = c.attribute;
-				String val = attr.replaceAll("\\.", "") + this.hashCode();
+				String val = (attr.replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
 				Object value = c.value;
 				processed++;
 				ret.append(attr);
@@ -163,10 +163,14 @@ public class Conditions {
 
 		iter = this.subConditions.iterator();
 		while (iter.hasNext()) {
+			processed++;
 			ConditionResponse child = ((Conditions) iter.next())
 					.getConditionHQL();
 			ret.append("(").append(child.conditionString).append(")");
 			retMap.putAll(child.properties);
+			if (processed < size) {
+				ret.append(this.joinCondition == JOIN_AND ? " and " : " or ");
+			}
 		}
 
 		if (this.joinCondition == JOIN_NOT) {
@@ -200,13 +204,13 @@ public class Conditions {
 	public Conditions addAttributesPrefix(String prefix) {
 		Conditions newC = new Conditions();
 		ArrayList conditions = new ArrayList();
-		for (Iterator iter = newC.conditions.iterator(); iter.hasNext();) {
+		for (Iterator iter = this.conditions.iterator(); iter.hasNext();) {
 			Condition condition = (Condition) iter.next();			
 			Condition newCondition = new Condition(prefix + condition.attribute, condition.op, condition.value);
 			conditions.add(newCondition);
 		}
 		ArrayList newSubconditions = new ArrayList();
-		for (Iterator iter = newC.subConditions.iterator(); iter.hasNext();) {
+		for (Iterator iter = this.subConditions.iterator(); iter.hasNext();) {
 			Conditions subConditions = (Conditions) iter.next();
 			newSubconditions.add(subConditions.addAttributesPrefix(prefix));			
 		}
@@ -216,4 +220,16 @@ public class Conditions {
 		return newC;
 	}
 	
+	public String toString() {
+		ConditionResponse response = this.getConditionHQL();
+		String out = response.conditionString.toString();
+		System.out.println(out);
+		Iterator iter = response.properties.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next().toString();
+			System.out.println("Replacing " + key + " by " + response.properties.get(key).toString());
+			out = out.replaceAll(":" + key, response.properties.get(key).toString());
+		}
+		return out;
+	}
 }

@@ -109,6 +109,14 @@
 		-->
 	</managed-bean>
 
+	<managed-bean>
+		<managed-bean-name>TimeLineResultTabBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.components.tabs.TimeLineResultTabBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
 	<lifecycle />
 	<application>
 		<locale-config />

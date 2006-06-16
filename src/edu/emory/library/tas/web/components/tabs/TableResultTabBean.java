@@ -56,7 +56,7 @@ public class TableResultTabBean {
 			localCond.addCondition(VoyageIndex.getRecent());
 
 			System.out.println("3: --------------------------------------");
-			System.out.println(localCond.getConditionHQL().conditionString);
+			System.out.println(localCond);
 			
 			QueryValue qValue = new QueryValue("VoyageIndex as v",
 					localCond);
