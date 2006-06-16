@@ -4,7 +4,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
-<%@ taglib uri="http://tas.library.emory.edu/tabs" prefix="d" %>
+<%@ taglib uri="http://tas.library.emory.edu" prefix="d" %>
 
 <html>
  <head>
@@ -44,8 +44,8 @@
 	        	<h:commandButton id="show_stat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}"/>
         	</h:panelGroup>
         	<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
-				<h:graphicImage value="#{TimeLineResultTabBean.chartPath}" rendered="#{TimeLineResultTabBean.normalView}"/>
-				<h:graphicImage value="#{TimeLineResultTabBean.chartPath}" rendered="#{TimeLineResultTabBean.largeView}"/>
+				<h:graphicImage value="#{TimeLineResultTabBean.chartPath}&height=480&width=640" rendered="#{TimeLineResultTabBean.normalView}"/>
+				<h:graphicImage value="#{TimeLineResultTabBean.chartPath}&height=1024&width=1280" rendered="#{TimeLineResultTabBean.largeView}"/>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
 				<h:commandButton id="enlarge" value="Enlarge" action="#{TimeLineResultTabBean.setLargeView}" rendered="#{TimeLineResultTabBean.normalView}"/>

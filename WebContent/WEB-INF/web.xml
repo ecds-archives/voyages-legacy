@@ -97,6 +97,11 @@
 		<servlet-name>JSONRPC</servlet-name>
 		<servlet-class>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>ImageFeederServlet</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.components.tabs.ImageFeederServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>listing</servlet-name>
@@ -137,5 +142,10 @@
 		<servlet-name>JSONRPC</servlet-name>
 		<url-pattern>/JSON-RPC</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ImageFeederServlet</servlet-name>
+		<url-pattern>/servlet/ImageFeederServlet</url-pattern>
+	</servlet-mapping>  
 
 </web-app>
