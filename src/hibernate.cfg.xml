@@ -9,7 +9,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://domokun.library.emory.edu/tasdb</property>
+        <property name="connection.url">jdbc:postgresql://domokun/tasdb</property>
         <property name="connection.username">tasuser</property>
         <property name="connection.password">tasuser</property>
 
@@ -26,7 +26,7 @@
         <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
 
         <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">false</property>
+        <property name="show_sql">true</property>
         
         <!-- statistics -->
         <property name="hibernate.generate_statistics">true</property>
@@ -36,8 +36,8 @@
 
         <mapping resource="edu/emory/library/tas/Voyage.hbm.xml"/>
         <mapping resource="edu/emory/library/tas/Slave.hbm.xml"/>
-        <mapping resource="edu/emory/library/tas/VoyageIndex.hbm.xml"/>
-	<mapping resource="edu/emory/library/tas/Dictionary.hbm.xml"/>
+        <mapping resource="edu/emory/library/tas/VoyageIndex.hbm.xml"/>		<mapping resource="edu/emory/library/tas/Dictionary.hbm.xml"/>
+		<mapping resource="edu/emory/library/tas/attrGroups/AttrGroups.hbm.xml"/>
     </session-factory>
 
 </hibernate-configuration>
