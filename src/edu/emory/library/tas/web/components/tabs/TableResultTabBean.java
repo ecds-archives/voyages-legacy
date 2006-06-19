@@ -1,7 +1,20 @@
 package edu.emory.library.tas.web.components.tabs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
+import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.Group;
+import edu.emory.library.tas.attrGroups.GroupSet;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
@@ -18,11 +31,19 @@ public class TableResultTabBean {
 	private Conditions condition;
 
 	private Boolean componentVisible = new Boolean(false);
-	
+
 	private boolean needQuery = false;
 
+	private boolean configuration = false;
+
+	private String selectedGroupSet = null;
+
+	private String selectedAttributeAdded;
+
+	private String selectedAttributeToAdd;
+
 	public TableResultTabBean() {
-		
+
 		populatedAttributes = new String[] { "voyageId", "captaina",
 				"captainb", "captainc", "ownere", "arrport" };
 	}
@@ -32,7 +53,7 @@ public class TableResultTabBean {
 			current += step;
 			this.needQuery = true;
 		}
-		
+
 		this.getResultsDB();
 		return null;
 	}
@@ -47,20 +68,20 @@ public class TableResultTabBean {
 	}
 
 	private void getResultsDB() {
-		if (this.condition != null)
-		{
+		if (this.condition != null) {
 			System.out.println("2: --------------------------------------");
-			System.out.println(this.condition.getConditionHQL().conditionString);
+			System.out
+					.println(this.condition.getConditionHQL().conditionString);
 		}
 		if (this.componentVisible.booleanValue() && needQuery) {
-			Conditions localCond = (Conditions)this.condition.addAttributesPrefix("v.voyage.");			
+			Conditions localCond = (Conditions) this.condition
+					.addAttributesPrefix("v.voyage.");
 			localCond.addCondition(VoyageIndex.getRecent());
 
 			System.out.println("3: --------------------------------------");
 			System.out.println(localCond);
-			
-			QueryValue qValue = new QueryValue("VoyageIndex as v",
-					localCond);
+
+			QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
 			qValue.setLimit(this.getStep().intValue());
 			qValue.setFirstResult(this.getCurrent().intValue());
 			qValue.setOrderBy("v.voyageId");
@@ -128,8 +149,7 @@ public class TableResultTabBean {
 	}
 
 	public void setConditions(Conditions c) {
-		if (c != null)
-		{
+		if (c != null) {
 			System.out.println("1: --------------------------------------");
 			System.out.println(c.getConditionHQL().conditionString);
 		}
@@ -149,5 +169,182 @@ public class TableResultTabBean {
 
 	public void setComponentVisible(Boolean componentVisible) {
 		this.componentVisible = componentVisible;
+	}
+
+	public Boolean getConfigurationMode() {
+		return new Boolean(this.configuration);
+	}
+
+	public Boolean getResultsMode() {
+		return new Boolean(!this.configuration);
+	}
+
+	public void configurationMode() {
+		this.configuration = true;
+	}
+
+	public void resultsMode() {
+		this.configuration = false;
+	}
+
+	public List getAvailableGroupSets() {
+		ArrayList res = new ArrayList();
+		Conditions c = new Conditions();
+		QueryValue qValue = new QueryValue("GroupSet", c);
+		Object[] groupSets = qValue.executeQuery();
+		for (int i = 0; i < groupSets.length; i++) {
+			GroupSet set = (GroupSet) groupSets[i];
+			res.add(new SelectItem("" + set.getId().longValue(), set
+					.getName()));
+		}
+		if (this.selectedGroupSet == null && groupSets.length > 0) {
+			this.selectedGroupSet = ((GroupSet)groupSets[0]).getId().toString();
+		}
+		return res;
+	}
+
+	public List getAvailableAttributes() {
+		ArrayList res = new ArrayList();
+		Conditions c = new Conditions();
+		if (this.selectedGroupSet != null) {
+			c.addCondition("id", new Long(this.selectedGroupSet), Conditions.OP_EQUALS);
+		}		
+		QueryValue qValue = new QueryValue("GroupSet", c);
+		Object[] groupSets = qValue.executeQuery();
+		for (int i = 0; i < groupSets.length; i++) {
+			GroupSet set = (GroupSet) groupSets[i];
+			Set attrs = set.getAttributes();
+			
+			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
+				Attribute attr = (Attribute) iter.next();
+				res.add(new SelectItem("Attribute_" + attr.getName(), (""
+								.equals(attr.getUserLabel()) || attr
+								.getUserLabel() == null) ? (attr.getName())
+								: (attr.getUserLabel())));
+			}
+			Set groups = set.getGroups();
+			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
+				Group element = (Group) groupsIter.next();
+				res.add(new SelectItem("Group_" + element.getName(), element.getName()));
+			}
+		}
+		return res;
+	}
+
+	public List getVisibleAttributes() {
+		ArrayList res = new ArrayList();
+		for (int i = 0; i < this.populatedAttributes.length; i++) {
+			res.add(new SelectItem(this.populatedAttributes[i]));
+		}
+		return res;
+	}
+
+	public String getSelectedGroupSet() {
+		return selectedGroupSet;
+	}
+
+	public void setSelectedGroupSet(String selectedGroupSet) {
+		this.selectedGroupSet = selectedGroupSet;
+	}
+
+	public String getSelectedAttributeAdded() {
+		return selectedAttributeAdded;
+	}
+
+	public void setSelectedAttributeAdded(String selectedAttributeAdded) {
+		this.selectedAttributeAdded = selectedAttributeAdded;
+	}
+
+	public String getSelectedAttributeToAdd() {
+		return selectedAttributeToAdd;
+	}
+
+	public void setSelectedAttributeToAdd(String selectedAttributeToAdd) {
+		this.selectedAttributeToAdd = selectedAttributeToAdd;
+	}
+
+	public String moveAttrUp() {
+		for (int i = 1; i < this.populatedAttributes.length; i++) {
+			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
+				String tmp = this.populatedAttributes[i];
+				this.populatedAttributes[i] = this.populatedAttributes[i - 1];
+				this.populatedAttributes[i - 1] = tmp;
+				this.needQuery = true;
+				break;
+			}
+		}
+		return null;
+	}
+
+	public String moveAttrDown() {
+		for (int i = 0; i < this.populatedAttributes.length - 1; i++) {
+			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
+				String tmp = this.populatedAttributes[i];
+				this.populatedAttributes[i] = this.populatedAttributes[i + 1];
+				this.populatedAttributes[i + 1] = tmp;
+				this.needQuery = true;
+				break;
+			}
+		}
+		return null;
+	}
+
+	public String addSelectedAttributeToList() {
+		boolean is = false;
+		String attrsToAdd[] = null;
+		if (this.selectedAttributeToAdd.startsWith("Attribute_")) {
+			attrsToAdd = new String[1];
+			attrsToAdd[0] = this.selectedAttributeToAdd.substring("Attribute_"
+					.length(), this.selectedAttributeToAdd.length());
+		} else {
+			String groupName = this.selectedAttributeToAdd.substring("Group_"
+					.length(), this.selectedAttributeToAdd.length());
+			Conditions c = new Conditions();
+			c.addCondition("name", groupName, Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("Group", c);
+			Object[] groups = qValue.executeQuery();
+			if (groups.length > 0) {
+				Group group = (Group) groups[0];
+				Set attrs = group.getAttributes();
+				attrsToAdd = new String[attrs.size()];
+				int i = 0;
+				for (Iterator iter = attrs.iterator(); iter.hasNext();) {
+					Attribute attr = (Attribute) iter.next();
+					attrsToAdd[i] = ("".equals(attr.getUserLabel()) || attr
+							.getUserLabel() == null) ? (attr.getName()) : (attr
+							.getUserLabel());
+					i++;
+				}
+			}
+		}
+		for (int j = 0; j < attrsToAdd.length; j++) {
+			for (int i = 0; i < this.populatedAttributes.length; i++) {
+				if (this.populatedAttributes[i].equals(attrsToAdd[j])) {
+					is = true;
+				}
+			}
+			if (!is) {
+				List list = Arrays.asList(this.populatedAttributes);
+				list = new ArrayList(list);
+				list.add(attrsToAdd[j]);
+				this.populatedAttributes = (String[]) list
+						.toArray(new String[] {});
+				this.needQuery = true;
+			}
+		}
+
+		return null;
+	}
+
+	public String remSelectedAttributeFromList() {
+
+		List list = Arrays.asList(this.populatedAttributes);
+		if (list.contains(this.selectedAttributeAdded)) {
+			list = new ArrayList(list);
+			list.remove(this.selectedAttributeAdded);
+			this.populatedAttributes = (String[]) list.toArray(new String[] {});
+			this.needQuery = true;
+		}
+		return null;
 	}
 }
