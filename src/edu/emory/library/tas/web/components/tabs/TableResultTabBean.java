@@ -68,18 +68,15 @@ public class TableResultTabBean {
 	}
 
 	private void getResultsDB() {
-		if (this.condition != null) {
-			System.out.println("2: --------------------------------------");
-			System.out
-					.println(this.condition.getConditionHQL().conditionString);
-		}
-		if (this.componentVisible.booleanValue() && needQuery) {
+//		if (this.condition != null) {
+//			System.out.println("2: --------------------------------------");
+//			System.out
+//					.println(this.condition.getConditionHQL().conditionString);
+//		}
+		if (this.condition != null && this.componentVisible.booleanValue() && needQuery) {
 			Conditions localCond = (Conditions) this.condition
 					.addAttributesPrefix("v.voyage.");
 			localCond.addCondition(VoyageIndex.getRecent());
-
-			System.out.println("3: --------------------------------------");
-			System.out.println(localCond);
 
 			QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
 			qValue.setLimit(this.getStep().intValue());
@@ -154,9 +151,9 @@ public class TableResultTabBean {
 			System.out.println(c.getConditionHQL().conditionString);
 		}
 		if (c == null) {
-			needQuery = false;
+			//needQuery = false;
 		} else if (c.equals(condition)) {
-			needQuery = false;
+			//needQuery = false;
 		} else {
 			condition = c;
 			needQuery = true;
@@ -264,6 +261,9 @@ public class TableResultTabBean {
 	}
 
 	public String moveAttrUp() {
+		if (this.selectedAttributeAdded == null) {
+			return null;
+		}
 		for (int i = 1; i < this.populatedAttributes.length; i++) {
 			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
 				String tmp = this.populatedAttributes[i];
@@ -277,6 +277,9 @@ public class TableResultTabBean {
 	}
 
 	public String moveAttrDown() {
+		if (this.selectedAttributeAdded == null) {
+			return null;
+		}
 		for (int i = 0; i < this.populatedAttributes.length - 1; i++) {
 			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
 				String tmp = this.populatedAttributes[i];
@@ -290,6 +293,9 @@ public class TableResultTabBean {
 	}
 
 	public String addSelectedAttributeToList() {
+		if (this.selectedAttributeToAdd == null) {
+			return null;
+		}
 		boolean is = false;
 		String attrsToAdd[] = null;
 		if (this.selectedAttributeToAdd.startsWith("Attribute_")) {
@@ -337,7 +343,9 @@ public class TableResultTabBean {
 	}
 
 	public String remSelectedAttributeFromList() {
-
+		if (this.selectedAttributeToAdd == null) {
+			return null;
+		}
 		List list = Arrays.asList(this.populatedAttributes);
 		if (list.contains(this.selectedAttributeAdded)) {
 			list = new ArrayList(list);
