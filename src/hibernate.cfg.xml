@@ -9,7 +9,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://domokun/tasdb</property>
+        <property name="connection.url">jdbc:postgresql://domokun.library.emory.edu/tasdb</property>
         <property name="connection.username">tasuser</property>
         <property name="connection.password">tasuser</property>
 

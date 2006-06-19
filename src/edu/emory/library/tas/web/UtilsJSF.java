@@ -20,6 +20,11 @@ public class UtilsJSF
         return (UIForm) parent;
 	}
 	
+	public static void encodeHiddenInput(UIComponent component, ResponseWriter writer, String name) throws IOException
+	{
+		encodeHiddenInput(component, writer, name, "");
+	}
+
 	public static void encodeHiddenInput(UIComponent component, ResponseWriter writer, String name, String value) throws IOException
 	{
 		writer.startElement("input", component);
@@ -43,20 +48,20 @@ public class UtilsJSF
 		writer.endElement("script");
 	}
 
-	public static String generateSubmitJS(FacesContext context, UIForm form, String name, String value)
+	public static String generateSubmitJS(FacesContext context, UIForm form, String elementName, String value)
 	{
 		
 		StringBuffer js = new StringBuffer();
 
-		if (name != null && value != null)
+		if (elementName != null && value != null)
 		{
-			appendFormElementValJS(js, context, form, name).append(" = ");
-			js.append("'").append(value).append("';");
+			appendFormElementValJS(js, context, form, elementName);
+			js.append(" = '").append(value).append("';");
 		}
 
 		if (js.length() > 0) js.append(" ");
-		appendFormElementRefJS(js, context, form, name).append(".");
-		js.append("submit();");
+		appendFormRefJS(js, context, form);
+		js.append(".submit();");
 		
 		if (js.length() > 0) js.append(" ");
 		js.append("return false;");
@@ -65,17 +70,23 @@ public class UtilsJSF
 	
 	}
 	
-	public static StringBuffer appendFormElementRefJS(StringBuffer js, FacesContext context, UIForm form, String name)
+	public static StringBuffer appendFormRefJS(StringBuffer js, FacesContext context, UIForm form)
 	{
 		js.append("document.");
-		js.append("forms['").append(form.getClientId(context)).append("'].");
-		js.append("elements['").append(name).append("']");
+		js.append("forms['").append(form.getClientId(context)).append("']");
 		return js;
 	}
 
-	public static StringBuffer appendFormElementValJS(StringBuffer js, FacesContext context, UIForm form, String name)
+	public static StringBuffer appendFormElementRefJS(StringBuffer js, FacesContext context, UIForm form, String elementName)
 	{
-		appendFormElementRefJS(js, context, form, name);
+		appendFormRefJS(js, context, form);
+		js.append(".elements['").append(elementName).append("']");
+		return js;
+	}
+
+	public static StringBuffer appendFormElementValJS(StringBuffer js, FacesContext context, UIForm form, String elementName)
+	{
+		appendFormElementRefJS(js, context, form, elementName);
 		js.append(".value");
 		return js;
 	}

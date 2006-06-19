@@ -71,8 +71,8 @@ public class SearchBean
 	
 	public void moduleTabChanged(TabChangeEvent event)
 	{
-		tableVisible = event.getTabId().equals("table");
-		timeLineVisible = event.getTabId().equals("timeline");
+		tableVisible = "table".equals(event.getTabId());
+		timeLineVisible = "timeline".equals(event.getTabId());
 	}
 	
 	public String getSelectedAtttibute()

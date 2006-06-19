@@ -94,10 +94,6 @@ public class HistoryListComponent extends UIComponentBase
 		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context), null);
 		UtilsJSF.encodeHiddenInput(this, writer, getToRestoreHiddenFieldName(context), null);
 		
-		writer.startElement("div", this);
-		writer.write("History");
-		writer.endElement("div");
-		
 		History history = getItems();
 		if (history != null)
 		{
@@ -118,57 +114,125 @@ public class HistoryListComponent extends UIComponentBase
 	{
 	}
 	
-	private void encodeDeleteButton(String historyId, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
-	{
-		
-		String js = UtilsJSF.generateSubmitJS(
-				context, form,
-				getToDeleteHiddenFieldName(context),
-				historyId);
-			
-		writer.startElement("a", this);
-		writer.writeAttribute("href", "#", null);
-		writer.writeAttribute("onclick", js, null);
-		writer.write("del");
-		writer.endElement("a");
-		
-	}
-	
-	private void encodeRestoreButton(String historyId, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
-	{
-		
-		String js = UtilsJSF.generateSubmitJS(
-				context, form,
-				getToRestoreHiddenFieldName(context),
-				historyId);
-		
-		writer.startElement("a", this);
-		writer.writeAttribute("href", "#", null);
-		writer.writeAttribute("onclick", js, null);
-		writer.write("res");
-		writer.endElement("a");
-		
-	}
-
 	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form) throws IOException
 	{
 		
 		if (item.getId() == null) return;
 		
-		encodeDeleteButton(item.getId(), context, form, writer);
-		encodeRestoreButton(item.getId(), context, form, writer);
+		String jsToDelete = UtilsJSF.generateSubmitJS(
+				context, form,
+				getToDeleteHiddenFieldName(context),
+				item.getId());
+
+		String jsToRestore = UtilsJSF.generateSubmitJS(
+				context, form,
+				getToRestoreHiddenFieldName(context),
+				item.getId());
 		
 		writer.startElement("div", this);
+		writer.writeAttribute("class", "side-box", null);
+		
 		for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
 			writer.write(queryCondition.getAttributeName());
+			
+			if (queryCondition instanceof QueryConditionText)
+			{
+				QueryConditionText queryConditionText = (QueryConditionText) queryCondition;
+				writer.write(" is ");
+				writer.startElement("b", this);
+				writer.write(queryConditionText.getValue());
+				writer.endElement("b");
+			}
+			
+			else if (queryCondition instanceof QueryConditionRange)
+			{
+				QueryConditionRange queryConditionRange = (QueryConditionRange) queryCondition;
+				switch (queryConditionRange.getType())
+				{
+					case QueryConditionRange.TYPE_BETWEEN:
+						writer.write(" is between ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getFrom());
+						writer.endElement("b");
+						writer.write(" and ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getTo());
+						writer.endElement("b");
+						break;
+					
+					case QueryConditionRange.TYPE_LE:
+						writer.write(" is at most ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getLe());
+						writer.endElement("b");
+						break;
+						
+					case QueryConditionRange.TYPE_GE:
+						writer.write(" is at least ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getGe());
+						writer.endElement("b");
+						break;
+
+					case QueryConditionRange.TYPE_EQ:
+						writer.write(" is equal ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getEq());
+						writer.endElement("b");
+						break;
+				}
+			}
+			
+			else if (queryCondition instanceof QueryConditionList)
+			{
+				QueryConditionList queryConditionList = (QueryConditionList) queryCondition;
+				writer.write(" is ");
+				for (Iterator iterValue = queryConditionList.getValues().iterator(); iterValue.hasNext();)
+				{
+					String value = (String) iterValue.next();
+					writer.startElement("b", this);
+					writer.write(value);
+					writer.endElement("b");
+					if (iterValue.hasNext()) writer.write(" or ");
+				}
+			}
+			
 			if (iterQueryCondition.hasNext())
 			{
 				writer.startElement("br", this);
 				writer.endElement("br");
 			}
+			
 		}
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "history-item-buttons", null);
+		writer.startElement("tr", this);
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-box-button", null);
+		writer.writeAttribute("onclick", jsToDelete, null);
+		writer.write("&times;");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-box-button-space", null);
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-box-button", null);
+		writer.writeAttribute("onclick", jsToRestore, null);
+		writer.write("restore");
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.endElement("table");
+		
 		writer.endElement("div");
 		
 	}

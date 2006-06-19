@@ -1,16 +1,11 @@
 package edu.emory.library.tas.web.test;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
@@ -18,10 +13,13 @@ import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.query.QueryValue;
 
 public class StatisticalSheet extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 		
 		System.out.println("Do get");
 		

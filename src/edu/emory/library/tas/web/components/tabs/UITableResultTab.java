@@ -37,6 +37,7 @@ public class UITableResultTab extends UIOutput implements
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
 		writer.startElement("table", this);
+		writer.writeAttribute("class", "grid", null);
 		
 		String style = (String)getAttributes().get("style");
 		if (style!=null)

@@ -125,12 +125,16 @@ public class QueryBuilderComponent extends UIComponentBase
 			
 			SchemaColumn col = Voyage.getSchemaColumn(queryCondition.getAttributeName());
 			if (col == null) continue;
-			
+
 			switch (col.getType())
 			{
 				case SchemaColumn.TYPE_STRING:
 					if (queryCondition instanceof QueryConditionText)
+					{
+						encodeStartQueryConditionBox(queryCondition, context, form, writer);
 						encodeSimpleCondition((QueryConditionText)queryCondition, context, form, writer);
+						encodeEndQueryConditionBox(queryCondition, context, form, writer);
+					}
 					break;
 
 				case SchemaColumn.TYPE_INTEGER:
@@ -138,15 +142,24 @@ public class QueryBuilderComponent extends UIComponentBase
 				case SchemaColumn.TYPE_FLOAT:
 				case SchemaColumn.TYPE_DATE:
 					if (queryCondition instanceof QueryConditionRange)
+					{
+						encodeStartQueryConditionBox(queryCondition, context, form, writer);
 						encodeRangeCondition((QueryConditionRange) queryCondition, context, form, writer);
+						encodeEndQueryConditionBox(queryCondition, context, form, writer);
+					}
 					break;
 			
 				case SchemaColumn.TYPE_DICT:
 					if (queryCondition instanceof QueryConditionList)
+					{
+						encodeStartQueryConditionBox(queryCondition, context, form, writer);
 						encodeListCondition((QueryConditionList)queryCondition, context, form, writer);
+						encodeEndQueryConditionBox(queryCondition, context, form, writer);
+					}
 					break;
 
 			}
+
 			
 		}
 
@@ -163,27 +176,58 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeDeleteButton(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
-		StringBuffer js = new StringBuffer();
-		
-		js.append("document.");
-		js.append("forms['").append(form.getClientId(context)).append("'].");
-		js.append("elements['").append(getToDeleteHiddenFieldName(context)).append("'].value = ");
-		js.append("'").append(queryCondition.getAttributeName()).append("';");
+		String jsToDelete = UtilsJSF.generateSubmitJS(context, form,
+				getToDeleteHiddenFieldName(context),
+				queryCondition.getAttributeName());
 
-		js.append(" ");
-		js.append("document.");
-		js.append("forms['").append(form.getClientId(context)).append("'].");
-		js.append("submit();");
+		writer.startElement("table", this);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "query-builder-remove", null);
+		writer.startElement("tr", this);
 		
-		js.append(" ");
-		js.append("return false;");
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-box-button", null);
+		writer.writeAttribute("onclick", jsToDelete, null);
+		writer.write("&times;");
+		writer.endElement("td");
 		
-		writer.startElement("a", this);
-		writer.writeAttribute("href", "#", null);
-		writer.writeAttribute("onclick", js.toString(), null);
-		writer.write("del");
-		writer.endElement("a");
+		writer.endElement("tr");
+		writer.endElement("table");
 		
+	}
+	
+	private void encodeStartQueryConditionBox(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	{
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "side-box", null);
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "query-builder-label", null);
+		writer.startElement("tr", this);
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-label", null);
+		writer.write(queryCondition.getAttributeName());
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		encodeDeleteButton(queryCondition, context, form, writer);
+		writer.endElement("td");
+		
+		writer.endElement("tr");
+		writer.endElement("table");
+
+	}
+	
+	private void encodeEndQueryConditionBox(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	{
+		writer.endElement("div");
 	}
 	
 	private String getHtmlNameForSimpleValue(String attributeName, FacesContext context)
@@ -203,16 +247,9 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		writer.startElement("td", this);
-		encodeDeleteButton(queryCondition, context, form, writer);
-		writer.endElement("td");
-		
-		writer.startElement("td", this);
-		writer.write(attributeName);
-		writer.endElement("td");
-
-		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("class", "query-builder-text", null);
 		writer.writeAttribute("name", getHtmlNameForSimpleValue(attributeName, context), null);
 		writer.writeAttribute("value", queryCondition.getValue(), null);
 		writer.endElement("input");
@@ -288,40 +325,31 @@ public class QueryBuilderComponent extends UIComponentBase
 
 		js.append("var type = ");
 		UtilsJSF.appendFormElementRefJS(js, context, form, htmlNameForRangeType);
-		js.append(".selectedIndex; ");
+		js.append(".selectedIndex;");
 		
+		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdFromId);
-		js.append(".style.display = (type == 0) ? '' : 'none'; ");
+		js.append(".style.display = (type == 0) ? '' : 'none';");
 		
-//		UtilsJSF.appendFormElementRefJS(js, context, form, inputFromName);
-//		js.append(".type = (type == 0) ? 'hidden' : 'text'; ");
-		
+		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdDashId);
-		js.append(".style.display = (type == 0) ? '' : 'none'; ");
+		js.append(".style.display = (type == 0) ? '' : 'none';");
 
+		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdToId);
-		js.append(".style.display = (type == 0) ? '' : 'none'; ");
+		js.append(".style.display = (type == 0) ? '' : 'none';");
 
-//		UtilsJSF.appendFormElementRefJS(js, context, form, inputToName);
-//		js.append(".type = (type == 0) ? 'hidden' : 'text'; ");
-
+		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdLeId);
-		js.append(".style.display = (type == 1) ? '' : 'none'; ");
+		js.append(".style.display = (type == 1) ? '' : 'none';");
 
-//		UtilsJSF.appendFormElementRefJS(js, context, form, inputLeName);
-//		js.append(".type = (type == 1) ? 'hidden' : 'text'; ");
-
+		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdGeId);
-		js.append(".style.display = (type == 2) ? '' : 'none'; ");
+		js.append(".style.display = (type == 2) ? '' : 'none';");
 		
-//		UtilsJSF.appendFormElementRefJS(js, context, form, inputGeName);
-//		js.append(".type = (type == 2) ? 'hidden' : 'text'; ");
-
+		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdEqId);
-		js.append(".style.display = (type == 3) ? '' : 'none'; ");
-
-//		UtilsJSF.appendFormElementRefJS(js, context, form, inputEqName);
-//		js.append(".type = (type == 3) ? 'hidden' : 'text'; ");
+		js.append(".style.display = (type == 3) ? '' : 'none';");
 
 		int type = queryCondition.getType();
 
@@ -332,14 +360,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		writer.startElement("td", this);
-		encodeDeleteButton(queryCondition, context, form, writer);
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		writer.write(attributeName);
-		writer.endElement("td");
-
-		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-range-type", null);
 		writer.startElement("select", this);
 		writer.writeAttribute("name", htmlNameForRangeType, null);
 		writer.writeAttribute("onchange", js.toString(), null);
@@ -374,6 +395,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		if (type != 0) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdFromId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputFromName, null);
@@ -384,12 +406,14 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		if (type != 0) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdDashId, null);
+		writer.writeAttribute("class", "query-builder-range-dash", null);
 		writer.write("-");
 		writer.endElement("td");
 
 		writer.startElement("td", this);
 		if (type != 0) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdToId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputToName, null);
@@ -400,6 +424,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		if (type != 1) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdLeId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputLeName, null);
@@ -410,6 +435,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		if (type != 2) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdGeId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputGeName, null);
@@ -420,6 +446,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		if (type != 3) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdEqId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputEqName, null);
@@ -507,14 +534,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		writer.startElement("td", this);
-		encodeDeleteButton(queryCondition, context, form, writer);
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		writer.write(attributeName);
-		writer.endElement("td");
-
-		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-list", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", displayListHtmlName, null);
@@ -522,6 +542,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("td");
 		
 		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-list-select", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("value", "Select", null);

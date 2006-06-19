@@ -59,7 +59,7 @@ public class TabBarComponent extends UIComponentBase
 	{
 		
 		String newSelectedTabId = (String) context.getExternalContext().getRequestParameterMap().get(getHiddenFieldName(context));
-		if (newSelectedTabId != null)
+		if (newSelectedTabId != null && newSelectedTabId.length() > 0)
 		{
 			if (!newSelectedTabId.equals(lastSelectedTabId))
 			{
@@ -83,11 +83,12 @@ public class TabBarComponent extends UIComponentBase
 		
 		ResponseWriter writer = context.getResponseWriter();
 		
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("name", getHiddenFieldName(context), null);
-		writer.writeAttribute("value", getSelectedTagId(), null);
-		writer.endElement("input");
+		UtilsJSF.encodeHiddenInput(
+				this, writer,
+				getHiddenFieldName(context));
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "tab-bar", null);
 
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -108,19 +109,23 @@ public class TabBarComponent extends UIComponentBase
 		{
 			TabComponent tab = (TabComponent) iterChild.next();
 			
+			String jsOnClick = UtilsJSF.generateSubmitJS(
+					context, form,
+					getHiddenFieldName(context), tab.getTabId());
+			
 			writer.startElement("td", this);
-			
-			writer.startElement("a", this);
-			writer.writeAttribute("href", "#", null);
-			writer.writeAttribute("onclick", createJavaScript(context, form, tab), null);
-			
-			if (tab.isSelected()) writer.startElement("b", this);
+			if (tab.isSelected())
+			{
+				writer.writeAttribute("class", "tab-selected", null);
+			}
+			else
+			{
+				writer.writeAttribute("class", "tab", null);
+				writer.writeAttribute("onclick", jsOnClick, null);
+			}
 			writer.write(tab.getText());
-			if (tab.isSelected()) writer.endElement("b");
-			
-			writer.endElement("a");
-			
 			writer.endElement("td");
+			
 		}
 		
 	}
@@ -132,28 +137,13 @@ public class TabBarComponent extends UIComponentBase
 		
 		writer.endElement("tr");
 		writer.endElement("table");
+		writer.endElement("div");
 	
 	}
 	
 	private String getHiddenFieldName(FacesContext context)
 	{
 		return getClientId(context) + HIDDEN_FIELD_SUFFIX;
-	}
-	
-	private String createJavaScript(FacesContext context, UIForm form, TabComponent tab)
-	{
-		StringBuffer js = new StringBuffer();
-		
-		js.append("document.forms['").append(form.getClientId(context)).append("'].");
-		js.append("elements['").append(getHiddenFieldName(context)).append("'].value =");
-		js.append("'").append(tab.getTabId()).append("'; ");
-
-		js.append("document.forms['").append(form.getClientId(context)).append("'].");
-		js.append("submit(); ");
-		
-		js.append("return false;");
-		
-		return js.toString(); 
 	}
 	
 	public void setSelectedTagId(String tabId)
