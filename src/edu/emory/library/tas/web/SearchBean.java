@@ -31,31 +31,20 @@ public class SearchBean
 		
 		// convert to condition
 		Conditions conditions = new Conditions();
-		try
+		boolean errors = false;
+		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
-			for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
-			{
-				QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-				queryCondition.addToConditions(conditions);
-			}
+			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+			if (!queryCondition.addToConditions(conditions)) errors = true;
 		}
-		catch (QueryInvalidValueException qive)
-		{
-			// to user: correct your query,
-			// you have a problem in qive.getAttributeName()
-			return;
-		}
+		if (errors) return;
 
-		//System.out.println(conditions.getConditionHQL().conditionString);
-		
 		// all ok -> set our property
 		currentConditions = conditions;
 		
 		// and add to history list
-		HistoryItem historyItem = new HistoryItem();
-		historyItem.setQuery(workingQuery);
-		history.addItem(historyItem);
-	
+		if (!workingQuery.equals(history.getLatestQuery()))
+			history.addQuery((Query) workingQuery.clone());	
 	}
 	
 	public void historyItemDelete(HistoryItemDeleteEvent event)
@@ -100,9 +89,9 @@ public class SearchBean
 		return workingQuery;
 	}
 
-	public void setWorkingQuery(Query currentWorkingQuery)
+	public void setWorkingQuery(Query newWorkingQuery)
 	{
-		this.workingQuery = currentWorkingQuery;
+		this.workingQuery = newWorkingQuery;
 	}
 
 	public History getHistory()

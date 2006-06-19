@@ -159,10 +159,19 @@
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>list</name>
+			<name>dictionary</name>
 		</attribute>
 		<attribute>
-			<name>attribute</name>
+			<name>attributeName</name>
+		</attribute>
+		<attribute>
+			<name>formName</name>
+		</attribute>
+		<attribute>
+			<name>hiddenFieldName</name>
+		</attribute>
+		<attribute>
+			<name>displayFieldName</name>
 		</attribute>
 	</tag>
 

@@ -12,9 +12,10 @@ public class QueryConditionText extends QueryCondition
 		super(attributeName);
 	}
 
-	public void addToConditions(Conditions conditions) throws QueryInvalidValueException
+	public boolean addToConditions(Conditions conditions) 
 	{
-		conditions.addCondition(getAttributeName(), value, Conditions.OP_LIKE);
+		if (isNonEmpty()) conditions.addCondition(getAttributeName(), value.trim(), Conditions.OP_LIKE);
+		return true;
 	}
 
 	public String getValue()
@@ -25,6 +26,39 @@ public class QueryConditionText extends QueryCondition
 	public void setValue(String value)
 	{
 		this.value = value;
+	}
+	
+	public boolean isNonEmpty()
+	{
+		return value != null && value.trim().length() > 0;
+	}
+	
+	private boolean compareTextFields(String val1, String val2)
+	{
+		return
+			(val1 == null && val2 == null) ||
+			(val1 != null && val1.equals(val2));
+	}
+	
+	public boolean equals(Object obj)
+	{
+		if (!super.equals(obj)) return false;
+		if (obj instanceof QueryConditionText)
+		{
+			QueryConditionText queryConditionText = (QueryConditionText) obj;
+			return compareTextFields(queryConditionText.getValue(), value);
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	protected Object clone()
+	{
+		QueryConditionText newQueryCondition = new QueryConditionText(getAttributeName());
+		newQueryCondition.setValue(value);
+		return newQueryCondition;
 	}
 
 }

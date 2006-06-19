@@ -47,7 +47,7 @@ public class UtilsJSF
 		//writer.write("\n");
 		writer.endElement("script");
 	}
-
+	
 	public static String generateSubmitJS(FacesContext context, UIForm form, String elementName, String value)
 	{
 		

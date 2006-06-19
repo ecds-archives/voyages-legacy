@@ -9,8 +9,11 @@ import javax.faces.webapp.UIComponentTag;
 public class DictionaryListTag extends UIComponentTag
 {
 	
-	private String attribute;
-	private String list;
+	private String attributeName;
+	private String formName;
+	private String hiddenFieldName;
+	private String displayFieldName;
+	private String dictionary;
 	
 	protected void setProperties(UIComponent component)
 	{
@@ -18,20 +21,50 @@ public class DictionaryListTag extends UIComponentTag
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		DictionaryListComponent dictionaryList = (DictionaryListComponent) component;
 		
-		if (attribute != null && isValueReference(attribute))
+		if (attributeName != null && isValueReference(attributeName))
 		{
-			ValueBinding vb = app.createValueBinding(attribute);
-			component.setValueBinding("attribute", vb);
+			ValueBinding vb = app.createValueBinding(attributeName);
+			component.setValueBinding("attributeName", vb);
 		}
 		else
 		{
-			dictionaryList.setAttributeName(attribute);
+			dictionaryList.setAttributeName(attributeName);
 		}
 
-		if (list != null && isValueReference(list))
+		if (formName != null && isValueReference(formName))
 		{
-			ValueBinding vb = app.createValueBinding(list);
-			component.setValueBinding("list", vb);
+			ValueBinding vb = app.createValueBinding(formName);
+			component.setValueBinding("formName", vb);
+		}
+		else
+		{
+			dictionaryList.setAttributeName(formName);
+		}
+
+		if (hiddenFieldName != null && isValueReference(hiddenFieldName))
+		{
+			ValueBinding vb = app.createValueBinding(hiddenFieldName);
+			component.setValueBinding("hiddenFieldName", vb);
+		}
+		else
+		{
+			dictionaryList.setAttributeName(hiddenFieldName);
+		}
+
+		if (displayFieldName != null && isValueReference(displayFieldName))
+		{
+			ValueBinding vb = app.createValueBinding(displayFieldName);
+			component.setValueBinding("displayFieldName", vb);
+		}
+		else
+		{
+			dictionaryList.setAttributeName(displayFieldName);
+		}
+
+		if (dictionary != null && isValueReference(dictionary))
+		{
+			ValueBinding vb = app.createValueBinding(dictionary);
+			component.setValueBinding("dictionary", vb);
 		}
 
 	}
@@ -46,24 +79,54 @@ public class DictionaryListTag extends UIComponentTag
 		return null;
 	}
 
-	public String getAttribute()
+	public String getDictionary()
 	{
-		return attribute;
+		return dictionary;
 	}
 
-	public void setAttribute(String attribute)
+	public void setDictionary(String list)
 	{
-		this.attribute = attribute;
+		this.dictionary = list;
 	}
 
-	public String getList()
+	public String getAttributeName()
 	{
-		return list;
+		return attributeName;
 	}
 
-	public void setList(String list)
+	public void setAttributeName(String attributeName)
 	{
-		this.list = list;
+		this.attributeName = attributeName;
+	}
+
+	public String getDisplayFieldName()
+	{
+		return displayFieldName;
+	}
+
+	public void setDisplayFieldName(String displayFieldName)
+	{
+		this.displayFieldName = displayFieldName;
+	}
+
+	public String getFormName()
+	{
+		return formName;
+	}
+
+	public void setFormName(String formName)
+	{
+		this.formName = formName;
+	}
+
+	public String getHiddenFieldName()
+	{
+		return hiddenFieldName;
+	}
+
+	public void setHiddenFieldName(String hiddenFieldName)
+	{
+		this.hiddenFieldName = hiddenFieldName;
 	}
 
 }

@@ -9,6 +9,24 @@ public class History
 	
 	private List items = new ArrayList();
 	
+	public Query getLatestQuery()
+	{
+		if (isEmpty()) return null;
+		return ((HistoryItem)items.get(0)).getQuery();
+	}
+	
+	public boolean isEmpty()
+	{
+		return items.size() == 0;
+	}
+	
+	public void addQuery(Query query)
+	{
+		HistoryItem historyItem = new HistoryItem();
+		historyItem.setQuery(query);
+		addItem(historyItem);
+	}
+
 	public void addItem(HistoryItem item)
 	{
 		
@@ -17,7 +35,7 @@ public class History
 		{
 			HistoryItem historyItem = (HistoryItem) iterHistoryItem.next();
 			int id = Integer.parseInt(historyItem.getId());
-			if (newId <= id) newId ++;
+			if (newId <= id) newId = id + 1;
 		}
 		
 		item.setId(String.valueOf(newId));

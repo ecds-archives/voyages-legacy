@@ -1,8 +1,10 @@
 package edu.emory.library.tas.web;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
@@ -11,10 +13,13 @@ public class Query
 {
 
 	List conditions = new ArrayList();
+	Map attributeNames = new Hashtable();
 	
 	public void addCondition(QueryCondition queryCondition)
 	{
+		if (queryCondition == null) return;
 		conditions.add(queryCondition);
+		attributeNames.put(queryCondition.getAttributeName(), queryCondition);
 	}
 	
 	public boolean addConditionOn(String atttibuteName)
@@ -42,7 +47,7 @@ public class Query
 				break;
 				
 			case SchemaColumn.TYPE_DICT:
-				queryCondition = new QueryConditionList(atttibuteName);
+				queryCondition = new QueryConditionDictionary(atttibuteName);
 				break;
 		}
 		
@@ -60,15 +65,12 @@ public class Query
 
 	public boolean containsConditionOn(String attributeName)
 	{
-		for (Iterator iterQueryCondition = conditions.iterator(); iterQueryCondition.hasNext();)
-		{
-			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			if (queryCondition.getAttributeName().equals(attributeName))
-			{
-				return true;
-			}
-		}
-		return false;
+		return attributeNames.containsKey(attributeName);
+	}
+
+	public QueryCondition getCondition(String attributeName)
+	{
+		return (QueryCondition) attributeNames.get(attributeName);
 	}
 
 	protected Object clone()
@@ -77,14 +79,51 @@ public class Query
 		for (Iterator iterQueryCondition = conditions.iterator(); iterQueryCondition.hasNext();)
 		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			newQuery.addCondition(queryCondition);
+			newQuery.addCondition((QueryCondition) queryCondition.clone());
 		}
 		return newQuery;
+	}
+	
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof Query)
+		{
+			Query theOtherQuery = (Query) obj;
+			if (theOtherQuery == null)
+				return false;
+			
+			if (getConditionCount() != theOtherQuery.getConditionCount())
+				return false;
+			
+			for (Iterator iterAttr = attributeNames.keySet().iterator(); iterAttr.hasNext();)
+			{
+				String attr = (String) iterAttr.next();
+				QueryCondition theOtherQueryCondition = theOtherQuery.getCondition(attr);
+				if (theOtherQueryCondition == null) return false;
+				if (!theOtherQueryCondition.equals(getCondition(attr))) return false;
+			}
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public List getConditions()
 	{
 		return conditions;
+	}
+
+	public Map getAttributeNames()
+	{
+		return attributeNames;
+	}
+	
+	public int getConditionCount()
+	{
+		return conditions.size();
 	}
 
 }

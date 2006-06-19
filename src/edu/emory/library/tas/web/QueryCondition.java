@@ -6,6 +6,10 @@ public abstract class QueryCondition
 {
 	
 	private String attributeName;
+	private boolean errorFlag = false;
+
+	public abstract boolean addToConditions(Conditions conditions);
+	protected abstract Object clone();
 
 	public QueryCondition(String attributeName)
 	{
@@ -16,7 +20,29 @@ public abstract class QueryCondition
 	{
 		return attributeName;
 	}
-	
-	public abstract void addToConditions(Conditions conditions) throws QueryInvalidValueException;
 
+	public boolean isErrorFlag()
+	{
+		return errorFlag;
+	}
+
+	public void setErrorFlag(boolean errorFlag)
+	{
+		this.errorFlag = errorFlag;
+	}
+	
+	public boolean equals(Object obj)
+	{
+		if (obj == null) return false;
+		if (obj instanceof QueryCondition)
+		{
+			QueryCondition queryCondition = (QueryCondition) obj;
+			return this.attributeName.equals(queryCondition.getAttributeName());
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 }

@@ -9,12 +9,17 @@ a {
 
 input, textarea, select {
 	border: 0px;
-	font-family: Verdanda, sans-serif;
+	font-family: Verdana, sans-serif;
 	font-size: 8pt; }
 	
 div.main-title {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 150px;
+	background-image: url(header0.png);
+	background-repeat: no-repeat;
+	background-position: left -50px;		
 	border-bottom: 2px solid #444444;
-	padding: 15px;
 	background-color: #555555;
 	color: White;
 	font-family: Arial;
@@ -55,6 +60,11 @@ div.side-box {
 
 td.query-builder-delete {
 	text-align: right; }
+
+span.query-builder-error {
+	background-color: #CC3300;
+	color: White;
+	font-weight: bold; }
 
 td.side-box-button {
 	cursor: pointer;

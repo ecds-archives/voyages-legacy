@@ -1,6 +1,7 @@
 package edu.emory.library.tas;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 
 public class SchemaColumn
@@ -120,30 +121,56 @@ public class SchemaColumn
 				
 			case TYPE_DATE:
 				
-				if (values.length != 3 || values[0] == null || values[1] == null || values[2] == null)
+				boolean separate = values.length == 3 && values[0] != null && values[1] != null && values[2] != null;
+				boolean single = values.length == 1 && values[0] != null;
+				
+				if (!separate || !single)
 					throw new InvalidNumberOfValuesException();
 				
-				String day = values[0].trim();
-				String month = values[1].trim();
-				String year = values[2].trim();
-				
-				if (day.length() == 0 || month.length() == 0 || year.length() == 0)
-					return null;
-
-				
-				try
+				if (separate)
 				{
-					Timestamp tstamp = new Timestamp(Integer.parseInt(year),
-							Integer.parseInt(month),
-							Integer.parseInt(day),
-							0,0,0,0);
+				
+					String day = values[0].trim();
+					String month = values[1].trim();
+					String year = values[2].trim();
 					
+					if (day.length() == 0 || month.length() == 0 || year.length() == 0)
+						return null;
 					
-					return tstamp;
+					try
+					{
+						Calendar cal = Calendar.getInstance();
+						cal.clear();
+						cal.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+//						Timestamp tstamp = new Timestamp(Integer.parseInt(year),
+//								Integer.parseInt(month),
+//								Integer.parseInt(day),
+//								0,0,0,0);
+						return cal.getTime();
+					}
+					catch (NumberFormatException nfe)
+					{
+						throw new InvalidDateException();
+					}
+					
 				}
-				catch (NumberFormatException nfe)
+				else if (single)
 				{
-					throw new InvalidDateException();
+					
+					value = values[0].trim();
+
+					if (value.length() == 0)
+						return null;
+					
+					try
+					{
+						DateFormat dateFormat = DateFormat.getDateInstance();
+						return dateFormat.parse(value);
+					}
+					catch (ParseException e)
+					{
+						throw new InvalidDateException();
+					}
 				}
 
 			case TYPE_DICT:

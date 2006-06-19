@@ -13,6 +13,8 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
+import edu.emory.library.tas.Dictionary;
+
 public class HistoryListComponent extends UIComponentBase
 {
 	
@@ -141,9 +143,18 @@ public class HistoryListComponent extends UIComponentBase
 			{
 				QueryConditionText queryConditionText = (QueryConditionText) queryCondition;
 				writer.write(" is ");
-				writer.startElement("b", this);
-				writer.write(queryConditionText.getValue());
-				writer.endElement("b");
+				if (queryConditionText.isNonEmpty())
+				{
+					writer.startElement("b", this);
+					writer.write(queryConditionText.getValue());
+					writer.endElement("b");
+				}
+				else
+				{
+					writer.startElement("i", this);
+					writer.write("[anything]");
+					writer.endElement("i");
+				}
 			}
 			
 			else if (queryCondition instanceof QueryConditionRange)
@@ -185,17 +196,26 @@ public class HistoryListComponent extends UIComponentBase
 				}
 			}
 			
-			else if (queryCondition instanceof QueryConditionList)
+			else if (queryCondition instanceof QueryConditionDictionary)
 			{
-				QueryConditionList queryConditionList = (QueryConditionList) queryCondition;
+				QueryConditionDictionary queryConditionList = (QueryConditionDictionary) queryCondition;
 				writer.write(" is ");
-				for (Iterator iterValue = queryConditionList.getValues().iterator(); iterValue.hasNext();)
+				if (queryConditionList.getDictionaries().size() > 0)
 				{
-					String value = (String) iterValue.next();
-					writer.startElement("b", this);
-					writer.write(value);
-					writer.endElement("b");
-					if (iterValue.hasNext()) writer.write(" or ");
+					for (Iterator iterDict = queryConditionList.getDictionaries().iterator(); iterDict.hasNext();)
+					{
+						Dictionary dict = (Dictionary) iterDict.next();
+						writer.startElement("b", this);
+						writer.write(dict.getName());
+						writer.endElement("b");
+						if (iterDict.hasNext()) writer.write(" or ");
+					}
+				}
+				else
+				{
+					writer.startElement("i", this);
+					writer.write("[anything]");
+					writer.endElement("i");
 				}
 			}
 			

@@ -1,7 +1,6 @@
 package edu.emory.library.tas.web;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
@@ -9,99 +8,64 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.Dictionary;
-import edu.emory.library.tas.SchemaColumn;
-import edu.emory.library.tas.Voyage;
 
 public class DictionaryListComponent extends UIComponentBase
 {
 	
-	private String attribute;
-	private boolean attributeSet = false;
+	private String attributeName;
 	private String formName;
-	private Dictionary[] items;
-	private boolean itemsSet = false;
-	
-	public Object saveState(FacesContext context)
-	{
-		Object values[] = new Object[3];
-		values[0] = super.saveState(context);
-		values[1] = attribute;
-		values[2] = formName;
-		return values;
-	}
-	
-	public void restoreState(FacesContext context, Object state)
-	{
-		Object values[] = (Object[]) state;
-		super.restoreState(context, values[0]);
-		attribute = (String) values[1];
-		formName = (String) values[2];
-	}
-	
-	public void decode(FacesContext context)
-	{
-		Map params = context.getExternalContext().getRequestParameterMap();
-		if (params.containsKey("attributeName") && params.containsKey("formName"))
-		{
-			attribute = (String) params.get("attributeName");
-			formName = (String) params.get("formName");
-		}
-	}
+	private String hiddenFieldName;
+	private String displayFieldName;
+	private Dictionary[] dictionary;
 
-	public void processUpdates(FacesContext context)
-	{
-		ValueBinding vb = getValueBinding("attribute");
-		if (vb != null) vb.setValue(context, attribute);
-	}
+	private boolean attributeNameSet = false;
+	private boolean formNameSet = false;
+	private boolean hiddenFieldNameSet = false;
+	private boolean displayFieldNameSet = false;
+	private boolean dictionarySet = false;
 	
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
 
-		String hiddenFieldName = null;
-		String displayFieldName = null;
-		
-		Map params = context.getExternalContext().getRequestParameterMap();
-		if (params.containsKey("attributeName") && params.containsKey("formName"))
-		{
-			attribute = (String) params.get("attributeName");
-			formName = (String) params.get("formName");
-			hiddenFieldName = (String) params.get("hiddenFieldName");
-			displayFieldName = (String) params.get("displayFieldName");
-		}
-
 		UtilsJSF.encodeJavaScriptStart(this, writer);
-		writer.write("var formName = '" + formName + "';");
-		writer.write("var attributeName = '" + attribute + "';");
-		writer.write("var hiddenFieldName = '" + hiddenFieldName + "';");
-		writer.write("var displayFieldName = '" + displayFieldName + "';");
+		writer.write("var formName = '" + getFormName() + "';\n");
+		writer.write("var attributeName = '" + getAttributeName() + "';\n");
+		writer.write("var hiddenFieldName = '" + getHiddenFieldName() + "';\n");
+		writer.write("var displayFieldName = '" + getDisplayFieldName() + "';\n");
+		writer.write("var tblListId = '" + getClientId(context) + "';");
 		UtilsJSF.encodeJavaScriptEnd(this, writer);
 
-		SchemaColumn col = Voyage.getSchemaColumn(attribute);
-		Dictionary items[] = Dictionary.loadDictionary(col.getDictinaory());
-		
+		Dictionary dictionary[] = getDictionary();
+
 		writer.startElement("table", this);
+		writer.writeAttribute("id", getClientId(context), null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("border", "0", null);
 
-		if (items != null)
+		if (dictionary != null)
 		{
-			for (int i = 0; i < items.length; i++)
+			for (int i = 0; i < dictionary.length; i++)
 			{
-				Dictionary item = items[i];
+				Dictionary item = dictionary[i];
 				writer.startElement("tr", this);
 	
 				writer.startElement("td", this);
 				writer.startElement("input", this);
+				writer.writeAttribute("id", "value_" + item.getRemoteId(), null);
 				writer.writeAttribute("value", item.getRemoteId(), null);
 				writer.writeAttribute("type", "checkbox", null);
 				writer.endElement("input");
 				writer.endElement("td");
 	
 				writer.startElement("td", this);
+				writer.startElement("label", this);
+				writer.writeAttribute("for", "value_" + item.getRemoteId(), null);
+				writer.writeAttribute("id", "label_" + item.getRemoteId(), null);
 				writer.write(item.getName());
+				writer.endElement("label");
 				writer.endElement("td");
 			
 				writer.endElement("tr");
@@ -127,30 +91,69 @@ public class DictionaryListComponent extends UIComponentBase
 
 	public String getAttributeName()
 	{
-		if (attributeSet) return attribute;
-		ValueBinding vb = getValueBinding("attribute");
-		if (vb == null) return attribute;
+		if (attributeNameSet) return attributeName;
+		ValueBinding vb = getValueBinding("attributeName");
+		if (vb == null) return attributeName;
 		return (String) vb.getValue(getFacesContext());
 	}
 
 	public void setAttributeName(String attributeName)
 	{
-		attributeSet = true;
-		this.attribute = attributeName;
+		attributeNameSet = true;
+		this.attributeName = attributeName;
 	}
 
-	public Dictionary[] getItems()
+	public Dictionary[] getDictionary()
 	{
-		if (itemsSet) return items;
-		ValueBinding vb = getValueBinding("items");
-		if (vb == null) return items;
+		if (dictionarySet) return dictionary;
+		ValueBinding vb = getValueBinding("dictionary");
+		if (vb == null) return dictionary;
 		return (Dictionary[]) vb.getValue(getFacesContext());
 	}
 
-	public void setItems(Dictionary[] items)
+	public void setDictionary(Dictionary[] items)
 	{
-		itemsSet = true;
-		this.items = items;
+		dictionarySet = true;
+		this.dictionary = items;
+	}
+
+	public String getDisplayFieldName()
+	{
+		if (displayFieldNameSet) return displayFieldName;
+		ValueBinding vb = getValueBinding("displayFieldName");
+		if (vb == null) return displayFieldName;
+		return (String) vb.getValue(getFacesContext());
+	}
+
+	public void setDisplayFieldName(String displayFieldName)
+	{
+		this.displayFieldName = displayFieldName;
+	}
+
+	public String getFormName()
+	{
+		if (formNameSet) return formName;
+		ValueBinding vb = getValueBinding("formName");
+		if (vb == null) return formName;
+		return (String) vb.getValue(getFacesContext());
+	}
+
+	public void setFormName(String formName)
+	{
+		this.formName = formName;
+	}
+
+	public String getHiddenFieldName()
+	{
+		if (hiddenFieldNameSet) return hiddenFieldName;
+		ValueBinding vb = getValueBinding("hiddenFieldName");
+		if (vb == null) return hiddenFieldName;
+		return (String) vb.getValue(getFacesContext());
+	}
+
+	public void setHiddenFieldName(String hiddenFieldName)
+	{
+		this.hiddenFieldName = hiddenFieldName;
 	}
 
 }

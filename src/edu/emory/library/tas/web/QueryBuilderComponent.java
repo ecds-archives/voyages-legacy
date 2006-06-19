@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
+import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
 
@@ -86,7 +87,7 @@ public class QueryBuilderComponent extends UIComponentBase
 					break;
 			
 				case SchemaColumn.TYPE_DICT:
-					queryCondition = decodeListCondition(col, context, externalContex);
+					queryCondition = decodeDictionaryCondition(col, context, externalContex);
 					break;
 			}
 			
@@ -150,10 +151,10 @@ public class QueryBuilderComponent extends UIComponentBase
 					break;
 			
 				case SchemaColumn.TYPE_DICT:
-					if (queryCondition instanceof QueryConditionList)
+					if (queryCondition instanceof QueryConditionDictionary)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer);
-						encodeListCondition((QueryConditionList)queryCondition, context, form, writer);
+						encodeDictionaryCondition((QueryConditionDictionary)queryCondition, context, form, writer);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
 					break;
@@ -201,6 +202,8 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeStartQueryConditionBox(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
+		//String errorClassName = queryCondition.isErrorFlag() ? " query-builder-error" : "";
+		
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
 		
@@ -213,6 +216,14 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "query-builder-label", null);
+		if (queryCondition.isErrorFlag())
+		{
+			writer.startElement("span", this);
+			writer.writeAttribute("class", "query-builder-error", null);
+			writer.write("&nbsp;!&nbsp;");
+			writer.endElement("span");
+			writer.write(" ");
+		}
 		writer.write(queryCondition.getAttributeName());
 		writer.endElement("td");
 		
@@ -508,17 +519,33 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attibuteName + "_list";
 	}
 
-	private void encodeListCondition(QueryConditionList queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private void encodeDictionaryCondition(QueryConditionDictionary queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
 		String attributeName = queryCondition.getAttributeName();
-		String displayListHtmlName = getClientId(context) + attributeName + "_user_list";
+		String displayListHtmlName = getClientId(context) + "_" + attributeName + "_user_list";
 		
-		UtilsJSF.encodeHiddenInput(this, writer, getHtmlNameForList(attributeName, context), "");
+		StringBuffer valuesList = new StringBuffer();
+		StringBuffer displayList = new StringBuffer();
+		for (Iterator iterItem = queryCondition.getDictionaries().iterator(); iterItem.hasNext();)
+		{
+			Dictionary dict = (Dictionary) iterItem.next();
+			valuesList.append(dict.getRemoteId());
+			displayList.append(dict.getName());
+			if (iterItem.hasNext())
+			{
+				valuesList.append(",");
+				displayList.append(", ");
+			}
+		}
+		
+		UtilsJSF.encodeHiddenInput(this, writer,
+				getHtmlNameForList(attributeName, context),
+				valuesList.toString());
 		
 		StringBuffer jsPopup = new StringBuffer();
 		jsPopup.append("window.open(");
-		jsPopup.append("'dictionary-list.faces");
+		jsPopup.append("'dictionary-list.jsp");
 		jsPopup.append("?attributeName=").append(attributeName);
 		jsPopup.append("&formName=").append(form.getClientId(context));
 		jsPopup.append("&hiddenFieldName=").append(getHtmlNameForList(attributeName, context));
@@ -538,6 +565,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", displayListHtmlName, null);
+		writer.writeAttribute("value", displayList.toString(), null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -555,20 +583,24 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 
-	private QueryCondition decodeListCondition(SchemaColumn col, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeDictionaryCondition(SchemaColumn col, FacesContext context, ExternalContext externalContext)
 	{
 		
 		String attributeName = col.getName();
 		
-		String[] values =
-			((String) externalContext.getRequestParameterMap().get(
-					getHtmlNameForList(attributeName, context))).split(",");
+		String valuesStr = (String) externalContext.getRequestParameterMap().get(
+				getHtmlNameForList(attributeName, context));
 		
-		List list = new ArrayList();
-		for (int i = 0; i < values.length; i++) list.add(values[i]);
-
-		QueryConditionList queryCondition = new QueryConditionList(attributeName);
-		queryCondition.setValues(list);
+		String[] values = null;
+		if (valuesStr != null && valuesStr.length() > 0)
+			values = valuesStr.split(",");
+		
+		QueryConditionDictionary queryCondition =
+			new QueryConditionDictionary(attributeName);
+		
+		if (values != null)
+			for (int i = 0; i < values.length; i++)
+				queryCondition.addDictionary(Integer.parseInt(values[i]));
 		
 		return queryCondition;
 

@@ -34,7 +34,7 @@ public class QueryConditionRange extends QueryCondition
 		this.type = type;
 	}
 
-	public void addToConditions(Conditions conditions) throws QueryInvalidValueException
+	public boolean addToConditions(Conditions conditions)
 	{
 		
 		SchemaColumn col = Voyage.getSchemaColumn(getAttributeName());
@@ -48,22 +48,42 @@ public class QueryConditionRange extends QueryCondition
 				case QueryConditionRange.TYPE_BETWEEN:
 					Object fromConverted = col.parse(from);
 					Object toConverted = col.parse(to);
+					if (fromConverted == null || toConverted == null) 
+					{
+						setErrorFlag(true);
+						return false;
+					}
 					conditions.addCondition(getAttributeName(), fromConverted, Conditions.OP_GREATER_OR_EQUAL);
 					conditions.addCondition(getAttributeName(), toConverted, Conditions.OP_SMALLER_OR_EQUAL);
 					break;
 	
 				case QueryConditionRange.TYPE_LE:
 					Object leConverted = col.parse(le);
+					if (leConverted == null)
+					{
+						setErrorFlag(true);
+						return false;
+					}
 					conditions.addCondition(getAttributeName(), leConverted, Conditions.OP_SMALLER_OR_EQUAL);
 					break;
 					
 				case QueryConditionRange.TYPE_GE:
 					Object geConverted = col.parse(ge);
+					if (geConverted == null)
+					{
+						setErrorFlag(true);
+						return false;
+					}
 					conditions.addCondition(getAttributeName(), geConverted, Conditions.OP_GREATER_OR_EQUAL);
 					break;
 	
 				case QueryConditionRange.TYPE_EQ:
 					Object eqConverted = col.parse(eq);
+					if (eqConverted == null)
+					{
+						setErrorFlag(true);
+						return false;
+					}
 					conditions.addCondition(getAttributeName(), eqConverted, Conditions.OP_EQUALS);
 					break;
 	
@@ -72,20 +92,25 @@ public class QueryConditionRange extends QueryCondition
 		}
 		catch (InvalidNumberOfValuesException e)
 		{
-			throw new QueryInvalidValueException(getAttributeName());
+			setErrorFlag(true);
+			return false;
 		}
 		catch (InvalidNumberException e)
 		{
-			throw new QueryInvalidValueException(getAttributeName());
+			setErrorFlag(true);
+			return false;
 		}
 		catch (InvalidDateException e)
 		{
-			throw new QueryInvalidValueException(getAttributeName());
+			setErrorFlag(true);
+			return false;
 		}
 		catch (StringTooLongException e)
 		{
-			throw new QueryInvalidValueException(getAttributeName());
+			setErrorFlag(true);
+			return false;
 		}
+		return true;
 	
 	}
 
@@ -149,4 +174,43 @@ public class QueryConditionRange extends QueryCondition
 		this.type = type;
 	}
 
+	private boolean compareTextFields(String val1, String val2)
+	{
+		return
+			(val1 == null && val2 == null) ||
+			(val1 != null && val1.equals(val2));
+	}
+	
+	public boolean equals(Object obj)
+	{
+		if (!super.equals(obj)) return false;
+		if (obj instanceof QueryConditionRange)
+		{
+			QueryConditionRange queryConditionRange = (QueryConditionRange) obj;
+			return
+				type == queryConditionRange.getType() &&
+				compareTextFields(from, queryConditionRange.getFrom()) &&
+				compareTextFields(to, queryConditionRange.getTo()) &&
+				compareTextFields(le, queryConditionRange.getLe()) &&
+				compareTextFields(ge, queryConditionRange.getGe()) &&
+				compareTextFields(eq, queryConditionRange.getEq());
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	protected Object clone()
+	{
+		QueryConditionRange newQueryCondition = new QueryConditionRange(getAttributeName());
+		newQueryCondition.setType(type);
+		newQueryCondition.setFrom(from);
+		newQueryCondition.setTo(to);
+		newQueryCondition.setLe(le);
+		newQueryCondition.setGe(ge);
+		newQueryCondition.setEq(eq);
+		return newQueryCondition;
+	}
+	
 }

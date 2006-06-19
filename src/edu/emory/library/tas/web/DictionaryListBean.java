@@ -1,33 +1,69 @@
 package edu.emory.library.tas.web;
 
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+
 import edu.emory.library.tas.Dictionary;
+import edu.emory.library.tas.SchemaColumn;
+import edu.emory.library.tas.Voyage;
 
 public class DictionaryListBean
 {
 
-	private String attribute;
-	private boolean attributeChanged = false;
-	private Dictionary[] list = null;
+	private String attributeName;
+	private String formName;
+	private String hiddenFieldName;
+	private String displayFieldName;
+	private boolean paramsLoaded = false;
+	private Dictionary[] dictionary = null;
 	
-	public String getAttribute()
+	private void ensureLoadParamsFromRequest()
 	{
-		return attribute;
+		if (!paramsLoaded)
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map params = context.getExternalContext().getRequestParameterMap();
+			attributeName = (String) params.get("attributeName");
+			formName = (String) params.get("formName");
+			hiddenFieldName = (String) params.get("hiddenFieldName");
+			displayFieldName = (String) params.get("displayFieldName");
+			paramsLoaded = true;
+		}
 	}
 	
-	public void setAttribute(String attribute)
+	public String getAttributeName()
 	{
-		if ((attribute == null && this.attribute != null) || !attribute.equals(this.attribute))
-			attributeChanged = true;
-		
-		this.attribute = attribute;
+		ensureLoadParamsFromRequest();
+		return attributeName;
 	}
-	
-	public Dictionary[] getList()
+
+	public String getDisplayFieldName()
 	{
-		if (attributeChanged || list == null)
-			list = Dictionary.loadDictionary(attribute);
-		
-		return list;
+		ensureLoadParamsFromRequest();
+		return displayFieldName;
+	}
+
+	public String getFormName()
+	{
+		ensureLoadParamsFromRequest();
+		return formName;
+	}
+
+	public String getHiddenFieldName()
+	{
+		ensureLoadParamsFromRequest();
+		return hiddenFieldName;
+	}
+
+	public Dictionary[] getDictionary()
+	{
+		if (dictionary == null)
+		{
+			SchemaColumn col = Voyage.getSchemaColumn(attributeName);
+			dictionary = Dictionary.loadDictionary(col.getDictinaory());
+		}
+		return dictionary;
 	}
 	
 }
