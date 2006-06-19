@@ -211,21 +211,21 @@ public class TableResultTabBean {
 		}		
 		QueryValue qValue = new QueryValue("GroupSet", c);
 		Object[] groupSets = qValue.executeQuery();
-		for (int i = 0; i < groupSets.length; i++) {
-			GroupSet set = (GroupSet) groupSets[i];
+		if (groupSets.length > 0) {
+			GroupSet set = (GroupSet) groupSets[0];
 			Set attrs = set.getAttributes();
 			
+			Set groups = set.getGroups();
+			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
+				Group element = (Group) groupsIter.next();
+				res.add(new SelectItem("Group_" + element.getId(), element.getName()));
+			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
 				Attribute attr = (Attribute) iter.next();
 				res.add(new SelectItem("Attribute_" + attr.getName(), (""
 								.equals(attr.getUserLabel()) || attr
 								.getUserLabel() == null) ? (attr.getName())
 								: (attr.getUserLabel())));
-			}
-			Set groups = set.getGroups();
-			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
-				Group element = (Group) groupsIter.next();
-				res.add(new SelectItem("Group_" + element.getName(), element.getName()));
 			}
 		}
 		return res;
@@ -300,7 +300,7 @@ public class TableResultTabBean {
 			String groupName = this.selectedAttributeToAdd.substring("Group_"
 					.length(), this.selectedAttributeToAdd.length());
 			Conditions c = new Conditions();
-			c.addCondition("name", groupName, Conditions.OP_EQUALS);
+			c.addCondition("id", new Long(groupName), Conditions.OP_EQUALS);
 			QueryValue qValue = new QueryValue("Group", c);
 			Object[] groups = qValue.executeQuery();
 			if (groups.length > 0) {
