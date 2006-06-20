@@ -1,6 +1,8 @@
 package edu.emory.library.tas.attrGroups;
 
-public class ObjectType {
+import java.io.Serializable;
+
+public class ObjectType implements Serializable {
 	private Long id;
 	private String typeName;
 	

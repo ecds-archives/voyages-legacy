@@ -1,12 +1,13 @@
 package edu.emory.library.tas.attrGroups;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
-public class Group {
+public class Group implements Serializable {
 	
 	private Long id;
 	private String name;

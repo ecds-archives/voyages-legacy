@@ -50,6 +50,7 @@
 		<property name="length" column="length"/>
 					                       
 		<set name="attributes" table="compound_attribute_attributes" lazy="false">
+			<cache usage="read-write"/>
         	<key column="r_compound_attribute_id"/>
         	<many-to-many column="r_attribute_id" class="edu.emory.library.tas.attrGroups.Attribute"/>
     	</set>
@@ -70,11 +71,13 @@
 		<property name="description" column="description"/>	
 		
 		<set name="compoundAttributes" table="group_compound_attributes" lazy="false">
+			<cache usage="read-write"/>
         	<key column="r_group_id"/>
         	<many-to-many column="r_compound_attribute_id" class="edu.emory.library.tas.attrGroups.CompoundAttribute"/>
     	</set>
     	
 		<set name="attributes" table="group_attributes" lazy="false">
+			<cache usage="read-write"/>
         	<key column="r_group_id"/>
         	<many-to-many column="r_attribute_id" class="edu.emory.library.tas.attrGroups.Attribute"/>
     	</set>
