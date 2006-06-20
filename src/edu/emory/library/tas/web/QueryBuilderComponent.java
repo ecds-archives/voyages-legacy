@@ -67,7 +67,7 @@ public class QueryBuilderComponent extends UIComponentBase
 				continue;
 			
 			QueryCondition queryCondition = null;
-			switch (attribute.getType())
+			switch (attribute.getType().intValue())
 			{
 				case AbstractAttribute.TYPE_STRING:
 					queryCondition = decodeSimpleCondition(attribute, context, externalContex); 
@@ -116,7 +116,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			AbstractAttribute attribute = queryCondition.getAttribute(); 
 			attributes.add(attribute);
 			
-			switch (attribute.getType())
+			switch (attribute.getType().intValue())
 			{
 				case AbstractAttribute.TYPE_STRING:
 					if (queryCondition instanceof QueryConditionText)

@@ -1,6 +1,10 @@
 package edu.emory.library.tas.web;
 
+import java.util.Iterator;
+
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
+import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.util.query.Conditions;
 
 public class QueryConditionText extends QueryCondition
@@ -12,11 +16,37 @@ public class QueryConditionText extends QueryCondition
 	{
 		super(attribute);
 	}
+	
+	private boolean addSingleAttributeToConditions(Attribute attribute, Conditions conditions, String value)
+	{
+		conditions.addCondition(getAttribute().getName(), value, Conditions.OP_LIKE);
+		return true;
+	}
 
 	public boolean addToConditions(Conditions conditions) 
 	{
-//		if (isNonEmpty())
-//			conditions.addCondition(getAttributeId(), value.trim(), Conditions.OP_LIKE);
+		if (!isNonEmpty())
+			return true;
+		
+		String trimmedValue = value.trim();
+		
+		if (isOnAttribute())
+		{
+			Attribute attr = (Attribute) getAttribute();
+			addSingleAttributeToConditions(attr, conditions, trimmedValue);
+		}
+		else if (isOnCompountAttribute())
+		{
+			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
+			Conditions orCond = new Conditions(Conditions.JOIN_OR);
+			conditions.addCondition(orCond);
+			for (Iterator iterAttr = compAttr.getAttributes().iterator(); iterAttr.hasNext();)
+			{
+				Attribute attr = (Attribute) iterAttr.next();
+				addSingleAttributeToConditions(attr, orCond, trimmedValue);
+			}
+		}
+		
 		return true;
 	}
 

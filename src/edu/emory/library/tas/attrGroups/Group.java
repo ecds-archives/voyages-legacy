@@ -3,6 +3,9 @@ package edu.emory.library.tas.attrGroups;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
+
 public class Group {
 	
 	private Long id;
@@ -14,6 +17,15 @@ public class Group {
 	private String description;
 	
 	public Group() {		
+	}
+	
+	public static Group loadById(Long id) {
+		Conditions conditions = new Conditions();
+		conditions.addCondition("id", id, Conditions.OP_EQUALS);
+		QueryValue query = new QueryValue("Group", conditions);
+		Object[] groups = (Object[]) query.executeQuery();
+		if (groups.length == 0) return null;
+		return (Group) groups[0];
 	}
 	
 	public Set getCompoundAttributes() {

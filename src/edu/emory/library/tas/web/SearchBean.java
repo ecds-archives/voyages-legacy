@@ -30,7 +30,7 @@ public class SearchBean
 	private boolean tableVisible = true;
 	private boolean timeLineVisible = false;
 	
-	public void listGroups()
+	public void listAttributes()
 	{
 		activeGroupId = selectedGroupId;
 	}

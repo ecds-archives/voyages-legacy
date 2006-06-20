@@ -165,3 +165,19 @@ table.grid th {
 
 table.grid td {
 	border-bottom: 2px solid #EEEEEE; }
+
+table.configTable td {
+	background-color: #666666;
+	border: 1;
+	border-color: #666666;
+	margin-top: 40px; 
+	margin-right: 40px; 
+	margin-left: 40px;
+}
+
+div.configDiv {
+	background-color: #666666;
+	margin-top: 0px; 
+	margin-right: 2px; 
+	margin-left: 2px;
+}

@@ -28,7 +28,7 @@ public class Query
 			return false;
 		
 		QueryCondition queryCondition = null;
-		switch (attribute.getType())
+		switch (attribute.getType().intValue())
 		{
 			case AbstractAttribute.TYPE_STRING:
 				queryCondition = new QueryConditionText(attribute);

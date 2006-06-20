@@ -8,8 +8,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Search</title>
-	<link href="search-jsp.css" rel="stylesheet" type="text/css">
-
+	<link href="search-jsf.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
@@ -21,11 +20,27 @@
 			<td class="side-panel">
 			
 				<div style="margin: 10px 0px 5px 10px; color: White;">Add field to query</div>
+
 				<div style="margin: 0px 0px 5px 10px;">
-	     		    <h:selectOneMenu value="#{SearchBean.selectedAtttibute}" style="width: 276px; padding: 2px;">
+					<h:selectOneMenu
+	     		    	value="#{SearchBean.selectedGroupId}"
+	     		    	style="width: 276px; padding: 2px;">
+			        	<f:selectItems value="#{SearchBean.voyageAttributeGroups}"/>
+			        </h:selectOneMenu>
+			    </div>
+
+				<div style="margin: 0px 0px 5px 10px;">
+			    	<h:commandButton action="#{SearchBean.listAttributes}" value="Show" />	
+			    </div>
+
+				<div style="margin: 0px 0px 5px 10px;">
+	     		    <h:selectOneMenu
+	     		    	value="#{SearchBean.selectedAtttibuteId}"
+	     		    	style="width: 276px; padding: 2px;">
 			        	<f:selectItems value="#{SearchBean.voyageAttributes}"/>
 			        </h:selectOneMenu>
 			    </div>
+
 			    <div style="margin: 0px 0px 5px 10px;">
 			    	<h:commandButton action="#{SearchBean.addQueryCondition}" value="Add" />	
 			    </div>
