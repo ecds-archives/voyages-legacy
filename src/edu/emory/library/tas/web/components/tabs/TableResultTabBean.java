@@ -13,8 +13,8 @@ import javax.faces.model.SelectItem;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
-import edu.emory.library.tas.attrGroups.GroupSet;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
@@ -190,12 +190,12 @@ public class TableResultTabBean {
 		QueryValue qValue = new QueryValue("GroupSet", c);
 		Object[] groupSets = qValue.executeQuery();
 		for (int i = 0; i < groupSets.length; i++) {
-			GroupSet set = (GroupSet) groupSets[i];
+			Group set = (Group) groupSets[i];
 			res.add(new SelectItem("" + set.getId().longValue(), set
 					.getName()));
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
-			this.selectedGroupSet = ((GroupSet)groupSets[0]).getId().toString();
+			this.selectedGroupSet = ((Group)groupSets[0]).getId().toString();
 		}
 		return res;
 	}
@@ -209,12 +209,12 @@ public class TableResultTabBean {
 		QueryValue qValue = new QueryValue("GroupSet", c);
 		Object[] groupSets = qValue.executeQuery();
 		if (groupSets.length > 0) {
-			GroupSet set = (GroupSet) groupSets[0];
+			Group set = (Group) groupSets[0];
 			Set attrs = set.getAttributes();
 			
-			Set groups = set.getGroups();
+			Set groups = set.getCompoundAttributes();
 			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
-				Group element = (Group) groupsIter.next();
+				CompoundAttribute element = (CompoundAttribute) groupsIter.next();
 				res.add(new SelectItem("Group_" + element.getId(), element.getName()));
 			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
@@ -310,7 +310,7 @@ public class TableResultTabBean {
 			QueryValue qValue = new QueryValue("Group", c);
 			Object[] groups = qValue.executeQuery();
 			if (groups.length > 0) {
-				Group group = (Group) groups[0];
+				CompoundAttribute group = (CompoundAttribute) groups[0];
 				Set attrs = group.getAttributes();
 				attrsToAdd = new String[attrs.size()];
 				int i = 0;

@@ -20,8 +20,9 @@ import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
-import edu.emory.library.tas.attrGroups.GroupSet;
+import edu.emory.library.tas.attrGroups.ObjectType;
 import edu.emory.library.tas.dicts.PortLocation;
 import edu.emory.library.tas.dicts.SecondDemPort;
 import edu.emory.library.tas.dicts.Temp;
@@ -227,14 +228,22 @@ public class HibernateTest {
 //				
 //				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
 			} else if ("tsave".equalsIgnoreCase(command)) {
-				GroupSet set = new GroupSet();
+				
+				Conditions c1 = new Conditions();
+				c1.addCondition("typeName", "Voyage", Conditions.OP_EQUALS);
+				QueryValue qValue = new QueryValue("ObjectType", c1);
+				ObjectType type = (ObjectType)qValue.executeQuery()[0];
+				
+				Group set = new Group();
 				set.setName("new groupset " + System.currentTimeMillis());
-				Group group = new Group();
+				set.setObjectType(type);
+				CompoundAttribute group = new CompoundAttribute();
 				group.setName("new group " + System.currentTimeMillis());
+				group.setObjectType(type);
 				
 				Conditions c = new Conditions(Conditions.JOIN_AND);
 				c.addCondition("name", "captain%", Conditions.OP_LIKE);
-				QueryValue qValue = new QueryValue("Attribute", c);  
+				qValue = new QueryValue("Attribute", c);  
 				Object [] aobjs = qValue.executeQuery();
 				c = new Conditions(Conditions.JOIN_AND);
 				c.addCondition("name", "ownera", Conditions.OP_EQUALS);
@@ -245,13 +254,13 @@ public class HibernateTest {
 					group.getAttributes().add(aobjs[i]);
 				}
 				set.getAttributes().add(aobjs1[0]);
-				set.getGroups().add(group);
+				set.getCompoundAttributes().add(group);
 				HibernateConnector.getConnector().saveObject(group);
 				HibernateConnector.getConnector().saveObject(set);
 				
 			} else if ("tload".equalsIgnoreCase(command)) {
 				Conditions c = new Conditions(Conditions.JOIN_AND);
-				QueryValue qValue = new QueryValue("GroupSet", c);
+				QueryValue qValue = new QueryValue("Group", c);
 				Object [] ret = qValue.executeQuery();
 				for (int i = 0; i < ret.length; i++) {
 					System.out.println("Has: " + ret[i]);
