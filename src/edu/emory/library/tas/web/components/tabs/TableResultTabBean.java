@@ -186,9 +186,7 @@ public class TableResultTabBean {
 
 	public List getAvailableGroupSets() {
 		ArrayList res = new ArrayList();
-		Conditions c = new Conditions();
-		QueryValue qValue = new QueryValue("Group", c);
-		Object[] groupSets = qValue.executeQuery();
+		Group[] groupSets = Voyage.getGroups();
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
 			res.add(new SelectItem("" + set.getId().longValue(), set
