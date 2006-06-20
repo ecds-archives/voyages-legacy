@@ -11,6 +11,9 @@ import java.util.Set;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
+import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.dicts.Angola;
 import edu.emory.library.tas.dicts.Carib;
 import edu.emory.library.tas.dicts.DemBroadRegion;
@@ -80,6 +83,18 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	private Set slaves = new HashSet();
 	
+	public static Group[] getGroups() {
+		return new Group[] {};
+	}
+	
+	public static Attribute[] getAttributes() {
+		return new Attribute[] {};
+	}
+
+	public static CompoundAttribute[] getCoumpoundAttributes() {
+		return new CompoundAttribute[] {};
+	}
+
 	/**
 	 * Gets Schema of given attribute.
 	 * @param p_attrName	attribute name

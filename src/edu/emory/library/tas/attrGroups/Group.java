@@ -14,6 +14,11 @@ public class Group {
 	
 	public Group() {		
 	}
+
+	public static Group loadById(Long id)
+	{
+		return null;
+	}
 	
 	public Set getCompoundAttributes() {
 		return compoundAttributes;
