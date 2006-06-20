@@ -187,7 +187,7 @@ public class TableResultTabBean {
 	public List getAvailableGroupSets() {
 		ArrayList res = new ArrayList();
 		Conditions c = new Conditions();
-		QueryValue qValue = new QueryValue("GroupSet", c);
+		QueryValue qValue = new QueryValue("Group", c);
 		Object[] groupSets = qValue.executeQuery();
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
@@ -206,7 +206,7 @@ public class TableResultTabBean {
 		if (this.selectedGroupSet != null) {
 			c.addCondition("id", new Long(this.selectedGroupSet), Conditions.OP_EQUALS);
 		}		
-		QueryValue qValue = new QueryValue("GroupSet", c);
+		QueryValue qValue = new QueryValue("Group", c);
 		Object[] groupSets = qValue.executeQuery();
 		if (groupSets.length > 0) {
 			Group set = (Group) groupSets[0];
@@ -307,7 +307,7 @@ public class TableResultTabBean {
 					.length(), this.selectedAttributeToAdd.length());
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(groupName), Conditions.OP_EQUALS);
-			QueryValue qValue = new QueryValue("Group", c);
+			QueryValue qValue = new QueryValue("CompoundAttribute", c);
 			Object[] groups = qValue.executeQuery();
 			if (groups.length > 0) {
 				CompoundAttribute group = (CompoundAttribute) groups[0];
