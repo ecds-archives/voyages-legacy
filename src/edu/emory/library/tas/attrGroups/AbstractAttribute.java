@@ -275,7 +275,11 @@ public abstract class AbstractAttribute implements Serializable {
 	}
 	
 	public static AbstractAttribute loadById(Long id) {
-		return null;
+		AbstractAttribute attribute = Attribute.loadById(id);
+		if (attribute == null) {
+			attribute = CompoundAttribute.loadById(id);
+		}
+		return attribute;
 	}
 	
 	public boolean equals(Object obj)

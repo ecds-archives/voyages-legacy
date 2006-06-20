@@ -9,6 +9,8 @@ import edu.emory.library.tas.InvalidDateException;
 import edu.emory.library.tas.InvalidNumberException;
 import edu.emory.library.tas.InvalidNumberOfValuesException;
 import edu.emory.library.tas.StringTooLongException;
+import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
 
 public class Attribute extends AbstractAttribute {
 	
@@ -40,7 +42,14 @@ public class Attribute extends AbstractAttribute {
 	
 	public static AbstractAttribute loadById(Long id)
 	{
-		return null;
+		Conditions conditions = new Conditions();
+		conditions.addCondition("id", id, Conditions.OP_EQUALS);
+		QueryValue query = new QueryValue("Attribute", conditions);
+		Object[] groups = (Object[]) query.executeQuery();
+		if (groups.length == 0) {
+			return null;
+		}
+		return (AbstractAttribute) groups[0];
 	}
 
 	public String getImportDateDay()
