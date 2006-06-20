@@ -22,6 +22,7 @@
 				<div style="margin: 10px 0px 5px 10px; color: White;">Add field to query</div>
 
 				<div style="margin: 0px 0px 5px 10px;">
+	     		    <h:selectOneMenu value="#{SearchBean.selectedAttribute}" style="width: 276px; padding: 2px;">
 					<h:selectOneMenu
 	     		    	value="#{SearchBean.selectedGroupId}"
 	     		    	style="width: 276px; padding: 2px;">
