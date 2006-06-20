@@ -4,25 +4,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Group {
+	
 	private Long id;
 	private String name;
-	private Set attributes = new HashSet();;
+	private String userLabel;
+	private Set compoundAttributes  = new HashSet();
+	private Set attributes = new HashSet();
 	
-	public Group() {
-		
+	public Group() {		
 	}
 	
-	public Set getAttributes() {
-		return attributes;
+	public Set getCompoundAttributes() {
+		return compoundAttributes;
 	}
-	public void setAttributes(Set attributes) {
-		this.attributes = attributes;
+	public void setCompoundAttributes(Set groups) {
+		this.compoundAttributes = groups;
 	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Set getAttributes() {
+		return attributes;
+	}
+	public void setAttributes(Set attributes) {
+		this.attributes = attributes;
 	}
 
 	public String getName() {
@@ -32,17 +40,16 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String toString() {
-		return "Group of attributes " + this.attributes;
+
+	public String getUserLabel() {
+		return userLabel;
+	}
+
+	public void setUserLabel(String userLabel) {
+		this.userLabel = userLabel;
 	}
 	
-	public boolean equals(Object obj)
-	{
-		Group theOther = (Group) obj;
-		if (theOther == null) return false;
-		return
-			(id == null && theOther.getId() == null) ||
-			(id != null && id.equals(theOther.getId()));
+	public String toString() {
+		return "Set " + this.name +": groups " + this.compoundAttributes + "\n     attributes " + this.attributes;
 	}
 }
