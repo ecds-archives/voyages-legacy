@@ -40,4 +40,14 @@ public class Attribute {
 	public String toString() {
 		return "Attribute: " + this.name;
 	}
+	
+	public boolean equals(Object obj)
+	{
+		Attribute theOther = (Attribute) obj;
+		if (theOther == null) return false;
+		return 
+			(id == null && theOther.getId() == null) ||
+			(id != null && id.equals(theOther.getId()));
+	}
+
 }

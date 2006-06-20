@@ -36,4 +36,13 @@ public class Group {
 	public String toString() {
 		return "Group of attributes " + this.attributes;
 	}
+	
+	public boolean equals(Object obj)
+	{
+		Group theOther = (Group) obj;
+		if (theOther == null) return false;
+		return
+			(id == null && theOther.getId() == null) ||
+			(id != null && id.equals(theOther.getId()));
+	}
 }
