@@ -1,20 +1,22 @@
 package edu.emory.library.tas.web;
 
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.util.query.Conditions;
 
 public class QueryConditionText extends QueryCondition
 {
 	
 	private String value = "";
-
-	public QueryConditionText(String attributeName)
+	
+	public QueryConditionText(AbstractAttribute attribute)
 	{
-		super(attributeName);
+		super(attribute);
 	}
 
 	public boolean addToConditions(Conditions conditions) 
 	{
-		if (isNonEmpty()) conditions.addCondition(getAttributeName(), value.trim(), Conditions.OP_LIKE);
+//		if (isNonEmpty())
+//			conditions.addCondition(getAttributeId(), value.trim(), Conditions.OP_LIKE);
 		return true;
 	}
 
@@ -42,21 +44,14 @@ public class QueryConditionText extends QueryCondition
 	
 	public boolean equals(Object obj)
 	{
-		if (!super.equals(obj)) return false;
-		if (obj instanceof QueryConditionText)
-		{
-			QueryConditionText queryConditionText = (QueryConditionText) obj;
-			return compareTextFields(queryConditionText.getValue(), value);
-		}
-		else
-		{
-			return false;
-		}
+		if (!super.equals(obj) || !(obj instanceof QueryConditionText)) return false;
+		QueryConditionText queryConditionText = (QueryConditionText) obj;
+		return compareTextFields(queryConditionText.getValue(), value);
 	}
 	
 	protected Object clone()
 	{
-		QueryConditionText newQueryCondition = new QueryConditionText(getAttributeName());
+		QueryConditionText newQueryCondition = new QueryConditionText(getAttribute());
 		newQueryCondition.setValue(value);
 		return newQueryCondition;
 	}

@@ -6,48 +6,43 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import edu.emory.library.tas.SchemaColumn;
-import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
 
 public class Query
 {
 
 	List conditions = new ArrayList();
-	Map attributeNames = new Hashtable();
+	Map conditionsByAttributes = new Hashtable();
 	
 	public void addCondition(QueryCondition queryCondition)
 	{
 		if (queryCondition == null) return;
 		conditions.add(queryCondition);
-		attributeNames.put(queryCondition.getAttributeName(), queryCondition);
+		conditionsByAttributes.put(queryCondition.getAttribute(), queryCondition);
 	}
 	
-	public boolean addConditionOn(String atttibuteName)
+	public boolean addConditionOn(AbstractAttribute attribute)
 	{
 		
-		if (containsConditionOn(atttibuteName))
+		if (containsConditionOn(attribute))
 			return false;
 		
-		SchemaColumn col = Voyage.getSchemaColumn(atttibuteName);
-		if (col == null)
-			return false;
-	
 		QueryCondition queryCondition = null;
-		switch (col.getType())
+		switch (attribute.getType())
 		{
-			case SchemaColumn.TYPE_STRING:
-				queryCondition = new QueryConditionText(atttibuteName);
+			case AbstractAttribute.TYPE_STRING:
+				queryCondition = new QueryConditionText(attribute);
 				break;
 				
-			case SchemaColumn.TYPE_INTEGER:
-			case SchemaColumn.TYPE_LONG:
-			case SchemaColumn.TYPE_FLOAT:
-			case SchemaColumn.TYPE_DATE:
-				queryCondition = new QueryConditionRange(atttibuteName);
+			case AbstractAttribute.TYPE_INTEGER:
+			case AbstractAttribute.TYPE_LONG:
+			case AbstractAttribute.TYPE_FLOAT:
+			case AbstractAttribute.TYPE_DATE:
+				queryCondition = new QueryConditionRange(attribute);
 				break;
 				
-			case SchemaColumn.TYPE_DICT:
-				queryCondition = new QueryConditionDictionary(atttibuteName);
+			case AbstractAttribute.TYPE_DICT:
+				queryCondition = new QueryConditionDictionary(attribute);
 				break;
 		}
 		
@@ -63,14 +58,29 @@ public class Query
 		
 	}
 
-	public boolean containsConditionOn(String attributeName)
+	public List getConditions()
 	{
-		return attributeNames.containsKey(attributeName);
+		return conditions;
 	}
 
-	public QueryCondition getCondition(String attributeName)
+	public Map getConditionsByAttributes()
 	{
-		return (QueryCondition) attributeNames.get(attributeName);
+		return conditionsByAttributes;
+	}
+	
+	public int getConditionCount()
+	{
+		return conditions.size();
+	}
+	
+	public boolean containsConditionOn(AbstractAttribute attribute)
+	{
+		return conditionsByAttributes.containsKey(attribute);
+	}
+
+	public QueryCondition getCondition(AbstractAttribute attribute)
+	{
+		return (QueryCondition) conditionsByAttributes.get(attribute);
 	}
 
 	protected Object clone()
@@ -86,44 +96,27 @@ public class Query
 	
 	public boolean equals(Object obj)
 	{
-		if (obj instanceof Query)
-		{
-			Query theOtherQuery = (Query) obj;
-			if (theOtherQuery == null)
-				return false;
-			
-			if (getConditionCount() != theOtherQuery.getConditionCount())
-				return false;
-			
-			for (Iterator iterAttr = attributeNames.keySet().iterator(); iterAttr.hasNext();)
-			{
-				String attr = (String) iterAttr.next();
-				QueryCondition theOtherQueryCondition = theOtherQuery.getCondition(attr);
-				if (theOtherQueryCondition == null) return false;
-				if (!theOtherQueryCondition.equals(getCondition(attr))) return false;
-			}
-			
-			return true;
-		}
-		else
-		{
+		if (obj == null || !(obj instanceof Query))
 			return false;
+		
+		Query theOther = (Query) obj;
+		
+		if (getConditionCount() != theOther.getConditionCount())
+			return false;
+		
+		for (Iterator iterAttr = conditionsByAttributes.keySet().iterator(); iterAttr.hasNext();)
+		{
+			AbstractAttribute attr = (AbstractAttribute) iterAttr.next();
+			QueryCondition theOtherQueryCondition = theOther.getCondition(attr);
+			
+			if (theOtherQueryCondition == null)
+				return false;
+			
+			if (!theOtherQueryCondition.equals(getCondition(attr)))
+				return false;
 		}
-	}
-
-	public List getConditions()
-	{
-		return conditions;
-	}
-
-	public Map getAttributeNames()
-	{
-		return attributeNames;
-	}
-	
-	public int getConditionCount()
-	{
-		return conditions.size();
+		
+		return true;
 	}
 
 }

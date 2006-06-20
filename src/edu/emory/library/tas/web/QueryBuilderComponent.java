@@ -14,8 +14,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.Dictionary;
-import edu.emory.library.tas.SchemaColumn;
-import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
 
 public class QueryBuilderComponent extends UIComponentBase
 {
@@ -23,7 +22,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private Query submittedQuery;
 	private Query setQuery;
 	private boolean querySet = false;
-	private List attributeNames;
+	private List attributes;
 
 	public String getFamily()
 	{
@@ -34,7 +33,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		Object values[] = new Object[2];
 		values[0] = super.saveState(context);
-		values[1] = saveAttachedState(context, attributeNames);
+		values[1] = saveAttachedState(context, attributes);
 		return values;
 	}
 
@@ -42,7 +41,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
-		attributeNames = (List) restoreAttachedState(context, values[1]);
+		attributes = (List) restoreAttachedState(context, values[1]);
 	}
 	
 	private String getToDeleteHiddenFieldName(FacesContext context)
@@ -55,39 +54,34 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		ExternalContext externalContex = context.getExternalContext();
 		
-		String toDelete =
-			(String) externalContex.getRequestParameterMap().get(
-					getToDeleteHiddenFieldName(context));
+		String toDelete = (String) externalContex.getRequestParameterMap().get(
+				getToDeleteHiddenFieldName(context));
 		
 		submittedQuery = new Query();
-		for (Iterator iterAtrributeName = attributeNames.iterator(); iterAtrributeName.hasNext();)
+		for (Iterator iterAtrribute = attributes.iterator(); iterAtrribute.hasNext();)
 		{
 			
-			String attributeName = (String) iterAtrributeName.next();
-			SchemaColumn col = Voyage.getSchemaColumn(attributeName);
+			AbstractAttribute attribute = (AbstractAttribute) iterAtrribute.next();
 			
-			if (col == null)
-				continue;
-			
-			if (col.getName().equals(toDelete))
+			if (attribute.getId().toString().equals(toDelete))
 				continue;
 			
 			QueryCondition queryCondition = null;
-			switch (col.getType())
+			switch (attribute.getType())
 			{
-				case SchemaColumn.TYPE_STRING:
-					queryCondition = decodeSimpleCondition(col, context, externalContex); 
+				case AbstractAttribute.TYPE_STRING:
+					queryCondition = decodeSimpleCondition(attribute, context, externalContex); 
 					break;
 
-				case SchemaColumn.TYPE_INTEGER:
-				case SchemaColumn.TYPE_LONG:
-				case SchemaColumn.TYPE_FLOAT:
-				case SchemaColumn.TYPE_DATE:
-					queryCondition = decodeRangeCondition(col, context, externalContex);
+				case AbstractAttribute.TYPE_INTEGER:
+				case AbstractAttribute.TYPE_LONG:
+				case AbstractAttribute.TYPE_FLOAT:
+				case AbstractAttribute.TYPE_DATE:
+					queryCondition = decodeRangeCondition(attribute, context, externalContex);
 					break;
 			
-				case SchemaColumn.TYPE_DICT:
-					queryCondition = decodeDictionaryCondition(col, context, externalContex);
+				case AbstractAttribute.TYPE_DICT:
+					queryCondition = decodeDictionaryCondition(attribute, context, externalContex);
 					break;
 			}
 			
@@ -111,25 +105,20 @@ public class QueryBuilderComponent extends UIComponentBase
 		UIForm form = UtilsJSF.getForm(this, context);
 		
 		Query query = getQuery();
-		attributeNames = new ArrayList();
+		attributes = new ArrayList();
 		
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("name", getToDeleteHiddenFieldName(context), null);
-		writer.endElement("input");
+		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context));
 		
 		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();)
 		{
 			
 			QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
-			attributeNames.add(queryCondition.getAttributeName());
+			AbstractAttribute attribute = queryCondition.getAttribute(); 
+			attributes.add(attribute);
 			
-			SchemaColumn col = Voyage.getSchemaColumn(queryCondition.getAttributeName());
-			if (col == null) continue;
-
-			switch (col.getType())
+			switch (attribute.getType())
 			{
-				case SchemaColumn.TYPE_STRING:
+				case AbstractAttribute.TYPE_STRING:
 					if (queryCondition instanceof QueryConditionText)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer);
@@ -138,10 +127,10 @@ public class QueryBuilderComponent extends UIComponentBase
 					}
 					break;
 
-				case SchemaColumn.TYPE_INTEGER:
-				case SchemaColumn.TYPE_LONG:
-				case SchemaColumn.TYPE_FLOAT:
-				case SchemaColumn.TYPE_DATE:
+				case AbstractAttribute.TYPE_INTEGER:
+				case AbstractAttribute.TYPE_LONG:
+				case AbstractAttribute.TYPE_FLOAT:
+				case AbstractAttribute.TYPE_DATE:
 					if (queryCondition instanceof QueryConditionRange)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer);
@@ -150,7 +139,7 @@ public class QueryBuilderComponent extends UIComponentBase
 					}
 					break;
 			
-				case SchemaColumn.TYPE_DICT:
+				case AbstractAttribute.TYPE_DICT:
 					if (queryCondition instanceof QueryConditionDictionary)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer);
@@ -178,8 +167,8 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		
 		String jsToDelete = UtilsJSF.generateSubmitJS(context, form,
-				getToDeleteHiddenFieldName(context),
-				queryCondition.getAttributeName());
+				getToDeleteHiddenFieldName(context), 
+				queryCondition.getAttribute().getId().toString());
 
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
@@ -224,7 +213,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.endElement("span");
 			writer.write(" ");
 		}
-		writer.write(queryCondition.getAttributeName());
+		writer.write(queryCondition.getAttribute().getUserLabel());
 		writer.endElement("td");
 		
 		writer.startElement("td", this);
@@ -241,15 +230,15 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("div");
 	}
 	
-	private String getHtmlNameForSimpleValue(String attributeName, FacesContext context)
+	private String getHtmlNameForSimpleValue(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attributeName;
+		return getClientId(context) + "_" + attribute.getId();
 	}
 
 	private void encodeSimpleCondition(QueryConditionText queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
-		String attributeName = queryCondition.getAttributeName();
+		AbstractAttribute attribute = queryCondition.getAttribute();
 
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -261,7 +250,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("class", "query-builder-text", null);
-		writer.writeAttribute("name", getHtmlNameForSimpleValue(attributeName, context), null);
+		writer.writeAttribute("name", getHtmlNameForSimpleValue(attribute, context), null);
 		writer.writeAttribute("value", queryCondition.getValue(), null);
 		writer.endElement("input");
 		writer.endElement("td");
@@ -271,66 +260,67 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 	
-	private QueryCondition decodeSimpleCondition(SchemaColumn col, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeSimpleCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
 	{
 
-		String value = (String) externalContext.getRequestParameterMap().get(getHtmlNameForSimpleValue(col.getName(), context));
+		String value = (String) externalContext.getRequestParameterMap().get(
+				getHtmlNameForSimpleValue(attribute, context));
 
-		QueryConditionText queryCondition = new QueryConditionText(col.getName());
+		QueryConditionText queryCondition = new QueryConditionText(attribute);
 		queryCondition.setValue(value);
 		
 		return queryCondition;
 		
 	}
 	
-	private String getHtmlNameForRangeType(String attributeName, FacesContext context)
+	private String getHtmlNameForRangeType(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attributeName + "_type";
+		return getClientId(context) + "_" + attribute.getId() + "_type";
 	}
 
-	private String getHtmlNameForRangeFrom(String attributeName, FacesContext context)
+	private String getHtmlNameForRangeFrom(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attributeName + "_from";
+		return getClientId(context) + "_" + attribute.getId() + "_from";
 	}
 
-	private String getHtmlNameForRangeTo(String attributeName, FacesContext context)
+	private String getHtmlNameForRangeTo(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attributeName + "_to";
+		return getClientId(context) + "_" + attribute.getId() + "_to";
 	}
 
-	private String getHtmlNameForRangeLe(String attributeName, FacesContext context)
+	private String getHtmlNameForRangeLe(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attributeName + "_le";
+		return getClientId(context) + "_" + attribute.getId() + "_le";
 	}
 
-	private String getHtmlNameForRangeGe(String attributeName, FacesContext context)
+	private String getHtmlNameForRangeGe(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attributeName + "_ge";
+		return getClientId(context) + "_" + attribute.getId() + "_ge";
 	}
 	
-	private String getHtmlNameForRangeEq(String attributeName, FacesContext context)
+	private String getHtmlNameForRangeEq(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attributeName + "_eq";
+		return getClientId(context) + "_" + attribute.getId() + "_eq";
 	}
 
 	private void encodeRangeCondition(QueryConditionRange queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 
-		String attributeName = queryCondition.getAttributeName();
+		AbstractAttribute attribute = queryCondition.getAttribute();
 		
-		String tdFromId = getClientId(context) + attributeName + "_td_from";
-		String tdDashId = getClientId(context) + attributeName + "_td_dash";
-		String tdToId = getClientId(context) + attributeName + "_td_to";
-		String tdLeId = getClientId(context) + attributeName + "_td_le";
-		String tdGeId = getClientId(context) + attributeName + "_td_ge";
-		String tdEqId = getClientId(context) + attributeName + "_td_eq";
+		String tdFromId = getClientId(context) + attribute.getId() + "_td_from";
+		String tdDashId = getClientId(context) + attribute.getId() + "_td_dash";
+		String tdToId = getClientId(context) + attribute.getId() + "_td_to";
+		String tdLeId = getClientId(context) + attribute.getId() + "_td_le";
+		String tdGeId = getClientId(context) + attribute.getId() + "_td_ge";
+		String tdEqId = getClientId(context) + attribute.getId() + "_td_eq";
 		
-		String htmlNameForRangeType = getHtmlNameForRangeType(attributeName, context);
-		String inputFromName = getHtmlNameForRangeFrom(attributeName, context);
-		String inputToName = getHtmlNameForRangeTo(attributeName, context);
-		String inputLeName = getHtmlNameForRangeLe(attributeName, context);
-		String inputGeName = getHtmlNameForRangeGe(attributeName, context);
-		String inputEqName = getHtmlNameForRangeEq(attributeName, context);
+		String htmlNameForRangeType = getHtmlNameForRangeType(attribute, context);
+		String inputFromName = getHtmlNameForRangeFrom(attribute, context);
+		String inputToName = getHtmlNameForRangeTo(attribute, context);
+		String inputLeName = getHtmlNameForRangeLe(attribute, context);
+		String inputGeName = getHtmlNameForRangeGe(attribute, context);
+		String inputEqName = getHtmlNameForRangeEq(attribute, context);
 		
 		StringBuffer js = new StringBuffer();
 
@@ -470,16 +460,16 @@ public class QueryBuilderComponent extends UIComponentBase
 	
 	}
 	
-	private QueryCondition decodeRangeCondition(SchemaColumn col, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeRangeCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
 	{
 		
 		Map params = externalContext.getRequestParameterMap();
-		String typeStr = (String) params.get(getHtmlNameForRangeType(col.getName(), context));
-		String from = (String) params.get(getHtmlNameForRangeFrom(col.getName(), context));
-		String to = (String) params.get(getHtmlNameForRangeTo(col.getName(), context));
-		String le = (String) params.get(getHtmlNameForRangeLe(col.getName(), context));
-		String ge = (String) params.get(getHtmlNameForRangeGe(col.getName(), context));
-		String eq = (String) params.get(getHtmlNameForRangeEq(col.getName(), context));
+		String typeStr = (String) params.get(getHtmlNameForRangeType(attribute, context));
+		String from = (String) params.get(getHtmlNameForRangeFrom(attribute, context));
+		String to = (String) params.get(getHtmlNameForRangeTo(attribute, context));
+		String le = (String) params.get(getHtmlNameForRangeLe(attribute, context));
+		String ge = (String) params.get(getHtmlNameForRangeGe(attribute, context));
+		String eq = (String) params.get(getHtmlNameForRangeEq(attribute, context));
 
 		int type;
 		if ("between".equals(typeStr))
@@ -503,7 +493,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			return null;
 		}
 		
-		QueryConditionRange queryCondition = new QueryConditionRange(col.getName(), type);
+		QueryConditionRange queryCondition = new QueryConditionRange(attribute, type);
 		queryCondition.setFrom(from);
 		queryCondition.setTo(to);
 		queryCondition.setLe(le);
@@ -514,16 +504,16 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 
-	private String getHtmlNameForList(String attibuteName, FacesContext context)
+	private String getHtmlNameForList(AbstractAttribute attibute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attibuteName + "_list";
+		return getClientId(context) + "_" + attibute.getId() + "_list";
 	}
 
 	private void encodeDictionaryCondition(QueryConditionDictionary queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
-		String attributeName = queryCondition.getAttributeName();
-		String displayListHtmlName = getClientId(context) + "_" + attributeName + "_user_list";
+		AbstractAttribute attribute = queryCondition.getAttribute();
+		String displayListHtmlName = getClientId(context) + "_" + attribute.getId() + "_user_list";
 		
 		StringBuffer valuesList = new StringBuffer();
 		StringBuffer displayList = new StringBuffer();
@@ -540,15 +530,15 @@ public class QueryBuilderComponent extends UIComponentBase
 		}
 		
 		UtilsJSF.encodeHiddenInput(this, writer,
-				getHtmlNameForList(attributeName, context),
+				getHtmlNameForList(attribute, context),
 				valuesList.toString());
 		
 		StringBuffer jsPopup = new StringBuffer();
 		jsPopup.append("window.open(");
 		jsPopup.append("'dictionary-list.jsp");
-		jsPopup.append("?attributeName=").append(attributeName);
+		jsPopup.append("?attributeId=").append(attribute.getId());
 		jsPopup.append("&formName=").append(form.getClientId(context));
-		jsPopup.append("&hiddenFieldName=").append(getHtmlNameForList(attributeName, context));
+		jsPopup.append("&hiddenFieldName=").append(getHtmlNameForList(attribute, context));
 		jsPopup.append("&displayFieldName=").append(displayListHtmlName);
 		jsPopup.append("', ");
 		jsPopup.append("'search-list', ");
@@ -583,20 +573,18 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 
-	private QueryCondition decodeDictionaryCondition(SchemaColumn col, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeDictionaryCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
 	{
 		
-		String attributeName = col.getName();
-		
 		String valuesStr = (String) externalContext.getRequestParameterMap().get(
-				getHtmlNameForList(attributeName, context));
+				getHtmlNameForList(attribute, context));
 		
 		String[] values = null;
 		if (valuesStr != null && valuesStr.length() > 0)
 			values = valuesStr.split(",");
 		
 		QueryConditionDictionary queryCondition =
-			new QueryConditionDictionary(attributeName);
+			new QueryConditionDictionary(attribute);
 		
 		if (values != null)
 			for (int i = 0; i < values.length; i++)

@@ -137,7 +137,7 @@ public class HistoryListComponent extends UIComponentBase
 		for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			writer.write(queryCondition.getAttributeName());
+			writer.write(queryCondition.getAttribute().getUserLabel());
 			
 			if (queryCondition instanceof QueryConditionText)
 			{

@@ -1,24 +1,21 @@
 package edu.emory.library.tas.web;
 
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
+import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 
 public abstract class QueryCondition
 {
 	
-	private String attributeName;
+	private AbstractAttribute attribute;
 	private boolean errorFlag = false;
 
 	public abstract boolean addToConditions(Conditions conditions);
 	protected abstract Object clone();
 
-	public QueryCondition(String attributeName)
+	public QueryCondition(AbstractAttribute attribute)
 	{
-		this.attributeName = attributeName;
-	}
-
-	public String getAttributeName()
-	{
-		return attributeName;
+		this.attribute = attribute;
 	}
 
 	public boolean isErrorFlag()
@@ -33,16 +30,29 @@ public abstract class QueryCondition
 	
 	public boolean equals(Object obj)
 	{
-		if (obj == null) return false;
-		if (obj instanceof QueryCondition)
-		{
-			QueryCondition queryCondition = (QueryCondition) obj;
-			return this.attributeName.equals(queryCondition.getAttributeName());
-		}
-		else
-		{
-			return false;
-		}
+		if (obj == null || !(obj instanceof QueryCondition)) return false;
+		QueryCondition theOther = (QueryCondition) obj;
+		return attribute.equals(theOther.getAttribute());
+	}
+	
+	public boolean isOnAttribute()
+	{
+		return attribute instanceof Attribute;
+	}
+	
+	public boolean isOnCompountAttribute()
+	{
+		return attribute instanceof Attribute;
+	}
+
+	public AbstractAttribute getAttribute()
+	{
+		return attribute;
+	}
+	
+	public void setAttribute(AbstractAttribute attribute)
+	{
+		this.attribute = attribute;
 	}
 	
 }

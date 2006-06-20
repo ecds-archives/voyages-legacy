@@ -6,24 +6,49 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
+import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
+import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.util.query.Conditions;
 
 
 public class SearchBean
 {
 	
+	private static final String SIMPLE_ATTRIBUTE_PREFIX = "simple_";
+	private static final String COMPOUND_ATTRIBUTE_PREFIX = "compound_";
+	
+	private String selectedAtttibuteId;
+	private String selectedGroupId;
+	private String activeGroupId;
+
 	private History history = new History();
 	private Query workingQuery = new Query();
 	private Conditions currentConditions = null;
-	private String selectedAtttibute;
 	private boolean tableVisible = true;
 	private boolean timeLineVisible = false;
 	
+	public void listGroups()
+	{
+		activeGroupId = selectedGroupId;
+	}
+
 	public void addQueryCondition()
 	{
-		workingQuery.addConditionOn(selectedAtttibute);
+		AbstractAttribute attribute = null;
+		if (selectedAtttibuteId.startsWith(SIMPLE_ATTRIBUTE_PREFIX))
+		{
+			Long id = new Long(selectedAtttibuteId.substring(SIMPLE_ATTRIBUTE_PREFIX.length()));
+			attribute = Attribute.loadById(id);
+		}
+		else if (selectedAtttibuteId.startsWith(COMPOUND_ATTRIBUTE_PREFIX))
+		{
+			Long id = new Long(selectedAtttibuteId.substring(COMPOUND_ATTRIBUTE_PREFIX.length()));
+			attribute = CompoundAttribute.loadById(id);
+		}
+		workingQuery.addConditionOn(attribute);
 	}
 	
 	public void search()
@@ -44,7 +69,8 @@ public class SearchBean
 		
 		// and add to history list
 		if (!workingQuery.equals(history.getLatestQuery()))
-			history.addQuery((Query) workingQuery.clone());	
+			history.addQuery((Query) workingQuery.clone());
+
 	}
 	
 	public void historyItemDelete(HistoryItemDeleteEvent event)
@@ -64,14 +90,14 @@ public class SearchBean
 		timeLineVisible = "timeline".equals(event.getTabId());
 	}
 	
-	public String getSelectedAtttibute()
+	public String getSelectedAtttibuteId()
 	{
-		return selectedAtttibute;
+		return selectedAtttibuteId;
 	}
 
-	public void setSelectedAtttibute(String selectedAtttibute)
+	public void setSelectedAtttibuteId(String selectedAtttibute)
 	{
-		this.selectedAtttibute = selectedAtttibute;
+		this.selectedAtttibuteId = selectedAtttibute;
 	}
 
 	public Conditions getCurrentConditions()
@@ -104,19 +130,80 @@ public class SearchBean
 		this.history = history;
 	}
 
-	public List getVoyageAttributes()
+//	public List getVoyageAttributes()
+//	{
+//		List options = new ArrayList();
+//		String[] dbNames = Voyage.getAllAttrNames();
+//		for (int i = 0; i < dbNames.length; i++)
+//		{
+//			SchemaColumn col = Voyage.getSchemaColumn(dbNames[i]);
+//			SelectItem selectItem = new SelectItem();
+//			selectItem.setValue(col.getName());
+//			selectItem.setLabel(col.getName());
+//			options.add(selectItem);
+//		}
+//		return options;
+//	}
+	
+	public List getVoyageAttributeGroups()
 	{
+		Group[] groups = Voyage.getGroups();
 		List options = new ArrayList();
-		String[] dbNames = Voyage.getAllAttrNames();
-		for (int i = 0; i < dbNames.length; i++)
+		for (int i = 0; i < groups.length; i++)
 		{
-			SchemaColumn col = Voyage.getSchemaColumn(dbNames[i]);
-			SelectItem selectItem = new SelectItem();
-			selectItem.setValue(col.getName());
-			selectItem.setLabel(col.getName());
-			options.add(selectItem);
+			SelectItem option = new SelectItem();
+			option.setLabel(groups[i].getName());
+			option.setValue(groups[i].getId().toString());
+			options.add(option);
 		}
 		return options;
+	}
+	
+	private void ensureActiveGroupSetId()
+	{
+		
+		if (activeGroupId != null)
+			return;
+		
+		Group[] groups = Voyage.getGroups();
+		if (groups == null || groups.length == 0)
+			return;
+		
+		activeGroupId = groups[0].getId().toString();
+
+	}
+
+	public List getVoyageAttributes()
+	{
+		
+		ensureActiveGroupSetId();
+		
+		if (activeGroupId == null)
+			return new ArrayList();
+		
+		Group group = Group.loadById(new Long(activeGroupId));
+		List options = new ArrayList();
+		
+		for (Iterator iterCompAttr = group.getCompoundAttributes().iterator(); iterCompAttr.hasNext();)
+		{
+			CompoundAttribute a = (CompoundAttribute) iterCompAttr.next();
+			SelectItem option = new SelectItem();
+			option.setLabel(a.getName());
+			option.setValue(COMPOUND_ATTRIBUTE_PREFIX + a.getId().toString());
+			options.add(option);
+		}
+		
+		for (Iterator iterAttr = group.getCompoundAttributes().iterator(); iterAttr.hasNext();)
+		{
+			Attribute a = (Attribute) iterAttr.next();
+			SelectItem option = new SelectItem();
+			option.setLabel(a.getName());
+			option.setValue(SIMPLE_ATTRIBUTE_PREFIX + a.getId().toString());
+			options.add(option);
+		}
+
+		return options;
+
 	}
 
 	public boolean isTableVisible()
@@ -137,6 +224,16 @@ public class SearchBean
 	public void setTimeLineVisible(boolean timeLineVisible)
 	{
 		this.timeLineVisible = timeLineVisible;
+	}
+
+	public String getSelectedGroupId()
+	{
+		return selectedGroupId;
+	}
+
+	public void setSelectedGroupId(String selectedGroupId)
+	{
+		this.selectedGroupId = selectedGroupId;
 	}
 
 }
