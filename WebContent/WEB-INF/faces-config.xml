@@ -117,6 +117,54 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
+	<managed-bean>
+		<managed-bean-name>AttributeListBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.schema.AttributeListBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>AttributeEditBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.schema.AttributeEditBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>CompoundAttributeListBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.schema.CompoundAttributeListBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>CompoundAttributeEditBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.schema.CompoundAttributeEditBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>GroupListBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.schema.GroupListBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>GroupEditBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.schema.GroupEditBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
 	<lifecycle />
 	<application>
 		<locale-config />
