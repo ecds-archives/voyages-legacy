@@ -10,14 +10,10 @@ public class Group {
 	private String userLabel;
 	private Set compoundAttributes  = new HashSet();
 	private Set attributes = new HashSet();
-	private ObjectType objestType;
+	private ObjectType objectType;
+	private String description;
 	
 	public Group() {		
-	}
-
-	public static Group loadById(Long id)
-	{
-		return null;
 	}
 	
 	public Set getCompoundAttributes() {
@@ -59,11 +55,19 @@ public class Group {
 		return "Set " + this.name +": groups " + this.compoundAttributes + "\n     attributes " + this.attributes;
 	}
 
-	public ObjectType getObjestType() {
-		return objestType;
+	public ObjectType getObjectType() {
+		return objectType;
 	}
 
-	public void setObjestType(ObjectType objestType) {
-		this.objestType = objestType;
+	public void setObjectType(ObjectType objectType) {
+		this.objectType = objectType;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

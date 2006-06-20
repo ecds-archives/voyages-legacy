@@ -1,6 +1,17 @@
 package edu.emory.library.tas.attrGroups;
 
-public abstract class AbstractAttribute {
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+
+import edu.emory.library.tas.Dictionary;
+import edu.emory.library.tas.InvalidDateException;
+import edu.emory.library.tas.InvalidNumberException;
+import edu.emory.library.tas.InvalidNumberOfValuesException;
+import edu.emory.library.tas.StringTooLongException;
+
+public abstract class AbstractAttribute implements Serializable {
 	
 	public final static int TYPE_INTEGER = 0;
 	public final static int TYPE_LONG = 1; 
@@ -13,18 +24,194 @@ public abstract class AbstractAttribute {
 	private String name;
 	private Long id;
 	private String userLabel;
-	private int type;
+	private Integer type;
 	private String dictionary;
+	private String description;
+	private Long length = new Long(-1);
 	
 	public AbstractAttribute() {
 	}
 	
-	public AbstractAttribute(String name2, int type2, String dictionary2, String userLabel2, ObjectType objType) {
+	public AbstractAttribute(String name2, Integer type2, String dictionary2, String userLabel2, ObjectType objType, Integer length2) {
 		this.name = name2;
-		this.type = type2;
+		this.setType(type2);
+		this.setLength(length);
 		this.dictionary = dictionary2;
 		this.userLabel = userLabel2;
 		this.objectType = objType;
+	}
+	
+	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		return parse(new String[] {value});
+	}
+	
+	public Object parse(String[] values) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		
+		String value;
+		switch (getType().intValue())
+		{
+			case TYPE_STRING:
+				
+				if (values.length != 1 || values[0] == null)
+					throw new InvalidNumberOfValuesException();
+				
+				value = values[0].trim();
+				if (value.length() == 0)
+					return null;
+				
+				if (length.intValue() != -1 && value.length() > length.intValue())
+					throw new StringTooLongException();
+				
+				return value;
+				
+			case TYPE_INTEGER:
+				
+				if (values.length != 1 || values[0] == null)
+					throw new InvalidNumberOfValuesException();
+				
+				value = values[0].trim();
+				if (value.length() == 0)
+					return null;
+				
+				try
+				{
+					return new Integer(values[0]);
+				}
+				catch (NumberFormatException nfe)
+				{
+					throw new InvalidNumberException();
+				}
+				
+			case TYPE_LONG:
+
+				if (values.length != 1 || values[0] == null)
+					throw new InvalidNumberOfValuesException();
+				
+				value = values[0].trim();
+				if (value.length() == 0)
+					return null;
+				
+				try
+				{
+					return new Long(values[0]);
+				}
+				catch (NumberFormatException nfe)
+				{
+					throw new InvalidNumberException();
+				}
+				
+			case TYPE_FLOAT:
+
+				if (values.length != 1 || values[0] == null)
+					throw new InvalidNumberOfValuesException();
+				
+				value = values[0].trim();
+				if (value.length() == 0)
+					return null;
+				
+				try
+				{
+					return new Float(values[0]);
+				}
+				catch (NumberFormatException nfe)
+				{
+					throw new InvalidNumberException();
+				}
+				
+			case TYPE_DATE:
+				
+				boolean separate = values.length == 3 && values[0] != null && values[1] != null && values[2] != null;
+				boolean single = values.length == 1 && values[0] != null;
+				
+				if (!separate || !single)
+					throw new InvalidNumberOfValuesException();
+				
+				if (separate)
+				{
+				
+					String day = values[0].trim();
+					String month = values[1].trim();
+					String year = values[2].trim();
+					
+					if (day.length() == 0 || month.length() == 0 || year.length() == 0)
+						return null;
+					
+					try
+					{
+						Calendar cal = Calendar.getInstance();
+						cal.clear();
+						cal.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+//						Timestamp tstamp = new Timestamp(Integer.parseInt(year),
+//								Integer.parseInt(month),
+//								Integer.parseInt(day),
+//								0,0,0,0);
+						return cal.getTime();
+					}
+					catch (NumberFormatException nfe)
+					{
+						throw new InvalidDateException();
+					}
+					
+				}
+				else if (single)
+				{
+					
+					value = values[0].trim();
+
+					if (value.length() == 0)
+						return null;
+					
+					try
+					{
+						DateFormat dateFormat = DateFormat.getDateInstance();
+						return dateFormat.parse(value);
+					}
+					catch (ParseException e)
+					{
+						throw new InvalidDateException();
+					}
+				}
+
+			case TYPE_DICT:
+				
+				if (values.length != 1 || values[0] == null)
+					throw new InvalidNumberOfValuesException();
+				
+				value = values[0].trim();
+				if (value.length() == 0)
+					return null;
+
+				Integer remoteId = null;
+				try
+				{
+					remoteId = new Integer(value);
+				}
+				catch (NumberFormatException nfe)
+				{
+					throw new InvalidNumberException();
+				}
+				
+				Dictionary dicts[] = Dictionary.loadDictionary(getDictionary(), remoteId);
+				if (dicts.length > 0)
+				{
+					return dicts[0];
+				}
+				else
+				{
+					Dictionary dict = Dictionary.createNew(getDictionary());
+					dict.setRemoteId(remoteId);
+					dict.setName(remoteId.toString());
+					dict.save();
+					return dict;
+				}
+
+			default:
+				return null;
+
+		}
+		
 	}
 	
 	public Long getId() {
@@ -55,22 +242,32 @@ public abstract class AbstractAttribute {
 		this.name = attrName;
 	}
 	
-	public int getType() {
+	public Integer getType() {
 		return type;
 	}
 	
-	public void setType(int type) {
-		this.type = type;
+	public void setType(Integer type) {
+		if (type == null) {
+			type = new Integer(-1);
+		} else {
+			this.type = type;
+		}
 	}
 	
-	public boolean isDictinaory()
-	{
+	public boolean isDictinaory() {
 		return dictionary != null;
 	}
 	
-	public String getDictionary()
-	{
+	public String getDictionary() {
 		return dictionary;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	public String toString() {
@@ -93,9 +290,27 @@ public abstract class AbstractAttribute {
 			(id != null && id.equals(theOther.getId()));
 	}
 	
-	public int hashCode()
-	{
+	public int hashCode() {
+		
+		if (id == null) {
+			return super.hashCode();
+		}
+		
 		return id.hashCode();
+	}
+
+	public void setDictionary(String dictionary) {
+		this.dictionary = dictionary;
+	}
+
+	public Long getLength() {
+		return length;
+	}
+
+	public void setLength(Long length) {
+		if (length != null) {
+			this.length = length;
+		}
 	}
 	
 }
