@@ -24,6 +24,7 @@ import org.jfree.ui.RectangleInsets;
 
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
@@ -67,17 +68,16 @@ public class TimeLineResultTabBean {
 			Arrays.sort(attributes);
 			this.voyageAttributes = new ArrayList();
 			for (int i = 0; i < attributes.length; i++) {
-				if (Voyage.getSchemaColumn(attributes[i]).getType() == SchemaColumn.TYPE_FLOAT
-						|| Voyage.getSchemaColumn(attributes[i]).getType() == SchemaColumn.TYPE_INTEGER
-						|| Voyage.getSchemaColumn(attributes[i]).getType() == SchemaColumn.TYPE_LONG) {
+				Attribute attr = Voyage.getAttribute(attributes[i]);
+				if (attr.getType().intValue() == Attribute.TYPE_FLOAT
+						|| attr.getType().intValue() == Attribute.TYPE_INTEGER
+						|| attr.getType().intValue() == Attribute.TYPE_LONG) {
 					String outString = null;
-					if (Voyage.getSchemaColumn(attributes[i]).getUserLabel() == null
-							|| Voyage.getSchemaColumn(attributes[i])
-									.getUserLabel().equals("")) {
+					if (attr.getUserLabel() == null
+							|| attr.getUserLabel().equals("")) {
 						outString = attributes[i];
 					} else {
-						outString = Voyage.getSchemaColumn(attributes[i])
-								.getUserLabel();
+						outString = attr.getUserLabel();
 					}
 
 					voyageAttributes.add(new SelectItem(attributes[i],

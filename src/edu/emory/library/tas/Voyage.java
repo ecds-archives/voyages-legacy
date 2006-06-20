@@ -137,6 +137,26 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 	
+	public static Attribute getAttribute(String name) {
+		
+		Conditions conditions = new Conditions();
+		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
+		QueryValue query = new QueryValue("ObjectType", conditions);
+		Object[] types = (Object[]) query.executeQuery();
+		ObjectType type = (ObjectType)types[0];
+		
+		conditions = new Conditions();
+		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
+		conditions.addCondition("name", name, Conditions.OP_EQUALS);
+		query = new QueryValue("Attribute", conditions);
+		Object[] attributes = (Object[]) query.executeQuery();
+		Attribute ret = null;
+		if (attributes.length != 0) {
+			ret = (Attribute)attributes[0];
+		}
+		return ret;
+	}
+	
 	public static String[] getAllAttrNames() {
 		
 		Conditions conditions = new Conditions();

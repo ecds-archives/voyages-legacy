@@ -86,7 +86,7 @@ public class TableResultTabBean {
 				for (int i = 0; i < this.populatedAttributes.length; i++) {
 					qValue.addPopulatedAttribute("v.voyage."
 							+ this.populatedAttributes[i], Voyage
-							.getSchemaColumn(this.populatedAttributes[i])
+							.getAttribute(this.populatedAttributes[i])
 							.isDictinaory());
 				}
 			}
