@@ -102,7 +102,7 @@
 							<h:panelGrid columns="2" id="configure_currentAttrsPanelMain">
 								<h:panelGrid columns="1" id="configure_currentAttrsPanel">
 									<h:outputText  id="config_label3" value="Current attributes in talbe:"/>
-									<h:selectOneListbox style="width: 200px" id="configure_visibleAttributes" value="#{TableResultTabBean.selectedAttributeAdded}" size="10">
+									<h:selectOneListbox style="width: 200px" id="configure_visibleAttributes" value="#{TableResultTabBean.selectedAttributeAdded}" size="4">
 										<f:selectItems value="#{TableResultTabBean.visibleAttributes}"/>
 									</h:selectOneListbox>
 								</h:panelGrid>					
