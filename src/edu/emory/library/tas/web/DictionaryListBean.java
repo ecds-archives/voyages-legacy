@@ -5,13 +5,12 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 
 import edu.emory.library.tas.Dictionary;
-import edu.emory.library.tas.SchemaColumn;
-import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
 
 public class DictionaryListBean
 {
 
-	private String attributeName;
+	private String attributeId;
 	private String formName;
 	private String hiddenFieldName;
 	private String displayFieldName;
@@ -24,7 +23,7 @@ public class DictionaryListBean
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
-			attributeName = (String) params.get("attributeName");
+			attributeId = (String) params.get("attributeId");
 			formName = (String) params.get("formName");
 			hiddenFieldName = (String) params.get("hiddenFieldName");
 			displayFieldName = (String) params.get("displayFieldName");
@@ -35,7 +34,7 @@ public class DictionaryListBean
 	public String getAttributeName()
 	{
 		ensureLoadParamsFromRequest();
-		return attributeName;
+		return attributeId;
 	}
 
 	public String getDisplayFieldName()
@@ -60,8 +59,8 @@ public class DictionaryListBean
 	{
 		if (dictionary == null)
 		{
-			SchemaColumn col = Voyage.getSchemaColumn(attributeName);
-			dictionary = Dictionary.loadDictionary(col.getDictinaory());
+			AbstractAttribute attribute = AbstractAttribute.loadById(new Long(attributeId));
+			dictionary = Dictionary.loadDictionary(attribute.getDictionary());
 		}
 		return dictionary;
 	}

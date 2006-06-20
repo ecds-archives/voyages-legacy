@@ -1,8 +1,5 @@
 package edu.emory.library.tas;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;

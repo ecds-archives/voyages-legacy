@@ -16,6 +16,8 @@ import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.StringTooLongException;
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
+import edu.emory.library.tas.attrGroups.Attribute;
 
 public class Import
 {
@@ -46,8 +48,8 @@ public class Import
 	private String slavesSchemaFileName;
 	private Hashtable voyageSchema;
 	private Hashtable slaveSchema;
-	private String voyageDbSchemaNames[] = Voyage.getAllAttrNames();
-	private String slaveDbSchemaNames[] = Slave.getAllAttrNames();
+	private Attribute voyageAttributes[] = Voyage.getAttributes();
+	private Attribute slaveAttributes[] = Slave.getAttributes();
 	
 	// statistics
 	private int totalNoOfVoyages;
@@ -145,27 +147,27 @@ public class Import
 
 	}
 	
-	private SchemaColumn getSchemaColumn(int recordType, String name)
-	{
-		switch (recordType)
-		{
-			case VOYAGE: return Voyage.getSchemaColumn(name);
-			case SLAVE: return Slave.getSchemaColumn(name);
-			default: return null;
-		}
-	}
+//	private SchemaColumn getSchemaColumn(int recordType, String name)
+//	{
+//		switch (recordType)
+//		{
+//			case VOYAGE: return Voyage.getSchemaColumn(name);
+//			case SLAVE: return Slave.getSchemaColumn(name);
+//			default: return null;
+//		}
+//	}
 	
 	private boolean compareTypes(int colType, int varType)
 	{
 		return
-			(colType == SchemaColumn.IMPORT_TYPE_NUMERIC && varType == STSchemaVariable.TYPE_NUMERIC) ||
-			(colType == SchemaColumn.IMPORT_TYPE_STRING && varType == STSchemaVariable.TYPE_STRING);
+			(colType == Attribute.IMPORT_TYPE_NUMERIC && varType == STSchemaVariable.TYPE_NUMERIC) ||
+			(colType == Attribute.IMPORT_TYPE_STRING && varType == STSchemaVariable.TYPE_STRING);
 	}
 	
 	private boolean matchAndVerifySchemaInt(int recordType)
 	{
 		
-		String dbSchemaNames[] = null;
+		Attribute attributes[] = null;
 		Hashtable schema = null;
 		String errorMsgDataFile = null;
 		
@@ -173,13 +175,15 @@ public class Import
 		
 		if (recordType == VOYAGE)
 		{
-			dbSchemaNames = voyageDbSchemaNames;
+			//dbSchemaNames = voyageDbSchemaNames;
+			attributes = voyageAttributes;
 			schema = voyageSchema;
 			errorMsgDataFile = "voyages";
 		}
 		else if (recordType == SLAVE)
 		{
-			dbSchemaNames = slaveDbSchemaNames;
+			//dbSchemaNames = slaveDbSchemaNames;
+			attributes = slaveAttributes;
 			schema = slaveSchema;
 			errorMsgDataFile = "slaves";
 		}
@@ -188,19 +192,19 @@ public class Import
 			return false;
 		}
 		
-		for (int i=0; i<dbSchemaNames.length; i++)
+		for (int i=0; i<attributes.length; i++)
 		{
-
-			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
+			Attribute col = attributes[i];
+			int type = col.getImportType().intValue(); 
 
 			// ignoring
-			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE)
+			if (type == Attribute.IMPORT_TYPE_IGNORE)
 			{
 				continue;
 			}
 			
 			// date
-			else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_DATE)
+			else if (type == Attribute.IMPORT_TYPE_DATE)
 			{
 				STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay()); 
 				STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth()); 
@@ -235,20 +239,20 @@ public class Import
 							"Missing field for database field " + col.getName() + " " +
 							"in " + errorMsgDataFile + ".");
 				}
-				else if (!compareTypes(col.getImportType(), var.getType()))
+				else if (!compareTypes(type, var.getType()))
 				{
 					ok = false;
 					log.logError(
 							"Type missmatch for database field " + col.getName() + " " +
 							"in " + errorMsgDataFile + ".");
 				}
-				else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING && var.getLength() > col.getImportLength())
+				else if (type == Attribute.IMPORT_TYPE_STRING && var.getLength() > col.getLength().intValue())
 				{
 					ok = false;
 					log.logError(
 							"String too long for database field " + col.getName() + " " +
 							"in " + errorMsgDataFile + "." +
-							"Expected length = " + col.getImportLength() + ", " +
+							"Expected length = " + col.getLength() + ", " +
 							"Variable length = " + var.getLength() + ".");
 				}
 			}
@@ -305,7 +309,7 @@ public class Import
 		
 	}
 	
-	private void updateDictionary(SchemaColumn col, STSchemaVariable var)
+	private void updateDictionary(Attribute col, STSchemaVariable var)
 	{
 		//System.out.println("Inside: " + col.getName() + "(" + var.getLabels().size() + ")");
 		for (Iterator iterLabel = var.getLabels().iterator(); iterLabel.hasNext();)
@@ -314,13 +318,13 @@ public class Import
 			STSchemaVariableLabel label = (STSchemaVariableLabel) iterLabel.next();
 			
 			Dictionary[] dicts = Dictionary.loadDictionary(
-					col.getDictinaory(),
+					col.getDictionary(),
 					new Integer(label.getKey()));
 
 			Dictionary dict;
 			boolean newDict = dicts.length == 0; 
 			if (newDict)
-				dict = Dictionary.createNew(col.getDictinaory());
+				dict = Dictionary.createNew(col.getDictionary());
 			else
 				dict = dicts[0];
 			
@@ -343,17 +347,17 @@ public class Import
 	private void updateDictionaties(int recordType)
 	{
 		
-		String dbSchemaNames[] = null;
+		Attribute attributes[] = null;
 		Hashtable schema = null;		
 		
 		if (recordType == VOYAGE)
 		{
-			dbSchemaNames = voyageDbSchemaNames;
+			attributes = voyageAttributes;
 			schema = voyageSchema;
 		}
 		else if (recordType == SLAVE)
 		{
-			dbSchemaNames = slaveDbSchemaNames;
+			attributes = slaveAttributes;
 			schema = slaveSchema;
 		}
 		else
@@ -361,14 +365,14 @@ public class Import
 			return;
 		}
 		
-		for (int i=0; i<dbSchemaNames.length; i++)
+		for (int i=0; i<attributes.length; i++)
 		{
-			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
-			if (col.getType() == SchemaColumn.TYPE_DICT)
+			Attribute attr = attributes[i];
+			if (attr.getType().intValue() == SchemaColumn.TYPE_DICT)
 			{
 				// System.out.println("Updating: " + col.getName() + ", " + col.getDictinaory());
-				STSchemaVariable var = (STSchemaVariable) schema.get(col.getImportName());
-				updateDictionary(col, var);
+				STSchemaVariable var = (STSchemaVariable) schema.get(attr.getImportName());
+				updateDictionary(attr, var);
 			}
 		}
 		
@@ -396,24 +400,21 @@ public class Import
 	private boolean updateValues(AbstractDescriptiveObject obj, char[] line)
 	{
 		
-		String dbSchemaNames[] = null;
+		Attribute attributes[] = null;
 		Hashtable schema = null;
 		String errorMsgDataFile = null;
 		int recordNo = 0;
 		
-		int recordType;
 		if (obj instanceof Voyage)
 		{
-			recordType = VOYAGE;
-			dbSchemaNames = voyageDbSchemaNames;
+			attributes = voyageAttributes;
 			schema = voyageSchema;
 			errorMsgDataFile = "voyages";
 			recordNo = totalNoOfVoyages;
 		}
 		else if (obj instanceof Slave)
 		{
-			recordType = SLAVE;
-			dbSchemaNames = slaveDbSchemaNames;
+			attributes = slaveAttributes;
 			schema = slaveSchema;
 			errorMsgDataFile = "slaves";
 			recordNo = totalNoOfSlaves;
@@ -424,8 +425,11 @@ public class Import
 		}
 		
 		boolean valid = true;
-		for (int i=0; i<dbSchemaNames.length; i++)
+		for (int i=0; i<attributes.length; i++)
 		{
+			Attribute col = attributes[i];
+			int type = col.getType().intValue();
+			int importType = col.getImportType().intValue();
 
 			Object parsedValue = null;
 			String columnValue = null;
@@ -437,18 +441,15 @@ public class Import
 			STSchemaVariable varMonth = null;
 			STSchemaVariable varYear = null;
 			
-			// get db column
-			SchemaColumn col = getSchemaColumn(recordType, dbSchemaNames[i]);
-			
 			// we are ignoring this field for import
-			if (col.getImportType() == SchemaColumn.IMPORT_TYPE_IGNORE)
+			if (type == Attribute.IMPORT_TYPE_IGNORE)
 				continue;
 			
 			try
 			{
 
 				// import numeric or string field
-				if (col.getImportType() == SchemaColumn.IMPORT_TYPE_NUMERIC || col.getImportType() == SchemaColumn.IMPORT_TYPE_STRING)
+				if (importType == Attribute.IMPORT_TYPE_NUMERIC || importType == Attribute.IMPORT_TYPE_STRING)
 				{
 					var = (STSchemaVariable) schema.get(col.getImportName());
 					columnValue = new String(line, var.getStartColumn()-1, var.getLength()).trim();
@@ -456,7 +457,7 @@ public class Import
 				}
 				
 				// import date
-				else if (col.getImportType() == SchemaColumn.IMPORT_TYPE_DATE)
+				else if (importType == Attribute.IMPORT_TYPE_DATE)
 				{
 					varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
 					varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
@@ -468,7 +469,7 @@ public class Import
 				}
 				
 				// nonexisting dictionary value was inserted
-				if (col.getType() == SchemaColumn.TYPE_DICT && parsedValue != null && ((Dictionary)parsedValue).getId() == null)
+				if (type == AbstractAttribute.TYPE_DICT && parsedValue != null && ((Dictionary)parsedValue).getId() == null)
 					log.logWarn(
 							"Nonexistent label '" + ((Dictionary)parsedValue).getName() + "' " +
 							"inserted for variable " + col.getImportName() + " " +
@@ -964,9 +965,6 @@ public class Import
 		
 		if (args.length != 5) return;
 		
-		Voyage.initTypes();
-		Slave.initTypes();
-
 		// extracts params
 		String workingDir = args[0];
 		String logFileName = args[1];

@@ -2,16 +2,13 @@ package edu.emory.library.tas;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
