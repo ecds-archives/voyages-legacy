@@ -27,7 +27,7 @@ public abstract class AbstractAttribute implements Serializable {
 	private Integer type;
 	private String dictionary;
 	private String description;
-	private Long length = new Long(-1);
+	private Integer length = new Integer(-1);
 	
 	public AbstractAttribute() {
 	}
@@ -303,11 +303,11 @@ public abstract class AbstractAttribute implements Serializable {
 		this.dictionary = dictionary;
 	}
 
-	public Long getLength() {
+	public Integer getLength() {
 		return length;
 	}
 
-	public void setLength(Long length) {
+	public void setLength(Integer length) {
 		if (length != null) {
 			this.length = length;
 		}

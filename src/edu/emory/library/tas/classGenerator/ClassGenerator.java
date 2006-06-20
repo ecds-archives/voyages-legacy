@@ -189,11 +189,40 @@ public class ClassGenerator {
 								otype.setTypeName(objType);
 								HibernateConnector.getConnector().saveObject(otype);
 							}
-							Attribute attr = new Attribute();
-							attr.setName(attrName);
-							attr.setUserLabel(attrLabel);
-							attr.setObjectType(otype);
-							HibernateConnector.getConnector().saveObject(attr);
+							
+							Conditions cAttr = new Conditions();
+							cAttr.addCondition("name", attrName, Conditions.OP_EQUALS);
+							Object[] objs = new QueryValue("Attribute", cAttr).executeQuery();
+							
+							if (objs.length == 0) {
+								Attribute attr = new Attribute();
+								attr.setName(attrName);
+								attr.setUserLabel(attrLabel);
+								attr.setObjectType(otype);
+								attr.setImportType(new Integer(importType));
+								attr.setImportName(attrImportName);
+								attr.setImportDateYear(attrImportDateYear);
+								attr.setImportDateMonth(attrImportDateMonth);
+								attr.setImportDateDay(attrImportDateDay);
+								attr.setLength(length);
+								attr.setType(new Integer(type));
+								attr.setDictionary(dict);
+								HibernateConnector.getConnector().saveObject(attr);
+							} else {
+								Attribute attr = (Attribute)objs[0];
+								attr.setName(attrName);
+								attr.setUserLabel(attrLabel);
+								attr.setObjectType(otype);
+								attr.setImportType(new Integer(importType));
+								attr.setImportName(attrImportName);
+								attr.setImportDateYear(attrImportDateYear);
+								attr.setImportDateMonth(attrImportDateMonth);
+								attr.setImportDateDay(attrImportDateDay);
+								attr.setLength(length);
+								attr.setType(new Integer(type));
+								attr.setDictionary(dict);
+								HibernateConnector.getConnector().updateObject(attr);
+							}
 						}
 					}
 				}
