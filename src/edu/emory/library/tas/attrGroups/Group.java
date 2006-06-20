@@ -10,6 +10,7 @@ public class Group {
 	private String userLabel;
 	private Set compoundAttributes  = new HashSet();
 	private Set attributes = new HashSet();
+	private ObjectType objestType;
 	
 	public Group() {		
 	}
@@ -51,5 +52,13 @@ public class Group {
 	
 	public String toString() {
 		return "Set " + this.name +": groups " + this.compoundAttributes + "\n     attributes " + this.attributes;
+	}
+
+	public ObjectType getObjestType() {
+		return objestType;
+	}
+
+	public void setObjestType(ObjectType objestType) {
+		this.objestType = objestType;
 	}
 }
