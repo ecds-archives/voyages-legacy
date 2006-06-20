@@ -37,7 +37,7 @@ public class SearchFormServlet extends HttpServlet
 		int fieldsCount = 0;
 		for (int i = 0; i < dbNames.length; i++)
 		{
-			SchemaColumn col = Voyage.getSchemaColumn(dbNames[i]);
+			SchemaColumn col = null; // Voyage.getSchemaColumn(dbNames[i]);
 			if (fieldsCount > 0) out.println(","); 
 			out.print("{");
 			out.print("name: \"" + col.getName() + "\"");
@@ -60,7 +60,7 @@ public class SearchFormServlet extends HttpServlet
 		for (int i = 0; i < dbNames.length; i++)
 		{
 			String dbName = dbNames[i];
-			SchemaColumn col = Voyage.getSchemaColumn(dbName);
+			SchemaColumn col = null; //Voyage.getSchemaColumn(dbName);
 			if (col.isDictinaory() && !createdDictionaries.contains(col.getDictinaory()))
 			{
 				createdDictionaries.add(col.getDictinaory());

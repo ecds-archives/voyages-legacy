@@ -9,27 +9,34 @@
 </head>
 <body>
 <f:view>
-	<h:dataTable value="#{GroupListBean.groups}" var="group">
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Name" />
-			</f:facet>
-				<h:commandLink value="#{group.name}" />
-			<h:outputText value="#{group.name}" />
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Label" />
-			</f:facet>
-			<h:outputText value="#{group.userLabel}" />
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Description" />
-			</f:facet>
-			<h:outputText value="#{group.description}" />
-		</h:column>
-	</h:dataTable>
+	<h:form>
+		<h:dataTable value="#{GroupListBean.groups}" var="group">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Name" />
+				</f:facet>
+				<h:commandLink actionListener="#{GroupListBean.editGroup}">
+					<f:param id="groupId" name="groupId" value="#{group.id}" />
+					<h:outputText value="#{group.name}" />
+				</h:commandLink>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Label" />
+				</f:facet>
+				<h:outputText value="#{group.userLabel}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Description" />
+				</f:facet>
+				<h:outputText value="#{group.description}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+	
+	<h:outputText value="#{GroupListBean.cacheInfo}" />
+	
 </f:view>
 </body>
 </html>
