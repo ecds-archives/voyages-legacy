@@ -193,7 +193,7 @@ public class SearchBean
 			options.add(option);
 		}
 		
-		for (Iterator iterAttr = group.getCompoundAttributes().iterator(); iterAttr.hasNext();)
+		for (Iterator iterAttr = group.getAttributes().iterator(); iterAttr.hasNext();)
 		{
 			Attribute a = (Attribute) iterAttr.next();
 			SelectItem option = new SelectItem();
