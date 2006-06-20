@@ -77,6 +77,10 @@ public abstract class AbstractAttribute {
 		return "Attribute: " + this.name;
 	}
 	
+	public static AbstractAttribute loadById(Long id) {
+		return null;
+	}
+	
 	public boolean equals(Object obj)
 	{
 		if (!(obj instanceof AbstractAttribute)) {
@@ -88,4 +92,10 @@ public abstract class AbstractAttribute {
 			(id == null && theOther.getId() == null) ||
 			(id != null && id.equals(theOther.getId()));
 	}
+	
+	public int hashCode()
+	{
+		return id.hashCode();
+	}
+	
 }

@@ -21,4 +21,8 @@ public class CompoundAttribute extends AbstractAttribute {
 		return "Group of attributes " + this.attributes;
 	}
 	
+	public static AbstractAttribute loadById(Long id) {
+		return null;
+	}
+	
 }

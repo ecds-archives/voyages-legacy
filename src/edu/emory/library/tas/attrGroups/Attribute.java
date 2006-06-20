@@ -211,6 +211,11 @@ public class Attribute extends AbstractAttribute {
 	{
 		return parse(new String[] {value});
 	}
+	
+	public static AbstractAttribute loadById(Long id)
+	{
+		return null;
+	}
 
 	public String getImportDateDay()
 	{
