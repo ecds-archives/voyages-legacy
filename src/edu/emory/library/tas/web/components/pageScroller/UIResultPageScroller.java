@@ -10,23 +10,32 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tas.Voyage;
-
+/**
+ * UIComponent responsible for showing current rows range
+ * @author Pawel Jurczyk
+ *
+ */
 public class UIResultPageScroller extends UIInput {
 	
 	public boolean getRendersChildren() {
 		return true;
 	}
 
+	/**
+	 * Begin of component encoding.
+	 */
 	public void encodeBegin(FacesContext context) throws IOException {
 		Integer resultFirst = null;
 		Integer resultSize = null;
 		Integer resultLast = null;
 		
+		//get value binding for resultFirst
 		ValueBinding vb = this.getValueBinding("resultFirst");
 		if (vb != null) {
 			resultFirst = (Integer)vb.getValue(context);
 		}
+		
+		//get value binding for resultSize
 		vb = this.getValueBinding("resultSize");
 		if (vb != null) {
 			resultSize = (Integer) vb.getValue(context);
@@ -34,12 +43,14 @@ public class UIResultPageScroller extends UIInput {
 				resultSize = new Integer(0);
 			}
 		}
+		
+		//get value binding for resultLast
 		vb = this.getValueBinding("resultLast");
 		if (vb != null) {
 			resultLast = (Integer) vb.getValue(context);
 		}
 		
-		
+		//prepare object encoding
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
 		writer.startElement("table", this);
@@ -56,7 +67,9 @@ public class UIResultPageScroller extends UIInput {
 	}
 	
 	
-
+	/**
+	 * Encoding of child components.
+	 */
 	public void encodeChildren(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		List children = this.getChildren();
@@ -73,6 +86,9 @@ public class UIResultPageScroller extends UIInput {
 		}
 	}
 
+	/**
+	 * End of component encoding.
+	 */
 	public void encodeEnd(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.endElement("tr");

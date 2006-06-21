@@ -1,20 +1,29 @@
 package edu.emory.library.tas.web.components.pageScroller;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * Tag that is used to split results into pages.
+ * 
+ * @author Pawel Jurczyk
+ *
+ */
 public class ResultPageScrollerTag extends UIComponentTag {
 
-	private String resultFirst;
-	private String resultSize;
-	private String resultLast;
+	private String resultFirst;		//Rowid of current first row back-bean binding
+	private String resultSize;		//# of rows per page back-bean binding
+	private String resultLast;		//Rowid of current last row back-bean binding
 	
+	/**
+	 * Overriden method from supertype.
+	 */
 	protected void setProperties(UIComponent component) {
 
 		super.setProperties(component);
 		
+		//Set mapping of resultFirst
 		if (resultFirst != null) {
             if (isValueReference(resultFirst)) {
                 ValueBinding vb =
@@ -26,6 +35,7 @@ public class ResultPageScrollerTag extends UIComponentTag {
             }
 		}
 		
+		//Set mapping of resultLast
 		if (resultLast != null) {
             if (isValueReference(resultFirst)) {
                 ValueBinding vb =
@@ -37,6 +47,7 @@ public class ResultPageScrollerTag extends UIComponentTag {
             }
 		}
 		
+		//Set mapping of resultSize		
 		if (resultSize != null) {
             if (isValueReference(resultSize)) {
                 ValueBinding vb =
@@ -50,10 +61,15 @@ public class ResultPageScrollerTag extends UIComponentTag {
     
 	}
 	
+	/**
+	 * Gets component type
+	 */
 	public String getComponentType() {
 		return "ResultPageScroller";
 	}
 
+	////////////////////// GETTERS - SETTERS for TAG attributes //////////////////////
+	
 	public String getRendererType() {
 		return null;
 	}
