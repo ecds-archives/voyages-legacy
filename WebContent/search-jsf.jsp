@@ -53,8 +53,10 @@
 					<s:tab text="Graphs" tabId="timeline" />
 				</s:tabBar></div>
 
+				<% /* Table tab */ %>
 				<t:htmlTag value="div" styleClass="data-container" rendered="#{SearchBean.tableVisible}">
 
+					<% /* Table with results */ %>
 					<s:tabletab rendered="#{TableResultTabBean.resultsMode}" query="#{SearchBean.currentConditions}"
 						conditionsOut="#{TableResultTabBean.conditions}" results="#{TableResultTabBean.results}"
 						populatedAttributes="#{TableResultTabBean.populatedAttributes}"
@@ -68,9 +70,12 @@
 						</s:resultscroll>
 					</s:tabletab>
 
+					<% /* Configuration of table */ %>
 					<t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
+					
+						<% /* Groups */ %>
 						<t:htmlTag styleClass="configDiv" style="width: 594px;" value="div">
-							<h:outputText style="margin-left: 3px;" id="config_label1" value="Choose set of attributes:" />
+							<h:outputText style="margin-left: 3px;" id="config_label1" value="Choose group of attributes:" />
 							<t:htmlTag value="br" />
 							<h:selectOneMenu style="margin: 0px 0px 5px 10px;width: 200px;" value="#{TableResultTabBean.selectedGroupSet}"
 								id="configure_groupSetCombo" onchange="submit()">
@@ -78,8 +83,10 @@
 							</h:selectOneMenu>
 						</t:htmlTag>
 
+						<% /* Configuration of visible attributes */ %>
 						<h:panelGrid styleClass="configTable" id="configure_groupAttrs" columns="3">
 
+							<% /* Available attributes in current group */ %>
 							<h:panelGrid styleClass="config" columns="1" id="configure_groupAttrsPanel">
 								<h:outputText id="config_label2" value="Available attributes:" />
 								<h:selectOneListbox style="width: 200px" id="configure_availAttributes" size="10"
@@ -88,6 +95,7 @@
 								</h:selectOneListbox>
 							</h:panelGrid>
 
+							<% /* Buttons -> and -< */ %>
 							<h:panelGroup id="configure_buttonsAddRem">
 								<h:panelGrid id="cinfigure_buttonsAddRemGrid">
 									<h:commandButton style="width: 75px" id="configure_AddAttrButton" value="->"
@@ -97,7 +105,10 @@
 								</h:panelGrid>
 							</h:panelGroup>
 
+							<% /* Currently set attributes */ %>
 							<h:panelGrid columns="2" id="configure_currentAttrsPanelMain">
+								
+								<% /* List of attributes */ %>
 								<h:panelGrid columns="1" id="configure_currentAttrsPanel">
 									<h:outputText id="config_label3" value="Current attributes in talbe:" />
 									<h:selectOneListbox style="width: 200px" id="configure_visibleAttributes"
@@ -105,32 +116,40 @@
 										<f:selectItems value="#{TableResultTabBean.visibleAttributes}" />
 									</h:selectOneListbox>
 								</h:panelGrid>
-								<h:panelGrid id="configure_ipDownPanel" columns="1">
+								
+								<% /* Buttons - move up/down */ %>
+								<h:panelGrid id="configure_upDownPanel" columns="1">
 									<h:commandButton style="width: 75px" id="configure_UpAttrButton" value="Move up"
 										action="#{TableResultTabBean.moveAttrUp}" />
 									<h:commandButton style="width: 75px" id="configure_DownAttrButton" value="Move down"
 										action="#{TableResultTabBean.moveAttrDown}" />
 								</h:panelGrid>
 							</h:panelGrid>
-
 						</h:panelGrid>
+						
+						<% /* Results per page config */ %>
 						<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
 							<h:outputText style="margin-left: 3px; margin-top: 3px;" value="Results per page: " />
 							<h:inputText style="margin-top: 3px; width: 40px;" value="#{TableResultTabBean.step}" />
 						</t:htmlTag>
 						
+						<% /* Apply button part */ %>
 						<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
 							<h:commandButton style="margin-top: 5px; margin-left: 4px;" id="configure_applyConfigButton"
 								value="Apply configuration" action="#{TableResultTabBean.resultsMode}" />
 						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag> 
+				
+				<% /* Statistical tab */ %>
 				<s:stattab rendered="#{SearchBean.timeLineVisible}" 
 						query="#{SearchBean.currentConditions}"
 						conditionsOut="#{TimeLineResultTabBean.conditions}" 
 						componentVisible="#{TimeLineResultTabBean.componentVisible}"
 						styleClass="data-container">
 					<h:panelGrid columns="1">
+					
+						<% /* Configuration of graph */ %>
 						<h:panelGroup>
 							<h:outputText value="Y axis value: " />
 							<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAggregate}" id="tLAggregates">
@@ -141,11 +160,15 @@
 							</h:selectOneMenu>
 							<h:commandButton id="show_stat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}" />
 						</h:panelGroup>
+						
+						<% /* Graph data */ %>
 						<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
 						  <t:htmlTag value="div" style="overflow:auto; width: 640px; height: 480px">
 							<h:graphicImage value="#{TimeLineResultTabBean.chartPath}"/>
 						  </t:htmlTag>
 						</h:panelGroup>
+						
+						<% /* Change size panel */ %>
 						<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
 							<h:outputText value="Width: "/>
 							<h:inputText value="#{TimeLineResultTabBean.chartWidth}" style="width: 40px;"/>
