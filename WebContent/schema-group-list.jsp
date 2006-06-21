@@ -10,12 +10,12 @@
 <body>
 <f:view>
 	<h:form>
-		<h:dataTable value="#{GroupListBean.groups}" var="group">
+		<h:dataTable value="#{GroupsBean.groups}" var="group" border="1">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Name" />
 				</f:facet>
-				<h:commandLink actionListener="#{GroupListBean.editGroup}">
+				<h:commandLink actionListener="#{GroupsBean.editGroup}" action="edit">
 					<f:param id="groupId" name="groupId" value="#{group.id}" />
 					<h:outputText value="#{group.name}" />
 				</h:commandLink>
@@ -34,9 +34,6 @@
 			</h:column>
 		</h:dataTable>
 	</h:form>
-	
-	<h:outputText value="#{GroupListBean.cacheInfo}" />
-	
 </f:view>
 </body>
 </html>

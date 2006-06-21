@@ -150,11 +150,11 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>GroupListBean</managed-bean-name>
+		<managed-bean-name>GroupsBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.schema.GroupListBean
+			edu.emory.library.tas.web.schema.GroupsBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
@@ -165,11 +165,37 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
-	<lifecycle />
-	<application>
-		<locale-config />
-	</application>
-	<factory />
+	<navigation-rule>
+		<from-view-id>/schema-group-list.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>edit</from-outcome>
+			<to-view-id>/schema-group-edit.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/schema-group-edit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/schema-group-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/a.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>b</from-outcome>
+			<to-view-id>/b.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/b.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>a</from-outcome>
+			<to-view-id>/a.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<render-kit>
 
@@ -182,4 +208,5 @@
 			<renderer-class>edu.emory.library.tas.jsf.components.StatMainRenderer</renderer-class>
 			</renderer> -->
 	</render-kit>
+
 </faces-config>

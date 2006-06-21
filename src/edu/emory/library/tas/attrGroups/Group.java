@@ -9,6 +9,8 @@ import edu.emory.library.tas.util.query.QueryValue;
 
 public class Group implements Serializable {
 	
+	private static final long serialVersionUID = -2786637413827394050L;
+	
 	private Long id;
 	private String name;
 	private String userLabel;
