@@ -9,8 +9,7 @@ import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.util.query.Conditions;
 
-public class UITableResultTab extends UIOutput implements
-		ConditionedTabbedComponent {
+public class UITableResultTab extends UIOutput {
 
 	public UITableResultTab() {
 		super();

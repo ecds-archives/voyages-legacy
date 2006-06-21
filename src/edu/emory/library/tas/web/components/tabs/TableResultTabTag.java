@@ -4,8 +4,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
-import edu.emory.library.tas.util.query.Conditions;
-
 public class TableResultTabTag extends UIComponentTag {
 
 	private static final String TABLE_RESULT_TAB = "TableResultTab";

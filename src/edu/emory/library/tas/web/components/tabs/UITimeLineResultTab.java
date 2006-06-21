@@ -16,8 +16,7 @@ import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.components.pageScroller.UIResultPageScroller;
 
-public class UITimeLineResultTab extends UIOutput implements
-		ConditionedTabbedComponent {
+public class UITimeLineResultTab extends UIOutput {
 	
 	public void appyConditions(Conditions c, FacesContext context) {
 		// TODO Auto-generated method stub

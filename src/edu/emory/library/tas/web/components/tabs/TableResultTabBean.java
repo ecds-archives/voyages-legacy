@@ -16,6 +16,11 @@ import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
+/**
+ * Backing bean for Table results presented in TAST web interface.
+ * @author Pawel Jurczyk
+ *
+ */
 public class TableResultTabBean {
 
 	private int current = 0;
@@ -48,27 +53,6 @@ public class TableResultTabBean {
 				"captainb", "captainc", "ownere", "arrport" };
 	}
 
-	public String next() {
-		if (current + step < this.numberOfResults.intValue() && this.condition != null) {
-			current += step;
-			this.needQuery = true;
-		}
-
-		this.getResultsDB();
-		return null;
-	}
-
-	public String prev() {
-		if (current > 0 && this.condition != null) {
-			current -= step;
-			if (current < 0) {
-				current = 0;
-			}
-			this.needQuery = true;
-		}
-		this.getResultsDB();
-		return null;
-	}
 
 	private void getResultsDB() {
 		if (this.condition != null && this.componentVisible.booleanValue()
@@ -95,74 +79,6 @@ public class TableResultTabBean {
 
 	}
 
-	public Integer getCurrent() {
-		return new Integer(current);
-	}
-
-	public void setCurrent(Integer current) {
-		this.current = current.intValue();
-	}
-
-	public Integer getStep() {
-		return new Integer(step);
-	}
-
-	public void setStep(Integer step) {
-		if (this.step != step.intValue()) {
-			this.needQuery = true;
-		}
-		this.step = step.intValue();
-	}
-
-	public Conditions getCondition() {
-		return condition;
-	}
-
-	public void setCondition(Conditions condition) {
-		this.condition = condition;
-	}
-
-	public String[] getPopulatedAttributes() {
-		return populatedAttributes;
-	}
-
-	public void setPopulatedAttributes(String[] populatedAttributes) {
-		this.populatedAttributes = populatedAttributes;
-	}
-
-	public Object[] getResults() {
-		this.getResultsDB();
-		return this.results;
-	}
-
-	public void setResults(Object[] results) {
-		this.results = results;
-	}
-
-	public void setResultSize(Integer size) {
-	}
-
-	public Integer getResultSize() {
-		return new Integer(this.results != null ? this.results.length : 0);
-	}
-
-	public void setConditions(Conditions c) {
-		if (c != null) {
-			System.out.println("1: --------------------------------------");
-			System.out.println(c.getConditionHQL().conditionString);
-		}
-		if (c == null) {
-			// needQuery = false;
-		} else if (c.equals(condition)) {
-			// needQuery = false;
-		} else {
-			condition = c;
-			needQuery = true;
-			this.setNumberOfResults();
-			this.current = 0;
-		}
-	}
-
 	private void setNumberOfResults() {
 		
 		Conditions localCond = (Conditions) this.condition
@@ -174,144 +90,46 @@ public class TableResultTabBean {
 		Object [] ret = qValue.executeQuery();
 		this.numberOfResults = (Integer)ret[0];
 	}
-
-	public Boolean getComponentVisible() {
-		return componentVisible;
-	}
-
-	public void setComponentVisible(Boolean componentVisible) {
-		this.componentVisible = componentVisible;
-	}
-
-	public Boolean getConfigurationMode() {
-		return new Boolean(this.configuration);
-	}
-
-	public Boolean getResultsMode() {
-		return new Boolean(!this.configuration);
-	}
-
-	public void configurationMode() {
-		this.configuration = true;
-	}
-
-	public void resultsMode() {
-		this.configuration = false;
-	}
-
-	public List getAvailableGroupSets() {
-		ArrayList res = new ArrayList();
-		Group[] groupSets = Voyage.getGroups();
-		for (int i = 0; i < groupSets.length; i++) {
-			Group set = (Group) groupSets[i];
-			res
-					.add(new SelectItem("" + set.getId().longValue(), set
-							.getName()));
+	
+	
+	////////////////////////////// ACTIONS called from web interface /////////////////////////
+	
+	public String next() {
+		if (current + step < this.numberOfResults.intValue() && this.condition != null) {
+			current += step;
+			this.needQuery = true;
 		}
-		if (this.selectedGroupSet == null && groupSets.length > 0) {
-			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
-		}
-		return res;
-	}
 
-	public List getAvailableAttributes() {
-		ArrayList res = new ArrayList();
-		Conditions c = new Conditions();
-		if (this.selectedGroupSet != null) {
-			c.addCondition("id", new Long(this.selectedGroupSet),
-					Conditions.OP_EQUALS);
-		}
-		QueryValue qValue = new QueryValue("Group", c);
-		// qValue.setCacheable(true);
-
-		Object[] groupSets = qValue.executeQuery();
-		if (groupSets.length > 0) {
-			Group set = (Group) groupSets[0];
-			Set attrs = set.getAttributes();
-
-			Set groups = set.getCompoundAttributes();
-			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
-				CompoundAttribute element = (CompoundAttribute) groupsIter
-						.next();
-				res.add(new SelectItem("Group_" + element.getId(), element
-						.getName()));
-			}
-			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
-				Attribute attr = (Attribute) iter.next();
-				res
-						.add(new SelectItem("Attribute_" + attr.getName(), (""
-								.equals(attr.getUserLabel()) || attr
-								.getUserLabel() == null) ? (attr.getName())
-								: (attr.getUserLabel())));
-			}
-		}
-		return res;
-	}
-
-	public List getVisibleAttributes() {
-		ArrayList res = new ArrayList();
-		for (int i = 0; i < this.populatedAttributes.length; i++) {
-			res.add(new SelectItem(this.populatedAttributes[i]));
-		}
-		return res;
-	}
-
-	public String getSelectedGroupSet() {
-		return selectedGroupSet;
-	}
-
-	public void setSelectedGroupSet(String selectedGroupSet) {
-		this.selectedGroupSet = selectedGroupSet;
-	}
-
-	public String getSelectedAttributeAdded() {
-		return selectedAttributeAdded;
-	}
-
-	public void setSelectedAttributeAdded(String selectedAttributeAdded) {
-		this.selectedAttributeAdded = selectedAttributeAdded;
-	}
-
-	public String getSelectedAttributeToAdd() {
-		return selectedAttributeToAdd;
-	}
-
-	public void setSelectedAttributeToAdd(String selectedAttributeToAdd) {
-		this.selectedAttributeToAdd = selectedAttributeToAdd;
-	}
-
-	public String moveAttrUp() {
-		if (this.selectedAttributeAdded == null) {
-			return null;
-		}
-		for (int i = 1; i < this.populatedAttributes.length; i++) {
-			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
-				String tmp = this.populatedAttributes[i];
-				this.populatedAttributes[i] = this.populatedAttributes[i - 1];
-				this.populatedAttributes[i - 1] = tmp;
-				this.needQuery = true;
-				break;
-			}
-		}
+		this.getResultsDB();
 		return null;
 	}
 
-	public String moveAttrDown() {
-		if (this.selectedAttributeAdded == null) {
+	public String prev() {
+		if (current > 0 && this.condition != null) {
+			current -= step;
+			if (current < 0) {
+				current = 0;
+			}
+			this.needQuery = true;
+		}
+		this.getResultsDB();
+		return null;
+	}
+	
+	public String remSelectedAttributeFromList() {
+		if (this.selectedAttributeToAdd == null) {
 			return null;
 		}
-		for (int i = 0; i < this.populatedAttributes.length - 1; i++) {
-			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
-				String tmp = this.populatedAttributes[i];
-				this.populatedAttributes[i] = this.populatedAttributes[i + 1];
-				this.populatedAttributes[i + 1] = tmp;
-				this.needQuery = true;
-				break;
-			}
+		List list = Arrays.asList(this.populatedAttributes);
+		if (list.contains(this.selectedAttributeAdded)) {
+			list = new ArrayList(list);
+			list.remove(this.selectedAttributeAdded);
+			this.populatedAttributes = (String[]) list.toArray(new String[] {});
+			this.needQuery = true;
 		}
 		return null;
 	}
-
+	
 	public String addSelectedAttributeToList() {
 		if (this.selectedAttributeToAdd == null) {
 			return null;
@@ -361,22 +179,209 @@ public class TableResultTabBean {
 
 		return null;
 	}
+	
+	public String moveAttrUp() {
+		if (this.selectedAttributeAdded == null) {
+			return null;
+		}
+		for (int i = 1; i < this.populatedAttributes.length; i++) {
+			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
+				String tmp = this.populatedAttributes[i];
+				this.populatedAttributes[i] = this.populatedAttributes[i - 1];
+				this.populatedAttributes[i - 1] = tmp;
+				this.needQuery = true;
+				break;
+			}
+		}
+		return null;
+	}
+
+	public String moveAttrDown() {
+		if (this.selectedAttributeAdded == null) {
+			return null;
+		}
+		for (int i = 0; i < this.populatedAttributes.length - 1; i++) {
+			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
+				String tmp = this.populatedAttributes[i];
+				this.populatedAttributes[i] = this.populatedAttributes[i + 1];
+				this.populatedAttributes[i + 1] = tmp;
+				this.needQuery = true;
+				break;
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	////////////////////////////// GETTERS / SETTERS /////////////////////////
+	
+	public Integer getCurrent() {
+		return new Integer(current);
+	}
+
+	public void setCurrent(Integer current) {
+		this.current = current.intValue();
+	}
+
+	public Integer getStep() {
+		return new Integer(step);
+	}
+
+	public void setStep(Integer step) {
+		if (this.step != step.intValue()) {
+			this.needQuery = true;
+		}
+		this.step = step.intValue();
+	}
+
+	public String[] getPopulatedAttributes() {
+		return populatedAttributes;
+	}
+
+	public void setPopulatedAttributes(String[] populatedAttributes) {
+		this.populatedAttributes = populatedAttributes;
+	}
+
+	public Object[] getResults() {
+		this.getResultsDB();
+		return this.results;
+	}
+
+	public void setResults(Object[] results) {
+		this.results = results;
+	}
+
+	public void setResultSize(Integer size) {
+	}
+
+	public Integer getResultSize() {
+		return new Integer(this.results != null ? this.results.length : 0);
+	}
+
+	public void setConditions(Conditions c) {
+		if (c != null) {
+			System.out.println("1: --------------------------------------");
+			System.out.println(c.getConditionHQL().conditionString);
+		}
+		if (c == null) {
+			// needQuery = false;
+		} else if (c.equals(condition)) {
+			// needQuery = false;
+		} else {
+			condition = c;
+			needQuery = true;
+			this.setNumberOfResults();
+			this.current = 0;
+		}
+	}
+	
+	public Boolean getComponentVisible() {
+		return componentVisible;
+	}
+
+	public void setComponentVisible(Boolean componentVisible) {
+		this.componentVisible = componentVisible;
+	}
+
+	public Boolean getConfigurationMode() {
+		return new Boolean(this.configuration);
+	}
+
+	public Boolean getResultsMode() {
+		return new Boolean(!this.configuration);
+	}
+
+	public void configurationMode() {
+		this.configuration = true;
+	}
+
+	public void resultsMode() {
+		this.configuration = false;
+	}
+	
+	public List getAvailableGroupSets() {
+		ArrayList res = new ArrayList();
+		Group[] groupSets = Voyage.getGroups();
+		for (int i = 0; i < groupSets.length; i++) {
+			Group set = (Group) groupSets[i];
+			res
+					.add(new SelectItem("" + set.getId().longValue(), set
+							.getName()));
+		}
+		if (this.selectedGroupSet == null && groupSets.length > 0) {
+			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
+		}
+		return res;
+	}
+	
+	public List getAvailableAttributes() {
+		ArrayList res = new ArrayList();
+		Conditions c = new Conditions();
+		if (this.selectedGroupSet != null) {
+			c.addCondition("id", new Long(this.selectedGroupSet),
+					Conditions.OP_EQUALS);
+		}
+		QueryValue qValue = new QueryValue("Group", c);
+		// qValue.setCacheable(true);
+
+		Object[] groupSets = qValue.executeQuery();
+		if (groupSets.length > 0) {
+			Group set = (Group) groupSets[0];
+			Set attrs = set.getAttributes();
+
+			Set groups = set.getCompoundAttributes();
+			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
+				CompoundAttribute element = (CompoundAttribute) groupsIter
+						.next();
+				res.add(new SelectItem("Group_" + element.getId(), element
+						.getName()));
+			}
+			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
+				Attribute attr = (Attribute) iter.next();
+				res
+						.add(new SelectItem("Attribute_" + attr.getName(), (""
+								.equals(attr.getUserLabel()) || attr
+								.getUserLabel() == null) ? (attr.getName())
+								: (attr.getUserLabel())));
+			}
+		}
+		return res;
+	}
+	
+	public List getVisibleAttributes() {
+		ArrayList res = new ArrayList();
+		for (int i = 0; i < this.populatedAttributes.length; i++) {
+			res.add(new SelectItem(this.populatedAttributes[i]));
+		}
+		return res;
+	}
+	
+	public String getSelectedGroupSet() {
+		return selectedGroupSet;
+	}
+
+	public void setSelectedGroupSet(String selectedGroupSet) {
+		this.selectedGroupSet = selectedGroupSet;
+	}
+
+	public String getSelectedAttributeAdded() {
+		return selectedAttributeAdded;
+	}
+
+	public void setSelectedAttributeAdded(String selectedAttributeAdded) {
+		this.selectedAttributeAdded = selectedAttributeAdded;
+	}
+
+	public String getSelectedAttributeToAdd() {
+		return selectedAttributeToAdd;
+	}
+
+	public void setSelectedAttributeToAdd(String selectedAttributeToAdd) {
+		this.selectedAttributeToAdd = selectedAttributeToAdd;
+	}
 
 	public Integer getNumberOfResults() {
 		return numberOfResults;
-	}
-
-	public String remSelectedAttributeFromList() {
-		if (this.selectedAttributeToAdd == null) {
-			return null;
-		}
-		List list = Arrays.asList(this.populatedAttributes);
-		if (list.contains(this.selectedAttributeAdded)) {
-			list = new ArrayList(list);
-			list.remove(this.selectedAttributeAdded);
-			this.populatedAttributes = (String[]) list.toArray(new String[] {});
-			this.needQuery = true;
-		}
-		return null;
 	}
 }
