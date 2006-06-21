@@ -205,6 +205,8 @@ public class TableResultTabBean {
 			c.addCondition("id", new Long(this.selectedGroupSet), Conditions.OP_EQUALS);
 		}		
 		QueryValue qValue = new QueryValue("Group", c);
+//		qValue.setCacheable(true);
+		
 		Object[] groupSets = qValue.executeQuery();
 		if (groupSets.length > 0) {
 			Group set = (Group) groupSets[0];
@@ -306,6 +308,7 @@ public class TableResultTabBean {
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(groupName), Conditions.OP_EQUALS);
 			QueryValue qValue = new QueryValue("CompoundAttribute", c);
+//			qValue.setCacheable(true);
 			Object[] groups = qValue.executeQuery();
 			if (groups.length > 0) {
 				CompoundAttribute group = (CompoundAttribute) groups[0];

@@ -24,6 +24,7 @@ public class QueryValue {
 	private int order;
 	private int limit;
 	private int firstResult;
+	private boolean cacheable = false;
 	
 	private ArrayList populateValues = null;
 	private ArrayList populateValuesDictInfo = null;
@@ -145,6 +146,8 @@ public class QueryValue {
 		if (this.firstResult != FIRST_NO_FIRST) {
 			q.setFirstResult(this.firstResult);
 		}
+		q.setCacheable(this.isCacheable());
+		
 		return q;
 	}
 	 
@@ -154,5 +157,13 @@ public class QueryValue {
 	
 	public Object[] executeQuery(Session p_session) {
 		return HibernateConnector.getConnector().loadObjects(p_session, this);
+	}
+
+	public boolean isCacheable() {
+		return cacheable;
+	}
+
+	public void setCacheable(boolean cacheable) {
+		this.cacheable = cacheable;
 	}
 }

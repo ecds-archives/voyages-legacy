@@ -91,12 +91,14 @@ public class Voyage extends AbstractDescriptiveObject {
 		Conditions conditions = new Conditions();
 		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("ObjectType", conditions);
+		query.setCacheable(true);
 		Object[] types = (Object[]) query.executeQuery();
 		ObjectType type = (ObjectType)types[0];
 		
 		conditions = new Conditions();
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		query = new QueryValue("Group", conditions);
+		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		Group[] ret = null;
 		if (attributes.length == 0) {
@@ -115,12 +117,14 @@ public class Voyage extends AbstractDescriptiveObject {
 		Conditions conditions = new Conditions();
 		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("ObjectType", conditions);
+		query.setCacheable(true);
 		Object[] types = (Object[]) query.executeQuery();
 		ObjectType type = (ObjectType)types[0];
 		
 		conditions = new Conditions();
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		query = new QueryValue("Attribute", conditions);
+		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		Attribute[] ret = null;
 		if (attributes.length == 0) {
@@ -139,6 +143,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		Conditions conditions = new Conditions();
 		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("ObjectType", conditions);
+		query.setCacheable(true);
 		Object[] types = (Object[]) query.executeQuery();
 		ObjectType type = (ObjectType)types[0];
 		
@@ -146,6 +151,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		conditions.addCondition("name", name, Conditions.OP_EQUALS);
 		query = new QueryValue("Attribute", conditions);
+		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		Attribute ret = null;
 		if (attributes.length != 0) {
@@ -159,12 +165,14 @@ public class Voyage extends AbstractDescriptiveObject {
 		Conditions conditions = new Conditions();
 		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("ObjectType", conditions);
+		query.setCacheable(true);
 		Object[] types = (Object[]) query.executeQuery();
 		ObjectType type = (ObjectType)types[0];
 		
 		conditions = new Conditions();
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		query = new QueryValue("Attribute", conditions);
+		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		String[] ret = null;
 		if (attributes.length == 0) {
@@ -183,12 +191,14 @@ public class Voyage extends AbstractDescriptiveObject {
 		Conditions conditions = new Conditions();
 		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("ObjectType", conditions);
+		query.setCacheable(true);
 		Object[] types = (Object[]) query.executeQuery();
 		ObjectType type = (ObjectType)types[0];
 		
 		conditions = new Conditions();
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		query = new QueryValue("CompoundAttribute", conditions);
+		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		CompoundAttribute[] ret = null;
 		if (attributes.length == 0) {
