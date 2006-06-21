@@ -21,6 +21,8 @@ public class UIResultPageScroller extends UIInput {
 	public void encodeBegin(FacesContext context) throws IOException {
 		Integer resultFirst = null;
 		Integer resultSize = null;
+		Integer resultLast = null;
+		
 		ValueBinding vb = this.getValueBinding("resultFirst");
 		if (vb != null) {
 			resultFirst = (Integer)vb.getValue(context);
@@ -28,7 +30,15 @@ public class UIResultPageScroller extends UIInput {
 		vb = this.getValueBinding("resultSize");
 		if (vb != null) {
 			resultSize = (Integer) vb.getValue(context);
+			if (resultSize == null) {
+				resultSize = new Integer(0);
+			}
 		}
+		vb = this.getValueBinding("resultLast");
+		if (vb != null) {
+			resultLast = (Integer) vb.getValue(context);
+		}
+		
 		
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
@@ -36,7 +46,7 @@ public class UIResultPageScroller extends UIInput {
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
 		writer.write("Records from " + resultFirst.intValue() + 
-				" to " + (resultFirst.intValue() + resultSize.intValue()));
+				" to " + (resultFirst.intValue() + resultLast.intValue()) + " (of " + resultSize.intValue() + ") ");
 		writer.endElement("td");
 	}
 	

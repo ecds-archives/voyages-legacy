@@ -9,6 +9,7 @@ public class ResultPageScrollerTag extends UIComponentTag {
 
 	private String resultFirst;
 	private String resultSize;
+	private String resultLast;
 	
 	protected void setProperties(UIComponent component) {
 
@@ -24,6 +25,18 @@ public class ResultPageScrollerTag extends UIComponentTag {
                 component.getAttributes().put("resultFirst", resultFirst);
             }
 		}
+		
+		if (resultLast != null) {
+            if (isValueReference(resultFirst)) {
+                ValueBinding vb =
+                    getFacesContext().getApplication().
+                    createValueBinding(resultLast);
+                component.setValueBinding("resultLast", vb);
+            } else {
+                component.getAttributes().put("resultLast", resultLast);
+            }
+		}
+		
 		if (resultSize != null) {
             if (isValueReference(resultSize)) {
                 ValueBinding vb =
@@ -59,6 +72,14 @@ public class ResultPageScrollerTag extends UIComponentTag {
 
 	public void setResultSize(String resultSize) {
 		this.resultSize = resultSize;
+	}
+
+	public String getResultLast() {
+		return resultLast;
+	}
+
+	public void setResultLast(String resultLast) {
+		this.resultLast = resultLast;
 	}
 
 }

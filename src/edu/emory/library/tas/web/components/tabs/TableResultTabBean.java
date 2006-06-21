@@ -2,12 +2,10 @@ package edu.emory.library.tas.web.components.tabs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import edu.emory.library.tas.Voyage;
