@@ -42,7 +42,7 @@ public class TableResultTabBean {
 
 	private String selectedAttributeToAdd;
 
-	private int numberOfResults;
+	private Integer numberOfResults;
 
 	public TableResultTabBean() {
 
@@ -70,11 +70,6 @@ public class TableResultTabBean {
 	}
 
 	private void getResultsDB() {
-		// if (this.condition != null) {
-		// System.out.println("2: --------------------------------------");
-		// System.out
-		// .println(this.condition.getConditionHQL().conditionString);
-		// }
 		if (this.condition != null && this.componentVisible.booleanValue()
 				&& needQuery) {
 			Conditions localCond = (Conditions) this.condition
@@ -170,12 +165,9 @@ public class TableResultTabBean {
 		localCond.addCondition(VoyageIndex.getRecent());
 
 		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
-		qValue.setLimit(this.getStep().intValue());
-		qValue.setFirstResult(this.getCurrent().intValue());
-		qValue.setOrderBy("v.voyageId");
-		qValue.addPopulatedAttribute("cnt(v.voyageId)", false);
+		qValue.addPopulatedAttribute("count(v.voyageId)", false);
 		Object [] ret = qValue.executeQuery();
-		this.numberOfResults = ((Integer)ret[0]).intValue();
+		this.numberOfResults = (Integer)ret[0];
 	}
 
 	public Boolean getComponentVisible() {
@@ -365,7 +357,7 @@ public class TableResultTabBean {
 		return null;
 	}
 
-	public int getNumberOfResults() {
+	public Integer getNumberOfResults() {
 		return numberOfResults;
 	}
 
