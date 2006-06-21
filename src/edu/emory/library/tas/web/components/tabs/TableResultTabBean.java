@@ -49,7 +49,7 @@ public class TableResultTabBean {
 	}
 
 	public String next() {
-		if (current % step == 0 && this.condition != null) {
+		if (current + step < this.numberOfResults.intValue() && this.condition != null) {
 			current += step;
 			this.needQuery = true;
 		}
@@ -61,6 +61,9 @@ public class TableResultTabBean {
 	public String prev() {
 		if (current > 0 && this.condition != null) {
 			current -= step;
+			if (current < 0) {
+				current = 0;
+			}
 			this.needQuery = true;
 		}
 		this.getResultsDB();
@@ -105,6 +108,9 @@ public class TableResultTabBean {
 	}
 
 	public void setStep(Integer step) {
+		if (this.step != step.intValue()) {
+			this.needQuery = true;
+		}
 		this.step = step.intValue();
 	}
 
@@ -153,6 +159,7 @@ public class TableResultTabBean {
 			condition = c;
 			needQuery = true;
 			this.setNumberOfResults();
+			this.current = 0;
 		}
 	}
 
