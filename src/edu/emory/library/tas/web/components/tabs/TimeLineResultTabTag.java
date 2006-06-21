@@ -1,11 +1,8 @@
 package edu.emory.library.tas.web.components.tabs;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
-
-import edu.emory.library.tas.util.query.Conditions;
 
 public class TimeLineResultTabTag extends UIComponentTag {
 

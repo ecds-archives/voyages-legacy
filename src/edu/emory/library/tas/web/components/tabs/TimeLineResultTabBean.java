@@ -19,10 +19,8 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.time.Year;
 import org.jfree.ui.RectangleInsets;
 
-import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
@@ -133,7 +131,6 @@ public class TimeLineResultTabBean {
 
 			for (int i = 0; i < ret.length; i++) {
 				Object[] row = (Object[]) ret[i];
-				String label = row[0] != null ? (row[0].toString()) : "null";
 				timeseries.add(new Day((Date) row[0]), (Number) row[1]);
 
 			}
