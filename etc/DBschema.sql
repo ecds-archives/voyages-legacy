@@ -1,20 +1,39 @@
+-- Role: "tasuser"
+
+-- DROP ROLE tasuser;
+
 CREATE ROLE tasuser LOGIN
-  ENCRYPTED PASSWORD 'md51542627f8efdf6a76f9555f130b9fef0'
-  NOSUPERUSER NOINHERIT NOCREATEDB NOCREATEROLE;
+  NOSUPERUSER NOINHERIT CREATEDB NOCREATEROLE;
+
+
+
+
+-- Database: tasdb
+
+-- DROP DATABASE tasdb;
 
 CREATE DATABASE tasdb
-  WITH OWNER = tasuser
+  WITH OWNER = postgres
        ENCODING = 'UTF8'
        TABLESPACE = pg_default;
 
 
 
+
+
+-- Sequence: hibernate_sequence
+
+-- DROP SEQUENCE hibernate_sequence;
+
 CREATE SEQUENCE hibernate_sequence
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
-  START 1000
+  START 263125
   CACHE 1;
+ALTER TABLE hibernate_sequence OWNER TO tasuser;
+
+
 
 
 -- Table: dictionary
@@ -30,6 +49,7 @@ CREATE TABLE dictionary
   CONSTRAINT pk_dictionary PRIMARY KEY (oid)
 ) 
 WITHOUT OIDS;
+ALTER TABLE dictionary OWNER TO tasuser;
 
 
 -- Index: dict_index_obj_type
@@ -51,228 +71,9 @@ CREATE INDEX dict_index_remote_id
   (remote_id);
 
 
--- Table: slaves
-
--- DROP TABLE slaves;
-
-CREATE TABLE slaves
-(
-  sid int8 NOT NULL,
-  iid int8 NOT NULL,
-  slave_name text,
-  sexage int8,
-  age float8,
-  feet float8,
-  inch float8,
-  country int8,
-  name varchar(25),
-  unclear int8,
-  nameimp varchar(25),
-  natimp int8,
-  bodypt1 int8,
-  placea1 int8,
-  placeb1 int8,
-  marksize int8,
-  marktype int8,
-  marknumb int8,
-  markdegr int8,
-  othrmark int8,
-  markspec int8,
-  bodypt2 int8,
-  placea2 int8,
-  placeb2 int8,
-  marksiz2 int8,
-  marktyp2 int8,
-  marknum2 int8,
-  markdeg2 int8,
-  bodypt3 int8,
-  placea3 int8,
-  placeb3 int8,
-  marksiz3 int8,
-  marktyp3 int8,
-  marknum3 int8,
-  markdeg3 int8,
-  bodypt4 int8,
-  bodypt5 int8,
-  bodypt6 int8,
-  placea4 int8,
-  placea5 int8,
-  placea6 int8,
-  placeb4 int8,
-  placeb5 int8,
-  placeb6 int8,
-  marksiz4 int8,
-  marksiz5 int8,
-  marksiz6 int8,
-  marktyp6 int8,
-  marktyp5 int8,
-  marktyp4 int8,
-  marknum4 int8,
-  marknum5 int8,
-  marknum6 int8,
-  markdeg6 int8,
-  markdeg5 int8,
-  markdeg4 int8,
-  majselpt int8,
-  source varchar(8),
-  majbuypt int8,
-  datarr34 int8,
-  regem1 int8,
-  ageinf int2,
-  CONSTRAINT pk_slaves PRIMARY KEY (iid),
-  CONSTRAINT bodypt1 FOREIGN KEY (bodypt1)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT bodypt2 FOREIGN KEY (bodypt2)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT bodypt3 FOREIGN KEY (bodypt3)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT bodypt4 FOREIGN KEY (bodypt4)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT bodypt5 FOREIGN KEY (bodypt5)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT bodypt6 FOREIGN KEY (bodypt6)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT country FOREIGN KEY (country)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT markdeg2 FOREIGN KEY (markdeg2)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT markdeg3 FOREIGN KEY (markdeg3)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT markdeg4 FOREIGN KEY (markdeg4)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT markdeg5 FOREIGN KEY (markdeg5)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT markdeg6 FOREIGN KEY (markdeg6)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT markdegr FOREIGN KEY (markdegr)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marknum2 FOREIGN KEY (marknum2)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marknum3 FOREIGN KEY (marknum3)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marknum4 FOREIGN KEY (marknum4)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marknum5 FOREIGN KEY (marknum5)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marknum6 FOREIGN KEY (marknum6)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marknumb FOREIGN KEY (marknumb)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marksiz2 FOREIGN KEY (marksiz2)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marksiz3 FOREIGN KEY (marksiz3)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marksiz4 FOREIGN KEY (marksiz4)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marksiz5 FOREIGN KEY (marksiz5)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marksiz6 FOREIGN KEY (marksiz6)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marksize FOREIGN KEY (marksize)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT markspec FOREIGN KEY (markspec)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marktyp2 FOREIGN KEY (marktyp2)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marktyp3 FOREIGN KEY (marktyp3)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marktyp4 FOREIGN KEY (marktyp4)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marktyp5 FOREIGN KEY (marktyp5)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marktyp6 FOREIGN KEY (marktyp6)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT marktype FOREIGN KEY (marktype)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT natimp FOREIGN KEY (natimp)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT othrmark FOREIGN KEY (othrmark)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placea1 FOREIGN KEY (placea1)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placea2 FOREIGN KEY (placea2)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placea3 FOREIGN KEY (placea3)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placea4 FOREIGN KEY (placea4)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placea5 FOREIGN KEY (placea5)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placea6 FOREIGN KEY (placea6)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placeb1 FOREIGN KEY (placeb1)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placeb2 FOREIGN KEY (placeb2)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placeb3 FOREIGN KEY (placeb3)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placeb4 FOREIGN KEY (placeb4)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placeb5 FOREIGN KEY (placeb5)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT placeb6 FOREIGN KEY (placeb6)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT sexage FOREIGN KEY (sexage)
-      REFERENCES dictionary (oid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-) 
-WITHOUT OIDS;
 
 
--- Index: index_iid
 
--- DROP INDEX index_iid;
-
-CREATE INDEX index_iid
-  ON slaves
-  USING btree
-  (iid);
 
 
 -- Table: voyages
@@ -455,13 +256,13 @@ CREATE TABLE voyages
   fate3 int8,
   fate4 int8,
   mjselimp int8,
-  sla32imp int2,
-  sla36imp int2,
-  imprat int4,
+  sla32imp float8,
+  sla36imp float8,
+  imprat float8,
   regdis11 int8,
   regdis21 int8,
   sla39imp int4,
-  ncr15imp int4,
+  ncr15imp float8,
   ncr17imp int4,
   exprat float8,
   male1imp int4,
@@ -480,8 +281,8 @@ CREATE TABLE voyages
   slavema3 int4,
   adlt3imp int4,
   vymrtrat float8,
-  slaximp int4,
-  slamimp int4,
+  slaximp float8,
+  slamimp float8,
   deptreg1 int8,
   mjselrg1 int8,
   constreg int8,
@@ -824,6 +625,7 @@ CREATE TABLE voyages
       ON UPDATE NO ACTION ON DELETE NO ACTION
 ) 
 WITHOUT OIDS;
+ALTER TABLE voyages OWNER TO tasuser;
 
 
 -- Index: vid_index
@@ -836,34 +638,231 @@ CREATE INDEX vid_index
   (vid);
 
 
--- Table: voyages_index
 
--- DROP TABLE voyages_index;
+-- Table: slaves
 
-CREATE TABLE voyages_index
+-- DROP TABLE slaves;
+
+CREATE TABLE slaves
 (
-  vid int8 NOT NULL,
-  global_rev_id int8 NOT NULL,
-  flag int2 DEFAULT 0,
-  revision_date date NOT NULL,
-  voyage_index_id int8 NOT NULL,
-  r_voyage_iid int8 NOT NULL,
-  CONSTRAINT pk_voyage_index PRIMARY KEY (voyage_index_id),
-  CONSTRAINT fk_voyage_index_to_voyage FOREIGN KEY (r_voyage_iid)
-      REFERENCES voyages (iid) MATCH SIMPLE
+  sid int8 NOT NULL,
+  iid int8 NOT NULL,
+  slave_name text,
+  sexage int8,
+  age float8,
+  feet float8,
+  inch float8,
+  country int8,
+  name varchar(25),
+  unclear int8,
+  nameimp varchar(25),
+  natimp int8,
+  bodypt1 int8,
+  placea1 int8,
+  placeb1 int8,
+  marksize int8,
+  marktype int8,
+  marknumb int8,
+  markdegr int8,
+  othrmark int8,
+  markspec int8,
+  bodypt2 int8,
+  placea2 int8,
+  placeb2 int8,
+  marksiz2 int8,
+  marktyp2 int8,
+  marknum2 int8,
+  markdeg2 int8,
+  bodypt3 int8,
+  placea3 int8,
+  placeb3 int8,
+  marksiz3 int8,
+  marktyp3 int8,
+  marknum3 int8,
+  markdeg3 int8,
+  bodypt4 int8,
+  bodypt5 int8,
+  bodypt6 int8,
+  placea4 int8,
+  placea5 int8,
+  placea6 int8,
+  placeb4 int8,
+  placeb5 int8,
+  placeb6 int8,
+  marksiz4 int8,
+  marksiz5 int8,
+  marksiz6 int8,
+  marktyp6 int8,
+  marktyp5 int8,
+  marktyp4 int8,
+  marknum4 int8,
+  marknum5 int8,
+  marknum6 int8,
+  markdeg6 int8,
+  markdeg5 int8,
+  markdeg4 int8,
+  majselpt int8,
+  source varchar(8),
+  majbuypt int8,
+  datarr34 int8,
+  regem1 int8,
+  ageinf int2,
+  CONSTRAINT pk_slaves PRIMARY KEY (iid),
+  CONSTRAINT bodypt1 FOREIGN KEY (bodypt1)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT bodypt2 FOREIGN KEY (bodypt2)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT bodypt3 FOREIGN KEY (bodypt3)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT bodypt4 FOREIGN KEY (bodypt4)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT bodypt5 FOREIGN KEY (bodypt5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT bodypt6 FOREIGN KEY (bodypt6)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT country FOREIGN KEY (country)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT markdeg2 FOREIGN KEY (markdeg2)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT markdeg3 FOREIGN KEY (markdeg3)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT markdeg4 FOREIGN KEY (markdeg4)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT markdeg5 FOREIGN KEY (markdeg5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT markdeg6 FOREIGN KEY (markdeg6)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT markdegr FOREIGN KEY (markdegr)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marknum2 FOREIGN KEY (marknum2)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marknum3 FOREIGN KEY (marknum3)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marknum4 FOREIGN KEY (marknum4)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marknum5 FOREIGN KEY (marknum5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marknum6 FOREIGN KEY (marknum6)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marknumb FOREIGN KEY (marknumb)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marksiz2 FOREIGN KEY (marksiz2)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marksiz3 FOREIGN KEY (marksiz3)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marksiz4 FOREIGN KEY (marksiz4)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marksiz5 FOREIGN KEY (marksiz5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marksiz6 FOREIGN KEY (marksiz6)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marksize FOREIGN KEY (marksize)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT markspec FOREIGN KEY (markspec)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marktyp2 FOREIGN KEY (marktyp2)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marktyp3 FOREIGN KEY (marktyp3)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marktyp4 FOREIGN KEY (marktyp4)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marktyp5 FOREIGN KEY (marktyp5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marktyp6 FOREIGN KEY (marktyp6)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT marktype FOREIGN KEY (marktype)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT natimp FOREIGN KEY (natimp)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT othrmark FOREIGN KEY (othrmark)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placea1 FOREIGN KEY (placea1)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placea2 FOREIGN KEY (placea2)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placea3 FOREIGN KEY (placea3)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placea4 FOREIGN KEY (placea4)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placea5 FOREIGN KEY (placea5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placea6 FOREIGN KEY (placea6)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placeb1 FOREIGN KEY (placeb1)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placeb2 FOREIGN KEY (placeb2)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placeb3 FOREIGN KEY (placeb3)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placeb4 FOREIGN KEY (placeb4)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placeb5 FOREIGN KEY (placeb5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT placeb6 FOREIGN KEY (placeb6)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT sexage FOREIGN KEY (sexage)
+      REFERENCES dictionary (oid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 ) 
 WITHOUT OIDS;
+ALTER TABLE slaves OWNER TO tasuser;
 
 
--- Index: index_main
+-- Index: index_iid
 
--- DROP INDEX index_main;
+-- DROP INDEX index_iid;
 
-CREATE INDEX index_main
-  ON voyages_index
+CREATE INDEX index_iid
+  ON slaves
   USING btree
-  (vid, voyage_index_id);
+  (iid);
+
 
 
 -- Table: voyage_slaves
@@ -883,6 +882,7 @@ CREATE TABLE voyage_slaves
       ON UPDATE NO ACTION ON DELETE NO ACTION
 ) 
 WITHOUT OIDS;
+ALTER TABLE voyage_slaves OWNER TO tasuser;
 
 
 -- Index: index_voyage_slaves
@@ -894,9 +894,279 @@ CREATE INDEX index_voyage_slaves
   USING btree
   (r_slave_id, r_voyage_index_id);
 
-ALTER TABLE hibernate_sequence OWNER TO tasuser;
-ALTER TABLE dictionary OWNER TO tasuser;
-ALTER TABLE slaves OWNER TO tasuser;
-ALTER TABLE voyage_slaves OWNER TO tasuser;
-ALTER TABLE voyages OWNER TO tasuser;
+
+
+-- Table: voyages_index
+
+-- DROP TABLE voyages_index;
+
+CREATE TABLE voyages_index
+(
+  vid int8 NOT NULL,
+  global_rev_id int8 NOT NULL,
+  flag int2 DEFAULT 0,
+  revision_date date NOT NULL,
+  voyage_index_id int8 NOT NULL,
+  r_voyage_iid int8 NOT NULL,
+  latest_approved int2,
+  latest int2,
+  CONSTRAINT pk_voyage_index PRIMARY KEY (voyage_index_id),
+  CONSTRAINT fk_voyage_index_to_voyage FOREIGN KEY (r_voyage_iid)
+      REFERENCES voyages (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+) 
+WITHOUT OIDS;
 ALTER TABLE voyages_index OWNER TO tasuser;
+
+
+-- Index: index_main
+
+-- DROP INDEX index_main;
+
+CREATE INDEX index_main
+  ON voyages_index
+  USING btree
+  (vid, voyage_index_id);
+
+-- Index: index_main_index_id
+
+-- DROP INDEX index_main_index_id;
+
+CREATE INDEX index_main_index_id
+  ON voyages_index
+  USING btree
+  (voyage_index_id);
+
+-- Index: index_main_vid
+
+-- DROP INDEX index_main_vid;
+
+CREATE INDEX index_main_vid
+  ON voyages_index
+  USING btree
+  (vid);
+
+-- Index: main_index_revision_id
+
+-- DROP INDEX main_index_revision_id;
+
+CREATE INDEX main_index_revision_id
+  ON voyages_index
+  USING btree
+  (global_rev_id);
+
+
+
+-- Table: object_types
+
+-- DROP TABLE object_types;
+
+CREATE TABLE object_types
+(
+  iid int8 NOT NULL,
+  name varchar NOT NULL,
+  CONSTRAINT pk_object_types PRIMARY KEY (iid)
+) 
+WITHOUT OIDS;
+ALTER TABLE object_types OWNER TO tasuser;
+
+
+
+-- Table: attributes
+
+-- DROP TABLE attributes;
+
+CREATE TABLE attributes
+(
+  iid int8 NOT NULL,
+  attr_name varchar(40) NOT NULL,
+  user_label varchar(40),
+  r_object_type_id int8 NOT NULL,
+  attr_type int2,
+  attr_dictionary varchar(40),
+  attr_description varchar(300),
+  attr_import_type int2,
+  attr_length int4 DEFAULT -1,
+  attr_import_name varchar(40),
+  attr_import_date_day varchar(40),
+  attr_import_date_month varchar(40),
+  attr_import_date_year varchar(40),
+  CONSTRAINT pk_attributes PRIMARY KEY (iid),
+  CONSTRAINT fk_attribute_to_object_type FOREIGN KEY (r_object_type_id)
+      REFERENCES object_types (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+) 
+WITHOUT OIDS;
+ALTER TABLE attributes OWNER TO tasuser;
+
+
+
+
+-- Table: compound_attributes
+
+-- DROP TABLE compound_attributes;
+
+CREATE TABLE compound_attributes
+(
+  iid int8 NOT NULL,
+  name varchar(40),
+  user_label varchar(40),
+  "type" int2,
+  dictionary varchar(40),
+  description varchar(40),
+  r_object_type_id int8 NOT NULL DEFAULT 1,
+  length int4 DEFAULT -1,
+  CONSTRAINT pk_groups PRIMARY KEY (iid),
+  CONSTRAINT fk_groups_to_oject_types FOREIGN KEY (r_object_type_id)
+      REFERENCES object_types (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+) 
+WITHOUT OIDS;
+ALTER TABLE compound_attributes OWNER TO tasuser;
+
+
+-- Index: index_group_iid
+
+-- DROP INDEX index_group_iid;
+
+CREATE INDEX index_group_iid
+  ON compound_attributes
+  USING btree
+  (iid);
+
+-- Index: index_group_name
+
+-- DROP INDEX index_group_name;
+
+CREATE INDEX index_group_name
+  ON compound_attributes
+  USING btree
+  (name);
+
+
+
+-- Table: groups
+
+-- DROP TABLE groups;
+
+CREATE TABLE groups
+(
+  iid int8 NOT NULL,
+  name varchar(40) NOT NULL,
+  user_label varchar(40),
+  r_object_type_id int8 NOT NULL DEFAULT 1,
+  description varchar(40),
+  CONSTRAINT pk_groupsets PRIMARY KEY (iid),
+  CONSTRAINT fk_groupset_to_object_type FOREIGN KEY (r_object_type_id)
+      REFERENCES object_types (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+) 
+WITHOUT OIDS;
+ALTER TABLE groups OWNER TO tasuser;
+
+
+-- Index: index_groupset_iid
+
+-- DROP INDEX index_groupset_iid;
+
+CREATE INDEX index_groupset_iid
+  ON groups
+  USING btree
+  (iid);
+
+-- Index: index_groupset_name
+
+-- DROP INDEX index_groupset_name;
+
+CREATE INDEX index_groupset_name
+  ON groups
+  USING btree
+  (name);
+
+
+
+-- Table: compound_attribute_attributes
+
+-- DROP TABLE compound_attribute_attributes;
+
+CREATE TABLE compound_attribute_attributes
+(
+  r_compound_attribute_id int8 NOT NULL,
+  r_attribute_id int8 NOT NULL,
+  CONSTRAINT pk_group_attributes PRIMARY KEY (r_compound_attribute_id, r_attribute_id),
+  CONSTRAINT fk_compound_attribute_attributes_to_compound_attributes FOREIGN KEY (r_compound_attribute_id)
+      REFERENCES compound_attributes (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_compound_attributes_to_attributes FOREIGN KEY (r_attribute_id)
+      REFERENCES attributes (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+) 
+WITHOUT OIDS;
+ALTER TABLE compound_attribute_attributes OWNER TO tasuser;
+
+
+-- Index: index_group_attributes_group_id
+
+-- DROP INDEX index_group_attributes_group_id;
+
+CREATE INDEX index_group_attributes_group_id
+  ON compound_attribute_attributes
+  USING btree
+  (r_compound_attribute_id);
+
+
+
+-- Table: group_attributes
+
+-- DROP TABLE group_attributes;
+
+CREATE TABLE group_attributes
+(
+  r_group_id int8 NOT NULL,
+  r_attribute_id int8 NOT NULL,
+  CONSTRAINT pk_groupset_attribute PRIMARY KEY (r_group_id, r_attribute_id),
+  CONSTRAINT fk_group_attribute_to_attributes FOREIGN KEY (r_attribute_id)
+      REFERENCES attributes (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_group_attribute_to_groups FOREIGN KEY (r_group_id)
+      REFERENCES groups (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+) 
+WITHOUT OIDS;
+ALTER TABLE group_attributes OWNER TO tasuser;
+
+
+
+
+-- Table: group_compound_attributes
+
+-- DROP TABLE group_compound_attributes;
+
+CREATE TABLE group_compound_attributes
+(
+  r_group_id int8 NOT NULL,
+  r_compound_attribute_id int8 NOT NULL,
+  CONSTRAINT pk_groupset_groups PRIMARY KEY (r_group_id, r_compound_attribute_id),
+  CONSTRAINT fk_group_compound_attributes_to_compound_attributes FOREIGN KEY (r_compound_attribute_id)
+      REFERENCES compound_attributes (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_group_compound_attributes_to_groups FOREIGN KEY (r_group_id)
+      REFERENCES groups (iid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+) 
+WITHOUT OIDS;
+ALTER TABLE group_compound_attributes OWNER TO tasuser;
+
+
+-- Index: index_groupset_groups_groupset_id
+
+-- DROP INDEX index_groupset_groups_groupset_id;
+
+CREATE INDEX index_groupset_groups_groupset_id
+  ON group_compound_attributes
+  USING btree
+  (r_group_id);
+
+
+
+
