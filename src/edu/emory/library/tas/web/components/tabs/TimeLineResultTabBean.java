@@ -39,6 +39,10 @@ public class TimeLineResultTabBean {
 	private static final String[] aggregatesUL = { "Avg", "Min", "Max", "Sum",
 			"Count" };
 
+	private static final String DEFAULT_CHART_HEIGHT = "480";
+
+	private static final String DEFAULT_CHART_WIDTH = "640";
+
 	private List voyageAttributes;
 
 	private List aggregateFunctions;
@@ -49,8 +53,6 @@ public class TimeLineResultTabBean {
 
 	private Conditions conditions = null;
 
-	private boolean largeViewMode = false;
-
 	private boolean needQuery = false;
 
 	private boolean attributesChanged = false;
@@ -58,6 +60,10 @@ public class TimeLineResultTabBean {
 	private JFreeChart chart;
 
 	private Boolean componentVisible = new Boolean(false);
+
+	private String chartHeight = DEFAULT_CHART_HEIGHT;
+
+	private String chartWidth = DEFAULT_CHART_WIDTH;
 
 	public TimeLineResultTabBean() {
 	}
@@ -145,13 +151,6 @@ public class TimeLineResultTabBean {
 			xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
 			xyplot.setDomainCrosshairVisible(true);
 			xyplot.setRangeCrosshairVisible(true);
-			// if(xyitemrenderer instanceof XYLineAndShapeRenderer)
-			// {
-			// XYLineAndShapeRenderer xylineandshaperenderer =
-			// (XYLineAndShapeRenderer)xyitemrenderer;
-			// // xylineandshaperenderer.setDefaultShapesVisible(true);
-			// // xylineandshaperenderer.setDefaultShapesFilled(true);
-			// }
 			DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
 			dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
 
@@ -192,26 +191,17 @@ public class TimeLineResultTabBean {
 	}
 
 	public String getChartPath() {
-		return IMAGE_FEEDED_SERVLET + "?path=__chart__object";
+		return IMAGE_FEEDED_SERVLET 
+				+ "?path=__chart__object&&height=" 
+				+ this.chartHeight + "&width=" 
+				+ this.chartWidth;
 	}
 
 	public void setChartPath(String path) {
 	}
-
-	public boolean getNormalView() {
-		return largeViewMode == false;
-	}
-
-	public boolean getLargeView() {
-		return largeViewMode;
-	}
-
-	public void setLargeView() {
-		this.largeViewMode = true;
-	}
-
-	public void setNormalView() {
-		this.largeViewMode = false;
+	
+	public String setNewView() {
+		return null;
 	}
 
 	public boolean getChartReady() {
@@ -242,5 +232,21 @@ public class TimeLineResultTabBean {
 		if (shouldQuery) {
 			this.showTimeLine();
 		}
+	}
+
+	public String getChartHeight() {
+		return chartHeight;
+	}
+
+	public void setChartHeight(String chartHeight) {
+		this.chartHeight = chartHeight;
+	}
+
+	public String getChartWidth() {
+		return chartWidth;
+	}
+
+	public void setChartWidth(String chartWidth) {
+		this.chartWidth = chartWidth;
 	}
 }

@@ -35,7 +35,6 @@ public class UITimeLineResultTab extends UIOutput implements
 	public void encodeBegin(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
-		writer.startElement("table", this);
 		
 		String style = (String)getAttributes().get("style");
 		if (style!=null)
@@ -62,6 +61,8 @@ public class UITimeLineResultTab extends UIOutput implements
 				vb.setValue(context, c);
 			}
 		}
+		
+		writer.startElement("table", this);
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException {
