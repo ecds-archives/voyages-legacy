@@ -3,6 +3,9 @@ package edu.emory.library.tas.attrGroups;
 import java.io.Serializable;
 
 public class ObjectType implements Serializable {
+	
+	private static final long serialVersionUID = -5680579514956701065L;
+
 	private Long id;
 	private String typeName;
 	

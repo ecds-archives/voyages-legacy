@@ -1,20 +1,17 @@
 package edu.emory.library.tas.attrGroups;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Calendar;
+import java.util.List;
 
-import edu.emory.library.tas.Dictionary;
-import edu.emory.library.tas.InvalidDateException;
-import edu.emory.library.tas.InvalidNumberException;
-import edu.emory.library.tas.InvalidNumberOfValuesException;
-import edu.emory.library.tas.StringTooLongException;
-import edu.emory.library.tas.util.query.Conditions;
-import edu.emory.library.tas.util.query.QueryValue;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Expression;
+
+import edu.emory.library.tas.util.HibernateUtil;
 
 public class Attribute extends AbstractAttribute {
 	
-	
+	private static final long serialVersionUID = -8780232223504322861L;
+
 	public final static int IMPORT_TYPE_IGNORE = -1;
 	public final static int IMPORT_TYPE_NUMERIC = 0; 
 	public final static int IMPORT_TYPE_STRING = 1; 
@@ -40,16 +37,20 @@ public class Attribute extends AbstractAttribute {
 	}
 	
 	
-	public static AbstractAttribute loadById(Long id)
-	{
-		Conditions conditions = new Conditions();
-		conditions.addCondition("id", id, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("Attribute", conditions);
-		Object[] groups = (Object[]) query.executeQuery();
-		if (groups.length == 0) {
-			return null;
-		}
-		return (AbstractAttribute) groups[0];
+	public static AbstractAttribute loadById(Long id) {
+		Session session = HibernateUtil.getSession();
+		AbstractAttribute attr = loadById(id, session);
+		session.close();
+		return attr;
+	}
+	
+	public static AbstractAttribute loadById(Long id, Session session) {
+		Criteria crit = session.createCriteria(Attribute.class);
+		crit.add(Expression.eq("id", id));
+		crit.setMaxResults(1);
+		List list = crit.list();
+		if (list == null || list.size() == 0) return null;
+		return (AbstractAttribute) list.get(0);
 	}
 
 	public String getImportDateDay()

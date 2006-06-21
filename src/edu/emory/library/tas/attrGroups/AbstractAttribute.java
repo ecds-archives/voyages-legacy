@@ -3,7 +3,11 @@ package edu.emory.library.tas.attrGroups;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
+
+import org.hibernate.Session;
 
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.InvalidDateException;
@@ -273,7 +277,7 @@ public abstract class AbstractAttribute implements Serializable {
 	public String toString() {
 		return "Attribute: " + this.name;
 	}
-	
+
 	public static AbstractAttribute loadById(Long id) {
 		AbstractAttribute attribute = Attribute.loadById(id);
 		if (attribute == null) {
@@ -282,6 +286,14 @@ public abstract class AbstractAttribute implements Serializable {
 		return attribute;
 	}
 	
+	public static AbstractAttribute loadById(Long id, Session session) {
+		AbstractAttribute attribute = Attribute.loadById(id, session);
+		if (attribute == null) {
+			attribute = CompoundAttribute.loadById(id, session);
+		}
+		return attribute;
+	}
+
 	public boolean equals(Object obj)
 	{
 		if (!(obj instanceof AbstractAttribute)) {
@@ -315,6 +327,36 @@ public abstract class AbstractAttribute implements Serializable {
 		if (length != null) {
 			this.length = length;
 		}
+	}
+	
+	public static class UserLabelComparator implements Comparator
+	{
+		public int compare(Object o1, Object o2)
+		{
+			AbstractAttribute a1 = (AbstractAttribute) o1;
+			AbstractAttribute a2 = (AbstractAttribute) o2;
+			return a1.getUserLabel().compareTo(a2.getUserLabel());
+		}
+	}
+	
+	public static void sortByUserLabel(Object[] array)
+	{
+		Arrays.sort(array, new AbstractAttribute.UserLabelComparator());
+	}
+	
+	public static class NameComparator implements Comparator
+	{
+		public int compare(Object o1, Object o2)
+		{
+			AbstractAttribute a1 = (AbstractAttribute) o1;
+			AbstractAttribute a2 = (AbstractAttribute) o2;
+			return a1.getName().compareTo(a2.getName());
+		}
+	}
+
+	public static void sortByName(Object[] array)
+	{
+		Arrays.sort(array, new AbstractAttribute.NameComparator());
 	}
 	
 }

@@ -2,10 +2,14 @@ package edu.emory.library.tas.attrGroups;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import edu.emory.library.tas.util.query.Conditions;
-import edu.emory.library.tas.util.query.QueryValue;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Expression;
+
+import edu.emory.library.tas.util.HibernateUtil;
 
 public class Group implements Serializable {
 	
@@ -23,12 +27,19 @@ public class Group implements Serializable {
 	}
 	
 	public static Group loadById(Long id) {
-		Conditions conditions = new Conditions();
-		conditions.addCondition("id", id, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("Group", conditions);
-		Object[] groups = (Object[]) query.executeQuery();
-		if (groups.length == 0) return null;
-		return (Group) groups[0];
+		Session session = HibernateUtil.getSession();
+		Group group = loadById(id, session);
+		session.close();
+		return group;
+	}
+	
+	public static Group loadById(Long id, Session session) {
+		Criteria crit = session.createCriteria(Group.class);
+		crit.add(Expression.eq("id", id));
+		crit.setMaxResults(1);
+		List list = crit.list();
+		if (list == null || list.size() == 0) return null;
+		return (Group) list.get(0);
 	}
 	
 	public Set getCompoundAttributes() {

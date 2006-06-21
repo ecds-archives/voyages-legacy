@@ -1,12 +1,19 @@
 package edu.emory.library.tas.attrGroups;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import edu.emory.library.tas.util.query.Conditions;
-import edu.emory.library.tas.util.query.QueryValue;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Expression;
+
+import edu.emory.library.tas.util.HibernateUtil;
 
 public class CompoundAttribute extends AbstractAttribute {
+	
+	private static final long serialVersionUID = -6276849726137818052L;
+
 	private Set attributes = new HashSet();
 	
 	
@@ -25,14 +32,19 @@ public class CompoundAttribute extends AbstractAttribute {
 	}
 	
 	public static AbstractAttribute loadById(Long id) {
-		Conditions conditions = new Conditions();
-		conditions.addCondition("id", id, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("CompoundAttribute", conditions);
-		Object[] groups = (Object[]) query.executeQuery();
-		if (groups.length == 0) {
-			return null;
-		}
-		return (AbstractAttribute) groups[0];
+		Session session = HibernateUtil.getSession();
+		AbstractAttribute attr = loadById(id, session);
+		session.close();
+		return attr;
+	}
+	
+	public static AbstractAttribute loadById(Long id, Session session) {
+		Criteria crit = session.createCriteria(CompoundAttribute.class);
+		crit.add(Expression.eq("id", id));
+		crit.setMaxResults(1);
+		List list = crit.list();
+		if (list == null || list.size() == 0) return null;
+		return (AbstractAttribute) list.get(0);
 	}
 	
 }
