@@ -177,5 +177,22 @@
 			<name>displayFieldName</name>
 		</attribute>
 	</tag>
-
+	
+	<tag>
+		<name>selectAndOrder</name>
+		<tag-class>
+			edu.emory.library.tas.web.schema.SelectAndOrderTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>availableItems</name>
+		</attribute>
+		<attribute>
+			<name>selectedItems</name>
+		</attribute>
+		<attribute>
+			<name>sortable</name>
+		</attribute>
+	</tag>
+	
 </taglib>

@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Group</title>
+	<title>Compound attribute</title>
 	<script src="select-and-order.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
@@ -14,26 +14,20 @@
 	<h:form>
 
 		<b>Name</b><br>
-		<h:inputText value="#{GroupsBean.groupName}" /><br>
+		<h:inputText value="#{CompoundAttributesBean.attributeName}" /><br>
 
 		<b>User label</b><br>
-		<h:inputText value="#{GroupsBean.groupUserLabel}" /><br>
+		<h:inputText value="#{CompoundAttributesBean.attributeUserLabel}" /><br>
 
 		<b>Attributes</b><br>
 		<s:selectAndOrder
 			sortable="false"
-			availableItems="#{GroupsBean.availableAttributes}"
-			selectedItems="#{GroupsBean.groupAttributes}" /><br>
+			availableItems="#{CompoundAttributesBean.availableAttributes}"
+			selectedItems="#{CompoundAttributesBean.attributeAttributes}" /><br>
 			
-		<b>Compound attributes</b><br>
-		<s:selectAndOrder
-			sortable="false"
-			availableItems="#{GroupsBean.availableCompoundAttributes}"
-			selectedItems="#{GroupsBean.groupCompoundAttributes}" /><br>
-
-		<h:commandButton value="Save" action="#{GroupsBean.saveGroup}" />
-		<h:commandButton value="Back" action="#{GroupsBean.cancelEdit}" />
-		<h:outputText value="#{GroupsBean.errorText}" />
+		<h:commandButton value="Save" action="#{CompoundAttributesBean.saveAttribute}" />
+		<h:commandButton value="Back" action="#{CompoundAttributesBean.cancelEdit}" />
+		<h:outputText value="#{CompoundAttributesBean.errorText}" />
 		
 	</h:form>
 </f:view>

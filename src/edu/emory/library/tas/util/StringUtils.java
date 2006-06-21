@@ -18,5 +18,11 @@ public class StringUtils
 		
 		return -1;
 	}
+	
+	public static String trimAndUnNull(String str)
+	{
+		if (str == null) return "";
+		return str.trim();
+	}
 
 }

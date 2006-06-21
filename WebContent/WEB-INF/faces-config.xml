@@ -58,6 +58,13 @@
 		</component-class>
 	</component>
 	
+	<component>
+		<component-type>SelectAndOrder</component-type>
+		<component-class>
+			edu.emory.library.tas.web.schema.SelectAndOrderComponent
+		</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>
@@ -118,35 +125,19 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>AttributeListBean</managed-bean-name>
+		<managed-bean-name>AttributesBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.schema.AttributeListBean
+			edu.emory.library.tas.web.schema.AttributesBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>AttributeEditBean</managed-bean-name>
+		<managed-bean-name>CompoundAttributesBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.schema.AttributeEditBean
+			edu.emory.library.tas.web.schema.CompoundAttributesBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>CompoundAttributeListBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tas.web.schema.CompoundAttributeListBean
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>CompoundAttributeEditBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tas.web.schema.CompoundAttributeEditBean
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
@@ -155,14 +146,6 @@
 			edu.emory.library.tas.web.schema.GroupsBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>GroupEditBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tas.web.schema.GroupEditBean
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>
@@ -182,18 +165,34 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/a.jsp</from-view-id>
+		<from-view-id>/schema-attribute-list.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>b</from-outcome>
-			<to-view-id>/b.jsp</to-view-id>
+			<from-outcome>edit</from-outcome>
+			<to-view-id>/schema-attribute-edit.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/schema-attribute-edit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/schema-attribute-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/b.jsp</from-view-id>
+		<from-view-id>/schema-compound-attribute-list.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>a</from-outcome>
-			<to-view-id>/a.jsp</to-view-id>
+			<from-outcome>edit</from-outcome>
+			<to-view-id>/schema-compound-attribute-edit.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/schema-compound-attribute-edit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

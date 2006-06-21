@@ -16,36 +16,29 @@ import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
-import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.StringUtils;
 
-public class GroupsBean
+public class CompoundAttributesBean
 {
-	
+
 	private EditMode editMode = EditMode.Voyages;
-	private Long groupId;
-	private String groupUserLabel;
-	private String groupName;
+	private Long attributeId;
+	private String attributeUserLabel;
+	private String attributeName;
 	private List availableAttributes = new ArrayList();
-	private List groupAttributes = new ArrayList();
-	private List availableCompoundAttributes = new ArrayList();
-	private List groupCompoundAttributes = new ArrayList();
+	private List attributeAttributes = new ArrayList();
 	
 	private String errorText;
 	
 	private class SaveException extends Exception
 	{
-		private static final long serialVersionUID = 6458860234621829596L;
+		private static final long serialVersionUID = 1272411262323327048L;
 		public SaveException(String msg)
 		{
 			super(msg);
 		}
-	}
-	
-	public GroupsBean()
-	{
 	}
 	
 	public String switchToVoyages()
@@ -60,12 +53,12 @@ public class GroupsBean
 		return null;
 	}
 
-	public Object[] getGroups()
+	public Object[] getAttributes()
 	{
 		if (editMode.isVoyages())
-			return Voyage.getGroups();
+			return Voyage.getCoumpoundAttributes();
 		else if (editMode.isSlaves())
-			return Slave.getGroups();
+			return Slave.getCoumpoundAttributes();
 		else
 			return null;
 	}
@@ -74,11 +67,15 @@ public class GroupsBean
 	{
 		if (attr.getUserLabel() == null || attr.getUserLabel().length() == 0)
 		{
-			return attr.getName() + ": [no label]";
+			return attr.getName() + ": " + 
+			"[no label]" + " " +
+			"(" + attr.getType() + ")";
 		}
 		else
 		{
-			return attr.getName() + ": " + attr.getUserLabel();
+			return attr.getName() + ": " +
+			attr.getUserLabel() + " " + 
+			"(" + attr.getType() + ")";
 		}
 	}
 	
@@ -117,33 +114,31 @@ public class GroupsBean
 		
 	}
 	
-	public void editGroup(ActionEvent event)
+	public void editAttribute(ActionEvent event)
 	{
 		
-		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("groupId");
+		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("attributeId");
 		if (groupIdParam == null) return;
 		
-		Group group = Group.loadById((Long) groupIdParam.getValue());
-		groupId = group.getId();
-		setGroupUserLabel(group.getUserLabel());
-		setGroupName(group.getName());
+		CompoundAttribute attribute = (CompoundAttribute) CompoundAttribute.loadById((Long) groupIdParam.getValue());
+		attributeId = attribute.getId();
+		setAttributeUserLabel(attribute.getUserLabel());
+		setAttributeName(attribute.getName());
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
-				(AbstractAttribute[]) group.getAttributes().toArray(new AbstractAttribute[0]),
-				groupAttributes,
+				(AbstractAttribute[]) attribute.getAttributes().toArray(new AbstractAttribute[0]),
+				attributeAttributes,
 				availableAttributes);
-		
-		moveAttributesToUI(
-				Voyage.getCoumpoundAttributes(),
-				(AbstractAttribute[]) group.getCompoundAttributes().toArray(new AbstractAttribute[0]),
-				groupCompoundAttributes,
-				availableCompoundAttributes);
 		
 	}
 	
-	private Set getNewAttributes(Session session, List uiAttributes, boolean isCompundAttr)
+	private Set getNewAttributes(Session session, List uiAttributes, boolean isCompundAttr) throws SaveException
 	{
+		
+		boolean first = true;
+		int type = 0;
+		String dictionaryName = null;
 		
 		Set newAttributes = new HashSet();
 		for (Iterator iter = uiAttributes.iterator(); iter.hasNext();)
@@ -157,38 +152,51 @@ public class GroupsBean
 				attr = Attribute.loadById(new Long(item.getValue()), session);
 				
 			if (attr != null)
+			{
+				if (first)
+				{
+					type = attr.getType().intValue();
+					dictionaryName = attr.getDictionary();
+					first = false;
+				}
+				else
+				{
+					if (type != attr.getType().intValue() ||
+							(type == AbstractAttribute.TYPE_DICT &&
+									!dictionaryName.equals(attr.getDictionary())))
+						throw new SaveException("The selected attributes are not of the same type.");
+				}
 				newAttributes.add(attr);
+			}
 		}
 		
 		return newAttributes;
 		
 	}
 	
-	public String saveGroup()
+	public String saveAttribute()
 	{
 
 		Session session = HibernateUtil.getSession();
-		Group group = Group.loadById(groupId, session);
+		CompoundAttribute attribute = (CompoundAttribute) CompoundAttribute.loadById(attributeId, session);
 
 		try
 		{
 			
-			String name = StringUtils.trimAndUnNull(groupName);
+			String name = StringUtils.trimAndUnNull(attributeName);
 			if (name.length() == 0)
-				throw new SaveException("Please specify the group name.");
+				throw new SaveException("Please specify attribute name.");
 			
-			String userLabel = StringUtils.trimAndUnNull(groupUserLabel);
+			String userLabel = StringUtils.trimAndUnNull(attributeUserLabel);
 			if (userLabel.length() == 0)
-				throw new SaveException("Please specify the label.");
+				throw new SaveException("Please specify label.");
 	
-			Set attributes = getNewAttributes(session, groupAttributes, false);
-			Set compoundAttributes = getNewAttributes(session, groupCompoundAttributes, false);
+			Set attributes = getNewAttributes(session, attributeAttributes, false);
 			
-			group.setName(name);
-			group.setUserLabel(userLabel);
-			group.setAttributes(attributes);
-			group.setCompoundAttributes(compoundAttributes);
-			HibernateConnector.getConnector().updateObject(group);
+			attribute.setName(name);
+			attribute.setUserLabel(userLabel);
+			attribute.setAttributes(attributes);
+			HibernateConnector.getConnector().updateObject(attribute);
 			
 			session.close();
 			errorText = null;
@@ -213,32 +221,30 @@ public class GroupsBean
 	private void clearEditResouces()
 	{
 		availableAttributes.clear();
-		groupAttributes.clear();
-		availableCompoundAttributes.clear();
-		groupCompoundAttributes.clear();
-		groupId = null;
-		groupName = null;
-		groupUserLabel = null;
+		attributeAttributes.clear();
+		attributeId = null;
+		attributeName = null;
+		attributeUserLabel = null;
 	}
 
-	public String getGroupUserLabel()
+	public String getAttributeUserLabel()
 	{
-		return groupUserLabel;
+		return attributeUserLabel;
 	}
 
-	public void setGroupUserLabel(String selectedGroupUserLabel)
+	public void setAttributeUserLabel(String selectedGroupUserLabel)
 	{
-		this.groupUserLabel = selectedGroupUserLabel;
+		this.attributeUserLabel = selectedGroupUserLabel;
 	}
 
-	public String getGroupName()
+	public String getAttributeName()
 	{
-		return groupName;
+		return attributeName;
 	}
 
-	public void setGroupName(String selectedGroupUserName)
+	public void setAttributeName(String selectedGroupUserName)
 	{
-		this.groupName = selectedGroupUserName;
+		this.attributeName = selectedGroupUserName;
 	}
 
 	public List getAvailableAttributes()
@@ -254,43 +260,17 @@ public class GroupsBean
 			this.availableAttributes = availableAttributes;
 	}
 
-	public List getAvailableCompoundAttributes()
+	public List getAttributeAttributes()
 	{
-		return availableCompoundAttributes;
+		return attributeAttributes;
 	}
 
-	public void setAvailableCompoundAttributes(List availableCompoundAttributes)
-	{
-		if (availableCompoundAttributes == null)
-			this.availableCompoundAttributes.clear();
-		else
-			this.availableCompoundAttributes = availableCompoundAttributes;
-	}
-
-	public List getGroupAttributes()
-	{
-		return groupAttributes;
-	}
-
-	public void setGroupAttributes(List groupAttributes)
+	public void setAttributeAttributes(List groupAttributes)
 	{
 		if (groupAttributes == null)
-			this.groupAttributes.clear();
+			this.attributeAttributes.clear();
 		else
-			this.groupAttributes = groupAttributes;
-	}
-
-	public List getGroupCompoundAttributes()
-	{
-		return groupCompoundAttributes;
-	}
-
-	public void setGroupCompoundAttributes(List groupCompoundAttributes)
-	{
-		if (groupCompoundAttributes == null)
-			this.groupCompoundAttributes.clear();
-		else
-			this.groupCompoundAttributes = groupCompoundAttributes;
+			this.attributeAttributes = groupAttributes;
 	}
 
 	public String getErrorText()

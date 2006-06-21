@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Groups</title>
+	<title>Attributes</title>
 </head>
 <body>
 <f:view>
@@ -18,32 +18,44 @@
 		
 		<br>
 	
-		<h:commandLink action="#{GroupsBean.switchToVoyages}" value="Voyages"/> |
-		<h:commandLink action="#{GroupsBean.switchToSlaves}" value="Slaves"/>
+		<h:commandLink action="#{AttributesBean.switchToVoyages}" value="Voyages"/> |
+		<h:commandLink action="#{AttributesBean.switchToSlaves}" value="Slaves"/>
 		
 		<br>
 		
-		<h:dataTable value="#{GroupsBean.groups}" var="group" border="1">
+		<h:dataTable value="#{AttributesBean.attributes}" var="attribute" border="1">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Name" />
 				</f:facet>
-				<h:commandLink actionListener="#{GroupsBean.editGroup}" action="edit">
-					<f:param id="groupId" name="groupId" value="#{group.id}" />
-					<h:outputText value="#{group.name}" />
+				<h:commandLink actionListener="#{AttributesBean.editAttribute}" action="edit">
+					<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
+					<h:outputText value="#{attribute.name}" />
 				</h:commandLink>
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Label" />
 				</f:facet>
-				<h:outputText value="#{group.userLabel}" />
+				<h:outputText value="#{attribute.userLabel}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Description" />
 				</f:facet>
-				<h:outputText value="#{group.description}" />
+				<h:outputText value="#{attribute.description}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Type" />
+				</f:facet>
+				<h:outputText value="#{attribute.type}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Dictionary" />
+				</f:facet>
+				<h:outputText value="#{attribute.dictionary}" />
 			</h:column>
 		</h:dataTable>
 
