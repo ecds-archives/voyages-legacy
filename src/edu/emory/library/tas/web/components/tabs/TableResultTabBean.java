@@ -42,6 +42,8 @@ public class TableResultTabBean {
 
 	private String selectedAttributeToAdd;
 
+	private int numberOfResults;
+
 	public TableResultTabBean() {
 
 		populatedAttributes = new String[] { "voyageId", "captaina",
@@ -68,12 +70,13 @@ public class TableResultTabBean {
 	}
 
 	private void getResultsDB() {
-//		if (this.condition != null) {
-//			System.out.println("2: --------------------------------------");
-//			System.out
-//					.println(this.condition.getConditionHQL().conditionString);
-//		}
-		if (this.condition != null && this.componentVisible.booleanValue() && needQuery) {
+		// if (this.condition != null) {
+		// System.out.println("2: --------------------------------------");
+		// System.out
+		// .println(this.condition.getConditionHQL().conditionString);
+		// }
+		if (this.condition != null && this.componentVisible.booleanValue()
+				&& needQuery) {
 			Conditions localCond = (Conditions) this.condition
 					.addAttributesPrefix("v.voyage.");
 			localCond.addCondition(VoyageIndex.getRecent());
@@ -85,9 +88,8 @@ public class TableResultTabBean {
 			if (this.populatedAttributes != null) {
 				for (int i = 0; i < this.populatedAttributes.length; i++) {
 					qValue.addPopulatedAttribute("v.voyage."
-							+ this.populatedAttributes[i], Voyage
-							.getAttribute(this.populatedAttributes[i])
-							.isDictinaory());
+							+ this.populatedAttributes[i], Voyage.getAttribute(
+							this.populatedAttributes[i]).isDictinaory());
 				}
 			}
 
@@ -151,13 +153,29 @@ public class TableResultTabBean {
 			System.out.println(c.getConditionHQL().conditionString);
 		}
 		if (c == null) {
-			//needQuery = false;
+			// needQuery = false;
 		} else if (c.equals(condition)) {
-			//needQuery = false;
+			// needQuery = false;
 		} else {
 			condition = c;
 			needQuery = true;
+			this.setNumberOfResults();
 		}
+	}
+
+	private void setNumberOfResults() {
+		
+		Conditions localCond = (Conditions) this.condition
+				.addAttributesPrefix("v.voyage.");
+		localCond.addCondition(VoyageIndex.getRecent());
+
+		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
+		qValue.setLimit(this.getStep().intValue());
+		qValue.setFirstResult(this.getCurrent().intValue());
+		qValue.setOrderBy("v.voyageId");
+		qValue.addPopulatedAttribute("cnt(v.voyageId)", false);
+		Object [] ret = qValue.executeQuery();
+		this.numberOfResults = ((Integer)ret[0]).intValue();
 	}
 
 	public Boolean getComponentVisible() {
@@ -189,11 +207,12 @@ public class TableResultTabBean {
 		Group[] groupSets = Voyage.getGroups();
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
-			res.add(new SelectItem("" + set.getId().longValue(), set
-					.getName()));
+			res
+					.add(new SelectItem("" + set.getId().longValue(), set
+							.getName()));
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
-			this.selectedGroupSet = ((Group)groupSets[0]).getId().toString();
+			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
 		}
 		return res;
 	}
@@ -202,24 +221,28 @@ public class TableResultTabBean {
 		ArrayList res = new ArrayList();
 		Conditions c = new Conditions();
 		if (this.selectedGroupSet != null) {
-			c.addCondition("id", new Long(this.selectedGroupSet), Conditions.OP_EQUALS);
-		}		
+			c.addCondition("id", new Long(this.selectedGroupSet),
+					Conditions.OP_EQUALS);
+		}
 		QueryValue qValue = new QueryValue("Group", c);
-//		qValue.setCacheable(true);
-		
+		// qValue.setCacheable(true);
+
 		Object[] groupSets = qValue.executeQuery();
 		if (groupSets.length > 0) {
 			Group set = (Group) groupSets[0];
 			Set attrs = set.getAttributes();
-			
+
 			Set groups = set.getCompoundAttributes();
 			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
-				CompoundAttribute element = (CompoundAttribute) groupsIter.next();
-				res.add(new SelectItem("Group_" + element.getId(), element.getName()));
+				CompoundAttribute element = (CompoundAttribute) groupsIter
+						.next();
+				res.add(new SelectItem("Group_" + element.getId(), element
+						.getName()));
 			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
 				Attribute attr = (Attribute) iter.next();
-				res.add(new SelectItem("Attribute_" + attr.getName(), (""
+				res
+						.add(new SelectItem("Attribute_" + attr.getName(), (""
 								.equals(attr.getUserLabel()) || attr
 								.getUserLabel() == null) ? (attr.getName())
 								: (attr.getUserLabel())));
@@ -308,7 +331,6 @@ public class TableResultTabBean {
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(groupName), Conditions.OP_EQUALS);
 			QueryValue qValue = new QueryValue("CompoundAttribute", c);
-//			qValue.setCacheable(true);
 			Object[] groups = qValue.executeQuery();
 			if (groups.length > 0) {
 				CompoundAttribute group = (CompoundAttribute) groups[0];
@@ -341,6 +363,10 @@ public class TableResultTabBean {
 		}
 
 		return null;
+	}
+
+	public int getNumberOfResults() {
+		return numberOfResults;
 	}
 
 	public String remSelectedAttributeFromList() {

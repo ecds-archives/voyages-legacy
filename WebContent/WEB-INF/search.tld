@@ -85,6 +85,9 @@
 		<attribute>
 			<name>resultSize</name>
 		</attribute>
+		<attribute>
+			<name>resultLast</name>
+		</attribute>
 	</tag>
 	
 	<tag>
