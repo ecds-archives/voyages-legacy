@@ -59,7 +59,9 @@
 						conditionsOut="#{TableResultTabBean.conditions}" results="#{TableResultTabBean.results}"
 						populatedAttributes="#{TableResultTabBean.populatedAttributes}"
 						componentVisible="#{TableResultTabBean.componentVisible}">
-						<s:resultscroll resultFirst="#{TableResultTabBean.current}" resultSize="#{TableResultTabBean.resultSize}">
+						<s:resultscroll resultFirst="#{TableResultTabBean.current}" 
+										resultLast="#{TableResultTabBean.resultSize}"
+										resultSize="#{TableResultTabBean.numberOfResults}">
 							<h:commandButton id="prev_pack" value="Previous result set" action="#{TableResultTabBean.prev}" />
 							<h:commandButton id="next_pack" value="Next result set" action="#{TableResultTabBean.next}" />
 							<h:commandButton id="configureButton" value="Configure table" action="#{TableResultTabBean.configurationMode}" />
@@ -68,7 +70,7 @@
 
 					<t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 						<t:htmlTag styleClass="configDiv" style="width: 594px;" value="div">
-							<h:outputText id="config_label1" value="Choose set of attributes:" />
+							<h:outputText style="margin-left: 3px;" id="config_label1" value="Choose set of attributes:" />
 							<t:htmlTag value="br" />
 							<h:selectOneMenu style="margin: 0px 0px 5px 10px;width: 200px;" value="#{TableResultTabBean.selectedGroupSet}"
 								id="configure_groupSetCombo" onchange="submit()">
@@ -99,7 +101,7 @@
 								<h:panelGrid columns="1" id="configure_currentAttrsPanel">
 									<h:outputText id="config_label3" value="Current attributes in talbe:" />
 									<h:selectOneListbox style="width: 200px" id="configure_visibleAttributes"
-										value="#{TableResultTabBean.selectedAttributeAdded}" size="4">
+										value="#{TableResultTabBean.selectedAttributeAdded}" size="10">
 										<f:selectItems value="#{TableResultTabBean.visibleAttributes}" />
 									</h:selectOneListbox>
 								</h:panelGrid>
@@ -112,7 +114,12 @@
 							</h:panelGrid>
 
 						</h:panelGrid>
-						<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">
+						<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
+							<h:outputText style="margin-left: 3px; margin-top: 3px;" value="Results per page: " />
+							<h:inputText style="margin-top: 3px; width: 40px;" value="#{TableResultTabBean.step}" />
+						</t:htmlTag>
+						
+						<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
 							<h:commandButton style="margin-top: 5px; margin-left: 4px;" id="configure_applyConfigButton"
 								value="Apply configuration" action="#{TableResultTabBean.resultsMode}" />
 						</t:htmlTag>
@@ -147,7 +154,8 @@
 							<h:commandButton id="enlarge" value="Change size" action="#{TimeLineResultTabBean.setNewView}"/>
 						</h:panelGroup>
 					</h:panelGrid>
-				</s:stattab></td>
+				</s:stattab>
+				</td>
 			</tr>
 		</table>
 
