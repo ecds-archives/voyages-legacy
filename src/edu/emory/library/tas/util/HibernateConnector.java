@@ -388,9 +388,9 @@ public class HibernateConnector {
 	}
 	
 	public Object[] loadObjects(Session p_session, QueryValue p_query) {
-		Session session = HibernateUtil.getSession();
-		Transaction transaction = session.beginTransaction();
-		List list = p_query.getQuery(session).list();
+		
+		Transaction transaction = p_session.beginTransaction();
+		List list = p_query.getQuery(p_session).list();
 		transaction.commit();
 		
 		if (list.size() != 0) {
