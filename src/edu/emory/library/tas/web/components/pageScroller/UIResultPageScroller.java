@@ -45,7 +45,7 @@ public class UIResultPageScroller extends UIInput {
 		writer.startElement("table", this);
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
-		writer.write("Records from " + resultFirst.intValue() + 
+		writer.write("Records from " + (resultFirst.intValue() + 1) + 
 				" to " + (resultFirst.intValue() + resultLast.intValue()) + " (of " + resultSize.intValue() + ") ");
 		writer.endElement("td");
 	}
