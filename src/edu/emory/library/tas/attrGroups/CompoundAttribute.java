@@ -15,6 +15,7 @@ public class CompoundAttribute extends AbstractAttribute {
 	private static final long serialVersionUID = -6276849726137818052L;
 
 	private Set attributes = new HashSet();
+	private Set groups = new HashSet();
 	
 	
 	public CompoundAttribute() {	
@@ -27,6 +28,19 @@ public class CompoundAttribute extends AbstractAttribute {
 		this.attributes = attributes;
 	}
 	
+	public Set getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set groups) {
+		this.groups = groups;
+	}
+
+	public int getGroupsCount() {
+		if (groups == null) return 0;
+		return groups.size();
+	}
+
 	public String toString() {
 		return "Group of attributes " + this.attributes;
 	}
@@ -47,4 +61,34 @@ public class CompoundAttribute extends AbstractAttribute {
 		return (AbstractAttribute) list.get(0);
 	}
 	
+	public static CompoundAttribute newForVoyages() {
+		CompoundAttribute attribute = new CompoundAttribute();
+		attribute.setObjectType(ObjectType.getVoyages());
+		return attribute;
+	}
+	
+	public static CompoundAttribute newForVoyages(Session session) {
+		CompoundAttribute attribute = new CompoundAttribute();
+		attribute.setObjectType(ObjectType.getVoyages(session));
+		return attribute;
+	}
+
+	public static CompoundAttribute newForSlaves() {
+		CompoundAttribute attribute = new CompoundAttribute();
+		attribute.setObjectType(ObjectType.getSlaves());
+		return attribute;
+	}
+	
+	public static CompoundAttribute newForSlaves(Session session) {
+		CompoundAttribute attribute = new CompoundAttribute();
+		attribute.setObjectType(ObjectType.getSlaves(session));
+		return attribute;
+	}
+
+	public int getAttributesCount()
+	{
+		if (attributes == null) return 0;
+		return attributes.size();
+	}
+
 }

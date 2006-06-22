@@ -4,11 +4,12 @@ import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.exception.DataException;
 
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.Attribute;
-import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.StringUtils;
 
@@ -59,35 +60,55 @@ public class AttributesBean extends SchemaEditBeanBase
 	{
 
 		Session session = HibernateUtil.getSession();
-		Attribute attribute = (Attribute) Attribute.loadById(attributeId, session);
+		Transaction transaction = session.beginTransaction();
+
+		Attribute attribute;
+		if (attributeId != null)
+			attribute = (Attribute) Attribute.loadById(attributeId, session);	
+		else if (editingVoyages())
+			attribute = Attribute.newForVoyages(session);	
+		else 
+			attribute = Attribute.newForSlaves(session);	
 
 		try
 		{
 			
-			String name = StringUtils.trimAndUnNull(attributeName);
+			String name = StringUtils.trimAndUnNull(attributeName, getMaxNameLength());
 			if (name.length() == 0)
 				throw new SaveException("Please specify attribute name.");
 			
-			String userLabel = StringUtils.trimAndUnNull(attributeUserLabel);
+			String userLabel = StringUtils.trimAndUnNull(attributeUserLabel, getMaxUserLabelLength());
 			if (userLabel.length() == 0)
 				throw new SaveException("Please specify label.");
 	
-			String description = StringUtils.trimAndUnNull(attributeDescription);
+			String description = StringUtils.trimAndUnNull(attributeDescription, getMaxDescriptionLength());
+			if (description.length() > getMaxDescriptionLength())
+				throw new SaveException("Description is limited to " + getMaxDescriptionLength() + " characters.");
 
 			attribute.setName(name);
 			attribute.setUserLabel(userLabel);
 			attribute.setDescription(description);
-			HibernateConnector.getConnector().updateObject(attribute);
 			
+			session.saveOrUpdate(attribute);
+			
+			transaction.commit();
 			session.close();
-			setErrorText(null);
+			clearEditResouces();
 			return "back";
 		
 		}
 		catch (SaveException se)
 		{
+			transaction.rollback();
 			session.close();
 			setErrorText(se.getMessage());
+			return null;
+		}
+		catch (DataException de)
+		{
+			transaction.rollback();
+			session.close();
+			setErrorText("Internal error accessing database. Sorry for the inconvenience.");
 			return null;
 		}
 		
@@ -105,6 +126,7 @@ public class AttributesBean extends SchemaEditBeanBase
 		attributeName = null;
 		attributeUserLabel = null;
 		attributeDescription = null;
+		setErrorText(null);
 	}
 
 	public String getAttributeUserLabel()

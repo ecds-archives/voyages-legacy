@@ -266,7 +266,7 @@ public abstract class AbstractAttribute implements Serializable {
 			case TYPE_FLOAT: return "Decimal";
 			case TYPE_STRING: return "Text";
 			case TYPE_DATE: return "Date";
-			case TYPE_DICT: return "List";
+			case TYPE_DICT: return "List " + dictionary;
 			default: return "";
 		}
 	}

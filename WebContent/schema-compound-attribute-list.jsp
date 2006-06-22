@@ -7,13 +7,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Compound attributes</title>
+	<script src="scrolling.js" type="text/javascript" language="javascript"></script>
 	<link href="schema.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form>
 	
-		<jsp:include page="schema-edit-header.jsp"/>
+		<%@ include file="schema-edit-header.jsp" %>
 		
 		<div class="content">
 		
@@ -38,21 +39,21 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Description" />
-					</f:facet>
-					<h:outputText value="#{attribute.description}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
 						<h:outputText value="Type" />
 					</f:facet>
 					<h:outputText value="#{attribute.typeUserName}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="List type" />
+						<h:outputText value="Attributes" />
 					</f:facet>
-					<h:outputText value="#{attribute.dictionary}" />
+					<h:outputText value="#{group.attributesCount}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Description" />
+					</f:facet>
+					<h:outputText styleClass="description" value="#{attribute.dictionary}" />
 				</h:column>
 			</h:dataTable>
 	

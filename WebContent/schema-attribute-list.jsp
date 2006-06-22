@@ -7,13 +7,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Attributes</title>
+	<script src="scrolling.js" type="text/javascript" language="javascript"></script>
 	<link href="schema.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form>
 	
-		<jsp:include page="schema-edit-header.jsp"/>
+		<%@ include file="schema-edit-header.jsp" %>
 	
 		<div class="content">
 		
@@ -37,21 +38,15 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Description" />
-					</f:facet>
-					<h:outputText value="#{attribute.description}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
 						<h:outputText value="Type" />
 					</f:facet>
 					<h:outputText value="#{attribute.typeUserName}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="List type" />
+						<h:outputText value="Description" />
 					</f:facet>
-					<h:outputText value="#{attribute.dictionary}" />
+					<h:outputText styleClass="description" value="#{attribute.description}" />
 				</h:column>
 			</h:dataTable>
 			

@@ -10,6 +10,8 @@ import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.exception.DataException;
 
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
@@ -105,6 +107,8 @@ public class GroupsBean extends SchemaEditBeanBase
 	public String newGroup()
 	{
 		
+		clearEditResouces();
+		
 		groupId = null;
 		
 		moveAttributesToUI(
@@ -125,6 +129,8 @@ public class GroupsBean extends SchemaEditBeanBase
 	public void editGroup(ActionEvent event)
 	{
 		
+		setErrorText(null);
+		
 		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("groupId");
 		if (groupIdParam == null) return;
 		
@@ -133,7 +139,6 @@ public class GroupsBean extends SchemaEditBeanBase
 		setGroupUserLabel(group.getUserLabel());
 		setGroupName(group.getName());
 		setGroupDescription(group.getDescription());
-//		System.out.println("Load: " + group.getDescription());
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
@@ -149,7 +154,7 @@ public class GroupsBean extends SchemaEditBeanBase
 		
 	}
 	
-	private Set getNewAttributes(Session session, List uiAttributes, boolean isCompundAttr)
+	private Set moveAttributesFromUI(Session session, List uiAttributes, boolean isCompundAttr)
 	{
 		
 		Set newAttributes = new HashSet();
@@ -175,6 +180,7 @@ public class GroupsBean extends SchemaEditBeanBase
 	{
 
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		
 		Group group = null;
 		if (groupId != null)
@@ -187,44 +193,64 @@ public class GroupsBean extends SchemaEditBeanBase
 		try
 		{
 			
-			String name = StringUtils.trimAndUnNull(groupName);
+			String name = StringUtils.trimAndUnNull(groupName, getMaxNameLength());
 			if (name.length() == 0)
 				throw new SaveException("Please specify group name.");
 			
-			String userLabel = StringUtils.trimAndUnNull(groupUserLabel);
+			String userLabel = StringUtils.trimAndUnNull(groupUserLabel, getMaxUserLabelLength());
 			if (userLabel.length() == 0)
 				throw new SaveException("Please specify label.");
 	
-			String description = StringUtils.trimAndUnNull(groupDescription);
-//			System.out.println("Before save: " + description);
+			String description = StringUtils.trimAndUnNull(groupDescription, getMaxDescriptionLength());
+			if (description.length() > getMaxDescriptionLength())
+				throw new SaveException("Description is limited to " + getMaxDescriptionLength() + " characters.");
 
-			Set attributes = getNewAttributes(session, groupAttributes, false);
-			Set compoundAttributes = getNewAttributes(session, groupCompoundAttributes, false);
+			Set attributes = moveAttributesFromUI(session, groupAttributes, false);
+			Set compoundAttributes = moveAttributesFromUI(session, groupCompoundAttributes, true);
 
 			group.setName(name);
 			group.setUserLabel(userLabel);
 			group.setDescription(description);
 			group.setAttributes(attributes);
 			group.setCompoundAttributes(compoundAttributes);
-//			System.out.println("After save: " + group.getDescription());
 			
-			if (groupId != null)
-				session.update(group);
-			else
-				session.save(group);
+			session.saveOrUpdate(group);
 			
+			transaction.commit();
 			session.close();
 			clearEditResouces();
-			setErrorText(null);
 			return "back";
 		
 		}
 		catch (SaveException se)
 		{
+			transaction.rollback();
 			session.close();
 			setErrorText(se.getMessage());
 			return null;
 		}
+		catch (DataException de)
+		{
+			transaction.rollback();
+			session.close();
+			setErrorText("Internal error accessing database. Sorry for the inconvenience.");
+			return null;
+		}
+		
+	}
+	
+	public String deleteGroup()
+	{
+		
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		Group group = Group.loadById(groupId, session);
+		session.delete(group);
+		transaction.commit();
+		session.close();
+		
+		clearEditResouces();
+		return "back";
 		
 	}
 	
@@ -244,6 +270,7 @@ public class GroupsBean extends SchemaEditBeanBase
 		groupName = null;
 		groupUserLabel = null;
 		groupDescription = null;
+		setErrorText(null);
 	}
 
 	public String getGroupUserLabel()
@@ -326,6 +353,11 @@ public class GroupsBean extends SchemaEditBeanBase
 	public void setGroupDescription(String groupDescription)
 	{
 		this.groupDescription = groupDescription;
+	}
+
+	public boolean isNewGroup()
+	{
+		return groupId == null;
 	}
 	
 }

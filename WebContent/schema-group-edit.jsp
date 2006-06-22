@@ -8,13 +8,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Group</title>
 	<script src="select-and-order.js" type="text/javascript" language="javascript"></script>
+	<script src="scrolling.js" type="text/javascript" language="javascript"></script>
 	<link href="schema.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form>
 	
-		<jsp:include page="schema-edit-header.jsp"/>
+		<%@ include file="schema-edit-header.jsp" %>
 		
 		<div class="content">
 
@@ -25,10 +26,10 @@
 			<h2>Basic information</h2>
 
 			<div class="label">Name</div>
-			<div class="field"><h:inputText style="width: 200px;" value="#{GroupsBean.groupName}" /></div>
+			<div class="field"><h:inputText maxlength="#{GroupsBean.maxNameLength}" style="width: 200px;" value="#{GroupsBean.groupName}" /></div>
 	
 			<div class="label">User label</div>
-			<div class="field"><h:inputText style="width: 200px;" value="#{GroupsBean.groupUserLabel}" /></div>
+			<div class="field"><h:inputText maxlength="#{GroupsBean.maxUserLabelLength}"  style="width: 200px;" value="#{GroupsBean.groupUserLabel}" /></div>
 	
 			<div class="label">Description</div>
 			<div class="field"><h:inputTextarea style="width: 300px;" value="#{GroupsBean.groupDescription}" /></div>
@@ -50,6 +51,7 @@
 				selectedItems="#{GroupsBean.groupCompoundAttributes}" /></div>
 	
 			<h:commandButton value="Save" action="#{GroupsBean.saveGroup}" />
+			<h:commandButton value="Delete" rendered="#{!GroupsBean.newGroup}" onclick="return confirm('Are you sure?');" action="#{GroupsBean.deleteGroup}" />
 			<h:commandButton value="Back" action="#{GroupsBean.cancelEdit}" />
 		
 		</div>

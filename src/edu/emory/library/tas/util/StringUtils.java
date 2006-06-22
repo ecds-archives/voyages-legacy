@@ -25,4 +25,12 @@ public class StringUtils
 		return str.trim();
 	}
 
+	public static String trimAndUnNull(String str, int maxLength)
+	{
+		if (str == null) return "";
+		str = str.trim();
+		if (str.length() > maxLength) str = str.substring(0, maxLength);
+		return str;
+	}
+
 }

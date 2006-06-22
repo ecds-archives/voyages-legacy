@@ -7,13 +7,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Groups</title>
+	<script src="scrolling.js" type="text/javascript" language="javascript"></script>
 	<link href="schema.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form>
 	
-		<jsp:include page="schema-edit-header.jsp"/>
+		<%@ include file="schema-edit-header.jsp" %>
 		
 		<div class="content">
 		
@@ -38,9 +39,21 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
+						<h:outputText value="Attributes" />
+					</f:facet>
+					<h:outputText value="#{group.attributesCount}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Compound attributes" />
+					</f:facet>
+					<h:outputText value="#{group.compoundAttributesCount}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
 						<h:outputText value="Description" />
 					</f:facet>
-					<h:outputText value="#{group.description}" />
+					<h:outputText styleClass="description" value="#{group.description}" />
 				</h:column>
 			</h:dataTable>
 			

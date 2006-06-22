@@ -53,6 +53,30 @@ public class Attribute extends AbstractAttribute {
 		return (AbstractAttribute) list.get(0);
 	}
 
+	public static Attribute newForVoyages() {
+		Attribute attribute = new Attribute();
+		attribute.setObjectType(ObjectType.getVoyages());
+		return attribute;
+	}
+	
+	public static Attribute newForVoyages(Session session) {
+		Attribute attribute = new Attribute();
+		attribute.setObjectType(ObjectType.getVoyages(session));
+		return attribute;
+	}
+
+	public static Attribute newForSlaves() {
+		Attribute attribute = new Attribute();
+		attribute.setObjectType(ObjectType.getSlaves());
+		return attribute;
+	}
+	
+	public static Attribute newForSlaves(Session session) {
+		Attribute attribute = new Attribute();
+		attribute.setObjectType(ObjectType.getSlaves(session));
+		return attribute;
+	}
+
 	public String getImportDateDay()
 	{
 		return importDateDay;

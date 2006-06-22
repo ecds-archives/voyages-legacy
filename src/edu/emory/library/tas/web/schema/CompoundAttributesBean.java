@@ -10,13 +10,15 @@ import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.exception.DataException;
 
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
-import edu.emory.library.tas.util.HibernateConnector;
+import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.StringUtils;
 
@@ -29,6 +31,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	private String attributeDescription;
 	private List availableAttributes = new ArrayList();
 	private List attributeAttributes = new ArrayList();
+	private boolean questionReallyDelete = false;
 	
 	private class SaveException extends Exception
 	{
@@ -55,13 +58,13 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		{
 			return attr.getName() + ": " + 
 			"[no label]" + " " +
-			"(" + attr.getType() + ")";
+			"(" + attr.getTypeUserName() + ")";
 		}
 		else
 		{
 			return attr.getName() + ": " +
 			attr.getUserLabel() + " " + 
-			"(" + attr.getType() + ")";
+			"(" + attr.getTypeUserName() + ")";
 		}
 	}
 	
@@ -105,7 +108,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	public String newAttribute()
 	{
 		
-		setErrorText(null);
+		clearEditResouces();
 		
 		attributeId = null;
 		
@@ -183,22 +186,34 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	
 	public String saveAttribute()
 	{
+		
+		questionReallyDelete = false;
 
 		Session session = HibernateUtil.getSession();
-		CompoundAttribute attribute = (CompoundAttribute) CompoundAttribute.loadById(attributeId, session);
+		Transaction transaction = session.beginTransaction();
+		
+		CompoundAttribute attribute;
+		if (attributeId != null)
+			attribute = (CompoundAttribute) CompoundAttribute.loadById(attributeId, session);	
+		else if (editingVoyages())
+			attribute = CompoundAttribute.newForVoyages(session);	
+		else 
+			attribute = CompoundAttribute.newForSlaves(session);	
 
 		try
 		{
 			
-			String name = StringUtils.trimAndUnNull(attributeName);
+			String name = StringUtils.trimAndUnNull(attributeName, getMaxNameLength());
 			if (name.length() == 0)
 				throw new SaveException("Please specify attribute name.");
 			
-			String userLabel = StringUtils.trimAndUnNull(attributeUserLabel);
+			String userLabel = StringUtils.trimAndUnNull(attributeUserLabel, getMaxUserLabelLength());
 			if (userLabel.length() == 0)
 				throw new SaveException("Please specify label.");
 			
-			String description = StringUtils.trimAndUnNull(attributeDescription);
+			String description = StringUtils.trimAndUnNull(attributeDescription, getMaxDescriptionLength());
+			if (description.length() > getMaxDescriptionLength())
+				throw new SaveException("Description is limited to " + getMaxDescriptionLength() + " characters.");
 	
 			Set attributes = getNewAttributes(session, attributeAttributes, false);
 			
@@ -206,20 +221,96 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			attribute.setUserLabel(userLabel);
 			attribute.setAttributes(attributes);
 			attribute.setDescription(description);
-			HibernateConnector.getConnector().updateObject(attribute);
 			
+			session.saveOrUpdate(attribute);
+			
+			transaction.commit();
 			session.close();
-			setErrorText(null);
+			clearEditResouces();
 			return "back";
 		
 		}
 		catch (SaveException se)
 		{
+			transaction.rollback();
 			session.close();
 			setErrorText(se.getMessage());
 			return null;
 		}
+		catch (DataException de)
+		{
+			transaction.rollback();
+			session.close();
+			setErrorText("Internal error accessing database. Sorry for the inconvenience.");
+			return null;
+		}
 		
+	}
+	
+	private boolean deleteInternal(boolean hard)
+	{
+		
+		System.out.println("deleteInternal hard = " + hard);
+		
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		
+		CompoundAttribute attribute =
+			(CompoundAttribute) CompoundAttribute.loadById(attributeId, session);
+		
+		System.out.println("getGroupsCount = " + attribute.getGroupsCount());
+
+		if (!hard)
+		{
+			if (attribute.getGroupsCount() > 0)
+			{
+				transaction.rollback();
+				session.close();
+				System.out.println("Cannot delete bc of a group.");
+				return false;
+			}
+		}
+		else
+		{
+			if (attribute.getGroupsCount() > 0)
+			{
+				for (Iterator iter = attribute.getGroups().iterator(); iter.hasNext();)
+				{
+					Group group = (Group) iter.next();
+					group.getCompoundAttributes().remove(attribute);
+					session.update(group);
+				}
+			}
+		}
+		System.out.println("About to delete ...");
+		
+		session.delete(attribute);
+		transaction.commit();
+		session.close();
+		
+		return true;
+		
+	}
+	
+	public String deleteAttributeSoft()
+	{
+		if (!deleteInternal(false))
+		{
+			questionReallyDelete = true;
+			return null;
+		}
+		else
+		{
+			clearEditResouces();
+			return "back";
+		}
+	}
+	
+	public String deleteAttributeHard()
+	{
+		deleteInternal(true);
+		clearEditResouces();
+		return "back";
 	}
 	
 	public String cancelEdit()
@@ -230,12 +321,14 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 
 	private void clearEditResouces()
 	{
+		questionReallyDelete = false;
 		availableAttributes.clear();
 		attributeAttributes.clear();
 		attributeId = null;
 		attributeName = null;
 		attributeUserLabel = null;
 		attributeDescription = null;
+		setErrorText(null);
 	}
 
 	public String getAttributeUserLabel()
@@ -293,5 +386,16 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	{
 		this.attributeDescription = attributeDescription;
 	}
+
+	public boolean isNewAttribute()
+	{
+		return attributeId == null;
+	}
+
+	public boolean isQuestionReallyDelete()
+	{
+		return questionReallyDelete;
+	}
+
 	
 }

@@ -40,15 +40,19 @@
         <many-to-one name="objectType" column="r_object_type_id" 
 		             class="edu.emory.library.tas.attrGroups.ObjectType" 
 					 unique="true" lazy="false"/>
-			
-				
+
     	<property name="name" column="name"/>
     	<property name="userLabel" column="user_label"/>
  		<property name="type" column="type"/>
 		<property name="dictionary" column="dictionary"/>
 		<property name="description" column="description"/>				
 		<property name="length" column="length"/>
-					                       
+
+		<set name="groups" table="group_compound_attributes" lazy="false" inverse="true">
+        	<key column="r_compound_attribute_id"/>
+        	<many-to-many column="r_group_id" class="edu.emory.library.tas.attrGroups.Group"/>
+    	</set>
+
 		<set name="attributes" table="compound_attribute_attributes" lazy="false">
 			<cache usage="read-write"/>
         	<key column="r_compound_attribute_id"/>

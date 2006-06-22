@@ -102,7 +102,14 @@ public class Group implements Serializable {
 	}
 	
 	public String toString() {
-		return "Set " + this.name +": groups " + this.compoundAttributes + "\n     attributes " + this.attributes;
+		return
+			"Group: " +
+			"id = " + this.id + "\n" +
+			"name = " + this.name + "\n" +
+			"description = " + this.description + "\n" +
+			"user label = " + this.userLabel + "\n" +
+			"attributes = " + this.attributes.size() + "\n" +
+			"compound attributes = " + this.compoundAttributes.size();
 	}
 
 	public ObjectType getObjectType() {
@@ -120,4 +127,17 @@ public class Group implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public int getAttributesCount()
+	{
+		if (attributes == null) return 0;
+		return attributes.size();
+	}
+
+	public int getCompoundAttributesCount()
+	{
+		if (compoundAttributes == null) return 0;
+		return compoundAttributes.size();
+	}
+
 }
