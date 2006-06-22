@@ -7,67 +7,56 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Compound attributes</title>
+	<link href="schema.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form>
 	
-		<h:commandLink
-			action="#{Switcher.gotoVoyagesGroups}"
-			value="Voyages - groups"/> |
-		<h:commandLink
-			action="#{Switcher.gotoVoyagesCompoundAttributes}"
-			value="Voyages - compound atrributes"/> |
-		<h:commandLink
-			action="#{Switcher.gotoVoyagesAttributes}"
-			value="Voyages - attributes"/> |
-		<h:commandLink
-			action="#{Switcher.gotoSlavesGroups}"
-			value="Slaves - groups"/> |
-		<h:commandLink
-			action="#{Switcher.gotoSlavesCompoundAttributes}"
-			value="Slaves - compound atrributes"/> |
-		<h:commandLink
-			action="#{Switcher.gotoSlavesAttributes}"
-			value="Slaves - attributes"/>
-	
-		<br>
+		<jsp:include page="schema-edit-header.jsp"/>
 		
-		<h:dataTable value="#{CompoundAttributesBean.attributes}" var="attribute" border="1">
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
-				<h:commandLink actionListener="#{CompoundAttributesBean.editAttribute}" action="edit">
-					<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
-					<h:outputText value="#{attribute.name}" />
-				</h:commandLink>
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Label" />
-				</f:facet>
-				<h:outputText value="#{attribute.userLabel}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Description" />
-				</f:facet>
-				<h:outputText value="#{attribute.description}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Type" />
-				</f:facet>
-				<h:outputText value="#{attribute.typeUserName}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="List type" />
-				</f:facet>
-				<h:outputText value="#{attribute.dictionary}" />
-			</h:column>
-		</h:dataTable>
+		<div class="content">
+		
+			<h1><h:outputText value="#{Switcher.pageTitle}" />
+			<span class="new">(<h:commandLink action="#{CompoundAttributesBean.newAttribute}" value="Create new" />)</span></h1>
+		
+			<h:dataTable value="#{CompoundAttributesBean.attributes}" var="attribute" border="0" cellpadding="0" cellspacing="0" styleClass="grid">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:commandLink actionListener="#{CompoundAttributesBean.editAttribute}" action="edit">
+						<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
+						<h:outputText value="#{attribute.name}" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Label" />
+					</f:facet>
+					<h:outputText value="#{attribute.userLabel}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Description" />
+					</f:facet>
+					<h:outputText value="#{attribute.description}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Type" />
+					</f:facet>
+					<h:outputText value="#{attribute.typeUserName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="List type" />
+					</f:facet>
+					<h:outputText value="#{attribute.dictionary}" />
+				</h:column>
+			</h:dataTable>
+	
+		</div>
 
 	</h:form>
 </f:view>

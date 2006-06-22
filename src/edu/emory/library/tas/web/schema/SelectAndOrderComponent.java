@@ -214,19 +214,22 @@ public class SelectAndOrderComponent extends UIComponentBase
 		writer.endElement("td");
 		
 		writer.startElement("td", this);
+		writer.writeAttribute("class", "select-and-order-add-remove", null);
 		
 		writer.startElement("div", this);
+		writer.writeAttribute("class", "select-and-order-add", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "Add", null);
+		writer.writeAttribute("value", ">", null);
 		writer.writeAttribute("onclick", jsAddFunction, null);
 		writer.endElement("input");
 		writer.endElement("div");
 		
 		writer.startElement("div", this);
+		writer.writeAttribute("class", "select-and-order-remove", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "Remove", null);
+		writer.writeAttribute("value", "<", null);
 		writer.writeAttribute("onclick", jsRemoveFunction, null);
 		writer.endElement("input");
 		writer.endElement("div");

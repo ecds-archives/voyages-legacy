@@ -1,0 +1,123 @@
+body {
+	font-family: Verdana, sans-serif;
+	font-size: 8pt;
+	margin: 0px;
+	padding: 0px; }
+	
+a {
+	color: #CC3300; }
+	
+a:hover {
+	color: Black; }
+
+table.grid a {
+	text-decoration: none; }
+
+input, textarea, select {
+	font-family: Verdana, sans-serif;
+	font-size: 8pt; }
+
+select {
+	width: 300px; }
+
+div.content {
+	margin-left: 10px; 
+	margin-right: 10px; }
+	
+div.label {
+	margin-left: 5px;
+	font-weight: bold;
+	margin-bottom: 5px; }
+
+div.field {
+	margin-left: 5px;
+	margin-bottom: 10px; }
+
+div.tabs-container {
+	background-color: #666666; } 
+
+.error {
+	margin-bottom: 10px;
+	display: block;
+	padding: 5px;
+	color: White;
+	font-weight: bold;
+	background-color: #CC3300; }
+
+h1 {
+	margin: 10px 0px 10px 0px;
+	padding: 0px;
+	font-size: 16pt;
+	font-weight: normal;
+	font-family: Arial, Helvetica, sans-serif; }
+
+h2 {
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding: 5px;
+	background-color: #DDDDDD;
+	font-size: 8pt;
+	font-weight: bold; }
+
+h1 span.new {
+	font-weight: bold;
+	font-size: 8pt; }
+
+div.main-title {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 150px;
+	background-image: url(header0.png);
+	background-repeat: no-repeat;
+	background-position: left -50px;		
+	border-bottom: 2px solid #444444;
+	background-color: #555555;
+	color: White;
+	font-family: Arial, sans-serif;
+	font-size: 16pt; }
+
+div.tab-bar {
+	padding: 5px;
+	font-weight: bold;
+	color: White;
+	background-color: #666666; } 
+	
+td.tab {
+	cursor: pointer;
+	padding: 2px 10px 2px 10px; }
+
+td.tab:hover {
+	background-color: #555555; }
+
+td.tab-selected {
+	padding: 2px 10px 2px 10px;
+	background-color: #CC3300; }	
+	
+table.grid {
+	xwidth: 100%;
+	border-collapse: collapse; } 
+
+table.grid td, table.grid th {
+	padding: 5px; }
+
+table.grid th {
+	background-color: #DDDDDD;
+	text-align: left;
+	/*border-top: 2px solid #CCCCCC;
+	border-bottom: 2px solid #CCCCCC; */}
+
+table.grid td {
+	border-bottom: 2px solid #EEEEEE; }
+	
+td.select-and-order-add-remove {
+	padding-left: 5px;
+	padding-right: 5px; }
+	
+div.select-and-order-add {
+	margin-bottom: 5px;
+	text-align: center; }
+	
+div.select-and-order-remove {
+	text-align: center; }

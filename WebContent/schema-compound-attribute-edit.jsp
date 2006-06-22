@@ -8,29 +8,42 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Compound attribute</title>
 	<script src="select-and-order.js" type="text/javascript" language="javascript"></script>
+	<link href="schema.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form>
+	
+		<jsp:include page="schema-edit-header.jsp"/>
 
-		<b>Name</b><br>
-		<h:inputText value="#{CompoundAttributesBean.attributeName}" /><br>
+		<div class="content">
 
-		<b>User label</b><br>
-		<h:inputText value="#{CompoundAttributesBean.attributeUserLabel}" /><br>
+			<h1><h:outputText value="#{Switcher.pageTitle}" /></h1>
 
-		<b>Description</b><br>
-		<h:inputTextarea value="#{CompoundAttributesBean.attributeDescription}" /><br>
+			<h:outputText value="#{CompoundAttributesBean.errorText}" rendered="#{CompoundAttributesBean.error}" styleClass="error" />
+	
+			<h2>Basic information</h2>
 
-		<b>Attributes</b><br>
-		<s:selectAndOrder
-			sortable="false"
-			availableItems="#{CompoundAttributesBean.availableAttributes}"
-			selectedItems="#{CompoundAttributesBean.attributeAttributes}" /><br>
+			<div class="label">Name</div>
+			<div class="field"><h:inputText style="width: 200px;" value="#{CompoundAttributesBean.attributeName}" /></div>
+	
+			<div class="label">User label</div>
+			<div class="field"><h:inputText style="width: 200px;" value="#{CompoundAttributesBean.attributeUserLabel}" /></div>
+	
+			<div class="label">Description</div>
+			<div class="field"><h:inputTextarea style="width: 300px;" value="#{CompoundAttributesBean.attributeDescription}" /></div>
+	
+			<h2>Attributes</h2>
+
+			<div class="field"><s:selectAndOrder
+				sortable="false"
+				availableItems="#{CompoundAttributesBean.availableAttributes}"
+				selectedItems="#{CompoundAttributesBean.attributeAttributes}" /></div>
+				
+			<h:commandButton value="Save" action="#{CompoundAttributesBean.saveAttribute}" />
+			<h:commandButton value="Back" action="#{CompoundAttributesBean.cancelEdit}" />
 			
-		<h:commandButton value="Save" action="#{CompoundAttributesBean.saveAttribute}" />
-		<h:commandButton value="Back" action="#{CompoundAttributesBean.cancelEdit}" />
-		<h:outputText value="#{CompoundAttributesBean.errorText}" />
+		</div>
 		
 	</h:form>
 </f:view>

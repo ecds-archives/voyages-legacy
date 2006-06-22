@@ -7,70 +7,44 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Groups</title>
+	<link href="schema.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form>
 	
-		<div class="tabs-container">
-			<s:tabBar id="bar" onTabChanged="#{Switcher.moduleChanged}">
-				<s:tab text="Voyages - groups" tabId="voyages-groups" />
-				<s:tab text="Voyages - compound atrributes" tabId="voyages-attributes" />
-				<s:tab text="Voyages - atrributes" tabId="voyages-attributes" />
-				<s:tab text="Slaves - groups" tabId="slaves-groups" />
-				<s:tab text="Slaves - compound atrributes" tabId="slaves-attributes" />
-				<s:tab text="Slaves - atrributes" tabId="slaves-attributes" />
-			</s:tabBar>
+		<jsp:include page="schema-edit-header.jsp"/>
+		
+		<div class="content">
+		
+			<h1><h:outputText value="#{Switcher.pageTitle}" />
+			<span class="new">(<h:commandLink action="#{GroupsBean.newGroup}" value="Create new" />)</span></h1>
+
+			<h:dataTable value="#{GroupsBean.groups}" var="group" border="0" cellpadding="0" cellspacing="0" styleClass="grid">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:commandLink actionListener="#{GroupsBean.editGroup}" action="edit">
+						<f:param id="groupId" name="groupId" value="#{group.id}" />
+						<h:outputText value="#{group.name}" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Label" />
+					</f:facet>
+					<h:outputText value="#{group.userLabel}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Description" />
+					</f:facet>
+					<h:outputText value="#{group.description}" />
+				</h:column>
+			</h:dataTable>
+			
 		</div>
-		
-		<h:commandLink
-			action="#{Switcher.gotoVoyagesGroups}"
-			value="Voyages - groups"/> |
-		<h:commandLink
-			action="#{Switcher.gotoVoyagesCompoundAttributes}"
-			value="Voyages - compound atrributes"/> |
-		<h:commandLink
-			action="#{Switcher.gotoVoyagesAttributes}"
-			value="Voyages - attributes"/> |
-		<h:commandLink
-			action="#{Switcher.gotoSlavesGroups}"
-			value="Slaves - groups"/> |
-		<h:commandLink
-			action="#{Switcher.gotoSlavesCompoundAttributes}"
-			value="Slaves - compound atrributes"/> |
-		<h:commandLink
-			action="#{Switcher.gotoSlavesAttributes}"
-			value="Slaves - attributes"/>
-	
-		<br>
-		
-		<h:commandButton action="#{GroupsBean.newGroup}" value="New" />
-		
-		<br>
-		
-		<h:dataTable value="#{GroupsBean.groups}" var="group" border="1">
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
-				<h:commandLink actionListener="#{GroupsBean.editGroup}" action="edit">
-					<f:param id="groupId" name="groupId" value="#{group.id}" />
-					<h:outputText value="#{group.name}" />
-				</h:commandLink>
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Label" />
-				</f:facet>
-				<h:outputText value="#{group.userLabel}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="List type" />
-				</f:facet>
-				<h:outputText value="#{group.description}" />
-			</h:column>
-		</h:dataTable>
 
 	</h:form>
 </f:view>

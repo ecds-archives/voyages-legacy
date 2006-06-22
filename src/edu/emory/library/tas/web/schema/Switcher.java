@@ -1,44 +1,35 @@
 package edu.emory.library.tas.web.schema;
 
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
+
+import edu.emory.library.tas.web.TabBarComponent;
+import edu.emory.library.tas.web.TabChangeEvent;
+
 public class Switcher
 {
 	
 	private EditMode editMode = EditMode.Voyages;
+	private String selectedModuleId = "voyages-groups";
+	private TabBarComponent moduleTabs = null;
 	
-	public String gotoVoyagesGroups()
+	public void moduleChanged(TabChangeEvent event)
 	{
-		editMode = EditMode.Voyages;
-		return "voyages-groups";
+		
+		selectedModuleId = event.getTabId();
+		
+		editMode = event.getTabId().startsWith("voyages") ?
+				EditMode.Voyages : EditMode.Slaves;
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		NavigationHandler nav = context.getApplication().getNavigationHandler();
+		nav.handleNavigation(context, null, selectedModuleId);
+		
 	}
 
-	public String gotoVoyagesCompoundAttributes()
+	public String getPageTitle()
 	{
-		editMode = EditMode.Voyages;
-		return "voyages-compound-attributes";
-	}
-
-	public String gotoVoyagesAttributes()
-	{
-		editMode = EditMode.Voyages;
-		return "voyages-attributes";
-	}
-
-	public String gotoSlavesGroups()
-	{
-		editMode = EditMode.Slaves;
-		return "slaves-groups";
-	}
-
-	public String gotoSlavesCompoundAttributes()
-	{
-		editMode = EditMode.Slaves;
-		return "slaves-compound-attributes";
-	}
-
-	public String gotoSlavesAttributes()
-	{
-		editMode = EditMode.Slaves;
-		return "slaves-attributes";
+		return moduleTabs.getSelectedTab().getText();
 	}
 
 	public EditMode getEditMode()
@@ -51,4 +42,24 @@ public class Switcher
 		this.editMode = editMode;
 	}
 
+	public String getSelectedModuleId()
+	{
+		return selectedModuleId;
+	}
+
+	public void setSelectedModuleId(String selectedModuleId)
+	{
+		this.selectedModuleId = selectedModuleId;
+	}
+
+	public TabBarComponent getModuleTabs()
+	{
+		return moduleTabs;
+	}
+
+	public void setModuleTabs(TabBarComponent moduleTabs)
+	{
+		this.moduleTabs = moduleTabs;
+	}
+	
 }

@@ -100,6 +100,12 @@
 			<name>id</name>
 		</attribute>
 		<attribute>
+			<name>binding</name>
+		</attribute>
+		<attribute>
+			<name>selectedTabId</name>
+		</attribute>
+		<attribute>
 			<name>onTabChanged</name>
 		</attribute>
 	</tag>

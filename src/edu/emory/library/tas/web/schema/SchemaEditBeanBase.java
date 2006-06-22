@@ -4,6 +4,7 @@ public class SchemaEditBeanBase
 {
 
 	private Switcher switcher;
+	private String errorText;
 
 	public boolean editingVoyages()
 	{
@@ -28,6 +29,21 @@ public class SchemaEditBeanBase
 	public void setSwitcher(Switcher switcher)
 	{
 		this.switcher = switcher;
+	}
+
+	public String getErrorText()
+	{
+		return errorText;
+	}
+
+	public void setErrorText(String errorText)
+	{
+		this.errorText = errorText;
+	}
+	
+	public boolean isError()
+	{
+		return errorText != null && errorText.length() > 0 ;
 	}
 
 }

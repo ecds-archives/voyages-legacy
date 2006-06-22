@@ -32,8 +32,6 @@ public class GroupsBean extends SchemaEditBeanBase
 	private List availableCompoundAttributes = new ArrayList();
 	private List groupCompoundAttributes = new ArrayList();
 	
-	private String errorText;
-	
 	private class SaveException extends Exception
 	{
 		private static final long serialVersionUID = 6458860234621829596L;
@@ -110,13 +108,13 @@ public class GroupsBean extends SchemaEditBeanBase
 		groupId = null;
 		
 		moveAttributesToUI(
-				Voyage.getAttributes(),
+				editingVoyages() ? Voyage.getAttributes() : Slave.getAttributes(),
 				null,
 				groupAttributes,
 				availableAttributes);
 		
 		moveAttributesToUI(
-				Voyage.getCoumpoundAttributes(),
+				editingVoyages() ? Voyage.getCoumpoundAttributes() : Slave.getCoumpoundAttributes(),
 				null,
 				groupCompoundAttributes,
 				availableCompoundAttributes);
@@ -135,6 +133,7 @@ public class GroupsBean extends SchemaEditBeanBase
 		setGroupUserLabel(group.getUserLabel());
 		setGroupName(group.getName());
 		setGroupDescription(group.getDescription());
+//		System.out.println("Load: " + group.getDescription());
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
@@ -197,6 +196,7 @@ public class GroupsBean extends SchemaEditBeanBase
 				throw new SaveException("Please specify label.");
 	
 			String description = StringUtils.trimAndUnNull(groupDescription);
+//			System.out.println("Before save: " + description);
 
 			Set attributes = getNewAttributes(session, groupAttributes, false);
 			Set compoundAttributes = getNewAttributes(session, groupCompoundAttributes, false);
@@ -206,6 +206,7 @@ public class GroupsBean extends SchemaEditBeanBase
 			group.setDescription(description);
 			group.setAttributes(attributes);
 			group.setCompoundAttributes(compoundAttributes);
+//			System.out.println("After save: " + group.getDescription());
 			
 			if (groupId != null)
 				session.update(group);
@@ -214,14 +215,14 @@ public class GroupsBean extends SchemaEditBeanBase
 			
 			session.close();
 			clearEditResouces();
-			errorText = null;
+			setErrorText(null);
 			return "back";
 		
 		}
 		catch (SaveException se)
 		{
 			session.close();
-			errorText = se.getMessage();
+			setErrorText(se.getMessage());
 			return null;
 		}
 		
@@ -315,11 +316,6 @@ public class GroupsBean extends SchemaEditBeanBase
 			this.groupCompoundAttributes.clear();
 		else
 			this.groupCompoundAttributes = groupCompoundAttributes;
-	}
-
-	public String getErrorText()
-	{
-		return errorText;
 	}
 
 	public String getGroupDescription()

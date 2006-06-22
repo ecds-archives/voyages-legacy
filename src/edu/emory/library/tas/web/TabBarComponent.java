@@ -8,6 +8,7 @@ import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.MethodBinding;
+import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
@@ -17,7 +18,8 @@ public class TabBarComponent extends UIComponentBase
 	
 	private static final String HIDDEN_FIELD_SUFFIX = "_selected_tab";
 	private MethodBinding tabChanged;
-	private String lastSelectedTabId;
+	private String selectedTabId;
+	private boolean selectedTabIdSet = false;
 	
 	public boolean getRendersChildren()
 	{
@@ -34,7 +36,7 @@ public class TabBarComponent extends UIComponentBase
 		Object values[] = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = saveAttachedState(context, tabChanged);
-		values[2] = lastSelectedTabId;
+		values[2] = selectedTabId;
 		return values;
 	}
 	
@@ -43,9 +45,28 @@ public class TabBarComponent extends UIComponentBase
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
 		tabChanged = (MethodBinding) restoreAttachedState(context, values[1]);
-		lastSelectedTabId = (String) values[2];
+		selectedTabId = (String) values[2];
 	}
 
+	public void decode(FacesContext context)
+	{
+		String newSelectedTabId = (String) context.getExternalContext().getRequestParameterMap().get(getHiddenFieldName(context));
+		if (newSelectedTabId != null && newSelectedTabId.length() > 0)
+		{
+			if (!newSelectedTabId.equals(selectedTabId))
+			{
+				queueEvent(new TabChangeEvent(this, newSelectedTabId));
+				selectedTabId = newSelectedTabId;
+			}
+		}
+	}
+	
+	public void processUpdates(FacesContext context)
+	{
+		ValueBinding vb = getValueBinding("selectedTabId");
+		if (vb != null) vb.setValue(context, selectedTabId);
+	}
+	
 	public void broadcast(FacesEvent event) throws AbortProcessingException
 	{
 		super.broadcast(event);
@@ -55,29 +76,14 @@ public class TabBarComponent extends UIComponentBase
 		
 	}
 
-	public void decode(FacesContext context)
-	{
-		
-		String newSelectedTabId = (String) context.getExternalContext().getRequestParameterMap().get(getHiddenFieldName(context));
-		if (newSelectedTabId != null && newSelectedTabId.length() > 0)
-		{
-			if (!newSelectedTabId.equals(lastSelectedTabId))
-			{
-				queueEvent(new TabChangeEvent(this, newSelectedTabId));
-				setSelectedTagId(newSelectedTabId);
-			}
-		}
-		
-	}
-	
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
-		if (getSelectedTagId() == null)
+		if (getSelectedTabId() == null)
 		{
 			if (getChildCount() > 0)
 			{
-				setSelectedTagId(((TabComponent) getChildren().get(0)).getTabId());
+				setSelectedTabId(((TabComponent) getChildren().get(0)).getTabId());
 			}
 		}
 		
@@ -105,6 +111,8 @@ public class TabBarComponent extends UIComponentBase
 		UIForm form = UtilsJSF.getForm(this, context);
 		if (form == null) return;
 		
+		String selectedTabId = getSelectedTabId();
+		
 		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
 		{
 			TabComponent tab = (TabComponent) iterChild.next();
@@ -114,7 +122,7 @@ public class TabBarComponent extends UIComponentBase
 					getHiddenFieldName(context), tab.getTabId());
 			
 			writer.startElement("td", this);
-			if (tab.isSelected())
+			if ((selectedTabId == null && tab.getTabId() == null) || (selectedTabId != null && selectedTabId.equals(tab.getTabId())))
 			{
 				writer.writeAttribute("class", "tab-selected", null);
 			}
@@ -146,23 +154,39 @@ public class TabBarComponent extends UIComponentBase
 		return getClientId(context) + HIDDEN_FIELD_SUFFIX;
 	}
 	
-	public void setSelectedTagId(String tabId)
+	public void setSelectedTabId(String tabId)
 	{
 		if (tabId == null) return;
-		lastSelectedTabId = tabId;
-		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
-		{
-			TabComponent tab = (TabComponent) iterChild.next();
-			tab.setSelected(tabId.equals(tab.getTabId()));
-		}
+		selectedTabIdSet = true;
+		selectedTabId = tabId;
+//		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
+//		{
+//			TabComponent tab = (TabComponent) iterChild.next();
+//			tab.setSelected(tabId.equals(tab.getTabId()));
+//		}
 	}
 	
-	public String getSelectedTagId()
+	public String getSelectedTabId()
+	{
+		if (selectedTabIdSet) return selectedTabId;
+		ValueBinding vb = getValueBinding("selectedTabId");
+		if (vb == null) return selectedTabId;
+		return (String) vb.getValue(getFacesContext());
+	}
+	
+	public TabComponent getSelectedTab()
 	{
 		for (Iterator iterChild = getChildren().iterator(); iterChild.hasNext();)
 		{
 			TabComponent tab = (TabComponent) iterChild.next();
-			if (tab.isSelected()) return tab.getTabId();
+			if ((selectedTabId == null && tab.getTabId() == null) || (selectedTabId != null && selectedTabId.equals(tab.getTabId())))
+			{
+				return tab;
+			}
+		}
+		if (getChildCount() > 0)
+		{
+			return (TabComponent) getChildren().get(0);
 		}
 		return null;
 	}

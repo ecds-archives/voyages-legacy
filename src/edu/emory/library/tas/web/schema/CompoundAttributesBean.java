@@ -30,8 +30,6 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	private List availableAttributes = new ArrayList();
 	private List attributeAttributes = new ArrayList();
 	
-	private String errorText;
-	
 	private class SaveException extends Exception
 	{
 		private static final long serialVersionUID = 1272411262323327048L;
@@ -70,25 +68,27 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	private void moveAttributesToUI(AbstractAttribute[] allAbstrAttribs, AbstractAttribute[] groupAbstrAttribs, List uiSelected, List uiAvailable)
 	{
 		
-		AbstractAttribute.sortByName(allAbstrAttribs);
-		AbstractAttribute.sortByName(groupAbstrAttribs);
-		
 		uiSelected.clear();
 		Set selectedIds = new HashSet();
-		for (int i = 0; i < groupAbstrAttribs.length; i++)
+		if (groupAbstrAttribs != null)
 		{
-			AbstractAttribute attr = groupAbstrAttribs[i];
-			SelectItem item = new SelectItem();
-			item.setText(makeAttributeLabel(attr));
-			item.setValue(attr.getId().toString());
-			item.setOrderNumber(i);
-			selectedIds.add(attr.getId());
-			uiSelected.add(item);
+			AbstractAttribute.sortByName(groupAbstrAttribs);
+			for (int i = 0; i < groupAbstrAttribs.length; i++)
+			{
+				AbstractAttribute attr = groupAbstrAttribs[i];
+				SelectItem item = new SelectItem();
+				item.setText(makeAttributeLabel(attr));
+				item.setValue(attr.getId().toString());
+				item.setOrderNumber(i);
+				selectedIds.add(attr.getId());
+				uiSelected.add(item);
+			}
 		}
 		
 		uiAvailable.clear();
 		for (int i = 0; i < allAbstrAttribs.length; i++)
 		{
+			AbstractAttribute.sortByName(allAbstrAttribs);
 			AbstractAttribute attr = allAbstrAttribs[i];
 			if (!selectedIds.contains(allAbstrAttribs[i].getId()))
 			{
@@ -102,8 +102,26 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		
 	}
 	
+	public String newAttribute()
+	{
+		
+		setErrorText(null);
+		
+		attributeId = null;
+		
+		moveAttributesToUI(
+				editingVoyages() ? Voyage.getAttributes() : Slave.getAttributes(),
+				null,
+				attributeAttributes,
+				availableAttributes);
+		
+		return "edit";
+	}
+
 	public void editAttribute(ActionEvent event)
 	{
+		
+		setErrorText(null);
 		
 		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("attributeId");
 		if (groupIdParam == null) return;
@@ -191,14 +209,14 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			HibernateConnector.getConnector().updateObject(attribute);
 			
 			session.close();
-			errorText = null;
+			setErrorText(null);
 			return "back";
 		
 		}
 		catch (SaveException se)
 		{
 			session.close();
-			errorText = se.getMessage();
+			setErrorText(se.getMessage());
 			return null;
 		}
 		
@@ -264,11 +282,6 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			this.attributeAttributes.clear();
 		else
 			this.attributeAttributes = groupAttributes;
-	}
-
-	public String getErrorText()
-	{
-		return errorText;
 	}
 
 	public String getAttributeDescription()

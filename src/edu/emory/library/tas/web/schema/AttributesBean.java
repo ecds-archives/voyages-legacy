@@ -20,8 +20,6 @@ public class AttributesBean extends SchemaEditBeanBase
 	private String attributeName;
 	private String attributeDescription;
 	
-	private String errorText;
-	
 	private class SaveException extends Exception
 	{
 		private static final long serialVersionUID = -1049756863527182663L;
@@ -43,6 +41,8 @@ public class AttributesBean extends SchemaEditBeanBase
 	
 	public void editAttribute(ActionEvent event)
 	{
+		
+		setErrorText(null);
 		
 		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("attributeId");
 		if (groupIdParam == null) return;
@@ -80,14 +80,14 @@ public class AttributesBean extends SchemaEditBeanBase
 			HibernateConnector.getConnector().updateObject(attribute);
 			
 			session.close();
-			errorText = null;
+			setErrorText(null);
 			return "back";
 		
 		}
 		catch (SaveException se)
 		{
 			session.close();
-			errorText = se.getMessage();
+			setErrorText(se.getMessage());
 			return null;
 		}
 		
@@ -125,11 +125,6 @@ public class AttributesBean extends SchemaEditBeanBase
 	public void setAttributeName(String selectedGroupUserName)
 	{
 		this.attributeName = selectedGroupUserName;
-	}
-
-	public String getErrorText()
-	{
-		return errorText;
 	}
 
 	public String getAttributeDescription()
