@@ -181,6 +181,75 @@
 					</h:panelGrid>
 				</s:stattab>
 				
+				<t:htmlTag value="div" styleClass="data-container">
+					<h:panelGrid columns="2">
+						<h:outputText value="Chart setup: "/>
+						<t:htmlTag value="div">
+							<h:outputText value="Current series: " rendered="#{AdvancedStatisticsTabBean.seriesAdded}"/>
+						</t:htmlTag>
+					    <t:htmlTag value="div" styleClass="advancedStatConfigLeftDiv">
+					    	<h:selectOneRadio onchange="submit()" 
+					    					  value="#{AdvancedStatisticsTabBean.selectedChart}">
+								<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}"/>
+							</h:selectOneRadio>
+							<t:htmlTag value="div">
+								<h:panelGrid columns="3">
+									<h:outputText value="X axis value: "/>
+									
+									<h:selectOneMenu style="width: 150px;" value="#{AdvancedStatisticsTabBean.xaxis}" id="xaxis_select">
+										<f:selectItems value="#{AdvancedStatisticsTabBean.voyageSelectedAttributes}"/>
+									</h:selectOneMenu>
+									
+									<h:panelGrid columns="2">
+										<h:selectBooleanCheckbox onclick="submit()" value="#{AdvancedStatisticsTabBean.aggregate}"/>
+										<h:outputText value="Enable aggregate functions"/>
+									</h:panelGrid>													
+							
+									<h:outputText value="Order: "/>
+						
+									<h:selectOneMenu style="width: 150px;" value="#{AdvancedStatisticsTabBean.order}" id="order_select">
+										<f:selectItems value="#{AdvancedStatisticsTabBean.availableOrders}"/>
+									</h:selectOneMenu>
+						
+									<t:htmlTag value="div">
+									</t:htmlTag>
+							
+									<h:outputText value="Y axis value: "/>
+									
+									<t:htmlTag value="div">
+										<h:selectOneMenu style="width: 50px;" disabled="#{AdvancedStatisticsTabBean.notAggregate}" value="#{AdvancedStatisticsTabBean.selectedAggregate}" id="aggregate_select">
+											<f:selectItems value="#{AdvancedStatisticsTabBean.aggregateFunctions}"/>
+										</h:selectOneMenu>
+										<h:selectOneMenu style="width: 100px;" value="#{AdvancedStatisticsTabBean.yaxis}" id="yaxis_select">
+											<f:selectItems value="#{AdvancedStatisticsTabBean.voyageNumericAttributes}"/>
+										</h:selectOneMenu>
+									</t:htmlTag>
+									
+									<h:commandButton id="addSeries" value="Add series" action="#{AdvancedStatisticsTabBean.addSeries}"/>
+								</h:panelGrid>
+							</t:htmlTag>	
+						</t:htmlTag>
+						<t:htmlTag value="div" styleClass="advancedStatConfigRightDiv">
+							<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.seriesAdded}">
+								<h:selectManyCheckbox id="to_remove_check" 
+										layout="pageDirection"
+										value="#{AdvancedStatisticsTabBean.toRemove}">
+									<f:selectItems value="#{AdvancedStatisticsTabBean.series}"/>
+								</h:selectManyCheckbox>
+								<h:commandButton id="removeSeries" value="Remove selected" action="#{AdvancedStatisticsTabBean.removeSeries}"/>
+							</t:htmlTag>
+						</t:htmlTag>
+						
+						<t:htmlTag value="div">
+							<h:commandButton id="showGraph" value="Show" action="#{AdvancedStatisticsTabBean.showGraph}"/>						
+							<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.statReady}">
+								<h:graphicImage value="#{TimeLineResultTabBean.chartPath}"/>
+							</t:htmlTag>
+						</t:htmlTag>
+						
+					</h:panelGrid>
+				</t:htmlTag>
+				
 				</td>
 			</tr>
 		</table>

@@ -181,3 +181,18 @@ div.configDiv {
 	margin-right: 2px; 
 	margin-left: 2px;
 }
+
+
+div.advancedStatConfigLeftDiv {
+	background-color: #666666;
+	margin-top: 0px; 
+	margin-right: 2px; 
+	margin-left: 2px;
+}
+
+div.advancedStatConfigRightDiv {
+	background-color: #666666;
+	margin-top: 0px; 
+	margin-right: 2px; 
+	margin-left: 2px;
+}
