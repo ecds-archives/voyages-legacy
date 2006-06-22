@@ -34,9 +34,11 @@ public class ImageFeederServlet extends HttpServlet {
 		if (path != null) {
 			//Prepare image
 			JFreeChart chart = (JFreeChart)session.getAttribute(path);
-			response.setContentType("image/png");
-			//Write image
-			ChartUtilities.writeChartAsPNG(stream, chart, width, height);
+			if (chart != null) {
+				response.setContentType("image/png");
+				//Write image
+				ChartUtilities.writeChartAsPNG(stream, chart, width, height);
+			}
 		}
 		//close streams
 		stream.close();			

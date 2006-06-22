@@ -52,6 +52,7 @@
 					<s:tabBar id="bar" onTabChanged="#{SearchBean.moduleTabChanged}">
 						<s:tab text="Results listing" tabId="table" />
 						<s:tab text="Graphs" tabId="timeline" />
+						<s:tab text="Advanced statistics" tabId="statistics" />
 					</s:tabBar>
 				</div>
 

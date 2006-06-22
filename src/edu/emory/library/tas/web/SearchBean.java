@@ -29,6 +29,7 @@ public class SearchBean
 	private Conditions currentConditions = null;
 	private boolean tableVisible = true;
 	private boolean timeLineVisible = false;
+	private boolean statisticsVisible = false;
 	
 	public void listAttributes()
 	{
@@ -88,6 +89,7 @@ public class SearchBean
 	{
 		tableVisible = "table".equals(event.getTabId());
 		timeLineVisible = "timeline".equals(event.getTabId());
+		statisticsVisible = "statistics".equals(event.getTabId());
 	}
 	
 	public String getSelectedAtttibuteId()
@@ -234,6 +236,14 @@ public class SearchBean
 	public void setSelectedGroupId(String selectedGroupId)
 	{
 		this.selectedGroupId = selectedGroupId;
+	}
+
+	public boolean isStatisticsVisible() {
+		return statisticsVisible;
+	}
+
+	public void setStatisticsVisible(boolean statisticsVisible) {
+		this.statisticsVisible = statisticsVisible;
 	}
 
 }
