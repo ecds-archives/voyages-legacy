@@ -32,10 +32,10 @@ public class AdvancedStatisticsTabBean {
 			"Count" };
 
 	private static final String[] availableChartsLabels = {
-			"Time series chart", "Bar chart", "Pie chart" };
+			"XY chart", "Bar chart", "Pie chart" };
 
 	private static final String[] chartGenerators = {
-			"TimeSeriesChartGenerator", "BarChartGenerator",
+			"XYChartGenerator", "BarChartGenerator",
 			"PieChartGenerator" };
 
 	private static final String DEFAULT_CHART_HEIGHT = "480";
@@ -106,14 +106,14 @@ public class AdvancedStatisticsTabBean {
 
 	private QueryValue prepareQueryValue(AbstractChartGenerator generator) {
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
-		localCondition.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
+		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
 		localCondition.addCondition("vi.remoteVoyageId",
 				new DirectValue("v.id"), Conditions.OP_EQUALS);
 
 		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v",
 				localCondition);
 		
-		String xAxis = generator.getXAxisSelectOperator(this.xaxis);
+		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
 		if (this.aggregate.booleanValue()) {
 			qValue.setGroupBy(xAxis);
 		}
@@ -122,8 +122,16 @@ public class AdvancedStatisticsTabBean {
 		for (Iterator iter = this.series.iterator(); iter.hasNext();) {
 			AdvancedStatisticsTabBean.SeriesItem element = 
 				(AdvancedStatisticsTabBean.SeriesItem) iter.next();
-			qValue.addPopulatedAttribute(element.toString(), false);			
+			String out = null;
+			if (element.aggregate != null) {
+				out = element.aggregate + "(v." + element.attribute + ")";
+			} else {
+				out = "v." + element.attribute;
+			}
+			qValue.addPopulatedAttribute(out, false);			
 		}
+		
+		System.out.println(qValue.toStringWithParams().conditionString);
 		
 		return qValue;
 	}
@@ -131,7 +139,7 @@ public class AdvancedStatisticsTabBean {
 	private AbstractChartGenerator getChartGenerator() {
 		int sel = Integer.parseInt(this.selectedChart);
 		AbstractChartGenerator generator = null;
-		String className = "edu.emory.library.tas.web.components.tabs.chartGenerators"
+		String className = "edu.emory.library.tas.web.components.tabs.chartGenerators."
 				+ chartGenerators[sel];
 		try {
 			Class clazz = Class.forName(className);
@@ -155,6 +163,7 @@ public class AdvancedStatisticsTabBean {
 		} else {
 			this.series.add(new SeriesItem(series, null));
 		}
+		this.neededQuery = true;
 		return null;
 	}
 
@@ -166,6 +175,7 @@ public class AdvancedStatisticsTabBean {
 				for (int i = 0; i < this.series.size(); i++) {
 					if (this.series.get(i).hashCode() == hash) {
 						this.series.remove(i);
+						this.neededQuery = true;
 						break;
 					}
 				}
@@ -178,6 +188,8 @@ public class AdvancedStatisticsTabBean {
 		this.statReady = new Boolean(true);
 		if (this.neededQuery) {
 			AbstractChartGenerator generator = this.getChartGenerator();
+			Attribute attr = Voyage.getAttribute(this.xaxis);
+			generator.setDate(attr.getType().intValue() == Attribute.TYPE_DATE);
 			QueryValue qValue = this.prepareQueryValue(generator);
 			Object[] objs = qValue.executeQuery();
 			generator.addRowToDataSet(objs, this.series.toArray());
@@ -185,10 +197,14 @@ public class AdvancedStatisticsTabBean {
 			ExternalContext servletContext = FacesContext.getCurrentInstance()
 					.getExternalContext();
 			((HttpSession) servletContext.getSession(true)).setAttribute(
-					STAT_OBJECT_NAME, generator.getChart());
+					STAT_OBJECT_NAME, generator.getChart(this.xaxis));
 
 			this.neededQuery = false;
 		}
+		return null;
+	}
+	
+	public String setNewView() {
 		return null;
 	}
 
@@ -214,7 +230,7 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	public void setConditions(Conditions conditions) {
-		if (conditions != null && conditions.equals(this.conditions)) {
+		if (conditions != null && !conditions.equals(this.conditions)) {
 			this.conditions = conditions;
 			this.neededQuery = true;
 		}
@@ -226,6 +242,9 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	public void setOrder(String orderby) {
+		if (orderby != null && !orderby.equals(this.order)) {
+			this.neededQuery = true;
+		}
 		this.order = orderby;
 	}
 
@@ -249,6 +268,9 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	public void setXaxis(String xaxis) {
+		if (xaxis != null && !xaxis.equals(this.xaxis)) {
+			this.neededQuery = true;
+		}
 		this.xaxis = xaxis;
 	}
 
@@ -258,13 +280,12 @@ public class AdvancedStatisticsTabBean {
 		for (int i = 0; i < attributes.length; i++) {
 			boolean ok = false;
 			if (this.selectedChart.equals("0")) {
-				if (attributes[i].getType().intValue() == Attribute.TYPE_DATE) {
-					ok = true;
-				}
+				ok = true;
 			} else {
 				if (attributes[i].getType().intValue() == Attribute.TYPE_INTEGER
 						|| attributes[i].getType().intValue() == Attribute.TYPE_LONG
-						|| attributes[i].getType().intValue() == Attribute.TYPE_FLOAT) {
+						|| attributes[i].getType().intValue() == Attribute.TYPE_FLOAT
+						|| attributes[i].getType().intValue() == Attribute.TYPE_DICT) {
 					ok = true;
 				}
 			}
@@ -390,6 +411,9 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	public void setSelectedChart(String chartType) {
+		if (chartType != null && !chartType.equals(this.selectedChart)) {
+			this.neededQuery = true;
+		}
 		this.selectedChart = chartType;
 	}
 

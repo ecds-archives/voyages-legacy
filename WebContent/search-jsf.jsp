@@ -182,7 +182,10 @@
 					</h:panelGrid>
 				</s:stattab>
 				
-				<t:htmlTag value="div" styleClass="data-container">
+				<s:stattab styleClass="data-container"
+						rendered="#{SearchBean.statisticsVisible}"
+						query="#{SearchBean.currentConditions}"
+						conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
 					<h:panelGrid columns="2">
 						<h:outputText value="Chart setup: "/>
 						<t:htmlTag value="div">
@@ -242,14 +245,25 @@
 						</t:htmlTag>
 						
 						<t:htmlTag value="div">
-							<h:commandButton id="showGraph" value="Show" action="#{AdvancedStatisticsTabBean.showGraph}"/>						
-							<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.statReady}">
-								<h:graphicImage value="#{TimeLineResultTabBean.chartPath}"/>
+							<h:commandButton style="margin: 3px;" id="showGraph" value="Show" action="#{AdvancedStatisticsTabBean.showGraph}"/>						
+							<t:htmlTag value="div" 
+										style="overflow:auto; width: 640px; height: 480px"
+										rendered="#{AdvancedStatisticsTabBean.statReady}">
+								<h:graphicImage value="#{AdvancedStatisticsTabBean.chartPath}"/>
 							</t:htmlTag>
+							
+							<% /* Change size panel */ %>
+							<h:panelGroup rendered="#{AdvancedStatisticsTabBean.statReady}">
+								<h:outputText value="Width: "/>
+								<h:inputText value="#{AdvancedStatisticsTabBean.chartWidth}" style="width: 40px;"/>
+								<h:outputText value="Height: "/>
+								<h:inputText value="#{AdvancedStatisticsTabBean.chartHeight}" style="width: 40px;"/>
+								<h:commandButton id="enlargeStat" value="Change size" action="#{AdvancedStatisticsTabBean.setNewView}"/>
+							</h:panelGroup>
 						</t:htmlTag>
 						
 					</h:panelGrid>
-				</t:htmlTag>
+				</s:stattab>
 				
 				</td>
 			</tr>
