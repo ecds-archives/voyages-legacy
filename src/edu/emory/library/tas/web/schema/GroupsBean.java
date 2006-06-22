@@ -17,17 +17,16 @@ import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
-import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.StringUtils;
 
-public class GroupsBean
+public class GroupsBean extends SchemaEditBeanBase
 {
 	
-	private EditMode editMode = EditMode.Voyages;
 	private Long groupId;
 	private String groupUserLabel;
 	private String groupName;
+	private String groupDescription;
 	private List availableAttributes = new ArrayList();
 	private List groupAttributes = new ArrayList();
 	private List availableCompoundAttributes = new ArrayList();
@@ -48,26 +47,12 @@ public class GroupsBean
 	{
 	}
 	
-	public String switchToVoyages()
-	{
-		editMode = EditMode.Voyages;
-		return null;
-	}
-	
-	public String switchToSlaves()
-	{
-		editMode = EditMode.Slaves;
-		return null;
-	}
-
 	public Object[] getGroups()
 	{
-		if (editMode.isVoyages())
+		if (editingVoyages())
 			return Voyage.getGroups();
-		else if (editMode.isSlaves())
-			return Slave.getGroups();
 		else
-			return null;
+			return Slave.getGroups();
 	}
 	
 	private String makeAttributeLabel(AbstractAttribute attr)
@@ -85,23 +70,25 @@ public class GroupsBean
 	private void moveAttributesToUI(AbstractAttribute[] allAbstrAttribs, AbstractAttribute[] groupAbstrAttribs, List uiSelected, List uiAvailable)
 	{
 		
-		AbstractAttribute.sortByName(allAbstrAttribs);
-		AbstractAttribute.sortByName(groupAbstrAttribs);
-		
 		uiSelected.clear();
 		Set selectedIds = new HashSet();
-		for (int i = 0; i < groupAbstrAttribs.length; i++)
+		if (groupAbstrAttribs != null)
 		{
-			AbstractAttribute attr = groupAbstrAttribs[i];
-			SelectItem item = new SelectItem();
-			item.setText(makeAttributeLabel(attr));
-			item.setValue(attr.getId().toString());
-			item.setOrderNumber(i);
-			selectedIds.add(attr.getId());
-			uiSelected.add(item);
+			AbstractAttribute.sortByName(groupAbstrAttribs);
+			for (int i = 0; i < groupAbstrAttribs.length; i++)
+			{
+				AbstractAttribute attr = groupAbstrAttribs[i];
+				SelectItem item = new SelectItem();
+				item.setText(makeAttributeLabel(attr));
+				item.setValue(attr.getId().toString());
+				item.setOrderNumber(i);
+				selectedIds.add(attr.getId());
+				uiSelected.add(item);
+			}
 		}
 		
 		uiAvailable.clear();
+		AbstractAttribute.sortByName(allAbstrAttribs);
 		for (int i = 0; i < allAbstrAttribs.length; i++)
 		{
 			AbstractAttribute attr = allAbstrAttribs[i];
@@ -117,6 +104,26 @@ public class GroupsBean
 		
 	}
 	
+	public String newGroup()
+	{
+		
+		groupId = null;
+		
+		moveAttributesToUI(
+				Voyage.getAttributes(),
+				null,
+				groupAttributes,
+				availableAttributes);
+		
+		moveAttributesToUI(
+				Voyage.getCoumpoundAttributes(),
+				null,
+				groupCompoundAttributes,
+				availableCompoundAttributes);
+		
+		return "edit";
+	}
+
 	public void editGroup(ActionEvent event)
 	{
 		
@@ -127,6 +134,7 @@ public class GroupsBean
 		groupId = group.getId();
 		setGroupUserLabel(group.getUserLabel());
 		setGroupName(group.getName());
+		setGroupDescription(group.getDescription());
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
@@ -168,29 +176,44 @@ public class GroupsBean
 	{
 
 		Session session = HibernateUtil.getSession();
-		Group group = Group.loadById(groupId, session);
+		
+		Group group = null;
+		if (groupId != null)
+			group = Group.loadById(groupId, session);
+		else if (editingVoyages())
+			group = Group.newForVoyages(session);
+		else
+			group = Group.newForSlaves(session);
 
 		try
 		{
 			
 			String name = StringUtils.trimAndUnNull(groupName);
 			if (name.length() == 0)
-				throw new SaveException("Please specify the group name.");
+				throw new SaveException("Please specify group name.");
 			
 			String userLabel = StringUtils.trimAndUnNull(groupUserLabel);
 			if (userLabel.length() == 0)
-				throw new SaveException("Please specify the label.");
+				throw new SaveException("Please specify label.");
 	
+			String description = StringUtils.trimAndUnNull(groupDescription);
+
 			Set attributes = getNewAttributes(session, groupAttributes, false);
 			Set compoundAttributes = getNewAttributes(session, groupCompoundAttributes, false);
-			
+
 			group.setName(name);
 			group.setUserLabel(userLabel);
+			group.setDescription(description);
 			group.setAttributes(attributes);
 			group.setCompoundAttributes(compoundAttributes);
-			HibernateConnector.getConnector().updateObject(group);
+			
+			if (groupId != null)
+				session.update(group);
+			else
+				session.save(group);
 			
 			session.close();
+			clearEditResouces();
 			errorText = null;
 			return "back";
 		
@@ -219,6 +242,7 @@ public class GroupsBean
 		groupId = null;
 		groupName = null;
 		groupUserLabel = null;
+		groupDescription = null;
 	}
 
 	public String getGroupUserLabel()
@@ -296,6 +320,16 @@ public class GroupsBean
 	public String getErrorText()
 	{
 		return errorText;
+	}
+
+	public String getGroupDescription()
+	{
+		return groupDescription;
+	}
+
+	public void setGroupDescription(String groupDescription)
+	{
+		this.groupDescription = groupDescription;
 	}
 	
 }

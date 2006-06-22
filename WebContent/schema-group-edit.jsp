@@ -19,6 +19,9 @@
 		<b>User label</b><br>
 		<h:inputText value="#{GroupsBean.groupUserLabel}" /><br>
 
+		<b>Description</b><br>
+		<h:inputTextarea value="#{GroupsBean.groupDescription}" /><br>
+
 		<b>Attributes</b><br>
 		<s:selectAndOrder
 			sortable="false"

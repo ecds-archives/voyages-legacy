@@ -11,15 +11,29 @@
 <body>
 <f:view>
 	<h:form>
+
+		<h:commandLink
+			action="#{Switcher.gotoVoyagesGroups}"
+			value="Voyages - groups"/> |
+		<h:commandLink
+			action="#{Switcher.gotoVoyagesCompoundAttributes}"
+			value="Voyages - compound atrributes"/> |
+		<h:commandLink
+			action="#{Switcher.gotoVoyagesAttributes}"
+			value="Voyages - attributes"/> |
+		<h:commandLink
+			action="#{Switcher.gotoSlavesGroups}"
+			value="Slaves - groups"/> |
+		<h:commandLink
+			action="#{Switcher.gotoSlavesCompoundAttributes}"
+			value="Slaves - compound atrributes"/> |
+		<h:commandLink
+			action="#{Switcher.gotoSlavesAttributes}"
+			value="Slaves - attributes"/>
 	
-		<a href="schema-group-list.faces">Groups</a> |
-		<a href="schema-compound-attribute-list.faces">Compound attributes</a> |
-		<a href="schema-attribute-list.faces">Attributes</a>
-		
 		<br>
-	
-		<h:commandLink action="#{GroupsBean.switchToVoyages}" value="Voyages"/> |
-		<h:commandLink action="#{GroupsBean.switchToSlaves}" value="Slaves"/>
+		
+		<h:commandButton action="#{GroupsBean.newGroup}" value="New" />
 		
 		<br>
 		
@@ -41,7 +55,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">
-					<h:outputText value="Description" />
+					<h:outputText value="List type" />
 				</f:facet>
 				<h:outputText value="#{group.description}" />
 			</h:column>

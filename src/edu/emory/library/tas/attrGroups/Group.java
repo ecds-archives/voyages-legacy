@@ -26,6 +26,30 @@ public class Group implements Serializable {
 	public Group() {		
 	}
 	
+	public static Group newForVoyages() {
+		Group group = new Group();
+		group.setObjectType(ObjectType.getVoyages());
+		return group;
+	}
+	
+	public static Group newForVoyages(Session session) {
+		Group group = new Group();
+		group.setObjectType(ObjectType.getVoyages(session));
+		return group;
+	}
+
+	public static Group newForSlaves() {
+		Group group = new Group();
+		group.setObjectType(ObjectType.getSlaves());
+		return group;
+	}
+	
+	public static Group newForSlaves(Session session) {
+		Group group = new Group();
+		group.setObjectType(ObjectType.getSlaves(session));
+		return group;
+	}
+
 	public static Group loadById(Long id) {
 		Session session = HibernateUtil.getSession();
 		Group group = loadById(id, session);

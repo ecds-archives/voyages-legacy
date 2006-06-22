@@ -125,11 +125,23 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>Switcher</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.schema.Switcher
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>AttributesBean</managed-bean-name>
 		<managed-bean-class>
 			edu.emory.library.tas.web.schema.AttributesBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>switcher</property-name>
+			<value>#{Switcher}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -138,6 +150,10 @@
 			edu.emory.library.tas.web.schema.CompoundAttributesBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>switcher</property-name>
+			<value>#{Switcher}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -146,6 +162,10 @@
 			edu.emory.library.tas.web.schema.GroupsBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>switcher</property-name>
+			<value>#{Switcher}</value>
+		</managed-property>
 	</managed-bean>
 
 	<navigation-rule>
@@ -192,6 +212,48 @@
 		<from-view-id>/schema-compound-attribute-edit.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>back</from-outcome>
+			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>voyages-groups</from-outcome>
+			<to-view-id>/schema-group-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>slaves-groups</from-outcome>
+			<to-view-id>/schema-group-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>voyages-attributes</from-outcome>
+			<to-view-id>/schema-attribute-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>slaves-attributes</from-outcome>
+			<to-view-id>/schema-attribute-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>voyages-compound-attributes</from-outcome>
+			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>slaves-compound-attributes</from-outcome>
 			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>

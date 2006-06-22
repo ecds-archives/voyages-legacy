@@ -18,6 +18,9 @@
 
 		<b>User label</b><br>
 		<h:inputText value="#{AttributesBean.attributeUserLabel}" /><br>
+		
+		<b>Description</b><br>
+		<h:inputTextarea value="#{AttributesBean.attributeDescription}" /><br>
 
 		<h:commandButton value="Save" action="#{AttributesBean.saveAttribute}" />
 		<h:commandButton value="Back" action="#{AttributesBean.cancelEdit}" />

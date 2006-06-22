@@ -12,15 +12,25 @@
 <f:view>
 	<h:form>
 	
-		<a href="schema-group-list.faces">Groups</a> |
-		<a href="schema-compound-attribute-list.faces">Compound attributes</a> |
-		<a href="schema-attribute-list.faces">Attributes</a>
-		
-		<br>
+		<h:commandLink
+			action="#{Switcher.gotoVoyagesGroups}"
+			value="Voyages - groups"/> |
+		<h:commandLink
+			action="#{Switcher.gotoVoyagesCompoundAttributes}"
+			value="Voyages - compound atrributes"/> |
+		<h:commandLink
+			action="#{Switcher.gotoVoyagesAttributes}"
+			value="Voyages - attributes"/> |
+		<h:commandLink
+			action="#{Switcher.gotoSlavesGroups}"
+			value="Slaves - groups"/> |
+		<h:commandLink
+			action="#{Switcher.gotoSlavesCompoundAttributes}"
+			value="Slaves - compound atrributes"/> |
+		<h:commandLink
+			action="#{Switcher.gotoSlavesAttributes}"
+			value="Slaves - attributes"/>
 	
-		<h:commandLink action="#{AttributesBean.switchToVoyages}" value="Voyages"/> |
-		<h:commandLink action="#{AttributesBean.switchToSlaves}" value="Slaves"/>
-		
 		<br>
 		
 		<h:dataTable value="#{AttributesBean.attributes}" var="attribute" border="1">
@@ -49,11 +59,11 @@
 				<f:facet name="header">
 					<h:outputText value="Type" />
 				</f:facet>
-				<h:outputText value="#{attribute.type}" />
+				<h:outputText value="#{attribute.typeUserName}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">
-					<h:outputText value="Dictionary" />
+					<h:outputText value="List type" />
 				</f:facet>
 				<h:outputText value="#{attribute.dictionary}" />
 			</h:column>

@@ -19,6 +19,9 @@
 		<b>User label</b><br>
 		<h:inputText value="#{CompoundAttributesBean.attributeUserLabel}" /><br>
 
+		<b>Description</b><br>
+		<h:inputTextarea value="#{CompoundAttributesBean.attributeDescription}" /><br>
+
 		<b>Attributes</b><br>
 		<s:selectAndOrder
 			sortable="false"

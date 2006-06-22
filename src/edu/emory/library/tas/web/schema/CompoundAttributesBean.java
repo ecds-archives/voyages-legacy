@@ -20,13 +20,13 @@ import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.StringUtils;
 
-public class CompoundAttributesBean
+public class CompoundAttributesBean extends SchemaEditBeanBase
 {
 
-	private EditMode editMode = EditMode.Voyages;
 	private Long attributeId;
 	private String attributeUserLabel;
 	private String attributeName;
+	private String attributeDescription;
 	private List availableAttributes = new ArrayList();
 	private List attributeAttributes = new ArrayList();
 	
@@ -41,23 +41,11 @@ public class CompoundAttributesBean
 		}
 	}
 	
-	public String switchToVoyages()
-	{
-		editMode = EditMode.Voyages;
-		return null;
-	}
-	
-	public String switchToSlaves()
-	{
-		editMode = EditMode.Slaves;
-		return null;
-	}
-
 	public Object[] getAttributes()
 	{
-		if (editMode.isVoyages())
+		if (editingVoyages())
 			return Voyage.getCoumpoundAttributes();
-		else if (editMode.isSlaves())
+		else if (editingSlaves())
 			return Slave.getCoumpoundAttributes();
 		else
 			return null;
@@ -124,6 +112,7 @@ public class CompoundAttributesBean
 		attributeId = attribute.getId();
 		setAttributeUserLabel(attribute.getUserLabel());
 		setAttributeName(attribute.getName());
+		setAttributeDescription(attribute.getDescription());
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
@@ -190,12 +179,15 @@ public class CompoundAttributesBean
 			String userLabel = StringUtils.trimAndUnNull(attributeUserLabel);
 			if (userLabel.length() == 0)
 				throw new SaveException("Please specify label.");
+			
+			String description = StringUtils.trimAndUnNull(attributeDescription);
 	
 			Set attributes = getNewAttributes(session, attributeAttributes, false);
 			
 			attribute.setName(name);
 			attribute.setUserLabel(userLabel);
 			attribute.setAttributes(attributes);
+			attribute.setDescription(description);
 			HibernateConnector.getConnector().updateObject(attribute);
 			
 			session.close();
@@ -225,6 +217,7 @@ public class CompoundAttributesBean
 		attributeId = null;
 		attributeName = null;
 		attributeUserLabel = null;
+		attributeDescription = null;
 	}
 
 	public String getAttributeUserLabel()
@@ -276,6 +269,16 @@ public class CompoundAttributesBean
 	public String getErrorText()
 	{
 		return errorText;
+	}
+
+	public String getAttributeDescription()
+	{
+		return attributeDescription;
+	}
+
+	public void setAttributeDescription(String attributeDescription)
+	{
+		this.attributeDescription = attributeDescription;
 	}
 	
 }

@@ -258,6 +258,19 @@ public abstract class AbstractAttribute implements Serializable {
 		}
 	}
 	
+	public String getTypeUserName() {
+		if (type == null) return "";
+		switch (type.intValue()) {
+			case TYPE_INTEGER: return "Integer";
+			case TYPE_LONG: return "Integer";
+			case TYPE_FLOAT: return "Decimal";
+			case TYPE_STRING: return "Text";
+			case TYPE_DATE: return "Date";
+			case TYPE_DICT: return "List";
+			default: return "";
+		}
+	}
+	
 	public boolean isDictinaory() {
 		return dictionary != null;
 	}

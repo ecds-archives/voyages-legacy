@@ -12,14 +12,13 @@ import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.StringUtils;
 
-public class AttributesBean
+public class AttributesBean extends SchemaEditBeanBase
 {
 	
-	private EditMode editMode = EditMode.Voyages;
-
 	private Long attributeId;
 	private String attributeUserLabel;
 	private String attributeName;
+	private String attributeDescription;
 	
 	private String errorText;
 	
@@ -32,23 +31,11 @@ public class AttributesBean
 		}
 	}
 	
-	public String switchToVoyages()
-	{
-		editMode = EditMode.Voyages;
-		return null;
-	}
-	
-	public String switchToSlaves()
-	{
-		editMode = EditMode.Slaves;
-		return null;
-	}
-
 	public Object[] getAttributes()
 	{
-		if (editMode.isVoyages())
+		if (editingVoyages())
 			return Voyage.getAttributes();
-		else if (editMode.isSlaves())
+		else if (editingSlaves())
 			return Slave.getAttributes();
 		else
 			return null;
@@ -64,6 +51,7 @@ public class AttributesBean
 		attributeId = attribute.getId();
 		setAttributeUserLabel(attribute.getUserLabel());
 		setAttributeName(attribute.getName());
+		setAttributeDescription(attribute.getDescription());
 		
 	}
 	
@@ -84,8 +72,11 @@ public class AttributesBean
 			if (userLabel.length() == 0)
 				throw new SaveException("Please specify label.");
 	
+			String description = StringUtils.trimAndUnNull(attributeDescription);
+
 			attribute.setName(name);
 			attribute.setUserLabel(userLabel);
+			attribute.setDescription(description);
 			HibernateConnector.getConnector().updateObject(attribute);
 			
 			session.close();
@@ -113,6 +104,7 @@ public class AttributesBean
 		attributeId = null;
 		attributeName = null;
 		attributeUserLabel = null;
+		attributeDescription = null;
 	}
 
 	public String getAttributeUserLabel()
@@ -138,6 +130,16 @@ public class AttributesBean
 	public String getErrorText()
 	{
 		return errorText;
+	}
+
+	public String getAttributeDescription()
+	{
+		return attributeDescription;
+	}
+
+	public void setAttributeDescription(String attributeDescription)
+	{
+		this.attributeDescription = attributeDescription;
 	}
 
 }
