@@ -48,10 +48,12 @@
 					history="#{SearchBean.history}" /></td>
 				<td class="main-panel">
 
-				<div class="tab-bar-container"><s:tabBar id="bar" onTabChanged="#{SearchBean.moduleTabChanged}">
-					<s:tab text="Results listing" tabId="table" />
-					<s:tab text="Graphs" tabId="timeline" />
-				</s:tabBar></div>
+				<div class="tab-bar-container">
+					<s:tabBar id="bar" onTabChanged="#{SearchBean.moduleTabChanged}">
+						<s:tab text="Results listing" tabId="table" />
+						<s:tab text="Graphs" tabId="timeline" />
+					</s:tabBar>
+				</div>
 
 				<% /* Table tab */ %>
 				<t:htmlTag value="div" styleClass="data-container" rendered="#{SearchBean.tableVisible}">
@@ -178,6 +180,7 @@
 						</h:panelGroup>
 					</h:panelGrid>
 				</s:stattab>
+				
 				</td>
 			</tr>
 		</table>

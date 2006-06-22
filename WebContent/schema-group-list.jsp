@@ -11,7 +11,18 @@
 <body>
 <f:view>
 	<h:form>
-
+	
+		<div class="tabs-container">
+			<s:tabBar id="bar" onTabChanged="#{Switcher.moduleChanged}">
+				<s:tab text="Voyages - groups" tabId="voyages-groups" />
+				<s:tab text="Voyages - compound atrributes" tabId="voyages-attributes" />
+				<s:tab text="Voyages - atrributes" tabId="voyages-attributes" />
+				<s:tab text="Slaves - groups" tabId="slaves-groups" />
+				<s:tab text="Slaves - compound atrributes" tabId="slaves-attributes" />
+				<s:tab text="Slaves - atrributes" tabId="slaves-attributes" />
+			</s:tabBar>
+		</div>
+		
 		<h:commandLink
 			action="#{Switcher.gotoVoyagesGroups}"
 			value="Voyages - groups"/> |
