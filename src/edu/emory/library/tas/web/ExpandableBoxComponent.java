@@ -14,6 +14,8 @@ public class ExpandableBoxComponent extends UIComponentBase
 	
 	private static final String EXPANEDED = "expanded";
 	private static final String COLLAPSED = "collapsed";
+	private static final String COLLAPSE_SYMBOL = "-";
+	private static final String EXPANED_SYMBOL = "+";
 
 	private boolean collapsed = false;
 
@@ -70,6 +72,8 @@ public class ExpandableBoxComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = UtilsJSF.getForm(this, context);
 		
+		String tdWithSymbolId = getClientId(context) + "_symbol";
+		
 		UtilsJSF.encodeHiddenInput(this, writer,
 				getStateHiddenFieldName(context),
 				collapsed ? COLLAPSED : EXPANEDED);
@@ -84,17 +88,43 @@ public class ExpandableBoxComponent extends UIComponentBase
 		UtilsJSF.appendFormElementRefJS(js, context, form, getStateHiddenFieldName(context));
 		js.append("; ");
 
+		js.append("var symbol = ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdWithSymbolId);
+		js.append("; ");
+
 		js.append("if (state.value == '").append(COLLAPSED).append("') {");
 		js.append("state.value = '").append(EXPANEDED).append("'; ");
-		js.append("box.style.display = 'block';");
+		js.append("box.style.display = 'block'; ");
+		js.append("symbol.innerHTML = '").append(COLLAPSE_SYMBOL).append("';");
 		js.append("} else {");
 		js.append("state.value = '").append(COLLAPSED).append("'; ");
-		js.append("box.style.display = 'none';");
+		js.append("box.style.display = 'none'; ");
+		js.append("symbol.innerHTML = '").append(EXPANED_SYMBOL).append("';");
 		js.append("}");
 		
 		writer.startElement("div", this);
+		writer.writeAttribute("class", "side-panel-section", null);
 		writer.writeAttribute("onclick", js.toString(), null);
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.startElement("tr", this);
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-panel-section-text", null);
 		writer.write(getText());
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-panel-section-symbol", null);
+		writer.writeAttribute("id", tdWithSymbolId, null);
+		writer.write(collapsed ?  EXPANED_SYMBOL : COLLAPSE_SYMBOL);
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.endElement("table");
 		writer.endElement("div");
 
 		writer.startElement("div", this);

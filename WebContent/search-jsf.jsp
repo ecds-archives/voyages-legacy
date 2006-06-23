@@ -19,32 +19,36 @@
 			<tr>
 				<td class="side-panel">
 
-				<div style="margin: 10px 0px 5px 10px; color: White;">Add condition to query</div>
+					<div style="margin: 10px 0px 5px 10px; color: White;">Add condition to query</div>
+	
+					<div style="margin: 0px 0px 5px 10px;">
+						<h:selectOneMenu onchange="form.submit();" value="#{SearchBean.selectedGroupId}" style="border: 0px; width: 276px; padding: 2px;">
+							<f:selectItems value="#{SearchBean.voyageAttributeGroups}" />
+						</h:selectOneMenu>
+					</div>
+	
+					<div style="margin: 0px 0px 5px 10px;">
+						<h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}" style="border: 0px; width: 276px; padding: 2px;">
+							<f:selectItems value="#{SearchBean.voyageAttributes}" />
+						</h:selectOneMenu>
+					</div>
+	
+					<div style="margin: 0px 0px 5px 10px;">
+						<h:commandButton action="#{SearchBean.addQueryCondition}" value="Add" />
+					</div>
+	
+					<s:expandableBox text="Current query">
+						<s:queryBuilder query="#{SearchBean.workingQuery}" />
+					</s:expandableBox>
+	
+					<div style="margin: 10px 0px 5px 10px;"><h:commandButton action="#{SearchBean.search}" value="Search" /></div>
+	
+					<s:expandableBox text="History">
+						<s:historyList onDelete="#{SearchBean.historyItemDelete}" onRestore="#{SearchBean.historyItemRestore}" history="#{SearchBean.history}" />
+					</s:expandableBox>
+	
 
-				<div style="margin: 0px 0px 5px 10px;">
-					<h:selectOneMenu onchange="form.submit();" value="#{SearchBean.selectedGroupId}" style="border: 0px; width: 276px; padding: 2px;">
-						<f:selectItems value="#{SearchBean.voyageAttributeGroups}" />
-					</h:selectOneMenu>
-				</div>
-
-				<div style="margin: 0px 0px 5px 10px;"><h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}" style="border: 0px; width: 276px; padding: 2px;">
-					<f:selectItems value="#{SearchBean.voyageAttributes}" />
-				</h:selectOneMenu></div>
-
-				<div style="margin: 0px 0px 5px 10px;"><h:commandButton action="#{SearchBean.addQueryCondition}" value="Add" /></div>
-
-				<div class="side-panel-section side-panel-section-query-builder">Current query</div>
-
-				<s:expandableBox text="Current query">
-				<s:queryBuilder query="#{SearchBean.workingQuery}" />
-				</s:expandableBox>
-
-				<div style="margin: 10px 0px 5px 10px;"><h:commandButton action="#{SearchBean.search}" value="Search" /></div>
-
-				<div class="side-panel-section side-panel-section-history">History</div>
-
-				<s:historyList onDelete="#{SearchBean.historyItemDelete}" onRestore="#{SearchBean.historyItemRestore}"
-					history="#{SearchBean.history}" /></td>
+				</td>
 				<td class="main-panel">
 
 				<div class="tab-bar-container">

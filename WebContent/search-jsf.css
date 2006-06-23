@@ -30,17 +30,22 @@ td.side-panel {
 	background-color: #666666; }
 	
 div.side-panel-section {
+	margin-top: 10px;
+	cursor: pointer;
 	padding: 5px 10px 5px 10px; 
 	color: White;
 	font-weight: bold;
 	background-color: #CC3300; }
 	
-div.side-panel-section-history {
-	margin-top: 10px; }
+div.side-panel-section:hover {
+	background-color: #BB2200; }
 
-div.side-panel-section-query-builder {
-	margin-top: 10px; }
-	
+div.side-panel-section table {
+	width: 100%; }
+
+td.side-panel-section-symbol {
+	text-align: right; }
+
 td.main-panel {
 	vertical-align: top; }
 
