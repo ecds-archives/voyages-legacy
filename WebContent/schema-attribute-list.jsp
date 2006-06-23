@@ -40,7 +40,7 @@
 					<f:facet name="header">
 						<h:outputText value="Type" />
 					</f:facet>
-					<h:outputText value="#{attribute.typeUserName}" />
+					<h:outputText value="#{attribute.typeDisplayName}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">

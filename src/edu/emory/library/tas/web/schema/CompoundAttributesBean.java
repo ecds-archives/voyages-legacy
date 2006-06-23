@@ -58,47 +58,47 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		{
 			return attr.getName() + ": " + 
 			"[no label]" + " " +
-			"(" + attr.getTypeUserName() + ")";
+			"(" + attr.getTypeDisplayName() + ")";
 		}
 		else
 		{
 			return attr.getName() + ": " +
 			attr.getUserLabel() + " " + 
-			"(" + attr.getTypeUserName() + ")";
+			"(" + attr.getTypeDisplayName() + ")";
 		}
 	}
 	
-	private void moveAttributesToUI(AbstractAttribute[] allAbstrAttribs, AbstractAttribute[] groupAbstrAttribs, List uiSelected, List uiAvailable)
+	private void moveAttributesToUI(AbstractAttribute[] dbAll, Set dbSelected, List uiAvailable, List uiSelected)
 	{
 		
-		uiSelected.clear();
+		AbstractAttribute.sortByName(dbAll);
+		
 		Set selectedIds = new HashSet();
-		if (groupAbstrAttribs != null)
+		if (dbSelected != null)
 		{
-			AbstractAttribute.sortByName(groupAbstrAttribs);
-			for (int i = 0; i < groupAbstrAttribs.length; i++)
+			for (Iterator iter = dbSelected.iterator(); iter.hasNext();)
 			{
-				AbstractAttribute attr = groupAbstrAttribs[i];
-				SelectItem item = new SelectItem();
-				item.setText(makeAttributeLabel(attr));
-				item.setValue(attr.getId().toString());
-				item.setOrderNumber(i);
+				AbstractAttribute attr = (AbstractAttribute) iter.next();
 				selectedIds.add(attr.getId());
-				uiSelected.add(item);
 			}
 		}
 		
+		uiSelected.clear();
 		uiAvailable.clear();
-		for (int i = 0; i < allAbstrAttribs.length; i++)
+		
+		for (int i = 0; i < dbAll.length; i++)
 		{
-			AbstractAttribute.sortByName(allAbstrAttribs);
-			AbstractAttribute attr = allAbstrAttribs[i];
-			if (!selectedIds.contains(allAbstrAttribs[i].getId()))
+			AbstractAttribute attr = dbAll[i];
+			SelectItem item = new SelectItem();
+			item.setText(makeAttributeLabel(attr));
+			item.setValue(attr.getId().toString());
+			item.setOrderNumber(i);
+			if (selectedIds.contains(dbAll[i].getId()))
 			{
-				SelectItem item = new SelectItem();
-				item.setText(makeAttributeLabel(attr));
-				item.setValue(attr.getId().toString());
-				item.setOrderNumber(i);
+				uiSelected.add(item);
+			}
+			else
+			{
 				uiAvailable.add(item);
 			}
 		}
@@ -115,8 +115,8 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		moveAttributesToUI(
 				editingVoyages() ? Voyage.getAttributes() : Slave.getAttributes(),
 				null,
-				attributeAttributes,
-				availableAttributes);
+				availableAttributes,
+				attributeAttributes);
 		
 		return "edit";
 	}
@@ -137,13 +137,13 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
-				(AbstractAttribute[]) attribute.getAttributes().toArray(new AbstractAttribute[0]),
+				attribute.getAttributes(),
 				attributeAttributes,
 				availableAttributes);
 		
 	}
 	
-	private Set getNewAttributes(Session session, List uiAttributes, boolean isCompundAttr) throws SaveException
+	private Set moveAttributesFromUI(Session session, List uiAttributes, boolean isCompundAttr) throws SaveException
 	{
 		
 		boolean first = true;
@@ -215,7 +215,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			if (description.length() > getMaxDescriptionLength())
 				throw new SaveException("Description is limited to " + getMaxDescriptionLength() + " characters.");
 	
-			Set attributes = getNewAttributes(session, attributeAttributes, false);
+			Set attributes = moveAttributesFromUI(session, attributeAttributes, false);
 			
 			attribute.setName(name);
 			attribute.setUserLabel(userLabel);
@@ -250,31 +250,26 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	private boolean deleteInternal(boolean hard)
 	{
 		
-		System.out.println("deleteInternal hard = " + hard);
-		
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		
-		CompoundAttribute attribute =
-			(CompoundAttribute) CompoundAttribute.loadById(attributeId, session);
+		CompoundAttribute attribute = (CompoundAttribute) CompoundAttribute.loadById(attributeId, session);
+		List containingGroups = attribute.loadContainingGroups(session);
 		
-		System.out.println("getGroupsCount = " + attribute.getGroupsCount());
-
 		if (!hard)
 		{
-			if (attribute.getGroupsCount() > 0)
+			if (containingGroups.size() > 0)
 			{
 				transaction.rollback();
 				session.close();
-				System.out.println("Cannot delete bc of a group.");
 				return false;
 			}
 		}
 		else
 		{
-			if (attribute.getGroupsCount() > 0)
+			if (containingGroups.size() > 0)
 			{
-				for (Iterator iter = attribute.getGroups().iterator(); iter.hasNext();)
+				for (Iterator iter = containingGroups.iterator(); iter.hasNext();)
 				{
 					Group group = (Group) iter.next();
 					group.getCompoundAttributes().remove(attribute);
@@ -282,7 +277,6 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 				}
 			}
 		}
-		System.out.println("About to delete ...");
 		
 		session.delete(attribute);
 		transaction.commit();

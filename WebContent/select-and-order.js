@@ -91,34 +91,40 @@ var SelectAndOrder =
 			if (sourceOptions[i].selected)
 			{
 			
-				var opt = document.createElement("option");
-				opt.value = sourceOptions[i].value;
-				opt.text = sourceOptions[i].text;
+				//var opt = document.createElement("option");
+				//opt.value = sourceOptions[i].value;
+				//opt.text = sourceOptions[i].text;
+				
+				var opt = new Option(
+					sourceOptions[i].text,
+					sourceOptions[i].value);
 		
 				sourceSelect.remove(i);
 				i--;
 				
 				var nextOption = null;
+				var nextOptionIndex = destOptions.length;
 				if (order && destOptions.length > 0)
 				{
 					var orderNumber = this.getItemOrderNumber(opt.value);
-					if (orderNumber < this.getItemOrderNumber(destOptions[0].value))
+					for (var j = 0; j < destOptions.length; j++)
 					{
-						nextOption = destOptions[0];
-					}
-					else
-					{
-						for (var j = 0; j < destOptions.length-1; j++)
+						if (orderNumber <= this.getItemOrderNumber(destOptions[j].value))
 						{
-							if (orderNumber >= this.getItemOrderNumber(destOptions[j].value))
-							{
-								nextOption = destOptions[j+1];
-								break;
-							}
+							nextOption = destOptions[j];
+							nextOptionIndex = j;
+							break;
 						}
 					}
 				}
-				destSelect.add(opt, nextOption);
+				try
+				{
+					destSelect.add(opt, nextOption);
+				}
+				catch (e)
+				{
+					destSelect.add(opt, nextOptionIndex);
+				}
 			
 			}
 		}

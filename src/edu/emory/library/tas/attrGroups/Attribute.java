@@ -3,6 +3,7 @@ package edu.emory.library.tas.attrGroups;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 
@@ -121,6 +122,21 @@ public class Attribute extends AbstractAttribute {
 
 	public void setImportType(Integer importType) {
 		this.importType = importType;
+	}
+
+	public List loadContainingCompoundAttributes(Session session)
+	{
+		Query query = session.createQuery("from CompoundAttribute a where :attr = some elements(a.attributes)");
+		query.setParameter("attr", this);
+		return query.list();
+	}
+
+	public List loadContainingCompoundAttributes()
+	{
+		Session session = HibernateUtil.getSession();
+		List groups = loadContainingCompoundAttributes(session);
+		session.close();
+		return groups;
 	}
 
 }

@@ -67,40 +67,72 @@ public class GroupsBean extends SchemaEditBeanBase
 		}
 	}
 	
-	private void moveAttributesToUI(AbstractAttribute[] allAbstrAttribs, AbstractAttribute[] groupAbstrAttribs, List uiSelected, List uiAvailable)
+	private void moveAttributesToUI(AbstractAttribute[] dbAll, Set dbSelected, List uiAvailable, List uiSelected)
 	{
 		
-		uiSelected.clear();
+		AbstractAttribute.sortByName(dbAll);
+		
 		Set selectedIds = new HashSet();
-		if (groupAbstrAttribs != null)
+		if (dbSelected != null)
 		{
-			AbstractAttribute.sortByName(groupAbstrAttribs);
-			for (int i = 0; i < groupAbstrAttribs.length; i++)
+			for (Iterator iter = dbSelected.iterator(); iter.hasNext();)
 			{
-				AbstractAttribute attr = groupAbstrAttribs[i];
-				SelectItem item = new SelectItem();
-				item.setText(makeAttributeLabel(attr));
-				item.setValue(attr.getId().toString());
-				item.setOrderNumber(i);
+				AbstractAttribute attr = (AbstractAttribute) iter.next();
 				selectedIds.add(attr.getId());
-				uiSelected.add(item);
 			}
 		}
 		
+		uiSelected.clear();
 		uiAvailable.clear();
-		AbstractAttribute.sortByName(allAbstrAttribs);
-		for (int i = 0; i < allAbstrAttribs.length; i++)
+		
+		for (int i = 0; i < dbAll.length; i++)
 		{
-			AbstractAttribute attr = allAbstrAttribs[i];
-			if (!selectedIds.contains(allAbstrAttribs[i].getId()))
+			AbstractAttribute attr = dbAll[i];
+			SelectItem item = new SelectItem();
+			item.setText(makeAttributeLabel(attr));
+			item.setValue(attr.getId().toString());
+			item.setOrderNumber(i);
+			if (selectedIds.contains(dbAll[i].getId()))
 			{
-				SelectItem item = new SelectItem();
-				item.setText(makeAttributeLabel(attr));
-				item.setValue(attr.getId().toString());
-				item.setOrderNumber(i);
+				uiSelected.add(item);
+			}
+			else
+			{
 				uiAvailable.add(item);
 			}
 		}
+		
+//		uiSelected.clear();
+//		Set selectedIds = new HashSet();
+//		if (dbSelected != null)
+//		{
+//			AbstractAttribute.sortByName(dbSelected);
+//			for (int i = 0; i < dbSelected.length; i++)
+//			{
+//				AbstractAttribute attr = dbSelected[i];
+//				SelectItem item = new SelectItem();
+//				item.setText(makeAttributeLabel(attr));
+//				item.setValue(attr.getId().toString());
+//				item.setOrderNumber(i);
+//				selectedIds.add(attr.getId());
+//				uiSelected.add(item);
+//			}
+//		}
+//		
+//		uiAvailable.clear();
+//		AbstractAttribute.sortByName(dbAll);
+//		for (int i = 0; i < dbAll.length; i++)
+//		{
+//			AbstractAttribute attr = dbAll[i];
+//			if (!selectedIds.contains(dbAll[i].getId()))
+//			{
+//				SelectItem item = new SelectItem();
+//				item.setText(makeAttributeLabel(attr));
+//				item.setValue(attr.getId().toString());
+//				item.setOrderNumber(i);
+//				uiAvailable.add(item);
+//			}
+//		}
 		
 	}
 	
@@ -114,14 +146,14 @@ public class GroupsBean extends SchemaEditBeanBase
 		moveAttributesToUI(
 				editingVoyages() ? Voyage.getAttributes() : Slave.getAttributes(),
 				null,
-				groupAttributes,
-				availableAttributes);
+				availableAttributes,
+				groupAttributes);
 		
 		moveAttributesToUI(
 				editingVoyages() ? Voyage.getCoumpoundAttributes() : Slave.getCoumpoundAttributes(),
 				null,
-				groupCompoundAttributes,
-				availableCompoundAttributes);
+				availableCompoundAttributes,
+				groupCompoundAttributes);
 		
 		return "edit";
 	}
@@ -142,15 +174,15 @@ public class GroupsBean extends SchemaEditBeanBase
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
-				(AbstractAttribute[]) group.getAttributes().toArray(new AbstractAttribute[0]),
-				groupAttributes,
-				availableAttributes);
+				group.getAttributes(),
+				availableAttributes,
+				groupAttributes);
 		
 		moveAttributesToUI(
 				Voyage.getCoumpoundAttributes(),
-				(AbstractAttribute[]) group.getCompoundAttributes().toArray(new AbstractAttribute[0]),
-				groupCompoundAttributes,
-				availableCompoundAttributes);
+				group.getCompoundAttributes(),
+				availableCompoundAttributes,
+				groupCompoundAttributes);
 		
 	}
 	

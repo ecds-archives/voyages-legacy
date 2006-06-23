@@ -6,7 +6,9 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import edu.emory.library.tas.Dictionary;
@@ -14,6 +16,7 @@ import edu.emory.library.tas.InvalidDateException;
 import edu.emory.library.tas.InvalidNumberException;
 import edu.emory.library.tas.InvalidNumberOfValuesException;
 import edu.emory.library.tas.StringTooLongException;
+import edu.emory.library.tas.util.HibernateUtil;
 
 public abstract class AbstractAttribute implements Serializable {
 	
@@ -258,7 +261,7 @@ public abstract class AbstractAttribute implements Serializable {
 		}
 	}
 	
-	public String getTypeUserName() {
+	public String getTypeDisplayName() {
 		if (type == null) return "";
 		switch (type.intValue()) {
 			case TYPE_INTEGER: return "Integer";
@@ -271,22 +274,41 @@ public abstract class AbstractAttribute implements Serializable {
 		}
 	}
 	
-	public boolean isDictinaory() {
-		return dictionary != null;
-	}
-	
-	public String getDictionary() {
+	public String getDictionary()
+	{
 		return dictionary;
 	}
 	
-	public String getDescription() {
+	public void setDictionary(String dictionary)
+	{
+		this.dictionary = dictionary;
+	}
+
+	public boolean isDictinaory()
+	{
+		return dictionary != null;
+	}
+
+	public String getDescription()
+	{
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(String description)
+	{
 		this.description = description;
 	}
-	
+
+	public Integer getLength()
+	{
+		return length;
+	}
+
+	public void setLength(Integer length)
+	{
+		if (length != null) this.length = length;
+	}
+
 	public String toString() {
 		return "Attribute: " + this.name;
 	}
@@ -306,42 +328,38 @@ public abstract class AbstractAttribute implements Serializable {
 		}
 		return attribute;
 	}
+	
+	public List loadContainingGroups(Session session)
+	{
+		String attributeType = this instanceof Attribute ? "attributes" : "compoundAttributes"; 
+		Query query = session.createQuery("from Group g where :attr = some elements(g." + attributeType +  ")");
+		query.setParameter("attr", this);
+		return query.list();
+	}
 
+	public List loadContainingGroups()
+	{
+		Session session = HibernateUtil.getSession();
+		List groups = loadContainingGroups(session);
+		session.close();
+		return groups;
+	}
+	
 	public boolean equals(Object obj)
 	{
-		if (!(obj instanceof AbstractAttribute)) {
-			return false;
-		}
+		if (obj == null || !(obj instanceof AbstractAttribute))  return false;
 		AbstractAttribute theOther = (AbstractAttribute) obj;
-		if (theOther == null) return false;
 		return 
 			(id == null && theOther.getId() == null) ||
 			(id != null && id.equals(theOther.getId()));
 	}
 	
-	public int hashCode() {
-		
-		if (id == null) {
-			return super.hashCode();
-		}
-		
+	public int hashCode()
+	{
+		if (id == null) return super.hashCode();
 		return id.hashCode();
 	}
 
-	public void setDictionary(String dictionary) {
-		this.dictionary = dictionary;
-	}
-
-	public Integer getLength() {
-		return length;
-	}
-
-	public void setLength(Integer length) {
-		if (length != null) {
-			this.length = length;
-		}
-	}
-	
 	public static class UserLabelComparator implements Comparator
 	{
 		public int compare(Object o1, Object o2)
