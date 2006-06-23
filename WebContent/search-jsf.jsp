@@ -185,21 +185,31 @@
 						rendered="#{SearchBean.statisticsVisible}"
 						query="#{SearchBean.currentConditions}"
 						conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
-					<t:htmlTag value="div" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
-						<h:panelGrid columns="3">
-							<h:outputText value="#{AdvancedStatisticsTabBean.errorMessage}"/>	
-							<h:commandButton id="fixError" value="#Fix error" action="#{AdvancedStatisticsTabBean.fixError}"/>
-							<h:commandButton id="goBackOnError" value="Back" action="#{AdvancedStatisticsTabBean.rollback}"/>
-						</h:panelGrid>
-					</t:htmlTag>
 					<h:panelGrid columns="2">
+					
+						<t:htmlTag id="div_error" value="div" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
+							<h:panelGrid columns="3">
+								<h:outputText value="#{AdvancedStatisticsTabBean.errorMessage}"/>	
+								<h:commandButton id="fixError" value="Fix error" action="#{AdvancedStatisticsTabBean.fixError}"/>
+								<h:commandButton id="goBackOnError" value="Back" action="#{AdvancedStatisticsTabBean.rollback}"/>
+							</h:panelGrid>
+						</t:htmlTag>
+					    <t:htmlTag id="div_error_fillin" value="div" rendered="#{AdvancedStatisticsTabBean.errorPresent}"></t:htmlTag>
+					
+						<t:htmlTag id="div_warning" value="div" style="background: green;" rendered="#{AdvancedStatisticsTabBean.warningPresent}">
+							<h:outputText id = "warning_text" value="#{AdvancedStatisticsTabBean.warningMessage}"/>	
+						</t:htmlTag>
+						<t:htmlTag id="div_warning_fillin" value="div" rendered="#{AdvancedStatisticsTabBean.warningPresent}"></t:htmlTag>
+					
+					
 						<h:outputText value="Chart setup: "/>
 						<t:htmlTag value="div">
 							<h:outputText value="Current series: " rendered="#{AdvancedStatisticsTabBean.seriesAdded}"/>
 						</t:htmlTag>
 					    <t:htmlTag value="div" styleClass="advancedStatConfigLeftDiv">
 					    	<h:selectOneRadio onchange="submit()" 
-					    					  value="#{AdvancedStatisticsTabBean.selectedChart}">
+					    					  value="#{AdvancedStatisticsTabBean.selectedChart}"
+					    					  disabled="#{AdvancedStatisticsTabBean.errorPresent}">
 								<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}"/>
 							</h:selectOneRadio>
 							<t:htmlTag value="div">
@@ -211,7 +221,9 @@
 									</h:selectOneMenu>
 									
 									<h:panelGrid columns="2">
-										<h:selectBooleanCheckbox onclick="submit()" value="#{AdvancedStatisticsTabBean.aggregate}"/>
+										<h:selectBooleanCheckbox onclick="submit()" 
+											disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+											value="#{AdvancedStatisticsTabBean.aggregate}"/>
 										<h:outputText value="Enable aggregate functions"/>
 									</h:panelGrid>													
 							
@@ -235,7 +247,10 @@
 										</h:selectOneMenu>
 									</t:htmlTag>
 									
-									<h:commandButton id="addSeries" value="Add series" action="#{AdvancedStatisticsTabBean.addSeries}"/>
+									<h:commandButton id="addSeries" 
+										disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+										value="Add series" 
+										action="#{AdvancedStatisticsTabBean.addSeries}"/>
 								</h:panelGrid>
 							</t:htmlTag>	
 						</t:htmlTag>
@@ -246,12 +261,19 @@
 										value="#{AdvancedStatisticsTabBean.toRemove}">
 									<f:selectItems value="#{AdvancedStatisticsTabBean.series}"/>
 								</h:selectManyCheckbox>
-								<h:commandButton id="removeSeries" value="Remove selected" action="#{AdvancedStatisticsTabBean.removeSeries}"/>
+								<h:commandButton id="removeSeries" 
+									disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+									value="Remove selected" 
+									action="#{AdvancedStatisticsTabBean.removeSeries}"/>
 							</t:htmlTag>
 						</t:htmlTag>
 						
 						<t:htmlTag value="div">
-							<h:commandButton style="margin: 3px;" id="showGraph" value="Show" action="#{AdvancedStatisticsTabBean.showGraph}"/>						
+							<h:commandButton style="margin: 3px;" 
+								id="showGraph" 
+								value="Show" 
+								disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+								action="#{AdvancedStatisticsTabBean.showGraph}"/>						
 							<t:htmlTag value="div" 
 										style="overflow:auto; width: 640px; height: 480px"
 										rendered="#{AdvancedStatisticsTabBean.statReady}">
