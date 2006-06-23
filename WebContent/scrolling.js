@@ -1,4 +1,4 @@
-function getScrolling()
+function saveScrolling(formName)
 {
 	var x = 0;
 	var y = 0;
@@ -17,5 +17,6 @@ function getScrolling()
 		x = document.body.scrollLeft;
 		y = document.body.scrollTop;
 	}
-	return x + "," + y;
+	document.forms[formName].elements["scrollPosX"].value = x;
+	document.forms[formName].elements["scrollPosY"].value = y;
 }

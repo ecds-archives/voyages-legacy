@@ -12,7 +12,13 @@
 </head>
 <body>
 <f:view>
-	<h:form>
+	<h:form id="form">
+	
+		<input type="hidden" name="scrollPosX">
+		<input type="hidden" name="scrollPosY">
+		<script type="text/javascript" language="javascript">
+		<h:outputText value="#{GroupsBean.scrollToJavaScript}" />
+		</script>
 	
 		<%@ include file="schema-edit-header.jsp" %>
 		
@@ -26,7 +32,7 @@
 					<f:facet name="header">
 						<h:outputText value="Name" />
 					</f:facet>
-					<h:commandLink actionListener="#{GroupsBean.editGroup}" action="edit">
+					<h:commandLink onclick="saveScrolling('form');" actionListener="#{GroupsBean.editGroup}" action="edit">
 						<f:param id="groupId" name="groupId" value="#{group.id}" />
 						<h:outputText value="#{group.name}" />
 					</h:commandLink>

@@ -43,6 +43,7 @@ public class AttributesBean extends SchemaEditBeanBase
 	public void editAttribute(ActionEvent event)
 	{
 		
+		saveScrollPosition();
 		setErrorText(null);
 		
 		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("attributeId");

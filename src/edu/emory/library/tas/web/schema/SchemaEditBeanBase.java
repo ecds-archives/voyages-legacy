@@ -1,5 +1,9 @@
 package edu.emory.library.tas.web.schema;
 
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+
 public class SchemaEditBeanBase
 {
 
@@ -9,6 +13,51 @@ public class SchemaEditBeanBase
 
 	private Switcher switcher;
 	private String errorText;
+	
+	private int scrollPosX = 0;
+	private int scrollPosY = 0;
+
+	public String getScrollToJavaScript()
+	{
+		if (scrollPosX != 0 || scrollPosY != 0)
+		{
+			StringBuffer js = new StringBuffer();
+			js.append("window.onload = function() {");
+			js.append("window.scrollTo(").append(scrollPosX).append(", ").append(scrollPosY).append(");");
+			js.append("}");
+			clearScrollPosition();
+			return js.toString();
+		}
+		else
+		{
+			return "";
+		}
+	}
+	
+	protected void saveScrollPosition()
+	{
+
+		Map params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String scrollPosXStr = (String) params.get("scrollPosX");
+		String scrollPosYStr = (String) params.get("scrollPosY");
+		
+		try
+		{
+			scrollPosX = Integer.parseInt(scrollPosXStr);
+			scrollPosY = Integer.parseInt(scrollPosYStr);
+		}
+		catch (NumberFormatException e)
+		{
+			clearScrollPosition();
+		}
+
+	}
+	
+	protected void clearScrollPosition()
+	{
+		scrollPosX = 0;
+		scrollPosY = 0;
+	}
 
 	public boolean editingVoyages()
 	{

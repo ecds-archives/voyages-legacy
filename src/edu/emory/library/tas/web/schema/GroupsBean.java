@@ -139,6 +139,7 @@ public class GroupsBean extends SchemaEditBeanBase
 	public String newGroup()
 	{
 		
+		saveScrollPosition();
 		clearEditResouces();
 		
 		groupId = null;
@@ -160,7 +161,8 @@ public class GroupsBean extends SchemaEditBeanBase
 
 	public void editGroup(ActionEvent event)
 	{
-		
+
+		saveScrollPosition();
 		setErrorText(null);
 		
 		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("groupId");

@@ -108,6 +108,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	public String newAttribute()
 	{
 		
+		saveScrollPosition();
 		clearEditResouces();
 		
 		attributeId = null;
@@ -124,6 +125,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	public void editAttribute(ActionEvent event)
 	{
 		
+		saveScrollPosition();
 		setErrorText(null);
 		
 		UIParameter groupIdParam = (UIParameter) event.getComponent().findComponent("attributeId");

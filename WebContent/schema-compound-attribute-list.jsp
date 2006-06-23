@@ -14,9 +14,9 @@
 <f:view>
 	<h:form id="form">
 	
-		<h:inputText id="scrollPos" />
-		<input type="hidden" name="scrollPos">
-		<script src="scrolling.js" type="text/javascript" language="javascript">
+		<input type="hidden" name="scrollPosX">
+		<input type="hidden" name="scrollPosY">
+		<script type="text/javascript" language="javascript">
 		<h:outputText value="#{CompoundAttributesBean.scrollToJavaScript}" />
 		</script>
 	
@@ -32,7 +32,7 @@
 					<f:facet name="header">
 						<h:outputText value="Name" />
 					</f:facet>
-					<h:commandLink onclick="/*document.forms['form'].elements['scrollPos'].value = getScrolling();*/" actionListener="#{CompoundAttributesBean.editAttribute}" action="edit">
+					<h:commandLink onclick="saveScrolling('form');" actionListener="#{CompoundAttributesBean.editAttribute}" action="edit">
 						<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
 						<h:outputText value="#{attribute.name}" />
 					</h:commandLink>

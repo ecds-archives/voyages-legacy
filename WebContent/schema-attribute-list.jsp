@@ -12,7 +12,13 @@
 </head>
 <body>
 <f:view>
-	<h:form>
+	<h:form id="form">
+	
+		<input type="hidden" name="scrollPosX">
+		<input type="hidden" name="scrollPosY">
+		<script type="text/javascript" language="javascript">
+		<h:outputText value="#{AttributesBean.scrollToJavaScript}" />
+		</script>
 	
 		<%@ include file="schema-edit-header.jsp" %>
 	
@@ -25,7 +31,7 @@
 					<f:facet name="header">
 						<b><h:outputText value="Name" /></b>
 					</f:facet>
-					<h:commandLink actionListener="#{AttributesBean.editAttribute}" action="edit">
+					<h:commandLink onclick="saveScrolling('form');" actionListener="#{AttributesBean.editAttribute}" action="edit">
 						<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
 						<h:outputText value="#{attribute.name}" />
 					</h:commandLink>
