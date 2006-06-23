@@ -19,7 +19,7 @@ public class QueryConditionText extends QueryCondition
 	
 	private boolean addSingleAttributeToConditions(Attribute attribute, Conditions conditions, String value)
 	{
-		conditions.addCondition(getAttribute().getName(), value, Conditions.OP_LIKE);
+		conditions.addCondition(attribute.getName(), value, Conditions.OP_LIKE);
 		return true;
 	}
 
@@ -35,7 +35,7 @@ public class QueryConditionText extends QueryCondition
 			Attribute attr = (Attribute) getAttribute();
 			addSingleAttributeToConditions(attr, conditions, trimmedValue);
 		}
-		else if (isOnCompountAttribute())
+		else if (isOnCompoundAttribute())
 		{
 			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
 			Conditions orCond = new Conditions(Conditions.JOIN_OR);

@@ -245,8 +245,15 @@ public abstract class AbstractAttribute implements Serializable {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String attrName) {
 		this.name = attrName;
+	}
+	
+	public String getUserLabelOrName() {
+		if (userLabel != null && userLabel.length() > 0) return userLabel;
+		if (name != null && name.length() > 0) return name;
+		return name;
 	}
 	
 	public Integer getType() {

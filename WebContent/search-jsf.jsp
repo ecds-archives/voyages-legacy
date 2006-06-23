@@ -6,31 +6,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Search</title>
-<link href="search-jsf.css" rel="stylesheet" type="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Search</title>
+	<link href="search-jsf.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
-	<div class="main-title">Trans-American Slave Trade</div>
+	<div class="main-title">Trans-Atlantic Slave Trade</div>
 	<h:form id="form">
 
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
 				<td class="side-panel">
 
-				<div style="margin: 10px 0px 5px 10px; color: White;">Add field to query</div>
+				<div style="margin: 10px 0px 5px 10px; color: White;">Add condition to query</div>
 
 				<div style="margin: 0px 0px 5px 10px;">
-					<h:selectOneMenu value="#{SearchBean.selectedGroupId}" style="width: 276px; padding: 2px;">
+					<h:selectOneMenu onchange="form.submit();" value="#{SearchBean.selectedGroupId}" style="border: 0px; width: 276px; padding: 2px;">
 						<f:selectItems value="#{SearchBean.voyageAttributeGroups}" />
 					</h:selectOneMenu>
 				</div>
 
 				<div style="margin: 0px 0px 5px 10px;"><h:commandButton action="#{SearchBean.listAttributes}" value="Show" /></div>
 
-				<div style="margin: 0px 0px 5px 10px;"><h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}"
-					style="width: 276px; padding: 2px;">
+				<div style="margin: 0px 0px 5px 10px;"><h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}" style="border: 0px; width: 276px; padding: 2px;">
 					<f:selectItems value="#{SearchBean.voyageAttributes}" />
 				</h:selectOneMenu></div>
 

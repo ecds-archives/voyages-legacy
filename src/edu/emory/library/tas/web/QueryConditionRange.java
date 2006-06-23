@@ -144,7 +144,7 @@ public class QueryConditionRange extends QueryCondition
 			addSingleAttributeToConditions(attr, conditions,
 					fromConverted, toConverted, leConverted, geConverted, eqConverted);
 		}
-		else if (isOnCompountAttribute())
+		else if (isOnCompoundAttribute())
 		{
 			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
 			Conditions orCond = new Conditions(Conditions.JOIN_OR);

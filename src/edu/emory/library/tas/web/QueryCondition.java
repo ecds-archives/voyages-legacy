@@ -2,6 +2,7 @@ package edu.emory.library.tas.web;
 
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.util.query.Conditions;
 
 public abstract class QueryCondition
@@ -40,9 +41,9 @@ public abstract class QueryCondition
 		return attribute instanceof Attribute;
 	}
 	
-	public boolean isOnCompountAttribute()
+	public boolean isOnCompoundAttribute()
 	{
-		return attribute instanceof Attribute;
+		return attribute instanceof CompoundAttribute;
 	}
 
 	public AbstractAttribute getAttribute()

@@ -213,7 +213,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.endElement("span");
 			writer.write(" ");
 		}
-		writer.write(queryCondition.getAttribute().getUserLabel());
+		writer.write(queryCondition.getAttribute().getUserLabelOrName());
 		writer.endElement("td");
 		
 		writer.startElement("td", this);

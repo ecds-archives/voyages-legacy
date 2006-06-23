@@ -1,6 +1,8 @@
 package edu.emory.library.tas.attrGroups;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -101,6 +103,12 @@ public class Group implements Serializable {
 		this.userLabel = userLabel;
 	}
 	
+	public String getUserLabelOrName() {
+		if (userLabel != null && userLabel.length() > 0) return userLabel;
+		if (name != null && name.length() > 0) return name;
+		return name;
+	}
+	
 	public String toString() {
 		return
 			"Group: " +
@@ -138,6 +146,36 @@ public class Group implements Serializable {
 	{
 		if (compoundAttributes == null) return 0;
 		return compoundAttributes.size();
+	}
+	
+	public static class UserLabelComparator implements Comparator
+	{
+		public int compare(Object o1, Object o2)
+		{
+			Group g1 = (Group) o1;
+			Group g2 = (Group) o2;
+			return g1.getUserLabel().compareTo(g2.getUserLabel());
+		}
+	}
+	
+	public static void sortByUserLabel(Object[] array)
+	{
+		Arrays.sort(array, new Group.UserLabelComparator());
+	}
+	
+	public static class NameComparator implements Comparator
+	{
+		public int compare(Object o1, Object o2)
+		{
+			Group g1 = (Group) o1;
+			Group g2 = (Group) o2;
+			return g1.getName().compareTo(g2.getName());
+		}
+	}
+
+	public static void sortByName(Object[] array)
+	{
+		Arrays.sort(array, new Group.NameComparator());
 	}
 
 }

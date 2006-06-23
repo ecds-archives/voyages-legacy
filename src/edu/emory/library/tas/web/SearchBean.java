@@ -17,12 +17,13 @@ import edu.emory.library.tas.util.query.Conditions;
 public class SearchBean
 {
 	
+	private static final String ATTRIBUTES_LIST_SEPARATOR_TEXT = "-----------------------";
+	private static final String ATTRIBUTES_LIST_SEPARATOR_VALUE = "-";
 	private static final String SIMPLE_ATTRIBUTE_PREFIX = "simple_";
 	private static final String COMPOUND_ATTRIBUTE_PREFIX = "compound_";
 	
 	private String selectedAtttibuteId;
 	private String selectedGroupId;
-	private String activeGroupId;
 
 	private History history = new History();
 	private Query workingQuery = new Query();
@@ -31,15 +32,14 @@ public class SearchBean
 	private boolean timeLineVisible = false;
 	private boolean statisticsVisible = false;
 	
-	public void listAttributes()
-	{
-		activeGroupId = selectedGroupId;
-	}
-
 	public void addQueryCondition()
 	{
 		AbstractAttribute attribute = null;
-		if (selectedAtttibuteId.startsWith(SIMPLE_ATTRIBUTE_PREFIX))
+		if (selectedAtttibuteId.equals(ATTRIBUTES_LIST_SEPARATOR_VALUE))
+		{
+			return;
+		}
+		else if (selectedAtttibuteId.startsWith(SIMPLE_ATTRIBUTE_PREFIX))
 		{
 			Long id = new Long(selectedAtttibuteId.substring(SIMPLE_ATTRIBUTE_PREFIX.length()));
 			attribute = Attribute.loadById(id);
@@ -132,74 +132,72 @@ public class SearchBean
 		this.history = history;
 	}
 
-//	public List getVoyageAttributes()
-//	{
-//		List options = new ArrayList();
-//		String[] dbNames = Voyage.getAllAttrNames();
-//		for (int i = 0; i < dbNames.length; i++)
-//		{
-//			SchemaColumn col = Voyage.getSchemaColumn(dbNames[i]);
-//			SelectItem selectItem = new SelectItem();
-//			selectItem.setValue(col.getName());
-//			selectItem.setLabel(col.getName());
-//			options.add(selectItem);
-//		}
-//		return options;
-//	}
-	
 	public List getVoyageAttributeGroups()
 	{
 		Group[] groups = Voyage.getGroups();
+		Group.sortByUserLabel(groups);
 		List options = new ArrayList();
 		for (int i = 0; i < groups.length; i++)
 		{
 			SelectItem option = new SelectItem();
-			option.setLabel(groups[i].getName());
+			option.setLabel(groups[i].getUserLabelOrName());
 			option.setValue(groups[i].getId().toString());
 			options.add(option);
 		}
 		return options;
 	}
 	
-	private void ensureActiveGroupSetId()
+	private void ensureSelectedGroupSetId()
 	{
 		
-		if (activeGroupId != null)
+		if (selectedGroupId != null)
 			return;
 		
 		Group[] groups = Voyage.getGroups();
+		Group.sortByUserLabel(groups);
 		if (groups == null || groups.length == 0)
 			return;
 		
-		activeGroupId = groups[0].getId().toString();
+		selectedGroupId = groups[0].getId().toString();
 
 	}
 
 	public List getVoyageAttributes()
 	{
 		
-		ensureActiveGroupSetId();
+		ensureSelectedGroupSetId();
 		
-		if (activeGroupId == null)
+		if (selectedGroupId == null)
 			return new ArrayList();
 		
-		Group group = Group.loadById(new Long(activeGroupId));
+		Group group = Group.loadById(new Long(selectedGroupId));
 		List options = new ArrayList();
 		
-		for (Iterator iterCompAttr = group.getCompoundAttributes().iterator(); iterCompAttr.hasNext();)
+		CompoundAttribute[] compoundAttributes = (CompoundAttribute[]) group.getCompoundAttributes().toArray(new CompoundAttribute[0]);
+		Attribute[] attributes = (Attribute[]) group.getAttributes().toArray(new Attribute[0]);
+		
+		AbstractAttribute.sortByUserLabel(compoundAttributes);
+		AbstractAttribute.sortByUserLabel(attributes);
+		
+		for (int i = 0; i < compoundAttributes.length; i++)
 		{
-			CompoundAttribute a = (CompoundAttribute) iterCompAttr.next();
+			CompoundAttribute a = compoundAttributes[i];
 			SelectItem option = new SelectItem();
-			option.setLabel(a.getName());
+			option.setLabel(a.getUserLabelOrName());
 			option.setValue(COMPOUND_ATTRIBUTE_PREFIX + a.getId().toString());
 			options.add(option);
 		}
 		
-		for (Iterator iterAttr = group.getAttributes().iterator(); iterAttr.hasNext();)
+		SelectItem sep = new SelectItem();
+		sep.setLabel(ATTRIBUTES_LIST_SEPARATOR_TEXT);
+		sep.setValue(ATTRIBUTES_LIST_SEPARATOR_VALUE);
+		options.add(sep);
+
+		for (int i = 0; i < attributes.length; i++)
 		{
-			Attribute a = (Attribute) iterAttr.next();
+			Attribute a = attributes[i];
 			SelectItem option = new SelectItem();
-			option.setLabel(a.getName());
+			option.setLabel(a.getUserLabelOrName());
 			option.setValue(SIMPLE_ATTRIBUTE_PREFIX + a.getId().toString());
 			options.add(option);
 		}

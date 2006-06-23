@@ -41,7 +41,7 @@ public class QueryConditionDictionary extends QueryCondition
 			Attribute attr = (Attribute) getAttribute();
 			addSingleAttributeToConditions(attr, conditions);
 		}
-		else if (isOnCompountAttribute())
+		else if (isOnCompoundAttribute())
 		{
 			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
 			Conditions orCond = new Conditions(Conditions.JOIN_OR);

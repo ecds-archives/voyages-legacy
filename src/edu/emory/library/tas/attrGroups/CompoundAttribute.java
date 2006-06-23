@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 
 import edu.emory.library.tas.util.HibernateUtil;
-import edu.emory.library.tas.util.query.Conditions;
 
 public class CompoundAttribute extends AbstractAttribute {
 	
