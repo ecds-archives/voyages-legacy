@@ -27,8 +27,6 @@
 					</h:selectOneMenu>
 				</div>
 
-				<div style="margin: 0px 0px 5px 10px;"><h:commandButton action="#{SearchBean.listAttributes}" value="Show" /></div>
-
 				<div style="margin: 0px 0px 5px 10px;"><h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}" style="border: 0px; width: 276px; padding: 2px;">
 					<f:selectItems value="#{SearchBean.voyageAttributes}" />
 				</h:selectOneMenu></div>
