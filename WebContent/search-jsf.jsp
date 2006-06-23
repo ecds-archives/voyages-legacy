@@ -186,6 +186,13 @@
 						rendered="#{SearchBean.statisticsVisible}"
 						query="#{SearchBean.currentConditions}"
 						conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
+					<t:htmlTag value="div" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
+						<h:panelGrid columns="3">
+							<h:outputText value="#{AdvancedStatisticsTabBean.errorMessage}"/>	
+							<h:commandButton id="fixError" value="#Fix error" action="#{AdvancedStatisticsTabBean.fixError}"/>
+							<h:commandButton id="goBackOnError" value="Back" action="#{AdvancedStatisticsTabBean.rollback}"/>
+						</h:panelGrid>
+					</t:htmlTag>
 					<h:panelGrid columns="2">
 						<h:outputText value="Chart setup: "/>
 						<t:htmlTag value="div">
@@ -199,7 +206,7 @@
 							<t:htmlTag value="div">
 								<h:panelGrid columns="3">
 									<h:outputText value="X axis value: "/>
-									
+									 
 									<h:selectOneMenu style="width: 150px;" value="#{AdvancedStatisticsTabBean.xaxis}" id="xaxis_select">
 										<f:selectItems value="#{AdvancedStatisticsTabBean.voyageSelectedAttributes}"/>
 									</h:selectOneMenu>

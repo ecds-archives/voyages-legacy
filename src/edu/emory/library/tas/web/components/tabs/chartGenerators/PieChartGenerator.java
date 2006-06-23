@@ -4,11 +4,17 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
+import edu.emory.library.tas.attrGroups.Attribute;
+
 public class PieChartGenerator extends AbstractChartGenerator {
 
 	DefaultPieDataset pieDataset = new DefaultPieDataset();
 	
-	public JFreeChart getChart(String xAxis) {
+	public PieChartGenerator(Attribute xAxis) {
+		super(xAxis);
+	}
+	
+	public JFreeChart getChart() {
 		JFreeChart chart = ChartFactory.createPieChart(null, 
 				pieDataset, false, true, false);
 		return chart;
@@ -22,8 +28,8 @@ public class PieChartGenerator extends AbstractChartGenerator {
 		
 	}
 
-	public String getXAxisSelectOperator(String xAxisAttribute) {
-		return xAxisAttribute;
-	}
+//	public String getXAxisSelectOperator(String xAxisAttribute) {
+//		return xAxisAttribute;
+//	}
 
 }

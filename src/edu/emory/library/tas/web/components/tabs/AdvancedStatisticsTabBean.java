@@ -1,5 +1,6 @@
 package edu.emory.library.tas.web.components.tabs;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -99,13 +100,21 @@ public class AdvancedStatisticsTabBean {
 	private List availableCharts;
 
 	private Attribute[] attributes = prepareAttributes();
+	
+	private List rollbackActions = new ArrayList();
+	private List fixErrorActions = new ArrayList();
 
+	private Boolean errorPresent;
+	private String errorMessage;
+	private String fixButton;
+	
 	private Attribute[] prepareAttributes() {
 		return Voyage.getAttributes();
 	}
 
 	private QueryValue prepareQueryValue(AbstractChartGenerator generator) {
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
+	
 		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
 		localCondition.addCondition("vi.remoteVoyageId",
 				new DirectValue("v.id"), Conditions.OP_EQUALS);
@@ -115,7 +124,7 @@ public class AdvancedStatisticsTabBean {
 		
 		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
 		if (this.aggregate.booleanValue()) {
-			qValue.setGroupBy(xAxis);
+			qValue.setGroupBy(generator.getXAxisSelectOperator("v." + this.xaxis));
 		}
 		qValue.addPopulatedAttribute(xAxis, false);
 
@@ -141,14 +150,25 @@ public class AdvancedStatisticsTabBean {
 		AbstractChartGenerator generator = null;
 		String className = "edu.emory.library.tas.web.components.tabs.chartGenerators."
 				+ chartGenerators[sel];
+		Attribute attr = Voyage.getAttribute(this.xaxis);
 		try {
 			Class clazz = Class.forName(className);
-			generator = (AbstractChartGenerator) clazz.newInstance();
+			
+			generator = (AbstractChartGenerator) clazz.getConstructor(new Class[] {Attribute.class}).
+								newInstance(new Object[] {attr});
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		}
 
@@ -187,17 +207,18 @@ public class AdvancedStatisticsTabBean {
 	public String showGraph() {
 		this.statReady = new Boolean(true);
 		if (this.neededQuery) {
+			
 			AbstractChartGenerator generator = this.getChartGenerator();
-			Attribute attr = Voyage.getAttribute(this.xaxis);
-			generator.setDate(attr.getType().intValue() == Attribute.TYPE_DATE);
+			
 			QueryValue qValue = this.prepareQueryValue(generator);
 			Object[] objs = qValue.executeQuery();
+			generator.correctAndCompleteData(objs);
 			generator.addRowToDataSet(objs, this.series.toArray());
 
 			ExternalContext servletContext = FacesContext.getCurrentInstance()
 					.getExternalContext();
 			((HttpSession) servletContext.getSession(true)).setAttribute(
-					STAT_OBJECT_NAME, generator.getChart(this.xaxis));
+					STAT_OBJECT_NAME, generator.getChart());
 
 			this.neededQuery = false;
 		}
@@ -205,6 +226,14 @@ public class AdvancedStatisticsTabBean {
 	}
 	
 	public String setNewView() {
+		return null;
+	}
+	
+	public String fixError() {
+		return null;
+	}
+	
+	public String rollback() {
 		return null;
 	}
 
@@ -222,6 +251,31 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	public void setAggregate(Boolean aggregate) {
+		if (this.series.size() > 0 
+				&& !aggregate.equals(this.aggregate) 
+				&& !this.errorPresent.booleanValue()) {
+			this.errorPresent = new Boolean(true);
+			if (this.aggregate.booleanValue()) {
+				this.errorMessage = "Series with aggregate functions present! Remove it?";
+			} else {
+				this.errorMessage = "Series with not aggregate functions present! Remove it?";
+			}
+		}
+		if (this.errorPresent.booleanValue()) {
+			MemorizedAction action = new MemorizedAction(new Object[] {this.aggregate}) {
+				public void performAction() {
+					AdvancedStatisticsTabBean.this.aggregate = (Boolean)this.params[0];
+				}				
+			};
+			this.rollbackActions.add(action);
+			
+			action = new MemorizedAction(new Object[] {}) {
+				public void performAction() {
+					AdvancedStatisticsTabBean.this.series = null;
+				}				
+			};
+			this.fixErrorActions.add(action);
+		}
 		this.aggregate = aggregate;
 	}
 
@@ -429,6 +483,30 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	public void setAvailableCharts(List availableCharts) {
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public Boolean getErrorPresent() {
+		return errorPresent;
+	}
+
+	public void setErrorPresent(Boolean errorPresent) {
+		this.errorPresent = errorPresent;
+	}
+
+	public String getFixButton() {
+		return fixButton;
+	}
+
+	public void setFixButton(String fixButton) {
+		this.fixButton = fixButton;
 	}
 
 }

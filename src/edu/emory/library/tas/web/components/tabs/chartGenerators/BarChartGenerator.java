@@ -5,14 +5,20 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import edu.emory.library.tas.attrGroups.Attribute;
+
 public class BarChartGenerator extends AbstractChartGenerator {
 
 	private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	
-	public JFreeChart getChart(String xAxis) {
+	public BarChartGenerator(Attribute xAxis) {
+		super(xAxis);
+	}
+	
+	public JFreeChart getChart() {
 		
 		JFreeChart chart = ChartFactory.createBarChart(null,
-			 xAxis, "Value", dataset, PlotOrientation.VERTICAL,
+				getXAxis(), "Value", dataset, PlotOrientation.VERTICAL,
 			 true, true, false);
 		
 		return chart;
@@ -27,8 +33,9 @@ public class BarChartGenerator extends AbstractChartGenerator {
 		}
 	}
 
-	public String getXAxisSelectOperator(String xAxisAttribute) {
-		return xAxisAttribute;
-	}
+//	public String getXAxisSelectOperator(String xAxisAttribute) {
+//		
+//		return xAxisAttribute + ".id";
+//	}
 
 }

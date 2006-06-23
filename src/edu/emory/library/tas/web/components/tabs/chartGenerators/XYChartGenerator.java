@@ -14,33 +14,36 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+import edu.emory.library.tas.attrGroups.Attribute;
+
 public class XYChartGenerator extends AbstractChartGenerator {
 
 	private Dataset dataset;
 
-	public XYChartGenerator() {
+	public XYChartGenerator(Attribute xAxis) {
+		super(xAxis);
 		dataset = new TimeSeriesCollection();
 	}
 
-	public JFreeChart getChart(String xAxis) {
-		if (this.isDate()) {
-			return this.prepareDateChart(xAxis);
+	public JFreeChart getChart() {
+		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
+			return this.prepareDateChart();
 		} else {
-			return this.prepareXYChart(xAxis);
+			return this.prepareXYChart();
 		}
 	}
 
-	private JFreeChart prepareXYChart(String xAxis) {
+	private JFreeChart prepareXYChart() {
 		JFreeChart chart = ChartFactory.createLineChart(null,
-				 xAxis, "Value", (DefaultCategoryDataset)dataset, PlotOrientation.VERTICAL,
+				getXAxis(), "Value", (DefaultCategoryDataset)dataset, PlotOrientation.VERTICAL,
 				 true, true, false);
 			
 		return chart;
 	}
 
-	private JFreeChart prepareDateChart(String xAxis) {
+	private JFreeChart prepareDateChart() {
 
-		chart = ChartFactory.createTimeSeriesChart(null, xAxis, "Value",
+		chart = ChartFactory.createTimeSeriesChart(null, getXAxis(), "Value",
 				(TimeSeriesCollection)dataset, true, true, false);
 
 		XYPlot xyplot = (XYPlot) chart.getPlot();
@@ -57,7 +60,7 @@ public class XYChartGenerator extends AbstractChartGenerator {
 	}
 
 	public void addRowToDataSet(Object[] data, Object[] series) {
-		if (this.isDate()) {
+		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
 			addDateRowToDataSet(data, series);
 		} else {
 			addSimpleDataRowToDataSet(data, series);
@@ -89,12 +92,12 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		}
 	}
 
-	public String getXAxisSelectOperator(String xAxisAttribute) {
-		if (!isDate()) {
-			return xAxisAttribute;
-		} else {
-			return "date_trunc('year', " + xAxisAttribute + ")";
-		}
-	}
+//	public String getXAxisSelectOperator(String xAxisAttribute) {
+//		if (this.getType() != Attribute.TYPE_DATE) {
+//			return xAxisAttribute;
+//		} else {
+//			return "date_trunc('year', " + xAxisAttribute + ")";
+//		}
+//	}
 
 }
