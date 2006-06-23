@@ -35,7 +35,9 @@
 
 				<div class="side-panel-section side-panel-section-query-builder">Current query</div>
 
+				<s:expandableBox text="Current query">
 				<s:queryBuilder query="#{SearchBean.workingQuery}" />
+				</s:expandableBox>
 
 				<div style="margin: 10px 0px 5px 10px;"><h:commandButton action="#{SearchBean.search}" value="Search" /></div>
 

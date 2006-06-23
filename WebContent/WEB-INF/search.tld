@@ -134,6 +134,17 @@
 	</tag>
 	
 	<tag>
+		<name>expandableBox</name>
+		<tag-class>
+			edu.emory.library.tas.web.ExpandableBoxTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>text</name>
+		</attribute>
+	</tag>
+	
+	<tag>
 		<name>historyList</name>
 		<tag-class>
 			edu.emory.library.tas.web.HistoryListTag
@@ -200,5 +211,5 @@
 			<name>sortable</name>
 		</attribute>
 	</tag>
-	
+
 </taglib>
