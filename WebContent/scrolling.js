@@ -17,6 +17,5 @@ function getScrolling()
 		x = document.body.scrollLeft;
 		y = document.body.scrollTop;
 	}
-	alert(x + "," + y);
 	return x + "," + y;
 }

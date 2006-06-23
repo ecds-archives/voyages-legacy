@@ -26,7 +26,7 @@
 			<h2>Basic information</h2>
 
 			<div class="label">Name</div>
-			<div class="field"><h:inputText maxlength="#{AttributesBean.maxNameLength}" style="width: 200px;" value="#{AttributesBean.attributeName}" /></div>
+			<div class="field"><h:inputText disabled="true" maxlength="#{AttributesBean.maxNameLength}" style="width: 200px;" value="#{AttributesBean.attributeName}" /></div>
 	
 			<div class="label">User label</div>
 			<div class="field"><h:inputText maxlength="#{AttributesBean.maxUserLabelLength}" style="width: 200px;" value="#{AttributesBean.attributeUserLabel}" /></div>

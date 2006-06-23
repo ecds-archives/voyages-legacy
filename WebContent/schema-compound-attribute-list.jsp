@@ -12,7 +12,9 @@
 </head>
 <body>
 <f:view>
-	<h:form>
+	<h:form id="form">
+	
+		<input type="hidden" name="scrollPos">
 	
 		<%@ include file="schema-edit-header.jsp" %>
 		
@@ -26,7 +28,7 @@
 					<f:facet name="header">
 						<h:outputText value="Name" />
 					</f:facet>
-					<h:commandLink actionListener="#{CompoundAttributesBean.editAttribute}" action="edit">
+					<h:commandLink onclick="document.forms['form'].elements['scrollPos'].value = getScrolling();" actionListener="#{CompoundAttributesBean.editAttribute}" action="edit">
 						<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
 						<h:outputText value="#{attribute.name}" />
 					</h:commandLink>
@@ -47,7 +49,7 @@
 					<f:facet name="header">
 						<h:outputText value="Attributes" />
 					</f:facet>
-					<h:outputText value="#{group.attributesCount}" />
+					<h:outputText value="#{attribute.attributesCount}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">

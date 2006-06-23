@@ -138,8 +138,8 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		moveAttributesToUI(
 				Voyage.getAttributes(),
 				attribute.getAttributes(),
-				attributeAttributes,
-				availableAttributes);
+				availableAttributes,
+				attributeAttributes);
 		
 	}
 	
@@ -221,6 +221,19 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			attribute.setUserLabel(userLabel);
 			attribute.setAttributes(attributes);
 			attribute.setDescription(description);
+			if (attributes != null && attributes.size() > 0)
+			{
+				Attribute firstAttr = (Attribute) attributes.iterator().next(); 
+				attribute.setType(firstAttr.getType());
+				attribute.setDictionary(firstAttr.getDictionary());
+				attribute.setLength(firstAttr.getLength());
+			}
+			else
+			{
+				attribute.setType(null);
+				attribute.setDictionary(null);
+				attribute.setLength(null);
+			}
 			
 			session.saveOrUpdate(attribute);
 			
