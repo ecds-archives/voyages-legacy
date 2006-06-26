@@ -9,7 +9,6 @@ public class Record
 	{
 		this.line = line;
 		this.key = key;
-		//this.bufPtr = bufPtr;
 	}
 	
 	public int compareTo(Record record)
@@ -36,4 +35,10 @@ public class Record
 	{
 		return line;
 	}
+	
+	public String getValue(STSchemaVariable var)
+	{
+		return new String(line, var.getStartColumn()-1, var.getLength()).trim();
+	}
+	
 }

@@ -3,9 +3,10 @@ package edu.emory.library.tas.spss;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import edu.emory.library.tas.AbstractDescriptiveObject;
 import edu.emory.library.tas.Dictionary;
@@ -53,14 +54,19 @@ public class Import
 	
 	// statistics
 	private int totalNoOfVoyages;
-	private int noOfValidVoyages;
-	private int noOfVoyagesWithoutVid;
+	private int noOfVoyagesWithInvalidVid;
 	private int totalNoOfSlaves;
-	private int noOfValidSlaves;
-	private int noOfSlavesWithoutVid;
-	private int noOfSlavesWithoutSid;
+	private int noOfSlavesWithInvalidVid;
+	private int noOfSlavesWithInvalidSid;
+	private int noOfUpdatedVoyages;
+	private int noOfCreatedVoyages;
 	private int noOfVoyagesWithSlaves;
-	
+	private int noOfDeletedSlaves;
+	private int noOfUpdatedSlaves;
+	private int noOfCreatedSlaves;
+	private int noOfInvalidVoyages;
+	private int noOfInvalidSlaves;
+
 	private void convertSpssFiles() throws IOException, StatTransferException, InterruptedException
 	{
 
@@ -397,7 +403,7 @@ public class Import
 		
 	}
 	
-	private boolean updateValues(AbstractDescriptiveObject obj, char[] line)
+	private boolean updateValues(AbstractDescriptiveObject obj, Record record)
 	{
 		
 		Attribute attributes[] = null;
@@ -452,7 +458,7 @@ public class Import
 				if (importType == Attribute.IMPORT_TYPE_NUMERIC || importType == Attribute.IMPORT_TYPE_STRING)
 				{
 					var = (STSchemaVariable) schema.get(col.getImportName());
-					columnValue = new String(line, var.getStartColumn()-1, var.getLength()).trim();
+					columnValue = record.getValue(var);
 					parsedValue = col.parse(columnValue);
 				}
 				
@@ -462,9 +468,9 @@ public class Import
 					varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
 					varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
 					varYear = (STSchemaVariable) schema.get(col.getImportDateYear());
-					columnDayValue = new String(line, varDay.getStartColumn()-1, varDay.getLength()).trim();
-					columnMonthValue = new String(line, varMonth.getStartColumn()-1, varMonth.getLength()).trim();
-					columnYearValue = new String(line, varYear.getStartColumn()-1, varYear.getLength()).trim();
+					columnDayValue = record.getValue(varDay);
+					columnMonthValue = record.getValue(varMonth);
+					columnYearValue = record.getValue(varYear);
 					parsedValue = col.parse(new String[]{columnDayValue, columnMonthValue, columnYearValue});
 				}
 				
@@ -487,6 +493,7 @@ public class Import
 			}
 			catch (InvalidNumberException ine)
 			{
+				valid = false;
 				log.logWarn(
 						"Invalid numeric value '" + columnValue + "' " +
 						"in variable " + var.getName() + " " +
@@ -495,6 +502,7 @@ public class Import
 			}
 			catch (InvalidDateException ide)
 			{
+				valid = false;
 				log.logWarn(
 						"Invalid date " +
 						"day = '" + columnDayValue + "' in variable " + varDay.getName() + ", " +
@@ -505,6 +513,7 @@ public class Import
 			}
 			catch (StringTooLongException stle)
 			{
+				valid = false;
 				log.logWarn(
 						"String '" + parsedValue + "' too long " +
 						"in variable " + var.getName() + " " +
@@ -520,73 +529,54 @@ public class Import
 	
 	private void updateVoyage(Voyage voyage, Record voyageRecord)
 	{
-		updateValues(voyage, voyageRecord.getLine());
+		boolean valid = updateValues(voyage, voyageRecord);
+		if (!valid) noOfInvalidVoyages ++;
 	}
 
-	private void removeDeletedSlaves(Voyage voyage, ArrayList slaves)
+	private void removeDeletedSlaves(Voyage voyage, Map slaves)
 	{
-		
-		ArrayList toRemove = new ArrayList();
-		
 		for (Iterator iterSlave = voyage.getSlaves().iterator(); iterSlave.hasNext();)
 		{
 			Slave slave = (Slave) iterSlave.next();
-			boolean slaveFound = false;
-			for (int i=0; i<slaves.size(); i++)
+			if (!slaves.containsKey(slave.getIid()))
 			{
-				Long slaveId = new Long(((Record)slaves.get(i)).getKey().trim());
-				if (slave.getSlaveId().equals(slaveId))
-				{
-					slaveFound = true;
-					break;
-				}
-			}
-			if (!slaveFound)
-			{
-				toRemove.add(slave);
+				noOfDeletedSlaves ++;
+				iterSlave.remove();
 			}
 		}
-		
-		for (Iterator iterSlave = toRemove.iterator(); iterSlave.hasNext();)
-		{
-			Slave slave = (Slave) iterSlave.next();
-			voyage.removeSlave(slave);
-		}
-		
 	}
 	
-	private void updateExistingSlaves(Voyage voyage, ArrayList slaves)
+	private void updateExistingSlaves(Voyage voyage, Map slaves)
 	{
-		
-		for (Iterator iterSlave = slaves.iterator(); iterSlave.hasNext();)
+		for (Iterator iterSlave = voyage.getSlaves().iterator(); iterSlave.hasNext();)
 		{
-			Record slaveRecord = (Record) iterSlave.next();
-			Long slaveId = new Long(slaveRecord.getKey().trim());
-			Slave slave = voyage.getSlave(slaveId);
-			if (slave != null)
+			Slave slave = (Slave) iterSlave.next();
+			Record slaveRecord = (Record) slaves.get(slave.getIid()); 
+			if (slaveRecord != null)
 			{
-				updateValues(slave, slaveRecord.getLine());
+				noOfUpdatedSlaves++;
+				boolean valid = updateValues(slave, slaveRecord);
+				if (!valid) noOfInvalidSlaves ++;
 			}
 		}
-		
 	}
 
-	private void addNewSlaves(Voyage voyage, ArrayList slaves)
+	private void addNewSlaves(Voyage voyage, Map slaves)
 	{
-		
-		for (Iterator iterSlave = slaves.iterator(); iterSlave.hasNext();)
+		for (Iterator iterSlave = slaves.entrySet().iterator(); iterSlave.hasNext();)
 		{
 			Record slaveRecord = (Record) iterSlave.next();
 			Long slaveId = new Long(slaveRecord.getKey().trim());
 			Slave slave = voyage.getSlave(slaveId);
 			if (slave == null)
 			{
+				noOfCreatedSlaves++;
 				slave = Slave.createNew(slaveId);
 				voyage.addSlave(slave);
-				updateValues(slave, slaveRecord.getLine());
+				boolean valid = updateValues(slave, slaveRecord);
+				if (!valid) noOfInvalidSlaves ++;
 			}
 		}
-		
 	}
 	
 	private void importData() throws IOException
@@ -599,10 +589,11 @@ public class Import
 		// variables for the main loop (see below)
 		Record voyageRecord = null;
 		Record slaveRecord = null;
-		int voyageVid = 0;
-		int slavesVid = 0;
-		int mainVid = 0;
-		ArrayList slaves = new ArrayList(); 
+		Long slaveId = null;
+		long voyageVid = 0;
+		long slavesVid = 0;
+		long mainVid = 0;
+		Map slaves = new HashMap();
 		boolean saveVoyage = false;
 		boolean saveSlaves = false;
 		boolean readVoyage = false;
@@ -614,13 +605,21 @@ public class Import
 		
 		// init stats
 		totalNoOfVoyages = 0;
-		noOfVoyagesWithoutVid = 0;
+		noOfVoyagesWithInvalidVid = 0;
 		totalNoOfSlaves = 0;
-		noOfSlavesWithoutVid = 0;
-		noOfSlavesWithoutSid = 0;
+		noOfSlavesWithInvalidVid = 0;
+		noOfSlavesWithInvalidSid = 0;
 		noOfVoyagesWithSlaves = 0;
-		noOfValidVoyages = 0;
-		noOfValidSlaves = 0;
+		noOfInvalidVoyages = 0;
+		noOfDeletedSlaves = 0;
+		noOfInvalidSlaves = 0;
+		noOfUpdatedSlaves = 0;
+		noOfCreatedSlaves = 0;
+		noOfUpdatedVoyages = 0;
+		noOfCreatedVoyages = 0;
+		
+		// slave id
+		STSchemaVariable varSlaveId = (STSchemaVariable)slaveSchema.get("slaveid");
 		
 		// we have only voyages -> make sure that in the main loop 
 		// we always read and save only voyages
@@ -664,28 +663,24 @@ public class Import
 				while ((voyageRecord = voyagesRdr.readRecord()) != null)
 				{
 					totalNoOfVoyages++;
-					
-					String currVoyageVid = voyageRecord.getKey();
-
-					boolean voyageHasVid = currVoyageVid.trim().length() != 0;
-					if (!voyageHasVid) noOfVoyagesWithoutVid++;
-					
-					boolean validVoyage = voyageHasVid;
-					//if (validVoyage) validVoyage = Integer.parseInt(currVoyageVid.trim()) >= 30000;
-					if (validVoyage) noOfValidVoyages++;
-					
-					if (validVoyage)
+					try
 					{
-						voyageVid = Integer.parseInt(currVoyageVid.trim());
+						voyageVid = Long.parseLong(voyageRecord.getKey().trim());
 						break;
 					}
-					else
+					catch (NumberFormatException nfe)
 					{
-						log.logWarn("Invalid voyage on line " + totalNoOfVoyages + ". Skipping.");
+						noOfVoyagesWithInvalidVid ++;
+						log.logWarn(
+							"Invalid voyage id " + 
+							"(" + voyageRecord.getKey().trim() + ") " +
+							"on line " + totalNoOfVoyages + ". Skipping.");
+						continue;
 					}
-					
 				}
 			}
+			
+			//((STSchemaVariable)slaveSchema.get("slaveid"));
 	
 			// read the next set of slaves with the same vid
 			// outcome: ArrayList slaves;
@@ -696,45 +691,57 @@ public class Import
 				slavesVid = 0;
 				if (slaveRecord != null)
 				{
-					slavesVid = Integer.parseInt(slaveRecord.getKey().trim());
-					slaves.add(slaveRecord);
+					slavesVid = Long.parseLong(slaveRecord.getKey().trim());
+					slaves.put(slaveId, slaveRecord);
 				}
 				while ((slaveRecord = slavesRdr.readRecord()) != null)
 				{
 					totalNoOfSlaves ++;
-					
-					String currSlaveVid = slaveRecord.getKey();
-					
-					boolean slaveHasVid = currSlaveVid.trim().length() > 0;
-					boolean slaveHasSid = true;
-					if (!slaveHasVid) noOfSlavesWithoutVid++;
-					if (!slaveHasSid) noOfSlavesWithoutSid++;
+					long currSlaveVid = 0;
+					long currSlaveSid = 0;
 
-					boolean validSlave = slaveHasVid && slaveHasSid;
-					//if (validSlave) validSlave = Integer.parseInt(currSlaveVid.trim()) >= 30000;
-					if (validSlave) noOfValidSlaves++;
-					
-					if (validSlave)
+					try
 					{
-						int currSlaveVidInt = Integer.parseInt(currSlaveVid.trim());
-						if (slavesVid == 0)
-						{
-							slavesVid = currSlaveVidInt;
-							slaves.add(slaveRecord);
-						}
-						else if (slavesVid == currSlaveVidInt)
-						{
-							slaves.add(slaveRecord);
-						}
-						else
-						{
-							break;
-						}
+						currSlaveVid = Long.parseLong(slaveRecord.getKey().trim());
+					}
+					catch (NumberFormatException nfe)
+					{
+						noOfSlavesWithInvalidVid++;
+						log.logWarn(
+								"Invalid slave id " + 
+								"(" + slaveRecord.getKey().trim() + ") " +
+								"on line " + totalNoOfSlaves + ". Skipping.");
+						continue;
+					}
+
+					try
+					{
+						currSlaveSid = Long.parseLong(slaveRecord.getValue(varSlaveId));
+					}
+					catch (NumberFormatException nfe)
+					{
+						noOfSlavesWithInvalidSid++;
+						log.logWarn(
+								"Invalid slave id " + 
+								"(" + slaveRecord.getValue(varSlaveId) + ") " +
+								"on line " + totalNoOfSlaves + ". Skipping.");
+						continue;
+					}
+					
+					if (slavesVid == 0)
+					{
+						slavesVid = currSlaveVid;
+						slaves.put(new Long(currSlaveSid), slaveRecord);
+					}
+					else if (slavesVid == currSlaveVid)
+					{
+						slaves.put(new Long(currSlaveSid), slaveRecord);
 					}
 					else
 					{
-						log.logWarn("Invalid slave on line " + totalNoOfSlaves + ". Skipping.");
+						break;
 					}
+
 				}
 			}
 			
@@ -811,7 +818,6 @@ public class Import
 					{
 						voyagesCache = Voyage.loadMostRecent(new Long(mainVid), VOYAGE_CACHE_SIZE);
 						cachePos = 0;
-						//HibernateUtil.getSessionFactory().getStatistics().logSummary();
 					}
 					
 					if (voyagesCache.length > 0)
@@ -825,6 +831,7 @@ public class Import
 							}
 							if (voyagesCache[cachePos].getVoyageId().intValue() > mainVid)
 							{
+								noOfUpdatedVoyages ++;
 								voyage = Voyage.createNew(new Long(mainVid));
 								break;
 							}
@@ -832,6 +839,7 @@ public class Import
 					}
 					else
 					{
+						noOfCreatedVoyages ++;
 						voyage = Voyage.createNew(new Long(mainVid));
 					}
 					
@@ -926,9 +934,17 @@ public class Import
 
 			log.logInfo("Import successfully completed.");
 			log.logInfo("Total number of voyages = " + totalNoOfVoyages);
-			log.logInfo("Number of valid voyages = " + noOfValidVoyages);
+			log.logInfo("Number voyages with invalid ID = " + noOfVoyagesWithInvalidVid);
+			log.logInfo("Number of created voyages = " + noOfCreatedVoyages);
+			log.logInfo("Number of updated voyages = " + noOfUpdatedVoyages);
+			log.logInfo("Number of invalid (but imported) voyages = " + noOfInvalidVoyages);
 			log.logInfo("Total number of slaves = " + totalNoOfSlaves);
-			log.logInfo("Number of valid slaves = " + noOfValidSlaves);
+			log.logInfo("Number slaves with invalid ID = " + noOfSlavesWithInvalidSid);
+			log.logInfo("Number slaves with invalid VoyageID = " + noOfSlavesWithInvalidVid);
+			log.logInfo("Number of deleted slaves = " + noOfDeletedSlaves);
+			log.logInfo("Number of created slaves = " + noOfCreatedSlaves);
+			log.logInfo("Number of updated slaves = " + noOfUpdatedSlaves);
+			log.logInfo("Number of invalid (but imported) slaves = " + noOfInvalidSlaves);
 			log.logInfo("Voyages with slaves = " + noOfVoyagesWithSlaves);
 			
 		}

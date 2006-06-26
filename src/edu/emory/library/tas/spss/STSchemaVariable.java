@@ -142,21 +142,4 @@ public class STSchemaVariable
 		return doImport;
 	}
 
-//	public Dictionary getDictionaryFromCache(String key)
-//	{
-//		try
-//		{
-//			return (Dictionary) dictionaryCache.get(new Integer(key));
-//		}
-//		catch (NumberFormatException nfe)
-//		{
-//			return null;
-//		}
-//	}
-//
-//	public void addToDictionaryCache(Dictionary dict)
-//	{
-//		dictionaryCache.put(dict.getRemoteId(), dict);
-//	}
-
 }
