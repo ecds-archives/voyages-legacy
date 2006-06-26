@@ -69,7 +69,8 @@
 							conditionsOut="#{TableResultTabBean.conditions}"
 							results="#{TableResultTabBean.results}"
 							populatedAttributes="#{TableResultTabBean.populatedAttributes}"
-							componentVisible="#{TableResultTabBean.componentVisible}">
+							componentVisible="#{TableResultTabBean.componentVisible}"
+							sortChanged="#{TableResultTabBean.sortChanged}">
 							<%-- 
 							<s:resultscroll resultFirst="#{TableResultTabBean.current}" 
 											resultLast="#{TableResultTabBean.resultSize}"

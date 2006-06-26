@@ -45,6 +45,9 @@
 		<attribute>
 			<name>componentVisible</name>
 		</attribute>
+		<attribute>
+			<name>sortChanged</name>
+		</attribute>
 	</tag>
 
 	<tag>

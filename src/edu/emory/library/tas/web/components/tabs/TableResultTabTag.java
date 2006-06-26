@@ -1,8 +1,12 @@
 package edu.emory.library.tas.web.components.tabs;
 
+import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
+
+import org.apache.myfaces.el.MethodBindingImpl;
 
 public class TableResultTabTag extends UIComponentTag {
 
@@ -11,7 +15,8 @@ public class TableResultTabTag extends UIComponentTag {
 	private String results;
 
 	private String populatedAttributes;
-
+	private String sortChanged;
+	
 	private String style;
 	private String styleClass;
 
@@ -96,6 +101,12 @@ public class TableResultTabTag extends UIComponentTag {
 			}
 		}
 		
+		if (component instanceof UITableResultTab && sortChanged != null) {
+			UITableResultTab tab = (UITableResultTab)component;
+			Application app = FacesContext.getCurrentInstance().getApplication();
+			tab.setSortChanged(new MethodBindingImpl(app, sortChanged, new Class[] {SortChangeEvent.class}));
+		}
+		
 	}
 
 	public void release() {
@@ -152,5 +163,13 @@ public class TableResultTabTag extends UIComponentTag {
 
 	public void setComponentVisible(String componentVisible) {
 		this.componentVisible = componentVisible;
+	}
+
+	public String getSortChanged() {
+		return sortChanged;
+	}
+
+	public void setSortChanged(String sortChanged) {
+		this.sortChanged = sortChanged;
 	}
 }
