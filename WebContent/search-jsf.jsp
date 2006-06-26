@@ -70,6 +70,7 @@
 							results="#{TableResultTabBean.results}"
 							populatedAttributes="#{TableResultTabBean.populatedAttributes}"
 							componentVisible="#{TableResultTabBean.componentVisible}">
+							<%-- 
 							<s:resultscroll resultFirst="#{TableResultTabBean.current}" 
 											resultLast="#{TableResultTabBean.resultSize}"
 											resultSize="#{TableResultTabBean.numberOfResults}">
@@ -77,7 +78,24 @@
 								<h:commandButton id="next_pack" value="Next result set" action="#{TableResultTabBean.next}" />
 								<h:commandButton id="configureButton" value="Configure table" action="#{TableResultTabBean.configurationMode}" />
 							</s:resultscroll>
+							--%>
 						</s:tabletab>
+						
+						<div style="background-color: #DDDDDD; padding: 5px;">
+							<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+							<tr>
+								<td>
+									<h:commandLink style="font-weight: bold; text-decoration: none;" value="< Previous page" action="#{TableResultTabBean.prev}" /> |
+									<h:commandLink style="font-weight: bold; text-decoration: none;" value="Next page >" action="#{TableResultTabBean.next}" /> |
+									Showing
+									<h:outputText value="#{TableResultTabBean.firstDisplayed}" /> - 
+									<h:outputText value="#{TableResultTabBean.lastDisplayed}" />
+									out of <h:outputText value="#{TableResultTabBean.totalRows}" />
+								</td>
+								<td style="padding-right: 5px; text-align: right"><h:commandLink value="Configure table" action="#{TableResultTabBean.configurationMode}" /></td>
+							</tr>
+							</table>
+						</div>
 	
 						<% /* Configuration of table */ %>
 						<t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">

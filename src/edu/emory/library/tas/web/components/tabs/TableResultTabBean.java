@@ -216,6 +216,30 @@ public class TableResultTabBean {
 	
 	////////////////////////////// GETTERS / SETTERS /////////////////////////
 	
+	public Integer getFirstDisplayed()
+	{
+		if (numberOfResults == null || numberOfResults.intValue() == 0)
+			return new Integer(0);
+		else
+			return new Integer(current + 1);
+	}
+	
+	public Integer getLastDisplayed()
+	{
+		if (numberOfResults == null || numberOfResults.intValue() == 0)
+			return new Integer(0);
+		else
+			return new Integer(current + 1 + (this.results != null ? this.results.length : 0));
+	}
+	
+	public Integer getTotalRows()
+	{
+		if (numberOfResults == null)
+			return new Integer(0);
+		else
+			return numberOfResults;
+	}
+
 	public Integer getCurrent() {
 		return new Integer(current);
 	}

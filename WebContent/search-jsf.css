@@ -171,8 +171,14 @@ table.grid th {
 	/*border-top: 2px solid #CCCCCC;
 	border-bottom: 2px solid #CCCCCC; */}
 
-table.grid td {
+tr.grid-row-even {
 	border-bottom: 2px solid #EEEEEE; }
+
+tr.grid-row-odd {
+	border-bottom: 2px solid #EEEEEE; }
+
+tr.grid-row-last {
+	border-bottom-style: none; }
 
 table.configTable td {
 	background-color: #666666;

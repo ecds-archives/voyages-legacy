@@ -82,11 +82,25 @@ public class UITableResultTab extends UIOutput {
 				writer.endElement("th");
 			}
 			writer.endElement("tr");
+			
+			StringBuffer rowClass = new StringBuffer();
 
 			if (objs != null) {
 				for (int i = 0; i < objs.length; i++) {
+					
+					rowClass.setLength(0);
+					if (i % 2 == 0)
+						rowClass.append("grid-row-even");
+					else
+						rowClass.append("grid-row-odd"); 
+					if (i == 0)
+						rowClass.append(" grid-row-first");
+					if (i == objs.length - 1)
+						rowClass.append(" grid-row-last");
+					
 					Object[] values = (Object[]) objs[i];
 					writer.startElement("tr", this);
+					writer.writeAttribute("class", rowClass.toString(), null);
 					for (int j = 0; j < values.length; j++) {
 						writer.startElement("td", this);
 						Object obj = values[j];
