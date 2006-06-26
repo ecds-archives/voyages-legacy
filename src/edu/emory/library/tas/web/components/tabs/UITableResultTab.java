@@ -13,6 +13,7 @@ import javax.faces.event.FacesEvent;
 import org.apache.myfaces.el.MethodBindingImpl;
 
 import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.TabChangeEvent;
 import edu.emory.library.tas.web.UtilsJSF;
 
@@ -62,6 +63,8 @@ public class UITableResultTab extends UIOutput {
 	public void encodeBegin(FacesContext context) throws IOException {
 		Object[] objs = null;
 		String[] populatedAttributes = null;
+		Integer orderColumn = null;
+		Integer order = null;
 		
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
@@ -107,6 +110,15 @@ public class UITableResultTab extends UIOutput {
 			objs = (Object[]) vb.getValue(context);
 		}
 
+		vb = this.getValueBinding("orderColumn");
+		if (vb != null) {
+			orderColumn = (Integer) vb.getValue(context);
+		}
+		vb = this.getValueBinding("order");
+		if (vb != null) {
+			order = (Integer) vb.getValue(context);
+		}
+		
 		writer.startElement("tr", this);
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
@@ -116,6 +128,16 @@ public class UITableResultTab extends UIOutput {
 				writer.write(">");
 				writer.write(populatedAttributes[i]);
 				writer.write("</a>");
+				if (orderColumn != null
+						&& orderColumn.intValue() == i
+						&& order != null 
+						&& order.intValue() != QueryValue.ORDER_DEFAULT) {
+					if (order.intValue() == QueryValue.ORDER_DESC) {
+						writer.write("<img src=\"up2.gif\" width=\"15\" height=\"15\">");
+					} else { 
+						writer.write("<img src=\"down2.gif\" width=\"15\" height=\"15\">");
+					}
+				}
 				writer.endElement("th");
 			}
 			writer.endElement("tr");

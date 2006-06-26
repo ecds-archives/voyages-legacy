@@ -48,6 +48,12 @@
 		<attribute>
 			<name>sortChanged</name>
 		</attribute>
+		<attribute>
+			<name>orderColumn</name>
+		</attribute>
+		<attribute>
+			<name>order</name>
+		</attribute>
 	</tag>
 
 	<tag>

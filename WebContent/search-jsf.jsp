@@ -70,7 +70,9 @@
 							results="#{TableResultTabBean.results}"
 							populatedAttributes="#{TableResultTabBean.populatedAttributes}"
 							componentVisible="#{TableResultTabBean.componentVisible}"
-							sortChanged="#{TableResultTabBean.sortChanged}">
+							sortChanged="#{TableResultTabBean.sortChanged}"
+							orderColumn="#{TableResultTabBean.sortColumn}"
+							order="#{TableResultTabBean.sortOrder}">
 							<%-- 
 							<s:resultscroll resultFirst="#{TableResultTabBean.current}" 
 											resultLast="#{TableResultTabBean.resultSize}"

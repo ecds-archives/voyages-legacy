@@ -24,6 +24,9 @@ public class TableResultTabTag extends UIComponentTag {
 	private String conditionsOut;
 
 	private String componentVisible;
+	
+	private String orderColumn;
+	private String order;
 
 	public String getStyle() {
 		return style;
@@ -99,6 +102,24 @@ public class TableResultTabTag extends UIComponentTag {
 			} else {
 				component.getAttributes().put("componentVisible", componentVisible);
 			}
+		}		
+		if (orderColumn != null) {
+			if (isValueReference(conditionsOut)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(orderColumn);
+				component.setValueBinding("orderColumn", vb);
+			} else {
+				component.getAttributes().put("orderColumn", orderColumn);
+			}
+		}
+		if (order != null) {
+			if (isValueReference(conditionsOut)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(order);
+				component.setValueBinding("order", vb);
+			} else {
+				component.getAttributes().put("order", order);
+			}
 		}
 		
 		if (component instanceof UITableResultTab && sortChanged != null) {
@@ -171,5 +192,21 @@ public class TableResultTabTag extends UIComponentTag {
 
 	public void setSortChanged(String sortChanged) {
 		this.sortChanged = sortChanged;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	public String getOrderColumn() {
+		return orderColumn;
+	}
+
+	public void setOrderColumn(String orderColumn) {
+		this.orderColumn = orderColumn;
 	}
 }

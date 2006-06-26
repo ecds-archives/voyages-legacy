@@ -49,8 +49,9 @@ public class TableResultTabBean {
 	private String selectedAttributeToAdd;
 
 	private Integer numberOfResults;
-	
+
 	private int sortColumn = -1;
+
 	private int sortOrder = QueryValue.ORDER_DEFAULT;
 
 	public TableResultTabBean() {
@@ -79,7 +80,24 @@ public class TableResultTabBean {
 			QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
 			qValue.setLimit(this.getStep().intValue());
 			qValue.setFirstResult(this.getCurrent().intValue());
-			qValue.setOrderBy("v.voyageId");
+			if (this.sortColumn == -1) {
+				qValue.setOrderBy("v.voyageId");
+			} else {
+				Attribute attr = Voyage
+						.getAttribute(this.populatedAttributes[this.sortColumn]);
+
+				if (!attr.isDictinaory()) {
+					qValue.setOrderBy("v.voyage."
+							+ this.populatedAttributes[this.sortColumn]);
+					qValue.setOrder(this.sortOrder);
+				} else {
+					qValue.setOrderBy("v.voyage."
+							+ this.populatedAttributes[this.sortColumn]
+							+ ".name");
+					qValue.setOrder(this.sortOrder);
+				}
+			}
+
 			if (this.populatedAttributes != null) {
 				for (int i = 0; i < this.populatedAttributes.length; i++) {
 					qValue.addPopulatedAttribute("v.voyage."
@@ -167,10 +185,10 @@ public class TableResultTabBean {
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(groupName), Conditions.OP_EQUALS);
 			QueryValue qValue = new QueryValue("CompoundAttribute", c);
-			if (this.sortColumn != -1) {
-				qValue.setOrderBy(this.populatedAttributes[this.sortColumn]);
-				qValue.setOrder(this.sortOrder);
-			}
+			// if (this.sortColumn != -1) {
+			// qValue.setOrderBy(this.populatedAttributes[this.sortColumn]);
+			// qValue.setOrder(this.sortOrder);
+			// }
 			Object[] groups = qValue.executeQuery();
 			if (groups.length > 0) {
 				CompoundAttribute group = (CompoundAttribute) groups[0];
@@ -238,30 +256,34 @@ public class TableResultTabBean {
 		this.populatedAttributesVisibleLabels = null;
 		return null;
 	}
-	
+
 	public void sortChanged(SortChangeEvent event) {
-		 String attrToSort = event.getAttributeSort();
-		 for (int i = 0; i < attrToSort.length(); i++) {
-			 if (this.populatedAttributesVisibleLabels[i].equals(attrToSort)) {
-				 if (i == this.sortColumn) {
-					 switch (this.sortOrder) {
-					 case QueryValue.ORDER_ASC:
-						 this.sortOrder = QueryValue.ORDER_DESC;
-						 break;
-					 case QueryValue.ORDER_DESC:
-						 this.sortOrder = QueryValue.ORDER_DEFAULT;
-						 break;
-					 case QueryValue.ORDER_DEFAULT:
-						 this.sortOrder = QueryValue.ORDER_ASC;
-						 break;
-					 }
-				 } else {
-					 this.sortColumn = i;
-					 this.sortOrder = QueryValue.ORDER_ASC;
-				 }
-				 break;
-			 }
-		 }
+		if (this.populatedAttributesVisibleLabels != null) {
+			String attrToSort = event.getAttributeSort();
+			for (int i = 0; i < attrToSort.length(); i++) {
+				if (this.populatedAttributesVisibleLabels[i].equals(attrToSort)) {
+					if (i == this.sortColumn) {
+						switch (this.sortOrder) {
+						case QueryValue.ORDER_ASC:
+							this.sortOrder = QueryValue.ORDER_DESC;
+							break;
+						case QueryValue.ORDER_DESC:
+							this.sortOrder = QueryValue.ORDER_DEFAULT;
+							break;
+						case QueryValue.ORDER_DEFAULT:
+							this.sortOrder = QueryValue.ORDER_ASC;
+							break;
+						}
+					} else {
+						this.sortColumn = i;
+						this.sortOrder = QueryValue.ORDER_ASC;
+					}
+					this.current = 0;
+					this.needQuery = true;
+					break;
+				}
+			}
+		}
 	}
 
 	// //////////////////////////// GETTERS / SETTERS /////////////////////////
@@ -458,5 +480,13 @@ public class TableResultTabBean {
 
 	public Integer getNumberOfResults() {
 		return numberOfResults;
+	}
+
+	public int getSortColumn() {
+		return sortColumn;
+	}
+
+	public int getSortOrder() {
+		return sortOrder;
 	}
 }
