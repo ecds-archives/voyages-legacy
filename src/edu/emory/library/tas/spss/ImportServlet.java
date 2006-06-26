@@ -1,4 +1,4 @@
-package edu.emory.library.tas.web.test;
+package edu.emory.library.tas.spss;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.emory.library.tas.spss.LogItem;
-import edu.emory.library.tas.spss.LogWriter;
+import edu.emory.library.tas.web.test.JavaProgramRunner;
 import edu.emory.library.tas.web.upload.Upload;
 import edu.emory.library.tas.web.upload.UploadedFile;
 

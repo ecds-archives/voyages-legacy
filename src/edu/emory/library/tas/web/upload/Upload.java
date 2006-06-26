@@ -237,7 +237,7 @@ public class Upload
 				
 				// is it a file?
 				currFile = null;
-				if (contentDisp != null && contentDisp.getMainValue().equals("form-data") && contentDisp.getNamedPart("filename") != null)
+				if (contentDisp != null && contentDisp.getMainValue().equals("form-data") && contentDisp.getNamedPart("filename") != null && !contentDisp.getNamedPart("filename").equals("\"\""))
 				{
 					
 					// determine file name

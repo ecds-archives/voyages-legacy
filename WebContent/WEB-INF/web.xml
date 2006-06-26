@@ -64,7 +64,7 @@
 
 	<servlet>
 		<servlet-name>import</servlet-name>
-		<servlet-class>edu.emory.library.tas.web.test.ImportServlet</servlet-class>
+		<servlet-class>edu.emory.library.tas.spss.ImportServlet</servlet-class>
 		<init-param>
 			<param-name>imports.dir</param-name>
 			<param-value>C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\imports</param-value>

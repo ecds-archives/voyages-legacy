@@ -167,8 +167,8 @@
   	<attribute name="women8" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="boy8" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="girl8" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="behrflag" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="price" type="Integer" userLabel="" importType="numeric"/> 
+  	<!-- <attribute name="behrflag" type="Integer" userLabel="" importType="numeric"/>  -->
+  	<attribute name="price" type="Integer" userLabel="" importType="numeric"/>
   	<attribute name="uppguine" type="Float" userLabel="" importType="numeric"/> 
   	<attribute name="voyagimp" type="Float" userLabel="" importType="numeric"/> 
   	<attribute name="timcoast" type="Float" userLabel="" importType="numeric"/> 
@@ -192,8 +192,8 @@
     <attribute name="boyrat7" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="boyrat3" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="boyrat1" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="behmimp2" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="behximp2" type="Float" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="behmimp2" type="Integer" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="behximp2" type="Float" userLabel="" importType="numeric"/> -->
     <attribute name="poundprice" type="Float" userLabel="" importType="numeric" importName="__price" /> 
     <attribute name="termmth" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="intrate" type="Integer" userLabel="" importType="numeric"/> 
@@ -204,15 +204,15 @@
     <attribute name="frencpri" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="frnprinl" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="nonpay" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="seneg" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="sl" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="wwc" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="slperton" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="tonpercr" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="portugus" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="manol" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="portug2" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="deptamer" type="Float" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="seneg" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="sl" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="wwc" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="slperton" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="tonpercr" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="portugus" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="manol" type="Integer" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="portug2" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="deptamer" type="Float" userLabel="" importType="numeric"/> -->
     <attribute name="girl5" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="boy5" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="men5" type="Integer" userLabel="" importType="numeric"/> 
@@ -221,22 +221,22 @@
     <attribute name="male5" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="female5" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="arrport2" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="nsp" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="nna" type="Integer" userLabel="" importType="numeric"/>  
+    <!-- <attribute name="nsp" type="Integer" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="nna" type="Integer" userLabel="" importType="numeric"/> -->
     <attribute name="infant3" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="infants3" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="infant1" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="kleimerg" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="klemerg2" type="Float" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="kleimerg" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="klemerg2" type="Float" userLabel="" importType="numeric"/> -->
     <attribute name="adult5" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="bahijelm" type="Float" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="bahijelm" type="Float" userLabel="" importType="numeric"/>  -->
     <attribute name="adult2" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="adult4" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="infant4" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="voyagid2" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="newmina" type="Integer" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="voyagid2" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="newmina" type="Integer" userLabel="" importType="numeric"/> -->
     <attribute name="crew" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="guns2" type="Integer" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="guns2" type="Integer" userLabel="" importType="numeric"/> -->
     <attribute name="men7" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="male7" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="female7" type="Integer" userLabel="" importType="numeric"/> 
@@ -246,18 +246,18 @@
     <attribute name="girl7" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="child7" type="Integer" userLabel="" importType="numeric"/> 
     <attribute name="voy3imp" type="Integer" userLabel="" importType="numeric"/>
-    <attribute name="slavcapt" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="majbycon" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="tabexpo" type="Integer" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="slavcapt" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="majbycon" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="tabexpo" type="Integer" userLabel="" importType="numeric"/> -->
     <attribute name="rice" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="slavemx7" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="spanishamer" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="year25a" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="menvymrtrat" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="womenvymrtrat" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="boyvymrtrat" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="girlvymrtrat" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="cubaperiod" type="Float" userLabel="" importType="numeric"/> 
+    <!-- <attribute name="year25a" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="menvymrtrat" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="womenvymrtrat" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="boyvymrtrat" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="girlvymrtrat" type="Float" userLabel="" importType="numeric"/> -->
+    <!-- <attribute name="cubaperiod" type="Float" userLabel="" importType="numeric"/> -->
     <attribute name="datepl" type="DepDefinition" userLabel=""/>
     <attribute name="embport" type="PurchasePort" userLabel=""/>
     <attribute name="arrport" type="IntDisembPort" userLabel=""/>
@@ -301,32 +301,32 @@
     <attribute name="fate3" type="Fate3" userLabel=""/>
     <attribute name="fate4" type="Fate4" userLabel=""/>
     <attribute name="mjselimp" type="ImpPrincipalRegion" userLabel=""/>
-    <attribute name="deptreg1" type="DepartureRegion" userLabel=""/>
-    <attribute name="mjselrg1" type="DemBroadRegion" userLabel=""/>
+    <!-- <attribute name="deptreg1" type="DepartureRegion" userLabel=""/> -->
+    <!-- <attribute name="mjselrg1" type="DemBroadRegion" userLabel=""/> -->
     <attribute name="constreg" type="DepartureRegion" userLabel=""/>
     <attribute name="status" type="Status" userLabel=""/>
-    <attribute name="majbyim3" type="MajByIm" userLabel=""/>
+    <!-- <attribute name="majbyim3" type="MajByIm" userLabel=""/> -->
 	<attribute name="editor" type="Editor" userLabel=""/>
 	<!-- <attribute name="majbyimp" type="PurchasePort" userLabel=""/> -->
-	<attribute name="newf" type="New" userLabel="" importName="new" />
+	<!-- <attribute name="newf" type="New" userLabel="" importName="new" /> -->
 	<attribute name="filter_$" type="Filter" userLabel="" importName="filter__"/>
-	<attribute name="natinim3" type="Natinim3" userLabel=""/>
-	<attribute name="mjselrg2" type="Mjselrg2" userLabel=""/>
-	<attribute name="newamreg" type="Newamreg" userLabel=""/>
+	<!-- <attribute name="natinim3" type="Natinim3" userLabel=""/> -->
+	<!-- <attribute name="mjselrg2" type="Mjselrg2" userLabel=""/> -->
+	<!-- <attribute name="newamreg" type="Newamreg" userLabel=""/> -->
 	<attribute name="yearches" type="Yearches" userLabel=""/>
-	<attribute name="gc" type="Gc" userLabel=""/>
-	<attribute name="angola" type="Angola" userLabel=""/>
-	<attribute name="seafrica" type="Seafrica" userLabel=""/>
+	<!-- <attribute name="gc" type="Gc" userLabel=""/> -->
+	<!-- <attribute name="angola" type="Angola" userLabel=""/> -->
+	<!-- <attribute name="seafrica" type="Seafrica" userLabel=""/> -->
 	<attribute name="regarrp2" type="DepartureRegion" userLabel=""/>
-	<attribute name="userid" type="Userid" userLabel=""/>
+	<!-- <attribute name="userid" type="Userid" userLabel=""/> -->
 	<attribute name="xmimpflag" type="XmimpFlag" userLabel=""/>
-	<attribute name="temp2" type="Temp2" userLabel=""/>
-	<attribute name="flag2" type="Flag2" userLabel=""/>
+	<!-- <attribute name="temp2" type="Temp2" userLabel=""/> -->
+	<!-- <attribute name="flag2" type="Flag2" userLabel=""/> -->
 	<attribute name="primarylast" type="PrimaryLast" userLabel=""/>
 	<attribute name="primarylast1" type="PrimaryLast" userLabel=""/>
 	<attribute name="carib" type="Carib" userLabel=""/>
-	<attribute name="natinim4" type="Natinim4" userLabel=""/>
+	<!-- <attribute name="natinim4" type="Natinim4" userLabel=""/> -->
 	<attribute name="us" type="Us" userLabel=""/>
-	<attribute name="mjselim2" type="DepartureRegion" userLabel=""/>
+	<!-- <attribute name="mjselim2" type="DepartureRegion" userLabel=""/> -->
 	<attribute name="temp" type="Temp" userLabel=""/>
 </class>

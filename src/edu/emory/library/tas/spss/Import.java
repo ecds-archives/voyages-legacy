@@ -583,8 +583,8 @@ public class Import
 	{
 		
 		// open both files
-		RecordReader voyagesRdr = voyagesRecordIOFactory.createReader(voyagesSortedDataFileName);
-		RecordReader slavesRdr = slavesRecordIOFactory.createReader(slavesSortedDataFileName);
+		RecordReader voyagesRdr = voyagesPresent ? voyagesRecordIOFactory.createReader(voyagesSortedDataFileName) : null;
+		RecordReader slavesRdr = slavesPresent ? slavesRecordIOFactory.createReader(slavesSortedDataFileName) : null;
 		
 		// variables for the main loop (see below)
 		Record voyageRecord = null;
@@ -619,7 +619,7 @@ public class Import
 		noOfCreatedVoyages = 0;
 		
 		// slave id
-		STSchemaVariable varSlaveId = (STSchemaVariable)slaveSchema.get("slaveid");
+		STSchemaVariable varSlaveId = slavesPresent ? (STSchemaVariable)slaveSchema.get("slaveid") : null;
 		
 		// we have only voyages -> make sure that in the main loop 
 		// we always read and save only voyages
@@ -885,8 +885,8 @@ public class Import
 		}
 		
 		// close all
-		voyagesRdr.close();
-		slavesRdr.close();
+		if (voyagesPresent) voyagesRdr.close();
+		if (slavesPresent) slavesRdr.close();
 
 	}
 
@@ -915,7 +915,7 @@ public class Import
 		{
 			
 			log.startStage(LogItem.STAGE_CONVERSION);
-			convertSpssFiles();
+			//convertSpssFiles();
 
 			log.startStage(LogItem.STAGE_SCHEMA_LOADING);
 			loadSchemas();
@@ -924,7 +924,7 @@ public class Import
 			matchAndVerifySchema();
 
 			log.startStage(LogItem.STAGE_SORTING);
-			sortFiles();
+			//sortFiles();
 
 			log.startStage(LogItem.STAGE_UPDATING_LABELS);
 			updateDictionaties();
@@ -962,17 +962,17 @@ public class Import
 		{
 			log.logInfo("Import terminated.");
 		}
-		catch (StatTransferException ste)
-		{
-			log.logError("The uploaded file is not proabably a valid SPSS file.");
-			log.logError(ste.getMessage());
-			log.logInfo("Import terminated.");
-		}
-		catch (InterruptedException ie)
-		{
-			log.logError(ie.getMessage());
-			log.logInfo("Import terminated.");
-		}
+//		catch (StatTransferException ste)
+//		{
+//			log.logError("The uploaded file is not proabably a valid SPSS file.");
+//			log.logError(ste.getMessage());
+//			log.logInfo("Import terminated.");
+//		}
+//		catch (InterruptedException ie)
+//		{
+//			log.logError(ie.getMessage());
+//			log.logInfo("Import terminated.");
+//		}
 		
 	}
 

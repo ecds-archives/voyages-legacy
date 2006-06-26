@@ -17,7 +17,7 @@ JSONRPCBridge.getGlobalBridge().registerClass("Upload", Upload.class);
 
 %>
 
-<script language="javascript" src="jsonrpc.js"></script>
+<script language="javascript" src="jslib/jsonrpc.js"></script>
 <script language="javascript">
 
 var json;

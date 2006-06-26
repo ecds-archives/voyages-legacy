@@ -179,7 +179,7 @@
   	<property name="women8"/>
   	<property name="boy8"/>
   	<property name="girl8"/>
-  	<property name="behrflag"/>
+  	<!-- <property name="behrflag"/> -->
   	<property name="price"/>
   	<property name="uppguine"/>
   	<property name="voyagimp"/>
@@ -204,8 +204,8 @@
     <property name="boyrat7"/>
     <property name="boyrat3"/>
     <property name="boyrat1"/>
-    <property name="behmimp2"/>
-    <property name="behximp2"/>
+    <!-- <property name="behmimp2"/> -->
+    <!-- <property name="behximp2"/> -->
     <property name="poundprice"/>
     <property name="termmth"/>
     <property name="intrate"/>
@@ -216,15 +216,15 @@
     <property name="frencpri"/>
     <property name="frnprinl"/>
     <property name="nonpay"/>
-    <property name="seneg"/>
-    <property name="sl"/>
-    <property name="wwc"/>
-    <property name="slperton"/>
-    <property name="tonpercr"/>
-    <property name="portugus"/>
-    <property name="manol"/>
-    <property name="portug2"/>
-    <property name="deptamer"/>
+    <!-- <property name="seneg"/> -->
+    <!-- <property name="sl"/> -->
+    <!-- <property name="wwc"/> -->
+    <!-- <property name="slperton"/> -->
+    <!-- <property name="tonpercr"/> -->
+    <!-- <property name="portugus"/> -->
+    <!-- <property name="manol"/> -->
+    <!-- <property name="portug2"/> -->
+    <!-- <property name="deptamer"/> -->
     <property name="girl5"/>
     <property name="boy5"/>
     <property name="men5"/>
@@ -233,22 +233,22 @@
     <property name="male5"/>
     <property name="female5"/>
     <property name="arrport2"/>
-    <property name="nsp"/>
-    <property name="nna"/>
+    <!-- <property name="nsp"/> -->
+    <!-- <property name="nna"/> -->
     <property name="infant3"/>
     <property name="infants3"/>
     <property name="infant1"/>
-    <property name="kleimerg"/>
-    <property name="klemerg2"/>
+    <!-- <property name="kleimerg"/> -->
+    <!-- <property name="klemerg2"/> -->
     <property name="adult5"/>
-    <property name="bahijelm"/>
+    <!-- <property name="bahijelm"/> -->
     <property name="adult2"/>
     <property name="adult4"/>
     <property name="infant4"/>
-    <property name="voyagid2"/>
-    <property name="newmina"/>
+    <!-- <property name="voyagid2"/> -->
+    <!-- <property name="newmina"/> -->
     <property name="crew"/>
-    <property name="guns2"/>
+    <!-- <property name="guns2"/> -->
     <property name="men7"/>
     <property name="male7"/>
     <property name="female7"/>
@@ -258,18 +258,18 @@
     <property name="girl7"/>
     <property name="child7"/>
     <property name="voy3imp"/>
-    <property name="slavcapt"/>
-    <property name="majbycon"/>
-    <property name="tabexpo"/>
-    <property name="rice"/>
+    <!-- <property name="slavcapt"/> -->
+    <!-- <property name="majbycon"/> -->
+    <!-- <property name="tabexpo"/> -->
+    <!-- <property name="rice"/> -->
     <property name="slavemx7"/>
     <property name="spanishamer"/>
-    <property name="year25a"/>
-    <property name="menvymrtrat"/>
-    <property name="womenvymrtrat"/>
-    <property name="boyvymrtrat"/>
-    <property name="girlvymrtrat"/>
-    <property name="cubaperiod"/>
+    <!-- <property name="year25a"/> -->
+    <!-- <property name="menvymrtrat"/> -->
+    <!-- <property name="womenvymrtrat"/> -->
+    <!-- <property name="boyvymrtrat"/> -->
+    <!-- <property name="girlvymrtrat"/> -->
+    <!-- <property name="cubaperiod"/> -->
     
     <many-to-one name="datepl" class="edu.emory.library.tas.dicts.DepDefinition" unique="true" lazy="false"/>
     <many-to-one name="embport" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
@@ -314,37 +314,36 @@
     <many-to-one name="fate3" class="edu.emory.library.tas.dicts.Fate3" unique="true" lazy="false"/>
     <many-to-one name="fate4" class="edu.emory.library.tas.dicts.Fate4" unique="true" lazy="false"/>
     <many-to-one name="mjselimp" class="edu.emory.library.tas.dicts.ImpPrincipalRegion" unique="true" lazy="false"/>
-    <many-to-one name="deptreg1" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-    <many-to-one name="mjselrg1" class="edu.emory.library.tas.dicts.DemBroadRegion" unique="true" lazy="false"/>
+    <!-- <many-to-one name="deptreg1" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/> -->
+    <!-- <many-to-one name="mjselrg1" class="edu.emory.library.tas.dicts.DemBroadRegion" unique="true" lazy="false"/> -->
     <many-to-one name="constreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
     <many-to-one name="status" class="edu.emory.library.tas.dicts.Status" unique="true" lazy="false"/>
-    <many-to-one name="majbyim3" class="edu.emory.library.tas.dicts.MajByIm" unique="true" lazy="false"/>
+    <!-- <many-to-one name="majbyim3" class="edu.emory.library.tas.dicts.MajByIm" unique="true" lazy="false"/> -->
   
-  		<many-to-one name="editor" class="edu.emory.library.tas.dicts.Editor" unique="true" lazy="false"/>
-  		<!--<many-to-one name="mjbyptimp" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>-->
-  		<many-to-one name="newf" class="edu.emory.library.tas.dicts.New" unique="true" lazy="false"/>
-  		<many-to-one name="filter_$" class="edu.emory.library.tas.dicts.Filter" unique="true" lazy="false"/>
-  		<many-to-one name="natinim3" class="edu.emory.library.tas.dicts.Natinim3" unique="true" lazy="false"/>
-  		<many-to-one name="mjselrg2" class="edu.emory.library.tas.dicts.Mjselrg2" unique="true" lazy="false"/>
-  		<many-to-one name="newamreg" class="edu.emory.library.tas.dicts.Newamreg" unique="true" lazy="false"/>
-  		<many-to-one name="yearches" class="edu.emory.library.tas.dicts.Yearches" unique="true" lazy="false"/>
-  		<many-to-one name="gc" class="edu.emory.library.tas.dicts.Gc" unique="true" lazy="false"/>
-  		<many-to-one name="angola" class="edu.emory.library.tas.dicts.Angola" unique="true" lazy="false"/>
-  		<many-to-one name="seafrica" class="edu.emory.library.tas.dicts.Seafrica" unique="true" lazy="false"/>
-  		<many-to-one name="regarrp2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-  		<many-to-one name="userid" class="edu.emory.library.tas.dicts.Userid" unique="true" lazy="false"/>
-  		<many-to-one name="xmimpflag" class="edu.emory.library.tas.dicts.XmimpFlag" unique="true" lazy="false"/>
-  		<many-to-one name="temp2" class="edu.emory.library.tas.dicts.Temp2" unique="true" lazy="false"/>
-  		<many-to-one name="flag2" class="edu.emory.library.tas.dicts.Flag2" unique="true" lazy="false"/>
-  		<many-to-one name="primarylast" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
-  		<many-to-one name="primarylast1" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
-  		<many-to-one name="carib" class="edu.emory.library.tas.dicts.Carib" unique="true" lazy="false"/>
-  		<many-to-one name="natinim4" class="edu.emory.library.tas.dicts.Natinim4" unique="true" lazy="false"/>
-  		<many-to-one name="us" class="edu.emory.library.tas.dicts.Us" unique="true" lazy="false"/>
-  		<many-to-one name="mjselim2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+	<many-to-one name="editor" class="edu.emory.library.tas.dicts.Editor" unique="true" lazy="false"/>
+	<!--<many-to-one name="mjbyptimp" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>-->
+	<!-- <many-to-one name="newf" class="edu.emory.library.tas.dicts.New" unique="true" lazy="false"/> -->
+	<many-to-one name="filter_$" class="edu.emory.library.tas.dicts.Filter" unique="true" lazy="false"/>
+	<!-- <many-to-one name="natinim3" class="edu.emory.library.tas.dicts.Natinim3" unique="true" lazy="false"/> -->
+	<!-- <many-to-one name="mjselrg2" class="edu.emory.library.tas.dicts.Mjselrg2" unique="true" lazy="false"/> -->
+	<!-- <many-to-one name="newamreg" class="edu.emory.library.tas.dicts.Newamreg" unique="true" lazy="false"/> -->
+	<many-to-one name="yearches" class="edu.emory.library.tas.dicts.Yearches" unique="true" lazy="false"/>
+	<!-- <many-to-one name="gc" class="edu.emory.library.tas.dicts.Gc" unique="true" lazy="false"/> -->
+	<!-- <many-to-one name="angola" class="edu.emory.library.tas.dicts.Angola" unique="true" lazy="false"/> -->
+	<!-- <many-to-one name="seafrica" class="edu.emory.library.tas.dicts.Seafrica" unique="true" lazy="false"/> -->
+	<many-to-one name="regarrp2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
+	<!-- <many-to-one name="userid" class="edu.emory.library.tas.dicts.Userid" unique="true" lazy="false"/> -->
+	<many-to-one name="xmimpflag" class="edu.emory.library.tas.dicts.XmimpFlag" unique="true" lazy="false"/>
+	<!-- <many-to-one name="temp2" class="edu.emory.library.tas.dicts.Temp2" unique="true" lazy="false"/> -->
+	<!-- <many-to-one name="flag2" class="edu.emory.library.tas.dicts.Flag2" unique="true" lazy="false"/> -->
+	<many-to-one name="primarylast" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
+	<many-to-one name="primarylast1" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
+	<many-to-one name="carib" class="edu.emory.library.tas.dicts.Carib" unique="true" lazy="false"/>
+	<!-- <many-to-one name="natinim4" class="edu.emory.library.tas.dicts.Natinim4" unique="true" lazy="false"/> -->
+	<many-to-one name="us" class="edu.emory.library.tas.dicts.Us" unique="true" lazy="false"/>
+	<!-- <many-to-one name="mjselim2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/> -->
  
-  		
-  		<many-to-one name="temp" class="edu.emory.library.tas.dicts.Temp" unique="true" lazy="false"/>
+	<many-to-one name="temp" class="edu.emory.library.tas.dicts.Temp" unique="true" lazy="false"/>
         
     </class>
     

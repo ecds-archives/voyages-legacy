@@ -2065,13 +2065,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("girl8", girl8);
 	}
-	public void setBehrflag(Integer behrflag) {
-		if ((behrflag == null && this.values.get("behrflag") != null) 
-			|| (behrflag != null && !behrflag.equals(this.values.get("behrflag")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("behrflag", behrflag);
-	}
 	public void setPrice(Integer price) {
 		if ((price == null && this.values.get("price") != null) 
 			|| (price != null && !price.equals(this.values.get("price")))) {
@@ -2240,20 +2233,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("boyrat1", boyrat1);
 	}
-	public void setBehmimp2(Integer behmimp2) {
-		if ((behmimp2 == null && this.values.get("behmimp2") != null) 
-			|| (behmimp2 != null && !behmimp2.equals(this.values.get("behmimp2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("behmimp2", behmimp2);
-	}
-	public void setBehximp2(Float behximp2) {
-		if ((behximp2 == null && this.values.get("behximp2") != null) 
-			|| (behximp2 != null && !behximp2.equals(this.values.get("behximp2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("behximp2", behximp2);
-	}
 	public void setPoundprice(Float poundprice) {
 		if ((poundprice == null && this.values.get("poundprice") != null) 
 			|| (poundprice != null && !poundprice.equals(this.values.get("poundprice")))) {
@@ -2324,69 +2303,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("nonpay", nonpay);
 	}
-	public void setSeneg(Float seneg) {
-		if ((seneg == null && this.values.get("seneg") != null) 
-			|| (seneg != null && !seneg.equals(this.values.get("seneg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("seneg", seneg);
-	}
-	public void setSl(Float sl) {
-		if ((sl == null && this.values.get("sl") != null) 
-			|| (sl != null && !sl.equals(this.values.get("sl")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sl", sl);
-	}
-	public void setWwc(Float wwc) {
-		if ((wwc == null && this.values.get("wwc") != null) 
-			|| (wwc != null && !wwc.equals(this.values.get("wwc")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("wwc", wwc);
-	}
-	public void setSlperton(Float slperton) {
-		if ((slperton == null && this.values.get("slperton") != null) 
-			|| (slperton != null && !slperton.equals(this.values.get("slperton")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slperton", slperton);
-	}
-	public void setTonpercr(Float tonpercr) {
-		if ((tonpercr == null && this.values.get("tonpercr") != null) 
-			|| (tonpercr != null && !tonpercr.equals(this.values.get("tonpercr")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("tonpercr", tonpercr);
-	}
-	public void setPortugus(Float portugus) {
-		if ((portugus == null && this.values.get("portugus") != null) 
-			|| (portugus != null && !portugus.equals(this.values.get("portugus")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("portugus", portugus);
-	}
-	public void setManol(Integer manol) {
-		if ((manol == null && this.values.get("manol") != null) 
-			|| (manol != null && !manol.equals(this.values.get("manol")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("manol", manol);
-	}
-	public void setPortug2(Float portug2) {
-		if ((portug2 == null && this.values.get("portug2") != null) 
-			|| (portug2 != null && !portug2.equals(this.values.get("portug2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("portug2", portug2);
-	}
-	public void setDeptamer(Float deptamer) {
-		if ((deptamer == null && this.values.get("deptamer") != null) 
-			|| (deptamer != null && !deptamer.equals(this.values.get("deptamer")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("deptamer", deptamer);
-	}
 	public void setGirl5(Integer girl5) {
 		if ((girl5 == null && this.values.get("girl5") != null) 
 			|| (girl5 != null && !girl5.equals(this.values.get("girl5")))) {
@@ -2443,20 +2359,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("arrport2", arrport2);
 	}
-	public void setNsp(Integer nsp) {
-		if ((nsp == null && this.values.get("nsp") != null) 
-			|| (nsp != null && !nsp.equals(this.values.get("nsp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("nsp", nsp);
-	}
-	public void setNna(Integer nna) {
-		if ((nna == null && this.values.get("nna") != null) 
-			|| (nna != null && !nna.equals(this.values.get("nna")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("nna", nna);
-	}
 	public void setInfant3(Integer infant3) {
 		if ((infant3 == null && this.values.get("infant3") != null) 
 			|| (infant3 != null && !infant3.equals(this.values.get("infant3")))) {
@@ -2478,33 +2380,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("infant1", infant1);
 	}
-	public void setKleimerg(Float kleimerg) {
-		if ((kleimerg == null && this.values.get("kleimerg") != null) 
-			|| (kleimerg != null && !kleimerg.equals(this.values.get("kleimerg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("kleimerg", kleimerg);
-	}
-	public void setKlemerg2(Float klemerg2) {
-		if ((klemerg2 == null && this.values.get("klemerg2") != null) 
-			|| (klemerg2 != null && !klemerg2.equals(this.values.get("klemerg2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("klemerg2", klemerg2);
-	}
 	public void setAdult5(Integer adult5) {
 		if ((adult5 == null && this.values.get("adult5") != null) 
 			|| (adult5 != null && !adult5.equals(this.values.get("adult5")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("adult5", adult5);
-	}
-	public void setBahijelm(Float bahijelm) {
-		if ((bahijelm == null && this.values.get("bahijelm") != null) 
-			|| (bahijelm != null && !bahijelm.equals(this.values.get("bahijelm")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("bahijelm", bahijelm);
 	}
 	public void setAdult2(Integer adult2) {
 		if ((adult2 == null && this.values.get("adult2") != null) 
@@ -2527,33 +2408,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("infant4", infant4);
 	}
-	public void setVoyagid2(Float voyagid2) {
-		if ((voyagid2 == null && this.values.get("voyagid2") != null) 
-			|| (voyagid2 != null && !voyagid2.equals(this.values.get("voyagid2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("voyagid2", voyagid2);
-	}
-	public void setNewmina(Integer newmina) {
-		if ((newmina == null && this.values.get("newmina") != null) 
-			|| (newmina != null && !newmina.equals(this.values.get("newmina")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("newmina", newmina);
-	}
 	public void setCrew(Integer crew) {
 		if ((crew == null && this.values.get("crew") != null) 
 			|| (crew != null && !crew.equals(this.values.get("crew")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("crew", crew);
-	}
-	public void setGuns2(Integer guns2) {
-		if ((guns2 == null && this.values.get("guns2") != null) 
-			|| (guns2 != null && !guns2.equals(this.values.get("guns2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("guns2", guns2);
 	}
 	public void setMen7(Integer men7) {
 		if ((men7 == null && this.values.get("men7") != null) 
@@ -2618,27 +2478,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("voy3imp", voy3imp);
 	}
-	public void setSlavcapt(Float slavcapt) {
-		if ((slavcapt == null && this.values.get("slavcapt") != null) 
-			|| (slavcapt != null && !slavcapt.equals(this.values.get("slavcapt")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavcapt", slavcapt);
-	}
-	public void setMajbycon(Float majbycon) {
-		if ((majbycon == null && this.values.get("majbycon") != null) 
-			|| (majbycon != null && !majbycon.equals(this.values.get("majbycon")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("majbycon", majbycon);
-	}
-	public void setTabexpo(Integer tabexpo) {
-		if ((tabexpo == null && this.values.get("tabexpo") != null) 
-			|| (tabexpo != null && !tabexpo.equals(this.values.get("tabexpo")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("tabexpo", tabexpo);
-	}
 	public void setRice(Float rice) {
 		if ((rice == null && this.values.get("rice") != null) 
 			|| (rice != null && !rice.equals(this.values.get("rice")))) {
@@ -2659,48 +2498,6 @@ public class Voyage extends AbstractDescriptiveObject {
 			this.modified = UPDATED;
 		}
 		this.values.put("spanishamer", spanishamer);
-	}
-	public void setYear25a(Float year25a) {
-		if ((year25a == null && this.values.get("year25a") != null) 
-			|| (year25a != null && !year25a.equals(this.values.get("year25a")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("year25a", year25a);
-	}
-	public void setMenvymrtrat(Float menvymrtrat) {
-		if ((menvymrtrat == null && this.values.get("menvymrtrat") != null) 
-			|| (menvymrtrat != null && !menvymrtrat.equals(this.values.get("menvymrtrat")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("menvymrtrat", menvymrtrat);
-	}
-	public void setWomenvymrtrat(Float womenvymrtrat) {
-		if ((womenvymrtrat == null && this.values.get("womenvymrtrat") != null) 
-			|| (womenvymrtrat != null && !womenvymrtrat.equals(this.values.get("womenvymrtrat")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("womenvymrtrat", womenvymrtrat);
-	}
-	public void setBoyvymrtrat(Float boyvymrtrat) {
-		if ((boyvymrtrat == null && this.values.get("boyvymrtrat") != null) 
-			|| (boyvymrtrat != null && !boyvymrtrat.equals(this.values.get("boyvymrtrat")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boyvymrtrat", boyvymrtrat);
-	}
-	public void setGirlvymrtrat(Float girlvymrtrat) {
-		if ((girlvymrtrat == null && this.values.get("girlvymrtrat") != null) 
-			|| (girlvymrtrat != null && !girlvymrtrat.equals(this.values.get("girlvymrtrat")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girlvymrtrat", girlvymrtrat);
-	}
-	public void setCubaperiod(Float cubaperiod) {
-		if ((cubaperiod == null && this.values.get("cubaperiod") != null) 
-			|| (cubaperiod != null && !cubaperiod.equals(this.values.get("cubaperiod")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("cubaperiod", cubaperiod);
 	}
 	public void setDatepl(DepDefinition datepl) {
 		if ((datepl == null && this.values.get("datepl") != null) 
@@ -3003,20 +2800,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("mjselimp", mjselimp);
 	}
-	public void setDeptreg1(DepartureRegion deptreg1) {
-		if ((deptreg1 == null && this.values.get("deptreg1") != null) 
-			|| (deptreg1 != null && !deptreg1.equals(this.values.get("deptreg1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("deptreg1", deptreg1);
-	}
-	public void setMjselrg1(DemBroadRegion mjselrg1) {
-		if ((mjselrg1 == null && this.values.get("mjselrg1") != null) 
-			|| (mjselrg1 != null && !mjselrg1.equals(this.values.get("mjselrg1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("mjselrg1", mjselrg1);
-	}
 	public void setConstreg(DepartureRegion constreg) {
 		if ((constreg == null && this.values.get("constreg") != null) 
 			|| (constreg != null && !constreg.equals(this.values.get("constreg")))) {
@@ -3031,26 +2814,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("status", status);
 	}
-	public void setMajbyim3(MajByIm majbyim3) {
-		if ((majbyim3 == null && this.values.get("majbyim3") != null) 
-			|| (majbyim3 != null && !majbyim3.equals(this.values.get("majbyim3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("majbyim3", majbyim3);
-	}
 	public void setEditor(Editor editor) {
 		if ((editor == null && this.values.get("editor") != null) 
 			|| (editor != null && !editor.equals(this.values.get("editor")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("editor", editor);
-	}
-	public void setNewf(New newf) {
-		if ((newf == null && this.values.get("newf") != null) 
-			|| (newf != null && !newf.equals(this.values.get("newf")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("newf", newf);
 	}
 	public void setFilter_$(Filter filter_$) {
 		if ((filter_$ == null && this.values.get("filter_$") != null) 
@@ -3059,54 +2828,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("filter_$", filter_$);
 	}
-	public void setNatinim3(Natinim3 natinim3) {
-		if ((natinim3 == null && this.values.get("natinim3") != null) 
-			|| (natinim3 != null && !natinim3.equals(this.values.get("natinim3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("natinim3", natinim3);
-	}
-	public void setMjselrg2(Mjselrg2 mjselrg2) {
-		if ((mjselrg2 == null && this.values.get("mjselrg2") != null) 
-			|| (mjselrg2 != null && !mjselrg2.equals(this.values.get("mjselrg2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("mjselrg2", mjselrg2);
-	}
-	public void setNewamreg(Newamreg newamreg) {
-		if ((newamreg == null && this.values.get("newamreg") != null) 
-			|| (newamreg != null && !newamreg.equals(this.values.get("newamreg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("newamreg", newamreg);
-	}
 	public void setYearches(Yearches yearches) {
 		if ((yearches == null && this.values.get("yearches") != null) 
 			|| (yearches != null && !yearches.equals(this.values.get("yearches")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("yearches", yearches);
-	}
-	public void setGc(Gc gc) {
-		if ((gc == null && this.values.get("gc") != null) 
-			|| (gc != null && !gc.equals(this.values.get("gc")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("gc", gc);
-	}
-	public void setAngola(Angola angola) {
-		if ((angola == null && this.values.get("angola") != null) 
-			|| (angola != null && !angola.equals(this.values.get("angola")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("angola", angola);
-	}
-	public void setSeafrica(Seafrica seafrica) {
-		if ((seafrica == null && this.values.get("seafrica") != null) 
-			|| (seafrica != null && !seafrica.equals(this.values.get("seafrica")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("seafrica", seafrica);
 	}
 	public void setRegarrp2(DepartureRegion regarrp2) {
 		if ((regarrp2 == null && this.values.get("regarrp2") != null) 
@@ -3115,33 +2842,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("regarrp2", regarrp2);
 	}
-	public void setUserid(Userid userid) {
-		if ((userid == null && this.values.get("userid") != null) 
-			|| (userid != null && !userid.equals(this.values.get("userid")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("userid", userid);
-	}
 	public void setXmimpflag(XmimpFlag xmimpflag) {
 		if ((xmimpflag == null && this.values.get("xmimpflag") != null) 
 			|| (xmimpflag != null && !xmimpflag.equals(this.values.get("xmimpflag")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("xmimpflag", xmimpflag);
-	}
-	public void setTemp2(Temp2 temp2) {
-		if ((temp2 == null && this.values.get("temp2") != null) 
-			|| (temp2 != null && !temp2.equals(this.values.get("temp2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("temp2", temp2);
-	}
-	public void setFlag2(Flag2 flag2) {
-		if ((flag2 == null && this.values.get("flag2") != null) 
-			|| (flag2 != null && !flag2.equals(this.values.get("flag2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("flag2", flag2);
 	}
 	public void setPrimarylast(PrimaryLast primarylast) {
 		if ((primarylast == null && this.values.get("primarylast") != null) 
@@ -3164,26 +2870,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("carib", carib);
 	}
-	public void setNatinim4(Natinim4 natinim4) {
-		if ((natinim4 == null && this.values.get("natinim4") != null) 
-			|| (natinim4 != null && !natinim4.equals(this.values.get("natinim4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("natinim4", natinim4);
-	}
 	public void setUs(Us us) {
 		if ((us == null && this.values.get("us") != null) 
 			|| (us != null && !us.equals(this.values.get("us")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("us", us);
-	}
-	public void setMjselim2(DepartureRegion mjselim2) {
-		if ((mjselim2 == null && this.values.get("mjselim2") != null) 
-			|| (mjselim2 != null && !mjselim2.equals(this.values.get("mjselim2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("mjselim2", mjselim2);
 	}
 	public void setTemp(Temp temp) {
 		if ((temp == null && this.values.get("temp") != null) 
@@ -3690,9 +3382,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getGirl8() {
 		return (Integer)this.values.get("girl8");
 	}
-	public Integer getBehrflag() {
-		return (Integer)this.values.get("behrflag");
-	}
 	public Integer getPrice() {
 		return (Integer)this.values.get("price");
 	}
@@ -3765,12 +3454,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Float getBoyrat1() {
 		return (Float)this.values.get("boyrat1");
 	}
-	public Integer getBehmimp2() {
-		return (Integer)this.values.get("behmimp2");
-	}
-	public Float getBehximp2() {
-		return (Float)this.values.get("behximp2");
-	}
 	public Float getPoundprice() {
 		return (Float)this.values.get("poundprice");
 	}
@@ -3801,33 +3484,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Float getNonpay() {
 		return (Float)this.values.get("nonpay");
 	}
-	public Float getSeneg() {
-		return (Float)this.values.get("seneg");
-	}
-	public Float getSl() {
-		return (Float)this.values.get("sl");
-	}
-	public Float getWwc() {
-		return (Float)this.values.get("wwc");
-	}
-	public Float getSlperton() {
-		return (Float)this.values.get("slperton");
-	}
-	public Float getTonpercr() {
-		return (Float)this.values.get("tonpercr");
-	}
-	public Float getPortugus() {
-		return (Float)this.values.get("portugus");
-	}
-	public Integer getManol() {
-		return (Integer)this.values.get("manol");
-	}
-	public Float getPortug2() {
-		return (Float)this.values.get("portug2");
-	}
-	public Float getDeptamer() {
-		return (Float)this.values.get("deptamer");
-	}
 	public Integer getGirl5() {
 		return (Integer)this.values.get("girl5");
 	}
@@ -3852,12 +3508,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getArrport2() {
 		return (Integer)this.values.get("arrport2");
 	}
-	public Integer getNsp() {
-		return (Integer)this.values.get("nsp");
-	}
-	public Integer getNna() {
-		return (Integer)this.values.get("nna");
-	}
 	public Integer getInfant3() {
 		return (Integer)this.values.get("infant3");
 	}
@@ -3867,17 +3517,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getInfant1() {
 		return (Integer)this.values.get("infant1");
 	}
-	public Float getKleimerg() {
-		return (Float)this.values.get("kleimerg");
-	}
-	public Float getKlemerg2() {
-		return (Float)this.values.get("klemerg2");
-	}
 	public Integer getAdult5() {
 		return (Integer)this.values.get("adult5");
-	}
-	public Float getBahijelm() {
-		return (Float)this.values.get("bahijelm");
 	}
 	public Integer getAdult2() {
 		return (Integer)this.values.get("adult2");
@@ -3888,17 +3529,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getInfant4() {
 		return (Integer)this.values.get("infant4");
 	}
-	public Float getVoyagid2() {
-		return (Float)this.values.get("voyagid2");
-	}
-	public Integer getNewmina() {
-		return (Integer)this.values.get("newmina");
-	}
 	public Integer getCrew() {
 		return (Integer)this.values.get("crew");
-	}
-	public Integer getGuns2() {
-		return (Integer)this.values.get("guns2");
 	}
 	public Integer getMen7() {
 		return (Integer)this.values.get("men7");
@@ -3927,15 +3559,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getVoy3imp() {
 		return (Integer)this.values.get("voy3imp");
 	}
-	public Float getSlavcapt() {
-		return (Float)this.values.get("slavcapt");
-	}
-	public Float getMajbycon() {
-		return (Float)this.values.get("majbycon");
-	}
-	public Integer getTabexpo() {
-		return (Integer)this.values.get("tabexpo");
-	}
 	public Float getRice() {
 		return (Float)this.values.get("rice");
 	}
@@ -3944,24 +3567,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	public Float getSpanishamer() {
 		return (Float)this.values.get("spanishamer");
-	}
-	public Float getYear25a() {
-		return (Float)this.values.get("year25a");
-	}
-	public Float getMenvymrtrat() {
-		return (Float)this.values.get("menvymrtrat");
-	}
-	public Float getWomenvymrtrat() {
-		return (Float)this.values.get("womenvymrtrat");
-	}
-	public Float getBoyvymrtrat() {
-		return (Float)this.values.get("boyvymrtrat");
-	}
-	public Float getGirlvymrtrat() {
-		return (Float)this.values.get("girlvymrtrat");
-	}
-	public Float getCubaperiod() {
-		return (Float)this.values.get("cubaperiod");
 	}
 	public DepDefinition getDatepl() {
 		return (DepDefinition)this.values.get("datepl");
@@ -4092,65 +3697,26 @@ public class Voyage extends AbstractDescriptiveObject {
 	public ImpPrincipalRegion getMjselimp() {
 		return (ImpPrincipalRegion)this.values.get("mjselimp");
 	}
-	public DepartureRegion getDeptreg1() {
-		return (DepartureRegion)this.values.get("deptreg1");
-	}
-	public DemBroadRegion getMjselrg1() {
-		return (DemBroadRegion)this.values.get("mjselrg1");
-	}
 	public DepartureRegion getConstreg() {
 		return (DepartureRegion)this.values.get("constreg");
 	}
 	public Status getStatus() {
 		return (Status)this.values.get("status");
 	}
-	public MajByIm getMajbyim3() {
-		return (MajByIm)this.values.get("majbyim3");
-	}
 	public Editor getEditor() {
 		return (Editor)this.values.get("editor");
-	}
-	public New getNewf() {
-		return (New)this.values.get("newf");
 	}
 	public Filter getFilter_$() {
 		return (Filter)this.values.get("filter_$");
 	}
-	public Natinim3 getNatinim3() {
-		return (Natinim3)this.values.get("natinim3");
-	}
-	public Mjselrg2 getMjselrg2() {
-		return (Mjselrg2)this.values.get("mjselrg2");
-	}
-	public Newamreg getNewamreg() {
-		return (Newamreg)this.values.get("newamreg");
-	}
 	public Yearches getYearches() {
 		return (Yearches)this.values.get("yearches");
-	}
-	public Gc getGc() {
-		return (Gc)this.values.get("gc");
-	}
-	public Angola getAngola() {
-		return (Angola)this.values.get("angola");
-	}
-	public Seafrica getSeafrica() {
-		return (Seafrica)this.values.get("seafrica");
 	}
 	public DepartureRegion getRegarrp2() {
 		return (DepartureRegion)this.values.get("regarrp2");
 	}
-	public Userid getUserid() {
-		return (Userid)this.values.get("userid");
-	}
 	public XmimpFlag getXmimpflag() {
 		return (XmimpFlag)this.values.get("xmimpflag");
-	}
-	public Temp2 getTemp2() {
-		return (Temp2)this.values.get("temp2");
-	}
-	public Flag2 getFlag2() {
-		return (Flag2)this.values.get("flag2");
 	}
 	public PrimaryLast getPrimarylast() {
 		return (PrimaryLast)this.values.get("primarylast");
@@ -4161,14 +3727,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Carib getCarib() {
 		return (Carib)this.values.get("carib");
 	}
-	public Natinim4 getNatinim4() {
-		return (Natinim4)this.values.get("natinim4");
-	}
 	public Us getUs() {
 		return (Us)this.values.get("us");
-	}
-	public DepartureRegion getMjselim2() {
-		return (DepartureRegion)this.values.get("mjselim2");
 	}
 	public Temp getTemp() {
 		return (Temp)this.values.get("temp");
