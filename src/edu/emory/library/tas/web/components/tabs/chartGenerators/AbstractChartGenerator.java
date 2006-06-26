@@ -37,7 +37,7 @@ public abstract class AbstractChartGenerator {
 				Long id = (Long)row[0];
 				Conditions conditions = new Conditions();
 				conditions.addCondition("id", id, Conditions.OP_EQUALS);
-				QueryValue qValue = new QueryValue("Dictionary", conditions);
+				QueryValue qValue = new QueryValue(this.getXAxisAttribute().getDictionary(), conditions);
 				Object[] dicts = qValue.executeQuery();
 				if (dicts.length > 0) {
 					((Object[])objs[i])[0] = ((Dictionary)dicts[0]).getName();

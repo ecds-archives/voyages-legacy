@@ -1,7 +1,9 @@
 package edu.emory.library.tas.util.query;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,6 +20,8 @@ public class QueryValue {
 	public static final int ORDER_DESC = -1;
 	
 	private String object;
+	private QueryValue qValue;
+	private String alias;
 	private Conditions conditions;
 	private String groupBy;
 	private String orderBy;
@@ -33,6 +37,10 @@ public class QueryValue {
 		this(objType, new Conditions(Conditions.JOIN_AND));
 	}
 	
+	public QueryValue(QueryValue qValue, String alias) {
+		this(qValue, alias, new Conditions(Conditions.JOIN_AND));
+	}
+	
 	public QueryValue(String objType, Conditions cond) {
 		this(objType, cond, LIMIT_NO_LIMIT);
 	}
@@ -44,6 +52,12 @@ public class QueryValue {
 		this.firstResult = FIRST_NO_FIRST;
 	}
 	
+	public QueryValue(QueryValue value, String alias, Conditions conditions2) {
+		this.conditions = conditions2;
+		this.qValue = value;
+		this.alias = alias;
+	}
+
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
@@ -89,11 +103,23 @@ public class QueryValue {
 			}
 		}
 		
+		HashMap allProperties = new HashMap();
+		if (this.object != null) {
+			buf.append("from ").append(this.object).append(" ").append(fetchClause);
+		} else {
+			ConditionResponse response = this.qValue.toStringWithParams();
+			buf.append("from (").append(response.conditionString).append(") as ").append(this.alias);
+			allProperties.putAll(response.properties);
+		}
 		
-		buf.append("from ").append(this.object).append(" ").append(fetchClause);
 		ConditionResponse response = this.conditions.getConditionHQL();
 		if (!response.conditionString.toString().trim().equals("")) {
 			buf.append(" where ").append(response.conditionString);
+		}
+		allProperties.putAll(response.properties);
+		
+		if (groupBy != null) {
+			buf.append(" group by ").append(groupBy);
 		}
 		
 		if (orderBy != null) {		
@@ -108,13 +134,9 @@ public class QueryValue {
 			}
 		}
 		
-		if (groupBy != null) {
-			buf.append(" group by ").append(groupBy);
-		}
-		
 		ConditionResponse res = new ConditionResponse();
 		res.conditionString = buf;
-		res.properties = response.properties;
+		res.properties = allProperties;
 		return res;
 	}
 	
