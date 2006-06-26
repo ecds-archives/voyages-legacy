@@ -81,21 +81,25 @@
 							--%>
 						</s:tabletab>
 						
-						<div style="background-color: #DDDDDD; padding: 5px;">
-							<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
-							<tr>
-								<td>
-									<h:commandLink style="font-weight: bold; text-decoration: none;" value="< Previous page" action="#{TableResultTabBean.prev}" /> |
-									<h:commandLink style="font-weight: bold; text-decoration: none;" value="Next page >" action="#{TableResultTabBean.next}" /> |
-									Showing
-									<h:outputText value="#{TableResultTabBean.firstDisplayed}" /> - 
+						<t:htmlTag value="div" style="background-color: #DDDDDD; padding: 5px;" rendered="#{TableResultTabBean.resultsMode}">
+							<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
+							<t:htmlTag value="tr">
+								<t:htmlTag value="td" style="padding: 0px;">
+									<h:commandLink style="font-weight: bold; text-decoration: none;" value="< Previous page" action="#{TableResultTabBean.prev}" />
+									<h:outputText value=" | " />
+									<h:commandLink style="font-weight: bold; text-decoration: none;" value="Next page >" action="#{TableResultTabBean.next}" />
+									<h:outputText value=" | " />
+									<h:outputText value="Showing" />
+									<h:outputText value="#{TableResultTabBean.firstDisplayed}" />
+									<h:outputText value="-" />
 									<h:outputText value="#{TableResultTabBean.lastDisplayed}" />
-									out of <h:outputText value="#{TableResultTabBean.totalRows}" />
-								</td>
-								<td style="padding-right: 5px; text-align: right"><h:commandLink value="Configure table" action="#{TableResultTabBean.configurationMode}" /></td>
-							</tr>
-							</table>
-						</div>
+									<h:outputText value="out of" />
+									<h:outputText value="#{TableResultTabBean.totalRows}" />
+								</t:htmlTag>
+								<t:htmlTag value="td" style="padding-left: 0px; padding-bottom: 0px; padding-top: 0px; padding-right: 5px; text-align: right"><h:commandLink value="Configure table" action="#{TableResultTabBean.configurationMode}" /></t:htmlTag>
+							</t:htmlTag>
+							</t:htmlTag>
+						</t:htmlTag>
 	
 						<% /* Configuration of table */ %>
 						<t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">

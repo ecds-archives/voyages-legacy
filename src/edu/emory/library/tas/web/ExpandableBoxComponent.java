@@ -60,8 +60,6 @@ public class ExpandableBoxComponent extends UIComponentBase
 		String stateStr = (String) externalContex.getRequestParameterMap().get(
 				getStateHiddenFieldName(context));
 		
-		System.out.println(stateStr);
-		
 		collapsed = COLLAPSED.equals(stateStr); 
 		
 	}
