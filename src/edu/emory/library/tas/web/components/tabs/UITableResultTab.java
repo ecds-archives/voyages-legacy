@@ -52,7 +52,7 @@ public class UITableResultTab extends UIOutput {
 		}
 
 	}
-
+	
 	public void appyConditions(Conditions c, FacesContext context) {
 		ValueBinding vb = this.getValueBinding("condition");
 		if (vb != null) {

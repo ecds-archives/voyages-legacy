@@ -64,6 +64,7 @@
 	
 						<% /* Table with results */ %>
 						<s:tabletab
+							onClick="#{TableResultTabBean.onRowClick}"
 							rendered="#{TableResultTabBean.resultsMode}"
 							query="#{SearchBean.currentConditions}"
 							conditionsOut="#{TableResultTabBean.conditions}"
