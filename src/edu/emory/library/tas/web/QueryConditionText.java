@@ -19,7 +19,11 @@ public class QueryConditionText extends QueryCondition
 	
 	private boolean addSingleAttributeToConditions(Attribute attribute, Conditions conditions, String value)
 	{
-		conditions.addCondition(attribute.getName(), value, Conditions.OP_LIKE);
+		String localValue = value;
+		if (!localValue.endsWith("%")) {
+			localValue += "%";
+		} 
+		conditions.addCondition(attribute.getName(), localValue, Conditions.OP_LIKE);
 		return true;
 	}
 
