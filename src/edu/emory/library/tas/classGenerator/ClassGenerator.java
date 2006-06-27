@@ -7,17 +7,23 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.crimson.tree.XmlDocument;
+import org.hibernate.Session;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import edu.emory.library.tas.SchemaColumn;
 import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
+import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.attrGroups.ObjectType;
 import edu.emory.library.tas.util.HibernateConnector;
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
@@ -50,6 +56,7 @@ public class ClassGenerator {
 			}
 			Node rootNode = document.getLastChild();
 			if (rootNode != null) {
+				ArrayList attributes = new ArrayList();
 				String className = rootNode.getAttributes()
 						.getNamedItem("name").getNodeValue();
 				BufferedOutputStream oStream = new BufferedOutputStream(
@@ -176,56 +183,14 @@ public class ClassGenerator {
 							types.append(length.intValue()).append("));\n");
 						}
 						if (shouldSave) {
-							String objType = args[i].substring(args[i].lastIndexOf("/")+1, args[i].lastIndexOf("."));
-							Conditions c = new Conditions(Conditions.JOIN_AND);
-							c.addCondition("typeName", objType, Conditions.OP_EQUALS);
-							QueryValue qValue = new QueryValue("ObjectType", c);
-							Object[] otypes = HibernateConnector.getConnector().loadObjects(qValue);
-							ObjectType otype = null;
-							if (otypes.length != 0) {
-								otype = (ObjectType)otypes[0];
-							} else {
-								otype = new ObjectType();
-								otype.setTypeName(objType);
-								HibernateConnector.getConnector().saveObject(otype);
-							}
-							
-							Conditions cAttr = new Conditions();
-							cAttr.addCondition("name", attrName, Conditions.OP_EQUALS);
-							Object[] objs = new QueryValue("Attribute", cAttr).executeQuery();
-							
-							if (objs.length == 0) {
-								Attribute attr = new Attribute();
-								attr.setName(attrName);
-								attr.setUserLabel(attrLabel);
-								attr.setObjectType(otype);
-								attr.setImportType(new Integer(importType));
-								attr.setImportName(attrImportName);
-								attr.setImportDateYear(attrImportDateYear);
-								attr.setImportDateMonth(attrImportDateMonth);
-								attr.setImportDateDay(attrImportDateDay);
-								attr.setLength(length);
-								attr.setType(new Integer(type));
-								attr.setDictionary(dict);
-								HibernateConnector.getConnector().saveObject(attr);
-							} else {
-								Attribute attr = (Attribute)objs[0];
-								attr.setName(attrName);
-								attr.setUserLabel(attrLabel);
-								attr.setObjectType(otype);
-								attr.setImportType(new Integer(importType));
-								attr.setImportName(attrImportName);
-								attr.setImportDateYear(attrImportDateYear);
-								attr.setImportDateMonth(attrImportDateMonth);
-								attr.setImportDateDay(attrImportDateDay);
-								attr.setLength(length);
-								attr.setType(new Integer(type));
-								attr.setDictionary(dict);
-								HibernateConnector.getConnector().updateObject(attr);
-							}
+							attributes.add(doDBUpdate(args, i, attrName, attrLabel, 
+									attrImportName, attrImportDateYear, attrImportDateMonth, 
+									attrImportDateDay, length, type, dict, importType));
 						}
 					}
 				}
+				
+				cleanDB(attributes, args, i);
 
 				oStream.write(types.toString().getBytes());
 
@@ -270,5 +235,139 @@ public class ClassGenerator {
 			}
 		}
 
+	}
+
+	private static void cleanDB(ArrayList attributes, String[] args, int i) {
+		
+		Session session = HibernateUtil.getSession();
+		
+		String objType = args[i].substring(args[i].lastIndexOf(File.separator)+1, args[i].lastIndexOf("."));
+		Conditions c = new Conditions(Conditions.JOIN_AND);
+		c.addCondition("typeName", objType, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("ObjectType", c);
+		Object[] otypes = HibernateConnector.getConnector().loadObjects(session, qValue);
+		ObjectType otype = null;
+		if (otypes.length != 0) {
+			otype = (ObjectType)otypes[0];
+		} else {
+			otype = new ObjectType();
+			otype.setTypeName(objType);
+			HibernateConnector.getConnector().saveObject(session, otype);
+		}
+		
+		Conditions cAttr = new Conditions(Conditions.JOIN_AND);
+		cAttr.addCondition("objectType", otype, Conditions.OP_EQUALS);
+		Object[] objs = new QueryValue("Attribute", cAttr).executeQuery(session);
+		
+		for (int k = 0; k < objs.length; k++) {
+			Attribute attr = (Attribute)objs[k];
+			boolean found = false;
+			for (int l = 0; l < attributes.size(); l++) {
+				
+				Attribute that = (Attribute)attributes.get(l);
+				if (attr.getId().equals(that.getId())) {
+					found = true;
+					break;
+				}	
+			}
+			if (!found) {
+				System.out.println("Removing attribute: " + attr.getName());
+				c = new Conditions();
+				c.addCondition("objectType", otype, Conditions.OP_EQUALS);
+				Object[] compounds = new QueryValue("CompoundAttribute", c).executeQuery(session);
+				for (int j = 0; j < compounds.length; j++) {
+					CompoundAttribute compound = (CompoundAttribute)compounds[j];
+					Set set = compound.getAttributes();
+					for (Iterator iter = set.iterator(); iter.hasNext();) {
+						Attribute element = (Attribute) iter.next();
+						if (element.getId().equals(attr.getId())) {
+							set.remove(attr);
+						}
+					}
+					compound.setAttributes(set);
+					HibernateConnector.getConnector().updateObject(session, compound);
+				}
+				
+				c = new Conditions();
+				c.addCondition("objectType", otype, Conditions.OP_EQUALS);
+				Object[] groups = new QueryValue("Group", c).executeQuery(session);
+				ArrayList toRemove = new ArrayList();
+				for (int j = 0; j < groups.length; j++) {
+					Group group = (Group)groups[j];
+					Set set = group.getAttributes();
+					for (Iterator iter = set.iterator(); iter.hasNext();) {
+						Attribute element = (Attribute) iter.next();
+						if (element.getId().equals(attr.getId())) {
+							toRemove.add(attr);
+						}
+					}
+					for (Iterator iter = toRemove.iterator(); iter.hasNext();) {
+						Attribute element = (Attribute) iter.next();
+						set.remove(element);
+					} 
+						
+					group.setAttributes(set);
+					HibernateConnector.getConnector().updateObject(session, group);
+				}
+				
+				HibernateConnector.getConnector().deleteObject(session, attr);
+				
+			}
+		}
+		session.close();
+	}
+
+	private static Attribute doDBUpdate(String[] args, int i, String attrName, String attrLabel, String attrImportName, String attrImportDateYear, String attrImportDateMonth, String attrImportDateDay, Integer length, int type, String dict, int importType) {
+		
+		String objType = args[i].substring(args[i].lastIndexOf(File.separator)+1, args[i].lastIndexOf("."));
+		Conditions c = new Conditions(Conditions.JOIN_AND);
+		c.addCondition("typeName", objType, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("ObjectType", c);
+		Object[] otypes = HibernateConnector.getConnector().loadObjects(qValue);
+		ObjectType otype = null;
+		if (otypes.length != 0) {
+			otype = (ObjectType)otypes[0];
+		} else {
+			otype = new ObjectType();
+			otype.setTypeName(objType);
+			HibernateConnector.getConnector().saveObject(otype);
+		}
+		
+		Conditions cAttr = new Conditions(Conditions.JOIN_AND);
+		cAttr.addCondition("objectType", otype, Conditions.OP_EQUALS);
+		cAttr.addCondition("name", attrName, Conditions.OP_EQUALS);
+		Object[] objs = new QueryValue("Attribute", cAttr).executeQuery();
+		
+		if (objs.length == 0) {
+			Attribute attr = new Attribute();
+			attr.setName(attrName);
+			attr.setUserLabel(attrLabel);
+			attr.setObjectType(otype);
+			attr.setImportType(new Integer(importType));
+			attr.setImportName(attrImportName);
+			attr.setImportDateYear(attrImportDateYear);
+			attr.setImportDateMonth(attrImportDateMonth);
+			attr.setImportDateDay(attrImportDateDay);
+			attr.setLength(length);
+			attr.setType(new Integer(type));
+			attr.setDictionary(dict);
+			HibernateConnector.getConnector().saveObject(attr);
+			return attr;
+		} else {
+			Attribute attr = (Attribute)objs[0];
+			attr.setName(attrName);
+			attr.setUserLabel(attrLabel);
+			attr.setObjectType(otype);
+			attr.setImportType(new Integer(importType));
+			attr.setImportName(attrImportName);
+			attr.setImportDateYear(attrImportDateYear);
+			attr.setImportDateMonth(attrImportDateMonth);
+			attr.setImportDateDay(attrImportDateDay);
+			attr.setLength(length);
+			attr.setType(new Integer(type));
+			attr.setDictionary(dict);
+			HibernateConnector.getConnector().updateObject(attr);
+			return attr;
+		}
 	}
 }

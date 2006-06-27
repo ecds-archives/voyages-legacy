@@ -30,6 +30,8 @@ public class Conditions {
 
 	public static final int OP_IS_NOT = 9;
 
+	public static final int OP_IN = 10;
+
 	private int joinCondition = JOIN_AND;
 
 	private ArrayList conditions = new ArrayList();
@@ -89,6 +91,9 @@ public class Conditions {
 		case OP_IS_NOT:
 			opStr = " is not ";
 			break;
+		case OP_IN:
+			opStr = " in ";
+			break;
 		default:
 			throw new RuntimeException("Wrong operand!");
 		}
@@ -127,6 +132,23 @@ public class Conditions {
 				ret.append(attr);
 				ret.append(c.op);
 				ret.append("null");
+			} else if (c.op.equals(" in ")) {
+				String attr = c.attribute;
+				String val = (attr.replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
+				Object[] values = (Object[])c.value;
+				processed++;
+				ret.append(attr);
+				ret.append(c.op);
+				ret.append("(");
+				for (int i = 0; i < values.length; i++) {
+					ret.append(" :");
+					ret.append(val + "_" + i);
+					retMap.put(val + "_" + i, values[i]);
+					if (i < values.length - 1) {
+						ret.append(", ");
+					}
+				}
+				ret.append(") ");
 			} else if (!(c.value instanceof DirectValue)) {
 				String attr = c.attribute;
 				String val = (attr.replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');

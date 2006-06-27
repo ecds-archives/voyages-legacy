@@ -249,7 +249,7 @@
     <!-- <attribute name="slavcapt" type="Float" userLabel="" importType="numeric"/> -->
     <!-- <attribute name="majbycon" type="Float" userLabel="" importType="numeric"/> -->
     <!-- <attribute name="tabexpo" type="Integer" userLabel="" importType="numeric"/> -->
-    <attribute name="rice" type="Float" userLabel="" importType="numeric"/> 
+    <!-- attribute name="rice" type="Float" userLabel="" importType="numeric"/> -->
     <attribute name="slavemx7" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="spanishamer" type="Float" userLabel="" importType="numeric"/> 
     <!-- <attribute name="year25a" type="Float" userLabel="" importType="numeric"/> -->
