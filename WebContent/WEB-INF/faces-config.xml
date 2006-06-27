@@ -66,6 +66,13 @@
 	</component>
 	
 	<component>
+		<component-type>VoyageDetail</component-type>
+		<component-class>
+			edu.emory.library.tas.web.VoyageDetailComponent
+		</component-class>
+	</component>
+
+	<component>
 		<component-type>SelectAndOrder</component-type>
 		<component-class>
 			edu.emory.library.tas.web.schema.SelectAndOrderComponent
