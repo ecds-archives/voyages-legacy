@@ -2,9 +2,11 @@ package edu.emory.library.tas.spss;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 public class RecordReader
 {
@@ -15,10 +17,20 @@ public class RecordReader
 	
 	public RecordReader(File file, int startColumn, int endColumn, int columnsCount) throws FileNotFoundException
 	{
+
 		this.startColumn = startColumn;
 		this.endColumn = endColumn;
 		this.columnsCount = columnsCount;
-		rdr = new BufferedReader(new FileReader(file));
+
+		try
+		{
+			rdr = new BufferedReader(new InputStreamReader(new FileInputStream(file), "windows-1252"));
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 	
 	public Record readRecord() throws IOException
