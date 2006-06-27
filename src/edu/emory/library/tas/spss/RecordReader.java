@@ -24,7 +24,9 @@ public class RecordReader
 
 		try
 		{
-			rdr = new BufferedReader(new InputStreamReader(new FileInputStream(file), "windows-1252"));
+			rdr = new BufferedReader(
+					new InputStreamReader(
+							new FileInputStream(file), "windows-1252"));
 		}
 		catch (UnsupportedEncodingException e)
 		{

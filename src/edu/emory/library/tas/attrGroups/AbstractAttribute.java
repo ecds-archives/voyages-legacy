@@ -132,7 +132,7 @@ public abstract class AbstractAttribute implements Serializable {
 				boolean separate = values.length == 3 && values[0] != null && values[1] != null && values[2] != null;
 				boolean single = values.length == 1 && values[0] != null;
 				
-				if (!separate || !single)
+				if (!(separate || single))
 					throw new InvalidNumberOfValuesException();
 				
 				if (separate)
@@ -149,7 +149,7 @@ public abstract class AbstractAttribute implements Serializable {
 					{
 						Calendar cal = Calendar.getInstance();
 						cal.clear();
-						cal.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+						cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day));
 //						Timestamp tstamp = new Timestamp(Integer.parseInt(year),
 //								Integer.parseInt(month),
 //								Integer.parseInt(day),

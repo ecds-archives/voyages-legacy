@@ -2,8 +2,10 @@ package edu.emory.library.tas.spss;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 public class RecordWriter
 {
@@ -11,7 +13,16 @@ public class RecordWriter
 	
 	public RecordWriter(File file) throws IOException
 	{
-		wrt = new BufferedWriter(new FileWriter(file));
+		try
+		{
+			wrt = new BufferedWriter(
+					new OutputStreamWriter(
+							new FileOutputStream(file), "windows-1252"));
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void writeRecord(Record record) throws IOException
@@ -31,7 +42,7 @@ public class RecordWriter
 	{
 		if (data == null) return;
 		wrt.write(data);
-		for (int i = 0; i < data.length - length; i++) wrt.write(' ');
+		for (int i = 0; i < length - data.length; i++) wrt.write(' ');
 	}
 
 	public void write(String data) throws IOException
@@ -44,7 +55,7 @@ public class RecordWriter
 	{
 		if (data == null) return;
 		wrt.write(data);
-		for (int i = 0; i < data.length() - length; i++) wrt.write(' ');
+		for (int i = 0; i < length - data.length(); i++) wrt.write(' ');
 	}
 
 	public void finishRecord() throws IOException

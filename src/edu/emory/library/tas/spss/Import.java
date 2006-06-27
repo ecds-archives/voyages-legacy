@@ -3,6 +3,7 @@ package edu.emory.library.tas.spss;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -74,6 +75,7 @@ public class Import
 	
 	private class IdIsEmptyException extends Exception
 	{
+		private static final long serialVersionUID = 4076984197898103476L;
 	}
 
 	private void convertSpssFiles() throws IOException, StatTransferException, InterruptedException
@@ -362,7 +364,7 @@ public class Import
 		
 		if (voyagesPresent)
 		{
-			log.logInfo("Sorting voyages by VoyageID.");
+			log.logInfo("Sorting voyages by voyage ID.");
 			RecordSorter voyagesSorter = new RecordSorter(voyagesNumberedDataFileName, voyagesSortedDataFileName, voyagesRecordIOFactory);
 			voyagesSorter.setTmpFolder(workingDir);
 			voyagesSorter.setMaxLines(1000);
@@ -372,7 +374,7 @@ public class Import
 		
 		if (slavesPresent)
 		{
-			log.logInfo("Sorting slaves by VoyageID.");
+			log.logInfo("Sorting slaves by voyage ID.");
 			RecordSorter slavesSorter = new RecordSorter(slavesNumberedDataFileName, slavesSortedDataFileName, slavesRecordIOFactory);
 			slavesSorter.setTmpFolder(workingDir);
 			slavesSorter.setMaxLines(5000);
@@ -482,14 +484,14 @@ public class Import
 			attributes = voyageAttributes;
 			schema = voyageSchema;
 			errorMsgDataFile = "voyages";
-			recordNo = totalNoOfVoyages;
+			recordNo = Integer.parseInt(record.getValue(voyagesLineNoVar));
 		}
 		else if (obj instanceof Slave)
 		{
 			attributes = slaveAttributes;
 			schema = slaveSchema;
 			errorMsgDataFile = "slaves";
-			recordNo = totalNoOfSlaves;
+			recordNo = Integer.parseInt(record.getValue(slavesLineNoVar));
 		}
 		else
 		{
@@ -546,7 +548,7 @@ public class Import
 							"Nonexistent label '" + ((Dictionary)parsedValue).getName() + "' " +
 							"inserted for variable " + col.getImportName() + " " +
 							"in " + errorMsgDataFile + " " +
-							"record = " + recordNo + ".");
+							"in record " + recordNo + ".");
 	
 				// update the object
 				obj.setAttrValue(col.getName(), parsedValue);
@@ -564,7 +566,7 @@ public class Import
 						"Invalid numeric value '" + columnValue + "' " +
 						"in variable " + var.getName() + " " +
 						"in " + errorMsgDataFile + " " +
-						"record = " + recordNo + ".");
+						"in record " + recordNo + ".");
 			}
 			catch (InvalidDateException ide)
 			{
@@ -575,7 +577,7 @@ public class Import
 						"month = '" + columnMonthValue + "' in variable " + varMonth.getName() + ", " +
 						"year = '" + columnYearValue + "' in variable " + varYear.getName() + " " +
 						"in " + errorMsgDataFile + " " +
-						"record = " + recordNo + ".");
+						"in record " + recordNo + ".");
 			}
 			catch (StringTooLongException stle)
 			{
@@ -584,7 +586,7 @@ public class Import
 						"String '" + parsedValue + "' too long " +
 						"in variable " + var.getName() + " " +
 						"in " + errorMsgDataFile + " " +
-						"record = " + recordNo + ".");
+						"in record " + recordNo + ".");
 			}
 			
 		}
@@ -734,13 +736,13 @@ public class Import
 						noOfVoyagesWithInvalidVid ++;
 						log.logWarn(
 							"Voyage in line " + lineNo + " " +
-							"is missing the voyage id. Skipping.");
+							"is missing the voyage ID. Skipping.");
 					}
 					catch (NumberFormatException nfe)
 					{
 						noOfVoyagesWithInvalidVid ++;
 						log.logWarn(
-							"Invalid voyage id " + 
+							"Invalid voyage ID " + 
 							"(" + voyageRecord.getKey().trim() + ") " +
 							"in line " + lineNo + ". Skipping.");
 						continue;
@@ -778,14 +780,14 @@ public class Import
 						noOfSlavesWithInvalidVid++;
 						log.logWarn(
 							"Slave in line " + lineNo + " " +
-							"is missing the slave id. Skipping.");
+							"is missing the slave ID. Skipping.");
 						continue;
 					}
 					catch (NumberFormatException nfe)
 					{
 						noOfSlavesWithInvalidVid++;
 						log.logWarn(
-								"Invalid slave id " + 
+								"Invalid slave ID " + 
 								"(" + slaveRecord.getKey().trim() + ") " +
 								"in line " + lineNo + ". Skipping.");
 						continue;
@@ -802,14 +804,14 @@ public class Import
 						noOfSlavesWithInvalidVid++;
 						log.logWarn(
 							"Slave in line " + totalNoOfSlaves + " " +
-							"is missing the voyage id. Skipping.");
+							"is missing the voyage ID. Skipping.");
 						continue;
 					}
 					catch (NumberFormatException nfe)
 					{
 						noOfSlavesWithInvalidSid++;
 						log.logWarn(
-								"Invalid slave id " + 
+								"Invalid slave ID " + 
 								"(" + slaveRecord.getValue(varSlaveId) + ") " +
 								"in line " + totalNoOfSlaves + ". Skipping.");
 						continue;
@@ -975,13 +977,13 @@ public class Import
 		this.slavesPresent = slavesSpssFileName!=null;
 		
 		voyagesDataFileName = workingDir + File.separatorChar + "voyages.dat";
-		voyagesNumberedDataFileName = workingDir + File.separatorChar + "voyages-sorted-and-numbered.dat";
+		voyagesNumberedDataFileName = workingDir + File.separatorChar + "voyages-numbered.dat";
 		voyagesSortedDataFileName = workingDir + File.separatorChar + "voyages-sorted.dat";
 		voyagesSchemaFileName = workingDir + File.separatorChar + "voyages.sts";
 		
 		slavesDataFileName = workingDir + File.separatorChar + "slaves.dat";
 		slavesSortedDataFileName = workingDir + File.separatorChar + "slaves-sorted.dat";
-		slavesNumberedDataFileName = workingDir + File.separatorChar + "slaves-sorted-and-numbered.dat";
+		slavesNumberedDataFileName = workingDir + File.separatorChar + "slaves-numbered.dat";
 		slavesSchemaFileName = workingDir + File.separatorChar + "slaves.sts";
 		
 		try
