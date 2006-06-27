@@ -7,15 +7,16 @@ public class LogItem
 	public static final int STAGE_CONVERSION = 1;
 	public static final int STAGE_SCHEMA_LOADING = 2;
 	public static final int STAGE_SCHEMA_MATCHING = 3;
-	public static final int STAGE_SORTING = 4;
-	public static final int STAGE_UPDATING_LABELS = 5;
-	public static final int STAGE_IMPORTING_DATA = 6;
+	public static final int STAGE_NUMBERING = 4;
+	public static final int STAGE_SORTING = 5;
+	public static final int STAGE_UPDATING_LABELS = 6;
+	public static final int STAGE_IMPORTING_DATA = 7;
 	
 	public static final int TYPE_INFO = 0;
 	public static final int TYPE_WARN = 1;
 	public static final int TYPE_ERROR = 2;	
 	
-	private static final String[] stageStrings = new String[] {"U", "C", "S", "M", "O", "D", "I"};
+	private static final String[] stageStrings = new String[] {"U", "C", "S", "M", "N", "O", "D", "I"};
 	private static final String[] typeStrings = new String[] {"I", "W", "E"};
 	
 	private static final String[] stageLabels = new String[] {
@@ -23,6 +24,7 @@ public class LogItem
 		"File conversion from SPSS",
 		"Reading data schema",
 		"Matching and verifying schema",
+		"Numbering voyages and slaves",
 		"Sorting voyages and slaves",
 		"Synchronizing labels",
 		"Importing data to database" };

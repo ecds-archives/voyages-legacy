@@ -23,6 +23,7 @@ import edu.emory.library.tas.attrGroups.Attribute;
 public class Import
 {
 	
+	private static final int MAX_INT_LENGTH = 10;
 	private static final int VOYAGE_CACHE_SIZE = 100;
 	private static final int VOYAGE = 0;
 	private static final int SLAVE = 1;
@@ -32,8 +33,10 @@ public class Import
 	private String slavesSpssFileName;
 	private String voyagesDataFileName;
 	private String voyagesSortedDataFileName;
+	private String voyagesNumberedDataFileName;
 	private String slavesDataFileName;
 	private String slavesSortedDataFileName;
+	private String slavesNumberedDataFileName;
 	private boolean voyagesPresent;
 	private boolean slavesPresent;
 	STSchemaVariable voyagesVidVar;
@@ -51,6 +54,8 @@ public class Import
 	private Hashtable slaveSchema;
 	private Attribute voyageAttributes[] = Voyage.getAttributes();
 	private Attribute slaveAttributes[] = Slave.getAttributes();
+	private STSchemaVariable voyagesLineNoVar = null;
+	private STSchemaVariable slavesLineNoVar = null;
 	
 	// statistics
 	private int totalNoOfVoyages;
@@ -66,6 +71,10 @@ public class Import
 	private int noOfCreatedSlaves;
 	private int noOfInvalidVoyages;
 	private int noOfInvalidSlaves;
+	
+	private class IdIsEmptyException extends Exception
+	{
+	}
 
 	private void convertSpssFiles() throws IOException, StatTransferException, InterruptedException
 	{
@@ -153,16 +162,6 @@ public class Import
 
 	}
 	
-//	private SchemaColumn getSchemaColumn(int recordType, String name)
-//	{
-//		switch (recordType)
-//		{
-//			case VOYAGE: return Voyage.getSchemaColumn(name);
-//			case SLAVE: return Slave.getSchemaColumn(name);
-//			default: return null;
-//		}
-//	}
-	
 	private boolean compareTypes(int colType, int varType)
 	{
 		return
@@ -181,14 +180,12 @@ public class Import
 		
 		if (recordType == VOYAGE)
 		{
-			//dbSchemaNames = voyageDbSchemaNames;
 			attributes = voyageAttributes;
 			schema = voyageSchema;
 			errorMsgDataFile = "voyages";
 		}
 		else if (recordType == SLAVE)
 		{
-			//dbSchemaNames = slaveDbSchemaNames;
 			attributes = slaveAttributes;
 			schema = slaveSchema;
 			errorMsgDataFile = "slaves";
@@ -287,26 +284,96 @@ public class Import
 		}
 		
 	}
+	
+	private void addLineNumbers(int type) throws IOException
+	{
+		
+		RecordIOFactory recordIO = null;
+		String inputFile = null;
+		String outputFile = null;
+		
+		if (type == VOYAGE)
+		{
+			recordIO = voyagesRecordIOFactory;
+			inputFile = voyagesDataFileName;
+			outputFile = voyagesNumberedDataFileName;
+		}
+		else if (type == SLAVE)
+		{
+			recordIO = slavesRecordIOFactory;
+			inputFile = slavesDataFileName;
+			outputFile = slavesNumberedDataFileName;
+		}
+		else
+		{
+			return;
+		}
+		
+		RecordReader rdr = recordIO.createReader(inputFile);
+		RecordWriter writer = recordIO.createWriter(outputFile);
+		
+		Record record = null;
+		int i = 1;
+		while ((record = rdr.readRecord()) != null)
+		{
+			writer.write(record.getLine());
+			writer.write(String.valueOf(i), MAX_INT_LENGTH);
+			writer.finishRecord();
+			i++;
+		}
+		
+		int currRecordColumns = recordIO.getColumnsCount();
+		recordIO.setColumnsCount(currRecordColumns + MAX_INT_LENGTH);
+		
+		STSchemaVariable lineNoVar = new STSchemaVariable();
+		lineNoVar.setName("lineno");
+		lineNoVar.setType(STSchemaVariable.TYPE_NUMERIC);
+		lineNoVar.setStartColumn(currRecordColumns + 1);
+		lineNoVar.setEndColumn(currRecordColumns + MAX_INT_LENGTH);
+
+		if (type == VOYAGE)
+			voyagesLineNoVar = lineNoVar;
+		else if (type == SLAVE)
+			slavesLineNoVar = lineNoVar;
+
+	}
+	
+	private void addLineNumbers() throws IOException
+	{
+		
+		if (voyagesPresent)
+		{
+			log.logInfo("Numbering voyages records.");
+			addLineNumbers(VOYAGE);
+			log.logInfo("Voyages numbered.");
+		}
+		
+		if (slavesPresent)
+		{
+			log.logInfo("Numbering slaves records.");
+			addLineNumbers(SLAVE);
+			log.logInfo("Slaves numbered.");
+		}
+		
+	}
 
 	private void sortFiles() throws FileNotFoundException, IOException
 	{
 		
-		// sort voyages
 		if (voyagesPresent)
 		{
 			log.logInfo("Sorting voyages by VoyageID.");
-			RecordSorter voyagesSorter = new RecordSorter(voyagesDataFileName, voyagesSortedDataFileName, voyagesRecordIOFactory);
+			RecordSorter voyagesSorter = new RecordSorter(voyagesNumberedDataFileName, voyagesSortedDataFileName, voyagesRecordIOFactory);
 			voyagesSorter.setTmpFolder(workingDir);
 			voyagesSorter.setMaxLines(1000);
 			voyagesSorter.sort();
 			log.logInfo("Voyages sorted.");
 		}
 		
-		// sort slaves
 		if (slavesPresent)
 		{
 			log.logInfo("Sorting slaves by VoyageID.");
-			RecordSorter slavesSorter = new RecordSorter(slavesDataFileName, slavesSortedDataFileName, slavesRecordIOFactory);
+			RecordSorter slavesSorter = new RecordSorter(slavesNumberedDataFileName, slavesSortedDataFileName, slavesRecordIOFactory);
 			slavesSorter.setTmpFolder(workingDir);
 			slavesSorter.setMaxLines(5000);
 			slavesSorter.sort();
@@ -317,7 +384,6 @@ public class Import
 	
 	private void updateDictionary(Attribute col, STSchemaVariable var)
 	{
-		//System.out.println("Inside: " + col.getName() + "(" + var.getLabels().size() + ")");
 		for (Iterator iterLabel = var.getLabels().iterator(); iterLabel.hasNext();)
 		{
 			
@@ -594,10 +660,8 @@ public class Import
 		long slavesVid = 0;
 		long mainVid = 0;
 		Map slaves = new HashMap();
-		boolean saveVoyage = false;
-		boolean saveSlaves = false;
-		boolean readVoyage = false;
-		boolean readSlaves = false;
+		boolean saveAndReadVoyage = false;
+		boolean saveAndReadSlaves = false;
 		
 		// cache
 		Voyage[] voyagesCache = null;
@@ -625,48 +689,52 @@ public class Import
 		// we always read and save only voyages
 		if (voyagesPresent && !slavesPresent)
 		{
-			saveVoyage = true;
-			saveSlaves = true;
-			readVoyage = false;
-			readSlaves = false;
+			saveAndReadVoyage = true;
+			saveAndReadSlaves = false;
 		}
 
 		// we have only slaves -> make sure that in the main loop 
 		// we always read and save only slaves
 		else if (voyagesPresent && !slavesPresent)
 		{
-			saveVoyage = false;
-			saveSlaves = false;
-			readVoyage = true;
-			readSlaves = true;
+			saveAndReadVoyage = false;
+			saveAndReadSlaves = true;
 		}
 		
 		// we have both files
 		else
 		{
-			saveVoyage = true;
-			saveSlaves = true;
-			readVoyage = true;
-			readSlaves = true;
+			saveAndReadVoyage = true;
+			saveAndReadSlaves = true;
 		}
 		
 		// main loop
-		while (readVoyage || readSlaves)
+		while (saveAndReadVoyage || saveAndReadSlaves)
 		{
 
 			// read the next voyage
 			// outcome: voyageVals
 			// if voyageVals == null -> there is no more voyages
-			if (readVoyage)
+			if (saveAndReadVoyage)
 			{
 				voyageVid = 0;
 				while ((voyageRecord = voyagesRdr.readRecord()) != null)
 				{
 					totalNoOfVoyages++;
+					int lineNo = Integer.parseInt(voyageRecord.getValue(voyagesLineNoVar));
 					try
 					{
-						voyageVid = Long.parseLong(voyageRecord.getKey().trim());
+						String id = voyageRecord.getKey().trim();
+						if (id.length() == 0) throw new IdIsEmptyException();
+						voyageVid = Long.parseLong(id);
 						break;
+					}
+					catch (IdIsEmptyException iiee)
+					{
+						noOfVoyagesWithInvalidVid ++;
+						log.logWarn(
+							"Voyage in line " + lineNo + " " +
+							"is missing the voyage id. Skipping.");
 					}
 					catch (NumberFormatException nfe)
 					{
@@ -674,18 +742,16 @@ public class Import
 						log.logWarn(
 							"Invalid voyage id " + 
 							"(" + voyageRecord.getKey().trim() + ") " +
-							"on line " + totalNoOfVoyages + ". Skipping.");
+							"in line " + lineNo + ". Skipping.");
 						continue;
 					}
 				}
 			}
 			
-			//((STSchemaVariable)slaveSchema.get("slaveid"));
-	
 			// read the next set of slaves with the same vid
 			// outcome: ArrayList slaves;
 			// if slaves.count() == 0 -> there is no more slaves
-			if (readSlaves)
+			if (saveAndReadSlaves)
 			{
 				slaves.clear();
 				slavesVid = 0;
@@ -699,10 +765,21 @@ public class Import
 					totalNoOfSlaves ++;
 					long currSlaveVid = 0;
 					long currSlaveSid = 0;
+					int lineNo = Integer.parseInt(slaveRecord.getValue(slavesLineNoVar));
 
 					try
 					{
-						currSlaveVid = Long.parseLong(slaveRecord.getKey().trim());
+						String id = voyageRecord.getKey().trim();
+						if (id.length() == 0) throw new IdIsEmptyException();
+						currSlaveVid = Long.parseLong(id);
+					}
+					catch (IdIsEmptyException iiee)
+					{
+						noOfSlavesWithInvalidVid++;
+						log.logWarn(
+							"Slave in line " + lineNo + " " +
+							"is missing the slave id. Skipping.");
+						continue;
 					}
 					catch (NumberFormatException nfe)
 					{
@@ -710,13 +787,23 @@ public class Import
 						log.logWarn(
 								"Invalid slave id " + 
 								"(" + slaveRecord.getKey().trim() + ") " +
-								"on line " + totalNoOfSlaves + ". Skipping.");
+								"in line " + lineNo + ". Skipping.");
 						continue;
 					}
 
 					try
 					{
-						currSlaveSid = Long.parseLong(slaveRecord.getValue(varSlaveId));
+						String id = slaveRecord.getValue(varSlaveId);
+						if (id.length() == 0) throw new IdIsEmptyException();
+						currSlaveSid = Long.parseLong(id);
+					}
+					catch (IdIsEmptyException iiee)
+					{
+						noOfSlavesWithInvalidVid++;
+						log.logWarn(
+							"Slave in line " + totalNoOfSlaves + " " +
+							"is missing the voyage id. Skipping.");
+						continue;
 					}
 					catch (NumberFormatException nfe)
 					{
@@ -724,7 +811,7 @@ public class Import
 						log.logWarn(
 								"Invalid slave id " + 
 								"(" + slaveRecord.getValue(varSlaveId) + ") " +
-								"on line " + totalNoOfSlaves + ". Skipping.");
+								"in line " + totalNoOfSlaves + ". Skipping.");
 						continue;
 					}
 					
@@ -755,24 +842,20 @@ public class Import
 			// end of voyages and slaves
 			if (!haveVoyage && !haveSlaves)
 			{
-				saveVoyage = false;
-				readVoyage = false;
-				saveSlaves = false;
-				readSlaves = false;
+				saveAndReadVoyage = false;
+				saveAndReadSlaves = false;
 			}
 			
 			// end of voyages
 			else if (!haveVoyage)
 			{
-				saveVoyage = false;
-				readVoyage = false;
+				saveAndReadVoyage = false;
 			}
 			
 			// end of slaves
 			else if (!haveSlaves)
 			{
-				saveSlaves = false;
-				readSlaves = false;
+				saveAndReadSlaves = false;
 			}
 
 			// we have both still
@@ -780,46 +863,37 @@ public class Import
 			{
 				if (voyageVid == slavesVid)
 				{
-					saveVoyage = true;
-					readVoyage = true;
-					saveSlaves = true;
-					readSlaves = true;
+					saveAndReadVoyage = true;
+					saveAndReadSlaves = true;
 				}
 				else if (voyageVid < slavesVid)
 				{
-					saveVoyage = true;
-					readVoyage = true;
-					saveSlaves = false;
-					readSlaves = false;
+					saveAndReadVoyage = true;
+					saveAndReadSlaves = false;
 				}
 				else
 				{
-					saveVoyage = false;
-					readVoyage = false;
-					saveSlaves = true;
-					readSlaves = true;
+					saveAndReadVoyage = false;
+					saveAndReadSlaves = true;
 				}
 			}
-			
 
 			// save 
-			if (saveVoyage || saveSlaves)
+			if (saveAndReadVoyage || saveAndReadSlaves)
 			{
 			
 				// determine VID
-				mainVid = saveVoyage ? voyageVid : slavesVid;
+				mainVid = saveAndReadVoyage ? voyageVid : slavesVid;
 				
 				// load voyage from db or create a new one
 				Voyage voyage = null;
 				while (voyage == null)
 				{
-					
 					if (voyagesCache == null || cachePos == voyagesCache.length)
 					{
 						voyagesCache = Voyage.loadMostRecent(new Long(mainVid), VOYAGE_CACHE_SIZE);
 						cachePos = 0;
 					}
-					
 					if (voyagesCache.length > 0)
 					{
 						for (; cachePos<voyagesCache.length; cachePos++)
@@ -842,17 +916,16 @@ public class Import
 						noOfCreatedVoyages ++;
 						voyage = Voyage.createNew(new Long(mainVid));
 					}
-					
 				}
 				
 				// update voyage
-				if (saveVoyage)
+				if (saveAndReadVoyage)
 				{
 					updateVoyage(voyage, voyageRecord);
 				}
 				
 				// update slaves
-				if (saveSlaves)
+				if (saveAndReadSlaves)
 				{
 					removeDeletedSlaves(voyage, slaves);
 					updateExistingSlaves(voyage, slaves);
@@ -863,7 +936,7 @@ public class Import
 				voyage.save();
 
 				// basic stat
-				if (saveVoyage && saveSlaves)
+				if (saveAndReadVoyage && saveAndReadSlaves)
 					noOfVoyagesWithSlaves++;
 				
 				// debug
@@ -893,7 +966,6 @@ public class Import
 	public void runImport(LogWriter log, String workingDir, String exeStatTransfer, String voyagesSpssFileName, String slavesSpssFileName)
 	{
 		
-		// remember files
 		this.log = log;
 		this.exeStatTransfer = exeStatTransfer;
 		this.workingDir = workingDir;
@@ -902,15 +974,16 @@ public class Import
 		this.voyagesPresent = voyagesSpssFileName!=null;
 		this.slavesPresent = slavesSpssFileName!=null;
 		
-		// setup the other file names
 		voyagesDataFileName = workingDir + File.separatorChar + "voyages.dat";
+		voyagesNumberedDataFileName = workingDir + File.separatorChar + "voyages-sorted-and-numbered.dat";
 		voyagesSortedDataFileName = workingDir + File.separatorChar + "voyages-sorted.dat";
 		voyagesSchemaFileName = workingDir + File.separatorChar + "voyages.sts";
+		
 		slavesDataFileName = workingDir + File.separatorChar + "slaves.dat";
 		slavesSortedDataFileName = workingDir + File.separatorChar + "slaves-sorted.dat";
+		slavesNumberedDataFileName = workingDir + File.separatorChar + "slaves-sorted-and-numbered.dat";
 		slavesSchemaFileName = workingDir + File.separatorChar + "slaves.sts";
 		
-		// run import
 		try
 		{
 			
@@ -923,8 +996,11 @@ public class Import
 			log.startStage(LogItem.STAGE_SCHEMA_MATCHING);
 			matchAndVerifySchema();
 
+			log.startStage(LogItem.STAGE_NUMBERING);
+			addLineNumbers();
+
 			log.startStage(LogItem.STAGE_SORTING);
-			//sortFiles();
+			sortFiles();
 
 			log.startStage(LogItem.STAGE_UPDATING_LABELS);
 			updateDictionaties();

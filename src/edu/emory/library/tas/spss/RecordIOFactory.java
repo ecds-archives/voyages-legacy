@@ -6,9 +6,9 @@ import java.io.IOException;
 
 public class RecordIOFactory
 {
-	protected int startColumn;
-	protected int endColumn;
-	protected int columnsCount;
+	private int startColumn;
+	private int endColumn;
+	private int columnsCount;
 	
 	public RecordIOFactory(int startColumn, int endColumn, int columnsCount) throws FileNotFoundException
 	{
@@ -35,5 +35,35 @@ public class RecordIOFactory
 	public RecordReader createReader(String fileName) throws IOException
 	{
 		return createReader(new File(fileName));
+	}
+	
+	public int getColumnsCount()
+	{
+		return columnsCount;
+	}
+
+	public void setColumnsCount(int columnsCount)
+	{
+		this.columnsCount = columnsCount;
+	}
+
+	public int getEndColumn()
+	{
+		return endColumn;
+	}
+
+	public void setEndColumn(int endColumn)
+	{
+		this.endColumn = endColumn;
+	}
+
+	public int getStartColumn()
+	{
+		return startColumn;
+	}
+
+	public void setStartColumn(int startColumn)
+	{
+		this.startColumn = startColumn;
 	}
 }

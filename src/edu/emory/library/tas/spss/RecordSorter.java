@@ -26,7 +26,7 @@ public class RecordSorter
 			if (recObj0 == null || recObj1 == null) return 0;
 			Record rec0 = (Record)recObj0; 
 			Record rec1 = (Record)recObj1; 
-			return (rec0.compareTo(rec1));
+			return rec0.compareTo(rec1);
 		}
 	}
 	

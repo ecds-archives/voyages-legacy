@@ -22,6 +22,12 @@ public class STSchemaVariable
 	{
 	}
 
+	public STSchemaVariable(String name, int type)
+	{
+		this.name = name;
+		this.type = type;
+	}
+
 	public STSchemaVariable(String name, int startColumn, int endColumn)
 	{
 		this.name = name;

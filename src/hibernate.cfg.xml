@@ -9,7 +9,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://domokun.library.emory.edu/tasdb</property>
+        <property name="connection.url">jdbc:postgresql://wilson.library.emory.edu/tasdb</property>
         <property name="connection.username">tasuser</property>
         <property name="connection.password">tasuser</property>
 
@@ -27,7 +27,7 @@
 		<property name="hibernate.cache.use_query_cache">true</property>
 
         <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
         
         <!-- statistics -->
         <property name="hibernate.generate_statistics">true</property>

@@ -17,11 +17,41 @@ public class RecordWriter
 	public void writeRecord(Record record) throws IOException
 	{
 		if (record == null) return;
-		//wrt.write(AsciiFixedFormatRecordReader.buf, ((AsciiFixedFormatRecord)record).bufPtr, 2973);
 		wrt.write(record.getLine());
 		wrt.write('\n');
 	}
 	
+	public void write(char[] data) throws IOException
+	{
+		if (data == null) return;
+		write(data, data.length);
+	}
+
+	public void write(char[] data, int length) throws IOException
+	{
+		if (data == null) return;
+		wrt.write(data);
+		for (int i = 0; i < data.length - length; i++) wrt.write(' ');
+	}
+
+	public void write(String data) throws IOException
+	{
+		if (data == null) return;
+		write(data, data.length());
+	}
+
+	public void write(String data, int length) throws IOException
+	{
+		if (data == null) return;
+		wrt.write(data);
+		for (int i = 0; i < data.length() - length; i++) wrt.write(' ');
+	}
+
+	public void finishRecord() throws IOException
+	{
+		wrt.write('\n');
+	}
+
 	public void writeRecords(Record[] records) throws IOException
 	{
 		for (int i=0; i<records.length; i++)
