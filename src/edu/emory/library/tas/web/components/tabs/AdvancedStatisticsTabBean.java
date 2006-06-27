@@ -3,16 +3,16 @@ package edu.emory.library.tas.web.components.tabs;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tas.Voyage;
-import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
@@ -405,8 +405,9 @@ public class AdvancedStatisticsTabBean {
 			for (Iterator iter = series.iterator(); iter.hasNext();) {
 				SeriesItem element = (SeriesItem) iter.next();
 				String output = element.toString();
-				list.add(new SelectItem(element.hashCode() + "", output));
+				list.add(new ComparableSelectItem(element.hashCode() + "", output));
 			}
+			Collections.sort(series);
 		}
 		return list;
 	}
@@ -448,9 +449,10 @@ public class AdvancedStatisticsTabBean {
 				} else {
 					outString = attributes[i].getUserLabel();
 				}
-				list.add(new SelectItem(attributes[i].getName(), outString));
+				list.add(new ComparableSelectItem(attributes[i].getName(), outString));
 			}
 		}
+		
 		return list;
 	}
 
@@ -473,11 +475,12 @@ public class AdvancedStatisticsTabBean {
 						outString = attr.getUserLabel();
 					}
 
-					voyageAttributes.add(new SelectItem(attributes[i],
+					voyageAttributes.add(new ComparableSelectItem(attributes[i],
 							outString));
 
 				}
 			}
+			Collections.sort(voyageAttributes);
 		}
 		return this.voyageAttributes;
 
@@ -487,7 +490,7 @@ public class AdvancedStatisticsTabBean {
 		if (this.aggregateFunctions == null) {
 			this.aggregateFunctions = new ArrayList();
 			for (int i = 0; i < aggregates.length; i++) {
-				this.aggregateFunctions.add(new SelectItem(aggregates[i],
+				this.aggregateFunctions.add(new ComparableSelectItem(aggregates[i],
 						aggregatesUL[i]));
 			}
 		}
@@ -498,7 +501,7 @@ public class AdvancedStatisticsTabBean {
 		if (this.availableOrders == null) {
 			this.availableOrders = new ArrayList();
 			for (int i = 0; i < orders.length; i++) {
-				this.availableOrders.add(new SelectItem("" + i, orders[i]));
+				this.availableOrders.add(new ComparableSelectItem("" + i, orders[i]));
 			}
 		}
 		return this.availableOrders;
@@ -573,7 +576,7 @@ public class AdvancedStatisticsTabBean {
 		if (this.availableCharts == null) {
 			this.availableCharts = new ArrayList();
 			for (int i = 0; i < availableChartsLabels.length; i++) {
-				this.availableCharts.add(new SelectItem(i + "",
+				this.availableCharts.add(new ComparableSelectItem(i + "",
 						availableChartsLabels[i]));
 			}
 		}

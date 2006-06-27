@@ -2,11 +2,10 @@ package edu.emory.library.tas.web.components.tabs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import javax.faces.model.SelectItem;
 
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
@@ -399,12 +398,14 @@ public class TableResultTabBean {
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
 			res
-					.add(new SelectItem("" + set.getId().longValue(), set
-							.getName()));
+					.add(new ComparableSelectItem("" + set.getId().longValue(), (set
+							.getUserLabel() != null && !set.getUserLabel().equals("")) ? 
+									(set.getUserLabel()) : (set.getName())));
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
 			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
 		}
+		Collections.sort(res);
 		return res;
 	}
 
@@ -427,18 +428,19 @@ public class TableResultTabBean {
 			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
 				CompoundAttribute element = (CompoundAttribute) groupsIter
 						.next();
-				res.add(new SelectItem("Group_" + element.getId(), element
+				res.add(new ComparableSelectItem("Group_" + element.getId(), element
 						.getName()));
 			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
 				Attribute attr = (Attribute) iter.next();
 				res
-						.add(new SelectItem("Attribute_" + attr.getName(), (""
+						.add(new ComparableSelectItem("Attribute_" + attr.getName(), (""
 								.equals(attr.getUserLabel()) || attr
 								.getUserLabel() == null) ? (attr.getName())
 								: (attr.getUserLabel())));
 			}
 		}
+		Collections.sort(res);
 		return res;
 	}
 
@@ -448,7 +450,7 @@ public class TableResultTabBean {
 			this.prepareVisibleLabelsForPopulatedAttributes();
 		}
 		for (int i = 0; i < this.populatedAttributes.length; i++) {
-			res.add(new SelectItem(this.populatedAttributes[i],
+			res.add(new ComparableSelectItem(this.populatedAttributes[i],
 					this.populatedAttributesVisibleLabels[i]));
 		}
 		return res;

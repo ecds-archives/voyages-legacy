@@ -5,6 +5,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.context.ExternalContext;
@@ -84,11 +85,12 @@ public class TimeLineResultTabBean {
 						outString = attr.getUserLabel();
 					}
 
-					voyageAttributes.add(new SelectItem(attributes[i],
+					voyageAttributes.add(new ComparableSelectItem(attributes[i],
 							outString));
 
 				}
 			}
+			Collections.sort(voyageAttributes);
 		}
 		return this.voyageAttributes;
 	}
