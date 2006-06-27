@@ -20,6 +20,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.Year;
 import org.jfree.ui.RectangleInsets;
 
 import edu.emory.library.tas.Voyage;
@@ -27,6 +28,8 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.components.tabs.chartGenerators.AbstractChartGenerator;
+import edu.emory.library.tas.web.components.tabs.chartGenerators.XYChartGenerator;
 
 public class TimeLineResultTabBean {
 
@@ -125,34 +128,38 @@ public class TimeLineResultTabBean {
 							false);
 			qValue.addPopulatedAttribute(this.chosenAggregate + "(v."
 					+ this.chosenAttribute + ")", false);
+			qValue.setOrderBy("date_trunc('year', v.datedep)");
 			Object[] ret = qValue.executeQuery();
 
-			TimeSeriesCollection dataset = new TimeSeriesCollection();
-			TimeSeries timeseries = new TimeSeries("Years");
-			dataset.addSeries(timeseries);
-
-			for (int i = 0; i < ret.length; i++) {
-				Object[] row = (Object[]) ret[i];
-				timeseries.add(new Day((Date) row[0]), (Number) row[1]);
-
-			}
-
-			chart = ChartFactory.createTimeSeriesChart("Time statistics",
-					"Year of voyages", "" + this.chosenAggregate + "("
-							+ this.chosenAttribute + ")", dataset, false, true,
-					false);
-
-			
-			XYPlot xyplot = (XYPlot) chart.getPlot();
-			xyplot.setBackgroundPaint(Color.LIGHT_GRAY);
-			xyplot.setDomainGridlinePaint(Color.WHITE);
-			xyplot.setRangeGridlinePaint(Color.WHITE);
-			xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
-			xyplot.setDomainCrosshairVisible(true);
-			xyplot.setRangeCrosshairVisible(true);
-			DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
-			dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
-
+//			TimeSeriesCollection dataset = new TimeSeriesCollection();
+//			TimeSeries timeseries = new TimeSeries("Years");
+//			dataset.addSeries(timeseries);
+//
+//			for (int i = 0; i < ret.length; i++) {
+//				Object[] row = (Object[]) ret[i];
+//				timeseries.add(new ChangedDay((Date) row[0]), (Number) row[1]);
+//
+//			}
+//
+//			chart = ChartFactory.createTimeSeriesChart("Time statistics",
+//					"Year of voyages", "" + this.chosenAggregate + "("
+//							+ this.chosenAttribute + ")", dataset, false, true,
+//					false);
+//
+//			
+//			XYPlot xyplot = (XYPlot) chart.getPlot();
+//			xyplot.setBackgroundPaint(Color.LIGHT_GRAY);
+//			xyplot.setDomainGridlinePaint(Color.WHITE);
+//			xyplot.setRangeGridlinePaint(Color.WHITE);
+//			xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
+//			xyplot.setDomainCrosshairVisible(true);
+//			xyplot.setRangeCrosshairVisible(true);
+//			DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
+//			dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
+			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
+			generator.correctAndCompleteData(ret);
+			generator.addRowToDataSet(ret, new String[] {"Year of voyage"});
+			chart = generator.getChart();
 			
 			ExternalContext servletContext = FacesContext.getCurrentInstance()
 					.getExternalContext();

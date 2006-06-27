@@ -407,7 +407,7 @@ public class AdvancedStatisticsTabBean {
 				String output = element.toString();
 				list.add(new ComparableSelectItem(element.hashCode() + "", output));
 			}
-			Collections.sort(series);
+			//Collections.sort(series);
 		}
 		return list;
 	}

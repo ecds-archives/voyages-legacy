@@ -1,18 +1,14 @@
 package edu.emory.library.tas.web.components.tabs.chartGenerators;
 
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
 
 import edu.emory.library.tas.attrGroups.Attribute;
 
@@ -22,7 +18,7 @@ public class XYChartGenerator extends AbstractChartGenerator {
 
 	public XYChartGenerator(Attribute xAxis) {
 		super(xAxis);
-		dataset = new TimeSeriesCollection();
+		dataset = new DefaultCategoryDataset();
 	}
 
 	public JFreeChart getChart() {
@@ -43,18 +39,18 @@ public class XYChartGenerator extends AbstractChartGenerator {
 
 	private JFreeChart prepareDateChart() {
 
-		chart = ChartFactory.createTimeSeriesChart(null, getXAxis(), "Value",
-				(TimeSeriesCollection)dataset, true, true, false);
+		JFreeChart chart = ChartFactory.createLineChart(null,
+				getXAxis(), "Value", (DefaultCategoryDataset)dataset, PlotOrientation.VERTICAL,
+				 true, true, false);
 
-		XYPlot xyplot = (XYPlot) chart.getPlot();
+		// CategoryPlot xyplot = (CategoryPlot) chart.getPlot();
 		// xyplot.setBackgroundPaint(Color.LIGHT_GRAY);
 		// xyplot.setDomainGridlinePaint(Color.WHITE);
 		// xyplot.setRangeGridlinePaint(Color.WHITE);
 		// xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
 		// xyplot.setDomainCrosshairVisible(true);
 		// xyplot.setRangeCrosshairVisible(true);
-		DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
-		dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
+		
 
 		return chart;
 	}
@@ -69,7 +65,6 @@ public class XYChartGenerator extends AbstractChartGenerator {
 	}
 
 	private void addSimpleDataRowToDataSet(Object[] data, Object[] series) {
-		this.dataset = new DefaultCategoryDataset();
 		for (int i = 0; i < series.length; i++) {			
 			for (int j = 0; j < data.length; j++) {
 				Object[] row = (Object[])data[j];
@@ -80,15 +75,16 @@ public class XYChartGenerator extends AbstractChartGenerator {
 	}
 	
 	private void addDateRowToDataSet(Object[] data, Object[] series) {
-		this.dataset = new TimeSeriesCollection();
-		for (int i = 0; i < series.length; i++) {
-			TimeSeries timeseries = new TimeSeries(series[i].toString());
+		for (int i = 0; i < series.length; i++) {			
 			for (int j = 0; j < data.length; j++) {
-				Object[] row = (Object[]) data[j];
-				timeseries.addOrUpdate(new Day((Date) row[0]),
-						(Number) row[i + 1]);
+				Object[] row = (Object[])data[j];
+				Date date = (Date)row[0];
+				Calendar cal = new GregorianCalendar();
+				cal.setTime(date);
+				String str = cal.get(Calendar.YEAR) + "";
+				((DefaultCategoryDataset)dataset).addValue((Number)row[i + 1], 
+						series[i].toString(), str);
 			}
-			((TimeSeriesCollection)this.dataset).addSeries(timeseries);
 		}
 	}
 
