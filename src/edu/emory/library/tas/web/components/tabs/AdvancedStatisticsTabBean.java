@@ -86,7 +86,7 @@ public class AdvancedStatisticsTabBean {
 
 	private Boolean aggregate = new Boolean(false);
 
-	private String order = "0";
+	private String order = "1";
 
 	private String xaxis;
 
