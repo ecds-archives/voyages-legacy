@@ -39,6 +39,7 @@ public class VoyageDetailComponent extends UIComponentBase
 		writer.writeAttribute("cellpadding", "0", null);
 		
 		Long voyageId = getVoyageId();
+		if (voyageId == null) return;
 		
 		List voyages = Voyage.loadAllRevisions(voyageId, 0);
 		Attribute[] attributes = Voyage.getAttributes();

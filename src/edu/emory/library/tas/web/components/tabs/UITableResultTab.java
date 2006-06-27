@@ -1,7 +1,9 @@
 package edu.emory.library.tas.web.components.tabs;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.faces.component.UIForm;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -10,11 +12,8 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-import org.apache.myfaces.el.MethodBindingImpl;
-
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
-import edu.emory.library.tas.web.TabChangeEvent;
 import edu.emory.library.tas.web.UtilsJSF;
 
 public class UITableResultTab extends UIOutput {
@@ -39,11 +38,19 @@ public class UITableResultTab extends UIOutput {
 	}
 
 	public void decode(FacesContext context) {
-		super.decode(context);
-		String newSelectedTabId = (String) context.getExternalContext().getRequestParameterMap().get(getHiddenFieldId(context));
+		
+		Map params = context.getExternalContext().getRequestParameterMap();
+		
+		String newSelectedTabId = (String) params.get(getSortHiddenFieldName(context));
 		if (newSelectedTabId != null && newSelectedTabId.length() > 0) {			
 			queueEvent(new SortChangeEvent(this, newSelectedTabId));	
 		}
+
+		String newSelectedVoyageId = (String) params.get(getClickIdHiddenFieldName(context));
+		if (newSelectedVoyageId != null && newSelectedVoyageId.length() > 0) {			
+			queueEvent(new ResultsRowClickedEvent(this, new Long(newSelectedVoyageId)));	
+		}
+
 	}
 
 	public void appyConditions(Conditions c, FacesContext context) {
@@ -69,7 +76,8 @@ public class UITableResultTab extends UIOutput {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
 		
-		UtilsJSF.encodeHiddenInput(this, writer, getHiddenFieldId(context));
+		UtilsJSF.encodeHiddenInput(this, writer, getSortHiddenFieldName(context));
+		UtilsJSF.encodeHiddenInput(this, writer, getClickIdHiddenFieldName(context));
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("class", "grid", null);
@@ -119,15 +127,24 @@ public class UITableResultTab extends UIOutput {
 			order = (Integer) vb.getValue(context);
 		}
 		
+		UIForm form = UtilsJSF.getForm(this, context);
+		
 		writer.startElement("tr", this);
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
+				
+				String jsSort = UtilsJSF.generateSubmitJS(
+						context, form,
+						getSortHiddenFieldName(context),
+						populatedAttributes[i]);
+				
 				writer.startElement("th", this);
-				writer.write("<a href=\"#\"");
-				writer.write(this.prepareJS(context, populatedAttributes[i]));
-				writer.write(">");
+				writer.startElement("a", this);
+				writer.writeAttribute("href", "#", null);
+				writer.writeAttribute("onclick", jsSort, null);
 				writer.write(populatedAttributes[i]);
-				writer.write("</a>");
+				writer.endElement("a");
+
 				if (orderColumn != null
 						&& orderColumn.intValue() == i
 						&& order != null 
@@ -158,19 +175,25 @@ public class UITableResultTab extends UIOutput {
 						rowClass.append(" grid-row-last");
 					
 					Object[] values = (Object[]) objs[i];
+
+					String jsClick = UtilsJSF.generateSubmitJS(
+							context, form,
+							getClickIdHiddenFieldName(context),
+							values[0].toString());
+					
 					writer.startElement("tr", this);
 					writer.writeAttribute("class", rowClass.toString(), null);
-					for (int j = 0; j < values.length; j++) {
+					//writer.writeAttribute("onclick", jsClick, null);
+					for (int j = 1; j < values.length; j++) {
 						writer.startElement("td", this);
 						Object obj = values[j];
 						if (obj != null) {
 							writer.write(obj.toString());
 						}
-
 						writer.endElement("td");
 					}
-					
 					writer.endElement("tr");
+					
 				}
 			}
 		}
@@ -178,17 +201,21 @@ public class UITableResultTab extends UIOutput {
 		writer.endElement("table");
 	}
 
-	private String prepareJS(FacesContext context, String pressedLink) {
-		StringBuffer buffer = new StringBuffer();
-		String ID = getHiddenFieldId(context);
-		buffer.append(" onclick=\"document.forms['form'].elements['" + ID + "'].value = '" 
-				+ pressedLink + "';" +
-				"clear_form();form.submit();\"");
-		return buffer.toString();
+//	private String prepareJS(FacesContext context, String pressedLink) {
+//		StringBuffer buffer = new StringBuffer();
+//		String ID = getSortHiddenFieldName(context);
+//		buffer.append(" onclick=\"document.forms['form'].elements['" + ID + "'].value = '" 
+//				+ pressedLink + "';" +
+//				"clear_form();form.submit();\"");
+//		return buffer.toString();
+//	}
+
+	private String getSortHiddenFieldName(FacesContext context) {
+		return this.getClientId(context) + "_sort";
 	}
 
-	private String getHiddenFieldId(FacesContext context) {
-		return this.getClientId(context) + "__" + "HF";
+	private String getClickIdHiddenFieldName(FacesContext context) {
+		return this.getClientId(context) + "_click_id";
 	}
 
 	public void encodeEnd(FacesContext context) throws IOException {

@@ -50,6 +50,8 @@ public class TableResultTabBean {
 	private Integer numberOfResults;
 
 	private int sortColumn = -1;
+	
+	private Long selectedVoyageId;
 
 	private int sortOrder = QueryValue.ORDER_DEFAULT;
 
@@ -96,6 +98,9 @@ public class TableResultTabBean {
 					qValue.setOrder(this.sortOrder);
 				}
 			}
+
+			// Jan Zich: temporary solution
+			qValue.addPopulatedAttribute("v.voyage.voyageId", false);
 
 			if (this.populatedAttributes != null) {
 				for (int i = 0; i < this.populatedAttributes.length; i++) {
@@ -384,6 +389,10 @@ public class TableResultTabBean {
 		return new Boolean(!this.configuration);
 	}
 
+	public Boolean getDetailMode() {
+		return new Boolean(!this.configuration);
+	}
+
 	public void configurationMode() {
 		this.configuration = true;
 	}
@@ -491,4 +500,10 @@ public class TableResultTabBean {
 	public int getSortOrder() {
 		return sortOrder;
 	}
+
+	public Long getSelectedVoyageId()
+	{
+		return selectedVoyageId;
+	}
+
 }

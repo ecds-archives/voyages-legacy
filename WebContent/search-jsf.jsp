@@ -103,7 +103,13 @@
 							</t:htmlTag>
 							</t:htmlTag>
 						</t:htmlTag>
-	
+						
+						<%--
+						<s:voyageDetail
+							voyageId="#{TableResultTabBean.selectedVoyageId}"
+							rendered="#{TableResultTabBean.detailMode}" />
+						--%>
+						
 						<% /* Configuration of table */ %>
 						<t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 						
