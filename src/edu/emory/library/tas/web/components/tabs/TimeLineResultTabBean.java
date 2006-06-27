@@ -158,7 +158,8 @@ public class TimeLineResultTabBean {
 //			dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
 			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
 			generator.correctAndCompleteData(ret);
-			generator.addRowToDataSet(ret, new String[] {"Year of voyage"});
+			generator.addRowToDataSet(ret, new String[] {this.chosenAggregate + "(v."
+					+ this.chosenAttribute + ")"});
 			chart = generator.getChart();
 			
 			ExternalContext servletContext = FacesContext.getCurrentInstance()
