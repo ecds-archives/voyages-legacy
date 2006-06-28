@@ -31,10 +31,7 @@
 			<name>styleClass</name>
 		</attribute>
 		<attribute>
-			<name>results</name>
-		</attribute>
-		<attribute>
-			<name>populatedAttributes</name>
+			<name>data</name>
 		</attribute>
 		<attribute>
 			<name>query</name>
@@ -47,12 +44,6 @@
 		</attribute>
 		<attribute>
 			<name>sortChanged</name>
-		</attribute>
-		<attribute>
-			<name>orderColumn</name>
-		</attribute>
-		<attribute>
-			<name>order</name>
 		</attribute>
 	</tag>
 

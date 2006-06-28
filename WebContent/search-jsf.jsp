@@ -68,12 +68,9 @@
 							rendered="#{TableResultTabBean.resultsMode}"
 							query="#{SearchBean.currentConditions}"
 							conditionsOut="#{TableResultTabBean.conditions}"
-							results="#{TableResultTabBean.results}"
-							populatedAttributes="#{TableResultTabBean.populatedAttributes}"
+							data="#{TableResultTabBean.data}"
 							componentVisible="#{TableResultTabBean.componentVisible}"
-							sortChanged="#{TableResultTabBean.sortChanged}"
-							orderColumn="#{TableResultTabBean.sortColumn}"
-							order="#{TableResultTabBean.sortOrder}">
+							sortChanged="#{TableResultTabBean.sortChanged}">
 							<%-- 
 							<s:resultscroll resultFirst="#{TableResultTabBean.current}" 
 											resultLast="#{TableResultTabBean.resultSize}"
