@@ -55,6 +55,7 @@ public class AdvancedStatisticsTabBean {
 		public SeriesItem(String attribute, String aggregate) {
 			this.attribute = attribute;
 			this.aggregate = aggregate;
+			
 		}
 		
 		public boolean equals(Object o) {
@@ -71,7 +72,7 @@ public class AdvancedStatisticsTabBean {
 			StringBuffer buffer = new StringBuffer();
 			if (this.aggregate != null) {
 				return buffer.append(this.aggregate).append("(").append(
-						this.attribute).append(")").toString();
+						Voyage.getAttribute(this.attribute)).append(")").toString();
 			} else {
 				return buffer.append(this.attribute).toString();
 			}
@@ -166,8 +167,6 @@ public class AdvancedStatisticsTabBean {
 			qValue.addPopulatedAttribute(out, false);			
 		}
 		
-		System.out.println(qValue.toStringWithParams().conditionString);
-		
 		return qValue;
 	}
 
@@ -230,6 +229,9 @@ public class AdvancedStatisticsTabBean {
 		}
 		this.neededQuery = true;
 		this.validateSelectedChart();
+		if (this.showedGraph) {
+			this.showGraph();
+		}
 		return null;
 	}
 
@@ -248,6 +250,9 @@ public class AdvancedStatisticsTabBean {
 			}
 		}
 		this.validateSelectedChart();
+		if (this.showedGraph) {
+			this.showGraph();
+		}
 		return null;
 	}
 
@@ -316,6 +321,8 @@ public class AdvancedStatisticsTabBean {
 		}
 		this.errorPresent = new Boolean(false);
 		this.validateSelectedChart();
+		this.fixErrorActions.clear();
+		this.rollbackActions.clear();
 		return null;
 	}
 	
@@ -327,6 +334,8 @@ public class AdvancedStatisticsTabBean {
 		}
 		this.errorPresent = new Boolean(false);
 		this.validateSelectedChart();
+		this.fixErrorActions.clear();
+		this.rollbackActions.clear();
 		return null;
 	}
 
@@ -460,7 +469,7 @@ public class AdvancedStatisticsTabBean {
 
 		if (voyageAttributes == null) {
 			String[] attributes = Voyage.getAllAttrNames();
-			Arrays.sort(attributes);
+			//Arrays.sort(attributes);
 			this.voyageAttributes = new ArrayList();
 			for (int i = 0; i < attributes.length; i++) {
 				Attribute attr = Voyage.getAttribute(attributes[i]);
@@ -480,7 +489,7 @@ public class AdvancedStatisticsTabBean {
 
 				}
 			}
-			Collections.sort(voyageAttributes);
+			Collections.sort(this.voyageAttributes);
 		}
 		return this.voyageAttributes;
 
@@ -570,6 +579,9 @@ public class AdvancedStatisticsTabBean {
 		}
 		this.selectedChart = chartType;
 		validateSelectedChart();
+		if (this.showedGraph) {
+			this.showGraph();
+		}
 	}
 
 	public List getAvailableCharts() {

@@ -12,8 +12,12 @@ public abstract class AbstractChartGenerator {
 	private Attribute xAxisAttribute;
 	
 	
-	public abstract JFreeChart getChart();
+	public abstract JFreeChart getChart(String title, boolean showLegend);
 
+	public JFreeChart getChart() {
+		return this.getChart(null, true);
+	}
+	
 	public abstract void addRowToDataSet(Object[] data, Object[] series);
 	
 	public AbstractChartGenerator(Attribute attribute) {
@@ -57,5 +61,5 @@ public abstract class AbstractChartGenerator {
 	public void setXAxisAttribute(Attribute axisAttribute) {
 		xAxisAttribute = axisAttribute;
 	}
-	
+
 }

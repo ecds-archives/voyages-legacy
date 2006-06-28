@@ -3,6 +3,7 @@ package edu.emory.library.tas.util.query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 public class Conditions {
 
@@ -253,5 +254,18 @@ public class Conditions {
 			out = out.replaceAll(":" + key, response.properties.get(key).toString());
 		}
 		return out;
+	}
+	
+	public List getConditionedAttributes() {
+		ArrayList list = new ArrayList();
+		for (Iterator iter = this.conditions.iterator(); iter.hasNext();) {
+			Condition element = (Condition) iter.next();
+			list.add(element.attribute);			
+		}
+		for (Iterator iter = this.subConditions.iterator(); iter.hasNext();) {
+			Conditions element = (Conditions) iter.next();
+			list.addAll(element.getConditionedAttributes());
+		}
+		return list;
 	}
 }

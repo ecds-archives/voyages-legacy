@@ -12,6 +12,7 @@ import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
+import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
@@ -23,15 +24,15 @@ import edu.emory.library.tas.util.query.QueryValue;
  */
 public class TableResultTabBean {
 
+	private static final String ATTRIBUTE = "Attribute_";
+
+	private static final String COMPOUND_ATTRIBUTE = "CompoundAttribute_";
+
+	private static final String GROUP = "Group";
+
 	private int current = 0;
 
 	private int step = 10;
-
-	private Object[] results;
-
-	private String[] populatedAttributes;
-
-	private String[] populatedAttributesVisibleLabels;
 
 	private Conditions condition;
 
@@ -49,31 +50,27 @@ public class TableResultTabBean {
 
 	private Integer numberOfResults;
 
-	private int sortColumn = -1;
-	
-	private Long selectedVoyageId;
-
-	private int sortOrder = QueryValue.ORDER_DEFAULT;
+	private TableData data = new TableData();
 
 	public TableResultTabBean() {
 
-		populatedAttributes = new String[] { "voyageId", "captaina",
-				"captainb", "captainc", "ownere", "arrport" };
-	}
+		Attribute[] attrs = new Attribute[6];
+		attrs[0] = Voyage.getAttribute("voyageId");
+		attrs[1] = Voyage.getAttribute("shipname");
+		attrs[2] = Voyage.getAttribute("captaina");
+		attrs[3] = Voyage.getAttribute("captainb");
+		attrs[4] = Voyage.getAttribute("captainc");
+		attrs[5] = Voyage.getAttribute("portdep");
+		data.setVisibleColumns(attrs);
 
-	private void prepareVisibleLabelsForPopulatedAttributes() {
-		this.populatedAttributesVisibleLabels = new String[this.populatedAttributes.length];
-		for (int i = 0; i < this.populatedAttributes.length; i++) {
-			Attribute attr = Voyage.getAttribute(this.populatedAttributes[i]);
-			this.populatedAttributesVisibleLabels[i] = (attr.getUserLabel() != null && !attr
-					.getUserLabel().equals("")) ? (attr.getUserLabel()) : (attr
-					.getName());
-		}
 	}
 
 	private void getResultsDB() {
 		if (this.condition != null && this.componentVisible.booleanValue()
 				&& needQuery) {
+			
+			
+			
 			Conditions localCond = (Conditions) this.condition
 					.addAttributesPrefix("v.voyage.");
 			localCond.addCondition(VoyageIndex.getRecent());
@@ -81,36 +78,47 @@ public class TableResultTabBean {
 			QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
 			qValue.setLimit(this.getStep().intValue());
 			qValue.setFirstResult(this.getCurrent().intValue());
-			if (this.sortColumn == -1) {
+			if (this.data.getOrderByColumn() == null) {
 				qValue.setOrderBy("v.voyageId");
 			} else {
-				Attribute attr = Voyage
-						.getAttribute(this.populatedAttributes[this.sortColumn]);
+				VisibleColumn vattr = this.data.getOrderByColumn();
+				Attribute[] attr = null;
+				if (vattr instanceof Attribute) {
+					attr = new Attribute[] { (Attribute) vattr };
+				} else if (vattr instanceof CompoundAttribute) {
+					CompoundAttribute cAttr = (CompoundAttribute) vattr;
+					List attrs = this.data.getAttrForCAttribute(cAttr);
+					attr = (Attribute[]) attrs.toArray(new Attribute[] {});
+				}
 
-				if (!attr.isDictinaory()) {
-					qValue.setOrderBy("v.voyage."
-							+ this.populatedAttributes[this.sortColumn]);
-					qValue.setOrder(this.sortOrder);
-				} else {
-					qValue.setOrderBy("v.voyage."
-							+ this.populatedAttributes[this.sortColumn]
-							+ ".name");
-					qValue.setOrder(this.sortOrder);
+				if (attr != null) {
+					StringBuffer order = new StringBuffer();
+					for (int i = 0; i < attr.length; i++) {
+						if (!attr[i].isDictinaory()) {
+							order.append("v.voyage." + attr[i].getName());
+						} else {
+							order.append("v.voyage." + attr[i].getName()
+											+ ".name");
+						}
+						if (i < attr.length - 1) {
+							order.append(", ");
+						}
+						qValue.setOrderBy(order.toString());
+						qValue.setOrder(data.getOrder());
+					}
 				}
 			}
 
-			// Jan Zich: temporary solution
-			qValue.addPopulatedAttribute("v.voyage.voyageId", false);
-
-			if (this.populatedAttributes != null) {
-				for (int i = 0; i < this.populatedAttributes.length; i++) {
+			Attribute[] populatedAttributes = data.getAttributesForQuery();
+			if (populatedAttributes != null) {
+				for (int i = 0; i < populatedAttributes.length; i++) {
 					qValue.addPopulatedAttribute("v.voyage."
-							+ this.populatedAttributes[i], Voyage.getAttribute(
-							this.populatedAttributes[i]).isDictinaory());
+							+ populatedAttributes[i].getName(),
+							populatedAttributes[i].isDictinaory());
 				}
 			}
 
-			this.results = qValue.executeQuery();
+			this.data.setData(qValue.executeQuery());
 			needQuery = false;
 		}
 
@@ -128,8 +136,7 @@ public class TableResultTabBean {
 		this.numberOfResults = (Integer) ret[0];
 	}
 
-	// //////////////////////////// ACTIONS called from web interface
-	// /////////////////////////
+	/** ACTIONS called from web interface * */
 
 	public String next() {
 		if (this.numberOfResults != null) {
@@ -162,14 +169,17 @@ public class TableResultTabBean {
 		if (this.selectedAttributeToAdd == null) {
 			return null;
 		}
-		List list = Arrays.asList(this.populatedAttributes);
-		if (list.contains(this.selectedAttributeAdded)) {
+
+		VisibleColumn attr = this
+				.getVisibleAttribute(this.selectedAttributeToAdd);
+
+		List list = Arrays.asList(this.data.getVisibleAttributes());
+		if (list.contains(attr)) {
 			list = new ArrayList(list);
-			list.remove(this.selectedAttributeAdded);
-			this.populatedAttributes = (String[]) list.toArray(new String[] {});
+			list.remove(attr);
+			this.data.setVisibleColumns(list);
 			this.needQuery = true;
 		}
-		this.populatedAttributesVisibleLabels = null;
 		return null;
 	}
 
@@ -177,53 +187,25 @@ public class TableResultTabBean {
 		if (this.selectedAttributeToAdd == null) {
 			return null;
 		}
+
+		VisibleColumn attr = this
+				.getVisibleAttribute(this.selectedAttributeToAdd);
+		VisibleColumn[] attrs = this.data.getVisibleAttributes();
+
 		boolean is = false;
-		String attrsToAdd[] = null;
-		if (this.selectedAttributeToAdd.startsWith("Attribute_")) {
-			attrsToAdd = new String[1];
-			attrsToAdd[0] = this.selectedAttributeToAdd.substring("Attribute_"
-					.length(), this.selectedAttributeToAdd.length());
-		} else {
-			String groupName = this.selectedAttributeToAdd.substring("Group_"
-					.length(), this.selectedAttributeToAdd.length());
-			Conditions c = new Conditions();
-			c.addCondition("id", new Long(groupName), Conditions.OP_EQUALS);
-			QueryValue qValue = new QueryValue("CompoundAttribute", c);
-			// if (this.sortColumn != -1) {
-			// qValue.setOrderBy(this.populatedAttributes[this.sortColumn]);
-			// qValue.setOrder(this.sortOrder);
-			// }
-			Object[] groups = qValue.executeQuery();
-			if (groups.length > 0) {
-				CompoundAttribute group = (CompoundAttribute) groups[0];
-				Set attrs = group.getAttributes();
-				attrsToAdd = new String[attrs.size()];
-				int i = 0;
-				for (Iterator iter = attrs.iterator(); iter.hasNext();) {
-					Attribute attr = (Attribute) iter.next();
-					attrsToAdd[i] = ("".equals(attr.getUserLabel()) || attr
-							.getUserLabel() == null) ? (attr.getName()) : (attr
-							.getUserLabel());
-					i++;
-				}
+
+		for (int i = 0; i < attrs.length; i++) {
+			if (attrs[i].getId().equals(attr.getId())) {
+				is = true;
 			}
 		}
-		for (int j = 0; j < attrsToAdd.length; j++) {
-			for (int i = 0; i < this.populatedAttributes.length; i++) {
-				if (this.populatedAttributes[i].equals(attrsToAdd[j])) {
-					is = true;
-				}
-			}
-			if (!is) {
-				List list = Arrays.asList(this.populatedAttributes);
-				list = new ArrayList(list);
-				list.add(attrsToAdd[j]);
-				this.populatedAttributes = (String[]) list
-						.toArray(new String[] {});
-				this.needQuery = true;
-			}
+		if (!is) {
+			List list = Arrays.asList(attrs);
+			list = new ArrayList(list);
+			list.add(attr);
+			this.data.setVisibleColumns(list);
+			this.needQuery = true;
 		}
-		this.populatedAttributesVisibleLabels = null;
 		return null;
 	}
 
@@ -231,16 +213,18 @@ public class TableResultTabBean {
 		if (this.selectedAttributeAdded == null) {
 			return null;
 		}
-		for (int i = 1; i < this.populatedAttributes.length; i++) {
-			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
-				String tmp = this.populatedAttributes[i];
-				this.populatedAttributes[i] = this.populatedAttributes[i - 1];
-				this.populatedAttributes[i - 1] = tmp;
+		VisibleColumn attr = this
+				.getVisibleAttribute(this.selectedAttributeAdded);
+		VisibleColumn[] attrs = data.getVisibleAttributes();
+		for (int i = 1; i < attrs.length; i++) {
+			if (attrs[i].getId().equals(attr.getId())) {
+				VisibleColumn tmp = attrs[i];
+				attrs[i] = attrs[i - 1];
+				attrs[i - 1] = tmp;
 				this.needQuery = true;
 				break;
 			}
 		}
-		this.populatedAttributesVisibleLabels = null;
 		return null;
 	}
 
@@ -248,49 +232,81 @@ public class TableResultTabBean {
 		if (this.selectedAttributeAdded == null) {
 			return null;
 		}
-		for (int i = 0; i < this.populatedAttributes.length - 1; i++) {
-			if (this.populatedAttributes[i].equals(this.selectedAttributeAdded)) {
-				String tmp = this.populatedAttributes[i];
-				this.populatedAttributes[i] = this.populatedAttributes[i + 1];
-				this.populatedAttributes[i + 1] = tmp;
+		VisibleColumn attr = this
+				.getVisibleAttribute(this.selectedAttributeAdded);
+		VisibleColumn[] attrs = data.getVisibleAttributes();
+		for (int i = 0; i < attrs.length - 1; i++) {
+			if (attrs[i].getId().equals(attr.getId())) {
+				VisibleColumn tmp = attrs[i];
+				attrs[i] = attrs[i + 1];
+				attrs[i + 1] = tmp;
 				this.needQuery = true;
 				break;
 			}
 		}
-		this.populatedAttributesVisibleLabels = null;
 		return null;
 	}
 
 	public void sortChanged(SortChangeEvent event) {
-		if (this.populatedAttributesVisibleLabels != null) {
-			String attrToSort = event.getAttributeSort();
-			for (int i = 0; i < attrToSort.length(); i++) {
-				if (this.populatedAttributesVisibleLabels[i].equals(attrToSort)) {
-					if (i == this.sortColumn) {
-						switch (this.sortOrder) {
-						case QueryValue.ORDER_ASC:
-							this.sortOrder = QueryValue.ORDER_DESC;
-							break;
-						case QueryValue.ORDER_DESC:
-							this.sortOrder = QueryValue.ORDER_DEFAULT;
-							break;
-						case QueryValue.ORDER_DEFAULT:
-							this.sortOrder = QueryValue.ORDER_ASC;
-							break;
-						}
-					} else {
-						this.sortColumn = i;
-						this.sortOrder = QueryValue.ORDER_ASC;
-					}
-					this.current = 0;
-					this.needQuery = true;
-					break;
-				}
+		String attrToSort = event.getAttributeSort();
+
+		VisibleColumn attr = this.getVisibleAttribute(attrToSort);
+
+		if (this.data.getOrderByColumn().getId().equals(attr.getId())) {
+			switch (this.data.getOrder()) {
+			case QueryValue.ORDER_ASC:
+				this.data.setOrder(QueryValue.ORDER_DESC);
+				break;
+			case QueryValue.ORDER_DESC:
+				this.data.setOrder(QueryValue.ORDER_DEFAULT);
+				break;
+			case QueryValue.ORDER_DEFAULT:
+				this.data.setOrder(QueryValue.ORDER_ASC);
+				break;
 			}
+		} else {
+			this.data.setOrderByColumn(attr);
+			this.data.setOrder(QueryValue.ORDER_ASC);
 		}
+		this.current = 0;
+		this.needQuery = true;
 	}
 
-	// //////////////////////////// GETTERS / SETTERS /////////////////////////
+	/** GETTERS / SETTERS * */
+
+	private VisibleColumn getVisibleAttribute(String sAttr) {
+		VisibleColumn ret = null;
+		if (sAttr.startsWith(ATTRIBUTE)) {
+			String attrId = sAttr.substring(ATTRIBUTE.length(), sAttr.length());
+			Conditions c = new Conditions();
+			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("Attribute", c);
+			Object[] attrs = qValue.executeQuery();
+			if (attrs.length > 0) {
+				ret = (VisibleColumn) attrs[0];
+			}
+		} else if (sAttr.startsWith(COMPOUND_ATTRIBUTE)) {
+			String attrId = sAttr.substring(COMPOUND_ATTRIBUTE.length(), sAttr
+					.length());
+			Conditions c = new Conditions();
+			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("CompoundAttribute", c);
+			Object[] attrs = qValue.executeQuery();
+			if (attrs.length > 0) {
+				ret = (VisibleColumn) attrs[0];
+			}
+		} else if (sAttr.startsWith(GROUP)) {
+			String attrId = sAttr.substring(GROUP.length(), sAttr.length());
+			Conditions c = new Conditions();
+			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("Group", c);
+			Object[] attrs = qValue.executeQuery();
+			if (attrs.length > 0) {
+				ret = (VisibleColumn) attrs[0];
+			}
+		}
+		return ret;
+	}
 
 	public Integer getFirstDisplayed() {
 		if (numberOfResults == null || numberOfResults.intValue() == 0)
@@ -303,8 +319,10 @@ public class TableResultTabBean {
 		if (numberOfResults == null || numberOfResults.intValue() == 0)
 			return new Integer(0);
 		else
-			return new Integer(current + 1
-					+ (this.results != null ? this.results.length : 0));
+			return new Integer(current
+					+ 1
+					+ (this.data.getData() != null ? this.data.getData().length - 1
+							: 0));
 	}
 
 	public Integer getTotalRows() {
@@ -333,27 +351,20 @@ public class TableResultTabBean {
 		this.step = step.intValue();
 	}
 
-	public String[] getPopulatedAttributes() {
-		if (this.populatedAttributesVisibleLabels == null) {
-			this.prepareVisibleLabelsForPopulatedAttributes();
-		}
-		return populatedAttributesVisibleLabels;
-	}
-
-	public Object[] getResults() {
+	public TableData getData() {
 		this.getResultsDB();
-		return this.results;
+		return this.data;
 	}
 
-	public void setResults(Object[] results) {
-		this.results = results;
+	public void setData(Object data) {
 	}
 
 	public void setResultSize(Integer size) {
 	}
 
 	public Integer getResultSize() {
-		return new Integer(this.results != null ? this.results.length : 0);
+		return new Integer(
+				this.data.getData() != null ? this.data.getData().length : 0);
 	}
 
 	public void setConditions(Conditions c) {
@@ -389,10 +400,6 @@ public class TableResultTabBean {
 		return new Boolean(!this.configuration);
 	}
 
-	public Boolean getDetailMode() {
-		return new Boolean(!this.configuration);
-	}
-
 	public void configurationMode() {
 		this.configuration = true;
 	}
@@ -406,10 +413,8 @@ public class TableResultTabBean {
 		Group[] groupSets = Voyage.getGroups();
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
-			res
-					.add(new ComparableSelectItem("" + set.getId().longValue(), (set
-							.getUserLabel() != null && !set.getUserLabel().equals("")) ? 
-									(set.getUserLabel()) : (set.getName())));
+			res.add(new ComparableSelectItem("" + set.getId().longValue(), set
+					.toString()));
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
 			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
@@ -437,16 +442,13 @@ public class TableResultTabBean {
 			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
 				CompoundAttribute element = (CompoundAttribute) groupsIter
 						.next();
-				res.add(new ComparableSelectItem("Group_" + element.getId(), element
-						.getName()));
+				res.add(new ComparableSelectItem(element.encodeToString(),
+						element.toString()));
 			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
 				Attribute attr = (Attribute) iter.next();
-				res
-						.add(new ComparableSelectItem("Attribute_" + attr.getName(), (""
-								.equals(attr.getUserLabel()) || attr
-								.getUserLabel() == null) ? (attr.getName())
-								: (attr.getUserLabel())));
+				res.add(new ComparableSelectItem(attr.encodeToString(), attr
+						.toString()));
 			}
 		}
 		Collections.sort(res);
@@ -454,15 +456,13 @@ public class TableResultTabBean {
 	}
 
 	public List getVisibleAttributes() {
-		ArrayList res = new ArrayList();
-		if (this.populatedAttributesVisibleLabels == null) {
-			this.prepareVisibleLabelsForPopulatedAttributes();
+		List list = new ArrayList();
+		VisibleColumn[] cols = this.data.getVisibleAttributes();
+		for (int i = 0; i < cols.length; i++) {
+			list.add(new ComparableSelectItem(cols[i].encodeToString(), cols[i]
+					.toString()));
 		}
-		for (int i = 0; i < this.populatedAttributes.length; i++) {
-			res.add(new ComparableSelectItem(this.populatedAttributes[i],
-					this.populatedAttributesVisibleLabels[i]));
-		}
-		return res;
+		return list;
 	}
 
 	public String getSelectedGroupSet() {
@@ -492,18 +492,4 @@ public class TableResultTabBean {
 	public Integer getNumberOfResults() {
 		return numberOfResults;
 	}
-
-	public int getSortColumn() {
-		return sortColumn;
-	}
-
-	public int getSortOrder() {
-		return sortOrder;
-	}
-
-	public Long getSelectedVoyageId()
-	{
-		return selectedVoyageId;
-	}
-
 }

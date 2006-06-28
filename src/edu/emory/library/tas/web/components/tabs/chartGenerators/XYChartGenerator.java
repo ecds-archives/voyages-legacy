@@ -21,27 +21,31 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		dataset = new DefaultCategoryDataset();
 	}
 
-	public JFreeChart getChart() {
+	public JFreeChart getChart(String title, boolean showLegend) {
 		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
-			return this.prepareDateChart();
+			return this.prepareDateChart(title, showLegend);
 		} else {
-			return this.prepareXYChart();
+			return this.prepareXYChart(title, showLegend);
 		}
 	}
+	
+	public JFreeChart getChart() {
+		return getChart(null, true);
+	}
 
-	private JFreeChart prepareXYChart() {
-		JFreeChart chart = ChartFactory.createLineChart(null,
+	private JFreeChart prepareXYChart(String title, boolean showLegend) {
+		JFreeChart chart = ChartFactory.createLineChart(title,
 				getXAxis(), "Value", (DefaultCategoryDataset)dataset, PlotOrientation.VERTICAL,
-				 true, true, false);
+				 showLegend, true, false);
 			
 		return chart;
 	}
 
-	private JFreeChart prepareDateChart() {
+	private JFreeChart prepareDateChart(String title, boolean showLegend) {
 
-		JFreeChart chart = ChartFactory.createLineChart(null,
+		JFreeChart chart = ChartFactory.createLineChart(title,
 				getXAxis(), "Value", (DefaultCategoryDataset)dataset, PlotOrientation.VERTICAL,
-				 true, true, false);
+				 showLegend, true, false);
 
 		// CategoryPlot xyplot = (CategoryPlot) chart.getPlot();
 		// xyplot.setBackgroundPaint(Color.LIGHT_GRAY);

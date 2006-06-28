@@ -12,9 +12,6 @@ public class TableResultTabTag extends UIComponentTag {
 
 	private static final String TABLE_RESULT_TAB = "TableResultTab";
 
-	private String results;
-
-	private String populatedAttributes;
 	private String sortChanged;
 	
 	private String style;
@@ -24,10 +21,9 @@ public class TableResultTabTag extends UIComponentTag {
 	private String conditionsOut;
 
 	private String componentVisible;
-	
-	private String orderColumn;
-	private String order;
 
+	private String data;
+	
 	public String getStyle() {
 		return style;
 	}
@@ -40,22 +36,13 @@ public class TableResultTabTag extends UIComponentTag {
 
 		super.setProperties(component);
 
-		if (results != null) {
-			if (isValueReference(results)) {
+		if (data != null) {
+			if (isValueReference(data)) {
 				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(results);
-				component.setValueBinding("results", vb);
+						.createValueBinding(data);
+				component.setValueBinding("data", vb);
 			} else {
-				component.getAttributes().put("results", results);
-			}
-		}
-		if (populatedAttributes != null) {
-			if (isValueReference(populatedAttributes)) {
-				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(populatedAttributes);
-				component.setValueBinding("populatedAttributes", vb);
-			} else {
-				component.getAttributes().put("populatedAttributes", results);
+				component.getAttributes().put("data", data);
 			}
 		}
 		if (style != null) {
@@ -103,24 +90,6 @@ public class TableResultTabTag extends UIComponentTag {
 				component.getAttributes().put("componentVisible", componentVisible);
 			}
 		}		
-		if (orderColumn != null) {
-			if (isValueReference(conditionsOut)) {
-				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(orderColumn);
-				component.setValueBinding("orderColumn", vb);
-			} else {
-				component.getAttributes().put("orderColumn", orderColumn);
-			}
-		}
-		if (order != null) {
-			if (isValueReference(conditionsOut)) {
-				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(order);
-				component.setValueBinding("order", vb);
-			} else {
-				component.getAttributes().put("order", order);
-			}
-		}
 		
 		if (component instanceof UITableResultTab && sortChanged != null) {
 			UITableResultTab tab = (UITableResultTab)component;
@@ -140,22 +109,6 @@ public class TableResultTabTag extends UIComponentTag {
 
 	public String getRendererType() {
 		return null;
-	}
-
-	public String getPopulatedAttributes() {
-		return populatedAttributes;
-	}
-
-	public void setPopulatedAttributes(String populatedAttributes) {
-		this.populatedAttributes = populatedAttributes;
-	}
-
-	public String getResults() {
-		return results;
-	}
-
-	public void setResults(String results) {
-		this.results = results;
 	}
 
 	public String getStyleClass() {
@@ -194,19 +147,11 @@ public class TableResultTabTag extends UIComponentTag {
 		this.sortChanged = sortChanged;
 	}
 
-	public String getOrder() {
-		return order;
+	public String getData() {
+		return data;
 	}
 
-	public void setOrder(String order) {
-		this.order = order;
-	}
-
-	public String getOrderColumn() {
-		return orderColumn;
-	}
-
-	public void setOrderColumn(String orderColumn) {
-		this.orderColumn = orderColumn;
+	public void setData(String data) {
+		this.data = data;
 	}
 }

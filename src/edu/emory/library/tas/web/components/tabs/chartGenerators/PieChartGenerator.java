@@ -15,8 +15,12 @@ public class PieChartGenerator extends AbstractChartGenerator {
 	}
 	
 	public JFreeChart getChart() {
-		JFreeChart chart = ChartFactory.createPieChart(null, 
-				pieDataset, false, true, false);
+		return this.getChart(null, false);
+	}
+	
+	public JFreeChart getChart(String title, boolean showLegend) {
+		JFreeChart chart = ChartFactory.createPieChart(title, 
+				pieDataset, showLegend, true, false);
 		return chart;
 	}
 

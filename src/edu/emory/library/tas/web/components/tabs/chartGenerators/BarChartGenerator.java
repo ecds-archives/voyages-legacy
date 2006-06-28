@@ -15,11 +15,11 @@ public class BarChartGenerator extends AbstractChartGenerator {
 		super(xAxis);
 	}
 	
-	public JFreeChart getChart() {
+	public JFreeChart getChart(String title, boolean showLegend) {
 		
-		JFreeChart chart = ChartFactory.createBarChart(null,
+		JFreeChart chart = ChartFactory.createBarChart(title,
 				getXAxis(), "Value", dataset, PlotOrientation.VERTICAL,
-			 true, true, false);
+			 showLegend, true, false);
 		
 		return chart;
 	}

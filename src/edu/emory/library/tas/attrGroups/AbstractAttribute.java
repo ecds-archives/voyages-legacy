@@ -18,7 +18,7 @@ import edu.emory.library.tas.InvalidNumberOfValuesException;
 import edu.emory.library.tas.StringTooLongException;
 import edu.emory.library.tas.util.HibernateUtil;
 
-public abstract class AbstractAttribute implements Serializable {
+public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 	
 	public final static int TYPE_INTEGER = 0;
 	public final static int TYPE_LONG = 1; 
@@ -317,7 +317,11 @@ public abstract class AbstractAttribute implements Serializable {
 	}
 
 	public String toString() {
-		return "Attribute: " + this.name;
+		if (this.userLabel != null && !this.userLabel.equals("")) {
+			return this.userLabel;
+		} else {
+			return this.name;
+		}
 	}
 
 	public static AbstractAttribute loadById(Long id) {
