@@ -68,7 +68,7 @@
 	<component>
 		<component-type>VoyageDetail</component-type>
 		<component-class>
-			edu.emory.library.tas.web.VoyageDetailComponent
+			edu.emory.library.tas.web.components.tabs.UIDetailComponent
 		</component-class>
 	</component>
 

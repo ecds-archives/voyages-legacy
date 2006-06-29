@@ -40,8 +40,6 @@ public class TableResultTabBean {
 
 	private boolean needQuery = false;
 
-	private boolean configuration = false;
-
 	private String selectedGroupSet = null;
 
 	private String selectedAttributeAdded;
@@ -51,6 +49,18 @@ public class TableResultTabBean {
 	private Integer numberOfResults;
 
 	private TableData data = new TableData();
+
+	private TableData detailData = new TableData();
+
+	private Boolean detailMode = new Boolean(false);
+
+	private Boolean configurationMode = new Boolean(false);
+
+	private Boolean resultsMode = new Boolean(true);
+
+	private Long detailVoyageId;
+
+	private boolean needDetailQuery;
 
 	public TableResultTabBean() {
 
@@ -62,66 +72,80 @@ public class TableResultTabBean {
 		attrs[4] = Voyage.getAttribute("captainc");
 		attrs[5] = Voyage.getAttribute("portdep");
 		data.setVisibleColumns(attrs);
+		
+		detailData.setVisibleColumns(Voyage.getAttributes());
 
 	}
 
 	private void getResultsDB() {
 		if (this.condition != null && this.componentVisible.booleanValue()
 				&& needQuery) {
-			
-			
-			
-			Conditions localCond = (Conditions) this.condition
-					.addAttributesPrefix("v.voyage.");
-			localCond.addCondition(VoyageIndex.getRecent());
-
-			QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
-			qValue.setLimit(this.getStep().intValue());
-			qValue.setFirstResult(this.getCurrent().intValue());
-			if (this.data.getOrderByColumn() == null) {
-				qValue.setOrderBy("v.voyageId");
-			} else {
-				VisibleColumn vattr = this.data.getOrderByColumn();
-				Attribute[] attr = null;
-				if (vattr instanceof Attribute) {
-					attr = new Attribute[] { (Attribute) vattr };
-				} else if (vattr instanceof CompoundAttribute) {
-					CompoundAttribute cAttr = (CompoundAttribute) vattr;
-					List attrs = this.data.getAttrForCAttribute(cAttr);
-					attr = (Attribute[]) attrs.toArray(new Attribute[] {});
-				}
-
-				if (attr != null) {
-					StringBuffer order = new StringBuffer();
-					for (int i = 0; i < attr.length; i++) {
-						if (!attr[i].isDictinaory()) {
-							order.append("v.voyage." + attr[i].getName());
-						} else {
-							order.append("v.voyage." + attr[i].getName()
-											+ ".name");
-						}
-						if (i < attr.length - 1) {
-							order.append(", ");
-						}
-						qValue.setOrderBy(order.toString());
-						qValue.setOrder(data.getOrder());
-					}
-				}
-			}
-
-			Attribute[] populatedAttributes = data.getAttributesForQuery();
-			if (populatedAttributes != null) {
-				for (int i = 0; i < populatedAttributes.length; i++) {
-					qValue.addPopulatedAttribute("v.voyage."
-							+ populatedAttributes[i].getName(),
-							populatedAttributes[i].isDictinaory());
-				}
-			}
-
-			this.data.setData(qValue.executeQuery());
+			this.queryAndFillInData(VoyageIndex.getRecent(), this.data);
 			needQuery = false;
 		}
+	}
 
+	private void queryAndFillInData(Conditions subCondition, TableData dataTable) {
+
+		subCondition = subCondition.addAttributesPrefix("v.");
+		Conditions localCond = (Conditions) this.condition
+				.addAttributesPrefix("v.voyage.");
+		localCond.addCondition(subCondition);
+
+		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
+		qValue.setLimit(this.getStep().intValue());
+		qValue.setFirstResult(this.getCurrent().intValue());
+		if (dataTable.getOrderByColumn() == null) {
+			qValue.setOrderBy("v.voyageId");
+		} else {
+			VisibleColumn vattr = dataTable.getOrderByColumn();
+			Attribute[] attr = null;
+			if (vattr instanceof Attribute) {
+				attr = new Attribute[] { (Attribute) vattr };
+			} else if (vattr instanceof CompoundAttribute) {
+				CompoundAttribute cAttr = (CompoundAttribute) vattr;
+				List attrs = dataTable.getAttrForCAttribute(cAttr);
+				attr = (Attribute[]) attrs.toArray(new Attribute[] {});
+			}
+
+			if (attr != null) {
+				StringBuffer order = new StringBuffer();
+				for (int i = 0; i < attr.length; i++) {
+					if (!attr[i].isDictinaory()) {
+						order.append("v.voyage." + attr[i].getName());
+					} else {
+						order.append("v.voyage." + attr[i].getName() + ".name");
+					}
+					if (i < attr.length - 1) {
+						order.append(", ");
+					}
+					qValue.setOrderBy(order.toString());
+					qValue.setOrder(dataTable.getOrder());
+				}
+			}
+		}
+
+		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
+		if (populatedAttributes != null) {
+			for (int i = 0; i < populatedAttributes.length; i++) {
+				qValue.addPopulatedAttribute("v.voyage."
+						+ populatedAttributes[i].getName(),
+						populatedAttributes[i].isDictinaory());
+			}
+		}
+
+		dataTable.setData(qValue.executeQuery());
+
+	}
+
+	private void getResultsDetailDB() {
+		if (this.needDetailQuery && this.detailVoyageId != null) {
+			Conditions c = new Conditions();
+			c.addCondition(VoyageIndex.getApproved());
+			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
+			this.queryAndFillInData(c, this.detailData);
+			this.needDetailQuery = false;
+		}
 	}
 
 	private void setNumberOfResults() {
@@ -179,6 +203,7 @@ public class TableResultTabBean {
 			list.remove(attr);
 			this.data.setVisibleColumns(list);
 			this.needQuery = true;
+			this.needDetailQuery = true;
 		}
 		return null;
 	}
@@ -205,6 +230,7 @@ public class TableResultTabBean {
 			list.add(attr);
 			this.data.setVisibleColumns(list);
 			this.needQuery = true;
+			this.needDetailQuery = true;
 		}
 		return null;
 	}
@@ -222,6 +248,7 @@ public class TableResultTabBean {
 				attrs[i] = attrs[i - 1];
 				attrs[i - 1] = tmp;
 				this.needQuery = true;
+				this.needDetailQuery = true;
 				break;
 			}
 		}
@@ -241,6 +268,7 @@ public class TableResultTabBean {
 				attrs[i] = attrs[i + 1];
 				attrs[i + 1] = tmp;
 				this.needQuery = true;
+				this.needDetailQuery = true;
 				break;
 			}
 		}
@@ -270,6 +298,13 @@ public class TableResultTabBean {
 		}
 		this.current = 0;
 		this.needQuery = true;
+	}
+
+	public void showDetails(ShowDetailsEvent event) {
+		this.configurationMode = new Boolean(false);
+		this.detailMode = new Boolean(true);
+		this.resultsMode = new Boolean(false);
+		this.detailVoyageId = event.getVoyageId();
 	}
 
 	/** GETTERS / SETTERS * */
@@ -319,10 +354,11 @@ public class TableResultTabBean {
 		if (numberOfResults == null || numberOfResults.intValue() == 0)
 			return new Integer(0);
 		else
-			return new Integer(current
-					+ 1
-					+ (this.data.getData() != null ? this.data.getData().length - 1
-							: 0));
+			return new Integer(
+					current
+							+ 1
+							+ (this.data.getData() != null ? this.data
+									.getData().length - 1 : 0));
 	}
 
 	public Integer getTotalRows() {
@@ -379,6 +415,7 @@ public class TableResultTabBean {
 		} else {
 			condition = c;
 			needQuery = true;
+			this.needDetailQuery = true;
 			this.setNumberOfResults();
 			this.current = 0;
 		}
@@ -393,19 +430,23 @@ public class TableResultTabBean {
 	}
 
 	public Boolean getConfigurationMode() {
-		return new Boolean(this.configuration);
+		return this.configurationMode;
 	}
 
 	public Boolean getResultsMode() {
-		return new Boolean(!this.configuration);
+		return this.resultsMode;
 	}
 
 	public void configurationMode() {
-		this.configuration = true;
+		this.configurationMode = new Boolean(true);
+		this.resultsMode = new Boolean(false);
+		this.detailMode = new Boolean(false);
 	}
 
 	public void resultsMode() {
-		this.configuration = false;
+		this.configurationMode = new Boolean(false);
+		this.resultsMode = new Boolean(true);
+		this.detailMode = new Boolean(false);
 	}
 
 	public List getAvailableGroupSets() {
@@ -491,5 +532,22 @@ public class TableResultTabBean {
 
 	public Integer getNumberOfResults() {
 		return numberOfResults;
+	}
+
+	public TableData getDetailData() {
+		this.getResultsDetailDB();
+		return detailData;
+	}
+
+	public void setDetailData(TableData detailData) {
+		this.detailData = detailData;
+	}
+
+	public Boolean getDetailMode() {
+		return detailMode;
+	}
+
+	public void setDetailMode(Boolean detailMode) {
+		this.detailMode = detailMode;
 	}
 }

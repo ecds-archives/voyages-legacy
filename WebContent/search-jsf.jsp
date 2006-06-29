@@ -64,7 +64,7 @@
 	
 						<% /* Table with results */ %>
 						<s:tabletab
-							onClick="#{TableResultTabBean.onRowClick}"
+							onclick="#{TableResultTabBean.showDetails}"
 							rendered="#{TableResultTabBean.resultsMode}"
 							query="#{SearchBean.currentConditions}"
 							conditionsOut="#{TableResultTabBean.conditions}"
@@ -82,7 +82,8 @@
 							--%>
 						</s:tabletab>
 						
-						<t:htmlTag value="div" style="background-color: #DDDDDD; padding: 5px;" rendered="#{TableResultTabBean.resultsMode}">
+						<t:htmlTag value="div" style="background-color: #DDDDDD; padding: 5px;" 
+								rendered="#{TableResultTabBean.resultsMode}">
 							<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 							<t:htmlTag value="tr">
 								<t:htmlTag value="td" style="padding: 0px;">
@@ -97,17 +98,18 @@
 									<h:outputText value="out of" />
 									<h:outputText value="#{TableResultTabBean.totalRows}" />
 								</t:htmlTag>
-								<t:htmlTag value="td" style="padding-left: 0px; padding-bottom: 0px; padding-top: 0px; padding-right: 5px; text-align: right"><h:commandLink value="Configure table" action="#{TableResultTabBean.configurationMode}" /></t:htmlTag>
+								<t:htmlTag value="td" style="padding-left: 0px; padding-bottom: 0px; padding-top: 0px; padding-right: 5px; text-align: right">
+									<h:commandLink value="Configure table" 
+									action="#{TableResultTabBean.configurationMode}" /></t:htmlTag>
 							</t:htmlTag>
 							</t:htmlTag>
 						</t:htmlTag>
 						
-						<%--
-						<s:voyageDetail
-							voyageId="#{TableResultTabBean.selectedVoyageId}"
-							rendered="#{TableResultTabBean.detailMode}" />
-						--%>
-						
+						<t:htmlTag value="div" rendered="#{TableResultTabBean.detailMode}">
+							<s:voyageDetail data="#{TableResultTabBean.detailData}"/>
+							<h:commandButton value="Back to results" action="#{TableResultTabBean.resultsMode}"/>
+						</t:htmlTag>
+									
 						<% /* Configuration of table */ %>
 						<t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 						

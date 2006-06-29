@@ -23,6 +23,7 @@ public class TableResultTabTag extends UIComponentTag {
 	private String componentVisible;
 
 	private String data;
+	private String onclick;
 	
 	public String getStyle() {
 		return style;
@@ -90,6 +91,15 @@ public class TableResultTabTag extends UIComponentTag {
 				component.getAttributes().put("componentVisible", componentVisible);
 			}
 		}		
+//		if (onclick != null) {
+//			if (isValueReference(conditionsOut)) {
+//				ValueBinding vb = getFacesContext().getApplication()
+//						.createValueBinding(onclick);
+//				component.setValueBinding("onclick", vb);
+//			} else {
+//				component.getAttributes().put("onclick", onclick);
+//			}
+//		}
 		
 		if (component instanceof UITableResultTab && sortChanged != null) {
 			UITableResultTab tab = (UITableResultTab)component;
@@ -97,6 +107,11 @@ public class TableResultTabTag extends UIComponentTag {
 			tab.setSortChanged(new MethodBindingImpl(app, sortChanged, new Class[] {SortChangeEvent.class}));
 		}
 		
+		if (component instanceof UITableResultTab && onclick != null) {
+			UITableResultTab tab = (UITableResultTab)component;
+			Application app = FacesContext.getCurrentInstance().getApplication();
+			tab.setShowDetails(new MethodBindingImpl(app, onclick, new Class[] {ShowDetailsEvent.class}));
+		}
 	}
 
 	public void release() {
@@ -153,5 +168,13 @@ public class TableResultTabTag extends UIComponentTag {
 
 	public void setData(String data) {
 		this.data = data;
+	}
+
+	public String getOnclick() {
+		return onclick;
+	}
+
+	public void setOnclick(String onclick) {
+		this.onclick = onclick;
 	}
 }

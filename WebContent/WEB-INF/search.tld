@@ -45,6 +45,9 @@
 		<attribute>
 			<name>sortChanged</name>
 		</attribute>
+		<attribute>
+			<name>onclick</name>
+		</attribute>
 	</tag>
 
 	<tag>
@@ -215,7 +218,7 @@
 	<tag>
 		<name>voyageDetail</name>
 		<tag-class>
-			edu.emory.library.tas.web.VoyageDetailTag
+			edu.emory.library.tas.web.components.tabs.DetailTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -225,7 +228,7 @@
 			<name>id</name>
 		</attribute>
 		<attribute>
-			<name>voyageId</name>
+			<name>data</name>
 		</attribute>
 	</tag>
 

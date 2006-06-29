@@ -20,6 +20,7 @@ import edu.emory.library.tas.web.UtilsJSF;
 public class UITableResultTab extends UIOutput {
 
 	private MethodBinding sortChanged;
+	private MethodBinding showDetails;
 
 	public UITableResultTab() {
 		super();
@@ -29,12 +30,14 @@ public class UITableResultTab extends UIOutput {
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
 		sortChanged = (MethodBinding) restoreAttachedState(context, values[1]);
+		showDetails = (MethodBinding) restoreAttachedState(context, values[2]);
 	}
 
 	public Object saveState(FacesContext context) {
-		Object[] values = new Object[2];
+		Object[] values = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = saveAttachedState(context, sortChanged);
+		values[2] = saveAttachedState(context, showDetails);
 		return values;
 	}
 
@@ -51,24 +54,10 @@ public class UITableResultTab extends UIOutput {
 		String newSelectedVoyageId = (String) params
 				.get(getClickIdHiddenFieldName(context));
 		if (newSelectedVoyageId != null && newSelectedVoyageId.length() > 0) {
-			queueEvent(new ResultsRowClickedEvent(this, new Long(
+			queueEvent(new ShowDetailsEvent(this, new Long(
 					newSelectedVoyageId)));
 		}
 
-	}
-
-	public void appyConditions(Conditions c, FacesContext context) {
-		ValueBinding vb = this.getValueBinding("condition");
-		if (vb != null) {
-			vb.setValue(context, c);
-		}
-	}
-
-	public void applyPopulatedAttributes(String[] attrs, FacesContext context) {
-		ValueBinding vb = this.getValueBinding("populatedAttributes");
-		if (vb != null) {
-			vb.setValue(context, attrs);
-		}
 	}
 
 	public void encodeBegin(FacesContext context) throws IOException {
@@ -147,6 +136,8 @@ public class UITableResultTab extends UIOutput {
 			}
 			writer.endElement("th");
 		}
+		writer.startElement("th", this);
+		writer.endElement("th");
 		writer.endElement("tr");
 
 		StringBuffer rowClass = new StringBuffer();
@@ -164,13 +155,13 @@ public class UITableResultTab extends UIOutput {
 				if (i == objs.length - 1)
 					rowClass.append(" grid-row-last");
 
-				String jsClick = UtilsJSF.generateSubmitJS(context, form,
-						getClickIdHiddenFieldName(context), objs[i].voyageId
-								.toString());
+//				String jsClick = UtilsJSF.generateSubmitJS(context, form,
+//						getClickIdHiddenFieldName(context), objs[i].voyageId
+//								.toString());
 
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
-				writer.writeAttribute("onclick", jsClick, null);
+				//writer.writeAttribute("onclick", jsClick, null);
 				Object[] values = objs[i].dataRow;
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
@@ -183,6 +174,18 @@ public class UITableResultTab extends UIOutput {
 
 					writer.endElement("td");
 				}
+				writer.startElement("td", this);
+				
+				String jsShowDetail = UtilsJSF.generateSubmitJS(context, form,
+						getClickIdHiddenFieldName(context), objs[i].voyageId.toString());
+				writer.startElement("a", this);
+				writer.writeAttribute("href", "#", null);
+				writer.writeAttribute("style", "border: 0px;", null);
+				writer.writeAttribute("onclick", jsShowDetail, null);
+				writer.write("<img style=\"border: 0px;\" alt=\"Details of voyage\" " +
+						"src=\"contents.gif\" width=\"12\" height=\"15\">");
+				writer.endElement("a");
+				writer.endElement("td");
 				writer.endElement("tr");
 
 			}
@@ -217,8 +220,13 @@ public class UITableResultTab extends UIOutput {
 	public void broadcast(FacesEvent event) throws AbortProcessingException {
 		super.broadcast(event);
 
-		if (event instanceof SortChangeEvent && sortChanged != null)
+		if (event instanceof SortChangeEvent && sortChanged != null) {
 			sortChanged.invoke(getFacesContext(), new Object[] { event });
+		}
+		
+		if (event instanceof ShowDetailsEvent && showDetails != null) {
+			showDetails.invoke(getFacesContext(), new Object[] { event });
+		}
 
 	}
 
@@ -228,5 +236,13 @@ public class UITableResultTab extends UIOutput {
 
 	public void setSortChanged(MethodBinding sortChanged) {
 		this.sortChanged = sortChanged;
+	}
+
+	public MethodBinding getShowDetails() {
+		return showDetails;
+	}
+
+	public void setShowDetails(MethodBinding showDetails) {
+		this.showDetails = showDetails;
 	}
 }
