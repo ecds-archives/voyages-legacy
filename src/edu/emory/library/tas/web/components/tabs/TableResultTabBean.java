@@ -30,6 +30,8 @@ public class TableResultTabBean {
 
 	private static final String GROUP = "Group";
 
+	private static final int MAX_STEP = 50000;
+
 	private int current = 0;
 
 	private int step = 10;
@@ -63,14 +65,19 @@ public class TableResultTabBean {
 	private boolean needDetailQuery;
 
 	public TableResultTabBean() {
-
-		Attribute[] attrs = new Attribute[6];
+		
+		VisibleColumn[] attrs = new VisibleColumn[6];
 		attrs[0] = Voyage.getAttribute("voyageId");
 		attrs[1] = Voyage.getAttribute("shipname");
-		attrs[2] = Voyage.getAttribute("captaina");
-		attrs[3] = Voyage.getAttribute("captainb");
-		attrs[4] = Voyage.getAttribute("captainc");
-		attrs[5] = Voyage.getAttribute("portdep");
+		attrs[2] = Voyage.getCoumpoundAttribute("anycaptain");
+		attrs[3] = Voyage.getAttribute("yearam");
+		attrs[4] = Voyage.getAttribute("majbyimp");
+		attrs[5] = Voyage.getAttribute("majselpt");
+		
+		if (attrs[2] == null) {
+			attrs[2] = Voyage.getAttribute("captaina");
+		}
+		
 		data.setVisibleColumns(attrs);
 		
 		detailData.setVisibleColumns(Voyage.getAttributes());
@@ -93,7 +100,7 @@ public class TableResultTabBean {
 		localCond.addCondition(subCondition);
 
 		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
-		qValue.setLimit(this.getStep().intValue());
+		qValue.setLimit(this.step);
 		qValue.setFirstResult(this.getCurrent().intValue());
 		if (dataTable.getOrderByColumn() == null) {
 			qValue.setOrderBy("v.voyageId");
@@ -118,10 +125,10 @@ public class TableResultTabBean {
 					}
 					if (i < attr.length - 1) {
 						order.append(", ");
-					}
-					qValue.setOrderBy(order.toString());
-					qValue.setOrder(dataTable.getOrder());
+					}					
 				}
+				qValue.setOrderBy(order.toString());
+				qValue.setOrder(dataTable.getOrder());
 			}
 		}
 
@@ -139,7 +146,7 @@ public class TableResultTabBean {
 	}
 
 	private void getResultsDetailDB() {
-		if (this.needDetailQuery && this.detailVoyageId != null) {
+		if (this.needDetailQuery && this.detailVoyageId != null && this.condition != null) {
 			Conditions c = new Conditions();
 			c.addCondition(VoyageIndex.getApproved());
 			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
@@ -190,12 +197,12 @@ public class TableResultTabBean {
 	}
 
 	public String remSelectedAttributeFromList() {
-		if (this.selectedAttributeToAdd == null) {
+		if (this.selectedAttributeAdded == null) {
 			return null;
 		}
 
 		VisibleColumn attr = this
-				.getVisibleAttribute(this.selectedAttributeToAdd);
+				.getVisibleAttribute(this.selectedAttributeAdded);
 
 		List list = Arrays.asList(this.data.getVisibleAttributes());
 		if (list.contains(attr)) {
@@ -252,6 +259,7 @@ public class TableResultTabBean {
 				break;
 			}
 		}
+		data.setVisibleColumns(attrs);
 		return null;
 	}
 
@@ -272,6 +280,7 @@ public class TableResultTabBean {
 				break;
 			}
 		}
+		data.setVisibleColumns(attrs);
 		return null;
 	}
 
@@ -305,6 +314,7 @@ public class TableResultTabBean {
 		this.detailMode = new Boolean(true);
 		this.resultsMode = new Boolean(false);
 		this.detailVoyageId = event.getVoyageId();
+		this.needDetailQuery = true;
 	}
 
 	/** GETTERS / SETTERS * */
@@ -376,15 +386,26 @@ public class TableResultTabBean {
 		this.current = current.intValue();
 	}
 
-	public Integer getStep() {
-		return new Integer(step);
+	public String getStep() {
+		if (this.step == MAX_STEP) {
+			return "all";
+		} else {
+			return step + "";
+		}
 	}
 
-	public void setStep(Integer step) {
-		if (this.step != step.intValue()) {
+	public void setStep(String step) {
+		if (step.equals("all")) {
+			if (this.step != MAX_STEP) {
+				this.needQuery = true;
+			}
+			this.step = MAX_STEP;
+			return;
+		}
+		if (this.step != new Integer(step).intValue()) {
 			this.needQuery = true;
 		}
-		this.step = step.intValue();
+		this.step = new Integer(step).intValue();
 	}
 
 	public TableData getData() {

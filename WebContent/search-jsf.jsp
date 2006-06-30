@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Search</title>
 	<link href="search-jsf.css" rel="stylesheet" type="text/css">
+	<script src="tooltip.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
 <f:view>
@@ -97,9 +98,18 @@
 									<h:outputText value="#{TableResultTabBean.lastDisplayed}" />
 									<h:outputText value="out of" />
 									<h:outputText value="#{TableResultTabBean.totalRows}" />
+										<h:outputText value=" | Show " />
+										<h:selectOneMenu onchange="submit()" value="#{TableResultTabBean.step}">
+											<f:selectItem itemValue="10" itemLabel="10"/>
+											<f:selectItem itemValue="25" itemLabel="25"/>
+											<f:selectItem itemValue="50" itemLabel="50"/>
+											<f:selectItem itemValue="100" itemLabel="100"/>
+											<f:selectItem itemValue="all" itemLabel="all"/>
+										</h:selectOneMenu>
+										<h:outputText value="  results per page." />
 								</t:htmlTag>
 								<t:htmlTag value="td" style="padding-left: 0px; padding-bottom: 0px; padding-top: 0px; padding-right: 5px; text-align: right">
-									<h:commandLink value="Configure table" 
+									<h:commandLink value="Preferences" 
 									action="#{TableResultTabBean.configurationMode}" /></t:htmlTag>
 							</t:htmlTag>
 							</t:htmlTag>

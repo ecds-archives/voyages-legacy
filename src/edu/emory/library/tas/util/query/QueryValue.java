@@ -123,7 +123,15 @@ public class QueryValue {
 		}
 		
 		if (orderBy != null) {		
-			buf.append(" order by ").append(orderBy);
+			String orderLocal = orderBy;
+			if (order != ORDER_DEFAULT) {
+				if (order == ORDER_ASC) {
+					orderLocal = orderBy.replaceAll(",", " asc,");
+				} else {
+					orderLocal = orderBy.replaceAll(",", " desc,");
+				}
+			}
+			buf.append(" order by ").append(orderLocal);
 			if (order != ORDER_DEFAULT) {
 				buf.append(" ");
 				if (order == ORDER_ASC) {

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
@@ -19,6 +20,8 @@ public class TableData {
 	private List data = new ArrayList();
 	private VisibleColumn orderByColumn = Voyage.getAttribute("voyageId");
 	private int order = QueryValue.ORDER_ASC;
+	private List additionalColumns = new ArrayList();
+	private List additionalData = new ArrayList();
 	
 	public class DataTableItem {
 		public Long voyageId;
@@ -34,6 +37,10 @@ public class TableData {
 	public void setVisibleColumns(List columns) {
 		this.columns.clear();
 		this.columns.addAll(columns);
+		if (this.columns.size() > 0) {
+			this.setOrderByColumn((VisibleColumn)this.columns.get(0));
+			this.setOrder(QueryValue.ORDER_ASC);
+		}
 	}
 	
 	public void setVisibleColumns(VisibleColumn[] columns) {
@@ -41,16 +48,37 @@ public class TableData {
 		for (int i = 0; i < columns.length; i++) {
 			this.columns.add(columns[i]);
 		}
+		if (this.columns.size() > 0) {
+			this.setOrderByColumn((VisibleColumn)this.columns.get(0));
+			this.setOrder(QueryValue.ORDER_ASC);
+		}
 	}
 	
 	public VisibleColumn[] getVisibleAttributes() {
 		return (VisibleColumn[])this.columns.toArray(new VisibleColumn[] {});
 	}
 	
+	public void setVisibleAdditionalColumns(List columns) {
+		this.additionalColumns.clear();
+		this.additionalColumns.addAll(columns);
+	}
+	
+	public void setVisibleAdditionalColumns(VisibleColumn[] columns) {
+		this.additionalColumns.clear();
+		for (int i = 0; i < columns.length; i++) {
+			this.additionalColumns.add(columns[i]);
+		}
+	}
+	
+	public VisibleColumn[] getVisibleAdditionalAttributes() {
+		return (VisibleColumn[])this.additionalColumns.toArray(new VisibleColumn[] {});
+	}
+	
 	public List getAttrForCAttribute(CompoundAttribute cAttr) {
 		ArrayList list = new ArrayList();
 		Set attributes = cAttr.getAttributes();
 		list.addAll(attributes);
+		AbstractAttribute.sortByName(list);
 		return list;
 	}
 
@@ -115,6 +143,7 @@ public class TableData {
 
 	public void setData(Object[] rawData) {
 		this.data.clear();
+		this.additionalData.clear();
 		for (int i = 0; i < rawData.length; i++) {
 			Object[] dataColumn = new Object[columns.size()];
 			for (int j = 0; j < columns.size(); j++) {
@@ -148,6 +177,10 @@ public class TableData {
 	
 	public DataTableItem[] getData() {
 		return (DataTableItem[])this.data.toArray(new DataTableItem[] {});
+	}
+	
+	public DataTableItem[] getAdditionalData() {
+		return (DataTableItem[])this.additionalData.toArray(new DataTableItem[] {});
 	}
 
 	public int getOrder() {

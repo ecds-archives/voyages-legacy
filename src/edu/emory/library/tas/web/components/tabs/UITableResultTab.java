@@ -19,6 +19,7 @@ import edu.emory.library.tas.web.UtilsJSF;
 
 public class UITableResultTab extends UIOutput {
 
+	private static final int TRIM_LENGTH = 35;
 	private MethodBinding sortChanged;
 	private MethodBinding showDetails;
 
@@ -166,12 +167,42 @@ public class UITableResultTab extends UIOutput {
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
 				for (int j = 0; j < values.length; j++) {
-					writer.startElement("td", this);
+					String visibleLabel = null;
+					String visibleToolTop = null;
 					Object obj = values[j];
 					if (obj != null) {
-						writer.write(obj.toString());
+						if (obj.toString().length() > TRIM_LENGTH) {
+							visibleLabel = obj.toString().substring(0, TRIM_LENGTH) + " ...";
+							visibleToolTop = obj.toString();
+						} else {
+							visibleLabel = obj.toString();
+						}
 					}
-
+					writer.startElement("td", this);
+					writer.writeAttribute("id", "cell_" + i + "_" + j, null);
+					if (visibleToolTop != null) {
+						writer.writeAttribute("onmouseover", 
+							"showToolTip('" + "tooltip_" + i + "_" + j + "', " +
+									"'" + "cell_" + i + "_" + j + "')", null);
+						writer.writeAttribute("onmouseout", 
+							"hideToolTip('" + "tooltip_" + i + "_" + j + "')", null);
+					}
+					
+					if (visibleLabel != null) {
+						writer.write(visibleLabel);
+					}
+					
+					//Tooltip
+					if (visibleToolTop != null) {
+						writer.startElement("div", this);
+						writer.writeAttribute("id", "tooltip_" + i + "_" + j, null);
+						writer.writeAttribute("class", "tableDataTooltip", null);
+						if (obj != null) {
+							writer.write(visibleToolTop.replaceAll("', '", "',  <br>'"));
+						}
+						writer.endElement("div");
+					}
+					
 					writer.endElement("td");
 				}
 				writer.startElement("td", this);

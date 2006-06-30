@@ -222,3 +222,20 @@ div.advancedStatConfigRightDiv {
 	margin-right: 2px; 
 	margin-left: 2px;
 }
+
+div.tableDataTooltip 
+{
+    visibility: hidden; 
+    position: absolute; 
+    top: 0;  
+    left: 0; 
+
+    z-index: 1; 
+    overflow:auto;
+    float: left;
+    width: 240px;
+    background: white;
+    font: normal 8pt sans-serif; 
+    padding: 3px; 
+    border: solid 1px;
+}

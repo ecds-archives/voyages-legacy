@@ -217,6 +217,30 @@ public class Voyage extends AbstractDescriptiveObject {
 		}		
 		return ret;
 	}
+	
+	public static CompoundAttribute getCoumpoundAttribute(String name) {
+		
+		Conditions conditions = new Conditions();
+		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
+		QueryValue query = new QueryValue("ObjectType", conditions);
+		query.setCacheable(true);
+		Object[] types = (Object[]) query.executeQuery();
+		ObjectType type = (ObjectType)types[0];
+		
+		conditions = new Conditions();
+		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
+		conditions.addCondition("name", name, Conditions.OP_EQUALS);
+		query = new QueryValue("CompoundAttribute", conditions);
+		query.setOrder(QueryValue.ORDER_ASC);
+		query.setOrderBy("name");
+		query.setCacheable(true);
+		Object[] attributes = (Object[]) query.executeQuery();
+		if (attributes.length == 0) {
+			return null;
+		} else {
+			return (CompoundAttribute)attributes[0];
+		}		
+	}
 
 //	/**
 //	 * Gets Schema of given attribute.
