@@ -111,8 +111,24 @@ public class TableData {
 		}
 		return (Attribute[])attributes.toArray(new Attribute[] {});
 	}
+	public Attribute[] getAdditionalAttributesForQuery() {
+		ArrayList attributes = new ArrayList();
+		for (int i = 0; i < this.additionalColumns.size(); i++) {
+			if (this.additionalColumns.get(i) instanceof Group) {
+				Group group = (Group)this.additionalColumns.get(i);
+				attributes.addAll(this.getAttrForGroup(group));
+			} else if (this.additionalColumns.get(i) instanceof CompoundAttribute) {
+				CompoundAttribute cAttr = (CompoundAttribute)this.additionalColumns.get(i);
+				attributes.addAll(this.getAttrForCAttribute(cAttr));
+			} else {
+				Attribute attr = (Attribute)this.additionalColumns.get(i);
+				attributes.add(attr);
+			}
+		}
+		return (Attribute[])attributes.toArray(new Attribute[] {});
+	}
 	
-	private Attribute[] getAttributesForColumn(int column) {
+	private Attribute[] getAttributesForColumn(List columns, int column) {
 		ArrayList attrs = new ArrayList();
 		if (columns.get(column) instanceof Group) {
 			Group group = (Group)columns.get(column);
@@ -130,15 +146,28 @@ public class TableData {
 	private int[] getRangeOfAttribute(int attr) {
 		int i = 0;
 		int count = 0;
-		for (i = 0; i < attr; i++) {
-			count += this.getAttributesForColumn(i).length;
+		Attribute[] attrs = null;
+		for (i = 0; i < attr && i < this.columns.size(); i++) {
+			count += this.getAttributesForColumn(this.columns, i).length;
 		}
-		Attribute[] attrs = this.getAttributesForColumn(i);
-		int [] ret = new int[attrs.length];
-		for (int j = 0; j < attrs.length; j++) {
-			ret[j] = count + j + 1;
+		if (i > this.columns.size() - 1) {
+			for (;i < this.additionalColumns.size() + this.columns.size(); i++) {
+				count += this.getAttributesForColumn(this.additionalColumns, i - this.columns.size()).length;
+			}
+			attrs = this.getAttributesForColumn(this.additionalColumns, i - this.columns.size());
+			int [] ret = new int[attrs.length];
+			for (int j = 0; j < attrs.length; j++) {
+				ret[j] = count + j + 1;
+			}
+			return ret;
+		} else {
+			attrs = this.getAttributesForColumn(this.columns, i);
+			int [] ret = new int[attrs.length];
+			for (int j = 0; j < attrs.length; j++) {
+				ret[j] = count + j + 1;
+			}
+			return ret;
 		}
-		return ret;
 	}
 
 	public void setData(Object[] rawData) {
@@ -146,6 +175,7 @@ public class TableData {
 		this.additionalData.clear();
 		for (int i = 0; i < rawData.length; i++) {
 			Object[] dataColumn = new Object[columns.size()];
+			Object[] additionalDataColumn = new Object[additionalColumns.size()]; 
 			for (int j = 0; j < columns.size(); j++) {
 				int [] rawCols = this.getRangeOfAttribute(j);
 				if (rawCols.length == 1) {
@@ -171,7 +201,35 @@ public class TableData {
 					dataColumn[j] = buf.toString();
 				}
 			}
+			for (int j = 0; j < additionalColumns.size(); j++) {
+				int [] rawCols = this.getRangeOfAttribute(j + this.columns.size());
+				if (rawCols.length == 1) {
+					additionalDataColumn[j] = ((Object[])rawData[i])[rawCols[0]];
+				} else {
+					StringBuffer buf = new StringBuffer();
+					buf.append("[");
+					for (int k = 0; k < rawCols.length; k++) {
+						
+						Object[] rawRow = (Object[])rawData[i];
+						if (rawRow[rawCols[k]] != null) {
+							buf.append("'");
+							buf.append(rawRow[rawCols[k]].toString());
+							buf.append("'");
+							if (k < rawCols.length - 1) {
+								buf.append(", ");
+							}
+						}
+						
+						
+					}
+					buf.append("]");
+					additionalDataColumn[j] = buf.toString();
+				}
+			}
 			this.data.add(new DataTableItem((Long)((Object[])rawData[i])[0], dataColumn));
+			if (additionalDataColumn.length > 0) {
+				this.additionalData.add(new DataTableItem((Long)((Object[])rawData[i])[0], additionalDataColumn));
+			}
 		}
 	}
 	

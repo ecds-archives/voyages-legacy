@@ -80,8 +80,13 @@ public class TableResultTabBean {
 		
 		data.setVisibleColumns(attrs);
 		
+		
 		detailData.setVisibleColumns(Voyage.getAttributes());
-
+		detailData.setVisibleAdditionalColumns(new VisibleColumn[] 
+		              {VoyageIndex.getAttribute("revisionId"), 
+		               VoyageIndex.getAttribute("revisionDate")});
+		detailData.setOrderByColumn(VoyageIndex.getAttribute("revisionId"));
+		detailData.setOrder(QueryValue.ORDER_DESC);
 	}
 
 	private void getResultsDB() {
@@ -102,6 +107,31 @@ public class TableResultTabBean {
 		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
 		qValue.setLimit(this.step);
 		qValue.setFirstResult(this.getCurrent().intValue());
+
+		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
+		if (populatedAttributes != null) {
+			for (int i = 0; i < populatedAttributes.length; i++) {
+				qValue.addPopulatedAttribute("v.voyage."
+						+ populatedAttributes[i].getName(),
+						populatedAttributes[i].isDictinaory());
+			}
+		}
+		
+		Attribute[] populatedAdditionalAttributes = dataTable.getAdditionalAttributesForQuery();
+		if (populatedAdditionalAttributes != null) {
+			for (int i = 0; i < populatedAdditionalAttributes.length; i++) {
+				qValue.addPopulatedAttribute("v."
+						+ populatedAdditionalAttributes[i].getName(),
+						populatedAdditionalAttributes[i].isDictinaory());
+			}
+		}
+		
+		String orderByPrefix = null;
+		if (populatedAdditionalAttributes != null) {
+			orderByPrefix = "v.";
+		} else {
+			orderByPrefix = "v.voyage.";
+		}
 		if (dataTable.getOrderByColumn() == null) {
 			qValue.setOrderBy("v.voyageId");
 		} else {
@@ -119,9 +149,9 @@ public class TableResultTabBean {
 				StringBuffer order = new StringBuffer();
 				for (int i = 0; i < attr.length; i++) {
 					if (!attr[i].isDictinaory()) {
-						order.append("v.voyage." + attr[i].getName());
+						order.append(orderByPrefix + attr[i].getName());
 					} else {
-						order.append("v.voyage." + attr[i].getName() + ".name");
+						order.append(orderByPrefix + attr[i].getName() + ".name");
 					}
 					if (i < attr.length - 1) {
 						order.append(", ");
@@ -129,15 +159,6 @@ public class TableResultTabBean {
 				}
 				qValue.setOrderBy(order.toString());
 				qValue.setOrder(dataTable.getOrder());
-			}
-		}
-
-		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
-		if (populatedAttributes != null) {
-			for (int i = 0; i < populatedAttributes.length; i++) {
-				qValue.addPopulatedAttribute("v.voyage."
-						+ populatedAttributes[i].getName(),
-						populatedAttributes[i].isDictinaory());
 			}
 		}
 

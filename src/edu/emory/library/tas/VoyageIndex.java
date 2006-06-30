@@ -1,9 +1,12 @@
 package edu.emory.library.tas;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 
 public class VoyageIndex {
@@ -20,6 +23,32 @@ public class VoyageIndex {
 	
 	private Voyage voyage;
 	private Set slaves = new HashSet();
+
+	private static Map attributes = new HashMap();
+	static {		
+		Attribute attr = new Attribute();
+		attr.setName("revisionId");
+		attr.setType(new Integer(Attribute.TYPE_INTEGER));
+		attr.setUserLabel("Revision");
+		attributes.put("revisionId", attr);
+		
+		attr = new Attribute();
+		attr.setName("revisionDate");
+		attr.setType(new Integer(Attribute.TYPE_INTEGER));
+		attr.setUserLabel("Modification date");
+		attributes.put("revisionDate", attr);
+		
+		attr = new Attribute();
+		attr.setName("flag");
+		attr.setType(new Integer(Attribute.TYPE_INTEGER));
+		attr.setUserLabel("Approved");
+		attributes.put("flag", attr);
+	}
+	
+	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
+	}
 	
 	public VoyageIndex() {}
 

@@ -34,8 +34,32 @@ public class UIDetailComponent extends UIComponentBase {
 		writer.endElement("th");		
 		
 		TableData.DataTableItem[] objs = data.getData();
+		TableData.DataTableItem[] addObjs = data.getAdditionalData();
 		VisibleColumn[] columns = data.getVisibleAttributes();
+		VisibleColumn[] additionalColumns = data.getVisibleAdditionalAttributes();
 		
+		
+		if (addObjs != null) {
+			for (int i = 0; i < additionalColumns.length; i++) {
+				
+				writer.startElement("tr", this);
+				writer.startElement("td", this);
+				writer.write(additionalColumns[i].toString());
+				writer.endElement("td");
+								
+				for (int j = 0; j < addObjs.length; j++) {
+					writer.startElement("td", this);
+					Object[] row = addObjs[j].dataRow;
+					if (row[i] != null) {
+						writer.write(row[i].toString());
+					}
+					writer.endElement("td");
+				}
+				
+				writer.endElement("tr");
+
+			}
+		}
 		if (objs != null) {
 			for (int i = 0; i < columns.length; i++) {
 				
