@@ -223,8 +223,7 @@ div.advancedStatConfigRightDiv {
 	margin-left: 2px;
 }
 
-div.tableDataTooltip 
-{
+div.tableDataTooltip {
     visibility: hidden; 
     position: absolute; 
     top: 0;  
@@ -238,4 +237,43 @@ div.tableDataTooltip
     font: normal 8pt sans-serif; 
     padding: 3px; 
     border: solid 1px;
+}
+
+
+table.detailTable {
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 1px;
+	border-collapse: separate;
+	border: solid 1px;
+	background-color: white;
+}
+
+td.cellPlain {
+	padding: 1px 1px 1px 1px;
+	border: solid 1px;
+	background-color: white;
+}
+
+td.cellChanged {
+	padding: 1px 1px 1px 1px;
+	border: solid 1px;
+	background-color: green;
+}
+
+th.cellUpperLeft {
+	padding: 1px 1px 1px 1px;
+	border: solid 1px;
+	background-color: #AEAEAE;
+}
+
+th.cellHeader {
+	padding: 1px 1px 1px 1px;
+	border: solid 1px;
+	background-color: #DEDEDE;
+}
+
+td.cellLeft {
+	padding: 1px 1px 1px 1px;
+	border: solid 1px;
+	background-color: #CECECE;
 }

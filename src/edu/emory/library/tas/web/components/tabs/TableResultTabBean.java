@@ -1,5 +1,6 @@
 package edu.emory.library.tas.web.components.tabs;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
+import edu.emory.library.tas.attrGroups.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
@@ -44,9 +46,9 @@ public class TableResultTabBean {
 
 	private String selectedGroupSet = null;
 
-	private String selectedAttributeAdded;
+	private List selectedAttributeAdded = new ArrayList();
 
-	private String selectedAttributeToAdd;
+	private List selectedAttributeToAdd = new ArrayList();
 
 	private Integer numberOfResults;
 
@@ -65,7 +67,7 @@ public class TableResultTabBean {
 	private boolean needDetailQuery;
 
 	public TableResultTabBean() {
-		
+
 		VisibleColumn[] attrs = new VisibleColumn[6];
 		attrs[0] = Voyage.getAttribute("voyageId");
 		attrs[1] = Voyage.getAttribute("shipname");
@@ -73,61 +75,62 @@ public class TableResultTabBean {
 		attrs[3] = Voyage.getAttribute("yearam");
 		attrs[4] = Voyage.getAttribute("majbyimp");
 		attrs[5] = Voyage.getAttribute("majselpt");
-		
+
 		if (attrs[2] == null) {
 			attrs[2] = Voyage.getAttribute("captaina");
 		}
-		
+
 		data.setVisibleColumns(attrs);
-		
-		
+
 		detailData.setVisibleColumns(Voyage.getAttributes());
-		detailData.setVisibleAdditionalColumns(new VisibleColumn[] 
-		              {VoyageIndex.getAttribute("revisionId"), 
-		               VoyageIndex.getAttribute("revisionDate")});
+
+		VisibleColumn[] additionalAttrs = new VisibleColumn[] { VoyageIndex.getAttribute("revisionId"),
+				VoyageIndex.getAttribute("revisionDate") };
+		detailData.setVisibleAdditionalColumns(additionalAttrs);
 		detailData.setOrderByColumn(VoyageIndex.getAttribute("revisionId"));
 		detailData.setOrder(QueryValue.ORDER_DESC);
+		detailData.setFormatter(additionalAttrs[1],
+				new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
 	}
 
 	private void getResultsDB() {
-		if (this.condition != null && this.componentVisible.booleanValue()
-				&& needQuery) {
-			this.queryAndFillInData(VoyageIndex.getRecent(), this.data);
+		if (this.condition != null && this.componentVisible.booleanValue() && needQuery) {
+			this.queryAndFillInData(VoyageIndex.getRecent(), this.data, this.getCurrent().intValue(), this.step);
 			needQuery = false;
 		}
 	}
 
-	private void queryAndFillInData(Conditions subCondition, TableData dataTable) {
+	private void queryAndFillInData(Conditions subCondition, TableData dataTable, int start, int length) {
 
 		subCondition = subCondition.addAttributesPrefix("v.");
-		Conditions localCond = (Conditions) this.condition
-				.addAttributesPrefix("v.voyage.");
+		Conditions localCond = (Conditions) this.condition.addAttributesPrefix("v.voyage.");
 		localCond.addCondition(subCondition);
 
 		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
-		qValue.setLimit(this.step);
-		qValue.setFirstResult(this.getCurrent().intValue());
-
+		if (length != -1) {
+			qValue.setLimit(length);
+		}
+		if (start != -1) {
+			qValue.setFirstResult(start);
+		}
 		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
-				qValue.addPopulatedAttribute("v.voyage."
-						+ populatedAttributes[i].getName(),
-						populatedAttributes[i].isDictinaory());
+				qValue.addPopulatedAttribute("v.voyage." + populatedAttributes[i].getName(), populatedAttributes[i]
+						.isDictinaory());
 			}
 		}
-		
+
 		Attribute[] populatedAdditionalAttributes = dataTable.getAdditionalAttributesForQuery();
 		if (populatedAdditionalAttributes != null) {
 			for (int i = 0; i < populatedAdditionalAttributes.length; i++) {
-				qValue.addPopulatedAttribute("v."
-						+ populatedAdditionalAttributes[i].getName(),
+				qValue.addPopulatedAttribute("v." + populatedAdditionalAttributes[i].getName(),
 						populatedAdditionalAttributes[i].isDictinaory());
 			}
 		}
-		
+
 		String orderByPrefix = null;
-		if (populatedAdditionalAttributes != null) {
+		if (populatedAdditionalAttributes != null && populatedAdditionalAttributes.length > 0) {
 			orderByPrefix = "v.";
 		} else {
 			orderByPrefix = "v.voyage.";
@@ -155,7 +158,7 @@ public class TableResultTabBean {
 					}
 					if (i < attr.length - 1) {
 						order.append(", ");
-					}					
+					}
 				}
 				qValue.setOrderBy(order.toString());
 				qValue.setOrder(dataTable.getOrder());
@@ -171,15 +174,14 @@ public class TableResultTabBean {
 			Conditions c = new Conditions();
 			c.addCondition(VoyageIndex.getApproved());
 			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
-			this.queryAndFillInData(c, this.detailData);
+			this.queryAndFillInData(c, this.detailData, -1, -1);
 			this.needDetailQuery = false;
 		}
 	}
 
 	private void setNumberOfResults() {
 
-		Conditions localCond = (Conditions) this.condition
-				.addAttributesPrefix("v.voyage.");
+		Conditions localCond = (Conditions) this.condition.addAttributesPrefix("v.voyage.");
 		localCond.addCondition(VoyageIndex.getRecent());
 
 		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
@@ -192,8 +194,7 @@ public class TableResultTabBean {
 
 	public String next() {
 		if (this.numberOfResults != null) {
-			if (current + step < this.numberOfResults.intValue()
-					&& this.condition != null) {
+			if (current + step < this.numberOfResults.intValue() && this.condition != null) {
 				current += step;
 				this.needQuery = true;
 			}
@@ -222,16 +223,19 @@ public class TableResultTabBean {
 			return null;
 		}
 
-		VisibleColumn attr = this
-				.getVisibleAttribute(this.selectedAttributeAdded);
+		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
+			String element = (String) iter.next();
 
-		List list = Arrays.asList(this.data.getVisibleAttributes());
-		if (list.contains(attr)) {
-			list = new ArrayList(list);
-			list.remove(attr);
-			this.data.setVisibleColumns(list);
-			this.needQuery = true;
-			this.needDetailQuery = true;
+			VisibleColumn attr = this.getVisibleAttribute(element);
+
+			List list = Arrays.asList(this.data.getVisibleAttributes());
+			if (list.contains(attr)) {
+				list = new ArrayList(list);
+				list.remove(attr);
+				this.data.setVisibleColumns(list);
+				this.needQuery = true;
+				this.needDetailQuery = true;
+			}
 		}
 		return null;
 	}
@@ -241,24 +245,27 @@ public class TableResultTabBean {
 			return null;
 		}
 
-		VisibleColumn attr = this
-				.getVisibleAttribute(this.selectedAttributeToAdd);
-		VisibleColumn[] attrs = this.data.getVisibleAttributes();
+		for (Iterator iter = this.selectedAttributeToAdd.iterator(); iter.hasNext();) {
+			String element = (String) iter.next();
 
-		boolean is = false;
+			VisibleColumn attr = this.getVisibleAttribute(element);
+			VisibleColumn[] attrs = this.data.getVisibleAttributes();
 
-		for (int i = 0; i < attrs.length; i++) {
-			if (attrs[i].getId().equals(attr.getId())) {
-				is = true;
+			boolean is = false;
+
+			for (int i = 0; i < attrs.length; i++) {
+				if (attrs[i].getId().equals(attr.getId())) {
+					is = true;
+				}
 			}
-		}
-		if (!is) {
-			List list = Arrays.asList(attrs);
-			list = new ArrayList(list);
-			list.add(attr);
-			this.data.setVisibleColumns(list);
-			this.needQuery = true;
-			this.needDetailQuery = true;
+			if (!is) {
+				List list = Arrays.asList(attrs);
+				list = new ArrayList(list);
+				list.add(attr);
+				this.data.setVisibleColumns(list);
+				this.needQuery = true;
+				this.needDetailQuery = true;
+			}
 		}
 		return null;
 	}
@@ -267,20 +274,24 @@ public class TableResultTabBean {
 		if (this.selectedAttributeAdded == null) {
 			return null;
 		}
-		VisibleColumn attr = this
-				.getVisibleAttribute(this.selectedAttributeAdded);
-		VisibleColumn[] attrs = data.getVisibleAttributes();
-		for (int i = 1; i < attrs.length; i++) {
-			if (attrs[i].getId().equals(attr.getId())) {
-				VisibleColumn tmp = attrs[i];
-				attrs[i] = attrs[i - 1];
-				attrs[i - 1] = tmp;
-				this.needQuery = true;
-				this.needDetailQuery = true;
-				break;
+
+		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
+			String element = (String) iter.next();
+
+			VisibleColumn attr = this.getVisibleAttribute(element);
+			VisibleColumn[] attrs = data.getVisibleAttributes();
+			for (int i = 1; i < attrs.length; i++) {
+				if (attrs[i].getId().equals(attr.getId())) {
+					VisibleColumn tmp = attrs[i];
+					attrs[i] = attrs[i - 1];
+					attrs[i - 1] = tmp;
+					this.needQuery = true;
+					this.needDetailQuery = true;
+					break;
+				}
 			}
+			data.setVisibleColumns(attrs);
 		}
-		data.setVisibleColumns(attrs);
 		return null;
 	}
 
@@ -288,20 +299,24 @@ public class TableResultTabBean {
 		if (this.selectedAttributeAdded == null) {
 			return null;
 		}
-		VisibleColumn attr = this
-				.getVisibleAttribute(this.selectedAttributeAdded);
-		VisibleColumn[] attrs = data.getVisibleAttributes();
-		for (int i = 0; i < attrs.length - 1; i++) {
-			if (attrs[i].getId().equals(attr.getId())) {
-				VisibleColumn tmp = attrs[i];
-				attrs[i] = attrs[i + 1];
-				attrs[i + 1] = tmp;
-				this.needQuery = true;
-				this.needDetailQuery = true;
-				break;
+
+		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
+			String element = (String) iter.next();
+
+			VisibleColumn attr = this.getVisibleAttribute(element);
+			VisibleColumn[] attrs = data.getVisibleAttributes();
+			for (int i = 0; i < attrs.length - 1; i++) {
+				if (attrs[i].getId().equals(attr.getId())) {
+					VisibleColumn tmp = attrs[i];
+					attrs[i] = attrs[i + 1];
+					attrs[i + 1] = tmp;
+					this.needQuery = true;
+					this.needDetailQuery = true;
+					break;
+				}
 			}
+			data.setVisibleColumns(attrs);
 		}
-		data.setVisibleColumns(attrs);
 		return null;
 	}
 
@@ -352,8 +367,7 @@ public class TableResultTabBean {
 				ret = (VisibleColumn) attrs[0];
 			}
 		} else if (sAttr.startsWith(COMPOUND_ATTRIBUTE)) {
-			String attrId = sAttr.substring(COMPOUND_ATTRIBUTE.length(), sAttr
-					.length());
+			String attrId = sAttr.substring(COMPOUND_ATTRIBUTE.length(), sAttr.length());
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
 			QueryValue qValue = new QueryValue("CompoundAttribute", c);
@@ -385,11 +399,7 @@ public class TableResultTabBean {
 		if (numberOfResults == null || numberOfResults.intValue() == 0)
 			return new Integer(0);
 		else
-			return new Integer(
-					current
-							+ 1
-							+ (this.data.getData() != null ? this.data
-									.getData().length - 1 : 0));
+			return new Integer(current + 1 + (this.data.getData() != null ? this.data.getData().length - 1 : 0));
 	}
 
 	public Integer getTotalRows() {
@@ -441,8 +451,7 @@ public class TableResultTabBean {
 	}
 
 	public Integer getResultSize() {
-		return new Integer(
-				this.data.getData() != null ? this.data.getData().length : 0);
+		return new Integer(this.data.getData() != null ? this.data.getData().length : 0);
 	}
 
 	public void setConditions(Conditions c) {
@@ -496,8 +505,7 @@ public class TableResultTabBean {
 		Group[] groupSets = Voyage.getGroups();
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
-			res.add(new ComparableSelectItem("" + set.getId().longValue(), set
-					.toString()));
+			res.add(new ComparableSelectItem("" + set.getId().longValue(), set.toString()));
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
 			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
@@ -510,8 +518,7 @@ public class TableResultTabBean {
 		ArrayList res = new ArrayList();
 		Conditions c = new Conditions();
 		if (this.selectedGroupSet != null) {
-			c.addCondition("id", new Long(this.selectedGroupSet),
-					Conditions.OP_EQUALS);
+			c.addCondition("id", new Long(this.selectedGroupSet), Conditions.OP_EQUALS);
 		}
 		QueryValue qValue = new QueryValue("Group", c);
 		// qValue.setCacheable(true);
@@ -523,15 +530,12 @@ public class TableResultTabBean {
 
 			Set groups = set.getCompoundAttributes();
 			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
-				CompoundAttribute element = (CompoundAttribute) groupsIter
-						.next();
-				res.add(new ComparableSelectItem(element.encodeToString(),
-						element.toString()));
+				CompoundAttribute element = (CompoundAttribute) groupsIter.next();
+				res.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
 			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
 				Attribute attr = (Attribute) iter.next();
-				res.add(new ComparableSelectItem(attr.encodeToString(), attr
-						.toString()));
+				res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
 			}
 		}
 		Collections.sort(res);
@@ -542,8 +546,7 @@ public class TableResultTabBean {
 		List list = new ArrayList();
 		VisibleColumn[] cols = this.data.getVisibleAttributes();
 		for (int i = 0; i < cols.length; i++) {
-			list.add(new ComparableSelectItem(cols[i].encodeToString(), cols[i]
-					.toString()));
+			list.add(new ComparableSelectItem(cols[i].encodeToString(), cols[i].toString()));
 		}
 		return list;
 	}
@@ -556,19 +559,19 @@ public class TableResultTabBean {
 		this.selectedGroupSet = selectedGroupSet;
 	}
 
-	public String getSelectedAttributeAdded() {
+	public List getSelectedAttributeAdded() {
 		return selectedAttributeAdded;
 	}
 
-	public void setSelectedAttributeAdded(String selectedAttributeAdded) {
+	public void setSelectedAttributeAdded(List selectedAttributeAdded) {
 		this.selectedAttributeAdded = selectedAttributeAdded;
 	}
 
-	public String getSelectedAttributeToAdd() {
+	public List getSelectedAttributeToAdd() {
 		return selectedAttributeToAdd;
 	}
 
-	public void setSelectedAttributeToAdd(String selectedAttributeToAdd) {
+	public void setSelectedAttributeToAdd(List selectedAttributeToAdd) {
 		this.selectedAttributeToAdd = selectedAttributeToAdd;
 	}
 

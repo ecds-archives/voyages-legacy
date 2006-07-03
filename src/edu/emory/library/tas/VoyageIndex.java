@@ -29,7 +29,7 @@ public class VoyageIndex {
 		Attribute attr = new Attribute();
 		attr.setName("revisionId");
 		attr.setType(new Integer(Attribute.TYPE_INTEGER));
-		attr.setUserLabel("Revision");
+		attr.setUserLabel("Revision #");
 		attributes.put("revisionId", attr);
 		
 		attr = new Attribute();

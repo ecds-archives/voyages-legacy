@@ -116,8 +116,9 @@
 						</t:htmlTag>
 						
 						<t:htmlTag value="div" rendered="#{TableResultTabBean.detailMode}">
+							<h:commandLink id="back_res_upper" value="Back to results" action="#{TableResultTabBean.resultsMode}"/>
 							<s:voyageDetail data="#{TableResultTabBean.detailData}"/>
-							<h:commandButton value="Back to results" action="#{TableResultTabBean.resultsMode}"/>
+							<h:commandLink id="back_res_lower" value="Back to results" action="#{TableResultTabBean.resultsMode}"/>
 						</t:htmlTag>
 									
 						<% /* Configuration of table */ %>
@@ -139,10 +140,10 @@
 								<% /* Available attributes in current group */ %>
 								<h:panelGrid styleClass="config" columns="1" id="configure_groupAttrsPanel">
 									<h:outputText id="config_label2" value="Available attributes:" />
-									<h:selectOneListbox style="width: 200px" id="configure_availAttributes" size="10"
+									<h:selectManyListbox style="width: 200px" id="configure_availAttributes" size="10"
 										value="#{TableResultTabBean.selectedAttributeToAdd}">
 										<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
-									</h:selectOneListbox>
+									</h:selectManyListbox>
 								</h:panelGrid>
 	
 								<% /* Buttons -> and -< */ %>
@@ -161,10 +162,10 @@
 									<% /* List of attributes */ %>
 									<h:panelGrid columns="1" id="configure_currentAttrsPanel">
 										<h:outputText id="config_label3" value="Current attributes in talbe:" />
-										<h:selectOneListbox style="width: 200px" id="configure_visibleAttributes"
+										<h:selectManyListbox style="width: 200px" id="configure_visibleAttributes"
 											value="#{TableResultTabBean.selectedAttributeAdded}" size="10">
 											<f:selectItems value="#{TableResultTabBean.visibleAttributes}" />
-										</h:selectOneListbox>
+										</h:selectManyListbox>
 									</h:panelGrid>
 									
 									<% /* Buttons - move up/down */ %>
