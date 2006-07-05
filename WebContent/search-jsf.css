@@ -167,20 +167,18 @@ table.grid td, table.grid th {
 
 table.grid th {
 	background-color: #DDDDDD;
-	text-align: left;
-	/*border-top: 2px solid #CCCCCC;
-	border-bottom: 2px solid #CCCCCC; */}
+	text-align: left; }
 
 tr.grid-row-even {
-	/*cursor: pointer;*/
+	cursor: pointer;
 	border-bottom: 2px solid #EEEEEE; }
 
 tr.grid-row-odd {
-	/*cursor: pointer;*/
+	cursor: pointer;
 	border-bottom: 2px solid #EEEEEE; }
 
 tr.grid-row-last {
-	/*cursor: pointer;*/
+	cursor: pointer;
 	border-bottom-style: none; }
 	
 tr.grid-row-even:hover {
@@ -191,6 +189,15 @@ tr.grid-row-odd:hover {
 
 tr.grid-row-last:hover {
 	background-color: #EEEEEE; }
+	
+td.grid-header-text {
+	padding: 0px; }
+
+td.grid-header-icon {
+	padding-left: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px; }
 
 table.configTable td {
 	background-color: #666666;
@@ -240,40 +247,32 @@ div.tableDataTooltip {
 }
 
 
-table.detailTable {
-	border-width: 1px 1px 1px 1px;
-	border-spacing: 1px;
-	border-collapse: separate;
-	border: solid 1px;
-	background-color: white;
-}
+table.detail {
+	border-collapse: collapse;
+	background-color: white; }
+
+table.detail td {
+	border-bottom: 2px solid #EEEEEE;
+	text-align: left;
+	padding: 5px; }
+	
+table.detail th {
+	text-align: left;
+	padding: 5px; }
 
 td.cellPlain {
-	padding: 1px 1px 1px 1px;
-	border: solid 1px;
-	background-color: white;
-}
+	border-left: 2px solid #EEEEEE;
+	background-color: White; }
 
 td.cellChanged {
-	padding: 1px 1px 1px 1px;
-	border: solid 1px;
-	background-color: green;
-}
+	background-color: #CC3300; }
 
 th.cellUpperLeft {
-	padding: 1px 1px 1px 1px;
-	border: solid 1px;
-	background-color: #AEAEAE;
-}
+	background-color: #DDDDDD; }
 
 th.cellHeader {
-	padding: 1px 1px 1px 1px;
-	border: solid 1px;
-	background-color: #DEDEDE;
-}
+	background-color: #DDDDDD;
+	font-weight: bold; }
 
 td.cellLeft {
-	padding: 1px 1px 1px 1px;
-	border: solid 1px;
-	background-color: #CECECE;
-}
+	font-weight: normal; }
