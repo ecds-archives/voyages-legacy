@@ -15,6 +15,7 @@ import javax.faces.event.FacesEvent;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.UtilsJSF;
 
 public class UITableResultTab extends UIOutput {
@@ -94,10 +95,10 @@ public class UITableResultTab extends UIOutput {
 
 		vb = this.getValueBinding("conditions");
 		if (vb != null) {
-			Conditions c = (Conditions) vb.getValue(context);
+			SearchParameters p = (SearchParameters) vb.getValue(context);
 			vb = this.getValueBinding("conditionsOut");
 			if (vb != null) {
-				vb.setValue(context, c);
+				vb.setValue(context, p);
 			}
 		}
 

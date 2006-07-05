@@ -1,10 +1,12 @@
 package edu.emory.library.tas.classGenerator;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,7 +38,7 @@ public class ClassGenerator {
 		}
 
 		boolean shouldSave = "true".equals(System.getProperty("saveTypes"));
-		shouldSave=true;
+		shouldSave = true;
 		
 		for (int i = 0; i < args.length; i++) {
 			String fileName = args[i];
@@ -64,9 +66,10 @@ public class ClassGenerator {
 				List attrNames = new ArrayList();
 				List attrTypes = new ArrayList();
 				List attrLabels = new ArrayList();
+				List columns = new ArrayList();
 				NodeList children = rootNode.getChildNodes();
 				StringBuffer types = new StringBuffer();
-				oStream.write("/** Static construction **/\n".getBytes());
+//				oStream.write("/** Static construction **/\n".getBytes());
 				for (int j = 0; j < children.getLength(); j++) {
 					Node child = children.item(j);
 					if (child.getNodeType() == Node.ELEMENT_NODE) {
@@ -76,8 +79,15 @@ public class ClassGenerator {
 								"type").getNodeValue();
 						String attrLabel = child.getAttributes().getNamedItem(
 								"userLabel").getNodeValue();
+						Node node = child.getAttributes().getNamedItem(
+								"column");
+						String column = null;
+						if (node != null) {
+							column = node.getNodeValue();
+						}
 						attrNames.add(attrName);
 						attrTypes.add(attrType);
+						columns.add(column);
 						String attrImportType = (child.getAttributes()
 								.getNamedItem("importType") != null) ? child
 								.getAttributes().getNamedItem("importType")
@@ -190,51 +200,108 @@ public class ClassGenerator {
 					}
 				}
 				
-				cleanDB(attributes, args, i);
+				if (shouldSave) {
+					cleanDB(attributes, args, i);
+				}
 
-				oStream.write(types.toString().getBytes());
+//				oStream.write(types.toString().getBytes());
 
 				oStream.write("\n\n\n/** Getters/setters **/\n".getBytes());
-				for (int j = 0; j < attrNames.size(); j++) {
-					StringBuffer buffer = new StringBuffer();
-					String name = (String) attrNames.get(j);
-					buffer.append("public void set").append(
-							name.substring(0, 1).toUpperCase());
-					buffer.append(name.substring(1)).append("(").append(
-							attrTypes.get(j));
-					buffer.append(" ").append(name).append(") {\n\t");
-					buffer.append("if ((").append(name).append(
-							" == null && this.values.get(\"").append(name)
-							.append("\") != null");
-					buffer.append(") \n\t\t|| (").append(name).append(
-							" != null && !").append(name).append(
-							".equals(this.values.get(\"").append(name).append(
-							"\"))))");
-					buffer.append(" {\n\t\tthis.modified = UPDATED;\n\t}");
-					buffer.append("\n\tthis.values.put(\"");
-					buffer.append(name).append("\", ").append(name).append(
-							");\n}\n");
-					oStream.write(buffer.toString().getBytes());
-				}
-				for (int j = 0; j < attrNames.size(); j++) {
-					StringBuffer buffer = new StringBuffer();
-					String name = (String) attrNames.get(j);
-					buffer.append("public ").append(attrTypes.get(j)).append(
-							" get");
-					buffer.append(name.substring(0, 1).toUpperCase());
-					buffer.append(name.substring(1)).append("() {\n\treturn (")
-							.append(attrTypes.get(j));
-					buffer.append(")this.values.get(\"").append(name).append(
-							"\");\n}\n");
-
-					oStream.write(buffer.toString().getBytes());
-				}
-
+				
+				prepareSetters(oStream, attrNames, attrTypes);
+				prepareGetters(oStream, attrNames, attrTypes);
+				
 				oStream.flush();
 				oStream.close();
+				
+				generateHibernateXml(className, attrNames, attrTypes, columns);
 			}
 		}
 
+	}
+
+	private static void generateHibernateXml(String file, List attrNames, List attrTypes, List columns) throws IOException {
+		String tableName = file.substring(0, 1).toLowerCase() + file.substring(1, file.length());
+		tableName = tableName + "s";		
+		BufferedWriter bWrite = new BufferedWriter(new FileWriter(file + ".hbm.xml"));
+		bWrite.write("<?xml version=\"1.0\"?>\n");
+		bWrite.write("<!DOCTYPE hibernate-mapping PUBLIC\n");
+		bWrite.write("		\"-//Hibernate/Hibernate Mapping DTD 3.0//EN\"\n");
+		bWrite.write("		\"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd\">\n");
+		bWrite.write("<hibernate-mapping>\n");
+		bWrite.write("	<class name=\"edu.emory.library.tas." + file + "\" table=\"" + tableName + "\">\n");
+		bWrite.write("		<id name=\"iid\" column=\"iid\">\n");
+		bWrite.write("			<generator class=\"native\"/>\n");
+		bWrite.write("		</id>\n");
+				    		        		        			      		        
+		/** Generate hbm.xml file **/
+		for (int i = 0; i < attrNames.size(); i++) {
+			String attrName = (String)attrNames.get(i);
+			String attrType = (String)attrTypes.get(i);
+			String colName = (String)columns.get(i);
+			if (colName == null || colName.equals("")) {
+				colName = attrName;
+			}
+			if ("String".equals(attrType)
+					|| "Float".equals(attrType)
+					|| "Integer".equals(attrType)
+					|| "Long".equals(attrType)
+					|| "Date".equals(attrType)) {
+				bWrite.write("		<property name=\"" + attrName + "\" column=\"" + colName + "\"/>\n");
+			} else {
+				bWrite.write("		<many-to-one name=\"" + attrName + "\"");
+				bWrite.write(" class=\"edu.emory.library.tas.dicts." + attrType + "\"");
+				bWrite.write(" unique=\"true\" lazy=\"false\"/>\n");				 
+			}
+		}
+		
+		bWrite.write("	</class>\n");			   
+		bWrite.write("</hibernate-mapping>\n");
+		
+		bWrite.flush();
+		bWrite.close();
+	}
+
+	private static void prepareSetters(BufferedOutputStream oStream, List attrNames, List attrTypes) throws IOException {
+		/** Generate setters **/
+		for (int j = 0; j < attrNames.size(); j++) {
+			StringBuffer buffer = new StringBuffer();
+			String name = (String) attrNames.get(j);
+			buffer.append("public void set").append(
+					name.substring(0, 1).toUpperCase());
+			buffer.append(name.substring(1)).append("(").append(
+					attrTypes.get(j));
+			buffer.append(" ").append(name).append(") {\n\t");
+			buffer.append("if ((").append(name).append(
+					" == null && this.values.get(\"").append(name)
+					.append("\") != null");
+			buffer.append(") \n\t\t|| (").append(name).append(
+					" != null && !").append(name).append(
+					".equals(this.values.get(\"").append(name).append(
+					"\"))))");
+			buffer.append(" {\n\t\tthis.modified = UPDATED;\n\t}");
+			buffer.append("\n\tthis.values.put(\"");
+			buffer.append(name).append("\", ").append(name).append(
+					");\n}\n");
+			oStream.write(buffer.toString().getBytes());
+		}
+	}
+
+	private static void prepareGetters(BufferedOutputStream oStream, List attrNames, List attrTypes) throws IOException {
+		/** Generate getters **/
+		for (int j = 0; j < attrNames.size(); j++) {
+			StringBuffer buffer = new StringBuffer();
+			String name = (String) attrNames.get(j);
+			buffer.append("public ").append(attrTypes.get(j)).append(
+					" get");
+			buffer.append(name.substring(0, 1).toUpperCase());
+			buffer.append(name.substring(1)).append("() {\n\treturn (")
+					.append(attrTypes.get(j));
+			buffer.append(")this.values.get(\"").append(name).append(
+					"\");\n}\n");
+
+			oStream.write(buffer.toString().getBytes());
+		}
 	}
 
 	private static void cleanDB(ArrayList attributes, String[] args, int i) {
@@ -356,7 +423,7 @@ public class ClassGenerator {
 		} else {
 			Attribute attr = (Attribute)objs[0];
 			attr.setName(attrName);
-			attr.setUserLabel(attrLabel);
+			//attr.setUserLabel(attrLabel);
 			attr.setObjectType(otype);
 			attr.setImportType(new Integer(importType));
 			attr.setImportName(attrImportName);

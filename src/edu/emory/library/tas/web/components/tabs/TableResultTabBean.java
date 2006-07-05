@@ -17,6 +17,7 @@ import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.attrGroups.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchParameters;
 
 /**
  * Backing bean for Table results presented in TAST web interface.
@@ -454,7 +455,11 @@ public class TableResultTabBean {
 		return new Integer(this.data.getData() != null ? this.data.getData().length : 0);
 	}
 
-	public void setConditions(Conditions c) {
+	public void setConditions(SearchParameters params) {
+		if (params == null) {
+			return;
+		}
+		Conditions c = params.getConditions();
 		if (c != null) {
 			System.out.println("1: --------------------------------------");
 			System.out.println(c.getConditionHQL().conditionString);

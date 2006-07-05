@@ -11,6 +11,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.web.SearchParameters;
 
 public class UITimeLineResultTab extends UIOutput {
 	
@@ -50,7 +51,7 @@ public class UITimeLineResultTab extends UIOutput {
 		
 		vb = this.getValueBinding("conditions");
 		if (vb != null) {
-			Conditions c = (Conditions) vb.getValue(context);
+			SearchParameters c = (SearchParameters) vb.getValue(context);
 			vb = this.getValueBinding("conditionsOut");
 			if (vb != null) {
 				vb.setValue(context, c);

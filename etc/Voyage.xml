@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<class name="Voyage">                   
-	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric" importName="voyageid" />
-	<attribute name="shipname" type="String" userLabel="Ship name" importType="string" length="60" />
+<class name="Voyage">
+	                   
+	<attribute name="voyageId" type="Long" userLabel="Voyage ID" importType="numeric" importName="voyageid" column="vid"/>
+	<attribute name="shipname" type="String" userLabel="Ship name" importType="string" length="60" column="ship_name"/>
   	<attribute name="captaina" type="String" userLabel="" importType="string" length="60" />
   	<attribute name="captainb" type="String" userLabel="" importType="string" length="40" />
   	<attribute name="captainc" type="String" userLabel="" importType="string" length="40" />  

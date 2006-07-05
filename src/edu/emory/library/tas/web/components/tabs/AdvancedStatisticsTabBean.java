@@ -17,6 +17,7 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.AbstractChartGenerator;
 
 public class AdvancedStatisticsTabBean {
@@ -381,12 +382,12 @@ public class AdvancedStatisticsTabBean {
 		}
 		this.aggregate = aggregate;
 	}
-
-	public Conditions getConditions() {
-		return conditions;
-	}
-
-	public void setConditions(Conditions conditions) {
+	
+	public void setConditions(SearchParameters params) {
+		if (params == null) {
+			return;
+		}
+		Conditions conditions = params.getConditions();
 		if (conditions != null && !conditions.equals(this.conditions)) {
 			this.conditions = conditions;
 			this.neededQuery = true;

@@ -28,6 +28,7 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.AbstractChartGenerator;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.XYChartGenerator;
 
@@ -215,7 +216,11 @@ public class TimeLineResultTabBean {
 		return this.chart != null;
 	}
 
-	public void setConditions(Conditions c) {
+	public void setConditions(SearchParameters params) {
+		if (params == null) {
+			return;
+		}
+		Conditions c = params.getConditions();
 		if (c == null || c.equals(conditions)) {
 			return;
 		} else {

@@ -67,7 +67,7 @@
 						<s:tabletab
 							onclick="#{TableResultTabBean.showDetails}"
 							rendered="#{TableResultTabBean.resultsMode}"
-							query="#{SearchBean.currentConditions}"
+							query="#{SearchBean.searchParameters}"
 							conditionsOut="#{TableResultTabBean.conditions}"
 							data="#{TableResultTabBean.data}"
 							componentVisible="#{TableResultTabBean.componentVisible}"
@@ -195,7 +195,7 @@
 					
 					<% /* Statistical tab */ %>
 					<s:stattab rendered="#{SearchBean.timeLineVisible}" 
-							query="#{SearchBean.currentConditions}"
+							query="#{SearchBean.searchParameters}"
 							conditionsOut="#{TimeLineResultTabBean.conditions}" 
 							componentVisible="#{TimeLineResultTabBean.componentVisible}"
 							styleClass="data-container">
@@ -233,7 +233,7 @@
 					
 					<s:stattab styleClass="data-container"
 							rendered="#{SearchBean.statisticsVisible}"
-							query="#{SearchBean.currentConditions}"
+							query="#{SearchBean.searchParameters}"
 							conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
 						<h:panelGrid columns="2">
 						
