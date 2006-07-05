@@ -22,7 +22,7 @@ public class UtilsJSF
 	
 	public static void encodeHiddenInput(UIComponent component, ResponseWriter writer, String name) throws IOException
 	{
-		encodeHiddenInput(component, writer, name, "");
+		encodeHiddenInput(component, writer, name, null);
 	}
 
 	public static void encodeHiddenInput(UIComponent component, ResponseWriter writer, String name, String value) throws IOException
