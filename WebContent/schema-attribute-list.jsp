@@ -48,11 +48,31 @@
 					</f:facet>
 					<h:outputText value="#{attribute.typeDisplayName}" />
 				</h:column>
+				<%--
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Description" />
 					</f:facet>
 					<h:outputText styleClass="description" value="#{attribute.description}" />
+				</h:column>
+				--%>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="In groups" />
+					</f:facet>
+					<h:outputText escape="false" value="#{attribute.groupsHTML}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Proxied groups" />
+					</f:facet>
+					<h:outputText escape="false" value="#{attribute.proxiedGroupsHTML}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="In compound attributes" />
+					</f:facet>
+					<h:outputText escape="false" value="#{attribute.compoundAttributesHTML}" />
 				</h:column>
 			</h:dataTable>
 			

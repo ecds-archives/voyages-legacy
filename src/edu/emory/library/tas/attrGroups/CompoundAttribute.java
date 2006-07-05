@@ -1,5 +1,6 @@
 package edu.emory.library.tas.attrGroups;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,21 +76,51 @@ public class CompoundAttribute extends AbstractAttribute {
 		return attribute;
 	}
 
-	public List loadContainingGroups(Session session) {
-		Query query = session
-				.createQuery("from Group g where :attr = some elements(g.compoundAttributes)");
+	public List loadContainingGroups(Session session)
+	{
+		Query query = session.createQuery("from Group g where :attr = some elements(g.compoundAttributes)");
 		query.setParameter("attr", this);
 		return query.list();
 	}
 
-	public List loadContainingGroups() {
+	public List determineContainingGroups(Group[] allGroups)
+	{
+		List containingGroups = new ArrayList();
+		for (int j = 0; j < allGroups.length; j++)
+		{
+			Group group = allGroups[j];
+			if (group.getCompoundAttributes().contains(this))
+			{
+				containingGroups.add(group);
+			}
+		}
+		return containingGroups;
+	}
+
+	public List determineContainingGroups(Object[] allGroups)
+	{
+		List containingGroups = new ArrayList();
+		for (int j = 0; j < allGroups.length; j++)
+		{
+			Group group = (Group) allGroups[j];
+			if (group.getCompoundAttributes().contains(this))
+			{
+				containingGroups.add(group);
+			}
+		}
+		return containingGroups;
+	}
+
+	public List loadContainingGroups()
+	{
 		Session session = HibernateUtil.getSession();
 		List groups = loadContainingGroups(session);
 		session.close();
 		return groups;
 	}
 
-	public String encodeToString() {
+	public String encodeToString()
+	{
 		return "CompoundAttribute_" + this.getId();
 	}
 

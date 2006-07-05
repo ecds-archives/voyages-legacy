@@ -42,14 +42,54 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		}
 	}
 	
-	public Object[] getAttributes()
+	public CompoundAttributeForDisplay[] getAttributes()
 	{
+		
+		Object[] compoundAttributes = null;
+		Object[] groups = null;
+		
 		if (editingVoyages())
-			return Voyage.getCoumpoundAttributes();
+		{
+			compoundAttributes = Voyage.getCoumpoundAttributes();
+			groups = Voyage.getGroups();
+		}
 		else if (editingSlaves())
-			return Slave.getCoumpoundAttributes();
+		{
+			compoundAttributes = Slave.getCoumpoundAttributes();
+			groups = Slave.getGroups();
+		}
 		else
+		{
 			return null;
+		}
+		
+		CompoundAttributeForDisplay[] compoundAttributesForDisplay = new CompoundAttributeForDisplay[compoundAttributes.length];
+
+		StringBuffer htmlGroups = new StringBuffer();
+
+		for (int i = 0; i < compoundAttributes.length; i++)
+		{
+			CompoundAttribute attr = (CompoundAttribute) compoundAttributes[i];
+			
+			htmlGroups.setLength(0);
+			for (int j = 0; j < groups.length; j++)
+			{
+				Group group = (Group) groups[j];
+				if (group.getCompoundAttributes().contains(attr))
+				{
+					htmlGroups.append("<div>");
+					htmlGroups.append(group.getUserLabelOrName());
+					htmlGroups.append("</div>");
+				}
+			}
+
+			compoundAttributesForDisplay[i] = new CompoundAttributeForDisplay(attr);
+			compoundAttributesForDisplay[i].setGroupsHTML(htmlGroups.toString());
+
+		}
+		
+		return compoundAttributesForDisplay;
+		
 	}
 	
 	private String makeAttributeLabel(AbstractAttribute attr)

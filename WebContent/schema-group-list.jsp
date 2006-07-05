@@ -55,12 +55,14 @@
 					</f:facet>
 					<h:outputText value="#{group.compoundAttributesCount}" />
 				</h:column>
+				<%--
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Description" />
 					</f:facet>
 					<h:outputText styleClass="description" value="#{group.description}" />
 				</h:column>
+				--%>
 			</h:dataTable>
 			
 		</div>

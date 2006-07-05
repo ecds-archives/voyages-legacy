@@ -56,6 +56,11 @@ public class SearchBean
 	
 	public void search()
 	{
+		searchInternal(true);
+	}
+	
+	private void searchInternal(boolean storeToHistory)
+	{
 		
 		VisibleColumn[] columns = new VisibleColumn[workingQuery.getConditionCount()];
 		Conditions conditions = new Conditions();
@@ -74,7 +79,7 @@ public class SearchBean
 		searchParameters.setConditions(conditions);
 		searchParameters.setColumns(columns);
 
-		if (!workingQuery.equals(history.getLatestQuery()))
+		if (storeToHistory && !workingQuery.equals(history.getLatestQuery()))
 			history.addQuery((Query) workingQuery.clone());
 
 	}
@@ -88,6 +93,7 @@ public class SearchBean
 	{
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
 		workingQuery = (Query) historyItem.getQuery().clone();
+		searchInternal(false);
 	}
 	
 	public void moduleTabChanged(TabChangeEvent event)

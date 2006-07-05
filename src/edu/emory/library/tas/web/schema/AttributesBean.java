@@ -1,5 +1,7 @@
 package edu.emory.library.tas.web.schema;
 
+import java.util.Iterator;
+
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
@@ -10,6 +12,8 @@ import org.hibernate.exception.DataException;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
+import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.StringUtils;
 
@@ -30,14 +34,91 @@ public class AttributesBean extends SchemaEditBeanBase
 		}
 	}
 	
-	public Object[] getAttributes()
+	public AttributeForDisplay[] getAttributes()
 	{
+		
+		Object[] attributes = null;
+		Object[] compoundAttributes = null;
+		Object[] groups = null;
+		
 		if (editingVoyages())
-			return Voyage.getAttributes();
+		{
+			attributes = Voyage.getAttributes();
+			compoundAttributes = Voyage.getCoumpoundAttributes();
+			groups = Voyage.getGroups();
+		}
 		else if (editingSlaves())
-			return Slave.getAttributes();
+		{
+			attributes = Slave.getAttributes();
+			compoundAttributes = Slave.getCoumpoundAttributes();
+			groups = Slave.getGroups();
+		}
 		else
+		{
 			return null;
+		}
+		
+		AttributeForDisplay[] attributesForDisplay = new AttributeForDisplay[attributes.length];
+
+		StringBuffer htmlCompAttrs = new StringBuffer();
+		StringBuffer htmlGroups = new StringBuffer();
+		StringBuffer htmlProxiedGroups = new StringBuffer();
+
+		for (int i = 0; i < attributes.length; i++)
+		{
+			Attribute attr = (Attribute) attributes[i];
+			
+			htmlCompAttrs.setLength(0);
+			for (int j = 0; j < compoundAttributes.length; j++)
+			{
+				CompoundAttribute compAttr = (CompoundAttribute) compoundAttributes[j];
+				if (compAttr.getAttributes().contains(attr))
+				{
+					htmlCompAttrs.append("<div>");
+					htmlCompAttrs.append(compAttr.getUserLabelOrName());
+					htmlCompAttrs.append("</div>");
+				}
+			}
+			
+			htmlProxiedGroups.setLength(0);
+			for (int j = 0; j < groups.length; j++)
+			{
+				Group group = (Group) groups[j];
+				for (Iterator iter = group.getCompoundAttributes().iterator(); iter.hasNext();)
+				{
+					CompoundAttribute compAttr = (CompoundAttribute) iter.next();
+					if (compAttr.getAttributes().contains(attr))
+					{
+						htmlProxiedGroups.append("<div>");
+						htmlProxiedGroups.append(group.getUserLabelOrName());
+						htmlProxiedGroups.append(" (by ");
+						htmlProxiedGroups.append(compAttr.getUserLabelOrName());
+						htmlProxiedGroups.append(")</div>");
+					}
+				}
+			}
+
+			htmlGroups.setLength(0);
+			for (int j = 0; j < groups.length; j++)
+			{
+				Group group = (Group) groups[j];
+				if (group.getAttributes().contains(attr))
+				{
+					htmlGroups.append("<div>");
+					htmlGroups.append(group.getUserLabelOrName());
+					htmlGroups.append("</div>");
+				}
+			}
+
+			attributesForDisplay[i] = new AttributeForDisplay(attr);
+			attributesForDisplay[i].setCompoundAttributesHTML(htmlCompAttrs.toString());
+			attributesForDisplay[i].setGroupsHTML(htmlGroups.toString());
+			attributesForDisplay[i].setProxiedGroupsHTML(htmlProxiedGroups.toString());
+
+		}
+		
+		return attributesForDisplay;
+		
 	}
 	
 	public void editAttribute(ActionEvent event)
