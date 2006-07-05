@@ -162,10 +162,8 @@ table.grid {
 	width: 100%;
 	border-collapse: collapse; } 
 
-table.grid td, table.grid th {
-	padding: 5px; }
-
 table.grid th {
+	padding: 5px;
 	background-color: #DDDDDD;
 	text-align: left; }
 
@@ -177,6 +175,9 @@ tr.grid-row-odd {
 	cursor: pointer;
 	border-bottom: 2px solid #EEEEEE; }
 
+tr.grid-row-odd td, tr.grid-row-even td { 
+	padding: 5px; }
+		
 tr.grid-row-last {
 	cursor: pointer;
 	border-bottom-style: none; }

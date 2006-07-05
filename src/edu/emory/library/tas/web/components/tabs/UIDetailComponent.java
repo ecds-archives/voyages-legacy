@@ -24,10 +24,10 @@ public class UIDetailComponent extends UIComponentBase {
 
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("table", this);
-		writer.writeAttribute("class", "detailTable", null);
-//		writer.writeAttribute("border", "1", null);
-//		writer.writeAttribute("cellspacing", "1", null);
-//		writer.writeAttribute("cellpadding", "1", null);
+		writer.writeAttribute("class", "detail", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
 
 		TableData data = this.getData();	
 		

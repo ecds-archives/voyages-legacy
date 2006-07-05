@@ -118,27 +118,50 @@ public class UITableResultTab extends UIOutput {
 								.encodeToString());
 
 				writer.startElement("th", this);
+
+				writer.startElement("table", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("cellspacing", "0", null);
+				writer.writeAttribute("cellpadding", "0", null);
+				writer.writeAttribute("class", "grid-header", null);
+				writer.startElement("tr", this);
+
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "grid-header-text", null);
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.writeAttribute("onclick", jsSort, null);
 				writer.write(populatedAttributes[i].toString());
 				writer.endElement("a");
-
+				writer.endElement("td");
+				
 				if (data.getOrderByColumn() != null
 						&& data.getOrderByColumn().getId().equals(
 								populatedAttributes[i].getId()))
-					if (data.getOrder() == QueryValue.ORDER_DESC) {
-						writer
-								.write("<img src=\"up2.gif\" width=\"15\" height=\"15\">");
-					} else if (data.getOrder() == QueryValue.ORDER_ASC) {
-						writer
-								.write("<img src=\"down2.gif\" width=\"15\" height=\"15\">");
+				{
+					
+					writer.startElement("td", this);
+					writer.writeAttribute("class", "grid-header-icon", null);
+					if (data.getOrder() == QueryValue.ORDER_DESC)
+					{
+						writer.write("<img src=\"up2.gif\" width=\"15\" height=\"15\">");
 					}
+					else if (data.getOrder() == QueryValue.ORDER_ASC)
+					{
+						writer.write("<img src=\"down2.gif\" width=\"15\" height=\"15\">");
+					}
+					writer.endElement("td");
+				}
+
+				writer.endElement("tr");
+				writer.endElement("table");
+
+				writer.endElement("th");
+
 			}
-			writer.endElement("th");
 		}
-		writer.startElement("th", this);
-		writer.endElement("th");
+//		writer.startElement("th", this);
+//		writer.endElement("th");
 		writer.endElement("tr");
 
 		StringBuffer rowClass = new StringBuffer();
@@ -156,16 +179,14 @@ public class UITableResultTab extends UIOutput {
 				if (i == objs.length - 1)
 					rowClass.append(" grid-row-last");
 
-//				String jsClick = UtilsJSF.generateSubmitJS(context, form,
-//						getClickIdHiddenFieldName(context), objs[i].voyageId
-//								.toString());
+				String jsClick = UtilsJSF.generateSubmitJS(context, form,
+						getClickIdHiddenFieldName(context), objs[i].voyageId.toString()
+								.toString());
 
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
-				//writer.writeAttribute("onclick", jsClick, null);
+				writer.writeAttribute("onclick", jsClick, null);
 				Object[] values = objs[i].dataRow;
-				writer.startElement("tr", this);
-				writer.writeAttribute("class", rowClass.toString(), null);
 				for (int j = 0; j < values.length; j++) {
 					String visibleLabel = null;
 					String visibleToolTop = null;
@@ -205,18 +226,19 @@ public class UITableResultTab extends UIOutput {
 					
 					writer.endElement("td");
 				}
-				writer.startElement("td", this);
 				
-				String jsShowDetail = UtilsJSF.generateSubmitJS(context, form,
-						getClickIdHiddenFieldName(context), objs[i].voyageId.toString());
-				writer.startElement("a", this);
-				writer.writeAttribute("href", "#", null);
-				writer.writeAttribute("style", "border: 0px;", null);
-				writer.writeAttribute("onclick", jsShowDetail, null);
-				writer.write("<img style=\"border: 0px;\" alt=\"Details of voyage\" " +
-						"src=\"contents.gif\" width=\"12\" height=\"15\">");
-				writer.endElement("a");
-				writer.endElement("td");
+//				String jsShowDetail = UtilsJSF.generateSubmitJS(context, form,
+//						getClickIdHiddenFieldName(context), objs[i].voyageId.toString());
+//				writer.startElement("td", this);
+//				writer.startElement("a", this);
+//				writer.writeAttribute("href", "#", null);
+//				writer.writeAttribute("style", "border: 0px;", null);
+//				writer.writeAttribute("onclick", jsShowDetail, null);
+//				writer.write("<img style=\"border: 0px;\" alt=\"Details of voyage\" " +
+//						"src=\"contents.gif\" width=\"12\" height=\"15\">");
+//				writer.endElement("a");
+//				writer.endElement("td");
+				
 				writer.endElement("tr");
 
 			}
