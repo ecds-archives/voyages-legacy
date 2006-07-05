@@ -11,6 +11,7 @@ import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
+import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.util.query.Conditions;
 
 
@@ -27,7 +28,8 @@ public class SearchBean
 
 	private History history = new History();
 	private Query workingQuery = new Query();
-	private Conditions currentConditions = null;
+//	private Conditions currentConditions = null;
+	private SearchParameters searchParameters = null;
 	private boolean tableVisible = true;
 	private boolean timeLineVisible = false;
 	private boolean statisticsVisible = false;
@@ -55,20 +57,23 @@ public class SearchBean
 	public void search()
 	{
 		
-		// convert to condition
+		VisibleColumn[] columns = new VisibleColumn[workingQuery.getConditionCount()];
 		Conditions conditions = new Conditions();
+
+		int i = 0;
 		boolean errors = false;
 		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
 			if (!queryCondition.addToConditions(conditions)) errors = true;
+			columns[i++] = queryCondition.getAttribute();
 		}
 		if (errors) return;
 
-		// all ok -> set our property
-		currentConditions = conditions;
-		
-		// and add to history list
+		searchParameters = new SearchParameters();
+		searchParameters.setConditions(conditions);
+		searchParameters.setColumns(columns);
+
 		if (!workingQuery.equals(history.getLatestQuery()))
 			history.addQuery((Query) workingQuery.clone());
 
@@ -92,46 +97,6 @@ public class SearchBean
 		statisticsVisible = "statistics".equals(event.getTabId());
 	}
 	
-	public String getSelectedAtttibuteId()
-	{
-		return selectedAtttibuteId;
-	}
-
-	public void setSelectedAtttibuteId(String selectedAtttibute)
-	{
-		this.selectedAtttibuteId = selectedAtttibute;
-	}
-
-	public Conditions getCurrentConditions()
-	{
-		return currentConditions;
-	}
-
-	public void setCurrentConditions(Conditions currentQuery)
-	{
-		this.currentConditions = currentQuery;
-	}
-
-	public Query getWorkingQuery()
-	{
-		return workingQuery;
-	}
-
-	public void setWorkingQuery(Query newWorkingQuery)
-	{
-		this.workingQuery = newWorkingQuery;
-	}
-
-	public History getHistory()
-	{
-		return history;
-	}
-
-	public void setHistory(History history)
-	{
-		this.history = history;
-	}
-
 	public List getVoyageAttributeGroups()
 	{
 		Group[] groups = Voyage.getGroups();
@@ -242,6 +207,56 @@ public class SearchBean
 
 	public void setStatisticsVisible(boolean statisticsVisible) {
 		this.statisticsVisible = statisticsVisible;
+	}
+
+	public String getSelectedAtttibuteId()
+	{
+		return selectedAtttibuteId;
+	}
+
+	public void setSelectedAtttibuteId(String selectedAtttibute)
+	{
+		this.selectedAtttibuteId = selectedAtttibute;
+	}
+
+//	public Conditions getCurrentConditions()
+//	{
+//		return currentConditions;
+//	}
+//
+//	public void setCurrentConditions(Conditions currentQuery)
+//	{
+//		this.currentConditions = currentQuery;
+//	}
+
+	public Query getWorkingQuery()
+	{
+		return workingQuery;
+	}
+
+	public void setWorkingQuery(Query newWorkingQuery)
+	{
+		this.workingQuery = newWorkingQuery;
+	}
+
+	public History getHistory()
+	{
+		return history;
+	}
+
+	public void setHistory(History history)
+	{
+		this.history = history;
+	}
+
+	public SearchParameters getSearchParameters()
+	{
+		return searchParameters;
+	}
+
+	public void setSearchParameters(SearchParameters searchParameters)
+	{
+		this.searchParameters = searchParameters;
 	}
 
 }
