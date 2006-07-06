@@ -38,7 +38,7 @@ public class Query
 			case AbstractAttribute.TYPE_LONG:
 			case AbstractAttribute.TYPE_FLOAT:
 			case AbstractAttribute.TYPE_DATE:
-				queryCondition = new QueryConditionRange(attribute);
+				queryCondition = new QueryConditionNumeric(attribute);
 				break;
 				
 			case AbstractAttribute.TYPE_DICT:

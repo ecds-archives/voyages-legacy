@@ -114,7 +114,24 @@ td.query-builder-range-value input {
 	border: 0px;
 	padding: 2px;
 	width: 71px; }
+	
+table.query-builder-range-months {
+	margin-top: 5px;
+	width: 280px; }
+	
+td.query-builder-range-month-delected {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+	text-align: center; }
 
+td.query-builder-range-month-selected {
+	background-color: #555555;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+	text-align: center; }
+	
 td.query-builder-list {
 	width: 220px; }
 

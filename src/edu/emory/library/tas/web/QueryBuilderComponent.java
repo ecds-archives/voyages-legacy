@@ -76,10 +76,13 @@ public class QueryBuilderComponent extends UIComponentBase
 				case AbstractAttribute.TYPE_INTEGER:
 				case AbstractAttribute.TYPE_LONG:
 				case AbstractAttribute.TYPE_FLOAT:
-				case AbstractAttribute.TYPE_DATE:
-					queryCondition = decodeRangeCondition(attribute, context, externalContex);
+					queryCondition = decodeNumericCondition(attribute, context, externalContex);
 					break;
 			
+				case AbstractAttribute.TYPE_DATE:
+					queryCondition = decodeDateCondition(attribute, context, externalContex);
+					break;
+
 				case AbstractAttribute.TYPE_DICT:
 					queryCondition = decodeDictionaryCondition(attribute, context, externalContex);
 					break;
@@ -130,15 +133,23 @@ public class QueryBuilderComponent extends UIComponentBase
 				case AbstractAttribute.TYPE_INTEGER:
 				case AbstractAttribute.TYPE_LONG:
 				case AbstractAttribute.TYPE_FLOAT:
-				case AbstractAttribute.TYPE_DATE:
-					if (queryCondition instanceof QueryConditionRange)
+					if (queryCondition instanceof QueryConditionNumeric)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer);
-						encodeRangeCondition((QueryConditionRange) queryCondition, context, form, writer);
+						encodeNumericCondition((QueryConditionNumeric) queryCondition, context, form, writer);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
 					break;
 			
+				case AbstractAttribute.TYPE_DATE:
+					if (queryCondition instanceof QueryConditionDate)
+					{
+						encodeStartQueryConditionBox(queryCondition, context, form, writer);
+						encodeDateCondition((QueryConditionDate) queryCondition, context, form, writer);
+						encodeEndQueryConditionBox(queryCondition, context, form, writer);
+					}
+					break;
+
 				case AbstractAttribute.TYPE_DICT:
 					if (queryCondition instanceof QueryConditionDictionary)
 					{
@@ -273,54 +284,54 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 	
-	private String getHtmlNameForRangeType(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericType(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_type";
 	}
 
-	private String getHtmlNameForRangeFrom(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericFrom(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_from";
 	}
 
-	private String getHtmlNameForRangeTo(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericTo(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_to";
 	}
 
-	private String getHtmlNameForRangeLe(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericLe(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_le";
 	}
 
-	private String getHtmlNameForRangeGe(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericGe(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_ge";
 	}
 	
-	private String getHtmlNameForRangeEq(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericEq(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_eq";
 	}
 
-	private void encodeRangeCondition(QueryConditionRange queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private void encodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 
 		AbstractAttribute attribute = queryCondition.getAttribute();
 		
-		String tdFromId = getClientId(context) + attribute.getId() + "_td_from";
-		String tdDashId = getClientId(context) + attribute.getId() + "_td_dash";
-		String tdToId = getClientId(context) + attribute.getId() + "_td_to";
-		String tdLeId = getClientId(context) + attribute.getId() + "_td_le";
-		String tdGeId = getClientId(context) + attribute.getId() + "_td_ge";
-		String tdEqId = getClientId(context) + attribute.getId() + "_td_eq";
+		String tdFromId = getClientId(context) + "_" + attribute.getId() + "_td_from";
+		String tdDashId = getClientId(context) + "_" + attribute.getId() + "_td_dash";
+		String tdToId = getClientId(context) + "_" + attribute.getId() + "_td_to";
+		String tdLeId = getClientId(context) + "_" + attribute.getId() + "_td_le";
+		String tdGeId = getClientId(context) + "_" + attribute.getId() + "_td_ge";
+		String tdEqId = getClientId(context) + "_" + attribute.getId() + "_td_eq";
 		
-		String htmlNameForRangeType = getHtmlNameForRangeType(attribute, context);
-		String inputFromName = getHtmlNameForRangeFrom(attribute, context);
-		String inputToName = getHtmlNameForRangeTo(attribute, context);
-		String inputLeName = getHtmlNameForRangeLe(attribute, context);
-		String inputGeName = getHtmlNameForRangeGe(attribute, context);
-		String inputEqName = getHtmlNameForRangeEq(attribute, context);
+		String htmlNameForRangeType = getHtmlNameForNumericType(attribute, context);
+		String inputFromName = getHtmlNameForNumericFrom(attribute, context);
+		String inputToName = getHtmlNameForNumericTo(attribute, context);
+		String inputLeName = getHtmlNameForNumericLe(attribute, context);
+		String inputGeName = getHtmlNameForNumericGe(attribute, context);
+		String inputEqName = getHtmlNameForNumericEq(attribute, context);
 		
 		StringBuffer js = new StringBuffer();
 
@@ -368,25 +379,25 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "between", null);
-		if (type == QueryConditionRange.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionNumeric.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
 		writer.write("Between");
 		writer.endElement("option");
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "le", null);
-		if (type == QueryConditionRange.TYPE_LE) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionNumeric.TYPE_LE) writer.writeAttribute("selected", "selected", null);
 		writer.write("at most");
 		writer.endElement("option");
 
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "ge", null);
-		if (type == QueryConditionRange.TYPE_GE) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionNumeric.TYPE_GE) writer.writeAttribute("selected", "selected", null);
 		writer.write("at least");
 		writer.endElement("option");
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "eq", null);
-		if (type == QueryConditionRange.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
+		if (type == QueryConditionNumeric.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
 		writer.write("is equal");
 		writer.endElement("option");
 		
@@ -460,45 +471,474 @@ public class QueryBuilderComponent extends UIComponentBase
 	
 	}
 	
-	private QueryCondition decodeRangeCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeNumericCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
 	{
 		
 		Map params = externalContext.getRequestParameterMap();
-		String typeStr = (String) params.get(getHtmlNameForRangeType(attribute, context));
-		String from = (String) params.get(getHtmlNameForRangeFrom(attribute, context));
-		String to = (String) params.get(getHtmlNameForRangeTo(attribute, context));
-		String le = (String) params.get(getHtmlNameForRangeLe(attribute, context));
-		String ge = (String) params.get(getHtmlNameForRangeGe(attribute, context));
-		String eq = (String) params.get(getHtmlNameForRangeEq(attribute, context));
+		String typeStr = (String) params.get(getHtmlNameForNumericType(attribute, context));
+		String from = (String) params.get(getHtmlNameForNumericFrom(attribute, context));
+		String to = (String) params.get(getHtmlNameForNumericTo(attribute, context));
+		String le = (String) params.get(getHtmlNameForNumericLe(attribute, context));
+		String ge = (String) params.get(getHtmlNameForNumericGe(attribute, context));
+		String eq = (String) params.get(getHtmlNameForNumericEq(attribute, context));
 
 		int type;
 		if ("between".equals(typeStr))
 		{
-			type = QueryConditionRange.TYPE_BETWEEN;
+			type = QueryConditionNumeric.TYPE_BETWEEN;
 		}
 		else if ("le".equals(typeStr))
 		{
-			type = QueryConditionRange.TYPE_LE; 
+			type = QueryConditionNumeric.TYPE_LE; 
 		}
 		else if ("ge".equals(typeStr))
 		{
-			type = QueryConditionRange.TYPE_GE;
+			type = QueryConditionNumeric.TYPE_GE;
 		}
 		else if ("eq".equals(typeStr))
 		{
-			type = QueryConditionRange.TYPE_EQ;
+			type = QueryConditionNumeric.TYPE_EQ;
 		}
 		else
 		{
 			return null;
 		}
 		
-		QueryConditionRange queryCondition = new QueryConditionRange(attribute, type);
+		QueryConditionNumeric queryCondition = new QueryConditionNumeric(attribute, type);
 		queryCondition.setFrom(from);
 		queryCondition.setTo(to);
 		queryCondition.setLe(le);
 		queryCondition.setGe(ge);
 		queryCondition.setEq(eq);
+		
+		return queryCondition;
+		
+	}
+
+	private String getHtmlNameForDateType(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_type";
+	}
+
+	private String getHtmlNameForDateFromMonth(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_from_month";
+	}
+
+	private String getHtmlNameForDateFromYear(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_from_year";
+	}
+
+	private String getHtmlNameForDateToMonth(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_to_month";
+	}
+
+	private String getHtmlNameForDateToYear(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_to_year";
+	}
+
+	private String getHtmlNameForDateLeMonth(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_le_month";
+	}
+
+	private String getHtmlNameForDateLeYear(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_le_year";
+	}
+
+	private String getHtmlNameForDateGeMonth(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_ge_month";
+	}
+	
+	private String getHtmlNameForDateGeYear(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_ge_year";
+	}
+
+	private String getHtmlNameForDateEqMonth(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_eq_month";
+	}
+
+	private String getHtmlNameForDateEqYear(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_eq_year";
+	}
+
+	private String getHtmlNameForRangeMonth(AbstractAttribute attribute, FacesContext context, int month)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_month_" + month;
+	}
+	
+//	private void encodeDateField(ResponseWriter writer, boolean display)
+//	{
+//		
+//		writer.startElement("td", this);
+//		if (!display) writer.writeAttribute("style", "display: none;", null);
+//		writer.writeAttribute("id", tdFromMonthId, null);
+//		writer.writeAttribute("class", "query-builder-range-value", null);
+//		writer.startElement("input", this);
+//		writer.writeAttribute("type", "text", null);
+//		writer.writeAttribute("name", inputFromMonthName, null);
+//		writer.writeAttribute("value", queryCondition.getFromMonth(), null);
+//		writer.endElement("input");
+//		writer.endElement("td");
+//		
+//		writer.startElement("td", this);
+//		if (!display) writer.writeAttribute("style", "display: none;", null);
+//		writer.writeAttribute("id", tdSlashBetweenStartId, null);
+//		writer.writeAttribute("class", "query-builder-range-dash", null);
+//		writer.write("/");
+//		writer.endElement("td");
+//
+//		writer.startElement("td", this);
+//		if (!display) writer.writeAttribute("style", "display: none;", null);
+//		writer.writeAttribute("id", tdFromYearId, null);
+//		writer.writeAttribute("class", "query-builder-range-value", null);
+//		writer.startElement("input", this);
+//		writer.writeAttribute("type", "text", null);
+//		writer.writeAttribute("name", inputFromYearName, null);
+//		writer.writeAttribute("value", queryCondition.getFromYear(), null);
+//		writer.endElement("input");
+//		writer.endElement("td");
+//		
+//	}
+
+	private void encodeDateCondition(QueryConditionDate queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	{
+
+		AbstractAttribute attribute = queryCondition.getAttribute();
+		
+		String tdFromMonthId = getClientId(context) + "_" + attribute.getId() + "_td_from_month";
+		String tdSlashBetweenStartId = getClientId(context) + "_" + attribute.getId() + "_td_slash_between_start";
+		String tdFromYearId = getClientId(context) + "_" + attribute.getId() + "_td_from_year";
+		String tdDashId = getClientId(context) + "_" + attribute.getId() + "_td_dash";
+		String tdToMonthId = getClientId(context) + "_" + attribute.getId() + "_td_to_month";
+		String tdSlashBetweenEndId = getClientId(context) + "_" + attribute.getId() + "_td_slash_between_end";
+		String tdToYearId = getClientId(context) + "_" + attribute.getId() + "_td_to_year";
+		String tdLeMonthId = getClientId(context) + "_" + attribute.getId() + "_td_le_month";
+		String tdSlashLeId = getClientId(context) + "_" + attribute.getId() + "_td_le_slash";
+		String tdLeYearId = getClientId(context) + "_" + attribute.getId() + "_td_le_year";
+		String tdGeMonthId = getClientId(context) + "_" + attribute.getId() + "_td_ge_month";
+		String tdSlashGeId = getClientId(context) + "_" + attribute.getId() + "_td_ge_slash";
+		String tdGeYearId = getClientId(context) + "_" + attribute.getId() + "_td_ge_year";
+		String tdEqMonthId = getClientId(context) + "_" + attribute.getId() + "_td_eq_month";
+		String tdSlashEqId = getClientId(context) + "_" + attribute.getId() + "_td_eq_slash";
+		String tdEqYearId = getClientId(context) + "_" + attribute.getId() + "_td_eq_year";
+		
+		String htmlNameForRangeType = getHtmlNameForDateType(attribute, context);
+		String inputFromMonthName = getHtmlNameForDateFromMonth(attribute, context);
+		String inputFromYearName = getHtmlNameForDateFromYear(attribute, context);
+		String inputToMonthName = getHtmlNameForDateToMonth(attribute, context);
+		String inputToYearName = getHtmlNameForDateToYear(attribute, context);
+		String inputLeMonthName = getHtmlNameForDateLeMonth(attribute, context);
+		String inputLeYearName = getHtmlNameForDateLeYear(attribute, context);
+		String inputGeMonthName = getHtmlNameForDateGeMonth(attribute, context);
+		String inputGeYearName = getHtmlNameForDateGeMonth(attribute, context);
+		String inputEqMonthName = getHtmlNameForDateEqMonth(attribute, context);
+		String inputEqYearName = getHtmlNameForDateEqYear(attribute, context);
+		
+		StringBuffer js = new StringBuffer();
+
+		js.append("var type = ");
+		UtilsJSF.appendFormElementRefJS(js, context, form, htmlNameForRangeType);
+		js.append(".selectedIndex;");
+		
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdFromMonthId);
+		js.append(".style.display = (type == 0) ? '' : 'none';");
+		
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdSlashBetweenStartId);
+		js.append(".style.display = (type == 0) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdFromYearId);
+		js.append(".style.display = (type == 0) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdDashId);
+		js.append(".style.display = (type == 0) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdToMonthId);
+		js.append(".style.display = (type == 0) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdSlashBetweenEndId);
+		js.append(".style.display = (type == 0) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdToYearId);
+		js.append(".style.display = (type == 0) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdLeMonthId);
+		js.append(".style.display = (type == 1) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdSlashLeId);
+		js.append(".style.display = (type == 3) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdLeYearId);
+		js.append(".style.display = (type == 1) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdGeMonthId);
+		js.append(".style.display = (type == 2) ? '' : 'none';");
+		
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdSlashGeId);
+		js.append(".style.display = (type == 3) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdGeYearId);
+		js.append(".style.display = (type == 2) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdEqMonthId);
+		js.append(".style.display = (type == 3) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdSlashEqId);
+		js.append(".style.display = (type == 3) ? '' : 'none';");
+
+		js.append(" ");
+		UtilsJSF.appendElementRefJS(js, context, form, tdEqYearId);
+		js.append(".style.display = (type == 3) ? '' : 'none';");
+
+		int type = queryCondition.getType();
+
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.startElement("tr", this);
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-range-type", null);
+		writer.startElement("select", this);
+		writer.writeAttribute("name", htmlNameForRangeType, null);
+		writer.writeAttribute("onchange", js.toString(), null);
+		
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "between", null);
+		if (type == QueryConditionNumeric.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
+		writer.write("Between");
+		writer.endElement("option");
+		
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "le", null);
+		if (type == QueryConditionNumeric.TYPE_LE) writer.writeAttribute("selected", "selected", null);
+		writer.write("at most");
+		writer.endElement("option");
+
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "ge", null);
+		if (type == QueryConditionNumeric.TYPE_GE) writer.writeAttribute("selected", "selected", null);
+		writer.write("at least");
+		writer.endElement("option");
+		
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "eq", null);
+		if (type == QueryConditionNumeric.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
+		writer.write("is equal");
+		writer.endElement("option");
+		
+		writer.endElement("select");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdFromMonthId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputFromMonthName, null);
+		writer.writeAttribute("value", queryCondition.getFromMonth(), null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdSlashBetweenStartId, null);
+		writer.writeAttribute("class", "query-builder-range-dash", null);
+		writer.write("/");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdFromYearId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputFromYearName, null);
+		writer.writeAttribute("value", queryCondition.getFromYear(), null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdDashId, null);
+		writer.writeAttribute("class", "query-builder-range-dash", null);
+		writer.write("-");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		if (type != 0) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdToMonthId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputToMonthName, null);
+		writer.writeAttribute("value", queryCondition.getToMonth(), null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		if (type != 1) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdLeMonthId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputLeMonthName, null);
+		writer.writeAttribute("value", queryCondition.getLeMonth(), null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		if (type != 2) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdGeMonthId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputGeMonthName, null);
+		writer.writeAttribute("value", queryCondition.getGeMonth(), null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		if (type != 3) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdEqMonthId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputEqMonthName, null);
+		writer.writeAttribute("value", queryCondition.getEqMonth(), null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.endElement("table");
+		
+			
+		for (int i = 0; i < 12; i++)
+			UtilsJSF.encodeHiddenInput(this, writer,
+					getHtmlNameForRangeMonth(attribute, context, i),
+					queryCondition.isMonthSelected(i) ? "1" : "0");
+
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("class", "query-builder-range-months", null);
+		writer.startElement("tr", this);
+		
+		for (int i = 0; i < 12; i++)
+		{
+			
+			String tdMonthId = getClientId(context) + "_" + attribute.getId() + "_td_month_" + i;
+			
+			js.setLength(0);
+
+			js.append("var monthInput = ");
+			UtilsJSF.appendFormElementRefJS(js, context, form, getHtmlNameForRangeMonth(attribute, context, i));
+			js.append("; ");
+
+			js.append("var monthTd = ");
+			UtilsJSF.appendElementRefJS(js, context, form, tdMonthId);
+			js.append("; ");
+
+			js.append("if (monthInput.value == '1') {");
+			js.append("monthInput.value = '0'; ");
+			js.append("monthTd.className = 'query-builder-range-month-delected';");
+			js.append("} else {");
+			js.append("monthInput.value = '1'; ");
+			js.append("monthTd.className = 'query-builder-range-month-selected';");
+			js.append("}");
+			
+			String styleClass = queryCondition.isMonthSelected(i) ? 
+					"query-builder-range-month-selected" : 
+					"query-builder-range-month-delected"; 
+			
+			writer.startElement("td", this);
+			writer.writeAttribute("id", tdMonthId, null);
+			writer.writeAttribute("class", styleClass, null);
+			writer.writeAttribute("onclick", js.toString(), null);
+			writer.write(QueryConditionDate.MONTH_NAMES[i]);
+			writer.endElement("td");
+
+		}
+		
+		writer.endElement("tr");
+		writer.endElement("table");
+
+	}
+	
+	private QueryCondition decodeDateCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
+	{
+		
+		Map params = externalContext.getRequestParameterMap();
+		String typeStr = (String) params.get(getHtmlNameForNumericType(attribute, context));
+		String from = (String) params.get(getHtmlNameForNumericFrom(attribute, context));
+		String to = (String) params.get(getHtmlNameForNumericTo(attribute, context));
+		String le = (String) params.get(getHtmlNameForNumericLe(attribute, context));
+		String ge = (String) params.get(getHtmlNameForNumericGe(attribute, context));
+		String eq = (String) params.get(getHtmlNameForNumericEq(attribute, context));
+
+		int type;
+		if ("between".equals(typeStr))
+		{
+			type = QueryConditionNumeric.TYPE_BETWEEN;
+		}
+		else if ("le".equals(typeStr))
+		{
+			type = QueryConditionNumeric.TYPE_LE; 
+		}
+		else if ("ge".equals(typeStr))
+		{
+			type = QueryConditionNumeric.TYPE_GE;
+		}
+		else if ("eq".equals(typeStr))
+		{
+			type = QueryConditionNumeric.TYPE_EQ;
+		}
+		else
+		{
+			return null;
+		}
+		
+		QueryConditionDate queryCondition = new QueryConditionDate(attribute, type);
+		queryCondition.setFromMonth(from);
+		queryCondition.setToMonth(to);
+		queryCondition.setLeMonth(le);
+		queryCondition.setGeMonth(ge);
+		queryCondition.setEqMonth(eq);
+		
+		if (attribute.getType().intValue() == AbstractAttribute.TYPE_DATE)
+		{
+			for (int i = 0; i < 12; i++)
+			{
+				String monthStatus = (String) params.get(getHtmlNameForRangeMonth(attribute, context, i));
+				queryCondition.setMonthStatus(i, "1".equals(monthStatus));
+			}
+		}
 
 		return queryCondition;
 		

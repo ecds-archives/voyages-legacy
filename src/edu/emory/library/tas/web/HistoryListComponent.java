@@ -157,12 +157,12 @@ public class HistoryListComponent extends UIComponentBase
 				}
 			}
 			
-			else if (queryCondition instanceof QueryConditionRange)
+			else if (queryCondition instanceof QueryConditionNumeric)
 			{
-				QueryConditionRange queryConditionRange = (QueryConditionRange) queryCondition;
+				QueryConditionNumeric queryConditionRange = (QueryConditionNumeric) queryCondition;
 				switch (queryConditionRange.getType())
 				{
-					case QueryConditionRange.TYPE_BETWEEN:
+					case QueryConditionNumeric.TYPE_BETWEEN:
 						writer.write(" is between ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getFrom());
@@ -173,21 +173,21 @@ public class HistoryListComponent extends UIComponentBase
 						writer.endElement("b");
 						break;
 					
-					case QueryConditionRange.TYPE_LE:
+					case QueryConditionNumeric.TYPE_LE:
 						writer.write(" is at most ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getLe());
 						writer.endElement("b");
 						break;
 						
-					case QueryConditionRange.TYPE_GE:
+					case QueryConditionNumeric.TYPE_GE:
 						writer.write(" is at least ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getGe());
 						writer.endElement("b");
 						break;
 
-					case QueryConditionRange.TYPE_EQ:
+					case QueryConditionNumeric.TYPE_EQ:
 						writer.write(" is equal ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getEq());
