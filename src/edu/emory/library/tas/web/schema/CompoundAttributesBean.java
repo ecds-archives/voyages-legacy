@@ -63,7 +63,8 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			return null;
 		}
 		
-		CompoundAttributeForDisplay[] compoundAttributesForDisplay = new CompoundAttributeForDisplay[compoundAttributes.length];
+		CompoundAttributeForDisplay[] compoundAttributesForDisplay =
+			new CompoundAttributeForDisplay[compoundAttributes.length];
 
 		StringBuffer htmlGroups = new StringBuffer();
 		StringBuffer htmlAttrs = new StringBuffer();
@@ -85,9 +86,10 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			}
 			
 			htmlAttrs.setLength(0);
-			for (Iterator iter = compAttr.getAttributes().iterator(); iter.hasNext();)
+			Attribute[] attrsSorted = compAttr.getAttributesSortedByUserLabel();
+			for (int j = 0; j < attrsSorted.length; j++)
 			{
-				Attribute attr = (Attribute) iter.next();
+				Attribute attr = attrsSorted[j];
 				htmlAttrs.append("<div>");
 				htmlAttrs.append(attr.getUserLabelOrName());
 				htmlAttrs.append("</div>");

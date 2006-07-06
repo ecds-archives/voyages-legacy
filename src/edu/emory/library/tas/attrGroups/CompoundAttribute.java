@@ -18,7 +18,11 @@ public class CompoundAttribute extends AbstractAttribute {
 
 	private Set attributes = new HashSet();
 
-	public CompoundAttribute() {
+	private Attribute[] attributesSortedByUserLabel = null;
+	private Attribute[] attributesSortedByName = null;
+
+	public CompoundAttribute()
+	{
 	}
 
 	public Set getAttributes() {
@@ -117,6 +121,28 @@ public class CompoundAttribute extends AbstractAttribute {
 		List groups = loadContainingGroups(session);
 		session.close();
 		return groups;
+	}
+
+	public Attribute[] getAttributesSortedByUserLabel()
+	{
+		if (attributesSortedByUserLabel == null)
+		{
+			attributesSortedByUserLabel = new Attribute[attributes.size()];
+			attributes.toArray(attributesSortedByUserLabel);
+			Attribute.sortByUserLabel(attributesSortedByUserLabel);
+		}
+		return attributesSortedByUserLabel;
+	}
+
+	public Attribute[] getAttributesSortedByName()
+	{
+		if (attributesSortedByName == null)
+		{
+			attributesSortedByName = new Attribute[attributes.size()];
+			attributes.toArray(attributesSortedByName);
+			Attribute.sortByName(attributesSortedByName);
+		}
+		return attributesSortedByName;
 	}
 
 	public String encodeToString()

@@ -79,19 +79,20 @@ public class GroupsBean extends SchemaEditBeanBase
 			Group group = (Group) groups[i];
 			
 			htmlCompAttrs.setLength(0);
-			CompoundAttribute[] compAttrSorted = group.getCompoundAttributesSortedByName(); 
-			for (int j = 0; j < compAttrSorted.length; j++)
+			CompoundAttribute[] compAttrsSorted = group.getCompoundAttributesSortedByUserLabel(); 
+			for (int j = 0; j < compAttrsSorted.length; j++)
 			{
-				CompoundAttribute compAttr = compAttrSorted[j];
+				CompoundAttribute compAttr = compAttrsSorted[j];
 				htmlCompAttrs.append("<div>");
 				htmlCompAttrs.append(compAttr.getUserLabelOrName());
 				htmlCompAttrs.append("</div>");
 			}
 			
 			htmlAttrs.setLength(0);
-			for (Iterator iter = group.getAttributes().iterator(); iter.hasNext();)
+			Attribute[] attrsSorted = group.getAttributesSortedByUserLabel();
+			for (int j = 0; j < attrsSorted.length; j++)
 			{
-				Attribute attr = (Attribute) iter.next();
+				Attribute attr = attrsSorted[j];
 				htmlAttrs.append("<div>");
 				htmlAttrs.append(attr.getUserLabelOrName());
 				htmlAttrs.append("</div>");

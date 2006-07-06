@@ -94,9 +94,10 @@ public class Group implements Serializable, VisibleColumn {
 	
 	public CompoundAttribute[] getCompoundAttributesSortedByUserLabel()
 	{
-		if (compoundAttributesSortedByUserLabel != null)
+		if (compoundAttributesSortedByUserLabel == null)
 		{
-			compoundAttributesSortedByUserLabel = (CompoundAttribute[]) compoundAttributes.toArray(new CompoundAttribute[compoundAttributes.size()]);
+			compoundAttributesSortedByUserLabel = new CompoundAttribute[compoundAttributes.size()];
+			compoundAttributes.toArray(compoundAttributesSortedByUserLabel);
 			CompoundAttribute.sortByUserLabel(compoundAttributesSortedByUserLabel);
 		}
 		return compoundAttributesSortedByUserLabel;
@@ -104,9 +105,10 @@ public class Group implements Serializable, VisibleColumn {
 
 	public CompoundAttribute[] getCompoundAttributesSortedByName()
 	{
-		if (compoundAttributesSortedByName != null)
+		if (compoundAttributesSortedByName == null)
 		{
-			compoundAttributesSortedByName = (CompoundAttribute[]) compoundAttributes.toArray(new CompoundAttribute[compoundAttributes.size()]);
+			compoundAttributesSortedByName = new CompoundAttribute[compoundAttributes.size()];
+			compoundAttributes.toArray(compoundAttributesSortedByName);
 			CompoundAttribute.sortByName(compoundAttributesSortedByName);
 		}
 		return compoundAttributesSortedByName;
@@ -136,19 +138,21 @@ public class Group implements Serializable, VisibleColumn {
 
 	public Attribute[] getAttributesSortedByUserLabel()
 	{
-		if (attributesSortedByUserLabel != null)
+		if (attributesSortedByUserLabel == null)
 		{
-			attributesSortedByUserLabel = (Attribute[]) compoundAttributes.toArray(new Attribute[attributes.size()]);
-			Attribute.sortByUserLabel(compoundAttributesSortedByUserLabel);
+			attributesSortedByUserLabel = new Attribute[attributes.size()];
+			attributes.toArray(attributesSortedByUserLabel);
+			Attribute.sortByUserLabel(attributesSortedByUserLabel);
 		}
 		return attributesSortedByUserLabel;
 	}
 
 	public Attribute[] getAttributesSortedByName()
 	{
-		if (attributesSortedByName != null)
+		if (attributesSortedByName == null)
 		{
-			attributesSortedByName = (Attribute[]) attributes.toArray(new Attribute[attributes.size()]);
+			attributesSortedByName = new Attribute[attributes.size()];
+			attributes.toArray(attributesSortedByName);
 			Attribute.sortByName(attributesSortedByName);
 		}
 		return attributesSortedByName;
