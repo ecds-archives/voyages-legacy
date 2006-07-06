@@ -7,12 +7,12 @@
 
 <div class="tabs-container">
 	<s:tabBar id="bar" binding="#{Switcher.moduleTabs}" onTabChanged="#{Switcher.moduleChanged}" selectedTabId="#{Switcher.selectedModuleId}">
-		<s:tab text="Voyages - groups" tabId="voyages-groups" />
-		<s:tab text="Voyages - compound attributes" tabId="voyages-compound-attributes" />
 		<s:tab text="Voyages - atrributes" tabId="voyages-attributes" />
-		<s:tab text="Names - groups" tabId="slaves-groups" />
-		<s:tab text="Names - compound attributes" tabId="slaves-compound-attributes" />
+		<s:tab text="Voyages - compound attributes" tabId="voyages-compound-attributes" />
+		<s:tab text="Voyages - groups" tabId="voyages-groups" />
 		<s:tab text="Names - attributes" tabId="slaves-attributes" />
+		<s:tab text="Names - compound attributes" tabId="slaves-compound-attributes" />
+		<s:tab text="Names - groups" tabId="slaves-groups" />
 	</s:tabBar>
 </div>
 

@@ -2,6 +2,7 @@ package edu.emory.library.tas.spss;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,19 +19,34 @@ public class ImportServlet extends HttpServlet
 {
 	
 	private static final long serialVersionUID = 1L;
+	private static final String DIRECTORY_MASK = "yyyy-MM-dd-HH-mm-ss-SSSS";
 	
-	private String generateImportDirectory()
+	private static String generateImportDirectory()
 	{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSSS");
+		SimpleDateFormat df = new SimpleDateFormat(DIRECTORY_MASK);
 		return df.format(new Date());
 	}
-
+	
+	public static boolean isValidImportDirectoryName(String name)
+	{
+		SimpleDateFormat df = new SimpleDateFormat(DIRECTORY_MASK);
+		try
+		{
+			df.parse(name);
+			return true;
+		}
+		catch (ParseException e)
+		{
+			return false;
+		}
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		
 		// import directory
 		String importsRootDir = getInitParameter("imports.dir");
-		String importDir = importsRootDir + File.separatorChar + generateImportDirectory();
+		String importDir = importsRootDir + File.separatorChar + ImportServlet.generateImportDirectory();
 		new File(importDir).mkdir();
 		
 		// create a log

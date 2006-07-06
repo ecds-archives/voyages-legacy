@@ -3,7 +3,6 @@ package edu.emory.library.tas.spss;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -990,7 +989,7 @@ public class Import
 		{
 			
 			log.startStage(LogItem.STAGE_CONVERSION);
-			//convertSpssFiles();
+			convertSpssFiles();
 
 			log.startStage(LogItem.STAGE_SCHEMA_LOADING);
 			loadSchemas();
@@ -1040,17 +1039,17 @@ public class Import
 		{
 			log.logInfo("Import terminated.");
 		}
-//		catch (StatTransferException ste)
-//		{
-//			log.logError("The uploaded file is not proabably a valid SPSS file.");
-//			log.logError(ste.getMessage());
-//			log.logInfo("Import terminated.");
-//		}
-//		catch (InterruptedException ie)
-//		{
-//			log.logError(ie.getMessage());
-//			log.logInfo("Import terminated.");
-//		}
+		catch (StatTransferException ste)
+		{
+			log.logError("The uploaded file is not proabably a valid SPSS file.");
+			log.logError(ste.getMessage());
+			log.logInfo("Import terminated.");
+		}
+		catch (InterruptedException ie)
+		{
+			log.logError(ie.getMessage());
+			log.logInfo("Import terminated.");
+		}
 		
 	}
 

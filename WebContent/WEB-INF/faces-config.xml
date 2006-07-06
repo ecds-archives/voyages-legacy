@@ -189,6 +189,26 @@
 			<value>#{Switcher}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ImportLogList</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.spss.ImportLogListBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ImportLogDetail</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.spss.ImportLogDetailBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>importDirName</property-name>
+			<value>#{ImportLogList.currentImportDirName}</value>
+		</managed-property>
+	</managed-bean>
 
 	<navigation-rule>
 		<from-view-id>/schema-group-list.jsp</from-view-id>
@@ -277,6 +297,14 @@
 		<navigation-case>
 			<from-outcome>slaves-compound-attributes</from-outcome>
 			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/import-list.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>detail</from-outcome>
+			<to-view-id>/import-detail.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

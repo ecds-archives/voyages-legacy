@@ -10,7 +10,7 @@ public class Switcher
 {
 	
 	private EditMode editMode = EditMode.Voyages;
-	private String selectedModuleId = "voyages-groups";
+	private String selectedModuleId = "voyages-attributes";
 	private TabBarComponent moduleTabs = null;
 	
 	public void moduleChanged(TabChangeEvent event)

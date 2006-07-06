@@ -53,7 +53,7 @@
 					<f:facet name="header">
 						<h:outputText value="Attributes" />
 					</f:facet>
-					<h:outputText value="#{attribute.attributesCount}" />
+					<h:outputText escape="false" value="#{attribute.attributesHTML}" />
 				</h:column>
 				<%--
 				<h:column>

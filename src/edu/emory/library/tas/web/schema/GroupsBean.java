@@ -49,10 +49,81 @@ public class GroupsBean extends SchemaEditBeanBase
 	
 	public Object[] getGroups()
 	{
+		
+		Object[] groups = null;
+		Object[] attributes = null;
+		
 		if (editingVoyages())
-			return Voyage.getGroups();
-		else
-			return Slave.getGroups();
+		{
+			groups = Voyage.getGroups();
+			attributes = Voyage.getAttributes();
+		}
+		else if (editingSlaves())
+		{
+			groups = Slave.getGroups();
+			attributes = Slave.getAttributes();
+		}
+		else 
+		{
+			return null;
+		}
+		
+		GroupForDisplay[] groupsForDisplay = new GroupForDisplay[groups.length];
+		
+		StringBuffer htmlCompAttrs = new StringBuffer();
+		StringBuffer htmlAttrs = new StringBuffer();
+		StringBuffer htmlProxiedAttrs = new StringBuffer();
+		
+		for (int i = 0; i < groups.length; i++)
+		{
+			Group group = (Group) groups[i];
+			
+			htmlCompAttrs.setLength(0);
+			CompoundAttribute[] compAttrSorted = group.getCompoundAttributesSortedByName(); 
+			for (int j = 0; j < compAttrSorted.length; j++)
+			{
+				CompoundAttribute compAttr = compAttrSorted[j];
+				htmlCompAttrs.append("<div>");
+				htmlCompAttrs.append(compAttr.getUserLabelOrName());
+				htmlCompAttrs.append("</div>");
+			}
+			
+			htmlAttrs.setLength(0);
+			for (Iterator iter = group.getAttributes().iterator(); iter.hasNext();)
+			{
+				Attribute attr = (Attribute) iter.next();
+				htmlAttrs.append("<div>");
+				htmlAttrs.append(attr.getUserLabelOrName());
+				htmlAttrs.append("</div>");
+			}
+			
+			htmlProxiedAttrs.setLength(0);
+			for (int j = 0; j < attributes.length; j++)
+			{
+				Attribute attr = (Attribute) attributes[j];
+				for (Iterator iter = group.getCompoundAttributes().iterator(); iter.hasNext();)
+				{
+					CompoundAttribute compAttr = (CompoundAttribute) iter.next();
+					if (compAttr.getAttributes().contains(attr))
+					{
+						htmlProxiedAttrs.append("<div>");
+						htmlProxiedAttrs.append(attr.getUserLabelOrName());
+						htmlProxiedAttrs.append(" (by ");
+						htmlProxiedAttrs.append(compAttr.getUserLabelOrName());
+						htmlProxiedAttrs.append(")</div>");
+					}
+				}
+			}
+
+			groupsForDisplay[i] = new GroupForDisplay(group);
+			groupsForDisplay[i].setCompoundAttributesHTML(htmlCompAttrs.toString());
+			groupsForDisplay[i].setAttributesHTML(htmlAttrs.toString());
+			groupsForDisplay[i].setProxiedAttributesHTML(htmlProxiedAttrs.toString());
+			
+		}
+		
+		return groupsForDisplay;
+		
 	}
 	
 	private String makeAttributeLabel(AbstractAttribute attr)
@@ -101,38 +172,6 @@ public class GroupsBean extends SchemaEditBeanBase
 				uiAvailable.add(item);
 			}
 		}
-		
-//		uiSelected.clear();
-//		Set selectedIds = new HashSet();
-//		if (dbSelected != null)
-//		{
-//			AbstractAttribute.sortByName(dbSelected);
-//			for (int i = 0; i < dbSelected.length; i++)
-//			{
-//				AbstractAttribute attr = dbSelected[i];
-//				SelectItem item = new SelectItem();
-//				item.setText(makeAttributeLabel(attr));
-//				item.setValue(attr.getId().toString());
-//				item.setOrderNumber(i);
-//				selectedIds.add(attr.getId());
-//				uiSelected.add(item);
-//			}
-//		}
-//		
-//		uiAvailable.clear();
-//		AbstractAttribute.sortByName(dbAll);
-//		for (int i = 0; i < dbAll.length; i++)
-//		{
-//			AbstractAttribute attr = dbAll[i];
-//			if (!selectedIds.contains(dbAll[i].getId()))
-//			{
-//				SelectItem item = new SelectItem();
-//				item.setText(makeAttributeLabel(attr));
-//				item.setValue(attr.getId().toString());
-//				item.setOrderNumber(i);
-//				uiAvailable.add(item);
-//			}
-//		}
 		
 	}
 	

@@ -47,13 +47,19 @@
 					<f:facet name="header">
 						<h:outputText value="Attributes" />
 					</f:facet>
-					<h:outputText value="#{group.attributesCount}" />
+					<h:outputText escape="false" value="#{group.attributesHTML}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Proxied attributes" />
+					</f:facet>
+					<h:outputText escape="false" value="#{group.proxiedAttributesHTML}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Compound attributes" />
 					</f:facet>
-					<h:outputText value="#{group.compoundAttributesCount}" />
+					<h:outputText escape="false" value="#{group.compoundAttributesHTML}" />
 				</h:column>
 				<%--
 				<h:column>

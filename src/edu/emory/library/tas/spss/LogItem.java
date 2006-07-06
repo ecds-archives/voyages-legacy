@@ -11,12 +11,13 @@ public class LogItem
 	public static final int STAGE_SORTING = 5;
 	public static final int STAGE_UPDATING_LABELS = 6;
 	public static final int STAGE_IMPORTING_DATA = 7;
+	public static final int STAGE_END_OF_IMPORT = 8;
 	
 	public static final int TYPE_INFO = 0;
 	public static final int TYPE_WARN = 1;
 	public static final int TYPE_ERROR = 2;	
 	
-	private static final String[] stageStrings = new String[] {"U", "C", "S", "M", "N", "O", "D", "I"};
+	private static final String[] stageStrings = new String[] {"U", "C", "S", "M", "N", "O", "D", "I", "E"};
 	private static final String[] typeStrings = new String[] {"I", "W", "E"};
 	
 	private static final String[] stageLabels = new String[] {
@@ -27,7 +28,8 @@ public class LogItem
 		"Numbering voyages and slaves",
 		"Sorting voyages and slaves",
 		"Synchronizing labels",
-		"Importing data to database" };
+		"Importing data to database",
+		"End of import" };
 	
 	private static final String[] typeLabels = new String[] {
 		"Information",

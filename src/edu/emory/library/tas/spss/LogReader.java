@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +32,7 @@ public class LogReader
 		this.fileName = fileName;
 	}
 	
-	private ArrayList load(boolean groupByStages) throws IOException
+	private ArrayList load(boolean groupByStages) throws IOException, LogReaderException
 	{
 		
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -78,6 +79,11 @@ public class LogReader
 				messages.add(logItem);
 				
 			}
+			else
+			{
+				reader.close();
+				throw new LogReaderException();
+			}
 		}
 		reader.close();
 		
@@ -88,22 +94,23 @@ public class LogReader
 		
 	}
 	
-	public LogItemStage[] loadGroupedByStages() throws IOException
+	public LogItemStage[] loadGroupedByStages() throws IOException, LogReaderException
 	{
-		ArrayList stages = load(true);
+		List stages = load(true);
 		LogItemStage[] stagesArray = new LogItemStage[stages.size()];
 		int i = 0;
 		for (Iterator iterStage = stages.iterator(); iterStage.hasNext();)
 		{		
-			ArrayList stage = (ArrayList) iterStage.next();
+			List stage = (ArrayList) iterStage.next();
 			stagesArray[i].setLogItems((LogItem[]) stage.toArray(new LogItem[] {new LogItem()}));
 		}
 		return stagesArray;
 	}
 	
-	public LogItem[] loadFlatList() throws IOException
+	public LogItem[] loadFlatList() throws IOException, LogReaderException
 	{
-		return (LogItem[]) load(false).toArray(new LogItem[] {new LogItem()});
+		List items = load(false);
+		return (LogItem[]) items.toArray(new LogItem[items.size()]);
 	}
 	
 }

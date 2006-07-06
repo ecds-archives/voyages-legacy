@@ -6,6 +6,7 @@ public class CompoundAttributeForDisplay extends AbstractAttributeForDisplay
 {
 	
 	private int attributesCount;
+	private String attributesHTML;
 	
 	public CompoundAttributeForDisplay(CompoundAttribute attribute)
 	{
@@ -25,6 +26,16 @@ public class CompoundAttributeForDisplay extends AbstractAttributeForDisplay
 	public void setAttributesCount(int attributesCount)
 	{
 		this.attributesCount = attributesCount;
+	}
+
+	public String getAttributesHTML()
+	{
+		return attributesHTML;
+	}
+
+	public void setAttributesHTML(String attributesHTML)
+	{
+		this.attributesHTML = attributesHTML;
 	}
 
 }

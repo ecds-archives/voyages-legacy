@@ -66,7 +66,7 @@ public class LogWriter
 		logEvent(LogItem.TYPE_ERROR, message);
 	}
 	
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args) throws IOException, LogReaderException
 	{
 		
 		LogWriter w = new LogWriter("x.log");

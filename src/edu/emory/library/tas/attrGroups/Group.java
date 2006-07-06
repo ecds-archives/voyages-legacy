@@ -31,6 +31,11 @@ public class Group implements Serializable, VisibleColumn {
 
 	private String description;
 
+	private CompoundAttribute[] compoundAttributesSortedByUserLabel = null;
+	private CompoundAttribute[] compoundAttributesSortedByName = null;
+	private Attribute[] attributesSortedByUserLabel = null;
+	private Attribute[] attributesSortedByName = null;
+
 	public Group() {
 	}
 
@@ -75,30 +80,80 @@ public class Group implements Serializable, VisibleColumn {
 		return (Group) list.get(0);
 	}
 
-	public Set getCompoundAttributes() {
+	public Set getCompoundAttributes()
+	{
 		return compoundAttributes;
 	}
 
-	public void setCompoundAttributes(Set groups) {
+	public void setCompoundAttributes(Set groups)
+	{
+		compoundAttributesSortedByName = null;
+		compoundAttributesSortedByUserLabel = null;
 		this.compoundAttributes = groups;
 	}
+	
+	public CompoundAttribute[] getCompoundAttributesSortedByUserLabel()
+	{
+		if (compoundAttributesSortedByUserLabel != null)
+		{
+			compoundAttributesSortedByUserLabel = (CompoundAttribute[]) compoundAttributes.toArray(new CompoundAttribute[compoundAttributes.size()]);
+			CompoundAttribute.sortByUserLabel(compoundAttributesSortedByUserLabel);
+		}
+		return compoundAttributesSortedByUserLabel;
+	}
 
-	public Long getId() {
+	public CompoundAttribute[] getCompoundAttributesSortedByName()
+	{
+		if (compoundAttributesSortedByName != null)
+		{
+			compoundAttributesSortedByName = (CompoundAttribute[]) compoundAttributes.toArray(new CompoundAttribute[compoundAttributes.size()]);
+			CompoundAttribute.sortByName(compoundAttributesSortedByName);
+		}
+		return compoundAttributesSortedByName;
+	}
+
+	public Long getId()
+	{
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Long id)
+	{
 		this.id = id;
 	}
 
-	public Set getAttributes() {
+	public Set getAttributes()
+	{
 		return attributes;
 	}
 
-	public void setAttributes(Set attributes) {
+	public void setAttributes(Set attributes)
+	{
+		attributesSortedByName = null;
+		attributesSortedByUserLabel = null;
 		this.attributes = attributes;
 	}
 
+	public Attribute[] getAttributesSortedByUserLabel()
+	{
+		if (attributesSortedByUserLabel != null)
+		{
+			attributesSortedByUserLabel = (Attribute[]) compoundAttributes.toArray(new Attribute[attributes.size()]);
+			Attribute.sortByUserLabel(compoundAttributesSortedByUserLabel);
+		}
+		return attributesSortedByUserLabel;
+	}
+
+	public Attribute[] getAttributesSortedByName()
+	{
+		if (attributesSortedByName != null)
+		{
+			attributesSortedByName = (Attribute[]) attributes.toArray(new Attribute[attributes.size()]);
+			Attribute.sortByName(attributesSortedByName);
+		}
+		return attributesSortedByName;
+	}
+	
 	public String getName() {
 		return name;
 	}

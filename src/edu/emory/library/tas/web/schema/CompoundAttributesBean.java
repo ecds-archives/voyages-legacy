@@ -66,25 +66,36 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		CompoundAttributeForDisplay[] compoundAttributesForDisplay = new CompoundAttributeForDisplay[compoundAttributes.length];
 
 		StringBuffer htmlGroups = new StringBuffer();
+		StringBuffer htmlAttrs = new StringBuffer();
 
 		for (int i = 0; i < compoundAttributes.length; i++)
 		{
-			CompoundAttribute attr = (CompoundAttribute) compoundAttributes[i];
+			CompoundAttribute compAttr = (CompoundAttribute) compoundAttributes[i];
 			
 			htmlGroups.setLength(0);
 			for (int j = 0; j < groups.length; j++)
 			{
 				Group group = (Group) groups[j];
-				if (group.getCompoundAttributes().contains(attr))
+				if (group.getCompoundAttributes().contains(compAttr))
 				{
 					htmlGroups.append("<div>");
 					htmlGroups.append(group.getUserLabelOrName());
 					htmlGroups.append("</div>");
 				}
 			}
+			
+			htmlAttrs.setLength(0);
+			for (Iterator iter = compAttr.getAttributes().iterator(); iter.hasNext();)
+			{
+				Attribute attr = (Attribute) iter.next();
+				htmlAttrs.append("<div>");
+				htmlAttrs.append(attr.getUserLabelOrName());
+				htmlAttrs.append("</div>");
+			}
 
-			compoundAttributesForDisplay[i] = new CompoundAttributeForDisplay(attr);
+			compoundAttributesForDisplay[i] = new CompoundAttributeForDisplay(compAttr);
 			compoundAttributesForDisplay[i].setGroupsHTML(htmlGroups.toString());
+			compoundAttributesForDisplay[i].setAttributesHTML(htmlAttrs.toString());
 
 		}
 		
