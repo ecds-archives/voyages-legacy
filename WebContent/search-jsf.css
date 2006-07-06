@@ -5,6 +5,7 @@ body {
 	padding: 0px; }
 
 a {
+	text-decoration: none;
 	color: #CC3300; }
 
 input, textarea, select {
