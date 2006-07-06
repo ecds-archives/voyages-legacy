@@ -71,17 +71,8 @@
 							conditionsOut="#{TableResultTabBean.conditions}"
 							data="#{TableResultTabBean.data}"
 							componentVisible="#{TableResultTabBean.componentVisible}"
-							sortChanged="#{TableResultTabBean.sortChanged}">
-							<%-- 
-							<s:resultscroll resultFirst="#{TableResultTabBean.current}" 
-											resultLast="#{TableResultTabBean.resultSize}"
-											resultSize="#{TableResultTabBean.numberOfResults}">
-								<h:commandButton id="prev_pack" value="Previous result set" action="#{TableResultTabBean.prev}" />
-								<h:commandButton id="next_pack" value="Next result set" action="#{TableResultTabBean.next}" />
-								<h:commandButton id="configureButton" value="Configure table" action="#{TableResultTabBean.configurationMode}" />
-							</s:resultscroll>
-							--%>
-						</s:tabletab>
+							sortChanged="#{TableResultTabBean.sortChanged}"
+							style="overflow:auto;"/>
 						
 						<t:htmlTag value="div" style="background-color: #DDDDDD; padding: 5px;" 
 								rendered="#{TableResultTabBean.resultsMode}">
@@ -178,10 +169,10 @@
 								</h:panelGrid>
 							</h:panelGrid>
 							
-							<% /* Results per page config */ %>
-							<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
-								<h:outputText style="margin-left: 3px; margin-top: 3px;" value="Results per page: " />
-								<h:inputText style="margin-top: 3px; width: 40px;" value="#{TableResultTabBean.step}" />
+							<% /* Auto attach attributes from search */ %>
+							<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">			
+								<h:selectBooleanCheckbox style="margin-top: 3px;" value="#{TableResultTabBean.attachSearchedParams}" />				
+								<h:outputText style="margin-left: 3px; margin-top: 3px;" value=" Attach to the result attributes from the search query" />
 							</t:htmlTag>
 							
 							<% /* Apply button part */ %>

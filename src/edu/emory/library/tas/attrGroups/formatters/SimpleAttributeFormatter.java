@@ -12,16 +12,17 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 
 	public String format(Object[] object) {
 		StringBuffer buf = new StringBuffer();
-		buf.append("[");
+		boolean added = false;
+		buf.append("[");		
 		for (int i = 0; i < object.length; i++) {
-
 			if (object[i] != null) {
+				if (i > 0 && added) {
+					buf.append(", ");
+				}
 				buf.append("'");
 				buf.append(object[i].toString());
 				buf.append("'");
-				if (i < object.length - 1) {
-					buf.append(", ");
-				}
+				added = true;
 			}
 
 		}

@@ -48,7 +48,11 @@ public class TableResultTabBean {
 	private String selectedGroupSet = null;
 
 	private List selectedAttributeAdded = new ArrayList();
+	
+	private List visibleColumns = new ArrayList();
 
+	private List queryColumns = new ArrayList();
+	
 	private List selectedAttributeToAdd = new ArrayList();
 
 	private Integer numberOfResults;
@@ -66,6 +70,8 @@ public class TableResultTabBean {
 	private Long detailVoyageId;
 
 	private boolean needDetailQuery;
+	
+	private Boolean attachSearchedParams = new Boolean(true);
 
 	public TableResultTabBean() {
 
@@ -82,7 +88,9 @@ public class TableResultTabBean {
 		}
 
 		data.setVisibleColumns(attrs);
-
+		this.visibleColumns = Arrays.asList(attrs);
+		
+		
 		detailData.setVisibleColumns(Voyage.getAttributes());
 
 		VisibleColumn[] additionalAttrs = new VisibleColumn[] { VoyageIndex.getAttribute("revisionId"),
@@ -226,14 +234,12 @@ public class TableResultTabBean {
 
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-
 			VisibleColumn attr = this.getVisibleAttribute(element);
-
-			List list = Arrays.asList(this.data.getVisibleAttributes());
+			List list = new ArrayList(this.visibleColumns);
 			if (list.contains(attr)) {
-				list = new ArrayList(list);
 				list.remove(attr);
-				this.data.setVisibleColumns(list);
+				this.visibleColumns = list;
+				this.setVisibleColumns();
 				this.needQuery = true;
 				this.needDetailQuery = true;
 			}
@@ -248,22 +254,19 @@ public class TableResultTabBean {
 
 		for (Iterator iter = this.selectedAttributeToAdd.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-
 			VisibleColumn attr = this.getVisibleAttribute(element);
-			VisibleColumn[] attrs = this.data.getVisibleAttributes();
-
+			VisibleColumn[] attrs = (VisibleColumn[])this.visibleColumns.toArray(new VisibleColumn[] {});
 			boolean is = false;
-
 			for (int i = 0; i < attrs.length; i++) {
 				if (attrs[i].getId().equals(attr.getId())) {
 					is = true;
 				}
 			}
 			if (!is) {
-				List list = Arrays.asList(attrs);
-				list = new ArrayList(list);
+				List list = new ArrayList(this.visibleColumns);
 				list.add(attr);
-				this.data.setVisibleColumns(list);
+				this.visibleColumns = list;
+				this.setVisibleColumns();
 				this.needQuery = true;
 				this.needDetailQuery = true;
 			}
@@ -278,9 +281,8 @@ public class TableResultTabBean {
 
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-
 			VisibleColumn attr = this.getVisibleAttribute(element);
-			VisibleColumn[] attrs = data.getVisibleAttributes();
+			VisibleColumn[] attrs = (VisibleColumn[])this.visibleColumns.toArray(new VisibleColumn[] {});
 			for (int i = 1; i < attrs.length; i++) {
 				if (attrs[i].getId().equals(attr.getId())) {
 					VisibleColumn tmp = attrs[i];
@@ -291,7 +293,8 @@ public class TableResultTabBean {
 					break;
 				}
 			}
-			data.setVisibleColumns(attrs);
+			this.visibleColumns = Arrays.asList(attrs);
+			this.setVisibleColumns();
 		}
 		return null;
 	}
@@ -303,9 +306,8 @@ public class TableResultTabBean {
 
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-
 			VisibleColumn attr = this.getVisibleAttribute(element);
-			VisibleColumn[] attrs = data.getVisibleAttributes();
+			VisibleColumn[] attrs = (VisibleColumn[])this.visibleColumns.toArray(new VisibleColumn[] {});
 			for (int i = 0; i < attrs.length - 1; i++) {
 				if (attrs[i].getId().equals(attr.getId())) {
 					VisibleColumn tmp = attrs[i];
@@ -316,7 +318,8 @@ public class TableResultTabBean {
 					break;
 				}
 			}
-			data.setVisibleColumns(attrs);
+			this.visibleColumns = Arrays.asList(attrs);
+			this.setVisibleColumns();
 		}
 		return null;
 	}
@@ -460,6 +463,7 @@ public class TableResultTabBean {
 			return;
 		}
 		Conditions c = params.getConditions();
+		this.queryColumns = Arrays.asList(params.getColumns());
 		if (c != null) {
 			System.out.println("1: --------------------------------------");
 			System.out.println(c.getConditionHQL().conditionString);
@@ -469,6 +473,11 @@ public class TableResultTabBean {
 		} else if (c.equals(condition)) {
 			// needQuery = false;
 		} else {
+			List list = new ArrayList(this.visibleColumns);
+			if (this.attachSearchedParams.booleanValue()) {
+				list.addAll(this.queryColumns);
+			}
+			this.data.setVisibleColumns(list);
 			condition = c;
 			needQuery = true;
 			this.needDetailQuery = true;
@@ -549,9 +558,10 @@ public class TableResultTabBean {
 
 	public List getVisibleAttributes() {
 		List list = new ArrayList();
-		VisibleColumn[] cols = this.data.getVisibleAttributes();
-		for (int i = 0; i < cols.length; i++) {
-			list.add(new ComparableSelectItem(cols[i].encodeToString(), cols[i].toString()));
+//		VisibleColumn[] cols = this.data.getVisibleAttributes();
+		for (Iterator iter = this.visibleColumns.iterator(); iter.hasNext();) {
+			VisibleColumn element = (VisibleColumn) iter.next();			
+			list.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
 		}
 		return list;
 	}
@@ -599,5 +609,25 @@ public class TableResultTabBean {
 
 	public void setDetailMode(Boolean detailMode) {
 		this.detailMode = detailMode;
+	}
+
+	public Boolean getAttachSearchedParams() {
+		return attachSearchedParams;
+	}
+
+	public void setAttachSearchedParams(Boolean attachSearchedParams) {
+		if (!this.attachSearchedParams.equals(attachSearchedParams)) {
+			this.attachSearchedParams = attachSearchedParams;
+			this.setVisibleColumns();
+			this.needQuery = true;
+		}
+	}
+	
+	private void setVisibleColumns() {
+		List cols = new ArrayList(this.visibleColumns);
+		if (attachSearchedParams.booleanValue()) {				
+			cols.addAll(this.queryColumns);
+		}
+		this.data.setVisibleColumns(cols);
 	}
 }

@@ -64,10 +64,21 @@ public class UITableResultTab extends UIOutput {
 
 	public void encodeBegin(FacesContext context) throws IOException {
 		TableData data = null;
-
+		
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
-
+		
+		ValueBinding vb = this.getValueBinding("style");
+		if (vb != null && vb.getValue(context) != null) {
+			writer.writeAttribute("style", vb.getValue(context), null);
+		}
+		
+		vb = this.getValueBinding("styleClass");
+		if (vb != null && vb.getValue(context) != null) {
+			writer.writeAttribute("class", vb.getValue(context), null);
+		}
+		
+		
 		UtilsJSF.encodeHiddenInput(this, writer,
 				getSortHiddenFieldName(context));
 		UtilsJSF.encodeHiddenInput(this, writer,
@@ -84,7 +95,7 @@ public class UITableResultTab extends UIOutput {
 		if (styleClass != null)
 			writer.writeAttribute("class", styleClass, null);
 
-		ValueBinding vb = this.getValueBinding("rendered");
+		vb = this.getValueBinding("rendered");
 		if (vb != null) {
 			Boolean b = (Boolean) vb.getValue(context);
 			vb = this.getValueBinding("componentVisible");
@@ -195,9 +206,9 @@ public class UITableResultTab extends UIOutput {
 					if (obj != null) {
 						if (obj.toString().length() > TRIM_LENGTH) {
 							visibleLabel = obj.toString().substring(0, TRIM_LENGTH) + " ...";
-							visibleToolTop = obj.toString();
+							visibleToolTop = obj.toString().replaceAll(" ", "&nbsp ");
 						} else {
-							visibleLabel = obj.toString();
+							visibleLabel = obj.toString().replaceAll(" ", "&nbsp ");
 						}
 					}
 					writer.startElement("td", this);
