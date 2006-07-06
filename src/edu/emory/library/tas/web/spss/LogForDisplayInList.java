@@ -1,7 +1,7 @@
-package edu.emory.library.tas.spss;
+package edu.emory.library.tas.web.spss;
 
 
-public class ImportLogForDisplay
+public class LogForDisplayInList
 {
 	
 	private String id;

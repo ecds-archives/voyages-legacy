@@ -20,6 +20,9 @@ import edu.emory.library.tas.StringTooLongException;
 import edu.emory.library.tas.util.HibernateUtil;
 
 public abstract class AbstractAttribute implements Serializable, VisibleColumn {
+	
+	public final static int ROUND_TO_END_OF_YEAR = 1;
+	public final static int ROUND_TO_BEGINNING_OF_YEAR = 2;
 
 	public final static int TYPE_INTEGER = 0;
 
@@ -62,15 +65,23 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 		this.objectType = objType;
 	}
 
-	public Object parse(String value) throws InvalidNumberOfValuesException,
-			InvalidNumberException, InvalidDateException,
-			StringTooLongException {
-		return parse(new String[] { value });
+	public Object parse(String value, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		return parse(new String[] { value }, options);
 	}
 
-	public Object parse(String[] values) throws InvalidNumberOfValuesException,
-			InvalidNumberException, InvalidDateException,
-			StringTooLongException {
+	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		return parse(new String[] { value }, 0);
+	}
+
+	public Object parse(String[] values) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		return parse(values, 0);
+	}
+
+	public Object parse(String[] values, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
 
 		String value;
 		switch (getType().intValue()) {
@@ -135,8 +146,7 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 
 		case TYPE_DATE:
 
-			boolean separate = values.length == 3 && values[0] != null
-					&& values[1] != null && values[2] != null;
+			boolean separate = values.length == 3 && values[0] != null && values[1] != null && values[2] != null;
 			boolean single = values.length == 1 && values[0] != null;
 
 			if (!(separate || single))

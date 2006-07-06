@@ -25,7 +25,7 @@ public class DateTimeUtils
 		"week",
 		"day",
 		"hour",
-		"minute",
+		"min",
 		"sec",
 		"ms" };
 	

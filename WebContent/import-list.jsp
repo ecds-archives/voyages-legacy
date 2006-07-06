@@ -13,12 +13,12 @@
 <f:view>
 	<h:form id="form">
 	
-		<h:dataTable value="#{ImportLogList.importLogs}" var="log" border="1" cellpadding="0" cellspacing="0" styleClass="grid">
+		<h:dataTable value="#{ImportLog.importLogs}" var="log" border="1" cellpadding="0" cellspacing="0" styleClass="grid">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Started" />
 				</f:facet>
-				<h:commandLink actionListener="#{ImportLogList.openDetail}" action="detail">
+				<h:commandLink actionListener="#{ImportLog.openDetail}" action="detail">
 					<f:param id="itemId" name="itemId" value="#{log.id}" />
 					<h:outputText value="#{log.started}" />
 				</h:commandLink>

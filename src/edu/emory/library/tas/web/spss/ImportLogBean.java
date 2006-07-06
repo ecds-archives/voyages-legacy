@@ -1,4 +1,4 @@
-package edu.emory.library.tas.spss;
+package edu.emory.library.tas.web.spss;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,29 +11,47 @@ import java.util.List;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
-import edu.emory.library.tas.DateTimeUtils;
+import com.metaparadigm.jsonrpc.JSONRPCBridge;
 
-public class ImportLogListBean
+import edu.emory.library.tas.DateTimeUtils;
+import edu.emory.library.tas.spss.Log;
+import edu.emory.library.tas.spss.ImportServlet;
+import edu.emory.library.tas.spss.LogReader;
+import edu.emory.library.tas.spss.LogReaderException;
+
+public class ImportLogBean
 {
 	
 	private String currentImportDirName;
+	
+	public ImportLogBean()
+	{
+		try
+		{
+			JSONRPCBridge.getGlobalBridge().registerClass(
+					"ImportLogDetail", LogForDisplayInDetail.class);
+		}
+		catch (Exception e)
+		{
+		}
+	}
 	
 	private class InvalidImportDirectoryException extends Exception
 	{
 		private static final long serialVersionUID = 1019360649699803025L;
 	}
 	
-	private File findImportLog(File[] files)
-	{
-		for (int j = 0; j < files.length; j++)
-		{
-			if ("import.log".equals(files[j].getName()))
-			{
-				return files[j]; 
-			}
-		}
-		return null;
-	}
+//	private File findImportLog(File[] files)
+//	{
+//		for (int j = 0; j < files.length; j++)
+//		{
+//			if ("import.log".equals(files[j].getName()))
+//			{
+//				return files[j]; 
+//			}
+//		}
+//		return null;
+//	}
 
 	public List getImportLogs()
 	{
@@ -54,44 +72,33 @@ public class ImportLogListBean
 			try
 			{
 				
-				ImportLogForDisplay importLogForDisplay = new ImportLogForDisplay();
+				LogForDisplayInList importLogForDisplay = new LogForDisplayInList();
 			
 				if (!ImportServlet.isValidImportDirectoryName(dir.getName()))
 					throw new InvalidImportDirectoryException();
 				
-				importLogForDisplay.setId(dir.getAbsolutePath());
+				importLogForDisplay.setId(dir.getName());
 
-				File importLog = findImportLog(dir.listFiles());
-				if (importLog == null)
-					throw new InvalidImportDirectoryException();
+				LogReader rdr = new LogReader(dir.getAbsolutePath());
+				Log importLog = rdr.load(Integer.MAX_VALUE);
 				
-				LogReader logReader = new LogReader(importLog.getAbsolutePath());
-				LogItem[] items = logReader.loadFlatList();
+				importLogForDisplay.setStarted(df.format(importLog.getTimeStart()));
 				
-				if (items == null || items.length == 0)
-					throw new InvalidImportDirectoryException();
-				
-				LogItem firstItem = items[0];
-				LogItem lastItem = items[items.length - 1];
-				
-				Date start = new Date(firstItem.getTime());
-				Date end = new Date(lastItem.getTime());
-				
-				importLogForDisplay.setStarted(df.format(start));
-
-				if (lastItem.getType() == LogItem.STAGE_END_OF_IMPORT)
+				Date lastActivityTime = null;
+				if (importLog.isFinished())
 				{
-					importLogForDisplay.setFinished(df.format(end));
-					importLogForDisplay.setOutcome("finished");
+					lastActivityTime = importLog.getTimeFinish();
+					importLogForDisplay.setFinished(df.format(importLog.getTimeFinish()));
 				}
 				else
 				{
-					importLogForDisplay.setFinished("-");
-					importLogForDisplay.setOutcome("running");
+					lastActivityTime = new Date();
+					importLogForDisplay.setFinished("not yet");
 				}
 				
 				importLogForDisplay.setDuration(DateTimeUtils.formatTimeSpan(
-						start, end, DateTimeUtils.TIME_INTERVAL_ROUND_TO_SEC));
+						importLog.getTimeStart(), lastActivityTime,
+						DateTimeUtils.TIME_INTERVAL_ROUND_TO_SEC));
 				
 				importLogs.add(importLogForDisplay);
 

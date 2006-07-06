@@ -11,8 +11,8 @@ public class LogItem
 	public static final int STAGE_SORTING = 5;
 	public static final int STAGE_UPDATING_LABELS = 6;
 	public static final int STAGE_IMPORTING_DATA = 7;
-	public static final int STAGE_END_OF_IMPORT = 8;
-	
+	public static final int STAGE_SUMMARY = 8;
+
 	public static final int TYPE_INFO = 0;
 	public static final int TYPE_WARN = 1;
 	public static final int TYPE_ERROR = 2;	
@@ -29,7 +29,7 @@ public class LogItem
 		"Sorting voyages and slaves",
 		"Synchronizing labels",
 		"Importing data to database",
-		"End of import" };
+		"Summary" };
 	
 	private static final String[] typeLabels = new String[] {
 		"Information",
@@ -142,5 +142,5 @@ public class LogItem
 	{
 		this.type = getTypeFromString(type);
 	}
-
+	
 }

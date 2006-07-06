@@ -1009,6 +1009,7 @@ public class Import
 			log.startStage(LogItem.STAGE_IMPORTING_DATA);
 			importData();
 
+			log.startStage(LogItem.STAGE_SUMMARY);
 			log.logInfo("Import successfully completed.");
 			log.logInfo("Total number of voyages = " + totalNoOfVoyages);
 			log.logInfo("Number voyages with invalid ID = " + noOfVoyagesWithInvalidVid);
@@ -1023,32 +1024,38 @@ public class Import
 			log.logInfo("Number of updated slaves = " + noOfUpdatedSlaves);
 			log.logInfo("Number of invalid (but imported) slaves = " + noOfInvalidSlaves);
 			log.logInfo("Voyages with slaves = " + noOfVoyagesWithSlaves);
+			log.doneWithSuccess();
 			
 		}
 		catch (IOException ioe)
 		{
 			log.logError("IO error: " + ioe.getMessage());
 			log.logInfo("Import terminated.");
+			log.doneWithErrors();
 		}
 		catch (STSchemaException stse)
 		{
 			log.logError(stse.getMessage());
 			log.logInfo("Import terminated.");
+			log.doneWithErrors();
 		}
 		catch (DataSchemaMissmatchException dsme)
 		{
 			log.logInfo("Import terminated.");
+			log.doneWithErrors();
 		}
 		catch (StatTransferException ste)
 		{
 			log.logError("The uploaded file is not proabably a valid SPSS file.");
 			log.logError(ste.getMessage());
 			log.logInfo("Import terminated.");
+			log.doneWithErrors();
 		}
 		catch (InterruptedException ie)
 		{
 			log.logError(ie.getMessage());
 			log.logInfo("Import terminated.");
+			log.doneWithErrors();
 		}
 		
 	}
@@ -1060,13 +1067,12 @@ public class Import
 		
 		// extracts params
 		String workingDir = args[0];
-		String logFileName = args[1];
-		String exeStatTransfer = args[2];
-		String voyagesFileName = args[3].equals("*") ? null : args[3];
-		String slavesFileName = args[4].equals("*") ? null : args[4];
+		String exeStatTransfer = args[1];
+		String voyagesFileName = args[2].equals("*") ? null : args[3];
+		String slavesFileName = args[3].equals("*") ? null : args[4];
 		
 		// crate a log
-		LogWriter log = new LogWriter(logFileName);
+		LogWriter log = new LogWriter(workingDir);
 		
 		// import
 		Import imp = new Import();

@@ -191,23 +191,11 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>ImportLogList</managed-bean-name>
+		<managed-bean-name>ImportLog</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.spss.ImportLogListBean
+			edu.emory.library.tas.web.spss.ImportLogBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>ImportLogDetail</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tas.spss.ImportLogDetailBean
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>importDirName</property-name>
-			<value>#{ImportLogList.currentImportDirName}</value>
-		</managed-property>
 	</managed-bean>
 
 	<navigation-rule>
