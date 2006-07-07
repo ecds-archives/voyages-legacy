@@ -465,8 +465,8 @@ public class TableResultTabBean {
 		Conditions c = params.getConditions();
 		this.queryColumns = Arrays.asList(params.getColumns());
 		if (c != null) {
-//			System.out.println("1: --------------------------------------");
-//			System.out.println(c.getConditionHQL().conditionString);
+			System.out.println("1: --------------------------------------");
+			System.out.println(c.getConditionHQL().conditionString);
 		}
 		if (c == null) {
 			// needQuery = false;
@@ -477,13 +477,25 @@ public class TableResultTabBean {
 			if (this.attachSearchedParams.booleanValue()) {
 				list.addAll(this.queryColumns);
 			}
-			this.data.setVisibleColumns(list);
+			setVisibleAttributesList(list);
 			condition = c;
 			needQuery = true;
 			this.needDetailQuery = true;
 			this.setNumberOfResults();
 			this.current = 0;
 		}
+	}
+
+	private void setVisibleAttributesList(List list) {
+		for (Iterator iter = list.iterator(); iter.hasNext();) {
+			VisibleColumn element = (VisibleColumn) iter.next();
+			if (element.getType().intValue() == Attribute.TYPE_DATE) {
+				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
+			}
+		} {
+			
+		}
+		this.data.setVisibleColumns(list);
 	}
 
 	public Boolean getComponentVisible() {
@@ -628,6 +640,6 @@ public class TableResultTabBean {
 		if (attachSearchedParams.booleanValue()) {				
 			cols.addAll(this.queryColumns);
 		}
-		this.data.setVisibleColumns(cols);
+		setVisibleAttributesList(cols);
 	}
 }

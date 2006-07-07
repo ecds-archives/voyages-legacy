@@ -16,6 +16,7 @@ import java.util.HashSet;
 //import org.jfree.data.category.DefaultCategoryDataset;
 //import org.jfree.data.general.DatasetGroup;
 
+import edu.emory.library.tas.Configuration;
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
@@ -265,7 +266,20 @@ public class HibernateTest {
 				for (int i = 0; i < ret.length; i++) {
 					System.out.println("Has: " + ret[i]);
 				}
-			} 
+			} else if ("cload".equalsIgnoreCase(command)) {
+				Conditions c = new Conditions();
+				QueryValue qValue = new QueryValue("Configuration", c);
+				Object[] ret = qValue.executeQuery();
+				for (int i = 0; i < ret.length; i++) {
+					Object object = ret[i];
+					System.out.println(object);
+				}
+			} else if ("csave".equalsIgnoreCase(command)) {
+				Configuration conf = new Configuration();
+				conf.addEntry("my1", "firstEntry_" + System.currentTimeMillis());
+				conf.addEntry("my2", "secondEntry_" + System.currentTimeMillis());
+				conf.save();
+			}
 			
 			System.out.print("command:>");
 		}

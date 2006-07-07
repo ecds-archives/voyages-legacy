@@ -21,7 +21,9 @@ import edu.emory.library.tas.web.UtilsJSF;
 public class UITableResultTab extends UIOutput {
 
 	private static final int TRIM_LENGTH = 35;
+
 	private MethodBinding sortChanged;
+
 	private MethodBinding showDetails;
 
 	public UITableResultTab() {
@@ -47,42 +49,36 @@ public class UITableResultTab extends UIOutput {
 
 		Map params = context.getExternalContext().getRequestParameterMap();
 
-		String newSelectedTabId = (String) params
-				.get(getSortHiddenFieldName(context));
+		String newSelectedTabId = (String) params.get(getSortHiddenFieldName(context));
 		if (newSelectedTabId != null && newSelectedTabId.length() > 0) {
 			queueEvent(new SortChangeEvent(this, newSelectedTabId));
 		}
 
-		String newSelectedVoyageId = (String) params
-				.get(getClickIdHiddenFieldName(context));
+		String newSelectedVoyageId = (String) params.get(getClickIdHiddenFieldName(context));
 		if (newSelectedVoyageId != null && newSelectedVoyageId.length() > 0) {
-			queueEvent(new ShowDetailsEvent(this, new Long(
-					newSelectedVoyageId)));
+			queueEvent(new ShowDetailsEvent(this, new Long(newSelectedVoyageId)));
 		}
 
 	}
 
 	public void encodeBegin(FacesContext context) throws IOException {
 		TableData data = null;
-		
+
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
-		
+
 		ValueBinding vb = this.getValueBinding("style");
 		if (vb != null && vb.getValue(context) != null) {
 			writer.writeAttribute("style", vb.getValue(context), null);
 		}
-		
+
 		vb = this.getValueBinding("styleClass");
 		if (vb != null && vb.getValue(context) != null) {
 			writer.writeAttribute("class", vb.getValue(context), null);
 		}
-		
-		
-		UtilsJSF.encodeHiddenInput(this, writer,
-				getSortHiddenFieldName(context));
-		UtilsJSF.encodeHiddenInput(this, writer,
-				getClickIdHiddenFieldName(context));
+
+		UtilsJSF.encodeHiddenInput(this, writer, getSortHiddenFieldName(context));
+		UtilsJSF.encodeHiddenInput(this, writer, getClickIdHiddenFieldName(context));
 
 		writer.startElement("table", this);
 		writer.writeAttribute("class", "grid", null);
@@ -125,9 +121,8 @@ public class UITableResultTab extends UIOutput {
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
 
-				String jsSort = UtilsJSF.generateSubmitJS(context, form,
-						getSortHiddenFieldName(context), populatedAttributes[i]
-								.encodeToString());
+				String jsSort = UtilsJSF.generateSubmitJS(context, form, getSortHiddenFieldName(context),
+						populatedAttributes[i].encodeToString());
 
 				writer.startElement("th", this);
 
@@ -146,20 +141,15 @@ public class UITableResultTab extends UIOutput {
 				writer.write(populatedAttributes[i].toString());
 				writer.endElement("a");
 				writer.endElement("td");
-				
+
 				if (data.getOrderByColumn() != null
-						&& data.getOrderByColumn().getId().equals(
-								populatedAttributes[i].getId()))
-				{
-					
+						&& data.getOrderByColumn().getId().equals(populatedAttributes[i].getId())) {
+
 					writer.startElement("td", this);
 					writer.writeAttribute("class", "grid-header-icon", null);
-					if (data.getOrder() == QueryValue.ORDER_DESC)
-					{
+					if (data.getOrder() == QueryValue.ORDER_DESC) {
 						writer.write("<img src=\"up2.gif\" width=\"15\" height=\"15\">");
-					}
-					else if (data.getOrder() == QueryValue.ORDER_ASC)
-					{
+					} else if (data.getOrder() == QueryValue.ORDER_ASC) {
 						writer.write("<img src=\"down2.gif\" width=\"15\" height=\"15\">");
 					}
 					writer.endElement("td");
@@ -172,8 +162,8 @@ public class UITableResultTab extends UIOutput {
 
 			}
 		}
-//		writer.startElement("th", this);
-//		writer.endElement("th");
+		// writer.startElement("th", this);
+		// writer.endElement("th");
 		writer.endElement("tr");
 
 		StringBuffer rowClass = new StringBuffer();
@@ -191,9 +181,8 @@ public class UITableResultTab extends UIOutput {
 				if (i == objs.length - 1)
 					rowClass.append(" grid-row-last");
 
-				String jsClick = UtilsJSF.generateSubmitJS(context, form,
-						getClickIdHiddenFieldName(context), objs[i].voyageId.toString()
-								.toString());
+				String jsClick = UtilsJSF.generateSubmitJS(context, form, getClickIdHiddenFieldName(context),
+						objs[i].voyageId.toString().toString());
 
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
@@ -203,29 +192,28 @@ public class UITableResultTab extends UIOutput {
 					String visibleLabel = null;
 					String visibleToolTop = null;
 					Object obj = values[j];
+					String objString = obj.toString();
 					if (obj != null) {
-						if (obj.toString().length() > TRIM_LENGTH) {
-							visibleLabel = obj.toString().substring(0, TRIM_LENGTH) + " ...";
-							visibleToolTop = obj.toString().replaceAll(" ", "&nbsp ");
+						if (objString.length() > TRIM_LENGTH) {
+							visibleLabel = objString.substring(0, TRIM_LENGTH) + " ...";
+							visibleToolTop = objString.replaceAll(" ", "&nbsp ");
 						} else {
-							visibleLabel = obj.toString().replaceAll(" ", "&nbsp ");
+							visibleLabel = objString.replaceAll(" ", "&nbsp ");
 						}
 					}
 					writer.startElement("td", this);
 					writer.writeAttribute("id", "cell_" + i + "_" + j, null);
 					if (visibleToolTop != null) {
-						writer.writeAttribute("onmouseover", 
-							"showToolTip('" + "tooltip_" + i + "_" + j + "', " +
-									"'" + "cell_" + i + "_" + j + "')", null);
-						writer.writeAttribute("onmouseout", 
-							"hideToolTip('" + "tooltip_" + i + "_" + j + "')", null);
+						writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "', " + "'"
+								+ "cell_" + i + "_" + j + "')", null);
+						writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "')", null);
 					}
-					
+
 					if (visibleLabel != null) {
 						writer.write(visibleLabel);
 					}
-					
-					//Tooltip
+
+					// Tooltip
 					if (visibleToolTop != null) {
 						writer.startElement("div", this);
 						writer.writeAttribute("id", "tooltip_" + i + "_" + j, null);
@@ -235,22 +223,25 @@ public class UITableResultTab extends UIOutput {
 						}
 						writer.endElement("div");
 					}
-					
+
 					writer.endElement("td");
 				}
-				
-//				String jsShowDetail = UtilsJSF.generateSubmitJS(context, form,
-//						getClickIdHiddenFieldName(context), objs[i].voyageId.toString());
-//				writer.startElement("td", this);
-//				writer.startElement("a", this);
-//				writer.writeAttribute("href", "#", null);
-//				writer.writeAttribute("style", "border: 0px;", null);
-//				writer.writeAttribute("onclick", jsShowDetail, null);
-//				writer.write("<img style=\"border: 0px;\" alt=\"Details of voyage\" " +
-//						"src=\"contents.gif\" width=\"12\" height=\"15\">");
-//				writer.endElement("a");
-//				writer.endElement("td");
-				
+
+				// String jsShowDetail = UtilsJSF.generateSubmitJS(context,
+				// form,
+				// getClickIdHiddenFieldName(context),
+				// objs[i].voyageId.toString());
+				// writer.startElement("td", this);
+				// writer.startElement("a", this);
+				// writer.writeAttribute("href", "#", null);
+				// writer.writeAttribute("style", "border: 0px;", null);
+				// writer.writeAttribute("onclick", jsShowDetail, null);
+				// writer.write("<img style=\"border: 0px;\" alt=\"Details of
+				// voyage\" " +
+				// "src=\"contents.gif\" width=\"12\" height=\"15\">");
+				// writer.endElement("a");
+				// writer.endElement("td");
+
 				writer.endElement("tr");
 
 			}
@@ -288,7 +279,7 @@ public class UITableResultTab extends UIOutput {
 		if (event instanceof SortChangeEvent && sortChanged != null) {
 			sortChanged.invoke(getFacesContext(), new Object[] { event });
 		}
-		
+
 		if (event instanceof ShowDetailsEvent && showDetails != null) {
 			showDetails.invoke(getFacesContext(), new Object[] { event });
 		}

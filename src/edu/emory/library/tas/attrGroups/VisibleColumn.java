@@ -5,4 +5,5 @@ public interface VisibleColumn {
 	public String toString();
 	public Long getId();
 	public String encodeToString();
+	public Integer getType();
 }

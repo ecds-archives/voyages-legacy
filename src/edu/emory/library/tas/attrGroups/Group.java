@@ -254,4 +254,8 @@ public class Group implements Serializable, VisibleColumn {
 		return "Group_" + this.getId();
 	}
 
+	public Integer getType() {
+		return new Integer(AbstractAttribute.TYPE_STRING);
+	}
+
 }
