@@ -162,6 +162,9 @@
 		<attribute>
 			<name>onRestore</name>
 		</attribute>
+		<attribute>
+			<name>onPermlink</name>
+		</attribute>
 	</tag>
 
 	<tag>

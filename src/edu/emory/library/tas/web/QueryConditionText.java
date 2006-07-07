@@ -10,6 +10,8 @@ import edu.emory.library.tas.util.query.Conditions;
 public class QueryConditionText extends QueryCondition
 {
 	
+	private static final long serialVersionUID = -650415782530711623L;
+	
 	private String value = "";
 	
 	public QueryConditionText(AbstractAttribute attribute)

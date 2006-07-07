@@ -45,9 +45,12 @@
 					<div style="margin: 10px 0px 5px 10px;"><h:commandButton action="#{SearchBean.search}" value="Search" /></div>
 	
 					<s:expandableBox text="History">
-						<s:historyList onDelete="#{SearchBean.historyItemDelete}" onRestore="#{SearchBean.historyItemRestore}" history="#{SearchBean.history}" />
+						<s:historyList
+							onDelete="#{SearchBean.historyItemDelete}"
+							onRestore="#{SearchBean.historyItemRestore}"
+							onPermlink="#{SearchBean.historyItemPermlink}"
+							history="#{SearchBean.history}" />
 					</s:expandableBox>
-	
 
 				</td>
 				<td class="main-panel">
@@ -59,6 +62,8 @@
 							<s:tab text="Advanced statistics" tabId="statistics" />
 						</s:tabBar>
 					</div>
+					
+					<h:outputText value="#{SearchBean.createdPermlink}" />
 	
 					<% /* Table tab */ %>
 					<t:htmlTag value="div" styleClass="data-container" rendered="#{SearchBean.tableVisible}">

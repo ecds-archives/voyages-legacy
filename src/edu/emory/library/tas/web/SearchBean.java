@@ -1,11 +1,23 @@
 package edu.emory.library.tas.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import edu.emory.library.tas.UidGenerator;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
@@ -28,11 +40,13 @@ public class SearchBean
 
 	private History history = new History();
 	private Query workingQuery = new Query();
-//	private Conditions currentConditions = null;
 	private SearchParameters searchParameters = null;
 	private boolean tableVisible = true;
 	private boolean timeLineVisible = false;
 	private boolean statisticsVisible = false;
+	
+	private String createdPermlink = null;
+	private String permlinksDirectory;
 	
 	public void addQueryCondition()
 	{
@@ -94,6 +108,74 @@ public class SearchBean
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
 		workingQuery = (Query) historyItem.getQuery().clone();
 		searchInternal(false);
+	}
+	
+	public void historyItemPermlink(HistoryItemPermlinkEvent event)
+	{
+		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
+		
+		UidGenerator generator = new UidGenerator();
+		String uid = generator.generate();
+		
+		FileOutputStream fos;
+		try
+		{
+			fos = new FileOutputStream(permlinksDirectory + File.separatorChar + uid);
+			ObjectOutput out = new ObjectOutputStream(fos);
+			out.writeObject(historyItem.getQuery());
+			out.close();
+			fos.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			return;
+		}
+		catch (IOException e)
+		{
+			return;
+		}
+		
+		//FacesContext contex = FacesContext.getCurrentInstance();
+		createdPermlink = uid;
+		
+	}
+	
+	private void restorePermlinkIfAny()
+	{
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map params = context.getExternalContext().getRequestParameterMap();
+		String permlink = (String)params.get("permlink");
+		
+		if (permlink == null || permlink.length() == 0)
+			return;
+
+		Query query = null;
+		try
+		{
+			FileInputStream fis = new FileInputStream(permlinksDirectory + File.separatorChar + permlink);
+			ObjectInput in = new ObjectInputStream(fis);
+			query = (Query) in.readObject();
+			in.close();
+			fis.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			return;
+		}
+		catch (IOException e)
+		{
+			return;
+		}
+		catch (ClassNotFoundException e)
+		{
+			return;
+		}
+		
+		workingQuery = query;
+		history.clear();
+		searchInternal(true);
+
 	}
 	
 	public void moduleTabChanged(TabChangeEvent event)
@@ -225,18 +307,9 @@ public class SearchBean
 		this.selectedAtttibuteId = selectedAtttibute;
 	}
 
-//	public Conditions getCurrentConditions()
-//	{
-//		return currentConditions;
-//	}
-//
-//	public void setCurrentConditions(Conditions currentQuery)
-//	{
-//		this.currentConditions = currentQuery;
-//	}
-
 	public Query getWorkingQuery()
 	{
+		restorePermlinkIfAny();
 		return workingQuery;
 	}
 
@@ -257,12 +330,30 @@ public class SearchBean
 
 	public SearchParameters getSearchParameters()
 	{
+		restorePermlinkIfAny();
 		return searchParameters;
 	}
 
 	public void setSearchParameters(SearchParameters searchParameters)
 	{
 		this.searchParameters = searchParameters;
+	}
+
+	public String getPermlinksDirectory()
+	{
+		return permlinksDirectory;
+	}
+
+	public void setPermlinksDirectory(String permlinksDirectory)
+	{
+		this.permlinksDirectory = permlinksDirectory;
+	}
+
+	public String getCreatedPermlink()
+	{
+		String temp = createdPermlink;
+		createdPermlink = null;
+		return temp;
 	}
 
 }

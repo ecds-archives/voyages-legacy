@@ -13,6 +13,7 @@ public class HistoryListTag extends UIComponentTag
 	private String history;
 	private String onDelete;
 	private String onRestore;
+	private String onPermlink;
 	
 	protected void setProperties(UIComponent component)
 	{
@@ -29,13 +30,19 @@ public class HistoryListTag extends UIComponentTag
 		if (onDelete != null && isValueReference(onDelete))
 		{
 			MethodBinding mb = app.createMethodBinding(onDelete, new Class[] {HistoryItemDeleteEvent.class});
-			historyList.setOndelete(mb);
+			historyList.setOnDelete(mb);
 		}
 
 		if (onRestore != null && isValueReference(onRestore))
 		{
 			MethodBinding mb = app.createMethodBinding(onRestore, new Class[] {HistoryItemRestoreEvent.class});
-			historyList.setOnrestore(mb);
+			historyList.setOnRestore(mb);
+		}
+
+		if (onPermlink != null && isValueReference(onPermlink))
+		{
+			MethodBinding mb = app.createMethodBinding(onPermlink, new Class[] {HistoryItemPermlinkEvent.class});
+			historyList.setOnPermlink(mb);
 		}
 
 	}
@@ -78,6 +85,16 @@ public class HistoryListTag extends UIComponentTag
 	public void setOnRestore(String onrestore)
 	{
 		this.onRestore = onrestore;
+	}
+
+	public String getOnPermlink()
+	{
+		return onPermlink;
+	}
+
+	public void setOnPermlink(String onPermlink)
+	{
+		this.onPermlink = onPermlink;
 	}
 
 }

@@ -14,6 +14,8 @@ import edu.emory.library.tas.util.query.Conditions;
 public class QueryConditionNumeric extends QueryConditionRange
 {
 	
+	private static final long serialVersionUID = -7863875106659949813L;
+
 	private String from;
 	private String to;
 	private String ge;

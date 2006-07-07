@@ -9,6 +9,11 @@ public class History
 	
 	private List items = new ArrayList();
 	
+	public void clear()
+	{
+		items.clear();
+	}
+	
 	public Query getLatestQuery()
 	{
 		if (isEmpty()) return null;

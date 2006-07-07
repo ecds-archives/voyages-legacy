@@ -465,8 +465,8 @@ public class TableResultTabBean {
 		Conditions c = params.getConditions();
 		this.queryColumns = Arrays.asList(params.getColumns());
 		if (c != null) {
-			System.out.println("1: --------------------------------------");
-			System.out.println(c.getConditionHQL().conditionString);
+//			System.out.println("1: --------------------------------------");
+//			System.out.println(c.getConditionHQL().conditionString);
 		}
 		if (c == null) {
 			// needQuery = false;

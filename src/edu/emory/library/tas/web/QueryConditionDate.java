@@ -13,6 +13,8 @@ import edu.emory.library.tas.util.query.Conditions;
 public class QueryConditionDate extends QueryConditionRange
 {
 	
+	private static final long serialVersionUID = -5784093870244195009L;
+
 	public static final String[] MONTH_NAMES = {
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -28,10 +30,11 @@ public class QueryConditionDate extends QueryConditionRange
 	private String eqMonth;
 	private String eqYear;
 	private boolean[] selectedMonths = null;
-	private boolean noOfSelectedMonthsDetermined = false; 
-	private int noOfSelectedMonths; 
-	private String selectedMonthsAsString = null;
-	private Integer[] selectedMonthsAsArray = null;
+	
+	private transient boolean noOfSelectedMonthsDetermined = false; 
+	private transient int noOfSelectedMonths; 
+	private transient String selectedMonthsAsString = null;
+	private transient Integer[] selectedMonthsAsArray = null;
 	
 	public QueryConditionDate(AbstractAttribute attribute)
 	{

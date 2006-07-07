@@ -19,8 +19,9 @@ public class HistoryListComponent extends UIComponentBase
 {
 	
 	private History history;
-	private MethodBinding ondelete;
-	private MethodBinding onrestore;
+	private MethodBinding onDelete;
+	private MethodBinding onRestore;
+	private MethodBinding onPermlink;
 
 	public String getFamily()
 	{
@@ -29,10 +30,11 @@ public class HistoryListComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[3];
+		Object values[] = new Object[4];
 		values[0] = super.saveState(context);
-		values[1] = saveAttachedState(context, ondelete);
-		values[2] = saveAttachedState(context, onrestore);
+		values[1] = saveAttachedState(context, onDelete);
+		values[2] = saveAttachedState(context, onRestore);
+		values[3] = saveAttachedState(context, onPermlink);
 		return values;
 	}
 	
@@ -40,8 +42,9 @@ public class HistoryListComponent extends UIComponentBase
 	{
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
-		ondelete = (MethodBinding) restoreAttachedState(context, values[1]);
-		onrestore = (MethodBinding) restoreAttachedState(context, values[2]);
+		onDelete = (MethodBinding) restoreAttachedState(context, values[1]);
+		onRestore = (MethodBinding) restoreAttachedState(context, values[2]);
+		onPermlink = (MethodBinding) restoreAttachedState(context, values[3]);
 	}
 	
 	private String getToDeleteHiddenFieldName(FacesContext context)
@@ -52,6 +55,11 @@ public class HistoryListComponent extends UIComponentBase
 	private String getToRestoreHiddenFieldName(FacesContext context)
 	{
 		return getClientId(context) + "_to_restore";
+	}
+
+	private String getToPermlinkHiddenFieldName(FacesContext context)
+	{
+		return getClientId(context) + "_to_permlink";
 	}
 
 	public void decode(FacesContext context)
@@ -71,6 +79,12 @@ public class HistoryListComponent extends UIComponentBase
 		if (toRestoreId != null && toRestoreId.length() != 0)
 			queueEvent(new HistoryItemRestoreEvent(this, toRestoreId));
 
+		String toCreatePermlinkId = (String) externalContex.getRequestParameterMap().get(
+				getToPermlinkHiddenFieldName(context));
+
+		if (toCreatePermlinkId != null && toCreatePermlinkId.length() != 0)
+			queueEvent(new HistoryItemPermlinkEvent(this, toCreatePermlinkId));
+
 	}
 	
 	public void broadcast(FacesEvent event) throws AbortProcessingException
@@ -78,12 +92,16 @@ public class HistoryListComponent extends UIComponentBase
 		super.broadcast(event);
 		
 		if (event instanceof HistoryItemDeleteEvent)
-			if (ondelete != null)
-				ondelete.invoke(getFacesContext(), new Object[] {event});
+			if (onDelete != null)
+				onDelete.invoke(getFacesContext(), new Object[] {event});
 		
 		if (event instanceof HistoryItemRestoreEvent)
-			if (onrestore != null)
-				onrestore.invoke(getFacesContext(), new Object[] {event});
+			if (onRestore != null)
+				onRestore.invoke(getFacesContext(), new Object[] {event});
+
+		if (event instanceof HistoryItemPermlinkEvent)
+			if (onPermlink != null)
+				onPermlink.invoke(getFacesContext(), new Object[] {event});
 
 	}
 	
@@ -95,6 +113,7 @@ public class HistoryListComponent extends UIComponentBase
 		
 		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context), null);
 		UtilsJSF.encodeHiddenInput(this, writer, getToRestoreHiddenFieldName(context), null);
+		UtilsJSF.encodeHiddenInput(this, writer, getToPermlinkHiddenFieldName(context), null);
 		
 		History history = getItems();
 		if (history != null)
@@ -131,6 +150,11 @@ public class HistoryListComponent extends UIComponentBase
 				getToRestoreHiddenFieldName(context),
 				item.getId());
 		
+		String jsToPermlink = UtilsJSF.generateSubmitJS(
+				context, form,
+				getToPermlinkHiddenFieldName(context),
+				item.getId());
+
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
 		
@@ -250,6 +274,16 @@ public class HistoryListComponent extends UIComponentBase
 		writer.write("restore");
 		writer.endElement("td");
 
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-box-button-space", null);
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "side-box-button", null);
+		writer.writeAttribute("onclick", jsToPermlink, null);
+		writer.write("permlink");
+		writer.endElement("td");
+
 		writer.endElement("tr");
 		writer.endElement("table");
 		
@@ -270,24 +304,34 @@ public class HistoryListComponent extends UIComponentBase
 		this.history = items;
 	}
 
-	public MethodBinding getOndelete()
+	public MethodBinding getOnDelete()
 	{
-		return ondelete;
+		return onDelete;
 	}
 
-	public void setOndelete(MethodBinding ondelete)
+	public void setOnDelete(MethodBinding ondelete)
 	{
-		this.ondelete = ondelete;
+		this.onDelete = ondelete;
 	}
 
-	public MethodBinding getOnrestore()
+	public MethodBinding getOnRestore()
 	{
-		return onrestore;
+		return onRestore;
 	}
 
-	public void setOnrestore(MethodBinding onrestore)
+	public void setOnRestore(MethodBinding onrestore)
 	{
-		this.onrestore = onrestore;
+		this.onRestore = onrestore;
+	}
+
+	public MethodBinding getOnPermlink()
+	{
+		return onPermlink;
+	}
+
+	public void setOnPermlink(MethodBinding onPermlink)
+	{
+		this.onPermlink = onPermlink;
 	}
 
 }

@@ -1,24 +1,45 @@
 package edu.emory.library.tas.web;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 
-public class Query
+public class Query implements Serializable
 {
 
-	List conditions = new ArrayList();
-	Map conditionsByAttributes = new Hashtable();
+	private static final long serialVersionUID = 5986829888479480030L;
+
+	private List conditions = new ArrayList();
+	private transient Map conditionsByAttributes = null;
+	
+	private void ensureMap()
+	{
+		if (conditionsByAttributes == null)
+		{
+			conditionsByAttributes = new HashMap();
+			for (Iterator iter = conditions.iterator(); iter.hasNext();)
+			{
+				QueryCondition queryCondition = (QueryCondition) iter.next();
+				conditionsByAttributes.put(queryCondition.getAttribute(), queryCondition);
+			}
+		}
+	}
 	
 	public void addCondition(QueryCondition queryCondition)
 	{
+		
 		if (queryCondition == null) return;
+		
 		conditions.add(queryCondition);
+		
+		ensureMap();
 		conditionsByAttributes.put(queryCondition.getAttribute(), queryCondition);
+	
 	}
 	
 	public boolean addConditionOn(AbstractAttribute attribute)
@@ -68,6 +89,7 @@ public class Query
 
 	public Map getConditionsByAttributes()
 	{
+		ensureMap();
 		return conditionsByAttributes;
 	}
 	
@@ -78,11 +100,13 @@ public class Query
 	
 	public boolean containsConditionOn(AbstractAttribute attribute)
 	{
+		ensureMap();
 		return conditionsByAttributes.containsKey(attribute);
 	}
 
 	public QueryCondition getCondition(AbstractAttribute attribute)
 	{
+		ensureMap();
 		return (QueryCondition) conditionsByAttributes.get(attribute);
 	}
 
@@ -107,7 +131,7 @@ public class Query
 		if (getConditionCount() != theOther.getConditionCount())
 			return false;
 		
-		for (Iterator iterAttr = conditionsByAttributes.keySet().iterator(); iterAttr.hasNext();)
+		for (Iterator iterAttr = getConditionsByAttributes().keySet().iterator(); iterAttr.hasNext();)
 		{
 			AbstractAttribute attr = (AbstractAttribute) iterAttr.next();
 			QueryCondition theOtherQueryCondition = theOther.getCondition(attr);

@@ -13,6 +13,8 @@ import edu.emory.library.tas.util.query.Conditions;
 public class QueryConditionDictionary extends QueryCondition
 {
 	
+	private static final long serialVersionUID = 6147345036427086382L;
+
 	private List dictionaries = new ArrayList();
 	
 	public QueryConditionDictionary(AbstractAttribute attribute)
