@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import org.hibernate.Hibernate;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.dialect.Dialect;
+import org.hibernate.dialect.function.SQLFunction;
+import org.hibernate.impl.SessionFactoryImpl;
+
+import edu.emory.library.tas.util.HibernateUtil;
 
 public class Conditions {
 
@@ -54,13 +63,20 @@ public class Conditions {
 
 	}
 	
-	private String getAttribute(String exp)
-	{
-		if (exp.startsWith("date_")) {
-			return exp.substring(exp.indexOf(",") + 1, exp.indexOf(")")).trim();
-		} else {
-			return exp;
-		}
+	private String getAttribute(String exp) {
+		Dialect dialect = 
+			((SessionFactoryImpl)HibernateUtil.getSessionFactory()).getSettings().getDialect();
+		
+		Map functions = dialect.getFunctions();
+		
+		for (Iterator iter = functions.values().iterator(); iter.hasNext();) {
+			SQLFunction element = (SQLFunction) iter.next();
+			if (exp.startsWith(element.toString())) {
+				return exp.substring(exp.indexOf(",") + 1, exp.indexOf(")")).trim();
+			}
+		}  
+		
+		return exp;
 	}
 
 	public Conditions() {
@@ -137,7 +153,7 @@ public class Conditions {
 		while (iter.hasNext()) {
 			Condition c = (Condition) iter.next();
 			if (c.value == null) {
-				String attr = c.attribute;
+				String attr = this.getAttribute(c.attribute);
 				Object value = c.value;
 				processed++;
 				ret.append(attr);
@@ -145,7 +161,7 @@ public class Conditions {
 				ret.append("null");
 			} else if (c.op.equals(" in ")) {
 				String attr = c.attribute;
-				String val = (attr.replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
+				String val = (this.getAttribute(attr).replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
 				Object[] values = (Object[])c.value;
 				processed++;
 				ret.append(attr);
@@ -153,8 +169,8 @@ public class Conditions {
 				ret.append("(");
 				for (int i = 0; i < values.length; i++) {
 					ret.append(" :");
-					ret.append(getAttribute(val) + "_" + i);
-					retMap.put(getAttribute(val) + "_" + i, values[i]);
+					ret.append(val + "_" + i);
+					retMap.put(val + "_" + i, values[i]);
 					if (i < values.length - 1) {
 						ret.append(", ");
 					}
@@ -162,7 +178,7 @@ public class Conditions {
 				ret.append(") ");
 			} else if (!(c.value instanceof DirectValue)) {
 				String attr = c.attribute;
-				String val = (attr.replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
+				String val = (this.getAttribute(attr).replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
 				Object value = c.value;
 				processed++;
 				ret.append(attr);
