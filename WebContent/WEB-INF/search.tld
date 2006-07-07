@@ -235,4 +235,21 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>messageBar</name>
+		<tag-class>
+			edu.emory.library.tas.web.MessageBarTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>binding</name>
+		</attribute>
+	</tag>
+
 </taglib>

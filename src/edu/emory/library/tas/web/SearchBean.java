@@ -41,12 +41,14 @@ public class SearchBean
 	private History history = new History();
 	private Query workingQuery = new Query();
 	private SearchParameters searchParameters = null;
+
 	private boolean tableVisible = true;
 	private boolean timeLineVisible = false;
 	private boolean statisticsVisible = false;
 	
-	private String createdPermlink = null;
 	private String permlinksDirectory;
+	
+	private MessageBarComponent messageBar;
 	
 	public void addQueryCondition()
 	{
@@ -135,8 +137,9 @@ public class SearchBean
 			return;
 		}
 		
-		//FacesContext contex = FacesContext.getCurrentInstance();
-		createdPermlink = uid;
+		String path = FacesContext.getCurrentInstance().getExternalContext().getRequestPathInfo();
+		messageBar.setMessage(path + "?" + uid);
+		messageBar.setRendered(true);
 		
 	}
 	
@@ -349,11 +352,14 @@ public class SearchBean
 		this.permlinksDirectory = permlinksDirectory;
 	}
 
-	public String getCreatedPermlink()
+	public MessageBarComponent getMessageBar()
 	{
-		String temp = createdPermlink;
-		createdPermlink = null;
-		return temp;
+		return messageBar;
+	}
+
+	public void setMessageBar(MessageBarComponent messageBar)
+	{
+		this.messageBar = messageBar;
 	}
 
 }

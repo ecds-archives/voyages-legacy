@@ -63,8 +63,12 @@
 						</s:tabBar>
 					</div>
 					
-					<h:outputText value="#{SearchBean.createdPermlink}" />
-	
+					<div class="message-bar-container">
+						<s:messageBar
+							rendered="false"
+							binding="#{SearchBean.messageBar}"  />
+					</div>
+					
 					<% /* Table tab */ %>
 					<t:htmlTag value="div" styleClass="data-container" rendered="#{SearchBean.tableVisible}">
 	
