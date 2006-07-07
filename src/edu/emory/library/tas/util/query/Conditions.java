@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Hibernate;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.SQLFunction;
 import org.hibernate.impl.SessionFactoryImpl;
@@ -139,7 +137,6 @@ public class Conditions {
 					"With JOIN_NOT only one condition allowable!");
 		}
 
-		boolean last = false;
 		int processed = 0;
 		StringBuffer ret = new StringBuffer();
 
@@ -154,7 +151,6 @@ public class Conditions {
 			Condition c = (Condition) iter.next();
 			if (c.value == null) {
 				String attr = this.getAttribute(c.attribute);
-				Object value = c.value;
 				processed++;
 				ret.append(attr);
 				ret.append(c.op);
@@ -186,19 +182,6 @@ public class Conditions {
 				ret.append(" :");
 				ret.append(val);
 				retMap.put(val, value);
-				// if (value instanceof String) {
-				// if (c.op.equals(" like ")) {
-				// ret.append("(");
-				// }
-				// ret.append("'");
-				// ret.append(value);
-				// ret.append("'");
-				// if (c.op.equals(" like ")) {
-				// ret.append(")");
-				// }
-				// } else {
-				// ret.append(value);
-				// }
 			} else {
 				processed++;
 				ret.append(c.attribute);
