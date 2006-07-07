@@ -1,14 +1,5 @@
 package edu.emory.library.tas.web;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +7,10 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpUtils;
 
+import edu.emory.library.tas.Configuration;
 import edu.emory.library.tas.UidGenerator;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
@@ -116,29 +110,15 @@ public class SearchBean
 	{
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
 		
-		UidGenerator generator = new UidGenerator();
-		String uid = generator.generate();
+		//UidGenerator generator = new UidGenerator();
+		//String uid = generator.generate();
 		
-		FileOutputStream fos;
-		try
-		{
-			fos = new FileOutputStream(permlinksDirectory + File.separatorChar + uid);
-			ObjectOutput out = new ObjectOutputStream(fos);
-			out.writeObject(historyItem.getQuery());
-			out.close();
-			fos.close();
-		}
-		catch (FileNotFoundException e)
-		{
-			return;
-		}
-		catch (IOException e)
-		{
-			return;
-		}
-		
-		String path = FacesContext.getCurrentInstance().getExternalContext().getRequestPathInfo();
-		messageBar.setMessage(path + "?" + uid);
+		Configuration conf = new Configuration();
+		conf.addEntry("permlink", historyItem.getQuery());
+		conf.save();
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		messageBar.setMessage(HttpUtils.getRequestURL(request) + "?permlink=" + conf.getId());
 		messageBar.setRendered(true);
 		
 	}
@@ -153,29 +133,9 @@ public class SearchBean
 		if (permlink == null || permlink.length() == 0)
 			return;
 
-		Query query = null;
-		try
-		{
-			FileInputStream fis = new FileInputStream(permlinksDirectory + File.separatorChar + permlink);
-			ObjectInput in = new ObjectInputStream(fis);
-			query = (Query) in.readObject();
-			in.close();
-			fis.close();
-		}
-		catch (FileNotFoundException e)
-		{
-			return;
-		}
-		catch (IOException e)
-		{
-			return;
-		}
-		catch (ClassNotFoundException e)
-		{
-			return;
-		}
+		Configuration conf = Configuration.loadConfiguration(new Long(permlink));
 		
-		workingQuery = query;
+		workingQuery = (Query) conf.getEntry("permlink");
 		history.clear();
 		searchInternal(true);
 

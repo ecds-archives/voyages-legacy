@@ -92,10 +92,6 @@
 			edu.emory.library.tas.web.SearchBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>permlinksDirectory</property-name>
-			<value>C:\Documents and Settings\zich\My Documents\Library\SlaveTrade\permlinks</value>
-		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
