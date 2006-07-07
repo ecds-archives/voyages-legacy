@@ -314,6 +314,72 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attribute.getId() + "_eq";
 	}
 
+	private void encodeRangeSelect(ResponseWriter writer, String htmlNameForRangeType, String jsOnChange, int type) throws IOException
+	{
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-range-type", null);
+		writer.startElement("select", this);
+		writer.writeAttribute("name", htmlNameForRangeType, null);
+		writer.writeAttribute("onchange", jsOnChange.toString(), null);
+		
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "between", null);
+		if (type == QueryConditionNumeric.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
+		writer.write("Between");
+		writer.endElement("option");
+		
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "le", null);
+		if (type == QueryConditionNumeric.TYPE_LE) writer.writeAttribute("selected", "selected", null);
+		writer.write("at most");
+		writer.endElement("option");
+
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "ge", null);
+		if (type == QueryConditionNumeric.TYPE_GE) writer.writeAttribute("selected", "selected", null);
+		writer.write("at least");
+		writer.endElement("option");
+		
+		writer.startElement("option", this);
+		writer.writeAttribute("value", "eq", null);
+		if (type == QueryConditionNumeric.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
+		writer.write("is equal");
+		writer.endElement("option");
+		
+		writer.endElement("select");
+		writer.endElement("td");
+
+	}
+	
+	private void encodeRangeDash(ResponseWriter writer, String tdDashId, boolean visible) throws IOException
+	{
+		
+		writer.startElement("td", this);
+		if (!visible) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdDashId, null);
+		writer.writeAttribute("class", "query-builder-range-dash", null);
+		writer.write("-");
+		writer.endElement("td");
+		
+	}
+	
+	private void encodeNumericField(ResponseWriter writer, String value, String tdId, String inputName, boolean visible) throws IOException
+	{
+		
+		writer.startElement("td", this);
+		if (!visible) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputName, null);
+		writer.writeAttribute("value", value, null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+	}
+
 	private void encodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 
@@ -371,106 +437,44 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.startElement("tr", this);
 		
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "query-builder-range-type", null);
-		writer.startElement("select", this);
-		writer.writeAttribute("name", htmlNameForRangeType, null);
-		writer.writeAttribute("onchange", js.toString(), null);
+		encodeRangeSelect(writer,
+				htmlNameForRangeType, js.toString(),
+				type);
+
+		encodeNumericField(writer,
+				queryCondition.getFrom(),
+				tdFromId, inputFromName,
+				type != 0);
 		
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "between", null);
-		if (type == QueryConditionNumeric.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
-		writer.write("Between");
-		writer.endElement("option");
+		encodeRangeDash(writer,
+				tdDashId,
+				type != 0);
+
+		encodeNumericField(writer,
+				queryCondition.getTo(),
+				tdToId, inputToName,
+				type != 0);
+
+		encodeNumericField(writer,
+				queryCondition.getLe(),
+				tdLeId, inputLeName,
+				type != 1);
+
+		encodeNumericField(writer,
+				queryCondition.getGe(),
+				tdGeId, inputGeName,
+				type != 2);
+
+		encodeNumericField(writer,
+				queryCondition.getEq(),
+				tdEqId, inputEqName,
+				type != 3);
 		
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "le", null);
-		if (type == QueryConditionNumeric.TYPE_LE) writer.writeAttribute("selected", "selected", null);
-		writer.write("at most");
-		writer.endElement("option");
-
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "ge", null);
-		if (type == QueryConditionNumeric.TYPE_GE) writer.writeAttribute("selected", "selected", null);
-		writer.write("at least");
-		writer.endElement("option");
-		
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "eq", null);
-		if (type == QueryConditionNumeric.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
-		writer.write("is equal");
-		writer.endElement("option");
-		
-		writer.endElement("select");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdFromId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputFromName, null);
-		writer.writeAttribute("value", queryCondition.getFrom(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-		
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdDashId, null);
-		writer.writeAttribute("class", "query-builder-range-dash", null);
-		writer.write("-");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdToId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputToName, null);
-		writer.writeAttribute("value", queryCondition.getTo(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 1) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdLeId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputLeName, null);
-		writer.writeAttribute("value", queryCondition.getLe(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 2) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdGeId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputGeName, null);
-		writer.writeAttribute("value", queryCondition.getGe(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 3) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdEqId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputEqName, null);
-		writer.writeAttribute("value", queryCondition.getEq(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-
 		writer.endElement("tr");
 		writer.endElement("table");
 	
 	}
-	
+
 	private QueryCondition decodeNumericCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
 	{
 		
@@ -575,40 +579,40 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attribute.getId() + "_month_" + month;
 	}
 	
-//	private void encodeDateField(ResponseWriter writer, boolean display)
-//	{
-//		
-//		writer.startElement("td", this);
-//		if (!display) writer.writeAttribute("style", "display: none;", null);
-//		writer.writeAttribute("id", tdFromMonthId, null);
-//		writer.writeAttribute("class", "query-builder-range-value", null);
-//		writer.startElement("input", this);
-//		writer.writeAttribute("type", "text", null);
-//		writer.writeAttribute("name", inputFromMonthName, null);
-//		writer.writeAttribute("value", queryCondition.getFromMonth(), null);
-//		writer.endElement("input");
-//		writer.endElement("td");
-//		
-//		writer.startElement("td", this);
-//		if (!display) writer.writeAttribute("style", "display: none;", null);
-//		writer.writeAttribute("id", tdSlashBetweenStartId, null);
-//		writer.writeAttribute("class", "query-builder-range-dash", null);
-//		writer.write("/");
-//		writer.endElement("td");
-//
-//		writer.startElement("td", this);
-//		if (!display) writer.writeAttribute("style", "display: none;", null);
-//		writer.writeAttribute("id", tdFromYearId, null);
-//		writer.writeAttribute("class", "query-builder-range-value", null);
-//		writer.startElement("input", this);
-//		writer.writeAttribute("type", "text", null);
-//		writer.writeAttribute("name", inputFromYearName, null);
-//		writer.writeAttribute("value", queryCondition.getFromYear(), null);
-//		writer.endElement("input");
-//		writer.endElement("td");
-//		
-//	}
+	private void encodeDateField(ResponseWriter writer, String month, String year, String tdMonthId, String tdSlashId, String tdYearId, String inputMonthName, String inputYearName, boolean visible) throws IOException
+	{
+		
+		writer.startElement("td", this);
+		if (!visible) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdMonthId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputMonthName, null);
+		writer.writeAttribute("value", month, null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		if (!visible) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdSlashId, null);
+		writer.writeAttribute("class", "query-builder-range-dash", null);
+		writer.write("/");
+		writer.endElement("td");
 
+		writer.startElement("td", this);
+		if (!visible) writer.writeAttribute("style", "display: none;", null);
+		writer.writeAttribute("id", tdYearId, null);
+		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputYearName, null);
+		writer.writeAttribute("value", year, null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+	}
+	
 	private void encodeDateCondition(QueryConditionDate queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 
@@ -639,7 +643,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		String inputLeMonthName = getHtmlNameForDateLeMonth(attribute, context);
 		String inputLeYearName = getHtmlNameForDateLeYear(attribute, context);
 		String inputGeMonthName = getHtmlNameForDateGeMonth(attribute, context);
-		String inputGeYearName = getHtmlNameForDateGeMonth(attribute, context);
+		String inputGeYearName = getHtmlNameForDateGeYear(attribute, context);
 		String inputEqMonthName = getHtmlNameForDateEqMonth(attribute, context);
 		String inputEqYearName = getHtmlNameForDateEqYear(attribute, context);
 		
@@ -721,122 +725,46 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.startElement("tr", this);
 		
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "query-builder-range-type", null);
-		writer.startElement("select", this);
-		writer.writeAttribute("name", htmlNameForRangeType, null);
-		writer.writeAttribute("onchange", js.toString(), null);
+		encodeRangeSelect(writer,
+				htmlNameForRangeType, js.toString(),
+				type);
+
+		encodeDateField(writer,
+				queryCondition.getFromMonth(), queryCondition.getFromYear(),
+				tdFromMonthId, tdSlashBetweenStartId, tdFromYearId,
+				inputFromMonthName, inputFromYearName,
+				type != 0);
 		
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "between", null);
-		if (type == QueryConditionNumeric.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
-		writer.write("Between");
-		writer.endElement("option");
-		
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "le", null);
-		if (type == QueryConditionNumeric.TYPE_LE) writer.writeAttribute("selected", "selected", null);
-		writer.write("at most");
-		writer.endElement("option");
+		encodeRangeDash(writer,
+				tdDashId,
+				type != 0);
 
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "ge", null);
-		if (type == QueryConditionNumeric.TYPE_GE) writer.writeAttribute("selected", "selected", null);
-		writer.write("at least");
-		writer.endElement("option");
-		
-		writer.startElement("option", this);
-		writer.writeAttribute("value", "eq", null);
-		if (type == QueryConditionNumeric.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
-		writer.write("is equal");
-		writer.endElement("option");
-		
-		writer.endElement("select");
-		writer.endElement("td");
+		encodeDateField(writer,
+				queryCondition.getToMonth(), queryCondition.getToYear(),
+				tdToMonthId, tdSlashBetweenEndId, tdToYearId,
+				inputToMonthName, inputToYearName,
+				type != 0);
 
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdFromMonthId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputFromMonthName, null);
-		writer.writeAttribute("value", queryCondition.getFromMonth(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-		
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdSlashBetweenStartId, null);
-		writer.writeAttribute("class", "query-builder-range-dash", null);
-		writer.write("/");
-		writer.endElement("td");
+		encodeDateField(writer,
+				queryCondition.getLeMonth(), queryCondition.getLeYear(),
+				tdLeMonthId, tdSlashLeId, tdLeYearId,
+				inputLeMonthName, inputLeYearName,
+				type != 1);
 
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdFromYearId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputFromYearName, null);
-		writer.writeAttribute("value", queryCondition.getFromYear(), null);
-		writer.endElement("input");
-		writer.endElement("td");
+		encodeDateField(writer,
+				queryCondition.getGeMonth(), queryCondition.getGeYear(),
+				tdGeMonthId, tdSlashGeId, tdGeYearId,
+				inputGeMonthName, inputGeYearName,
+				type != 2);
 
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdDashId, null);
-		writer.writeAttribute("class", "query-builder-range-dash", null);
-		writer.write("-");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 0) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdToMonthId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputToMonthName, null);
-		writer.writeAttribute("value", queryCondition.getToMonth(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 1) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdLeMonthId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputLeMonthName, null);
-		writer.writeAttribute("value", queryCondition.getLeMonth(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 2) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdGeMonthId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputGeMonthName, null);
-		writer.writeAttribute("value", queryCondition.getGeMonth(), null);
-		writer.endElement("input");
-		writer.endElement("td");
-
-		writer.startElement("td", this);
-		if (type != 3) writer.writeAttribute("style", "display: none;", null);
-		writer.writeAttribute("id", tdEqMonthId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputEqMonthName, null);
-		writer.writeAttribute("value", queryCondition.getEqMonth(), null);
-		writer.endElement("input");
-		writer.endElement("td");
+		encodeDateField(writer,
+				queryCondition.getEqMonth(), queryCondition.getEqYear(),
+				tdEqMonthId, tdSlashEqId, tdEqYearId,
+				inputEqMonthName, inputEqYearName,
+				type != 3);
 
 		writer.endElement("tr");
 		writer.endElement("table");
-		
 			
 		for (int i = 0; i < 12; i++)
 			UtilsJSF.encodeHiddenInput(this, writer,
@@ -890,7 +818,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("table");
 
 	}
-	
+
 	private QueryCondition decodeDateCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
 	{
 		
