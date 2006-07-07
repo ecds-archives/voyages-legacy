@@ -1,8 +1,13 @@
 package edu.emory.library.tas.web;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
+import edu.emory.library.tas.attrGroups.Attribute;
+import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.util.query.Conditions;
 
 public class QueryConditionDate extends QueryConditionRange
@@ -23,6 +28,10 @@ public class QueryConditionDate extends QueryConditionRange
 	private String eqMonth;
 	private String eqYear;
 	private boolean[] selectedMonths = null;
+	private boolean noOfSelectedMonthsDetermined = false; 
+	private int noOfSelectedMonths; 
+	private String selectedMonthsAsString = null;
+	private Integer[] selectedMonthsAsArray = null;
 	
 	public QueryConditionDate(AbstractAttribute attribute)
 	{
@@ -35,15 +44,164 @@ public class QueryConditionDate extends QueryConditionRange
 		this.type = type;
 	}
 
-	public boolean addToConditions(Conditions conditions)
+	private Date parseDate(String monthStr, String yearStr, int roundDirection)
 	{
-		return false;
+
+		int month = 0;
+		int year = 0;
+	
+		if (yearStr == null)
+			return null;
+		
+		if (monthStr == null)
+			monthStr = "";
+
+		monthStr = monthStr.trim();
+		yearStr = yearStr.trim();
+		
+		if (yearStr.length() == 0)
+			return null;
+		
+		try { year = Integer.parseInt(yearStr); }
+		catch (NumberFormatException nfe) { return null; }
+		
+		if (monthStr.length() > 0)
+		{
+			try { month = Integer.parseInt(monthStr); }
+			catch (NumberFormatException nfe) { return null; }
+		}
+		else
+		{
+			if (roundDirection > 0)
+				month = 12;
+			else
+				month = 1;
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(year, month - 1, 1);
+		
+		if (roundDirection > 0)
+		{
+			cal.add(Calendar.MONTH, 1);
+			cal.add(Calendar.DATE, -1);
+		}
+
+		return cal.getTime();
+		
 	}
 
+	private void addSingleAttributeToConditions(Attribute attribute, Conditions conditions, Date fromDateQuery, Date toDateQuery)
+	{
+		switch (type)
+		{
+			case QueryConditionNumeric.TYPE_BETWEEN:
+			case QueryConditionNumeric.TYPE_EQ:
+				conditions.addCondition(attribute.getName(), fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute.getName(), toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
+				break;
+
+			case QueryConditionNumeric.TYPE_LE:
+				conditions.addCondition(attribute.getName(), toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
+				break;
+				
+			case QueryConditionNumeric.TYPE_GE:
+				conditions.addCondition(attribute.getName(), fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
+				break;
+
+		}
+		
+		if (!areAllMonthsSelected())
+			conditions.addCondition(
+					"date_part('month', " + attribute.getName() + ")",
+					getSelectedMonthsAsArray(),
+					Conditions.OP_IN);
+		
+	}
+	
+	public boolean addToConditions(Conditions conditions)
+	{
+
+		Date fromDateQuery = null;
+		Date toDateQuery = null;
+
+		switch (type)
+		{
+
+			case QueryConditionNumeric.TYPE_BETWEEN:
+				fromDateQuery = parseDate(fromMonth, fromYear, -1);
+				toDateQuery = parseDate(toMonth, toYear, 1);
+				if (fromDateQuery == null || toDateQuery == null) 
+				{
+					setErrorFlag(true);
+					return false;
+				}
+				break;
+
+			case QueryConditionNumeric.TYPE_LE:
+				toDateQuery = parseDate(leMonth, leYear, 1);
+				if (toDateQuery == null)
+				{
+					setErrorFlag(true);
+					return false;
+				}
+				break;
+				
+			case QueryConditionNumeric.TYPE_GE:
+				fromDateQuery = parseDate(geMonth, geYear, -1);
+				if (fromDateQuery == null)
+				{
+					setErrorFlag(true);
+					return false;
+				}
+				break;
+
+			case QueryConditionNumeric.TYPE_EQ:
+				fromDateQuery = parseDate(eqMonth, eqYear, -1);
+				toDateQuery = parseDate(eqMonth, eqYear, 1);
+				if (fromDateQuery == null || toDateQuery == null) 
+				{
+					setErrorFlag(true);
+					return false;
+				}
+				break;
+
+		}
+		
+		if (isOnAttribute())
+		{
+			Attribute attr = (Attribute) getAttribute();
+			addSingleAttributeToConditions(attr, conditions, fromDateQuery, toDateQuery);
+		}
+		else if (isOnCompoundAttribute())
+		{
+			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
+			Conditions orCond = new Conditions(Conditions.JOIN_OR);
+			conditions.addCondition(orCond);
+			for (Iterator iterAttr = compAttr.getAttributes().iterator(); iterAttr.hasNext();)
+			{
+				Attribute attr = (Attribute) iterAttr.next();
+				addSingleAttributeToConditions(attr, orCond, fromDateQuery, toDateQuery);
+			}
+		}
+		
+		return true;
+		
+	}
+	
+	private void resetPrecomputedMonthsInfo()
+	{
+		noOfSelectedMonthsDetermined = false;
+		selectedMonthsAsString = null;
+		selectedMonthsAsArray = null;
+	}
+	
 	private void ensureMonths()
 	{
 		if (selectedMonths == null)
 		{
+			resetPrecomputedMonthsInfo();
 			selectedMonths = new boolean[12];
 			Arrays.fill(selectedMonths, true);
 		}
@@ -55,10 +213,72 @@ public class QueryConditionDate extends QueryConditionRange
 		return selectedMonths[month];
 	}
 	
+	public boolean areAllMonthsSelected()
+	{
+		return getNoOfSelectedMonths() == 12;
+	}
+	
+	public boolean noMonthSelected()
+	{
+		return getNoOfSelectedMonths() == 0;
+	}
+
+	public int getNoOfSelectedMonths()
+	{
+		ensureMonths();
+		if (!noOfSelectedMonthsDetermined)
+		{
+			noOfSelectedMonths = 0;
+			for (int i = 0; i < 12; i++)
+				if (selectedMonths[i])
+					noOfSelectedMonths ++;
+			noOfSelectedMonthsDetermined = true;
+		}
+		return noOfSelectedMonths;
+	}
+
+	public String getSelectedMonthsAsString()
+	{
+		if (selectedMonthsAsString == null)
+		{
+			StringBuffer selMonthsList = new StringBuffer();
+			for (int i = 0; i < 12; i++)
+			{
+				if (isMonthSelected(i))
+				{
+					if (selMonthsList.length() > 0 ) selMonthsList.append(",");
+					selMonthsList.append(i);
+				}
+			}
+			selectedMonthsAsString = selMonthsList.toString(); 
+		}
+		return selectedMonthsAsString;
+	}
+	
+	public Integer[] getSelectedMonthsAsArray()
+	{
+		if (selectedMonthsAsArray == null)
+		{
+			selectedMonthsAsArray = new Integer[getNoOfSelectedMonths()];
+			for (int i = 0, j = 0; i < 12; i++)
+			{
+				if (isMonthSelected(i))
+				{
+					selectedMonthsAsArray[j++] = new Integer(i+1);
+				}
+			}
+		}
+		return selectedMonthsAsArray;
+	}
+
 	public void setMonthStatus(int month, boolean selected)
 	{
 		ensureMonths();
-		selectedMonths[month] = selected;
+		if (selectedMonths[month] != selected)
+		{
+			resetPrecomputedMonthsInfo();
+			selectedMonths[month] = selected;
+		}
 	}
 
 	public void selectMonth(int month)
@@ -78,6 +298,7 @@ public class QueryConditionDate extends QueryConditionRange
 
 	public void setSelectedMonths(boolean[] selectedMonths)
 	{
+		resetPrecomputedMonthsInfo();
 		this.selectedMonths = selectedMonths;
 	}
 	

@@ -1,18 +1,18 @@
 package edu.emory.library.tas.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Test
 {
 	
-	public void abc()
+	public static void main(String[] args)
 	{
 		
-		int x = 45;
-		int y = 67;
-
-		y = 45;
-		x = 45 + y;
-		y = x;
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(df.format(new Date()));
 		
 	}
 	

@@ -1,4 +1,4 @@
-//$Id: PostgreSQLDialect.java,v 1.1 2006-06-15 17:45:22 pjurczy Exp $
+//$Id: PostgreSQLDialect.java,v 1.2 2006-07-07 15:17:34 jzich Exp $
 package org.hibernate.dialect;
 
 import java.sql.Types;
@@ -112,6 +112,8 @@ public class PostgreSQLDialect extends Dialect {
 
 		registerFunction( "date_trunc", new StandardSQLFunction( "date_trunc", Hibernate.TIMESTAMP ) );
 		
+		registerFunction( "date_part", new StandardSQLFunction( "date_part", Hibernate.INTEGER ) );
+
 		getDefaultProperties().setProperty(Environment.STATEMENT_BATCH_SIZE, DEFAULT_BATCH_SIZE);
 	}
 

@@ -51,6 +51,16 @@ public class Conditions {
 			this.value = val;
 			this.attribute = attr;
 		}
+
+	}
+	
+	private String getAttribute(String exp)
+	{
+		if (exp.startsWith("date_")) {
+			return exp.substring(exp.indexOf(",") + 1, exp.indexOf(")")).trim();
+		} else {
+			return exp;
+		}
 	}
 
 	public Conditions() {
@@ -143,8 +153,8 @@ public class Conditions {
 				ret.append("(");
 				for (int i = 0; i < values.length; i++) {
 					ret.append(" :");
-					ret.append(val + "_" + i);
-					retMap.put(val + "_" + i, values[i]);
+					ret.append(getAttribute(val) + "_" + i);
+					retMap.put(getAttribute(val) + "_" + i, values[i]);
 					if (i < values.length - 1) {
 						ret.append(", ");
 					}
@@ -231,8 +241,7 @@ public class Conditions {
 			Condition condition = (Condition) iter.next();
 			Condition newCondition;
 			if (condition.attribute.startsWith("date_")) {
-				String attribute = condition.attribute.substring(condition.attribute.indexOf("'", 0),
-										condition.attribute.indexOf("'", 1));
+				String attribute = getAttribute(condition.attribute); 
 				newCondition = new Condition(condition.attribute.replaceAll(attribute, prefix + attribute), condition.op, condition.value);
 			} else {
 				newCondition = new Condition(prefix + condition.attribute, condition.op, condition.value);

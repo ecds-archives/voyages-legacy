@@ -115,6 +115,27 @@ td.query-builder-range-value input {
 	padding: 2px;
 	width: 71px; }
 	
+td.query-builder-range-month {
+	width: 25px; }
+
+td.query-builder-range-month input {
+	border: 0px;
+	padding: 2px;
+	width: 21px; }
+
+td.query-builder-range-slash {
+	overflow: hidden;
+	text-align: center;
+	width: 10px; }
+
+td.query-builder-range-year {
+	width: 40px; }
+
+td.query-builder-range-year input {
+	border: 0px;
+	padding: 2px;
+	width: 36px; }
+
 table.query-builder-range-months {
 	margin-top: 5px;
 	width: 280px; }

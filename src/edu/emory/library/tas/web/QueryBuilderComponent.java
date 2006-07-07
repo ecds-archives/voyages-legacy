@@ -444,31 +444,31 @@ public class QueryBuilderComponent extends UIComponentBase
 		encodeNumericField(writer,
 				queryCondition.getFrom(),
 				tdFromId, inputFromName,
-				type != 0);
+				type == 0);
 		
 		encodeRangeDash(writer,
 				tdDashId,
-				type != 0);
+				type == 0);
 
 		encodeNumericField(writer,
 				queryCondition.getTo(),
 				tdToId, inputToName,
-				type != 0);
+				type == 0);
 
 		encodeNumericField(writer,
 				queryCondition.getLe(),
 				tdLeId, inputLeName,
-				type != 1);
+				type == 1);
 
 		encodeNumericField(writer,
 				queryCondition.getGe(),
 				tdGeId, inputGeName,
-				type != 2);
+				type == 2);
 
 		encodeNumericField(writer,
 				queryCondition.getEq(),
 				tdEqId, inputEqName,
-				type != 3);
+				type == 3);
 		
 		writer.endElement("tr");
 		writer.endElement("table");
@@ -514,7 +514,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		queryCondition.setLe(le);
 		queryCondition.setGe(ge);
 		queryCondition.setEq(eq);
-		
+
 		return queryCondition;
 		
 	}
@@ -585,7 +585,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		if (!visible) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdMonthId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.writeAttribute("class", "query-builder-range-month", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputMonthName, null);
@@ -596,14 +596,14 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		if (!visible) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdSlashId, null);
-		writer.writeAttribute("class", "query-builder-range-dash", null);
+		writer.writeAttribute("class", "query-builder-range-slash", null);
 		writer.write("/");
 		writer.endElement("td");
 
 		writer.startElement("td", this);
 		if (!visible) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdYearId, null);
-		writer.writeAttribute("class", "query-builder-range-value", null);
+		writer.writeAttribute("class", "query-builder-range-year", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputYearName, null);
@@ -687,7 +687,7 @@ public class QueryBuilderComponent extends UIComponentBase
 
 		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdSlashLeId);
-		js.append(".style.display = (type == 3) ? '' : 'none';");
+		js.append(".style.display = (type == 1) ? '' : 'none';");
 
 		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdLeYearId);
@@ -699,7 +699,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdSlashGeId);
-		js.append(".style.display = (type == 3) ? '' : 'none';");
+		js.append(".style.display = (type == 2) ? '' : 'none';");
 
 		js.append(" ");
 		UtilsJSF.appendElementRefJS(js, context, form, tdGeYearId);
@@ -733,35 +733,35 @@ public class QueryBuilderComponent extends UIComponentBase
 				queryCondition.getFromMonth(), queryCondition.getFromYear(),
 				tdFromMonthId, tdSlashBetweenStartId, tdFromYearId,
 				inputFromMonthName, inputFromYearName,
-				type != 0);
+				type == 0);
 		
 		encodeRangeDash(writer,
 				tdDashId,
-				type != 0);
+				type == 0);
 
 		encodeDateField(writer,
 				queryCondition.getToMonth(), queryCondition.getToYear(),
 				tdToMonthId, tdSlashBetweenEndId, tdToYearId,
 				inputToMonthName, inputToYearName,
-				type != 0);
+				type == 0);
 
 		encodeDateField(writer,
 				queryCondition.getLeMonth(), queryCondition.getLeYear(),
 				tdLeMonthId, tdSlashLeId, tdLeYearId,
 				inputLeMonthName, inputLeYearName,
-				type != 1);
+				type == 1);
 
 		encodeDateField(writer,
 				queryCondition.getGeMonth(), queryCondition.getGeYear(),
 				tdGeMonthId, tdSlashGeId, tdGeYearId,
 				inputGeMonthName, inputGeYearName,
-				type != 2);
+				type == 2);
 
 		encodeDateField(writer,
 				queryCondition.getEqMonth(), queryCondition.getEqYear(),
 				tdEqMonthId, tdSlashEqId, tdEqYearId,
 				inputEqMonthName, inputEqYearName,
-				type != 3);
+				type == 3);
 
 		writer.endElement("tr");
 		writer.endElement("table");
@@ -823,12 +823,17 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		
 		Map params = externalContext.getRequestParameterMap();
-		String typeStr = (String) params.get(getHtmlNameForNumericType(attribute, context));
-		String from = (String) params.get(getHtmlNameForNumericFrom(attribute, context));
-		String to = (String) params.get(getHtmlNameForNumericTo(attribute, context));
-		String le = (String) params.get(getHtmlNameForNumericLe(attribute, context));
-		String ge = (String) params.get(getHtmlNameForNumericGe(attribute, context));
-		String eq = (String) params.get(getHtmlNameForNumericEq(attribute, context));
+		String typeStr = (String) params.get(getHtmlNameForDateType(attribute, context));
+		String fromMonth = (String) params.get(getHtmlNameForDateFromMonth(attribute, context));
+		String fromYear = (String) params.get(getHtmlNameForDateFromYear(attribute, context));
+		String toMonth = (String) params.get(getHtmlNameForDateToMonth(attribute, context));
+		String toYear = (String) params.get(getHtmlNameForDateToYear(attribute, context));
+		String leMonth = (String) params.get(getHtmlNameForDateLeMonth(attribute, context));
+		String leYear = (String) params.get(getHtmlNameForDateLeYear(attribute, context));
+		String geMonth = (String) params.get(getHtmlNameForDateGeMonth(attribute, context));
+		String geYear = (String) params.get(getHtmlNameForDateGeYear(attribute, context));
+		String eqMonth = (String) params.get(getHtmlNameForDateEqMonth(attribute, context));
+		String eqYear = (String) params.get(getHtmlNameForDateEqYear(attribute, context));
 
 		int type;
 		if ("between".equals(typeStr))
@@ -853,11 +858,16 @@ public class QueryBuilderComponent extends UIComponentBase
 		}
 		
 		QueryConditionDate queryCondition = new QueryConditionDate(attribute, type);
-		queryCondition.setFromMonth(from);
-		queryCondition.setToMonth(to);
-		queryCondition.setLeMonth(le);
-		queryCondition.setGeMonth(ge);
-		queryCondition.setEqMonth(eq);
+		queryCondition.setFromMonth(fromMonth);
+		queryCondition.setFromYear(fromYear);
+		queryCondition.setToMonth(toMonth);
+		queryCondition.setToYear(toYear);
+		queryCondition.setLeMonth(leMonth);
+		queryCondition.setLeYear(leYear);
+		queryCondition.setGeMonth(geMonth);
+		queryCondition.setGeYear(geYear);
+		queryCondition.setEqMonth(eqMonth);
+		queryCondition.setEqYear(eqYear);
 		
 		if (attribute.getType().intValue() == AbstractAttribute.TYPE_DATE)
 		{
@@ -867,7 +877,7 @@ public class QueryBuilderComponent extends UIComponentBase
 				queryCondition.setMonthStatus(i, "1".equals(monthStatus));
 			}
 		}
-
+		
 		return queryCondition;
 		
 	}

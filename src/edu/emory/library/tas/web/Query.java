@@ -37,10 +37,13 @@ public class Query
 			case AbstractAttribute.TYPE_INTEGER:
 			case AbstractAttribute.TYPE_LONG:
 			case AbstractAttribute.TYPE_FLOAT:
-			case AbstractAttribute.TYPE_DATE:
 				queryCondition = new QueryConditionNumeric(attribute);
 				break;
 				
+			case AbstractAttribute.TYPE_DATE:
+				queryCondition = new QueryConditionDate(attribute);
+				break;
+
 			case AbstractAttribute.TYPE_DICT:
 				queryCondition = new QueryConditionDictionary(attribute);
 				break;
