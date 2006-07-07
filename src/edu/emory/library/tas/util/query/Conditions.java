@@ -228,8 +228,15 @@ public class Conditions {
 		Conditions newC = new Conditions();
 		ArrayList conditions = new ArrayList();
 		for (Iterator iter = this.conditions.iterator(); iter.hasNext();) {
-			Condition condition = (Condition) iter.next();			
-			Condition newCondition = new Condition(prefix + condition.attribute, condition.op, condition.value);
+			Condition condition = (Condition) iter.next();
+			Condition newCondition;
+			if (condition.attribute.startsWith("date_")) {
+				String attribute = condition.attribute.substring(condition.attribute.indexOf("'", 0),
+										condition.attribute.indexOf("'", 1));
+				newCondition = new Condition(condition.attribute.replaceAll(attribute, prefix + attribute), condition.op, condition.value);
+			} else {
+				newCondition = new Condition(prefix + condition.attribute, condition.op, condition.value);
+			}
 			conditions.add(newCondition);
 		}
 		ArrayList newSubconditions = new ArrayList();
