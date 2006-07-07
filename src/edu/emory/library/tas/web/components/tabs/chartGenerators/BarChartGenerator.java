@@ -2,6 +2,9 @@ package edu.emory.library.tas.web.components.tabs.chartGenerators;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -20,6 +23,13 @@ public class BarChartGenerator extends AbstractChartGenerator {
 		JFreeChart chart = ChartFactory.createBarChart(title,
 				getXAxis(), "Value", dataset, PlotOrientation.VERTICAL,
 			 showLegend, true, false);
+		
+		
+		CategoryPlot xyplot = (CategoryPlot) chart.getPlot();
+		CategoryAxis axis = xyplot.getDomainAxis();
+		SkippableCategoryAxis newAxis = new SkippableCategoryAxis(axis);
+		newAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
+		xyplot.setDomainAxis(newAxis);
 		
 		return chart;
 	}
