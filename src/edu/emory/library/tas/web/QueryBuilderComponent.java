@@ -579,9 +579,17 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attribute.getId() + "_month_" + month;
 	}
 	
-	private void encodeDateField(ResponseWriter writer, String month, String year, String tdMonthId, String tdSlashId, String tdYearId, String inputMonthName, String inputYearName, boolean visible) throws IOException
+	private void encodeDateField(FacesContext context, UIForm form, ResponseWriter writer, String month, String year, String tdMonthId, String tdSlashId, String tdYearId, String inputMonthName, String inputYearName, boolean visible) throws IOException
 	{
 		
+		String jsMonthOnFocus =
+			"if (this.value == '" + QueryConditionDate.EMPTY_MONTH + "') " +
+			"this.value = '';";
+
+		String jsYearOnFocus =
+			"if (this.value == '" + QueryConditionDate.EMPTY_YEAR + "') " +
+			"this.value = '';";
+
 		writer.startElement("td", this);
 		if (!visible) writer.writeAttribute("style", "display: none;", null);
 		writer.writeAttribute("id", tdMonthId, null);
@@ -589,6 +597,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputMonthName, null);
+		writer.writeAttribute("onfocus", jsMonthOnFocus, null);
 		writer.writeAttribute("value", month, null);
 		writer.endElement("input");
 		writer.endElement("td");
@@ -607,6 +616,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputYearName, null);
+		writer.writeAttribute("onfocus", jsYearOnFocus, null);
 		writer.writeAttribute("value", year, null);
 		writer.endElement("input");
 		writer.endElement("td");
@@ -647,76 +657,76 @@ public class QueryBuilderComponent extends UIComponentBase
 		String inputEqMonthName = getHtmlNameForDateEqMonth(attribute, context);
 		String inputEqYearName = getHtmlNameForDateEqYear(attribute, context);
 		
-		StringBuffer js = new StringBuffer();
+		StringBuffer jsChnageType = new StringBuffer();
 
-		js.append("var type = ");
-		UtilsJSF.appendFormElementRefJS(js, context, form, htmlNameForRangeType);
-		js.append(".selectedIndex;");
+		jsChnageType.append("var type = ");
+		UtilsJSF.appendFormElementRefJS(jsChnageType, context, form, htmlNameForRangeType);
+		jsChnageType.append(".selectedIndex;");
 		
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdFromMonthId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdFromMonthId);
+		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 		
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdSlashBetweenStartId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashBetweenStartId);
+		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdFromYearId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdFromYearId);
+		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdDashId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdDashId);
+		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdToMonthId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdToMonthId);
+		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdSlashBetweenEndId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashBetweenEndId);
+		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdToYearId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdToYearId);
+		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdLeMonthId);
-		js.append(".style.display = (type == 1) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdLeMonthId);
+		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdSlashLeId);
-		js.append(".style.display = (type == 1) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashLeId);
+		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdLeYearId);
-		js.append(".style.display = (type == 1) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdLeYearId);
+		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdGeMonthId);
-		js.append(".style.display = (type == 2) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdGeMonthId);
+		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
 		
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdSlashGeId);
-		js.append(".style.display = (type == 2) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashGeId);
+		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdGeYearId);
-		js.append(".style.display = (type == 2) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdGeYearId);
+		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdEqMonthId);
-		js.append(".style.display = (type == 3) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdEqMonthId);
+		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdSlashEqId);
-		js.append(".style.display = (type == 3) ? '' : 'none';");
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashEqId);
+		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
 
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdEqYearId);
-		js.append(".style.display = (type == 3) ? '' : 'none';");
-
+		jsChnageType.append(" ");
+		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdEqYearId);
+		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
+		
 		int type = queryCondition.getType();
 
 		writer.startElement("table", this);
@@ -726,10 +736,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		encodeRangeSelect(writer,
-				htmlNameForRangeType, js.toString(),
+				htmlNameForRangeType, jsChnageType.toString(),
 				type);
 
-		encodeDateField(writer,
+		encodeDateField(context, form, writer, 
 				queryCondition.getFromMonth(), queryCondition.getFromYear(),
 				tdFromMonthId, tdSlashBetweenStartId, tdFromYearId,
 				inputFromMonthName, inputFromYearName,
@@ -739,25 +749,25 @@ public class QueryBuilderComponent extends UIComponentBase
 				tdDashId,
 				type == 0);
 
-		encodeDateField(writer,
+		encodeDateField(context, form, writer,
 				queryCondition.getToMonth(), queryCondition.getToYear(),
 				tdToMonthId, tdSlashBetweenEndId, tdToYearId,
 				inputToMonthName, inputToYearName,
 				type == 0);
 
-		encodeDateField(writer,
+		encodeDateField(context, form, writer,
 				queryCondition.getLeMonth(), queryCondition.getLeYear(),
 				tdLeMonthId, tdSlashLeId, tdLeYearId,
 				inputLeMonthName, inputLeYearName,
 				type == 1);
 
-		encodeDateField(writer,
+		encodeDateField(context, form, writer,
 				queryCondition.getGeMonth(), queryCondition.getGeYear(),
 				tdGeMonthId, tdSlashGeId, tdGeYearId,
 				inputGeMonthName, inputGeYearName,
 				type == 2);
 
-		encodeDateField(writer,
+		encodeDateField(context, form, writer,
 				queryCondition.getEqMonth(), queryCondition.getEqYear(),
 				tdEqMonthId, tdSlashEqId, tdEqYearId,
 				inputEqMonthName, inputEqYearName,
@@ -778,28 +788,30 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("class", "query-builder-range-months", null);
 		writer.startElement("tr", this);
 		
+		StringBuffer jsSelectMonth = new StringBuffer();
+		
 		for (int i = 0; i < 12; i++)
 		{
 			
 			String tdMonthId = getClientId(context) + "_" + attribute.getId() + "_td_month_" + i;
 			
-			js.setLength(0);
+			jsSelectMonth.setLength(0);
+			
+			jsSelectMonth.append("var monthInput = ");
+			UtilsJSF.appendFormElementRefJS(jsSelectMonth, context, form, getHtmlNameForRangeMonth(attribute, context, i));
+			jsSelectMonth.append("; ");
 
-			js.append("var monthInput = ");
-			UtilsJSF.appendFormElementRefJS(js, context, form, getHtmlNameForRangeMonth(attribute, context, i));
-			js.append("; ");
+			jsSelectMonth.append("var monthTd = ");
+			UtilsJSF.appendElementRefJS(jsSelectMonth, context, form, tdMonthId);
+			jsSelectMonth.append("; ");
 
-			js.append("var monthTd = ");
-			UtilsJSF.appendElementRefJS(js, context, form, tdMonthId);
-			js.append("; ");
-
-			js.append("if (monthInput.value == '1') {");
-			js.append("monthInput.value = '0'; ");
-			js.append("monthTd.className = 'query-builder-range-month-delected';");
-			js.append("} else {");
-			js.append("monthInput.value = '1'; ");
-			js.append("monthTd.className = 'query-builder-range-month-selected';");
-			js.append("}");
+			jsSelectMonth.append("if (monthInput.value == '1') {");
+			jsSelectMonth.append("monthInput.value = '0'; ");
+			jsSelectMonth.append("monthTd.className = 'query-builder-range-month-delected';");
+			jsSelectMonth.append("} else {");
+			jsSelectMonth.append("monthInput.value = '1'; ");
+			jsSelectMonth.append("monthTd.className = 'query-builder-range-month-selected';");
+			jsSelectMonth.append("}");
 			
 			String styleClass = queryCondition.isMonthSelected(i) ? 
 					"query-builder-range-month-selected" : 
@@ -808,7 +820,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.startElement("td", this);
 			writer.writeAttribute("id", tdMonthId, null);
 			writer.writeAttribute("class", styleClass, null);
-			writer.writeAttribute("onclick", js.toString(), null);
+			writer.writeAttribute("onclick", jsSelectMonth.toString(), null);
 			writer.write(QueryConditionDate.MONTH_NAMES[i]);
 			writer.endElement("td");
 

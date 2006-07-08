@@ -8,10 +8,8 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpUtils;
 
 import edu.emory.library.tas.Configuration;
-import edu.emory.library.tas.UidGenerator;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
@@ -118,7 +116,7 @@ public class SearchBean
 		conf.save();
 
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		messageBar.setMessage(HttpUtils.getRequestURL(request) + "?permlink=" + conf.getId());
+		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
 		messageBar.setRendered(true);
 		
 	}

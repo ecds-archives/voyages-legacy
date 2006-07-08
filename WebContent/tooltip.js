@@ -32,6 +32,9 @@ function showToolTip(id, parentId) {
     it = document.getElementById(id);
     parent = document.getElementById(parentId);
         
+    it.style.visibility = 'visible'; 
+    return;
+
     if ((it.style.top == '' || it.style.top == 0) 
         && (it.style.left == '' || it.style.left == 0)) {
         // need to fixate default size (MSIE problem)

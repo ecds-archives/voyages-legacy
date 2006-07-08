@@ -196,9 +196,10 @@ public class UITableResultTab extends UIOutput {
 					if (obj != null) {
 						if (objString.length() > TRIM_LENGTH) {
 							visibleLabel = objString.substring(0, TRIM_LENGTH) + " ...";
-							visibleToolTop = objString.replaceAll(" ", "&nbsp ");
+							//visibleToolTop = objString.replaceAll(" ", "&nbsp;");
+							visibleToolTop = objString;
 						} else {
-							visibleLabel = objString.replaceAll(" ", "&nbsp ");
+							visibleLabel = objString.replaceAll(" ", "&nbsp;");
 						}
 					}
 					writer.startElement("td", this);
@@ -207,10 +208,7 @@ public class UITableResultTab extends UIOutput {
 						writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "', " + "'"
 								+ "cell_" + i + "_" + j + "')", null);
 						writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "')", null);
-					}
-
-					if (visibleLabel != null) {
-						writer.write(visibleLabel);
+//						writer.writeAttribute("title", visibleToolTop, null);
 					}
 
 					// Tooltip
@@ -218,10 +216,15 @@ public class UITableResultTab extends UIOutput {
 						writer.startElement("div", this);
 						writer.writeAttribute("id", "tooltip_" + i + "_" + j, null);
 						writer.writeAttribute("class", "tableDataTooltip", null);
-						if (obj != null) {
-							writer.write(visibleToolTop.replaceAll("', '", "',  <br>'"));
-						}
+						writer.write(visibleToolTop);
+//						if (obj != null) {
+//							writer.write(visibleToolTop.replaceAll("', '", "',  <br>'"));
+//						}
 						writer.endElement("div");
+					}
+					
+					if (visibleLabel != null) {
+						writer.write(visibleLabel);
 					}
 
 					writer.endElement("td");

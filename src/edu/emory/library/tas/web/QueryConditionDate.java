@@ -19,6 +19,9 @@ public class QueryConditionDate extends QueryConditionRange
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 	
+	public static final String EMPTY_MONTH = "MM";
+	public static final String EMPTY_YEAR = "YYYY";
+	
 	private String fromMonth;
 	private String fromYear;
 	private String toMonth;
@@ -39,6 +42,8 @@ public class QueryConditionDate extends QueryConditionRange
 	public QueryConditionDate(AbstractAttribute attribute)
 	{
 		super(attribute);
+		fromMonth = toMonth = geMonth = leMonth = eqMonth = EMPTY_MONTH;
+		fromYear = toYear = geYear = leYear = eqYear = EMPTY_YEAR;
 	}
 
 	public QueryConditionDate(AbstractAttribute attribute, int type)
@@ -128,6 +133,12 @@ public class QueryConditionDate extends QueryConditionRange
 
 		Date fromDateQuery = null;
 		Date toDateQuery = null;
+		
+		if (noMonthSelected())
+		{
+			setErrorFlag(true);
+			return false;
+		}
 
 		switch (type)
 		{
