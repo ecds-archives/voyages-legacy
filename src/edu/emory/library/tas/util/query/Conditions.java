@@ -77,8 +77,13 @@ public class Conditions {
 		return exp;
 	}
 
+	
+	
+	
 	public Conditions() {
+		
 		this.joinCondition = JOIN_AND;
+		
 	}
 
 	public Conditions(int joinCondition) {

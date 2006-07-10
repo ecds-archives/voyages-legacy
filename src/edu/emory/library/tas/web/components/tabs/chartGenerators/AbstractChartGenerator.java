@@ -28,26 +28,26 @@ public abstract class AbstractChartGenerator {
 		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
 			return "date_trunc('year', " + string + ")";
 		} else if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DICT) {
-			return string + ".id";
+			return string + ".name";
 		} else {
 			return string;
 		}
 	}
 
 	public void correctAndCompleteData(Object[] objs) {
-		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DICT) {
-			for (int i = 0; i < objs.length; i++) {
-				Object[] row = (Object[])objs[i];
-				Long id = (Long)row[0];
-				Conditions conditions = new Conditions();
-				conditions.addCondition("id", id, Conditions.OP_EQUALS);
-				QueryValue qValue = new QueryValue(this.getXAxisAttribute().getDictionary(), conditions);
-				Object[] dicts = qValue.executeQuery();
-				if (dicts.length > 0) {
-					((Object[])objs[i])[0] = ((Dictionary)dicts[0]).getName();
-				}
-			}
-		}
+//		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DICT) {
+//			for (int i = 0; i < objs.length; i++) {
+//				Object[] row = (Object[])objs[i];
+//				Long id = (Long)row[0];
+//				Conditions conditions = new Conditions();
+//				conditions.addCondition("id", id, Conditions.OP_EQUALS);
+//				QueryValue qValue = new QueryValue(this.getXAxisAttribute().getDictionary(), conditions);
+//				Object[] dicts = qValue.executeQuery();
+//				if (dicts.length > 0) {
+//					((Object[])objs[i])[0] = ((Dictionary)dicts[0]).getName();
+//				}
+//			}
+//		}
 	}
 
 	public String getXAxis() {
