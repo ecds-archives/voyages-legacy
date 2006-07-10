@@ -311,17 +311,15 @@
 		</navigation-case>
 	</navigation-rule>
 
-	<render-kit>
+	<navigation-rule>
+		<from-view-id>/import-detail.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/import-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
-		<!--  <renderer>
-			<description>
-			Renderer for Stat component.
-			</description>
-			<component-family>STAT_FAMILY</component-family>
-			<renderer-type>STAT_RENDERER</renderer-type>
-			<renderer-class>edu.emory.library.tas.jsf.components.StatMainRenderer</renderer-class>
-			</renderer> -->
-	</render-kit>
+	<render-kit />
 
 	<application>
 		<locale-config>

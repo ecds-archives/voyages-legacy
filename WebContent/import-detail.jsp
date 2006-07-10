@@ -18,17 +18,25 @@
 var json = null;
 var noOfMessages = 0;
 var noOfWarnings = 0;
+var importDir = null;
 
 window.onload = function()
 {
+	
 	json = new JSONRpcClient("JSON-RPC");
-	noOfMessages = document.getElementById("form:logItems").rows.length - 1;
+	
+	var form = document.forms["form"];
+	importDir = form.elements["form:currentImportDir"].value;
+	noOfMessages = parseInt(form.elements["form:currentNoOfMessages"].value);
+	noOfWarnings = parseInt(form.elements["form:currentNoOfWarnings"].value);
+	
 	refresh();
+
 }
 
 function refresh()
 {
-	json.ImportLog.loadDetail(detailLoaded, importDirName, noOfMessages);
+	json.ImportLog.loadDetail(detailLoaded, importDir, noOfMessages);
 }
 
 function detailLoaded(detail, exception)
@@ -38,13 +46,21 @@ function detailLoaded(detail, exception)
 	var logItemsTbl = document.getElementById("form:logItems");
 	for (var i = 0; i < logItems.length; i++)
 	{
+		
 		var tr = logItemsTbl.insertRow(1);
 		var logItem = logItems[i];
-		if (logItem.type == 1) noOfWarnings ++;
-		tr.insertCell(0).appendChild(document.createTextNode(logItem.type));
+		
+		if (logItem.type == 1) noOfWarnings++;
+		
+		var icon = document.createElement("img");
+		icon.width = icon.height = 16;
+		icon.src = logItem.typeImg;
+		
+		tr.insertCell(0).appendChild(icon);
 		tr.insertCell(1).appendChild(document.createTextNode(logItem.timeText));
 		tr.insertCell(2).appendChild(document.createTextNode(logItem.stageLabel));
 		tr.insertCell(3).appendChild(document.createTextNode(logItem.message));
+	
 	}
 
 	/*
@@ -90,73 +106,81 @@ function detailLoaded(detail, exception)
 
 </head>
 <body>
-<f:view><h:form id="form">
+<f:view>
+	<h:form id="form">
+	
+		<h1>Import detail</h1>
+		
+		<h:inputHidden id="currentImportDir" value="#{ImportLog.currentImportDir}" />
+		<h:inputHidden id="currentNoOfMessages" value="#{ImportLog.currentNoOfMessages}" />
+		<h:inputHidden id="currentNoOfWarnings" value="#{ImportLog.currentNoOfWarnings}" />
 
-<b>Overview</b>
+		<div class="main-container">
 
-<table border="0" cellspacing="5" cellpadding="0">
-<tr>
-	<td>Voyages data file</td>
-	<td id="voyagesPresent">?</td>
-</tr>
-<tr>
-	<td>Slaves data file</td>
-	<td id="slavesPresent">?</td>
-</tr>
-<tr>
-	<td>Started</td>
-	<td id="started">?</td>
-</tr>
-<tr>
-	<td>Finished</td>
-	<td id="finished">?</td>
-</tr>
-<tr>
-	<td>Duration</td>
-	<td id="duration">?</td>
-</tr>
-<tr>
-	<td>Number of warnings</td>
-	<td id="noOfWarnings">?</td>
-</tr>
-<tr>
-	<td>Status</td>
-	<td id="status">?</td>
-</tr>
-</table>
+			<h2>Overview</h2>
+	
+			<table border="0" cellspacing="5" cellpadding="0">
+			<tr>
+				<td>Voyages data file</td>
+				<td id="voyagesPresent">?</td>
+			</tr>
+			<tr>
+				<td>Slaves data file</td>
+				<td id="slavesPresent">?</td>
+			</tr>
+			<tr>
+				<td>Started</td>
+				<td id="started">?</td>
+			</tr>
+			<tr>
+				<td>Finished</td>
+				<td id="finished">?</td>
+			</tr>
+			<tr>
+				<td>Duration</td>
+				<td id="duration">?</td>
+			</tr>
+			<tr>
+				<td>Number of warnings</td>
+				<td id="noOfWarnings">?</td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td id="status">?</td>
+			</tr>
+			</table>
+			
+			<h2>Import log</h2>
+	
+			<h:dataTable id="logItems" value="#{ImportLog.currentLogItems}" var="item" border="0" cellpadding="0" cellspacing="5">
+				<h:column>
+					<h:graphicImage width="16" height="16" url="#{item.typeImg}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Time" />
+					</f:facet>
+					<h:outputText value="#{item.timeText}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Stage" />
+					</f:facet>
+					<h:outputText value="#{item.stageLabel}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Message" />
+					</f:facet>
+					<h:outputText value="#{item.message}" />
+				</h:column>
+			</h:dataTable>
+			
+			<h:commandButton action="back" value="Back" />
+			
+		</div>
 
-<b>Log</b>
-
-<h:dataTable id="logItems" value="#{ImportLog.currentLogItems}" var="item" border="0" cellpadding="0" cellspacing="5">
-	<h:column>
-		<h:graphicImage width="16" height="16" url="#{item.typeImg}" />
-	</h:column>
-	<h:column>
-		<f:facet name="header">
-			<h:outputText value="Time" />
-		</f:facet>
-		<h:outputText value="#{item.timeText}" />
-	</h:column>
-	<h:column>
-		<f:facet name="header">
-			<h:outputText value="Stage" />
-		</f:facet>
-		<h:outputText value="#{item.stageLabel}" />
-	</h:column>
-	<h:column>
-		<f:facet name="header">
-			<h:outputText value="Message" />
-		</f:facet>
-		<h:outputText value="#{item.message}" />
-	</h:column>
-</h:dataTable>
-
-<script language="javascript" type="text/javascript">
-<h:outputFormat escape="false" value="var importDirName = \"{0}\";">
-	<f:param value="#{ImportLog.currentImportDirName}" />
-</h:outputFormat>
-</script>
-
-</h:form></f:view>
+	</h:form>
+</f:view>
 </body>
 </html>

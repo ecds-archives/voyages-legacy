@@ -1,21 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="edu.emory.library.tas.web.upload.Upload" %>
 <%@ page import="com.metaparadigm.jsonrpc.JSONRPCBridge" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<% JSONRPCBridge.getGlobalBridge().registerClass("Upload", Upload.class); %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Import</title>
-<link href="common.css" rel="stylesheet" type="text/css">
-
-<%
-
-//JSONRPCBridge bridge = Utils.getJSONRPCBridge(request.getSession());
-//bridge.registerClass("Upload", Upload.class);
-JSONRPCBridge.getGlobalBridge().registerClass("Upload", Upload.class);
-
-%>
+<link href="import.css" rel="stylesheet" type="text/css">
 
 <script language="javascript" src="jslib/jsonrpc.js"></script>
 <script language="javascript">
@@ -66,10 +61,12 @@ function refreshStatus()
 
 </head>
 <body>
-
+<f:view>
 <form onsubmit="return beforeUpload()" target="upload-iframe" action="import" name="upload" method="post" enctype="multipart/form-data">
 
-<div style="padding: 5px; background-color: #EEEEEE; font-weight: bold;">Select files</div>
+<h1>Import</h1>
+
+<h2>Select files</h2>
 
 <table border="0" cellspacing="5" cellpadding="0">
 <tr>
@@ -105,9 +102,9 @@ function refreshStatus()
 
 <div id="statusBarFrame" style="width: 300px; overflow: hidden; height: 10px; border: 1px solid #CCCCCC"><div style="background-color: #EEEEEE; width: 0%; overflow: hide; height: 10px;" id="statusBar" ></div></div>
 
-</form>
-
 <iframe xstyle="display: none" name="upload-iframe" width="600" height="300"></iframe>
 
+</form>
+</f:view>
 </body>
 </html>

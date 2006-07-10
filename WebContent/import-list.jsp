@@ -14,35 +14,39 @@
 <f:view>
 	<h:form id="form">
 	
-		<h:dataTable value="#{ImportLog.importLogs}" var="log" border="0" cellpadding="0" cellspacing="5" styleClass="grid">
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Started" />
-				</f:facet>
-				<h:commandLink actionListener="#{ImportLog.openDetail}" action="detail">
-					<f:param id="itemId" name="itemId" value="#{log.id}" />
-					<h:outputText value="#{log.started}" />
-				</h:commandLink>
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Finished" />
-				</f:facet>
-				<h:outputText value="#{log.finished}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Duration" />
-				</f:facet>
-				<h:outputText value="#{log.duration}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Outcome" />
-				</f:facet>
-				<h:outputText value="#{log.outcome}" />
-			</h:column>
-		</h:dataTable>
+		<h1>Import history</h1>
+		
+		<div class="main-container">
+			<h:dataTable value="#{ImportLog.importLogs}" var="log" border="0" cellpadding="0" cellspacing="5" styleClass="grid">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Started" />
+					</f:facet>
+					<h:commandLink actionListener="#{ImportLog.openDetail}" action="detail">
+						<f:param id="itemId" name="itemId" value="#{log.id}" />
+						<h:outputText value="#{log.started}" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Finished" />
+					</f:facet>
+					<h:outputText value="#{log.finished}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Duration" />
+					</f:facet>
+					<h:outputText value="#{log.duration}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Outcome" />
+					</f:facet>
+					<h:outputText value="#{log.outcome}" />
+				</h:column>
+			</h:dataTable>
+		</div>
 	
 	</h:form>
 </f:view>

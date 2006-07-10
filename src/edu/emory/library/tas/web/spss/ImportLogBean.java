@@ -23,14 +23,16 @@ import edu.emory.library.tas.spss.ImportServlet;
 import edu.emory.library.tas.spss.Log;
 import edu.emory.library.tas.spss.LogItem;
 import edu.emory.library.tas.spss.LogReader;
-import edu.emory.library.tas.spss.LogReaderException;
 
 public class ImportLogBean
 {
 	
 	private static final String BEAN_NAME = "ImportLog";
 
-	private String currentImportDirName;
+	private String currentImportDir;
+	private int currentNoOfMessages;
+	private int currentNoOfWarnings;
+	private LogItemForDisplayInDetail[] currentLogItems;
 	
 	public ImportLogBean()
 	{
@@ -107,9 +109,6 @@ public class ImportLogBean
 			catch (InvalidImportDirectoryException e)
 			{
 			}
-			catch (LogReaderException e)
-			{
-			}
 			catch (IOException e)
 			{
 			}
@@ -122,19 +121,23 @@ public class ImportLogBean
 
 	public void openDetail(ActionEvent event)
 	{
+		
 		UIParameter itemIdParam = (UIParameter) event.getComponent().findComponent("itemId");
 		if (itemIdParam == null) return;
-		currentImportDirName = (String) itemIdParam.getValue();
+		
+		currentImportDir = (String) itemIdParam.getValue();
+		loadLogItemsForDetail();
+
 	}
 
-	public String getCurrentImportDirName()
+	public String getCurrentImportDir()
 	{
-		return currentImportDirName;
+		return currentImportDir;
 	}
 
-	public void setCurrentImportDirName(String currentImportDirName)
+	public void setCurrentImportDir(String currentImportDirName)
 	{
-		this.currentImportDirName = currentImportDirName;
+		this.currentImportDir = currentImportDirName;
 	}
 	
 	public static LogForDisplayInDetail loadDetail(HttpServletRequest request, String importDirName, int skip)
@@ -206,16 +209,16 @@ public class ImportLogBean
 		catch (IOException e)
 		{
 		}
-		catch (LogReaderException e)
-		{
-		}
 
 		return null;
 		
 	}
 	
-	public LogItemForDisplayInDetail[] getCurrentLogItems()
+	private void loadLogItemsForDetail()
 	{
+		
+		currentNoOfMessages = 0;
+		currentNoOfWarnings = 0;
 		
 		Configuration conf = AppConfig.getConfiguration();
 		DateFormat dateFormatLogItem = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_LOGITEM_DATEFORMAT));
@@ -226,32 +229,42 @@ public class ImportLogBean
 			LogReader rdr = new LogReader(
 					makeImportFullDir(
 							conf.getString(AppConfig.IMPORT_ROOTDIR),
-							currentImportDirName));
+							currentImportDir));
 			
 			Log importLog = rdr.loadAll();
+			currentNoOfMessages = importLog.getItems().size();
 			
 			List items = importLog.getItems();
-			LogItemForDisplayInDetail[] itemsForDisplay =
-				new LogItemForDisplayInDetail[items.size()];
-			
+			currentLogItems = new LogItemForDisplayInDetail[items.size()];
+
 			for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
 			{
 				LogItem item = (LogItem) items.get(j);
-				itemsForDisplay[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
+				if (item.getType() == LogItem.TYPE_WARN) currentNoOfWarnings ++;
+				currentLogItems[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
 			}
 			
-			return itemsForDisplay;
-
 		}
 		catch (IOException e)
 		{
-			return null;
-		}
-		catch (LogReaderException e)
-		{
-			return null;
+			throw new RuntimeException(e);
 		}
 		
+	}
+
+	public LogItemForDisplayInDetail[] getCurrentLogItems()
+	{
+		return currentLogItems;
+	}
+
+	public int getCurrentNoOfMessages()
+	{
+		return currentNoOfMessages;
+	}
+
+	public int getCurrentNoOfWarnings()
+	{
+		return currentNoOfWarnings;
 	}
 
 }
