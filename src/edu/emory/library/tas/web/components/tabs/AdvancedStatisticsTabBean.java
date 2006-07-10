@@ -441,7 +441,7 @@ public class AdvancedStatisticsTabBean {
 		ArrayList list = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			boolean ok = false;
-			if (this.selectedChart.equals("0")) {
+			if (this.selectedChart != null && this.selectedChart.equals("0")) {
 				ok = true;
 			} else {
 				if (attributes[i].getType().intValue() == Attribute.TYPE_INTEGER
@@ -462,6 +462,8 @@ public class AdvancedStatisticsTabBean {
 				list.add(new ComparableSelectItem(attributes[i].getName(), outString));
 			}
 		}
+		
+		Collections.sort(list);
 		
 		return list;
 	}
