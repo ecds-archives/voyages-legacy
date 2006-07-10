@@ -112,7 +112,7 @@ public class TimeLineResultTabBean {
 
 	public String showTimeLine() {
 		if (this.componentVisible.booleanValue()
-				&& (this.needQuery || this.attributesChanged)) {
+				&& (this.needQuery || this.attributesChanged) && this.conditions != null) {
 
 			Conditions localCondition = this.conditions
 					.addAttributesPrefix("v.");

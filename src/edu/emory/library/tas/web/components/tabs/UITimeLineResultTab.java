@@ -24,9 +24,9 @@ public class UITimeLineResultTab extends UIOutput {
 		
 	}
 	
-	public boolean getRendersChildren() {
-		return true;
-	}
+//	public boolean getRendersChildren() {
+//		return true;
+//	}
 
 	public void encodeBegin(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
@@ -61,21 +61,19 @@ public class UITimeLineResultTab extends UIOutput {
 		writer.startElement("table", this);
 	}
 
-	public void encodeChildren(FacesContext context) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		List children = this.getChildren();
-		Iterator iter = children.iterator();
-		while (iter.hasNext()) {
-			writer.startElement("td", this);
-			UIComponentBase component = (UIComponentBase)iter.next();
-			component.encodeBegin(context);
-			if (component.getRendersChildren()) {
-				component.encodeChildren(context);
-			}
-			component.encodeEnd(context);
-			writer.endElement("td");			
-		}
-	}
+//	public void encodeChildren(FacesContext context) throws IOException {
+//		ResponseWriter writer = context.getResponseWriter();
+//		List children = this.getChildren();
+//		Iterator iter = children.iterator();
+//		while (iter.hasNext()) {
+//			writer.startElement("td", this);
+//			UIComponentBase component = (UIComponentBase)iter.next();
+//			component.encodeBegin(context);
+//			component.encodeChildren(context);
+//			component.encodeEnd(context);
+//			writer.endElement("td");			
+//		}
+//	}
 	
 	public void encodeEnd(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
