@@ -180,7 +180,7 @@ public class HibernateTest {
 //				}
 				//qValue.addPopulatedAttribute("vi.remoteVoyageId", false);
 				qValue.addPopulatedAttribute("sum(v.voyage)", false);
-				qValue.setGroupBy("v.datedep");
+				qValue.setGroupBy(new String[] {"v.datedep"});
 //				qValue.addPopulatedAttribute("voyage.shipname");
 //				qValue.addPopulatedAttribute("v.voyage.shipname", false);
 //				qValue.addPopulatedAttribute("v.voyage.ownere", false);

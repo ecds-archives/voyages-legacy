@@ -99,7 +99,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		query = new QueryValue("Group", conditions);
 		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy("name");
+		query.setOrderBy(new String[] {"name"});
 		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		Group[] ret = null;
@@ -127,7 +127,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		query = new QueryValue("Attribute", conditions);
 		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy("name");
+		query.setOrderBy(new String[] {"name"});
 		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		Attribute[] ret = null;
@@ -203,7 +203,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
 		query = new QueryValue("CompoundAttribute", conditions);
 		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy("name");
+		query.setOrderBy(new String[] {"name"});
 		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		CompoundAttribute[] ret = null;
@@ -232,7 +232,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		conditions.addCondition("name", name, Conditions.OP_EQUALS);
 		query = new QueryValue("CompoundAttribute", conditions);
 		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy("name");
+		query.setOrderBy(new String[] {"name"});
 		query.setCacheable(true);
 		Object[] attributes = (Object[]) query.executeQuery();
 		if (attributes.length == 0) {

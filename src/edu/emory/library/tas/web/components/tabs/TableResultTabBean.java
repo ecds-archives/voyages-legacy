@@ -145,7 +145,7 @@ public class TableResultTabBean {
 			orderByPrefix = "v.voyage.";
 		}
 		if (dataTable.getOrderByColumn() == null) {
-			qValue.setOrderBy("v.voyageId");
+			qValue.setOrderBy(new String[] {"v.voyageId"});
 		} else {
 			VisibleColumn vattr = dataTable.getOrderByColumn();
 			Attribute[] attr = null;
@@ -158,18 +158,15 @@ public class TableResultTabBean {
 			}
 
 			if (attr != null) {
-				StringBuffer order = new StringBuffer();
+				String[] order = new String[attr.length];
 				for (int i = 0; i < attr.length; i++) {
 					if (!attr[i].isDictinaory()) {
-						order.append(orderByPrefix + attr[i].getName());
+						order[i] = orderByPrefix + attr[i].getName();
 					} else {
-						order.append(orderByPrefix + attr[i].getName() + ".name");
-					}
-					if (i < attr.length - 1) {
-						order.append(", ");
+						order[i] = orderByPrefix + attr[i].getName() + ".name";
 					}
 				}
-				qValue.setOrderBy(order.toString());
+				qValue.setOrderBy(order);
 				qValue.setOrder(dataTable.getOrder());
 			}
 		}

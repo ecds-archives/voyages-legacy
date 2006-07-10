@@ -144,15 +144,15 @@ public class AdvancedStatisticsTabBean {
 		
 		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
 		if (this.aggregate.booleanValue()) {
-			qValue.setGroupBy(xAxis);
+			qValue.setGroupBy(new String[] {xAxis});
 		}
 		qValue.addPopulatedAttribute(xAxis, false);
 		
 		if (this.order.equals("1")) {
-			qValue.setOrderBy(xAxis);
+			qValue.setOrderBy(new String[] {xAxis});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 		} else if (this.order.equals("2")) {
-			qValue.setOrderBy(xAxis);
+			qValue.setOrderBy(new String[] {xAxis});
 			qValue.setOrder(QueryValue.ORDER_DESC);
 		}
 		
@@ -301,7 +301,7 @@ public class AdvancedStatisticsTabBean {
 		
 		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
 		if (this.aggregate.booleanValue()) {
-			qValue.setGroupBy(xAxis);
+			qValue.setGroupBy(new String[] {xAxis});
 		}
 		qValue.addPopulatedAttribute(xAxis, false);
 		qValue.setLimit(MAX_RESULTS_PER_GRAPH + 1);
@@ -441,16 +441,17 @@ public class AdvancedStatisticsTabBean {
 		ArrayList list = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			boolean ok = false;
-			if (this.selectedChart != null && this.selectedChart.equals("0")) {
-				ok = true;
-			} else {
-				if (attributes[i].getType().intValue() == Attribute.TYPE_INTEGER
-						|| attributes[i].getType().intValue() == Attribute.TYPE_LONG
-						|| attributes[i].getType().intValue() == Attribute.TYPE_FLOAT
-						|| attributes[i].getType().intValue() == Attribute.TYPE_DICT) {
-					ok = true;
-				}
-			}
+//			if (this.selectedChart != null && this.selectedChart.equals("0")) {
+//				ok = true;
+//			} else {
+//				if (attributes[i].getType().intValue() == Attribute.TYPE_INTEGER
+//						|| attributes[i].getType().intValue() == Attribute.TYPE_LONG
+//						|| attributes[i].getType().intValue() == Attribute.TYPE_FLOAT
+//						|| attributes[i].getType().intValue() == Attribute.TYPE_DICT) {
+//					ok = true;
+//				}
+//			}
+			ok = true;
 			if (ok) {
 				String outString = null;
 				if (attributes[i].getUserLabel() == null

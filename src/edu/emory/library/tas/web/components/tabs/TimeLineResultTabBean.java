@@ -123,13 +123,14 @@ public class TimeLineResultTabBean {
 
 			QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v",
 					localCondition);
-			qValue.setGroupBy("date_trunc('year', v.datedep)");
+			qValue.setGroupBy(new String[] {"date_trunc('year', v.datedep)"});
 			qValue
 					.addPopulatedAttribute("date_trunc('year', v.datedep)",
 							false);
 			qValue.addPopulatedAttribute(this.chosenAggregate + "(v."
 					+ this.chosenAttribute + ")", false);
-			qValue.setOrderBy("date_trunc('year', v.datedep)");
+			qValue.setOrderBy(new String[] {"date_trunc('year', v.datedep)"});
+			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
 
 //			TimeSeriesCollection dataset = new TimeSeriesCollection();

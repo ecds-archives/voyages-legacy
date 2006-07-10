@@ -1,5 +1,9 @@
 package edu.emory.library.tas.web.components.tabs.chartGenerators;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -35,10 +39,33 @@ public class BarChartGenerator extends AbstractChartGenerator {
 	}
 
 	public void addRowToDataSet(Object[] data, Object[] series) {
-		for (int i = 0; i < series.length; i++) {			
+		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
+			addDateRowToDataSet(data, series);
+		} else {
+			addSimpleDataRowToDataSet(data, series);
+		}
+
+	}
+
+	private void addSimpleDataRowToDataSet(Object[] data, Object[] series) {
+		for (int i = 0; i < series.length; i++) {
 			for (int j = 0; j < data.length; j++) {
-				Object[] row = (Object[])data[j];
-				dataset.addValue((Number)row[i + 1], series[i].toString(), row[0].toString());
+				Object[] row = (Object[]) data[j];
+				((DefaultCategoryDataset) dataset).addValue((Number) row[i + 1], series[i].toString(), row[0]
+						.toString());
+			}
+		}
+	}
+
+	private void addDateRowToDataSet(Object[] data, Object[] series) {
+		for (int i = 0; i < series.length; i++) {
+			for (int j = 0; j < data.length; j++) {
+				Object[] row = (Object[]) data[j];
+				Date date = (Date) row[0];
+				Calendar cal = new GregorianCalendar();
+				cal.setTime(date);
+				String str = cal.get(Calendar.YEAR) + "";
+				((DefaultCategoryDataset) dataset).addValue((Number) row[i + 1], series[i].toString(), str);
 			}
 		}
 	}

@@ -110,7 +110,7 @@
 					<%/* Configuration of table */
 
 						%>
-					<t:htmlTag value="div" style="padding: 10px; background-color: #EEEEEE"
+					<t:htmlTag value="div"
 						rendered="#{TableResultTabBean.configurationMode}">
 
 						<t:htmlTag value="div"
@@ -118,151 +118,155 @@
 							<h:outputText value="Configure columns" />
 						</t:htmlTag>
 
-						<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
-							<h:outputText value="Choose group of attributes" />
-						</t:htmlTag>
-						<t:htmlTag value="div" style="margin-bottom: 5px; padding-bottom: 5px;">
-							<h:selectOneMenu style="width: 300px;" value="#{TableResultTabBean.selectedGroupSet}"
-								id="configure_groupSetCombo" onchange="submit()">
-								<f:selectItems value="#{TableResultTabBean.availableGroupSets}" />
-							</h:selectOneMenu>
-						</t:htmlTag>
+						<t:htmlTag value="div" style="padding: 10px; background-color: #EEEEEE">
 
-						<t:htmlTag value="table" style="border-collapse: collapse;">
-							<t:htmlTag value="tr">
-
-								<t:htmlTag value="td" style="padding: 0px;">
-									<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
-										<h:outputText value="Available attributes" />
-									</t:htmlTag>
-									<h:selectManyListbox style="width: 300px" id="configure_availAttributes" size="10"
-										value="#{TableResultTabBean.selectedAttributeToAdd}">
-										<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
-									</h:selectManyListbox>
-								</t:htmlTag>
-
-								<t:htmlTag value="td" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-bottom: 0px;">
-									<t:htmlTag value="div" style="margin-bottom: 5px;">
-										<h:commandButton style="width: 30px" id="configure_AddAttrButton" value=">"
-											action="#{TableResultTabBean.addSelectedAttributeToList}" />
-									</t:htmlTag>
-									<t:htmlTag value="div">
-										<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="<"
-											action=" #{TableResultTabBean.remSelectedAttributeFromList}" />
-									</t:htmlTag>
-								</t:htmlTag>
-
-								<t:htmlTag value="td" style="padding: 0px;">
-									<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
-										<h:outputText value="Selected columns" />
-									</t:htmlTag>
-									<h:selectManyListbox style="width: 300px" id="configure_visibleAttributes"
-										value="#{TableResultTabBean.selectedAttributeAdded}" size="10">
-										<f:selectItems value="#{TableResultTabBean.visibleAttributes}" />
-									</h:selectManyListbox>
-								</t:htmlTag>
-
-								<t:htmlTag value="td" style="padding-left: 10px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
-									<t:htmlTag value="div" style="margin-bottom: 5px;">
-										<h:commandButton style="width: 80px" id="configure_UpAttrButton" value="Move up"
-											action="#{TableResultTabBean.moveAttrUp}" />
-									</t:htmlTag>
-									<t:htmlTag value="div">
-										<h:commandButton style="width: 80px" id="configure_DownAttrButton" value="Move down"
-											action="#{TableResultTabBean.moveAttrDown}" />
-									</t:htmlTag>
-								</t:htmlTag>
-
+							<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
+								<h:outputText value="Choose group of attributes" />
 							</t:htmlTag>
-						</t:htmlTag>
-
-						<%-- 
-							<% /* Groups */ %>
-							<t:htmlTag styleClass="configDiv" style="border: 3px solid Blue; width: 594px;" value="div">
-								<h:outputText style="margin-left: 3px;" id="config_label1" value="Choose group of attributes:" />
-								<t:htmlTag value="br" />
-								<h:selectOneMenu style="margin: 0px 0px 5px 10px;width: 200px;" value="#{TableResultTabBean.selectedGroupSet}"
+							<t:htmlTag value="div" style="margin-bottom: 5px; padding-bottom: 5px;">
+								<h:selectOneMenu style="width: 300px;" value="#{TableResultTabBean.selectedGroupSet}"
 									id="configure_groupSetCombo" onchange="submit()">
 									<f:selectItems value="#{TableResultTabBean.availableGroupSets}" />
 								</h:selectOneMenu>
 							</t:htmlTag>
 	
-							<% /* Configuration of visible attributes */ %>
-							<h:panelGrid styleClass="configTable" id="configure_groupAttrs" columns="3">
+							<t:htmlTag value="table" style="border-collapse: collapse;">
+								<t:htmlTag value="tr">
 	
-								<% /* Available attributes in current group */ %>
-								<h:panelGrid styleClass="config" columns="1" id="configure_groupAttrsPanel">
-									<h:outputText id="config_label2" value="Available attributes:" />
-									<h:selectManyListbox style="width: 200px" id="configure_availAttributes" size="10"
-										value="#{TableResultTabBean.selectedAttributeToAdd}">
-										<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
-									</h:selectManyListbox>
-								</h:panelGrid>
+									<t:htmlTag value="td" style="padding: 0px;">
+										<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
+											<h:outputText value="Available attributes" />
+										</t:htmlTag>
+										<h:selectManyListbox style="width: 300px" id="configure_availAttributes" size="10"
+											value="#{TableResultTabBean.selectedAttributeToAdd}">
+											<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
+										</h:selectManyListbox>
+									</t:htmlTag>
 	
-								<% /* Buttons -> and -< */ %>
-								<h:panelGroup id="configure_buttonsAddRem">
-									<h:panelGrid id="cinfigure_buttonsAddRemGrid">
-										<h:commandButton style="width: 75px" id="configure_AddAttrButton" value="->"
-											action="#{TableResultTabBean.addSelectedAttributeToList}" />
-										<h:commandButton style="width: 75px" id="configure_RemAttrButton" value="<-"
-											action="#{TableResultTabBean.remSelectedAttributeFromList}" />
-									</h:panelGrid>
-								</h:panelGroup>
+									<t:htmlTag value="td" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-bottom: 0px;">
+										<t:htmlTag value="div" style="margin-bottom: 5px;">
+											<h:commandButton style="width: 30px" id="configure_AddAttrButton" value=">"
+												action="#{TableResultTabBean.addSelectedAttributeToList}" />
+										</t:htmlTag>
+										<t:htmlTag value="div">
+											<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="<"
+												action=" #{TableResultTabBean.remSelectedAttributeFromList}" />
+										</t:htmlTag>
+									</t:htmlTag>
 	
-								<% /* Currently set attributes */ %>
-								<h:panelGrid columns="2" id="configure_currentAttrsPanelMain">
-									
-									<% /* List of attributes */ %>
-									<h:panelGrid columns="1" id="configure_currentAttrsPanel">
-										<h:outputText id="config_label3" value="Current attributes in talbe:" />
-										<h:selectManyListbox style="width: 200px" id="configure_visibleAttributes"
+									<t:htmlTag value="td" style="padding: 0px;">
+										<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
+											<h:outputText value="Selected columns" />
+										</t:htmlTag>
+										<h:selectManyListbox style="width: 300px" id="configure_visibleAttributes"
 											value="#{TableResultTabBean.selectedAttributeAdded}" size="10">
 											<f:selectItems value="#{TableResultTabBean.visibleAttributes}" />
 										</h:selectManyListbox>
+									</t:htmlTag>
+	
+									<t:htmlTag value="td" style="padding-left: 10px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
+										<t:htmlTag value="div" style="margin-bottom: 5px;">
+											<h:commandButton style="width: 80px" id="configure_UpAttrButton" value="Move up"
+												action="#{TableResultTabBean.moveAttrUp}" />
+										</t:htmlTag>
+										<t:htmlTag value="div">
+											<h:commandButton style="width: 80px" id="configure_DownAttrButton" value="Move down"
+												action="#{TableResultTabBean.moveAttrDown}" />
+										</t:htmlTag>
+									</t:htmlTag>
+	
+								</t:htmlTag>
+							</t:htmlTag>
+	
+							<%-- 
+								<% /* Groups */ %>
+								<t:htmlTag styleClass="configDiv" style="border: 3px solid Blue; width: 594px;" value="div">
+									<h:outputText style="margin-left: 3px;" id="config_label1" value="Choose group of attributes:" />
+									<t:htmlTag value="br" />
+									<h:selectOneMenu style="margin: 0px 0px 5px 10px;width: 200px;" value="#{TableResultTabBean.selectedGroupSet}"
+										id="configure_groupSetCombo" onchange="submit()">
+										<f:selectItems value="#{TableResultTabBean.availableGroupSets}" />
+									</h:selectOneMenu>
+								</t:htmlTag>
+		
+								<% /* Configuration of visible attributes */ %>
+								<h:panelGrid styleClass="configTable" id="configure_groupAttrs" columns="3">
+		
+									<% /* Available attributes in current group */ %>
+									<h:panelGrid styleClass="config" columns="1" id="configure_groupAttrsPanel">
+										<h:outputText id="config_label2" value="Available attributes:" />
+										<h:selectManyListbox style="width: 200px" id="configure_availAttributes" size="10"
+											value="#{TableResultTabBean.selectedAttributeToAdd}">
+											<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
+										</h:selectManyListbox>
 									</h:panelGrid>
-									
-									<% /* Buttons - move up/down */ %>
-									<h:panelGrid id="configure_upDownPanel" columns="1">
-										<h:commandButton style="width: 75px" id="configure_UpAttrButton" value="Move up"
-											action="#{TableResultTabBean.moveAttrUp}" />
-										<h:commandButton style="width: 75px" id="configure_DownAttrButton" value="Move down"
-											action="#{TableResultTabBean.moveAttrDown}" />
+		
+									<% /* Buttons -> and -< */ %>
+									<h:panelGroup id="configure_buttonsAddRem">
+										<h:panelGrid id="cinfigure_buttonsAddRemGrid">
+											<h:commandButton style="width: 75px" id="configure_AddAttrButton" value="->"
+												action="#{TableResultTabBean.addSelectedAttributeToList}" />
+											<h:commandButton style="width: 75px" id="configure_RemAttrButton" value="<-"
+												action="#{TableResultTabBean.remSelectedAttributeFromList}" />
+										</h:panelGrid>
+									</h:panelGroup>
+		
+									<% /* Currently set attributes */ %>
+									<h:panelGrid columns="2" id="configure_currentAttrsPanelMain">
+										
+										<% /* List of attributes */ %>
+										<h:panelGrid columns="1" id="configure_currentAttrsPanel">
+											<h:outputText id="config_label3" value="Current attributes in talbe:" />
+											<h:selectManyListbox style="width: 200px" id="configure_visibleAttributes"
+												value="#{TableResultTabBean.selectedAttributeAdded}" size="10">
+												<f:selectItems value="#{TableResultTabBean.visibleAttributes}" />
+											</h:selectManyListbox>
+										</h:panelGrid>
+										
+										<% /* Buttons - move up/down */ %>
+										<h:panelGrid id="configure_upDownPanel" columns="1">
+											<h:commandButton style="width: 75px" id="configure_UpAttrButton" value="Move up"
+												action="#{TableResultTabBean.moveAttrUp}" />
+											<h:commandButton style="width: 75px" id="configure_DownAttrButton" value="Move down"
+												action="#{TableResultTabBean.moveAttrDown}" />
+										</h:panelGrid>
 									</h:panelGrid>
 								</h:panelGrid>
-							</h:panelGrid>
-							
-							<% /* Auto attach attributes from search */ %>
-							<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">			
-								<h:selectBooleanCheckbox style="margin-top: 3px;" value="#{TableResultTabBean.attachSearchedParams}" />				
-								<h:outputText style="margin-left: 3px; margin-top: 3px;" value=" Attach to the result attributes from the search query" />
-							</t:htmlTag>
-							
-							<% /* Apply button part */ %>
-							<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
-								<h:commandButton style="margin-top: 5px; margin-left: 4px;" id="configure_applyConfigButton"
-									value="Apply configuration" action="#{TableResultTabBean.resultsMode}" />
-							</t:htmlTag>
-							--%>
-
-						<t:htmlTag value="div" style="margin-top: 10px;">
-							<t:htmlTag value="table" style="border-collapse: collapse;">
-								<t:htmlTag value="tr">
-									<t:htmlTag value="td" style="padding: 0px;">
-										<h:selectBooleanCheckbox value="#{TableResultTabBean.attachSearchedParams}" />
-									</t:htmlTag>
-									<t:htmlTag value="td" style="padding-left: 5px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;">
-										<h:outputText value="Attach to the result attributes from the search query" />
+								
+								<% /* Auto attach attributes from search */ %>
+								<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">			
+									<h:selectBooleanCheckbox style="margin-top: 3px;" value="#{TableResultTabBean.attachSearchedParams}" />				
+									<h:outputText style="margin-left: 3px; margin-top: 3px;" value=" Attach to the result attributes from the search query" />
+								</t:htmlTag>
+								
+								<% /* Apply button part */ %>
+								<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
+									<h:commandButton style="margin-top: 5px; margin-left: 4px;" id="configure_applyConfigButton"
+										value="Apply configuration" action="#{TableResultTabBean.resultsMode}" />
+								</t:htmlTag>
+								--%>
+	
+							<t:htmlTag value="div" style="margin-top: 10px;">
+								<t:htmlTag value="table" style="border-collapse: collapse;">
+									<t:htmlTag value="tr">
+										<t:htmlTag value="td" style="padding: 0px;">
+											<h:selectBooleanCheckbox value="#{TableResultTabBean.attachSearchedParams}" />
+										</t:htmlTag>
+										<t:htmlTag value="td" style="padding-left: 5px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;">
+											<h:outputText value="Attach to the result attributes from the search query" />
+										</t:htmlTag>
 									</t:htmlTag>
 								</t:htmlTag>
 							</t:htmlTag>
+	
+							<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #CCCCCC;">
+								<h:commandButton id="configure_applyConfigButton" value="Apply configuration"
+									action="#{TableResultTabBean.resultsMode}" />
+							</t:htmlTag>
+	
 						</t:htmlTag>
 
-						<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #CCCCCC;">
-							<h:commandButton id="configure_applyConfigButton" value="Apply configuration"
-								action="#{TableResultTabBean.resultsMode}" />
-						</t:htmlTag>
-
-					</t:htmlTag>
+					</t:htmlTag> 
 
 				</t:htmlTag> 
 				
@@ -333,83 +337,85 @@
 							</t:htmlTag>
 						<t:htmlTag id="div_warning_fillin" value="td"></t:htmlTag>
 					</t:htmlTag>
-	
-	
+
+
 					<t:htmlTag id="div_table" value="div" style="padding: 2px;background-color: #EEEEEE;">
-					<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
-						<t:htmlTag id="tr_third" value="tr" style="background-color: #EEEEEE;">
-							<t:htmlTag id="td_setup_label" value="th" >
-								<h:outputText value="Chart setup"/>
+						<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
+							<t:htmlTag id="tr_third" value="tr" style="background-color: #EEEEEE;">
+								<t:htmlTag id="td_setup_label" value="th">
+									<h:outputText value="Chart setup" />
+								</t:htmlTag>
+
+								<t:htmlTag value="th" style="border-left: 2px solid #CCCCCC; margin-bottom: 10px;">
+									<h:outputText value="Current series" />
+								</t:htmlTag>
 							</t:htmlTag>
 
-							<t:htmlTag value="th" style="border-left: 2px solid #CCCCCC; margin-bottom: 10px;">
-								<h:outputText value="Current series" />
-							</t:htmlTag>
-						</t:htmlTag>
-						
-						
-						<t:htmlTag id="tr_setup" value="tr">
-							<t:htmlTag value="td" style="background-color: #EEEEEE; width: 520px; border-bottom: 4px solid #CCCCCC;">
-								<h:selectOneRadio onchange="submit()" value="#{AdvancedStatisticsTabBean.selectedChart}"
-									disabled="#{AdvancedStatisticsTabBean.errorPresent}">
-									<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}" />
-								</h:selectOneRadio>
-								<t:htmlTag value="div">
-									<h:panelGrid columns="3">
-										<h:outputText value="X axis value: " />
 
-										<h:selectOneMenu style="width: 150px;" value="#{AdvancedStatisticsTabBean.xaxis}" id="xaxis_select">
-											<f:selectItems value="#{AdvancedStatisticsTabBean.voyageSelectedAttributes}" />
-										</h:selectOneMenu>
+							<t:htmlTag id="tr_setup" value="tr">
+								<t:htmlTag value="td" style="background-color: #EEEEEE; width: 520px; border-bottom: 4px solid #CCCCCC;">
+									<h:selectOneRadio onchange="submit()" value="#{AdvancedStatisticsTabBean.selectedChart}"
+										disabled="#{AdvancedStatisticsTabBean.errorPresent}">
+										<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}" />
+									</h:selectOneRadio>
+									<t:htmlTag value="div">
+										<h:panelGrid columns="3">
+											<h:outputText value="X axis value: " />
 
-										<h:panelGrid columns="2">
-											<h:selectBooleanCheckbox onclick="submit()" disabled="#{AdvancedStatisticsTabBean.errorPresent}"
-												value="#{AdvancedStatisticsTabBean.aggregate}" />
-											<h:outputText value="Enable aggregate functions" />
+											<h:selectOneMenu style="width: 300px;" value="#{AdvancedStatisticsTabBean.xaxis}" id="xaxis_select">
+												<f:selectItems value="#{AdvancedStatisticsTabBean.voyageSelectedAttributes}" />
+											</h:selectOneMenu>
+
+											<h:panelGrid columns="2">
+												<h:selectBooleanCheckbox onclick="submit()" disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+													value="#{AdvancedStatisticsTabBean.aggregate}" />
+												<h:outputText value="Enable aggregate functions" />
+											</h:panelGrid>
+
+											<h:outputText value="Order: " />
+
+											<h:selectOneMenu style="width: 300px;" value="#{AdvancedStatisticsTabBean.order}" id="order_select">
+												<f:selectItems value="#{AdvancedStatisticsTabBean.availableOrders}" />
+											</h:selectOneMenu>
+
+											<t:htmlTag value="div">
+											</t:htmlTag>
+
+											<h:outputText value="Y axis value: " />
+
+											<t:htmlTag value="div">
+												<h:selectOneMenu style="width: 50px;" disabled="#{AdvancedStatisticsTabBean.notAggregate}"
+													value="#{AdvancedStatisticsTabBean.selectedAggregate}" id="aggregate_select">
+													<f:selectItems value="#{AdvancedStatisticsTabBean.aggregateFunctions}" />
+												</h:selectOneMenu>
+												<h:selectOneMenu style="width: 250px;" value="#{AdvancedStatisticsTabBean.yaxis}" id="yaxis_select">
+													<f:selectItems value="#{AdvancedStatisticsTabBean.voyageNumericAttributes}" />
+												</h:selectOneMenu>
+											</t:htmlTag>
+
+											<h:commandButton id="addSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}" value="Add series"
+												action="#{AdvancedStatisticsTabBean.addSeries}" />
 										</h:panelGrid>
-
-										<h:outputText value="Order: " />
-
-										<h:selectOneMenu style="width: 150px;" value="#{AdvancedStatisticsTabBean.order}" id="order_select">
-											<f:selectItems value="#{AdvancedStatisticsTabBean.availableOrders}" />
-										</h:selectOneMenu>
-
-										<t:htmlTag value="div">
-										</t:htmlTag>
-
-										<h:outputText value="Y axis value: " />
-
-										<t:htmlTag value="div">
-											<h:selectOneMenu style="width: 50px;" disabled="#{AdvancedStatisticsTabBean.notAggregate}"
-												value="#{AdvancedStatisticsTabBean.selectedAggregate}" id="aggregate_select">
-												<f:selectItems value="#{AdvancedStatisticsTabBean.aggregateFunctions}" />
-											</h:selectOneMenu>
-											<h:selectOneMenu style="width: 100px;" value="#{AdvancedStatisticsTabBean.yaxis}" id="yaxis_select">
-												<f:selectItems value="#{AdvancedStatisticsTabBean.voyageNumericAttributes}" />
-											</h:selectOneMenu>
-										</t:htmlTag>
-
-										<h:commandButton id="addSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}" value="Add series"
-											action="#{AdvancedStatisticsTabBean.addSeries}" />
-									</h:panelGrid>
+									</t:htmlTag>
 								</t:htmlTag>
+								<t:htmlTag value="td"
+									style="width: 240px; background-color: #EEEEEE; border-left: 2px solid #CCCCCC; border-bottom: 4px solid #CCCCCC; margin-bottom: 10px;">
+									<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.seriesAdded}">
+										<h:selectManyCheckbox id="to_remove_check" layout="pageDirection"
+											value="#{AdvancedStatisticsTabBean.toRemove}">
+											<f:selectItems value="#{AdvancedStatisticsTabBean.series}" />
+										</h:selectManyCheckbox>
+										<h:commandButton id="removeSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+											value="Remove selected" action="#{AdvancedStatisticsTabBean.removeSeries}" style="" />
+									</t:htmlTag>
+									<t:htmlTag value="div" rendered="#{!AdvancedStatisticsTabBean.seriesAdded}">
+										<h:outputText value="No series added" />
+									</t:htmlTag>
+								</t:htmlTag>
+
 							</t:htmlTag>
-							<t:htmlTag value="td" style="width: 240px; background-color: #EEEEEE; border-left: 2px solid #CCCCCC; border-bottom: 4px solid #CCCCCC; margin-bottom: 10px;">
-								<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.seriesAdded}">
-									<h:selectManyCheckbox id="to_remove_check" layout="pageDirection" value="#{AdvancedStatisticsTabBean.toRemove}">
-										<f:selectItems value="#{AdvancedStatisticsTabBean.series}" />
-									</h:selectManyCheckbox>
-									<h:commandButton id="removeSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}" value="Remove selected"
-										action="#{AdvancedStatisticsTabBean.removeSeries}" style=""/>
-								</t:htmlTag>
-								<t:htmlTag value="div" rendered="#{!AdvancedStatisticsTabBean.seriesAdded}">
-									<h:outputText value="No series added" />
-								</t:htmlTag>
-							</t:htmlTag>
+						</t:htmlTag>
 
-						</t:htmlTag>
-						</t:htmlTag>
-						
 						<t:htmlTag value="div" style="background-color: #EEEEEE;">
 							<t:htmlTag value="div" style="border-bottom: 2px solid #CCCCCC;">
 								<h:commandButton style="margin: 3px;" id="showGraph" value="Show"
@@ -428,10 +434,10 @@
 								<h:commandButton id="enlargeStat" value="Change size" action="#{AdvancedStatisticsTabBean.setNewView}" />
 							</h:panelGroup>
 						</t:htmlTag>
-	
-							
+
+
 					</t:htmlTag>
-					
+
 				</s:stattab>
 				
 				

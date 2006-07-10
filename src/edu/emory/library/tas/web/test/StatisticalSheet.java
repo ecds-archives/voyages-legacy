@@ -102,7 +102,7 @@ public class StatisticalSheet extends HttpServlet {
 				qValue.addPopulatedAttribute("voyage.voyageId", false);
 			} else {
 				qValue.addPopulatedAttribute("voyage." + (String)group, false);
-				qValue.setGroupBy("voyage." + (String)group);
+				qValue.setGroupBy(new String[] {"voyage." + (String)group});
 			}
 			
 			Object [] objs = HibernateConnector.getConnector().loadObjects(qValue);
