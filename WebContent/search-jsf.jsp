@@ -114,7 +114,7 @@
 						rendered="#{TableResultTabBean.configurationMode}">
 
 						<t:htmlTag value="div"
-							style="padding-bottom: 5px; font-weight: bold; font-weight: bold; border-bottom: 2px solid #CCCCCC; margin-bottom: 10px;">
+							style="margin-top: 10px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; font-weight: bold; font-weight: bold; background-color: #DDDDDD;">
 							<h:outputText value="Configure columns" />
 						</t:htmlTag>
 
