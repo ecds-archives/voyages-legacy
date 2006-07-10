@@ -8,12 +8,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Import</title>
+	<link href="import.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 	<h:form id="form">
 	
-		<h:dataTable value="#{ImportLog.importLogs}" var="log" border="1" cellpadding="0" cellspacing="0" styleClass="grid">
+		<h:dataTable value="#{ImportLog.importLogs}" var="log" border="0" cellpadding="0" cellspacing="5" styleClass="grid">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Started" />

@@ -1,16 +1,5 @@
 package edu.emory.library.tas.web.spss;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import edu.emory.library.tas.DateTimeUtils;
-import edu.emory.library.tas.spss.Log;
-import edu.emory.library.tas.spss.LogReader;
-import edu.emory.library.tas.spss.LogReaderException;
 
 public class LogForDisplayInDetail
 {
@@ -22,67 +11,8 @@ public class LogForDisplayInDetail
 	private boolean finished = false;
 	private boolean voyagesPresent = false;
 	private boolean slavesPresent = false;
-	private List logItems;
+	private LogItemForDisplayInDetail[] logItems;
 	
-	public static LogForDisplayInDetail load(String importDirName, int skip)
-	{
-		
-		DateFormat df = SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-
-		try
-		{
-		
-			LogForDisplayInDetail detail = new LogForDisplayInDetail();
-			
-			File importDir = new File("C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\imports" + File.separatorChar + importDirName);
-			
-			File[] files = importDir.listFiles();
-			for (int i = 0; i < files.length; i++)
-			{
-				File file = files[i];
-				if (file.getName().equals("voyages.sav")) detail.setVoyagesPresent(true);
-				if (file.getName().equals("slaves.sav")) detail.setSlavesPresent(true);
-			}
-
-			LogReader rdr = new LogReader(importDir.getAbsolutePath());
-			Log importLog = rdr.load(skip);
-			detail.setLogItems(importLog.getItems());
-			
-			detail.setTimeStart(df.format(importLog.getTimeStart()));
-	
-			Date lastActivityTime = null;
-			detail.setFinished(importLog.isFinished());
-			if (importLog.isFinished())
-			{
-				lastActivityTime = importLog.getTimeFinish();
-				detail.setTimeFinish(df.format(importLog.getTimeFinish()));
-				detail.setStatusText(importLog.isFinishedOK() ? "import finished with no errors" : "import terminated with errors");
-			}
-			else
-			{
-				lastActivityTime = new Date();
-				detail.setTimeFinish("not yet");
-				detail.setStatusText("import still running");
-			}
-			
-			detail.setDuration(DateTimeUtils.formatTimeSpan(
-					importLog.getTimeStart(), lastActivityTime,
-					DateTimeUtils.TIME_INTERVAL_ROUND_TO_SEC));
-			
-			return detail;
-
-		}
-		catch (IOException e)
-		{
-		}
-		catch (LogReaderException e)
-		{
-		}
-
-		return null;
-		
-	}
-
 	public String getDuration()
 	{
 		return duration;
@@ -103,12 +33,12 @@ public class LogForDisplayInDetail
 		this.timeFinish = finished;
 	}
 
-	public List getLogItems()
+	public LogItemForDisplayInDetail[] getLogItems()
 	{
 		return logItems;
 	}
 
-	public void setLogItems(List logItems)
+	public void setLogItems(LogItemForDisplayInDetail[] logItems)
 	{
 		this.logItems = logItems;
 	}

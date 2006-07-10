@@ -38,8 +38,6 @@ public class SearchBean
 	private boolean timeLineVisible = false;
 	private boolean statisticsVisible = false;
 	
-	private String permlinksDirectory;
-	
 	private MessageBarComponent messageBar;
 	
 	public void addQueryCondition()
@@ -64,6 +62,7 @@ public class SearchBean
 	
 	public void search()
 	{
+		messageBar.setRendered(false);
 		searchInternal(true);
 	}
 	
@@ -298,16 +297,6 @@ public class SearchBean
 	public void setSearchParameters(SearchParameters searchParameters)
 	{
 		this.searchParameters = searchParameters;
-	}
-
-	public String getPermlinksDirectory()
-	{
-		return permlinksDirectory;
-	}
-
-	public void setPermlinksDirectory(String permlinksDirectory)
-	{
-		this.permlinksDirectory = permlinksDirectory;
 	}
 
 	public MessageBarComponent getMessageBar()

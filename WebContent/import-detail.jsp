@@ -10,6 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Import</title>
 
+<link href="import.css" rel="stylesheet" type="text/css">
+
 <script language="javascript" type="text/javascript" src="jslib/jsonrpc.js"></script>
 <script language="javascript" type="text/javascript">
 
@@ -20,34 +22,30 @@ var noOfWarnings = 0;
 window.onload = function()
 {
 	json = new JSONRpcClient("JSON-RPC");
+	noOfMessages = document.getElementById("form:logItems").rows.length - 1;
 	refresh();
 }
 
 function refresh()
 {
-	//alert("before ...");
-	json.ImportLogDetail.load(detailLoaded, importDirName, noOfMessages);
+	json.ImportLog.loadDetail(detailLoaded, importDirName, noOfMessages);
 }
 
 function detailLoaded(detail, exception)
 {
 
-	//alert("loaded ...");
-
-	var logItems = detail.logItems.list;
-	var logItemsTbl = document.getElementById("logItemsTbl");
-	//var logItemsTbl = document.createElement("table");
+	var logItems = detail.logItems;
+	var logItemsTbl = document.getElementById("form:logItems");
 	for (var i = 0; i < logItems.length; i++)
 	{
-		var tr = logItemsTbl.insertRow(logItemsTbl.rows.length);
+		var tr = logItemsTbl.insertRow(1);
 		var logItem = logItems[i];
 		if (logItem.type == 1) noOfWarnings ++;
-		tr.insertCell(0).appendChild(document.createTextNode(logItem.time));
-		tr.insertCell(1).appendChild(document.createTextNode(logItem.stage));
-		tr.insertCell(2).appendChild(document.createTextNode(logItem.type));
+		tr.insertCell(0).appendChild(document.createTextNode(logItem.type));
+		tr.insertCell(1).appendChild(document.createTextNode(logItem.timeText));
+		tr.insertCell(2).appendChild(document.createTextNode(logItem.stageLabel));
 		tr.insertCell(3).appendChild(document.createTextNode(logItem.message));
 	}
-	document.getElementById("xx").appendChild(logItemsTbl);
 
 	/*
 	var html = new Array();
@@ -92,11 +90,11 @@ function detailLoaded(detail, exception)
 
 </head>
 <body>
-<f:view>
+<f:view><h:form id="form">
 
 <b>Overview</b>
 
-<table border="1" cellspacing="5" cellpadding="0">
+<table border="0" cellspacing="5" cellpadding="0">
 <tr>
 	<td>Voyages data file</td>
 	<td id="voyagesPresent">?</td>
@@ -127,18 +125,31 @@ function detailLoaded(detail, exception)
 </tr>
 </table>
 
-<div id="xx"></div>
-
 <b>Log</b>
 
-<table border="1" cellspacing="5" cellpadding="0" id="logItemsTbl">
-<tr>
-	<td>Time</td>
-	<td>Stage</td>
-	<td>Type</td>
-	<td>Message</td>
-</tr>
-</table>
+<h:dataTable id="logItems" value="#{ImportLog.currentLogItems}" var="item" border="0" cellpadding="0" cellspacing="5">
+	<h:column>
+		<h:graphicImage width="16" height="16" url="#{item.typeImg}" />
+	</h:column>
+	<h:column>
+		<f:facet name="header">
+			<h:outputText value="Time" />
+		</f:facet>
+		<h:outputText value="#{item.timeText}" />
+	</h:column>
+	<h:column>
+		<f:facet name="header">
+			<h:outputText value="Stage" />
+		</f:facet>
+		<h:outputText value="#{item.stageLabel}" />
+	</h:column>
+	<h:column>
+		<f:facet name="header">
+			<h:outputText value="Message" />
+		</f:facet>
+		<h:outputText value="#{item.message}" />
+	</h:column>
+</h:dataTable>
 
 <script language="javascript" type="text/javascript">
 <h:outputFormat escape="false" value="var importDirName = \"{0}\";">
@@ -146,6 +157,6 @@ function detailLoaded(detail, exception)
 </h:outputFormat>
 </script>
 
-</f:view>
+</h:form></f:view>
 </body>
 </html>

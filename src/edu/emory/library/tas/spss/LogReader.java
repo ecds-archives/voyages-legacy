@@ -32,6 +32,11 @@ public class LogReader
 		this.dirName = fileName;
 	}
 	
+	public Log loadAll() throws IOException, LogReaderException
+	{
+		return load(0);
+	}
+
 	public Log load(int skip) throws IOException, LogReaderException
 	{
 		

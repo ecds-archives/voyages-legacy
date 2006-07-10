@@ -183,13 +183,19 @@ div.tab-bar {
 	
 td.tab {
 	cursor: pointer;
-	padding: 5px; }
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px; }
 
 td.tab:hover {
 	background-color: #555555; }
 
 td.tab-selected {
-	padding: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	background-color: #CC3300; }
 	
 div.data-container {

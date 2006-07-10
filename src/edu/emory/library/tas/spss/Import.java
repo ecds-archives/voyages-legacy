@@ -23,12 +23,26 @@ import edu.emory.library.tas.attrGroups.Attribute;
 public class Import
 {
 	
+	public static final String VOYAGES_SAV = "voyages.sav";
+	public static final String VOYAGES_DAT = "voyages.dat";
+	public static final String VOYAGES_STS = "voyages.sts";
+	public static final String VOYAGES_NUMBERED_DAT = "voyages-numbered.dat";
+	public static final String VOYAGES_SORTED_DAT = "voyages-sorted.dat";
+
+	public static final String SLAVES_SAV = "slaves.sav";
+	public static final String SLAVES_DAT = "slaves.dat";
+	public static final String SLAVES_STS = "slaves.sts";
+	public static final String SLAVES_SORTED_DAT = "slaves-sorted.dat";
+	public static final String SLAVES_NUMBERED_DAT = "slaves-numbered.dat";
+
 	private static final int MAX_INT_LENGTH = 10;
 	private static final int VOYAGE_CACHE_SIZE = 100;
+
 	private static final int VOYAGE = 0;
 	private static final int SLAVE = 1;
 
-	// files, readers and schemas
+	private String importDir;
+	private LogWriter log;
 	private String voyagesSpssFileName;
 	private String slavesSpssFileName;
 	private String voyagesDataFileName;
@@ -43,11 +57,8 @@ public class Import
 	STSchemaVariable slavesVidVar;
 	RecordIOFactory voyagesRecordIOFactory;
 	RecordIOFactory slavesRecordIOFactory;
-	private String workingDir;
-	private LogWriter log;
 	private String exeStatTransfer;
 
-	// schemas
 	private String voyagesSchemaFileName;
 	private String slavesSchemaFileName;
 	private Hashtable voyageSchema;
@@ -57,7 +68,6 @@ public class Import
 	private STSchemaVariable voyagesLineNoVar = null;
 	private STSchemaVariable slavesLineNoVar = null;
 	
-	// statistics
 	private int totalNoOfVoyages;
 	private int noOfVoyagesWithInvalidVid;
 	private int totalNoOfSlaves;
@@ -365,7 +375,7 @@ public class Import
 		{
 			log.logInfo("Sorting voyages by voyage ID.");
 			RecordSorter voyagesSorter = new RecordSorter(voyagesNumberedDataFileName, voyagesSortedDataFileName, voyagesRecordIOFactory);
-			voyagesSorter.setTmpFolder(workingDir);
+			voyagesSorter.setTmpFolder(importDir);
 			voyagesSorter.setMaxLines(1000);
 			voyagesSorter.sort();
 			log.logInfo("Voyages sorted.");
@@ -375,7 +385,7 @@ public class Import
 		{
 			log.logInfo("Sorting slaves by voyage ID.");
 			RecordSorter slavesSorter = new RecordSorter(slavesNumberedDataFileName, slavesSortedDataFileName, slavesRecordIOFactory);
-			slavesSorter.setTmpFolder(workingDir);
+			slavesSorter.setTmpFolder(importDir);
 			slavesSorter.setMaxLines(5000);
 			slavesSorter.sort();
 			log.logInfo("Slaves sorted.");
@@ -964,27 +974,27 @@ public class Import
 
 	}
 
-	public void runImport(LogWriter log, String workingDir, String exeStatTransfer, String voyagesSpssFileName, String slavesSpssFileName)
+	public void runImport(LogWriter log, String importDir, String exeStatTransfer)
 	{
 		
 		this.log = log;
 		this.exeStatTransfer = exeStatTransfer;
-		this.workingDir = workingDir;
-		this.voyagesSpssFileName = voyagesSpssFileName;
-		this.slavesSpssFileName = slavesSpssFileName;
-		this.voyagesPresent = voyagesSpssFileName!=null;
-		this.slavesPresent = slavesSpssFileName!=null;
+		this.importDir = importDir;
 		
-		voyagesDataFileName = workingDir + File.separatorChar + "voyages.dat";
-		voyagesNumberedDataFileName = workingDir + File.separatorChar + "voyages-numbered.dat";
-		voyagesSortedDataFileName = workingDir + File.separatorChar + "voyages-sorted.dat";
-		voyagesSchemaFileName = workingDir + File.separatorChar + "voyages.sts";
-		
-		slavesDataFileName = workingDir + File.separatorChar + "slaves.dat";
-		slavesSortedDataFileName = workingDir + File.separatorChar + "slaves-sorted.dat";
-		slavesNumberedDataFileName = workingDir + File.separatorChar + "slaves-numbered.dat";
-		slavesSchemaFileName = workingDir + File.separatorChar + "slaves.sts";
-		
+		voyagesSpssFileName = importDir + File.separatorChar + VOYAGES_SAV;
+		voyagesDataFileName = importDir + File.separatorChar + VOYAGES_DAT;
+		voyagesNumberedDataFileName = importDir + File.separatorChar + VOYAGES_NUMBERED_DAT;
+		voyagesSortedDataFileName = importDir + File.separatorChar + VOYAGES_SORTED_DAT;
+		voyagesSchemaFileName = importDir + File.separatorChar + VOYAGES_STS;
+		voyagesPresent = voyagesSpssFileName != null;
+
+		slavesSpssFileName = importDir + File.separatorChar + SLAVES_SAV;	
+		slavesDataFileName = importDir + File.separatorChar + SLAVES_DAT;
+		slavesSortedDataFileName = importDir + File.separatorChar + SLAVES_SORTED_DAT;
+		slavesNumberedDataFileName = importDir + File.separatorChar + SLAVES_NUMBERED_DAT;
+		slavesSchemaFileName = importDir + File.separatorChar + SLAVES_STS;
+		slavesPresent = slavesSpssFileName != null;
+
 		try
 		{
 			
@@ -1063,20 +1073,17 @@ public class Import
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		
-		if (args.length != 5) return;
-		
 		// extracts params
-		String workingDir = args[0];
+		if (args.length != 2) return;
+		String importDir = args[0];
 		String exeStatTransfer = args[1];
-		String voyagesFileName = args[2].equals("*") ? null : args[3];
-		String slavesFileName = args[3].equals("*") ? null : args[4];
 		
 		// crate a log
-		LogWriter log = new LogWriter(workingDir);
+		LogWriter log = new LogWriter(importDir);
 		
 		// import
 		Import imp = new Import();
-		imp.runImport(log, workingDir, exeStatTransfer, voyagesFileName, slavesFileName); 
+		imp.runImport(log, importDir, exeStatTransfer); 
 		log.close();
 		
 	}

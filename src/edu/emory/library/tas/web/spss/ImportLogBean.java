@@ -10,29 +10,37 @@ import java.util.List;
 
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.metaparadigm.jsonrpc.JSONRPCBridge;
 
+import edu.emory.library.tas.AppConfig;
 import edu.emory.library.tas.DateTimeUtils;
-import edu.emory.library.tas.spss.Log;
+import edu.emory.library.tas.spss.Import;
 import edu.emory.library.tas.spss.ImportServlet;
+import edu.emory.library.tas.spss.Log;
+import edu.emory.library.tas.spss.LogItem;
 import edu.emory.library.tas.spss.LogReader;
 import edu.emory.library.tas.spss.LogReaderException;
 
 public class ImportLogBean
 {
 	
+	private static final String BEAN_NAME = "ImportLog";
+
 	private String currentImportDirName;
 	
 	public ImportLogBean()
 	{
 		try
 		{
-			JSONRPCBridge.getGlobalBridge().registerClass(
-					"ImportLogDetail", LogForDisplayInDetail.class);
+			JSONRPCBridge.getGlobalBridge().registerClass(BEAN_NAME, ImportLogBean.class);
 		}
 		catch (Exception e)
 		{
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -41,26 +49,19 @@ public class ImportLogBean
 		private static final long serialVersionUID = 1019360649699803025L;
 	}
 	
-//	private File findImportLog(File[] files)
-//	{
-//		for (int j = 0; j < files.length; j++)
-//		{
-//			if ("import.log".equals(files[j].getName()))
-//			{
-//				return files[j]; 
-//			}
-//		}
-//		return null;
-//	}
+	private static String makeImportFullDir(String rootImportsDir, String importDir)
+	{
+		return rootImportsDir + File.separatorChar + importDir;
+	}
 
 	public List getImportLogs()
 	{
 		
-		File importDir = new File("C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\imports");
+		Configuration conf = AppConfig.getConfiguration();
+		DateFormat dateFormat = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_DATEFORMAT));
+
+		File importDir = new File(conf.getString(AppConfig.IMPORT_ROOTDIR));
 		if (!importDir.isDirectory()) return null;
-		
-		DateFormat df = SimpleDateFormat.getDateTimeInstance(
-				DateFormat.SHORT, DateFormat.SHORT);
 		
 		List importLogs = new ArrayList();
 	
@@ -82,13 +83,13 @@ public class ImportLogBean
 				LogReader rdr = new LogReader(dir.getAbsolutePath());
 				Log importLog = rdr.load(Integer.MAX_VALUE);
 				
-				importLogForDisplay.setStarted(df.format(importLog.getTimeStart()));
+				importLogForDisplay.setStarted(dateFormat.format(importLog.getTimeStart()));
 				
 				Date lastActivityTime = null;
 				if (importLog.isFinished())
 				{
 					lastActivityTime = importLog.getTimeFinish();
-					importLogForDisplay.setFinished(df.format(importLog.getTimeFinish()));
+					importLogForDisplay.setFinished(dateFormat.format(importLog.getTimeFinish()));
 				}
 				else
 				{
@@ -118,7 +119,7 @@ public class ImportLogBean
 		return importLogs;
 
 	}
-	
+
 	public void openDetail(ActionEvent event)
 	{
 		UIParameter itemIdParam = (UIParameter) event.getComponent().findComponent("itemId");
@@ -134,6 +135,123 @@ public class ImportLogBean
 	public void setCurrentImportDirName(String currentImportDirName)
 	{
 		this.currentImportDirName = currentImportDirName;
+	}
+	
+	public static LogForDisplayInDetail loadDetail(HttpServletRequest request, String importDirName, int skip)
+	{
+		
+		Configuration conf = AppConfig.getConfiguration();
+		DateFormat dateFormat = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_DATEFORMAT));
+		DateFormat dateFormatLogItem = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_LOGITEM_DATEFORMAT));
+		
+		try
+		{
+		
+			LogForDisplayInDetail detail = new LogForDisplayInDetail();
+			
+			File importDir = new File(
+					ImportLogBean.makeImportFullDir(
+							conf.getString(AppConfig.IMPORT_ROOTDIR),
+							importDirName));
+			
+			File[] files = importDir.listFiles();
+			for (int i = 0; i < files.length; i++)
+			{
+				File file = files[i];
+				if (file.getName().equals(Import.VOYAGES_SAV)) detail.setVoyagesPresent(true);
+				if (file.getName().equals(Import.SLAVES_SAV)) detail.setSlavesPresent(true);
+			}
+
+			LogReader rdr = new LogReader(importDir.getAbsolutePath());
+			Log importLog = rdr.load(skip);
+			
+			List items = importLog.getItems();
+			LogItemForDisplayInDetail[] itemsForDisplay =
+				new LogItemForDisplayInDetail[items.size()];
+
+			for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
+			{
+				LogItem item = (LogItem) items.get(j);
+				itemsForDisplay[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
+			}
+			
+			detail.setLogItems(itemsForDisplay);
+			
+			detail.setTimeStart(dateFormat.format(importLog.getTimeStart()));
+	
+			Date lastActivityTime = null;
+			detail.setFinished(importLog.isFinished());
+			if (importLog.isFinished())
+			{
+				lastActivityTime = importLog.getTimeFinish();
+				detail.setTimeFinish(dateFormat.format(importLog.getTimeFinish()));
+				detail.setStatusText(importLog.isFinishedOK() ? "import finished with no errors" : "import terminated with errors");
+			}
+			else
+			{
+				lastActivityTime = new Date();
+				detail.setTimeFinish("not yet");
+				detail.setStatusText("import still running");
+			}
+			
+			detail.setDuration(DateTimeUtils.formatTimeSpan(
+					importLog.getTimeStart(), lastActivityTime,
+					DateTimeUtils.TIME_INTERVAL_ROUND_TO_SEC));
+			
+			
+			
+			return detail;
+
+		}
+		catch (IOException e)
+		{
+		}
+		catch (LogReaderException e)
+		{
+		}
+
+		return null;
+		
+	}
+	
+	public LogItemForDisplayInDetail[] getCurrentLogItems()
+	{
+		
+		Configuration conf = AppConfig.getConfiguration();
+		DateFormat dateFormatLogItem = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_LOGITEM_DATEFORMAT));
+
+		try
+		{
+			
+			LogReader rdr = new LogReader(
+					makeImportFullDir(
+							conf.getString(AppConfig.IMPORT_ROOTDIR),
+							currentImportDirName));
+			
+			Log importLog = rdr.loadAll();
+			
+			List items = importLog.getItems();
+			LogItemForDisplayInDetail[] itemsForDisplay =
+				new LogItemForDisplayInDetail[items.size()];
+			
+			for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
+			{
+				LogItem item = (LogItem) items.get(j);
+				itemsForDisplay[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
+			}
+			
+			return itemsForDisplay;
+
+		}
+		catch (IOException e)
+		{
+			return null;
+		}
+		catch (LogReaderException e)
+		{
+			return null;
+		}
+		
 	}
 
 }
