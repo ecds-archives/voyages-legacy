@@ -287,12 +287,12 @@
 							<h:commandButton id="show_stat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}" />
 						</h:panelGroup>
 
-						<%/* Graph data */
-
-							%>
+						<%/* Graph data */%>
 						<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
-							<t:htmlTag value="div" style="margin-top: 5px; border-top: 2px solid #CCCCCC; overflow:auto; width: 640px; height: 480px">
-								<h:graphicImage value="#{TimeLineResultTabBean.chartPath}" />
+							<t:htmlTag value="div" style="margin-top: 5px;margin-bottom: 5px; border-top: 2px solid #CCCCCC;margin-top: 5px;">
+								<t:htmlTag value="div" style="overflow:auto; width: 100%; height: 500px">
+									<h:graphicImage value="#{TimeLineResultTabBean.chartPath}" />
+								</t:htmlTag>
 							</t:htmlTag>
 						</h:panelGroup>
 
@@ -415,7 +415,7 @@
 								<h:commandButton style="margin: 3px;" id="showGraph" value="Show"
 									disabled="#{AdvancedStatisticsTabBean.errorPresent}" action="#{AdvancedStatisticsTabBean.showGraph}" />
 							</t:htmlTag>
-							<t:htmlTag value="div" style="margin-top: 4px; overflow:auto; width: 640px; height: 480px"
+							<t:htmlTag value="div" style="margin-top: 4px; overflow:auto; width: 100%; height: 500px"
 								rendered="#{AdvancedStatisticsTabBean.statReady}">
 								<h:graphicImage value="#{AdvancedStatisticsTabBean.chartPath}" />
 							</t:htmlTag>
