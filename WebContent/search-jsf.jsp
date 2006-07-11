@@ -125,9 +125,15 @@
 					</t:htmlTag>
 
 					<t:htmlTag value="div" rendered="#{TableResultTabBean.detailMode}">
-						<h:commandLink id="back_res_upper" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
+						<h:commandLink id="back_res_upper" 
+								style="padding: 5px;" 
+								value="Back to results" 
+								action="#{TableResultTabBean.resultsMode}" />
 						<s:voyageDetail data="#{TableResultTabBean.detailData}" />
-						<h:commandLink id="back_res_lower" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
+						<h:commandLink id="back_res_lower" 
+								style="padding: 5px;" 
+								value="Back to results" 
+								action="#{TableResultTabBean.resultsMode}" />
 					</t:htmlTag>
 
 					<%/* Configuration of table */

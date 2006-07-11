@@ -293,33 +293,46 @@ div.tableDataTooltip {
 
 table.detail {
 	border-collapse: collapse;
-	background-color: white; }
+	background-color: white; 
+	width: 100%;
+}
 
 table.detail td {
-	border-bottom: 2px solid #EEEEEE;
+	border-bottom: 2px solid #F5F0D3;
 	text-align: left;
 	padding: 5px; }
 	
 table.detail th {
 	text-align: left;
-	padding: 5px; }
+	padding: 5px; 
+	border-bottom: 2px solid #F5F0D3;
+	background-color: #F1E365;
+}
 
 td.cellPlain {
-	border-left: 2px solid #EEEEEE;
+	border-left: 2px solid #F5F0D3;
 	background-color: White; }
 
 td.cellChanged {
-	background-color: #CC3300; }
+	background-color: #CC3300; 
+	border-bottom: 2px solid #F5F0D3;
+}
 
 th.cellUpperLeft {
-	background-color: #DDDDDD; }
+	background-color: #DDDDDD; 
+	border-bottom: 2px solid #F5F0D3;
+}
 
 th.cellHeader {
 	background-color: #DDDDDD;
-	font-weight: bold; }
+	font-weight: bold; 
+	border-bottom: 2px solid #F5F0D3;
+}
 
 td.cellLeft {
-	font-weight: normal; }
+	font-weight: normal; 
+	border-bottom: 2px solid #F5F0D3;
+}
 
 div.message-bar-container {
 	margin-top: 0px;
