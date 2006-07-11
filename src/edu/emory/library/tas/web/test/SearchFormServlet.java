@@ -59,7 +59,7 @@ public class SearchFormServlet extends HttpServlet
 		HashSet createdDictionaries = new HashSet();
 		for (int i = 0; i < dbNames.length; i++)
 		{
-			String dbName = dbNames[i];
+			//String dbName = dbNames[i];
 			SchemaColumn col = null; //Voyage.getSchemaColumn(dbName);
 			if (col.isDictinaory() && !createdDictionaries.contains(col.getDictinaory()))
 			{

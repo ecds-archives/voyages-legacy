@@ -35,7 +35,7 @@ public class SearchResultsServlet extends HttpServlet
 		
 		for (int i = 0; i<selectedConditions.length; i++)
 		{
-			String cond = selectedConditions[i];
+			//String cond = selectedConditions[i];
 			SchemaColumn col = null; // Voyage.getSchemaColumn(cond);
 			
 			switch (col.getType())

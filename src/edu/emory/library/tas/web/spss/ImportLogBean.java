@@ -7,8 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.component.UIParameter;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,8 +31,6 @@ public class ImportLogBean
 	
 	private static final String BEAN_NAME = "ImportLog";
 	
-	private UIParameter importDirParam;
-
 	private String currentImportDir;
 	private int currentNoOfMessages;
 	private int currentNoOfWarnings;
@@ -121,33 +121,32 @@ public class ImportLogBean
 
 	}
 	
-//	public String openDetail()
-//	{
-//		if (importDirParam == null) return null;
-//		openDetailInternal((String) importDirParam.getValue());
-//		return "detail";
-//	}
-	
-	private String abc = "";
-	
-	public String xxx()
-	{
-		System.out.println("bbb");
-		abc = "abcxyz";
-		return null;
-	}
-	
-	public String getAbc()
-	{
-		return abc + ":::";
-	}
-
 	public void openDetail(ActionEvent event)
 	{
-		System.out.println("aaa");
-		UIParameter itemIdParam = (UIParameter) event.getComponent().findComponent("importDir");
-		if (itemIdParam == null) return;
-		openDetailInternal((String) itemIdParam.getValue());
+		
+		UIParameter importDirParam = (UIParameter) event.getComponent().findComponent("importDir");
+		String importDir = null;
+		
+		// if opening from the list
+		if (importDirParam != null)
+		{
+			importDir = (String) importDirParam.getValue();
+		}
+		
+		// if opening after upload
+		else
+		{
+			Map session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+			importDir = (String) session.remove("importDir");
+		}
+		
+		// just to be sure
+		if (importDir == null || importDir.length() == 0)
+			return;
+
+		// now really open
+		openDetailInternal(importDir);
+
 	}
 
 	private void openDetailInternal(String importDir)
@@ -291,16 +290,6 @@ public class ImportLogBean
 	public int getCurrentNoOfWarnings()
 	{
 		return currentNoOfWarnings;
-	}
-
-	public UIParameter getImportDirParam()
-	{
-		return importDirParam;
-	}
-
-	public void setImportDirParam(UIParameter importDirParam)
-	{
-		this.importDirParam = importDirParam;
 	}
 
 }

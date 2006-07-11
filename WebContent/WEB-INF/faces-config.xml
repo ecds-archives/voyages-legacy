@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN" "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<!DOCTYPE faces-config
+	PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+	"http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
 <faces-config>
 
 	<component>
@@ -124,33 +126,6 @@
 			edu.emory.library.tas.web.components.tabs.TableResultTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-		<!-- 
-			<managed-property>
-			<property-name>current</property-name>
-			<property-class>java.lang.Integer</property-class>
-			<value>0</value>
-			</managed-property>
-			<managed-property>
-			<property-name>step</property-name>
-			<property-class>java.lang.Integer</property-class>
-			<value>10</value>
-			</managed-property>
-			<managed-property>
-			<property-name>condition</property-name>
-			<property-class>java.lang.Integer</property-class>
-			<null-value/>
-			</managed-property>
-			<managed-property>
-			<property-name>resultSize</property-name>
-			<property-class>java.lang.Integer</property-class>
-			<null-value/>
-			</managed-property>
-			<managed-property>
-			<property-name>populatedAttributes</property-name>
-			<property-class>java.lang.Integer</property-class>
-			<null-value/>
-			</managed-property>
-		-->
 	</managed-bean>
 
 	<managed-bean>
@@ -211,6 +186,22 @@
 			edu.emory.library.tas.web.spss.ImportLogBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ABCBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.spss.ABCBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>TestBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.TestBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>

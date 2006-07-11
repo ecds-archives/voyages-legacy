@@ -21,16 +21,12 @@
         <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
         <param-value>false</param-value>
     </context-param>
-
-	<servlet>
-		<servlet-name>listing</servlet-name>
-		<servlet-class>edu.emory.library.tas.web.test.ListingServlet</servlet-class>
-	</servlet>
 	
     <listener>
         <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
     </listener>
 	
+
     <servlet>
         <servlet-name>FacesServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -38,6 +34,12 @@
     </servlet>
 
 <!--  
+
+	<servlet>
+		<servlet-name>listing</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.test.ListingServlet</servlet-class>
+	</servlet>
+
 	<servlet>
 		<servlet-name>detail</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.test.DetailServlet</servlet-class>
@@ -64,7 +66,7 @@
     </servlet>
 	
 	<servlet>
-		<servlet-name>JSONRPC</servlet-name>
+		<servlet-name>JSON-RPC</servlet-name>
 		<servlet-class>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-class>
 	</servlet>
 	
@@ -100,19 +102,19 @@
 	</servlet-mapping>
 -->
  
-	<servlet-mapping>
-		<servlet-name>ImportServlet</servlet-name>
-		<url-pattern>/servlet/ImportServlet</url-pattern>
-	</servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>FacesServlet</servlet-name>
         <url-pattern>*.faces</url-pattern>
     </servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>JSONRPC</servlet-name>
+		<servlet-name>JSON-RPC</servlet-name>
 		<url-pattern>/JSON-RPC</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ImportServlet</servlet-name>
+		<url-pattern>/servlet/ImportServlet</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

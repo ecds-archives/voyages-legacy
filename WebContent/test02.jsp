@@ -5,17 +5,15 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Import</title>
-	<link href="import.css" rel="stylesheet" type="text/css">
+	<title>Test</title>
 </head>
 <body>
 <f:view>
 	<h:form id="form">
-	
-		The data file(s) was(were) succesfully uploaded.
-		Click OK to go the progress window of the import.
-		<h:commandButton value="OK" actionListener="#{ImportLog.openDetail}" action="detail"/>
-		
+		<h:inputText value="#{TestBean.a}" /> +
+		<h:inputText value="#{TestBean.b}" /> =
+		<h:inputText value="#{TestBean.c}" />
+		<h:commandButton value="Add" action="#{TestBean.add}" />
 	</h:form>
 </f:view>
 </body>

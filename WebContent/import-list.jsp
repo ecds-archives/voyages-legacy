@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
-<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,9 +13,6 @@
 	<h:form id="form">
 	
 		<h1>Import history</h1>
-		
-		<h:commandButton value="X" action="#{ImportLog.xxx}" />
-		<h:inputText value="#{ImportLog.abc}" />
 		
 		<div class="main-container">
 			<h:dataTable value="#{ImportLog.importLogs}" var="log" border="0" cellpadding="0" cellspacing="5" styleClass="grid">
@@ -50,7 +45,7 @@
 				</h:column>
 			</h:dataTable>
 		</div>
-	
+		
 	</h:form>
 </f:view>
 </body>

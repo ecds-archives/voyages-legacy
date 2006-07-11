@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
-import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.query.QueryValue;
 
 public class StatisticalSheet extends HttpServlet {
@@ -105,7 +104,7 @@ public class StatisticalSheet extends HttpServlet {
 				qValue.setGroupBy(new String[] {"voyage." + (String)group});
 			}
 			
-			Object [] objs = HibernateConnector.getConnector().loadObjects(qValue);
+			//Object [] objs = HibernateConnector.getConnector().loadObjects(qValue);
 			
 //			DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
 //			
