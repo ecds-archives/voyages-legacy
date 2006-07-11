@@ -17,7 +17,8 @@ div.main-title {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	padding-left: 150px;
-	xbackground-image: url(header0.png);
+	padding-left: 10px;
+	-background-image: url(header0.png);
 	background-repeat: no-repeat;
 	background-position: left -50px;		
 	border-bottom: 2px solid #571C1F;

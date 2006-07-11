@@ -29,6 +29,7 @@ public class SearchBean
 	
 	private String selectedAtttibuteId;
 	private String selectedGroupId;
+	private int category = AbstractAttribute.CATEGORY_BEGINNER;
 
 	private History history = new History();
 	private Query workingQuery = new Query();
@@ -152,10 +153,14 @@ public class SearchBean
 		List options = new ArrayList();
 		for (int i = 0; i < groups.length; i++)
 		{
-			SelectItem option = new SelectItem();
-			option.setLabel(groups[i].getUserLabelOrName());
-			option.setValue(groups[i].getId().toString());
-			options.add(option);
+			Group g = groups[i];
+			if (g.noOfAttributesInCategory(category) + g.noOfCompoundAttributesInCategory(category) > 0)
+			{
+				SelectItem option = new SelectItem();
+				option.setLabel(g.getUserLabelOrName());
+				option.setValue(g.getId().toString());
+				options.add(option);
+			}
 		}
 		return options;
 	}
@@ -189,16 +194,19 @@ public class SearchBean
 		CompoundAttribute[] compoundAttributes = (CompoundAttribute[]) group.getCompoundAttributes().toArray(new CompoundAttribute[0]);
 		Attribute[] attributes = (Attribute[]) group.getAttributes().toArray(new Attribute[0]);
 		
-		AbstractAttribute.sortByUserLabel(compoundAttributes);
-		AbstractAttribute.sortByUserLabel(attributes);
+		AbstractAttribute.sortByUserLabelOrName(compoundAttributes);
+		AbstractAttribute.sortByUserLabelOrName(attributes);
 		
 		for (int i = 0; i < compoundAttributes.length; i++)
 		{
 			CompoundAttribute a = compoundAttributes[i];
-			SelectItem option = new SelectItem();
-			option.setLabel(a.getUserLabelOrName());
-			option.setValue(COMPOUND_ATTRIBUTE_PREFIX + a.getId().toString());
-			options.add(option);
+			if (a.isVisibleByCategory(category))
+			{
+				SelectItem option = new SelectItem();
+				option.setLabel(a.getUserLabelOrName());
+				option.setValue(COMPOUND_ATTRIBUTE_PREFIX + a.getId().toString());
+				options.add(option);
+			}
 		}
 		
 		SelectItem sep = new SelectItem();
@@ -209,10 +217,13 @@ public class SearchBean
 		for (int i = 0; i < attributes.length; i++)
 		{
 			Attribute a = attributes[i];
-			SelectItem option = new SelectItem();
-			option.setLabel(a.getUserLabelOrName());
-			option.setValue(SIMPLE_ATTRIBUTE_PREFIX + a.getId().toString());
-			options.add(option);
+			if (a.isVisibleByCategory(category))
+			{
+				SelectItem option = new SelectItem();
+				option.setLabel(a.getUserLabelOrName());
+				option.setValue(SIMPLE_ATTRIBUTE_PREFIX + a.getId().toString());
+				options.add(option);
+			}
 		}
 
 		return options;
@@ -307,6 +318,16 @@ public class SearchBean
 	public void setMessageBar(MessageBarComponent messageBar)
 	{
 		this.messageBar = messageBar;
+	}
+
+	public int getCategory()
+	{
+		return category;
+	}
+
+	public void setCategory(int category)
+	{
+		this.category = category;
 	}
 
 }

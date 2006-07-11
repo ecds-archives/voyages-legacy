@@ -22,25 +22,31 @@
 
 				<s:expandableBox text="Choose query mode">
 					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
-						<h:selectOneRadio>
-							<f:selectItem itemValue="0" itemLabel="Basic"/>
-							<f:selectItem itemValue="1" itemLabel="Advanced"/>
-						</h:selectOneRadio>
+						<h:selectOneMenu
+								style="border: 0px; width: 276px; padding: 2px;"
+								onchange="form.submit();"
+								value="#{SearchBean.category}">
+							<f:selectItem itemLabel="General" itemValue="1" />
+							<f:selectItem itemLabel="Beginner + General" itemValue="0" />
+						</h:selectOneMenu>
 					</t:htmlTag>
 				</s:expandableBox>
 
 				<s:expandableBox text="Add condition to query">
+
 					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
-						<h:selectOneMenu onchange="form.submit();"
-									value="#{SearchBean.selectedGroupId}" 
-									style="border: 0px; width: 276px; padding: 2px;">
+						<h:selectOneMenu
+								onchange="form.submit();"
+								value="#{SearchBean.selectedGroupId}" 
+								style="border: 0px; width: 276px; padding: 2px;">
 							<f:selectItems value="#{SearchBean.voyageAttributeGroups}" />
 						</h:selectOneMenu>
 					</t:htmlTag>
 					
 					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
-						<h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}"
-									style="border: 0px; width: 276px; padding: 2px;">
+						<h:selectOneMenu
+							value="#{SearchBean.selectedAtttibuteId}"
+							style="border: 0px; width: 276px; padding: 2px;">
 							<f:selectItems value="#{SearchBean.voyageAttributes}" />
 						</h:selectOneMenu>
 					</t:htmlTag>

@@ -8,7 +8,7 @@ public class SearchParameters
 {
 	
 	private Conditions conditions;
-	private VisibleColumn[] columns;
+	private VisibleColumn[] columns = new VisibleColumn[0]; 
 	private int category = AbstractAttribute.CATEGORY_GENERAL;
 	
 	public VisibleColumn[] getColumns()

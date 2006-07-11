@@ -263,12 +263,11 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 		this.name = attrName;
 	}
 
-	public String getUserLabelOrName() {
-		if (userLabel != null && userLabel.length() > 0)
-			return userLabel;
-		if (name != null && name.length() > 0)
-			return name;
-		return name;
+	public String getUserLabelOrName()
+	{
+		if (userLabel != null && userLabel.length() > 0) return userLabel;
+		if (name != null && name.length() > 0) return name;
+		return "";
 	}
 
 	public Integer getCategory()
@@ -427,7 +426,7 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 		public int compare(Object o1, Object o2) {
 			AbstractAttribute a1 = (AbstractAttribute) o1;
 			AbstractAttribute a2 = (AbstractAttribute) o2;
-			return a1.getUserLabel().compareTo(a2.getUserLabel());
+			return a1.getUserLabel().compareToIgnoreCase(a2.getUserLabel());
 		}
 	}
 
@@ -443,7 +442,7 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 		public int compare(Object o1, Object o2) {
 			AbstractAttribute a1 = (AbstractAttribute) o1;
 			AbstractAttribute a2 = (AbstractAttribute) o2;
-			return a1.getName().compareTo(a2.getName());
+			return a1.getName().compareToIgnoreCase(a2.getName());
 		}
 	}
 
@@ -453,6 +452,22 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 
 	public static void sortByName(List list) {
 		Collections.sort(list, new AbstractAttribute.NameComparator());
+	}
+
+	public static class UserLabelOrNameComparator implements Comparator {
+		public int compare(Object o1, Object o2) {
+			AbstractAttribute a1 = (AbstractAttribute) o1;
+			AbstractAttribute a2 = (AbstractAttribute) o2;
+			return a1.getUserLabelOrName().compareToIgnoreCase(a2.getUserLabelOrName());
+		}
+	}
+
+	public static void sortByUserLabelOrName(Object[] array) {
+		Arrays.sort(array, new AbstractAttribute.UserLabelOrNameComparator());
+	}
+
+	public static void sortByUserLabelOrName(List list) {
+		Collections.sort(list, new AbstractAttribute.UserLabelOrNameComparator());
 	}
 
 }

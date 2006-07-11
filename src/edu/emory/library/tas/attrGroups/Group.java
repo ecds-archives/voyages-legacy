@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -87,9 +88,25 @@ public class Group implements Serializable, VisibleColumn {
 
 	public void setCompoundAttributes(Set groups)
 	{
+		clearCachedInfoForCompoundAttributes();
+		this.compoundAttributes = groups;
+	}
+	
+	private void clearCachedInfoForCompoundAttributes()
+	{
 		compoundAttributesSortedByName = null;
 		compoundAttributesSortedByUserLabel = null;
-		this.compoundAttributes = groups;
+	}
+	
+	public int noOfCompoundAttributesInCategory(int category)
+	{
+		int n = 0;
+		for (Iterator iter = compoundAttributes.iterator(); iter.hasNext();)
+		{
+			CompoundAttribute attr = (CompoundAttribute) iter.next();
+			if (attr.isVisibleByCategory(category)) n++;
+		}
+		return n;
 	}
 	
 	public CompoundAttribute[] getCompoundAttributesSortedByUserLabel()
@@ -131,11 +148,16 @@ public class Group implements Serializable, VisibleColumn {
 
 	public void setAttributes(Set attributes)
 	{
-		attributesSortedByName = null;
-		attributesSortedByUserLabel = null;
+		clearCachedInfoForAttributes();
 		this.attributes = attributes;
 	}
 	
+	private void clearCachedInfoForAttributes()
+	{
+		attributesSortedByName = null;
+		attributesSortedByUserLabel = null;
+	}
+
 //	public Attribute[] getAttributesVisibleByCategory(int category)
 //	{
 //		List attributesVisible = new ArrayList();
@@ -148,6 +170,17 @@ public class Group implements Serializable, VisibleColumn {
 //		attributesVisible.toArray(attributesVisibleArray);
 //		return attributesVisibleArray;
 //	}
+	
+	public int noOfAttributesInCategory(int category)
+	{
+		int n = 0;
+		for (Iterator iter = attributes.iterator(); iter.hasNext();)
+		{
+			Attribute attr = (Attribute) iter.next();
+			if (attr.isVisibleByCategory(category)) n++;
+		}
+		return n;
+	}
 
 	public Attribute[] getAttributesSortedByUserLabel()
 	{
