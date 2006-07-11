@@ -26,8 +26,8 @@
 								style="border: 0px; width: 276px; padding: 2px;"
 								onchange="form.submit();"
 								value="#{SearchBean.category}">
+							<f:selectItem itemLabel="Beginner" itemValue="0" />
 							<f:selectItem itemLabel="General" itemValue="1" />
-							<f:selectItem itemLabel="Beginner + General" itemValue="0" />
 						</h:selectOneMenu>
 					</t:htmlTag>
 				</s:expandableBox>

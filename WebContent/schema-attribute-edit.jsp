@@ -35,7 +35,7 @@
 			<div class="field">
 				<h:selectOneMenu style="width: 200px;" value="#{AttributesBean.attributeCategory}">
 					<f:selectItem itemLabel="General" itemValue="1" />
-					<f:selectItem itemLabel="Beginner + General" itemValue="0" />
+					<f:selectItem itemLabel="Beginner" itemValue="0" />
 				</h:selectOneMenu>
 				<table border="0" cellspacing="0" cellpadding="0" style="margin-top: 5px;">
 				<tr>
