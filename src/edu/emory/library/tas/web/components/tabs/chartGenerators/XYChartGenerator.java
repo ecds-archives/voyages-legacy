@@ -1,5 +1,6 @@
 package edu.emory.library.tas.web.components.tabs.chartGenerators;
 
+import java.awt.Color;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -46,7 +47,7 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		SkippableCategoryAxis newAxis = new SkippableCategoryAxis(axis);
 		newAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
 		xyplot.setDomainAxis(newAxis);
-		
+		chart.setBackgroundPaint(new Color(241, 227, 101));
 		return chart;
 	}
 
@@ -61,7 +62,7 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		SkippableCategoryAxis newAxis = new SkippableCategoryAxis(axis);
 		newAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
 		xyplot.setDomainAxis(newAxis);
-
+		chart.setBackgroundPaint(new Color(241, 227, 101));
 		return chart;
 	}
 

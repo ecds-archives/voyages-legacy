@@ -66,10 +66,12 @@ public class Conditions {
 			((SessionFactoryImpl)HibernateUtil.getSessionFactory()).getSettings().getDialect();
 		
 		Map functions = dialect.getFunctions();
-		
+//		System.out.println("Checking: " + exp);
 		for (Iterator iter = functions.values().iterator(); iter.hasNext();) {
 			SQLFunction element = (SQLFunction) iter.next();
+//			System.out.println("Functon: " + element);
 			if (exp.startsWith(element.toString())) {
+//				System.out.println("Returning: " + exp.substring(exp.indexOf(",") + 1, exp.indexOf(")")).trim());
 				return exp.substring(exp.indexOf(",") + 1, exp.indexOf(")")).trim();
 			}
 		}  

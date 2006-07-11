@@ -20,19 +20,36 @@
 			<tr>
 				<td class="side-panel">
 
-				<div style="margin: 10px 0px 5px 10px; color: White;">Add condition to query</div>
+				<s:expandableBox text="Choose query mode">
+					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
+						<h:selectOneRadio>
+							<f:selectItem itemValue="0" itemLabel="Basic"/>
+							<f:selectItem itemValue="1" itemLabel="Advanced"/>
+						</h:selectOneRadio>
+					</t:htmlTag>
+				</s:expandableBox>
 
-				<div style="margin: 0px 0px 5px 10px;"><h:selectOneMenu onchange="form.submit();"
-					value="#{SearchBean.selectedGroupId}" style="border: 0px; width: 276px; padding: 2px;">
-					<f:selectItems value="#{SearchBean.voyageAttributeGroups}" />
-				</h:selectOneMenu></div>
-
-				<div style="margin: 0px 0px 5px 10px;"><h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}"
-					style="border: 0px; width: 276px; padding: 2px;">
-					<f:selectItems value="#{SearchBean.voyageAttributes}" />
-				</h:selectOneMenu></div>
-
-				<div style="margin: 0px 0px 5px 10px;"><h:commandButton action="#{SearchBean.addQueryCondition}" value="Add" /></div>
+				<s:expandableBox text="Add condition to query">
+					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
+						<h:selectOneMenu onchange="form.submit();"
+									value="#{SearchBean.selectedGroupId}" 
+									style="border: 0px; width: 276px; padding: 2px;">
+							<f:selectItems value="#{SearchBean.voyageAttributeGroups}" />
+						</h:selectOneMenu>
+					</t:htmlTag>
+					
+					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
+						<h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}"
+									style="border: 0px; width: 276px; padding: 2px;">
+							<f:selectItems value="#{SearchBean.voyageAttributes}" />
+						</h:selectOneMenu>
+					</t:htmlTag>
+					
+					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
+						<h:commandButton action="#{SearchBean.addQueryCondition}" value="Add" />
+					</t:htmlTag>
+					
+				</s:expandableBox>
 
 				<s:expandableBox text="Current query">
 					<s:queryBuilder query="#{SearchBean.workingQuery}" />
@@ -52,21 +69,21 @@
 					<s:tab text="Advanced statistics" tabId="statistics" />
 				</s:tabBar></div>
 
-				<div class="message-bar-container"><s:messageBar rendered="false" binding="#{SearchBean.messageBar}" /></div>
+				<t:htmlTag value="div" styleClass="message-bar-container">
+						<s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
+				</t:htmlTag>
+				
 
-				<%/* Table tab */
-
-					%> <t:htmlTag value="div" styleClass="data-container" rendered="#{SearchBean.tableVisible}">
-
-					<%/* Table with results */
-
-						%>
+				<%/* Table tab */%> 
+				<t:htmlTag value="div" styleClass="data-container" rendered="#{SearchBean.tableVisible}">
+					
+					<%/* Table with results */%>
 					<s:tabletab onclick="#{TableResultTabBean.showDetails}" rendered="#{TableResultTabBean.resultsMode}"
 						query="#{SearchBean.searchParameters}" conditionsOut="#{TableResultTabBean.conditions}"
 						data="#{TableResultTabBean.data}" componentVisible="#{TableResultTabBean.componentVisible}"
 						sortChanged="#{TableResultTabBean.sortChanged}" style="overflow:auto;" />
 
-					<t:htmlTag value="div" style="background-color: #DDDDDD; padding: 5px;"
+					<t:htmlTag value="div" style="background-color: #F1E365; padding: 5px;"
 						rendered="#{TableResultTabBean.resultsMode}">
 						<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 							<t:htmlTag value="tr">
@@ -114,11 +131,11 @@
 						rendered="#{TableResultTabBean.configurationMode}">
 
 						<t:htmlTag value="div"
-							style="margin-top: 10px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; font-weight: bold; font-weight: bold; background-color: #DDDDDD;">
+							style="margin-top: 10px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; font-weight: bold; font-weight: bold; background-color: #D1C345;">
 							<h:outputText value="Configure columns" />
 						</t:htmlTag>
 
-						<t:htmlTag value="div" style="padding: 10px; background-color: #EEEEEE">
+						<t:htmlTag value="div" style="padding: 10px; background-color: #F1E365">
 
 							<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
 								<h:outputText value="Choose group of attributes" />
@@ -178,74 +195,6 @@
 								</t:htmlTag>
 							</t:htmlTag>
 	
-							<%-- 
-								<% /* Groups */ %>
-								<t:htmlTag styleClass="configDiv" style="border: 3px solid Blue; width: 594px;" value="div">
-									<h:outputText style="margin-left: 3px;" id="config_label1" value="Choose group of attributes:" />
-									<t:htmlTag value="br" />
-									<h:selectOneMenu style="margin: 0px 0px 5px 10px;width: 200px;" value="#{TableResultTabBean.selectedGroupSet}"
-										id="configure_groupSetCombo" onchange="submit()">
-										<f:selectItems value="#{TableResultTabBean.availableGroupSets}" />
-									</h:selectOneMenu>
-								</t:htmlTag>
-		
-								<% /* Configuration of visible attributes */ %>
-								<h:panelGrid styleClass="configTable" id="configure_groupAttrs" columns="3">
-		
-									<% /* Available attributes in current group */ %>
-									<h:panelGrid styleClass="config" columns="1" id="configure_groupAttrsPanel">
-										<h:outputText id="config_label2" value="Available attributes:" />
-										<h:selectManyListbox style="width: 200px" id="configure_availAttributes" size="10"
-											value="#{TableResultTabBean.selectedAttributeToAdd}">
-											<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
-										</h:selectManyListbox>
-									</h:panelGrid>
-		
-									<% /* Buttons -> and -< */ %>
-									<h:panelGroup id="configure_buttonsAddRem">
-										<h:panelGrid id="cinfigure_buttonsAddRemGrid">
-											<h:commandButton style="width: 75px" id="configure_AddAttrButton" value="->"
-												action="#{TableResultTabBean.addSelectedAttributeToList}" />
-											<h:commandButton style="width: 75px" id="configure_RemAttrButton" value="<-"
-												action="#{TableResultTabBean.remSelectedAttributeFromList}" />
-										</h:panelGrid>
-									</h:panelGroup>
-		
-									<% /* Currently set attributes */ %>
-									<h:panelGrid columns="2" id="configure_currentAttrsPanelMain">
-										
-										<% /* List of attributes */ %>
-										<h:panelGrid columns="1" id="configure_currentAttrsPanel">
-											<h:outputText id="config_label3" value="Current attributes in talbe:" />
-											<h:selectManyListbox style="width: 200px" id="configure_visibleAttributes"
-												value="#{TableResultTabBean.selectedAttributeAdded}" size="10">
-												<f:selectItems value="#{TableResultTabBean.visibleAttributes}" />
-											</h:selectManyListbox>
-										</h:panelGrid>
-										
-										<% /* Buttons - move up/down */ %>
-										<h:panelGrid id="configure_upDownPanel" columns="1">
-											<h:commandButton style="width: 75px" id="configure_UpAttrButton" value="Move up"
-												action="#{TableResultTabBean.moveAttrUp}" />
-											<h:commandButton style="width: 75px" id="configure_DownAttrButton" value="Move down"
-												action="#{TableResultTabBean.moveAttrDown}" />
-										</h:panelGrid>
-									</h:panelGrid>
-								</h:panelGrid>
-								
-								<% /* Auto attach attributes from search */ %>
-								<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">			
-									<h:selectBooleanCheckbox style="margin-top: 3px;" value="#{TableResultTabBean.attachSearchedParams}" />				
-									<h:outputText style="margin-left: 3px; margin-top: 3px;" value=" Attach to the result attributes from the search query" />
-								</t:htmlTag>
-								
-								<% /* Apply button part */ %>
-								<t:htmlTag styleClass="configDiv" style="width: 594px; height: 25px;" value="div">							
-									<h:commandButton style="margin-top: 5px; margin-left: 4px;" id="configure_applyConfigButton"
-										value="Apply configuration" action="#{TableResultTabBean.resultsMode}" />
-								</t:htmlTag>
-								--%>
-	
 							<t:htmlTag value="div" style="margin-top: 10px;">
 								<t:htmlTag value="table" style="border-collapse: collapse;">
 									<t:htmlTag value="tr">
@@ -259,7 +208,7 @@
 								</t:htmlTag>
 							</t:htmlTag>
 	
-							<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #CCCCCC;">
+							<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #F1E365;">
 								<h:commandButton id="configure_applyConfigButton" value="Apply configuration"
 									action="#{TableResultTabBean.resultsMode}" />
 							</t:htmlTag>
@@ -276,11 +225,12 @@
 						query="#{SearchBean.searchParameters}"
 						conditionsOut="#{TimeLineResultTabBean.conditions}" 
 						componentVisible="#{TimeLineResultTabBean.componentVisible}"
-						styleClass="data-container">
-					<h:panelGrid columns="1" style="width: 100%; background-color: #EEEEEE;">
+						styleClass="data-container">					
+						
+					<h:panelGrid columns="1" style="width: 100%; background-color: #F1E365; padding-top: 5px;">
 
 						<%/* Configuration of graph */%>
-						<h:panelGroup style="margin-bottom: 5px;">
+						<h:panelGroup style="margin-bottom: 5px; margin-top: 5px;">
 							<h:outputText value="Y axis value: " />
 							<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAggregate}" id="tLAggregates">
 								<f:selectItems value="#{TimeLineResultTabBean.aggregateFunctions}" />
@@ -293,7 +243,7 @@
 
 						<%/* Graph data */%>
 						<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
-							<t:htmlTag value="div" style="margin-top: 5px;margin-bottom: 5px; border-top: 2px solid #CCCCCC;margin-top: 5px;">
+							<t:htmlTag value="div" style="margin-top: 5px;margin-bottom: 5px; border-top: 2px solid #D6A51A;margin-top: 5px;">
 								<t:htmlTag value="div" style="overflow:auto; width: 100%; height: 500px">
 									<h:graphicImage value="#{TimeLineResultTabBean.chartPath}" />
 								</t:htmlTag>
@@ -317,8 +267,6 @@
 					rendered="#{SearchBean.statisticsVisible}"
 					query="#{SearchBean.searchParameters}" 
 					conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
-					
-					
 							
 					<t:htmlTag value="div" style="padding: 2px;" 
 						rendered="#{AdvancedStatisticsTabBean.errorPresent || AdvancedStatisticsTabBean.warningPresent}">
@@ -339,21 +287,21 @@
 					</t:htmlTag>
 
 
-					<t:htmlTag id="div_table" value="div" style="padding: 2px;background-color: #EEEEEE;">
+					<t:htmlTag id="div_table" value="div" style="padding: 2px;background-color: #F1E365;">
 						<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
-							<t:htmlTag id="tr_third" value="tr" style="background-color: #EEEEEE;">
+							<t:htmlTag id="tr_third" value="tr" style="background-color: #F1E365;">
 								<t:htmlTag id="td_setup_label" value="th">
 									<h:outputText value="Chart setup" />
 								</t:htmlTag>
 
-								<t:htmlTag value="th" style="border-left: 2px solid #CCCCCC; margin-bottom: 10px;">
+								<t:htmlTag value="th" style="border-left: 2px solid #D6A51A; margin-bottom: 10px;">
 									<h:outputText value="Current series" />
 								</t:htmlTag>
 							</t:htmlTag>
 
 
 							<t:htmlTag id="tr_setup" value="tr">
-								<t:htmlTag value="td" style="background-color: #EEEEEE; width: 520px; border-bottom: 4px solid #CCCCCC;">
+								<t:htmlTag value="td" style="background-color: #F1E365; width: 520px; border-bottom: 4px solid #D6A51A;">
 									<h:selectOneRadio onchange="submit()" value="#{AdvancedStatisticsTabBean.selectedChart}"
 										disabled="#{AdvancedStatisticsTabBean.errorPresent}">
 										<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}" />
@@ -399,7 +347,7 @@
 									</t:htmlTag>
 								</t:htmlTag>
 								<t:htmlTag value="td"
-									style="width: 240px; background-color: #EEEEEE; border-left: 2px solid #CCCCCC; border-bottom: 4px solid #CCCCCC; margin-bottom: 10px;">
+									style="width: 240px; background-color: #F1E365; border-left: 2px solid #D6A51A; border-bottom: 4px solid #D6A51A; margin-bottom: 10px;">
 									<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.seriesAdded}">
 										<h:selectManyCheckbox id="to_remove_check" layout="pageDirection"
 											value="#{AdvancedStatisticsTabBean.toRemove}">
@@ -416,8 +364,8 @@
 							</t:htmlTag>
 						</t:htmlTag>
 
-						<t:htmlTag value="div" style="background-color: #EEEEEE;">
-							<t:htmlTag value="div" style="border-bottom: 2px solid #CCCCCC;">
+						<t:htmlTag value="div" style="background-color: #F1E365; padding-left: 2px; ">
+							<t:htmlTag value="div" style="border-bottom: 2px solid #D6A51A;">
 								<h:commandButton style="margin: 3px;" id="showGraph" value="Show"
 									disabled="#{AdvancedStatisticsTabBean.errorPresent}" action="#{AdvancedStatisticsTabBean.showGraph}" />
 							</t:htmlTag>

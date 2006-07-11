@@ -73,7 +73,7 @@ public class MessageBarComponent extends UIComponentBase
 		writer.startElement("input", this);
 		writer.writeAttribute("name", getClientId(context), null);
 		writer.writeAttribute("type", "submit", null);
-		writer.writeAttribute("value", "Close", null);
+		writer.writeAttribute("value", "Hide link", null);
 		writer.endElement("input");
 		writer.endElement("td");
 

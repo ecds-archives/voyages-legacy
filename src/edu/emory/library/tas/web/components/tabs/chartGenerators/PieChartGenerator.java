@@ -1,5 +1,7 @@
 package edu.emory.library.tas.web.components.tabs.chartGenerators;
 
+import java.awt.Color;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
@@ -21,6 +23,7 @@ public class PieChartGenerator extends AbstractChartGenerator {
 	public JFreeChart getChart(String title, boolean showLegend) {
 		JFreeChart chart = ChartFactory.createPieChart(title, 
 				pieDataset, showLegend, true, false);
+		chart.setBackgroundPaint(new Color(241, 227, 101));
 		return chart;
 	}
 
