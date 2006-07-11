@@ -31,9 +31,23 @@
 			<div class="label">User label</div>
 			<div class="field"><h:inputText maxlength="#{AttributesBean.maxUserLabelLength}" style="width: 200px;" value="#{AttributesBean.attributeUserLabel}" /></div>
 			
+			<div class="label">Category</div>
+			<div class="field">
+				<h:selectOneMenu style="width: 200px;" value="#{AttributesBean.attributeCategory}">
+					<f:selectItem itemLabel="General" itemValue="1" />
+					<f:selectItem itemLabel="Beginner + General" itemValue="0" />
+				</h:selectOneMenu>
+				<table border="0" cellspacing="0" cellpadding="0" style="margin-top: 5px;">
+				<tr>
+					<td><h:selectBooleanCheckbox value="#{AttributesBean.attributeVisible}" /></td>
+					<td style="padding-right: 5px;">visible</td>
+				</tr>
+				</table>
+			</div>
+
 			<div class="label">Description</div>
 			<div class="field"><h:inputTextarea style="width: 300px;" value="#{AttributesBean.attributeDescription}" /></div>
-	
+
 			<h:commandButton value="Save" action="#{AttributesBean.saveAttribute}" />
 			<h:commandButton value="Back" action="#{AttributesBean.cancelEdit}" />
 			

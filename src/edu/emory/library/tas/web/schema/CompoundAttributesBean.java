@@ -32,6 +32,8 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	private List availableAttributes = new ArrayList();
 	private List attributeAttributes = new ArrayList();
 	private boolean questionReallyDelete = false;
+	private int attributeCategory = AbstractAttribute.CATEGORY_BEGINNER;
+	private boolean attributeVisible = true;
 	
 	private class SaveException extends Exception
 	{
@@ -189,6 +191,8 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		setAttributeUserLabel(attribute.getUserLabel());
 		setAttributeName(attribute.getName());
 		setAttributeDescription(attribute.getDescription());
+		setAttributeCategory(attribute.getCategory().intValue());
+		setAttributeVisible(attribute.isVisible());
 		
 		moveAttributesToUI(
 				Voyage.getAttributes(),
@@ -275,6 +279,8 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			attribute.setName(name);
 			attribute.setUserLabel(userLabel);
 			attribute.setAttributes(attributes);
+			attribute.setCategory(new Integer(attributeCategory));
+			attribute.setVisible(new Boolean(attributeVisible));
 			attribute.setDescription(description);
 			if (attributes != null && attributes.size() > 0)
 			{
@@ -390,6 +396,8 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		attributeName = null;
 		attributeUserLabel = null;
 		attributeDescription = null;
+		attributeVisible = true;
+		attributeCategory = AbstractAttribute.CATEGORY_BEGINNER;
 		setErrorText(null);
 	}
 
@@ -459,5 +467,24 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		return questionReallyDelete;
 	}
 
+	public int getAttributeCategory()
+	{
+		return attributeCategory;
+	}
+
+	public void setAttributeCategory(int attributeCategory)
+	{
+		this.attributeCategory = attributeCategory;
+	}
 	
+	public boolean isAttributeVisible()
+	{
+		return attributeVisible;
+	}
+
+	public void setAttributeVisible(boolean attributeVisible)
+	{
+		this.attributeVisible = attributeVisible;
+	}
+
 }

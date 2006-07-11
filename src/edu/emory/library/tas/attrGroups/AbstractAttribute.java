@@ -21,9 +21,6 @@ import edu.emory.library.tas.util.HibernateUtil;
 
 public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 	
-	public final static int ROUND_TO_END_OF_YEAR = 1;
-	public final static int ROUND_TO_BEGINNING_OF_YEAR = 2;
-
 	public final static int TYPE_INTEGER = 0;
 
 	public final static int TYPE_LONG = 1;
@@ -35,6 +32,10 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 	public final static int TYPE_DATE = 3;
 
 	public final static int TYPE_DICT = 4;
+	
+	public final static int CATEGORY_BEGINNER = 0;
+
+	public final static int CATEGORY_GENERAL = 1;
 
 	private ObjectType objectType;
 
@@ -49,6 +50,10 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 	private String dictionary;
 
 	private String description;
+
+	private Boolean visible;
+
+	private Integer category;
 
 	private Integer length = new Integer(-1);
 
@@ -266,6 +271,16 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 		return name;
 	}
 
+	public Integer getCategory()
+	{
+		return category;
+	}
+
+	public void setCategory(Integer category)
+	{
+		this.category = category;
+	}
+	
 	public Integer getType() {
 		return type;
 	}
@@ -326,6 +341,31 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 	public void setLength(Integer length) {
 		if (length != null)
 			this.length = length;
+	}
+
+	public Boolean getVisible()
+	{
+		return visible;
+	}
+
+	public void setVisible(Boolean visible)
+	{
+		this.visible = visible;
+	}
+	
+	public boolean isVisible()
+	{
+		return
+			visible != null &&
+			visible.booleanValue();
+	}
+	
+	public boolean isVisibleByCategory(int category)
+	{
+		return
+			isVisible() &&
+			this.category != null &&
+			this.category.intValue() <= category;
 	}
 
 	public String toString() {

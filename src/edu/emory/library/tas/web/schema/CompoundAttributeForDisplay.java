@@ -16,6 +16,8 @@ public class CompoundAttributeForDisplay extends AbstractAttributeForDisplay
 		this.setDescription(attribute.getDescription());
 		this.setTypeDisplayName(attribute.getTypeDisplayName());
 		this.setAttributesCount(attribute.getAttributesCount());
+		this.setCategory(attribute.getCategory().intValue());
+		this.setVisible(attribute.isVisible());
 	}
 
 	public int getAttributesCount()

@@ -30,7 +30,7 @@ public class Group implements Serializable, VisibleColumn {
 	private ObjectType objectType;
 
 	private String description;
-
+	
 	private CompoundAttribute[] compoundAttributesSortedByUserLabel = null;
 	private CompoundAttribute[] compoundAttributesSortedByName = null;
 	private Attribute[] attributesSortedByUserLabel = null;
@@ -135,6 +135,19 @@ public class Group implements Serializable, VisibleColumn {
 		attributesSortedByUserLabel = null;
 		this.attributes = attributes;
 	}
+	
+//	public Attribute[] getAttributesVisibleByCategory(int category)
+//	{
+//		List attributesVisible = new ArrayList();
+//		for (Iterator iter = attributes.iterator(); iter.hasNext();)
+//		{
+//			Attribute attr = (Attribute) iter.next();
+//			if (attr.isVisibleByCategory(category)) attributesVisible.add(attr);
+//		}
+//		Attribute[] attributesVisibleArray = new Attribute[attributesVisible.size()];
+//		attributesVisible.toArray(attributesVisibleArray);
+//		return attributesVisibleArray;
+//	}
 
 	public Attribute[] getAttributesSortedByUserLabel()
 	{

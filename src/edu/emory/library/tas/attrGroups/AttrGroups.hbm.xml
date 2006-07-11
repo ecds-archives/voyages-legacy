@@ -27,6 +27,8 @@
 		<property name="importDateDay" column="attr_import_date_day"/>
 		<property name="importDateMonth" column="attr_import_date_month"/>
 		<property name="importDateYear" column="attr_import_date_year"/>
+		<property name="visible" column="attr_visible"/>
+		<property name="category" column="attr_category"/>
 					
 	</class>
 	
@@ -47,6 +49,8 @@
 		<property name="dictionary" column="dictionary"/>
 		<property name="description" column="description"/>				
 		<property name="length" column="length"/>
+		<property name="visible" column="visible"/>
+		<property name="category" column="category"/>
 
 		<!-- 
 		<set name="groups" table="group_compound_attributes" lazy="false" inverse="true">

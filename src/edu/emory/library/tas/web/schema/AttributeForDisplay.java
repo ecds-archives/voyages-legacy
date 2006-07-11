@@ -15,6 +15,8 @@ public class AttributeForDisplay extends AbstractAttributeForDisplay
 		this.setUserLabel(attribute.getUserLabel());
 		this.setDescription(attribute.getDescription());
 		this.setTypeDisplayName(attribute.getTypeDisplayName());
+		this.setCategory(attribute.getCategory().intValue());
+		this.setVisible(attribute.isVisible());
 	}
 
 	public String getCompoundAttributesHTML()

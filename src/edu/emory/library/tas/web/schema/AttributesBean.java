@@ -11,6 +11,7 @@ import org.hibernate.exception.DataException;
 
 import edu.emory.library.tas.Slave;
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
@@ -24,6 +25,8 @@ public class AttributesBean extends SchemaEditBeanBase
 	private String attributeUserLabel;
 	private String attributeName;
 	private String attributeDescription;
+	private int attributeCategory = AbstractAttribute.CATEGORY_BEGINNER;
+	private boolean attributeVisible = true;
 	
 	private class SaveException extends Exception
 	{
@@ -135,6 +138,8 @@ public class AttributesBean extends SchemaEditBeanBase
 		setAttributeUserLabel(attribute.getUserLabel());
 		setAttributeName(attribute.getName());
 		setAttributeDescription(attribute.getDescription());
+		setAttributeCategory(attribute.getCategory().intValue());
+		setAttributeVisible(attribute.isVisible());
 		
 	}
 	
@@ -170,6 +175,8 @@ public class AttributesBean extends SchemaEditBeanBase
 			attribute.setName(name);
 			attribute.setUserLabel(userLabel);
 			attribute.setDescription(description);
+			attribute.setCategory(new Integer(attributeCategory));
+			attribute.setVisible(new Boolean(attributeVisible));
 			
 			session.saveOrUpdate(attribute);
 			
@@ -239,6 +246,26 @@ public class AttributesBean extends SchemaEditBeanBase
 	public void setAttributeDescription(String attributeDescription)
 	{
 		this.attributeDescription = attributeDescription;
+	}
+
+	public int getAttributeCategory()
+	{
+		return attributeCategory;
+	}
+
+	public void setAttributeCategory(int attributeCategory)
+	{
+		this.attributeCategory = attributeCategory;
+	}
+
+	public boolean isAttributeVisible()
+	{
+		return attributeVisible;
+	}
+
+	public void setAttributeVisible(boolean attributeVisible)
+	{
+		this.attributeVisible = attributeVisible;
 	}
 
 }

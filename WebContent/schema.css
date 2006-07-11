@@ -43,7 +43,8 @@ div.tabs-container {
 	padding: 5px;
 	color: White;
 	font-weight: bold;
-	background-color: #CC3300; }
+	-background-color: #CC3300;
+	background-color: #4F2683; }
 
 h1 {
 	margin: 10px 0px 10px 0px;

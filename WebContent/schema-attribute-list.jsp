@@ -29,6 +29,18 @@
 			<h:dataTable value="#{AttributesBean.attributes}" var="attribute" border="0" cellpadding="0" cellspacing="0" styleClass="grid">
 				<h:column>
 					<f:facet name="header">
+						<h:outputText value="Visible" />
+					</f:facet>
+					<h:outputText value="#{attribute.visibleText}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Category" />
+					</f:facet>
+					<h:outputText value="#{attribute.categoryText}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
 						<b><h:outputText value="Name" /></b>
 					</f:facet>
 					<h:commandLink onclick="saveScrolling('form');" actionListener="#{AttributesBean.editAttribute}" action="edit">

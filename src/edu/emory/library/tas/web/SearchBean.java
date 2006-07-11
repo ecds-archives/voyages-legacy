@@ -32,7 +32,7 @@ public class SearchBean
 
 	private History history = new History();
 	private Query workingQuery = new Query();
-	private SearchParameters searchParameters = null;
+	private SearchParameters searchParameters = new SearchParameters();
 
 	private boolean tableVisible = true;
 	private boolean timeLineVisible = false;
