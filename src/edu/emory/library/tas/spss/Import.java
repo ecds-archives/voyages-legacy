@@ -8,7 +8,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.configuration.Configuration;
+
 import edu.emory.library.tas.AbstractDescriptiveObject;
+import edu.emory.library.tas.AppConfig;
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.InvalidDateException;
 import edu.emory.library.tas.InvalidNumberException;
@@ -57,7 +60,6 @@ public class Import
 	STSchemaVariable slavesVidVar;
 	RecordIOFactory voyagesRecordIOFactory;
 	RecordIOFactory slavesRecordIOFactory;
-	private String exeStatTransfer;
 
 	private String voyagesSchemaFileName;
 	private String slavesSchemaFileName;
@@ -89,12 +91,15 @@ public class Import
 
 	private void convertSpssFiles() throws IOException, StatTransferException, InterruptedException
 	{
+		
+		Configuration conf = AppConfig.getConfiguration();
+		String statTransferExe = conf.getString(AppConfig.IMPORT_STATTRANSFER);
 
 		// convert voyages
-		if (voyagesSpssFileName != null)
+		if (voyagesPresent)
 		{
 			log.logInfo("Converting voyages by StatTransfer.");
-			StatTransfer voyagesST = new StatTransfer(exeStatTransfer);
+			StatTransfer voyagesST = new StatTransfer(statTransferExe);
 			voyagesST.setInputFileType("spss");
 			voyagesST.setInputFileName(voyagesSpssFileName);
 			voyagesST.setOutputFileType("stfixed");
@@ -104,10 +109,10 @@ public class Import
 		}
 		
 		// convert slaves
-		if (slavesSpssFileName != null)
+		if (slavesPresent)
 		{
 			log.logInfo("Converting slaves by StatTransfer.");
-			StatTransfer slavesST = new StatTransfer(exeStatTransfer);
+			StatTransfer slavesST = new StatTransfer(statTransferExe);
 			slavesST.setInputFileType("spss");
 			slavesST.setInputFileName(slavesSpssFileName);
 			slavesST.setOutputFileType("stfixed");
@@ -974,11 +979,10 @@ public class Import
 
 	}
 
-	public void runImport(LogWriter log, String importDir, String exeStatTransfer)
+	public void runImport(LogWriter log, String importDir)
 	{
 		
 		this.log = log;
-		this.exeStatTransfer = exeStatTransfer;
 		this.importDir = importDir;
 		
 		voyagesSpssFileName = importDir + File.separatorChar + VOYAGES_SAV;
@@ -986,14 +990,14 @@ public class Import
 		voyagesNumberedDataFileName = importDir + File.separatorChar + VOYAGES_NUMBERED_DAT;
 		voyagesSortedDataFileName = importDir + File.separatorChar + VOYAGES_SORTED_DAT;
 		voyagesSchemaFileName = importDir + File.separatorChar + VOYAGES_STS;
-		voyagesPresent = voyagesSpssFileName != null;
+		voyagesPresent = new File(voyagesSpssFileName).exists();
 
 		slavesSpssFileName = importDir + File.separatorChar + SLAVES_SAV;	
 		slavesDataFileName = importDir + File.separatorChar + SLAVES_DAT;
 		slavesSortedDataFileName = importDir + File.separatorChar + SLAVES_SORTED_DAT;
 		slavesNumberedDataFileName = importDir + File.separatorChar + SLAVES_NUMBERED_DAT;
 		slavesSchemaFileName = importDir + File.separatorChar + SLAVES_STS;
-		slavesPresent = slavesSpssFileName != null;
+		slavesPresent = new File(slavesSpssFileName).exists();
 
 		try
 		{
@@ -1074,16 +1078,17 @@ public class Import
 	{
 		
 		// extracts params
-		if (args.length != 2) return;
+		if (args.length != 1) return;
 		String importDir = args[0];
-		String exeStatTransfer = args[1];
 		
 		// crate a log
-		LogWriter log = new LogWriter(importDir);
+		Configuration conf = AppConfig.getConfiguration();
+		String fullImportDir = conf.getString(AppConfig.IMPORT_ROOTDIR) + File.separatorChar + importDir;
+		LogWriter log = new LogWriter(fullImportDir);
 		
 		// import
 		Import imp = new Import();
-		imp.runImport(log, importDir, exeStatTransfer); 
+		imp.runImport(log, fullImportDir); 
 		log.close();
 		
 	}

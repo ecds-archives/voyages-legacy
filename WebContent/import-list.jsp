@@ -15,7 +15,7 @@
 		<h1>Import history</h1>
 		
 		<div class="main-container">
-			<h:dataTable value="#{ImportLog.importLogs}" var="log" border="0" cellpadding="0" cellspacing="5" styleClass="grid">
+			<h:dataTable value="#{ImportLog.importLogs}" var="log" border="0" cellpadding="0" cellspacing="0">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Started" />

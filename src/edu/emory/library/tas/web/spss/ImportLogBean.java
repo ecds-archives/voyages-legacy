@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.component.UIParameter;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +23,7 @@ import edu.emory.library.tas.spss.ImportServlet;
 import edu.emory.library.tas.spss.Log;
 import edu.emory.library.tas.spss.LogItem;
 import edu.emory.library.tas.spss.LogReader;
+import edu.emory.library.tas.web.UtilsJSF;
 
 public class ImportLogBean
 {
@@ -33,7 +33,9 @@ public class ImportLogBean
 	private String currentImportDir;
 	private int currentNoOfMessages;
 	private int currentNoOfWarnings;
+	private int currentLastStage;
 	private LogItemForDisplayInDetail[] currentLogItems;
+	private String currentLogRowClasses;
 	private boolean initialDetailDataLoaded = false;
 	
 	public ImportLogBean()
@@ -131,7 +133,7 @@ public class ImportLogBean
 	private void loadInitialDetailData()
 	{
 		
-		String importDirFromURL = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("importDir");
+		String importDirFromURL = UtilsJSF.getParam("importDir");
 		if (importDirFromURL != null && importDirFromURL.length() > 0)
 		{
 			if (importDirFromURL.equals(currentImportDir) && initialDetailDataLoaded) return;
@@ -162,13 +164,37 @@ public class ImportLogBean
 			
 			List items = importLog.getItems();
 			currentLogItems = new LogItemForDisplayInDetail[items.size()];
+			
+			StringBuffer rowClasses = new StringBuffer();
+			
+			currentLastStage = -1;
 
-			for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
+			if (items.size() > 0)
 			{
-				LogItem item = (LogItem) items.get(j);
-				if (item.getType() == LogItem.TYPE_WARN) currentNoOfWarnings ++;
-				currentLogItems[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
+				
+				LogItem currItem = null;
+				LogItem nextItem = (LogItem) items.get(items.size() - 1);
+				currentLastStage = nextItem.getStage();
+				
+				for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
+				{
+					
+					currItem = nextItem;
+					if (0 < j) nextItem = (LogItem) items.get(j - 1);
+					else nextItem = null;
+					
+					if (currItem.getType() == LogItem.TYPE_WARN) currentNoOfWarnings ++;
+					currentLogItems[i] = new LogItemForDisplayInDetail(currItem, dateFormatLogItem);
+					
+					if (rowClasses.length() > 0) rowClasses.append(",");
+
+					if (nextItem == null || currItem.getStage() != nextItem.getStage()) rowClasses.append("log-item-new-stage");
+					else rowClasses.append("log-item");
+				}
+			
 			}
+			
+			currentLogRowClasses = rowClasses.toString();
 			
 		}
 		catch (IOException e)
@@ -202,16 +228,52 @@ public class ImportLogBean
 		return currentNoOfWarnings;
 	}
 
-	public static LogForDisplayInDetail loadDetail(HttpServletRequest request, String importDirName, int skip)
+	public String getCurrentLogRowClasses()
 	{
-		
-		Configuration conf = AppConfig.getConfiguration();
-		DateFormat dateFormat = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_DATEFORMAT));
-		DateFormat dateFormatLogItem = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_LOGITEM_DATEFORMAT));
+		loadInitialDetailData();
+		return currentLogRowClasses;
+	}
+	
+	public int getCurrentLastStage()
+	{
+		loadInitialDetailData();
+		return currentLastStage;
+	}
+
+	public void setCurrentImportDir(String arg)
+	{
+		// required by JSF because it is bind to <h:inputHidden>
+		// otherwise JSF does not work correctly
+	}
+
+	public void setCurrentNoOfMessages(int arg)
+	{
+		// required by JSF because it is bind to <h:inputHidden>
+		// otherwise JSF does not work correctly
+	}
+
+	public void setCurrentNoOfWarnings(int arg)
+	{
+		// required by JSF because it is bind to <h:inputHidden>
+		// otherwise JSF does not work correctly
+	}
+
+	public void setCurrentLastStage(int arg)
+	{
+		// required by JSF because it is bind to <h:inputHidden>
+		// otherwise JSF does not work correctly
+	}
+
+	public static LogForDisplayInDetail loadDetail(HttpServletRequest request, String importDirName, int skip) throws IOException
+	{
 		
 		try
 		{
 		
+			Configuration conf = AppConfig.getConfiguration();
+			DateFormat dateFormat = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_DATEFORMAT));
+			DateFormat dateFormatLogItem = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_LOGITEM_DATEFORMAT));
+			
 			LogForDisplayInDetail detail = new LogForDisplayInDetail();
 			
 			File importDir = new File(
@@ -226,23 +288,26 @@ public class ImportLogBean
 				if (file.getName().equals(Import.VOYAGES_SAV)) detail.setVoyagesPresent(true);
 				if (file.getName().equals(Import.SLAVES_SAV)) detail.setSlavesPresent(true);
 			}
-
+	
 			LogReader rdr = new LogReader(importDir.getAbsolutePath());
 			Log importLog = rdr.load(skip);
 			
 			List items = importLog.getItems();
 			LogItemForDisplayInDetail[] itemsForDisplay =
 				new LogItemForDisplayInDetail[items.size()];
-
-			for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
+	
+			for (int i = 0; i < items.size(); i++)
 			{
-				LogItem item = (LogItem) items.get(j);
+				LogItem item = (LogItem) items.get(i);
 				itemsForDisplay[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
 			}
 			
 			detail.setLogItems(itemsForDisplay);
 			
-			detail.setTimeStart(dateFormat.format(importLog.getTimeStart()));
+			if (importLog.getTimeStart() != null)
+				detail.setTimeStart(dateFormat.format(importLog.getTimeStart()));
+			else
+				detail.setTimeStart("?");
 	
 			Date lastActivityTime = null;
 			detail.setFinished(importLog.isFinished());
@@ -259,20 +324,21 @@ public class ImportLogBean
 				detail.setStatusText("import still running");
 			}
 			
-			detail.setDuration(DateTimeUtils.formatTimeSpan(
-					importLog.getTimeStart(), lastActivityTime,
-					DateTimeUtils.TIME_INTERVAL_ROUND_TO_SEC));
-			
-			
-			
+			if (importLog.getTimeStart() != null && lastActivityTime != null) 
+				detail.setDuration(DateTimeUtils.formatTimeSpan(
+						importLog.getTimeStart(), lastActivityTime,
+						DateTimeUtils.TIME_INTERVAL_ROUND_TO_SEC));
+			else
+				detail.setDuration("?");
+		
 			return detail;
-
+		
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
+			e.printStackTrace();
+			return null;
 		}
-
-		return null;
 		
 	}
 

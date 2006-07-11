@@ -25,7 +25,7 @@ window.onload = function()
 
 function beforeUpload()
 {
-	document.forms["upload"].action = "import?UPLOAD=" + uploadId;
+	document.forms["upload"].action = "servlet/ImportServlet?UPLOAD=" + uploadId;
 	window.setTimeout("refreshStatus()", 500);
 	return true;
 }
@@ -66,43 +66,47 @@ function refreshStatus()
 
 <h1>Import</h1>
 
-<h2>Select files</h2>
+<div class="main-container">
 
-<table border="0" cellspacing="5" cellpadding="0">
-<tr>
-	<td>Voyages</td>
-	<td><input type="file" name="voyages" size="100"></td>
-</tr>
-<tr>
-	<td>Slaves</td>
-	<td><input type="file" name="slaves" size="100"></td>
-</tr>
-<tr>
-	<td></td>
-	<td><input type="submit" value="Upload"></td>
-</tr>
-</table>
-
-<div style="margin-top: 20px; padding: 5px; background-color: #EEEEEE; font-weight: bold;">Upload progress</div>
-
-<table border="0" cellspacing="5" cellpadding="0">
-<tr>
-	<td><b>File name</b></td>
-	<td id="progressFileName"></td>
-</tr>
-<tr>
-	<td><b>File size</b></td>
-	<td id="progressFileSize"></td>
-</tr>
-<tr>
-	<td><b>Total progress</b></td>
-	<td id="progressTotalProgress"></td>
-</tr>
-</table>
-
-<div id="statusBarFrame" style="width: 300px; overflow: hidden; height: 10px; border: 1px solid #CCCCCC"><div style="background-color: #EEEEEE; width: 0%; overflow: hide; height: 10px;" id="statusBar" ></div></div>
-
-<iframe xstyle="display: none" name="upload-iframe" width="600" height="300"></iframe>
+	<h2>Select files</h2>
+	
+	<table border="0" cellspacing="5" cellpadding="0">
+	<tr>
+		<td>Voyages</td>
+		<td><input type="file" name="voyages" size="100"></td>
+	</tr>
+	<tr>
+		<td>Slaves</td>
+		<td><input type="file" name="slaves" size="100"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="Upload"></td>
+	</tr>
+	</table>
+	
+	<div style="margin-top: 20px; padding: 5px; background-color: #EEEEEE; font-weight: bold;">Upload progress</div>
+	
+	<table border="0" cellspacing="5" cellpadding="0">
+	<tr>
+		<td><b>File name</b></td>
+		<td id="progressFileName"></td>
+	</tr>
+	<tr>
+		<td><b>File size</b></td>
+		<td id="progressFileSize"></td>
+	</tr>
+	<tr>
+		<td><b>Total progress</b></td>
+		<td id="progressTotalProgress"></td>
+	</tr>
+	</table>
+	
+	<div id="statusBarFrame" style="width: 300px; overflow: hidden; height: 10px; border: 1px solid #CCCCCC"><div style="background-color: #EEEEEE; width: 0%; overflow: hide; height: 10px;" id="statusBar" ></div></div>
+	
+	<iframe style="display: none" name="upload-iframe" width="600" height="300"></iframe>
+	
+</div>
 
 </form>
 </f:view>

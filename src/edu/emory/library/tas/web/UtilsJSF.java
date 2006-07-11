@@ -97,5 +97,11 @@ public class UtilsJSF
 		js.append("getElementById('").append(id).append("')");
 		return js;
 	}
+	
+	public static String getParam(String name)
+	{
+		return (String) FacesContext.getCurrentInstance().getExternalContext().
+			getRequestParameterMap().get(name);	
+	}
 
 }

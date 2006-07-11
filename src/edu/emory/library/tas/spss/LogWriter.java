@@ -43,6 +43,7 @@ public class LogWriter
 	public void startStage(int stage)
 	{
 		this.stage = stage;
+		writerItems.flush();
 	}
 
 	private void logEvent(int type, String message)
@@ -63,8 +64,16 @@ public class LogWriter
 		writerItems.print(" ");
 		
 		// message
-		message = message.replaceAll("\\r\\n", " ").replaceAll("\\r", " ").replaceAll("\\n", " ");
-		writerItems.println(message);
+		if (message != null)
+		{
+			message = message.replaceAll("\\r\\n", " ").replaceAll("\\r", " ").replaceAll("\\n", " ");
+			writerItems.print(message);
+		}
+		else
+		{
+			writerItems.print("-");
+		}
+		writerItems.println();
 		
 		// we want to see it
 		writerItems.flush();

@@ -34,8 +34,12 @@ h2 {
 	background-color: #DDDDDD;
 	font-weight: bold; }
 	
-th {
+th, td {
+	padding: 3px;
 	text-align: left; }
 
 div.main-container {
-	margin: 5px; }
+	margin: 10px; }
+	
+tr.log-item-new-stage td  {
+	border-bottom: 1px solid #CCCCCC; }

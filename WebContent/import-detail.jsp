@@ -19,6 +19,7 @@ var json = null;
 var noOfMessages = 0;
 var noOfWarnings = 0;
 var importDir = null;
+var lastStage = -1;
 
 window.onload = function()
 {
@@ -29,6 +30,7 @@ window.onload = function()
 	importDir = form.elements["form:currentImportDir"].value;
 	noOfMessages = parseInt(form.elements["form:currentNoOfMessages"].value);
 	noOfWarnings = parseInt(form.elements["form:currentNoOfWarnings"].value);
+	lastStage = parseInt(form.elements["form:currentLastStage"].value);
 	
 	refresh();
 
@@ -42,13 +44,24 @@ function refresh()
 function detailLoaded(detail, exception)
 {
 
+	// var x = "";
+	// for (k in detail) x += k + " = " + detail[k] + "\n";
+	// alert(x);
+	
+	if (detail == null) return;
+	
 	var logItems = detail.logItems;
 	var logItemsTbl = document.getElementById("form:logItems");
 	for (var i = 0; i < logItems.length; i++)
 	{
-		
-		var tr = logItemsTbl.insertRow(1);
 		var logItem = logItems[i];
+		var tr = logItemsTbl.insertRow(1);
+		
+		if (logItem.stage != lastStage)
+		{
+			tr.className = "log-item-new-stage";
+			lastStage = logItem.stage;
+		}
 		
 		if (logItem.type == 1) noOfWarnings++;
 		
@@ -114,6 +127,7 @@ function detailLoaded(detail, exception)
 		<h:inputHidden id="currentImportDir" value="#{ImportLog.currentImportDir}" />
 		<h:inputHidden id="currentNoOfMessages" value="#{ImportLog.currentNoOfMessages}" />
 		<h:inputHidden id="currentNoOfWarnings" value="#{ImportLog.currentNoOfWarnings}" />
+		<h:inputHidden id="currentLastStage" value="#{ImportLog.currentLastStage}" />
 
 		<div class="main-container">
 
@@ -152,7 +166,7 @@ function detailLoaded(detail, exception)
 			
 			<h2>Import log</h2>
 	
-			<h:dataTable id="logItems" value="#{ImportLog.currentLogItems}" var="item" border="0" cellpadding="0" cellspacing="5">
+			<h:dataTable id="logItems" value="#{ImportLog.currentLogItems}" var="item" border="0" cellpadding="0" cellspacing="0" rowClasses="#{ImportLog.currentLogRowClasses}" styleClass="log-items">
 				<h:column>
 					<h:graphicImage width="16" height="16" url="#{item.typeImg}" />
 				</h:column>

@@ -2,7 +2,6 @@ package edu.emory.library.tas.spss;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.configuration.Configuration;
 
 import edu.emory.library.tas.AppConfig;
+import edu.emory.library.tas.web.UtilsHTML;
 import edu.emory.library.tas.web.test.JavaProgramRunner;
 import edu.emory.library.tas.web.upload.Upload;
 import edu.emory.library.tas.web.upload.UploadedFile;
@@ -52,15 +52,17 @@ public class ImportServlet extends HttpServlet
 		
 		// import directory
 		String rootImportsDir = conf.getString(AppConfig.IMPORT_ROOTDIR);
-		String importDir = rootImportsDir + File.separatorChar + ImportServlet.generateImportDirectory();
-		new File(importDir).mkdir();
+		String importDir = ImportServlet.generateImportDirectory();
+		String fullImportDir = rootImportsDir + File.separatorChar + importDir; 
+		new File(fullImportDir).mkdir();
 		
 		// create a log
-		LogWriter log = new LogWriter(importDir);
+		LogWriter log = new LogWriter(fullImportDir);
+		log.startImport();
 		log.startStage(LogItem.STAGE_UPLOADING);
 
 		// upload files
-		Upload upload = new Upload(request, importDir, log);
+		Upload upload = new Upload(request, fullImportDir, log);
 		upload.setSaveAs("voyages", Import.VOYAGES_SAV);
 		upload.setSaveAs("slaves", Import.SLAVES_SAV);
 		if (!upload.upload())
@@ -92,27 +94,9 @@ public class ImportServlet extends HttpServlet
 		javaRunner.run();
 		
 		// some output
-		javaScriptRedirect(
-				response.getWriter(),
-				"import-detail.faces?importDir=" + importDir,
-				false);
+		UtilsHTML.javaScriptRedirect(response.getWriter(),
+				"../import-detail.faces?importDir=" + importDir, false, 1);
 		
-	}
-	
-	private void javaScriptRedirect(PrintWriter out, String URL, boolean showInBody)
-	{
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
-		out.println("<html>");
-		out.println("<head>");
-		out.println("<title>Redirect</title>");
-		out.println("<script language=\"javascript\" type=\"text/javascript\">");
-		out.println("window.parent.location.href=\"" + URL + "\"");
-		out.println("</script>");
-		out.println("</head>");
-		out.println("<body>");
-		if (showInBody) out.println("Redirect to: " + URL);
-		out.println("</body>");
-		out.println("</html>");
 	}
 	
 	public static void main(String[] args) throws IOException
