@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
@@ -35,6 +34,7 @@ public class ImportLogBean
 	private int currentNoOfMessages;
 	private int currentNoOfWarnings;
 	private LogItemForDisplayInDetail[] currentLogItems;
+	private boolean initialDetailDataLoaded = false;
 	
 	public ImportLogBean()
 	{
@@ -123,48 +123,85 @@ public class ImportLogBean
 	
 	public void openDetail(ActionEvent event)
 	{
-		
 		UIParameter importDirParam = (UIParameter) event.getComponent().findComponent("importDir");
-		String importDir = null;
-		
-		// if opening from the list
-		if (importDirParam != null)
-		{
-			importDir = (String) importDirParam.getValue();
-		}
-		
-		// if opening after upload
-		else
-		{
-			Map session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-			importDir = (String) session.remove("importDir");
-		}
-		
-		// just to be sure
-		if (importDir == null || importDir.length() == 0)
-			return;
-
-		// now really open
-		openDetailInternal(importDir);
-
+		currentImportDir = (String) importDirParam.getValue();
+		initialDetailDataLoaded = false;
 	}
 
-	private void openDetailInternal(String importDir)
+	private void loadInitialDetailData()
 	{
-		currentImportDir = importDir;
-		loadLogItemsForDetail();
+		
+		String importDirFromURL = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("importDir");
+		if (importDirFromURL != null && importDirFromURL.length() > 0)
+		{
+			if (importDirFromURL.equals(currentImportDir) && initialDetailDataLoaded) return;
+			currentImportDir = importDirFromURL; 
+		}
+		else
+		{
+			if (initialDetailDataLoaded) return;
+		}
+		initialDetailDataLoaded = true;
+		
+		currentNoOfMessages = 0;
+		currentNoOfWarnings = 0;
+		
+		Configuration conf = AppConfig.getConfiguration();
+		DateFormat dateFormatLogItem = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_LOGITEM_DATEFORMAT));
+
+		try
+		{
+			
+			LogReader rdr = new LogReader(
+					makeImportFullDir(
+							conf.getString(AppConfig.IMPORT_ROOTDIR),
+							currentImportDir));
+			
+			Log importLog = rdr.loadAll();
+			currentNoOfMessages = importLog.getItems().size();
+			
+			List items = importLog.getItems();
+			currentLogItems = new LogItemForDisplayInDetail[items.size()];
+
+			for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
+			{
+				LogItem item = (LogItem) items.get(j);
+				if (item.getType() == LogItem.TYPE_WARN) currentNoOfWarnings ++;
+				currentLogItems[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
+			}
+			
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
+		
 	}
 
 	public String getCurrentImportDir()
 	{
+		loadInitialDetailData();
 		return currentImportDir;
 	}
 
-	public void setCurrentImportDir(String currentImportDirName)
+	public LogItemForDisplayInDetail[] getCurrentLogItems()
 	{
-		this.currentImportDir = currentImportDirName;
+		loadInitialDetailData();
+		return currentLogItems;
 	}
-	
+
+	public int getCurrentNoOfMessages()
+	{
+		loadInitialDetailData();
+		return currentNoOfMessages;
+	}
+
+	public int getCurrentNoOfWarnings()
+	{
+		loadInitialDetailData();
+		return currentNoOfWarnings;
+	}
+
 	public static LogForDisplayInDetail loadDetail(HttpServletRequest request, String importDirName, int skip)
 	{
 		
@@ -237,59 +274,6 @@ public class ImportLogBean
 
 		return null;
 		
-	}
-	
-	private void loadLogItemsForDetail()
-	{
-		
-		currentNoOfMessages = 0;
-		currentNoOfWarnings = 0;
-		
-		Configuration conf = AppConfig.getConfiguration();
-		DateFormat dateFormatLogItem = new SimpleDateFormat(conf.getString(AppConfig.IMPORT_LOGITEM_DATEFORMAT));
-
-		try
-		{
-			
-			LogReader rdr = new LogReader(
-					makeImportFullDir(
-							conf.getString(AppConfig.IMPORT_ROOTDIR),
-							currentImportDir));
-			
-			Log importLog = rdr.loadAll();
-			currentNoOfMessages = importLog.getItems().size();
-			
-			List items = importLog.getItems();
-			currentLogItems = new LogItemForDisplayInDetail[items.size()];
-
-			for (int j = items.size() - 1, i = 0; 0 <= j; j--, i++)
-			{
-				LogItem item = (LogItem) items.get(j);
-				if (item.getType() == LogItem.TYPE_WARN) currentNoOfWarnings ++;
-				currentLogItems[i] = new LogItemForDisplayInDetail(item, dateFormatLogItem); 
-			}
-			
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException(e);
-		}
-		
-	}
-
-	public LogItemForDisplayInDetail[] getCurrentLogItems()
-	{
-		return currentLogItems;
-	}
-
-	public int getCurrentNoOfMessages()
-	{
-		return currentNoOfMessages;
-	}
-
-	public int getCurrentNoOfWarnings()
-	{
-		return currentNoOfWarnings;
 	}
 
 }

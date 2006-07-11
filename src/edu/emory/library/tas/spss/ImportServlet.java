@@ -2,6 +2,7 @@ package edu.emory.library.tas.spss;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,9 +92,27 @@ public class ImportServlet extends HttpServlet
 		javaRunner.run();
 		
 		// some output
-		request.getSession().setAttribute("importDir", importDir);
-		response.sendRedirect("import-upload-done.faces");
+		javaScriptRedirect(
+				response.getWriter(),
+				"import-detail.faces?importDir=" + importDir,
+				false);
 		
+	}
+	
+	private void javaScriptRedirect(PrintWriter out, String URL, boolean showInBody)
+	{
+		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>Redirect</title>");
+		out.println("<script language=\"javascript\" type=\"text/javascript\">");
+		out.println("window.parent.location.href=\"" + URL + "\"");
+		out.println("</script>");
+		out.println("</head>");
+		out.println("<body>");
+		if (showInBody) out.println("Redirect to: " + URL);
+		out.println("</body>");
+		out.println("</html>");
 	}
 	
 	public static void main(String[] args) throws IOException
