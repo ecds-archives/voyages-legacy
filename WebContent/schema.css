@@ -5,7 +5,7 @@ body {
 	padding: 0px; }
 	
 a {
-	color: #CC3300; }
+	color: #4F2683; }
 	
 a:hover {
 	color: Black; }
@@ -58,7 +58,10 @@ h2 {
 	margin-top: 0px;
 	margin-bottom: 10px;
 	padding: 5px;
-	background-color: #DDDDDD;
+	-background-color: #DDDDDD;
+	-background-color: #9396CA;
+	background-color: #C7CAE6;
+	color: White;
 	font-size: 8pt;
 	font-weight: bold; }
 
@@ -69,12 +72,15 @@ h1 span.new {
 div.main-title {
 	padding-top: 15px;
 	padding-bottom: 15px;
-	padding-left: 150px;
-	background-image: url(header0.png);
-	background-repeat: no-repeat;
-	background-position: left -50px;		
-	border-bottom: 2px solid #444444;
-	background-color: #555555;
+	-padding-left: 150px;
+	padding-left: 10px;
+	-background-image: url(header0.png);
+	-background-repeat: no-repeat;
+	-background-position: left -50px;		
+	-border-bottom: 2px solid #444444;
+	-background-color: #555555;
+	-background-color: #9396CA;
+	background-color: #4F2683;
 	color: White;
 	font-family: Arial, sans-serif;
 	font-size: 16pt; }
@@ -83,35 +89,44 @@ div.tab-bar {
 	padding: 5px;
 	font-weight: bold;
 	color: White;
-	background-color: #666666; } 
-	
+	-background-color: #666666;
+	-background-color: #4F2683; 
+	background-color: #9396CA;
+}
+
 td.tab {
 	cursor: pointer;
 	padding: 2px 10px 2px 10px; }
 
 td.tab:hover {
-	background-color: #555555; }
+	-background-color: #555555;
+	background-color: #4F2683; }
 
 td.tab-selected {
 	padding: 2px 10px 2px 10px;
-	background-color: #CC3300; }	
+	-background-color: #CC3300;
+	-background-color: #9396CA;
+	background-color: #4F2683; }
 	
 table.grid {
-	xwidth: 100%;
+	-width: 100%;
 	border-collapse: collapse; } 
 
 table.grid td, table.grid th {
 	border: 1px solid #CCCCCC;
+	border: 1px solid #C7CAE6;
 	padding: 5px; }
 
 table.grid th {
 	vertical-align: top;
-	background-color: #EEEEEE;
+	-background-color: #EEEEEE;
+	-background-color: #9396CA;
+	background-color: #C7CAE6;
+	color: White;
 	text-align: left; }
 
 table.grid td {
-	vertical-align: top;
-	/* border-bottom: 2px solid #EEEEEE; */ }
+	vertical-align: top; }
 	
 td.select-and-order-add-remove {
 	padding-left: 5px;
