@@ -28,6 +28,8 @@ public class ImportLogBean
 {
 	
 	private static final String BEAN_NAME = "ImportLog";
+	
+	private UIParameter importDirParam;
 
 	private String currentImportDir;
 	private int currentNoOfMessages;
@@ -80,7 +82,7 @@ public class ImportLogBean
 				if (!ImportServlet.isValidImportDirectoryName(dir.getName()))
 					throw new InvalidImportDirectoryException();
 				
-				importLogForDisplay.setId(dir.getName());
+				importLogForDisplay.setImportDir(dir.getName());
 
 				LogReader rdr = new LogReader(dir.getAbsolutePath());
 				Log importLog = rdr.load(Integer.MAX_VALUE);
@@ -118,16 +120,40 @@ public class ImportLogBean
 		return importLogs;
 
 	}
+	
+//	public String openDetail()
+//	{
+//		if (importDirParam == null) return null;
+//		openDetailInternal((String) importDirParam.getValue());
+//		return "detail";
+//	}
+	
+	private String abc = "";
+	
+	public String xxx()
+	{
+		System.out.println("bbb");
+		abc = "abcxyz";
+		return null;
+	}
+	
+	public String getAbc()
+	{
+		return abc + ":::";
+	}
 
 	public void openDetail(ActionEvent event)
 	{
-		
-		UIParameter itemIdParam = (UIParameter) event.getComponent().findComponent("itemId");
+		System.out.println("aaa");
+		UIParameter itemIdParam = (UIParameter) event.getComponent().findComponent("importDir");
 		if (itemIdParam == null) return;
-		
-		currentImportDir = (String) itemIdParam.getValue();
-		loadLogItemsForDetail();
+		openDetailInternal((String) itemIdParam.getValue());
+	}
 
+	private void openDetailInternal(String importDir)
+	{
+		currentImportDir = importDir;
+		loadLogItemsForDetail();
 	}
 
 	public String getCurrentImportDir()
@@ -265,6 +291,16 @@ public class ImportLogBean
 	public int getCurrentNoOfWarnings()
 	{
 		return currentNoOfWarnings;
+	}
+
+	public UIParameter getImportDirParam()
+	{
+		return importDirParam;
+	}
+
+	public void setImportDirParam(UIParameter importDirParam)
+	{
+		this.importDirParam = importDirParam;
 	}
 
 }

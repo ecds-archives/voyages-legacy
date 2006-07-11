@@ -62,7 +62,7 @@ function refreshStatus()
 </head>
 <body>
 <f:view>
-<form onsubmit="return beforeUpload()" target="upload-iframe" action="import" name="upload" method="post" enctype="multipart/form-data">
+<form onsubmit="return beforeUpload()" target="upload-iframe" action="/servlet/ImportServlet" name="upload" method="post" enctype="multipart/form-data">
 
 <h1>Import</h1>
 

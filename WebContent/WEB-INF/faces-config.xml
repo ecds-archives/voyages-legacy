@@ -319,6 +319,14 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/import-upload-done.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>detail</from-outcome>
+			<to-view-id>/import-detail.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 	<render-kit />
 
 	<application>

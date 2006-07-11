@@ -16,6 +16,9 @@
 	
 		<h1>Import history</h1>
 		
+		<h:commandButton value="X" action="#{ImportLog.xxx}" />
+		<h:inputText value="#{ImportLog.abc}" />
+		
 		<div class="main-container">
 			<h:dataTable value="#{ImportLog.importLogs}" var="log" border="0" cellpadding="0" cellspacing="5" styleClass="grid">
 				<h:column>
@@ -23,7 +26,7 @@
 						<h:outputText value="Started" />
 					</f:facet>
 					<h:commandLink actionListener="#{ImportLog.openDetail}" action="detail">
-						<f:param id="itemId" name="itemId" value="#{log.id}" />
+						<f:param id="importDir" name="importDir" value="#{log.importDir}" />
 						<h:outputText value="#{log.started}" />
 					</h:commandLink>
 				</h:column>

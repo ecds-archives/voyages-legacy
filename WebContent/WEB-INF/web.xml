@@ -32,11 +32,12 @@
     </listener>
 	
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-name>FacesServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+<!--  
 	<servlet>
 		<servlet-name>detail</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.test.DetailServlet</servlet-class>
@@ -56,9 +57,9 @@
 		<servlet-name>upload</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.upload.UploadServlet</servlet-class>
 	</servlet>
-
+-->
 	<servlet>
-		<servlet-name>import</servlet-name>
+		<servlet-name>ImportServlet</servlet-name>
 		<servlet-class>edu.emory.library.tas.spss.ImportServlet</servlet-class>
     </servlet>
 	
@@ -72,6 +73,7 @@
 		<servlet-class>edu.emory.library.tas.web.components.tabs.ImageFeederServlet</servlet-class>
 	</servlet>
 
+<!-- 
 	<servlet-mapping>
 		<servlet-name>listing</servlet-name>
 		<url-pattern>/listing</url-pattern>
@@ -91,19 +93,20 @@
 		<servlet-name>searchresults</servlet-name>
 		<url-pattern>/searchresults</url-pattern>
 	</servlet-mapping>
-	
+ 
 	<servlet-mapping>
 		<servlet-name>upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
-
+-->
+ 
 	<servlet-mapping>
-		<servlet-name>import</servlet-name>
-		<url-pattern>/import</url-pattern>
+		<servlet-name>ImportServlet</servlet-name>
+		<url-pattern>/servlet/ImportServlet</url-pattern>
 	</servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-name>FacesServlet</servlet-name>
         <url-pattern>*.faces</url-pattern>
     </servlet-mapping>
 

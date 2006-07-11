@@ -91,7 +91,7 @@ public class ImportServlet extends HttpServlet
 		javaRunner.run();
 		
 		// some output
-		response.getWriter().println("import started ... look inside: " + importDir);
+		response.sendRedirect("import-upload-done.faces?importDir=" + importDir);
 		
 	}
 	

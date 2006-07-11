@@ -4,7 +4,7 @@ package edu.emory.library.tas.web.spss;
 public class LogForDisplayInList
 {
 	
-	private String id;
+	private String importDir;
 	private String started;
 	private String finished;
 	private String duration;
@@ -40,14 +40,14 @@ public class LogForDisplayInList
 		this.started = started;
 	}
 
-	public String getId()
+	public String getImportDir()
 	{
-		return id;
+		return importDir;
 	}
 
-	public void setId(String id)
+	public void setImportDir(String id)
 	{
-		this.id = id;
+		this.importDir = id;
 	}
 
 	public String getDuration()
