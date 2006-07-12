@@ -75,9 +75,9 @@ div.main-title {
 	padding-bottom: 15px;
 	-padding-left: 150px;
 	padding-left: 10px;
-	-background-image: url(header0.png);
+	background-image: url(schema-bg.png);
 	-background-repeat: no-repeat;
-	-background-position: left -50px;		
+	background-position: bottom left;
 	-border-bottom: 2px solid #444444;
 	-background-color: #555555;
 	-background-color: #9396CA;
@@ -110,21 +110,25 @@ td.tab-selected {
 	background-color: #4F2683; }
 	
 table.grid {
-	-width: 100%;
+	width: 100%;
 	border-collapse: collapse; } 
 
 td.grid-col-center, th.grid-col-center {
 	text-align: center; }
 
 table.grid td, table.grid th {
-	border: 1px solid #CCCCCC;
-	border: 1px solid #C7CAE6;
 	padding: 5px; }
+	
+table.grid td {
+	-border: 1px solid #C7CAE6;
+	-border: 1px solid #9396CA;
+	-border: 1px solid #CCCCCC;
+	border: 1px solid #C7CAE6; }
 
 table.grid th {
 	vertical-align: top;
-	-background-color: #EEEEEE;
 	-background-color: #9396CA;
+	background-color: #EEEEEE;
 	background-color: #C7CAE6;
 	color: White;
 	text-align: left; }
