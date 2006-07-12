@@ -21,7 +21,7 @@
 				<td class="side-panel">
 
 				<s:expandableBox text="Choose query mode">
-					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
+					<t:htmlTag value="div" style="margin: 5px 0px 5px 10px;">
 						<h:selectOneMenu
 								style="border: 0px; width: 276px; padding: 2px;"
 								onchange="form.submit();"
@@ -34,7 +34,7 @@
 
 				<s:expandableBox text="Add condition to query">
 
-					<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
+					<t:htmlTag value="div" style="margin: 5px 0px 5px 10px;">
 						<h:selectOneMenu
 								onchange="form.submit();"
 								value="#{SearchBean.selectedGroupId}" 
@@ -89,7 +89,7 @@
 						data="#{TableResultTabBean.data}" componentVisible="#{TableResultTabBean.componentVisible}"
 						sortChanged="#{TableResultTabBean.sortChanged}" style="overflow:auto;" />
 
-					<t:htmlTag value="div" style="background-color: #F1E365; padding: 5px;"
+					<t:htmlTag value="div" style="background-color: #F1E7C8; padding: 5px;"
 						rendered="#{TableResultTabBean.resultsMode}">
 						<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 							<t:htmlTag value="tr">
@@ -143,11 +143,11 @@
 						rendered="#{TableResultTabBean.configurationMode}">
 
 						<t:htmlTag value="div"
-							style="margin-top: 10px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; font-weight: bold; font-weight: bold; background-color: #D1C345;">
+							style="margin-top: 10px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; font-weight: bold; font-weight: bold; background-color: #E2873B;">
 							<h:outputText value="Configure columns" />
 						</t:htmlTag>
 
-						<t:htmlTag value="div" style="padding: 10px; background-color: #F1E365">
+						<t:htmlTag value="div" style="padding: 10px; background-color: #F1E7C8">
 
 							<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
 								<h:outputText value="Choose group of attributes" />
@@ -220,7 +220,7 @@
 								</t:htmlTag>
 							</t:htmlTag>
 	
-							<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #F1E365;">
+							<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #F1E7C8;">
 								<h:commandButton id="configure_applyConfigButton" value="Apply configuration"
 									action="#{TableResultTabBean.resultsMode}" />
 							</t:htmlTag>
@@ -239,7 +239,7 @@
 						componentVisible="#{TimeLineResultTabBean.componentVisible}"
 						styleClass="data-container">					
 						
-					<h:panelGrid columns="1" style="width: 100%; background-color: #F1E365; padding-top: 5px;">
+					<h:panelGrid columns="1" style="width: 100%; background-color: #F1E7C8; padding-top: 5px;">
 
 						<%/* Configuration of graph */%>
 						<h:panelGroup style="margin-bottom: 5px; margin-top: 5px;">
@@ -299,9 +299,9 @@
 					</t:htmlTag>
 
 
-					<t:htmlTag id="div_table" value="div" style="padding: 2px;background-color: #F1E365;">
+					<t:htmlTag id="div_table" value="div" style="padding: 2px;background-color: #F1E7C8;">
 						<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
-							<t:htmlTag id="tr_third" value="tr" style="background-color: #F1E365;">
+							<t:htmlTag id="tr_third" value="tr" style="background-color: #F1E7C8;">
 								<t:htmlTag id="td_setup_label" value="th">
 									<h:outputText value="Chart setup" />
 								</t:htmlTag>
@@ -313,7 +313,7 @@
 
 
 							<t:htmlTag id="tr_setup" value="tr">
-								<t:htmlTag value="td" style="background-color: #F1E365; width: 520px; border-bottom: 4px solid #D6A51A;">
+								<t:htmlTag value="td" style="background-color: #F1E7C8; width: 520px; border-bottom: 4px solid #D6A51A;">
 									<h:selectOneRadio onchange="submit()" value="#{AdvancedStatisticsTabBean.selectedChart}"
 										disabled="#{AdvancedStatisticsTabBean.errorPresent}">
 										<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}" />
@@ -359,7 +359,7 @@
 									</t:htmlTag>
 								</t:htmlTag>
 								<t:htmlTag value="td"
-									style="width: 240px; background-color: #F1E365; border-left: 2px solid #D6A51A; border-bottom: 4px solid #D6A51A; margin-bottom: 10px;">
+									style="width: 240px; background-color: #F1E7C8; border-left: 2px solid #D6A51A; border-bottom: 4px solid #D6A51A; margin-bottom: 10px;">
 									<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.seriesAdded}">
 										<h:selectManyCheckbox id="to_remove_check" layout="pageDirection"
 											value="#{AdvancedStatisticsTabBean.toRemove}">
@@ -376,7 +376,7 @@
 							</t:htmlTag>
 						</t:htmlTag>
 
-						<t:htmlTag value="div" style="background-color: #F1E365; padding-left: 2px; ">
+						<t:htmlTag value="div" style="background-color: #F1E7C8; padding-left: 2px; ">
 							<t:htmlTag value="div" style="border-bottom: 2px solid #D6A51A;">
 								<h:commandButton style="margin: 3px;" id="showGraph" value="Show"
 									disabled="#{AdvancedStatisticsTabBean.errorPresent}" action="#{AdvancedStatisticsTabBean.showGraph}" />

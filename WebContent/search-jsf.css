@@ -19,8 +19,8 @@ div.main-title {
 	padding-left: 150px;
 	padding-left: 10px;
 	-background-image: url(header0.png);
-	background-repeat: no-repeat;
-	background-position: left -50px;		
+	-background-repeat: no-repeat;
+	-background-position: left -50px;		
 	border-bottom: 2px solid #571C1F;
 	background-color: #571C1F;
 	color: White;
@@ -30,7 +30,7 @@ div.main-title {
 td.side-panel {
 	width: 300px;
 	vertical-align: top;
-	background-color: #F1E365; }
+	background-color: #F1E7C8; }
 	
 div.side-panel-section {
 	margin-top: 00px;
@@ -51,7 +51,7 @@ td.side-panel-section-symbol {
 
 td.main-panel {
 	vertical-align: top; 
-	border-left: 4px solid #F1E365;
+	border-left: 4px solid #F1E7C8;
 }
 
 div.side-box {
@@ -65,7 +65,7 @@ div.side-box {
 	padding-left: 5px;
 	padding-right: 5px;
 	border-bottom: 2px solid #D6A51A;
-	background-color: #F1E365; }
+	background-color: #F1E7C8; }
 
 td.query-builder-delete {
 	text-align: right; }
@@ -200,7 +200,7 @@ td.tab {
 	padding-bottom: 5px; }
 
 td.tab:hover {
-	background-color: #F1E365; }
+	background-color: #F1E7C8; }
 
 td.tab-selected {
 	padding-left: 5px;
@@ -228,7 +228,7 @@ table.grid {
 
 table.grid th {
 	padding: 5px;
-	background-color: #F1E365;
+	background-color: #F1E7C8;
 	text-align: left; }
 
 tr.grid-row-even {
@@ -306,7 +306,7 @@ table.detail th {
 	text-align: left;
 	padding: 5px; 
 	border-bottom: 2px solid #F5F0D3;
-	background-color: #F1E365;
+	background-color: #F1E7C8;
 }
 
 td.cellPlain {
@@ -344,7 +344,7 @@ div.message-bar {
 	padding-bottom: 5px;
 	padding-left: 5px;
 	padding-right: 5px;
-	background-color: #F1E365; 
+	background-color: #F1E7C8; 
 	border-left: 4px solid #CA4223;
 	border-bottom: 2px solid #F5F0D3;
 }
