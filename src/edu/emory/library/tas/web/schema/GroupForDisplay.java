@@ -5,6 +5,9 @@ import edu.emory.library.tas.attrGroups.Group;
 public class GroupForDisplay extends SchemaElementForDisplay
 {
 	
+	public static final int SORT_BY_NAME = 0;
+	public static final int SORT_BY_LABEL = 1;
+	
 	private String attributesHTML;
 	private String compoundAttributesHTML;
 	private String proxiedAttributesHTML;

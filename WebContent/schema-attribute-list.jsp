@@ -26,22 +26,34 @@
 		
 			<h1><h:outputText value="#{Switcher.pageTitle}" /></h1>
 				
-			<h:dataTable value="#{AttributesBean.attributes}" var="attribute" border="0" cellpadding="0" cellspacing="0" styleClass="grid">
+			<h:dataTable value="#{AttributesBean.attributes}" var="attribute" border="0" cellpadding="0" cellspacing="0" styleClass="grid" columnClasses="grid-col-center,grid-col-center,grid-col,grid-col,grid-col,grid-col,grid-col,grid-col">
 				<h:column>
+					<f:facet name="header">
+						<h:commandLink value="Visible" action="#{AttributesBean.sortByVisibility}" />
+					</f:facet>
+					<h:graphicImage value="#{attribute.visibleIcon}" width="16" height="16" />
+					<%--
 					<f:facet name="header">
 						<h:outputText value="Visible" />
 					</f:facet>
 					<h:outputText value="#{attribute.visibleText}" />
+					--%>
 				</h:column>
 				<h:column>
+					<f:facet name="header">
+						<h:commandLink value="Category" action="#{AttributesBean.sortByCategory}" />
+					</f:facet>
+					<h:graphicImage value="#{attribute.categoryIcon}" width="16" height="16" />
+					<%--
 					<f:facet name="header">
 						<h:outputText value="Category" />
 					</f:facet>
 					<h:outputText value="#{attribute.categoryText}" />
+					--%>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<b><h:outputText value="Name" /></b>
+						<h:commandLink value="Name" action="#{AttributesBean.sortByName}" />
 					</f:facet>
 					<h:commandLink onclick="saveScrolling('form');" actionListener="#{AttributesBean.editAttribute}" action="edit">
 						<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
@@ -50,13 +62,13 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Label" />
+						<h:commandLink value="Label" action="#{AttributesBean.sortByLabel}" />
 					</f:facet>
 					<h:outputText value="#{attribute.userLabel}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Type" />
+						<h:commandLink value="Type" action="#{AttributesBean.sortByType}" />
 					</f:facet>
 					<h:outputText value="#{attribute.typeDisplayName}" />
 				</h:column>

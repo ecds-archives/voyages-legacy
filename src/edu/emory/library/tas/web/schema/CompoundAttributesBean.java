@@ -1,6 +1,7 @@
 package edu.emory.library.tas.web.schema;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -35,6 +36,9 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 	private int attributeCategory = AbstractAttribute.CATEGORY_BEGINNER;
 	private boolean attributeVisible = true;
 	
+	private int listSortBy = AbstractAttributeForDisplay.SORT_BY_NAME;
+	private boolean listSortAsc = true;
+	
 	private class SaveException extends Exception
 	{
 		private static final long serialVersionUID = 1272411262323327048L;
@@ -44,6 +48,41 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		}
 	}
 	
+	public String sortByName()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_NAME) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_NAME;
+		return null;
+	}
+	
+	public String sortByLabel()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_LABEL) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_LABEL;
+		return null;
+	}
+
+	public String sortByType()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_TYPE) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_TYPE;
+		return null;
+	}
+
+	public String sortByVisibility()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_VISIBILITY) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_VISIBILITY;
+		return null;
+	}
+
+	public String sortByCategory()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_CATEGORY) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_CATEGORY;
+		return null;
+	}
+
 	public CompoundAttributeForDisplay[] getAttributes()
 	{
 		
@@ -103,6 +142,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 
 		}
 		
+		Arrays.sort(compoundAttributesForDisplay, new AbstractAttributeComparator(listSortBy, listSortAsc));
 		return compoundAttributesForDisplay;
 		
 	}

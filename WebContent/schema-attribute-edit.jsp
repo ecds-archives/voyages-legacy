@@ -49,7 +49,7 @@
 			<div class="field"><h:inputTextarea style="width: 300px;" value="#{AttributesBean.attributeDescription}" /></div>
 
 			<h:commandButton value="Save" action="#{AttributesBean.saveAttribute}" />
-			<h:commandButton value="Back" action="#{AttributesBean.cancelEdit}" />
+			<h:commandButton value="Cancel" action="#{AttributesBean.cancelEdit}" />
 			
 		</div>
 		

@@ -5,6 +5,12 @@ import edu.emory.library.tas.attrGroups.AbstractAttribute;
 public class AbstractAttributeForDisplay extends SchemaElementForDisplay
 {
 
+	public static final int SORT_BY_NAME = 0;
+	public static final int SORT_BY_LABEL = 1;
+	public static final int SORT_BY_TYPE = 2;
+	public static final int SORT_BY_VISIBILITY = 3;
+	public static final int SORT_BY_CATEGORY = 4;
+	
 	private String typeDisplayName;
 	private String groupsHTML;
 	private int category;
@@ -73,7 +79,7 @@ public class AbstractAttributeForDisplay extends SchemaElementForDisplay
 	public String getVisibleIcon()
 	{
 		if (visible)
-			return "blank.png";
+			return "schema-icon-visible.png";
 		else
 			return "schema-icon-invisible.png";
 	}

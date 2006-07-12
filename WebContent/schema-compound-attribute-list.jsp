@@ -27,22 +27,34 @@
 			<h1><h:outputText value="#{Switcher.pageTitle}" />
 			<span class="new">(<h:commandLink action="#{CompoundAttributesBean.newAttribute}" value="Create new" />)</span></h1>
 		
-			<h:dataTable value="#{CompoundAttributesBean.attributes}" var="attribute" border="0" cellpadding="0" cellspacing="0" styleClass="grid">
+			<h:dataTable value="#{CompoundAttributesBean.attributes}" var="attribute" border="0" cellpadding="0" cellspacing="0" styleClass="grid" columnClasses="grid-col-center,grid-col-center,grid-col,grid-col,grid-col,grid-col,grid-col,grid-col">
 				<h:column>
+					<f:facet name="header">
+						<h:commandLink value="Visible" action="#{CompoundAttributesBean.sortByVisibility}" />
+					</f:facet>
+					<h:graphicImage value="#{attribute.visibleIcon}" width="16" height="16" />
+					<%--
 					<f:facet name="header">
 						<h:outputText value="Visible" />
 					</f:facet>
 					<h:outputText value="#{attribute.visibleText}" />
+					--%>
 				</h:column>
 				<h:column>
+					<f:facet name="header">
+						<h:commandLink value="Category" action="#{CompoundAttributesBean.sortByCategory}" />
+					</f:facet>
+					<h:graphicImage value="#{attribute.categoryIcon}" width="16" height="16" />
+					<%--
 					<f:facet name="header">
 						<h:outputText value="Category" />
 					</f:facet>
 					<h:outputText value="#{attribute.categoryText}" />
+					--%>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Name" />
+						<h:commandLink value="Name" action="#{CompoundAttributesBean.sortByName}" />
 					</f:facet>
 					<h:commandLink onclick="saveScrolling('form');" actionListener="#{CompoundAttributesBean.editAttribute}" action="edit">
 						<f:param id="attributeId" name="attributeId" value="#{attribute.id}" />
@@ -51,13 +63,13 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Label" />
+						<h:commandLink value="Label" action="#{CompoundAttributesBean.sortByLabel}" />
 					</f:facet>
 					<h:outputText value="#{attribute.userLabel}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Type" />
+						<h:commandLink value="Type" action="#{CompoundAttributesBean.sortByType}" />
 					</f:facet>
 					<h:outputText value="#{attribute.typeDisplayName}" />
 				</h:column>

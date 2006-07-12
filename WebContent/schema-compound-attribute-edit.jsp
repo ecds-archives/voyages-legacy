@@ -68,7 +68,7 @@
 				
 			<h:commandButton value="Save" action="#{CompoundAttributesBean.saveAttribute}" />
 			<h:commandButton value="Delete" rendered="#{!CompoundAttributesBean.newAttribute}" onclick="return confirm('Are you sure?');" action="#{CompoundAttributesBean.deleteAttributeSoft}" />
-			<h:commandButton value="Back" action="#{CompoundAttributesBean.cancelEdit}" />
+			<h:commandButton value="Cancel" action="#{CompoundAttributesBean.cancelEdit}" />
 			
 		</div>
 		

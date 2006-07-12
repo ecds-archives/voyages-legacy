@@ -52,7 +52,7 @@
 	
 			<h:commandButton value="Save" action="#{GroupsBean.saveGroup}" />
 			<h:commandButton value="Delete" rendered="#{!GroupsBean.newGroup}" onclick="return confirm('Are you sure?');" action="#{GroupsBean.deleteGroup}" />
-			<h:commandButton value="Back" action="#{GroupsBean.cancelEdit}" />
+			<h:commandButton value="Cancel" action="#{GroupsBean.cancelEdit}" />
 		
 		</div>
 		

@@ -1,6 +1,7 @@
 package edu.emory.library.tas.web.schema;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +35,9 @@ public class GroupsBean extends SchemaEditBeanBase
 	private List availableCompoundAttributes = new ArrayList();
 	private List groupCompoundAttributes = new ArrayList();
 	
+	private int listSortBy = GroupForDisplay.SORT_BY_NAME;
+	private boolean listSortAsc = true;
+
 	private class SaveException extends Exception
 	{
 		private static final long serialVersionUID = 6458860234621829596L;
@@ -43,8 +47,18 @@ public class GroupsBean extends SchemaEditBeanBase
 		}
 	}
 	
-	public GroupsBean()
+	public String sortByName()
 	{
+		if (listSortBy == GroupForDisplay.SORT_BY_NAME) listSortAsc = !listSortAsc;
+		listSortBy = GroupForDisplay.SORT_BY_NAME;
+		return null;
+	}
+	
+	public String sortByLabel()
+	{
+		if (listSortBy == GroupForDisplay.SORT_BY_LABEL) listSortAsc = !listSortAsc;
+		listSortBy = GroupForDisplay.SORT_BY_LABEL;
+		return null;
 	}
 	
 	public Object[] getGroups()
@@ -123,6 +137,7 @@ public class GroupsBean extends SchemaEditBeanBase
 			
 		}
 		
+		Arrays.sort(groupsForDisplay, new GroupComparator(listSortBy, listSortAsc));
 		return groupsForDisplay;
 		
 	}

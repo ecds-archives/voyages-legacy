@@ -1,5 +1,6 @@
 package edu.emory.library.tas.web.schema;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.faces.component.UIParameter;
@@ -28,6 +29,9 @@ public class AttributesBean extends SchemaEditBeanBase
 	private int attributeCategory = AbstractAttribute.CATEGORY_BEGINNER;
 	private boolean attributeVisible = true;
 	
+	private int listSortBy = AbstractAttributeForDisplay.SORT_BY_NAME;
+	private boolean listSortAsc = true;
+	
 	private class SaveException extends Exception
 	{
 		private static final long serialVersionUID = -1049756863527182663L;
@@ -37,6 +41,41 @@ public class AttributesBean extends SchemaEditBeanBase
 		}
 	}
 	
+	public String sortByName()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_NAME) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_NAME;
+		return null;
+	}
+	
+	public String sortByLabel()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_LABEL) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_LABEL;
+		return null;
+	}
+
+	public String sortByType()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_TYPE) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_TYPE;
+		return null;
+	}
+
+	public String sortByVisibility()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_VISIBILITY) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_VISIBILITY;
+		return null;
+	}
+
+	public String sortByCategory()
+	{
+		if (listSortBy == AbstractAttributeForDisplay.SORT_BY_CATEGORY) listSortAsc = !listSortAsc;
+		listSortBy = AbstractAttributeForDisplay.SORT_BY_CATEGORY;
+		return null;
+	}
+
 	public AttributeForDisplay[] getAttributes()
 	{
 		
@@ -120,6 +159,7 @@ public class AttributesBean extends SchemaEditBeanBase
 
 		}
 		
+		Arrays.sort(attributesForDisplay, new AbstractAttributeComparator(listSortBy, listSortAsc));
 		return attributesForDisplay;
 		
 	}

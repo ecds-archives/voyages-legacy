@@ -30,7 +30,7 @@
 			<h:dataTable value="#{GroupsBean.groups}" var="group" border="0" cellpadding="0" cellspacing="0" styleClass="grid">
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Name" />
+						<h:commandLink value="Name" action="#{GroupsBean.sortByName}" />
 					</f:facet>
 					<h:commandLink onclick="saveScrolling('form');" actionListener="#{GroupsBean.editGroup}" action="edit">
 						<f:param id="groupId" name="groupId" value="#{group.id}" />
@@ -39,7 +39,7 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Label" />
+						<h:commandLink value="Name" action="#{GroupsBean.sortByName}" />
 					</f:facet>
 					<h:outputText value="#{group.userLabel}" />
 				</h:column>

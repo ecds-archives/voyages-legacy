@@ -113,6 +113,9 @@ table.grid {
 	-width: 100%;
 	border-collapse: collapse; } 
 
+td.grid-col-center, th.grid-col-center {
+	text-align: center; }
+
 table.grid td, table.grid th {
 	border: 1px solid #CCCCCC;
 	border: 1px solid #C7CAE6;

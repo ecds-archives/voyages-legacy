@@ -312,7 +312,7 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 			return "";
 		}
 	}
-
+	
 	public String getDictionary() {
 		return dictionary;
 	}
