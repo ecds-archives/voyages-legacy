@@ -104,6 +104,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			return null;
 		}
 		
+		Group.sortByUserLabelOrName(groups);
 		CompoundAttributeForDisplay[] compoundAttributesForDisplay =
 			new CompoundAttributeForDisplay[compoundAttributes.length];
 
@@ -127,7 +128,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			}
 			
 			htmlAttrs.setLength(0);
-			Attribute[] attrsSorted = compAttr.getAttributesSortedByUserLabel();
+			Attribute[] attrsSorted = compAttr.getAttributesSortedByUserLabelOrName();
 			for (int j = 0; j < attrsSorted.length; j++)
 			{
 				Attribute attr = attrsSorted[j];

@@ -2,8 +2,6 @@ package edu.emory.library.tas.web.schema;
 
 import java.util.Comparator;
 
-import edu.emory.library.tas.attrGroups.Group;
-
 public class GroupComparator implements Comparator
 {
 	

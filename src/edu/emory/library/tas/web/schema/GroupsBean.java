@@ -82,6 +82,7 @@ public class GroupsBean extends SchemaEditBeanBase
 			return null;
 		}
 		
+		AbstractAttribute.sortByUserLabelOrName(attributes);
 		GroupForDisplay[] groupsForDisplay = new GroupForDisplay[groups.length];
 		
 		StringBuffer htmlCompAttrs = new StringBuffer();
@@ -103,7 +104,7 @@ public class GroupsBean extends SchemaEditBeanBase
 			}
 			
 			htmlAttrs.setLength(0);
-			Attribute[] attrsSorted = group.getAttributesSortedByUserLabel();
+			Attribute[] attrsSorted = group.getAttributesSortedByUserLabelOrName();
 			for (int j = 0; j < attrsSorted.length; j++)
 			{
 				Attribute attr = attrsSorted[j];

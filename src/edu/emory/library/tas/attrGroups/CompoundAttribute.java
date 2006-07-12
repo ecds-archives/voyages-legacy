@@ -20,6 +20,7 @@ public class CompoundAttribute extends AbstractAttribute {
 
 	private Attribute[] attributesSortedByUserLabel = null;
 	private Attribute[] attributesSortedByName = null;
+	private Attribute[] attributesSortedByUserLabelOrName = null;
 
 	public CompoundAttribute()
 	{
@@ -29,14 +30,23 @@ public class CompoundAttribute extends AbstractAttribute {
 		return attributes;
 	}
 
-	public void setAttributes(Set attributes) {
+	public void setAttributes(Set attributes)
+	{
+		clearCachedInfoForAttributes();
 		this.attributes = attributes;
 	}
-
+	
 	public int getAttributesCount() {
 		if (attributes == null)
 			return 0;
 		return attributes.size();
+	}
+
+	private void clearCachedInfoForAttributes()
+	{
+		attributesSortedByUserLabel = null;
+		attributesSortedByName = null;
+		attributesSortedByUserLabelOrName = null;
 	}
 
 	public static AbstractAttribute loadById(Long id) {
@@ -143,6 +153,17 @@ public class CompoundAttribute extends AbstractAttribute {
 			Attribute.sortByName(attributesSortedByName);
 		}
 		return attributesSortedByName;
+	}
+
+	public Attribute[] getAttributesSortedByUserLabelOrName()
+	{
+		if (attributesSortedByUserLabelOrName == null)
+		{
+			attributesSortedByUserLabelOrName = new Attribute[attributes.size()];
+			attributes.toArray(attributesSortedByUserLabelOrName);
+			Attribute.sortByUserLabelOrName(attributesSortedByUserLabelOrName);
+		}
+		return attributesSortedByUserLabelOrName;
 	}
 
 	public String encodeToString()

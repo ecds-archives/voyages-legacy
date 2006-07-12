@@ -99,7 +99,9 @@ public class AttributesBean extends SchemaEditBeanBase
 		{
 			return null;
 		}
-		
+
+		AbstractAttribute.sortByUserLabelOrName(compoundAttributes);
+		Group.sortByUserLabelOrName(groups);
 		AttributeForDisplay[] attributesForDisplay = new AttributeForDisplay[attributes.length];
 
 		StringBuffer htmlCompAttrs = new StringBuffer();

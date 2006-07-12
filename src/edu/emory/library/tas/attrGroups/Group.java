@@ -2,6 +2,7 @@ package edu.emory.library.tas.attrGroups;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,8 +33,10 @@ public class Group implements Serializable, VisibleColumn {
 
 	private String description;
 	
+	private CompoundAttribute[] compoundAttributesSortedByUserLabelOrName = null;
 	private CompoundAttribute[] compoundAttributesSortedByUserLabel = null;
 	private CompoundAttribute[] compoundAttributesSortedByName = null;
+	private Attribute[] attributesSortedByUserLabelOrName = null;
 	private Attribute[] attributesSortedByUserLabel = null;
 	private Attribute[] attributesSortedByName = null;
 
@@ -96,6 +99,7 @@ public class Group implements Serializable, VisibleColumn {
 	{
 		compoundAttributesSortedByName = null;
 		compoundAttributesSortedByUserLabel = null;
+		compoundAttributesSortedByUserLabelOrName = null;
 	}
 	
 	public int noOfCompoundAttributesInCategory(int category)
@@ -109,6 +113,17 @@ public class Group implements Serializable, VisibleColumn {
 		return n;
 	}
 	
+	public CompoundAttribute[] getCompoundAttributesSortedByUserLabelOrName()
+	{
+		if (compoundAttributesSortedByUserLabelOrName == null)
+		{
+			compoundAttributesSortedByUserLabelOrName = new CompoundAttribute[compoundAttributes.size()];
+			compoundAttributes.toArray(compoundAttributesSortedByUserLabelOrName);
+			CompoundAttribute.sortByUserLabelOrName(compoundAttributesSortedByUserLabelOrName);
+		}
+		return compoundAttributesSortedByUserLabelOrName;
+	}
+
 	public CompoundAttribute[] getCompoundAttributesSortedByUserLabel()
 	{
 		if (compoundAttributesSortedByUserLabel == null)
@@ -156,6 +171,7 @@ public class Group implements Serializable, VisibleColumn {
 	{
 		attributesSortedByName = null;
 		attributesSortedByUserLabel = null;
+		attributesSortedByUserLabelOrName = null;
 	}
 
 //	public Attribute[] getAttributesVisibleByCategory(int category)
@@ -180,6 +196,17 @@ public class Group implements Serializable, VisibleColumn {
 			if (attr.isVisibleByCategory(category)) n++;
 		}
 		return n;
+	}
+
+	public Attribute[] getAttributesSortedByUserLabelOrName()
+	{
+		if (attributesSortedByUserLabelOrName == null)
+		{
+			attributesSortedByUserLabelOrName = new Attribute[attributes.size()];
+			attributes.toArray(attributesSortedByUserLabelOrName);
+			Attribute.sortByUserLabelOrName(attributesSortedByUserLabelOrName);
+		}
+		return attributesSortedByUserLabelOrName;
 	}
 
 	public Attribute[] getAttributesSortedByUserLabel()
@@ -296,6 +323,22 @@ public class Group implements Serializable, VisibleColumn {
 		Arrays.sort(array, new Group.NameComparator());
 	}
 
+	public static class UserLabelOrNameComparator implements Comparator {
+		public int compare(Object o1, Object o2) {
+			Group g1 = (Group) o1;
+			Group g2 = (Group) o2;
+			return g1.getUserLabelOrName().compareToIgnoreCase(g2.getUserLabelOrName());
+		}
+	}
+
+	public static void sortByUserLabelOrName(Object[] array) {
+		Arrays.sort(array, new Group.UserLabelOrNameComparator());
+	}
+
+	public static void sortByUserLabelOrName(List list) {
+		Collections.sort(list, new Group.UserLabelOrNameComparator());
+	}
+	
 	public String encodeToString() {
 		return "Group_" + this.getId();
 	}
