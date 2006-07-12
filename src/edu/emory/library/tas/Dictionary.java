@@ -2,16 +2,38 @@ package edu.emory.library.tas;
 
 import edu.emory.library.tas.util.HibernateConnector;
 
+/**
+ * Superclass for any dictionary in the application.
+ * @author Pawel Jurczyk
+ *
+ */
 public class Dictionary {
 
+	/**
+	 * ID of dictionary
+	 */
 	private Long id;
 
+	/**
+	 * Name (Dictionary entry name)
+	 */
 	private String name;
 
+	/**
+	 * Type of dictionary.
+	 */
 	private Integer type;
 	
+	/**
+	 * ID in the oryginal data (before import).
+	 */
 	private Integer remoteId;
 
+	/**
+	 * Creates new dictionary of given type.
+	 * @param p_dictionaryName dictionary name (should be located in ./dicts package)
+	 * @return
+	 */
 	public static Dictionary createNew(String p_dictionaryName)
 	{
 		try
@@ -37,18 +59,37 @@ public class Dictionary {
 		return null;
 	}
 
+	/**
+	 * Loads given dictionary name with given name value
+	 * @param p_dictionaryName
+	 * @param p_dictVal
+	 * @return dictionary array, empty array if there is no desired dictionary entry
+	 */
 	public static Dictionary[] loadDictionary(String p_dictionaryName,
 			String p_dictVal) {
 		
 		return loadDictionaryInternal(p_dictionaryName, "name", p_dictVal);
 	}
 
+	/**
+	 * Loads given dictionary with given remote id value.
+	 * @param p_dictionaryName
+	 * @param p_dictVal
+	 * @return dictionary array, empty array if there is no desired dictionary entry
+	 */
 	public static Dictionary[] loadDictionary(String p_dictionaryName,
 			Integer p_dictVal) {
 		
 		return loadDictionaryInternal(p_dictionaryName, "remoteId", p_dictVal);
 	}
 	
+	/**
+	 * Loads dictionary with desired paraameters.
+	 * @param p_dictionaryName
+	 * @param p_attrName
+	 * @param p_dictVal
+	 * @return dictionary array, empty array if there is no desired dictionary entry
+	 */
 	private static Dictionary[] loadDictionaryInternal(String p_dictionaryName, String p_attrName, Object p_dictVal) {
 		int dictType = -1;
 		try {
@@ -83,6 +124,11 @@ public class Dictionary {
 		}
 	}
 	
+	/**
+	 * Loads all entries of given dictionary type
+	 * @param p_dictionaryName
+	 * @return
+	 */
 	public static Dictionary[] loadDictionary(String p_dictionaryName) {
 
 		int dictType = -1;
@@ -118,6 +164,10 @@ public class Dictionary {
 		}
 	}
 
+	/**
+	 * Constructor
+	 *
+	 */
 	public Dictionary() {
 	}
 

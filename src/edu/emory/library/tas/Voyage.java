@@ -62,6 +62,11 @@ import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 
+/**
+ * Voyage object.
+ * @author Pawel Jurczyk
+ *
+ */
 public class Voyage extends AbstractDescriptiveObject {
 	
 	private static final String VOYAGE = "Voyage";
@@ -86,6 +91,15 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	private Set slaves = new HashSet();
 	
+	/**
+	 * ID of voyage.
+	 */
+	private Long iid;
+	
+	/**
+	 * Gets all groups designed to voyages.
+	 * @return
+	 */
 	public static Group[] getGroups() {
 		
 		Conditions conditions = new Conditions();
@@ -114,6 +128,11 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 	
+	
+	/**
+	 * Gets all attributes of voyage.
+	 * @return
+	 */
 	public static Attribute[] getAttributes() {
 		
 		Conditions conditions = new Conditions();
@@ -142,6 +161,11 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 	
+	/**
+	 * Gets attribute with given name.
+	 * @param name
+	 * @return attribute, null if there is no attribute with given name
+	 */
 	public static Attribute getAttribute(String name) {
 		
 		Conditions conditions = new Conditions();
@@ -164,6 +188,10 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 	
+	/**
+	 * Gets names of all attributes in voyage.
+	 * @return
+	 */
 	public static String[] getAllAttrNames() {
 		
 		Conditions conditions = new Conditions();
@@ -190,6 +218,11 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 
+	
+	/**
+	 * Gets Compound attributes designed to voyages.
+	 * @return
+	 */
 	public static CompoundAttribute[] getCoumpoundAttributes() {
 		
 		Conditions conditions = new Conditions();
@@ -218,6 +251,11 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 	
+	/**
+	 * Gets compound attrbibute designed to voyages with given name
+	 * @param name
+	 * @return
+	 */
 	public static CompoundAttribute getCoumpoundAttribute(String name) {
 		
 		Conditions conditions = new Conditions();
@@ -241,8 +279,6 @@ public class Voyage extends AbstractDescriptiveObject {
 			return (CompoundAttribute)attributes[0];
 		}		
 	}
-	
-	private Long iid;
 	
 	/**
 	 * Creates new Voyage. Object will have new ID.
@@ -359,6 +395,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		return ret;
 	}
 	
+	/**
+	 * Loads a most reecnt voyages.
+	 * @param p_firstResult first result
+	 * @param p_fetchSize suze of package
+	 * @return
+	 */
 	public static Voyage[] loadAllMostRecent(int p_firstResult, int p_fetchSize) {
 		
 		Session session = HibernateUtil.getSession();
