@@ -302,6 +302,7 @@ public class SearchBean
 	public SearchParameters getSearchParameters()
 	{
 		restorePermlinkIfAny();
+		this.searchParameters.setCategory(category);
 		return searchParameters;
 	}
 
@@ -327,7 +328,6 @@ public class SearchBean
 
 	public void setCategory(int category)
 	{
-		this.searchParameters.setCategory(category);
 		this.category = category;
 	}
 
