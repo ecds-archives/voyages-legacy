@@ -13,6 +13,13 @@ import javax.faces.el.ValueBinding;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.web.SearchParameters;
 
+/**
+ * Component for presenting stats/charts.
+ * Component is a div section. Also, it connects SearchBean with specific bean responsible for
+ * performing desired action.
+ * @author Pawel Jurczyk
+ *
+ */
 public class UITimeLineResultTab extends UIOutput {
 	
 	public void appyConditions(Conditions c, FacesContext context) {
@@ -24,14 +31,15 @@ public class UITimeLineResultTab extends UIOutput {
 		
 	}
 	
-//	public boolean getRendersChildren() {
-//		return true;
-//	}
 
+	/**
+	 * Begin encodiung of object.
+	 */
 	public void encodeBegin(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		writer.startElement("div", this);
 		
+		//Prepare div
+		writer.startElement("div", this);
 		String style = (String)getAttributes().get("style");
 		if (style!=null)
 		 	writer.writeAttribute("style", style, null);
@@ -40,6 +48,7 @@ public class UITimeLineResultTab extends UIOutput {
 		if (styleClass!=null)
 			writer.writeAttribute("class", styleClass, null);
 		
+		//Load value bindings
 		ValueBinding vb = this.getValueBinding("rendered");
 		if (vb != null) {
 			Boolean b = (Boolean) vb.getValue(context);
@@ -47,8 +56,7 @@ public class UITimeLineResultTab extends UIOutput {
 			if (vb != null) {
 				vb.setValue(context, b);
 			}
-		}
-		
+		}		
 		vb = this.getValueBinding("conditions");
 		if (vb != null) {
 			SearchParameters c = (SearchParameters) vb.getValue(context);
@@ -58,23 +66,14 @@ public class UITimeLineResultTab extends UIOutput {
 			}
 		}
 		
+		//Start table (needed?)
 		writer.startElement("table", this);
 	}
 
-//	public void encodeChildren(FacesContext context) throws IOException {
-//		ResponseWriter writer = context.getResponseWriter();
-//		List children = this.getChildren();
-//		Iterator iter = children.iterator();
-//		while (iter.hasNext()) {
-//			writer.startElement("td", this);
-//			UIComponentBase component = (UIComponentBase)iter.next();
-//			component.encodeBegin(context);
-//			component.encodeChildren(context);
-//			component.encodeEnd(context);
-//			writer.endElement("td");			
-//		}
-//	}
-	
+
+	/**
+	 * End encoding of object.
+	 */
 	public void encodeEnd(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.endElement("table");

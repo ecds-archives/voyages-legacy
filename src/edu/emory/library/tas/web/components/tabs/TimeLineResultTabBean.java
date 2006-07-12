@@ -32,6 +32,11 @@ import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.AbstractChartGenerator;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.XYChartGenerator;
 
+/**
+ * Bean for time line statistics.
+ * @author Pawel Jurczyk
+ *
+ */
 public class TimeLineResultTabBean {
 
 	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
@@ -44,37 +49,85 @@ public class TimeLineResultTabBean {
 
 	private static final String DEFAULT_CHART_WIDTH = "640";
 
+	/**
+	 * List of voyage attributes.
+	 */
 	private List voyageAttributes;
 
+	/**
+	 * List of available aggregates.
+	 */
 	private List aggregateFunctions;
 
+	/**
+	 * Chosen aggregate.
+	 */
 	private String chosenAggregate = "sum";
 
+	/**
+	 * Chosen attribute name.
+	 */
 	private String chosenAttribute = "sla32imp";
 
+	/**
+	 * Current set of attributes.
+	 */
 	private Conditions conditions = null;
 
+	/**
+	 * Need of query indication.
+	 */
 	private boolean needQuery = false;
 
+	/**
+	 * Attributes changed indication.
+	 */
 	private boolean attributesChanged = false;
 
+	/**
+	 * Chart presented to user.
+	 */
 	private JFreeChart chart;
 
+	/**
+	 * Visibility of component.
+	 */
 	private Boolean componentVisible = new Boolean(false);
 
+	/**
+	 * Current chart height.
+	 */
 	private String chartHeight = DEFAULT_CHART_HEIGHT;
 
+	/**
+	 * Current chart width.
+	 */
 	private String chartWidth = DEFAULT_CHART_WIDTH;
 
+	/**
+	 * Current category of attributes (basic or general).
+	 */
 	private int category;
 
+	/**
+	 * Avaialable voyage attributes.
+	 */
 	private Attribute[] attributes = Voyage.getAttributes();
 
+	/**
+	 * Default constructor.
+	 *
+	 */
 	public TimeLineResultTabBean() {
 	}
 
+	/**
+	 * Gets numeric attributes of voyage.
+	 * @return
+	 */
 	public List getVoyageNumericAttributes() {
 
+		//Build list of numeric attributes.
 		this.voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			Attribute attr = attributes[i];
@@ -82,13 +135,6 @@ public class TimeLineResultTabBean {
 					&& (attr.getType().intValue() == Attribute.TYPE_FLOAT
 							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
 				String outString = attr.toString();
-				// if (attr.getUserLabel() == null
-				// || attr.getUserLabel().equals("")) {
-				// outString = attributes[i].toString();
-				// } else {
-				// outString = attr.getUserLabel();
-				// }
-
 				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
 
 			}
@@ -98,6 +144,10 @@ public class TimeLineResultTabBean {
 		return this.voyageAttributes;
 	}
 
+	/**
+	 * Gets avaialable aggregates.
+	 * @return
+	 */
 	public List getAggregateFunctions() {
 		if (this.aggregateFunctions == null) {
 			this.aggregateFunctions = new ArrayList();
@@ -108,10 +158,16 @@ public class TimeLineResultTabBean {
 		return this.aggregateFunctions;
 	}
 
+	/**
+	 * Shows time line chart.
+	 * @return
+	 */
 	public String showTimeLine() {
+		
+		//Check if we can construct chart
 		if (this.componentVisible.booleanValue() && (this.needQuery || this.attributesChanged)
 				&& this.conditions != null) {
-
+			//Prepare query
 			Conditions localCondition = this.conditions.addAttributesPrefix("v.");
 			localCondition.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
 			localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
@@ -124,37 +180,14 @@ public class TimeLineResultTabBean {
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
 
-			// TimeSeriesCollection dataset = new TimeSeriesCollection();
-			// TimeSeries timeseries = new TimeSeries("Years");
-			// dataset.addSeries(timeseries);
-			//
-			// for (int i = 0; i < ret.length; i++) {
-			// Object[] row = (Object[]) ret[i];
-			// timeseries.add(new ChangedDay((Date) row[0]), (Number) row[1]);
-			//
-			// }
-			//
-			// chart = ChartFactory.createTimeSeriesChart("Time statistics",
-			// "Year of voyages", "" + this.chosenAggregate + "("
-			// + this.chosenAttribute + ")", dataset, false, true,
-			// false);
-			//
-			//			
-			// XYPlot xyplot = (XYPlot) chart.getPlot();
-			// xyplot.setBackgroundPaint(Color.LIGHT_GRAY);
-			// xyplot.setDomainGridlinePaint(Color.WHITE);
-			// xyplot.setRangeGridlinePaint(Color.WHITE);
-			// xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
-			// xyplot.setDomainCrosshairVisible(true);
-			// xyplot.setRangeCrosshairVisible(true);
-			// DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
-			// dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
+			//Prepare chart generator.
 			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
 			generator.correctAndCompleteData(ret);
 			generator.addRowToDataSet(ret, new String[] { this.chosenAggregate + "("
 					+ Voyage.getAttribute(this.chosenAttribute) + ")" });
 			chart = generator.getChart("Time line graph", false);
 
+			//Put chart into session.
 			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
 			((HttpSession) servletContext.getSession(true)).setAttribute("__chart__object", chart);
 
@@ -165,10 +198,18 @@ public class TimeLineResultTabBean {
 		return null;
 	}
 
+	/**
+	 * Gets currently chosen aggregate.
+	 * @return
+	 */
 	public String getChosenAggregate() {
 		return chosenAggregate;
 	}
 
+	/**
+	 * Sets currently chosen aggregate.
+	 * @param chosenAggregate
+	 */
 	public void setChosenAggregate(String chosenAggregate) {
 		if (!chosenAggregate.equals(this.chosenAttribute)) {
 			this.chosenAggregate = chosenAggregate;
@@ -176,10 +217,18 @@ public class TimeLineResultTabBean {
 		}
 	}
 
+	/**
+	 * Gets currently chosen attribute.
+	 * @return
+	 */
 	public String getChosenAttribute() {
 		return chosenAttribute;
 	}
 
+	/**
+	 * Sets currently chosen attribute.
+	 * @param chosenAttribute
+	 */
 	public void setChosenAttribute(String chosenAttribute) {
 		if (!chosenAttribute.equals(this.chosenAttribute)) {
 			this.chosenAttribute = chosenAttribute;
@@ -188,21 +237,30 @@ public class TimeLineResultTabBean {
 
 	}
 
+	/**
+	 * Gets path to chart image.
+	 * @return
+	 */
 	public String getChartPath() {
 		return IMAGE_FEEDED_SERVLET + "?path=__chart__object&&height=" + this.chartHeight + "&width=" + this.chartWidth;
 	}
-
 	public void setChartPath(String path) {
 	}
-
 	public String setNewView() {
 		return null;
 	}
 
+	/**
+	 * Checks if any chart is ready to show.
+	 */
 	public boolean getChartReady() {
 		return this.chart != null;
 	}
 
+	/**
+	 * Sets current search parameters.
+	 * @param params
+	 */
 	public void setConditions(SearchParameters params) {
 		if (params == null) {
 			return;
@@ -218,10 +276,18 @@ public class TimeLineResultTabBean {
 		showTimeLine();
 	}
 
+	/**
+	 * Checks if component is visible.
+	 * @return
+	 */
 	public Boolean getComponentVisible() {
 		return componentVisible;
 	}
 
+	/**
+	 * Sets visibility of component.
+	 * @param componentVisible
+	 */
 	public void setComponentVisible(Boolean componentVisible) {
 		boolean shouldQuery = false;
 		if (this.componentVisible.booleanValue() == false && componentVisible.booleanValue() == true) {
@@ -233,18 +299,34 @@ public class TimeLineResultTabBean {
 		}
 	}
 
+	/**
+	 * Gets chart height.
+	 * @return
+	 */
 	public String getChartHeight() {
 		return chartHeight;
 	}
 
+	/**
+	 * Gets chart height.
+	 * @param chartHeight
+	 */
 	public void setChartHeight(String chartHeight) {
 		this.chartHeight = chartHeight;
 	}
 
+	/**
+	 * Gets chart width.
+	 * @param chartHeight
+	 */
 	public String getChartWidth() {
 		return chartWidth;
 	}
 
+	/**
+	 * Sets chart width.
+	 * @param chartWidth
+	 */
 	public void setChartWidth(String chartWidth) {
 		this.chartWidth = chartWidth;
 	}

@@ -13,23 +13,40 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tas.attrGroups.VisibleColumn;
-import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.UtilsJSF;
 
+/**
+ * Component used for presenting table result.
+ * @author Pawel Jurczyk
+ *
+ */
 public class UITableResultTab extends UIOutput {
 
 	private static final int TRIM_LENGTH = 35;
 
+	/**
+	 * Sort changed binding.
+	 */
 	private MethodBinding sortChanged;
 
+	/**
+	 * Show details binding.
+	 */
 	private MethodBinding showDetails;
 
+	/**
+	 * Default constructor.
+	 *
+	 */
 	public UITableResultTab() {
 		super();
 	}
 
+	/**
+	 * Restore state overload.
+	 */
 	public void restoreState(FacesContext context, Object state) {
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
@@ -37,6 +54,9 @@ public class UITableResultTab extends UIOutput {
 		showDetails = (MethodBinding) restoreAttachedState(context, values[2]);
 	}
 
+	/**
+	 * Save state overload.
+	 */
 	public Object saveState(FacesContext context) {
 		Object[] values = new Object[3];
 		values[0] = super.saveState(context);
@@ -45,6 +65,9 @@ public class UITableResultTab extends UIOutput {
 		return values;
 	}
 
+	/**
+	 * Decode overload.
+	 */
 	public void decode(FacesContext context) {
 
 		Map params = context.getExternalContext().getRequestParameterMap();
@@ -61,36 +84,42 @@ public class UITableResultTab extends UIOutput {
 
 	}
 
+	/**
+	 * Encode begin overload.
+	 */
 	public void encodeBegin(FacesContext context) throws IOException {
 		TableData data = null;
 
 		ResponseWriter writer = context.getResponseWriter();
+		
+		//Start div
 		writer.startElement("div", this);
 
+		//Bind style/style class.
 		ValueBinding vb = this.getValueBinding("style");
 		if (vb != null && vb.getValue(context) != null) {
 			writer.writeAttribute("style", vb.getValue(context), null);
 		}
-
 		vb = this.getValueBinding("styleClass");
 		if (vb != null && vb.getValue(context) != null) {
 			writer.writeAttribute("class", vb.getValue(context), null);
 		}
 
+		//Encode hidden fields.
 		UtilsJSF.encodeHiddenInput(this, writer, getSortHiddenFieldName(context));
 		UtilsJSF.encodeHiddenInput(this, writer, getClickIdHiddenFieldName(context));
 
+		//Start table
 		writer.startElement("table", this);
 		writer.writeAttribute("class", "grid", null);
 
+		
 		String style = (String) getAttributes().get("style");
 		if (style != null)
 			writer.writeAttribute("style", style, null);
-
 		String styleClass = (String) getAttributes().get("styleClass");
 		if (styleClass != null)
 			writer.writeAttribute("class", styleClass, null);
-
 		vb = this.getValueBinding("rendered");
 		if (vb != null) {
 			Boolean b = (Boolean) vb.getValue(context);
@@ -99,7 +128,6 @@ public class UITableResultTab extends UIOutput {
 				vb.setValue(context, b);
 			}
 		}
-
 		vb = this.getValueBinding("conditions");
 		if (vb != null) {
 			SearchParameters p = (SearchParameters) vb.getValue(context);
@@ -108,16 +136,16 @@ public class UITableResultTab extends UIOutput {
 				vb.setValue(context, p);
 			}
 		}
-
 		vb = this.getValueBinding("data");
 		if (vb != null) {
 			data = (TableData) vb.getValue(context);
 		}
-
 		UIForm form = UtilsJSF.getForm(this, context);
 
 		writer.startElement("tr", this);
 		VisibleColumn[] populatedAttributes = data.getVisibleAttributes();
+		
+		//Encode header of table
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
 
@@ -162,12 +190,12 @@ public class UITableResultTab extends UIOutput {
 
 			}
 		}
-		// writer.startElement("th", this);
-		// writer.endElement("th");
 		writer.endElement("tr");
 
 		StringBuffer rowClass = new StringBuffer();
 		TableData.DataTableItem[] objs = data.getData();
+		
+		//Encode data.
 		if (objs != null) {
 			for (int i = 0; i < objs.length; i++) {
 
@@ -208,7 +236,6 @@ public class UITableResultTab extends UIOutput {
 						writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "', " + "'"
 								+ "cell_" + i + "_" + j + "')", null);
 						writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "')", null);
-//						writer.writeAttribute("title", visibleToolTop, null);
 					}
 
 					// Tooltip
@@ -217,9 +244,6 @@ public class UITableResultTab extends UIOutput {
 						writer.writeAttribute("id", "tooltip_" + i + "_" + j, null);
 						writer.writeAttribute("class", "tableDataTooltip", null);
 						writer.write(visibleToolTop);
-//						if (obj != null) {
-//							writer.write(visibleToolTop.replaceAll("', '", "',  <br>'"));
-//						}
 						writer.endElement("div");
 					}
 					
@@ -230,21 +254,6 @@ public class UITableResultTab extends UIOutput {
 					writer.endElement("td");
 				}
 
-				// String jsShowDetail = UtilsJSF.generateSubmitJS(context,
-				// form,
-				// getClickIdHiddenFieldName(context),
-				// objs[i].voyageId.toString());
-				// writer.startElement("td", this);
-				// writer.startElement("a", this);
-				// writer.writeAttribute("href", "#", null);
-				// writer.writeAttribute("style", "border: 0px;", null);
-				// writer.writeAttribute("onclick", jsShowDetail, null);
-				// writer.write("<img style=\"border: 0px;\" alt=\"Details of
-				// voyage\" " +
-				// "src=\"contents.gif\" width=\"12\" height=\"15\">");
-				// writer.endElement("a");
-				// writer.endElement("td");
-
 				writer.endElement("tr");
 
 			}
@@ -252,16 +261,6 @@ public class UITableResultTab extends UIOutput {
 
 		writer.endElement("table");
 	}
-
-	// private String prepareJS(FacesContext context, String pressedLink) {
-	// StringBuffer buffer = new StringBuffer();
-	// String ID = getSortHiddenFieldName(context);
-	// buffer.append(" onclick=\"document.forms['form'].elements['" + ID +
-	// "'].value = '"
-	// + pressedLink + "';" +
-	// "clear_form();form.submit();\"");
-	// return buffer.toString();
-	// }
 
 	private String getSortHiddenFieldName(FacesContext context) {
 		return this.getClientId(context) + "_sort";

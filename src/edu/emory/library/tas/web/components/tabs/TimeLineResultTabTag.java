@@ -4,19 +4,51 @@ import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * Tag for chart result presentation.
+ * @author Pawel Jurczyk
+ * Example of usage:
+ * <s:stattab styleClass="data-container" 
+ * 			  rendered="#{SearchBean.statisticsVisible}" 
+ *            query="#{SearchBean.searchParameters}"
+ *            conditionsOut="#{Bean.conditions}">
+ *            
+ *      <any tags using values from Bean bean>
+ *            
+ * </s:stattab>
+ */
 public class TimeLineResultTabTag extends UIComponentTag {
 
 	private static final String STAT_RESULT_TAB = "TimeLineResultTab";
 
+	/**
+	 * Style mapping.
+	 */
 	private String style;
+	
+	/**
+	 * Style class mapping.
+	 */
 	private String styleClass;
 
+	/**
+	 * Conditions in mapping.
+	 */
 	private String conditions;
+	
+	/**
+	 * Conditions out mapping.
+	 */
 	private String conditionsOut;
 
+	/**
+	 * Visibility of component mapping.
+	 */
 	private String componentVisible;
 	
-	
+	/**
+	 * Setting of component properties.
+	 */
 	protected void setProperties(UIComponent component) {
 
 		super.setProperties(component);

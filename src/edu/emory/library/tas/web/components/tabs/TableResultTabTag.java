@@ -8,21 +8,64 @@ import javax.faces.webapp.UIComponentTag;
 
 import org.apache.myfaces.el.MethodBindingImpl;
 
+/**
+ * Class represents html tag for table results.
+ * @author Pawel Jurczyk
+ * 
+ * Example usage:
+ * 
+ * <s:tabletab onclick="#{TableResultTabBean.showDetails}" 
+ * 			   rendered="#{TableResultTabBean.resultsMode}"
+ * 			   query="#{SearchBean.searchParameters}" 
+ *             conditionsOut="#{TableResultTabBean.conditions}"
+ *	           data="#{TableResultTabBean.data}" 
+ *             componentVisible="#{TableResultTabBean.componentVisible}"
+ * 			   sortChanged="#{TableResultTabBean.sortChanged}" 
+ * 			   style="overflow:auto;" />
+ *
+ */
 public class TableResultTabTag extends UIComponentTag {
 
 	private static final String TABLE_RESULT_TAB = "TableResultTab";
 
+	/**
+	 * Sort changed event mapping.
+	 */
 	private String sortChanged;
 	
+	/**
+	 * Style mapping.
+	 */
 	private String style;
+	
+	/**
+	 * Style class mapping.
+	 */
 	private String styleClass;
 
+	/**
+	 * Conditions in mapping.
+	 */
 	private String conditions;
+	
+	/**
+	 * Conditions out mapping.
+	 */
 	private String conditionsOut;
 
+	/**
+	 * Visibility of component mapping.
+	 */
 	private String componentVisible;
 
+	/**
+	 * Table data mapping.
+	 */
 	private String data;
+	
+	/**
+	 * Onclick event mapping (on row of data column - fires details).
+	 */
 	private String onclick;
 	
 	public String getStyle() {
@@ -37,6 +80,7 @@ public class TableResultTabTag extends UIComponentTag {
 
 		super.setProperties(component);
 
+		//Setting of properties
 		if (data != null) {
 			if (isValueReference(data)) {
 				ValueBinding vb = getFacesContext().getApplication()
@@ -91,15 +135,6 @@ public class TableResultTabTag extends UIComponentTag {
 				component.getAttributes().put("componentVisible", componentVisible);
 			}
 		}		
-//		if (onclick != null) {
-//			if (isValueReference(conditionsOut)) {
-//				ValueBinding vb = getFacesContext().getApplication()
-//						.createValueBinding(onclick);
-//				component.setValueBinding("onclick", vb);
-//			} else {
-//				component.getAttributes().put("onclick", onclick);
-//			}
-//		}
 		
 		if (component instanceof UITableResultTab && sortChanged != null) {
 			UITableResultTab tab = (UITableResultTab)component;

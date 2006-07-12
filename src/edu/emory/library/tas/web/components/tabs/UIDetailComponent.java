@@ -14,31 +14,50 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.web.UtilsJSF;
 
+/**
+ * Component that presents daetailed information abour voyage.
+ * @author Pawel Jurczyk
+ *
+ */
 public class UIDetailComponent extends UIComponentBase {
 
 	public String getFamily() {
 		return null;
 	}
 
+	/**
+	 * Encode begin of component.
+	 */
 	public void encodeBegin(FacesContext context) throws IOException {
 
 		ResponseWriter writer = context.getResponseWriter();
+		
+		//Encode table
 		writer.startElement("table", this);
 		writer.writeAttribute("class", "detail", null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 
+		//Get data to fill in table
 		TableData data = this.getData();	
 		
+		//Voyages info
 		TableData.DataTableItem[] objs = data.getData();
+		
+		//Voyages Indexes info
 		TableData.DataTableItem[] addObjs = data.getAdditionalData();
+		
+		//Columns of voyage
 		VisibleColumn[] columns = data.getVisibleAttributes();
+		
+		//Columns of voyage index
 		VisibleColumn[] additionalColumns = data.getVisibleAdditionalAttributes();
 		
-		
+		//Load data about voyage index into table if possible
 		if (addObjs != null) {
 			
+			//Create table header
 			writer.startElement("th", this);
 			writer.writeAttribute("class", "cellUpperLeft", null);
 			writer.write(additionalColumns[0].toString());
@@ -53,7 +72,7 @@ public class UIDetailComponent extends UIComponentBase {
 				writer.endElement("th");
 			}			
 			
-			
+			//Create table data
 			for (int i = 1; i < additionalColumns.length; i++) {
 				
 				writer.startElement("tr", this);
@@ -76,6 +95,8 @@ public class UIDetailComponent extends UIComponentBase {
 
 			}
 		}
+		
+		//Load info about voyages into table
 		if (objs != null) {
 			for (int i = 0; i < columns.length; i++) {
 				
@@ -130,6 +151,10 @@ public class UIDetailComponent extends UIComponentBase {
 	public void encodeEnd(FacesContext context) throws IOException {
 	}
 
+	/**
+	 * Gets TableData object
+	 * @return
+	 */
 	public TableData getData() {
 		ValueBinding vb = getValueBinding("data");
 		if (vb == null)
