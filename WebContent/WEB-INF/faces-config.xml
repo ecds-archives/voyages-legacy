@@ -88,6 +88,20 @@
 		</component-class>
 	</component>
 
+	<component>
+		<component-type>SectionGroup</component-type>
+		<component-class>
+			edu.emory.library.tas.web.SectionGroupComponent
+		</component-class>
+	</component>
+
+	<component>
+		<component-type>Section</component-type>
+		<component-class>
+			edu.emory.library.tas.web.SectionComponent
+		</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>
