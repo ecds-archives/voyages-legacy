@@ -327,6 +327,7 @@ public class SearchBean
 
 	public void setCategory(int category)
 	{
+		this.searchParameters.setCategory(category);
 		this.category = category;
 	}
 
