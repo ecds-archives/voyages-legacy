@@ -36,11 +36,9 @@ public class TimeLineResultTabBean {
 
 	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
 
-	private static final String[] aggregates = { "avg", "min", "max", "sum",
-			"count" };
+	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
 
-	private static final String[] aggregatesUL = { "Avg", "Min", "Max", "Sum",
-			"Count" };
+	private static final String[] aggregatesUL = { "Avg", "Min", "Max", "Sum", "Count" };
 
 	private static final String DEFAULT_CHART_HEIGHT = "480";
 
@@ -68,34 +66,35 @@ public class TimeLineResultTabBean {
 
 	private String chartWidth = DEFAULT_CHART_WIDTH;
 
+	private int category;
+
+	private Attribute[] attributes = Voyage.getAttributes();
+
 	public TimeLineResultTabBean() {
 	}
 
 	public List getVoyageNumericAttributes() {
-		if (voyageAttributes == null) {
-			String[] attributes = Voyage.getAllAttrNames();
-			Arrays.sort(attributes);
-			this.voyageAttributes = new ArrayList();
-			for (int i = 0; i < attributes.length; i++) {
-				Attribute attr = Voyage.getAttribute(attributes[i]);
-				if (attr.getType().intValue() == Attribute.TYPE_FLOAT
-						|| attr.getType().intValue() == Attribute.TYPE_INTEGER
-						|| attr.getType().intValue() == Attribute.TYPE_LONG) {
-					String outString = null;
-					if (attr.getUserLabel() == null
-							|| attr.getUserLabel().equals("")) {
-						outString = attributes[i];
-					} else {
-						outString = attr.getUserLabel();
-					}
 
-					voyageAttributes.add(new ComparableSelectItem(attributes[i],
-							outString));
+		this.voyageAttributes = new ArrayList();
+		for (int i = 0; i < attributes.length; i++) {
+			Attribute attr = attributes[i];
+			if (attr.isVisibleByCategory(this.category)
+					&& (attr.getType().intValue() == Attribute.TYPE_FLOAT
+							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
+				String outString = attr.toString();
+				// if (attr.getUserLabel() == null
+				// || attr.getUserLabel().equals("")) {
+				// outString = attributes[i].toString();
+				// } else {
+				// outString = attr.getUserLabel();
+				// }
 
-				}
+				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
+
 			}
-			Collections.sort(voyageAttributes);
 		}
+		Collections.sort(voyageAttributes);
+
 		return this.voyageAttributes;
 	}
 
@@ -103,71 +102,61 @@ public class TimeLineResultTabBean {
 		if (this.aggregateFunctions == null) {
 			this.aggregateFunctions = new ArrayList();
 			for (int i = 0; i < aggregates.length; i++) {
-				this.aggregateFunctions.add(new SelectItem(aggregates[i],
-						aggregatesUL[i]));
+				this.aggregateFunctions.add(new SelectItem(aggregates[i], aggregatesUL[i]));
 			}
 		}
 		return this.aggregateFunctions;
 	}
 
 	public String showTimeLine() {
-		if (this.componentVisible.booleanValue()
-				&& (this.needQuery || this.attributesChanged) && this.conditions != null) {
+		if (this.componentVisible.booleanValue() && (this.needQuery || this.attributesChanged)
+				&& this.conditions != null) {
 
-			Conditions localCondition = this.conditions
-					.addAttributesPrefix("v.");
-			localCondition
-					.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
-			localCondition.addCondition("vi.remoteVoyageId", new DirectValue(
-					"v.id"), Conditions.OP_EQUALS);
+			Conditions localCondition = this.conditions.addAttributesPrefix("v.");
+			localCondition.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
+			localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
 
-			QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v",
-					localCondition);
-			qValue.setGroupBy(new String[] {"date_trunc('year', v.datedep)"});
-			qValue
-					.addPopulatedAttribute("date_trunc('year', v.datedep)",
-							false);
-			qValue.addPopulatedAttribute(this.chosenAggregate + "(v."
-					+ this.chosenAttribute + ")", false);
-			qValue.setOrderBy(new String[] {"date_trunc('year', v.datedep)"});
+			QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
+			qValue.setGroupBy(new String[] { "date_trunc('year', v.datedep)" });
+			qValue.addPopulatedAttribute("date_trunc('year', v.datedep)", false);
+			qValue.addPopulatedAttribute(this.chosenAggregate + "(v." + this.chosenAttribute + ")", false);
+			qValue.setOrderBy(new String[] { "date_trunc('year', v.datedep)" });
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
 
-//			TimeSeriesCollection dataset = new TimeSeriesCollection();
-//			TimeSeries timeseries = new TimeSeries("Years");
-//			dataset.addSeries(timeseries);
-//
-//			for (int i = 0; i < ret.length; i++) {
-//				Object[] row = (Object[]) ret[i];
-//				timeseries.add(new ChangedDay((Date) row[0]), (Number) row[1]);
-//
-//			}
-//
-//			chart = ChartFactory.createTimeSeriesChart("Time statistics",
-//					"Year of voyages", "" + this.chosenAggregate + "("
-//							+ this.chosenAttribute + ")", dataset, false, true,
-//					false);
-//
-//			
-//			XYPlot xyplot = (XYPlot) chart.getPlot();
-//			xyplot.setBackgroundPaint(Color.LIGHT_GRAY);
-//			xyplot.setDomainGridlinePaint(Color.WHITE);
-//			xyplot.setRangeGridlinePaint(Color.WHITE);
-//			xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
-//			xyplot.setDomainCrosshairVisible(true);
-//			xyplot.setRangeCrosshairVisible(true);
-//			DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
-//			dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
+			// TimeSeriesCollection dataset = new TimeSeriesCollection();
+			// TimeSeries timeseries = new TimeSeries("Years");
+			// dataset.addSeries(timeseries);
+			//
+			// for (int i = 0; i < ret.length; i++) {
+			// Object[] row = (Object[]) ret[i];
+			// timeseries.add(new ChangedDay((Date) row[0]), (Number) row[1]);
+			//
+			// }
+			//
+			// chart = ChartFactory.createTimeSeriesChart("Time statistics",
+			// "Year of voyages", "" + this.chosenAggregate + "("
+			// + this.chosenAttribute + ")", dataset, false, true,
+			// false);
+			//
+			//			
+			// XYPlot xyplot = (XYPlot) chart.getPlot();
+			// xyplot.setBackgroundPaint(Color.LIGHT_GRAY);
+			// xyplot.setDomainGridlinePaint(Color.WHITE);
+			// xyplot.setRangeGridlinePaint(Color.WHITE);
+			// xyplot.setAxisOffset(new RectangleInsets(5, 5, 5, 5));
+			// xyplot.setDomainCrosshairVisible(true);
+			// xyplot.setRangeCrosshairVisible(true);
+			// DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
+			// dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
 			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
 			generator.correctAndCompleteData(ret);
-			generator.addRowToDataSet(ret, new String[] {this.chosenAggregate + "("
-					+ Voyage.getAttribute(this.chosenAttribute) + ")"});
+			generator.addRowToDataSet(ret, new String[] { this.chosenAggregate + "("
+					+ Voyage.getAttribute(this.chosenAttribute) + ")" });
 			chart = generator.getChart("Time line graph", false);
-			
-			ExternalContext servletContext = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute(
-					"__chart__object", chart);
+
+			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+			((HttpSession) servletContext.getSession(true)).setAttribute("__chart__object", chart);
 
 			this.needQuery = false;
 			this.attributesChanged = false;
@@ -200,15 +189,12 @@ public class TimeLineResultTabBean {
 	}
 
 	public String getChartPath() {
-		return IMAGE_FEEDED_SERVLET 
-				+ "?path=__chart__object&&height=" 
-				+ this.chartHeight + "&width=" 
-				+ this.chartWidth;
+		return IMAGE_FEEDED_SERVLET + "?path=__chart__object&&height=" + this.chartHeight + "&width=" + this.chartWidth;
 	}
 
 	public void setChartPath(String path) {
 	}
-	
+
 	public String setNewView() {
 		return null;
 	}
@@ -221,6 +207,7 @@ public class TimeLineResultTabBean {
 		if (params == null) {
 			return;
 		}
+		this.category = params.getCategory();
 		Conditions c = params.getConditions();
 		if (c == null || c.equals(conditions)) {
 			return;
@@ -237,8 +224,7 @@ public class TimeLineResultTabBean {
 
 	public void setComponentVisible(Boolean componentVisible) {
 		boolean shouldQuery = false;
-		if (this.componentVisible.booleanValue() == false
-				&& componentVisible.booleanValue() == true) {
+		if (this.componentVisible.booleanValue() == false && componentVisible.booleanValue() == true) {
 			shouldQuery = true;
 		}
 		this.componentVisible = componentVisible;

@@ -19,6 +19,11 @@ import edu.emory.library.tas.attrGroups.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tas.attrGroups.formatters.SimpleAttributeFormatter;
 import edu.emory.library.tas.util.query.QueryValue;
 
+/**
+ * Data that is presented in results (Result table or detail table).
+ * @author Pawel Jurczyk
+ *
+ */
 public class TableData {
 
 	private static final AbstractAttributeFormatter DEFAULT_FORMATTER = new SimpleAttributeFormatter();

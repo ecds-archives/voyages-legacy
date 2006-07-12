@@ -2,8 +2,6 @@ package edu.emory.library.tas.web.components.tabs;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -20,26 +18,27 @@ import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.AbstractChartGenerator;
 
+/**
+ * Bean used for generating graphs.
+ * 
+ * @author Pawel Jurczyk
+ * 
+ */
 public class AdvancedStatisticsTabBean {
 
 	private static final String STAT_OBJECT_NAME = "__stat__object";
 
 	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
 
-	private static final String[] orders = {"Ignore", "Asc", "Desc" };
+	private static final String[] orders = { "Ignore", "Asc", "Desc" };
 
-	private static final String[] aggregates = { "avg", "min", "max", "sum",
-			"count" };
+	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
 
-	private static final String[] aggregatesUL = { "Avg", "Min", "Max", "Sum",
-			"Count" };
+	private static final String[] aggregatesUL = { "Avg", "Min", "Max", "Sum", "Count" };
 
-	private static final String[] availableChartsLabels = {
-			"XY chart", "Bar chart", "Pie chart" };
+	private static final String[] availableChartsLabels = { "XY chart", "Bar chart", "Pie chart" };
 
-	private static final String[] chartGenerators = {
-			"XYChartGenerator", "BarChartGenerator",
-			"PieChartGenerator" };
+	private static final String[] chartGenerators = { "XYChartGenerator", "BarChartGenerator", "PieChartGenerator" };
 
 	private static final String DEFAULT_CHART_HEIGHT = "480";
 
@@ -47,140 +46,275 @@ public class AdvancedStatisticsTabBean {
 
 	private static final int MAX_RESULTS_PER_GRAPH = 1000;
 
+	/**
+	 * Series of the chart. The class keeps information about attribute and
+	 * aggregate function.
+	 * 
+	 * @author Pawel Jurczyk
+	 * 
+	 */
 	public class SeriesItem {
 
+		/**
+		 * Attribute of series.
+		 */
 		public String attribute;
 
+		/**
+		 * Used aggregate.
+		 */
 		public String aggregate;
 
+		/**
+		 * Default constructor.
+		 * 
+		 * @param attribute
+		 *            attribute of voyage
+		 * @param aggregate
+		 *            aggregate function
+		 */
 		public SeriesItem(String attribute, String aggregate) {
 			this.attribute = attribute;
 			this.aggregate = aggregate;
-			
+
 		}
-		
+
+		/**
+		 * Implementation of equals. It checks if two objects have the same
+		 * attribute and aggregate function.
+		 */
 		public boolean equals(Object o) {
 			if (!(o instanceof SeriesItem)) {
 				return false;
 			}
-			SeriesItem that = (SeriesItem)o;
-			return ((this.aggregate == null && that.aggregate == null) 
-						|| this.aggregate.equals(that.aggregate)) 
+			SeriesItem that = (SeriesItem) o;
+			return ((this.aggregate == null && that.aggregate == null) || this.aggregate.equals(that.aggregate))
 					&& this.attribute.equals(that.attribute);
 		}
 
+		/**
+		 * toString method. Returns string that can be shown to user.
+		 */
 		public String toString() {
 			StringBuffer buffer = new StringBuffer();
 			if (this.aggregate != null) {
-				return buffer.append(this.aggregate).append("(").append(
-						Voyage.getAttribute(this.attribute)).append(")").toString();
+				return buffer.append(this.aggregate).append("(").append(Voyage.getAttribute(this.attribute))
+						.append(")").toString();
 			} else {
 				return buffer.append(this.attribute).toString();
 			}
 		}
 	}
 
+	/**
+	 * Conditions used on search interface.
+	 */
 	private Conditions conditions;
 
+	/**
+	 * Indicatation of query need. If false - DB will not be queried.
+	 */
 	private boolean neededQuery = false;
 
+	/**
+	 * Current series of chart. List keeps SeriesItem objects.
+	 */
 	private List series = new ArrayList();
 
+	/**
+	 * Indication of aggregate functions enabling. If aggregates are enabled -
+	 * true.
+	 */
 	private Boolean aggregate = new Boolean(false);
 
+	/**
+	 * Currently used order (asc, desc, ignore). See QueryValue.ORDER_*
+	 * constants (string representation).
+	 */
 	private String order = "1";
 
+	/**
+	 * Current attribute of x axis.
+	 */
 	private String xaxis;
 
+	/**
+	 * Current attribute on y axis (when adding to series list).
+	 */
 	private String yaxis;
 
+	/**
+	 * Currently selected aggregate function (when adding new series).
+	 */
 	private String selectedAggregate;
 
+	/**
+	 * Available voyage attributes.
+	 */
 	private List voyageAttributes;
 
+	/**
+	 * Avaialable aggregate functions.
+	 */
 	private List aggregateFunctions;
 
+	/**
+	 * Available orders.
+	 */
 	private List availableOrders;
 
+	/**
+	 * List of series that should be removed from series list.
+	 */
 	private List toRemove;
 
+	/**
+	 * Current chart height.
+	 */
 	private String chartHeight = DEFAULT_CHART_HEIGHT;
 
+	/**
+	 * Current chart width.
+	 */
 	private String chartWidth = DEFAULT_CHART_WIDTH;
 
+	/**
+	 * Indicates if any chart is ready to show.
+	 */
 	private Boolean statReady = new Boolean(false);
 
+	/**
+	 * Selected chart type.
+	 */
 	private String selectedChart = "0";
 
+	/**
+	 * Available charts.
+	 */
 	private List availableCharts;
 
+	/**
+	 * Avaialble attributes of Voyage.
+	 */
 	private Attribute[] attributes = prepareAttributes();
 
-	
+	/**
+	 * Actions that will be performed when rollback is required by user.
+	 */
 	private List rollbackActions = new ArrayList();
+
+	/**
+	 * Actions that will be performed to fix error.
+	 */
 	private List fixErrorActions = new ArrayList();
 
+	/**
+	 * Indication of error presence.
+	 */
 	private Boolean errorPresent = new Boolean(false);
+
+	/**
+	 * Error message that will be presented to user.
+	 */
 	private String errorMessage = null;
+
+	/**
+	 * Fix button string.
+	 */
 	private String fixButton = null;
-	
+
+	/**
+	 * Indication of warning presence.
+	 */
 	private Boolean warningPresent = new Boolean(false);
+
+	/**
+	 * Message that will be shown to user.
+	 */
 	private String warningMessage = null;
 
-	private boolean showedGraph = false;
-	
+	/**
+	 * Current category of attributes.
+	 */
+	private int category;
+
+	/**
+	 * Gets list of attributes of Voyage.
+	 * 
+	 * @return array of Attribute objects.
+	 */
 	private Attribute[] prepareAttributes() {
 		return Voyage.getAttributes();
 	}
 
+	/**
+	 * Prepares query that will be performed.
+	 * 
+	 * @param generator
+	 *            AbstractChartGenerator object
+	 * @return QueryValue that will return result for chart.
+	 */
 	private QueryValue prepareQueryValue(AbstractChartGenerator generator) {
+
+		// We will use "v" prefix for Voyage object.
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
 		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
-		localCondition.addCondition("vi.remoteVoyageId",
-				new DirectValue("v.id"), Conditions.OP_EQUALS);
 
-		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v",
-				localCondition);
-		
+		// We will need join condition (to join VoyageIndex and Voyage).
+		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+
+		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
+
+		// Get xAxis - consider attribute type (Dictionary, Number...)
 		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
+
+		// Set group by only if aggregates are enabled
 		if (this.aggregate.booleanValue()) {
-			qValue.setGroupBy(new String[] {xAxis});
+			qValue.setGroupBy(new String[] { xAxis });
 		}
 		qValue.addPopulatedAttribute(xAxis, false);
-		
+
+		// Setup order
 		if (this.order.equals("1")) {
-			qValue.setOrderBy(new String[] {xAxis});
+			qValue.setOrderBy(new String[] { xAxis });
 			qValue.setOrder(QueryValue.ORDER_ASC);
 		} else if (this.order.equals("2")) {
-			qValue.setOrderBy(new String[] {xAxis});
+			qValue.setOrderBy(new String[] { xAxis });
 			qValue.setOrder(QueryValue.ORDER_DESC);
 		}
-		
+
+		// Add series of chart to query
 		for (Iterator iter = this.series.iterator(); iter.hasNext();) {
-			AdvancedStatisticsTabBean.SeriesItem element = 
-				(AdvancedStatisticsTabBean.SeriesItem) iter.next();
+			AdvancedStatisticsTabBean.SeriesItem element = (AdvancedStatisticsTabBean.SeriesItem) iter.next();
 			String out = null;
 			if (element.aggregate != null) {
 				out = element.aggregate + "(v." + element.attribute + ")";
 			} else {
 				out = "v." + element.attribute;
 			}
-			qValue.addPopulatedAttribute(out, false);			
+			qValue.addPopulatedAttribute(out, false);
 		}
-		
+
 		return qValue;
 	}
 
+	/**
+	 * Creates AbstractChartGenerator subclass.
+	 * 
+	 * @return AbstractChartGenerator object.
+	 */
 	private AbstractChartGenerator getChartGenerator() {
+
+		// Get AbstractChartGenerator subclass name
 		int sel = Integer.parseInt(this.selectedChart);
 		AbstractChartGenerator generator = null;
-		String className = "edu.emory.library.tas.web.components.tabs.chartGenerators."
-				+ chartGenerators[sel];
+		String className = "edu.emory.library.tas.web.components.tabs.chartGenerators." + chartGenerators[sel];
 		Attribute attr = Voyage.getAttribute(this.xaxis);
 		try {
+			// Invoke new AbstractChartGenerator(Attribute xAxis)
 			Class clazz = Class.forName(className);
-			generator = (AbstractChartGenerator) clazz.getConstructor(new Class[] {Attribute.class})
-						.newInstance(new Object[] {attr});
+			generator = (AbstractChartGenerator) clazz.getConstructor(new Class[] { Attribute.class }).newInstance(
+					new Object[] { attr });
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -204,6 +338,9 @@ public class AdvancedStatisticsTabBean {
 		return generator;
 	}
 
+	/**
+	 * Checks if chart is ok. Decides if user should see warning message.
+	 */
 	private void validateSelectedChart() {
 		if (this.selectedChart != null && this.selectedChart.equals("2") && this.series.size() > 1) {
 			this.warningMessage = "Pie chart should have only one series. All series besides first will be ignored.";
@@ -212,32 +349,51 @@ public class AdvancedStatisticsTabBean {
 			this.warningPresent = new Boolean(false);
 		}
 	}
-	
+
+	/**
+	 * Adds series to chart.
+	 * 
+	 * @return
+	 */
 	public String addSeries() {
+		// Current series and aggregate to add
 		String series = this.yaxis;
 		String aggregate = this.selectedAggregate;
 		SeriesItem tmpSeries;
+
+		// Create appropriate series item
 		if (this.aggregate.booleanValue()) {
 			tmpSeries = new SeriesItem(series, aggregate);
 		} else {
 			tmpSeries = new SeriesItem(series, null);
 		}
+
+		// Checks whether series already present
 		if (this.series.contains(tmpSeries)) {
+			// If present - show warning
 			this.warningMessage = "Series has already been added.";
 			this.warningPresent = new Boolean(true);
 		} else {
+			// If not - we will add it
 			this.series.add(tmpSeries);
 		}
 		this.neededQuery = true;
 		this.validateSelectedChart();
-		if (this.showedGraph) {
+		if (this.statReady.booleanValue()) {
 			this.showGraph();
 		}
+
 		return null;
 	}
 
+	/**
+	 * Removes selected series from chart.
+	 * 
+	 * @return
+	 */
 	public String removeSeries() {
 		if (this.toRemove != null) {
+			// Find and remove series
 			for (Iterator iter = toRemove.iterator(); iter.hasNext();) {
 				String element = (String) iter.next();
 				int hash = Integer.parseInt(element);
@@ -251,87 +407,101 @@ public class AdvancedStatisticsTabBean {
 			}
 		}
 		this.validateSelectedChart();
-		if (this.showedGraph) {
+		if (this.statReady.booleanValue()) {
 			this.showGraph();
 		}
 		return null;
 	}
 
+	/**
+	 * Generates chart.
+	 * 
+	 * @return
+	 */
 	public String showGraph() {
-		
+
+		// Check whether we should query DB
 		if (this.conditions != null && this.neededQuery) {
 			this.statReady = new Boolean(true);
-			
+
+			// Prepare current generator
 			AbstractChartGenerator generator = this.getChartGenerator();
+
+			// Check if warning should appear
 			if (this.getNumberOfResults(generator) > MAX_RESULTS_PER_GRAPH) {
-				this.warningMessage = "Current query returns more than " + MAX_RESULTS_PER_GRAPH 
-								+ " voyages. Graph shows only first " + MAX_RESULTS_PER_GRAPH + " results.";
+				this.warningMessage = "Current query returns more than " + MAX_RESULTS_PER_GRAPH
+						+ " voyages. Graph shows only first " + MAX_RESULTS_PER_GRAPH + " results.";
 				this.warningPresent = new Boolean(true);
 			} else {
 				this.warningPresent = new Boolean(false);
 			}
-			
+
+			// Prepare query
 			QueryValue qValue = this.prepareQueryValue(generator);
 			qValue.setLimit(MAX_RESULTS_PER_GRAPH);
+
+			// Query
 			Object[] objs = qValue.executeQuery();
+
+			// Add results to chart
 			generator.correctAndCompleteData(objs);
 			generator.addRowToDataSet(objs, this.series.toArray());
 
-			ExternalContext servletContext = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute(
-					STAT_OBJECT_NAME, generator.getChart());
+			// Put chart in session
+			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+			((HttpSession) servletContext.getSession(true)).setAttribute(STAT_OBJECT_NAME, generator.getChart());
 
 			this.neededQuery = false;
 		}
-		//this.validateSelectedChart();
-		this.showedGraph = true;
+
 		return null;
 	}
-	
+
+	/**
+	 * Gets current number of result by invoking specific query.
+	 * 
+	 * @param generator
+	 *            currently used generator
+	 * @return number of results
+	 */
 	private int getNumberOfResults(AbstractChartGenerator generator) {
-		
+
+		// Add prefix (we will use "v" alias for Voyage in query)
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
 		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
-		localCondition.addCondition("vi.remoteVoyageId",
-				new DirectValue("v.id"), Conditions.OP_EQUALS);
+		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
 
-		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v",
-				localCondition);
-		
+		// Build query
+		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
+
+		// set populated attributes
 		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
 		if (this.aggregate.booleanValue()) {
-			qValue.setGroupBy(new String[] {xAxis});
+			qValue.setGroupBy(new String[] { xAxis });
 		}
 		qValue.addPopulatedAttribute(xAxis, false);
 		qValue.setLimit(MAX_RESULTS_PER_GRAPH + 1);
-		Object [] ret = qValue.executeQuery();
+
+		// Execute query
+		Object[] ret = qValue.executeQuery();
 
 		return ret.length;
 	}
-	
+
 	public String setNewView() {
 		return null;
-	}	
-	
+	}
+
+	/**
+	 * Action invoked when user pressed fix error.
+	 * 
+	 * @return
+	 */
 	public String fixError() {
 		for (Iterator iter = this.fixErrorActions.iterator(); iter.hasNext();) {
 			MemorizedAction element = (MemorizedAction) iter.next();
 			element.performAction();
-			
-		}
-		this.errorPresent = new Boolean(false);
-		this.validateSelectedChart();
-		this.fixErrorActions.clear();
-		this.rollbackActions.clear();
-		return null;
-	}
-	
-	public String rollback() {
-		for (Iterator iter = this.rollbackActions.iterator(); iter.hasNext();) {
-			MemorizedAction element = (MemorizedAction) iter.next();
-			element.performAction();
-			
+
 		}
 		this.errorPresent = new Boolean(false);
 		this.validateSelectedChart();
@@ -341,22 +511,50 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	/**
-	 * ///////////////////////////////// GETTERS / SETTERS
-	 * //////////////////////////////////// *
+	 * Action invoked when user clicks back button (on error).
+	 * 
+	 * @return
 	 */
+	public String rollback() {
+		for (Iterator iter = this.rollbackActions.iterator(); iter.hasNext();) {
+			MemorizedAction element = (MemorizedAction) iter.next();
+			element.performAction();
 
+		}
+		this.errorPresent = new Boolean(false);
+		this.validateSelectedChart();
+		this.fixErrorActions.clear();
+		this.rollbackActions.clear();
+		return null;
+	}
+
+	/**
+	 * Gets selection of aggregate functions.
+	 * 
+	 * @return
+	 */
 	public Boolean getAggregate() {
 		return aggregate;
 	}
 
+	/**
+	 * Gets selection of non-aggregate functions.
+	 * 
+	 * @return
+	 */
 	public Boolean getNotAggregate() {
 		return new Boolean(!aggregate.booleanValue());
 	}
 
+	/**
+	 * Sets aggregate selection (after clicking checkbox on UI).
+	 * 
+	 * @param aggregate
+	 */
 	public void setAggregate(Boolean aggregate) {
-		if (this.series.size() > 0 
-				&& !aggregate.equals(this.aggregate) 
-				&& !this.errorPresent.booleanValue()) {
+
+		// If we have any series added - we need to remove it firstly.
+		if (this.series.size() > 0 && !aggregate.equals(this.aggregate) && !this.errorPresent.booleanValue()) {
 			this.errorPresent = new Boolean(true);
 			if (this.aggregate.booleanValue()) {
 				this.errorMessage = "Series with aggregate functions present! Remove it?";
@@ -365,43 +563,61 @@ public class AdvancedStatisticsTabBean {
 			}
 			this.fixButton = "Remove series";
 		}
+
+		// Prepare actions for fix/rollback
 		if (this.errorPresent.booleanValue() && !aggregate.equals(this.aggregate)) {
-			MemorizedAction action = new MemorizedAction(new Object[] {this.aggregate}) {
+			MemorizedAction action = new MemorizedAction(new Object[] { this.aggregate }) {
 				public void performAction() {
-					AdvancedStatisticsTabBean.this.aggregate = (Boolean)this.params[0];
-				}				
+					AdvancedStatisticsTabBean.this.aggregate = (Boolean) this.params[0];
+				}
 			};
 			this.rollbackActions.add(action);
-			
+
 			action = new MemorizedAction(new Object[] {}) {
 				public void performAction() {
 					AdvancedStatisticsTabBean.this.series = new ArrayList();
-				}				
+				}
 			};
 			this.fixErrorActions.add(action);
 		}
 		this.aggregate = aggregate;
 	}
-	
+
+	/**
+	 * Sets currently chosen search parameters.
+	 * 
+	 * @param params
+	 */
 	public void setConditions(SearchParameters params) {
 		if (params == null) {
 			return;
 		}
+		this.category = params.getCategory();
 		Conditions conditions = params.getConditions();
 		if (conditions != null && !conditions.equals(this.conditions)) {
 			this.conditions = conditions;
 			this.neededQuery = true;
-			if (this.showedGraph ) {
+			if (this.statReady.booleanValue()) {
 				this.showGraph();
 			}
 		}
 
 	}
 
+	/**
+	 * Gets chosen order.
+	 * 
+	 * @return
+	 */
 	public String getOrder() {
 		return order;
 	}
 
+	/**
+	 * Sets chosen order from UI.
+	 * 
+	 * @param orderby
+	 */
 	public void setOrder(String orderby) {
 		if (orderby != null && !orderby.equals(this.order)) {
 			this.neededQuery = true;
@@ -409,6 +625,11 @@ public class AdvancedStatisticsTabBean {
 		this.order = orderby;
 	}
 
+	/**
+	 * Gets list of current series.
+	 * 
+	 * @return
+	 */
 	public List getSeries() {
 		List list = new ArrayList();
 		if (series != null) {
@@ -417,7 +638,6 @@ public class AdvancedStatisticsTabBean {
 				String output = element.toString();
 				list.add(new ComparableSelectItem(element.hashCode() + "", output));
 			}
-			//Collections.sort(series);
 		}
 		return list;
 	}
@@ -425,10 +645,20 @@ public class AdvancedStatisticsTabBean {
 	public void setSeries(List series) {
 	}
 
+	/**
+	 * Gets currently selected x axis attribute.
+	 * 
+	 * @return
+	 */
 	public String getXaxis() {
 		return xaxis;
 	}
 
+	/**
+	 * Sets attribute that will be shown on x axis.
+	 * 
+	 * @param xaxis
+	 */
 	public void setXaxis(String xaxis) {
 		if (xaxis != null && !xaxis.equals(this.xaxis)) {
 			this.neededQuery = true;
@@ -436,26 +666,32 @@ public class AdvancedStatisticsTabBean {
 		this.xaxis = xaxis;
 	}
 
+	/**
+	 * Gets attributes that may appear on chart series.
+	 * 
+	 * @return List of SelectItems
+	 */
 	public List getVoyageSelectedAttributes() {
 
 		ArrayList list = new ArrayList();
+		// Look through attributes
 		for (int i = 0; i < attributes.length; i++) {
 			boolean ok = false;
-//			if (this.selectedChart != null && this.selectedChart.equals("0")) {
-//				ok = true;
-//			} else {
-//				if (attributes[i].getType().intValue() == Attribute.TYPE_INTEGER
-//						|| attributes[i].getType().intValue() == Attribute.TYPE_LONG
-//						|| attributes[i].getType().intValue() == Attribute.TYPE_FLOAT
-//						|| attributes[i].getType().intValue() == Attribute.TYPE_DICT) {
-//					ok = true;
-//				}
-//			}
+			// if (this.selectedChart != null && this.selectedChart.equals("0"))
+			// {
+			// ok = true;
+			// } else {
+			// if (attributes[i].getType().intValue() == Attribute.TYPE_INTEGER
+			// || attributes[i].getType().intValue() == Attribute.TYPE_LONG
+			// || attributes[i].getType().intValue() == Attribute.TYPE_FLOAT
+			// || attributes[i].getType().intValue() == Attribute.TYPE_DICT) {
+			// ok = true;
+			// }
+			// }
 			ok = true;
-			if (ok) {
+			if (ok && attributes[i].isVisibleByCategory(this.category)) {
 				String outString = null;
-				if (attributes[i].getUserLabel() == null
-						|| attributes[i].getUserLabel().equals("")) {
+				if (attributes[i].getUserLabel() == null || attributes[i].getUserLabel().equals("")) {
 					outString = attributes[i].getName();
 				} else {
 					outString = attributes[i].getUserLabel();
@@ -463,53 +699,64 @@ public class AdvancedStatisticsTabBean {
 				list.add(new ComparableSelectItem(attributes[i].getName(), outString));
 			}
 		}
-		
+
+		// Sort output
 		Collections.sort(list);
-		
+
 		return list;
 	}
 
+	/**
+	 * Gets attributes that are numeric.
+	 * 
+	 * @return List of SelectItems
+	 */
 	public List getVoyageNumericAttributes() {
 
-		if (voyageAttributes == null) {
-			String[] attributes = Voyage.getAllAttrNames();
-			//Arrays.sort(attributes);
-			this.voyageAttributes = new ArrayList();
-			for (int i = 0; i < attributes.length; i++) {
-				Attribute attr = Voyage.getAttribute(attributes[i]);
-				if (attr.getType().intValue() == Attribute.TYPE_FLOAT
-						|| attr.getType().intValue() == Attribute.TYPE_INTEGER
-						|| attr.getType().intValue() == Attribute.TYPE_LONG) {
-					String outString = null;
-					if (attr.getUserLabel() == null
-							|| attr.getUserLabel().equals("")) {
-						outString = attributes[i];
-					} else {
-						outString = attr.getUserLabel();
-					}
+		voyageAttributes = new ArrayList();
+		for (int i = 0; i < attributes.length; i++) {
+			Attribute attr = attributes[i];
+			if (attr.isVisibleByCategory(this.category)
+					&& (attr.getType().intValue() == Attribute.TYPE_FLOAT
+							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
+				String outString = attr.toString();
+				// if (attr.getUserLabel() == null
+				// || attr.getUserLabel().equals("")) {
+				// outString = attributes[i];
+				// } else {
+				// outString = attr.getUserLabel();
+				// }
 
-					voyageAttributes.add(new ComparableSelectItem(attributes[i],
-							outString));
+				voyageAttributes.add(new ComparableSelectItem(attributes[i].getName(), outString));
 
-				}
 			}
-			Collections.sort(this.voyageAttributes);
 		}
+		Collections.sort(this.voyageAttributes);
+
 		return this.voyageAttributes;
 
 	}
 
+	/**
+	 * Gets currently available aggregates.
+	 * 
+	 * @return List of SelectItems
+	 */
 	public List getAggregateFunctions() {
 		if (this.aggregateFunctions == null) {
 			this.aggregateFunctions = new ArrayList();
 			for (int i = 0; i < aggregates.length; i++) {
-				this.aggregateFunctions.add(new ComparableSelectItem(aggregates[i],
-						aggregatesUL[i]));
+				this.aggregateFunctions.add(new ComparableSelectItem(aggregates[i], aggregatesUL[i]));
 			}
 		}
 		return this.aggregateFunctions;
 	}
 
+	/**
+	 * Gets currently available orders.
+	 * 
+	 * @return List of SelectItems
+	 */
 	public List getAvailableOrders() {
 		if (this.availableOrders == null) {
 			this.availableOrders = new ArrayList();
@@ -520,80 +767,161 @@ public class AdvancedStatisticsTabBean {
 		return this.availableOrders;
 	}
 
+	/**
+	 * Checks if there are any series added.
+	 * 
+	 * @return true if any series is added
+	 */
 	public Boolean getSeriesAdded() {
 		return new Boolean(this.series.size() > 0);
 	}
 
+	/**
+	 * Gets currently selected aggregate.
+	 * 
+	 * @return aggregate
+	 */
 	public String getSelectedAggregate() {
 		return selectedAggregate;
 	}
 
+	/**
+	 * Sets selected aggregate in UI.
+	 * 
+	 * @param selectedAggregate
+	 *            aggregate
+	 */
 	public void setSelectedAggregate(String selectedAggregate) {
 		this.selectedAggregate = selectedAggregate;
 	}
 
+	/**
+	 * Gets y axis attribute
+	 * 
+	 * @return y axis attribute
+	 */
 	public String getYaxis() {
 		return yaxis;
 	}
 
+	/**
+	 * Sets y axis attribute
+	 * 
+	 * @param yaxis
+	 *            y axis attribute
+	 */
 	public void setYaxis(String yaxis) {
 		this.yaxis = yaxis;
 	}
 
+	/**
+	 * Gets List of series that can be removed.
+	 * 
+	 * @return
+	 */
 	public List getToRemove() {
 		return toRemove;
 	}
 
+	/**
+	 * Sets list of series that can be removed.
+	 * 
+	 * @param toRemove
+	 */
 	public void setToRemove(List toRemove) {
 		this.toRemove = toRemove;
 	}
 
+	/**
+	 * Gets current chart height.
+	 * 
+	 * @return
+	 */
 	public String getChartHeight() {
 		return chartHeight;
 	}
 
+	/**
+	 * Sets current chart height
+	 * 
+	 * @param chartHeight
+	 */
 	public void setChartHeight(String chartHeight) {
 		this.chartHeight = chartHeight;
 	}
 
+	/**
+	 * Gets current chart width.
+	 * 
+	 * @return
+	 */
 	public String getChartWidth() {
 		return chartWidth;
 	}
 
+	/**
+	 * Sets current chart width.
+	 * 
+	 * @param chartWidth
+	 */
 	public void setChartWidth(String chartWidth) {
 		this.chartWidth = chartWidth;
 	}
 
+	/**
+	 * Gets path of servlet providing chart.
+	 * 
+	 * @return
+	 */
 	public String getChartPath() {
-		return IMAGE_FEEDED_SERVLET + "?path=" + STAT_OBJECT_NAME + "&&height="
-				+ this.chartHeight + "&width=" + this.chartWidth;
+		return IMAGE_FEEDED_SERVLET + "?path=" + STAT_OBJECT_NAME + "&&height=" + this.chartHeight + "&width="
+				+ this.chartWidth;
 	}
 
+	/**
+	 * Checks whether any chart is ready to show.
+	 * 
+	 * @return
+	 */
 	public Boolean getStatReady() {
 		return statReady;
 	}
 
+	/**
+	 * Gets currently selected chart type.
+	 * 
+	 * @return
+	 */
 	public String getSelectedChart() {
 		return selectedChart;
 	}
 
+	/**
+	 * Sets currently selected chart type in UI.
+	 * 
+	 * @param chartType
+	 */
 	public void setSelectedChart(String chartType) {
 		if (chartType != null && !chartType.equals(this.selectedChart)) {
 			this.neededQuery = true;
 		}
 		this.selectedChart = chartType;
 		validateSelectedChart();
-		if (this.showedGraph) {
+		if (this.statReady.booleanValue()) {
 			this.showGraph();
 		}
 	}
 
+	/**
+	 * Gets list of available charts.
+	 * 
+	 * @return
+	 */
 	public List getAvailableCharts() {
 		if (this.availableCharts == null) {
 			this.availableCharts = new ArrayList();
 			for (int i = 0; i < availableChartsLabels.length; i++) {
-				this.availableCharts.add(new ComparableSelectItem(i + "",
-						availableChartsLabels[i]));
+				this.availableCharts.add(new ComparableSelectItem(i + "", availableChartsLabels[i]));
 			}
 		}
 		return availableCharts;
@@ -601,43 +929,93 @@ public class AdvancedStatisticsTabBean {
 
 	public void setAvailableCharts(List availableCharts) {
 	}
-	
+
+	/**
+	 * Gets error message.
+	 * 
+	 * @return
+	 */
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 
+	/**
+	 * Sets error message.
+	 * 
+	 * @param errorMessage
+	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
 
+	/**
+	 * Checks whether error message is present.
+	 * 
+	 * @return
+	 */
 	public Boolean getErrorPresent() {
 		return errorPresent;
 	}
 
+	/**
+	 * TODO: Do i need it?
+	 * 
+	 * @param errorPresent
+	 */
 	public void setErrorPresent(Boolean errorPresent) {
 		this.errorPresent = errorPresent;
 	}
 
+	/**
+	 * Gets fix button user label.
+	 * 
+	 * @return
+	 */
 	public String getFixButton() {
 		return fixButton;
 	}
 
+	/**
+	 * TODO: do I need it?
+	 * 
+	 * @param fixButton
+	 */
 	public void setFixButton(String fixButton) {
 		this.fixButton = fixButton;
 	}
 
+	/**
+	 * Gets warning message
+	 * 
+	 * @return
+	 */
 	public String getWarningMessage() {
 		return warningMessage;
 	}
 
+	/**
+	 * TODO: do I need it?
+	 * 
+	 * @param warning
+	 */
 	public void setWarningMessage(String warning) {
 		this.warningMessage = warning;
 	}
 
+	/**
+	 * Checks whether warning message is present.
+	 * 
+	 * @return
+	 */
 	public Boolean getWarningPresent() {
 		return warningPresent;
 	}
 
+	/**
+	 * TODO: do I need it?
+	 * 
+	 * @param warningPresent
+	 */
 	public void setWarningPresent(Boolean warningPresent) {
 		this.warningPresent = warningPresent;
 	}
