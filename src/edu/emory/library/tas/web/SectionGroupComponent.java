@@ -17,9 +17,6 @@ public class SectionGroupComponent extends UIComponentBase
 	private static final String EXPANEDED = "expanded";
 	private static final String COLLAPSED = "collapsed";
 
-	public static final int STYLE_MIDDLE = 1; 
-	public static final int STYLE_LIGHT = 2; 
-	
 	private boolean collapsed = false;
 	private String title;
 	private String backgroundStyle;
@@ -187,8 +184,8 @@ public class SectionGroupComponent extends UIComponentBase
 		writer.writeAttribute("src", collapsed ? srcExpand : srcCollapse, null);
 		writer.writeAttribute("onclick", jsOnClick, null);
 		writer.writeAttribute("class", "section-button", null);
-		writer.writeAttribute("width", "16", null);
-		writer.writeAttribute("height", "16", null);
+		writer.writeAttribute("width", "12", null);
+		writer.writeAttribute("height", "12", null);
 		writer.writeAttribute("border", "0", null);
 		writer.endElement("img");
 		
@@ -201,9 +198,8 @@ public class SectionGroupComponent extends UIComponentBase
 		UIForm form = UtilsJSF.getForm(this, context);
 
 		String selectedSectionId = getSelectedTabId();
+		if (selectedSectionId == null) selectedSectionId = "";
 		
-//		System.out.println(getChildCount());
-
 		boolean hasTabs = true;
 		for (Iterator iter = getChildren().iterator(); iter.hasNext();)
 		{
@@ -252,13 +248,18 @@ public class SectionGroupComponent extends UIComponentBase
 		writer.endElement("div");
 		
 		writer.startElement("div", this);
+		writer.writeAttribute("id", getClientId(context), null);
+		writer.writeAttribute("class", "section-body", null);
+		if (collapsed) writer.writeAttribute("style", "display: none", null);
 		if (hasTabs)
 		{
 			for (Iterator iter = getChildren().iterator(); iter.hasNext();)
 			{
 				SectionComponent sect = (SectionComponent) iter.next();
 				if (selectedSectionId.equals(sect.getSectionId()))
-					sect.encodeChildren(context);
+				{
+					UtilsJSF.renderChild(context, sect);
+				}
 			}
 		}
 		else
@@ -266,20 +267,12 @@ public class SectionGroupComponent extends UIComponentBase
 			for (Iterator iter = getChildren().iterator(); iter.hasNext();)
 			{
 				UIComponent comp = (UIComponent) iter.next();
-				comp.encodeBegin(context);
-				if (comp.getRendersChildren()) comp.encodeChildren(context);
-				comp.encodeEnd(context);
+				UtilsJSF.renderChild(context, comp);
 			}
 		}
 		writer.endElement("div");
 
 	}
-	
-//	public void encodeEnd(FacesContext context) throws IOException
-//	{
-//		ResponseWriter writer = context.getResponseWriter();
-//		writer.endElement("div");
-//	}
 	
 	public String getTitle()
 	{

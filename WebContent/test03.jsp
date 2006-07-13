@@ -83,6 +83,9 @@ div.section-title-line-middle {
 div.section-title-line-light {
 	border-bottom: 2px solid #E2873B; }
 
+table.section-title {
+	width: 100%; }
+
 td.section-title-left {
 	text-align: left; }
 
@@ -90,7 +93,7 @@ td.section-title-buttons {
 	padding-right: 10px;
 	text-align: right; }
 
-td.section-button {
+img.section-button {
 	cursor: pointer; }
 
 div.section-title-text {
@@ -144,14 +147,18 @@ div.section-body {
 			buttonsStyle="middle"
 			selectedSectionId="abc">
 			<s:section title="ABC" sectionId="abc">
+			
 				<h:outputText value="a" />
 				<h:outputText value="b" />
 				<h:outputText value="c" />
+			
 			</s:section>
 			<s:section title="DEF" sectionId="def">
+			
 				<h:outputText value="d" />
 				<h:outputText value="e" />
 				<h:outputText value="f" />
+			
 			</s:section>
 		</s:sectionGroup>
 	

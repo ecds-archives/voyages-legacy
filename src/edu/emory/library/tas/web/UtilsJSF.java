@@ -1,6 +1,7 @@
 package edu.emory.library.tas.web;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -103,5 +104,33 @@ public class UtilsJSF
 		return (String) FacesContext.getCurrentInstance().getExternalContext().
 			getRequestParameterMap().get(name);	
 	}
+	
+    public static void renderChildren(FacesContext context, UIComponent component) throws IOException
+    {
+        if (component.getChildCount() > 0)
+        {
+            for (Iterator it = component.getChildren().iterator(); it.hasNext(); )
+            {
+                UIComponent child = (UIComponent)it.next();
+                renderChild(context, child);
+            }
+        }
+    }
 
+    public static void renderChild(FacesContext context, UIComponent child) throws IOException
+    {
+        if (!child.isRendered())
+        	return;
+        
+        child.encodeBegin(context);
+        if (child.getRendersChildren())
+        {
+            child.encodeChildren(context);
+        }
+        else
+        {
+            renderChildren(context, child);
+        }
+        child.encodeEnd(context);
+    }
 }
