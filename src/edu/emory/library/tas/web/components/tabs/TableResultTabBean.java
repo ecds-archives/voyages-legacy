@@ -129,6 +129,11 @@ public class TableResultTabBean {
 	 * Indication if parameters from search should be attached.
 	 */
 	private Boolean attachSearchedParams = new Boolean(true);
+	
+	/**
+	 * Current category of attributes (Basic or General).
+	 */
+	private int category;
 
 	/**
 	 * Constructor.
@@ -628,6 +633,8 @@ public class TableResultTabBean {
 		if (params == null) {
 			return;
 		}
+		this.category = params.getCategory();
+		
 		Conditions c = params.getConditions();
 		this.queryColumns = Arrays.asList(params.getColumns());
 		if (c != null) {
@@ -729,7 +736,10 @@ public class TableResultTabBean {
 		Group[] groupSets = Voyage.getGroups();
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
-			res.add(new ComparableSelectItem("" + set.getId().longValue(), set.toString()));
+			if (set.noOfAttributesInCategory(this.category) > 0 ||
+					set.noOfCompoundAttributesInCategory(this.category) > 0) {
+				res.add(new ComparableSelectItem("" + set.getId().longValue(), set.toString()));
+			}
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
 			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
@@ -760,11 +770,15 @@ public class TableResultTabBean {
 			Set groups = set.getCompoundAttributes();
 			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
 				CompoundAttribute element = (CompoundAttribute) groupsIter.next();
-				res.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
+				if (element.isVisibleByCategory(this.category)) {
+					res.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
+				}
 			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
 				Attribute attr = (Attribute) iter.next();
-				res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
+				if (attr.isVisibleByCategory(this.category)) {
+					res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
+				}
 			}
 		}
 		
