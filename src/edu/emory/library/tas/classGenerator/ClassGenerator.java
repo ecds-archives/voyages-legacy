@@ -65,7 +65,7 @@ public class ClassGenerator {
 						new FileOutputStream(className + ".tmpClass"));
 				List attrNames = new ArrayList();
 				List attrTypes = new ArrayList();
-				List attrLabels = new ArrayList();
+				//List attrLabels = new ArrayList();
 				List columns = new ArrayList();
 				NodeList children = rootNode.getChildNodes();
 				StringBuffer types = new StringBuffer();

@@ -107,7 +107,7 @@ public class HibernateConnector {
 
 		// Recognize history/no history
 		if ((p_option & 1) == (WITHOUT_HISTORY & 1)) {
-			String oldWhere = where.toString();
+			//String oldWhere = where.toString();
 			if (!first) {
 				where.append("and ");
 			} else {
@@ -167,6 +167,17 @@ public class HibernateConnector {
 		return res;
 	}
 
+	/**
+	 * Gets VoyageIndex object with voyage id as id in provided Voyage.
+	 * 
+	 * @param p_session
+	 * 			  Session object
+	 * @param p_voyage
+	 *            Voyage with ID (null if all voyages should be returned)
+	 * @param p_option
+	 *            option
+	 * @return table of VoyageIndex objects
+	 */
 	public VoyageIndex[] getVoyageIndexByVoyage(Session p_session, Voyage p_voyage, int p_option) {
 
 		Transaction transaction = p_session.beginTransaction();
@@ -197,6 +208,17 @@ public class HibernateConnector {
 		return res;
 	}
 	
+	/**
+	 * Gets Scrollable result of VoyageIndex objects with voyage id as id in
+	 * provided Voyage.
+	 * 
+	 * @param p_session session context
+	 * @param p_voyage
+	 *            Voyage with ID (null if all voyages should be returned)
+	 * @param p_option
+	 *            option
+	 * @return table of VoyageIndex objects
+	 */
 	public ScrollableResults scrollVoyageIndexByVoyage(Session p_session, Voyage p_voyage,
 			int p_option) {
 
@@ -221,8 +243,8 @@ public class HibernateConnector {
 	}
 
 	/**
-	 * 
-	 * @param p_voyage
+	 * Creates new VoyageIndex - saves it into DB.
+	 * @param p_voyage voyage index object
 	 */
 	public void createVoyage(VoyageIndex p_voyage) {
 		Session session = HibernateUtil.getSession();
@@ -230,6 +252,11 @@ public class HibernateConnector {
 		session.close();
 	}
 	
+	/**
+	 * Creates new VoyageIndex - saves it into DB.
+	 * @param p_session session context
+	 * @param p_voyage voyage index object
+	 */
 	public void createVoyage(Session p_session, VoyageIndex p_voyage) {
 
 		
@@ -266,12 +293,21 @@ public class HibernateConnector {
 		transaction.commit();
 	}
 
+	/**
+	 * Updates given voyage index in DB
+	 * @param p_voyage voyage index object
+	 */
 	public void updateVoyage(VoyageIndex p_voyage) {
 		Session session = HibernateUtil.getSession();
 		updateVoyage(session, p_voyage);
 		session.close();
 	}
 	
+	/**
+	 * Updates given voyage index in DB
+	 * @param p_session session context
+	 * @param p_voyage voyage index object
+	 */
 	public void updateVoyage(Session p_session, VoyageIndex p_voyage) {
 
 		
@@ -336,10 +372,24 @@ public class HibernateConnector {
 		transaction.commit();
 	}
 
+	/**
+	 * Approves given voyage.
+	 * Sets approved flag to 1.
+	 * TODO implement it!
+	 * @param p_voyage voyage index to approve
+	 */
 	public void approveVoyage(VoyageIndex p_voyage) {
 
 	}
 	
+	/**
+	 * Load given object type that satisfies set of conditions
+	 * @param p_objType object type name
+	 * @param params list of attributes
+	 * @param values list of desired values of attributes
+	 * @param strings list of trues/falses - true if any of params above is string type
+	 * @return list of objects
+	 */
 	public Object[] loadObjects(String p_objType, String[] params, String[] values, boolean[] strings) {
 		Session session = HibernateUtil.getSession();
 		Object[] ret = loadObjects(session, p_objType, params, values, strings);
@@ -347,13 +397,19 @@ public class HibernateConnector {
 		return ret;
 	}
 	
+	/**
+	 * Load given object type that satisfies set of conditions
+	 * @param p_session session context
+	 * @param p_objType object type name
+	 * @param params list of attributes
+	 * @param values list of desired values of attributes
+	 * @param strings list of trues/falses - true if any of params above is string type
+	 * @return list of objects
+	 */
 	public Object[] loadObjects(Session p_session, String p_objType, String[] params, String[] values, boolean[] strings) {
 		
+		//Prepare where string
 		StringBuffer where = params.length != 0 ? new StringBuffer("where "):new StringBuffer("");
-		
-		
-		Transaction transaction = p_session.beginTransaction();
-		
 		for (int i = 0; i < params.length; i++) {
 			if (i != 0) {
 				where.append("and ");
@@ -368,11 +424,16 @@ public class HibernateConnector {
 			}
 		}
 		
+		//lock transaction
+		Transaction transaction = p_session.beginTransaction();
+		
+		//Exec query
 		Query query = p_session.createQuery("from " + p_objType + " " + where.toString());
 		List list = query.list();
 		
 		transaction.commit();
 		
+		//Return results
 		if (list.size() != 0) {
 			return list.toArray();
 		} else {
@@ -380,6 +441,11 @@ public class HibernateConnector {
 		}
 	}
 	
+	/**
+	 * Loads object for given QueryValue.
+	 * @param p_query QueryValue object
+	 * @return results of execution of QueryValue
+	 */
 	public Object[] loadObjects(QueryValue p_query) {
 		Session session = HibernateUtil.getSession();
 		Object[] ret = loadObjects(session, p_query);
@@ -387,6 +453,12 @@ public class HibernateConnector {
 		return ret;
 	}
 	
+	/**
+	 * Loads object for given QueryValue.
+	 * @param p_session session context
+	 * @param p_query QueryValue object
+	 * @return results of execution of QueryValue
+	 */
 	public Object[] loadObjects(Session p_session, QueryValue p_query) {
 		
 		Transaction transaction = p_session.beginTransaction();
@@ -400,6 +472,10 @@ public class HibernateConnector {
 		}
 	}
 	
+	/**
+	 * Saves given object to DB.
+	 * @param obj object to save
+	 */
 	public void saveObject(Object obj) {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
@@ -407,12 +483,21 @@ public class HibernateConnector {
 		transaction.commit();
 	}
 	
+	/**
+	 * Saves given object into DB.
+	 * @param session session context
+	 * @param obj object to save
+	 */
 	public void saveObject(Session session, Object obj) {
 		Transaction transaction = session.beginTransaction();
 		session.save(obj);
 		transaction.commit();
 	}
 	
+	/**
+	 * Updates object in DB.
+	 * @param obj object to update.
+	 */
 	public void updateObject(Object obj) {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
@@ -420,12 +505,21 @@ public class HibernateConnector {
 		transaction.commit();
 	}
 	
+	/**
+	 * Updates object in DB.
+	 * @param session session context
+	 * @param obj object to update.
+	 */
 	public void updateObject(Session session, Object obj) {
 		Transaction transaction = session.beginTransaction();
 		session.update(obj);
 		transaction.commit();
 	}
 	
+	/**
+	 * Saves object or updates it (if it exists in DB).
+	 * @param obj object to save/update
+	 */
 	public void saveOrUpdateObject(Object obj) {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
@@ -433,12 +527,21 @@ public class HibernateConnector {
 		transaction.commit();
 	}
 	
+	/**
+	 * Saves object or updates it (if it exists in DB).
+	 * @param session session context
+	 * @param obj object to save/update
+	 */
 	public void saveOrUpdateObject(Session session, Object obj) {
 		Transaction transaction = session.beginTransaction();
 		session.saveOrUpdate(obj);
 		transaction.commit();
 	}
 	
+	/**
+	 * Deletes object from DB.
+	 * @param obj object to delete
+	 */
 	public void deleteObject(Object obj) {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
@@ -446,12 +549,24 @@ public class HibernateConnector {
 		transaction.commit();
 	}
 
+	/**
+	 * Deletes object from DB.
+	 * @param session session context
+	 * @param obj object to delete
+	 */
 	public void deleteObject(Session session, Object obj) {
 		Transaction transaction = session.beginTransaction();
 		session.delete(obj);
 		transaction.commit();
 	}
 	
+	/**
+	 * Gets VoyagesIndex object from db.
+	 * @param p_voyage Voyage (provides voyageID)
+	 * @param p_fetchSize max number of results
+	 * @param p_option option
+	 * @return
+	 */
 	public VoyageIndex[] getVoyagesIndexSet(Voyage p_voyage, int p_fetchSize, int p_option) {
 		Session session = HibernateUtil.getSession();
 		VoyageIndex[] ret = getVoyagesIndexSet(session, p_voyage, p_fetchSize, p_option);
@@ -459,6 +574,14 @@ public class HibernateConnector {
 		return ret;
 	}
 	
+	/**
+	 * Gets VoyagesIndex object from db.
+	 * @param p_session session context
+	 * @param p_voyage Voyage (provides voyageID)
+	 * @param p_fetchSize max number of results
+	 * @param p_option option
+	 * @return
+	 */
 	public VoyageIndex[] getVoyagesIndexSet(Session p_session, Voyage p_voyage, int p_fetchSize, int p_option) {		
 		Transaction transaction = p_session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(p_session, p_voyage,
@@ -469,6 +592,13 @@ public class HibernateConnector {
 		return this.prepareResponse(list, p_option);
 	}
 
+	/**
+	 * Gets a set of voyages from db.
+	 * @param p_firstResult
+	 * @param p_fetchSize
+	 * @param p_option
+	 * @return
+	 */
 	public VoyageIndex[] getVoyagesIndexSet(int p_firstResult, int p_fetchSize, int p_option) {
 		Session session = HibernateUtil.getSession();
 		VoyageIndex[] ret = getVoyagesIndexSet(session, p_firstResult, p_fetchSize, p_option);
@@ -476,6 +606,14 @@ public class HibernateConnector {
 		return ret;
 	}
 	
+	/**
+	 * Gets a set of voyages from db.
+	 * @param p_session
+	 * @param p_firstResult
+	 * @param p_fetchSize
+	 * @param p_option
+	 * @return
+	 */
 	public VoyageIndex[] getVoyagesIndexSet(Session p_session, int p_firstResult, int p_fetchSize, int p_option) {			
 		Transaction transaction = p_session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(p_session, null,

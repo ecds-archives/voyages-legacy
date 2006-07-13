@@ -8,18 +8,37 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import edu.emory.library.tas.attrGroups.Attribute;
 
+/**
+ * Generator that creates pie charts.
+ * @author Pawel Jurczyk
+ *
+ */
 public class PieChartGenerator extends AbstractChartGenerator {
 
+	/**
+	 * Dataset.
+	 */
 	DefaultPieDataset pieDataset = new DefaultPieDataset();
 	
+	/**
+	 * Constructor.
+	 * @param xAxis x axis attribute
+	 */
 	public PieChartGenerator(Attribute xAxis) {
 		super(xAxis);
 	}
 	
+	/**
+	 * Creates chart with no title and legend.
+	 */
 	public JFreeChart getChart() {
 		return this.getChart(null, false);
 	}
 	
+	/**
+	 * Creates chart.
+	 * @inheritDoc
+	 */
 	public JFreeChart getChart(String title, boolean showLegend) {
 		JFreeChart chart = ChartFactory.createPieChart(title, 
 				pieDataset, showLegend, true, false);
@@ -27,6 +46,9 @@ public class PieChartGenerator extends AbstractChartGenerator {
 		return chart;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void addRowToDataSet(Object[] data, Object[] series) {
 		for (int i = 0; i < data.length; i++) {
 			Object [] row = (Object[])data[i];
@@ -34,9 +56,5 @@ public class PieChartGenerator extends AbstractChartGenerator {
 		}
 		
 	}
-
-//	public String getXAxisSelectOperator(String xAxisAttribute) {
-//		return xAxisAttribute;
-//	}
 
 }

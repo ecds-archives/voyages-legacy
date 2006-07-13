@@ -4,10 +4,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +24,11 @@ import org.jfree.text.TextBlock;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 
+/**
+ * Subclass for CategoryAxis that automatically hides some category labels (if there is too many labels).
+ * @author Pawel Jurczyk
+ *
+ */
 public class SkippableCategoryAxis extends CategoryAxis {
 
 	private static final long serialVersionUID = -5591468602200139851L;
@@ -37,8 +40,11 @@ public class SkippableCategoryAxis extends CategoryAxis {
 	// private float maximumCategoryLabelWidthRatio;
 	// private CategoryLabelPositions categoryLabelPositions;
 	// private int categoryLabelPositionOffset;
-	private HashMap categoryLabelToolTips;
+	// private HashMap categoryLabelToolTips;
 
+	/**
+	 * Constructor.
+	 */
 	public SkippableCategoryAxis(CategoryAxis ca) {
 		super.setLowerMargin(ca.getLowerMargin());
 		super.setUpperMargin(ca.getUpperMargin());
@@ -50,7 +56,7 @@ public class SkippableCategoryAxis extends CategoryAxis {
 
 		super.setCategoryLabelPositionOffset(ca.getCategoryLabelPositionOffset());
 		super.setCategoryLabelPositions(ca.getCategoryLabelPositions());
-		this.categoryLabelToolTips = new HashMap();
+		//this.categoryLabelToolTips = new HashMap();
 	}
 
 	/**
@@ -150,110 +156,6 @@ public class SkippableCategoryAxis extends CategoryAxis {
 		return state;
 	}
 
-	// public List refreshTicks(Graphics2D g2,
-	// AxisState state,
-	// Rectangle2D dataArea,
-	// RectangleEdge edge) {
-	//
-	// List ticks = new java.util.ArrayList();
-	//        
-	// // sanity check for data area...
-	// if (dataArea.getHeight() <= 0.0 || dataArea.getWidth() < 0.0) {
-	// return ticks;
-	// }
-	//
-	// CategoryPlot plot = (CategoryPlot) getPlot();
-	// List categories = plot.getCategories();
-	// double max = 0.0;
-	//                
-	// if (categories != null) {
-	// CategoryLabelPosition position
-	// = getCategoryLabelPositions().getLabelPosition(edge);
-	// float r = getMaximumCategoryLabelWidthRatio();
-	// if (r <= 0.0) {
-	// r = position.getWidthRatio();
-	// }
-	//                  
-	// float l = 0.0f;
-	// if (position.getWidthType() == CategoryLabelWidthType.CATEGORY) {
-	// l = (float) calculateCategorySize(categories.size(), dataArea,
-	// edge);
-	// }
-	// else {
-	// if (RectangleEdge.isLeftOrRight(edge)) {
-	// l = (float) dataArea.getWidth();
-	// }
-	// else {
-	// l = (float) dataArea.getHeight();
-	// }
-	// }
-	// Font font = this.getTickLabelFont();
-	// FontRenderContext frc = g2.getFontRenderContext();
-	// int categoryIndex = 0;
-	// int categorySkip = 0;
-	// float maxWidth = (float) (dataArea.getWidth() / categories.size() *
-	// 0.9f);
-	// float xx, yy;
-	// Iterator iterator = categories.iterator();
-	// while (iterator.hasNext()) {
-	//            	
-	// if (categorySkip != 0) {
-	// categorySkip--;
-	// categoryIndex++;
-	// iterator.next();
-	// continue;
-	// }
-	//            	
-	// Comparable category = (Comparable) iterator.next();
-	//                
-	// String labelS = category.toString();
-	// Rectangle2D labelBounds = font.getStringBounds(labelS, frc);
-	// // LineMetrics metrics = font.getLineMetrics(labelS, frc);
-	// // float catX = (float)getCategoryMiddle(categoryIndex,
-	// categories.size(), dataArea, edge);
-	//                
-	// // xx = (float) (catX - maxWidth / 2);
-	// // if (edge == RectangleEdge.TOP) {
-	// // yy = (float) (dataArea.getMinY() - getTickLabelInsets().getBottom()
-	// // - metrics.getDescent()
-	// // - metrics.getLeading());
-	// // }
-	// // else {
-	// // yy = (float) (dataArea.getMaxY() + getTickLabelInsets().getTop()
-	// // + metrics.getHeight()
-	// // - metrics.getDescent());
-	// // }
-	//                
-	// //float d = (float) Math.sqrt(Math.pow(labelBounds.getWidth(), 2) +
-	// Math.pow(labelBounds.getHeight(), 2));
-	//                
-	// float d = (float)labelBounds.getHeight();
-	//                
-	// categorySkip = ((int) ((d - maxWidth / 2)
-	// / maxWidth) + 1);
-	//                
-	// TextBlock label = createLabel(category, l*r, edge, g2);
-	// if (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM) {
-	// max = Math.max(max,
-	// calculateTextBlockHeight(label, position, g2));
-	// }
-	// else if (edge == RectangleEdge.LEFT
-	// || edge == RectangleEdge.RIGHT) {
-	// max = Math.max(max,
-	// calculateTextBlockWidth(label, position, g2));
-	// }
-	// Tick tick = new CategoryTick(category, label,
-	// position.getLabelAnchor(), position.getRotationAnchor(),
-	// position.getAngle());
-	// ticks.add(tick);
-	// categoryIndex = categoryIndex + 1;
-	// }
-	// }
-	// state.setMax(max);
-	// return ticks;
-	//        
-	// }
-
 	public List refreshTicks(Graphics2D g2, AxisState state, Rectangle2D dataArea, RectangleEdge edge) {
 
 		List ticks = new java.util.ArrayList();
@@ -305,18 +207,12 @@ public class SkippableCategoryAxis extends CategoryAxis {
 				String labelS = category.toString();
 				Rectangle2D labelBounds = font.getStringBounds(labelS, frc);
 				double d;
-//				d = Math.sqrt(Math.pow(labelBounds.getWidth(), 2) +
-//							 Math.pow(labelBounds.getHeight(), 2));
-//				d = d * Math.sin(getCategoryLabelPositions().getLabelPosition(edge).getAngle());
 				if (getCategoryLabelPositions().equals(CategoryLabelPositions.DOWN_90) || 
 						getCategoryLabelPositions().equals(CategoryLabelPositions.UP_90)) {
 					d = (float)labelBounds.getHeight();
 				}
 				else if (getCategoryLabelPositions().equals(CategoryLabelPositions.DOWN_45) || 
 							getCategoryLabelPositions().equals(CategoryLabelPositions.UP_45)) {
-//					d = Math.sqrt(Math.pow(labelBounds.getWidth(), 2) +
-//							Math.pow(labelBounds.getHeight(), 2));
-//					d = d * Math.sin(getCategoryLabelPositions().getLabelPosition(edge).getAngle());
 					d = (float)labelBounds.getHeight();
 				} else {
 					d = (float)labelBounds.getWidth();

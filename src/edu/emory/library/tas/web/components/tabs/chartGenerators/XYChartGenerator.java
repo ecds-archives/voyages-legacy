@@ -16,15 +16,27 @@ import org.jfree.data.general.Dataset;
 
 import edu.emory.library.tas.attrGroups.Attribute;
 
+/**
+ * Generator for XY charts.
+ */
 public class XYChartGenerator extends AbstractChartGenerator {
 
+	/**
+	 * Dataset.
+	 */
 	private Dataset dataset;
 
+	/**
+	 * @inheritDoc
+	 */
 	public XYChartGenerator(Attribute xAxis) {
 		super(xAxis);
 		dataset = new DefaultCategoryDataset();
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public JFreeChart getChart(String title, boolean showLegend) {
 		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
 			return this.prepareDateChart(title, showLegend);
@@ -33,10 +45,19 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public JFreeChart getChart() {
 		return getChart(null, true);
 	}
 
+	/**
+	 * Prepares XY chart with other than Date data
+	 * @param title title of chart
+	 * @param showLegend true if legend is desired
+	 * @return
+	 */
 	private JFreeChart prepareXYChart(String title, boolean showLegend) {
 		JFreeChart chart = ChartFactory.createLineChart(title, getXAxis(), "Value", (DefaultCategoryDataset) dataset,
 				PlotOrientation.VERTICAL, showLegend, true, false);
@@ -51,6 +72,9 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		return chart;
 	}
 
+	/**
+	 * Prepares chart with Date data
+	 */
 	private JFreeChart prepareDateChart(String title, boolean showLegend) {
 
 		JFreeChart chart = ChartFactory.createLineChart(title, getXAxis(), "Value", (DefaultCategoryDataset) dataset,
@@ -66,6 +90,9 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		return chart;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void addRowToDataSet(Object[] data, Object[] series) {
 		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
 			addDateRowToDataSet(data, series);
@@ -75,6 +102,11 @@ public class XYChartGenerator extends AbstractChartGenerator {
 
 	}
 
+	/**
+	 * Adds other type than date data to chart.
+	 * @param data Rows of data
+	 * @param series series of chart
+	 */
 	private void addSimpleDataRowToDataSet(Object[] data, Object[] series) {
 		for (int i = 0; i < series.length; i++) {
 			for (int j = 0; j < data.length; j++) {
@@ -85,6 +117,11 @@ public class XYChartGenerator extends AbstractChartGenerator {
 		}
 	}
 
+	/**
+	 * Adds date data to chart.
+	 * @param data Rows of data
+	 * @param series series of chart
+	 */
 	private void addDateRowToDataSet(Object[] data, Object[] series) {
 		for (int i = 0; i < series.length; i++) {
 			for (int j = 0; j < data.length; j++) {
@@ -97,13 +134,5 @@ public class XYChartGenerator extends AbstractChartGenerator {
 			}
 		}
 	}
-
-	// public String getXAxisSelectOperator(String xAxisAttribute) {
-	// if (this.getType() != Attribute.TYPE_DATE) {
-	// return xAxisAttribute;
-	// } else {
-	// return "date_trunc('year', " + xAxisAttribute + ")";
-	// }
-	// }
 
 }

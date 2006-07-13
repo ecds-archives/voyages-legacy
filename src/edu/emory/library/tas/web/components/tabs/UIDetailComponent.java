@@ -1,18 +1,13 @@
 package edu.emory.library.tas.web.components.tabs;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tas.Voyage;
-import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
-import edu.emory.library.tas.web.UtilsJSF;
 
 /**
  * Component that presents daetailed information abour voyage.

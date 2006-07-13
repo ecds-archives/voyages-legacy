@@ -3,13 +3,17 @@ package edu.emory.library.tas.util.query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import edu.emory.library.tas.util.HibernateConnector;
 
+/**
+ * 
+ * @author juri
+ *
+ */
 public class QueryValue {
 
 	public static final int LIMIT_NO_LIMIT = -1;

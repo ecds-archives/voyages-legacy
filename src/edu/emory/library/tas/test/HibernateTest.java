@@ -1,20 +1,9 @@
 package edu.emory.library.tas.test;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.HashSet;
-
-//import org.jfree.chart.ChartFactory;
-//import org.jfree.chart.ChartUtilities;
-//import org.jfree.chart.JFreeChart;
-//import org.jfree.chart.plot.PlotOrientation;
-//import org.jfree.data.category.CategoryDataset;
-//import org.jfree.data.category.DefaultCategoryDataset;
-//import org.jfree.data.general.DatasetGroup;
 
 import edu.emory.library.tas.Configuration;
 import edu.emory.library.tas.Dictionary;
@@ -24,8 +13,6 @@ import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.attrGroups.ObjectType;
-import edu.emory.library.tas.dicts.PortLocation;
-import edu.emory.library.tas.dicts.SecondDemPort;
 import edu.emory.library.tas.dicts.Temp;
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.query.Conditions;
@@ -43,7 +30,7 @@ public class HibernateTest {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				System.in));
 		
-		HibernateConnector connector = HibernateConnector.getConnector();
+		//HibernateConnector connector = HibernateConnector.getConnector();
 
 		System.out.print("command:>");
 		while ((command = reader.readLine()) != null
@@ -174,7 +161,7 @@ public class HibernateTest {
 				
 				cMain.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
 				QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", cMain);
-				String [] attrs = Voyage.getAllAttrNames();
+				//String [] attrs = Voyage.getAllAttrNames();
 //				for (int i = 10; i < 115; i++) {
 //					qValue.addPopulatedAttribute("v.voyage." + attrs[i]);
 //				}
