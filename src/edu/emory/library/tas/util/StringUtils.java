@@ -32,5 +32,10 @@ public class StringUtils
 		if (str.length() > maxLength) str = str.substring(0, maxLength);
 		return str;
 	}
+	
+	public static boolean isNullOrEmpty(String str)
+	{
+		return str == null || str.length() == 0;
+	}
 
 }

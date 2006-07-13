@@ -153,6 +153,7 @@ public class UITableResultTab extends UIOutput {
 						populatedAttributes[i].encodeToString());
 
 				writer.startElement("th", this);
+				if (i == 0) writer.writeAttribute("class", "grid-first-column", null);
 
 				writer.startElement("table", this);
 				writer.writeAttribute("border", "0", null);
@@ -232,6 +233,7 @@ public class UITableResultTab extends UIOutput {
 					}
 					writer.startElement("td", this);
 					writer.writeAttribute("id", "cell_" + i + "_" + j, null);
+					if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
 					if (visibleToolTop != null) {
 						writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "', " + "'"
 								+ "cell_" + i + "_" + j + "')", null);
@@ -242,8 +244,10 @@ public class UITableResultTab extends UIOutput {
 					if (visibleToolTop != null) {
 						writer.startElement("div", this);
 						writer.writeAttribute("id", "tooltip_" + i + "_" + j, null);
-						writer.writeAttribute("class", "tableDataTooltip", null);
+						writer.writeAttribute("class", "grid-tooltip", null);
+						writer.startElement("div", this);
 						writer.write(visibleToolTop);
+						writer.endElement("div");
 						writer.endElement("div");
 					}
 					

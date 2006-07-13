@@ -152,9 +152,13 @@ public class TimeLineResultTabBean {
 	 */
 	public String showTimeLine() {
 		
+		System.out.println("ABC");
+		
 		//Check if we can construct chart
-		if (this.componentVisible.booleanValue() && (this.needQuery || this.attributesChanged)
-				&& this.conditions != null) {
+		if ((this.needQuery || this.attributesChanged) && this.conditions != null) {
+
+			System.out.println("DEF");
+			
 			//Prepare query
 			Conditions localCondition = this.conditions.addAttributesPrefix("v.");
 			localCondition.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
@@ -199,7 +203,7 @@ public class TimeLineResultTabBean {
 	 * @param chosenAggregate
 	 */
 	public void setChosenAggregate(String chosenAggregate) {
-		if (!chosenAggregate.equals(this.chosenAttribute)) {
+		if (chosenAggregate != null && !chosenAggregate.equals(this.chosenAttribute)) {
 			this.chosenAggregate = chosenAggregate;
 			this.attributesChanged = true;
 		}
@@ -218,7 +222,7 @@ public class TimeLineResultTabBean {
 	 * @param chosenAttribute
 	 */
 	public void setChosenAttribute(String chosenAttribute) {
-		if (!chosenAttribute.equals(this.chosenAttribute)) {
+		if (chosenAttribute != null && !chosenAttribute.equals(this.chosenAttribute)) {
 			this.chosenAttribute = chosenAttribute;
 			this.attributesChanged = true;
 		}
@@ -300,6 +304,7 @@ public class TimeLineResultTabBean {
 	 * @param chartHeight
 	 */
 	public void setChartHeight(String chartHeight) {
+		if (chartHeight == null) return;
 		this.chartHeight = chartHeight;
 	}
 
@@ -316,6 +321,7 @@ public class TimeLineResultTabBean {
 	 * @param chartWidth
 	 */
 	public void setChartWidth(String chartWidth) {
+		if (chartWidth == null) return;
 		this.chartWidth = chartWidth;
 	}
 }

@@ -14,7 +14,7 @@
 		<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAttribute}" id="tLAttributes">
 			<f:selectItems value="#{TimeLineResultTabBean.voyageNumericAttributes}" />
 		</h:selectOneMenu>
-		<h:commandButton id="show_stat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}" />
+		<h:commandButton id="showStat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}" />
 	</h:panelGroup>
 
 	<%/* Graph data */%>
@@ -26,9 +26,7 @@
 		</t:htmlTag>
 	</h:panelGroup>
 
-	<%/* Change size panel */
-
-				%>
+	<%/* Change size panel */%>
 	<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
 		<h:outputText value="Width: " />
 		<h:inputText value="#{TimeLineResultTabBean.chartWidth}" style="width: 40px;" />
@@ -36,4 +34,5 @@
 		<h:inputText value="#{TimeLineResultTabBean.chartHeight}" style="width: 40px;" />
 		<h:commandButton id="enlarge" value="Change size" action="#{TimeLineResultTabBean.setNewView}" />
 	</h:panelGroup>
+	
 </h:panelGrid>

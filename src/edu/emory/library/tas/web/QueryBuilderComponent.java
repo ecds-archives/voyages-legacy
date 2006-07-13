@@ -181,22 +181,30 @@ public class QueryBuilderComponent extends UIComponentBase
 				getToDeleteHiddenFieldName(context), 
 				queryCondition.getAttribute().getId().toString());
 
-		writer.startElement("table", this);
-		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("cellspacing", "0", null);
-		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "query-builder-remove", null);
-		writer.startElement("tr", this);
+//		writer.startElement("table", this);
+//		writer.writeAttribute("border", "0", null);
+//		writer.writeAttribute("cellspacing", "0", null);
+//		writer.writeAttribute("cellpadding", "0", null);
+//		writer.writeAttribute("class", "query-builder-remove", null);
+//		writer.startElement("tr", this);
+//		
+//		writer.startElement("td", this);
+//		writer.writeAttribute("class", "side-box-button", null);
+//		writer.startElement("img", this);
+//		writer.endElement("td");
+//		
+//		writer.endElement("tr");
+//		writer.endElement("table");
 		
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "side-box-button", null);
+		writer.startElement("img", this);
+		writer.writeAttribute("src", "icon-remove.png", null);
 		writer.writeAttribute("onclick", jsToDelete, null);
-		writer.write("&times;");
-		writer.endElement("td");
-		
-		writer.endElement("tr");
-		writer.endElement("table");
-		
+		writer.writeAttribute("class", "query-builder-remove-button", null);
+		writer.writeAttribute("width", "12", null);
+		writer.writeAttribute("height", "12", null);
+		writer.writeAttribute("border", "0", null);
+		writer.endElement("img");
+
 	}
 	
 	private void encodeStartQueryConditionBox(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException

@@ -1,6 +1,8 @@
+/* general */
+
 body {
-	font-family: Arial, sans-serif;
-	background: #fdf7d7;
+	font-family: Arial, Helvetica, sans-serif;
+	background: #F1E7C8;
 	font-size: 8pt;
 	margin: 0px;
 	padding: 0px; }
@@ -12,7 +14,64 @@ a {
 input, textarea, select {
 	font-family: Arial, sans-serif;
 	font-size: 8pt; }
+
+
+/* header */
+
+div.header {
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	background-color: #571B1D;
+	background-repeat: repeat-x;
+	background-position: left -3px;
+	background-image: url(header-decoration.png); }
+
+div.header-path {
+	font-weight: bold;
+	padding-left: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: White;
+	background-color: #CA4223; }
+
+
+/* main two pannels */
+
+td.side-panel {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 5px;
+	width: 300px;
+	vertical-align: top; }
+
+td.main-panel {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 10px;
+	vertical-align: top; }
+
+
+/* message */
+
+div.message-bar {
+	color: White;
+	margin-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: #E2873B; 
+	border-bottom: 2px solid #F5F0D3; }
 	
+td.message-bar-button {
+	padding-left: 10px; }
+
+
+/*
+
 div.main-title {
 	padding-top: 15px;
 	padding-bottom: 15px;
@@ -351,3 +410,5 @@ div.message-bar {
 	
 td.message-bar-button {
 	padding-left: 10px; }
+	
+*/

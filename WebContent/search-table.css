@@ -1,0 +1,86 @@
+table.grid {
+	width: 100%;
+	background: white;
+	border-collapse: collapse; } 
+
+table.grid th {
+	padding: 5px;
+	background-color: #CA4223;
+	background-color: #E1802F;
+	background-color: #E47B65;
+	background-color: #EDB587;
+	background-color: #E79C5F;
+	background-color: #F1E7C8;
+	background-color: #571B1D;
+	background-color: #F1E7C8;
+	background-color: White;
+	text-align: left;
+	border-bottom: 2px solid #F1E7C8; }
+
+table.grid th a {
+	color: #CA4223; }
+	
+tr.grid-row-even {
+	cursor: pointer;
+	border-bottom: 2px solid #F1E7C8; }
+
+tr.grid-row-odd {
+	cursor: pointer;
+	border-bottom: 2px solid #F1E7C8; }
+
+tr.grid-row-odd td, tr.grid-row-even td { 
+	padding: 5px; }
+		
+tr.grid-row-last {
+	cursor: pointer;
+	border-bottom-style: none; }
+	
+tr.grid-row-even:hover {
+	background-color: #F1E7C8; }
+
+tr.grid-row-odd:hover {
+	background-color: #F1E7C8; }
+
+tr.grid-row-last:hover {
+	background-color: #F1E7C8; }
+	
+td.grid-header-text {
+	padding: 0px; }
+
+td.grid-header-icon {
+	padding-left: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px; }
+	
+td.grid-first-column, th.grid-first-column {
+	padding-left: 10px !important; }
+
+div.pager {
+	color: White;
+	background-color: #E79C5F;
+	background-color: #F1E7C8;
+	background-color: #571B1D;
+	padding: 5px; }
+	
+div.pager a {
+	color: White; }
+	
+div.pager select {
+	border: 0px; }
+	
+div.grid-tooltip {
+    visibility: hidden; 
+    position: absolute; 
+    z-index: 1; 
+    width: 240px;
+    color: White; }
+    
+div.grid-tooltip div {
+    padding: 5px;
+    background-color: #CA4223;
+    border: 2px solid #571B1D;
+	position: relative;
+	top: -7px;
+	left: -7px; }
+	

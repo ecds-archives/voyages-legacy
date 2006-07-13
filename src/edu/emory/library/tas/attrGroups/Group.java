@@ -187,6 +187,11 @@ public class Group implements Serializable, VisibleColumn {
 //		return attributesVisibleArray;
 //	}
 	
+	public int noOfAllAttributesInCategory(int category)
+	{
+		return noOfAttributesInCategory(category) + noOfCompoundAttributesInCategory(category);
+	}
+
 	public int noOfAttributesInCategory(int category)
 	{
 		int n = 0;

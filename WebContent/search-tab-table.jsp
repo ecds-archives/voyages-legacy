@@ -4,26 +4,35 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <%/* Table with results */%>
-<s:tabletab onclick="#{TableResultTabBean.showDetails}" rendered="#{TableResultTabBean.resultsMode}"
-	query="#{SearchBean.searchParameters}" conditionsOut="#{TableResultTabBean.conditions}"
-	data="#{TableResultTabBean.data}" componentVisible="#{TableResultTabBean.componentVisible}"
-	sortChanged="#{TableResultTabBean.sortChanged}" style="overflow:auto;" />
+<s:tabletab id="tableResults"
+	onclick="#{TableResultTabBean.showDetails}"
+	rendered="#{TableResultTabBean.resultsMode}"
+	query="#{SearchBean.searchParameters}"
+	conditionsOut="#{TableResultTabBean.conditions}"
+	data="#{TableResultTabBean.data}"
+	componentVisible="#{TableResultTabBean.componentVisible}"
+	sortChanged="#{TableResultTabBean.sortChanged}"
+	style="overflow: auto;" />
 
-<t:htmlTag value="div" style="background-color: #F1E7C8; padding: 5px;" rendered="#{TableResultTabBean.resultsMode}">
+<t:htmlTag value="div" styleClass="pager" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="padding: 0px;">
-				<h:commandLink style="font-weight: bold; text-decoration: none;" value="< Previous page"
+				<h:commandLink
+					style="font-weight: bold; text-decoration: none;"
+					value="< Previous page"
 					action="#{TableResultTabBean.prev}" />
 				<h:outputText value=" | " />
-				<h:commandLink style="font-weight: bold; text-decoration: none;" value="Next page >"
+				<h:commandLink
+					style="font-weight: bold; text-decoration: none;"
+					value="Next page >"
 					action="#{TableResultTabBean.next}" />
 				<h:outputText value=" | " />
-				<h:outputText value="Showing" />
+				<h:outputText value="Showing " />
 				<h:outputText value="#{TableResultTabBean.firstDisplayed}" />
 				<h:outputText value="-" />
 				<h:outputText value="#{TableResultTabBean.lastDisplayed}" />
-				<h:outputText value="out of" />
+				<h:outputText value=" out of " />
 				<h:outputText value="#{TableResultTabBean.totalRows}" />
 				<h:outputText value=" | Show " />
 				<h:selectOneMenu onchange="submit()" value="#{TableResultTabBean.step}">
@@ -51,9 +60,7 @@
 		action="#{TableResultTabBean.resultsMode}" />
 </t:htmlTag>
 
-<%/* Configuration of table */
-
-			%>
+<%/* Configuration of table */ %>
 <t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 
 	<t:htmlTag value="div"
@@ -80,7 +87,10 @@
 					<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
 						<h:outputText value="Available attributes" />
 					</t:htmlTag>
-					<h:selectManyListbox style="width: 300px" id="configure_availAttributes" size="10"
+					<h:selectManyListbox
+						style="width: 300px"
+						id="configure_availAttributes"
+						size="10"
 						value="#{TableResultTabBean.selectedAttributeToAdd}">
 						<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
 					</h:selectManyListbox>
@@ -135,7 +145,9 @@
 		</t:htmlTag>
 
 		<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #F1E7C8;">
-			<h:commandButton id="configure_applyConfigButton" value="Apply configuration"
+			<h:commandButton
+				id="configureApplyConfigButton"
+				value="Apply configuration"
 				action="#{TableResultTabBean.resultsMode}" />
 		</t:htmlTag>
 

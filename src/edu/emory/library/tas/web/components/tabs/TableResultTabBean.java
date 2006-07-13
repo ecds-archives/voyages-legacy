@@ -586,6 +586,7 @@ public class TableResultTabBean {
 	 * @param step
 	 */
 	public void setStep(String step) {
+		if (step == null) return;
 		if (step.equals("all")) {
 			if (this.step != MAX_STEP) {
 				this.needQuery = true;
@@ -638,8 +639,8 @@ public class TableResultTabBean {
 		Conditions c = params.getConditions();
 		this.queryColumns = Arrays.asList(params.getColumns());
 		if (c != null) {
-			System.out.println("1: --------------------------------------");
-			System.out.println(c.getConditionHQL().conditionString);
+//			System.out.println("1: --------------------------------------");
+//			System.out.println(c.getConditionHQL().conditionString);
 		}
 		if (c == null) {
 			// needQuery = false;
@@ -813,6 +814,7 @@ public class TableResultTabBean {
 	 * @param selectedGroupSet
 	 */
 	public void setSelectedGroupSet(String selectedGroupSet) {
+		if (selectedGroupSet == null) return; 
 		this.selectedGroupSet = selectedGroupSet;
 	}
 
@@ -845,6 +847,7 @@ public class TableResultTabBean {
 	 * @param selectedAttributeToAdd
 	 */
 	public void setSelectedAttributeToAdd(List selectedAttributeToAdd) {
+		if (selectedAttributeToAdd == null) return;
 		this.selectedAttributeToAdd = selectedAttributeToAdd;
 	}
 

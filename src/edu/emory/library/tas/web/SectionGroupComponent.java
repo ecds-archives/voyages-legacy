@@ -92,6 +92,7 @@ public class SectionGroupComponent extends UIComponentBase
 	{
 		ValueBinding vb = getValueBinding("selectedSectionId");
 		if (vb != null) vb.setValue(context, selectedSectionId);
+		super.processUpdates(context);
 	}
 	
 	private void encodeSingleTextTitle(FacesContext context, ResponseWriter writer) throws IOException
@@ -216,11 +217,8 @@ public class SectionGroupComponent extends UIComponentBase
 				selectedSectionId);
 
 		String mainClass = "section-title";
-		if (hasTabs)
-		{
-			mainClass += " section-title-" + backgroundStyle;
-			mainClass += " section-title-line-" + tabsStyle;
-		}
+		mainClass += " section-title-" + backgroundStyle;
+		if (hasTabs) mainClass += " section-title-line-" + tabsStyle;
 		
 		writer.startElement("div", this);
 		writer.writeAttribute("class", mainClass, null);

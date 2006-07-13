@@ -14,6 +14,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tas.Dictionary;
+import edu.emory.library.tas.util.StringUtils;
 
 public class HistoryListComponent extends UIComponentBase
 {
@@ -135,6 +136,33 @@ public class HistoryListComponent extends UIComponentBase
 	{
 	}
 	
+	private void encodeIcon(ResponseWriter writer, String imgSrc, String jsOnClick, String text) throws IOException
+	{
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "history-list-icon", null);
+		writer.writeAttribute("onclick", jsOnClick, null);
+		writer.startElement("img", this);
+		writer.writeAttribute("src", imgSrc, null);
+		writer.writeAttribute("class", "history-list-icon", null);
+		writer.writeAttribute("width", "12", null);
+		writer.writeAttribute("height", "12", null);
+		writer.writeAttribute("border", "0", null);
+		writer.endElement("img");
+		writer.endElement("td");
+		
+		if (!StringUtils.isNullOrEmpty(text))
+		{
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "history-list-icon-text", null);
+			writer.writeAttribute("onclick", jsOnClick, null);
+			writer.write(text);
+			writer.endElement("td");
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "history-list-icon-space", null);
+			writer.endElement("td");
+		}
+	}
+	
 	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form) throws IOException
 	{
 		
@@ -158,97 +186,105 @@ public class HistoryListComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
 		
-		for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
+		if (item.getQuery().getConditionCount() == 0)
 		{
-			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			writer.write(queryCondition.getAttribute().getUserLabel());
+			writer.write("No conditions. This query returns everything.");
+		}
+		else
+		{
 			
-			if (queryCondition instanceof QueryConditionText)
+			for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
 			{
-				QueryConditionText queryConditionText = (QueryConditionText) queryCondition;
-				writer.write(" is ");
-				if (queryConditionText.isNonEmpty())
+				QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+				writer.write(queryCondition.getAttribute().getUserLabel());
+				
+				if (queryCondition instanceof QueryConditionText)
 				{
-					writer.startElement("b", this);
-					writer.write(queryConditionText.getValue());
-					writer.endElement("b");
-				}
-				else
-				{
-					writer.startElement("i", this);
-					writer.write("[anything]");
-					writer.endElement("i");
-				}
-			}
-			
-			else if (queryCondition instanceof QueryConditionNumeric)
-			{
-				QueryConditionNumeric queryConditionRange = (QueryConditionNumeric) queryCondition;
-				switch (queryConditionRange.getType())
-				{
-					case QueryConditionNumeric.TYPE_BETWEEN:
-						writer.write(" is between ");
-						writer.startElement("b", this);
-						writer.write(queryConditionRange.getFrom());
-						writer.endElement("b");
-						writer.write(" and ");
-						writer.startElement("b", this);
-						writer.write(queryConditionRange.getTo());
-						writer.endElement("b");
-						break;
-					
-					case QueryConditionNumeric.TYPE_LE:
-						writer.write(" is at most ");
-						writer.startElement("b", this);
-						writer.write(queryConditionRange.getLe());
-						writer.endElement("b");
-						break;
-						
-					case QueryConditionNumeric.TYPE_GE:
-						writer.write(" is at least ");
-						writer.startElement("b", this);
-						writer.write(queryConditionRange.getGe());
-						writer.endElement("b");
-						break;
-
-					case QueryConditionNumeric.TYPE_EQ:
-						writer.write(" is equal ");
-						writer.startElement("b", this);
-						writer.write(queryConditionRange.getEq());
-						writer.endElement("b");
-						break;
-				}
-			}
-			
-			else if (queryCondition instanceof QueryConditionDictionary)
-			{
-				QueryConditionDictionary queryConditionList = (QueryConditionDictionary) queryCondition;
-				writer.write(" is ");
-				if (queryConditionList.getDictionaries().size() > 0)
-				{
-					for (Iterator iterDict = queryConditionList.getDictionaries().iterator(); iterDict.hasNext();)
+					QueryConditionText queryConditionText = (QueryConditionText) queryCondition;
+					writer.write(" is ");
+					if (queryConditionText.isNonEmpty())
 					{
-						Dictionary dict = (Dictionary) iterDict.next();
 						writer.startElement("b", this);
-						writer.write(dict.getName());
+						writer.write(queryConditionText.getValue());
 						writer.endElement("b");
-						if (iterDict.hasNext()) writer.write(" or ");
+					}
+					else
+					{
+						writer.startElement("i", this);
+						writer.write("[anything]");
+						writer.endElement("i");
 					}
 				}
-				else
+				
+				else if (queryCondition instanceof QueryConditionNumeric)
 				{
-					writer.startElement("i", this);
-					writer.write("[anything]");
-					writer.endElement("i");
+					QueryConditionNumeric queryConditionRange = (QueryConditionNumeric) queryCondition;
+					switch (queryConditionRange.getType())
+					{
+						case QueryConditionNumeric.TYPE_BETWEEN:
+							writer.write(" is between ");
+							writer.startElement("b", this);
+							writer.write(queryConditionRange.getFrom());
+							writer.endElement("b");
+							writer.write(" and ");
+							writer.startElement("b", this);
+							writer.write(queryConditionRange.getTo());
+							writer.endElement("b");
+							break;
+						
+						case QueryConditionNumeric.TYPE_LE:
+							writer.write(" is at most ");
+							writer.startElement("b", this);
+							writer.write(queryConditionRange.getLe());
+							writer.endElement("b");
+							break;
+							
+						case QueryConditionNumeric.TYPE_GE:
+							writer.write(" is at least ");
+							writer.startElement("b", this);
+							writer.write(queryConditionRange.getGe());
+							writer.endElement("b");
+							break;
+	
+						case QueryConditionNumeric.TYPE_EQ:
+							writer.write(" is equal ");
+							writer.startElement("b", this);
+							writer.write(queryConditionRange.getEq());
+							writer.endElement("b");
+							break;
+					}
 				}
+				
+				else if (queryCondition instanceof QueryConditionDictionary)
+				{
+					QueryConditionDictionary queryConditionList = (QueryConditionDictionary) queryCondition;
+					writer.write(" is ");
+					if (queryConditionList.getDictionaries().size() > 0)
+					{
+						for (Iterator iterDict = queryConditionList.getDictionaries().iterator(); iterDict.hasNext();)
+						{
+							Dictionary dict = (Dictionary) iterDict.next();
+							writer.startElement("b", this);
+							writer.write(dict.getName());
+							writer.endElement("b");
+							if (iterDict.hasNext()) writer.write(" or ");
+						}
+					}
+					else
+					{
+						writer.startElement("i", this);
+						writer.write("[anything]");
+						writer.endElement("i");
+					}
+				}
+				
+				if (iterQueryCondition.hasNext())
+				{
+					writer.startElement("br", this);
+					writer.endElement("br");
+				}
+				
 			}
-			
-			if (iterQueryCondition.hasNext())
-			{
-				writer.startElement("br", this);
-				writer.endElement("br");
-			}
-			
 		}
 		
 		writer.startElement("table", this);
@@ -258,31 +294,34 @@ public class HistoryListComponent extends UIComponentBase
 		writer.writeAttribute("class", "history-item-buttons", null);
 		writer.startElement("tr", this);
 		
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "side-box-button", null);
-		writer.writeAttribute("onclick", jsToDelete, null);
-		writer.write("&times;");
-		writer.endElement("td");
+//		writer.startElement("td", this);
+//		writer.writeAttribute("class", "side-box-button", null);
+//		writer.writeAttribute("onclick", jsToDelete, null);
+//		writer.write("&times;");
+//		writer.endElement("td");
+		encodeIcon(writer, "icon-remove.png", jsToDelete, "delete");
 		
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "side-box-button-space", null);
 		writer.endElement("td");
 
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "side-box-button", null);
-		writer.writeAttribute("onclick", jsToRestore, null);
-		writer.write("restore");
-		writer.endElement("td");
+//		writer.startElement("td", this);
+//		writer.writeAttribute("class", "side-box-button", null);
+//		writer.writeAttribute("onclick", jsToRestore, null);
+//		writer.write("restore");
+//		writer.endElement("td");
+		encodeIcon(writer, "icon-restore.png", jsToRestore, "restore");
 
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "side-box-button-space", null);
 		writer.endElement("td");
 
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "side-box-button", null);
-		writer.writeAttribute("onclick", jsToPermlink, null);
-		writer.write("permlink");
-		writer.endElement("td");
+//		writer.startElement("td", this);
+//		writer.writeAttribute("class", "side-box-button", null);
+//		writer.writeAttribute("onclick", jsToPermlink, null);
+//		writer.write("permlink");
+//		writer.endElement("td");
+		encodeIcon(writer, "icon-permlink.png", jsToPermlink, "permlink");
 
 		writer.endElement("tr");
 		writer.endElement("table");

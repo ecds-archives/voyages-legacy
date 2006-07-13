@@ -1,5 +1,10 @@
 package edu.emory.library.tas.spss;
 
+/**
+ * Represents a single row in the fixed width format in an imported data file.
+ * 
+ * @author Jan Zich
+ */
 public class Record
 {
 	protected char[] line;

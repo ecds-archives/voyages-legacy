@@ -63,8 +63,8 @@ public class UITimeLineResultTab extends UIOutput {
 			}
 		}
 		
-		//Start table (needed?)
-		writer.startElement("table", this);
+		// Start table (needed?)
+		// writer.startElement("table", this);
 	}
 
 
@@ -73,7 +73,7 @@ public class UITimeLineResultTab extends UIOutput {
 	 */
 	public void encodeEnd(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		writer.endElement("table");
+		// writer.endElement("table");
 		writer.endElement("div");
 	}
 }

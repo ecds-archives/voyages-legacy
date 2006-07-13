@@ -16,6 +16,7 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
+import edu.emory.library.tas.util.StringUtils;
 import edu.emory.library.tas.util.query.Conditions;
 
 
@@ -27,9 +28,11 @@ public class SearchBean
 	private static final String SIMPLE_ATTRIBUTE_PREFIX = "simple_";
 	private static final String COMPOUND_ATTRIBUTE_PREFIX = "compound_";
 	
-	private String selectedAtttibuteId;
-	private String selectedGroupId;
-	private int category = AbstractAttribute.CATEGORY_BEGINNER;
+	private String selectedCategory = "beginner";
+	private String selectedBeginnerGroupId;
+	private String selectedBeginnerAtttibuteId;
+	private String selectedGeneralGroupId;
+	private String selectedGeneralAtttibuteId;
 
 	private History history = new History();
 	private Query workingQuery = new Query();
@@ -41,32 +44,86 @@ public class SearchBean
 	
 	private MessageBarComponent messageBar;
 	
-	public void addQueryCondition()
+	/**
+	 * Called by {@link #addQueryConditionBeginner} or
+	 * {@link #addQueryConditionGeneral()}. Inserts a new condition on the
+	 * attribute with the given ID to the current query {@link #workingQuery}.
+	 * 
+	 * @param selectedAttributeId
+	 *            ID of {@link Attribute} or {@link CompoundAttribute} to add.
+	 */
+	private void addQueryCondition(String selectedAttributeId)
 	{
 		AbstractAttribute attribute = null;
-		if (selectedAtttibuteId.equals(ATTRIBUTES_LIST_SEPARATOR_VALUE))
+		if (selectedAttributeId == null || selectedAttributeId.equals(ATTRIBUTES_LIST_SEPARATOR_VALUE))
 		{
 			return;
 		}
-		else if (selectedAtttibuteId.startsWith(SIMPLE_ATTRIBUTE_PREFIX))
+		else if (selectedAttributeId.startsWith(SIMPLE_ATTRIBUTE_PREFIX))
 		{
-			Long id = new Long(selectedAtttibuteId.substring(SIMPLE_ATTRIBUTE_PREFIX.length()));
-			attribute = Attribute.loadById(id);
+			Long attrId = new Long(selectedAttributeId.substring(SIMPLE_ATTRIBUTE_PREFIX.length()));
+			attribute = Attribute.loadById(attrId);
 		}
-		else if (selectedAtttibuteId.startsWith(COMPOUND_ATTRIBUTE_PREFIX))
+		else if (selectedAttributeId.startsWith(COMPOUND_ATTRIBUTE_PREFIX))
 		{
-			Long id = new Long(selectedAtttibuteId.substring(COMPOUND_ATTRIBUTE_PREFIX.length()));
-			attribute = CompoundAttribute.loadById(id);
+			Long attrId = new Long(selectedAttributeId.substring(COMPOUND_ATTRIBUTE_PREFIX.length()));
+			attribute = CompoundAttribute.loadById(attrId);
 		}
 		workingQuery.addConditionOn(attribute);
 	}
 	
-	public void search()
+	/**
+	 * Bind a button in UI. Activated when the user adds a new condition to a
+	 * query in the beginner mode.
+	 * 
+	 * @return Always <code>null</code>, i.e. we stay on the same page.
+	 */
+	public String addQueryConditionBeginner()
+	{
+		System.out.println(selectedBeginnerAtttibuteId);
+		addQueryCondition(selectedBeginnerAtttibuteId);
+		return null;
+	}
+	
+	/**
+	 * Bind a button in UI. Activated when the user adds a new condition to a
+	 * query in the general mode.
+	 * 
+	 * @return Always <code>null</code>, i.e. we stay on the same page.
+	 */
+	public String addQueryConditionGeneral()
+	{
+		System.out.println(selectedGeneralAtttibuteId);
+		addQueryCondition(selectedGeneralAtttibuteId);
+		return null;
+	}
+
+	/**
+	 * Bind a button in UI. Activated when the user clicks on the search button
+	 * under the list of conditions. Calles {@link #searchInternal(boolean)}
+	 * with <code>true</code> meaning that the current query should be stored
+	 * in the history list.
+	 * 
+	 * @return Always <code>null</code>, i.e. we stay on the same page.
+	 */
+	public String search()
 	{
 		messageBar.setRendered(false);
 		searchInternal(true);
+		return null;
 	}
-	
+
+	/**
+	 * Do actuall seach. Not called directly from UI
+	 * Construct a database query ({@link Conditions})
+	 * from {@link #workingQuery} by calling
+	 * {@link QueryCondition#addToConditions(Conditions)} on each condition.
+	 * Then, is the query is different from the last query in the history list
+	 * and if <code>storeToHistory</code> is <code>true</code> the stores
+	 * {@link #workingQuery} to the history list {@link #history}.
+	 * 
+	 * @param storeToHistory
+	 */
 	private void searchInternal(boolean storeToHistory)
 	{
 		
@@ -92,11 +149,28 @@ public class SearchBean
 
 	}
 	
+	/**
+	 * Handler of an event from the history list. Deletes the given history item
+	 * from {@link #history}. The deletion is not handled directly by the
+	 * {@link HistoryListComponent} because the component does not hold the data
+	 * itself (it only gets them from this bean when rendering).
+	 * 
+	 * @param event
+	 *            Contains the history ID to delete.
+	 */
 	public void historyItemDelete(HistoryItemDeleteEvent event)
 	{
 		history.deleteItem(event.getHistoryId());
 	}
 	
+	/**
+	 * Handler of an event from the history list. Restores the given history
+	 * item from {@link #history} and replaces by it the current query
+	 * {@link #workingQuery} and invokes search.
+	 * 
+	 * @param event
+	 *            Contains the history ID to restore.
+	 */
 	public void historyItemRestore(HistoryItemRestoreEvent event)
 	{
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
@@ -104,6 +178,14 @@ public class SearchBean
 		searchInternal(false);
 	}
 	
+	/**
+	 * Handler of an event from the history list. Creates a permlink to a given
+	 * history item. It saves it to the database and displays a message to the
+	 * user with the genearated URL.
+	 * 
+	 * @param event
+	 *            Contains the history ID to create a permlink to.
+	 */
 	public void historyItemPermlink(HistoryItemPermlinkEvent event)
 	{
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
@@ -139,22 +221,22 @@ public class SearchBean
 
 	}
 	
-	public void moduleTabChanged(TabChangeEvent event)
-	{
-		tableVisible = "table".equals(event.getTabId());
-		timeLineVisible = "timeline".equals(event.getTabId());
-		statisticsVisible = "statistics".equals(event.getTabId());
-	}
+//	public void moduleTabChanged(TabChangeEvent event)
+//	{
+//		tableVisible = "table".equals(event.getTabId());
+//		timeLineVisible = "timeline".equals(event.getTabId());
+//		statisticsVisible = "statistics".equals(event.getTabId());
+//	}
 	
-	public List getVoyageAttributeGroups()
+	private List getVoyageAttributeGroups(int category)
 	{
 		Group[] groups = Voyage.getGroups();
-		Group.sortByUserLabel(groups);
+		Group.sortByUserLabelOrName(groups);
 		List options = new ArrayList();
 		for (int i = 0; i < groups.length; i++)
 		{
 			Group g = groups[i];
-			if (g.noOfAttributesInCategory(category) + g.noOfCompoundAttributesInCategory(category) > 0)
+			if (g.noOfAllAttributesInCategory(category) > 0)
 			{
 				SelectItem option = new SelectItem();
 				option.setLabel(g.getUserLabelOrName());
@@ -165,30 +247,62 @@ public class SearchBean
 		return options;
 	}
 	
-	private void ensureSelectedGroupSetId()
+	public List getVoyageAttributeBeginnerGroups()
 	{
-		
-		if (selectedGroupId != null)
-			return;
+		return getVoyageAttributeGroups(AbstractAttribute.CATEGORY_BEGINNER);
+	}
+	
+	public List getVoyageAttributeGeneralGroups()
+	{
+		return getVoyageAttributeGroups(AbstractAttribute.CATEGORY_GENERAL);
+	}
+	
+	private Group getFirstVisibleGroup(int category)
+	{
 		
 		Group[] groups = Voyage.getGroups();
-		Group.sortByUserLabel(groups);
 		if (groups == null || groups.length == 0)
-			return;
+			return null;
 		
-		selectedGroupId = groups[0].getId().toString();
-
+		Group.sortByUserLabelOrName(groups);
+		
+		for (int i = 0; i < groups.length; i++)
+		{
+			Group g = groups[i];
+			if (g.noOfAllAttributesInCategory(category) > 0)
+			{
+				return g;
+			}
+		}
+		
+		return null;
+		
 	}
 
-	public List getVoyageAttributes()
+	private String ensureSelectedGroup(String selectedGroupId, int category)
+	{
+		if (StringUtils.isNullOrEmpty(selectedGeneralGroupId))
+		{
+			Group g = getFirstVisibleGroup(category);
+			if (g != null) return g.getId().toString();
+			return null;
+		}
+		else
+		{
+			return selectedGroupId;
+		}
+	}
+
+	private List getVoyageAttributes(String selectedGroupId, int category)
 	{
 		
-		ensureSelectedGroupSetId();
-		
-		if (selectedGroupId == null)
+		if (StringUtils.isNullOrEmpty(selectedGroupId))
 			return new ArrayList();
 		
 		Group group = Group.loadById(new Long(selectedGroupId));
+		if (group == null)
+			return new ArrayList();
+
 		List options = new ArrayList();
 		
 		CompoundAttribute[] compoundAttributes = (CompoundAttribute[]) group.getCompoundAttributes().toArray(new CompoundAttribute[0]);
@@ -229,6 +343,28 @@ public class SearchBean
 		return options;
 
 	}
+	
+	public List getVoyageBeginnerAttributes()
+	{
+		selectedBeginnerGroupId = ensureSelectedGroup(
+				selectedBeginnerGroupId,
+				AbstractAttribute.CATEGORY_BEGINNER);
+		
+		return getVoyageAttributes(
+				selectedBeginnerGroupId,
+				AbstractAttribute.CATEGORY_BEGINNER);
+	}
+
+	public List getVoyageGeneralAttributes()
+	{
+		selectedGeneralGroupId = ensureSelectedGroup(
+				selectedGeneralGroupId,
+				AbstractAttribute.CATEGORY_GENERAL);
+
+		return getVoyageAttributes(
+				selectedGeneralGroupId,
+				AbstractAttribute.CATEGORY_GENERAL);
+	}
 
 	public boolean isTableVisible()
 	{
@@ -250,32 +386,58 @@ public class SearchBean
 		this.timeLineVisible = timeLineVisible;
 	}
 
-	public String getSelectedGroupId()
+	public String getSelectedBeginnerGroupId()
 	{
-		return selectedGroupId;
+		return selectedBeginnerGroupId;
 	}
 
-	public void setSelectedGroupId(String selectedGroupId)
+	public void setSelectedBeginnerGroupId(String selectedGroupId)
 	{
-		this.selectedGroupId = selectedGroupId;
+		if (selectedGroupId == null) return;
+		this.selectedBeginnerGroupId = selectedGroupId;
+	}
+	
+	public String getSelectedBeginnerAtttibuteId()
+	{
+		return selectedBeginnerAtttibuteId;
 	}
 
-	public boolean isStatisticsVisible() {
+	public void setSelectedBeginnerAtttibuteId(String selectedAtttibuteId)
+	{
+		if (selectedAtttibuteId == null) return;
+		this.selectedBeginnerAtttibuteId = selectedAtttibuteId;
+	}
+
+	public String getSelectedGeneralGroupId()
+	{
+		return selectedGeneralGroupId;
+	}
+
+	public void setSelectedGeneralGroupId(String selectedGeneralGroupId)
+	{
+		if (selectedGeneralGroupId == null) return;
+		this.selectedGeneralGroupId = selectedGeneralGroupId;
+	}
+
+	public String getSelectedGeneralAtttibuteId()
+	{
+		return selectedGeneralAtttibuteId;
+	}
+
+	public void setSelectedGeneralAtttibuteId(String selectedGeneralAtttibuteId)
+	{
+		if (selectedGeneralAtttibuteId == null) return;
+		this.selectedGeneralAtttibuteId = selectedGeneralAtttibuteId;
+	}
+	
+	public boolean isStatisticsVisible()
+	{
 		return statisticsVisible;
 	}
 
-	public void setStatisticsVisible(boolean statisticsVisible) {
+	public void setStatisticsVisible(boolean statisticsVisible)
+	{
 		this.statisticsVisible = statisticsVisible;
-	}
-
-	public String getSelectedAtttibuteId()
-	{
-		return selectedAtttibuteId;
-	}
-
-	public void setSelectedAtttibuteId(String selectedAtttibute)
-	{
-		this.selectedAtttibuteId = selectedAtttibute;
 	}
 
 	public Query getWorkingQuery()
@@ -302,7 +464,7 @@ public class SearchBean
 	public SearchParameters getSearchParameters()
 	{
 		restorePermlinkIfAny();
-		this.searchParameters.setCategory(category);
+		this.searchParameters.setCategory(getSelectedCategoryTyped());
 		return searchParameters;
 	}
 
@@ -321,14 +483,21 @@ public class SearchBean
 		this.messageBar = messageBar;
 	}
 
-	public int getCategory()
+	public String getSelectedCategory()
 	{
-		return category;
+		return selectedCategory;
 	}
 
-	public void setCategory(int category)
+	public int getSelectedCategoryTyped()
 	{
-		this.category = category;
+		return "beginner".equals(selectedCategory) ?
+				AbstractAttribute.CATEGORY_BEGINNER :
+					AbstractAttribute.CATEGORY_GENERAL;
+	}
+
+	public void setSelectedCategory(String selectedCategory)
+	{
+		this.selectedCategory = selectedCategory;
 	}
 
 }
