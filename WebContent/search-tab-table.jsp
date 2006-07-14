@@ -63,16 +63,16 @@
 <%/* Configuration of table */ %>
 <t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 
-	<t:htmlTag value="div"
-		style="margin-top: 10px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; font-weight: bold; font-weight: bold; background-color: #E2873B;">
+	<t:htmlTag value="div" styleClass="section-inside-title">
 		<h:outputText value="Configure columns" />
 	</t:htmlTag>
 
-	<t:htmlTag value="div" style="padding: 10px; background-color: #F1E7C8">
+	<t:htmlTag value="div" styleClass="section-inside-group">
 
 		<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
 			<h:outputText value="Choose group of attributes" />
 		</t:htmlTag>
+		
 		<t:htmlTag value="div" style="margin-bottom: 5px; padding-bottom: 5px;">
 			<h:selectOneMenu style="width: 300px;" value="#{TableResultTabBean.selectedGroupSet}" id="configure_groupSetCombo"
 				onchange="submit()">
@@ -102,8 +102,11 @@
 							action="#{TableResultTabBean.addSelectedAttributeToList}" />
 					</t:htmlTag>
 					<t:htmlTag value="div">
-						<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="<"
-												action=" #{TableResultTabBean.remSelectedAttributeFromList}" />
+						<h:commandButton
+							style="width: 30px"
+							id="configure_RemAttrButton"
+							value="<"
+							action=" #{TableResultTabBean.remSelectedAttributeFromList}" />
 					</t:htmlTag>
 				</t:htmlTag>
 
@@ -144,13 +147,18 @@
 			</t:htmlTag>
 		</t:htmlTag>
 
-		<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #F1E7C8;">
-			<h:commandButton
-				id="configureApplyConfigButton"
-				value="Apply configuration"
-				action="#{TableResultTabBean.resultsMode}" />
-		</t:htmlTag>
+	</t:htmlTag>
 
+	<t:htmlTag value="div" styleClass="section-inside-footer">
+		<h:commandButton
+			id="configureApplyConfigButton"
+			value="Apply configuration"
+			action="#{TableResultTabBean.resultsMode}" />
+		<h:outputText value=" " />
+		<h:commandButton
+			id="configureCancel"
+			value="Cancel"
+			action="#{TableResultTabBean.cancelConfiguration}" />
 	</t:htmlTag>
 
 </t:htmlTag>

@@ -21,22 +21,24 @@
 </t:htmlTag>
 
 
-<t:htmlTag id="div_table" value="div" style="padding: 2px;background-color: #F1E7C8;">
+<t:htmlTag id="div_table" value="div" style="padding: 2px;">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
-		<t:htmlTag id="tr_third" value="tr" style="background-color: #F1E7C8;">
+		<t:htmlTag id="tr_third" value="tr">
 			<t:htmlTag id="td_setup_label" value="th">
 				<h:outputText value="Chart setup" />
 			</t:htmlTag>
 
-			<t:htmlTag value="th" style="border-left: 2px solid #D6A51A; margin-bottom: 10px;">
+			<t:htmlTag value="th" style="border-left: 2px solid #F1E7C8; margin-bottom: 10px;">
 				<h:outputText value="Current series" />
 			</t:htmlTag>
 		</t:htmlTag>
 
 
 		<t:htmlTag id="tr_setup" value="tr">
-			<t:htmlTag value="td" style="background-color: #F1E7C8; width: 520px; border-bottom: 4px solid #D6A51A;">
-				<h:selectOneRadio onchange="submit()" value="#{AdvancedStatisticsTabBean.selectedChart}"
+			<t:htmlTag value="td" style="width: 520px; border-bottom: 2px solid #F1E7C8;">
+				<h:selectOneRadio
+					onchange="submit()"
+					value="#{AdvancedStatisticsTabBean.selectedChart}"
 					disabled="#{AdvancedStatisticsTabBean.errorPresent}">
 					<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}" />
 				</h:selectOneRadio>
@@ -81,7 +83,7 @@
 				</t:htmlTag>
 			</t:htmlTag>
 			<t:htmlTag value="td"
-				style="width: 240px; background-color: #F1E7C8; border-left: 2px solid #D6A51A; border-bottom: 4px solid #D6A51A; margin-bottom: 10px;">
+				style="width: 240px; border-left: 2px solid #F1E7C8; border-bottom: 2px solid #F1E7C8; margin-bottom: 10px;">
 				<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.seriesAdded}">
 					<h:selectManyCheckbox id="to_remove_check" layout="pageDirection" value="#{AdvancedStatisticsTabBean.toRemove}">
 						<f:selectItems value="#{AdvancedStatisticsTabBean.series}" />
@@ -97,8 +99,8 @@
 		</t:htmlTag>
 	</t:htmlTag>
 
-	<t:htmlTag value="div" style="background-color: #F1E7C8; padding-left: 2px; ">
-		<t:htmlTag value="div" style="border-bottom: 2px solid #D6A51A;">
+	<t:htmlTag value="div" style="padding-left: 10px; padding-bottom: 5px; padding-top: 5px;">
+		<t:htmlTag value="div">
 			<h:commandButton style="margin: 3px;" id="showGraph" value="Show"
 				disabled="#{AdvancedStatisticsTabBean.errorPresent}" action="#{AdvancedStatisticsTabBean.showGraph}" />
 		</t:htmlTag>

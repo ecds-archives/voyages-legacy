@@ -12,13 +12,6 @@
 	
 	<s:section title="Result listing" sectionId="listing">
 		<%@ include file="search-tab-table.jsp" %>
-		<%--
-		<h:commandButton
-			id="buttonAddQueryConditionBeginner1"
-			styleClass="main-box-button"
-			action="#{SearchBean.addQueryConditionBeginner}"
-			value="X" />
-		--%>
 	</s:section>
 	
 	<s:section title="Basic graph" sectionId="basic-graph">

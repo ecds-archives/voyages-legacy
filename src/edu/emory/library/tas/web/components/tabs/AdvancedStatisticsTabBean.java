@@ -902,7 +902,8 @@ public class AdvancedStatisticsTabBean {
 	 * @param chartType
 	 */
 	public void setSelectedChart(String chartType) {
-		if (chartType != null && !chartType.equals(this.selectedChart)) {
+		if (chartType == null) return;
+		if (!chartType.equals(this.selectedChart)) {
 			this.neededQuery = true;
 		}
 		this.selectedChart = chartType;

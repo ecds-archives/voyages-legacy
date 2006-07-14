@@ -78,3 +78,24 @@ div.section-body {
 div.sections-sepatator {
 	overflow: hidden;
 	margin-bottom: 10px; }
+	
+div.section-inside-title {
+	padding-bottom: 5px;
+	padding-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-weight: bold;
+	border-bottom: 2px solid #F1E7C8; }
+	
+div.section-inside-group {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	border-bottom: 2px solid #F1E7C8; }
+		
+div.section-inside-footer {
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px; }

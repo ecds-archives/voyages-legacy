@@ -34,6 +34,7 @@ span.query-builder-error {
 	color: White;
 	font-weight: bold; }
 
+/*
 td.side-box-button {
 	cursor: pointer;
 	padding: 1px 5px 1px 5px;
@@ -52,6 +53,14 @@ td.side-box-button-space {
 table.query-builder-remove {
 	margin-right: 0px;
 	margin-left: auto; }
+*/
+
+td.query-builder-button img {
+	cursor: pointer; }
+
+td.query-builder-button-separator {
+	width: 5px;
+	overflow: hidden; }
 
 table.query-builder-label {
 	margin-bottom: 5px;

@@ -44,18 +44,29 @@ public class QueryBuilderComponent extends UIComponentBase
 		attributes = (List) restoreAttachedState(context, values[1]);
 	}
 	
-	private String getToDeleteHiddenFieldName(FacesContext context)
-	{
-		return getClientId(context) + "_to_delete";
-	}
+//	private String getToDeleteHiddenFieldName(FacesContext context)
+//	{
+//		return getClientId(context) + "_to_delete";
+//	}
 
+//	private String getAttributesListHiddenFieldName(FacesContext context)
+//	{
+//		return getClientId(context) + "_attributes";
+//	}
+
+	private String getAttributeHiddenFieldName(FacesContext context)
+	{
+		return getClientId(context) + "_attribute";
+	}
+	
 	public void decode(FacesContext context)
 	{
 		
-		ExternalContext externalContex = context.getExternalContext();
+//		ExternalContext externalContex = context.getExternalContext();
+//		Map params = context.getExternalContext().getRequestParameterMap();
 		
-		String toDelete = (String) externalContex.getRequestParameterMap().get(
-				getToDeleteHiddenFieldName(context));
+//		String toDelete = (String) externalContex.getRequestParameterMap().get(
+//				getToDeleteHiddenFieldName(context));
 		
 		submittedQuery = new Query();
 		for (Iterator iterAtrribute = attributes.iterator(); iterAtrribute.hasNext();)
@@ -63,8 +74,8 @@ public class QueryBuilderComponent extends UIComponentBase
 			
 			AbstractAttribute attribute = (AbstractAttribute) iterAtrribute.next();
 			
-			if (attribute.getId().toString().equals(toDelete))
-				continue;
+//			if (attribute.getId().toString().equals(toDelete))
+//				continue;
 			
 			QueryCondition queryCondition = null;
 			switch (attribute.getType().intValue())
@@ -110,7 +121,8 @@ public class QueryBuilderComponent extends UIComponentBase
 		Query query = getQuery();
 		attributes = new ArrayList();
 		
-		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context));
+//		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context));
+//		UtilsJSF.encodeHiddenInput(this, writer, getAttributesListHiddenFieldName(context));
 		
 		int i = 0;
 		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();  i++)
@@ -180,6 +192,45 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + conditionIndex;
 	}
 	
+	private void encodeConditionButtonsStart(ResponseWriter writer) throws IOException
+	{
+		writer.startElement("table", this);
+		writer.writeAttribute("align", "right", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.startElement("tr", this);
+	}
+
+	private void encodeConditionButton(ResponseWriter writer, String imgSrc, String jsOnClick) throws IOException
+	{
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-button", null);
+
+		writer.startElement("img", this);
+		writer.writeAttribute("src", imgSrc, null);
+		writer.writeAttribute("onclick", jsOnClick, null);
+		writer.writeAttribute("width", "12", null);
+		writer.writeAttribute("height", "12", null);
+		writer.writeAttribute("border", "0", null);
+		writer.endElement("img");
+
+		writer.endElement("td");
+	}
+
+	private void encodeConditionButtonSeparator(ResponseWriter writer) throws IOException
+	{
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-button-separator", null);
+		writer.endElement("td");
+	}
+
+	private void encodeConditionButtonsEnd(ResponseWriter writer) throws IOException
+	{
+		writer.endElement("tr");
+		writer.endElement("table");
+	}
+
 	private void encodeConditionButtons(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer, int conditionIndex) throws IOException
 	{
 		
@@ -187,35 +238,60 @@ public class QueryBuilderComponent extends UIComponentBase
 //				getToDeleteHiddenFieldName(context), 
 //				queryCondition.getAttribute().getId().toString());
 		
-		StringBuffer jsToDelete = new StringBuffer();
-		jsToDelete.append("var cond = ");
-		UtilsJSF.appendElementRefJS(jsToDelete, context, form, getConditionDivId(context, conditionIndex));
-		jsToDelete.append("; ");
-		jsToDelete.append("cond.parentNode.removeChild(cond);");
+		String conditionDivId = getConditionDivId(context, conditionIndex);
+//		String attrListFieldName = getAttributesListHiddenFieldName(context);
 
-//		writer.startElement("table", this);
-//		writer.writeAttribute("border", "0", null);
-//		writer.writeAttribute("cellspacing", "0", null);
-//		writer.writeAttribute("cellpadding", "0", null);
-//		writer.writeAttribute("class", "query-builder-remove", null);
-//		writer.startElement("tr", this);
-//		
-//		writer.startElement("td", this);
-//		writer.writeAttribute("class", "side-box-button", null);
-//		writer.startElement("img", this);
-//		writer.endElement("td");
-//		
-//		writer.endElement("tr");
-//		writer.endElement("table");
+		StringBuffer jsDelete = new StringBuffer();
+		jsDelete.append("var cond = ");
+		UtilsJSF.appendElementRefJS(jsDelete, context, form, conditionDivId);
+		jsDelete.append("; ");
+		jsDelete.append("cond.parentNode.removeChild(cond);");
+
+		StringBuffer jsMoveUp = new StringBuffer();
+		jsMoveUp.append("var cond = ");
+		UtilsJSF.appendElementRefJS(jsMoveUp, context, form, conditionDivId);
+		jsMoveUp.append("; ");
+		jsMoveUp.append("var prevCond = cond.previousSibling; ");
+		jsMoveUp.append("if (prevCond != null) {");
+		jsMoveUp.append("var parent = cond.parentNode; ");
+		jsMoveUp.append("parent.removeChild(cond); ");
+		jsMoveUp.append("parent.insertBefore(cond, prevCond);");
+//		jsMoveUp.append("var attrListField = ");
+//		UtilsJSF.appendFormElementRefJS(jsMoveUp, context, form, attrListFieldName);
+//		jsMoveUp.append("; ");
+//		jsMoveUp.append("var attrList = attrListField.value.split(','); ");
+//		jsMoveUp.append("var attrList = attrListField.value.split(','); ");
+		jsMoveUp.append("}");
+
+		StringBuffer jsMoveDown = new StringBuffer();
+		jsMoveDown.append("var cond = ");
+		UtilsJSF.appendElementRefJS(jsMoveDown, context, form, conditionDivId);
+		jsMoveDown.append("; ");
+		jsMoveDown.append("var nextCond = cond.nextSibling; ");
+		jsMoveDown.append("if (nextCond != null) {");
+		jsMoveDown.append("var nextNextCond = nextCond.nextSibling; ");
+		jsMoveDown.append("if (nextNextCond != null) {");
+		jsMoveDown.append("var parent = cond.parentNode; ");
+		jsMoveDown.append("parent.removeChild(cond); ");
+		jsMoveDown.append("parent.insertBefore(cond, nextNextCond);");
+		jsMoveDown.append("}}");
+
+		encodeConditionButtonsStart(writer);
+		encodeConditionButton(writer, "icon-move-up.png", jsMoveUp.toString());
+		encodeConditionButtonSeparator(writer);
+		encodeConditionButton(writer, "icon-move-down.png", jsMoveDown.toString());
+		encodeConditionButtonSeparator(writer);
+		encodeConditionButton(writer, "icon-remove.png", jsDelete.toString());
+		encodeConditionButtonsEnd(writer);
 		
-		writer.startElement("img", this);
-		writer.writeAttribute("src", "icon-remove.png", null);
-		writer.writeAttribute("onclick", jsToDelete.toString(), null);
-		writer.writeAttribute("class", "query-builder-remove-button", null);
-		writer.writeAttribute("width", "12", null);
-		writer.writeAttribute("height", "12", null);
-		writer.writeAttribute("border", "0", null);
-		writer.endElement("img");
+//		writer.startElement("img", this);
+//		writer.writeAttribute("src", "icon-remove.png", null);
+//		writer.writeAttribute("onclick", jsToDelete.toString(), null);
+//		writer.writeAttribute("class", "query-builder-remove-button", null);
+//		writer.writeAttribute("width", "12", null);
+//		writer.writeAttribute("height", "12", null);
+//		writer.writeAttribute("border", "0", null);
+//		writer.endElement("img");
 
 	}
 	
@@ -225,6 +301,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
 		writer.writeAttribute("id", getConditionDivId(context, conditionIndex), null);
+		
+		UtilsJSF.encodeHiddenInput(this, writer,
+				getAttributeHiddenFieldName(context),
+				queryCondition.getAttribute().getId().toString());
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
