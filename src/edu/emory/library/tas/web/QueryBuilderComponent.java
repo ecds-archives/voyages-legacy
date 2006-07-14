@@ -70,21 +70,21 @@ public class QueryBuilderComponent extends UIComponentBase
 			switch (attribute.getType().intValue())
 			{
 				case AbstractAttribute.TYPE_STRING:
-					queryCondition = decodeSimpleCondition(attribute, context, externalContex); 
+					queryCondition = decodeSimpleCondition(attribute, context); 
 					break;
 
 				case AbstractAttribute.TYPE_INTEGER:
 				case AbstractAttribute.TYPE_LONG:
 				case AbstractAttribute.TYPE_FLOAT:
-					queryCondition = decodeNumericCondition(attribute, context, externalContex);
+					queryCondition = decodeNumericCondition(attribute, context);
 					break;
 			
 				case AbstractAttribute.TYPE_DATE:
-					queryCondition = decodeDateCondition(attribute, context, externalContex);
+					queryCondition = decodeDateCondition(attribute, context);
 					break;
 
 				case AbstractAttribute.TYPE_DICT:
-					queryCondition = decodeDictionaryCondition(attribute, context, externalContex);
+					queryCondition = decodeDictionaryCondition(attribute, context);
 					break;
 			}
 			
@@ -112,7 +112,8 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context));
 		
-		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();)
+		int i = 0;
+		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();  i++)
 		{
 			
 			QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
@@ -124,7 +125,7 @@ public class QueryBuilderComponent extends UIComponentBase
 				case AbstractAttribute.TYPE_STRING:
 					if (queryCondition instanceof QueryConditionText)
 					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
+						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
 						encodeSimpleCondition((QueryConditionText)queryCondition, context, form, writer);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
@@ -135,7 +136,7 @@ public class QueryBuilderComponent extends UIComponentBase
 				case AbstractAttribute.TYPE_FLOAT:
 					if (queryCondition instanceof QueryConditionNumeric)
 					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
+						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
 						encodeNumericCondition((QueryConditionNumeric) queryCondition, context, form, writer);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
@@ -144,7 +145,7 @@ public class QueryBuilderComponent extends UIComponentBase
 				case AbstractAttribute.TYPE_DATE:
 					if (queryCondition instanceof QueryConditionDate)
 					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
+						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
 						encodeDateCondition((QueryConditionDate) queryCondition, context, form, writer);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
@@ -153,7 +154,7 @@ public class QueryBuilderComponent extends UIComponentBase
 				case AbstractAttribute.TYPE_DICT:
 					if (queryCondition instanceof QueryConditionDictionary)
 					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
+						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
 						encodeDictionaryCondition((QueryConditionDictionary)queryCondition, context, form, writer);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
@@ -174,12 +175,23 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 	}
 	
-	private void encodeDeleteButton(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private String getConditionDivId(FacesContext context, int conditionIndex)
+	{
+		return getClientId(context) + "_" + conditionIndex;
+	}
+	
+	private void encodeConditionButtons(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer, int conditionIndex) throws IOException
 	{
 		
-		String jsToDelete = UtilsJSF.generateSubmitJS(context, form,
-				getToDeleteHiddenFieldName(context), 
-				queryCondition.getAttribute().getId().toString());
+//		String jsToDelete = UtilsJSF.generateSubmitJS(context, form,
+//				getToDeleteHiddenFieldName(context), 
+//				queryCondition.getAttribute().getId().toString());
+		
+		StringBuffer jsToDelete = new StringBuffer();
+		jsToDelete.append("var cond = ");
+		UtilsJSF.appendElementRefJS(jsToDelete, context, form, getConditionDivId(context, conditionIndex));
+		jsToDelete.append("; ");
+		jsToDelete.append("cond.parentNode.removeChild(cond);");
 
 //		writer.startElement("table", this);
 //		writer.writeAttribute("border", "0", null);
@@ -198,7 +210,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		writer.startElement("img", this);
 		writer.writeAttribute("src", "icon-remove.png", null);
-		writer.writeAttribute("onclick", jsToDelete, null);
+		writer.writeAttribute("onclick", jsToDelete.toString(), null);
 		writer.writeAttribute("class", "query-builder-remove-button", null);
 		writer.writeAttribute("width", "12", null);
 		writer.writeAttribute("height", "12", null);
@@ -207,13 +219,12 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 	
-	private void encodeStartQueryConditionBox(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private void encodeStartQueryConditionBox(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer, int conditionIndex) throws IOException
 	{
-		
-		//String errorClassName = queryCondition.isErrorFlag() ? " query-builder-error" : "";
 		
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
+		writer.writeAttribute("id", getConditionDivId(context, conditionIndex), null);
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
@@ -236,7 +247,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("td");
 		
 		writer.startElement("td", this);
-		encodeDeleteButton(queryCondition, context, form, writer);
+		encodeConditionButtons(queryCondition, context, form, writer, conditionIndex);
 		writer.endElement("td");
 		
 		writer.endElement("tr");
@@ -279,12 +290,16 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 	
-	private QueryCondition decodeSimpleCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeSimpleCondition(AbstractAttribute attribute, FacesContext context)
 	{
-
-		String value = (String) externalContext.getRequestParameterMap().get(
-				getHtmlNameForSimpleValue(attribute, context));
-
+		
+		String fieldName = getHtmlNameForSimpleValue(attribute, context); 
+		
+		Map params = context.getExternalContext().getRequestParameterMap();
+		if (!params.containsKey(fieldName))
+			return null;
+		
+		String value = (String) params.get(fieldName);
 		QueryConditionText queryCondition = new QueryConditionText(attribute);
 		queryCondition.setValue(value);
 		
@@ -483,10 +498,13 @@ public class QueryBuilderComponent extends UIComponentBase
 	
 	}
 
-	private QueryCondition decodeNumericCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeNumericCondition(AbstractAttribute attribute, FacesContext context)
 	{
 		
-		Map params = externalContext.getRequestParameterMap();
+		Map params = context.getExternalContext().getRequestParameterMap();
+		if (!params.containsKey(getHtmlNameForNumericType(attribute, context)))
+			return null;
+		
 		String typeStr = (String) params.get(getHtmlNameForNumericType(attribute, context));
 		String from = (String) params.get(getHtmlNameForNumericFrom(attribute, context));
 		String to = (String) params.get(getHtmlNameForNumericTo(attribute, context));
@@ -839,10 +857,13 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 
-	private QueryCondition decodeDateCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeDateCondition(AbstractAttribute attribute, FacesContext context)
 	{
 		
-		Map params = externalContext.getRequestParameterMap();
+		Map params = context.getExternalContext().getRequestParameterMap();
+		if (!params.containsKey(getHtmlNameForDateType(attribute, context)))
+			return null;
+		
 		String typeStr = (String) params.get(getHtmlNameForDateType(attribute, context));
 		String fromMonth = (String) params.get(getHtmlNameForDateFromMonth(attribute, context));
 		String fromYear = (String) params.get(getHtmlNameForDateFromYear(attribute, context));
@@ -971,11 +992,15 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 
-	private QueryCondition decodeDictionaryCondition(AbstractAttribute attribute, FacesContext context, ExternalContext externalContext)
+	private QueryCondition decodeDictionaryCondition(AbstractAttribute attribute, FacesContext context)
 	{
 		
-		String valuesStr = (String) externalContext.getRequestParameterMap().get(
-				getHtmlNameForList(attribute, context));
+		Map params = context.getExternalContext().getRequestParameterMap();
+		String fieldName = getHtmlNameForList(attribute, context);
+		if (!params.containsKey(fieldName))
+			return null;
+		
+		String valuesStr = (String) params.get(fieldName);
 		
 		String[] values = null;
 		if (valuesStr != null && valuesStr.length() > 0)
