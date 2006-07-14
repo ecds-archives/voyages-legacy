@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;

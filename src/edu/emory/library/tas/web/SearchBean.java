@@ -323,10 +323,13 @@ public class SearchBean
 			}
 		}
 		
-		SelectItem sep = new SelectItem();
-		sep.setLabel(ATTRIBUTES_LIST_SEPARATOR_TEXT);
-		sep.setValue(ATTRIBUTES_LIST_SEPARATOR_VALUE);
-		options.add(sep);
+		if (compoundAttributes.length > 0)
+		{
+			SelectItem sep = new SelectItem();
+			sep.setLabel(ATTRIBUTES_LIST_SEPARATOR_TEXT);
+			sep.setValue(ATTRIBUTES_LIST_SEPARATOR_VALUE);
+			options.add(sep);
+		}
 
 		for (int i = 0; i < attributes.length; i++)
 		{
