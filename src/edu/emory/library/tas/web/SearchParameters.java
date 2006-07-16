@@ -4,6 +4,16 @@ import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.util.query.Conditions;
 
+/**
+ * Used by the bean {@link edu.emory.library.tas.web.SearchBean} in order to
+ * pass search parameters collected from
+ * {@link edu.emory.library.tas.web.QueryBuilderComponent}. It contains the
+ * current query, the list of attributes (since we need the columns to the
+ * results) and the type of the user category.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class SearchParameters
 {
 	

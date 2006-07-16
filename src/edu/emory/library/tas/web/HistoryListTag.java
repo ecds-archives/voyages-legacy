@@ -7,6 +7,13 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * JSP tag for {@link edu.emory.library.tas.web.HistoryListComponent}. It does
+ * the standard stuff as a typical JSP tag for a JSF component.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class HistoryListTag extends UIComponentTag
 {
 	

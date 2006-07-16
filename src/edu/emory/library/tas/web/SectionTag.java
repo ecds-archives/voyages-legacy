@@ -3,6 +3,12 @@ package edu.emory.library.tas.web;
 import javax.faces.component.UIComponent;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * JSP tag for {@link edu.emory.library.tas.web.SectionComponent}.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class SectionTag extends UIComponentTag
 {
 	

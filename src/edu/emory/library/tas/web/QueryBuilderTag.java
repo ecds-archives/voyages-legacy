@@ -6,6 +6,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * JSP tag for {@link edu.emory.library.tas.web.QueryBuilderComponent}.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class QueryBuilderTag extends UIComponentTag
 {
 	

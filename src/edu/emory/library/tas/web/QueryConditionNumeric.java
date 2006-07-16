@@ -207,7 +207,31 @@ public class QueryConditionNumeric extends QueryConditionRange
 		this.to = to;
 	}
 
+	public String getFromForDisplay()
+	{
+		return from;
+	}
 
+	public String getToForDisplay()
+	{
+		return to;
+	}
+
+	public String getLeForDisplay()
+	{
+		return le;
+	}
+
+	public String getGeForDisplay()
+	{
+		return ge;
+	}
+
+	public String getEqForDisplay()
+	{
+		return eq;
+	}
+	
 	private boolean compareTextFields(String val1, String val2)
 	{
 		return

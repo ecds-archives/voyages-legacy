@@ -40,12 +40,10 @@ public class UtilsJSF
 		writer.startElement("script", component);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.writeAttribute("language", "javascript", null);
-		//writer.write("\n");
 	}
 
 	public static void encodeJavaScriptEnd(UIComponent component, ResponseWriter writer) throws IOException
 	{
-		//writer.write("\n");
 		writer.endElement("script");
 	}
 	

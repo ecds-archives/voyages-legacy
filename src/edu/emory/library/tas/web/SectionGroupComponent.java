@@ -11,6 +11,33 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
+/**
+ * <p>
+ * This component is a combination of tabs and an expandable box component. If
+ * is contains children only of type {@link SectionComponent}, it renders a
+ * header with tabs with one tab for each child. Otherwise, it only renders
+ * single header text given by the title property.
+ * </p>
+ * <p>
+ * There is a problem related to hiding and showing tabs. If a tab is hidden and
+ * if it contains additional input-type components (like a textbox), the child
+ * components do not receive any request values from their HTML controls since
+ * they are not rendered. And so all hidden components then pass to bean
+ * typically just <code>null</code> values instead of the last visible valied
+ * values. So beans should text the incomming values for <code>null</code>s,
+ * if they are using componends inside this one. But they should do it anyways.
+ * </p>
+ * <p>
+ * Second problem with the hiding is that when a portion of a component tree is
+ * not rendered, the generated sequence of client IDs gets shifted and therefore
+ * some components can get each time different client IDs. So if a components
+ * uses its client ID to name HTML controls of elements, it should get some
+ * fixed ID.
+ * </p>
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class SectionGroupComponent extends UIComponentBase
 {
 	

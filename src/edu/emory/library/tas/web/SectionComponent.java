@@ -3,6 +3,19 @@ package edu.emory.library.tas.web;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 
+/**
+ * <p>
+ * This compoment is supposed to be used only an a child of
+ * {@link edu.emory.library.tas.web.SectionGroupComponent}. In general,
+ * {@link edu.emory.library.tas.web.SectionGroupComponent} can contain several
+ * of these which then form tabs. Each section has a title (displayed in the
+ * tabs) and a section ID (inteded for accessing and manimulating sections).
+ * Otherwise, this components does not do anything, nor it renders any output.
+ * </p>
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class SectionComponent extends UIComponentBase
 {
 	

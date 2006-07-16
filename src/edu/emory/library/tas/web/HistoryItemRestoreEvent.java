@@ -5,6 +5,14 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 
+/**
+ * An event which is fired when a user clicks on the restore button in the
+ * history list. The event holds the history ID of the history item which should
+ * be restore from the history.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class HistoryItemRestoreEvent extends FacesEvent
 {
 

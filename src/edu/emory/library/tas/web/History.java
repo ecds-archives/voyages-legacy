@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class represent the entire history of searches in the search UI.
+ * This class represents the history of searches in the search UI.
  * Basically, it is just a holder for a list of classes of type
  * {@link edu.emory.library.tas.web.HistoryItem}. On top of it, it provides
  * convenience methods for accessing and manipulating the list of history items.

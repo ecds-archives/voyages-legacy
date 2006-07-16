@@ -8,6 +8,7 @@ import java.util.Iterator;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
+import edu.emory.library.tas.util.StringUtils;
 import edu.emory.library.tas.util.query.Conditions;
 
 public class QueryConditionDate extends QueryConditionRange
@@ -414,6 +415,49 @@ public class QueryConditionDate extends QueryConditionRange
 	public void setToYear(String toYear)
 	{
 		this.toYear = toYear;
+	}
+	
+	private String formatDateForDisplay(String month, String year)
+	{
+		boolean hasMonth = StringUtils.isNullOrEmpty(month);
+		boolean hasYear = StringUtils.isNullOrEmpty(year); 
+		if (hasMonth && hasYear)
+		{
+			return month + "/" + year;
+		}
+		else if (hasYear)
+		{
+			return year;
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	public String getFromForDisplay()
+	{
+		return formatDateForDisplay(fromMonth, fromYear);
+	}
+
+	public String getToForDisplay()
+	{
+		return formatDateForDisplay(toMonth, toYear);
+	}
+
+	public String getLeForDisplay()
+	{
+		return formatDateForDisplay(leMonth, leYear);
+	}
+
+	public String getGeForDisplay()
+	{
+		return formatDateForDisplay(geMonth, geYear);
+	}
+
+	public String getEqForDisplay()
+	{
+		return formatDateForDisplay(eqMonth, eqYear);
 	}
 
 	private boolean compareTextFields(String val1, String val2)

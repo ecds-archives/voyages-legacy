@@ -36,6 +36,12 @@ public abstract class QueryConditionRange extends QueryCondition
 	{
 		this.type = type;
 	}
+	
+	public abstract String getFromForDisplay();
+	public abstract String getToForDisplay();
+	public abstract String getLeForDisplay();
+	public abstract String getGeForDisplay();
+	public abstract String getEqForDisplay();
 
 	protected abstract Object clone();
 	

@@ -5,6 +5,14 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 
+/**
+ * An event which is fired when a user clicks on the create permlink button in
+ * the history list. The event holds the history ID of the history item to which
+ * a permlink should be created.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class HistoryItemPermlinkEvent extends FacesEvent
 {
 
