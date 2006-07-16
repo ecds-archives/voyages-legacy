@@ -104,7 +104,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 			return null;
 		}
 		
-		Group.sortByUserLabelOrName(groups);
+		Group.sortByName(groups);
 		CompoundAttributeForDisplay[] compoundAttributesForDisplay =
 			new CompoundAttributeForDisplay[compoundAttributes.length];
 
@@ -122,18 +122,18 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 				if (group.getCompoundAttributes().contains(compAttr))
 				{
 					htmlGroups.append("<div>");
-					htmlGroups.append(group.getUserLabelOrName());
+					htmlGroups.append(makeGroupLabel(group));
 					htmlGroups.append("</div>");
 				}
 			}
 			
 			htmlAttrs.setLength(0);
-			Attribute[] attrsSorted = compAttr.getAttributesSortedByUserLabelOrName();
+			Attribute[] attrsSorted = compAttr.getAttributesSortedByName();
 			for (int j = 0; j < attrsSorted.length; j++)
 			{
 				Attribute attr = attrsSorted[j];
 				htmlAttrs.append("<div>");
-				htmlAttrs.append(attr.getUserLabelOrName());
+				htmlAttrs.append(makeAttributeLabel(attr, false));
 				htmlAttrs.append("</div>");
 			}
 
@@ -146,22 +146,6 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		Arrays.sort(compoundAttributesForDisplay, new AbstractAttributeComparator(listSortBy, listSortAsc));
 		return compoundAttributesForDisplay;
 		
-	}
-	
-	private String makeAttributeLabel(AbstractAttribute attr)
-	{
-		if (attr.getUserLabel() == null || attr.getUserLabel().length() == 0)
-		{
-			return attr.getName() + ": " + 
-			"[no label]" + " " +
-			"(" + attr.getTypeDisplayName() + ")";
-		}
-		else
-		{
-			return attr.getName() + ": " +
-			attr.getUserLabel() + " " + 
-			"(" + attr.getTypeDisplayName() + ")";
-		}
 	}
 	
 	private void moveAttributesToUI(AbstractAttribute[] dbAll, Set dbSelected, List uiAvailable, List uiSelected)
@@ -186,7 +170,7 @@ public class CompoundAttributesBean extends SchemaEditBeanBase
 		{
 			AbstractAttribute attr = dbAll[i];
 			SelectItem item = new SelectItem();
-			item.setText(makeAttributeLabel(attr));
+			item.setText(makeAttributeLabel(attr, true));
 			item.setValue(attr.getId().toString());
 			item.setOrderNumber(i);
 			if (selectedIds.contains(dbAll[i].getId()))

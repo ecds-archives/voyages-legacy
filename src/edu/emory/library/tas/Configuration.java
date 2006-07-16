@@ -105,6 +105,19 @@ public class Configuration {
 		return null;
 	}
 	
+	public static Configuration loadConfiguration(String idStr) {
+		Long id = null;
+		try
+		{
+			id = new Long(idStr);
+		}
+		catch (NumberFormatException nfe)
+		{
+			return null;
+		}
+		return Configuration.loadConfiguration(id);
+	}
+	
 	public String toString() {
 		return "Configuration with id=" + this.id + " " + this.entries;
 	}

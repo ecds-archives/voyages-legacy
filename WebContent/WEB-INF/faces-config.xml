@@ -102,6 +102,20 @@
 		</component-class>
 	</component>
 
+	<component>
+		<component-type>MenuPopup</component-type>
+		<component-class>
+			edu.emory.library.tas.web.MenuPopupComponent
+		</component-class>
+	</component>
+
+	<component>
+		<component-type>MenuSlider</component-type>
+		<component-class>
+			edu.emory.library.tas.web.MenuSliderComponent
+		</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>

@@ -9,6 +9,17 @@ import java.util.Map;
 
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 
+/**
+ * Holds the list of conditions, i.e. objects of types
+ * {@link edu.emory.library.tas.web.QueryCondition}. Represents the currently
+ * built query. Used by {@link edu.emory.library.tas.web.QueryBuilderComponent}.
+ * Also, it is important that this class implements {@link #clone()} and
+ * {@link #equals(Object)} since is the two methods are used when storing and
+ * restoring the query in the history list.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class Query implements Serializable
 {
 

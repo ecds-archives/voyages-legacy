@@ -92,13 +92,41 @@ public class UtilsJSF
 		return js;
 	}
 	
-	public static StringBuffer appendElementRefJS(StringBuffer js, FacesContext context, UIForm form, String id)
+	public static StringBuffer appendElementRefJS(StringBuffer js, String elementId)
 	{
 		js.append("document.");
-		js.append("getElementById('").append(id).append("')");
+		js.append("getElementById('").append(elementId).append("')");
 		return js;
 	}
 	
+	public static StringBuffer appendSetElementStyle(StringBuffer js, String elementId, String style, String value)
+	{
+		appendElementRefJS(js, elementId);
+		js.append(".style.").append(style);
+		js.append(" = '").append(value).append("';");
+		return js;
+	}
+
+	public static StringBuffer appendHideElement(StringBuffer js, String elementId)
+	{
+		return appendSetElementStyle(js, elementId, "display", "none");
+	}
+
+	public static StringBuffer appendShowElement(StringBuffer js, String elementId)
+	{
+		return appendSetElementStyle(js, elementId, "display", "");
+	}
+
+	public static StringBuffer appendToggleElement(StringBuffer js, String elementId)
+	{
+		js.append("{");
+		js.append("var el = ");
+		appendElementRefJS(js, elementId).append("; ");
+		js.append("el.style.display = el.style.display == 'none' ? '' : 'none' ;");
+		js.append("}");
+		return js;
+	}
+
 	public static String getParam(String name)
 	{
 		return (String) FacesContext.getCurrentInstance().getExternalContext().

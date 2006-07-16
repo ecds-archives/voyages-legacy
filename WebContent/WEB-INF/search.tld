@@ -310,4 +310,38 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>menuSlider</name>
+		<tag-class>
+			edu.emory.library.tas.web.MenuSliderTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>items</name>
+		</attribute>
+		<attribute>
+			<name>onMenuSelected</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>menuPopup</name>
+		<tag-class>
+			edu.emory.library.tas.web.MenuPopupTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>items</name>
+		</attribute>
+		<attribute>
+			<name>onMenuSelected</name>
+		</attribute>
+	</tag>
+
 </taglib>

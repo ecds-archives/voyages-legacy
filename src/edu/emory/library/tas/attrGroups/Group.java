@@ -33,12 +33,15 @@ public class Group implements Serializable, VisibleColumn {
 
 	private String description;
 	
-	private CompoundAttribute[] compoundAttributesSortedByUserLabelOrName = null;
-	private CompoundAttribute[] compoundAttributesSortedByUserLabel = null;
-	private CompoundAttribute[] compoundAttributesSortedByName = null;
 	private Attribute[] attributesSortedByUserLabelOrName = null;
 	private Attribute[] attributesSortedByUserLabel = null;
 	private Attribute[] attributesSortedByName = null;
+	private CompoundAttribute[] compoundAttributesSortedByUserLabelOrName = null;
+	private CompoundAttribute[] compoundAttributesSortedByUserLabel = null;
+	private CompoundAttribute[] compoundAttributesSortedByName = null;
+	private AbstractAttribute[] allAttributesSortedByUserLabelOrName = null;
+	private AbstractAttribute[] allAttributesSortedByUserLabel = null;
+	private AbstractAttribute[] allAttributesSortedByName = null;
 
 	public Group() {
 	}
@@ -84,68 +87,6 @@ public class Group implements Serializable, VisibleColumn {
 		return (Group) list.get(0);
 	}
 
-	public Set getCompoundAttributes()
-	{
-		return compoundAttributes;
-	}
-
-	public void setCompoundAttributes(Set groups)
-	{
-		clearCachedInfoForCompoundAttributes();
-		this.compoundAttributes = groups;
-	}
-	
-	private void clearCachedInfoForCompoundAttributes()
-	{
-		compoundAttributesSortedByName = null;
-		compoundAttributesSortedByUserLabel = null;
-		compoundAttributesSortedByUserLabelOrName = null;
-	}
-	
-	public int noOfCompoundAttributesInCategory(int category)
-	{
-		int n = 0;
-		for (Iterator iter = compoundAttributes.iterator(); iter.hasNext();)
-		{
-			CompoundAttribute attr = (CompoundAttribute) iter.next();
-			if (attr.isVisibleByCategory(category)) n++;
-		}
-		return n;
-	}
-	
-	public CompoundAttribute[] getCompoundAttributesSortedByUserLabelOrName()
-	{
-		if (compoundAttributesSortedByUserLabelOrName == null)
-		{
-			compoundAttributesSortedByUserLabelOrName = new CompoundAttribute[compoundAttributes.size()];
-			compoundAttributes.toArray(compoundAttributesSortedByUserLabelOrName);
-			CompoundAttribute.sortByUserLabelOrName(compoundAttributesSortedByUserLabelOrName);
-		}
-		return compoundAttributesSortedByUserLabelOrName;
-	}
-
-	public CompoundAttribute[] getCompoundAttributesSortedByUserLabel()
-	{
-		if (compoundAttributesSortedByUserLabel == null)
-		{
-			compoundAttributesSortedByUserLabel = new CompoundAttribute[compoundAttributes.size()];
-			compoundAttributes.toArray(compoundAttributesSortedByUserLabel);
-			CompoundAttribute.sortByUserLabel(compoundAttributesSortedByUserLabel);
-		}
-		return compoundAttributesSortedByUserLabel;
-	}
-
-	public CompoundAttribute[] getCompoundAttributesSortedByName()
-	{
-		if (compoundAttributesSortedByName == null)
-		{
-			compoundAttributesSortedByName = new CompoundAttribute[compoundAttributes.size()];
-			compoundAttributes.toArray(compoundAttributesSortedByName);
-			CompoundAttribute.sortByName(compoundAttributesSortedByName);
-		}
-		return compoundAttributesSortedByName;
-	}
-
 	public Long getId()
 	{
 		return id;
@@ -156,86 +97,6 @@ public class Group implements Serializable, VisibleColumn {
 		this.id = id;
 	}
 
-	public Set getAttributes()
-	{
-		return attributes;
-	}
-
-	public void setAttributes(Set attributes)
-	{
-		clearCachedInfoForAttributes();
-		this.attributes = attributes;
-	}
-	
-	private void clearCachedInfoForAttributes()
-	{
-		attributesSortedByName = null;
-		attributesSortedByUserLabel = null;
-		attributesSortedByUserLabelOrName = null;
-	}
-
-//	public Attribute[] getAttributesVisibleByCategory(int category)
-//	{
-//		List attributesVisible = new ArrayList();
-//		for (Iterator iter = attributes.iterator(); iter.hasNext();)
-//		{
-//			Attribute attr = (Attribute) iter.next();
-//			if (attr.isVisibleByCategory(category)) attributesVisible.add(attr);
-//		}
-//		Attribute[] attributesVisibleArray = new Attribute[attributesVisible.size()];
-//		attributesVisible.toArray(attributesVisibleArray);
-//		return attributesVisibleArray;
-//	}
-	
-	public int noOfAllAttributesInCategory(int category)
-	{
-		return noOfAttributesInCategory(category) + noOfCompoundAttributesInCategory(category);
-	}
-
-	public int noOfAttributesInCategory(int category)
-	{
-		int n = 0;
-		for (Iterator iter = attributes.iterator(); iter.hasNext();)
-		{
-			Attribute attr = (Attribute) iter.next();
-			if (attr.isVisibleByCategory(category)) n++;
-		}
-		return n;
-	}
-
-	public Attribute[] getAttributesSortedByUserLabelOrName()
-	{
-		if (attributesSortedByUserLabelOrName == null)
-		{
-			attributesSortedByUserLabelOrName = new Attribute[attributes.size()];
-			attributes.toArray(attributesSortedByUserLabelOrName);
-			Attribute.sortByUserLabelOrName(attributesSortedByUserLabelOrName);
-		}
-		return attributesSortedByUserLabelOrName;
-	}
-
-	public Attribute[] getAttributesSortedByUserLabel()
-	{
-		if (attributesSortedByUserLabel == null)
-		{
-			attributesSortedByUserLabel = new Attribute[attributes.size()];
-			attributes.toArray(attributesSortedByUserLabel);
-			Attribute.sortByUserLabel(attributesSortedByUserLabel);
-		}
-		return attributesSortedByUserLabel;
-	}
-
-	public Attribute[] getAttributesSortedByName()
-	{
-		if (attributesSortedByName == null)
-		{
-			attributesSortedByName = new Attribute[attributes.size()];
-			attributes.toArray(attributesSortedByName);
-			Attribute.sortByName(attributesSortedByName);
-		}
-		return attributesSortedByName;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -259,7 +120,234 @@ public class Group implements Serializable, VisibleColumn {
 			return name;
 		return name;
 	}
+	
+	public void setObjectType(ObjectType objectType) {
+		this.objectType = objectType;
+	}
 
+	public ObjectType getObjectType() {
+		return objectType;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Integer getType() {
+		return new Integer(AbstractAttribute.TYPE_STRING);
+	}
+
+	public Set getAttributes()
+	{
+		return attributes;
+	}
+
+	public void setAttributes(Set attributes)
+	{
+		clearCachedInfoForAttributes();
+		this.attributes = attributes;
+	}
+	
+	public Set getCompoundAttributes()
+	{
+		return compoundAttributes;
+	}
+
+	public void setCompoundAttributes(Set groups)
+	{
+		clearCachedInfoForCompoundAttributes();
+		this.compoundAttributes = groups;
+	}
+	
+	private void clearCachedInfoForAttributes()
+	{
+		attributesSortedByName = null;
+		attributesSortedByUserLabel = null;
+		attributesSortedByUserLabelOrName = null;
+		allAttributesSortedByName = null;
+		allAttributesSortedByUserLabel = null;
+		allAttributesSortedByUserLabelOrName = null;
+	}
+
+	private void clearCachedInfoForCompoundAttributes()
+	{
+		compoundAttributesSortedByName = null;
+		compoundAttributesSortedByUserLabel = null;
+		compoundAttributesSortedByUserLabelOrName = null;
+		allAttributesSortedByName = null;
+		allAttributesSortedByUserLabel = null;
+		allAttributesSortedByUserLabelOrName = null;
+	}
+	
+
+	public int getAttributesCount() {
+		if (attributes == null) return 0;
+		return attributes.size();
+	}
+
+	public int getCompoundAttributesCount() {
+		if (compoundAttributes == null) return 0;
+		return compoundAttributes.size();
+	}
+	
+	public int noOfCompoundAttributesInCategory(int category)
+	{
+		int n = 0;
+		for (Iterator iter = compoundAttributes.iterator(); iter.hasNext();)
+		{
+			CompoundAttribute attr = (CompoundAttribute) iter.next();
+			if (attr.isVisibleByCategory(category)) n++;
+		}
+		return n;
+	}
+	
+	public int noOfAttributesInCategory(int category)
+	{
+		int n = 0;
+		for (Iterator iter = attributes.iterator(); iter.hasNext();)
+		{
+			Attribute attr = (Attribute) iter.next();
+			if (attr.isVisibleByCategory(category)) n++;
+		}
+		return n;
+	}
+
+	public int noOfAllAttributesInCategory(int category)
+	{
+		return noOfAttributesInCategory(category) + noOfCompoundAttributesInCategory(category);
+	}
+	
+	private Attribute[] createAttributesArray()
+	{
+		Attribute arr[] = new Attribute[getAttributesCount()];
+		attributes.toArray(arr);
+		return arr;
+	}
+	
+	public Attribute[] getAttributesSortedByUserLabelOrName()
+	{
+		if (attributesSortedByUserLabelOrName == null)
+		{
+			attributesSortedByUserLabelOrName = createAttributesArray();
+			Attribute.sortByUserLabelOrName(attributesSortedByUserLabelOrName);
+		}
+		return attributesSortedByUserLabelOrName;
+	}
+
+	public Attribute[] getAttributesSortedByUserLabel()
+	{
+		if (attributesSortedByUserLabel == null)
+		{
+			attributesSortedByUserLabel = createAttributesArray();
+			Attribute.sortByUserLabel(attributesSortedByUserLabel);
+		}
+		return attributesSortedByUserLabel;
+	}
+
+	public Attribute[] getAttributesSortedByName()
+	{
+		if (attributesSortedByName == null)
+		{
+			attributesSortedByName = createAttributesArray();
+			Attribute.sortByName(attributesSortedByName);
+		}
+		return attributesSortedByName;
+	}
+	
+	private CompoundAttribute[] createCompoundAttributesArray()
+	{
+		CompoundAttribute arr[] = new CompoundAttribute[getCompoundAttributesCount()];
+		compoundAttributes.toArray(arr);
+		return arr;
+	}
+	
+	public CompoundAttribute[] getCompoundAttributesSortedByUserLabelOrName()
+	{
+		if (compoundAttributesSortedByUserLabelOrName == null)
+		{
+			compoundAttributesSortedByUserLabelOrName = createCompoundAttributesArray();
+			CompoundAttribute.sortByUserLabelOrName(compoundAttributesSortedByUserLabelOrName);
+		}
+		return compoundAttributesSortedByUserLabelOrName;
+	}
+
+	public CompoundAttribute[] getCompoundAttributesSortedByUserLabel()
+	{
+		if (compoundAttributesSortedByUserLabel == null)
+		{
+			compoundAttributesSortedByUserLabel = createCompoundAttributesArray();
+			CompoundAttribute.sortByUserLabel(compoundAttributesSortedByUserLabel);
+		}
+		return compoundAttributesSortedByUserLabel;
+	}
+
+	public CompoundAttribute[] getCompoundAttributesSortedByName()
+	{
+		if (compoundAttributesSortedByName == null)
+		{
+			compoundAttributesSortedByName = createCompoundAttributesArray();
+			CompoundAttribute.sortByName(compoundAttributesSortedByName);
+		}
+		return compoundAttributesSortedByName;
+	}
+	
+	private AbstractAttribute[] createAllAttributesArray()
+	{
+		AbstractAttribute[] arr = new AbstractAttribute[getAttributesCount() + getCompoundAttributesCount()];
+		int i = 0;
+		if (attributes != null)
+		{
+			for (Iterator iter = attributes.iterator(); iter.hasNext();)
+			{
+				Attribute attr = (Attribute) iter.next();
+				arr[i++] = attr; 
+			}
+		}
+		if (compoundAttributes != null)
+		{
+			for (Iterator iter = compoundAttributes.iterator(); iter.hasNext();)
+			{
+				CompoundAttribute compAttr = (CompoundAttribute) iter.next();
+				arr[i++] = compAttr; 
+			}
+		}
+		return arr;
+	}
+
+	public AbstractAttribute[] getAllAttributesSortedByUserLabelOrName()
+	{
+		if (allAttributesSortedByUserLabelOrName == null)
+		{
+			allAttributesSortedByUserLabelOrName = createAllAttributesArray();
+			AbstractAttribute.sortByUserLabelOrName(allAttributesSortedByUserLabelOrName);
+		}
+		return allAttributesSortedByUserLabelOrName;
+	}
+
+	public AbstractAttribute[] getAllAttributesSortedByUserLabel()
+	{
+		if (allAttributesSortedByUserLabel == null)
+		{
+			allAttributesSortedByUserLabel = createAllAttributesArray();
+			AbstractAttribute.sortByUserLabel(allAttributesSortedByUserLabel);
+		}
+		return allAttributesSortedByUserLabel;
+	}
+
+	public AbstractAttribute[] getAllAttributesSortedByName()
+	{
+		if (allAttributesSortedByName == null)
+		{
+			allAttributesSortedByName = createAllAttributesArray();
+			AbstractAttribute.sortByName(allAttributesSortedByName);
+		}
+		return allAttributesSortedByName;
+	}
+	
 	public String toLongString() {
 		return "Group: " + "id = " + this.id + "\n" + "name = " + this.name
 				+ "\n" + "description = " + this.description + "\n"
@@ -274,34 +362,6 @@ public class Group implements Serializable, VisibleColumn {
 		} else {
 			return this.name;
 		}
-	}
-
-	public ObjectType getObjectType() {
-		return objectType;
-	}
-
-	public void setObjectType(ObjectType objectType) {
-		this.objectType = objectType;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getAttributesCount() {
-		if (attributes == null)
-			return 0;
-		return attributes.size();
-	}
-
-	public int getCompoundAttributesCount() {
-		if (compoundAttributes == null)
-			return 0;
-		return compoundAttributes.size();
 	}
 
 	public static class UserLabelComparator implements Comparator {
@@ -346,10 +406,6 @@ public class Group implements Serializable, VisibleColumn {
 	
 	public String encodeToString() {
 		return "Group_" + this.getId();
-	}
-
-	public Integer getType() {
-		return new Integer(AbstractAttribute.TYPE_STRING);
 	}
 
 }

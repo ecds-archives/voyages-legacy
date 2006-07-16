@@ -159,7 +159,7 @@ public class SectionGroupComponent extends UIComponentBase
 		StringBuffer jsOnClick = new StringBuffer();
 		
 		jsOnClick.append("var box = ");
-		UtilsJSF.appendElementRefJS(jsOnClick, context, form, getClientId(context));
+		UtilsJSF.appendElementRefJS(jsOnClick, getClientId(context));
 		jsOnClick.append("; ");
 		
 		jsOnClick.append("var state = ");
@@ -167,7 +167,7 @@ public class SectionGroupComponent extends UIComponentBase
 		jsOnClick.append("; ");
 		
 		jsOnClick.append("var img = ");
-		UtilsJSF.appendElementRefJS(jsOnClick, context, form, imgId);
+		UtilsJSF.appendElementRefJS(jsOnClick, imgId);
 		jsOnClick.append("; ");
 
 		jsOnClick.append("if (state.value == '").append(COLLAPSED).append("') {");

@@ -4,6 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This class represent the entire history of searches in the search UI.
+ * Basically, it is just a holder for a list of classes of type
+ * {@link edu.emory.library.tas.web.HistoryItem}. On top of it, it provides
+ * convenience methods for accessing and manipulating the list of history items.
+ * It is the data format used by the history list component
+ * {@link edu.emory.library.tas.web.HistoryListComponent}. The
+ * {@link edu.emory.library.tas.web.HistoryListComponent} does not, however,
+ * hold internally the history list, since it does not need to modify it.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class History
 {
 	

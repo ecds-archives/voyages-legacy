@@ -16,6 +16,11 @@ import javax.faces.event.FacesEvent;
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.util.StringUtils;
 
+/**
+ * 
+ * @author Jan Zich
+ *
+ */
 public class HistoryListComponent extends UIComponentBase
 {
 	

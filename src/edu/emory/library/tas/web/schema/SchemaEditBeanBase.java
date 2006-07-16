@@ -4,6 +4,10 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
+import edu.emory.library.tas.attrGroups.AbstractAttribute;
+import edu.emory.library.tas.attrGroups.Group;
+import edu.emory.library.tas.util.StringUtils;
+
 public class SchemaEditBeanBase
 {
 
@@ -16,6 +20,21 @@ public class SchemaEditBeanBase
 	
 	private int scrollPosX = 0;
 	private int scrollPosY = 0;
+	
+	protected String makeAttributeLabel(AbstractAttribute attr, boolean includeType)
+	{
+		return
+			(attr.getName()) + ": " +
+			(StringUtils.isNullOrEmpty(attr.getUserLabel()) ? "[no label]" : attr.getUserLabel()) + " " + 
+			(includeType ? "(" + attr.getTypeDisplayName() + ")" : "");
+	}
+	
+	protected String makeGroupLabel(Group group)
+	{
+		return
+			(group.getName()) + ": " +
+			(StringUtils.isNullOrEmpty(group.getUserLabel()) ? "[no label]" : group.getUserLabel()); 
+	}
 
 	public String getScrollToJavaScript()
 	{

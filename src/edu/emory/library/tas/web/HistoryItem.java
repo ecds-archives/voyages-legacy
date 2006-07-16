@@ -1,6 +1,14 @@
 package edu.emory.library.tas.web;
 
-
+/**
+ * This class represents a sinle item in the histoty list in the search UI. In
+ * fact, it only contains a query of the type
+ * {@link edu.emory.library.tas.web.Query} and a history ID. The history ID is
+ * used to access, reffer and manipulate the history items in the history list.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class HistoryItem
 {
 

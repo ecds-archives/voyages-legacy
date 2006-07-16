@@ -100,8 +100,8 @@ public class AttributesBean extends SchemaEditBeanBase
 			return null;
 		}
 
-		AbstractAttribute.sortByUserLabelOrName(compoundAttributes);
-		Group.sortByUserLabelOrName(groups);
+		AbstractAttribute.sortByName(compoundAttributes);
+		Group.sortByName(groups);
 		AttributeForDisplay[] attributesForDisplay = new AttributeForDisplay[attributes.length];
 
 		StringBuffer htmlCompAttrs = new StringBuffer();
@@ -119,7 +119,7 @@ public class AttributesBean extends SchemaEditBeanBase
 				if (compAttr.getAttributes().contains(attr))
 				{
 					htmlCompAttrs.append("<div>");
-					htmlCompAttrs.append(compAttr.getUserLabelOrName());
+					htmlCompAttrs.append(makeAttributeLabel(compAttr, false));
 					htmlCompAttrs.append("</div>");
 				}
 			}
@@ -134,9 +134,9 @@ public class AttributesBean extends SchemaEditBeanBase
 					if (compAttr.getAttributes().contains(attr))
 					{
 						htmlProxiedGroups.append("<div>");
-						htmlProxiedGroups.append(group.getUserLabelOrName());
+						htmlProxiedGroups.append(makeGroupLabel(group));
 						htmlProxiedGroups.append(" (by ");
-						htmlProxiedGroups.append(compAttr.getUserLabelOrName());
+						htmlProxiedGroups.append(makeAttributeLabel(compAttr, false));
 						htmlProxiedGroups.append(")</div>");
 					}
 				}
@@ -149,7 +149,7 @@ public class AttributesBean extends SchemaEditBeanBase
 				if (group.getAttributes().contains(attr))
 				{
 					htmlGroups.append("<div>");
-					htmlGroups.append(group.getUserLabelOrName());
+					htmlGroups.append(makeGroupLabel(group));
 					htmlGroups.append("</div>");
 				}
 			}

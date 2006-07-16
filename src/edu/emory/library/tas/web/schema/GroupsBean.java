@@ -94,22 +94,22 @@ public class GroupsBean extends SchemaEditBeanBase
 			Group group = (Group) groups[i];
 			
 			htmlCompAttrs.setLength(0);
-			CompoundAttribute[] compAttrsSorted = group.getCompoundAttributesSortedByUserLabel(); 
+			CompoundAttribute[] compAttrsSorted = group.getCompoundAttributesSortedByName(); 
 			for (int j = 0; j < compAttrsSorted.length; j++)
 			{
 				CompoundAttribute compAttr = compAttrsSorted[j];
 				htmlCompAttrs.append("<div>");
-				htmlCompAttrs.append(compAttr.getUserLabelOrName());
+				htmlCompAttrs.append(makeAttributeLabel(compAttr, false));
 				htmlCompAttrs.append("</div>");
 			}
 			
 			htmlAttrs.setLength(0);
-			Attribute[] attrsSorted = group.getAttributesSortedByUserLabelOrName();
+			Attribute[] attrsSorted = group.getAttributesSortedByName();
 			for (int j = 0; j < attrsSorted.length; j++)
 			{
 				Attribute attr = attrsSorted[j];
 				htmlAttrs.append("<div>");
-				htmlAttrs.append(attr.getUserLabelOrName());
+				htmlAttrs.append(makeAttributeLabel(attr, false));
 				htmlAttrs.append("</div>");
 			}
 			
@@ -123,9 +123,9 @@ public class GroupsBean extends SchemaEditBeanBase
 					if (compAttr.getAttributes().contains(attr))
 					{
 						htmlProxiedAttrs.append("<div>");
-						htmlProxiedAttrs.append(attr.getUserLabelOrName());
+						htmlProxiedAttrs.append(makeAttributeLabel(attr, false));
 						htmlProxiedAttrs.append(" (by ");
-						htmlProxiedAttrs.append(compAttr.getUserLabelOrName());
+						htmlProxiedAttrs.append(makeAttributeLabel(compAttr, false));
 						htmlProxiedAttrs.append(")</div>");
 					}
 				}
@@ -141,18 +141,6 @@ public class GroupsBean extends SchemaEditBeanBase
 		Arrays.sort(groupsForDisplay, new GroupComparator(listSortBy, listSortAsc));
 		return groupsForDisplay;
 		
-	}
-	
-	private String makeAttributeLabel(AbstractAttribute attr)
-	{
-		if (attr.getUserLabel() == null || attr.getUserLabel().length() == 0)
-		{
-			return attr.getName() + ": [no label]";
-		}
-		else
-		{
-			return attr.getName() + ": " + attr.getUserLabel();
-		}
 	}
 	
 	private void moveAttributesToUI(AbstractAttribute[] dbAll, Set dbSelected, List uiAvailable, List uiSelected)
@@ -177,7 +165,7 @@ public class GroupsBean extends SchemaEditBeanBase
 		{
 			AbstractAttribute attr = dbAll[i];
 			SelectItem item = new SelectItem();
-			item.setText(makeAttributeLabel(attr));
+			item.setText(makeAttributeLabel(attr, false));
 			item.setValue(attr.getId().toString());
 			item.setOrderNumber(i);
 			if (selectedIds.contains(dbAll[i].getId()))

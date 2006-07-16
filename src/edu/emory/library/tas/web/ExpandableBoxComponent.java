@@ -79,7 +79,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		StringBuffer js = new StringBuffer();
 		
 		js.append("var box = ");
-		UtilsJSF.appendElementRefJS(js, context, form, getClientId(context));
+		UtilsJSF.appendElementRefJS(js, getClientId(context));
 		js.append("; ");
 		
 		js.append("var state = ");
@@ -87,7 +87,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		js.append("; ");
 
 		js.append("var symbol = ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdWithSymbolId);
+		UtilsJSF.appendElementRefJS(js, tdWithSymbolId);
 		js.append("; ");
 
 		js.append("if (state.value == '").append(COLLAPSED).append("') {");

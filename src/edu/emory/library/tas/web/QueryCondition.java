@@ -7,6 +7,18 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
 import edu.emory.library.tas.util.query.Conditions;
 
+/**
+ * This class represents one condition in the list of conditions, represented by
+ * {@link edu.emory.library.tas.web.Query}, in the currently built query in the
+ * search UI. It is abstract. It provides only the necessary methods and
+ * properties for specialized conditions. It is important that this class and,
+ * in particular, its descendants implement {@link #clone()} and
+ * {@link #equals(Object)} since is the two methods are used when storing and
+ * restoring the query in the history list.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public abstract class QueryCondition implements Serializable
 {
 	

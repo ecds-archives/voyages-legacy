@@ -1,9 +1,7 @@
 package edu.emory.library.tas.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
@@ -14,92 +12,81 @@ import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
+import edu.emory.library.tas.util.StringUtils;
 
+/**
+ * 
+ * @author Jan Zich
+ *
+ */
 public class QueryBuilderComponent extends UIComponentBase
 {
 
 	private Query submittedQuery;
 	private Query setQuery;
 	private boolean querySet = false;
-	private List attributes;
 
 	public String getFamily()
 	{
 		return null;
 	}
 
-	public Object saveState(FacesContext context)
+	private String getAttributesListHiddenFieldName(FacesContext context)
 	{
-		Object values[] = new Object[2];
-		values[0] = super.saveState(context);
-		values[1] = saveAttachedState(context, attributes);
-		return values;
+		return getClientId(context) + "_attributes";
 	}
 
-	public void restoreState(FacesContext context, Object state)
-	{
-		Object values[] = (Object[]) state;
-		super.restoreState(context, values[0]);
-		attributes = (List) restoreAttachedState(context, values[1]);
-	}
-	
-//	private String getToDeleteHiddenFieldName(FacesContext context)
-//	{
-//		return getClientId(context) + "_to_delete";
-//	}
-
-//	private String getAttributesListHiddenFieldName(FacesContext context)
-//	{
-//		return getClientId(context) + "_attributes";
-//	}
-
-	private String getAttributeHiddenFieldName(FacesContext context)
-	{
-		return getClientId(context) + "_attribute";
-	}
-	
 	public void decode(FacesContext context)
 	{
 		
-//		ExternalContext externalContex = context.getExternalContext();
-//		Map params = context.getExternalContext().getRequestParameterMap();
+		Map params = context.getExternalContext().getRequestParameterMap();
 		
-//		String toDelete = (String) externalContex.getRequestParameterMap().get(
-//				getToDeleteHiddenFieldName(context));
+		String attrFieldName = getAttributesListHiddenFieldName(context); 
+		if (!params.containsKey(attrFieldName))
+		{
+			submittedQuery = null;
+			return;
+		}
 		
+		String submittedAttributesStr = (String) params.get(attrFieldName);
 		submittedQuery = new Query();
-		for (Iterator iterAtrribute = attributes.iterator(); iterAtrribute.hasNext();)
+
+		if (!StringUtils.isNullOrEmpty(submittedAttributesStr))
 		{
 			
-			AbstractAttribute attribute = (AbstractAttribute) iterAtrribute.next();
-			
-//			if (attribute.getId().toString().equals(toDelete))
-//				continue;
-			
-			QueryCondition queryCondition = null;
-			switch (attribute.getType().intValue())
+			String[] submittedAttributes = submittedAttributesStr.split(",");
+			for (int i = 0; i < submittedAttributes.length; i++)
 			{
-				case AbstractAttribute.TYPE_STRING:
-					queryCondition = decodeSimpleCondition(attribute, context); 
-					break;
-
-				case AbstractAttribute.TYPE_INTEGER:
-				case AbstractAttribute.TYPE_LONG:
-				case AbstractAttribute.TYPE_FLOAT:
-					queryCondition = decodeNumericCondition(attribute, context);
-					break;
-			
-				case AbstractAttribute.TYPE_DATE:
-					queryCondition = decodeDateCondition(attribute, context);
-					break;
-
-				case AbstractAttribute.TYPE_DICT:
-					queryCondition = decodeDictionaryCondition(attribute, context);
-					break;
+				
+				AbstractAttribute attribute = (AbstractAttribute)
+					AbstractAttribute.loadById(new Long(submittedAttributes[i]));
+				
+				QueryCondition queryCondition = null;
+				switch (attribute.getType().intValue())
+				{
+					case AbstractAttribute.TYPE_STRING:
+						queryCondition = decodeSimpleCondition(attribute, context); 
+						break;
+	
+					case AbstractAttribute.TYPE_INTEGER:
+					case AbstractAttribute.TYPE_LONG:
+					case AbstractAttribute.TYPE_FLOAT:
+						queryCondition = decodeNumericCondition(attribute, context);
+						break;
+				
+					case AbstractAttribute.TYPE_DATE:
+						queryCondition = decodeDateCondition(attribute, context);
+						break;
+	
+					case AbstractAttribute.TYPE_DICT:
+						queryCondition = decodeDictionaryCondition(attribute, context);
+						break;
+				}
+				
+				if (queryCondition != null)
+					submittedQuery.addCondition(queryCondition);
+				
 			}
-			
-			if (queryCondition != null)
-				submittedQuery.addCondition(queryCondition);
 			
 		}
 		
@@ -108,7 +95,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	public void processUpdates(FacesContext context)
 	{
 		ValueBinding vb = getValueBinding("query");
-		if (vb != null) vb.setValue(context, submittedQuery);
+		if (vb != null && submittedQuery != null) vb.setValue(context, submittedQuery);
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException
@@ -118,18 +105,29 @@ public class QueryBuilderComponent extends UIComponentBase
 		UIForm form = UtilsJSF.getForm(this, context);
 		
 		Query query = getQuery();
-		attributes = new ArrayList();
+		//attributes = new ArrayList();
 		
-//		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context));
-//		UtilsJSF.encodeHiddenInput(this, writer, getAttributesListHiddenFieldName(context));
+		StringBuffer attributeIds = new StringBuffer();
+		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();)
+		{
+			QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
+			AbstractAttribute attribute = queryCondition.getAttribute();
+			if (attributeIds.length() > 0) attributeIds.append(",");
+			attributeIds.append(attribute.getId().toString());
+		}
+		
+		UtilsJSF.encodeHiddenInput(this, writer,
+				getAttributesListHiddenFieldName(context),
+				attributeIds.toString());
 		
 		int i = 0;
 		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();  i++)
 		{
 			
 			QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
-			AbstractAttribute attribute = queryCondition.getAttribute(); 
-			attributes.add(attribute);
+			AbstractAttribute attribute = queryCondition.getAttribute();
+			
+			//attributes.add(attribute);
 			
 			switch (attribute.getType().intValue())
 			{
@@ -172,7 +170,6 @@ public class QueryBuilderComponent extends UIComponentBase
 					break;
 
 			}
-
 			
 		}
 
@@ -233,47 +230,114 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeConditionButtons(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer, int conditionIndex) throws IOException
 	{
 		
-//		String jsToDelete = UtilsJSF.generateSubmitJS(context, form,
-//				getToDeleteHiddenFieldName(context), 
-//				queryCondition.getAttribute().getId().toString());
-		
 		String conditionDivId = getConditionDivId(context, conditionIndex);
-//		String attrListFieldName = getAttributesListHiddenFieldName(context);
+		String attrListFieldName = getAttributesListHiddenFieldName(context);
+		String conditionId = queryCondition.getAttribute().getId().toString();
 
 		StringBuffer jsDelete = new StringBuffer();
 		jsDelete.append("var cond = ");
-		UtilsJSF.appendElementRefJS(jsDelete, context, form, conditionDivId);
-		jsDelete.append("; ");
-		jsDelete.append("cond.parentNode.removeChild(cond);");
+		UtilsJSF.appendElementRefJS(jsDelete, conditionDivId).append("; ");
+		jsDelete.append("var attrListField = ");
+		UtilsJSF.appendFormElementRefJS(jsDelete, context, form, attrListFieldName).append("; ");
+		jsDelete.append("var attrs = attrListField.value.split(','); ");
+		jsDelete.append("for (var i=0; i<attrs.length; i++) {");
+		{
+			jsDelete.append("if (attrs[i] == '").append(conditionId).append("') {");
+			{
+				jsDelete.append("attrs.splice(i, 1); ");
+				jsDelete.append("attrListField.value = attrs.join(','); ");
+				jsDelete.append("if (Scriptaculous) {");
+				{
+					jsDelete.append("new Effect.Opacity(");
+					jsDelete.append("cond, ");
+					jsDelete.append("{");
+					{
+						jsDelete.append("from: 1.0, ");
+						jsDelete.append("to: 0.0, ");
+						jsDelete.append("duration: 0.5, ");
+						jsDelete.append("afterFinishInternal: function(effect) ");
+						jsDelete.append("{effect.element.parentNode.removeChild(effect.element);}");
+					}
+					jsDelete.append("}");
+					jsDelete.append(");");
+				}
+				jsDelete.append("} else {");
+				{
+					jsDelete.append("cond.parentNode.removeChild(cond);");
+				}
+				jsDelete.append("}");
+				jsDelete.append("return;");
+			}
+			jsDelete.append("}");
+		}
+		jsDelete.append("}");
+
 
 		StringBuffer jsMoveUp = new StringBuffer();
 		jsMoveUp.append("var cond = ");
-		UtilsJSF.appendElementRefJS(jsMoveUp, context, form, conditionDivId);
-		jsMoveUp.append("; ");
-		jsMoveUp.append("var prevCond = cond.previousSibling; ");
-		jsMoveUp.append("if (prevCond != null) {");
-		jsMoveUp.append("var parent = cond.parentNode; ");
-		jsMoveUp.append("parent.removeChild(cond); ");
-		jsMoveUp.append("parent.insertBefore(cond, prevCond);");
-//		jsMoveUp.append("var attrListField = ");
-//		UtilsJSF.appendFormElementRefJS(jsMoveUp, context, form, attrListFieldName);
-//		jsMoveUp.append("; ");
-//		jsMoveUp.append("var attrList = attrListField.value.split(','); ");
-//		jsMoveUp.append("var attrList = attrListField.value.split(','); ");
+		UtilsJSF.appendElementRefJS(jsMoveUp, conditionDivId).append("; ");
+		jsMoveUp.append("var attrListField = ");
+		UtilsJSF.appendFormElementRefJS(jsMoveUp, context, form, attrListFieldName).append("; ");
+		jsMoveUp.append("var attrs = attrListField.value.split(','); ");
+		jsMoveUp.append("for (var i=0; i<attrs.length; i++) {");
+		{
+			jsMoveUp.append("if (attrs[i] == '").append(conditionId).append("') {");
+			{
+				jsMoveUp.append("if (i != 0) {");
+				{
+					jsMoveUp.append("var prevCond = cond.previousSibling; ");
+					jsMoveUp.append("var parent = cond.parentNode; ");
+					jsMoveUp.append("parent.removeChild(cond); ");
+					jsMoveUp.append("parent.insertBefore(cond, prevCond); ");
+					jsMoveUp.append("attrs[i] = attrs[i-1]; ");
+					jsMoveUp.append("attrs[i-1] = '").append(conditionId).append("'; ");
+					jsMoveUp.append("attrListField.value = attrs.join(',');");
+					jsMoveUp.append("if (Scriptaculous) {");
+					{
+						jsMoveUp.append("Element.setOpacity(cond, 0); ");
+						jsMoveUp.append("Effect.Appear(cond, {duration: 0.5});");
+					}
+					jsMoveUp.append("} ");
+				}
+				jsMoveUp.append("} ");
+				jsMoveUp.append("return;");
+			}
+			jsMoveUp.append("}");
+		}
 		jsMoveUp.append("}");
-
+		
 		StringBuffer jsMoveDown = new StringBuffer();
 		jsMoveDown.append("var cond = ");
-		UtilsJSF.appendElementRefJS(jsMoveDown, context, form, conditionDivId);
-		jsMoveDown.append("; ");
-		jsMoveDown.append("var nextCond = cond.nextSibling; ");
-		jsMoveDown.append("if (nextCond != null) {");
-		jsMoveDown.append("var nextNextCond = nextCond.nextSibling; ");
-		jsMoveDown.append("if (nextNextCond != null) {");
-		jsMoveDown.append("var parent = cond.parentNode; ");
-		jsMoveDown.append("parent.removeChild(cond); ");
-		jsMoveDown.append("parent.insertBefore(cond, nextNextCond);");
-		jsMoveDown.append("}}");
+		UtilsJSF.appendElementRefJS(jsMoveDown, conditionDivId).append("; ");
+		jsMoveDown.append("var attrListField = ");
+		UtilsJSF.appendFormElementRefJS(jsMoveDown, context, form, attrListFieldName).append("; ");
+		jsMoveDown.append("var attrs = attrListField.value.split(','); ");
+		jsMoveDown.append("for (var i=0; i<attrs.length; i++) {");
+		{
+			jsMoveDown.append("if (attrs[i] == '").append(conditionId).append("') {");
+			{
+				jsMoveDown.append("if (i != attrs.length-1) {");
+				{
+					jsMoveDown.append("var nextNextCond = cond.nextSibling.nextSibling; ");
+					jsMoveDown.append("var parent = cond.parentNode; ");
+					jsMoveDown.append("parent.removeChild(cond); ");
+					jsMoveDown.append("parent.insertBefore(cond, nextNextCond); ");
+					jsMoveDown.append("attrs[i] = attrs[i+1]; ");
+					jsMoveDown.append("attrs[i+1] = '").append(conditionId).append("'; ");
+					jsMoveDown.append("attrListField.value = attrs.join(',');");
+					jsMoveDown.append("if (Scriptaculous) {");
+					{
+						jsMoveDown.append("Element.setOpacity(cond, 0); ");
+						jsMoveDown.append("Effect.Appear(cond, {duration: 0.5});");
+					}
+					jsMoveDown.append("}");
+				}
+				jsMoveDown.append("} ");
+				jsMoveDown.append("return;");
+			}
+			jsMoveDown.append("}");
+		}
+		jsMoveDown.append("}");
 
 		encodeConditionButtonsStart(writer);
 		encodeConditionButton(writer, "icon-move-up.png", jsMoveUp.toString());
@@ -283,15 +347,6 @@ public class QueryBuilderComponent extends UIComponentBase
 		encodeConditionButton(writer, "icon-remove.png", jsDelete.toString());
 		encodeConditionButtonsEnd(writer);
 		
-//		writer.startElement("img", this);
-//		writer.writeAttribute("src", "icon-remove.png", null);
-//		writer.writeAttribute("onclick", jsToDelete.toString(), null);
-//		writer.writeAttribute("class", "query-builder-remove-button", null);
-//		writer.writeAttribute("width", "12", null);
-//		writer.writeAttribute("height", "12", null);
-//		writer.writeAttribute("border", "0", null);
-//		writer.endElement("img");
-
 	}
 	
 	private void encodeStartQueryConditionBox(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer, int conditionIndex) throws IOException
@@ -300,10 +355,6 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
 		writer.writeAttribute("id", getConditionDivId(context, conditionIndex), null);
-		
-		UtilsJSF.encodeHiddenInput(this, writer,
-				getAttributeHiddenFieldName(context),
-				queryCondition.getAttribute().getId().toString());
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
@@ -508,27 +559,27 @@ public class QueryBuilderComponent extends UIComponentBase
 		js.append(".selectedIndex;");
 		
 		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdFromId);
+		UtilsJSF.appendElementRefJS(js, tdFromId);
 		js.append(".style.display = (type == 0) ? '' : 'none';");
 		
 		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdDashId);
+		UtilsJSF.appendElementRefJS(js, tdDashId);
 		js.append(".style.display = (type == 0) ? '' : 'none';");
 
 		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdToId);
+		UtilsJSF.appendElementRefJS(js, tdToId);
 		js.append(".style.display = (type == 0) ? '' : 'none';");
 
 		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdLeId);
+		UtilsJSF.appendElementRefJS(js, tdLeId);
 		js.append(".style.display = (type == 1) ? '' : 'none';");
 
 		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdGeId);
+		UtilsJSF.appendElementRefJS(js, tdGeId);
 		js.append(".style.display = (type == 2) ? '' : 'none';");
 		
 		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, context, form, tdEqId);
+		UtilsJSF.appendElementRefJS(js, tdEqId);
 		js.append(".style.display = (type == 3) ? '' : 'none';");
 
 		int type = queryCondition.getType();
@@ -769,67 +820,67 @@ public class QueryBuilderComponent extends UIComponentBase
 		jsChnageType.append(".selectedIndex;");
 		
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdFromMonthId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdFromMonthId);
 		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 		
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashBetweenStartId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashBetweenStartId);
 		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdFromYearId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdFromYearId);
 		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdDashId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdDashId);
 		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdToMonthId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdToMonthId);
 		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashBetweenEndId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashBetweenEndId);
 		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdToYearId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdToYearId);
 		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdLeMonthId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdLeMonthId);
 		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashLeId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashLeId);
 		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdLeYearId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdLeYearId);
 		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdGeMonthId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdGeMonthId);
 		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
 		
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashGeId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashGeId);
 		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdGeYearId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdGeYearId);
 		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdEqMonthId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdEqMonthId);
 		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdSlashEqId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashEqId);
 		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
 
 		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, context, form, tdEqYearId);
+		UtilsJSF.appendElementRefJS(jsChnageType, tdEqYearId);
 		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
 		
 		int type = queryCondition.getType();
@@ -907,7 +958,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			jsSelectMonth.append("; ");
 
 			jsSelectMonth.append("var monthTd = ");
-			UtilsJSF.appendElementRefJS(jsSelectMonth, context, form, tdMonthId);
+			UtilsJSF.appendElementRefJS(jsSelectMonth, tdMonthId);
 			jsSelectMonth.append("; ");
 
 			jsSelectMonth.append("if (monthInput.value == '1') {");

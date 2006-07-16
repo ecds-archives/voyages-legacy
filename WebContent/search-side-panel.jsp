@@ -4,6 +4,56 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <s:sectionGroup
+	id="selectAttributeSectionByPopupMenu"
+	backgroundStyle="dark"
+	tabsStyle="middle"
+	buttonsStyle="middle"
+	selectedSectionId="beginner">
+
+	<s:section title="Beginner" sectionId="beginner">
+		<s:menuPopup
+			id="popupMenuAttributesBeginner"
+			items="#{SearchBean.menuAttributesBeginner}"
+			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
+	</s:section>
+
+	<s:section title="General" sectionId="general">
+		<s:menuPopup
+			id="popupMenuAttributesGeneral"
+			items="#{SearchBean.menuAttributesGeneral}"
+			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
+	</s:section>
+
+</s:sectionGroup>
+
+<div class="sections-sepatator"></div>
+
+<s:sectionGroup
+	id="selectAttributeSectionBySliderMenu"
+	backgroundStyle="dark"
+	tabsStyle="middle"
+	buttonsStyle="middle"
+	selectedSectionId="beginner">
+
+	<s:section title="Beginner" sectionId="beginner">
+		<s:menuSlider
+			id="sliderMenuAttributesBeginner"
+			items="#{SearchBean.menuAttributesBeginner}"
+			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
+	</s:section>
+
+	<s:section title="General" sectionId="general">
+		<s:menuSlider
+			id="sliderMenuAttributesGeneral"
+			items="#{SearchBean.menuAttributesGeneral}"
+			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
+	</s:section>
+
+</s:sectionGroup>
+
+<div class="sections-sepatator"></div>
+
+<s:sectionGroup
 	id="selectAttributeSection"
 	backgroundStyle="dark"
 	tabsStyle="middle"
