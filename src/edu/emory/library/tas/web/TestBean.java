@@ -42,5 +42,10 @@ public class TestBean
 	{
 		this.c = c;
 	}
+	
+	public boolean getIsResultBig()
+	{
+		return c > 100;
+	}
 
 }

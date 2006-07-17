@@ -27,9 +27,8 @@ public class MenuSliderComponent extends MenuComponent
 		
 	}
 	
-	private void encodeSubmenu(MenuItem item, String mainMenuDivId, FacesContext context, ResponseWriter writer, UIForm form) throws IOException
+	private void encodeSubmenu(MenuItem item, String mainMenuDivId, boolean expanded, FacesContext context, ResponseWriter writer, UIForm form) throws IOException
 	{
-		boolean expanded = item.getId().equals(expandedMainMenuId);
 
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mainMenuDivId, null);
@@ -63,7 +62,8 @@ public class MenuSliderComponent extends MenuComponent
 		UIForm form = UtilsJSF.getForm(this, context);
 		
 		String expandedMenuIdFieldName = getExpandedMenuIdFieldName(context);
-		String expandedElementIdFieldName = getClientId(context) + "_expanded_element_id";
+		String expandedMainIdFieldName = getClientId(context) + "_expanded_main_element_id";
+		String expandedSubIdFieldName = getClientId(context) + "_expanded_sub_element_id";
 
 		UtilsJSF.encodeHiddenInput(this, writer,
 				getSelectedMenuIdFieldName(context));
@@ -72,7 +72,10 @@ public class MenuSliderComponent extends MenuComponent
 				expandedMenuIdFieldName, expandedMainMenuId);
 
 		UtilsJSF.encodeHiddenInput(this, writer,
-				expandedElementIdFieldName);
+				expandedMainIdFieldName);
+
+		UtilsJSF.encodeHiddenInput(this, writer,
+				expandedSubIdFieldName);
 
 		MenuItemMain[] items = getItems();
 		
@@ -80,36 +83,58 @@ public class MenuSliderComponent extends MenuComponent
 		for (int i = 0; i < items.length; i++)
 		{
 			MenuItemMain mainItem = items[i];
-			String mainMenuDivId = getClientId(context) + "_" + i;
+			boolean expanded = mainItem.getId().equals(expandedMainMenuId);
+			
+			String mainMenuDivId = getClientId(context) + "_main_" + i;
+			String subMenuDivId = getClientId(context) + "_sub_" + i;
 			
 			jsOnClick.setLength(0);
-			jsOnClick.append("var expandedMenuId = ");
-			UtilsJSF.appendFormElementRefJS(jsOnClick, context, form, expandedMenuIdFieldName).append("; ");
-			jsOnClick.append("var expandedElementId = ");
-			UtilsJSF.appendFormElementRefJS(jsOnClick, context, form, expandedElementIdFieldName).append("; ");
+			UtilsJSF.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedMenuId", expandedMenuIdFieldName).append(" ");
+			UtilsJSF.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedMainId", expandedMainIdFieldName).append(" ");
+			UtilsJSF.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedSubId", expandedSubIdFieldName).append(" ");
+			UtilsJSF.appendElementRefWithVarJS(jsOnClick, "subMenu", subMenuDivId).append(" ");
+			UtilsJSF.appendElementRefWithVarJS(jsOnClick, "mainMenu", mainMenuDivId).append(" ");
+			jsOnClick.append("var prevMainMenu = document.getElementById(expandedMainId.value); ");
+			jsOnClick.append("var prevSubMenu = document.getElementById(expandedSubId.value); ");
 			jsOnClick.append("if (expandedMenuId.value == '").append(mainItem.getId()).append("') {");
 			{
-				UtilsJSF.appendHideElement(jsOnClick, mainMenuDivId).append(" ");
-				jsOnClick.append("expandedMenuId.value = '';");
-				jsOnClick.append("expandedElementId.value = '';");
+				jsOnClick.append("subMenu.style.display = 'none'; ");
+				jsOnClick.append("mainMenu.className = 'menu-slider-item-main-collapsed'; ");
+				// jsOnClick.append("if (Scriptaculous) Effect.SlideUp(subMenu); ");
+				jsOnClick.append("expandedMenuId.value = ''; ");
+				jsOnClick.append("expandedMainId.value = '';");
+				jsOnClick.append("expandedSubId.value = '';");
 			}
 			jsOnClick.append("} else {");
 			{
-				UtilsJSF.appendShowElement(jsOnClick, mainMenuDivId).append(" ");
-				jsOnClick.append("if (expandedMenuId.value != '') ");
-				jsOnClick.append("document.getElementById(expandedElementId.value).style.display = 'none'; ");
-				jsOnClick.append("expandedMenuId.value = '").append(mainItem.getId()).append("';");
-				jsOnClick.append("expandedElementId.value = '").append(mainMenuDivId).append("';");
+				jsOnClick.append("subMenu.style.display = 'block'; ");
+				jsOnClick.append("mainMenu.className = 'menu-slider-item-main-expanded'; ");
+				// jsOnClick.append("if (Scriptaculous) Effect.SlideDown(subMenu); ");
+				jsOnClick.append("if (prevSubMenu) {");
+				{
+					jsOnClick.append("prevSubMenu.style.display = 'none'; ");
+					jsOnClick.append("prevMainMenu.className = 'menu-slider-item-main-collapsed';");
+					// jsOnClick.append("if (Scriptaculous) Effect.SlideUp(subMenu); ");
+				}
+				jsOnClick.append("} ");
+				jsOnClick.append("expandedMenuId.value = '").append(mainItem.getId()).append("'; ");
+				jsOnClick.append("expandedMainId.value = '").append(mainMenuDivId).append("'; ");
+				jsOnClick.append("expandedSubId.value = '").append(subMenuDivId).append("';");
 			}
 			jsOnClick.append("}");
 			
+			String mainMenuClass = expanded ?
+					"menu-slider-item-main-expanded" :
+					"menu-slider-item-main-collapsed";
+
 			writer.startElement("div", this);
-			writer.writeAttribute("class", "menu-slider-item-main", null);
+			writer.writeAttribute("id", mainMenuDivId, null);
+			writer.writeAttribute("class", mainMenuClass, null);
 			writer.writeAttribute("onclick", jsOnClick.toString(), null);
 			writer.write(mainItem.getText());
 			writer.endElement("div");
 
-			encodeSubmenu(mainItem, mainMenuDivId, context, writer, form);
+			encodeSubmenu(mainItem, subMenuDivId, expanded, context, writer, form);
 		
 		}
 		

@@ -40,28 +40,47 @@ div.menu-popup-submenu-item:hover {
 	background-color: #CA4223;
 	color: White !important; }
 	
-div.menu-slider-item-main {
+div.menu-slider-item-main-collapsed {
 	cursor: pointer;
-	width: 285px;
-	border: 0px solid Black;
 	border-bottom: 2px solid #F1E7C8;
-	padding-left: 10px;
+	padding-left: 25px;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	padding-right: 5px;
-	-background-repeat: no-repeat;
-	-background-position: 280px center;
-	-background-image: url(icon-arrow-right.png); }
-	
-div.menu-slider-item-main:hover {
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-image: url(icon-arrow-right.png); }	
+
+div.menu-slider-item-main-expanded {
+	cursor: pointer;
+	border-bottom: 2px solid #F1E7C8;
+	padding-left: 25px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-right: 5px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-image: url(icon-arrow-down.png); }	
+
+div.menu-slider-item-main-collapsed:hover {
 	background-color: #F1E7C8; }
-	
+
+div.menu-slider-item-main-expanded:hover {
+	background-color: #F1E7C8; }
+
+div.menu-slider-submenu {
+	border-bottom: 2px solid #F1E7C8; }
+		
 div.menu-slider-submenu-item {
 	cursor: pointer;
 	padding-top: 2px; 
 	padding-bottom: 2px; 
-	padding-left: 10px; }
+	padding-left: 25px; }
 
 div.menu-slider-submenu-item:hover {
 	color: White;
 	background-color: #CA4223; }
+	
+span.attribute-selected {
+	font-weight: normal;
+	color: #E2873B; }

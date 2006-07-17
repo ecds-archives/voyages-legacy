@@ -83,6 +83,14 @@ public class UtilsJSF
 		return js;
 	}
 
+	public static StringBuffer appendFormElementRefWithVarJS(StringBuffer js, FacesContext context, UIForm form, String var, String elementName)
+	{
+		js.append("var ").append(var).append(" = ");
+		appendFormElementRefJS(js, context, form, elementName);
+		js.append(";");
+		return js;
+	}
+
 	public static StringBuffer appendFormElementValJS(StringBuffer js, FacesContext context, UIForm form, String elementName)
 	{
 		appendFormElementRefJS(js, context, form, elementName);
@@ -97,6 +105,14 @@ public class UtilsJSF
 		return js;
 	}
 	
+	public static StringBuffer appendElementRefWithVarJS(StringBuffer js, String var, String elementId)
+	{
+		js.append("var ").append(var).append(" = ");
+		appendElementRefJS(js, elementId);
+		js.append(";");
+		return js;
+	}
+
 	public static StringBuffer appendSetElementStyle(StringBuffer js, String elementId, String style, String value)
 	{
 		appendElementRefJS(js, elementId);

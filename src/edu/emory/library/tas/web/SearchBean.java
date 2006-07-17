@@ -572,7 +572,15 @@ public class SearchBean
 						MenuItem subItem = new MenuItem();
 						subItems[k++] = subItem;
 						subItem.setId(makeAttributeMenuId(attr));
-						subItem.setText(attr.getUserLabelOrName());
+						System.out.print(attr.getUserLabelOrName());
+						if (workingQuery != null && workingQuery.containsConditionOn(attr))
+						{
+							subItem.setText("<span class=\"attribute-selected\">" + attr.getUserLabelOrName() + "</span>");
+						}
+						else
+						{
+							subItem.setText(attr.getUserLabelOrName());
+						}
 					}
 				}
 				
@@ -651,6 +659,11 @@ public class SearchBean
 		this.selectedBeginnerGroupId = selectedGroupId;
 	}
 	
+	public String getSelectedBeginnerGroupId()
+	{
+		return selectedGeneralGroupId;
+	}
+
 	public String getSelectedBeginnerAtttibuteId()
 	{
 		return selectedBeginnerAtttibuteId;
