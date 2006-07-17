@@ -13,7 +13,7 @@ import edu.emory.library.tas.util.HibernateConnector;
  * Class that represents query built for hibernate.
  * An example usage/results:
  * 
- * Examples:
+ * Example 1:
  * -->Conditions
  * Conditions c = new Conditions();
  * QueryValue qValue = new QueryValue("Configuration", c);
@@ -22,6 +22,7 @@ import edu.emory.library.tas.util.HibernateConnector;
  * -->HQL
  * select configurat0_.id as id5_, configurat0_.map_entries as map2_5_ from configurations configurat0_
  * 
+ * Example 2:
  * -->Conditions
  * Conditions cMain = new Conditions(Conditions.JOIN_AND);
  * cMain.addCondition("vi.voyageId", new Long(104), Conditions.OP_SMALLER_OR_EQUAL);
@@ -33,7 +34,7 @@ import edu.emory.library.tas.util.HibernateConnector;
  * -->QueryValue
  * select sum(v.voyage) 
  * from VoyageIndex as vi, Voyage v 
- * where vi.voyageId <=  :vivoyageId494255733104 and
+ * where vi.voyageId <=  :vivoyageId_494255733104 and
  *           vi.remoteVoyageId = v.id and
  *           (latest =  :latest_11098809531)
  * group by v.datedep
