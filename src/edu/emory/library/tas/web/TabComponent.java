@@ -3,6 +3,12 @@ package edu.emory.library.tas.web;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 
+/**
+ * This component should not be used any more. Its functionality is provided by
+ * {@link edu.emory.library.tas.web.SectionGroupComponent}.
+ * 
+ * @author Jan Zich
+ */
 public class TabComponent extends UIComponentBase
 {
 	

@@ -15,6 +15,43 @@ import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.web.UtilsJSF;
 
+/**
+ * <p>
+ * A component which allows users move items between two lists. It contains two
+ * lists: available items and selected items. The available items list holds the
+ * non-selected itema and the selected items list contains the selected items.
+ * When an item is moves from either list to the other, it is removed from the
+ * original list. These two collections and bindable to a bean.
+ * </p>
+ * <p>
+ * Each item in either list can be equiped by an integer designating its order
+ * with respect to the other items. The available items list always presents the
+ * items in this order. In the component in marked as non-sortable (via
+ * {@link #setSortable(boolean)}), the selected items list also preserves the
+ * order of items. If the component is not marked as sortable, the selected
+ * items can be sorted by user.
+ * </p>
+ * <p>
+ * Moving elements between two two list and sorting is implemented via
+ * JavaScript. The component uses two hidden fields to store the IDs of items in
+ * the two lists and the items themselves are stored in the internal state of
+ * the component (i.e. via {@link #saveState(FacesContext)} and
+ * {@link #restoreState(FacesContext, Object)}).
+ * </p>
+ * <p>
+ * The JavaScript does not hijack the onsubmit event of the main form in order
+ * to create the two lists of IDs. Instead it recreates the lists every time the
+ * user changes anything. This seems to work work well for hundrets of items. So
+ * far it has not been tested for more. But it should be OK.
+ * </p>
+ * <p>
+ * The component requires select-and-order.js library. The library itself
+ * creates just one global JavaScript object called SelectAndOrder.
+ * </p>
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class SelectAndOrderComponent extends UIComponentBase
 {
 	

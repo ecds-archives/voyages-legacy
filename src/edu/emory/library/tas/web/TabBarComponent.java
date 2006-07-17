@@ -12,7 +12,13 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-
+/**
+ * This component should not be used any more. Its functionality is provided by
+ * {@link edu.emory.library.tas.web.SectionGroupComponent}.
+ * 
+ * @author Jan Zich
+ * 
+ */
 public class TabBarComponent extends UIComponentBase
 {
 	
