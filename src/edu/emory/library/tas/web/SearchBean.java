@@ -572,7 +572,6 @@ public class SearchBean
 						MenuItem subItem = new MenuItem();
 						subItems[k++] = subItem;
 						subItem.setId(makeAttributeMenuId(attr));
-						System.out.print(attr.getUserLabelOrName());
 						if (workingQuery != null && workingQuery.containsConditionOn(attr))
 						{
 							subItem.setText("<span class=\"attribute-selected\">" + attr.getUserLabelOrName() + "</span>");

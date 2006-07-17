@@ -53,11 +53,17 @@
 </t:htmlTag>
 
 <t:htmlTag value="div" rendered="#{TableResultTabBean.detailMode}">
-	<h:commandLink id="back_res_upper" style="padding: 5px;" value="Back to results"
-		action="#{TableResultTabBean.resultsMode}" />
-	<s:voyageDetail data="#{TableResultTabBean.detailData}" />
-	<h:commandLink id="back_res_lower" style="padding: 5px;" value="Back to results"
-		action="#{TableResultTabBean.resultsMode}" />
+	
+	<s:voyageDetail
+		data="#{TableResultTabBean.detailData}" />
+	
+	<t:htmlTag value="div" styleClass="section-inside-footer">
+		<h:commandButton
+			id="backFromDetail"
+			value="Back to results"
+			action="#{TableResultTabBean.resultsMode}" />
+	</t:htmlTag>
+		
 </t:htmlTag>
 
 <%/* Configuration of table */ %>

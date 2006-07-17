@@ -53,6 +53,7 @@
 
 <div class="sections-sepatator"></div>
 
+<%--
 <s:sectionGroup
 	id="selectAttributeSection"
 	backgroundStyle="dark"
@@ -113,6 +114,7 @@
 </s:sectionGroup>
 
 <div class="sections-sepatator"></div>
+--%>
 
 <s:sectionGroup
 	id="queryBuilderSection"

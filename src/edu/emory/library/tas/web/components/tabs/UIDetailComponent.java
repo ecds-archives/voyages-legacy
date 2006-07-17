@@ -54,12 +54,12 @@ public class UIDetailComponent extends UIComponentBase {
 			
 			//Create table header
 			writer.startElement("th", this);
-			writer.writeAttribute("class", "cellUpperLeft", null);
-			writer.write(additionalColumns[0].toString());
+			writer.writeAttribute("class", "detail-header", null);
+			writer.write(additionalColumns[0].getUserLabelOrName());
 			writer.endElement("th");							
 			for (int j = 0; j < addObjs.length; j++) {
 				writer.startElement("th", this);
-				writer.writeAttribute("class", "cellHeader", null);
+				writer.writeAttribute("class", "detail-header", null);
 				Object[] row = addObjs[j].dataRow;
 				if (row[0] != null) {
 					writer.write(row[0].toString());
@@ -72,13 +72,13 @@ public class UIDetailComponent extends UIComponentBase {
 				
 				writer.startElement("tr", this);
 				writer.startElement("td", this);
-				writer.writeAttribute("class", "cellLeft", null);
-				writer.write(additionalColumns[i].toString());				
+				writer.writeAttribute("class", "detail-label", null);
+				writer.write(additionalColumns[i].getUserLabelOrName());				
 				writer.endElement("td");
 								
 				for (int j = 0; j < addObjs.length; j++) {
 					writer.startElement("td", this);
-					writer.writeAttribute("class", "cellPlain", null);
+					writer.writeAttribute("class", "detail-data", null);
 					Object[] row = addObjs[j].dataRow;
 					if (row[i] != null) {
 						writer.write(row[i].toString());
@@ -97,7 +97,7 @@ public class UIDetailComponent extends UIComponentBase {
 				
 				writer.startElement("tr", this);
 				writer.startElement("td", this);
-				writer.writeAttribute("class", "cellLeft", null);
+				writer.writeAttribute("class", "detail-label", null);
 				writer.write(columns[i].toString());
 				writer.endElement("td");
 								
@@ -123,9 +123,9 @@ public class UIDetailComponent extends UIComponentBase {
 					
 					writer.startElement("td", this);
 					if (changed) {
-						writer.writeAttribute("class", "cellChanged", null);
+						writer.writeAttribute("class", "detail-data-changed", null);
 					} else {
-						writer.writeAttribute("class", "cellPlain", null);
+						writer.writeAttribute("class", "detail-data", null);
 					}
 					
 					if (row[i] != null) {
