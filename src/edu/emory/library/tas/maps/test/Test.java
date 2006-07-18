@@ -1,5 +1,6 @@
 package edu.emory.library.tas.maps.test;
 
+import edu.umn.gis.mapscript.MS_LAYER_TYPE;
 import edu.umn.gis.mapscript.classObj;
 import edu.umn.gis.mapscript.imageObj;
 import edu.umn.gis.mapscript.layerObj;
@@ -13,10 +14,10 @@ public class Test
 	public static void main(String[] args)
 	{
 		
-//		String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-//		String imgFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\test.gif";
-		String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-		String imgFile = "D:\\Library\\SlaveTrade\\test.gif";
+		String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
+		String imgFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\test.gif";
+//		String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
+//		String imgFile = "D:\\Library\\SlaveTrade\\test.gif";
 		
 //		String mapScript = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\mapserver\\mapscript.dll";
 //		System.load(mapScript);
@@ -44,12 +45,14 @@ public class Test
 		System.loadLibrary("mapscript");
 
 		mapObj map = new mapObj(mapFile);
+		map.setSize(600, 600);
+		map.setExtent(0, -90, 180, 90);
 		
 		layerObj layerEurope = new layerObj(map);
 		map.insertLayer(layerEurope, 2);
 		
 		layerEurope.setName("europe");
-		layerEurope.setType(mapscriptConstants.MS_LAYER_POINT);
+		layerEurope.setType(MS_LAYER_TYPE.MS_LAYER_POINT);
 		layerEurope.setStatus(mapscriptConstants.MS_DEFAULT);
 		layerEurope.setData("europe");
 		layerEurope.setLabelitem("CITY_NAME");
