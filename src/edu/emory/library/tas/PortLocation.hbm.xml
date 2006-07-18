@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+
+	<class name="edu.emory.library.tas.Dictionary" table="dictionary">
+		<cache usage="read-write" />
+        <id name="cityName" column="city_name">
+        	<generator class="native"/>
+        </id>
+        <property name="x" column="x(geometryn(the_geom, 1))"/>
+        <property name="y" column="y(geometryn(the_geom, 1))"/>
+    </class>
+    
+</hibernate-mapping>
