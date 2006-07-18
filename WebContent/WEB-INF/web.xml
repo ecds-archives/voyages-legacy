@@ -75,6 +75,11 @@
 		<servlet-class>edu.emory.library.tas.web.components.tabs.ImageFeederServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>TileServlet</servlet-name>
+		<servlet-class>edu.emory.library.tas.maps.test.TileServlet</servlet-class>
+	</servlet>
+
 <!-- 
 	<servlet-mapping>
 		<servlet-name>listing</servlet-name>
@@ -120,6 +125,11 @@
 	<servlet-mapping>
 		<servlet-name>ImageFeederServlet</servlet-name>
 		<url-pattern>/servlet/ImageFeederServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TileServlet</servlet-name>
+		<url-pattern>/servlet/maptile</url-pattern>
 	</servlet-mapping>
 
 </web-app>
