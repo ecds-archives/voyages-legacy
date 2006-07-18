@@ -173,6 +173,8 @@ public class HibernateTest {
 //				qValue.addPopulatedAttribute("v.voyage.ownere", false);
 //				qValue.addPopulatedAttribute("v.voyage.arrport", true);
 				
+				System.out.println("Query: " + qValue.toStringWithParams().conditionString);
+				
 				long t1 = System.currentTimeMillis();
 				Object[] res = HibernateConnector.getConnector().loadObjects(qValue);
 				long t2 = System.currentTimeMillis();
@@ -256,6 +258,7 @@ public class HibernateTest {
 			} else if ("cload".equalsIgnoreCase(command)) {
 				Conditions c = new Conditions();
 				QueryValue qValue = new QueryValue("Configuration", c);
+				System.out.println("Query: " + qValue.toStringWithParams().conditionString);
 				Object[] ret = qValue.executeQuery();
 				for (int i = 0; i < ret.length; i++) {
 					Object object = ret[i];
@@ -266,6 +269,14 @@ public class HibernateTest {
 				conf.addEntry("my1", "firstEntry_" + System.currentTimeMillis());
 				conf.addEntry("my2", "secondEntry_" + System.currentTimeMillis());
 				conf.save();
+			} else if ("gis".equalsIgnoreCase(command)) {
+				Conditions c = new Conditions();
+				QueryValue qValue = new QueryValue("GISPortLocation", c);
+				Object[] ret = qValue.executeQuery();
+				for (int i = 0; i < ret.length && i < 20; i++) {
+					Object object = ret[i];
+					System.out.println(object);
+				}
 			}
 			
 			System.out.print("command:>");

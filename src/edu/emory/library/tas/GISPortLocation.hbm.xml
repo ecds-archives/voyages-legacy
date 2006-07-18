@@ -6,13 +6,13 @@
 
 <hibernate-mapping>
 
-	<class name="edu.emory.library.tas.Dictionary" table="dictionary">
+	<class name="edu.emory.library.tas.GISPortLocation" table="port_locations">
 		<cache usage="read-write" />
-        <id name="cityName" column="city_name">
+        <id name="portName" column="city_name">
         	<generator class="native"/>
         </id>
-        <property name="x" column="x(geometryn(the_geom, 1))"/>
-        <property name="y" column="y(geometryn(the_geom, 1))"/>
+        <property name="x" formula="x(geometryn(the_geom, 1))"/>
+        <property name="y" formula="y(geometryn(the_geom, 1))"/>
     </class>
     
 </hibernate-mapping>

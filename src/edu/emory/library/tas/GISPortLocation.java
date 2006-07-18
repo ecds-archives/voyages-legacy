@@ -1,12 +1,12 @@
 package edu.emory.library.tas;
 
-public class PortLocation {
+public class GISPortLocation {
 
 	public String portName;
 	public float x;
 	public float y;
 	
-	public PortLocation() {		
+	public GISPortLocation() {		
 	}
 
 	public String getPortName() {
@@ -33,6 +33,8 @@ public class PortLocation {
 		this.y = y;
 	}
 	
-	
+	public String toString() {
+		return "Port: " + this.getPortName() + " [" + this.x + ", " + this.y + "]";
+	}
 	
 }
