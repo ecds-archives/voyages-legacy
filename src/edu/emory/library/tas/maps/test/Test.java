@@ -13,8 +13,10 @@ public class Test
 	public static void main(String[] args)
 	{
 		
-		String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-		String imgFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\test.gif";
+//		String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
+//		String imgFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\test.gif";
+		String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
+		String imgFile = "D:\\Library\\SlaveTrade\\test.gif";
 		
 //		String mapScript = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\mapserver\\mapscript.dll";
 //		System.load(mapScript);
