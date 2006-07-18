@@ -4,8 +4,11 @@ import edu.umn.gis.mapscript.MS_LAYER_TYPE;
 import edu.umn.gis.mapscript.classObj;
 import edu.umn.gis.mapscript.imageObj;
 import edu.umn.gis.mapscript.layerObj;
+import edu.umn.gis.mapscript.lineObj;
 import edu.umn.gis.mapscript.mapObj;
 import edu.umn.gis.mapscript.mapscriptConstants;
+import edu.umn.gis.mapscript.pointObj;
+import edu.umn.gis.mapscript.shapeObj;
 import edu.umn.gis.mapscript.styleObj;
 
 public class Test
@@ -46,7 +49,7 @@ public class Test
 
 		mapObj map = new mapObj(mapFile);
 		map.setSize(600, 600);
-		map.setExtent(0, -90, 180, 90);
+		map.setExtent(0, 0, 60, 60);
 		
 		layerObj layerEurope = new layerObj(map);
 		map.insertLayer(layerEurope, 2);
@@ -54,7 +57,7 @@ public class Test
 		layerEurope.setName("europe");
 		layerEurope.setType(MS_LAYER_TYPE.MS_LAYER_POINT);
 		layerEurope.setStatus(mapscriptConstants.MS_DEFAULT);
-		layerEurope.setData("europe");
+//		layerEurope.setData("europe");
 		layerEurope.setLabelitem("CITY_NAME");
 		
 		classObj classCities = new classObj(layerEurope);
@@ -63,8 +66,24 @@ public class Test
 		styleObj styleCities = new styleObj(classCities);
 		classCities.insertStyle(styleCities, 0);
 		styleCities.setSymbolname("circle");
-		styleCities.setSize(2);
+		styleCities.setSize(200);
 		
+		lineObj lineKrakow = new lineObj();
+		lineKrakow.add(new pointObj(19.945, 50.065, 0));
+		shapeObj shapeKrakow = new shapeObj(mapscriptConstants.MS_SHAPEFILE_POINT);
+		shapeKrakow.add(lineKrakow);
+		shapeKrakow.setValue(0, "Krakow");
+		shapeKrakow.setValue(1, "abc");
+		layerEurope.addFeature(shapeKrakow);
+		
+		lineObj linePrague = new lineObj();
+		linePrague.add(new pointObj(14.3, 50.05, 0));
+		shapeObj shapePrague = new shapeObj(mapscriptConstants.MS_SHAPEFILE_POINT);
+		shapePrague.add(linePrague);
+		shapePrague.setValue(0, "Praha");
+		shapeKrakow.setValue(1, "xyz");
+		layerEurope.addFeature(shapePrague);
+
 		imageObj img = map.draw();
 		img.save(imgFile, map);
 		
