@@ -32,6 +32,15 @@
 		</s:stattab>
 	</s:section>
 	
+	<s:section title="Map of ports" sectionId="map-ports">
+		<s:stattab
+			styleClass="data-container"
+			query="#{SearchBean.searchParameters}"
+			conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
+		<%@ include file="search-tab-map.jsp" %>
+		</s:stattab>
+	</s:section>
+	
 </s:sectionGroup>
 
 <%--
