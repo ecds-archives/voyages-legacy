@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.umn.gis.mapscript.imageObj;
+import edu.umn.gis.mapscript.mapObj;
+
 public class MapFeederServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -23,11 +26,20 @@ public class MapFeederServlet extends HttpServlet {
 		
 		if (path != null) {
 			//Prepare image
-			byte[] picture = (byte[])session.getAttribute(path);
-			if (picture != null) {
+			String file = (String)session.getAttribute(path);
+			if (file != null) {
+				
+				mapObj map = new mapObj(file);
+				map.setSize(800, 600);
+				map.setExtent(0, 0, 60, 60);				
+				imageObj img = map.draw();
+				
 				response.setContentType("image/png");
 				//Write image
-				stream.write(picture);
+				stream.write(img.getBytes());
+				
+				img.delete();
+				map.delete();
 			}
 		}
 		//close streams

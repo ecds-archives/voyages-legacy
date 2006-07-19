@@ -36,7 +36,7 @@
 		<s:stattab
 			styleClass="data-container"
 			query="#{SearchBean.searchParameters}"
-			conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
+			conditionsOut="#{MapBean.conditions}">
 		<%@ include file="search-tab-map.jsp" %>
 		</s:stattab>
 	</s:section>

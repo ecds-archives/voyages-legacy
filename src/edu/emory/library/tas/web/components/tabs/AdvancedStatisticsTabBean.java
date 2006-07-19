@@ -256,6 +256,10 @@ public class AdvancedStatisticsTabBean {
 	 */
 	private QueryValue prepareQueryValue(AbstractChartGenerator generator) {
 
+		/**
+		 * TODO - I should add getMostRecent!
+		 */
+		
 		// We will use "v" prefix for Voyage object.
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
 		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);

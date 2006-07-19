@@ -40,9 +40,9 @@ public class GISPortLocation {
 		return "Port: " + this.getPortName() + " [" + this.x + ", " + this.y + "]";
 	}
 	
-	public static GISPortLocation getGISPortLocation(Dictionary dictionary) {
+	public static GISPortLocation getGISPortLocation(String portName) {
 		Conditions c = new Conditions();
-		c.addCondition("portName", dictionary.getName(), Conditions.OP_EQUALS);
+		c.addCondition("portName", portName, Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("GISPortLocation", c);
 		Object[] ports = qValue.executeQuery();
 		if (ports.length == 0) {

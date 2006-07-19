@@ -1,6 +1,5 @@
 package edu.emory.library.tas.maps.test;
 
-import edu.umn.gis.mapscript.MS_LAYER_TYPE;
 import edu.umn.gis.mapscript.classObj;
 import edu.umn.gis.mapscript.imageObj;
 import edu.umn.gis.mapscript.layerObj;
@@ -17,8 +16,8 @@ public class Test
 	public static void main(String[] args)
 	{
 		
-		String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-		String imgFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\test.gif";
+		String mapFile = "/home/juri/gis/tests/voyages_new1.map";
+		String imgFile = "/home/juri/gis/tests/voyages_new1.gif";
 //		String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
 //		String imgFile = "D:\\Library\\SlaveTrade\\test.gif";
 		
@@ -55,7 +54,7 @@ public class Test
 		map.insertLayer(layerEurope, 2);
 		
 		layerEurope.setName("europe");
-		layerEurope.setType(MS_LAYER_TYPE.MS_LAYER_POINT);
+		layerEurope.setType(mapscriptConstants.MS_LAYER_POINT);
 		layerEurope.setStatus(mapscriptConstants.MS_DEFAULT);
 //		layerEurope.setData("europe");
 		layerEurope.setLabelitem("CITY_NAME");

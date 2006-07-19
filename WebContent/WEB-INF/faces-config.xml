@@ -231,6 +231,14 @@
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>MapBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tas.web.components.tabs.MapBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<from-view-id>/schema-group-list.jsp</from-view-id>
