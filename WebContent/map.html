@@ -14,6 +14,10 @@ body {
 	padding: 0px;
 	font-family: Verdana;
 	font-size: 8pt; }
+	
+input {
+	font-family: Verdana;
+	font-size: 8pt; }
 
 </style>
 
@@ -23,7 +27,8 @@ body {
 <div id="map-control" style="position: absolute;">
 
 	<div id="map-frm" style="position: absolute;"></div>
-	
+
+	<!--  
 	<table border="0" cellspacing="0" cellpadding="0" id="map-tools-left" style="position: absolute; width: 30px; background-color: #EEEEEE;">
 	<tr>
 		<td></td>
@@ -36,9 +41,20 @@ body {
 	</tr>
 	</table>
 	
-	<div id="map-tools-top" style="position: absolute; height: 30px; background-color: Red">TOP</div>
+	<div id="map-tools-bottom" style="position: absolute; height: 30px; background-color: #EEEEEE"></div>
+
+	-->	
 	
-	<div id="map-tools-bottom" style="position: absolute; height: 30px; background-color: Blue">BOTTOM</div>
+	<div id="map-tools-top" style="position: absolute; background-color: #DDDDDD; border-bottom: 1px solid #999999;">
+		<table border="0" cellspacing="10" cellpadding="0">
+		<tr>
+			<td><input type="button" onclick="map_mouse_mode = PAN;" value="Realtime pan"></td>
+			<td><input type="button" onclick="map_mouse_mode = ZOOM;" value="Realtime zoom"></td>
+			<td><input type="button" onclick="zoom_plus()" value="+"></td>
+			<td><input type="button" onclick="zoom_minus()" value="-"></td>
+		</tr>
+		</table>
+	</div>
 	
 </div>
 

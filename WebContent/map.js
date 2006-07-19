@@ -13,6 +13,7 @@ var min_map_control_height = 400;
 // references to HTML elements
 var map_frame = null;
 var tiles_map = null;
+var map_blank_img = "blank.png";
 
 // viewport config
 var visible_rows = 5;
@@ -27,29 +28,9 @@ var revert_axis_x = false;
 var revert_axis_y = false;
 
 // zoom history
-var zoom_history = new Array();;
+var zoom_history = new Array();
 var zoom_history_pos = -1;
 var zoom_history_max = 100;
-
-// bubble - route info
-var bubble;
-var bubble_len;
-var bubble_speed;
-var bubble_time;
-var bubble_place;
-var bubble_dur;
-
-// bubble - start
-var bubble_start;
-var bubble_start_visible = true;
-var bubble_start_prm;
-var bubble_start_sec;
-
-// bubble - end
-var bubble_end;
-var bubble_end_visible = true;
-var bubble_end_prm;
-var bubble_end_sec;
 
 // for dragging
 var dragging_start_x;
@@ -61,17 +42,17 @@ var first_tile_row;
 var first_tile_vx;
 var first_tile_vy;
 var scale;
-var scale_min = 4802.843;
-var scale_max = 4802844;
-var scale_factor_plus = 0.666666;
-var scale_factor_minus = 2.0;
+var scale_min = 0.01;
+var scale_max = 10000;
+var scale_factor_plus = 2.0;
+var scale_factor_minus = 0.666666;
 
 // zooming and panning
 var ZOOM = 1;
 var PAN = 2;
 var nav_mouse_mode = ZOOM;
 var map_mouse_mode = PAN;
-var selector_border_width = 2;
+var selector_border_width = 1;
 var selector_color = "Gray"; //"#0066CC";
 var selector_opacity = 30;
 var map_selector = null;
@@ -365,9 +346,6 @@ function map_start_drag(event)
 	map_frame.onmousemove = map_mouse_move;
 	//if (IE) map_frame.style.cursor = "url(ruka-dole.cur)";
 	
-	// the route is not active
-	detach_route_events();
-	
 	// init position
 	dragging_start_x = event.clientX - vport_offset_left + get_element_scroll_left(map_frame);
 	dragging_start_y = event.clientY - vport_offset_top + get_element_scroll_top(map_frame);
@@ -411,9 +389,6 @@ function map_stop_drag(event)
 			break;
 			
 	}
-	
-	// activate route events
-	attach_route_events();
 	
 }
 
@@ -500,11 +475,6 @@ function map_hide_selector()
 /////////////////////////////////////////////////////////
 
 
-function zoom_to_route()
-{
-	zoom_map_to(route_x1, route_y1, route_x2, route_y2, 180);
-}
-
 function zoom_plus()
 {
 	change_scale(scale * scale_factor_plus);
@@ -576,7 +546,7 @@ function zoom_map_to(x1, y1, x2, y2, border)
 	y2 = cy + 0.5 * height;
 	width = x2 - x1;
 	height = y2 - y1;
-
+	
 	// set scale
 	var new_scale = vport_width / width;
 
@@ -1155,6 +1125,7 @@ function map_control_init()
 	bg.style.width = "100%";
 	bg.style.height = "100%";
 	bg.style.filter = "progid:DXImageTransform.Microsoft.Alpha(opacity=" + selector_opacity + ")";
+	bg.style.MozOpacity = selector_opacity / 100;
 	bg.style.backgroundColor = selector_color;
 	map_selector.appendChild(bg);
 	
@@ -1180,6 +1151,9 @@ function map_init()
 
 	// pan tools
 	pan_tool_init();
+
+	// show something
+	zoom_map_to(-180, -90, 180, 90);	
 	
 	// last thing, we don't want to fire this
 	// when we create HTML elements
