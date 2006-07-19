@@ -132,3 +132,62 @@ function get_element_scroll_top(el)
 	}
 	return offset;
 }
+
+var Events =
+{
+	map: null,
+
+	findRegistration: function(element, eventName)
+	{
+		if (Events.map == null) Events.map = new Array();
+		for (var i=0; i<Events.map.length; i++)
+		{
+			var req = Events.map[i];
+			if (req.element == element && req.eventName == eventName)
+			{
+				return req;
+			}
+		}
+		return null;
+	},
+
+	attach: function(element, eventName, handler)
+	{
+
+		if (element.attachEvent)
+		{
+			element.attachEvent("on" + eventName, Events.globalHandler);
+		}
+		else if (element.addEventListener)
+		{
+			element.addEventListener(eventName, Events.globalHandler, false);
+		}
+
+		var reg = Events.findRegistration(element, eventName);
+		if (reg == null)
+		{
+			reg = new Object();
+			this.map.push(reg);
+		}
+
+		reg.element = element;
+		reg.eventName = eventName;
+		reg.handler = handler;
+
+	},
+
+	attachById: function(elementId, eventName, handler)
+	{
+		var element = document.getElementById(elementId);
+		this.attach(element, eventName, handler);
+	},
+
+	globalHandler: function(event)
+	{
+		if (!event) event = window.event;
+		var element = event.srcElement ? event.srcElement : this;
+		var reg = Events.findRegistration(element, event.type);
+		if (reg != null) reg.handler.call();
+	}
+
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test</title>
+</head>
+<body>
+
+<script type="text/javascript" language="javascript">
+
+var Events =
+{
+	map: null,
+
+	findRegistration: function(element, eventName)
+	{
+		if (Events.map == null) Events.map = new Array();
+		for (var i=0; i<Events.map.length; i++)
+		{
+			var req = Events.map[i];
+			if (req.element == element && req.eventName == eventName)
+			{
+				return req;
+			}
+		}
+		return null;
+	},
+
+	attach: function(element, eventName, handler)
+	{
+
+		if (element.attachEvent)
+		{
+			element.attachEvent("on" + eventName, Events.globalHandler);
+		}
+		else if (element.addEventListener)
+		{
+			element.addEventListener(eventName, Events.globalHandler, false);
+		}
+
+		var reg = Events.findRegistration(element, eventName);
+		if (reg == null)
+		{
+			reg = new Object();
+			this.map.push(reg);
+		}
+
+		reg.element = element;
+		reg.eventName = eventName;
+		reg.handler = handler;
+
+	},
+
+	attachById: function(elementId, eventName, handler)
+	{
+		var element = document.getElementById(elementId);
+		this.attach(element, eventName, handler);
+	},
+
+	globalHandler: function(event)
+	{
+		if (!event) event = window.event;
+		var element = event.srcElement ? event.srcElement : this;
+		var reg = Events.findRegistration(element, event.type);
+		if (reg != null) reg.handler.call();
+	}
+
+}
+
+var ABC =
+{
+	aaa: function()
+	{
+		alert("hmmm");
+	}
+}
+
+function abc()
+{
+	alert("abc");
+}
+
+function bcd()
+{
+	alert("bcd");
+}
+
+window.onload = function()
+{
+	Events.attachById("btn1", "click", ABC.aaa);
+	Events.attachById("btn2", "click", bcd);
+	return;
+
+	var btn1 = document.getElementById("btn1");
+	var btn2 = document.getElementById("btn2");
+
+	var x = new Array();
+
+	x[btn1] = "aaaaaaaa";
+	alert("x[btn1] = " + x[btn1]);
+	alert("x[btn2] = " + x[btn2]);
+
+	x[btn2] = "bbbbbbbb";
+	alert("x[btn1] = " + x[btn1]);
+	alert("x[btn2] = " + x[btn2]);
+}
+
+
+
+</script>
+
+<input type="button" id="btn1" value="Show abc" >
+<input type="button" id="btn2" value="Show bcd" >
+
+</body>
+</html>

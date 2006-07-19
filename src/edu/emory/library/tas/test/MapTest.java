@@ -33,7 +33,7 @@ public class MapTest {
 			map.insertLayer(layerEurope, 2);
 			
 			layerEurope.setName("ports");
-			layerEurope.setType(mapscriptConstants.MS_LAYER_POINT);
+			//layerEurope.setType(mapscriptConstants.MS_LAYER_POINT);
 			layerEurope.setStatus(mapscriptConstants.MS_DEFAULT);
 			layerEurope.setLabelitem("CITY_NAME");
 			

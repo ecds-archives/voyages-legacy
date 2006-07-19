@@ -35,7 +35,8 @@ public class TileServlet extends HttpServlet
 		{
 			
 			//String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-			String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
+			//String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
+			String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\test.map";
 			
 			double x = 0;
 			double y = 0;

@@ -54,7 +54,7 @@ public class Test
 		map.insertLayer(layerEurope, 2);
 		
 		layerEurope.setName("europe");
-		layerEurope.setType(mapscriptConstants.MS_LAYER_POINT);
+		//layerEurope.setType(mapscriptConstants.MS_LAYER_POINT);
 		layerEurope.setStatus(mapscriptConstants.MS_DEFAULT);
 //		layerEurope.setData("europe");
 		layerEurope.setLabelitem("CITY_NAME");
