@@ -16,8 +16,10 @@
 	<script src="tooltip.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/scriptaculous.js" type="text/javascript" language="javascript"></script>
+	<script language="javascript" type="text/javascript" src="map_PJ.js"></script>
+	<script language="javascript" type="text/javascript" src="utils.js"></script>
 </head>
-<body>
+<body onload="map_init()">
 <f:view>
 
 	<div class="header">

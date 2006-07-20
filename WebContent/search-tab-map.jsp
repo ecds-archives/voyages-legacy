@@ -4,7 +4,34 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <h:outputText value="#{MapBean.mapPath}" />
-<h:graphicImage value="#{MapBean.mapPath}" />
+
+
+<t:htmlTag value="div" id="map-control" style="position: absolute;">
+
+	<t:htmlTag value="div" id="map-frm" style="position: absolute;"></t:htmlTag>
+
+	<t:htmlTag value="div" id="map-tools-top"
+		style="height:30px; position: absolute; background-color: #DDDDDD; border-bottom: 1px solid #999999;">
+		<t:htmlTag value="table">
+			<t:htmlTag value="tr">
+				<t:htmlTag value="td">
+					<h:commandButton onclick="map_mouse_mode = PAN;return false;" value="Realtime pan" />
+				</t:htmlTag>
+				<t:htmlTag value="td">
+					<h:commandButton type="button" onclick="map_mouse_mode = ZOOM;return false;" value="Realtime zoom" />
+				</t:htmlTag>
+				<t:htmlTag value="td">
+					<h:commandButton type="button" onclick="zoom_plus();return false;" value="+" />
+				</t:htmlTag>
+				<t:htmlTag value="td">
+					<h:commandButton type="button" onclick="zoom_minus();return false;" value="-" />
+				</t:htmlTag>
+			</t:htmlTag>
+		</t:htmlTag>
+	</t:htmlTag>
+
+</t:htmlTag>
+
 <%--
 <h:dataTable value="#{MapBean.ports}" var="group">
 	<h:column>

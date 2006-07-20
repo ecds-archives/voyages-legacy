@@ -32,7 +32,7 @@ import edu.umn.gis.mapscript.styleObj;
 import edu.umn.gis.mapscript.symbolObj;
 
 /**
- * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes
+ * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes --with-threads
  * --verbose=yes
  * 
  * @author juri
@@ -44,7 +44,7 @@ public class MapBean {
 
 	public static int PORT_ARRIVAL = 2;
 
-	private static final String MAP_OBJECT_ATTR_NAME = "__map__object_bytes";
+	private static final String MAP_OBJECT_ATTR_NAME = "__map__file";
 
 	private static final String IMAGE_FEEDED_SERVLET = "servlet/MapFeederServlet";
 
@@ -206,6 +206,8 @@ public class MapBean {
 				} else {
 					return null;
 				}
+			
+			
 
 				neededQuery = false;
 		}

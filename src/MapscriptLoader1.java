@@ -1,5 +1,5 @@
 
-public class MapscriptLoader
+public class MapscriptLoader1
 {
     static {
          try {

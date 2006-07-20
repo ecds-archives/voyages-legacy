@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import edu.emory.library.tas.AppConfig;
 import edu.emory.library.tas.web.components.tabs.MapBean;
 import edu.emory.library.tas.web.components.tabs.MapBean.MapItem;
 
@@ -16,14 +17,12 @@ public class MapFileCreator {
 
 	private static String COLOR1 = "45 230 200";
 	private static String COLOR2 = "230 230 45";
-	
-	private static String TIME_SYMBOL = "(TIME)";
 
-	private static String TIME_SYMBOL_REGEX = "\\(TIME\\)";
+	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
 
-	private static String MAP_FILE_SKELETON = "/home/juri/gis/tast_map_skeleton.map";
+	private static String MAP_FILE_SKELETON = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_SKELETON);
 
-	private static String MAP_FILE_OUTPUT = "/home/juri/gis/map_" + TIME_SYMBOL + ".map";
+	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
 
 	private static String MAP_INSERT_SECTION_NAME_BEGIN = "#Generated_code_begin";
 
@@ -137,58 +136,39 @@ public class MapFileCreator {
 
 			for (int i = 0; i < circleRanges; i++) {
 
-				if (this.pointsC1[i].size() > 0) {
-					writer.write("LAYER\n");
-					writer.write("	TYPE POINT\n");
-					writer.write("	STATUS DEFAULT\n");
-
-					Iterator iter = this.pointsC1[i].iterator();
-					while (iter.hasNext()) {
-						MapItem item = (MapItem) iter.next();
-						writer.write("	FEATURE\n");
-						writer.write("		POINTS " + item.x + " " + item.y + " END\n");
-						writer.write("		TEXT '" + item.label + "'\n");
-						writer.write("	END\n");
-					}
-
-					writer.write("	CLASS\n");
-					writer.write("		STYLE\n");
-					writer.write("			SYMBOL 'circle" + (i + 1) + "'\n");
-					writer.write("			COLOR " + COLOR1 + "\n");
-					writer.write("		END\n");
-					writer.write("		LABEL\n");
-					writer.write("			TYPE BITMAP\n");
-					writer.write("		END\n");
-					writer.write("	END\n");
-					writer.write("END\n");
-				}
+				generateFeature(writer, this.pointsC1[i], COLOR1, i + 1);
+				generateFeature(writer, this.pointsC2[i], COLOR2, i + 1);
 				
-				if (this.pointsC2[i].size() > 0) {
-					writer.write("LAYER\n");
-					writer.write("	TYPE POINT\n");
-					writer.write("	STATUS DEFAULT\n");
-
-					Iterator iter = this.pointsC2[i].iterator();
-					while (iter.hasNext()) {
-						MapItem item = (MapItem) iter.next();
-						writer.write("	FEATURE\n");
-						writer.write("		POINTS " + item.x + " " + item.y + " END\n");
-						writer.write("		TEXT '" + item.label + "'\n");
-						writer.write("	END\n");
-					}
-
-					writer.write("	CLASS\n");
-					writer.write("		STYLE\n");
-					writer.write("			SYMBOL 'circle" + (i + 1) + "'\n");
-					writer.write("			COLOR " + COLOR2 + "\n");
-					writer.write("		END\n");
-					writer.write("		LABEL\n");
-					writer.write("			TYPE BITMAP\n");
-					writer.write("		END\n");
-					writer.write("	END\n");
-					writer.write("END\n");
-				}
 			}
+		}
+	}
+
+	private void generateFeature(BufferedWriter writer, ArrayList list, String color, int size) throws IOException {
+		if (list.size() > 0) {
+			writer.write("LAYER\n");
+			writer.write("	TYPE POINT\n");
+			writer.write("	STATUS DEFAULT\n");
+
+			Iterator iter = list.iterator();
+			while (iter.hasNext()) {
+				MapItem item = (MapItem) iter.next();
+				writer.write("	FEATURE\n");
+				writer.write("		POINTS " + item.x + " " + item.y + " END\n");
+				writer.write("		TEXT '" + item.label + "'\n");
+				writer.write("	END\n");
+			}
+
+			writer.write("	CLASS\n");
+			writer.write("		STYLE\n");
+			writer.write("			SYMBOL 'circle" + size + "'\n");
+			writer.write("			COLOR " + color + "\n");
+			writer.write("		END\n");
+			writer.write("		LABEL\n");
+			writer.write("			POSITION ul\n");
+			writer.write("			TYPE BITMAP\n");
+			writer.write("		END\n");
+			writer.write("	END\n");
+			writer.write("END\n");
 		}
 	}
 
