@@ -370,8 +370,8 @@ Map.prototype.fromRealToPx = function(v)
 Map.prototype.roundAndCapScale = function(s)
 {
 	s = Math.round(s);
-	if (s > this.scale_max) s = scale_max;
-	if (s < this.scale_min) s = scale_min;
+	if (s > this.scale_max) s = this.scale_max;
+	if (s < this.scale_min) s = this.scale_min;
 	return s;
 }
 
