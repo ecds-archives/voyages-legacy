@@ -32,8 +32,8 @@ import edu.umn.gis.mapscript.styleObj;
 import edu.umn.gis.mapscript.symbolObj;
 
 /**
- * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes --with-threads
- * --verbose=yes
+ * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes
+ * --with-threads --verbose=yes
  * 
  * @author juri
  * 
@@ -142,8 +142,8 @@ public class MapBean {
 		qValue.addPopulatedAttribute("v.portdep.name", false);
 		qValue.addPopulatedAttribute("sum(v.slaximp)", false);
 		qValue.setGroupBy(new String[] { "v.portdep.name" });
-		qValue.setOrderBy(new String[] {"sum(v.slaximp)"});
-		
+		qValue.setOrderBy(new String[] { "sum(v.slaximp)" });
+
 		Object[] voyages = qValue.executeQuery();
 
 		ArrayList response = new ArrayList();
@@ -155,17 +155,16 @@ public class MapBean {
 						((Number) ((Object[]) voyages[i])[1]).floatValue(), PORT_DEPARTURE));
 			}
 		}
-		
-		
+
 		qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
 
 		qValue.addPopulatedAttribute("v.portret.name", false);
 		qValue.addPopulatedAttribute("sum(v.slaximp)", false);
 		qValue.setGroupBy(new String[] { "v.portret.name" });
-		qValue.setOrderBy(new String[] {"sum(v.slaximp)"});
-		
+		qValue.setOrderBy(new String[] { "sum(v.slaximp)" });
+
 		voyages = qValue.executeQuery();
-		
+
 		for (int i = 0; i < voyages.length; i++) {
 			String portName = (String) ((Object[]) voyages[i])[0];
 			GISPortLocation gisPort = GISPortLocation.getGISPortLocation(portName);
@@ -191,28 +190,27 @@ public class MapBean {
 
 			MapItem[] items = this.getMapItems();
 
-			
-				if (this.creator == null) {
-					this.creator = new MapFileCreator();
-				}
+			if (this.creator == null) {
+				this.creator = new MapFileCreator();
+			}
 
-				if (items.length > 0) {
-					this.creator.setMapData(items, items[0].size, items[items.length - 1].size);
-				}
-				if (this.creator.createMapFile()) {
-					ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-					((HttpSession) servletContext.getSession(true)).setAttribute(MAP_OBJECT_ATTR_NAME, creator
-							.getFilePath());
-				} else {
-					return null;
-				}
-			
-			
+			if (items.length > 0) {
+				this.creator.setMapData(items, items[0].size, items[items.length - 1].size);
+			}
+			if (this.creator.createMapFile()) {
+				ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+				((HttpSession) servletContext.getSession(true)).setAttribute(MAP_OBJECT_ATTR_NAME, creator
+						.getFilePath());
 
-				neededQuery = false;
+			} else {
+				return null;
+			}
+
+			neededQuery = false;
 		}
 
-		return IMAGE_FEEDED_SERVLET + "?path=" + MAP_OBJECT_ATTR_NAME;
+		return MAP_OBJECT_ATTR_NAME;
+
 	}
 
 	/**

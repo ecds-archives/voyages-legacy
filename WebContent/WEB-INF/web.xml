@@ -73,6 +73,11 @@
 		<servlet-name>ImageFeederServlet</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.components.tabs.ImageFeederServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>MapFeederServlet</servlet-name>
+		<servlet-class>edu.emory.library.tas.web.components.tabs.MapFeederServlet</servlet-class>
+	</servlet>
 
 	<servlet>
 		<servlet-name>TileServlet</servlet-name>
@@ -124,6 +129,11 @@
 	<servlet-mapping>
 		<servlet-name>ImageFeederServlet</servlet-name>
 		<url-pattern>/servlet/ImageFeederServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>MapFeederServlet</servlet-name>
+		<url-pattern>/servlet/MapFeederServlet</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

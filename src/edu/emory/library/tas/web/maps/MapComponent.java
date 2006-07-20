@@ -37,10 +37,14 @@ public class MapComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[3];
+		Object[] values = new Object[7];
 		values[0] = super.saveState(context);
 		values[1] = mapFile;
 		values[2] = serverBaseUrl;
+		values[3] = new Double(x1);
+		values[4] = new Double(y1);
+		values[5] = new Double(x2);
+		values[6] = new Double(y2);
 		return values;
 	}
 	
@@ -50,6 +54,10 @@ public class MapComponent extends UIComponentBase
 		super.restoreState(context, values[0]);
 		mapFile = (String) values[1];
 		serverBaseUrl = (String) values[2];
+		x1 = ((Double)values[3]).doubleValue();
+		y1 = ((Double)values[4]).doubleValue();
+		x2 = ((Double)values[5]).doubleValue();
+		y2 = ((Double)values[6]).doubleValue();
 	}
 	
 	private String getHiddenFieldNameForX1(FacesContext context)
@@ -77,10 +85,10 @@ public class MapComponent extends UIComponentBase
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		
-		x1 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForX1(context));
-		y1 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForY1(context));
-		x2 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForX2(context));
-		y2 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForY2(context));
+		x1 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForX1(context), x1);
+		y1 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForY1(context), y1);
+		x2 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForX2(context), x2);
+		y2 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForY2(context), y2);
 		
 	}
 	
