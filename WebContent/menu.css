@@ -17,6 +17,7 @@ div.menu-popup-item-main:hover {
 	-color: White; }
 
 div.menu-popup-submenu-frame {
+	z-index: 1;	
 	top: -7px;
 	-left: 200px;
 	left: 290px;

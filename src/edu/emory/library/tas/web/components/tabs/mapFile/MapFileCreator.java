@@ -15,8 +15,8 @@ import edu.emory.library.tas.web.components.tabs.MapBean.MapItem;
 
 public class MapFileCreator {
 
-	private static String COLOR1 = "45 230 200";
-	private static String COLOR2 = "230 230 45";
+	private static String COLOR1 = "202 66 35"; // "45 230 200";
+	private static String COLOR2 = "87 27 29"; //"230 230 45";
 
 	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
 

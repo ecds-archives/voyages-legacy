@@ -188,15 +188,17 @@ public class MapComponent extends UIComponentBase
 		
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapControlId, null);
-		writer.writeAttribute("style", "position: relative; width: 800px; height: 600px;", null);
+		writer.writeAttribute("style", "position: relative; width: 730px; height: 500px;", null);
 
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapFrameId, null);
 		writer.writeAttribute("style", "position: absolute", null);
+		writer.writeAttribute("class", "map-tools-top", null);
 		writer.endElement("div");
 		
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapTopToolsId, null);
+		writer.writeAttribute("style", "position: absolute", null);
 		encodeTopTools(context, writer, mapId);
 		writer.endElement("div");
 
