@@ -16,6 +16,8 @@ public class AppConfig
 	public static final String IMPORT_ROOTDIR = "import.rootdir";
 	public static final String IMPORT_DATEFORMAT = "import.dateformat";
 	public static final String IMPORT_LOGITEM_DATEFORMAT = "import.logitem.dateformat";
+	public static final String MAP_FILE_SKELETON = "mapserver.mapfile.skeleton";
+	public static final String MAP_FILE_OUTPUT = "mapserver.mapfile.output";
 	
 	private static void load()
 	{
