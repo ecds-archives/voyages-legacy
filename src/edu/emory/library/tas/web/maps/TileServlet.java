@@ -20,8 +20,6 @@ public class TileServlet extends HttpServlet
 
 	private static final long serialVersionUID = 5538255560078657125L;
 	
-	private static Map cache = new Hashtable();
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		
@@ -31,16 +29,13 @@ public class TileServlet extends HttpServlet
 		response.setDateHeader("Expires", (new Date()).getTime() + 1000 * 60 * 60);
 		response.setHeader("Cache-Control", "public");
 
-		//byte[] imgBytes = (byte[]) cache.get(request.getQueryString());
 		byte[] imgBytes = null;
 		
 		if (imgBytes == null)
 		{
 			
-			//String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-			//String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-			
-			String mapFile = AppConfig.getConfiguration().getString(AppConfig.MAPS_DIRECTORY) +
+			String mapFile =
+				AppConfig.getConfiguration().getString(AppConfig.MAPS_DIRECTOR) +
 				File.separatorChar + request.getParameter("m"); 
 			
 			double col = 0;
