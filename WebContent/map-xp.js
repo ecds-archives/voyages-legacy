@@ -1,33 +1,102 @@
 var MAP_TOOL_ZOOM = 1;
 var MAP_TOOL_PAN = 2;
 
+var MapsGlobal = 
+{
+
+	maps: new Array(),
+	
+	registerMap: function(
+		mapId, // unique id
+		mapControlId, // main container 
+		mapFrmameId, // frame for the map
+		mapToolsTopId, // top tools element
+		mapToolsBottomId, // bottom tools element
+		mapToolsLeftId, // left tools element
+		mapToolsRightId, // top tools element
+		mapTilesServer // servlet
+	)
+	{
+	
+		var map = new Map();
+		maps[mapId] = map;
+		
+		// HTML
+		map.map_control_id = mapControlId;
+		map.map_frame_id = mapFrmameId;
+		map.map_control_top_tools_id = mapToolsTopId;
+		map.map_control_bottom_tools_id = mapToolsBottomId;
+		map.map_control_left_tools_id = mapToolsLeftId;
+		map.map_control_right_tools_id = mapToolsRightId;
+		
+		// server
+		map.map_tiles_server = mapTilesServer;
+	
+	}
+	
+	zoomGoBack: function(mapId)
+	{
+		var map = maps[mapId];
+		if (map) map.zoomGoBack();
+	}
+	
+	zoomGoForward: function(mapId)
+	{
+		var map = maps[mapId];
+		if (map) map.zoomGoForward();
+	}
+	
+	zoomCanGoBack: function(mapId)
+	{
+		var map = maps[mapId];
+		if (map) return map.zoomCanGoBack();
+		rerurn false;
+	}
+	
+	zoomCanGoForward: function(mapId)
+	{
+		var map = maps[mapId];
+		if (map) return map.zoomCanGoForward();
+		rerurn false;
+	}
+
+}
+
 function Map()
 {
 
+	// server
+	this.map_tiles_server = "servlet/maptile";
+
 	// container
-	this.map_container;
-	this.map_control;
-	this.map_control_top_tools;
-	this.map_control_bottom_tools;
-	this.map_control_left_tools;
-	this.map_control_right_tools;
-	this.map_container_offset_left;
-	this.map_container_offset_top;
+	this.map_control = null;
+	this.map_control_id = null;
 	this.min_map_control_width = 600;
 	this.min_map_control_height = 400;
 	
+	// tools
+	this.map_control_top_tools = null;
+	this.map_control_top_tools_id = null;
+	this.map_control_bottom_tools = null;
+	this.map_control_bottom_tools_id = null;
+	this.map_control_left_tools = null;
+	this.map_control_left_tools_id = null;
+	this.map_control_right_tools = null;
+	this.map_control_right_tools_id = null;
+	
 	// references to HTML elements
 	this.map_frame = null;
+	this.map_frame_id = null;
 	this.tiles_map = null;
 	this.map_blank_img = "blank.png";
 	
 	// viewport config
-	this.visible_rows = 5;
-	this.visible_cols = 5;
-	this.vport_offset_left;
-	this.vport_offset_top;
-	this.vport_width;
-	this.vport_height;
+	this.visible_rows = -1;
+	this.visible_cols = -1;
+	this.vport_offset_left = -1;
+	this.vport_offset_top = -1;
+	this.vport_width = -1;
+	this.vport_height = -1;
 	this.tile_width = 160;
 	this.tile_height = 120;
 	this.postponed_refresh_id = -1;
@@ -38,15 +107,15 @@ function Map()
 	this.zoom_history_max = 100;
 	
 	// for dragging
-	this.dragging_start_x;
-	this.dragging_start_y;
+	this.dragging_start_x = null;
+	this.dragging_start_y = null;
 	
 	// current position
-	this.first_tile_col;
-	this.first_tile_row;
-	this.first_tile_vx;
-	this.first_tile_vy;
-	this.scale;
+	this.first_tile_col = null;
+	this.first_tile_row = null;
+	this.first_tile_vx = null;
+	this.first_tile_vy = null;
+	this.scale = null;
 	this.scale_min = 0.01;
 	this.scale_max = 10000;
 	this.scale_factor_plus = 2.0;
@@ -80,9 +149,6 @@ function Map()
 	this.pan_tool_timout_id;
 	this.pan_tool_dx;
 	this.pan_tool_dy;
-	
-	// server
-	this.map_tiles_server = "servlet/maptile";
 
 }
 
