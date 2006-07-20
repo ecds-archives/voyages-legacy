@@ -30,6 +30,7 @@ function Map()
 	this.vport_height;
 	this.tile_width = 160;
 	this.tile_height = 120;
+	this.postponed_refresh_id = -1;
 	
 	// zoom history
 	this.zoom_history = new Array();
@@ -97,20 +98,6 @@ function MapTile(img)
 	this.img = img;
 	this.valid = false;
 	this.url = "";
-}
-
-/////////////////////////////////////////////////////////
-// mozilla specific functions
-/////////////////////////////////////////////////////////
-
-Map.prototype.find_child_element_by_id = function(parent, tag_name, id)
-{
-	var coll = parent.getElementsByTagName(tag_name);
-	var coll_length = coll.length;
-	for (var i=0; i<coll_length; i++)
-		if (coll[i].id == id)
-			return coll[i];
-	return null;
 }
 
 /////////////////////////////////////////////////////////
@@ -349,41 +336,39 @@ Map.prototype.scaleIndicatorInit = function()
 // map zoom/pan
 /////////////////////////////////////////////////////////
 
-function map_start_drag(event)
+Map.prototype.mapStartDrag = function(event)
 {
-	event = get_event(event);
 
 	// set onMouseMove handler
-	this.map_frame.onmousemove = map_mouse_move;
+	EventAttacher.attach(this.map_frame, "mousemove", this, "mapMouseMove");
 	//if (IE) map_frame.style.cursor = "url(ruka-dole.cur)";
 	
 	// init position
-	dragging_start_x = event.clientX - vport_offset_left + get_element_scroll_left(this.map_frame);
-	dragging_start_y = event.clientY - vport_offset_top + get_element_scroll_top(this.map_frame);
+	this.dragging_start_x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
+	this.dragging_start_y = event.clientY - this.vport_offset_top + ElementUtils.getScrollTop(this.map_frame);
 	
 }
 
-function map_stop_drag(event)
+Map.prototype.mapStopDrag = function(event)
 {
-	event = get_event(event);
 
 	// cancel onMouseMove handler
-	this.map_frame.onmousemove = null;
+	EventAttacher.detach(this.map_frame, "mousemove");
 	//if (IE) this.map_frame.style.cursor = "url(ruka.cur)";
 
 	// new position
-	var x = event.clientX - vport_offset_left + get_element_scroll_left(this.map_frame);
-	var y = event.clientY - vport_offset_top + get_element_scroll_top(this.map_frame);
+	var x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
+	var y = event.clientY - this.vport_offset_top + ElementUtils.getScrollTop(this.map_frame);
 	
-	switch (map_mouse_mode)
+	switch (this.map_mouse_mode)
 	{
-		case ZOOM:
+		case MAP_TOOL_ZOOM:
 		
 			// hide selector
 			this.mapHideSelector();
 			
 			// has the mouse moved?
-			if (dragging_start_x == x && dragging_start_y == y)
+			if (this.dragging_start_x == x && this.dragging_start_y == y)
 				return;
 			
 			// and zoom
@@ -395,7 +380,7 @@ function map_stop_drag(event)
 			
 			break;
 			
-		case PAN:
+		case MAP_TOOL_PAN:
 		
 			break;
 			
@@ -403,36 +388,35 @@ function map_stop_drag(event)
 	
 }
 
-function map_mouse_move(event)
+Map.prototype.mapMouseMove = function(event)
 {
-	event = get_event(event);
-	
+
 	// new position
-	var x = event.clientX - vport_offset_left + get_element_scroll_left(this.map_frame);
-	var y = event.clientY - vport_offset_top + get_element_scroll_top(this.map_frame);
+	var x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
+	var y = event.clientY - this.vport_offset_top + ElementUtils.getScrollTop(this.map_frame);
 	
 	switch (map_mouse_mode)
 	{
-		case PAN:
+		case MAP_TOOL_PAN:
 		
 			// position change
-			var dx = x - dragging_start_x;
-			var dy = y - dragging_start_y;
+			var dx = x - this.dragging_start_x;
+			var dy = y - this.dragging_start_y;
 
 			// remember for the next turn
-			dragging_start_x = x;
-			dragging_start_y = y;
+			this.dragging_start_x = x;
+			this.dragging_start_y = y;
 			
 			// change pos
-			first_tile_vx += dx;
-			first_tile_vy += dy;
+			this.first_tile_vx += dx;
+			this.first_tile_vy += dy;
 
 			// adjust tile if needed
 			this.adjustTilesAfterPan();
 			
 			break;
 			
-		case ZOOM:
+		case MAP_TOOL_ZOOM:
 
 			// draw selector
 			this.mapDrawSelector(
@@ -445,18 +429,16 @@ function map_mouse_move(event)
 	
 }
 
-function map_mouse_wheel(event)
+Map.prototype.mapMouseWheel = function(event)
 {
-	event = get_event(event);
-	
 	// change the zoom
 	if (event.wheelDelta < 0)
 	{
-		this.changeScale((-event.wheelDelta/120) * scale * scale_factor_plus);
+		this.changeScale((-event.wheelDelta/120) * this.scale * this.scale_factor_plus);
 	}
 	else
 	{
-		this.changeScale(event.wheelDelta/120 * scale * scale_factor_minus);
+		this.changeScale(event.wheelDelta/120 * this.scale * this.scale_factor_minus);
 	}
 	
 	// we don't want to scroll the page
@@ -541,7 +523,7 @@ Map.prototype.zoomMapTo = function(x1, y1, x2, y2, border)
 	if (vport_height < 100) vport_height = 100;
 
 	// adjust to the ratio
-	var vport_ratio = this.vport_width / this.vport_height;
+	var vport_ratio = vport_width / vport_height;
 	if (width/height < vport_ratio)
 	{
 		width = vport_ratio * (y2 - y1);
@@ -653,8 +635,8 @@ Map.prototype.refreshInvalidatedTiles = function()
 
 Map.prototype.postponedRefresh = function()
 {
-	window.clearTimeout(iid);
-	iid = window.setTimeout("refresh_invalidated_tiles()", 50);		
+	Timer.cancelCall(this.postponed_refresh_id);
+	this.postponed_refresh_id = Timer.delayedCall(this, "refreshInvalidatedTiles", 50);		
 }
 
 Map.prototype.positionTiles = function(update_img, row_from, row_to, col_from, col_to)
@@ -694,8 +676,8 @@ Map.prototype.adjustTilesAfterPan = function()
 	
 		update_col_from ++;
 	
-		first_tile_vx -= this.tile_width;
-		first_tile_col --;
+		this.first_tile_vx -= this.tile_width;
+		this.first_tile_col --;
 		
 		for (var i=0; i<this.visible_rows+1; i++)
 		{
@@ -717,8 +699,8 @@ Map.prototype.adjustTilesAfterPan = function()
 
 		update_col_to --;
 
-		first_tile_vx += this.tile_width;
-		first_tile_col ++;
+		this.first_tile_vx += this.tile_width;
+		this.first_tile_col ++;
 		
 		for (var i=0; i<this.visible_rows+1; i++)
 		{
@@ -740,8 +722,8 @@ Map.prototype.adjustTilesAfterPan = function()
 	
 		update_row_from ++;
 	
-		first_tile_vy -= this.tile_height;
-		first_tile_row ++;
+		this.first_tile_vy -= this.tile_height;
+		this.first_tile_row ++;
 		
 		var first_map_row = this.tiles_map.pop();
 		this.tiles_map.unshift(first_map_row);
@@ -763,8 +745,8 @@ Map.prototype.adjustTilesAfterPan = function()
 	
 		update_row_to --;
 
-		first_tile_vy += tile_height;
-		first_tile_row --;
+		this.first_tile_vy += tile_height;
+		this.first_tile_row --;
 		
 		var last_map_row = tiles_map.shift();
 		tiles_map.push(last_map_row);
@@ -787,8 +769,6 @@ Map.prototype.adjustTilesAfterPan = function()
 		update_col_from, update_col_to);
 
 }
-
-var iid = 0;
 
 Map.prototype.createTileMapUrl = function(col, row)
 {
@@ -881,7 +861,7 @@ function scale_sel_click(event)
 	event = get_event(event);
 
 	// position
-	var x = get_event_relative_pos_x(event) - scale_sel_btn_width/2;
+	var x = EventUtils.getRelativePosX(event) - scale_sel_btn_width/2;
 	
 	// change scale
 	this.changeScale( (scale_sel_width-x)/scale_sel_width * (scale_max - scale_min) + scale_min );
@@ -902,14 +882,23 @@ Map.prototype.scaleSelInit = function()
 	else
 		this.scale_sel.childNodes[1].style.width = (scale_sel_btn_width) + "px";
 
-	this.scale_sel_offset_left = get_element_offset_left(this.scale_sel);
-	this.scale_sel_offset_top = get_element_offset_top(this.scale_sel);
+	this.scale_sel_offset_left = ElementUtils.getOffsetLeft(this.scale_sel);
+	this.scale_sel_offset_top = ElementUtils.getOffsetTop(this.scale_sel);
 }
 
+/////////////////////////////////////////////////////////
+// tools
+/////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////
-// pan tool
-/////////////////////////////////////////////////////////
+Map.prototype.setMouseModeToPan = function()
+{
+	this.map_mouse_mode = MAP_TOOL_PAN;
+}
+
+Map.prototype.setMouseModeToZoom = function()
+{
+	this.map_mouse_mode = MAP_TOOL_ZOOM;
+}
 
 Map.prototype.panningNextMove = function()
 {
@@ -918,7 +907,7 @@ Map.prototype.panningNextMove = function()
 	this.first_tile_vy += this.pan_tool_dy;
 	this.adjustTilesAfterPan();
 	
-	pan_tool_timout_id = setTimeout("panning_next_move()", pan_tool_delay);
+	this.pan_tool_timout_id = Timer.delayedCall(this, "panningNextMove", this.pan_tool_delay);
 
 }
 
@@ -952,7 +941,7 @@ Map.prototype.panRightMouseDown = function()
 
 Map.prototype.panMouseUp = function()
 {
-	clearTimeout(pan_tool_timout_id);
+	Timer.cancelCall(this.pan_tool_timout_id);
 }
 
 Map.prototype.panToolInit = function()
@@ -966,29 +955,29 @@ Map.prototype.panToolInit = function()
 	if (this.tool_pan_up)
 	{
 		this.tool_pan_up.unselectable = "on";
-		this.tool_pan_up.onmousedown = pan_up_mouse_down;
-		this.tool_pan_up.onmouseup = pan_mouse_up;
+		EventAttacher.attach(this.tool_pan_up, "mousedown", this, "panUpMouseDown");
+		EventAttacher.attach(this.tool_pan_up, "mouseup", this, "panMouseUp");
 	}
 	
 	if (this.tool_pan_down)
 	{
 		tool_pan_down.unselectable = "on";
-		tool_pan_down.onmousedown = pan_down_mouse_down;
-		tool_pan_down.onmouseup = pan_mouse_up;
+		EventAttacher.attach(this.tool_pan_down, "mousedown", this, "panDownMouseDown");
+		EventAttacher.attach(this.tool_pan_down, "mouseup", this, "panMouseUp");
 	}
 	
 	if (this.tool_pan_left)
 	{
 		this.tool_pan_left.unselectable = "on";
-		this.tool_pan_left.onmousedown = pan_left_mouse_down;
-		this.tool_pan_left.onmouseup = pan_mouse_up;
+		EventAttacher.attach(this.tool_pan_left, "mousedown", this, "panLeftMouseDown");
+		EventAttacher.attach(this.tool_pan_left, "mouseup", this, "panMouseUp");
 	}
 	
 	if (this.tool_pan_right)
 	{
 		this.tool_pan_right.unselectable = "on";
-		this.tool_pan_right.onmousedown = pan_right_mouse_down;
-		this.tool_pan_right.onmouseup = pan_mouse_up;
+		EventAttacher.attach(this.tool_pan_right, "mousedown", this, "panRightMouseDown");
+		EventAttacher.attach(this.tool_pan_right, "mouseup", this, "panMouseUp");
 	}
 	
 }
@@ -1009,8 +998,8 @@ Map.prototype.changeMapSize = function()
 {
 	
 	// total width and height
-	var width = Math.max((get_page_width() - this.map_control.offsetLeft), this.min_map_control_width);
-	var height = Math.max((get_page_height() - this.map_control.offsetTop), this.min_map_control_height);
+	var width = Math.max((ElementUtils.getPageWidth() - this.map_control.offsetLeft), this.min_map_control_width);
+	var height = Math.max((ElementUtils.getPageHeight() - this.map_control.offsetTop), this.min_map_control_height);
 	
 	// offsets
 	var top = this.map_control_top_tools ? this.map_control_top_tools.offsetHeight : 0;
@@ -1067,8 +1056,8 @@ Map.prototype.changeMapSize = function()
 	// map itself
 	this.map_frame.style.left = (left) + "px";
 	this.map_frame.style.top = (top) + "px";
-	this.map_frame.style.width = (vport_width) + "px";
-	this.map_frame.style.height = (vport_height) + "px";
+	this.map_frame.style.width = (this.vport_width) + "px";
+	this.map_frame.style.height = (this.vport_height) + "px";
 	
 	// number of tiles needed
 	this.visible_cols = Math.floor(this.vport_width / this.tile_width) + 1;
@@ -1101,11 +1090,11 @@ Map.prototype.changeMapSize = function()
 			}
 			tile.onmousedown = this.falseFnc;
 			tile.style.position = "absolute";
-			tile.width = tile_width;
-			tile.height = tile_height;
-			tile.style.left = (j * tile_width) + "px";
-			tile.style.top = (i * tile_height) + "px";
-			this.map_frame.insertBefore(tile, map_selector);
+			tile.width = this.tile_width;
+			tile.height = this.tile_height;
+			tile.style.left = (j * this.tile_width) + "px";
+			tile.style.top = (i * this.tile_height) + "px";
+			this.map_frame.insertBefore(tile, this.map_selector);
 		}
 	}
 	
@@ -1114,12 +1103,6 @@ Map.prototype.changeMapSize = function()
 Map.prototype.mapControlInit = function(mapControlId, mapFrmId, mapToolsTopId, mapToolsBottomId, mapToolsRightId)
 {
 
-	/*
-	map_container = document.getElementById("plocha");
-	map_container_offset_left = get_element_offset_left(map_container);
-	map_container_offset_top = get_element_offset_top(map_container);
-	*/
-	
 	this.map_control = document.getElementById(mapControlId);
 	this.map_control.style.display = "block";
 	
@@ -1150,28 +1133,28 @@ Map.prototype.mapControlInit = function(mapControlId, mapFrmId, mapToolsTopId, m
 		this.map_frame.style.MozUserSelect = "none";
 	}
 
-	this.map_frame.onmousedown = map_start_drag;
-	this.map_frame.onmouseup = map_stop_drag;
-	if (IE) this.map_frame.onmousewheel = map_mouse_wheel;
+	EventAttacher.attach(this.map_frame, "mousedown", this, "mapStartDrag");
+	EventAttacher.attach(this.map_frame, "mousedown", this, "mapStopDrag");
+	if (IE) EventAttacher.attach(this.map_frame, "mousewheel", this, "mapMouseWheel");
 
 	map_selector = document.createElement("DIV");
 	map_selector.style.position = "absolute";
 	map_selector.style.display = "none";
 	map_selector.style.borderStyle = "solid";
 	map_selector.style.borderWidth = selector_border_width + "px";
-	map_selector.style.borderColor = selector_color;
+	map_selector.style.borderColor = this.selector_color;
 	map_selector.style.left = "0px";
 	map_selector.style.top = "0px";
 	map_selector.style.width = "200px";
 	map_selector.style.height = "200px";
-	this.map_frame.appendChild(map_selector);
+	this.map_frame.appendChild(this.map_selector);
 	
 	var bg = document.createElement("DIV");
 	bg.style.width = "100%";
 	bg.style.height = "100%";
-	bg.style.filter = "progid:DXImageTransform.Microsoft.Alpha(opacity=" + selector_opacity + ")";
-	bg.style.MozOpacity = selector_opacity / 100;
-	bg.style.backgroundColor = selector_color;
+	bg.style.filter = "progid:DXImageTransform.Microsoft.Alpha(opacity=" + this.selector_opacity + ")";
+	bg.style.MozOpacity = this.selector_opacity / 100;
+	bg.style.backgroundColor = this.selector_color;
 	map_selector.appendChild(bg);
 	
 }
@@ -1181,7 +1164,15 @@ Map.prototype.mapControlInit = function(mapControlId, mapFrmId, mapToolsTopId, m
 // main init
 /////////////////////////////////////////////////////////
 
-Map.prototype.init = function()
+Map.prototype.init = function
+(
+	mapControlId, // main container 
+	mapFrmId, // frame for the map
+	mapToolsTopId, // top tools element
+	mapToolsBottomId, // bottom tools element
+	mapToolsLeftId, // left tools element
+	mapToolsRightId // top tools element
+)
 {
 
 	// control

@@ -1,14 +1,149 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Test</title>
-</head>
-<body>
+var IE = navigator.userAgent.indexOf("MSIE 7.0") || navigator.userAgent.indexOf("MSIE 6.0") != -1 || navigator.userAgent.indexOf("MSIE 5.5") != -1;
+var GK = navigator.userAgent.indexOf("Gecko") != -1;
 
-<script type="text/javascript" language="javascript">
+function get_event(e)
+{
+	return window.event ? window.event : e;
+}
 
-var Events =
+var EventUtils = 
+{
+
+	getRelativePosX: function(e)
+	{
+		return e.x ? e.x : e.layerX;
+	}
+	
+	getRelativePosX: function(e)
+	{
+		return e.y ? e.y : e.layerY;
+	}
+
+}
+
+var ElementUtils =
+{
+	
+	getOffsetLeft: function(el)
+	{
+		// IE
+		if (el.clientLeft)
+		{
+			return el.clientLeft;
+		}
+		
+		// others
+		var curleft = 0;
+		while (el.offsetParent)
+		{
+			curleft += el.offsetLeft
+			el = el.offsetParent;
+		}
+		return curleft;
+		
+	}
+	
+	getOffsetLeft: getOffsetTop(el)
+	{
+	
+		// IE
+		if (el.clientTop)
+		{
+			return el.clientTop;
+		}
+		
+		// others
+		var curtop = 0;
+		while (el.offsetParent)
+		{
+			curtop += el.offsetTop
+			el = el.offsetParent;
+		}
+		return curtop;
+		
+	}
+	
+	deleteAllChildren: function(el)
+	{
+		while (el.hasChildNodes())
+			el.removeChild(el.firstChild);
+	}
+	
+	getPageWidth: function()
+	{
+		if (self.pageXOffset) // all except IE
+		{
+			return self.innerWidth;
+		}
+		else if (document.documentElement && document.documentElement.clientWidth) // IE6 Strict
+		{
+			return document.documentElement.clientWidth;
+		}
+		else if (document.body) // all other IE
+		{
+			return document.body.clientWidth;
+		}
+	}
+	
+	getPageHeight: function()
+	{
+		if (self.pageYOffset) // all except IE
+		{
+			return self.innerHeight;
+		}
+		else if (document.documentElement && document.documentElement.clientHeight) // IE6 Strict
+		{
+			return document.documentElement.clientHeight;
+		}
+		else if (document.body) // all other IE
+		{
+			return document.body.clientHeight;
+		}
+	}
+	
+	getScrollLeft: function(el)
+	{
+		var offset = 0;
+		if (el.offsetParent != null)	// IE
+		{
+			var actual = el;
+			while(actual)
+			{
+				if (actual.scrollLeft != null)
+					offset += actual.scrollLeft;
+				actual=actual.offsetParent;
+			}
+		}
+		else // all other IE
+		{
+			offset = document.body.scrollLeft;
+		}
+		return offset;
+	}
+	
+	getScrollTop: function(el)
+	{
+		var offset = 0;
+		if (el.offsetParent != null)	// IE
+		{
+			var actual = el;
+			while(actual)
+			{
+				if (actual.scrollTop != null)
+					offset += actual.scrollTop;
+				actual=actual.offsetParent;
+			}
+		}
+		else // all other IE
+		{
+			offset = document.body.scrollTop;
+		}
+		return offset;
+	}
+
+}
+
+var EventAttacher =
 {
 	map: new Array(),
 
@@ -148,62 +283,3 @@ var ObjectUtils =
 		}
 	}
 }
-
-var ABC =
-{
-	bbb: "256",
-	aaa: function()
-	{
-		alert(this.bbb);
-		Events.detachById("btn1", "click");
-	}
-}
-
-function abc()
-{
-	alert("abc");
-}
-
-function bcd()
-{
-	alert("bcd");
-}
-
-window.onload = function()
-{
-
-	Events.attachById("btn1", "click", ABC, "aaa");
-	Events.attachById("btn2", "click", null, "bcd");
-
-	ABC.bbb = "333";
-	
-	var callId = Timer.delayedCall(ABC, "aaa", 2000);
-	Timer.cancelCall(callId);
-	
-	/*
-
-	var btn1 = document.getElementById("btn1");
-	var btn2 = document.getElementById("btn2");
-
-	var x = new Array();
-
-	x[btn1] = "aaaaaaaa";
-	alert("x[btn1] = " + x[btn1]);
-	alert("x[btn2] = " + x[btn2]);
-
-	x[btn2] = "bbbbbbbb";
-	alert("x[btn1] = " + x[btn1]);
-	alert("x[btn2] = " + x[btn2]);
-	
-	*/
-}
-
-
-
-</script>
-
-<input type="button" id="btn1" value="Show abc" >
-<input type="button" id="btn2" value="Show bcd" >
-
-</body>
-</html>
