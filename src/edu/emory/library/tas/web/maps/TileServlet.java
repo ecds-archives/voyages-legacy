@@ -1,5 +1,6 @@
-package edu.emory.library.tas.maps.test;
+package edu.emory.library.tas.web.maps;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Hashtable;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.emory.library.tas.AppConfig;
 import edu.umn.gis.mapscript.imageObj;
 import edu.umn.gis.mapscript.mapObj;
 
@@ -29,28 +31,31 @@ public class TileServlet extends HttpServlet
 		response.setDateHeader("Expires", (new Date()).getTime() + 1000 * 60 * 60);
 		response.setHeader("Cache-Control", "public");
 
-		byte[] imgBytes = (byte[]) cache.get(request.getQueryString());
+		//byte[] imgBytes = (byte[]) cache.get(request.getQueryString());
+		byte[] imgBytes = null;
 		
 		if (imgBytes == null)
 		{
 			
 			//String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\voyages.map";
 			//String mapFile = "D:\\Library\\SlaveTrade\\shapefiles\\voyages.map";
-			String mapFile = "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\test.map";
 			
-			double x = 0;
-			double y = 0;
+			String mapFile = AppConfig.getConfiguration().getString(AppConfig.MAPS_DIRECTORY) +
+				File.separatorChar + request.getParameter("m"); 
+			
+			double col = 0;
+			double row = 0;
 			double scale = 0;
-			int width = 0;
-			int height = 0;
+			int tileWidth = 0;
+			int tileHeight = 0;
 			
 			try
 			{
-				x = Double.parseDouble(request.getParameter("x"));
-				y = Double.parseDouble(request.getParameter("y"));
-				scale = Double.parseDouble(request.getParameter("s"));
-				width = Integer.parseInt(request.getParameter("w"));
-				height = Integer.parseInt(request.getParameter("h"));
+				col = Integer.parseInt(request.getParameter("c"));
+				row = Integer.parseInt(request.getParameter("r"));
+				scale = Integer.parseInt(request.getParameter("s"));
+				tileWidth = Integer.parseInt(request.getParameter("w"));
+				tileHeight = Integer.parseInt(request.getParameter("h"));
 			}
 			catch (NumberFormatException nfe)
 			{
@@ -58,17 +63,22 @@ public class TileServlet extends HttpServlet
 				return;
 			}
 			
-			double x2 = x + ((double)width) / scale;
-			double y2 = y + ((double)height) / scale;
+			
+			double realTileWidth = (double)tileWidth / (double)scale;
+			double realTileHeight = (double)tileHeight / (double)scale;
+			double x1 = col * realTileWidth;
+			double y1 = row * realTileHeight;
+			double x2 = (col + 1) * realTileWidth;
+			double y2 = (row + 1) * realTileHeight;
 			
 			mapObj map = new mapObj(mapFile);
-			map.setSize(width, height);
-			map.setExtent(x, y, x2, y2);
+			map.setSize(tileWidth, tileHeight);
+			map.setExtent(x1, y1, x2, y2);
 			
 			imageObj img = map.draw();
 			imgBytes = img.getBytes();
 			
-			cache.put(request.getQueryString(), imgBytes);
+			//cache.put(request.getQueryString(), imgBytes);
 		
 		}
 		

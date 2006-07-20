@@ -115,6 +115,13 @@
 			edu.emory.library.tas.web.MenuSliderComponent
 		</component-class>
 	</component>
+	
+	<component>
+		<component-type>Map</component-type>
+		<component-class>
+			edu.emory.library.tas.web.maps.MapComponent
+		</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>

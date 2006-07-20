@@ -2,11 +2,14 @@ package edu.emory.library.tas.web;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
+import edu.emory.library.tas.util.StringUtils;
 
 public class UtilsJSF
 {
@@ -175,4 +178,37 @@ public class UtilsJSF
         }
         child.encodeEnd(context);
     }
+    
+    public static double getParamDouble(Map params, String paramName)
+    {
+		String value = (String) params.get(paramName);
+		if (!StringUtils.isNullOrEmpty(value))
+			return Double.parseDouble(value);
+		else
+			throw new RuntimeException("missing param " + paramName);
+    }
+    
+    public static double getParamDouble(FacesContext context, String paramName)
+    {
+    	return getParamDouble(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName);
+    }
+
+    public static double getParamDouble(Map params, String paramName, double def)
+    {
+		String value = (String) params.get(paramName);
+		if (!StringUtils.isNullOrEmpty(value))
+			return Double.parseDouble(value);
+		else
+			return def;
+    }
+    
+    public static double getParamDouble(FacesContext context, String paramName, double def)
+    {
+    	return getParamDouble(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName, def);
+    }
+
 }

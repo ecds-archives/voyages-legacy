@@ -6,129 +6,288 @@ function get_event(e)
 	return window.event ? window.event : e;
 }
 
-function get_event_relative_pos_x(e)
+var EventUtils = 
 {
-	return e.x ? e.x : e.layerX;
-}
 
-function get_event_relative_pos_y(e)
-{
-	return e.y ? e.y : e.layerY;
-}
-
-function get_element_offset_left(el)
-{
-	// IE
-	if (el.clientLeft)
+	getRelativePosX: function(e)
 	{
-		return el.clientLeft;
-	}
+		return e.x ? e.x : e.layerX;
+	},
 	
-	// others
-	var curleft = 0;
-	while (el.offsetParent)
+	getRelativePosX: function(e)
 	{
-		curleft += el.offsetLeft
-		el = el.offsetParent;
+		return e.y ? e.y : e.layerY;
 	}
-	return curleft;
+
+}
+
+var ElementUtils =
+{
 	
-}
-
-function get_element_offset_top(el)
-{
-
-	// IE
-	if (el.clientTop)
+	getOffsetLeft: function(el)
 	{
-		return el.clientTop;
-	}
-	
-	// others
-	var curtop = 0;
-	while (el.offsetParent)
-	{
-		curtop += el.offsetTop
-		el = el.offsetParent;
-	}
-	return curtop;
-	
-}
-
-function delete_all_children(el)
-{
-	while (el.hasChildNodes())
-		el.removeChild(el.firstChild);
-}
-
-function get_page_width()
-{
-	if (self.pageXOffset) // all except IE
-	{
-		return self.innerWidth;
-	}
-	else if (document.documentElement && document.documentElement.clientWidth) // IE6 Strict
-	{
-		return document.documentElement.clientWidth;
-	}
-	else if (document.body) // all other IE
-	{
-		return document.body.clientWidth;
-	}
-}
-
-function get_page_height()
-{
-	if (self.pageYOffset) // all except IE
-	{
-		return self.innerHeight;
-	}
-	else if (document.documentElement && document.documentElement.clientHeight) // IE6 Strict
-	{
-		return document.documentElement.clientHeight;
-	}
-	else if (document.body) // all other IE
-	{
-		return document.body.clientHeight;
-	}
-}
-
-function get_element_scroll_left(el)
-{
-	var offset = 0;
-	if (el.offsetParent != null)	// IE
-	{
-		var actual = el;
-		while(actual)
+		// IE
+		if (el.clientLeft)
 		{
-			if (actual.scrollLeft != null)
-				offset += actual.scrollLeft;
-			actual=actual.offsetParent;
+			return el.clientLeft;
+		}
+		
+		// others
+		var curleft = 0;
+		while (el.offsetParent)
+		{
+			curleft += el.offsetLeft
+			el = el.offsetParent;
+		}
+		return curleft;
+		
+	},
+	
+	getOffsetTop: function(el)
+	{
+	
+		// IE
+		if (el.clientTop)
+		{
+			return el.clientTop;
+		}
+		
+		// others
+		var curtop = 0;
+		while (el.offsetParent)
+		{
+			curtop += el.offsetTop
+			el = el.offsetParent;
+		}
+		return curtop;
+		
+	},
+	
+	deleteAllChildren: function(el)
+	{
+		while (el.hasChildNodes())
+			el.removeChild(el.firstChild);
+	},
+	
+	getPageWidth: function()
+	{
+		if (self.pageXOffset) // all except IE
+		{
+			return self.innerWidth;
+		}
+		else if (document.documentElement && document.documentElement.clientWidth) // IE6 Strict
+		{
+			return document.documentElement.clientWidth;
+		}
+		else if (document.body) // all other IE
+		{
+			return document.body.clientWidth;
+		}
+	},
+	
+	getPageHeight: function()
+	{
+		if (self.pageYOffset) // all except IE
+		{
+			return self.innerHeight;
+		}
+		else if (document.documentElement && document.documentElement.clientHeight) // IE6 Strict
+		{
+			return document.documentElement.clientHeight;
+		}
+		else if (document.body) // all other IE
+		{
+			return document.body.clientHeight;
+		}
+	},
+	
+	getScrollLeft: function(el)
+	{
+		var offset = 0;
+		if (el.offsetParent != null)	// IE
+		{
+			var actual = el;
+			while(actual)
+			{
+				if (actual.scrollLeft != null)
+					offset += actual.scrollLeft;
+				actual=actual.offsetParent;
+			}
+		}
+		else // all other IE
+		{
+			offset = document.body.scrollLeft;
+		}
+		return offset;
+	},
+	
+	getScrollTop: function(el)
+	{
+		var offset = 0;
+		if (el.offsetParent != null)	// IE
+		{
+			var actual = el;
+			while(actual)
+			{
+				if (actual.scrollTop != null)
+					offset += actual.scrollTop;
+				actual=actual.offsetParent;
+			}
+		}
+		else // all other IE
+		{
+			offset = document.body.scrollTop;
+		}
+		return offset;
+	}
+
+}
+
+var EventAttacher =
+{
+	map: new Array(),
+
+	attach: function(element, eventType, object, handler)
+	{
+
+		if (element.attachEvent)
+		{
+			element.attachEvent("on" + eventType, EventAttacher.globalHandler);
+		}
+		else if (element.addEventListener)
+		{
+			element.addEventListener(eventType, EventAttacher.globalHandler, false);
+		}
+
+		var reg = new Object();
+		EventAttacher.map.push(reg);
+
+		if (object == null) object = window;
+		reg.element = element;
+		reg.object = object;
+		reg.eventType = eventType;
+		reg.handler = handler;
+
+	},
+
+	attachById: function(elementId, eventType, object, handler)
+	{
+		var element = document.getElementById(elementId);
+		this.attach(element, eventType, object, handler);
+	},
+	
+	detach: function(element, eventType, object, handler)
+	{
+		var noOnTheSameType = 0;	
+		for (var i=0; i<EventAttacher.map.length; i++)
+		{
+			var reg = EventAttacher.map[i];
+			if (reg.element == element && reg.eventType == eventType)
+			{
+				noOnTheSameType ++;
+				if (reg.object == object && reg.handler == handler)
+				{
+					EventAttacher.map.splice(i, 1);
+					noOnTheSameType --;
+					i --;;
+				}
+			}
+		}
+		if (noOnTheSameType == 0)
+		{
+			if (element.detachEvent)
+			{
+				element.detachEvent("on" + eventType, EventAttacher.globalHandler);
+			}
+			else if (element.removeEventListener)
+			{
+				element.removeEventListener(eventType, EventAttacher.globalHandler, false);
+			}
+		}
+	},
+	
+	detachById: function(elementId, eventType, object, handler)
+	{
+		var element = document.getElementById(elementId);
+		EventAttacher.detach(element, eventType, object, handler);
+	},
+
+	globalHandler: function(event)
+	{
+		if (!event) event = window.event;
+		var element = this; // event.srcElement ? event.srcElement : this;
+		//alert(EventAttacher.map.length);
+		for (var i=0; i<EventAttacher.map.length; i++)
+		{
+			var reg = EventAttacher.map[i];
+			if (reg.element == element && reg.eventType == event.type)
+			{
+				reg.object[reg.handler](event);
+			}
 		}
 	}
-	else // all other IE
-	{
-		offset = document.body.scrollLeft;
-	}
-	return offset;
+
 }
 
-function get_element_scroll_top(el)
+var Timer =
 {
-	var offset = 0;
-	if (el.offsetParent != null)	// IE
+
+	map: new Array(),
+	nextId: 0,
+	
+	delayedCall: function(object, method, delay)
 	{
-		var actual = el;
-		while(actual)
+	
+		var id = Timer.nextId;
+		Timer.nextId ++;
+	
+		if (object == null) object = window;
+		var reg = new Object();
+		reg.object = object;
+		reg.method = method;
+		reg.tid = window.setTimeout("Timer.globalHandler(" + id + ")", delay);
+		
+		Timer.map["call_" + id] = reg;
+		
+		return id;
+
+	},
+	
+	cancelCall: function(id)
+	{
+		var reg = Timer.map["call_" + id];
+		if (reg)
 		{
-			if (actual.scrollTop != null)
-				offset += actual.scrollTop;
-			actual=actual.offsetParent;
+			window.clearTimeout(reg.tid);
+			delete Timer.map["call_" + id];
+		}
+	},
+	
+	globalHandler: function(id)
+	{
+		var reg = Timer.map["call_" + id];
+		if (reg)
+		{
+			delete Timer.map["call_" + id];
+			reg.object[reg.method]();
 		}
 	}
-	else // all other IE
+
+}
+
+var ObjectUtils = 
+{
+	printObject: function(obj)
 	{
-		offset = document.body.scrollTop;
+		if (!obj)
+		{
+			alert(obj);
+		}
+		else
+		{
+			var ret = "";
+			for (var k in obj) ret += k + " = " + obj[k] + "\n";
+			alert(ret);
+		}
 	}
-	return offset;
 }
