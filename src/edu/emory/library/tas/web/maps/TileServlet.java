@@ -28,13 +28,10 @@ public class TileServlet extends HttpServlet {
 
 	private static long sizeOfCache = 0;
 	
-	private Object servletId;
-	
 	private long lastClean = 0;
 
 	
 	public TileServlet() {
-		this.servletId = new Object();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +64,7 @@ public class TileServlet extends HttpServlet {
 			return;
 		}
 
-		CachedTile tile = new CachedTile(this.servletId, col, row, scale);
+		CachedTile tile = new CachedTile(mapFile, col, row, scale);
 		byte[] cachedObject;
 		synchronized (cache) {
 			cachedObject = (byte[]) cache.get(tile);

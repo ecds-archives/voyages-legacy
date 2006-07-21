@@ -44,20 +44,7 @@ public class MapBean {
 
 	public static int PORT_ARRIVAL = 2;
 
-	private static final String MAP_OBJECT_ATTR_NAME = "__map__file";
-
-	private static final String IMAGE_FEEDED_SERVLET = "servlet/MapFeederServlet";
-
-	private static boolean linked = false;
-
-	// static {
-	// try {
-	// Class.forName("MapscriptLoader");
-	// } catch (ClassNotFoundException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
+	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";
 
 	public class MapItem {
 
@@ -129,6 +116,8 @@ public class MapBean {
 
 	private MapFileCreator creator;
 
+	private String sessionParam;
+
 	private MapItem[] getMapItems() {
 
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
@@ -185,42 +174,39 @@ public class MapBean {
 	}
 
 	public synchronized String getMapPath() {
-		
-		try
-		{
-		
-		if (this.neededQuery) {
 
-			MapItem[] items = this.getMapItems();
+		try {
 
-			if (this.creator == null) {
-				this.creator = new MapFileCreator();
+			if (this.neededQuery) {
+
+				MapItem[] items = this.getMapItems();
+
+				if (this.creator == null) {
+					this.creator = new MapFileCreator();
+				}
+
+				if (items.length > 0) {
+					this.creator.setMapData(items, items[0].size, items[items.length - 1].size);
+				}
+				if (this.creator.createMapFile()) {
+					sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
+					ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+					((HttpSession) servletContext.getSession(true)).setAttribute(sessionParam, creator.getFilePath());
+
+				} else {
+					return null;
+				}
+
+				neededQuery = false;
 			}
 
-			if (items.length > 0) {
-				this.creator.setMapData(items, items[0].size, items[items.length - 1].size);
-			}
-			if (this.creator.createMapFile()) {
-				ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-				((HttpSession) servletContext.getSession(true)).setAttribute(MAP_OBJECT_ATTR_NAME, creator
-						.getFilePath());
+			return sessionParam;
 
-			} else {
-				return null;
-			}
-
-			neededQuery = false;
-		}
-
-		return MAP_OBJECT_ATTR_NAME;
-		
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
 		}
-		
+
 	}
 
 	/**
