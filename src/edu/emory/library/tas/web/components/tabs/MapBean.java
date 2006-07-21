@@ -185,7 +185,10 @@ public class MapBean {
 	}
 
 	public synchronized String getMapPath() {
-
+		
+		try
+		{
+		
 		if (this.neededQuery) {
 
 			MapItem[] items = this.getMapItems();
@@ -210,7 +213,14 @@ public class MapBean {
 		}
 
 		return MAP_OBJECT_ATTR_NAME;
-
+		
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "";
+		}
+		
 	}
 
 	/**

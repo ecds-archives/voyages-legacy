@@ -1,4 +1,3 @@
-
 var MapsGlobal = 
 {
 
@@ -22,7 +21,22 @@ var MapsGlobal =
 		fieldNameX1, // name of the hidden field for x1
 		fieldNameX2, // name of the hidden field for x2
 		fieldNameY1, // name of the hidden field for y1
-		fieldNameY2  // name of the hidden field for y2
+		fieldNameY2,  // name of the hidden field for y2
+		buttonBackId,
+		buttonForwardId,
+		buttonZoomPlusId,
+		buttonZoomMinusId,
+		buttonPanId,
+		buttonZoomId,
+		buttonSizeSmallId,
+		sizeSmallX,
+		sizeSmallY,
+		buttonSizeMediumId,
+		sizeMediumX,
+		sizeMediumY,
+		buttonSizeBigId,
+		sizeBigX,
+		sizeBigY
 	)
 	{
 	
@@ -49,6 +63,25 @@ var MapsGlobal =
 		map.field_name_x2 = fieldNameY1;
 		map.field_name_y2 = fieldNameY2;
 		
+		// buttons
+		if (buttonBackId)
+			new MapButtonGoBack(buttonBackId, map);
+
+		if (buttonForwardId)
+			new MapButtonGoForward(buttonForwardId, map);
+
+		if (buttonZoomPlusId)
+			new MapButtonZoomPlus(buttonZoomPlusId, map);
+
+		if (buttonZoomMinusId)
+			new MapButtonZoomMinus(buttonZoomMinusId, map);
+			
+		if (buttonPanId && buttonZoomId)
+			new MapZoomAndPanButtons(buttonPanId, buttonZoomId, map);
+
+		if (buttonSizeSmallId && sizeSmallX && sizeSmallY && buttonSizeMediumId && sizeMediumX && sizeMediumY && buttonSizeBigId && sizeBigX && sizeBigY)
+			new MapZoomSize(buttonSizeSmallId, sizeSmallX, sizeSmallY, buttonSizeMediumId, sizeMediumX, sizeMediumY, buttonSizeBigId, sizeBigX, sizeBigY, map);
+
 		// call init after page loads
 		EventAttacher.attach(window, "load", map, "init");
 	
@@ -159,6 +192,8 @@ function Map()
 	this.zoom_history = new Array();
 	this.zoom_history_pos = -1;
 	this.zoom_history_max = 100;
+	this.go_back_button = null;
+	this.go_forward_button = null;
 	
 	// for dragging
 	this.dragging_start_x = null;
@@ -963,6 +998,13 @@ Map.prototype.zoomRestoreCurrent = function()
 {
 	var state = this.zoom_history[this.zoom_history_pos];
 	this.setScaleAndCenterMapTo(state.scale, state.cx, state.cy, false);
+	this.zoomHistoryFireEvents();
+}
+
+Map.prototype.zoomHistoryFireEvents = function()
+{
+	if (this.go_back_button) this.go_back_button.historyChanged();
+	if (this.go_forward_button) this.go_forward_button.historyChanged();
 }
 
 Map.prototype.zoomGoBack = function()
@@ -989,6 +1031,15 @@ Map.prototype.zoomCanGoForward = function()
 	return this.zoom_history_pos+1 < this.zoom_history.length;
 }
 
+Map.prototype.registerGoForwardButton = function(button)
+{
+	this.go_forward_button = button;
+}
+
+Map.prototype.registerGoBackButton = function(button)
+{
+	this.go_back_button = button;
+}
 
 /////////////////////////////////////////////////////////
 // scale selector
@@ -1391,4 +1442,223 @@ Map.prototype.init = function()
 	// show something
 	this.restoreState();
 	
+}
+
+
+/////////////////////////////////////////////////////////
+// generic button functions
+/////////////////////////////////////////////////////////
+/*
+function MapButton(elementId, map)
+{
+	this.element = null;
+	this.map = map;
+	this.elementId = elementId;
+	EventAttacher.attach(window, "load", this, "init");
+}
+
+MapButton.prototype.init = function()
+{
+	this.element = document.getElementById(this.elementId);
+	EventAttacher.attach(this.element, "click", this, "click");
+}
+*/
+
+/////////////////////////////////////////////////////////
+// zoom + button
+/////////////////////////////////////////////////////////
+
+function MapButtonZoomPlus(elementId, map)
+{
+	this.element = null;
+	this.map = map;
+	this.elementId = elementId;
+	EventAttacher.attach(window, "load", this, "init");
+}
+
+MapButtonZoomPlus.prototype.init = function()
+{
+	this.element = document.getElementById(this.elementId);
+	EventAttacher.attach(this.element, "click", this, "click");
+}
+
+MapButtonZoomPlus.prototype.click = function(event)
+{
+	this.map.zoomPlus();
+}
+
+
+/////////////////////////////////////////////////////////
+// zoom - button
+/////////////////////////////////////////////////////////
+
+function MapButtonZoomMinus(elementId, map)
+{
+	this.element = null;
+	this.map = map;
+	this.elementId = elementId;
+	EventAttacher.attach(window, "load", this, "init");
+}
+
+MapButtonZoomMinus.prototype.init = function()
+{
+	this.element = document.getElementById(this.elementId);
+	EventAttacher.attach(this.element, "click", this, "click");
+}
+
+MapButtonZoomMinus.prototype.click = function(event)
+{
+	this.map.zoomMinus();
+}
+
+/////////////////////////////////////////////////////////
+// back button
+/////////////////////////////////////////////////////////
+
+function MapButtonGoBack(elementId, map)
+{
+	this.element = null;
+	this.map = map;
+	this.elementId = elementId;
+	this.map.registerGoBackButton(this);
+	EventAttacher.attach(window, "load", this, "init");
+}
+
+MapButtonGoBack.prototype.init = function()
+{
+	this.element = document.getElementById(this.elementId);
+	EventAttacher.attach(this.element, "click", this, "click");
+}
+
+MapButtonGoBack.prototype.click = function(event)
+{
+	this.map.zoomGoBack();
+}
+
+MapButtonGoBack.prototype.historyChanged = function()
+{
+	element.className = this.map.zoomCanGoBack ? "map-icon-back" : "map-icon-back-off";
+}
+
+/////////////////////////////////////////////////////////
+// forward button
+/////////////////////////////////////////////////////////
+
+function MapButtonGoForward(elementId, map)
+{
+	this.element = null;
+	this.map = map;
+	this.elementId = elementId;
+	this.map.registerGoForwardButton(this);
+	EventAttacher.attach(window, "load", this, "init");
+}
+
+MapButtonGoForward.prototype.init = function()
+{
+	this.element = document.getElementById(this.elementId);
+	EventAttacher.attach(this.element, "click", this, "click");
+}
+
+MapButtonGoForward.prototype.click = function(event)
+{
+	this.map.zoomGoForward();
+}
+
+MapButtonGoForward.prototype.historyChanged = function()
+{
+	this.element.className = this.map.zoomCanGoForward ? "map-icon-forward" : "map-icon-forward-off";
+}
+
+
+/////////////////////////////////////////////////////////
+// zoom and pan buttons
+/////////////////////////////////////////////////////////
+
+function MapZoomAndPanButtons(panElementId, zoomElementId, map)
+{
+	this.zoomElement = null;
+	this.panElement = null;
+	this.panElementId = panElementId;
+	this.zoomElementId = zoomElementId;
+	this.map = map;
+	EventAttacher.attach(window, "load", this, "init");
+}
+
+MapZoomAndPanButtons.prototype.init = function()
+{
+	this.zoomElement = document.getElementById(this.zoomElementId);
+	this.panElement = document.getElementById(this.panElementId);
+	EventAttacher.attach(this.zoomElement, "click", this, "clickZoom");
+	EventAttacher.attach(this.panElement, "click", this, "clickPan");
+}
+
+MapZoomAndPanButtons.prototype.clickZoom = function(event)
+{
+	this.map.setMouseModeToZoom();
+	this.zoomElement.className = "map-icon-zoom";
+	this.panElement.className = "map-icon-pan-off";
+}
+
+MapZoomAndPanButtons.prototype.clickPan = function(event)
+{
+	this.map.setMouseModeToPan();
+	this.zoomElement.className = "map-icon-zoom-off";
+	this.panElement.className = "map-icon-pan";
+}
+
+
+/////////////////////////////////////////////////////////
+// size buttons
+/////////////////////////////////////////////////////////
+
+function MapZoomSize(smallElementId, sizeSmallX, sizeSmallY, mediumElementId, sizeMediumX, sizeMediumY, bigElementId, sizeBigX, sizeBigY, map)
+{
+	this.smallSizeX = sizeSmallX;
+	this.smallSizeY = sizeSmallY;
+	this.mediumSizeX = sizeMediumX;
+	this.mediumSizeY = sizeMediumY;
+	this.bigSizeX = sizeBigX;
+	this.bigSizeY = sizeBigY;
+	this.smallElement = null;
+	this.mediumElement = null;
+	this.bigElement = null;
+	this.smallElementId = smallElementId;
+	this.mediumElementId = mediumElementId;
+	this.bigElementId = bigElementId;
+	this.map = map;
+	EventAttacher.attach(window, "load", this, "init");
+}
+
+MapZoomSize.prototype.init = function()
+{
+	this.smallElement = document.getElementById(this.smallElementId);
+	this.mediumElement = document.getElementById(this.mediumElementId);
+	this.bigElement = document.getElementById(this.bigElementId);
+	EventAttacher.attach(this.smallElement, "click", this, "clickSmall");
+	EventAttacher.attach(this.mediumElement, "click", this, "clickMedium");
+	EventAttacher.attach(this.bigElement, "click", this, "clickBig");
+}
+
+MapZoomSize.prototype.clickSmall = function(event)
+{
+	this.map.setSize(this.smallSizeX, this.smallSizeY);
+	this.smallElement.className = "map-icon-size-small";
+	this.mediumElement.className = "map-icon-size-medium-off";
+	this.bigElement.className = "map-icon-size-big-off";
+}
+
+MapZoomSize.prototype.clickMedium = function(event)
+{
+	this.map.setSize(this.mediumSizeX, this.mediumSizeY);
+	this.smallElement.className = "map-icon-size-small-off";
+	this.mediumElement.className = "map-icon-size-medium";
+	this.bigElement.className = "map-icon-size-big-off";
+}
+
+MapZoomSize.prototype.clickBig = function(event)
+{
+	this.map.setSize(this.bigSizeX, this.bigSizeY);
+	this.smallElement.className = "map-icon-size-small-off";
+	this.mediumElement.className = "map-icon-size-medium-off";
+	this.bigElement.className = "map-icon-size-big";
 }

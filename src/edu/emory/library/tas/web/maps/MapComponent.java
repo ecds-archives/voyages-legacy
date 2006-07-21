@@ -92,23 +92,75 @@ public class MapComponent extends UIComponentBase
 		
 	}
 	
+//	private void encodeToolStart(ResponseWriter writer) throws IOException
+//	{
+//		writer.startElement("table", this);
+//		writer.writeAttribute("border", "0", null);
+//		writer.writeAttribute("cellspacing", "5", null);
+//		writer.writeAttribute("cellpadding", "0", null);
+//		writer.startElement("tr", this);
+//	}
+//	
+//	private void encodeTool(FacesContext context, ResponseWriter writer, String label, String js) throws IOException
+//	{
+//		writer.startElement("td", this);
+//		writer.startElement("input", this);
+//		writer.writeAttribute("type", "button", null);
+//		writer.writeAttribute("value", label, null);
+//		writer.writeAttribute("onclick", js, null);
+//		writer.endElement("input");
+//		writer.endElement("td");
+//	}
+//
+//	private void encodeToolEnd(ResponseWriter writer) throws IOException
+//	{
+//		writer.endElement("tr");
+//		writer.endElement("table");
+//	}
+//	
+//	private void encodeTopTools(FacesContext context, ResponseWriter writer, String mapId) throws IOException
+//	{
+//
+//		encodeToolStart(writer);
+//		
+//		encodeTool(context, writer, "<", "MapsGlobal.zoomGoBack('" + mapId + "')");
+//		encodeTool(context, writer, ">", "MapsGlobal.zoomGoForward('" + mapId + "')");
+//		encodeTool(context, writer, "+", "MapsGlobal.zoomPlus('" + mapId + "')");
+//		encodeTool(context, writer, "-", "MapsGlobal.zoomMinus('" + mapId + "')");
+//
+//		encodeTool(context, writer, "Pan", "MapsGlobal.setMouseModeToPan('" + mapId + "')");
+//		encodeTool(context, writer, "Zoom", "MapsGlobal.setMouseModeToZoom('" + mapId + "')");
+//
+//		encodeTool(context, writer, "S", "MapsGlobal.setSize('" + mapId + "', 480, 320)");
+//		encodeTool(context, writer, "M", "MapsGlobal.setSize('" + mapId + "', 800, 600)");
+//		encodeTool(context, writer, "L", "MapsGlobal.setSize('" + mapId + "', 1024, 768)");
+//		
+//		encodeToolEnd(writer);
+//		
+//	}
+	
 	private void encodeToolStart(ResponseWriter writer) throws IOException
 	{
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("cellspacing", "5", null);
+		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "map-tools", null);
 		writer.startElement("tr", this);
 	}
 	
-	private void encodeTool(FacesContext context, ResponseWriter writer, String label, String js) throws IOException
+	private void encodeTool(FacesContext context, ResponseWriter writer, String id, String className) throws IOException
 	{
 		writer.startElement("td", this);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", label, null);
-		writer.writeAttribute("onclick", js, null);
-		writer.endElement("input");
+		writer.writeAttribute("id", id, null);
+		writer.writeAttribute("class", className, null);
+		writer.endElement("td");
+	}
+
+	private void encodeToolSepearator(FacesContext context, ResponseWriter writer) throws IOException
+	{
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-tools-separator", null);
 		writer.endElement("td");
 	}
 
@@ -116,27 +168,6 @@ public class MapComponent extends UIComponentBase
 	{
 		writer.endElement("tr");
 		writer.endElement("table");
-	}
-	
-	private void encodeTopTools(FacesContext context, ResponseWriter writer, String mapId) throws IOException
-	{
-
-		encodeToolStart(writer);
-		
-		encodeTool(context, writer, "<", "MapsGlobal.zoomGoBack('" + mapId + "')");
-		encodeTool(context, writer, ">", "MapsGlobal.zoomGoForward('" + mapId + "')");
-		encodeTool(context, writer, "+", "MapsGlobal.zoomPlus('" + mapId + "')");
-		encodeTool(context, writer, "-", "MapsGlobal.zoomMinus('" + mapId + "')");
-
-		encodeTool(context, writer, "Pan", "MapsGlobal.setMouseModeToPan('" + mapId + "')");
-		encodeTool(context, writer, "Zoom", "MapsGlobal.setMouseModeToZoom('" + mapId + "')");
-
-		encodeTool(context, writer, "S", "MapsGlobal.setSize('" + mapId + "', 480, 320)");
-		encodeTool(context, writer, "M", "MapsGlobal.setSize('" + mapId + "', 800, 600)");
-		encodeTool(context, writer, "L", "MapsGlobal.setSize('" + mapId + "', 1024, 768)");
-		
-		encodeToolEnd(writer);
-		
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException
@@ -151,8 +182,18 @@ public class MapComponent extends UIComponentBase
 		String mapId = getClientId(context);
 		String mapControlId = getClientId(context) + "_contol";
 		String mapFrameId = getClientId(context) + "_frame";
-		String mapTopToolsId = getClientId(context) + "_top_tools";
+//		String mapTopToolsId = getClientId(context) + "_top_tools";
 		
+		String toolsBackId = getClientId(context) + "_back";
+		String toolsForwardId = getClientId(context) + "_forward";
+		String toolsZoomPlusId = getClientId(context) + "_zoom_plus";
+		String toolsZoomMinusId = getClientId(context) + "_zoom_minus";
+		String toolsPanId = getClientId(context) + "_pan";
+		String toolsZoomId = getClientId(context) + "_zoom";
+		String toolsSizeSmallId = getClientId(context) + "_size_small";
+		String toolsSizeMediumId = getClientId(context) + "_size_medium";
+		String toolsSizeBigId = getClientId(context) + "_size_big";
+
 		String hiddenFieldNameForX1 = getHiddenFieldNameForX1(context);
 		String hiddenFieldNameForY1 = getHiddenFieldNameForY1(context);
 		String hiddenFieldNameForX2 = getHiddenFieldNameForX2(context);
@@ -166,7 +207,7 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("'").append(mapFile).append("', ");
 		jsRegister.append("'").append(mapControlId).append("', ");
 		jsRegister.append("'").append(mapFrameId).append("', ");
-		jsRegister.append("'").append(mapTopToolsId).append("', ");
+		jsRegister.append("null").append(", ");
 		jsRegister.append("null").append(", ");
 		jsRegister.append("null").append(", ");
 		jsRegister.append("null").append(", ");
@@ -174,7 +215,19 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("'").append(hiddenFieldNameForX1).append("', ");
 		jsRegister.append("'").append(hiddenFieldNameForY1).append("', ");
 		jsRegister.append("'").append(hiddenFieldNameForX2).append("', ");
-		jsRegister.append("'").append(hiddenFieldNameForY2).append("'");
+		jsRegister.append("'").append(hiddenFieldNameForY2).append("', ");
+		jsRegister.append("'").append(toolsBackId).append("', ");
+		jsRegister.append("'").append(toolsForwardId).append("', ");
+		jsRegister.append("'").append(toolsZoomPlusId).append("', ");
+		jsRegister.append("'").append(toolsZoomMinusId).append("', ");
+		jsRegister.append("'").append(toolsPanId).append("', ");
+		jsRegister.append("'").append(toolsZoomId).append("', ");
+		jsRegister.append("'").append(toolsSizeSmallId).append("', ");
+		jsRegister.append("480, 320, ");
+		jsRegister.append("'").append(toolsSizeMediumId).append("', ");
+		jsRegister.append("800, 600, ");
+		jsRegister.append("'").append(toolsSizeBigId).append("', ");
+		jsRegister.append("1024, 768");
 		jsRegister.append(")");
 		
 		UtilsJSF.encodeJavaScriptStart(this, writer);
@@ -188,19 +241,35 @@ public class MapComponent extends UIComponentBase
 		
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapControlId, null);
-		writer.writeAttribute("style", "position: relative; width: 730px; height: 500px;", null);
+		writer.writeAttribute("style", "position: relative; width: 800px; height: 600px;", null);
 
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapFrameId, null);
 		writer.writeAttribute("style", "position: absolute", null);
-		writer.writeAttribute("class", "map-tools-top", null);
 		writer.endElement("div");
 		
-		writer.startElement("div", this);
-		writer.writeAttribute("id", mapTopToolsId, null);
-		writer.writeAttribute("style", "position: absolute", null);
-		encodeTopTools(context, writer, mapId);
-		writer.endElement("div");
+		encodeToolStart(writer);
+		encodeTool(context, writer, toolsBackId, "map-icon-back");
+		encodeToolSepearator(context, writer);
+		encodeTool(context, writer, toolsForwardId, "map-icon-forward");
+		encodeToolSepearator(context, writer);
+		encodeTool(context, writer, toolsPanId, "map-icon-pan");
+		encodeTool(context, writer, toolsZoomId, "map-icon-zoom-off");
+		encodeToolSepearator(context, writer);
+		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus");
+		encodeToolSepearator(context, writer);
+		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus");
+		encodeToolSepearator(context, writer);
+		encodeTool(context, writer, toolsSizeSmallId, "map-icon-size-small-off");
+		encodeTool(context, writer, toolsSizeMediumId, "map-icon-size-medium");
+		encodeTool(context, writer, toolsSizeBigId, "map-icon-size-big-off");
+		encodeToolEnd(writer);
+		
+//		writer.startElement("div", this);
+//		writer.writeAttribute("id", mapTopToolsId, null);
+//		writer.writeAttribute("style", "position: absolute", null);
+//		encodeTopTools(context, writer, mapId);
+//		writer.endElement("div");
 
 		writer.endElement("div");
 		

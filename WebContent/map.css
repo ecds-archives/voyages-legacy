@@ -1,0 +1,178 @@
+table.map-tools {
+	top: 10px;
+	left: 10px;
+	position: absolute; }
+	
+td.map-tools-separator {
+	width: 5px; 
+	overflow: hidden; }
+
+td.map-icon-back {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-back.png); }
+	
+td.map-icon-back:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-forward {
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-forward.png); }
+	
+td.map-icon-forward:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-back {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-back.png); }
+	
+td.map-icon-back:hover {
+	background-position: 0px -24px; }
+
+td.map-icon-zoom-plus {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-zoom-plus.png); }
+	
+td.map-icon-zoom-plus:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-zoom-minus {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-zoom-minus.png); }
+	
+td.map-icon-zoom-minus:hover {
+	background-position: 0px -24px; }
+
+td.map-icon-zoom {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-zoom.png); }
+	
+td.map-icon-zoom-off {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: 0px -48px;
+	background-image: url(map-icon-zoom.png); }
+
+td.map-icon-zoom:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-zoom-off:hover {
+	background-position: 0px -24px; }
+
+td.map-icon-pan {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-pan.png); }
+	
+td.map-icon-pan-off {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: 0px -48px;
+	background-image: url(map-icon-pan.png); }
+	
+td.map-icon-pan:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-pan-off:hover {
+	background-position: 0px -24px; }
+
+td.map-icon-size-small {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-size-small.png); }
+	
+td.map-icon-size-small-off {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: 0px -48px;
+	background-image: url(map-icon-size-small.png); }
+	
+td.map-icon-size-small:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-size-small-off:hover {
+	background-position: 0px -24px; }		
+	
+td.map-icon-size-medium {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-size-medium.png); }
+	
+td.map-icon-size-medium-off {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: 0px -48px;
+	background-image: url(map-icon-size-medium.png); }
+	
+td.map-icon-size-medium:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-size-medium-off:hover {
+	background-position: 0px -24px; }		
+	
+td.map-icon-size-big {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-size-big.png); }
+	
+td.map-icon-size-big-off {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: 0px -48px;
+	background-image: url(map-icon-size-big.png); }
+	
+td.map-icon-size-big:hover {
+	background-position: 0px -24px; }
+	
+td.map-icon-size-big-off:hover {
+	background-position: 0px -24px; }		
+	

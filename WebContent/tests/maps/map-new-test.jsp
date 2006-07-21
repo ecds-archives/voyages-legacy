@@ -3,12 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%
+
+session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\test.map");
+
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<title>Map test</title>
 	<script src="../../utils.js" type="text/javascript" language="javascript"></script>
 	<script src="../../map.js" type="text/javascript" language="javascript"></script>
+	<link href="../../map.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
