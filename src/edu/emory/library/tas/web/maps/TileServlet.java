@@ -20,15 +20,18 @@ public class TileServlet extends HttpServlet {
 	
 	public static final long CLEAN_PERIOD = 10000;
 
+	public static final long MAX_CACHE = 104857600;
+	
 	private static final long serialVersionUID = 5538255560078657125L;
 
 	private static Map cache = new HashMap();
 
+	private static long sizeOfCache = 0;
+	
 	private Object servletId;
 	
 	private long lastClean = 0;
 
-	
 	
 	public TileServlet() {
 		this.servletId = new Object();
@@ -36,10 +39,10 @@ public class TileServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("doGet");
+		//System.out.println("doGet");
 		
 		HttpSession session = request.getSession();
-		long timeStart = System.currentTimeMillis();
+		//long timeStart = System.currentTimeMillis();
 
 		response.setContentType("image/png");
 		response.setDateHeader("Expires", (new Date()).getTime() + 1000 * 60 * 60);
@@ -70,6 +73,7 @@ public class TileServlet extends HttpServlet {
 			cachedObject = (byte[]) cache.get(tile);
 		}
 
+		//System.out.println("Size: " + sizeOfCache);
 		clean();
 		
 		if (cachedObject == null) {
@@ -87,10 +91,14 @@ public class TileServlet extends HttpServlet {
 				map.setExtent(x1, y1, x2, y2);
 
 				imageObj img = map.draw();
-				response.getOutputStream().write(img.getBytes());
+				byte [] imgBytes = img.getBytes();
+				response.getOutputStream().write(imgBytes);
 
 				synchronized (cache) {
-					cache.put(tile, img.getBytes());
+					if (sizeOfCache < MAX_CACHE) {
+						cache.put(tile, imgBytes);
+						sizeOfCache += imgBytes.length;
+					}
 				}
 
 			} else {
@@ -98,7 +106,7 @@ public class TileServlet extends HttpServlet {
 				return;
 			}
 		} else {
-			System.out.println("FROM cache: " + tile);
+			//System.out.println("FROM cache: " + tile);
 			synchronized (cache) {
 				cache.put(tile, cachedObject);
 			}
@@ -106,8 +114,8 @@ public class TileServlet extends HttpServlet {
 			return;
 		}
 		
-		long timeEnd = System.currentTimeMillis();
-		System.out.println(request.getQueryString() + ", time = " + (timeEnd - timeStart));
+		//long timeEnd = System.currentTimeMillis();
+		//System.out.println(request.getQueryString() + ", time = " + (timeEnd - timeStart));
 
 	}
 
@@ -121,20 +129,23 @@ public class TileServlet extends HttpServlet {
 		
 		ArrayList toRemove = new ArrayList();
 		synchronized (cache) {
-			System.out.println("Cleaner!!! " + cache.size());
+			//System.out.println("Cleaner!!! " + cache.size());
 			Iterator iter = cache.keySet().iterator();
 			while (iter.hasNext()) {
 				CachedTile tile = (CachedTile) iter.next();
 				if (tile.isExpired(time)) {
-					System.out.println("Will remove: " + tile);
+					//System.out.println("Will remove: " + tile);
 					toRemove.add(tile);
 				}
 			}
 			iter = toRemove.iterator();
 			while (iter.hasNext()) {
-				cache.remove(iter.next());
+				Object key = iter.next();
+				byte [] bytes = (byte[])cache.get(key);
+				sizeOfCache -= bytes.length;
+				cache.remove(key);
 			}
-			System.out.println("Cleaner exits. " + cache.size());
+			//System.out.println("Cleaner exits. " + cache.size());
 		}
 	}
 
