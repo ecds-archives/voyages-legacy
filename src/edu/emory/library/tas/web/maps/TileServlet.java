@@ -1,64 +1,40 @@
 package edu.emory.library.tas.web.maps;
 
-import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
+import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
-import java.awt.image.CropImageFilter;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.ByteOrder;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.imageio.spi.ImageWriterSpi;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.ImageIcon;
-
-import com.keypoint.PngEncoder;
-import com.sun.imageio.plugins.png.PNGImageWriter;
-
-import sun.awt.image.PNGImageDecoder;
 
 import edu.umn.gis.mapscript.imageObj;
 import edu.umn.gis.mapscript.mapObj;
 
 public class TileServlet extends HttpServlet {
 
-	public static final int META_SIZE_X = 20;
-	
-	public static final int META_SIZE_Y = 20;
-
-	public static final long CLEAN_PERIOD = 10000;
-
-	public static final long MAX_CACHE = 104857600;
-
 	private static final long serialVersionUID = 5538255560078657125L;
 
-	private static Map cache = new HashMap();
+	public static final int META_SIZE_X = 20;
+	public static final int META_SIZE_Y = 20;
 
-	private static long sizeOfCache = 0;
+	//private static Map cache = new HashMap();
+	private TileCache cache = new TileCache();  
 
-	private long lastClean = 0;
-
-	public TileServlet() {
-	}
+//	private static long sizeOfCache = 0;
+//	private long lastClean = 0;
+//	public static final long MAX_CACHE = 104857600;
+//	public static final long CLEAN_PERIOD = 10000;
+	
+	private int cacheHits = 0;
+	private int cacheMisses = 0;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -70,84 +46,116 @@ public class TileServlet extends HttpServlet {
 
 		String mapFile = request.getParameter("m");
 
-		double col = 0;
-		double row = 0;
-		double scale = 0;
+		int col = 0;
+		int row = 0;
+		int scale = 0;
 		int tileWidth = 0;
 		int tileHeight = 0;
 
-		try {
+		try
+		{
 			col = Integer.parseInt(request.getParameter("c"));
 			row = Integer.parseInt(request.getParameter("r"));
 			scale = Integer.parseInt(request.getParameter("s"));
 			tileWidth = Integer.parseInt(request.getParameter("w"));
 			tileHeight = Integer.parseInt(request.getParameter("h"));
-		} catch (NumberFormatException nfe) {
-			response.sendRedirect("blank.png");
+		}
+		catch (NumberFormatException nfe)
+		{
+			response.sendRedirect("../blank.png");
 			return;
 		}
 
-		CachedTile tile = new CachedTile(mapFile, col, row, scale);
-		byte[] cachedObject;
-		synchronized (cache) {
-			cachedObject = (byte[]) cache.get(tile);
-		}
+		//		CachedTileKey tile = new CachedTileKey(mapFile, col, row, scale);
+//		byte[] cachedObject;
+//		synchronized (cache) {
+//			cachedObject = (byte[]) cache.get(tile);
+//		}
+		
+		cache.clean();
 
-		clean();
-
-		if (cachedObject == null) {
-			String path = (String) session.getAttribute(mapFile);
-			if (path != null) {
-				double realTileWidth = (double) tileWidth / (double) scale;
-				double realTileHeight = (double) tileHeight / (double) scale;
-				double x1 = col * realTileWidth - META_SIZE_X / (double) scale;
-				double y1 = row * realTileHeight - META_SIZE_Y / (double) scale;
-				double x2 = (col + 1) * realTileWidth + META_SIZE_X / (double) scale;
-				double y2 = (row + 1) * realTileHeight + META_SIZE_Y / (double) scale;
-
-				mapObj map = new mapObj(path);
-				map.setSize(tileWidth + 2 * META_SIZE_X, tileHeight + 2 * META_SIZE_Y);
-				map.setExtent(x1, y1, x2, y2);
-
-				map.setMetaData("labelcache_map_edge_buffer", ((int)-Math.max(META_SIZE_X, META_SIZE_Y)) + "");
-
-				imageObj img = map.draw();
-				byte[] imgBytes = img.getBytes();
-				//img.save("/home/juri/gis/pleple1" + col + "_" + row + ".png", map);
-				Image image = Toolkit.getDefaultToolkit().createImage(imgBytes);
-				RenderedImage rimage = toBufferedImage(Toolkit.getDefaultToolkit().createImage(
-						new FilteredImageSource(image.getSource(), new CropImageFilter(META_SIZE_X, META_SIZE_Y, tileWidth,
-								tileHeight))));
-				
-				ByteArrayOutputStream oStream = new ByteArrayOutputStream();
-				ImageIO.write(rimage, "png", oStream);
-
-				imgBytes = oStream.toByteArray();
-				
-				response.getOutputStream().write(imgBytes);
-
-				
-				synchronized (cache) {
-					if (sizeOfCache < MAX_CACHE) {
-						cache.put(tile, imgBytes);
-						sizeOfCache += imgBytes.length;
-					}
-				}
-
-			} else {
-				response.sendRedirect("blank.png");
-				return;
-			}
-		} else {
-			synchronized (cache) {
-				cache.put(tile, cachedObject);
-			}
-			response.getOutputStream().write(cachedObject);
+		byte[] cachedImg = cache.get(mapFile, col, row, scale);
+		if (cachedImg != null)
+		{
+			cacheHits++;
+			response.getOutputStream().write(cachedImg);
 			return;
 		}
+		cacheMisses++;
+		
+		System.out.println(((double)cacheHits / ((double) cacheHits + cacheMisses) * 100) +  "%");
+
+		String path = (String) session.getAttribute(mapFile);
+		if (path == null)
+		{
+			response.sendRedirect("../blank.png");
+			return;
+		}
+		
+		double realTileWidth = (double) tileWidth / (double) scale;
+		double realTileHeight = (double) tileHeight / (double) scale;
+
+		double x1 = col * realTileWidth - META_SIZE_X / (double) scale;
+		double y1 = row * realTileHeight - META_SIZE_Y / (double) scale;
+		double x2 = (col + 1) * realTileWidth + META_SIZE_X / (double) scale;
+		double y2 = (row + 1) * realTileHeight + META_SIZE_Y / (double) scale;
+
+		mapObj map = new mapObj(path);
+		map.setSize(tileWidth + 2 * META_SIZE_X, tileHeight + 2 * META_SIZE_Y);
+		map.setExtent(x1, y1, x2, y2);
+
+//				map.setMetaData("labelcache_map_edge_buffer", ((int)-Math.max(META_SIZE_X, META_SIZE_Y)) + "");
+
+		imageObj img = map.draw();
+		byte[] imgBytes = img.getBytes();
+			
+			//img.save("/home/juri/gis/pleple1" + col + "_" + row + ".png", map);
+			
+//				Image image = Toolkit.getDefaultToolkit().createImage(imgBytes);
+//				RenderedImage rimage = toBufferedImage(Toolkit.getDefaultToolkit().createImage(
+//						new FilteredImageSource(image.getSource(), new CropImageFilter(META_SIZE_X, META_SIZE_Y, tileWidth,
+//								tileHeight))));
+			
+		Image image = ImageIO.read(new ByteArrayInputStream(imgBytes));
+		BufferedImage rimage = new BufferedImage(tileWidth, tileHeight, BufferedImage.TYPE_INT_RGB);
+		
+		Graphics2D gr = rimage.createGraphics();
+		gr.drawImage(image,
+				0, 0, tileWidth, tileHeight,
+				META_SIZE_X, META_SIZE_Y, META_SIZE_X + tileWidth, META_SIZE_Y + tileHeight,
+				null);
+		gr.dispose();
+			
+		ByteArrayOutputStream oStream = new ByteArrayOutputStream();
+		ImageIO.write(rimage, "png", oStream);
+		imgBytes = oStream.toByteArray();
+		
+		cache.put(mapFile, col, row, scale, imgBytes);
+		
+		response.getOutputStream().write(imgBytes);
+			
+//			synchronized (cache) {
+//				if (sizeOfCache < MAX_CACHE) {
+//					cache.put(tile, imgBytes);
+//					sizeOfCache += imgBytes.length;
+//				}
+//			}
+
+//		} else {
+//			synchronized (cache) {
+//				cache.put(tile, cachedObject);
+//			}
+//			response.getOutputStream().write(cachedObject);
+//			return;
+//		}
 
 	}
+	
+	public void init() throws ServletException
+	{
+	}
 
+/*
 	public static BufferedImage toBufferedImage(Image image) {
 		if (image instanceof BufferedImage) {
 			return (BufferedImage) image;
@@ -191,7 +199,9 @@ public class TileServlet extends HttpServlet {
 
 		return bimage;
 	}
-
+*/
+	
+/*
 	protected void clean() {
 
 		long time = System.currentTimeMillis();
@@ -204,7 +214,7 @@ public class TileServlet extends HttpServlet {
 		synchronized (cache) {
 			Iterator iter = cache.keySet().iterator();
 			while (iter.hasNext()) {
-				CachedTile tile = (CachedTile) iter.next();
+				CachedTileKey tile = (CachedTileKey) iter.next();
 				if (tile.isExpired(time)) {
 					toRemove.add(tile);
 				}
@@ -218,7 +228,7 @@ public class TileServlet extends HttpServlet {
 			}
 		}
 	}
-
+*/
 	// public synchronized void init() throws ServletException {
 	// super.init();
 	// if (threadCleaner == null) {

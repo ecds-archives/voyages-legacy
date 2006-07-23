@@ -22,21 +22,16 @@ var MapsGlobal =
 		fieldNameX2, // name of the hidden field for x2
 		fieldNameY1, // name of the hidden field for y1
 		fieldNameY2,  // name of the hidden field for y2
+		fieldNameZoomHistory, 
 		buttonBackId,
 		buttonForwardId,
 		buttonZoomPlusId,
 		buttonZoomMinusId,
 		buttonPanId,
 		buttonZoomId,
-		buttonSizeSmallId,
-		sizeSmallX,
-		sizeSmallY,
-		buttonSizeMediumId,
-		sizeMediumX,
-		sizeMediumY,
-		buttonSizeBigId,
-		sizeBigX,
-		sizeBigY
+		fieldNameForMouseMode,
+		mapSizes,
+		fieldNameForMapSize
 	)
 	{
 	
@@ -62,13 +57,20 @@ var MapsGlobal =
 		map.field_name_y1 = fieldNameX2;
 		map.field_name_x2 = fieldNameY1;
 		map.field_name_y2 = fieldNameY2;
+		map.field_name_zoom_history = fieldNameZoomHistory;
 		
 		// buttons
 		if (buttonBackId)
-			new MapButtonGoBack(buttonBackId, map);
+		{
+			var btn = new MapButtonGoBack(buttonBackId, map);
+			map.registerGoBackButton(btn);
+		}
 
 		if (buttonForwardId)
-			new MapButtonGoForward(buttonForwardId, map);
+		{
+			var btn = new MapButtonGoForward(buttonForwardId, map);
+			map.registerGoForwardButton(btn);
+		}
 
 		if (buttonZoomPlusId)
 			new MapButtonZoomPlus(buttonZoomPlusId, map);
@@ -77,10 +79,10 @@ var MapsGlobal =
 			new MapButtonZoomMinus(buttonZoomMinusId, map);
 			
 		if (buttonPanId && buttonZoomId)
-			new MapZoomAndPanButtons(buttonPanId, buttonZoomId, map);
+			new MapZoomAndPanButtons(buttonPanId, buttonZoomId, formName, fieldNameForMouseMode, map);
 
-		if (buttonSizeSmallId && sizeSmallX && sizeSmallY && buttonSizeMediumId && sizeMediumX && sizeMediumY && buttonSizeBigId && sizeBigX && sizeBigY)
-			new MapZoomSize(buttonSizeSmallId, sizeSmallX, sizeSmallY, buttonSizeMediumId, sizeMediumX, sizeMediumY, buttonSizeBigId, sizeBigX, sizeBigY, map);
+		if (mapSizes && fieldNameForMapSize)
+			new MapZoomSize(mapSizes, formName, fieldNameForMapSize, map);
 
 		// call init after page loads
 		EventAttacher.attach(window, "load", map, "init");
@@ -175,7 +177,7 @@ function Map()
 	this.map_frame = null;
 	this.map_frame_id = null;
 	this.tiles_map = null;
-	this.map_blank_img = "blank.png";
+	// this.map_blank_img = "../../blank.png";
 	
 	// viewport config
 	this.visible_rows = -1;
@@ -189,6 +191,8 @@ function Map()
 	this.postponed_refresh_id = -1;
 	
 	// zoom history
+	this.field_name_zoom_history = null;
+	this.field_zoom_history = null;
 	this.zoom_history = new Array();
 	this.zoom_history_pos = -1;
 	this.zoom_history_max = 100;
@@ -208,7 +212,7 @@ function Map()
 	this.scale_min = 1;
 	this.scale_max = 10000;
 	this.scale_factor_plus = 2.0;
-	this.scale_factor_minus = 0.666666;
+	this.scale_factor_minus = 0.5;
 	
 	// zooming and panning
 	this.nav_mouse_mode = MapsGlobal.MAP_TOOL_ZOOM;
@@ -240,7 +244,7 @@ function Map()
 	this.pan_tool_dy = null;
 	
 	// hidden fields for maitaining state
-	this.has_hidden_state_fields = false;
+	this.has_hidden_extend_fields = false;
 	this.formName = null;
 	this.field_name_x1 = null;
 	this.field_name_y1 = null;
@@ -547,7 +551,8 @@ Map.prototype.mapStopDrag = function(event)
 				this.fromVportToRealX(this.dragging_start_x),
 				this.fromVportToRealY(this.dragging_start_y),
 				this.fromVportToRealX(x),
-				this.fromVportToRealY(y));
+				this.fromVportToRealY(y),
+				true);
 			
 			break;
 			
@@ -664,7 +669,7 @@ Map.prototype.changeScale = function(new_scale)
 
 }
 
-Map.prototype.zoomMapTo = function(x1, y1, x2, y2, border)
+Map.prototype.zoomMapTo = function(x1, y1, x2, y2, save_state, border)
 {
 
 	// ensure that first is top left
@@ -715,7 +720,7 @@ Map.prototype.zoomMapTo = function(x1, y1, x2, y2, border)
 	var new_scale = new_vport_width / width;
 	
 	// center it
-	this.setScaleAndCenterMapTo(new_scale, cx, cy, true);
+	this.setScaleAndCenterMapTo(new_scale, cx, cy, save_state);
 	
 }
 
@@ -760,13 +765,12 @@ Map.prototype.setScaleAndCenterMapTo = function(new_scale, x, y, save_state)
 	this.first_tile_row = row;
 	this.first_tile_vx = vx;
 	this.first_tile_vy = vy;
-
-	// remeber state, default = true
-	if (save_state == null || save_state)
-		this.zoomSaveState();
 	
 	// draw all tiles
 	this.positionTiles(true);
+	
+	// remeber current state
+	if (save_state) this.zoomSaveState();
 	
 }
 
@@ -777,7 +781,7 @@ Map.prototype.setScaleAndCenterMapTo = function(new_scale, x, y, save_state)
 
 Map.prototype.saveState = function()
 {
-	if (this.has_hidden_state_fields)
+	if (this.has_hidden_extend_fields)
 	{
 		this.field_x1.value = this.getMapX1();
 		this.field_y1.value = this.getMapY1();
@@ -793,7 +797,7 @@ Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 	if (y != null) map_tile.img.style.top = y + "px";
 	if (update_img)
 	{
-		map_tile.img.src = this.map_blank_img;
+		map_tile.img.src = this.getBlankTileUrl();
 		map_tile.url = this.createTileUrl(col, row);
 		map_tile.valid = false;
 	}
@@ -964,6 +968,12 @@ Map.prototype.createTileUrl = function(col, row)
 		"m=" + this.map_file;
 }
 
+Map.prototype.getBlankTileUrl = function()
+{
+	return this.map_tiles_server + "?" +
+		"m=" + this.map_file;
+}
+
 /////////////////////////////////////////////////////////
 // zooming history
 /////////////////////////////////////////////////////////
@@ -992,13 +1002,97 @@ Map.prototype.zoomSaveState = function()
 		this.zoom_history_pos--;
 	}
 
+	// save the entire history
+	this.zoomHistorySave();
+
+	// let buttons know
+	this.zoomHistoryFireEvents();
+
 }
 
-Map.prototype.zoomRestoreCurrent = function()
+Map.prototype.zoomHistoryMoveAndRestore = function(dir)
 {
-	var state = this.zoom_history[this.zoom_history_pos];
+
+	// check
+	var new_pos = this.zoom_history_pos + dir;
+	if (!(0 <= new_pos && new_pos < this.zoom_history.length))
+		return;
+
+	// restore
+	var state = this.zoom_history[new_pos];
 	this.setScaleAndCenterMapTo(state.scale, state.cx, state.cy, false);
+
+	// goto
+	this.zoom_history_pos = new_pos;
+	
+	// let buttons know
 	this.zoomHistoryFireEvents();
+	
+	// save the entire history
+	this.zoomHistorySave();
+
+}
+
+Map.prototype.zoomHistorySave = function()
+{
+
+	// check if we care about saving the state
+	if (!this.field_zoom_history)
+		return;
+
+	// "buffer"
+	var str = new Array();
+	
+	// first the the position
+	str.push(this.zoom_history_pos);
+	
+	// next the states
+	for (var i = 0; i < this.zoom_history.length; i++)
+	{
+		var state = this.zoom_history[i];
+		str.push(state.scale);
+		str.push(state.cx);
+		str.push(state.cy);
+	}
+	
+	// store
+	this.field_zoom_history.value = str.join(" ");
+	
+}
+
+Map.prototype.zoomHistoryRestore = function()
+{
+
+	// main form
+	var form = document.forms[this.form_name];
+	if (!form) return;
+
+	// hidden field
+	this.field_zoom_history = form.elements[this.field_name_zoom_history];
+	if (!this.field_zoom_history) return;
+	
+	// split values
+	var values = this.field_zoom_history.value.split(/\s+/);
+	
+	// simple check
+	if (values.length % 3 != 1)
+		return;
+		
+	// history position
+	this.zoom_history_pos = parseInt(values[0]);
+	
+	// history states
+	var n = (values.length - 1) / 3;
+	for (var i = 0; i < n; i++)
+		this.zoom_history.push(
+			new MapZoomState(
+				parseInt(values[3*i+0]),
+				parseFloat(values[3*i+1]),
+				parseFloat(values[3*i+2])));
+
+	// let buttons know
+	this.zoomHistoryFireEvents();
+
 }
 
 Map.prototype.zoomHistoryFireEvents = function()
@@ -1009,16 +1103,12 @@ Map.prototype.zoomHistoryFireEvents = function()
 
 Map.prototype.zoomGoBack = function()
 {
-	if (!this.zoomCanGoBack()) return;
-	this.zoom_history_pos--;
-	this.zoomRestoreCurrent();
+	this.zoomHistoryMoveAndRestore(-1);
 }
 
 Map.prototype.zoomGoForward = function()
 {
-	if (!this.zoomCanGoForward()) return;
-	this.zoom_history_pos++;
-	this.zoomRestoreCurrent();
+	this.zoomHistoryMoveAndRestore(+1);
 }
 
 Map.prototype.zoomCanGoBack = function()
@@ -1385,7 +1475,7 @@ Map.prototype.hiddenFieldsInit = function()
 	var form = document.forms[this.form_name];
 	if (!form)
 	{
-		this.has_hidden_state_fields = false;
+		this.has_hidden_extend_fields = false;
 		return;
 	}
 
@@ -1394,24 +1484,33 @@ Map.prototype.hiddenFieldsInit = function()
 	this.field_x2 = form.elements[this.field_name_x2];
 	this.field_y2 = form.elements[this.field_name_y2];
 	
-	this.has_hidden_state_fields = this.field_x1 && this.field_y1 && this.field_x2 && this.field_y2;
+	this.has_hidden_extend_fields = this.field_x1 && this.field_y1 && this.field_x2 && this.field_y2;
 
 }
 
 Map.prototype.restoreState = function()
 {
-	if (this.has_hidden_state_fields)
+
+	// zoom
+	if (this.has_hidden_extend_fields)
 	{
 		var x1 = parseFloat(this.field_x1.value);
 		var y1 = parseFloat(this.field_y1.value);
 		var x2 = parseFloat(this.field_x2.value);
 		var y2 = parseFloat(this.field_y2.value);
-		this.zoomMapTo(x1, y1, x2, y2);
+		this.zoomMapTo(x1, y1, x2, y2, false);
 	}
 	else
 	{
-		this.zoomMapTo(-180, -90, 180, 90);
+		this.zoomMapTo(-180, -90, 180, 90, false);
 	}
+	
+	// and init history if empty	
+	if (this.zoom_history_pos == -1)
+	{
+		this.zoomSaveState();
+	}
+
 }
 
 
@@ -1438,6 +1537,9 @@ Map.prototype.init = function()
 
 	// pan tools
 	this.panToolInit();
+	
+	// zoom history
+	this.zoomHistoryRestore();
 
 	// show something
 	this.restoreState();
@@ -1520,7 +1622,6 @@ function MapButtonGoBack(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	this.map.registerGoBackButton(this);
 	EventAttacher.attach(window, "load", this, "init");
 }
 
@@ -1537,7 +1638,7 @@ MapButtonGoBack.prototype.click = function(event)
 
 MapButtonGoBack.prototype.historyChanged = function()
 {
-	element.className = this.map.zoomCanGoBack ? "map-icon-back" : "map-icon-back-off";
+	this.element.className = this.map.zoomCanGoBack() ? "map-icon-back" : "map-icon-back-off";
 }
 
 /////////////////////////////////////////////////////////
@@ -1549,7 +1650,6 @@ function MapButtonGoForward(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	this.map.registerGoForwardButton(this);
 	EventAttacher.attach(window, "load", this, "init");
 }
 
@@ -1566,7 +1666,7 @@ MapButtonGoForward.prototype.click = function(event)
 
 MapButtonGoForward.prototype.historyChanged = function()
 {
-	this.element.className = this.map.zoomCanGoForward ? "map-icon-forward" : "map-icon-forward-off";
+	this.element.className = this.map.zoomCanGoForward() ? "map-icon-forward" : "map-icon-forward-off";
 }
 
 
@@ -1574,12 +1674,17 @@ MapButtonGoForward.prototype.historyChanged = function()
 // zoom and pan buttons
 /////////////////////////////////////////////////////////
 
-function MapZoomAndPanButtons(panElementId, zoomElementId, map)
+function MapZoomAndPanButtons(panElementId, zoomElementId, formName, fieldNameForMouseMode, map)
 {
 	this.zoomElement = null;
 	this.panElement = null;
 	this.panElementId = panElementId;
 	this.zoomElementId = zoomElementId;
+
+	this.formName = formName;
+	this.fieldNameForMouseMode = fieldNameForMouseMode;
+	this.fieldForMouseMode = null;
+	
 	this.map = map;
 	EventAttacher.attach(window, "load", this, "init");
 }
@@ -1588,77 +1693,66 @@ MapZoomAndPanButtons.prototype.init = function()
 {
 	this.zoomElement = document.getElementById(this.zoomElementId);
 	this.panElement = document.getElementById(this.panElementId);
+	this.fieldForMouseMode = document.forms[this.formName].elements[this.fieldNameForMouseMode];
+
 	EventAttacher.attach(this.zoomElement, "click", this, "clickZoom");
 	EventAttacher.attach(this.panElement, "click", this, "clickPan");
-}
-
-MapZoomAndPanButtons.prototype.clickZoom = function(event)
-{
-	this.map.setMouseModeToZoom();
-	this.zoomElement.className = "map-icon-zoom";
-	this.panElement.className = "map-icon-pan-off";
 }
 
 MapZoomAndPanButtons.prototype.clickPan = function(event)
 {
 	this.map.setMouseModeToPan();
+	this.fieldForMouseMode.value = "pan";
 	this.zoomElement.className = "map-icon-zoom-off";
 	this.panElement.className = "map-icon-pan";
 }
 
+MapZoomAndPanButtons.prototype.clickZoom = function(event)
+{
+	this.map.setMouseModeToZoom();
+	this.fieldForMouseMode.value = "zoom";
+	this.zoomElement.className = "map-icon-zoom";
+	this.panElement.className = "map-icon-pan-off";
+}
 
 /////////////////////////////////////////////////////////
 // size buttons
 /////////////////////////////////////////////////////////
 
-function MapZoomSize(smallElementId, sizeSmallX, sizeSmallY, mediumElementId, sizeMediumX, sizeMediumY, bigElementId, sizeBigX, sizeBigY, map)
+function MapZoomSize(mapSizes, formName, fieldNameForMapSize, map)
 {
-	this.smallSizeX = sizeSmallX;
-	this.smallSizeY = sizeSmallY;
-	this.mediumSizeX = sizeMediumX;
-	this.mediumSizeY = sizeMediumY;
-	this.bigSizeX = sizeBigX;
-	this.bigSizeY = sizeBigY;
-	this.smallElement = null;
-	this.mediumElement = null;
-	this.bigElement = null;
-	this.smallElementId = smallElementId;
-	this.mediumElementId = mediumElementId;
-	this.bigElementId = bigElementId;
+	this.mapSizes = mapSizes;
+	this.formName = formName;
+	this.fieldNameForMapSize = fieldNameForMapSize;
+	this.fieldForMapSize = null;
 	this.map = map;
 	EventAttacher.attach(window, "load", this, "init");
 }
 
 MapZoomSize.prototype.init = function()
 {
-	this.smallElement = document.getElementById(this.smallElementId);
-	this.mediumElement = document.getElementById(this.mediumElementId);
-	this.bigElement = document.getElementById(this.bigElementId);
-	EventAttacher.attach(this.smallElement, "click", this, "clickSmall");
-	EventAttacher.attach(this.mediumElement, "click", this, "clickMedium");
-	EventAttacher.attach(this.bigElement, "click", this, "clickBig");
+	var form = document.forms[this.formName];
+	this.fieldForMapSize = form.elements[this.fieldNameForMapSize];
+	for (var i=0; i<this.mapSizes.length; i++)
+	{
+		var ms = this.mapSizes[i];
+		ms.element = document.getElementById(ms.elementId);
+		EventAttacher.attach(ms.element, "click", this, "click", i);
+	}
 }
 
-MapZoomSize.prototype.clickSmall = function(event)
+MapZoomSize.prototype.click = function(event, mapSizeIndex)
 {
-	this.map.setSize(this.smallSizeX, this.smallSizeY);
-	this.smallElement.className = "map-icon-size-small";
-	this.mediumElement.className = "map-icon-size-medium-off";
-	this.bigElement.className = "map-icon-size-big-off";
-}
-
-MapZoomSize.prototype.clickMedium = function(event)
-{
-	this.map.setSize(this.mediumSizeX, this.mediumSizeY);
-	this.smallElement.className = "map-icon-size-small-off";
-	this.mediumElement.className = "map-icon-size-medium";
-	this.bigElement.className = "map-icon-size-big-off";
-}
-
-MapZoomSize.prototype.clickBig = function(event)
-{
-	this.map.setSize(this.bigSizeX, this.bigSizeY);
-	this.smallElement.className = "map-icon-size-small-off";
-	this.mediumElement.className = "map-icon-size-medium-off";
-	this.bigElement.className = "map-icon-size-big";
+	var ms = this.mapSizes[mapSizeIndex];
+	
+	this.map.setSize(ms.width, ms.height);
+	this.fieldForMapSize.value = ms.width + " " + ms.height;
+	
+	for (var i=0; i<this.mapSizes.length; i++)
+	{
+		var ms = this.mapSizes[i];
+		var className = "map-icon-size-" + i;
+		if (i != mapSizeIndex) className += "-off";
+		ms.element.className = className;
+	}
 }

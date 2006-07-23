@@ -147,7 +147,7 @@ var EventAttacher =
 {
 	map: new Array(),
 
-	attach: function(element, eventType, object, handler)
+	attach: function(element, eventType, object, handler, args)
 	{
 
 		if (element.attachEvent)
@@ -167,13 +167,14 @@ var EventAttacher =
 		reg.object = object;
 		reg.eventType = eventType;
 		reg.handler = handler;
+		reg.args = args;
 
 	},
 
-	attachById: function(elementId, eventType, object, handler)
+	attachById: function(elementId, eventType, object, handler, args)
 	{
 		var element = document.getElementById(elementId);
-		this.attach(element, eventType, object, handler);
+		this.attach(element, eventType, object, handler, args);
 	},
 	
 	detach: function(element, eventType, object, handler)
@@ -222,7 +223,7 @@ var EventAttacher =
 			var reg = EventAttacher.map[i];
 			if (reg.element == element && reg.eventType == event.type)
 			{
-				reg.object[reg.handler](event);
+				reg.object[reg.handler](event, reg.args);
 			}
 		}
 	}

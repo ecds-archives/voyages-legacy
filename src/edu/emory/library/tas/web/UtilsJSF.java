@@ -211,4 +211,100 @@ public class UtilsJSF
     			paramName, def);
     }
 
+    public static int getParamInt(Map params, String paramName)
+    {
+		String value = (String) params.get(paramName);
+		if (!StringUtils.isNullOrEmpty(value))
+			return Integer.parseInt(value);
+		else
+			throw new RuntimeException("missing param " + paramName);
+    }
+    
+    public static int getParamInt(FacesContext context, String paramName)
+    {
+    	return getParamInt(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName);
+    }
+
+    public static int getParamInt(Map params, String paramName, int def)
+    {
+		String value = (String) params.get(paramName);
+		if (!StringUtils.isNullOrEmpty(value))
+			return Integer.parseInt(value);
+		else
+			return def;
+    }
+    
+    public static int getParamInt(FacesContext context, String paramName, int def)
+    {
+    	return getParamInt(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName, def);
+    }
+
+    public static String getParamString(Map params, String paramName)
+    {
+    	String value = (String) params.get(paramName);
+    	if (value == null) throw new RuntimeException("missing param " + paramName);
+		return value;
+    }
+    
+    public static String getParamString(FacesContext context, String paramName)
+    {
+    	return getParamString (
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName);
+    }
+
+    public static String getParamString(Map params, String paramName, String def)
+    {
+		String value = (String) params.get(paramName);
+		if (value == null)
+			return def;
+		else
+			return value;
+    }
+    
+    public static String getParamString(FacesContext context, String paramName, String def)
+    {
+    	return getParamString (
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName, def);
+    }
+
+    public static String getParamStringReplaceEmpty(Map params, String paramName, String def)
+    {
+		String value = (String) params.get(paramName);
+		if (!StringUtils.isNullOrEmpty(value))
+			return value;
+		else
+			return def;
+    }
+    
+    public static String getParamStringReplaceEmpty(FacesContext context, String paramName, String def)
+    {
+    	return getParamStringReplaceEmpty(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName, def);
+    }
+
+    public static boolean isParamEqualTo(Map params, String paramName, String value)
+    {
+		String paramValue = (String) params.get(paramName);
+		if (paramValue == null && value == null)
+			return true;
+		else if (paramValue != null)
+			return paramValue.equals(value);
+		else 
+			return value.equals(paramName);
+    }
+
+    public static boolean isParamEqualTo(FacesContext context, String paramName, String value)
+    {
+    	return isParamEqualTo(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName, value);
+   }
+
 }

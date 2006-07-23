@@ -15,28 +15,34 @@ td.map-icon-back {
 	background-repeat: no-repeat;
 	background-image: url(map-icon-back.png); }
 	
+td.map-icon-back-off {
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-position: 0px -48px;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-back.png); }
+
 td.map-icon-back:hover {
 	background-position: 0px -24px; }
 	
 td.map-icon-forward {
+	cursor: pointer;
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
 	background-image: url(map-icon-forward.png); }
 	
-td.map-icon-forward:hover {
-	background-position: 0px -24px; }
-	
-td.map-icon-back {
-	cursor: pointer;
+td.map-icon-forward-off {
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
+	background-position: 0px -48px;
 	background-repeat: no-repeat;
-	background-image: url(map-icon-back.png); }
-	
-td.map-icon-back:hover {
+	background-image: url(map-icon-forward.png); }
+
+td.map-icon-forward:hover {
 	background-position: 0px -24px; }
 
 td.map-icon-zoom-plus {
@@ -107,72 +113,72 @@ td.map-icon-pan:hover {
 td.map-icon-pan-off:hover {
 	background-position: 0px -24px; }
 
-td.map-icon-size-small {
+td.map-icon-size-0 {
 	cursor: pointer;
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
-	background-image: url(map-icon-size-small.png); }
+	background-image: url(map-icon-size-0.png); }
 	
-td.map-icon-size-small-off {
+td.map-icon-size-0-off {
 	cursor: pointer;
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
 	background-position: 0px -48px;
-	background-image: url(map-icon-size-small.png); }
+	background-image: url(map-icon-size-0.png); }
 	
-td.map-icon-size-small:hover {
+td.map-icon-size-0:hover {
 	background-position: 0px -24px; }
 	
-td.map-icon-size-small-off:hover {
+td.map-icon-size-0-off:hover {
 	background-position: 0px -24px; }		
 	
-td.map-icon-size-medium {
+td.map-icon-size-1 {
 	cursor: pointer;
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
-	background-image: url(map-icon-size-medium.png); }
+	background-image: url(map-icon-size-1.png); }
 	
-td.map-icon-size-medium-off {
+td.map-icon-size-1-off {
 	cursor: pointer;
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
 	background-position: 0px -48px;
-	background-image: url(map-icon-size-medium.png); }
+	background-image: url(map-icon-size-1.png); }
 	
-td.map-icon-size-medium:hover {
+td.map-icon-size-1:hover {
 	background-position: 0px -24px; }
 	
-td.map-icon-size-medium-off:hover {
+td.map-icon-size-1-off:hover {
 	background-position: 0px -24px; }		
 	
-td.map-icon-size-big {
+td.map-icon-size-2 {
 	cursor: pointer;
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
-	background-image: url(map-icon-size-big.png); }
+	background-image: url(map-icon-size-2.png); }
 	
-td.map-icon-size-big-off {
+td.map-icon-size-2-off {
 	cursor: pointer;
 	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
 	background-position: 0px -48px;
-	background-image: url(map-icon-size-big.png); }
+	background-image: url(map-icon-size-2.png); }
 	
-td.map-icon-size-big:hover {
+td.map-icon-size-2:hover {
 	background-position: 0px -24px; }
 	
-td.map-icon-size-big-off:hover {
+td.map-icon-size-2-off:hover {
 	background-position: 0px -24px; }		
 	
