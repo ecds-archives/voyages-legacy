@@ -50,11 +50,8 @@ public class UtilsJSF
 		writer.endElement("script");
 	}
 	
-	public static String generateSubmitJS(FacesContext context, UIForm form, String elementName, String value)
+	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value)
 	{
-		
-		StringBuffer js = new StringBuffer();
-
 		if (elementName != null && value != null)
 		{
 			appendFormElementValJS(js, context, form, elementName);
@@ -67,9 +64,15 @@ public class UtilsJSF
 		
 		if (js.length() > 0) js.append(" ");
 		js.append("return false;");
-		
+
+		return js;
+	}
+
+	public static String generateSubmitJS(FacesContext context, UIForm form, String elementName, String value)
+	{
+		StringBuffer js = new StringBuffer();
+		appendSubmitJS(js, context, form, elementName, value);
 		return js.toString();
-	
 	}
 	
 	public static StringBuffer appendFormRefJS(StringBuffer js, FacesContext context, UIForm form)
@@ -246,7 +249,7 @@ public class UtilsJSF
     public static String getParamString(Map params, String paramName)
     {
     	String value = (String) params.get(paramName);
-    	if (value == null) throw new RuntimeException("missing param " + paramName);
+    	//if (value == null) throw new RuntimeException("missing param " + paramName);
 		return value;
     }
     

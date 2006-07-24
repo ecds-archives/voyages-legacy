@@ -6,6 +6,54 @@ function get_event(e)
 	return window.event ? window.event : e;
 }
 
+
+function Animation(element, x1, y1, w1, h1, o1, x2, y2, w2, h2, o2, steps, duration, callWhenDone)
+{
+	this.element = element;
+	this.x1 = x1;
+	this.y1 = y1;
+	this.w1 = w1;
+	this.h1 = h1;
+	this.o1 = o1;
+	this.x2 = x2;
+	this.y2 = y2;
+	this.w2 = w2;
+	this.h2 = h2;
+	this.o2 = o2;
+	this.steps = steps;
+	this.delay = Math.round(duration / steps);
+	this.callWhenDone = callWhenDone;
+}
+
+Animation.prototype.start = function()
+{
+	this.pos = 0;
+	this.move();
+}
+
+Animation.prototype.move = function()
+{
+
+	var t = this.pos / this.steps;
+	this.element.style.left = Math.round(this.x1 + t*(this.x2-this.x1)) + "px";
+	this.element.style.top = Math.round(this.y1 + t*(this.y2-this.y1)) + "px";
+	this.element.style.width = Math.round(this.w1 + t*(this.w2-this.w1)) + "px";
+	this.element.style.height = Math.round(this.h1 + t*(this.h2-this.h1)) + "px";
+	this.element.style.opacity = this.o1 + t*(this.o2-this.o1);
+
+	if (this.pos < this.steps)
+	{
+		this.pos ++;
+		Timer.delayedCall(this, "move", this.delay);
+	}
+	else
+	{
+		if (this.callWhenDone)
+			this.callWhenDone();
+	}
+
+}
+
 var EventUtils = 
 {
 
@@ -23,7 +71,17 @@ var EventUtils =
 
 var ElementUtils =
 {
+
+	getOffsetWidth: function(el)
+	{
+		return el.offsetWidth;
+	},
 	
+	getOffsetHeight: function(el)
+	{
+		return el.offsetHeight;
+	},
+
 	getOffsetLeft: function(el)
 	{
 		// IE

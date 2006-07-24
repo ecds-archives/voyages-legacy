@@ -325,6 +325,9 @@
 		<attribute>
 			<name>onMenuSelected</name>
 		</attribute>
+		<attribute>
+			<name>customSubmitFunction</name>
+		</attribute>
 	</tag>
 
 	<tag>
@@ -341,6 +344,9 @@
 		</attribute>
 		<attribute>
 			<name>onMenuSelected</name>
+		</attribute>
+		<attribute>
+			<name>customSubmitFunction</name>
 		</attribute>
 	</tag>
 	

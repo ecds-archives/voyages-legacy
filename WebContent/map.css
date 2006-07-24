@@ -182,3 +182,26 @@ td.map-icon-size-2:hover {
 td.map-icon-size-2-off:hover {
 	background-position: 0px -24px; }		
 	
+td.map-zoom-slider-bg {
+	vertical-align: top;
+	width: 80px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-zoom-slider-bg.png); }	
+	
+div.map-zoom-slider-bg {
+	width: 80px;
+	height: 24px;
+	position: absolute; }
+	
+div.map-zoom-slider-knob {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	cursor: pointer;
+	width: 13px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-zoom-slider-knob.png); }	

@@ -12,6 +12,7 @@
 
 	<s:section title="Beginner" sectionId="beginner">
 		<s:menuPopup
+			customSubmitFunction="animateAttribute"
 			id="popupMenuAttributesBeginner"
 			items="#{SearchBean.menuAttributesBeginner}"
 			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
@@ -19,6 +20,7 @@
 
 	<s:section title="General" sectionId="general">
 		<s:menuPopup
+			customSubmitFunction="animateAttribute"
 			id="popupMenuAttributesGeneral"
 			items="#{SearchBean.menuAttributesGeneral}"
 			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
@@ -28,6 +30,42 @@
 
 <div class="sections-sepatator"></div>
 
+<script type="text/javascript" language="javascript">
+
+function animateAttribute(menuItem, submitFunction)
+{
+
+	var dest = document.getElementById("animateAttributeDest");
+	
+	var x1 = ElementUtils.getOffsetLeft(menuItem) + 1;
+	var y1 = ElementUtils.getOffsetTop(menuItem) + 1;
+	var w1 = ElementUtils.getOffsetWidth(menuItem) - 2;
+	var h1 = ElementUtils.getOffsetHeight(menuItem) - 2;
+	
+	var x2 = ElementUtils.getOffsetLeft(dest);
+	var y2 = ElementUtils.getOffsetTop(dest);
+	var w2 = ElementUtils.getOffsetWidth(dest) - 2;
+	var h2 = ElementUtils.getOffsetHeight(dest) - 2;
+
+	var a = document.createElement("div");
+	a.style.position = "absolute";
+	a.style.left = x1 + "px";
+	a.style.top = y1 + "px";
+	a.style.width = w1 + "px";
+	a.style.height = h1 + "px";
+	a.style.border = "1px solid Black";
+	a.style.zIndex = "1";
+	
+	document.body.appendChild(a);
+	
+	var anim = new Animation(a, x1, y1, w1, h1, 1, x2, y2, w2, h2, 0, 20, 300, submitFunction);
+	anim.start();
+
+}
+
+</script>
+
+<%--
 <s:sectionGroup
 	id="selectAttributeSectionBySliderMenu"
 	backgroundStyle="dark"
@@ -52,6 +90,7 @@
 </s:sectionGroup>
 
 <div class="sections-sepatator"></div>
+--%>
 
 <%--
 <s:sectionGroup
@@ -116,6 +155,7 @@
 <div class="sections-sepatator"></div>
 --%>
 
+<div id="animateAttributeDest">
 <s:sectionGroup
 	id="queryBuilderSection"
 	title="Current query"
@@ -133,6 +173,7 @@
 		value="Search" />
 
 </s:sectionGroup>
+</div>
 
 <div class="sections-sepatator"></div>
 
@@ -150,50 +191,3 @@
 		history="#{SearchBean.history}" />
 
 </s:sectionGroup>
-
-<%--
-<s:expandableBox text="Choose query mode">
-	<t:htmlTag value="div" style="margin: 5px 0px 5px 10px;">
-		<h:selectOneMenu style="border: 0px; width: 276px; padding: 2px;" onchange="form.submit();"
-			value="#{SearchBean.category}">
-			<f:selectItem itemLabel="Beginner" itemValue="0" />
-			<f:selectItem itemLabel="General" itemValue="1" />
-		</h:selectOneMenu>
-	</t:htmlTag>
-</s:expandableBox>
-
-<s:expandableBox text="Add condition to query">
-
-	<t:htmlTag value="div" style="margin: 5px 0px 5px 10px;">
-		<h:selectOneMenu onchange="form.submit();" value="#{SearchBean.selectedGroupId}"
-			style="border: 0px; width: 276px; padding: 2px;">
-			<f:selectItems value="#{SearchBean.voyageAttributeGroups}" />
-		</h:selectOneMenu>
-	</t:htmlTag>
-
-	<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
-		<h:selectOneMenu value="#{SearchBean.selectedAtttibuteId}" style="border: 0px; width: 276px; padding: 2px;">
-			<f:selectItems value="#{SearchBean.voyageAttributes}" />
-		</h:selectOneMenu>
-	</t:htmlTag>
-
-	<t:htmlTag value="div" style="margin: 0px 0px 5px 10px;">
-		<h:commandButton action="#{SearchBean.addQueryCondition}" value="Add" />
-	</t:htmlTag>
-
-</s:expandableBox>
-
-<s:expandableBox text="Current query">
-	<s:queryBuilder query="#{SearchBean.workingQuery}" />
-</s:expandableBox>
-
-<div style="margin: 10px 0px 5px 10px;">
-	<h:commandButton action="#{SearchBean.search}" value="Search" />
-</div>
-
-<s:expandableBox text="History">
-	<s:historyList onDelete="#{SearchBean.historyItemDelete}" onRestore="#{SearchBean.historyItemRestore}"
-		onPermlink="#{SearchBean.historyItemPermlink}" history="#{SearchBean.history}" />
-</s:expandableBox>
-
---%>

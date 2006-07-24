@@ -42,6 +42,16 @@ public class MouseMode implements Serializable
 		return mode == MODE_PAN;
 	}
 	
+	public String getStyleCursor()
+	{
+		switch (mode)
+		{
+			case MODE_PAN: return "move";
+			case MODE_ZOOM: return "crosshair";
+			default: return "default";
+		}
+	}
+
 	public String toString()
 	{
 		switch (mode)

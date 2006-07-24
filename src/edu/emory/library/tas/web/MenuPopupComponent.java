@@ -9,7 +9,7 @@ import javax.faces.context.ResponseWriter;
 public class MenuPopupComponent extends MenuComponent
 {
 
-	private void encodeSubmenu(MenuItem item, FacesContext context, ResponseWriter writer, UIForm form) throws IOException
+	private void encodeSubmenu(MenuItem item, FacesContext context, ResponseWriter writer, UIForm form, String customSubmitFunction) throws IOException
 	{
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "menu-popup-submenu-frame", null);
@@ -24,10 +24,11 @@ public class MenuPopupComponent extends MenuComponent
 		{
 			MenuItem subItem = items[i];
 			
-			String onClick = UtilsJSF.generateSubmitJS(
-					context, form,
-					getSelectedMenuIdFieldName(context), subItem.getId());
-
+			String onClick = MenuComponent.generateSubmitJS(context, form,
+					getSelectedMenuIdFieldName(context),
+					subItem.getId(),
+					customSubmitFunction);
+			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "menu-popup-submenu-item", null);
 			writer.writeAttribute("onclick", onClick, null);
@@ -48,6 +49,8 @@ public class MenuPopupComponent extends MenuComponent
 		UtilsJSF.encodeHiddenInput(this, writer,
 				getSelectedMenuIdFieldName(context));
 		
+		String customSubmitFunction =getCustomSubmitFunction();
+		
 		MenuItemMain[] items = getItems();
 		
 		for (int i = 0; i < items.length; i++)
@@ -58,7 +61,7 @@ public class MenuPopupComponent extends MenuComponent
 			writer.writeAttribute("class", "menu-popup-item-main", null);
 			writer.writeAttribute("onmouseover", "this.firstChild.style.display = 'block';", null);
 			writer.writeAttribute("onmouseout", "this.firstChild.style.display = 'none';", null);
-			encodeSubmenu(mainItem, context, writer, form);
+			encodeSubmenu(mainItem, context, writer, form, customSubmitFunction);
 			writer.write(mainItem.getText());
 			writer.endElement("div");
 		}

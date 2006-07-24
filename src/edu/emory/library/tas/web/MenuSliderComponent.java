@@ -27,7 +27,7 @@ public class MenuSliderComponent extends MenuComponent
 		
 	}
 	
-	private void encodeSubmenu(MenuItem item, String mainMenuDivId, boolean expanded, FacesContext context, ResponseWriter writer, UIForm form) throws IOException
+	private void encodeSubmenu(MenuItem item, String mainMenuDivId, boolean expanded, FacesContext context, ResponseWriter writer, UIForm form, String customSubmitFunction) throws IOException
 	{
 
 		writer.startElement("div", this);
@@ -40,10 +40,10 @@ public class MenuSliderComponent extends MenuComponent
 		{
 			MenuItem subItem = items[i];
 			
-			String onClick = UtilsJSF.generateSubmitJS(
-					context, form,
-					getSelectedMenuIdFieldName(context), subItem.getId());
-			
+			String onClick = MenuComponent.generateSubmitJS(context, form,
+					getSelectedMenuIdFieldName(context),
+					subItem.getId(),
+					customSubmitFunction);
 
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "menu-slider-submenu-item", null);
@@ -134,7 +134,7 @@ public class MenuSliderComponent extends MenuComponent
 			writer.write(mainItem.getText());
 			writer.endElement("div");
 
-			encodeSubmenu(mainItem, subMenuDivId, expanded, context, writer, form);
+			encodeSubmenu(mainItem, subMenuDivId, expanded, context, writer, form, getCustomSubmitFunction());
 		
 		}
 		

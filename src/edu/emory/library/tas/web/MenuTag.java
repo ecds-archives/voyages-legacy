@@ -12,6 +12,7 @@ public class MenuTag extends UIComponentTag
 	
 	private String onMenuSelected;
 	private String items;
+	private String customSubmitFunction;
 
 	protected void setProperties(UIComponent component)
 	{
@@ -30,6 +31,8 @@ public class MenuTag extends UIComponentTag
 			MethodBinding mb = app.createMethodBinding(onMenuSelected, new Class[] {MenuItemSelectedEvent.class});
 			menu.setOnMenuSelected(mb);
 		}
+		
+		menu.setCustomSubmitFunction(customSubmitFunction);
 
 	}
 
@@ -61,6 +64,16 @@ public class MenuTag extends UIComponentTag
 	public void setOnMenuSelected(String onMenuSelected)
 	{
 		this.onMenuSelected = onMenuSelected;
+	}
+
+	public String getCustomSubmitFunction()
+	{
+		return customSubmitFunction;
+	}
+
+	public void setCustomSubmitFunction(String customSubmitFunction)
+	{
+		this.customSubmitFunction = customSubmitFunction;
 	}
 
 }

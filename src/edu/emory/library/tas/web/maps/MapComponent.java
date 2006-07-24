@@ -161,6 +161,25 @@ public class MapComponent extends UIComponentBase
 		writer.endElement("td");
 	}
 
+	private void encodeToolZoomSlider(FacesContext context, ResponseWriter writer, String bgId, String knobId) throws IOException
+	{
+		writer.startElement("td", this);
+		writer.writeAttribute("id", bgId, null);
+		writer.writeAttribute("class", "map-zoom-slider-bg", null);
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "map-zoom-slider-bg", null);
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("id", knobId, null);
+		writer.writeAttribute("class", "map-zoom-slider-knob", null);
+		writer.endElement("div");
+		
+		writer.endElement("div");
+		
+		writer.endElement("td");
+	}
+
 	private void encodeToolSepearator(FacesContext context, ResponseWriter writer) throws IOException
 	{
 		writer.startElement("td", this);
@@ -196,6 +215,8 @@ public class MapComponent extends UIComponentBase
 		String toolsForwardId = getClientId(context) + "_forward";
 		String toolsZoomPlusId = getClientId(context) + "_zoom_plus";
 		String toolsZoomMinusId = getClientId(context) + "_zoom_minus";
+		String toolsSliderBgId = getClientId(context) + "_zoom_slider_bg";
+		String toolsSliderKnobId = getClientId(context) + "_zoom_slider_knob";
 		String toolsPanId = getClientId(context) + "_pan";
 		String toolsZoomId = getClientId(context) + "_zoom";
 
@@ -268,16 +289,24 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("'").append(hiddenFieldNameForZoomHistory).append("'");
 		jsRegister.append(", ");
 
-		// basic tools
+		// back / forward
 		jsRegister.append("'").append(toolsBackId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(toolsForwardId).append("'");
 		jsRegister.append(", ");
+
+		// zoom + / -
 		jsRegister.append("'").append(toolsZoomPlusId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(toolsZoomMinusId).append("'");
 		jsRegister.append(", ");
 		
+		// slider
+		jsRegister.append("'").append(toolsSliderBgId).append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append(toolsSliderKnobId).append("'");
+		jsRegister.append(", ");
+
 		// pan / zoom tools
 		jsRegister.append("'").append(toolsPanId).append("'");
 		jsRegister.append(", ");
@@ -338,7 +367,12 @@ public class MapComponent extends UIComponentBase
 			"position: relative; " +
 			"width: " + mapSize.getWidth() + "px; " +
 			"height: " + mapSize.getHeight() + "px;";
-
+		
+		// frame div style
+		String frameDivStyle = 
+			"position: absolute; " +
+			"cursor: " + mouseMode.getStyleCursor();
+			
 		// main div
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapControlId, null);
@@ -347,7 +381,7 @@ public class MapComponent extends UIComponentBase
 		// map frame for tiles
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapFrameId, null);
-		writer.writeAttribute("style", "position: absolute", null);
+		writer.writeAttribute("style", frameDivStyle, null);
 		writer.endElement("div");
 		
 		// icon start
@@ -366,6 +400,8 @@ public class MapComponent extends UIComponentBase
 		
 		// icons: zoom + / zoom -
 		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus");
+		encodeToolSepearator(context, writer);
+		encodeToolZoomSlider(context, writer, toolsSliderBgId, toolsSliderKnobId);
 		encodeToolSepearator(context, writer);
 		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus");
 		encodeToolSepearator(context, writer);
