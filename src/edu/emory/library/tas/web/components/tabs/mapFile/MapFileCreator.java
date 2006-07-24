@@ -28,7 +28,7 @@ public class MapFileCreator {
 
 	private static String MAP_INSERT_SECTION_NAME_END = "#Generated_code_end";
 
-	private static int circleRanges = 10;
+	private static int circleRanges = 5;
 
 	private MapItem[] data;
 

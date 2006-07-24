@@ -139,7 +139,7 @@ public class MapBean {
 		for (int i = 0; i < voyages.length; i++) {
 			String portName = (String) ((Object[]) voyages[i])[0];
 			GISPortLocation gisPort = GISPortLocation.getGISPortLocation(portName);
-			if (gisPort != null) {
+			if (gisPort != null && ((Object[]) voyages[i])[1] != null) {
 				response.add(new MapItem(portName, gisPort.getX(), gisPort.getY(),
 						((Number) ((Object[]) voyages[i])[1]).floatValue(), PORT_DEPARTURE));
 			}
