@@ -173,6 +173,7 @@ public class MapComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("id", knobId, null);
 		writer.writeAttribute("class", "map-zoom-slider-knob", null);
+		writer.writeAttribute("style", "display: none", null);
 		writer.endElement("div");
 		
 		writer.endElement("div");
@@ -399,11 +400,11 @@ public class MapComponent extends UIComponentBase
 		encodeToolSepearator(context, writer);
 		
 		// icons: zoom + / zoom -
-		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus");
+		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus");
 		encodeToolSepearator(context, writer);
 		encodeToolZoomSlider(context, writer, toolsSliderBgId, toolsSliderKnobId);
 		encodeToolSepearator(context, writer);
-		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus");
+		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus");
 		encodeToolSepearator(context, writer);
 		
 		// icons: sizes

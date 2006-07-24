@@ -5,8 +5,8 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%
 
-session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\test.map");
 session.setAttribute("test.map", "D:\\Library\\SlaveTrade\\shapefiles\\test.map");
+session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\test.map");
 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,17 +16,36 @@ session.setAttribute("test.map", "D:\\Library\\SlaveTrade\\shapefiles\\test.map"
 	<script src="../../utils.js" type="text/javascript" language="javascript"></script>
 	<script src="../../map.js" type="text/javascript" language="javascript"></script>
 	<link href="../../map.css" rel="stylesheet" type="text/css">
+	
+	<style>
+	body {font-family: Verdana; font-size: 8pt;}
+	</style>
+	
 </head>
 <body>
 <f:view>
 	<h:form id="form">
 	
-		<s:map
-			id="testMap"
-			mapFile="test.map"
-			serverBaseUrl="../../servlet/maptile" />
+		<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td valign="top">
 			
-		<h:commandButton value="OK" />
+				<s:map
+					id="testMap"
+					mapFile="test.map"
+					serverBaseUrl="../../servlet/maptile" />
+					
+				<h:commandButton value="OK" />
+
+			</td>
+			<td valign="top">
+
+				<div style="margin-left: 10px;" id="debug"></div>
+			
+			</td>
+		</tr>
+		</table>
+		
 	
 	</h:form>
 </f:view>
