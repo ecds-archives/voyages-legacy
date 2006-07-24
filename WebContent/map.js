@@ -562,7 +562,7 @@ Map.prototype.mapStopDrag = function(event)
 				this.fromVportToRealY(this.dragging_start_y),
 				this.fromVportToRealX(x),
 				this.fromVportToRealY(y),
-				true, true);
+				true, 0, true);
 			
 			break;
 			
