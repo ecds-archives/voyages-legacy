@@ -218,7 +218,7 @@ function Map()
 	this.first_tile_vy = null;
 	this.scale = null;
 	this.scale_min = 1;
-	this.scale_max = 30;
+	this.scale_max = 100;
 	this.scale_factor_plus = 2.0;
 	this.scale_factor_minus = 0.5;
 	
@@ -227,7 +227,7 @@ function Map()
 	this.map_mouse_mode = MapsGlobal.MAP_TOOL_PAN;
 	this.zoom_slider = null;
 	this.selector_border_width = 1;
-	this.selector_color = "Gray"; //"#0066CC";
+	this.selector_color = "White"; //"#0066CC";
 	this.selector_opacity = 30;
 	this.map_selector = null;
 	this.nav_selector = null;
@@ -263,6 +263,9 @@ function Map()
 	this.field_y1 = null;
 	this.field_x2 = null;
 	this.field_y2 = null;
+	
+	// init handler
+	this.init_listeners = new Array();
 
 }
 
@@ -525,8 +528,6 @@ Map.prototype.mapStartDrag = function(event)
 
 	// set onMouseMove handler
 	EventAttacher.attach(this.map_frame, "mousemove", this, "mapMouseMove");
-	//if (IE) map_frame.style.cursor = "url(ruka-dole.cur)";
-	// map_frame.style.cursor = "move";
 	
 	// init position
 	this.dragging_start_x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
@@ -539,7 +540,6 @@ Map.prototype.mapStopDrag = function(event)
 
 	// cancel onMouseMove handler
 	EventAttacher.detach(this.map_frame, "mousemove", this, "mapMouseMove");
-	//if (IE) this.map_frame.style.cursor = "url(ruka.cur)";
 
 	// new position
 	var x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
@@ -1309,8 +1309,8 @@ Map.prototype.mapWindowResize = function()
 
 Map.prototype.initSizeByHTML = function()
 {
-	this.width = this.map_control.offsetWidth;
-	this.height = this.map_control.offsetHeight;
+	this.width = this.map_control.clientWidth;
+	this.height = this.map_control.clientHeight;
 }
 	
 Map.prototype.changeSizeByWindow = function()
@@ -1448,7 +1448,6 @@ Map.prototype.mapControlsInit = function()
 	this.map_frame.style.overflow = "hidden";
 	if (IE)
 	{
-		//this.map_frame.style.cursor = "url(ruka.cur)";
 		this.map_frame.unselectable = "on";
 	}
 	if (GK)
@@ -1530,9 +1529,22 @@ Map.prototype.restoreState = function()
 
 }
 
-Map.prototype.initTools = function()
+Map.prototype.registerInitListener = function(object, method, arg)
 {
-	if (this.zoom_slider) this.zoom_slider.init();
+	var reg = new Object();
+	reg.object = object;
+	reg.method = method;
+	reg.arg = arg;
+	this.init_listeners.push(reg);
+}
+
+Map.prototype.invokeInitListeners = function()
+{
+	for (var i=0; i<this.init_listeners.length; i++)
+	{
+		var reg = this.init_listeners[i];
+		reg.object[reg.method](reg.arg);
+	}
 }
 
 /////////////////////////////////////////////////////////
@@ -1563,7 +1575,7 @@ Map.prototype.init = function()
 	this.restoreState();
 	
 	// init tools
-	this.initTools();
+	this.invokeInitListeners();
 	
 }
 
@@ -1596,7 +1608,7 @@ function MapButtonZoomPlus(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	EventAttacher.attach(window, "load", this, "init");
+	this.map.registerInitListener(this, "init", null);
 }
 
 MapButtonZoomPlus.prototype.init = function()
@@ -1620,7 +1632,7 @@ function MapButtonZoomMinus(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	EventAttacher.attach(window, "load", this, "init");
+	this.map.registerInitListener(this, "init", null);
 }
 
 MapButtonZoomMinus.prototype.init = function()
@@ -1643,7 +1655,7 @@ function MapButtonGoBack(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	EventAttacher.attach(window, "load", this, "init");
+	this.map.registerInitListener(this, "init", null);
 }
 
 MapButtonGoBack.prototype.init = function()
@@ -1659,7 +1671,9 @@ MapButtonGoBack.prototype.click = function(event)
 
 MapButtonGoBack.prototype.historyChanged = function()
 {
-	this.element.className = this.map.zoomCanGoBack() ? "map-icon-back" : "map-icon-back-off";
+	if (this.element)
+		this.element.className =
+			this.map.zoomCanGoBack() ? "map-icon-back" : "map-icon-back-off";
 }
 
 /////////////////////////////////////////////////////////
@@ -1671,7 +1685,7 @@ function MapButtonGoForward(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	EventAttacher.attach(window, "load", this, "init");
+	this.map.registerInitListener(this, "init", null);
 }
 
 MapButtonGoForward.prototype.init = function()
@@ -1687,7 +1701,9 @@ MapButtonGoForward.prototype.click = function(event)
 
 MapButtonGoForward.prototype.historyChanged = function()
 {
-	this.element.className = this.map.zoomCanGoForward() ? "map-icon-forward" : "map-icon-forward-off";
+	if (this.element)
+		this.element.className =
+			this.map.zoomCanGoForward() ? "map-icon-forward" : "map-icon-forward-off";
 }
 
 
@@ -1707,7 +1723,7 @@ function MapZoomAndPanButtons(panElementId, zoomElementId, formName, fieldNameFo
 	this.fieldForMouseMode = null;
 	
 	this.map = map;
-	EventAttacher.attach(window, "load", this, "init");
+	this.map.registerInitListener(this, "init", null);
 }
 
 MapZoomAndPanButtons.prototype.init = function()
@@ -1747,7 +1763,7 @@ function MapZoomSize(mapSizes, formName, fieldNameForMapSize, map)
 	this.fieldNameForMapSize = fieldNameForMapSize;
 	this.fieldForMapSize = null;
 	this.map = map;
-	EventAttacher.attach(window, "load", this, "init");
+	this.map.registerInitListener(this, "init", null);
 }
 
 MapZoomSize.prototype.init = function()
@@ -1789,7 +1805,7 @@ function MapZoomSlider(bgElementId, knobElementId, map)
 	this.map = map;
 	this.scale = 0;
 	this.map.registerZoomSlider(this);
-	//EventAttacher.attach(window, "load", this, "init");
+	this.map.registerInitListener(this, "init", null);
 }
 
 MapZoomSlider.prototype.init = function()
