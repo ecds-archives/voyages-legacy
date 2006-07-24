@@ -13,6 +13,7 @@
 	<link href="search.css" rel="stylesheet" type="text/css">
 	<link href="search-query.css" rel="stylesheet" type="text/css">
 	<link href="search-table.css" rel="stylesheet" type="text/css">
+	<link href="map.css" rel="stylesheet" type="text/css">
 	<script src="tooltip.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/scriptaculous.js" type="text/javascript" language="javascript"></script>

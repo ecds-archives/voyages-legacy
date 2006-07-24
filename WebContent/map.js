@@ -218,13 +218,14 @@ function Map()
 	this.first_tile_vy = null;
 	this.scale = null;
 	this.scale_min = 1;
-	this.scale_max = 20;
+	this.scale_max = 30;
 	this.scale_factor_plus = 2.0;
 	this.scale_factor_minus = 0.5;
 	
 	// zooming and panning
 	this.nav_mouse_mode = MapsGlobal.MAP_TOOL_ZOOM;
 	this.map_mouse_mode = MapsGlobal.MAP_TOOL_PAN;
+	this.zoom_slider = null;
 	this.selector_border_width = 1;
 	this.selector_color = "Gray"; //"#0066CC";
 	this.selector_opacity = 30;
@@ -654,6 +655,8 @@ Map.prototype.mapHideSelector = function()
 
 Map.prototype.zoomPlus = function(notify_zoom_change)
 {
+	//alert("current = " + this.scale + ", this.scale_factor_plus = " + this.scale_factor_plus + ", after = " + (this.scale * this.scale_factor_plus) + ", max = " + this.scale_max);
+	debug("zoomPlus (notify_zoom_change = " + notify_zoom_change + ")");
 	this.changeScale(this.scale * this.scale_factor_plus, notify_zoom_change);
 }
 
@@ -664,21 +667,42 @@ Map.prototype.zoomMinus = function(notify_zoom_change)
 
 Map.prototype.changeScaleNormalized = function(t, notify_zoom_change)
 {
+	debug("changeScaleNormalized (t = " + t + ")");
 	this.changeScale(this.scale_min + t * (this.scale_max - this.scale_min), notify_zoom_change);
 }
 
 Map.prototype.getScaleNormalized = function()
 {
-	// ...
+	debug("getScaleNormalized = " + ((this.scale - this.scale_min) / (this.scale_max - this.scale_min)));
+	return (this.scale - this.scale_min) / (this.scale_max - this.scale_min);
+}
+
+Map.prototype.registerZoomSlider = function(zoom_slider)
+{
+	this.zoom_slider = zoom_slider;
+}
+
+Map.prototype.notifyZoomChange = function()
+{
+	debug("notifyZoomChange");
+	if (this.zoom_slider) this.zoom_slider.zoomChanged();
+}
+
+function debug(text)
+{
+	var el = document.getElementById("debug");
+	if (el) el.innerHTML += text + "<br>";
 }
 
 Map.prototype.changeScale = function(new_scale, notify_zoom_change)
 {
 
 	// has it changed?
+	debug("changeScale, new_scale before cap = " + new_scale);
 	new_scale = this.roundAndCapScale(new_scale);
+	debug("changeScale, new_scale after cap = " + new_scale);
 	if (new_scale == this.scale) return;
-
+	
 	// get old center
 	var cx = this.getCenterX();
 	var cy = this.getCenterY();
@@ -690,6 +714,8 @@ Map.prototype.changeScale = function(new_scale, notify_zoom_change)
 
 Map.prototype.zoomMapTo = function(x1, y1, x2, y2, save_state, border, notify_zoom_change)
 {
+
+	debug("zoomMapTo (notify_zoom_change = " + notify_zoom_change + ")")
 
 	// ensure that first is top left
 	if (x2 < x1)
@@ -792,7 +818,7 @@ Map.prototype.setScaleAndCenterMapTo = function(new_scale, x, y, save_state, not
 	if (save_state) this.zoomSaveState();
 	
 	// notify change of zoom
-	if (notify_zoom_change) ; // todo
+	if (notify_zoom_change) this.notifyZoomChange();
 	
 }
 
@@ -1489,11 +1515,11 @@ Map.prototype.restoreState = function()
 		var y1 = parseFloat(this.field_y1.value);
 		var x2 = parseFloat(this.field_x2.value);
 		var y2 = parseFloat(this.field_y2.value);
-		this.zoomMapTo(x1, y1, x2, y2, false, true);
+		this.zoomMapTo(x1, y1, x2, y2, false, 0, false);
 	}
 	else
 	{
-		this.zoomMapTo(-180, -90, 180, 90, false, true);
+		this.zoomMapTo(-180, -90, 180, 90, false, 0, false);
 	}
 	
 	// and init history if empty	
@@ -1504,6 +1530,10 @@ Map.prototype.restoreState = function()
 
 }
 
+Map.prototype.initTools = function()
+{
+	if (this.zoom_slider) this.zoom_slider.init();
+}
 
 /////////////////////////////////////////////////////////
 // main init
@@ -1520,11 +1550,8 @@ Map.prototype.init = function()
 	this.initSizeByHTML();
 	this.updateControlsLayout();
 	
-	// scale indicator - down left	
+	// scale indicator	
 	this.scaleIndicatorInit();
-
-	// scale selector - top right
-	this.scaleSelInit();
 
 	// pan tools
 	this.panToolInit();
@@ -1534,6 +1561,9 @@ Map.prototype.init = function()
 
 	// show something
 	this.restoreState();
+	
+	// init tools
+	this.initTools();
 	
 }
 
@@ -1758,25 +1788,49 @@ function MapZoomSlider(bgElementId, knobElementId, map)
 	this.knobElementId = knobElementId;
 	this.map = map;
 	this.scale = 0;
-	EventAttacher.attach(window, "load", this, "init");
+	this.map.registerZoomSlider(this);
+	//EventAttacher.attach(window, "load", this, "init");
 }
 
 MapZoomSlider.prototype.init = function()
 {
+
 	this.bg = document.getElementById(this.bgElementId);
 	this.knob = document.getElementById(this.knobElementId);
 	
+	this.knob.style.display = "block";
+
 	this.sliderWidth = ElementUtils.getOffsetWidth(this.bg);
 	this.knobWidth = ElementUtils.getOffsetWidth(this.knob);
 	this.sliderOffsetLeft = ElementUtils.getOffsetLeft(this.bg);
 	this.sliderEffectiveWidth = this.bg.offsetWidth - this.knob.offsetWidth;
 	
 	EventAttacher.attach(this.knob, "mousedown", this, "mouseDown");
+	
+	this.zoomChanged();
+}
+
+MapZoomSlider.prototype.capKnobPosition = function(knobLeft)
+{
+	if (knobLeft < 0) knobLeft = 0;
+	if (knobLeft > this.sliderEffectiveWidth) knobLeft = this.sliderEffectiveWidth;
+	return knobLeft;
+}
+
+MapZoomSlider.prototype.setKnobNormalizedPosition = function(t)
+{
+	this.setKnobPosition(t * this.sliderEffectiveWidth);
+}
+
+MapZoomSlider.prototype.setKnobPosition = function(knobLeft)
+{
+	this.knob.style.left = this.capKnobPosition(knobLeft) + "px";
 }
 
 MapZoomSlider.prototype.mouseDown = function(event)
 {
 	this.startPos = event.clientX;
+	this.startOffsetLeft = this.knob.offsetLeft;
 	this.lastPos = this.startPos;
 	EventAttacher.attach(window, "mousemove", this, "mouseMove");
 	EventAttacher.attach(window, "mouseup", this, "mouseUp");
@@ -1785,15 +1839,20 @@ MapZoomSlider.prototype.mouseDown = function(event)
 MapZoomSlider.prototype.mouseMove = function(event)
 {
 	var pos = event.clientX;
-	this.knob.style.left = (this.knob.offsetLeft + (pos - this.lastPos)) + "px";
+	this.setKnobPosition(this.knob.offsetLeft + (pos - this.lastPos));
 	this.lastPos = pos;
 }
 
 MapZoomSlider.prototype.mouseUp = function(event)
 {
 	var pos = event.clientX;
-	var scale = (this.knob.offsetLeft + (pos - this.startPos)) / this.sliderEffectiveWidth;
-	this.map.changeScaleNormalized(scale, false);
+	var t = this.capKnobPosition(this.startOffsetLeft + (pos - this.startPos)) / this.sliderEffectiveWidth;
+	this.map.changeScaleNormalized(t, false);
 	EventAttacher.detach(window, "mousemove", this, "mouseMove");
-	EventAttacher.detach(window, "mouseip", this, "mouseUp");
+	EventAttacher.detach(window, "mouseup", this, "mouseUp");
+}
+
+MapZoomSlider.prototype.zoomChanged = function()
+{
+	this.setKnobNormalizedPosition(this.map.getScaleNormalized());
 }

@@ -22,18 +22,20 @@ public class TileServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5538255560078657125L;
 
-	public static final int META_SIZE_X = 20;
-	public static final int META_SIZE_Y = 20;
+	public static final int META_SIZE_X = 160;
 
-	//private static Map cache = new HashMap();
-	private TileCache cache = new TileCache();  
+	public static final int META_SIZE_Y = 60;
 
-//	private static long sizeOfCache = 0;
-//	private long lastClean = 0;
-//	public static final long MAX_CACHE = 104857600;
-//	public static final long CLEAN_PERIOD = 10000;
-	
+	// private static Map cache = new HashMap();
+	private TileCache cache = new TileCache();
+
+	// private static long sizeOfCache = 0;
+	// private long lastClean = 0;
+	// public static final long MAX_CACHE = 104857600;
+	// public static final long CLEAN_PERIOD = 10000;
+
 	private int cacheHits = 0;
+
 	private int cacheMisses = 0;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,46 +54,42 @@ public class TileServlet extends HttpServlet {
 		int tileWidth = 0;
 		int tileHeight = 0;
 
-		try
-		{
+		try {
 			col = Integer.parseInt(request.getParameter("c"));
 			row = Integer.parseInt(request.getParameter("r"));
 			scale = Integer.parseInt(request.getParameter("s"));
 			tileWidth = Integer.parseInt(request.getParameter("w"));
 			tileHeight = Integer.parseInt(request.getParameter("h"));
-		}
-		catch (NumberFormatException nfe)
-		{
+		} catch (NumberFormatException nfe) {
 			response.sendRedirect("../blank.png");
 			return;
 		}
 
-		//		CachedTileKey tile = new CachedTileKey(mapFile, col, row, scale);
-//		byte[] cachedObject;
-//		synchronized (cache) {
-//			cachedObject = (byte[]) cache.get(tile);
-//		}
-		
+		// CachedTileKey tile = new CachedTileKey(mapFile, col, row, scale);
+		// byte[] cachedObject;
+		// synchronized (cache) {
+		// cachedObject = (byte[]) cache.get(tile);
+		// }
+
 		cache.clean();
 
 		byte[] cachedImg = cache.get(mapFile, col, row, scale);
-		if (cachedImg != null)
-		{
+		if (cachedImg != null) {
 			cacheHits++;
 			response.getOutputStream().write(cachedImg);
 			return;
 		}
 		cacheMisses++;
-		
-		System.out.println(((double)cacheHits / ((double) cacheHits + cacheMisses) * 100) +  "%");
+
+		System.out.println(((double) cacheHits / ((double) cacheHits + cacheMisses) * 100) + "%");
 
 		String path = (String) session.getAttribute(mapFile);
-		if (path == null)
-		{
+		//path = "/home/juri/gis/tests/map_test.map";
+		if (path == null) {
 			response.sendRedirect("../blank.png");
 			return;
 		}
-		
+
 		double realTileWidth = (double) tileWidth / (double) scale;
 		double realTileHeight = (double) tileHeight / (double) scale;
 
@@ -104,131 +102,77 @@ public class TileServlet extends HttpServlet {
 		map.setSize(tileWidth + 2 * META_SIZE_X, tileHeight + 2 * META_SIZE_Y);
 		map.setExtent(x1, y1, x2, y2);
 
-//				map.setMetaData("labelcache_map_edge_buffer", ((int)-Math.max(META_SIZE_X, META_SIZE_Y)) + "");
+		//map.setMetaData("labelcache_map_edge_buffer", (META_SIZE_X) + "");
 
 		imageObj img = map.draw();
 		byte[] imgBytes = img.getBytes();
-			
-			//img.save("/home/juri/gis/pleple1" + col + "_" + row + ".png", map);
-			
-//				Image image = Toolkit.getDefaultToolkit().createImage(imgBytes);
-//				RenderedImage rimage = toBufferedImage(Toolkit.getDefaultToolkit().createImage(
-//						new FilteredImageSource(image.getSource(), new CropImageFilter(META_SIZE_X, META_SIZE_Y, tileWidth,
-//								tileHeight))));
-			
+
 		Image image = ImageIO.read(new ByteArrayInputStream(imgBytes));
 		BufferedImage rimage = new BufferedImage(tileWidth, tileHeight, BufferedImage.TYPE_INT_RGB);
-		
+
 		Graphics2D gr = rimage.createGraphics();
-		gr.drawImage(image,
-				0, 0, tileWidth, tileHeight,
-				META_SIZE_X, META_SIZE_Y, META_SIZE_X + tileWidth, META_SIZE_Y + tileHeight,
-				null);
+		
+		//gr.drawImage(image, 0, 0, tileWidth+2*META_SIZE_X, tileHeight+2*META_SIZE_Y, null);
+		gr.drawImage(image, 0, 0, tileWidth, tileHeight, META_SIZE_X, META_SIZE_Y, META_SIZE_X + tileWidth, META_SIZE_Y
+				+ tileHeight, null);
 		gr.dispose();
-			
+
 		ByteArrayOutputStream oStream = new ByteArrayOutputStream();
 		ImageIO.write(rimage, "png", oStream);
 		imgBytes = oStream.toByteArray();
-		
+
 		cache.put(mapFile, col, row, scale, imgBytes);
-		
+
 		response.getOutputStream().write(imgBytes);
-			
-//			synchronized (cache) {
-//				if (sizeOfCache < MAX_CACHE) {
-//					cache.put(tile, imgBytes);
-//					sizeOfCache += imgBytes.length;
-//				}
-//			}
-
-//		} else {
-//			synchronized (cache) {
-//				cache.put(tile, cachedObject);
-//			}
-//			response.getOutputStream().write(cachedObject);
-//			return;
-//		}
 
 	}
-	
-	public void init() throws ServletException
-	{
+
+	public void init() throws ServletException {
 	}
 
-/*
-	public static BufferedImage toBufferedImage(Image image) {
-		if (image instanceof BufferedImage) {
-			return (BufferedImage) image;
-		}
+	/*
+	 * public static BufferedImage toBufferedImage(Image image) { if (image
+	 * instanceof BufferedImage) { return (BufferedImage) image; }
+	 *  // This code ensures that all the pixels in the image are loaded image =
+	 * new ImageIcon(image).getImage();
+	 *  // Determine if the image has transparent pixels; for this method's //
+	 * implementation, see e661 Determining If an Image Has Transparent //
+	 * Pixels
+	 *  // Create a buffered image with a format that's compatible with the //
+	 * screen BufferedImage bimage = null; GraphicsEnvironment ge =
+	 * GraphicsEnvironment.getLocalGraphicsEnvironment(); try { // Determine the
+	 * type of transparency of the new buffered image int transparency =
+	 * Transparency.OPAQUE;
+	 *  // Create the buffered image GraphicsDevice gs =
+	 * ge.getDefaultScreenDevice(); GraphicsConfiguration gc =
+	 * gs.getDefaultConfiguration(); bimage =
+	 * gc.createCompatibleImage(image.getWidth(null), image.getHeight(null),
+	 * transparency); } catch (HeadlessException e) { // The system does not
+	 * have a screen }
+	 * 
+	 * if (bimage == null) { // Create a buffered image using the default color
+	 * model int type = BufferedImage.TYPE_INT_RGB; bimage = new
+	 * BufferedImage(image.getWidth(null), image.getHeight(null), type); }
+	 *  // Copy image to buffered image Graphics g = bimage.createGraphics();
+	 *  // Paint the image onto the buffered image g.drawImage(image, 0, 0,
+	 * null); g.dispose();
+	 * 
+	 * return bimage; }
+	 */
 
-		// This code ensures that all the pixels in the image are loaded
-		image = new ImageIcon(image).getImage();
-
-		// Determine if the image has transparent pixels; for this method's
-		// implementation, see e661 Determining If an Image Has Transparent
-		// Pixels
-
-		// Create a buffered image with a format that's compatible with the
-		// screen
-		BufferedImage bimage = null;
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		try {
-			// Determine the type of transparency of the new buffered image
-			int transparency = Transparency.OPAQUE;
-
-			// Create the buffered image
-			GraphicsDevice gs = ge.getDefaultScreenDevice();
-			GraphicsConfiguration gc = gs.getDefaultConfiguration();
-			bimage = gc.createCompatibleImage(image.getWidth(null), image.getHeight(null), transparency);
-		} catch (HeadlessException e) {
-			// The system does not have a screen
-		}
-
-		if (bimage == null) {
-			// Create a buffered image using the default color model
-			int type = BufferedImage.TYPE_INT_RGB;
-			bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
-		}
-
-		// Copy image to buffered image
-		Graphics g = bimage.createGraphics();
-
-		// Paint the image onto the buffered image
-		g.drawImage(image, 0, 0, null);
-		g.dispose();
-
-		return bimage;
-	}
-*/
-	
-/*
-	protected void clean() {
-
-		long time = System.currentTimeMillis();
-		if (lastClean + CLEAN_PERIOD > time) {
-			return;
-		}
-		lastClean = time;
-
-		ArrayList toRemove = new ArrayList();
-		synchronized (cache) {
-			Iterator iter = cache.keySet().iterator();
-			while (iter.hasNext()) {
-				CachedTileKey tile = (CachedTileKey) iter.next();
-				if (tile.isExpired(time)) {
-					toRemove.add(tile);
-				}
-			}
-			iter = toRemove.iterator();
-			while (iter.hasNext()) {
-				Object key = iter.next();
-				byte[] bytes = (byte[]) cache.get(key);
-				sizeOfCache -= bytes.length;
-				cache.remove(key);
-			}
-		}
-	}
-*/
+	/*
+	 * protected void clean() {
+	 * 
+	 * long time = System.currentTimeMillis(); if (lastClean + CLEAN_PERIOD >
+	 * time) { return; } lastClean = time;
+	 * 
+	 * ArrayList toRemove = new ArrayList(); synchronized (cache) { Iterator
+	 * iter = cache.keySet().iterator(); while (iter.hasNext()) { CachedTileKey
+	 * tile = (CachedTileKey) iter.next(); if (tile.isExpired(time)) {
+	 * toRemove.add(tile); } } iter = toRemove.iterator(); while
+	 * (iter.hasNext()) { Object key = iter.next(); byte[] bytes = (byte[])
+	 * cache.get(key); sizeOfCache -= bytes.length; cache.remove(key); } } }
+	 */
 	// public synchronized void init() throws ServletException {
 	// super.init();
 	// if (threadCleaner == null) {
@@ -258,5 +202,4 @@ public class TileServlet extends HttpServlet {
 	// threadCleaner = null;
 	// }
 	// }
-
 }
