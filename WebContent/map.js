@@ -1577,6 +1577,28 @@ Map.prototype.init = function()
 	// init tools
 	this.invokeInitListeners();
 	
+	this.testSVG();
+	
+}
+
+Map.prototype.testSVG = function()
+{
+
+	this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	this.svg.style.position = "absolute";
+	
+	var x = this.fromRealToVportX(19);
+	var y = this.fromRealToVportY(50);
+	
+	var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+	c.setAttributeNS(null, "cx", x);
+	c.setAttributeNS(null, "cy", y);
+	c.setAttributeNS(null, "r", "30");
+	c.setAttributeNS(null, "style", "fill: Black");
+	this.svg.appendChild(c);
+	
+	this.map_frame.appendChild(this.svg);
+
 }
 
 
