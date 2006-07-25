@@ -52,7 +52,7 @@ public class BarChartGenerator extends AbstractChartGenerator {
 		xyplot.setDomainAxis(newAxis);
 		chart.setBackgroundPaint(new Color(241, 227, 101));
 		
-		return chart;
+		return prepareChart(chart);
 	}
 
 	/**

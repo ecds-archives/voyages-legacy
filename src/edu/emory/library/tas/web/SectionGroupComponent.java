@@ -283,7 +283,10 @@ public class SectionGroupComponent extends UIComponentBase
 				SectionComponent sect = (SectionComponent) iter.next();
 				if (selectedSectionId.equals(sect.getSectionId()))
 				{
+					sect.setRendered(true);
 					UtilsJSF.renderChild(context, sect);
+				} else {
+					sect.setRendered(false);
 				}
 			}
 		}

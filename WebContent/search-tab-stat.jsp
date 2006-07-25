@@ -5,19 +5,14 @@
 
 <t:htmlTag value="div" style="padding: 2px;"
 	rendered="#{AdvancedStatisticsTabBean.errorPresent || AdvancedStatisticsTabBean.warningPresent}">
-	<t:htmlTag id="div_error" value="td" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
+	<t:htmlTag id="div_error" value="div" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
 		<h:panelGrid columns="3">
 			<h:outputText value="#{AdvancedStatisticsTabBean.errorMessage}" />
 			<h:commandButton id="fixError" value="Fix error" action="#{AdvancedStatisticsTabBean.fixError}" />
 			<h:commandButton id="goBackOnError" value="Back" action="#{AdvancedStatisticsTabBean.rollback}" />
 		</h:panelGrid>
 	</t:htmlTag>
-
-	<t:htmlTag id="div_warning" value="td" style="background: green;"
-		rendered="#{AdvancedStatisticsTabBean.warningPresent}">
-		<h:outputText id="warning_text" value="#{AdvancedStatisticsTabBean.warningMessage}" />
-	</t:htmlTag>
-	<t:htmlTag id="div_warning_fillin" value="td"></t:htmlTag>
+	
 </t:htmlTag>
 
 
@@ -99,12 +94,18 @@
 		</t:htmlTag>
 	</t:htmlTag>
 
-	<t:htmlTag value="div" style="padding-left: 10px; padding-bottom: 5px; padding-top: 5px;">
+	<t:htmlTag value="div" style="position: absolute; padding-left: 10px; padding-bottom: 10px; padding-top: 5px; width: 650px; height: 550px">
 		<t:htmlTag value="div">
 			<h:commandButton style="margin: 3px;" id="showGraph" value="Show"
 				disabled="#{AdvancedStatisticsTabBean.errorPresent}" action="#{AdvancedStatisticsTabBean.showGraph}" />
 		</t:htmlTag>
-		<t:htmlTag value="div" style="margin-top: 4px; overflow:auto; width: 100%; height: 500px"
+		
+		<t:htmlTag id="div_warning" value="div" style="margin: 3px; background: #E2873B; length: 640px;"
+				rendered="#{AdvancedStatisticsTabBean.warningPresent}">
+			<h:outputText id="warning_text" value="#{AdvancedStatisticsTabBean.warningMessage}" />
+		</t:htmlTag>
+		
+		<t:htmlTag value="div" style="margin-top: 4px; width: 640px; height: 480px; overflow:auto; width: 100%; height: 500px"
 			rendered="#{AdvancedStatisticsTabBean.statReady}">
 			<h:graphicImage value="#{AdvancedStatisticsTabBean.chartPath}" />
 		</t:htmlTag>
@@ -116,6 +117,12 @@
 			<h:inputText value="#{AdvancedStatisticsTabBean.chartHeight}" style="width: 40px;" />
 			<h:commandButton id="enlargeStat" value="Change size" action="#{AdvancedStatisticsTabBean.setNewView}" />
 		</h:panelGroup>
+		
+		<t:htmlTag rendered="#{AdvancedStatisticsTabBean.statReady}" value="div">
+			<s:divbutton id="chart-back-button-id" action="#{AdvancedStatisticsTabBean.prev}" styleClass="chart-back-button"/>
+			<s:divbutton id="chart-forward-button-id" action="#{AdvancedStatisticsTabBean.next}" styleClass="chart-forward-button"/>
+		</t:htmlTag> 
+		
 	</t:htmlTag>
 
 

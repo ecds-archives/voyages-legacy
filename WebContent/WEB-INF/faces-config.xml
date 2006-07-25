@@ -122,6 +122,13 @@
 			edu.emory.library.tas.web.maps.MapComponent
 		</component-class>
 	</component>
+	
+	<component>
+		<component-type>DivButton</component-type>
+		<component-class>
+			edu.emory.library.tas.web.components.UIDivButton
+		</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>

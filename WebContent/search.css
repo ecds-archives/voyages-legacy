@@ -88,6 +88,47 @@ td.detail-label {
 	font-weight: bold; }
 
 
+div.chart-back-button {
+	position: absolute; 
+	top: 290px; 
+	left: 12px; 
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-back.png); 
+}
+
+div.chart-back-button:hover {
+	background-position: 0px -24px; 
+}
+
+div.chart-forward-button {
+	position: absolute; 
+	top: 290px; 
+	left: 623px; 
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-forward.png); }
+
+div.chart-forward-button:hover {
+	background-position: 0px -24px; }
+
+table.tooltip-class {
+	width: 300px;
+	border-collapse: collapse;
+}
+
+table.tooltip-class tr {	
+	border-bottom: 2px solid #CF5435;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 /* map */
 /*
 div.map-tools-top {

@@ -221,14 +221,14 @@ public class UITableResultTab extends UIOutput {
 					String visibleLabel = null;
 					String visibleToolTop = null;
 					Object obj = values[j];
-					String objString = obj.toString();
+					TableData.ColumnData columnData = (TableData.ColumnData)obj;
 					if (obj != null) {
-						if (objString.length() > TRIM_LENGTH) {
-							visibleLabel = objString.substring(0, TRIM_LENGTH) + " ...";
+						if (columnData.toString().length() > TRIM_LENGTH) {
+							visibleLabel = columnData.toString().substring(0, TRIM_LENGTH) + " ...";
 							//visibleToolTop = objString.replaceAll(" ", "&nbsp;");
-							visibleToolTop = objString;
+							visibleToolTop = columnData.getToolTipText(data);
 						} else {
-							visibleLabel = objString.replaceAll(" ", "&nbsp;");
+							visibleLabel = columnData.toString().replaceAll(" ", "&nbsp;");
 						}
 					}
 					writer.startElement("td", this);

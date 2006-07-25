@@ -21,6 +21,15 @@ public class SearchParameters
 	private VisibleColumn[] columns = new VisibleColumn[0]; 
 	private int category = AbstractAttribute.CATEGORY_GENERAL;
 	
+	
+	public SearchParameters() {
+		this.conditions = null;
+	}
+	
+	public SearchParameters(Conditions conditions2) {
+		this.conditions = conditions2;
+	}
+
 	public VisibleColumn[] getColumns()
 	{
 		return columns;

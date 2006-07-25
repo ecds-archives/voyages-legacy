@@ -43,7 +43,7 @@ public class PieChartGenerator extends AbstractChartGenerator {
 		JFreeChart chart = ChartFactory.createPieChart(title, 
 				pieDataset, showLegend, true, false);
 		chart.setBackgroundPaint(new Color(241, 227, 101));
-		return chart;
+		return prepareChart(chart);
 	}
 
 	/**

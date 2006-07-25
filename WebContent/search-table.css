@@ -73,7 +73,7 @@ div.grid-tooltip {
     visibility: hidden; 
     position: absolute; 
     z-index: 1; 
-    width: 240px;
+    /*width: 0px;*/
     color: White; }
     
 div.grid-tooltip div {

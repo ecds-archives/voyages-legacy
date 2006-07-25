@@ -45,7 +45,7 @@ public class AdvancedStatisticsTabBean {
 	private static final String DEFAULT_CHART_WIDTH = "640";
 
 	private static final int MAX_RESULTS_PER_GRAPH = 1000;
-
+	
 	/**
 	 * Series of the chart. The class keeps information about attribute and
 	 * aggregate function.
@@ -237,6 +237,8 @@ public class AdvancedStatisticsTabBean {
 	 * Current category of attributes.
 	 */
 	private int category;
+	
+	private int firstResult = 0;
 
 	/**
 	 * Gets list of attributes of Voyage.
@@ -432,65 +434,89 @@ public class AdvancedStatisticsTabBean {
 			AbstractChartGenerator generator = this.getChartGenerator();
 
 			// Check if warning should appear
-			if (this.getNumberOfResults(generator) > MAX_RESULTS_PER_GRAPH) {
-				this.warningMessage = "Current query returns more than " + MAX_RESULTS_PER_GRAPH
-						+ " voyages. Graph shows only first " + MAX_RESULTS_PER_GRAPH + " results.";
-				this.warningPresent = new Boolean(true);
-			} else {
-				this.warningPresent = new Boolean(false);
-			}
+//			if (this.getNumberOfResults(generator) > MAX_RESULTS_PER_GRAPH) {
+//				this.warningMessage = "Current query returns more than " + MAX_RESULTS_PER_GRAPH
+//						+ " voyages. Graph shows only first " + MAX_RESULTS_PER_GRAPH + " results.";
+//				this.warningPresent = new Boolean(true);
+//			} else {
+//				this.warningPresent = new Boolean(false);
+//			}
 
 			// Prepare query
 			QueryValue qValue = this.prepareQueryValue(generator);
-			qValue.setLimit(MAX_RESULTS_PER_GRAPH);
+			qValue.setLimit(MAX_RESULTS_PER_GRAPH + 1);
+			qValue.setFirstResult(this.firstResult);
 
 			// Query
 			Object[] objs = qValue.executeQuery();
+			if (objs.length == 0) {
+				if (this.firstResult != 0) {
+					this.firstResult -= MAX_RESULTS_PER_GRAPH;
+				}
+			} else {
 
-			// Add results to chart
-			generator.correctAndCompleteData(objs);
-			generator.addRowToDataSet(objs, this.series.toArray());
+				Object[] realobjs = objs;
+				if (objs.length > MAX_RESULTS_PER_GRAPH) {
+					realobjs = new Object[objs.length - 1];
+					for (int i = 0; i < realobjs.length; i++) {
+						realobjs[i] = objs[i];
+						
+					}
+				}
+				
+				if (objs.length > MAX_RESULTS_PER_GRAPH || this.firstResult != 0) {
+					this.warningMessage = "Current query returns more than " + MAX_RESULTS_PER_GRAPH
+						+ " results. Graph shows chunks of data by " + MAX_RESULTS_PER_GRAPH + " results." +
+								"Use arrow buttons below to navigate between visible chunks. " +
+								"Currently visible results from " + (this.firstResult + 1) + " to " + 
+								(this.firstResult + realobjs.length) + ".";
+					this.warningPresent = new Boolean(true);
+				}
+				
+				// Add results to chart
+				generator.correctAndCompleteData(objs);
+				generator.addRowToDataSet(objs, this.series.toArray());
 
-			// Put chart in session
-			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute(STAT_OBJECT_NAME, generator.getChart());
-
+				// Put chart in session
+				ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+				((HttpSession) servletContext.getSession(true)).setAttribute(STAT_OBJECT_NAME, generator.getChart());
+			}
 			this.neededQuery = false;
 		}
 
 		return null;
 	}
 
-	/**
-	 * Gets current number of result by invoking specific query.
-	 * 
-	 * @param generator
-	 *            currently used generator
-	 * @return number of results
-	 */
-	private int getNumberOfResults(AbstractChartGenerator generator) {
-
-		// Add prefix (we will use "v" alias for Voyage in query)
-		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
-		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
-		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
-
-		// Build query
-		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
-
-		// set populated attributes
-		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
-		if (this.aggregate.booleanValue()) {
-			qValue.setGroupBy(new String[] { xAxis });
-		}
-		qValue.addPopulatedAttribute(xAxis, false);
-		qValue.setLimit(MAX_RESULTS_PER_GRAPH + 1);
-
-		// Execute query
-		Object[] ret = qValue.executeQuery();
-
-		return ret.length;
-	}
+//	/**
+//	 * Gets current number of result by invoking specific query.
+//	 * 
+//	 * @param generator
+//	 *            currently used generator
+//	 * @return number of results
+//	 */
+//	private int getNumberOfResults(AbstractChartGenerator generator) {
+//
+//		// Add prefix (we will use "v" alias for Voyage in query)
+//		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
+//		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
+//		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+//
+//		// Build query
+//		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
+//
+//		// set populated attributes
+//		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
+//		if (this.aggregate.booleanValue()) {
+//			qValue.setGroupBy(new String[] { xAxis });
+//		}
+//		qValue.addPopulatedAttribute(xAxis, false);
+//		qValue.setLimit(MAX_RESULTS_PER_GRAPH + 1);
+//
+//		// Execute query
+//		Object[] ret = qValue.executeQuery();
+//
+//		return ret.length;
+//	}
 
 	public String setNewView() {
 		return null;
@@ -531,7 +557,26 @@ public class AdvancedStatisticsTabBean {
 		this.rollbackActions.clear();
 		return null;
 	}
+	
+	public void prev(ClickEvent event) {
+		if (firstResult > 0) {
+			this.firstResult -= MAX_RESULTS_PER_GRAPH;
+			if (this.firstResult < 0) {
+				this.firstResult = 0;
+			}
+			this.neededQuery = true;
+			this.showGraph();
+		}
+	}
 
+	public void next(ClickEvent event) {
+		
+		this.firstResult += MAX_RESULTS_PER_GRAPH;
+		this.neededQuery = true;
+		this.showGraph();
+		
+	}
+	
 	/**
 	 * Gets selection of aggregate functions.
 	 * 
@@ -557,6 +602,10 @@ public class AdvancedStatisticsTabBean {
 	 */
 	public void setAggregate(Boolean aggregate) {
 
+		if (aggregate == null) {
+			return;
+		}
+		
 		// If we have any series added - we need to remove it firstly.
 		if (this.series.size() > 0 && !aggregate.equals(this.aggregate) && !this.errorPresent.booleanValue()) {
 			this.errorPresent = new Boolean(true);
@@ -909,9 +958,9 @@ public class AdvancedStatisticsTabBean {
 		if (chartType == null) return;
 		if (!chartType.equals(this.selectedChart)) {
 			this.neededQuery = true;
+			validateSelectedChart();
 		}
 		this.selectedChart = chartType;
-		validateSelectedChart();
 		if (this.statReady.booleanValue()) {
 			this.showGraph();
 		}

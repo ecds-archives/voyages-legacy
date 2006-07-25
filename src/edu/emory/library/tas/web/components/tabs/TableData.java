@@ -19,13 +19,15 @@ import edu.emory.library.tas.util.query.QueryValue;
 
 /**
  * Data that is presented in results (Result table or detail table).
+ * 
  * @author Pawel Jurczyk
- *
+ * 
  */
 public class TableData {
 
 	/**
-	 * Default formatter - calls to string (for lists creates ['val a', ...., 'val n'])
+	 * Default formatter - calls to string (for lists creates ['val a', ....,
+	 * 'val n'])
 	 */
 	private static final AbstractAttributeFormatter DEFAULT_FORMATTER = new SimpleAttributeFormatter();
 
@@ -66,11 +68,12 @@ public class TableData {
 
 	/**
 	 * Container for raw data that is stored in data and additionalData.
+	 * 
 	 * @author Pawel Jurczyk
-	 *
+	 * 
 	 */
 	public class DataTableItem {
-		
+
 		/**
 		 * VoyageID.
 		 */
@@ -83,6 +86,7 @@ public class TableData {
 
 		/**
 		 * Constructor.
+		 * 
 		 * @param voyageId
 		 * @param row
 		 */
@@ -93,8 +97,59 @@ public class TableData {
 
 	}
 
+	public class ColumnData {
+
+		private Object[] data;
+
+		private VisibleColumn attribute;
+
+		private AbstractAttributeFormatter formatter;
+
+		public ColumnData(VisibleColumn attribute, Object[] data, AbstractAttributeFormatter formatter) {
+			this.attribute = attribute;
+			this.data = data;
+			this.formatter = formatter;
+		}
+
+		public String getToolTipText(TableData table) {
+
+			List list = new ArrayList();
+			list.add(attribute);
+			Attribute[] attributes = table.getAttributesForColumn(list, 0);
+			StringBuffer buffer = new StringBuffer();
+
+			if (attributes.length > 1) {
+
+				buffer.append("<table class=\"tooltip-class\">");
+				buffer.append("<tr<td><b>Compound attribute:</b></td><td><b>");
+				buffer.append(attribute.getUserLabelOrName()).append("</b></td>");
+				for (int i = 0; i < attributes.length; i++) {
+					Attribute attribute = attributes[i];
+					buffer.append("<tr><td>").append(attribute.getUserLabelOrName()).append(":</td>");
+					buffer.append("<td>").append(data[i] == null ? "" : data[i]).append("</td></tr>");
+				}
+				buffer.append("</table>");
+			} else {
+				buffer.append(attribute.getUserLabelOrName()).append(": ");
+				buffer.append(data[0] == null ? "" : data[0]);
+			}
+			return buffer.toString();
+
+		}
+
+		public String toString() {
+			if (this.data.length == 1) {
+				return formatter.format(data[0]);
+			} else {
+				return formatter.format(data);
+			}
+		}
+
+	}
+
 	/**
 	 * Sets visible columns.
+	 * 
 	 * @param columns
 	 */
 	public void setVisibleColumns(List columns) {
@@ -108,6 +163,7 @@ public class TableData {
 
 	/**
 	 * Sets visible columns.
+	 * 
 	 * @param columns
 	 */
 	public void setVisibleColumns(VisibleColumn[] columns) {
@@ -123,6 +179,7 @@ public class TableData {
 
 	/**
 	 * Gets visible columns.
+	 * 
 	 * @return
 	 */
 	public VisibleColumn[] getVisibleAttributes() {
@@ -131,6 +188,7 @@ public class TableData {
 
 	/**
 	 * Sets optional visible columns.
+	 * 
 	 * @param columns
 	 */
 	public void setVisibleAdditionalColumns(List columns) {
@@ -140,6 +198,7 @@ public class TableData {
 
 	/**
 	 * Sets optional visible columns.
+	 * 
 	 * @param columns
 	 */
 	public void setVisibleAdditionalColumns(VisibleColumn[] columns) {
@@ -151,6 +210,7 @@ public class TableData {
 
 	/**
 	 * Gets optional visible columns.
+	 * 
 	 * @return
 	 */
 	public VisibleColumn[] getVisibleAdditionalAttributes() {
@@ -159,6 +219,7 @@ public class TableData {
 
 	/**
 	 * Sets specific formatter for any column in data table.
+	 * 
 	 * @param column
 	 * @param formatter
 	 */
@@ -168,21 +229,23 @@ public class TableData {
 
 	/**
 	 * Gets formatter that should be used in rendering column.
+	 * 
 	 * @param column
 	 * @return
 	 */
 	private AbstractAttributeFormatter getFormatter(VisibleColumn column) {
 		if (this.columnFormatters.containsKey(column)) {
-			//Registered specific formatter
+			// Registered specific formatter
 			return (AbstractAttributeFormatter) this.columnFormatters.get(column);
 		} else {
-			//Use default formatter
+			// Use default formatter
 			return DEFAULT_FORMATTER;
 		}
 	}
 
 	/**
 	 * Gets all attributes for given compound attribute.
+	 * 
 	 * @param cAttr
 	 * @return
 	 */
@@ -196,6 +259,7 @@ public class TableData {
 
 	/**
 	 * Gets all attributes for given group.
+	 * 
 	 * @param group
 	 * @return
 	 */
@@ -213,6 +277,7 @@ public class TableData {
 
 	/**
 	 * Gets attributes that should be used in query.
+	 * 
 	 * @return
 	 */
 	public Attribute[] getAttributesForQuery() {
@@ -235,6 +300,7 @@ public class TableData {
 
 	/**
 	 * Gets attributes for optional columns that should be used in query
+	 * 
 	 * @return
 	 */
 	public Attribute[] getAdditionalAttributesForQuery() {
@@ -256,22 +322,25 @@ public class TableData {
 
 	/**
 	 * Gets array of attributes needed for specific column.
-	 * @param columns all columns
-	 * @param column  index of element in columns
+	 * 
+	 * @param columns
+	 *            all columns
+	 * @param column
+	 *            index of element in columns
 	 * @return array of attributes
 	 */
 	private Attribute[] getAttributesForColumn(List columns, int column) {
 		ArrayList attrs = new ArrayList();
 		if (columns.get(column) instanceof Group) {
-			//Group of attributes
+			// Group of attributes
 			Group group = (Group) columns.get(column);
 			attrs.addAll(this.getAttrForGroup(group));
 		} else if (columns.get(column) instanceof CompoundAttribute) {
-			//Compound attribute
+			// Compound attribute
 			CompoundAttribute cAttr = (CompoundAttribute) columns.get(column);
 			attrs.addAll(this.getAttrForCAttribute(cAttr));
 		} else {
-			//Simple attribute
+			// Simple attribute
 			Attribute attr = (Attribute) columns.get(column);
 			attrs.add(attr);
 		}
@@ -280,23 +349,25 @@ public class TableData {
 
 	/**
 	 * Gets array of indexes of data for specified column.
-	 * @param col column number
+	 * 
+	 * @param col
+	 *            column number
 	 * @return
 	 */
 	private int[] getRangeOfAttribute(int col) {
 		int i = 0;
 		int count = 0;
 		Attribute[] attrs = null;
-		//Check columns
+		// Check columns
 		for (i = 0; i < col && i < this.columns.size(); i++) {
 			count += this.getAttributesForColumn(this.columns, i).length;
 		}
 		if (i > this.columns.size() - 1) {
-			//col refers additional columns
+			// col refers additional columns
 			for (; i < this.additionalColumns.size() + this.columns.size() - 1 && i < col; i++) {
 				count += this.getAttributesForColumn(this.additionalColumns, i - this.columns.size()).length;
 			}
-			//Array of attributes refering given column
+			// Array of attributes refering given column
 			attrs = this.getAttributesForColumn(this.additionalColumns, i - this.columns.size());
 			int[] ret = new int[attrs.length];
 			for (int j = 0; j < attrs.length; j++) {
@@ -315,54 +386,58 @@ public class TableData {
 
 	/**
 	 * Executes formatter on given column.
+	 * 
 	 * @param column
 	 * @param rawRow
 	 * @param rawCols
 	 * @return
 	 */
-	private String executeFormatter(VisibleColumn column, Object[] rawRow, int[] rawCols) {
-		
-		//Build tmp object array
+	private Object getSubItem(VisibleColumn column, Object[] rawRow, int[] rawCols) {
+
+		// Build tmp object array
 		Object[] tmp = getObjectTable(rawRow, rawCols);
-		
-		//Execute appropriate formatter
-		if (tmp.length > 1) {
-			return this.getFormatter(column).format(tmp);
-		} else {
-			return this.getFormatter(column).format(tmp[0]);
-		}
+
+		return new ColumnData(column, tmp, this.getFormatter(column));
+
+		// //Execute appropriate formatter
+		// if (tmp.length > 1) {
+		// return this.getFormatter(column).format(tmp);
+		// } else {
+		// return this.getFormatter(column).format(tmp[0]);
+		// }
 	}
 
 	/**
 	 * Sets query response for this TableData
-	 * @param rawData query response
+	 * 
+	 * @param rawData
+	 *            query response
 	 */
 	public void setData(Object[] rawData) {
-		
-		//Clear old data
+
+		// Clear old data
 		this.data.clear();
 		this.additionalData.clear();
-		
-		//Parse all rows
+
+		// Parse all rows
 		for (int i = 0; i < rawData.length; i++) {
 			Object[] dataColumn = new Object[columns.size()];
 			Object[] additionalDataColumn = new Object[additionalColumns.size()];
 			Object[] rawRow = (Object[]) rawData[i];
-			
-			//Get basic columns
+
+			// Get basic columns
 			for (int j = 0; j < columns.size(); j++) {
 				int[] rawCols = this.getRangeOfAttribute(j);
-				dataColumn[j] = this.executeFormatter((VisibleColumn) columns.get(j), rawRow, rawCols);
+				dataColumn[j] = this.getSubItem((VisibleColumn) columns.get(j), rawRow, rawCols);
 			}
-			
-			//Get additional columns
+
+			// Get additional columns
 			for (int j = 0; j < additionalColumns.size(); j++) {
 				int[] rawCols = this.getRangeOfAttribute(j + this.columns.size());
-				additionalDataColumn[j] = this.executeFormatter((VisibleColumn) additionalColumns.get(j), rawRow,
-						rawCols);
+				additionalDataColumn[j] = this.getSubItem((VisibleColumn) additionalColumns.get(j), rawRow, rawCols);
 			}
-			
-			//Set data and additionalData if needed.
+
+			// Set data and additionalData if needed.
 			this.data.add(new DataTableItem((Long) ((Object[]) rawData[i])[0], dataColumn));
 			if (additionalDataColumn.length > 0) {
 				this.additionalData.add(new DataTableItem((Long) ((Object[]) rawData[i])[0], additionalDataColumn));
@@ -372,8 +447,12 @@ public class TableData {
 
 	/**
 	 * Builds subarray from given object array.
-	 * @param rawRow  initial object array
-	 * @param rawCols array of indexes in rawRow that will be placed in returned array 
+	 * 
+	 * @param rawRow
+	 *            initial object array
+	 * @param rawCols
+	 *            array of indexes in rawRow that will be placed in returned
+	 *            array
 	 * @return array of object
 	 */
 	private Object[] getObjectTable(Object[] rawRow, int[] rawCols) {
@@ -386,6 +465,7 @@ public class TableData {
 
 	/**
 	 * Gets data from table data.
+	 * 
 	 * @return
 	 */
 	public DataTableItem[] getData() {
@@ -394,6 +474,7 @@ public class TableData {
 
 	/**
 	 * Gets optional data from table data.
+	 * 
 	 * @return
 	 */
 	public DataTableItem[] getAdditionalData() {
@@ -402,6 +483,7 @@ public class TableData {
 
 	/**
 	 * Gets current order for column that is being sorted.
+	 * 
 	 * @return
 	 */
 	public int getOrder() {
@@ -410,6 +492,7 @@ public class TableData {
 
 	/**
 	 * Sets sort order.
+	 * 
 	 * @param order
 	 */
 	public void setOrder(int order) {
@@ -418,6 +501,7 @@ public class TableData {
 
 	/**
 	 * Gets ordered column.
+	 * 
 	 * @return
 	 */
 	public VisibleColumn getOrderByColumn() {
@@ -426,6 +510,7 @@ public class TableData {
 
 	/**
 	 * Sets ordered columns.
+	 * 
 	 * @param orderByColumn
 	 */
 	public void setOrderByColumn(VisibleColumn orderByColumn) {

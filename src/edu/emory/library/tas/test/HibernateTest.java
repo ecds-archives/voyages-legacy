@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
+import java.util.Iterator;
+
+import javax.imageio.ImageIO;
+
+import com.sun.imageio.plugins.png.PNGImageWriterSpi;
 
 import edu.emory.library.tas.Configuration;
 import edu.emory.library.tas.Dictionary;
@@ -31,7 +36,7 @@ public class HibernateTest {
 				System.in));
 		
 		//HibernateConnector connector = HibernateConnector.getConnector();
-
+		
 		System.out.print("command:>");
 		while ((command = reader.readLine()) != null
 				&& !command.equalsIgnoreCase("exit")) {

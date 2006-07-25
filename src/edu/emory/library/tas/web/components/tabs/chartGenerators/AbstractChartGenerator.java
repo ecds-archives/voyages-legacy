@@ -1,6 +1,7 @@
 package edu.emory.library.tas.web.components.tabs.chartGenerators;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.ui.RectangleInsets;
 
 import edu.emory.library.tas.attrGroups.Attribute;
 
@@ -109,6 +110,12 @@ public abstract class AbstractChartGenerator {
 	 */
 	public void setXAxisAttribute(Attribute axisAttribute) {
 		xAxisAttribute = axisAttribute;
+		
+	}
+	
+	protected final JFreeChart prepareChart(JFreeChart chart) {
+		chart.setPadding(new RectangleInsets(2, 2, 2, 24));
+		return chart;
 	}
 
 }

@@ -39,9 +39,9 @@ public class XYChartGenerator extends AbstractChartGenerator {
 	 */
 	public JFreeChart getChart(String title, boolean showLegend) {
 		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
-			return this.prepareDateChart(title, showLegend);
+			return prepareChart(this.prepareDateChart(title, showLegend));
 		} else {
-			return this.prepareXYChart(title, showLegend);
+			return prepareChart(this.prepareXYChart(title, showLegend));
 		}
 	}
 
