@@ -1,3 +1,6 @@
+div.map-control {
+	overflow: visible; }
+
 table.map-tools {
 	top: 10px;
 	left: 10px;
@@ -204,4 +207,84 @@ div.map-zoom-slider-knob {
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
-	background-image: url(map-zoom-slider-knob.png); }	
+	background-image: url(map-zoom-slider-knob.png); }
+
+/*
+div.map-bubble-container {
+	display: none;
+	position: absolute;
+	overflow: visible;
+	width: 300px;
+	height: 0px; }
+*/
+	
+table.map-bubble {
+	display: none;
+	position: absolute; }
+ 
+td.map-bubble-11 {
+	width: 32px;
+	height: 12px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(bubble-11.png); }	
+	
+td.map-bubble-11 div {
+	width: 32px;
+	height: 12px; }
+	
+td.map-bubble-12 {
+	height: 12px;
+	overflow: hidden;
+	background-repeat: repeat-x;
+	background-image: url(bubble-12.png); }	
+	
+td.map-bubble-13 {
+	width: 12px;
+	height: 12px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(bubble-13.png); }	
+
+td.map-bubble-13 div {
+	width: 12px;
+	height: 12px; }
+
+td.map-bubble-21 {
+	width: 32px;
+	overflow: hidden;
+	background-repeat: repeat-y;
+	background-image: url(bubble-21.png); }	
+	
+td.map-bubble-22 {
+	color: White;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-image: url(bubble-22.png); }	
+	
+td.map-bubble-23 {
+	width: 12px;
+	overflow: hidden;
+	background-repeat: repeat-y;
+	background-image: url(bubble-23.png); }	
+	
+td.map-bubble-31 {
+	width: 32px;
+	height: 32px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(bubble-31.png); }	
+	
+td.map-bubble-32 {
+	height: 32px;
+	overflow: hidden;
+	background-repeat: repeat-x;
+	background-image: url(bubble-32.png); }	
+	
+td.map-bubble-33 {
+	width: 12px;
+	height: 32px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(bubble-33.png); }	
+	

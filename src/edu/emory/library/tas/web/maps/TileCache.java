@@ -43,7 +43,14 @@ public class TileCache
 		size -= cacheTail.getSize(); 
 		keyMap.remove(cacheTail.getKey());
 		cacheTail = cacheTail.getPrev();
-		cacheTail.makeLast();
+		if (cacheTail == null)
+		{
+			cacheHead = null;
+		}
+		else
+		{
+			cacheTail.makeLast();
+		}
 	}
 
 	public byte[] get(CachedTileKey key)
@@ -85,6 +92,8 @@ public class TileCache
 			tile.makeFirst(cacheHead);
 			cacheHead = tile;
 			if (cacheTail == null) cacheTail = tile;
+			
+			System.out.println("cache size after put = " + size);
 		
 		}
 			

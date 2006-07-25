@@ -11,6 +11,7 @@ public class MapTag extends UIComponentTag
 	
 	private String mapFile;
 	private String serverBaseUrl;
+	private String pointsOfInterest;
 
 	public String getComponentType()
 	{
@@ -47,6 +48,12 @@ public class MapTag extends UIComponentTag
 		{
 			map.setServerBaseUrl(serverBaseUrl);
 		}
+		
+		if (pointsOfInterest != null && isValueReference(pointsOfInterest))
+		{
+			ValueBinding vb = app.createValueBinding(pointsOfInterest);
+			component.setValueBinding("pointsOfInterest", vb);
+		}
 
 	}
 
@@ -68,6 +75,16 @@ public class MapTag extends UIComponentTag
 	public void setServerBaseUrl(String serverBaseUrl)
 	{
 		this.serverBaseUrl = serverBaseUrl;
+	}
+
+	public String getPointsOfInterest()
+	{
+		return pointsOfInterest;
+	}
+
+	public void setPointsOfInterest(String pointsOfInterest)
+	{
+		this.pointsOfInterest = pointsOfInterest;
 	}
 
 }

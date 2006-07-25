@@ -33,7 +33,11 @@ var MapsGlobal =
 		buttonZoomId,
 		fieldNameForMouseMode,
 		mapSizes,
-		fieldNameForMapSize
+		fieldNameForMapSize,
+		pointsOfInterest,
+		bubbleContainerId,
+		bubbleId,
+		bubbleTextId
 	)
 	{
 	
@@ -60,6 +64,14 @@ var MapsGlobal =
 		map.field_name_x2 = fieldNameY1;
 		map.field_name_y2 = fieldNameY2;
 		map.field_name_zoom_history = fieldNameZoomHistory;
+		
+		// points
+		map.pointsOfInterest = pointsOfInterest;
+		
+		// bubble
+		map.bubble_container_id = bubbleContainerId;
+		map.bubble_id = bubbleId;
+		map.bubble_text_id = bubbleTextId;
 		
 		// buttons
 		if (buttonBackId)
@@ -231,6 +243,10 @@ function Map()
 	this.selector_opacity = 30;
 	this.map_selector = null;
 	this.nav_selector = null;
+	
+	// bubble
+	this.bubble = null;
+	this.bubble_text = null;
 	
 	// scale indicator & selector
 	this.scale_bar_indicator = null;
@@ -688,12 +704,6 @@ Map.prototype.notifyZoomChange = function()
 	if (this.zoom_slider) this.zoom_slider.zoomChanged();
 }
 
-function debug(text)
-{
-	var el = document.getElementById("debug");
-	if (el) el.innerHTML += text + "<br>";
-}
-
 Map.prototype.changeScale = function(new_scale, notify_zoom_change)
 {
 
@@ -813,6 +823,10 @@ Map.prototype.setScaleAndCenterMapTo = function(new_scale, x, y, save_state, not
 	
 	// draw all tiles
 	this.positionTiles(true);
+	
+	// position poits of interest
+	this.drawPointsOfInterest();
+	this.repositionPointsOfInterest();
 	
 	// remember current state
 	if (save_state) this.zoomSaveState();
@@ -1002,6 +1016,9 @@ Map.prototype.adjustTilesAfterPan = function()
 	this.positionTiles(false,
 		update_row_from, update_row_to,
 		update_col_from, update_col_to);
+		
+	// position poits of interest
+	this.repositionPointsOfInterest();
 
 }
 
@@ -1277,6 +1294,119 @@ Map.prototype.panToolInit = function()
 	
 }
 
+/////////////////////////////////////////////////////////
+// points of interest
+/////////////////////////////////////////////////////////
+
+Map.prototype.initPointsOfInterest = function()
+{
+
+	if (!this.pointsOfInterest)
+		return;
+	
+	this.pointsOfInterestExtraSpace = 10;
+	
+	this.pointsOfInterestLeft = this.pointsOfInterest[0].x;
+	this.pointsOfInterestRight = this.pointsOfInterest[0].x;
+	this.pointsOfInterestTop = this.pointsOfInterest[0].y;
+	this.pointsOfInterestBottom = this.pointsOfInterest[0].x;
+	for (var i=0; i<this.pointsOfInterest.length; i++)
+	{
+		var pnt = this.pointsOfInterest[i];
+		if (pnt.x < this.pointsOfInterestLeft) this.pointsOfInterestLeft = pnt.x;
+		if (pnt.x > this.pointsOfInterestRight) this.pointsOfInterestRight = pnt.x;
+		if (pnt.y > this.pointsOfInterestTop) this.pointsOfInterestTop = pnt.y;
+		if (pnt.y < this.pointsOfInterestBottom) this.pointsOfInterestBottom = pnt.y;
+	}
+	
+	this.drawPointsOfInterest();
+	this.repositionPointsOfInterest();
+	
+	/*
+	this.pointsOfInterestDot = new GraphicsSVG();
+	this.pointsOfInterestDot.getRootDOM().style.position = "absolute";
+	this.pointsOfInterestDot.getRootDOM().style.display = "none";
+	this.pointsOfInterestDot.getRootDOM().style.cursor = "pointer";
+	var dotCircle = this.pointsOfInterestDot.drawCircle(10, 10, 6, "Black");
+	this.map_frame.appendChild(this.pointsOfInterestDot.getRootDOM());
+	EventAttacher.attach(dotCircle, "mouseout", this, "hideLabel");
+	*/
+}
+
+Map.prototype.drawPointsOfInterest = function()
+{
+
+	if (!this.pointsOfInterest)
+		return;
+		
+	var firstTime = !this.pointsOfInterestGraphics;
+	if (!firstTime) this.map_frame.removeChild(this.pointsOfInterestGraphics.getRootDOM());
+	
+	this.pointsOfInterestGraphics = new GraphicsSVG();
+	var root = this.pointsOfInterestGraphics.getRootDOM();
+
+	root.style.position = "absolute";
+
+	for (var i=0; i<this.pointsOfInterest.length; i++)
+	{
+		var pnt = this.pointsOfInterest[i];
+		var x = this.fromRealToPx(pnt.x - this.pointsOfInterestLeft) + this.pointsOfInterestExtraSpace;
+		var y = this.fromRealToPx(this.pointsOfInterestTop - pnt.y) + this.pointsOfInterestExtraSpace;
+		debug("x = " + x + ", y = " + y);
+		var circ = this.pointsOfInterestGraphics.drawCircle(x, y, 5, "Black");
+		circ.style.cursor = "pointer";
+		if (!firstTime)
+		{
+			EventAttacher.detach(circ, "mouseover", this, "showLabel");
+			EventAttacher.detach(circ, "mouseout", this, "hideLabel");
+		}
+		EventAttacher.attach(circ, "mouseover", this, "showLabel", i);
+		EventAttacher.attach(circ, "mouseout", this, "hideLabel");
+	}
+	
+	this.repositionPointsOfInterest();
+	this.map_frame.appendChild(root);
+	
+}
+
+Map.prototype.repositionPointsOfInterest = function()
+{
+	if (!this.pointsOfInterestGraphics) return;
+	var root = this.pointsOfInterestGraphics.getRootDOM();
+	root.style.left = (this.fromRealToVportX(this.pointsOfInterestLeft) - this.pointsOfInterestExtraSpace) + "px";
+	root.style.top = (this.fromRealToVportY(this.pointsOfInterestTop) - this.pointsOfInterestExtraSpace) + "px";
+}
+
+Map.prototype.showLabel = function(event, pntIndex)
+{
+	var pnt = this.pointsOfInterest[pntIndex];
+	
+	var x = this.fromRealToVportX(pnt.x);
+	var y = this.fromRealToVportY(pnt.y);
+
+	this.bubble_text.innerHTML = pnt.text;
+	this.bubble.style.display = "block";
+
+	this.bubble.style.left = (x + 5) + "px";
+	this.bubble.style.top = (y - 5 - this.bubble.offsetHeight) + "px";
+	
+	/*
+	var dot = this.pointsOfInterestDot.getRootDOM();
+	this.pointsOfInterestDot.show();
+	dot.style.left = (x - 10) + "px";
+	dot.style.top = (y - 10) + "px";
+	*/
+	
+	debug("showLabel (pntIndex = " + pntIndex + ", event.target = " + event.target + ")");
+}
+
+Map.prototype.hideLabel = function(event)
+{
+	this.bubble.style.display = "none";
+	//this.pointsOfInterestDot.hide();
+	debug("hideLabel (event.target = " + event.target + ")");
+}
+
 
 /////////////////////////////////////////////////////////
 // map control: resizing and init
@@ -1441,6 +1571,11 @@ Map.prototype.mapControlsInit = function()
 	
 	this.map_control_right_tools = document.getElementById(this.map_control_right_tools_id);
 	if (this.map_control_right_tools) this.map_control_right_tools.style.position = "absolute";
+	
+	//this.bubble_container = document.getElementById(this.bubble_container_id)
+	this.bubble = document.getElementById(this.bubble_id)
+	this.bubble_text = document.getElementById(this.bubble_text_id)
+	if (this.bubble) this.bubble.style.position = "absolute";
 
 	this.map_frame = document.getElementById(this.map_frame_id);
 	this.map_frame.style.backgroundColor = "White";
@@ -1577,30 +1712,10 @@ Map.prototype.init = function()
 	// init tools
 	this.invokeInitListeners();
 	
-	this.testSVG();
+	// init points of interest
+	this.initPointsOfInterest();
 	
 }
-
-Map.prototype.testSVG = function()
-{
-
-	this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-	this.svg.style.position = "absolute";
-	
-	var x = this.fromRealToVportX(19);
-	var y = this.fromRealToVportY(50);
-	
-	var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-	c.setAttributeNS(null, "cx", x);
-	c.setAttributeNS(null, "cy", y);
-	c.setAttributeNS(null, "r", "30");
-	c.setAttributeNS(null, "style", "fill: Black");
-	this.svg.appendChild(c);
-	
-	this.map_frame.appendChild(this.svg);
-
-}
-
 
 /////////////////////////////////////////////////////////
 // generic button functions
@@ -1893,4 +2008,16 @@ MapZoomSlider.prototype.mouseUp = function(event)
 MapZoomSlider.prototype.zoomChanged = function()
 {
 	this.setKnobNormalizedPosition(this.map.getScaleNormalized());
+}
+
+/////////////////////////////////////////////////////////
+// points of interest
+/////////////////////////////////////////////////////////
+
+function PointOfInterest(x, y, name, text)
+{
+	this.x = x;
+	this.y = y;
+	this.name = name;
+	this.text = text;
 }

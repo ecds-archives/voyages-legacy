@@ -308,6 +308,26 @@ public class UtilsJSF
     	return isParamEqualTo(
     			context.getExternalContext().getRequestParameterMap(),
     			paramName, value);
-   }
+    }
+    
+    public static String escapeStringForJS(String str)
+    {
+    	if (str == null) return "";
+    	str = str.replaceAll("\"", "\\\"");
+    	str = str.replaceAll("\r\n", "<br>");
+    	str = str.replaceAll("\n\r", "<br>");
+    	str = str.replaceAll("\n", "<br>");
+    	return str;
+    }
+    
+    public static void encodeBlank(UIComponent component, ResponseWriter writer, int width, int height) throws IOException
+    {
+    	writer.startElement("img", component);
+    	writer.writeAttribute("src", "blank.png", null);
+    	writer.writeAttribute("width", String.valueOf(width), null);
+    	writer.writeAttribute("height", String.valueOf(height), null);
+    	writer.writeAttribute("border", "0", null);
+    	writer.endElement("img");
+    }
 
 }

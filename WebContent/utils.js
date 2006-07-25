@@ -1,6 +1,12 @@
 var IE = navigator.userAgent.indexOf("MSIE 7.0") || navigator.userAgent.indexOf("MSIE 6.0") != -1 || navigator.userAgent.indexOf("MSIE 5.5") != -1;
 var GK = navigator.userAgent.indexOf("Gecko") != -1;
 
+function debug(text)
+{
+	var el = document.getElementById("debug");
+	if (el) el.innerHTML += text + "<br>";
+}
+
 function Animation(element, x1, y1, w1, h1, o1, x2, y2, w2, h2, o2, steps, duration, callWhenDone)
 {
 	this.element = element;

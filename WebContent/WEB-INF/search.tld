@@ -365,6 +365,9 @@
 		<attribute>
 			<name>serverBaseUrl</name>
 		</attribute>
+		<attribute>
+			<name>pointsOfInterest</name>
+		</attribute>
 	</tag>
 
 </taglib>

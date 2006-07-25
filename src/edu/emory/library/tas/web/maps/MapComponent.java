@@ -33,6 +33,9 @@ public class MapComponent extends UIComponentBase
 	private boolean serverBaseUrlSet = false;
 	private String serverBaseUrl = null;
 
+	private boolean pointsOfInterestSet = false;
+	private PointOfInterest[] pointsOfInterest = null;
+
 	private double x1 = -180;
 	private double y1 = -90;
 	private double x2 = 180;
@@ -194,6 +197,87 @@ public class MapComponent extends UIComponentBase
 		writer.endElement("table");
 	}
 	
+	private void encodeBubble(FacesContext context, ResponseWriter writer, String bubbleContainerId, String bubbleId, String bubbleTextId) throws IOException
+	{
+		
+//		writer.startElement("div", this);
+//		writer.writeAttribute("id", bubbleContainerId, null);
+//		writer.writeAttribute("class", "map-bubble-container", null);
+
+		writer.startElement("table", this);
+		writer.writeAttribute("id", bubbleId, null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "map-bubble", null);
+		writer.startElement("tr", this);
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-11", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-12", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-13", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.startElement("tr", this);
+
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-21", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("id", bubbleTextId, null);
+		writer.writeAttribute("class", "map-bubble-22", null);
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-23", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.startElement("tr", this);
+
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-31", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-32", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "map-bubble-33", null);
+		writer.startElement("div", this);
+		writer.endElement("div");
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.endElement("table");
+		
+//		writer.endElement("div");
+
+	}
+	
 	private String getElementIdForMapSize(FacesContext context, int sizeIndex)
 	{
 		return getClientId(context) + "_size_" + sizeIndex; 
@@ -220,6 +304,9 @@ public class MapComponent extends UIComponentBase
 		String toolsSliderKnobId = getClientId(context) + "_zoom_slider_knob";
 		String toolsPanId = getClientId(context) + "_pan";
 		String toolsZoomId = getClientId(context) + "_zoom";
+		String bubbleContainerId = getClientId(context) + "_bubble_container";
+		String bubbleId = getClientId(context) + "_bubble";
+		String bubbleTextId = getClientId(context) + "_bubble_text";
 
 		String hiddenFieldNameForX1 = getHiddenFieldNameForX1(context);
 		String hiddenFieldNameForY1 = getHiddenFieldNameForY1(context);
@@ -232,6 +319,7 @@ public class MapComponent extends UIComponentBase
 		// from beans or prev values
 		mapSize = getMapSize();
 		mapSizes = getMapSizes();
+		PointOfInterest[] pointsOfInterest = getPointsOfInterest();
 		
 		// at least the default map size
 		if (mapSizes == null || mapSizes.length == 0)
@@ -333,6 +421,35 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("]");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(hiddenFieldNameForMapSize).append("'");
+		jsRegister.append(", ");
+		
+		// points of interest
+		if (pointsOfInterest != null)
+		{
+			jsRegister.append("[");
+			for (int i = 0; i < pointsOfInterest.length; i++)
+			{
+				PointOfInterest pnt = pointsOfInterest[i];
+				if (i > 0) jsRegister.append(", ");
+				jsRegister.append("new PointOfInterest(");
+				jsRegister.append(pnt.getX()).append(", ");
+				jsRegister.append(pnt.getY()).append(", ");
+				jsRegister.append("'").append(pnt.getNameJavaScriptSafe()).append("'").append(", ");
+				jsRegister.append("'").append(pnt.getTextJavaScriptSafe()).append("'");
+				jsRegister.append(")");
+			}
+			jsRegister.append("]");
+		}
+		else
+		{
+			jsRegister.append("null");
+		}
+		jsRegister.append(", ");
+		jsRegister.append("'").append(bubbleContainerId).append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append(bubbleId).append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append(bubbleTextId).append("'");
 		
 		jsRegister.append(");");
 		
@@ -378,6 +495,7 @@ public class MapComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("id", mapControlId, null);
 		writer.writeAttribute("style", mainDivStyle, null);
+		writer.writeAttribute("class", "map-control", null);
 
 		// map frame for tiles
 		writer.startElement("div", this);
@@ -417,16 +535,14 @@ public class MapComponent extends UIComponentBase
 		}
 		encodeToolEnd(writer);
 		
-//		writer.startElement("div", this);
-//		writer.writeAttribute("id", mapTopToolsId, null);
-//		writer.writeAttribute("style", "position: absolute", null);
-//		encodeTopTools(context, writer, mapId);
-//		writer.endElement("div");
-
+		// bubble
+		encodeBubble(context, writer, bubbleContainerId, bubbleId, bubbleTextId);
+		
+		// end main div
 		writer.endElement("div");
 		
 	}
-	
+
 	public void encodeChildren(FacesContext context) throws IOException
 	{
 	}
@@ -489,6 +605,20 @@ public class MapComponent extends UIComponentBase
         ValueBinding vb = getValueBinding("mapSize");
         if (vb == null) return mapSize;
         return (MapSize) vb.getValue(getFacesContext());
+	}
+
+	public void setPointsOfInterest(PointOfInterest[] pointsOfInterest)
+	{
+		pointsOfInterestSet = true;
+		this.pointsOfInterest = pointsOfInterest;
+	}
+
+	public PointOfInterest[] getPointsOfInterest()
+	{
+        if (pointsOfInterestSet) return pointsOfInterest;
+        ValueBinding vb = getValueBinding("pointsOfInterest");
+        if (vb == null) return pointsOfInterest;
+        return (PointOfInterest[]) vb.getValue(getFacesContext());
 	}
 
 }

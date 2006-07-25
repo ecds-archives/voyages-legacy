@@ -15,6 +15,7 @@ session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents
 	<title>Map test</title>
 	<script src="../../utils.js" type="text/javascript" language="javascript"></script>
 	<script src="../../map.js" type="text/javascript" language="javascript"></script>
+	<script src="../../graphics-svg.js" type="text/javascript" language="javascript"></script>
 	<link href="../../map.css" rel="stylesheet" type="text/css">
 	
 	<style>
@@ -33,7 +34,8 @@ session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents
 				<s:map
 					id="testMap"
 					mapFile="test.map"
-					serverBaseUrl="../../servlet/maptile" />
+					serverBaseUrl="../../servlet/maptile"
+					pointsOfInterest="#{TestMapBean.points}" />
 					
 				<h:commandButton value="OK" />
 
