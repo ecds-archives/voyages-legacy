@@ -22,22 +22,21 @@ var MapsGlobal =
 		fieldNameX2, // name of the hidden field for x2
 		fieldNameY1, // name of the hidden field for y1
 		fieldNameY2,  // name of the hidden field for y2
-		fieldNameZoomHistory, 
-		buttonBackId,
-		buttonForwardId,
-		buttonZoomPlusId,
-		buttonZoomMinusId,
-		sliderBgId,
-		sliderKnobId,
-		buttonPanId,
-		buttonZoomId,
-		fieldNameForMouseMode,
-		mapSizes,
-		fieldNameForMapSize,
-		pointsOfInterest,
-		bubbleContainerId,
-		bubbleId,
-		bubbleTextId
+		fieldNameZoomHistory, // field for serialized zoom history 
+		buttonBackId, // back button
+		buttonForwardId, // forward button
+		buttonZoomPlusId, // zoom + button
+		buttonZoomMinusId, // zoom - button
+		sliderBgId, // slider background
+		sliderKnobId, // slider knob
+		buttonPanId, // pan button
+		buttonZoomId, // zoom button
+		fieldNameForMouseMode, // mouse mode hidden field
+		mapSizes, // available map sizes
+		fieldNameForMapSize, // hidden field for selected map size
+		pointsOfInterest, // array of points with labels
+		bubbleId, // bubble <table>
+		bubbleTextId // inner <td> for the text in the bubble
 	)
 	{
 	
@@ -69,7 +68,6 @@ var MapsGlobal =
 		map.pointsOfInterest = pointsOfInterest;
 		
 		// bubble
-		map.bubble_container_id = bubbleContainerId;
 		map.bubble_id = bubbleId;
 		map.bubble_text_id = bubbleTextId;
 		
@@ -106,7 +104,6 @@ var MapsGlobal =
 	
 	},
 	
-	/*
 	setMouseModeToPan: function(mapId)
 	{
 		var map = MapsGlobal.maps[mapId];
@@ -163,8 +160,6 @@ var MapsGlobal =
 		if (map) map.setSize(width, height);
 	}
 	
-	*/
-
 }
 
 function Map()
@@ -244,7 +239,12 @@ function Map()
 	this.map_selector = null;
 	this.nav_selector = null;
 	
+	// points of interest
+	var pointsOfInterest = null;
+	
 	// bubble
+	this.bubble_id = null;
+	this.bubble_text_id = null;
 	this.bubble = null;
 	this.bubble_text = null;
 	
@@ -1572,7 +1572,6 @@ Map.prototype.mapControlsInit = function()
 	this.map_control_right_tools = document.getElementById(this.map_control_right_tools_id);
 	if (this.map_control_right_tools) this.map_control_right_tools.style.position = "absolute";
 	
-	//this.bubble_container = document.getElementById(this.bubble_container_id)
 	this.bubble = document.getElementById(this.bubble_id)
 	this.bubble_text = document.getElementById(this.bubble_text_id)
 	if (this.bubble) this.bubble.style.position = "absolute";

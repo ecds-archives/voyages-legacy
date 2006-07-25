@@ -197,13 +197,9 @@ public class MapComponent extends UIComponentBase
 		writer.endElement("table");
 	}
 	
-	private void encodeBubble(FacesContext context, ResponseWriter writer, String bubbleContainerId, String bubbleId, String bubbleTextId) throws IOException
+	private void encodeBubble(FacesContext context, ResponseWriter writer, String bubbleId, String bubbleTextId) throws IOException
 	{
 		
-//		writer.startElement("div", this);
-//		writer.writeAttribute("id", bubbleContainerId, null);
-//		writer.writeAttribute("class", "map-bubble-container", null);
-
 		writer.startElement("table", this);
 		writer.writeAttribute("id", bubbleId, null);
 		writer.writeAttribute("border", "0", null);
@@ -274,8 +270,6 @@ public class MapComponent extends UIComponentBase
 		writer.endElement("tr");
 		writer.endElement("table");
 		
-//		writer.endElement("div");
-
 	}
 	
 	private String getElementIdForMapSize(FacesContext context, int sizeIndex)
@@ -304,7 +298,6 @@ public class MapComponent extends UIComponentBase
 		String toolsSliderKnobId = getClientId(context) + "_zoom_slider_knob";
 		String toolsPanId = getClientId(context) + "_pan";
 		String toolsZoomId = getClientId(context) + "_zoom";
-		String bubbleContainerId = getClientId(context) + "_bubble_container";
 		String bubbleId = getClientId(context) + "_bubble";
 		String bubbleTextId = getClientId(context) + "_bubble_text";
 
@@ -445,8 +438,6 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("null");
 		}
 		jsRegister.append(", ");
-		jsRegister.append("'").append(bubbleContainerId).append("'");
-		jsRegister.append(", ");
 		jsRegister.append("'").append(bubbleId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(bubbleTextId).append("'");
@@ -536,7 +527,7 @@ public class MapComponent extends UIComponentBase
 		encodeToolEnd(writer);
 		
 		// bubble
-		encodeBubble(context, writer, bubbleContainerId, bubbleId, bubbleTextId);
+		encodeBubble(context, writer, bubbleId, bubbleTextId);
 		
 		// end main div
 		writer.endElement("div");
