@@ -1296,7 +1296,7 @@ Map.prototype.splitPointsToTiles = function()
 {
 
 	// we don't have points
-	if (!this.points)
+	if (!this.points && GraphicsGlobal.isSupported())
 		return;
 
 	// remove all visible tiles

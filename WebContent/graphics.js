@@ -13,6 +13,11 @@ var GraphicsGlobal =
 		{
 			return new GraphicsSVG();
 		}
+	},
+	
+	isSupported: function()
+	{
+		return !IE;	
 	}
 
 }
