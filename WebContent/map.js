@@ -243,10 +243,6 @@ function Map()
 	this.points = null;
 	this.pointsExtraSpace = 10;
 	this.pointsByTiles = new Array();
-	this.pointsLeft = null;
-	this.pointsRight = null;
-	this.pointsTop = null;
-	this.pointsBottom = null;
 	
 	// bubble
 	this.bubble_id = null;
@@ -292,13 +288,6 @@ function MapZoomState(scale, cx, cy)
 	this.cx = cx;
 	this.cy = cy;
 	this.scale = scale;
-}
-
-function PointsTile(col, row)
-{
-	this.col = col;
-	this.row = row;
-	this.gr = null;
 }
 
 function MapTile(img)
@@ -838,6 +827,30 @@ Map.prototype.saveState = function()
 
 Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 {
+	if (update_img)
+	{
+	
+		// points
+		if (map_tile.points)
+		{
+			this.map_frame.removeChild(map_tile.points.getRoot());
+		}
+		var pointsTile = this.pointsByTiles[col + ":" + row];
+		if (pointsTile)
+		{
+			map_tile.points = pointsTile;
+			this.map_frame.insertBefore(pointsTile.getRoot(), this.map_selector);
+		}
+		else
+		{
+			map_tile.points = null;
+		}
+		
+		// map
+		map_tile.img.src = this.getBlankTileUrl();
+		map_tile.url = this.createTileUrl(col, row);
+		map_tile.valid = false;
+	}
 	if (x != null)
 	{
 		if (map_tile.points) map_tile.points.setX(x - this.pointsExtraSpace);
@@ -847,12 +860,6 @@ Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 	{
 		if (map_tile.points) map_tile.points.setY(y - this.pointsExtraSpace);
 		map_tile.img.style.top = y + "px";
-	}
-	if (update_img)
-	{
-		map_tile.img.src = this.getBlankTileUrl();
-		map_tile.url = this.createTileUrl(col, row);
-		map_tile.valid = false;
 	}
 }
 
@@ -1293,6 +1300,7 @@ Map.prototype.splitPointsToTiles = function()
 		return;
 
 	// remove all visible tiles
+	/*
 	for (var i=0; i<this.tiles_map.length; i++)
 	{
 		for (var j=0; j<this.tiles_map[i].length; j++)
@@ -1301,6 +1309,7 @@ Map.prototype.splitPointsToTiles = function()
 			if (tile.points) this.map_frame.removeChild(tile.points.getRoot());
 		}
 	}
+	*/
 	
 	// hashmap by col:row
 	this.pointsByTiles = new Array();
@@ -1325,9 +1334,8 @@ Map.prototype.splitPointsToTiles = function()
 		// no -> create new
 		if (!pointsTile)
 		{
-			pointsTile = new PointsTile(col, row);
-			pointsTile.points = GraphicsGlobal.createGraphics();
-			pointsTile.points.getRoot().style.position = "absolute";
+			pointsTile = GraphicsGlobal.createGraphics();
+			pointsTile.getRoot().style.position = "absolute";
 			this.pointsByTiles[pointsTileKey] = pointsTile;
 		}
 		
@@ -1336,7 +1344,7 @@ Map.prototype.splitPointsToTiles = function()
 		var posOnTileY = (row+1)*this.tile_height - this.fromRealToPx(pnt.y) + this.pointsExtraSpace;
 		
 		// draw a point on the tile
-		var circ = pointsTile.points.createCircle();
+		var circ = pointsTile.createCircle();
 		circ.setCenter(posOnTileX, posOnTileY);
 		circ.setRadius(5);
 		circ.setFill("Black");
@@ -1344,11 +1352,12 @@ Map.prototype.splitPointsToTiles = function()
 		circ.getRoot().style.cursor = "pointer";
 		EventAttacher.attach(circ.getRoot(), "mouseover", this, "showLabel", i);
 		EventAttacher.attach(circ.getRoot(), "mouseout", this, "hideLabel");
-		pointsTile.points.appendChild(circ);
+		pointsTile.appendChild(circ);
 	
 	}
 
 	// attach visible tiles to vport
+	/*
 	for (var i=0; i<this.visible_rows+1; i++)
 	{
 		for (var j=0; j<this.visible_cols+1; j++)
@@ -1368,6 +1377,7 @@ Map.prototype.splitPointsToTiles = function()
 			}
 		}
 	}
+	*/
 	
 }
 
