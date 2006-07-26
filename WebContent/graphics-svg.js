@@ -23,7 +23,7 @@ GraphicsSVG.prototype.createCircle = function()
 	return new GraphicsCircleSVG();
 }
 
-GraphicsSVG.prototype.getRootDOM = function()
+GraphicsSVG.prototype.getRoot = function()
 {
 	return this.svg;
 }
@@ -32,6 +32,17 @@ GraphicsSVG.prototype.appendChild = function(child)
 {
 	this.svg.appendChild(child.getRoot());
 }
+
+GraphicsSVG.prototype.setX = function(x)
+{
+	this.svg.style.left = x + "px";
+}
+
+GraphicsSVG.prototype.setY = function(y)
+{
+	this.svg.style.top = y + "px";
+}
+
 
 /////////////////////////////////////////////////////////
 // circle

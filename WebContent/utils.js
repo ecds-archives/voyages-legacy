@@ -346,7 +346,6 @@ var EventAttacher =
 	{
 		if (!event) event = window.event;
 		var element = this;
-		debug(element.tagName);
 		EventAttacher.dispatch(event, element, event.type);
 	},
 	

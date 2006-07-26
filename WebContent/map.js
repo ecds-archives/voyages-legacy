@@ -1,5 +1,3 @@
-// TEST !
-
 var MapsGlobal = 
 {
 
@@ -67,7 +65,7 @@ var MapsGlobal =
 		map.field_name_zoom_history = fieldNameZoomHistory;
 		
 		// points
-		map.pointsOfInterest = pointsOfInterest;
+		map.points = pointsOfInterest;
 		
 		// bubble
 		map.bubble_id = bubbleId;
@@ -194,7 +192,7 @@ function Map()
 	this.map_frame = null;
 	this.map_frame_id = null;
 	this.tiles_map = null;
-	// this.map_blank_img = "../../blank.png";
+	this.map_blank_img = "blank.png";
 	
 	// viewport config
 	this.visible_rows = -1;
@@ -242,7 +240,13 @@ function Map()
 	this.nav_selector = null;
 	
 	// points of interest
-	var pointsOfInterest = null;
+	this.points = null;
+	this.pointsExtraSpace = 10;
+	this.pointsByTiles = new Array();
+	this.pointsLeft = null;
+	this.pointsRight = null;
+	this.pointsTop = null;
+	this.pointsBottom = null;
 	
 	// bubble
 	this.bubble_id = null;
@@ -290,10 +294,18 @@ function MapZoomState(scale, cx, cy)
 	this.scale = scale;
 }
 
+function PointsTile(col, row)
+{
+	this.col = col;
+	this.row = row;
+	this.gr = null;
+}
+
 function MapTile(img)
 {
 	this.img = img;
 	this.valid = false;
+	this.points = null;
 	this.url = "";
 }
 
@@ -481,7 +493,7 @@ Map.prototype.drawSelector = function(sel, x1, y1, x2, y2)
 
 
 /////////////////////////////////////////////////////////
-// scale indicator and selector
+// scale indicator
 /////////////////////////////////////////////////////////
 
 Map.prototype.formatMetersForDisplay = function(meters)
@@ -566,7 +578,6 @@ Map.prototype.mapStopDrag = function(event)
 			break;
 			
 		case MapsGlobal.MAP_TOOL_PAN:
-		
 			break;
 			
 	}
@@ -654,8 +665,6 @@ Map.prototype.mapHideSelector = function()
 
 Map.prototype.zoomPlus = function(notify_zoom_change)
 {
-	//alert("current = " + this.scale + ", this.scale_factor_plus = " + this.scale_factor_plus + ", after = " + (this.scale * this.scale_factor_plus) + ", max = " + this.scale_max);
-	debug("zoomPlus (notify_zoom_change = " + notify_zoom_change + ")");
 	this.changeScale(this.scale * this.scale_factor_plus, notify_zoom_change);
 }
 
@@ -666,13 +675,11 @@ Map.prototype.zoomMinus = function(notify_zoom_change)
 
 Map.prototype.changeScaleNormalized = function(t, notify_zoom_change)
 {
-	debug("changeScaleNormalized (t = " + t + ")");
 	this.changeScale(this.scale_min + t * (this.scale_max - this.scale_min), notify_zoom_change);
 }
 
 Map.prototype.getScaleNormalized = function()
 {
-	debug("getScaleNormalized = " + ((this.scale - this.scale_min) / (this.scale_max - this.scale_min)));
 	return (this.scale - this.scale_min) / (this.scale_max - this.scale_min);
 }
 
@@ -683,7 +690,6 @@ Map.prototype.registerZoomSlider = function(zoom_slider)
 
 Map.prototype.notifyZoomChange = function()
 {
-	debug("notifyZoomChange");
 	if (this.zoom_slider) this.zoom_slider.zoomChanged();
 }
 
@@ -691,9 +697,7 @@ Map.prototype.changeScale = function(new_scale, notify_zoom_change)
 {
 
 	// has it changed?
-	debug("changeScale, new_scale before cap = " + new_scale);
 	new_scale = this.roundAndCapScale(new_scale);
-	debug("changeScale, new_scale after cap = " + new_scale);
 	if (new_scale == this.scale) return;
 	
 	// get old center
@@ -707,8 +711,6 @@ Map.prototype.changeScale = function(new_scale, notify_zoom_change)
 
 Map.prototype.zoomMapTo = function(x1, y1, x2, y2, save_state, border, notify_zoom_change)
 {
-
-	debug("zoomMapTo (notify_zoom_change = " + notify_zoom_change + ")")
 
 	// ensure that first is top left
 	if (x2 < x1)
@@ -799,12 +801,15 @@ Map.prototype.setScaleAndCenterMapTo = function(new_scale, x, y, save_state, not
 	this.first_tile_vx = vx;
 	this.first_tile_vy = vy;
 	
+	// retile points
+	this.splitPointsToTiles();
+	
 	// draw all tiles
 	this.positionTiles(true);
 	
 	// position poits of interest
-	this.drawPointsOfInterest();
-	this.repositionPointsOfInterest();
+	//this.drawPointsOfInterest();
+	//this.repositionPointsOfInterest();
 	
 	// remember current state
 	if (save_state) this.zoomSaveState();
@@ -833,8 +838,16 @@ Map.prototype.saveState = function()
 
 Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 {
-	if (x != null) map_tile.img.style.left = x + "px";
-	if (y != null) map_tile.img.style.top = y + "px";
+	if (x != null)
+	{
+		if (map_tile.points) map_tile.points.setX(x - this.pointsExtraSpace);
+		map_tile.img.style.left = x + "px";
+	}
+	if (y != null)
+	{
+		if (map_tile.points) map_tile.points.setY(y - this.pointsExtraSpace);
+		map_tile.img.style.top = y + "px";
+	}
 	if (update_img)
 	{
 		map_tile.img.src = this.getBlankTileUrl();
@@ -858,17 +871,11 @@ Map.prototype.refreshInvalidatedTiles = function()
 	}
 }
 
-Map.prototype.postponedRefresh = function()
-{
-	Timer.cancelCall(this.postponed_refresh_id);
-	this.postponed_refresh_id = Timer.delayedCall(this, "refreshInvalidatedTiles", 10);		
-}
-
 Map.prototype.positionTiles = function(update_img, row_from, row_to, col_from, col_to)
 {
 
 	this.saveState();
-
+	
 	if (row_from == null) row_from = 0;
 	if (row_to == null) row_to = this.visible_rows;
 	if (col_from == null) col_from = 0;
@@ -884,7 +891,8 @@ Map.prototype.positionTiles = function(update_img, row_from, row_to, col_from, c
 				this.first_tile_col + j,
 				this.first_tile_row - i);
 				
-	this.postponedRefresh();
+	Timer.cancelCall(this.postponed_refresh_id);
+	this.postponed_refresh_id = Timer.delayedCall(this, "refreshInvalidatedTiles", 10);		
 
 }
 
@@ -996,7 +1004,7 @@ Map.prototype.adjustTilesAfterPan = function()
 		update_col_from, update_col_to);
 		
 	// position poits of interest
-	this.repositionPointsOfInterest();
+	// this.repositionPointsOfInterest();
 
 }
 
@@ -1013,8 +1021,9 @@ Map.prototype.createTileUrl = function(col, row)
 
 Map.prototype.getBlankTileUrl = function()
 {
-	return this.map_tiles_server + "?" +
-		"m=" + this.map_file;
+	return this.map_blank_img;
+//	return this.map_tiles_server + "?" +
+//		"m=" + this.map_file;
 }
 
 /////////////////////////////////////////////////////////
@@ -1276,86 +1285,95 @@ Map.prototype.panToolInit = function()
 // points of interest
 /////////////////////////////////////////////////////////
 
-Map.prototype.initPointsOfInterest = function()
+Map.prototype.splitPointsToTiles = function()
 {
 
-	if (!this.pointsOfInterest)
+	// we don't have points
+	if (!this.points)
 		return;
-	
-	this.pointsOfInterestExtraSpace = 10;
-	
-	this.pointsOfInterestLeft = this.pointsOfInterest[0].x;
-	this.pointsOfInterestRight = this.pointsOfInterest[0].x;
-	this.pointsOfInterestTop = this.pointsOfInterest[0].y;
-	this.pointsOfInterestBottom = this.pointsOfInterest[0].x;
-	for (var i=0; i<this.pointsOfInterest.length; i++)
+
+	// remove all visible tiles
+	for (var i=0; i<this.tiles_map.length; i++)
 	{
-		var pnt = this.pointsOfInterest[i];
-		if (pnt.x < this.pointsOfInterestLeft) this.pointsOfInterestLeft = pnt.x;
-		if (pnt.x > this.pointsOfInterestRight) this.pointsOfInterestRight = pnt.x;
-		if (pnt.y > this.pointsOfInterestTop) this.pointsOfInterestTop = pnt.y;
-		if (pnt.y < this.pointsOfInterestBottom) this.pointsOfInterestBottom = pnt.y;
+		for (var j=0; j<this.tiles_map[i].length; j++)
+		{
+			var tile = this.tiles_map[i][j];
+			if (tile.points) this.map_frame.removeChild(tile.points.getRoot());
+		}
 	}
 	
-	this.drawPointsOfInterest();
-	this.repositionPointsOfInterest();
+	// hashmap by col:row
+	this.pointsByTiles = new Array();
 	
-}
-
-Map.prototype.drawPointsOfInterest = function()
-{
-
-	if (!this.pointsOfInterest)
-		return;
-		
-	var firstTime = !this.pointsOfInterestGraphics;
-	if (!firstTime) this.map_frame.removeChild(this.pointsOfInterestGraphics.getRootDOM());
+	// efficiency
+	var tileRealWidth = this.getTileRealWidth();
+	var tileRealHeight = this.getTileRealHeight();
 	
-	this.pointsOfInterestGraphics = GraphicsGlobal.createGraphics();
-	if (!this.pointsOfInterestGraphics)
-		return;
-
-	var root = this.pointsOfInterestGraphics.getRootDOM();
-	debug(root);
-
-	root.style.position = "absolute";
-
-	for (var i=0; i<this.pointsOfInterest.length; i++)
+	// split
+	for (var i=0; i<this.points.length; i++)
 	{
-		var pnt = this.pointsOfInterest[i];
-		
-		var x = this.fromRealToPx(pnt.x - this.pointsOfInterestLeft) + this.pointsOfInterestExtraSpace;
-		var y = this.fromRealToPx(this.pointsOfInterestTop - pnt.y) + this.pointsOfInterestExtraSpace;
-		//debug("x = " + x + ", y = " + y);
+		var pnt = this.points[i];
 
-		var circ = this.pointsOfInterestGraphics.createCircle();
-		circ.setCenter(x, y);
+		// position		
+		var col = Math.floor(pnt.x / tileRealWidth);
+		var row = Math.floor(pnt.y / tileRealHeight);
+		
+		// do we have a tile for it?
+		var pointsTileKey = col + ":" + row;
+		var pointsTile = this.pointsByTiles[pointsTileKey];
+		
+		// no -> create new
+		if (!pointsTile)
+		{
+			pointsTile = new PointsTile(col, row);
+			pointsTile.points = GraphicsGlobal.createGraphics();
+			pointsTile.points.getRoot().style.position = "absolute";
+			this.pointsByTiles[pointsTileKey] = pointsTile;
+		}
+		
+		// position on the tile
+		var posOnTileX = this.fromRealToPx(pnt.x) - col*this.tile_width + this.pointsExtraSpace;
+		var posOnTileY = (row+1)*this.tile_height - this.fromRealToPx(pnt.y) + this.pointsExtraSpace;
+		
+		// draw a point on the tile
+		var circ = pointsTile.points.createCircle();
+		circ.setCenter(posOnTileX, posOnTileY);
 		circ.setRadius(5);
 		circ.setFill("Black");
+		circ.setFillOpacity(0);
 		circ.getRoot().style.cursor = "pointer";
-		this.pointsOfInterestGraphics.appendChild(circ);
-		this.pointsOfInterest[i].circ = circ.getRoot();
-
 		EventAttacher.attach(circ.getRoot(), "mouseover", this, "showLabel", i);
 		EventAttacher.attach(circ.getRoot(), "mouseout", this, "hideLabel");
+		pointsTile.points.appendChild(circ);
+	
+	}
+
+	// attach visible tiles to vport
+	for (var i=0; i<this.visible_rows+1; i++)
+	{
+		for (var j=0; j<this.visible_cols+1; j++)
+		{
+			var mapTile = this.tiles_map[i][j];
+			var row = this.first_tile_row - i;
+			var col = j + this.first_tile_col;
+			var pointsTile = this.pointsByTiles[col + ":" + row];
+			if (pointsTile)
+			{
+				mapTile.points = pointsTile.points;
+				this.map_frame.insertBefore(pointsTile.points.getRoot(), this.map_selector);
+			}
+			else
+			{
+				mapTile.points = null;
+			}
+		}
 	}
 	
-	this.repositionPointsOfInterest();
-	this.map_frame.appendChild(root);
-	
-}
-
-Map.prototype.repositionPointsOfInterest = function()
-{
-	if (!this.pointsOfInterestGraphics) return;
-	var root = this.pointsOfInterestGraphics.getRootDOM();
-	root.style.left = (this.fromRealToVportX(this.pointsOfInterestLeft) - this.pointsOfInterestExtraSpace) + "px";
-	root.style.top = (this.fromRealToVportY(this.pointsOfInterestTop) - this.pointsOfInterestExtraSpace) + "px";
 }
 
 Map.prototype.showLabel = function(event, pntIndex)
 {
-	var pnt = this.pointsOfInterest[pntIndex];
+	var pnt = this.points[pntIndex];
 	
 	var x = this.fromRealToVportX(pnt.x);
 	var y = this.fromRealToVportY(pnt.y);
@@ -1368,13 +1386,11 @@ Map.prototype.showLabel = function(event, pntIndex)
 	this.bubble.style.left = (x + 5) + "px";
 	this.bubble.style.top = (y - 5 - this.bubble.offsetHeight) + "px";
 	
-	debug("showLabel (pntIndex = " + pntIndex + ", event.target = " + event.target + ")");
 }
 
 Map.prototype.hideLabel = function(event)
 {
 	this.bubble.style.display = "none";
-	debug("hideLabel (event.target = " + event.target + ")");
 }
 
 
@@ -1487,10 +1503,18 @@ Map.prototype.updateControlsLayout = function()
 	
 	// delete old tiles for map
 	if (this.tiles_map != null)
+	{
 		for (var i=0; i<this.tiles_map.length; i++)
+		{
 			for (var j=0; j<this.tiles_map[i].length; j++)
-				this.map_frame.removeChild(this.tiles_map[i][j].img);
-
+			{
+				var tile = this.tiles_map[i][j];
+				this.map_frame.removeChild(tile.img);
+				if (tile.points) this.map_frame.removeChild(tile.points.getRoot());
+			}
+		}
+	}
+	
 	// tiles for maps
 	this.tiles_map = new Array();
 	for (var i=0; i<this.visible_rows+1; i++)
@@ -1516,6 +1540,7 @@ Map.prototype.updateControlsLayout = function()
 			tile.height = this.tile_height;
 			tile.style.left = (j * this.tile_width) + "px";
 			tile.style.top = (i * this.tile_height) + "px";
+			tile.points = null;
 			this.map_frame.insertBefore(tile, this.map_selector);
 		}
 	}
@@ -1678,9 +1703,6 @@ Map.prototype.init = function()
 	
 	// init tools
 	this.invokeInitListeners();
-	
-	// init points of interest
-	this.initPointsOfInterest();
 	
 }
 
