@@ -3,5 +3,5 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<s:map mapFile="#{MapBean.mapPath}" serverBaseUrl="servlet/maptile"/>
+<s:map mapFile="#{MapBean.mapPath}"  serverBaseUrl="servlet/maptile"/>
 

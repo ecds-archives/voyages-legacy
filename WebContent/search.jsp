@@ -18,6 +18,9 @@
 	<script src="jslib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/scriptaculous.js" type="text/javascript" language="javascript"></script>
 	<script language="javascript" type="text/javascript" src="map.js"></script>
+	<script language="javascript" type="text/javascript" src="graphics.js"></script>
+	<script language="javascript" type="text/javascript" src="graphics-svg.js"></script>
+	<script language="javascript" type="text/javascript" src="graphics-vml.js"></script>
 	<script language="javascript" type="text/javascript" src="utils.js"></script>
 </head>
 <body>

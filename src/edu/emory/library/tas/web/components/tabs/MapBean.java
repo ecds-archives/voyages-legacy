@@ -3,6 +3,8 @@ package edu.emory.library.tas.web.components.tabs;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -15,6 +17,7 @@ import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
+import edu.emory.library.tas.web.maps.PointOfInterest;
 import edu.umn.gis.mapscript.classObj;
 import edu.umn.gis.mapscript.colorObj;
 import edu.umn.gis.mapscript.fontSetObj;
@@ -118,6 +121,8 @@ public class MapBean {
 
 	private String sessionParam;
 
+	private List pointsOfInterest = new ArrayList();
+	
 	private MapItem[] getMapItems() {
 
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
@@ -154,10 +159,12 @@ public class MapBean {
 
 		voyages = qValue.executeQuery();
 
+		this.pointsOfInterest.clear();
 		for (int i = 0; i < voyages.length; i++) {
 			String portName = (String) ((Object[]) voyages[i])[0];
 			GISPortLocation gisPort = GISPortLocation.getGISPortLocation(portName);
 			if (gisPort != null) {
+				this.pointsOfInterest.add(new PointOfInterest(gisPort.getX(), gisPort.getY(), gisPort.getPortName(), "Port name: " + gisPort.getPortName()));
 				response.add(new MapItem(portName, gisPort.getX(), gisPort.getY(),
 						((Number) ((Object[]) voyages[i])[1]).floatValue(), PORT_ARRIVAL));
 			}
@@ -225,6 +232,15 @@ public class MapBean {
 			this.neededQuery = true;
 		}
 
+	}
+
+	public PointOfInterest[] getPointsOfInterest() {
+		System.out.println("returning " + pointsOfInterest.size());
+		return (PointOfInterest[])pointsOfInterest.toArray(new PointOfInterest[] {});
+	}
+
+	public void setPointsOfInterest(PointOfInterest[] pointsOfInterest) {
+		this.pointsOfInterest = Arrays.asList(pointsOfInterest);
 	}
 
 }

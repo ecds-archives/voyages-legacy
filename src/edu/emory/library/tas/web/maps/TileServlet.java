@@ -116,6 +116,9 @@ public class TileServlet extends HttpServlet {
 		cache.put(mapFile, col, row, scale, imgBytes);
 
 		response.getOutputStream().write(imgBytes);
+		
+		img.delete();
+		map.delete();
 
 	}
 
