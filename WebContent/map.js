@@ -1321,19 +1321,21 @@ Map.prototype.drawPointsOfInterest = function()
 	for (var i=0; i<this.pointsOfInterest.length; i++)
 	{
 		var pnt = this.pointsOfInterest[i];
+		
 		var x = this.fromRealToPx(pnt.x - this.pointsOfInterestLeft) + this.pointsOfInterestExtraSpace;
 		var y = this.fromRealToPx(this.pointsOfInterestTop - pnt.y) + this.pointsOfInterestExtraSpace;
-		debug("x = " + x + ", y = " + y);
-		var circ = this.pointsOfInterestGraphics.drawCircle(x, y, 5, "Black");
-		this.pointsOfInterest[i].circ = circ;
-		circ.style.cursor = "pointer";
-		if (!firstTime)
-		{
-			EventAttacher.detach(circ, "mouseover", this, "showLabel");
-			EventAttacher.detach(circ, "mouseout", this, "hideLabel");
-		}
-		EventAttacher.attach(circ, "mouseover", this, "showLabel", i);
-		EventAttacher.attach(circ, "mouseout", this, "hideLabel");
+		//debug("x = " + x + ", y = " + y);
+
+		var circ = this.pointsOfInterestGraphics.createCircle();
+		circ.setCenter(x, y);
+		circ.setRadius(5);
+		circ.setFill("Black");
+		circ.getRoot().style.cursor = "pointer";
+		this.pointsOfInterestGraphics.appendChild(circ);
+		this.pointsOfInterest[i].circ = circ.getRoot();
+
+		EventAttacher.attach(circ.getRoot(), "mouseover", this, "showLabel", i);
+		EventAttacher.attach(circ.getRoot(), "mouseout", this, "hideLabel");
 	}
 	
 	this.repositionPointsOfInterest();

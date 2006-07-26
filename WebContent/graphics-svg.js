@@ -1,8 +1,11 @@
+var GraphicsGlobalSVG =
+{
+	NS: "http://www.w3.org/2000/svg"
+}
+
 function GraphicsSVG()
 {
-	this.NS = "http://www.w3.org/2000/svg";
-	this.svg = document.createElementNS(this.NS, "svg");
-	this.svg.setAttributeNS(null, "overflow", "visible");
+	this.svg = document.createElementNS(GraphicsGlobalSVG.NS, "svg");
 }
 
 GraphicsSVG.prototype.hide = function()
@@ -15,18 +18,62 @@ GraphicsSVG.prototype.show = function()
 	this.svg.style.display = "block";
 }
 
-GraphicsSVG.prototype.drawCircle = function(x, y, r, fill)
+GraphicsSVG.prototype.createCircle = function()
 {
-	var c = document.createElementNS(this.NS, "circle");
-	c.setAttributeNS(null, "cx", x);
-	c.setAttributeNS(null, "cy", y);
-	c.setAttributeNS(null, "r", r);
-	if (fill) c.setAttributeNS(null, "fill", fill);
-	this.svg.appendChild(c);
-	return c;
+	return new GraphicsCircleSVG();
 }
 
 GraphicsSVG.prototype.getRootDOM = function()
 {
 	return this.svg;
+}
+
+GraphicsSVG.prototype.appendChild = function(child)
+{
+	this.svg.appendChild(child.getRoot());
+}
+
+/////////////////////////////////////////////////////////
+// circle
+/////////////////////////////////////////////////////////
+
+function GraphicsCircleSVG()
+{
+	this.circle = document.createElementNS(GraphicsGlobalSVG.NS, "circle");
+}
+
+GraphicsCircleSVG.prototype.getRoot = function()
+{
+	return this.circle;
+}
+
+GraphicsCircleSVG.prototype.setCenter = function(x, y)
+{
+	this.setCenterX(x);
+	this.setCenterY(y);
+}
+
+GraphicsCircleSVG.prototype.setCenterX = function(x)
+{
+	this.circle.setAttributeNS(null, "cx", x);
+}
+
+GraphicsCircleSVG.prototype.setCenterY = function(y)
+{
+	this.circle.setAttributeNS(null, "cy", y);
+}
+
+GraphicsCircleSVG.prototype.setRadius = function(r)
+{
+	this.circle.setAttributeNS(null, "r", r);
+}
+
+GraphicsCircleSVG.prototype.setFill = function(fill)
+{
+	this.circle.setAttributeNS(null, "fill", fill);
+}
+
+GraphicsCircleSVG.prototype.setFillOpacity = function(opacity)
+{
+	this.circle.setAttributeNS(null, "fill-opacity", opacity);
 }
