@@ -125,6 +125,7 @@ public class MapBean {
 	
 	private MapItem[] getMapItems() {
 
+		this.pointsOfInterest.clear();
 		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
 		localCondition.addCondition(VoyageIndex.getRecent().addAttributesPrefix("vi."));
 
@@ -145,6 +146,7 @@ public class MapBean {
 			String portName = (String) ((Object[]) voyages[i])[0];
 			GISPortLocation gisPort = GISPortLocation.getGISPortLocation(portName);
 			if (gisPort != null && ((Object[]) voyages[i])[1] != null) {
+				this.pointsOfInterest.add(new PointOfInterest(gisPort.getX(), gisPort.getY(), gisPort.getPortName(), "Port name: " + gisPort.getPortName()));
 				response.add(new MapItem(portName, gisPort.getX(), gisPort.getY(),
 						((Number) ((Object[]) voyages[i])[1]).floatValue(), PORT_DEPARTURE));
 			}
@@ -159,7 +161,6 @@ public class MapBean {
 
 		voyages = qValue.executeQuery();
 
-		this.pointsOfInterest.clear();
 		for (int i = 0; i < voyages.length; i++) {
 			String portName = (String) ((Object[]) voyages[i])[0];
 			GISPortLocation gisPort = GISPortLocation.getGISPortLocation(portName);
