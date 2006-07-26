@@ -26,16 +26,8 @@ public class TileServlet extends HttpServlet {
 
 	public static final int META_SIZE_Y = 60;
 
-	// private static Map cache = new HashMap();
 	private TileCache cache = new TileCache();
-
-	// private static long sizeOfCache = 0;
-	// private long lastClean = 0;
-	// public static final long MAX_CACHE = 104857600;
-	// public static final long CLEAN_PERIOD = 10000;
-
 	private int cacheHits = 0;
-
 	private int cacheMisses = 0;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

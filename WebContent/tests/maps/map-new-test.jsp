@@ -5,8 +5,8 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%
 
-session.setAttribute("test.map", "D:\\Library\\SlaveTrade\\shapefiles\\test.map");
 session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\test.map");
+session.setAttribute("test.map", "D:\\Library\\SlaveTrade\\shapefiles\\test.map");
 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,6 +15,8 @@ session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents
 	<title>Map test</title>
 	<script src="../../utils.js" type="text/javascript" language="javascript"></script>
 	<script src="../../map.js" type="text/javascript" language="javascript"></script>
+	<script src="../../graphics.js" type="text/javascript" language="javascript"></script>
+	<script src="../../graphics-vml.js" type="text/javascript" language="javascript"></script>
 	<script src="../../graphics-svg.js" type="text/javascript" language="javascript"></script>
 	<link href="../../map.css" rel="stylesheet" type="text/css">
 	

@@ -1,4 +1,4 @@
-var IE = navigator.userAgent.indexOf("MSIE 7.0") || navigator.userAgent.indexOf("MSIE 6.0") != -1 || navigator.userAgent.indexOf("MSIE 5.5") != -1;
+var IE = navigator.userAgent.indexOf("MSIE 7.0") != -1 || navigator.userAgent.indexOf("MSIE 6.0") != -1 || navigator.userAgent.indexOf("MSIE 5.5") != -1;
 var GK = navigator.userAgent.indexOf("Gecko") != -1;
 
 function debug(text)
@@ -201,26 +201,56 @@ var ElementUtils =
 
 }
 
+/////////////////////////////////////////////////////////
+// EventAttacher
+// Note: Handling events of the window object is treated
+// separately because Opera in 'this' variable passes
+// document instead of window.
+/////////////////////////////////////////////////////////
+
 var EventAttacher =
 {
 	map: new Array(),
 
 	attach: function(element, eventType, object, handler, args)
 	{
-
-		if (element.attachEvent)
+	
+		/*
+		if (element == null)
 		{
-			element.attachEvent("on" + eventType, EventAttacher.globalHandler);
+			if (window.addEventListener)
+			{
+				window.addEventListener(eventType, EventAttacher.globalWindowHandler, false);
+			}
+			else
+			{
+				window.attachEvent("on" + eventType, EventAttacher.globalWindowHandler);
+			}
 		}
-		else if (element.addEventListener)
+		else
 		{
-			element.addEventListener(eventType, EventAttacher.globalHandler, false);
+			if (element.addEventListener)
+			{
+				element.addEventListener(eventType, EventAttacher.globalHandler, false);
+			}
+			else if (element.attachEvent)
+			{
+				element.attachEvent("on" + eventType, EventAttacher.globalHandler);
+			}
 		}
-
+		*/
+		if (element == null)
+		{
+			window["on" + eventType] = EventAttacher.globalWindowHandler;
+		}
+		else
+		{
+			element["on" + eventType] = EventAttacher.globalHandler;
+		}
+		
 		var reg = new Object();
 		EventAttacher.map.push(reg);
 
-		if (object == null) object = window;
 		reg.element = element;
 		reg.object = object;
 		reg.eventType = eventType;
@@ -235,6 +265,16 @@ var EventAttacher =
 		this.attach(element, eventType, object, handler, args);
 	},
 	
+	attachOnWindowEvent: function(eventType, object, handler, args)
+	{
+		this.attach(null, eventType, object, handler, args);
+	},
+	
+	detachOnWindowEvent: function(eventType, object, handler)
+	{
+		detach(null, eventType, object, handler);
+	},
+
 	detach: function(element, eventType, object, handler)
 	{
 		var noOnTheSameType = 0;	
@@ -254,15 +294,40 @@ var EventAttacher =
 		}
 		if (noOnTheSameType == 0)
 		{
-			if (element.detachEvent)
+			if (element == null)
 			{
-				element.detachEvent("on" + eventType, EventAttacher.globalHandler);
+				/*
+				if (window.detachEvent)
+				{
+					window.detachEvent("on" + eventType, EventAttacher.globalWindowHandler);
+				}
+				else if (window.removeEventListener)
+				{
+					window.removeEventListener(eventType, EventAttacher.globalWindowHandler, false);
+				}
+				*/
+				window["on" + eventType] = null;
 			}
-			else if (element.removeEventListener)
+			else
 			{
-				element.removeEventListener(eventType, EventAttacher.globalHandler, false);
+				/*
+				if (element.detachEvent)
+				{
+					element.detachEvent("on" + eventType, EventAttacher.globalHandler);
+				}
+				else if (element.removeEventListener)
+				{
+					element.removeEventListener(eventType, EventAttacher.globalHandler, false);
+				}
+				*/
+				element["on" + eventType] = null;
 			}
 		}
+	},
+	
+	detachOnWindowEvent: function(eventType, object, handler)
+	{
+		EventAttacher.detach(null, eventType, object, handler);
 	},
 	
 	detachById: function(elementId, eventType, object, handler)
@@ -270,16 +335,27 @@ var EventAttacher =
 		var element = document.getElementById(elementId);
 		EventAttacher.detach(element, eventType, object, handler);
 	},
+	
+	globalWindowHandler: function(event)
+	{
+		if (!event) event = window.event;
+		EventAttacher.dispatch(event, null, event.type);
+	},
 
 	globalHandler: function(event)
 	{
 		if (!event) event = window.event;
-		var element = this; // event.srcElement ? event.srcElement : this;
-		//alert(EventAttacher.map.length);
+		var element = this;
+		debug(element.tagName);
+		EventAttacher.dispatch(event, element, event.type);
+	},
+	
+	dispatch: function(event, element, eventType)
+	{
 		for (var i=0; i<EventAttacher.map.length; i++)
 		{
 			var reg = EventAttacher.map[i];
-			if (reg.element == element && reg.eventType == event.type)
+			if (reg.element == element && reg.eventType == eventType)
 			{
 				reg.object[reg.handler](event, reg.args);
 			}
@@ -336,7 +412,8 @@ var Timer =
 
 var ObjectUtils = 
 {
-	printObject: function(obj)
+
+	toString: function(obj)
 	{
 		if (!obj)
 		{
@@ -346,7 +423,12 @@ var ObjectUtils =
 		{
 			var ret = "";
 			for (var k in obj) ret += k + " = " + obj[k] + "\n";
-			alert(ret);
+			return ret;
 		}
+	},
+	
+	printObject: function(obj)
+	{
+		alert(this.toString(obj));
 	}
 }

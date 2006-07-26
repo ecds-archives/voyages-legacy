@@ -100,7 +100,7 @@ var MapsGlobal =
 			new MapZoomSize(mapSizes, formName, fieldNameForMapSize, map);
 
 		// call init after page loads
-		EventAttacher.attach(window, "load", map, "init");
+		EventAttacher.attachOnWindowEvent("load", map, "init");
 	
 	},
 	
@@ -251,11 +251,7 @@ function Map()
 	// scale indicator & selector
 	this.scale_bar_indicator = null;
 	this.scale_text_indicator = null;
-	this.scale_sel_width = 200;
-	this.scale_sel_btn_width = 4;
-	this.scale_sel = null;
-	this.scale_sel_offset_left = null;
-	this.scale_sel_offset_top = null;
+	this.has_scale_indicator = false;
 	
 	// pan tools
 	this.tool_pan_up = null;
@@ -497,7 +493,8 @@ Map.prototype.formatMetersForDisplay = function(meters)
 Map.prototype.updateScaleIndicator = function()
 {
 
-	if (!this.scale_sel) return;
+	if (!this.has_scale_indicator)
+		return;
 
 	var meters = this.fromPxToReal(100);
 	var digits = Math.floor(Math.log(meters) / Math.LN10);
@@ -508,31 +505,13 @@ Map.prototype.updateScaleIndicator = function()
 	scale_bar_indicator.style.width = Math.round(pixels) + "px";
 	scale_text_indicator.innerHTML = this.formatMetersForDisplay(meters);
 
-	var scale_fraction =
-		(this.scale - this.scale_min) /
-		(this.scale_max - this.scale_min);
-	
-	var scale_left = Math.round(
-		this.scale_sel_width -
-		this.scale_fraction * (this.scale_sel_width - this.scale_sel_btn_width) -
-		this.scale_sel_btn_width);
-	
-	if (IE)
-		scale_sel.firstChild.style.left = scale_left + "px";
-	else
-		scale_sel.childNodes[1].style.left = scale_left + "px";
-	
-}
-
-Map.prototype.scaleIndicatorPrecomputePos = function()
-{
-	this.scale_bar_indicator = document.getElementById("map-scale-bar");
-	this.scale_text_indicator = document.getElementById("map-scale-text");
 }
 
 Map.prototype.scaleIndicatorInit = function()
 {
-	this.scaleIndicatorPrecomputePos();
+	this.scale_bar_indicator = document.getElementById("map-scale-bar");
+	this.scale_text_indicator = document.getElementById("map-scale-text");
+	this.has_scale_indicator = this.scale_bar_indicator && this.scale_text_indicator;
 }
 
 /////////////////////////////////////////////////////////
@@ -543,7 +522,8 @@ Map.prototype.mapStartDrag = function(event)
 {
 
 	// set onMouseMove handler
-	EventAttacher.attach(this.map_frame, "mousemove", this, "mapMouseMove");
+	EventAttacher.attachOnWindowEvent("mousemove", this, "mapMouseMove");
+	EventAttacher.attachOnWindowEvent("mouseup", this, "mapStopDrag");
 	
 	// init position
 	this.dragging_start_x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
@@ -555,7 +535,8 @@ Map.prototype.mapStopDrag = function(event)
 {
 
 	// cancel onMouseMove handler
-	EventAttacher.detach(this.map_frame, "mousemove", this, "mapMouseMove");
+	EventAttacher.detachOnWindowEvent("mousemove", this, "mapMouseMove");
+	EventAttacher.detachOnWindowEvent("mouseup", this, "mapStopDrag");
 
 	// new position
 	var x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
@@ -786,13 +767,8 @@ Map.prototype.setScaleAndCenterMapTo = function(new_scale, x, y, save_state, not
 	new_scale = this.roundAndCapScale(new_scale);
 	if (this.scale != new_scale)
 	{
-
-		// set
 		this.scale = new_scale;
-		
-		// updates
 		this.updateScaleIndicator();
-
 	}
 	
 	// middle tile
@@ -838,7 +814,7 @@ Map.prototype.setScaleAndCenterMapTo = function(new_scale, x, y, save_state, not
 
 
 /////////////////////////////////////////////////////////
-// drawing map and route
+// main drawing procedures
 /////////////////////////////////////////////////////////
 
 Map.prototype.saveState = function()
@@ -1322,15 +1298,6 @@ Map.prototype.initPointsOfInterest = function()
 	this.drawPointsOfInterest();
 	this.repositionPointsOfInterest();
 	
-	/*
-	this.pointsOfInterestDot = new GraphicsSVG();
-	this.pointsOfInterestDot.getRootDOM().style.position = "absolute";
-	this.pointsOfInterestDot.getRootDOM().style.display = "none";
-	this.pointsOfInterestDot.getRootDOM().style.cursor = "pointer";
-	var dotCircle = this.pointsOfInterestDot.drawCircle(10, 10, 6, "Black");
-	this.map_frame.appendChild(this.pointsOfInterestDot.getRootDOM());
-	EventAttacher.attach(dotCircle, "mouseout", this, "hideLabel");
-	*/
 }
 
 Map.prototype.drawPointsOfInterest = function()
@@ -1342,8 +1309,12 @@ Map.prototype.drawPointsOfInterest = function()
 	var firstTime = !this.pointsOfInterestGraphics;
 	if (!firstTime) this.map_frame.removeChild(this.pointsOfInterestGraphics.getRootDOM());
 	
-	this.pointsOfInterestGraphics = new GraphicsSVG();
+	this.pointsOfInterestGraphics = GraphicsGlobal.createGraphics();
+	if (!this.pointsOfInterestGraphics)
+		return;
+
 	var root = this.pointsOfInterestGraphics.getRootDOM();
+	debug(root);
 
 	root.style.position = "absolute";
 
@@ -1354,6 +1325,7 @@ Map.prototype.drawPointsOfInterest = function()
 		var y = this.fromRealToPx(this.pointsOfInterestTop - pnt.y) + this.pointsOfInterestExtraSpace;
 		debug("x = " + x + ", y = " + y);
 		var circ = this.pointsOfInterestGraphics.drawCircle(x, y, 5, "Black");
+		this.pointsOfInterest[i].circ = circ;
 		circ.style.cursor = "pointer";
 		if (!firstTime)
 		{
@@ -1386,16 +1358,11 @@ Map.prototype.showLabel = function(event, pntIndex)
 
 	this.bubble_text.innerHTML = pnt.text;
 	this.bubble.style.display = "block";
+	
+	//pnt.circ.setAttributeNS(null, "r", "8");
 
 	this.bubble.style.left = (x + 5) + "px";
 	this.bubble.style.top = (y - 5 - this.bubble.offsetHeight) + "px";
-	
-	/*
-	var dot = this.pointsOfInterestDot.getRootDOM();
-	this.pointsOfInterestDot.show();
-	dot.style.left = (x - 10) + "px";
-	dot.style.top = (y - 10) + "px";
-	*/
 	
 	debug("showLabel (pntIndex = " + pntIndex + ", event.target = " + event.target + ")");
 }
@@ -1403,7 +1370,6 @@ Map.prototype.showLabel = function(event, pntIndex)
 Map.prototype.hideLabel = function(event)
 {
 	this.bubble.style.display = "none";
-	//this.pointsOfInterestDot.hide();
 	debug("hideLabel (event.target = " + event.target + ")");
 }
 
@@ -1423,7 +1389,6 @@ Map.prototype.setSize = function(width, height)
 	
 	this.updateControlsLayout();
 	this.positionTiles(true);
-	this.scaleIndicatorPrecomputePos();
 	
 	this.setScaleAndCenterMapTo(this.scale, cx, cy, false, true);
 
@@ -1434,7 +1399,6 @@ Map.prototype.mapWindowResize = function()
 	this.changeSizeByWindow();
 	this.updateControlsLayout();
 	this.positionTiles(true);
-	this.scaleIndicatorPrecomputePos();
 }
 
 Map.prototype.initSizeByHTML = function()
@@ -1591,7 +1555,7 @@ Map.prototype.mapControlsInit = function()
 	}
 
 	EventAttacher.attach(this.map_frame, "mousedown", this, "mapStartDrag");
-	EventAttacher.attach(this.map_frame, "mouseup", this, "mapStopDrag");
+	// EventAttacher.attach(this.map_frame, "mouseup", this, "mapStopDrag");
 	if (IE) EventAttacher.attach(this.map_frame, "mousewheel", this, "mapMouseWheel");
 
 	this.map_selector = document.createElement("DIV");
@@ -1615,7 +1579,7 @@ Map.prototype.mapControlsInit = function()
 	this.map_selector.appendChild(bg);
 
 	if (!this.fixed_size)
-		EventAttacher.attach(window, "resize", this, "mapWindowResize");
+		EventAttacher.attachOnWindowEvent("resize", this, "mapWindowResize");
 	
 }
 
@@ -1984,8 +1948,8 @@ MapZoomSlider.prototype.mouseDown = function(event)
 	this.startPos = event.clientX;
 	this.startOffsetLeft = this.knob.offsetLeft;
 	this.lastPos = this.startPos;
-	EventAttacher.attach(window, "mousemove", this, "mouseMove");
-	EventAttacher.attach(window, "mouseup", this, "mouseUp");
+	EventAttacher.attachOnWindowEvent("mousemove", this, "mouseMove");
+	EventAttacher.attachOnWindowEvent("mouseup", this, "mouseUp");
 }
 
 MapZoomSlider.prototype.mouseMove = function(event)
@@ -2000,8 +1964,8 @@ MapZoomSlider.prototype.mouseUp = function(event)
 	var pos = event.clientX;
 	var t = this.capKnobPosition(this.startOffsetLeft + (pos - this.startPos)) / this.sliderEffectiveWidth;
 	this.map.changeScaleNormalized(t, false);
-	EventAttacher.detach(window, "mousemove", this, "mouseMove");
-	EventAttacher.detach(window, "mouseup", this, "mouseUp");
+	EventAttacher.detachOnWindowEvent("mousemove", this, "mouseMove");
+	EventAttacher.detachOnWindowEvent("mouseup", this, "mouseUp");
 }
 
 MapZoomSlider.prototype.zoomChanged = function()
