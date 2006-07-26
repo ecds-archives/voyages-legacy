@@ -16,7 +16,10 @@ import edu.emory.library.tas.web.components.tabs.MapBean.MapItem;
 public class MapFileCreator {
 
 	private static String COLOR1 = "202 66 35"; // "45 230 200";
-	private static String COLOR2 = "87 27 29"; //"230 230 45";
+
+	private static String COLOR2 = "87 27 29"; // "230 230 45";
+
+	private static String COLOR3 = "255 0 0"; // "230 230 45";
 
 	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
 
@@ -36,10 +39,13 @@ public class MapFileCreator {
 
 	// private float min;
 	// private float max;
-	private float[] rangeBoundries;
+	private double[] rangeBoundries;
 
 	private ArrayList[] pointsC1 = null;
+
 	private ArrayList[] pointsC2 = null;
+
+	private ArrayList[] pointsC3 = null;
 
 	public MapFileCreator() {
 		this.filePath = MAP_FILE_OUTPUT;
@@ -47,32 +53,38 @@ public class MapFileCreator {
 		this.filePath = this.filePath.replaceAll(TIME_SYMBOL_REGEX, time);
 	}
 
-	public void setMapData(MapItem[] data, float max, float min) {
+	public void setMapData(MapItem[] data, double min, double max) {
 		this.data = data;
 
-		this.rangeBoundries = new float[circleRanges];
+		this.rangeBoundries = new double[circleRanges + 1];
 		this.pointsC1 = new ArrayList[circleRanges];
 		this.pointsC2 = new ArrayList[circleRanges];
+		this.pointsC3 = new ArrayList[circleRanges];
 
-		float step = (max - min) / circleRanges;
+		double step = (max - min) / circleRanges;
 		for (int i = 0; i < circleRanges; i++) {
-			this.rangeBoundries[i] = i * step + step + min;
+			this.rangeBoundries[i + 1] = i * step + step + min;
 			this.pointsC1[i] = new ArrayList();
 			this.pointsC2[i] = new ArrayList();
+			this.pointsC3[i] = new ArrayList();
 		}
+		this.rangeBoundries[0] = min;
 
 		for (int i = 0; i < this.data.length; i++) {
 			int index = circleRanges - 1;
-			float size = this.data[i].size;
-			for (int j = 1; j < circleRanges; j++) {
-				if (size > this.rangeBoundries[j]) {
-					index = j - 1;
+			double size = this.data[i].size;
+			for (int j = 0; j < circleRanges; j++) {
+				if (size >= this.rangeBoundries[j] && size < this.rangeBoundries[j + 1]) {
+					index = j;
 				}
+
 			}
 			if (this.data[i].portType == MapBean.PORT_DEPARTURE) {
 				this.pointsC1[index].add(this.data[i]);
-			} else {
+			} else if (this.data[i].portType == MapBean.PORT_ARRIVAL) {
 				this.pointsC2[index].add(this.data[i]);
+			} else {
+				this.pointsC3[index].add(this.data[i]);
 			}
 		}
 
@@ -138,7 +150,7 @@ public class MapFileCreator {
 
 				generateFeature(writer, this.pointsC1[i], COLOR1, i + 1);
 				generateFeature(writer, this.pointsC2[i], COLOR2, i + 1);
-				
+				generateFeature(writer, this.pointsC3[i], COLOR3, i + 1);
 			}
 		}
 	}

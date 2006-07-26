@@ -2,12 +2,13 @@ package edu.emory.library.tas;
 
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.maps.PointOfInterest;
 
 public class GISPortLocation {
 
 	public String portName;
-	public float x;
-	public float y;
+	public double x;
+	public double y;
 	
 	public GISPortLocation() {		
 	}
@@ -20,24 +21,35 @@ public class GISPortLocation {
 		this.portName = portName;
 	}
 
-	public float getX() {
+	public double getX() {
 		return x;
 	}
 
-	public void setX(float x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
-	public float getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setY(float y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 	
 	public String toString() {
 		return "Port: " + this.getPortName() + " [" + this.x + ", " + this.y + "]";
+	}
+	
+	public boolean equals(Object o) {
+		if (o instanceof PointOfInterest) {
+			PointOfInterest that = (PointOfInterest)o;
+			return this.x == that.getX() && this.y == that.getY();
+		} else if (o instanceof GISPortLocation) {
+			GISPortLocation that = (GISPortLocation)o;
+			return this.x == that.getX() && this.y == that.getY();
+		}
+		return false;
 	}
 	
 	public static GISPortLocation getGISPortLocation(String portName) {

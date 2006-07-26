@@ -1,5 +1,6 @@
 package edu.emory.library.tas.web.maps;
 
+import edu.emory.library.tas.GISPortLocation;
 import edu.emory.library.tas.web.UtilsJSF;
 
 public class PointOfInterest
@@ -72,6 +73,17 @@ public class PointOfInterest
 	public void setY(double y)
 	{
 		this.y = y;
+	}
+	
+	public boolean equals(Object o) {
+		if (o instanceof PointOfInterest) {
+			PointOfInterest that = (PointOfInterest)o;
+			return this.x == that.x && this.y == that.y;
+		} else if (o instanceof GISPortLocation) {
+			GISPortLocation that = (GISPortLocation)o;
+			return this.x == that.getX() && this.y == that.getY();
+		}
+		return false;
 	}
 	
 }
