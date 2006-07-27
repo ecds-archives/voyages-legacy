@@ -36,7 +36,9 @@ var MapsGlobal =
 		fieldNameForMapSize, // hidden field for selected map size
 		pointsOfInterest, // array of points with labels
 		bubbleId, // bubble <table>
-		bubbleTextId // inner <td> for the text in the bubble
+		bubbleTextId, // inner <td> for the text in the bubble
+		scaleIndicatorTextId,
+		scaleIndicatorBarId
 	)
 	{
 	
@@ -70,6 +72,10 @@ var MapsGlobal =
 		// bubble
 		map.bubble_id = bubbleId;
 		map.bubble_text_id = bubbleTextId;
+		
+		// scale indicator
+		map.scale_bar_indicator_id = scaleIndicatorBarId;
+		map.scale_text_indicator_id = scaleIndicatorTextId;
 		
 		// buttons
 		if (buttonBackId)
@@ -237,7 +243,6 @@ function Map()
 	this.selector_color = "White"; //"#0066CC";
 	this.selector_opacity = 30;
 	this.map_selector = null;
-	this.nav_selector = null;
 	
 	// points of interest
 	this.points = null;
@@ -251,6 +256,8 @@ function Map()
 	this.bubble_text = null;
 	
 	// scale indicator & selector
+	this.scale_bar_indicator_id = null;
+	this.scale_text_indicator_id = null;
 	this.scale_bar_indicator = null;
 	this.scale_text_indicator = null;
 	this.has_scale_indicator = false;
@@ -505,15 +512,15 @@ Map.prototype.updateScaleIndicator = function()
 	meters = Math.floor(meters / closest_power) * closest_power;
 	var pixels = this.fromRealToPx(meters);
 	
-	scale_bar_indicator.style.width = Math.round(pixels) + "px";
-	scale_text_indicator.innerHTML = this.formatMetersForDisplay(meters);
+	this.scale_bar_indicator.style.width = Math.round(pixels) + "px";
+	this.scale_text_indicator.innerHTML = meters + "&deg;"  //this.formatMetersForDisplay(meters);
 
 }
 
 Map.prototype.scaleIndicatorInit = function()
 {
-	this.scale_bar_indicator = document.getElementById("map-scale-bar");
-	this.scale_text_indicator = document.getElementById("map-scale-text");
+	this.scale_bar_indicator = document.getElementById(this.scale_bar_indicator_id);
+	this.scale_text_indicator = document.getElementById(this.scale_text_indicator_id);
 	this.has_scale_indicator = this.scale_bar_indicator && this.scale_text_indicator;
 }
 

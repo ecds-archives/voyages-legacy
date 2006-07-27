@@ -272,6 +272,24 @@ public class MapComponent extends UIComponentBase
 		
 	}
 	
+	private void encodeScaleIndicator(FacesContext context, ResponseWriter writer, String scaleIndicatorTextId, String scaleIndicatorBarId) throws IOException
+	{
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "map-scale-indicator-container", null);
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "map-scale-indicator-text", null);
+		writer.writeAttribute("id", scaleIndicatorTextId, null);
+		writer.endElement("div");
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "map-scale-indicator-bar", null);
+		writer.writeAttribute("id", scaleIndicatorBarId, null);
+		writer.endElement("div");
+
+		writer.endElement("div");
+	}
+
 	private String getElementIdForMapSize(FacesContext context, int sizeIndex)
 	{
 		return getClientId(context) + "_size_" + sizeIndex; 
@@ -300,6 +318,8 @@ public class MapComponent extends UIComponentBase
 		String toolsZoomId = getClientId(context) + "_zoom";
 		String bubbleId = getClientId(context) + "_bubble";
 		String bubbleTextId = getClientId(context) + "_bubble_text";
+		String scaleIndicatorTextId = getClientId(context) + "_scale_indicator_text";
+		String scaleIndicatorBarId = getClientId(context) + "_scale_indicator_bar";
 
 		String hiddenFieldNameForX1 = getHiddenFieldNameForX1(context);
 		String hiddenFieldNameForY1 = getHiddenFieldNameForY1(context);
@@ -441,6 +461,12 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("'").append(bubbleId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(bubbleTextId).append("'");
+		jsRegister.append(", ");
+		
+		// scale indicator
+		jsRegister.append("'").append(scaleIndicatorTextId).append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append(scaleIndicatorBarId).append("'");
 		
 		jsRegister.append(");");
 		
@@ -525,6 +551,9 @@ public class MapComponent extends UIComponentBase
 			encodeTool(context, writer, getElementIdForMapSize(context, i), className);
 		}
 		encodeToolEnd(writer);
+		
+		// scale indicator
+		encodeScaleIndicator(context, writer, scaleIndicatorTextId, scaleIndicatorBarId);
 		
 		// bubble
 		encodeBubble(context, writer, bubbleId, bubbleTextId);

@@ -174,6 +174,7 @@ public class MapFileCreator {
 			writer.write("		STYLE\n");
 			writer.write("			SYMBOL 'circle" + size + "'\n");
 			writer.write("			COLOR " + color + "\n");
+			writer.write("			ANTIALIAS TRUE\n");
 			writer.write("		END\n");
 			writer.write("		LABEL\n");
 			writer.write("			POSITION ur\n");
