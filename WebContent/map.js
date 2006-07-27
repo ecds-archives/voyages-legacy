@@ -1960,6 +1960,7 @@ function MapZoomSlider(bgElementId, knobElementId, map)
 	this.knobElementId = knobElementId;
 	this.map = map;
 	this.scale = 0;
+	this.sliding = false;
 	this.map.registerZoomSlider(this);
 	this.map.registerInitListener(this, "init", null);
 }
@@ -1978,6 +1979,7 @@ MapZoomSlider.prototype.init = function()
 	this.sliderEffectiveWidth = this.bg.offsetWidth - this.knob.offsetWidth;
 	
 	EventAttacher.attach(this.knob, "mousedown", this, "mouseDown");
+	EventAttacher.attach(this.bg, "click", this, "click");
 	
 	this.zoomChanged();
 }
@@ -1999,8 +2001,20 @@ MapZoomSlider.prototype.setKnobPosition = function(knobLeft)
 	this.knob.style.left = this.capKnobPosition(knobLeft) + "px";
 }
 
+MapZoomSlider.prototype.click = function(event)
+{
+	//alert(this.sliderOffsetLeft);
+	//alert(event.clientX);
+	var pos = event.clientX;
+	this.setKnobPosition(pos - this.sliderOffsetLeft - this.knobWidth / 2);
+	var capPos = this.capKnobPosition(pos - this.sliderOffsetLeft - this.knobWidth / 2);
+	var t = capPos / this.sliderEffectiveWidth;
+	this.map.changeScaleNormalized(t, false);
+}
+
 MapZoomSlider.prototype.mouseDown = function(event)
 {
+	this.sliding = true;
 	this.startPos = event.clientX;
 	this.startOffsetLeft = this.knob.offsetLeft;
 	this.lastPos = this.startPos;
@@ -2017,9 +2031,6 @@ MapZoomSlider.prototype.mouseMove = function(event)
 
 MapZoomSlider.prototype.mouseUp = function(event)
 {
-	var pos = event.clientX;
-	var t = this.capKnobPosition(this.startOffsetLeft + (pos - this.startPos)) / this.sliderEffectiveWidth;
-	this.map.changeScaleNormalized(t, false);
 	EventAttacher.detachOnWindowEvent("mousemove", this, "mouseMove");
 	EventAttacher.detachOnWindowEvent("mouseup", this, "mouseUp");
 }
