@@ -5,8 +5,8 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%
 
-session.setAttribute("test.map", "D:\\Library\\SlaveTrade\\shapefiles\\test.map");
 session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents\\Library\\SlaveTrade\\shapefiles\\test.map");
+session.setAttribute("test.map", "D:\\Library\\SlaveTrade\\shapefiles\\test.map");
 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,7 +37,7 @@ session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents
 					id="testMap"
 					mapFile="test.map"
 					serverBaseUrl="../../servlet/maptile"
-					pointsOfInterest="#{TestMapBean.points}" />
+					pointsOfInterest="#{TestMapBean.cities}" />
 					
 				<h:commandButton value="OK" />
 

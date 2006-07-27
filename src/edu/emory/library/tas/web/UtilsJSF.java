@@ -3,6 +3,7 @@ package edu.emory.library.tas.web;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -313,7 +314,7 @@ public class UtilsJSF
     public static String escapeStringForJS(String str)
     {
     	if (str == null) return "";
-    	str = str.replaceAll("\"", "\\\"");
+    	str = str.replaceAll("'", "\\\\'");
     	str = str.replaceAll("\r\n", "<br>");
     	str = str.replaceAll("\n\r", "<br>");
     	str = str.replaceAll("\n", "<br>");
@@ -329,5 +330,10 @@ public class UtilsJSF
     	writer.writeAttribute("border", "0", null);
     	writer.endElement("img");
     }
+    
+    public static void main(String[] args)
+	{
+		System.out.println(escapeStringForJS("'"));
+	}
 
 }

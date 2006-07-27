@@ -527,10 +527,11 @@ Map.prototype.mapStartDrag = function(event)
 	// set onMouseMove handler
 	EventAttacher.attachOnWindowEvent("mousemove", this, "mapMouseMove");
 	EventAttacher.attachOnWindowEvent("mouseup", this, "mapStopDrag");
+	this.forgetLabels();
 	
 	// init position
-	this.dragging_start_x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
-	this.dragging_start_y = event.clientY - this.vport_offset_top + ElementUtils.getScrollTop(this.map_frame);
+	this.dragging_start_x = event.clientX - this.vport_offset_left;
+	this.dragging_start_y = event.clientY - this.vport_offset_top;
 	
 }
 
@@ -540,10 +541,11 @@ Map.prototype.mapStopDrag = function(event)
 	// cancel onMouseMove handler
 	EventAttacher.detachOnWindowEvent("mousemove", this, "mapMouseMove");
 	EventAttacher.detachOnWindowEvent("mouseup", this, "mapStopDrag");
+	this.watchForLabels();
 
 	// new position
-	var x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
-	var y = event.clientY - this.vport_offset_top + ElementUtils.getScrollTop(this.map_frame);
+	var x = event.clientX - this.vport_offset_left;
+	var y = event.clientY - this.vport_offset_top;
 	
 	switch (this.map_mouse_mode)
 	{
@@ -567,6 +569,7 @@ Map.prototype.mapStopDrag = function(event)
 			break;
 			
 		case MapsGlobal.MAP_TOOL_PAN:
+			this.splitPointsToTiles();
 			break;
 			
 	}
@@ -577,8 +580,8 @@ Map.prototype.mapMouseMove = function(event)
 {
 
 	// new position
-	var x = event.clientX - this.vport_offset_left + ElementUtils.getScrollLeft(this.map_frame);
-	var y = event.clientY - this.vport_offset_top + ElementUtils.getScrollTop(this.map_frame);
+	var x = event.clientX - this.vport_offset_left;
+	var y = event.clientY - this.vport_offset_top;
 	
 	switch (this.map_mouse_mode)
 	{
@@ -1196,14 +1199,26 @@ Map.prototype.registerGoBackButton = function(button)
 
 Map.prototype.setMouseModeToPan = function()
 {
-	this.map_frame.style.cursor = "move";
 	this.map_mouse_mode = MapsGlobal.MAP_TOOL_PAN;
+	this.revertToDefaultCursor();
 }
 
 Map.prototype.setMouseModeToZoom = function()
 {
-	this.map_frame.style.cursor = "crosshair";
 	this.map_mouse_mode = MapsGlobal.MAP_TOOL_ZOOM;
+	this.revertToDefaultCursor();
+}
+
+Map.prototype.revertToDefaultCursor = function()
+{
+	if (this.map_mouse_mode == MapsGlobal.MAP_TOOL_PAN)
+	{
+		this.map_frame.style.cursor = "move";
+	}
+	else
+	{
+		this.map_frame.style.cursor = "crosshair";
+	}
 }
 
 Map.prototype.panningNextMove = function()
@@ -1292,25 +1307,49 @@ Map.prototype.panToolInit = function()
 // points of interest
 /////////////////////////////////////////////////////////
 
+Map.prototype.showHideLabel = function(event)
+{
+	var x = event.clientX - this.vport_offset_left;
+	var y = event.clientY - this.vport_offset_top;
+	for (var i=0; i<this.points.length; i++)
+	{
+		var pnt = this.points[i];
+		if (this.computeLengthSquared(x-pnt.vx, y-pnt.vy) <= 25)
+		{
+			this.showLabel(null, i);
+			return;
+		}
+	}
+	this.hideLabel(null);
+}
+
+Map.prototype.watchForLabels = function()
+{
+	EventAttacher.attach(this.map_frame, "mousemove", this, "showHideLabel");
+}
+
+Map.prototype.forgetLabels = function()
+{
+	this.hideLabel(null);
+	EventAttacher.detach(this.map_frame, "mousemove", this, "showHideLabel");
+}
+
 Map.prototype.splitPointsToTiles = function()
 {
+
+	for (var i=0; i<this.points.length; i++)
+	{
+		var pnt = this.points[i];
+		pnt.vx = this.fromRealToVportX(pnt.x);
+		pnt.vy = this.fromRealToVportY(pnt.y);
+	}
+
+	return;
 
 	// we don't have points
 	if (!this.points && GraphicsGlobal.isSupported())
 		return;
 
-	// remove all visible tiles
-	/*
-	for (var i=0; i<this.tiles_map.length; i++)
-	{
-		for (var j=0; j<this.tiles_map[i].length; j++)
-		{
-			var tile = this.tiles_map[i][j];
-			if (tile.points) this.map_frame.removeChild(tile.points.getRoot());
-		}
-	}
-	*/
-	
 	// hashmap by col:row
 	this.pointsByTiles = new Array();
 	
@@ -1348,7 +1387,7 @@ Map.prototype.splitPointsToTiles = function()
 		circ.setCenter(posOnTileX, posOnTileY);
 		circ.setRadius(5);
 		circ.setFill("Black");
-		circ.setFillOpacity(0);
+		circ.setFillOpacity(1);
 		circ.getRoot().style.cursor = "pointer";
 		EventAttacher.attach(circ.getRoot(), "mouseover", this, "showLabel", i);
 		EventAttacher.attach(circ.getRoot(), "mouseout", this, "hideLabel");
@@ -1356,29 +1395,6 @@ Map.prototype.splitPointsToTiles = function()
 	
 	}
 
-	// attach visible tiles to vport
-	/*
-	for (var i=0; i<this.visible_rows+1; i++)
-	{
-		for (var j=0; j<this.visible_cols+1; j++)
-		{
-			var mapTile = this.tiles_map[i][j];
-			var row = this.first_tile_row - i;
-			var col = j + this.first_tile_col;
-			var pointsTile = this.pointsByTiles[col + ":" + row];
-			if (pointsTile)
-			{
-				mapTile.points = pointsTile.points;
-				this.map_frame.insertBefore(pointsTile.points.getRoot(), this.map_selector);
-			}
-			else
-			{
-				mapTile.points = null;
-			}
-		}
-	}
-	*/
-	
 }
 
 Map.prototype.showLabel = function(event, pntIndex)
@@ -1396,10 +1412,13 @@ Map.prototype.showLabel = function(event, pntIndex)
 	this.bubble.style.left = (x + 5) + "px";
 	this.bubble.style.top = (y - 5 - this.bubble.offsetHeight) + "px";
 	
+	this.map_frame.style.cursor = "pointer";
+
 }
 
 Map.prototype.hideLabel = function(event)
 {
+	this.revertToDefaultCursor();
 	this.bubble.style.display = "none";
 }
 
@@ -1710,6 +1729,7 @@ Map.prototype.init = function()
 
 	// show something
 	this.restoreState();
+	this.watchForLabels();
 	
 	// init tools
 	this.invokeInitListeners();
