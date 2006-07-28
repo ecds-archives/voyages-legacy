@@ -129,6 +129,12 @@ table.tooltip-class tr {
 	padding-right: 10px;
 }
 
+div.detailTab {
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
 /* map */
 /*
 div.map-tools-top {

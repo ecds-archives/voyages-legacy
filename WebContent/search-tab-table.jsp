@@ -52,18 +52,33 @@
 	</t:htmlTag>
 </t:htmlTag>
 
-<t:htmlTag value="div" rendered="#{TableResultTabBean.detailMode}">
-	
-	<s:voyageDetail
-		data="#{TableResultTabBean.detailData}" />
-	
-	<t:htmlTag value="div" styleClass="section-inside-footer">
-		<h:commandButton
-			id="backFromDetail"
-			value="Back to results"
-			action="#{TableResultTabBean.resultsMode}" />
-	</t:htmlTag>
+<t:htmlTag value="div" styleClass="detailTab" rendered="#{TableResultTabBean.detailMode}">
+
+	<s:sectionGroup id="detailPanelSection" backgroundStyle="dark" tabsStyle="middle" buttonsStyle="middle"
+		selectedSectionId="listing">
+
+		<s:section title="Voyage details" sectionId="listing">
+
+			<s:voyageDetail data="#{TableResultTabBean.detailData}" />
+
+			<t:htmlTag value="div" styleClass="section-inside-footer">
+				<h:commandButton id="backFromDetail" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
+			</t:htmlTag>
+
+		</s:section>
 		
+		<s:section title="Voyage map" sectionId="maps">
+			
+			<s:map mapFile="#{TableResultTabBean.mapPath}" pointsOfInterest="#{TableResultTabBean.pointsOfInterest}"  serverBaseUrl="servlet/maptile"/>
+			
+			<t:htmlTag value="div" styleClass="section-inside-footer">
+				<h:commandButton id="backFromDetailMap" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
+			</t:htmlTag>
+			
+		</s:section>
+		
+	</s:sectionGroup>
+
 </t:htmlTag>
 
 <%/* Configuration of table */ %>

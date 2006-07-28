@@ -11,177 +11,151 @@ import java.util.Iterator;
 
 import edu.emory.library.tas.AppConfig;
 import edu.emory.library.tas.web.components.tabs.MapBean;
-import edu.emory.library.tas.web.components.tabs.MapBean.MapItem;
+import edu.emory.library.tas.web.components.tabs.MapItem;
 
 public class MapFileCreator {
 
-	private static String COLOR1 = "202 66 35"; // "45 230 200";
-
-	private static String COLOR2 = "87 27 29"; // "230 230 45";
-
-	private static String COLOR3 = "255 0 0"; // "230 230 45";
-
 	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
-
-	private static String MAP_FILE_SKELETON = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_SKELETON);
-
 	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
-
-	private static String MAP_INSERT_SECTION_NAME_BEGIN = "#Generated_code_begin";
-
-	private static String MAP_INSERT_SECTION_NAME_END = "#Generated_code_end";
 
 	private static int circleRanges = 5;
 
 	private MapItem[] data;
 
 	private String filePath;
+	
+	private MapSchemaReader schemaReader = new MapSchemaReader();
 
 	// private float min;
 	// private float max;
 	private double[] rangeBoundries;
 
-	private ArrayList[] pointsC1 = null;
-
-	private ArrayList[] pointsC2 = null;
-
-	private ArrayList[] pointsC3 = null;
+	private ArrayList[][][] points = null;
 
 	public MapFileCreator() {
 		this.filePath = MAP_FILE_OUTPUT;
 		String time = System.currentTimeMillis() + "";
 		this.filePath = this.filePath.replaceAll(TIME_SYMBOL_REGEX, time);
+		schemaReader.beginReading();
 	}
 
 	public void setMapData(MapItem[] data, double min, double max) {
 		this.data = data;
 
+		this.points = new ArrayList[MapSchemaConstants.getAvailableColors().length][][];
 		this.rangeBoundries = new double[circleRanges + 1];
-		this.pointsC1 = new ArrayList[circleRanges];
-		this.pointsC2 = new ArrayList[circleRanges];
-		this.pointsC3 = new ArrayList[circleRanges];
+		for (int i = 0; i < MapSchemaConstants.getAvailableColors().length; i++) {
+			ArrayList[][] lists = new ArrayList[MapSchemaConstants.getAvailableShapes().length][];
+			for (int j = 0; j < MapSchemaConstants.getAvailableShapes().length; j++) {
+				ArrayList[] listsSizes = new ArrayList[circleRanges];
+				for (int k = 0; k < listsSizes.length; k++) {
+					listsSizes[k] = new ArrayList();
+				}
+				lists[j] = listsSizes;
+			}
+			this.points[i] = lists;
+		}
 
 		double step = (max - min) / circleRanges;
 		for (int i = 0; i < circleRanges; i++) {
 			this.rangeBoundries[i + 1] = i * step + step + min;
-			this.pointsC1[i] = new ArrayList();
-			this.pointsC2[i] = new ArrayList();
-			this.pointsC3[i] = new ArrayList();
 		}
+		
 		this.rangeBoundries[0] = min;
 
 		for (int i = 0; i < this.data.length; i++) {
-			int index = circleRanges - 1;
-			double size = this.data[i].size;
-			for (int j = 0; j < circleRanges; j++) {
-				if (size >= this.rangeBoundries[j] && size < this.rangeBoundries[j + 1]) {
-					index = j;
-				}
+			if (this.data[i].isAutoSized()) {
+				int index = circleRanges - 1;
+				double size = this.data[i].getMaxVal();
+				for (int j = 0; j < circleRanges; j++) {
+					if (size >= this.rangeBoundries[j] && size < this.rangeBoundries[j + 1]) {
+						index = j;
+					}
 
-			}
-			if (this.data[i].portType == MapBean.PORT_DEPARTURE) {
-				this.pointsC1[index].add(this.data[i]);
-			} else if (this.data[i].portType == MapBean.PORT_ARRIVAL) {
-				this.pointsC2[index].add(this.data[i]);
+				}
+				this.points[this.data[i].getColor()][this.data[i].getShape()][index].add(this.data[i]);
 			} else {
-				this.pointsC3[index].add(this.data[i]);
+				this.points[this.data[i].getColor()][this.data[i].getShape()][this.data[i].getMaxVal()].add(this.data[i]);
 			}
 		}
 
 	}
 
 	public boolean createMapFile() {
-		BufferedReader reader = null;
+		this.schemaReader.clearModifications();
+		this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
+				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
+		
 		BufferedWriter writer = null;
 		try {
-			reader = new BufferedReader(new FileReader(MAP_FILE_SKELETON));
 			writer = new BufferedWriter(new FileWriter(this.filePath));
-			String line = null;
-			boolean deleteMode = false;
-
-			while ((line = reader.readLine()) != null) {
-				if (line.trim().indexOf(MAP_INSERT_SECTION_NAME_BEGIN) != -1) {
-					deleteMode = true;
-					this.generateLayerForPorts(writer);
-					continue;
-				}
-				if (line.trim().indexOf(MAP_INSERT_SECTION_NAME_END) != -1) {
-					deleteMode = false;
-					continue;
-				}
-				if (deleteMode) {
-					continue;
-				}
-				writer.write(line);
-				writer.write("\n");
-			}
-
+			writer.write(this.schemaReader.applyModifications().toString());
 			return true;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			try {
-				if (writer != null) {
+			if (writer != null) {
+				try {
 					writer.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
 					writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 		return false;
+		
 	}
 
-	private void generateLayerForPorts(BufferedWriter writer) throws IOException {
+	private String generateLayerForPorts() {
+		StringBuffer buffer = new StringBuffer();
 		if (this.data != null) {
-
-			for (int i = 0; i < circleRanges; i++) {
-
-				generateFeature(writer, this.pointsC1[i], COLOR1, i + 1);
-				generateFeature(writer, this.pointsC2[i], COLOR2, i + 1);
-				generateFeature(writer, this.pointsC3[i], COLOR3, i + 1);
+			System.out.println("Here!");
+			for (int i = 0; i < this.points.length; i++) {
+				for (int j = 0; j < this.points[i].length; j++) {
+					for (int k = 0; k < this.points[i][j].length; k++) {
+						generateFeature(buffer, this.points[i][j][k], i, j, k);
+					}
+				}
 			}
 		}
+		return buffer.toString();
 	}
 
-	private void generateFeature(BufferedWriter writer, ArrayList list, String color, int size) throws IOException {
+	private void generateFeature(StringBuffer writer, ArrayList list, int color, int shape, int size) {
 		if (list.size() > 0) {
-			writer.write("LAYER\n");
-			writer.write("	TYPE POINT\n");
-			writer.write("	STATUS DEFAULT\n");
+			
+			writer.append("LAYER\n");
+			writer.append("	TYPE POINT\n");
+			writer.append("	STATUS DEFAULT\n");
 
 			Iterator iter = list.iterator();
 			while (iter.hasNext()) {
 				MapItem item = (MapItem) iter.next();
-				writer.write("	FEATURE\n");
-				writer.write("		POINTS " + item.x + " " + item.y + " END\n");
-				writer.write("		TEXT '" + item.label + "'\n");
-				writer.write("	END\n");
+				writer.append("	FEATURE\n");
+				writer.append("		POINTS " + item.x + " " + item.y + " END\n");
+				writer.append("		TEXT '" + item.label + "'\n");
+				writer.append("	END\n");
 			}
 
-			writer.write("	CLASS\n");
-			writer.write("		STYLE\n");
-			writer.write("			SYMBOL 'circle" + size + "'\n");
-			writer.write("			COLOR " + color + "\n");
-			writer.write("			ANTIALIAS TRUE\n");
-			writer.write("		END\n");
-			writer.write("		LABEL\n");
-			writer.write("			POSITION ur\n");
-			writer.write("			TYPE BITMAP\n");
-			writer.write("		END\n");
-			writer.write("	END\n");
-			writer.write("END\n");
+			writer.append("	CLASS\n");
+			writer.append("		STYLE\n");
+			writer.append("			SYMBOL '" + MapSchemaConstants.getAvailableShapes()[shape] + (size + 1) + "'\n");
+			writer.append("			COLOR " + MapSchemaConstants.getAvailableColors()[color] + "\n");
+			writer.append("		END\n");
+			writer.append("		LABEL\n");
+			writer.append("			POSITION ur\n");
+			writer.append("			TYPE BITMAP\n");
+			writer.append("		END\n");
+			writer.append("	END\n");
+			writer.append("END\n");
 		}
 	}
 

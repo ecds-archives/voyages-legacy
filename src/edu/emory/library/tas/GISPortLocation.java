@@ -53,8 +53,26 @@ public class GISPortLocation {
 	}
 	
 	public static GISPortLocation getGISPortLocation(String portName) {
+		if (portName == null) {
+			return null;
+		}
 		Conditions c = new Conditions();
 		c.addCondition("portName", portName, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("GISPortLocation", c);
+		Object[] ports = qValue.executeQuery();
+		if (ports.length == 0) {
+			return null;
+		} else {
+			return (GISPortLocation)ports[0];
+		}
+	}
+	
+	public static GISPortLocation getGISPortLocation(Dictionary port) {
+		if (port == null) {
+			return null;
+		}
+		Conditions c = new Conditions();
+		c.addCondition("portName", port.getName(), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("GISPortLocation", c);
 		Object[] ports = qValue.executeQuery();
 		if (ports.length == 0) {

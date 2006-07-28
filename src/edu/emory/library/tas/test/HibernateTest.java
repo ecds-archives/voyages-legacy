@@ -134,57 +134,17 @@ public class HibernateTest {
 					e.printStackTrace();
 				}
 			} else if (command.equals("query")) {
-//				Conditions cMain = new Conditions(Conditions.JOIN_AND);
-//				cMain.addCondition("first", "fsfs", Conditions.OP_EQUALS);
-//				cMain.addCondition("second", "ddd", Conditions.OP_LIKE);
-//				cMain.addCondition("third", new Integer(11), Conditions.OP_NOT_EQUALS);
-//				Conditions c1 = new Conditions(Conditions.JOIN_OR);
-//				c1.addCondition("first1", "fsfs", Conditions.OP_EQUALS);
-//				c1.addCondition("second1", new Integer(11), Conditions.OP_NOT_EQUALS);
-//				Conditions c11 = new Conditions(Conditions.JOIN_OR);
-//				c11.addCondition("first11", "fsfs", Conditions.OP_EQUALS);
-//				c11.addCondition("second11", new Integer(11), Conditions.OP_NOT_EQUALS);
-//				c1.addCondition(c11);
-//				Conditions c2 = new Conditions(Conditions.JOIN_NOT);
-//				c11.addCondition("first2", "fsfs", Conditions.OP_EQUALS);
-//				Conditions c21 = new Conditions(Conditions.JOIN_AND);
-//				c21.addCondition("final", new Float(2.55), Conditions.OP_SMALLER);
-//				c2.addCondition(c21);
 				
-//				cMain.addCondition(c1);
-//				cMain.addCondition(c2);
+				Conditions conditions = new Conditions();
+				conditions.addCondition("v.voyageId", new Long(1), Conditions.OP_EQUALS);
+				conditions.addCondition(VoyageIndex.getApproved());
+				QueryValue qValue = new QueryValue("VoyageIndex as v", conditions);
+				qValue.addPopulatedAttribute("v.voyage.arrport", true);
+				qValue.addPopulatedAttribute("v.voyage.shipname", false);
 				
+				Object[] res = qValue.executeQuery();
 				
-				Conditions cMain = new Conditions(Conditions.JOIN_AND);
-				cMain.addCondition("vi.voyageId", new Long(104), Conditions.OP_SMALLER_OR_EQUAL);
-				cMain.addCondition(VoyageIndex.getRecent());
-//				cMain.addCondition("v.voyage.shipname", "Pa%", Conditions.OP_LIKE);
-//				Conditions cL1 = new Conditions(Conditions.JOIN_OR);
-//				cMain.addCondition(cL1);
-//				cL1.addCondition("v.voyage.portdep.name", "Lizbon", Conditions.OP_EQUALS);
-//				cL1.addCondition("v.voyage.captaina", "Cunha%", Conditions.OP_LIKE);
-				
-				cMain.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
-				QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", cMain);
-				//String [] attrs = Voyage.getAllAttrNames();
-//				for (int i = 10; i < 115; i++) {
-//					qValue.addPopulatedAttribute("v.voyage." + attrs[i]);
-//				}
-				//qValue.addPopulatedAttribute("vi.remoteVoyageId", false);
-				qValue.addPopulatedAttribute("sum(v.voyage)", false);
-				qValue.setGroupBy(new String[] {"v.datedep"});
-//				qValue.addPopulatedAttribute("voyage.shipname");
-//				qValue.addPopulatedAttribute("v.voyage.shipname", false);
-//				qValue.addPopulatedAttribute("v.voyage.ownere", false);
-//				qValue.addPopulatedAttribute("v.voyage.arrport", true);
-				
-				System.out.println("Query: " + qValue.toStringWithParams().conditionString);
-				
-				long t1 = System.currentTimeMillis();
-				Object[] res = HibernateConnector.getConnector().loadObjects(qValue);
-				long t2 = System.currentTimeMillis();
-				
-				System.out.println("Returned: " + res.length + " time=" + (t2-t1));
+				System.out.println("Returned: " + res.length);
 				for (int i = 0; i < res.length && i < 20; i++) {
 					System.out.println(" -> " + (res[i]));
 				}

@@ -8,6 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.collections.MapIterator;
+
+import edu.emory.library.tas.Dictionary;
+import edu.emory.library.tas.GISPortLocation;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.attrGroups.Attribute;
@@ -18,6 +26,8 @@ import edu.emory.library.tas.attrGroups.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.SearchParameters;
+import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
+import edu.emory.library.tas.web.maps.PointOfInterest;
 
 /**
  * Backing bean for Table results presented in TAST web interface.
@@ -30,6 +40,8 @@ public class TableResultTabBean {
 	private static final String ATTRIBUTE = "Attribute_";
 
 	private static final String COMPOUND_ATTRIBUTE = "CompoundAttribute_";
+	
+	private static final String MAP_SESSION_KEY = "detail_map__";
 
 	private static final String GROUP = "Group";
 
@@ -134,6 +146,11 @@ public class TableResultTabBean {
 	 * Current category of attributes (Basic or General).
 	 */
 	private int category;
+	
+	/**
+	 * Map creator for detail voyage map.
+	 */
+	private MapFileCreator creator = null;
 
 	/**
 	 * Constructor.
@@ -157,8 +174,6 @@ public class TableResultTabBean {
 		data.setVisibleColumns(attrs);
 		this.visibleColumns = Arrays.asList(attrs);
 		
-		
-		detailData.setVisibleColumns(Voyage.getAttributes());
 
 		VisibleColumn[] additionalAttrs = new VisibleColumn[] { VoyageIndex.getAttribute("revisionId"),
 				VoyageIndex.getAttribute("revisionDate") };
@@ -202,6 +217,10 @@ public class TableResultTabBean {
 		if (start != -1) {
 			qValue.setFirstResult(start);
 		}
+		
+//		//Dictionaries - list of columns with dictionaries.		
+//		List dicts = new ArrayList();
+		
 		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
@@ -219,8 +238,9 @@ public class TableResultTabBean {
 			}
 		}
 
+		VisibleColumn vattr = dataTable.getOrderByColumn();
 		String orderByPrefix = null;
-		if (populatedAdditionalAttributes != null && populatedAdditionalAttributes.length > 0) {
+		if (vattr != null && Arrays.asList(dataTable.getVisibleAdditionalAttributes()).contains(vattr)) {
 			orderByPrefix = "v.";
 		} else {
 			orderByPrefix = "v.voyage.";
@@ -228,7 +248,7 @@ public class TableResultTabBean {
 		if (dataTable.getOrderByColumn() == null) {
 			qValue.setOrderBy(new String[] {"v.voyageId"});
 		} else {
-			VisibleColumn vattr = dataTable.getOrderByColumn();
+			
 			Attribute[] attr = null;
 			if (vattr instanceof Attribute) {
 				attr = new Attribute[] { (Attribute) vattr };
@@ -266,6 +286,17 @@ public class TableResultTabBean {
 			Conditions c = new Conditions();
 			c.addCondition(VoyageIndex.getApproved());
 			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
+			
+			List validAttrs = new ArrayList();
+			Attribute[] attrs = Voyage.getAttributes();
+			for (int i = 0; i < attrs.length; i++) {
+				Attribute column = attrs[i];
+				if (column.isVisibleByCategory(this.category)) {
+					validAttrs.add(column);
+				}
+			}
+			detailData.setVisibleColumns(validAttrs);
+			
 			this.queryAndFillInData(c, this.detailData, -1, -1);
 			this.needDetailQuery = false;
 		}
@@ -919,4 +950,70 @@ public class TableResultTabBean {
 		}
 		setVisibleAttributesList(cols);
 	}
+	
+	public String getMapPath() {
+		
+		Conditions conditions = new Conditions();
+		conditions.addCondition("v.voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
+		conditions.addCondition(VoyageIndex.getApproved());
+		QueryValue qValue = new QueryValue("VoyageIndex as v", conditions);
+		qValue.addPopulatedAttribute("v.voyage.portdep", true);
+		qValue.addPopulatedAttribute("v.voyage.portret", true);
+		qValue.addPopulatedAttribute("v.voyage.majbyimp", true);
+		qValue.addPopulatedAttribute("v.voyage.majselpt", true);
+		qValue.addPopulatedAttribute("v.voyage.slaximp", false);
+		qValue.addPopulatedAttribute("v.voyage.slamimp", false);
+		
+		Object[] voyages = qValue.executeQuery();
+		if (voyages.length > 0) {
+		
+			if (creator == null) {
+				creator = new MapFileCreator();
+			}
+			
+			Object[] row = (Object[])voyages[0];
+			Dictionary portDepD = (Dictionary)row[0];
+			Dictionary portRetD = (Dictionary)row[1];
+			Dictionary buyD = (Dictionary)row[2];
+			Dictionary sellD = (Dictionary)row[3];
+			GISPortLocation portDep = GISPortLocation.getGISPortLocation(portDepD);
+			GISPortLocation portRet = GISPortLocation.getGISPortLocation(portRetD);
+			GISPortLocation mjbyimp = GISPortLocation.getGISPortLocation(buyD);
+			GISPortLocation mjselpt = GISPortLocation.getGISPortLocation(sellD);
+			
+			ArrayList items = new ArrayList();
+//			if (portDep != null) {
+//				items.add(new MapItem(portDep.getPortName(), portDep.getX(), 1, portDep.getY(),
+//						new String[] {}, MapBean.PORT_DEPARTURE));
+//			}
+//			if (portRet != null) {
+//				items.add(new MapItem(portRet.getPortName(), portRet.getX(), 1, portRet.getY(),
+//						new String[] {}, MapBean.PORT_ARRIVAL));
+//			}
+//			if (mjbyimp != null) {
+//				items.add(new MapItem(mjbyimp.getPortName(), mjbyimp.getX(), ((Number)row[4]).intValue(), mjbyimp.getY(),
+//						new String[] {}, MapBean.PORT_DEPARTURE));
+//			}
+//			if (mjselpt != null) {
+//				items.add(new MapItem(mjselpt.getPortName(), mjselpt.getX(), ((Number)row[5]).intValue(), mjselpt.getY(),
+//						new String[] {}, MapBean.PORT_ARRIVAL));
+//			}
+			
+			
+			this.creator.setMapData((MapItem[])items.toArray(new MapItem[] {}), 1, 1);
+			this.creator.createMapFile();
+			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+			((HttpSession) servletContext.getSession(true)).setAttribute(MAP_SESSION_KEY, creator.getFilePath());
+			return MAP_SESSION_KEY;
+		}
+		return "";
+	}
+	
+	public void setMapPath(String path) {}
+	
+	public PointOfInterest[] getPointsOfInterest() {
+		return null;
+	}
+	
+	public void setPointsOfInterest(PointOfInterest[] list) {}
 }

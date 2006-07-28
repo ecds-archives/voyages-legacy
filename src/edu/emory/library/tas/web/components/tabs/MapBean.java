@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.ExternalContext;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import edu.emory.library.tas.GISPortLocation;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
+import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
@@ -52,87 +54,6 @@ public class MapBean {
 
 	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";
 
-	public class MapItem {
-
-		public String label;
-
-		public double x;
-
-		public double y;
-
-		public double size;
-
-		public int portType;
-		
-		private String[] usedAttrs;
-
-		public MapItem(String label, double x, double y, double size, String[] usedAttrs, int portType) {
-			this.label = label;
-			this.x = x;
-			this.y = y;
-			this.size = size;
-			this.portType = portType;
-			this.usedAttrs = usedAttrs;
-		}
-
-		public String getLabel() {
-			return label;
-		}
-
-		public void setLabel(String label) {
-			this.label = label;
-		}
-
-		public int getPortType() {
-			return portType;
-		}
-
-		public void setPortType(int portType) {
-			this.portType = portType;
-		}
-
-		public double getSize() {
-			return size;
-		}
-
-		public void setSize(double size) {
-			this.size = size;
-		}
-
-		public double getX() {
-			return x;
-		}
-
-		public void setX(double x) {
-			this.x = x;
-		}
-
-		public double getY() {
-			return y;
-		}
-
-		public void setY(double y) {
-			this.y = y;
-		}
-		
-		public boolean equals(Object o) {
-			if (!(o instanceof MapItem)) {
-				return false;
-			}
-			MapItem that = (MapItem)o;
-			return this.x == that.x && this.y == that.y;
-		}
-
-		public String[] getUsedAttrs() {
-			return usedAttrs;
-		}
-
-		public void setUsedAttrs(String[] usedAttrs) {
-			this.usedAttrs = usedAttrs;
-		}
-
-	}
-	
 	private class MapItemResponse {
 		MapItem[] items;
 		double min;
@@ -164,16 +85,16 @@ public class MapBean {
 		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
 
 		ArrayList response = new ArrayList();
-		double[] minmax = executeMapQuery(response, localCondition, new String[] {"majbuypt", "slaximp"}, 
+		double[] minmax = executeMapQuery(response, localCondition, new Attribute[] {Voyage.getAttribute("majbuypt"), Voyage.getAttribute("slaximp")}, 
 				new String[] { "v.majbuypt.name",
 				"case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end" }, new String[] { "v.majbuypt.name" },
-				new String[] { "sum(v.slaximp)" }, PORT_DEPARTURE);
+				new String[] { "sum(v.slaximp)" }, 0, 0);
 		min = minmax[1];
 		max = minmax[0];
-		minmax = executeMapQuery(response, localCondition, new String[] {"majselpt", "slamimp"},  
+		minmax = executeMapQuery(response, localCondition, new Attribute[] {Voyage.getAttribute("majselpt"), Voyage.getAttribute("slamimp")},  
 				new String[] { "v.majselpt.name",
 				"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end" }, new String[] { "v.majselpt.name" },
-				new String[] { "sum(v.slamimp)" }, PORT_ARRIVAL);
+				new String[] { "sum(v.slamimp)" }, 0, 1);
 		if (min > minmax[1]) {
 			min = minmax[1];
 		}
@@ -188,8 +109,8 @@ public class MapBean {
 		return mapresponse;
 	}
 
-	private double[] executeMapQuery(List response, Conditions localCondition, String[] usedAttrs, String[] populatedAttrs, String[] groupBy,
-			String[] orderBy, int type) {
+	private double[] executeMapQuery(List response, Conditions localCondition, Attribute[] usedAttrs, String[] populatedAttrs, String[] groupBy,
+			String[] orderBy, int shape, int color) {
 
 		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
 
@@ -209,18 +130,27 @@ public class MapBean {
 			if (gisPort != null) {
 
 				if (this.pointsOfInterest.contains(gisPort)) {
+					List attrs = new ArrayList();
+					List data = new ArrayList();
+					attrs.add(usedAttrs);
+					data.add(((Object[]) voyages[i])[1]);
 					MapItem item = (MapItem) response.get(response.indexOf(new MapItem(portName, gisPort.getX(),
-							gisPort.getY(), ((Number) ((Object[]) voyages[i])[1]).doubleValue(), 
-							usedAttrs, type)));
-					item.setPortType(PORT_BOTH);
+							gisPort.getY(), data, 
+							attrs, shape, color, true)));
+					item.setColor(2);
+					attrs.addAll(item.getUsedAttrs());
+					data.addAll(item.getData());
 					PointOfInterest point = (PointOfInterest)this.pointsOfInterest.get(this.pointsOfInterest.indexOf(gisPort));
-					point.setText(buildToolTipInfo(gisPort, usedAttrs, item.getUsedAttrs(), item.getSize(), ((Number) ((Object[]) voyages[i])[1]).doubleValue()));
+					point.setText(buildToolTipInfo(gisPort, attrs, data));
 				} else {
+					List attrs = new ArrayList();
+					List data = new ArrayList();
+					attrs.add(usedAttrs);
+					data.add(((Object[]) voyages[i])[1]);
 					this.pointsOfInterest.add(new PointOfInterest(gisPort.getX(), gisPort.getY(),
 							gisPort.getPortName(), buildToolTipInfo(gisPort, usedAttrs, (Object[]) voyages[i])));
 					response.add(new MapItem(portName, gisPort.getX(), gisPort.getY(),
-							((Number) ((Object[]) voyages[i])[1]).doubleValue(), 
-							usedAttrs, type));
+							data, attrs, shape, color, true));
 				}
 			}
 		}
@@ -232,31 +162,34 @@ public class MapBean {
 
 	}
 
-	private String buildToolTipInfo(GISPortLocation port, String[] usedAttrs, Object[] data) {
+	private String buildToolTipInfo(GISPortLocation port, Attribute[] usedAttrs, Object[] data) {
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("<div style=\"white-space: nowrap\">");
 		buffer.append("<b>");
-		buffer.append(Voyage.getAttribute(usedAttrs[0])).append(": ").append(port.getPortName());
+		buffer.append(usedAttrs[0].getUserLabelOrName()).append(": ").append(port.getPortName());
 		buffer.append("</b><br/>");
-		buffer.append(Voyage.getAttribute(usedAttrs[1]).getUserLabelOrName()).append(": ");
+		buffer.append(usedAttrs[1].getUserLabelOrName()).append(": ");
 		buffer.append(((Number) data[1]).intValue());
 		buffer.append("</div>");
 
 		return buffer.toString();
 	}
 	
-	private String buildToolTipInfo(GISPortLocation port, String[] usedAttrs1, String[] usedAttrs2, double data1, double data2) {
+	private String buildToolTipInfo(GISPortLocation port, List usedAttrs, List data) {
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("<div style=\"white-space: nowrap\">");
 		buffer.append("<b>");
 		buffer.append("Port name: ").append(port.getPortName());
 		buffer.append("</b><br/>");
-		buffer.append(Voyage.getAttribute(usedAttrs1[1]).getUserLabelOrName()).append(": ");
-		buffer.append((int)data1).append("<br/>");
-		buffer.append(Voyage.getAttribute(usedAttrs2[1]).getUserLabelOrName()).append(": ");
-		buffer.append((int)data2);
+		int i = 0;
+		for (Iterator iter = usedAttrs.iterator(); iter.hasNext();) {
+			Attribute[] element = (Attribute[]) iter.next();
+			buffer.append(element[1].getUserLabelOrName()).append(": ");
+			buffer.append(((Number)data.get(i)).intValue()).append("<br/>");
+			i++;
+		}
 		buffer.append("</div>");
 
 		return buffer.toString();
