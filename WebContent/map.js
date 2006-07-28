@@ -708,6 +708,72 @@ Map.prototype.changeScale = function(new_scale, notify_zoom_change)
 
 }
 
+function MapRectangleFitter(srcX1, srcY1, srcX2, srcY2, destWidth, destHeight, border)
+{
+	this.srcX1 = srcX1;
+	this.srcY1 = srcY1;
+	this.srcX2 = srcX2;
+	this.srcY2 = srcY2;
+	this.destWidth = destWidth;
+	this.destHeight = destHeight;
+	this.border = border;
+}
+
+MapRectangleFitter.prototype.fit()
+{
+
+	// ensure that first is top left
+	if (this.srcX2 < this.srcX1)
+	{
+		var x = srcX2;
+		this.srcX2 = this.srcX1;
+		this.srcX1 = x;
+	}
+	if (this.srcY2 < this.srcY1)
+	{
+		var y = this.srcY2;
+		this.srcY2 = this.srcY1;
+		this.srcY1 = y;
+	}
+	
+	// center and dimensions
+	this.cx = 0.5 * (this.srcX1 + this.srcX2);
+	this.cy = 0.5 * (this.srcY1 + this.srcY2);
+	var srcWidth = this.srcX2 - this.srcX1;
+	var srcHeight = this.srcY2 - this.srcY1;
+
+	// compute where we have to fit it
+	if (this.border == null) this.border = 0;
+	var destEffectiveWidth = this.destWidth - 2*this.border;
+	var destEffectiveHeight = this.destHeight - 2*this.border;
+
+	// adjust to the ratio
+	var destRatio = destEffectiveWidth / destEffectiveHeight;
+	var srcRatio = srcWidth / srcHeight;
+	
+	// set scale
+	if (srcRatio < destRatio)
+		this.scale = destEffectiveHeight / srcHeight;
+	else
+		this.scale = destEffectiveWidth / srcWidth;
+	
+}
+
+MapRectangleFitter.prototype.getCenterX()
+{
+	return this.cx;
+}
+
+MapRectangleFitter.prototype.getCenterY()
+{
+	return this.cy;
+}
+
+MapRectangleFitter.prototype.getScale()
+{
+	return this.scale;
+}
+
 Map.prototype.zoomMapTo = function(x1, y1, x2, y2, save_state, border, notify_zoom_change)
 {
 
@@ -1620,7 +1686,6 @@ Map.prototype.mapControlsInit = function()
 	}
 
 	EventAttacher.attach(this.map_frame, "mousedown", this, "mapStartDrag");
-	// EventAttacher.attach(this.map_frame, "mouseup", this, "mapStopDrag");
 	if (IE) EventAttacher.attach(this.map_frame, "mousewheel", this, "mapMouseWheel");
 
 	this.map_selector = document.createElement("DIV");
@@ -2057,4 +2122,91 @@ function PointOfInterest(x, y, name, text)
 	this.y = y;
 	this.name = name;
 	this.text = text;
+}
+
+/////////////////////////////////////////////////////////
+// reference map
+/////////////////////////////////////////////////////////
+
+function ReferenceMap(elementId, map)
+{
+	this.elementId = elementId;
+	this.map.registerInitListener(this, "init", null);
+	
+	// extend
+	
+	
+}
+
+ReferenceMap.prototype.init = function()
+{
+	
+	// init
+	this.element = document.getElementById(this.elementId);
+	this.precomputePosition();
+	
+	// hook mouse down
+	EventAttacher.attach(this.element, "mousedown", this, "startDragging");
+	
+}
+
+ReferenceMap.prototype.precomputePosition = function()
+{
+	this.offsetLeft = ElementUtils.getOffsetLeft(this.offsetLeft);
+	this.offsetTop = ElementUtils.getOffsetLeft(this.offsetTop);
+}
+
+ReferenceMap.prototype.startDragging = function(event)
+{
+
+	// hook mouse up and mouse move to the entire area
+	EventAttacher.attachOnWindowEvent("mousemove", this, "mouseMove");
+	EventAttacher.attachOnWindowEvent("mouseup", this, "stopDragging");
+	
+	// remember where we started
+	this.draggingStartX = event.clientX - this.offsetLeft;
+	this.draggingStartY = event.clientY - this.offsetTop;
+
+}
+
+ReferenceMap.prototype.stopDragging = function(event)
+{
+
+	// cancel mouse handlers
+	EventAttacher.detachOnWindowEvent("mousemove", this, "mouseMove");
+	EventAttacher.detachOnWindowEvent("mouseup", this, "stopDragging");
+
+	// new position
+	var x = event.clientX - this.offsetLeft;
+	var y = event.clientY - this.offsetTop;
+	
+	// hide selector
+	this.mapHideSelector();
+	
+	// has the mouse moved?
+	if (this.draggingStartX == x && this.draggingStartY == y)
+		return;
+	
+	// and zoom
+	this.zoomMapTo(
+		this.fromVportToRealX(this.dragging_start_x),
+		this.fromVportToRealY(this.dragging_start_y),
+		this.fromVportToRealX(x),
+		this.fromVportToRealY(y),
+		true, 0, true);
+
+}
+
+ReferenceMap.prototype.mouseMove = function(event)
+{
+
+	// new position
+	var x = event.clientX - this.offsetLeft;
+	var y = event.clientY - this.offsetTop;
+	
+	// draw selector
+	this.mapDrawSelector(
+		this.draggingStartX, this.draggingStartY,
+		x, y);
+	
 }
