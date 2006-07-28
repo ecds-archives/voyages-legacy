@@ -38,6 +38,11 @@ session.setAttribute("test.map", "C:\\Documents and Settings\\zich\\My Documents
 					mapFile="test.map"
 					serverBaseUrl="../../servlet/maptile"
 					pointsOfInterest="#{TestMapBean.cities}" />
+				
+				<div id="mmControl" style="position: relative; width: 200px; height: 200px;">
+					<div id="mmFrame" style="position: absolute;"></div>
+				</div>
+				
 					
 				<h:commandButton value="OK" />
 

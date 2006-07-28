@@ -26,7 +26,7 @@ public class MapComponent extends UIComponentBase
 	
 	private boolean mapSizeSet = false;
 	private MapSize mapSize = (MapSize) defaultMapSize.clone();
-	
+
 	private boolean mapFileSet = false;
 	private String mapFile = null;
 
@@ -467,7 +467,14 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("'").append(scaleIndicatorTextId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(scaleIndicatorBarId).append("'");
+		jsRegister.append(", ");
 		
+		// minimap
+		jsRegister.append("'").append("mmControl").append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append("mmFrame").append("'");
+
+		// end of init JS
 		jsRegister.append(");");
 		
 		// render JS

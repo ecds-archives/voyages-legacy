@@ -416,7 +416,7 @@ var ObjectUtils =
 	{
 		if (!obj)
 		{
-			alert(obj);
+			return obj;
 		}
 		else
 		{
