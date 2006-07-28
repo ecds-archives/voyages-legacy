@@ -4,28 +4,19 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <%/* Table with results */%>
-<s:tabletab id="tableResults"
-	onclick="#{TableResultTabBean.showDetails}"
-	rendered="#{TableResultTabBean.resultsMode}"
-	query="#{SearchBean.searchParameters}"
-	conditionsOut="#{TableResultTabBean.conditions}"
-	data="#{TableResultTabBean.data}"
-	componentVisible="#{TableResultTabBean.componentVisible}"
-	sortChanged="#{TableResultTabBean.sortChanged}"
-	style="overflow: auto;" />
+<s:tabletab id="tableResults" onclick="#{TableResultTabBean.showDetails}" rendered="#{TableResultTabBean.resultsMode}"
+	query="#{SearchBean.searchParameters}" conditionsOut="#{TableResultTabBean.conditions}"
+	data="#{TableResultTabBean.data}" componentVisible="#{TableResultTabBean.componentVisible}"
+	sortChanged="#{TableResultTabBean.sortChanged}" style="overflow: auto;" />
 
 <t:htmlTag value="div" styleClass="pager" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="padding: 0px;">
-				<h:commandLink
-					style="font-weight: bold; text-decoration: none;"
-					value="< Previous page"
+				<h:commandLink style="font-weight: bold; text-decoration: none;" value="< Previous page"
 					action="#{TableResultTabBean.prev}" />
 				<h:outputText value=" | " />
-				<h:commandLink
-					style="font-weight: bold; text-decoration: none;"
-					value="Next page >"
+				<h:commandLink style="font-weight: bold; text-decoration: none;" value="Next page >"
 					action="#{TableResultTabBean.next}" />
 				<h:outputText value=" | " />
 				<h:outputText value="Showing " />
@@ -66,22 +57,27 @@
 			</t:htmlTag>
 
 		</s:section>
-		
+
 		<s:section title="Voyage map" sectionId="maps">
-			
-			<s:map mapFile="#{TableResultTabBean.mapPath}" pointsOfInterest="#{TableResultTabBean.pointsOfInterest}"  serverBaseUrl="servlet/maptile"/>
-			
+
+			<h:outputText value="&nbsp;" escape="false" />
+			<s:map mapFile="#{TableResultTabBean.mapPath}" pointsOfInterest="#{TableResultTabBean.pointsOfInterest}"
+				serverBaseUrl="servlet/maptile" />
+			<h:outputText value="&nbsp;" escape="false" />
+
 			<t:htmlTag value="div" styleClass="section-inside-footer">
 				<h:commandButton id="backFromDetailMap" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
 			</t:htmlTag>
-			
+
 		</s:section>
-		
+
 	</s:sectionGroup>
 
 </t:htmlTag>
 
-<%/* Configuration of table */ %>
+<%/* Configuration of table */
+
+			%>
 <t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 
 	<t:htmlTag value="div" styleClass="section-inside-title">
@@ -93,7 +89,7 @@
 		<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
 			<h:outputText value="Choose group of attributes" />
 		</t:htmlTag>
-		
+
 		<t:htmlTag value="div" style="margin-bottom: 5px; padding-bottom: 5px;">
 			<h:selectOneMenu style="width: 300px;" value="#{TableResultTabBean.selectedGroupSet}" id="configure_groupSetCombo"
 				onchange="submit()">
@@ -108,10 +104,7 @@
 					<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
 						<h:outputText value="Available attributes" />
 					</t:htmlTag>
-					<h:selectManyListbox
-						style="width: 300px"
-						id="configure_availAttributes"
-						size="10"
+					<h:selectManyListbox style="width: 300px" id="configure_availAttributes" size="10"
 						value="#{TableResultTabBean.selectedAttributeToAdd}">
 						<f:selectItems value="#{TableResultTabBean.availableAttributes}" />
 					</h:selectManyListbox>
@@ -123,10 +116,7 @@
 							action="#{TableResultTabBean.addSelectedAttributeToList}" />
 					</t:htmlTag>
 					<t:htmlTag value="div">
-						<h:commandButton
-							style="width: 30px"
-							id="configure_RemAttrButton"
-							value="<"
+						<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="<"
 							action=" #{TableResultTabBean.remSelectedAttributeFromList}" />
 					</t:htmlTag>
 				</t:htmlTag>
@@ -171,15 +161,10 @@
 	</t:htmlTag>
 
 	<t:htmlTag value="div" styleClass="section-inside-footer">
-		<h:commandButton
-			id="configureApplyConfigButton"
-			value="Apply configuration"
+		<h:commandButton id="configureApplyConfigButton" value="Apply configuration"
 			action="#{TableResultTabBean.resultsMode}" />
 		<h:outputText value=" " />
-		<h:commandButton
-			id="configureCancel"
-			value="Cancel"
-			action="#{TableResultTabBean.cancelConfiguration}" />
+		<h:commandButton id="configureCancel" value="Cancel" action="#{TableResultTabBean.cancelConfiguration}" />
 	</t:htmlTag>
 
 </t:htmlTag>

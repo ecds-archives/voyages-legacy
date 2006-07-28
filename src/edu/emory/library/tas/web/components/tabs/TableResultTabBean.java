@@ -981,23 +981,33 @@ public class TableResultTabBean {
 			GISPortLocation mjbyimp = GISPortLocation.getGISPortLocation(buyD);
 			GISPortLocation mjselpt = GISPortLocation.getGISPortLocation(sellD);
 			
-			ArrayList items = new ArrayList();
-//			if (portDep != null) {
-//				items.add(new MapItem(portDep.getPortName(), portDep.getX(), 1, portDep.getY(),
-//						new String[] {}, MapBean.PORT_DEPARTURE));
-//			}
-//			if (portRet != null) {
-//				items.add(new MapItem(portRet.getPortName(), portRet.getX(), 1, portRet.getY(),
-//						new String[] {}, MapBean.PORT_ARRIVAL));
-//			}
-//			if (mjbyimp != null) {
-//				items.add(new MapItem(mjbyimp.getPortName(), mjbyimp.getX(), ((Number)row[4]).intValue(), mjbyimp.getY(),
-//						new String[] {}, MapBean.PORT_DEPARTURE));
-//			}
-//			if (mjselpt != null) {
-//				items.add(new MapItem(mjselpt.getPortName(), mjselpt.getX(), ((Number)row[5]).intValue(), mjselpt.getY(),
-//						new String[] {}, MapBean.PORT_ARRIVAL));
-//			}
+			List items = new ArrayList();
+			List size = new ArrayList();
+			size.add(new Integer(4));
+			List attrs = new ArrayList();
+			if (portDep != null) {
+				attrs.add(Voyage.getAttribute("portdep"));
+				items.add(new MapItem(portDep.getPortName(), portDep.getX(), portDep.getY(),
+						size, attrs, 0, 4, false));
+			}
+			if (portRet != null) {
+				attrs.clear();
+				attrs.add(Voyage.getAttribute("portret"));
+				items.add(new MapItem(portRet.getPortName(), portRet.getX(), portRet.getY(),
+						size, attrs, 0, 4, false));
+			}
+			if (mjbyimp != null) {
+				attrs.clear();
+				attrs.add(Voyage.getAttribute("majbyimp"));
+				items.add(new MapItem(mjbyimp.getPortName(), mjbyimp.getX(), mjbyimp.getY(),
+						size, attrs, 0, 4, false));
+			}
+			if (mjselpt != null) {
+				attrs.clear();
+				attrs.add(Voyage.getAttribute("majselpt"));
+				items.add(new MapItem(mjselpt.getPortName(), mjselpt.getX(), mjselpt.getY(),
+						size, attrs, 0, 4, false));
+			}
 			
 			
 			this.creator.setMapData((MapItem[])items.toArray(new MapItem[] {}), 1, 1);
@@ -1012,7 +1022,7 @@ public class TableResultTabBean {
 	public void setMapPath(String path) {}
 	
 	public PointOfInterest[] getPointsOfInterest() {
-		return null;
+		return new PointOfInterest[] {};
 	}
 	
 	public void setPointsOfInterest(PointOfInterest[] list) {}
