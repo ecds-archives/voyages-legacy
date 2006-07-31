@@ -41,6 +41,10 @@ public class MapComponent extends UIComponentBase
 	private double x2 = 180;
 	private double y2 = 90;
 	
+	private boolean miniMapSet = false;
+	private boolean miniMap = true;
+	private boolean miniMapVisible = true;
+
 	private ZoomHistory zoomHistory = new ZoomHistory();
 	private MouseMode mouseMode = MouseMode.Pan;
 	
@@ -56,7 +60,7 @@ public class MapComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[11];
+		Object[] values = new Object[13];
 		values[0] = super.saveState(context);
 		values[1] = mapFile;
 		values[2] = serverBaseUrl;
@@ -68,6 +72,8 @@ public class MapComponent extends UIComponentBase
 		values[8] = mapSizes;
 		values[9] = mapSize;
 		values[10] = zoomHistory;
+		values[11] = new Boolean(miniMap);
+		values[12] = new Boolean(miniMapVisible);
 		return values;
 	}
 	
@@ -85,6 +91,8 @@ public class MapComponent extends UIComponentBase
 		mapSizes = (MapSize[]) values[8];
 		mapSize = (MapSize) values[9];
 		zoomHistory = (ZoomHistory) values[10];
+		miniMap = ((Boolean)values[11]).booleanValue();
+		miniMapVisible = ((Boolean)values[12]).booleanValue();
 	}
 	
 	private String getHiddenFieldNameForX1(FacesContext context)
@@ -122,6 +130,11 @@ public class MapComponent extends UIComponentBase
 		return getClientId(context) + "_zoom_history";
 	}
 
+	private String getHiddenFieldNameForMiniMapVisibility(FacesContext context)
+	{
+		return getClientId(context) + "_minimap_visible";
+	}
+
 	public void decode(FacesContext context)
 	{
 		
@@ -143,6 +156,9 @@ public class MapComponent extends UIComponentBase
 		String mapSizeStr = UtilsJSF.getParamString(params, getHiddenFieldNameForMapSize(context));
 		if (!StringUtils.isNullOrEmpty(mapSizeStr))
 			mapSize = MapSize.parse(mapSizeStr, true);
+		
+		miniMapVisible = UtilsJSF.getParamBoolean(params, getHiddenFieldNameForMiniMapVisibility(context), miniMapVisible);
+		System.out.println(miniMapVisible);
 		
 	}
 	
@@ -320,6 +336,9 @@ public class MapComponent extends UIComponentBase
 		String bubbleTextId = getClientId(context) + "_bubble_text";
 		String scaleIndicatorTextId = getClientId(context) + "_scale_indicator_text";
 		String scaleIndicatorBarId = getClientId(context) + "_scale_indicator_bar";
+		String miniMapControlId = getClientId(context) + "_minimap_control";
+		String miniMapFrameId = getClientId(context) + "_minimap_frame";
+		String miniMapToggleId = getClientId(context) + "_minimap_toggle";
 
 		String hiddenFieldNameForX1 = getHiddenFieldNameForX1(context);
 		String hiddenFieldNameForY1 = getHiddenFieldNameForY1(context);
@@ -328,11 +347,13 @@ public class MapComponent extends UIComponentBase
 		String hiddenFieldNameForMouseMode = getHiddenFieldNameForMouseMode(context);
 		String hiddenFieldNameForZoomHistory = getHiddenFieldNameForZoomHistory(context);
 		String hiddenFieldNameForMapSize = getHiddenFieldNameForMapSize(context);
+		String hiddenFieldNameForMiniMapVisibility = getHiddenFieldNameForMiniMapVisibility(context);
 		
 		// from beans or prev values
 		mapSize = getMapSize();
 		mapSizes = getMapSizes();
 		PointOfInterest[] pointsOfInterest = getPointsOfInterest();
+		miniMap = isMiniMap();
 		
 		// at least the default map size
 		if (mapSizes == null || mapSizes.length == 0)
@@ -470,9 +491,26 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append(", ");
 		
 		// minimap
-		jsRegister.append("'").append("mmControl").append("'");
-		jsRegister.append(", ");
-		jsRegister.append("'").append("mmFrame").append("'");
+		if (miniMap)
+		{
+			jsRegister.append("'").append(miniMapControlId).append("'");
+			jsRegister.append(", ");
+			jsRegister.append("'").append(miniMapFrameId).append("'");
+			jsRegister.append(", ");
+			jsRegister.append("'").append(miniMapToggleId).append("'");
+			jsRegister.append(", ");
+			jsRegister.append("'").append(hiddenFieldNameForMiniMapVisibility).append("'");
+		}
+		else
+		{
+			jsRegister.append("null");
+			jsRegister.append(", ");
+			jsRegister.append("null");
+			jsRegister.append(", ");
+			jsRegister.append("null");
+			jsRegister.append(", ");
+			jsRegister.append("null");
+		}
 
 		// end of init JS
 		jsRegister.append(");");
@@ -487,6 +525,7 @@ public class MapComponent extends UIComponentBase
 		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForY1, String.valueOf(y1));
 		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForX2, String.valueOf(x2));
 		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForY2, String.valueOf(y2));
+		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForMiniMapVisibility, String.valueOf(miniMapVisible));
 		
 		// hidden field: mouse mod
 		UtilsJSF.encodeHiddenInput(this, writer,
@@ -561,6 +600,28 @@ public class MapComponent extends UIComponentBase
 		
 		// scale indicator
 		encodeScaleIndicator(context, writer, scaleIndicatorTextId, scaleIndicatorBarId);
+		
+		// minimap
+		if (miniMap)
+		{
+			writer.startElement("div", this);
+			writer.writeAttribute("id", miniMapControlId, null);
+			if (!miniMapVisible) writer.writeAttribute("style", "visibility: hidden", null);
+			writer.writeAttribute("class", "minimap-control", null);
+
+			writer.startElement("div", this);
+			writer.writeAttribute("id", miniMapFrameId, null);
+			writer.writeAttribute("class", "minimap-frame", null);
+			writer.endElement("div");
+			
+			writer.endElement("div");
+
+			writer.startElement("div", this);
+			writer.writeAttribute("id", miniMapToggleId, null);
+			writer.writeAttribute("class", "minimap-toggle", null);
+			writer.endElement("div");
+		
+		}
 		
 		// bubble
 		encodeBubble(context, writer, bubbleId, bubbleTextId);
@@ -646,6 +707,20 @@ public class MapComponent extends UIComponentBase
         ValueBinding vb = getValueBinding("pointsOfInterest");
         if (vb == null) return pointsOfInterest;
         return (PointOfInterest[]) vb.getValue(getFacesContext());
+	}
+
+	public void setMiniMap(boolean miniMap)
+	{
+		miniMapSet = true;
+		this.miniMap = miniMap;
+	}
+
+	public boolean isMiniMap()
+	{
+        if (miniMapSet) return miniMap;
+        ValueBinding vb = getValueBinding("miniMap");
+        if (vb == null) return miniMap;
+        return ((Boolean) vb.getValue(getFacesContext())).booleanValue();
 	}
 
 }

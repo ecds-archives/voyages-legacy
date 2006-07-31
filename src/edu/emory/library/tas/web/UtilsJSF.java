@@ -3,7 +3,6 @@ package edu.emory.library.tas.web;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -247,6 +246,38 @@ public class UtilsJSF
     			paramName, def);
     }
 
+    public static boolean getParamBoolean(Map params, String paramName)
+    {
+		String value = (String) params.get(paramName);
+		if (StringUtils.isNullOrEmpty(value))
+			return false;
+		else
+			return "true".compareToIgnoreCase(value) == 0;
+    }
+    
+    public static boolean getParamBoolean(FacesContext context, String paramName)
+    {
+    	return getParamBoolean(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName);
+    }
+
+    public static boolean getParamBoolean(Map params, String paramName, boolean def)
+    {
+		String value = (String) params.get(paramName);
+		if (StringUtils.isNullOrEmpty(value))
+			return def;
+		else
+			return "true".compareToIgnoreCase(value) == 0;
+    }
+    
+    public static boolean getParamBoolean(FacesContext context, String paramName, boolean def)
+    {
+    	return getParamBoolean(
+    			context.getExternalContext().getRequestParameterMap(),
+    			paramName, def);
+    }
+    
     public static String getParamString(Map params, String paramName)
     {
     	String value = (String) params.get(paramName);

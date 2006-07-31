@@ -4,6 +4,8 @@ var MapsGlobal =
 	MAP_TOOL_ZOOM: 1,
 	MAP_TOOL_PAN: 2,
 	MAP_TOOL_SELECTOR: 3,
+	
+	SCALE_FACTOR: 1000,
 
 	maps: new Array(),
 	
@@ -41,7 +43,9 @@ var MapsGlobal =
 		scaleIndicatorTextId,
 		scaleIndicatorBarId,
 		miniMapControlId,
-		miniMapFrameId
+		miniMapFrameId,
+		miniMapToggleId,
+		fieldNameMiniMapVisibility
 	)
 	{
 	
@@ -89,7 +93,10 @@ var MapsGlobal =
 			miniMap.fixedSize = true;
 			miniMap.map_control_id = miniMapControlId;
 			miniMap.frameId = miniMapFrameId;
+			miniMap.mainMap = map;
 			map.miniMap = miniMap;
+			map.fieldNameMiniMapVisibility = fieldNameMiniMapVisibility;
+			if (miniMapToggleId) map.miniMapToggleId = miniMapToggleId;
 		}
 		
 		// button: back
@@ -127,7 +134,7 @@ var MapsGlobal =
 			new MapZoomSize(mapSizes, formName, fieldNameForMapSize, map);
 
 		// call init after page loads
-		EventAttacher.attachOnWindowEvent("load", map, "init");
+		EventAttacher.attachOnWindowEvent("load", map, "init", false);
 	
 	},
 	
@@ -375,7 +382,7 @@ function Map()
 	this.first_tile_vy = null;
 	this.scale = null;
 	this.scale_min = 1;
-	this.scale_max = 100;
+	this.scale_max = 100000;
 	this.scale_factor_plus = 2.0;
 	this.scale_factor_minus = 0.5;
 
@@ -428,7 +435,7 @@ function Map()
 	this.selector = null;
 	
 	// selector mode
-	this.selectorBorder = 50;
+	this.selectorBorder = 30;
 	this.selectorX1 = null;
 	this.selectorY1 = null;
 	this.selectorX2 = null;
@@ -439,6 +446,8 @@ function Map()
 	this.selectorVportY2 = null;
 	
 	// reference to a minimap
+	this.miniMapToggleId = null;
+	this.miniMapToggle = null;
 	this.miniMap = null;
 	this.mainMap = null;
 	
@@ -601,12 +610,12 @@ Map.prototype.getTileRealHeight = function()
 
 Map.prototype.fromPxToReal = function(v)
 {
-	return v / this.scale;
+	return v / (this.scale / MapsGlobal.SCALE_FACTOR);
 }
 
 Map.prototype.fromRealToPx = function(v)
 {
-	return v * this.scale;
+	return v * (this.scale / MapsGlobal.SCALE_FACTOR);
 }
 
 Map.prototype.roundAndCapScale = function(s)
@@ -786,7 +795,8 @@ Map.prototype.mapStopDrag = function(event)
 			// precompute points position wrt. the new vport
 			this.precomputePointsPositions();
 			
-			// update minimap
+			// update associated map
+			this.updateMainMap();
 			this.updateMiniMap();
 
 			break;
@@ -916,12 +926,12 @@ Map.prototype.changeScale = function(newScale, notifyZoomChange)
 	var cy = this.getCenterY();
 	
 	// center
-	this.setScaleAndCenterTo(newScale, cx, cy, true, notifyZoomChange);
+	this.setScaleAndCenterTo(newScale, cx, cy, true, notifyZoomChange, true, true);
 
 }
 
 // PUBLIC
-Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, border, notifyZoomChange)
+Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, border, notifyZoomChange, updateMainMap, updateMiniMap)
 {
 
 	// does not make sense in selector mode
@@ -931,7 +941,7 @@ Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, border, notifyZoom
 	// what we want to see
 	var rect = new MapRectangle(x1, y1, x2, y2);
 
-	// adjust scale
+	// compute new scale
 	var newScale = MapUtils.fitRectangle(
 		rect,
 		this.getVportWidth(),
@@ -939,18 +949,23 @@ Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, border, notifyZoom
 		MapUtils.RECTANGLE_FIT_DEST_OVER_SRC,
 		border);
 		
+	// adjust by factor
+	newScale *= MapsGlobal.SCALE_FACTOR;
+		
 	// zoom
 	this.setScaleAndCenterTo(
 		newScale,
 		rect.getCenterX(),
 		rect.getCenterY(),
 		saveState,
-		notifyZoomChange);
+		notifyZoomChange,
+		updateMainMap,
+		updateMiniMap);
 
 }
 
 // PUBLIC
-Map.prototype.positionBySelector = function(x1, y1, x2, y2)
+Map.prototype.positionBySelector = function(x1, y1, x2, y2, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
 
 	// works only in selector mode
@@ -966,7 +981,7 @@ Map.prototype.positionBySelector = function(x1, y1, x2, y2)
 	// what we want to see
 	var rect = new MapRectangle(x1, y1, x2, y2);
 
-	// adjust scale
+	// compute new scale
 	var newScale = MapUtils.fitRectangle(
 		rect,
 		this.getVportWidth(),
@@ -974,23 +989,35 @@ Map.prototype.positionBySelector = function(x1, y1, x2, y2)
 		MapUtils.RECTANGLE_FIT_DEST_OVER_SRC,
 		this.selectorBorder);
 		
+	// adjust by factor
+	newScale *= MapsGlobal.SCALE_FACTOR;
+
 	// zoom
 	this.setScaleAndCenterTo(
 		newScale,
 		rect.getCenterX(),
 		rect.getCenterY(),
-		false, false);
+		saveState,
+		notifyZoomChange,
+		updateMainMap,
+		updateMiniMap);
 
 }
 
 // PUBLIC
-Map.prototype.centerTo = function(x, y)
+Map.prototype.centerTo = function(x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
-	this.setScaleAndCenterTo(this.scale, x, y, false, false);
+	this.setScaleAndCenterTo(
+		this.scale,
+		x, y,
+		saveState,
+		notifyZoomChange,
+		updateMainMap,
+		updateMiniMap);
 }
 
 // PRIVATE
-Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZoomChange)
+Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
 
 	// scale has changed
@@ -1044,8 +1071,8 @@ Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZo
 	}
 	
 	// update associated main/mini-map
-	this.updateMiniMap();
-	this.updateMainMap();
+	if (updateMainMap) this.updateMainMap();
+	if (updateMiniMap) this.updateMiniMap();
 	
 	// remember current state
 	if (saveState)
@@ -1061,6 +1088,47 @@ Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZo
 // main/mini-map interaction
 /////////////////////////////////////////////////////////
 
+Map.prototype.toggleVisibility = function()
+{
+	this.map_control.style.visibility = 
+		this.isVisible() ? "hidden" : "visible";
+		
+	//this.map_control.style.bottom = "0px";
+	//this.map_control.style.right = "0px";
+}
+
+Map.prototype.isVisible = function()
+{
+	return this.map_control.style.visibility != "hidden";
+}
+
+Map.prototype.initMiniMap = function()
+{
+
+	if (!this.miniMap)
+		return;
+		
+	this.miniMapToggle = document.getElementById(this.miniMapToggleId);
+	
+	if (this.miniMapToggle)
+		EventAttacher.attach(this.miniMapToggle, "click", this, "hideShowMiniMap")
+
+	this.fieldMiniMapVisibility =
+		document.forms[this.form_name].elements[this.fieldNameMiniMapVisibility];
+
+}
+
+Map.prototype.hideShowMiniMap = function()
+{
+
+	if (!this.miniMap)
+		return;
+		
+	this.miniMap.toggleVisibility();
+	this.fieldMiniMapVisibility.value = this.miniMap.isVisible() ? "true" : "false";
+
+}
+
 Map.prototype.updateMiniMap = function()
 {
 
@@ -1071,7 +1139,12 @@ Map.prototype.updateMiniMap = function()
 		this.getMapX1(),
 		this.getMapY1(),
 		this.getMapX2(),
-		this.getMapY2());
+		this.getMapY2(),
+		false, // no save state
+		false, // no notify zoom change
+		false, // no update minimap
+		false  // no update mainmap
+	); 
 
 }
 
@@ -1083,7 +1156,12 @@ Map.prototype.updateMainMap = function()
 
 	this.mainMap.centerTo(
 		this.getCenterX(),
-		this.getCenterY());
+		this.getCenterY(),
+		false, // no save state
+		false, // no notify zoom change (since we are panning)
+		false, // no update minimap
+		false  // no update mainmap
+	);
 
 }
 
@@ -1938,7 +2016,7 @@ Map.prototype.mapControlsInit = function()
 {
 
 	this.map_control = document.getElementById(this.map_control_id);
-	this.map_control.style.display = "block";
+	//this.map_control.style.display = "block";
 	
 	this.map_control_top_tools = document.getElementById(this.map_control_top_tools_id);
 	if (this.map_control_top_tools) this.map_control_top_tools.style.position = "absolute";
@@ -2027,14 +2105,14 @@ Map.prototype.restoreState = function()
 		var y1 = parseFloat(this.field_y1.value);
 		var x2 = parseFloat(this.field_x2.value);
 		var y2 = parseFloat(this.field_y2.value);
-		this.zoomMapTo(x1, y1, x2, y2, false, 0, false);
+		this.zoomMapTo(x1, y1, x2, y2, false, 0, false, false, true);
 	}
 	else
 	{
-		this.zoomMapTo(-180, -90, 180, 90, false, 0, false);
+		this.zoomMapTo(-180, -90, 180, 90, false, 0, false, false, true);
 	}
 	
-	// and init history if empty	
+	// and init history if empty
 	if (this.zoom_history_pos == -1)
 	{
 		this.zoomSaveState();
@@ -2046,13 +2124,13 @@ Map.prototype.restoreState = function()
 // main init
 /////////////////////////////////////////////////////////
 
-Map.prototype.init = function()
+Map.prototype.init = function(restoreState)
 {
 
 	// minimap should be initialized first
 	if (this.miniMap)
 	{
-		this.miniMap.init();
+		this.miniMap.init(false);
 		this.miniMap.setMouseModeToSelector();
 	}
 
@@ -2074,9 +2152,15 @@ Map.prototype.init = function()
 	this.zoomHistoryRestore();
 	
 	// show something
-	this.restoreState();
-	this.watchForLabels();
+	if (restoreState)
+	{
+		this.restoreState();
+		this.watchForLabels();
+	}
 	
+	// init minimap
+	this.initMiniMap();
+		
 	// let others know that we are done
 	this.initListeners.invoke();
 	

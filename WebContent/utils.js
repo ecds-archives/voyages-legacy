@@ -383,7 +383,7 @@ EventQueue.prototype.register = function(object, method, arg)
 
 EventQueue.prototype.invoke = function()
 {
-	for (var i=0; i<this.init_listeners.length; i++)
+	for (var i=0; i<this.queue.length; i++)
 	{
 		var reg = this.queue[i];
 		reg.object[reg.method](reg.arg);

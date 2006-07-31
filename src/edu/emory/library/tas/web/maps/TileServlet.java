@@ -22,9 +22,9 @@ public class TileServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5538255560078657125L;
 
-	public static final int META_SIZE_X = 160;
-
-	public static final int META_SIZE_Y = 60;
+	private final static double SCALE_FACTOR = 1000.0;
+	public static final int META_SIZE_X = 0; // 160;
+	public static final int META_SIZE_Y = 0; //60;
 
 	private TileCache cache = new TileCache();
 	private int cacheHits = 0;
@@ -81,14 +81,16 @@ public class TileServlet extends HttpServlet {
 			response.sendRedirect("../blank.png");
 			return;
 		}
+		
+		double realScale = (double) scale / SCALE_FACTOR;
 
-		double realTileWidth = (double) tileWidth / (double) scale;
-		double realTileHeight = (double) tileHeight / (double) scale;
+		double realTileWidth = (double) tileWidth / realScale;
+		double realTileHeight = (double) tileHeight / realScale;
 
-		double x1 = col * realTileWidth - META_SIZE_X / (double) scale;
-		double y1 = row * realTileHeight - META_SIZE_Y / (double) scale;
-		double x2 = (col + 1) * realTileWidth + META_SIZE_X / (double) scale;
-		double y2 = (row + 1) * realTileHeight + META_SIZE_Y / (double) scale;
+		double x1 = col * realTileWidth - META_SIZE_X / realScale;
+		double y1 = row * realTileHeight - META_SIZE_Y / realScale;
+		double x2 = (col + 1) * realTileWidth + META_SIZE_X / realScale;
+		double y2 = (row + 1) * realTileHeight + META_SIZE_Y / realScale;
 
 		mapObj map = new mapObj(path);
 		map.setSize(tileWidth + 2 * META_SIZE_X, tileHeight + 2 * META_SIZE_Y);

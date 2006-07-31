@@ -12,6 +12,7 @@ public class MapTag extends UIComponentTag
 	private String mapFile;
 	private String serverBaseUrl;
 	private String pointsOfInterest;
+	private String miniMap;
 
 	public String getComponentType()
 	{
@@ -55,6 +56,16 @@ public class MapTag extends UIComponentTag
 			component.setValueBinding("pointsOfInterest", vb);
 		}
 
+		if (miniMap != null && isValueReference(miniMap))
+		{
+			ValueBinding vb = app.createValueBinding(miniMap);
+			component.setValueBinding("miniMap", vb);
+		}
+		else
+		{
+			map.setMiniMap("true".equalsIgnoreCase(miniMap));
+		}
+
 	}
 
 	public String getMapFile()
@@ -85,6 +96,16 @@ public class MapTag extends UIComponentTag
 	public void setPointsOfInterest(String pointsOfInterest)
 	{
 		this.pointsOfInterest = pointsOfInterest;
+	}
+
+	public String getMiniMap()
+	{
+		return miniMap;
+	}
+
+	public void setMiniMap(String miniMap)
+	{
+		this.miniMap = miniMap;
 	}
 
 }

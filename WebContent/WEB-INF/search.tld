@@ -368,6 +368,9 @@
 		<attribute>
 			<name>pointsOfInterest</name>
 		</attribute>
+		<attribute>
+			<name>miniMap</name>
+		</attribute>
 	</tag>
 	
 	<tag>
