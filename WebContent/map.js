@@ -393,7 +393,7 @@ function Map()
 	this.frame = null;
 	this.frameId = null;
 	this.tiles_map = null;
-	this.map_blank_img = "blank.png";
+	this.map_blank_img = "../../blank.png";
 	
 	// viewport config
 	this.visible_rows = -1;
@@ -440,6 +440,7 @@ function Map()
 	
 	// reference to a minimap
 	this.miniMap = null;
+	this.mainMap = null;
 	
 	// points of interest
 	this.points = null;
@@ -483,8 +484,8 @@ function Map()
 	this.field_y2 = null;
 	
 	// init handler
-	this.init_listeners = new Array();
-
+	this.initListeners = new EventQueue();
+	
 }
 
 /////////////////////////////////////////////////////////
@@ -915,7 +916,7 @@ Map.prototype.changeScale = function(newScale, notifyZoomChange)
 	var cy = this.getCenterY();
 	
 	// center
-	this.setScaleAndCenterMapTo(newScale, cx, cy, true, notifyZoomChange);
+	this.setScaleAndCenterTo(newScale, cx, cy, true, notifyZoomChange);
 
 }
 
@@ -939,7 +940,7 @@ Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, border, notifyZoom
 		border);
 		
 	// zoom
-	this.setScaleAndCenterMapTo(
+	this.setScaleAndCenterTo(
 		newScale,
 		rect.getCenterX(),
 		rect.getCenterY(),
@@ -974,7 +975,7 @@ Map.prototype.positionBySelector = function(x1, y1, x2, y2)
 		this.selectorBorder);
 		
 	// zoom
-	this.setScaleAndCenterMapTo(
+	this.setScaleAndCenterTo(
 		newScale,
 		rect.getCenterX(),
 		rect.getCenterY(),
@@ -982,11 +983,15 @@ Map.prototype.positionBySelector = function(x1, y1, x2, y2)
 
 }
 
-// PRIVATE
-Map.prototype.setScaleAndCenterMapTo = function(newScale, x, y, saveState, notifyZoomChange)
+// PUBLIC
+Map.prototype.centerTo = function(x, y)
 {
+	this.setScaleAndCenterTo(this.scale, x, y, false, false);
+}
 
-	// debug("setScaleAndCenterMapTo (newScale = " + newScale + ", x = " + x + ", y = " + y + ")");
+// PRIVATE
+Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZoomChange)
+{
 
 	// scale has changed
 	newScale = this.roundAndCapScale(newScale);
@@ -1038,8 +1043,9 @@ Map.prototype.setScaleAndCenterMapTo = function(newScale, x, y, saveState, notif
 		this.drawSelector(this.selectorVportX1, this.selectorVportY1, this.selectorVportX2, this.selectorVportY2);
 	}
 	
-	// update associated minimap
+	// update associated main/mini-map
 	this.updateMiniMap();
+	this.updateMainMap();
 	
 	// remember current state
 	if (saveState)
@@ -1048,29 +1054,37 @@ Map.prototype.setScaleAndCenterMapTo = function(newScale, x, y, saveState, notif
 	// notify change of zoom
 	if (notifyZoomChange)
 		this.notifyZoomChange();
-	
+		
 }
 
 /////////////////////////////////////////////////////////
-// minimap init
+// main/mini-map interaction
 /////////////////////////////////////////////////////////
 
 Map.prototype.updateMiniMap = function()
 {
+
 	if (!this.miniMap)
 		return;
 		
-	debug("updateMiniMap (" +
-		"x1 = " + this.getMapX1() + ", " +
-		"y1 = " + this.getMapY1() + ", " +
-		"x2 = " + this.getMapX2() + ", " +
-		"y2 = " + this.getMapY2() + ")");
-	
 	this.miniMap.positionBySelector(
 		this.getMapX1(),
 		this.getMapY1(),
 		this.getMapX2(),
 		this.getMapY2());
+
+}
+
+Map.prototype.updateMainMap = function()
+{
+
+	if (!this.mainMap)
+		return;
+
+	this.mainMap.centerTo(
+		this.getCenterX(),
+		this.getCenterY());
+
 }
 
 /////////////////////////////////////////////////////////
@@ -1091,24 +1105,24 @@ Map.prototype.saveState = function()
 
 Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 {
-	if (update_img)
-	{
+	//if (update_img)
+	//{
 	
 		// points
-		if (map_tile.points)
-		{
-			this.frame.removeChild(map_tile.points.getRoot());
-		}
-		var pointsTile = this.pointsByTiles[col + ":" + row];
-		if (pointsTile)
-		{
-			map_tile.points = pointsTile;
-			this.frame.insertBefore(pointsTile.getRoot(), this.selector);
-		}
-		else
-		{
-			map_tile.points = null;
-		}
+//		if (map_tile.points)
+//		{
+//			this.frame.removeChild(map_tile.points.getRoot());
+//		}
+//		var pointsTile = this.pointsByTiles[col + ":" + row];
+//		if (pointsTile)
+//		{
+//			map_tile.points = pointsTile;
+//			this.frame.insertBefore(pointsTile.getRoot(), this.selector);
+//		}
+//		else
+//		{
+//			map_tile.points = null;
+//		}
 		
 		// map
 		if (map_tile.url != map_tile.oldUrl)
@@ -1121,7 +1135,7 @@ Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 			map_tile.valid = true;
 		}
 
-	}
+	//}
 	if (x != null)
 	{
 		if (map_tile.points) map_tile.points.setX(x - this.pointsExtraSpace);
@@ -1134,9 +1148,8 @@ Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 	}
 }
 
-Map.prototype.refreshInvalidatedTiles = function()
+Map.prototype.updateInvalidatedTiles = function()
 {
-	if (!this.miniMap) debug("refreshInvalidatedTiles");
 	for (var i=0; i<this.visible_rows+1; i++)
 	{
 		for (var j=0; j<this.visible_cols+1; j++)
@@ -1145,7 +1158,8 @@ Map.prototype.refreshInvalidatedTiles = function()
 			if (!tile.valid)
 			{
 				tile.valid = true;
-				tile.img.src = tile.url;
+				tile.url = tile.newUrl;
+				tile.img.src = tile.newUrl;
 			}
 		}
 	}
@@ -1154,6 +1168,7 @@ Map.prototype.refreshInvalidatedTiles = function()
 Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, col_from, col_to)
 {
 
+	// save extend to hidden fields
 	this.saveState();
 	
 	if (row_from == null) row_from = 0;
@@ -1161,6 +1176,42 @@ Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, c
 	if (col_from == null) col_from = 0;
 	if (col_to == null) col_to = this.visible_cols;
 	
+	var needPosponedUpdate = false;
+	for (var i=row_from; i<=row_to; i++)
+	{
+		for (var j=col_from; j<=col_to; j++)
+		{
+			var tile = this.tiles_map[i][j];
+			var col = this.first_tile_col + j;
+			var row = this.first_tile_row - i;
+			var newUrl = this.createTileUrl(col, row);
+			if (newUrl != tile.url)
+			{
+				if (postpone)
+				{
+					if (tile.valid) tile.img.src = this.getBlankTileUrl();
+					tile.newUrl = newUrl;
+					tile.valid = false;
+					needPosponedUpdate = true;
+				}
+				else
+				{
+					tile.url = newUrl;
+					tile.valid = true;
+					tile.img.src = newUrl;
+				}
+			}
+			else
+			{
+				tile.valid = true;
+			}
+			tile.img.style.left = (this.first_tile_vx + (j * this.tile_width)) + "px";
+			tile.img.style.top = (this.first_tile_vy + (i * this.tile_height)) + "px";
+		}
+	}
+	
+	
+	/*
 	for (var i=row_from; i<=row_to; i++)
 		for (var j=col_from; j<=col_to; j++)
 			this.updateTile(
@@ -1170,16 +1221,15 @@ Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, c
 				this.first_tile_vy + (i * this.tile_height),
 				this.first_tile_col + j,
 				this.first_tile_row - i);
-				
-	if (postpone)
+	
+	*/
+
+	if (postpone && needPosponedUpdate)
 	{
 		Timer.cancelCall(this.postponed_refresh_id);
-		this.postponed_refresh_id = Timer.delayedCall(this, "refreshInvalidatedTiles", 10);		
+		this.postponed_refresh_id = Timer.delayedCall(this, "updateInvalidatedTiles", 10);		
 	}
-	else
-	{
-		this.refreshInvalidatedTiles();
-	}
+
 }
 
 Map.prototype.adjustTilesAfterPan = function()
@@ -1206,9 +1256,9 @@ Map.prototype.adjustTilesAfterPan = function()
 			var map_tile = this.tiles_map[i].pop();
 			this.tiles_map[i].unshift(map_tile);
 			
-			this.updateTile(true, map_tile, 
-				this.first_tile_vx, null,
-				this.first_tile_col, this.first_tile_row - i);
+//			this.updateTile(true, map_tile, 
+//				this.first_tile_vx, null,
+//				this.first_tile_col, this.first_tile_row - i);
 				
 		}
 		
@@ -1229,9 +1279,9 @@ Map.prototype.adjustTilesAfterPan = function()
 			var map_tile = this.tiles_map[i].shift();
 			this.tiles_map[i].push(map_tile);
 			
-			this.updateTile(true, map_tile, 
-				(this.first_tile_vx + (this.visible_cols+1)*this.tile_width), null,
-				this.first_tile_col + this.visible_cols, this.first_tile_row - i);
+//			this.updateTile(true, map_tile, 
+//				(this.first_tile_vx + (this.visible_cols+1)*this.tile_width), null,
+//				this.first_tile_col + this.visible_cols, this.first_tile_row - i);
 			
 		}
 		
@@ -1252,9 +1302,9 @@ Map.prototype.adjustTilesAfterPan = function()
 		for (var j=0; j<this.visible_cols+1; j++)
 		{
 
-			this.updateTile(true, first_map_row[j], 
-				null, this.first_tile_vy,
-				this.first_tile_col + j, this.first_tile_row);
+//			this.updateTile(true, first_map_row[j], 
+//				null, this.first_tile_vy,
+//				this.first_tile_col + j, this.first_tile_row);
 			
 		}
 		
@@ -1275,9 +1325,9 @@ Map.prototype.adjustTilesAfterPan = function()
 		for (var j=0; j<this.visible_cols+1; j++)
 		{
 		
-			this.updateTile(true, last_map_row[j], 
-				null, (this.first_tile_vy + (this.visible_rows+1)*this.tile_height),
-				this.first_tile_col + j, this.first_tile_row - this.visible_rows);
+//			this.updateTile(true, last_map_row[j], 
+//				null, (this.first_tile_vy + (this.visible_rows+1)*this.tile_height),
+//				this.first_tile_col + j, this.first_tile_row - this.visible_rows);
 		
 		}
 		
@@ -1285,10 +1335,10 @@ Map.prototype.adjustTilesAfterPan = function()
 	
 	// position last unchanged rectangle of tiles
 	// false means = do not change URLs of them
-	this.positionTiles(false, true,
-		update_row_from, update_row_to,
-		update_col_from, update_col_to);
-		
+	this.positionTiles(true, true);
+//		update_row_from, update_row_to,
+//		update_col_from, update_col_to);
+//		
 }
 
 Map.prototype.createTileUrl = function(col, row)
@@ -1355,7 +1405,7 @@ Map.prototype.zoomHistoryMoveAndRestore = function(dir)
 
 	// restore
 	var state = this.zoom_history[new_pos];
-	this.setScaleAndCenterMapTo(state.scale, state.cx, state.cy, false, true);
+	this.setScaleAndCenterTo(state.scale, state.cx, state.cy, false, true);
 
 	// goto
 	this.zoom_history_pos = new_pos;
@@ -1744,7 +1794,7 @@ Map.prototype.setSize = function(width, height)
 	this.updateControlsLayout();
 	this.positionTiles(true, false);
 	
-	this.setScaleAndCenterMapTo(this.scale, cx, cy, false, true);
+	this.setScaleAndCenterTo(this.scale, cx, cy, false, true);
 
 }
 
@@ -1993,28 +2043,6 @@ Map.prototype.restoreState = function()
 }
 
 /////////////////////////////////////////////////////////
-// init listeners
-/////////////////////////////////////////////////////////
-
-Map.prototype.registerInitListener = function(object, method, arg)
-{
-	var reg = new Object();
-	reg.object = object;
-	reg.method = method;
-	reg.arg = arg;
-	this.init_listeners.push(reg);
-}
-
-Map.prototype.invokeInitListeners = function()
-{
-	for (var i=0; i<this.init_listeners.length; i++)
-	{
-		var reg = this.init_listeners[i];
-		reg.object[reg.method](reg.arg);
-	}
-}
-
-/////////////////////////////////////////////////////////
 // main init
 /////////////////////////////////////////////////////////
 
@@ -2049,8 +2077,8 @@ Map.prototype.init = function()
 	this.restoreState();
 	this.watchForLabels();
 	
-	// init tools
-	this.invokeInitListeners();
+	// let others know that we are done
+	this.initListeners.invoke();
 	
 }
 
@@ -2063,7 +2091,7 @@ function MapButtonZoomPlus(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	this.map.registerInitListener(this, "init", null);
+	this.map.initListeners.register(this, "init", null);
 }
 
 MapButtonZoomPlus.prototype.init = function()
@@ -2087,7 +2115,7 @@ function MapButtonZoomMinus(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	this.map.registerInitListener(this, "init", null);
+	this.map.initListeners.register(this, "init", null);
 }
 
 MapButtonZoomMinus.prototype.init = function()
@@ -2110,7 +2138,7 @@ function MapButtonGoBack(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	this.map.registerInitListener(this, "init", null);
+	this.map.initListeners.register(this, "init", null);
 }
 
 MapButtonGoBack.prototype.init = function()
@@ -2140,7 +2168,7 @@ function MapButtonGoForward(elementId, map)
 	this.element = null;
 	this.map = map;
 	this.elementId = elementId;
-	this.map.registerInitListener(this, "init", null);
+	this.map.initListeners.register(this, "init", null);
 }
 
 MapButtonGoForward.prototype.init = function()
@@ -2178,7 +2206,7 @@ function MapZoomAndPanButtons(panElementId, zoomElementId, formName, fieldNameFo
 	this.fieldForMouseMode = null;
 	
 	this.map = map;
-	this.map.registerInitListener(this, "init", null);
+	this.map.initListeners.register(this, "init", null);
 }
 
 MapZoomAndPanButtons.prototype.init = function()
@@ -2218,7 +2246,7 @@ function MapZoomSize(mapSizes, formName, fieldNameForMapSize, map)
 	this.fieldNameForMapSize = fieldNameForMapSize;
 	this.fieldForMapSize = null;
 	this.map = map;
-	this.map.registerInitListener(this, "init", null);
+	this.map.initListeners.register(this, "init", null);
 }
 
 MapZoomSize.prototype.init = function()
@@ -2261,7 +2289,7 @@ function MapZoomSlider(bgElementId, knobElementId, map)
 	this.scale = 0;
 	this.sliding = false;
 	this.map.registerZoomSlider(this);
-	this.map.registerInitListener(this, "init", null);
+	this.map.initListeners.register(this, "init", null);
 }
 
 MapZoomSlider.prototype.init = function()

@@ -363,6 +363,38 @@ var EventAttacher =
 
 }
 
+/////////////////////////////////////////////////////////
+// EventQueue
+/////////////////////////////////////////////////////////
+
+function EventQueue()
+{
+	this.queue = new Array();
+}
+
+EventQueue.prototype.register = function(object, method, arg)
+{
+	var reg = new Object();
+	reg.object = object;
+	reg.method = method;
+	reg.arg = arg;
+	this.queue.push(reg);
+}
+
+EventQueue.prototype.invoke = function()
+{
+	for (var i=0; i<this.init_listeners.length; i++)
+	{
+		var reg = this.queue[i];
+		reg.object[reg.method](reg.arg);
+	}
+}
+
+
+/////////////////////////////////////////////////////////
+// Timer
+/////////////////////////////////////////////////////////
+
 var Timer =
 {
 
