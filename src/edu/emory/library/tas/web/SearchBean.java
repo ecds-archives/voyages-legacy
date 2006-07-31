@@ -9,8 +9,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
+import org.ajaxanywhere.AAUtils;
+
 import edu.emory.library.tas.Configuration;
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
@@ -18,6 +21,7 @@ import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.util.StringUtils;
 import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
 
 /**
  * This bean is used in UI to manage the list of groups, atributes, the
@@ -55,6 +59,7 @@ public class SearchBean
 //	private boolean statisticsVisible = false;
 	
 	private MessageBarComponent messageBar;
+	private int numberOfResults = -1;
 	
 	/**
 	 * Makes a nice ID for UI of a attribute. Compound attributes are prefixed
@@ -204,6 +209,41 @@ public class SearchBean
 
 	}
 	
+	public String determineNumberOfResults()
+	{
+		
+		HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		if (AAUtils.isAjaxRequest(request))
+		{ 
+			System.out.println("je");
+			AAUtils.addZonesToRefresh(request,"xx"); 
+		} 
+
+		Conditions conditions = new Conditions();
+		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
+		{
+			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+			queryCondition.addToConditions(conditions);
+		}
+		
+		Conditions localCond = (Conditions) conditions.addAttributesPrefix("v.voyage.");
+		localCond.addCondition(VoyageIndex.getRecent());
+
+		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
+		qValue.addPopulatedAttribute("count(v.voyageId)", false);
+		Object[] ret = qValue.executeQuery();
+		numberOfResults = ((Integer)ret[0]).intValue();
+
+		return null;
+
+	}
+	
+	public String getNumberOfResults()
+	{
+		if (numberOfResults == -1) return "";
+		return String.valueOf(numberOfResults);
+	}
+
 	/**
 	 * Handler of an event from the history list. Deletes the given history item
 	 * from {@link #history}. The deletion is not handled directly by the

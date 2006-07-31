@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
 <s:sectionGroup
 	id="selectAttributeSectionByPopupMenu"
@@ -171,6 +172,18 @@ function animateAttribute(menuItem, submitFunction)
 		styleClass="main-box-button"
 		action="#{SearchBean.search}"
 		value="Search" />
+
+	<h:commandButton
+		id="buttonCheck"
+		styleClass="main-box-button"
+		action="#{SearchBean.determineNumberOfResults}"
+		onclick="ajaxAnywhere.submitAJAX(null, this); return false;"
+		value="Check" />
+
+	<aa:zoneJSF id="xx">
+		<h:outputText
+			value="#{SearchBean.numberOfResults}" />
+	</aa:zoneJSF>
 
 </s:sectionGroup>
 </div>

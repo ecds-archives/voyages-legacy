@@ -441,6 +441,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("class", "query-builder-text", null);
 		writer.writeAttribute("name", getHtmlNameForSimpleValue(attribute, context), null);
 		writer.writeAttribute("value", queryCondition.getValue(), null);
+		writer.writeAttribute("autocomplete", "off", null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -557,6 +558,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputName, null);
 		writer.writeAttribute("value", value, null);
+		writer.writeAttribute("autocomplete", "off", null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -784,6 +786,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("name", inputMonthName, null);
 		writer.writeAttribute("onfocus", jsMonthOnFocus, null);
 		writer.writeAttribute("value", month, null);
+		writer.writeAttribute("autocomplete", "off", null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -803,6 +806,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("name", inputYearName, null);
 		writer.writeAttribute("onfocus", jsYearOnFocus, null);
 		writer.writeAttribute("value", year, null);
+		writer.writeAttribute("autocomplete", "off", null);
 		writer.endElement("input");
 		writer.endElement("td");
 
@@ -1134,6 +1138,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", displayListHtmlName, null);
 		writer.writeAttribute("value", displayList.toString(), null);
+		writer.writeAttribute("autocomplete", "off", null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -1143,6 +1148,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("value", "Select", null);
 		writer.writeAttribute("onclick", jsPopup.toString(), null);
+		writer.writeAttribute("autocomplete", "off", null);
 		writer.endElement("input");
 		writer.endElement("td");
 

@@ -17,11 +17,12 @@
 	<script src="tooltip.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/scriptaculous.js" type="text/javascript" language="javascript"></script>
-	<script language="javascript" type="text/javascript" src="map.js"></script>
-	<script language="javascript" type="text/javascript" src="graphics.js"></script>
-	<script language="javascript" type="text/javascript" src="graphics-svg.js"></script>
-	<script language="javascript" type="text/javascript" src="graphics-vml.js"></script>
-	<script language="javascript" type="text/javascript" src="utils.js"></script>
+	<script src="jslib/aa.js" type="text/javascript" language="javascript"></script>
+	<script src="map.js" language="javascript" type="text/javascript"></script>
+	<script src="utils.js" language="javascript" type="text/javascript"></script>
+	<script src="graphics.js" language="javascript" type="text/javascript"></script>
+	<script src="graphics-svg.js" language="javascript" type="text/javascript"></script>
+	<script src="graphics-vml.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
