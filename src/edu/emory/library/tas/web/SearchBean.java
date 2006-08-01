@@ -9,8 +9,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
+import org.ajaxanywhere.AAUtils;
+
 import edu.emory.library.tas.Configuration;
 import edu.emory.library.tas.Voyage;
+import edu.emory.library.tas.VoyageIndex;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
 import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.attrGroups.CompoundAttribute;
@@ -18,6 +21,7 @@ import edu.emory.library.tas.attrGroups.Group;
 import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.util.StringUtils;
 import edu.emory.library.tas.util.query.Conditions;
+import edu.emory.library.tas.util.query.QueryValue;
 
 /**
  * This bean is used in UI to manage the list of groups, atributes, the
@@ -195,8 +199,6 @@ public class SearchBean
 		}
 		if (errors) return;
 		
-		numberOfResults = -1;
-
 		searchParameters = new SearchParameters();
 		searchParameters.setConditions(conditions);
 		searchParameters.setColumns(columns);
@@ -257,7 +259,7 @@ public class SearchBean
 		qValue.addPopulatedAttribute("count(v.voyageId)", false);
 		
 		Object[] ret = qValue.executeQuery();
-		numberOfResults = ((Integer)ret[0]).intValue();
+		int numberOfResults = ((Integer)ret[0]).intValue();
 		
 		return "Expected number of voyages: " + numberOfResults;
 	}
