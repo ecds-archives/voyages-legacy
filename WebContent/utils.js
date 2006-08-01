@@ -401,7 +401,7 @@ var Timer =
 	map: new Array(),
 	nextId: 0,
 	
-	delayedCall: function(object, method, delay)
+	delayedCall: function(object, method, delay, arg)
 	{
 	
 		var id = Timer.nextId;
@@ -411,6 +411,7 @@ var Timer =
 		var reg = new Object();
 		reg.object = object;
 		reg.method = method;
+		req.arg = arg;
 		reg.tid = window.setTimeout("Timer.globalHandler(" + id + ")", delay);
 		
 		Timer.map["call_" + id] = reg;
@@ -435,7 +436,7 @@ var Timer =
 		if (reg)
 		{
 			delete Timer.map["call_" + id];
-			reg.object[reg.method]();
+			reg.object[reg.method](req.arg);
 		}
 	}
 

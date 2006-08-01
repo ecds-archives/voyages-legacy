@@ -93,6 +93,11 @@
 		<servlet-name>TileServlet</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.maps.TileServlet</servlet-class>
 	</servlet>
+	
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>edu.emory.library.tas.web.TestServlet</servlet-class>
+    </servlet>
 
 <!-- 
 	<servlet-mapping>
@@ -149,6 +154,11 @@
 	<servlet-mapping>
 		<servlet-name>TileServlet</servlet-name>
 		<url-pattern>/servlet/maptile</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TestServlet</servlet-name>
+		<url-pattern>/servlet/test</url-pattern>
 	</servlet-mapping>
 
 </web-app>

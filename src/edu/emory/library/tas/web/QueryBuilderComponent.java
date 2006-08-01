@@ -419,6 +419,11 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("div");
 	}
 	
+	private String getHtmlNameForTotal(FacesContext context)
+	{
+		return getClientId(context) + "_update_total";
+	}
+
 	private String getHtmlNameForSimpleValue(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId();
@@ -435,10 +440,19 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.startElement("tr", this);
 		
+		String onKeyUp =
+			"QueryBuilder.updateExpectedTotal(" +
+			"'" + getClientId(context) + "', " +
+			"'" + form.getId() + "', " +
+			"'" + getHtmlNameForTotal(context) + "', " +
+			"1000" +
+			")";
+		
 		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("class", "query-builder-text", null);
+		writer.writeAttribute("onkeyup", onKeyUp, null);
 		writer.writeAttribute("name", getHtmlNameForSimpleValue(attribute, context), null);
 		writer.writeAttribute("value", queryCondition.getValue(), null);
 		writer.writeAttribute("autocomplete", "off", null);
