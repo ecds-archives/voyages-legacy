@@ -7,7 +7,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="search-jsf.css" rel="stylesheet" type="text/css">
+<link href="search.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 </style>
@@ -73,6 +73,8 @@ function saveAndClose()
 
 	getHiddenList().value = values.join(",");
 	getDisplayList().value = labels.join(", ");
+	window.parent.opener.QueryBuilder.updateTotal(builderId, formName, updateTotalFieldName, 10);
+
 	window.parent.close();
 
 }
@@ -150,7 +152,9 @@ function searchFor(value)
 			formName="#{DictionaryListBean.formName}"
 			hiddenFieldName="#{DictionaryListBean.hiddenFieldName}"
 			displayFieldName="#{DictionaryListBean.displayFieldName}"
-			dictionary="#{DictionaryListBean.dictionary}"  />
+			dictionary="#{DictionaryListBean.dictionary}"
+			updateTotalFieldName="#{DictionaryListBean.updateTotalFieldName}"
+			builderId="#{DictionaryListBean.builderId}"  />
 		</div>
 	</h:form>
 </f:view>

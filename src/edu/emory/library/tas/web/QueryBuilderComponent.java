@@ -8,7 +8,10 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tas.Dictionary;
 import edu.emory.library.tas.attrGroups.AbstractAttribute;
@@ -51,19 +54,47 @@ import edu.emory.library.tas.util.StringUtils;
 public class QueryBuilderComponent extends UIComponentBase
 {
 
+	private static final int UPDATE_DELAY = 1000;
+
 	private Query submittedQuery;
 	private Query setQuery;
 	private boolean querySet = false;
+	private MethodBinding onUpdateTotal;
 
 	public String getFamily()
 	{
 		return null;
+	}
+	
+	public Object saveState(FacesContext context)
+	{
+		Object values[] = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = saveAttachedState(context, onUpdateTotal);
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		onUpdateTotal = (MethodBinding) restoreAttachedState(context, values[1]);
 	}
 
 	private String getAttributesListHiddenFieldName(FacesContext context)
 	{
 		return getClientId(context) + "_attributes";
 	}
+	
+	private String getHtmlNameForTotal(FacesContext context)
+	{
+		return getClientId(context) + "_update_total";
+	}
+
+//	private String getHtmlNameForTotalTimer(FacesContext context)
+//	{
+//		return getClientId(context) + "_update_total_timer";
+//	}
 
 	public void decode(FacesContext context)
 	{
@@ -76,6 +107,9 @@ public class QueryBuilderComponent extends UIComponentBase
 			submittedQuery = null;
 			return;
 		}
+		
+		if (UtilsJSF.getParamBoolean(params, getHtmlNameForTotal(context)))
+			queueEvent(new QueryUpdateTotalEvent(this));
 		
 		String submittedAttributesStr = (String) params.get(attrFieldName);
 		submittedQuery = new Query();
@@ -127,6 +161,16 @@ public class QueryBuilderComponent extends UIComponentBase
 		if (vb != null && submittedQuery != null) vb.setValue(context, submittedQuery);
 	}
 	
+	public void broadcast(FacesEvent event) throws AbortProcessingException
+	{
+		super.broadcast(event);
+
+		if (event instanceof QueryUpdateTotalEvent)
+			if (onUpdateTotal != null)
+				onUpdateTotal.invoke(getFacesContext(), new Object[] {event});
+
+	}
+	
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
@@ -145,10 +189,20 @@ public class QueryBuilderComponent extends UIComponentBase
 			attributeIds.append(attribute.getId().toString());
 		}
 		
+		String jsUpdateTotalPostponed = generateJavaScriptForUpdateTotal(form, context, false);
+		String jsUpdateTotalImmediate = generateJavaScriptForUpdateTotal(form, context, false);
+		
 		UtilsJSF.encodeHiddenInput(this, writer,
 				getAttributesListHiddenFieldName(context),
 				attributeIds.toString());
 		
+		UtilsJSF.encodeHiddenInput(this, writer,
+				getHtmlNameForTotal(context),
+				"false");
+
+//		UtilsJSF.encodeHiddenInput(this, writer,
+//				getHtmlNameForTotalTimer(context));
+
 		int i = 0;
 		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();  i++)
 		{
@@ -164,7 +218,7 @@ public class QueryBuilderComponent extends UIComponentBase
 					if (queryCondition instanceof QueryConditionText)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
-						encodeSimpleCondition((QueryConditionText)queryCondition, context, form, writer);
+						encodeSimpleCondition((QueryConditionText)queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
 					break;
@@ -175,7 +229,7 @@ public class QueryBuilderComponent extends UIComponentBase
 					if (queryCondition instanceof QueryConditionNumeric)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
-						encodeNumericCondition((QueryConditionNumeric) queryCondition, context, form, writer);
+						encodeNumericCondition((QueryConditionNumeric) queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
 					break;
@@ -184,7 +238,7 @@ public class QueryBuilderComponent extends UIComponentBase
 					if (queryCondition instanceof QueryConditionDate)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
-						encodeDateCondition((QueryConditionDate) queryCondition, context, form, writer);
+						encodeDateCondition((QueryConditionDate) queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
 					break;
@@ -193,7 +247,7 @@ public class QueryBuilderComponent extends UIComponentBase
 					if (queryCondition instanceof QueryConditionDictionary)
 					{
 						encodeStartQueryConditionBox(queryCondition, context, form, writer, i);
-						encodeDictionaryCondition((QueryConditionDictionary)queryCondition, context, form, writer);
+						encodeDictionaryCondition((QueryConditionDictionary)queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate);
 						encodeEndQueryConditionBox(queryCondition, context, form, writer);
 					}
 					break;
@@ -261,112 +315,136 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		String conditionDivId = getConditionDivId(context, conditionIndex);
 		String attrListFieldName = getAttributesListHiddenFieldName(context);
-		String conditionId = queryCondition.getAttribute().getId().toString();
+		String attributeId = queryCondition.getAttribute().getId().toString();
 
 		StringBuffer jsDelete = new StringBuffer();
-		jsDelete.append("var cond = ");
-		UtilsJSF.appendElementRefJS(jsDelete, conditionDivId).append("; ");
-		jsDelete.append("var attrListField = ");
-		UtilsJSF.appendFormElementRefJS(jsDelete, context, form, attrListFieldName).append("; ");
-		jsDelete.append("var attrs = attrListField.value.split(','); ");
-		jsDelete.append("for (var i=0; i<attrs.length; i++) {");
-		{
-			jsDelete.append("if (attrs[i] == '").append(conditionId).append("') {");
-			{
-				jsDelete.append("attrs.splice(i, 1); ");
-				jsDelete.append("attrListField.value = attrs.join(','); ");
-				jsDelete.append("if (Scriptaculous) {");
-				{
-					jsDelete.append("new Effect.Opacity(");
-					jsDelete.append("cond, ");
-					jsDelete.append("{");
-					{
-						jsDelete.append("from: 1.0, ");
-						jsDelete.append("to: 0.0, ");
-						jsDelete.append("duration: 0.5, ");
-						jsDelete.append("afterFinishInternal: function(effect) ");
-						jsDelete.append("{effect.element.parentNode.removeChild(effect.element);}");
-					}
-					jsDelete.append("}");
-					jsDelete.append(");");
-				}
-				jsDelete.append("} else {");
-				{
-					jsDelete.append("cond.parentNode.removeChild(cond);");
-				}
-				jsDelete.append("}");
-				jsDelete.append("return;");
-			}
-			jsDelete.append("}");
-		}
-		jsDelete.append("}");
+		jsDelete.append("QueryBuilder.deleteCondition(");
+		jsDelete.append("'").append(getClientId(context)).append("', ");
+		jsDelete.append("'").append(form.getId()).append("', ");
+		jsDelete.append("'").append(getHtmlNameForTotal(context)).append("', ");
+		jsDelete.append("'").append(attrListFieldName).append("', ");
+		jsDelete.append("'").append(conditionDivId).append("', ");
+		jsDelete.append("'").append(attributeId).append("'");
+		jsDelete.append(")");
+//		jsDelete.append("var cond = ");
+//		UtilsJSF.appendElementRefJS(jsDelete, conditionDivId).append("; ");
+//		jsDelete.append("var attrListField = ");
+//		UtilsJSF.appendFormElementRefJS(jsDelete, context, form, attrListFieldName).append("; ");
+//		jsDelete.append("var attrs = attrListField.value.split(','); ");
+//		jsDelete.append("for (var i=0; i<attrs.length; i++) {");
+//		{
+//			jsDelete.append("if (attrs[i] == '").append(attributeId).append("') {");
+//			{
+//				jsDelete.append("attrs.splice(i, 1); ");
+//				jsDelete.append("attrListField.value = attrs.join(','); ");
+//				jsDelete.append("if (Scriptaculous) {");
+//				{
+//					jsDelete.append("new Effect.Opacity(");
+//					jsDelete.append("cond, ");
+//					jsDelete.append("{");
+//					{
+//						jsDelete.append("from: 1.0, ");
+//						jsDelete.append("to: 0.0, ");
+//						jsDelete.append("duration: 0.5, ");
+//						jsDelete.append("afterFinishInternal: function(effect) ");
+//						jsDelete.append("{effect.element.parentNode.removeChild(effect.element);}");
+//					}
+//					jsDelete.append("}");
+//					jsDelete.append(");");
+//				}
+//				jsDelete.append("} else {");
+//				{
+//					jsDelete.append("cond.parentNode.removeChild(cond);");
+//				}
+//				jsDelete.append("}");
+//				jsDelete.append("return;");
+//			}
+//			jsDelete.append("}");
+//		}
+//		jsDelete.append("}");
 
 
 		StringBuffer jsMoveUp = new StringBuffer();
-		jsMoveUp.append("var cond = ");
-		UtilsJSF.appendElementRefJS(jsMoveUp, conditionDivId).append("; ");
-		jsMoveUp.append("var attrListField = ");
-		UtilsJSF.appendFormElementRefJS(jsMoveUp, context, form, attrListFieldName).append("; ");
-		jsMoveUp.append("var attrs = attrListField.value.split(','); ");
-		jsMoveUp.append("for (var i=0; i<attrs.length; i++) {");
-		{
-			jsMoveUp.append("if (attrs[i] == '").append(conditionId).append("') {");
-			{
-				jsMoveUp.append("if (i != 0) {");
-				{
-					jsMoveUp.append("var prevCond = cond.previousSibling; ");
-					jsMoveUp.append("var parent = cond.parentNode; ");
-					jsMoveUp.append("parent.removeChild(cond); ");
-					jsMoveUp.append("parent.insertBefore(cond, prevCond); ");
-					jsMoveUp.append("attrs[i] = attrs[i-1]; ");
-					jsMoveUp.append("attrs[i-1] = '").append(conditionId).append("'; ");
-					jsMoveUp.append("attrListField.value = attrs.join(',');");
-					jsMoveUp.append("if (Scriptaculous) {");
-					{
-						jsMoveUp.append("Element.setOpacity(cond, 0); ");
-						jsMoveUp.append("Effect.Appear(cond, {duration: 0.5});");
-					}
-					jsMoveUp.append("} ");
-				}
-				jsMoveUp.append("} ");
-				jsMoveUp.append("return;");
-			}
-			jsMoveUp.append("}");
-		}
-		jsMoveUp.append("}");
+		jsMoveUp.append("QueryBuilder.moveConditionUp(");
+		jsMoveUp.append("'").append(getClientId(context)).append("', ");
+		jsMoveUp.append("'").append(form.getId()).append("', ");
+		jsMoveUp.append("'").append(getHtmlNameForTotal(context)).append("', ");
+		jsMoveUp.append("'").append(attrListFieldName).append("', ");
+		jsMoveUp.append("'").append(conditionDivId).append("', ");
+		jsMoveUp.append("'").append(attributeId).append("'");
+		jsMoveUp.append(")");
+//		jsMoveUp.append("var cond = ");
+//		UtilsJSF.appendElementRefJS(jsMoveUp, conditionDivId).append("; ");
+//		jsMoveUp.append("var attrListField = ");
+//		UtilsJSF.appendFormElementRefJS(jsMoveUp, context, form, attrListFieldName).append("; ");
+//		jsMoveUp.append("var attrs = attrListField.value.split(','); ");
+//		jsMoveUp.append("for (var i=0; i<attrs.length; i++) {");
+//		{
+//			jsMoveUp.append("if (attrs[i] == '").append(conditionId).append("') {");
+//			{
+//				jsMoveUp.append("if (i != 0) {");
+//				{
+//					jsMoveUp.append("var prevCond = cond.previousSibling; ");
+//					jsMoveUp.append("var parent = cond.parentNode; ");
+//					jsMoveUp.append("parent.removeChild(cond); ");
+//					jsMoveUp.append("parent.insertBefore(cond, prevCond); ");
+//					jsMoveUp.append("attrs[i] = attrs[i-1]; ");
+//					jsMoveUp.append("attrs[i-1] = '").append(conditionId).append("'; ");
+//					jsMoveUp.append("attrListField.value = attrs.join(',');");
+//					jsMoveUp.append("if (Scriptaculous) {");
+//					{
+//						jsMoveUp.append("Element.setOpacity(cond, 0); ");
+//						jsMoveUp.append("Effect.Appear(cond, {duration: 0.5});");
+//					}
+//					jsMoveUp.append("} ");
+//				}
+//				jsMoveUp.append("} ");
+//				jsMoveUp.append("return;");
+//			}
+//			jsMoveUp.append("}");
+//		}
+//		jsMoveUp.append("}");
 		
 		StringBuffer jsMoveDown = new StringBuffer();
-		jsMoveDown.append("var cond = ");
-		UtilsJSF.appendElementRefJS(jsMoveDown, conditionDivId).append("; ");
-		jsMoveDown.append("var attrListField = ");
-		UtilsJSF.appendFormElementRefJS(jsMoveDown, context, form, attrListFieldName).append("; ");
-		jsMoveDown.append("var attrs = attrListField.value.split(','); ");
-		jsMoveDown.append("for (var i=0; i<attrs.length; i++) {");
-		{
-			jsMoveDown.append("if (attrs[i] == '").append(conditionId).append("') {");
-			{
-				jsMoveDown.append("if (i != attrs.length-1) {");
-				{
-					jsMoveDown.append("var nextNextCond = cond.nextSibling.nextSibling; ");
-					jsMoveDown.append("var parent = cond.parentNode; ");
-					jsMoveDown.append("parent.removeChild(cond); ");
-					jsMoveDown.append("parent.insertBefore(cond, nextNextCond); ");
-					jsMoveDown.append("attrs[i] = attrs[i+1]; ");
-					jsMoveDown.append("attrs[i+1] = '").append(conditionId).append("'; ");
-					jsMoveDown.append("attrListField.value = attrs.join(',');");
-					jsMoveDown.append("if (Scriptaculous) {");
-					{
-						jsMoveDown.append("Element.setOpacity(cond, 0); ");
-						jsMoveDown.append("Effect.Appear(cond, {duration: 0.5});");
-					}
-					jsMoveDown.append("}");
-				}
-				jsMoveDown.append("} ");
-				jsMoveDown.append("return;");
-			}
-			jsMoveDown.append("}");
-		}
-		jsMoveDown.append("}");
+		jsMoveDown.append("QueryBuilder.moveConditionDown(");
+		jsMoveDown.append("'").append(getClientId(context)).append("', ");
+		jsMoveDown.append("'").append(form.getId()).append("', ");
+		jsMoveDown.append("'").append(getHtmlNameForTotal(context)).append("', ");
+		jsMoveDown.append("'").append(attrListFieldName).append("', ");
+		jsMoveDown.append("'").append(conditionDivId).append("', ");
+		jsMoveDown.append("'").append(attributeId).append("'");
+		jsMoveDown.append(")");
+//		jsMoveDown.append("var cond = ");
+//		UtilsJSF.appendElementRefJS(jsMoveDown, conditionDivId).append("; ");
+//		jsMoveDown.append("var attrListField = ");
+//		UtilsJSF.appendFormElementRefJS(jsMoveDown, context, form, attrListFieldName).append("; ");
+//		jsMoveDown.append("var attrs = attrListField.value.split(','); ");
+//		jsMoveDown.append("for (var i=0; i<attrs.length; i++) {");
+//		{
+//			jsMoveDown.append("if (attrs[i] == '").append(attributeId).append("') {");
+//			{
+//				jsMoveDown.append("if (i != attrs.length-1) {");
+//				{
+//					jsMoveDown.append("var nextNextCond = cond.nextSibling.nextSibling; ");
+//					jsMoveDown.append("var parent = cond.parentNode; ");
+//					jsMoveDown.append("parent.removeChild(cond); ");
+//					jsMoveDown.append("parent.insertBefore(cond, nextNextCond); ");
+//					jsMoveDown.append("attrs[i] = attrs[i+1]; ");
+//					jsMoveDown.append("attrs[i+1] = '").append(attributeId).append("'; ");
+//					jsMoveDown.append("attrListField.value = attrs.join(',');");
+//					jsMoveDown.append("if (Scriptaculous) {");
+//					{
+//						jsMoveDown.append("Element.setOpacity(cond, 0); ");
+//						jsMoveDown.append("Effect.Appear(cond, {duration: 0.5});");
+//					}
+//					jsMoveDown.append("}");
+//				}
+//				jsMoveDown.append("} ");
+//				jsMoveDown.append("return;");
+//			}
+//			jsMoveDown.append("}");
+//		}
+//		jsMoveDown.append("}");
 
 		encodeConditionButtonsStart(writer);
 		encodeConditionButton(writer, "icon-move-up.png", jsMoveUp.toString());
@@ -419,17 +497,54 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("div");
 	}
 	
-	private String getHtmlNameForTotal(FacesContext context)
+	private String generateJavaScriptForUpdateTotal(UIForm form, FacesContext context, boolean immediate)
 	{
-		return getClientId(context) + "_update_total";
+		
+		StringBuffer js = new StringBuffer();
+		js.append("QueryBuilder.updateTotal(");
+		js.append("'").append(getClientId(context)).append("', ");
+		js.append("'").append(form.getId()).append("', ");
+		js.append("'").append(getHtmlNameForTotal(context)).append("', ");
+		if (immediate)
+			js.append("0");
+		else
+			js.append(UPDATE_DELAY);
+		js.append(")");
+		
+//		js.append("if (!ajaxAnywhere) return; ");
+//
+//		js.append("var id = ");
+//		UtilsJSF.appendFormElementRefJS(js, context, form, getHtmlNameForTotalTimer(context));
+//		js.append("; ");
+//		
+//		js.append("id.value = ");
+//		js.append("Timer.extendFunction(");
+//		
+//		js.append("id.value, ");
+//
+//		js.append("function() {");
+//		UtilsJSF.appendFormElementRefJS(js, context, form, getHtmlNameForTotal(context));
+//		js.append(".value = 'true'; ");
+//		js.append("ajaxAnywhere.submitAJAX(null, null);");
+//		js.append("}, ");
+//		
+//		if (immediate)
+//			js.append("0");
+//		else
+//			js.append(UPDATE_DELAY);
+//			
+//		js.append(");");
+		
+		return js.toString();
+		
 	}
-
+	
 	private String getHtmlNameForSimpleValue(AbstractAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId();
 	}
 
-	private void encodeSimpleCondition(QueryConditionText queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private void encodeSimpleCondition(QueryConditionText queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, Object jsUpdateTotalImmediate) throws IOException
 	{
 		
 		AbstractAttribute attribute = queryCondition.getAttribute();
@@ -440,19 +555,11 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.startElement("tr", this);
 		
-		String onKeyUp =
-			"QueryBuilder.updateExpectedTotal(" +
-			"'" + getClientId(context) + "', " +
-			"'" + form.getId() + "', " +
-			"'" + getHtmlNameForTotal(context) + "', " +
-			"1000" +
-			")";
-		
 		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("class", "query-builder-text", null);
-		writer.writeAttribute("onkeyup", onKeyUp, null);
+		writer.writeAttribute("onkeyup", jsUpdateTotalPostponed, null);
 		writer.writeAttribute("name", getHtmlNameForSimpleValue(attribute, context), null);
 		writer.writeAttribute("value", queryCondition.getValue(), null);
 		writer.writeAttribute("autocomplete", "off", null);
@@ -561,7 +668,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 	
-	private void encodeNumericField(ResponseWriter writer, String value, String tdId, String inputName, boolean visible) throws IOException
+	private void encodeNumericField(ResponseWriter writer, String value, String tdId, String inputName, boolean visible, String jsUpdateTotal) throws IOException
 	{
 		
 		writer.startElement("td", this);
@@ -573,12 +680,13 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("name", inputName, null);
 		writer.writeAttribute("value", value, null);
 		writer.writeAttribute("autocomplete", "off", null);
+		writer.writeAttribute("onkeyup", jsUpdateTotal, null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
 	}
 
-	private void encodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private void encodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate) throws IOException
 	{
 
 		AbstractAttribute attribute = queryCondition.getAttribute();
@@ -598,34 +706,46 @@ public class QueryBuilderComponent extends UIComponentBase
 		String inputEqName = getHtmlNameForNumericEq(attribute, context);
 		
 		StringBuffer js = new StringBuffer();
+		js.append("QueryBuilder.changeNumericRangeType(");
+		js.append("'").append(getClientId(context)).append("', ");
+		js.append("'").append(form.getId()).append("', ");
+		js.append("'").append(getHtmlNameForTotal(context)).append("', ");
+		js.append("'").append(htmlNameForRangeType).append("', ");
+		js.append("'").append(tdFromId).append("', ");
+		js.append("'").append(tdDashId).append("', ");
+		js.append("'").append(tdToId).append("', ");
+		js.append("'").append(tdLeId).append("', ");
+		js.append("'").append(tdGeId).append("', ");
+		js.append("'").append(tdEqId).append("'");
+		js.append(")");
 
-		js.append("var type = ");
-		UtilsJSF.appendFormElementRefJS(js, context, form, htmlNameForRangeType);
-		js.append(".selectedIndex;");
-		
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, tdFromId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
-		
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, tdDashId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
-
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, tdToId);
-		js.append(".style.display = (type == 0) ? '' : 'none';");
-
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, tdLeId);
-		js.append(".style.display = (type == 1) ? '' : 'none';");
-
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, tdGeId);
-		js.append(".style.display = (type == 2) ? '' : 'none';");
-		
-		js.append(" ");
-		UtilsJSF.appendElementRefJS(js, tdEqId);
-		js.append(".style.display = (type == 3) ? '' : 'none';");
+//		js.append("var type = ");
+//		UtilsJSF.appendFormElementRefJS(js, context, form, htmlNameForRangeType);
+//		js.append(".selectedIndex;");
+//		
+//		js.append(" ");
+//		UtilsJSF.appendElementRefJS(js, tdFromId);
+//		js.append(".style.display = (type == 0) ? '' : 'none';");
+//		
+//		js.append(" ");
+//		UtilsJSF.appendElementRefJS(js, tdDashId);
+//		js.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		js.append(" ");
+//		UtilsJSF.appendElementRefJS(js, tdToId);
+//		js.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		js.append(" ");
+//		UtilsJSF.appendElementRefJS(js, tdLeId);
+//		js.append(".style.display = (type == 1) ? '' : 'none';");
+//
+//		js.append(" ");
+//		UtilsJSF.appendElementRefJS(js, tdGeId);
+//		js.append(".style.display = (type == 2) ? '' : 'none';");
+//		
+//		js.append(" ");
+//		UtilsJSF.appendElementRefJS(js, tdEqId);
+//		js.append(".style.display = (type == 3) ? '' : 'none';");
 
 		int type = queryCondition.getType();
 
@@ -642,7 +762,8 @@ public class QueryBuilderComponent extends UIComponentBase
 		encodeNumericField(writer,
 				queryCondition.getFrom(),
 				tdFromId, inputFromName,
-				type == 0);
+				type == 0,
+				jsUpdateTotalPostponed);
 		
 		encodeRangeDash(writer,
 				tdDashId,
@@ -651,22 +772,26 @@ public class QueryBuilderComponent extends UIComponentBase
 		encodeNumericField(writer,
 				queryCondition.getTo(),
 				tdToId, inputToName,
-				type == 0);
+				type == 0,
+				jsUpdateTotalPostponed);
 
 		encodeNumericField(writer,
 				queryCondition.getLe(),
 				tdLeId, inputLeName,
-				type == 1);
+				type == 1,
+				jsUpdateTotalPostponed);
 
 		encodeNumericField(writer,
 				queryCondition.getGe(),
 				tdGeId, inputGeName,
-				type == 2);
+				type == 2,
+				jsUpdateTotalPostponed);
 
 		encodeNumericField(writer,
 				queryCondition.getEq(),
 				tdEqId, inputEqName,
-				type == 3);
+				type == 3,
+				jsUpdateTotalPostponed);
 		
 		writer.endElement("tr");
 		writer.endElement("table");
@@ -780,7 +905,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attribute.getId() + "_month_" + month;
 	}
 	
-	private void encodeDateField(FacesContext context, UIForm form, ResponseWriter writer, String month, String year, String tdMonthId, String tdSlashId, String tdYearId, String inputMonthName, String inputYearName, boolean visible) throws IOException
+	private void encodeDateField(FacesContext context, UIForm form, ResponseWriter writer, String month, String year, String tdMonthId, String tdSlashId, String tdYearId, String inputMonthName, String inputYearName, boolean visible, String jsUpdateTotal) throws IOException
 	{
 		
 		String jsMonthOnFocus =
@@ -801,6 +926,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("onfocus", jsMonthOnFocus, null);
 		writer.writeAttribute("value", month, null);
 		writer.writeAttribute("autocomplete", "off", null);
+		writer.writeAttribute("onkeyup", jsUpdateTotal, null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -821,12 +947,13 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("onfocus", jsYearOnFocus, null);
 		writer.writeAttribute("value", year, null);
 		writer.writeAttribute("autocomplete", "off", null);
+		writer.writeAttribute("onkeyup", jsUpdateTotal, null);
 		writer.endElement("input");
 		writer.endElement("td");
 
 	}
 	
-	private void encodeDateCondition(QueryConditionDate queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private void encodeDateCondition(QueryConditionDate queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate) throws IOException
 	{
 
 		AbstractAttribute attribute = queryCondition.getAttribute();
@@ -860,75 +987,97 @@ public class QueryBuilderComponent extends UIComponentBase
 		String inputEqMonthName = getHtmlNameForDateEqMonth(attribute, context);
 		String inputEqYearName = getHtmlNameForDateEqYear(attribute, context);
 		
-		StringBuffer jsChnageType = new StringBuffer();
-
-		jsChnageType.append("var type = ");
-		UtilsJSF.appendFormElementRefJS(jsChnageType, context, form, htmlNameForRangeType);
-		jsChnageType.append(".selectedIndex;");
+		StringBuffer jsChangeType = new StringBuffer();
+		jsChangeType.append("QueryBuilder.changeNumericRangeType(");
+		jsChangeType.append("'").append(getClientId(context)).append("', ");
+		jsChangeType.append("'").append(form.getId()).append("', ");
+		jsChangeType.append("'").append(getHtmlNameForTotal(context)).append("', ");
+		jsChangeType.append("'").append(htmlNameForRangeType).append("', ");
+		jsChangeType.append("'").append(tdFromMonthId).append("', ");
+		jsChangeType.append("'").append(tdSlashBetweenStartId).append("', ");
+		jsChangeType.append("'").append(tdFromYearId).append("', ");
+		jsChangeType.append("'").append(tdDashId).append("', ");
+		jsChangeType.append("'").append(tdToMonthId).append("', ");
+		jsChangeType.append("'").append(tdSlashBetweenEndId).append("', ");
+		jsChangeType.append("'").append(tdToYearId).append("', ");
+		jsChangeType.append("'").append(tdLeMonthId).append("', ");
+		jsChangeType.append("'").append(tdSlashLeId).append("', ");
+		jsChangeType.append("'").append(tdLeYearId).append("', ");
+		jsChangeType.append("'").append(tdGeMonthId).append("', ");
+		jsChangeType.append("'").append(tdSlashGeId).append("', ");
+		jsChangeType.append("'").append(tdGeYearId).append("', ");
+		jsChangeType.append("'").append(tdEqMonthId).append("', ");
+		jsChangeType.append("'").append(tdSlashEqId).append("', ");
+		jsChangeType.append("'").append(tdEqYearId).append("'");
+		jsChangeType.append(")");
 		
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdFromMonthId);
-		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
-		
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashBetweenStartId);
-		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdFromYearId);
-		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdDashId);
-		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdToMonthId);
-		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashBetweenEndId);
-		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdToYearId);
-		jsChnageType.append(".style.display = (type == 0) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdLeMonthId);
-		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashLeId);
-		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdLeYearId);
-		jsChnageType.append(".style.display = (type == 1) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdGeMonthId);
-		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
-		
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashGeId);
-		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdGeYearId);
-		jsChnageType.append(".style.display = (type == 2) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdEqMonthId);
-		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdSlashEqId);
-		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
-
-		jsChnageType.append(" ");
-		UtilsJSF.appendElementRefJS(jsChnageType, tdEqYearId);
-		jsChnageType.append(".style.display = (type == 3) ? '' : 'none';");
+//		jsChangeType.append("var type = ");
+//		UtilsJSF.appendFormElementRefJS(jsChangeType, context, form, htmlNameForRangeType);
+//		jsChangeType.append(".selectedIndex;");
+//		
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdFromMonthId);
+//		jsChangeType.append(".style.display = (type == 0) ? '' : 'none';");
+//		
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdSlashBetweenStartId);
+//		jsChangeType.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdFromYearId);
+//		jsChangeType.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdDashId);
+//		jsChangeType.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdToMonthId);
+//		jsChangeType.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdSlashBetweenEndId);
+//		jsChangeType.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdToYearId);
+//		jsChangeType.append(".style.display = (type == 0) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdLeMonthId);
+//		jsChangeType.append(".style.display = (type == 1) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdSlashLeId);
+//		jsChangeType.append(".style.display = (type == 1) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdLeYearId);
+//		jsChangeType.append(".style.display = (type == 1) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdGeMonthId);
+//		jsChangeType.append(".style.display = (type == 2) ? '' : 'none';");
+//		
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdSlashGeId);
+//		jsChangeType.append(".style.display = (type == 2) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdGeYearId);
+//		jsChangeType.append(".style.display = (type == 2) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdEqMonthId);
+//		jsChangeType.append(".style.display = (type == 3) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdSlashEqId);
+//		jsChangeType.append(".style.display = (type == 3) ? '' : 'none';");
+//
+//		jsChangeType.append(" ");
+//		UtilsJSF.appendElementRefJS(jsChangeType, tdEqYearId);
+//		jsChangeType.append(".style.display = (type == 3) ? '' : 'none';");
 		
 		int type = queryCondition.getType();
 
@@ -939,14 +1088,15 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		encodeRangeSelect(writer,
-				htmlNameForRangeType, jsChnageType.toString(),
+				htmlNameForRangeType, jsChangeType.toString(),
 				type);
 
 		encodeDateField(context, form, writer, 
 				queryCondition.getFromMonth(), queryCondition.getFromYear(),
 				tdFromMonthId, tdSlashBetweenStartId, tdFromYearId,
 				inputFromMonthName, inputFromYearName,
-				type == 0);
+				type == 0,
+				jsUpdateTotalPostponed);
 		
 		encodeRangeDash(writer,
 				tdDashId,
@@ -956,25 +1106,29 @@ public class QueryBuilderComponent extends UIComponentBase
 				queryCondition.getToMonth(), queryCondition.getToYear(),
 				tdToMonthId, tdSlashBetweenEndId, tdToYearId,
 				inputToMonthName, inputToYearName,
-				type == 0);
+				type == 0,
+				jsUpdateTotalPostponed);
 
 		encodeDateField(context, form, writer,
 				queryCondition.getLeMonth(), queryCondition.getLeYear(),
 				tdLeMonthId, tdSlashLeId, tdLeYearId,
 				inputLeMonthName, inputLeYearName,
-				type == 1);
+				type == 1,
+				jsUpdateTotalPostponed);
 
 		encodeDateField(context, form, writer,
 				queryCondition.getGeMonth(), queryCondition.getGeYear(),
 				tdGeMonthId, tdSlashGeId, tdGeYearId,
 				inputGeMonthName, inputGeYearName,
-				type == 2);
+				type == 2,
+				jsUpdateTotalPostponed);
 
 		encodeDateField(context, form, writer,
 				queryCondition.getEqMonth(), queryCondition.getEqYear(),
 				tdEqMonthId, tdSlashEqId, tdEqYearId,
 				inputEqMonthName, inputEqYearName,
-				type == 3);
+				type == 3,
+				jsUpdateTotalPostponed);
 
 		writer.endElement("tr");
 		writer.endElement("table");
@@ -982,7 +1136,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		for (int i = 0; i < 12; i++)
 			UtilsJSF.encodeHiddenInput(this, writer,
 					getHtmlNameForRangeMonth(attribute, context, i),
-					queryCondition.isMonthSelected(i) ? "1" : "0");
+					queryCondition.isMonthSelected(i) ? "true" : "false");
 
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -999,22 +1153,29 @@ public class QueryBuilderComponent extends UIComponentBase
 			String tdMonthId = getClientId(context) + "_" + attribute.getId() + "_td_month_" + i;
 			
 			jsSelectMonth.setLength(0);
+			jsSelectMonth.append("QueryBuilder.toggleMonth(");
+			jsSelectMonth.append("'").append(getClientId(context)).append("', ");
+			jsSelectMonth.append("'").append(form.getId()).append("', ");
+			jsSelectMonth.append("'").append(getHtmlNameForTotal(context)).append("', ");
+			jsSelectMonth.append("'").append(getHtmlNameForRangeMonth(attribute, context, i)).append("', ");
+			jsSelectMonth.append("'").append(tdMonthId).append("'");
+			jsSelectMonth.append(")");
 			
-			jsSelectMonth.append("var monthInput = ");
-			UtilsJSF.appendFormElementRefJS(jsSelectMonth, context, form, getHtmlNameForRangeMonth(attribute, context, i));
-			jsSelectMonth.append("; ");
-
-			jsSelectMonth.append("var monthTd = ");
-			UtilsJSF.appendElementRefJS(jsSelectMonth, tdMonthId);
-			jsSelectMonth.append("; ");
-
-			jsSelectMonth.append("if (monthInput.value == '1') {");
-			jsSelectMonth.append("monthInput.value = '0'; ");
-			jsSelectMonth.append("monthTd.className = 'query-builder-range-month-delected';");
-			jsSelectMonth.append("} else {");
-			jsSelectMonth.append("monthInput.value = '1'; ");
-			jsSelectMonth.append("monthTd.className = 'query-builder-range-month-selected';");
-			jsSelectMonth.append("}");
+//			jsSelectMonth.append("var monthInput = ");
+//			UtilsJSF.appendFormElementRefJS(jsSelectMonth, context, form, getHtmlNameForRangeMonth(attribute, context, i));
+//			jsSelectMonth.append("; ");
+//
+//			jsSelectMonth.append("var monthTd = ");
+//			UtilsJSF.appendElementRefJS(jsSelectMonth, tdMonthId);
+//			jsSelectMonth.append("; ");
+//
+//			jsSelectMonth.append("if (monthInput.value == '1') {");
+//			jsSelectMonth.append("monthInput.value = '0'; ");
+//			jsSelectMonth.append("monthTd.className = 'query-builder-range-month-delected';");
+//			jsSelectMonth.append("} else {");
+//			jsSelectMonth.append("monthInput.value = '1'; ");
+//			jsSelectMonth.append("monthTd.className = 'query-builder-range-month-selected';");
+//			jsSelectMonth.append("}");
 			
 			String styleClass = queryCondition.isMonthSelected(i) ? 
 					"query-builder-range-month-selected" : 
@@ -1091,8 +1252,8 @@ public class QueryBuilderComponent extends UIComponentBase
 		{
 			for (int i = 0; i < 12; i++)
 			{
-				String monthStatus = (String) params.get(getHtmlNameForRangeMonth(attribute, context, i));
-				queryCondition.setMonthStatus(i, "1".equals(monthStatus));
+				boolean monthSelected = UtilsJSF.getParamBoolean(params, getHtmlNameForRangeMonth(attribute, context, i));
+				queryCondition.setMonthStatus(i, monthSelected);
 			}
 		}
 		
@@ -1105,7 +1266,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attibute.getId() + "_list";
 	}
 
-	private void encodeDictionaryCondition(QueryConditionDictionary queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
+	private void encodeDictionaryCondition(QueryConditionDictionary queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate) throws IOException
 	{
 		
 		AbstractAttribute attribute = queryCondition.getAttribute();
@@ -1130,15 +1291,24 @@ public class QueryBuilderComponent extends UIComponentBase
 				valuesList.toString());
 		
 		StringBuffer jsPopup = new StringBuffer();
-		jsPopup.append("window.open(");
-		jsPopup.append("'dictionary-list.jsp");
-		jsPopup.append("?attributeId=").append(attribute.getId());
-		jsPopup.append("&formName=").append(form.getClientId(context));
-		jsPopup.append("&hiddenFieldName=").append(getHtmlNameForList(attribute, context));
-		jsPopup.append("&displayFieldName=").append(displayListHtmlName);
-		jsPopup.append("', ");
-		jsPopup.append("'search-list', ");
-		jsPopup.append("'width=300,height=500,resizable=yes,scrollbars=yes,status=no');");
+		jsPopup.append("QueryBuilder.showList(");
+		jsPopup.append("'").append(getClientId(context)).append("', ");
+		jsPopup.append("'").append(form.getId()).append("', ");
+		jsPopup.append("'").append(getHtmlNameForTotal(context)).append("', ");
+		jsPopup.append("'").append(attribute.getId()).append("', ");
+		jsPopup.append("'").append(getHtmlNameForList(attribute, context)).append("', ");
+		jsPopup.append("'").append(displayListHtmlName).append("'");
+		jsPopup.append(")");
+//		jsPopup.append("window.open(");
+//		jsPopup.append("'dictionary-list.jsp");
+//		jsPopup.append("?attributeId=").append(attribute.getId());
+//		jsPopup.append("&formName=").append(form.getClientId(context));
+//		jsPopup.append("&hiddenFieldName=").append(getHtmlNameForList(attribute, context));
+//		jsPopup.append("&displayFieldName=").append(displayListHtmlName);
+//		jsPopup.append("', ");
+//		jsPopup.append("'search-list', ");
+//		jsPopup.append("'width=300,height=500,resizable=yes,scrollbars=yes,status=no'");
+//		jsPopup.append(");");
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -1153,6 +1323,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("name", displayListHtmlName, null);
 		writer.writeAttribute("value", displayList.toString(), null);
 		writer.writeAttribute("autocomplete", "off", null);
+		writer.writeAttribute("readonly", "readonly", null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -1162,7 +1333,6 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("value", "Select", null);
 		writer.writeAttribute("onclick", jsPopup.toString(), null);
-		writer.writeAttribute("autocomplete", "off", null);
 		writer.endElement("input");
 		writer.endElement("td");
 
@@ -1208,6 +1378,16 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		querySet = true;
 		this.setQuery = query;
+	}
+
+	public MethodBinding getOnUpdateTotal()
+	{
+		return onUpdateTotal;
+	}
+
+	public void setOnUpdateTotal(MethodBinding onUpdateTotal)
+	{
+		this.onUpdateTotal = onUpdateTotal;
 	}
 
 }

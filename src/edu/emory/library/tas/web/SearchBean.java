@@ -172,7 +172,7 @@ public class SearchBean
 	 * Do actuall seach. Not called directly from UI
 	 * Construct a database query ({@link Conditions})
 	 * from {@link #workingQuery} by calling
-	 * {@link QueryCondition#addToConditions(Conditions)} on each condition.
+	 * {@link QueryCondition#addToConditions(Conditions, boolean)} on each condition.
 	 * Then, is the query is different from the last query in the history list
 	 * and if <code>storeToHistory</code> is <code>true</code> the stores
 	 * {@link #workingQuery} to the history list {@link #history}.
@@ -190,10 +190,12 @@ public class SearchBean
 		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			if (!queryCondition.addToConditions(conditions)) errors = true;
+			if (!queryCondition.addToConditions(conditions, false)) errors = true;
 			columns[i++] = queryCondition.getAttribute();
 		}
 		if (errors) return;
+		
+		numberOfResults = -1;
 
 		searchParameters = new SearchParameters();
 		searchParameters.setConditions(conditions);
@@ -204,6 +206,62 @@ public class SearchBean
 
 	}
 	
+	/**
+	 * AJAX refresh. Uses AjaxAnywhere. Bind to a QueryBuilder.
+	 * @param event
+	 */
+	public void updateTotal(QueryUpdateTotalEvent event)
+	{
+		
+		HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		if (AAUtils.isAjaxRequest(request))
+			AAUtils.addZonesToRefresh(request,"total"); 
+//
+//		Conditions conditions = new Conditions();
+//		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
+//		{
+//			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+//			queryCondition.addToConditions(conditions, false);
+//		}
+//		
+//		Conditions localCond = (Conditions) conditions.addAttributesPrefix("v.voyage.");
+//		localCond.addCondition(VoyageIndex.getRecent());
+//
+//		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
+//		qValue.addPopulatedAttribute("count(v.voyageId)", false);
+//		
+//		Object[] ret = qValue.executeQuery();
+//		numberOfResults = ((Integer)ret[0]).intValue();
+
+	}
+	
+	/**
+	 * Returns the number compute in {@link #updateTotal(QueryUpdateTotalEvent)}.
+	 * The number of results is reset any time the user presses search.
+	 * @return
+	 */
+	public String getNumberOfResultsText()
+	{
+
+		Conditions conditions = new Conditions();
+		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
+		{
+			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+			queryCondition.addToConditions(conditions, false);
+		}
+		
+		Conditions localCond = (Conditions) conditions.addAttributesPrefix("v.voyage.");
+		localCond.addCondition(VoyageIndex.getRecent());
+
+		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
+		qValue.addPopulatedAttribute("count(v.voyageId)", false);
+		
+		Object[] ret = qValue.executeQuery();
+		numberOfResults = ((Integer)ret[0]).intValue();
+		
+		return "Expected number of voyages: " + numberOfResults;
+	}
+
 	/**
 	 * Handler of an event from the history list. Deletes the given history item
 	 * from {@link #history}. The deletion is not handled directly by the

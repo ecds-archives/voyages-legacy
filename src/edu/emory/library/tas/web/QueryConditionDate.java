@@ -129,7 +129,7 @@ public class QueryConditionDate extends QueryConditionRange
 		
 	}
 	
-	public boolean addToConditions(Conditions conditions)
+	public boolean addToConditions(Conditions conditions, boolean markErrors)
 	{
 
 		Date fromDateQuery = null;
@@ -137,7 +137,7 @@ public class QueryConditionDate extends QueryConditionRange
 		
 		if (noMonthSelected())
 		{
-			setErrorFlag(true);
+			if (markErrors) setErrorFlag(true);
 			return false;
 		}
 
@@ -149,7 +149,7 @@ public class QueryConditionDate extends QueryConditionRange
 				toDateQuery = parseDate(toMonth, toYear, 1);
 				if (fromDateQuery == null || toDateQuery == null) 
 				{
-					setErrorFlag(true);
+					if (markErrors) setErrorFlag(true);
 					return false;
 				}
 				break;
@@ -158,7 +158,7 @@ public class QueryConditionDate extends QueryConditionRange
 				toDateQuery = parseDate(leMonth, leYear, 1);
 				if (toDateQuery == null)
 				{
-					setErrorFlag(true);
+					if (markErrors) setErrorFlag(true);
 					return false;
 				}
 				break;
@@ -167,7 +167,7 @@ public class QueryConditionDate extends QueryConditionRange
 				fromDateQuery = parseDate(geMonth, geYear, -1);
 				if (fromDateQuery == null)
 				{
-					setErrorFlag(true);
+					if (markErrors) setErrorFlag(true);
 					return false;
 				}
 				break;
@@ -177,7 +177,7 @@ public class QueryConditionDate extends QueryConditionRange
 				toDateQuery = parseDate(eqMonth, eqYear, 1);
 				if (fromDateQuery == null || toDateQuery == null) 
 				{
-					setErrorFlag(true);
+					if (markErrors) setErrorFlag(true);
 					return false;
 				}
 				break;

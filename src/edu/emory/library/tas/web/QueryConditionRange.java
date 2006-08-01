@@ -25,7 +25,7 @@ public abstract class QueryConditionRange extends QueryCondition
 		this.type = type;
 	}
 
-	public abstract boolean addToConditions(Conditions conditions);
+	public abstract boolean addToConditions(Conditions conditions, boolean markErrors);
 
 	public int getType()
 	{

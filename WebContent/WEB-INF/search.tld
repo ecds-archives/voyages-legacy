@@ -185,6 +185,9 @@
 		<attribute>
 			<name>query</name>
 		</attribute>
+		<attribute>
+			<name>onUpdateTotal</name>
+		</attribute>
 	</tag>
 	
 	<tag>
@@ -207,6 +210,12 @@
 		</attribute>
 		<attribute>
 			<name>displayFieldName</name>
+		</attribute>
+		<attribute>
+			<name>updateTotalFieldName</name>
+		</attribute>
+		<attribute>
+			<name>builderId</name>
 		</attribute>
 	</tag>
 	

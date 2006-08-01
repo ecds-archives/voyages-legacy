@@ -165,28 +165,54 @@ function animateAttribute(menuItem, submitFunction)
 
 	<s:queryBuilder
 		id="queryBuilder"
-		query="#{SearchBean.workingQuery}" />
+		query="#{SearchBean.workingQuery}"
+		onUpdateTotal="#{SearchBean.updateTotal}" />
+
+	<t:htmlTag value="table" style="border-collapse: collapse;">
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" style="padding: 0px;">
+
+			<h:commandButton
+				id="buttonSearch"
+				styleClass="main-box-button"
+				action="#{SearchBean.search}"
+				value="Search" />
 	
-	<h:commandButton
-		id="buttonSearch"
-		styleClass="main-box-button"
-		action="#{SearchBean.search}"
-		value="Search" />
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 0px 0px 0px 5px;">
 
-	<h:commandButton
-		id="buttonCheck"
-		styleClass="main-box-button"
-		action="#{SearchBean.determineNumberOfResults}"
-		onclick="ajaxAnywhere.submitAJAX(null, this); return false;"
-		value="Check" />
+			<aa:zoneJSF id="total">
+				<h:outputText value="#{SearchBean.numberOfResultsText}" />
+			</aa:zoneJSF>
 
-	<aa:zoneJSF id="xx">
-		<h:outputText
-			value="#{SearchBean.numberOfResults}" />
-	</aa:zoneJSF>
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
+			<h:graphicImage url="ajax-loader.gif" width="16" height="16" alt="" />
+		</t:htmlTag>
+	</t:htmlTag>
+	</t:htmlTag>
 
 </s:sectionGroup>
 </div>
+
+<script type="text/javascript" language="javascript">
+
+AjaxAnywhere.prototype.showLoadingMessage = function()
+{
+	document.getElementById("totalUpdateIndicator").style.display = "";
+}
+
+AjaxAnywhere.prototype.hideLoadingMessage = function()
+{
+	document.getElementById("totalUpdateIndicator").style.display = "none";
+}
+
+AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
+{
+}
+
+</script>
+
 
 <div class="sections-sepatator"></div>
 

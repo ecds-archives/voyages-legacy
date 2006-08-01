@@ -22,15 +22,14 @@ public class QueryConditionText extends QueryCondition
 	private boolean addSingleAttributeToConditions(Attribute attribute, Conditions conditions, String value)
 	{
 		String localValue = value;
-		if (!localValue.endsWith("%")) {
-			localValue += "%";
-		} 
+		if (!localValue.endsWith("%")) localValue += "%";
 		conditions.addCondition(attribute.getName(), localValue, Conditions.OP_LIKE);
 		return true;
 	}
 
-	public boolean addToConditions(Conditions conditions) 
+	public boolean addToConditions(Conditions conditions, boolean markErrors) 
 	{
+
 		if (!isNonEmpty())
 			return true;
 		

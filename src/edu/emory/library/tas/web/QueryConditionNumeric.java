@@ -56,7 +56,7 @@ public class QueryConditionNumeric extends QueryConditionRange
 		}
 	}
 
-	public boolean addToConditions(Conditions conditions)
+	public boolean addToConditions(Conditions conditions, boolean markErrors)
 	{
 
 		AbstractAttribute attribute = getAttribute();
@@ -78,7 +78,7 @@ public class QueryConditionNumeric extends QueryConditionRange
 					toConverted = attribute.parse(to);
 					if (fromConverted == null || toConverted == null) 
 					{
-						setErrorFlag(true);
+						if (markErrors) setErrorFlag(true);
 						return false;
 					}
 					break;
@@ -87,7 +87,7 @@ public class QueryConditionNumeric extends QueryConditionRange
 					leConverted = attribute.parse(le);
 					if (leConverted == null)
 					{
-						setErrorFlag(true);
+						if (markErrors) setErrorFlag(true);
 						return false;
 					}
 					break;
@@ -96,7 +96,7 @@ public class QueryConditionNumeric extends QueryConditionRange
 					geConverted = attribute.parse(ge);
 					if (geConverted == null)
 					{
-						setErrorFlag(true);
+						if (markErrors) setErrorFlag(true);
 						return false;
 					}
 					break;
@@ -105,7 +105,7 @@ public class QueryConditionNumeric extends QueryConditionRange
 					eqConverted = attribute.parse(eq);
 					if (eqConverted == null)
 					{
-						setErrorFlag(true);
+						if (markErrors) setErrorFlag(true);
 						return false;
 					}
 					break;
@@ -115,22 +115,22 @@ public class QueryConditionNumeric extends QueryConditionRange
 		}
 		catch (InvalidNumberOfValuesException e)
 		{
-			setErrorFlag(true);
+			if (markErrors) setErrorFlag(true);
 			return false;
 		}
 		catch (InvalidNumberException e)
 		{
-			setErrorFlag(true);
+			if (markErrors) setErrorFlag(true);
 			return false;
 		}
 		catch (InvalidDateException e)
 		{
-			setErrorFlag(true);
+			if (markErrors) setErrorFlag(true);
 			return false;
 		}
 		catch (StringTooLongException e)
 		{
-			setErrorFlag(true);
+			if (markErrors) setErrorFlag(true);
 			return false;
 		}
 		

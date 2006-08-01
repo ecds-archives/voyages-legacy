@@ -13,13 +13,13 @@ div.menu-popup-item-main {
 
 div.menu-popup-item-main:hover {
 	background-color: #F1E7C8;
+	/*
 	-background-color: #571B1D;
-	-color: White; }
+	-color: White; */}
 
 div.menu-popup-submenu-frame {
 	z-index: 1;	
 	top: -7px;
-	-left: 200px;
 	left: 290px;
 	position: relative;
 	display: none; }

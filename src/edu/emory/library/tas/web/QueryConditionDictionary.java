@@ -33,7 +33,7 @@ public class QueryConditionDictionary extends QueryCondition
 		conditions.addCondition(subCondition);
 	}
 
-	public boolean addToConditions(Conditions conditions)
+	public boolean addToConditions(Conditions conditions, boolean markErrors)
 	{
 		if (dictionaries.size() == 0)
 			return true;

@@ -25,7 +25,7 @@ public abstract class QueryCondition implements Serializable
 	private AbstractAttribute attribute;
 	private transient boolean errorFlag;
 
-	public abstract boolean addToConditions(Conditions conditions);
+	public abstract boolean addToConditions(Conditions conditions, boolean markErrors);
 	protected abstract Object clone();
 
 	public QueryCondition(AbstractAttribute attribute)

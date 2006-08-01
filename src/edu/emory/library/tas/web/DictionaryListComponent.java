@@ -16,6 +16,8 @@ public class DictionaryListComponent extends UIComponentBase
 	private String formName;
 	private String hiddenFieldName;
 	private String displayFieldName;
+	private String updateTotalFieldName;
+	private String builderId;
 	private Dictionary[] dictionary;
 
 	private boolean attributeNameSet = false;
@@ -23,6 +25,8 @@ public class DictionaryListComponent extends UIComponentBase
 	private boolean hiddenFieldNameSet = false;
 	private boolean displayFieldNameSet = false;
 	private boolean dictionarySet = false;
+	private boolean updateTotalFieldNameSet = false;
+	private boolean builderIdSet = false;
 	
 	public void encodeBegin(FacesContext context) throws IOException
 	{
@@ -30,10 +34,12 @@ public class DictionaryListComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 
 		UtilsJSF.encodeJavaScriptStart(this, writer);
+		writer.write("var builderId = '" + getBuilderId() + "';\n");
 		writer.write("var formName = '" + getFormName() + "';\n");
 		writer.write("var attributeName = '" + getAttributeName() + "';\n");
 		writer.write("var hiddenFieldName = '" + getHiddenFieldName() + "';\n");
 		writer.write("var displayFieldName = '" + getDisplayFieldName() + "';\n");
+		writer.write("var updateTotalFieldName = '" + getUpdateTotalFieldName() + "';\n");
 		writer.write("var tblListId = '" + getClientId(context) + "';");
 		UtilsJSF.encodeJavaScriptEnd(this, writer);
 
@@ -127,7 +133,22 @@ public class DictionaryListComponent extends UIComponentBase
 
 	public void setDisplayFieldName(String displayFieldName)
 	{
+		displayFieldNameSet = true;
 		this.displayFieldName = displayFieldName;
+	}
+	
+	public String getUpdateTotalFieldName()
+	{
+		if (updateTotalFieldNameSet) return updateTotalFieldName;
+		ValueBinding vb = getValueBinding("updateTotalFieldName");
+		if (vb == null) return updateTotalFieldName;
+		return (String) vb.getValue(getFacesContext());
+	}
+
+	public void setUpdateTotalFieldName(String updateTotalFieldName)
+	{
+		updateTotalFieldNameSet = true;
+		this.updateTotalFieldName = updateTotalFieldName;
 	}
 
 	public String getFormName()
@@ -140,9 +161,24 @@ public class DictionaryListComponent extends UIComponentBase
 
 	public void setFormName(String formName)
 	{
+		formNameSet = true;
 		this.formName = formName;
 	}
 
+	public String getBuilderId()
+	{
+		if (builderIdSet) return builderId;
+		ValueBinding vb = getValueBinding("builderId");
+		if (vb == null) return builderId;
+		return (String) vb.getValue(getFacesContext());
+	}
+
+	public void setBuilderId(String builderId)
+	{
+		builderIdSet = true;
+		this.builderId = builderId;
+	}
+	
 	public String getHiddenFieldName()
 	{
 		if (hiddenFieldNameSet) return hiddenFieldName;
@@ -153,6 +189,7 @@ public class DictionaryListComponent extends UIComponentBase
 
 	public void setHiddenFieldName(String hiddenFieldName)
 	{
+		hiddenFieldNameSet = true;
 		this.hiddenFieldName = hiddenFieldName;
 	}
 

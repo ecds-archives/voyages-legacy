@@ -14,6 +14,8 @@ public class DictionaryListBean
 	private String formName;
 	private String hiddenFieldName;
 	private String displayFieldName;
+	private String updateTotalFieldName;
+	private String builderId;
 	private boolean paramsLoaded = false;
 	private Dictionary[] dictionary = null;
 	
@@ -27,6 +29,8 @@ public class DictionaryListBean
 			formName = (String) params.get("formName");
 			hiddenFieldName = (String) params.get("hiddenFieldName");
 			displayFieldName = (String) params.get("displayFieldName");
+			updateTotalFieldName = (String) params.get("updateTotalFieldName");
+			builderId = (String) params.get("builderId");
 			paramsLoaded = true;
 		}
 	}
@@ -53,6 +57,18 @@ public class DictionaryListBean
 	{
 		ensureLoadParamsFromRequest();
 		return hiddenFieldName;
+	}
+
+	public String getUpdateTotalFieldName()
+	{
+		ensureLoadParamsFromRequest();
+		return updateTotalFieldName;
+	}
+	
+	public String getBuilderId()
+	{
+		ensureLoadParamsFromRequest();
+		return builderId;
 	}
 
 	public Dictionary[] getDictionary()

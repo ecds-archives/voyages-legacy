@@ -401,6 +401,29 @@ var Timer =
 	map: new Array(),
 	nextId: 0,
 	
+	delayedFunction: function(fnc, delay, arg)
+	{
+	
+		var id = Timer.nextId;
+		Timer.nextId ++;
+	
+		var reg = new Object();
+		reg.fnc = fnc;
+		reg.arg = arg;
+		reg.tid = window.setTimeout("Timer.globalHandler(" + id + ")", delay);
+		
+		Timer.map["call_" + id] = reg;
+		
+		return id;
+	
+	},
+	
+	extendFunction: function(id, fnc, delay, arg)
+	{
+		Timer.cancelCall(id);
+		return Timer.delayedFunction(fnc, delay, arg);
+	},
+	
 	delayedCall: function(object, method, delay, arg)
 	{
 	
@@ -411,13 +434,19 @@ var Timer =
 		var reg = new Object();
 		reg.object = object;
 		reg.method = method;
-		req.arg = arg;
+		reg.arg = arg;
 		reg.tid = window.setTimeout("Timer.globalHandler(" + id + ")", delay);
 		
 		Timer.map["call_" + id] = reg;
 		
 		return id;
 
+	},
+	
+	extendCall: function(id, object, method, delay, arg)
+	{
+		Timer.cancelCall(id);
+		return Timer.delayedCall(object, method, delay, arg);
 	},
 	
 	cancelCall: function(id)
@@ -436,7 +465,14 @@ var Timer =
 		if (reg)
 		{
 			delete Timer.map["call_" + id];
-			reg.object[reg.method](req.arg);
+			if (reg.fnc)
+			{
+				reg.fnc(reg.arg);
+			}
+			else
+			{
+				reg.object[reg.method](reg.arg);
+			}
 		}
 	}
 

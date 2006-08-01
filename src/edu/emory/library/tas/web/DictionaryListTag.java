@@ -13,6 +13,8 @@ public class DictionaryListTag extends UIComponentTag
 	private String formName;
 	private String hiddenFieldName;
 	private String displayFieldName;
+	private String updateTotalFieldName;
+	private String builderId;
 	private String dictionary;
 	
 	protected void setProperties(UIComponent component)
@@ -38,7 +40,7 @@ public class DictionaryListTag extends UIComponentTag
 		}
 		else
 		{
-			dictionaryList.setAttributeName(formName);
+			dictionaryList.setFormName(formName);
 		}
 
 		if (hiddenFieldName != null && isValueReference(hiddenFieldName))
@@ -48,7 +50,7 @@ public class DictionaryListTag extends UIComponentTag
 		}
 		else
 		{
-			dictionaryList.setAttributeName(hiddenFieldName);
+			dictionaryList.setHiddenFieldName(hiddenFieldName);
 		}
 
 		if (displayFieldName != null && isValueReference(displayFieldName))
@@ -58,9 +60,29 @@ public class DictionaryListTag extends UIComponentTag
 		}
 		else
 		{
-			dictionaryList.setAttributeName(displayFieldName);
+			dictionaryList.setHiddenFieldName(hiddenFieldName);
 		}
 
+		if (updateTotalFieldName != null && isValueReference(updateTotalFieldName))
+		{
+			ValueBinding vb = app.createValueBinding(updateTotalFieldName);
+			component.setValueBinding("updateTotalFieldName", vb);
+		}
+		else
+		{
+			dictionaryList.setUpdateTotalFieldName(updateTotalFieldName);
+		}
+		
+		if (builderId != null && isValueReference(builderId))
+		{
+			ValueBinding vb = app.createValueBinding(builderId);
+			component.setValueBinding("builderId", vb);
+		}
+		else
+		{
+			dictionaryList.setBuilderId(builderId);
+		}
+		
 		if (dictionary != null && isValueReference(dictionary))
 		{
 			ValueBinding vb = app.createValueBinding(dictionary);
@@ -127,6 +149,26 @@ public class DictionaryListTag extends UIComponentTag
 	public void setHiddenFieldName(String hiddenFieldName)
 	{
 		this.hiddenFieldName = hiddenFieldName;
+	}
+
+	public String getUpdateTotalFieldName()
+	{
+		return updateTotalFieldName;
+	}
+
+	public void setUpdateTotalFieldName(String updateTotalFieldName)
+	{
+		this.updateTotalFieldName = updateTotalFieldName;
+	}
+
+	public String getBuilderId()
+	{
+		return builderId;
+	}
+
+	public void setBuilderId(String builderId)
+	{
+		this.builderId = builderId;
 	}
 
 }
