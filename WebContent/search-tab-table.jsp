@@ -112,12 +112,12 @@
 
 				<t:htmlTag value="td" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-bottom: 0px;">
 					<t:htmlTag value="div" style="margin-bottom: 5px;">
-						<h:commandButton style="width: 30px" id="configure_AddAttrButton" value=">"
+						<h:commandButton style="width: 30px" id="configure_AddAttrButton" value="xx"
 							action="#{TableResultTabBean.addSelectedAttributeToList}" />
 					</t:htmlTag>
 					<t:htmlTag value="div">
-						<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="<"
-							action=" #{TableResultTabBean.remSelectedAttributeFromList}" />
+						<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="yy"
+							action="#{TableResultTabBean.remSelectedAttributeFromList}" />
 					</t:htmlTag>
 				</t:htmlTag>
 
