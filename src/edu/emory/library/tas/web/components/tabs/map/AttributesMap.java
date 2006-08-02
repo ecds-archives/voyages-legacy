@@ -22,7 +22,7 @@ public class AttributesMap {
 		
 		for (Iterator iter = list.iterator(); iter.hasNext();) {
 			AttributesRange element = (AttributesRange) iter.next();
-			if (element.getStart() >= i && element.getEnd() <= i) {
+			if (element.getStart() <= i && element.getEnd() >= i) {
 				return element.getAttribute();
 			}
 		}

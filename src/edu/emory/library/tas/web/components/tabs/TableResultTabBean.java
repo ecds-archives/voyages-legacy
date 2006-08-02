@@ -984,10 +984,12 @@ public class TableResultTabBean {
 
 		if (this.detailVoyageMap.prepareMapFile()) {
 
+			long time = System.currentTimeMillis();
+			
 			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute(MAP_SESSION_KEY, this.detailVoyageMap
+			((HttpSession) servletContext.getSession(true)).setAttribute(MAP_SESSION_KEY + time, this.detailVoyageMap
 					.getCurrentMapFilePath());
-			return MAP_SESSION_KEY;
+			return MAP_SESSION_KEY + time;
 		}
 		return "";
 	}

@@ -106,8 +106,8 @@ public class MapBean {
 			double[] minmax = executeMapQuery(response, localCondition, new String[] {
 					"v.majbuypt.name", "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end", "1" },
 					new String[] { "v.majbuypt.name" }, new String[] { "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end" });
-			col1.add(new AttributesRange(Voyage.getAttribute("majbuypt"), 0, response.size()));
-			col1.add(new AttributesRange(Voyage.getAttribute("slaximp"), 0, response.size()));
+			col1.add(new AttributesRange(Voyage.getAttribute("majbuypt"), 0, response.size() - 1));
+			col2.add(new AttributesRange(Voyage.getAttribute("slaximp"), 0, response.size() - 1));
 			min = minmax[1];
 			max = minmax[0];
 			
@@ -115,8 +115,8 @@ public class MapBean {
 			minmax = executeMapQuery(response, localCondition, new String[] { "v.majselpt.name",
 					"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end", "2" },
 					new String[] { "v.majselpt.name" }, new String[] { "case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end"});
-			col1.add(new AttributesRange(Voyage.getAttribute("majselpt"), beginSize, beginSize + response.size()));
-			col1.add(new AttributesRange(Voyage.getAttribute("slamimp"), beginSize, beginSize + response.size()));
+			col1.add(new AttributesRange(Voyage.getAttribute("majselpt"), beginSize, beginSize + response.size() - 1));
+			col2.add(new AttributesRange(Voyage.getAttribute("slamimp"), beginSize, beginSize + response.size() - 1));
 			if (min > minmax[1]) {
 				min = minmax[1];
 			}

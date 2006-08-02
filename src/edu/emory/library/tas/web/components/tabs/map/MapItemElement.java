@@ -16,7 +16,7 @@ public class MapItemElement {
 	
 	public void addElement(Element element) {
 		this.elements.add(element);
-		if (this.max == null || this.max.getValue().compareTo(element.getValue()) == -1) {
+		if (this.max == null || (this.max.getValue() != null && this.max.getValue().compareTo(element.getValue()) == -1)) {
 			this.max = element;
 		}
 	}

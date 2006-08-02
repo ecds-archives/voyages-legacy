@@ -5,11 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.emory.library.tas.GISPortLocation;
+import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.components.tabs.map.AbstractDataTransformer;
 import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
 import edu.emory.library.tas.web.components.tabs.map.AttributesMap;
 import edu.emory.library.tas.web.components.tabs.map.Element;
+import edu.emory.library.tas.web.components.tabs.map.LegendItem;
+import edu.emory.library.tas.web.components.tabs.map.LegendItemsGroup;
 import edu.emory.library.tas.web.components.tabs.map.MapItemElement;
+import edu.emory.library.tas.web.components.tabs.map.TransformerResponse;
 
 /**
  * Expects data row: [Dictionary - place] [Number - value] [Integer - color]
@@ -27,7 +31,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		super(map);
 	}
 	
-	public AbstractMapItem[] transformData(Object[] data, double min, double max) {
+	public TransformerResponse transformData(Object[] data, double min, double max) {
 
 		double[] rangeBoundries = new double[CIRCLE_RANGES + 1];
 		double step = (max - min) / CIRCLE_RANGES;
@@ -39,7 +43,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		return this.getItems(data, rangeBoundries);
 	}
 
-	private AbstractMapItem[] getItems(Object[] data, double[] ranges) {
+	private TransformerResponse getItems(Object[] data, double[] ranges) {
 
 		List items = new ArrayList();
 
@@ -80,7 +84,23 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			dataItem.setSymbolSize(index);
 		}
 
-		return (AbstractMapItem[]) items.toArray(new AbstractMapItem[] {});
+		List legend = new ArrayList();
+		LegendItemsGroup legendSizes = new LegendItemsGroup("Number of slaves");
+		LegendItemsGroup legendColors = new LegendItemsGroup("Colors");
+		for (int i = 0; i < CIRCLE_RANGES - 1; i++) {
+			LegendItem item = new LegendItem("symbols/circle-1-" + (i + 1), "" + ranges[i] + " - " + ranges[i+1]);
+			legendSizes.addItemToGroup(item);
+		}
+		
+		LegendItem emb = new LegendItem("circle-" + 1 + "-4", "Embarkation");
+		LegendItem disemb = new LegendItem("circle-" + 2 + "-4", "Disembarkation");
+		LegendItem both = new LegendItem("circle-" + 5 + "-4", "Both");
+		legendColors.addItemToGroup(emb);
+		legendColors.addItemToGroup(disemb);
+		legendColors.addItemToGroup(both);
+		
+		return new TransformerResponse((AbstractMapItem[]) items.toArray(new AbstractMapItem[] {}), 
+										new LegendItemsGroup[] {legendSizes, legendColors});
 	}
 
 }

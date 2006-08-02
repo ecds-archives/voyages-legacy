@@ -44,4 +44,12 @@ public abstract class AbstractMapItem {
 	public double getY() {
 		return y;
 	}
+	
+	public boolean equals(Object o) {
+		if (!(o instanceof AbstractMapItem)) {
+			return false;
+		}
+		AbstractMapItem that = (AbstractMapItem)o;
+		return this.x == that.x && this.y == that.y;
+	}
 }

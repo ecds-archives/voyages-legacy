@@ -1,7 +1,6 @@
 package edu.emory.library.tas.web.components.tabs.map;
 
 public class LegendItem {
-	
 	private String imagePath;
 	private String legendString;
 	
@@ -26,4 +25,7 @@ public class LegendItem {
 		this.legendString = legendString;
 	}
 	
+	public String toString() {
+		return this.legendString;
+	}
 }
