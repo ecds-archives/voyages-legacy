@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var buff = "";
+var ac = 0;
+var bc = 0;
+var max = 10;
+
+window.onload = function()
+{
+	window.setTimeout("a()", 0);
+	window.setTimeout("b()", 0);
+}
+
+function a()
+{
+	ac++;
+	for (var i=0; i<1000; i++) buff += "a" + i + "<br>";
+	if (ac < max) window.setTimeout("a()", 10);
+	checkEnd();
+}
+
+function b()
+{
+	bc++;
+	for (var i=0; i<1000; i++) buff += "b" + i + "<br>";
+	if (bc < max) window.setTimeout("b()", 0);
+	checkEnd();
+}
+
+function checkEnd()
+{
+	if (ac == max && bc == max)
+		document.getElementById("result").innerHTML = buff;
+}
+
+</script>
+
+<div id="result"></div>
+
+</body>
+</html>

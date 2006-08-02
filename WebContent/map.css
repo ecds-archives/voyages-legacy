@@ -323,12 +323,74 @@ div.minimap-frame {
 	height: 100px;
 	position: absolute; }
 	
-div.minimap-toggle {
-	background-color: Black;
-	opacity: 0.5;
+div.minimap-toggle-nw-collapsed {
 	cursor: pointer;
-	width: 10px;
-	height: 10px;
+	width: 14px;
+	height: 14px;
+	left: 0px;
+	top: 0px;
+	background-image: url(minimap-corner-arrow-se.png);
+	position: absolute; }
+	
+div.minimap-toggle-nw-expanded {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	left: 0px;
+	top: 0px;
+	background-image: url(minimap-corner-arrow-nw.png);
+	position: absolute; }
+	
+div.minimap-toggle-ne-collapsed {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	right: 0px;
+	top: 0px;
+	background-image: url(minimap-corner-arrow-sw.png);
+	position: absolute; }
+	
+div.minimap-toggle-ne-expanded {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	right: 0px;
+	top: 0px;
+	background-image: url(minimap-corner-arrow-ne.png);
+	position: absolute; }
+	
+div.minimap-toggle-se-collapsed {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
 	right: 0px;
 	bottom: 0px;
+	background-image: url(minimap-corner-arrow-nw.png);
+	position: absolute; }
+	
+div.minimap-toggle-se-expanded {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	right: 0px;
+	bottom: 0px;
+	background-image: url(minimap-corner-arrow-se.png);
+	position: absolute; }
+	
+div.minimap-toggle-sw-collapsed {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	left: 0px;
+	bottom: 0px;
+	background-image: url(minimap-corner-arrow-ne.png);
+	position: absolute; }
+	
+div.minimap-toggle-sw-expanded {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	left: 0px;
+	bottom: 0px;
+	background-image: url(minimap-corner-arrow-sw.png);
 	position: absolute; }
