@@ -522,7 +522,7 @@ function MapTile(img)
 	this.points = null;
 	this.url = "";
 	this.oldUrl = "";
-	this.valid = false;
+	//this.valid = false;
 }
 
 function PointOfInterest(x, y, name, text)
@@ -1337,6 +1337,10 @@ Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, c
 			var newUrl = this.createTileUrl(col, row);
 			if (newUrl != tile.url)
 			{
+				tile.url = newUrl;
+				tile.img.style.visibility = "hidden";
+				tile.img.src = newUrl;
+				/*
 				if (postpone)
 				{
 					if (tile.valid) tile.img.src = this.getBlankTileUrl();
@@ -1350,11 +1354,14 @@ Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, c
 					tile.valid = true;
 					tile.img.src = newUrl;
 				}
+				*/
 			}
+			/*
 			else
 			{
 				tile.valid = true;
 			}
+			*/
 			tile.img.style.left = (this.first_tile_vx + (j * this.tile_width)) + "px";
 			tile.img.style.top = (this.first_tile_vy + (i * this.tile_height)) + "px";
 		}
@@ -2060,6 +2067,7 @@ Map.prototype.updateControlsLayout = function()
 		for (var j=0; j<this.visible_cols+1; j++)
 		{			
 			var tile = document.createElement("IMG");
+			tile.onload = function() {this.style.visibility = "visible"};
 			this.tiles_map[i][j] = new MapTile(tile);
 			if (IE)
 			{
