@@ -1251,7 +1251,7 @@ Map.prototype.saveState = function()
 	}
 }
 
-
+/*
 Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
 {
 	//if (update_img)
@@ -1313,6 +1313,7 @@ Map.prototype.updateInvalidatedTiles = function()
 		}
 	}
 }
+*/
 
 Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, col_from, col_to)
 {
@@ -1381,11 +1382,12 @@ Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, c
 	
 	*/
 
+	/*
 	if (postpone && needPosponedUpdate)
 	{
 		Timer.cancelCall(this.postponed_refresh_id);
 		this.postponed_refresh_id = Timer.delayedCall(this, "updateInvalidatedTiles", 10);		
-	}
+	*/
 
 }
 
