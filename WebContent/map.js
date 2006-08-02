@@ -1317,7 +1317,7 @@ Map.prototype.updateInvalidatedTiles = function()
 Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, col_from, col_to)
 {
 
-	postpone = true;
+	postpone = false;
 
 	this.saveState();
 	
