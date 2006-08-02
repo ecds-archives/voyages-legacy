@@ -380,6 +380,15 @@
 		<attribute>
 			<name>miniMap</name>
 		</attribute>
+		<attribute>
+			<name>miniMapPosition</name>
+		</attribute>
+		<attribute>
+			<name>miniMapWidth</name>
+		</attribute>
+		<attribute>
+			<name>miniMapHeight</name>
+		</attribute>
 	</tag>
 	
 	<tag>

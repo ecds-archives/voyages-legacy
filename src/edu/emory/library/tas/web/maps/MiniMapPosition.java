@@ -48,16 +48,28 @@ public class MiniMapPosition implements Serializable
 		}
 	}
 	
-	public String getCssClass(boolean collapsed)
+	public String getCssClassForMapControl()
 	{
-		if (!collapsed)
+		switch (position)
+		{
+			case POSITION_TOP_LEFT: return "minimap-control-nw";
+			case POSITION_TOP_RIGHT: return "minimap-control-ne";
+			case POSITION_BOTTOM_LEFT: return "minimap-control-sw";
+			case POSITION_BOTTOM_RIGHT: return "minimap-control-se";
+			default: return null;
+		}
+	}
+	
+	public String getCssClassForToggleButton(boolean visible)
+	{
+		if (visible)
 		{
 			switch (position)
 			{
-				case POSITION_TOP_LEFT: return "minimap-toggle-nw";
-				case POSITION_TOP_RIGHT: return "minimap-toggle-ne";
-				case POSITION_BOTTOM_LEFT: return "minimap-toggle-sw";
-				case POSITION_BOTTOM_RIGHT: return "minimap-toggle-se";
+				case POSITION_TOP_LEFT: return "minimap-toggle-nw-expanded";
+				case POSITION_TOP_RIGHT: return "minimap-toggle-ne-expanded";
+				case POSITION_BOTTOM_LEFT: return "minimap-toggle-sw-expanded";
+				case POSITION_BOTTOM_RIGHT: return "minimap-toggle-se-expanded";
 				default: return null;
 			}
 		}
@@ -74,7 +86,7 @@ public class MiniMapPosition implements Serializable
 		}
 	}
 	
-	public MiniMapPosition parse(String str)
+	public static MiniMapPosition parse(String str)
 	{
 		if (str == null) return MiniMapPosition.BottomRight;
 		str = str.toLowerCase();
@@ -82,13 +94,13 @@ public class MiniMapPosition implements Serializable
 		boolean left = str.indexOf("left") != -1;
 		if (top)
 		{
-			if (left) return TopLeft;
-			else return TopRight; 
+			if (left) return MiniMapPosition.TopLeft;
+			else return MiniMapPosition.TopRight; 
 		}
 		else
 		{
-			if (left) return BottomLeft;
-			else return BottomRight; 
+			if (left) return MiniMapPosition.BottomLeft;
+			else return MiniMapPosition.BottomRight; 
 		}
 	}
 

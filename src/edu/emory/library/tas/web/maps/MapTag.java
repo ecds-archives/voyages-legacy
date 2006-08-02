@@ -13,6 +13,9 @@ public class MapTag extends UIComponentTag
 	private String serverBaseUrl;
 	private String pointsOfInterest;
 	private String miniMap;
+	private String miniMapPosition;
+	private String miniMapWidth;
+	private String miniMapHeight;
 
 	public String getComponentType()
 	{
@@ -66,6 +69,36 @@ public class MapTag extends UIComponentTag
 			map.setMiniMap("true".equalsIgnoreCase(miniMap));
 		}
 
+		if (miniMapPosition != null && isValueReference(miniMapPosition))
+		{
+			ValueBinding vb = app.createValueBinding(miniMapPosition);
+			component.setValueBinding("miniMapPosition", vb);
+		}
+		else
+		{
+			map.setMiniMapPosition(MiniMapPosition.parse(miniMapPosition));
+		}
+
+		if (miniMapWidth != null && isValueReference(miniMapWidth))
+		{
+			ValueBinding vb = app.createValueBinding(miniMapWidth);
+			component.setValueBinding("miniMapWidth", vb);
+		}
+		else
+		{
+			map.setMiniMapWidth(Integer.parseInt(miniMapWidth));
+		}
+
+		if (miniMapHeight != null && isValueReference(miniMapHeight))
+		{
+			ValueBinding vb = app.createValueBinding(miniMapHeight);
+			component.setValueBinding("miniMapHeight", vb);
+		}
+		else
+		{
+			map.setMiniMapHeight(Integer.parseInt(miniMapHeight));
+		}
+
 	}
 
 	public String getMapFile()
@@ -106,6 +139,36 @@ public class MapTag extends UIComponentTag
 	public void setMiniMap(String miniMap)
 	{
 		this.miniMap = miniMap;
+	}
+
+	public String getMiniMapHeight()
+	{
+		return miniMapHeight;
+	}
+
+	public String getMiniMapPosition()
+	{
+		return miniMapPosition;
+	}
+
+	public String getMiniMapWidth()
+	{
+		return miniMapWidth;
+	}
+
+	public void setMiniMapHeight(String miniMapHeight)
+	{
+		this.miniMapHeight = miniMapHeight;
+	}
+
+	public void setMiniMapPosition(String miniMapPosition)
+	{
+		this.miniMapPosition = miniMapPosition;
+	}
+
+	public void setMiniMapWidth(String miniMapWidth)
+	{
+		this.miniMapWidth = miniMapWidth;
 	}
 
 }

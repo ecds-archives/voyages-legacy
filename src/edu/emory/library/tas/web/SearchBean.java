@@ -39,8 +39,6 @@ import edu.emory.library.tas.util.query.QueryValue;
 public class SearchBean
 {
 	
-	//private static final String ATTRIBUTES_LIST_SEPARATOR_TEXT = "-----------------------";
-	//private static final String ATTRIBUTES_LIST_SEPARATOR_VALUE = "-";
 	private static final String SIMPLE_ATTRIBUTE_PREFIX = "simple_";
 	private static final String COMPOUND_ATTRIBUTE_PREFIX = "compound_";
 	
@@ -54,10 +52,6 @@ public class SearchBean
 	private Query workingQuery = new Query();
 	private SearchParameters searchParameters = new SearchParameters(new Conditions());
 
-//	private boolean tableVisible = true;
-//	private boolean timeLineVisible = false;
-//	private boolean statisticsVisible = false;
-	
 	private MessageBarComponent messageBar;
 	
 	/**

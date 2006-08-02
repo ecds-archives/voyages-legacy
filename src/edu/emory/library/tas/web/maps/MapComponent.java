@@ -44,6 +44,14 @@ public class MapComponent extends UIComponentBase
 	private boolean miniMapSet = false;
 	private boolean miniMap = true;
 	private boolean miniMapVisible = true;
+	
+	private boolean miniMapPositionSet = false;
+	private MiniMapPosition miniMapPosition = MiniMapPosition.BottomRight;
+
+	private boolean miniMapWidthSet = false;
+	private boolean miniMapHeightSet = false;
+	private int miniMapWidth = 100;
+	private int miniMapHeight = 100;
 
 	private ZoomHistory zoomHistory = new ZoomHistory();
 	private MouseMode mouseMode = MouseMode.Pan;
@@ -60,7 +68,7 @@ public class MapComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[13];
+		Object[] values = new Object[16];
 		values[0] = super.saveState(context);
 		values[1] = mapFile;
 		values[2] = serverBaseUrl;
@@ -74,6 +82,9 @@ public class MapComponent extends UIComponentBase
 		values[10] = zoomHistory;
 		values[11] = new Boolean(miniMap);
 		values[12] = new Boolean(miniMapVisible);
+		values[13] = miniMapPosition;
+		values[14] = new Integer(miniMapWidth);
+		values[15] = new Integer(miniMapHeight);
 		return values;
 	}
 	
@@ -93,6 +104,9 @@ public class MapComponent extends UIComponentBase
 		zoomHistory = (ZoomHistory) values[10];
 		miniMap = ((Boolean)values[11]).booleanValue();
 		miniMapVisible = ((Boolean)values[12]).booleanValue();
+		miniMapPosition = (MiniMapPosition) values[13];
+		miniMapWidth = ((Integer)values[14]).intValue();
+		miniMapHeight = ((Integer)values[15]).intValue();
 	}
 	
 	private String getHiddenFieldNameForX1(FacesContext context)
@@ -158,7 +172,6 @@ public class MapComponent extends UIComponentBase
 			mapSize = MapSize.parse(mapSizeStr, true);
 		
 		miniMapVisible = UtilsJSF.getParamBoolean(params, getHiddenFieldNameForMiniMapVisibility(context), miniMapVisible);
-		System.out.println(miniMapVisible);
 		
 	}
 	
@@ -354,6 +367,9 @@ public class MapComponent extends UIComponentBase
 		mapSizes = getMapSizes();
 		PointOfInterest[] pointsOfInterest = getPointsOfInterest();
 		miniMap = isMiniMap();
+		miniMapPosition = getMiniMapPosition();
+		miniMapWidth = getMiniMapWidth();
+		miniMapHeight = getMiniMapHeight();
 		
 		// at least the default map size
 		if (mapSizes == null || mapSizes.length == 0)
@@ -500,6 +516,8 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("'").append(miniMapToggleId).append("'");
 			jsRegister.append(", ");
 			jsRegister.append("'").append(hiddenFieldNameForMiniMapVisibility).append("'");
+			jsRegister.append(", ");
+			jsRegister.append("'").append(miniMapPosition).append("'");
 		}
 		else
 		{
@@ -510,8 +528,10 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("null");
 			jsRegister.append(", ");
 			jsRegister.append("null");
+			jsRegister.append(", ");
+			jsRegister.append("null");
 		}
-
+		
 		// end of init JS
 		jsRegister.append(");");
 		
@@ -541,7 +561,6 @@ public class MapComponent extends UIComponentBase
 		UtilsJSF.encodeHiddenInput(this, writer,
 				hiddenFieldNameForMapSize,
 				String.valueOf(mapSize.toString()));
-		
 		
 		// main div style
 		String mainDivStyle =
@@ -604,21 +623,32 @@ public class MapComponent extends UIComponentBase
 		// minimap
 		if (miniMap)
 		{
+			
+			String miniMapControlStyle =
+				"width: " + miniMapWidth + "px; " +
+				"height: " + miniMapHeight + "px; " +
+				"visibility: " + (!miniMapVisible ? "hidden" : "visible");
+
+			String miniMapFrameStyle =
+				"width: " + miniMapWidth + "px; " +
+				"height: " + miniMapHeight + "px;";
+
+			// main DIV and frame DIV
 			writer.startElement("div", this);
 			writer.writeAttribute("id", miniMapControlId, null);
-			if (!miniMapVisible) writer.writeAttribute("style", "visibility: hidden", null);
-			writer.writeAttribute("class", "minimap-control", null);
-
+			writer.writeAttribute("style", miniMapControlStyle, null);
+			writer.writeAttribute("class", miniMapPosition.getCssClassForMapControl(), null);
 			writer.startElement("div", this);
 			writer.writeAttribute("id", miniMapFrameId, null);
+			writer.writeAttribute("style", miniMapFrameStyle, null);
 			writer.writeAttribute("class", "minimap-frame", null);
 			writer.endElement("div");
-			
 			writer.endElement("div");
 
+			// toggle button
 			writer.startElement("div", this);
 			writer.writeAttribute("id", miniMapToggleId, null);
-			writer.writeAttribute("class", "minimap-toggle", null);
+			writer.writeAttribute("class", miniMapPosition.getCssClassForToggleButton(miniMapVisible), null);
 			writer.endElement("div");
 		
 		}
@@ -721,6 +751,44 @@ public class MapComponent extends UIComponentBase
         ValueBinding vb = getValueBinding("miniMap");
         if (vb == null) return miniMap;
         return ((Boolean) vb.getValue(getFacesContext())).booleanValue();
+	}
+
+	public void setMiniMapPosition(MiniMapPosition miniMapPosition)
+	{
+		miniMapPositionSet = true;
+		this.miniMapPosition = miniMapPosition;
+	}
+
+	public MiniMapPosition getMiniMapPosition()
+	{
+        if (miniMapPositionSet) return miniMapPosition;
+        ValueBinding vb = getValueBinding("miniMapPosition");
+        if (vb == null) return miniMapPosition;
+        return (MiniMapPosition) vb.getValue(getFacesContext());
+	}
+
+	public void setMiniMapWidth(int miniMapWidth)
+	{
+		miniMapWidthSet = true;
+		this.miniMapWidth = miniMapWidth;
+	}
+
+	public int getMiniMapWidth()
+	{
+		return UtilsJSF.getComponentInt(this, getFacesContext(),
+				miniMapWidthSet, miniMapWidth, "miniMapWidth");
+	}
+
+	public void setMiniMapHeight(int miniMapHeight)
+	{
+		miniMapHeightSet = true;
+		this.miniMapHeight = miniMapHeight;
+	}
+
+	public int getMiniMapHeight()
+	{
+		return UtilsJSF.getComponentInt(this, getFacesContext(),
+				miniMapHeightSet, miniMapHeight, "miniMapHeight");
 	}
 
 }

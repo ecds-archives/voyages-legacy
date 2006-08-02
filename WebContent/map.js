@@ -45,7 +45,8 @@ var MapsGlobal =
 		miniMapControlId,
 		miniMapFrameId,
 		miniMapToggleId,
-		fieldNameMiniMapVisibility
+		fieldNameMiniMapVisibility,
+		miniMapPosition
 	)
 	{
 	
@@ -94,8 +95,10 @@ var MapsGlobal =
 			miniMap.map_control_id = miniMapControlId;
 			miniMap.frameId = miniMapFrameId;
 			miniMap.mainMap = map;
+			
 			map.miniMap = miniMap;
 			map.fieldNameMiniMapVisibility = fieldNameMiniMapVisibility;
+			map.miniMapPosition = miniMapPosition;
 			if (miniMapToggleId) map.miniMapToggleId = miniMapToggleId;
 		}
 		
@@ -450,6 +453,7 @@ function Map()
 	this.miniMapToggle = null;
 	this.miniMap = null;
 	this.mainMap = null;
+	this.miniMapPosition = null;
 	
 	// points of interest
 	this.points = null;
@@ -1088,13 +1092,14 @@ Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZo
 // main/mini-map interaction
 /////////////////////////////////////////////////////////
 
-Map.prototype.toggleVisibility = function()
+Map.prototype.show = function()
 {
-	this.map_control.style.visibility = 
-		this.isVisible() ? "hidden" : "visible";
-		
-	//this.map_control.style.bottom = "0px";
-	//this.map_control.style.right = "0px";
+	this.map_control.style.visibility = "visible";
+}
+
+Map.prototype.hide = function()
+{
+	this.map_control.style.visibility = "hidden";
 }
 
 Map.prototype.isVisible = function()
@@ -1118,14 +1123,62 @@ Map.prototype.initMiniMap = function()
 
 }
 
+Map.prototype.getCssClassForMinimapToggleButton = function(visible)
+{
+	if (visible)
+	{
+		if (this.miniMapPosition == "top left")
+			return "minimap-toggle-nw-expanded";
+		if (this.miniMapPosition == "top right")
+			return "minimap-toggle-ne-expanded";
+		if (this.miniMapPosition == "bottom left")
+			return "minimap-toggle-sw-expanded";
+		if (this.miniMapPosition == "bottom right")
+			return "minimap-toggle-se-expanded";
+	}
+	else
+	{
+		if (this.miniMapPosition == "top left")
+			return "minimap-toggle-nw-collapsed";
+		if (this.miniMapPosition == "top right")
+			return "minimap-toggle-ne-collapsed";
+		if (this.miniMapPosition == "bottom left")
+			return "minimap-toggle-sw-collapsed";
+		if (this.miniMapPosition == "bottom right")
+			return "minimap-toggle-se-collapsed";
+	}
+}
+
+Map.prototype.getCssClassForMinimap = function()
+{
+	if (this.miniMapPosition == "top left")
+		return "minimap-control-nw";
+	if (this.miniMapPosition == "top right")
+		return "minimap-control-ne";
+	if (this.miniMapPosition == "bottom left")
+		return "minimap-control-sw";
+	if (this.miniMapPosition == "bottom right")
+		return "minimap-control-se";
+}
+
 Map.prototype.hideShowMiniMap = function()
 {
 
 	if (!this.miniMap)
 		return;
-		
-	this.miniMap.toggleVisibility();
-	this.fieldMiniMapVisibility.value = this.miniMap.isVisible() ? "true" : "false";
+	
+	if (this.miniMap.isVisible())
+	{
+		this.miniMap.hide();
+		this.fieldMiniMapVisibility.value = "false";
+		this.miniMapToggle.className = this.getCssClassForMinimapToggleButton(false);
+	}
+	else
+	{
+		this.miniMap.show();
+		this.fieldMiniMapVisibility.value = "true";
+		this.miniMapToggle.className = this.getCssClassForMinimapToggleButton(true);
+	}
 
 }
 

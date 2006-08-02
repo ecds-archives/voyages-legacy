@@ -308,19 +308,39 @@ div.map-scale-indicator-bar {
 	overflow: hidden;
 	height: 5px; }	
 
-div.minimap-control {
+div.minimap-control-nw {
+	border-right: 1px solid #4C5966;
+	border-bottom: 1px solid #4C5966;
+	left: 0px;
+	top: 0px;
+	position: absolute;
+	overflow: visible; }
+	
+div.minimap-control-ne {
 	border-left: 1px solid #4C5966;
+	border-bottom: 1px solid #4C5966;
+	right: 0px;
+	top: 0px;
+	position: absolute;
+	overflow: visible; }
+	
+div.minimap-control-se {
 	border-top: 1px solid #4C5966;
-	width: 100px;
-	height: 100px;
+	border-left: 1px solid #4C5966;
 	right: 0px;
 	bottom: 0px;
 	position: absolute;
 	overflow: visible; }
-
+	
+div.minimap-control-sw {
+	border-right: 1px solid #4C5966;
+	border-top: 1px solid #4C5966;
+	left: 0px;
+	bottom: 0px;
+	position: absolute;
+	overflow: visible; }
+	
 div.minimap-frame {
-	width: 100px;
-	height: 100px;
 	position: absolute; }
 	
 div.minimap-toggle-nw-collapsed {

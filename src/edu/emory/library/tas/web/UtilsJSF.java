@@ -8,6 +8,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tas.util.StringUtils;
 
@@ -366,5 +367,13 @@ public class UtilsJSF
 	{
 		System.out.println(escapeStringForJS("'"));
 	}
+    
+    public static int getComponentInt(UIComponent component, FacesContext context, boolean set, int setValue, String boundKey)
+    {
+        if (set) return setValue;
+        ValueBinding vb = component.getValueBinding(boundKey);
+        if (vb == null) return setValue;
+        return ((Integer) vb.getValue(context)).intValue();
+    }
 
 }
