@@ -4,5 +4,13 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <h:outputText value="&nbsp;" escape="false" />
-<s:map mapFile="#{MapBean.mapPath}" pointsOfInterest="#{MapBean.pointsOfInterest}" serverBaseUrl="servlet/maptile"/>
+
+<s:map
+	mapFile="#{MapBean.mapPath}"
+	pointsOfInterest="#{MapBean.pointsOfInterest}"
+	miniMap="true"
+	miniMapWidth="100"
+	miniMapHeight="100"
+	serverBaseUrl="servlet/maptile"/>
+
 <h:outputText value="&nbsp;" escape="false" />

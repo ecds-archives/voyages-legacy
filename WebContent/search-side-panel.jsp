@@ -60,7 +60,7 @@ function animateAttribute(menuItem, submitFunction)
 	document.body.appendChild(a);
 	
 	var anim = new Animation(a, 20, 300, submitFunction);
-	anim.setPositions(x1, x1, x2, y2);
+	anim.setPositions(x1, y1, x2, y2);
 	anim.setSizes(w1, h1, w2, h2);
 	anim.setOpacities(1, 0.1);
 	anim.start();

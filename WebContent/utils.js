@@ -16,11 +16,11 @@ function Animation(element, steps, duration, callWhenDone, functionArg)
 	this.functionArg = functionArg;
 }
 
-Animation.prototype.setPositions = function(x1, y1)
+Animation.prototype.setPositions = function(x1, y1, x2, y2)
 {
 	this.setAnimatePosition(true);
 	this.setStartPosition(x1, y1);
-	this.setEndPosition(x1, y1);
+	this.setEndPosition(x2, y2);
 }
 
 Animation.prototype.setAnimatePosition = function(value)
