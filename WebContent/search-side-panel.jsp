@@ -9,7 +9,7 @@
 	backgroundStyle="dark"
 	tabsStyle="middle"
 	buttonsStyle="middle"
-	selectedSectionId="beginner">
+	selectedSectionId="#{SearchBean.selectedCategory}">
 
 	<s:section title="Beginner" sectionId="beginner">
 		<s:menuPopup

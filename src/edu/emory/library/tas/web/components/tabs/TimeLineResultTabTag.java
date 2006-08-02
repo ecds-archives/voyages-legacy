@@ -32,16 +32,6 @@ public class TimeLineResultTabTag extends UIComponentTag {
 	private String styleClass;
 
 	/**
-	 * Conditions in mapping.
-	 */
-	private String conditions;
-	
-	/**
-	 * Conditions out mapping.
-	 */
-	private String conditionsOut;
-
-	/**
 	 * Visibility of component mapping.
 	 */
 	private String componentVisible;
@@ -69,33 +59,6 @@ public class TimeLineResultTabTag extends UIComponentTag {
 				component.setValueBinding("styleClass", vb);
 			} else {
 				component.getAttributes().put("styleClass", styleClass);
-			}
-		}
-		if (conditions != null) {
-			if (isValueReference(conditions)) {
-				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(conditions);
-				component.setValueBinding("conditions", vb);
-			} else {
-				component.getAttributes().put("conditions", conditions);
-			}
-		}
-		if (conditionsOut != null) {
-			if (isValueReference(conditionsOut)) {
-				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(conditionsOut);
-				component.setValueBinding("conditionsOut", vb);
-			} else {
-				component.getAttributes().put("conditionsOut", conditionsOut);
-			}
-		}
-		if (componentVisible != null) {
-			if (isValueReference(conditionsOut)) {
-				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(componentVisible);
-				component.setValueBinding("componentVisible", vb);
-			} else {
-				component.getAttributes().put("componentVisible", componentVisible);
 			}
 		}
 	}
@@ -126,18 +89,6 @@ public class TimeLineResultTabTag extends UIComponentTag {
 
 	public void setStyle(String style) {
 		this.style = style;
-	}
-	
-	public void setQuery(String c) {
-		this.conditions = c;
-	}
-
-	public String getConditionsOut() {
-		return conditionsOut;
-	}
-
-	public void setConditionsOut(String conditionsOut) {
-		this.conditionsOut = conditionsOut;
 	}
 
 	public String getComponentVisible() {

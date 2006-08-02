@@ -16,26 +16,20 @@
 	
 	<s:section title="Basic graph" sectionId="basic-graph">
 		<s:stattab
-			styleClass="data-container"
-			query="#{SearchBean.searchParameters}"
-			conditionsOut="#{TimeLineResultTabBean.conditions}">
+			styleClass="data-container">
 		<%@ include file="search-tab-graph.jsp" %>
 		</s:stattab>
 	</s:section>
 
 	<s:section title="Custom graphs" sectionId="custom-graphs">
 		<s:stattab
-			styleClass="data-container"
-			query="#{SearchBean.searchParameters}"
-			conditionsOut="#{AdvancedStatisticsTabBean.conditions}">
+			styleClass="data-container">
 		<%@ include file="search-tab-stat.jsp" %>
 		</s:stattab>
 	</s:section>
 	
 	<s:section title="Map of ports" sectionId="map-ports">
-		<s:stattab
-			query="#{SearchBean.searchParameters}"
-			conditionsOut="#{MapBean.conditions}">
+		<s:stattab>
 		<%@ include file="search-tab-map.jsp" %>
 		</s:stattab>
 	</s:section>

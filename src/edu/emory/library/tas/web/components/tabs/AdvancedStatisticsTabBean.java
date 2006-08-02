@@ -15,6 +15,7 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchBean;
 import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.AbstractChartGenerator;
 
@@ -105,11 +106,6 @@ public class AdvancedStatisticsTabBean {
 			}
 		}
 	}
-
-	/**
-	 * Conditions used on search interface.
-	 */
-	private Conditions conditions;
 
 	/**
 	 * Indicatation of query need. If false - DB will not be queried.
@@ -234,9 +230,14 @@ public class AdvancedStatisticsTabBean {
 	private String warningMessage = null;
 
 	/**
-	 * Current category of attributes.
+	 * Reference to Search bean.
 	 */
-	private int category;
+	private SearchBean searchBean = null;
+	
+	/**
+	 * Conditions used in query.
+	 */
+	private Conditions conditions = null;
 	
 	private int firstResult = 0;
 
@@ -426,21 +427,17 @@ public class AdvancedStatisticsTabBean {
 	 */
 	public String showGraph() {
 
+		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
+			this.conditions = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+			neededQuery = true;
+		}
+		
 		// Check whether we should query DB
-		if (this.conditions != null && this.neededQuery) {
+		if (this.searchBean.getSearchParameters().getConditions() != null && this.neededQuery) {
 			this.statReady = new Boolean(true);
 
 			// Prepare current generator
 			AbstractChartGenerator generator = this.getChartGenerator();
-
-			// Check if warning should appear
-//			if (this.getNumberOfResults(generator) > MAX_RESULTS_PER_GRAPH) {
-//				this.warningMessage = "Current query returns more than " + MAX_RESULTS_PER_GRAPH
-//						+ " voyages. Graph shows only first " + MAX_RESULTS_PER_GRAPH + " results.";
-//				this.warningPresent = new Boolean(true);
-//			} else {
-//				this.warningPresent = new Boolean(false);
-//			}
 
 			// Prepare query
 			QueryValue qValue = this.prepareQueryValue(generator);
@@ -637,27 +634,6 @@ public class AdvancedStatisticsTabBean {
 	}
 
 	/**
-	 * Sets currently chosen search parameters.
-	 * 
-	 * @param params
-	 */
-	public void setConditions(SearchParameters params) {
-		if (params == null) {
-			return;
-		}
-		this.category = params.getCategory();
-		Conditions conditions = params.getConditions();
-		if (conditions != null && !conditions.equals(this.conditions)) {
-			this.conditions = conditions;
-			this.neededQuery = true;
-			if (this.statReady.booleanValue()) {
-				this.showGraph();
-			}
-		}
-
-	}
-
-	/**
 	 * Gets chosen order.
 	 * 
 	 * @return
@@ -742,7 +718,7 @@ public class AdvancedStatisticsTabBean {
 			// }
 			// }
 			ok = true;
-			if (ok && attributes[i].isVisibleByCategory(this.category)) {
+			if (ok && attributes[i].isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
 				String outString = null;
 				if (attributes[i].getUserLabel() == null || attributes[i].getUserLabel().equals("")) {
 					outString = attributes[i].getName();
@@ -769,7 +745,7 @@ public class AdvancedStatisticsTabBean {
 		voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			Attribute attr = attributes[i];
-			if (attr.isVisibleByCategory(this.category)
+			if (attr.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())
 					&& (attr.getType().intValue() == Attribute.TYPE_FLOAT
 							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
 				String outString = attr.toString();
@@ -1072,6 +1048,14 @@ public class AdvancedStatisticsTabBean {
 	 */
 	public void setWarningPresent(Boolean warningPresent) {
 		this.warningPresent = warningPresent;
+	}
+
+	public SearchBean getSearchBean() {
+		return searchBean;
+	}
+
+	public void setSearchBean(SearchBean searchBean) {
+		this.searchBean = searchBean;
 	}
 
 }

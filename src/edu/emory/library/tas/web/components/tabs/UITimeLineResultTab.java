@@ -54,14 +54,6 @@ public class UITimeLineResultTab extends UIOutput {
 				vb.setValue(context, b);
 			}
 		}		
-		vb = this.getValueBinding("conditions");
-		if (vb != null) {
-			SearchParameters c = (SearchParameters) vb.getValue(context);
-			vb = this.getValueBinding("conditionsOut");
-			if (vb != null) {
-				vb.setValue(context, c);
-			}
-		}
 		
 		// Start table (needed?)
 		//writer.startElement("table", this);

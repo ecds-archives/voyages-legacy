@@ -18,7 +18,13 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchBean;
 import edu.emory.library.tas.web.SearchParameters;
+import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
+import edu.emory.library.tas.web.components.tabs.map.AttributesMap;
+import edu.emory.library.tas.web.components.tabs.map.AttributesRange;
+import edu.emory.library.tas.web.components.tabs.map.MapData;
+import edu.emory.library.tas.web.components.tabs.map.specific.GlobalMapDataTransformer;
 import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
 import edu.emory.library.tas.web.maps.PointOfInterest;
 import edu.umn.gis.mapscript.classObj;
@@ -54,15 +60,15 @@ public class MapBean {
 
 	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";
 
-	private class MapItemResponse {
-		MapItem[] items;
-		double min;
-		double max;
-	}
+	/**
+	 * Reference to Search bean.
+	 */
+	private SearchBean searchBean = null;
 
-	private int category;
-
-	private Conditions conditions;
+	/**
+	 * Conditions used in query.
+	 */
+	private Conditions conditions = null;
 
 	private boolean neededQuery = false;
 
@@ -72,45 +78,64 @@ public class MapBean {
 
 	private List pointsOfInterest = new ArrayList();
 
-	private MapItemResponse getMapItems() {
+	private MapData mapData = new MapData();
 
-		double min = Double.MAX_VALUE;
-		double max = Double.MIN_VALUE;
-		
-		this.pointsOfInterest.clear();
-		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
-		localCondition.addCondition(VoyageIndex.getRecent().addAttributesPrefix("vi."));
+	private void setMapData() {
 
-		// We will need join condition (to join VoyageIndex and Voyage).
-		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
+			this.conditions = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
+			neededQuery = true;
+		}
 
-		ArrayList response = new ArrayList();
-		double[] minmax = executeMapQuery(response, localCondition, new Attribute[] {Voyage.getAttribute("majbuypt"), Voyage.getAttribute("slaximp")}, 
-				new String[] { "v.majbuypt.name",
-				"case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end" }, new String[] { "v.majbuypt.name" },
-				new String[] { "sum(v.slaximp)" }, 0, 0);
-		min = minmax[1];
-		max = minmax[0];
-		minmax = executeMapQuery(response, localCondition, new Attribute[] {Voyage.getAttribute("majselpt"), Voyage.getAttribute("slamimp")},  
-				new String[] { "v.majselpt.name",
-				"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end" }, new String[] { "v.majselpt.name" },
-				new String[] { "sum(v.slamimp)" }, 0, 1);
-		if (min > minmax[1]) {
+		if (this.neededQuery) {
+			double min = Double.MAX_VALUE;
+			double max = Double.MIN_VALUE;
+
+			this.pointsOfInterest.clear();
+			Conditions localCondition = this.searchBean.getSearchParameters().getConditions().addAttributesPrefix("v.");
+			localCondition.addCondition(VoyageIndex.getRecent().addAttributesPrefix("vi."));
+
+			// We will need join condition (to join VoyageIndex and Voyage).
+			localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+
+			AttributesMap map = new AttributesMap();
+			List col1 = new ArrayList();
+			List col2 = new ArrayList();
+			ArrayList response = new ArrayList();
+			
+			double[] minmax = executeMapQuery(response, localCondition, new String[] {
+					"v.majbuypt.name", "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end", "1" },
+					new String[] { "v.majbuypt.name" }, new String[] { "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end" });
+			col1.add(new AttributesRange(Voyage.getAttribute("majbuypt"), 0, response.size()));
+			col1.add(new AttributesRange(Voyage.getAttribute("slaximp"), 0, response.size()));
 			min = minmax[1];
-		}
-		if (max < minmax[0]) {
 			max = minmax[0];
+			
+			int beginSize = response.size();
+			minmax = executeMapQuery(response, localCondition, new String[] { "v.majselpt.name",
+					"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end", "2" },
+					new String[] { "v.majselpt.name" }, new String[] { "case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end"});
+			col1.add(new AttributesRange(Voyage.getAttribute("majselpt"), beginSize, beginSize + response.size()));
+			col1.add(new AttributesRange(Voyage.getAttribute("slamimp"), beginSize, beginSize + response.size()));
+			if (min > minmax[1]) {
+				min = minmax[1];
+			}
+			if (max < minmax[0]) {
+				max = minmax[0];
+			}
+
+			map.addColumn(col1);
+			map.addColumn(col2);
+			
+			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(map);						
+			this.mapData.setMapData(response.toArray(), min, max, transformer);
+			
+			this.neededQuery = false;
 		}
-		
-		MapItemResponse mapresponse = new MapItemResponse();
-		mapresponse.items = (MapItem[]) response.toArray(new MapItem[] {});
-		mapresponse.max = max;
-		mapresponse.min = min;
-		return mapresponse;
 	}
 
-	private double[] executeMapQuery(List response, Conditions localCondition, Attribute[] usedAttrs, String[] populatedAttrs, String[] groupBy,
-			String[] orderBy, int shape, int color) {
+	private double[] executeMapQuery(List response, Conditions localCondition,
+			String[] populatedAttrs, String[] groupBy, String[] orderBy) {
 
 		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
 
@@ -124,110 +149,34 @@ public class MapBean {
 
 		Object[] voyages = qValue.executeQuery();
 
-		for (int i = 0; i < voyages.length; i++) {
-			String portName = (String) ((Object[]) voyages[i])[0];
-			GISPortLocation gisPort = GISPortLocation.getGISPortLocation(portName);
-			if (gisPort != null) {
+		response.addAll(Arrays.asList(voyages));
 
-				if (this.pointsOfInterest.contains(gisPort)) {
-					List attrs = new ArrayList();
-					List data = new ArrayList();
-					attrs.add(usedAttrs);
-					data.add(((Object[]) voyages[i])[1]);
-					MapItem item = (MapItem) response.get(response.indexOf(new MapItem(portName, gisPort.getX(),
-							gisPort.getY(), data, 
-							attrs, shape, color, true)));
-					item.setColor(2);
-					attrs.addAll(item.getUsedAttrs());
-					data.addAll(item.getData());
-					PointOfInterest point = (PointOfInterest)this.pointsOfInterest.get(this.pointsOfInterest.indexOf(gisPort));
-					point.setText(buildToolTipInfo(gisPort, attrs, data));
-				} else {
-					List attrs = new ArrayList();
-					List data = new ArrayList();
-					attrs.add(usedAttrs);
-					data.add(((Object[]) voyages[i])[1]);
-					this.pointsOfInterest.add(new PointOfInterest(gisPort.getX(), gisPort.getY(),
-							gisPort.getPortName(), buildToolTipInfo(gisPort, usedAttrs, (Object[]) voyages[i])));
-					response.add(new MapItem(portName, gisPort.getX(), gisPort.getY(),
-							data, attrs, shape, color, true));
-				}
-			}
-		}
-		
-		return new double[] {
-				((Number) ((Object[]) voyages[voyages.length - 1])[1]).doubleValue(),
-				((Number) ((Object[]) voyages[0])[1]).doubleValue()				
-		};
+		return new double[] { ((Number) ((Object[]) voyages[voyages.length - 1])[1]).doubleValue(),
+				((Number) ((Object[]) voyages[0])[1]).doubleValue() };
 
 	}
 
-	private String buildToolTipInfo(GISPortLocation port, Attribute[] usedAttrs, Object[] data) {
-		StringBuffer buffer = new StringBuffer();
-
-		buffer.append("<div style=\"white-space: nowrap\">");
-		buffer.append("<b>");
-		buffer.append(usedAttrs[0].getUserLabelOrName()).append(": ").append(port.getPortName());
-		buffer.append("</b><br/>");
-		buffer.append(usedAttrs[1].getUserLabelOrName()).append(": ");
-		buffer.append(((Number) data[1]).intValue());
-		buffer.append("</div>");
-
-		return buffer.toString();
-	}
-	
-	private String buildToolTipInfo(GISPortLocation port, List usedAttrs, List data) {
-		StringBuffer buffer = new StringBuffer();
-
-		buffer.append("<div style=\"white-space: nowrap\">");
-		buffer.append("<b>");
-		buffer.append("Port name: ").append(port.getPortName());
-		buffer.append("</b><br/>");
-		int i = 0;
-		for (Iterator iter = usedAttrs.iterator(); iter.hasNext();) {
-			Attribute[] element = (Attribute[]) iter.next();
-			buffer.append(element[1].getUserLabelOrName()).append(": ");
-			buffer.append(((Number)data.get(i)).intValue()).append("<br/>");
-			i++;
-		}
-		buffer.append("</div>");
-
-		return buffer.toString();
-	}
-
-	public MapItem[] getPorts() {
-		if (conditions != null) {
-			return this.getMapItems().items;
-		}
-		return new MapItem[] {};
-	}
-
-	public synchronized String getMapPath() {
+	public String getMapPath() {
 
 		try {
 
-			if (this.neededQuery) {
+			this.setMapData();
+			AbstractMapItem[] items = this.mapData.getItems();
+			
+			if (this.creator == null) {
+				this.creator = new MapFileCreator();
+			}
 
-				MapItemResponse response = this.getMapItems(); 
-				MapItem[] items = response.items;
+			if (items.length > 0) {
+				this.creator.setMapData(items);
+			}
+			if (this.creator.createMapFile()) {
+				sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
+				ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+				((HttpSession) servletContext.getSession(true)).setAttribute(sessionParam, creator.getFilePath());
 
-				if (this.creator == null) {
-					this.creator = new MapFileCreator();
-				}
-
-				if (items.length > 0) {
-					this.creator.setMapData(items, response.min, response.max);
-				}
-				if (this.creator.createMapFile()) {
-					sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
-					ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-					((HttpSession) servletContext.getSession(true)).setAttribute(sessionParam, creator.getFilePath());
-
-				} else {
-					return null;
-				}
-
-				neededQuery = false;
+			} else {
+				return null;
 			}
 
 			return sessionParam;
@@ -239,31 +188,16 @@ public class MapBean {
 
 	}
 
-	/**
-	 * Sets currently chosen search parameters.
-	 * 
-	 * @param params
-	 */
-	public void setConditions(SearchParameters params) {
-		if (params == null) {
-			return;
-		}
-		this.category = params.getCategory();
-		Conditions conditions = params.getConditions();
-		if (conditions != null && !conditions.equals(this.conditions)) {
-			this.conditions = conditions;
-			this.neededQuery = true;
-		}
-
-	}
-
 	public PointOfInterest[] getPointsOfInterest() {
-		System.out.println("returning " + pointsOfInterest.size());
-		return (PointOfInterest[]) pointsOfInterest.toArray(new PointOfInterest[] {});
+		return this.mapData.getToolTip();
 	}
 
-	public void setPointsOfInterest(PointOfInterest[] pointsOfInterest) {
-		this.pointsOfInterest = Arrays.asList(pointsOfInterest);
+	public SearchBean getSearchBean() {
+		return searchBean;
+	}
+
+	public void setSearchBean(SearchBean searchBean) {
+		this.searchBean = searchBean;
 	}
 
 }

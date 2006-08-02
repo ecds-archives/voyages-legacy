@@ -25,6 +25,7 @@ import edu.emory.library.tas.attrGroups.VisibleColumn;
 import edu.emory.library.tas.attrGroups.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchBean;
 import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
 import edu.emory.library.tas.web.maps.PointOfInterest;
@@ -40,7 +41,7 @@ public class TableResultTabBean {
 	private static final String ATTRIBUTE = "Attribute_";
 
 	private static final String COMPOUND_ATTRIBUTE = "CompoundAttribute_";
-	
+
 	private static final String MAP_SESSION_KEY = "detail_map__";
 
 	private static final String GROUP = "Group";
@@ -56,11 +57,6 @@ public class TableResultTabBean {
 	 * Number of visible records.
 	 */
 	private int step = 10;
-
-	/**
-	 * Currently used conditions.
-	 */
-	private Conditions condition;
 
 	/**
 	 * Indication of component visibility.
@@ -81,17 +77,12 @@ public class TableResultTabBean {
 	 * Currently selected list of attributes in added attrs list.
 	 */
 	private List selectedAttributeAdded = new ArrayList();
-	
+
 	/**
 	 * List of visible columns - from configuration.
 	 */
 	private List visibleColumns = new ArrayList();
 
-	/**
-	 * List of columns added from query.
-	 */
-	private List queryColumns = new ArrayList();
-	
 	/**
 	 * List of selected attributes to be added.
 	 */
@@ -136,29 +127,36 @@ public class TableResultTabBean {
 	 * Indication if query for detail voyage info is needed.
 	 */
 	private boolean needDetailQuery;
-	
+
 	/**
 	 * Indication if parameters from search should be attached.
 	 */
 	private Boolean attachSearchedParams = new Boolean(true);
-	
+
 	/**
-	 * Current category of attributes (Basic or General).
+	 * Current search bean reference.
 	 */
-	private int category;
-	
+	private SearchBean searchBean;
+
+	/**
+	 * Conditions used in query last time.
+	 */
+	private Conditions conditions = null;
+
 	/**
 	 * Map creator for detail voyage map.
 	 */
-	private MapFileCreator creator = null;
+	private DetailVoyageMap detailVoyageMap = new DetailVoyageMap();
+
+	private DetailVoyageInfo[] detailVoyageInfo = new DetailVoyageInfo[] {};
 
 	/**
 	 * Constructor.
-	 *
+	 * 
 	 */
 	public TableResultTabBean() {
 
-		//Setup default columns
+		// Setup default columns
 		VisibleColumn[] attrs = new VisibleColumn[6];
 		attrs[0] = Voyage.getAttribute("voyageId");
 		attrs[1] = Voyage.getAttribute("shipname");
@@ -173,7 +171,6 @@ public class TableResultTabBean {
 
 		data.setVisibleColumns(attrs);
 		this.visibleColumns = Arrays.asList(attrs);
-		
 
 		VisibleColumn[] additionalAttrs = new VisibleColumn[] { VoyageIndex.getAttribute("revisionId"),
 				VoyageIndex.getAttribute("revisionDate") };
@@ -186,30 +183,42 @@ public class TableResultTabBean {
 
 	/**
 	 * Queries DB for voyages if needed.
-	 *
+	 * 
 	 */
 	private void getResultsDB() {
-		if (this.condition != null && this.componentVisible.booleanValue() && needQuery) {
-			this.queryAndFillInData(VoyageIndex.getRecent(), this.data, this.getCurrent().intValue(), this.step);
+		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
+			this.conditions = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
+			needQuery = true;
+		}
+		if (this.searchBean.getSearchParameters().getConditions() != null && needQuery) {
+			this.queryAndFillInData(VoyageIndex.getRecent(), this.data, this.getCurrent().intValue(), this.step, false);
+			this.setNumberOfResults();
 			needQuery = false;
 		}
 	}
 
 	/**
 	 * Builds and executes query
-	 * @param subCondition Conditions for query (for VoyageIndex object)
-	 * @param dataTable place to store retrieved data
-	 * @param start	first result
-	 * @param length number of columns
+	 * 
+	 * @param subCondition
+	 *            Conditions for query (for VoyageIndex object)
+	 * @param dataTable
+	 *            place to store retrieved data
+	 * @param start
+	 *            first result
+	 * @param length
+	 *            number of columns
 	 */
-	private void queryAndFillInData(Conditions subCondition, TableData dataTable, int start, int length) {
+	private Object[][] queryAndFillInData(Conditions subCondition, TableData dataTable, int start, int length,
+			boolean returnBasicInfo) {
 
-		//Build condition
+		// Build condition
 		subCondition = subCondition.addAttributesPrefix("v.");
-		Conditions localCond = (Conditions) this.condition.addAttributesPrefix("v.voyage.");
+		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().addAttributesPrefix(
+				"v.voyage.");
 		localCond.addCondition(subCondition);
 
-		//Build query
+		// Build query
 		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
 		if (length != -1) {
 			qValue.setLimit(length);
@@ -217,10 +226,9 @@ public class TableResultTabBean {
 		if (start != -1) {
 			qValue.setFirstResult(start);
 		}
-		
-//		//Dictionaries - list of columns with dictionaries.		
-//		List dicts = new ArrayList();
-		
+
+		// Dictionaries - list of columns with dictionaries.
+
 		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
@@ -229,13 +237,19 @@ public class TableResultTabBean {
 			}
 		}
 
-		//Add populated attributes
+		// Add populated attributes
 		Attribute[] populatedAdditionalAttributes = dataTable.getAdditionalAttributesForQuery();
 		if (populatedAdditionalAttributes != null) {
 			for (int i = 0; i < populatedAdditionalAttributes.length; i++) {
 				qValue.addPopulatedAttribute("v." + populatedAdditionalAttributes[i].getName(),
 						populatedAdditionalAttributes[i].isDictinaory());
 			}
+		}
+
+		if (returnBasicInfo) {
+			qValue.addPopulatedAttribute("v.voyage.voyageId", false);
+			qValue.addPopulatedAttribute("v.voyage.portdep", true);
+			qValue.addPopulatedAttribute("v.voyage.portret", true);
 		}
 
 		VisibleColumn vattr = dataTable.getOrderByColumn();
@@ -246,9 +260,9 @@ public class TableResultTabBean {
 			orderByPrefix = "v.voyage.";
 		}
 		if (dataTable.getOrderByColumn() == null) {
-			qValue.setOrderBy(new String[] {"v.voyageId"});
+			qValue.setOrderBy(new String[] { "v.voyageId" });
 		} else {
-			
+
 			Attribute[] attr = null;
 			if (vattr instanceof Attribute) {
 				attr = new Attribute[] { (Attribute) vattr };
@@ -272,59 +286,62 @@ public class TableResultTabBean {
 			}
 		}
 
-		//Execute query
-		dataTable.setData(qValue.executeQuery());
+		// Execute query
+		Object[] ret = qValue.executeQuery();
+		dataTable.setData(ret);
 
-	}
-
-	/**
-	 * Queries DB for detail voyage info.
-	 *
-	 */
-	private void getResultsDetailDB() {
-		if (this.needDetailQuery && this.detailVoyageId != null && this.condition != null) {
-			Conditions c = new Conditions();
-			c.addCondition(VoyageIndex.getApproved());
-			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
-			
-			List validAttrs = new ArrayList();
-			Attribute[] attrs = Voyage.getAttributes();
-			for (int i = 0; i < attrs.length; i++) {
-				Attribute column = attrs[i];
-				if (column.isVisibleByCategory(this.category)) {
-					validAttrs.add(column);
-				}
-			}
-			detailData.setVisibleColumns(validAttrs);
-			
-			this.queryAndFillInData(c, this.detailData, -1, -1);
-			this.needDetailQuery = false;
+		if (returnBasicInfo && ret.length > 0) {
+			int len = ((Object[]) ret[0]).length;
+			return new Object[][] {
+					{ Voyage.getAttribute("voyageId"), Voyage.getAttribute("portdep"), Voyage.getAttribute("portret") },
+					{ ((Object[]) ret[0])[len - 3], ((Object[]) ret[0])[len - 2], ((Object[]) ret[0])[len - 1] } };
+		} else {
+			return new Object[][] {};
 		}
 	}
 
 	/**
-	 * Checks current number of results.
-	 *
+	 * Queries DB for detail voyage info.
+	 * 
 	 */
-	private void setNumberOfResults() {
+	private void getResultsDetailDB() {
+		if (this.needDetailQuery && this.detailVoyageId != null
+				&& this.searchBean.getSearchParameters().getConditions() != null) {
+			Conditions c = new Conditions();
+			c.addCondition(VoyageIndex.getApproved());
+			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
 
-		Conditions localCond = (Conditions) this.condition.addAttributesPrefix("v.voyage.");
-		localCond.addCondition(VoyageIndex.getRecent());
+			List validAttrs = new ArrayList();
+			Attribute[] attrs = Voyage.getAttributes();
+			for (int i = 0; i < attrs.length; i++) {
+				Attribute column = attrs[i];
+				if (column.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
+					validAttrs.add(column);
+				}
+			}
+			detailData.setVisibleColumns(validAttrs);
 
-		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
-		qValue.addPopulatedAttribute("count(v.voyageId)", false);
-		Object[] ret = qValue.executeQuery();
-		this.numberOfResults = (Integer) ret[0];
+			Object[][] info = this.queryAndFillInData(c, this.detailData, -1, -1, true);
+
+			this.detailVoyageInfo = new DetailVoyageInfo[info[0].length];
+			for (int i = 0; i < info[0].length; i++) {
+				this.detailVoyageInfo[i] = new DetailVoyageInfo((Attribute) info[0][i], info[1][i]);
+			}
+
+			this.needDetailQuery = false;
+
+		}
 	}
 
-	
 	/**
 	 * Next result set action.
+	 * 
 	 * @return
 	 */
 	public String next() {
 		if (this.numberOfResults != null) {
-			if (current + step < this.numberOfResults.intValue() && this.condition != null) {
+			if (current + step < this.numberOfResults.intValue()
+					&& this.searchBean.getSearchParameters().getConditions() != null) {
 				current += step;
 				this.needQuery = true;
 			}
@@ -336,11 +353,12 @@ public class TableResultTabBean {
 
 	/**
 	 * Previous result set action
+	 * 
 	 * @return
 	 */
 	public String prev() {
 		if (this.numberOfResults != null) {
-			if (current > 0 && this.condition != null) {
+			if (current > 0 && this.searchBean.getSearchParameters().getConditions() != null) {
 				current -= step;
 				if (current < 0) {
 					current = 0;
@@ -354,6 +372,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Removing of columns from table (Remove button)
+	 * 
 	 * @return
 	 */
 	public String remSelectedAttributeFromList() {
@@ -361,7 +380,7 @@ public class TableResultTabBean {
 			return null;
 		}
 
-		//Find and remove attributes
+		// Find and remove attributes
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
 			VisibleColumn attr = this.getVisibleAttribute(element);
@@ -378,7 +397,8 @@ public class TableResultTabBean {
 	}
 
 	/**
-	 * Adding of attributes to table (Add button).  
+	 * Adding of attributes to table (Add button).
+	 * 
 	 * @return
 	 */
 	public String addSelectedAttributeToList() {
@@ -386,11 +406,12 @@ public class TableResultTabBean {
 			return null;
 		}
 
-		//For each of attributes - check if not already in columns set and if not - add it
+		// For each of attributes - check if not already in columns set and if
+		// not - add it
 		for (Iterator iter = this.selectedAttributeToAdd.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
 			VisibleColumn attr = this.getVisibleAttribute(element);
-			VisibleColumn[] attrs = (VisibleColumn[])this.visibleColumns.toArray(new VisibleColumn[] {});
+			VisibleColumn[] attrs = (VisibleColumn[]) this.visibleColumns.toArray(new VisibleColumn[] {});
 			boolean is = false;
 			for (int i = 0; i < attrs.length; i++) {
 				if (attrs[i].getId().equals(attr.getId())) {
@@ -411,6 +432,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Moves attributes up.
+	 * 
 	 * @return
 	 */
 	public String moveAttrUp() {
@@ -418,11 +440,11 @@ public class TableResultTabBean {
 			return null;
 		}
 
-		//Move attributes one position up
+		// Move attributes one position up
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
 			VisibleColumn attr = this.getVisibleAttribute(element);
-			VisibleColumn[] attrs = (VisibleColumn[])this.visibleColumns.toArray(new VisibleColumn[] {});
+			VisibleColumn[] attrs = (VisibleColumn[]) this.visibleColumns.toArray(new VisibleColumn[] {});
 			for (int i = 1; i < attrs.length; i++) {
 				if (attrs[i].getId().equals(attr.getId())) {
 					VisibleColumn tmp = attrs[i];
@@ -441,6 +463,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Moves attributes down
+	 * 
 	 * @return
 	 */
 	public String moveAttrDown() {
@@ -448,11 +471,11 @@ public class TableResultTabBean {
 			return null;
 		}
 
-		//Move each attribute one position down
+		// Move each attribute one position down
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
 			VisibleColumn attr = this.getVisibleAttribute(element);
-			VisibleColumn[] attrs = (VisibleColumn[])this.visibleColumns.toArray(new VisibleColumn[] {});
+			VisibleColumn[] attrs = (VisibleColumn[]) this.visibleColumns.toArray(new VisibleColumn[] {});
 			for (int i = 0; i < attrs.length - 1; i++) {
 				if (attrs[i].getId().equals(attr.getId())) {
 					VisibleColumn tmp = attrs[i];
@@ -471,15 +494,16 @@ public class TableResultTabBean {
 
 	/**
 	 * Action invoked when sort has been changed.
+	 * 
 	 * @param event
 	 */
 	public void sortChanged(SortChangeEvent event) {
 		String attrToSort = event.getAttributeSort();
 
-		//Get column that will be sorted
+		// Get column that will be sorted
 		VisibleColumn attr = this.getVisibleAttribute(attrToSort);
 
-		//Set appropriate order
+		// Set appropriate order
 		if (this.data.getOrderByColumn().getId().equals(attr.getId())) {
 			switch (this.data.getOrder()) {
 			case QueryValue.ORDER_ASC:
@@ -496,14 +520,15 @@ public class TableResultTabBean {
 			this.data.setOrderByColumn(attr);
 			this.data.setOrder(QueryValue.ORDER_ASC);
 		}
-		
-		//Indicate need of query
+
+		// Indicate need of query
 		this.current = 0;
 		this.needQuery = true;
 	}
 
 	/**
 	 * Action invoked when show detail about voyage is requested
+	 * 
 	 * @param event
 	 */
 	public void showDetails(ShowDetailsEvent event) {
@@ -514,16 +539,16 @@ public class TableResultTabBean {
 		this.needDetailQuery = true;
 	}
 
-	
 	/**
 	 * Gets VisibleColumn object from given string representation
+	 * 
 	 * @param sAttr
 	 * @return
 	 */
 	private VisibleColumn getVisibleAttribute(String sAttr) {
 		VisibleColumn ret = null;
 		if (sAttr.startsWith(ATTRIBUTE)) {
-			//Attribute_#####
+			// Attribute_#####
 			String attrId = sAttr.substring(ATTRIBUTE.length(), sAttr.length());
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
@@ -533,7 +558,7 @@ public class TableResultTabBean {
 				ret = (VisibleColumn) attrs[0];
 			}
 		} else if (sAttr.startsWith(COMPOUND_ATTRIBUTE)) {
-			//CompoundAttribute_#####
+			// CompoundAttribute_#####
 			String attrId = sAttr.substring(COMPOUND_ATTRIBUTE.length(), sAttr.length());
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
@@ -543,7 +568,7 @@ public class TableResultTabBean {
 				ret = (VisibleColumn) attrs[0];
 			}
 		} else if (sAttr.startsWith(GROUP)) {
-			//Group_#####
+			// Group_#####
 			String attrId = sAttr.substring(GROUP.length(), sAttr.length());
 			Conditions c = new Conditions();
 			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
@@ -558,6 +583,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets number of first record displayed in current table view.
+	 * 
 	 * @return
 	 */
 	public Integer getFirstDisplayed() {
@@ -569,6 +595,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets last record displayed in current table view.
+	 * 
 	 * @return
 	 */
 	public Integer getLastDisplayed() {
@@ -580,6 +607,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets total number of rows.
+	 * 
 	 * @return
 	 */
 	public Integer getTotalRows() {
@@ -590,18 +618,21 @@ public class TableResultTabBean {
 	}
 
 	/**
-	 * TODO Needed? 
+	 * TODO Needed?
+	 * 
 	 * @return
 	 */
 	public Integer getCurrent() {
 		return new Integer(current);
 	}
+
 	public void setCurrent(Integer current) {
 		this.current = current.intValue();
 	}
 
 	/**
 	 * Gets current step
+	 * 
 	 * @return
 	 */
 	public String getStep() {
@@ -614,10 +645,12 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets current step
+	 * 
 	 * @param step
 	 */
 	public void setStep(String step) {
-		if (step == null) return;
+		if (step == null)
+			return;
 		if (step.equals("all")) {
 			if (this.step != MAX_STEP) {
 				this.needQuery = true;
@@ -633,17 +666,20 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets current TableData
+	 * 
 	 * @return
 	 */
 	public TableData getData() {
 		this.getResultsDB();
 		return this.data;
 	}
+
 	public void setData(Object data) {
 	}
 
 	/**
 	 * Sets size of results
+	 * 
 	 * @param size
 	 */
 	public void setResultSize(Integer size) {
@@ -651,6 +687,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets size of results.
+	 * 
 	 * @return
 	 */
 	public Integer getResultSize() {
@@ -658,41 +695,8 @@ public class TableResultTabBean {
 	}
 
 	/**
-	 * Sets current query parameters
-	 * @param params
-	 */
-	public void setConditions(SearchParameters params) {
-		if (params == null) {
-			return;
-		}
-		this.category = params.getCategory();
-		
-		Conditions c = params.getConditions();
-		this.queryColumns = Arrays.asList(params.getColumns());
-		if (c != null) {
-//			System.out.println("1: --------------------------------------");
-//			System.out.println(c.getConditionHQL().conditionString);
-		}
-		if (c == null) {
-			// needQuery = false;
-		} else if (c.equals(condition)) {
-			// needQuery = false;
-		} else {
-			List list = new ArrayList(this.visibleColumns);
-			if (this.attachSearchedParams.booleanValue()) {
-				list.addAll(this.queryColumns);
-			}
-			setVisibleAttributesList(list);
-			condition = c;
-			needQuery = true;
-			this.needDetailQuery = true;
-			this.setNumberOfResults();
-			this.current = 0;
-		}
-	}
-
-	/**
 	 * Sets current visible columns list.
+	 * 
 	 * @param list
 	 */
 	private void setVisibleAttributesList(List list) {
@@ -701,14 +705,16 @@ public class TableResultTabBean {
 			if (element.getType().intValue() == Attribute.TYPE_DATE) {
 				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
 			}
-		} {
-			
+		}
+		{
+
 		}
 		this.data.setVisibleColumns(list);
 	}
 
 	/**
 	 * Checks whether component is currently visible.
+	 * 
 	 * @return
 	 */
 	public Boolean getComponentVisible() {
@@ -717,6 +723,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets visibility of current component.
+	 * 
 	 * @param componentVisible
 	 */
 	public void setComponentVisible(Boolean componentVisible) {
@@ -725,6 +732,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Checks if configuration mode is enabled.
+	 * 
 	 * @return
 	 */
 	public Boolean getConfigurationMode() {
@@ -733,6 +741,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Checks if results mode is enabled.
+	 * 
 	 * @return
 	 */
 	public Boolean getResultsMode() {
@@ -741,7 +750,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets configuration mode.
-	 *
+	 * 
 	 */
 	public void configurationMode() {
 		this.configurationMode = new Boolean(true);
@@ -751,7 +760,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets results mode.
-	 *
+	 * 
 	 */
 	public void resultsMode() {
 		this.configurationMode = new Boolean(false);
@@ -761,6 +770,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets attribute groups that are available.
+	 * 
 	 * @return
 	 */
 	public List getAvailableGroupSets() {
@@ -768,8 +778,8 @@ public class TableResultTabBean {
 		Group[] groupSets = Voyage.getGroups();
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = (Group) groupSets[i];
-			if (set.noOfAttributesInCategory(this.category) > 0 ||
-					set.noOfCompoundAttributesInCategory(this.category) > 0) {
+			if (set.noOfAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0
+					|| set.noOfCompoundAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0) {
 				res.add(new ComparableSelectItem("" + set.getId().longValue(), set.toString()));
 			}
 		}
@@ -782,6 +792,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets available attributes for chosen group.
+	 * 
 	 * @return
 	 */
 	public List getAvailableAttributes() {
@@ -793,7 +804,7 @@ public class TableResultTabBean {
 		QueryValue qValue = new QueryValue("Group", c);
 		// qValue.setCacheable(true);
 
-		//Query for attributes of group
+		// Query for attributes of group
 		Object[] groupSets = qValue.executeQuery();
 		if (groupSets.length > 0) {
 			Group set = (Group) groupSets[0];
@@ -802,31 +813,32 @@ public class TableResultTabBean {
 			Set groups = set.getCompoundAttributes();
 			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
 				CompoundAttribute element = (CompoundAttribute) groupsIter.next();
-				if (element.isVisibleByCategory(this.category)) {
+				if (element.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
 					res.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
 				}
 			}
 			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
 				Attribute attr = (Attribute) iter.next();
-				if (attr.isVisibleByCategory(this.category)) {
+				if (attr.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
 					res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
 				}
 			}
 		}
-		
+
 		Collections.sort(res);
 		return res;
 	}
 
 	/**
 	 * Gets currently visible columns (according to configuration).
+	 * 
 	 * @return
 	 */
 	public List getVisibleAttributes() {
 		List list = new ArrayList();
-//		VisibleColumn[] cols = this.data.getVisibleAttributes();
+		// VisibleColumn[] cols = this.data.getVisibleAttributes();
 		for (Iterator iter = this.visibleColumns.iterator(); iter.hasNext();) {
-			VisibleColumn element = (VisibleColumn) iter.next();			
+			VisibleColumn element = (VisibleColumn) iter.next();
 			list.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
 		}
 		return list;
@@ -834,6 +846,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets currently selected group.
+	 * 
 	 * @return
 	 */
 	public String getSelectedGroupSet() {
@@ -842,15 +855,18 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets currently selected group.
+	 * 
 	 * @param selectedGroupSet
 	 */
 	public void setSelectedGroupSet(String selectedGroupSet) {
-		if (selectedGroupSet == null) return; 
+		if (selectedGroupSet == null)
+			return;
 		this.selectedGroupSet = selectedGroupSet;
 	}
 
 	/**
 	 * Gets currently selected columns (in configuration).
+	 * 
 	 * @return
 	 */
 	public List getSelectedAttributeAdded() {
@@ -859,6 +875,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets currently selected columns (in configuration).
+	 * 
 	 * @param selectedAttributeAdded
 	 */
 	public void setSelectedAttributeAdded(List selectedAttributeAdded) {
@@ -867,6 +884,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets selected attributes in list "to add".
+	 * 
 	 * @return
 	 */
 	public List getSelectedAttributeToAdd() {
@@ -875,15 +893,18 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets selected attributes from list "to add".
+	 * 
 	 * @param selectedAttributeToAdd
 	 */
 	public void setSelectedAttributeToAdd(List selectedAttributeToAdd) {
-		if (selectedAttributeToAdd == null) return;
+		if (selectedAttributeToAdd == null)
+			return;
 		this.selectedAttributeToAdd = selectedAttributeToAdd;
 	}
 
 	/**
 	 * Gets number of results.
+	 * 
 	 * @return
 	 */
 	public Integer getNumberOfResults() {
@@ -892,6 +913,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Gets detail voyage table data.
+	 * 
 	 * @return
 	 */
 	public TableData getDetailData() {
@@ -901,6 +923,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets detail voyage data.
+	 * 
 	 * @param detailData
 	 */
 	public void setDetailData(TableData detailData) {
@@ -909,6 +932,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Checks if detail mode is enabled.
+	 * 
 	 * @return
 	 */
 	public Boolean getDetailMode() {
@@ -917,6 +941,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets detail mode.
+	 * 
 	 * @param detailMode
 	 */
 	public void setDetailMode(Boolean detailMode) {
@@ -925,6 +950,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Checks if attributes from query should be attached to results.
+	 * 
 	 * @return
 	 */
 	public Boolean getAttachSearchedParams() {
@@ -933,6 +959,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Sets if attributes from query should be attached to results.
+	 * 
 	 * @param attachSearchedParams
 	 */
 	public void setAttachSearchedParams(Boolean attachSearchedParams) {
@@ -942,88 +969,62 @@ public class TableResultTabBean {
 			this.needQuery = true;
 		}
 	}
-	
+
 	private void setVisibleColumns() {
 		List cols = new ArrayList(this.visibleColumns);
-		if (attachSearchedParams.booleanValue()) {				
-			cols.addAll(this.queryColumns);
+		if (attachSearchedParams.booleanValue()) {
+			cols.addAll(Arrays.asList(this.searchBean.getSearchParameters().getColumns()));
 		}
 		setVisibleAttributesList(cols);
 	}
-	
+
 	public String getMapPath() {
-		
-		Conditions conditions = new Conditions();
-		conditions.addCondition("v.voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
-		conditions.addCondition(VoyageIndex.getApproved());
-		QueryValue qValue = new QueryValue("VoyageIndex as v", conditions);
-		qValue.addPopulatedAttribute("v.voyage.portdep", true);
-		qValue.addPopulatedAttribute("v.voyage.portret", true);
-		qValue.addPopulatedAttribute("v.voyage.majbyimp", true);
-		qValue.addPopulatedAttribute("v.voyage.majselpt", true);
-		qValue.addPopulatedAttribute("v.voyage.slaximp", false);
-		qValue.addPopulatedAttribute("v.voyage.slamimp", false);
-		
-		Object[] voyages = qValue.executeQuery();
-		if (voyages.length > 0) {
-		
-			if (creator == null) {
-				creator = new MapFileCreator();
-			}
-			
-			Object[] row = (Object[])voyages[0];
-			Dictionary portDepD = (Dictionary)row[0];
-			Dictionary portRetD = (Dictionary)row[1];
-			Dictionary buyD = (Dictionary)row[2];
-			Dictionary sellD = (Dictionary)row[3];
-			GISPortLocation portDep = GISPortLocation.getGISPortLocation(portDepD);
-			GISPortLocation portRet = GISPortLocation.getGISPortLocation(portRetD);
-			GISPortLocation mjbyimp = GISPortLocation.getGISPortLocation(buyD);
-			GISPortLocation mjselpt = GISPortLocation.getGISPortLocation(sellD);
-			
-			List items = new ArrayList();
-			List size = new ArrayList();
-			size.add(new Integer(4));
-			List attrs = new ArrayList();
-			if (portDep != null) {
-				attrs.add(Voyage.getAttribute("portdep"));
-				items.add(new MapItem(portDep.getPortName(), portDep.getX(), portDep.getY(),
-						size, attrs, 0, 4, false));
-			}
-			if (portRet != null) {
-				attrs.clear();
-				attrs.add(Voyage.getAttribute("portret"));
-				items.add(new MapItem(portRet.getPortName(), portRet.getX(), portRet.getY(),
-						size, attrs, 0, 4, false));
-			}
-			if (mjbyimp != null) {
-				attrs.clear();
-				attrs.add(Voyage.getAttribute("majbyimp"));
-				items.add(new MapItem(mjbyimp.getPortName(), mjbyimp.getX(), mjbyimp.getY(),
-						size, attrs, 0, 4, false));
-			}
-			if (mjselpt != null) {
-				attrs.clear();
-				attrs.add(Voyage.getAttribute("majselpt"));
-				items.add(new MapItem(mjselpt.getPortName(), mjselpt.getX(), mjselpt.getY(),
-						size, attrs, 0, 4, false));
-			}
-			
-			
-			this.creator.setMapData((MapItem[])items.toArray(new MapItem[] {}), 1, 1);
-			this.creator.createMapFile();
+
+		this.detailVoyageMap.setVoyageId(this.detailVoyageId);
+
+		if (this.detailVoyageMap.prepareMapFile()) {
+
 			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute(MAP_SESSION_KEY, creator.getFilePath());
+			((HttpSession) servletContext.getSession(true)).setAttribute(MAP_SESSION_KEY, this.detailVoyageMap
+					.getCurrentMapFilePath());
 			return MAP_SESSION_KEY;
 		}
 		return "";
 	}
-	
-	public void setMapPath(String path) {}
-	
-	public PointOfInterest[] getPointsOfInterest() {
-		return new PointOfInterest[] {};
+
+	public void setMapPath(String path) {
 	}
-	
-	public void setPointsOfInterest(PointOfInterest[] list) {}
+
+	public PointOfInterest[] getPointsOfInterest() {
+		return this.detailVoyageMap.getPointsOfInterest();
+	}
+
+	public DetailVoyageInfo[] getDetailVoyageInfo() {
+		getResultsDetailDB();
+		return this.detailVoyageInfo;
+	}
+
+	public SearchBean getSearchBean() {
+		return searchBean;
+	}
+
+	public void setSearchBean(SearchBean searchBean) {
+		this.searchBean = searchBean;
+	}
+
+	/**
+	 * Checks current number of results.
+	 * 
+	 */
+	private void setNumberOfResults() {
+
+		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().addAttributesPrefix(
+				"v.voyage.");
+		localCond.addCondition(VoyageIndex.getRecent());
+
+		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
+		qValue.addPopulatedAttribute("count(v.voyageId)", false);
+		Object[] ret = qValue.executeQuery();
+		this.numberOfResults = (Integer) ret[0];
+	}
 }

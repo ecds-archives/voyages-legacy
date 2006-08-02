@@ -37,12 +37,6 @@
 			<name>data</name>
 		</attribute>
 		<attribute>
-			<name>query</name>
-		</attribute>
-		<attribute>
-			<name>conditionsOut</name>
-		</attribute>
-		<attribute>
 			<name>componentVisible</name>
 		</attribute>
 		<attribute>
@@ -67,12 +61,6 @@
 		</attribute>
 		<attribute>
 			<name>styleClass</name>
-		</attribute>
-		<attribute>
-			<name>query</name>
-		</attribute>
-		<attribute>
-			<name>conditionsOut</name>
 		</attribute>
 		<attribute>
 			<name>componentVisible</name>

@@ -16,6 +16,7 @@ import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
+import edu.emory.library.tas.web.SearchBean;
 import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.AbstractChartGenerator;
 import edu.emory.library.tas.web.components.tabs.chartGenerators.XYChartGenerator;
@@ -55,13 +56,18 @@ public class TimeLineResultTabBean {
 	/**
 	 * Chosen attribute name.
 	 */
-	private String chosenAttribute = "sla32imp";
+	private String chosenAttribute = "slaximp";
 
 	/**
-	 * Current set of attributes.
+	 * Current search bean reference.
+	 */
+	private SearchBean searchBean;
+	
+	/**
+	 * Conditions used in query last time.
 	 */
 	private Conditions conditions = null;
-
+	
 	/**
 	 * Need of query indication.
 	 */
@@ -78,11 +84,6 @@ public class TimeLineResultTabBean {
 	private JFreeChart chart;
 
 	/**
-	 * Visibility of component.
-	 */
-	private Boolean componentVisible = new Boolean(false);
-
-	/**
 	 * Current chart height.
 	 */
 	private String chartHeight = DEFAULT_CHART_HEIGHT;
@@ -91,11 +92,6 @@ public class TimeLineResultTabBean {
 	 * Current chart width.
 	 */
 	private String chartWidth = DEFAULT_CHART_WIDTH;
-
-	/**
-	 * Current category of attributes (basic or general).
-	 */
-	private int category;
 
 	/**
 	 * Avaialable voyage attributes.
@@ -119,7 +115,7 @@ public class TimeLineResultTabBean {
 		this.voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			Attribute attr = attributes[i];
-			if (attr.isVisibleByCategory(this.category)
+			if (attr.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())
 					&& (attr.getType().intValue() == Attribute.TYPE_FLOAT
 							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
 				String outString = attr.toString();
@@ -152,15 +148,17 @@ public class TimeLineResultTabBean {
 	 */
 	public String showTimeLine() {
 		
-		System.out.println("ABC");
+		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
+			this.conditions = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+			needQuery = true;
+		}
 		
 		//Check if we can construct chart
-		if ((this.needQuery || this.attributesChanged) && this.conditions != null) {
+		if ((this.needQuery || this.attributesChanged) && this.searchBean.getSearchParameters().getConditions() != null) {
 
-			System.out.println("DEF");
 			
 			//Prepare query
-			Conditions localCondition = this.conditions.addAttributesPrefix("v.");
+			Conditions localCondition = this.searchBean.getSearchParameters().getConditions().addAttributesPrefix("v.");
 			localCondition.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
 			localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
 
@@ -234,6 +232,7 @@ public class TimeLineResultTabBean {
 	 * @return
 	 */
 	public String getChartPath() {
+		this.showTimeLine();
 		return IMAGE_FEEDED_SERVLET + "?path=__chart__object&&height=" + this.chartHeight + "&width=" + this.chartWidth;
 	}
 	public void setChartPath(String path) {
@@ -246,50 +245,10 @@ public class TimeLineResultTabBean {
 	 * Checks if any chart is ready to show.
 	 */
 	public boolean getChartReady() {
-		return this.chart != null;
+		//return this.chart != null;
+		return true;
 	}
-
-	/**
-	 * Sets current search parameters.
-	 * @param params
-	 */
-	public void setConditions(SearchParameters params) {
-		if (params == null) {
-			return;
-		}
-		this.category = params.getCategory();
-		Conditions c = params.getConditions();
-		if (c == null || c.equals(conditions)) {
-			return;
-		} else {
-			conditions = c;
-			needQuery = true;
-		}
-		showTimeLine();
-	}
-
-	/**
-	 * Checks if component is visible.
-	 * @return
-	 */
-	public Boolean getComponentVisible() {
-		return componentVisible;
-	}
-
-	/**
-	 * Sets visibility of component.
-	 * @param componentVisible
-	 */
-	public void setComponentVisible(Boolean componentVisible) {
-		boolean shouldQuery = false;
-		if (this.componentVisible.booleanValue() == false && componentVisible.booleanValue() == true) {
-			shouldQuery = true;
-		}
-		this.componentVisible = componentVisible;
-		if (shouldQuery) {
-			this.showTimeLine();
-		}
-	}
+	
 
 	/**
 	 * Gets chart height.
@@ -323,5 +282,13 @@ public class TimeLineResultTabBean {
 	public void setChartWidth(String chartWidth) {
 		if (chartWidth == null) return;
 		this.chartWidth = chartWidth;
+	}
+
+	public SearchBean getSearchBean() {
+		return searchBean;
+	}
+
+	public void setSearchBean(SearchBean searchBean) {
+		this.searchBean = searchBean;
 	}
 }

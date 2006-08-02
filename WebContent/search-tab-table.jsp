@@ -5,7 +5,6 @@
 
 <%/* Table with results */%>
 <s:tabletab id="tableResults" onclick="#{TableResultTabBean.showDetails}" rendered="#{TableResultTabBean.resultsMode}"
-	query="#{SearchBean.searchParameters}" conditionsOut="#{TableResultTabBean.conditions}"
 	data="#{TableResultTabBean.data}" componentVisible="#{TableResultTabBean.componentVisible}"
 	sortChanged="#{TableResultTabBean.sortChanged}" style="overflow: auto;" />
 
@@ -45,6 +44,22 @@
 
 <t:htmlTag value="div" styleClass="detailTab" rendered="#{TableResultTabBean.detailMode}">
 
+	<h:panelGrid style="padding-left: 5px;" columns="2">
+		<h:outputText value="Detail information about voyage" style="font-size: 150%;"/>
+		<t:htmlTag value="div" styleClass="section-inside-footer">
+			<h:commandButton id="backFromDetailMap" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
+		</t:htmlTag>
+	</h:panelGrid>
+
+	<h:dataTable value="#{TableResultTabBean.detailVoyageInfo}" var="info" style="padding-left: 10px;">
+		<h:column>
+			<h:outputText value="#{info.attribute}:"/>
+		</h:column>
+		<h:column>
+			<h:outputText value="#{info.value==null? \"not set\" : info.value}"/>
+		</h:column>
+	</h:dataTable>
+
 	<s:sectionGroup id="detailPanelSection" backgroundStyle="dark" tabsStyle="middle" buttonsStyle="middle"
 		selectedSectionId="listing">
 
@@ -52,22 +67,14 @@
 
 			<s:voyageDetail data="#{TableResultTabBean.detailData}" />
 
-			<t:htmlTag value="div" styleClass="section-inside-footer">
-				<h:commandButton id="backFromDetail" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
-			</t:htmlTag>
-
 		</s:section>
 
 		<s:section title="Voyage map" sectionId="maps">
 
 			<h:outputText value="&nbsp;" escape="false" />
 			<s:map mapFile="#{TableResultTabBean.mapPath}" pointsOfInterest="#{TableResultTabBean.pointsOfInterest}"
-				serverBaseUrl="servlet/maptile" />
+				serverBaseUrl="servlet/maptile" miniMap="true" />
 			<h:outputText value="&nbsp;" escape="false" />
-
-			<t:htmlTag value="div" styleClass="section-inside-footer">
-				<h:commandButton id="backFromDetailMap" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
-			</t:htmlTag>
 
 		</s:section>
 

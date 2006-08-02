@@ -128,14 +128,6 @@ public class UITableResultTab extends UIOutput {
 				vb.setValue(context, b);
 			}
 		}
-		vb = this.getValueBinding("conditions");
-		if (vb != null) {
-			SearchParameters p = (SearchParameters) vb.getValue(context);
-			vb = this.getValueBinding("conditionsOut");
-			if (vb != null) {
-				vb.setValue(context, p);
-			}
-		}
 		vb = this.getValueBinding("data");
 		if (vb != null) {
 			data = (TableData) vb.getValue(context);

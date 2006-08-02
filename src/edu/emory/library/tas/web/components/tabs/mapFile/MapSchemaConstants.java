@@ -8,8 +8,7 @@ public class MapSchemaConstants {
 	public static final String MAP_INSERT_SECTION_NAME_END = "#{generated_code_end}";
 	
 	public static final String SHAPE_CIRCLE = "circle";
-	public static final String SHAPE_SQUARE = "square";
-	public static final String SHAPE_TRIANGLE = "triangle";
+	public static final String SHAPE_NUMBER = "number";
 	
 	public static final String COLOR1 = "202 66 35";
 	public static final String COLOR2 = "87 27 29";
@@ -26,7 +25,7 @@ public class MapSchemaConstants {
 	}
 	
 	public static String[] getAvailableShapes() {
-		return new String[] {SHAPE_CIRCLE, SHAPE_SQUARE, SHAPE_TRIANGLE};
+		return new String[] {SHAPE_CIRCLE, SHAPE_NUMBER};
 	}
 	
 	public static String[] getAvailableColors() {

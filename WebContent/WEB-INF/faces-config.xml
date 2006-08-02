@@ -160,6 +160,10 @@
 			edu.emory.library.tas.web.components.tabs.AdvancedStatisticsTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -168,6 +172,10 @@
 			edu.emory.library.tas.web.components.tabs.TableResultTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -176,6 +184,10 @@
 			edu.emory.library.tas.web.components.tabs.TimeLineResultTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -252,6 +264,10 @@
 			edu.emory.library.tas.web.components.tabs.MapBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>

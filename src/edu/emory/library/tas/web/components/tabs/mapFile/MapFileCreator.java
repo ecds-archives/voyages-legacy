@@ -7,81 +7,50 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 import edu.emory.library.tas.AppConfig;
-import edu.emory.library.tas.web.components.tabs.MapBean;
-import edu.emory.library.tas.web.components.tabs.MapItem;
+import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
 
 public class MapFileCreator {
 
 	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
 	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
 
-	private static int circleRanges = 5;
-
-	private MapItem[] data;
-
 	private String filePath;
 	
 	private MapSchemaReader schemaReader = new MapSchemaReader();
 
-	// private float min;
-	// private float max;
-	private double[] rangeBoundries;
-
-	private ArrayList[][][] points = null;
+	private HashMap points = new HashMap();
 
 	public MapFileCreator() {
-		this.filePath = MAP_FILE_OUTPUT;
-		String time = System.currentTimeMillis() + "";
-		this.filePath = this.filePath.replaceAll(TIME_SYMBOL_REGEX, time);
 		schemaReader.beginReading();
 	}
 
-	public void setMapData(MapItem[] data, double min, double max) {
-		this.data = data;
-
-		this.points = new ArrayList[MapSchemaConstants.getAvailableColors().length][][];
-		this.rangeBoundries = new double[circleRanges + 1];
-		for (int i = 0; i < MapSchemaConstants.getAvailableColors().length; i++) {
-			ArrayList[][] lists = new ArrayList[MapSchemaConstants.getAvailableShapes().length][];
-			for (int j = 0; j < MapSchemaConstants.getAvailableShapes().length; j++) {
-				ArrayList[] listsSizes = new ArrayList[circleRanges];
-				for (int k = 0; k < listsSizes.length; k++) {
-					listsSizes[k] = new ArrayList();
-				}
-				lists[j] = listsSizes;
-			}
-			this.points[i] = lists;
-		}
-
-		double step = (max - min) / circleRanges;
-		for (int i = 0; i < circleRanges; i++) {
-			this.rangeBoundries[i + 1] = i * step + step + min;
-		}
+	public void setMapData(AbstractMapItem[] data) {
 		
-		this.rangeBoundries[0] = min;
-
-		for (int i = 0; i < this.data.length; i++) {
-			if (this.data[i].isAutoSized()) {
-				int index = circleRanges - 1;
-				double size = this.data[i].getMaxVal();
-				for (int j = 0; j < circleRanges; j++) {
-					if (size >= this.rangeBoundries[j] && size < this.rangeBoundries[j + 1]) {
-						index = j;
-					}
-
-				}
-				this.points[this.data[i].getColor()][this.data[i].getShape()][index].add(this.data[i]);
-			} else {
-				this.points[this.data[i].getColor()][this.data[i].getShape()][this.data[i].getMaxVal()].add(this.data[i]);
+		this.points = new HashMap();
+		
+		for (int i = 0; i < data.length; i++) {
+			AbstractMapItem item = data[i];
+			String symbolName = item.getSymbolName(); 
+			if (!this.points.containsKey(symbolName)) {
+				this.points.put(symbolName, new ArrayList());
 			}
+			ArrayList symbolPoints = (ArrayList)this.points.get(symbolName);
+			symbolPoints.add(data[i]);
 		}
 
 	}
 
 	public boolean createMapFile() {
+		
+		this.filePath = MAP_FILE_OUTPUT;
+		String time = System.currentTimeMillis() + "";
+		this.filePath = this.filePath.replaceAll(TIME_SYMBOL_REGEX, time);
+		
 		this.schemaReader.clearModifications();
 		this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
 				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
@@ -116,20 +85,16 @@ public class MapFileCreator {
 
 	private String generateLayerForPorts() {
 		StringBuffer buffer = new StringBuffer();
-		if (this.data != null) {
-			System.out.println("Here!");
-			for (int i = 0; i < this.points.length; i++) {
-				for (int j = 0; j < this.points[i].length; j++) {
-					for (int k = 0; k < this.points[i][j].length; k++) {
-						generateFeature(buffer, this.points[i][j][k], i, j, k);
-					}
-				}
-			}
+		Set layers = this.points.keySet();
+		for (Iterator iter = layers.iterator(); iter.hasNext();) {
+			String symbolName = (String) iter.next();
+			ArrayList layerPoints = (ArrayList)this.points.get(symbolName);
+			this.generateFeature(buffer, symbolName, layerPoints);
 		}
 		return buffer.toString();
 	}
 
-	private void generateFeature(StringBuffer writer, ArrayList list, int color, int shape, int size) {
+	private void generateFeature(StringBuffer writer, String symbolName, ArrayList list) {
 		if (list.size() > 0) {
 			
 			writer.append("LAYER\n");
@@ -138,17 +103,16 @@ public class MapFileCreator {
 
 			Iterator iter = list.iterator();
 			while (iter.hasNext()) {
-				MapItem item = (MapItem) iter.next();
+				AbstractMapItem item = (AbstractMapItem) iter.next();
 				writer.append("	FEATURE\n");
-				writer.append("		POINTS " + item.x + " " + item.y + " END\n");
-				writer.append("		TEXT '" + item.label + "'\n");
+				writer.append("		POINTS " + item.getX() + " " + item.getY() + " END\n");
+				writer.append("		TEXT '" + item.getMainLabel() + "'\n");
 				writer.append("	END\n");
 			}
 
 			writer.append("	CLASS\n");
 			writer.append("		STYLE\n");
-			writer.append("			SYMBOL '" + MapSchemaConstants.getAvailableShapes()[shape] + (size + 1) + "'\n");
-			writer.append("			COLOR " + MapSchemaConstants.getAvailableColors()[color] + "\n");
+			writer.append("			SYMBOL '" + symbolName + "'\n");
 			writer.append("		END\n");
 			writer.append("		LABEL\n");
 			writer.append("			POSITION ur\n");
