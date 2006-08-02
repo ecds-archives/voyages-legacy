@@ -86,7 +86,13 @@ public class MapTag extends UIComponentTag
 		}
 		else
 		{
-			map.setMiniMapWidth(Integer.parseInt(miniMapWidth));
+			try
+			{
+				map.setMiniMapWidth(Integer.parseInt(miniMapWidth));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
 		}
 
 		if (miniMapHeight != null && isValueReference(miniMapHeight))
@@ -96,7 +102,13 @@ public class MapTag extends UIComponentTag
 		}
 		else
 		{
-			map.setMiniMapHeight(Integer.parseInt(miniMapHeight));
+			try
+			{
+				map.setMiniMapHeight(Integer.parseInt(miniMapHeight));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
 		}
 
 	}
