@@ -332,7 +332,9 @@ var EventAttacher =
 	attachById: function(elementId, eventType, object, handler, args)
 	{
 		var element = document.getElementById(elementId);
-		this.attach(element, eventType, object, handler, args);
+		if (element != null) {
+			this.attach(element, eventType, object, handler, args);
+		}
 	},
 	
 	attachOnWindowEvent: function(eventType, object, handler, args)
