@@ -46,7 +46,9 @@ var MapsGlobal =
 		miniMapFrameId,
 		miniMapToggleId,
 		fieldNameMiniMapVisibility,
-		miniMapPosition
+		miniMapPosition,
+		miniMapWidth,
+		miniMapHeight
 	)
 	{
 	
@@ -99,6 +101,8 @@ var MapsGlobal =
 			map.miniMap = miniMap;
 			map.fieldNameMiniMapVisibility = fieldNameMiniMapVisibility;
 			map.miniMapPosition = miniMapPosition;
+			map.miniMapWidth = miniMapWidth;
+			map.miniMapHeight = miniMapHeight;
 			if (miniMapToggleId) map.miniMapToggleId = miniMapToggleId;
 		}
 		
@@ -1169,15 +1173,29 @@ Map.prototype.hideShowMiniMap = function()
 	
 	if (this.miniMap.isVisible())
 	{
-		this.miniMap.hide();
+	
+		var miniMapHideFunction = function(miniMap) {miniMap.hide()};
+		var a = new Animation(this.miniMap.map_control, 10, 400, miniMapHideFunction, this.miniMap);
+		//a.setSizes(this.miniMapWidth, this.miniMapHeight, 0, 0);
+		a.setOpacities(1, 0);
+		a.start();
+		
 		this.fieldMiniMapVisibility.value = "false";
 		this.miniMapToggle.className = this.getCssClassForMinimapToggleButton(false);
+		
 	}
 	else
 	{
+
 		this.miniMap.show();
+		var a = new Animation(this.miniMap.map_control, 10, 400);
+		//a.setSizes(0, 0, this.miniMapWidth, this.miniMapHeight);
+		a.setOpacities(0, 1);
+		a.start();
+
 		this.fieldMiniMapVisibility.value = "true";
 		this.miniMapToggle.className = this.getCssClassForMinimapToggleButton(true);
+
 	}
 
 }

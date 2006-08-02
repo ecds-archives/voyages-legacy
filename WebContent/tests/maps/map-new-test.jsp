@@ -40,7 +40,7 @@ session.setAttribute("test.map", "C:\\Documents and Settings\\jzich\\My Document
 					miniMap="true"
 					miniMapHeight="100"
 					miniMapWidth="100"
-					miniMapPosition="bottom left"
+					miniMapPosition="bottom right"
 					serverBaseUrl="../../servlet/maptile" />
 
 				<h:commandButton value="OK" />

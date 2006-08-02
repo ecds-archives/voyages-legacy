@@ -518,9 +518,17 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("'").append(hiddenFieldNameForMiniMapVisibility).append("'");
 			jsRegister.append(", ");
 			jsRegister.append("'").append(miniMapPosition).append("'");
+			jsRegister.append(", ");
+			jsRegister.append(miniMapWidth);
+			jsRegister.append(", ");
+			jsRegister.append(miniMapHeight);
 		}
 		else
 		{
+			jsRegister.append("null");
+			jsRegister.append(", ");
+			jsRegister.append("null");
+			jsRegister.append(", ");
 			jsRegister.append("null");
 			jsRegister.append(", ");
 			jsRegister.append("null");

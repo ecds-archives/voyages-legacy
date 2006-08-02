@@ -7,22 +7,83 @@ function debug(text)
 	if (el) el.innerHTML += text + "<br>";
 }
 
-function Animation(element, x1, y1, w1, h1, o1, x2, y2, w2, h2, o2, steps, duration, callWhenDone)
+function Animation(element, steps, duration, callWhenDone, functionArg)
 {
 	this.element = element;
-	this.x1 = x1;
-	this.y1 = y1;
-	this.w1 = w1;
-	this.h1 = h1;
-	this.o1 = o1;
-	this.x2 = x2;
-	this.y2 = y2;
-	this.w2 = w2;
-	this.h2 = h2;
-	this.o2 = o2;
 	this.steps = steps;
 	this.delay = Math.round(duration / steps);
 	this.callWhenDone = callWhenDone;
+	this.functionArg = functionArg;
+}
+
+Animation.prototype.setPositions = function(x1, y1)
+{
+	this.setAnimatePosition(true);
+	this.setStartPosition(x1, y1);
+	this.setEndPosition(x1, y1);
+}
+
+Animation.prototype.setAnimatePosition = function(value)
+{
+	this.animatePos = value;
+}
+
+Animation.prototype.setStartPosition = function(x, y)
+{
+	this.x1 = x;
+	this.y1 = y;
+}
+
+Animation.prototype.setEndPosition = function(x, y)
+{
+	this.x2 = x;
+	this.y2 = y;
+}
+
+Animation.prototype.setSizes = function(w1, h1, w2, h2)
+{
+	this.setAnimateSize(true);
+	this.setStartSize(w1, h1);
+	this.setEndSize(w2, h2);
+}
+
+Animation.prototype.setAnimateSize = function(value)
+{
+	this.animateSize = value;
+}
+
+Animation.prototype.setStartSize = function(w, h)
+{
+	this.w1 = w;
+	this.h1 = h;
+}
+
+Animation.prototype.setEndSize = function(w, h)
+{
+	this.w2 = w;
+	this.h2 = h;
+}
+
+Animation.prototype.setOpacities = function(o1, o2)
+{
+	this.setAnimateOpacity(true);
+	this.setStartOpacity(o1);
+	this.setEndOpacity(o2);
+}
+
+Animation.prototype.setAnimateOpacity = function(value)
+{
+	this.animateOpacity = value;
+}
+
+Animation.prototype.setStartOpacity = function(o)
+{
+	this.o1 = o;
+}
+
+Animation.prototype.setEndOpacity = function(o)
+{
+	this.o2 = o;
 }
 
 Animation.prototype.start = function()
@@ -35,11 +96,20 @@ Animation.prototype.move = function()
 {
 
 	var t = this.pos / this.steps;
-	this.element.style.left = Math.round(this.x1 + t*(this.x2-this.x1)) + "px";
-	this.element.style.top = Math.round(this.y1 + t*(this.y2-this.y1)) + "px";
-	this.element.style.width = Math.round(this.w1 + t*(this.w2-this.w1)) + "px";
-	this.element.style.height = Math.round(this.h1 + t*(this.h2-this.h1)) + "px";
-	this.element.style.opacity = this.o1 + t*(this.o2-this.o1);
+	if (this.animatePos)
+	{
+		this.element.style.left = Math.round(this.x1 + t*(this.x2-this.x1)) + "px";
+		this.element.style.top = Math.round(this.y1 + t*(this.y2-this.y1)) + "px";
+	}
+	if (this.animateSize)
+	{
+		this.element.style.width = Math.round(this.w1 + t*(this.w2-this.w1)) + "px";
+		this.element.style.height = Math.round(this.h1 + t*(this.h2-this.h1)) + "px";
+	}
+	if (this.animateOpacity)
+	{
+		this.element.style.opacity = this.o1 + t*(this.o2-this.o1);
+	}
 
 	if (this.pos < this.steps)
 	{
@@ -49,7 +119,7 @@ Animation.prototype.move = function()
 	else
 	{
 		if (this.callWhenDone)
-			this.callWhenDone();
+			this.callWhenDone(this.functionArg);
 	}
 
 }

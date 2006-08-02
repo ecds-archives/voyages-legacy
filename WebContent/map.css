@@ -314,7 +314,7 @@ div.minimap-control-nw {
 	left: 0px;
 	top: 0px;
 	position: absolute;
-	overflow: visible; }
+	overflow: hidden; }
 	
 div.minimap-control-ne {
 	border-left: 1px solid #4C5966;
@@ -322,7 +322,7 @@ div.minimap-control-ne {
 	right: 0px;
 	top: 0px;
 	position: absolute;
-	overflow: visible; }
+	overflow: hidden; }
 	
 div.minimap-control-se {
 	border-top: 1px solid #4C5966;
@@ -330,7 +330,7 @@ div.minimap-control-se {
 	right: 0px;
 	bottom: 0px;
 	position: absolute;
-	overflow: visible; }
+	overflow: hidden; }
 	
 div.minimap-control-sw {
 	border-right: 1px solid #4C5966;
@@ -338,7 +338,7 @@ div.minimap-control-sw {
 	left: 0px;
 	bottom: 0px;
 	position: absolute;
-	overflow: visible; }
+	overflow: hidden; }
 	
 div.minimap-frame {
 	position: absolute; }
