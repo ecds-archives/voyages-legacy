@@ -1,0 +1,402 @@
+MAP
+	SIZE 1200 700
+	EXTENT -180 -90 180 90  
+	IMAGETYPE      PNG24
+	IMAGECOLOR 153 179 204
+
+	WEB
+         TEMPLATE      'voyages.html'
+         IMAGEPATH    '/ms4w/tmp/ms_tmp/'
+         IMAGEURL     '/ms_tmp/'
+         #HEADER       'templates/header.html'
+         #FOOTER       'templates/footer.html'
+         #MINSCALE     3000000
+      END
+
+	
+	
+
+	#{map.projection.out}	
+        PROJECTION
+	    proj=moll
+	    ellps=WGS84
+	    lat_0=0
+	    lon_0=-40
+	END
+      
+	SYMBOL
+  		NAME 'circle-1-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-2-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-3-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-4-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-5-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-2-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-3-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-5.png'
+	END
+
+
+	SYMBOL
+  		NAME 'number-4-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-5.png'
+	END
+
+
+	
+
+	#KEEP THE NEXT TWO LAYERS
+
+#	LAYER
+		#{map.projection.in}
+		
+#		NAME oceans
+#		TYPE POLYGON
+#		STATUS DEFAULT
+#
+#		DATA Ocean_Background
+#		CLASS
+#			STYLE
+#				COLOR 180 180 220
+#				OUTLINECOLOR 100 100 100
+#			END
+#	
+#		END
+#	END
+
+	LAYER
+		#{map.projection.in}
+		PROJECTION
+		    proj=latlong
+		    ellps=WGS84
+		    datum=WGS84
+		    no_defs
+		END
+		NAME Continents
+		TYPE POLYGON
+		DATA Continents
+		STATUS DEFAULT
+		#LABELITEM 'CONTINENT'
+		CLASS
+			STYLE
+				COLOR 242 236 230
+				OUTLINECOLOR 150 150 150
+			END
+		#	LABEL
+		#		MINFEATURESIZE 5
+		#	END
+		END
+
+	END
+
+	#{generated_code_begin}
+	#{generated_code_end}
+
+	#SCALEBAR
+	#	STATUS EMBED
+	#	UNITS KILOMETERS
+	#	INTERVALS 3
+	#	TRANSPARENT TRUE
+	#	OUTLINECOLOR 0 0 0
+	#END
+
+
+END
