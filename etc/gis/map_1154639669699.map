@@ -1,0 +1,798 @@
+MAP
+	SIZE 1200 700
+	EXTENT -180 -90 180 90  
+	IMAGETYPE      PNG24
+	IMAGECOLOR 153 179 204
+
+	WEB
+         TEMPLATE      'voyages.html'
+         IMAGEPATH    '/ms4w/tmp/ms_tmp/'
+         IMAGEURL     '/ms_tmp/'
+         #HEADER       'templates/header.html'
+         #FOOTER       'templates/footer.html'
+         #MINSCALE     3000000
+      END
+
+	#{map.projection.out}	
+  PROJECTION
+	    proj=moll
+	    ellps=WGS84
+	    lat_0=0
+	    lon_0=0
+	END
+      
+	SYMBOL
+  		NAME 'circle-1-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-2-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-3-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-4-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-5-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-2-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-2-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-2-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-3-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-3-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-3-5.png'
+	END
+
+
+	SYMBOL
+  		NAME 'number-4-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-4-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-4-5.png'
+	END
+
+
+	
+
+	#KEEP THE NEXT TWO LAYERS
+
+#	LAYER
+		#{map.projection.in}
+		
+#		NAME oceans
+#		TYPE POLYGON
+#		STATUS DEFAULT
+#
+#		DATA Ocean_Background
+#		CLASS
+#			STYLE
+#				COLOR 180 180 220
+#				OUTLINECOLOR 100 100 100
+#			END
+#	
+#		END
+#	END
+
+	LAYER
+		#{map.projection.in}
+		PROJECTION
+		    proj=latlong
+		    ellps=WGS84
+		    datum=WGS84
+		    no_defs
+		END
+		NAME Continents
+		TYPE POLYGON
+		DATA Continents
+		STATUS DEFAULT
+		#LABELITEM 'CONTINENT'
+		CLASS
+			STYLE
+				COLOR 242 236 230
+				OUTLINECOLOR 150 150 150
+			END
+		#	LABEL
+		#		MINFEATURESIZE 5
+		#	END
+		END
+
+	END
+
+	LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS -77.3956952362425 24.9942726255127 END
+		TEXT 'New Providence'
+	END
+	FEATURE
+		POINTS -75.2012342610511 39.8977753925804 END
+		TEXT 'Philadelphia'
+	END
+	FEATURE
+		POINTS -9.1333 38.7167 END
+		TEXT 'Lisbon'
+	END
+	FEATURE
+		POINTS -71.0594669132612 42.3616571460531 END
+		TEXT 'Boston'
+	END
+	FEATURE
+		POINTS -6.2994 36.5336 END
+		TEXT 'Cadiz'
+	END
+	FEATURE
+		POINTS -72.5347 18.2342 END
+		TEXT 'Jacmel'
+	END
+	FEATURE
+		POINTS -90.1076952988575 29.9617880106338 END
+		TEXT 'New Orleans'
+	END
+	FEATURE
+		POINTS -44.0333 -22.95 END
+		TEXT 'Mangaratiba'
+	END
+	FEATURE
+		POINTS -72.8333 19.95 END
+		TEXT 'Port-de-Paix'
+	END
+	FEATURE
+		POINTS -75.6451954138816 20.8382801385149 END
+		TEXT 'Vanes'
+	END
+	FEATURE
+		POINTS -35.6 -5.6167 END
+		TEXT 'Taipu'
+	END
+	FEATURE
+		POINTS -46.3333 -23.95 END
+		TEXT 'Santos'
+	END
+	FEATURE
+		POINTS -74.0078791167085 40.7170552928979 END
+		TEXT 'New York'
+	END
+	FEATURE
+		POINTS -82.7536 22.9875 END
+		TEXT 'Mariel'
+	END
+	FEATURE
+		POINTS -69.9088884274108 18.4989565507125 END
+		TEXT 'Santo Domingo'
+	END
+	FEATURE
+		POINTS -81.0543463753779 32.0656413921537 END
+		TEXT 'Savannah'
+	END
+	FEATURE
+		POINTS -42.0167 -22.8833 END
+		TEXT 'Cabo Frio'
+	END
+	FEATURE
+		POINTS -57.9716281488385 6.73647185116154 END
+		TEXT 'Berbice'
+	END
+	FEATURE
+		POINTS -82.9219 22.9758 END
+		TEXT 'Cabanas'
+	END
+	FEATURE
+		POINTS -80.0756 22.8067 END
+		TEXT 'Sagua'
+	END
+	FEATURE
+		POINTS -83.1590981198733 22.9035424209805 END
+		TEXT 'Bahia Honda'
+	END
+	FEATURE
+		POINTS -56.1708 -34.8581 END
+		TEXT 'Montevideo'
+	END
+	FEATURE
+		POINTS -64.7523050741618 18.3401403354174 END
+		TEXT 'Tortola'
+	END
+	FEATURE
+		POINTS -75.8219 20.0247 END
+		TEXT 'Santiago de Cuba'
+	END
+	FEATURE
+		POINTS -81.5775 23.0411 END
+		TEXT 'Matanzas'
+	END
+	FEATURE
+		POINTS -52.3333 4.9333 END
+		TEXT 'Cayenne'
+	END
+	FEATURE
+		POINTS -44.2343907511904 -23.1643790958263 END
+		TEXT 'Ilha Grande'
+	END
+	FEATURE
+		POINTS -81.2047 23.0375 END
+		TEXT 'Cardenas'
+	END
+	FEATURE
+		POINTS -79.9842 21.8019 END
+		TEXT 'Trinidad'
+	END
+	FEATURE
+		POINTS -64.9500866441826 18.3441300833992 END
+		TEXT 'St. Thomas'
+	END
+	FEATURE
+		POINTS -41.3 -21.75 END
+		TEXT 'Campos'
+	END
+	FEATURE
+		POINTS -58.1667 6.8 END
+		TEXT 'Demerara'
+	END
+	FEATURE
+		POINTS -79.9355345470368 32.7809609814284 END
+		TEXT 'Charleston'
+	END
+	FEATURE
+		POINTS -72.335 18.5392 END
+		TEXT 'Port-au-Prince'
+	END
+	FEATURE
+		POINTS -37.7 -8.7833 END
+		TEXT 'Pernambuco'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-2-1'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS 7.1667 4.4333 END
+		TEXT 'Bonny'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-1-3'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS -13.085585499239 8.36834389822705 END
+		TEXT 'Sierra Leone'
+	END
+	FEATURE
+		POINTS -1.25 5.1 END
+		TEXT 'Cape Coast Castle'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-5-1'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS -82.3642 23.1319 END
+		TEXT 'Havana'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-2-2'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS -16.3867 13.3344 END
+		TEXT 'Albreda'
+	END
+	FEATURE
+		POINTS -10.2849176176728 6.08211021248579 END
+		TEXT 'St. Paul'
+	END
+	FEATURE
+		POINTS -11.2833 6.9833 END
+		TEXT 'Mano (Manna)'
+	END
+	FEATURE
+		POINTS 1.8333 6.2833 END
+		TEXT 'Grand Popo'
+	END
+	FEATURE
+		POINTS -8.71619716292903 4.83168293491865 END
+		TEXT 'Cess'
+	END
+	FEATURE
+		POINTS -16.411987272287 13.2390440422655 END
+		TEXT 'James Fort'
+	END
+	FEATURE
+		POINTS 9.245 3.9544 END
+		TEXT 'Bimbia'
+	END
+	FEATURE
+		POINTS 39.4 -8.75 END
+		TEXT 'Kilwa'
+	END
+	FEATURE
+		POINTS -1.0833 5.2 END
+		TEXT 'Kormantine'
+	END
+	FEATURE
+		POINTS 35.3833 -23.865 END
+		TEXT 'Inhambane'
+	END
+	FEATURE
+		POINTS -5.08909437905054 5.15714881198305 END
+		TEXT 'Lahou (Cap)'
+	END
+	FEATURE
+		POINTS -12.8348667833121 7.57568582590582 END
+		TEXT 'Sherbro'
+	END
+	FEATURE
+		POINTS -23.5336181225554 14.9988450166308 END
+		TEXT 'Cape Verde Islands'
+	END
+	FEATURE
+		POINTS -12.9413813968627 8.54412335458198 END
+		TEXT 'Bance Island'
+	END
+	FEATURE
+		POINTS -0.1833 5.55 END
+		TEXT 'Christiansborg'
+	END
+	FEATURE
+		POINTS -0.2167 5.55 END
+		TEXT 'Accra'
+	END
+	FEATURE
+		POINTS 46.2155407547066 -15.8658282373064 END
+		TEXT 'Madagascar'
+	END
+	FEATURE
+		POINTS 3.05 6.4167 END
+		TEXT 'Epe'
+	END
+	FEATURE
+		POINTS 9.73153893122255 3.87678461374381 END
+		TEXT 'Cameroons'
+	END
+	FEATURE
+		POINTS -8.4 4.7833 END
+		TEXT 'Bassa'
+	END
+	FEATURE
+		POINTS 5.6333 6.3333 END
+		TEXT 'Benin'
+	END
+	FEATURE
+		POINTS -16.0897270607999 12.3421119804513 END
+		TEXT 'Cacheu'
+	END
+	FEATURE
+		POINTS -10.7652873637618 6.3275460219199 END
+		TEXT 'Cape Mount'
+	END
+	FEATURE
+		POINTS -15.6044819860369 11.8559459247589 END
+		TEXT 'Bissau'
+	END
+	FEATURE
+		POINTS 2.6167 6.4833 END
+		TEXT 'Porto Novo'
+	END
+	FEATURE
+		POINTS 6.9758 4.5742 END
+		TEXT 'New Calabar'
+	END
+	FEATURE
+		POINTS 13.1167 -7.85 END
+		TEXT 'Ambriz'
+	END
+	FEATURE
+		POINTS 12.9833 -5.1667 END
+		TEXT 'Loango'
+	END
+	FEATURE
+		POINTS 13.0878773385467 -5.88091289853916 END
+		TEXT 'Congo River'
+	END
+	FEATURE
+		POINTS 40.7358 -15.0342 END
+		TEXT 'Mozambique'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-1-1'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS 13.2344 -8.8383 END
+		TEXT 'Luanda'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-1-4'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS -38.5167 -12.9833 END
+		TEXT 'Bahia'
+	END
+	FEATURE
+		POINTS -43.2333 -22.9 END
+		TEXT 'Rio de Janeiro'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-2-4'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+LAYER
+	TYPE POINT
+	STATUS DEFAULT
+	FEATURE
+		POINTS 13.4072 -12.5783 END
+		TEXT 'Benguela'
+	END
+	FEATURE
+		POINTS 12.2 -5.55 END
+		TEXT 'Cabinda'
+	END
+	CLASS
+		STYLE
+			SYMBOL 'circle-1-2'
+		END
+		LABEL
+			POSITION ur
+			TYPE BITMAP
+		END
+	END
+END
+
+
+	#SCALEBAR
+	#	STATUS EMBED
+	#	UNITS KILOMETERS
+	#	INTERVALS 3
+	#	TRANSPARENT TRUE
+	#	OUTLINECOLOR 0 0 0
+	#END
+
+
+END

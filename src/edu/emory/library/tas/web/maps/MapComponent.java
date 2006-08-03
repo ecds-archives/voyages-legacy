@@ -36,10 +36,10 @@ public class MapComponent extends UIComponentBase
 	private boolean pointsOfInterestSet = false;
 	private PointOfInterest[] pointsOfInterest = null;
 
-	private double x1 = -180;
-	private double y1 = -90;
-	private double x2 = 180;
-	private double y2 = 90;
+	private double x1 = -18000000;
+	private double y1 = -9000000;
+	private double x2 = 18000000;
+	private double y2 = 9000000;
 	
 	private boolean miniMapSet = false;
 	private boolean miniMap = true;

@@ -13,15 +13,12 @@ MAP
          #MINSCALE     3000000
       END
 
-	
-	
-
 	#{map.projection.out}	
-        PROJECTION
+  PROJECTION
 	    proj=moll
 	    ellps=WGS84
 	    lat_0=0
-	    lon_0=-40
+	    lon_0=0
 	END
       
 	SYMBOL

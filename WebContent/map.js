@@ -5,7 +5,7 @@ var MapsGlobal =
 	MAP_TOOL_PAN: 2,
 	MAP_TOOL_SELECTOR: 3,
 	
-	SCALE_FACTOR: 1000,
+	SCALE_FACTOR: 100000,
 
 	maps: new Array(),
 	
@@ -2191,7 +2191,8 @@ Map.prototype.restoreState = function()
 	}
 	else
 	{
-		this.zoomMapTo(-180, -90, 180, 90, false, 0, false, false, true);
+		//this.zoomMapTo(-180, -90, 180, 90, false, 0, false, false, true);
+		this.zoomMapTo(-18000000, -9000000, 18000000, 9000000, false, 0, false, false, true);
 	}
 	
 	// and init history if empty

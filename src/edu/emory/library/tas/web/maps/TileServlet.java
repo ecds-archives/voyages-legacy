@@ -22,7 +22,7 @@ public class TileServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5538255560078657125L;
 
-	private final static double SCALE_FACTOR = 1000.0;
+	private final static double SCALE_FACTOR = 100000.0;
 	public static final int META_SIZE_X = 160; // 160;
 	public static final int META_SIZE_Y = 60; //60;
 
@@ -73,7 +73,7 @@ public class TileServlet extends HttpServlet {
 		}
 		cacheMisses++;
 
-		System.out.println(((double) cacheHits / ((double) cacheHits + cacheMisses) * 100) + "%");
+		// System.out.println(((double) cacheHits / ((double) cacheHits + cacheMisses) * 100) + "%");
 
 		String path = (String) session.getAttribute(mapFile);
 		//path = "/home/juri/gis/tests/map_test.map";
