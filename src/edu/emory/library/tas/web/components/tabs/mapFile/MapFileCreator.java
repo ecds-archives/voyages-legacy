@@ -108,8 +108,9 @@ public boolean createMapFile() {
 		if (list.size() > 0) {
 
 			writer.append("LAYER\n");
-//			writer.append("PROJECTION");
-//			writer.append("PROJECTION");
+			writer.append("PROJECTION");
+			writer.append(StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration().getStringArray(AppConfig.MAP_PROJ_IN)));
+			writer.append("END");
 			writer.append("	TYPE POINT\n");
 			writer.append("	STATUS DEFAULT\n");
 
