@@ -23,6 +23,7 @@ import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
 import edu.emory.library.tas.web.components.tabs.map.AttributesMap;
 import edu.emory.library.tas.web.components.tabs.map.AttributesRange;
+import edu.emory.library.tas.web.components.tabs.map.LegendItemsGroup;
 import edu.emory.library.tas.web.components.tabs.map.MapData;
 import edu.emory.library.tas.web.components.tabs.map.specific.GlobalMapDataTransformer;
 import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
@@ -190,6 +191,10 @@ public class MapBean {
 
 	public PointOfInterest[] getPointsOfInterest() {
 		return this.mapData.getToolTip();
+	}
+	
+	public LegendItemsGroup[] getLegend() {
+		return this.mapData.getLegend();
 	}
 
 	public SearchBean getSearchBean() {

@@ -135,6 +135,35 @@ div.detailTab {
 	padding-right: 5px;
 }
 
+table.legend-table-main {
+	padding-left: 10px;
+}
+
+table.legend-table-detail {
+	border-collapse: collapse;
+	padding-left: 5px;
+}
+
+td.legend-table-detail-col1 {
+	text-align: center;
+	padding-top: 5px;
+}
+
+td.legend-table-detail-col2 {
+	padding-left: 10px;
+	text-align: left;
+	padding-top: 3px;
+}
+
+div.map-legend-div {
+	padding-right: 10px;
+	width: 150px; 
+	background: #728fad;
+	vertical-align: top;
+	border: 1px solid #555555;
+}
+
+
 /* map */
 /*
 div.map-tools-top {

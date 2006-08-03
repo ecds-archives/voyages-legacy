@@ -31,10 +31,10 @@ public class LegendItemsGroup {
 	
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("Legend group:" ).append(this.title);
+		buffer.append("Legend group:" ).append(this.title).append("\n");
 		LegendItem[] items = this.getItems();
 		for (int i = 0; i < items.length; i++) {
-			buffer.append("   ").append(items[i]);
+			buffer.append("   ").append(items[i]).append("\n");
 		}
 		return buffer.toString();
 	}

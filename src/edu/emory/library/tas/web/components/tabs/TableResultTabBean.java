@@ -27,6 +27,7 @@ import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.SearchBean;
 import edu.emory.library.tas.web.SearchParameters;
+import edu.emory.library.tas.web.components.tabs.map.LegendItemsGroup;
 import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
 import edu.emory.library.tas.web.maps.PointOfInterest;
 
@@ -1012,6 +1013,10 @@ public class TableResultTabBean {
 
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
+	}
+	
+	public LegendItemsGroup[] getLegend() {
+		return this.detailVoyageMap.getLegend();
 	}
 
 	/**

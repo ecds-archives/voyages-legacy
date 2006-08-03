@@ -55,4 +55,19 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 		this.symbolName = buffer.toString();
 	}
 
+	public String getLegendText() {
+		StringBuffer buffer = new StringBuffer();
+		Element[] elements = this.getMapItemElements()[0].getElements();
+		boolean first = true;
+		for (int i = 0; i < elements.length; i++) {
+			if (!first) {
+				buffer.append(", ");
+			}
+			Element element = elements[i];
+			buffer.append(element.getAttribute());
+			first = false;
+		}
+		return buffer.toString();
+	}
+
 }

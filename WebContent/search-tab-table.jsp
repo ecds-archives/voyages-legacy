@@ -45,7 +45,7 @@
 <t:htmlTag value="div" styleClass="detailTab" rendered="#{TableResultTabBean.detailMode}">
 
 	<h:panelGrid style="padding-left: 5px;" columns="2">
-		<h:outputText value="Detail information about voyage" style="font-size: 150%;"/>
+		<h:outputText value="Detail information about voyage" style="font-size: 150%;" />
 		<t:htmlTag value="div" styleClass="section-inside-footer">
 			<h:commandButton id="backFromDetailMap" value="Back to results" action="#{TableResultTabBean.resultsMode}" />
 		</t:htmlTag>
@@ -53,10 +53,10 @@
 
 	<h:dataTable value="#{TableResultTabBean.detailVoyageInfo}" var="info" style="padding-left: 10px;">
 		<h:column>
-			<h:outputText value="#{info.attribute}:"/>
+			<h:outputText value="#{info.attribute}:" />
 		</h:column>
 		<h:column>
-			<h:outputText value="#{info.value==null? \"not set\" : info.value}"/>
+			<h:outputText value="#{info.value==null? \"not set\" : info.value}" />
 		</h:column>
 	</h:dataTable>
 
@@ -72,9 +72,38 @@
 		<s:section title="Voyage map" sectionId="maps">
 
 			<h:outputText value="&nbsp;" escape="false" />
-			<s:map mapFile="#{TableResultTabBean.mapPath}" pointsOfInterest="#{TableResultTabBean.pointsOfInterest}"
-				serverBaseUrl="servlet/maptile" miniMap="true" />
-			<h:outputText value="&nbsp;" escape="false" />
+
+			<t:htmlTag value="table" id="DetailMap" style="border-collapse: collapse; padding-left: 20px; margin-left: auto; margin-right: auto;">
+
+				<t:htmlTag value="tr">
+					<t:htmlTag value="td">
+						<s:map mapFile="#{TableResultTabBean.mapPath}" pointsOfInterest="#{TableResultTabBean.pointsOfInterest}"
+							serverBaseUrl="servlet/maptile" miniMap="true" />
+						<h:outputText value="&nbsp;" escape="false" />
+					</t:htmlTag>
+
+					<t:htmlTag value="td" style="vertical-align: top;">
+						<t:htmlTag value="div" id="mapDetailLegend" styleClass="map-legend-div">
+							<h:outputText value="Legend:" style="font-weight: bold; padding-left: 5px;" />
+							<h:dataTable id="map-detail-legend" styleClass="legend-table-main" value="#{TableResultTabBean.legend}" var="legendGroup">
+								<h:column>
+									<h:outputText value="#{legendGroup.title}" />
+									<h:dataTable id="map-legendDetailDetail" styleClass="legend-table-detail" columnClasses="legend-table-detail-col1,legend-table-detail-col2" value="#{legendGroup.items}"
+										var="legendItem">
+										<h:column>
+											<h:graphicImage value="#{legendItem.imagePath}" />
+										</h:column>
+										<h:column>
+											<h:outputText value="#{legendItem.legendString}" />
+										</h:column>
+									</h:dataTable>
+								</h:column>
+							</h:dataTable>
+						</t:htmlTag>
+					</t:htmlTag>
+				</t:htmlTag>
+			</t:htmlTag>
+
 
 		</s:section>
 

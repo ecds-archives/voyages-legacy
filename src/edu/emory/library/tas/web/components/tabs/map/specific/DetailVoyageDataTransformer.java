@@ -1,6 +1,7 @@
 package edu.emory.library.tas.web.components.tabs.map.specific;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import edu.emory.library.tas.web.components.tabs.map.AbstractDataTransformer;
 import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
 import edu.emory.library.tas.web.components.tabs.map.AttributesMap;
 import edu.emory.library.tas.web.components.tabs.map.Element;
+import edu.emory.library.tas.web.components.tabs.map.LegendItem;
+import edu.emory.library.tas.web.components.tabs.map.LegendItemsGroup;
 import edu.emory.library.tas.web.components.tabs.map.MapItemElement;
 import edu.emory.library.tas.web.components.tabs.map.TransformerResponse;
 
@@ -22,6 +25,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 	public TransformerResponse transformData(Object[] data, double min, double max) {
 		
 		Object[] row = (Object[]) data[0];
+		List rowList = Arrays.asList(row);
 		
 		List toMap = new ArrayList();
 		if (row[0] == null) {
@@ -47,8 +51,8 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		toMap.add(row[8]);
 		
 		List items = new ArrayList();
-		int i = 0;
-		for (Iterator iter = toMap.iterator(); iter.hasNext(); i++) {				
+		
+		for (Iterator iter = toMap.iterator(); iter.hasNext();) {				
 			Dictionary dict = (Dictionary) iter.next();
 			GISPortLocation gisLoc = GISPortLocation.getGISPortLocation(dict);
 			if (gisLoc != null) {
@@ -56,23 +60,26 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 				int index;
 				if ((index = items.indexOf(testItem)) != -1) {
 					DetailVoyageMapItem item = (DetailVoyageMapItem) items.get(index);
-					item.getMapItemElements()[0].addElement(new Element(this.getAttribute(0, i), ""));
+					item.getMapItemElements()[0].addElement(new Element(this.getAttribute(0, rowList.indexOf(dict)), ""));
 				} else {
-					MapItemElement itemElement = new MapItemElement(getAttribute(0, i));
-					itemElement.addElement(new Element(getAttribute(0, i), null));
+					MapItemElement itemElement = new MapItemElement(getAttribute(0, rowList.indexOf(dict)));
+					itemElement.addElement(new Element(getAttribute(0, rowList.indexOf(dict)), null));
 					testItem.addMapItemElement(itemElement);
 					items.add(testItem);
 				}
 			}
 		}
 
-		i = 0;
+		LegendItemsGroup legend = new LegendItemsGroup("");
+		int i = 0;
 		for (Iterator iter = items.iterator(); iter.hasNext(); i++) {
 			DetailVoyageMapItem element = (DetailVoyageMapItem) iter.next();
 			element.setNumber(i + 1);
+			LegendItem legengItem = new LegendItem("/symbols/number-1-" + (i + 1) + ".png", element.getLegendText());
+			legend.addItemToGroup(legengItem);
 		}
 		
-		return new TransformerResponse((AbstractMapItem[])items.toArray(new AbstractMapItem[] {}), null);
+		return new TransformerResponse((AbstractMapItem[])items.toArray(new AbstractMapItem[] {}), new LegendItemsGroup[] {legend});
 	}
 
 }

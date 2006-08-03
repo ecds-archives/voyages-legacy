@@ -10,6 +10,7 @@ import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.components.tabs.map.AttributesMap;
 import edu.emory.library.tas.web.components.tabs.map.AttributesRange;
+import edu.emory.library.tas.web.components.tabs.map.LegendItemsGroup;
 import edu.emory.library.tas.web.components.tabs.map.MapData;
 import edu.emory.library.tas.web.components.tabs.map.specific.DetailVoyageDataTransformer;
 import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
@@ -136,5 +137,9 @@ public class DetailVoyageMap {
 	
 	public PointOfInterest[] getPointsOfInterest() {
 		return this.mapData.getToolTip();
+	}
+
+	public LegendItemsGroup[] getLegend() {
+		return this.mapData.getLegend();
 	}
 }

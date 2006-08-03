@@ -24,6 +24,7 @@
 	<script src="graphics-svg.js" language="javascript" type="text/javascript"></script>
 	<script src="graphics-vml.js" language="javascript" type="text/javascript"></script>
 	<script src="query-builder.js" language="javascript" type="text/javascript"></script>
+	<script src="tools_map_adds.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>

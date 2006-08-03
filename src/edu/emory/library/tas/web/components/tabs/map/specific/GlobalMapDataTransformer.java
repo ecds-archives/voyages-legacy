@@ -84,17 +84,16 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			dataItem.setSymbolSize(index);
 		}
 
-		List legend = new ArrayList();
 		LegendItemsGroup legendSizes = new LegendItemsGroup("Number of slaves");
-		LegendItemsGroup legendColors = new LegendItemsGroup("Colors");
-		for (int i = 0; i < CIRCLE_RANGES - 1; i++) {
-			LegendItem item = new LegendItem("symbols/circle-1-" + (i + 1), "" + ranges[i] + " - " + ranges[i+1]);
+		LegendItemsGroup legendColors = new LegendItemsGroup("Places");
+		for (int i = 0; i < CIRCLE_RANGES; i++) {
+			LegendItem item = new LegendItem("symbols/circle-1-" + (i + 1) + ".png", "" + Math.round(ranges[i]) + " - " + Math.round(ranges[i+1]));
 			legendSizes.addItemToGroup(item);
 		}
 		
-		LegendItem emb = new LegendItem("circle-" + 1 + "-4", "Embarkation");
-		LegendItem disemb = new LegendItem("circle-" + 2 + "-4", "Disembarkation");
-		LegendItem both = new LegendItem("circle-" + 5 + "-4", "Both");
+		LegendItem emb = new LegendItem("symbols/circle-" + 1 + "-4.png", "Place of embarkation");
+		LegendItem disemb = new LegendItem("symbols/circle-" + 2 + "-4.png", "Place of disembarkation");
+		LegendItem both = new LegendItem("symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
 		legendColors.addItemToGroup(both);
