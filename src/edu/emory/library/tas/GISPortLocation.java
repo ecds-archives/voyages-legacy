@@ -1,16 +1,32 @@
 package edu.emory.library.tas;
 
+import org.proj4.Proj4;
+import org.proj4.ProjectionData;
+
+import edu.emory.library.tas.util.StringUtils;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.maps.PointOfInterest;
 
 public class GISPortLocation {
 
-	public String portName;
-	public double x;
-	public double y;
-	
-	public GISPortLocation() {		
+	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
+			.getStringArray(AppConfig.MAP_PROJ_OUT));
+
+	private static final String PROJ_OUT = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
+			.getStringArray(AppConfig.MAP_PROJ_OUT));
+
+	private String portName;
+
+	private double x;
+
+	private double y;
+
+	// static {
+	// System.loadLibrary("proj");
+	// }
+
+	public GISPortLocation() {
 	}
 
 	public String getPortName() {
@@ -36,22 +52,22 @@ public class GISPortLocation {
 	public void setY(double y) {
 		this.y = y;
 	}
-	
+
 	public String toString() {
 		return "Port: " + this.getPortName() + " [" + this.x + ", " + this.y + "]";
 	}
-	
+
 	public boolean equals(Object o) {
 		if (o instanceof PointOfInterest) {
-			PointOfInterest that = (PointOfInterest)o;
+			PointOfInterest that = (PointOfInterest) o;
 			return this.x == that.getX() && this.y == that.getY();
 		} else if (o instanceof GISPortLocation) {
-			GISPortLocation that = (GISPortLocation)o;
+			GISPortLocation that = (GISPortLocation) o;
 			return this.x == that.getX() && this.y == that.getY();
 		}
 		return false;
 	}
-	
+
 	public static GISPortLocation getGISPortLocation(String portName) {
 		if (portName == null) {
 			return null;
@@ -63,10 +79,10 @@ public class GISPortLocation {
 		if (ports.length == 0) {
 			return null;
 		} else {
-			return (GISPortLocation)ports[0];
+			return (GISPortLocation) ports[0];
 		}
 	}
-	
+
 	public static GISPortLocation getGISPortLocation(Dictionary port) {
 		if (port == null) {
 			return null;
@@ -78,8 +94,15 @@ public class GISPortLocation {
 		if (ports.length == 0) {
 			return null;
 		} else {
-			return (GISPortLocation)ports[0];
+			return (GISPortLocation) ports[0];
 		}
 	}
-	
+
+	public double[] getXYProjected() {
+		Proj4 projClass = new Proj4(PROJ_IN, PROJ_OUT);
+		ProjectionData data = new ProjectionData(new double[] { x }, new double[] { y });
+		projClass.transform(data, 1, 0);
+		return new double[] { data.x[0], data.y[0] };
+	}
+
 }

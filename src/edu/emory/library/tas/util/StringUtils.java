@@ -37,5 +37,23 @@ public class StringUtils
 	{
 		return str == null || str.length() == 0;
 	}
+	
+	public static String getProjectionStringForProj4(String[] array) {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < array.length; i++) {
+			String string = array[i];
+			buffer.append("+").append(string).append(" ");
+		}
+		return buffer.toString();
+	}
+	
+	public static String getProjectionStringForMapFile(String[] array) {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < array.length; i++) {
+			String string = array[i];
+			buffer.append("\"").append(string).append("\"\n");
+		}
+		return buffer.toString();
+	}
 
 }

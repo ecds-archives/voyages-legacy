@@ -50,7 +50,14 @@ public class MapSchemaReader {
 			while (matcher.find()) {
 				System.out.println(matcher.group());
 				int matchIndex = matcher.end();
-				markers.put(matcher.group(), new Integer(matchIndex - matcher.group().length()));
+				if (!markers.containsKey(matcher.group())) {
+					ArrayList list = new ArrayList();
+					list.add(new Integer(matchIndex - matcher.group().length()));
+					markers.put(matcher.group(), list);
+				} else {
+					ArrayList list = (ArrayList)markers.get(matcher.group());
+					list.add(new Integer(matchIndex - matcher.group().length()));
+				}
 			}
 
 			return true;

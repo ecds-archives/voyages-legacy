@@ -6,6 +6,8 @@ public class MapSchemaConstants {
 	
 	public static final String MAP_INSERT_SECTION_NAME_BEGIN = "#{generated_code_begin}";
 	public static final String MAP_INSERT_SECTION_NAME_END = "#{generated_code_end}";
+	public static final String MAP_PROJECTION_IN = "#{map.projection.in}";
+	public static final String MAP_PROJECTION_OUT = "#{map.projection.out}";
 	
 	public static final String SHAPE_CIRCLE = "circle";
 	public static final String SHAPE_NUMBER = "number";

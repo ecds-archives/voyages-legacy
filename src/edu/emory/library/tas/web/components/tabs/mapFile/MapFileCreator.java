@@ -12,15 +12,23 @@ import java.util.Iterator;
 import java.util.Set;
 
 import edu.emory.library.tas.AppConfig;
+import edu.emory.library.tas.util.StringUtils;
 import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
 
 public class MapFileCreator {
 
 	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
+
 	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
 
+	private static String PROJ_IN = StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration()
+			.getStringArray(AppConfig.MAP_PROJ_IN));
+
+	private static String PROJ_OUT = StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration()
+			.getStringArray(AppConfig.MAP_PROJ_OUT));
+
 	private String filePath;
-	
+
 	private MapSchemaReader schemaReader = new MapSchemaReader();
 
 	private HashMap points = new HashMap();
@@ -30,22 +38,22 @@ public class MapFileCreator {
 	}
 
 	public void setMapData(AbstractMapItem[] data) {
-		
+
 		this.points = new HashMap();
-		
+
 		for (int i = 0; i < data.length; i++) {
 			AbstractMapItem item = data[i];
-			String symbolName = item.getSymbolName(); 
+			String symbolName = item.getSymbolName();
 			if (!this.points.containsKey(symbolName)) {
 				this.points.put(symbolName, new ArrayList());
 			}
-			ArrayList symbolPoints = (ArrayList)this.points.get(symbolName);
+			ArrayList symbolPoints = (ArrayList) this.points.get(symbolName);
 			symbolPoints.add(data[i]);
 		}
 
 	}
 
-	public boolean createMapFile() {
+public boolean createMapFile() {
 		
 		this.filePath = MAP_FILE_OUTPUT;
 		String time = System.currentTimeMillis() + "";
@@ -54,6 +62,10 @@ public class MapFileCreator {
 		this.schemaReader.clearModifications();
 		this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
 				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
+//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN,
+//				PROJ_IN);
+//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN,
+//				PROJ_OUT);
 		
 		BufferedWriter writer = null;
 		try {
@@ -81,14 +93,12 @@ public class MapFileCreator {
 		}
 		return false;
 		
-	}
-
-	private String generateLayerForPorts() {
+	}	private String generateLayerForPorts() {
 		StringBuffer buffer = new StringBuffer();
 		Set layers = this.points.keySet();
 		for (Iterator iter = layers.iterator(); iter.hasNext();) {
 			String symbolName = (String) iter.next();
-			ArrayList layerPoints = (ArrayList)this.points.get(symbolName);
+			ArrayList layerPoints = (ArrayList) this.points.get(symbolName);
 			this.generateFeature(buffer, symbolName, layerPoints);
 		}
 		return buffer.toString();
@@ -96,8 +106,10 @@ public class MapFileCreator {
 
 	private void generateFeature(StringBuffer writer, String symbolName, ArrayList list) {
 		if (list.size() > 0) {
-			
+
 			writer.append("LAYER\n");
+//			writer.append("PROJECTION");
+//			writer.append("PROJECTION");
 			writer.append("	TYPE POINT\n");
 			writer.append("	STATUS DEFAULT\n");
 

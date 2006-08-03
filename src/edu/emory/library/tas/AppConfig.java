@@ -18,6 +18,8 @@ public class AppConfig
 	public static final String IMPORT_LOGITEM_DATEFORMAT = "import.logitem.dateformat";
 	public static final String MAP_FILE_SKELETON = "mapserver.mapfile.skeleton";
 	public static final String MAP_FILE_OUTPUT = "mapserver.mapfile.output";
+	public static final String MAP_PROJ_IN = "map.projection.in";
+	public static final String MAP_PROJ_OUT = "map.projection.out";
 	
 	private static void load()
 	{

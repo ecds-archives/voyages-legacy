@@ -1,5 +1,7 @@
 package edu.emory.library.tas.web.components.tabs.mapFile;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 public class SimpleModification implements Modification {
@@ -13,9 +15,13 @@ public class SimpleModification implements Modification {
 	}
 	
 	public void apply(StringBuffer file, Map markers) {
-		int begin = ((Integer)markers.get(this.key)).intValue();
-		int end = begin + this.key.length();
-		file.replace(begin, end, substitution);
+		ArrayList list = (ArrayList)markers.get(this.key);
+		for (Iterator iter = list.iterator(); iter.hasNext();) {
+			Integer element = (Integer) iter.next();
+			int begin = element.intValue();
+			int end = begin + this.key.length();
+			file.replace(begin, end, substitution);
+		}
 	}
 
 }
