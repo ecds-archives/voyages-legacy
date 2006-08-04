@@ -11,6 +11,8 @@ public abstract class AbstractMapItem {
 	
 	private double y;
 	
+	private double projx, projy;
+	
 	private String mailLabel;
 	
 	private List elements = new ArrayList();
@@ -19,6 +21,11 @@ public abstract class AbstractMapItem {
 		this.x = x;
 		this.y = y;
 		this.mailLabel = mailLabel;
+	}
+	
+	public void setProjXY(double x, double y) {
+		this.projx = x;
+		this.projy = y;
 	}
 	
 	public MapItemElement[] getMapItemElements() {
@@ -51,5 +58,13 @@ public abstract class AbstractMapItem {
 		}
 		AbstractMapItem that = (AbstractMapItem)o;
 		return this.x == that.x && this.y == that.y;
+	}
+
+	public double getProjectedX() {
+		return projx;
+	}
+
+	public double getProjectedY() {
+		return projy;
 	}
 }

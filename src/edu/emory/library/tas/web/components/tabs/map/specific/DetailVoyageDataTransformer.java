@@ -60,6 +60,8 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 				int index;
 				if ((index = items.indexOf(testItem)) != -1) {
 					DetailVoyageMapItem item = (DetailVoyageMapItem) items.get(index);
+					double [] projXY = gisLoc.getXYProjected();
+					item.setProjXY(projXY[0], projXY[1]);
 					item.getMapItemElements()[0].addElement(new Element(this.getAttribute(0, rowList.indexOf(dict)), ""));
 				} else {
 					MapItemElement itemElement = new MapItemElement(getAttribute(0, rowList.indexOf(dict)));

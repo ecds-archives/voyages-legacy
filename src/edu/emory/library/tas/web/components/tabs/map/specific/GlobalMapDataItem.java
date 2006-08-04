@@ -38,7 +38,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	}
 
 	public PointOfInterest getTooltipText() {
-		PointOfInterest point = new PointOfInterest(this.getX(), this.getY());
+		PointOfInterest point = new PointOfInterest(this.getProjectedX(), this.getProjectedY());
 		point.setText(this.buildToolTipInfo());
 		return point;
 	}

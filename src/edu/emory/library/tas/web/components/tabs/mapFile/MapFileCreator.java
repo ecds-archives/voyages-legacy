@@ -1,9 +1,6 @@
 package edu.emory.library.tas.web.components.tabs.mapFile;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,10 +59,6 @@ public boolean createMapFile() {
 		this.schemaReader.clearModifications();
 		this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
 				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
-//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN,
-//				PROJ_IN);
-//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN,
-//				PROJ_OUT);
 		
 		BufferedWriter writer = null;
 		try {

@@ -52,7 +52,6 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			int color = ((Integer) ((Object[]) data[i])[2]).intValue();
 			Number value = (Number) ((Object[]) data[i])[1];
 			if (gisPort != null) {
-				System.out.println(gisPort.getXYProjected()[0] + "-" + gisPort.getXYProjected()[1] );
 				GlobalMapDataItem testItem = new GlobalMapDataItem(gisPort.getX(), gisPort.getY(), gisPort
 						.getPortName(), color);
 				int index;
@@ -66,6 +65,8 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 					MapItemElement itemElement = new MapItemElement(getAttribute(i, 0));
 					itemElement.addElement(new Element(getAttribute(i, 1), new Double(value.doubleValue())));
 					testItem.addMapItemElement(itemElement);
+					double [] projXY = gisPort.getXYProjected();
+					testItem.setProjXY(projXY[0], projXY[1]);
 					items.add(testItem);
 				}
 			}

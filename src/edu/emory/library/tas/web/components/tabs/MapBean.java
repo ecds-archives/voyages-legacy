@@ -45,8 +45,7 @@ import edu.umn.gis.mapscript.styleObj;
 import edu.umn.gis.mapscript.symbolObj;
 
 /**
- * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes
- * --with-threads --verbose=yes
+ * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes --with-threads --verbose=yes
  * 
  * @author juri
  * 
@@ -190,6 +189,11 @@ public class MapBean {
 	}
 
 	public PointOfInterest[] getPointsOfInterest() {
+		
+		if (this.mapData.getToolTip().length != 0) {
+			System.out.println(this.mapData.getToolTip()[0].getX());
+		}
+		
 		return this.mapData.getToolTip();
 	}
 	

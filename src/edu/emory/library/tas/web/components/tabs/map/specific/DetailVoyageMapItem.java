@@ -41,7 +41,7 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 			first = false;
 		}
 		
-		PointOfInterest point = new PointOfInterest(this.getX(), this.getY());
+		PointOfInterest point = new PointOfInterest(this.getProjectedY(), this.getProjectedX());
 		point.setText(buffer.toString());
 		return point;
 	}

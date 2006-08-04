@@ -11,7 +11,7 @@ import edu.emory.library.tas.web.maps.PointOfInterest;
 public class GISPortLocation {
 
 	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
-			.getStringArray(AppConfig.MAP_PROJ_OUT));
+			.getStringArray(AppConfig.MAP_PROJ_IN));
 
 	private static final String PROJ_OUT = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
 			.getStringArray(AppConfig.MAP_PROJ_OUT));
