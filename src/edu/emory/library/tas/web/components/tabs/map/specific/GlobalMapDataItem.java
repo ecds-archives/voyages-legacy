@@ -1,13 +1,9 @@
 package edu.emory.library.tas.web.components.tabs.map.specific;
 
-import java.util.Iterator;
-import java.util.List;
-
-import edu.emory.library.tas.GISPortLocation;
-import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
 import edu.emory.library.tas.web.components.tabs.map.Element;
 import edu.emory.library.tas.web.maps.PointOfInterest;
+
 
 public class GlobalMapDataItem extends AbstractMapItem {
 

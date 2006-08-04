@@ -1,25 +1,19 @@
 package edu.emory.library.tas.web.components.tabs;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import edu.emory.library.tas.GISPortLocation;
 import edu.emory.library.tas.Voyage;
 import edu.emory.library.tas.VoyageIndex;
-import edu.emory.library.tas.attrGroups.Attribute;
 import edu.emory.library.tas.util.query.Conditions;
 import edu.emory.library.tas.util.query.DirectValue;
 import edu.emory.library.tas.util.query.QueryValue;
 import edu.emory.library.tas.web.SearchBean;
-import edu.emory.library.tas.web.SearchParameters;
 import edu.emory.library.tas.web.components.tabs.map.AbstractMapItem;
 import edu.emory.library.tas.web.components.tabs.map.AttributesMap;
 import edu.emory.library.tas.web.components.tabs.map.AttributesRange;
@@ -28,21 +22,7 @@ import edu.emory.library.tas.web.components.tabs.map.MapData;
 import edu.emory.library.tas.web.components.tabs.map.specific.GlobalMapDataTransformer;
 import edu.emory.library.tas.web.components.tabs.mapFile.MapFileCreator;
 import edu.emory.library.tas.web.maps.PointOfInterest;
-import edu.umn.gis.mapscript.classObj;
-import edu.umn.gis.mapscript.colorObj;
-import edu.umn.gis.mapscript.fontSetObj;
-import edu.umn.gis.mapscript.imageObj;
-import edu.umn.gis.mapscript.labelObj;
-import edu.umn.gis.mapscript.layerObj;
-import edu.umn.gis.mapscript.lineObj;
-import edu.umn.gis.mapscript.mapObj;
-import edu.umn.gis.mapscript.mapscript;
-import edu.umn.gis.mapscript.mapscriptConstants;
-import edu.umn.gis.mapscript.outputFormatObj;
-import edu.umn.gis.mapscript.pointObj;
-import edu.umn.gis.mapscript.shapeObj;
-import edu.umn.gis.mapscript.styleObj;
-import edu.umn.gis.mapscript.symbolObj;
+
 
 /**
  * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes --with-threads --verbose=yes
