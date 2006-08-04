@@ -5,8 +5,6 @@ var MapsGlobal =
 	MAP_TOOL_PAN: 2,
 	MAP_TOOL_SELECTOR: 3,
 	
-	SCALE_FACTOR: 100000,
-
 	maps: new Array(),
 	
 	registerMap: function(
@@ -14,6 +12,8 @@ var MapsGlobal =
 		fixedSize, // true/false
 		mapTilesServer, // servlet
 		mapFile, // ServerMap map file
+		scaleFactor, // scale demominator
+		scaleMax, // max magnification w.r.t. scale = 1
 		mapControlId, // main container 
 		mapFrameId, // frame for the map
 		mapToolsTopId, // top tools element
@@ -58,6 +58,10 @@ var MapsGlobal =
 		// server and map file
 		map.mapFile = mapFile;
 		map.server = mapTilesServer;
+		
+		// scale
+		map.scaleFactor = scaleFactor;
+		map.scaleMax = scaleMax;
 		
 		// HTML
 		map.fixedSize = fixedSize;
@@ -387,9 +391,10 @@ function Map()
 	this.first_tile_row = null;
 	this.first_tile_vx = null;
 	this.first_tile_vy = null;
+	this.scaleFactor = 1;
 	this.scale = null;
-	this.scale_min = 1;
-	this.scale_max = 100000;
+	this.scaleMin = 1;
+	this.scaleMax = 100000;
 	this.scale_factor_plus = 2.0;
 	this.scale_factor_minus = 0.5;
 
@@ -618,19 +623,19 @@ Map.prototype.getTileRealHeight = function()
 
 Map.prototype.fromPxToReal = function(v)
 {
-	return v / (this.scale / MapsGlobal.SCALE_FACTOR);
+	return v / (this.scale / this.scaleFactor);
 }
 
 Map.prototype.fromRealToPx = function(v)
 {
-	return v * (this.scale / MapsGlobal.SCALE_FACTOR);
+	return v * (this.scale / this.scaleFactor);
 }
 
 Map.prototype.roundAndCapScale = function(s)
 {
 	s = Math.round(s);
-	if (s > this.scale_max) s = this.scale_max;
-	if (s < this.scale_min) s = this.scale_min;
+	if (s > this.scaleMax) s = this.scaleMax;
+	if (s < this.scaleMin) s = this.scaleMin;
 	return s;
 }
 
@@ -903,13 +908,13 @@ Map.prototype.zoomMinus = function(notifyZoomChange)
 Map.prototype.changeScaleNormalized = function(t, notifyZoomChange)
 {
 	this.changeScale(
-		this.scale_min + t * (this.scale_max - this.scale_min),
+		this.scaleMin + t * (this.scaleMax - this.scaleMin),
 		notifyZoomChange);
 }
 
 Map.prototype.getScaleNormalized = function()
 {
-	return (this.scale - this.scale_min) / (this.scale_max - this.scale_min);
+	return (this.scale - this.scaleMin) / (this.scaleMax - this.scaleMin);
 }
 
 Map.prototype.registerZoomSlider = function(zoom_slider)
@@ -958,7 +963,7 @@ Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, border, notifyZoom
 		border);
 		
 	// adjust by factor
-	newScale *= MapsGlobal.SCALE_FACTOR;
+	newScale *= this.scaleFactor;
 		
 	// zoom
 	this.setScaleAndCenterTo(
@@ -998,7 +1003,7 @@ Map.prototype.positionBySelector = function(x1, y1, x2, y2, saveState, notifyZoo
 		this.selectorBorder);
 		
 	// adjust by factor
-	newScale *= MapsGlobal.SCALE_FACTOR;
+	newScale *= this.scaleFactor;
 
 	// zoom
 	this.setScaleAndCenterTo(
@@ -2189,10 +2194,13 @@ Map.prototype.restoreState = function()
 		var y2 = parseFloat(this.field_y2.value);
 		this.zoomMapTo(x1, y1, x2, y2, false, 0, false, false, true);
 	}
+	
+	// in case that the server components is not interested
+	// in saving the max extent -> so we show the minimal
+	// scale (i.e. scale = minScale = 1 = the most distant view)
 	else
 	{
-		//this.zoomMapTo(-180, -90, 180, 90, false, 0, false, false, true);
-		this.zoomMapTo(-18000000, -9000000, 18000000, 9000000, false, 0, false, false, true);
+		this.setScaleAndCenterTo(this.minScale, 0, 0, false, false, false, true);
 	}
 	
 	// and init history if empty

@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
+import edu.emory.library.tas.AppConfig;
 import edu.emory.library.tas.util.StringUtils;
 import edu.emory.library.tas.web.UtilsJSF;
 
@@ -36,10 +37,10 @@ public class MapComponent extends UIComponentBase
 	private boolean pointsOfInterestSet = false;
 	private PointOfInterest[] pointsOfInterest = null;
 
-	private double x1 = -18000000;
-	private double y1 = -9000000;
-	private double x2 = 18000000;
-	private double y2 = 9000000;
+	private double x1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_X_MIN);
+	private double y1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_Y_MIN);
+	private double x2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_X_MAX);
+	private double y2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_Y_MAX);
 	
 	private boolean miniMapSet = false;
 	private boolean miniMap = true;
@@ -374,7 +375,12 @@ public class MapComponent extends UIComponentBase
 		// at least the default map size
 		if (mapSizes == null || mapSizes.length == 0)
 			mapSizes = new MapSize[] {defaultMapSize};
+
+		// scale configuration and extent
+		double scaleFactor = AppConfig.getConfiguration().getDouble(AppConfig.MAP_SCALE_FACTOR);
+		int scaleMax = AppConfig.getConfiguration().getInt(AppConfig.MAP_MAX_MAGNIFICATION);
 		
+		// init JS
 		StringBuffer jsRegister = new StringBuffer();
 		
 		// map id
@@ -392,6 +398,12 @@ public class MapComponent extends UIComponentBase
 
 		// m parameter
 		jsRegister.append("'").append(mapFile).append("'");
+		jsRegister.append(", ");
+
+		// scale factor (i.e. denominator)
+		jsRegister.append("'").append(scaleFactor).append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append(scaleMax).append("'");
 		jsRegister.append(", ");
 
 		// main HTML elements

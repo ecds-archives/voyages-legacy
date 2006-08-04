@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.emory.library.tas.AppConfig;
 import edu.umn.gis.mapscript.imageObj;
 import edu.umn.gis.mapscript.mapObj;
 
@@ -22,9 +23,10 @@ public class TileServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5538255560078657125L;
 
-	private final static double SCALE_FACTOR = 100000.0;
-	public static final int META_SIZE_X = 160; // 160;
-	public static final int META_SIZE_Y = 60; //60;
+	private final static double SCALE_FACTOR = AppConfig.getConfiguration().getDouble(AppConfig.MAP_SCALE_FACTOR);
+
+	public static final int META_SIZE_X = 160;
+	public static final int META_SIZE_Y = 60;
 
 	private TileCache cache = new TileCache();
 	private int cacheHits = 0;
