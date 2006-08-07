@@ -227,7 +227,7 @@
 	<tag>
 		<name>messageBar</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.MessageBarTag
+			edu.emory.library.tast.ui.MessageBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -244,7 +244,7 @@
 	<tag>
 		<name>sectionGroup</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.SectionGroupTag
+			edu.emory.library.tast.ui.SectionGroupTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -276,7 +276,7 @@
 	<tag>
 		<name>section</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.SectionTag
+			edu.emory.library.tast.ui.SectionTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -313,7 +313,7 @@
 	<tag>
 		<name>menuPopup</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.MenuPopupTag
+			edu.emory.library.tast.ui.MenuPopupTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

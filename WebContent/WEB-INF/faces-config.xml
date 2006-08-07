@@ -21,7 +21,7 @@
 	<component>
 		<component-type>TabBar</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.TabBarComponent
+			edu.emory.library.tast.ui.TabBarComponent
 		</component-class>
 	</component>
 	
