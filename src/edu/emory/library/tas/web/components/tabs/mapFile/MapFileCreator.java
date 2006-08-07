@@ -59,6 +59,8 @@ public boolean createMapFile() {
 		this.schemaReader.clearModifications();
 		this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
 				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
+		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN, PROJ_IN);
+		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_OUT, PROJ_OUT);
 		
 		BufferedWriter writer = null;
 		try {

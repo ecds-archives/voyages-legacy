@@ -13,12 +13,9 @@ MAP
          #MINSCALE     3000000
       END
 
-	#{map.projection.out}	
-  PROJECTION
-	    proj=moll
-	    ellps=WGS84
-	    lat_0=0
-	    lon_0=0
+		
+	PROJECTION
+	    #{map.projection.out}
 	END
       
 	SYMBOL
@@ -342,9 +339,7 @@ MAP
 
 	#KEEP THE NEXT TWO LAYERS
 
-#	LAYER
-		#{map.projection.in}
-		
+#	LAYER		
 #		NAME oceans
 #		TYPE POLYGON
 #		STATUS DEFAULT
@@ -360,13 +355,10 @@ MAP
 #	END
 
 	LAYER
-		#{map.projection.in}
 		PROJECTION
-		    proj=latlong
-		    ellps=WGS84
-		    datum=WGS84
-		    no_defs
+		#{map.projection.in}
 		END
+
 		NAME Continents
 		TYPE POLYGON
 		DATA Continents

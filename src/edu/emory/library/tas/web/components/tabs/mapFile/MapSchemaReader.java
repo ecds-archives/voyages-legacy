@@ -23,11 +23,22 @@ public class MapSchemaReader {
 
 	private static String PARAM_REGEX = "\\#\\{.*\\}";
 
+	private class ChangeableItem {
+		public Integer index;
+		public String key;
+		public ChangeableItem(Integer index, String key) {
+			this.index = index;
+			this.key = key;
+		}
+	}
+	
 	private StringBuffer file = new StringBuffer();
 
 	private Map markers = new HashMap();
+	
+	private List revMarkers = new ArrayList();
 
-	private List modifications = new ArrayList();
+	private Map modifications = new HashMap();
 	
 	public MapSchemaReader() {
 
@@ -50,14 +61,16 @@ public class MapSchemaReader {
 			while (matcher.find()) {
 				System.out.println(matcher.group());
 				int matchIndex = matcher.end();
+				Integer index = new Integer(matchIndex - matcher.group().length());
 				if (!markers.containsKey(matcher.group())) {
 					ArrayList list = new ArrayList();
-					list.add(new Integer(matchIndex - matcher.group().length()));
+					list.add(index);
 					markers.put(matcher.group(), list);
 				} else {
 					ArrayList list = (ArrayList)markers.get(matcher.group());
-					list.add(new Integer(matchIndex - matcher.group().length()));
+					list.add(index);
 				}
+				this.revMarkers.add(new ChangeableItem(index, matcher.group()));
 			}
 
 			return true;
@@ -96,18 +109,23 @@ public class MapSchemaReader {
 	}
 	
 	public void addBlockModification(String markerBegin, String markerEnd, String substitution) {
-		this.modifications.add(new BlockModification(markerBegin, markerEnd, substitution));
+		this.modifications.put(markerBegin, new BlockModification(markerBegin, markerEnd, substitution));
 	}
 	
 	public void addSimpleModification(String markerKey, String substitution) {
-		this.modifications.add(new SimpleModification(markerKey, substitution));
+		this.modifications.put(markerKey, new SimpleModification(markerKey, substitution));
 	}
 	
 	public StringBuffer applyModifications() {
 		StringBuffer copy = new StringBuffer(this.file.toString());
-		for (Iterator iter = this.modifications.iterator(); iter.hasNext();) {
-			Modification element = (Modification) iter.next();
-			element.apply(copy, this.markers);
+		
+		int offset = 0;
+		for (Iterator iter = this.revMarkers.iterator(); iter.hasNext();) {
+			ChangeableItem item = (ChangeableItem)iter.next();
+			Modification element = (Modification) this.modifications.get(item.key);
+			if (element != null) {
+				offset = element.apply(copy, item.index ,this.markers, offset);
+			}
 		}
 		return copy;
 	}
