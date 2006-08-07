@@ -18,7 +18,7 @@
 	<tag>
 		<name>tabletab</name>
 		<tag-class>
-			edu.emory.library.tas.web.components.tabs.TableResultTabTag
+			edu.emory.library.tast.ui.search.table.TableResultTabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -50,7 +50,7 @@
 	<tag>
 		<name>stattab</name>
 		<tag-class>
-			edu.emory.library.tas.web.components.tabs.TimeLineResultTabTag
+			edu.emory.library.tast.ui.search.stat.TimeLineResultTabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -68,26 +68,9 @@
 	</tag>
 
 	<tag>
-		<name>resultscroll</name>
-		<tag-class>
-			edu.emory.library.tas.web.components.pageScroller.ResultPageScrollerTag
-		</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>resultFirst</name>
-		</attribute>
-		<attribute>
-			<name>resultSize</name>
-		</attribute>
-		<attribute>
-			<name>resultLast</name>
-		</attribute>
-	</tag>
-	
-	<tag>
 		<name>tabBar</name>
 		<tag-class>
-			edu.emory.library.tas.web.TabBarTag
+			edu.emory.library.tast.ui.search.query.TabBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -107,7 +90,7 @@
 	<tag>
 		<name>tab</name>
 		<tag-class>
-			edu.emory.library.tas.web.TabTag
+			edu.emory.library.tast.ui.search.query.TabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -130,7 +113,7 @@
 	<tag>
 		<name>expandableBox</name>
 		<tag-class>
-			edu.emory.library.tas.web.ExpandableBoxTag
+			edu.emory.library.tast.ui.search.query.ExpandableBoxTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -141,7 +124,7 @@
 	<tag>
 		<name>historyList</name>
 		<tag-class>
-			edu.emory.library.tas.web.HistoryListTag
+			edu.emory.library.tast.ui.search.query.HistoryListTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -164,7 +147,7 @@
 	<tag>
 		<name>queryBuilder</name>
 		<tag-class>
-			edu.emory.library.tas.web.QueryBuilderTag
+			edu.emory.library.tast.ui.search.query.QueryBuilderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -181,7 +164,7 @@
 	<tag>
 		<name>dictionatyList</name>
 		<tag-class>
-			edu.emory.library.tas.web.DictionaryListTag
+			edu.emory.library.tast.ui.search.query.DictionaryListTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -210,7 +193,7 @@
 	<tag>
 		<name>selectAndOrder</name>
 		<tag-class>
-			edu.emory.library.tas.web.schema.SelectAndOrderTag
+			edu.emory.library.tast.ui.schema.SelectAndOrderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -227,7 +210,7 @@
 	<tag>
 		<name>voyageDetail</name>
 		<tag-class>
-			edu.emory.library.tas.web.components.tabs.DetailTag
+			edu.emory.library.tast.ui.search.table.DetailTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -244,7 +227,7 @@
 	<tag>
 		<name>messageBar</name>
 		<tag-class>
-			edu.emory.library.tas.web.MessageBarTag
+			edu.emory.library.tast.ui.search.query.MessageBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -261,7 +244,7 @@
 	<tag>
 		<name>sectionGroup</name>
 		<tag-class>
-			edu.emory.library.tas.web.SectionGroupTag
+			edu.emory.library.tast.ui.search.query.SectionGroupTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -293,7 +276,7 @@
 	<tag>
 		<name>section</name>
 		<tag-class>
-			edu.emory.library.tas.web.SectionTag
+			edu.emory.library.tast.ui.search.query.SectionTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -310,7 +293,7 @@
 	<tag>
 		<name>menuSlider</name>
 		<tag-class>
-			edu.emory.library.tas.web.MenuSliderTag
+			edu.emory.library.tast.ui.search.query.MenuSliderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -330,7 +313,7 @@
 	<tag>
 		<name>menuPopup</name>
 		<tag-class>
-			edu.emory.library.tas.web.MenuPopupTag
+			edu.emory.library.tast.ui.search.query.MenuPopupTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -350,7 +333,7 @@
 	<tag>
 		<name>map</name>
 		<tag-class>
-			edu.emory.library.tas.web.maps.MapTag
+			edu.emory.library.tast.ui.maps.component.MapTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -382,7 +365,7 @@
 	<tag>
 		<name>divbutton</name>
 		<tag-class>
-			edu.emory.library.tas.web.components.DivButtonTag
+			edu.emory.library.tast.ui.DivButtonTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

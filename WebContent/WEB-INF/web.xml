@@ -71,7 +71,7 @@
 -->
 	<servlet>
 		<servlet-name>ImportServlet</servlet-name>
-		<servlet-class>edu.emory.library.tas.spss.ImportServlet</servlet-class>
+		<servlet-class>edu.emory.library.tast.spss.ImportServlet</servlet-class>
     </servlet>
 	
 	<servlet>
@@ -81,23 +81,20 @@
 	
 	<servlet>
 		<servlet-name>ImageFeederServlet</servlet-name>
-		<servlet-class>edu.emory.library.tas.web.components.tabs.ImageFeederServlet</servlet-class>
-	</servlet>
-	
-	<servlet>
-		<servlet-name>MapFeederServlet</servlet-name>
-		<servlet-class>edu.emory.library.tas.web.components.tabs.MapFeederServlet</servlet-class>
+		<servlet-class>edu.emory.library.tast.ui.search.stat.ImageFeederServlet</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>TileServlet</servlet-name>
-		<servlet-class>edu.emory.library.tas.web.maps.TileServlet</servlet-class>
+		<servlet-class>edu.emory.library.tast.ui.maps.component.TileServlet</servlet-class>
 	</servlet>
-	
+
+<!-- 
     <servlet>
         <servlet-name>TestServlet</servlet-name>
-        <servlet-class>edu.emory.library.tas.web.TestServlet</servlet-class>
+        <servlet-class>edu.emory.library.tast.web.TestServlet</servlet-class>
     </servlet>
+ -->	
 
 <!-- 
 	<servlet-mapping>
@@ -145,20 +142,15 @@
 		<servlet-name>ImageFeederServlet</servlet-name>
 		<url-pattern>/servlet/ImageFeederServlet</url-pattern>
 	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>MapFeederServlet</servlet-name>
-		<url-pattern>/servlet/MapFeederServlet</url-pattern>
-	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>TileServlet</servlet-name>
 		<url-pattern>/servlet/maptile</url-pattern>
 	</servlet-mapping>
-
+<!-- 
 	<servlet-mapping>
 		<servlet-name>TestServlet</servlet-name>
 		<url-pattern>/servlet/test</url-pattern>
 	</servlet-mapping>
-
+ -->	
 </web-app>
