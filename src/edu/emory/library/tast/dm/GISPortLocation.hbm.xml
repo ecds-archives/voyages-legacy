@@ -6,7 +6,7 @@
 
 <hibernate-mapping>
 
-	<class name="edu.emory.library.tas.GISPortLocation" table="ports">
+	<class name="edu.emory.library.tast.dm.GISPortLocation" table="ports">
 		<cache usage="read-write" />
         <id name="portName" column="name">
         	<generator class="native"/>

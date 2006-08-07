@@ -5,7 +5,7 @@
         
 <hibernate-mapping>
 
-    <class name="edu.emory.library.tas.attrGroups.Attribute" table="attributes">
+    <class name="edu.emory.library.tast.dm.attributes.Attribute" table="attributes">
     	<cache usage="read-write" />
     	
         <id name="id" column="iid">
@@ -13,7 +13,7 @@
         </id>                       
         
 		<many-to-one name="objectType" column="r_object_type_id" 
-		             class="edu.emory.library.tas.attrGroups.ObjectType" 
+		             class="edu.emory.library.tast.dm.attributes.ObjectType" 
 					 unique="true" lazy="false"/>
 		
 		<property name="name" column="attr_name"/>		
@@ -32,7 +32,7 @@
 					
 	</class>
 	
-	<class name="edu.emory.library.tas.attrGroups.CompoundAttribute" table="compound_attributes">
+	<class name="edu.emory.library.tast.dm.attributes.CompoundAttribute" table="compound_attributes">
 		<cache usage="read-write" />
 		
         <id name="id" column="iid">
@@ -40,7 +40,7 @@
         </id> 
         
         <many-to-one name="objectType" column="r_object_type_id" 
-		             class="edu.emory.library.tas.attrGroups.ObjectType" 
+		             class="edu.emory.library.tast.dm.attributes.ObjectType" 
 					 unique="true" lazy="false"/>
 
     	<property name="name" column="name"/>
@@ -62,17 +62,17 @@
 		<set name="attributes" table="compound_attribute_attributes" lazy="false">
 			<cache usage="read-write"/>
         	<key column="r_compound_attribute_id"/>
-        	<many-to-many column="r_attribute_id" class="edu.emory.library.tas.attrGroups.Attribute"/>
+        	<many-to-many column="r_attribute_id" class="edu.emory.library.tast.dm.attributes.Attribute"/>
     	</set>
 	</class>
 
-	<class name="edu.emory.library.tas.attrGroups.Group" table="groups">
+	<class name="edu.emory.library.tast.dm.attributes.Group" table="groups">
 		<cache usage="read-write" />
         <id name="id" column="iid">
         	<generator class="native"/>
         </id>                       
         <many-to-one name="objectType" column="r_object_type_id" 
-		             class="edu.emory.library.tas.attrGroups.ObjectType" 
+		             class="edu.emory.library.tast.dm.attributes.ObjectType" 
 					 unique="true" lazy="false"/>
 			
 				
@@ -83,17 +83,17 @@
 		<set name="compoundAttributes" table="group_compound_attributes" lazy="false">
 			<cache usage="read-write"/>
         	<key column="r_group_id"/>
-        	<many-to-many column="r_compound_attribute_id" class="edu.emory.library.tas.attrGroups.CompoundAttribute"/>
+        	<many-to-many column="r_compound_attribute_id" class="edu.emory.library.tast.dm.attributes.CompoundAttribute"/>
     	</set>
     	
 		<set name="attributes" table="group_attributes" lazy="false">
 			<cache usage="read-write"/>
         	<key column="r_group_id"/>
-        	<many-to-many column="r_attribute_id" class="edu.emory.library.tas.attrGroups.Attribute"/>
+        	<many-to-many column="r_attribute_id" class="edu.emory.library.tast.dm.attributes.Attribute"/>
     	</set>
 	</class>
 
-	<class name="edu.emory.library.tas.attrGroups.ObjectType" table="object_types">
+	<class name="edu.emory.library.tast.dm.attributes.ObjectType" table="object_types">
 		<cache usage="read-write" />
         <id name="id" column="iid">
         	<generator class="native"/>

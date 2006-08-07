@@ -3,7 +3,7 @@
 		"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="edu.emory.library.tas.Voyage" table="voyages">
+	<class name="edu.emory.library.tas.dm.Voyage" table="voyages">
 		<id name="iid" column="iid">
 			<generator class="native"/>
 		</id>
@@ -234,60 +234,60 @@
 		<property name="voy3imp" column="voy3imp"/>
 		<property name="slavemx7" column="slavemx7"/>
 		<property name="spanishamer" column="spanishamer"/>
-		<many-to-one name="datepl" class="edu.emory.library.tas.dicts.DepDefinition" unique="true" lazy="false"/>
-		<many-to-one name="embport" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
-		<many-to-one name="arrport" class="edu.emory.library.tas.dicts.IntDisembPort" unique="true" lazy="false"/>
-		<many-to-one name="plac1tra" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
-		<many-to-one name="destin" class="edu.emory.library.tas.dicts.RetPort" unique="true" lazy="false"/>
-		<many-to-one name="plac2tra" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
-		<many-to-one name="plac3tra" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
-		<many-to-one name="npafttra" class="edu.emory.library.tas.dicts.OldWorldPlace" unique="true" lazy="false"/>
-		<many-to-one name="sla1port" class="edu.emory.library.tas.dicts.FirstDemPort" unique="true" lazy="false"/>
-		<many-to-one name="adpsale1" class="edu.emory.library.tas.dicts.SecondDemPort" unique="true" lazy="false"/>
-		<many-to-one name="adpsale2" class="edu.emory.library.tas.dicts.ThirdDemPort" unique="true" lazy="false"/>
-		<many-to-one name="portret" class="edu.emory.library.tas.dicts.RetPort" unique="true" lazy="false"/>
-		<many-to-one name="tontype" class="edu.emory.library.tas.dicts.TonesType" unique="true" lazy="false"/>
-		<many-to-one name="national" class="edu.emory.library.tas.dicts.ShipNationality" unique="true" lazy="false"/>
-		<many-to-one name="embport2" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
-		<many-to-one name="portdep" class="edu.emory.library.tas.dicts.DeparturePort" unique="true" lazy="false"/>
-		<many-to-one name="rig" class="edu.emory.library.tas.dicts.VesselRig" unique="true" lazy="false"/>
-		<many-to-one name="placcons" class="edu.emory.library.tas.dicts.RetPort" unique="true" lazy="false"/>
-		<many-to-one name="majselpt" class="edu.emory.library.tas.dicts.FirstDemPort" unique="true" lazy="false"/>
-		<many-to-one name="majbuypt" class="edu.emory.library.tas.dicts.PurchasePort" unique="true" lazy="false"/>
-		<many-to-one name="natinimp" class="edu.emory.library.tas.dicts.ImputedNation" unique="true" lazy="false"/>
-		<many-to-one name="deptreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="retrnreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="regisreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="year100" class="edu.emory.library.tas.dicts.Year100" unique="true" lazy="false"/>
-		<many-to-one name="year5" class="edu.emory.library.tas.dicts.Year5" unique="true" lazy="false"/>
-		<many-to-one name="year25" class="edu.emory.library.tas.dicts.Year25" unique="true" lazy="false"/>
-		<many-to-one name="regem1" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-		<many-to-one name="regem2" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-		<many-to-one name="regem3" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-		<many-to-one name="embreg" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-		<many-to-one name="embreg2" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-		<many-to-one name="majbuyrg" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-		<many-to-one name="majbyimp" class="edu.emory.library.tas.dicts.EmbRegion" unique="true" lazy="false"/>
-		<many-to-one name="regdis1" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="regdis2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="regdis3" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="regarrp" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="majselrg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="fate2" class="edu.emory.library.tas.dicts.Fate2" unique="true" lazy="false"/>
-		<many-to-one name="fate3" class="edu.emory.library.tas.dicts.Fate3" unique="true" lazy="false"/>
-		<many-to-one name="fate4" class="edu.emory.library.tas.dicts.Fate4" unique="true" lazy="false"/>
-		<many-to-one name="mjselimp" class="edu.emory.library.tas.dicts.ImpPrincipalRegion" unique="true" lazy="false"/>
-		<many-to-one name="constreg" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="status" class="edu.emory.library.tas.dicts.Status" unique="true" lazy="false"/>
-		<many-to-one name="editor" class="edu.emory.library.tas.dicts.Editor" unique="true" lazy="false"/>
-		<many-to-one name="filter_$" class="edu.emory.library.tas.dicts.Filter" unique="true" lazy="false"/>
-		<many-to-one name="yearches" class="edu.emory.library.tas.dicts.Yearches" unique="true" lazy="false"/>
-		<many-to-one name="regarrp2" class="edu.emory.library.tas.dicts.DepartureRegion" unique="true" lazy="false"/>
-		<many-to-one name="xmimpflag" class="edu.emory.library.tas.dicts.XmimpFlag" unique="true" lazy="false"/>
-		<many-to-one name="primarylast" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
-		<many-to-one name="primarylast1" class="edu.emory.library.tas.dicts.PrimaryLast" unique="true" lazy="false"/>
-		<many-to-one name="carib" class="edu.emory.library.tas.dicts.Carib" unique="true" lazy="false"/>
-		<many-to-one name="us" class="edu.emory.library.tas.dicts.Us" unique="true" lazy="false"/>
-		<many-to-one name="temp" class="edu.emory.library.tas.dicts.Temp" unique="true" lazy="false"/>
+		<many-to-one name="datepl" class="edu.emory.library.tas.dm.dictionaries.DepDefinition" unique="true" lazy="false"/>
+		<many-to-one name="embport" class="edu.emory.library.tas.dm.dictionaries.PurchasePort" unique="true" lazy="false"/>
+		<many-to-one name="arrport" class="edu.emory.library.tas.dm.dictionaries.IntDisembPort" unique="true" lazy="false"/>
+		<many-to-one name="plac1tra" class="edu.emory.library.tas.dm.dictionaries.PurchasePort" unique="true" lazy="false"/>
+		<many-to-one name="destin" class="edu.emory.library.tas.dm.dictionaries.RetPort" unique="true" lazy="false"/>
+		<many-to-one name="plac2tra" class="edu.emory.library.tas.dm.dictionaries.PurchasePort" unique="true" lazy="false"/>
+		<many-to-one name="plac3tra" class="edu.emory.library.tas.dm.dictionaries.PurchasePort" unique="true" lazy="false"/>
+		<many-to-one name="npafttra" class="edu.emory.library.tas.dm.dictionaries.OldWorldPlace" unique="true" lazy="false"/>
+		<many-to-one name="sla1port" class="edu.emory.library.tas.dm.dictionaries.FirstDemPort" unique="true" lazy="false"/>
+		<many-to-one name="adpsale1" class="edu.emory.library.tas.dm.dictionaries.SecondDemPort" unique="true" lazy="false"/>
+		<many-to-one name="adpsale2" class="edu.emory.library.tas.dm.dictionaries.ThirdDemPort" unique="true" lazy="false"/>
+		<many-to-one name="portret" class="edu.emory.library.tas.dm.dictionaries.RetPort" unique="true" lazy="false"/>
+		<many-to-one name="tontype" class="edu.emory.library.tas.dm.dictionaries.TonesType" unique="true" lazy="false"/>
+		<many-to-one name="national" class="edu.emory.library.tas.dm.dictionaries.ShipNationality" unique="true" lazy="false"/>
+		<many-to-one name="embport2" class="edu.emory.library.tas.dm.dictionaries.PurchasePort" unique="true" lazy="false"/>
+		<many-to-one name="portdep" class="edu.emory.library.tas.dm.dictionaries.DeparturePort" unique="true" lazy="false"/>
+		<many-to-one name="rig" class="edu.emory.library.tas.dm.dictionaries.VesselRig" unique="true" lazy="false"/>
+		<many-to-one name="placcons" class="edu.emory.library.tas.dm.dictionaries.RetPort" unique="true" lazy="false"/>
+		<many-to-one name="majselpt" class="edu.emory.library.tas.dm.dictionaries.FirstDemPort" unique="true" lazy="false"/>
+		<many-to-one name="majbuypt" class="edu.emory.library.tas.dm.dictionaries.PurchasePort" unique="true" lazy="false"/>
+		<many-to-one name="natinimp" class="edu.emory.library.tas.dm.dictionaries.ImputedNation" unique="true" lazy="false"/>
+		<many-to-one name="deptreg" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="retrnreg" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="regisreg" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="year100" class="edu.emory.library.tas.dm.dictionaries.Year100" unique="true" lazy="false"/>
+		<many-to-one name="year5" class="edu.emory.library.tas.dm.dictionaries.Year5" unique="true" lazy="false"/>
+		<many-to-one name="year25" class="edu.emory.library.tas.dm.dictionaries.Year25" unique="true" lazy="false"/>
+		<many-to-one name="regem1" class="edu.emory.library.tas.dm.dictionaries.EmbRegion" unique="true" lazy="false"/>
+		<many-to-one name="regem2" class="edu.emory.library.tas.dm.dictionaries.EmbRegion" unique="true" lazy="false"/>
+		<many-to-one name="regem3" class="edu.emory.library.tas.dm.dictionaries.EmbRegion" unique="true" lazy="false"/>
+		<many-to-one name="embreg" class="edu.emory.library.tas.dm.dictionaries.EmbRegion" unique="true" lazy="false"/>
+		<many-to-one name="embreg2" class="edu.emory.library.tas.dm.dictionaries.EmbRegion" unique="true" lazy="false"/>
+		<many-to-one name="majbuyrg" class="edu.emory.library.tas.dm.dictionaries.EmbRegion" unique="true" lazy="false"/>
+		<many-to-one name="majbyimp" class="edu.emory.library.tas.dm.dictionaries.EmbRegion" unique="true" lazy="false"/>
+		<many-to-one name="regdis1" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="regdis2" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="regdis3" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="regarrp" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="majselrg" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="fate2" class="edu.emory.library.tas.dm.dictionaries.Fate2" unique="true" lazy="false"/>
+		<many-to-one name="fate3" class="edu.emory.library.tas.dm.dictionaries.Fate3" unique="true" lazy="false"/>
+		<many-to-one name="fate4" class="edu.emory.library.tas.dm.dictionaries.Fate4" unique="true" lazy="false"/>
+		<many-to-one name="mjselimp" class="edu.emory.library.tas.dm.dictionaries.ImpPrincipalRegion" unique="true" lazy="false"/>
+		<many-to-one name="constreg" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="status" class="edu.emory.library.tas.dm.dictionaries.Status" unique="true" lazy="false"/>
+		<many-to-one name="editor" class="edu.emory.library.tas.dm.dictionaries.Editor" unique="true" lazy="false"/>
+		<many-to-one name="filter_$" class="edu.emory.library.tas.dm.dictionaries.Filter" unique="true" lazy="false"/>
+		<many-to-one name="yearches" class="edu.emory.library.tas.dm.dictionaries.Yearches" unique="true" lazy="false"/>
+		<many-to-one name="regarrp2" class="edu.emory.library.tas.dm.dictionaries.DepartureRegion" unique="true" lazy="false"/>
+		<many-to-one name="xmimpflag" class="edu.emory.library.tas.dm.dictionaries.XmimpFlag" unique="true" lazy="false"/>
+		<many-to-one name="primarylast" class="edu.emory.library.tas.dm.dictionaries.PrimaryLast" unique="true" lazy="false"/>
+		<many-to-one name="primarylast1" class="edu.emory.library.tas.dm.dictionaries.PrimaryLast" unique="true" lazy="false"/>
+		<many-to-one name="carib" class="edu.emory.library.tas.dm.dictionaries.Carib" unique="true" lazy="false"/>
+		<many-to-one name="us" class="edu.emory.library.tas.dm.dictionaries.Us" unique="true" lazy="false"/>
+		<many-to-one name="temp" class="edu.emory.library.tas.dm.dictionaries.Temp" unique="true" lazy="false"/>
 	</class>
 </hibernate-mapping>
