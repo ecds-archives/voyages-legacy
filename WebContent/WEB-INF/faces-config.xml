@@ -7,133 +7,126 @@
 	<component>
 		<component-type>TableResultTab</component-type>
 		<component-class>
-			edu.emory.library.tas.web.components.tabs.UITableResultTab
+			edu.emory.library.tast.ui.search.table.UITableResultTab
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>TimeLineResultTab</component-type>
 		<component-class>
-			edu.emory.library.tas.web.components.tabs.UITimeLineResultTab
-		</component-class>
-	</component>
-
-	<component>
-		<component-type>ResultPageScroller</component-type>
-		<component-class>
-			edu.emory.library.tas.web.components.pageScroller.UIResultPageScroller
+			edu.emory.library.tast.ui.search.stat.UITimeLineResultTab
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>TabBar</component-type>
 		<component-class>
-			edu.emory.library.tas.web.TabBarComponent
+			edu.emory.library.tast.ui.search.query.TabBarComponent
 		</component-class>
 	</component>
 	
 	<component>
 		<component-type>ExpandableBox</component-type>
 		<component-class>
-			edu.emory.library.tas.web.ExpandableBoxComponent
+			edu.emory.library.tast.ui.search.query.ExpandableBoxComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>HistoryList</component-type>
 		<component-class>
-			edu.emory.library.tas.web.HistoryListComponent
+			edu.emory.library.tast.ui.search.query.HistoryListComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>Tab</component-type>
 		<component-class>
-			edu.emory.library.tas.web.TabComponent
+			edu.emory.library.tast.ui.search.query.TabComponent
 		</component-class>
 	</component>
 	
 	<component>
 		<component-type>QueryBuilder</component-type>
 		<component-class>
-			edu.emory.library.tas.web.QueryBuilderComponent
+			edu.emory.library.tast.ui.search.query.QueryBuilderComponent
 		</component-class>
 	</component>
 	
 	<component>
 		<component-type>DictionaryList</component-type>
 		<component-class>
-			edu.emory.library.tas.web.DictionaryListComponent
+			edu.emory.library.tast.ui.search.query.DictionaryListComponent
 		</component-class>
 	</component>
 	
 	<component>
 		<component-type>VoyageDetail</component-type>
 		<component-class>
-			edu.emory.library.tas.web.components.tabs.UIDetailComponent
+			edu.emory.library.tast.ui.search.table.UIDetailComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>SelectAndOrder</component-type>
 		<component-class>
-			edu.emory.library.tas.web.schema.SelectAndOrderComponent
+			edu.emory.library.tast.ui.schema.SelectAndOrderComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>MessageBar</component-type>
 		<component-class>
-			edu.emory.library.tas.web.MessageBarComponent
+			edu.emory.library.tast.ui.search.query.MessageBarComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>SectionGroup</component-type>
 		<component-class>
-			edu.emory.library.tas.web.SectionGroupComponent
+			edu.emory.library.tast.ui.search.query.SectionGroupComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>Section</component-type>
 		<component-class>
-			edu.emory.library.tas.web.SectionComponent
+			edu.emory.library.tast.ui.search.query.SectionComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>MenuPopup</component-type>
 		<component-class>
-			edu.emory.library.tas.web.MenuPopupComponent
+			edu.emory.library.tast.ui.search.query.MenuPopupComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>MenuSlider</component-type>
 		<component-class>
-			edu.emory.library.tas.web.MenuSliderComponent
+			edu.emory.library.tast.ui.search.query.MenuSliderComponent
 		</component-class>
 	</component>
 	
 	<component>
 		<component-type>Map</component-type>
 		<component-class>
-			edu.emory.library.tas.web.maps.MapComponent
+			edu.emory.library.tast.ui.maps.component.MapComponent
 		</component-class>
 	</component>
 	
 	<component>
 		<component-type>DivButton</component-type>
 		<component-class>
-			edu.emory.library.tas.web.components.UIDivButton
+			edu.emory.library.tast.ui.UIDivButton
 		</component-class>
 	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.SearchBean
+			edu.emory.library.tast.ui.search.query.SearchBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -141,7 +134,7 @@
 	<managed-bean>
 		<managed-bean-name>RestorePermlinkBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.RestorePermlinkBean
+			edu.emory.library.tast.ui.search.query.RestorePermlinkBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
@@ -149,7 +142,7 @@
 	<managed-bean>
 		<managed-bean-name>DictionaryListBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.DictionaryListBean
+			edu.emory.library.tast.ui.search.query.DictionaryListBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
@@ -157,7 +150,7 @@
 	<managed-bean>
 		<managed-bean-name>AdvancedStatisticsTabBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.components.tabs.AdvancedStatisticsTabBean
+			edu.emory.library.tast.ui.search.stat.AdvancedStatisticsTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -169,7 +162,7 @@
 	<managed-bean>
 		<managed-bean-name>TableResultTabBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.components.tabs.TableResultTabBean
+			edu.emory.library.tast.ui.search.table.TableResultTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -181,7 +174,7 @@
 	<managed-bean>
 		<managed-bean-name>TimeLineResultTabBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.components.tabs.TimeLineResultTabBean
+			edu.emory.library.tast.ui.search.stat.TimeLineResultTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -193,7 +186,7 @@
 	<managed-bean>
 		<managed-bean-name>Switcher</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.schema.Switcher
+			edu.emory.library.tast.ui.schema.Switcher
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -201,7 +194,7 @@
 	<managed-bean>
 		<managed-bean-name>AttributesBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.schema.AttributesBean
+			edu.emory.library.tast.ui.schema.AttributesBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -213,7 +206,7 @@
 	<managed-bean>
 		<managed-bean-name>CompoundAttributesBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.schema.CompoundAttributesBean
+			edu.emory.library.tast.ui.schema.CompoundAttributesBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -225,7 +218,7 @@
 	<managed-bean>
 		<managed-bean-name>GroupsBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.schema.GroupsBean
+			edu.emory.library.tast.ui.schema.GroupsBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -237,7 +230,7 @@
 	<managed-bean>
 		<managed-bean-name>ImportLog</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.spss.ImportLogBean
+			edu.emory.library.tast.ui.spss.ImportLogBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -245,7 +238,7 @@
 	<managed-bean>
 		<managed-bean-name>ABCBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.spss.ABCBean
+			edu.emory.library.tast.ui.spss.ABCBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -253,7 +246,7 @@
 	<managed-bean>
 		<managed-bean-name>TestBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.TestBean
+			edu.emory.library.tast.ui.TestBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
@@ -261,7 +254,7 @@
 	<managed-bean>
 		<managed-bean-name>MapBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.components.tabs.MapBean
+			edu.emory.library.tast.ui.search.map.MapBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -273,7 +266,7 @@
 	<managed-bean>
 		<managed-bean-name>TestMapBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tas.web.maps.TestMapBean
+			edu.emory.library.tast.ui.maps.component.TestMapBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
