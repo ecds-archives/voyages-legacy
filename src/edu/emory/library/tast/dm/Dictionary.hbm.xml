@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+
+	<class name="edu.emory.library.tas.Dictionary" table="dictionary">
+		<cache usage="read-write" />
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Angola" table="dictionary">
+        <cache usage="read-write" />
+        <id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.BodyPt" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Carib" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Country" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.DemBroadRegion" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.DeparturePort" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.DepartureRegion" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.DepDefinition" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Editor" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.EmbRegion" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Fate2" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Fate3" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Fate4" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Filter" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.FirstDemPort" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Flag2" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Gc" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.ImpPrincipalRegion" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.ImputedNation" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.IntDisembPort" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.MajByIm" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.MarkDegree" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.MarkNumber" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.MarkSize" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.MarkType" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Mjselrg2" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Natinim3" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Natinim4" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Nation" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.New" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Newamreg" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.OldWorldPlace" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.OtherMark" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.PlaceA" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.PlaceB" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.PortLocation" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.PurchasePort" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.RetPort" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Seafrica" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.SecondDemPort" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.SexAge" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.ShipNationality" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.SpecialMark" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Status" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+   
+    <class name="edu.emory.library.tas.dm.dictionaries.Temp" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Temp2" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.ThirdDemPort" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.TonesType" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Us" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Userid" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.VesselRig" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.XmimpFlag" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Year100" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Year25" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Year5" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.Yearches" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+    
+    
+    <class name="edu.emory.library.tas.dm.dictionaries.PrimaryLast" table="dictionary">
+        <cache usage="read-write" /><id name="id" column="oid">
+        	<generator class="native"/>
+        </id>
+        <property name="type" column="obj_type"/>
+        <property name="name" column="name"/>
+        <property name="remoteId" column="remote_id"/>
+    </class>
+
+</hibernate-mapping>
