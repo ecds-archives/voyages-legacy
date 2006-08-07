@@ -133,7 +133,7 @@ public class Dictionary {
 
 		int dictType = -1;
 		try {
-			Class clazz = Class.forName("edu.emory.library.tas.dm.dictionaries." + p_dictionaryName);
+			Class clazz = Class.forName("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
 			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

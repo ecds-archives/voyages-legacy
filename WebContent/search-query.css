@@ -134,6 +134,21 @@ td.query-builder-range-month-selected {
 	cursor: pointer;
 	text-align: center; }
 	
+div.query-builder-list-popup-container {
+	position: relative;
+	width: 0px;
+	height: 0px; }
+	
+div.query-builder-list-popup {
+	position: absolute;
+	border: 1px solid Black;
+	top: -100px;
+	left: 290px;
+	width: 200px;
+	height: 200px;
+	background-color: White;
+	overflow: scroll; }
+
 td.query-builder-list {
 	width: 220px; }
 

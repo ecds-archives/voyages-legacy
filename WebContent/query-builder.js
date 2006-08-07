@@ -32,10 +32,13 @@
 	monthFieldName,
 	monthTdId,
 	monthsTds
+	
+	LIST:
+	
 
 */
 
-var QueryBuilder = 
+var QueryBuilderGlobals = 
 {
 
 	builders: new Array(),
@@ -47,49 +50,61 @@ var QueryBuilder =
 
 	updateTotal: function(builderId, delay)
 	{
-		var builder = builders[builderId];
+		var builder = this.builders[builderId];
 		if (builder) builder.updateTotal(delay);
 	},
 	
 	moveConditionUp: function(builderId, attributeId)
 	{
-		var builder = builders[builderId];
+		var builder = this.builders[builderId];
 		if (builder) builder.moveConditionUp(attributeId);
 	},
 	
 	moveConditionDown: function(builderId, attributeId)
 	{
-		var builder = builders[builderId];
+		var builder = this.builders[builderId];
 		if (builder) builder.moveConditionDown(attributeId);
 	},
 	
 	deleteCondition: function(builderId, attributeId)
 	{
-		var builder = builders[builderId];
+		var builder = this.builders[builderId];
 		if (builder) builder.deleteCondition(attributeId);
 	},
 	
 	changeNumericRangeType: function(builderId, attributeId)
 	{
-		var builder = builders[builderId];
+		var builder = this.builders[builderId];
 		if (builder) builder.changeNumericRangeType(attributeId);
 	},
 	
 	changeDateRangeType: function(builderId, attributeId)
 	{
-		var builder = builders[builderId];
-		if (builder) builder.changeDateRangeType(builderId);
+		var builder = this.builders[builderId];
+		if (builder) builder.changeDateRangeType(attributeId);
 	},
 	
 	toggleMonth: function(builderId, attributeId, month)
 	{
-		var builder = builders[builderId];
+		var builder = this.builders[builderId];
 		if (builder) builder.toggleMonth(attributeId, month);
-	}
+	},
 	
+	openList: function(builderId, attributeId)
+	{
+		var builder = this.builders[builderId];
+		if (builder) builder.openList(attributeId);
+	},
+	
+	closeList: function(builderId, attributeId)
+	{
+		var builder = this.builders[builderId];
+		if (builder) builder.closeList(attributeId);
+	}
+
 }
 
-function QueryBuilder(builderId, formName, attributesFieldName, conditions)
+function QueryBuilder(builderId, formName, attributesFieldName, updateTotalFieldName, conditions)
 {
 	this.formName = formName;
 	this.builderId = builderId;
@@ -121,9 +136,9 @@ QueryBuilder.prototype.updateTotal = function(delay)
 		
 }
 
-QueryBuilder.prototype.doUpdateExpectedTotal = function(flagField)
+QueryBuilder.prototype.doUpdateExpectedTotal = function()
 {
-	this.updateTotalFieldName.value = "true";
+	document.forms[this.formName].elements[this.updateTotalFieldName].value = "true";
 	ajaxAnywhere.submitAJAX(null, null);
 }
 
@@ -196,7 +211,7 @@ QueryBuilder.prototype.deleteCondition = function(attributeId)
 		if (attrs[i] == attributeId)
 		{
 			attrs.splice(i, 1);
-			delete this.condition[attributeId];
+			delete this.conditions[attributeId];
 			attrListField.value = attrs.join(',');
 			if (Scriptaculous)
 			{
@@ -235,11 +250,11 @@ QueryBuilder.prototype.changeNumericRangeType = function(attributeId)
 QueryBuilder.prototype.changeDateRangeType = function(attributeId)
 {
 	var cond = this.conditions[attributeId];
-	var type = document.forms['form'].elements[cond.typeFieldName].selectedIndex;
+	var type = document.forms[this.formName].elements[cond.typeFieldName].selectedIndex;
 	document.getElementById(cond.tdFromMonthId).style.display = (type == 0) ? '' : 'none';
 	document.getElementById(cond.tdSlashBetweenStartId).style.display = (type == 0) ? '' : 'none';
 	document.getElementById(cond.tdFromYearId).style.display = (type == 0) ? '' : 'none';
-	document.getElementById(cond.tdSlashBetweenEndId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdDashId).style.display = (type == 0) ? '' : 'none';
 	document.getElementById(cond.tdToMonthId).style.display = (type == 0) ? '' : 'none';
 	document.getElementById(cond.tdSlashBetweenEndId).style.display = (type == 0) ? '' : 'none';
 	document.getElementById(cond.tdToYearId).style.display = (type == 0) ? '' : 'none';
@@ -272,6 +287,19 @@ QueryBuilder.prototype.toggleMonth = function(attributeId, month)
 	}
 	this.updateTotal(0);
 }
+
+QueryBuilder.prototype.openList = function(attributeId)
+{
+	var cond = this.conditions[attributeId];
+	document.getElementById(cond.popupElementId).style.display = "block";
+}
+
+QueryBuilder.prototype.closeList = function(attributeId)
+{
+	var cond = this.conditions[attributeId];
+	document.getElementById(cond.popupElementId).style.display = "none";
+}
+
 
 /*
 QueryBuilder.prototype.showList = function(attributeId, hiddenFieldName, displayFieldName)
