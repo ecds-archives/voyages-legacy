@@ -28,7 +28,7 @@
 	<component>
 		<component-type>ExpandableBox</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.ExpandableBoxComponent
+			edu.emory.library.tast.ui.ExpandableBoxComponent
 		</component-class>
 	</component>
 
@@ -42,7 +42,7 @@
 	<component>
 		<component-type>Tab</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.TabComponent
+			edu.emory.library.tast.ui.TabComponent
 		</component-class>
 	</component>
 	
@@ -77,35 +77,35 @@
 	<component>
 		<component-type>MessageBar</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.MessageBarComponent
+			edu.emory.library.tast.ui.MessageBarComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>SectionGroup</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.SectionGroupComponent
+			edu.emory.library.tast.ui.SectionGroupComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>Section</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.SectionComponent
+			edu.emory.library.tast.ui.SectionComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>MenuPopup</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.MenuPopupComponent
+			edu.emory.library.tast.ui.MenuPopupComponent
 		</component-class>
 	</component>
 
 	<component>
 		<component-type>MenuSlider</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.query.MenuSliderComponent
+			edu.emory.library.tast.ui.MenuSliderComponent
 		</component-class>
 	</component>
 	
