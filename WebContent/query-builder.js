@@ -1,221 +1,293 @@
+/*
+
+	NUMERIC:
+	
+	typeFieldName,
+	fromId,
+	dashId,
+	toId,
+	leId,
+	geId,
+	eqId
+
+	DATE:
+	
+	typeFieldName,
+	tdFromMonthId,
+	tdSlashBetweenStartId,
+	tdFromYearId,
+	tdDashId,
+	tdToMonthId,
+	tdSlashBetweenEndId,
+	tdToYearId,
+	tdLeMonthId,
+	tdSlashLeId,
+	tdLeYearId,
+	tdGeMonthId,
+	tdSlashGeId,
+	tdGeYearId,
+	tdEqMonthId,
+	tdSlashEqId,
+	tdEqYearId,
+	monthFieldName,
+	monthTdId,
+	monthsTds
+
+*/
+
 var QueryBuilder = 
 {
 
-	timeoutIds: new Array(),
+	builders: new Array(),
+	
+	registerBuilder: function(builder)
+	{
+		this.builders[builder.builderId] = builder;
+	},
 
-	updateTotal: function(builderId, formName, updateTotalFieldName, delay)
+	updateTotal: function(builderId, delay)
 	{
+		var builder = builders[builderId];
+		if (builder) builder.updateTotal(delay);
+	},
 	
-		if (!ajaxAnywhere) return;
-		
-		// set to true when submit
-		// so that the component can fire an event
-		var flagField = document.forms[formName].elements[updateTotalFieldName];
-		
-		// old timeout id
-		var oldTimeoutId = QueryBuilder.timeoutIds[builderId];
+	moveConditionUp: function(builderId, attributeId)
+	{
+		var builder = builders[builderId];
+		if (builder) builder.moveConditionUp(attributeId);
+	},
+	
+	moveConditionDown: function(builderId, attributeId)
+	{
+		var builder = builders[builderId];
+		if (builder) builder.moveConditionDown(attributeId);
+	},
+	
+	deleteCondition: function(builderId, attributeId)
+	{
+		var builder = builders[builderId];
+		if (builder) builder.deleteCondition(attributeId);
+	},
+	
+	changeNumericRangeType: function(builderId, attributeId)
+	{
+		var builder = builders[builderId];
+		if (builder) builder.changeNumericRangeType(attributeId);
+	},
+	
+	changeDateRangeType: function(builderId, attributeId)
+	{
+		var builder = builders[builderId];
+		if (builder) builder.changeDateRangeType(builderId);
+	},
+	
+	toggleMonth: function(builderId, attributeId, month)
+	{
+		var builder = builders[builderId];
+		if (builder) builder.toggleMonth(attributeId, month);
+	}
+	
+}
 
-		// delay
-		if (delay > 0)
-			QueryBuilder.timeoutIds[builderId] = Timer.extendCall(
-				oldTimeoutId,
-				QueryBuilder, "doUpdateExpectedTotal",
-				delay, flagField);
-		
-		// immediate
-		else
-			QueryBuilder.doUpdateExpectedTotal(flagField);
-			
-	},
-	
-	doUpdateExpectedTotal: function(flagField)
-	{
-		flagField.value = "true";
-		ajaxAnywhere.submitAJAX(null, null);
-	},
-	
-	moveConditionUp: function(builderId, formName, updateTotalFieldName, attributesFieldName, conditionDivId, attributeId)
-	{
-		var cond = document.getElementById(conditionDivId);
-		var attrListField = document.forms[formName].elements[attributesFieldName];
-		var attrs = attrListField.value.split(',');
-		for (var i=0; i<attrs.length; i++)
-		{
-			if (attrs[i] == attributeId)
-			{
-				if (i != 0)
-				{
-					var prevCond = cond.previousSibling;
-					var parent = cond.parentNode;
-					parent.removeChild(cond);
-					parent.insertBefore(cond, prevCond);
-					attrs[i] = attrs[i-1];
-					attrs[i-1] = attributeId;
-					attrListField.value = attrs.join(',');
-					if (Scriptaculous)
-					{
-						Element.setOpacity(cond, 0);
-						Effect.Appear(cond, {duration: 0.5});
-					}
-				}
-				return;
-			}
-		}
-	},
-	
-	moveConditionDown: function(builderId, formName, updateTotalFieldName, attributesFieldName, conditionDivId, attributeId)
-	{
-		var cond = document.getElementById(conditionDivId);
-		var attrListField = document.forms[formName].elements[attributesFieldName];
-		var attrs = attrListField.value.split(',');
-		for (var i=0; i<attrs.length; i++)
-		{
-			if (attrs[i] == attributeId)
-			{
-				if (i != attrs.length-1)
-				{
-					var nextNextCond = cond.nextSibling.nextSibling;
-					var parent = cond.parentNode;
-					parent.removeChild(cond);
-					parent.insertBefore(cond, nextNextCond);
-					attrs[i] = attrs[i+1];
-					attrs[i+1] = attributeId;
-					attrListField.value = attrs.join(',');
-					if (Scriptaculous)
-					{
-						Element.setOpacity(cond, 0);
-						Effect.Appear(cond, {duration: 0.5});
-					}
-				}
-				return;
-			}
-		}
-	},
-	
-	deleteCondition: function(builderId, formName, updateTotalFieldName, attributesFieldName, conditionDivId, attributeId)
-	{
+function QueryBuilder(builderId, formName, attributesFieldName, conditions)
+{
+	this.formName = formName;
+	this.builderId = builderId;
+	this.updateTotalFieldName = updateTotalFieldName;
+	this.conditions = conditions;
+	this.attributesFieldName = attributesFieldName;
+	this.timeoutId = "";
+}
 
-		var cond = document.getElementById(conditionDivId);
-		var attrListField = document.forms[formName].elements[attributesFieldName];
-		var attrs = attrListField.value.split(',');
-		for (var i=0; i<attrs.length; i++) 
+QueryBuilder.prototype.updateTotal = function(delay)
+{
+
+	if (!ajaxAnywhere) return;
+	
+	// set to true when submit
+	// so that the component can fire an event
+	var flagField = document.forms[this.formName].elements[this.updateTotalFieldName];
+	
+	// delay
+	if (delay > 0)
+		this.timeoutId = Timer.extendCall(
+			this.timeoutId,
+			this, "doUpdateExpectedTotal",
+			delay);
+	
+	// immediate
+	else
+		this.doUpdateExpectedTotal();
+		
+}
+
+QueryBuilder.prototype.doUpdateExpectedTotal = function(flagField)
+{
+	this.updateTotalFieldName.value = "true";
+	ajaxAnywhere.submitAJAX(null, null);
+}
+
+QueryBuilder.prototype.moveConditionUp = function(attributeId)
+{
+	var cond = document.getElementById(this.conditions[attributeId].conditionDivId);
+	var attrListField = document.forms[this.formName].elements[this.attributesFieldName];
+	var attrs = attrListField.value.split(',');
+	for (var i=0; i<attrs.length; i++)
+	{
+		if (attrs[i] == attributeId)
 		{
-			if (attrs[i] == attributeId)
+			if (i != 0)
 			{
-				attrs.splice(i, 1);
+				var prevCond = cond.previousSibling;
+				var parent = cond.parentNode;
+				parent.removeChild(cond);
+				parent.insertBefore(cond, prevCond);
+				attrs[i] = attrs[i-1];
+				attrs[i-1] = attributeId;
 				attrListField.value = attrs.join(',');
 				if (Scriptaculous)
 				{
-					new Effect.Opacity(cond,
-					{
-						from: 1.0, to: 0.0, duration: 0.5,
-						afterFinishInternal: function(effect) {effect.element.parentNode.removeChild(effect.element);}
-					});
+					Element.setOpacity(cond, 0);
+					Effect.Appear(cond, {duration: 0.5});
 				}
-				else
-				{
-					cond.parentNode.removeChild(cond);
-				}
-				QueryBuilder.updateTotal(builderId, formName, updateTotalFieldName, 0);
-				return;
 			}
-		}	
-	},
-	
-	changeNumericRangeType: function(
-		builderId,
-		formName,
-		updateTotalFieldName,
-		typeFieldName,
-		fromId,
-		dashId,
-		toId,
-		leId,
-		geId,
-		eqId)
-	{
-		var type = document.forms[formName].elements[typeFieldName].selectedIndex;
-		document.getElementById(fromId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(dashId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(toId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(leId).style.display = (type == 1) ? '' : 'none';
-		document.getElementById(geId).style.display = (type == 2) ? '' : 'none';
-		document.getElementById(eqId).style.display = (type == 3) ? '' : 'none';
-		QueryBuilder.updateTotal(builderId, formName, updateTotalFieldName, 0);
-	},
-	
-	changeDateRangeType: function(
-		builderId,
-		formName,
-		updateTotalFieldName,
-		typeFieldName,
-		tdFromMonthId,
-		tdSlashBetweenStartId,
-		tdFromYearId,
-		tdDashId,
-		tdToMonthId,
-		tdSlashBetweenEndId,
-		tdToYearId,
-		tdLeMonthId,
-		tdSlashLeId,
-		tdLeYearId,
-		tdGeMonthId,
-		tdSlashGeId,
-		tdGeYearId,
-		tdEqMonthId,
-		tdSlashEqId,
-		tdEqYearId)
-	{
-		var type = document.forms['form'].elements[typeFieldName].selectedIndex;
-		document.getElementById(tdFromMonthId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(tdSlashBetweenStartId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(tdFromYearId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(tdSlashBetweenEndId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(tdToMonthId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(tdSlashBetweenEndId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(tdToYearId).style.display = (type == 0) ? '' : 'none';
-		document.getElementById(tdLeMonthId).style.display = (type == 1) ? '' : 'none';
-		document.getElementById(tdSlashLeId).style.display = (type == 1) ? '' : 'none';
-		document.getElementById(tdLeYearId).style.display = (type == 1) ? '' : 'none';
-		document.getElementById(tdGeMonthId).style.display = (type == 2) ? '' : 'none';
-		document.getElementById(tdSlashGeId).style.display = (type == 2) ? '' : 'none';
-		document.getElementById(tdGeYearId).style.display = (type == 2) ? '' : 'none';
-		document.getElementById(tdEqMonthId).style.display = (type == 3) ? '' : 'none';
-		document.getElementById(tdSlashEqId).style.display = (type == 3) ? '' : 'none';
-		document.getElementById(tdEqYearId).style.display = (type == 3) ? '' : 'none';
-		QueryBuilder.updateTotal(builderId, formName, updateTotalFieldName, 0);
-	},
-	
-	toggleMonth: function(builderId, formName, updateTotalFieldName, monthFieldName, monthTdId)
-	{
-		var monthInput = document.forms[formName].elements[monthFieldName];
-		var monthTd = document.getElementById(monthTdId);
-		if (monthInput.value == "true")
-		{
-			monthInput.value = "false";
-			monthTd.className = 'query-builder-range-month-delected';
+			return;
 		}
-		else
-		{
-			monthInput.value = "true";
-			monthTd.className = 'query-builder-range-month-selected';
-		}
-		QueryBuilder.updateTotal(builderId, formName, updateTotalFieldName, 0);
-	},
-	
-	showList: function(builderId, formName, updateTotalFieldName, attributeId, hiddenFieldName, displayFieldName)
-	{
-	
-		var url = "dictionary-list.jsp" +
-			"?attributeId=" + encodeURIComponent(attributeId) + 
-			"&formName=" + encodeURIComponent(formName) +
-			"&updateTotalFieldName=" + encodeURIComponent(updateTotalFieldName) +
-			"&hiddenFieldName=" + encodeURIComponent(hiddenFieldName) +
-			"&displayFieldName=" + encodeURIComponent(displayFieldName) +
-			"&builderId=" + encodeURIComponent(builderId);
-
-		window.open(url, "search-list", "width=300,height=500,resizable=yes,scrollbars=yes,status=no");
-
 	}
+}
+
+QueryBuilder.prototype.moveConditionDown = function(attributeId)
+{
+	var cond = document.getElementById(this.conditions[attributeId].conditionDivId);
+	var attrListField = document.forms[this.formName].elements[this.attributesFieldName];
+	var attrs = attrListField.value.split(',');
+	for (var i=0; i<attrs.length; i++)
+	{
+		if (attrs[i] == attributeId)
+		{
+			if (i != attrs.length-1)
+			{
+				var nextNextCond = cond.nextSibling.nextSibling;
+				var parent = cond.parentNode;
+				parent.removeChild(cond);
+				parent.insertBefore(cond, nextNextCond);
+				attrs[i] = attrs[i+1];
+				attrs[i+1] = attributeId;
+				attrListField.value = attrs.join(',');
+				if (Scriptaculous)
+				{
+					Element.setOpacity(cond, 0);
+					Effect.Appear(cond, {duration: 0.5});
+				}
+			}
+			return;
+		}
+	}
+}
+
+QueryBuilder.prototype.deleteCondition = function(attributeId)
+{
+
+	var cond = document.getElementById(this.conditions[attributeId].conditionDivId);
+	var attrListField = document.forms[this.formName].elements[this.attributesFieldName];
+	var attrs = attrListField.value.split(',');
+	for (var i=0; i<attrs.length; i++) 
+	{
+		if (attrs[i] == attributeId)
+		{
+			attrs.splice(i, 1);
+			delete this.condition[attributeId];
+			attrListField.value = attrs.join(',');
+			if (Scriptaculous)
+			{
+				new Effect.Opacity(cond,
+				{
+					from: 1.0, to: 0.0, duration: 0.5,
+					afterFinishInternal: function(effect)
+					{
+						effect.element.parentNode.removeChild(effect.element);
+					}
+				});
+			}
+			else
+			{
+				cond.parentNode.removeChild(cond);
+			}
+			this.updateTotal(0);
+			return;
+		}
+	}	
+}
+
+QueryBuilder.prototype.changeNumericRangeType = function(attributeId)
+{
+	var cond = this.conditions[attributeId];
+	var type = document.forms[this.formName].elements[cond.typeFieldName].selectedIndex;
+	document.getElementById(cond.fromId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.dashId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.toId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.leId).style.display = (type == 1) ? '' : 'none';
+	document.getElementById(cond.geId).style.display = (type == 2) ? '' : 'none';
+	document.getElementById(cond.eqId).style.display = (type == 3) ? '' : 'none';
+	this.updateTotal(0);
+}
+
+QueryBuilder.prototype.changeDateRangeType = function(attributeId)
+{
+	var cond = this.conditions[attributeId];
+	var type = document.forms['form'].elements[cond.typeFieldName].selectedIndex;
+	document.getElementById(cond.tdFromMonthId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdSlashBetweenStartId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdFromYearId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdSlashBetweenEndId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdToMonthId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdSlashBetweenEndId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdToYearId).style.display = (type == 0) ? '' : 'none';
+	document.getElementById(cond.tdLeMonthId).style.display = (type == 1) ? '' : 'none';
+	document.getElementById(cond.tdSlashLeId).style.display = (type == 1) ? '' : 'none';
+	document.getElementById(cond.tdLeYearId).style.display = (type == 1) ? '' : 'none';
+	document.getElementById(cond.tdGeMonthId).style.display = (type == 2) ? '' : 'none';
+	document.getElementById(cond.tdSlashGeId).style.display = (type == 2) ? '' : 'none';
+	document.getElementById(cond.tdGeYearId).style.display = (type == 2) ? '' : 'none';
+	document.getElementById(cond.tdEqMonthId).style.display = (type == 3) ? '' : 'none';
+	document.getElementById(cond.tdSlashEqId).style.display = (type == 3) ? '' : 'none';
+	document.getElementById(cond.tdEqYearId).style.display = (type == 3) ? '' : 'none';
+	this.updateTotal(0);
+}
+
+QueryBuilder.prototype.toggleMonth = function(attributeId, month)
+{
+	var cond = this.conditions[attributeId];
+	var monthInput = document.forms[this.formName].elements[this.monthFieldName];
+	var monthTd = document.getElementById(cond.monthsTds[month]);
+	if (monthInput.value == "true")
+	{
+		monthInput.value = "false";
+		monthTd.className = 'query-builder-range-month-delected';
+	}
+	else
+	{
+		monthInput.value = "true";
+		monthTd.className = 'query-builder-range-month-selected';
+	}
+	this.updateTotal(0);
+}
+
+/*
+QueryBuilder.prototype.showList = function(attributeId, hiddenFieldName, displayFieldName)
+{
+
+	var url = "dictionary-list.jsp" +
+		"?attributeId=" + encodeURIComponent(attributeId) + 
+		"&formName=" + encodeURIComponent(formName) +
+		"&updateTotalFieldName=" + encodeURIComponent(updateTotalFieldName) +
+		"&hiddenFieldName=" + encodeURIComponent(hiddenFieldName) +
+		"&displayFieldName=" + encodeURIComponent(displayFieldName) +
+		"&builderId=" + encodeURIComponent(builderId);
+
+	window.open(url, "search-list", "width=300,height=500,resizable=yes,scrollbars=yes,status=no");
 
 }
+
+*/
+	
