@@ -1168,7 +1168,6 @@ public class QueryBuilderComponent extends UIComponentBase
 		String popupElementId = getClientId(context) + "_" + attribute.getId() + "_popup";
 		
 		Dictionary[] dictionary = Dictionary.loadDictionary(attribute.getDictionary());
-		System.out.println(dictionary.length);
 
 		regJS.append(", ");
 		regJS.append("displayElementId: '").append(displayElementId).append("'");
@@ -1228,6 +1227,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("border", "0", null);
 
+		// actual list
 		for (int i = 0; i < dictionary.length; i++)
 		{
 			Dictionary dictItem = dictionary[i];
@@ -1237,8 +1237,9 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.startElement("td", this);
 			writer.startElement("input", this);
 			writer.writeAttribute("type", "checkbox", null);
-			writer.writeAttribute("name", "", null);
-			writer.writeAttribute("value", getHtmlNameForList(attribute, context), null);
+			writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
+			writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
+			writer.writeAttribute("value", dictItem.getId(), null);
 			writer.endElement("input");
 			writer.endElement("td");
 
@@ -1308,23 +1309,16 @@ public class QueryBuilderComponent extends UIComponentBase
 	private QueryCondition decodeDictionaryCondition(AbstractAttribute attribute, FacesContext context)
 	{
 		
-		Map params = context.getExternalContext().getRequestParameterMap();
-		String fieldName = getHtmlNameForList(attribute, context);
-		if (!params.containsKey(fieldName))
+		Map params = context.getExternalContext().getRequestParameterValuesMap();
+		String[] values = (String[]) params.get(getHtmlNameForList(attribute, context));
+		if (values == null || values.length == 0)
 			return null;
-		
-		String valuesStr = (String) params.get(fieldName);
-		
-		String[] values = null;
-		if (valuesStr != null && valuesStr.length() > 0)
-			values = valuesStr.split(",");
 		
 		QueryConditionDictionary queryCondition =
 			new QueryConditionDictionary(attribute);
 		
-		if (values != null)
-			for (int i = 0; i < values.length; i++)
-				queryCondition.addDictionary(Integer.parseInt(values[i]));
+		for (int i = 0; i < values.length; i++)
+			queryCondition.addDictionary(Integer.parseInt(values[i]));
 		
 		return queryCondition;
 

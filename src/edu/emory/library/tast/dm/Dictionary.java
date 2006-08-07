@@ -93,19 +93,15 @@ public class Dictionary {
 	private static Dictionary[] loadDictionaryInternal(String p_dictionaryName, String p_attrName, Object p_dictVal) {
 		int dictType = -1;
 		try {
-			Class clazz = Class.forName("edu.emory.library.tas.dm.dictionaries." + p_dictionaryName);
+			Class clazz = Class.forName("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
 			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
