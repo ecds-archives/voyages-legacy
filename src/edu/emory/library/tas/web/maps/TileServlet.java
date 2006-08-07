@@ -97,6 +97,12 @@ public class TileServlet extends HttpServlet {
 		mapObj map = new mapObj(path);
 		map.setSize(tileWidth + 2 * META_SIZE_X, tileHeight + 2 * META_SIZE_Y);
 		map.setExtent(x1, y1, x2, y2);
+		
+		synchronized(this)
+		{
+			System.out.println("SIZE " + (tileWidth + 2 * META_SIZE_X) + " " + (tileHeight + 2 * META_SIZE_Y));
+			System.out.println("EXTENT " + x1 + " " + y1 + " " + x2 + " " + y2);
+		}
 
 		//map.setMetaData("labelcache_map_edge_buffer", (META_SIZE_X) + "");
 

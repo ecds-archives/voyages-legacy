@@ -10,8 +10,13 @@
 
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
-			<s:map mapFile="#{MapBean.mapPath}" pointsOfInterest="#{MapBean.pointsOfInterest}" miniMap="true" miniMapWidth="100"
-				miniMapHeight="100" serverBaseUrl="servlet/maptile" />
+			<s:map
+				mapFile="#{MapBean.mapPath}"
+				pointsOfInterest="#{MapBean.pointsOfInterest}"
+				miniMap="true"
+				miniMapWidth="100"
+				miniMapHeight="100"
+				serverBaseUrl="servlet/maptile" />
 		</t:htmlTag>
 
 		<t:htmlTag value="td" style="vertical-align: top;">
