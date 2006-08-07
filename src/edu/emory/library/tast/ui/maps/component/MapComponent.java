@@ -10,8 +10,8 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.AppConfig;
-import edu.emory.library.tast.ui.search.query.UtilsJSF;
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class MapComponent extends UIComponentBase
 {
@@ -155,24 +155,24 @@ public class MapComponent extends UIComponentBase
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		
-		x1 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForX1(context), x1);
-		y1 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForY1(context), y1);
-		x2 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForX2(context), x2);
-		y2 = UtilsJSF.getParamDouble(params, getHiddenFieldNameForY2(context), y2);
+		x1 = JsfUtils.getParamDouble(params, getHiddenFieldNameForX1(context), x1);
+		y1 = JsfUtils.getParamDouble(params, getHiddenFieldNameForY1(context), y1);
+		x2 = JsfUtils.getParamDouble(params, getHiddenFieldNameForX2(context), x2);
+		y2 = JsfUtils.getParamDouble(params, getHiddenFieldNameForY2(context), y2);
 		
-		String mouseModeStr = UtilsJSF.getParamString(params, getHiddenFieldNameForMouseMode(context));
+		String mouseModeStr = JsfUtils.getParamString(params, getHiddenFieldNameForMouseMode(context));
 		if (!StringUtils.isNullOrEmpty(mouseModeStr))
 			mouseMode = MouseMode.parse(mouseModeStr);
 		
-		String zoomHistoryStr = UtilsJSF.getParamString(params, getHiddenFieldNameForZoomHistory(context));
+		String zoomHistoryStr = JsfUtils.getParamString(params, getHiddenFieldNameForZoomHistory(context));
 		if (!StringUtils.isNullOrEmpty(zoomHistoryStr))
 			zoomHistory = ZoomHistory.parse(zoomHistoryStr);
 		
-		String mapSizeStr = UtilsJSF.getParamString(params, getHiddenFieldNameForMapSize(context));
+		String mapSizeStr = JsfUtils.getParamString(params, getHiddenFieldNameForMapSize(context));
 		if (!StringUtils.isNullOrEmpty(mapSizeStr))
 			mapSize = MapSize.parse(mapSizeStr, true);
 		
-		miniMapVisible = UtilsJSF.getParamBoolean(params, getHiddenFieldNameForMiniMapVisibility(context), miniMapVisible);
+		miniMapVisible = JsfUtils.getParamBoolean(params, getHiddenFieldNameForMiniMapVisibility(context), miniMapVisible);
 		
 	}
 	
@@ -329,7 +329,7 @@ public class MapComponent extends UIComponentBase
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		
 		String mapFile = getMapFile();
 		String serverBaseUrl = getServerBaseUrl();
@@ -556,29 +556,29 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append(");");
 		
 		// render JS
-		UtilsJSF.encodeJavaScriptStart(this, writer);
+		JsfUtils.encodeJavaScriptStart(this, writer);
 		writer.write(jsRegister.toString());
-		UtilsJSF.encodeJavaScriptEnd(this, writer);
+		JsfUtils.encodeJavaScriptEnd(this, writer);
 		
 		// hidden fields for extend
-		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForX1, String.valueOf(x1));
-		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForY1, String.valueOf(y1));
-		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForX2, String.valueOf(x2));
-		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForY2, String.valueOf(y2));
-		UtilsJSF.encodeHiddenInput(this, writer, hiddenFieldNameForMiniMapVisibility, String.valueOf(miniMapVisible));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForX1, String.valueOf(x1));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForY1, String.valueOf(y1));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForX2, String.valueOf(x2));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForY2, String.valueOf(y2));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForMiniMapVisibility, String.valueOf(miniMapVisible));
 		
 		// hidden field: mouse mod
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				hiddenFieldNameForMouseMode,
 				mouseMode.toString());
 		
 		// hidden field: zoom history
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				hiddenFieldNameForZoomHistory,
 				zoomHistory.toString());
 
 		// hidden field: map size
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				hiddenFieldNameForMapSize,
 				String.valueOf(mapSize.toString()));
 		
@@ -795,7 +795,7 @@ public class MapComponent extends UIComponentBase
 
 	public int getMiniMapWidth()
 	{
-		return UtilsJSF.getComponentInt(this, getFacesContext(),
+		return JsfUtils.getComponentInt(this, getFacesContext(),
 				miniMapWidthSet, miniMapWidth, "miniMapWidth");
 	}
 
@@ -807,7 +807,7 @@ public class MapComponent extends UIComponentBase
 
 	public int getMiniMapHeight()
 	{
-		return UtilsJSF.getComponentInt(this, getFacesContext(),
+		return JsfUtils.getComponentInt(this, getFacesContext(),
 				miniMapHeightSet, miniMapHeight, "miniMapHeight");
 	}
 

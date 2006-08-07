@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 import java.util.Map;

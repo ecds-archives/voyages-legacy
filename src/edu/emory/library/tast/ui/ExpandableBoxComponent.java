@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 
@@ -8,6 +8,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
+
+import edu.emory.library.tast.util.JsfUtils;
 
 public class ExpandableBoxComponent extends UIComponentBase
 {
@@ -68,26 +70,26 @@ public class ExpandableBoxComponent extends UIComponentBase
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		
 		String tdWithSymbolId = getClientId(context) + "_symbol";
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getStateHiddenFieldName(context),
 				collapsed ? COLLAPSED : EXPANEDED);
 		
 		StringBuffer js = new StringBuffer();
 		
 		js.append("var box = ");
-		UtilsJSF.appendElementRefJS(js, getClientId(context));
+		JsfUtils.appendElementRefJS(js, getClientId(context));
 		js.append("; ");
 		
 		js.append("var state = ");
-		UtilsJSF.appendFormElementRefJS(js, context, form, getStateHiddenFieldName(context));
+		JsfUtils.appendFormElementRefJS(js, context, form, getStateHiddenFieldName(context));
 		js.append("; ");
 
 		js.append("var symbol = ");
-		UtilsJSF.appendElementRefJS(js, tdWithSymbolId);
+		JsfUtils.appendElementRefJS(js, tdWithSymbolId);
 		js.append("; ");
 
 		js.append("if (state.value == '").append(COLLAPSED).append("') {");

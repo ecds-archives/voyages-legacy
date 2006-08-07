@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 import java.util.Map;
@@ -12,6 +12,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.JsfUtils;
 
 public abstract class MenuComponent extends UIComponentBase
 {
@@ -81,7 +82,7 @@ public abstract class MenuComponent extends UIComponentBase
 		if (customSubmitFunction == null)
 		{
 			
-			UtilsJSF.appendSubmitJS(js, context, form, fieldNameForSelected, menuId);
+			JsfUtils.appendSubmitJS(js, context, form, fieldNameForSelected, menuId);
 			
 		}
 		else
@@ -93,7 +94,7 @@ public abstract class MenuComponent extends UIComponentBase
 			js.append(", ");
 			
 			js.append("function() {");
-			UtilsJSF.appendSubmitJS(js, context, form, fieldNameForSelected, menuId);
+			JsfUtils.appendSubmitJS(js, context, form, fieldNameForSelected, menuId);
 			js.append("}");
 			
 			js.append(");");

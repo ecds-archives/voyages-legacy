@@ -1,8 +1,8 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.util;
 
 import java.io.PrintWriter;
 
-public class UtilsHTML
+public class HtmlUtils
 {
 
 	public static void javaScriptRedirect(PrintWriter out, String URL, boolean showInBody)

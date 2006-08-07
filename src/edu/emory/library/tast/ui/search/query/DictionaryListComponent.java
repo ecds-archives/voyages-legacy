@@ -8,6 +8,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.dm.Dictionary;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class DictionaryListComponent extends UIComponentBase
 {
@@ -33,7 +34,7 @@ public class DictionaryListComponent extends UIComponentBase
 		
 		ResponseWriter writer = context.getResponseWriter();
 
-		UtilsJSF.encodeJavaScriptStart(this, writer);
+		JsfUtils.encodeJavaScriptStart(this, writer);
 		writer.write("var builderId = '" + getBuilderId() + "';\n");
 		writer.write("var formName = '" + getFormName() + "';\n");
 		writer.write("var attributeName = '" + getAttributeName() + "';\n");
@@ -41,7 +42,7 @@ public class DictionaryListComponent extends UIComponentBase
 		writer.write("var displayFieldName = '" + getDisplayFieldName() + "';\n");
 		writer.write("var updateTotalFieldName = '" + getUpdateTotalFieldName() + "';\n");
 		writer.write("var tblListId = '" + getClientId(context) + "';");
-		UtilsJSF.encodeJavaScriptEnd(this, writer);
+		JsfUtils.encodeJavaScriptEnd(this, writer);
 
 		Dictionary dictionary[] = getDictionary();
 

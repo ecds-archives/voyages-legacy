@@ -13,8 +13,8 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-import edu.emory.library.tast.ui.search.query.UtilsJSF;
 import edu.emory.library.tast.ui.search.table.ClickEvent;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class UIDivButton extends UIOutput {
 
@@ -71,7 +71,7 @@ public class UIDivButton extends UIOutput {
 	public void encodeBegin(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
-		UtilsJSF.encodeHiddenInput(this, writer, getHiddenFieldName(context));
+		JsfUtils.encodeHiddenInput(this, writer, getHiddenFieldName(context));
 		
 		writer.startElement("div", this);
 		String id = (String)this.getAttributes().get("id");
@@ -88,8 +88,8 @@ public class UIDivButton extends UIOutput {
 		}
 		
 		StringBuffer buffer = new StringBuffer();
-		UIForm form = UtilsJSF.getForm(this, context);
-		UtilsJSF.appendSubmitJS(buffer, context, form, getHiddenFieldName(context), PRESSED);
+		UIForm form = JsfUtils.getForm(this, context);
+		JsfUtils.appendSubmitJS(buffer, context, form, getHiddenFieldName(context), PRESSED);
 		writer.writeAttribute("onclick", buffer.toString(), null);
 		
 		

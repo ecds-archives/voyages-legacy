@@ -1,7 +1,7 @@
 package edu.emory.library.tast.ui.maps.component;
 
 import edu.emory.library.tast.dm.GISPortLocation;
-import edu.emory.library.tast.ui.search.query.UtilsJSF;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class PointOfInterest
 {
@@ -37,7 +37,7 @@ public class PointOfInterest
 	
 	public String getNameJavaScriptSafe()
 	{
-		return UtilsJSF.escapeStringForJS(name);
+		return JsfUtils.escapeStringForJS(name);
 	}
 	
 	public String getText()
@@ -52,7 +52,7 @@ public class PointOfInterest
 	
 	public String getTextJavaScriptSafe()
 	{
-		return UtilsJSF.escapeStringForJS(text);
+		return JsfUtils.escapeStringForJS(text);
 	}
 	
 	public double getX()

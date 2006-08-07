@@ -15,6 +15,7 @@ import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.JsfUtils;
 
 /**
  * <p>
@@ -268,17 +269,17 @@ public class HistoryListComponent extends UIComponentBase
 		
 		if (item.getId() == null) return;
 		
-		String jsToDelete = UtilsJSF.generateSubmitJS(
+		String jsToDelete = JsfUtils.generateSubmitJS(
 				context, form,
 				getToDeleteHiddenFieldName(context),
 				item.getId());
 
-		String jsToRestore = UtilsJSF.generateSubmitJS(
+		String jsToRestore = JsfUtils.generateSubmitJS(
 				context, form,
 				getToRestoreHiddenFieldName(context),
 				item.getId());
 		
-		String jsToPermlink = UtilsJSF.generateSubmitJS(
+		String jsToPermlink = JsfUtils.generateSubmitJS(
 				context, form,
 				getToPermlinkHiddenFieldName(context),
 				item.getId());
@@ -415,11 +416,11 @@ public class HistoryListComponent extends UIComponentBase
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		
-		UtilsJSF.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context));
-		UtilsJSF.encodeHiddenInput(this, writer, getToRestoreHiddenFieldName(context));
-		UtilsJSF.encodeHiddenInput(this, writer, getToPermlinkHiddenFieldName(context));
+		JsfUtils.encodeHiddenInput(this, writer, getToDeleteHiddenFieldName(context));
+		JsfUtils.encodeHiddenInput(this, writer, getToRestoreHiddenFieldName(context));
+		JsfUtils.encodeHiddenInput(this, writer, getToPermlinkHiddenFieldName(context));
 		
 		History history = getItems();
 		if (history != null)

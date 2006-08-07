@@ -1,10 +1,10 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import javax.faces.component.UIComponent;
 import javax.faces.webapp.UIComponentTag;
 
 /**
- * JSP tag for {@link edu.emory.library.tast.ui.search.query.SectionComponent}.
+ * JSP tag for {@link edu.emory.library.tast.ui.SectionComponent}.
  * 
  * @author Jan Zich
  * 

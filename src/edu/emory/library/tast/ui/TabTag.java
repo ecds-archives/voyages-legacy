@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;

@@ -1,11 +1,11 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 
 /**
  * This component should not be used any more. Its functionality is provided by
- * {@link edu.emory.library.tast.ui.search.query.SectionGroupComponent}.
+ * {@link edu.emory.library.tast.ui.SectionGroupComponent}.
  * 
  * @author Jan Zich
  */

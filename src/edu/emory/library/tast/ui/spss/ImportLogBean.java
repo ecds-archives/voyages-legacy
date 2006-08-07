@@ -22,8 +22,8 @@ import edu.emory.library.tast.spss.ImportServlet;
 import edu.emory.library.tast.spss.Log;
 import edu.emory.library.tast.spss.LogItem;
 import edu.emory.library.tast.spss.LogReader;
-import edu.emory.library.tast.ui.search.query.UtilsJSF;
 import edu.emory.library.tast.util.DateTimeUtils;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class ImportLogBean
 {
@@ -133,7 +133,7 @@ public class ImportLogBean
 	private void loadInitialDetailData()
 	{
 		
-		String importDirFromURL = UtilsJSF.getParam("importDir");
+		String importDirFromURL = JsfUtils.getParam("importDir");
 		if (importDirFromURL != null && importDirFromURL.length() > 0)
 		{
 			if (importDirFromURL.equals(currentImportDir) && initialDetailDataLoaded) return;

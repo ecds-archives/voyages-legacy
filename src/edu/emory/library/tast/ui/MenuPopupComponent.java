@@ -1,10 +1,12 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
+import edu.emory.library.tast.util.JsfUtils;
 
 public class MenuPopupComponent extends MenuComponent
 {
@@ -44,9 +46,9 @@ public class MenuPopupComponent extends MenuComponent
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getSelectedMenuIdFieldName(context));
 		
 		String customSubmitFunction =getCustomSubmitFunction();

@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tast.ui.search.query.UtilsJSF;
+import edu.emory.library.tast.util.JsfUtils;
 
 /**
  * <p>
@@ -154,7 +154,7 @@ public class SelectAndOrderComponent extends UIComponentBase
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		String clientId = getClientId(context);
 		String formName = form.getClientId(context);
 		boolean sortable = isSortable();
@@ -184,11 +184,11 @@ public class SelectAndOrderComponent extends UIComponentBase
 			}
 		}
 
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getAvailableHiddenFieldName(context),
 				availableValues.toString());
 
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getSelectedHiddenFieldName(context),
 				selectedValues.toString());
 		

@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -10,6 +10,8 @@ import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
+
+import edu.emory.library.tast.util.JsfUtils;
 
 /**
  * <p>
@@ -151,7 +153,7 @@ public class SectionGroupComponent extends UIComponentBase
 				"section-title-tab " + 
 				"section-title-tab-" + tabsStyle + (isSelected ? "-selected" : "");
 			
-			String jsOnClick = UtilsJSF.generateSubmitJS(
+			String jsOnClick = JsfUtils.generateSubmitJS(
 					context, form,
 					getSelectedTabHiddenFieldName(context), sect.getSectionId());
 			
@@ -186,15 +188,15 @@ public class SectionGroupComponent extends UIComponentBase
 		StringBuffer jsOnClick = new StringBuffer();
 		
 		jsOnClick.append("var box = ");
-		UtilsJSF.appendElementRefJS(jsOnClick, getClientId(context));
+		JsfUtils.appendElementRefJS(jsOnClick, getClientId(context));
 		jsOnClick.append("; ");
 		
 		jsOnClick.append("var state = ");
-		UtilsJSF.appendFormElementRefJS(jsOnClick, context, form, getStateHiddenFieldName(context));
+		JsfUtils.appendFormElementRefJS(jsOnClick, context, form, getStateHiddenFieldName(context));
 		jsOnClick.append("; ");
 		
 		jsOnClick.append("var img = ");
-		UtilsJSF.appendElementRefJS(jsOnClick, imgId);
+		JsfUtils.appendElementRefJS(jsOnClick, imgId);
 		jsOnClick.append("; ");
 
 		jsOnClick.append("if (state.value == '").append(COLLAPSED).append("') {");
@@ -223,7 +225,7 @@ public class SectionGroupComponent extends UIComponentBase
 	{
 	
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 
 		String selectedSectionId = getSelectedTabId();
 		if (selectedSectionId == null) selectedSectionId = "";
@@ -235,11 +237,11 @@ public class SectionGroupComponent extends UIComponentBase
 			if (!(comp instanceof SectionComponent)) hasTabs = false;
 		}
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getStateHiddenFieldName(context),
 				collapsed ? COLLAPSED : EXPANEDED);
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getSelectedTabHiddenFieldName(context),
 				selectedSectionId);
 
@@ -284,7 +286,7 @@ public class SectionGroupComponent extends UIComponentBase
 				if (selectedSectionId.equals(sect.getSectionId()))
 				{
 					sect.setRendered(true);
-					UtilsJSF.renderChild(context, sect);
+					JsfUtils.renderChild(context, sect);
 				} else {
 					sect.setRendered(false);
 				}
@@ -295,7 +297,7 @@ public class SectionGroupComponent extends UIComponentBase
 			for (Iterator iter = getChildren().iterator(); iter.hasNext();)
 			{
 				UIComponent comp = (UIComponent) iter.next();
-				UtilsJSF.renderChild(context, comp);
+				JsfUtils.renderChild(context, comp);
 			}
 		}
 		writer.endElement("div");

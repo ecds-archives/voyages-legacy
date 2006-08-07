@@ -16,6 +16,7 @@ import javax.faces.event.FacesEvent;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.JsfUtils;
 
 /**
  * <p>
@@ -108,7 +109,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			return;
 		}
 		
-		if (UtilsJSF.getParamBoolean(params, getHtmlNameForTotal(context)))
+		if (JsfUtils.getParamBoolean(params, getHtmlNameForTotal(context)))
 			queueEvent(new QueryUpdateTotalEvent(this));
 		
 		String submittedAttributesStr = (String) params.get(attrFieldName);
@@ -175,7 +176,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		
 		Query query = getQuery();
 		//attributes = new ArrayList();
@@ -192,11 +193,11 @@ public class QueryBuilderComponent extends UIComponentBase
 		String jsUpdateTotalPostponed = generateJavaScriptForUpdateTotal(form, context, false);
 		String jsUpdateTotalImmediate = generateJavaScriptForUpdateTotal(form, context, false);
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getAttributesListHiddenFieldName(context),
 				attributeIds.toString());
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getHtmlNameForTotal(context),
 				"false");
 
@@ -1134,7 +1135,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("table");
 			
 		for (int i = 0; i < 12; i++)
-			UtilsJSF.encodeHiddenInput(this, writer,
+			JsfUtils.encodeHiddenInput(this, writer,
 					getHtmlNameForRangeMonth(attribute, context, i),
 					queryCondition.isMonthSelected(i) ? "true" : "false");
 
@@ -1252,7 +1253,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		{
 			for (int i = 0; i < 12; i++)
 			{
-				boolean monthSelected = UtilsJSF.getParamBoolean(params, getHtmlNameForRangeMonth(attribute, context, i));
+				boolean monthSelected = JsfUtils.getParamBoolean(params, getHtmlNameForRangeMonth(attribute, context, i));
 				queryCondition.setMonthStatus(i, monthSelected);
 			}
 		}
@@ -1286,7 +1287,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			}
 		}
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getHtmlNameForList(attribute, context),
 				valuesList.toString());
 		

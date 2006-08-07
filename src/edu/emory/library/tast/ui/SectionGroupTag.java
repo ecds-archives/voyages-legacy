@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
@@ -7,7 +7,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
 /**
- * JSP tag for {@link edu.emory.library.tast.ui.search.query.SectionComponent}. It does
+ * JSP tag for {@link edu.emory.library.tast.ui.SectionComponent}. It does
  * the standard stuff as a typical JSP tag for a JSF component.
  * 
  * @author Jan Zich

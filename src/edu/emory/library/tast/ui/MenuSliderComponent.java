@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 import java.util.Map;
@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
+import edu.emory.library.tast.util.JsfUtils;
 
 public class MenuSliderComponent extends MenuComponent
 {
@@ -59,22 +61,22 @@ public class MenuSliderComponent extends MenuComponent
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		
 		String expandedMenuIdFieldName = getExpandedMenuIdFieldName(context);
 		String expandedMainIdFieldName = getClientId(context) + "_expanded_main_element_id";
 		String expandedSubIdFieldName = getClientId(context) + "_expanded_sub_element_id";
 
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				getSelectedMenuIdFieldName(context));
 		
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				expandedMenuIdFieldName, expandedMainMenuId);
 
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				expandedMainIdFieldName);
 
-		UtilsJSF.encodeHiddenInput(this, writer,
+		JsfUtils.encodeHiddenInput(this, writer,
 				expandedSubIdFieldName);
 
 		MenuItemMain[] items = getItems();
@@ -89,11 +91,11 @@ public class MenuSliderComponent extends MenuComponent
 			String subMenuDivId = getClientId(context) + "_sub_" + i;
 			
 			jsOnClick.setLength(0);
-			UtilsJSF.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedMenuId", expandedMenuIdFieldName).append(" ");
-			UtilsJSF.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedMainId", expandedMainIdFieldName).append(" ");
-			UtilsJSF.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedSubId", expandedSubIdFieldName).append(" ");
-			UtilsJSF.appendElementRefWithVarJS(jsOnClick, "subMenu", subMenuDivId).append(" ");
-			UtilsJSF.appendElementRefWithVarJS(jsOnClick, "mainMenu", mainMenuDivId).append(" ");
+			JsfUtils.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedMenuId", expandedMenuIdFieldName).append(" ");
+			JsfUtils.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedMainId", expandedMainIdFieldName).append(" ");
+			JsfUtils.appendFormElementRefWithVarJS(jsOnClick, context, form, "expandedSubId", expandedSubIdFieldName).append(" ");
+			JsfUtils.appendElementRefWithVarJS(jsOnClick, "subMenu", subMenuDivId).append(" ");
+			JsfUtils.appendElementRefWithVarJS(jsOnClick, "mainMenu", mainMenuDivId).append(" ");
 			jsOnClick.append("var prevMainMenu = document.getElementById(expandedMainId.value); ");
 			jsOnClick.append("var prevSubMenu = document.getElementById(expandedSubId.value); ");
 			jsOnClick.append("if (expandedMenuId.value == '").append(mainItem.getId()).append("') {");

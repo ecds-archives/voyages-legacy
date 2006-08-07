@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -12,9 +12,11 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
+import edu.emory.library.tast.util.JsfUtils;
+
 /**
  * This component should not be used any more. Its functionality is provided by
- * {@link edu.emory.library.tast.ui.search.query.SectionGroupComponent}.
+ * {@link edu.emory.library.tast.ui.SectionGroupComponent}.
  * 
  * @author Jan Zich
  * 
@@ -95,7 +97,7 @@ public class TabBarComponent extends UIComponentBase
 		
 		ResponseWriter writer = context.getResponseWriter();
 		
-		UtilsJSF.encodeHiddenInput(
+		JsfUtils.encodeHiddenInput(
 				this, writer,
 				getHiddenFieldName(context));
 
@@ -114,7 +116,7 @@ public class TabBarComponent extends UIComponentBase
 	{
 		
 		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 		if (form == null) return;
 		
 		String selectedTabId = getSelectedTabId();
@@ -123,7 +125,7 @@ public class TabBarComponent extends UIComponentBase
 		{
 			TabComponent tab = (TabComponent) iterChild.next();
 			
-			String jsOnClick = UtilsJSF.generateSubmitJS(
+			String jsOnClick = JsfUtils.generateSubmitJS(
 					context, form,
 					getHiddenFieldName(context), tab.getTabId());
 			

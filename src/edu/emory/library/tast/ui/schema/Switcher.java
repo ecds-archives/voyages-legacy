@@ -3,8 +3,8 @@ package edu.emory.library.tast.ui.schema;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
-import edu.emory.library.tast.ui.search.query.TabBarComponent;
-import edu.emory.library.tast.ui.search.query.TabChangeEvent;
+import edu.emory.library.tast.ui.TabBarComponent;
+import edu.emory.library.tast.ui.TabChangeEvent;
 
 public class Switcher
 {

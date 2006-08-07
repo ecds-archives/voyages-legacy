@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.ui;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
@@ -6,8 +6,8 @@ import javax.faces.context.FacesContext;
 /**
  * <p>
  * This compoment is supposed to be used only an a child of
- * {@link edu.emory.library.tast.ui.search.query.SectionGroupComponent}. In general,
- * {@link edu.emory.library.tast.ui.search.query.SectionGroupComponent} can contain several
+ * {@link edu.emory.library.tast.ui.SectionGroupComponent}. In general,
+ * {@link edu.emory.library.tast.ui.SectionGroupComponent} can contain several
  * of these which then form tabs. Each section has a title (displayed in the
  * tabs) and a section ID (inteded for accessing and manimulating sections).
  * Otherwise, this components does not do anything, nor it renders any output.

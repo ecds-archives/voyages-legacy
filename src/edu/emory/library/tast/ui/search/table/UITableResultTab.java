@@ -14,7 +14,7 @@ import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
-import edu.emory.library.tast.ui.search.query.UtilsJSF;
+import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
@@ -106,8 +106,8 @@ public class UITableResultTab extends UIOutput {
 		}
 
 		//Encode hidden fields.
-		UtilsJSF.encodeHiddenInput(this, writer, getSortHiddenFieldName(context));
-		UtilsJSF.encodeHiddenInput(this, writer, getClickIdHiddenFieldName(context));
+		JsfUtils.encodeHiddenInput(this, writer, getSortHiddenFieldName(context));
+		JsfUtils.encodeHiddenInput(this, writer, getClickIdHiddenFieldName(context));
 
 		//Start table
 		writer.startElement("table", this);
@@ -132,7 +132,7 @@ public class UITableResultTab extends UIOutput {
 		if (vb != null) {
 			data = (TableData) vb.getValue(context);
 		}
-		UIForm form = UtilsJSF.getForm(this, context);
+		UIForm form = JsfUtils.getForm(this, context);
 
 		writer.startElement("tr", this);
 		VisibleColumn[] populatedAttributes = data.getVisibleAttributes();
@@ -141,7 +141,7 @@ public class UITableResultTab extends UIOutput {
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
 
-				String jsSort = UtilsJSF.generateSubmitJS(context, form, getSortHiddenFieldName(context),
+				String jsSort = JsfUtils.generateSubmitJS(context, form, getSortHiddenFieldName(context),
 						populatedAttributes[i].encodeToString());
 
 				writer.startElement("th", this);
@@ -202,7 +202,7 @@ public class UITableResultTab extends UIOutput {
 				if (i == objs.length - 1)
 					rowClass.append(" grid-row-last");
 
-				String jsClick = UtilsJSF.generateSubmitJS(context, form, getClickIdHiddenFieldName(context),
+				String jsClick = JsfUtils.generateSubmitJS(context, form, getClickIdHiddenFieldName(context),
 						objs[i].voyageId.toString().toString());
 
 				writer.startElement("tr", this);

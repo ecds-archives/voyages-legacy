@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.query;
+package edu.emory.library.tast.util;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -10,9 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tast.util.StringUtils;
 
-public class UtilsJSF
+public class JsfUtils
 {
 	
 	public static UIForm getForm(UIComponent component, FacesContext context)

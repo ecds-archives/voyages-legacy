@@ -16,7 +16,7 @@ import org.apache.commons.configuration.Configuration;
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.misc.http.upload.Upload;
 import edu.emory.library.tast.misc.http.upload.UploadedFile;
-import edu.emory.library.tast.ui.search.query.UtilsHTML;
+import edu.emory.library.tast.util.HtmlUtils;
 import edu.emory.library.tast.web.test.JavaProgramRunner;
 
 public class ImportServlet extends HttpServlet
@@ -94,7 +94,7 @@ public class ImportServlet extends HttpServlet
 		javaRunner.run();
 		
 		// some output
-		UtilsHTML.javaScriptRedirect(response.getWriter(),
+		HtmlUtils.javaScriptRedirect(response.getWriter(),
 				"../import-detail.faces?importDir=" + importDir, false, 1);
 		
 	}
