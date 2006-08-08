@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<searchable-attributes>
+
+	<searchable-attribute type="simple" id="anycaptain" userLabel="Captains">
+		<attributes>
+			<attribute name="captaina" />
+			<attribute name="captainb" />
+			<attribute name="captainc" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute type="location" id="place" userLabel="Place of origin">
+		<locations>
+			<location port="port1" region="region1" />
+			<location port="port2" region="region2" />
+			<location port="port3" region="region3" />
+		</locations>
+	</searchable-attribute>
+
+</searchable-attributes>
