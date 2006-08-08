@@ -103,11 +103,13 @@ public class Dictionary {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
 			e.printStackTrace();
-		} 
+		}
 		
 		Object[] ret = HibernateConnector.getConnector().loadObjects(
-				p_dictionaryName, new String[] { p_attrName, "obj_type" },
-				new String[] { p_dictVal.toString(), dictType + "" }, new boolean[] { false, false });
+				p_dictionaryName,
+				new String[] { p_attrName, "obj_type" },
+				new String[] { p_dictVal.toString(), dictType + "" },
+				new boolean[] { false, false });
 
 		if (ret.length != 0) {
 			Dictionary[] dict = new Dictionary[ret.length];

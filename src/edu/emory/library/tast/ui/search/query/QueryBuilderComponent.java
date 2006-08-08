@@ -1174,12 +1174,14 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append(", ");
 		regJS.append("popupElementId: '").append(popupElementId).append("'");
 		regJS.append(", ");
+		regJS.append("itemsField: '").append(getHtmlNameForList(attribute, context)).append("'");
+		regJS.append(", ");
 		regJS.append("items: {");
 		for (int i = 0; i < dictionary.length; i++)
 		{
 			Dictionary dictItem = dictionary[i];
 			if (i > 0) regJS.append(", ");
-			regJS.append("'").append(dictItem.getId()).append("': ");
+			regJS.append("'").append(dictItem.getRemoteId()).append("': ");
 			regJS.append("'").append(JsfUtils.escapeStringForJS(dictItem.getName())).append("' ");
 		}
 		regJS.append("}");
@@ -1239,7 +1241,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.writeAttribute("type", "checkbox", null);
 			writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
 			writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
-			writer.writeAttribute("value", dictItem.getId(), null);
+			writer.writeAttribute("value", dictItem.getRemoteId(), null);
 			writer.endElement("input");
 			writer.endElement("td");
 

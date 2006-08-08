@@ -298,6 +298,20 @@ QueryBuilder.prototype.closeList = function(attributeId)
 {
 	var cond = this.conditions[attributeId];
 	document.getElementById(cond.popupElementId).style.display = "none";
+	
+	var names = new Array();
+	var allInputs = document.forms[this.formName].getElementsByTagName("input");
+	for (var i=0; i<allInputs.length; i++)
+	{
+		var input = allInputs[i];
+		if (input.type == "checkbox" && input.name == cond.itemsField && input.checked)
+		{
+			names.push(cond.items[input.value]);
+			alert(input.value + ": " + cond.items[input.value] + " " + cond.items);
+		}
+	}
+	
+	document.getElementById(cond.displayElementId).innerHTML = names.join(", ");
 }
 
 
