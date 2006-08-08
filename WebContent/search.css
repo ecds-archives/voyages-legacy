@@ -156,13 +156,18 @@ td.legend-table-detail-col2 {
 }
 
 div.map-legend-div {
-	padding-right: 10px;
-	width: 150px; 
-	background: #728fad;
+	padding-left: 10px;
 	vertical-align: top;
-	border: 1px solid #555555;
 }
 
+input.map-legend-refresh {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+table.legend-table-layers {
+	padding-left: 10px;
+}
 
 /* map */
 /*

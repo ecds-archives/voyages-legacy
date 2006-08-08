@@ -68,6 +68,28 @@ public class JsfUtils
 		return js;
 	}
 
+	public static String generateConditionalJS(FacesContext context, UIForm form, String elementName, String jsObjectAttributeName, String hiddenField, String trueValue, String falseValue) {
+		StringBuffer js = new StringBuffer();
+		if (elementName != null) {
+			js.append("var obj = ");
+			appendElementRefJS(js, elementName).append(";");
+			js.append("if (obj.").append(jsObjectAttributeName).append(") {");
+			appendFormElementValJS(js, context, form, hiddenField).append(" = ");
+			js.append("'").append(trueValue).append("';");
+//			js.append("alert('new val: ' + ");
+//			appendFormElementValJS(js, context, form, hiddenField);
+//			js.append(");");
+			js.append("} else {");
+			appendFormElementValJS(js, context, form, hiddenField).append(" = ");
+			js.append("'").append(falseValue).append("';");
+//			js.append("alert('new val: ' + ");
+//			appendFormElementValJS(js, context, form, hiddenField);
+//			js.append(");");
+			js.append("};");
+		}
+		return js.toString();
+	}
+	
 	public static String generateSubmitJS(FacesContext context, UIForm form, String elementName, String value)
 	{
 		StringBuffer js = new StringBuffer();

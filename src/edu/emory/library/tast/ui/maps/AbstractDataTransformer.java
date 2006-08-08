@@ -35,7 +35,7 @@ public abstract class AbstractDataTransformer {
 	 * @param max maximal value in data
 	 * @return TransformResponse object
 	 */
-	public abstract TransformerResponse transformData(Object[] data, double min, double max);
+	public abstract TransformerResponse transformData(Object[] data);
 	
 	/**
 	 * Gets attribute that is in passed data in (i,j) position.

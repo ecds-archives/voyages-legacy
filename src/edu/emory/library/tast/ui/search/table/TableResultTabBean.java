@@ -23,6 +23,7 @@ import edu.emory.library.tast.dm.attributes.CompoundAttribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
+import edu.emory.library.tast.ui.maps.MapLayer;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 import edu.emory.library.tast.ui.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.ui.search.query.SearchBean;
@@ -582,6 +583,10 @@ public class TableResultTabBean {
 		}
 		return ret;
 	}
+	
+	public String refresh() {
+		return null;
+	}
 
 	/**
 	 * Gets number of first record displayed in current table view.
@@ -1018,6 +1023,10 @@ public class TableResultTabBean {
 	
 	public LegendItemsGroup[] getLegend() {
 		return this.detailVoyageMap.getLegend();
+	}
+	
+	public MapLayer[] getLayers() {
+		return this.detailVoyageMap.getLayers();
 	}
 
 	/**

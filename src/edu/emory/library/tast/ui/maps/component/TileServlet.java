@@ -32,7 +32,7 @@ public class TileServlet extends HttpServlet {
 	private int cacheHits = 0;
 	private int cacheMisses = 0;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected synchronized void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
 
@@ -40,6 +40,12 @@ public class TileServlet extends HttpServlet {
 		response.setDateHeader("Expires", (new Date()).getTime() + 1000 * 60 * 60);
 		response.setHeader("Cache-Control", "public");
 
+		
+//		response.sendRedirect("../blank.png");
+//		if (true) {
+//			return;
+//		}
+		
 		String mapFile = request.getParameter("m");
 
 		int col = 0;

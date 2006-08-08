@@ -45,18 +45,18 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	/**
 	 * Transforms data.
 	 */
-	public TransformerResponse transformData(Object[] data, double min, double max) {
+	public TransformerResponse transformData(Object[] data) {
 
-		//Prepare ranges of circles size
-		double[] rangeBoundries = new double[CIRCLE_RANGES + 1];
-		double step = (max - min) / CIRCLE_RANGES;
-		for (int i = 0; i < CIRCLE_RANGES; i++) {
-			rangeBoundries[i + 1] = i * step + step + min;
-		}
-		rangeBoundries[0] = min;
+//		//Prepare ranges of circles size
+//		double[] rangeBoundries = new double[CIRCLE_RANGES + 1];
+//		double step = (max - min) / CIRCLE_RANGES;
+//		for (int i = 0; i < CIRCLE_RANGES; i++) {
+//			rangeBoundries[i + 1] = i * step + step + min;
+//		}
+//		rangeBoundries[0] = min;
 
 		//Get items
-		return this.getItems(data, rangeBoundries);
+		return this.getItems(data);
 	}
 
 	/**
@@ -65,10 +65,13 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	 * @param ranges ranges of circles size.
 	 * @return
 	 */
-	private TransformerResponse getItems(Object[] data, double[] ranges) {
+	private TransformerResponse getItems(Object[] data) {
 
 		List items = new ArrayList();
 
+		double min = Double.MAX_VALUE;
+		double max = Double.MIN_VALUE;
+		
 		//Parse each response row
 		for (int i = 0; i < data.length; i++) {
 			//Get port
@@ -80,6 +83,14 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			//Get valaue
 			Number value = (Number) ((Object[]) data[i])[1];
 			if (gisPort != null) {
+				
+				if (min > value.doubleValue()) {
+					min = value.doubleValue();
+				}
+				if (max < value.doubleValue()) {
+					max = value.doubleValue();
+				}
+				
 				//Create test item
 				GlobalMapDataItem testItem = new GlobalMapDataItem(gisPort.getX(), gisPort.getY(), gisPort
 						.getPortName(), color);
@@ -105,10 +116,20 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 
 		}
 
+		double[] ranges = new double[CIRCLE_RANGES + 1];
+		double step = (max - min) / CIRCLE_RANGES;
+		for (int i = 0; i < CIRCLE_RANGES; i++) {
+			ranges[i + 1] = i * step + step + min;
+		}
+		ranges[0] = min;
+		
+		
 		//Set size of each of items created above
 		for (Iterator iter = items.iterator(); iter.hasNext();) {
 			GlobalMapDataItem dataItem = (GlobalMapDataItem) iter.next();
 
+			System.out.println(dataItem.getMapItemElements()[0].getMaxElement().getValue());
+			
 			double size = ((Double) dataItem.getMapItemElements()[0].getMaxElement().getValue()).doubleValue();
 			int index = CIRCLE_RANGES - 1;
 			for (int j = 0; j < CIRCLE_RANGES; j++) {
@@ -126,14 +147,14 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		
 		//Prepare legend about size of dots
 		for (int i = 0; i < CIRCLE_RANGES; i++) {
-			LegendItem item = new LegendItem("symbols/circle-1-" + (i + 1) + ".png", "" + Math.round(ranges[i]) + " - " + Math.round(ranges[i+1]));
+			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", "symbols/circle-1-" + (i + 1) + ".png", "" + Math.round(ranges[i]) + " - " + Math.round(ranges[i+1]));
 			legendSizes.addItemToGroup(item);
 		}
 		
 		///Prepare legend about colors
-		LegendItem emb = new LegendItem("symbols/circle-" + 1 + "-4.png", "Place of embarkation");
-		LegendItem disemb = new LegendItem("symbols/circle-" + 2 + "-4.png", "Place of disembarkation");
-		LegendItem both = new LegendItem("symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
+		LegendItem emb = new LegendItem("circle-1-\\d", "symbols/circle-" + 1 + "-4.png", "Place of embarkation");
+		LegendItem disemb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2 + "-4.png", "Place of disembarkation");
+		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
 		legendColors.addItemToGroup(both);

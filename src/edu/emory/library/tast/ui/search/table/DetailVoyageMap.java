@@ -10,6 +10,7 @@ import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.AttributesRange;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapData;
+import edu.emory.library.tast.ui.maps.MapLayer;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 import edu.emory.library.tast.ui.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.ui.search.table.mapimpl.DetailVoyageDataTransformer;
@@ -123,8 +124,9 @@ public class DetailVoyageMap {
 		if (voyages.length > 0) {
 
 			DetailVoyageDataTransformer transformer = new DetailVoyageDataTransformer(attrsMap);
-			this.mapData.setMapData(voyages, 0, 0, transformer);
+			this.mapData.setMapData(voyages, transformer);
 			this.creator.setMapData(this.mapData.getItems());
+			this.creator.setMapLegend(this.mapData.getLegend());
 			return this.creator.createMapFile();
 
 		}
@@ -141,5 +143,9 @@ public class DetailVoyageMap {
 
 	public LegendItemsGroup[] getLegend() {
 		return this.mapData.getLegend();
+	}
+
+	public MapLayer[] getLayers() {
+		return this.creator.getLayers();
 	}
 }

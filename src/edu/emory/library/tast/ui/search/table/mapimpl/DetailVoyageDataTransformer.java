@@ -35,7 +35,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 	/**
 	 * Transformes data for detail voyage info.
 	 */
-	public TransformerResponse transformData(Object[] data, double min, double max) {
+	public TransformerResponse transformData(Object[] data) {
 		
 		//Retrieve first row
 		Object[] row = (Object[]) data[0];
@@ -106,7 +106,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		for (Iterator iter = items.iterator(); iter.hasNext(); i++) {
 			DetailVoyageMapItem element = (DetailVoyageMapItem) iter.next();
 			element.setNumber(i + 1);
-			LegendItem legengItem = new LegendItem("/symbols/number-1-" + (i + 1) + ".png", element.getLegendText());
+			LegendItem legengItem = new LegendItem(element.getSymbolName(), "/symbols/number-1-" + (i + 1) + ".png", element.getLegendText());
 			legend.addItemToGroup(legengItem);
 		}
 		

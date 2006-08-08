@@ -22,9 +22,18 @@ public class LegendItem {
 	 */
 	private String legendString;
 	
-	public LegendItem(String imageString, String legendString) {
+	private String imageId;
+	
+	/**
+	  *Information if elements of this legend item will appear in ma
+	  */
+	private boolean enabled;
+	
+	public LegendItem(String imageId, String imageString, String legendString) {
+		this.imageId = imageId;
 		this.imagePath = imageString;
 		this.legendString = legendString;
+		this.enabled = true;
 	}
 
 	/**
@@ -63,5 +72,17 @@ public class LegendItem {
 	 */
 	public String toString() {
 		return this.legendString;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getImageId() {
+		return imageId;
 	}
 }

@@ -66,6 +66,13 @@
 			edu.emory.library.tast.ui.search.table.UIDetailComponent
 		</component-class>
 	</component>
+	
+	<component>
+		<component-type>Legend</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.maps.component.LegendComponent
+		</component-class>
+	</component>
 
 	<component>
 		<component-type>SelectAndOrder</component-type>

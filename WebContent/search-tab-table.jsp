@@ -83,23 +83,11 @@
 					</t:htmlTag>
 
 					<t:htmlTag value="td" style="vertical-align: top;">
-						<t:htmlTag value="div" id="mapDetailLegend" styleClass="map-legend-div">
-							<h:outputText value="Legend:" style="font-weight: bold; padding-left: 5px;" />
-							<h:dataTable id="map-detail-legend" styleClass="legend-table-main" value="#{TableResultTabBean.legend}" var="legendGroup">
-								<h:column>
-									<h:outputText value="#{legendGroup.title}" />
-									<h:dataTable id="map-legendDetailDetail" styleClass="legend-table-detail" columnClasses="legend-table-detail-col1,legend-table-detail-col2" value="#{legendGroup.items}"
-										var="legendItem">
-										<h:column>
-											<h:graphicImage value="#{legendItem.imagePath}" />
-										</h:column>
-										<h:column>
-											<h:outputText value="#{legendItem.legendString}" />
-										</h:column>
-									</h:dataTable>
-								</h:column>
-							</h:dataTable>
-						</t:htmlTag>
+						<s:legend id="mapLegend-component-detailvoyage" 
+								styleClass="map-legend-div"
+								legend="#{TableResultTabBean.legend}"
+								layers="#{TableResultTabBean.layers}"
+								refreshAction="#{TableResultTabBean.refresh}" />
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>

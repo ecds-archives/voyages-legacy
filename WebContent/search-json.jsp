@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="edu.emory.library.tas.web.searchJSON.Search" %>
+<%@ page import="edu.emory.library.tast.web.searchJSON.Search" %>
 <%@ page import="com.metaparadigm.jsonrpc.JSONRPCBridge" %>
 <% JSONRPCBridge.getGlobalBridge().registerClass("Search", Search.class); %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

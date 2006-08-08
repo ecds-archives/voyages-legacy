@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.dm.Voyage;
@@ -15,6 +16,7 @@ import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.AttributesRange;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapData;
+import edu.emory.library.tast.ui.maps.MapLayer;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 import edu.emory.library.tast.ui.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.ui.search.map.mapimpl.GlobalMapDataTransformer;
@@ -68,8 +70,6 @@ public class MapBean {
 		}
 
 		if (this.neededQuery) {
-			double min = Double.MAX_VALUE;
-			double max = Double.MIN_VALUE;
 
 			this.pointsOfInterest.clear();
 			Conditions localCondition = this.searchBean.getSearchParameters().getConditions().addAttributesPrefix("v.");
@@ -83,38 +83,30 @@ public class MapBean {
 			List col2 = new ArrayList();
 			ArrayList response = new ArrayList();
 			
-			double[] minmax = executeMapQuery(response, localCondition, new String[] {
+			executeMapQuery(response, localCondition, new String[] {
 					"v.majbuypt.name", "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end", "1" },
 					new String[] { "v.majbuypt.name" }, new String[] { "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end" });
 			col1.add(new AttributesRange(Voyage.getAttribute("majbuypt"), 0, response.size() - 1));
 			col2.add(new AttributesRange(Voyage.getAttribute("slaximp"), 0, response.size() - 1));
-			min = minmax[1];
-			max = minmax[0];
 			
 			int beginSize = response.size();
-			minmax = executeMapQuery(response, localCondition, new String[] { "v.majselpt.name",
+			executeMapQuery(response, localCondition, new String[] { "v.majselpt.name",
 					"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end", "2" },
 					new String[] { "v.majselpt.name" }, new String[] { "case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end"});
 			col1.add(new AttributesRange(Voyage.getAttribute("majselpt"), beginSize, beginSize + response.size() - 1));
 			col2.add(new AttributesRange(Voyage.getAttribute("slamimp"), beginSize, beginSize + response.size() - 1));
-			if (min > minmax[1]) {
-				min = minmax[1];
-			}
-			if (max < minmax[0]) {
-				max = minmax[0];
-			}
 
 			map.addColumn(col1);
 			map.addColumn(col2);
 			
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(map);						
-			this.mapData.setMapData(response.toArray(), min, max, transformer);
+			this.mapData.setMapData(response.toArray(), transformer);
 			
 			this.neededQuery = false;
 		}
 	}
 
-	private double[] executeMapQuery(List response, Conditions localCondition,
+	private void executeMapQuery(List response, Conditions localCondition,
 			String[] populatedAttrs, String[] groupBy, String[] orderBy) {
 
 		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
@@ -131,8 +123,8 @@ public class MapBean {
 
 		response.addAll(Arrays.asList(voyages));
 
-		return new double[] { ((Number) ((Object[]) voyages[voyages.length - 1])[1]).doubleValue(),
-				((Number) ((Object[]) voyages[0])[1]).doubleValue() };
+//		return new double[] { ((Number) ((Object[]) voyages[voyages.length - 1])[1]).doubleValue(),
+//				((Number) ((Object[]) voyages[0])[1]).doubleValue() };
 
 	}
 
@@ -149,6 +141,7 @@ public class MapBean {
 
 			if (items.length > 0) {
 				this.creator.setMapData(items);
+				this.creator.setMapLegend(this.mapData.getLegend());
 			}
 			if (this.creator.createMapFile()) {
 				sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
@@ -166,6 +159,16 @@ public class MapBean {
 			return "";
 		}
 
+	}
+	
+	public String refresh() {		
+//		if (this.creator.createMapFile()) {
+//			sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
+//			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+//			((HttpSession) servletContext.getSession(true)).setAttribute(sessionParam, creator.getFilePath());
+//
+//		}
+		return null;
 	}
 
 	public PointOfInterest[] getPointsOfInterest() {
@@ -188,5 +191,13 @@ public class MapBean {
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
 	}
-
+	
+	public MapLayer[] getLayers() {
+		return this.creator.getLayers();
+	}
+	
+//	public void setLayers(MapLayer[] layers) {
+//		this.creator.setLayers(layers);
+//	}
+	
 }

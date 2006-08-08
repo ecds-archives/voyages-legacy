@@ -381,5 +381,31 @@
 			<name>styleClass</name>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<name>legend</name>
+		<tag-class>
+			edu.emory.library.tast.ui.maps.component.LegendTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>refreshAction</name>
+		</attribute>
+		<attribute>
+			<name>style</name>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+		</attribute>
+		<attribute>
+			<name>layers</name>
+		</attribute>
+		<attribute>
+			<name>legend</name>
+		</attribute>
+	</tag>
 
 </taglib>
