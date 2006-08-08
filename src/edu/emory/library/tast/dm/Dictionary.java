@@ -1,6 +1,13 @@
 package edu.emory.library.tast.dm;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Expression;
+
+import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.util.HibernateConnector;
+import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Superclass for any dictionary in the application.
@@ -58,6 +65,41 @@ public class Dictionary {
 		}
 		return null;
 	}
+	
+	/**
+	 * Loads given dictionary name with given name value
+	 * @param p_dictionaryName
+	 * @param id
+	 * @return dictionary array, empty array if there is no desired dictionary entry
+	 */
+	public static Dictionary loadDictionaryById(String p_dictionaryName, Long id) {
+		
+		Criteria crit = HibernateUtil.getSession().createCriteria("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
+		crit.add(Expression.eq("id", id));
+		crit.setMaxResults(1);
+		List list = crit.list();
+		if (list == null || list.size() == 0)
+			return null;
+		return (Dictionary) list.get(0);
+
+//		Object[] ret = HibernateConnector.getConnector().loadObjects(
+//				"edu.emory.library.tast.dm.dictionaries." + p_dictionaryName,
+//				new String[] { "id" },
+//				new String[] { id + "" },
+//				new boolean[] { false });
+//
+//		if (ret.length != 0) {
+//			Dictionary[] dict = new Dictionary[ret.length];
+//			for (int i = 0; i < dict.length; i++) {
+//				dict[i] = (Dictionary) ret[i];
+//			}
+//			return dict;
+//		} else {
+//			return new Dictionary[] {};
+//		}
+		
+	}
+	
 
 	/**
 	 * Loads given dictionary name with given name value
@@ -74,13 +116,13 @@ public class Dictionary {
 	/**
 	 * Loads given dictionary with given remote id value.
 	 * @param p_dictionaryName
-	 * @param p_dictVal
+	 * @param remoteId
 	 * @return dictionary array, empty array if there is no desired dictionary entry
 	 */
-	public static Dictionary[] loadDictionary(String p_dictionaryName,
-			Integer p_dictVal) {
+	public static Dictionary[] loadDictionaryByRemoteId(String p_dictionaryName,
+			Integer remoteId) {
 		
-		return loadDictionaryInternal(p_dictionaryName, "remoteId", p_dictVal);
+		return loadDictionaryInternal(p_dictionaryName, "remoteId", remoteId);
 	}
 	
 	/**
@@ -134,16 +176,12 @@ public class Dictionary {
 			Class clazz = Class.forName("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
 			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 

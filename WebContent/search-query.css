@@ -133,36 +133,46 @@ td.query-builder-range-month-selected {
 	padding-bottom: 2px;
 	cursor: pointer;
 	text-align: center; }
-	
-div.query-builder-list-popup-container {
-	position: relative;
-	width: 0px;
-	height: 0px; }
-	
-div.query-builder-list-popup {
-	position: absolute;
-	border: 1px solid Black;
-	top: -100px;
-	left: 290px;
-	width: 200px;
-	height: 200px;
-	background-color: White;
-	overflow: scroll; }
 
-td.query-builder-list {
-	width: 220px; }
+div.query-builder-show {
+	}
 
-td.query-builder-list input {
+div.query-builder-show-list {
+	}
+	
+div.query-builder-edit {
+	}
+
+div.query-builder-list-button {
+	padding-top: 5px; }
+
+table.query-builder-list-buttons {
+	margin-top: 5px; }
+
+table.query-builder-list-buttons td {
+	padding-right: 5px; }
+	
+div.query-builder-edit-list {
+	padding: 2px;
+	background-color: #F1E7C8;
+	overflow: scroll;
+	overflow: -moz-scrollbars-vertical;
+	height: 200px; }
+	
+table.query-builder-quicksearch {
+	margin-bottom: 5px; }
+	
+td.query-builder-quicksearch-label {
+	width: 80px; }
+	
+td.query-builder-quicksearch-input input {
 	background-color: #F1E7C8;
 	border: 0px;
 	padding: 2px;
-	width: 206px; }
+	width: 200px; }	
 
-td.query-builder-list-select {
-	width: 60px; }
-
-td.query-builder-list-select input {
-	width: 60px; }
+div.query-builder-edit-list td {
+	padding: 1px; }
 	
 table.history-item-buttons {
 	margin-top: 5px; }

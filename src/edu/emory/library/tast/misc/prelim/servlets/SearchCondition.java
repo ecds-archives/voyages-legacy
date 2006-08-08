@@ -1,4 +1,4 @@
-package edu.emory.library.tast.web.test;
+package edu.emory.library.tast.misc.prelim.servlets;
 
 public class SearchCondition
 {

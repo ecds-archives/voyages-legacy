@@ -100,6 +100,24 @@ var QueryBuilderGlobals =
 	{
 		var builder = this.builders[builderId];
 		if (builder) builder.closeList(attributeId);
+	},
+	
+	quickSearchList: function(builderId, attributeId, input)
+	{
+		var builder = this.builders[builderId];
+		if (builder) builder.quickSearchList(attributeId, input);
+	},
+	
+	listSelectAll: function(builderId, attributeId)
+	{
+		var builder = this.builders[builderId];
+		if (builder) builder.listSelectAll(attributeId);
+	},
+
+	listDeselectAll: function(builderId, attributeId)
+	{
+		var builder = this.builders[builderId];
+		if (builder) builder.listDeselectAll(attributeId);
 	}
 
 }
@@ -291,13 +309,17 @@ QueryBuilder.prototype.toggleMonth = function(attributeId, month)
 QueryBuilder.prototype.openList = function(attributeId)
 {
 	var cond = this.conditions[attributeId];
-	document.getElementById(cond.popupElementId).style.display = "block";
+	document.getElementById(cond.showElementId).style.display = "none";
+	document.getElementById(cond.editElementId).style.display = "block";
+	document.forms[this.formName].elements[cond.stateFieldName].value = "edit";
 }
 
 QueryBuilder.prototype.closeList = function(attributeId)
 {
 	var cond = this.conditions[attributeId];
-	document.getElementById(cond.popupElementId).style.display = "none";
+	document.getElementById(cond.showElementId).style.display = "block";
+	document.getElementById(cond.editElementId).style.display = "none";
+	document.forms[this.formName].elements[cond.stateFieldName].value = "show";
 	
 	var names = new Array();
 	var allInputs = document.forms[this.formName].getElementsByTagName("input");
@@ -306,14 +328,77 @@ QueryBuilder.prototype.closeList = function(attributeId)
 		var input = allInputs[i];
 		if (input.type == "checkbox" && input.name == cond.itemsField && input.checked)
 		{
-			names.push(cond.items[input.value]);
-			alert(input.value + ": " + cond.items[input.value] + " " + cond.items);
+			names.push(cond.items[input.value].text);
 		}
 	}
 	
-	document.getElementById(cond.displayElementId).innerHTML = names.join(", ");
+	var displayDiv = document.getElementById(cond.showListElementId);
+	if (names.length > 0)
+	{
+		displayDiv.innerHTML = names.join(", ");
+	}
+	else
+	{
+		displayDiv.innerHTML = "[<i>nothing selected</i>]";
+	}
 }
 
+QueryBuilder.prototype.prepareList = function(cond)
+{
+	if (cond.listPrepared) return;
+	for (var id in cond.items)
+	{
+		var item = cond.items[id];
+		item.element = document.getElementById(item.elementId);
+		item.checkbox = document.getElementById(item.checkboxId);
+		item.textLowerCase = item.text.toLowerCase();
+	}
+	cond.listPrepared = true;
+}
+
+QueryBuilder.prototype.quickSearchList = function(attributeId, input)
+{
+	var cond = this.conditions[attributeId];
+	this.prepareList(cond);
+
+	var searchFor = input.value.toLowerCase();
+
+	for (var id in cond.items)
+	{
+		var item = cond.items[id];
+		var match = item.textLowerCase.indexOf(searchFor) != -1;
+		item.element.style.display = match ? "" : "none";
+	}
+
+}
+
+QueryBuilder.prototype.listSelectAll = function(attributeId)
+{
+	this.listChangeSelectionAll(attributeId, true);
+}
+
+QueryBuilder.prototype.listDeselectAll = function(attributeId)
+{
+	this.listChangeSelectionAll(attributeId, false);
+}
+
+QueryBuilder.prototype.listChangeSelectionAll = function(attributeId, state)
+{
+	var cond = this.conditions[attributeId];
+	this.prepareList(cond);
+
+	for (var id in cond.items)
+	{
+		var item = cond.items[id];
+		if (item.element.style.display != "none")
+		{
+			item.checkbox.checked = state;
+		}
+	}
+	
+	this.updateTotal(0);
+
+}
 
 /*
 QueryBuilder.prototype.showList = function(attributeId, hiddenFieldName, displayFieldName)

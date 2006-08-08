@@ -1,4 +1,4 @@
-package edu.emory.library.tast.web.searchJSON;
+package edu.emory.library.tast.misc.prelim.JSON;
 
 public class HistoryItem
 {

@@ -1,4 +1,4 @@
-package edu.emory.library.tast.misc.tests;
+package edu.emory.library.tast.misc.tests.hibernate;
 
 public class Book
 {

@@ -1,18 +1,9 @@
 package edu.emory.library.tast.misc.tests;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-import edu.umn.gis.mapscript.classObj;
 import edu.umn.gis.mapscript.imageObj;
-import edu.umn.gis.mapscript.layerObj;
-import edu.umn.gis.mapscript.lineObj;
 import edu.umn.gis.mapscript.mapObj;
-import edu.umn.gis.mapscript.mapscriptConstants;
-import edu.umn.gis.mapscript.pointObj;
-import edu.umn.gis.mapscript.shapeObj;
-import edu.umn.gis.mapscript.styleObj;
 
 public class MapTest {
 	public static void usage() {

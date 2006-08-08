@@ -363,9 +363,9 @@ public class HistoryListComponent extends UIComponentBase
 					writer.write(" is ");
 					if (queryConditionList.getDictionaries().size() > 0)
 					{
-						for (Iterator iterDict = queryConditionList.getDictionaries().iterator(); iterDict.hasNext();)
+						for (Iterator iterDict = queryConditionList.getDictionaries().entrySet().iterator(); iterDict.hasNext();)
 						{
-							Dictionary dict = (Dictionary) iterDict.next();
+							Dictionary dict = (Dictionary) ((Map.Entry)iterDict.next()).getValue();
 							writer.startElement("b", this);
 							writer.write(dict.getName());
 							writer.endElement("b");

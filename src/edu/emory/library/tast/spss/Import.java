@@ -757,7 +757,7 @@ public class Import
 
 			STSchemaVariableLabel label = (STSchemaVariableLabel) iterLabel.next();
 
-			Dictionary[] dicts = Dictionary.loadDictionary(
+			Dictionary[] dicts = Dictionary.loadDictionaryByRemoteId(
 					attr.getDictionary(),
 					new Integer(label.getKey()));
 

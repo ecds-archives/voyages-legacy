@@ -1155,24 +1155,48 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 
-	private String getHtmlNameForList(AbstractAttribute attibute, FacesContext context)
+	private String getHtmlNameForList(AbstractAttribute attribute, FacesContext context)
 	{
-		return getClientId(context) + "_" + attibute.getId() + "_list";
+		return getClientId(context) + "_" + attribute.getId() + "_list";
+	}
+
+	private String getHtmlNameListItemElement(AbstractAttribute attribute, Dictionary dictItem, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_list_td_" + dictItem.getId();
+	}
+
+	private String getHtmlNameForListCheckbox(AbstractAttribute attribute, Dictionary dictItem, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_list_cb_" + dictItem.getId();
+	}
+
+	private String getHtmlNameForListState(AbstractAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_list_state";
 	}
 
 	private void encodeDictionaryCondition(QueryConditionDictionary queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 		
 		AbstractAttribute attribute = queryCondition.getAttribute();
-		String displayElementId = getClientId(context) + "_" + attribute.getId() + "_user_list";
-		String popupElementId = getClientId(context) + "_" + attribute.getId() + "_popup";
+		String showElementId = getClientId(context) + "_" + attribute.getId() + "_show";
+		String showListElementId = getClientId(context) + "_" + attribute.getId() + "_show_list";
+		String editElementId = getClientId(context) + "_" + attribute.getId() + "_edit";
+		String editListElementId = getClientId(context) + "_" + attribute.getId() + "_edit_list";
 		
 		Dictionary[] dictionary = Dictionary.loadDictionary(attribute.getDictionary());
+		StringBuffer displayList = new StringBuffer();
 
 		regJS.append(", ");
-		regJS.append("displayElementId: '").append(displayElementId).append("'");
+		regJS.append("stateFieldName: '").append(getHtmlNameForListState(attribute, context)).append("'");
 		regJS.append(", ");
-		regJS.append("popupElementId: '").append(popupElementId).append("'");
+		regJS.append("showElementId: '").append(showElementId).append("'");
+		regJS.append(", ");
+		regJS.append("showListElementId: '").append(showListElementId).append("'");
+		regJS.append(", ");
+		regJS.append("editElementId: '").append(editElementId).append("'");
+		regJS.append(", ");
+		regJS.append("editListElementId: '").append(editListElementId).append("'");
 		regJS.append(", ");
 		regJS.append("itemsField: '").append(getHtmlNameForList(attribute, context)).append("'");
 		regJS.append(", ");
@@ -1181,80 +1205,29 @@ public class QueryBuilderComponent extends UIComponentBase
 		{
 			Dictionary dictItem = dictionary[i];
 			if (i > 0) regJS.append(", ");
-			regJS.append("'").append(dictItem.getRemoteId()).append("': ");
-			regJS.append("'").append(JsfUtils.escapeStringForJS(dictItem.getName())).append("' ");
-		}
-		regJS.append("}");
-		regJS.append(", ");
-		regJS.append("index: {}");
-				
-		StringBuffer valuesList = new StringBuffer();
-		StringBuffer displayList = new StringBuffer();
-		for (Iterator iterItem = queryCondition.getDictionaries().iterator(); iterItem.hasNext();)
-		{
-			Dictionary dict = (Dictionary) iterItem.next();
-			valuesList.append(dict.getRemoteId());
-			displayList.append(dict.getName());
-			if (iterItem.hasNext())
+			regJS.append("'").append(dictItem.getId()).append("': ");
+			regJS.append("{");
+			regJS.append("id: '").append(dictItem.getId()).append("', ");
+			regJS.append("text: '").append(JsfUtils.escapeStringForJS(dictItem.getName())).append("', ");
+			regJS.append("checkboxId: '").append(getHtmlNameForListCheckbox(attribute, dictItem, context)).append("', ");
+			regJS.append("elementId: '").append(getHtmlNameListItemElement(attribute, dictItem, context)).append("'");
+			regJS.append("}");
+			if (queryCondition.containsDictionary(dictItem))
 			{
-				valuesList.append(",");
-				displayList.append(", ");
+				if (displayList.length() > 0) displayList.append(", ");
+				displayList.append(dictItem.getName());
 			}
 		}
+		regJS.append("}");
 		
-//		JsfUtils.encodeHiddenInput(this, writer,
-//				getHtmlNameForList(attribute, context),
-//				valuesList.toString());
-		
-//		StringBuffer jsPopup = new StringBuffer();
-//		jsPopup.append("QueryBuilderGlobals.showList(");
-//		jsPopup.append("'").append(getClientId(context)).append("', ");
-//		jsPopup.append("'").append(form.getId()).append("', ");
-//		jsPopup.append("'").append(getHtmlNameForTotal(context)).append("', ");
-//		jsPopup.append("'").append(attribute.getId()).append("', ");
-//		jsPopup.append("'").append(getHtmlNameForList(attribute, context)).append("', ");
-//		jsPopup.append("'").append(displayElementId).append("'");
-//		jsPopup.append(")");
+		if (displayList.length() == 0)
+			displayList.append("[<i>nothing selected</i>]");
 
-		// popup start
-		writer.startElement("div", this);
-		writer.writeAttribute("class", "query-builder-list-popup-container", null);
-		writer.startElement("div", this);
-		writer.writeAttribute("id", popupElementId, null);
-		writer.writeAttribute("class", "query-builder-list-popup", null);
-		writer.writeAttribute("style", "display: none;", null);
-		
-		writer.startElement("table", this);
-		writer.writeAttribute("cellspacing", "0", null);
-		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("border", "0", null);
+		// state (edit/show)
+		JsfUtils.encodeHiddenInput(this, writer,
+				getHtmlNameForListState(attribute, context),
+				queryCondition.isEdit() ? "edit" : "show");
 
-		// actual list
-		for (int i = 0; i < dictionary.length; i++)
-		{
-			Dictionary dictItem = dictionary[i];
-
-			writer.startElement("tr", this);
-			
-			writer.startElement("td", this);
-			writer.startElement("input", this);
-			writer.writeAttribute("type", "checkbox", null);
-			writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
-			writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
-			writer.writeAttribute("value", dictItem.getRemoteId(), null);
-			writer.endElement("input");
-			writer.endElement("td");
-
-			writer.startElement("td", this);
-			writer.write(dictItem.getName());
-			writer.endElement("td");
-		
-			writer.endElement("tr");
-
-		}
-		
-		writer.endElement("table");
-		
 		// open list
 		String jsOpenList = 
 			"QueryBuilderGlobals.openList(" +
@@ -1267,45 +1240,167 @@ public class QueryBuilderComponent extends UIComponentBase
 			"'" + getClientId(context) + "'," +
 			"'" + attribute.getId() + "')";
 		
-		// ok button
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "Close", null);
-		writer.writeAttribute("onclick", jsCloseList, null);
-		writer.endElement("input");
+		// select all
+		String jsSelectAll = 
+			"QueryBuilderGlobals.listSelectAll(" +
+			"'" + getClientId(context) + "'," +
+			"'" + attribute.getId() + "')";
+
+		// deselect all
+		String jsDeselectAll = 
+			"QueryBuilderGlobals.listDeselectAll(" +
+			"'" + getClientId(context) + "'," +
+			"'" + attribute.getId() + "')";
 		
-		// popup end
-		writer.endElement("div");
-		writer.endElement("div");
+		// quicksearch JS
+		String jsQuickSearch =
+			"QueryBuilderGlobals.quickSearchList(" + 
+			"'" + getClientId(context) + "', " +
+			"'" + attribute.getId() + "', " +
+			"this)";
 		
-		// start: visible part
-		writer.startElement("table", this);
-		writer.writeAttribute("cellspacing", "0", null);
-		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("border", "0", null);
-		writer.startElement("tr", this);
+		// readonly part: start
+		writer.startElement("div", this);
+		writer.writeAttribute("id", showElementId, null);
+		writer.writeAttribute("class", "query-builder-show", null);
+		if (queryCondition.isEdit()) writer.writeAttribute("style", "display: none", null);
 		
 		// selected items
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "query-builder-list", null);
-		writer.writeAttribute("id", displayElementId, null);
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "query-builder-show-list", null);
+		writer.writeAttribute("id", showListElementId, null);
 		writer.write(displayList.toString());
-		writer.endElement("td");
+		writer.endElement("div");
 		
-		// selecte button
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "query-builder-list-select", null);
+		// select button
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "query-builder-list-button", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("value", "Select", null);
 		writer.writeAttribute("onclick", jsOpenList, null);
 		writer.endElement("input");
+		writer.endElement("div");
+		
+		// readonly part: end
+		writer.endElement("div");
+		
+		// edit part: start
+		writer.startElement("div", this);
+		writer.writeAttribute("id", editElementId, null);
+		writer.writeAttribute("class", "query-builder-edit", null);
+		if (!queryCondition.isEdit()) writer.writeAttribute("style", "display: none", null);
+
+		// quicksearch table container: start
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("class", "query-builder-quicksearch", null);
+		writer.startElement("tr", this);
+		
+		// quicksearch title
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-quicksearch-label", null);
+		writer.write("Quicksearch");
 		writer.endElement("td");
 
-		// visible: end
+		// quicksearch
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-builder-quicksearch-input", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", "", null);
+		writer.writeAttribute("onkeyup", jsQuickSearch, null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		// quicksearch table container: end
+		writer.endElement("tr");
+		writer.endElement("table");
+
+		// list: start
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "query-builder-edit-list", null);
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+
+		// actual list
+		for (int i = 0; i < dictionary.length; i++)
+		{
+			Dictionary dictItem = dictionary[i];
+			boolean checked = queryCondition.containsDictionary(dictItem.getId());
+
+			writer.startElement("tr", this);
+			writer.writeAttribute("id", getHtmlNameListItemElement(attribute, dictItem, context), null);
+			
+			writer.startElement("td", this);
+			writer.startElement("input", this);
+			writer.writeAttribute("type", "checkbox", null);
+			writer.writeAttribute("id", getHtmlNameForListCheckbox(attribute, dictItem, context), null);
+			writer.writeAttribute("value", dictItem.getId(), null);
+			writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
+			writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
+			if (checked) writer.writeAttribute("checked", "checked", null);
+			writer.endElement("input");
+			writer.endElement("td");
+
+			writer.startElement("td", this);
+			writer.write(dictItem.getName());
+			writer.endElement("td");
+		
+			writer.endElement("tr");
+
+		}
+		
+		// list: end
+		writer.endElement("table");
+		writer.endElement("div");
+
+		// buttons in edit: start
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("class", "query-builder-list-buttons", null);
+		writer.startElement("tr", this);
+		
+		// ok button
+		writer.startElement("td", this);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("value", "OK", null);
+		writer.writeAttribute("onclick", jsCloseList, null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+		// select all
+		writer.startElement("td", this);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("value", "Select all", null);
+		writer.writeAttribute("onclick", jsSelectAll, null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+		// deselect all
+		writer.startElement("td", this);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("value", "Delect all", null);
+		writer.writeAttribute("onclick", jsDeselectAll, null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		// buttons: end
 		writer.endElement("tr");
 		writer.endElement("table");
 		
+		// edit part: end
+		writer.endElement("div");
+
 	}
 
 	private QueryCondition decodeDictionaryCondition(AbstractAttribute attribute, FacesContext context)
@@ -1321,6 +1416,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		for (int i = 0; i < values.length; i++)
 			queryCondition.addDictionary(Integer.parseInt(values[i]));
+		
+		queryCondition.setEdit(
+				JsfUtils.getParamString(context,
+						getHtmlNameForListState(attribute, context), "show").compareTo("edit") == 0);
 		
 		return queryCondition;
 

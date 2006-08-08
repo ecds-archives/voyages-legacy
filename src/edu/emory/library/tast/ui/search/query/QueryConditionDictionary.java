@@ -1,8 +1,8 @@
 package edu.emory.library.tast.ui.search.query;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.AbstractAttribute;
@@ -15,7 +15,8 @@ public class QueryConditionDictionary extends QueryCondition
 	
 	private static final long serialVersionUID = 6147345036427086382L;
 
-	private List dictionaries = new ArrayList();
+	private Map dictionaries = new HashMap();
+	private boolean edit = false;
 	
 	public QueryConditionDictionary(AbstractAttribute attribute)
 	{
@@ -25,9 +26,9 @@ public class QueryConditionDictionary extends QueryCondition
 	public void addSingleAttributeToConditions(Attribute attribute, Conditions conditions)
 	{
 		Conditions subCondition = new Conditions(Conditions.JOIN_OR);
-		for (Iterator dictIter = dictionaries.iterator(); dictIter.hasNext();)
+		for (Iterator dictIter = dictionaries.entrySet().iterator(); dictIter.hasNext();)
 		{
-			Dictionary dict = (Dictionary) dictIter.next();
+			Dictionary dict = (Dictionary) ((Map.Entry)dictIter.next()).getValue();
 			subCondition.addCondition(attribute.getName(), dict, Conditions.OP_EQUALS);
 		}
 		conditions.addCondition(subCondition);
@@ -58,27 +59,48 @@ public class QueryConditionDictionary extends QueryCondition
 		return true;
 	}
 
-	public List getDictionaries()
+	public Map getDictionaries()
 	{
 		return dictionaries;
 	}
 
-	public void setDictionaries(List values)
+	public void setDictionaries(Map values)
 	{
 		this.dictionaries = values;
+	}
+	
+	public boolean containsDictionary(Long id)
+	{
+		if (dictionaries == null) return false;
+		return dictionaries.containsKey(id);
+	}
+
+	public boolean containsDictionary(long id)
+	{
+		return containsDictionary(new Long(id));
+	}
+
+	public boolean containsDictionary(Dictionary dict)
+	{
+		return containsDictionary(dict.getId());
 	}
 
 	public void addDictionary(Dictionary dict)
 	{
-		if (dictionaries == null) dictionaries = new ArrayList();
-		dictionaries.add(dict);
+		if (dictionaries == null) dictionaries = new HashMap();
+		if (dict != null) dictionaries.put(dict.getId(), dict);
 	}
 
-	public void addDictionary(int value)
+	public void addDictionary(long id)
+	{
+		addDictionary(new Long(id));
+	}
+
+	public void addDictionary(Long id)
 	{
 		String dictName = getAttribute().getDictionary();
-		Dictionary[] dicts = Dictionary.loadDictionary(dictName, new Integer(value));
-		if (dicts.length > 0) dictionaries.add(dicts[0]);
+		Dictionary dict = Dictionary.loadDictionaryById(dictName, id);
+		if (dict != null) addDictionary(dict);
 	}
 	
 	public boolean equals(Object obj)
@@ -87,16 +109,14 @@ public class QueryConditionDictionary extends QueryCondition
 		if (obj instanceof QueryConditionDictionary)
 		{
 			QueryConditionDictionary queryConditionDictionary = (QueryConditionDictionary) obj;
-			List theOtherDicts = queryConditionDictionary.getDictionaries();
+			Map theOtherDicts = queryConditionDictionary.getDictionaries();
 
 			if (dictionaries.size() != theOtherDicts.size()) return false;
 			
-			for (int i = 0; i < dictionaries.size(); i++)
+			for (Iterator iter = dictionaries.keySet().iterator(); iter.hasNext();)
 			{
-				Dictionary dict1 = (Dictionary)dictionaries.get(i); 
-				Dictionary dict2 = (Dictionary)theOtherDicts.get(i);
-				if ((dict1 != null && dict2 == null) || (dict1 == null && dict2 != null) || !dict1.equals(dict2))
-					return false;
+				Integer remoteId = (Integer) iter.next();
+				if (!theOtherDicts.containsKey(remoteId)) return false;
 			}
 			
 			return true;
@@ -110,14 +130,22 @@ public class QueryConditionDictionary extends QueryCondition
 	protected Object clone()
 	{
 		QueryConditionDictionary newQueryCondition = new QueryConditionDictionary(getAttribute());
-		String dictName = getAttribute().getDictionary();
-		for (Iterator iterDict = dictionaries.iterator(); iterDict.hasNext();)
+		for (Iterator iterDict = dictionaries.keySet().iterator(); iterDict.hasNext();)
 		{
-			Dictionary dict = (Dictionary) iterDict.next();
-			Dictionary[] dicts = Dictionary.loadDictionary(dictName, dict.getRemoteId());
-			if (dicts.length > 0) newQueryCondition.addDictionary(dicts[0]);
+			Long id = (Long) iterDict.next();
+			newQueryCondition.addDictionary(id);
 		}
 		return newQueryCondition;
+	}
+
+	public boolean isEdit()
+	{
+		return edit;
+	}
+
+	public void setEdit(boolean edit)
+	{
+		this.edit = edit;
 	}
 
 }

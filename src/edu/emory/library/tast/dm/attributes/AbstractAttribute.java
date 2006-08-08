@@ -212,7 +212,7 @@ public abstract class AbstractAttribute implements Serializable, VisibleColumn {
 				throw new InvalidNumberException();
 			}
 
-			Dictionary dicts[] = Dictionary.loadDictionary(getDictionary(),
+			Dictionary dicts[] = Dictionary.loadDictionaryByRemoteId(getDictionary(),
 					remoteId);
 			if (dicts.length > 0) {
 				return dicts[0];

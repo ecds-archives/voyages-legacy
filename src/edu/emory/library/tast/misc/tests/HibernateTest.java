@@ -4,11 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
-import java.util.Iterator;
-
-import javax.imageio.ImageIO;
-
-import com.sun.imageio.plugins.png.PNGImageWriterSpi;
 
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Dictionary;
@@ -21,7 +16,6 @@ import edu.emory.library.tast.dm.attributes.ObjectType;
 import edu.emory.library.tast.dm.dictionaries.Temp;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class HibernateTest {
