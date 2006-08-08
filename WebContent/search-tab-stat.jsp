@@ -1,22 +1,20 @@
-<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
-<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
-<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<%@ taglib uri="http://tas.library.emory.edu" prefix="s" %>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
 
-<t:htmlTag value="div" style="padding: 2px;"
-	rendered="#{AdvancedStatisticsTabBean.errorPresent || AdvancedStatisticsTabBean.warningPresent}">
-	<t:htmlTag id="div_error" value="div" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
+<t:htmlTag value="div" style="padding: 2px;" rendered="#{AdvancedStatisticsTabBean.errorPresent || AdvancedStatisticsTabBean.warningPresent}">
+	<t:htmlTag value="div" id="div_error" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
 		<h:panelGrid columns="3">
 			<h:outputText value="#{AdvancedStatisticsTabBean.errorMessage}" />
 			<h:commandButton id="fixError" value="Fix error" action="#{AdvancedStatisticsTabBean.fixError}" />
 			<h:commandButton id="goBackOnError" value="Back" action="#{AdvancedStatisticsTabBean.rollback}" />
 		</h:panelGrid>
 	</t:htmlTag>
-	
 </t:htmlTag>
 
-
 <t:htmlTag id="div_table" value="div" style="padding: 2px;">
+
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag id="tr_third" value="tr">
 			<t:htmlTag id="td_setup_label" value="th">
@@ -27,7 +25,6 @@
 				<h:outputText value="Current series" />
 			</t:htmlTag>
 		</t:htmlTag>
-
 
 		<t:htmlTag id="tr_setup" value="tr">
 			<t:htmlTag value="td" style="width: 520px; border-bottom: 2px solid #F1E7C8;">
@@ -93,23 +90,29 @@
 
 		</t:htmlTag>
 	</t:htmlTag>
-
-	<t:htmlTag value="div" style="position: absolute; padding-left: 10px; padding-bottom: 10px; padding-top: 5px; width: 650px; height: 550px">
+	
+	<t:htmlTag value="div"
+		style="position: absolute; padding-left: 10px; padding-bottom: 10px; padding-top: 5px; width: 650px; height: 550px">
+		
 		<t:htmlTag value="div">
-			<h:commandButton style="margin: 3px;" id="showGraph" value="Show"
-				disabled="#{AdvancedStatisticsTabBean.errorPresent}" action="#{AdvancedStatisticsTabBean.showGraph}" />
+			<h:commandButton
+				style="margin: 3px;" id="showGraph" value="Show"
+				disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+				action="#{AdvancedStatisticsTabBean.showGraph}" />
 		</t:htmlTag>
 		
-		<t:htmlTag id="div_warning" value="div" style="margin: 3px; background: #E2873B; length: 640px;"
-				rendered="#{AdvancedStatisticsTabBean.warningPresent}">
+		<t:htmlTag value="div" id="div_warning"
+			style="margin: 3px; background: #E2873B; length: 640px;"
+			rendered="#{AdvancedStatisticsTabBean.warningPresent}">
 			<h:outputText id="warning_text" value="#{AdvancedStatisticsTabBean.warningMessage}" />
 		</t:htmlTag>
 		
-		<t:htmlTag value="div" style="margin-top: 4px; width: 640px; height: 480px; overflow:auto; width: 100%; height: 500px"
+		<t:htmlTag value="div"
+			style="margin-top: 4px; width: 640px; height: 480px; overflow:auto; width: 100%; height: 500px"
 			rendered="#{AdvancedStatisticsTabBean.statReady}">
 			<h:graphicImage value="#{AdvancedStatisticsTabBean.chartPath}" />
 		</t:htmlTag>
-		<%/* Change size panel */%>
+
 		<h:panelGroup rendered="#{AdvancedStatisticsTabBean.statReady}">
 			<h:outputText value="Width: " />
 			<h:inputText value="#{AdvancedStatisticsTabBean.chartWidth}" style="width: 40px;" />
@@ -124,6 +127,5 @@
 		</t:htmlTag> 
 		
 	</t:htmlTag>
-
 
 </t:htmlTag>
