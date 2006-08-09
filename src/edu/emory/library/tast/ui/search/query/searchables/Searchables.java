@@ -31,6 +31,10 @@ public class Searchables
 	
 	private static Searchables instance = null;
 	
+	private Searchables()
+	{
+	}
+	
 	public static Searchables getCurrent()
 	{
 		if (instance == null)
