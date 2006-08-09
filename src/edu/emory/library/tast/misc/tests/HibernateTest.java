@@ -31,6 +31,9 @@ public class HibernateTest {
 		
 		//HibernateConnector connector = HibernateConnector.getConnector();
 		
+		System.out.println(Voyage.getAttributes().length);
+		
+		
 		System.out.print("command:>");
 		while ((command = reader.readLine()) != null
 				&& !command.equalsIgnoreCase("exit")) {
