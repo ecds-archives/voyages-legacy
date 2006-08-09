@@ -4,11 +4,14 @@ public abstract class SearchableAttribute
 {
 	
 	private String userLabel;
+	private String id;
+	private UserCategory userCategory;
 	
-	public SearchableAttribute(String userLabel)
+	public SearchableAttribute(String id, String userLabel, UserCategory userCategory)
 	{
-		super();
+		this.id = id;
 		this.userLabel = userLabel;
+		this.userCategory = userCategory;
 	}
 
 	public String getUserLabel()
@@ -16,9 +19,14 @@ public abstract class SearchableAttribute
 		return userLabel;
 	}
 
-	public void setUserLabel(String userLabel)
+	public String getId()
 	{
-		this.userLabel = userLabel;
+		return id;
+	}
+
+	public UserCategory getUserCategory()
+	{
+		return userCategory;
 	}
 
 }

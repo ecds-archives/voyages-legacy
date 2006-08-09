@@ -7,9 +7,9 @@ public class SearchableAttributeSimple extends SearchableAttribute
 	
 	private Attribute[] attributes;
 
-	public SearchableAttributeSimple(String userLabel, Attribute[] attributes)
+	public SearchableAttributeSimple(String id, String userLabel, UserCategory userCategory, Attribute[] attributes)
 	{
-		super(userLabel);
+		super(id, userLabel, userCategory);
 		this.attributes = attributes != null ? attributes : new Attribute[0];
 	}
 	
