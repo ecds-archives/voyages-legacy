@@ -20,6 +20,9 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 public class Searchables
 {
 	
+	private static final String SEARCHABLE_ATTRIBUTES_XML = "/searchable-attributes.xml";
+	private static final String ATTRIBUTE_GROUPS_XML = "/attribute-groups.xml";
+	
 	private SearchableAttribute[] searchableAttributes = null;
 	private Map searchableAttributesByIds = null;
 
@@ -41,15 +44,18 @@ public class Searchables
 	
 	private void loadAttributes() throws ParserConfigurationException, SAXException, IOException
 	{
-		
+
+		// we have a DTD and we want to get rid of whitespace
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(true);
 		factory.setIgnoringElementContentWhitespace(true);
 
+		// load main document
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		InputStream str = this.getClass().getResourceAsStream("/searchable-attributes.xml");
+		InputStream str = this.getClass().getResourceAsStream(SEARCHABLE_ATTRIBUTES_XML);
 		Document document = builder.parse(str);
 		
+		// all <searchable-attribute>'s
 		NodeList xmlSearchableAttrs = document.getDocumentElement().getChildNodes();
 		searchableAttributes = new SearchableAttribute[xmlSearchableAttrs.getLength()];
 		searchableAttributesByIds = new HashMap();
@@ -112,12 +118,14 @@ public class Searchables
 	private void loadGroups() throws ParserConfigurationException, SAXException, IOException
 	{
 		
+		// we have a DTD and we want to get rid of whitespace
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(true);
 		factory.setIgnoringElementContentWhitespace(true);
 
+		// load main document
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		InputStream str = this.getClass().getResourceAsStream("/attribute-groups.xml");
+		InputStream str = this.getClass().getResourceAsStream(ATTRIBUTE_GROUPS_XML);
 		Document document = builder.parse(str);
 		
 		NodeList xmlGroups = document.getDocumentElement().getChildNodes();
@@ -166,17 +174,14 @@ public class Searchables
 		}
 		catch (ParserConfigurationException e)
 		{
-			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		catch (SAXException e)
 		{
-			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
