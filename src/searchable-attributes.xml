@@ -218,11 +218,26 @@
 			<attribute name="sourcen" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="ownerd"
+	<searchable-attribute type="location" id="origin"
+		userCategory="beginners" userLabel="Voyage origin">
+		<locations>
+			<location port="origin_port" region="origin_region" />
+		</locations>
+		<table-attributes>
+			<table-attribute id="origin_port_pj">
+			<table-attribute id="origin_region_pj">
+		</table-attributes>
+	</searchable-attribute>
+	<searchable-attribute type="location" id="ownerd"
 		userCategory="beginners" userLabel="Fourth owner of venture">
 		<attributes>
 			<attribute name="ownerd" />
 		</attributes>
+		<groups>
+			<group id="y" />
+			<group id="x" />
+			<group id="z" />
+		</groups>
 	</searchable-attribute>
 	<searchable-attribute type="simple" id="sourced"
 		userCategory="beginners" userLabel="Fourth source of information">
