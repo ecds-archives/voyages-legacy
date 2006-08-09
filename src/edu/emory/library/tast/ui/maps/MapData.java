@@ -1,5 +1,8 @@
 package edu.emory.library.tast.ui.maps;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 
 /**
@@ -54,12 +57,6 @@ public class MapData {
 		//Set legend
 		this.legendItems = response.getLegendItems();
 		
-		//Prepare tooltips
-		this.points = new PointOfInterest[this.items.length];
-		for (int i = 0; i < this.items.length; i++) {
-			this.points[i] = this.items[i].getTooltipText();
-		}
-		
 	}
 
 	/**
@@ -75,9 +72,18 @@ public class MapData {
 	 * @return
 	 */
 	public PointOfInterest[] getToolTip() {
+		
+		//Prepare tooltips
+		List localPoints = new ArrayList();
+		for (int i = 0; i < this.items.length; i++) {
+			if (this.items[i].isPointEnabled()) {
+				localPoints.add(this.items[i].getTooltipText());
+			}
+		}			
+		this.points = (PointOfInterest[])localPoints.toArray(new PointOfInterest[] {});
 		return points;
 	}
-	
+
 	/**
 	 * Gets legend of map.
 	 * @return

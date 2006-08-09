@@ -132,6 +132,10 @@ public class DetailVoyageMap {
 		}
 		return false;
 	}
+	
+	public void refresh() {
+		this.creator.createMapFile();
+	}
 
 	public String getCurrentMapFilePath() {
 		return this.creator.getFilePath();

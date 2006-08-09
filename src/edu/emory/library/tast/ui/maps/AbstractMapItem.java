@@ -44,6 +44,11 @@ public abstract class AbstractMapItem {
 	 */
 	private String mainLabel;
 	
+	/**
+	 * Legend item corresponding to map item.
+	 */
+	private List legendItems = new ArrayList();
+	
 	private List elements = new ArrayList();
 	
 	/**
@@ -149,5 +154,18 @@ public abstract class AbstractMapItem {
 	 */
 	public double getProjectedY() {
 		return projy;
+	}
+
+	public boolean isPointEnabled() {
+		boolean enabled = true;
+		for (int i = 0; i < this.legendItems.size(); i++) {
+			LegendItem item = (LegendItem)this.legendItems.get(i);
+			enabled = enabled && item.isEnabled();
+		}
+		return enabled;
+	}
+
+	public void addLegendItem(LegendItem legendItem) {
+		this.legendItems.add(legendItem);
 	}
 }

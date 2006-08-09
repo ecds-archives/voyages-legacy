@@ -585,6 +585,7 @@ public class TableResultTabBean {
 	}
 	
 	public String refresh() {
+		this.detailVoyageMap.refresh();
 		return null;
 	}
 

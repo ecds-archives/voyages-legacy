@@ -106,8 +106,9 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		for (Iterator iter = items.iterator(); iter.hasNext(); i++) {
 			DetailVoyageMapItem element = (DetailVoyageMapItem) iter.next();
 			element.setNumber(i + 1);
-			LegendItem legengItem = new LegendItem(element.getSymbolName(), "/symbols/number-1-" + (i + 1) + ".png", element.getLegendText());
-			legend.addItemToGroup(legengItem);
+			LegendItem legendItem = new LegendItem(element.getSymbolName(), "symbols/number-1-" + (i + 1) + ".png", element.getLegendText());
+			legend.addItemToGroup(legendItem);
+			element.addLegendItem(legendItem);
 		}
 		
 		//Return result of transformation

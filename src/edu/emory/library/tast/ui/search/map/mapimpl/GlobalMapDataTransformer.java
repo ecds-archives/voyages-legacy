@@ -159,6 +159,19 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		legendColors.addItemToGroup(disemb);
 		legendColors.addItemToGroup(both);
 		
+		int i = 0; 
+		for (Iterator iter = items.iterator(); iter.hasNext(); i++) {
+			GlobalMapDataItem element = (GlobalMapDataItem) iter.next();
+			element.addLegendItem(legendSizes.getItems()[element.getSymbolSize()]);
+			if (element.getSymbolColor() == 1) {
+				element.addLegendItem(emb);
+			} else if (element.getSymbolColor() == 2) {
+				element.addLegendItem(disemb);
+			} else {
+				element.addLegendItem(both);
+			}
+		}
+		
 		//Return result response
 		return new TransformerResponse((AbstractMapItem[]) items.toArray(new AbstractMapItem[] {}), 
 										new LegendItemsGroup[] {legendSizes, legendColors});

@@ -54,7 +54,7 @@ public class MapBean {
 
 	private boolean neededQuery = false;
 
-	private MapFileCreator creator;
+	private MapFileCreator creator = new MapFileCreator();
 
 	private String sessionParam;
 
@@ -134,10 +134,6 @@ public class MapBean {
 
 			this.setMapData();
 			AbstractMapItem[] items = this.mapData.getItems();
-			
-			if (this.creator == null) {
-				this.creator = new MapFileCreator();
-			}
 
 			if (items.length > 0) {
 				this.creator.setMapData(items);

@@ -27,6 +27,8 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 * Used color.
 	 */
 	private int color;
+
+	private int size;
 	
 	/**
 	 * Data item constructor.
@@ -64,6 +66,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 		buffer.append(SYMBOL_NAME_PREFIX).append(this.color);
 		buffer.append("-").append(size + 1);
 		this.symbolName =  buffer.toString();
+		this.size = size;
 	}
 
 	/**
@@ -95,6 +98,14 @@ public class GlobalMapDataItem extends AbstractMapItem {
 		buffer.append("</div>");
 
 		return buffer.toString();
+	}
+
+	public int getSymbolColor() {
+		return this.color;
+	}
+
+	public int getSymbolSize() {
+		return this.size; 
 	}
 
 
