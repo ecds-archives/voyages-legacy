@@ -12,6 +12,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.attributes.Attribute;
+
 public class ConfigLoader
 {
 	
@@ -32,6 +35,13 @@ public class ConfigLoader
 			SearchableAttribute searchableAttribute = null;
 			if ("simple".equals(type))
 			{
+				NodeList xmlAttributes = xmlSearchableAttr.getChildNodes();
+				Attribute[] attributes = new Attribute[xmlAttributes.getLength()];
+				for (int j = 0; j < xmlAttributes.getLength(); j++)
+				{
+					attributes[j] = Voyage.getAttribute("");
+				}
+				searchableAttribute = new SearchableAttributeSimple(null, null);
 			}
 			else if ("location".equals(type))
 			{
