@@ -2,6 +2,7 @@ package edu.emory.library.tast.ui.search.tabscommon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,8 @@ public class VisibleAttribute {
 		if (visibleAttributes.isEmpty()) {
 			loadConfig();
 		}
-		return (VisibleAttribute[])((List)visibleAttributes.get(new Integer(tabType))).toArray(new VisibleAttribute[] {});
+		return (VisibleAttribute[]) (((Map) visibleAttributes.get(new Integer(
+				tabType)))).values().toArray(new VisibleAttribute[] {});
 	}
 
 	private static void loadConfig() {
@@ -50,10 +52,11 @@ public class VisibleAttribute {
 					NodeList attrs = mainNode.getChildNodes();
 					for (int j = 0; j < attrs.getLength(); j++) {
 						if (attrs.item(j).getNodeType() == Node.ELEMENT_NODE) {
-							VisibleAttribute attr = VisibleAttribute.fromXML(attrs.item(j));
+							VisibleAttribute attr = VisibleAttribute
+									.fromXML(attrs.item(j));
 							for (int i = 0; i < attr.getValidity().length; i++) {
 								Integer val = new Integer(attr.getValidity()[i]);
-								Map attrMap = (Map)visibleAttributes.get(val);
+								Map attrMap = (Map) visibleAttributes.get(val);
 								if (attrMap == null) {
 									attrMap = new HashMap();
 									visibleAttributes.put(val, attrMap);
@@ -148,15 +151,20 @@ public class VisibleAttribute {
 	public String getName() {
 		return name;
 	}
-	
-	public String getUserLabelOrName() {
-		return (this.userLabel == null || "".equals(this.userLabel)) ? this.name : this.userLabel;
+
+	public String toString() {
+		return this.getUserLabelOrName();
 	}
 	
+	public String getUserLabelOrName() {
+		return (this.userLabel == null || "".equals(this.userLabel)) ? this.name
+				: this.userLabel;
+	}
+
 	public String encodeToString() {
 		return "Attribute_" + this.getName();
 	}
-	
+
 	public Integer getType() {
 		return this.attributes[0].getType();
 	}
@@ -165,8 +173,24 @@ public class VisibleAttribute {
 		if (visibleAttributes.isEmpty()) {
 			loadConfig();
 		}
-		HashMap map = (HashMap)visibleAttributes.get(new Integer(VisibleAttribute.ATTRIBUTE_TABLE_TAB));
-		return (VisibleAttribute)map.get(string);
+		HashMap map = (HashMap) visibleAttributes.get(new Integer(
+				VisibleAttribute.ATTRIBUTE_TABLE_TAB));
+		return (VisibleAttribute) map.get(string);
+	}
+
+	public static VisibleAttribute getAttribute(String id) {
+		Iterator iter = visibleAttributes.values().iterator();
+		while (iter.hasNext()) {
+			Map attrMap = (Map) iter.next();
+			Iterator attrMapIter = attrMap.values().iterator();
+			while (attrMapIter.hasNext()) {
+				VisibleAttribute attr = (VisibleAttribute) attrMapIter.next();
+				if (attr.getName().equals(id)) {
+					return attr;
+				}
+			}
+		}
+		return null;
 	}
 
 }

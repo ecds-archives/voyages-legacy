@@ -16,6 +16,7 @@ import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.ObjectType;
 import edu.emory.library.tast.dm.dictionaries.Temp;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleGroup;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -35,6 +36,7 @@ public class HibernateTest {
 		
 		System.out.println(Voyage.getAttributes().length);
 		System.out.println(VisibleAttribute.loadVisibleAttributes(VisibleAttribute.ATTRIBUTE_CHART_TAB).length);
+		System.out.println(VisibleGroup.loadAllGroups().length);
 		
 		System.out.print("command:>");
 		while ((command = reader.readLine()) != null

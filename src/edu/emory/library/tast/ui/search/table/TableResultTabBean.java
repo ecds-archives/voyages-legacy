@@ -15,8 +15,6 @@ import javax.servlet.http.HttpSession;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
-import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapLayer;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
@@ -24,6 +22,7 @@ import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleGroup;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -547,13 +546,8 @@ public class TableResultTabBean {
 		if (sAttr.startsWith(ATTRIBUTE)) {
 			// Attribute_#####
 			String attrId = sAttr.substring(ATTRIBUTE.length(), sAttr.length());
-			Conditions c = new Conditions();
-			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
-			QueryValue qValue = new QueryValue("Attribute", c);
-			Object[] attrs = qValue.executeQuery();
-			if (attrs.length > 0) {
-				ret = (VisibleAttribute) attrs[0];
-			}
+			
+			ret = VisibleAttribute.getAttribute(attrId);
 		} 
 //		else if (sAttr.startsWith(COMPOUND_ATTRIBUTE)) {
 //			// CompoundAttribute_#####
@@ -778,16 +772,15 @@ public class TableResultTabBean {
 	 */
 	public List getAvailableGroupSets() {
 		ArrayList res = new ArrayList();
-		Group[] groupSets = Voyage.getGroups();
+		VisibleGroup[] groupSets = VisibleGroup.loadAllGroups();
 		for (int i = 0; i < groupSets.length; i++) {
-			Group set = (Group) groupSets[i];
-			if (set.noOfAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0
-					|| set.noOfCompoundAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0) {
-				res.add(new ComparableSelectItem("" + set.getId().longValue(), set.toString()));
+			VisibleGroup set = groupSets[i];
+			if (set.noOfAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0) {
+				res.add(new ComparableSelectItem("" + set.getName(), set.toString()));
 			}
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
-			this.selectedGroupSet = ((Group) groupSets[0]).getId().toString();
+			this.selectedGroupSet = (groupSets[0]).getName().toString();
 		}
 		Collections.sort(res);
 		return res;
@@ -800,29 +793,12 @@ public class TableResultTabBean {
 	 */
 	public List getAvailableAttributes() {
 		ArrayList res = new ArrayList();
-		Conditions c = new Conditions();
-		if (this.selectedGroupSet != null) {
-			c.addCondition("id", new Long(this.selectedGroupSet), Conditions.OP_EQUALS);
-		}
-		QueryValue qValue = new QueryValue("Group", c);
-		// qValue.setCacheable(true);
-
-		// Query for attributes of group
-		Object[] groupSets = qValue.executeQuery();
-		if (groupSets.length > 0) {
-			Group set = (Group) groupSets[0];
-			Set attrs = set.getAttributes();
-
-			Set groups = set.getCompoundAttributes();
-			for (Iterator groupsIter = groups.iterator(); groupsIter.hasNext();) {
-				CompoundAttribute element = (CompoundAttribute) groupsIter.next();
-				if (element.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
-					res.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
-				}
-			}
-			for (Iterator iter = attrs.iterator(); iter.hasNext();) {
-				Attribute attr = (Attribute) iter.next();
-				if (attr.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
+		VisibleGroup group = VisibleGroup.loadVisibleGroup(this.selectedGroupSet);
+		if (group != null) {
+			VisibleAttribute[] attrs = group.getVisibleAttributes();
+			for (int i = 0; i < attrs.length; i++) {
+				VisibleAttribute attr = attrs[i];
+				if (attr.getCategory() == this.searchBean.getSearchParameters().getCategory()) {
 					res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
 				}
 			}

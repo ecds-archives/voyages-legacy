@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.query.SearchBean;
-import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.ui.search.stat.charts.AbstractChartGenerator;
 import edu.emory.library.tast.ui.search.table.ClickEvent;
 import edu.emory.library.tast.util.query.Conditions;
