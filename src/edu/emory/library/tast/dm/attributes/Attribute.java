@@ -203,7 +203,7 @@ public class Attribute extends AbstractAttribute {
 	public static Attribute[] loadAttributesForType(String type) {
 		if (config.isEmpty()) {
 			try {
-				Document document = new XMLConfiguration("Attributes.xml").getDocument(); 
+				Document document = new XMLConfiguration("attributes.xml").getDocument(); 
 				Node mainNode = document.getFirstChild();
 				if (mainNode != null) {
 					NodeList objects = mainNode.getChildNodes();
