@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tast.dm.attributes.VisibleColumn;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 
 /**
  * Component that presents daetailed information abour voyage.
@@ -44,10 +44,10 @@ public class UIDetailComponent extends UIComponentBase {
 		TableData.DataTableItem[] addObjs = data.getAdditionalData();
 		
 		//Columns of voyage
-		VisibleColumn[] columns = data.getVisibleAttributes();
+		VisibleAttribute[] columns = data.getVisibleAttributes();
 		
 		//Columns of voyage index
-		VisibleColumn[] additionalColumns = data.getVisibleAdditionalAttributes();
+		VisibleAttribute[] additionalColumns = data.getVisibleAdditionalAttributes();
 		
 		//Load data about voyage index into table if possible
 		if (addObjs != null) {

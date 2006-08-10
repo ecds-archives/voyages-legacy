@@ -12,8 +12,8 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -135,7 +135,7 @@ public class UITableResultTab extends UIOutput {
 		UIForm form = JsfUtils.getForm(this, context);
 
 		writer.startElement("tr", this);
-		VisibleColumn[] populatedAttributes = data.getVisibleAttributes();
+		VisibleAttribute[] populatedAttributes = data.getVisibleAttributes();
 		
 		//Encode header of table
 		if (populatedAttributes != null) {
@@ -159,12 +159,12 @@ public class UITableResultTab extends UIOutput {
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.writeAttribute("onclick", jsSort, null);
-				writer.write(populatedAttributes[i].toString());
+				writer.write(populatedAttributes[i].getUserLabelOrName());
 				writer.endElement("a");
 				writer.endElement("td");
 
 				if (data.getOrderByColumn() != null
-						&& data.getOrderByColumn().getId().equals(populatedAttributes[i].getId())) {
+						&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
 
 					writer.startElement("td", this);
 					writer.writeAttribute("class", "grid-header-icon", null);

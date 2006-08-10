@@ -10,10 +10,12 @@ import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
+import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.CompoundAttribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.ObjectType;
 import edu.emory.library.tast.dm.dictionaries.Temp;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -32,7 +34,7 @@ public class HibernateTest {
 		//HibernateConnector connector = HibernateConnector.getConnector();
 		
 		System.out.println(Voyage.getAttributes().length);
-		
+		System.out.println(VisibleAttribute.loadVisibleAttributes(VisibleAttribute.ATTRIBUTE_CHART_TAB).length);
 		
 		System.out.print("command:>");
 		while ((command = reader.readLine()) != null

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<searchable-attributes>
-	<table-attribute tabs="1,2" id="adultspurch" userCategory="beginners" userLabel="Adults purchased anywhere">
+<table-attributes>
+	<table-attribute tabs="1" id="adultspurch" userCategory="beginners" userLabel="Adults purchased anywhere">
 		<attributes>
 			<attribute name="adult4"/>
 			<attribute name="adult1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="adultspurch" userCategory="beginners" userLabel="Adults purchased anywhere">
+	<table-attribute tabs="1" id="adultspurch" userCategory="beginners" userLabel="Adults purchased anywhere">
 		<attributes>
 			<attribute name="adult4"/>
 			<attribute name="adult1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="anycaptain" userCategory="beginners" userLabel="Captain">
+	<table-attribute tabs="1" id="anycaptain" userCategory="beginners" userLabel="Captain">
 		<attributes>
 			<attribute name="captainc"/>
 			<attribute name="captainb"/>
@@ -304,7 +304,7 @@
 			<attribute name="fate"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="anyowner" userCategory="beginners" userLabel="Owner">
+	<table-attribute tabs="1" id="anyowner" userCategory="beginners" userLabel="Owner">
 		<attributes>
 			<attribute name="ownera"/>
 			<attribute name="ownerf"/>
@@ -329,11 +329,26 @@
 			<attribute name="placcons"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="purchase" userCategory="beginners" userLabel="Place of purchase">
+	<table-attribute tabs="1" id="purchase" userCategory="beginners" userLabel="Place of purchase">
 		<attributes>
 			<attribute name="plac3tra"/>
 			<attribute name="plac1tra"/>
 			<attribute name="plac2tra"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="2" id="plac1tra" userCategory="beginners" userLabel="First place of purchase">
+		<attributes>
+			<attribute name="plac1tra"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="2" id="plac2tra" userCategory="beginners" userLabel="Second place of purchase">
+		<attributes>
+			<attribute name="plac2tra"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="2" id="plac3tra" userCategory="beginners" userLabel="Third place of purchase">
+		<attributes>
+			<attribute name="plac3tra"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="portret" userCategory="beginners" userLabel="Port at which voyage ended">
@@ -491,7 +506,7 @@
 			<attribute name="slintend"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="anysource" userCategory="beginners" userLabel="Source">
+	<table-attribute tabs="1" id="anysource" userCategory="beginners" userLabel="Source">
 		<attributes>
 			<attribute name="sourceg"/>
 			<attribute name="sourceh"/>
@@ -649,4 +664,4 @@
 			<attribute name="fate2"/>
 		</attributes>
 	</table-attribute>
-</searchable-attributes>
+</table-attributes>

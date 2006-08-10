@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui.search.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -10,11 +11,9 @@ import java.util.Set;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
-import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.search.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleAttributeFormatter;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
@@ -49,7 +48,7 @@ public class TableData {
 	/**
 	 * Column used to order results.
 	 */
-	private VisibleColumn orderByColumn = Voyage.getAttribute("voyageId");
+	private VisibleAttribute orderByColumn = VisibleAttribute.getAttributeForTable("voyageId");
 
 	/**
 	 * Current order.
@@ -101,11 +100,11 @@ public class TableData {
 
 		private Object[] data;
 
-		private VisibleColumn attribute;
+		private VisibleAttribute attribute;
 
 		private AbstractAttributeFormatter formatter;
 
-		public ColumnData(VisibleColumn attribute, Object[] data, AbstractAttributeFormatter formatter) {
+		public ColumnData(VisibleAttribute attribute, Object[] data, AbstractAttributeFormatter formatter) {
 			this.attribute = attribute;
 			this.data = data;
 			this.formatter = formatter;
@@ -156,7 +155,7 @@ public class TableData {
 		this.columns.clear();
 		this.columns.addAll(columns);
 		if (this.columns.size() > 0) {
-			this.setOrderByColumn((VisibleColumn) this.columns.get(0));
+			this.setOrderByColumn((VisibleAttribute) this.columns.get(0));
 			this.setOrder(QueryValue.ORDER_ASC);
 		}
 	}
@@ -166,13 +165,13 @@ public class TableData {
 	 * 
 	 * @param columns
 	 */
-	public void setVisibleColumns(VisibleColumn[] columns) {
+	public void setVisibleColumns(VisibleAttribute[] columns) {
 		this.columns.clear();
 		for (int i = 0; i < columns.length; i++) {
 			this.columns.add(columns[i]);
 		}
 		if (this.columns.size() > 0) {
-			this.setOrderByColumn((VisibleColumn) this.columns.get(0));
+			this.setOrderByColumn((VisibleAttribute) this.columns.get(0));
 			this.setOrder(QueryValue.ORDER_ASC);
 		}
 	}
@@ -182,8 +181,8 @@ public class TableData {
 	 * 
 	 * @return
 	 */
-	public VisibleColumn[] getVisibleAttributes() {
-		return (VisibleColumn[]) this.columns.toArray(new VisibleColumn[] {});
+	public VisibleAttribute[] getVisibleAttributes() {
+		return (VisibleAttribute[]) this.columns.toArray(new VisibleAttribute[] {});
 	}
 
 	/**
@@ -201,7 +200,7 @@ public class TableData {
 	 * 
 	 * @param columns
 	 */
-	public void setVisibleAdditionalColumns(VisibleColumn[] columns) {
+	public void setVisibleAdditionalColumns(VisibleAttribute[] columns) {
 		this.additionalColumns.clear();
 		for (int i = 0; i < columns.length; i++) {
 			this.additionalColumns.add(columns[i]);
@@ -213,8 +212,8 @@ public class TableData {
 	 * 
 	 * @return
 	 */
-	public VisibleColumn[] getVisibleAdditionalAttributes() {
-		return (VisibleColumn[]) this.additionalColumns.toArray(new VisibleColumn[] {});
+	public VisibleAttribute[] getVisibleAdditionalAttributes() {
+		return (VisibleAttribute[]) this.additionalColumns.toArray(new VisibleAttribute[] {});
 	}
 
 	/**
@@ -223,7 +222,7 @@ public class TableData {
 	 * @param column
 	 * @param formatter
 	 */
-	public void setFormatter(VisibleColumn column, AbstractAttributeFormatter formatter) {
+	public void setFormatter(VisibleAttribute column, AbstractAttributeFormatter formatter) {
 		this.columnFormatters.put(column, formatter);
 	}
 
@@ -233,7 +232,7 @@ public class TableData {
 	 * @param column
 	 * @return
 	 */
-	private AbstractAttributeFormatter getFormatter(VisibleColumn column) {
+	private AbstractAttributeFormatter getFormatter(VisibleAttribute column) {
 		if (this.columnFormatters.containsKey(column)) {
 			// Registered specific formatter
 			return (AbstractAttributeFormatter) this.columnFormatters.get(column);
@@ -243,37 +242,37 @@ public class TableData {
 		}
 	}
 
-	/**
-	 * Gets all attributes for given compound attribute.
-	 * 
-	 * @param cAttr
-	 * @return
-	 */
-	public List getAttrForCAttribute(CompoundAttribute cAttr) {
-		ArrayList list = new ArrayList();
-		Set attributes = cAttr.getAttributes();
-		list.addAll(attributes);
-		AbstractAttribute.sortByName(list);
-		return list;
-	}
+//	/**
+//	 * Gets all attributes for given compound attribute.
+//	 * 
+//	 * @param cAttr
+//	 * @return
+//	 */
+//	public List getAttrForCAttribute(VisibleAttribute cAttr) {
+//		ArrayList list = new ArrayList();
+//		Set attributes = cAttr.getAttributes();
+//		list.addAll(attributes);
+//		AbstractAttribute.sortByName(list);
+//		return list;
+//	}
 
-	/**
-	 * Gets all attributes for given group.
-	 * 
-	 * @param group
-	 * @return
-	 */
-	public List getAttrForGroup(Group group) {
-		ArrayList list = new ArrayList();
-		Set cAttrs = group.getCompoundAttributes();
-		for (Iterator iter = cAttrs.iterator(); iter.hasNext();) {
-			CompoundAttribute element = (CompoundAttribute) iter.next();
-			list.addAll(this.getAttrForCAttribute(element));
-		}
-		Set attributes = group.getAttributes();
-		list.addAll(attributes);
-		return list;
-	}
+//	/**
+//	 * Gets all attributes for given group.
+//	 * 
+//	 * @param group
+//	 * @return
+//	 */
+//	public List getAttrForGroup(Group group) {
+//		ArrayList list = new ArrayList();
+//		Set cAttrs = group.getCompoundAttributes();
+//		for (Iterator iter = cAttrs.iterator(); iter.hasNext();) {
+//			CompoundAttribute element = (CompoundAttribute) iter.next();
+//			list.addAll(this.getAttrForCAttribute(element));
+//		}
+//		Set attributes = group.getAttributes();
+//		list.addAll(attributes);
+//		return list;
+//	}
 
 	/**
 	 * Gets attributes that should be used in query.
@@ -284,16 +283,18 @@ public class TableData {
 		ArrayList attributes = new ArrayList();
 		attributes.add(Voyage.getAttribute("voyageId"));
 		for (int i = 0; i < columns.size(); i++) {
-			if (columns.get(i) instanceof Group) {
-				Group group = (Group) columns.get(i);
-				attributes.addAll(this.getAttrForGroup(group));
-			} else if (columns.get(i) instanceof CompoundAttribute) {
-				CompoundAttribute cAttr = (CompoundAttribute) columns.get(i);
-				attributes.addAll(this.getAttrForCAttribute(cAttr));
-			} else {
-				Attribute attr = (Attribute) columns.get(i);
-				attributes.add(attr);
-			}
+//			if (columns.get(i) instanceof Group) {
+//				Group group = (Group) columns.get(i);
+//				attributes.addAll(this.getAttrForGroup(group));
+//			} else if (columns.get(i) instanceof CompoundAttribute) {
+//				CompoundAttribute cAttr = (CompoundAttribute) columns.get(i);
+//				attributes.addAll(this.getAttrForCAttribute(cAttr));
+//			} else {
+//				Attribute attr = (Attribute) columns.get(i);
+//				attributes.add(attr);
+//			}
+			VisibleAttribute attr = (VisibleAttribute)columns.get(i);
+			attributes.addAll(Arrays.asList(attr.getAttributes()));
 		}
 		return (Attribute[]) attributes.toArray(new Attribute[] {});
 	}
@@ -306,16 +307,18 @@ public class TableData {
 	public Attribute[] getAdditionalAttributesForQuery() {
 		ArrayList attributes = new ArrayList();
 		for (int i = 0; i < this.additionalColumns.size(); i++) {
-			if (this.additionalColumns.get(i) instanceof Group) {
-				Group group = (Group) this.additionalColumns.get(i);
-				attributes.addAll(this.getAttrForGroup(group));
-			} else if (this.additionalColumns.get(i) instanceof CompoundAttribute) {
-				CompoundAttribute cAttr = (CompoundAttribute) this.additionalColumns.get(i);
-				attributes.addAll(this.getAttrForCAttribute(cAttr));
-			} else {
-				Attribute attr = (Attribute) this.additionalColumns.get(i);
-				attributes.add(attr);
-			}
+//			if (this.additionalColumns.get(i) instanceof Group) {
+//				Group group = (Group) this.additionalColumns.get(i);
+//				attributes.addAll(this.getAttrForGroup(group));
+//			} else if (this.additionalColumns.get(i) instanceof CompoundAttribute) {
+//				CompoundAttribute cAttr = (CompoundAttribute) this.additionalColumns.get(i);
+//				attributes.addAll(this.getAttrForCAttribute(cAttr));
+//			} else {
+//				Attribute attr = (Attribute) this.additionalColumns.get(i);
+//				attributes.add(attr);
+//			}
+			VisibleAttribute attr = (VisibleAttribute)columns.get(i);
+			attributes.addAll(Arrays.asList(attr.getAttributes()));
 		}
 		return (Attribute[]) attributes.toArray(new Attribute[] {});
 	}
@@ -331,19 +334,21 @@ public class TableData {
 	 */
 	private Attribute[] getAttributesForColumn(List columns, int column) {
 		ArrayList attrs = new ArrayList();
-		if (columns.get(column) instanceof Group) {
-			// Group of attributes
-			Group group = (Group) columns.get(column);
-			attrs.addAll(this.getAttrForGroup(group));
-		} else if (columns.get(column) instanceof CompoundAttribute) {
-			// Compound attribute
-			CompoundAttribute cAttr = (CompoundAttribute) columns.get(column);
-			attrs.addAll(this.getAttrForCAttribute(cAttr));
-		} else {
-			// Simple attribute
-			Attribute attr = (Attribute) columns.get(column);
-			attrs.add(attr);
-		}
+//		if (columns.get(column) instanceof Group) {
+//			// Group of attributes
+//			Group group = (Group) columns.get(column);
+//			attrs.addAll(this.getAttrForGroup(group));
+//		} else if (columns.get(column) instanceof CompoundAttribute) {
+//			// Compound attribute
+//			CompoundAttribute cAttr = (CompoundAttribute) columns.get(column);
+//			attrs.addAll(this.getAttrForCAttribute(cAttr));
+//		} else {
+//			// Simple attribute
+//			Attribute attr = (Attribute) columns.get(column);
+//			attrs.add(attr);
+//		}
+		VisibleAttribute attr = (VisibleAttribute)columns.get(column);
+		attrs.addAll(Arrays.asList(attr.getAttributes()));
 		return (Attribute[]) attrs.toArray(new Attribute[] {});
 	}
 
@@ -392,7 +397,7 @@ public class TableData {
 	 * @param rawCols
 	 * @return
 	 */
-	private Object getSubItem(VisibleColumn column, Object[] rawRow, int[] rawCols) {
+	private Object getSubItem(VisibleAttribute column, Object[] rawRow, int[] rawCols) {
 
 		// Build tmp object array
 		Object[] tmp = getObjectTable(rawRow, rawCols);
@@ -428,13 +433,13 @@ public class TableData {
 			// Get basic columns
 			for (int j = 0; j < columns.size(); j++) {
 				int[] rawCols = this.getRangeOfAttribute(j);
-				dataColumn[j] = this.getSubItem((VisibleColumn) columns.get(j), rawRow, rawCols);
+				dataColumn[j] = this.getSubItem((VisibleAttribute) columns.get(j), rawRow, rawCols);
 			}
 
 			// Get additional columns
 			for (int j = 0; j < additionalColumns.size(); j++) {
 				int[] rawCols = this.getRangeOfAttribute(j + this.columns.size());
-				additionalDataColumn[j] = this.getSubItem((VisibleColumn) additionalColumns.get(j), rawRow, rawCols);
+				additionalDataColumn[j] = this.getSubItem((VisibleAttribute) additionalColumns.get(j), rawRow, rawCols);
 			}
 
 			// Set data and additionalData if needed.
@@ -504,7 +509,7 @@ public class TableData {
 	 * 
 	 * @return
 	 */
-	public VisibleColumn getOrderByColumn() {
+	public VisibleAttribute getOrderByColumn() {
 		return orderByColumn;
 	}
 
@@ -513,7 +518,7 @@ public class TableData {
 	 * 
 	 * @param orderByColumn
 	 */
-	public void setOrderByColumn(VisibleColumn orderByColumn) {
+	public void setOrderByColumn(VisibleAttribute orderByColumn) {
 		this.orderByColumn = orderByColumn;
 	}
 }
