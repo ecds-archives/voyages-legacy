@@ -1,10 +1,5 @@
 package edu.emory.library.tast.ui.search.query;
 
-import java.util.Iterator;
-
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class QueryConditionText extends QueryCondition
@@ -14,44 +9,13 @@ public class QueryConditionText extends QueryCondition
 	
 	private String value = "";
 	
-	public QueryConditionText(AbstractAttribute attribute)
+	public QueryConditionText(String searchableAttributeId)
 	{
-		super(attribute);
+		super(searchableAttributeId);
 	}
 	
-	private boolean addSingleAttributeToConditions(Attribute attribute, Conditions conditions, String value)
-	{
-		String localValue = value;
-		if (!localValue.endsWith("%")) localValue += "%";
-		conditions.addCondition(attribute.getName(), localValue, Conditions.OP_LIKE);
-		return true;
-	}
-
 	public boolean addToConditions(Conditions conditions, boolean markErrors) 
 	{
-
-		if (!isNonEmpty())
-			return true;
-		
-		String trimmedValue = value.trim();
-		
-		if (isOnAttribute())
-		{
-			Attribute attr = (Attribute) getAttribute();
-			addSingleAttributeToConditions(attr, conditions, trimmedValue);
-		}
-		else if (isOnCompoundAttribute())
-		{
-			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
-			Conditions orCond = new Conditions(Conditions.JOIN_OR);
-			conditions.addCondition(orCond);
-			for (Iterator iterAttr = compAttr.getAttributes().iterator(); iterAttr.hasNext();)
-			{
-				Attribute attr = (Attribute) iterAttr.next();
-				addSingleAttributeToConditions(attr, orCond, trimmedValue);
-			}
-		}
-		
 		return true;
 	}
 
@@ -86,7 +50,7 @@ public class QueryConditionText extends QueryCondition
 	
 	protected Object clone()
 	{
-		QueryConditionText newQueryCondition = new QueryConditionText(getAttribute());
+		QueryConditionText newQueryCondition = new QueryConditionText(getSearchableAttributeId());
 		newQueryCondition.setValue(value);
 		return newQueryCondition;
 	}

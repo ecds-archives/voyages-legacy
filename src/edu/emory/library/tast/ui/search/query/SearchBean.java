@@ -17,13 +17,16 @@ import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.CompoundAttribute;
-import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.MenuComponent;
 import edu.emory.library.tast.ui.MenuItem;
 import edu.emory.library.tast.ui.MenuItemMain;
 import edu.emory.library.tast.ui.MenuItemSelectedEvent;
 import edu.emory.library.tast.ui.MessageBarComponent;
+import edu.emory.library.tast.ui.search.query.searchables.Group;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.Searchables;
+import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -44,9 +47,6 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class SearchBean
 {
 	
-	private static final String SIMPLE_ATTRIBUTE_PREFIX = "simple_";
-	private static final String COMPOUND_ATTRIBUTE_PREFIX = "compound_";
-	
 	private String selectedCategory = "beginner";
 	private String selectedBeginnerGroupId;
 	private String selectedBeginnerAtttibuteId;
@@ -60,54 +60,6 @@ public class SearchBean
 	private MessageBarComponent messageBar;
 	
 	/**
-	 * Makes a nice ID for UI of a attribute. Compound attributes are prefixed
-	 * by "compound_" and simple attributes are prefixed by "simple_". This
-	 * makes it easier to reconstruct them when the page is submitted since we
-	 * know the type of the attribute.
-	 * 
-	 * @param attr
-	 *            The attribute to make the id for.
-	 * @return
-	 */
-	private String makeAttributeMenuId(AbstractAttribute attr)
-	{
-		if (attr instanceof CompoundAttribute)
-			return COMPOUND_ATTRIBUTE_PREFIX + attr.getId().toString();
-		else if (attr instanceof Attribute)
-			return SIMPLE_ATTRIBUTE_PREFIX + attr.getId().toString();
-		else
-			throw new RuntimeException("unimplemented attribute type");
-	}
-
-	/**
-	 * The complementary method to
-	 * {@link #makeAttributeMenuId(AbstractAttribute)}. It retrives the
-	 * attribute by its UI id.
-	 * 
-	 * @param attrMenuId
-	 *            The UI id of the attribute.
-	 * 
-	 * @return
-	 */
-	private AbstractAttribute getAttributeByMenuId(String attrMenuId)
-	{
-		if (attrMenuId.startsWith(SIMPLE_ATTRIBUTE_PREFIX))
-		{
-			Long attrId = new Long(attrMenuId.substring(SIMPLE_ATTRIBUTE_PREFIX.length()));
-			return Attribute.loadById(attrId);
-		}
-		else if (attrMenuId.startsWith(COMPOUND_ATTRIBUTE_PREFIX))
-		{
-			Long attrId = new Long(attrMenuId.substring(COMPOUND_ATTRIBUTE_PREFIX.length()));
-			return CompoundAttribute.loadById(attrId);
-		}
-		else
-		{
-			throw new RuntimeException("invalid menu id");
-		}
-	}
-
-	/**
 	 * Called by {@link #addQueryConditionBeginner} or
 	 * {@link #addQueryConditionGeneral()}. Inserts a new condition on the
 	 * attribute with the given ID to the current query {@link #workingQuery}.
@@ -117,7 +69,7 @@ public class SearchBean
 	 */
 	private void addQueryCondition(String selectedAttributeId)
 	{
-		workingQuery.addConditionOn(getAttributeByMenuId(selectedAttributeId));
+		workingQuery.addConditionOn(selectedAttributeId);
 	}
 	
 	/**
@@ -194,7 +146,7 @@ public class SearchBean
 		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
 			if (!queryCondition.addToConditions(conditions, false)) errors = true;
-			columns[i++] = queryCondition.getAttribute();
+			//columns[i++] = queryCondition.getSearchableAttributeId();
 		}
 		if (errors) return;
 		
@@ -351,241 +303,6 @@ public class SearchBean
 	}
 
 	/**
-	 * Called by {@link #getVoyageAttributeBeginnerGroups()} and
-	 * {@link #getMenuAttributesGeneral()}. Gets the list of attribute groups
-	 * for voyages which have at least one visible attribute for the given
-	 * category. As of this moment this method does not cache the data in any
-	 * way and leaves this to Hibernate caching meachnisms.
-	 * 
-	 * @param category
-	 *            The category of users, indicated by
-	 *            {@link AbstractAttribute#CATEGORY_BEGINNER} or
-	 *            {@link AbstractAttribute#CATEGORY_GENERAL}, for which the
-	 *            list of group is filtered.
-	 * @return
-	 */
-	private List getVoyageAttributeGroups(int category)
-	{
-		Group[] groups = Voyage.getGroups();
-		Group.sortByUserLabelOrName(groups);
-		List options = new ArrayList();
-		for (int i = 0; i < groups.length; i++)
-		{
-			Group g = groups[i];
-			if (g.noOfAllAttributesInCategory(category) > 0)
-			{
-				SelectItem option = new SelectItem();
-				option.setLabel(g.getUserLabelOrName());
-				option.setValue(g.getId().toString());
-				options.add(option);
-			}
-		}
-		return options;
-	}
-	
-	/**
-	 * Bind in UI to a dropdown with the list of groups for beginner users.
-	 * Internally calles {@link #getVoyageAttributeGroups(int)}.
-	 * 
-	 * @return The list of groups.
-	 */
-	public List getVoyageAttributeBeginnerGroups()
-	{
-		return getVoyageAttributeGroups(AbstractAttribute.CATEGORY_BEGINNER);
-	}
-	
-	/**
-	 * Bind in UI to a dropdown with the list of groups for general users.
-	 * Internally calles {@link #getVoyageAttributeGroups(int)}.
-	 * 
-	 * @return The list of groups.
-	 */
-	public List getVoyageAttributeGeneralGroups()
-	{
-		return getVoyageAttributeGroups(AbstractAttribute.CATEGORY_GENERAL);
-	}
-	
-	/**
-	 * Finds the first visible attribute group of voyages for the given user
-	 * catagory.
-	 * 
-	 * @param category
-	 *            One of {@link AbstractAttribute#CATEGORY_BEGINNER} or
-	 *            {@link AbstractAttribute#CATEGORY_GENERAL}.
-	 * @return The group.
-	 */
-	private Group getFirstVisibleGroup(int category)
-	{
-		
-		Group[] groups = Voyage.getGroups();
-		if (groups == null || groups.length == 0)
-			return null;
-		
-		Group.sortByUserLabelOrName(groups);
-		
-		for (int i = 0; i < groups.length; i++)
-		{
-			Group g = groups[i];
-			if (g.noOfAllAttributesInCategory(category) > 0)
-			{
-				return g;
-			}
-		}
-		
-		return null;
-		
-	}
-
-	/**
-	 * If <code>selectedGroupId</code> is <code>null</code> or empty, calles
-	 * {@link #getFirstVisibleGroup(int)} with the given <code>category</code>.
-	 * Otherwise, just returns the given value. Used by
-	 * {@link #getVoyageAttributes(String, int)} which is in turn used by the
-	 * dropdowns in the search UI.
-	 * 
-	 * @param selectedGroupId
-	 *            Group.
-	 * @param category
-	 *            One of {@link AbstractAttribute#CATEGORY_BEGINNER} or
-	 *            {@link AbstractAttribute#CATEGORY_GENERAL}. Used for
-	 *            {@link #getFirstVisibleGroup(int)}.
-	 * @return
-	 */
-	private String ensureSelectedGroup(String selectedGroupId, int category)
-	{
-		if (StringUtils.isNullOrEmpty(selectedGeneralGroupId))
-		{
-			Group g = getFirstVisibleGroup(category);
-			if (g != null) return g.getId().toString();
-			return null;
-		}
-		else
-		{
-			return selectedGroupId;
-		}
-	}
-
-	/**
-	 * Called by {@link #getVoyageBeginnerAttributes} and
-	 * {@link #getVoyageGeneralAttributes}. Loads the given group from db and
-	 * from its list of attributes and compound atributes creates a list of
-	 * {@link SelectItem}.
-	 * 
-	 * @param selectedGroupId
-	 *            The group whose attributes should be returned.
-	 * @param category
-	 *            User category. One of
-	 *            {@link AbstractAttribute#CATEGORY_BEGINNER} or
-	 *            {@link AbstractAttribute#CATEGORY_GENERAL}. Used for
-	 *            {@link #getFirstVisibleGroup(int)}.
-	 * @return
-	 */
-	private List getVoyageAttributes(String selectedGroupId, int category)
-	{
-		
-		if (StringUtils.isNullOrEmpty(selectedGroupId))
-			return new ArrayList();
-		
-		Group group = Group.loadById(new Long(selectedGroupId));
-		if (group == null)
-			return new ArrayList();
-
-		List options = new ArrayList();
-		
-//		CompoundAttribute[] compoundAttributes = (CompoundAttribute[]) group.getCompoundAttributes().toArray(new CompoundAttribute[0]);
-//		Attribute[] attributes = (Attribute[]) group.getAttributes().toArray(new Attribute[0]);
-//		
-//		AbstractAttribute.sortByUserLabelOrName(compoundAttributes);
-//		AbstractAttribute.sortByUserLabelOrName(attributes);
-//		
-//		for (int i = 0; i < compoundAttributes.length; i++)
-//		{
-//			CompoundAttribute a = compoundAttributes[i];
-//			if (a.isVisibleByCategory(category))
-//			{
-//				SelectItem option = new SelectItem();
-//				option.setLabel(a.getUserLabelOrName());
-//				option.setValue(COMPOUND_ATTRIBUTE_PREFIX + a.getId().toString());
-//				options.add(option);
-//			}
-//		}
-//		
-//		if (compoundAttributes.length > 0)
-//		{
-//			SelectItem sep = new SelectItem();
-//			sep.setLabel(ATTRIBUTES_LIST_SEPARATOR_TEXT);
-//			sep.setValue(ATTRIBUTES_LIST_SEPARATOR_VALUE);
-//			options.add(sep);
-//		}
-//
-//		for (int i = 0; i < attributes.length; i++)
-//		{
-//			Attribute a = attributes[i];
-//			if (a.isVisibleByCategory(category))
-//			{
-//				SelectItem option = new SelectItem();
-//				option.setLabel(a.getUserLabelOrName());
-//				option.setValue(SIMPLE_ATTRIBUTE_PREFIX + a.getId().toString());
-//				options.add(option);
-//			}
-//		}
-
-		AbstractAttribute[] allAttrs = group.getAllAttributesSortedByUserLabelOrName();
-		for (int i = 0; i < allAttrs.length; i++)
-		{
-			AbstractAttribute attr = allAttrs[i];
-			if (attr.isVisibleByCategory(category))
-			{
-				SelectItem option = new SelectItem();
-				option.setLabel(attr.getUserLabelOrName());
-				option.setValue(makeAttributeMenuId(attr));
-				options.add(option);
-			}
-		}
-
-		return options;
-
-	}
-	
-	/**
-	 * Bind to a dropdown component in UI. Returns the list of attributes in
-	 * form of {@link SelectItem} visible for beginners contaned in the group
-	 * given by {@link #selectedBeginnerGroupId}. Calls internally
-	 * {@link #getVoyageAttributes(String, int)}.
-	 * 
-	 * @return The list of attributes.
-	 */
-	public List getVoyageBeginnerAttributes()
-	{
-		selectedBeginnerGroupId = ensureSelectedGroup(
-				selectedBeginnerGroupId,
-				AbstractAttribute.CATEGORY_BEGINNER);
-		
-		return getVoyageAttributes(
-				selectedBeginnerGroupId,
-				AbstractAttribute.CATEGORY_BEGINNER);
-	}
-
-	/**
-	 * Bind to a dropdown component in UI. Returns the list of attributes in
-	 * form of {@link SelectItem} visible for general users contaned in the
-	 * group given by {@link #selectedGeneralGroupId}. Calls internally
-	 * {@link #getVoyageAttributes(String, int)}.
-	 * 
-	 * @return The list of attributes.
-	 */
-	public List getVoyageGeneralAttributes()
-	{
-		selectedGeneralGroupId = ensureSelectedGroup(
-				selectedGeneralGroupId,
-				AbstractAttribute.CATEGORY_GENERAL);
-
-		return getVoyageAttributes(
-				selectedGeneralGroupId,
-				AbstractAttribute.CATEGORY_GENERAL);
-	}
-	
-	/**
 	 * Returns a two-level menu data structure with groups in the first level
 	 * and its attributes in the second level as required by the menu component
 	 * {@link MenuComponent}.
@@ -599,15 +316,14 @@ public class SearchBean
 	private MenuItemMain[] getMenuAttributes(int category)
 	{
 		
-		Group[] groups = Voyage.getGroups();
-		Group.sortByUserLabelOrName(groups);
+		Group[] groups = Searchables.getCurrent().getGroups();
 		
 		MenuItemMain[] mainItems = new MenuItemMain[groups.length];
 		for (int i = 0; i < groups.length; i++)
 		{
 			Group group = groups[i];
-			int noOfAllAttrs = group.noOfAllAttributesInCategory(category); 
-			if (noOfAllAttrs > 0)
+			SearchableAttribute[] attributes = group.getSearchableAttributesInUserCategory(UserCategory.Beginners);
+			if (attributes != null && attributes.length > 0)
 			{
 				MenuItemMain mainItem = new MenuItemMain();
 				MenuItem[] subItems = new MenuItem[noOfAllAttrs];
@@ -630,7 +346,7 @@ public class SearchBean
 					{
 						MenuItem subItem = new MenuItem();
 						subItems[k++] = subItem;
-						subItem.setId(makeAttributeMenuId(attr));
+						subItem.setId(attr);
 						if (workingQuery != null && workingQuery.containsConditionOn(attr))
 						{
 							subItem.setText("<span class=\"attribute-selected\">" + attr.getUserLabelOrName() + "</span>");

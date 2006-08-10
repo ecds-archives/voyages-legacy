@@ -15,6 +15,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 
 public class Searchables
@@ -23,6 +24,9 @@ public class Searchables
 	private static final String SEARCHABLE_ATTRIBUTES_XML = "/searchable-attributes.xml";
 	private static final String ATTRIBUTE_GROUPS_XML = "/attribute-groups.xml";
 	
+	private static final String PORT_DICTIONARY = "TBD:locationport";
+	private static final String REGION_DICTIONARY = "TBD:locationregiondict";
+
 	private SearchableAttribute[] searchableAttributes = null;
 	private Map searchableAttributesByIds = null;
 
@@ -80,31 +84,75 @@ public class Searchables
 			if (searchableAttributesByIds.containsKey(id))
 				throw new RuntimeException("duplicate attribute id '" + id + "'");
 
-			// simple attribute -> read list of attriutes
+			// simple attribute -> read list of db attriutes
 			if ("simple".equals(type))
 			{
 				NodeList xmlAttrs = xmlSearchableAttr.getFirstChild().getChildNodes();
-				Attribute[] attrs = new Attribute[xmlAttrs.getLength()]; 
+				Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
+				
+				// read the db attributes
+				int attrType = 0;
 				for (int j = 0; j < xmlAttrs.getLength(); j++)
 				{
 					Node xmlAttr = xmlAttrs.item(j);
 					String name = xmlAttr.getAttributes().getNamedItem("name").getNodeValue();
-					attrs[j] = Voyage.getAttribute(name);
+					Attribute attr = Voyage.getAttribute(name);
+					if (j == 0)
+					{
+						attrType = attr.getType().intValue();
+					}
+					else
+					{
+						if (attrType != attr.getType().intValue())
+							throw new RuntimeException("searchable attribute '" + id + "' contains invalid attributes");
+					}
+					attrs[j] = attr;
 				}
-				searchableAttribute = new SearchableAttributeSimple(id, userLabel, userCategory, attrs);
+				
+				// create the corresponding searchable attribute
+				switch (attrType)
+				{
+					case AbstractAttribute.TYPE_DICT:
+						searchableAttribute = new SearchableAttributeSimpleDictionary(id, userLabel, userCategory, attrs);
+						break;
+					
+					case AbstractAttribute.TYPE_STRING:
+						searchableAttribute = new SearchableAttributeSimpleText(id, userLabel, userCategory, attrs);
+						break;
+					
+					case AbstractAttribute.TYPE_INTEGER:
+					case AbstractAttribute.TYPE_FLOAT:
+						searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
+						break;
+						
+					case AbstractAttribute.TYPE_DATE:
+						searchableAttribute = new SearchableAttributeSimpleDate(id, userLabel, userCategory, attrs);
+						break;
+				}
+				
 			}
 
 			// location -> read list of locations
 			else if ("location".equals(type))
 			{
 				NodeList xmlLocs = xmlSearchableAttr.getFirstChild().getChildNodes();
-				Location[] locs = new Location[xmlLocs.getLength()]; 
+				Location[] locs = new Location[xmlLocs.getLength()];
 				for (int j = 0; j < xmlLocs.getLength(); j++)
 				{
 					Node xmlLoc = xmlLocs.item(j);
+
 					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
 					String region = xmlLoc.getAttributes().getNamedItem("region").getNodeValue();
-					locs[j] = new Location(Voyage.getAttribute(port), Voyage.getAttribute(region));
+					Attribute attrPort = Voyage.getAttribute(port);
+					Attribute attrRegion = Voyage.getAttribute(region);
+					
+					if (attrPort.getType().intValue() != AbstractAttribute.TYPE_DICT ||
+							attrRegion.getType().intValue() != AbstractAttribute.TYPE_DICT || 
+							!PORT_DICTIONARY.equals(attrPort.getDictionary()) ||
+							!REGION_DICTIONARY.equals(attrRegion.getDictionary()))
+						throw new RuntimeException("searchable attribute '" + id + "' invalid location");
+					
+					locs[j] = new Location(attrPort, attrRegion);
 				}
 				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCategory, locs);
 			}
@@ -193,6 +241,16 @@ public class Searchables
 	public SearchableAttribute getSearchableAttributeById(String attributeId)
 	{
 		return (SearchableAttribute) searchableAttributesByIds.get(attributeId);
+	}
+	
+	public Group[] getGroups()
+	{
+		return groups;
+	}
+	
+	public SearchableAttribute[] getSearchableAttributes()
+	{
+		return searchableAttributes;
 	}
 	
 	public Group getGroupById(String groupId)

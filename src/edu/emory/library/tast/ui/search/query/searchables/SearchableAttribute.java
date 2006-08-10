@@ -1,5 +1,8 @@
 package edu.emory.library.tast.ui.search.query.searchables;
 
+import edu.emory.library.tast.ui.search.query.QueryCondition;
+import edu.emory.library.tast.util.query.Conditions;
+
 public abstract class SearchableAttribute
 {
 	
@@ -28,5 +31,8 @@ public abstract class SearchableAttribute
 	{
 		return userCategory;
 	}
+	
+	public abstract QueryCondition createQueryCondition();
+	public abstract boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition);
 
 }

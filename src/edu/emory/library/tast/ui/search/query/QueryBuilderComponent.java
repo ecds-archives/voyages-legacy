@@ -13,8 +13,9 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
@@ -56,6 +57,7 @@ public class QueryBuilderComponent extends UIComponentBase
 {
 
 	private static final int UPDATE_DELAY = 1000;
+	private static final String ID_SEPARATOR = ":";
 
 	private Query submittedQuery;
 	private Query setQuery;
@@ -122,33 +124,28 @@ public class QueryBuilderComponent extends UIComponentBase
 			for (int i = 0; i < submittedAttributes.length; i++)
 			{
 				
-				AbstractAttribute attribute = (AbstractAttribute)
-					AbstractAttribute.loadById(new Long(submittedAttributes[i]));
-				
-				QueryCondition queryCondition = null;
-				switch (attribute.getType().intValue())
+				SearchableAttribute attribute = Searchables.getCurrent().getSearchableAttributeById(submittedAttributes[i]);
+				QueryCondition queryCondition = attribute.createQueryCondition();
+
+				boolean ok = false;
+				if (queryCondition instanceof QueryConditionText)
 				{
-					case AbstractAttribute.TYPE_STRING:
-						queryCondition = decodeSimpleCondition(attribute, context); 
-						break;
-	
-					case AbstractAttribute.TYPE_INTEGER:
-					case AbstractAttribute.TYPE_LONG:
-					case AbstractAttribute.TYPE_FLOAT:
-						queryCondition = decodeNumericCondition(attribute, context);
-						break;
-				
-					case AbstractAttribute.TYPE_DATE:
-						queryCondition = decodeDateCondition(attribute, context);
-						break;
-	
-					case AbstractAttribute.TYPE_DICT:
-						queryCondition = decodeDictionaryCondition(attribute, context);
-						break;
+					ok = decodeSimpleCondition((QueryConditionText) queryCondition, context); 
+				}
+				else if (queryCondition instanceof QueryConditionNumeric)
+				{
+					ok = decodeNumericCondition((QueryConditionNumeric) queryCondition, context);
+				}
+				else if (queryCondition instanceof QueryConditionDate)
+				{
+					ok = decodeDateCondition((QueryConditionDate) queryCondition, context);					
+				}
+				else if (queryCondition instanceof QueryConditionDate)
+				{
+					ok = decodeDictionaryCondition((QueryConditionList) queryCondition, context);
 				}
 				
-				if (queryCondition != null)
-					submittedQuery.addCondition(queryCondition);
+				if (ok) submittedQuery.addCondition(queryCondition);
 				
 			}
 			
@@ -180,6 +177,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		Query query = getQuery();
 		
+		// start of the registration JS
 		StringBuffer regJS = new StringBuffer();
 		regJS.append("QueryBuilderGlobals.registerBuilder(new QueryBuilder(");
 		regJS.append("'").append(getClientId(context)).append("', ");
@@ -188,22 +186,25 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append("'").append(getHtmlNameForTotal(context)).append("', ");
 		regJS.append("{");
 		
+		// the list of SearchableAttributeIds for a hidden field
 		StringBuffer attributeIds = new StringBuffer();
 		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();)
 		{
 			QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
-			AbstractAttribute attribute = queryCondition.getAttribute();
 			if (attributeIds.length() > 0) attributeIds.append(",");
-			attributeIds.append(attribute.getId().toString());
+			attributeIds.append(queryCondition.getSearchableAttributeId());
 		}
-		
-		String jsUpdateTotalPostponed = generateJavaScriptForUpdateTotal(form, context, false);
-		String jsUpdateTotalImmediate = generateJavaScriptForUpdateTotal(form, context, false);
-		
+
+		// the list of SearchableAttributeIds
 		JsfUtils.encodeHiddenInput(this, writer,
 				getAttributesListHiddenFieldName(context),
 				attributeIds.toString());
+
+		// AJAX JS for updating totals
+		String jsUpdateTotalPostponed = generateJavaScriptForUpdateTotal(form, context, false);
+		String jsUpdateTotalImmediate = generateJavaScriptForUpdateTotal(form, context, false);
 		
+		// AJAX JS for updating totals
 		JsfUtils.encodeHiddenInput(this, writer,
 				getHtmlNameForTotal(context),
 				"false");
@@ -213,54 +214,42 @@ public class QueryBuilderComponent extends UIComponentBase
 		{
 			
 			QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
-			AbstractAttribute attribute = queryCondition.getAttribute();
+			String searchableAttributeId = queryCondition.getSearchableAttributeId();
 			
 			if (i > 0) regJS.append(", ");
-			regJS.append("'").append(attribute.getId()).append("': {");
+			regJS.append("'").append(searchableAttributeId).append("': {");
 			regJS.append("conditionDivId: '").append(getConditionDivId(context, queryCondition)).append("'");
 			
-			switch (attribute.getType().intValue())
+			encodeStartQueryConditionBox(queryCondition, context, form, writer);
+			if (queryCondition instanceof QueryConditionText)
 			{
-				
-				case AbstractAttribute.TYPE_STRING:
-					if (queryCondition instanceof QueryConditionText)
-					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
-						encodeSimpleCondition((QueryConditionText)queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-						encodeEndQueryConditionBox(queryCondition, context, form, writer);
-					}
-					break;
-
-				case AbstractAttribute.TYPE_INTEGER:
-				case AbstractAttribute.TYPE_LONG:
-				case AbstractAttribute.TYPE_FLOAT:
-					if (queryCondition instanceof QueryConditionNumeric)
-					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
-						encodeNumericCondition((QueryConditionNumeric) queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-						encodeEndQueryConditionBox(queryCondition, context, form, writer);
-					}
-					break;
-			
-				case AbstractAttribute.TYPE_DATE:
-					if (queryCondition instanceof QueryConditionDate)
-					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
-						encodeDateCondition((QueryConditionDate) queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-						encodeEndQueryConditionBox(queryCondition, context, form, writer);
-					}
-					break;
-
-				case AbstractAttribute.TYPE_DICT:
-					if (queryCondition instanceof QueryConditionDictionary)
-					{
-						encodeStartQueryConditionBox(queryCondition, context, form, writer);
-						encodeDictionaryCondition((QueryConditionDictionary)queryCondition, context, form, writer, jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-						encodeEndQueryConditionBox(queryCondition, context, form, writer);
-					}
-					break;
-
+				encodeSimpleCondition(
+						(QueryConditionText)queryCondition,
+						context, form, writer,
+						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
 			}
+			else if (queryCondition instanceof QueryConditionNumeric)
+			{
+				encodeNumericCondition(
+						(QueryConditionNumeric) queryCondition,
+						context, form, writer,
+						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+			}
+			else if (queryCondition instanceof QueryConditionDate)
+			{
+				encodeDateCondition(
+						(QueryConditionDate) queryCondition,
+						context, form, writer,
+						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+			}
+			else if (queryCondition instanceof QueryConditionDate)
+			{
+				encodeDictionaryCondition(
+						(QueryConditionList)queryCondition,
+						context, form, writer,
+						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+			}
+			encodeEndQueryConditionBox(queryCondition, context, form, writer);
 			
 			regJS.append("}");
 
@@ -284,7 +273,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	
 	private String getConditionDivId(FacesContext context, QueryCondition cond)
 	{
-		return getClientId(context) + "_" + cond.getAttribute().getId();
+		return getClientId(context) + "_" + cond.getSearchableAttributeId();
 	}
 	
 	private void encodeConditionButtonsStart(ResponseWriter writer) throws IOException
@@ -329,7 +318,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeConditionButtons(QueryCondition queryCondition, FacesContext context, UIForm form, ResponseWriter writer) throws IOException
 	{
 		
-		String attributeId = queryCondition.getAttribute().getId().toString();
+		String attributeId = queryCondition.getSearchableAttributeId();
 
 		StringBuffer jsDelete = new StringBuffer();
 		jsDelete.append("QueryBuilderGlobals.deleteCondition(");
@@ -482,7 +471,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.endElement("span");
 			writer.write(" ");
 		}
-		writer.write(queryCondition.getAttribute().getUserLabelOrName());
+		writer.write(queryCondition.getSearchableAttribute().getUserLabel());
 		writer.endElement("td");
 		
 		writer.startElement("td", this);
@@ -515,7 +504,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 	
-	private String getHtmlNameForSimpleValue(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForSimpleValue(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId();
 	}
@@ -523,7 +512,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeSimpleCondition(QueryConditionText queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 		
-		AbstractAttribute attribute = queryCondition.getAttribute();
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -547,49 +536,48 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 	
-	private QueryCondition decodeSimpleCondition(AbstractAttribute attribute, FacesContext context)
+	private boolean decodeSimpleCondition(QueryConditionText queryCondition, FacesContext context)
 	{
 		
-		String fieldName = getHtmlNameForSimpleValue(attribute, context); 
+		String fieldName = getHtmlNameForSimpleValue(queryCondition.getSearchableAttribute(), context); 
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		if (!params.containsKey(fieldName))
-			return null;
+			return false;
 		
 		String value = (String) params.get(fieldName);
-		QueryConditionText queryCondition = new QueryConditionText(attribute);
 		queryCondition.setValue(value);
 		
-		return queryCondition;
+		return true;
 		
 	}
 	
-	private String getHtmlNameForNumericType(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericType(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_type";
 	}
 
-	private String getHtmlNameForNumericFrom(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericFrom(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_from";
 	}
 
-	private String getHtmlNameForNumericTo(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericTo(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_to";
 	}
 
-	private String getHtmlNameForNumericLe(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericLe(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_le";
 	}
 
-	private String getHtmlNameForNumericGe(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericGe(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_ge";
 	}
 	
-	private String getHtmlNameForNumericEq(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForNumericEq(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_eq";
 	}
@@ -665,7 +653,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 
-		AbstractAttribute attribute = queryCondition.getAttribute();
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
 		
 		String tdFromId = getClientId(context) + "_" + attribute.getId() + "_td_from";
 		String tdDashId = getClientId(context) + "_" + attribute.getId() + "_td_dash";
@@ -752,12 +740,14 @@ public class QueryBuilderComponent extends UIComponentBase
 	
 	}
 
-	private QueryCondition decodeNumericCondition(AbstractAttribute attribute, FacesContext context)
+	private boolean decodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context)
 	{
+		
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		if (!params.containsKey(getHtmlNameForNumericType(attribute, context)))
-			return null;
+			return false;
 		
 		String typeStr = (String) params.get(getHtmlNameForNumericType(attribute, context));
 		String from = (String) params.get(getHtmlNameForNumericFrom(attribute, context));
@@ -785,81 +775,81 @@ public class QueryBuilderComponent extends UIComponentBase
 		}
 		else
 		{
-			return null;
+			return false;
 		}
 		
-		QueryConditionNumeric queryCondition = new QueryConditionNumeric(attribute, type);
+		queryCondition.setType(type);
 		queryCondition.setFrom(from);
 		queryCondition.setTo(to);
 		queryCondition.setLe(le);
 		queryCondition.setGe(ge);
 		queryCondition.setEq(eq);
 
-		return queryCondition;
+		return true;
 		
 	}
 
-	private String getHtmlNameForDateType(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateType(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_type";
 	}
 
-	private String getHtmlNameForDateFromMonth(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateFromMonth(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_from_month";
 	}
 
-	private String getHtmlNameForDateFromYear(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateFromYear(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_from_year";
 	}
 
-	private String getHtmlNameForDateToMonth(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateToMonth(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_to_month";
 	}
 
-	private String getHtmlNameForDateToYear(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateToYear(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_to_year";
 	}
 
-	private String getHtmlNameForDateLeMonth(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateLeMonth(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_le_month";
 	}
 
-	private String getHtmlNameForDateLeYear(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateLeYear(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_le_year";
 	}
 
-	private String getHtmlNameForDateGeMonth(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateGeMonth(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_ge_month";
 	}
 	
-	private String getHtmlNameForDateGeYear(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateGeYear(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_ge_year";
 	}
 
-	private String getHtmlNameForDateEqMonth(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateEqMonth(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_eq_month";
 	}
 
-	private String getHtmlNameForDateEqYear(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForDateEqYear(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_eq_year";
 	}
 
-	private String getHtmlNameForRangeMonth(AbstractAttribute attribute, FacesContext context, int month)
+	private String getHtmlNameForRangeMonth(SearchableAttribute attribute, FacesContext context, int month)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_month_" + month;
 	}
 	
-	private String getTdNameForMonth(FacesContext context, AbstractAttribute attribute, int month)
+	private String getTdNameForMonth(FacesContext context, SearchableAttribute attribute, int month)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_td_month_" + month;
 	}
@@ -915,7 +905,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeDateCondition(QueryConditionDate queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 
-		AbstractAttribute attribute = queryCondition.getAttribute();
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
 		
 		String tdFromMonthId = getClientId(context) + "_" + attribute.getId() + "_td_from_month";
 		String tdSlashBetweenStartId = getClientId(context) + "_" + attribute.getId() + "_td_slash_between_start";
@@ -1089,12 +1079,14 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 
-	private QueryCondition decodeDateCondition(AbstractAttribute attribute, FacesContext context)
+	private boolean decodeDateCondition(QueryConditionDate queryCondition, FacesContext context)
 	{
+		
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		if (!params.containsKey(getHtmlNameForDateType(attribute, context)))
-			return null;
+			return false;
 		
 		String typeStr = (String) params.get(getHtmlNameForDateType(attribute, context));
 		String fromMonth = (String) params.get(getHtmlNameForDateFromMonth(attribute, context));
@@ -1127,10 +1119,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		}
 		else
 		{
-			return null;
+			return false;
 		}
 		
-		QueryConditionDate queryCondition = new QueryConditionDate(attribute, type);
+		queryCondition.setType(type);
 		queryCondition.setFromMonth(fromMonth);
 		queryCondition.setFromYear(fromYear);
 		queryCondition.setToMonth(toMonth);
@@ -1142,50 +1134,160 @@ public class QueryBuilderComponent extends UIComponentBase
 		queryCondition.setEqMonth(eqMonth);
 		queryCondition.setEqYear(eqYear);
 		
-		if (attribute.getType().intValue() == AbstractAttribute.TYPE_DATE)
+		for (int i = 0; i < 12; i++)
 		{
-			for (int i = 0; i < 12; i++)
-			{
-				boolean monthSelected = JsfUtils.getParamBoolean(params, getHtmlNameForRangeMonth(attribute, context, i));
-				queryCondition.setMonthStatus(i, monthSelected);
-			}
+			boolean monthSelected = JsfUtils.getParamBoolean(params, getHtmlNameForRangeMonth(attribute, context, i));
+			queryCondition.setMonthStatus(i, monthSelected);
 		}
 		
-		return queryCondition;
+		return true;
 		
 	}
 
-	private String getHtmlNameForList(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForList(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_list";
 	}
 
-	private String getHtmlNameListItemElement(AbstractAttribute attribute, Dictionary dictItem, FacesContext context)
+	private String getHtmlNameListItemElement(SearchableAttribute attribute, FacesContext context, String fullId)
 	{
-		return getClientId(context) + "_" + attribute.getId() + "_list_td_" + dictItem.getId();
+		return getClientId(context) + "_" + attribute.getId() + "_list_td_" + fullId;
 	}
 
-	private String getHtmlNameForListCheckbox(AbstractAttribute attribute, Dictionary dictItem, FacesContext context)
+	private String getHtmlNameForListCheckbox(SearchableAttribute attribute, FacesContext context, String fullId)
 	{
-		return getClientId(context) + "_" + attribute.getId() + "_list_cb_" + dictItem.getId();
+		return getClientId(context) + "_" + attribute.getId() + "_list_cb_" + fullId;
 	}
 
-	private String getHtmlNameForListState(AbstractAttribute attribute, FacesContext context)
+	private String getHtmlNameForListState(SearchableAttribute attribute, FacesContext context)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_list_state";
 	}
-
-	private void encodeDictionaryCondition(QueryConditionDictionary queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
+	
+	private void createRegJsForListItem(SearchableAttribute attribute, FacesContext context, QueryConditionListItem item, String parentId, StringBuffer regJS)
 	{
 		
-		AbstractAttribute attribute = queryCondition.getAttribute();
+		String fullId;
+		if (!StringUtils.isNullOrEmpty(parentId))
+			fullId = "";
+		else
+			fullId = parentId + ID_SEPARATOR + item.getId();
+
+		regJS.append("'").append(item.getId()).append("': ");
+		regJS.append("{");
+		regJS.append("fullId: '").append(fullId).append("', ");
+		regJS.append("text: '").append(JsfUtils.escapeStringForJS(item.getText())).append("', ");
+		regJS.append("checkboxId: '").append(getHtmlNameForListCheckbox(attribute, context, fullId)).append("', ");
+		regJS.append("elementId: '").append(getHtmlNameListItemElement(attribute, context, fullId)).append("', ");
+		
+		if (item.getChildrenCount() > 0)
+		{
+			regJS.append("children: {");
+			QueryConditionListItem[] children = item.getChildren();
+			for (int i = 0; i < children.length; i++)
+			{
+				if (i > 0 ) regJS.append(", ");
+				createRegJsForListItem(attribute, context, children[i], fullId, regJS);
+			}
+			regJS.append("}");
+		}
+		
+		regJS.append("}");
+		
+	}
+	
+	private void appendSelectedItems(StringBuffer displayedText, QueryConditionList queryCondition, QueryConditionListItem item, String parentId)
+	{
+		
+		String fullId;
+		if (!StringUtils.isNullOrEmpty(parentId))
+			fullId = "";
+		else
+			fullId = parentId + ID_SEPARATOR + item.getId();
+		
+		if (queryCondition.containsId(fullId))
+		{
+			if (displayedText.length() > 0) displayedText.append(", ");
+			displayedText.append(item.getText());
+		}
+		
+		if (item.getChildrenCount() > 0)
+		{
+			QueryConditionListItem[] children = item.getChildren();
+			for (int i = 0; i < children.length; i++)
+				appendSelectedItems(displayedText, queryCondition, children[i], fullId);
+		}
+		
+	}
+	
+	private void encodeListItem(SearchableAttribute attribute, FacesContext context, ResponseWriter writer, String jsUpdateTotal, QueryConditionList queryCondition, QueryConditionListItem item, String parentId) throws IOException
+	{
+		
+		String fullId;
+		if (!StringUtils.isNullOrEmpty(parentId))
+			fullId = "";
+		else
+			fullId = parentId + ID_SEPARATOR + item.getId();
+		
+		writer.startElement("tr", this);
+		writer.writeAttribute("id", getHtmlNameListItemElement(attribute, context, fullId), null);
+		
+		writer.startElement("td", this);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "checkbox", null);
+		writer.writeAttribute("id", getHtmlNameForListCheckbox(attribute, context, fullId), null);
+		writer.writeAttribute("value", item.getId(), null);
+		writer.writeAttribute("onclick", jsUpdateTotal, null);
+		writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
+		if (queryCondition.containsId(fullId)) writer.writeAttribute("checked", "checked", null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		writer.write(item.getText());
+		writer.endElement("td");
+	
+		writer.endElement("tr");
+		
+		if (item.getChildrenCount() > 0)
+		{
+			QueryConditionListItem[] children = item.getChildren();
+			
+			writer.startElement("tr", this);
+			
+			writer.startElement("td", this);
+			writer.endElement("td");
+
+			writer.startElement("td", this);
+			writer.startElement("table", this);
+			writer.writeAttribute("cellspacing", "0", null);
+			writer.writeAttribute("cellpadding", "0", null);
+			writer.writeAttribute("border", "0", null);
+			writer.startElement("tr", this);
+			for (int i = 0; i < children.length; i++)
+			{
+				encodeListItem(attribute, context, writer, jsUpdateTotal, queryCondition, children[i], fullId);
+			}
+			writer.endElement("table");
+			writer.endElement("td");
+
+			writer.endElement("tr");
+		}
+		
+		
+	}
+
+	private void encodeDictionaryCondition(QueryConditionList queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
+	{
+		
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
+	
 		String showElementId = getClientId(context) + "_" + attribute.getId() + "_show";
 		String showListElementId = getClientId(context) + "_" + attribute.getId() + "_show_list";
 		String editElementId = getClientId(context) + "_" + attribute.getId() + "_edit";
 		String editListElementId = getClientId(context) + "_" + attribute.getId() + "_edit_list";
 		
-		Dictionary[] dictionary = Dictionary.loadDictionary(attribute.getDictionary());
-		StringBuffer displayList = new StringBuffer();
+		QueryConditionListItem[] allItems = ((ListItemsSource)attribute).getAvailableItems();
 
 		regJS.append(", ");
 		regJS.append("stateFieldName: '").append(getHtmlNameForListState(attribute, context)).append("'");
@@ -1201,24 +1303,16 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append("itemsField: '").append(getHtmlNameForList(attribute, context)).append("'");
 		regJS.append(", ");
 		regJS.append("items: {");
-		for (int i = 0; i < dictionary.length; i++)
+		for (int i = 0; i < allItems.length; i++)
 		{
-			Dictionary dictItem = dictionary[i];
-			if (i > 0) regJS.append(", ");
-			regJS.append("'").append(dictItem.getId()).append("': ");
-			regJS.append("{");
-			regJS.append("id: '").append(dictItem.getId()).append("', ");
-			regJS.append("text: '").append(JsfUtils.escapeStringForJS(dictItem.getName())).append("', ");
-			regJS.append("checkboxId: '").append(getHtmlNameForListCheckbox(attribute, dictItem, context)).append("', ");
-			regJS.append("elementId: '").append(getHtmlNameListItemElement(attribute, dictItem, context)).append("'");
-			regJS.append("}");
-			if (queryCondition.containsDictionary(dictItem))
-			{
-				if (displayList.length() > 0) displayList.append(", ");
-				displayList.append(dictItem.getName());
-			}
+			createRegJsForListItem(attribute, context, allItems[i], "", regJS);
 		}
 		regJS.append("}");
+
+		// selected items text
+		StringBuffer displayList = new StringBuffer();
+		for (int i = 0; i < allItems.length; i++)
+			appendSelectedItems(displayList, queryCondition, allItems[i], "");
 		
 		if (displayList.length() == 0)
 			displayList.append("[<i>nothing selected</i>]");
@@ -1326,34 +1420,11 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("border", "0", null);
-
-		// actual list
-		for (int i = 0; i < dictionary.length; i++)
-		{
-			Dictionary dictItem = dictionary[i];
-			boolean checked = queryCondition.containsDictionary(dictItem.getId());
-
-			writer.startElement("tr", this);
-			writer.writeAttribute("id", getHtmlNameListItemElement(attribute, dictItem, context), null);
-			
-			writer.startElement("td", this);
-			writer.startElement("input", this);
-			writer.writeAttribute("type", "checkbox", null);
-			writer.writeAttribute("id", getHtmlNameForListCheckbox(attribute, dictItem, context), null);
-			writer.writeAttribute("value", dictItem.getId(), null);
-			writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
-			writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
-			if (checked) writer.writeAttribute("checked", "checked", null);
-			writer.endElement("input");
-			writer.endElement("td");
-
-			writer.startElement("td", this);
-			writer.write(dictItem.getName());
-			writer.endElement("td");
 		
-			writer.endElement("tr");
-
-		}
+		// actual list
+		for (int i = 0; i < allItems.length; i++)
+			encodeListItem(attribute, context, writer, jsUpdateTotalPostponed,
+					queryCondition, allItems[i], "");
 		
 		// list: end
 		writer.endElement("table");
@@ -1403,25 +1474,24 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 
-	private QueryCondition decodeDictionaryCondition(AbstractAttribute attribute, FacesContext context)
+	private boolean decodeDictionaryCondition(QueryConditionList queryCondition, FacesContext context)
 	{
+		
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
 		
 		Map params = context.getExternalContext().getRequestParameterValuesMap();
 		String[] values = (String[]) params.get(getHtmlNameForList(attribute, context));
 		if (values == null || values.length == 0)
-			return null;
-		
-		QueryConditionDictionary queryCondition =
-			new QueryConditionDictionary(attribute);
+			return false;
 		
 		for (int i = 0; i < values.length; i++)
-			queryCondition.addDictionary(Integer.parseInt(values[i]));
+			queryCondition.addId(values[i]);
 		
 		queryCondition.setEdit(
 				JsfUtils.getParamString(context,
 						getHtmlNameForListState(attribute, context), "show").compareTo("edit") == 0);
 		
-		return queryCondition;
+		return true;
 
 	}
 	

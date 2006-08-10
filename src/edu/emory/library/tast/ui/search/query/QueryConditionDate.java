@@ -1,13 +1,7 @@
 package edu.emory.library.tast.ui.search.query;
 
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
@@ -40,169 +34,23 @@ public class QueryConditionDate extends QueryConditionRange
 	private transient String selectedMonthsAsString = null;
 	private transient Integer[] selectedMonthsAsArray = null;
 	
-	public QueryConditionDate(AbstractAttribute attribute)
+	public QueryConditionDate(String searchableAttributeId)
 	{
-		super(attribute);
+		super(searchableAttributeId);
 		fromMonth = toMonth = geMonth = leMonth = eqMonth = EMPTY_MONTH;
 		fromYear = toYear = geYear = leYear = eqYear = EMPTY_YEAR;
 	}
 
-	public QueryConditionDate(AbstractAttribute attribute, int type)
+	public QueryConditionDate(String searchableAttributeId, int type)
 	{
-		super(attribute);
+		super(searchableAttributeId);
 		this.type = type;
 	}
 
-	private Date parseDate(String monthStr, String yearStr, int roundDirection)
-	{
-
-		int month = 0;
-		int year = 0;
-	
-		if (yearStr == null)
-			return null;
-		
-		if (monthStr == null)
-			monthStr = "";
-
-		monthStr = monthStr.trim();
-		yearStr = yearStr.trim();
-		
-		if (yearStr.length() == 0)
-			return null;
-		
-		try { year = Integer.parseInt(yearStr); }
-		catch (NumberFormatException nfe) { return null; }
-		
-		if (monthStr.length() > 0)
-		{
-			try { month = Integer.parseInt(monthStr); }
-			catch (NumberFormatException nfe) { return null; }
-		}
-		else
-		{
-			if (roundDirection > 0)
-				month = 12;
-			else
-				month = 1;
-		}
-		
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(year, month - 1, 1);
-		
-		if (roundDirection > 0)
-		{
-			cal.add(Calendar.MONTH, 1);
-			cal.add(Calendar.DATE, -1);
-		}
-
-		return cal.getTime();
-		
-	}
-
-	private void addSingleAttributeToConditions(Attribute attribute, Conditions conditions, Date fromDateQuery, Date toDateQuery)
-	{
-		switch (type)
-		{
-			case QueryConditionNumeric.TYPE_BETWEEN:
-			case QueryConditionNumeric.TYPE_EQ:
-				conditions.addCondition(attribute.getName(), fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
-				conditions.addCondition(attribute.getName(), toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
-				break;
-
-			case QueryConditionNumeric.TYPE_LE:
-				conditions.addCondition(attribute.getName(), toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
-				break;
-				
-			case QueryConditionNumeric.TYPE_GE:
-				conditions.addCondition(attribute.getName(), fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
-				break;
-
-		}
-		
-		if (!areAllMonthsSelected())
-			conditions.addCondition(
-					"date_part('month', " + attribute.getName() + ")",
-					getSelectedMonthsAsArray(),
-					Conditions.OP_IN);
-		
-	}
-	
 	public boolean addToConditions(Conditions conditions, boolean markErrors)
 	{
 
-		Date fromDateQuery = null;
-		Date toDateQuery = null;
-		
-		if (noMonthSelected())
-		{
-			if (markErrors) setErrorFlag(true);
-			return false;
-		}
-
-		switch (type)
-		{
-
-			case QueryConditionNumeric.TYPE_BETWEEN:
-				fromDateQuery = parseDate(fromMonth, fromYear, -1);
-				toDateQuery = parseDate(toMonth, toYear, 1);
-				if (fromDateQuery == null || toDateQuery == null) 
-				{
-					if (markErrors) setErrorFlag(true);
-					return false;
-				}
-				break;
-
-			case QueryConditionNumeric.TYPE_LE:
-				toDateQuery = parseDate(leMonth, leYear, 1);
-				if (toDateQuery == null)
-				{
-					if (markErrors) setErrorFlag(true);
-					return false;
-				}
-				break;
-				
-			case QueryConditionNumeric.TYPE_GE:
-				fromDateQuery = parseDate(geMonth, geYear, -1);
-				if (fromDateQuery == null)
-				{
-					if (markErrors) setErrorFlag(true);
-					return false;
-				}
-				break;
-
-			case QueryConditionNumeric.TYPE_EQ:
-				fromDateQuery = parseDate(eqMonth, eqYear, -1);
-				toDateQuery = parseDate(eqMonth, eqYear, 1);
-				if (fromDateQuery == null || toDateQuery == null) 
-				{
-					if (markErrors) setErrorFlag(true);
-					return false;
-				}
-				break;
-
-		}
-		
-		if (isOnAttribute())
-		{
-			Attribute attr = (Attribute) getAttribute();
-			addSingleAttributeToConditions(attr, conditions, fromDateQuery, toDateQuery);
-		}
-		else if (isOnCompoundAttribute())
-		{
-			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
-			Conditions orCond = new Conditions(Conditions.JOIN_OR);
-			conditions.addCondition(orCond);
-			for (Iterator iterAttr = compAttr.getAttributes().iterator(); iterAttr.hasNext();)
-			{
-				Attribute attr = (Attribute) iterAttr.next();
-				addSingleAttributeToConditions(attr, orCond, fromDateQuery, toDateQuery);
-			}
-		}
-		
 		return true;
-		
 	}
 	
 	private void resetPrecomputedMonthsInfo()
@@ -490,7 +338,7 @@ public class QueryConditionDate extends QueryConditionRange
 
 	protected Object clone()
 	{
-		QueryConditionDate newQueryCondition = new QueryConditionDate(getAttribute(), getType());
+		QueryConditionDate newQueryCondition = new QueryConditionDate(getSearchableAttributeId(), getType());
 		
 		newQueryCondition.setType(type);
 		newQueryCondition.setFromMonth(fromMonth);

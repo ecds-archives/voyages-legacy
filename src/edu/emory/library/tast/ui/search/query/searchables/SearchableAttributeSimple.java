@@ -2,15 +2,25 @@ package edu.emory.library.tast.ui.search.query.searchables;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 
-public class SearchableAttributeSimple extends SearchableAttribute
+public abstract class SearchableAttributeSimple extends SearchableAttribute
 {
 	
 	private Attribute[] attributes;
+	private int attributeType;
 
 	public SearchableAttributeSimple(String id, String userLabel, UserCategory userCategory, Attribute[] attributes)
 	{
 		super(id, userLabel, userCategory);
-		this.attributes = attributes != null ? attributes : new Attribute[0];
+		if (attributes != null || attributes.length == 0)
+		{
+			this.attributes = new Attribute[0];
+			this.attributeType = -1;
+		}
+		else
+		{
+			this.attributes = attributes;
+			this.attributeType = attributes[0].getType().intValue();
+		}
 	}
 	
 	public int getAtrributesCount()
@@ -21,6 +31,11 @@ public class SearchableAttributeSimple extends SearchableAttribute
 	public Attribute[] getAttributes()
 	{
 		return attributes;
+	}
+
+	public int getAttributeType()
+	{
+		return attributeType;
 	}
 
 }

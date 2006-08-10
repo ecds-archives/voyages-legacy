@@ -1,14 +1,5 @@
 package edu.emory.library.tast.ui.search.query;
 
-import java.util.Iterator;
-
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class QueryConditionNumeric extends QueryConditionRange
@@ -22,139 +13,20 @@ public class QueryConditionNumeric extends QueryConditionRange
 	private String le;
 	private String eq;
 	
-	public QueryConditionNumeric(AbstractAttribute attribute)
+	public QueryConditionNumeric(String searchableAttributeId)
 	{
-		super(attribute);
+		super(searchableAttributeId);
 	}
 
-	public QueryConditionNumeric(AbstractAttribute attribute, int type)
+	public QueryConditionNumeric(String searchableAttributeId, int type)
 	{
-		super(attribute);
+		super(searchableAttributeId);
 		this.type = type;
-	}
-
-	public void addSingleAttributeToConditions(Attribute attribute, Conditions conditions, Object fromConverted, Object toConverted, Object leConverted, Object geConverted, Object eqConverted)
-	{
-		switch (type)
-		{
-			case QueryConditionNumeric.TYPE_BETWEEN:
-				conditions.addCondition(attribute.getName(), fromConverted, Conditions.OP_GREATER_OR_EQUAL);
-				conditions.addCondition(attribute.getName(), toConverted, Conditions.OP_SMALLER_OR_EQUAL);
-				break;
-
-			case QueryConditionNumeric.TYPE_LE:
-				conditions.addCondition(attribute.getName(), leConverted, Conditions.OP_SMALLER_OR_EQUAL);
-				break;
-				
-			case QueryConditionNumeric.TYPE_GE:
-				conditions.addCondition(attribute.getName(), geConverted, Conditions.OP_GREATER_OR_EQUAL);
-				break;
-
-			case QueryConditionNumeric.TYPE_EQ:
-				conditions.addCondition(attribute.getName(), eqConverted, Conditions.OP_EQUALS);
-				break;
-		}
 	}
 
 	public boolean addToConditions(Conditions conditions, boolean markErrors)
 	{
-
-		AbstractAttribute attribute = getAttribute();
-		
-		Object fromConverted = null;
-		Object toConverted = null;
-		Object leConverted = null;
-		Object geConverted = null;
-		Object eqConverted = null;
-
-		try
-		{
-
-			switch (type)
-			{
-	
-				case QueryConditionNumeric.TYPE_BETWEEN:
-					fromConverted = attribute.parse(from);
-					toConverted = attribute.parse(to);
-					if (fromConverted == null || toConverted == null) 
-					{
-						if (markErrors) setErrorFlag(true);
-						return false;
-					}
-					break;
-	
-				case QueryConditionNumeric.TYPE_LE:
-					leConverted = attribute.parse(le);
-					if (leConverted == null)
-					{
-						if (markErrors) setErrorFlag(true);
-						return false;
-					}
-					break;
-					
-				case QueryConditionNumeric.TYPE_GE:
-					geConverted = attribute.parse(ge);
-					if (geConverted == null)
-					{
-						if (markErrors) setErrorFlag(true);
-						return false;
-					}
-					break;
-	
-				case QueryConditionNumeric.TYPE_EQ:
-					eqConverted = attribute.parse(eq);
-					if (eqConverted == null)
-					{
-						if (markErrors) setErrorFlag(true);
-						return false;
-					}
-					break;
-	
-			}
-			
-		}
-		catch (InvalidNumberOfValuesException e)
-		{
-			if (markErrors) setErrorFlag(true);
-			return false;
-		}
-		catch (InvalidNumberException e)
-		{
-			if (markErrors) setErrorFlag(true);
-			return false;
-		}
-		catch (InvalidDateException e)
-		{
-			if (markErrors) setErrorFlag(true);
-			return false;
-		}
-		catch (StringTooLongException e)
-		{
-			if (markErrors) setErrorFlag(true);
-			return false;
-		}
-		
-		if (isOnAttribute())
-		{
-			Attribute attr = (Attribute) getAttribute();
-			addSingleAttributeToConditions(attr, conditions,
-					fromConverted, toConverted, leConverted, geConverted, eqConverted);
-		}
-		else if (isOnCompoundAttribute())
-		{
-			CompoundAttribute compAttr = (CompoundAttribute) getAttribute();
-			Conditions orCond = new Conditions(Conditions.JOIN_OR);
-			conditions.addCondition(orCond);
-			for (Iterator iterAttr = compAttr.getAttributes().iterator(); iterAttr.hasNext();)
-			{
-				Attribute attr = (Attribute) iterAttr.next();
-				addSingleAttributeToConditions(attr, orCond,
-						fromConverted, toConverted, leConverted, geConverted, eqConverted);
-			}
-		}
-		
 		return true;
-		
 	}
 	
 	public String getEq()
@@ -256,7 +128,7 @@ public class QueryConditionNumeric extends QueryConditionRange
 	
 	protected Object clone()
 	{
-		QueryConditionNumeric newQueryCondition = new QueryConditionNumeric(getAttribute(), getType());
+		QueryConditionNumeric newQueryCondition = new QueryConditionNumeric(getSearchableAttributeId(), getType());
 		newQueryCondition.setType(type);
 		newQueryCondition.setFrom(from);
 		newQueryCondition.setTo(to);

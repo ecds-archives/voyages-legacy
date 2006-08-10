@@ -297,7 +297,7 @@ public class HistoryListComponent extends UIComponentBase
 			for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
 			{
 				QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-				writer.write(queryCondition.getAttribute().getUserLabel());
+				writer.write(queryCondition.getSearchableAttribute().getUserLabel());
 				
 				if (queryCondition instanceof QueryConditionText)
 				{
@@ -357,13 +357,13 @@ public class HistoryListComponent extends UIComponentBase
 					
 				}
 				
-				else if (queryCondition instanceof QueryConditionDictionary)
+				else if (queryCondition instanceof QueryConditionList)
 				{
-					QueryConditionDictionary queryConditionList = (QueryConditionDictionary) queryCondition;
+					QueryConditionList queryConditionList = (QueryConditionList) queryCondition;
 					writer.write(" is ");
-					if (queryConditionList.getDictionaries().size() > 0)
+					if (queryConditionList.getSelectedIds().size() > 0)
 					{
-						for (Iterator iterDict = queryConditionList.getDictionaries().entrySet().iterator(); iterDict.hasNext();)
+						for (Iterator iterDict = queryConditionList.getSelectedIds().iterator(); iterDict.hasNext();)
 						{
 							Dictionary dict = (Dictionary) ((Map.Entry)iterDict.next()).getValue();
 							writer.startElement("b", this);

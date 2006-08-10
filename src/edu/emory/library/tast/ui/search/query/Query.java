@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import edu.emory.library.tast.dm.attributes.AbstractAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 
 /**
  * Holds the list of conditions, i.e. objects of types
@@ -36,7 +38,7 @@ public class Query implements Serializable
 			for (Iterator iter = conditions.iterator(); iter.hasNext();)
 			{
 				QueryCondition queryCondition = (QueryCondition) iter.next();
-				conditionsByAttributes.put(queryCondition.getAttribute(), queryCondition);
+				conditionsByAttributes.put(queryCondition.getSearchableAttributeId(), queryCondition);
 			}
 		}
 	}
@@ -49,37 +51,18 @@ public class Query implements Serializable
 		conditions.add(queryCondition);
 		
 		ensureMap();
-		conditionsByAttributes.put(queryCondition.getAttribute(), queryCondition);
+		conditionsByAttributes.put(queryCondition.getSearchableAttributeId(), queryCondition);
 	
 	}
 	
-	public boolean addConditionOn(AbstractAttribute attribute)
+	public boolean addConditionOn(String searchableAttributeId)
 	{
 		
-		if (containsConditionOn(attribute))
+		if (containsConditionOn(searchableAttributeId))
 			return false;
 		
-		QueryCondition queryCondition = null;
-		switch (attribute.getType().intValue())
-		{
-			case AbstractAttribute.TYPE_STRING:
-				queryCondition = new QueryConditionText(attribute);
-				break;
-				
-			case AbstractAttribute.TYPE_INTEGER:
-			case AbstractAttribute.TYPE_LONG:
-			case AbstractAttribute.TYPE_FLOAT:
-				queryCondition = new QueryConditionNumeric(attribute);
-				break;
-				
-			case AbstractAttribute.TYPE_DATE:
-				queryCondition = new QueryConditionDate(attribute);
-				break;
-
-			case AbstractAttribute.TYPE_DICT:
-				queryCondition = new QueryConditionDictionary(attribute);
-				break;
-		}
+		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById("searchableAttributeId");
+		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
 		
 		if (queryCondition != null)
 		{
@@ -109,10 +92,10 @@ public class Query implements Serializable
 		return conditions.size();
 	}
 	
-	public boolean containsConditionOn(AbstractAttribute attribute)
+	public boolean containsConditionOn(String searchableAttributeId)
 	{
 		ensureMap();
-		return conditionsByAttributes.containsKey(attribute);
+		return conditionsByAttributes.containsKey(searchableAttributeId);
 	}
 
 	public QueryCondition getCondition(AbstractAttribute attribute)

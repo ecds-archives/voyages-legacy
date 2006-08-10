@@ -2,9 +2,9 @@ package edu.emory.library.tast.ui.search.query;
 
 import java.io.Serializable;
 
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.Searchables;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -22,15 +22,15 @@ import edu.emory.library.tast.util.query.Conditions;
 public abstract class QueryCondition implements Serializable
 {
 	
-	private AbstractAttribute attribute;
+	private String searchableAttributeId;
 	private transient boolean errorFlag;
 
 	public abstract boolean addToConditions(Conditions conditions, boolean markErrors);
 	protected abstract Object clone();
 
-	public QueryCondition(AbstractAttribute attribute)
+	public QueryCondition(String searchableAttributeId)
 	{
-		this.attribute = attribute;
+		this.searchableAttributeId = searchableAttributeId;
 		this.errorFlag = false;
 	}
 
@@ -47,28 +47,18 @@ public abstract class QueryCondition implements Serializable
 	public boolean equals(Object obj)
 	{
 		if (obj == null || !(obj instanceof QueryCondition)) return false;
-		QueryCondition theOther = (QueryCondition) obj;
-		return attribute.equals(theOther.getAttribute());
+		QueryCondition that = (QueryCondition) obj;
+		return StringUtils.compareStrings(this.searchableAttributeId, that.searchableAttributeId);
 	}
 	
-	public boolean isOnAttribute()
+	public String getSearchableAttributeId()
 	{
-		return attribute instanceof Attribute;
+		return searchableAttributeId;
 	}
 	
-	public boolean isOnCompoundAttribute()
+	public SearchableAttribute getSearchableAttribute()
 	{
-		return attribute instanceof CompoundAttribute;
+		return Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
 	}
 
-	public AbstractAttribute getAttribute()
-	{
-		return attribute;
-	}
-	
-	public void setAttribute(AbstractAttribute attribute)
-	{
-		this.attribute = attribute;
-	}
-	
 }

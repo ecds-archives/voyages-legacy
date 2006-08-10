@@ -1,6 +1,5 @@
 package edu.emory.library.tast.ui.search.query;
 
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.util.query.Conditions;
 
 public abstract class QueryConditionRange extends QueryCondition
@@ -13,15 +12,15 @@ public abstract class QueryConditionRange extends QueryCondition
 	
 	protected int type = TYPE_BETWEEN;
 
-	public QueryConditionRange(AbstractAttribute attribute)
+	public QueryConditionRange(String searchableAttributeId)
 	{
-		super(attribute);
+		super(searchableAttributeId);
 		this.type = TYPE_BETWEEN;
 	}
 
-	public QueryConditionRange(AbstractAttribute attribute, int type)
+	public QueryConditionRange(String searchableAttributeId, int type)
 	{
-		super(attribute);
+		super(searchableAttributeId);
 		this.type = type;
 	}
 

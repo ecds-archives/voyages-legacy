@@ -55,5 +55,21 @@ public class StringUtils
 		}
 		return buffer.toString();
 	}
+	
+	public static boolean compareStrings(String s1, String s2)
+	{
+		if (s1 == null && s2 == null)
+		{
+			return true;
+		}
+		else if (s1 != null)
+		{
+			 return s1.equals(s2);
+		}
+		else
+		{
+			 return s2.equals(s1);
+		}
+	}
 
 }
