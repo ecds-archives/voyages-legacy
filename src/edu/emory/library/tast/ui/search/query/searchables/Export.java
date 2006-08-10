@@ -101,12 +101,14 @@ public class Export
 			String userLabel = rs.getString("userLabel");
 			
 			System.out.println("\t<group id=\"" + id + "\" userLabel=\"" + userLabel + "\">");
+		
+			System.out.println("\t\t<searchable-attributes>");
 			
 			Statement stAttrs = connSec.createStatement();
 			ResultSet rsAttrs = stAttrs.executeQuery("SELECT attributes.attr_name AS id from attributes INNER JOIN group_attributes ON attributes.iid=group_attributes.r_attribute_id WHERE group_attributes.r_group_id = " + iid);
 			while (rsAttrs.next())
 			{
-				System.out.println("\t\t<searchable-attribute id=\"" + rsAttrs.getString("id") + "\"/>");
+				System.out.println("\t\t\t<searchable-attribute id=\"" + rsAttrs.getString("id") + "\"/>");
 			}
 			rsAttrs.close();
 			
@@ -114,9 +116,32 @@ public class Export
 			ResultSet rsCompAttrs = stCompAttrs.executeQuery("SELECT compound_attributes.name AS id from compound_attributes INNER JOIN group_compound_attributes ON compound_attributes.iid=group_compound_attributes.r_compound_attribute_id WHERE group_compound_attributes.r_group_id = " + iid);
 			while (rsCompAttrs.next())
 			{
-				System.out.println("\t\t<searchable-attribute id=\"" + rsCompAttrs.getString("id") + "\"/>");
+				System.out.println("\t\t\t<searchable-attribute id=\"" + rsCompAttrs.getString("id") + "\"/>");
 			}
 			rsCompAttrs.close();
+			
+			System.out.println("\t\t</searchable-attributes>");
+			
+			
+			System.out.println("\t\t<table-attributes>");
+			rsAttrs = stAttrs.executeQuery("SELECT attributes.attr_name AS id from attributes INNER JOIN group_attributes ON attributes.iid=group_attributes.r_attribute_id WHERE group_attributes.r_group_id = " + iid);
+			while (rsAttrs.next())
+			{
+				System.out.println("\t\t\t<table-attribute id=\"" + rsAttrs.getString("id") + "\"/>");
+			}
+			rsAttrs.close();
+			
+			rsCompAttrs = stCompAttrs.executeQuery("SELECT compound_attributes.name AS id from compound_attributes INNER JOIN group_compound_attributes ON compound_attributes.iid=group_compound_attributes.r_compound_attribute_id WHERE group_compound_attributes.r_group_id = " + iid);
+			while (rsCompAttrs.next())
+			{
+				System.out.println("\t\t\t<table-attribute id=\"" + rsCompAttrs.getString("id") + "\"/>");
+			}
+			rsCompAttrs.close();
+			System.out.println("\t\t</table-attributes>");
+			
+			
+			
+			
 
 			System.out.println("\t</group>");
 
@@ -132,7 +157,7 @@ public class Export
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
 		Class.forName("org.postgresql.Driver");
-		exportAttributes();
+		//exportAttributes();
 		exportGroups();
 	}
 

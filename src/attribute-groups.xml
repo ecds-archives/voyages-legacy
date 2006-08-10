@@ -2,15 +2,20 @@
 <!DOCTYPE groups [
 
 <!ELEMENT groups (group*)>
-<!ELEMENT group (searchable-attributes)>
+<!ELEMENT group (searchable-attributes, table-attributes)>
 <!ELEMENT searchable-attributes (searchable-attribute+)>
+<!ELEMENT table-attributes (table-attribute+)>
 <!ELEMENT searchable-attribute EMPTY>
+<!ELEMENT table-attribute EMPTY>
 
 <!ATTLIST group
 	id CDATA #REQUIRED
 	userLabel CDATA #REQUIRED>
 
 <!ATTLIST searchable-attribute
+	id CDATA #REQUIRED>
+
+<!ATTLIST table-attribute
 	id CDATA #REQUIRED>
 
 ]>
@@ -60,6 +65,49 @@
 			<searchable-attribute id="datarr33"/>
 			<searchable-attribute id="ncr17imp"/>
 		</searchable-attributes>
+		<table-attributes>
+			<table-attribute id="yearam"/>
+			<table-attribute id="voyageId"/>
+			<table-attribute id="shipname"/>
+			<table-attribute id="sladvoy"/>
+			<table-attribute id="slaarriv"/>
+			<table-attribute id="slas32"/>
+			<table-attribute id="slas36"/>
+			<table-attribute id="slas39"/>
+			<table-attribute id="ncar13"/>
+			<table-attribute id="ncar15"/>
+			<table-attribute id="ncar17"/>
+			<table-attribute id="vymrtimp"/>
+			<table-attribute id="womrat7"/>
+			<table-attribute id="girlrat7"/>
+			<table-attribute id="boyrat7"/>
+			<table-attribute id="jamcaspr"/>
+			<table-attribute id="adpsale1"/>
+			<table-attribute id="adpsale2"/>
+			<table-attribute id="crew1"/>
+			<table-attribute id="crew3"/>
+			<table-attribute id="crewdied"/>
+			<table-attribute id="d1slatr"/>
+			<table-attribute id="ddepamb"/>
+			<table-attribute id="fate"/>
+			<table-attribute id="fate2"/>
+			<table-attribute id="insurrec"/>
+			<table-attribute id="malrat7"/>
+			<table-attribute id="sla32imp"/>
+			<table-attribute id="sla36imp"/>
+			<table-attribute id="sla39imp"/>
+			<table-attribute id="slamimp"/>
+			<table-attribute id="slaximp"/>
+			<table-attribute id="timslave"/>
+			<table-attribute id="voy2imp"/>
+			<table-attribute id="vymrtrat"/>
+			<table-attribute id="ncr15imp"/>
+			<table-attribute id="rountrip"/>
+			<table-attribute id="datarr4"/>
+			<table-attribute id="datarr32"/>
+			<table-attribute id="datarr33"/>
+			<table-attribute id="ncr17imp"/>
+		</table-attributes>
 	</group>
 	<group id="geography" userLabel="Geography">
 		<searchable-attributes>
@@ -91,6 +139,35 @@
 			<searchable-attribute id="portdep"/>
 			<searchable-attribute id="portret"/>
 		</searchable-attributes>
+		<table-attributes>
+			<table-attribute id="yearam"/>
+			<table-attribute id="voyageId"/>
+			<table-attribute id="shipname"/>
+			<table-attribute id="arrport"/>
+			<table-attribute id="embport"/>
+			<table-attribute id="regem1"/>
+			<table-attribute id="regem2"/>
+			<table-attribute id="regem3"/>
+			<table-attribute id="majbuyrg"/>
+			<table-attribute id="regdis2"/>
+			<table-attribute id="regdis3"/>
+			<table-attribute id="majselrg"/>
+			<table-attribute id="xmimpflag"/>
+			<table-attribute id="adpsale1"/>
+			<table-attribute id="adpsale2"/>
+			<table-attribute id="deptreg"/>
+			<table-attribute id="majselpt"/>
+			<table-attribute id="majbyimp"/>
+			<table-attribute id="mjselimp"/>
+			<table-attribute id="regdis1"/>
+			<table-attribute id="sla1port"/>
+			<table-attribute id="majbuypt"/>
+			<table-attribute id="plac1tra"/>
+			<table-attribute id="plac2tra"/>
+			<table-attribute id="plac3tra"/>
+			<table-attribute id="portdep"/>
+			<table-attribute id="portret"/>
+		</table-attributes>
 	</group>
 	<group id="ship" userLabel="Ship">
 		<searchable-attributes>
@@ -136,6 +213,49 @@
 			<searchable-attribute id="anycaptain"/>
 			<searchable-attribute id="anyowner"/>
 		</searchable-attributes>
+		<table-attributes>
+			<table-attribute id="yearam"/>
+			<table-attribute id="voyageId"/>
+			<table-attribute id="natinimp"/>
+			<table-attribute id="shipname"/>
+			<table-attribute id="rig"/>
+			<table-attribute id="tonnage"/>
+			<table-attribute id="guns"/>
+			<table-attribute id="placcons"/>
+			<table-attribute id="tonmod"/>
+			<table-attribute id="evgreen"/>
+			<table-attribute id="xmimpflag"/>
+			<table-attribute id="datedep"/>
+			<table-attribute id="fate"/>
+			<table-attribute id="fate4"/>
+			<table-attribute id="timslave"/>
+			<table-attribute id="rountrip"/>
+			<table-attribute id="captaina"/>
+			<table-attribute id="captainb"/>
+			<table-attribute id="captainc"/>
+			<table-attribute id="ownera"/>
+			<table-attribute id="ownerf"/>
+			<table-attribute id="ownerb"/>
+			<table-attribute id="ownerc"/>
+			<table-attribute id="ownerd"/>
+			<table-attribute id="ownere"/>
+			<table-attribute id="ownerg"/>
+			<table-attribute id="ownerh"/>
+			<table-attribute id="owneri"/>
+			<table-attribute id="ownerj"/>
+			<table-attribute id="ownerk"/>
+			<table-attribute id="ownerl"/>
+			<table-attribute id="ownerm"/>
+			<table-attribute id="ownern"/>
+			<table-attribute id="ownero"/>
+			<table-attribute id="ownerp"/>
+			<table-attribute id="datarr4"/>
+			<table-attribute id="fate3"/>
+			<table-attribute id="portdep"/>
+			<table-attribute id="portret"/>
+			<table-attribute id="anycaptain"/>
+			<table-attribute id="anyowner"/>
+		</table-attributes>
 	</group>
 	<group id="personnel" userLabel="Ship Personnel">
 		<searchable-attributes>
@@ -152,6 +272,20 @@
 			<searchable-attribute id="anycaptain"/>
 			<searchable-attribute id="anyowner"/>
 		</searchable-attributes>
+		<table-attributes>
+			<table-attribute id="yearam"/>
+			<table-attribute id="voyageId"/>
+			<table-attribute id="shipname"/>
+			<table-attribute id="crew1"/>
+			<table-attribute id="crew3"/>
+			<table-attribute id="crewdied"/>
+			<table-attribute id="timslave"/>
+			<table-attribute id="rountrip"/>
+			<table-attribute id="portdep"/>
+			<table-attribute id="portret"/>
+			<table-attribute id="anycaptain"/>
+			<table-attribute id="anyowner"/>
+		</table-attributes>
 	</group>
 	<group id="slaves" userLabel="Slaves">
 		<searchable-attributes>
@@ -211,6 +345,63 @@
 			<searchable-attribute id="plac2tra"/>
 			<searchable-attribute id="plac3tra"/>
 		</searchable-attributes>
+		<table-attributes>
+			<table-attribute id="yearam"/>
+			<table-attribute id="voyageId"/>
+			<table-attribute id="shipname"/>
+			<table-attribute id="tslavesd"/>
+			<table-attribute id="sladvoy"/>
+			<table-attribute id="slaarriv"/>
+			<table-attribute id="slas32"/>
+			<table-attribute id="slas36"/>
+			<table-attribute id="slas39"/>
+			<table-attribute id="slintend"/>
+			<table-attribute id="ncar13"/>
+			<table-attribute id="ncar15"/>
+			<table-attribute id="ncar17"/>
+			<table-attribute id="vymrtimp"/>
+			<table-attribute id="regem1"/>
+			<table-attribute id="regem2"/>
+			<table-attribute id="regem3"/>
+			<table-attribute id="majbuyrg"/>
+			<table-attribute id="regdis2"/>
+			<table-attribute id="regdis3"/>
+			<table-attribute id="majselrg"/>
+			<table-attribute id="price"/>
+			<table-attribute id="womrat7"/>
+			<table-attribute id="menrat7"/>
+			<table-attribute id="girlrat7"/>
+			<table-attribute id="boyrat7"/>
+			<table-attribute id="jamcaspr"/>
+			<table-attribute id="adpsale1"/>
+			<table-attribute id="adpsale2"/>
+			<table-attribute id="chilrat7"/>
+			<table-attribute id="d1slatr"/>
+			<table-attribute id="ddepamb"/>
+			<table-attribute id="fate"/>
+			<table-attribute id="fate2"/>
+			<table-attribute id="insurrec"/>
+			<table-attribute id="majselpt"/>
+			<table-attribute id="malrat7"/>
+			<table-attribute id="majbyimp"/>
+			<table-attribute id="mjselimp"/>
+			<table-attribute id="regdis1"/>
+			<table-attribute id="sla1port"/>
+			<table-attribute id="sla32imp"/>
+			<table-attribute id="sla36imp"/>
+			<table-attribute id="sla39imp"/>
+			<table-attribute id="slamimp"/>
+			<table-attribute id="slaximp"/>
+			<table-attribute id="vymrtrat"/>
+			<table-attribute id="ncr15imp"/>
+			<table-attribute id="datarr32"/>
+			<table-attribute id="datarr33"/>
+			<table-attribute id="majbuypt"/>
+			<table-attribute id="ncr17imp"/>
+			<table-attribute id="plac1tra"/>
+			<table-attribute id="plac2tra"/>
+			<table-attribute id="plac3tra"/>
+		</table-attributes>
 	</group>
 	<group id="sources" userLabel="Sources">
 		<searchable-attributes>
@@ -236,5 +427,28 @@
 			<searchable-attribute id="sourcee"/>
 			<searchable-attribute id="sourcef"/>
 		</searchable-attributes>
+		<table-attributes>
+			<table-attribute id="yearam"/>
+			<table-attribute id="voyageId"/>
+			<table-attribute id="shipname"/>
+			<table-attribute id="sourceg"/>
+			<table-attribute id="sourceh"/>
+			<table-attribute id="sourcei"/>
+			<table-attribute id="sourcej"/>
+			<table-attribute id="sourcek"/>
+			<table-attribute id="sourcel"/>
+			<table-attribute id="sourcem"/>
+			<table-attribute id="sourcen"/>
+			<table-attribute id="sourceo"/>
+			<table-attribute id="sourcep"/>
+			<table-attribute id="sourceq"/>
+			<table-attribute id="sourcer"/>
+			<table-attribute id="sourcea"/>
+			<table-attribute id="sourceb"/>
+			<table-attribute id="sourcec"/>
+			<table-attribute id="sourced"/>
+			<table-attribute id="sourcee"/>
+			<table-attribute id="sourcef"/>
+		</table-attributes>
 	</group>
 </groups>
