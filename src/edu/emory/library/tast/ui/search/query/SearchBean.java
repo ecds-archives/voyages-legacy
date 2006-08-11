@@ -1,18 +1,14 @@
 package edu.emory.library.tast.ui.search.query;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
 
 import edu.emory.library.tast.dm.Configuration;
-import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -47,11 +43,7 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class SearchBean
 {
 	
-	private String selectedCategory = "beginner";
-	private String selectedBeginnerGroupId;
-	private String selectedBeginnerAtttibuteId;
-	private String selectedGeneralGroupId;
-	private String selectedGeneralAtttibuteId;
+	private UserCategory selectedCategory = UserCategory.Beginners;
 
 	private History history = new History();
 	private Query workingQuery = new Query();
@@ -70,30 +62,6 @@ public class SearchBean
 	private void addQueryCondition(String selectedAttributeId)
 	{
 		workingQuery.addConditionOn(selectedAttributeId);
-	}
-	
-	/**
-	 * Bind a button in UI. Activated when the user adds a new condition to a
-	 * query in the beginner mode.
-	 * 
-	 * @return Always <code>null</code>, i.e. we stay on the same page.
-	 */
-	public String addQueryConditionBeginner()
-	{
-		addQueryCondition(selectedBeginnerAtttibuteId);
-		return null;
-	}
-	
-	/**
-	 * Bind a button in UI. Activated when the user adds a new condition to a
-	 * query in the general mode.
-	 * 
-	 * @return Always <code>null</code>, i.e. we stay on the same page.
-	 */
-	public String addQueryConditionGeneral()
-	{
-		addQueryCondition(selectedGeneralAtttibuteId);
-		return null;
 	}
 	
 	/**
@@ -140,7 +108,7 @@ public class SearchBean
 		VisibleColumn[] columns = new VisibleColumn[workingQuery.getConditionCount()];
 		Conditions conditions = new Conditions();
 
-		int i = 0;
+		//int i = 0;
 		boolean errors = false;
 		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
@@ -165,27 +133,9 @@ public class SearchBean
 	 */
 	public void updateTotal(QueryUpdateTotalEvent event)
 	{
-		
 		HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
 		if (AAUtils.isAjaxRequest(request))
 			AAUtils.addZonesToRefresh(request,"total"); 
-//
-//		Conditions conditions = new Conditions();
-//		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
-//		{
-//			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-//			queryCondition.addToConditions(conditions, false);
-//		}
-//		
-//		Conditions localCond = (Conditions) conditions.addAttributesPrefix("v.voyage.");
-//		localCond.addCondition(VoyageIndex.getRecent());
-//
-//		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
-//		qValue.addPopulatedAttribute("count(v.voyageId)", false);
-//		
-//		Object[] ret = qValue.executeQuery();
-//		numberOfResults = ((Integer)ret[0]).intValue();
-
 	}
 	
 	/**
@@ -313,24 +263,27 @@ public class SearchBean
 	 *            {@link AbstractAttribute#CATEGORY_GENERAL}.
 	 * @return
 	 */
-	private MenuItemMain[] getMenuAttributes(int category)
+	private MenuItemMain[] getMenuAttributes(UserCategory category)
 	{
 		
 		Group[] groups = Searchables.getCurrent().getGroups();
+		
+		System.out.println("i'm here ...");
 		
 		MenuItemMain[] mainItems = new MenuItemMain[groups.length];
 		for (int i = 0; i < groups.length; i++)
 		{
 			Group group = groups[i];
-			SearchableAttribute[] attributes = group.getSearchableAttributesInUserCategory(UserCategory.Beginners);
+			SearchableAttribute[] attributes = group.getSearchableAttributesInUserCategory(category);
+			System.out.println("count ? " + (attributes != null && attributes.length > 0));
 			if (attributes != null && attributes.length > 0)
 			{
 				MenuItemMain mainItem = new MenuItemMain();
-				MenuItem[] subItems = new MenuItem[noOfAllAttrs];
+				MenuItem[] subItems = new MenuItem[attributes.length];
 				
 				String mainItemText =
-					"<b>" + group.getUserLabelOrName() + "</b> " +
-					"(" + noOfAllAttrs + " attributes)";
+					"<b>" + group.getUserLabel() + "</b> " +
+					"(" + attributes.length + " attributes)";
 				
 				mainItems[i] = mainItem;
 				mainItem.setId(group.getId().toString());
@@ -338,23 +291,19 @@ public class SearchBean
 				mainItem.setSubmenu(subItems);
 				
 				int k = 0;
-				AbstractAttribute[] allAttrs = group.getAllAttributesSortedByUserLabelOrName();
-				for (int j = 0; j < allAttrs.length; j++)
+				for (int j = 0; j < attributes.length; j++)
 				{
-					AbstractAttribute attr = allAttrs[j];
-					if (attr.isVisibleByCategory(category))
+					SearchableAttribute attr = attributes[j];
+					MenuItem subItem = new MenuItem();
+					subItems[k++] = subItem;
+					subItem.setId(attr.getId());
+					if (workingQuery != null && workingQuery.containsConditionOn(attr.getId()))
 					{
-						MenuItem subItem = new MenuItem();
-						subItems[k++] = subItem;
-						subItem.setId(attr);
-						if (workingQuery != null && workingQuery.containsConditionOn(attr))
-						{
-							subItem.setText("<span class=\"attribute-selected\">" + attr.getUserLabelOrName() + "</span>");
-						}
-						else
-						{
-							subItem.setText(attr.getUserLabelOrName());
-						}
+						subItem.setText("<span class=\"attribute-selected\">" + attr.getUserLabel() + "</span>");
+					}
+					else
+					{
+						subItem.setText(attr.getUserLabel());
 					}
 				}
 				
@@ -373,9 +322,9 @@ public class SearchBean
 	 * 
 	 * @return An array of {@link MenuItemMain}.
 	 */
-	public MenuItemMain[] getMenuAttributesBeginner()
+	public MenuItemMain[] getMenuAttributesBeginners()
 	{
-		return getMenuAttributes(AbstractAttribute.CATEGORY_BEGINNER);
+		return getMenuAttributes(UserCategory.Beginners);
 	}
 
 	/**
@@ -389,86 +338,7 @@ public class SearchBean
 	 */
 	public MenuItemMain[] getMenuAttributesGeneral()
 	{
-		return getMenuAttributes(AbstractAttribute.CATEGORY_GENERAL);
-	}
-
-//	public boolean isTableVisible()
-//	{
-//		return tableVisible;
-//	}
-//
-//	public void setTableVisible(boolean tableVisible)
-//	{
-//		this.tableVisible = tableVisible;
-//	}
-//
-//	public boolean isTimeLineVisible()
-//	{
-//		return timeLineVisible;
-//	}
-//
-//	public void setTimeLineVisible(boolean timeLineVisible)
-//	{
-//		this.timeLineVisible = timeLineVisible;
-//	}
-//
-//	public String getSelectedBeginnerGroupId()
-//	{
-//		return selectedBeginnerGroupId;
-//	}
-//
-//	public boolean isStatisticsVisible()
-//	{
-//		return statisticsVisible;
-//	}
-//
-//	public void setStatisticsVisible(boolean statisticsVisible)
-//	{
-//		this.statisticsVisible = statisticsVisible;
-//	}
-
-	public void setSelectedBeginnerGroupId(String selectedGroupId)
-	{
-		if (selectedGroupId == null) return;
-		this.selectedBeginnerGroupId = selectedGroupId;
-	}
-	
-	public String getSelectedBeginnerGroupId()
-	{
-		return selectedGeneralGroupId;
-	}
-
-	public String getSelectedBeginnerAtttibuteId()
-	{
-		return selectedBeginnerAtttibuteId;
-	}
-
-	public void setSelectedBeginnerAtttibuteId(String selectedAtttibuteId)
-	{
-		if (selectedAtttibuteId == null) return;
-		this.selectedBeginnerAtttibuteId = selectedAtttibuteId;
-	}
-
-	public String getSelectedGeneralGroupId()
-	{
-		return selectedGeneralGroupId;
-	}
-
-	public void setSelectedGeneralGroupId(String selectedGeneralGroupId)
-	{
-		if (selectedGeneralGroupId == null) return;
-		this.selectedGeneralGroupId = selectedGeneralGroupId;
-	}
-
-	public String getSelectedGeneralAtttibuteId()
-	{
-		return selectedGeneralAtttibuteId;
-	}
-
-	public void setSelectedGeneralAtttibuteId(String selectedGeneralAtttibuteId)
-	{
-		if (selectedGeneralAtttibuteId == null) return;
-		this.selectedGeneralAtttibuteId = selectedGeneralAtttibuteId;
+		return getMenuAttributes(UserCategory.General);
 	}
 
 	public Query getWorkingQuery()
@@ -496,7 +366,7 @@ public class SearchBean
 	public SearchParameters getSearchParameters()
 	{
 		restorePermlinkIfAny();
-		this.searchParameters.setCategory(getSelectedCategoryTyped());
+		this.searchParameters.setCategory(0);
 		return searchParameters;
 	}
 
@@ -517,20 +387,13 @@ public class SearchBean
 
 	public String getSelectedCategory()
 	{
-		return selectedCategory;
-	}
-
-	public int getSelectedCategoryTyped()
-	{
-		return "beginner".equals(selectedCategory) ?
-				AbstractAttribute.CATEGORY_BEGINNER :
-					AbstractAttribute.CATEGORY_GENERAL;
+		return selectedCategory.toString();
 	}
 
 	public void setSelectedCategory(String selectedCategory)
 	{
-		this.selectedCategory = selectedCategory;
-		this.searchParameters.setCategory(this.getSelectedCategoryTyped());
+		this.selectedCategory = UserCategory.parse(selectedCategory);
+		//this.searchParameters.setCategory(this.getSelectedCategoryTyped());
 	}
 
 }

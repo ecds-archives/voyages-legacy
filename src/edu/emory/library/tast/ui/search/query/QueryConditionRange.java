@@ -1,6 +1,5 @@
 package edu.emory.library.tast.ui.search.query;
 
-import edu.emory.library.tast.util.query.Conditions;
 
 public abstract class QueryConditionRange extends QueryCondition
 {
@@ -23,8 +22,6 @@ public abstract class QueryConditionRange extends QueryCondition
 		super(searchableAttributeId);
 		this.type = type;
 	}
-
-	public abstract boolean addToConditions(Conditions conditions, boolean markErrors);
 
 	public int getType()
 	{

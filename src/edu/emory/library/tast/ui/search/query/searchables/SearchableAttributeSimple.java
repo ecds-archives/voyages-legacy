@@ -11,7 +11,7 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 	public SearchableAttributeSimple(String id, String userLabel, UserCategory userCategory, Attribute[] attributes)
 	{
 		super(id, userLabel, userCategory);
-		if (attributes != null || attributes.length == 0)
+		if (attributes == null || attributes.length == 0)
 		{
 			this.attributes = new Attribute[0];
 			this.attributeType = -1;

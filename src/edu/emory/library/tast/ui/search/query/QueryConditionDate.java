@@ -3,7 +3,6 @@ package edu.emory.library.tast.ui.search.query;
 import java.util.Arrays;
 
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
 
 public class QueryConditionDate extends QueryConditionRange
 {
@@ -47,12 +46,6 @@ public class QueryConditionDate extends QueryConditionRange
 		this.type = type;
 	}
 
-	public boolean addToConditions(Conditions conditions, boolean markErrors)
-	{
-
-		return true;
-	}
-	
 	private void resetPrecomputedMonthsInfo()
 	{
 		noOfSelectedMonthsDetermined = false;

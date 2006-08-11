@@ -61,7 +61,7 @@ public class Query implements Serializable
 		if (containsConditionOn(searchableAttributeId))
 			return false;
 		
-		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById("searchableAttributeId");
+		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
 		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
 		
 		if (queryCondition != null)

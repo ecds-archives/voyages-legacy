@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import edu.emory.library.tast.util.query.Conditions;
-
 public class QueryConditionList extends QueryCondition
 {
 	
@@ -17,11 +15,6 @@ public class QueryConditionList extends QueryCondition
 	public QueryConditionList(String searchableAttributeId)
 	{
 		super(searchableAttributeId);
-	}
-
-	public boolean addToConditions(Conditions conditions, boolean markErrors)
-	{
-		return true;
 	}
 
 	public int getSelectedIdsCount()

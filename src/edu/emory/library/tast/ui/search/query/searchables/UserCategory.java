@@ -43,6 +43,14 @@ public class UserCategory
 		return category == BEGINNERS;
 	}
 	
+	public String toString()
+	{
+		if (category == GENERAL)
+			return "general";
+		else
+			return "beginners";
+	}
+	
 	public static UserCategory parse(String value)
 	{
 		if (value == null || value.equals("general"))

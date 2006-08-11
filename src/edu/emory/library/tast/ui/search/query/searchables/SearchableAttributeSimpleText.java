@@ -39,6 +39,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 
 		// create db conditions
 		Attribute[] attributes = getAttributes();
+		System.out.println("id = " + getId() + ", attributes.length = " + attributes.length + ", value = " + value);
 		if (attributes.length == 1)
 		{
 			conditions.addCondition(attributes[0].getName(),

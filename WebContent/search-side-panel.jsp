@@ -15,7 +15,7 @@
 		<s:menuPopup
 			customSubmitFunction="animateAttribute"
 			id="popupMenuAttributesBeginner"
-			items="#{SearchBean.menuAttributesBeginner}"
+			items="#{SearchBean.menuAttributesBeginners}"
 			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
 	</s:section>
 

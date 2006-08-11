@@ -25,8 +25,12 @@ public abstract class QueryCondition implements Serializable
 	private String searchableAttributeId;
 	private transient boolean errorFlag;
 
-	public abstract boolean addToConditions(Conditions conditions, boolean markErrors);
 	protected abstract Object clone();
+
+	public boolean addToConditions(Conditions conditions, boolean markErrors)
+	{
+		return getSearchableAttribute().addToConditions(markErrors, conditions, this);
+	}
 
 	public QueryCondition(String searchableAttributeId)
 	{

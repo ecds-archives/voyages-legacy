@@ -44,16 +44,18 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimple
 	
 	private Object parseNumber(String number)
 	{
-		if (getAttributeType() == AbstractAttribute.TYPE_INTEGER)
+		switch (getAttributeType())
 		{
+		case AbstractAttribute.TYPE_INTEGER:
 			return new Integer(number);
-		}
-		else if (getAttributeType() == AbstractAttribute.TYPE_FLOAT)
-		{
+		
+		case AbstractAttribute.TYPE_FLOAT:
 			return new Float(number);
-		}
-		else
-		{
+		
+		case AbstractAttribute.TYPE_LONG:
+			return new Long(number);
+
+		default:
 			throw new RuntimeException("unsupported type");
 		}
 	}

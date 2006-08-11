@@ -1,6 +1,5 @@
 package edu.emory.library.tast.ui.search.query;
 
-import edu.emory.library.tast.util.query.Conditions;
 
 public class QueryConditionText extends QueryCondition
 {
@@ -14,11 +13,6 @@ public class QueryConditionText extends QueryCondition
 		super(searchableAttributeId);
 	}
 	
-	public boolean addToConditions(Conditions conditions, boolean markErrors) 
-	{
-		return true;
-	}
-
 	public String getValue()
 	{
 		return value;

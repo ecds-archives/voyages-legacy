@@ -122,6 +122,7 @@ public class Searchables
 					
 					case AbstractAttribute.TYPE_INTEGER:
 					case AbstractAttribute.TYPE_FLOAT:
+					case AbstractAttribute.TYPE_LONG:
 						searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
 						break;
 						
@@ -197,22 +198,41 @@ public class Searchables
 			if (groupsByIds.containsKey(id))
 				throw new RuntimeException("duplicate group id '" + id + "'");
 
-			// attributes
-			NodeList xmlAttrs = xmlGroup.getChildNodes();
-			SearchableAttribute[] attrs = new SearchableAttribute[xmlAttrs.getLength()]; 
-			for (int j = 0; j < xmlAttrs.getLength(); j++)
+			// locate <searchable-attributes>
+			NodeList xmlAttrTypes = xmlGroup.getChildNodes();
+			NodeList xmlAttrs = null;
+			for (int k = 0; k < xmlAttrTypes.getLength(); k++)
 			{
-				Node xmlAttr = xmlAttrs.item(j);
-				String attrId = xmlAttr.getAttributes().getNamedItem("id").getNodeValue();
-				SearchableAttribute attr = (SearchableAttribute) searchableAttributesByIds.get(attrId);
-				if (attr == null) throw new RuntimeException("group '" + id + "' contains a nonexistend attribute '" + attrId + "'");
-				attrs[j] = attr;
+				Node xmlAttrType = xmlAttrTypes.item(k);
+				if ("searchable-attributes".equals(xmlAttrType.getNodeName()))
+				{
+					xmlAttrs = xmlAttrType.getChildNodes(); 
+					break;
+				}
 			}
-			Group group = new Group(id, userLabel, attrs);
 
-			// add it to our collection
-			groups[i] = group;
-			groupsByIds.put(id, group);
+			// if found ...
+			if (xmlAttrs != null)
+			{
+
+				// real all <searchable-attribute>'s in it
+				SearchableAttribute[] attrs = new SearchableAttribute[xmlAttrs.getLength()]; 
+				for (int j = 0; j < xmlAttrs.getLength(); j++)
+				{
+					Node xmlAttr = xmlAttrs.item(j);
+					String attrId = xmlAttr.getAttributes().getNamedItem("id").getNodeValue();
+					SearchableAttribute attr = (SearchableAttribute) searchableAttributesByIds.get(attrId);
+					if (attr == null) throw new RuntimeException("group '" + id + "' contains a nonexistent attribute '" + attrId + "'");
+					attrs[j] = attr;
+				}
+				Group group = new Group(id, userLabel, attrs);
+
+				// add it to our collection
+				groups[i] = group;
+				groupsByIds.put(id, group);
+			
+			}
+
 		}
 		
 	}
