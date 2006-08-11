@@ -1,8 +1,8 @@
 package edu.emory.library.tast.ui.search.query;
 
 
-import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -19,7 +19,7 @@ public class SearchParameters
 {
 	
 	private Conditions conditions;
-	private VisibleColumn[] columns = new VisibleColumn[0]; 
+	private VisibleAttribute[] columns = new VisibleAttribute[0]; 
 	private UserCategory category = UserCategory.Beginners;
 	
 	
@@ -31,12 +31,12 @@ public class SearchParameters
 		this.conditions = conditions2;
 	}
 
-	public VisibleColumn[] getColumns()
+	public VisibleAttribute[] getColumns()
 	{
 		return columns;
 	}
 	
-	public void setColumns(VisibleColumn[] columns)
+	public void setColumns(VisibleAttribute[] columns)
 	{
 		this.columns = columns;
 	}

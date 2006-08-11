@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapLayer;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
@@ -22,7 +23,6 @@ import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.ui.search.tabscommon.MemorizedAction;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleGroup;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -820,15 +820,15 @@ public class TableResultTabBean {
 	 */
 	public List getAvailableGroupSets() {
 		ArrayList res = new ArrayList();
-		VisibleGroup[] groupSets = VisibleGroup.loadAllGroups();
+		Group[] groupSets = Group.getGroups();
 		for (int i = 0; i < groupSets.length; i++) {
-			VisibleGroup set = groupSets[i];
+			Group set = groupSets[i];
 			//if (set.noOfAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0) {
-				res.add(new ComparableSelectItem("" + set.getName(), set.toString()));
+				res.add(new ComparableSelectItem("" + set.getId(), set.toString()));
 			//}
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
-			this.selectedGroupSet = (groupSets[0]).getName().toString();
+			this.selectedGroupSet = (groupSets[0]).getId().toString();
 		}
 		Collections.sort(res);
 		return res;
@@ -841,9 +841,9 @@ public class TableResultTabBean {
 	 */
 	public List getAvailableAttributes() {
 		ArrayList res = new ArrayList();
-		VisibleGroup group = VisibleGroup.loadVisibleGroup(this.selectedGroupSet);
+		Group group = Group.getGroupById(this.selectedGroupSet);
 		if (group != null) {
-			VisibleAttribute[] attrs = group.getVisibleAttributes();
+			VisibleAttribute[] attrs = group.getAllVisibleAttributes();
 			for (int i = 0; i < attrs.length; i++) {
 				VisibleAttribute attr = attrs[i];
 				//if (attr.getCategory() == this.searchBean.getSearchParameters().getCategory()) {

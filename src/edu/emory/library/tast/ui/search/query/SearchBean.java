@@ -13,15 +13,14 @@ import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.MenuComponent;
 import edu.emory.library.tast.ui.MenuItem;
 import edu.emory.library.tast.ui.MenuItemMain;
 import edu.emory.library.tast.ui.MenuItemSelectedEvent;
 import edu.emory.library.tast.ui.MessageBarComponent;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
-import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -104,7 +103,7 @@ public class SearchBean
 	private void searchInternal(boolean storeToHistory)
 	{
 		
-		VisibleColumn[] columns = new VisibleColumn[workingQuery.getConditionCount()];
+		VisibleAttribute[] columns = new VisibleAttribute[workingQuery.getConditionCount()];
 		Conditions conditions = new Conditions();
 
 		//int i = 0;
@@ -265,7 +264,7 @@ public class SearchBean
 	private MenuItemMain[] getMenuAttributes(UserCategory category)
 	{
 		
-		Group[] groups = Searchables.getCurrent().getGroups();
+		Group[] groups = Group.getGroups();
 		
 		MenuItemMain[] mainItems = new MenuItemMain[groups.length];
 		for (int i = 0; i < groups.length; i++)

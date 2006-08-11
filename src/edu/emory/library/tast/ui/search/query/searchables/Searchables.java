@@ -22,16 +22,12 @@ public class Searchables
 {
 	
 	private static final String SEARCHABLE_ATTRIBUTES_XML = "/searchable-attributes.xml";
-	private static final String ATTRIBUTE_GROUPS_XML = "/attribute-groups.xml";
 	
 	private static final String PORT_DICTIONARY = "TBD:locationport";
 	private static final String REGION_DICTIONARY = "TBD:locationregiondict";
 
 	private SearchableAttribute[] searchableAttributes = null;
 	private Map searchableAttributesByIds = null;
-
-	private Group[] groups = null;
-	private Map groupsByIds = null;
 	
 	private static Searchables instance = null;
 	
@@ -168,81 +164,12 @@ public class Searchables
 		
 	}
 
-	private void loadGroups() throws ParserConfigurationException, SAXException, IOException
-	{
-		
-		// we have a DTD and we want to get rid of whitespace
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setValidating(true);
-		factory.setIgnoringElementContentWhitespace(true);
-
-		// load main document
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		InputStream str = this.getClass().getResourceAsStream(ATTRIBUTE_GROUPS_XML);
-		Document document = builder.parse(str);
-		
-		NodeList xmlGroups = document.getDocumentElement().getChildNodes();
-		groups = new Group[xmlGroups.getLength()];
-		groupsByIds = new HashMap();
-		
-		// main loop over <searchable-attribute>
-		for (int i = 0; i < xmlGroups.getLength(); i++)
-		{
-			Node xmlGroup = xmlGroups.item(i);
-			
-			// main properties
-			String id = xmlGroup.getAttributes().getNamedItem("id").getNodeValue();
-			String userLabel = xmlGroup.getAttributes().getNamedItem("userLabel").getNodeValue();
-			
-			// check id uniqueness
-			if (groupsByIds.containsKey(id))
-				throw new RuntimeException("duplicate group id '" + id + "'");
-
-			// locate <searchable-attributes>
-			NodeList xmlAttrTypes = xmlGroup.getChildNodes();
-			NodeList xmlAttrs = null;
-			for (int k = 0; k < xmlAttrTypes.getLength(); k++)
-			{
-				Node xmlAttrType = xmlAttrTypes.item(k);
-				if ("searchable-attributes".equals(xmlAttrType.getNodeName()))
-				{
-					xmlAttrs = xmlAttrType.getChildNodes(); 
-					break;
-				}
-			}
-
-			// if found ...
-			if (xmlAttrs != null)
-			{
-
-				// real all <searchable-attribute>'s in it
-				SearchableAttribute[] attrs = new SearchableAttribute[xmlAttrs.getLength()]; 
-				for (int j = 0; j < xmlAttrs.getLength(); j++)
-				{
-					Node xmlAttr = xmlAttrs.item(j);
-					String attrId = xmlAttr.getAttributes().getNamedItem("id").getNodeValue();
-					SearchableAttribute attr = (SearchableAttribute) searchableAttributesByIds.get(attrId);
-					if (attr == null) throw new RuntimeException("group '" + id + "' contains a nonexistent attribute '" + attrId + "'");
-					attrs[j] = attr;
-				}
-				Group group = new Group(id, userLabel, attrs);
-
-				// add it to our collection
-				groups[i] = group;
-				groupsByIds.put(id, group);
-			
-			}
-
-		}
-		
-	}
 
 	private void loadConfiguration()
 	{
 		try
 		{
 			loadAttributes();
-			loadGroups();
 		}
 		catch (ParserConfigurationException e)
 		{
@@ -263,25 +190,19 @@ public class Searchables
 		return (SearchableAttribute) searchableAttributesByIds.get(attributeId);
 	}
 	
-	public Group[] getGroups()
-	{
-		return groups;
-	}
-	
 	public SearchableAttribute[] getSearchableAttributes()
 	{
 		return searchableAttributes;
-	}
-	
-	public Group getGroupById(String groupId)
-	{
-		return (Group) groupsByIds.get(groupId);
 	}
 
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException
 	{
 		Searchables sa = new Searchables();
 		sa.loadConfiguration();
+	}
+	
+	public static SearchableAttribute getById(String attrId) {
+		return getCurrent().getSearchableAttributeById(attrId);
 	}
 
 }

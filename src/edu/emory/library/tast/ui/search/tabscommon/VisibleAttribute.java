@@ -28,7 +28,7 @@ public class VisibleAttribute {
 
 	private String name;
 
-	private UserCategory category;
+	private UserCategory userCategory;
 
 	private String userLabel;
 
@@ -107,7 +107,7 @@ public class VisibleAttribute {
 		}
 		VisibleAttribute attr = new VisibleAttribute(name, tabs,
 				(Attribute[]) attributesList.toArray(new Attribute[] {}));
-		attr.setCategory(UserCategory.parse(category));
+		attr.setUserCategory(UserCategory.parse(category));
 		attr.setUserLabel(userLabel);
 		return attr;
 	}
@@ -126,12 +126,12 @@ public class VisibleAttribute {
 		this.attributes = attributes;
 	}
 
-	public UserCategory getCategory() {
-		return category;
+	public UserCategory getUserCategory() {
+		return userCategory;
 	}
 
-	public void setCategory(UserCategory category) {
-		this.category = category;
+	public void setUserCategory(UserCategory category) {
+		this.userCategory = category;
 	}
 
 	public String getUserLabel() {
@@ -177,6 +177,9 @@ public class VisibleAttribute {
 	}
 
 	public static VisibleAttribute getAttribute(String id) {
+		if (visibleAttributes.isEmpty()) {
+			loadConfig();
+		}
 		Iterator iter = visibleAttributes.values().iterator();
 		while (iter.hasNext()) {
 			Map attrMap = (Map) iter.next();
