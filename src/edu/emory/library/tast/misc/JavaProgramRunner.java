@@ -1,4 +1,4 @@
-package edu.emory.library.tast.misc.prelim.servlets;
+package edu.emory.library.tast.misc;
 
 import java.io.IOException;
 import java.util.ArrayList;

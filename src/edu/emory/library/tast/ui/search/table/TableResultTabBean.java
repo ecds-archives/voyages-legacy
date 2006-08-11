@@ -316,9 +316,7 @@ public class TableResultTabBean {
 			Attribute[] attrs = Voyage.getAttributes();
 			for (int i = 0; i < attrs.length; i++) {
 				Attribute column = attrs[i];
-				if (column.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
-					validAttrs.add(column);
-				}
+				validAttrs.add(column);
 			}
 			detailData.setVisibleColumns(validAttrs);
 
@@ -825,9 +823,9 @@ public class TableResultTabBean {
 		VisibleGroup[] groupSets = VisibleGroup.loadAllGroups();
 		for (int i = 0; i < groupSets.length; i++) {
 			VisibleGroup set = groupSets[i];
-			if (set.noOfAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0) {
+			//if (set.noOfAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0) {
 				res.add(new ComparableSelectItem("" + set.getName(), set.toString()));
-			}
+			//}
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
 			this.selectedGroupSet = (groupSets[0]).getName().toString();
@@ -848,9 +846,9 @@ public class TableResultTabBean {
 			VisibleAttribute[] attrs = group.getVisibleAttributes();
 			for (int i = 0; i < attrs.length; i++) {
 				VisibleAttribute attr = attrs[i];
-				if (attr.getCategory() == this.searchBean.getSearchParameters().getCategory()) {
+				//if (attr.getCategory() == this.searchBean.getSearchParameters().getCategory()) {
 					res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
-				}
+				//}
 			}
 		}
 

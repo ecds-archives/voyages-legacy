@@ -1,17 +1,14 @@
 package edu.emory.library.tast.dm.attributes;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.crimson.tree.XmlDocument;
-import org.apache.crimson.tree.XmlDocumentBuilder;
 import org.apache.jasper.xmlparser.TreeNode;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -20,18 +17,31 @@ import org.hibernate.criterion.Expression;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import sun.misc.Resource;
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
+import edu.emory.library.tast.dm.Dictionary;
+import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
+import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
+import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
+import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 import edu.emory.library.tast.util.HibernateUtil;
 
-public class Attribute extends AbstractAttribute {
+public class Attribute  {
 
 	private static HashMap config = new HashMap();
 
 	private static final long serialVersionUID = -8780232223504322861L;
+
+	public final static int TYPE_INTEGER = 0;
+
+	public final static int TYPE_LONG = 1;
+
+	public final static int TYPE_FLOAT = 5;
+
+	public final static int TYPE_STRING = 2;
+
+	public final static int TYPE_DATE = 3;
+
+	public final static int TYPE_DICT = 4;
 
 	public final static int IMPORT_TYPE_IGNORE = -1;
 
@@ -40,6 +50,24 @@ public class Attribute extends AbstractAttribute {
 	public final static int IMPORT_TYPE_STRING = 1;
 
 	public final static int IMPORT_TYPE_DATE = 2;
+
+	private String name;
+
+	private Long id;
+
+	private String userLabel;
+
+	private Integer type;
+
+	private String dictionary;
+
+	private String description;
+
+	private Boolean visible;
+
+	private Integer category;
+
+	private Integer length = new Integer(-1);
 
 	private Integer importType;
 
@@ -55,9 +83,12 @@ public class Attribute extends AbstractAttribute {
 	}
 
 	public Attribute(String name, Integer type, String dictionary, Integer importType, String importName,
-			String importDateDay, String importDateMonth, String importDateYear, String userLabel, Integer length,
-			ObjectType objType) {
-		super(name, type, dictionary, userLabel, objType, length);
+			String importDateDay, String importDateMonth, String importDateYear, String userLabel, Integer length) {
+		this.name = name;
+		this.type = type;
+		this.length = length;
+		this.dictionary = dictionary;
+		this.userLabel = userLabel;
 		this.importType = importType;
 		this.importName = importName;
 		this.importDateDay = importDateDay;
@@ -65,44 +96,40 @@ public class Attribute extends AbstractAttribute {
 		this.importDateYear = importDateYear;
 	}
 
-	public static AbstractAttribute loadById(Long id) {
+	public static Attribute loadById(Long id) {
 		Session session = HibernateUtil.getSession();
-		AbstractAttribute attr = loadById(id, session);
+		Attribute attr = loadById(id, session);
 		session.close();
 		return attr;
 	}
 
-	public static AbstractAttribute loadById(Long id, Session session) {
+	public static Attribute loadById(Long id, Session session) {
 		Criteria crit = session.createCriteria(Attribute.class);
 		crit.add(Expression.eq("id", id));
 		crit.setMaxResults(1);
 		List list = crit.list();
 		if (list == null || list.size() == 0)
 			return null;
-		return (AbstractAttribute) list.get(0);
+		return (Attribute) list.get(0);
 	}
 
 	public static Attribute newForVoyages() {
 		Attribute attribute = new Attribute();
-		attribute.setObjectType(ObjectType.getVoyages());
 		return attribute;
 	}
 
 	public static Attribute newForVoyages(Session session) {
 		Attribute attribute = new Attribute();
-		attribute.setObjectType(ObjectType.getVoyages(session));
 		return attribute;
 	}
 
 	public static Attribute newForSlaves() {
 		Attribute attribute = new Attribute();
-		attribute.setObjectType(ObjectType.getSlaves());
 		return attribute;
 	}
 
 	public static Attribute newForSlaves(Session session) {
 		Attribute attribute = new Attribute();
-		attribute.setObjectType(ObjectType.getSlaves(session));
 		return attribute;
 	}
 
@@ -347,6 +374,318 @@ public class Attribute extends AbstractAttribute {
 		}
 
 		return attr;
+	}
+
+
+	public Object parse(String value, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		return parse(new String[] { value }, options);
+	}
+
+	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		return parse(new String[] { value }, 0);
+	}
+
+	public Object parse(String[] values) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		return parse(values, 0);
+	}
+
+	public Object parse(String[] values, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+
+		String value;
+		switch (getType().intValue()) {
+		case TYPE_STRING:
+
+			if (values.length != 1 || values[0] == null)
+				throw new InvalidNumberOfValuesException();
+
+			value = values[0].trim();
+			if (value.length() == 0)
+				return null;
+
+			if (length.intValue() != -1 && value.length() > length.intValue())
+				throw new StringTooLongException();
+
+			return value;
+
+		case TYPE_INTEGER:
+
+			if (values.length != 1 || values[0] == null)
+				throw new InvalidNumberOfValuesException();
+
+			value = values[0].trim();
+			if (value.length() == 0)
+				return null;
+
+			try {
+				return new Integer(values[0]);
+			} catch (NumberFormatException nfe) {
+				throw new InvalidNumberException();
+			}
+
+		case TYPE_LONG:
+
+			if (values.length != 1 || values[0] == null)
+				throw new InvalidNumberOfValuesException();
+
+			value = values[0].trim();
+			if (value.length() == 0)
+				return null;
+
+			try {
+				return new Long(values[0]);
+			} catch (NumberFormatException nfe) {
+				throw new InvalidNumberException();
+			}
+
+		case TYPE_FLOAT:
+
+			if (values.length != 1 || values[0] == null)
+				throw new InvalidNumberOfValuesException();
+
+			value = values[0].trim();
+			if (value.length() == 0)
+				return null;
+
+			try {
+				return new Float(values[0]);
+			} catch (NumberFormatException nfe) {
+				throw new InvalidNumberException();
+			}
+
+		case TYPE_DATE:
+
+			boolean separate = values.length == 3 && values[0] != null && values[1] != null && values[2] != null;
+			boolean single = values.length == 1 && values[0] != null;
+
+			if (!(separate || single))
+				throw new InvalidNumberOfValuesException();
+
+			if (separate) {
+
+				String day = values[0].trim();
+				String month = values[1].trim();
+				String year = values[2].trim();
+
+				if (day.length() == 0 || month.length() == 0
+						|| year.length() == 0)
+					return null;
+
+				try {
+					Calendar cal = Calendar.getInstance();
+					cal.clear();
+					cal.set(Integer.parseInt(year),
+							Integer.parseInt(month) - 1, Integer.parseInt(day));
+					// Timestamp tstamp = new Timestamp(Integer.parseInt(year),
+					// Integer.parseInt(month),
+					// Integer.parseInt(day),
+					// 0,0,0,0);
+					return cal.getTime();
+				} catch (NumberFormatException nfe) {
+					throw new InvalidDateException();
+				}
+
+			} else if (single) {
+
+				value = values[0].trim();
+
+				if (value.length() == 0)
+					return null;
+
+				try {
+					DateFormat dateFormat = DateFormat.getDateInstance();
+					return dateFormat.parse(value);
+				} catch (ParseException e) {
+					throw new InvalidDateException();
+				}
+			}
+
+		case TYPE_DICT:
+
+			if (values.length != 1 || values[0] == null)
+				throw new InvalidNumberOfValuesException();
+
+			value = values[0].trim();
+			if (value.length() == 0)
+				return null;
+
+			Integer remoteId = null;
+			try {
+				remoteId = new Integer(value);
+			} catch (NumberFormatException nfe) {
+				throw new InvalidNumberException();
+			}
+
+			Dictionary dicts[] = Dictionary.loadDictionaryByRemoteId(getDictionary(),
+					remoteId);
+			if (dicts.length > 0) {
+				return dicts[0];
+			} else {
+				Dictionary dict = Dictionary.createNew(getDictionary());
+				dict.setRemoteId(remoteId);
+				dict.setName(remoteId.toString());
+				dict.save();
+				return dict;
+			}
+
+		default:
+			return null;
+
+		}
+
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUserLabel() {
+		return userLabel;
+	}
+
+	public void setUserLabel(String userLabel) {
+		this.userLabel = userLabel;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String attrName) {
+		this.name = attrName;
+	}
+
+	public String getUserLabelOrName()
+	{
+		if (userLabel != null && userLabel.length() > 0) return userLabel;
+		if (name != null && name.length() > 0) return name;
+		return "";
+	}
+
+	public Integer getCategory()
+	{
+		return category;
+	}
+
+	public void setCategory(Integer category)
+	{
+		this.category = category;
+	}
+	
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		if (type == null) {
+			type = new Integer(-1);
+		} else {
+			this.type = type;
+		}
+	}
+
+	public String getTypeDisplayName() {
+		if (type == null)
+			return "";
+		switch (type.intValue()) {
+		case TYPE_INTEGER:
+			return "Integer";
+		case TYPE_LONG:
+			return "Integer";
+		case TYPE_FLOAT:
+			return "Decimal";
+		case TYPE_STRING:
+			return "Text";
+		case TYPE_DATE:
+			return "Date";
+		case TYPE_DICT:
+			return "List " + dictionary;
+		default:
+			return "";
+		}
+	}
+	
+	public String getDictionary() {
+		return dictionary;
+	}
+
+	public void setDictionary(String dictionary) {
+		this.dictionary = dictionary;
+	}
+
+	public boolean isDictinaory() {
+		return dictionary != null;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getLength() {
+		return length;
+	}
+
+	public void setLength(Integer length) {
+		if (length != null)
+			this.length = length;
+	}
+
+	public Boolean getVisible()
+	{
+		return visible;
+	}
+
+	public void setVisible(Boolean visible)
+	{
+		this.visible = visible;
+	}
+	
+	public boolean isVisible()
+	{
+		return
+			visible != null &&
+			visible.booleanValue();
+	}
+	
+	public boolean isVisibleByCategory(int category)
+	{
+		return
+			isVisible() &&
+			this.category != null &&
+			this.category.intValue() <= category;
+	}
+
+	public String toString() {
+		if (this.userLabel != null && !this.userLabel.equals("")) {
+			return this.userLabel;
+		} else {
+			return this.name;
+		}
+	}
+
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Attribute))
+			return false;
+		Attribute theOther = (Attribute) obj;
+		return (id == null && theOther.getId() == null)
+				|| (id != null && id.equals(theOther.getId()));
+	}
+
+	public int hashCode() {
+		if (id == null)
+			return super.hashCode();
+		return id.hashCode();
 	}
 
 }

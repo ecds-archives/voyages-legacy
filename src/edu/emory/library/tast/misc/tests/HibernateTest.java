@@ -10,14 +10,9 @@ import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
-import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.dm.attributes.ObjectType;
 import edu.emory.library.tast.dm.dictionaries.Temp;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleGroup;
-import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -183,37 +178,6 @@ public class HibernateTest {
 //				
 //				
 //				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
-			} else if ("tsave".equalsIgnoreCase(command)) {
-				
-				Conditions c1 = new Conditions();
-				c1.addCondition("typeName", "Voyage", Conditions.OP_EQUALS);
-				QueryValue qValue = new QueryValue("ObjectType", c1);
-				ObjectType type = (ObjectType)qValue.executeQuery()[0];
-				
-				Group set = new Group();
-				set.setName("new groupset " + System.currentTimeMillis());
-				set.setObjectType(type);
-				CompoundAttribute group = new CompoundAttribute();
-				group.setName("new group " + System.currentTimeMillis());
-				group.setObjectType(type);
-				
-				Conditions c = new Conditions(Conditions.JOIN_AND);
-				c.addCondition("name", "captain%", Conditions.OP_LIKE);
-				qValue = new QueryValue("Attribute", c);  
-				Object [] aobjs = qValue.executeQuery();
-				c = new Conditions(Conditions.JOIN_AND);
-				c.addCondition("name", "ownera", Conditions.OP_EQUALS);
-				qValue = new QueryValue("Attribute", c);
-				Object[] aobjs1 = qValue.executeQuery();
-				
-				for (int i = 0; i < aobjs.length; i++) {
-					group.getAttributes().add(aobjs[i]);
-				}
-				set.getAttributes().add(aobjs1[0]);
-				set.getCompoundAttributes().add(group);
-				HibernateConnector.getConnector().saveObject(group);
-				HibernateConnector.getConnector().saveObject(set);
-				
 			} else if ("tload".equalsIgnoreCase(command)) {
 				Conditions c = new Conditions(Conditions.JOIN_AND);
 				QueryValue qValue = new QueryValue("Group", c);

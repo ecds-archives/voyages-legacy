@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
+import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 
@@ -98,7 +98,7 @@ public class Query implements Serializable
 		return conditionsByAttributes.containsKey(searchableAttributeId);
 	}
 
-	public QueryCondition getCondition(AbstractAttribute attribute)
+	public QueryCondition getCondition(Attribute attribute)
 	{
 		ensureMap();
 		return (QueryCondition) conditionsByAttributes.get(attribute);
@@ -127,7 +127,7 @@ public class Query implements Serializable
 		
 		for (Iterator iterAttr = getConditionsByAttributes().keySet().iterator(); iterAttr.hasNext();)
 		{
-			AbstractAttribute attr = (AbstractAttribute) iterAttr.next();
+			Attribute attr = (Attribute) iterAttr.next();
 			QueryCondition theOtherQueryCondition = theOther.getCondition(attr);
 			
 			if (theOtherQueryCondition == null)

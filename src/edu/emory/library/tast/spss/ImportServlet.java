@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.configuration.Configuration;
 
 import edu.emory.library.tast.AppConfig;
+import edu.emory.library.tast.misc.JavaProgramRunner;
 import edu.emory.library.tast.misc.http.upload.Upload;
 import edu.emory.library.tast.misc.http.upload.UploadedFile;
-import edu.emory.library.tast.misc.prelim.servlets.JavaProgramRunner;
 import edu.emory.library.tast.util.HtmlUtils;
 
 public class ImportServlet extends HttpServlet

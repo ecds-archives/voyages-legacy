@@ -10,9 +10,6 @@ import java.util.Set;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
-import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.dm.attributes.ObjectType;
 import edu.emory.library.tast.dm.dictionaries.Carib;
 import edu.emory.library.tast.dm.dictionaries.DepDefinition;
 import edu.emory.library.tast.dm.dictionaries.DeparturePort;
@@ -89,39 +86,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	private static Attribute[] attributes;
 	
 	/**
-	 * Gets all groups designed to voyages.
-	 * @return
-	 */
-	public static Group[] getGroups() {
-		
-		Conditions conditions = new Conditions();
-		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("ObjectType", conditions);
-		query.setCacheable(true);
-		Object[] types = (Object[]) query.executeQuery();
-		ObjectType type = (ObjectType)types[0];
-		
-		conditions = new Conditions();
-		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
-		query = new QueryValue("Group", conditions);
-		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy(new String[] {"name"});
-		query.setCacheable(true);
-		Object[] attributes = (Object[]) query.executeQuery();
-		Group[] ret = null;
-		if (attributes.length == 0) {
-			ret = new Group[] {};
-		} else {
-			ret = new Group[attributes.length];
-			for (int i = 0; i < attributes.length; i++) {
-				ret[i] = (Group)attributes[i];
-			}
-		}		
-		return ret;
-	}
-	
-	
-	/**
 	 * Gets all attributes of voyage.
 	 * @return
 	 */
@@ -165,68 +129,6 @@ public class Voyage extends AbstractDescriptiveObject {
 			attrsName[i] = attributes[i].getName();
 		}
 		return attrsName;
-	}
-
-	
-	/**
-	 * Gets Compound attributes designed to voyages.
-	 * @return
-	 */
-	public static CompoundAttribute[] getCoumpoundAttributes() {
-		
-		Conditions conditions = new Conditions();
-		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("ObjectType", conditions);
-		query.setCacheable(true);
-		Object[] types = (Object[]) query.executeQuery();
-		ObjectType type = (ObjectType)types[0];
-		
-		conditions = new Conditions();
-		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
-		query = new QueryValue("CompoundAttribute", conditions);
-		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy(new String[] {"name"});
-		query.setCacheable(true);
-		Object[] attributes = (Object[]) query.executeQuery();
-		CompoundAttribute[] ret = null;
-		if (attributes.length == 0) {
-			ret = new CompoundAttribute[] {};
-		} else {
-			ret = new CompoundAttribute[attributes.length];
-			for (int i = 0; i < attributes.length; i++) {
-				ret[i] = (CompoundAttribute)attributes[i];
-			}
-		}		
-		return ret;
-	}
-	
-	/**
-	 * Gets compound attrbibute designed to voyages with given name
-	 * @param name
-	 * @return
-	 */
-	public static CompoundAttribute getCoumpoundAttribute(String name) {
-		
-		Conditions conditions = new Conditions();
-		conditions.addCondition("typeName", VOYAGE, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("ObjectType", conditions);
-		query.setCacheable(true);
-		Object[] types = (Object[]) query.executeQuery();
-		ObjectType type = (ObjectType)types[0];
-		
-		conditions = new Conditions();
-		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
-		conditions.addCondition("name", name, Conditions.OP_EQUALS);
-		query = new QueryValue("CompoundAttribute", conditions);
-		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy(new String[] {"name"});
-		query.setCacheable(true);
-		Object[] attributes = (Object[]) query.executeQuery();
-		if (attributes.length == 0) {
-			return null;
-		} else {
-			return (CompoundAttribute)attributes[0];
-		}		
 	}
 	
 	/**

@@ -719,7 +719,7 @@ public class AdvancedStatisticsTabBean {
 			// }
 			// }
 			ok = true;
-			if (ok && attributes[i].isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())) {
+			if (ok) {
 				String outString = null;
 				if (attributes[i].getUserLabel() == null || attributes[i].getUserLabel().equals("")) {
 					outString = attributes[i].getName();
@@ -746,9 +746,8 @@ public class AdvancedStatisticsTabBean {
 		voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			Attribute attr = attributes[i];
-			if (attr.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())
-					&& (attr.getType().intValue() == Attribute.TYPE_FLOAT
-							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
+			if (attr.getType().intValue() == Attribute.TYPE_FLOAT
+							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG) {
 				String outString = attr.toString();
 				// if (attr.getUserLabel() == null
 				// || attr.getUserLabel().equals("")) {

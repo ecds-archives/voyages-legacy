@@ -3,13 +3,10 @@ package edu.emory.library.tast.ui.search.table;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleAttributeFormatter;

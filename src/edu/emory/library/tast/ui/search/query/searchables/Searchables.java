@@ -15,7 +15,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 
 public class Searchables
@@ -112,21 +111,21 @@ public class Searchables
 				// create the corresponding searchable attribute
 				switch (attrType)
 				{
-					case AbstractAttribute.TYPE_DICT:
+					case Attribute.TYPE_DICT:
 						searchableAttribute = new SearchableAttributeSimpleDictionary(id, userLabel, userCategory, attrs);
 						break;
 					
-					case AbstractAttribute.TYPE_STRING:
+					case Attribute.TYPE_STRING:
 						searchableAttribute = new SearchableAttributeSimpleText(id, userLabel, userCategory, attrs);
 						break;
 					
-					case AbstractAttribute.TYPE_INTEGER:
-					case AbstractAttribute.TYPE_FLOAT:
-					case AbstractAttribute.TYPE_LONG:
+					case Attribute.TYPE_INTEGER:
+					case Attribute.TYPE_FLOAT:
+					case Attribute.TYPE_LONG:
 						searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
 						break;
 						
-					case AbstractAttribute.TYPE_DATE:
+					case Attribute.TYPE_DATE:
 						searchableAttribute = new SearchableAttributeSimpleDate(id, userLabel, userCategory, attrs);
 						break;
 				}
@@ -147,8 +146,8 @@ public class Searchables
 					Attribute attrPort = Voyage.getAttribute(port);
 					Attribute attrRegion = Voyage.getAttribute(region);
 					
-					if (attrPort.getType().intValue() != AbstractAttribute.TYPE_DICT ||
-							attrRegion.getType().intValue() != AbstractAttribute.TYPE_DICT || 
+					if (attrPort.getType().intValue() != Attribute.TYPE_DICT ||
+							attrRegion.getType().intValue() != Attribute.TYPE_DICT || 
 							!PORT_DICTIONARY.equals(attrPort.getDictionary()) ||
 							!REGION_DICTIONARY.equals(attrRegion.getDictionary()))
 						throw new RuntimeException("searchable attribute '" + id + "' invalid location");

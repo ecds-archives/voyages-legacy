@@ -1,9 +1,6 @@
 package edu.emory.library.tast.dm;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
-import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.dm.attributes.ObjectType;
 import edu.emory.library.tast.dm.dictionaries.BodyPt;
 import edu.emory.library.tast.dm.dictionaries.Country;
 import edu.emory.library.tast.dm.dictionaries.MarkDegree;
@@ -16,8 +13,6 @@ import edu.emory.library.tast.dm.dictionaries.PlaceA;
 import edu.emory.library.tast.dm.dictionaries.PlaceB;
 import edu.emory.library.tast.dm.dictionaries.SexAge;
 import edu.emory.library.tast.dm.dictionaries.SpecialMark;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Slave object.
@@ -35,39 +30,6 @@ public class Slave extends AbstractDescriptiveObject {
 	 * Tells whether object has been updated or created.
 	 */
 	private int modified = 0;
-
-	/**
-	 * Loads all groups designed to slave type.
-	 * 
-	 * @return
-	 */
-	public static Group[] getGroups() {
-
-		Conditions conditions = new Conditions();
-		conditions.addCondition("typeName", SLAVE, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("ObjectType", conditions);
-		query.setCacheable(true);
-		Object[] types = (Object[]) query.executeQuery();
-		ObjectType type = (ObjectType) types[0];
-
-		conditions = new Conditions();
-		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
-		query = new QueryValue("Group", conditions);
-		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy(new String[] { "name" });
-		query.setCacheable(true);
-		Object[] attributes = (Object[]) query.executeQuery();
-		Group[] ret = null;
-		if (attributes.length == 0) {
-			ret = new Group[] {};
-		} else {
-			ret = new Group[attributes.length];
-			for (int i = 0; i < attributes.length; i++) {
-				ret[i] = (Group) attributes[i];
-			}
-		}
-		return ret;
-	}
 
 	/**
 	 * Loads all Attributes designed to slaves.
@@ -116,39 +78,6 @@ public class Slave extends AbstractDescriptiveObject {
 			attrsName[i] = attributes[i].getName();
 		}
 		return attrsName;
-	}
-
-	/**
-	 * Gets all CompoundAttributes assigned to slaves.
-	 * 
-	 * @return
-	 */
-	public static CompoundAttribute[] getCoumpoundAttributes() {
-
-		Conditions conditions = new Conditions();
-		conditions.addCondition("typeName", SLAVE, Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("ObjectType", conditions);
-		query.setCacheable(true);
-		Object[] types = (Object[]) query.executeQuery();
-		ObjectType type = (ObjectType) types[0];
-
-		conditions = new Conditions();
-		conditions.addCondition("objectType", type, Conditions.OP_EQUALS);
-		query = new QueryValue("CompoundAttribute", conditions);
-		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy(new String[] { "name" });
-		query.setCacheable(true);
-		Object[] attributes = (Object[]) query.executeQuery();
-		CompoundAttribute[] ret = null;
-		if (attributes.length == 0) {
-			ret = new CompoundAttribute[] {};
-		} else {
-			ret = new CompoundAttribute[attributes.length];
-			for (int i = 0; i < attributes.length; i++) {
-				ret[i] = (CompoundAttribute) attributes[i];
-			}
-		}
-		return ret;
 	}
 
 	/**

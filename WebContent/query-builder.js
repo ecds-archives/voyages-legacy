@@ -118,6 +118,12 @@ var QueryBuilderGlobals =
 	{
 		var builder = this.builders[builderId];
 		if (builder) builder.listDeselectAll(attributeId);
+	},
+
+	listItemToggled: function(builderId, attributeId, input)
+	{
+		var builder = this.builders[builderId];
+		if (builder) builder.listItemToggled(attributeId, input);
 	}
 
 }
@@ -306,6 +312,18 @@ QueryBuilder.prototype.toggleMonth = function(attributeId, month)
 	this.updateTotal(0);
 }
 
+QueryBuilder.prototype.getListItemById = function(cond, id, offset)
+{
+	var ids = id.split(cond.idSeparator);
+	var item = cond.items[ids[0]];
+	
+	if (!offset) offset = 0;
+	for (var i = 1; i < ids.length - offset; i++)
+		item = item.children[ids[i]];
+
+	return item;
+}
+
 QueryBuilder.prototype.openList = function(attributeId)
 {
 	var cond = this.conditions[attributeId];
@@ -400,21 +418,16 @@ QueryBuilder.prototype.listChangeSelectionAll = function(attributeId, state)
 
 }
 
-/*
-QueryBuilder.prototype.showList = function(attributeId, hiddenFieldName, displayFieldName)
+QueryBuilder.prototype.listItemToggled = function(attributeId, input)
 {
-
-	var url = "dictionary-list.jsp" +
-		"?attributeId=" + encodeURIComponent(attributeId) + 
-		"&formName=" + encodeURIComponent(formName) +
-		"&updateTotalFieldName=" + encodeURIComponent(updateTotalFieldName) +
-		"&hiddenFieldName=" + encodeURIComponent(hiddenFieldName) +
-		"&displayFieldName=" + encodeURIComponent(displayFieldName) +
-		"&builderId=" + encodeURIComponent(builderId);
-
-	window.open(url, "search-list", "width=300,height=500,resizable=yes,scrollbars=yes,status=no");
-
-}
-
-*/
+	var cond = this.conditions[attributeId];
+	if (!cond.selecteChildren) false;
 	
+	var item = this.getListItemById(cond, input.value, 0);
+	
+	for (var i = 0; i < item.children.length; i++)
+	{
+		item.children[i];
+	}
+	
+}

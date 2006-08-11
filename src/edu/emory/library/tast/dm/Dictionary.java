@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Expression;
 
-import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.HibernateUtil;
 

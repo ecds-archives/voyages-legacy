@@ -7,12 +7,11 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
+import org.dom4j.tree.AbstractAttribute;
 
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.VoyageIndex;
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CompoundAttribute;
 import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.MenuComponent;
 import edu.emory.library.tast.ui.MenuItem;
@@ -364,7 +363,6 @@ public class SearchBean
 	public SearchParameters getSearchParameters()
 	{
 		restorePermlinkIfAny();
-		this.searchParameters.setCategory(0);
 		return searchParameters;
 	}
 
@@ -391,7 +389,7 @@ public class SearchBean
 	public void setSelectedCategory(String selectedCategory)
 	{
 		this.selectedCategory = UserCategory.parse(selectedCategory);
-		//this.searchParameters.setCategory(this.getSelectedCategoryTyped());
+		this.searchParameters.setCategory(this.selectedCategory);
 	}
 
 }

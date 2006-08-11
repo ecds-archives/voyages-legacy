@@ -1300,6 +1300,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append(", ");
 		regJS.append("editListElementId: '").append(editListElementId).append("'");
 		regJS.append(", ");
+		regJS.append("idSeparator: '").append(ID_SEPARATOR).append("'");
+		regJS.append(", ");
+		regJS.append("selecteChildren: '").append(ID_SEPARATOR).append("'");
+		regJS.append(", ");
 		regJS.append("itemsField: '").append(getHtmlNameForList(attribute, context)).append("'");
 		regJS.append(", ");
 		regJS.append("items: {");

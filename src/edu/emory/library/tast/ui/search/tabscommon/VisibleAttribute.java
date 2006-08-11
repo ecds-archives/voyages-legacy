@@ -13,8 +13,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 
 public class VisibleAttribute {
 
@@ -28,7 +28,7 @@ public class VisibleAttribute {
 
 	private String name;
 
-	private int category;
+	private UserCategory category;
 
 	private String userLabel;
 
@@ -107,9 +107,7 @@ public class VisibleAttribute {
 		}
 		VisibleAttribute attr = new VisibleAttribute(name, tabs,
 				(Attribute[]) attributesList.toArray(new Attribute[] {}));
-		attr
-				.setCategory("beginners".equals(category) ? AbstractAttribute.CATEGORY_BEGINNER
-						: AbstractAttribute.CATEGORY_GENERAL);
+		attr.setCategory(UserCategory.parse(category));
 		attr.setUserLabel(userLabel);
 		return attr;
 	}
@@ -128,11 +126,11 @@ public class VisibleAttribute {
 		this.attributes = attributes;
 	}
 
-	public int getCategory() {
+	public UserCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(int category) {
+	public void setCategory(UserCategory category) {
 		this.category = category;
 	}
 

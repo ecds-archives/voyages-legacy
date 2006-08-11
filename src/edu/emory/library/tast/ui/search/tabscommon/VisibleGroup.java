@@ -3,13 +3,14 @@ package edu.emory.library.tast.ui.search.tabscommon;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 
 public class VisibleGroup {
 
@@ -125,7 +126,7 @@ public class VisibleGroup {
 		this.userLabel = userLabel;
 	}
 
-	public int noOfAttributesInCategory(int category) {
+	public int noOfAttributesInCategory(UserCategory category) {
 		int num = 0;
 		for (int i = 0; i < this.visibleAttributes.length; i++) {
 			if (category == this.visibleAttributes[i].getCategory()) {

@@ -1,6 +1,5 @@
 package edu.emory.library.tast.ui.search.query.searchables;
 
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;
@@ -46,13 +45,13 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimple
 	{
 		switch (getAttributeType())
 		{
-		case AbstractAttribute.TYPE_INTEGER:
+		case Attribute.TYPE_INTEGER:
 			return new Integer(number);
 		
-		case AbstractAttribute.TYPE_FLOAT:
+		case Attribute.TYPE_FLOAT:
 			return new Float(number);
 		
-		case AbstractAttribute.TYPE_LONG:
+		case Attribute.TYPE_LONG:
 			return new Long(number);
 
 		default:

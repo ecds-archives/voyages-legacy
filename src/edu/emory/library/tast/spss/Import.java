@@ -14,7 +14,6 @@ import edu.emory.library.tast.dm.AbstractDescriptiveObject;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.attributes.AbstractAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
@@ -814,7 +813,7 @@ public class Import
 		for (int i = 0; i < attributes.length; i++)
 		{
 			Attribute attr = attributes[i];
-			if (attr.getType().intValue() == AbstractAttribute.TYPE_DICT)
+			if (attr.getType().intValue() == Attribute.TYPE_DICT)
 			{
 				// System.out.println("Updating: " + col.getName() + ", " +
 				// col.getDictinaory());
@@ -939,7 +938,7 @@ public class Import
 				}
 
 				// nonexisting dictionary value was inserted
-				if (type == AbstractAttribute.TYPE_DICT && parsedValue != null
+				if (type == Attribute.TYPE_DICT && parsedValue != null
 						&& ((Dictionary) parsedValue).getId() == null) log
 						.logWarn("Nonexistent label '"
 								+ ((Dictionary) parsedValue).getName() + "' "

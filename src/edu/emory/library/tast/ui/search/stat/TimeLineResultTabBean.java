@@ -115,8 +115,7 @@ public class TimeLineResultTabBean {
 		this.voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			Attribute attr = attributes[i];
-			if (attr.isVisibleByCategory(this.searchBean.getSearchParameters().getCategory())
-					&& (attr.getType().intValue() == Attribute.TYPE_FLOAT
+			if ((attr.getType().intValue() == Attribute.TYPE_FLOAT
 							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
 				String outString = attr.toString();
 				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
