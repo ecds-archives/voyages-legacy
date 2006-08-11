@@ -36,11 +36,7 @@ public class TableResultTabBean {
 
 	private static final String ATTRIBUTE = "Attribute_";
 
-	private static final String COMPOUND_ATTRIBUTE = "CompoundAttribute_";
-
 	private static final String MAP_SESSION_KEY = "detail_map__";
-
-	private static final String GROUP = "Group";
 
 	private static final int MAX_STEP = 50000;
 
@@ -843,7 +839,7 @@ public class TableResultTabBean {
 		ArrayList res = new ArrayList();
 		Group group = Group.getGroupById(this.selectedGroupSet);
 		if (group != null) {
-			VisibleAttribute[] attrs = group.getAllVisibleAttributes();
+			VisibleAttribute[] attrs = group.getVisibleAttributesInUserCategory(this.searchBean.getSearchParameters().getCategory());
 			for (int i = 0; i < attrs.length; i++) {
 				VisibleAttribute attr = attrs[i];
 				//if (attr.getCategory() == this.searchBean.getSearchParameters().getCategory()) {
