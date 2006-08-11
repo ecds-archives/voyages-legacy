@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -21,6 +20,7 @@ import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleDateAttributeFormatter;
+import edu.emory.library.tast.ui.search.tabscommon.MemorizedAction;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleGroup;
 import edu.emory.library.tast.util.query.Conditions;
@@ -145,7 +145,12 @@ public class TableResultTabBean {
 	private DetailVoyageMap detailVoyageMap = new DetailVoyageMap();
 
 	private DetailVoyageInfo[] detailVoyageInfo = new DetailVoyageInfo[] {};
-
+	
+	/**
+	 * A list of actions that will be performed after apply configuration was pressed.
+	 */
+	private List actionsToPerform = new ArrayList();
+	
 	/**
 	 * Constructor.
 	 * 
@@ -376,19 +381,30 @@ public class TableResultTabBean {
 			return null;
 		}
 
-		// Find and remove attributes
-		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
+		for (Iterator iter = selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-			VisibleAttribute attr = this.getVisibleAttribute(element);
-			List list = new ArrayList(this.visibleColumns);
+			VisibleAttribute attr = getVisibleAttribute(element);
+			List list = new ArrayList(visibleColumns);
+			int index = list.indexOf(attr);
 			if (list.contains(attr)) {
 				list.remove(attr);
-				this.visibleColumns = list;
-				this.setVisibleColumns();
-				this.needQuery = true;
-				this.needDetailQuery = true;
+				visibleColumns = list;
+				setVisibleColumns();
+				needQuery = true;
+				needDetailQuery = true;
+				
+				this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(index), attr}) {
+					public void performAction() {
+						List list = new ArrayList(visibleColumns);
+						list.add(((Integer)this.params[0]).intValue(), this.params[1]);
+						visibleColumns = list;
+						setVisibleColumns();
+					}
+				});
+				
 			}
 		}
+		
 		return null;
 	}
 
@@ -421,6 +437,17 @@ public class TableResultTabBean {
 				this.setVisibleColumns();
 				this.needQuery = true;
 				this.needDetailQuery = true;
+				
+				int index = list.indexOf(attr);
+				this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(index)}) {
+					public void performAction() {
+						List list = new ArrayList(visibleColumns);
+						list.remove(((Integer)this.params[0]).intValue());
+						visibleColumns = list;
+						setVisibleColumns();
+					}
+				});
+				
 			}
 		}
 		return null;
@@ -448,6 +475,22 @@ public class TableResultTabBean {
 					attrs[i - 1] = tmp;
 					this.needQuery = true;
 					this.needDetailQuery = true;
+					
+					this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(i)}) {
+						public void performAction() {
+							VisibleAttribute[] attrs = (VisibleAttribute[]) visibleColumns.toArray(new VisibleAttribute[] {});
+							
+							int i = ((Integer)this.params[0]).intValue();
+							VisibleAttribute tmp = attrs[i - 1];
+							attrs[i - 1] = attrs[i];
+							attrs[i] = tmp;
+							
+							visibleColumns = Arrays.asList(attrs);
+							setVisibleColumns();
+						}
+					});
+					
+					
 					break;
 				}
 			}
@@ -479,12 +522,27 @@ public class TableResultTabBean {
 					attrs[i + 1] = tmp;
 					this.needQuery = true;
 					this.needDetailQuery = true;
+					
+					this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(i)}) {
+						public void performAction() {
+							VisibleAttribute[] attrs = (VisibleAttribute[]) visibleColumns.toArray(new VisibleAttribute[] {});
+							
+							int i = ((Integer)this.params[0]).intValue();
+							VisibleAttribute tmp = attrs[i + 1];
+							attrs[i + 1] = attrs[i];
+							attrs[i] = tmp;
+							
+							visibleColumns = Arrays.asList(attrs);
+							setVisibleColumns();
+						}
+					});
+					
 					break;
 				}
 			}
 			this.visibleColumns = Arrays.asList(attrs);
 			this.setVisibleColumns();
-		}
+		} 
 		return null;
 	}
 
@@ -534,6 +592,18 @@ public class TableResultTabBean {
 		this.detailVoyageId = event.getVoyageId();
 		this.needDetailQuery = true;
 	}
+	
+	public String cancelConfiguration() {
+		for (int i = this.actionsToPerform.size() - 1; i >= 0; i--) {
+			MemorizedAction element = (MemorizedAction) this.actionsToPerform.get(i);
+			element.performAction();
+		}
+		this.actionsToPerform.clear();
+		this.configurationMode = new Boolean(false);
+		this.resultsMode = new Boolean(true);
+		this.detailMode = new Boolean(false);
+		return null;
+	}
 
 	/**
 	 * Gets VisibleColumn object from given string representation
@@ -544,32 +614,10 @@ public class TableResultTabBean {
 	private VisibleAttribute getVisibleAttribute(String sAttr) {
 		VisibleAttribute ret = null;
 		if (sAttr.startsWith(ATTRIBUTE)) {
-			// Attribute_#####
 			String attrId = sAttr.substring(ATTRIBUTE.length(), sAttr.length());
 			
 			ret = VisibleAttribute.getAttribute(attrId);
 		} 
-//		else if (sAttr.startsWith(COMPOUND_ATTRIBUTE)) {
-//			// CompoundAttribute_#####
-//			String attrId = sAttr.substring(COMPOUND_ATTRIBUTE.length(), sAttr.length());
-//			Conditions c = new Conditions();
-//			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
-//			QueryValue qValue = new QueryValue("CompoundAttribute", c);
-//			Object[] attrs = qValue.executeQuery();
-//			if (attrs.length > 0) {
-//				ret = (VisibleColumn) attrs[0];
-//			}
-//		} else if (sAttr.startsWith(GROUP)) {
-//			// Group_#####
-//			String attrId = sAttr.substring(GROUP.length(), sAttr.length());
-//			Conditions c = new Conditions();
-//			c.addCondition("id", new Long(attrId), Conditions.OP_EQUALS);
-//			QueryValue qValue = new QueryValue("Group", c);
-//			Object[] attrs = qValue.executeQuery();
-//			if (attrs.length > 0) {
-//				ret = (VisibleColumn) attrs[0];
-//			}
-//		}
 		return ret;
 	}
 	
@@ -741,7 +789,7 @@ public class TableResultTabBean {
 	 * 
 	 * @return
 	 */
-	public Boolean getResultsMode() {
+	public Boolean getResultsMode() {		
 		return this.resultsMode;
 	}
 
@@ -760,6 +808,8 @@ public class TableResultTabBean {
 	 * 
 	 */
 	public void resultsMode() {
+		this.actionsToPerform.clear();
+		this.actionsToPerform.clear();
 		this.configurationMode = new Boolean(false);
 		this.resultsMode = new Boolean(true);
 		this.detailMode = new Boolean(false);
@@ -943,8 +993,16 @@ public class TableResultTabBean {
 	 */
 	public void setAttachSearchedParams(Boolean attachSearchedParams) {
 		if (!this.attachSearchedParams.equals(attachSearchedParams)) {
-			this.attachSearchedParams = attachSearchedParams;
+			this.attachSearchedParams = attachSearchedParams;			
 			this.setVisibleColumns();
+			
+			this.actionsToPerform.add(new MemorizedAction (new Object[] {new Boolean(!attachSearchedParams.booleanValue())}) {
+				public void performAction() {
+					TableResultTabBean.this.attachSearchedParams = (Boolean)this.params[0];
+					setVisibleColumns();
+				}
+			});
+			
 			this.needQuery = true;
 		}
 	}

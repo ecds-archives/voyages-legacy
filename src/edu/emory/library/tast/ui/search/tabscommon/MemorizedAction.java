@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.search.stat;
+package edu.emory.library.tast.ui.search.tabscommon;
 
 /**
  * Action that memores any parameters that can be used in performAction method.
