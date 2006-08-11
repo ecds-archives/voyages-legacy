@@ -268,8 +268,6 @@ public class SearchBean
 		
 		Group[] groups = Searchables.getCurrent().getGroups();
 		
-		System.out.println("i'm here ...");
-		
 		MenuItemMain[] mainItems = new MenuItemMain[groups.length];
 		for (int i = 0; i < groups.length; i++)
 		{
