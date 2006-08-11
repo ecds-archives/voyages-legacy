@@ -136,11 +136,11 @@
 
 				<t:htmlTag value="td" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-bottom: 0px;">
 					<t:htmlTag value="div" style="margin-bottom: 5px;">
-						<h:commandButton style="width: 30px" id="configure_AddAttrButton" value="xx"
+						<h:commandButton style="width: 30px" id="configure_AddAttrButton" value=">"
 							action="#{TableResultTabBean.addSelectedAttributeToList}" />
 					</t:htmlTag>
 					<t:htmlTag value="div">
-						<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="yy"
+						<h:commandButton style="width: 30px" id="configure_RemAttrButton" value="<"
 							action="#{TableResultTabBean.remSelectedAttributeFromList}" />
 					</t:htmlTag>
 				</t:htmlTag>
@@ -173,7 +173,7 @@
 			<t:htmlTag value="table" style="border-collapse: collapse;">
 				<t:htmlTag value="tr">
 					<t:htmlTag value="td" style="padding: 0px;">
-						<h:selectBooleanCheckbox value="#{TableResultTabBean.attachSearchedParams}" />
+						<h:selectBooleanCheckbox onchange="submit();" value="#{TableResultTabBean.attachSearchedParams}" />
 					</t:htmlTag>
 					<t:htmlTag value="td" style="padding-left: 5px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;">
 						<h:outputText value="Attach to the result attributes from the search query" />
