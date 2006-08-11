@@ -162,38 +162,9 @@
 	</tag>
 	
 	<tag>
-		<name>dictionatyList</name>
-		<tag-class>
-			edu.emory.library.tast.ui.search.query.DictionaryListTag
-		</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>dictionary</name>
-		</attribute>
-		<attribute>
-			<name>attributeName</name>
-		</attribute>
-		<attribute>
-			<name>formName</name>
-		</attribute>
-		<attribute>
-			<name>hiddenFieldName</name>
-		</attribute>
-		<attribute>
-			<name>displayFieldName</name>
-		</attribute>
-		<attribute>
-			<name>updateTotalFieldName</name>
-		</attribute>
-		<attribute>
-			<name>builderId</name>
-		</attribute>
-	</tag>
-	
-	<tag>
 		<name>selectAndOrder</name>
 		<tag-class>
-			edu.emory.library.tast.ui.schema.SelectAndOrderTag
+			edu.emory.library.tast.ui.SelectAndOrderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

@@ -1,9 +1,12 @@
-package edu.emory.library.tast.ui.search.query.searchables;
+package edu.emory.library.tast.dm.attributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 
 public class Group
 {

@@ -54,13 +54,6 @@
 	</component>
 	
 	<component>
-		<component-type>DictionaryList</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.search.query.DictionaryListComponent
-		</component-class>
-	</component>
-	
-	<component>
 		<component-type>VoyageDetail</component-type>
 		<component-class>
 			edu.emory.library.tast.ui.search.table.UIDetailComponent
@@ -77,7 +70,7 @@
 	<component>
 		<component-type>SelectAndOrder</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.schema.SelectAndOrderComponent
+			edu.emory.library.tast.ui.SelectAndOrderComponent
 		</component-class>
 	</component>
 

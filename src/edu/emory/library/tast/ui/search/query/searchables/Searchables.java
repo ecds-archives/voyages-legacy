@@ -16,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.Group;
 
 public class Searchables
 {

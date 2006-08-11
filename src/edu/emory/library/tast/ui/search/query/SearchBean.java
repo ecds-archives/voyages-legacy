@@ -12,13 +12,13 @@ import org.dom4j.tree.AbstractAttribute;
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.VisibleColumn;
 import edu.emory.library.tast.ui.MenuComponent;
 import edu.emory.library.tast.ui.MenuItem;
 import edu.emory.library.tast.ui.MenuItemMain;
 import edu.emory.library.tast.ui.MenuItemSelectedEvent;
 import edu.emory.library.tast.ui.MessageBarComponent;
-import edu.emory.library.tast.ui.search.query.searchables.Group;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
@@ -272,7 +272,6 @@ public class SearchBean
 		{
 			Group group = groups[i];
 			SearchableAttribute[] attributes = group.getSearchableAttributesInUserCategory(category);
-			System.out.println("count ? " + (attributes != null && attributes.length > 0));
 			if (attributes != null && attributes.length > 0)
 			{
 				MenuItemMain mainItem = new MenuItemMain();
