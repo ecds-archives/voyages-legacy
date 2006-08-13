@@ -361,17 +361,55 @@ QueryBuilder.prototype.closeList = function(attributeId)
 	}
 }
 
+QueryBuilder.prototype.prepareListItem = function(item, parent)
+{
+
+	item.itemElement = document.getElementById(item.itemElementId);
+	item.childrenElement = document.getElementById(item.childrenElementId);
+	item.checkbox = document.getElementById(item.checkboxId);
+	item.textLowerCase = item.text.toLowerCase();
+	item.parent = parent;
+	
+	if (item.children)
+	{
+		for (var id in item.children)
+		{
+			this.prepareListItem(item.children[id], item);
+		}
+	}
+
+}
+
 QueryBuilder.prototype.prepareList = function(cond)
 {
 	if (cond.listPrepared) return;
 	for (var id in cond.items)
 	{
-		var item = cond.items[id];
-		item.element = document.getElementById(item.elementId);
-		item.checkbox = document.getElementById(item.checkboxId);
-		item.textLowerCase = item.text.toLowerCase();
+		this.prepareListItem(cond.items[id], null);
 	}
 	cond.listPrepared = true;
+}
+
+QueryBuilder.prototype.quickSearchTree = function(item, searchFor)
+{
+
+	var directMatch = item.textLowerCase.indexOf(searchFor) != -1;
+	
+	var subtreeMatches = 0;
+	if (item.children)
+	{
+		for (var id in item.children)
+		{
+			if (this.quickSearchTree(item.children[id], searchFor))
+				subtreeMatches ++;
+		}
+	}
+	
+	item.itemElement.style.display = (directMatch || subtreeMatches > 0) ? "" : "none";
+	item.childrenElement.style.display = (subtreeMatches > 0) ? "" : "none";
+	
+	return directMatch || subtreeMatches > 0;
+
 }
 
 QueryBuilder.prototype.quickSearchList = function(attributeId, input)
@@ -418,16 +456,51 @@ QueryBuilder.prototype.listChangeSelectionAll = function(attributeId, state)
 
 }
 
+QueryBuilder.prototype.listSelectItem = function(item, state)
+{
+	listSelectItem.checkbox.checked = state;
+	if (item.children)
+	{
+		for (var i = 0; i < item.children.length; i++)
+		{
+			this.listSelectItem(item.children[i], state);
+		}
+	}
+}
+
 QueryBuilder.prototype.listItemToggled = function(attributeId, input)
 {
 	var cond = this.conditions[attributeId];
-	if (!cond.selecteChildren) false;
+	if (!cond.selectChildren) false;
+	this.prepareList(cond);
 	
 	var item = this.getListItemById(cond, input.value, 0);
+	this.listSelectItem(item, item.checkbox.checked);
 	
-	for (var i = 0; i < item.children.length; i++)
+	var parent = item.parent;
+	while (parent)
 	{
-		item.children[i];
+		var allSelected = true;
+		var allDeselected = true;
+		for (var i = 0; i < parent.children.length; i++)
+		{
+			var child = parent.children[i];
+			if (!child.checkbox.checked) allSelected = false; else allDeselected = false;
+			if (!allSelected && !allDeselected) break;
+		}
+		if (allSelected)
+		{
+			parent.checkbox.checked = true;
+		}
+		else if (allDeselected)
+		{
+			parent.checkbox.checked = false;
+		}
+		else
+		{
+			break;
+		}
+		parent = parent.parent;
 	}
 	
 }

@@ -1151,7 +1151,12 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	private String getHtmlNameListItemElement(SearchableAttribute attribute, FacesContext context, String fullId)
 	{
-		return getClientId(context) + "_" + attribute.getId() + "_list_td_" + fullId;
+		return getClientId(context) + "_" + attribute.getId() + "_list_item_" + fullId;
+	}
+
+	private String getHtmlNameListChildElement(SearchableAttribute attribute, FacesContext context, String fullId)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_list_chld_" + fullId;
 	}
 
 	private String getHtmlNameForListCheckbox(SearchableAttribute attribute, FacesContext context, String fullId)
@@ -1178,7 +1183,8 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append("fullId: '").append(fullId).append("', ");
 		regJS.append("text: '").append(JsfUtils.escapeStringForJS(item.getText())).append("', ");
 		regJS.append("checkboxId: '").append(getHtmlNameForListCheckbox(attribute, context, fullId)).append("', ");
-		regJS.append("elementId: '").append(getHtmlNameListItemElement(attribute, context, fullId)).append("', ");
+		regJS.append("itemElementId: '").append(getHtmlNameListItemElement(attribute, context, fullId)).append("', ");
+		regJS.append("childrenElementId: '").append(getHtmlNameListChildElement(attribute, context, fullId)).append("', ");
 		
 		if (item.getChildrenCount() > 0)
 		{
@@ -1248,6 +1254,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.endElement("td");
 	
 		writer.endElement("tr");
+		writer.writeAttribute("id", getHtmlNameListChildElement(attribute, context, fullId), null);
 		
 		if (item.getChildrenCount() > 0)
 		{
