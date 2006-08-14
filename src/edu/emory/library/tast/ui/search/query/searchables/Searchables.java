@@ -16,7 +16,6 @@ import org.xml.sax.SAXException;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.Group;
 
 public class Searchables
 {
@@ -138,18 +137,19 @@ public class Searchables
 				{
 					Node xmlLoc = xmlLocs.item(j);
 
-					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
-					String region = xmlLoc.getAttributes().getNamedItem("region").getNodeValue();
-					Attribute attrPort = Voyage.getAttribute(port);
-					Attribute attrRegion = Voyage.getAttribute(region);
-					
-					if (attrPort.getType().intValue() != Attribute.TYPE_DICT ||
-							attrRegion.getType().intValue() != Attribute.TYPE_DICT || 
-							!PORT_DICTIONARY.equals(attrPort.getDictionary()) ||
-							!REGION_DICTIONARY.equals(attrRegion.getDictionary()))
-						throw new RuntimeException("searchable attribute '" + id + "' invalid location");
-					
-					locs[j] = new Location(attrPort, attrRegion);
+//					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
+//					String region = xmlLoc.getAttributes().getNamedItem("region").getNodeValue();
+//					Attribute attrPort = Voyage.getAttribute(port);
+//					Attribute attrRegion = Voyage.getAttribute(region);
+//					
+//					if (attrPort.getType().intValue() != Attribute.TYPE_DICT ||
+//							attrRegion.getType().intValue() != Attribute.TYPE_DICT || 
+//							!PORT_DICTIONARY.equals(attrPort.getDictionary()) ||
+//							!REGION_DICTIONARY.equals(attrRegion.getDictionary()))
+//						throw new RuntimeException("searchable attribute '" + id + "' invalid location");
+//					
+//					locs[j] = new Location(attrPort, attrRegion);
+					locs[j] = new Location(null, null);
 				}
 				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCategory, locs);
 			}

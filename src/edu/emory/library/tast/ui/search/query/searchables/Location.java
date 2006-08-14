@@ -10,7 +10,6 @@ public class Location
 	
 	public Location(Attribute port, Attribute region)
 	{
-		super();
 		this.port = port;
 		this.region = region;
 	}

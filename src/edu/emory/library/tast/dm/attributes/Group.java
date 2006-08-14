@@ -131,6 +131,16 @@ public class Group
 		return (SearchableAttribute[]) searchableAttributesbyUserCategories.get(category);
 	}
 	
+	public int getNoOfSearchableAttributesInUserCategory(UserCategory category)
+	{
+		return getSearchableAttributesInUserCategory(category).length;
+	}
+
+	public boolean hasSearchableAttributesInUserCategory(UserCategory category)
+	{
+		return getNoOfSearchableAttributesInUserCategory(category) > 0;
+	}
+
 	public VisibleAttribute[] getAllVisibleAttributes()
 	{
 		return visibleAttributesAll;
@@ -141,6 +151,16 @@ public class Group
 		return (VisibleAttribute[]) visibleAttributesbyUserCategories.get(category);
 	}
 	
+	public int getNoOfVisibleAttributesInUserCategory(UserCategory category)
+	{
+		return getVisibleAttributesInUserCategory(category).length;
+	}
+
+	public boolean hasVisibleAttributesInUserCategory(UserCategory category)
+	{
+		return getNoOfVisibleAttributesInUserCategory(category) > 0;
+	}
+
 	private static void loadGroups() throws ParserConfigurationException, SAXException, IOException
 	{
 		

@@ -260,8 +260,8 @@ public class QueryConditionDate extends QueryConditionRange
 	
 	private String formatDateForDisplay(String month, String year)
 	{
-		boolean hasMonth = StringUtils.isNullOrEmpty(month);
-		boolean hasYear = StringUtils.isNullOrEmpty(year); 
+		boolean hasMonth = !StringUtils.isNullOrEmpty(month);
+		boolean hasYear = !StringUtils.isNullOrEmpty(year); 
 		if (hasMonth && hasYear)
 		{
 			return month + "/" + year;

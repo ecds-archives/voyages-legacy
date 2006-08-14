@@ -11,10 +11,31 @@ public class QueryConditionList extends QueryCondition
 
 	private Set selectedIds = new HashSet();
 	private boolean edit = false;
+	private boolean autoSelection = false; 
 	
 	public QueryConditionList(String searchableAttributeId)
 	{
 		super(searchableAttributeId);
+	}
+	
+	public boolean isEdit()
+	{
+		return edit;
+	}
+
+	public void setEdit(boolean edit)
+	{
+		this.edit = edit;
+	}
+
+	public boolean isAutoSelection() 
+	{
+		return autoSelection;
+	}
+
+	public void setAutoSelection(boolean autoSelection)
+	{
+		this.autoSelection = autoSelection;
 	}
 
 	public int getSelectedIdsCount()
@@ -75,16 +96,6 @@ public class QueryConditionList extends QueryCondition
 			newQueryCondition.addId((String) iterDict.next());
 		
 		return newQueryCondition;
-	}
-
-	public boolean isEdit()
-	{
-		return edit;
-	}
-
-	public void setEdit(boolean edit)
-	{
-		this.edit = edit;
 	}
 
 }

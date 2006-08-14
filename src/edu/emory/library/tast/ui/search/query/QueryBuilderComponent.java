@@ -140,7 +140,7 @@ public class QueryBuilderComponent extends UIComponentBase
 				{
 					ok = decodeDateCondition((QueryConditionDate) queryCondition, context);					
 				}
-				else if (queryCondition instanceof QueryConditionDate)
+				else if (queryCondition instanceof QueryConditionList)
 				{
 					ok = decodeDictionaryCondition((QueryConditionList) queryCondition, context);
 				}
@@ -242,7 +242,7 @@ public class QueryBuilderComponent extends UIComponentBase
 						context, form, writer,
 						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
 			}
-			else if (queryCondition instanceof QueryConditionDate)
+			else if (queryCondition instanceof QueryConditionList)
 			{
 				encodeDictionaryCondition(
 						(QueryConditionList)queryCondition,
@@ -971,11 +971,19 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append(", ");
 		regJS.append("tdEqYearId: '").append(tdEqYearId).append("'");
 		regJS.append(", ");
-		regJS.append("monthsTds: [");
+		regJS.append("monthTds: [");
 		for (int i = 0; i < 12; i++)
 		{
 			if (i > 0) regJS.append(", ");
 			regJS.append("'").append(getTdNameForMonth(context, attribute, i)).append("'");
+		}
+		regJS.append("]");
+		regJS.append(", ");
+		regJS.append("monthInputs: [");
+		for (int i = 0; i < 12; i++)
+		{
+			if (i > 0) regJS.append(", ");
+			regJS.append("'").append(getHtmlNameForRangeMonth(attribute, context, i)).append("'");
 		}
 		regJS.append("]");
 		
@@ -1058,6 +1066,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			jsSelectMonth.setLength(0);
 			jsSelectMonth.append("QueryBuilderGlobals.toggleMonth(");
 			jsSelectMonth.append("'").append(getClientId(context)).append("', ");
+			jsSelectMonth.append("'").append(attribute.getId()).append("', ");
 			jsSelectMonth.append(i);
 			jsSelectMonth.append(")");
 			
@@ -1173,21 +1182,24 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		
 		String fullId;
-		if (!StringUtils.isNullOrEmpty(parentId))
-			fullId = "";
+		if (StringUtils.isNullOrEmpty(parentId))
+			fullId = item.getId();
 		else
 			fullId = parentId + ID_SEPARATOR + item.getId();
 
 		regJS.append("'").append(item.getId()).append("': ");
 		regJS.append("{");
-		regJS.append("fullId: '").append(fullId).append("', ");
-		regJS.append("text: '").append(JsfUtils.escapeStringForJS(item.getText())).append("', ");
-		regJS.append("checkboxId: '").append(getHtmlNameForListCheckbox(attribute, context, fullId)).append("', ");
-		regJS.append("itemElementId: '").append(getHtmlNameListItemElement(attribute, context, fullId)).append("', ");
-		regJS.append("childrenElementId: '").append(getHtmlNameListChildElement(attribute, context, fullId)).append("', ");
+		regJS.append("text: '").append(JsfUtils.escapeStringForJS(item.getText())).append("'");
+		regJS.append(", ");
+		regJS.append("checkboxId: '").append(getHtmlNameForListCheckbox(attribute, context, fullId)).append("'");
+		regJS.append(", ");
+		regJS.append("itemElementId: '").append(getHtmlNameListItemElement(attribute, context, fullId)).append("'");
+		regJS.append(", ");
+		regJS.append("childrenElementId: '").append(getHtmlNameListChildElement(attribute, context, fullId)).append("'");
 		
 		if (item.getChildrenCount() > 0)
 		{
+			regJS.append(", ");
 			regJS.append("children: {");
 			QueryConditionListItem[] children = item.getChildren();
 			for (int i = 0; i < children.length; i++)
@@ -1206,8 +1218,8 @@ public class QueryBuilderComponent extends UIComponentBase
 	{
 		
 		String fullId;
-		if (!StringUtils.isNullOrEmpty(parentId))
-			fullId = "";
+		if (StringUtils.isNullOrEmpty(parentId))
+			fullId = item.getId();
 		else
 			fullId = parentId + ID_SEPARATOR + item.getId();
 		
@@ -1226,41 +1238,78 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 	
-	private void encodeListItem(SearchableAttribute attribute, FacesContext context, ResponseWriter writer, String jsUpdateTotal, QueryConditionList queryCondition, QueryConditionListItem item, String parentId) throws IOException
+	private void encodeListItem(SearchableAttribute attribute, int level, FacesContext context, ResponseWriter writer, String jsUpdateTotal, QueryConditionList queryCondition, QueryConditionListItem item, String parentId) throws IOException
 	{
 		
 		String fullId;
-		if (!StringUtils.isNullOrEmpty(parentId))
-			fullId = "";
+		if (StringUtils.isNullOrEmpty(parentId))
+			fullId = item.getId();
 		else
 			fullId = parentId + ID_SEPARATOR + item.getId();
 		
+		String jsCheckboxClick = 
+			"QueryBuilderGlobals.listItemToggled(" +
+			"'" + getClientId(context) + "'," +
+			"'" + attribute.getId() + "'," +
+			"this)";
+		
+		String className =
+			"query-builder-list-item-" + level + 
+			(item.getChildrenCount() > 0 ? " query-builder-list-item-with-children" : "");
+		
 		writer.startElement("tr", this);
 		writer.writeAttribute("id", getHtmlNameListItemElement(attribute, context, fullId), null);
-		
+
+//		not yet implemented
+//		writer.startElement("td", this);
+//		if (item.isExpandable())
+//		{
+//
+//			String jsArrowClick = 
+//				"QueryBuilderGlobals.listItemExpandCollapse(" +
+//				"'" + getClientId(context) + "'," +
+//				"'" + attribute.getId() + "'," +
+//				"'" + fullId + "'," +
+//				"this)";
+//			
+//			String arrowClassName =
+//				"query-builder-list-item-expanded";
+//			
+//			writer.startElement("div", this);
+//			writer.writeAttribute("class", arrowClassName, null);
+//			writer.writeAttribute("onclick", jsArrowClick, null);
+//			writer.endElement("div");
+//			
+//		}
+//		writer.endElement("td");
+
 		writer.startElement("td", this);
-		writer.startElement("input", this);
-		writer.writeAttribute("type", "checkbox", null);
-		writer.writeAttribute("id", getHtmlNameForListCheckbox(attribute, context, fullId), null);
-		writer.writeAttribute("value", item.getId(), null);
-		writer.writeAttribute("onclick", jsUpdateTotal, null);
-		writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
-		if (queryCondition.containsId(fullId)) writer.writeAttribute("checked", "checked", null);
-		writer.endElement("input");
+		if (item.isSelectable())
+		{
+			writer.startElement("input", this);
+			writer.writeAttribute("type", "checkbox", null);
+			writer.writeAttribute("id", getHtmlNameForListCheckbox(attribute, context, fullId), null);
+			writer.writeAttribute("value", fullId, null);
+			writer.writeAttribute("onclick", jsCheckboxClick, null);
+			writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
+			if (queryCondition.containsId(fullId)) writer.writeAttribute("checked", "checked", null);
+			writer.endElement("input");
+		}
 		writer.endElement("td");
 
 		writer.startElement("td", this);
+		writer.writeAttribute("class", className, null);
 		writer.write(item.getText());
 		writer.endElement("td");
 	
 		writer.endElement("tr");
-		writer.writeAttribute("id", getHtmlNameListChildElement(attribute, context, fullId), null);
 		
 		if (item.getChildrenCount() > 0)
 		{
 			QueryConditionListItem[] children = item.getChildren();
 			
 			writer.startElement("tr", this);
+			writer.writeAttribute("id", getHtmlNameListChildElement(attribute, context, fullId), null);
 			
 			writer.startElement("td", this);
 			writer.endElement("td");
@@ -1273,7 +1322,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.startElement("tr", this);
 			for (int i = 0; i < children.length; i++)
 			{
-				encodeListItem(attribute, context, writer, jsUpdateTotal, queryCondition, children[i], fullId);
+				encodeListItem(attribute, level+1, context, writer, jsUpdateTotal, queryCondition, children[i], fullId);
 			}
 			writer.endElement("table");
 			writer.endElement("td");
@@ -1309,13 +1358,14 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append(", ");
 		regJS.append("idSeparator: '").append(ID_SEPARATOR).append("'");
 		regJS.append(", ");
-		regJS.append("selecteChildren: '").append(ID_SEPARATOR).append("'");
+		regJS.append("autoSelection: ").append(queryCondition.isAutoSelection());
 		regJS.append(", ");
 		regJS.append("itemsField: '").append(getHtmlNameForList(attribute, context)).append("'");
 		regJS.append(", ");
 		regJS.append("items: {");
 		for (int i = 0; i < allItems.length; i++)
 		{
+			if (i > 0) regJS.append(", ");
 			createRegJsForListItem(attribute, context, allItems[i], "", regJS);
 		}
 		regJS.append("}");
@@ -1434,7 +1484,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		// actual list
 		for (int i = 0; i < allItems.length; i++)
-			encodeListItem(attribute, context, writer, jsUpdateTotalPostponed,
+			encodeListItem(attribute, 0, context, writer, jsUpdateTotalPostponed,
 					queryCondition, allItems[i], "");
 		
 		// list: end

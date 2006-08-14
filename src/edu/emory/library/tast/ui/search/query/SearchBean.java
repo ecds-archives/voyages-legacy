@@ -143,7 +143,7 @@ public class SearchBean
 	 */
 	public String getNumberOfResultsText()
 	{
-
+		
 		Conditions conditions = new Conditions();
 		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{

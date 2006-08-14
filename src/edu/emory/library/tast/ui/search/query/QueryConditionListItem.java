@@ -13,8 +13,9 @@ public class QueryConditionListItem implements Serializable
 
 	private String id;
 	private String text;
-	private boolean selectable = true;
-	private boolean selectChildren = true;
+	private boolean selectable = true; // not yet implemented
+	private boolean expandable = true; // not yet implemented
+	private boolean expanded = true;
 	private transient Map childrenById = null;
 	private QueryConditionListItem[] children;
 	
@@ -33,6 +34,13 @@ public class QueryConditionListItem implements Serializable
 		this.text = text;
 	}
 	
+	public QueryConditionListItem(String id, String text, QueryConditionListItem[] children)
+	{
+		this.id = id;
+		this.text = text;
+		this.children = children;
+	}
+
 	private void ensureIdMap()
 	{
 		if (childrenById == null)
@@ -90,16 +98,16 @@ public class QueryConditionListItem implements Serializable
 		this.selectable = selectable;
 	}
 	
-	public boolean isSelectChildren()
+	public boolean isExpandable()
 	{
-		return selectChildren;
+		return expandable;
 	}
-	
-	public void setSelectChildren(boolean selectedChildren)
+
+	public void setExpandable(boolean expandable)
 	{
-		this.selectChildren = selectedChildren;
+		this.expandable = expandable;
 	}
-	
+
 	public String getText()
 	{
 		return text;
@@ -108,6 +116,16 @@ public class QueryConditionListItem implements Serializable
 	public void setText(String text)
 	{
 		this.text = text;
+	}
+	
+	public boolean isExpanded()
+	{
+		return expanded;
+	}
+
+	public void setExpanded(boolean expanded)
+	{
+		this.expanded = expanded;
 	}
 
 	public boolean equals(Object obj)
@@ -147,7 +165,6 @@ public class QueryConditionListItem implements Serializable
 		newItem.setId(id);
 		newItem.setText(text);
 		newItem.setSelectable(selectable);
-		newItem.setSelectChildren(selectChildren);
 		newItem.setChildren(children);
 		
 		return newItem;

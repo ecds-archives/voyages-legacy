@@ -157,7 +157,7 @@ public class Export
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
 		Class.forName("org.postgresql.Driver");
-		//exportAttributes();
+		exportAttributes();
 		exportGroups();
 	}
 

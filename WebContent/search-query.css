@@ -170,10 +170,34 @@ td.query-builder-quicksearch-input input {
 	border: 0px;
 	padding: 2px;
 	width: 200px; }	
-
+	
 div.query-builder-edit-list td {
 	padding: 1px; }
 	
+td.quer-builder-list-item-0 {
+	}	
+
+td.quer-builder-list-item-1 {
+	}	
+
+td.quer-builder-list-item-2 {
+	}	
+
+td.query-builder-list-item-with-children {
+	font-weight: bold; }
+	
+div.query-builder-list-item-expanded {
+	background-image: url(icon-arrow-down.png);
+	background-repeat: no-repeat;
+	width: 11px;
+	height: 11px; }
+
+div.query-builder-list-item-collapsed {
+	background-image: url(icon-arrow-right.png);
+	background-repeat: no-repeat;
+	width: 11px;
+	height: 11px; }
+
 table.history-item-buttons {
 	margin-top: 5px; }
 	

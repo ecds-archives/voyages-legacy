@@ -81,4 +81,12 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		return items;
 	}
 
+	public QueryConditionListItem getItemByFullId(String id)
+	{
+		Dictionary dictItem = Dictionary.loadDictionaryById(dictionary, new Long(id));
+		return new QueryConditionListItem(
+				dictItem.getId().toString(),
+				dictItem.getName());
+	}
+	
 }

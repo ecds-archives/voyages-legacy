@@ -297,8 +297,8 @@ QueryBuilder.prototype.changeDateRangeType = function(attributeId)
 QueryBuilder.prototype.toggleMonth = function(attributeId, month)
 {
 	var cond = this.conditions[attributeId];
-	var monthInput = document.forms[this.formName].elements[this.monthFieldName];
-	var monthTd = document.getElementById(cond.monthsTds[month]);
+	var monthInput = document.forms[this.formName].elements[cond.monthInputs[month]];
+	var monthTd = document.getElementById(cond.monthTds[month]);
 	if (monthInput.value == "true")
 	{
 		monthInput.value = "false";
@@ -332,23 +332,35 @@ QueryBuilder.prototype.openList = function(attributeId)
 	document.forms[this.formName].elements[cond.stateFieldName].value = "edit";
 }
 
+QueryBuilder.prototype.getSelectedItemText = function(item, names)
+{
+
+	if (item.checkbox.checked)
+		names.push(item.text);
+	
+	if (item.children)
+	{
+		for (var id in item.children)
+		{
+			this.getSelectedItemText(item.children[id], names);
+		}
+	}
+
+}
+
+
 QueryBuilder.prototype.closeList = function(attributeId)
 {
 	var cond = this.conditions[attributeId];
+	this.prepareList(cond);
+
 	document.getElementById(cond.showElementId).style.display = "block";
 	document.getElementById(cond.editElementId).style.display = "none";
 	document.forms[this.formName].elements[cond.stateFieldName].value = "show";
 	
 	var names = new Array();
-	var allInputs = document.forms[this.formName].getElementsByTagName("input");
-	for (var i=0; i<allInputs.length; i++)
-	{
-		var input = allInputs[i];
-		if (input.type == "checkbox" && input.name == cond.itemsField && input.checked)
-		{
-			names.push(cond.items[input.value].text);
-		}
-	}
+	for (var id in cond.items)
+		this.getSelectedItemText(cond.items[id], names);
 	
 	var displayDiv = document.getElementById(cond.showListElementId);
 	if (names.length > 0)
@@ -382,11 +394,12 @@ QueryBuilder.prototype.prepareListItem = function(item, parent)
 
 QueryBuilder.prototype.prepareList = function(cond)
 {
-	if (cond.listPrepared) return;
+	if (cond.listPrepared)
+		return;
+
 	for (var id in cond.items)
-	{
 		this.prepareListItem(cond.items[id], null);
-	}
+
 	cond.listPrepared = true;
 }
 
@@ -397,16 +410,16 @@ QueryBuilder.prototype.quickSearchTree = function(item, searchFor)
 	
 	var subtreeMatches = 0;
 	if (item.children)
-	{
 		for (var id in item.children)
-		{
 			if (this.quickSearchTree(item.children[id], searchFor))
 				subtreeMatches ++;
-		}
-	}
 	
-	item.itemElement.style.display = (directMatch || subtreeMatches > 0) ? "" : "none";
-	item.childrenElement.style.display = (subtreeMatches > 0) ? "" : "none";
+	item.itemElement.style.display =
+		(directMatch || subtreeMatches > 0) ? "" : "none";
+	
+	if (item.children)
+		item.childrenElement.style.display =
+			(subtreeMatches > 0) ? "" : "none";
 	
 	return directMatch || subtreeMatches > 0;
 
@@ -418,13 +431,10 @@ QueryBuilder.prototype.quickSearchList = function(attributeId, input)
 	this.prepareList(cond);
 
 	var searchFor = input.value.toLowerCase();
+	cond.searchFor = searchFor;
 
 	for (var id in cond.items)
-	{
-		var item = cond.items[id];
-		var match = item.textLowerCase.indexOf(searchFor) != -1;
-		item.element.style.display = match ? "" : "none";
-	}
+		this.quickSearchTree(cond.items[id], searchFor);
 
 }
 
@@ -438,19 +448,40 @@ QueryBuilder.prototype.listDeselectAll = function(attributeId)
 	this.listChangeSelectionAll(attributeId, false);
 }
 
+QueryBuilder.prototype.listItemChangeSelectionAll = function(cond, item, state, force)
+{
+
+	var match = !cond.searchFor || item.textLowerCase.indexOf(cond.searchFor) != -1;
+
+	if (cond.autoSelection)
+	{
+		if (force || match)
+		{
+			item.checkbox.checked = state;
+			force = true;
+		}
+	}
+	else
+	{
+		if (match)
+		{
+			item.checkbox.checked = state;
+		}
+	}
+
+	if (item.children)
+		for (var id in item.children)
+			this.listItemChangeSelectionAll(cond, item.children[id], state, force);
+
+}
+
 QueryBuilder.prototype.listChangeSelectionAll = function(attributeId, state)
 {
 	var cond = this.conditions[attributeId];
 	this.prepareList(cond);
 
 	for (var id in cond.items)
-	{
-		var item = cond.items[id];
-		if (item.element.style.display != "none")
-		{
-			item.checkbox.checked = state;
-		}
-	}
+		this.listItemChangeSelectionAll(cond, cond.items[id], state, false);
 	
 	this.updateTotal(0);
 
@@ -458,12 +489,12 @@ QueryBuilder.prototype.listChangeSelectionAll = function(attributeId, state)
 
 QueryBuilder.prototype.listSelectItem = function(item, state)
 {
-	listSelectItem.checkbox.checked = state;
+	item.checkbox.checked = state;
 	if (item.children)
 	{
-		for (var i = 0; i < item.children.length; i++)
+		for (var id in item.children)
 		{
-			this.listSelectItem(item.children[i], state);
+			this.listSelectItem(item.children[id], state);
 		}
 	}
 }
@@ -471,36 +502,40 @@ QueryBuilder.prototype.listSelectItem = function(item, state)
 QueryBuilder.prototype.listItemToggled = function(attributeId, input)
 {
 	var cond = this.conditions[attributeId];
-	if (!cond.selectChildren) false;
-	this.prepareList(cond);
 	
-	var item = this.getListItemById(cond, input.value, 0);
-	this.listSelectItem(item, item.checkbox.checked);
-	
-	var parent = item.parent;
-	while (parent)
+	if (cond.autoSelection)
 	{
-		var allSelected = true;
-		var allDeselected = true;
-		for (var i = 0; i < parent.children.length; i++)
+		this.prepareList(cond);
+		
+		var item = this.getListItemById(cond, input.value, 0);
+		this.listSelectItem(item, item.checkbox.checked);
+		
+		var parent = item.parent;
+		while (parent)
 		{
-			var child = parent.children[i];
-			if (!child.checkbox.checked) allSelected = false; else allDeselected = false;
-			if (!allSelected && !allDeselected) break;
+			var allSelected = true;
+			for (var id in parent.children)
+			{
+				var child = parent.children[id];
+				if (!child.checkbox.checked)
+				{
+					allSelected = false;
+					break;
+				}
+			}
+			if (allSelected)
+			{
+				parent.checkbox.checked = true;
+				parent = parent.parent;
+			}
+			else
+			{
+				parent.checkbox.checked = false;
+				break;
+			}
 		}
-		if (allSelected)
-		{
-			parent.checkbox.checked = true;
-		}
-		else if (allDeselected)
-		{
-			parent.checkbox.checked = false;
-		}
-		else
-		{
-			break;
-		}
-		parent = parent.parent;
 	}
+	
+	this.updateTotal(0);
 	
 }

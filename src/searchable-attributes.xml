@@ -23,6 +23,18 @@
 ]>
 
 <searchable-attributes>
+
+
+	<searchable-attribute
+		type="location"
+		id="test"
+		userCategory="beginners"
+		userLabel="Test">
+		<locations>
+			<location port="p" region="r" />
+		</locations>
+	</searchable-attribute>
+
 	<searchable-attribute type="simple" id="adultspurch"
 		userCategory="beginners" userLabel="Adults purchased anywhere">
 		<attributes>

@@ -13,9 +13,9 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 /**
  * <p>
@@ -360,16 +360,17 @@ public class HistoryListComponent extends UIComponentBase
 				else if (queryCondition instanceof QueryConditionList)
 				{
 					QueryConditionList queryConditionList = (QueryConditionList) queryCondition;
+					ListItemsSource itemsSource = (ListItemsSource) queryConditionList.getSearchableAttribute();
 					writer.write(" is ");
 					if (queryConditionList.getSelectedIds().size() > 0)
 					{
-						for (Iterator iterDict = queryConditionList.getSelectedIds().iterator(); iterDict.hasNext();)
+						for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
 						{
-							Dictionary dict = (Dictionary) ((Map.Entry)iterDict.next()).getValue();
+							QueryConditionListItem listItem = itemsSource.getItemByFullId((String) iter.next());
 							writer.startElement("b", this);
-							writer.write(dict.getName());
+							writer.write(listItem.getText());
 							writer.endElement("b");
-							if (iterDict.hasNext()) writer.write(" or ");
+							if (iter.hasNext()) writer.write(" or ");
 						}
 					}
 					else

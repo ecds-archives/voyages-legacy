@@ -3,8 +3,8 @@
 
 <!ELEMENT groups (group*)>
 <!ELEMENT group (searchable-attributes, table-attributes)>
-<!ELEMENT searchable-attributes (searchable-attribute+)>
-<!ELEMENT table-attributes (table-attribute+)>
+<!ELEMENT searchable-attributes (searchable-attribute*)>
+<!ELEMENT table-attributes (table-attribute*)>
 <!ELEMENT searchable-attribute EMPTY>
 <!ELEMENT table-attribute EMPTY>
 
@@ -21,6 +21,13 @@
 ]>
 
 <groups>
+	<group id="test" userLabel="Test">
+		<searchable-attributes>
+			<searchable-attribute id="test"/>
+		</searchable-attributes>
+		<table-attributes>
+		</table-attributes>
+	</group>
 	<group id="experience" userLabel="Experience">
 		<searchable-attributes>
 			<searchable-attribute id="yearam"/>

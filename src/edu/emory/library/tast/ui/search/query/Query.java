@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 
@@ -34,12 +33,13 @@ public class Query implements Serializable
 	{
 		if (conditionsByAttributes == null)
 		{
-			conditionsByAttributes = new HashMap();
+			Map newMap = new HashMap();
 			for (Iterator iter = conditions.iterator(); iter.hasNext();)
 			{
 				QueryCondition queryCondition = (QueryCondition) iter.next();
-				conditionsByAttributes.put(queryCondition.getSearchableAttributeId(), queryCondition);
+				newMap.put(queryCondition.getSearchableAttributeId(), queryCondition);
 			}
+			conditionsByAttributes = newMap;
 		}
 	}
 	
@@ -98,10 +98,10 @@ public class Query implements Serializable
 		return conditionsByAttributes.containsKey(searchableAttributeId);
 	}
 
-	public QueryCondition getCondition(Attribute attribute)
+	public QueryCondition getCondition(String searchableAttributeId)
 	{
 		ensureMap();
-		return (QueryCondition) conditionsByAttributes.get(attribute);
+		return (QueryCondition) conditionsByAttributes.get(searchableAttributeId);
 	}
 
 	protected Object clone()
@@ -120,20 +120,21 @@ public class Query implements Serializable
 		if (obj == null || !(obj instanceof Query))
 			return false;
 		
-		Query theOther = (Query) obj;
+		Query that = (Query) obj;
 		
-		if (getConditionCount() != theOther.getConditionCount())
+		if (this.getConditionCount() != that.getConditionCount())
 			return false;
 		
 		for (Iterator iterAttr = getConditionsByAttributes().keySet().iterator(); iterAttr.hasNext();)
 		{
-			Attribute attr = (Attribute) iterAttr.next();
-			QueryCondition theOtherQueryCondition = theOther.getCondition(attr);
+			String attrId = (String) iterAttr.next();
+			QueryCondition thisQueryCondition = this.getCondition(attrId);
+			QueryCondition thatQueryCondition = that.getCondition(attrId);
 			
-			if (theOtherQueryCondition == null)
+			if (thatQueryCondition == null)
 				return false;
 			
-			if (!theOtherQueryCondition.equals(getCondition(attr)))
+			if (!thatQueryCondition.equals(thisQueryCondition))
 				return false;
 		}
 		
