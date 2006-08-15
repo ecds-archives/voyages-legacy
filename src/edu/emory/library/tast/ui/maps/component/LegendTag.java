@@ -21,6 +21,10 @@ public class LegendTag extends UIComponentTag {
 	private String layers;
 
 	private String refreshAction;
+	
+	private String availableMaps;
+	
+	private String chosenMap;
 
 	protected void setProperties(UIComponent component) {
 
@@ -59,6 +63,20 @@ public class LegendTag extends UIComponentTag {
 			component.setValueBinding("layers", vb);
 		} else  if (layers != null)  {
 			component.getAttributes().put("layers", layers);
+		}
+		
+		if (availableMaps != null && isValueReference(availableMaps)) {
+			ValueBinding vb = app.createValueBinding(availableMaps);
+			component.setValueBinding("availableMaps", vb);
+		} else  if (availableMaps != null)  {
+			component.getAttributes().put("availableMaps", availableMaps);
+		}
+		
+		if (chosenMap != null && isValueReference(chosenMap)) {
+			ValueBinding vb = app.createValueBinding(chosenMap);
+			component.setValueBinding("chosenMap", vb);
+		} else  if (chosenMap != null)  {
+			component.getAttributes().put("chosenMap", chosenMap);
 		}
 		
 		if (component instanceof LegendComponent && refreshAction != null) {
@@ -121,5 +139,21 @@ public class LegendTag extends UIComponentTag {
 
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
+	}
+
+	public String getMaps() {
+		return availableMaps;
+	}
+
+	public void setMaps(String availableMaps) {
+		this.availableMaps = availableMaps;
+	}
+
+	public String getChosenMap() {
+		return chosenMap;
+	}
+
+	public void setChosenMap(String chosenMap) {
+		this.chosenMap = chosenMap;
 	}
 }

@@ -377,6 +377,12 @@
 		<attribute>
 			<name>legend</name>
 		</attribute>
+		<attribute>
+			<name>maps</name>
+		</attribute>
+		<attribute>
+			<name>chosenMap</name>
+		</attribute>
 	</tag>
 
 </taglib>

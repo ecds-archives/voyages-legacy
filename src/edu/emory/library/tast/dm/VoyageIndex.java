@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -74,24 +75,24 @@ public class VoyageIndex {
 	 * Attributes that can be shown on UI.
 	 */
 	private static Map attributes = new HashMap();
-	static {		
+	static {	
 		Attribute attr = new Attribute();
 		attr.setName("revisionId");
-		attr.setType(new Integer(Attribute.TYPE_INTEGER));
-		attr.setUserLabel("Revision #");
-		attributes.put("revisionId", attr);
+		VisibleAttribute visibleAttr = new VisibleAttribute("revisionId", new int [] {1, 2}, new Attribute[] {attr});
+		visibleAttr.setUserLabel("Revision #");
+		attributes.put("revisionId", visibleAttr);
 		
 		attr = new Attribute();
 		attr.setName("revisionDate");
-		attr.setType(new Integer(Attribute.TYPE_INTEGER));
-		attr.setUserLabel("Modification date");
-		attributes.put("revisionDate", attr);
+		visibleAttr = new VisibleAttribute("revisionDate", new int [] {1, 2}, new Attribute[] {attr});
+		visibleAttr.setUserLabel("Modification date");
+		attributes.put("revisionDate", visibleAttr);
 		
 		attr = new Attribute();
 		attr.setName("flag");
-		attr.setType(new Integer(Attribute.TYPE_INTEGER));
-		attr.setUserLabel("Approved");
-		attributes.put("flag", attr);
+		visibleAttr = new VisibleAttribute("flag", new int [] {1, 2}, new Attribute[] {attr});
+		visibleAttr.setUserLabel("Approved");
+		attributes.put("flag", visibleAttr);
 	}
 	
 	/**
@@ -99,8 +100,8 @@ public class VoyageIndex {
 	 * @param name
 	 * @return
 	 */
-	public static Attribute getAttribute(String name) {
-		return (Attribute)attributes.get(name);
+	public static VisibleAttribute getVisibleAttribute(String name) {
+		return (VisibleAttribute)attributes.get(name);
 	}
 	
 	/**

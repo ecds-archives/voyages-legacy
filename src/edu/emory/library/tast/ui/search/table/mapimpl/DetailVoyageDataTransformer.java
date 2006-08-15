@@ -9,6 +9,7 @@ import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.GISPortLocation;
 import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
+import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.Element;
 import edu.emory.library.tast.ui.maps.LegendItem;
@@ -35,10 +36,10 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 	/**
 	 * Transformes data for detail voyage info.
 	 */
-	public TransformerResponse transformData(Object[] data) {
+	public TransformerResponse transformData(AbstractTransformerQueryHolder data) {
 		
 		//Retrieve first row
-		Object[] row = (Object[]) data[0];
+		Object[] row = (Object[]) data.getRawQueryResponse()[0];
 		List rowList = Arrays.asList(row);
 		
 		//Prepare attributes that will be shown on map

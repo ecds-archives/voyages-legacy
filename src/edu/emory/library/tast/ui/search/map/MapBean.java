@@ -20,6 +20,7 @@ import edu.emory.library.tast.ui.maps.MapLayer;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 import edu.emory.library.tast.ui.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.ui.search.map.mapimpl.GlobalMapDataTransformer;
+import edu.emory.library.tast.ui.search.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
@@ -62,6 +63,8 @@ public class MapBean {
 
 	private MapData mapData = new MapData();
 
+	private int chosenMap = 0;
+
 	private void setMapData() {
 
 		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
@@ -72,60 +75,14 @@ public class MapBean {
 		if (this.neededQuery) {
 
 			this.pointsOfInterest.clear();
-			Conditions localCondition = this.searchBean.getSearchParameters().getConditions().addAttributesPrefix("v.");
-			localCondition.addCondition(VoyageIndex.getRecent().addAttributesPrefix("vi."));
-
-			// We will need join condition (to join VoyageIndex and Voyage).
-			localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
-
-			AttributesMap map = new AttributesMap();
-			List col1 = new ArrayList();
-			List col2 = new ArrayList();
-			ArrayList response = new ArrayList();
+			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(this.conditions);
+			queryHolder.executeQuery(this.chosenMap);
 			
-			executeMapQuery(response, localCondition, new String[] {
-					"v.majbuypt.name", "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end", "1" },
-					new String[] { "v.majbuypt.name" }, new String[] { "case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end" });
-			col1.add(new AttributesRange(Voyage.getAttribute("majbuypt"), 0, response.size() - 1));
-			col2.add(new AttributesRange(Voyage.getAttribute("slaximp"), 0, response.size() - 1));
-			
-			int beginSize = response.size();
-			executeMapQuery(response, localCondition, new String[] { "v.majselpt.name",
-					"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end", "2" },
-					new String[] { "v.majselpt.name" }, new String[] { "case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end"});
-			col1.add(new AttributesRange(Voyage.getAttribute("majselpt"), beginSize, beginSize + response.size() - 1));
-			col2.add(new AttributesRange(Voyage.getAttribute("slamimp"), beginSize, beginSize + response.size() - 1));
-
-			map.addColumn(col1);
-			map.addColumn(col2);
-			
-			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(map);						
-			this.mapData.setMapData(response.toArray(), transformer);
+			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(queryHolder.getAttributesMap());					
+			this.mapData.setMapData(queryHolder, transformer);
 			
 			this.neededQuery = false;
 		}
-	}
-
-	private void executeMapQuery(List response, Conditions localCondition,
-			String[] populatedAttrs, String[] groupBy, String[] orderBy) {
-
-		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
-
-		for (int i = 0; i < populatedAttrs.length; i++) {
-			qValue.addPopulatedAttribute(populatedAttrs[i], false);
-		}
-
-		qValue.setGroupBy(groupBy);
-		qValue.setOrderBy(orderBy);
-		qValue.setOrder(QueryValue.ORDER_ASC);
-
-		Object[] voyages = qValue.executeQuery();
-
-		response.addAll(Arrays.asList(voyages));
-
-//		return new double[] { ((Number) ((Object[]) voyages[voyages.length - 1])[1]).doubleValue(),
-//				((Number) ((Object[]) voyages[0])[1]).doubleValue() };
-
 	}
 
 	public String getMapPath() {
@@ -191,6 +148,28 @@ public class MapBean {
 	public MapLayer[] getLayers() {
 		return this.creator.getLayers();
 	}
+	
+	public void setChosenMap(Integer value) {
+		if (this.chosenMap != value.intValue()) {
+			this.neededQuery = true;
+		}
+		this.chosenMap = value.intValue();
+	}
+	
+	public Integer getChosenMap() {
+		return new Integer(this.chosenMap);
+	}
+	
+	public SelectItem[] getAvailableMaps() {
+		String[] maps = GlobalMapQueryHolder.getAvailableQuerySets();
+		SelectItem[] items = new SelectItem[maps.length];
+		for (int i = 0; i < items.length; i++) {
+			items[i] = new SelectItem(new Integer(i), maps[i]);
+		}
+		return items; 
+	}
+	
+	public void setAvailableMaps(Object[] par) {}
 	
 //	public void setLayers(MapLayer[] layers) {
 //		this.creator.setLayers(layers);

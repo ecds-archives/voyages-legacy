@@ -314,7 +314,7 @@ public class TableData {
 //				Attribute attr = (Attribute) this.additionalColumns.get(i);
 //				attributes.add(attr);
 //			}
-			VisibleAttribute attr = (VisibleAttribute)columns.get(i);
+			VisibleAttribute attr = (VisibleAttribute)additionalColumns.get(i);
 			attributes.addAll(Arrays.asList(attr.getAttributes()));
 		}
 		return (Attribute[]) attributes.toArray(new Attribute[] {});

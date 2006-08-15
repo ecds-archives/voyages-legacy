@@ -169,8 +169,8 @@ public class TableResultTabBean {
 		data.setVisibleColumns(attrs);
 		this.visibleColumns = Arrays.asList(attrs);
 
-		VisibleAttribute[] additionalAttrs = new VisibleAttribute[] { VisibleAttribute.getAttributeForTable("revisionId"),
-				VisibleAttribute.getAttributeForTable("revisionDate") };
+		VisibleAttribute[] additionalAttrs = new VisibleAttribute[] { VoyageIndex.getVisibleAttribute("revisionId"),
+				VoyageIndex.getVisibleAttribute("revisionDate") };
 		detailData.setVisibleAdditionalColumns(additionalAttrs);
 		detailData.setOrderByColumn(VisibleAttribute.getAttributeForTable("revisionId"));
 		detailData.setOrder(QueryValue.ORDER_DESC);
@@ -309,9 +309,9 @@ public class TableResultTabBean {
 			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
 
 			List validAttrs = new ArrayList();
-			Attribute[] attrs = Voyage.getAttributes();
+			VisibleAttribute[] attrs = VisibleAttribute.getAllAttributes();
 			for (int i = 0; i < attrs.length; i++) {
-				Attribute column = attrs[i];
+				VisibleAttribute column = attrs[i];
 				validAttrs.add(column);
 			}
 			detailData.setVisibleColumns(validAttrs);

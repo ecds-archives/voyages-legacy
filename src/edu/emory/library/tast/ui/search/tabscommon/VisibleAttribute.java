@@ -72,6 +72,10 @@ public class VisibleAttribute {
 			e.printStackTrace();
 		}
 	}
+	
+	public static VisibleAttribute[] getAllAttributes() {
+		return (VisibleAttribute[])((Map)visibleAttributes.get(new Integer(1))).values().toArray(new VisibleAttribute[] {});
+	}
 
 	private static VisibleAttribute fromXML(Node node) {
 

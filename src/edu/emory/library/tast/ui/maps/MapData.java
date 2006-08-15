@@ -46,10 +46,10 @@ public class MapData {
 	 * @param max max value in data
 	 * @param transformer data  trasformer implementation that should be used
 	 */
-	public void setMapData(Object[] queryResult, AbstractDataTransformer transformer) {
+	public void setMapData(AbstractTransformerQueryHolder data, AbstractDataTransformer transformer) {
 		
 		//Transform data
-		TransformerResponse response = transformer.transformData(queryResult);
+		TransformerResponse response = transformer.transformData(data);
 		
 		//Set items
 		this.items = response.getItems();

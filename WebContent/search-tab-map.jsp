@@ -24,7 +24,9 @@
 				styleClass="map-legend-div"
 				legend="#{MapBean.legend}"
 				layers="#{MapBean.layers}"
-				refreshAction="#{MapBean.refresh}" />
+				refreshAction="#{MapBean.refresh}" 
+				maps="#{MapBean.availableMaps}"
+				chosenMap="#{MapBean.chosenMap}" />
 		</t:htmlTag>
 	</t:htmlTag>
 

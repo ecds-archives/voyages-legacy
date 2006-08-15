@@ -156,8 +156,10 @@ td.legend-table-detail-col2 {
 }
 
 div.map-legend-div {
+	padding-top: 10px;
 	padding-left: 10px;
 	vertical-align: top;
+	
 }
 
 input.map-legend-refresh {

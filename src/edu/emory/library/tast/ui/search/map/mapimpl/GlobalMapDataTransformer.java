@@ -7,6 +7,7 @@ import java.util.List;
 import edu.emory.library.tast.dm.GISPortLocation;
 import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
+import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.Element;
 import edu.emory.library.tast.ui.maps.LegendItem;
@@ -45,7 +46,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	/**
 	 * Transforms data.
 	 */
-	public TransformerResponse transformData(Object[] data) {
+	public TransformerResponse transformData(AbstractTransformerQueryHolder data) {
 
 //		//Prepare ranges of circles size
 //		double[] rangeBoundries = new double[CIRCLE_RANGES + 1];
@@ -65,8 +66,10 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	 * @param ranges ranges of circles size.
 	 * @return
 	 */
-	private TransformerResponse getItems(Object[] data) {
+	private TransformerResponse getItems(AbstractTransformerQueryHolder holder) {
 
+		Object[] data = holder.getRawQueryResponse();
+		
 		List items = new ArrayList();
 
 		double min = Double.MAX_VALUE;

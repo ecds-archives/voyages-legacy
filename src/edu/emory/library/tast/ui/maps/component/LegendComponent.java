@@ -12,6 +12,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
+import javax.faces.model.SelectItem;
 
 import edu.emory.library.tast.ui.maps.LegendItem;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
@@ -36,6 +37,12 @@ public class LegendComponent extends UIComponentBase {
 		String refreshClicked = (String) params.get(getLegendHiddenFieldName(context));
 		if (refreshClicked != null && refreshClicked.length() > 0) {
 			this.queueEvent(new ActionEvent(this));
+		}
+		
+		String mapTypeId = (String) params.get(getMapTypeHiddenFieldName(context));
+		if (mapTypeId != null) {
+			ValueBinding vb = this.getValueBinding("chosenMap");
+			vb.setValue(context, new Integer(mapTypeId));
 		}
 		
 		for (Iterator iter = params.keySet().iterator(); iter.hasNext();) {
@@ -84,11 +91,64 @@ public class LegendComponent extends UIComponentBase {
 			writer.writeAttribute("class", styleClass, null);
 		}
 
+		this.encodeMapsChoose(context, writer);
+		
 		writer.write("<b>Legend:</b><br/>");
 		
 		this.encodeLegend(context, writer);
 		
 		this.encodeComponentButton(context, writer);
+
+	}
+	
+	private void encodeMapsChoose(FacesContext context, ResponseWriter writer) throws IOException {
+		/*
+		<t:htmlTag value="tr">
+			<t:htmlTag value="td">
+				<h:outputText value="Show on map: "/>
+				<h:selectOneMenu onchange="submit()" value="#{MapBean.chosenMap}" id="asdf1">
+					<f:selectItems value="#{MapBean.availableMaps}" id="asdf2"/>
+				</h:selectOneMenu>
+			</t:htmlTag>
+			<t:htmlTag value="td">
+			</t:htmlTag>		
+		</t:htmlTag>
+		*/
+		SelectItem[] maps = (SelectItem[]) this.getValueBinding(context, "availableMaps");
+		Integer selectedMap = (Integer)this.getValueBinding(context, "chosenMap");
+		
+		if (maps != null && selectedMap != null) {
+			writer.write("<b>Show: </b>");
+			writer.startElement("select", this);
+			writer.writeAttribute("id", this.getId() + "_availableMap", null);
+			StringBuffer buffer = new StringBuffer();
+			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getMapTypeHiddenFieldName(context));
+			buffer.append(" = ");
+			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getId() + "_availableMap");
+			buffer.append("; alert(");
+			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getMapTypeHiddenFieldName(context));
+			buffer.append(");");
+			//JsfUtils.appendSubmitJS(js, context, form, elementName, value)
+			writer.writeAttribute("onchange", buffer.toString(), null);
+			for (int i = 0; i < maps.length; i++) {
+				writer.startElement("option", this);
+				writer.writeAttribute("value", maps[i].getValue(), null);
+				if (selectedMap.intValue() == i) {
+					writer.writeAttribute("selected", null, null);
+				}
+				writer.write(maps[i].getLabel());
+				writer.endElement("option");
+			}
+			writer.endElement("input");
+			
+			writer.startElement("input", this);
+			writer.writeAttribute("name", this.getMapTypeHiddenFieldName(context), null);
+			writer.writeAttribute("type", "hidden", null);
+			writer.writeAttribute("value", selectedMap, null);
+			writer.endElement("input");
+			
+			writer.write("<br/><br/>");
+		}
 	}
 
 	private void encodeLegend(FacesContext context, ResponseWriter writer) throws IOException {
@@ -247,6 +307,10 @@ public class LegendComponent extends UIComponentBase {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(this.getId()).append("_checkbox_");
 		return buffer.toString();
+	}
+	
+	private String getMapTypeHiddenFieldName(FacesContext context) {
+		return this.getId() + "_availMaps_hidden";
 	}
 	
 	private String getLegendHiddenFieldName(FacesContext context) {
