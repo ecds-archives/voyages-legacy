@@ -455,6 +455,18 @@ public class HibernateConnector {
 	
 	/**
 	 * Loads object for given QueryValue.
+	 * @param p_query QueryValue object
+	 * @return results of execution of QueryValue
+	 */
+	public List loadObjectList(QueryValue p_query) {
+		Session session = HibernateUtil.getSession();
+		List list = loadObjectList(session, p_query);
+		session.close();
+		return list;
+	}
+
+	/**
+	 * Loads object for given QueryValue.
 	 * @param p_session session context
 	 * @param p_query QueryValue object
 	 * @return results of execution of QueryValue
@@ -472,6 +484,20 @@ public class HibernateConnector {
 		}
 	}
 	
+	/**
+	 * Loads object for given QueryValue.
+	 * @param p_session session context
+	 * @param p_query QueryValue object
+	 * @return results of execution of QueryValue
+	 */
+	public List loadObjectList(Session p_session, QueryValue p_query) {
+		
+		Transaction transaction = p_session.beginTransaction();
+		List list = p_query.getQuery(p_session).list();
+		transaction.commit();
+		return list;
+	}
+
 	/**
 	 * Saves given object to DB.
 	 * @param obj object to save

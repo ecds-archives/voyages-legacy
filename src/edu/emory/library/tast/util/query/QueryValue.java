@@ -3,6 +3,7 @@ package edu.emory.library.tast.util.query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -357,6 +358,14 @@ public class QueryValue {
 	 */
 	public Object[] executeQuery() {
 		return HibernateConnector.getConnector().loadObjects(this);
+	}
+
+	/**
+	 * Executes query.
+	 * @return query results
+	 */
+	public List executeQueryList() {
+		return HibernateConnector.getConnector().loadObjectList(this);
 	}
 
 	/**

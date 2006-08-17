@@ -42,6 +42,8 @@
         <mapping resource="edu/emory/library/tast/dm/VoyageIndex.hbm.xml"/>		<mapping resource="edu/emory/library/tast/dm/Dictionary.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Configuration.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/GISPortLocation.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/Region.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/Port.hbm.xml"/>
 		
     </session-factory>
 
