@@ -50,6 +50,18 @@ public class JsfUtils
 		writer.endElement("script");
 	}
 	
+	public static void encodeJavaScriptBlock(UIComponent component, ResponseWriter writer, String js) throws IOException
+	{
+		JsfUtils.encodeJavaScriptStart(component, writer);
+		writer.write(js);
+		JsfUtils.encodeJavaScriptEnd(component, writer);
+	}
+
+	public static void encodeJavaScriptBlock(UIComponent component, ResponseWriter writer, StringBuffer js) throws IOException
+	{
+		encodeJavaScriptBlock(component, writer, js.toString());
+	}
+
 	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value)
 	{
 		if (elementName != null && value != null)
