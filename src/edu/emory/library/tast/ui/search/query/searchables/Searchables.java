@@ -94,6 +94,9 @@ public class Searchables
 					Attribute attr = Voyage.getAttribute(name);
 					if (j == 0)
 					{
+						if (attr == null) {
+							int a = 0;
+						}
 						attrType = attr.getType().intValue();
 					}
 					else

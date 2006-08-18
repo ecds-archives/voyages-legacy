@@ -2,6 +2,7 @@ package edu.emory.library.tast.ui.search.table.mapimpl;
 
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.Element;
+import edu.emory.library.tast.ui.maps.MapItemElement;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 
 /**
@@ -18,19 +19,9 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 	public static final String SYMBOL_NAME_PREFIX = "number-";
 	
 	/**
-	 * Symbol name that will be used in map file.
-	 */
-	private String symbolName;
-	
-	/**
 	 * Color of map item.
 	 */
 	private int color;
-	
-	/**
-	 * Number on map item.
-	 */
-	private int number;
 	
 	/**
 	 * Creates new map item.
@@ -47,8 +38,35 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 	/**
 	 * Gets name of symbol that should be used by this map item.
 	 */
-	public String getSymbolName() {
-		return symbolName;
+	public String[] getSymbolNames() {
+		String[] symbols = new String[this.getMapItemElements().length];
+		for (int i = 0; i < symbols.length; i++) {
+			MapItemElement element = this.getMapItemElements()[i];
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("number-");
+			buffer.append(this.color);
+			buffer.append("-");
+			buffer.append(element.getAttributes()[0]);
+			if (this.getMapItemElements().length > 1) {
+				buffer.append("-").append(i + 1);
+			}
+			symbols[i] = buffer.toString();
+		}
+		return symbols;
+	}
+	
+	public String[] getLegendSymbolNames() {
+		String[] symbols = new String[this.getMapItemElements().length];
+		for (int i = 0; i < symbols.length; i++) {
+			MapItemElement element = this.getMapItemElements()[i];
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("number-");
+			buffer.append(this.color);
+			buffer.append("-");
+			buffer.append(element.getAttributes()[0]);
+			symbols[i] = buffer.toString();
+		}
+		return symbols;
 	}
 
 	/**
@@ -59,56 +77,33 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<b>").append("Location: ");
 		buffer.append(this.getMainLabel()).append("</b><br/>");
-		Element[] elements = this.getMapItemElements()[0].getElements();
-		boolean first = true;
-		for (int i = 0; i < elements.length; i++) {
-			if (!first) {
-				buffer.append(", ");
+		MapItemElement[] mapItemElements = this.getMapItemElements();
+		for (int i = 0; i < mapItemElements.length; i++) {
+			MapItemElement mapItemElement = mapItemElements[i];
+			buffer.append(mapItemElement.getAttribute());
+			Element[] elements = mapItemElement.getElements();
+			for (int j = 1; j < elements.length; j++) {
+				buffer.append("<br/> &nbsp&nbsp ");
+				buffer.append(elements[j].getAttribute());
+				buffer.append(": ").append(elements[j].getValue()).append("<br/>");
 			}
-			Element element = elements[i];
-			buffer.append(element.getAttribute());
-			first = false;
 		}
 		
 		PointOfInterest point = new PointOfInterest(this.getProjectedX(), this.getProjectedY());
 		point.setText(buffer.toString());
 		return point;
 	}
-	
-	/**
-	 * Sets number that will appear on map symbol.
-	 * @param number
-	 */
-	public void setNumber(int number) {
-		
-		//Set number
-		this.number = number;
-		
-		//Prepare symbol name
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(SYMBOL_NAME_PREFIX);
-		buffer.append(color).append("-");
-		buffer.append(this.number);
-		this.symbolName = buffer.toString();
-	}
 
 	/**
 	 * Gets legend for this item.
 	 * @return legend String
 	 */
-	public String getLegendText() {
-		StringBuffer buffer = new StringBuffer();
-		Element[] elements = this.getMapItemElements()[0].getElements();
-		boolean first = true;
-		for (int i = 0; i < elements.length; i++) {
-			if (!first) {
-				buffer.append(", ");
-			}
-			Element element = elements[i];
-			buffer.append(element.getAttribute());
-			first = false;
+	public String[] getLegendTexts() {
+		String[] responses = new String[this.getMapItemElements().length];
+		for (int i = 0; i < responses.length; i++) {
+			responses[i] = this.getMapItemElements()[i].getLegendText();
 		}
-		return buffer.toString();
+		return responses;
 	}
 
 }

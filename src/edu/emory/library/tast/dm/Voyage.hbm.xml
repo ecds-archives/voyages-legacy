@@ -15,6 +15,7 @@
 		<property name="datedep" column="datedep"/>
 		<property name="nppretra" column="nppretra"/>
 		<property name="d1slatr" column="d1slatr"/>
+		<property name="dlslatrb" column="dlslatrb"/>
 		<property name="npprior" column="npprior"/>
 		<property name="tslavesp" column="tslavesp"/>
 		<property name="tslavesd" column="tslavesd"/>
@@ -214,7 +215,6 @@
 		<property name="child5" column="child5"/>
 		<property name="male5" column="male5"/>
 		<property name="female5" column="female5"/>
-		<property name="arrport2" column="arrport2"/>
 		<property name="infant3" column="infant3"/>
 		<property name="infants3" column="infants3"/>
 		<property name="infant1" column="infant1"/>
@@ -237,6 +237,7 @@
 		<many-to-one name="datepl" class="edu.emory.library.tast.dm.dictionaries.DepDefinition"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="embport" class="edu.emory.library.tast.dm.dictionaries.PurchasePort"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="arrport" class="edu.emory.library.tast.dm.dictionaries.IntDisembPort"  lazy="false" outer-join="false"/>
+		<many-to-one name="arrport2" class="edu.emory.library.tast.dm.dictionaries.IntDisembPort"  lazy="false" outer-join="false"/>
 		<many-to-one name="plac1tra" class="edu.emory.library.tast.dm.dictionaries.PurchasePort"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="destin" class="edu.emory.library.tast.dm.dictionaries.RetPort"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="plac2tra" class="edu.emory.library.tast.dm.dictionaries.PurchasePort"  lazy="false" outer-join="true" fetch="join"/>
@@ -254,6 +255,7 @@
 		<many-to-one name="placcons" class="edu.emory.library.tast.dm.dictionaries.RetPort"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="majselpt" class="edu.emory.library.tast.dm.dictionaries.FirstDemPort"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="majbuypt" class="edu.emory.library.tast.dm.dictionaries.PurchasePort"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="mjbyptimp" class="edu.emory.library.tast.dm.dictionaries.PurchasePort"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="natinimp" class="edu.emory.library.tast.dm.dictionaries.ImputedNation"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="deptreg" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="retrnreg" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>

@@ -77,12 +77,14 @@ public class MapFileCreator {
 
 		for (int i = 0; i < data.length; i++) {
 			AbstractMapItem item = data[i];
-			String symbolName = item.getSymbolName();
-			if (!this.points.containsKey(symbolName)) {
-				this.points.put(symbolName, new ArrayList());
+			String[] symbolNames = item.getSymbolNames();
+			for (int j = 0; j < symbolNames.length; j++) {
+				if (!this.points.containsKey(symbolNames[j])) {
+					this.points.put(symbolNames[j], new ArrayList());
+				}
+				ArrayList symbolPoints = (ArrayList) this.points.get(symbolNames[j]);
+				symbolPoints.add(data[i]);
 			}
-			ArrayList symbolPoints = (ArrayList) this.points.get(symbolName);
-			symbolPoints.add(data[i]);
 		}
 
 	}

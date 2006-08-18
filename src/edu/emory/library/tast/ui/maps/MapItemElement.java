@@ -19,6 +19,8 @@ public class MapItemElement {
 	 */
 	private Attribute attribute;
 	
+	private Object[] attributes;
+	
 	/**
 	 * Subelements.
 	 */
@@ -34,7 +36,16 @@ public class MapItemElement {
 	 * @param attribute main attribute of map item element
 	 */
 	public MapItemElement(Attribute attribute) {
+		this(attribute, null);
+	}
+	
+	/**
+	 * Constructs map item element.
+	 * @param attribute main attribute of map item element
+	 */
+	public MapItemElement(Attribute attribute, Object[] attributes) {
 		this.attribute = attribute;
+		this.attributes = attributes;
 	}
 	
 	/**
@@ -75,5 +86,16 @@ public class MapItemElement {
 	public Attribute getAttribute() {
 		return attribute;
 	}
+
+	public Object[] getAttributes() {
+		return attributes;
+	}
 	
+	
+	public String getLegendText() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(getAttribute());
+		return buffer.toString();
+	}
+
 }

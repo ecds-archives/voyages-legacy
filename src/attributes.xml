@@ -94,6 +94,8 @@
     </attribute>
     <attribute userLabel="Day began slave purchase" importDateDay="d1slatra" type="3" importDateYear="d1slatrc" length="-1" category="0" importDateMonth="d1slatrb" id="262793" importType="2" importName="d1slatr" typeDisplayName="Date" visible="true" name="d1slatr" desc="">
     </attribute>
+    <attribute userLabel="Dayend slave purchase" importDateDay="dlslatrc" type="3" importDateYear="dlslatrc" length="-1" category="0" importDateMonth="dlslatrb" id="262793" importType="2" importName="dlslatrb" typeDisplayName="Date" visible="true" name="dlslatrb" desc="">
+    </attribute>
     <attribute userLabel="Date of arrival at second port of disembarkation" importDateDay="datarr36" type="3" importDateYear="datarr34" length="-1" category="1" importDateMonth="datarr37" id="262801" importType="2" importName="datarr32" typeDisplayName="Date" visible="true" name="datarr32" desc="Date of arrival at second port of disembarkation">
     </attribute>
     <attribute userLabel="Date of third disembarkation of slaves" importDateDay="datarr39" type="3" importDateYear="datarr34" length="-1" category="1" importDateMonth="datarr40" id="262803" importType="2" importName="datarr33" typeDisplayName="Date" visible="true" name="datarr33" desc="Date of third disembarkation of slaves">
@@ -204,7 +206,9 @@
     </attribute>
     <attribute userLabel="-" importName="locurmnl" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="locurmnl" desc="" id="262984">
     </attribute>
-    <attribute userLabel="Imputed principal port of slave purchase" importName="majbuypt" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="majbuypt" desc="Imputed principal port of slave purchas" id="263062">
+    <attribute userLabel="Principal port of slave purchase" importName="majbuypt" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="majbuypt" desc="Principal port of slave purchas" id="263062">
+    </attribute>
+    <attribute userLabel="Imputed principal port of slave purchase" importName="mjbyptimp" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="mjbyptimp" desc="Imputed principal port of slave purchas" id="2">
     </attribute>
     <attribute userLabel="Principal region of embarkation" importName="majbuyrg" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="1" visible="true" name="majbuyrg" desc="" id="263075">
     </attribute>

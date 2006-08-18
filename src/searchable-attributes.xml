@@ -311,11 +311,11 @@
 			<attribute name="majselpt" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="majbuypt"
+	<searchable-attribute type="simple" id="mjbyptimp"
 		userCategory="general"
 		userLabel="Imputed principal port of slave purchase">
 		<attributes>
-			<attribute name="majbuypt" />
+			<attribute name="mjbyptimp" />
 		</attributes>
 	</searchable-attribute>
 	<searchable-attribute type="simple" id="majbyimp"

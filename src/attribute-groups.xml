@@ -21,13 +21,6 @@
 ]>
 
 <groups>
-	<group id="test" userLabel="Test">
-		<searchable-attributes>
-			<searchable-attribute id="test"/>
-		</searchable-attributes>
-		<table-attributes>
-		</table-attributes>
-	</group>
 	<group id="experience" userLabel="Experience">
 		<searchable-attributes>
 			<searchable-attribute id="yearam"/>
@@ -139,7 +132,7 @@
 			<searchable-attribute id="mjselimp"/>
 			<searchable-attribute id="regdis1"/>
 			<searchable-attribute id="sla1port"/>
-			<searchable-attribute id="majbuypt"/>
+			<searchable-attribute id="mjbyptimp"/>
 			<searchable-attribute id="plac1tra"/>
 			<searchable-attribute id="plac2tra"/>
 			<searchable-attribute id="plac3tra"/>
@@ -168,7 +161,7 @@
 			<table-attribute id="mjselimp"/>
 			<table-attribute id="regdis1"/>
 			<table-attribute id="sla1port"/>
-			<table-attribute id="majbuypt"/>
+			<table-attribute id="mjbyptimp"/>
 			<table-attribute id="plac1tra"/>
 			<table-attribute id="plac2tra"/>
 			<table-attribute id="plac3tra"/>
@@ -346,7 +339,7 @@
 			<searchable-attribute id="ncr15imp"/>
 			<searchable-attribute id="datarr32"/>
 			<searchable-attribute id="datarr33"/>
-			<searchable-attribute id="majbuypt"/>
+			<searchable-attribute id="mjbyptimp"/>
 			<searchable-attribute id="ncr17imp"/>
 			<searchable-attribute id="plac1tra"/>
 			<searchable-attribute id="plac2tra"/>
@@ -403,7 +396,7 @@
 			<table-attribute id="ncr15imp"/>
 			<table-attribute id="datarr32"/>
 			<table-attribute id="datarr33"/>
-			<table-attribute id="majbuypt"/>
+			<table-attribute id="mjbyptimp"/>
 			<table-attribute id="ncr17imp"/>
 			<table-attribute id="plac1tra"/>
 			<table-attribute id="plac2tra"/>

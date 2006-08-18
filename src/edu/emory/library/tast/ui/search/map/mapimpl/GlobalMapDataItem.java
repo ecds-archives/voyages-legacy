@@ -53,8 +53,15 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	/**
 	 * Gets symbol name.
 	 */
-	public String getSymbolName() {
-		return symbolName;
+	public String[] getSymbolNames() {
+		return new String[] {symbolName};
+	}
+	
+	/**
+	 * Gets symbol names visible in legend.
+	 */
+	public String[] getLegendSymbolNames() {
+		return new String[] {symbolName};
 	}
 	
 	/**

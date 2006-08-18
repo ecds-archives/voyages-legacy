@@ -125,9 +125,7 @@ public class LegendComponent extends UIComponentBase {
 			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getMapTypeHiddenFieldName(context));
 			buffer.append(" = ");
 			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getId() + "_availableMap");
-			buffer.append("; alert(");
-			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getMapTypeHiddenFieldName(context));
-			buffer.append(");");
+			buffer.append(";");
 			//JsfUtils.appendSubmitJS(js, context, form, elementName, value)
 			writer.writeAttribute("onchange", buffer.toString(), null);
 			for (int i = 0; i < maps.length; i++) {

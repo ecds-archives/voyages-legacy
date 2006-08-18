@@ -29,6 +29,11 @@
 			<attribute name="crew1"/>
 		</attributes>
 	</table-attribute>
+	<table-attribute tabs="1,2" id="dlslatrb" userCategory="general" userLabel="Date of end of slave purchase">
+		<attributes>
+			<attribute name="dlslatrb"/>
+		</attributes>
+	</table-attribute>
 	<table-attribute tabs="1,2" id="datedep" userCategory="beginners" userLabel="Date began slave voyage">
 		<attributes>
 			<attribute name="datedep"/>
@@ -224,9 +229,9 @@
 			<attribute name="majselpt"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="majbuypt" userCategory="general" userLabel="Imputed principal port of slave purchase">
+	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="general" userLabel="Imputed principal port of slave purchase">
 		<attributes>
-			<attribute name="majbuypt"/>
+			<attribute name="mjbyptimp"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="majbyimp" userCategory="beginners" userLabel="Imputed principal region of embarkation">

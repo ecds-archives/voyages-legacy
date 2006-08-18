@@ -96,7 +96,13 @@ public abstract class AbstractMapItem {
 	 * exception.
 	 * @return name of symbol
 	 */
-	public abstract String getSymbolName();
+	public abstract String[] getSymbolNames();
+	
+	/**
+	 * Gets list of symbols that will appear as pictures in legend of map.
+	 * @return
+	 */
+	public abstract String[] getLegendSymbolNames();
 	
 	/**
 	 * Gets tooltip of map item.
