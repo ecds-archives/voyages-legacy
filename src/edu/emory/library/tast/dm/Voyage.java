@@ -449,6 +449,22 @@ public class Voyage extends AbstractDescriptiveObject {
 		this.values.put("revisionId", revisionId);
 	}
 	
+	public Float getS_slaximp() {
+		return (Float)this.values.get("s_slaximp");
+	}
+	
+	public Float getS_slamimp() {
+		return (Float)this.values.get("s_slamimp");
+	}
+	
+	public void setS_slaximp(Float value) {
+		this.values.put("s_slaximp", value);
+	}
+	
+	public void setS_slamimp(Float value) {
+		this.values.put("s_slamimp", value);
+	}
+	
 	/**
 	 * Returns string representation of object.
 	 */

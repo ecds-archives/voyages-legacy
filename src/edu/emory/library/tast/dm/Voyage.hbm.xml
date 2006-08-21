@@ -234,6 +234,10 @@
 		<property name="voy3imp" column="voy3imp"/>
 		<property name="slavemx7" column="slavemx7"/>
 		<property name="spanishamer" column="spanishamer"/>
+		
+		<property name="s_slaximp" formula="standarizeSlaveNumber(slaximp)" update="false" insert="false"/>
+		<property name="s_slamimp" formula="standarizeSlaveNumber(slamimp)" update="false" insert="false"/>
+		
 		<many-to-one name="datepl" class="edu.emory.library.tast.dm.dictionaries.DepDefinition"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="embport" class="edu.emory.library.tast.dm.dictionaries.PurchasePort"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="arrport" class="edu.emory.library.tast.dm.dictionaries.IntDisembPort"  lazy="false" outer-join="false"/>

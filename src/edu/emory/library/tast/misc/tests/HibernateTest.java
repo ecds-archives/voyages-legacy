@@ -53,36 +53,12 @@ public class HibernateTest {
 				
 				v.save();
 			} else if (command.equals("list")) {
-				try {
-//					Voyage v = new Voyage();
-//					v.setVoyageId(new Long(30001));
-					
-					long t1 = System.currentTimeMillis();
-//					VoyageIndex[] list = connector.getVoyagesIndexSet(0, 100, HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
-//					Voyage v = Voyage.loadMostRecent(new Long(2314));
-					Voyage[] list = Voyage.loadAllMostRecent(0, 100);
-					
-					
-					long t2 = System.currentTimeMillis();
-					
-					System.out.println("Returned: " + list.length + " time=" + (t2-t1));
-					
-//					if (v != null) {
-//						
-////						System.out.println("Event1: " + theVoyage);
-//						System.out.println("Printing!");
-//						System.out.println(((Slave)v.getSlaves().iterator().next()).getName());
-//						System.out.println(v.getShipname() + "---" + v.getPortdep());
-//					}
-//					for (int i = 0; i < list.length; i++) {
-//						Voyage v = list[i].getVoyage();
-//						System.out.println("Printing!");
-//						System.out.println(v.getShipname() + "---" + v.getPortdep());
-//					}
-
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
+				Conditions conditions = new Conditions();
+				conditions.addCondition("vid", new Long(1), Conditions.OP_EQUALS);
+				QueryValue val = new QueryValue("Voyage", conditions);
+				Object[] ret = val.executeQuery();
+				Voyage v = (Voyage)ret[0];
+				System.out.println("---> " + v.getS_slamimp() + "  " + v.getS_slaximp());
 			} else if (command.startsWith("modify")) {
 				Long id = new Long(command.split(" ")[1]);
 				Voyage v = Voyage.loadMostRecent(id);
