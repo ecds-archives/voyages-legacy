@@ -78,10 +78,10 @@ public class HibernateUtil {
 				String line = null;
 				while ((line = reader.readLine()) != null) {
 					buffer.append(line);
-				}							
+				}
+				statement.execute(buffer.toString());
 				System.out.println("OK");
 			}
-			
 			statement.close();
 			session.flush();
 			session.close();

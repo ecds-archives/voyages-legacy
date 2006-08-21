@@ -40,6 +40,10 @@ public class MapBean {
 	public static int PORT_ARRIVAL = 2;
 
 	public static int PORT_BOTH = 3;
+	
+	private static String[] MAPS = new String[] {"Ports", "Regions"};
+	
+	private static String[] ATTRS = new String[] {"Raw", "Adjusted"};
 
 	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";
 
@@ -78,7 +82,7 @@ public class MapBean {
 
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(this.conditions);
-			queryHolder.executeQuery(this.chosenMap);
+			queryHolder.executeQuery(this.chosenMap + this.chosenAttribute * ATTRS.length);
 			
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(queryHolder.getAttributesMap());					
 			this.mapData.setMapData(queryHolder, transformer);
@@ -117,12 +121,6 @@ public class MapBean {
 	}
 	
 	public String refresh() {		
-//		if (this.creator.createMapFile()) {
-//			sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
-//			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-//			((HttpSession) servletContext.getSession(true)).setAttribute(sessionParam, creator.getFilePath());
-//
-//		}
 		return null;
 	}
 
@@ -163,7 +161,7 @@ public class MapBean {
 	}
 	
 	public SelectItem[] getAvailableMaps() {
-		String[] maps = GlobalMapQueryHolder.getAvailableQuerySets();
+		String [] maps = MAPS;
 		SelectItem[] items = new SelectItem[maps.length];
 		for (int i = 0; i < items.length; i++) {
 			items[i] = new SelectItem(new Integer(i), maps[i]);
@@ -183,7 +181,7 @@ public class MapBean {
 	}
 	
 	public SelectItem[] getAvailableAttributes() {
-		String[] maps = GlobalMapQueryHolder.getAvailableQuerySets();
+		String [] maps = ATTRS;
 		SelectItem[] items = new SelectItem[maps.length];
 		for (int i = 0; i < items.length; i++) {
 			items[i] = new SelectItem(new Integer(i), maps[i]);

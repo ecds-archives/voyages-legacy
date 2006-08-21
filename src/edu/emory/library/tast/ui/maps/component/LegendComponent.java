@@ -97,9 +97,12 @@ public class LegendComponent extends UIComponentBase {
 			writer.writeAttribute("class", styleClass, null);
 		}
 
+		
+		writer.startElement("table", this);
 		this.encodeAttrsChoose(context, writer);
 		
 		this.encodeMapsChoose(context, writer);
+		writer.endElement("table");
 		
 		writer.write("<b>Legend:</b><br/>");
 		
@@ -115,7 +118,11 @@ public class LegendComponent extends UIComponentBase {
 		Integer selectedMap = (Integer)this.getValueBinding(context, "chosenMap");
 		
 		if (maps != null && selectedMap != null) {
+			writer.startElement("tr", this);
+			writer.startElement("td", this);
 			writer.write("<b>Show: </b>");
+			writer.endElement("td");
+			writer.startElement("td", this);
 			writer.startElement("select", this);
 			writer.writeAttribute("id", this.getId() + "_availableMap", null);
 			StringBuffer buffer = new StringBuffer();
@@ -142,7 +149,8 @@ public class LegendComponent extends UIComponentBase {
 			writer.writeAttribute("value", selectedMap, null);
 			writer.endElement("input");
 			
-			writer.write("<br/><br/>");
+			writer.endElement("td");
+			writer.endElement("tr");
 		}
 	}
 
@@ -153,7 +161,11 @@ public class LegendComponent extends UIComponentBase {
 		Integer selectedAttr = (Integer)this.getValueBinding(context, "chosenAttribute");
 		
 		if (attrs != null && selectedAttr != null) {
+			writer.startElement("tr", this);
+			writer.startElement("td", this);
 			writer.write("<b>Values: </b>");
+			writer.endElement("td");
+			writer.startElement("td", this);
 			writer.startElement("select", this);
 			writer.writeAttribute("id", this.getId() + "_availableAttr", null);
 			StringBuffer buffer = new StringBuffer();
@@ -179,7 +191,8 @@ public class LegendComponent extends UIComponentBase {
 			writer.writeAttribute("value", selectedAttr, null);
 			writer.endElement("input");
 			
-			writer.write("<br/><br/>");
+			writer.endElement("td");
+			writer.endElement("tr");
 		}
 	}
 	

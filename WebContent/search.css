@@ -171,10 +171,22 @@ table.legend-table-layers {
 	padding-left: 10px;
 }
 
-/* map */
-/*
-div.map-tools-top {
-	z-index: -1;
-	background-color: Red;
-	border-bottom: 2px solid #F1E7C8; }
-*/
+
+
+div.timetime-slider-container {
+	position: relative;
+	height: 20px;
+	background-color: #EEEEEE; }
+	
+div.timetime-knob {
+	position: absolute;
+	height: 20px;
+	width: 10px;
+	background-color: Red; }
+
+div.timetime-selection {
+	height: 20px;
+	position: absolute;
+	background-color: Blue; }
+
+
