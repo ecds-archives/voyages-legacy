@@ -21,17 +21,34 @@ div.timetime-slider-container {
 	position: relative;
 	height: 20px;
 	background-color: #EEEEEE; }
-	
-div.timetime-knob {
+
+div.timetime-left-knob {
 	position: absolute;
+	cursor: pointer;
 	height: 20px;
 	width: 10px;
-	background-color: Red; }
+	border-right: 1px solid Black;
+	background-color: #BBBBBB; }
+
+div.timetime-right-knob {
+	position: absolute;
+	cursor: pointer;
+	height: 20px;
+	border-left: 1px solid Black;
+	width: 10px;
+	background-color: #BBBBBB; }
 
 div.timetime-selection {
-	height: 20px;
 	position: absolute;
-	background-color: Blue; }
+	cursor: pointer;
+	height: 20px;
+	width: 0px;
+	background-color: #AAAAAA; }
+
+table.timeline-markers td {
+	overflow: hidden;
+	background-color: #CCCCCC;
+	text-align: center; }
 
 </style>
 
@@ -44,8 +61,10 @@ div.timetime-selection {
 			id="tl"
 			markers="1500,1600,1650,1700,1725,1750,1775,1800,1825,1850,1875,1900"
 			leftExtent="0"		
-			rightExtent="0"
-			markerWidth="60" />
+			rightExtent="10"
+			markerWidth="35" />
+			
+		<h:commandButton value="OK" />
 
 	</h:form>
 </f:view>

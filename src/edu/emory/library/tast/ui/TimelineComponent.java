@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
@@ -56,6 +57,16 @@ public class TimelineComponent extends UIComponentBase
 	{
 		return getClientId(context) + "_right";
 	}
+	
+	public void decode(FacesContext context)
+	{
+
+		Map params = context.getExternalContext().getRequestParameterMap();
+		
+		leftExtent = JsfUtils.getParamInt(params, getFieldNameForLeftExtent(context), 0);
+		rightExtent = JsfUtils.getParamInt(params, getFieldNameForRightExtent(context), 0);
+		
+	}
 
 	public void encodeBegin(FacesContext context) throws IOException
 	{
@@ -110,7 +121,7 @@ public class TimelineComponent extends UIComponentBase
 		// left knob
 		writer.startElement("div", this);
 		writer.writeAttribute("id", knobLeftElementId, null);
-		writer.writeAttribute("class", "timetime-knob", null);
+		writer.writeAttribute("class", "timetime-left-knob", null);
 		writer.endElement("div");
 		
 		// center span
@@ -122,7 +133,7 @@ public class TimelineComponent extends UIComponentBase
 		// right knob
 		writer.startElement("div", this);
 		writer.writeAttribute("id", knobRightElementId, null);
-		writer.writeAttribute("class", "timetime-knob", null);
+		writer.writeAttribute("class", "timetime-right-knob", null);
 		writer.endElement("div");
 
 		// end slider container
@@ -133,7 +144,7 @@ public class TimelineComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "map-tools", null);
+		writer.writeAttribute("class", "timeline-markers", null);
 		writer.startElement("tr", this);
 		
 		// markers
