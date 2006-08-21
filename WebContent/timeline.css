@@ -3,31 +3,38 @@ body {
 	font-size: 8pt; }
 	
 table.timeline td {
-	padding-top: 50px;
+	padding-top: 25px;
 	overflow: hidden;
 	text-align: center;
+	background-position: center top;
+	background-repeat: no-repeat;
 	-moz-user-select: none; }
-
-td.timeline-inside {
-	background-color: #EEEEEE; }
-
-td.timeline-outside {
-	background-color: White; }
 	
+td.timeline-outside {
+	background-image: url(timeline-outside.png); }
+	
+td.timeline-inside {
+	background-image: url(timeline-inside.png);
+	cursor: pointer; }
+
 td.timeline-left-boundary {
-	background-color: White; }
+	background-image: url(timeline-left-boundary.png); }
 
 td.timeline-right-boundary {
-	background-color: White; }
+	background-image: url(timeline-right-boundary.png); }
 
 td.timeline-left-marker {
-	background-color: Red; }
+	cursor: e-resize;
+	background-image: url(timeline-left-marker.png); }
 	
 td.timeline-left-boundary-marker {
-	background-color: Red; }
+	cursor: e-resize;
+	background-image: url(timeline-left-boundary-marker.png); }
 
 td.timeline-right-marker {
-	background-color: Blue; }
+	cursor: e-resize;
+	background-image: url(timeline-right-marker.png); }
 
 td.timeline-right-boundary-marker {
-	background-color: Blue; }
+	cursor: e-resize;
+	background-image: url(timeline-right-boundary-marker.png); }

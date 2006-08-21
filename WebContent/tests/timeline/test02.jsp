@@ -22,6 +22,9 @@
 			rightExtent="10"
 			markerWidth="35" />
 			
+		<br>
+		<br>
+			
 		<h:commandButton value="OK" />
 		
 		<div id="debug"></div>
