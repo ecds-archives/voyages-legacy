@@ -383,6 +383,12 @@
 		<attribute>
 			<name>chosenMap</name>
 		</attribute>
+		<attribute>
+			<name>availableAttributes</name>
+		</attribute>
+		<attribute>
+			<name>chosenAttribute</name>
+		</attribute>
 	</tag>
 
 	<tag>

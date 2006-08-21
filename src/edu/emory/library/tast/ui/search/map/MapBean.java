@@ -65,6 +65,8 @@ public class MapBean {
 
 	private int chosenMap = 0;
 
+	private int chosenAttribute = 0;
+
 	private void setMapData() {
 
 		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
@@ -161,6 +163,26 @@ public class MapBean {
 	}
 	
 	public SelectItem[] getAvailableMaps() {
+		String[] maps = GlobalMapQueryHolder.getAvailableQuerySets();
+		SelectItem[] items = new SelectItem[maps.length];
+		for (int i = 0; i < items.length; i++) {
+			items[i] = new SelectItem(new Integer(i), maps[i]);
+		}
+		return items; 
+	}
+	
+	public Integer getChosenAttribute() {
+		return new Integer(this.chosenAttribute );
+	}
+	
+	public void setChosenAttribute(Integer value) {
+		if (this.chosenAttribute != value.intValue()) {
+			this.neededQuery = true;
+		}
+		this.chosenAttribute = value.intValue();
+	}
+	
+	public SelectItem[] getAvailableAttributes() {
 		String[] maps = GlobalMapQueryHolder.getAvailableQuerySets();
 		SelectItem[] items = new SelectItem[maps.length];
 		for (int i = 0; i < items.length; i++) {

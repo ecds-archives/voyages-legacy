@@ -693,9 +693,9 @@
     <attribute importName="voyageid" importType="0" type="1" typeDisplayName="Integer" length="-1" category="0" visible="false" name="voyageId" id="262725">
     </attribute>
     
-    <attribute type="1" typeDisplayName="Float" length="-1" category="0" visible="false" name="s_slaximp" id="10" userLabel="Standarized imputed number of slaves embarked">
+    <attribute type="1" typeDisplayName="Float" length="-1" category="0" visible="false" name="s_slaximp" id="10" userLabel="Adjusted imputed number of slaves embarked">
     </attribute>
-    <attribute type="1" typeDisplayName="Float" length="-1" category="0" visible="false" name="s_slamimp" id="11" userLabel="Standarized imputed number of slaves disembarked">
+    <attribute type="1" typeDisplayName="Float" length="-1" category="0" visible="false" name="s_slamimp" id="11" userLabel="Adjusted imputed number of slaves disembarked">
     </attribute>
     
     

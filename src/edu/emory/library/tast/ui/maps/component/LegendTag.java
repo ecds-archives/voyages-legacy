@@ -26,6 +26,10 @@ public class LegendTag extends UIComponentTag {
 	
 	private String chosenMap;
 
+	private String availableAttributes;
+	
+	private String chosenAttribute;
+	
 	protected void setProperties(UIComponent component) {
 
 		Application app = FacesContext.getCurrentInstance().getApplication();
@@ -77,6 +81,20 @@ public class LegendTag extends UIComponentTag {
 			component.setValueBinding("chosenMap", vb);
 		} else  if (chosenMap != null)  {
 			component.getAttributes().put("chosenMap", chosenMap);
+		}
+		
+		if (chosenAttribute != null && isValueReference(chosenAttribute)) {
+			ValueBinding vb = app.createValueBinding(chosenAttribute);
+			component.setValueBinding("chosenAttribute", vb);
+		} else  if (chosenAttribute != null)  {
+			component.getAttributes().put("chosenAttribute", chosenAttribute);
+		}
+		
+		if (availableAttributes != null && isValueReference(availableAttributes)) {
+			ValueBinding vb = app.createValueBinding(availableAttributes);
+			component.setValueBinding("availableAttributes", vb);
+		} else  if (availableAttributes != null)  {
+			component.getAttributes().put("availableAttributes", availableAttributes);
 		}
 		
 		if (component instanceof LegendComponent && refreshAction != null) {
@@ -155,5 +173,29 @@ public class LegendTag extends UIComponentTag {
 
 	public void setChosenMap(String chosenMap) {
 		this.chosenMap = chosenMap;
+	}
+
+	public String getAvailableAttributes() {
+		return availableAttributes;
+	}
+
+	public void setAvailableAttributes(String availableAttributes) {
+		this.availableAttributes = availableAttributes;
+	}
+
+	public String getAvailableMaps() {
+		return availableMaps;
+	}
+
+	public void setAvailableMaps(String availableMaps) {
+		this.availableMaps = availableMaps;
+	}
+
+	public String getChosenAttribute() {
+		return chosenAttribute;
+	}
+
+	public void setChosenAttribute(String chosenAttribute) {
+		this.chosenAttribute = chosenAttribute;
 	}
 }

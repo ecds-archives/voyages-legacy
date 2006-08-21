@@ -45,6 +45,12 @@ public class LegendComponent extends UIComponentBase {
 			vb.setValue(context, new Integer(mapTypeId));
 		}
 		
+		String attrTypeId = (String) params.get(getAttrTypeHiddenFieldName(context));
+		if (attrTypeId != null) {
+			ValueBinding vb = this.getValueBinding("chosenAttribute");
+			vb.setValue(context, new Integer(attrTypeId));
+		}
+		
 		for (Iterator iter = params.keySet().iterator(); iter.hasNext();) {
 			String paramName = (String) iter.next();
 			if (paramName.startsWith(getCheckboxPrefix(context))) {
@@ -91,6 +97,8 @@ public class LegendComponent extends UIComponentBase {
 			writer.writeAttribute("class", styleClass, null);
 		}
 
+		this.encodeAttrsChoose(context, writer);
+		
 		this.encodeMapsChoose(context, writer);
 		
 		writer.write("<b>Legend:</b><br/>");
@@ -102,18 +110,7 @@ public class LegendComponent extends UIComponentBase {
 	}
 	
 	private void encodeMapsChoose(FacesContext context, ResponseWriter writer) throws IOException {
-		/*
-		<t:htmlTag value="tr">
-			<t:htmlTag value="td">
-				<h:outputText value="Show on map: "/>
-				<h:selectOneMenu onchange="submit()" value="#{MapBean.chosenMap}" id="asdf1">
-					<f:selectItems value="#{MapBean.availableMaps}" id="asdf2"/>
-				</h:selectOneMenu>
-			</t:htmlTag>
-			<t:htmlTag value="td">
-			</t:htmlTag>		
-		</t:htmlTag>
-		*/
+
 		SelectItem[] maps = (SelectItem[]) this.getValueBinding(context, "availableMaps");
 		Integer selectedMap = (Integer)this.getValueBinding(context, "chosenMap");
 		
@@ -149,6 +146,43 @@ public class LegendComponent extends UIComponentBase {
 		}
 	}
 
+	
+	private void encodeAttrsChoose(FacesContext context, ResponseWriter writer) throws IOException {
+		
+		SelectItem[] attrs = (SelectItem[]) this.getValueBinding(context, "availableAttributes");
+		Integer selectedAttr = (Integer)this.getValueBinding(context, "chosenAttribute");
+		
+		if (attrs != null && selectedAttr != null) {
+			writer.write("<b>Values: </b>");
+			writer.startElement("select", this);
+			writer.writeAttribute("id", this.getId() + "_availableAttr", null);
+			StringBuffer buffer = new StringBuffer();
+			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getAttrTypeHiddenFieldName(context));
+			buffer.append(" = ");
+			JsfUtils.appendFormElementValJS(buffer, context, JsfUtils.getForm(this, context), this.getId() + "_availableAttr");
+			buffer.append(";");
+			writer.writeAttribute("onchange", buffer.toString(), null);
+			for (int i = 0; i < attrs.length; i++) {
+				writer.startElement("option", this);
+				writer.writeAttribute("value", attrs[i].getValue(), null);
+				if (selectedAttr.intValue() == i) {
+					writer.writeAttribute("selected", null, null);
+				}
+				writer.write(attrs[i].getLabel());
+				writer.endElement("option");
+			}
+			writer.endElement("input");
+			
+			writer.startElement("input", this);
+			writer.writeAttribute("name", this.getAttrTypeHiddenFieldName(context), null);
+			writer.writeAttribute("type", "hidden", null);
+			writer.writeAttribute("value", selectedAttr, null);
+			writer.endElement("input");
+			
+			writer.write("<br/><br/>");
+		}
+	}
+	
 	private void encodeLegend(FacesContext context, ResponseWriter writer) throws IOException {
 		
 		LegendItemsGroup[] legendGroups = (LegendItemsGroup[])getValueBinding(context, "legend");
@@ -309,6 +343,10 @@ public class LegendComponent extends UIComponentBase {
 	
 	private String getMapTypeHiddenFieldName(FacesContext context) {
 		return this.getId() + "_availMaps_hidden";
+	}
+	
+	private String getAttrTypeHiddenFieldName(FacesContext context) {
+		return this.getId() + "_availAttrs_hidden";
 	}
 	
 	private String getLegendHiddenFieldName(FacesContext context) {
