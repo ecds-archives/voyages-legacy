@@ -8,7 +8,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Timeline</title>
-<script type="text/javascript" src="../../timeline.js"></script>
+<script type="text/javascript" src="../../timeline-v1.js"></script>
 <script type="text/javascript" src="../../utils.js"></script>
 
 <style type="text/css">

@@ -1,0 +1,33 @@
+body {
+	font-family: Verdana, sans-serif;
+	font-size: 8pt; }
+	
+table.timeline td {
+	padding-top: 50px;
+	overflow: hidden;
+	text-align: center;
+	-moz-user-select: none; }
+
+td.timeline-inside {
+	background-color: #EEEEEE; }
+
+td.timeline-outside {
+	background-color: White; }
+	
+td.timeline-left-boundary {
+	background-color: White; }
+
+td.timeline-right-boundary {
+	background-color: White; }
+
+td.timeline-left-marker {
+	background-color: Red; }
+	
+td.timeline-left-boundary-marker {
+	background-color: Red; }
+
+td.timeline-right-marker {
+	background-color: Blue; }
+
+td.timeline-right-boundary-marker {
+	background-color: Blue; }

@@ -11,7 +11,7 @@ import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
 
-public class TimelineComponent extends UIComponentBase
+public class TimelineComponentV1 extends UIComponentBase
 {
 	
 	private boolean markersSet = false;
@@ -67,16 +67,6 @@ public class TimelineComponent extends UIComponentBase
 		rightExtent = JsfUtils.getParamInt(params, getFieldNameForRightExtent(context), 0);
 		
 	}
-	
-	private int cropExtent(int extent, int min, int max)
-	{
-		if (extent < min)
-			return extent;
-		else if (extent > max)
-			return max;
-		else
-			return extent;
-	}
 
 	public void encodeBegin(FacesContext context) throws IOException
 	{
@@ -87,13 +77,9 @@ public class TimelineComponent extends UIComponentBase
 		// pull data from beans
 		String[] markers = getMarkers();
 		int markerWidth = getMarkerWidth();
+		int totalWidth = markerWidth * markers.length;
 		int leftExtent = getLeftExtent();
 		int rightExtent = getRightExtent();
-		
-		// check range
-		leftExtent = cropExtent(leftExtent, 0, markers.length - 2);
-		rightExtent = cropExtent(rightExtent, 1, markers.length - 1);
-		if (!(leftExtent < rightExtent)) rightExtent = leftExtent + 1;
 		
 		// hidden field for left extent
 		JsfUtils.encodeHiddenInput(this, writer,
@@ -105,6 +91,12 @@ public class TimelineComponent extends UIComponentBase
 				getFieldNameForRightExtent(context),
 				String.valueOf(rightExtent));
 
+		// element names
+		String sliderContainerElementId = getClientId(context) + "_slider_container";
+		String knobLeftElementId = getClientId(context) + "_knob_left";
+		String knobRightElementId = getClientId(context) + "_knob_right";
+		String selectionElementId = getClientId(context) + "_selection";
+		
 		// registration script
 		StringBuffer regJS = new StringBuffer();
 		regJS.append("TimelineGlobals.registerTimeline(new Timeline(");
@@ -113,68 +105,67 @@ public class TimelineComponent extends UIComponentBase
 		regJS.append(markerWidth).append(", ");
 		regJS.append(markers.length).append(", ");
 		regJS.append("'").append(getFieldNameForLeftExtent(context)).append("', ");
-		regJS.append("'").append(getFieldNameForRightExtent(context)).append("'");
-		regJS.append("))");
+		regJS.append("'").append(getFieldNameForRightExtent(context)).append("', ");
+		regJS.append("'").append(sliderContainerElementId).append("', ");
+		regJS.append("'").append(knobLeftElementId).append("', ");
+		regJS.append("'").append(knobRightElementId).append("', ");
+		regJS.append("'").append(selectionElementId).append("'));");
 		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);
+		
+		// slider container
+		writer.startElement("div", this);
+		writer.writeAttribute("id", sliderContainerElementId, null);
+		writer.writeAttribute("class", "timetime-slider-container", null);
+		writer.writeAttribute("style", "width: " + totalWidth + "px", null);
+		
+		// left knob
+		writer.startElement("div", this);
+		writer.writeAttribute("id", knobLeftElementId, null);
+		writer.writeAttribute("class", "timetime-left-knob", null);
+		writer.endElement("div");
+		
+		// center span
+		writer.startElement("div", this);
+		writer.writeAttribute("id", selectionElementId, null);
+		writer.writeAttribute("class", "timetime-selection", null);
+		writer.endElement("div");
+
+		// right knob
+		writer.startElement("div", this);
+		writer.writeAttribute("id", knobRightElementId, null);
+		writer.writeAttribute("class", "timetime-right-knob", null);
+		writer.endElement("div");
+
+		// end slider container
+		writer.endElement("div");
 		
 		// begin markers
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "timeline", null);
-		writer.writeAttribute("id", getClientId(context), null);
+		writer.writeAttribute("class", "timeline-markers", null);
 		writer.startElement("tr", this);
 		
 		// markers
 		for (int i = 0; i < markers.length; i++)
 		{
-
-			String className = null;
-			if (0 < i && i < markers.length-1)
-			{
-				if (leftExtent < i && i < rightExtent)
-					className = "timeline-inside";
-				else if (i < leftExtent || rightExtent < i)
-					className = "timeline-outside";
-				else if (i == leftExtent)
-					className = "timeline-left-marker";
-				else
-					className = "timeline-right-marker";
-			}
-			else if (i == 0)
-			{
-				if (leftExtent == 0)
-					className = "timeline-left-boundary-marker";
-				else
-					className = "timeline-left-boundary";
-			}
-			else
-			{
-				if (rightExtent == markers.length-1)
-					className = "timeline-right-boundary-marker";
-				else
-					className = "timeline-right-boundary";
-			}
-
 			writer.startElement("td", this);
 			writer.writeAttribute("style", "width: " + markerWidth + "px", null);
-			writer.writeAttribute("class", className, null);
 			writer.write(markers[i]);
 			writer.endElement("td");
-			
 		}
 		
 		// end markers
 		writer.endElement("tr");
 		writer.endElement("table");
-
+		
 	}
-
+	
 	public void encodeChildren(FacesContext arg0) throws IOException
 	{
 	}
-
+	
 	public void encodeEnd(FacesContext arg0) throws IOException
 	{
 	}
