@@ -18,13 +18,14 @@
 				miniMapHeight="100"
 				serverBaseUrl="servlet/maptile" />
 				
-				
+			<h:outputText value="&nbsp;" escape="false"/>
+			
 			<s:timeline
 				id="tl-mainMap"
-				markers="1500,1600,1650,1700,1725,1750,1775,1800,1825,1850,1875,1900"
-				leftExtent="0"		
-				rightExtent="0"
-				markerWidth="60" />
+				markers="#{MapBean.markers}"
+				leftExtent="#{MapBean.yearBegin}"		
+				rightExtent="#{MapBean.yearEnd}"
+				markerWidth="40" />
 		</t:htmlTag>
 
  		<t:htmlTag value="td" style="vertical-align: top;">

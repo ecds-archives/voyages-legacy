@@ -173,20 +173,3 @@ table.legend-table-layers {
 
 
 
-div.timetime-slider-container {
-	position: relative;
-	height: 20px;
-	background-color: #EEEEEE; }
-	
-div.timetime-knob {
-	position: absolute;
-	height: 20px;
-	width: 10px;
-	background-color: Red; }
-
-div.timetime-selection {
-	height: 20px;
-	position: absolute;
-	background-color: Blue; }
-
-

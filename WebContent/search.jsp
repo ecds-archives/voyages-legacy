@@ -14,6 +14,7 @@
 	<link href="search-query.css" rel="stylesheet" type="text/css">
 	<link href="search-table.css" rel="stylesheet" type="text/css">
 	<link href="map.css" rel="stylesheet" type="text/css">
+	<link href="timeline.css" rel="stylesheet" type="text/css">
 	<script src="tooltip.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/scriptaculous.js" type="text/javascript" language="javascript"></script>
@@ -25,6 +26,7 @@
 	<script src="graphics-vml.js" language="javascript" type="text/javascript"></script>
 	<script src="query-builder.js" language="javascript" type="text/javascript"></script>
 	<script src="tools_map_adds.js" language="javascript" type="text/javascript"></script>
+	<script src="timeline.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
