@@ -14,10 +14,6 @@ MAP
       END
 
 		
-	PROJECTION
-	    #{map.projection.out}
-	END
-      
 	SYMBOL
   		NAME 'circle-1-1'
   		TYPE pixmap
@@ -414,9 +410,6 @@ MAP
 #	END
 
 	LAYER
-		PROJECTION
-		#{map.projection.out}
-		END
 
 		NAME Continents
 		TYPE POLYGON

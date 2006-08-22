@@ -19,8 +19,6 @@ public class AppConfig
 	
 	public static final String MAP_FILE_SKELETON = "mapserver.mapfile.skeleton";
 	public static final String MAP_FILE_OUTPUT = "mapserver.mapfile.output";
-	public static final String MAP_PROJ_IN = "map.projection.in";
-	public static final String MAP_PROJ_OUT = "map.projection.out";
 	public static final String MAP_DEFAULT_EXTENT_X_MIN = "map.default.extent.x.min";
 	public static final String MAP_DEFAULT_EXTENT_X_MAX = "map.default.extent.x.max";
 	public static final String MAP_DEFAULT_EXTENT_Y_MIN = "map.default.extent.y.min";

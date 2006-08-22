@@ -27,11 +27,11 @@ public class MapFileCreator {
 
 	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
 
-	private static String PROJ_IN = StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration()
-			.getStringArray(AppConfig.MAP_PROJ_IN));
-
-	private static String PROJ_OUT = StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration()
-			.getStringArray(AppConfig.MAP_PROJ_OUT));
+//	private static String PROJ_IN = StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration()
+//			.getStringArray(AppConfig.MAP_PROJ_IN));
+//
+//	private static String PROJ_OUT = StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration()
+//			.getStringArray(AppConfig.MAP_PROJ_OUT));
 
 	private static final String CHECKBOX_PREFIX = "#{map.layer.status";
 
@@ -102,8 +102,8 @@ public class MapFileCreator {
 		this.schemaReader.clearModifications();
 		this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
 				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
-		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN, PROJ_IN);
-		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_OUT, PROJ_OUT);
+//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN, PROJ_IN);
+//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_OUT, PROJ_OUT);
 
 		for (int i = 0; i < this.layers.length; i++) {
 			this.schemaReader.addSimpleModification(layers[i].getKey(), layers[i].isEnabled() ? "ON" : "OFF");
@@ -167,10 +167,11 @@ public class MapFileCreator {
 			if (list.size() > 0) {
 
 				writer.append("LAYER\n");
-				writer.append("PROJECTION");
-				writer.append(StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration().getStringArray(
-						AppConfig.MAP_PROJ_IN)));
-				writer.append("END");
+//				writer.append("PROJECTION");
+//				writer.append(StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration().getStringArray(
+//						AppConfig.MAP_PROJ_IN)));
+//				writer.append("END");
+				writer.append("	TRANSPARENCY ALPHA\n");
 				writer.append("	TYPE POINT\n");
 				writer.append("	STATUS DEFAULT\n");
 
