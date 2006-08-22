@@ -11,7 +11,7 @@ public class OldWorldPlace extends Dictionary {
 	}
 	
 	public static OldWorldPlace loadOldWorldPlace(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (OldWorldPlace)dicts[0];
 		} else {

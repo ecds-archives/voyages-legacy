@@ -179,7 +179,7 @@
         <property name="remoteId" column="remote_id"/>
     </class>
     
-    <class name="edu.emory.library.tast.dm.dictionaries.ImputedNation" table="dictionary">
+    <class name="edu.emory.library.tast.dm.dictionaries.ImputedNation" table="dictionary" where="obj_type=19">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>

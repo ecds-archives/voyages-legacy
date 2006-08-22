@@ -2,11 +2,9 @@ package edu.emory.library.tast.dm;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Expression;
-
 import edu.emory.library.tast.util.HibernateConnector;
-import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Superclass for any dictionary in the application.
@@ -49,17 +47,14 @@ public class Dictionary {
 		}
 		catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (InstantiationException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IllegalAccessException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -73,13 +68,13 @@ public class Dictionary {
 	 */
 	public static Dictionary loadDictionaryById(String p_dictionaryName, Long id) {
 		
-		Criteria crit = HibernateUtil.getSession().createCriteria("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
-		crit.add(Expression.eq("id", id));
-		crit.setMaxResults(1);
-		List list = crit.list();
-		if (list == null || list.size() == 0)
-			return null;
-		return (Dictionary) list.get(0);
+//		Criteria crit = HibernateUtil.getSession().createCriteria("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
+//		crit.add(Expression.eq("id", id));
+//		crit.setMaxResults(1);
+//		List list = crit.list();
+//		if (list == null || list.size() == 0)
+//			return null;
+//		return (Dictionary) list.get(0);
 
 //		Object[] ret = HibernateConnector.getConnector().loadObjects(
 //				"edu.emory.library.tast.dm.dictionaries." + p_dictionaryName,
@@ -97,6 +92,12 @@ public class Dictionary {
 //			return new Dictionary[] {};
 //		}
 		
+		Dictionary[] dictionary = loadDictionaryInternal(p_dictionaryName, "id", id);
+		if (dictionary == null || dictionary.length == 0)
+			return null;
+		else
+			return dictionary[0];
+
 	}
 	
 
@@ -106,7 +107,7 @@ public class Dictionary {
 	 * @param p_dictVal
 	 * @return dictionary array, empty array if there is no desired dictionary entry
 	 */
-	public static Dictionary[] loadDictionary(String p_dictionaryName,
+	public static Dictionary[] loadDictionaryByName(String p_dictionaryName,
 			String p_dictVal) {
 		
 		return loadDictionaryInternal(p_dictionaryName, "name", p_dictVal);
@@ -131,27 +132,17 @@ public class Dictionary {
 	 * @param p_dictVal
 	 * @return dictionary array, empty array if there is no desired dictionary entry
 	 */
-	private static Dictionary[] loadDictionaryInternal(String p_dictionaryName, String p_attrName, Object p_dictVal) {
-		int dictType = -1;
-		try {
-			Class clazz = Class.forName("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
-			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		}
+	private static Dictionary[] loadDictionaryInternal(String dictionaryName, String p_attrName, Object p_dictVal)
+	{
 		
-		Object[] ret = HibernateConnector.getConnector().loadObjects(
-				p_dictionaryName,
-				new String[] { p_attrName, "obj_type" },
-				new String[] { p_dictVal.toString(), dictType + "" },
-				new boolean[] { false, false });
-
+		Conditions conditions = new Conditions();
+		conditions.addCondition(p_attrName, p_dictVal, Conditions.OP_EQUALS);
+		
+		QueryValue qv = new QueryValue(dictionaryName, conditions);
+		qv.setOrderBy(new String[] {"name"});
+		qv.setOrder(QueryValue.ORDER_ASC);
+		Object[] ret = qv.executeQuery();
+		
 		if (ret.length != 0) {
 			Dictionary[] dict = new Dictionary[ret.length];
 			for (int i = 0; i < dict.length; i++) {
@@ -161,6 +152,16 @@ public class Dictionary {
 		} else {
 			return new Dictionary[] {};
 		}
+
+	}
+	
+	
+	public static List loadDictionaryList(String dictionaryName)
+	{
+		QueryValue qv = new QueryValue(dictionaryName);
+		qv.setOrderBy(new String[] {"name"});
+		qv.setOrder(QueryValue.ORDER_ASC);
+		return qv.executeQueryList();
 	}
 	
 	/**

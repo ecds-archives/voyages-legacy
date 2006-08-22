@@ -27,8 +27,8 @@ public class SearchParameters
 		this.conditions = null;
 	}
 	
-	public SearchParameters(Conditions conditions2) {
-		this.conditions = conditions2;
+	public SearchParameters(Conditions conditions) {
+		this.conditions = conditions;
 	}
 
 	public VisibleAttribute[] getColumns()

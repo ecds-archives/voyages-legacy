@@ -11,7 +11,7 @@ public class Userid extends Dictionary {
 	}
 	
 	public static Userid loadUserid(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (Userid)dicts[0];
 		} else {

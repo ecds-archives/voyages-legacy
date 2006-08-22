@@ -12,7 +12,7 @@ public class SexAge extends Dictionary {
 	}
 	
 	public static SexAge loadSexAge(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (SexAge)dicts[0];
 		} else {

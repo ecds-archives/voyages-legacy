@@ -11,7 +11,7 @@ public class RetPort extends Dictionary {
 	}
 	
 	public static RetPort loadRetPort(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (RetPort)dicts[0];
 		} else {

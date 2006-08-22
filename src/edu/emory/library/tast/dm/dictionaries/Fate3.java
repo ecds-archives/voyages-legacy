@@ -11,7 +11,7 @@ public class Fate3 extends Dictionary {
 	}
 	
 	public static Fate3 loadFate3(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (Fate3)dicts[0];
 		} else {

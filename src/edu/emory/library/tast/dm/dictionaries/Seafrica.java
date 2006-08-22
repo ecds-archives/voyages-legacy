@@ -11,7 +11,7 @@ public class Seafrica extends Dictionary {
 	}
 	
 	public static Seafrica loadSeafrica(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (Seafrica)dicts[0];
 		} else {

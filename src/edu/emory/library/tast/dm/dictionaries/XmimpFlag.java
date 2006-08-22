@@ -11,7 +11,7 @@ public class XmimpFlag extends Dictionary {
 	}
 	
 	public static XmimpFlag loadXmimpFlag(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (XmimpFlag)dicts[0];
 		} else {

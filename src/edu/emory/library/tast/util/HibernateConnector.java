@@ -471,8 +471,8 @@ public class HibernateConnector {
 	 * @param p_query QueryValue object
 	 * @return results of execution of QueryValue
 	 */
-	public Object[] loadObjects(Session p_session, QueryValue p_query) {
-		
+	public Object[] loadObjects(Session p_session, QueryValue p_query)
+	{
 		Transaction transaction = p_session.beginTransaction();
 		List list = p_query.getQuery(p_session).list();
 		transaction.commit();
@@ -490,8 +490,8 @@ public class HibernateConnector {
 	 * @param p_query QueryValue object
 	 * @return results of execution of QueryValue
 	 */
-	public List loadObjectList(Session p_session, QueryValue p_query) {
-		
+	public List loadObjectList(Session p_session, QueryValue p_query)
+	{
 		Transaction transaction = p_session.beginTransaction();
 		List list = p_query.getQuery(p_session).list();
 		transaction.commit();

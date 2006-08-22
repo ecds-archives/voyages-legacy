@@ -8,7 +8,7 @@
 	backgroundStyle="dark"
 	tabsStyle="middle"
 	buttonsStyle="middle"
-	selectedSectionId="listing">
+	selectedSectionId="#{SearchBean.mainSectionId}">
 	
 	<s:section title="Result listing" sectionId="listing">
 		<%@ include file="search-tab-table.jsp" %>

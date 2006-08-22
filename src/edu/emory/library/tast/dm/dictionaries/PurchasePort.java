@@ -11,7 +11,7 @@ public class PurchasePort extends Dictionary {
 	}
 	
 	public static PurchasePort loadPurchasePort(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (PurchasePort)dicts[0];
 		} else {

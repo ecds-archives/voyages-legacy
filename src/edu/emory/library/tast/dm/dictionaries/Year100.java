@@ -11,7 +11,7 @@ public class Year100 extends Dictionary {
 	}
 	
 	public static Year100 loadYear100(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (Year100)dicts[0];
 		} else {

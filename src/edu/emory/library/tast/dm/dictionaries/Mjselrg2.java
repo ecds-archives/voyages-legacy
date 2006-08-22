@@ -11,7 +11,7 @@ public class Mjselrg2 extends Dictionary {
 	}
 	
 	public static Mjselrg2 loadMjselrg2(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (Mjselrg2)dicts[0];
 		} else {

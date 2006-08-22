@@ -191,50 +191,6 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>Switcher</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.schema.Switcher
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>AttributesBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.schema.AttributesBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>switcher</property-name>
-			<value>#{Switcher}</value>
-		</managed-property>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>CompoundAttributesBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.schema.CompoundAttributesBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>switcher</property-name>
-			<value>#{Switcher}</value>
-		</managed-property>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>GroupsBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.schema.GroupsBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>switcher</property-name>
-			<value>#{Switcher}</value>
-		</managed-property>
-	</managed-bean>
-	
-	<managed-bean>
 		<managed-bean-name>ImportLog</managed-bean-name>
 		<managed-bean-class>
 			edu.emory.library.tast.ui.spss.ImportLogBean
@@ -242,22 +198,6 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-	<managed-bean>
-		<managed-bean-name>ABCBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.spss.ABCBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>TestBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.TestBean
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
 	<managed-bean>
 		<managed-bean-name>MapBean</managed-bean-name>
 		<managed-bean-class>
@@ -277,6 +217,26 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ReportBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.reports.ReportBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>/reports.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showreport</from-outcome>
+			<to-view-id>/search.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<from-view-id>/schema-group-list.jsp</from-view-id>

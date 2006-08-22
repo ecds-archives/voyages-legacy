@@ -42,6 +42,7 @@ public class SearchBean
 {
 	
 	private UserCategory selectedCategory = UserCategory.Beginners;
+	private String mainSectionId = "listing";
 
 	private History history = new History();
 	private Query workingQuery = new Query();
@@ -84,8 +85,11 @@ public class SearchBean
 	 */
 	public String search()
 	{
-		messageBar.setRendered(false);
+		if (messageBar != null)
+			messageBar.setRendered(false);
+		
 		searchInternal(true);
+		
 		return null;
 	}
 
@@ -388,6 +392,16 @@ public class SearchBean
 	{
 		this.selectedCategory = UserCategory.parse(selectedCategory);
 		this.searchParameters.setCategory(this.selectedCategory);
+	}
+
+	public String getMainSectionId()
+	{
+		return mainSectionId;
+	}
+
+	public void setMainSectionId(String mainSectionId)
+	{
+		this.mainSectionId = mainSectionId;
 	}
 
 }

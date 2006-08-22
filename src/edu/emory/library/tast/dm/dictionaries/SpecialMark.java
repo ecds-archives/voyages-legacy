@@ -12,7 +12,7 @@ public class SpecialMark extends Dictionary {
 	}
 	
 	public static SpecialMark loadSpecialMark(String p_dictVal) {
-		Dictionary[] dicts = Dictionary.loadDictionary(NAME, p_dictVal);
+		Dictionary[] dicts = Dictionary.loadDictionaryByName(NAME, p_dictVal);
 		if (dicts.length != 0) {
 			return (SpecialMark)dicts[0];
 		} else {
