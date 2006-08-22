@@ -18,16 +18,25 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SearchParameters
 {
 	
+	public static final int NOT_SPECIFIED = 0;
+	public static final int MAP_PORTS = 1;
+	public static final int MAP_REGIONS = 2;
+	public static final int VALUES_ADJUSTED = 1;
+	public static final int VALUES_RAW = 2;
+	
 	private Conditions conditions;
 	private VisibleAttribute[] columns = new VisibleAttribute[0]; 
 	private UserCategory category = UserCategory.Beginners;
+	private int valuesType = NOT_SPECIFIED;
+	private int mapElements = NOT_SPECIFIED;
 	
-	
-	public SearchParameters() {
+	public SearchParameters()
+	{
 		this.conditions = null;
 	}
 	
-	public SearchParameters(Conditions conditions) {
+	public SearchParameters(Conditions conditions)
+	{
 		this.conditions = conditions;
 	}
 
@@ -59,6 +68,26 @@ public class SearchParameters
 	public void setCategory(UserCategory category)
 	{
 		this.category = category;
+	}
+
+	public int getValuesType()
+	{
+		return valuesType;
+	}
+
+	public void setValuesType(int displayAdjusted)
+	{
+		this.valuesType = displayAdjusted;
+	}
+
+	public int getMapElements()
+	{
+		return mapElements;
+	}
+
+	public void setMapElements(int mapElements)
+	{
+		this.mapElements = mapElements;
 	}
 
 }

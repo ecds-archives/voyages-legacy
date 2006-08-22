@@ -1,5 +1,6 @@
 package edu.emory.library.tast.ui.reports;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.component.UIParameter;
@@ -8,8 +9,11 @@ import javax.faces.event.ActionEvent;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.search.query.Query;
+import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
 import edu.emory.library.tast.ui.search.query.SearchBean;
+import edu.emory.library.tast.ui.search.query.SearchParameters;
+import edu.emory.library.tast.util.query.Conditions;
 
 public class ReportBean
 {
@@ -54,9 +58,28 @@ public class ReportBean
 	
 	private void showReport(Query query)
 	{
+
+		// build db conditions
+		Conditions conditions = new Conditions();
+		for (Iterator iterQueryCondition = query.getConditions().iterator(); iterQueryCondition.hasNext();)
+		{
+			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+			queryCondition.addToConditions(conditions, false);
+		}
+		
+		// display last tab
 		searchBean.setMainSectionId("map-ports");
+		
+		// set query so that it display in the query builder
 		searchBean.setWorkingQuery(query);
-		searchBean.search();
+
+		// set search parameters so that we really search
+		SearchParameters searchParameters = new SearchParameters();
+		searchParameters.setConditions(conditions);
+		searchParameters.setMapElements(SearchParameters.MAP_REGIONS);
+		searchParameters.setValuesType(SearchParameters.VALUES_ADJUSTED);
+		searchBean.setSearchParameters(searchParameters);
+		
 	}
 	
 	public List getAfricanRegions()

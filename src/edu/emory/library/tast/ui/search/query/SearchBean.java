@@ -85,11 +85,8 @@ public class SearchBean
 	 */
 	public String search()
 	{
-		if (messageBar != null)
-			messageBar.setRendered(false);
-		
+		messageBar.setRendered(false);
 		searchInternal(true);
-		
 		return null;
 	}
 
@@ -368,11 +365,6 @@ public class SearchBean
 		return searchParameters;
 	}
 
-	public void setSearchParameters(SearchParameters searchParameters)
-	{
-		this.searchParameters = searchParameters;
-	}
-
 	public MessageBarComponent getMessageBar()
 	{
 		return messageBar;
@@ -386,6 +378,11 @@ public class SearchBean
 	public String getSelectedCategory()
 	{
 		return selectedCategory.toString();
+	}
+
+	public void setSearchParameters(SearchParameters searchParameters)
+	{
+		this.searchParameters = searchParameters;
 	}
 
 	public void setSelectedCategory(String selectedCategory)
