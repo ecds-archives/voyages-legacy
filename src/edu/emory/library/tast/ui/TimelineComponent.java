@@ -68,6 +68,17 @@ public class TimelineComponent extends UIComponentBase
 		
 	}
 	
+	public void processUpdates(FacesContext context)
+	{
+		
+		ValueBinding vbLeftExtent = getValueBinding("leftExtent");
+		if (vbLeftExtent != null) vbLeftExtent.setValue(context, new Integer(leftExtent));
+	
+		ValueBinding vbRightExtent = getValueBinding("rightExtent");
+		if (vbRightExtent != null) vbLeftExtent.setValue(context, new Integer(rightExtent));
+		
+	}
+	
 	private int cropExtent(int extent, int min, int max)
 	{
 		if (extent < min)
