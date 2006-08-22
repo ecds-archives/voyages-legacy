@@ -75,7 +75,7 @@ public class TimelineComponent extends UIComponentBase
 		if (vbLeftExtent != null) vbLeftExtent.setValue(context, new Integer(leftExtent));
 	
 		ValueBinding vbRightExtent = getValueBinding("rightExtent");
-		if (vbRightExtent != null) vbLeftExtent.setValue(context, new Integer(rightExtent));
+		if (vbRightExtent != null) vbRightExtent.setValue(context, new Integer(rightExtent));
 		
 	}
 	
