@@ -47,7 +47,8 @@ public class MapBean {
 
 	private static final String[] MARKERS = new String[] {"1519", "1600", "1650", "1675", "1700", "1725", "1750", "1800", "1825", "1850", "1867"};
 	
-	private static final String markersList = "1519,1600,1650,1675,1700,1725,1750,1800,1825,1850,1867";
+	private static final String[] markersList = MARKERS;
+	//private static final String markersList = "1519,1600,1650,1675,1700,1725,1750,1800,1825,1850,1867";
 	
 	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";
 
@@ -75,9 +76,9 @@ public class MapBean {
 
 	private int chosenAttribute = 0;
 
-	private int yearBegin = 0;
+	private Integer yearBegin = new Integer(0);
 
-	private int yearEnd = MARKERS.length - 1;
+	private Integer yearEnd = new Integer(MARKERS.length - 1);
 
 	private void setMapData() {
 
@@ -89,8 +90,8 @@ public class MapBean {
 		if (this.neededQuery) {
 
 			Conditions conditions = (Conditions)this.conditions.clone();
-			conditions.addCondition("yearam", new Integer(MARKERS[this.yearBegin]), Conditions.OP_GREATER_OR_EQUAL);
-			conditions.addCondition("yearam", new Integer(MARKERS[this.yearEnd]), Conditions.OP_SMALLER_OR_EQUAL);
+			conditions.addCondition("yearam", new Integer(MARKERS[this.yearBegin.intValue()]), Conditions.OP_GREATER_OR_EQUAL);
+			conditions.addCondition("yearam", new Integer(MARKERS[this.yearEnd.intValue()]), Conditions.OP_SMALLER_OR_EQUAL);
 			
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
@@ -201,29 +202,29 @@ public class MapBean {
 		return items; 
 	}
 	
-	public int getYearBegin() {
+	public Integer getYearBegin() {
 		return this.yearBegin;
 	}
 	
-	public int getYearEnd() {
+	public Integer getYearEnd() {
 		return this.yearEnd;
 	}
 
-	protected void setYearBegin(int yearBegin) {
-		if (this.yearBegin != yearBegin) {
+	public void setYearBegin(Integer yearBegin) {
+		if (!this.yearBegin.equals(yearBegin)) {
 			this.neededQuery = true;
 		}
 		this.yearBegin = yearBegin;
 	}
 
-	protected void setYearEnd(int yearEnd) {
-		if (this.yearEnd != yearEnd) {
+	public void setYearEnd(Integer yearEnd) {
+		if (!this.yearEnd.equals(yearEnd)) {
 			this.neededQuery = true;
 		}
 		this.yearEnd = yearEnd;
 	}
 	
-	public String getMarkers() {
+	public String[] getMarkers() {
 		return markersList;
 	}
 	
