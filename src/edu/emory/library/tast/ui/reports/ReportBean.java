@@ -7,7 +7,6 @@ import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
 import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.search.query.Query;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
@@ -84,7 +83,8 @@ public class ReportBean
 	
 	public List getAfricanRegions()
 	{
-		return Region.getRegionsList();
+		//return Region.getRegionsList();
+		return Dictionary.loadDictionaryList("EmbRegion");
 	}
 	
 	public List getNationalCarriers()

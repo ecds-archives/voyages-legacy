@@ -98,7 +98,7 @@
         <property name="remoteId" column="remote_id"/>
     </class>
     
-    <class name="edu.emory.library.tast.dm.dictionaries.EmbRegion" table="dictionary">
+    <class name="edu.emory.library.tast.dm.dictionaries.EmbRegion" table="dictionary" where="obj_type=10">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
@@ -197,7 +197,7 @@
         <property name="remoteId" column="remote_id"/>
     </class>
     
-    <class name="edu.emory.library.tast.dm.dictionaries.MajByIm" table="dictionary">
+    <class name="edu.emory.library.tast.dm.dictionaries.MajByIm" table="dictionary" where="obj_type=21">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
