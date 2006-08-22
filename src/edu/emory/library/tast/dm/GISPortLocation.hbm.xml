@@ -11,8 +11,8 @@
         <id name="portName" column="name">
         	<generator class="native"/>
         </id>
-        <property name="x" formula="x(wkb_geometry)"/>
-        <property name="y" formula="y(wkb_geometry)"/>
+        <property name="x" formula="x"/>
+        <property name="y" formula="y"/>
     </class>
     
 </hibernate-mapping>

@@ -1,21 +1,16 @@
 package edu.emory.library.tast.dm;
 
-import org.proj4.Proj4;
-import org.proj4.ProjectionData;
-
-import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
-import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class GISPortLocation {
 
-	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
-			.getStringArray(AppConfig.MAP_PROJ_IN));
-
-	private static final String PROJ_OUT = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
-			.getStringArray(AppConfig.MAP_PROJ_OUT));
+//	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
+//			.getStringArray(AppConfig.MAP_PROJ_IN));
+//
+//	private static final String PROJ_OUT = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
+//			.getStringArray(AppConfig.MAP_PROJ_OUT));
 
 	private String portName;
 
@@ -100,10 +95,11 @@ public class GISPortLocation {
 	}
 
 	public double[] getXYProjected() {
-		Proj4 projClass = new Proj4(PROJ_IN, PROJ_OUT);
-		ProjectionData data = new ProjectionData(new double[] { x }, new double[] { y });
-		projClass.transform(data, 1, 0);
-		return new double[] { data.x[0], data.y[0] };
+//		Proj4 projClass = new Proj4(PROJ_IN, PROJ_OUT);
+//		ProjectionData data = new ProjectionData(new double[] { x }, new double[] { y });
+//		projClass.transform(data, 1, 0);
+//		return new double[] { data.x[0], data.y[0] };
+		return new double[] { x, y };
 	}
 
 }
