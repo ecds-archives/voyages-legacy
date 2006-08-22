@@ -22,6 +22,7 @@ import edu.emory.library.tast.ui.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.ui.search.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.ui.search.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.ui.search.query.SearchBean;
+import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -83,7 +84,25 @@ public class MapBean {
 	private void setMapData() {
 
 		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
-			this.conditions = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
+
+			SearchParameters params = this.searchBean.getSearchParameters();
+			this.conditions = (Conditions) params.getConditions().clone();
+			if (params.getMapElements() != SearchParameters.NOT_SPECIFIED) {
+				if (params.getMapElements() == SearchParameters.MAP_PORTS) {
+					this.chosenMap = 0;
+				} else {
+					this.chosenMap = 1;
+				}
+			}
+			
+			if (params.getValuesType() != SearchParameters.NOT_SPECIFIED) {
+				if (params.getMapElements() == SearchParameters.VALUES_ADJUSTED) {
+					this.chosenAttribute = 1;
+				} else {
+					this.chosenAttribute = 0;
+				}
+			}
+			
 			neededQuery = true;
 		}
 

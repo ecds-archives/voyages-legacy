@@ -18,7 +18,8 @@
 				miniMapHeight="100"
 				serverBaseUrl="servlet/maptile" />
 				
-			<h:outputText value="&nbsp;" escape="false"/>
+			<h:outputText value="&nbsp;" escape="false" />
+			<h:outputText value="View by time period:" />
 			
 			<s:timeline
 				id="tl-mainMap"

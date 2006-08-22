@@ -149,7 +149,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		LegendItemsGroup legendColors = new LegendItemsGroup("Places");
 		
 		//Prepare legend about size of dots
-		for (int i = 0; i < CIRCLE_RANGES; i++) {
+		for (int i = CIRCLE_RANGES - 1; i >= 0; i--) {
 			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", "symbols/circle-1-" + (i + 1) + ".png", "" + Math.round(ranges[i]) + " - " + Math.round(ranges[i+1]));
 			legendSizes.addItemToGroup(item);
 		}
