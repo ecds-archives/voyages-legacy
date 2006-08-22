@@ -229,113 +229,172 @@ MAP
 	END
 
 	SYMBOL
-  		NAME 'number-2-1'
+  		NAME 'number-1-1-1'
   		TYPE pixmap
   		FILLED true
-  		IMAGE 'picts/number-2-1.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-2-2'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-2-2.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-2-3'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-2-3.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-2-4'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-2-4.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-2-5'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-2-5.png'
+  		IMAGE 'picts/number-1-1-1.png'
 	END
 
 	SYMBOL
-  		NAME 'number-3-1'
+  		NAME 'number-1-1-2'
   		TYPE pixmap
   		FILLED true
-  		IMAGE 'picts/number-3-1.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-3-2'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-3-2.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-3-3'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-3-3.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-3-4'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-3-4.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-3-5'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-3-5.png'
+  		IMAGE 'picts/number-1-1-2.png'
 	END
 
-
 	SYMBOL
-  		NAME 'number-4-1'
+  		NAME 'number-1-1-3'
   		TYPE pixmap
   		FILLED true
-  		IMAGE 'picts/number-4-1.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-4-2'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-4-2.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-4-3'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-4-3.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-4-4'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-4-4.png'
-	END
-	
-	SYMBOL
-  		NAME 'number-4-5'
-  		TYPE pixmap
-  		FILLED true
-  		IMAGE 'picts/number-4-5.png'
+  		IMAGE 'picts/number-1-1-3.png'
 	END
 
+	SYMBOL
+  		NAME 'number-1-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1-4.png'
+	END
 
+	SYMBOL
+  		NAME 'number-1-2-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-1.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-2-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-2.png'
+	END
 	
+	SYMBOL
+  		NAME 'number-1-2-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-2-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-4.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-3-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-4.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-6-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-6-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-6-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-6-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-4.png'
+	END
 
 	#KEEP THE NEXT TWO LAYERS
 
@@ -356,13 +415,13 @@ MAP
 
 	LAYER
 		PROJECTION
-		#{map.projection.in}
+		#{map.projection.out}
 		END
 
 		NAME Continents
 		TYPE POLYGON
-		DATA Continents
-		STATUS DEFAULT
+		DATA Continents_new
+		STATUS #{map.layer.status.continents}
 		#LABELITEM 'CONTINENT'
 		CLASS
 			STYLE
