@@ -40,7 +40,6 @@ public class TileServlet extends HttpServlet {
 		response.setDateHeader("Expires", (new Date()).getTime() + 1000 * 60 * 60);
 		response.setHeader("Cache-Control", "public");
 
-		
 //		response.sendRedirect("../blank.png");
 //		if (true) {
 //			return;
@@ -65,23 +64,16 @@ public class TileServlet extends HttpServlet {
 			return;
 		}
 
-		// CachedTileKey tile = new CachedTileKey(mapFile, col, row, scale);
-		// byte[] cachedObject;
-		// synchronized (cache) {
-		// cachedObject = (byte[]) cache.get(tile);
-		// }
-
 		cache.clean();
 
 		byte[] cachedImg = cache.get(mapFile, col, row, scale);
-		if (cachedImg != null) {
+		if (cachedImg != null)
+		{
 			cacheHits++;
 			response.getOutputStream().write(cachedImg);
 			return;
 		}
 		cacheMisses++;
-
-		// System.out.println(((double) cacheHits / ((double) cacheHits + cacheMisses) * 100) + "%");
 
 		String path = (String) session.getAttribute(mapFile);
 		//path = "/home/juri/gis/tests/map_test.map";
@@ -104,12 +96,6 @@ public class TileServlet extends HttpServlet {
 		map.setSize(tileWidth + 2 * META_SIZE_X, tileHeight + 2 * META_SIZE_Y);
 		map.setExtent(x1, y1, x2, y2);
 		
-		synchronized(this)
-		{
-			System.out.println("SIZE " + (tileWidth + 2 * META_SIZE_X) + " " + (tileHeight + 2 * META_SIZE_Y));
-			System.out.println("EXTENT " + x1 + " " + y1 + " " + x2 + " " + y2);
-		}
-
 		//map.setMetaData("labelcache_map_edge_buffer", (META_SIZE_X) + "");
 
 		imageObj img = map.draw();
@@ -120,9 +106,11 @@ public class TileServlet extends HttpServlet {
 
 		Graphics2D gr = rimage.createGraphics();
 		
-		//gr.drawImage(image, 0, 0, tileWidth+2*META_SIZE_X, tileHeight+2*META_SIZE_Y, null);
-		gr.drawImage(image, 0, 0, tileWidth, tileHeight, META_SIZE_X, META_SIZE_Y, META_SIZE_X + tileWidth, META_SIZE_Y
-				+ tileHeight, null);
+		gr.drawImage(
+				image, 0, 0, tileWidth, tileHeight,
+				META_SIZE_X, META_SIZE_Y, META_SIZE_X + tileWidth, META_SIZE_Y + tileHeight,
+				null);
+		
 		gr.dispose();
 
 		ByteArrayOutputStream oStream = new ByteArrayOutputStream();
