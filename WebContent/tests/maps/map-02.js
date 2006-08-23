@@ -792,14 +792,18 @@ Map.prototype.mapStopDrag = function(event)
 			// has the mouse moved?
 			if (this.dragging_start_x == x && this.dragging_start_y == y)
 				return;
-			
+				
 			// and zoom
 			this.zoomMapTo(
 				this.fromVportToRealX(this.dragging_start_x),
 				this.fromVportToRealY(this.dragging_start_y),
 				this.fromVportToRealX(x),
 				this.fromVportToRealY(y),
-				true, 0, true);
+				true, // saveState
+				0, // border
+				true, // notifyZoomChange
+				false, // updateMainMap
+				true); // updateMiniMap
 			
 			break;
 			
@@ -985,7 +989,7 @@ Map.prototype.positionBySelector = function(x1, y1, x2, y2, saveState, notifyZoo
 	// works only in selector mode
 	if (this.mouseMode != MapsGlobal.MAP_TOOL_SELECTOR)
 		return;
-
+		
 	// change selector position
 	this.selectorX1 = x1;
 	this.selectorY1 = y1;
@@ -1861,59 +1865,6 @@ Map.prototype.precomputePointsPositions = function()
 		pnt.vx = this.fromRealToVportX(pnt.x);
 		pnt.vy = this.fromRealToVportY(pnt.y);
 	}
-
-/*
-
-	// we don't have points
-	if (!this.points && GraphicsGlobal.isSupported())
-		return;
-
-	// hashmap by col:row
-	this.pointsByTiles = new Array();
-	
-	// efficiency
-	var tileRealWidth = this.getTileRealWidth();
-	var tileRealHeight = this.getTileRealHeight();
-	
-	// split
-	for (var i=0; i<this.points.length; i++)
-	{
-		var pnt = this.points[i];
-
-		// position		
-		var col = Math.floor(pnt.x / tileRealWidth);
-		var row = Math.floor(pnt.y / tileRealHeight);
-		
-		// do we have a tile for it?
-		var pointsTileKey = col + ":" + row;
-		var pointsTile = this.pointsByTiles[pointsTileKey];
-		
-		// no -> create new
-		if (!pointsTile)
-		{
-			pointsTile = GraphicsGlobal.createGraphics();
-			pointsTile.getRoot().style.position = "absolute";
-			this.pointsByTiles[pointsTileKey] = pointsTile;
-		}
-		
-		// position on the tile
-		var posOnTileX = this.fromRealToPx(pnt.x) - col*this.tile_width + this.pointsExtraSpace;
-		var posOnTileY = (row+1)*this.tile_height - this.fromRealToPx(pnt.y) + this.pointsExtraSpace;
-		
-		// draw a point on the tile
-		var circ = pointsTile.createCircle();
-		circ.setCenter(posOnTileX, posOnTileY);
-		circ.setRadius(5);
-		circ.setFill("Black");
-		circ.setFillOpacity(1);
-		circ.getRoot().style.cursor = "pointer";
-		EventAttacher.attach(circ.getRoot(), "mouseover", this, "showLabel", i);
-		EventAttacher.attach(circ.getRoot(), "mouseout", this, "hideLabel");
-		pointsTile.appendChild(circ);
-	
-	}
-	
-*/
 
 }
 

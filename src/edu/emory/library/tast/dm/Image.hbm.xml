@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edu.emory.library.tast.dm.Image" table="images">
+		<cache usage="read-write" />
+		<id name="id" column="image_id">
+			<generator class="native"/>
+		</id>
+		<property name="name" />
+		<property name="description" />
+		<property name="fileName" column="file_name" />
+		<property name="width" />
+		<property name="height" />
+		<property name="mimeType" column="mime_type" />
+		<property name="thumbnailFileName" column="thumbnail_file_name" />
+		<property name="thumbnailMimeType" column="thumbnail_mime_type" />
+	</class>
+</hibernate-mapping>

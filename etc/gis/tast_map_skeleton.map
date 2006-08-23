@@ -1,18 +1,10 @@
 MAP
+
 	SIZE 1200 700
 	EXTENT -180 -90 180 90  
-	IMAGETYPE      PNG24
-	IMAGECOLOR 153 179 204
 
-	WEB
-         TEMPLATE      'voyages.html'
-         IMAGEPATH    '/ms4w/tmp/ms_tmp/'
-         IMAGEURL     '/ms_tmp/'
-         #HEADER       'templates/header.html'
-         #FOOTER       'templates/footer.html'
-         #MINSCALE     3000000
-      END
-
+	IMAGETYPE PNG24
+	IMAGECOLOR 151 183 214
 		
 	SYMBOL
   		NAME 'circle-1-1'

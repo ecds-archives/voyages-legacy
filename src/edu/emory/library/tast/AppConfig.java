@@ -26,6 +26,10 @@ public class AppConfig
 	public static final String MAP_SCALE_FACTOR = "map.scale.factor";
 	public static final String MAP_MAX_MAGNIFICATION = "map.max.magnification";	
 	
+	public static final String IMAGES_DIRECTORY = "images.dir";	
+	public static final String IMAGES_THUMBNAIL_WIDTH = "images.thumbnail.width";	
+	public static final String IMAGES_THUMBNAIL_HEIGHT = "images.thumbnail.height";	
+
 	private static void load()
 	{
 		try

@@ -130,6 +130,13 @@
 		</component-class>
 	</component>
 
+	<component>
+		<component-type>ImageList</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.images.ImageListComponent
+		</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>
@@ -228,6 +235,14 @@
 			<property-name>searchBean</property-name>
 			<value>#{SearchBean}</value>
 		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ImagesBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.images.ImagesBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>
@@ -349,6 +364,22 @@
 		<navigation-case>
 			<from-outcome>detail</from-outcome>
 			<to-view-id>/import-detail.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/images-list.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>detail</from-outcome>
+			<to-view-id>/images-detail.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/images-detail.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>list</from-outcome>
+			<to-view-id>/images-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
