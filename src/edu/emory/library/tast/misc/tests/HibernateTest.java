@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Slave;
@@ -13,6 +17,7 @@ import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.dictionaries.Temp;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -54,7 +59,7 @@ public class HibernateTest {
 				v.save();
 			} else if (command.equals("list")) {
 				Conditions conditions = new Conditions();
-				conditions.addCondition("vid", new Long(1), Conditions.OP_EQUALS);
+				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), Conditions.OP_EQUALS);
 				QueryValue val = new QueryValue("Voyage", conditions);
 				Object[] ret = val.executeQuery();
 				Voyage v = (Voyage)ret[0];
@@ -108,11 +113,12 @@ public class HibernateTest {
 			} else if (command.equals("query")) {
 				
 				Conditions conditions = new Conditions();
-				conditions.addCondition("v.voyageId", new Long(1), Conditions.OP_EQUALS);
+				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), Conditions.OP_EQUALS);
 				conditions.addCondition(VoyageIndex.getApproved());
-				QueryValue qValue = new QueryValue("VoyageIndex as v", conditions);
-				qValue.addPopulatedAttribute("v.voyage.arrport", true);
-				qValue.addPopulatedAttribute("v.voyage.shipname", false);
+				QueryValue qValue = new QueryValue(new String [] {"VoyageIndex", "Voyage"},
+						new String[] {"v", "vi"}, conditions);
+				qValue.addPopulatedAttribute(Voyage.getAttribute("arrport"));
+				qValue.addPopulatedAttribute(Voyage.getAttribute("shipname"));
 				
 				Object[] res = qValue.executeQuery();
 				
@@ -120,7 +126,12 @@ public class HibernateTest {
 				for (int i = 0; i < res.length && i < 20; i++) {
 					System.out.println(" -> " + (res[i]));
 				}
-			} else if (command.equals("chart")) {
+			} else if (command.equals("hql")) {
+				
+				Session session = HibernateUtil.getSession();
+				Query query = session.createQuery("select v.majbuypt.name ,case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end ,1 from VoyageIndex as vi , Voyage as v left outer join v.majbuypt where vi.remoteVoyageId = v.iid group by v.majbuypt.name order by case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end asc");
+				query.list();
+				
 //				Conditions cMain = new Conditions(Conditions.JOIN_AND);
 //				Conditions cNot = new Conditions(Conditions.JOIN_NOT);
 //				Conditions cNNull = new Conditions(Conditions.JOIN_AND);

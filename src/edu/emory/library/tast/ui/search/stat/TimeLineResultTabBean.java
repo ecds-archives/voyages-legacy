@@ -12,7 +12,11 @@ import javax.servlet.http.HttpSession;
 import org.jfree.chart.JFreeChart;
 
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.ui.search.stat.charts.AbstractChartGenerator;
@@ -115,8 +119,7 @@ public class TimeLineResultTabBean {
 		this.voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			Attribute attr = attributes[i];
-			if ((attr.getType().intValue() == Attribute.TYPE_FLOAT
-							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG)) {
+			if ((attr instanceof NumericAttribute)) {
 				String outString = attr.toString();
 				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
 
@@ -157,15 +160,15 @@ public class TimeLineResultTabBean {
 
 			
 			//Prepare query
-			Conditions localCondition = this.searchBean.getSearchParameters().getConditions().addAttributesPrefix("v.");
-			localCondition.addCondition("v.datedep", null, Conditions.OP_IS_NOT);
-			localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+			Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+			localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
+			localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 
-			QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
-			qValue.setGroupBy(new String[] { "date_trunc('year', v.datedep)" });
-			qValue.addPopulatedAttribute("date_trunc('year', v.datedep)", false);
-			qValue.addPopulatedAttribute(this.chosenAggregate + "(v." + this.chosenAttribute + ")", false);
-			qValue.setOrderBy(new String[] { "date_trunc('year', v.datedep)" });
+			QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+			qValue.setGroupBy(new Attribute[] { new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("'year'"), Voyage.getAttribute("datedep")})});
+			qValue.addPopulatedAttribute(new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("'year'"), Voyage.getAttribute("datedep")}));
+			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenAggregate, new Attribute[] {Voyage.getAttribute(this.chosenAttribute)}));
+			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("'year'"), Voyage.getAttribute("datedep")})});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
 

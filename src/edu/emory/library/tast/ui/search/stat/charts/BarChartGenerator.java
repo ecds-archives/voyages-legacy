@@ -14,6 +14,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
 
 /**
  * Generator for bar charts.
@@ -59,7 +60,7 @@ public class BarChartGenerator extends AbstractChartGenerator {
 	 * @inheritDoc
 	 */
 	public void addRowToDataSet(Object[] data, Object[] series) {
-		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
+		if (this.getXAxisAttribute() instanceof DateAttribute) {
 			//Date data
 			addDateRowToDataSet(data, series);
 		} else {

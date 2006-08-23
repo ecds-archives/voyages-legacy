@@ -3,12 +3,16 @@ package edu.emory.library.tast.ui.search.table.mapimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.AttributesRange;
 import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class DetailQueryHolder extends AbstractTransformerQueryHolder {
@@ -33,49 +37,50 @@ public class DetailQueryHolder extends AbstractTransformerQueryHolder {
 		 */
 		Conditions localConditions = (Conditions)conditions.clone();
 		localConditions.addCondition(VoyageIndex.getApproved());
-		
-		QueryValue qValue = new QueryValue("VoyageIndex as v", localConditions);
 
-		qValue.addPopulatedAttribute("v.voyage.portdep", true);
-		qValue.addPopulatedAttribute("v.voyage.deptreg", true);
-		
-		qValue.addPopulatedAttribute("v.voyage.plac1tra", true);
-		qValue.addPopulatedAttribute("v.voyage.plac2tra", true);
-		qValue.addPopulatedAttribute("v.voyage.plac3tra", true);
-		qValue.addPopulatedAttribute("v.voyage.regem1", true);
-		qValue.addPopulatedAttribute("v.voyage.regem2", true);
-		qValue.addPopulatedAttribute("v.voyage.regem3", true);
-		qValue.addPopulatedAttribute("v.voyage.embport", true);
-		qValue.addPopulatedAttribute("v.voyage.embport2", true);
-		qValue.addPopulatedAttribute("v.voyage.embreg", true);
-		qValue.addPopulatedAttribute("v.voyage.embreg2", true);
-		qValue.addPopulatedAttribute("v.voyage.mjbyptimp", true);
-		qValue.addPopulatedAttribute("v.voyage.majbyimp", true);
+		localConditions.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String [] {"vi", "v"}, localConditions);
 
-		qValue.addPopulatedAttribute("v.voyage.sla1port", true);
-		qValue.addPopulatedAttribute("v.voyage.adpsale1", true);
-		qValue.addPopulatedAttribute("v.voyage.adpsale2", true);
-		qValue.addPopulatedAttribute("v.voyage.regdis1", true);
-		qValue.addPopulatedAttribute("v.voyage.regdis2", true);
-		qValue.addPopulatedAttribute("v.voyage.regdis3", true);
-		qValue.addPopulatedAttribute("v.voyage.arrport", true);
-		qValue.addPopulatedAttribute("v.voyage.arrport2", true);
-		qValue.addPopulatedAttribute("v.voyage.regarrp", true);
-		qValue.addPopulatedAttribute("v.voyage.regarrp2", true);
-		qValue.addPopulatedAttribute("v.voyage.mjselimp", true);
+		qValue.addPopulatedAttribute(Voyage.getAttribute("portdep"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("deptreg"));
+		
+		qValue.addPopulatedAttribute(Voyage.getAttribute("plac1tra"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("plac2tra"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("plac3tra"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regem1"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regem2"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regem3"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("embport"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("embport2"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("embreg"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("embreg2"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("mjbyptimp"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("majbyimp"));
 
-		qValue.addPopulatedAttribute("v.voyage.portret", true);
-		qValue.addPopulatedAttribute("v.voyage.retrnreg", true);
+		qValue.addPopulatedAttribute(Voyage.getAttribute("sla1port"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("adpsale1"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("adpsale2"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regdis1"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regdis2"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regdis3"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("arrport"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("arrport2"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regarrp"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("regarrp2"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("mjselimp"));
+
+		qValue.addPopulatedAttribute(Voyage.getAttribute("portret"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("retrnreg"));
 		
 		
-		qValue.addPopulatedAttribute("v.voyage.datedep", false);
-		qValue.addPopulatedAttribute("v.voyage.d1slatr", false);
-		qValue.addPopulatedAttribute("v.voyage.dlslatrb", false);
-		qValue.addPopulatedAttribute("v.voyage.rrdata31", false);
-		qValue.addPopulatedAttribute("v.voyage.datarr32", false);
-		qValue.addPopulatedAttribute("v.voyage.datarr33", false);
-		qValue.addPopulatedAttribute("v.voyage.ddepamb", false);
-		qValue.addPopulatedAttribute("v.voyage.datarr4", false);
+		qValue.addPopulatedAttribute(Voyage.getAttribute("datedep"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("d1slatr"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("dlslatrb"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("rrdata31"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("datarr32"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("datarr33"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("ddepamb"));
+		qValue.addPopulatedAttribute(Voyage.getAttribute("datarr4"));
 
 		AttributesMap attrsMap = new AttributesMap();
 		List col = new ArrayList();

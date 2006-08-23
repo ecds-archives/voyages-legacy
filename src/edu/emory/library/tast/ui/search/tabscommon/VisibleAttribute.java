@@ -14,6 +14,10 @@ import org.w3c.dom.NodeList;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 
 public class VisibleAttribute {
@@ -167,8 +171,18 @@ public class VisibleAttribute {
 		return "Attribute_" + this.getName();
 	}
 
-	public Integer getType() {
-		return this.attributes[0].getType();
+	public String getType() {
+		if (this.attributes[0] instanceof DateAttribute) {
+			return "DateAttribute";
+		} else if (this.attributes[0] instanceof StringAttribute) {
+			return "StringAttribute";
+		} else if (this.attributes[0] instanceof DictionaryAttribute) {
+			return "DictionaryAttribute";
+		} else if (this.attributes[0] instanceof NumericAttribute) {
+			return "NumericAttribute";
+		} else {
+			throw new RuntimeException("Not supported attribute type!");
+		}
 	}
 
 	public static VisibleAttribute getAttributeForTable(String string) {

@@ -1,7 +1,12 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -13,6 +18,14 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class Dictionary {
 
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("name", new StringAttribute("name", "Dictionary"));
+		attributes.put("type", new NumericAttribute("type", "Dictionary"));
+		attributes.put("remoteId", new NumericAttribute("remoteId", "Dictionary"));
+	}
+	
+	
 	/**
 	 * ID of dictionary
 	 */
@@ -136,10 +149,10 @@ public class Dictionary {
 	{
 		
 		Conditions conditions = new Conditions();
-		conditions.addCondition(p_attrName, p_dictVal, Conditions.OP_EQUALS);
+		conditions.addCondition(Dictionary.getAttribute(p_attrName), p_dictVal, Conditions.OP_EQUALS);
 		
 		QueryValue qv = new QueryValue(dictionaryName, conditions);
-		qv.setOrderBy(new String[] {"name"});
+		qv.setOrderBy(new Attribute[] {Dictionary.getAttribute("name")});
 		qv.setOrder(QueryValue.ORDER_ASC);
 		Object[] ret = qv.executeQuery();
 		
@@ -159,7 +172,7 @@ public class Dictionary {
 	public static List loadDictionaryList(String dictionaryName)
 	{
 		QueryValue qv = new QueryValue(dictionaryName);
-		qv.setOrderBy(new String[] {"name"});
+		qv.setOrderBy(new Attribute[] {Dictionary.getAttribute("name")});
 		qv.setOrder(QueryValue.ORDER_ASC);
 		return qv.executeQueryList();
 	}
@@ -261,5 +274,9 @@ public class Dictionary {
 			return dict.getId().equals(this.getId());
 		}
 		return false;
+	}
+	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
 	}
 }

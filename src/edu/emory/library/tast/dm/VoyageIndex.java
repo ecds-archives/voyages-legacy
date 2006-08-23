@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.query.Conditions;
 
@@ -74,25 +76,36 @@ public class VoyageIndex {
 	/**
 	 * Attributes that can be shown on UI.
 	 */
+	private static Map visibleAttributes = new HashMap();
 	private static Map attributes = new HashMap();
 	static {	
-		Attribute attr = new Attribute();
-		attr.setName("revisionId");
+		Attribute attr = new NumericAttribute("revisionId", "VoyageIndex");
 		VisibleAttribute visibleAttr = new VisibleAttribute("revisionId", new int [] {1, 2}, new Attribute[] {attr});
 		visibleAttr.setUserLabel("Revision #");
-		attributes.put("revisionId", visibleAttr);
+		visibleAttributes.put("revisionId", visibleAttr);
+		attributes.put(attr.getName(), attr);
 		
-		attr = new Attribute();
+		attr = new DateAttribute("revisionDate", "VoyageIndex");
 		attr.setName("revisionDate");
 		visibleAttr = new VisibleAttribute("revisionDate", new int [] {1, 2}, new Attribute[] {attr});
 		visibleAttr.setUserLabel("Modification date");
-		attributes.put("revisionDate", visibleAttr);
+		visibleAttributes.put("revisionDate", visibleAttr);
+		attributes.put(attr.getName(), attr);
 		
-		attr = new Attribute();
+		attr = new NumericAttribute("flag", "VoyageIndex");
 		attr.setName("flag");
 		visibleAttr = new VisibleAttribute("flag", new int [] {1, 2}, new Attribute[] {attr});
 		visibleAttr.setUserLabel("Approved");
-		attributes.put("flag", visibleAttr);
+		visibleAttributes.put("flag", visibleAttr);
+		attributes.put(attr.getName(), attr);
+		
+		attr = new NumericAttribute("latest", "VoyageIndex");
+		attributes.put(attr.getName(), attr);
+		attr = new NumericAttribute("latest_approved", "VoyageIndex");
+		attributes.put(attr.getName(), attr);
+		attr = new NumericAttribute("remoteVoyageId", "VoyageIndex");
+		attributes.put(attr.getName(), attr);
+		
 	}
 	
 	/**
@@ -101,7 +114,11 @@ public class VoyageIndex {
 	 * @return
 	 */
 	public static VisibleAttribute getVisibleAttribute(String name) {
-		return (VisibleAttribute)attributes.get(name);
+		return (VisibleAttribute)visibleAttributes.get(name);
+	}
+	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
 	}
 	
 	/**
@@ -192,7 +209,7 @@ public class VoyageIndex {
 	 */
 	public static Conditions getRecentApproved() {
 		Conditions cond = new Conditions(Conditions.JOIN_AND);
-		cond.addCondition("latest_approved", new Integer(1), Conditions.OP_EQUALS);
+		cond.addCondition(VoyageIndex.getAttribute("latest_approved"), new Integer(1), Conditions.OP_EQUALS);
 		return cond;
 	}
 	
@@ -202,7 +219,7 @@ public class VoyageIndex {
 	 */
 	public static Conditions getRecent() {
 		Conditions cond = new Conditions(Conditions.JOIN_AND);
-		cond.addCondition("latest", new Integer(1), Conditions.OP_EQUALS);
+		cond.addCondition(VoyageIndex.getAttribute("latest"), new Integer(1), Conditions.OP_EQUALS);
 		return cond;
 	}
 	
@@ -212,7 +229,7 @@ public class VoyageIndex {
 	 */
 	public static Conditions getApproved() {
 		Conditions cond = new Conditions(Conditions.JOIN_AND);
-		cond.addCondition("flag", new Integer(1), Conditions.OP_EQUALS);
+		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(1), Conditions.OP_EQUALS);
 		return cond;
 	}
 	
@@ -222,7 +239,7 @@ public class VoyageIndex {
 	 */
 	public static Conditions getNotApproved() {
 		Conditions cond = new Conditions(Conditions.JOIN_AND);
-		cond.addCondition("flag", new Integer(0), Conditions.OP_EQUALS);
+		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(0), Conditions.OP_EQUALS);
 		return cond;
 	}
 

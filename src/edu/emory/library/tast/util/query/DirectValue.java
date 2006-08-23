@@ -1,5 +1,9 @@
 package edu.emory.library.tast.util.query;
 
+import java.util.Map;
+
+import edu.emory.library.tast.dm.attributes.Attribute;
+
 /**
  * Class used to provide to Conditions direct value. 
  * The value of given attribute will be set directly to set String value (w/o using :param notation).
@@ -11,13 +15,13 @@ public class DirectValue {
 	/**
 	 * Direct value.
 	 */
-	private String value;
+	private Attribute value;
 	
 	/**
 	 * Constructor.
 	 * @param str direct value
 	 */
-	public DirectValue(String str) {
+	public DirectValue(Attribute str) {
 		this.value = str;
 	}
 
@@ -25,7 +29,7 @@ public class DirectValue {
 	 * Getter for value.
 	 * @return
 	 */
-	public String getValue() {
+	public Attribute getValue() {
 		return value;
 	}
 
@@ -33,11 +37,11 @@ public class DirectValue {
 	 * Setter for value.
 	 * @param value
 	 */
-	public void setValue(String value) {
+	public void setValue(Attribute value) {
 		this.value = value;
 	}
 	
-	public String toString() {
-		return this.value;
+	public String toString(Map bindings) {
+		return this.value.getHQLSelectPath(bindings);
 	}
 }

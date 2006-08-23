@@ -3,7 +3,13 @@ package edu.emory.library.tast.ui.search.stat.charts;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.RectangleInsets;
 
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
 /**
  * Abstract class that is used to generate charts.
@@ -58,11 +64,11 @@ public abstract class AbstractChartGenerator {
 	 * @param string
 	 * @return
 	 */
-	public String getXAxisSelectOperator(String string) {
-		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
-			return "date_trunc('year', " + string + ")";
-		} else if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DICT) {
-			return string + ".name";
+	public Attribute getXAxisSelectOperator(Attribute string) {
+		if (this.getXAxisAttribute() instanceof DateAttribute) {
+			return new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("'year"), string});
+		} else if (this.getXAxisAttribute() instanceof DictionaryAttribute) {
+			return new SequenceAttribute(new Attribute[] {string, Dictionary.getAttribute("name")});
 		} else {
 			return string;
 		}

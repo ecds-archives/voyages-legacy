@@ -1,16 +1,30 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.proj4.Proj4;
+import org.proj4.ProjectionData;
+
+import edu.emory.library.tast.AppConfig;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class GISPortLocation {
 
-//	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
-//			.getStringArray(AppConfig.MAP_PROJ_IN));
-//
-//	private static final String PROJ_OUT = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
-//			.getStringArray(AppConfig.MAP_PROJ_OUT));
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("portName", new StringAttribute("name", "GISPortLocation"));
+		attributes.put("x", new NumericAttribute("x", "GISPortLocation"));
+		attributes.put("y", new NumericAttribute("y", "GISPortLocation"));
+	}
+	
+	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
+			.getStringArray(AppConfig.MAP_PROJ_IN));
 
 	private String portName;
 
@@ -69,7 +83,7 @@ public class GISPortLocation {
 			return null;
 		}
 		Conditions c = new Conditions();
-		c.addCondition("portName", portName, Conditions.OP_EQUALS);
+		c.addCondition(GISPortLocation.getAttribute("portName"), portName, Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("GISPortLocation", c);
 		Object[] ports = qValue.executeQuery();
 		if (ports.length == 0) {
@@ -84,7 +98,7 @@ public class GISPortLocation {
 			return null;
 		}
 		Conditions c = new Conditions();
-		c.addCondition("portName", port.getName(), Conditions.OP_EQUALS);
+		c.addCondition(GISPortLocation.getAttribute("portName"), port.getName(), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("GISPortLocation", c);
 		Object[] ports = qValue.executeQuery();
 		if (ports.length == 0) {
@@ -100,6 +114,10 @@ public class GISPortLocation {
 //		projClass.transform(data, 1, 0);
 //		return new double[] { data.x[0], data.y[0] };
 		return new double[] { x, y };
+	}
+	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
 	}
 
 }

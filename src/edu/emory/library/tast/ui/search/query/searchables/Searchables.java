@@ -86,7 +86,7 @@ public class Searchables
 				Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
 				
 				// read the db attributes
-				int attrType = 0;
+				String attrType = null;
 				for (int j = 0; j < xmlAttrs.getLength(); j++)
 				{
 					Node xmlAttr = xmlAttrs.item(j);
@@ -97,36 +97,29 @@ public class Searchables
 						if (attr == null) {
 							int a = 0;
 						}
-						attrType = attr.getType().intValue();
+						attrType = attr.decodeType();
 					}
 					else
 					{
-						if (attrType != attr.getType().intValue())
+						if (!attrType.equals(attr.decodeType()))
 							throw new RuntimeException("searchable attribute '" + id + "' contains invalid attributes");
 					}
 					attrs[j] = attr;
 				}
 				
 				// create the corresponding searchable attribute
-				switch (attrType)
+				if (attrType.equals(Attribute.DICTIONARY_ATTRIBUTE))
 				{
-					case Attribute.TYPE_DICT:
-						searchableAttribute = new SearchableAttributeSimpleDictionary(id, userLabel, userCategory, attrs);
-						break;
+					searchableAttribute = new SearchableAttributeSimpleDictionary(id, userLabel, userCategory, attrs);
+				} else if (attrType.equals(Attribute.STRING_ATTRIBUTE)) 
+				{
+					searchableAttribute = new SearchableAttributeSimpleText(id, userLabel, userCategory, attrs);
+				} else if (attrType.equals(Attribute.NUMERIC_ATTRIBUTE)) 
+				{
 					
-					case Attribute.TYPE_STRING:
-						searchableAttribute = new SearchableAttributeSimpleText(id, userLabel, userCategory, attrs);
-						break;
-					
-					case Attribute.TYPE_INTEGER:
-					case Attribute.TYPE_FLOAT:
-					case Attribute.TYPE_LONG:
-						searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
-						break;
-						
-					case Attribute.TYPE_DATE:
+					searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
+				} else if (attrType.equals(Attribute.DATE_ATTRIBUTE)) {		
 						searchableAttribute = new SearchableAttributeSimpleDate(id, userLabel, userCategory, attrs);
-						break;
 				}
 				
 			}

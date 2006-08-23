@@ -1,703 +1,705 @@
 <attributes>
   <objectAttributes objectType="Voyage">
-    <attribute userLabel="-" importName="adlt3imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="false" name="adlt3imp" desc="" id="262938">
+    <attribute  importName="adlt3imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="adlt3imp" desc="" id="262938">
     </attribute>
-    <attribute userLabel="Second port of disembarkation" importName="adpsale1" importType="0" type="4" typeDisplayName="List SecondDemPort" length="-1" dictionary="SecondDemPort" category="1" visible="true" name="adpsale1" desc="" id="263052">
+    <attribute userLabel="Second port of disembarkation" importName="adpsale1" importType="0" attrType="Dictionary" typeDisplayName="List SecondDemPort"  dictionary="SecondDemPort" category="1"  name="adpsale1" desc="" id="263052">
     </attribute>
-    <attribute userLabel="Third port of disembarkation" importName="adpsale2" importType="0" type="4" typeDisplayName="List ThirdDemPort" length="-1" dictionary="ThirdDemPort" category="1" visible="true" name="adpsale2" desc="" id="263053">
+    <attribute userLabel="Third port of disembarkation" importName="adpsale2" importType="0" attrType="Dictionary" typeDisplayName="List ThirdDemPort"  dictionary="ThirdDemPort" category="1"  name="adpsale2" desc="" id="263053">
     </attribute>
-    <attribute userLabel="-" importName="adult1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="false" name="adult1" desc="" id="262849">
+    <attribute  importName="adult1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="adult1" desc="" id="262849">
     </attribute>
-    <attribute userLabel="-" importName="adult2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="false" name="adult2" desc="" id="263015">
+    <attribute  importName="adult2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="adult2" desc="" id="263015">
     </attribute>
-    <attribute userLabel="-" importName="adult3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="false" name="adult3" desc="Adults at first port of disembarkation" id="262892">
+    <attribute  importName="adult3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="adult3" desc="Adults at first port of disembarkation" id="262892">
     </attribute>
-    <attribute userLabel="-" importName="adult4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="false" name="adult4" desc="" id="263016">
+    <attribute  importName="adult4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="adult4" desc="" id="263016">
     </attribute>
-    <attribute userLabel="-" importName="adult5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="adult5" desc="Adults embarked at third port of embarkation" id="263013">
+    <attribute  importName="adult5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="adult5" desc="Adults embarked at third port of embarkation" id="263013">
     </attribute>
-    <attribute userLabel="-" importName="adult7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="adult7" desc="" id="263026">
+    <attribute  importName="adult7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="adult7" desc="" id="263026">
     </attribute>
-    <attribute userLabel="First port of intended disembarkation" importName="arrport" importType="0" type="4" typeDisplayName="List IntDisembPort" length="-1" dictionary="IntDisembPort" category="1" visible="true" name="arrport" desc="First port of intended disembarkation" id="263045">
+    <attribute userLabel="First port of intended disembarkation" importName="arrport" importType="0" attrType="Dictionary" typeDisplayName="List IntDisembPort"  dictionary="IntDisembPort" category="1"  name="arrport" desc="First port of intended disembarkation" id="263045">
     </attribute>
-    <attribute userLabel="-" importName="arrport2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="arrport2" desc="Second port of intended disembarkation" id="263005">
+    <attribute  importName="arrport2" importType="0" type="0" attrType="Dictionary" typeDisplayName="List IntDisembPort"  category="0"  name="arrport2" desc="Second port of intended disembarkation" id="263005">
     </attribute>
-    <attribute userLabel="-" importName="boy2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="boy2" desc="" id="262859">
+    <attribute  importName="boy2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="boy2" desc="" id="262859">
     </attribute>
-    <attribute userLabel="-" importName="boy3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="boy3" desc="Boys disembarked at first port of disembarkation" id="262865">
+    <attribute  importName="boy3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="boy3" desc="Boys disembarked at first port of disembarkation" id="262865">
     </attribute>
-    <attribute userLabel="-" importName="boy4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="boy4" desc="Boys embarked at second port of purchase" id="262871">
+    <attribute  importName="boy4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="boy4" desc="Boys embarked at second port of purchase" id="262871">
     </attribute>
-    <attribute userLabel="-" importName="boy5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="boy5" desc="Boys embarked at third port of embarkation" id="262999">
+    <attribute  importName="boy5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="boy5" desc="Boys embarked at third port of embarkation" id="262999">
     </attribute>
-    <attribute userLabel="-" importName="boy6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="boy6" desc="Boys disembarked at second port of disembarkation" id="262878">
+    <attribute  importName="boy6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="boy6" desc="Boys disembarked at second port of disembarkation" id="262878">
     </attribute>
-    <attribute userLabel="-" importName="boy7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="boy7" desc="" id="263027">
+    <attribute  importName="boy7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="boy7" desc="" id="263027">
     </attribute>
-    <attribute userLabel="-" importName="boy8" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="boy8" desc="Boys embarked at third port of disembarkation" id="262950">
+    <attribute  importName="boy8" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="boy8" desc="Boys embarked at third port of disembarkation" id="262950">
     </attribute>
-    <attribute userLabel="-" importName="boyrat1" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="boyrat1" desc="" id="262976">
+    <attribute  importName="boyrat1" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="boyrat1" desc="" id="262976">
     </attribute>
-    <attribute userLabel="-" importName="boyrat3" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="boyrat3" desc="" id="262975">
+    <attribute  importName="boyrat3" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="boyrat3" desc="" id="262975">
     </attribute>
-    <attribute userLabel="Number of slave boys" importName="boyrat7" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="boyrat7" desc="" id="262974">
+    <attribute userLabel="Number of slave boys" importName="boyrat7" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="boyrat7" desc="" id="262974">
     </attribute>
-    <attribute userLabel="First captain of ship" importName="captaina" importType="1" type="2" typeDisplayName="Text" length="60" category="0" visible="true" name="captaina" desc="First captain of ship" id="262788">
+    <attribute userLabel="First captain of ship" importName="captaina" importType="1" attrType="String" typeDisplayName="Text" length="60" category="0"  name="captaina" desc="First captain of ship" id="262788">
     </attribute>
-    <attribute userLabel="Second captain of ship" importName="captainb" importType="1" type="2" typeDisplayName="Text" length="40" category="0" visible="true" name="captainb" desc="Second captain of ship" id="262789">
+    <attribute userLabel="Second captain of ship" importName="captainb" importType="1" attrType="String" typeDisplayName="Text" length="40" category="0"  name="captainb" desc="Second captain of ship" id="262789">
     </attribute>
-    <attribute userLabel="Third captain of ship" importName="captainc" importType="1" type="2" typeDisplayName="Text" length="40" category="0" visible="true" name="captainc" desc="Third captain of ship" id="262790">
+    <attribute userLabel="Third captain of ship" importName="captainc" importType="1" attrType="String" typeDisplayName="Text" length="40" category="0"  name="captainc" desc="Third captain of ship" id="262790">
     </attribute>
-    <attribute userLabel="-" importName="carib" importType="0" type="4" typeDisplayName="List Carib" length="-1" dictionary="Carib" category="0" visible="false" name="carib" desc="" id="263108">
+    <attribute  importName="carib" importType="0" attrType="Dictionary" typeDisplayName="List Carib"  dictionary="Carib" category="0"  name="carib" desc="" id="263108">
     </attribute>
-    <attribute userLabel="-" importName="cashpric" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="cashpric" desc="" id="262982">
+    <attribute  importName="cashpric" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="cashpric" desc="" id="262982">
     </attribute>
-    <attribute userLabel="-" importName="chil1imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="chil1imp" desc="" id="262926">
+    <attribute  importName="chil1imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="chil1imp" desc="" id="262926">
     </attribute>
-    <attribute userLabel="-" importName="chil3imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="chil3imp" desc="" id="262933">
+    <attribute  importName="chil3imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="chil3imp" desc="" id="262933">
     </attribute>
-    <attribute userLabel="-" importName="child1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="child1" desc="Children at first port of purchase" id="262850">
+    <attribute  importName="child1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="child1" desc="Children at first port of purchase" id="262850">
     </attribute>
-    <attribute userLabel="-" importName="child2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="child2" desc="Children died on middle passage" id="262843">
+    <attribute  importName="child2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="child2" desc="Children died on middle passage" id="262843">
     </attribute>
-    <attribute userLabel="-" importName="child3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="child3" desc="Children at first port of disembarkation" id="262844">
+    <attribute  importName="child3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="child3" desc="Children at first port of disembarkation" id="262844">
     </attribute>
-    <attribute userLabel="-" importName="child4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="child4" desc="Children embarked at second port of purchase" id="262873">
+    <attribute  importName="child4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="child4" desc="Children embarked at second port of purchase" id="262873">
     </attribute>
-    <attribute userLabel="-" importName="child5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="child5" desc="Children embarked at third port of embarkation" id="263002">
+    <attribute  importName="child5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="child5" desc="Children embarked at third port of embarkation" id="263002">
     </attribute>
-    <attribute userLabel="-" importName="child6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="child6" desc="Children disembarked at second port of disembarkation" id="262880">
+    <attribute  importName="child6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="child6" desc="Children disembarked at second port of disembarkation" id="262880">
     </attribute>
-    <attribute userLabel="-" importName="child7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="child7" desc="" id="263029">
+    <attribute  importName="child7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="child7" desc="" id="263029">
     </attribute>
-    <attribute userLabel="-" importName="chilrat1" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="chilrat1" desc="" id="262928">
+    <attribute  importName="chilrat1" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="chilrat1" desc="" id="262928">
     </attribute>
-    <attribute userLabel="-" importName="chilrat3" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="chilrat3" desc="" id="262934">
+    <attribute  importName="chilrat3" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="chilrat3" desc="" id="262934">
     </attribute>
-    <attribute userLabel="Child ratios" importName="chilrat7" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="true" name="chilrat7" desc="" id="262945">
+    <attribute userLabel="Child ratios" importName="chilrat7" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="chilrat7" desc="" id="262945">
     </attribute>
-    <attribute userLabel="-" importName="constreg" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="0" visible="false" name="constreg" desc="" id="263088">
+    <attribute  importName="constreg" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="0"  name="constreg" desc="" id="263088">
     </attribute>
-    <attribute userLabel="-" importName="crew" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="crew" desc="" id="263020">
+    <attribute  importName="crew" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="crew" desc="" id="263020">
     </attribute>
-    <attribute userLabel="Crew on board at outset of voyage" importName="crew1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="crew1" desc="Crew on board at outset of voyage" id="262842">
+    <attribute userLabel="Crew on board at outset of voyage" importName="crew1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="crew1" desc="Crew on board at outset of voyage" id="262842">
     </attribute>
-    <attribute userLabel="-" importName="crew2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="crew2" desc="" id="262881">
+    <attribute  importName="crew2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="crew2" desc="" id="262881">
     </attribute>
-    <attribute userLabel="Number of crew at first port of disembarkation" importName="crew3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="crew3" desc="" id="262846">
+    <attribute userLabel="Number of crew at first port of disembarkation" importName="crew3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="crew3" desc="" id="262846">
     </attribute>
-    <attribute userLabel="-" importName="crew4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="crew4" desc="" id="262847">
+    <attribute  importName="crew4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="crew4" desc="" id="262847">
     </attribute>
-    <attribute userLabel="-" importName="crew5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="crew5" desc="" id="262848">
+    <attribute  importName="crew5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="crew5" desc="" id="262848">
     </attribute>
-    <attribute userLabel="Total crew died on voyage" importName="crewdied" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="crewdied" desc="-" id="262828">
+    <attribute userLabel="Total crew died on voyage" importName="crewdied" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="crewdied" desc="-" id="262828">
     </attribute>
-    <attribute userLabel="Day began slave purchase" importDateDay="d1slatra" type="3" importDateYear="d1slatrc" length="-1" category="0" importDateMonth="d1slatrb" id="262793" importType="2" importName="d1slatr" typeDisplayName="Date" visible="true" name="d1slatr" desc="">
+    <attribute userLabel="Day began slave purchase" importDateDay="d1slatra" attrType="Date" importDateYear="d1slatrc"  category="0" importDateMonth="d1slatrb" id="262793" importType="2" importName="d1slatr" typeDisplayName="Date"  name="d1slatr" desc="">
     </attribute>
-    <attribute userLabel="Dayend slave purchase" importDateDay="dlslatrc" type="3" importDateYear="dlslatrc" length="-1" category="0" importDateMonth="dlslatrb" id="262793" importType="2" importName="dlslatrb" typeDisplayName="Date" visible="true" name="dlslatrb" desc="">
+    <attribute userLabel="Dayend slave purchase" importDateDay="dlslatrc" attrType="Date" importDateYear="dlslatrc"  category="0" importDateMonth="dlslatrb" id="262793" importType="2" importName="dlslatrb" typeDisplayName="Date"  name="dlslatrb" desc="">
     </attribute>
-    <attribute userLabel="Date of arrival at second port of disembarkation" importDateDay="datarr36" type="3" importDateYear="datarr34" length="-1" category="1" importDateMonth="datarr37" id="262801" importType="2" importName="datarr32" typeDisplayName="Date" visible="true" name="datarr32" desc="Date of arrival at second port of disembarkation">
+    <attribute userLabel="Date of arrival at second port of disembarkation" importDateDay="datarr36" attrType="Date" importDateYear="datarr34"  category="1" importDateMonth="datarr37" id="262801" importType="2" importName="datarr32" typeDisplayName="Date"  name="datarr32" desc="Date of arrival at second port of disembarkation">
     </attribute>
-    <attribute userLabel="Date of third disembarkation of slaves" importDateDay="datarr39" type="3" importDateYear="datarr34" length="-1" category="1" importDateMonth="datarr40" id="262803" importType="2" importName="datarr33" typeDisplayName="Date" visible="true" name="datarr33" desc="Date of third disembarkation of slaves">
+    <attribute userLabel="Date of third disembarkation of slaves" importDateDay="datarr39" attrType="Date" importDateYear="datarr34"  category="1" importDateMonth="datarr40" id="262803" importType="2" importName="datarr33" typeDisplayName="Date"  name="datarr33" desc="Date of third disembarkation of slaves">
     </attribute>
-    <attribute userLabel="Date in which voyage completed" importDateDay="datarr43" type="3" importDateYear="datarr45" length="-1" category="0" importDateMonth="datarr44" id="262806" importType="2" importName="datarr4" typeDisplayName="Date" visible="true" name="datarr4" desc="Date in which voyage completed">
+    <attribute userLabel="Date in which voyage completed" importDateDay="datarr43" attrType="Date" importDateYear="datarr45"  category="0" importDateMonth="datarr44" id="262806" importType="2" importName="datarr4" typeDisplayName="Date"  name="datarr4" desc="Date in which voyage completed">
     </attribute>
-    <attribute userLabel="Date began slave voyage" importDateDay="datedepa" type="3" importDateYear="datedepc" length="-1" category="0" importDateMonth="datedepb" id="262791" importType="2" importName="datedep" typeDisplayName="Date" visible="true" name="datedep" desc="">
+    <attribute userLabel="Date began slave voyage" importDateDay="datedepa" attrType="Date" importDateYear="datedepc"  category="0" importDateMonth="datedepb" id="262791" importType="2" importName="datedep" typeDisplayName="Date"  name="datedep" desc="">
     </attribute>
-    <attribute userLabel="-" importName="datepl" importType="0" type="4" typeDisplayName="List DepDefinition" length="-1" dictionary="DepDefinition" category="0" visible="false" name="datepl" desc="" id="263043">
+    <attribute  importName="datepl" importType="0" attrType="Dictionary" typeDisplayName="List DepDefinition"  dictionary="DepDefinition" category="0"  name="datepl" desc="" id="263043">
     </attribute>
-    <attribute userLabel="Date of departure from last port disembarkation" importDateDay="ddepam" type="3" importDateYear="ddepamc" length="-1" category="0" importDateMonth="ddepamb" id="262805" importType="2" importName="ddepamb" typeDisplayName="Date" visible="true" name="ddepamb" desc="">
+    <attribute userLabel="Date of departure from last port disembarkation" importDateDay="ddepam" attrType="Date" importDateYear="ddepamc"  category="0" importDateMonth="ddepamb" id="262805" importType="2" importName="ddepamb" typeDisplayName="Date"  name="ddepamb" desc="">
     </attribute>
-    <attribute userLabel="Region of departure" importName="deptreg" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="0" visible="true" name="deptreg" desc="" id="263064">
+    <attribute userLabel="Region of departure" importName="deptreg" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="0"  name="deptreg" desc="" id="263064">
     </attribute>
-    <attribute userLabel="-" importName="destin" importType="0" type="4" typeDisplayName="List RetPort" length="-1" dictionary="RetPort" category="0" visible="false" name="destin" desc="" id="263047">
+    <attribute  importName="destin" importType="0" attrType="Dictionary" typeDisplayName="List RetPort"  dictionary="RetPort" category="0"  name="destin" desc="" id="263047">
     </attribute>
-    <attribute userLabel="-" importName="editor" importType="0" type="4" typeDisplayName="List Editor" length="-1" dictionary="Editor" category="0" visible="false" name="editor" desc="" id="263091">
+    <attribute  importName="editor" importType="0" attrType="Dictionary" typeDisplayName="List Editor"  dictionary="Editor" category="0"  name="editor" desc="" id="263091">
     </attribute>
-    <attribute userLabel="First place of intended embarkation" importName="embport" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="embport" desc="First place of intended embarkation" id="263044">
+    <attribute userLabel="First place of intended embarkation" importName="embport" importType="0" attrType="Dictionary" typeDisplayName="List PurchasePort"  dictionary="PurchasePort" category="1"  name="embport" desc="First place of intended embarkation" id="263044">
     </attribute>
-    <attribute userLabel="-" importName="embport2" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="0" visible="false" name="embport2" desc="" id="263057">
+    <attribute  importName="embport2" importType="0" attrType="Dictionary" typeDisplayName="List PurchasePort"  dictionary="PurchasePort" category="0"  name="embport2" desc="" id="263057">
     </attribute>
-    <attribute userLabel="-" importName="embreg" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="0" visible="false" name="embreg" desc="" id="263073">
+    <attribute  importName="embreg" importType="0" attrType="Dictionary" typeDisplayName="List EmbRegion"  dictionary="EmbRegion" category="0"  name="embreg" desc="" id="263073">
     </attribute>
-    <attribute userLabel="-" importName="embreg2" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="0" visible="false" name="embreg2" desc="" id="263074">
+    <attribute  importName="embreg2" importType="0" attrType="Dictionary" typeDisplayName="List EmbRegion"  dictionary="EmbRegion" category="0"  name="embreg2" desc="" id="263074">
     </attribute>
-    <attribute userLabel="Flag record present in 1999 set" importName="evgreen" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="evgreen" desc="" id="262964">
+    <attribute userLabel="Flag record present in 1999 set" importName="evgreen" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="evgreen" desc="" id="262964">
     </attribute>
-    <attribute userLabel="-" importName="exchrate" importType="1" type="2" typeDisplayName="Text" length="10" category="0" visible="false" name="exchrate" desc="" id="262985">
+    <attribute  importName="exchrate" importType="1" attrType="String" typeDisplayName="Text" length="10" category="0"  name="exchrate" desc="" id="262985">
     </attribute>
-    <attribute userLabel="-" importName="exprat" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="exprat" desc="" id="262923">
+    <attribute  importName="exprat" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="exprat" desc="" id="262923">
     </attribute>
-    <attribute userLabel="Outcome of voyage" importName="fate" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="fate" desc="" id="262807">
+    <attribute userLabel="Outcome of voyage" importName="fate" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="fate" desc="" id="262807">
     </attribute>
-    <attribute userLabel="Voyage outcome from perspective of slaves" importName="fate2" importType="0" type="4" typeDisplayName="List Fate2" length="-1" dictionary="Fate2" category="0" visible="true" name="fate2" desc="" id="263082">
+    <attribute userLabel="Voyage outcome from perspective of slaves" importName="fate2" importType="0" attrType="Dictionary" typeDisplayName="List Fate2"  dictionary="Fate2" category="0"  name="fate2" desc="" id="263082">
     </attribute>
-    <attribute userLabel="Voyage outcome from perspective of captain" importName="fate3" importType="0" type="4" typeDisplayName="List Fate3" length="-1" dictionary="Fate3" category="0" visible="true" name="fate3" desc="" id="263083">
+    <attribute userLabel="Voyage outcome from perspective of captain" importName="fate3" importType="0" attrType="Dictionary" typeDisplayName="List Fate3"  dictionary="Fate3" category="0"  name="fate3" desc="" id="263083">
     </attribute>
-    <attribute userLabel="voyage outcome from perspective of owner" importName="fate4" importType="0" type="4" typeDisplayName="List Fate4" length="-1" dictionary="Fate4" category="0" visible="true" name="fate4" desc="" id="263084">
+    <attribute userLabel="voyage outcome from perspective of owner" importName="fate4" importType="0" attrType="Dictionary" typeDisplayName="List Fate4"  dictionary="Fate4" category="0"  name="fate4" desc="" id="263084">
     </attribute>
-    <attribute userLabel="-" importName="female1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="female1" desc="" id="262851">
+    <attribute  importName="female1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="female1" desc="" id="262851">
     </attribute>
-    <attribute userLabel="-" importName="female2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="female2" desc="" id="262855">
+    <attribute  importName="female2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="female2" desc="" id="262855">
     </attribute>
-    <attribute userLabel="-" importName="female3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="female3" desc="" id="262861">
+    <attribute  importName="female3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="female3" desc="" id="262861">
     </attribute>
-    <attribute userLabel="-" importName="female4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="female4" desc="" id="262867">
+    <attribute  importName="female4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="female4" desc="" id="262867">
     </attribute>
-    <attribute userLabel="-" importName="female5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="female5" desc="" id="263004">
+    <attribute  importName="female5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="female5" desc="" id="263004">
     </attribute>
-    <attribute userLabel="-" importName="female6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="female6" desc="" id="262874">
+    <attribute  importName="female6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="female6" desc="" id="262874">
     </attribute>
-    <attribute userLabel="-" importName="female7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="female7" desc="" id="263024">
+    <attribute  importName="female7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="female7" desc="" id="263024">
     </attribute>
-    <attribute userLabel="-" importName="feml1imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="feml1imp" desc="" id="262925">
+    <attribute  importName="feml1imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="feml1imp" desc="" id="262925">
     </attribute>
-    <attribute userLabel="-" importName="feml3imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="feml3imp" desc="" id="262932">
+    <attribute  importName="feml3imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="feml3imp" desc="" id="262932">
     </attribute>
-    <attribute userLabel="-" importName="filter__" importType="0" type="4" typeDisplayName="List Filter" length="-1" dictionary="Filter" category="0" visible="false" name="filter_$" desc="" id="263093">
+    <attribute  importName="filter__" importType="0" attrType="Dictionary" typeDisplayName="List Filter"  dictionary="Filter" category="0"  name="filter_$" desc="" id="263093">
     </attribute>
-    <attribute userLabel="-" importName="frencpri" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="frencpri" desc="" id="262986">
+    <attribute  importName="frencpri" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="frencpri" desc="" id="262986">
     </attribute>
-    <attribute userLabel="-" importName="frnprinl" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="frnprinl" desc="" id="262987">
+    <attribute  importName="frnprinl" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="frnprinl" desc="" id="262987">
     </attribute>
-    <attribute userLabel="-" importName="girl2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="girl2" desc="" id="262860">
+    <attribute  importName="girl2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="girl2" desc="" id="262860">
     </attribute>
-    <attribute userLabel="-" importName="girl3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="girl3" desc="" id="262866">
+    <attribute  importName="girl3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="girl3" desc="" id="262866">
     </attribute>
-    <attribute userLabel="-" importName="girl4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="girl4" desc="" id="262872">
+    <attribute  importName="girl4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="girl4" desc="" id="262872">
     </attribute>
-    <attribute userLabel="-" importName="girl5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="girl5" desc="" id="262998">
+    <attribute  importName="girl5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="girl5" desc="" id="262998">
     </attribute>
-    <attribute userLabel="-" importName="girl6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="girl6" desc="" id="262879">
+    <attribute  importName="girl6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="girl6" desc="" id="262879">
     </attribute>
-    <attribute userLabel="-" importName="girl7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="girl7" desc="" id="263028">
+    <attribute  importName="girl7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="girl7" desc="" id="263028">
     </attribute>
-    <attribute userLabel="-" importName="girl8" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="girl8" desc="" id="262951">
+    <attribute  importName="girl8" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="girl8" desc="" id="262951">
     </attribute>
-    <attribute userLabel="-" importName="girlrat1" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="girlrat1" desc="" id="262971">
+    <attribute  importName="girlrat1" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="girlrat1" desc="" id="262971">
     </attribute>
-    <attribute userLabel="-" importName="girlrat3" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="girlrat3" desc="" id="262972">
+    <attribute  importName="girlrat3" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="girlrat3" desc="" id="262972">
     </attribute>
-    <attribute userLabel="Number of Slave girls" importName="girlrat7" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="girlrat7" desc="" id="262973">
+    <attribute userLabel="Number of Slave girls" importName="girlrat7" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="girlrat7" desc="" id="262973">
     </attribute>
-    <attribute userLabel="Number of guns carried" importName="guns" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="guns" desc="Number of guns carried" id="262840">
+    <attribute userLabel="Number of guns carried" importName="guns" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="guns" desc="Number of guns carried" id="262840">
     </attribute>
-    <attribute userLabel="-" importName="imprat" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="imprat" desc="" id="262917">
+    <attribute  importName="imprat" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="imprat" desc="" id="262917">
     </attribute>
-    <attribute userLabel="-" importName="infant1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="infant1" desc="" id="263010">
+    <attribute  importName="infant1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="infant1" desc="" id="263010">
     </attribute>
-    <attribute userLabel="-" importName="infant3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="infant3" desc="" id="263008">
+    <attribute  importName="infant3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="infant3" desc="" id="263008">
     </attribute>
-    <attribute userLabel="-" importName="infant4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="infant4" desc="" id="263017">
+    <attribute  importName="infant4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="infant4" desc="" id="263017">
     </attribute>
-    <attribute userLabel="-" importName="infantf3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="infantf3" desc="" id="262883">
+    <attribute  importName="infantf3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="infantf3" desc="" id="262883">
     </attribute>
-    <attribute userLabel="-" importName="infantm3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="infantm3" desc="" id="262882">
+    <attribute  importName="infantm3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="infantm3" desc="" id="262882">
     </attribute>
-    <attribute userLabel="-" importName="infants3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="infants3" desc="" id="263009">
+    <attribute  importName="infants3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="infants3" desc="" id="263009">
     </attribute>
-    <attribute userLabel="-" importName="insurre2" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="insurre2" desc="" id="262961">
+    <attribute  importName="insurre2" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="insurre2" desc="" id="262961">
     </attribute>
-    <attribute userLabel="Violent incidents" importName="insurrec" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="insurrec" desc="" id="262891">
+    <attribute userLabel="Violent incidents" importName="insurrec" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="insurrec" desc="" id="262891">
     </attribute>
-    <attribute userLabel="-" importName="intrate" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="intrate" desc="" id="262981">
+    <attribute  importName="intrate" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="intrate" desc="" id="262981">
     </attribute>
-    <attribute userLabel="Standardized price of slaves" importName="jamcaspr" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="jamcaspr" desc="" id="262983">
+    <attribute userLabel="Standardized price of slaves" importName="jamcaspr" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="jamcaspr" desc="" id="262983">
     </attribute>
-    <attribute userLabel="-" importName="locurmnl" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="locurmnl" desc="" id="262984">
+    <attribute  importName="locurmnl" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="locurmnl" desc="" id="262984">
     </attribute>
-    <attribute userLabel="Principal port of slave purchase" importName="majbuypt" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="majbuypt" desc="Principal port of slave purchas" id="263062">
+    <attribute userLabel="Principal port of slave purchase" importName="majbuypt" importType="0" attrType="Dictionary" typeDisplayName="List PurchasePort"  dictionary="PurchasePort" category="1"  name="majbuypt" desc="Principal port of slave purchas" id="263062">
     </attribute>
-    <attribute userLabel="Imputed principal port of slave purchase" importName="mjbyptimp" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="mjbyptimp" desc="Imputed principal port of slave purchas" id="2">
+    <attribute userLabel="Imputed principal port of slave purchase" importName="mjbyptimp" importType="0" attrType="Dictionary" typeDisplayName="List PurchasePort"  dictionary="PurchasePort" category="1"  name="mjbyptimp" desc="Imputed principal port of slave purchas" id="2">
     </attribute>
-    <attribute userLabel="Principal region of embarkation" importName="majbuyrg" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="1" visible="true" name="majbuyrg" desc="" id="263075">
+    <attribute userLabel="Principal region of embarkation" importName="majbuyrg" importType="0" attrType="Dictionary" typeDisplayName="List EmbRegion"  dictionary="EmbRegion" category="1"  name="majbuyrg" desc="" id="263075">
     </attribute>
-    <attribute userLabel="Imputed principal region of embarkation" importName="majbyimp" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="0" visible="true" name="majbyimp" desc="" id="263076">
+    <attribute userLabel="Imputed principal region of embarkation" importName="majbyimp" importType="0" attrType="Dictionary" typeDisplayName="List EmbRegion"  dictionary="EmbRegion" category="0"  name="majbyimp" desc="" id="263076">
     </attribute>
-    <attribute userLabel="Imputed port of slave arrival" importName="majselpt" importType="0" type="4" typeDisplayName="List FirstDemPort" length="-1" dictionary="FirstDemPort" category="1" visible="true" name="majselpt" desc="Imputed port of slave arrival" id="263061">
+    <attribute userLabel="Imputed port of slave arrival" importName="majselpt" importType="0" attrType="Dictionary" typeDisplayName="List FirstDemPort"  dictionary="FirstDemPort" category="1"  name="majselpt" desc="Imputed port of slave arrival" id="263061">
     </attribute>
-    <attribute userLabel="Principal region of disembarkation" importName="majselrg" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="1" visible="true" name="majselrg" desc="" id="263081">
+    <attribute userLabel="Principal region of disembarkation" importName="majselrg" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="1"  name="majselrg" desc="" id="263081">
     </attribute>
-    <attribute userLabel="-" importName="male1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male1" desc="" id="262852">
+    <attribute  importName="male1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male1" desc="" id="262852">
     </attribute>
-    <attribute userLabel="-" importName="male1imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male1imp" desc="" id="262924">
+    <attribute  importName="male1imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male1imp" desc="" id="262924">
     </attribute>
-    <attribute userLabel="-" importName="male2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male2" desc="" id="262856">
+    <attribute  importName="male2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male2" desc="" id="262856">
     </attribute>
-    <attribute userLabel="-" importName="male3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male3" desc="" id="262862">
+    <attribute  importName="male3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male3" desc="" id="262862">
     </attribute>
-    <attribute userLabel="-" importName="male3imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male3imp" desc="" id="262931">
+    <attribute  importName="male3imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male3imp" desc="" id="262931">
     </attribute>
-    <attribute userLabel="-" importName="male4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male4" desc="" id="262868">
+    <attribute  importName="male4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male4" desc="" id="262868">
     </attribute>
-    <attribute userLabel="-" importName="male5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male5" desc="" id="263003">
+    <attribute  importName="male5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male5" desc="" id="263003">
     </attribute>
-    <attribute userLabel="-" importName="male6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male6" desc="" id="262875">
+    <attribute  importName="male6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male6" desc="" id="262875">
     </attribute>
-    <attribute userLabel="-" importName="male7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="male7" desc="" id="263023">
+    <attribute  importName="male7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="male7" desc="" id="263023">
     </attribute>
-    <attribute userLabel="-" importName="malrat1" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="malrat1" desc="" id="262927">
+    <attribute  importName="malrat1" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="malrat1" desc="" id="262927">
     </attribute>
-    <attribute userLabel="-" importName="malrat3" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="malrat3" desc="" id="262935">
+    <attribute  importName="malrat3" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="malrat3" desc="" id="262935">
     </attribute>
-    <attribute userLabel="Male ratios" importName="malrat7" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="true" name="malrat7" desc="" id="262944">
+    <attribute userLabel="Male ratios" importName="malrat7" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="malrat7" desc="" id="262944">
     </attribute>
-    <attribute userLabel="-" importName="men1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men1" desc="" id="262853">
+    <attribute  importName="men1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men1" desc="" id="262853">
     </attribute>
-    <attribute userLabel="-" importName="men2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men2" desc="" id="262857">
+    <attribute  importName="men2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men2" desc="" id="262857">
     </attribute>
-    <attribute userLabel="-" importName="men3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men3" desc="" id="262863">
+    <attribute  importName="men3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men3" desc="" id="262863">
     </attribute>
-    <attribute userLabel="-" importName="men4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men4" desc="" id="262869">
+    <attribute  importName="men4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men4" desc="" id="262869">
     </attribute>
-    <attribute userLabel="-" importName="men5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men5" desc="" id="263000">
+    <attribute  importName="men5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men5" desc="" id="263000">
     </attribute>
-    <attribute userLabel="-" importName="men6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men6" desc="" id="262876">
+    <attribute  importName="men6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men6" desc="" id="262876">
     </attribute>
-    <attribute userLabel="-" importName="men7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men7" desc="" id="263022">
+    <attribute  importName="men7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men7" desc="" id="263022">
     </attribute>
-    <attribute userLabel="-" importName="men8" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="men8" desc="" id="262948">
+    <attribute  importName="men8" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="men8" desc="" id="262948">
     </attribute>
-    <attribute userLabel="-" importName="menrat1" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="menrat1" desc="" id="262970">
+    <attribute  importName="menrat1" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="menrat1" desc="" id="262970">
     </attribute>
-    <attribute userLabel="-" importName="menrat3" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="menrat3" desc="" id="262969">
+    <attribute  importName="menrat3" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="menrat3" desc="" id="262969">
     </attribute>
-    <attribute userLabel="Number of slave men" importName="menrat7" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="menrat7" desc="" id="262968">
+    <attribute userLabel="Number of slave men" importName="menrat7" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="menrat7" desc="" id="262968">
     </attribute>
-    <attribute userLabel="Imputed principal region of sale" importName="mjselimp" importType="0" type="4" typeDisplayName="List ImpPrincipalRegion" length="-1" dictionary="ImpPrincipalRegion" category="0" visible="true" name="mjselimp" desc="" id="263085">
+    <attribute userLabel="Imputed principal region of sale" importName="mjselimp" importType="0" attrType="Dictionary" typeDisplayName="List ImpPrincipalRegion"  dictionary="ImpPrincipalRegion" category="0"  name="mjselimp" desc="" id="263085">
     </attribute>
-    <attribute userLabel="Imputed nation of ship registration" importName="natinimp" importType="0" type="4" typeDisplayName="List ImputedNation" length="-1" dictionary="ImputedNation" category="0" visible="true" name="natinimp" desc="Imputed nation of ship registration" id="263063">
+    <attribute userLabel="Imputed nation of ship registration" importName="natinimp" importType="0" attrType="Dictionary" typeDisplayName="List ImputedNation"  dictionary="ImputedNation" category="0"  name="natinimp" desc="Imputed nation of ship registration" id="263063">
     </attribute>
-    <attribute userLabel="-" importName="national" importType="0" type="4" typeDisplayName="List ShipNationality" length="-1" dictionary="ShipNationality" category="0" visible="false" name="national" desc="" id="263056">
+    <attribute  importName="national" importType="0" attrType="Dictionary" typeDisplayName="List ShipNationality"  dictionary="ShipNationality" category="0"  name="national" desc="" id="263056">
     </attribute>
-    <attribute userLabel="Slaves carried from first port of purchase" importName="ncar13" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="ncar13" desc="Slaves carried from first port of purchase" id="262829">
+    <attribute userLabel="Slaves carried from first port of purchase" importName="ncar13" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="ncar13" desc="Slaves carried from first port of purchase" id="262829">
     </attribute>
-    <attribute userLabel="Slaves carried from second port of purchase" importName="ncar15" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="ncar15" desc="Slaves carried from second port of purchase" id="262830">
+    <attribute userLabel="Slaves carried from second port of purchase" importName="ncar15" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="ncar15" desc="Slaves carried from second port of purchase" id="262830">
     </attribute>
-    <attribute userLabel="Slaves carried from third port of purchase" importName="ncar17" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="ncar17" desc="Slaves carried from third port of purchase" id="262831">
+    <attribute userLabel="Slaves carried from third port of purchase" importName="ncar17" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="ncar17" desc="Slaves carried from third port of purchase" id="262831">
     </attribute>
-    <attribute userLabel="Imputed number slaves embarked second port" importName="ncr15imp" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="ncr15imp" desc="" id="262921">
+    <attribute userLabel="Imputed number slaves embarked second port" importName="ncr15imp" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="ncr15imp" desc="" id="262921">
     </attribute>
-    <attribute userLabel="Imputed number of slaves embarked third port" importName="ncr17imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="ncr17imp" desc="" id="262922">
+    <attribute userLabel="Imputed number of slaves embarked third port" importName="ncr17imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="ncr17imp" desc="" id="262922">
     </attribute>
-    <attribute userLabel="-" importName="ndesert" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="ndesert" desc="" id="262838">
+    <attribute  importName="ndesert" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="ndesert" desc="" id="262838">
     </attribute>
-    <attribute userLabel="-" importName="nonpay" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="nonpay" desc="" id="262988">
+    <attribute  importName="nonpay" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="nonpay" desc="" id="262988">
     </attribute>
-    <attribute userLabel="-" importName="npafttra" importType="0" type="4" typeDisplayName="List OldWorldPlace" length="-1" dictionary="OldWorldPlace" category="0" visible="false" name="npafttra" desc="" id="263050">
+    <attribute  importName="npafttra" importType="0" attrType="Dictionary" typeDisplayName="List OldWorldPlace"  dictionary="OldWorldPlace" category="0"  name="npafttra" desc="" id="263050">
     </attribute>
-    <attribute userLabel="-" importName="nppretra" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="nppretra" desc="" id="262792">
+    <attribute  importName="nppretra" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="nppretra" desc="" id="262792">
     </attribute>
-    <attribute userLabel="-" importName="npprior" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="npprior" desc="" id="262794">
+    <attribute  importName="npprior" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="npprior" desc="" id="262794">
     </attribute>
-    <attribute userLabel="First owner of venture" importName="ownera" importType="1" type="2" typeDisplayName="Text" length="60" category="0" visible="true" name="ownera" desc="First owner of venture" id="262893">
+    <attribute userLabel="First owner of venture" importName="ownera" importType="1" attrType="String" typeDisplayName="Text" length="60" category="0"  name="ownera" desc="First owner of venture" id="262893">
     </attribute>
-    <attribute userLabel="Second owner of venture" importName="ownerb" importType="1" type="2" typeDisplayName="Text" length="40" category="0" visible="true" name="ownerb" desc="Second owner of venture" id="262894">
+    <attribute userLabel="Second owner of venture" importName="ownerb" importType="1" attrType="String" typeDisplayName="Text" length="40" category="0"  name="ownerb" desc="Second owner of venture" id="262894">
     </attribute>
-    <attribute userLabel="Third owner of venture" importName="ownerc" importType="1" type="2" typeDisplayName="Text" length="40" category="0" visible="true" name="ownerc" desc="Third owner of venture" id="262895">
+    <attribute userLabel="Third owner of venture" importName="ownerc" importType="1" attrType="String" typeDisplayName="Text" length="40" category="0"  name="ownerc" desc="Third owner of venture" id="262895">
     </attribute>
-    <attribute userLabel="Fourth owner of venture" importName="ownerd" importType="1" type="2" typeDisplayName="Text" length="40" category="0" visible="true" name="ownerd" desc="Fourth owner of venture" id="262896">
+    <attribute userLabel="Fourth owner of venture" importName="ownerd" importType="1" attrType="String" typeDisplayName="Text" length="40" category="0"  name="ownerd" desc="Fourth owner of venture" id="262896">
     </attribute>
-    <attribute userLabel="Fifth owner of venture" importName="ownere" importType="1" type="2" typeDisplayName="Text" length="40" category="0" visible="true" name="ownere" desc="Fifth owner of venture" id="262897">
+    <attribute userLabel="Fifth owner of venture" importName="ownere" importType="1" attrType="String" typeDisplayName="Text" length="40" category="0"  name="ownere" desc="Fifth owner of venture" id="262897">
     </attribute>
-    <attribute userLabel="Sixth owner of venture" importName="ownerf" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerf" desc="Sixth owner of venture" id="262898">
+    <attribute userLabel="Sixth owner of venture" importName="ownerf" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerf" desc="Sixth owner of venture" id="262898">
     </attribute>
-    <attribute userLabel="Seventh owner of venture" importName="ownerg" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerg" desc="Seventh owner of venture" id="262899">
+    <attribute userLabel="Seventh owner of venture" importName="ownerg" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerg" desc="Seventh owner of venture" id="262899">
     </attribute>
-    <attribute userLabel="Eighth owner of venture" importName="ownerh" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerh" desc="Eighth owner of venture" id="262900">
+    <attribute userLabel="Eighth owner of venture" importName="ownerh" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerh" desc="Eighth owner of venture" id="262900">
     </attribute>
-    <attribute userLabel="Ninth owner of venture" importName="owneri" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="owneri" desc="Ninth owner of venture" id="262901">
+    <attribute userLabel="Ninth owner of venture" importName="owneri" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="owneri" desc="Ninth owner of venture" id="262901">
     </attribute>
-    <attribute userLabel="Tenth owner of venture" importName="ownerj" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerj" desc="Tenth owner of venture" id="262902">
+    <attribute userLabel="Tenth owner of venture" importName="ownerj" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerj" desc="Tenth owner of venture" id="262902">
     </attribute>
-    <attribute userLabel="Tenth owner of venture" importName="ownerk" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerk" desc="Tenth owner of venture" id="262903">
+    <attribute userLabel="Tenth owner of venture" importName="ownerk" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerk" desc="Tenth owner of venture" id="262903">
     </attribute>
-    <attribute userLabel="Twelfth owner of venture" importName="ownerl" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerl" desc="Twelfth owner of venture" id="262904">
+    <attribute userLabel="Twelfth owner of venture" importName="ownerl" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerl" desc="Twelfth owner of venture" id="262904">
     </attribute>
-    <attribute userLabel="Thirteenth owner of venture" importName="ownerm" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerm" desc="Thirteenth owner of venture" id="262905">
+    <attribute userLabel="Thirteenth owner of venture" importName="ownerm" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerm" desc="Thirteenth owner of venture" id="262905">
     </attribute>
-    <attribute userLabel="Fourteenth owner of venture" importName="ownern" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownern" desc="Fourteenth owner of venture" id="262906">
+    <attribute userLabel="Fourteenth owner of venture" importName="ownern" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownern" desc="Fourteenth owner of venture" id="262906">
     </attribute>
-    <attribute userLabel="Fifteenth owner of venture" importName="ownero" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownero" desc="Fifteenth owner of venture" id="262907">
+    <attribute userLabel="Fifteenth owner of venture" importName="ownero" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownero" desc="Fifteenth owner of venture" id="262907">
     </attribute>
-    <attribute userLabel="Sixteenth owner of venture" importName="ownerp" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="ownerp" desc="Sixteenth owner of venture" id="262908">
+    <attribute userLabel="Sixteenth owner of venture" importName="ownerp" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="ownerp" desc="Sixteenth owner of venture" id="262908">
     </attribute>
-    <attribute userLabel="-" importName="p" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="p" desc="" id="262947">
+    <attribute  importName="p" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="p" desc="" id="262947">
     </attribute>
-    <attribute userLabel="First place of slave purchase" importName="plac1tra" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="plac1tra" desc="" id="263046">
+    <attribute userLabel="First place of slave purchase" importName="plac1tra" importType="0" attrType="Dictionary" typeDisplayName="List PurchasePort"  dictionary="PurchasePort" category="1"  name="plac1tra" desc="" id="263046">
     </attribute>
-    <attribute userLabel="Second place of slave purchase" importName="plac2tra" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="plac2tra" desc="" id="263048">
+    <attribute userLabel="Second place of slave purchase" importName="plac2tra" importType="0" attrType="Dictionary" typeDisplayName="List PurchasePort"  dictionary="PurchasePort" category="1"  name="plac2tra" desc="" id="263048">
     </attribute>
-    <attribute userLabel="Third place of slave purchase" importName="plac3tra" importType="0" type="4" typeDisplayName="List PurchasePort" length="-1" dictionary="PurchasePort" category="1" visible="true" name="plac3tra" desc="" id="263049">
+    <attribute userLabel="Third place of slave purchase" importName="plac3tra" importType="0" attrType="Dictionary" typeDisplayName="List PurchasePort"  dictionary="PurchasePort" category="1"  name="plac3tra" desc="" id="263049">
     </attribute>
-    <attribute userLabel="Place of construction" importName="placcons" importType="0" type="4" typeDisplayName="List RetPort" length="-1" dictionary="RetPort" category="1" visible="true" name="placcons" desc="Place of construction" id="263060">
+    <attribute userLabel="Place of construction" importName="placcons" importType="0" attrType="Dictionary" typeDisplayName="List RetPort"  dictionary="RetPort" category="1"  name="placcons" desc="Place of construction" id="263060">
     </attribute>
-    <attribute userLabel="Port of Departure" importName="portdep" importType="0" type="4" typeDisplayName="List DeparturePort" length="-1" dictionary="DeparturePort" category="1" visible="true" name="portdep" desc="" id="263058">
+    <attribute userLabel="Port of Departure" importName="portdep" importType="0" attrType="Dictionary" typeDisplayName="List DeparturePort"  dictionary="DeparturePort" category="1"  name="portdep" desc="" id="263058">
     </attribute>
-    <attribute userLabel="Port at which voyage ended" importName="portret" importType="0" type="4" typeDisplayName="List RetPort" length="-1" dictionary="RetPort" category="0" visible="true" name="portret" desc="" id="263054">
+    <attribute userLabel="Port at which voyage ended" importName="portret" importType="0" attrType="Dictionary" typeDisplayName="List RetPort"  dictionary="RetPort" category="0"  name="portret" desc="" id="263054">
     </attribute>
-    <attribute userLabel="-" importName="__price" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="poundprice" desc="" id="262979">
+    <attribute  importName="__price" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="poundprice" desc="" id="262979">
     </attribute>
-    <attribute userLabel="Price of slaves" importName="price" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="price" desc="Price of slaves" id="262953">
+    <attribute userLabel="Price of slaves" importName="price" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="price" desc="Price of slaves" id="262953">
     </attribute>
-    <attribute userLabel="-" importName="primarylast" importType="0" type="4" typeDisplayName="List PrimaryLast" length="-1" dictionary="PrimaryLast" category="0" visible="false" name="primarylast" desc="" id="263106">
+    <attribute  importName="primarylast" importType="0" attrType="Dictionary" typeDisplayName="List PrimaryLast"  dictionary="PrimaryLast" category="0"  name="primarylast" desc="" id="263106">
     </attribute>
-    <attribute userLabel="-" importName="primarylast1" importType="0" type="4" typeDisplayName="List PrimaryLast" length="-1" dictionary="PrimaryLast" category="0" visible="false" name="primarylast1" desc="" id="263107">
+    <attribute  importName="primarylast1" importType="0" attrType="Dictionary" typeDisplayName="List PrimaryLast"  dictionary="PrimaryLast" category="0"  name="primarylast1" desc="" id="263107">
     </attribute>
-    <attribute userLabel="-" importName="regarrp" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="0" visible="false" name="regarrp" desc="" id="263080">
+    <attribute  importName="regarrp" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="0"  name="regarrp" desc="" id="263080">
     </attribute>
-    <attribute userLabel="-" importName="regarrp2" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="0" visible="false" name="regarrp2" desc="" id="263101">
+    <attribute  importName="regarrp2" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="0"  name="regarrp2" desc="" id="263101">
     </attribute>
-    <attribute userLabel="First region of disembarkation" importName="regdis1" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="0" visible="true" name="regdis1" desc="" id="263077">
+    <attribute userLabel="First region of disembarkation" importName="regdis1" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="0"  name="regdis1" desc="" id="263077">
     </attribute>
-    <attribute userLabel="-" importName="regdis11" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="regdis11" desc="" id="262918">
+    <attribute  importName="regdis11" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="regdis11" desc="" id="262918">
     </attribute>
-    <attribute userLabel="Second region of disembarkation" importName="regdis2" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="1" visible="true" name="regdis2" desc="" id="263078">
+    <attribute userLabel="Second region of disembarkation" importName="regdis2" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="1"  name="regdis2" desc="" id="263078">
     </attribute>
-    <attribute userLabel="-" importName="regdis21" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="regdis21" desc="" id="262919">
+    <attribute  importName="regdis21" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="regdis21" desc="" id="262919">
     </attribute>
-    <attribute userLabel="Third region of disembarkation" importName="regdis3" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="1" visible="true" name="regdis3" desc="" id="263079">
+    <attribute userLabel="Third region of disembarkation" importName="regdis3" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="1"  name="regdis3" desc="" id="263079">
     </attribute>
-    <attribute userLabel="First region of embarkation" importName="regem1" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="1" visible="true" name="regem1" desc="" id="263070">
+    <attribute userLabel="First region of embarkation" importName="regem1" importType="0" attrType="Dictionary" typeDisplayName="List EmbRegion"  dictionary="EmbRegion" category="1"  name="regem1" desc="" id="263070">
     </attribute>
-    <attribute userLabel="Second region of embarkation" importName="regem2" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="1" visible="true" name="regem2" desc="" id="263071">
+    <attribute userLabel="Second region of embarkation" importName="regem2" importType="0" attrType="Dictionary" typeDisplayName="List EmbRegion"  dictionary="EmbRegion" category="1"  name="regem2" desc="" id="263071">
     </attribute>
-    <attribute userLabel="Third region of embarkation" importName="regem3" importType="0" type="4" typeDisplayName="List EmbRegion" length="-1" dictionary="EmbRegion" category="1" visible="true" name="regem3" desc="" id="263072">
+    <attribute userLabel="Third region of embarkation" importName="regem3" importType="0" attrType="Dictionary" typeDisplayName="List EmbRegion"  dictionary="EmbRegion" category="1"  name="regem3" desc="" id="263072">
     </attribute>
-    <attribute userLabel="-" importName="regisreg" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="0" visible="false" name="regisreg" desc="" id="263066">
+    <attribute  importName="regisreg" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="0"  name="regisreg" desc="" id="263066">
     </attribute>
-    <attribute userLabel="-" importName="retrnreg" importType="0" type="4" typeDisplayName="List DepartureRegion" length="-1" dictionary="DepartureRegion" category="0" visible="false" name="retrnreg" desc="" id="263065">
+    <attribute  importName="retrnreg" importType="0" attrType="Dictionary" typeDisplayName="List DepartureRegion"  dictionary="DepartureRegion" category="0"  name="retrnreg" desc="" id="263065">
     </attribute>
-    <attribute userLabel="Rig of vessel" importName="rig" importType="0" type="4" typeDisplayName="List VesselRig" length="-1" dictionary="VesselRig" category="0" visible="true" name="rig" desc="Rig of vessel" id="263059">
+    <attribute userLabel="Rig of vessel" importName="rig" importType="0" attrType="Dictionary" typeDisplayName="List VesselRig"  dictionary="VesselRig" category="0"  name="rig" desc="Rig of vessel" id="263059">
     </attribute>
-    <attribute userLabel="Round trip length of voyage" importName="rountrip" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="rountrip" desc="" id="262958">
+    <attribute userLabel="Round trip length of voyage" importName="rountrip" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="rountrip" desc="" id="262958">
     </attribute>
-    <attribute userLabel="Date of first disembarkation" importDateDay="datarr32" type="3" importDateYear="datarr34" length="-1" category="0" importDateMonth="datarr33" id="262799" importType="2" importName="rrdata31" typeDisplayName="Date" visible="true" name="rrdata31" desc="Date of first disembarkation">
+    <attribute userLabel="Date of first disembarkation" importDateDay="datarr32" attrType="Date" importDateYear="datarr34"  category="0" importDateMonth="datarr33" id="262799" importType="2" importName="rrdata31" typeDisplayName="Date"  name="rrdata31" desc="Date of first disembarkation">
     </attribute>
-    <attribute userLabel="-" importName="saild1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="saild1" desc="" id="262833">
+    <attribute  importName="saild1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="saild1" desc="" id="262833">
     </attribute>
-    <attribute userLabel="-" importName="saild2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="saild2" desc="" id="262834">
+    <attribute  importName="saild2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="saild2" desc="" id="262834">
     </attribute>
-    <attribute userLabel="-" importName="saild3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="saild3" desc="" id="262835">
+    <attribute  importName="saild3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="saild3" desc="" id="262835">
     </attribute>
-    <attribute userLabel="-" importName="saild4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="saild4" desc="" id="262836">
+    <attribute  importName="saild4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="saild4" desc="" id="262836">
     </attribute>
-    <attribute userLabel="-" importName="saild5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="saild5" desc="" id="262837">
+    <attribute  importName="saild5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="saild5" desc="" id="262837">
     </attribute>
-    <attribute userLabel="Name of vessel" importName="shipname" importType="1" type="2" typeDisplayName="Text" length="60" category="0" visible="true" name="shipname" desc="Name of vessel" id="262786">
+    <attribute userLabel="Name of vessel" importName="shipname" importType="1" attrType="String" typeDisplayName="Text" length="60" category="0"  name="shipname" desc="Name of vessel" id="262786">
     </attribute>
-    <attribute userLabel="First port of disembarkation" importName="sla1port" importType="0" type="4" typeDisplayName="List FirstDemPort" length="-1" dictionary="FirstDemPort" category="1" visible="true" name="sla1port" desc="First port of disembarkation (see codebook)" id="263051">
+    <attribute userLabel="First port of disembarkation" importName="sla1port" importType="0" attrType="Dictionary" typeDisplayName="List FirstDemPort"  dictionary="FirstDemPort" category="1"  name="sla1port" desc="First port of disembarkation (see codebook)" id="263051">
     </attribute>
-    <attribute userLabel="Imputed number slaves disembarked at first port" importName="sla32imp" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="sla32imp" desc="" id="262915">
+    <attribute userLabel="Imputed number slaves disembarked at first port" importName="sla32imp" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="sla32imp" desc="" id="262915">
     </attribute>
-    <attribute userLabel="Imputed number of slaves at second port arrival" importName="sla36imp" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="sla36imp" desc="" id="262916">
+    <attribute userLabel="Imputed number of slaves at second port arrival" importName="sla36imp" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="sla36imp" desc="" id="262916">
     </attribute>
-    <attribute userLabel="Imputed number of slaves at third port of arrival" importName="sla39imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="sla39imp" desc="" id="262920">
+    <attribute userLabel="Imputed number of slaves at third port of arrival" importName="sla39imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="sla39imp" desc="" id="262920">
     </attribute>
-    <attribute userLabel="Total slaves arrived first port of disembarkation" importName="slaarriv" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="slaarriv" desc="Total slaves arrived first port of disembarkation" id="262798">
+    <attribute userLabel="Total slaves arrived first port of disembarkation" importName="slaarriv" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="slaarriv" desc="Total slaves arrived first port of disembarkation" id="262798">
     </attribute>
-    <attribute userLabel="-" importName="sladafri" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladafri" desc="" id="262884">
+    <attribute  importName="sladafri" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladafri" desc="" id="262884">
     </attribute>
-    <attribute userLabel="-" importName="sladamer" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladamer" desc="" id="262832">
+    <attribute  importName="sladamer" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladamer" desc="" id="262832">
     </attribute>
-    <attribute userLabel="-" importName="sladied1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladied1" desc="Crew died before first port of purchase" id="262888">
+    <attribute  importName="sladied1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladied1" desc="Crew died before first port of purchase" id="262888">
     </attribute>
-    <attribute userLabel="-" importName="sladied2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladied2" desc="Crew died between first slave purchase and departure from last port of purchase" id="262887">
+    <attribute  importName="sladied2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladied2" desc="Crew died between first slave purchase and departure from last port of purchase" id="262887">
     </attribute>
-    <attribute userLabel="-" importName="sladied3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladied3" desc="Crew died between first slave purchase and departure from last port of purchase" id="262889">
+    <attribute  importName="sladied3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladied3" desc="Crew died between first slave purchase and departure from last port of purchase" id="262889">
     </attribute>
-    <attribute userLabel="-" importName="sladied4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladied4" desc="Crew died between first disembarkation of slaves and departure from last port of disembarkation" id="262886">
+    <attribute  importName="sladied4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladied4" desc="Crew died between first disembarkation of slaves and departure from last port of disembarkation" id="262886">
     </attribute>
-    <attribute userLabel="-" importName="sladied5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladied5" desc="Crew died between departure from last port of disembarkation and end of voyage" id="262885">
+    <attribute  importName="sladied5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladied5" desc="Crew died between departure from last port of disembarkation and end of voyage" id="262885">
     </attribute>
-    <attribute userLabel="-" importName="sladied6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="sladied6" desc="" id="262890">
+    <attribute  importName="sladied6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="sladied6" desc="" id="262890">
     </attribute>
-    <attribute userLabel="Slaves died - last port purchase to first port sale" importName="sladvoy" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="sladvoy" desc="Slaves died - last port purchase to first port sale" id="262797">
+    <attribute userLabel="Slaves died - last port purchase to first port sale" importName="sladvoy" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="sladvoy" desc="Slaves died - last port purchase to first port sale" id="262797">
     </attribute>
-    <attribute userLabel="Imputed number of slaves disembarked" importName="slamimp" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="true" name="slamimp" desc="" id="262941">
+    <attribute userLabel="Imputed number of slaves disembarked" importName="slamimp" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="slamimp" desc="" id="262941">
     </attribute>
-    <attribute userLabel="Slaves disembarked at first port disembarkation" importName="slas32" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="slas32" desc="Slaves disembarked at first port disembarkation" id="262800">
+    <attribute userLabel="Slaves disembarked at first port disembarkation" importName="slas32" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="slas32" desc="Slaves disembarked at first port disembarkation" id="262800">
     </attribute>
-    <attribute userLabel="Slaves disembarked second port" importName="slas36" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="slas36" desc="Slaves disembarked second port" id="262802">
+    <attribute userLabel="Slaves disembarked second port" importName="slas36" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="slas36" desc="Slaves disembarked second port" id="262802">
     </attribute>
-    <attribute userLabel="Slaves disembarked third port disembarkation" importName="slas39" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="slas39" desc="Slaves disembarked third port disembarkation" id="262804">
+    <attribute userLabel="Slaves disembarked third port disembarkation" importName="slas39" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="slas39" desc="Slaves disembarked third port disembarkation" id="262804">
     </attribute>
-    <attribute userLabel="-" importName="slavema1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="slavema1" desc="" id="262930">
+    <attribute  importName="slavema1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="slavema1" desc="" id="262930">
     </attribute>
-    <attribute userLabel="-" importName="slavema3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="slavema3" desc="" id="262937">
+    <attribute  importName="slavema3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="slavema3" desc="" id="262937">
     </attribute>
-    <attribute userLabel="-" importName="slavemx1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="slavemx1" desc="" id="262929">
+    <attribute  importName="slavemx1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="slavemx1" desc="" id="262929">
     </attribute>
-    <attribute userLabel="-" importName="slavemx3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="slavemx3" desc="" id="262936">
+    <attribute  importName="slavemx3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="slavemx3" desc="" id="262936">
     </attribute>
-    <attribute userLabel="-" importName="slavemx7" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="slavemx7" desc="" id="263035">
+    <attribute  importName="slavemx7" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="slavemx7" desc="" id="263035">
     </attribute>
-    <attribute userLabel="-" importName="slavpday" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="slavpday" desc="" id="262957">
+    <attribute  importName="slavpday" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="slavpday" desc="" id="262957">
     </attribute>
-    <attribute userLabel="-" importName="slavpvoy" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="slavpvoy" desc="" id="262959">
+    <attribute  importName="slavpvoy" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="slavpvoy" desc="" id="262959">
     </attribute>
-    <attribute userLabel="Imputed number of slaves embarked" importName="slaximp" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="true" name="slaximp" desc="" id="262940">
+    <attribute userLabel="Imputed number of slaves embarked" importName="slaximp" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="slaximp" desc="" id="262940">
     </attribute>
-    <attribute userLabel="-" importName="slinten2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="slinten2" desc="" id="262839">
+    <attribute  importName="slinten2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="slinten2" desc="" id="262839">
     </attribute>
-    <attribute userLabel="Slaves intended from first port of purchase" importName="slintend" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="slintend" desc="Slaves intended from first port of purchase" id="262826">
+    <attribute userLabel="Slaves intended from first port of purchase" importName="slintend" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="slintend" desc="Slaves intended from first port of purchase" id="262826">
     </attribute>
-    <attribute userLabel="-" importName="slxp1000" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="slxp1000" desc="" id="262960">
+    <attribute  importName="slxp1000" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="slxp1000" desc="" id="262960">
     </attribute>
-    <attribute userLabel="First source of information" importName="sourcea" importType="1" type="2" typeDisplayName="Text" length="60" category="0" visible="true" name="sourcea" desc="First source of information" id="262808">
+    <attribute userLabel="First source of information" importName="sourcea" importType="1" attrType="String" typeDisplayName="Text" length="60" category="0"  name="sourcea" desc="First source of information" id="262808">
     </attribute>
-    <attribute userLabel="Second source of information" importName="sourceb" importType="1" type="2" typeDisplayName="Text" length="50" category="0" visible="true" name="sourceb" desc="Second source of information" id="262809">
+    <attribute userLabel="Second source of information" importName="sourceb" importType="1" attrType="String" typeDisplayName="Text" length="50" category="0"  name="sourceb" desc="Second source of information" id="262809">
     </attribute>
-    <attribute userLabel="Third source of information" importName="sourcec" importType="1" type="2" typeDisplayName="Text" length="50" category="0" visible="true" name="sourcec" desc="Third source of information" id="262810">
+    <attribute userLabel="Third source of information" importName="sourcec" importType="1" attrType="String" typeDisplayName="Text" length="50" category="0"  name="sourcec" desc="Third source of information" id="262810">
     </attribute>
-    <attribute userLabel="Fourth source of information" importName="sourced" importType="1" type="2" typeDisplayName="Text" length="50" category="0" visible="true" name="sourced" desc="Fourth source of information" id="262811">
+    <attribute userLabel="Fourth source of information" importName="sourced" importType="1" attrType="String" typeDisplayName="Text" length="50" category="0"  name="sourced" desc="Fourth source of information" id="262811">
     </attribute>
-    <attribute userLabel="Fifth source of information" importName="sourcee" importType="1" type="2" typeDisplayName="Text" length="50" category="0" visible="true" name="sourcee" desc="Fifth source of information" id="262812">
+    <attribute userLabel="Fifth source of information" importName="sourcee" importType="1" attrType="String" typeDisplayName="Text" length="50" category="0"  name="sourcee" desc="Fifth source of information" id="262812">
     </attribute>
-    <attribute userLabel="Sixth source of information" importName="sourcef" importType="1" type="2" typeDisplayName="Text" length="50" category="0" visible="true" name="sourcef" desc="Sixth source of information" id="262813">
+    <attribute userLabel="Sixth source of information" importName="sourcef" importType="1" attrType="String" typeDisplayName="Text" length="50" category="0"  name="sourcef" desc="Sixth source of information" id="262813">
     </attribute>
-    <attribute userLabel="Seventh source of information" importName="sourceg" importType="1" type="2" typeDisplayName="Text" length="50" category="1" visible="true" name="sourceg" desc="Seventh source of information" id="262814">
+    <attribute userLabel="Seventh source of information" importName="sourceg" importType="1" attrType="String" typeDisplayName="Text" length="50" category="1"  name="sourceg" desc="Seventh source of information" id="262814">
     </attribute>
-    <attribute userLabel="Eighth source of information" importName="sourceh" importType="1" type="2" typeDisplayName="Text" length="50" category="1" visible="true" name="sourceh" desc="Eighth source of information" id="262815">
+    <attribute userLabel="Eighth source of information" importName="sourceh" importType="1" attrType="String" typeDisplayName="Text" length="50" category="1"  name="sourceh" desc="Eighth source of information" id="262815">
     </attribute>
-    <attribute userLabel="Ninth source of information" importName="sourcei" importType="1" type="2" typeDisplayName="Text" length="50" category="1" visible="true" name="sourcei" desc="Ninth source of information" id="262816">
+    <attribute userLabel="Ninth source of information" importName="sourcei" importType="1" attrType="String" typeDisplayName="Text" length="50" category="1"  name="sourcei" desc="Ninth source of information" id="262816">
     </attribute>
-    <attribute userLabel="Tenth source of information" importName="sourcej" importType="1" type="2" typeDisplayName="Text" length="50" category="1" visible="true" name="sourcej" desc="Tenth source of information" id="262817">
+    <attribute userLabel="Tenth source of information" importName="sourcej" importType="1" attrType="String" typeDisplayName="Text" length="50" category="1"  name="sourcej" desc="Tenth source of information" id="262817">
     </attribute>
-    <attribute userLabel="Eleventh source of information" importName="sourcek" importType="1" type="2" typeDisplayName="Text" length="50" category="1" visible="true" name="sourcek" desc="Eleventh source of information" id="262818">
+    <attribute userLabel="Eleventh source of information" importName="sourcek" importType="1" attrType="String" typeDisplayName="Text" length="50" category="1"  name="sourcek" desc="Eleventh source of information" id="262818">
     </attribute>
-    <attribute userLabel="Twelfth source of information" importName="sourcel" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="sourcel" desc="Twelfth source of information" id="262819">
+    <attribute userLabel="Twelfth source of information" importName="sourcel" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="sourcel" desc="Twelfth source of information" id="262819">
     </attribute>
-    <attribute userLabel="Thirteenth source of information" importName="sourcem" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="sourcem" desc="" id="262820">
+    <attribute userLabel="Thirteenth source of information" importName="sourcem" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="sourcem" desc="" id="262820">
     </attribute>
-    <attribute userLabel="Fourteenth source of information" importName="sourcen" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="sourcen" desc="Fourteenth source of information" id="262821">
+    <attribute userLabel="Fourteenth source of information" importName="sourcen" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="sourcen" desc="Fourteenth source of information" id="262821">
     </attribute>
-    <attribute userLabel="Fifteenth source of information" importName="sourceo" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="sourceo" desc="Fifteenth source of information" id="262822">
+    <attribute userLabel="Fifteenth source of information" importName="sourceo" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="sourceo" desc="Fifteenth source of information" id="262822">
     </attribute>
-    <attribute userLabel="Sixteenth source of information" importName="sourcep" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="sourcep" desc="Sixteenth source of information" id="262823">
+    <attribute userLabel="Sixteenth source of information" importName="sourcep" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="sourcep" desc="Sixteenth source of information" id="262823">
     </attribute>
-    <attribute userLabel="Seventeenth source of information" importName="sourceq" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="sourceq" desc="Seventeenth source of information" id="262824">
+    <attribute userLabel="Seventeenth source of information" importName="sourceq" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="sourceq" desc="Seventeenth source of information" id="262824">
     </attribute>
-    <attribute userLabel="Eighteenth source of information" importName="sourcer" importType="1" type="2" typeDisplayName="Text" length="40" category="1" visible="true" name="sourcer" desc="Eighteenth source of information" id="262825">
+    <attribute userLabel="Eighteenth source of information" importName="sourcer" importType="1" attrType="String" typeDisplayName="Text" length="40" category="1"  name="sourcer" desc="Eighteenth source of information" id="262825">
     </attribute>
-    <attribute userLabel="-" importName="sourcex" importType="1" type="2" typeDisplayName="Text" length="254" category="1" visible="false" name="sourcex" desc="" id="262946">
+    <attribute  importName="sourcex" importType="1" attrType="String" typeDisplayName="Text" length="254" category="1"  name="sourcex" desc="" id="262946">
     </attribute>
-    <attribute userLabel="-" importName="spanishamer" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="spanishamer" desc="" id="263036">
+    <attribute  importName="spanishamer" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="spanishamer" desc="" id="263036">
     </attribute>
-    <attribute userLabel="-" importName="status" importType="0" type="4" typeDisplayName="List Status" length="-1" dictionary="Status" category="0" visible="false" name="status" desc="" id="263089">
+    <attribute  importName="status" importType="0" attrType="Dictionary" typeDisplayName="List Status"  dictionary="Status" category="0"  name="status" desc="" id="263089">
     </attribute>
-    <attribute userLabel="-" importName="temp" importType="0" type="4" typeDisplayName="List Temp" length="-1" dictionary="Temp" category="0" visible="false" name="temp" desc="" id="263112">
+    <attribute  importName="temp" importType="0" attrType="Dictionary" typeDisplayName="List Temp"  dictionary="Temp" category="0"  name="temp" desc="" id="263112">
     </attribute>
-    <attribute userLabel="-" importName="termmth" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="termmth" desc="" id="262980">
+    <attribute  importName="termmth" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="termmth" desc="" id="262980">
     </attribute>
-    <attribute userLabel="-" importName="timcoast" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="timcoast" desc="" id="262956">
+    <attribute  importName="timcoast" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="timcoast" desc="" id="262956">
     </attribute>
-    <attribute userLabel="Time spent acquiring slaves" importName="timslave" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="true" name="timslave" desc="" id="262962">
+    <attribute userLabel="Time spent acquiring slaves" importName="timslave" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="timslave" desc="" id="262962">
     </attribute>
-    <attribute userLabel="-" importName="toncateg" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="toncateg" desc="" id="262963">
+    <attribute  importName="toncateg" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="toncateg" desc="" id="262963">
     </attribute>
-    <attribute userLabel="Standardized tonnage" importName="tonmod" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="tonmod" desc="" id="262912">
+    <attribute userLabel="Standardized tonnage" importName="tonmod" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="tonmod" desc="" id="262912">
     </attribute>
-    <attribute userLabel="Tonnage of vessel" importName="tonnage" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="tonnage" desc="Tonnage of vessel" id="262827">
+    <attribute userLabel="Tonnage of vessel" importName="tonnage" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="tonnage" desc="Tonnage of vessel" id="262827">
     </attribute>
-    <attribute userLabel="-" importName="tontype" importType="0" type="4" typeDisplayName="List TonesType" length="-1" dictionary="TonesType" category="0" visible="false" name="tontype" desc="" id="263055">
+    <attribute  importName="tontype" importType="0" attrType="Dictionary" typeDisplayName="List TonesType"  dictionary="TonesType" category="0"  name="tontype" desc="" id="263055">
     </attribute>
-    <attribute userLabel="Total slaves at departure from last slaving port" importName="tslavesd" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="true" name="tslavesd" desc="Total slaves at departure from last slaving port" id="262796">
+    <attribute userLabel="Total slaves at departure from last slaving port" importName="tslavesd" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="tslavesd" desc="Total slaves at departure from last slaving port" id="262796">
     </attribute>
-    <attribute userLabel="-" importName="tslavesp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="tslavesp" desc="" id="262795">
+    <attribute  importName="tslavesp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="tslavesp" desc="" id="262795">
     </attribute>
-    <attribute userLabel="-" importName="tslmtimp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="tslmtimp" desc="" id="262914">
+    <attribute  importName="tslmtimp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="tslmtimp" desc="" id="262914">
     </attribute>
-    <attribute userLabel="-" importName="uppguine" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="uppguine" desc="" id="262954">
+    <attribute  importName="uppguine" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="uppguine" desc="" id="262954">
     </attribute>
-    <attribute userLabel="-" importName="us" importType="0" type="4" typeDisplayName="List Us" length="-1" dictionary="Us" category="0" visible="false" name="us" desc="" id="263110">
+    <attribute  importName="us" importType="0" attrType="Dictionary" typeDisplayName="List Us"  dictionary="Us" category="0"  name="us" desc="" id="263110">
     </attribute>
-    <attribute userLabel="-" importName="voy1imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="voy1imp" desc="" id="262943">
+    <attribute  importName="voy1imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="voy1imp" desc="" id="262943">
     </attribute>
-    <attribute userLabel="Imputed length of middle passage" importName="voy2imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="voy2imp" desc="" id="262942">
+    <attribute userLabel="Imputed length of middle passage" importName="voy2imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="voy2imp" desc="" id="262942">
     </attribute>
-    <attribute userLabel="-" importName="voy3imp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="voy3imp" desc="" id="263030">
+    <attribute  importName="voy3imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="voy3imp" desc="" id="263030">
     </attribute>
-    <attribute userLabel="-" importName="voyage" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="voyage" desc="" id="262841">
+    <attribute  importName="voyage" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="voyage" desc="" id="262841">
     </attribute>
-    <attribute userLabel="Unique identity number" importName="voyageid" importType="0" type="1" typeDisplayName="Integer" length="-1" category="0" visible="true" name="voyageId" desc="Unique identity number" id="262785">
+    <attribute userLabel="Unique identity number" importName="voyageid" importType="0" type="1" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="voyageId" desc="Unique identity number" id="262785">
     </attribute>
-    <attribute userLabel="-" importName="voyagimp" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="voyagimp" desc="" id="262955">
+    <attribute  importName="voyagimp" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="voyagimp" desc="" id="262955">
     </attribute>
-    <attribute userLabel="Imputed total of slaves died on voyage" importName="vymrtimp" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="vymrtimp" desc="" id="262913">
+    <attribute userLabel="Imputed total of slaves died on voyage" importName="vymrtimp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="vymrtimp" desc="" id="262913">
     </attribute>
-    <attribute userLabel="Slaves died on voyage/Slaves embarked" importName="vymrtrat" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="true" name="vymrtrat" desc="" id="262939">
+    <attribute userLabel="Slaves died on voyage/Slaves embarked" importName="vymrtrat" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="vymrtrat" desc="" id="262939">
     </attribute>
-    <attribute userLabel="-" importName="women1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="1" visible="false" name="women1" desc="" id="262854">
+    <attribute  importName="women1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="women1" desc="" id="262854">
     </attribute>
-    <attribute userLabel="-" importName="women2" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="women2" desc="" id="262858">
+    <attribute  importName="women2" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="women2" desc="" id="262858">
     </attribute>
-    <attribute userLabel="-" importName="women3" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="women3" desc="" id="262864">
+    <attribute  importName="women3" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="women3" desc="" id="262864">
     </attribute>
-    <attribute userLabel="-" importName="women4" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="women4" desc="" id="262870">
+    <attribute  importName="women4" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="women4" desc="" id="262870">
     </attribute>
-    <attribute userLabel="-" importName="women5" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="women5" desc="" id="263001">
+    <attribute  importName="women5" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="women5" desc="" id="263001">
     </attribute>
-    <attribute userLabel="-" importName="women6" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="women6" desc="" id="262877">
+    <attribute  importName="women6" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="women6" desc="" id="262877">
     </attribute>
-    <attribute userLabel="-" importName="women7" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="women7" desc="" id="263025">
+    <attribute  importName="women7" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="women7" desc="" id="263025">
     </attribute>
-    <attribute userLabel="-" importName="women8" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="women8" desc="" id="262949">
+    <attribute  importName="women8" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="women8" desc="" id="262949">
     </attribute>
-    <attribute userLabel="-" importName="womrat1" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="womrat1" desc="" id="262965">
+    <attribute  importName="womrat1" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="womrat1" desc="" id="262965">
     </attribute>
-    <attribute userLabel="-" importName="womrat3" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="womrat3" desc="" id="262966">
+    <attribute  importName="womrat3" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="womrat3" desc="" id="262966">
     </attribute>
-    <attribute userLabel="Number of Slave women" importName="womrat7" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="1" visible="true" name="womrat7" desc="" id="262967">
+    <attribute userLabel="Number of Slave women" importName="womrat7" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="1"  name="womrat7" desc="" id="262967">
     </attribute>
-    <attribute userLabel="Voyage link categ for calculating impute" importName="xmimpflag" importType="0" type="4" typeDisplayName="List XmimpFlag" length="-1" dictionary="XmimpFlag" category="1" visible="true" name="xmimpflag" desc="" id="263103">
+    <attribute userLabel="Voyage link categ for calculating impute" importName="xmimpflag" importType="0" attrType="Dictionary" typeDisplayName="List XmimpFlag"  dictionary="XmimpFlag" category="1"  name="xmimpflag" desc="" id="263103">
     </attribute>
-    <attribute userLabel="-" importName="year100" importType="0" type="4" typeDisplayName="List Year100" length="-1" dictionary="Year100" category="0" visible="false" name="year100" desc="" id="263067">
+    <attribute  importName="year100" importType="0" attrType="Dictionary" typeDisplayName="List Year100"  dictionary="Year100" category="0"  name="year100" desc="" id="263067">
     </attribute>
-    <attribute userLabel="-" importName="year25" importType="0" type="4" typeDisplayName="List Year25" length="-1" dictionary="Year25" category="0" visible="false" name="year25" desc="" id="263069">
+    <attribute  importName="year25" importType="0" attrType="Dictionary" typeDisplayName="List Year25"  dictionary="Year25" category="0"  name="year25" desc="" id="263069">
     </attribute>
-    <attribute userLabel="-" importName="year5" importType="0" type="4" typeDisplayName="List Year5" length="-1" dictionary="Year5" category="0" visible="false" name="year5" desc="" id="263068">
+    <attribute  importName="year5" importType="0" attrType="Dictionary" typeDisplayName="List Year5"  dictionary="Year5" category="0"  name="year5" desc="" id="263068">
     </attribute>
-    <attribute userLabel="-" importName="yearaf" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="yearaf" desc="" id="262909">
+    <attribute  importName="yearaf" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="yearaf" desc="" id="262909">
     </attribute>
-    <attribute userLabel="Imputed Year of arrival port of disembarkation" importName="yearam" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="true" name="yearam" desc="Year of arrival at port of disembarkation (imputed)" id="262911">
+    <attribute userLabel="Imputed Year of arrival port of disembarkation" importName="yearam" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="yearam" desc="Year of arrival at port of disembarkation (imputed)" id="262911">
     </attribute>
-    <attribute userLabel="-" importName="yearches" importType="0" type="4" typeDisplayName="List Yearches" length="-1" dictionary="Yearches" category="0" visible="false" name="yearches" desc="" id="263097">
+    <attribute  importName="yearches" importType="0" attrType="Dictionary" typeDisplayName="List Yearches"  dictionary="Yearches" category="0"  name="yearches" desc="" id="263097">
     </attribute>
-    <attribute userLabel="-" importName="yeardep" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="yeardep" desc="" id="262910">
+    <attribute  importName="yeardep" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="yeardep" desc="" id="262910">
     </attribute>
-    <attribute userLabel="-" importName="yrreg" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="yrreg" desc="" id="262845">
+    <attribute  importName="yrreg" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="yrreg" desc="" id="262845">
     </attribute>
+    
+    <attribute type="1" attrType="Numeric" typeDisplayName="Float"  category="0"  name="s_slaximp" userLabel="Adjusted imputed number of slaves embarked">
+    </attribute>
+    <attribute type="1" attrType="Numeric" typeDisplayName="Float"  category="0"  name="s_slamimp" userLabel="Adjusted imputed number of slaves disembarked">
+    </attribute>
+    <attribute type="1" attrType="Numeric" typeDisplayName="Long"  category="0"  name="iid" userLabel="Voyage internal id">
+    </attribute>
+    
   </objectAttributes>
   <objectAttributes objectType="Slave">
-    <attribute importName="age" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="age" id="262727">
+    <attribute importName="age" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="age" id="262727">
     </attribute>
-    <attribute importName="ageinf" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="ageinf" id="262730">
+    <attribute importName="ageinf" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="ageinf" id="262730">
     </attribute>
-    <attribute importName="bodypt1" importType="0" type="4" typeDisplayName="List BodyPt" length="-1" dictionary="BodyPt" category="0" visible="false" name="bodypt1" id="262736">
+    <attribute importName="bodypt1" importType="0" attrType="Dictionary" typeDisplayName="List BodyPt"  dictionary="BodyPt" category="0"  name="bodypt1" id="262736">
     </attribute>
-    <attribute importName="bodypt2" importType="0" type="4" typeDisplayName="List BodyPt" length="-1" dictionary="BodyPt" category="0" visible="false" name="bodypt2" id="262745">
+    <attribute importName="bodypt2" importType="0" attrType="Dictionary" typeDisplayName="List BodyPt"  dictionary="BodyPt" category="0"  name="bodypt2" id="262745">
     </attribute>
-    <attribute importName="bodypt3" importType="0" type="4" typeDisplayName="List BodyPt" length="-1" dictionary="BodyPt" category="0" visible="false" name="bodypt3" id="262752">
+    <attribute importName="bodypt3" importType="0" attrType="Dictionary" typeDisplayName="List BodyPt"  dictionary="BodyPt" category="0"  name="bodypt3" id="262752">
     </attribute>
-    <attribute importName="bodypt4" importType="0" type="4" typeDisplayName="List BodyPt" length="-1" dictionary="BodyPt" category="0" visible="false" name="bodypt4" id="262759">
+    <attribute importName="bodypt4" importType="0" attrType="Dictionary" typeDisplayName="List BodyPt"  dictionary="BodyPt" category="0"  name="bodypt4" id="262759">
     </attribute>
-    <attribute importName="bodypt5" importType="0" type="4" typeDisplayName="List BodyPt" length="-1" dictionary="BodyPt" category="0" visible="false" name="bodypt5" id="262760">
+    <attribute importName="bodypt5" importType="0" attrType="Dictionary" typeDisplayName="List BodyPt"  dictionary="BodyPt" category="0"  name="bodypt5" id="262760">
     </attribute>
-    <attribute importName="bodypt6" importType="0" type="4" typeDisplayName="List BodyPt" length="-1" dictionary="BodyPt" category="0" visible="false" name="bodypt6" id="262761">
+    <attribute importName="bodypt6" importType="0" attrType="Dictionary" typeDisplayName="List BodyPt"  dictionary="BodyPt" category="0"  name="bodypt6" id="262761">
     </attribute>
-    <attribute importName="country" importType="0" type="4" typeDisplayName="List Country" length="-1" dictionary="Country" category="0" visible="false" name="country" id="262731">
+    <attribute importName="country" importType="0" attrType="Dictionary" typeDisplayName="List Country"  dictionary="Country" category="0"  name="country" id="262731">
     </attribute>
-    <attribute importName="datarr34" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="datarr34" id="262783">
+    <attribute importName="datarr34" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="datarr34" id="262783">
     </attribute>
-    <attribute importName="feet" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="feet" id="262728">
+    <attribute importName="feet" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="feet" id="262728">
     </attribute>
-    <attribute importName="inch" importType="0" type="5" typeDisplayName="Decimal" length="-1" category="0" visible="false" name="inch" id="262729">
+    <attribute importName="inch" importType="0" type="5" attrType="Numeric" typeDisplayName="Decimal"  category="0"  name="inch" id="262729">
     </attribute>
-    <attribute importName="majbuypt" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="majbuypt" id="262782">
+    <attribute importName="majbuypt" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="majbuypt" id="262782">
     </attribute>
-    <attribute importName="majselpt" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="majselpt" id="262780">
+    <attribute importName="majselpt" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="majselpt" id="262780">
     </attribute>
-    <attribute importName="markdeg2" importType="0" type="4" typeDisplayName="List MarkDegree" length="-1" dictionary="MarkDegree" category="0" visible="false" name="markdeg2" id="262751">
+    <attribute importName="markdeg2" importType="0" attrType="Dictionary" typeDisplayName="List MarkDegree"  dictionary="MarkDegree" category="0"  name="markdeg2" id="262751">
     </attribute>
-    <attribute importName="markdeg3" importType="0" type="4" typeDisplayName="List MarkDegree" length="-1" dictionary="MarkDegree" category="0" visible="false" name="markdeg3" id="262758">
+    <attribute importName="markdeg3" importType="0" attrType="Dictionary" typeDisplayName="List MarkDegree"  dictionary="MarkDegree" category="0"  name="markdeg3" id="262758">
     </attribute>
-    <attribute importName="markdeg4" importType="0" type="4" typeDisplayName="List MarkDegree" length="-1" dictionary="MarkDegree" category="0" visible="false" name="markdeg4" id="262779">
+    <attribute importName="markdeg4" importType="0" attrType="Dictionary" typeDisplayName="List MarkDegree"  dictionary="MarkDegree" category="0"  name="markdeg4" id="262779">
     </attribute>
-    <attribute importName="markdeg5" importType="0" type="4" typeDisplayName="List MarkDegree" length="-1" dictionary="MarkDegree" category="0" visible="false" name="markdeg5" id="262778">
+    <attribute importName="markdeg5" importType="0" attrType="Dictionary" typeDisplayName="List MarkDegree"  dictionary="MarkDegree" category="0"  name="markdeg5" id="262778">
     </attribute>
-    <attribute importName="markdeg6" importType="0" type="4" typeDisplayName="List MarkDegree" length="-1" dictionary="MarkDegree" category="0" visible="false" name="markdeg6" id="262777">
+    <attribute importName="markdeg6" importType="0" attrType="Dictionary" typeDisplayName="List MarkDegree"  dictionary="MarkDegree" category="0"  name="markdeg6" id="262777">
     </attribute>
-    <attribute importName="markdegr" importType="0" type="4" typeDisplayName="List MarkDegree" length="-1" dictionary="MarkDegree" category="0" visible="false" name="markdegr" id="262742">
+    <attribute importName="markdegr" importType="0" attrType="Dictionary" typeDisplayName="List MarkDegree"  dictionary="MarkDegree" category="0"  name="markdegr" id="262742">
     </attribute>
-    <attribute importName="marknum2" importType="0" type="4" typeDisplayName="List MarkNumber" length="-1" dictionary="MarkNumber" category="0" visible="false" name="marknum2" id="262750">
+    <attribute importName="marknum2" importType="0" attrType="Dictionary" typeDisplayName="List MarkNumber"  dictionary="MarkNumber" category="0"  name="marknum2" id="262750">
     </attribute>
-    <attribute importName="marknum3" importType="0" type="4" typeDisplayName="List MarkNumber" length="-1" dictionary="MarkNumber" category="0" visible="false" name="marknum3" id="262757">
+    <attribute importName="marknum3" importType="0" attrType="Dictionary" typeDisplayName="List MarkNumber"  dictionary="MarkNumber" category="0"  name="marknum3" id="262757">
     </attribute>
-    <attribute importName="marknum4" importType="0" type="4" typeDisplayName="List MarkNumber" length="-1" dictionary="MarkNumber" category="0" visible="false" name="marknum4" id="262774">
+    <attribute importName="marknum4" importType="0" attrType="Dictionary" typeDisplayName="List MarkNumber"  dictionary="MarkNumber" category="0"  name="marknum4" id="262774">
     </attribute>
-    <attribute importName="marknum5" importType="0" type="4" typeDisplayName="List MarkNumber" length="-1" dictionary="MarkNumber" category="0" visible="false" name="marknum5" id="262775">
+    <attribute importName="marknum5" importType="0" attrType="Dictionary" typeDisplayName="List MarkNumber"  dictionary="MarkNumber" category="0"  name="marknum5" id="262775">
     </attribute>
-    <attribute importName="marknum6" importType="0" type="4" typeDisplayName="List MarkNumber" length="-1" dictionary="MarkNumber" category="0" visible="false" name="marknum6" id="262776">
+    <attribute importName="marknum6" importType="0" attrType="Dictionary" typeDisplayName="List MarkNumber"  dictionary="MarkNumber" category="0"  name="marknum6" id="262776">
     </attribute>
-    <attribute importName="marknumb" importType="0" type="4" typeDisplayName="List MarkNumber" length="-1" dictionary="MarkNumber" category="0" visible="false" name="marknumb" id="262741">
+    <attribute importName="marknumb" importType="0" attrType="Dictionary" typeDisplayName="List MarkNumber"  dictionary="MarkNumber" category="0"  name="marknumb" id="262741">
     </attribute>
-    <attribute importName="marksiz2" importType="0" type="4" typeDisplayName="List MarkSize" length="-1" dictionary="MarkSize" category="0" visible="false" name="marksiz2" id="262748">
+    <attribute importName="marksiz2" importType="0" attrType="Dictionary" typeDisplayName="List MarkSize"  dictionary="MarkSize" category="0"  name="marksiz2" id="262748">
     </attribute>
-    <attribute importName="marksiz3" importType="0" type="4" typeDisplayName="List MarkSize" length="-1" dictionary="MarkSize" category="0" visible="false" name="marksiz3" id="262755">
+    <attribute importName="marksiz3" importType="0" attrType="Dictionary" typeDisplayName="List MarkSize"  dictionary="MarkSize" category="0"  name="marksiz3" id="262755">
     </attribute>
-    <attribute importName="marksiz4" importType="0" type="4" typeDisplayName="List MarkSize" length="-1" dictionary="MarkSize" category="0" visible="false" name="marksiz4" id="262768">
+    <attribute importName="marksiz4" importType="0" attrType="Dictionary" typeDisplayName="List MarkSize"  dictionary="MarkSize" category="0"  name="marksiz4" id="262768">
     </attribute>
-    <attribute importName="marksiz5" importType="0" type="4" typeDisplayName="List MarkSize" length="-1" dictionary="MarkSize" category="0" visible="false" name="marksiz5" id="262769">
+    <attribute importName="marksiz5" importType="0" attrType="Dictionary" typeDisplayName="List MarkSize"  dictionary="MarkSize" category="0"  name="marksiz5" id="262769">
     </attribute>
-    <attribute importName="marksiz6" importType="0" type="4" typeDisplayName="List MarkSize" length="-1" dictionary="MarkSize" category="0" visible="false" name="marksiz6" id="262770">
+    <attribute importName="marksiz6" importType="0" attrType="Dictionary" typeDisplayName="List MarkSize"  dictionary="MarkSize" category="0"  name="marksiz6" id="262770">
     </attribute>
-    <attribute importName="marksize" importType="0" type="4" typeDisplayName="List MarkSize" length="-1" dictionary="MarkSize" category="0" visible="false" name="marksize" id="262739">
+    <attribute importName="marksize" importType="0" attrType="Dictionary" typeDisplayName="List MarkSize"  dictionary="MarkSize" category="0"  name="marksize" id="262739">
     </attribute>
-    <attribute importName="markspec" importType="0" type="4" typeDisplayName="List SpecialMark" length="-1" dictionary="SpecialMark" category="0" visible="false" name="markspec" id="262744">
+    <attribute importName="markspec" importType="0" attrType="Dictionary" typeDisplayName="List SpecialMark"  dictionary="SpecialMark" category="0"  name="markspec" id="262744">
     </attribute>
-    <attribute importName="marktyp2" importType="0" type="4" typeDisplayName="List MarkType" length="-1" dictionary="MarkType" category="0" visible="false" name="marktyp2" id="262749">
+    <attribute importName="marktyp2" importType="0" attrType="Dictionary" typeDisplayName="List MarkType"  dictionary="MarkType" category="0"  name="marktyp2" id="262749">
     </attribute>
-    <attribute importName="marktyp3" importType="0" type="4" typeDisplayName="List MarkType" length="-1" dictionary="MarkType" category="0" visible="false" name="marktyp3" id="262756">
+    <attribute importName="marktyp3" importType="0" attrType="Dictionary" typeDisplayName="List MarkType"  dictionary="MarkType" category="0"  name="marktyp3" id="262756">
     </attribute>
-    <attribute importName="marktyp4" importType="0" type="4" typeDisplayName="List MarkType" length="-1" dictionary="MarkType" category="0" visible="false" name="marktyp4" id="262773">
+    <attribute importName="marktyp4" importType="0" attrType="Dictionary" typeDisplayName="List MarkType"  dictionary="MarkType" category="0"  name="marktyp4" id="262773">
     </attribute>
-    <attribute importName="marktyp5" importType="0" type="4" typeDisplayName="List MarkType" length="-1" dictionary="MarkType" category="0" visible="false" name="marktyp5" id="262772">
+    <attribute importName="marktyp5" importType="0" attrType="Dictionary" typeDisplayName="List MarkType"  dictionary="MarkType" category="0"  name="marktyp5" id="262772">
     </attribute>
-    <attribute importName="marktyp6" importType="0" type="4" typeDisplayName="List MarkType" length="-1" dictionary="MarkType" category="0" visible="false" name="marktyp6" id="262771">
+    <attribute importName="marktyp6" importType="0" attrType="Dictionary" typeDisplayName="List MarkType"  dictionary="MarkType" category="0"  name="marktyp6" id="262771">
     </attribute>
-    <attribute importName="marktype" importType="0" type="4" typeDisplayName="List MarkType" length="-1" dictionary="MarkType" category="0" visible="false" name="marktype" id="262740">
+    <attribute importName="marktype" importType="0" attrType="Dictionary" typeDisplayName="List MarkType"  dictionary="MarkType" category="0"  name="marktype" id="262740">
     </attribute>
-    <attribute importName="name" importType="1" type="2" typeDisplayName="Text" length="25" category="0" visible="false" name="name" id="262732">
+    <attribute importName="name" importType="1" attrType="String" typeDisplayName="Text" length="25" category="0"  name="name" id="262732">
     </attribute>
-    <attribute importName="nameimp" importType="1" type="2" typeDisplayName="Text" length="25" category="0" visible="false" name="nameimp" id="262734">
+    <attribute importName="nameimp" importType="1" attrType="String" typeDisplayName="Text" length="25" category="0"  name="nameimp" id="262734">
     </attribute>
-    <attribute importName="natimp" importType="0" type="4" typeDisplayName="List Nation" length="-1" dictionary="Nation" category="0" visible="false" name="natimp" id="262735">
+    <attribute importName="natimp" importType="0" attrType="Dictionary" typeDisplayName="List Nation"  dictionary="Nation" category="0"  name="natimp" id="262735">
     </attribute>
-    <attribute importName="othrmark" importType="0" type="4" typeDisplayName="List OtherMark" length="-1" dictionary="OtherMark" category="0" visible="false" name="othrmark" id="262743">
+    <attribute importName="othrmark" importType="0" attrType="Dictionary" typeDisplayName="List OtherMark"  dictionary="OtherMark" category="0"  name="othrmark" id="262743">
     </attribute>
-    <attribute importName="placea1" importType="0" type="4" typeDisplayName="List PlaceA" length="-1" dictionary="PlaceA" category="0" visible="false" name="placea1" id="262737">
+    <attribute importName="placea1" importType="0" attrType="Dictionary" typeDisplayName="List PlaceA"  dictionary="PlaceA" category="0"  name="placea1" id="262737">
     </attribute>
-    <attribute importName="placea2" importType="0" type="4" typeDisplayName="List PlaceA" length="-1" dictionary="PlaceA" category="0" visible="false" name="placea2" id="262746">
+    <attribute importName="placea2" importType="0" attrType="Dictionary" typeDisplayName="List PlaceA"  dictionary="PlaceA" category="0"  name="placea2" id="262746">
     </attribute>
-    <attribute importName="placea3" importType="0" type="4" typeDisplayName="List PlaceA" length="-1" dictionary="PlaceA" category="0" visible="false" name="placea3" id="262753">
+    <attribute importName="placea3" importType="0" attrType="Dictionary" typeDisplayName="List PlaceA"  dictionary="PlaceA" category="0"  name="placea3" id="262753">
     </attribute>
-    <attribute importName="placea4" importType="0" type="4" typeDisplayName="List PlaceA" length="-1" dictionary="PlaceA" category="0" visible="false" name="placea4" id="262762">
+    <attribute importName="placea4" importType="0" attrType="Dictionary" typeDisplayName="List PlaceA"  dictionary="PlaceA" category="0"  name="placea4" id="262762">
     </attribute>
-    <attribute importName="placea5" importType="0" type="4" typeDisplayName="List PlaceA" length="-1" dictionary="PlaceA" category="0" visible="false" name="placea5" id="262763">
+    <attribute importName="placea5" importType="0" attrType="Dictionary" typeDisplayName="List PlaceA"  dictionary="PlaceA" category="0"  name="placea5" id="262763">
     </attribute>
-    <attribute importName="placea6" importType="0" type="4" typeDisplayName="List PlaceA" length="-1" dictionary="PlaceA" category="0" visible="false" name="placea6" id="262764">
+    <attribute importName="placea6" importType="0" attrType="Dictionary" typeDisplayName="List PlaceA"  dictionary="PlaceA" category="0"  name="placea6" id="262764">
     </attribute>
-    <attribute importName="placeb1" importType="0" type="4" typeDisplayName="List PlaceB" length="-1" dictionary="PlaceB" category="0" visible="false" name="placeb1" id="262738">
+    <attribute importName="placeb1" importType="0" attrType="Dictionary" typeDisplayName="List PlaceB"  dictionary="PlaceB" category="0"  name="placeb1" id="262738">
     </attribute>
-    <attribute importName="placeb2" importType="0" type="4" typeDisplayName="List PlaceB" length="-1" dictionary="PlaceB" category="0" visible="false" name="placeb2" id="262747">
+    <attribute importName="placeb2" importType="0" attrType="Dictionary" typeDisplayName="List PlaceB"  dictionary="PlaceB" category="0"  name="placeb2" id="262747">
     </attribute>
-    <attribute importName="placeb3" importType="0" type="4" typeDisplayName="List PlaceB" length="-1" dictionary="PlaceB" category="0" visible="false" name="placeb3" id="262754">
+    <attribute importName="placeb3" importType="0" attrType="Dictionary" typeDisplayName="List PlaceB"  dictionary="PlaceB" category="0"  name="placeb3" id="262754">
     </attribute>
-    <attribute importName="placeb4" importType="0" type="4" typeDisplayName="List PlaceB" length="-1" dictionary="PlaceB" category="0" visible="false" name="placeb4" id="262765">
+    <attribute importName="placeb4" importType="0" attrType="Dictionary" typeDisplayName="List PlaceB"  dictionary="PlaceB" category="0"  name="placeb4" id="262765">
     </attribute>
-    <attribute importName="placeb5" importType="0" type="4" typeDisplayName="List PlaceB" length="-1" dictionary="PlaceB" category="0" visible="false" name="placeb5" id="262766">
+    <attribute importName="placeb5" importType="0" attrType="Dictionary" typeDisplayName="List PlaceB"  dictionary="PlaceB" category="0"  name="placeb5" id="262766">
     </attribute>
-    <attribute importName="placeb6" importType="0" type="4" typeDisplayName="List PlaceB" length="-1" dictionary="PlaceB" category="0" visible="false" name="placeb6" id="262767">
+    <attribute importName="placeb6" importType="0" attrType="Dictionary" typeDisplayName="List PlaceB"  dictionary="PlaceB" category="0"  name="placeb6" id="262767">
     </attribute>
-    <attribute importName="regem1" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="regem1" id="262784">
+    <attribute importName="regem1" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="regem1" id="262784">
     </attribute>
-    <attribute importName="sexage" importType="0" type="4" typeDisplayName="List SexAge" length="-1" dictionary="SexAge" category="0" visible="false" name="sexage" id="262726">
+    <attribute importName="sexage" importType="0" attrType="Dictionary" typeDisplayName="List SexAge"  dictionary="SexAge" category="0"  name="sexage" id="262726">
     </attribute>
-    <attribute importName="slaveid" importType="0" type="1" typeDisplayName="Integer" length="-1" category="0" visible="false" name="slaveId" id="262724">
+    <attribute importName="slaveid" importType="0" type="1" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="slaveId" id="262724">
     </attribute>
-    <attribute importName="source" importType="1" type="2" typeDisplayName="Text" length="8" category="0" visible="false" name="source" id="262781">
+    <attribute importName="source" importType="1" attrType="String" typeDisplayName="Text" length="8" category="0"  name="source" id="262781">
     </attribute>
-    <attribute importName="unclear" importType="0" type="0" typeDisplayName="Integer" length="-1" category="0" visible="false" name="unclear" id="262733">
+    <attribute importName="unclear" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="unclear" id="262733">
     </attribute>
-    <attribute importName="voyageid" importType="0" type="1" typeDisplayName="Integer" length="-1" category="0" visible="false" name="voyageId" id="262725">
+    <attribute importName="voyageid" importType="0" type="1" attrType="Numeric" typeDisplayName="Integer"  category="0"  name="voyageId" id="262725">
     </attribute>
-    
-    <attribute type="1" typeDisplayName="Float" length="-1" category="0" visible="false" name="s_slaximp" id="10" userLabel="Adjusted imputed number of slaves embarked">
-    </attribute>
-    <attribute type="1" typeDisplayName="Float" length="-1" category="0" visible="false" name="s_slamimp" id="11" userLabel="Adjusted imputed number of slaves disembarked">
-    </attribute>
-    
     
   </objectAttributes>
 </attributes>

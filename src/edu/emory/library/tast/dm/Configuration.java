@@ -3,7 +3,11 @@ package edu.emory.library.tast.dm;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -15,6 +19,13 @@ import edu.emory.library.tast.util.query.QueryValue;
  *
  */
 public class Configuration {
+	
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new StringAttribute("id", "Configuration"));
+		attributes.put("creationDate", new NumericAttribute("creationDate", "Configuration"));
+		attributes.put("entries", new NumericAttribute("map_entries", "Configuration"));
+	}
 	
 	/**
 	 * ID of configuration.
@@ -96,7 +107,7 @@ public class Configuration {
 	 */
 	public static Configuration loadConfiguration(Long id) {
 		Conditions c = new Conditions();
-		c.addCondition("id", id, Conditions.OP_EQUALS);
+		c.addCondition(Configuration.getAttribute("id"), id, Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Configuration", c);
 		Object[] ret = qValue.executeQuery();
 		if (ret.length != 0) {
@@ -144,5 +155,9 @@ public class Configuration {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
 	}
 }

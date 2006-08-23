@@ -41,7 +41,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 		Attribute[] attributes = getAttributes();
 		if (attributes.length == 1)
 		{
-			conditions.addCondition(attributes[0].getName(),
+			conditions.addCondition(attributes[0],
 					value, Conditions.OP_LIKE);
 		}
 		else
@@ -49,7 +49,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			Conditions orCond = new Conditions(Conditions.JOIN_OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
-				conditions.addCondition(attributes[i].getName(),
+				conditions.addCondition(attributes[i],
 						value, Conditions.OP_LIKE);
 		}
 		

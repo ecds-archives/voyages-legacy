@@ -112,20 +112,20 @@ public class ClassGenerator {
 
 						int type = -1;
 						String dict = null;
-						if ("String".equals(attrType)) {
-							type = Attribute.TYPE_STRING;
-						} else if ("Integer".equals(attrType)) {
-							type = Attribute.TYPE_INTEGER;
-						} else if ("Long".equals(attrType)) {
-							type = Attribute.TYPE_LONG;
-						} else if ("Float".equals(attrType)) {
-							type = Attribute.TYPE_FLOAT;
-						} else if ("Date".equals(attrType)) {
-							type = Attribute.TYPE_DATE;
-						} else {
-							type = Attribute.TYPE_DICT;
-							dict = attrType;
-						}
+//						if ("String".equals(attrType)) {
+//							type = Attribute.TYPE_STRING;
+//						} else if ("Integer".equals(attrType)) {
+//							type = Attribute.TYPE_INTEGER;
+//						} else if ("Long".equals(attrType)) {
+//							type = Attribute.TYPE_LONG;
+//						} else if ("Float".equals(attrType)) {
+//							type = Attribute.TYPE_FLOAT;
+//						} else if ("Date".equals(attrType)) {
+//							type = Attribute.TYPE_DATE;
+//						} else {
+//							type = Attribute.TYPE_DICT;
+//							dict = attrType;
+//						}
 						int importType = Attribute.IMPORT_TYPE_NUMERIC;
 						if ("numeric".equals(attrImportType) || attrImportType == null) {
 							importType = Attribute.IMPORT_TYPE_NUMERIC;

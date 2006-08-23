@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui.search.query.searchables;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;
 import edu.emory.library.tast.util.query.Conditions;
@@ -23,35 +24,38 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimple
 		switch (queryConditionNumeric.getType())
 		{
 			case QueryConditionNumeric.TYPE_BETWEEN:
-				conditions.addCondition(attribute.getName(), fromConverted, Conditions.OP_GREATER_OR_EQUAL);
-				conditions.addCondition(attribute.getName(), toConverted, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, fromConverted, Conditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, toConverted, Conditions.OP_SMALLER_OR_EQUAL);
 				break;
 
 			case QueryConditionNumeric.TYPE_LE:
-				conditions.addCondition(attribute.getName(), leConverted, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, leConverted, Conditions.OP_SMALLER_OR_EQUAL);
 				break;
 				
 			case QueryConditionNumeric.TYPE_GE:
-				conditions.addCondition(attribute.getName(), geConverted, Conditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, geConverted, Conditions.OP_GREATER_OR_EQUAL);
 				break;
 
 			case QueryConditionNumeric.TYPE_EQ:
-				conditions.addCondition(attribute.getName(), eqConverted, Conditions.OP_EQUALS);
+				conditions.addCondition(attribute, eqConverted, Conditions.OP_EQUALS);
 				break;
 		}
 	}
 	
 	private Object parseNumber(String number)
 	{
-		switch (getAttributeType())
+		if (number == null) {
+			throw new NumberFormatException();
+		}
+		switch (((NumericAttribute)getAttributes()[0]).getType().intValue())
 		{
-		case Attribute.TYPE_INTEGER:
+		case NumericAttribute.TYPE_INTEGER:
 			return new Integer(number);
 		
-		case Attribute.TYPE_FLOAT:
+		case NumericAttribute.TYPE_FLOAT:
 			return new Float(number);
 		
-		case Attribute.TYPE_LONG:
+		case NumericAttribute.TYPE_LONG:
 			return new Long(number);
 
 		default:

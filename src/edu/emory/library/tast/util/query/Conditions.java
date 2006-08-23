@@ -9,6 +9,7 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.SQLFunction;
 import org.hibernate.impl.SessionFactoryImpl;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 /**
@@ -90,7 +91,7 @@ public class Conditions {
 		/**
 		 * Attribute name.
 		 */
-		public String attribute;
+		public Attribute attribute;
 
 		/**
 		 * Constructor of condition.
@@ -98,7 +99,7 @@ public class Conditions {
 		 * @param op operator
 		 * @param val value
 		 */
-		public Condition(String attr, String op, Object val) {
+		public Condition(Attribute attr, String op, Object val) {
 			this.op = op;
 			this.value = val;
 			this.attribute = attr;
@@ -106,30 +107,30 @@ public class Conditions {
 
 	}
 	
-	/**
-	 * Gets attribute from given expression (expression can be e.g. SQL function.)
-	 * @param exp expression containing attribute
-	 * @return attribute name
-	 */
-	private String getAttribute(String exp) {
-		
-		//Use appropriate dialect - the same as hibernate
-		Dialect dialect = 
-			((SessionFactoryImpl)HibernateUtil.getSessionFactory()).getSettings().getDialect();
-		
-		//Check registered functions
-		Map functions = dialect.getFunctions();
-		for (Iterator iter = functions.values().iterator(); iter.hasNext();) {
-			SQLFunction element = (SQLFunction) iter.next();
-			if (exp.startsWith(element.toString())) {
-				//If we have SQL function, extract attribute
-				return exp.substring(exp.indexOf(",") + 1, exp.indexOf(")")).trim();
-			}
-		}  
-		
-		//No function - passed just attribute
-		return exp;
-	}
+//	/**
+//	 * Gets attribute from given expression (expression can be e.g. SQL function.)
+//	 * @param exp expression containing attribute
+//	 * @return attribute name
+//	 */
+//	private String getAttribute(String attributeString) {
+//		
+//		//Use appropriate dialect - the same as hibernate
+//		Dialect dialect = 
+//			((SessionFactoryImpl)HibernateUtil.getSessionFactory()).getSettings().getDialect();
+//		
+//		//Check registered functions
+//		Map functions = dialect.getFunctions();
+//		for (Iterator iter = functions.values().iterator(); iter.hasNext();) {
+//			SQLFunction element = (SQLFunction) iter.next();
+//			if (attributeString.startsWith(element.toString())) {
+//				//If we have SQL function, extract attribute
+//				return attributeString.substring(attributeString.indexOf(",") + 1, attributeString.indexOf(")")).trim();
+//			}
+//		}  
+//		
+//		//No function - passed just attribute
+//		return attributeString;
+//	}
 
 	
 	/**
@@ -156,7 +157,7 @@ public class Conditions {
 	 * @param value value
 	 * @param op operator
 	 */
-	public void addCondition(String attrName, Object value, int op) {
+	public void addCondition(Attribute attrName, Object value, int op) {
 		String opStr = null;
 
 		//Recognize operator
@@ -212,7 +213,7 @@ public class Conditions {
 	 * Gets HQL for conditions.
 	 * @return ConditionResponse object.
 	 */
-	public ConditionResponse getConditionHQL() {
+	public ConditionResponse getConditionHQL(Map bindings) {
 		
 		//Check the number of items.
 		int size = this.conditions.size() + this.subConditions.size();
@@ -238,18 +239,18 @@ public class Conditions {
 			Condition c = (Condition) iter.next();
 			if (c.value == null) {
 				//Handle null request
-				String attr = this.getAttribute(c.attribute);
+				String attr = c.attribute.getHQLWherePath(bindings);
 				processed++;
 				ret.append(attr);
 				ret.append(c.op);
 				ret.append("null");
 			} else if (c.op.equals(" in ")) {
 				//Handle in request
-				String attr = c.attribute;
-				String val = (this.getAttribute(attr).replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
+				Attribute attr = c.attribute;
+				String val = (attr.getHQLParamName() + attr.hashCode() + c.value.hashCode()).replace('-', '_');
 				Object[] values = (Object[])c.value;
 				processed++;
-				ret.append(attr);
+				ret.append(attr.getHQLWherePath(bindings));
 				ret.append(c.op);
 				ret.append("(");
 				for (int i = 0; i < values.length; i++) {
@@ -263,11 +264,11 @@ public class Conditions {
 				ret.append(") ");
 			} else if (!(c.value instanceof DirectValue)) {
 				//Handle anything except direct value - avoid using :param notation.
-				String attr = c.attribute;
-				String val = (this.getAttribute(attr).replaceAll("\\.", "") + attr.hashCode() + c.value.hashCode()).replace('-', '_');
+				Attribute attr = c.attribute;
+				String val = (attr.getHQLParamName() + attr.hashCode() + c.value.hashCode()).replace('-', '_');
 				Object value = c.value;
 				processed++;
-				ret.append(attr);
+				ret.append(attr.getHQLWherePath(bindings));
 				ret.append(c.op);
 				ret.append(" :");
 				ret.append(val);
@@ -275,9 +276,9 @@ public class Conditions {
 			} else {
 				//Handle direct value - avoid using :param notation.
 				processed++;
-				ret.append(c.attribute);
+				ret.append(c.attribute.getHQLWherePath(bindings));
 				ret.append(c.op);
-				ret.append(c.value.toString());
+				ret.append(((DirectValue)c.value).toString(bindings));
 			}
 			if (processed < size) {
 				ret.append(this.joinCondition == JOIN_AND ? " and " : " or ");
@@ -289,7 +290,7 @@ public class Conditions {
 		while (iter.hasNext()) {
 			processed++;
 			ConditionResponse child = ((Conditions) iter.next())
-					.getConditionHQL();
+					.getConditionHQL(bindings);
 			ret.append("(").append(child.conditionString).append(")");
 			retMap.putAll(child.properties);
 			if (processed < size) {
@@ -334,50 +335,50 @@ public class Conditions {
 		return newC;
 	}
 
-	/**
-	 * Creates new Conditions object. It has the same subconditions but all the attributes
-	 * have added specific prefix.
-	 */
-	public Conditions addAttributesPrefix(String prefix) {
-		Conditions newC = new Conditions();
-		ArrayList conditions = new ArrayList();
-		//Handle simple conditions
-		for (Iterator iter = this.conditions.iterator(); iter.hasNext();) {
-			Condition condition = (Condition) iter.next();
-			Condition newCondition;
-			if (condition.attribute.startsWith("date_")) {
-				String attribute = getAttribute(condition.attribute); 
-				newCondition = new Condition(condition.attribute.replaceAll(attribute, prefix + attribute), condition.op, condition.value);
-			} else {
-				newCondition = new Condition(prefix + condition.attribute, condition.op, condition.value);
-			}
-			conditions.add(newCondition);
-		}
-		//Handle subconditions.
-		ArrayList newSubconditions = new ArrayList();
-		for (Iterator iter = this.subConditions.iterator(); iter.hasNext();) {
-			Conditions subConditions = (Conditions) iter.next();
-			newSubconditions.add(subConditions.addAttributesPrefix(prefix));			
-		}
-		
-		//Set values in new query.
-		newC.conditions = conditions;
-		newC.subConditions = newSubconditions;
-		newC.joinCondition = this.joinCondition;
-		return newC;
-	}
+//	/**
+//	 * Creates new Conditions object. It has the same subconditions but all the attributes
+//	 * have added specific prefix.
+//	 */
+//	public Conditions addAttributesPrefix(String prefix) {
+//		Conditions newC = new Conditions();
+//		ArrayList conditions = new ArrayList();
+//		//Handle simple conditions
+//		for (Iterator iter = this.conditions.iterator(); iter.hasNext();) {
+//			Condition condition = (Condition) iter.next();
+//			Condition newCondition;
+//			if (condition.attribute.startsWith("date_")) {
+//				String attribute = getAttribute(condition.attribute); 
+//				newCondition = new Condition(condition.attribute.replaceAll(attribute, prefix + attribute), condition.op, condition.value);
+//			} else {
+//				newCondition = new Condition(prefix + condition.attribute, condition.op, condition.value);
+//			}
+//			conditions.add(newCondition);
+//		}
+//		//Handle subconditions.
+//		ArrayList newSubconditions = new ArrayList();
+//		for (Iterator iter = this.subConditions.iterator(); iter.hasNext();) {
+//			Conditions subConditions = (Conditions) iter.next();
+//			newSubconditions.add(subConditions.addAttributesPrefix(prefix));			
+//		}
+//		
+//		//Set values in new query.
+//		newC.conditions = conditions;
+//		newC.subConditions = newSubconditions;
+//		newC.joinCondition = this.joinCondition;
+//		return newC;
+//	}
 	
 	/**
 	 * Gets String representation of query.
 	 */
 	public String toString() {
-		ConditionResponse response = this.getConditionHQL();
+		ConditionResponse response = this.getConditionHQL(new HashMap());
 		String out = response.conditionString.toString();
 		System.out.println(out);
 		Iterator iter = response.properties.keySet().iterator();
 		while (iter.hasNext()) {
 			String key = iter.next().toString();
-			System.out.println("Replacing " + key + " by " + response.properties.get(key).toString());
+			//System.out.println("Replacing " + key + " by " + response.properties.get(key).toString());
 			out = out.replaceAll(":" + key, response.properties.get(key).toString());
 		}
 		return out;

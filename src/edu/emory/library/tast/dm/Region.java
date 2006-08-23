@@ -1,12 +1,25 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class Region extends Location
 {
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new StringAttribute("id", "Region"));
+		attributes.put("name", new StringAttribute("name", "Region"));
+		attributes.put("x", new NumericAttribute("x", "Region"));
+		attributes.put("y", new NumericAttribute("y", "Region"));
+		attributes.put("ports", new NumericAttribute("ports", "Region"));
+	}
 	
 	private Set ports;
 
@@ -31,9 +44,13 @@ public class Region extends Location
 	public static List getRegionsList()
 	{
 		QueryValue qValue = new QueryValue("Region");
-		qValue.setOrderBy(new String[] {"name"});
+		qValue.setOrderBy(new Attribute[] {Region.getAttribute("name")});
 		qValue.setCacheable(true);
 		return qValue.executeQueryList();
+	}
+	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
 	}
 
 	//	public static void main(String[] args)

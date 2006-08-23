@@ -11,10 +11,14 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.Group;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapLayer;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
@@ -24,6 +28,7 @@ import edu.emory.library.tast.ui.search.table.formatters.SimpleDateAttributeForm
 import edu.emory.library.tast.ui.search.tabscommon.MemorizedAction;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
@@ -210,13 +215,12 @@ public class TableResultTabBean {
 			boolean returnBasicInfo) {
 
 		// Build condition
-		subCondition = subCondition.addAttributesPrefix("v.");
-		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().addAttributesPrefix(
-				"v.voyage.");
+		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
 		localCond.addCondition(subCondition);
-
+		localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+		
 		// Build query
-		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
+		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
 		if (length != -1) {
 			qValue.setLimit(length);
 		}
@@ -229,8 +233,7 @@ public class TableResultTabBean {
 		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
-				qValue.addPopulatedAttribute("v.voyage." + populatedAttributes[i].getName(), populatedAttributes[i]
-						.isDictinaory());
+				qValue.addPopulatedAttribute(populatedAttributes[i]);
 			}
 		}
 
@@ -238,26 +241,25 @@ public class TableResultTabBean {
 		Attribute[] populatedAdditionalAttributes = dataTable.getAdditionalAttributesForQuery();
 		if (populatedAdditionalAttributes != null) {
 			for (int i = 0; i < populatedAdditionalAttributes.length; i++) {
-				qValue.addPopulatedAttribute("v." + populatedAdditionalAttributes[i].getName(),
-						populatedAdditionalAttributes[i].isDictinaory());
+				qValue.addPopulatedAttribute(populatedAdditionalAttributes[i]);
 			}
 		}
 
 		if (returnBasicInfo) {
-			qValue.addPopulatedAttribute("v.voyage.voyageId", false);
-			qValue.addPopulatedAttribute("v.voyage.portdep", true);
-			qValue.addPopulatedAttribute("v.voyage.portret", true);
+			qValue.addPopulatedAttribute(Voyage.getAttribute("voyageId"));
+			qValue.addPopulatedAttribute(Voyage.getAttribute("portdep"));
+			qValue.addPopulatedAttribute(Voyage.getAttribute("portret"));
 		}
 
 		VisibleAttribute vattr = dataTable.getOrderByColumn();
-		String orderByPrefix = null;
-		if (vattr != null && Arrays.asList(dataTable.getVisibleAdditionalAttributes()).contains(vattr)) {
-			orderByPrefix = "v.";
-		} else {
-			orderByPrefix = "v.voyage.";
-		}
+//		String orderByPrefix = null;
+//		if (vattr != null && Arrays.asList(dataTable.getVisibleAdditionalAttributes()).contains(vattr)) {
+//			orderByPrefix = "v.";
+//		} else {
+//			orderByPrefix = "v.voyage.";
+//		}
 		if (dataTable.getOrderByColumn() == null) {
-			qValue.setOrderBy(new String[] { "v.voyageId" });
+			qValue.setOrderBy(new Attribute[] { Voyage.getAttribute("voyageId") });
 		} else {
 
 			Attribute[] attr = vattr.getAttributes();
@@ -270,12 +272,12 @@ public class TableResultTabBean {
 //			}
 
 			if (attr != null) {
-				String[] order = new String[attr.length];
+				Attribute[] order = new Attribute[attr.length];
 				for (int i = 0; i < attr.length; i++) {
-					if (!attr[i].isDictinaory()) {
-						order[i] = orderByPrefix + attr[i].getName();
+					if (!(attr[i] instanceof DictionaryAttribute)) {
+						order[i] = attr[i];
 					} else {
-						order[i] = orderByPrefix + attr[i].getName() + ".name";
+						order[i] = new SequenceAttribute(new Attribute[] {attr[i], Dictionary.getAttribute("name")});
 					}
 				}
 				qValue.setOrderBy(order);
@@ -306,7 +308,7 @@ public class TableResultTabBean {
 				&& this.searchBean.getSearchParameters().getConditions() != null) {
 			Conditions c = new Conditions();
 			c.addCondition(VoyageIndex.getApproved());
-			c.addCondition("voyageId", this.detailVoyageId, Conditions.OP_EQUALS);
+			c.addCondition(Voyage.getAttribute("voyageId"), this.detailVoyageId, Conditions.OP_EQUALS);
 
 			List validAttrs = new ArrayList();
 			VisibleAttribute[] attrs = VisibleAttribute.getAllAttributes();
@@ -741,7 +743,7 @@ public class TableResultTabBean {
 	private void setVisibleAttributesList(List list) {
 		for (Iterator iter = list.iterator(); iter.hasNext();) {
 			VisibleAttribute element = (VisibleAttribute) iter.next();
-			if (element.getType().intValue() == Attribute.TYPE_DATE) {
+			if (element.getType().equals("DateAttribute")) {
 				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
 			}
 		}
@@ -1059,12 +1061,12 @@ public class TableResultTabBean {
 	 */
 	private void setNumberOfResults() {
 
-		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().addAttributesPrefix(
-				"v.voyage.");
+		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
 		localCond.addCondition(VoyageIndex.getRecent());
-
-		QueryValue qValue = new QueryValue("VoyageIndex as v", localCond);
-		qValue.addPopulatedAttribute("count(v.voyageId)", false);
+		localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+		
+		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
+		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageId")}));
 		Object[] ret = qValue.executeQuery();
 		this.numberOfResults = (Integer) ret[0];
 	}

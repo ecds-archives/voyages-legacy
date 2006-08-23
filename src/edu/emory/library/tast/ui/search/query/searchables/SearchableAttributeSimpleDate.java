@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionDate;
 import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;
@@ -71,23 +73,23 @@ public class SearchableAttributeSimpleDate extends SearchableAttributeSimple
 		{
 			case QueryConditionNumeric.TYPE_BETWEEN:
 			case QueryConditionNumeric.TYPE_EQ:
-				conditions.addCondition(attribute.getName(), fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
-				conditions.addCondition(attribute.getName(), toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
 				break;
 
 			case QueryConditionNumeric.TYPE_LE:
-				conditions.addCondition(attribute.getName(), toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
 				break;
 				
 			case QueryConditionNumeric.TYPE_GE:
-				conditions.addCondition(attribute.getName(), fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
 				break;
 
 		}
 		
 		if (!queryConditionDate.areAllMonthsSelected())
 			conditions.addCondition(
-					"date_part('month', " + attribute.getName() + ")",
+					new FunctionAttribute("date_part", new Attribute[] {new DirectValueAttribute("'month'"), attribute}),
 					queryConditionDate.getSelectedMonthsAsArray(),
 					Conditions.OP_IN);
 		

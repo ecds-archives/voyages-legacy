@@ -15,6 +15,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
 
 /**
  * Generator for XY charts.
@@ -38,7 +39,7 @@ public class XYChartGenerator extends AbstractChartGenerator {
 	 * @inheritDoc
 	 */
 	public JFreeChart getChart(String title, boolean showLegend) {
-		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
+		if (this.getXAxisAttribute() instanceof DateAttribute) {
 			return prepareChart(this.prepareDateChart(title, showLegend));
 		} else {
 			return prepareChart(this.prepareXYChart(title, showLegend));
@@ -94,7 +95,7 @@ public class XYChartGenerator extends AbstractChartGenerator {
 	 * @inheritDoc
 	 */
 	public void addRowToDataSet(Object[] data, Object[] series) {
-		if (this.getXAxisAttribute().getType().intValue() == Attribute.TYPE_DATE) {
+		if (this.getXAxisAttribute() instanceof DateAttribute) {
 			addDateRowToDataSet(data, series);
 		} else {
 			addSimpleDataRowToDataSet(data, series);

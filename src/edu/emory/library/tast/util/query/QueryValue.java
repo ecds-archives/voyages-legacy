@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.HibernateConnector;
 
 /**
@@ -61,19 +63,14 @@ public class QueryValue {
 	public static final int ORDER_DESC = -1;
 
 	/**
-	 * Object type that will be quered.
+	 * Objects type that will be quered.
 	 */
-	private String object;
-
+	private String[] objects;
+	
 	/**
-	 * Nested query value (not used currently).
+	 * Aliases of objects.
 	 */
-	private QueryValue qValue;
-
-	/**
-	 * Alias for sub query (not used currently).
-	 */
-	private String alias;
+	private Map bindings = new HashMap();
 
 	/**
 	 * Conditions for query.
@@ -83,12 +80,12 @@ public class QueryValue {
 	/**
 	 * Group by expression.
 	 */
-	private String[] groupBy = null;
+	private Attribute[] groupBy = null;
 
 	/**
 	 * Order by expression.
 	 */
-	private String[] orderBy = null;
+	private Attribute[] orderBy = null;
 
 	/**
 	 * Deired order.
@@ -116,25 +113,19 @@ public class QueryValue {
 	private ArrayList populateValues = null;
 
 	/**
-	 * Array telling which of populated attributes are dictionaries. 
-	 */
-	private ArrayList populateValuesDictInfo = null;
-
-	/**
 	 * Constructor. Will use empty conditions.
 	 * @param objType object type
 	 */
 	public QueryValue(String objType) {
 		this(objType, new Conditions(Conditions.JOIN_AND));
 	}
-
+	
 	/**
 	 * Constructor. Will use empty conditions.
-	 * @param qValue
-	 * @param alias
+	 * @param objType object type
 	 */
-	public QueryValue(QueryValue qValue, String alias) {
-		this(qValue, alias, new Conditions(Conditions.JOIN_AND));
+	public QueryValue(String [] objTypes, String[] aliases) {
+		this(objTypes, aliases, new Conditions(Conditions.JOIN_AND));
 	}
 
 	/**
@@ -143,7 +134,16 @@ public class QueryValue {
 	 * @param cond
 	 */
 	public QueryValue(String objType, Conditions cond) {
-		this(objType, cond, LIMIT_NO_LIMIT);
+		this(new String[] {objType}, new String[] {}, cond, LIMIT_NO_LIMIT);
+	}
+	
+	/**
+	 * Constructor.
+	 * @param objType
+	 * @param cond
+	 */
+	public QueryValue(String [] objTypes, String [] aliases, Conditions cond) {
+		this(objTypes, aliases, cond, LIMIT_NO_LIMIT);
 	}
 
 	/**
@@ -152,23 +152,14 @@ public class QueryValue {
 	 * @param cond
 	 * @param limit
 	 */
-	public QueryValue(String objType, Conditions cond, int limit) {
-		this.object = objType;
+	public QueryValue(String [] objTypes, String [] aliases, Conditions cond, int limit) {
+		this.objects = objTypes;
 		this.conditions = cond;
 		this.limit = limit;
 		this.firstResult = FIRST_NO_FIRST;
-	}
-
-	/**
-	 * Constructor.
-	 * @param value
-	 * @param alias
-	 * @param conditions2
-	 */
-	public QueryValue(QueryValue value, String alias, Conditions conditions2) {
-		this.conditions = conditions2;
-		this.qValue = value;
-		this.alias = alias;
+		for (int i = 0; i < aliases.length; i++) {
+			this.bindings.put(objTypes[i], aliases[i]);
+		}
 	}
 
 	/**
@@ -199,7 +190,7 @@ public class QueryValue {
 	 * Sets group by columns.
 	 * @param groupBy
 	 */
-	public void setGroupBy(String[] groupBy) {
+	public void setGroupBy(Attribute[] groupBy) {
 		this.groupBy = groupBy;
 	}
 
@@ -207,7 +198,7 @@ public class QueryValue {
 	 * Sets order by columns.
 	 * @param orderBy
 	 */
-	public void setOrderBy(String[] orderBy) {
+	public void setOrderBy(Attribute[] orderBy) {
 		this.orderBy = orderBy;
 	}
 
@@ -232,32 +223,37 @@ public class QueryValue {
 			buf.append("select ");
 			boolean first = true;
 			Iterator iter = this.populateValues.iterator();
-			Iterator iterInfo = this.populateValuesDictInfo.iterator();
-			while (iter.hasNext() && iterInfo.hasNext()) {
-				String attr = (String) iter.next();
+			while (iter.hasNext()) {
+				Attribute attr = (Attribute) iter.next();
 				if (!first) {
 					buf.append(",");
 				}
 				first = false;
-				buf.append(attr).append(" ");
-				if (((Boolean) iterInfo.next()).booleanValue()) {
-					fetchClause.append(" left outer join ").append(attr);
+				buf.append(attr.getHQLSelectPath(bindings)).append(" ");
+				if (attr.isOuterjoinable()) {
+					fetchClause.append(" left outer join ").append(attr.getHQLOuterJoinPath(bindings));
 				}
 			}
 		}
-
-		//Set from clause - adds object type and left outer join part prepared above
+		
 		HashMap allProperties = new HashMap();
-		if (this.object != null) {
-			buf.append("from ").append(this.object).append(" ").append(fetchClause);
-		} else {
-			ConditionResponse response = this.qValue.toStringWithParams();
-			buf.append("from (").append(response.conditionString).append(") as ").append(this.alias);
-			allProperties.putAll(response.properties);
+		
+		buf.append("from ");
+		for (int  i = 0; i < this.objects.length; i++) {
+		//Set from clause - adds object type and left outer join part prepared above
+			if (i > 0) {
+				buf.append(", ");
+			}
+			buf.append(this.objects[i]).append(" ");
+			if (this.bindings.get(this.objects[i]) != null) {
+				buf.append("as ").append(this.bindings.get(objects[i])).append(" ");
+			}
 		}
+		buf.append(fetchClause);
+		
 
 		//Create where clause
-		ConditionResponse response = this.conditions.getConditionHQL();
+		ConditionResponse response = this.conditions.getConditionHQL(this.bindings);
 		if (!response.conditionString.toString().trim().equals("")) {
 			buf.append(" where ").append(response.conditionString);
 		}
@@ -267,7 +263,7 @@ public class QueryValue {
 		if (groupBy != null) {
 			StringBuffer groupBuf = new StringBuffer();
 			for (int i = 0; i < this.groupBy.length; i++) {
-				groupBuf.append(groupBy[i]);
+				groupBuf.append(groupBy[i].getHQLSelectPath(bindings));
 				if (i < this.groupBy.length - 1) {
 					groupBuf.append(", ");
 				}
@@ -282,7 +278,7 @@ public class QueryValue {
 			StringBuffer orderBuf = new StringBuffer();
 			if (order != ORDER_DEFAULT) {
 				for (int i = 0; i < this.orderBy.length; i++) {
-					orderBuf.append(this.orderBy[i]);
+					orderBuf.append(this.orderBy[i].getHQLSelectPath(bindings));
 					if (order == ORDER_ASC) {
 						orderBuf.append(" asc");
 					} else {
@@ -310,15 +306,11 @@ public class QueryValue {
 	 * @param p_attrName attribute name
 	 * @param dictionary true  if attribute is dictionary
 	 */
-	public void addPopulatedAttribute(String p_attrName, boolean dictionary) {
+	public void addPopulatedAttribute(Attribute p_attr) {
 		if (this.populateValues == null) {
 			this.populateValues = new ArrayList();
 		}
-		if (this.populateValuesDictInfo == null) {
-			this.populateValuesDictInfo = new ArrayList();
-		}
-		this.populateValues.add(p_attrName);
-		this.populateValuesDictInfo.add(new Boolean(dictionary));
+		this.populateValues.add(p_attr);
 	}
 
 	/**
@@ -329,8 +321,10 @@ public class QueryValue {
 	public Query getQuery(Session session) {
 		//Get HQL query
 		ConditionResponse response = toStringWithParams();
+		
+		System.out.println(response.conditionString.toString());
+		
 		Query q = session.createQuery(response.conditionString.toString());
-
 		//Set properties of query
 		Iterator iter = response.properties.keySet().iterator();
 		while (iter.hasNext()) {

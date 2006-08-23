@@ -11,7 +11,10 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.stat.charts.AbstractChartGenerator;
 import edu.emory.library.tast.ui.search.table.ClickEvent;
@@ -265,42 +268,42 @@ public class AdvancedStatisticsTabBean {
 		 */
 		
 		// We will use "v" prefix for Voyage object.
-		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
-		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
+		Conditions localCondition = (Conditions)this.conditions.clone();
+		localCondition.addCondition(Voyage.getAttribute(this.xaxis), null, Conditions.OP_IS_NOT);
 
 		// We will need join condition (to join VoyageIndex and Voyage).
-		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+		localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 
-		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
+		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 
 		// Get xAxis - consider attribute type (Dictionary, Number...)
-		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
+		Attribute xAxis = generator.getXAxisSelectOperator(Voyage.getAttribute(this.xaxis));
 
 		// Set group by only if aggregates are enabled
 		if (this.aggregate.booleanValue()) {
-			qValue.setGroupBy(new String[] { xAxis });
+			qValue.setGroupBy(new Attribute[] { xAxis });
 		}
-		qValue.addPopulatedAttribute(xAxis, false);
+		qValue.addPopulatedAttribute(xAxis);
 
 		// Setup order
 		if (this.order.equals("1")) {
-			qValue.setOrderBy(new String[] { xAxis });
+			qValue.setOrderBy(new Attribute[] { xAxis });
 			qValue.setOrder(QueryValue.ORDER_ASC);
 		} else if (this.order.equals("2")) {
-			qValue.setOrderBy(new String[] { xAxis });
+			qValue.setOrderBy(new Attribute[] { xAxis });
 			qValue.setOrder(QueryValue.ORDER_DESC);
 		}
 
 		// Add series of chart to query
 		for (Iterator iter = this.series.iterator(); iter.hasNext();) {
 			AdvancedStatisticsTabBean.SeriesItem element = (AdvancedStatisticsTabBean.SeriesItem) iter.next();
-			String out = null;
+			Attribute out = null;
 			if (element.aggregate != null) {
-				out = element.aggregate + "(v." + element.attribute + ")";
+				out = new FunctionAttribute(element.aggregate, new Attribute[] {Voyage.getAttribute(element.attribute)});
 			} else {
-				out = "v." + element.attribute;
+				out = Voyage.getAttribute(element.attribute);
 			}
-			qValue.addPopulatedAttribute(out, false);
+			qValue.addPopulatedAttribute(out);
 		}
 
 		return qValue;
@@ -316,7 +319,7 @@ public class AdvancedStatisticsTabBean {
 		// Get AbstractChartGenerator subclass name
 		int sel = Integer.parseInt(this.selectedChart);
 		AbstractChartGenerator generator = null;
-		String className = "edu.emory.library.tas.web.components.tabs.chartGenerators." + chartGenerators[sel];
+		String className = "edu.emory.library.tast.ui.search.stat.charts." + chartGenerators[sel];
 		Attribute attr = Voyage.getAttribute(this.xaxis);
 		try {
 			// Invoke new AbstractChartGenerator(Attribute xAxis)
@@ -746,8 +749,7 @@ public class AdvancedStatisticsTabBean {
 		voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			Attribute attr = attributes[i];
-			if (attr.getType().intValue() == Attribute.TYPE_FLOAT
-							|| attr.getType().intValue() == Attribute.TYPE_INTEGER || attr.getType().intValue() == Attribute.TYPE_LONG) {
+			if (attr instanceof NumericAttribute) {
 				String outString = attr.toString();
 				// if (attr.getUserLabel() == null
 				// || attr.getUserLabel().equals("")) {

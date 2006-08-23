@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
 import edu.emory.library.tast.ui.search.query.QueryConditionListItem;
@@ -17,7 +18,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 	public SearchableAttributeSimpleDictionary(String id, String userLabel, UserCategory userCategory, Attribute[] attributes)
 	{
 		super(id, userLabel, userCategory, attributes);
-		this.dictionary = attributes[0].getDictionary();
+		this.dictionary = ((DictionaryAttribute)attributes[0]).getDictionary();
 	}
 
 	public void addSingleAttributeToConditions(QueryConditionList queryConditionList, Attribute attribute, Conditions conditions)
@@ -27,7 +28,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		{
 			String id = (String) iter.next();
 			Dictionary dictItem = Dictionary.loadDictionaryById(dictionary, new Long(id));
-			subCondition.addCondition(attribute.getName(), dictItem, Conditions.OP_EQUALS);
+			subCondition.addCondition(attribute, dictItem, Conditions.OP_EQUALS);
 		}
 		conditions.addCondition(subCondition);
 	}

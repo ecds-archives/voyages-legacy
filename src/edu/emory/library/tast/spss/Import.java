@@ -15,6 +15,9 @@ import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
@@ -524,9 +527,10 @@ public class Import
 			// date
 			else if (type == Attribute.IMPORT_TYPE_DATE)
 			{
-				STSchemaVariable varDay = (STSchemaVariable) schema.get(col.getImportDateDay());
-				STSchemaVariable varMonth = (STSchemaVariable) schema.get(col.getImportDateMonth());
-				STSchemaVariable varYear = (STSchemaVariable) schema.get(col.getImportDateYear());
+				DateAttribute colDate = (DateAttribute)col;
+				STSchemaVariable varDay = (STSchemaVariable) schema.get(colDate.getImportDateDay());
+				STSchemaVariable varMonth = (STSchemaVariable) schema.get(colDate.getImportDateMonth());
+				STSchemaVariable varYear = (STSchemaVariable) schema.get(colDate.getImportDateYear());
 				if (varDay == null || varMonth == null || varYear == null)
 				{
 					ok = false;
@@ -566,12 +570,12 @@ public class Import
 							+ ".");
 				}
 				else if (type == Attribute.IMPORT_TYPE_STRING
-						&& var.getLength() > col.getLength().intValue())
+						&& var.getLength() > ((StringAttribute)col).getLength().intValue())
 				{
 					ok = false;
 					log.logError("String too long for database field "
 							+ col.getName() + " " + "in " + errorMsgDataFile
-							+ "." + "Expected length = " + col.getLength()
+							+ "." + "Expected length = " + ((StringAttribute)col).getLength()
 							+ ", " + "Variable length = " + var.getLength()
 							+ ".");
 				}
@@ -749,7 +753,7 @@ public class Import
 	 *            Imported schema variable containing possibly a new or updates
 	 *            list of values.
 	 */
-	private void updateDictionary(Attribute attr, STSchemaVariable var)
+	private void updateDictionary(DictionaryAttribute attr, STSchemaVariable var)
 	{
 		for (Iterator iterLabel = var.getLabels().iterator(); iterLabel.hasNext();)
 		{
@@ -813,12 +817,12 @@ public class Import
 		for (int i = 0; i < attributes.length; i++)
 		{
 			Attribute attr = attributes[i];
-			if (attr.getType().intValue() == Attribute.TYPE_DICT)
+			if (attr instanceof DictionaryAttribute)
 			{
 				// System.out.println("Updating: " + col.getName() + ", " +
 				// col.getDictinaory());
 				STSchemaVariable var = (STSchemaVariable) schema.get(attr.getImportName());
-				updateDictionary(attr, var);
+				updateDictionary((DictionaryAttribute)attr, var);
 			}
 		}
 
@@ -893,7 +897,7 @@ public class Import
 		for (int i = 0; i < attributes.length; i++)
 		{
 			Attribute col = attributes[i];
-			int type = col.getType().intValue();
+
 			int importType = col.getImportType().intValue();
 
 			Object parsedValue = null;
@@ -907,7 +911,7 @@ public class Import
 			STSchemaVariable varYear = null;
 
 			// we are ignoring this field for import
-			if (type == Attribute.IMPORT_TYPE_IGNORE) continue;
+			if (importType == Attribute.IMPORT_TYPE_IGNORE) continue;
 
 			try
 			{
@@ -924,11 +928,11 @@ public class Import
 				// import date
 				else if (importType == Attribute.IMPORT_TYPE_DATE)
 				{
-					varDay = (STSchemaVariable) schema.get(col
+					varDay = (STSchemaVariable) schema.get(((DateAttribute)col)
 							.getImportDateDay());
-					varMonth = (STSchemaVariable) schema.get(col
+					varMonth = (STSchemaVariable) schema.get(((DateAttribute)col)
 							.getImportDateMonth());
-					varYear = (STSchemaVariable) schema.get(col
+					varYear = (STSchemaVariable) schema.get(((DateAttribute)col)
 							.getImportDateYear());
 					columnDayValue = record.getValue(varDay);
 					columnMonthValue = record.getValue(varMonth);
@@ -938,7 +942,7 @@ public class Import
 				}
 
 				// nonexisting dictionary value was inserted
-				if (type == Attribute.TYPE_DICT && parsedValue != null
+				if (col instanceof DictionaryAttribute && parsedValue != null
 						&& ((Dictionary) parsedValue).getId() == null) log
 						.logWarn("Nonexistent label '"
 								+ ((Dictionary) parsedValue).getName() + "' "
