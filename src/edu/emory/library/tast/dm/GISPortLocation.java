@@ -23,8 +23,8 @@ public class GISPortLocation {
 		attributes.put("y", new NumericAttribute("y", "GISPortLocation"));
 	}
 	
-	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
-			.getStringArray(AppConfig.MAP_PROJ_IN));
+//	private static final String PROJ_IN = StringUtils.getProjectionStringForProj4(AppConfig.getConfiguration()
+//			.getStringArray(AppConfig.MAP_PROJ_IN));
 
 	private String portName;
 

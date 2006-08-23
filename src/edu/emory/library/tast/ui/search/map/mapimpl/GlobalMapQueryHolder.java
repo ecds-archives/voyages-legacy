@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.specific.CaseNullToZeroAttribute;
+import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.AttributesRange;
@@ -19,91 +26,91 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 	
 	public GlobalMapQueryHolder(Conditions conditions) {
 		
-		Conditions localCondition = conditions.addAttributesPrefix("v.");
-		localCondition.addCondition(VoyageIndex.getRecent().addAttributesPrefix("vi."));
+		Conditions localCondition = (Conditions)conditions.clone();
+		localCondition.addCondition(VoyageIndex.getRecent());
 
 		// We will need join condition (to join VoyageIndex and Voyage).
-		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
+		localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 
 		
 		QueryValue[] querySetPorts = new QueryValue[2];
-		QueryValue query1 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query1.addPopulatedAttribute("v.majbuypt.name", false);
-		query1.addPopulatedAttribute("case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end", false);
-		query1.addPopulatedAttribute("1", false);
-		query1.setGroupBy(new String[] { "v.majbuypt.name" });
-		query1.setOrderBy(new String[] {"case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end"});
+		QueryValue query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("name")}));
+		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
+		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("name")}) });
+		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetPorts[0] = query1;
 				
-		QueryValue query2 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query2.addPopulatedAttribute("v.majselpt.name", false);
-		query2.addPopulatedAttribute("case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end", false);
-		query2.addPopulatedAttribute("2", false);
-		query2.setGroupBy(new String[] { "v.majselpt.name" });
-		query2.setOrderBy(new String[] {"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end"});
+		QueryValue query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("name")}));
+		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
+		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("name")}) });
+		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetPorts[1] = query2;
 		
 	
 		QueryValue[] querySetRegions = new QueryValue[2];
-		query1 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query1.addPopulatedAttribute("v.majbuyrg.name", false);
-		query1.addPopulatedAttribute("case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end", false);
-		query1.addPopulatedAttribute("1", false);
-		query1.setGroupBy(new String[] { "v.majbuyrg.name" });
-		query1.setOrderBy(new String[] {"case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end"});
+		query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"),  Dictionary.getAttribute("name")}));
+		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
+		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"),  Dictionary.getAttribute("name")}) });
+		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[0] = query1;
 				
-		query2 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query2.addPopulatedAttribute("v.majselrg.name", false);
-		query2.addPopulatedAttribute("case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end", false);
-		query2.addPopulatedAttribute("2", false);
-		query2.setGroupBy(new String[] { "v.majselrg.name" });
-		query2.setOrderBy(new String[] {"case when sum(v.slamimp) is null then 0 else sum(v.slamimp) end"});
+		query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"),  Dictionary.getAttribute("name")}));
+		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
+		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"),  Dictionary.getAttribute("name")}) });
+		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[1] = query2;
 		
 		
 		
 		QueryValue[] querySetPortsAdj = new QueryValue[2];
-		query1 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query1.addPopulatedAttribute("v.majbuypt.name", false);
-		query1.addPopulatedAttribute("case when sum(v.s_slaximp) is null then 0 else sum(v.s_slaximp) end", false);
-		query1.addPopulatedAttribute("1", false);
-		query1.setGroupBy(new String[] { "v.majbuypt.name" });
-		query1.setOrderBy(new String[] {"case when sum(v.s_slaximp) is null then 0 else sum(v.s_slaximp) end"});
+		query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("name")}));
+		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
+		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("name")}) });
+		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetPortsAdj[0] = query1;
 				
-		query2 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query2.addPopulatedAttribute("v.majselpt.name", false);
-		query2.addPopulatedAttribute("case when sum(v.s_slamimp) is null then 0 else sum(v.s_slamimp) end", false);
-		query2.addPopulatedAttribute("2", false);
-		query2.setGroupBy(new String[] { "v.majselpt.name" });
-		query2.setOrderBy(new String[] {"case when sum(v.s_slamimp) is null then 0 else sum(v.s_slamimp) end"});
+		query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("name")}));
+		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
+		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("name")}) });
+		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetPortsAdj[1] = query2;
 		
 		
 		
 		QueryValue[] querySetRegionsAdj = new QueryValue[2];
-		query1 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query1.addPopulatedAttribute("v.majbuyrg.name", false);
-		query1.addPopulatedAttribute("case when sum(v.s_slaximp) is null then 0 else sum(v.s_slaximp) end", false);
-		query1.addPopulatedAttribute("1", false);
-		query1.setGroupBy(new String[] { "v.majbuyrg.name" });
-		query1.setOrderBy(new String[] {"case when sum(v.s_slaximp) is null then 0 else sum(v.s_slaximp) end"});
+		query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"), Dictionary.getAttribute("name")}));
+		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
+		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"), Dictionary.getAttribute("name")}) });
+		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetRegionsAdj[0] = query1;
 				
-		query2 = new QueryValue("VoyageIndex vi, Voyage v", localCondition);
-		query2.addPopulatedAttribute("v.majselrg.name", false);
-		query2.addPopulatedAttribute("case when sum(v.s_slamimp) is null then 0 else sum(v.s_slamimp) end", false);
-		query2.addPopulatedAttribute("2", false);
-		query2.setGroupBy(new String[] { "v.majselrg.name" });
-		query2.setOrderBy(new String[] {"case when sum(v.s_slamimp) is null then 0 else sum(v.s_slamimp) end"});
+		query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"), Dictionary.getAttribute("name")}));
+		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
+		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"), Dictionary.getAttribute("name")})});
+		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetRegionsAdj[1] = query2;
 		

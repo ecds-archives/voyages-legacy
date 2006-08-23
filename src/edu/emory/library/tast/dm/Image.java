@@ -1,13 +1,31 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class Image
 {
+	
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new StringAttribute("name", "Image"));
+		attributes.put("name", new NumericAttribute("name", "Image"));
+		attributes.put("description", new NumericAttribute("description", "Image"));
+		attributes.put("fileName", new NumericAttribute("fileName", "Image"));
+		attributes.put("width", new NumericAttribute("width", "Image"));
+		attributes.put("height", new NumericAttribute("height", "Image"));
+		attributes.put("mimeType", new NumericAttribute("mimeType", "Image"));
+		attributes.put("thumbnailFileName", new NumericAttribute("thumbnailFileName", "Image"));
+		attributes.put("thumbnailmimeType", new NumericAttribute("thumbnailmimeType", "Image"));
+	}
 	
 	private int id;
 	private String name;
@@ -135,7 +153,7 @@ public class Image
 	public static List getImagesList()
 	{
 		QueryValue qValue = new QueryValue("Image");
-		qValue.setOrderBy(new String[] {"name"});
+		qValue.setOrderBy(new Attribute[] {Image.getAttribute("name")});
 		qValue.setOrder(QueryValue.ORDER_ASC);
 		qValue.setCacheable(true);
 		return qValue.executeQueryList();
@@ -144,12 +162,15 @@ public class Image
 	public static Image loadById(int imageId)
 	{
 		Conditions conditions = new Conditions();
-		conditions.addCondition("id", new Integer(imageId), Conditions.OP_EQUALS);
+		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Image", conditions);
 		List list = qValue.executeQueryList();
 		if (list.size() == 0) return null;
 		return (Image) list.get(0);
 	}
 	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
+	}
 }
 	
