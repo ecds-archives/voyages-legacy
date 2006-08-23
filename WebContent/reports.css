@@ -1,0 +1,15 @@
+td.report {
+	background-color: White;
+	border-left: 10px solid #F1E7C8; }
+
+div.report {
+	width: 250px;
+	padding: 10px; }
+
+div.report-section {
+	font-size: 12pt;
+	font-weight: bold;
+	padding-bottom: 5px; }
+
+div.report-desciption {
+	padding-bottom: 5px; }

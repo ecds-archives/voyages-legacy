@@ -8,9 +8,10 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Search</title>
+	<link href="main.css" rel="stylesheet" type="text/css">
+	<link href="search.css" rel="stylesheet" type="text/css">
 	<link href="sections.css" rel="stylesheet" type="text/css">
 	<link href="menu.css" rel="stylesheet" type="text/css">
-	<link href="search.css" rel="stylesheet" type="text/css">
 	<link href="search-query.css" rel="stylesheet" type="text/css">
 	<link href="search-table.css" rel="stylesheet" type="text/css">
 	<link href="map.css" rel="stylesheet" type="text/css">
@@ -35,7 +36,8 @@
 		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">
 	</div>
 	<div class="header-path">
-		Homepage &gt; Database of voyages &gt; Search
+		<a href="search.faces">Database search</a> |
+		<a href="reports.faces">Precompiled reports</a>
 	</div>
 	
 	<h:form id="form">
