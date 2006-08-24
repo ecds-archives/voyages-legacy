@@ -86,7 +86,6 @@ public class ImageListComponent extends UICommand
 	
 	private void encodeImageThumbnail(FacesContext context, ResponseWriter writer, Image image, String onClick, int thumbnailWidth, int thumbnailHeight) throws IOException
 	{
-		String contextPath = context.getExternalContext().getRequestContextPath();
 
 		writer.startElement("a", this);
 		writer.writeAttribute("href", "#", null);
@@ -94,7 +93,7 @@ public class ImageListComponent extends UICommand
 		
 		writer.startElement("img", this);
 		writer.writeAttribute("class", "imagelist-thumbnail", null);
-		writer.writeAttribute("src", image.getThumbnailUrl(contextPath), null);
+		writer.writeAttribute("src", "images/" + image.getThumbnailFileName(), null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("width", String.valueOf(thumbnailWidth), null);
 		writer.writeAttribute("height", String.valueOf(thumbnailHeight), null);
@@ -104,7 +103,7 @@ public class ImageListComponent extends UICommand
 
 	}
 	
-	private void encodeList(FacesContext context, ResponseWriter writer, UIForm form, List images, int thumbnailWidth, int thumbnailHeight) throws IOException
+	private void encodeTableOrList(FacesContext context, ResponseWriter writer, UIForm form, List images, int thumbnailWidth, int thumbnailHeight, boolean displayThumbnails) throws IOException
 	{
 
 		writer.startElement("table", this);
@@ -123,9 +122,12 @@ public class ImageListComponent extends UICommand
 			
 			writer.startElement("tr", this);
 
-			writer.startElement("td", this);
-			encodeImageThumbnail(context, writer, image, onClick, thumbnailWidth, thumbnailHeight);
-			writer.endElement("td");
+			if (displayThumbnails)
+			{
+				writer.startElement("td", this);
+				encodeImageThumbnail(context, writer, image, onClick, thumbnailWidth, thumbnailHeight);
+				writer.endElement("td");
+			}
 
 			writer.startElement("td", this);
 			writer.startElement("a", this);
@@ -147,7 +149,7 @@ public class ImageListComponent extends UICommand
 		
 	}
 	
-	private void encodeThumbnails(FacesContext context, ResponseWriter writer, UIForm form, List images, int thumbnailWidth, int thumbnailHeight) throws IOException
+	private void encodeGallery(FacesContext context, ResponseWriter writer, UIForm form, List images, int thumbnailWidth, int thumbnailHeight) throws IOException
 	{
 
 		writer.startElement("div", this);
@@ -207,19 +209,23 @@ public class ImageListComponent extends UICommand
 		listStyle = getListStyle();
 		System.out.println(listStyle);
 		
-		// render
+ 		// render table
 		if (listStyle.equals(ImageListStyle.Table))
-		{
-			encodeList(context, writer, form,
+			encodeTableOrList(context, writer, form,
 					images,
-					thumbnailWidth, thumbnailHeight);
-		}
+					thumbnailWidth, thumbnailHeight, false);
+
+ 		// render list
+		else if (listStyle.equals(ImageListStyle.List))
+			encodeTableOrList(context, writer, form,
+					images,
+					thumbnailWidth, thumbnailHeight, true);
+
+		// render gallery
 		else if (listStyle.equals(ImageListStyle.Gallery))
-		{
-			encodeThumbnails(context, writer, form,
+			encodeGallery(context, writer, form,
 					images,
 					thumbnailWidth, thumbnailHeight);
-		}
 		
 	}
 	

@@ -9,9 +9,11 @@ public class ImageListStyle implements Serializable
 	private static final long serialVersionUID = 6788716676709166618L;
 	
 	private static final int TABLE = 1;
-	private static final int GALLERY = 2;
+	private static final int LIST = 2;
+	private static final int GALLERY = 3;
 	
 	public static ImageListStyle Table = new ImageListStyle(TABLE); 
+	public static ImageListStyle List = new ImageListStyle(LIST); 
 	public static ImageListStyle Gallery = new ImageListStyle(GALLERY); 
 	
 	private int style;
@@ -48,6 +50,7 @@ public class ImageListStyle implements Serializable
 		switch (style)
 		{
 		case TABLE: return "table"; 
+		case LIST: return "list"; 
 		case GALLERY: return "gallery";
 		default: return ""; 
 		}
@@ -57,6 +60,8 @@ public class ImageListStyle implements Serializable
 	{
 		if ("table".equalsIgnoreCase(str))
 			return Table; 
+		else if ("list".equalsIgnoreCase(str))
+			return List; 
 		else
 			return Gallery; 
 	}

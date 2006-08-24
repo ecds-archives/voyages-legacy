@@ -29,17 +29,37 @@ body {
 			<td valign="top">
 
 				<h:graphicImage 
-					url="#{ImagesBean.image.imageUrl}"
+					url="#{ImagesBean.imageUrl}"
 					width="#{ImagesBean.image.width}"
-					height="#{ImagesBean.image.height}" /><br>
+					height="#{ImagesBean.image.height}" />
 					
-				Upload new image:
-				<t:inputFileUpload
-					storage="file"
-					value="#{ImagesBean.uploadedImage}" />
+				<br>
+				
+				<h:outputText value="#{ImagesBean.imageInfo}" />
+				
+				<br>
 					
-				<h:outputText value="#{ImagesBean.uploadedImage}" />
-			
+				<h:commandButton
+					value="Upload new image"
+					action="#{ImagesBean.showUploadBox}"
+					rendered="#{!ImagesBean.uploadBoxShown}" />
+				
+				<h:panelGroup rendered="#{ImagesBean.uploadBoxShown}">
+					
+					<t:inputFileUpload
+						storage="file"
+						value="#{ImagesBean.uploadedImage}" />
+						
+					<h:commandButton
+						action="#{ImagesBean.uploadNewImage}"
+						value="Upload" />
+					
+					<h:commandButton
+						action="#{ImagesBean.hideUploadBox}"
+						value="Cancel" />
+						
+				</h:panelGroup>
+					
 			</td>
 			<td valign="top">
 			

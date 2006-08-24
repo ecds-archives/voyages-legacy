@@ -44,6 +44,7 @@ div.imagelist-gallery-image {
 		
 		<h:selectOneMenu value="#{ImagesBean.listStyle}">
 			<f:selectItem itemLabel="Table" itemValue="table" />
+			<f:selectItem itemLabel="List" itemValue="list" />
 			<f:selectItem itemLabel="Gallery" itemValue="gallery" />
 		</h:selectOneMenu>
 		
