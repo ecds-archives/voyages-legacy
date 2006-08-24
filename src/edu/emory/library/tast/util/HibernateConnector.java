@@ -162,7 +162,9 @@ public class HibernateConnector {
 	public VoyageIndex[] getVoyageIndexByVoyage(Voyage p_voyage, int p_option) {
 
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		VoyageIndex[] res = getVoyageIndexByVoyage(session, p_voyage, p_option);
+		transaction.commit();
 		session.close();
 		return res;
 	}
@@ -180,11 +182,11 @@ public class HibernateConnector {
 	 */
 	public VoyageIndex[] getVoyageIndexByVoyage(Session p_session, Voyage p_voyage, int p_option) {
 
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(p_session, p_voyage,
 				 -1, -1, p_option);
 		List list = query.list();
-		transaction.commit();
+		//transaction.commit();
 
 		return this.prepareResponse(list, p_option);
 	}
@@ -203,7 +205,9 @@ public class HibernateConnector {
 			int p_option) {
 
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		ScrollableResults res = scrollVoyageIndexByVoyage(session, p_voyage, p_option);
+		transaction.commit();
 		session.close();
 		return res;
 	}
@@ -222,11 +226,11 @@ public class HibernateConnector {
 	public ScrollableResults scrollVoyageIndexByVoyage(Session p_session, Voyage p_voyage,
 			int p_option) {
 
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(p_session, p_voyage,
 				-1, -1, p_option);
 		ScrollableResults scroll = query.scroll();
-		transaction.commit();
+		//transaction.commit();
 
 		return scroll;
 	}
@@ -248,7 +252,9 @@ public class HibernateConnector {
 	 */
 	public void createVoyage(VoyageIndex p_voyage) {
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		createVoyage(session, p_voyage);
+		transaction.commit();
 		session.close();
 	}
 	
@@ -260,7 +266,7 @@ public class HibernateConnector {
 	public void createVoyage(Session p_session, VoyageIndex p_voyage) {
 
 		
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 		
 		p_voyage.setLatest(new Integer(1));
 		p_voyage.setLatest_approved(new Integer(0));
@@ -290,7 +296,7 @@ public class HibernateConnector {
 		p_session.save(p_voyage);
 
 		// Commit changes
-		transaction.commit();
+		//transaction.commit();
 	}
 
 	/**
@@ -311,7 +317,7 @@ public class HibernateConnector {
 	public void updateVoyage(Session p_session, VoyageIndex p_voyage) {
 
 		
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 
 		// check for last revision ID
 		List tmpResponse = p_session.createQuery(
@@ -369,7 +375,7 @@ public class HibernateConnector {
 		}
 
 		// Commit changes
-		transaction.commit();
+		//transaction.commit();
 	}
 
 	/**
@@ -392,7 +398,9 @@ public class HibernateConnector {
 	 */
 	public Object[] loadObjects(String p_objType, String[] params, String[] values, boolean[] strings) {
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		Object[] ret = loadObjects(session, p_objType, params, values, strings);
+		transaction.commit();
 		session.close();
 		return ret;
 	}
@@ -448,7 +456,9 @@ public class HibernateConnector {
 	 */
 	public Object[] loadObjects(QueryValue p_query) {
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		Object[] ret = loadObjects(session, p_query);
+		transaction.commit();
 		session.close();
 		return ret;
 	}
@@ -460,7 +470,9 @@ public class HibernateConnector {
 	 */
 	public List loadObjectList(QueryValue p_query) {
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		List list = loadObjectList(session, p_query);
+		transaction.commit();
 		session.close();
 		return list;
 	}
@@ -473,9 +485,9 @@ public class HibernateConnector {
 	 */
 	public Object[] loadObjects(Session p_session, QueryValue p_query)
 	{
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 		List list = p_query.getQuery(p_session).list();
-		transaction.commit();
+		//transaction.commit();
 		
 		if (list.size() != 0) {
 			return list.toArray();
@@ -492,9 +504,9 @@ public class HibernateConnector {
 	 */
 	public List loadObjectList(Session p_session, QueryValue p_query)
 	{
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 		List list = p_query.getQuery(p_session).list();
-		transaction.commit();
+		//transaction.commit();
 		return list;
 	}
 
@@ -515,9 +527,9 @@ public class HibernateConnector {
 	 * @param obj object to save
 	 */
 	public void saveObject(Session session, Object obj) {
-		Transaction transaction = session.beginTransaction();
+		//Transaction transaction = session.beginTransaction();
 		session.save(obj);
-		transaction.commit();
+		//transaction.commit();
 	}
 	
 	/**
@@ -537,9 +549,9 @@ public class HibernateConnector {
 	 * @param obj object to update.
 	 */
 	public void updateObject(Session session, Object obj) {
-		Transaction transaction = session.beginTransaction();
+		//Transaction transaction = session.beginTransaction();
 		session.update(obj);
-		transaction.commit();
+		//transaction.commit();
 	}
 	
 	/**
@@ -559,9 +571,9 @@ public class HibernateConnector {
 	 * @param obj object to save/update
 	 */
 	public void saveOrUpdateObject(Session session, Object obj) {
-		Transaction transaction = session.beginTransaction();
+		//Transaction transaction = session.beginTransaction();
 		session.saveOrUpdate(obj);
-		transaction.commit();
+		//transaction.commit();
 	}
 	
 	/**
@@ -581,9 +593,9 @@ public class HibernateConnector {
 	 * @param obj object to delete
 	 */
 	public void deleteObject(Session session, Object obj) {
-		Transaction transaction = session.beginTransaction();
+		//Transaction transaction = session.beginTransaction();
 		session.delete(obj);
-		transaction.commit();
+		//transaction.commit();
 	}
 	
 	/**
@@ -595,7 +607,9 @@ public class HibernateConnector {
 	 */
 	public VoyageIndex[] getVoyagesIndexSet(Voyage p_voyage, int p_fetchSize, int p_option) {
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		VoyageIndex[] ret = getVoyagesIndexSet(session, p_voyage, p_fetchSize, p_option);
+		transaction.commit();
 		session.close();
 		return ret;
 	}
@@ -609,11 +623,11 @@ public class HibernateConnector {
 	 * @return
 	 */
 	public VoyageIndex[] getVoyagesIndexSet(Session p_session, Voyage p_voyage, int p_fetchSize, int p_option) {		
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(p_session, p_voyage,
 				-1, p_fetchSize, p_option);
 		List list = query.list();
-		transaction.commit();
+		//transaction.commit();
 
 		return this.prepareResponse(list, p_option);
 	}
@@ -627,7 +641,10 @@ public class HibernateConnector {
 	 */
 	public VoyageIndex[] getVoyagesIndexSet(int p_firstResult, int p_fetchSize, int p_option) {
 		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
 		VoyageIndex[] ret = getVoyagesIndexSet(session, p_firstResult, p_fetchSize, p_option);
+		transaction.commit();
+		
 		session.close();
 		return ret;
 	}
@@ -641,11 +658,11 @@ public class HibernateConnector {
 	 * @return
 	 */
 	public VoyageIndex[] getVoyagesIndexSet(Session p_session, int p_firstResult, int p_fetchSize, int p_option) {			
-		Transaction transaction = p_session.beginTransaction();
+		//Transaction transaction = p_session.beginTransaction();
 		Query query = this.getVoyageIndexByVoyageQuery(p_session, null,
 				p_firstResult, p_fetchSize, p_option);
 		List list = query.list();
-		transaction.commit();
+		//transaction.commit();
 
 		return this.prepareResponse(list, p_option);
 	}

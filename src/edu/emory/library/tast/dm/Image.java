@@ -1,6 +1,8 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Session;
@@ -8,24 +10,29 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public class Image
 {
 	
-//	private static Map attributes = new HashMap();
-//	static
-//	{
-//		attributes.put("id", new StringAttribute("name", "Image"));
-//		attributes.put("name", new NumericAttribute("name", "Image"));
-//		attributes.put("description", new NumericAttribute("description", "Image"));
-//		attributes.put("fileName", new NumericAttribute("fileName", "Image"));
-//		attributes.put("width", new NumericAttribute("width", "Image"));
-//		attributes.put("height", new NumericAttribute("height", "Image"));
-//		attributes.put("mimeType", new NumericAttribute("mimeType", "Image"));
-//		attributes.put("thumbnailFileName", new NumericAttribute("thumbnailFileName", "Image"));
-//		attributes.put("thumbnailmimeType", new NumericAttribute("thumbnailmimeType", "Image"));
-//	}
+	private static Map attributes = new HashMap();
+	static
+	{
+		attributes.put("id", new StringAttribute("name", "Image"));
+		attributes.put("name", new NumericAttribute("name", "Image"));
+		attributes.put("description", new NumericAttribute("description", "Image"));
+		attributes.put("fileName", new NumericAttribute("fileName", "Image"));
+		attributes.put("width", new NumericAttribute("width", "Image"));
+		attributes.put("height", new NumericAttribute("height", "Image"));
+		attributes.put("mimeType", new NumericAttribute("mimeType", "Image"));
+		attributes.put("thumbnailFileName", new NumericAttribute("thumbnailFileName", "Image"));
+		attributes.put("thumbnailmimeType", new NumericAttribute("thumbnailmimeType", "Image"));
+	}
 	
 	private int id;
 	private String name;
@@ -184,7 +191,7 @@ public class Image
 	}
 	
 	public static List getImagesList()
-	{
+	{			
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		List list = getImagesList();
@@ -195,7 +202,9 @@ public class Image
 
 	public static List getImagesList(Session sess)
 	{
-		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
+//		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
+		QueryValue query = new QueryValue("Image");
+		return query.executeQueryList(sess);
 	}
 
 	public static Image loadById(int imageId)
@@ -210,15 +219,22 @@ public class Image
 
 	public static Image loadById(int imageId, Session sess)
 	{
-		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
+//		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
+//		if (list == null || list.size() == 0) return null;
+//		return (Image) list.get(0);
+		
+		Conditions conditions = new Conditions();
+		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);		
+		QueryValue query = new QueryValue("Image", conditions);
+		List list = query.executeQueryList(sess);
 		if (list == null || list.size() == 0) return null;
-		return (Image) list.get(0);
+		return (Image) list.get(0);		
 	}
 	
-//	public static Attribute getAttribute(String name)
-//	{
-//		return (Attribute)attributes.get(name);
-//	}
+	public static Attribute getAttribute(String name)
+	{
+		return (Attribute)attributes.get(name);
+	}
 
 }
 	

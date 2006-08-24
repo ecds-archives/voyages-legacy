@@ -361,6 +361,14 @@ public class QueryValue {
 	public List executeQueryList() {
 		return HibernateConnector.getConnector().loadObjectList(this);
 	}
+	
+	/**
+	 * Executes query.
+	 * @return query results
+	 */
+	public List executeQueryList(Session p_session) {
+		return HibernateConnector.getConnector().loadObjectList(p_session, this);
+	}
 
 	/**
 	 * Executes query.
