@@ -136,6 +136,13 @@
 			edu.emory.library.tast.ui.images.ImageListComponent
 		</component-class>
 	</component>
+	
+	<component>
+		<component-type>LookupSelect</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.LookupSelectComponent
+		</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>

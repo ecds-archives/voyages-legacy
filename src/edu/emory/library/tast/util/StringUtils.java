@@ -38,6 +38,19 @@ public class StringUtils
 		return str == null || str.length() == 0;
 	}
 	
+	public static String coalesce(String str1, String str2)
+	{
+		if (str1 != null) return str1;
+		return str2;
+	}
+
+	public static String coalesce(String str1, String str2, String str3)
+	{
+		if (str1 != null) return str1;
+		if (str2 != null) return str2;
+		return str3;
+	}
+
 	public static String getProjectionStringForProj4(String[] array) {
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < array.length; i++) {

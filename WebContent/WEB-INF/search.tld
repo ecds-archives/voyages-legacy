@@ -415,7 +415,7 @@
 	</tag>
 
 	<tag>
-		<name>imagelist</name>
+		<name>imageList</name>
 		<tag-class>
 			edu.emory.library.tast.ui.images.ImageListTag
 		</tag-class>
@@ -442,5 +442,23 @@
 			<name>thumbnailHeight</name>
 		</attribute>
 	</tag>
+
+	<tag>
+		<name>lookupSelect</name>
+		<tag-class>
+			edu.emory.library.tast.ui.LookupSelectTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>sourceId</name>
+		</attribute>
+		<attribute>
+			<name>selectedValues</name>
+		</attribute>
+	</tag>
+
 
 </taglib>

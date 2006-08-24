@@ -69,5 +69,10 @@ public class Location
 	{
 		this.y = y;
 	}
+	
+	public int hashCode()
+	{
+		return id;
+	}
 
 }

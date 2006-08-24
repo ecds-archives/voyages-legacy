@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -22,11 +23,15 @@ import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.ui.LookupSource;
+import edu.emory.library.tast.ui.LookupSources;
 import edu.emory.library.tast.ui.SelectItem;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class ImagesBean
 {
+	
+	private static final String IMAGES_PEOPLE_LOOKUP = "images-people-lookup";
 	
 	private String listStyle = "table";
 	private UploadedFile uploadedImage;
@@ -37,7 +42,10 @@ public class ImagesBean
 	private List availPeople;
 	private List selectedRegions;
 	private List selectedPorts;
-	private List selectedPeople;
+	private List selectedPeople = new ArrayList();
+	private String personSearchString;
+	private List filteredPeople = new ArrayList();
+	private String[] selectedPeopleIds;
 	
 	public List getAllImages()
 	{
@@ -118,72 +126,37 @@ public class ImagesBean
 			}
 		}
 		
-		// load all people
-		List dbPeople = Person.getPeopleList(sess);
-		availPeople = new ArrayList();
-		selectedPeople = new ArrayList();
-
-		// fill people list
-		int k = 0;
-		for (Iterator iter = dbPeople.iterator(); iter.hasNext();)
-		{
-			Person dbPerson = (Person) iter.next();
-			SelectItem uiPerson = new SelectItem(
-					dbPerson.getLastName(),
-					String.valueOf(dbPerson.getId()), k++);
-			
-			if (image.getPeople().contains(dbPerson))
-				selectedPeople.add(uiPerson);
-			else
-				availPeople.add(uiPerson);
-
-		}
+		// register people lookup source
+		LookupSources.registerLookupSource(
+				IMAGES_PEOPLE_LOOKUP,
+				new LookupSourcePeople());
+		
+//		// load all people
+//		List dbPeople = Person.getPeopleList(sess);
+//		availPeople = new ArrayList(dbPeople.size());
+//		selectedPeople = new ArrayList(dbPeople.size());
+//
+//		// fill people list
+//		int k = 0;
+//		for (Iterator iter = dbPeople.iterator(); iter.hasNext();)
+//		{
+//			Person dbPerson = (Person) iter.next();
+//			SelectItem uiPerson = new SelectItem(
+//					dbPerson.getLastName(),
+//					String.valueOf(dbPerson.getId()), k++);
+//			
+//			if (image.getPeople().contains(dbPerson))
+//				selectedPeople.add(uiPerson);
+//			else
+//				availPeople.add(uiPerson);
+//
+//		}
 		
 		// close db
 		transaction.commit();
 		sess.close();
 		
 	}
-
-//	private void loadRegionsAndPortsToUI()
-//	{
-//		
-//		List dbRegions = Region.getRegionsList();
-//		
-//		availRegions = new ArrayList();
-//		availPorts = new ArrayList();
-//		selectedRegions = new ArrayList();
-//		selectedPorts = new ArrayList();
-//		
-//		int i = 0, j = 0;
-//		for (Iterator iter = dbRegions.iterator(); iter.hasNext();)
-//		{
-//			Region region = (Region) iter.next();
-//			SelectItem regionItem = new SelectItem(
-//					region.getName(),
-//					String.valueOf(region.getId()), i++);
-//			
-//			if (image.getRegions().contains(region))
-//				selectedRegions.add(regionItem);
-//			else
-//				availRegions.add(regionItem);
-//
-//			for (Iterator iterator = region.getPorts().iterator(); iterator.hasNext();)
-//			{
-//				Port port = (Port) iterator.next();
-//				SelectItem portItem = new SelectItem(
-//						region.getName() + " / " + port.getName(),
-//						String.valueOf(port.getId()), j++);
-//				
-//				if (image.getPorts().contains(port))
-//					selectedPorts.add(portItem);
-//				else
-//					availPorts.add(portItem);
-//
-//			}
-//		}
-//
-//	}
 
 	public String openImageAction()
 	{
@@ -249,27 +222,38 @@ public class ImagesBean
 	public String saveImage()
 	{
 		
-		Session session = HibernateUtil.getSession();
-		Transaction transaction = session.beginTransaction();
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
 
-		Set imageRegions = image.getRegions();
-		imageRegions.clear();
+		Set imageRegions = new HashSet();
+		image.setRegions(imageRegions);
 
 		for (Iterator iter = selectedRegions.iterator(); iter.hasNext();)
 		{
-			SelectItem regionItem = (SelectItem) iter.next();
-			Region region = Region.loadById(Integer.parseInt(regionItem.getValue()) , session);
-			imageRegions.add(region);
+			SelectItem uiRegion = (SelectItem) iter.next();
+			Region dbRegion = Region.loadById(Integer.parseInt(uiRegion.getValue()) , sess);
+			imageRegions.add(dbRegion);
 		}
 		
-		Set imagePorts = image.getPorts();
-		imagePorts.clear();
+		Set imagePorts = new HashSet();
+		image.setPorts(imagePorts);
 
 		for (Iterator iter = selectedPorts.iterator(); iter.hasNext();)
 		{
-			SelectItem portItem = (SelectItem) iter.next(); 
-			Port port = Port.loadById(Integer.parseInt(portItem.getValue()) , session);
-			imagePorts.add(port);
+			SelectItem uiPort = (SelectItem) iter.next(); 
+			Port dbPort = Port.loadById(Integer.parseInt(uiPort.getValue()) , sess);
+			imagePorts.add(dbPort);
+		}
+
+		Set imagePeople = new HashSet();
+		image.setPeople(imagePeople);
+
+		for (Iterator iter = selectedPeople.iterator(); iter.hasNext();)
+		{
+			SelectItem uiPerson = (SelectItem) iter.next();
+			System.out.println(uiPerson.getValue());
+			Person dbPerson = Person.loadById(sess, Integer.parseInt(uiPerson.getValue()));
+			imagePeople.add(dbPerson);
 		}
 
 		try
@@ -293,10 +277,10 @@ public class ImagesBean
 //			attribute.setCategory(new Integer(attributeCategory));
 //			attribute.setVisible(new Boolean(attributeVisible));
 			
-			session.saveOrUpdate(image);
+			sess.saveOrUpdate(image);
 			
 			transaction.commit();
-			session.close();
+			sess.close();
 			return "list";
 		
 		}
@@ -310,13 +294,13 @@ public class ImagesBean
 		catch (DataException de)
 		{
 			transaction.rollback();
-			session.close();
+			sess.close();
 			//setErrorText("Internal error accessing database. Sorry for the inconvenience.");
 			return null;
 		}
 
 	}
-	
+
 	public String getListStyle()
 	{
 		return listStyle;
@@ -326,7 +310,7 @@ public class ImagesBean
 	{
 		this.listStyle = listStyle;
 	}
-	
+
 	public List getAvailableRegions()
 	{
 		return availRegions;
@@ -411,25 +395,94 @@ public class ImagesBean
 	{
 		return AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_HEIGHT);
 	}
-
-	public List getAvailablePeople()
+	
+	public String getPeopleLookupSourceId()
 	{
-		return availPeople;
+		return IMAGES_PEOPLE_LOOKUP;
 	}
 
-	public void setAvailablePeople(List availPeople)
+	public String[] getSelectedPeopleIds()
 	{
-		this.availPeople = availPeople;
+		return selectedPeopleIds;
 	}
 
-	public List getSelectedPeople()
+	public void setSelectedPeopleIds(String[] selectedPeopleIds)
 	{
-		return selectedPeople;
+		this.selectedPeopleIds = selectedPeopleIds;
 	}
 
-	public void setSelectedPeople(List selectedPeople)
-	{
-		this.selectedPeople = selectedPeople;
-	}
+//	public List getAvailablePeople()
+//	{
+//		return availPeople;
+//	}
+//
+//	public void setAvailablePeople(List availPeople)
+//	{
+//		this.availPeople = availPeople;
+//	}
+//
+//	public List getSelectedPeople()
+//	{
+//		return selectedPeople;
+//	}
+//
+//	public void setSelectedPeople(List selectedPeople)
+//	{
+//		this.selectedPeople = selectedPeople;
+//	}
+//	
+//	public String getPersonSearchString()
+//	{
+//		return personSearchString;
+//	}
+//
+//	public void setPersonSearchString(String personSearchString)
+//	{
+//		this.personSearchString = personSearchString;
+//	}
+//
+//	public String personSearch()
+//	{
+//		
+//		// open db
+//		Session sess = HibernateUtil.getSession();
+//		Transaction transaction = sess.beginTransaction();
+//		
+//		// load all people
+//		List dbPeople = Person.getPeopleList(personSearchString + "%");
+//		filteredPeople = new ArrayList(dbPeople.size());
+//
+//		// fill people list
+//		for (Iterator iter = dbPeople.iterator(); iter.hasNext();)
+//		{
+//			Person dbPerson = (Person) iter.next();
+//			javax.faces.model.SelectItem item = new javax.faces.model.SelectItem();
+//			item.setValue(String.valueOf(dbPerson.getId()));
+//			item.setLabel(dbPerson.getLastName());
+//			filteredPeople.add(item);
+//		}
+//		
+//		// close db
+//		transaction.commit();
+//		sess.close();
+//		
+//		return null;
+//	}
+//
+//	public List getFilteredPeople()
+//	{
+//		return filteredPeople;
+//	}
+//
+//	public void setFilteredPeople(List filteredPeople)
+//	{
+//		this.filteredPeople = filteredPeople;
+//	}
+//	
+//	public String addSelectedPersons()
+//	{
+//		selectedPeople.add(null);
+//		return null;
+//	}
 
 }

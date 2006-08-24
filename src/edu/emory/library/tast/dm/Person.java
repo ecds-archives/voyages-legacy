@@ -2,6 +2,8 @@ package edu.emory.library.tast.dm;
 
 import java.util.List;
 
+import javax.naming.LimitExceededException;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -61,15 +63,15 @@ public class Person
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		Person person = loadById(personId, sess);
+		Person person = loadById(sess, personId);
 		transaction.commit();
 		sess.close();
 		return person;
 	}
 
-	public static Person loadById(int personId, Session sess)
+	public static Person loadById(Session sess, int personId)
 	{
-		List list = sess.createCriteria(Port.class).add(Restrictions.eq("id", new Integer(personId))).list();
+		List list = sess.createCriteria(Person.class).add(Restrictions.eq("id", new Integer(personId))).list();
 		if (list == null || list.size() == 0) return null;
 		return (Person) list.get(0);
 	}
@@ -86,11 +88,36 @@ public class Person
 	
 	public static List getPeopleList(Session sess)
 	{
-		return sess.createCriteria(Region.class).
+		return sess.createCriteria(Person.class).
 		addOrder(Order.asc("lastName")).
 		addOrder(Order.asc("firstName")).
 		addOrder(Order.asc("middleName")).
 		list();
+	}
+	
+	public static List getPeopleList(String substring)
+	{
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		List list = getPeopleList(sess, substring);
+		transaction.commit();
+		sess.close();
+		return list;
+	}
+	
+	public static List getPeopleList(Session sess, String substring)
+	{
+		return sess.createCriteria(Person.class).
+		add(Restrictions.like("lastName", substring)).
+		addOrder(Order.asc("lastName")).
+		addOrder(Order.asc("firstName")).
+		addOrder(Order.asc("middleName")).
+		list();
+	}
+
+	public int hashCode()
+	{
+		return id;
 	}
 	
 }

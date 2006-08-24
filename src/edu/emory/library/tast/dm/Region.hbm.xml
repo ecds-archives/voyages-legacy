@@ -3,18 +3,23 @@
 
 <hibernate-mapping>
 	<class name="edu.emory.library.tast.dm.Region" table="regions_new">
+		
 		<cache usage="read-write" />
+		
 		<id name="id" column="region_id">
 			<generator class="native"/>
 		</id>
+		
 		<property name="name" />
 		<property name="x" />
 		<property name="y" />
 		<property name="latitude" />
 		<property name="longitude" />
+		
 		<set name="ports" inverse="true" order-by="name asc" lazy="false">
 			<key column="region_id" />
 			<one-to-many class="edu.emory.library.tast.dm.Port" />
 		</set>
+		
 	</class>
 </hibernate-mapping>

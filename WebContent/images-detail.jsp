@@ -9,7 +9,9 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Images</title>
+<script type="text/javascript" src="utils.js"></script>
 <script type="text/javascript" src="select-and-order.js"></script>
+<script type="text/javascript" src="lookup-select.js"></script>
 	
 <style type="text/css">
 
@@ -83,6 +85,7 @@ body {
 		</tr>
 		</table>
 		
+		<!-- 
 		<div class="section">Regions</div>
 		
 		<s:selectAndOrder
@@ -96,13 +99,14 @@ body {
 			sortable="false"
 			availableItems="#{ImagesBean.availablePorts}"
 			selectedItems="#{ImagesBean.selectedPorts}" />
+			
+		 -->
 
 		<div class="section">People</div>
-
-		<s:selectAndOrder
-			sortable="false"
-			availableItems="#{ImagesBean.availablePeople}"
-			selectedItems="#{ImagesBean.selectedPeople}" />
+		
+		<s:lookupSelect
+			sourceId="#{ImagesBean.peopleLookupSourceId}"
+			selectedValues="#{ImagesBean.selectedPeopleIds}" />
 
 	</h:form>
 </f:view>

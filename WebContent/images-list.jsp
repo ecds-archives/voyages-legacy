@@ -52,7 +52,7 @@ div.imagelist-gallery-image {
 		
 		<hr>
 		
-		<s:imagelist
+		<s:imageList
 			id="images"
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
