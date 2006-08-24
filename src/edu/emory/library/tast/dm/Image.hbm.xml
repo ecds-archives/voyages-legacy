@@ -3,10 +3,13 @@
 
 <hibernate-mapping>
 	<class name="edu.emory.library.tast.dm.Image" table="images">
+		
 		<cache usage="read-write" />
+		
 		<id name="id" column="image_id">
 			<generator class="native"/>
 		</id>
+		
 		<property name="name" column="name" />
 		<property name="description" column="description" />
 		<property name="fileName" column="file_name" />
@@ -15,5 +18,21 @@
 		<property name="mimeType" column="mime_type" />
 		<property name="thumbnailFileName" column="thumbnail_file_name" />
 		<property name="thumbnailMimeType" column="thumbnail_mime_type" />
+		
+		<set name="regions" table="regions_images" lazy="true">
+			<key column="image_id" />
+			<many-to-many column="region_id" class="edu.emory.library.tast.dm.Region" />
+		</set>
+		
+		<set name="ports" table="ports_images" lazy="true">
+			<key column="image_id" />
+			<many-to-many column="port_id" class="edu.emory.library.tast.dm.Port" />
+		</set>
+
+		<set name="people" table="people_images" lazy="true">
+			<key column="image_id" />
+			<many-to-many column="person_id" class="edu.emory.library.tast.dm.Person" />
+		</set>
+
 	</class>
 </hibernate-mapping>

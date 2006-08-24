@@ -1,25 +1,25 @@
 package edu.emory.library.tast.dm;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.query.QueryValue;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import edu.emory.library.tast.util.HibernateUtil;
 
 public class Region extends Location
 {
-	private static Map attributes = new HashMap();
-	static {
-		attributes.put("id", new StringAttribute("id", "Region"));
-		attributes.put("name", new StringAttribute("name", "Region"));
-		attributes.put("x", new NumericAttribute("x", "Region"));
-		attributes.put("y", new NumericAttribute("y", "Region"));
-		attributes.put("ports", new NumericAttribute("ports", "Region"));
-	}
+//	private static Map attributes = new HashMap();
+//	static {
+//		attributes.put("id", new StringAttribute("id", "Region"));
+//		attributes.put("name", new StringAttribute("name", "Region"));
+//		attributes.put("x", new NumericAttribute("x", "Region"));
+//		attributes.put("y", new NumericAttribute("y", "Region"));
+//		attributes.put("ports", new NumericAttribute("ports", "Region"));
+//	}
 	
 	private Set ports;
 
@@ -43,15 +43,41 @@ public class Region extends Location
 	
 	public static List getRegionsList()
 	{
-		QueryValue qValue = new QueryValue("Region");
-		qValue.setOrderBy(new Attribute[] {Region.getAttribute("name")});
-		qValue.setCacheable(true);
-		return qValue.executeQueryList();
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		List list = getRegionsList(sess);
+		transaction.commit();
+		sess.close();
+		return list;
 	}
 	
-	public static Attribute getAttribute(String name) {
-		return (Attribute)attributes.get(name);
+	public static List getRegionsList(Session sess)
+	{
+		List list = sess.createCriteria(Region.class).addOrder(Order.asc("name")).list();
+		return list;
 	}
+
+	public static Region loadById(int regionId)
+	{
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		Region region = loadById(regionId, sess);
+		transaction.commit();
+		sess.close();
+		return region;
+	}
+
+	public static Region loadById(int regionId, Session sess)
+	{
+		List list = sess.createCriteria(Region.class).add(Restrictions.eq("id", new Integer(regionId))).list();
+		if (list == null || list.size() == 0) return null;
+		return (Region) list.get(0);
+	}
+	
+	
+	//	public static Attribute getAttribute(String name) {
+//		return (Attribute)attributes.get(name);
+//	}
 
 	//	public static void main(String[] args)
 //	{

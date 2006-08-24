@@ -9,6 +9,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Images</title>
+<script type="text/javascript" src="select-and-order.js"></script>
 	
 <style type="text/css">
 
@@ -81,7 +82,28 @@ body {
 			</td>
 		</tr>
 		</table>
+		
+		<div class="section">Regions</div>
+		
+		<s:selectAndOrder
+			sortable="false"
+			availableItems="#{ImagesBean.availableRegions}"
+			selectedItems="#{ImagesBean.selectedRegions}" />
 	
+		<div class="section">Ports</div>
+
+		<s:selectAndOrder
+			sortable="false"
+			availableItems="#{ImagesBean.availablePorts}"
+			selectedItems="#{ImagesBean.selectedPorts}" />
+
+		<div class="section">People</div>
+
+		<s:selectAndOrder
+			sortable="false"
+			availableItems="#{ImagesBean.availablePeople}"
+			selectedItems="#{ImagesBean.selectedPeople}" />
+
 	</h:form>
 </f:view>
 </body>

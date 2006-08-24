@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,7 +35,10 @@ public class Image
 	private int height;
 	private String mimeType;
 	private String thumbnailFileName;
-	private String thumbnailmimeType;
+	private String thumbnailMimeType;
+	private Set regions; 
+	private Set ports;
+	private Set people;
 	
 	public String getDescription()
 	{
@@ -118,12 +122,42 @@ public class Image
 
 	public String getThumbnailMimeType()
 	{
-		return thumbnailmimeType;
+		return thumbnailMimeType;
 	}
 
 	public void setThumbnailMimeType(String thumbnailmimeType)
 	{
-		this.thumbnailmimeType = thumbnailmimeType;
+		this.thumbnailMimeType = thumbnailmimeType;
+	}
+	
+	public Set getPorts()
+	{
+		return ports;
+	}
+
+	public void setPorts(Set ports)
+	{
+		this.ports = ports;
+	}
+
+	public Set getRegions()
+	{
+		return regions;
+	}
+
+	public void setRegions(Set regions)
+	{
+		this.regions = regions;
+	}
+	
+	public Set getPeople()
+	{
+		return people;
+	}
+
+	public void setPeople(Set people)
+	{
+		this.people = people;
 	}
 	
 //	public String getThumbnailUrl(String contextPath)
@@ -151,30 +185,32 @@ public class Image
 	
 	public static List getImagesList()
 	{
-//		QueryValue qValue = new QueryValue("Image");
-//		qValue.setOrderBy(new Attribute[] {Image.getAttribute("name")});
-//		qValue.setOrder(QueryValue.ORDER_ASC);
-//		qValue.setCacheable(true);
-//		return qValue.executeQueryList();
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		List list = sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
+		List list = getImagesList();
 		transaction.commit();
 		sess.close();
 		return list;
 	}
 
+	public static List getImagesList(Session sess)
+	{
+		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
+	}
+
 	public static Image loadById(int imageId)
 	{
-//		Conditions conditions = new Conditions();
-//		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);
-//		QueryValue qValue = new QueryValue("Image", conditions);
-//		List list = qValue.executeQueryList();
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
+		Image image = loadById(imageId, sess);
 		transaction.commit();
 		sess.close();
+		return image;
+	}
+
+	public static Image loadById(int imageId, Session sess)
+	{
+		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
 		if (list == null || list.size() == 0) return null;
 		return (Image) list.get(0);
 	}

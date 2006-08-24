@@ -240,8 +240,7 @@
 	<managed-bean>
 		<managed-bean-name>ImagesBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.images.ImagesBean
-		</managed-bean-class>
+		edu.emory.library.tast.ui.images.ImagesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 

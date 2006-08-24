@@ -435,6 +435,12 @@
 		<attribute>
 			<name>onImageSelected</name>
 		</attribute>
+		<attribute>
+			<name>thumbnailWidth</name>
+		</attribute>
+		<attribute>
+			<name>thumbnailHeight</name>
+		</attribute>
 	</tag>
 
 </taglib>

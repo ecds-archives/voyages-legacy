@@ -15,9 +15,8 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 
-import edu.emory.library.tast.AppConfig;
-import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 public class ImageListComponent extends UICommand
 {
@@ -29,6 +28,12 @@ public class ImageListComponent extends UICommand
 
 	private boolean listStyleSet = false;
 	private ImageListStyle listStyle = ImageListStyle.Table;
+	
+	private boolean thumbnailWidthSet = false;
+	private int thumbnailWidth;
+	
+	private boolean thumbnailHeightSet = false;
+	private int thumbnailHeight;
 
 	public String getFamily()
 	{
@@ -37,10 +42,12 @@ public class ImageListComponent extends UICommand
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[3];
+		Object values[] = new Object[5];
 		values[0] = super.saveState(context);
 		values[1] = saveAttachedState(context, onImageSelected);
 		values[2] = listStyle;
+		values[3] = new Integer(thumbnailWidth);
+		values[4] = new Integer(thumbnailHeight);
 		return values;
 	}
 	
@@ -50,6 +57,8 @@ public class ImageListComponent extends UICommand
 		super.restoreState(context, values[0]);
 		onImageSelected = (MethodBinding) restoreAttachedState(context, values[1]);
 		listStyle = (ImageListStyle) values[2];
+		thumbnailWidth = ((Integer) values[3]).intValue();
+		thumbnailHeight = ((Integer) values[4]).intValue();
 	}
 	
 	
@@ -62,10 +71,8 @@ public class ImageListComponent extends UICommand
 	{
 		Map params = context.getExternalContext().getRequestParameterMap();
 		
-		int imageId = JsfUtils.getParamInt(
-				params, getFieldNameForSelectedImage(context), -1);
-		
-		if (imageId != -1)
+		String imageId = JsfUtils.getParamString(params, getFieldNameForSelectedImage(context));
+		if (!StringUtils.isNullOrEmpty(imageId))
 		{
 			queueEvent(new ImageSelectedEvent(this, imageId));
 			queueEvent(new ActionEvent(this));
@@ -84,7 +91,7 @@ public class ImageListComponent extends UICommand
 		
 	}
 	
-	private void encodeImageThumbnail(FacesContext context, ResponseWriter writer, Image image, String onClick, int thumbnailWidth, int thumbnailHeight) throws IOException
+	private void encodeImageThumbnail(FacesContext context, ResponseWriter writer, ImageListItem image, String onClick, int thumbnailWidth, int thumbnailHeight) throws IOException
 	{
 
 		writer.startElement("a", this);
@@ -93,7 +100,7 @@ public class ImageListComponent extends UICommand
 		
 		writer.startElement("img", this);
 		writer.writeAttribute("class", "imagelist-thumbnail", null);
-		writer.writeAttribute("src", "images/" + image.getThumbnailFileName(), null);
+		writer.writeAttribute("src", image.getUrl(), null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("width", String.valueOf(thumbnailWidth), null);
 		writer.writeAttribute("height", String.valueOf(thumbnailHeight), null);
@@ -103,7 +110,7 @@ public class ImageListComponent extends UICommand
 
 	}
 	
-	private void encodeTableOrList(FacesContext context, ResponseWriter writer, UIForm form, List images, int thumbnailWidth, int thumbnailHeight, boolean displayThumbnails) throws IOException
+	private void encodeTableOrList(FacesContext context, ResponseWriter writer, UIForm form, List images, boolean displayThumbnails) throws IOException
 	{
 
 		writer.startElement("table", this);
@@ -114,11 +121,11 @@ public class ImageListComponent extends UICommand
 		
 		for (Iterator iter = images.iterator(); iter.hasNext();)
 		{
-			Image image = (Image) iter.next();
+			ImageListItem image = (ImageListItem) iter.next();
 			
 			String onClick = JsfUtils.generateSubmitJS(
 					context, form,
-					getFieldNameForSelectedImage(context), String.valueOf(image.getId()));
+					getFieldNameForSelectedImage(context), image.getId());
 			
 			writer.startElement("tr", this);
 
@@ -149,18 +156,18 @@ public class ImageListComponent extends UICommand
 		
 	}
 	
-	private void encodeGallery(FacesContext context, ResponseWriter writer, UIForm form, List images, int thumbnailWidth, int thumbnailHeight) throws IOException
+	private void encodeGallery(FacesContext context, ResponseWriter writer, UIForm form, List images) throws IOException
 	{
 
 		writer.startElement("div", this);
 		
 		for (Iterator iter = images.iterator(); iter.hasNext();)
 		{
-			Image image = (Image) iter.next();
+			ImageListItem image = (ImageListItem) iter.next();
 			
 			String onClick = JsfUtils.generateSubmitJS(
 					context, form,
-					getFieldNameForSelectedImage(context), String.valueOf(image.getId()));
+					getFieldNameForSelectedImage(context), image.getId());
 
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "imagelist-gallery-image", null);
@@ -197,35 +204,29 @@ public class ImageListComponent extends UICommand
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
 		
-		// load once
-		int thumbnailWidth = AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_WIDTH);
-		int thumbnailHeight = AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_HEIGHT);
-
 		// a field for storing the selected image id
 		JsfUtils.encodeHiddenInput(this, writer, getFieldNameForSelectedImage(context));
 
 		// get data from a bean
 		List images = getImages();
 		listStyle = getListStyle();
-		System.out.println(listStyle);
+		thumbnailWidth = getThumbnailWidth();
+		thumbnailHeight = getThumbnailHeight();
 		
  		// render table
 		if (listStyle.equals(ImageListStyle.Table))
 			encodeTableOrList(context, writer, form,
-					images,
-					thumbnailWidth, thumbnailHeight, false);
+					images, false);
 
  		// render list
 		else if (listStyle.equals(ImageListStyle.List))
 			encodeTableOrList(context, writer, form,
-					images,
-					thumbnailWidth, thumbnailHeight, true);
+					images, true);
 
 		// render gallery
 		else if (listStyle.equals(ImageListStyle.Gallery))
 			encodeGallery(context, writer, form,
-					images,
-					thumbnailWidth, thumbnailHeight);
+					images);
 		
 	}
 	
@@ -239,6 +240,7 @@ public class ImageListComponent extends UICommand
 
 	public void setImages(List images)
 	{
+		imagesSet = true;
 		this.images = images;
 	}
 
@@ -275,6 +277,34 @@ public class ImageListComponent extends UICommand
 	public void setOnImageSelected(MethodBinding onImageSelected)
 	{
 		this.onImageSelected = onImageSelected;
+	}
+
+	public int getThumbnailHeight()
+	{
+        if (thumbnailHeightSet) return thumbnailHeight;
+        ValueBinding vb = getValueBinding("thumbnailHeight");
+        if (vb == null) return thumbnailHeight;
+        return ((Integer)vb.getValue(getFacesContext())).intValue();
+	}
+
+	public void setThumbnailHeight(int thumbnailHeight)
+	{
+		thumbnailHeightSet = true;
+		this.thumbnailHeight = thumbnailHeight; 
+	}
+
+	public int getThumbnailWidth()
+	{
+        if (thumbnailWidthSet) return thumbnailWidth;
+        ValueBinding vb = getValueBinding("thumbnailWidth");
+        if (vb == null) return thumbnailWidth;
+        return ((Integer)vb.getValue(getFacesContext())).intValue();
+	}
+
+	public void setThumbnailWidth(int thumbnailWidth)
+	{
+		thumbnailWidthSet = true;
+		this.thumbnailWidth = thumbnailWidth;
 	}
 
 }

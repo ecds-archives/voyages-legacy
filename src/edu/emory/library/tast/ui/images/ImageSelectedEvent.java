@@ -7,9 +7,9 @@ import javax.faces.event.FacesListener;
 public class ImageSelectedEvent extends FacesEvent
 {
 	
-	private int imageId;
+	private String imageId;
 
-	public ImageSelectedEvent(UIComponent component, int imageId)
+	public ImageSelectedEvent(UIComponent component, String imageId)
 	{
 		super(component);
 		this.imageId = imageId;
@@ -26,12 +26,12 @@ public class ImageSelectedEvent extends FacesEvent
 	{
 	}
 
-	public int getImageId()
+	public String getImageId()
 	{
 		return imageId;
 	}
 
-	public void setImageId(int imageId)
+	public void setImageId(String imageId)
 	{
 		this.imageId = imageId;
 	}
