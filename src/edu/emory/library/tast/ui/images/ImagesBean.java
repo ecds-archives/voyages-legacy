@@ -23,28 +23,22 @@ import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.ui.LookupSource;
 import edu.emory.library.tast.ui.LookupSources;
-import edu.emory.library.tast.ui.SelectItem;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class ImagesBean
 {
 	
+	private static final String IMAGES_REGIONS_LOOKUP = "images-regions-lookup";
+	private static final String IMAGES_PORTS_LOOKUP = "images-ports-lookup";
 	private static final String IMAGES_PEOPLE_LOOKUP = "images-people-lookup";
 	
 	private String listStyle = "table";
 	private UploadedFile uploadedImage;
 	private Image image;
 	private boolean uploadBoxShown;
-	private List availRegions;
-	private List availPorts;
-	private List availPeople;
-	private List selectedRegions;
-	private List selectedPorts;
-	private List selectedPeople = new ArrayList();
-	private String personSearchString;
-	private List filteredPeople = new ArrayList();
+	private String[] selectedRegionsIds;
+	private String[] selectedPortsIds;
 	private String[] selectedPeopleIds;
 	
 	public List getAllImages()
@@ -90,47 +84,42 @@ public class ImagesBean
 		// load image itself
 		image = Image.loadById(Integer.parseInt(event.getImageId()), sess);
 		
-		// regions/ports lists
-		List dbRegions = Region.getRegionsList(sess);
-		availRegions = new ArrayList();
-		availPorts = new ArrayList();
-		selectedRegions = new ArrayList();
-		selectedPorts = new ArrayList();
-		
-		// fill regions/ports lists
-		int i = 0, j = 0;
-		for (Iterator iter = dbRegions.iterator(); iter.hasNext();)
-		{
-			Region dbRegion = (Region) iter.next();
-			SelectItem uiRegion = new SelectItem(
-					dbRegion.getName(),
-					String.valueOf(dbRegion.getId()), i++);
-			
-			if (image.getRegions().contains(dbRegion))
-				selectedRegions.add(uiRegion);
-			else
-				availRegions.add(uiRegion);
-
-			for (Iterator iterator = dbRegion.getPorts().iterator(); iterator.hasNext();)
-			{
-				Port dbPort = (Port) iterator.next();
-				SelectItem uiPort = new SelectItem(
-						dbRegion.getName() + " / " + dbPort.getName(),
-						String.valueOf(dbPort.getId()), j++);
-				
-				if (image.getPorts().contains(dbPort))
-					selectedPorts.add(uiPort);
-				else
-					availPorts.add(uiPort);
-
-			}
-		}
-		
-		// register people lookup source
-		LookupSources.registerLookupSource(
-				IMAGES_PEOPLE_LOOKUP,
-				new LookupSourcePeople());
-		
+//		// regions/ports lists
+//		List dbRegions = Region.getRegionsList(sess);
+//		availRegions = new ArrayList();
+//		availPorts = new ArrayList();
+//		selectedRegions = new ArrayList();
+//		selectedPorts = new ArrayList();
+//		
+//		// fill regions/ports lists
+//		int i = 0, j = 0;
+//		for (Iterator iter = dbRegions.iterator(); iter.hasNext();)
+//		{
+//			Region dbRegion = (Region) iter.next();
+//			SelectItem uiRegion = new SelectItem(
+//					dbRegion.getName(),
+//					String.valueOf(dbRegion.getId()), i++);
+//			
+//			if (image.getRegions().contains(dbRegion))
+//				selectedRegions.add(uiRegion);
+//			else
+//				availRegions.add(uiRegion);
+//
+//			for (Iterator iterator = dbRegion.getPorts().iterator(); iterator.hasNext();)
+//			{
+//				Port dbPort = (Port) iterator.next();
+//				SelectItem uiPort = new SelectItem(
+//						dbRegion.getName() + " / " + dbPort.getName(),
+//						String.valueOf(dbPort.getId()), j++);
+//				
+//				if (image.getPorts().contains(dbPort))
+//					selectedPorts.add(uiPort);
+//				else
+//					availPorts.add(uiPort);
+//
+//			}
+//		}
+//		
 //		// load all people
 //		List dbPeople = Person.getPeopleList(sess);
 //		availPeople = new ArrayList(dbPeople.size());
@@ -152,6 +141,49 @@ public class ImagesBean
 //
 //		}
 		
+		// selected regions
+		int i = 0;
+		selectedRegionsIds = new String[image.getRegions().size()];
+		for (Iterator iter = image.getRegions().iterator(); iter.hasNext();)
+		{
+			Region dbRegion = (Region) iter.next();
+			selectedRegionsIds[i++] = String.valueOf(dbRegion.getId());
+			System.out.println(dbRegion.getId());
+		}
+		
+		// selected ports
+		int j = 0;
+		selectedPortsIds = new String[image.getPorts().size()];
+		for (Iterator iter = image.getPorts().iterator(); iter.hasNext();)
+		{
+			Port dbPort = (Port) iter.next();
+			selectedPortsIds[j++] = String.valueOf(dbPort.getId());
+		}
+
+		// selected people
+		int k = 0;
+		selectedPeopleIds = new String[image.getPeople().size()];
+		for (Iterator iter = image.getPeople().iterator(); iter.hasNext();)
+		{
+			Person dbPerson = (Person) iter.next();
+			selectedPeopleIds[k++] = String.valueOf(dbPerson.getId());
+		}
+
+		// register regions lookup source
+		LookupSources.registerLookupSource(
+				IMAGES_REGIONS_LOOKUP,
+				new LookupSourceRegions());
+
+		// register ports lookup source
+		LookupSources.registerLookupSource(
+				IMAGES_PORTS_LOOKUP,
+				new LookupSourcePorts());
+
+		// register people lookup source
+		LookupSources.registerLookupSource(
+				IMAGES_PEOPLE_LOOKUP,
+				new LookupSourcePeople());
+
 		// close db
 		transaction.commit();
 		sess.close();
@@ -227,32 +259,31 @@ public class ImagesBean
 
 		Set imageRegions = new HashSet();
 		image.setRegions(imageRegions);
-
-		for (Iterator iter = selectedRegions.iterator(); iter.hasNext();)
+		
+		for (int i = 0; i < selectedRegionsIds.length; i++)
 		{
-			SelectItem uiRegion = (SelectItem) iter.next();
-			Region dbRegion = Region.loadById(Integer.parseInt(uiRegion.getValue()) , sess);
+			int regionId = Integer.parseInt(selectedRegionsIds[i]);
+			Region dbRegion = Region.loadById(sess, regionId);
 			imageRegions.add(dbRegion);
 		}
 		
 		Set imagePorts = new HashSet();
 		image.setPorts(imagePorts);
 
-		for (Iterator iter = selectedPorts.iterator(); iter.hasNext();)
+		for (int i = 0; i < selectedPortsIds.length; i++)
 		{
-			SelectItem uiPort = (SelectItem) iter.next(); 
-			Port dbPort = Port.loadById(Integer.parseInt(uiPort.getValue()) , sess);
+			int portId = Integer.parseInt(selectedPortsIds[i]);
+			Port dbPort = Port.loadById(sess, portId);
 			imagePorts.add(dbPort);
 		}
 
 		Set imagePeople = new HashSet();
 		image.setPeople(imagePeople);
 
-		for (Iterator iter = selectedPeople.iterator(); iter.hasNext();)
+		for (int i = 0; i < selectedPeopleIds.length; i++)
 		{
-			SelectItem uiPerson = (SelectItem) iter.next();
-			System.out.println(uiPerson.getValue());
-			Person dbPerson = Person.loadById(sess, Integer.parseInt(uiPerson.getValue()));
+			int personId = Integer.parseInt(selectedPeopleIds[i]);
+			Person dbPerson = Person.loadById(sess, personId);
 			imagePeople.add(dbPerson);
 		}
 
@@ -311,46 +342,6 @@ public class ImagesBean
 		this.listStyle = listStyle;
 	}
 
-	public List getAvailableRegions()
-	{
-		return availRegions;
-	}
-
-	public void setAvailableRegions(List availRegions)
-	{
-		this.availRegions = availRegions;
-	}
-
-	public List getSelectedRegions()
-	{
-		return selectedRegions;
-	}
-
-	public void setSelectedRegions(List selectedRegions)
-	{
-		this.selectedRegions = selectedRegions;
-	}
-
-	public List getAvailablePorts()
-	{
-		return availPorts;
-	}
-
-	public void setAvailablePorts(List availPorts)
-	{
-		this.availPorts = availPorts;
-	}
-
-	public List getSelectedPorts()
-	{
-		return selectedPorts;
-	}
-
-	public void setSelectedPorts(List selectedPorts)
-	{
-		this.selectedPorts = selectedPorts;
-	}
-
 	public Image getImage()
 	{
 		return image;
@@ -396,6 +387,16 @@ public class ImagesBean
 		return AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_HEIGHT);
 	}
 	
+	public String getRegionsLookupSourceId()
+	{
+		return IMAGES_REGIONS_LOOKUP;
+	}
+
+	public String getPortsLookupSourceId()
+	{
+		return IMAGES_PORTS_LOOKUP;
+	}
+
 	public String getPeopleLookupSourceId()
 	{
 		return IMAGES_PEOPLE_LOOKUP;
@@ -409,6 +410,26 @@ public class ImagesBean
 	public void setSelectedPeopleIds(String[] selectedPeopleIds)
 	{
 		this.selectedPeopleIds = selectedPeopleIds;
+	}
+
+	public String[] getSelectedPortsIds()
+	{
+		return selectedPortsIds;
+	}
+
+	public void setSelectedPortsIds(String[] selectedPortsIds)
+	{
+		this.selectedPortsIds = selectedPortsIds;
+	}
+
+	public String[] getSelectedRegionsIds()
+	{
+		return selectedRegionsIds;
+	}
+
+	public void setSelectedRegionsIds(String[] selectedRegionsIds)
+	{
+		this.selectedRegionsIds = selectedRegionsIds;
 	}
 
 //	public List getAvailablePeople()

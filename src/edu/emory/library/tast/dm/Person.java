@@ -2,8 +2,6 @@ package edu.emory.library.tast.dm;
 
 import java.util.List;
 
-import javax.naming.LimitExceededException;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;

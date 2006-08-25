@@ -96,6 +96,5 @@ LookupSelect.prototype.refreshSelectedItemsField = function()
 		var option = options[i];
 		ids.push(option.value);
 	}
-
 	this.selectedValues.value = ids.join(",");
 }

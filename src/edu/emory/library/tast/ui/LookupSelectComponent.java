@@ -10,6 +10,7 @@ import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
+import javax.faces.model.SelectItem;
 
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -20,6 +21,7 @@ public class LookupSelectComponent extends UIComponentBase
 	private boolean sourceIdSet = false;
 	private String sourceId;
 	
+	private boolean selectedValuesSet = false;
 	private String[] selectedValues = new String[0];
 	
 	public String getFamily()
@@ -29,12 +31,12 @@ public class LookupSelectComponent extends UIComponentBase
 	
 	private String getFieldNameForSelectedValues(FacesContext context)
 	{
-		return getClientId(context);
+		return getClientId(context) + "_selected_values";
 	}
 	
 	public void decode(FacesContext context)
 	{
-		Map params = context.getExternalContext().getInitParameterMap();
+		Map params = context.getExternalContext().getRequestParameterMap();
 		
 		String selectedValuesStr = (String) params.get(getFieldNameForSelectedValues(context));
 		if (!StringUtils.isNullOrEmpty(selectedValuesStr))
@@ -54,6 +56,7 @@ public class LookupSelectComponent extends UIComponentBase
 		
 		// load selected items
 		sourceId = getSourceId();
+		selectedValues = getSelectedValues();
 		LookupSource source = LookupSources.getLookupSource(sourceId);
 		List selectedItems = source.getItemsByValues(selectedValues);
 
@@ -86,17 +89,22 @@ public class LookupSelectComponent extends UIComponentBase
 		// render the list of items
 		writer.startElement("select", this);
 		writer.writeAttribute("name", selectName, null);
-		writer.writeAttribute("rows", "10", null);
+		writer.writeAttribute("style", "width: 200px;", null);
+		writer.writeAttribute("size", "10", null);
 		writer.writeAttribute("multiple", "multiple", null);
 		for (Iterator iter = selectedItems.iterator(); iter.hasNext();)
 		{
-			SelectItem item = (SelectItem) iter.next();
+			javax.faces.model.SelectItem item = (javax.faces.model.SelectItem) iter.next();
 			writer.startElement("option", this);
 			writer.writeAttribute("value", item.getValue(), null);
-			writer.write(item.getText());
+			writer.write(item.getLabel());
 			writer.endElement("option");
 		}
 		writer.endElement("select");
+		
+		// temporary
+		writer.startElement("br", this);
+		writer.endElement("br");
 		
 		// add button
 		writer.startElement("input", this);
@@ -140,6 +148,20 @@ public class LookupSelectComponent extends UIComponentBase
 		ValueBinding vb = getValueBinding("sourceId");
 		if (vb == null) return sourceId;
 		return (String) vb.getValue(getFacesContext());
+	}
+
+	public void setSelectedValues(String[] selectedValues)
+	{
+		selectedValuesSet = true;
+		this.selectedValues = selectedValues;
+	}
+
+	public String[] getSelectedValues()
+	{
+		if (selectedValuesSet) return selectedValues;
+		ValueBinding vb = getValueBinding("selectedValues");
+		if (vb == null) return selectedValues;
+		return (String[]) vb.getValue(getFacesContext());
 	}
 
 }

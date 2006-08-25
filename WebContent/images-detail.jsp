@@ -18,6 +18,12 @@
 body {
 	font-family: Verdana, Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
 	font-size: 8pt; }
+	
+div.section {
+	font-weight: bold;
+	background-color: #DDDDDD;
+	padding: 5px;
+	margin-bottom: 5px; }
 
 </style>
 	
@@ -85,29 +91,40 @@ body {
 		</tr>
 		</table>
 		
-		<!-- 
-		<div class="section">Regions</div>
+		<br>
 		
-		<s:selectAndOrder
-			sortable="false"
-			availableItems="#{ImagesBean.availableRegions}"
-			selectedItems="#{ImagesBean.selectedRegions}" />
-	
-		<div class="section">Ports</div>
-
-		<s:selectAndOrder
-			sortable="false"
-			availableItems="#{ImagesBean.availablePorts}"
-			selectedItems="#{ImagesBean.selectedPorts}" />
+		<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td valign="top" style="padding-right: 10px;">
 			
-		 -->
+				<div class="section">Regions</div>
 
-		<div class="section">People</div>
+				<s:lookupSelect
+					sourceId="#{ImagesBean.regionsLookupSourceId}"
+					selectedValues="#{ImagesBean.selectedRegionsIds}" />
+			
+			</td>
+			<td valign="top" style="padding-right: 10px;">
+			
+				<div class="section">Ports</div>
+			
+				<s:lookupSelect
+					sourceId="#{ImagesBean.portsLookupSourceId}"
+					selectedValues="#{ImagesBean.selectedPortsIds}" />
+			
+			</td>
+			<td>
+			
+				<div class="section">People</div>
+				
+				<s:lookupSelect
+					sourceId="#{ImagesBean.peopleLookupSourceId}"
+					selectedValues="#{ImagesBean.selectedPeopleIds}" />
+
+			</td>
+		</tr>
+		</table>
 		
-		<s:lookupSelect
-			sourceId="#{ImagesBean.peopleLookupSourceId}"
-			selectedValues="#{ImagesBean.selectedPeopleIds}" />
-
 	</h:form>
 </f:view>
 </body>

@@ -3,6 +3,7 @@ package edu.emory.library.tast.dm;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -35,39 +36,55 @@ public class Region extends Location
 	
 	public static Region[] getRegionsArray()
 	{
-		List list = getRegionsList();
+		List list = loadAllRegions();
 		Region[] regions = new Region[list.size()];
 		list.toArray(regions);
 		return regions;
 	}
 	
-	public static List getRegionsList()
+	public static List loadAllRegions()
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		List list = getRegionsList(sess);
+		List list = loadRegions(sess, null);
 		transaction.commit();
 		sess.close();
 		return list;
 	}
 	
-	public static List getRegionsList(Session sess)
+	public static List getAllRegions(Session sess)
 	{
-		List list = sess.createCriteria(Region.class).addOrder(Order.asc("name")).list();
-		return list;
+		return loadRegions(sess, null);
 	}
 
+	public static List loadRegions(String substring)
+	{
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		List list = loadRegions(sess, substring);
+		transaction.commit();
+		sess.close();
+		return list;
+	}
+	
+	public static List loadRegions(Session sess, String substring)
+	{
+		Criteria crit = sess.createCriteria(Region.class).addOrder(Order.asc("name"));
+		if (substring != null) crit.add(Restrictions.ilike("name", substring));
+		return crit.list();
+	}
+	
 	public static Region loadById(int regionId)
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		Region region = loadById(regionId, sess);
+		Region region = loadById(sess, regionId);
 		transaction.commit();
 		sess.close();
 		return region;
 	}
 
-	public static Region loadById(int regionId, Session sess)
+	public static Region loadById(Session sess, int regionId)
 	{
 		List list = sess.createCriteria(Region.class).add(Restrictions.eq("id", new Integer(regionId))).list();
 		if (list == null || list.size() == 0) return null;
