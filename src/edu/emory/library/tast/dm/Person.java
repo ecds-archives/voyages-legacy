@@ -108,7 +108,7 @@ public class Person
 	public static List getPeopleList(Session sess, String substring)
 	{
 		return sess.createCriteria(Person.class).
-		add(Restrictions.like("lastName", substring)).
+		add(Restrictions.ilike("lastName", substring)).
 		addOrder(Order.asc("lastName")).
 		addOrder(Order.asc("firstName")).
 		addOrder(Order.asc("middleName")).

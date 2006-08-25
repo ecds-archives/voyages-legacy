@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.ui.LookupSource;
-import edu.emory.library.tast.ui.SelectItem;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class LookupSourcePeople implements LookupSource
@@ -42,7 +43,7 @@ public class LookupSourcePeople implements LookupSource
 			Person dbPerson = Person.loadById(sess, personId);
 			SelectItem item = new SelectItem();
 			item.setValue(String.valueOf(dbPerson.getId()));
-			item.setText(dbPerson.getLastName());
+			item.setLabel(dbPerson.getLastName());
 			uiPeople.add(item);
 		}
 		
@@ -72,7 +73,7 @@ public class LookupSourcePeople implements LookupSource
 			Person dbPerson = (Person) iter.next();
 			SelectItem item = new SelectItem();
 			item.setValue(String.valueOf(dbPerson.getId()));
-			item.setText(dbPerson.getLastName());
+			item.setLabel(dbPerson.getLastName());
 			uiPeople.add(item);
 		}
 		

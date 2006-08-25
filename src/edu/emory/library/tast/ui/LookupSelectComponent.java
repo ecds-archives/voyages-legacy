@@ -29,7 +29,7 @@ public class LookupSelectComponent extends UIComponentBase
 	
 	private String getFieldNameForSelectedValues(FacesContext context)
 	{
-		return null;
+		return getClientId(context);
 	}
 	
 	public void decode(FacesContext context)
@@ -50,7 +50,7 @@ public class LookupSelectComponent extends UIComponentBase
 		UIForm form = JsfUtils.getForm(this, context);
 		
 		// <select> name
-		String selectName = getClientId(context);
+		String selectName = getClientId(context) + "_select";
 		
 		// load selected items
 		sourceId = getSourceId();
@@ -81,7 +81,7 @@ public class LookupSelectComponent extends UIComponentBase
 		// a field for selected values
 		JsfUtils.encodeHiddenInput(this, writer,
 				getFieldNameForSelectedValues(context),
-				selectedValues.toString());
+				StringUtils.join(selectedValues, ","));
 
 		// render the list of items
 		writer.startElement("select", this);

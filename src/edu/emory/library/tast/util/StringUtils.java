@@ -85,4 +85,16 @@ public class StringUtils
 		}
 	}
 
+	public static String join(String[] arr, String sep)
+	{
+		if (arr == null) return "";
+		StringBuffer res = new StringBuffer();
+		for (int i = 0; i < arr.length; i++)
+		{
+			if (i > 0) res.append(sep);
+			res.append(arr[i]);
+		}
+		return res.toString();
+	}
+
 }

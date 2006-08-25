@@ -194,7 +194,7 @@ public class Image
 	{			
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		List list = getImagesList();
+		List list = getImagesList(sess);
 		transaction.commit();
 		sess.close();
 		return list;
@@ -202,9 +202,9 @@ public class Image
 
 	public static List getImagesList(Session sess)
 	{
-//		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
-		QueryValue query = new QueryValue("Image");
-		return query.executeQueryList(sess);
+		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
+//		QueryValue query = new QueryValue("Image");
+//		return query.executeQueryList(sess);
 	}
 
 	public static Image loadById(int imageId)
@@ -219,16 +219,16 @@ public class Image
 
 	public static Image loadById(int imageId, Session sess)
 	{
-//		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
-//		if (list == null || list.size() == 0) return null;
-//		return (Image) list.get(0);
-		
-		Conditions conditions = new Conditions();
-		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);		
-		QueryValue query = new QueryValue("Image", conditions);
-		List list = query.executeQueryList(sess);
+		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
 		if (list == null || list.size() == 0) return null;
-		return (Image) list.get(0);		
+		return (Image) list.get(0);
+		
+//		Conditions conditions = new Conditions();
+//		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);		
+//		QueryValue query = new QueryValue("Image", conditions);
+//		List list = query.executeQueryList(sess);
+//		if (list == null || list.size() == 0) return null;
+//		return (Image) list.get(0);		
 	}
 	
 	public static Attribute getAttribute(String name)

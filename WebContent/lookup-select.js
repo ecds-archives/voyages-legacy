@@ -20,7 +20,7 @@ var LookupSelectGlobals =
 		if (lookupSelect) lookupSelect.openLookupWindow();
 	},
 	
-	addItems: function(items)
+	addItems: function(lookupSelectId, items)
 	{
 		var lookupSelect = this.lookupSelects[lookupSelectId];
 		if (lookupSelect) lookupSelect.addItems(items);
@@ -41,7 +41,7 @@ function LookupSelect(lookupSelectId, formName, sourceId, selectFieldName, selec
 LookupSelect.prototype.init = function()
 {
 	var form = document.forms[this.formName];
-	this.select = form.elements[this.selectName];
+	this.select = form.elements[this.selectFieldName];
 	this.selectedValues = form.elements[this.selectedValuesFieldName];
 }
 
@@ -62,9 +62,17 @@ LookupSelect.prototype.removeSelectedItems = function()
 
 LookupSelect.prototype.openLookupWindow = function()
 {
-	window.open(
-		"lookup.faces?sourceId=" + this.sourceId + "&lookupSelectId=" + this.lookupSelectId,
-		"lookup" + lookupSelectId);
+	if (!this.lookupWindow || this.lookupWindow.closed)
+	{
+		this.lookupWindow = window.open(
+			"lookup.faces?sourceId=" + this.sourceId + "&lookupSelectId=" + this.lookupSelectId,
+			"lookup" + this.lookupSelectId,
+			"width=300,height=400,resizable=yes,scrollbars=yes,status=no");
+	}
+	else
+	{
+		this.lookupWindow.focus();
+	}
 }
 
 LookupSelect.prototype.addItems = function(items)
@@ -72,8 +80,8 @@ LookupSelect.prototype.addItems = function(items)
 	for(var i=0; i<items.length; i++)
 	{
 		var option = document.createElement("option");
-		option.text = item[i].text;
-		option.value = item[i].value;
+		option.text = items[i].text;
+		option.value = items[i].value;
 		this.select.add(option, null);
 	}
 	this.refreshSelectedItemsField();
@@ -88,5 +96,6 @@ LookupSelect.prototype.refreshSelectedItemsField = function()
 		var option = options[i];
 		ids.push(option.value);
 	}
+
 	this.selectedValues.value = ids.join(",");
 }
