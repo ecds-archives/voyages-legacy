@@ -442,6 +442,30 @@
 			<name>thumbnailHeight</name>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<name>picture-gallery</name>
+		<tag-class>
+			edu.emory.library.tast.ui.images.site.GalleryTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>pictures</name>
+		</attribute>
+		<attribute>
+			<name>rows</name>
+		</attribute>
+		<attribute>
+			<name>columns</name>
+		</attribute>
+		<attribute>
+			<name>thumbnailHeight</name>
+		</attribute>
+		<attribute>
+			<name>thumbnailWidth</name>
+		</attribute>
+		
+	</tag>
 
 	<tag>
 		<name>lookupSelect</name>
