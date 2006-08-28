@@ -62,7 +62,7 @@ public class MapFileCreator {
 		for (int i = 0; i < layers.length; i++) {
 			String key = (String) list.get(i);
 			String userLabel = AppConfig.getConfiguration().getString(
-					key.substring(2, key.length() - 2) + CHECKBOX_KEY_SUFFIX);
+					key.substring(2, key.length() - 1) + CHECKBOX_KEY_SUFFIX);
 			if (userLabel == null) {
 				throw new RuntimeException("ERROR: tast.properties: missing property: " + key + CHECKBOX_KEY_SUFFIX);
 			}

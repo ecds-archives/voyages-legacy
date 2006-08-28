@@ -143,6 +143,13 @@
 			edu.emory.library.tast.ui.LookupSelectComponent
 		</component-class>
 	</component>
+	
+	<component>
+		<component-type>Gallery</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.images.site.GalleryComponent
+		</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
@@ -257,11 +264,31 @@
 		edu.emory.library.tast.ui.LookupBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>PicturesBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.images.site.PicturesBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
+	</managed-bean>
 
 	<navigation-rule>
 		<from-view-id>/reports.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>showreport</from-outcome>
+			<to-view-id>/search.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/gallery.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showinfo</from-outcome>
 			<to-view-id>/search.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>

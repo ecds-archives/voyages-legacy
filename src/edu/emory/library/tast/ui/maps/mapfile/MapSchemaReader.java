@@ -59,7 +59,7 @@ public class MapSchemaReader {
 			Matcher matcher = pattern.matcher(file);
 
 			while (matcher.find()) {
-				System.out.println(matcher.group());
+				//System.out.println(matcher.group());
 				int matchIndex = matcher.end();
 				Integer index = new Integer(matchIndex - matcher.group().length());
 				if (!markers.containsKey(matcher.group())) {
