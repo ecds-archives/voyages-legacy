@@ -89,7 +89,7 @@ public class UITableResultTab extends UIOutput {
 	 */
 	public void encodeBegin(FacesContext context) throws IOException {
 		TableData data = null;
-
+		
 		ResponseWriter writer = context.getResponseWriter();
 		
 		//Start div

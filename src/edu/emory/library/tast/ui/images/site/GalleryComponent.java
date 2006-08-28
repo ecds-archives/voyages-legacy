@@ -48,10 +48,10 @@ public class GalleryComponent extends UIComponentBase {
 					if (pictures.canMoveBackward(rows * cols)) {
 						pictures.moveBackward(rows * cols);
 					}
-				} else {
+				} else if (!action.trim().equals("")) {
 					int visible = Integer.parseInt(action);
 
-					Image[] picts = pictures.getPictures(rows * cols);
+					GaleryImage[] picts = pictures.getPictures(rows * cols);
 					pictures.setVisiblePicture(picts[visible]);
 				}
 			}
@@ -62,6 +62,7 @@ public class GalleryComponent extends UIComponentBase {
 	public void encodeBegin(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
+		writer.writeAttribute("align", "center", null);
 
 		JsfUtils
 				.encodeHiddenInput(this, writer, this.getHiddenFieldId(context));
@@ -79,24 +80,33 @@ public class GalleryComponent extends UIComponentBase {
 				"pictures");
 		if (pictures != null) {
 
-			writer.startElement("table", this);
-			writer.startElement("tr", this);
-			writer.startElement("td", this);
-			writer.writeAttribute("style", "text-align: center;", null);
+//			writer.startElement("table", this);
+//			writer.startElement("tr", this);
+//			writer.startElement("td", this);
+//			writer.writeAttribute("style", "text-align: center;", null);
 
 			writer.startElement("table", this);
+			writer.writeAttribute("class", "gallery-table-thumbnails", null);
 			writer.startElement("tr", this);
 			this.encodeButton(context, writer, GALLERY_BACK_BUTTON);
 
 			writer.startElement("td", this);
 			writer.startElement("table", this);
-			Image[] picts = pictures.getPictures(rows * cols);
+			GaleryImage[] picts = pictures.getPictures(rows * cols);
 			for (int i = 0; i < rows * cols && i < picts.length; i++) {
 				if (i % rows == 0) {
 					writer.startElement("tr", this);
 				}
 				writer.startElement("td", this);
-				Image image = picts[i];
+				writer.writeAttribute("style", "text-align: center;", null);
+				Image image = picts[i].getImage();
+				writer.startElement("a", this);
+				writer.writeAttribute("href", "#", null);
+				String js = JsfUtils.generateSubmitJS(context, JsfUtils
+						.getForm(this, context),
+						this.getHiddenFieldId(context), i + "");
+				writer.writeAttribute("onclick", js, null);
+
 				writer.startElement("img", this);
 				if (thumbnailWidth != -1) {
 					writer.writeAttribute("width", String
@@ -106,13 +116,13 @@ public class GalleryComponent extends UIComponentBase {
 					writer.writeAttribute("height", String
 							.valueOf(thumbnailHeight), null);
 				}
-				writer.writeAttribute("src", "../../images/"
+				writer.writeAttribute("src", "images/"
 						+ image.getThumbnailFileName(), null);
-				String js = JsfUtils.generateSubmitJS(context, JsfUtils
-						.getForm(this, context),
-						this.getHiddenFieldId(context), i + "");
-				writer.writeAttribute("onclick", js, null);
 				writer.writeAttribute("style", "cursor: pointer;", null);
+
+				writer.write("<br/>");
+				writer.write(image.getName());
+
 				writer.endElement("td");
 				if ((i + 1) % rows == 0) {
 					writer.endElement("tr");
@@ -125,56 +135,66 @@ public class GalleryComponent extends UIComponentBase {
 			writer.endElement("tr");
 			writer.endElement("table");
 
-			writer.endElement("td");
-			writer.endElement("tr");
-			writer.startElement("tr", this);
-			writer.startElement("td", this);
-			writer.writeAttribute("style", "text-align: center;", null);
+//			writer.endElement("td");
+//			writer.endElement("tr");
+//			writer.startElement("tr", this);
+//			writer.startElement("td", this);
+//			writer.writeAttribute("style", "text-align: center;", null);
 
-			Image visibleImage = pictures.getVisiblePicture();
+			GaleryImage visibleImage = pictures.getVisiblePicture();
 			if (visibleImage != null) {
+				writer.write(visibleImage.getImage().getName());
+				writer.write("<br/>");
 				writer.startElement("img", this);
-				writer.writeAttribute("src", "../../images/"
-						+ visibleImage.getFileName(), null);
+				writer.writeAttribute("src", "images/"
+						+ visibleImage.getImage().getFileName(), null);
 				writer.endElement("img");
 				this.printImageInfo(context, writer, visibleImage);
 			}
 
-			writer.endElement("td");
+//			writer.endElement("td");
 
-			writer.endElement("tr");
-			writer.endElement("table");
+//			writer.endElement("tr");
+//			writer.endElement("table");
 		}
 	}
 
 	private void printImageInfo(FacesContext context, ResponseWriter writer,
-			Image visibleImage) throws IOException {
+			GaleryImage visibleImage) throws IOException {
 		writer.startElement("table", this);
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
 		writer.write("Description:");
 		writer.endElement("td");
 		writer.startElement("td", this);
-		visibleImage.getDescription();
+		if (visibleImage.getImage().getDescription() != null) {
+			writer.write(visibleImage.getImage().getDescription());
+		} else {
+			writer.write("none");
+		}
 		writer.endElement("td");
 		writer.endElement("tr");
 
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
-		writer.write("Connected people:");
+		writer.write("Related people:");
 		writer.endElement("td");
 		writer.startElement("td", this);
-		Set persons = visibleImage.getPeople();
+		Person[] persons = visibleImage.getPeople();
 		if (persons != null) {
-			Iterator iter = persons.iterator();
-			while (iter.hasNext()) {
-				Person person = (Person) iter.next();
+			for (int i = 0; i < persons.length; i++) {
+				Person person = persons[i];
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
-				writer.write(person.getFirstName());
+				if (person.getFirstName() != null) {
+					writer.write(person.getFirstName());
+				}
 				writer.write(" ");
-				writer.write(person.getLastName());
+				if (person.getLastName() != null) {
+					writer.write(person.getLastName());
+				}
 				writer.endElement("a");
+				writer.write(" ");
 			}
 		}
 		writer.endElement("td");
@@ -182,18 +202,18 @@ public class GalleryComponent extends UIComponentBase {
 
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
-		writer.write("Connected ports:");
+		writer.write("Related ports:");
 		writer.endElement("td");
 		writer.startElement("td", this);
-		Set ports = visibleImage.getPorts();
+		Port[] ports = visibleImage.getPorts();
 		if (ports != null) {
-			Iterator iter = ports.iterator();
-			while (iter.hasNext()) {
-				Port port = (Port) iter.next();
+			for (int i = 0; i < ports.length; i++) {
+				Port port = ports[i];
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.write(port.getName());
 				writer.endElement("a");
+				writer.write(" ");
 			}
 		}
 		writer.endElement("td");
@@ -201,18 +221,18 @@ public class GalleryComponent extends UIComponentBase {
 
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
-		writer.write("Connected regions:");
+		writer.write("Related regions:");
 		writer.endElement("td");
 		writer.startElement("td", this);
-		Set regions = visibleImage.getRegions();
+		Region[] regions = visibleImage.getRegions();
 		if (regions != null) {
-			Iterator iter = regions.iterator();
-			while (iter.hasNext()) {
-				Region region = (Region) iter.next();
+			for (int i = 0; i < regions.length; i++) {
+				Region region = regions[i];
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.write(region.getName());
 				writer.endElement("a");
+				writer.write(" ");
 			}
 		}
 		writer.endElement("td");

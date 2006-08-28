@@ -5,11 +5,11 @@ import java.util.Arrays;
 import edu.emory.library.tast.dm.Image;
 
 public class PictureGalery {
-	private Image[] pictures;
+	private GaleryImage[] pictures;
 	private int firstVisible;
-	private Image visiblePicture;
+	private GaleryImage visiblePicture;
 	
-	public PictureGalery(Image[] pictures) {
+	public PictureGalery(GaleryImage[] pictures) {
 		this.pictures = pictures;
 		this.firstVisible = 0;
 	}
@@ -33,23 +33,23 @@ public class PictureGalery {
 		return this.firstVisible - number >= 0;
 	}
 
-	public Image[] getPictures(int number) {
-		Image[] ret = new Image[number < this.pictures.length - this.firstVisible ? number : this.pictures.length - this.firstVisible];
+	public GaleryImage[] getPictures(int number) {
+		GaleryImage[] ret = new GaleryImage[number < this.pictures.length - this.firstVisible ? number : this.pictures.length - this.firstVisible];
 		for (int i = 0; i < ret.length; i++) {
 			ret[i] = this.pictures[this.firstVisible + i];
 		}
 		return ret;
 	}
 
-	public void setPictures(Image[] pictures) {
+	public void setPictures(GaleryImage[] pictures) {
 		this.pictures = pictures;
 	}
 
-	public void setVisiblePicture(Image image) {
+	public void setVisiblePicture(GaleryImage image) {
 		this.visiblePicture = image;
 	}
 	
-	public Image getVisiblePicture() {
+	public GaleryImage getVisiblePicture() {
 		return this.visiblePicture;
 	}
 }
