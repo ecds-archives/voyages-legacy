@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -25,6 +27,8 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.LookupSources;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.UidGenerator;
 
 public class ImagesBean
 {
@@ -33,13 +37,25 @@ public class ImagesBean
 	private static final String IMAGES_PORTS_LOOKUP = "images-ports-lookup";
 	private static final String IMAGES_PEOPLE_LOOKUP = "images-people-lookup";
 	
+	private Map allowedTypes = new HashMap();
+
 	private String listStyle = "table";
-	private UploadedFile uploadedImage;
+	private String selectedImageId;
+	
 	private Image image;
+	private UploadedFile uploadedImage;
 	private boolean uploadBoxShown;
 	private String[] selectedRegionsIds;
 	private String[] selectedPortsIds;
 	private String[] selectedPeopleIds;
+	private String errorText;
+	
+	public ImagesBean()
+	{
+		allowedTypes.put("image/gif", "GIF");
+		allowedTypes.put("image/jpeg", "JPG");
+		allowedTypes.put("image/png", "PNG");
+	}
 	
 	public List getAllImages()
 	{
@@ -74,72 +90,17 @@ public class ImagesBean
 		
 	}
 
-	public void openImageListener(ImageSelectedEvent event)
+	public String openImage()
 	{
+		
+		System.out.println("openImage");
 		
 		// open db
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// load image itself
-		image = Image.loadById(Integer.parseInt(event.getImageId()), sess);
-		
-//		// regions/ports lists
-//		List dbRegions = Region.getRegionsList(sess);
-//		availRegions = new ArrayList();
-//		availPorts = new ArrayList();
-//		selectedRegions = new ArrayList();
-//		selectedPorts = new ArrayList();
-//		
-//		// fill regions/ports lists
-//		int i = 0, j = 0;
-//		for (Iterator iter = dbRegions.iterator(); iter.hasNext();)
-//		{
-//			Region dbRegion = (Region) iter.next();
-//			SelectItem uiRegion = new SelectItem(
-//					dbRegion.getName(),
-//					String.valueOf(dbRegion.getId()), i++);
-//			
-//			if (image.getRegions().contains(dbRegion))
-//				selectedRegions.add(uiRegion);
-//			else
-//				availRegions.add(uiRegion);
-//
-//			for (Iterator iterator = dbRegion.getPorts().iterator(); iterator.hasNext();)
-//			{
-//				Port dbPort = (Port) iterator.next();
-//				SelectItem uiPort = new SelectItem(
-//						dbRegion.getName() + " / " + dbPort.getName(),
-//						String.valueOf(dbPort.getId()), j++);
-//				
-//				if (image.getPorts().contains(dbPort))
-//					selectedPorts.add(uiPort);
-//				else
-//					availPorts.add(uiPort);
-//
-//			}
-//		}
-//		
-//		// load all people
-//		List dbPeople = Person.getPeopleList(sess);
-//		availPeople = new ArrayList(dbPeople.size());
-//		selectedPeople = new ArrayList(dbPeople.size());
-//
-//		// fill people list
-//		int k = 0;
-//		for (Iterator iter = dbPeople.iterator(); iter.hasNext();)
-//		{
-//			Person dbPerson = (Person) iter.next();
-//			SelectItem uiPerson = new SelectItem(
-//					dbPerson.getLastName(),
-//					String.valueOf(dbPerson.getId()), k++);
-//			
-//			if (image.getPeople().contains(dbPerson))
-//				selectedPeople.add(uiPerson);
-//			else
-//				availPeople.add(uiPerson);
-//
-//		}
+		image = Image.loadById(Integer.parseInt(selectedImageId), sess);
 		
 		// selected regions
 		int i = 0;
@@ -148,7 +109,6 @@ public class ImagesBean
 		{
 			Region dbRegion = (Region) iter.next();
 			selectedRegionsIds[i++] = String.valueOf(dbRegion.getId());
-			System.out.println(dbRegion.getId());
 		}
 		
 		// selected ports
@@ -169,6 +129,49 @@ public class ImagesBean
 			selectedPeopleIds[k++] = String.valueOf(dbPerson.getId());
 		}
 
+		// close db
+		transaction.commit();
+		sess.close();
+		
+		// goto detail
+		cleanAndPrepareDetailPage();
+		return "detail";
+
+	}
+	
+	public String newImage()
+	{
+		
+		System.out.println("newImage");
+		
+		// create an empty image
+		image = new Image();
+		
+		// clean the list of regions
+		selectedRegionsIds = new String[0];
+
+		// clean the list of ports
+		selectedPortsIds = new String[0];
+
+		// clean the list of people
+		selectedPeopleIds = new String[0];
+		
+		// goto detail
+		cleanAndPrepareDetailPage();
+		return "detail";
+
+	}
+	
+	private void cleanAndPrepareDetailPage()
+	{
+		registerLookupSources();
+		uploadBoxShown = false;
+		setErrorText(null);
+	}
+	
+	private void registerLookupSources()
+	{
+		
 		// register regions lookup source
 		LookupSources.registerLookupSource(
 				IMAGES_REGIONS_LOOKUP,
@@ -183,44 +186,35 @@ public class ImagesBean
 		LookupSources.registerLookupSource(
 				IMAGES_PEOPLE_LOOKUP,
 				new LookupSourcePeople());
-
-		// close db
-		transaction.commit();
-		sess.close();
 		
 	}
 
-	public String openImageAction()
-	{
-		return "detail";
-	}
-
-	public String showUploadBox()
-	{
-		uploadBoxShown = true;
-		return null;
-	}
-	
-	public String hideUploadBox()
-	{
-		uploadBoxShown = false;
-		return null;
-	}
-	
 	public String uploadNewImage()
 	{
 		
-		if (uploadedImage == null)
-			return null;
-		
 		try
 		{
+
+			if (uploadedImage == null)
+				return null;
+			
+			// check type
+			String extension = (String) allowedTypes.get(uploadedImage.getContentType()); 
+			if (extension == null)
+				return null;
 			
 			// new filename
-			String fileName = "xxx.png";
+			File file = null;
+			String fileName = null;
+			String imageDir = AppConfig.getConfiguration().getString(AppConfig.IMAGES_DIRECTORY);
+			do
+			{
+				fileName = new UidGenerator().generate() + "." + extension;
+				file = new File(imageDir, fileName);
+			}
+			while(file.exists());
 			
 			// copy
-			File file = new File(AppConfig.getConfiguration().getString(AppConfig.IMAGES_DIRECTORY), fileName);
 			FileOutputStream imgFileStream = new FileOutputStream(file);
 			IOUtils.copy(uploadedImage.getInputStream(), imgFileStream);
 			imgFileStream.close();
@@ -234,10 +228,11 @@ public class ImagesBean
 			// get width and height
 			int width = rdr.getWidth(0);
 			int height = rdr.getHeight(0);
-
+			
 			// replace current image
 			image.setWidth(width);
 			image.setHeight(height);
+			image.setMimeType(uploadedImage.getContentType());
 			image.setFileName(fileName);
 			
 			// all ok
@@ -254,84 +249,94 @@ public class ImagesBean
 	public String saveImage()
 	{
 		
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-
-		Set imageRegions = new HashSet();
-		image.setRegions(imageRegions);
+		Session sess = null;
+		Transaction transaction = null;
 		
-		for (int i = 0; i < selectedRegionsIds.length; i++)
-		{
-			int regionId = Integer.parseInt(selectedRegionsIds[i]);
-			Region dbRegion = Region.loadById(sess, regionId);
-			imageRegions.add(dbRegion);
-		}
-		
-		Set imagePorts = new HashSet();
-		image.setPorts(imagePorts);
-
-		for (int i = 0; i < selectedPortsIds.length; i++)
-		{
-			int portId = Integer.parseInt(selectedPortsIds[i]);
-			Port dbPort = Port.loadById(sess, portId);
-			imagePorts.add(dbPort);
-		}
-
-		Set imagePeople = new HashSet();
-		image.setPeople(imagePeople);
-
-		for (int i = 0; i < selectedPeopleIds.length; i++)
-		{
-			int personId = Integer.parseInt(selectedPeopleIds[i]);
-			Person dbPerson = Person.loadById(sess, personId);
-			imagePeople.add(dbPerson);
-		}
-
 		try
 		{
+
+			// open db
+			sess = HibernateUtil.getSession();
+			transaction = sess.beginTransaction();
 			
-//			String name = StringUtils.trimAndUnNull(attributeName, getMaxNameLength());
-//			if (name.length() == 0)
-//				throw new SaveException("Please specify attribute name.");
-//			
-//			String userLabel = StringUtils.trimAndUnNull(attributeUserLabel, getMaxUserLabelLength());
-//			if (userLabel.length() == 0)
-//				throw new SaveException("Please specify label.");
-//	
-//			String description = StringUtils.trimAndUnNull(attributeDescription, getMaxDescriptionLength());
-//			if (description.length() > getMaxDescriptionLength())
-//				throw new SaveException("Description is limited to " + getMaxDescriptionLength() + " characters.");
-//
-//			attribute.setName(name);
-//			attribute.setUserLabel(userLabel);
-//			attribute.setDescription(description);
-//			attribute.setCategory(new Integer(attributeCategory));
-//			attribute.setVisible(new Boolean(attributeVisible));
+			// links to regions
+			Set imageRegions = new HashSet();
+			image.setRegions(imageRegions);
+			for (int i = 0; i < selectedRegionsIds.length; i++)
+			{
+				int regionId = Integer.parseInt(selectedRegionsIds[i]);
+				Region dbRegion = Region.loadById(sess, regionId);
+				imageRegions.add(dbRegion);
+			}
 			
+			// links to ports
+			Set imagePorts = new HashSet();
+			image.setPorts(imagePorts);
+			for (int i = 0; i < selectedPortsIds.length; i++)
+			{
+				int portId = Integer.parseInt(selectedPortsIds[i]);
+				Port dbPort = Port.loadById(sess, portId);
+				imagePorts.add(dbPort);
+			}
+	
+			// links to people
+			Set imagePeople = new HashSet();
+			image.setPeople(imagePeople);
+			for (int i = 0; i < selectedPeopleIds.length; i++)
+			{
+				int personId = Integer.parseInt(selectedPeopleIds[i]);
+				Person dbPerson = Person.loadById(sess, personId);
+				imagePeople.add(dbPerson);
+			}
+
+			// links check name
+			if (StringUtils.isNullOrEmpty(image.getName(), true))
+				throw new SaveImageException("Please specify image name.");
+
+			// save
+			image.setName(image.getName().trim());
 			sess.saveOrUpdate(image);
-			
+
+			// commit
 			transaction.commit();
 			sess.close();
 			return "list";
 		
 		}
-//		catch (SaveException se)
-//		{
-//			transaction.rollback();
-//			session.close();
-//			setErrorText(se.getMessage());
-//			return null;
-//		}
+		catch (SaveImageException se)
+		{
+			if (transaction != null) transaction.rollback();
+			if (sess != null) sess.close();
+			setErrorText(se.getMessage());
+			return null;
+		}
 		catch (DataException de)
 		{
-			transaction.rollback();
-			sess.close();
-			//setErrorText("Internal error accessing database. Sorry for the inconvenience.");
+			if (transaction != null) transaction.rollback();
+			if (sess != null) sess.close();
+			setErrorText("Internal error accessing database. Sorry for the inconvenience.");
 			return null;
 		}
 
 	}
-
+	
+	public String cancelEdit()
+	{
+		return "list";
+	}
+	
+	public String showUploadBox()
+	{
+		uploadBoxShown = true;
+		return null;
+	}
+	
+	public String hideUploadBox()
+	{
+		uploadBoxShown = false;
+		return null;
+	}
+	
 	public String getListStyle()
 	{
 		return listStyle;
@@ -349,7 +354,14 @@ public class ImagesBean
 	
 	public String getImageUrl()
 	{
-		return "images/" + image.getFileName();
+		if (image.getFileName() != null)
+		{
+			return "images/" + image.getFileName();
+		}
+		else
+		{
+			return "blank.png";
+		}
 	}
 
 	public UploadedFile getUploadedImage()
@@ -364,7 +376,8 @@ public class ImagesBean
 	
 	public String getImageInfo()
 	{
-		return image.getWidth() + "x" + image.getHeight();
+		return image.getWidth() + "x" + image.getHeight() +
+			" (" + image.getMimeType() + ")";
 	}
 
 	public boolean isUploadBoxShown()
@@ -432,78 +445,29 @@ public class ImagesBean
 		this.selectedRegionsIds = selectedRegionsIds;
 	}
 
-//	public List getAvailablePeople()
-//	{
-//		return availPeople;
-//	}
-//
-//	public void setAvailablePeople(List availPeople)
-//	{
-//		this.availPeople = availPeople;
-//	}
-//
-//	public List getSelectedPeople()
-//	{
-//		return selectedPeople;
-//	}
-//
-//	public void setSelectedPeople(List selectedPeople)
-//	{
-//		this.selectedPeople = selectedPeople;
-//	}
-//	
-//	public String getPersonSearchString()
-//	{
-//		return personSearchString;
-//	}
-//
-//	public void setPersonSearchString(String personSearchString)
-//	{
-//		this.personSearchString = personSearchString;
-//	}
-//
-//	public String personSearch()
-//	{
-//		
-//		// open db
-//		Session sess = HibernateUtil.getSession();
-//		Transaction transaction = sess.beginTransaction();
-//		
-//		// load all people
-//		List dbPeople = Person.getPeopleList(personSearchString + "%");
-//		filteredPeople = new ArrayList(dbPeople.size());
-//
-//		// fill people list
-//		for (Iterator iter = dbPeople.iterator(); iter.hasNext();)
-//		{
-//			Person dbPerson = (Person) iter.next();
-//			javax.faces.model.SelectItem item = new javax.faces.model.SelectItem();
-//			item.setValue(String.valueOf(dbPerson.getId()));
-//			item.setLabel(dbPerson.getLastName());
-//			filteredPeople.add(item);
-//		}
-//		
-//		// close db
-//		transaction.commit();
-//		sess.close();
-//		
-//		return null;
-//	}
-//
-//	public List getFilteredPeople()
-//	{
-//		return filteredPeople;
-//	}
-//
-//	public void setFilteredPeople(List filteredPeople)
-//	{
-//		this.filteredPeople = filteredPeople;
-//	}
-//	
-//	public String addSelectedPersons()
-//	{
-//		selectedPeople.add(null);
-//		return null;
-//	}
+	public String getErrorText()
+	{
+		return errorText;
+	}
+
+	public void setErrorText(String errorText)
+	{
+		this.errorText = errorText;
+	}
+
+	public boolean isError()
+	{
+		return !StringUtils.isNullOrEmpty(errorText);
+	}
+
+	public String getSelectedImageId()
+	{
+		return selectedImageId;
+	}
+
+	public void setSelectedImageId(String selectedImageId)
+	{
+		this.selectedImageId = selectedImageId;
+	}
 
 }

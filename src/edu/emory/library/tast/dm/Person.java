@@ -2,12 +2,14 @@ package edu.emory.library.tast.dm;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 
 public class Person
 {
@@ -97,20 +99,27 @@ public class Person
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		List list = getPeopleList(sess, substring);
+		List list = getPeopleList(sess, substring, -1);
 		transaction.commit();
 		sess.close();
 		return list;
 	}
 	
-	public static List getPeopleList(Session sess, String substring)
+	public static List getPeopleList(Session sess, String substring, int maxResults)
 	{
-		return sess.createCriteria(Person.class).
-		add(Restrictions.ilike("lastName", substring)).
+		
+		Criteria crit = sess.createCriteria(Person.class).
 		addOrder(Order.asc("lastName")).
 		addOrder(Order.asc("firstName")).
-		addOrder(Order.asc("middleName")).
-		list();
+		addOrder(Order.asc("middleName"));
+		
+		if (!StringUtils.isNullOrEmpty(substring))
+			crit.add(Restrictions.ilike("lastName", substring));
+		
+		if (maxResults >= 0)
+			crit.setMaxResults(maxResults);
+		
+		return crit.list();
 	}
 
 	public int hashCode()

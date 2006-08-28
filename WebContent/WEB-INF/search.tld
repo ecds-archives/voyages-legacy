@@ -433,7 +433,7 @@
 			<name>listStyle</name>
 		</attribute>
 		<attribute>
-			<name>onImageSelected</name>
+			<name>selectedImageId</name>
 		</attribute>
 		<attribute>
 			<name>thumbnailWidth</name>

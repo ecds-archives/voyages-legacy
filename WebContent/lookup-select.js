@@ -67,7 +67,7 @@ LookupSelect.prototype.openLookupWindow = function()
 		this.lookupWindow = window.open(
 			"lookup.faces?sourceId=" + this.sourceId + "&lookupSelectId=" + this.lookupSelectId,
 			"lookup" + this.lookupSelectId,
-			"width=300,height=400,resizable=yes,scrollbars=yes,status=no");
+			"width=300,height=600,resizable=yes,scrollbars=yes,status=no");
 	}
 	else
 	{

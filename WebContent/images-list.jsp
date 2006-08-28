@@ -49,6 +49,7 @@ div.imagelist-gallery-image {
 		</h:selectOneMenu>
 		
 		<h:commandButton value="Change" />
+		<h:commandButton action="#{ImagesBean.newImage}" value="New image" />
 		
 		<hr>
 		
@@ -56,8 +57,8 @@ div.imagelist-gallery-image {
 			id="images"
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
-			onImageSelected="#{ImagesBean.openImageListener}"
-			action="#{ImagesBean.openImageAction}"
+			selectedImageId="#{ImagesBean.selectedImageId}"
+			action="#{ImagesBean.openImage}"
 			thumbnailWidth="#{ImagesBean.listThumbnailWidth}" 
 			thumbnailHeight="#{ImagesBean.listThumbnailHeight}" />
 

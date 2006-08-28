@@ -151,6 +151,30 @@ var ElementUtils =
 	{
 		return el.offsetHeight;
 	},
+	
+	getRealPageHeight: function()
+	{
+		if (IE)
+		{
+			return window.document.documentElement.offsetHeight;
+		}
+		else
+		{
+			return window.innerHeight;
+		}
+	},
+
+	getRealPageWidth: function()
+	{
+		if (IE)
+		{
+			return window.document.documentElement.offsetWidth;
+		}
+		else
+		{
+			return window.innerWidth;
+		}
+	},
 
 	getOffsetLeft: function(el)
 	{

@@ -81,10 +81,6 @@ div.section {
 					<td>Description</td>
 					<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.description}" /></td>
 				</tr>
-				<tr>
-					<td></td>
-					<td><h:commandButton value="Save" action="#{ImagesBean.saveImage}" /></td>
-				</tr>
 				</table>
 			
 			</td>
@@ -125,6 +121,11 @@ div.section {
 		</tr>
 		</table>
 		
+		<hr>
+		
+		<h:commandButton value="Save" action="#{ImagesBean.saveImage}" />
+		<h:commandButton value="Cancel" action="#{ImagesBean.cancelEdit}" />
+
 	</h:form>
 </f:view>
 </body>

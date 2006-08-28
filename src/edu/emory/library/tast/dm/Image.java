@@ -14,8 +14,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
 
 public class Image
 {
@@ -235,6 +233,6 @@ public class Image
 	{
 		return (Attribute)attributes.get(name);
 	}
-
+	
 }
 	

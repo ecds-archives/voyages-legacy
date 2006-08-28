@@ -13,7 +13,7 @@ public class ImageListTag extends UIComponentTagBase
 	
 	private String images;
 	private String listStyle;
-	private String onImageSelected;
+	private String selectedImageId;
 	private String action;
 	private String thumbnailWidth;
 	private String thumbnailHeight;
@@ -50,10 +50,14 @@ public class ImageListTag extends UIComponentTagBase
 			imageList.setListStyle(ImageListStyle.parse(listStyle));
 		}
 		
-		if (onImageSelected != null && isValueReference(onImageSelected))
+		if (selectedImageId != null && isValueReference(selectedImageId))
 		{
-			MethodBinding mb = app.createMethodBinding(onImageSelected, new Class[] {ImageSelectedEvent.class});
-			imageList.setOnImageSelected(mb);
+			ValueBinding vb = app.createValueBinding(selectedImageId);
+			component.setValueBinding("selectedImageId", vb);
+		}
+		else
+		{
+			imageList.setSelectedImageId(selectedImageId);
 		}
 		
 		if (action != null && isValueReference(action))
@@ -94,16 +98,6 @@ public class ImageListTag extends UIComponentTagBase
 		this.listStyle = listStyle;
 	}
 
-	public String getOnImageSelected()
-	{
-		return onImageSelected;
-	}
-
-	public void setOnImageSelected(String onImageSelected)
-	{
-		this.onImageSelected = onImageSelected;
-	}
-
 	public String getImages()
 	{
 		return images;
@@ -142,6 +136,16 @@ public class ImageListTag extends UIComponentTagBase
 	public void setThumbnailWidth(String listThumbnailWidth)
 	{
 		this.thumbnailWidth = listThumbnailWidth;
+	}
+
+	public String getSelectedImageId()
+	{
+		return selectedImageId;
+	}
+
+	public void setSelectedImageId(String selectedImageId)
+	{
+		this.selectedImageId = selectedImageId;
 	}
 
 }

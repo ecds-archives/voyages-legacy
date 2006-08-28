@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
-import edu.emory.library.tast.util.StringUtils;
-
 public class LookupBean
 {
 	
@@ -21,14 +19,14 @@ public class LookupBean
 		Map params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String newSourceId = (String) params.get("sourceId");
 		String newlookupSelectId = (String) params.get("lookupSelectId");
-		if (!StringUtils.isNullOrEmpty(newSourceId) && !newSourceId.equals(sourceId))
+		if (newSourceId != null && newlookupSelectId != null)
 		{
+			if (!newSourceId.equals(sourceId))
+			{
+				items = null;
+				searchForValue = null;
+			}
 			sourceId = newSourceId;
-			searchForValue = null;
-			loadAllItems();
-		}
-		if (!StringUtils.isNullOrEmpty(newlookupSelectId))
-		{
 			lookupSelectId = newlookupSelectId;
 		}
 	}
@@ -64,9 +62,31 @@ public class LookupBean
 	{
 		this.searchForValue = searchForValue;
 	}
+	
+	public String getInfoLine()
+	{
+		LookupSource source = LookupSources.getLookupSource(getSourceId());
+		if (!source.canReturnAllItems())
+		{
+			if (items == null)
+			{
+				return "No items selected. Search first please.";
+			}
+			else
+			{
+				return "First " + source.getMaxLimit() + " items:";
+			}
+		}
+		else
+		{
+			return "Items:";
+		}
+	}
 
 	public List getItems()
 	{
+		LookupSource source = LookupSources.getLookupSource(getSourceId());
+		if (items == null && source.canReturnAllItems()) loadAllItems();
 		return items == null ? new ArrayList() : items;
 	}
 	

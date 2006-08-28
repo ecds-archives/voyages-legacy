@@ -7,18 +7,23 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Lookup</title>
+<script type="text/javascript" src="utils.js"></script>
 
 <style type="text/css">
 
-body {
+body, input, select {
 	font-family: Verdana, Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
 	font-size: 8pt; }
+	
+body {
+	padding: 0px;
+	margin: 0px; }
 
 </style>
 
-<script>
+<script type="text/javascript">
 
-function add()
+function addItems()
 {
 
 	var items = new Array();
@@ -39,30 +44,85 @@ function add()
 	}
 
 	window.opener.LookupSelectGlobals.addItems(lookupSelectId, items);
-	window.close();
 
+}
+
+function closeWindow()
+{
+	window.close();
+}
+
+function init()
+{
+	document.forms["form"].elements["form:searchForValue"].focus();
+	document.forms["form"].elements["form:items"].ondblclick = addItems;
+	positionAfterResize();
+}
+
+function positionAfterResize()
+{
+
+	var w = ElementUtils.getRealPageWidth();
+	var h = ElementUtils.getRealPageHeight();
+	
+	var heightSearchBox = 30;
+	var heightInfoBox = 20;
+	var heightButtonsBox = 30;
+	var heightItems = h - heightSearchBox - heightInfoBox - heightButtonsBox;
+	if (heightItems < 0) heightItems = 0;
+	
+	var searchBox = document.getElementById("searchBox");
+	var infoBox = document.getElementById("infoBox");
+	var items = document.getElementById("form:items");
+	var buttonsBox = document.getElementById("buttonsBox");
+	
+	searchBox.style.top = 0 + "px";
+	searchBox.style.height = (heightSearchBox) + "px";
+	
+	infoBox.style.top = (heightSearchBox) + "px";
+	infoBox.style.height = (heightInfoBox) + "px";
+	
+	items.style.top = (heightSearchBox + heightInfoBox) + "px";
+	items.style.height = (heightItems) + "px";
+	items.style.width = (w) + "px";
+	
+	buttonsBox.style.top = (heightSearchBox + heightInfoBox + heightItems) + "px";
+	buttonsBox.style.height = (heightButtonsBox) + "px";
+	
 }
 
 </script>
 
 </head>
-<body>
+<body onresize="positionAfterResize()" onload="init()">
 <f:view>
 	<h:form id="form">
+	
 		<h:inputHidden id="sourceId" value="#{LookupBean.sourceId}" />
 		<h:inputHidden id="lookupSelectId" value="#{LookupBean.lookupSelectId}" />
 	
-		Search for:
-		<h:inputText id="searchForValue" value="#{LookupBean.searchForValue}" />
-		<h:commandButton id="searchButton" action="#{LookupBean.search}" value="Search" />
+		<table border="0" cellspacing="0" cellpadding="0" id="searchBox" style="position: absolute;">
+		<tr>
+			<td style="padding-left: 5px;">Search for:</td>
+			<td style="padding-left: 5px;"><h:inputText id="searchForValue" value="#{LookupBean.searchForValue}" style="width: 150px;" /></td>
+			<td style="padding-left: 5px;"><h:commandButton id="searchButton" action="#{LookupBean.search}" value="Search" /></td>
+		</tr>
+		</table>
 		
-		<br>
+		<div id="infoBox" style="position: absolute;">
+			<h:outputText value="#{LookupBean.infoLine}" />
+		</div>
 		
-		<h:selectManyListbox id="items">
+		<h:selectManyListbox id="items" style="position: absolute;">
 			<f:selectItems value="#{LookupBean.items}" />
 		</h:selectManyListbox>
 		
-		<input type="button" value="OK" onclick="add()" >
+		<table border="0" cellspacing="0" cellpadding="0" id="buttonsBox" style="position: absolute;">
+		<tr>
+			<td style="padding-left: 5px;"><input type="button" value="Add selected" onclick="addItems()" ></td>
+			<td style="padding-left: 5px;"><input type="button" value="Close window" onclick="closeWindow()" ></td>
+		</tr>
+		</table>
 		
 	</h:form>
 </f:view>

@@ -9,11 +9,8 @@ import javax.faces.component.UICommand;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -21,8 +18,6 @@ import edu.emory.library.tast.util.StringUtils;
 public class ImageListComponent extends UICommand
 {
 	
-	private MethodBinding onImageSelected;
-
 	private boolean imagesSet = false;
 	private List images;
 
@@ -35,19 +30,27 @@ public class ImageListComponent extends UICommand
 	private boolean thumbnailHeightSet = false;
 	private int thumbnailHeight;
 
+	private boolean selectedImageIdSet = false;
+	private String selectedImageId;
+	
+	public String getRendererType()
+	{
+		return null;
+	}
+	
 	public String getFamily()
 	{
-		return "edu.emory.library.tast.ImageList";
+		return null;
 	}
 	
 	public Object saveState(FacesContext context)
 	{
 		Object values[] = new Object[5];
 		values[0] = super.saveState(context);
-		values[1] = saveAttachedState(context, onImageSelected);
-		values[2] = listStyle;
-		values[3] = new Integer(thumbnailWidth);
-		values[4] = new Integer(thumbnailHeight);
+		values[1] = listStyle;
+		values[2] = new Integer(thumbnailWidth);
+		values[3] = new Integer(thumbnailHeight);
+		values[4] = selectedImageId;
 		return values;
 	}
 	
@@ -55,40 +58,36 @@ public class ImageListComponent extends UICommand
 	{
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
-		onImageSelected = (MethodBinding) restoreAttachedState(context, values[1]);
-		listStyle = (ImageListStyle) values[2];
-		thumbnailWidth = ((Integer) values[3]).intValue();
-		thumbnailHeight = ((Integer) values[4]).intValue();
+		listStyle = (ImageListStyle) values[1];
+		thumbnailWidth = ((Integer) values[2]).intValue();
+		thumbnailHeight = ((Integer) values[3]).intValue();
+		selectedImageId = (String) values[4];
 	}
 	
 	
-	private String getFieldNameForSelectedImage(FacesContext context)
+	private String getFieldNameForSelectedImageId(FacesContext context)
 	{
 		return getClientId(context) + "_selected_id";
 	}
 	
 	public void decode(FacesContext context)
 	{
+
 		Map params = context.getExternalContext().getRequestParameterMap();
 		
-		String imageId = JsfUtils.getParamString(params, getFieldNameForSelectedImage(context));
+		String imageId = JsfUtils.getParamString(params, getFieldNameForSelectedImageId(context));
 		if (!StringUtils.isNullOrEmpty(imageId))
 		{
-			queueEvent(new ImageSelectedEvent(this, imageId));
+			selectedImageId = imageId;
 			queueEvent(new ActionEvent(this));
 		}
 
 	}
 	
-	public void broadcast(FacesEvent event) throws AbortProcessingException
+	public void processUpdates(FacesContext context)
 	{
-		
-		super.broadcast(event);
-		
-		if (event instanceof ImageSelectedEvent)
-			if (onImageSelected != null)
-				onImageSelected.invoke(getFacesContext(), new Object[] {event});
-		
+        ValueBinding vb = getValueBinding("selectedImageId");
+        if (vb != null) vb.setValue(context, selectedImageId);
 	}
 	
 	private void encodeImageThumbnail(FacesContext context, ResponseWriter writer, ImageListItem image, String onClick, int thumbnailWidth, int thumbnailHeight) throws IOException
@@ -125,7 +124,7 @@ public class ImageListComponent extends UICommand
 			
 			String onClick = JsfUtils.generateSubmitJS(
 					context, form,
-					getFieldNameForSelectedImage(context), image.getId());
+					getFieldNameForSelectedImageId(context), image.getId());
 			
 			writer.startElement("tr", this);
 
@@ -167,7 +166,7 @@ public class ImageListComponent extends UICommand
 			
 			String onClick = JsfUtils.generateSubmitJS(
 					context, form,
-					getFieldNameForSelectedImage(context), image.getId());
+					getFieldNameForSelectedImageId(context), image.getId());
 
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "imagelist-gallery-image", null);
@@ -204,16 +203,18 @@ public class ImageListComponent extends UICommand
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
 		
-		// a field for storing the selected image id
-		JsfUtils.encodeHiddenInput(this, writer, getFieldNameForSelectedImage(context));
-
 		// get data from a bean
 		List images = getImages();
 		listStyle = getListStyle();
 		thumbnailWidth = getThumbnailWidth();
 		thumbnailHeight = getThumbnailHeight();
+		selectedImageId = getSelectedImageId();
 		
- 		// render table
+		// a field for storing the selected image id
+		JsfUtils.encodeHiddenInput(this, writer,
+				getFieldNameForSelectedImageId(context));
+
+		// render table
 		if (listStyle.equals(ImageListStyle.Table))
 			encodeTableOrList(context, writer, form,
 					images, false);
@@ -269,14 +270,11 @@ public class ImageListComponent extends UICommand
         	return (ImageListStyle) listStyleLocalObj;
 	}
 
-	public MethodBinding getOnImageSelected()
-	{
-		return onImageSelected;
-	}
 
-	public void setOnImageSelected(MethodBinding onImageSelected)
+	public void setThumbnailHeight(int thumbnailHeight)
 	{
-		this.onImageSelected = onImageSelected;
+		thumbnailHeightSet = true;
+		this.thumbnailHeight = thumbnailHeight; 
 	}
 
 	public int getThumbnailHeight()
@@ -287,10 +285,10 @@ public class ImageListComponent extends UICommand
         return ((Integer)vb.getValue(getFacesContext())).intValue();
 	}
 
-	public void setThumbnailHeight(int thumbnailHeight)
+	public void setThumbnailWidth(int thumbnailWidth)
 	{
-		thumbnailHeightSet = true;
-		this.thumbnailHeight = thumbnailHeight; 
+		thumbnailWidthSet = true;
+		this.thumbnailWidth = thumbnailWidth;
 	}
 
 	public int getThumbnailWidth()
@@ -301,10 +299,18 @@ public class ImageListComponent extends UICommand
         return ((Integer)vb.getValue(getFacesContext())).intValue();
 	}
 
-	public void setThumbnailWidth(int thumbnailWidth)
+	public void setSelectedImageId(String selectedImageId)
 	{
-		thumbnailWidthSet = true;
-		this.thumbnailWidth = thumbnailWidth;
+		selectedImageIdSet = true;
+		this.selectedImageId = selectedImageId;
+	}
+
+	public String getSelectedImageId()
+	{
+        if (selectedImageIdSet) return selectedImageId;
+        ValueBinding vb = getValueBinding("selectedImageId");
+        if (vb == null) return selectedImageId;
+        return (String) vb.getValue(getFacesContext());
 	}
 
 }
