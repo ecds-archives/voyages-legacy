@@ -25,9 +25,18 @@ public class LookupSourceRegions implements LookupSource
 	{
 		return getRegions(null);
 	}
+	
+	public int getMaxLimit()
+	{
+		return 0;
+	}
 
 	public List getItemsByValues(String[] ids)
 	{
+		
+		// nothing to do
+		if (ids == null)
+			return new ArrayList();
 
 		// open db
 		Session sess = HibernateUtil.getSession();

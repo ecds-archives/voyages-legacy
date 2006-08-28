@@ -26,8 +26,17 @@ public class LookupSourcePeople implements LookupSource
 		return null;
 	}
 
+	public int getMaxLimit()
+	{
+		return 100;
+	}
+	
 	public List getItemsByValues(String[] ids)
 	{
+
+		// nothing to do
+		if (ids == null)
+			return new ArrayList();
 
 		// open db
 		Session sess = HibernateUtil.getSession();
@@ -64,7 +73,7 @@ public class LookupSourcePeople implements LookupSource
 		Transaction transaction = sess.beginTransaction();
 		
 		// load all people
-		List dbPeople = Person.getPeopleList(sess, "%" + value + "%");
+		List dbPeople = Person.getPeopleList(sess, "%" + value + "%", getMaxLimit());
 		List uiPeople = new ArrayList(dbPeople.size());
 
 		// fill people list

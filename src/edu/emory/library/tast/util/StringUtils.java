@@ -35,9 +35,16 @@ public class StringUtils
 	
 	public static boolean isNullOrEmpty(String str)
 	{
-		return str == null || str.length() == 0;
+		return isNullOrEmpty(str, false);
 	}
 	
+	public static boolean isNullOrEmpty(String str, boolean trim)
+	{
+		if (str == null) return true;
+		if (trim) str = str.trim();
+		return str.length() == 0;
+	}
+
 	public static String coalesce(String str1, String str2)
 	{
 		if (str1 != null) return str1;

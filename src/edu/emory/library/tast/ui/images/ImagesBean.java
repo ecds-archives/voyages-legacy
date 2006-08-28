@@ -93,8 +93,6 @@ public class ImagesBean
 	public String openImage()
 	{
 		
-		System.out.println("openImage");
-		
 		// open db
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
@@ -141,8 +139,6 @@ public class ImagesBean
 	
 	public String newImage()
 	{
-		
-		System.out.println("newImage");
 		
 		// create an empty image
 		image = new Image();
