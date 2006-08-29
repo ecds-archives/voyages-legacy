@@ -27,9 +27,9 @@
 
 	<h:form>
 
-		<s:picture-gallery pictures="#{PicturesBean.pictureGalery}" rows="4" columns="2"
-			thumbnailWidth="100" thumbnailHeight="100" action="#{PicturesBean.showinfo}"
-			searchCondition="#{PicturesBean.searchCondition}" />
+		<s:picture-gallery pictures="#{PicturesBean.pictureGalery}" rows="6" columns="1"
+			thumbnailWidth="100" thumbnailHeight="100" action="#{PicturesBean.showinfo}" 
+		 	searchCondition="#{PicturesBean.searchCondition}" />
 
 	
 	</h:form>

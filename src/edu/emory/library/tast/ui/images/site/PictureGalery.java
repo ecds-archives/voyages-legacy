@@ -52,4 +52,12 @@ public class PictureGalery {
 	public GaleryImage getVisiblePicture() {
 		return this.visiblePicture;
 	}
+
+	public int getFirst() {
+		return this.firstVisible;
+	}
+	
+	public int getNumberOfAll() {
+		return this.pictures.length;
+	}
 }

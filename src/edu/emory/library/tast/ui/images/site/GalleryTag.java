@@ -75,7 +75,7 @@ public class GalleryTag extends UIComponentTag {
 		
 		if (action != null && component instanceof GalleryComponent) {
 			GalleryComponent gallery = (GalleryComponent)component;
-			gallery.setAction(new MethodBindingImpl(getFacesContext().getApplication(), action, new Class[] {}));
+			gallery.setAction(this.getFacesContext().getApplication().createMethodBinding(action, null));
 		}
 	}
 	

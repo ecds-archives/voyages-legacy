@@ -93,7 +93,7 @@ public class PicturesBean {
 			Person person = Person.loadById(id);
 
 			Query query = new Query();
-			QueryConditionText cond = new QueryConditionText("anycaptain");
+			QueryConditionText cond = new QueryConditionText("anyperson");
 			cond.setValue(person.getLastName());
 			query.addCondition(cond);
 			showReport(query);

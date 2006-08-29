@@ -836,4 +836,30 @@
 			<attribute name="fate2" />
 		</attributes>
 	</searchable-attribute>
+	<searchable-attribute type="simple" id="anyperson"
+		userCategory="general"
+		userLabel="Any captain or owner">
+		<attributes>
+			<attribute name="captainc" />
+			<attribute name="captainb" />
+			<attribute name="captaina" />
+			<attribute name="ownera" />
+			<attribute name="ownerf" />
+			<attribute name="ownerb" />
+			<attribute name="ownerc" />
+			<attribute name="ownerd" />
+			<attribute name="ownere" />
+			<attribute name="ownerg" />
+			<attribute name="ownerh" />
+			<attribute name="owneri" />
+			<attribute name="ownerj" />
+			<attribute name="ownerk" />
+			<attribute name="ownerl" />
+			<attribute name="ownerm" />
+			<attribute name="ownern" />
+			<attribute name="ownero" />
+			<attribute name="ownerp" />
+		</attributes>
+	</searchable-attribute>
+	
 </searchable-attributes>

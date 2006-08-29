@@ -139,17 +139,15 @@ public class GalleryComponent extends UICommand {
 				}
 			}
 			writer.endElement("table");
+			writer.startElement("div", this);
+			writer.writeAttribute("align", "right;", null);
+			writer.write("Showing images from " + (pictures.getFirst() + 1) + " to " + (pictures.getFirst() + rows*cols) + " out of "+ pictures.getNumberOfAll());
+			writer.endElement("div");
 			writer.endElement("td");
 
 			this.encodeButton(context, form, writer, GALLERY_FORWARD_BUTTON);
 			writer.endElement("tr");
 			writer.endElement("table");
-
-//			writer.endElement("td");
-//			writer.endElement("tr");
-//			writer.startElement("tr", this);
-//			writer.startElement("td", this);
-//			writer.writeAttribute("style", "text-align: center;", null);
 
 			GaleryImage visibleImage = pictures.getVisiblePicture();
 			if (visibleImage != null) {
@@ -162,15 +160,14 @@ public class GalleryComponent extends UICommand {
 				this.printImageInfo(context, form, writer, visibleImage);
 			}
 
-//			writer.endElement("td");
-
-//			writer.endElement("tr");
-//			writer.endElement("table");
 		}
 	}
 
 	private void printImageInfo(FacesContext context, UIForm form, ResponseWriter writer,
 			GaleryImage visibleImage) throws IOException {
+		writer.startElement("div", this);
+		writer.writeAttribute("style", "width: " + visibleImage.getImage().getWidth() + "px;", null);
+		writer.writeAttribute("align", "left", null);
 		writer.startElement("table", this);
 		writer.writeAttribute("class", "gallery-info-table", null);
 		writer.startElement("tr", this);
@@ -268,6 +265,8 @@ public class GalleryComponent extends UICommand {
 		}
 		writer.endElement("td");
 		writer.endElement("tr");
+		writer.endElement("table");
+		writer.endElement("div");
 	}
 
 	private void encodeButton(FacesContext context, UIForm form, ResponseWriter writer,
