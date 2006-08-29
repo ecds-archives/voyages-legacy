@@ -20,6 +20,7 @@ public class Dictionary {
 
 	private static Map attributes = new HashMap();
 	static {
+		attributes.put("id", new NumericAttribute("id", "Dictionary"));
 		attributes.put("name", new StringAttribute("name", "Dictionary"));
 		attributes.put("type", new NumericAttribute("type", "Dictionary"));
 		attributes.put("remoteId", new NumericAttribute("remoteId", "Dictionary"));
@@ -198,9 +199,12 @@ public class Dictionary {
 			e.printStackTrace();
 		} 
 
-		Object[] ret = HibernateConnector.getConnector().loadObjects(
-				p_dictionaryName, new String[] {"obj_type"}, new String[] {dictType + ""},
-				new boolean[] {false});
+		QueryValue query = new QueryValue(p_dictionaryName);
+		Object[] ret = query.executeQuery();
+		
+//		Object[] ret = HibernateConnector.getConnector().loadObjects(
+//				p_dictionaryName, new String[] {"obj_type"}, new String[] {dictType + ""},
+//				new boolean[] {false});
 
 		if (ret.length != 0) {
 			Dictionary[] dict = new Dictionary[ret.length];

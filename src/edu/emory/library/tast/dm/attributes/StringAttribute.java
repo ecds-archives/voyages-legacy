@@ -80,4 +80,10 @@ public class StringAttribute extends Attribute {
 	public String getHQLOuterJoinPath(Map bindings) {
 		return null;
 	}
+
+	public Object getValueToCondition(Object value) {
+//		StringBuffer buffer = new StringBuffer();
+//		buffer.append("'").append(value.toString()).append("'");
+		return value;
+	}
 }

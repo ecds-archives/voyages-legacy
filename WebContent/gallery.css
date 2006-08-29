@@ -1,0 +1,49 @@
+div.gallery-back-button {
+/*	position: absolute; 
+	top: 290px; 
+	left: 12px; */
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-back.png); 
+}
+
+div.gallery-back-button:hover {
+	background-position: 0px -24px; 
+}
+
+div.gallery-forward-button {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(map-icon-forward.png); }
+
+div.gallery-forward-button:hover {
+	background-position: 0px -24px; }
+
+table.gallery-table {
+	border-collapse: collapse;
+	margin-bottom: 15px;
+	font-family: Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
+	font-size: 8pt;
+}
+
+table.gallery-table tr {
+	border-bottom: 2px solid #CF5435;
+}
+
+table.gallery-table-thumbnails td {
+	font-family: Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
+	font-size: 8pt;
+	text-align: center;
+}
+
+table.gallery-info-table td {
+	font-family: Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
+	font-size: 8pt;
+	text-align: left;
+}

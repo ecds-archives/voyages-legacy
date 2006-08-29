@@ -14,9 +14,9 @@
 	</table-attribute>
 	<table-attribute tabs="1" id="anycaptain" userCategory="beginners" userLabel="Captain">
 		<attributes>
-			<attribute name="captainc"/>
-			<attribute name="captainb"/>
 			<attribute name="captaina"/>
+			<attribute name="captainb"/>
+			<attribute name="captainc"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="chilrat7" userCategory="beginners" userLabel="Child ratios">
@@ -312,11 +312,11 @@
 	<table-attribute tabs="1" id="anyowner" userCategory="beginners" userLabel="Owner">
 		<attributes>
 			<attribute name="ownera"/>
-			<attribute name="ownerf"/>
 			<attribute name="ownerb"/>
 			<attribute name="ownerc"/>
 			<attribute name="ownerd"/>
 			<attribute name="ownere"/>
+			<attribute name="ownerf"/>
 			<attribute name="ownerg"/>
 			<attribute name="ownerh"/>
 			<attribute name="owneri"/>

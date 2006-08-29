@@ -47,4 +47,8 @@ public class DirectValueAttribute extends Attribute {
 	public String getHQLOuterJoinPath(Map bindings) {
 		return null;
 	}
+
+	public Object getValueToCondition(Object value) {
+		return value;
+	}
 }

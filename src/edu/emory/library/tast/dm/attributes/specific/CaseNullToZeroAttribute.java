@@ -57,4 +57,8 @@ public class CaseNullToZeroAttribute extends Attribute {
 	public String getHQLOuterJoinPath(Map bindings) {
 		return attribute.getHQLOuterJoinPath(bindings);
 	}
+
+	public Object getValueToCondition(Object value) {
+		return attribute.getValueToCondition(value);
+	}
 }

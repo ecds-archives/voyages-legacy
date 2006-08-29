@@ -19,17 +19,17 @@
 		<property name="thumbnailFileName" column="thumbnail_file_name" />
 		<property name="thumbnailMimeType" column="thumbnail_mime_type" />
 		
-		<set name="regions" table="regions_images" lazy="true">
+		<set name="regions" table="regions_images" lazy="false">
 			<key column="image_id" />
 			<many-to-many column="region_id" class="edu.emory.library.tast.dm.Region" />
 		</set>
 		
-		<set name="ports" table="ports_images" lazy="true">
+		<set name="ports" table="ports_images" lazy="false">
 			<key column="image_id" />
 			<many-to-many column="port_id" class="edu.emory.library.tast.dm.Port" />
 		</set>
 
-		<set name="people" table="people_images" lazy="true">
+		<set name="people" table="people_images" lazy="false">
 			<key column="image_id" />
 			<many-to-many column="person_id" class="edu.emory.library.tast.dm.Person" />
 		</set>

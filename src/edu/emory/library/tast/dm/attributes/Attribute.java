@@ -58,7 +58,6 @@ public abstract class Attribute  {
 	}
 	
 	public Attribute(Node xmlNode, String objectType) {
-		System.out.println(xmlNode);
 		String name = parseAttribute(xmlNode, "name");
 		String userLabel = parseAttribute(xmlNode, "userLabel");
 		Integer importType = new Integer(IMPORT_TYPE_IGNORE);
@@ -270,6 +269,8 @@ public abstract class Attribute  {
 	public abstract String getHQLOuterJoinPath(Map bindings);
 	
 	public abstract String getHQLParamName();
+	
+	public abstract Object getValueToCondition(Object value);
 
 	public static String decodeType(Attribute attribute) {
 		if (attribute instanceof DateAttribute) {

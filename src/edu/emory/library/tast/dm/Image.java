@@ -7,13 +7,13 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public class Image
 {
@@ -200,9 +200,9 @@ public class Image
 
 	public static List getImagesList(Session sess)
 	{
-		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
-//		QueryValue query = new QueryValue("Image");
-//		return query.executeQueryList(sess);
+//		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
+		QueryValue query = new QueryValue("Image");
+		return query.executeQueryList(sess);
 	}
 
 	public static Image loadById(int imageId)
@@ -217,22 +217,22 @@ public class Image
 
 	public static Image loadById(int imageId, Session sess)
 	{
-		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
-		if (list == null || list.size() == 0) return null;
-		return (Image) list.get(0);
-		
-//		Conditions conditions = new Conditions();
-//		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);		
-//		QueryValue query = new QueryValue("Image", conditions);
-//		List list = query.executeQueryList(sess);
+//		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
 //		if (list == null || list.size() == 0) return null;
-//		return (Image) list.get(0);		
+//		return (Image) list.get(0);
+		
+		Conditions conditions = new Conditions();
+		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);		
+		QueryValue query = new QueryValue("Image", conditions);
+		List list = query.executeQueryList(sess);
+		if (list == null || list.size() == 0) return null;
+		return (Image) list.get(0);		
 	}
 	
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
 	}
-	
+
 }
 	

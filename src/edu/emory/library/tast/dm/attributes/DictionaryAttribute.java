@@ -100,4 +100,8 @@ public class DictionaryAttribute extends Attribute {
 		buffer.append(this.getName());
 		return buffer.toString();
 	}
+
+	public Object getValueToCondition(Object value) {
+		return value;
+	}
 }

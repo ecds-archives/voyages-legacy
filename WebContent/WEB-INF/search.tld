@@ -464,7 +464,12 @@
 		<attribute>
 			<name>thumbnailWidth</name>
 		</attribute>
-		
+		<attribute>
+			<name>action</name>
+		</attribute>	
+		<attribute>
+			<name>searchCondition</name>
+		</attribute>	
 	</tag>
 
 	<tag>

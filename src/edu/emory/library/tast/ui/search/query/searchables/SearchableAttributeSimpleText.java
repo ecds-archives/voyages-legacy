@@ -49,7 +49,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			Conditions orCond = new Conditions(Conditions.JOIN_OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
-				conditions.addCondition(attributes[i],
+				orCond.addCondition(attributes[i],
 						value, Conditions.OP_LIKE);
 		}
 		

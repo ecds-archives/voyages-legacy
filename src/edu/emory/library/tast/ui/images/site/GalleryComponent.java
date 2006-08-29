@@ -1,15 +1,17 @@
 package edu.emory.library.tast.ui.images.site;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.UICommand;
+import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.FacesEvent;
+
+import org.hibernate.mapping.ValueVisitor;
 
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
@@ -17,15 +19,11 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.util.JsfUtils;
 
-public class GalleryComponent extends UIComponentBase {
+public class GalleryComponent extends UICommand {
 
 	private static final String GALLERY_BACK_BUTTON = "gallery-back-button";
 
 	private static final String GALLERY_FORWARD_BUTTON = "gallery-forward-button";
-
-	public String getFamily() {
-		return null;
-	}
 
 	public void decode(FacesContext context) {
 		Map params = context.getExternalContext().getRequestParameterMap();
@@ -36,10 +34,17 @@ public class GalleryComponent extends UIComponentBase {
 					"rows").toString());
 			int cols = Integer.parseInt(this.getValueOrAttribute(context,
 					"columns").toString());
-			PictureGalery pictures = (PictureGalery) this.getValueBinding(
+			PictureGalery pictures = (PictureGalery) this.getBoundedValue(
 					context, "pictures");
-
-			if (pictures != null) {
+		
+			ValueBinding searchCondition = (ValueBinding)this.getValueBinding("searchCondition");
+			
+			if (action.startsWith("search_")) {
+				if (searchCondition != null) {
+					searchCondition.setValue(context, action.substring("search_".length()));
+					this.queueEvent(new ActionEvent(this));
+				}
+			} else if (pictures != null) {
 				if (GALLERY_FORWARD_BUTTON.equals(action)) {
 					if (pictures.canMoveForward(rows * cols)) {
 						pictures.moveForward(rows * cols);
@@ -55,11 +60,15 @@ public class GalleryComponent extends UIComponentBase {
 					pictures.setVisiblePicture(picts[visible]);
 				}
 			}
+			
 		}
 
 	}
 
 	public void encodeBegin(FacesContext context) throws IOException {
+		
+		UIForm form = JsfUtils.getForm(this, context);
+		
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
 		writer.writeAttribute("align", "center", null);
@@ -76,7 +85,7 @@ public class GalleryComponent extends UIComponentBase {
 		int thumbnailHeight = Integer.parseInt(this.getValueOrAttribute(
 				context, "thumbnailHeight").toString());
 
-		PictureGalery pictures = (PictureGalery) this.getValueBinding(context,
+		PictureGalery pictures = (PictureGalery) this.getBoundedValue(context,
 				"pictures");
 		if (pictures != null) {
 
@@ -86,19 +95,20 @@ public class GalleryComponent extends UIComponentBase {
 //			writer.writeAttribute("style", "text-align: center;", null);
 
 			writer.startElement("table", this);
-			writer.writeAttribute("class", "gallery-table-thumbnails", null);
+			writer.writeAttribute("class", "gallery-table", null);
 			writer.startElement("tr", this);
-			this.encodeButton(context, writer, GALLERY_BACK_BUTTON);
+			this.encodeButton(context, form, writer, GALLERY_BACK_BUTTON);
 
 			writer.startElement("td", this);
 			writer.startElement("table", this);
+			writer.writeAttribute("class", "gallery-table-thumbnails", null);
 			GaleryImage[] picts = pictures.getPictures(rows * cols);
 			for (int i = 0; i < rows * cols && i < picts.length; i++) {
 				if (i % rows == 0) {
 					writer.startElement("tr", this);
 				}
 				writer.startElement("td", this);
-				writer.writeAttribute("style", "text-align: center;", null);
+				//writer.writeAttribute("class", "text-align: center;", null);
 				Image image = picts[i].getImage();
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
@@ -131,7 +141,7 @@ public class GalleryComponent extends UIComponentBase {
 			writer.endElement("table");
 			writer.endElement("td");
 
-			this.encodeButton(context, writer, GALLERY_FORWARD_BUTTON);
+			this.encodeButton(context, form, writer, GALLERY_FORWARD_BUTTON);
 			writer.endElement("tr");
 			writer.endElement("table");
 
@@ -149,7 +159,7 @@ public class GalleryComponent extends UIComponentBase {
 				writer.writeAttribute("src", "images/"
 						+ visibleImage.getImage().getFileName(), null);
 				writer.endElement("img");
-				this.printImageInfo(context, writer, visibleImage);
+				this.printImageInfo(context, form, writer, visibleImage);
 			}
 
 //			writer.endElement("td");
@@ -159,9 +169,10 @@ public class GalleryComponent extends UIComponentBase {
 		}
 	}
 
-	private void printImageInfo(FacesContext context, ResponseWriter writer,
+	private void printImageInfo(FacesContext context, UIForm form, ResponseWriter writer,
 			GaleryImage visibleImage) throws IOException {
 		writer.startElement("table", this);
+		writer.writeAttribute("class", "gallery-info-table", null);
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
 		writer.write("Description:");
@@ -182,9 +193,13 @@ public class GalleryComponent extends UIComponentBase {
 		writer.startElement("td", this);
 		Person[] persons = visibleImage.getPeople();
 		if (persons != null) {
-			for (int i = 0; i < persons.length; i++) {
+			for (int i = 0; i < persons.length; i++) {				
 				Person person = persons[i];
 				writer.startElement("a", this);
+				
+				String js = JsfUtils.generateSubmitJS(context, form,
+						this.getHiddenFieldId(context), "search_person_" + person.getId());
+				writer.writeAttribute("onclick", js, null);
 				writer.writeAttribute("href", "#", null);
 				if (person.getFirstName() != null) {
 					writer.write(person.getFirstName());
@@ -194,7 +209,9 @@ public class GalleryComponent extends UIComponentBase {
 					writer.write(person.getLastName());
 				}
 				writer.endElement("a");
-				writer.write(" ");
+				if (i + 1 < persons.length) {
+					writer.write("; ");
+				}
 			}
 		}
 		writer.endElement("td");
@@ -211,9 +228,16 @@ public class GalleryComponent extends UIComponentBase {
 				Port port = ports[i];
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
+				
+				String js = JsfUtils.generateSubmitJS(context, form,
+						this.getHiddenFieldId(context), "search_port_" + port.getId());
+				writer.writeAttribute("onclick", js, null);
+				
 				writer.write(port.getName());
 				writer.endElement("a");
-				writer.write(" ");
+				if (i + 1 < persons.length) {
+					writer.write("; ");
+				}
 			}
 		}
 		writer.endElement("td");
@@ -230,22 +254,28 @@ public class GalleryComponent extends UIComponentBase {
 				Region region = regions[i];
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
+				
+				String js = JsfUtils.generateSubmitJS(context, form,
+						this.getHiddenFieldId(context), "search_region_" + region.getId());
+				writer.writeAttribute("onclick", js, null);
+				
 				writer.write(region.getName());
 				writer.endElement("a");
-				writer.write(" ");
+				if (i + 1 < persons.length) {
+					writer.write("; ");
+				}
 			}
 		}
 		writer.endElement("td");
 		writer.endElement("tr");
 	}
 
-	private void encodeButton(FacesContext context, ResponseWriter writer,
+	private void encodeButton(FacesContext context, UIForm form, ResponseWriter writer,
 			String button) throws IOException {
 		writer.startElement("td", this);
 		writer.startElement("div", this);
 		writer.writeAttribute("class", button, null);
-		String js = JsfUtils.generateSubmitJS(context, JsfUtils.getForm(this,
-				context), this.getHiddenFieldId(context), button);
+		String js = JsfUtils.generateSubmitJS(context, form, this.getHiddenFieldId(context), button);
 		writer.writeAttribute("onclick", js, null);
 		writer.endElement("div");
 		writer.endElement("td");
@@ -256,7 +286,7 @@ public class GalleryComponent extends UIComponentBase {
 		writer.endElement("div");
 	}
 
-	private Object getValueBinding(FacesContext context, String string) {
+	private Object getBoundedValue(FacesContext context, String string) {
 		ValueBinding vb = this.getValueBinding(string);
 		if (vb != null && vb.getValue(context) != null) {
 			return vb.getValue(context);
@@ -267,8 +297,8 @@ public class GalleryComponent extends UIComponentBase {
 	private Object getValueOrAttribute(FacesContext context, String string) {
 		if (this.getAttributes().containsKey(string)) {
 			return this.getAttributes().get(string);
-		} else if (this.getValueBinding(context, string) != null) {
-			return this.getValueBinding(context, string);
+		} else if (this.getBoundedValue(context, string) != null) {
+			return this.getBoundedValue(context, string);
 		} else {
 			return "-1";
 		}

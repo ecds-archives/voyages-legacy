@@ -1,8 +1,11 @@
 package edu.emory.library.tast.ui.images.site;
 
 import javax.faces.component.UIComponent;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
+
+import org.apache.myfaces.el.MethodBindingImpl;
 
 public class GalleryTag extends UIComponentTag {
 
@@ -15,6 +18,10 @@ public class GalleryTag extends UIComponentTag {
 	private String thumbnailHeight;
 	
 	private String thumbnailWidth;
+	
+	private String action;
+	
+	private String searchCondition;
 	
 	public String getComponentType() {
 		return "Gallery";
@@ -54,6 +61,21 @@ public class GalleryTag extends UIComponentTag {
 			} else {
 				component.getAttributes().put("columns", columns);
 			}
+		}
+		
+		if (searchCondition != null) {
+			if (isValueReference(searchCondition)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(searchCondition);
+				component.setValueBinding("searchCondition", vb);
+			} else {
+				component.getAttributes().put("searchCondition", searchCondition);
+			}
+		}
+		
+		if (action != null && component instanceof GalleryComponent) {
+			GalleryComponent gallery = (GalleryComponent)component;
+			gallery.setAction(new MethodBindingImpl(getFacesContext().getApplication(), action, new Class[] {}));
 		}
 	}
 	
@@ -110,6 +132,26 @@ public class GalleryTag extends UIComponentTag {
 
 	public void setThumbnailWidth(String thumbnailWidth) {
 		this.thumbnailWidth = thumbnailWidth;
+	}
+
+
+	public String getAction() {
+		return action;
+	}
+
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+
+	public String getSearchCondition() {
+		return searchCondition;
+	}
+
+
+	public void setSearchCondition(String searchCondition) {
+		this.searchCondition = searchCondition;
 	}
 
 }

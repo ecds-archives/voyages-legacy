@@ -81,4 +81,8 @@ public class SequenceAttribute extends Attribute {
 		
 		return buffer.toString().equals("") ? null : buffer.toString();
 	}
+
+	public Object getValueToCondition(Object value) {
+		return value;
+	}
 }

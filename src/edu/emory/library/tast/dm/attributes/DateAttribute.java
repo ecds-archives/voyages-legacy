@@ -139,5 +139,9 @@ public class DateAttribute extends Attribute {
 	public String getHQLOuterJoinPath(Map bindings) {
 		return null;
 	}
+
+	public Object getValueToCondition(Object value) {
+		return value;
+	}
 	
 }

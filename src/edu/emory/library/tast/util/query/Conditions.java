@@ -256,7 +256,7 @@ public class Conditions {
 				for (int i = 0; i < values.length; i++) {
 					ret.append(" :");
 					ret.append(val + "_" + i);
-					retMap.put(val + "_" + i, values[i]);
+					retMap.put(val + "_" + i, attr.getValueToCondition(values[i]));
 					if (i < values.length - 1) {
 						ret.append(", ");
 					}
@@ -272,7 +272,7 @@ public class Conditions {
 				ret.append(c.op);
 				ret.append(" :");
 				ret.append(val);
-				retMap.put(val, value);
+				retMap.put(val, attr.getValueToCondition(value));
 			} else {
 				//Handle direct value - avoid using :param notation.
 				processed++;
