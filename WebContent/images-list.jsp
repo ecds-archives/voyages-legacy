@@ -48,6 +48,13 @@ div.imagelist-gallery-image {
 			<f:selectItem itemLabel="Gallery" itemValue="gallery" />
 		</h:selectOneMenu>
 		
+		<h:selectOneMenu value="#{ImagesBean.thumbnailSize}">
+			<f:selectItem itemLabel="Small" itemValue="32x32" />
+			<f:selectItem itemLabel="Medium" itemValue="48x48" />
+			<f:selectItem itemLabel="Big" itemValue="64x64" />
+			<f:selectItem itemLabel="Huge" itemValue="128x128" />
+		</h:selectOneMenu>
+
 		<h:commandButton value="Change" />
 		<h:commandButton action="#{ImagesBean.newImage}" value="New image" />
 		

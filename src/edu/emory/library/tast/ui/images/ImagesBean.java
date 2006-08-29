@@ -41,6 +41,7 @@ public class ImagesBean
 
 	private String listStyle = "table";
 	private String selectedImageId;
+	private String thumbnailSize = "48x48";
 	
 	private Image image;
 	private UploadedFile uploadedImage;
@@ -68,6 +69,11 @@ public class ImagesBean
 		List dbImages = Image.getImagesList(sess);
 		List uiImages = new ArrayList(dbImages.size());
 		
+		// thumnail size
+		String [] thumbnailSizeArr = thumbnailSize.split("x");
+		String w = thumbnailSizeArr[0];
+		String h = thumbnailSizeArr[1];
+		
 		// move them to ui list
 		for (Iterator iter = dbImages.iterator(); iter.hasNext();)
 		{
@@ -75,7 +81,7 @@ public class ImagesBean
 			ImageListItem uiImage = new ImageListItem();
 			uiImage.setId(String.valueOf(image.getId()));
 			uiImage.setName(image.getName());
-			uiImage.setUrl("images/" + image.getThumbnailFileName());
+			uiImage.setUrl("servlet/thumbnail?i=" + image.getFileName() + "&w=" + w + "&h=" + h);
 			uiImage.setWidth(image.getWidth());
 			uiImage.setHeight(image.getHeight());
 			uiImages.add(uiImage);
@@ -464,6 +470,16 @@ public class ImagesBean
 	public void setSelectedImageId(String selectedImageId)
 	{
 		this.selectedImageId = selectedImageId;
+	}
+
+	public String getThumbnailSize()
+	{
+		return thumbnailSize;
+	}
+
+	public void setThumbnailSize(String thumbnailSize)
+	{
+		this.thumbnailSize = thumbnailSize;
 	}
 
 }

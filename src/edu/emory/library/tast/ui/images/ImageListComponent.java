@@ -101,8 +101,8 @@ public class ImageListComponent extends UICommand
 		writer.writeAttribute("class", "imagelist-thumbnail", null);
 		writer.writeAttribute("src", image.getUrl(), null);
 		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("width", String.valueOf(thumbnailWidth), null);
-		writer.writeAttribute("height", String.valueOf(thumbnailHeight), null);
+//		writer.writeAttribute("width", String.valueOf(thumbnailWidth), null);
+//		writer.writeAttribute("height", String.valueOf(thumbnailHeight), null);
 		writer.endElement("img");
 		
 		writer.endElement("a");

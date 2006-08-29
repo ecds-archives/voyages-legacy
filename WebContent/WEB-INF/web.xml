@@ -109,6 +109,11 @@
 		<servlet-class>edu.emory.library.tast.ui.maps.component.TileServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>ThumbnailServlet</servlet-name>
+		<servlet-class>edu.emory.library.tast.ui.images.ThumbnailServlet</servlet-class>
+	</servlet>
+
 <!-- 
     <servlet>
         <servlet-name>TestServlet</servlet-name>
@@ -167,6 +172,12 @@
 		<servlet-name>TileServlet</servlet-name>
 		<url-pattern>/servlet/maptile</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ThumbnailServlet</servlet-name>
+		<url-pattern>/servlet/thumbnail</url-pattern>
+	</servlet-mapping>
+
 <!-- 
 	<servlet-mapping>
 		<servlet-name>TestServlet</servlet-name>
