@@ -332,7 +332,7 @@ public class QueryValue {
 		//Get HQL query
 		ConditionResponse response = toStringWithParams();
 		
-		System.out.println(response.conditionString.toString());
+		//System.out.println(response.conditionString.toString());
 		
 		Query q = session.createQuery(response.conditionString.toString());
 		//Set properties of query

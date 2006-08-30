@@ -45,7 +45,7 @@
 						cellpadding="0" cellspacing="0" border="0">
 	
 						<h:column>
-							<h:commandLink actionListener="#{ReportBean.showRegionReport}" action="showreport">
+							<h:commandLink actionListener="#{ReportBean.showAfricanRegionReport}" action="showreport">
 								<f:param id="regionId" name="regionId" value="#{region.id}" />
 								<h:outputText value="#{region.name}" />
 							</h:commandLink>
@@ -55,7 +55,37 @@
 					
 				</div>
 			
-			</td>	
+			</td>
+			<td valign="top" class="report">
+
+				<div class="report">
+			
+					<div class="report-section">Volume of slave trade by American destination</div>
+					<div class="report-desciption">
+					Some desciption of the report.
+					Some desciption of the report.
+					Some desciption of the report.
+					Some desciption of the report.
+					</div>
+					
+					<h:dataTable
+						id="regions"
+						var="region"
+						value="#{ReportBean.americanRegions}"
+						cellpadding="0" cellspacing="0" border="0">
+	
+						<h:column>
+							<h:commandLink actionListener="#{ReportBean.showAmericanRegionReport}" action="showreport">
+								<f:param id="regionId" name="regionId" value="#{region.id}" />
+								<h:outputText value="#{region.name}" />
+							</h:commandLink>
+						</h:column>
+					
+					</h:dataTable>
+					
+				</div>
+			
+			</td>
 			<td valign="top" class="report">
 	
 				<div class="report">

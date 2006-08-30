@@ -19,7 +19,7 @@ public class ReportBean
 	
 	private SearchBean searchBean;
 	
-	public void showRegionReport(ActionEvent event)
+	public void showAfricanRegionReport(ActionEvent event)
 	{
 		
 		UIParameter regionIdParam = (UIParameter) event.getComponent().findComponent("regionId");
@@ -34,6 +34,21 @@ public class ReportBean
 		
 	}
 	
+	public void showAmericanRegionReport(ActionEvent event)
+	{
+		
+		UIParameter regionIdParam = (UIParameter) event.getComponent().findComponent("regionId");
+
+		Query query = new Query();
+		
+		QueryConditionList condRegion = new QueryConditionList("mjselimp");
+		condRegion.addId(regionIdParam.getValue().toString());
+		query.addCondition(condRegion);
+		
+		showReport(query);
+		
+	}
+
 	public void showDistributionReport(ActionEvent event)
 	{
 		Query query = new Query();
@@ -87,6 +102,12 @@ public class ReportBean
 		return Dictionary.loadDictionaryList("EmbRegion");
 	}
 	
+	public List getAmericanRegions()
+	{
+		//return Region.getRegionsList();
+		return Dictionary.loadDictionaryList("Mjselrg2");
+	}
+
 	public List getNationalCarriers()
 	{
 		return Dictionary.loadDictionaryList("ImputedNation");
