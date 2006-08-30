@@ -1,6 +1,8 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -8,11 +10,22 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class Port extends Location
 {
 	
+	private static Map attributes = new HashMap();
+	static
+	{
+		attributes.put("id", new StringAttribute("id", "Port"));
+		attributes.put("name", new NumericAttribute("name", "Port"));
+		attributes.put("region", new NumericAttribute("region", "Port"));
+	}
+
 	private Region region;
 
 	public Region getRegion()
@@ -75,6 +88,11 @@ public class Port extends Location
 		addOrder(Order.asc("name"));
 		if (substring != null) crit.add(Restrictions.ilike("name", substring));
 		return crit.list();
+	}
+
+	public static Attribute getAttribute(String name)
+	{
+		return (Attribute)attributes.get(name);
 	}
 
 }

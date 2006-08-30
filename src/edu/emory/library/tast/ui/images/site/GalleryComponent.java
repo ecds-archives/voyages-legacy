@@ -126,8 +126,7 @@ public class GalleryComponent extends UICommand {
 					writer.writeAttribute("height", String
 							.valueOf(thumbnailHeight), null);
 				}
-				writer.writeAttribute("src", "images/"
-						+ image.getThumbnailFileName(), null);
+				writer.writeAttribute("src", "images/x", null);
 				writer.writeAttribute("style", "cursor: pointer;", null);
 
 				writer.write("<br/>");

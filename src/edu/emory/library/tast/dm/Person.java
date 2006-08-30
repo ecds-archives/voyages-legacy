@@ -1,6 +1,8 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -8,12 +10,23 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class Person
 {
 	
+	private static Map attributes = new HashMap();
+	static
+	{
+		attributes.put("id", new StringAttribute("id", "Person"));
+		attributes.put("firstName", new StringAttribute("firstName", "Person"));
+		attributes.put("middleName", new StringAttribute("description", "Person"));
+		attributes.put("lastName", new StringAttribute("lastName", "Person"));
+	}
+
 	private int id;
 	private String firstName;
 	private String middleName;
@@ -127,4 +140,9 @@ public class Person
 		return id;
 	}
 	
+	public static Attribute getAttribute(String name)
+	{
+		return (Attribute)attributes.get(name);
+	}
+
 }

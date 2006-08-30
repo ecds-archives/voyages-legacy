@@ -235,6 +235,16 @@ public class QueryValue {
 				}
 			}
 		}
+		if (orderBy != null)
+		{
+			for (int i = 0; i < orderBy.length; i++)
+			{
+				Attribute attr = orderBy[i];
+				if (attr.isOuterjoinable()) {
+					fetchClause.append(" left outer join ").append(attr.getHQLOuterJoinPath(bindings));
+				}
+			}
+		}
 		
 		HashMap allProperties = new HashMap();
 		
@@ -322,7 +332,7 @@ public class QueryValue {
 		//Get HQL query
 		ConditionResponse response = toStringWithParams();
 		
-		//System.out.println(response.conditionString.toString());
+		System.out.println(response.conditionString.toString());
 		
 		Query q = session.createQuery(response.conditionString.toString());
 		//Set properties of query

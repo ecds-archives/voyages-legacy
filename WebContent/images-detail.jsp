@@ -15,7 +15,7 @@
 	
 <style type="text/css">
 
-body {
+body, input, select {
 	font-family: Verdana, Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
 	font-size: 8pt; }
 	
@@ -32,6 +32,10 @@ div.section {
 <body>
 <f:view>
 	<h:form id="form" enctype="multipart/form-data">
+	
+		<div style="font-size: 12pt; font-weight: bold; padding: 0px 5px 5px 5px; font-family: Arial, sans-serif;">
+		Trans-Atlantic Trade Slave / Image database
+		</div>
 	
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>

@@ -143,9 +143,13 @@ public class ImageListComponent extends UICommand
 			writer.endElement("a");
 			writer.endElement("td");
 			
-			writer.startElement("td", this);
-			writer.write(image.getWidth() + " x " + image.getHeight());
-			writer.endElement("td");
+			String[] subItems = image.getSubItems();
+			for (int i = 0; i < subItems.length; i++)
+			{
+				writer.startElement("td", this);
+				writer.write(subItems[i]);
+				writer.endElement("td");
+			}
 
 			writer.endElement("tr");
 			
@@ -178,15 +182,17 @@ public class ImageListComponent extends UICommand
 
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "imagelist-gallery-name", null);
+			writer.startElement("a", this);
 			writer.writeAttribute("href", "#", null);
 			writer.writeAttribute("onclick", onClick, null);
 			writer.write(image.getName());
+			writer.endElement("a");
 			writer.endElement("div");
 			
-			writer.startElement("div", this);
-			writer.writeAttribute("class", "imagelist-gallery-size", null);
-			writer.write(image.getWidth() + " x " + image.getHeight());
-			writer.endElement("div");
+//			writer.startElement("div", this);
+//			writer.writeAttribute("class", "imagelist-gallery-size", null);
+//			writer.write(image.getWidth() + " x " + image.getHeight());
+//			writer.endElement("div");
 
 			writer.endElement("div");
 			

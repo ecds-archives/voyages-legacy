@@ -1,6 +1,8 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -9,18 +11,22 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class Region extends Location
 {
-//	private static Map attributes = new HashMap();
-//	static {
-//		attributes.put("id", new StringAttribute("id", "Region"));
-//		attributes.put("name", new StringAttribute("name", "Region"));
-//		attributes.put("x", new NumericAttribute("x", "Region"));
-//		attributes.put("y", new NumericAttribute("y", "Region"));
-//		attributes.put("ports", new NumericAttribute("ports", "Region"));
-//	}
+	
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new StringAttribute("id", "Region"));
+		attributes.put("name", new StringAttribute("name", "Region"));
+		attributes.put("x", new NumericAttribute("x", "Region"));
+		attributes.put("y", new NumericAttribute("y", "Region"));
+		attributes.put("ports", new NumericAttribute("ports", "Region"));
+	}
 	
 	private Set ports;
 
@@ -92,9 +98,10 @@ public class Region extends Location
 	}
 	
 	
-	//	public static Attribute getAttribute(String name) {
-//		return (Attribute)attributes.get(name);
-//	}
+	public static Attribute getAttribute(String name)
+	{
+		return (Attribute)attributes.get(name);
+	}
 
 	//	public static void main(String[] args)
 //	{

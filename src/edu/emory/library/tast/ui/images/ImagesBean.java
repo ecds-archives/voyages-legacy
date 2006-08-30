@@ -42,6 +42,7 @@ public class ImagesBean
 	private String listStyle = "table";
 	private String selectedImageId;
 	private String thumbnailSize = "48x48";
+	private String searchInListFor = null;
 	
 	private Image image;
 	private UploadedFile uploadedImage;
@@ -66,7 +67,7 @@ public class ImagesBean
 		Transaction transaction = sess.beginTransaction();
 		
 		// load images from db and create a new list
-		List dbImages = Image.getImagesList(sess);
+		List dbImages = Image.getImagesList(sess, searchInListFor);
 		List uiImages = new ArrayList(dbImages.size());
 		
 		// thumnail size
@@ -78,12 +79,17 @@ public class ImagesBean
 		for (Iterator iter = dbImages.iterator(); iter.hasNext();)
 		{
 			Image image = (Image) iter.next();
+			
+			String subItems[] = new String[] {
+					image.getHeight() + "x" + image.getHeight(),
+					image.getMimeType()
+			};
+			
 			ImageListItem uiImage = new ImageListItem();
 			uiImage.setId(String.valueOf(image.getId()));
 			uiImage.setName(image.getName());
 			uiImage.setUrl("servlet/thumbnail?i=" + image.getFileName() + "&w=" + w + "&h=" + h);
-			uiImage.setWidth(image.getWidth());
-			uiImage.setHeight(image.getHeight());
+			uiImage.setSubItems(subItems);
 			uiImages.add(uiImage);
 		}
 		
@@ -93,7 +99,13 @@ public class ImagesBean
 		
 		// return list of images
 		return uiImages;
+
+	}
+	
+	public String searchInList()
+	{
 		
+		return null;
 	}
 
 	public String openImage()
@@ -105,11 +117,16 @@ public class ImagesBean
 		
 		// load image itself
 		image = Image.loadById(Integer.parseInt(selectedImageId), sess);
-		
+
+		// sort
+		List regions = sess.createFilter(image.getRegions(), "order by this.name").list();		
+		List ports = sess.createFilter(image.getPorts(), "order by this.name").list();		
+		List people = sess.createFilter(image.getPeople(), "order by this.lastName, this.firstName, this.middleName").list();		
+
 		// selected regions
 		int i = 0;
-		selectedRegionsIds = new String[image.getRegions().size()];
-		for (Iterator iter = image.getRegions().iterator(); iter.hasNext();)
+		selectedRegionsIds = new String[regions.size()];
+		for (Iterator iter = regions.iterator(); iter.hasNext();)
 		{
 			Region dbRegion = (Region) iter.next();
 			selectedRegionsIds[i++] = String.valueOf(dbRegion.getId());
@@ -117,8 +134,8 @@ public class ImagesBean
 		
 		// selected ports
 		int j = 0;
-		selectedPortsIds = new String[image.getPorts().size()];
-		for (Iterator iter = image.getPorts().iterator(); iter.hasNext();)
+		selectedPortsIds = new String[ports.size()];
+		for (Iterator iter = ports.iterator(); iter.hasNext();)
 		{
 			Port dbPort = (Port) iter.next();
 			selectedPortsIds[j++] = String.valueOf(dbPort.getId());
@@ -126,8 +143,8 @@ public class ImagesBean
 
 		// selected people
 		int k = 0;
-		selectedPeopleIds = new String[image.getPeople().size()];
-		for (Iterator iter = image.getPeople().iterator(); iter.hasNext();)
+		selectedPeopleIds = new String[people.size()];
+		for (Iterator iter = people.iterator(); iter.hasNext();)
 		{
 			Person dbPerson = (Person) iter.next();
 			selectedPeopleIds[k++] = String.valueOf(dbPerson.getId());
@@ -480,6 +497,16 @@ public class ImagesBean
 	public void setThumbnailSize(String thumbnailSize)
 	{
 		this.thumbnailSize = thumbnailSize;
+	}
+
+	public String getSearchInListFor()
+	{
+		return searchInListFor;
+	}
+
+	public void setSearchInListFor(String searchInListFor)
+	{
+		this.searchInListFor = searchInListFor;
 	}
 
 }

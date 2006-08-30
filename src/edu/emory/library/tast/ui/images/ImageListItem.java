@@ -6,18 +6,7 @@ public class ImageListItem
 	private String id;
 	private String name;
 	private String url; 
-	private int width;
-	private int height;
-	
-	public int getHeight()
-	{
-		return height;
-	}
-	
-	public void setHeight(int height)
-	{
-		this.height = height;
-	}
+	private String[] subItems;
 	
 	public String getName()
 	{
@@ -39,16 +28,6 @@ public class ImageListItem
 		this.url = url;
 	}
 	
-	public int getWidth()
-	{
-		return width;
-	}
-	
-	public void setWidth(int width)
-	{
-		this.width = width;
-	}
-	
 	public String getId()
 	{
 		return id;
@@ -57,6 +36,16 @@ public class ImageListItem
 	public void setId(String id)
 	{
 		this.id = id;
+	}
+
+	public String[] getSubItems()
+	{
+		return subItems;
+	}
+
+	public void setSubItems(String[] subItems)
+	{
+		this.subItems = subItems;
 	}
 
 }
