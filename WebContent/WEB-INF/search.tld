@@ -441,6 +441,9 @@
 		<attribute>
 			<name>thumbnailHeight</name>
 		</attribute>
+		<attribute>
+			<name>columns</name>
+		</attribute>
 	</tag>
 	
 	<tag>

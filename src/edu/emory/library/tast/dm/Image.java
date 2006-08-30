@@ -39,6 +39,9 @@ public class Image
 	private int id;
 	private String name;
 	private String description;
+	private String source;
+	private String dateCreated;
+	private String painter;
 	private String fileName;
 	private String mimeType;
 	private Set regions; 
@@ -47,6 +50,36 @@ public class Image
 	private int width;
 	private int height;
 	
+	public String getDateCreated()
+	{
+		return dateCreated;
+	}
+
+	public void setDateCreated(String dateCreated)
+	{
+		this.dateCreated = dateCreated;
+	}
+
+	public String getPainter()
+	{
+		return painter;
+	}
+
+	public void setPainter(String painter)
+	{
+		this.painter = painter;
+	}
+
+	public String getSource()
+	{
+		return source;
+	}
+
+	public void setSource(String source)
+	{
+		this.source = source;
+	}
+
 	public String getDescription()
 	{
 		return description;
@@ -189,19 +222,22 @@ public class Image
 	{
 //		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
 
+		QueryValue query = null;
 		if (!StringUtils.isNullOrEmpty(searchFor))
 		{
 			searchFor = "%" + searchFor + "%";
 			Conditions conds = new Conditions(Conditions.JOIN_AND);
 			conds.addCondition(getAttribute("name"), searchFor, Conditions.OP_LIKE);
-			QueryValue query = new QueryValue("Image", conds);
-			return query.executeQueryList(sess);
+			query = new QueryValue("Image", conds);
 		}
 		else
 		{
-			QueryValue query = new QueryValue("Image");
-			return query.executeQueryList(sess);
+			query = new QueryValue("Image");
 		}
+		
+		query.setOrderBy(new Attribute[] {getAttribute("name")});
+		query.setOrder(QueryValue.ORDER_ASC);
+		return query.executeQueryList(sess);		
 	}
 
 	public static Image loadById(int imageId)

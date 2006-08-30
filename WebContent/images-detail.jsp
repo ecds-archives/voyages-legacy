@@ -36,62 +36,72 @@ div.section {
 		<div style="font-size: 12pt; font-weight: bold; padding: 0px 5px 5px 5px; font-family: Arial, sans-serif;">
 		Trans-Atlantic Trade Slave / Image database
 		</div>
+		
+		<div class="section">Image</div>
 	
-		<table border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td valign="top">
-
-				<h:graphicImage 
-					url="#{ImagesBean.imageUrl}"
-					width="#{ImagesBean.image.width}"
-					height="#{ImagesBean.image.height}" />
-					
-				<br>
-				
-				<h:outputText value="#{ImagesBean.imageInfo}" />
-				
-				<br>
-					
-				<h:commandButton
-					value="Upload new image"
-					action="#{ImagesBean.showUploadBox}"
-					rendered="#{!ImagesBean.uploadBoxShown}" />
-				
-				<h:panelGroup rendered="#{ImagesBean.uploadBoxShown}">
-					
-					<t:inputFileUpload
-						storage="file"
-						value="#{ImagesBean.uploadedImage}" />
-						
-					<h:commandButton
-						action="#{ImagesBean.uploadNewImage}"
-						value="Upload" />
-					
-					<h:commandButton
-						action="#{ImagesBean.hideUploadBox}"
-						value="Cancel" />
-						
-				</h:panelGroup>
-					
-			</td>
-			<td valign="top">
+		<h:graphicImage 
+			url="#{ImagesBean.imageUrl}"
+			width="#{ImagesBean.image.width}"
+			height="#{ImagesBean.image.height}" />
 			
-				<table border="0" cellspacing="5" cellpadding="0">
-				<tr>
-					<td>Name</td>
-					<td><h:inputText value="#{ImagesBean.image.name}" /></td>
-				</tr>
-				<tr>
-					<td>Description</td>
-					<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.description}" /></td>
-				</tr>
-				</table>
-			
-			</td>
-		</tr>
-		</table>
+		<br>
+		
+		<h:outputText value="#{ImagesBean.imageInfo}" />
 		
 		<br>
+			
+		<h:commandButton
+			value="Upload new image"
+			action="#{ImagesBean.showUploadBox}"
+			rendered="#{!ImagesBean.uploadBoxShown}" />
+		
+		<h:panelGroup rendered="#{ImagesBean.uploadBoxShown}">
+			
+			<t:inputFileUpload
+				storage="file"
+				value="#{ImagesBean.uploadedImage}" />
+				
+			<h:commandButton
+				action="#{ImagesBean.uploadNewImage}"
+				value="Upload" />
+			
+			<h:commandButton
+				action="#{ImagesBean.hideUploadBox}"
+				value="Cancel" />
+				
+		</h:panelGroup>
+		
+		<br>
+		<br>
+
+		<div class="section">Image metadata</div>
+			
+		<table border="0" cellspacing="5" cellpadding="0">
+		<tr>
+			<td>Name</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.name}" /></td>
+		</tr>
+		<tr>
+			<td>Description</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.description}" /></td>
+		</tr>
+		<tr>
+			<td>Source</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.source}" /></td>
+		</tr>
+		<tr>
+			<td>Date created</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.dateCreated}" /></td>
+		</tr>
+		<tr>
+			<td>Painter</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.painter}" /></td>
+		</tr>
+		</table>
+			
+		<br>
+
+		<div class="section">Database connections</div>
 		
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
@@ -125,7 +135,7 @@ div.section {
 		</tr>
 		</table>
 		
-		<hr>
+		<div style="margin-top: 10px; border-bottom: 2px solid #CCCCCC; margin-bottom: 10px;"></div>
 		
 		<h:commandButton value="Save" action="#{ImagesBean.saveImage}" />
 		<h:commandButton value="Cancel" action="#{ImagesBean.cancelEdit}" />

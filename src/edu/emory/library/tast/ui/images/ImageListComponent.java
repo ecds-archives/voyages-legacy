@@ -20,7 +20,10 @@ public class ImageListComponent extends UICommand
 	
 	private boolean imagesSet = false;
 	private List images;
-
+	
+	private boolean columnsSet = false;
+	private ImageListColumn[] columns;
+	
 	private boolean listStyleSet = false;
 	private ImageListStyle listStyle = ImageListStyle.Table;
 	
@@ -45,12 +48,13 @@ public class ImageListComponent extends UICommand
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[5];
+		Object values[] = new Object[6];
 		values[0] = super.saveState(context);
 		values[1] = listStyle;
 		values[2] = new Integer(thumbnailWidth);
 		values[3] = new Integer(thumbnailHeight);
 		values[4] = selectedImageId;
+		values[5] = columns;
 		return values;
 	}
 	
@@ -62,6 +66,7 @@ public class ImageListComponent extends UICommand
 		thumbnailWidth = ((Integer) values[2]).intValue();
 		thumbnailHeight = ((Integer) values[3]).intValue();
 		selectedImageId = (String) values[4];
+		columns = (ImageListColumn[]) values[5];
 	}
 	
 	
@@ -118,6 +123,27 @@ public class ImageListComponent extends UICommand
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("class", "imagelist-table", null);
 		
+		if (columns != null)
+		{
+			writer.startElement("tr", this);
+			
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "imagelist-table-header", null);
+			if (displayThumbnails) writer.writeAttribute("colspan", "2", null);
+			writer.write("Image");
+			writer.endElement("td");
+			
+			writer.endElement("td");
+			for (int i = 0; i < columns.length; i++)
+			{
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "imagelist-table-header", null);
+				writer.write(columns[i].getName());
+				writer.endElement("td");
+			}
+			writer.endElement("tr");
+		}
+		
 		for (Iterator iter = images.iterator(); iter.hasNext();)
 		{
 			ImageListItem image = (ImageListItem) iter.next();
@@ -163,6 +189,7 @@ public class ImageListComponent extends UICommand
 	{
 
 		writer.startElement("div", this);
+		writer.writeAttribute("class", "imagelist-gallery", null);
 		
 		for (Iterator iter = images.iterator(); iter.hasNext();)
 		{
@@ -317,6 +344,20 @@ public class ImageListComponent extends UICommand
         ValueBinding vb = getValueBinding("selectedImageId");
         if (vb == null) return selectedImageId;
         return (String) vb.getValue(getFacesContext());
+	}
+
+	public void setColumns(ImageListColumn[] columns)
+	{
+		columnsSet = true;
+		this.columns = columns;
+	}
+
+	public ImageListColumn[] getColumns()
+	{
+        if (columnsSet) return columns;
+        ValueBinding vb = getValueBinding("columnsId");
+        if (vb == null) return columns;
+        return (ImageListColumn[]) vb.getValue(getFacesContext());
 	}
 
 }

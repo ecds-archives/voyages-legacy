@@ -21,6 +21,9 @@ a {
 table.imagelist-table {
 	border-collapse: collapse; }
 	
+td.imagelist-table-header {
+	font-weight: bold; }
+
 table.imagelist-table td {
 	padding-right: 10px;
 	padding-bottom: 5px;
@@ -30,6 +33,9 @@ table.imagelist-table td {
 	
 img.imagelist-thumbnail {
 	border: 2px solid #CCCCCC; }
+	
+div.imagelist-gallery {
+	margin: 5px; }
 	
 div.imagelist-gallery-image {
 	text-align: center;
@@ -77,6 +83,7 @@ div.imagelist-gallery-image {
 		
 		<s:imageList
 			id="images"
+			columns="Size, Image type, Date created, Source"
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
 			selectedImageId="#{ImagesBean.selectedImageId}"

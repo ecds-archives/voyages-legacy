@@ -17,6 +17,7 @@ public class ImageListTag extends UIComponentTagBase
 	private String action;
 	private String thumbnailWidth;
 	private String thumbnailHeight;
+	private String columns;
 
 	public String getComponentType()
 	{
@@ -86,6 +87,25 @@ public class ImageListTag extends UIComponentTagBase
 			imageList.setThumbnailWidth(Integer.parseInt(thumbnailHeight));
 		}
 
+		if (columns != null && isValueReference(columns))
+		{
+			ValueBinding vb = app.createValueBinding(columns);
+			component.setValueBinding("columns", vb);
+		}
+		else
+		{
+			if (columns != null)
+			{
+				String[] columnsStr = columns.split("\\s*,\\s*");
+				ImageListColumn[] columns = new ImageListColumn[columnsStr.length];
+				for (int i = 0; i < columnsStr.length; i++)
+				{
+					columns[i] = new ImageListColumn(columnsStr[i]);
+				}
+				imageList.setColumns(columns);
+			}
+		}
+
 	}
 
 	public String getListStyle()
@@ -146,6 +166,16 @@ public class ImageListTag extends UIComponentTagBase
 	public void setSelectedImageId(String selectedImageId)
 	{
 		this.selectedImageId = selectedImageId;
+	}
+
+	public String getColumns()
+	{
+		return columns;
+	}
+
+	public void setColumns(String columns)
+	{
+		this.columns = columns;
 	}
 
 }

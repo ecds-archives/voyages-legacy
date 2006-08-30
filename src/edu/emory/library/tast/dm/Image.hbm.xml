@@ -11,12 +11,16 @@
 		</id>
 		
 		<property name="name" column="name" />
-		<property name="description" column="description" />
 		<property name="fileName" column="file_name" />
 		<property name="width" column="width" />
 		<property name="height" column="height" />
 		<property name="mimeType" column="mime_type" />
 		
+		<property name="description" column="description" />
+		<property name="source" column="source" />
+		<property name="dateCreated" column="date_created" />
+		<property name="painter" column="painter" />
+
 		<set name="regions" table="regions_images" lazy="false">
 			<key column="image_id" />
 			<many-to-many column="region_id" class="edu.emory.library.tast.dm.Region" />

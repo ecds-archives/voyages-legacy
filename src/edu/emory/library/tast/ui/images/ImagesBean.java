@@ -82,7 +82,9 @@ public class ImagesBean
 			
 			String subItems[] = new String[] {
 					image.getHeight() + "x" + image.getHeight(),
-					image.getMimeType()
+					image.getMimeType(),
+					StringUtils.coalesce(image.getDateCreated(), ""),
+					StringUtils.coalesce(image.getSource(), ""),
 			};
 			
 			ImageListItem uiImage = new ImageListItem();
