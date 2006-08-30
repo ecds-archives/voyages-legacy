@@ -63,6 +63,26 @@ public class GalleryTag extends UIComponentTag {
 			}
 		}
 		
+		if (thumbnailWidth != null) {
+			if (isValueReference(thumbnailWidth)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(thumbnailWidth);
+				component.setValueBinding("thumbnailWidth", vb);
+			} else {
+				component.getAttributes().put("thumbnailWidth", thumbnailWidth);
+			}
+		}
+		
+		if (thumbnailHeight != null) {
+			if (isValueReference(thumbnailHeight)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(thumbnailHeight);
+				component.setValueBinding("thumbnailHeight", vb);
+			} else {
+				component.getAttributes().put("thumbnailHeight", thumbnailHeight);
+			}
+		}
+		
 		if (searchCondition != null) {
 			if (isValueReference(searchCondition)) {
 				ValueBinding vb = getFacesContext().getApplication()

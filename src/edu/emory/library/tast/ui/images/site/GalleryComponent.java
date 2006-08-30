@@ -89,11 +89,6 @@ public class GalleryComponent extends UICommand {
 				"pictures");
 		if (pictures != null) {
 
-//			writer.startElement("table", this);
-//			writer.startElement("tr", this);
-//			writer.startElement("td", this);
-//			writer.writeAttribute("style", "text-align: center;", null);
-
 			writer.startElement("table", this);
 			writer.writeAttribute("class", "gallery-table", null);
 			writer.startElement("tr", this);
@@ -108,7 +103,6 @@ public class GalleryComponent extends UICommand {
 					writer.startElement("tr", this);
 				}
 				writer.startElement("td", this);
-				//writer.writeAttribute("class", "text-align: center;", null);
 				Image image = picts[i].getImage();
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
@@ -126,7 +120,9 @@ public class GalleryComponent extends UICommand {
 					writer.writeAttribute("height", String
 							.valueOf(thumbnailHeight), null);
 				}
-				writer.writeAttribute("src", "images/x", null);
+				writer.writeAttribute("src", "servlet/thumbnail?i="
+						+ image.getFileName() + "&w=" + thumbnailWidth + "&h=" + thumbnailHeight, null);
+				
 				writer.writeAttribute("style", "cursor: pointer;", null);
 
 				writer.write("<br/>");
