@@ -215,7 +215,9 @@ public class UITableResultTab extends UIOutput {
 					Object obj = values[j];
 					TableData.ColumnData columnData = (TableData.ColumnData)obj;
 					if (obj != null) {
-						if (columnData.toString().length() > TRIM_LENGTH) {
+						if (columnData == null) {
+							visibleLabel = "empty";
+						} else if (columnData.toString().length() > TRIM_LENGTH) {
 							visibleLabel = columnData.toString().substring(0, TRIM_LENGTH) + " ...";
 							//visibleToolTop = objString.replaceAll(" ", "&nbsp;");
 							visibleToolTop = columnData.getToolTipText(data);

@@ -12,7 +12,6 @@ import org.hibernate.Session;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.dictionaries.Carib;
 import edu.emory.library.tast.dm.dictionaries.DepDefinition;
-import edu.emory.library.tast.dm.dictionaries.DeparturePort;
 import edu.emory.library.tast.dm.dictionaries.DepartureRegion;
 import edu.emory.library.tast.dm.dictionaries.Editor;
 import edu.emory.library.tast.dm.dictionaries.EmbRegion;
@@ -20,19 +19,13 @@ import edu.emory.library.tast.dm.dictionaries.Fate2;
 import edu.emory.library.tast.dm.dictionaries.Fate3;
 import edu.emory.library.tast.dm.dictionaries.Fate4;
 import edu.emory.library.tast.dm.dictionaries.Filter;
-import edu.emory.library.tast.dm.dictionaries.FirstDemPort;
 import edu.emory.library.tast.dm.dictionaries.ImpPrincipalRegion;
 import edu.emory.library.tast.dm.dictionaries.ImputedNation;
-import edu.emory.library.tast.dm.dictionaries.IntDisembPort;
 import edu.emory.library.tast.dm.dictionaries.OldWorldPlace;
 import edu.emory.library.tast.dm.dictionaries.PrimaryLast;
-import edu.emory.library.tast.dm.dictionaries.PurchasePort;
-import edu.emory.library.tast.dm.dictionaries.RetPort;
-import edu.emory.library.tast.dm.dictionaries.SecondDemPort;
 import edu.emory.library.tast.dm.dictionaries.ShipNationality;
 import edu.emory.library.tast.dm.dictionaries.Status;
 import edu.emory.library.tast.dm.dictionaries.Temp;
-import edu.emory.library.tast.dm.dictionaries.ThirdDemPort;
 import edu.emory.library.tast.dm.dictionaries.TonesType;
 import edu.emory.library.tast.dm.dictionaries.Us;
 import edu.emory.library.tast.dm.dictionaries.VesselRig;
@@ -2084,42 +2077,42 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("datepl", datepl);
 	}
-	public void setEmbport(PurchasePort embport) {
+	public void setEmbport(Port embport) {
 		if ((embport == null && this.values.get("embport") != null) 
 			|| (embport != null && !embport.equals(this.values.get("embport")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("embport", embport);
 	}
-	public void setArrport(IntDisembPort arrport) {
+	public void setArrport(Port arrport) {
 		if ((arrport == null && this.values.get("arrport") != null) 
 			|| (arrport != null && !arrport.equals(this.values.get("arrport")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("arrport", arrport);
 	}
-	public void setPlac1tra(PurchasePort plac1tra) {
+	public void setPlac1tra(Port plac1tra) {
 		if ((plac1tra == null && this.values.get("plac1tra") != null) 
 			|| (plac1tra != null && !plac1tra.equals(this.values.get("plac1tra")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("plac1tra", plac1tra);
 	}
-	public void setDestin(RetPort destin) {
+	public void setDestin(Port destin) {
 		if ((destin == null && this.values.get("destin") != null) 
 			|| (destin != null && !destin.equals(this.values.get("destin")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("destin", destin);
 	}
-	public void setPlac2tra(PurchasePort plac2tra) {
+	public void setPlac2tra(Port plac2tra) {
 		if ((plac2tra == null && this.values.get("plac2tra") != null) 
 			|| (plac2tra != null && !plac2tra.equals(this.values.get("plac2tra")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("plac2tra", plac2tra);
 	}
-	public void setPlac3tra(PurchasePort plac3tra) {
+	public void setPlac3tra(Port plac3tra) {
 		if ((plac3tra == null && this.values.get("plac3tra") != null) 
 			|| (plac3tra != null && !plac3tra.equals(this.values.get("plac3tra")))) {
 			this.modified = UPDATED;
@@ -2133,28 +2126,28 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("npafttra", npafttra);
 	}
-	public void setSla1port(FirstDemPort sla1port) {
+	public void setSla1port(Port sla1port) {
 		if ((sla1port == null && this.values.get("sla1port") != null) 
 			|| (sla1port != null && !sla1port.equals(this.values.get("sla1port")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("sla1port", sla1port);
 	}
-	public void setAdpsale1(SecondDemPort adpsale1) {
+	public void setAdpsale1(Port adpsale1) {
 		if ((adpsale1 == null && this.values.get("adpsale1") != null) 
 			|| (adpsale1 != null && !adpsale1.equals(this.values.get("adpsale1")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("adpsale1", adpsale1);
 	}
-	public void setAdpsale2(ThirdDemPort adpsale2) {
+	public void setAdpsale2(Port adpsale2) {
 		if ((adpsale2 == null && this.values.get("adpsale2") != null) 
 			|| (adpsale2 != null && !adpsale2.equals(this.values.get("adpsale2")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("adpsale2", adpsale2);
 	}
-	public void setPortret(RetPort portret) {
+	public void setPortret(Port portret) {
 		if ((portret == null && this.values.get("portret") != null) 
 			|| (portret != null && !portret.equals(this.values.get("portret")))) {
 			this.modified = UPDATED;
@@ -2175,14 +2168,14 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("national", national);
 	}
-	public void setEmbport2(PurchasePort embport2) {
+	public void setEmbport2(Port embport2) {
 		if ((embport2 == null && this.values.get("embport2") != null) 
 			|| (embport2 != null && !embport2.equals(this.values.get("embport2")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("embport2", embport2);
 	}
-	public void setPortdep(DeparturePort portdep) {
+	public void setPortdep(Port portdep) {
 		if ((portdep == null && this.values.get("portdep") != null) 
 			|| (portdep != null && !portdep.equals(this.values.get("portdep")))) {
 			this.modified = UPDATED;
@@ -2196,21 +2189,21 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("rig", rig);
 	}
-	public void setPlaccons(RetPort placcons) {
+	public void setPlaccons(Port placcons) {
 		if ((placcons == null && this.values.get("placcons") != null) 
 			|| (placcons != null && !placcons.equals(this.values.get("placcons")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("placcons", placcons);
 	}
-	public void setMajselpt(FirstDemPort majselpt) {
+	public void setMajselpt(Port majselpt) {
 		if ((majselpt == null && this.values.get("majselpt") != null) 
 			|| (majselpt != null && !majselpt.equals(this.values.get("majselpt")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("majselpt", majselpt);
 	}
-	public void setMajbuypt(PurchasePort majbuypt) {
+	public void setMajbuypt(Port majbuypt) {
 		if ((majbuypt == null && this.values.get("majbuypt") != null) 
 			|| (majbuypt != null && !majbuypt.equals(this.values.get("majbuypt")))) {
 			this.modified = UPDATED;
@@ -2462,7 +2455,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("temp", temp);
 	}
-	public void setMjbyptimp(PurchasePort purchasePort) {
+	public void setMjbyptimp(Port purchasePort) {
 		if ((purchasePort == null && this.values.get("mjbyptimp") != null) 
 			|| (purchasePort != null && !purchasePort.equals(this.values.get("mjbyptimp")))) {
 			this.modified = UPDATED;
@@ -3159,38 +3152,38 @@ public class Voyage extends AbstractDescriptiveObject {
 	public DepDefinition getDatepl() {
 		return (DepDefinition)this.values.get("datepl");
 	}
-	public PurchasePort getEmbport() {
-		return (PurchasePort)this.values.get("embport");
+	public Port getEmbport() {
+		return (Port)this.values.get("embport");
 	}
-	public IntDisembPort getArrport() {
-		return (IntDisembPort)this.values.get("arrport");
+	public Port getArrport() {
+		return (Port)this.values.get("arrport");
 	}
-	public PurchasePort getPlac1tra() {
-		return (PurchasePort)this.values.get("plac1tra");
+	public Port getPlac1tra() {
+		return (Port)this.values.get("plac1tra");
 	}
-	public RetPort getDestin() {
-		return (RetPort)this.values.get("destin");
+	public Port getDestin() {
+		return (Port)this.values.get("destin");
 	}
-	public PurchasePort getPlac2tra() {
-		return (PurchasePort)this.values.get("plac2tra");
+	public Port getPlac2tra() {
+		return (Port)this.values.get("plac2tra");
 	}
-	public PurchasePort getPlac3tra() {
-		return (PurchasePort)this.values.get("plac3tra");
+	public Port getPlac3tra() {
+		return (Port)this.values.get("plac3tra");
 	}
 	public OldWorldPlace getNpafttra() {
 		return (OldWorldPlace)this.values.get("npafttra");
 	}
-	public FirstDemPort getSla1port() {
-		return (FirstDemPort)this.values.get("sla1port");
+	public Port getSla1port() {
+		return (Port)this.values.get("sla1port");
 	}
-	public SecondDemPort getAdpsale1() {
-		return (SecondDemPort)this.values.get("adpsale1");
+	public Port getAdpsale1() {
+		return (Port)this.values.get("adpsale1");
 	}
-	public ThirdDemPort getAdpsale2() {
-		return (ThirdDemPort)this.values.get("adpsale2");
+	public Port getAdpsale2() {
+		return (Port)this.values.get("adpsale2");
 	}
-	public RetPort getPortret() {
-		return (RetPort)this.values.get("portret");
+	public Port getPortret() {
+		return (Port)this.values.get("portret");
 	}
 	public TonesType getTontype() {
 		return (TonesType)this.values.get("tontype");
@@ -3198,23 +3191,23 @@ public class Voyage extends AbstractDescriptiveObject {
 	public ShipNationality getNational() {
 		return (ShipNationality)this.values.get("national");
 	}
-	public PurchasePort getEmbport2() {
-		return (PurchasePort)this.values.get("embport2");
+	public Port getEmbport2() {
+		return (Port)this.values.get("embport2");
 	}
-	public DeparturePort getPortdep() {
-		return (DeparturePort)this.values.get("portdep");
+	public Port getPortdep() {
+		return (Port)this.values.get("portdep");
 	}
 	public VesselRig getRig() {
 		return (VesselRig)this.values.get("rig");
 	}
-	public RetPort getPlaccons() {
-		return (RetPort)this.values.get("placcons");
+	public Port getPlaccons() {
+		return (Port)this.values.get("placcons");
 	}
-	public FirstDemPort getMajselpt() {
-		return (FirstDemPort)this.values.get("majselpt");
+	public Port getMajselpt() {
+		return (Port)this.values.get("majselpt");
 	}
-	public PurchasePort getMajbuypt() {
-		return (PurchasePort)this.values.get("majbuypt");
+	public Port getMajbuypt() {
+		return (Port)this.values.get("majbuypt");
 	}
 	public ImputedNation getNatinimp() {
 		return (ImputedNation)this.values.get("natinimp");
@@ -3321,8 +3314,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Temp getTemp() {
 		return (Temp)this.values.get("temp");
 	}
-	public PurchasePort getMjbyptimp() {
-		return (PurchasePort)this.values.get("mjbyptimp");
+	public Port getMjbyptimp() {
+		return (Port)this.values.get("mjbyptimp");
 	}
 	/*END AUTOGENERATED*/
 }

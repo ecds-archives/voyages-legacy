@@ -10,7 +10,6 @@ import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.dm.dictionaries.FirstDemPort;
 import edu.emory.library.tast.ui.search.query.Query;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;

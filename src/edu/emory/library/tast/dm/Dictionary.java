@@ -185,26 +185,8 @@ public class Dictionary {
 	 */
 	public static Dictionary[] loadDictionary(String p_dictionaryName) {
 
-		int dictType = -1;
-		try {
-			Class clazz = Class.forName("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
-			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} 
-
 		QueryValue query = new QueryValue(p_dictionaryName);
 		Object[] ret = query.executeQuery();
-		
-//		Object[] ret = HibernateConnector.getConnector().loadObjects(
-//				p_dictionaryName, new String[] {"obj_type"}, new String[] {dictType + ""},
-//				new boolean[] {false});
 
 		if (ret.length != 0) {
 			Dictionary[] dict = new Dictionary[ret.length];
