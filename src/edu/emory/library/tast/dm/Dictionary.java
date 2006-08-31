@@ -280,6 +280,12 @@ public class Dictionary {
 		return false;
 	}
 	
+	
+	public int hashCode()
+	{
+		return id.hashCode();
+	}
+	
 	public static Attribute getAttribute(String name) {
 		return (Attribute)attributes.get(name);
 	}
