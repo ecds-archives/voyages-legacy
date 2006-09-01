@@ -1,3 +1,39 @@
+1157122761640 M E Missing field for database field boy8 in voyages.
+1157122761656 M E Missing field for database field carib in voyages.
+1157122761656 M E Missing field for database field cashpric in voyages.
+1157122761656 M E Missing field for database field exchrate in voyages.
+1157122761656 M E Missing field for database field frencpri in voyages.
+1157122761656 M E Missing field for database field frnprinl in voyages.
+1157122761656 M E Missing field for database field girl8 in voyages.
+1157122761656 M E Missing field for database field infants3 in voyages.
+1157122761656 M E Missing field for database field insurre2 in voyages.
+1157122761656 M E Missing field for database field intrate in voyages.
+1157122761656 M E Missing field for database field locurmnl in voyages.
+1157122761656 M E Missing field for database field men8 in voyages.
+1157122761656 M E Missing field for database field nonpay in voyages.
+1157122761656 M E Missing field for database field poundprice in voyages.
+1157122761656 M E Missing field for database field price in voyages.
+1157122761656 M E Missing field for database field primarylast in voyages.
+1157122761671 M E Missing field for database field primarylast1 in voyages.
+1157122761671 M E Missing field for database field rountrip in voyages.
+1157122761671 M E Missing field for database field slavpday in voyages.
+1157122761671 M E Missing field for database field slavpvoy in voyages.
+1157122761671 M E Missing field for database field slxp1000 in voyages.
+1157122761671 M E Missing field for database field spanishamer in voyages.
+1157122761671 M E Missing field for database field status in voyages.
+1157122761671 M E Missing field for database field termmth in voyages.
+1157122761671 M E Missing field for database field timcoast in voyages.
+1157122761671 M E Missing field for database field timslave in voyages.
+1157122761671 M E Missing field for database field toncateg in voyages.
+1157122761671 M E Missing field for database field uppguine in voyages.
+1157122761671 M E Missing field for database field us in voyages.
+1157122761671 M E Missing field for database field voy3imp in voyages.
+1157122761671 M E Missing field for database field voyagimp in voyages.
+1157122761671 M E Missing field for database field women8 in voyages.
+1157122761671 M E Missing field for database field yearches in voyages.
+
+
+
 <attributes>
   <objectAttributes objectType="Voyage">
     <attribute  importName="adlt3imp" importType="0" type="0" attrType="Numeric" typeDisplayName="Integer"  category="1"  name="adlt3imp" desc="" id="262938">
