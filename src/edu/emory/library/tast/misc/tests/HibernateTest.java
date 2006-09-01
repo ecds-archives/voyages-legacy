@@ -129,8 +129,9 @@ public class HibernateTest {
 			} else if (command.equals("hql")) {
 				
 				Session session = HibernateUtil.getSession();
-				Query query = session.createQuery("select v.majbuypt.name ,case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end ,1 from VoyageIndex as vi , Voyage as v left outer join v.majbuypt where vi.remoteVoyageId = v.iid group by v.majbuypt.name order by case when sum(v.slaximp) is null then 0 else sum(v.slaximp) end asc");
-				query.list();
+				Query query = session.createQuery("from Image as i left outer join i.people as p order by p.lastName");
+				System.out.println(query.list());
+				
 				
 //				Conditions cMain = new Conditions(Conditions.JOIN_AND);
 //				Conditions cNot = new Conditions(Conditions.JOIN_NOT);

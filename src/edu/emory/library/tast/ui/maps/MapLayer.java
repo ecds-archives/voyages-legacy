@@ -6,10 +6,14 @@ public class MapLayer {
 	private String label;
 	private boolean enabled;
 	
-	public MapLayer(String key, String label) {
+	public MapLayer(String key, String label, String defaultValue) {
 		this.key = key;
 		this.label = label;
-		this.enabled = true;
+		if (defaultValue == null) {
+			this.enabled = true;
+		} else {
+			this.enabled = "ON".equals(defaultValue);
+		}
 	}
 
 	public boolean isEnabled() {

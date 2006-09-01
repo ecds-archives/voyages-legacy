@@ -12,14 +12,11 @@ import org.hibernate.Session;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.dictionaries.Carib;
 import edu.emory.library.tast.dm.dictionaries.DepDefinition;
-import edu.emory.library.tast.dm.dictionaries.DepartureRegion;
 import edu.emory.library.tast.dm.dictionaries.Editor;
-import edu.emory.library.tast.dm.dictionaries.EmbRegion;
 import edu.emory.library.tast.dm.dictionaries.Fate2;
 import edu.emory.library.tast.dm.dictionaries.Fate3;
 import edu.emory.library.tast.dm.dictionaries.Fate4;
 import edu.emory.library.tast.dm.dictionaries.Filter;
-import edu.emory.library.tast.dm.dictionaries.ImpPrincipalRegion;
 import edu.emory.library.tast.dm.dictionaries.ImputedNation;
 import edu.emory.library.tast.dm.dictionaries.OldWorldPlace;
 import edu.emory.library.tast.dm.dictionaries.PrimaryLast;
@@ -36,8 +33,6 @@ import edu.emory.library.tast.dm.dictionaries.Year5;
 import edu.emory.library.tast.dm.dictionaries.Yearches;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Voyage object.
@@ -2217,21 +2212,21 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("natinimp", natinimp);
 	}
-	public void setDeptreg(DepartureRegion deptreg) {
+	public void setDeptreg(Region deptreg) {
 		if ((deptreg == null && this.values.get("deptreg") != null) 
 			|| (deptreg != null && !deptreg.equals(this.values.get("deptreg")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("deptreg", deptreg);
 	}
-	public void setRetrnreg(DepartureRegion retrnreg) {
+	public void setRetrnreg(Region retrnreg) {
 		if ((retrnreg == null && this.values.get("retrnreg") != null) 
 			|| (retrnreg != null && !retrnreg.equals(this.values.get("retrnreg")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("retrnreg", retrnreg);
 	}
-	public void setRegisreg(DepartureRegion regisreg) {
+	public void setRegisreg(Region regisreg) {
 		if ((regisreg == null && this.values.get("regisreg") != null) 
 			|| (regisreg != null && !regisreg.equals(this.values.get("regisreg")))) {
 			this.modified = UPDATED;
@@ -2259,84 +2254,84 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("year25", year25);
 	}
-	public void setRegem1(EmbRegion regem1) {
+	public void setRegem1(Region regem1) {
 		if ((regem1 == null && this.values.get("regem1") != null) 
 			|| (regem1 != null && !regem1.equals(this.values.get("regem1")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("regem1", regem1);
 	}
-	public void setRegem2(EmbRegion regem2) {
+	public void setRegem2(Region regem2) {
 		if ((regem2 == null && this.values.get("regem2") != null) 
 			|| (regem2 != null && !regem2.equals(this.values.get("regem2")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("regem2", regem2);
 	}
-	public void setRegem3(EmbRegion regem3) {
+	public void setRegem3(Region regem3) {
 		if ((regem3 == null && this.values.get("regem3") != null) 
 			|| (regem3 != null && !regem3.equals(this.values.get("regem3")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("regem3", regem3);
 	}
-	public void setEmbreg(EmbRegion embreg) {
+	public void setEmbreg(Region embreg) {
 		if ((embreg == null && this.values.get("embreg") != null) 
 			|| (embreg != null && !embreg.equals(this.values.get("embreg")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("embreg", embreg);
 	}
-	public void setEmbreg2(EmbRegion embreg2) {
+	public void setEmbreg2(Region embreg2) {
 		if ((embreg2 == null && this.values.get("embreg2") != null) 
 			|| (embreg2 != null && !embreg2.equals(this.values.get("embreg2")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("embreg2", embreg2);
 	}
-	public void setMajbuyrg(EmbRegion majbuyrg) {
+	public void setMajbuyrg(Region majbuyrg) {
 		if ((majbuyrg == null && this.values.get("majbuyrg") != null) 
 			|| (majbuyrg != null && !majbuyrg.equals(this.values.get("majbuyrg")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("majbuyrg", majbuyrg);
 	}
-	public void setMajbyimp(EmbRegion majbyimp) {
+	public void setMajbyimp(Region majbyimp) {
 		if ((majbyimp == null && this.values.get("majbyimp") != null) 
 			|| (majbyimp != null && !majbyimp.equals(this.values.get("majbyimp")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("majbyimp", majbyimp);
 	}
-	public void setRegdis1(DepartureRegion regdis1) {
+	public void setRegdis1(Region regdis1) {
 		if ((regdis1 == null && this.values.get("regdis1") != null) 
 			|| (regdis1 != null && !regdis1.equals(this.values.get("regdis1")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("regdis1", regdis1);
 	}
-	public void setRegdis2(DepartureRegion regdis2) {
+	public void setRegdis2(Region regdis2) {
 		if ((regdis2 == null && this.values.get("regdis2") != null) 
 			|| (regdis2 != null && !regdis2.equals(this.values.get("regdis2")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("regdis2", regdis2);
 	}
-	public void setRegdis3(DepartureRegion regdis3) {
+	public void setRegdis3(Region regdis3) {
 		if ((regdis3 == null && this.values.get("regdis3") != null) 
 			|| (regdis3 != null && !regdis3.equals(this.values.get("regdis3")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("regdis3", regdis3);
 	}
-	public void setRegarrp(DepartureRegion regarrp) {
+	public void setRegarrp(Region regarrp) {
 		if ((regarrp == null && this.values.get("regarrp") != null) 
 			|| (regarrp != null && !regarrp.equals(this.values.get("regarrp")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("regarrp", regarrp);
 	}
-	public void setMajselrg(DepartureRegion majselrg) {
+	public void setMajselrg(Region majselrg) {
 		if ((majselrg == null && this.values.get("majselrg") != null) 
 			|| (majselrg != null && !majselrg.equals(this.values.get("majselrg")))) {
 			this.modified = UPDATED;
@@ -2364,14 +2359,14 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("fate4", fate4);
 	}
-	public void setMjselimp(ImpPrincipalRegion mjselimp) {
+	public void setMjselimp(Region mjselimp) {
 		if ((mjselimp == null && this.values.get("mjselimp") != null) 
 			|| (mjselimp != null && !mjselimp.equals(this.values.get("mjselimp")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("mjselimp", mjselimp);
 	}
-	public void setConstreg(DepartureRegion constreg) {
+	public void setConstreg(Region constreg) {
 		if ((constreg == null && this.values.get("constreg") != null) 
 			|| (constreg != null && !constreg.equals(this.values.get("constreg")))) {
 			this.modified = UPDATED;
@@ -2406,7 +2401,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("yearches", yearches);
 	}
-	public void setRegarrp2(DepartureRegion regarrp2) {
+	public void setRegarrp2(Region regarrp2) {
 		if ((regarrp2 == null && this.values.get("regarrp2") != null) 
 			|| (regarrp2 != null && !regarrp2.equals(this.values.get("regarrp2")))) {
 			this.modified = UPDATED;
@@ -3212,14 +3207,14 @@ public class Voyage extends AbstractDescriptiveObject {
 	public ImputedNation getNatinimp() {
 		return (ImputedNation)this.values.get("natinimp");
 	}
-	public DepartureRegion getDeptreg() {
-		return (DepartureRegion)this.values.get("deptreg");
+	public Region getDeptreg() {
+		return (Region)this.values.get("deptreg");
 	}
-	public DepartureRegion getRetrnreg() {
-		return (DepartureRegion)this.values.get("retrnreg");
+	public Region getRetrnreg() {
+		return (Region)this.values.get("retrnreg");
 	}
-	public DepartureRegion getRegisreg() {
-		return (DepartureRegion)this.values.get("regisreg");
+	public Region getRegisreg() {
+		return (Region)this.values.get("regisreg");
 	}
 	public Year100 getYear100() {
 		return (Year100)this.values.get("year100");
@@ -3230,41 +3225,41 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Year25 getYear25() {
 		return (Year25)this.values.get("year25");
 	}
-	public EmbRegion getRegem1() {
-		return (EmbRegion)this.values.get("regem1");
+	public Region getRegem1() {
+		return (Region)this.values.get("regem1");
 	}
-	public EmbRegion getRegem2() {
-		return (EmbRegion)this.values.get("regem2");
+	public Region getRegem2() {
+		return (Region)this.values.get("regem2");
 	}
-	public EmbRegion getRegem3() {
-		return (EmbRegion)this.values.get("regem3");
+	public Region getRegem3() {
+		return (Region)this.values.get("regem3");
 	}
-	public EmbRegion getEmbreg() {
-		return (EmbRegion)this.values.get("embreg");
+	public Region getEmbreg() {
+		return (Region)this.values.get("embreg");
 	}
-	public EmbRegion getEmbreg2() {
-		return (EmbRegion)this.values.get("embreg2");
+	public Region getEmbreg2() {
+		return (Region)this.values.get("embreg2");
 	}
-	public EmbRegion getMajbuyrg() {
-		return (EmbRegion)this.values.get("majbuyrg");
+	public Region getMajbuyrg() {
+		return (Region)this.values.get("majbuyrg");
 	}
-	public EmbRegion getMajbyimp() {
-		return (EmbRegion)this.values.get("majbyimp");
+	public Region getMajbyimp() {
+		return (Region)this.values.get("majbyimp");
 	}
-	public DepartureRegion getRegdis1() {
-		return (DepartureRegion)this.values.get("regdis1");
+	public Region getRegdis1() {
+		return (Region)this.values.get("regdis1");
 	}
-	public DepartureRegion getRegdis2() {
-		return (DepartureRegion)this.values.get("regdis2");
+	public Region getRegdis2() {
+		return (Region)this.values.get("regdis2");
 	}
-	public DepartureRegion getRegdis3() {
-		return (DepartureRegion)this.values.get("regdis3");
+	public Region getRegdis3() {
+		return (Region)this.values.get("regdis3");
 	}
-	public DepartureRegion getRegarrp() {
-		return (DepartureRegion)this.values.get("regarrp");
+	public Region getRegarrp() {
+		return (Region)this.values.get("regarrp");
 	}
-	public DepartureRegion getMajselrg() {
-		return (DepartureRegion)this.values.get("majselrg");
+	public Region getMajselrg() {
+		return (Region)this.values.get("majselrg");
 	}
 	public Fate2 getFate2() {
 		return (Fate2)this.values.get("fate2");
@@ -3275,11 +3270,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Fate4 getFate4() {
 		return (Fate4)this.values.get("fate4");
 	}
-	public ImpPrincipalRegion getMjselimp() {
-		return (ImpPrincipalRegion)this.values.get("mjselimp");
+	public Region getMjselimp() {
+		return (Region)this.values.get("mjselimp");
 	}
-	public DepartureRegion getConstreg() {
-		return (DepartureRegion)this.values.get("constreg");
+	public Region getConstreg() {
+		return (Region)this.values.get("constreg");
 	}
 	public Status getStatus() {
 		return (Status)this.values.get("status");
@@ -3293,8 +3288,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Yearches getYearches() {
 		return (Yearches)this.values.get("yearches");
 	}
-	public DepartureRegion getRegarrp2() {
-		return (DepartureRegion)this.values.get("regarrp2");
+	public Region getRegarrp2() {
+		return (Region)this.values.get("regarrp2");
 	}
 	public XmimpFlag getXmimpflag() {
 		return (XmimpFlag)this.values.get("xmimpflag");

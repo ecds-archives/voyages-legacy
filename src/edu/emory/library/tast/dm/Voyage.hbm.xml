@@ -261,34 +261,34 @@
 		<many-to-one name="majbuypt" class="edu.emory.library.tast.dm.Port"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="mjbyptimp" class="edu.emory.library.tast.dm.Port"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="natinimp" class="edu.emory.library.tast.dm.dictionaries.ImputedNation"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="deptreg" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="retrnreg" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regisreg" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="deptreg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="retrnreg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regisreg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="year100" class="edu.emory.library.tast.dm.dictionaries.Year100"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="year5" class="edu.emory.library.tast.dm.dictionaries.Year5"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="year25" class="edu.emory.library.tast.dm.dictionaries.Year25"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regem1" class="edu.emory.library.tast.dm.dictionaries.EmbRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regem2" class="edu.emory.library.tast.dm.dictionaries.EmbRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regem3" class="edu.emory.library.tast.dm.dictionaries.EmbRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="embreg" class="edu.emory.library.tast.dm.dictionaries.EmbRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="embreg2" class="edu.emory.library.tast.dm.dictionaries.EmbRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="majbuyrg" class="edu.emory.library.tast.dm.dictionaries.EmbRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="majbyimp" class="edu.emory.library.tast.dm.dictionaries.EmbRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regdis1" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regdis2" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regdis3" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regarrp" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="majselrg" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regem1" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regem2" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regem3" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="embreg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="embreg2" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="majbuyrg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="majbyimp" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regdis1" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regdis2" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regdis3" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regarrp" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="majselrg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="fate2" class="edu.emory.library.tast.dm.dictionaries.Fate2"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="fate3" class="edu.emory.library.tast.dm.dictionaries.Fate3"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="fate4" class="edu.emory.library.tast.dm.dictionaries.Fate4"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="mjselimp" class="edu.emory.library.tast.dm.dictionaries.ImpPrincipalRegion"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="constreg" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="mjselimp" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="constreg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="status" class="edu.emory.library.tast.dm.dictionaries.Status"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="editor" class="edu.emory.library.tast.dm.dictionaries.Editor"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="filter_$" class="edu.emory.library.tast.dm.dictionaries.Filter"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="yearches" class="edu.emory.library.tast.dm.dictionaries.Yearches"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regarrp2" class="edu.emory.library.tast.dm.dictionaries.DepartureRegion"  lazy="false" outer-join="true" fetch="join"/>
+		<many-to-one name="regarrp2" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="xmimpflag" class="edu.emory.library.tast.dm.dictionaries.XmimpFlag"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="primarylast" class="edu.emory.library.tast.dm.dictionaries.PrimaryLast"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="primarylast1" class="edu.emory.library.tast.dm.dictionaries.PrimaryLast"  lazy="false" outer-join="true" fetch="join"/>

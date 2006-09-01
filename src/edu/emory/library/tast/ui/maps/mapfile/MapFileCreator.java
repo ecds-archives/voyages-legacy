@@ -23,6 +23,8 @@ import edu.emory.library.tast.util.StringUtils;
 
 public class MapFileCreator {
 
+	private static final String MINI = "_mini.map";
+
 	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
 
 	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
@@ -36,6 +38,8 @@ public class MapFileCreator {
 	private static final String CHECKBOX_PREFIX = "#{map.layer.status";
 
 	private static final String CHECKBOX_KEY_SUFFIX = ".userlabel";
+	
+	private static final String DEFAULT_VALUE = ".default";
 
 	private String filePath;
 
@@ -46,6 +50,8 @@ public class MapFileCreator {
 	private MapLayer[] layers;
 
 	private LegendItemsGroup[] legend;
+
+	private String fileSmallMapPath;
 
 	public MapFileCreator() {
 		schemaReader.beginReading();
@@ -63,10 +69,12 @@ public class MapFileCreator {
 			String key = (String) list.get(i);
 			String userLabel = AppConfig.getConfiguration().getString(
 					key.substring(2, key.length() - 1) + CHECKBOX_KEY_SUFFIX);
+			String defaultValue = AppConfig.getConfiguration().getString(
+					key.substring(2, key.length() - 1) + DEFAULT_VALUE);
 			if (userLabel == null) {
 				throw new RuntimeException("ERROR: tast.properties: missing property: " + key + CHECKBOX_KEY_SUFFIX);
 			}
-			layers[i] = new MapLayer(key, userLabel);
+			layers[i] = new MapLayer(key, userLabel, defaultValue);
 		}
 
 	}
@@ -94,24 +102,38 @@ public class MapFileCreator {
 	}
 
 	public boolean createMapFile() {
-
+		
 		this.filePath = MAP_FILE_OUTPUT;
 		String time = System.currentTimeMillis() + "";
 		this.filePath = this.filePath.replaceAll(TIME_SYMBOL_REGEX, time);
 
-		this.schemaReader.clearModifications();
-		this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
-				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
-//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_IN, PROJ_IN);
-//		this.schemaReader.addSimpleModification(MapSchemaConstants.MAP_PROJECTION_OUT, PROJ_OUT);
+		this.fileSmallMapPath = MAP_FILE_OUTPUT + MINI;
+		this.fileSmallMapPath = this.fileSmallMapPath.replaceAll(TIME_SYMBOL_REGEX, time);
 
+		
+		
+		
+		return this.createMapFileInt(this.filePath, true) &&  this.createMapFileInt(this.fileSmallMapPath, false);
+		
+		
+
+	}
+
+	private boolean createMapFileInt(String filePath2, boolean generatePorts) {
+		this.schemaReader.clearModifications();
+		
+		if (generatePorts) {
+			this.schemaReader.addBlockModification(MapSchemaConstants.MAP_INSERT_SECTION_NAME_BEGIN,
+				MapSchemaConstants.MAP_INSERT_SECTION_NAME_END, this.generateLayerForPorts());
+		}
+		
 		for (int i = 0; i < this.layers.length; i++) {
 			this.schemaReader.addSimpleModification(layers[i].getKey(), layers[i].isEnabled() ? "ON" : "OFF");
 		}
 
 		BufferedWriter writer = null;
 		try {
-			writer = new BufferedWriter(new FileWriter(this.filePath));
+			writer = new BufferedWriter(new FileWriter(filePath2));
 			writer.write(this.schemaReader.applyModifications().toString());
 			return true;
 		} catch (IOException e) {
@@ -134,7 +156,6 @@ public class MapFileCreator {
 			}
 		}
 		return false;
-
 	}
 
 	private String generateLayerForPorts() {
@@ -200,6 +221,10 @@ public class MapFileCreator {
 
 	public String getFilePath() {
 		return this.filePath;
+	}
+	
+	public String getSmallMapFilePath() {
+		return this.fileSmallMapPath;
 	}
 
 	public MapLayer[] getLayers() {

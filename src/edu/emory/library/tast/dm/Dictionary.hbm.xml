@@ -53,24 +53,6 @@
         <property name="remoteId" column="remote_id"/>
     </class>
     
-    <class name="edu.emory.library.tast.dm.dictionaries.DemBroadRegion" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.DepartureRegion" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
     <class name="edu.emory.library.tast.dm.dictionaries.DepDefinition" table="dictionary">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
@@ -81,15 +63,6 @@
     </class>
     
     <class name="edu.emory.library.tast.dm.dictionaries.Editor" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.EmbRegion" table="dictionary" where="obj_type=10">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
@@ -144,15 +117,6 @@
     </class>
     
     <class name="edu.emory.library.tast.dm.dictionaries.Gc" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.ImpPrincipalRegion" table="dictionary">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
@@ -297,15 +261,6 @@
     </class>
     
     <class name="edu.emory.library.tast.dm.dictionaries.PlaceB" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.PortLocation" table="dictionary">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
