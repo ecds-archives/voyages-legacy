@@ -4,22 +4,17 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.faces.model.SelectItem;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.LegendItem;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapLayer;
-import edu.emory.library.tast.util.StringUtils;
 
 public class MapFileCreator {
 
@@ -109,13 +104,8 @@ public class MapFileCreator {
 
 		this.fileSmallMapPath = MAP_FILE_OUTPUT + MINI;
 		this.fileSmallMapPath = this.fileSmallMapPath.replaceAll(TIME_SYMBOL_REGEX, time);
-
-		
-		
 		
 		return this.createMapFileInt(this.filePath, true) &&  this.createMapFileInt(this.fileSmallMapPath, false);
-		
-		
 
 	}
 

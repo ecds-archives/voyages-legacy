@@ -12,6 +12,8 @@ import org.apache.commons.configuration.Configuration;
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.dm.AbstractDescriptiveObject;
 import edu.emory.library.tast.dm.Dictionary;
+import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -764,20 +766,40 @@ public class Import
 					attr.getDictionary(),
 					new Integer(label.getKey()));
 
-			Dictionary dict;
+			Dictionary dict = null;
 			boolean newDict = dicts.length == 0;
 			if (newDict)
-				dict = Dictionary.createNew(attr.getDictionary());
+			{
+				if (attr.getDictionary().equals("Port"))
+				{
+					log.logWarn("Port with SPSS code = " + String.valueOf(label.getKey()) + " in variable " + var.getName() + " does does exist in the dabatase.");
+				}
+				else if (attr.getDictionary().equals("Region"))
+				{
+					log.logWarn("Region with SPSS code = " + String.valueOf(label.getKey()) + " in variable " + var.getName() + " does does exist in the dabatase.");
+				}
+				else
+				{
+					dict = Dictionary.createNew(attr.getDictionary());					
+				}
+			}
 			else
+			{
 				dict = dicts[0];
+			}
 
-			dict.setName(label.getLabel());
-			dict.setRemoteId(new Integer(label.getKey()));
-
-			if (newDict)
-				dict.save();
-			else
-				dict.update();
+			if (dict != null)
+			{
+			
+				dict.setName(label.getLabel());
+				dict.setRemoteId(new Integer(label.getKey()));
+	
+				if (newDict)
+					dict.save();
+				else
+					dict.update();
+			
+			}
 
 		}
 	}
@@ -819,10 +841,12 @@ public class Import
 			Attribute attr = attributes[i];
 			if (attr instanceof DictionaryAttribute)
 			{
-				// System.out.println("Updating: " + col.getName() + ", " +
-				// col.getDictinaory());
-				STSchemaVariable var = (STSchemaVariable) schema.get(attr.getImportName());
-				updateDictionary((DictionaryAttribute)attr, var);
+				String dictName = ((DictionaryAttribute)attr).getDictionary(); 
+				if (!dictName.equals("Port") && !dictName.equals("Region"))
+				{
+					STSchemaVariable var = (STSchemaVariable) schema.get(attr.getImportName());
+					updateDictionary((DictionaryAttribute)attr, var);
+				}
 			}
 		}
 
@@ -896,9 +920,9 @@ public class Import
 		boolean valid = true;
 		for (int i = 0; i < attributes.length; i++)
 		{
-			Attribute col = attributes[i];
+			Attribute attr = attributes[i];
 
-			int importType = col.getImportType().intValue();
+			int importType = attr.getImportType().intValue();
 
 			Object parsedValue = null;
 			String columnValue = null;
@@ -915,44 +939,64 @@ public class Import
 
 			try
 			{
-
-				// import numeric or string field
-				if (importType == Attribute.IMPORT_TYPE_NUMERIC
-						|| importType == Attribute.IMPORT_TYPE_STRING)
+				
+				// ports
+				if (attr instanceof DictionaryAttribute && ((DictionaryAttribute)attr).getDictionary().equals("Port"))
 				{
-					var = (STSchemaVariable) schema.get(col.getImportName());
+					try
+					{
+						var = (STSchemaVariable) schema.get(attr.getImportName());
+						parsedValue = Port.loadById(Integer.parseInt(record.getValue(var)));
+					}
+					catch (NumberFormatException nfe)
+					{
+					}
+				}
+
+				// regions
+				else if (attr instanceof DictionaryAttribute && ((DictionaryAttribute)attr).getDictionary().equals("Region"))
+				{
+					try
+					{
+						var = (STSchemaVariable) schema.get(attr.getImportName());
+						parsedValue = Region.loadById(Integer.parseInt(record.getValue(var)));
+					}
+					catch (NumberFormatException nfe)
+					{
+					}
+				}
+				
+				// import numeric or string field
+				else if (importType == Attribute.IMPORT_TYPE_NUMERIC || importType == Attribute.IMPORT_TYPE_STRING)
+				{
+					var = (STSchemaVariable) schema.get(attr.getImportName());
 					columnValue = record.getValue(var);
-					parsedValue = col.parse(columnValue);
+					parsedValue = attr.parse(columnValue);
 				}
 
 				// import date
 				else if (importType == Attribute.IMPORT_TYPE_DATE)
 				{
-					varDay = (STSchemaVariable) schema.get(((DateAttribute)col)
-							.getImportDateDay());
-					varMonth = (STSchemaVariable) schema.get(((DateAttribute)col)
-							.getImportDateMonth());
-					varYear = (STSchemaVariable) schema.get(((DateAttribute)col)
-							.getImportDateYear());
+					varDay = (STSchemaVariable) schema.get(((DateAttribute)attr).getImportDateDay());
+					varMonth = (STSchemaVariable) schema.get(((DateAttribute)attr).getImportDateMonth());
+					varYear = (STSchemaVariable) schema.get(((DateAttribute)attr).getImportDateYear());
 					columnDayValue = record.getValue(varDay);
 					columnMonthValue = record.getValue(varMonth);
 					columnYearValue = record.getValue(varYear);
-					parsedValue = col.parse(new String[] { columnDayValue,
-							columnMonthValue, columnYearValue });
+					parsedValue = attr.parse(new String[] { columnDayValue, columnMonthValue, columnYearValue });
 				}
 
 				// nonexisting dictionary value was inserted
-				if (col instanceof DictionaryAttribute && parsedValue != null
-						&& ((Dictionary) parsedValue).getId() == null) log
-						.logWarn("Nonexistent label '"
+				if (attr instanceof DictionaryAttribute && parsedValue != null && ((Dictionary) parsedValue).getId() == null)
+					log.logWarn("Nonexistent label '"
 								+ ((Dictionary) parsedValue).getName() + "' "
 								+ "inserted for variable "
-								+ col.getImportName() + " " + "in "
+								+ attr.getImportName() + " " + "in "
 								+ errorMsgDataFile + " " + "in record "
 								+ recordNo + ".");
 
 				// update the object
-				obj.setAttrValue(col.getName(), parsedValue);
+				obj.setAttrValue(attr.getName(), parsedValue);
 
 			}
 			catch (InvalidNumberOfValuesException inve)
@@ -1143,9 +1187,7 @@ public class Import
 		noOfCreatedVoyages = 0;
 
 		// slave id
-		STSchemaVariable varSlaveId = slavesPresent ? (STSchemaVariable) slaveSchema
-				.get("slaveid")
-				: null;
+		STSchemaVariable varSlaveId = slavesPresent ? (STSchemaVariable) slaveSchema.get("slaveid") : null;
 
 		// we have only voyages -> make sure that in the main loop
 		// we always read and save only voyages
@@ -1183,8 +1225,7 @@ public class Import
 				while ((voyageRecord = voyagesRdr.readRecord()) != null)
 				{
 					totalNoOfVoyages++;
-					int lineNo = Integer.parseInt(voyageRecord
-							.getValue(voyagesLineNoVar));
+					int lineNo = Integer.parseInt(voyageRecord.getValue(voyagesLineNoVar));
 					try
 					{
 						String id = voyageRecord.getKey().trim();
@@ -1458,7 +1499,7 @@ public class Import
 		{
 
 			log.startStage(LogItem.STAGE_CONVERSION);
-			convertSpssFiles();
+			// convertSpssFiles();
 
 			log.startStage(LogItem.STAGE_SCHEMA_LOADING);
 			loadSchemas();
@@ -1470,7 +1511,7 @@ public class Import
 			addLineNumbers();
 
 			log.startStage(LogItem.STAGE_SORTING);
-			sortFiles();
+			// sortFiles();
 
 			log.startStage(LogItem.STAGE_UPDATING_LABELS);
 			updateDictionaties();
@@ -1513,19 +1554,19 @@ public class Import
 			log.logInfo("Import terminated.");
 			log.doneWithErrors();
 		}
-		catch (StatTransferException ste)
-		{
-			log.logError("The uploaded file is not proabably a valid SPSS file.");
-			log.logError(ste.getMessage());
-			log.logInfo("Import terminated.");
-			log.doneWithErrors();
-		}
-		catch (InterruptedException ie)
-		{
-			log.logError(ie.getMessage());
-			log.logInfo("Import terminated.");
-			log.doneWithErrors();
-		}
+//		catch (StatTransferException ste)
+//		{
+//			log.logError("The uploaded file is not proabably a valid SPSS file.");
+//			log.logError(ste.getMessage());
+//			log.logInfo("Import terminated.");
+//			log.doneWithErrors();
+//		}
+//		catch (InterruptedException ie)
+//		{
+//			log.logError(ie.getMessage());
+//			log.logInfo("Import terminated.");
+//			log.doneWithErrors();
+//		}
 
 	}
 
@@ -1547,8 +1588,7 @@ public class Import
 
 		// crate a log
 		Configuration conf = AppConfig.getConfiguration();
-		String fullImportDir = conf.getString(AppConfig.IMPORT_ROOTDIR)
-				+ File.separatorChar + importDir;
+		String fullImportDir = conf.getString(AppConfig.IMPORT_ROOTDIR) + File.separatorChar + importDir;
 		LogWriter log = new LogWriter(fullImportDir);
 
 		// import
@@ -1556,6 +1596,6 @@ public class Import
 		imp.runImport(log, fullImportDir);
 		log.close();
 
+		
 	}
-
 }

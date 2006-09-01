@@ -460,12 +460,6 @@
 			<attribute name="portdep" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="price"
-		userCategory="general" userLabel="Price of slaves">
-		<attributes>
-			<attribute name="price" />
-		</attributes>
-	</searchable-attribute>
 	<searchable-attribute type="simple" id="majselrg"
 		userCategory="general"
 		userLabel="Principal region of disembarkation">
@@ -489,12 +483,6 @@
 		userCategory="beginners" userLabel="Rig of vessel">
 		<attributes>
 			<attribute name="rig" />
-		</attributes>
-	</searchable-attribute>
-	<searchable-attribute type="simple" id="rountrip"
-		userCategory="general" userLabel="Round trip length of voyage">
-		<attributes>
-			<attribute name="rountrip" />
 		</attributes>
 	</searchable-attribute>
 	<searchable-attribute type="simple" id="captainb"
@@ -750,12 +738,6 @@
 		userCategory="general" userLabel="Thirteenth source of information">
 		<attributes>
 			<attribute name="sourcem" />
-		</attributes>
-	</searchable-attribute>
-	<searchable-attribute type="simple" id="timslave"
-		userCategory="beginners" userLabel="Time spent acquiring slaves">
-		<attributes>
-			<attribute name="timslave" />
 		</attributes>
 	</searchable-attribute>
 	<searchable-attribute type="simple" id="tonnage"

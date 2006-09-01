@@ -50,7 +50,7 @@ public class Port extends Location
 
 	public static Port loadById(Session sess, int portId)
 	{
-		List list = sess.createCriteria(Port.class).add(Restrictions.eq("id", new Integer(portId))).list();
+		List list = sess.createCriteria(Port.class).add(Restrictions.eq("remoteId", new Integer(portId))).list();
 		if (list == null || list.size() == 0) return null;
 		return (Port) list.get(0);
 	}

@@ -1,7 +1,6 @@
 package edu.emory.library.tast.ui.search.map;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.context.ExternalContext;
@@ -10,10 +9,7 @@ import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
-import edu.emory.library.tast.ui.maps.AttributesMap;
-import edu.emory.library.tast.ui.maps.AttributesRange;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapData;
 import edu.emory.library.tast.ui.maps.MapLayer;
@@ -24,8 +20,6 @@ import edu.emory.library.tast.ui.search.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
-import edu.emory.library.tast.util.query.QueryValue;
 
 
 /**
@@ -68,6 +62,8 @@ public class MapBean {
 	private MapFileCreator creator = new MapFileCreator();
 
 	private String sessionParam;
+	
+	private String sessionParamMini;
 
 	private List pointsOfInterest = new ArrayList();
 
@@ -119,15 +115,6 @@ public class MapBean {
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(queryHolder.getAttributesMap());					
 			this.mapData.setMapData(queryHolder, transformer);
 			
-			this.neededQuery = false;
-		}
-	}
-
-	public String getMapPath() {
-
-		try {
-
-			this.setMapData();
 			AbstractMapItem[] items = this.mapData.getItems();
 
 			if (items.length > 0) {
@@ -136,20 +123,25 @@ public class MapBean {
 			}
 			if (this.creator.createMapFile()) {
 				sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
+				sessionParamMini = MAP_OBJECT_ATTR_NAME + "_mini_" + System.currentTimeMillis();
 				ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-				((HttpSession) servletContext.getSession(true)).setAttribute(sessionParam, creator.getFilePath());
-
-			} else {
-				return null;
+				HttpSession session = (HttpSession) servletContext.getSession(true);
+				session.setAttribute(sessionParam, creator.getFilePath());
+				session.setAttribute(sessionParamMini, creator.getSmallMapFilePath());
 			}
-
-			return sessionParam;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "";
+			
+			this.neededQuery = false;
 		}
-
+	}
+	
+	public String getMapPath() {
+		setMapData();
+		return sessionParam;
+	}
+	
+	public String getMiniMapFile() {
+		setMapData();
+		return sessionParamMini;
 	}
 	
 	public String refresh() {		

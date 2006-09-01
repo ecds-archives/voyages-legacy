@@ -56,7 +56,7 @@ public class Dictionary {
 	{
 		try
 		{
-			Class clazz = Class.forName("edu.emory.library.tas.dm.dictionaries." + p_dictionaryName);
+			Class clazz = Class.forName("edu.emory.library.tast.dm.dictionaries." + p_dictionaryName);
 			return (Dictionary) clazz.newInstance();
 		}
 		catch (ClassNotFoundException e)

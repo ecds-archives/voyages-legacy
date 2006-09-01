@@ -12,6 +12,7 @@ var MapsGlobal =
 		fixedSize, // true/false
 		mapTilesServer, // servlet
 		mapFile, // ServerMap map file
+		miniMapFile, // minimap ServerMap map file
 		scaleFactor, // scale demominator
 		scaleMax, // max magnification w.r.t. scale = 1
 		mapControlId, // main container 
@@ -95,7 +96,7 @@ var MapsGlobal =
 		if (miniMapControlId && miniMapFrameId)
 		{
 			var miniMap = new Map();
-			miniMap.mapFile = mapFile;
+			miniMap.mapFile = miniMapFile;
 			miniMap.server = mapTilesServer;
 			miniMap.fixedSize = true;
 			miniMap.map_control_id = miniMapControlId;

@@ -55,11 +55,9 @@
 			<searchable-attribute id="sla39imp"/>
 			<searchable-attribute id="slamimp"/>
 			<searchable-attribute id="slaximp"/>
-			<searchable-attribute id="timslave"/>
 			<searchable-attribute id="voy2imp"/>
 			<searchable-attribute id="vymrtrat"/>
 			<searchable-attribute id="ncr15imp"/>
-			<searchable-attribute id="rountrip"/>
 			<searchable-attribute id="datarr4"/>
 			<searchable-attribute id="datarr32"/>
 			<searchable-attribute id="datarr33"/>
@@ -98,11 +96,9 @@
 			<table-attribute id="sla39imp"/>
 			<table-attribute id="slamimp"/>
 			<table-attribute id="slaximp"/>
-			<table-attribute id="timslave"/>
 			<table-attribute id="voy2imp"/>
 			<table-attribute id="vymrtrat"/>
 			<table-attribute id="ncr15imp"/>
-			<table-attribute id="rountrip"/>
 			<table-attribute id="datarr4"/>
 			<table-attribute id="datarr32"/>
 			<table-attribute id="datarr33"/>
@@ -185,8 +181,6 @@
 			<searchable-attribute id="datedep"/>
 			<searchable-attribute id="fate"/>
 			<searchable-attribute id="fate4"/>
-			<searchable-attribute id="timslave"/>
-			<searchable-attribute id="rountrip"/>
 			<searchable-attribute id="captaina"/>
 			<searchable-attribute id="captainb"/>
 			<searchable-attribute id="captainc"/>
@@ -228,8 +222,6 @@
 			<table-attribute id="datedep"/>
 			<table-attribute id="fate"/>
 			<table-attribute id="fate4"/>
-			<table-attribute id="timslave"/>
-			<table-attribute id="rountrip"/>
 			<table-attribute id="captaina"/>
 			<table-attribute id="captainb"/>
 			<table-attribute id="captainc"/>
@@ -265,8 +257,6 @@
 			<searchable-attribute id="crew1"/>
 			<searchable-attribute id="crew3"/>
 			<searchable-attribute id="crewdied"/>
-			<searchable-attribute id="timslave"/>
-			<searchable-attribute id="rountrip"/>
 			<searchable-attribute id="portdep"/>
 			<searchable-attribute id="portret"/>
 			<searchable-attribute id="anycaptain"/>
@@ -279,8 +269,6 @@
 			<table-attribute id="crew1"/>
 			<table-attribute id="crew3"/>
 			<table-attribute id="crewdied"/>
-			<table-attribute id="timslave"/>
-			<table-attribute id="rountrip"/>
 			<table-attribute id="portdep"/>
 			<table-attribute id="portret"/>
 			<table-attribute id="anycaptain"/>
@@ -310,7 +298,6 @@
 			<searchable-attribute id="regdis2"/>
 			<searchable-attribute id="regdis3"/>
 			<searchable-attribute id="majselrg"/>
-			<searchable-attribute id="price"/>
 			<searchable-attribute id="womrat7"/>
 			<searchable-attribute id="menrat7"/>
 			<searchable-attribute id="girlrat7"/>

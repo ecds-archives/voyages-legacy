@@ -10,6 +10,7 @@ public class MapTag extends UIComponentTag
 {
 	
 	private String mapFile;
+	private String miniMapFile;
 	private String serverBaseUrl;
 	private String pointsOfInterest;
 	private String miniMap;
@@ -43,6 +44,16 @@ public class MapTag extends UIComponentTag
 			map.setMapFile(mapFile);
 		}
 		
+		if (miniMapFile != null && isValueReference(miniMapFile))
+		{
+			ValueBinding vb = app.createValueBinding(miniMapFile);
+			component.setValueBinding("miniMapFile", vb);
+		}
+		else
+		{
+			map.setMapFile(miniMapFile);
+		}
+
 		if (serverBaseUrl != null && isValueReference(serverBaseUrl))
 		{
 			ValueBinding vb = app.createValueBinding(serverBaseUrl);
@@ -181,6 +192,16 @@ public class MapTag extends UIComponentTag
 	public void setMiniMapWidth(String miniMapWidth)
 	{
 		this.miniMapWidth = miniMapWidth;
+	}
+
+	public String getMiniMapFile()
+	{
+		return miniMapFile;
+	}
+
+	public void setMiniMapFile(String miniMapFile)
+	{
+		this.miniMapFile = miniMapFile;
 	}
 
 }

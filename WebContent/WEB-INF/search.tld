@@ -314,6 +314,9 @@
 			<name>mapFile</name>
 		</attribute>
 		<attribute>
+			<name>miniMapFile</name>
+		</attribute>
+		<attribute>
 			<name>serverBaseUrl</name>
 		</attribute>
 		<attribute>

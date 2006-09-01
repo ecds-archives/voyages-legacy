@@ -8,7 +8,6 @@
 			<generator class="native"/>
 		</id>
 		<property name="slaveId" column="sid"/>
-		<property name="voyageId" column="vid"/>
 		<many-to-one name="sexage" class="edu.emory.library.tast.dm.dictionaries.SexAge" unique="true" lazy="false"/>
 		<property name="age" column="age"/>
 		<property name="feet" column="feet"/>

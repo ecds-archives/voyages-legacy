@@ -31,6 +31,9 @@ public class MapComponent extends UIComponentBase
 	private boolean mapFileSet = false;
 	private String mapFile = null;
 
+	private boolean miniMapFileSet = false;
+	private String miniMapFile = null;
+
 	private boolean serverBaseUrlSet = false;
 	private String serverBaseUrl = null;
 
@@ -69,24 +72,24 @@ public class MapComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[16];
-		values[0] = super.saveState(context);
-		values[1] = mapFile;
-		values[2] = serverBaseUrl;
-		values[3] = new Double(x1);
-		values[4] = new Double(y1);
-		values[5] = new Double(x2);
-		values[6] = new Double(y2);
-		values[7] = mouseMode;
-		values[8] = mapSizes;
-		values[9] = mapSize;
-		values[10] = zoomHistory;
-		values[11] = new Boolean(miniMap);
-		values[12] = new Boolean(miniMapVisible);
-		values[13] = miniMapPosition;
-		values[14] = new Integer(miniMapWidth);
-		values[15] = new Integer(miniMapHeight);
-		return values;
+		return new Object[] {
+			super.saveState(context),
+			mapFile,
+			miniMapFile,
+			serverBaseUrl,
+			new Double(x1),
+			new Double(y1),
+			new Double(x2),
+			new Double(y2),
+			mouseMode,
+			mapSizes,
+			mapSize,
+			zoomHistory,
+			new Boolean(miniMap),
+			new Boolean(miniMapVisible),
+			miniMapPosition,
+			new Integer(miniMapWidth),
+			new Integer(miniMapHeight) };
 	}
 	
 	public void restoreState(FacesContext context, Object state)
@@ -94,20 +97,21 @@ public class MapComponent extends UIComponentBase
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
 		mapFile = (String) values[1];
-		serverBaseUrl = (String) values[2];
-		x1 = ((Double)values[3]).doubleValue();
-		y1 = ((Double)values[4]).doubleValue();
-		x2 = ((Double)values[5]).doubleValue();
-		y2 = ((Double)values[6]).doubleValue();
-		mouseMode = (MouseMode)values[7];
-		mapSizes = (MapSize[]) values[8];
-		mapSize = (MapSize) values[9];
-		zoomHistory = (ZoomHistory) values[10];
-		miniMap = ((Boolean)values[11]).booleanValue();
-		miniMapVisible = ((Boolean)values[12]).booleanValue();
-		miniMapPosition = (MiniMapPosition) values[13];
-		miniMapWidth = ((Integer)values[14]).intValue();
-		miniMapHeight = ((Integer)values[15]).intValue();
+		miniMapFile = (String) values[2];
+		serverBaseUrl = (String) values[3];
+		x1 = ((Double)values[4]).doubleValue();
+		y1 = ((Double)values[5]).doubleValue();
+		x2 = ((Double)values[6]).doubleValue();
+		y2 = ((Double)values[7]).doubleValue();
+		mouseMode = (MouseMode)values[8];
+		mapSizes = (MapSize[]) values[9];
+		mapSize = (MapSize) values[10];
+		zoomHistory = (ZoomHistory) values[11];
+		miniMap = ((Boolean)values[12]).booleanValue();
+		miniMapVisible = ((Boolean)values[13]).booleanValue();
+		miniMapPosition = (MiniMapPosition) values[14];
+		miniMapWidth = ((Integer)values[15]).intValue();
+		miniMapHeight = ((Integer)values[16]).intValue();
 	}
 	
 	private String getHiddenFieldNameForX1(FacesContext context)
@@ -368,6 +372,7 @@ public class MapComponent extends UIComponentBase
 		mapSizes = getMapSizes();
 		PointOfInterest[] pointsOfInterest = getPointsOfInterest();
 		miniMap = isMiniMap();
+		miniMapFile = getMiniMapFile();
 		miniMapPosition = getMiniMapPosition();
 		miniMapWidth = getMiniMapWidth();
 		miniMapHeight = getMiniMapHeight();
@@ -396,8 +401,12 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("'").append(serverBaseUrl).append("'");
 		jsRegister.append(", ");
 
-		// m parameter
+		// mapfile parameter
 		jsRegister.append("'").append(mapFile).append("'");
+		jsRegister.append(", ");
+
+		// minimap mapfile parameter
+		jsRegister.append("'").append(miniMapFile).append("'");
 		jsRegister.append(", ");
 
 		// scale factor (i.e. denominator)
@@ -701,6 +710,20 @@ public class MapComponent extends UIComponentBase
 	{
 		mapFileSet = true;
 		this.mapFile = mapFile;
+	}
+
+	public void setMiniMapFile(String miniMapFile)
+	{
+		miniMapFileSet = true;
+		this.miniMapFile = miniMapFile;
+	}
+
+	public String getMiniMapFile()
+	{
+        if (miniMapFileSet) return miniMapFile;
+        ValueBinding vb = getValueBinding("miniMapFile");
+        if (vb == null) return miniMapFile;
+        return (String) vb.getValue(getFacesContext());
 	}
 
 	public String getServerBaseUrl()

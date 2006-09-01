@@ -92,7 +92,7 @@ public class Region extends Location
 
 	public static Region loadById(Session sess, int regionId)
 	{
-		List list = sess.createCriteria(Region.class).add(Restrictions.eq("id", new Integer(regionId))).list();
+		List list = sess.createCriteria(Region.class).add(Restrictions.eq("remoteId", new Integer(regionId))).list();
 		if (list == null || list.size() == 0) return null;
 		return (Region) list.get(0);
 	}

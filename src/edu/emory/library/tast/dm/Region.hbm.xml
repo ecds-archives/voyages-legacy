@@ -15,6 +15,7 @@
 		<property name="y" />
 		<property name="latitude" />
 		<property name="longitude" />
+		<property name="remoteId" column="rid" />
 		
 		<set name="ports" inverse="true" order-by="name asc" lazy="false">
 			<key column="region_id" />

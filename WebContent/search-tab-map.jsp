@@ -14,6 +14,7 @@
 				mapFile="#{MapBean.mapPath}"
 				pointsOfInterest="#{MapBean.pointsOfInterest}"
 				miniMap="true"
+				miniMapFile="#{MapBean.miniMapFile}"
 				miniMapWidth="100"
 				miniMapHeight="100"
 				serverBaseUrl="servlet/maptile" />

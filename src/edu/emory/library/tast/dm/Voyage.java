@@ -23,9 +23,6 @@ import edu.emory.library.tast.dm.dictionaries.Temp;
 import edu.emory.library.tast.dm.dictionaries.TonesType;
 import edu.emory.library.tast.dm.dictionaries.VesselRig;
 import edu.emory.library.tast.dm.dictionaries.XmimpFlag;
-import edu.emory.library.tast.dm.dictionaries.Year100;
-import edu.emory.library.tast.dm.dictionaries.Year25;
-import edu.emory.library.tast.dm.dictionaries.Year5;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.HibernateUtil;
 
@@ -1745,7 +1742,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("female5", female5);
 	}
-	public void setArrport2(Integer arrport2) {
+	public void setArrport2(Port arrport2) {
 		if ((arrport2 == null && this.values.get("arrport2") != null) 
 			|| (arrport2 != null && !arrport2.equals(this.values.get("arrport2")))) {
 			this.modified = UPDATED;
@@ -2038,27 +2035,6 @@ public class Voyage extends AbstractDescriptiveObject {
 			this.modified = UPDATED;
 		}
 		this.values.put("regisreg", regisreg);
-	}
-	public void setYear100(Year100 year100) {
-		if ((year100 == null && this.values.get("year100") != null) 
-			|| (year100 != null && !year100.equals(this.values.get("year100")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("year100", year100);
-	}
-	public void setYear5(Year5 year5) {
-		if ((year5 == null && this.values.get("year5") != null) 
-			|| (year5 != null && !year5.equals(this.values.get("year5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("year5", year5);
-	}
-	public void setYear25(Year25 year25) {
-		if ((year25 == null && this.values.get("year25") != null) 
-			|| (year25 != null && !year25.equals(this.values.get("year25")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("year25", year25);
 	}
 	public void setRegem1(Region regem1) {
 		if ((regem1 == null && this.values.get("regem1") != null) 
@@ -2773,8 +2749,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getFemale5() {
 		return (Integer)this.values.get("female5");
 	}
-	public Integer getArrport2() {
-		return (Integer)this.values.get("arrport2");
+	public Port getArrport2() {
+		return (Port)this.values.get("arrport2");
 	}
 	public Integer getInfant3() {
 		return (Integer)this.values.get("infant3");
@@ -2898,15 +2874,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	public Region getRegisreg() {
 		return (Region)this.values.get("regisreg");
-	}
-	public Year100 getYear100() {
-		return (Year100)this.values.get("year100");
-	}
-	public Year5 getYear5() {
-		return (Year5)this.values.get("year5");
-	}
-	public Year25 getYear25() {
-		return (Year25)this.values.get("year25");
 	}
 	public Region getRegem1() {
 		return (Region)this.values.get("regem1");

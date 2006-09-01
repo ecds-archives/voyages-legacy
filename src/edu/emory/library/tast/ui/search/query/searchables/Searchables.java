@@ -92,11 +92,12 @@ public class Searchables
 					Node xmlAttr = xmlAttrs.item(j);
 					String name = xmlAttr.getAttributes().getNamedItem("name").getNodeValue();
 					Attribute attr = Voyage.getAttribute(name);
-					if (j == 0)
+					if (attr == null)
 					{
-						if (attr == null) {
-							int a = 0;
-						}
+						throw new RuntimeException("searchable attribute '" + id + "' not found");
+					}
+					else if (j == 0)
+					{
 						attrType = attr.decodeType();
 					}
 					else
