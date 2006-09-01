@@ -35,15 +35,6 @@
         <property name="remoteId" column="remote_id"/>
     </class>
     
-    <class name="edu.emory.library.tast.dm.dictionaries.Carib" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
     <class name="edu.emory.library.tast.dm.dictionaries.Country" table="dictionary">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
@@ -304,15 +295,6 @@
         <property name="name" column="name"/>
         <property name="remoteId" column="remote_id"/>
     </class>
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.Status" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
    
     <class name="edu.emory.library.tast.dm.dictionaries.Temp" table="dictionary">
         <cache usage="read-write" /><id name="id" column="oid">
@@ -333,15 +315,6 @@
     </class>
     
     <class name="edu.emory.library.tast.dm.dictionaries.TonesType" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.Us" table="dictionary">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>
@@ -396,25 +369,6 @@
     </class>
     
     <class name="edu.emory.library.tast.dm.dictionaries.Year5" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.Yearches" table="dictionary">
-        <cache usage="read-write" /><id name="id" column="oid">
-        	<generator class="native"/>
-        </id>
-        <property name="type" column="obj_type"/>
-        <property name="name" column="name"/>
-        <property name="remoteId" column="remote_id"/>
-    </class>
-    
-    
-    <class name="edu.emory.library.tast.dm.dictionaries.PrimaryLast" table="dictionary">
         <cache usage="read-write" /><id name="id" column="oid">
         	<generator class="native"/>
         </id>

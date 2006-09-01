@@ -10,7 +10,6 @@ import java.util.Set;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.dictionaries.Carib;
 import edu.emory.library.tast.dm.dictionaries.DepDefinition;
 import edu.emory.library.tast.dm.dictionaries.Editor;
 import edu.emory.library.tast.dm.dictionaries.Fate2;
@@ -19,18 +18,14 @@ import edu.emory.library.tast.dm.dictionaries.Fate4;
 import edu.emory.library.tast.dm.dictionaries.Filter;
 import edu.emory.library.tast.dm.dictionaries.ImputedNation;
 import edu.emory.library.tast.dm.dictionaries.OldWorldPlace;
-import edu.emory.library.tast.dm.dictionaries.PrimaryLast;
 import edu.emory.library.tast.dm.dictionaries.ShipNationality;
-import edu.emory.library.tast.dm.dictionaries.Status;
 import edu.emory.library.tast.dm.dictionaries.Temp;
 import edu.emory.library.tast.dm.dictionaries.TonesType;
-import edu.emory.library.tast.dm.dictionaries.Us;
 import edu.emory.library.tast.dm.dictionaries.VesselRig;
 import edu.emory.library.tast.dm.dictionaries.XmimpFlag;
 import edu.emory.library.tast.dm.dictionaries.Year100;
 import edu.emory.library.tast.dm.dictionaries.Year25;
 import edu.emory.library.tast.dm.dictionaries.Year5;
-import edu.emory.library.tast.dm.dictionaries.Yearches;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.HibernateUtil;
 
@@ -1603,111 +1598,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("p", p);
 	}
-	public void setMen8(Integer men8) {
-		if ((men8 == null && this.values.get("men8") != null) 
-			|| (men8 != null && !men8.equals(this.values.get("men8")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men8", men8);
-	}
-	public void setWomen8(Integer women8) {
-		if ((women8 == null && this.values.get("women8") != null) 
-			|| (women8 != null && !women8.equals(this.values.get("women8")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women8", women8);
-	}
-	public void setBoy8(Integer boy8) {
-		if ((boy8 == null && this.values.get("boy8") != null) 
-			|| (boy8 != null && !boy8.equals(this.values.get("boy8")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boy8", boy8);
-	}
-	public void setGirl8(Integer girl8) {
-		if ((girl8 == null && this.values.get("girl8") != null) 
-			|| (girl8 != null && !girl8.equals(this.values.get("girl8")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girl8", girl8);
-	}
-	public void setPrice(Integer price) {
-		if ((price == null && this.values.get("price") != null) 
-			|| (price != null && !price.equals(this.values.get("price")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("price", price);
-	}
-	public void setUppguine(Float uppguine) {
-		if ((uppguine == null && this.values.get("uppguine") != null) 
-			|| (uppguine != null && !uppguine.equals(this.values.get("uppguine")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("uppguine", uppguine);
-	}
-	public void setVoyagimp(Float voyagimp) {
-		if ((voyagimp == null && this.values.get("voyagimp") != null) 
-			|| (voyagimp != null && !voyagimp.equals(this.values.get("voyagimp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("voyagimp", voyagimp);
-	}
-	public void setTimcoast(Float timcoast) {
-		if ((timcoast == null && this.values.get("timcoast") != null) 
-			|| (timcoast != null && !timcoast.equals(this.values.get("timcoast")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("timcoast", timcoast);
-	}
-	public void setSlavpday(Float slavpday) {
-		if ((slavpday == null && this.values.get("slavpday") != null) 
-			|| (slavpday != null && !slavpday.equals(this.values.get("slavpday")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavpday", slavpday);
-	}
-	public void setRountrip(Float rountrip) {
-		if ((rountrip == null && this.values.get("rountrip") != null) 
-			|| (rountrip != null && !rountrip.equals(this.values.get("rountrip")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("rountrip", rountrip);
-	}
-	public void setSlavpvoy(Float slavpvoy) {
-		if ((slavpvoy == null && this.values.get("slavpvoy") != null) 
-			|| (slavpvoy != null && !slavpvoy.equals(this.values.get("slavpvoy")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavpvoy", slavpvoy);
-	}
-	public void setSlxp1000(Float slxp1000) {
-		if ((slxp1000 == null && this.values.get("slxp1000") != null) 
-			|| (slxp1000 != null && !slxp1000.equals(this.values.get("slxp1000")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slxp1000", slxp1000);
-	}
-	public void setInsurre2(Float insurre2) {
-		if ((insurre2 == null && this.values.get("insurre2") != null) 
-			|| (insurre2 != null && !insurre2.equals(this.values.get("insurre2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("insurre2", insurre2);
-	}
-	public void setTimslave(Float timslave) {
-		if ((timslave == null && this.values.get("timslave") != null) 
-			|| (timslave != null && !timslave.equals(this.values.get("timslave")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("timslave", timslave);
-	}
-	public void setToncateg(Integer toncateg) {
-		if ((toncateg == null && this.values.get("toncateg") != null) 
-			|| (toncateg != null && !toncateg.equals(this.values.get("toncateg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("toncateg", toncateg);
-	}
 	public void setEvgreen(Integer evgreen) {
 		if ((evgreen == null && this.values.get("evgreen") != null) 
 			|| (evgreen != null && !evgreen.equals(this.values.get("evgreen")))) {
@@ -1799,75 +1689,12 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("boyrat1", boyrat1);
 	}
-	public void setPoundprice(Float poundprice) {
-		if ((poundprice == null && this.values.get("poundprice") != null) 
-			|| (poundprice != null && !poundprice.equals(this.values.get("poundprice")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("poundprice", poundprice);
-	}
-	public void setTermmth(Integer termmth) {
-		if ((termmth == null && this.values.get("termmth") != null) 
-			|| (termmth != null && !termmth.equals(this.values.get("termmth")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("termmth", termmth);
-	}
-	public void setIntrate(Integer intrate) {
-		if ((intrate == null && this.values.get("intrate") != null) 
-			|| (intrate != null && !intrate.equals(this.values.get("intrate")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("intrate", intrate);
-	}
-	public void setCashpric(Float cashpric) {
-		if ((cashpric == null && this.values.get("cashpric") != null) 
-			|| (cashpric != null && !cashpric.equals(this.values.get("cashpric")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("cashpric", cashpric);
-	}
 	public void setJamcaspr(Float jamcaspr) {
 		if ((jamcaspr == null && this.values.get("jamcaspr") != null) 
 			|| (jamcaspr != null && !jamcaspr.equals(this.values.get("jamcaspr")))) {
 			this.modified = UPDATED;
 		}
 		this.values.put("jamcaspr", jamcaspr);
-	}
-	public void setLocurmnl(Float locurmnl) {
-		if ((locurmnl == null && this.values.get("locurmnl") != null) 
-			|| (locurmnl != null && !locurmnl.equals(this.values.get("locurmnl")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("locurmnl", locurmnl);
-	}
-	public void setExchrate(String exchrate) {
-		if ((exchrate == null && this.values.get("exchrate") != null) 
-			|| (exchrate != null && !exchrate.equals(this.values.get("exchrate")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("exchrate", exchrate);
-	}
-	public void setFrencpri(Float frencpri) {
-		if ((frencpri == null && this.values.get("frencpri") != null) 
-			|| (frencpri != null && !frencpri.equals(this.values.get("frencpri")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("frencpri", frencpri);
-	}
-	public void setFrnprinl(Float frnprinl) {
-		if ((frnprinl == null && this.values.get("frnprinl") != null) 
-			|| (frnprinl != null && !frnprinl.equals(this.values.get("frnprinl")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("frnprinl", frnprinl);
-	}
-	public void setNonpay(Float nonpay) {
-		if ((nonpay == null && this.values.get("nonpay") != null) 
-			|| (nonpay != null && !nonpay.equals(this.values.get("nonpay")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("nonpay", nonpay);
 	}
 	public void setGirl5(Integer girl5) {
 		if ((girl5 == null && this.values.get("girl5") != null) 
@@ -1931,13 +1758,6 @@ public class Voyage extends AbstractDescriptiveObject {
 			this.modified = UPDATED;
 		}
 		this.values.put("infant3", infant3);
-	}
-	public void setInfants3(Integer infants3) {
-		if ((infants3 == null && this.values.get("infants3") != null) 
-			|| (infants3 != null && !infants3.equals(this.values.get("infants3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("infants3", infants3);
 	}
 	public void setInfant1(Integer infant1) {
 		if ((infant1 == null && this.values.get("infant1") != null) 
@@ -2037,13 +1857,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("child7", child7);
 	}
-	public void setVoy3imp(Integer voy3imp) {
-		if ((voy3imp == null && this.values.get("voy3imp") != null) 
-			|| (voy3imp != null && !voy3imp.equals(this.values.get("voy3imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("voy3imp", voy3imp);
-	}
 	public void setRice(Float rice) {
 		if ((rice == null && this.values.get("rice") != null) 
 			|| (rice != null && !rice.equals(this.values.get("rice")))) {
@@ -2057,13 +1870,6 @@ public class Voyage extends AbstractDescriptiveObject {
 			this.modified = UPDATED;
 		}
 		this.values.put("slavemx7", slavemx7);
-	}
-	public void setSpanishamer(Float spanishamer) {
-		if ((spanishamer == null && this.values.get("spanishamer") != null) 
-			|| (spanishamer != null && !spanishamer.equals(this.values.get("spanishamer")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("spanishamer", spanishamer);
 	}
 	public void setDatepl(DepDefinition datepl) {
 		if ((datepl == null && this.values.get("datepl") != null) 
@@ -2373,13 +2179,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("constreg", constreg);
 	}
-	public void setStatus(Status status) {
-		if ((status == null && this.values.get("status") != null) 
-			|| (status != null && !status.equals(this.values.get("status")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("status", status);
-	}
 	public void setEditor(Editor editor) {
 		if ((editor == null && this.values.get("editor") != null) 
 			|| (editor != null && !editor.equals(this.values.get("editor")))) {
@@ -2394,13 +2193,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("filter_$", filter_$);
 	}
-	public void setYearches(Yearches yearches) {
-		if ((yearches == null && this.values.get("yearches") != null) 
-			|| (yearches != null && !yearches.equals(this.values.get("yearches")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("yearches", yearches);
-	}
 	public void setRegarrp2(Region regarrp2) {
 		if ((regarrp2 == null && this.values.get("regarrp2") != null) 
 			|| (regarrp2 != null && !regarrp2.equals(this.values.get("regarrp2")))) {
@@ -2414,34 +2206,6 @@ public class Voyage extends AbstractDescriptiveObject {
 			this.modified = UPDATED;
 		}
 		this.values.put("xmimpflag", xmimpflag);
-	}
-	public void setPrimarylast(PrimaryLast primarylast) {
-		if ((primarylast == null && this.values.get("primarylast") != null) 
-			|| (primarylast != null && !primarylast.equals(this.values.get("primarylast")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("primarylast", primarylast);
-	}
-	public void setPrimarylast1(PrimaryLast primarylast1) {
-		if ((primarylast1 == null && this.values.get("primarylast1") != null) 
-			|| (primarylast1 != null && !primarylast1.equals(this.values.get("primarylast1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("primarylast1", primarylast1);
-	}
-	public void setCarib(Carib carib) {
-		if ((carib == null && this.values.get("carib") != null) 
-			|| (carib != null && !carib.equals(this.values.get("carib")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("carib", carib);
-	}
-	public void setUs(Us us) {
-		if ((us == null && this.values.get("us") != null) 
-			|| (us != null && !us.equals(this.values.get("us")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("us", us);
 	}
 	public void setTemp(Temp temp) {
 		if ((temp == null && this.values.get("temp") != null) 
@@ -2946,51 +2710,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getP() {
 		return (Integer)this.values.get("p");
 	}
-	public Integer getMen8() {
-		return (Integer)this.values.get("men8");
-	}
-	public Integer getWomen8() {
-		return (Integer)this.values.get("women8");
-	}
-	public Integer getBoy8() {
-		return (Integer)this.values.get("boy8");
-	}
-	public Integer getGirl8() {
-		return (Integer)this.values.get("girl8");
-	}
-	public Integer getPrice() {
-		return (Integer)this.values.get("price");
-	}
-	public Float getUppguine() {
-		return (Float)this.values.get("uppguine");
-	}
-	public Float getVoyagimp() {
-		return (Float)this.values.get("voyagimp");
-	}
-	public Float getTimcoast() {
-		return (Float)this.values.get("timcoast");
-	}
-	public Float getSlavpday() {
-		return (Float)this.values.get("slavpday");
-	}
-	public Float getRountrip() {
-		return (Float)this.values.get("rountrip");
-	}
-	public Float getSlavpvoy() {
-		return (Float)this.values.get("slavpvoy");
-	}
-	public Float getSlxp1000() {
-		return (Float)this.values.get("slxp1000");
-	}
-	public Float getInsurre2() {
-		return (Float)this.values.get("insurre2");
-	}
-	public Float getTimslave() {
-		return (Float)this.values.get("timslave");
-	}
-	public Integer getToncateg() {
-		return (Integer)this.values.get("toncateg");
-	}
 	public Integer getEvgreen() {
 		return (Integer)this.values.get("evgreen");
 	}
@@ -3030,35 +2749,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Float getBoyrat1() {
 		return (Float)this.values.get("boyrat1");
 	}
-	public Float getPoundprice() {
-		return (Float)this.values.get("poundprice");
-	}
-	public Integer getTermmth() {
-		return (Integer)this.values.get("termmth");
-	}
-	public Integer getIntrate() {
-		return (Integer)this.values.get("intrate");
-	}
-	public Float getCashpric() {
-		return (Float)this.values.get("cashpric");
-	}
 	public Float getJamcaspr() {
 		return (Float)this.values.get("jamcaspr");
-	}
-	public Float getLocurmnl() {
-		return (Float)this.values.get("locurmnl");
-	}
-	public String getExchrate() {
-		return (String)this.values.get("exchrate");
-	}
-	public Float getFrencpri() {
-		return (Float)this.values.get("frencpri");
-	}
-	public Float getFrnprinl() {
-		return (Float)this.values.get("frnprinl");
-	}
-	public Float getNonpay() {
-		return (Float)this.values.get("nonpay");
 	}
 	public Integer getGirl5() {
 		return (Integer)this.values.get("girl5");
@@ -3086,9 +2778,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	public Integer getInfant3() {
 		return (Integer)this.values.get("infant3");
-	}
-	public Integer getInfants3() {
-		return (Integer)this.values.get("infants3");
 	}
 	public Integer getInfant1() {
 		return (Integer)this.values.get("infant1");
@@ -3132,17 +2821,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getChild7() {
 		return (Integer)this.values.get("child7");
 	}
-	public Integer getVoy3imp() {
-		return (Integer)this.values.get("voy3imp");
-	}
 	public Float getRice() {
 		return (Float)this.values.get("rice");
 	}
 	public Float getSlavemx7() {
 		return (Float)this.values.get("slavemx7");
-	}
-	public Float getSpanishamer() {
-		return (Float)this.values.get("spanishamer");
 	}
 	public DepDefinition getDatepl() {
 		return (DepDefinition)this.values.get("datepl");
@@ -3276,35 +2959,17 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Region getConstreg() {
 		return (Region)this.values.get("constreg");
 	}
-	public Status getStatus() {
-		return (Status)this.values.get("status");
-	}
 	public Editor getEditor() {
 		return (Editor)this.values.get("editor");
 	}
 	public Filter getFilter_$() {
 		return (Filter)this.values.get("filter_$");
 	}
-	public Yearches getYearches() {
-		return (Yearches)this.values.get("yearches");
-	}
 	public Region getRegarrp2() {
 		return (Region)this.values.get("regarrp2");
 	}
 	public XmimpFlag getXmimpflag() {
 		return (XmimpFlag)this.values.get("xmimpflag");
-	}
-	public PrimaryLast getPrimarylast() {
-		return (PrimaryLast)this.values.get("primarylast");
-	}
-	public PrimaryLast getPrimarylast1() {
-		return (PrimaryLast)this.values.get("primarylast1");
-	}
-	public Carib getCarib() {
-		return (Carib)this.values.get("carib");
-	}
-	public Us getUs() {
-		return (Us)this.values.get("us");
 	}
 	public Temp getTemp() {
 		return (Temp)this.values.get("temp");

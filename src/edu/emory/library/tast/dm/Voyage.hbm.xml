@@ -113,7 +113,6 @@
 		<property name="sladied1" column="sladied1"/>
 		<property name="sladied3" column="sladied3"/>
 		<property name="sladied6" column="sladied6"/>
-		<property name="insurrec" column="insurrec"/>
 		<property name="adult3" column="adult3"/>
 		<property name="ownera" column="ownera"/>
 		<property name="ownerb" column="ownerb"/>
@@ -170,21 +169,7 @@
 		<property name="chilrat7" column="chilrat7"/>
 		<property name="sourcex" column="sourcex"/>
 		<property name="p" column="p"/>
-		<property name="men8" column="men8"/>
-		<property name="women8" column="women8"/>
-		<property name="boy8" column="boy8"/>
-		<property name="girl8" column="girl8"/>
-		<property name="price" column="price"/>
-		<property name="uppguine" column="uppguine"/>
-		<property name="voyagimp" column="voyagimp"/>
-		<property name="timcoast" column="timcoast"/>
-		<property name="slavpday" column="slavpday"/>
-		<property name="rountrip" column="rountrip"/>
-		<property name="slavpvoy" column="slavpvoy"/>
-		<property name="slxp1000" column="slxp1000"/>
 		<property name="insurre2" column="insurre2"/>
-		<property name="timslave" column="timslave"/>
-		<property name="toncateg" column="toncateg"/>
 		<property name="evgreen" column="evgreen"/>
 		<property name="womrat1" column="womrat1"/>
 		<property name="womrat3" column="womrat3"/>
@@ -198,16 +183,7 @@
 		<property name="boyrat7" column="boyrat7"/>
 		<property name="boyrat3" column="boyrat3"/>
 		<property name="boyrat1" column="boyrat1"/>
-		<property name="poundprice" column="poundprice"/>
-		<property name="termmth" column="termmth"/>
-		<property name="intrate" column="intrate"/>
-		<property name="cashpric" column="cashpric"/>
 		<property name="jamcaspr" column="jamcaspr"/>
-		<property name="locurmnl" column="locurmnl"/>
-		<property name="exchrate" column="exchrate"/>
-		<property name="frencpri" column="frencpri"/>
-		<property name="frnprinl" column="frnprinl"/>
-		<property name="nonpay" column="nonpay"/>
 		<property name="girl5" column="girl5"/>
 		<property name="boy5" column="boy5"/>
 		<property name="men5" column="men5"/>
@@ -216,7 +192,6 @@
 		<property name="male5" column="male5"/>
 		<property name="female5" column="female5"/>
 		<property name="infant3" column="infant3"/>
-		<property name="infants3" column="infants3"/>
 		<property name="infant1" column="infant1"/>
 		<property name="adult5" column="adult5"/>
 		<property name="adult2" column="adult2"/>
@@ -231,9 +206,7 @@
 		<property name="boy7" column="boy7"/>
 		<property name="girl7" column="girl7"/>
 		<property name="child7" column="child7"/>
-		<property name="voy3imp" column="voy3imp"/>
 		<property name="slavemx7" column="slavemx7"/>
-		<property name="spanishamer" column="spanishamer"/>
 		
 		<property name="s_slaximp" formula="standarizeSlaveNumber(slaximp)" update="false" insert="false"/>
 		<property name="s_slamimp" formula="standarizeSlaveNumber(slamimp)" update="false" insert="false"/>
@@ -284,16 +257,10 @@
 		<many-to-one name="fate4" class="edu.emory.library.tast.dm.dictionaries.Fate4"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="mjselimp" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="constreg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="status" class="edu.emory.library.tast.dm.dictionaries.Status"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="editor" class="edu.emory.library.tast.dm.dictionaries.Editor"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="filter_$" class="edu.emory.library.tast.dm.dictionaries.Filter"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="yearches" class="edu.emory.library.tast.dm.dictionaries.Yearches"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="regarrp2" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="xmimpflag" class="edu.emory.library.tast.dm.dictionaries.XmimpFlag"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="primarylast" class="edu.emory.library.tast.dm.dictionaries.PrimaryLast"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="primarylast1" class="edu.emory.library.tast.dm.dictionaries.PrimaryLast"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="carib" class="edu.emory.library.tast.dm.dictionaries.Carib"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="us" class="edu.emory.library.tast.dm.dictionaries.Us"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="temp" class="edu.emory.library.tast.dm.dictionaries.Temp"  lazy="false" outer-join="true" fetch="join"/>
 
 	</class>
