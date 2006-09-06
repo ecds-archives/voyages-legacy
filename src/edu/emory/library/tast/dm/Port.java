@@ -38,7 +38,7 @@ public class Port extends Location
 		this.region = region;
 	}
 	
-	public static Port loadById(int portId)
+	public static Port loadById(long portId)
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
@@ -48,9 +48,9 @@ public class Port extends Location
 		return port;
 	}
 
-	public static Port loadById(Session sess, int portId)
+	public static Port loadById(Session sess, long portId)
 	{
-		List list = sess.createCriteria(Port.class).add(Restrictions.eq("remoteId", new Integer(portId))).list();
+		List list = sess.createCriteria(Port.class).add(Restrictions.eq("id", new Long(portId))).list();
 		if (list == null || list.size() == 0) return null;
 		return (Port) list.get(0);
 	}

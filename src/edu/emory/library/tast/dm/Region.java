@@ -80,7 +80,7 @@ public class Region extends Location
 		return crit.list();
 	}
 	
-	public static Region loadById(int regionId)
+	public static Region loadById(long regionId)
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
@@ -90,9 +90,9 @@ public class Region extends Location
 		return region;
 	}
 
-	public static Region loadById(Session sess, int regionId)
+	public static Region loadById(Session sess, long regionId)
 	{
-		List list = sess.createCriteria(Region.class).add(Restrictions.eq("remoteId", new Integer(regionId))).list();
+		List list = sess.createCriteria(Region.class).add(Restrictions.eq("id", new Long(regionId))).list();
 		if (list == null || list.size() == 0) return null;
 		return (Region) list.get(0);
 	}

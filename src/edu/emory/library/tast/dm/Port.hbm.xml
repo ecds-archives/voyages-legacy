@@ -12,7 +12,6 @@
 		<property name="y" />
 		<property name="latitude" />
 		<property name="longitude" />
-		<property name="remoteId" column="rid" />
 		<many-to-one name="region" column="region_id" lazy="false" />
 	</class>
 </hibernate-mapping>

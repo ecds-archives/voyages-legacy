@@ -946,7 +946,7 @@ public class Import
 					try
 					{
 						var = (STSchemaVariable) schema.get(attr.getImportName());
-						parsedValue = Port.loadById(Integer.parseInt(record.getValue(var)));
+						parsedValue = Port.loadById(Long.parseLong(record.getValue(var)));
 					}
 					catch (NumberFormatException nfe)
 					{
@@ -959,7 +959,7 @@ public class Import
 					try
 					{
 						var = (STSchemaVariable) schema.get(attr.getImportName());
-						parsedValue = Region.loadById(Integer.parseInt(record.getValue(var)));
+						parsedValue = Region.loadById(Long.parseLong(record.getValue(var)));
 					}
 					catch (NumberFormatException nfe)
 					{

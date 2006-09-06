@@ -29,8 +29,18 @@ public class NumericAttribute extends Attribute {
 	}
 	
 	public NumericAttribute(Node xmlNode, String objectType) {
+
 		super(xmlNode, objectType);
-		this.type = new Integer(this.parseAttribute(xmlNode, "type"));
+		
+		String attrNumType = this.parseAttribute(xmlNode, "attrNumType");
+		if ("Integer".equals(attrNumType))
+			this.type = new Integer(TYPE_INTEGER);
+		else if ("Long".equals(attrNumType))
+			this.type = new Integer(TYPE_LONG);
+		else if ("Float".equals(attrNumType))
+			this.type = new Integer(TYPE_FLOAT);
+		else
+			this.type = new Integer(TYPE_UNKNOWN);
 	}
 	
 	public Integer getType() {

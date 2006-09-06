@@ -748,7 +748,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		}
 		this.values.put("slintend", slintend);
 	}
-	public void setTonnage(Integer tonnage) {
+	public void setTonnage(Float tonnage) {
 		if ((tonnage == null && this.values.get("tonnage") != null) 
 			|| (tonnage != null && !tonnage.equals(this.values.get("tonnage")))) {
 			this.modified = UPDATED;
@@ -2323,8 +2323,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getSlintend() {
 		return (Integer)this.values.get("slintend");
 	}
-	public Integer getTonnage() {
-		return (Integer)this.values.get("tonnage");
+	public Float getTonnage() {
+		return (Float)this.values.get("tonnage");
 	}
 	public Integer getCrewdied() {
 		return (Integer)this.values.get("crewdied");
