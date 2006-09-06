@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.images;
+package edu.emory.library.tast.ui.images.admin;
 
 import java.util.ArrayList;
 import java.util.Iterator;

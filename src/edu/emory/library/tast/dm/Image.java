@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
@@ -25,7 +28,7 @@ public class Image
 	static
 	{
 		attributes.put("id", new StringAttribute("id", "Image"));
-		attributes.put("name", new NumericAttribute("name", "Image"));
+		attributes.put("title", new NumericAttribute("title", "Image"));
 		attributes.put("description", new NumericAttribute("description", "Image"));
 		attributes.put("fileName", new NumericAttribute("fileName", "Image"));
 		attributes.put("width", new NumericAttribute("width", "Image"));
@@ -37,47 +40,56 @@ public class Image
 	}
 	
 	private int id;
-	private String name;
-	private String description;
-	private String source;
-	private String dateCreated;
-	private String painter;
+	private int width;
+	private int height;
+	private int size;
 	private String fileName;
 	private String mimeType;
+
+	private String title;
+	private String description;
+	private String creator;
+	private String source;
+	private String date;
+	private String language;
+
 	private Set regions; 
 	private Set ports;
 	private Set people;
-	private int width;
-	private int height;
 	
-	public String getDateCreated()
+	public String getDate()
 	{
-		return dateCreated;
+		return date;
 	}
 
-	public void setDateCreated(String dateCreated)
+	public void setDate(String dateCreated)
 	{
-		this.dateCreated = dateCreated;
+		this.date = dateCreated;
 	}
 
-	public String getPainter()
+	public String getLanguage()
 	{
-		return painter;
+		return language;
 	}
 
-	public void setPainter(String painter)
+	public String getLanguageName()
 	{
-		this.painter = painter;
+		return Languages.getNameByCode(language);
 	}
 
-	public String getSource()
+	public void setLanguage(String language)
 	{
-		return source;
+		this.language = language;
 	}
 
-	public void setSource(String source)
+	public String getCreator()
 	{
-		this.source = source;
+		return creator;
+	}
+
+	public void setCreator(String source)
+	{
+		this.creator = source;
 	}
 
 	public String getDescription()
@@ -140,14 +152,34 @@ public class Image
 		this.mimeType = mimeType;
 	}
 	
-	public String getName()
+	public String getTitle()
 	{
-		return name;
+		return title;
 	}
 	
-	public void setName(String name)
+	public void setTitle(String title)
 	{
-		this.name = name;
+		this.title = title;
+	}
+	
+	public int getSize()
+	{
+		return size;
+	}
+
+	public void setSize(int size)
+	{
+		this.size = size;
+	}
+
+	public String getSource()
+	{
+		return source;
+	}
+
+	public void setSource(String source)
+	{
+		this.source = source;
 	}
 	
 	public Set getPorts()
@@ -179,21 +211,6 @@ public class Image
 	{
 		this.people = people;
 	}
-	
-//	public String getThumbnailUrl(String contextPath)
-//	{
-//		return contextPath + "/images/" + thumbnailFileName;
-//	}
-//
-//	public String getImageUrl(String contextPath)
-//	{
-//		return contextPath + "/images/" + fileName;
-//	}
-//
-//	public String getImageUrl()
-//	{
-//		return "images/" + fileName;
-//	}
 
 	public static Image[] getImagesArray()
 	{
@@ -227,7 +244,7 @@ public class Image
 		{
 			searchFor = "%" + searchFor + "%";
 			Conditions conds = new Conditions(Conditions.JOIN_AND);
-			conds.addCondition(getAttribute("name"), searchFor, Conditions.OP_LIKE);
+			conds.addCondition(getAttribute("title"), searchFor, Conditions.OP_LIKE);
 			query = new QueryValue("Image", conds);
 		}
 		else
@@ -235,9 +252,9 @@ public class Image
 			query = new QueryValue("Image");
 		}
 		
-		query.setOrderBy(new Attribute[] {getAttribute("name")});
+		query.setOrderBy(new Attribute[] {getAttribute("title")});
 		query.setOrder(QueryValue.ORDER_ASC);
-		return query.executeQueryList(sess);		
+		return query.executeQueryList(sess);
 	}
 
 	public static Image loadById(int imageId)
@@ -274,6 +291,39 @@ public class Image
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
+	}
+	
+	public static boolean checkDate(String date)
+	{
+		
+		date = date.trim();
+		
+		Pattern regEx = Pattern.compile("(\\d{4})(?:-(\\d{1,2})(?:-(\\d{1,2}))?)?");
+		Matcher matcher = regEx.matcher(date);
+		if (!matcher.matches()) return false;
+		
+		String monthStr = matcher.group(2); 
+		if (monthStr != null)
+		{
+			int month = Integer.parseInt(monthStr);
+			if (month <= 0 || 12 < month) return false;
+			String dayString = matcher.group(3); 
+			if (dayString != null)
+			{
+				int day = Integer.parseInt(dayString);
+				if (day <= 0 || 31 < day) return false;
+			}
+		}
+
+		return true;
+		
+	}
+	
+	public static void main(String[] args)
+	{
+		
+		Image.checkDate("1234");
+		
 	}
 
 }

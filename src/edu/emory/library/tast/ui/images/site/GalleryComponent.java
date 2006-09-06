@@ -126,7 +126,7 @@ public class GalleryComponent extends UICommand {
 				writer.writeAttribute("style", "cursor: pointer;", null);
 
 				writer.write("<br/>");
-				writer.write(image.getName());
+				writer.write(image.getTitle());
 
 				writer.endElement("td");
 				if ((i + 1) % rows == 0) {
@@ -146,7 +146,7 @@ public class GalleryComponent extends UICommand {
 
 			GaleryImage visibleImage = pictures.getVisiblePicture();
 			if (visibleImage != null) {
-				writer.write(visibleImage.getImage().getName());
+				writer.write(visibleImage.getImage().getTitle());
 				writer.write("<br/>");
 				writer.startElement("img", this);
 				writer.writeAttribute("src", "images/"

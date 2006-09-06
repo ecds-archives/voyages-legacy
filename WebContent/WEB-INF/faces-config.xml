@@ -133,8 +133,7 @@
 	<component>
 		<component-type>ImageList</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.images.ImageListComponent
-		</component-class>
+		edu.emory.library.tast.ui.images.admin.ImageListComponent</component-class>
 	</component>
 	
 	<component>
@@ -254,7 +253,7 @@
 	<managed-bean>
 		<managed-bean-name>ImagesBean</managed-bean-name>
 		<managed-bean-class>
-		edu.emory.library.tast.ui.images.ImagesBean</managed-bean-class>
+		edu.emory.library.tast.ui.images.admin.ImagesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 

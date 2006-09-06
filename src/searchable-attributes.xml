@@ -24,7 +24,6 @@
 
 <searchable-attributes>
 
-
 	<searchable-attribute
 		type="location"
 		id="test"

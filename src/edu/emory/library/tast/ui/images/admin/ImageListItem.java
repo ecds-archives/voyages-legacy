@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.images;
+package edu.emory.library.tast.ui.images.admin;
 
 public class ImageListItem
 {

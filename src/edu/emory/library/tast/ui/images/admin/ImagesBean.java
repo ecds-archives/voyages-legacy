@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.images;
+package edu.emory.library.tast.ui.images.admin;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -83,13 +83,14 @@ public class ImagesBean
 			String subItems[] = new String[] {
 					image.getHeight() + "x" + image.getHeight(),
 					image.getMimeType(),
-					StringUtils.coalesce(image.getDateCreated(), ""),
-					StringUtils.coalesce(image.getSource(), ""),
+					StringUtils.coalesce(image.getDate(), ""),
+					StringUtils.coalesce(image.getCreator(), ""),
+					StringUtils.coalesce(image.getCreator(), ""),
 			};
 			
 			ImageListItem uiImage = new ImageListItem();
 			uiImage.setId(String.valueOf(image.getId()));
-			uiImage.setName(image.getName());
+			uiImage.setName(image.getTitle());
 			uiImage.setUrl("servlet/thumbnail?i=" + image.getFileName() + "&w=" + w + "&h=" + h);
 			uiImage.setSubItems(subItems);
 			uiImages.add(uiImage);
@@ -237,7 +238,7 @@ public class ImagesBean
 			
 			// copy
 			FileOutputStream imgFileStream = new FileOutputStream(file);
-			IOUtils.copy(uploadedImage.getInputStream(), imgFileStream);
+			int size = IOUtils.copy(uploadedImage.getInputStream(), imgFileStream);
 			imgFileStream.close();
 			
 			// get image info
@@ -253,6 +254,7 @@ public class ImagesBean
 			// replace current image
 			image.setWidth(width);
 			image.setHeight(height);
+			image.setSize(size);
 			image.setMimeType(uploadedImage.getContentType());
 			image.setFileName(fileName);
 			
@@ -311,11 +313,20 @@ public class ImagesBean
 			}
 
 			// links check name
-			if (StringUtils.isNullOrEmpty(image.getName(), true))
+			String titleLocal = image.getTitle().trim();
+			if (StringUtils.isNullOrEmpty(titleLocal, true))
 				throw new SaveImageException("Please specify image name.");
+			else if (titleLocal.length() > 200)
+				throw new SaveImageException("Title is too long.");
+
+			// check date
+			String dateLocal = image.getDate().trim();
+			if (!StringUtils.isNullOrEmpty(dateLocal, true) && !Image.checkDate(dateLocal))
+				throw new SaveImageException("Date is invalid. Expected YYYY or YYYY-MM or YYYY-MM-DD.");
 
 			// save
-			image.setName(image.getName().trim());
+			image.setDate(dateLocal);
+			image.setTitle(titleLocal);
 			sess.saveOrUpdate(image);
 
 			// commit

@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.images;
+package edu.emory.library.tast.ui.images.admin;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,11 +9,11 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.ui.LookupSource;
 import edu.emory.library.tast.util.HibernateUtil;
 
-public class LookupSourceRegions implements LookupSource
+public class LookupSourcePorts implements LookupSource
 {
 
 	public boolean canReturnAllItems()
@@ -23,17 +23,17 @@ public class LookupSourceRegions implements LookupSource
 
 	public List allItems()
 	{
-		return getRegions(null);
+		return getPorts(null);
 	}
-	
+
 	public int getMaxLimit()
 	{
 		return 0;
 	}
-
+	
 	public List getItemsByValues(String[] ids)
 	{
-		
+
 		// nothing to do
 		if (ids == null)
 			return new ArrayList();
@@ -43,17 +43,17 @@ public class LookupSourceRegions implements LookupSource
 		Transaction transaction = sess.beginTransaction();
 		
 		// prepare the list
-		List uiRegions = new ArrayList(ids.length);
+		List uiPorts = new ArrayList(ids.length);
 
 		// load one by one
 		for (int i = 0; i < ids.length; i++)
 		{
-			int regionId = Integer.parseInt(ids[i]);
-			Region dbRegion = Region.loadById(sess, regionId);
+			int portId = Integer.parseInt(ids[i]);
+			Port dbPort = Port.loadById(sess, portId);
 			SelectItem item = new SelectItem();
-			item.setValue(String.valueOf(dbRegion.getId()));
-			item.setLabel(dbRegion.getName());
-			uiRegions.add(item);
+			item.setValue(String.valueOf(dbPort.getId()));
+			item.setLabel(dbPort.getName());
+			uiPorts.add(item);
 		}
 		
 		// close db
@@ -61,35 +61,35 @@ public class LookupSourceRegions implements LookupSource
 		sess.close();
 		
 		// return
-		return uiRegions;
+		return uiPorts;
 
 	}
 
 	public List search(String value)
 	{
-		return getRegions(value);
+		return getPorts(value);
 	}
 	
-	private List getRegions(String searchFor)
+	private List getPorts(String searchFor)
 	{
 
 		// open db
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		// load all regions
+		// load all ports
 		if (searchFor != null) searchFor = "%" + searchFor + "%";
-		List dbRegions = Region.loadRegions(sess, searchFor);
-		List uiRegions = new ArrayList(dbRegions.size());
+		List dbPorts = Port.loadPorts(sess, searchFor);
+		List uiPorts = new ArrayList(dbPorts.size());
 
 		// fill UI list
-		for (Iterator iter = dbRegions.iterator(); iter.hasNext();)
+		for (Iterator iter = dbPorts.iterator(); iter.hasNext();)
 		{
-			Region dbPerson = (Region) iter.next();
+			Port dbPort = (Port) iter.next();
 			SelectItem item = new SelectItem();
-			item.setValue(String.valueOf(dbPerson.getId()));
-			item.setLabel(dbPerson.getName());
-			uiRegions.add(item);
+			item.setValue(String.valueOf(dbPort.getId()));
+			item.setLabel(dbPort.getRegion().getName() + " / " + dbPort.getName());
+			uiPorts.add(item);
 		}
 		
 		// close db
@@ -97,7 +97,7 @@ public class LookupSourceRegions implements LookupSource
 		sess.close();
 		
 		// return
-		return uiRegions;
+		return uiPorts;
 		
 	}
 

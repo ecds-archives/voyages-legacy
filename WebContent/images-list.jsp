@@ -83,7 +83,7 @@ div.imagelist-gallery-image {
 		
 		<s:imageList
 			id="images"
-			columns="Size, Image type, Date created, Source"
+			columns="Size, Image type, Date, Creator, Source"
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
 			selectedImageId="#{ImagesBean.selectedImageId}"

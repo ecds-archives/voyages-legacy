@@ -1,4 +1,4 @@
-package edu.emory.library.tast.ui.images;
+package edu.emory.library.tast.ui.images.admin;
 
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;

@@ -10,16 +10,18 @@
 			<generator class="native"/>
 		</id>
 		
-		<property name="name" column="name" />
 		<property name="fileName" column="file_name" />
 		<property name="width" column="width" />
 		<property name="height" column="height" />
+		<property name="size" column="size" />
 		<property name="mimeType" column="mime_type" />
 		
+		<property name="title" column="title" />
 		<property name="description" column="description" />
+		<property name="creator" column="creator" />
+		<property name="date" column="date" />
+		<property name="language" column="language" />
 		<property name="source" column="source" />
-		<property name="dateCreated" column="date_created" />
-		<property name="painter" column="painter" />
 
 		<set name="regions" table="regions_images" lazy="false">
 			<key column="image_id" />

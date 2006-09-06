@@ -420,7 +420,7 @@
 	<tag>
 		<name>imageList</name>
 		<tag-class>
-			edu.emory.library.tast.ui.images.ImageListTag
+			edu.emory.library.tast.ui.images.admin.ImageListTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

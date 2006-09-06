@@ -37,6 +37,8 @@ div.section {
 		Trans-Atlantic Trade Slave / Image database
 		</div>
 		
+		<h:outputText value="#{ImagesBean.errorText}" />
+		
 		<div class="section">Image</div>
 	
 		<h:graphicImage 
@@ -78,8 +80,8 @@ div.section {
 			
 		<table border="0" cellspacing="5" cellpadding="0">
 		<tr>
-			<td>Name</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.name}" /></td>
+			<td>Title</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.title}" /></td>
 		</tr>
 		<tr>
 			<td>Description</td>
@@ -90,12 +92,12 @@ div.section {
 			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.source}" /></td>
 		</tr>
 		<tr>
-			<td>Date created</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.dateCreated}" /></td>
+			<td>Date</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.date}" /></td>
 		</tr>
 		<tr>
-			<td>Painter</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.painter}" /></td>
+			<td>Creator</td>
+			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.creator}" /></td>
 		</tr>
 		</table>
 			
