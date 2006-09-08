@@ -60,4 +60,16 @@ public class PictureGalery {
 	public int getNumberOfAll() {
 		return this.pictures.length;
 	}
+
+	public int getLast(int rowstimescols) {
+		if (rowstimescols < this.pictures.length) {
+			if (this.firstVisible + rowstimescols > this.pictures.length) {
+				return this.pictures.length;
+			} else {
+				return this.firstVisible + rowstimescols;
+			}
+		} else {
+			return this.pictures.length;
+		}
+	}
 }

@@ -136,7 +136,7 @@ public class GalleryComponent extends UICommand {
 			writer.endElement("table");
 			writer.startElement("div", this);
 			writer.writeAttribute("align", "right;", null);
-			writer.write("Showing images from " + (pictures.getFirst() + 1) + " to " + (pictures.getFirst() + rows*cols) + " out of "+ pictures.getNumberOfAll());
+			writer.write("Showing images from " + (pictures.getFirst() + 1) + " to " + (pictures.getLast(rows*cols)) + " out of "+ pictures.getNumberOfAll());
 			writer.endElement("div");
 			writer.endElement("td");
 

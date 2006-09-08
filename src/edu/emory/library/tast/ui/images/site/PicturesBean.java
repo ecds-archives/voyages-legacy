@@ -1,6 +1,15 @@
 package edu.emory.library.tast.ui.images.site;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.servlet.ServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,6 +19,9 @@ import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.search.query.Query;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
@@ -18,8 +30,11 @@ import edu.emory.library.tast.ui.search.query.QueryConditionRange;
 import edu.emory.library.tast.ui.search.query.QueryConditionText;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
+import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.DirectValue;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public class PicturesBean {
 
@@ -31,11 +46,28 @@ public class PicturesBean {
 
 	public static final String VOYAGE_ENCODE = "voyage_";
 
+	private static Map galleryUserLabels = new HashMap();
+	
+	static {
+		galleryUserLabels.put("people", "people");
+		galleryUserLabels.put("regions", "regions");
+		galleryUserLabels.put("ports", "ports");
+		galleryUserLabels.put("ships", "ships");
+	}
+	
 	private PictureGalery pictureGalery;
 
 	private SearchBean searchBean;
 
 	private String searchCondition;
+	
+	private String visibleImage;
+
+	private String lastGalleryName;
+
+	private Object object;
+
+	private Object id;
 
 	public PicturesBean() {
 
@@ -47,16 +79,7 @@ public class PicturesBean {
 		GaleryImage[] galeryImage = new GaleryImage[images.length];
 		for (int i = 0; i < images.length; i++) {
 			Image image = images[i];
-			Person[] persons = (Person[]) image.getPeople().toArray(
-					new Person[] {});
-			Port[] ports = (Port[]) image.getPorts().toArray(new Port[] {});
-			Region[] regions = (Region[]) image.getRegions().toArray(
-					new Region[] {});
-			galeryImage[i] = new GaleryImage();
-			galeryImage[i].setImage(image);
-			galeryImage[i].setPeople(persons);
-			galeryImage[i].setPorts(ports);
-			galeryImage[i].setRegions(regions);
+			galeryImage[i] = getGalleryImage(image);
 		}
 
 		this.pictureGalery = new PictureGalery(galeryImage);
@@ -66,7 +89,58 @@ public class PicturesBean {
 
 	}
 
+	private GaleryImage getGalleryImage(Image image) {
+		GaleryImage galeryImage = null;		
+		Person[] persons = (Person[]) image.getPeople().toArray(
+				new Person[] {});
+		Port[] ports = (Port[]) image.getPorts().toArray(new Port[] {});
+		Region[] regions = (Region[]) image.getRegions().toArray(
+				new Region[] {});
+		galeryImage = new GaleryImage();
+		galeryImage.setImage(image);
+		galeryImage.setPeople(persons);
+		galeryImage.setPorts(ports);
+		galeryImage.setRegions(regions);
+		return galeryImage;
+	}
+
 	public PictureGalery getPictureGalery() {
+		String object = this.getURLParam("obj");
+		String id = this.getURLParam("id");
+		if (object != null && id != null && (!object.equals(this.object) || !id.equals(this.id))) {
+			this.id = id;
+			this.object = object;
+			Conditions conditions = new Conditions();
+			QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"}, conditions);
+			if (object.equals("people")) {
+				conditions.addCondition(new DirectValueAttribute(id),
+						new SequenceAttribute(new Attribute[] {Image.getAttribute("people"), Person.getAttribute("id")}), 
+					Conditions.OP_IN);
+			} else if (object.equals("ports")) {
+				conditions.addCondition(new DirectValueAttribute(id),
+						new SequenceAttribute(new Attribute[] {Image.getAttribute("ports"), Person.getAttribute("id")}), 
+					Conditions.OP_IN);
+			} else if (object.equals("regions")) {
+				conditions.addCondition(new DirectValueAttribute(id),
+						new SequenceAttribute(new Attribute[] {Image.getAttribute("regions"), Person.getAttribute("id")}), 
+					Conditions.OP_IN);
+			} else if (object.equals("ships")) {
+				
+			}
+			System.out.println(qValue.toStringWithParams().conditionString);
+			Session session = HibernateUtil.getSession();
+			Transaction transaction = session.beginTransaction();
+			Object[] ret = qValue.executeQuery(session);
+			GaleryImage[] gallImages = new GaleryImage[ret.length];
+			for (int i = 0; i < ret.length; i++) {
+				Image img = (Image)ret[i];
+				gallImages[i] = this.getGalleryImage(img);
+			}
+			this.pictureGalery = new PictureGalery(gallImages);
+			transaction.commit();
+			session.close();
+		}
+		
 		return pictureGalery;
 	}
 
@@ -174,4 +248,137 @@ public class PicturesBean {
 
 	}
 
+//	public String showImage() {
+//		System.out.println("Imageid " + this.id);
+//		return null;
+//	}
+	
+	public String getLastGalleryName() {
+		if (this.lastGalleryName == null) {
+			return "people";
+		}
+		return this.lastGalleryName;
+	}
+
+	public SelectItem[] getCurrentObjects() {
+		
+		ArrayList items = new ArrayList();
+		
+		String gallery = this.getURLParam("gal");
+		System.out.println("Gallery is: " + gallery);
+		if ("people".equals(gallery)) {
+			
+			Session session = HibernateUtil.getSession();
+			Transaction transaction = session.beginTransaction();
+			Object[] result = getImagesWith(Image.getAttribute("people"), session);
+			for (int i = 0; i < result.length; i++) {
+				Image image = (Image)result[i];
+				Set persons = image.getPeople();
+				Iterator iter = persons.iterator();
+				while (iter.hasNext()) {
+					Person p = (Person) iter.next();
+					SelectItem item = new ComparableSelectItem(String.valueOf(p.getId()), p.getLastName());
+					if (!items.contains(item)) {
+						items.add(item);
+					}
+				}
+			}
+			
+			transaction.commit();
+			session.close();
+			
+		} else if ("ports".equals(gallery)) {
+			
+			Session session = HibernateUtil.getSession();
+			Transaction transaction = session.beginTransaction();
+			Object[] result = getImagesWith(Image.getAttribute("ports"), session);
+			for (int i = 0; i < result.length; i++) {
+				Image image = (Image)result[i];
+				Set ports = image.getPorts();
+				Iterator iter = ports.iterator();
+				while (iter.hasNext()) {
+					Port p = (Port) iter.next();
+					SelectItem item = new ComparableSelectItem(String.valueOf(p.getId()), p.getName());
+					if (!items.contains(item)) {
+						items.add(item);
+					}
+				}
+			}
+			
+			transaction.commit();
+			session.close();
+			
+		} else if ("regions".equals(gallery)) {
+			
+			Session session = HibernateUtil.getSession();
+			Transaction transaction = session.beginTransaction();
+			Object[] result = getImagesWith(Image.getAttribute("regions"), session);
+			for (int i = 0; i < result.length; i++) {
+				Image image = (Image)result[i];
+				Set regions = image.getRegions();
+				Iterator iter = regions.iterator();
+				while (iter.hasNext()) {
+					Region p = (Region) iter.next();
+					SelectItem item = new ComparableSelectItem(String.valueOf(p.getId()), p.getName());
+					if (!items.contains(item)) {
+						items.add(item);
+					}
+				}
+			}
+			
+			transaction.commit();
+			session.close();
+			
+		} else if ("ships".equals(gallery)) {
+		} else {
+			throw new RuntimeException("Unedefined handler for gallery: " + gallery);
+			//return new SelectItem[] {};
+		}
+		
+		Collections.sort(items);
+		return (SelectItem[])items.toArray(new SelectItem[] {});
+	}
+
+	private Object[] getImagesWith(Attribute attr, Session session) {
+		Conditions conditions = new Conditions();
+		conditions.addCondition(attr, new DirectValue(new DirectValueAttribute("empty")), Conditions.OP_IS_NOT);
+		QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"}, conditions);
+		Object[] result = qValue.executeQuery(session);
+		return result;
+	}
+
+	public String getVisibleImage() {
+		return visibleImage;
+	}
+
+	public void setVisibleImage(String visibleImage) {
+		this.visibleImage = visibleImage;
+	}
+	
+	public String getGallery() {
+		return this.getURLParam("gal");
+	}
+	
+	public Boolean getGalleryList() {
+		if (this.getURLParam("gal") != null) {
+			this.lastGalleryName = this.getURLParam("gal");
+		}
+		return new Boolean(this.getURLParam("gal") != null);
+	}
+	
+	public String getGalleryUserName() {
+		if (this.getURLParam("gal") == null) {
+			return " !!!!null!!!!";
+		}
+		return (String)galleryUserLabels.get(this.getURLParam("gal"));
+	}
+	
+	private String getURLParam(String paramName) {
+		if (((ServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameterMap() == null) {
+			return null;
+		}
+		return ((ServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest())
+					.getParameter(paramName);
+		
+	}
 }

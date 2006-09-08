@@ -56,5 +56,15 @@ public class ComparableSelectItem extends SelectItem implements Comparable {
 		return this.getLabel().toLowerCase().compareTo(that.getLabel().toLowerCase());
 	}
 
+	public boolean equals(Object o) {
+		if (!(o instanceof SelectItem)) {
+			return false;
+		}
+		SelectItem that = (SelectItem)o;
+		if (this.getLabel().equals(that.getLabel()) && this.getValue().equals(that.getValue())) {
+			return true;
+		}
+		return false;
+	}
 	
 }

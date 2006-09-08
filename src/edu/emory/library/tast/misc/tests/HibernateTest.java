@@ -128,8 +128,13 @@ public class HibernateTest {
 				}
 			} else if (command.equals("hql")) {
 				
+//				Session session = HibernateUtil.getSession();
+//				Query query = session.createQuery("from Image as i left outer join i.people as p order by p.lastName");
+//				System.out.println(query.list());
+				
+				
 				Session session = HibernateUtil.getSession();
-				Query query = session.createQuery("from Image as i left outer join i.people as p order by p.lastName");
+				Query query = session.createQuery("from Image as i left outer join i.people where 455129 in i.people.id");
 				System.out.println(query.list());
 				
 				

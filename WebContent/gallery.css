@@ -36,6 +36,10 @@ table.gallery-table tr {
 	border-bottom: 2px solid #CF5435;
 }
 
+table.gallery-table td {
+	text-align: center;
+}
+
 table.gallery-table-thumbnails td {
 	font-family: Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
 	font-size: 8pt;
