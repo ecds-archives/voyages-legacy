@@ -15,8 +15,6 @@ public class ImageListTag extends UIComponentTagBase
 	private String listStyle;
 	private String selectedImageId;
 	private String action;
-	private String thumbnailWidth;
-	private String thumbnailHeight;
 	private String columns;
 
 	public String getComponentType()
@@ -65,26 +63,6 @@ public class ImageListTag extends UIComponentTagBase
 		{
 			MethodBinding mb = app.createMethodBinding(action, null);
 			imageList.setAction(mb);
-		}
-
-		if (thumbnailWidth != null && isValueReference(thumbnailWidth))
-		{
-			ValueBinding vb = app.createValueBinding(thumbnailWidth);
-			component.setValueBinding("thumbnailWidth", vb);
-		}
-		else
-		{
-			imageList.setThumbnailWidth(Integer.parseInt(thumbnailWidth));
-		}
-		
-		if (thumbnailHeight != null && isValueReference(thumbnailHeight))
-		{
-			ValueBinding vb = app.createValueBinding(thumbnailHeight);
-			component.setValueBinding("thumbnailHeight", vb);
-		}
-		else
-		{
-			imageList.setThumbnailWidth(Integer.parseInt(thumbnailHeight));
 		}
 
 		if (columns != null && isValueReference(columns))
@@ -136,26 +114,6 @@ public class ImageListTag extends UIComponentTagBase
 	public void setAction(String action)
 	{
 		this.action = action;
-	}
-
-	public String getThumbnailHeight()
-	{
-		return thumbnailHeight;
-	}
-
-	public void setThumbnailHeight(String thumbnailHeight)
-	{
-		this.thumbnailHeight = thumbnailHeight;
-	}
-
-	public String getThumbnailWidth()
-	{
-		return thumbnailWidth;
-	}
-
-	public void setThumbnailWidth(String listThumbnailWidth)
-	{
-		this.thumbnailWidth = listThumbnailWidth;
 	}
 
 	public String getSelectedImageId()

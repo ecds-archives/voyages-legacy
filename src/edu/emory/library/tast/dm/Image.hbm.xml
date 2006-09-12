@@ -22,6 +22,10 @@
 		<property name="date" column="date" />
 		<property name="language" column="language" />
 		<property name="source" column="source" />
+		<property name="references" column="other_references" />
+		<property name="comments" column="comments" />
+		<property name="emory" column="emory" />
+		<property name="emoryLocation" column="emory_location" />
 
 		<set name="regions" table="regions_images" lazy="false">
 			<key column="image_id" />

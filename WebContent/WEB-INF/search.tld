@@ -465,12 +465,6 @@
 			<name>columns</name>
 		</attribute>
 		<attribute>
-			<name>thumbnailHeight</name>
-		</attribute>
-		<attribute>
-			<name>thumbnailWidth</name>
-		</attribute>
-		<attribute>
 			<name>action</name>
 		</attribute>	
 		<attribute>

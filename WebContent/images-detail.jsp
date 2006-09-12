@@ -15,7 +15,7 @@
 	
 <style type="text/css">
 
-body, input, select {
+body, input, select, textarea {
 	font-family: Verdana, Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
 	font-size: 8pt; }
 	
@@ -76,40 +76,87 @@ div.section {
 		<br>
 		<br>
 
-		<div class="section">Image metadata</div>
+		<div class="section">External metadata</div>
 			
-		<table border="0" cellspacing="5" cellpadding="0">
-		<tr>
-			<td>Title</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.title}" /></td>
-		</tr>
-		<tr>
-			<td>Description</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.description}" /></td>
-		</tr>
-		<tr>
-			<td>Source</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.source}" /></td>
-		</tr>
-		<tr>
-			<td>Date</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.date}" /></td>
-		</tr>
-		<tr>
-			<td>Creator</td>
-			<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.creator}" /></td>
-		</tr>
-		</table>
+		<table border="0" cellspacing="0" cellpadding="0"><tr><td valign="top">
+
+			<table border="0" cellspacing="5" cellpadding="0">
+			<tr>
+				<td style="width: 80px;">Title</td>
+				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.title}" /></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{ImagesBean.image.description}" /></td>
+			</tr>
+			</table>
+		
+		</td><td style="width: 20px;"></td><td valign="top">
+		
+			<table border="0" cellspacing="5" cellpadding="0">
+			<tr>
+				<td style="width: 100px;">Source</td>
+				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.source}" /></td>
+			</tr>
+			<tr>
+				<td>Date</td>
+				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.date}" /></td>
+			</tr>
+			<tr>
+				<td>Creator</td>
+				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.creator}" /></td>
+			</tr>
+			<tr>
+				<td>Language</td>
+				<td><h:selectOneMenu value="#{ImagesBean.image.language}">
+					<f:selectItems value="#{ImagesBean.languages}" />
+				</h:selectOneMenu></td>
+			</tr>
+			</table>
+
+		</td></tr></table>
 			
+		<br>
+
+		<div class="section">Internal metadata</div>
+
+		<table border="0" cellspacing="0" cellpadding="0"><tr><td valign="top">
+
+			<table border="0" cellspacing="5" cellpadding="0">
+			<tr>
+				<td style="width: 80px;">Comments</td>
+				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.comments}" /></td>
+			</tr>
+			<tr>
+				<td>References</td>
+				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{ImagesBean.image.references}" /></td>
+			</tr>
+			</table>
+
+		</td><td style="width: 20px;"></td><td valign="top">
+
+			<table border="0" cellspacing="5" cellpadding="0">
+			<tr>
+				<td style="width: 100px;">Is at Emory</td>
+				<td><h:selectBooleanCheckbox value="#{ImagesBean.image.emory}" /></td>
+			</tr>
+			<tr>
+				<td>Emory location</td>
+				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.emoryLocation}" /></td>
+			</tr>
+			</table>
+
+		</td></tr></table>
+
 		<br>
 
 		<div class="section">Database connections</div>
 		
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
-			<td valign="top" style="padding-right: 10px;">
+			<td valign="top" style="padding-left: 5px; padding-right: 10px;">
 			
-				<div class="section">Regions</div>
+				<div style="margin-bottom: 5px; font-weight: bold;">Regions</div>
 
 				<s:lookupSelect
 					sourceId="#{ImagesBean.regionsLookupSourceId}"
@@ -118,7 +165,7 @@ div.section {
 			</td>
 			<td valign="top" style="padding-right: 10px;">
 			
-				<div class="section">Ports</div>
+				<div style="margin-bottom: 5px; font-weight: bold;">Ports</div>
 			
 				<s:lookupSelect
 					sourceId="#{ImagesBean.portsLookupSourceId}"
@@ -127,7 +174,7 @@ div.section {
 			</td>
 			<td>
 			
-				<div class="section">People</div>
+				<div style="margin-bottom: 5px; font-weight: bold;">People</div>
 				
 				<s:lookupSelect
 					sourceId="#{ImagesBean.peopleLookupSourceId}"

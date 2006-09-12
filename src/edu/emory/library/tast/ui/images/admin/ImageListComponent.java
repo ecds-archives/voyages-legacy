@@ -27,12 +27,6 @@ public class ImageListComponent extends UICommand
 	private boolean listStyleSet = false;
 	private ImageListStyle listStyle = ImageListStyle.Table;
 	
-	private boolean thumbnailWidthSet = false;
-	private int thumbnailWidth;
-	
-	private boolean thumbnailHeightSet = false;
-	private int thumbnailHeight;
-
 	private boolean selectedImageIdSet = false;
 	private String selectedImageId;
 	
@@ -48,13 +42,11 @@ public class ImageListComponent extends UICommand
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[6];
+		Object values[] = new Object[4];
 		values[0] = super.saveState(context);
 		values[1] = listStyle;
-		values[2] = new Integer(thumbnailWidth);
-		values[3] = new Integer(thumbnailHeight);
-		values[4] = selectedImageId;
-		values[5] = columns;
+		values[2] = selectedImageId;
+		values[3] = columns;
 		return values;
 	}
 	
@@ -63,10 +55,8 @@ public class ImageListComponent extends UICommand
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
 		listStyle = (ImageListStyle) values[1];
-		thumbnailWidth = ((Integer) values[2]).intValue();
-		thumbnailHeight = ((Integer) values[3]).intValue();
-		selectedImageId = (String) values[4];
-		columns = (ImageListColumn[]) values[5];
+		selectedImageId = (String) values[2];
+		columns = (ImageListColumn[]) values[3];
 	}
 	
 	
@@ -95,7 +85,7 @@ public class ImageListComponent extends UICommand
         if (vb != null) vb.setValue(context, selectedImageId);
 	}
 	
-	private void encodeImageThumbnail(FacesContext context, ResponseWriter writer, ImageListItem image, String onClick, int thumbnailWidth, int thumbnailHeight) throws IOException
+	private void encodeImageThumbnail(FacesContext context, ResponseWriter writer, ImageListItem image, String onClick) throws IOException
 	{
 
 		writer.startElement("a", this);
@@ -157,7 +147,7 @@ public class ImageListComponent extends UICommand
 			if (displayThumbnails)
 			{
 				writer.startElement("td", this);
-				encodeImageThumbnail(context, writer, image, onClick, thumbnailWidth, thumbnailHeight);
+				encodeImageThumbnail(context, writer, image, onClick);
 				writer.endElement("td");
 			}
 
@@ -204,7 +194,7 @@ public class ImageListComponent extends UICommand
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "imagelist-gallery-thumbnail", null);
-			encodeImageThumbnail(context, writer, image, onClick, thumbnailWidth, thumbnailHeight);
+			encodeImageThumbnail(context, writer, image, onClick);
 			writer.endElement("div");
 
 			writer.startElement("div", this);
@@ -239,8 +229,6 @@ public class ImageListComponent extends UICommand
 		// get data from a bean
 		List images = getImages();
 		listStyle = getListStyle();
-		thumbnailWidth = getThumbnailWidth();
-		thumbnailHeight = getThumbnailHeight();
 		selectedImageId = getSelectedImageId();
 		
 		// a field for storing the selected image id
@@ -301,35 +289,6 @@ public class ImageListComponent extends UICommand
         	return ImageListStyle.parse((String) listStyleLocalObj);
         else
         	return (ImageListStyle) listStyleLocalObj;
-	}
-
-
-	public void setThumbnailHeight(int thumbnailHeight)
-	{
-		thumbnailHeightSet = true;
-		this.thumbnailHeight = thumbnailHeight; 
-	}
-
-	public int getThumbnailHeight()
-	{
-        if (thumbnailHeightSet) return thumbnailHeight;
-        ValueBinding vb = getValueBinding("thumbnailHeight");
-        if (vb == null) return thumbnailHeight;
-        return ((Integer)vb.getValue(getFacesContext())).intValue();
-	}
-
-	public void setThumbnailWidth(int thumbnailWidth)
-	{
-		thumbnailWidthSet = true;
-		this.thumbnailWidth = thumbnailWidth;
-	}
-
-	public int getThumbnailWidth()
-	{
-        if (thumbnailWidthSet) return thumbnailWidth;
-        ValueBinding vb = getValueBinding("thumbnailWidth");
-        if (vb == null) return thumbnailWidth;
-        return ((Integer)vb.getValue(getFacesContext())).intValue();
 	}
 
 	public void setSelectedImageId(String selectedImageId)

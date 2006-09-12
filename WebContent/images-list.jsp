@@ -87,9 +87,7 @@ div.imagelist-gallery-image {
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
 			selectedImageId="#{ImagesBean.selectedImageId}"
-			action="#{ImagesBean.openImage}"
-			thumbnailWidth="#{ImagesBean.listThumbnailWidth}" 
-			thumbnailHeight="#{ImagesBean.listThumbnailHeight}" />
+			action="#{ImagesBean.openImage}" />
 
 	</h:form>
 </f:view>

@@ -26,9 +26,15 @@ public class AppConfig
 	public static final String MAP_SCALE_FACTOR = "map.scale.factor";
 	public static final String MAP_MAX_MAGNIFICATION = "map.max.magnification";	
 	
-	public static final String IMAGES_DIRECTORY = "images.dir";	
-	public static final String IMAGES_THUMBNAIL_WIDTH = "images.thumbnail.width";	
-	public static final String IMAGES_THUMBNAIL_HEIGHT = "images.thumbnail.height";	
+	public static final String IMAGES_DIRECTORY = "images.dir";
+	public static final String IMAGES_TITLE_MAXLEN = "images.title.maxlen";
+	public static final String IMAGES_CREATOR_MAXLEN = "images.creator.maxlen";
+	public static final String IMAGES_SOURCE_MAXLEN = "images.source.maxlen";
+	public static final String IMAGES_REFERENCES_MAXLEN = "images.references.maxlen";
+	public static final String IMAGES_EMORYLOCATION_MAXLEN = "images.emorylocation.maxlen";
+	
+//	public static final String IMAGES_THUMBNAIL_WIDTH = "images.thumbnail.width";	
+//	public static final String IMAGES_THUMBNAIL_HEIGHT = "images.thumbnail.height";	
 
 	private static void load()
 	{

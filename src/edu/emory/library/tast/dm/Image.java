@@ -52,6 +52,11 @@ public class Image
 	private String source;
 	private String date;
 	private String language;
+	
+	private String references;
+	private String comments;
+	private boolean emory;
+	private String emoryLocation;
 
 	private Set regions; 
 	private Set ports;
@@ -102,6 +107,46 @@ public class Image
 		this.description = description;
 	}
 	
+	public String getComments()
+	{
+		return comments;
+	}
+
+	public void setComments(String comments)
+	{
+		this.comments = comments;
+	}
+
+	public String getReferences()
+	{
+		return references;
+	}
+
+	public void setReferences(String references)
+	{
+		this.references = references;
+	}
+	
+	public boolean isEmory()
+	{
+		return emory;
+	}
+
+	public void setEmory(boolean emory)
+	{
+		this.emory = emory;
+	}
+
+	public String getEmoryLocation()
+	{
+		return emoryLocation;
+	}
+
+	public void setEmoryLocation(String emoryLocation)
+	{
+		this.emoryLocation = emoryLocation;
+	}
+
 	public String getFileName()
 	{
 		return fileName;

@@ -43,8 +43,8 @@
 	<lang code="cu" name="Church Slavic" />
 	<lang code="cv" name="Chuvash" />
 	<lang code="cy" name="Welsh" />
-	<lang code="da" name="Danish" />
-	<lang code="de" name="German" />
+	<lang code="da" name="Danish" active="true" />
+	<lang code="de" name="German" active="true" />
 	<lang code="dv" name="Divehi" />
 	<lang code="dz" name="Dzongkha" />
 	<lang code="ee" name="Ewe" />
@@ -84,7 +84,7 @@
 	<lang code="ik" name="Inupiaq" />
 	<lang code="io" name="Ido" />
 	<lang code="is" name="Icelandic" />
-	<lang code="it" name="Italian" />
+	<lang code="it" name="Italian" active="true" />
 	<lang code="iu" name="Inuktitut" />
 	<lang code="ja" name="Japanese" />
 	<lang code="jv" name="Javanese" />
@@ -128,9 +128,9 @@
 	<lang code="nd" name="North Ndebele" />
 	<lang code="ne" name="Nepali" />
 	<lang code="ng" name="Ndonga" />
-	<lang code="nl" name="Dutch" />
+	<lang code="nl" name="Dutch" active="true" />
 	<lang code="nn" name="Norwegian Nynorsk" />
-	<lang code="no" name="Norwegian" />
+	<lang code="no" name="Norwegian" active="true" />
 	<lang code="nr" name="South Ndebele" />
 	<lang code="nv" name="Navajo" />
 	<lang code="ny" name="Chichewa" />
@@ -167,7 +167,7 @@
 	<lang code="ss" name="Swati" />
 	<lang code="st" name="Southern Sotho" />
 	<lang code="su" name="Sundanese" />
-	<lang code="sv" name="Swedish" />
+	<lang code="sv" name="Swedish" active="true" />
 	<lang code="sw" name="Swahili" />
 	<lang code="ta" name="Tamil" />
 	<lang code="te" name="Telugu" />

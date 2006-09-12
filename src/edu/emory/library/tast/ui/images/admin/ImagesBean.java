@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.myfaces.custom.fileupload.UploadedFile;
 import org.hibernate.Session;
@@ -21,6 +23,8 @@ import org.hibernate.Transaction;
 import org.hibernate.exception.DataException;
 
 import edu.emory.library.tast.AppConfig;
+import edu.emory.library.tast.Language;
+import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.dm.Port;
@@ -268,6 +272,24 @@ public class ImagesBean
 		
 		return null;
 	}
+	
+	private String checkTextField(String value, String fieldName, int maxLength, boolean canBeEmpty) throws SaveImageException
+	{
+
+		if (value == null)
+			throw new SaveImageException("Please specify the field " + fieldName + ".");
+			
+		String valueLocal = value.trim();
+		
+		if (!canBeEmpty && valueLocal.length() == 0)
+			throw new SaveImageException("Please specify the field " + fieldName + ".");
+		
+		if (valueLocal.length() > maxLength)
+			throw new SaveImageException("The field " + valueLocal + " is too long (max allowed " + maxLength + " ).");
+		
+		return valueLocal;
+
+	}
 
 	public String saveImage()
 	{
@@ -311,13 +333,34 @@ public class ImagesBean
 				Person dbPerson = Person.loadById(sess, personId);
 				imagePeople.add(dbPerson);
 			}
+			
+			// we will use it often
+			Configuration appConf = AppConfig.getConfiguration();
+			
+			// title
+			String titleLocal = checkTextField(
+					image.getTitle(), "title",
+					appConf.getInt(AppConfig.IMAGES_TITLE_MAXLEN), false);
 
-			// links check name
-			String titleLocal = image.getTitle().trim();
-			if (StringUtils.isNullOrEmpty(titleLocal, true))
-				throw new SaveImageException("Please specify image name.");
-			else if (titleLocal.length() > 200)
-				throw new SaveImageException("Title is too long.");
+			// source
+			String sourceLocal = checkTextField(
+					image.getSource(), "source",
+					appConf.getInt(AppConfig.IMAGES_SOURCE_MAXLEN), true);
+
+			// creator
+			String creatorLocal = checkTextField(
+					image.getCreator(), "creator",
+					appConf.getInt(AppConfig.IMAGES_CREATOR_MAXLEN), true);
+
+			// creator
+			String referencesLocal = checkTextField(
+					image.getReferences(), "references",
+					appConf.getInt(AppConfig.IMAGES_REFERENCES_MAXLEN), true);
+			
+			// creator
+			String emoryLocationLocal = checkTextField(
+					image.getEmoryLocation(), "Emory location",
+					appConf.getInt(AppConfig.IMAGES_EMORYLOCATION_MAXLEN), true);
 
 			// check date
 			String dateLocal = image.getDate().trim();
@@ -327,6 +370,10 @@ public class ImagesBean
 			// save
 			image.setDate(dateLocal);
 			image.setTitle(titleLocal);
+			image.setSource(sourceLocal);
+			image.setCreator(creatorLocal);
+			image.setReferences(referencesLocal);
+			image.setEmoryLocation(emoryLocationLocal);
 			sess.saveOrUpdate(image);
 
 			// commit
@@ -422,15 +469,15 @@ public class ImagesBean
 		this.uploadBoxShown = uploadBoxShown;
 	}
 	
-	public int getListThumbnailWidth()
-	{
-		return AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_WIDTH);
-	}
-
-	public int getListThumbnailHeight()
-	{
-		return AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_HEIGHT);
-	}
+//	public int getListThumbnailWidth()
+//	{
+//		return AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_WIDTH);
+//	}
+//
+//	public int getListThumbnailHeight()
+//	{
+//		return AppConfig.getConfiguration().getInt(AppConfig.IMAGES_THUMBNAIL_HEIGHT);
+//	}
 	
 	public String getRegionsLookupSourceId()
 	{
@@ -520,6 +567,18 @@ public class ImagesBean
 	public void setSearchInListFor(String searchInListFor)
 	{
 		this.searchInListFor = searchInListFor;
+	}
+	
+	public SelectItem[] getLanguages()
+	{
+		Language[] langs = Languages.getActive();
+		SelectItem[] langSelItems = new SelectItem[langs.length]; 
+		for (int i = 0; i < langs.length; i++)
+		{
+			Language lang = langs[i];
+			langSelItems[i] = new SelectItem(lang.getCode(), lang.getName());
+		}
+		return langSelItems;
 	}
 
 }
