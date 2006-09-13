@@ -140,7 +140,8 @@ public class ImageListComponent extends UICommand
 			
 			String onClick = JsfUtils.generateSubmitJS(
 					context, form,
-					getFieldNameForSelectedImageId(context), image.getId());
+					getFieldNameForSelectedImageId(context),
+					image.getId());
 			
 			writer.startElement("tr", this);
 

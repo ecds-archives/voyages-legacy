@@ -64,6 +64,10 @@ public class JsfUtils
 
 	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value)
 	{
+		
+		js.append("if (typeof(saveScrolling) == 'function') ");
+		js.append("saveScrolling('" + form.getClientId(context) + "'); ");
+		
 		if (elementName != null && value != null)
 		{
 			appendFormElementValJS(js, context, form, elementName);

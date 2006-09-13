@@ -65,9 +65,9 @@ LookupSelect.prototype.openLookupWindow = function()
 	if (!this.lookupWindow || this.lookupWindow.closed)
 	{
 		this.lookupWindow = window.open(
-			"lookup.faces?sourceId=" + this.sourceId + "&lookupSelectId=" + this.lookupSelectId,
-			"lookup" + this.lookupSelectId,
-			"width=300,height=600,resizable=yes,scrollbars=yes,status=no");
+			"lookup.faces?sourceId=" + escape(this.sourceId) + "&lookupSelectId=" + escape(this.lookupSelectId),
+			"_blank",
+			"width=300,height=600,resizable=yes,scrollbars=no,status=no");
 	}
 	else
 	{
@@ -82,7 +82,7 @@ LookupSelect.prototype.addItems = function(items)
 		var option = document.createElement("option");
 		option.text = items[i].text;
 		option.value = items[i].value;
-		this.select.add(option, null);
+		this.select.options.add(option);
 	}
 	this.refreshSelectedItemsField();
 }

@@ -8,6 +8,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Images</title>
+<script type="text/javascript" src="scrolling.js"></script>
 
 <style type="text/css">
 
@@ -44,7 +45,7 @@ div.imagelist-gallery-image {
 	float: left; }
 
 </style>
-	
+
 </head>
 <body>
 <f:view>
@@ -52,38 +53,83 @@ div.imagelist-gallery-image {
 	
 		<input type="hidden" name="scrollPosX">
 		<input type="hidden" name="scrollPosY">
+		<script type="text/javascript" language="javascript">
+		<h:outputText value="#{ImagesBean.scrollToJavaScript}" />
+		</script>
 		
 		<div style="font-size: 12pt; font-weight: bold; padding: 0px 5px 5px 5px; font-family: Arial, sans-serif;">
-		Trans-Atlantic Trade Slave / Image database
+		Trans-Atlantic Slave Trade / Image database
 		</div>
 		
 		<div style="padding: 5px; background-color: #EEEEEE; border: 2px solid #CCCCCC;">
-		
-		<h:selectOneMenu value="#{ImagesBean.listStyle}">
-			<f:selectItem itemLabel="Table" itemValue="table" />
-			<f:selectItem itemLabel="List" itemValue="list" />
-			<f:selectItem itemLabel="Gallery" itemValue="gallery" />
-		</h:selectOneMenu>
-		
-		<h:selectOneMenu value="#{ImagesBean.thumbnailSize}">
-			<f:selectItem itemLabel="Small" itemValue="32x32" />
-			<f:selectItem itemLabel="Medium" itemValue="48x48" />
-			<f:selectItem itemLabel="Big" itemValue="64x64" />
-			<f:selectItem itemLabel="Huge" itemValue="128x128" />
-		</h:selectOneMenu>
-
-		<h:inputText value="#{ImagesBean.searchInListFor}" />
-		<h:commandButton value="OK" />
-		
-		|
-		
-		<h:commandButton action="#{ImagesBean.newImage}" value="New image" />
-		
+		<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+				List:&nbsp;
+			</td>
+			<td>
+				<h:selectOneMenu value="#{ImagesBean.listStyle}">
+					<f:selectItem itemLabel="Table" itemValue="table" />
+					<f:selectItem itemLabel="List" itemValue="list" />
+					<f:selectItem itemLabel="Gallery" itemValue="gallery" />
+				</h:selectOneMenu>
+			</td>
+			<td>
+				&nbsp;Thumnails:&nbsp;
+			</td>
+			<td>
+				<h:selectOneMenu value="#{ImagesBean.thumbnailSize}">
+					<f:selectItem itemLabel="Small" itemValue="32x32" />
+					<f:selectItem itemLabel="Medium" itemValue="48x48" />
+					<f:selectItem itemLabel="Big" itemValue="64x64" />
+					<f:selectItem itemLabel="Huge" itemValue="128x128" />
+				</h:selectOneMenu>
+			</td>
+			<td>
+				&nbsp;Sort by:&nbsp;
+			</td>
+			<td>
+				<h:selectOneMenu value="#{ImagesBean.sortBy}">
+					<f:selectItem itemLabel="Title" itemValue="title" />
+					<f:selectItem itemLabel="Date" itemValue="date" />
+				</h:selectOneMenu>
+			</td>
+			<td>
+				&nbsp;Status:&nbsp;
+			</td>
+			<td>
+				<h:selectOneMenu value="#{ImagesBean.statusFilter}">
+					<f:selectItem itemLabel="Any" itemValue="0" />
+					<f:selectItem itemLabel="Applied for auth." itemValue="1" />
+					<f:selectItem itemLabel="Processing" itemValue="2" />
+					<f:selectItem itemLabel="Ready to deploy" itemValue="3" />
+				</h:selectOneMenu>
+			</td>
+			<td>
+				&nbsp;Search for:&nbsp;
+			</td>
+			<td>
+				<h:inputText value="#{ImagesBean.searchFor}" />	
+			</td>
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				<h:commandButton value="OK" />
+			</td>
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				<h:commandButton action="#{ImagesBean.newImage}" value="New image" />
+			</td>
+		</tr>
+		</table>
 		</div>
 		
 		<s:imageList
 			id="images"
-			columns="Size, Image type, Date, Creator, Source"
+			columns="Size, Image type, Status, Date, Source"
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
 			selectedImageId="#{ImagesBean.selectedImageId}"

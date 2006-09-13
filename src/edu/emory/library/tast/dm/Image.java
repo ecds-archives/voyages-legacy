@@ -55,8 +55,9 @@ public class Image
 	
 	private String references;
 	private String comments;
-	private boolean emory;
+	private boolean emory = false;
 	private String emoryLocation;
+	private int workflowStatus = 0;
 
 	private Set regions; 
 	private Set ports;
@@ -145,6 +146,16 @@ public class Image
 	public void setEmoryLocation(String emoryLocation)
 	{
 		this.emoryLocation = emoryLocation;
+	}
+
+	public int getWorkflowStatus()
+	{
+		return workflowStatus;
+	}
+
+	public void setWorkflowStatus(int coordiatorStatus)
+	{
+		this.workflowStatus = coordiatorStatus;
 	}
 
 	public String getFileName()
@@ -364,12 +375,12 @@ public class Image
 		
 	}
 	
-	public static void main(String[] args)
-	{
-		
-		Image.checkDate("1234");
-		
-	}
+//	public static void main(String[] args)
+//	{
+//		
+//		Image.checkDate("1234");
+//		
+//	}
 
 }
 	

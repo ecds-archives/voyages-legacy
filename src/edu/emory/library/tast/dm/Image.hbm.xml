@@ -26,18 +26,19 @@
 		<property name="comments" column="comments" />
 		<property name="emory" column="emory" />
 		<property name="emoryLocation" column="emory_location" />
+		<property name="workflowStatus" column="workflow_status" />
 
-		<set name="regions" table="regions_images" lazy="false">
+		<set name="regions" table="regions_images">
 			<key column="image_id" />
 			<many-to-many column="region_id" class="edu.emory.library.tast.dm.Region" />
 		</set>
 		
-		<set name="ports" table="ports_images" lazy="false">
+		<set name="ports" table="ports_images">
 			<key column="image_id" />
 			<many-to-many column="port_id" class="edu.emory.library.tast.dm.Port" />
 		</set>
 
-		<set name="people" table="people_images" lazy="false">
+		<set name="people" table="people_images">
 			<key column="image_id" />
 			<many-to-many column="person_id" class="edu.emory.library.tast.dm.Person" />
 		</set>

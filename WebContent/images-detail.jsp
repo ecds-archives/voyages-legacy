@@ -24,6 +24,13 @@ div.section {
 	background-color: #DDDDDD;
 	padding: 5px;
 	margin-bottom: 5px; }
+	
+div.error {
+	margin-bottom: 5px;
+	padding: 5px;
+	font-weight: bold;
+	color: White;
+	background-color: #FF5500; }
 
 </style>
 	
@@ -34,10 +41,12 @@ div.section {
 	<h:form id="form" enctype="multipart/form-data">
 	
 		<div style="font-size: 12pt; font-weight: bold; padding: 0px 5px 5px 5px; font-family: Arial, sans-serif;">
-		Trans-Atlantic Trade Slave / Image database
+		Trans-Atlantic Slave Trade / Image database
 		</div>
 		
-		<h:outputText value="#{ImagesBean.errorText}" />
+		<t:htmlTag value="div" styleClass="error" rendered="#{ImagesBean.errorText != null}">
+			<h:outputText value="#{ImagesBean.errorText}" />
+		</t:htmlTag>
 		
 		<div class="section">Image</div>
 	
@@ -144,6 +153,15 @@ div.section {
 				<td>Emory location</td>
 				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.emoryLocation}" /></td>
 			</tr>
+			<tr>
+				<td>Status</td>
+				<td><h:selectOneMenu value="#{ImagesBean.image.workflowStatus}">
+					<f:selectItem itemLabel="-" itemValue="0" />
+					<f:selectItem itemLabel="Applied for authorization" itemValue="1" />
+					<f:selectItem itemLabel="Processing" itemValue="2" />
+					<f:selectItem itemLabel="Ready to deploy" itemValue="3" />
+				</h:selectOneMenu></td>
+			</tr>
 			</table>
 
 		</td></tr></table>
@@ -159,6 +177,7 @@ div.section {
 				<div style="margin-bottom: 5px; font-weight: bold;">Regions</div>
 
 				<s:lookupSelect
+					id="regions"
 					sourceId="#{ImagesBean.regionsLookupSourceId}"
 					selectedValues="#{ImagesBean.selectedRegionsIds}" />
 			
@@ -168,6 +187,7 @@ div.section {
 				<div style="margin-bottom: 5px; font-weight: bold;">Ports</div>
 			
 				<s:lookupSelect
+					id="ports"
 					sourceId="#{ImagesBean.portsLookupSourceId}"
 					selectedValues="#{ImagesBean.selectedPortsIds}" />
 			
@@ -177,6 +197,7 @@ div.section {
 				<div style="margin-bottom: 5px; font-weight: bold;">People</div>
 				
 				<s:lookupSelect
+					id="people"
 					sourceId="#{ImagesBean.peopleLookupSourceId}"
 					selectedValues="#{ImagesBean.selectedPeopleIds}" />
 
@@ -187,6 +208,7 @@ div.section {
 		<div style="margin-top: 10px; border-bottom: 2px solid #CCCCCC; margin-bottom: 10px;"></div>
 		
 		<h:commandButton value="Save" action="#{ImagesBean.saveImage}" />
+		<h:commandButton value="Delete" onclick="if (!confirm('Are you sure?')) return false;" action="#{ImagesBean.deleteImage}" rendered="#{ImagesBean.image.id != 0}" />
 		<h:commandButton value="Cancel" action="#{ImagesBean.cancelEdit}" />
 
 	</h:form>

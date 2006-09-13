@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -18,8 +19,11 @@ import javax.imageio.ImageReader;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.myfaces.custom.fileupload.UploadedFile;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.DataException;
 
 import edu.emory.library.tast.AppConfig;
@@ -46,7 +50,10 @@ public class ImagesBean
 	private String listStyle = "table";
 	private String selectedImageId;
 	private String thumbnailSize = "48x48";
-	private String searchInListFor = null;
+	
+	private String searchFor = null;
+	private int statusFilter = 0;
+	private String sortBy = "title";
 	
 	private Image image;
 	private UploadedFile uploadedImage;
@@ -55,12 +62,58 @@ public class ImagesBean
 	private String[] selectedPortsIds;
 	private String[] selectedPeopleIds;
 	private String errorText;
+
+	private int scrollPosX;
+	private int scrollPosY;
 	
 	public ImagesBean()
 	{
 		allowedTypes.put("image/gif", "GIF");
 		allowedTypes.put("image/jpeg", "JPG");
+		allowedTypes.put("image/pjpeg", "JPG");
 		allowedTypes.put("image/png", "PNG");
+	}
+	
+	public String getScrollToJavaScript()
+	{
+		if (scrollPosX != 0 || scrollPosY != 0)
+		{
+			StringBuffer js = new StringBuffer();
+			js.append("window.onload = function() {");
+			js.append("window.scrollTo(").append(scrollPosX).append(", ").append(scrollPosY).append(");");
+			js.append("}");
+			clearScrollPosition();
+			return js.toString();
+		}
+		else
+		{
+			return "";
+		}
+	}
+	
+	protected void saveScrollPosition()
+	{
+
+		Map params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String scrollPosXStr = (String) params.get("scrollPosX");
+		String scrollPosYStr = (String) params.get("scrollPosY");
+		
+		try
+		{
+			scrollPosX = Integer.parseInt(scrollPosXStr);
+			scrollPosY = Integer.parseInt(scrollPosYStr);
+		}
+		catch (NumberFormatException e)
+		{
+			clearScrollPosition();
+		}
+
+	}
+	
+	protected void clearScrollPosition()
+	{
+		scrollPosX = 0;
+		scrollPosY = 0;
 	}
 	
 	public List getAllImages()
@@ -70,8 +123,32 @@ public class ImagesBean
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		// load images from db and create a new list
-		List dbImages = Image.getImagesList(sess, searchInListFor);
+		// basic query
+		Criteria crit = sess.createCriteria(Image.class);
+		
+		// search for
+		if (!StringUtils.isNullOrEmpty(searchFor))
+		{
+			String searchForLocal = "%" + searchFor.trim() + "%";
+			crit.add(Restrictions.disjunction().
+				add(Restrictions.ilike("title", searchForLocal)).
+				add(Restrictions.ilike("description", searchForLocal)).
+				add(Restrictions.ilike("comments", searchForLocal)).
+				add(Restrictions.ilike("source", searchForLocal)).
+				add(Restrictions.ilike("references", searchForLocal)));
+		}
+		
+		// filter by status
+		if (statusFilter != 0)
+		{
+			crit.add(Restrictions.eq("workflowStatus", new Integer(statusFilter)));
+		}
+		
+		// sort order
+		crit.addOrder(Order.asc(sortBy));
+		
+		// load images from db and create a new list for UI
+		List dbImages = crit.list();
 		List uiImages = new ArrayList(dbImages.size());
 		
 		// thumnail size
@@ -84,12 +161,28 @@ public class ImagesBean
 		{
 			Image image = (Image) iter.next();
 			
+			String statusText;
+			switch (image.getWorkflowStatus())
+			{
+			case 1:
+				statusText = "Applied for auth.";
+				break;
+			case 2:
+				statusText = "Processing";
+				break;
+			case 3:
+				statusText = "Ready to deploy";
+				break;
+			default:
+				statusText = "-";
+			}
+			
 			String subItems[] = new String[] {
 					image.getHeight() + "x" + image.getHeight(),
 					image.getMimeType(),
+					statusText,
 					StringUtils.coalesce(image.getDate(), ""),
-					StringUtils.coalesce(image.getCreator(), ""),
-					StringUtils.coalesce(image.getCreator(), ""),
+					StringUtils.coalesce(image.getSource(), ""),
 			};
 			
 			ImageListItem uiImage = new ImageListItem();
@@ -111,12 +204,15 @@ public class ImagesBean
 	
 	public String searchInList()
 	{
-		
 		return null;
 	}
 
 	public String openImage()
 	{
+		
+		// we come from list -> detail
+		// so save the position in the list
+		saveScrollPosition();
 		
 		// open db
 		Session sess = HibernateUtil.getSession();
@@ -170,6 +266,10 @@ public class ImagesBean
 	public String newImage()
 	{
 		
+		// we come from list -> detail
+		// so save the position in the list
+		saveScrollPosition();
+
 		// create an empty image
 		image = new Image();
 		
@@ -246,7 +346,7 @@ public class ImagesBean
 			imgFileStream.close();
 			
 			// get image info
-			Iterator readerIter = ImageIO.getImageReadersByMIMEType(uploadedImage.getContentType());
+			Iterator readerIter = ImageIO.getImageReadersByFormatName(extension);
 			ImageReader rdr = (ImageReader) readerIter.next();
 			if (rdr == null) return null;
 			rdr.setInput(ImageIO.createImageInputStream(file), true);
@@ -268,6 +368,7 @@ public class ImagesBean
 		}
 		catch (IOException e)
 		{
+			throw new RuntimeException(e);
 		}
 		
 		return null;
@@ -404,6 +505,20 @@ public class ImagesBean
 		return "list";
 	}
 	
+	public String deleteImage()
+	{
+
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		sess.delete(image);
+
+		transaction.commit();
+		sess.close();
+		
+		return "list";
+	}
+	
 	public String showUploadBox()
 	{
 		uploadBoxShown = true;
@@ -414,6 +529,23 @@ public class ImagesBean
 	{
 		uploadBoxShown = false;
 		return null;
+	}
+	
+	public SelectItem[] getLanguages()
+	{
+
+		Language[] langs = Languages.getActive();
+		
+		SelectItem[] langSelItems = new SelectItem[langs.length + 1];
+		langSelItems[0] = new SelectItem("", "-");
+		
+		for (int i = 0; i < langs.length; i++)
+		{
+			Language lang = langs[i];
+			langSelItems[i+1] = new SelectItem(lang.getCode(), lang.getName());
+		}
+		return langSelItems;
+
 	}
 	
 	public String getListStyle()
@@ -455,7 +587,10 @@ public class ImagesBean
 	
 	public String getImageInfo()
 	{
-		return image.getWidth() + "x" + image.getHeight() +
+		if (image.getMimeType() == null)
+			return "";
+		else
+			return image.getWidth() + "x" + image.getHeight() +
 			" (" + image.getMimeType() + ")";
 	}
 
@@ -559,26 +694,34 @@ public class ImagesBean
 		this.thumbnailSize = thumbnailSize;
 	}
 
-	public String getSearchInListFor()
+	public String getSearchFor()
 	{
-		return searchInListFor;
+		return searchFor;
 	}
 
-	public void setSearchInListFor(String searchInListFor)
+	public void setSearchFor(String searchInListFor)
 	{
-		this.searchInListFor = searchInListFor;
+		this.searchFor = searchInListFor;
 	}
-	
-	public SelectItem[] getLanguages()
+
+	public String getSortBy()
 	{
-		Language[] langs = Languages.getActive();
-		SelectItem[] langSelItems = new SelectItem[langs.length]; 
-		for (int i = 0; i < langs.length; i++)
-		{
-			Language lang = langs[i];
-			langSelItems[i] = new SelectItem(lang.getCode(), lang.getName());
-		}
-		return langSelItems;
+		return sortBy;
+	}
+
+	public void setSortBy(String sortBy)
+	{
+		this.sortBy = sortBy;
+	}
+
+	public int getStatusFilter()
+	{
+		return statusFilter;
+	}
+
+	public void setStatusFilter(int statusFilter)
+	{
+		this.statusFilter = statusFilter;
 	}
 
 }

@@ -103,7 +103,7 @@
 	<lang code="kv" name="Komi" />
 	<lang code="kw" name="Cornish" />
 	<lang code="ky" name="Kirghiz" />
-	<lang code="la" name="Latin" />
+	<lang code="la" name="Latin" active="true" />
 	<lang code="lb" name="Luxembourgish" />
 	<lang code="lg" name="Ganda" />
 	<lang code="li" name="Limburgish" />
