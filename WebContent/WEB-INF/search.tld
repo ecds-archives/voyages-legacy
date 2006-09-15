@@ -465,11 +465,14 @@
 			<name>columns</name>
 		</attribute>
 		<attribute>
-			<name>action</name>
-		</attribute>	
+			<name>thumbnailHeight</name>
+		</attribute>
 		<attribute>
-			<name>searchCondition</name>
-		</attribute>	
+			<name>thumbnailWidth</name>
+		</attribute>
+		<attribute>
+			<name>galleryParams</name>
+		</attribute>		
 	</tag>
 
 	<tag>

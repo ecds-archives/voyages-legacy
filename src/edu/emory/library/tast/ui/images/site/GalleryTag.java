@@ -19,9 +19,8 @@ public class GalleryTag extends UIComponentTag {
 	
 	private String thumbnailWidth;
 	
-	private String action;
+	private String galleryParams;
 	
-	private String searchCondition;
 	
 	public String getComponentType() {
 		return "Gallery";
@@ -83,19 +82,14 @@ public class GalleryTag extends UIComponentTag {
 			}
 		}
 		
-		if (searchCondition != null) {
-			if (isValueReference(searchCondition)) {
+		if (galleryParams != null) {
+			if (isValueReference(galleryParams)) {
 				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(searchCondition);
-				component.setValueBinding("searchCondition", vb);
+						.createValueBinding(galleryParams);
+				component.setValueBinding("galleryParams", vb);
 			} else {
-				component.getAttributes().put("searchCondition", searchCondition);
+				component.getAttributes().put("galleryParams", galleryParams);
 			}
-		}
-		
-		if (action != null && component instanceof GalleryComponent) {
-			GalleryComponent gallery = (GalleryComponent)component;
-			gallery.setAction(this.getFacesContext().getApplication().createMethodBinding(action, null));
 		}
 	}
 	
@@ -155,23 +149,13 @@ public class GalleryTag extends UIComponentTag {
 	}
 
 
-	public String getAction() {
-		return action;
+	public String getGalleryParams() {
+		return galleryParams;
 	}
 
 
-	public void setAction(String action) {
-		this.action = action;
-	}
-
-
-	public String getSearchCondition() {
-		return searchCondition;
-	}
-
-
-	public void setSearchCondition(String searchCondition) {
-		this.searchCondition = searchCondition;
+	public void setGalleryParams(String action) {
+		this.galleryParams = action;
 	}
 
 }

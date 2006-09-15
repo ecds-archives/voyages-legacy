@@ -140,6 +140,20 @@ public class Person
 		return id;
 	}
 	
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		if (this.firstName != null) {
+			buffer.append(this.firstName).append(" ");
+		}
+		if (this.middleName != null) {
+			buffer.append(this.middleName).append(" ");
+		}
+		if (this.lastName != null) {
+			buffer.append(this.lastName).append(" ");
+		}
+		return buffer.toString().trim();
+	}
+	
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);

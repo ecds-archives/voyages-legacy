@@ -275,6 +275,14 @@
 			<value>#{SearchBean}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>GalleryRequestBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.images.site.GalleryRequestBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<from-view-id>/reports.jsp</from-view-id>

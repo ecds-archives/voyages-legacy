@@ -26,25 +26,33 @@ public class GalleryComponent extends UICommand {
 	private static final String GALLERY_FORWARD_BUTTON = "gallery-forward-button";
 
 	public void decode(FacesContext context) {
-		Map params = context.getExternalContext().getRequestParameterMap();
+//		Map params = context.getExternalContext().getRequestParameterMap();
 
-		String action = (String) params.get(getHiddenFieldId(context));
-		if (action != null) {
-			int rows = Integer.parseInt(this.getValueOrAttribute(context,
-					"rows").toString());
-			int cols = Integer.parseInt(this.getValueOrAttribute(context,
-					"columns").toString());
-			PictureGalery pictures = (PictureGalery) this.getBoundedValue(
-					context, "pictures");
-		
-			ValueBinding searchCondition = (ValueBinding)this.getValueBinding("searchCondition");
+//			int rows = Integer.parseInt(this.getValueOrAttribute(context,
+//					"rows").toString());
+//			int cols = Integer.parseInt(this.getValueOrAttribute(context,
+//					"columns").toString());
+//			PictureGalery pictures = (PictureGalery) this.getBoundedValue(
+//					context, "pictures");
+//			String set = (String)params.get(GalleryRequestBean.SET);
 			
-			if (action.startsWith("search_")) {
-				if (searchCondition != null) {
-					searchCondition.setValue(context, action.substring("search_".length()));
-					this.queueEvent(new ActionEvent(this));
-				}
-			} else if (pictures != null) {
+//			ValueBinding searchCondition = (ValueBinding) this
+//					.getValueBinding("searchCondition");
+
+//			if (action.startsWith("search_")) {
+//				if (searchCondition != null) {
+//					searchCondition.setValue(context, action
+//							.substring("search_".length()));
+//					this.queueEvent(new ActionEvent(this));
+//				}
+//			}
+//			
+//			if (set != null) {
+//				int s = Integer.parseInt(set) - 1;
+//				pictures.setFirstVisible(s * rows * cols);
+//			}
+			/*
+			else if (pictures != null) {
 				if (GALLERY_FORWARD_BUTTON.equals(action)) {
 					if (pictures.canMoveForward(rows * cols)) {
 						pictures.moveForward(rows * cols);
@@ -53,22 +61,16 @@ public class GalleryComponent extends UICommand {
 					if (pictures.canMoveBackward(rows * cols)) {
 						pictures.moveBackward(rows * cols);
 					}
-				} else if (!action.trim().equals("")) {
-					int visible = Integer.parseInt(action);
-
-					GaleryImage[] picts = pictures.getPictures(rows * cols);
-					pictures.setVisiblePicture(picts[visible]);
 				}
 			}
-			
-		}
+			*/
 
 	}
 
 	public void encodeBegin(FacesContext context) throws IOException {
-		
+
 		UIForm form = JsfUtils.getForm(this, context);
-		
+
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
 		writer.writeAttribute("align", "center", null);
@@ -87,17 +89,41 @@ public class GalleryComponent extends UICommand {
 
 		PictureGalery pictures = (PictureGalery) this.getBoundedValue(context,
 				"pictures");
+
+		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this
+				.getValueOrAttribute(context, "galleryParams");
+
 		if (pictures != null) {
 
+			int set = Integer.parseInt(params.getVisibleSet());
+			
 			writer.startElement("table", this);
 			writer.writeAttribute("class", "gallery-table", null);
 			writer.startElement("tr", this);
-			this.encodeButton(context, form, writer, GALLERY_BACK_BUTTON);
+
+			int prevset = Integer.parseInt(params.getVisibleSet());
+			if (pictures.canMoveBackward(set, rows * cols)) {
+				prevset--;
+			}
+			StringBuffer js = new StringBuffer();
+			js.append("window.location='galleryp.faces?");
+			js.append(GalleryRequestBean.GALLERY_TYPE).append("=");
+			js.append(params.getGalleryType());
+			js.append("&").append(GalleryRequestBean.ID).append("=");
+			js.append(params.getId());
+			js.append("&").append(GalleryRequestBean.SET).append("=");
+			js.append(prevset);
+			if (params.getVisiblePicture() != null) {
+				js.append("&").append(GalleryRequestBean.PICT).append("=");
+				js.append(params.getVisiblePicture());
+			}
+			js.append("'");
+			this.encodeButton(context, form, writer, GALLERY_BACK_BUTTON, js.toString());
 
 			writer.startElement("td", this);
 			writer.startElement("table", this);
 			writer.writeAttribute("class", "gallery-table-thumbnails", null);
-			GaleryImage[] picts = pictures.getPictures(rows * cols);
+			GaleryImage[] picts = pictures.getPictures(set, rows * cols);
 			for (int i = 0; i < rows * cols && i < picts.length; i++) {
 				if (i % rows == 0) {
 					writer.startElement("tr", this);
@@ -105,11 +131,17 @@ public class GalleryComponent extends UICommand {
 				writer.startElement("td", this);
 				Image image = picts[i].getImage();
 				writer.startElement("a", this);
-				writer.writeAttribute("href", "#", null);
-				String js = JsfUtils.generateSubmitJS(context, JsfUtils
-						.getForm(this, context),
-						this.getHiddenFieldId(context), i + "");
-				writer.writeAttribute("onclick", js, null);
+				StringBuffer link = new StringBuffer();
+				link.append("galleryp.faces?");
+				link.append(GalleryRequestBean.GALLERY_TYPE).append("=");
+				link.append(params.getGalleryType());
+				link.append("&").append(GalleryRequestBean.ID).append("=");
+				link.append(params.getId());
+				link.append("&").append(GalleryRequestBean.SET).append("=");
+				link.append(params.getVisibleSet());
+				link.append("&").append(GalleryRequestBean.PICT).append("=");
+				link.append(i);
+				writer.writeAttribute("href", link.toString(), null);
 
 				writer.startElement("img", this);
 				if (thumbnailWidth != -1) {
@@ -121,8 +153,9 @@ public class GalleryComponent extends UICommand {
 							.valueOf(thumbnailHeight), null);
 				}
 				writer.writeAttribute("src", "servlet/thumbnail?i="
-						+ image.getFileName() + "&w=" + thumbnailWidth + "&h=" + thumbnailHeight, null);
-				
+						+ image.getFileName() + "&w=" + thumbnailWidth + "&h="
+						+ thumbnailHeight, null);
+
 				writer.writeAttribute("style", "cursor: pointer;", null);
 
 				writer.write("<br/>");
@@ -136,32 +169,55 @@ public class GalleryComponent extends UICommand {
 			writer.endElement("table");
 			writer.startElement("div", this);
 			writer.writeAttribute("align", "right;", null);
-			writer.write("Showing images from " + (pictures.getFirst() + 1) + " to " + (pictures.getLast(rows*cols)) + " out of "+ pictures.getNumberOfAll());
+			writer.write("Showing images from " + (pictures.getFirst(set, rows * cols) + 1)
+					+ " to " + (pictures.getLast(set, rows * cols)) + " out of "
+					+ pictures.getNumberOfAll());
 			writer.endElement("div");
 			writer.endElement("td");
 
-			this.encodeButton(context, form, writer, GALLERY_FORWARD_BUTTON);
+			int nextset = Integer.parseInt(params.getVisibleSet());
+			if (pictures.canMoveForward(set, rows * cols)) {
+				nextset++;
+			}
+			js = new StringBuffer();
+			js.append("window.location='galleryp.faces?");
+			js.append(GalleryRequestBean.GALLERY_TYPE).append("=");
+			js.append(params.getGalleryType());
+			js.append("&").append(GalleryRequestBean.ID).append("=");
+			js.append(params.getId());
+			js.append("&").append(GalleryRequestBean.SET).append("=");
+			js.append(nextset);
+			if (params.getVisiblePicture() != null) {
+				js.append("&").append(GalleryRequestBean.PICT).append("=");
+				js.append(params.getVisiblePicture());
+			}
+			js.append("'");
+			this.encodeButton(context, form, writer, GALLERY_FORWARD_BUTTON, js.toString());
 			writer.endElement("tr");
 			writer.endElement("table");
 
-			GaleryImage visibleImage = pictures.getVisiblePicture();
-			if (visibleImage != null) {
+			if (params.getVisiblePicture() != null) {
+				GaleryImage visibleImage = picts[Integer.parseInt(params
+						.getVisiblePicture())];
 				writer.write(visibleImage.getImage().getTitle());
 				writer.write("<br/>");
 				writer.startElement("img", this);
 				writer.writeAttribute("src", "images/"
 						+ visibleImage.getImage().getFileName(), null);
 				writer.endElement("img");
-				this.printImageInfo(context, form, writer, visibleImage);
+				this.printImageInfo(context, form, writer, visibleImage, params);
 			}
 
 		}
 	}
 
-	private void printImageInfo(FacesContext context, UIForm form, ResponseWriter writer,
-			GaleryImage visibleImage) throws IOException {
+	private void printImageInfo(FacesContext context, UIForm form,
+			ResponseWriter writer, GaleryImage visibleImage, GalleryRequestBean.GalleryParams params) throws IOException {
+		 
+		
 		writer.startElement("div", this);
-		writer.writeAttribute("style", "width: " + visibleImage.getImage().getWidth() + "px;", null);
+		writer.writeAttribute("style", "width: "
+				+ visibleImage.getImage().getWidth() + "px;", null);
 		writer.writeAttribute("align", "left", null);
 		writer.startElement("table", this);
 		writer.writeAttribute("class", "gallery-info-table", null);
@@ -185,14 +241,18 @@ public class GalleryComponent extends UICommand {
 		writer.startElement("td", this);
 		Person[] persons = visibleImage.getPeople();
 		if (persons != null) {
-			for (int i = 0; i < persons.length; i++) {				
+			for (int i = 0; i < persons.length; i++) {
 				Person person = persons[i];
 				writer.startElement("a", this);
-				
-				String js = JsfUtils.generateSubmitJS(context, form,
-						this.getHiddenFieldId(context), "search_person_" + person.getId());
-				writer.writeAttribute("onclick", js, null);
-				writer.writeAttribute("href", "#", null);
+
+				StringBuffer link = new StringBuffer();
+				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
+				link.append("=").append("people");
+				link.append("&").append(GalleryRequestBean.ID);
+				link.append("=").append(person.getId());
+				link.append("&").append(GalleryRequestBean.SET);
+				link.append("=1");				
+				writer.writeAttribute("href", link, null);
 				if (person.getFirstName() != null) {
 					writer.write(person.getFirstName());
 				}
@@ -219,15 +279,19 @@ public class GalleryComponent extends UICommand {
 			for (int i = 0; i < ports.length; i++) {
 				Port port = ports[i];
 				writer.startElement("a", this);
-				writer.writeAttribute("href", "#", null);
 				
-				String js = JsfUtils.generateSubmitJS(context, form,
-						this.getHiddenFieldId(context), "search_port_" + port.getId());
-				writer.writeAttribute("onclick", js, null);
-				
+				StringBuffer link = new StringBuffer();
+				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
+				link.append("=").append("ports");
+				link.append("&").append(GalleryRequestBean.ID);
+				link.append("=").append(port.getId());
+				link.append("&").append(GalleryRequestBean.SET);
+				link.append("=1");
+				writer.writeAttribute("href", link, null);
+
 				writer.write(port.getName());
 				writer.endElement("a");
-				if (i + 1 < persons.length) {
+				if (i + 1 < ports.length) {
 					writer.write("; ");
 				}
 			}
@@ -245,15 +309,19 @@ public class GalleryComponent extends UICommand {
 			for (int i = 0; i < regions.length; i++) {
 				Region region = regions[i];
 				writer.startElement("a", this);
-				writer.writeAttribute("href", "#", null);
 				
-				String js = JsfUtils.generateSubmitJS(context, form,
-						this.getHiddenFieldId(context), "search_region_" + region.getId());
-				writer.writeAttribute("onclick", js, null);
-				
+				StringBuffer link = new StringBuffer();
+				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
+				link.append("=").append("regions");
+				link.append("&").append(GalleryRequestBean.ID);
+				link.append("=").append(region.getId());
+				link.append("&").append(GalleryRequestBean.SET);
+				link.append("=1");
+				writer.writeAttribute("href", link, null);
+
 				writer.write(region.getName());
 				writer.endElement("a");
-				if (i + 1 < persons.length) {
+				if (i + 1 < regions.length) {
 					writer.write("; ");
 				}
 			}
@@ -264,12 +332,11 @@ public class GalleryComponent extends UICommand {
 		writer.endElement("div");
 	}
 
-	private void encodeButton(FacesContext context, UIForm form, ResponseWriter writer,
-			String button) throws IOException {
+	private void encodeButton(FacesContext context, UIForm form,
+			ResponseWriter writer, String button, String js) throws IOException {
 		writer.startElement("td", this);
 		writer.startElement("div", this);
 		writer.writeAttribute("class", button, null);
-		String js = JsfUtils.generateSubmitJS(context, form, this.getHiddenFieldId(context), button);
 		writer.writeAttribute("onclick", js, null);
 		writer.endElement("div");
 		writer.endElement("td");

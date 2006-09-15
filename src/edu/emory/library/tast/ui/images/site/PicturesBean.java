@@ -58,8 +58,6 @@ public class PicturesBean {
 	private PictureGalery pictureGalery;
 
 	private SearchBean searchBean;
-
-	private String searchCondition;
 	
 	private String visibleImage;
 
@@ -71,21 +69,22 @@ public class PicturesBean {
 
 	public PicturesBean() {
 
-		Session session = HibernateUtil.getSession();
-		Transaction transaction = session.beginTransaction();
-
-		Image[] images = (Image[]) Image.getImagesList(session).toArray(
-				new Image[] {});
-		GaleryImage[] galeryImage = new GaleryImage[images.length];
-		for (int i = 0; i < images.length; i++) {
-			Image image = images[i];
-			galeryImage[i] = getGalleryImage(image);
-		}
-
-		this.pictureGalery = new PictureGalery(galeryImage);
-
-		transaction.commit();
-		session.close();
+//		Session session = HibernateUtil.getSession();
+//		Transaction transaction = session.beginTransaction();
+//
+//		Image[] images = (Image[]) Image.getImagesList(session).toArray(
+//				new Image[] {});
+//		GaleryImage[] galeryImage = new GaleryImage[images.length];
+//		for (int i = 0; i < images.length; i++) {
+//			Image image = images[i];
+//			galeryImage[i] = getGalleryImage(image);
+//		}
+//
+//		this.pictureGalery = new PictureGalery(galeryImage);
+//
+//		transaction.commit();
+//		session.close();
+		this.pictureGalery = new PictureGalery(new GaleryImage[] {});
 
 	}
 
@@ -139,6 +138,10 @@ public class PicturesBean {
 			this.pictureGalery = new PictureGalery(gallImages);
 			transaction.commit();
 			session.close();
+		} 
+		
+		if (object == null || id == null) {
+			this.pictureGalery = new PictureGalery(new GaleryImage[] {});
 		}
 		
 		return pictureGalery;
@@ -155,103 +158,6 @@ public class PicturesBean {
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
 	}
-
-	public String showinfo() {
-
-		System.out.println(">>>>>>>> " + searchCondition);
-
-		if (searchCondition.startsWith(PERSON_ENCODE)) {
-			int id = Integer.parseInt(searchCondition.substring(PERSON_ENCODE
-					.length()));
-			Person person = Person.loadById(id);
-
-			Query query = new Query();
-			QueryConditionText cond = new QueryConditionText("anyperson");
-			cond.setValue(person.getLastName());
-			query.addCondition(cond);
-			showReport(query);
-		} else if (searchCondition.startsWith(PORT_ENCODE)) {
-			int id = Integer.parseInt(searchCondition.substring(PORT_ENCODE
-					.length()));
-			Port port = Port.loadById(id);
-			Dictionary[] dem = (Dictionary[]) Dictionary
-					.loadDictionaryByName("FirstDemPort", port.getName());
-
-			if (dem.length != 0) {
-				Query query = new Query();
-				QueryConditionList condRegion = new QueryConditionList(
-						"majselpt");
-				condRegion.addId(dem[0].getId().toString());
-				query.addCondition(condRegion);
-				showReport(query);
-			}
-		} else if (searchCondition.startsWith(REGION_ENCODE)) {
-			int id = Integer.parseInt(searchCondition.substring(REGION_ENCODE.length()));
-			Region port = Region.loadById(id);
-			Dictionary[] dem = (Dictionary[]) Dictionary
-					.loadDictionaryByName("DepartureRegion", port.getName());
-			
-			if (dem.length != 0) {
-				Query query = new Query();
-				QueryConditionList condRegion = new QueryConditionList(
-						"majselrg");
-				condRegion.addId(dem[0].getId().toString());
-				query.addCondition(condRegion);
-				showReport(query);
-			}			
-		} else if (searchCondition.startsWith(VOYAGE_ENCODE)) {
-			int id = Integer.parseInt(searchCondition.substring(VOYAGE_ENCODE.length()));
-			Query query = new Query();
-			QueryConditionNumeric cond = new QueryConditionNumeric("voyageId", QueryConditionRange.TYPE_EQ);
-			cond.setEq(id + "");
-			query.addCondition(cond);
-			showReport(query);
-		} else {
-			throw new RuntimeException("Unexpected condition: "
-					+ this.searchCondition);
-		}
-
-		return "showinfo";
-	}
-
-	public String getSearchCondition() {
-		return searchCondition;
-	}
-
-	public void setSearchCondition(String searchCondition) {
-		this.searchCondition = searchCondition;
-	}
-
-	private void showReport(Query query) {
-
-		// build db conditions
-		Conditions conditions = new Conditions();
-		for (Iterator iterQueryCondition = query.getConditions().iterator(); iterQueryCondition
-				.hasNext();) {
-			QueryCondition queryCondition = (QueryCondition) iterQueryCondition
-					.next();
-			queryCondition.addToConditions(conditions, false);
-		}
-
-		// display first tab
-		searchBean.setMainSectionId("listing");
-
-		// set query so that it display in the query builder
-		searchBean.setWorkingQuery(query);
-
-		// set search parameters so that we really search
-		SearchParameters searchParameters = new SearchParameters();
-		searchParameters.setConditions(conditions);
-		searchParameters.setMapElements(SearchParameters.NOT_SPECIFIED);
-		searchParameters.setValuesType(SearchParameters.NOT_SPECIFIED);
-		searchBean.setSearchParameters(searchParameters);
-
-	}
-
-//	public String showImage() {
-//		System.out.println("Imageid " + this.id);
-//		return null;
-//	}
 	
 	public String getLastGalleryName() {
 		if (this.lastGalleryName == null) {
@@ -266,6 +172,7 @@ public class PicturesBean {
 		
 		String gallery = this.getURLParam("gal");
 		System.out.println("Gallery is: " + gallery);
+		this.lastGalleryName = gallery;
 		if ("people".equals(gallery)) {
 			
 			Session session = HibernateUtil.getSession();
@@ -331,8 +238,24 @@ public class PicturesBean {
 			
 		} else if ("ships".equals(gallery)) {
 		} else {
-			throw new RuntimeException("Unedefined handler for gallery: " + gallery);
-			//return new SelectItem[] {};
+			Session session = HibernateUtil.getSession();
+			Transaction transaction = session.beginTransaction();
+			Object[] result = getImagesWith(Image.getAttribute("people"), session);
+			for (int i = 0; i < result.length; i++) {
+				Image image = (Image)result[i];
+				Set persons = image.getPeople();
+				Iterator iter = persons.iterator();
+				while (iter.hasNext()) {
+					Person p = (Person) iter.next();
+					SelectItem item = new ComparableSelectItem(String.valueOf(p.getId()), p.getLastName());
+					if (!items.contains(item)) {
+						items.add(item);
+					}
+				}
+			}
+			
+			transaction.commit();
+			session.close();
 		}
 		
 		Collections.sort(items);
@@ -359,16 +282,9 @@ public class PicturesBean {
 		return this.getURLParam("gal");
 	}
 	
-	public Boolean getGalleryList() {
-		if (this.getURLParam("gal") != null) {
-			this.lastGalleryName = this.getURLParam("gal");
-		}
-		return new Boolean(this.getURLParam("gal") != null);
-	}
-	
 	public String getGalleryUserName() {
 		if (this.getURLParam("gal") == null) {
-			return " !!!!null!!!!";
+			return (String)galleryUserLabels.get("people");
 		}
 		return (String)galleryUserLabels.get(this.getURLParam("gal"));
 	}
@@ -380,5 +296,40 @@ public class PicturesBean {
 		return ((ServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest())
 					.getParameter(paramName);
 		
+	}
+	
+	public String getCurrentPath() {
+		
+		String object = this.getURLParam("obj");
+		String id = this.getURLParam("id");
+		Conditions conditions = new Conditions();
+		QueryValue qValue = null;
+		if (object == null || id == null) {
+			return "Invalid parameters!";
+		}
+		if (object.equals("people")) {
+			qValue = new QueryValue(new String[] {"Person"}, new String[] {"p"}, conditions);
+			conditions.addCondition(Person.getAttribute("id"), new Integer(id), Conditions.OP_EQUALS);
+		} else if (object.equals("ports")) {
+			qValue = new QueryValue(new String[] {"Port"}, new String[] {"p"}, conditions);
+			conditions.addCondition(Person.getAttribute("id"), new Long(id), Conditions.OP_EQUALS);
+		} else if (object.equals("regions")) {
+			qValue = new QueryValue(new String[] {"Region"}, new String[] {"p"}, conditions);
+			conditions.addCondition(Person.getAttribute("id"), new Long(id), Conditions.OP_EQUALS);
+		} else if (object.equals("ships")) {
+			
+		} else {
+			return "Invalid parameters!";
+		}
+		Object[] ret = qValue.executeQuery();
+		
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("Images / ").append(galleryUserLabels.get(object)).append(" / ");
+		if (ret.length != 0) {
+			buffer.append(ret[0].toString());
+		} else {
+			buffer.append("unknown");
+		}
+		return buffer.toString();
 	}
 }

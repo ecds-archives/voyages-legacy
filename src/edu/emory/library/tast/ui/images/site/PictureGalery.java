@@ -6,37 +6,29 @@ import edu.emory.library.tast.dm.Image;
 
 public class PictureGalery {
 	private GaleryImage[] pictures;
-	private int firstVisible;
 	private GaleryImage visiblePicture;
 	
 	public PictureGalery(GaleryImage[] pictures) {
 		this.pictures = pictures;
-		this.firstVisible = 0;
 	}
 	
-	public void moveForward(int number) {
-		this.firstVisible += number;
+	public boolean canMoveForward(int set, int number) {
+		return set * number < this.pictures.length;
 	}
 	
-	public void moveBackward(int number) {
-		this.firstVisible -= number;
-		if (this.firstVisible < 0) {
-			this.firstVisible = 0;
-		}
-	}
-	
-	public boolean canMoveForward(int number) {
-		return this.firstVisible + number < this.pictures.length;
-	}
-	
-	public boolean canMoveBackward(int number) {
-		return this.firstVisible - number >= 0;
+	public boolean canMoveBackward(int set, int number) {
+		return set > 1;
 	}
 
-	public GaleryImage[] getPictures(int number) {
-		GaleryImage[] ret = new GaleryImage[number < this.pictures.length - this.firstVisible ? number : this.pictures.length - this.firstVisible];
+	public GaleryImage[] getPictures(int set, int number) {
+		int first = (set - 1) * number;
+		int last = set * number;
+		if (last > this.pictures.length) {
+			last = this.pictures.length;
+		}
+		GaleryImage[] ret = new GaleryImage[last - first];
 		for (int i = 0; i < ret.length; i++) {
-			ret[i] = this.pictures[this.firstVisible + i];
+			ret[i] = this.pictures[first + i];
 		}
 		return ret;
 	}
@@ -53,21 +45,18 @@ public class PictureGalery {
 		return this.visiblePicture;
 	}
 
-	public int getFirst() {
-		return this.firstVisible;
+	public int getFirst(int set, int number) {
+		return (set - 1) * number;
 	}
 	
 	public int getNumberOfAll() {
 		return this.pictures.length;
 	}
 
-	public int getLast(int rowstimescols) {
-		if (rowstimescols < this.pictures.length) {
-			if (this.firstVisible + rowstimescols > this.pictures.length) {
-				return this.pictures.length;
-			} else {
-				return this.firstVisible + rowstimescols;
-			}
+	public int getLast(int set, int number) {
+		int last = set * number;
+		if (last < this.pictures.length) {			
+			return last;
 		} else {
 			return this.pictures.length;
 		}

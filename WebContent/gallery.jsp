@@ -32,7 +32,7 @@
 
 		<div align="center" id="gallery-div-lists">
 		
-		<t:htmlTag rendered="#{PicturesBean.galleryList}" value="table" style="border-collapse: collapse;">
+		<t:htmlTag value="table" style="border-collapse: collapse;">
 			<t:htmlTag value="tr">
 				<t:htmlTag value="td" style="margin-right: 30px;">
 					
@@ -71,24 +71,12 @@
 						</h:selectOneListbox>
 						<t:htmlTag value="br"/>
 						<h:commandButton value="Show images" 
-							onclick="var id = document.forms['form'].elements['form:gallery-list-objects'].value; if (id == null || id == '') {return false;};window.location='gallery.faces?obj=#{PicturesBean.gallery}&id=' + id; return false;"/>
+							onclick="var id = document.forms['form'].elements['form:gallery-list-objects'].value; if (id == null || id == '') {return false;};window.location='galleryp.faces?obj=#{PicturesBean.gallery == null ? 'people' : PicturesBean.gallery}&id=' + id + '&set=1'; return false;"/>
 					</t:div>
 				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
 		</div>
-
-		<t:htmlTag rendered="#{!PicturesBean.galleryList}" value="div">
-			<t:div id="gallsery-div-back-to-list" style="text-align: center;">
-				<h:outputLink value="gallery.faces?gal=#{PicturesBean.lastGalleryName}">
-					<h:outputText value="Back to gallery list"/>
-				</h:outputLink>
-			</t:div>
-			<s:picture-gallery pictures="#{PicturesBean.pictureGalery}" rows="6" columns="1"
-				thumbnailWidth="100" thumbnailHeight="100" action="#{PicturesBean.showinfo}" 
-			 	searchCondition="#{PicturesBean.searchCondition}" />
-		 </t:htmlTag>
-
 	
 	</h:form>
 	
