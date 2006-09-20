@@ -412,5 +412,37 @@ public class JsfUtils
         if (vb == null) return setValue;
         return ((Integer) vb.getValue(context)).intValue();
     }
+    
+    public static int getCompPropInt(UIComponent component, FacesContext context, String name, boolean set, int value)
+    {
+        if (set) return value;
+        ValueBinding vb = component.getValueBinding(name);
+        if (vb == null) return value;
+        return ((Integer) vb.getValue(context)).intValue();
+    }
+
+    public static String getCompPropString(UIComponent component, FacesContext context, String name, boolean set, String value)
+    {
+        if (set) return value;
+        ValueBinding vb = component.getValueBinding(name);
+        if (vb == null) return value;
+        return (String) vb.getValue(context);
+    }
+
+    public static String[] getCompPropStringArray(UIComponent component, FacesContext context, String name, boolean set, String[] value)
+    {
+        if (set) return value;
+        ValueBinding vb = component.getValueBinding(name);
+        if (vb == null) return value;
+        return (String[]) vb.getValue(context);
+    }
+
+    public static Object getCompPropObject(UIComponent component, FacesContext context, String name, boolean set, Object value)
+    {
+        if (set) return value;
+        ValueBinding vb = component.getValueBinding(name);
+        if (vb == null) return value;
+        return vb.getValue(context);
+    }
 
 }

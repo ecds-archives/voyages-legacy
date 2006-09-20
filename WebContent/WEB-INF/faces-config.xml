@@ -150,6 +150,13 @@
 		</component-class>
 	</component>
 
+	<component>
+		<component-type>EventLine</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.EventLineComponent
+		</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>
