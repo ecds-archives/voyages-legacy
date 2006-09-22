@@ -28,7 +28,7 @@
 		</s:stattab>
 	</s:section>
 
-	<s:section title="Basic statistics" sectionId="basic-statistics">
+	<s:section title="Summary statistics" sectionId="basic-statistics">
 		<s:stattab>
 		<%@ include file="search-tab-basic-stats.jsp" %>
 		</s:stattab>

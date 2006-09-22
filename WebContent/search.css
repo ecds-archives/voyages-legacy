@@ -133,3 +133,21 @@ table.legend-table-layers {
 	padding-left: 10px;
 }
 
+table.basic-stat-tab {
+	border-collapse: collapse;
+	border: 2px solid #F1E7C8;
+}
+
+table.basic-stat-tab tr {
+	border-bottom: 2px solid #F1E7C8;
+}
+
+table.basic-stat-tab th {
+	border-left: 2px solid #F1E7C8;
+	width: 150px;
+}
+
+table.basic-stat-tab td {
+	border-left: 2px solid #F1E7C8;
+	text-align: center;
+}
