@@ -9,7 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.GISPortLocation;
+import edu.emory.library.tast.dm.Location;
+import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
@@ -174,11 +176,14 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 			List rowList, int symbolNumber) {
 
 		// Get GIS port
-		GISPortLocation gisLoc = GISPortLocation.getGISPortLocation(dict);
+		Location gisLoc = Port.loadById(dict.getId().longValue());
+		if (gisLoc == null) {
+			gisLoc = Region.loadById(dict.getId().longValue());
+		}
 		if (gisLoc != null) {
 			// Prepare test item
 			DetailVoyageMapItem testItem = new DetailVoyageMapItem(gisLoc
-					.getX(), gisLoc.getY(), gisLoc.getPortName(), 1);
+					.getX(), gisLoc.getY(), gisLoc.getName(), 1);
 			int index;
 			if ((index = items.indexOf(testItem)) != -1) {
 				// Item with given coordinates already in map - will add
@@ -187,7 +192,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 				DetailVoyageMapItem item = (DetailVoyageMapItem) items
 						.get(index);
 				MapItemElement itemElement = new MapItemElement(getAttribute(0,
-						rowList.indexOf(dict)), new Object[] { new Integer(
+						rowList.lastIndexOf(dict)), new Object[] { new Integer(
 						symbolNumber++) });
 				itemElement.addElement(new Element(getAttribute(0, rowList
 						.indexOf(dict)), ""));
@@ -202,8 +207,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 						.indexOf(dict)), ""));
 				testItem.addMapItemElement(itemElement);
 				// Set prijected coordinates as well
-				double[] projXY = gisLoc.getXYProjected();
-				testItem.setProjXY(projXY[0], projXY[1]);
+				testItem.setProjXY(gisLoc.getX(), gisLoc.getY());
 				items.add(testItem);
 				return testItem;
 			}

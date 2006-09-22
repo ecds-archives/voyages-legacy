@@ -21,26 +21,28 @@ import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 
-public class Group
-{
-	
-	
+public class Group {
+
 	private static final String ATTRIBUTE_GROUPS_XML = "/attribute-groups.xml";
-	
+
 	private static Group[] groups = null;
+
 	private static Map groupsByIds = null;
-	
+
 	private String id;
+
 	private String userLabel;
-	
+
 	private SearchableAttribute[] searchableAttributesAll;
+
 	private Map searchableAttributesbyUserCategories = new HashMap();
-	
+
 	private VisibleAttribute[] visibleAttributesAll;
+
 	private Map visibleAttributesbyUserCategories = new HashMap();
-	
-	public Group(String id, String userLabel, SearchableAttribute[] all, VisibleAttribute[] visible)
-	{
+
+	public Group(String id, String userLabel, SearchableAttribute[] all,
+			VisibleAttribute[] visible) {
 		this.id = id;
 		this.userLabel = userLabel;
 		this.searchableAttributesAll = all;
@@ -53,117 +55,109 @@ public class Group
 		}
 		splitByUserCategories();
 	}
-	
-	private void splitByUserCategories()
-	{
-		
+
+	private void splitByUserCategories() {
+
 		if (searchableAttributesbyUserCategories == null)
 			searchableAttributesbyUserCategories = new HashMap();
 		else
 			searchableAttributesbyUserCategories.clear();
-		
+
 		if (visibleAttributesbyUserCategories == null)
 			visibleAttributesbyUserCategories = new HashMap();
 		else
 			visibleAttributesbyUserCategories.clear();
-		
+
 		UserCategory allCategories[] = UserCategory.getAllCategories();
 		List selected = new ArrayList();
-		
-		for (int i = 0; i < allCategories.length; i++)
-		{
-			
+
+		for (int i = 0; i < allCategories.length; i++) {
+
 			UserCategory category = allCategories[i];
 			selected.clear();
 
-			for (int j = 0; j < searchableAttributesAll.length; j++)
-			{
+			for (int j = 0; j < searchableAttributesAll.length; j++) {
 				SearchableAttribute attr = searchableAttributesAll[j];
-				if (attr.getUserCategory().equals(category)) selected.add(attr);
+				if (attr != null && attr.getUserCategory().equals(category))
+					selected.add(attr);
 			}
-			
-			SearchableAttribute[] selectedArr = new SearchableAttribute[selected.size()];
+
+			SearchableAttribute[] selectedArr = new SearchableAttribute[selected
+					.size()];
 			selected.toArray(selectedArr);
-			
+
 			searchableAttributesbyUserCategories.put(category, selectedArr);
-			
+
 		}
-		
-		
-		for (int i = 0; i < allCategories.length; i++)
-		{
-			
+
+		for (int i = 0; i < allCategories.length; i++) {
+
 			UserCategory category = allCategories[i];
 			selected.clear();
 
-			for (int j = 0; j < visibleAttributesAll.length; j++)
-			{
+			for (int j = 0; j < visibleAttributesAll.length; j++) {
 				VisibleAttribute attr = visibleAttributesAll[j];
-				if (attr.getUserCategory().equals(category)) selected.add(attr);
+				if (attr != null && attr.getUserCategory().equals(category))
+					selected.add(attr);
 			}
-			
-			VisibleAttribute[] selectedArr = new VisibleAttribute[selected.size()];
+
+			VisibleAttribute[] selectedArr = new VisibleAttribute[selected
+					.size()];
 			selected.toArray(selectedArr);
-			
+
 			visibleAttributesbyUserCategories.put(category, selectedArr);
-			
+
 		}
-		
+
 	}
-	
-	public String getId()
-	{
+
+	public String getId() {
 		return id;
 	}
-	
-	public String getUserLabel()
-	{
+
+	public String getUserLabel() {
 		return userLabel;
 	}
 
-	public SearchableAttribute[] getAllSearchableAttributes()
-	{
+	public SearchableAttribute[] getAllSearchableAttributes() {
 		return searchableAttributesAll;
 	}
-	
-	public SearchableAttribute[] getSearchableAttributesInUserCategory(UserCategory category)
-	{
-		return (SearchableAttribute[]) searchableAttributesbyUserCategories.get(category);
+
+	public SearchableAttribute[] getSearchableAttributesInUserCategory(
+			UserCategory category) {
+		return (SearchableAttribute[]) searchableAttributesbyUserCategories
+				.get(category);
 	}
-	
-	public int getNoOfSearchableAttributesInUserCategory(UserCategory category)
-	{
+
+	public int getNoOfSearchableAttributesInUserCategory(UserCategory category) {
 		return getSearchableAttributesInUserCategory(category).length;
 	}
 
-	public boolean hasSearchableAttributesInUserCategory(UserCategory category)
-	{
+	public boolean hasSearchableAttributesInUserCategory(UserCategory category) {
 		return getNoOfSearchableAttributesInUserCategory(category) > 0;
 	}
 
-	public VisibleAttribute[] getAllVisibleAttributes()
-	{
+	public VisibleAttribute[] getAllVisibleAttributes() {
 		return visibleAttributesAll;
 	}
-	
-	public VisibleAttribute[] getVisibleAttributesInUserCategory(UserCategory category)
-	{
-		return (VisibleAttribute[]) visibleAttributesbyUserCategories.get(category);
+
+	public VisibleAttribute[] getVisibleAttributesInUserCategory(
+			UserCategory category) {
+		return (VisibleAttribute[]) visibleAttributesbyUserCategories
+				.get(category);
 	}
-	
-	public int getNoOfVisibleAttributesInUserCategory(UserCategory category)
-	{
+
+	public int getNoOfVisibleAttributesInUserCategory(UserCategory category) {
 		return getVisibleAttributesInUserCategory(category).length;
 	}
 
-	public boolean hasVisibleAttributesInUserCategory(UserCategory category)
-	{
+	public boolean hasVisibleAttributesInUserCategory(UserCategory category) {
 		return getNoOfVisibleAttributesInUserCategory(category) > 0;
 	}
 
-	private static void loadGroups() throws ParserConfigurationException, SAXException, IOException
-	{
-		
+	private static void loadGroups() throws ParserConfigurationException,
+			SAXException, IOException {
+
 		// we have a DTD and we want to get rid of whitespace
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(true);
@@ -173,20 +167,21 @@ public class Group
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		InputStream str = Group.class.getResourceAsStream(ATTRIBUTE_GROUPS_XML);
 		Document document = builder.parse(str);
-		
+
 		NodeList xmlGroups = document.getDocumentElement().getChildNodes();
 		groups = new Group[xmlGroups.getLength()];
 		groupsByIds = new HashMap();
-		
+
 		// main loop over <searchable-attribute>
-		for (int i = 0; i < xmlGroups.getLength(); i++)
-		{
+		for (int i = 0; i < xmlGroups.getLength(); i++) {
 			Node xmlGroup = xmlGroups.item(i);
-			
+
 			// main properties
-			String id = xmlGroup.getAttributes().getNamedItem("id").getNodeValue();
-			String userLabel = xmlGroup.getAttributes().getNamedItem("userLabel").getNodeValue();
-			
+			String id = xmlGroup.getAttributes().getNamedItem("id")
+					.getNodeValue();
+			String userLabel = xmlGroup.getAttributes().getNamedItem(
+					"userLabel").getNodeValue();
+
 			// check id uniqueness
 			if (groupsByIds.containsKey(id))
 				throw new RuntimeException("duplicate group id '" + id + "'");
@@ -196,51 +191,65 @@ public class Group
 			NodeList xmlAttrs = null;
 			VisibleAttribute[] visibleAttrs = null;
 			SearchableAttribute[] searchableAttrs = null;
-			
-			for (int k = 0; k < xmlAttrTypes.getLength(); k++)
-			{
+
+			for (int k = 0; k < xmlAttrTypes.getLength(); k++) {
 				Node xmlAttrType = xmlAttrTypes.item(k);
-				if ("searchable-attributes".equals(xmlAttrType.getNodeName()))
-				{
+				if ("searchable-attributes".equals(xmlAttrType.getNodeName())) {
 					xmlAttrs = xmlAttrType.getChildNodes();
-					searchableAttrs = new SearchableAttribute[xmlAttrs.getLength()]; 
-					for (int j = 0; j < xmlAttrs.getLength(); j++)
-					{
+					searchableAttrs = new SearchableAttribute[xmlAttrs
+							.getLength()];
+					for (int j = 0; j < xmlAttrs.getLength(); j++) {
 						Node xmlAttr = xmlAttrs.item(j);
-						String attrId = xmlAttr.getAttributes().getNamedItem("id").getNodeValue();
-						SearchableAttribute attr = (SearchableAttribute)Searchables.getById(attrId);
-						if (attr == null) throw new RuntimeException("group '" + id + "' contains a nonexistent attribute '" + attrId + "'");
-						searchableAttrs[j] = attr;
+						if (xmlAttr.getNodeType() != Node.COMMENT_NODE) {
+							String attrId = xmlAttr.getAttributes()
+									.getNamedItem("id").getNodeValue();
+							SearchableAttribute attr = (SearchableAttribute) Searchables
+									.getById(attrId);
+							if (attr == null)
+								throw new RuntimeException(
+										"group '"
+												+ id
+												+ "' contains a nonexistent attribute '"
+												+ attrId + "'");
+							searchableAttrs[j] = attr;
+						}
 					}
 				}
-				if ("table-attributes".equals(xmlAttrType.getNodeName()))
-				{
-					xmlAttrs = xmlAttrType.getChildNodes(); 
-					visibleAttrs = new VisibleAttribute[xmlAttrs.getLength()]; 
-					for (int j = 0; j < xmlAttrs.getLength(); j++)
-					{
+				if ("table-attributes".equals(xmlAttrType.getNodeName())) {
+					xmlAttrs = xmlAttrType.getChildNodes();
+					visibleAttrs = new VisibleAttribute[xmlAttrs.getLength()];
+					for (int j = 0; j < xmlAttrs.getLength(); j++) {
 						Node xmlAttr = xmlAttrs.item(j);
-						String attrId = xmlAttr.getAttributes().getNamedItem("id").getNodeValue();
-						VisibleAttribute attr = VisibleAttribute.getAttribute(attrId);
-						if (attr == null) throw new RuntimeException("group '" + id + "' contains a nonexistent attribute '" + attrId + "'");
-						visibleAttrs[j] = attr;
+						if (xmlAttr.getNodeType() != Node.COMMENT_NODE) {
+							String attrId = xmlAttr.getAttributes()
+									.getNamedItem("id").getNodeValue();
+							VisibleAttribute attr = VisibleAttribute
+									.getAttribute(attrId);
+							if (attr == null)
+								throw new RuntimeException(
+										"group '"
+												+ id
+												+ "' contains a nonexistent attribute '"
+												+ attrId + "'");
+							visibleAttrs[j] = attr;
+						}
 					}
 				}
-			
+
 			}
-			
-			Group group = new Group(id, userLabel, searchableAttrs, visibleAttrs);
+
+			Group group = new Group(id, userLabel, searchableAttrs,
+					visibleAttrs);
 
 			// add it to our collection
 			groups[i] = group;
 			groupsByIds.put(id, group);
 
 		}
-		
+
 	}
-	
-	public static Group getGroupById(String groupId)
-	{
+
+	public static Group getGroupById(String groupId) {
 		if (groups == null) {
 			try {
 				loadGroups();
@@ -254,9 +263,8 @@ public class Group
 		}
 		return (Group) groupsByIds.get(groupId);
 	}
-	
-	public static Group[] getGroups()
-	{
+
+	public static Group[] getGroups() {
 		if (groups == null) {
 			try {
 				loadGroups();
@@ -274,5 +282,5 @@ public class Group
 	public String toString() {
 		return this.userLabel == null ? this.id : this.userLabel;
 	}
-	
+
 }

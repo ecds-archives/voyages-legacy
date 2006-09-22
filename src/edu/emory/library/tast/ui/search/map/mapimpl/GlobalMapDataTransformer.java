@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.emory.library.tast.dm.GISPortLocation;
+import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
@@ -78,7 +78,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		//Parse each response row
 		for (int i = 0; i < data.length; i++) {
 			//Get port
-			GISPortLocation gisPort = GISPortLocation.getGISPortLocation((String) ((Object[]) data[i])[0]);
+			Location gisPort = (Location) ((Object[]) data[i])[0];
 			
 			//Get color
 			int color = ((Integer) ((Object[]) data[i])[2]).intValue();
@@ -93,12 +93,14 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 				if (max < value.doubleValue()) {
 					max = value.doubleValue();
 				}
-				
+				System.out.println("Color---: " + color + gisPort.getX() + " " + gisPort.getY());
 				//Create test item
 				GlobalMapDataItem testItem = new GlobalMapDataItem(gisPort.getX(), gisPort.getY(), gisPort
-						.getPortName(), color);
+						.getName(), color, i);
 				int index;
 
+				System.out.println("i=" + i + "  Checking port: " + gisPort);
+				
 				//Check if test item is among map items that have already been added
 				if ((index = items.indexOf(testItem)) != -1) {
 					//If so - add Element to existing item
@@ -106,13 +108,14 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 					item.getMapItemElements()[0].addElement(new Element(getAttribute(i, 1), new Double(value
 							.doubleValue())));
 					item.setSymbolColor(DOUBLE_COLOR);
+					System.out.println("Equals to: " + item.getI());
 				} else {
 					//If no - add test item to map items
 					MapItemElement itemElement = new MapItemElement(getAttribute(i, 0));
 					itemElement.addElement(new Element(getAttribute(i, 1), new Double(value.doubleValue())));
 					testItem.addMapItemElement(itemElement);
-					double [] projXY = gisPort.getXYProjected();
-					testItem.setProjXY(projXY[0], projXY[1]);
+					//double [] projXY = gisPort.getXYProjected();
+					testItem.setProjXY(gisPort.getX(), gisPort.getY());
 					items.add(testItem);
 				}
 			}

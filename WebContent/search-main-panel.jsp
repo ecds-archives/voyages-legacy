@@ -27,6 +27,13 @@
 		<%@ include file="search-tab-stat.jsp" %>
 		</s:stattab>
 	</s:section>
+
+	<s:section title="Basic statistics" sectionId="basic-statistics">
+		<s:stattab>
+		<%@ include file="search-tab-basic-stats.jsp" %>
+		</s:stattab>
+	</s:section>
+	
 	
 	<s:section title="Map of ports" sectionId="map-ports">
 		<s:stattab>

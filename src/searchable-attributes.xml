@@ -783,12 +783,12 @@
 			<attribute name="voyageId" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="insurrec"
+	<!-- searchable-attribute type="simple" id="insurrec"
 		userCategory="beginners" userLabel="Violent incidents">
 		<attributes>
 			<attribute name="insurrec" />
 		</attributes>
-	</searchable-attribute>
+	</searchable-attribute> -->
 	<searchable-attribute type="simple" id="xmimpflag"
 		userCategory="general"
 		userLabel="Voyage link categ for calculating impute">

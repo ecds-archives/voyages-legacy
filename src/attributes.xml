@@ -408,10 +408,10 @@
 			attrType="Numeric" typeDisplayName="Integer" category="0"
 			name="infantm3" desc="" id="262882">
 		</attribute>
-		<attribute userLabel="Violent incidents" importName="insurrec"
+		<!-- attribute userLabel="Violent incidents" importName="insurrec"
 			importType="0" attrNumType="Integer" attrType="Numeric" typeDisplayName="Integer"
 			category="0" name="insurrec" desc="" id="262891">
-		</attribute>
+		</attribute> -->
 		<attribute userLabel="Standardized price of slaves"
 			importName="jamcaspr" importType="0" attrNumType="Float" attrType="Numeric"
 			typeDisplayName="Decimal" category="1" name="jamcaspr" desc=""

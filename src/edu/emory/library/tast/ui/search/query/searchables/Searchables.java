@@ -69,6 +69,7 @@ public class Searchables
 			Node xmlSearchableAttr = xmlSearchableAttrs.item(i);
 			
 			// main properties
+			if (xmlSearchableAttr.getNodeType() != Node.COMMENT_NODE) {
 			SearchableAttribute searchableAttribute = null;
 			String id = xmlSearchableAttr.getAttributes().getNamedItem("id").getNodeValue();
 			String type = xmlSearchableAttr.getAttributes().getNamedItem("type").getNodeValue();
@@ -157,6 +158,7 @@ public class Searchables
 				searchableAttributes[i] = searchableAttribute;
 				searchableAttributesByIds.put(id, searchableAttribute);
 			}
+		}
 		}
 		
 	}

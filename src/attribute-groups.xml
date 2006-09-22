@@ -48,7 +48,7 @@
 			<searchable-attribute id="ddepamb"/>
 			<searchable-attribute id="fate"/>
 			<searchable-attribute id="fate2"/>
-			<searchable-attribute id="insurrec"/>
+			<!--searchable-attribute id="insurrec"/>-->
 			<searchable-attribute id="malrat7"/>
 			<searchable-attribute id="sla32imp"/>
 			<searchable-attribute id="sla36imp"/>
@@ -89,7 +89,7 @@
 			<table-attribute id="ddepamb"/>
 			<table-attribute id="fate"/>
 			<table-attribute id="fate2"/>
-			<table-attribute id="insurrec"/>
+			<!-- <table-attribute id="insurrec"/> -->
 			<table-attribute id="malrat7"/>
 			<table-attribute id="sla32imp"/>
 			<table-attribute id="sla36imp"/>
@@ -310,7 +310,7 @@
 			<searchable-attribute id="ddepamb"/>
 			<searchable-attribute id="fate"/>
 			<searchable-attribute id="fate2"/>
-			<searchable-attribute id="insurrec"/>
+			<!-- <searchable-attribute id="insurrec"/> -->
 			<searchable-attribute id="majselpt"/>
 			<searchable-attribute id="malrat7"/>
 			<searchable-attribute id="majbyimp"/>
@@ -367,7 +367,7 @@
 			<table-attribute id="ddepamb"/>
 			<table-attribute id="fate"/>
 			<table-attribute id="fate2"/>
-			<table-attribute id="insurrec"/>
+			<!-- <table-attribute id="insurrec"/> -->
 			<table-attribute id="majselpt"/>
 			<table-attribute id="malrat7"/>
 			<table-attribute id="majbyimp"/>

@@ -30,6 +30,8 @@ public class GlobalMapDataItem extends AbstractMapItem {
 
 	private int size;
 	
+	private int i;
+	
 	/**
 	 * Data item constructor.
 	 * @param x x coordinate
@@ -37,9 +39,14 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 * @param mainLabel label 
 	 * @param color color
 	 */
-	public GlobalMapDataItem(double x, double y, String mainLabel, int color) {
+	public GlobalMapDataItem(double x, double y, String mainLabel, int color, int i) {
 		super(x, y, mainLabel);
 		this.color = color;
+		this.i = i;
+	}
+	
+	public int getI() {
+		return i;
 	}
 	
 	/**
@@ -48,6 +55,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 */
 	public void setSymbolColor(int color) {
 		this.color = color;
+		System.out.println("Color: " + this.color);
 	}
 
 	/**
@@ -72,6 +80,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(SYMBOL_NAME_PREFIX).append(this.color);
 		buffer.append("-").append(size + 1);
+		System.out.println("Symbol: " + buffer);
 		this.symbolName =  buffer.toString();
 		this.size = size;
 	}

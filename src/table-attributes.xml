@@ -644,11 +644,11 @@
 			<attribute name="voyageId"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="insurrec" userCategory="beginners" userLabel="Violent incidents">
+	<!--table-attribute tabs="1,2" id="insurrec" userCategory="beginners" userLabel="Violent incidents">
 		<attributes>
 			<attribute name="insurrec"/>
 		</attributes>
-	</table-attribute>
+	</table-attribute-->
 	<table-attribute tabs="1,2" id="xmimpflag" userCategory="general" userLabel="Voyage link categ for calculating impute">
 		<attributes>
 			<attribute name="xmimpflag"/>

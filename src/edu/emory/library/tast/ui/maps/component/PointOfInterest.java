@@ -1,6 +1,6 @@
 package edu.emory.library.tast.ui.maps.component;
 
-import edu.emory.library.tast.dm.GISPortLocation;
+import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.util.JsfUtils;
 
 public class PointOfInterest
@@ -79,8 +79,8 @@ public class PointOfInterest
 		if (o instanceof PointOfInterest) {
 			PointOfInterest that = (PointOfInterest)o;
 			return this.x == that.x && this.y == that.y;
-		} else if (o instanceof GISPortLocation) {
-			GISPortLocation that = (GISPortLocation)o;
+		} else if (o instanceof Location) {
+			Location that = (Location)o;
 			return this.x == that.getX() && this.y == that.getY();
 		}
 		return false;

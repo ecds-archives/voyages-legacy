@@ -143,7 +143,11 @@ public abstract class AbstractMapItem {
 			return false;
 		}
 		AbstractMapItem that = (AbstractMapItem)o;
-		return this.x == that.x && this.y == that.y;
+		boolean ret = this.x == that.x && this.y == that.y;
+		if (ret) {
+			System.out.println("EQUALS!!!");
+		}
+		return ret;
 	}
 
 	/**

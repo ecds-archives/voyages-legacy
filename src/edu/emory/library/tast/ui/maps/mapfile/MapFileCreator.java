@@ -191,7 +191,7 @@ public class MapFileCreator {
 					AbstractMapItem item = (AbstractMapItem) iter.next();
 					writer.append("	FEATURE\n");
 					writer.append("		POINTS " + item.getX() + " " + item.getY() + " END\n");
-					writer.append("		TEXT '" + item.getMainLabel() + "'\n");
+					writer.append("		TEXT \"" + item.getMainLabel() + "\"\n");
 					writer.append("	END\n");
 				}
 

@@ -233,7 +233,9 @@ public class TableResultTabBean {
 		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
-				qValue.addPopulatedAttribute(populatedAttributes[i]);
+				if (populatedAttributes[i] != null) {
+					qValue.addPopulatedAttribute(populatedAttributes[i]);
+				}
 			}
 		}
 
