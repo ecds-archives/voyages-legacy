@@ -7,6 +7,7 @@ public class EventLineGraph
 	
 	private int[] data;
 	private Color color;
+	private String name;
 
 	public int[] getData()
 	{
@@ -33,6 +34,16 @@ public class EventLineGraph
 	public void setColor(Color color)
 	{
 		this.color = color;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 }

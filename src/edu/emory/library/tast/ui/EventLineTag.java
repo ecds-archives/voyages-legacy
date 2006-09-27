@@ -9,16 +9,12 @@ import javax.faces.webapp.UIComponentTag;
 public class EventLineTag extends UIComponentTag
 {
 	
-	private String height;
-	private String width;
-	private String xMin;
-	private String xMax;
-	private String xSubdiv;
-	private String yMin;
-	private String yMax;
-	private String ySubdiv;
+	private String graphHeight;
+	private String barWidth;
 	private String graphs;
 	private String events;
+	private String horizontalLabels;
+	private String verticalLabels;
 
 	public String getComponentType()
 	{
@@ -36,128 +32,32 @@ public class EventLineTag extends UIComponentTag
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		EventLineComponent eventLine = (EventLineComponent) component;
 		
-		if (height != null && isValueReference(height))
+		if (graphHeight != null && isValueReference(graphHeight))
 		{
-			ValueBinding vb = app.createValueBinding(height);
-			eventLine.setValueBinding("height", vb);
+			ValueBinding vb = app.createValueBinding(graphHeight);
+			eventLine.setValueBinding("graphHeight", vb);
 		}
 		else
 		{
 			try
 			{
-				eventLine.setHeight(Integer.parseInt(height));
+				eventLine.setGraphHeight(Integer.parseInt(graphHeight));
 			}
 			catch (NumberFormatException nfe)
 			{
 			}
 		}
 		
-		if (width != null && isValueReference(width))
+		if (barWidth != null && isValueReference(barWidth))
 		{
-			ValueBinding vb = app.createValueBinding(width);
-			eventLine.setValueBinding("width", vb);
+			ValueBinding vb = app.createValueBinding(barWidth);
+			eventLine.setValueBinding("barWidth", vb);
 		}
 		else
 		{
 			try
 			{
-				eventLine.setWidth(Integer.parseInt(width));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
-		}
-
-		if (xMin != null && isValueReference(xMin))
-		{
-			ValueBinding vb = app.createValueBinding(xMin);
-			eventLine.setValueBinding("xMin", vb);
-		}
-		else
-		{
-			try
-			{
-				eventLine.setXMin(Integer.parseInt(xMin));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
-		}
-
-		if (xMax != null && isValueReference(xMax))
-		{
-			ValueBinding vb = app.createValueBinding(xMax);
-			eventLine.setValueBinding("xMax", vb);
-		}
-		else
-		{
-			try
-			{
-				eventLine.setXMax(Integer.parseInt(xMax));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
-		}
-
-		if (xSubdiv != null && isValueReference(xSubdiv))
-		{
-			ValueBinding vb = app.createValueBinding(xSubdiv);
-			eventLine.setValueBinding("xSubdiv", vb);
-		}
-		else
-		{
-			try
-			{
-				eventLine.setXSubdiv(Integer.parseInt(xSubdiv));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
-		}
-
-		if (yMin != null && isValueReference(yMin))
-		{
-			ValueBinding vb = app.createValueBinding(yMin);
-			eventLine.setValueBinding("yMin", vb);
-		}
-		else
-		{
-			try
-			{
-				eventLine.setYMin(Integer.parseInt(yMin));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
-		}
-
-		if (yMax != null && isValueReference(yMax))
-		{
-			ValueBinding vb = app.createValueBinding(yMax);
-			eventLine.setValueBinding("yMax", vb);
-		}
-		else
-		{
-			try
-			{
-				eventLine.setYMax(Integer.parseInt(yMax));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
-		}
-
-		if (xSubdiv != null && isValueReference(ySubdiv))
-		{
-			ValueBinding vb = app.createValueBinding(ySubdiv);
-			eventLine.setValueBinding("ySubdiv", vb);
-		}
-		else
-		{
-			try
-			{
-				eventLine.setYSubdiv(Integer.parseInt(ySubdiv));
+				eventLine.setBarWidth(Integer.parseInt(barWidth));
 			}
 			catch (NumberFormatException nfe)
 			{
@@ -176,26 +76,18 @@ public class EventLineTag extends UIComponentTag
 			eventLine.setValueBinding("events", vb);
 		}
 
-	}
+		if (horizontalLabels != null && isValueReference(horizontalLabels))
+		{
+			ValueBinding vb = app.createValueBinding(horizontalLabels);
+			eventLine.setValueBinding("horizontalLabels", vb);
+		}
 
-	public String getXMin()
-	{
-		return xMin;
-	}
+		if (verticalLabels != null && isValueReference(verticalLabels))
+		{
+			ValueBinding vb = app.createValueBinding(verticalLabels);
+			eventLine.setValueBinding("verticalLabels", vb);
+		}
 
-	public void setxMin(String xMin)
-	{
-		this.xMin = xMin;
-	}
-
-	public String getXMax()
-	{
-		return xMax;
-	}
-
-	public void setxMax(String extentRight)
-	{
-		this.xMax = extentRight;
 	}
 
 	public String getGraphs()
@@ -208,34 +100,24 @@ public class EventLineTag extends UIComponentTag
 		this.graphs = graphs;
 	}
 
-	public String getHeight()
+	public String getGraphHeight()
 	{
-		return height;
+		return graphHeight;
 	}
 
-	public void setHeight(String height)
+	public void setGraphHeight(String height)
 	{
-		this.height = height;
+		this.graphHeight = height;
 	}
 
-	public String getxSubdiv()
+	public String getBarWidth()
 	{
-		return xSubdiv;
+		return barWidth;
 	}
 
-	public void setxSubdiv(String subdivision)
+	public void setBarWidth(String width)
 	{
-		this.xSubdiv = subdivision;
-	}
-
-	public String getWidth()
-	{
-		return width;
-	}
-
-	public void setWidth(String width)
-	{
-		this.width = width;
+		this.barWidth = width;
 	}
 
 	public String getEvents()
@@ -248,34 +130,24 @@ public class EventLineTag extends UIComponentTag
 		this.events = items;
 	}
 
-	public String getYMax()
+	public String getHorizontalLabels()
 	{
-		return yMax;
+		return horizontalLabels;
 	}
 
-	public void setyMax(String max)
+	public void setHorizontalLabels(String horizontalLabels)
 	{
-		yMax = max;
+		this.horizontalLabels = horizontalLabels;
 	}
 
-	public String getYMin()
+	public String getVerticalLabels()
 	{
-		return yMin;
+		return verticalLabels;
 	}
 
-	public void setyMin(String min)
+	public void setVerticalLabels(String verticalLabels)
 	{
-		yMin = min;
-	}
-
-	public String getYSubdiv()
-	{
-		return ySubdiv;
-	}
-
-	public void setySubdiv(String subdiv)
-	{
-		ySubdiv = subdiv;
+		this.verticalLabels = verticalLabels;
 	}
 
 }

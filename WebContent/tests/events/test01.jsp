@@ -8,7 +8,9 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>EventLine test</title>
+
+<script src="../../eventline.js" language="javascript" type="text/javascript"></script>
 
 <style type="text/css">
 
@@ -33,10 +35,12 @@ div.event-line-graph {
 	<h:form id="form">
 	
 		<s:eventLine
+			graphHeight="#{EventLineTestBean.graphHeight}"
+			barWidth="1"
+			horizontalLabels="#{EventLineTestBean.horizontalLabels}"
+			verticalLabels="#{EventLineTestBean.verticalLabels}"
 			graphs="#{EventLineTestBean.graphs}"
-			events="#{EventLineTestBean.events}"
-			width="500" xMin="0" xMax="500" xSubdiv="50"
-			height="200" yMin="0" yMax="200" ySubdiv="50" />
+			events="#{EventLineTestBean.events}" />
 
 	</h:form>
 </f:view>

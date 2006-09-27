@@ -505,34 +505,22 @@
 			<name>rendered</name>
 		</attribute>
 		<attribute>
-			<name>xMin</name>
+			<name>graphHeight</name>
 		</attribute>
 		<attribute>
-			<name>xMax</name>
-		</attribute>
-		<attribute>
-			<name>xSubdiv</name>
-		</attribute>
-		<attribute>
-			<name>yMin</name>
-		</attribute>
-		<attribute>
-			<name>yMax</name>
-		</attribute>
-		<attribute>
-			<name>ySubdiv</name>
-		</attribute>
-		<attribute>
-			<name>height</name>
-		</attribute>
-		<attribute>
-			<name>width</name>
+			<name>barWidth</name>
 		</attribute>
 		<attribute>
 			<name>graphs</name>
 		</attribute>
 		<attribute>
 			<name>events</name>
+		</attribute>
+		<attribute>
+			<name>verticalLabels</name>
+		</attribute>
+		<attribute>
+			<name>horizontalLabels</name>
 		</attribute>
 	</tag>
 
