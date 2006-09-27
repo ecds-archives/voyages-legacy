@@ -23,37 +23,63 @@ function EventLineGraph(name, data)
 	this.data = data;
 }
 
-function EventLine(eventLineId, indicatorId, barWidth, graphOffsetLeft, graphOffsetTop, events, graphs)
+function EventLine(eventLineId, indicatorContainerId, indicatorId, indicatorLabelId, barWidth, graphWidth, graphOffsetLeft, graphOffsetTop, events, graphs)
 {
 	this.eventLineId = eventLineId;
+	this.indicatorContainerId = indicatorContainerId;
+	this.indicatorId = indicatorId;
+	this.indicatorLabelId = indicatorLabelId;
 	this.events = events;
 	this.graphs = graphs;
 	this.barWidth = barWidth;
+	this.graphWidth = graphWidth;
 	this.graphOffsetLeft = graphOffsetLeft;
 	this.graphOffsetTop = graphOffsetTop;
 	EventAttacher.attachOnWindowEvent("load", this, "init");
 }
 
-Timeline.prototype.init = function()
+EventLine.prototype.init = function()
 {
 	this.containerElement = document.getElementById(this.eventLineId);
-	EventAttacher.attach(this.containerElement, "mouseover", this, "mouseOver");
-	EventAttacher.attach(this.containerElement, "mouseout", this, "mouseOut");
-	EventAttacher.attach(this.containerElement, "mousemove", this, "mouseMove");
+	this.indicatorContainerElement = document.getElementById(this.indicatorContainerId);
+	this.indicatorElement = document.getElementById(this.indicatorId);
+	this.indicatorLabelElement = document.getElementById(this.indicatorLabelId);
+	EventAttacher.attach(this.indicatorContainerElement, "mouseover", this, "mouseOver");
+	EventAttacher.attach(this.indicatorContainerElement, "mouseout", this, "mouseOut");
+	EventAttacher.attach(this.indicatorContainerElement, "mousemove", this, "mouseMove");
 }
 
-Timeline.prototype.mouseOver = function(event)
+EventLine.prototype.mouseOver = function(event)
 {
-	var x = event.clientX - ElementUtils.getOffsetLeft(this.containerElement) - this.graphOffsetLeft;
+	this.indicatorElement.style.display = "block";
+	this.indicatorLabelElement.style.display = "block";
 }
 
-Timeline.prototype.mouseOut = function(event)
+EventLine.prototype.mouseOut = function(event)
 {
-	this.containerElement.display = "none";
+	//this.indicatorElement.style.display = "none";
 }
 
-Timeline.prototype.mouseMove = function(event)
+EventLine.prototype.mouseMove = function(event)
 {
-	this.containerElement.display = "block";
+
+	var x = event.clientX - ElementUtils.getOffsetLeft(this.indicatorContainerElement);
+	
+	if (x < 0) x = 0;
+	if (x > this.graphWidth) x = this.graphWidth;
+	
+	this.indicatorElement.style.left = x + "px";
+	this.indicatorLabelElement.style.left = x + "px";
+	
+	var pos = Math.floor(x / this.barWidth);
+
+	var label = "";
+	for (var i = 0; i < this.graphs.length; i++)
+	{
+		if (i > 0) label += "<br>";
+		label += this.graphs[i].name + ":&nbsp;" + this.graphs[i].data[pos];
+	}
+	this.indicatorLabelElement.innerHTML = label;
+
 }
 

@@ -11,10 +11,12 @@
 <title>EventLine test</title>
 
 <script src="../../eventline.js" language="javascript" type="text/javascript"></script>
+<script src="../../utils.js" language="javascript" type="text/javascript"></script>
 
 <style type="text/css">
 
 body {
+	margin: 0px;
 	font-size: 8pt;
 	font-family: Verdana; }
 	
@@ -26,6 +28,16 @@ table.event-line-top-label {
 
 div.event-line-graph {
 	-background-color: #EEFFFF; }
+	
+div.event-line-indicator {
+	background-color: #333333; }
+	
+div.event-line-indicator-container {
+	-background-color: #EEEEEE;}
+
+div.event-line-indicator-label {
+	border: 1px solid Black;
+	padding: 5px; }
 
 </style>
 
@@ -41,6 +53,8 @@ div.event-line-graph {
 			verticalLabels="#{EventLineTestBean.verticalLabels}"
 			graphs="#{EventLineTestBean.graphs}"
 			events="#{EventLineTestBean.events}" />
+			
+		<div id="debug"></div>
 
 	</h:form>
 </f:view>

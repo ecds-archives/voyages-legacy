@@ -173,8 +173,10 @@ public class EventLineComponent extends UIComponentBase
 		String contextPath = context.getExternalContext().getRequestContextPath();
 //		UIForm form = JsfUtils.getForm(this, context);
 
-		// ids
+		// HTML ids
+		String indicatorContainerId = getClientId(context) + "_indicator_contaiter";
 		String indicatorId = getClientId(context) + "_indicator";
+		String indicatorLabelId = getClientId(context) + "_indicator_label";
 
 		// these data won't be saved in the component state
 		EventLineGraph[] graphs = getGraphs();
@@ -210,10 +212,13 @@ public class EventLineComponent extends UIComponentBase
 		StringBuffer eventsJS = new StringBuffer();
 		eventsJS.append("EventLineGlobals.registerEventLine(new EventLine(");
 		eventsJS.append("'").append(getClientId(context)).append("', ");
+		eventsJS.append("'").append(indicatorContainerId).append("', ");
 		eventsJS.append("'").append(indicatorId).append("', ");
+		eventsJS.append("'").append(indicatorLabelId).append("', ");
 		eventsJS.append(barWidth).append(", ");
-		eventsJS.append(LEFT_LABELS_WIDTH).append(", ");
-		eventsJS.append(TOP_LABELS_HEIGHT).append(", ");
+		eventsJS.append(graphWidth).append(", ");
+		eventsJS.append(LEFT_LABELS_WIDTH + LABELS_MARGIN).append(", ");
+		eventsJS.append(TOP_LABELS_HEIGHT + LABELS_MARGIN).append(", ");
 		
 		// JS events
 		eventsJS.append("[");
@@ -264,20 +269,6 @@ public class EventLineComponent extends UIComponentBase
 		writer.writeAttribute("style", mainContainerCssSyle, null);
 		writer.writeAttribute("class", "event-line-container", null);
 		
-		// style of the main div
-		StringBuffer indicatorCssSyle = new StringBuffer();
-		indicatorCssSyle.append("position: absolute; ");
-		indicatorCssSyle.append("display: none; ");
-		indicatorCssSyle.append("width: ").append(barWidth).append("px; ");
-		indicatorCssSyle.append("height: ").append(graphHeight).append("px;");
-
-		// div which indicates the position
-		writer.startElement("div", this);
-		writer.writeAttribute("id", indicatorId, null);
-		writer.writeAttribute("style", indicatorCssSyle, null);
-		writer.writeAttribute("class", "event-line-indicator", null);
-		writer.endElement("div");
-
 		// graphs
 		StringBuffer graphCssStyle = new StringBuffer();
 		for (int i = 0; i < graphs.length; i++)
@@ -337,6 +328,43 @@ public class EventLineComponent extends UIComponentBase
 			
 		}
 		
+		// style of the indicator container
+		StringBuffer indicatorContainerCssSyle = new StringBuffer();
+		indicatorContainerCssSyle.append("position: absolute; ");
+		indicatorContainerCssSyle.append("left: ").append(LEFT_LABELS_WIDTH + LABELS_MARGIN).append("px; ");
+		indicatorContainerCssSyle.append("top: 0px; ");
+		indicatorContainerCssSyle.append("width: ").append(graphWidth).append("px; ");
+		indicatorContainerCssSyle.append("height: ").append(totalHeight).append("px;");
+
+		// indicator container
+		writer.startElement("div", this);
+		writer.writeAttribute("id", indicatorContainerId, null);
+		writer.writeAttribute("style", indicatorContainerCssSyle, null);
+		writer.writeAttribute("class", "event-line-indicator-container", null);
+		
+		// style of the indicator
+		StringBuffer indicatorCssSyle = new StringBuffer();
+		indicatorCssSyle.append("position: absolute; ");
+		indicatorCssSyle.append("display: none; ");
+		indicatorCssSyle.append("width: ").append(barWidth).append("px; ");
+		indicatorCssSyle.append("height: ").append(totalHeight).append("px;");
+
+		// div line indicator
+		writer.startElement("div", this);
+		writer.writeAttribute("id", indicatorId, null);
+		writer.writeAttribute("style", indicatorCssSyle, null);
+		writer.writeAttribute("class", "event-line-indicator", null);
+		writer.endElement("div");
+
+		writer.startElement("div", this);
+		writer.writeAttribute("id", indicatorLabelId, null);
+		writer.writeAttribute("style", "display: none; position: absolute; top: " + totalHeight + "px", null);
+		writer.writeAttribute("class", "event-line-indicator-label", null);
+		writer.endElement("div");
+
+		// indicator container
+		writer.endElement("div");
+
 		// main div container
 		writer.endElement("div");
 		

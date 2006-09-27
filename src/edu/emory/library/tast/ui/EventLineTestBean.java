@@ -19,10 +19,10 @@ public class EventLineTestBean
 	{
 		return GRAPH_HEIGHT;
 	}
-
-	public EventLineGraph[] getGraphs()
+	
+	private EventLineGraph createRandomGraph(Color color, String name)
 	{
-		
+
 		int[] values = new int[VALUES];
 		values[0] = (int) (GRAPH_HEIGHT * Math.random());
 		for (int i = 1; i < values.length; i++)
@@ -33,15 +33,27 @@ public class EventLineTestBean
 			values[i] = val;
 		}
 		
-		EventLineGraph graph1 = new EventLineGraph();
-		graph1.setColor(new Color(0.6f, 0.8f, 1.0f, 1.0f));
-		graph1.setData(values);
+		EventLineGraph graph = new EventLineGraph();
+		graph.setColor(color);
+		graph.setData(values);
+		graph.setName("Imported");
+		
+		return graph;
+		
+	}
+
+	public EventLineGraph[] getGraphs()
+	{
+		
 		
 //		EventLineGraph graph2 = new EventLineGraph();
 //		graph2.setColor(new Color(0.0f, 1.0f, 0.0f, 0.5f));
 //		graph2.setData(new int[] {5, 10, 60, 30, 50, 0});
 
-		return new EventLineGraph[] {graph1};
+		return new EventLineGraph[] {
+				createRandomGraph(new Color(0.6f, 0.8f, 1.0f, 0.5f), "Exported"),
+				createRandomGraph(new Color(0.6f, 0.8f, 1.0f, 1.0f), "Imported")
+		};
 
 	}
 	
