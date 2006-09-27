@@ -1,10 +1,12 @@
 package edu.emory.library.tast.ui;
 
-public class EventLineDataSequence
+import java.awt.Color;
+
+public class EventLineGraph
 {
 	
 	private int[] data;
-	private String color;
+	private Color color;
 
 	public int[] getData()
 	{
@@ -23,12 +25,12 @@ public class EventLineDataSequence
 		else return data.length;
 	}
 
-	public String getColor()
+	public Color getColor()
 	{
 		return color;
 	}
 
-	public void setColor(String color)
+	public void setColor(Color color)
 	{
 		this.color = color;
 	}

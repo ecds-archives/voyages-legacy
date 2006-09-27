@@ -33,8 +33,8 @@ div.event-line-graph {
 	<h:form id="form">
 	
 		<s:eventLine
-			graphs="test02.png, test01.png"
-			items=""
+			graphs="#{EventLineTestBean.graphs}"
+			events="#{EventLineTestBean.events}"
 			width="500" xMin="0" xMax="500" xSubdiv="50"
 			height="200" yMin="0" yMax="200" ySubdiv="50" />
 

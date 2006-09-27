@@ -1,12 +1,12 @@
 package edu.emory.library.tast.ui;
 
-public class EventLineItem
+public class EventLineEvent
 {
 	
 	private int year;
 	private String text;
 	
-	public EventLineItem(int year, String text)
+	public EventLineEvent(int year, String text)
 	{
 		this.year = year;
 		this.text = text;

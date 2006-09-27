@@ -532,7 +532,7 @@
 			<name>graphs</name>
 		</attribute>
 		<attribute>
-			<name>items</name>
+			<name>events</name>
 		</attribute>
 	</tag>
 

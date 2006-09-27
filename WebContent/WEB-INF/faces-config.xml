@@ -290,6 +290,14 @@
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>
+		EventLineTestBean</managed-bean-name>
+		<managed-bean-class>
+		edu.emory.library.tast.ui.EventLineTestBean</managed-bean-class>
+		<managed-bean-scope>
+		session</managed-bean-scope>
+	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>StatisticBean</managed-bean-name>

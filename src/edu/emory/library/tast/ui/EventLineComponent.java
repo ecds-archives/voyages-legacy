@@ -1,8 +1,9 @@
 package edu.emory.library.tast.ui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import javax.faces.component.UIComponentBase;
@@ -10,7 +11,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.imageio.ImageIO;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.UidGenerator;
 
 public class EventLineComponent extends UIComponentBase
 {
@@ -45,11 +48,11 @@ public class EventLineComponent extends UIComponentBase
 	private boolean ySubdivSet = false;
 	private int ySubdiv;
 
-	private boolean dataSequencesSet = false;
-	private EventLineDataSequence[] dataSequences;
+	private boolean graphsSet = false;
+	private EventLineGraph[] graphs;
 	
-	private boolean itemsSet = false;
-	private EventLineItem[] items;
+	private boolean eventsSet = false;
+	private EventLineEvent[] events;
 
 	public String getFamily()
 	{
@@ -85,20 +88,36 @@ public class EventLineComponent extends UIComponentBase
 		ySubdiv = ((Integer) state[8]).intValue();
 	}
 	
-	private void renderGraph(EventLineDataSequence data) throws IOException
+	private String renderGraph(EventLineGraph graph) throws IOException
 	{
 		
-		int[] x = new int[data.getCount()];
-		for (int i = 0; i < x.length; i++) x[i] = i;
+		int n = graph.getCount();
+		int[] x = new int[n];
+		int[] y = new int[n];
+		int[] graphValues = graph.getData();
+		
+		for (int i = 0; i < n; i++)
+		{
+			x[i] = (int) (width * (double) i / (double) n);
+			y[i] = height - graphValues[i];
+		}
 		
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D gr = image.createGraphics();
-		gr.drawPolyline(x, data.getData(), 0);
+		gr.setBackground(new Color(0,0,0,0));
+		gr.clearRect(0, 0, width, height);
+		gr.setColor(graph.getColor());
+		gr.drawPolyline(x, y, n);
 		gr.dispose();
-
-		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", imageStream);
-		byte[] imageBytes = imageStream.toByteArray();
+		
+		String fileName = new UidGenerator().generate() + ".png";
+		File imageFile = new File(AppConfig.getConfiguration().getString(AppConfig.EVENTLINE_IMAGE_DIR), fileName);
+		
+		// ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
+		ImageIO.write(image, "png", imageFile);
+		// byte[] imageBytes = imageStream.toByteArray();
+		
+		return fileName;
 		
 	}
 	
@@ -139,6 +158,7 @@ public class EventLineComponent extends UIComponentBase
 		
 		// general stuff
 		ResponseWriter writer = context.getResponseWriter();
+		String contextPath = context.getExternalContext().getRequestContextPath();
 //		UIForm form = JsfUtils.getForm(this, context);
 		
 		// pull data from beans
@@ -147,11 +167,24 @@ public class EventLineComponent extends UIComponentBase
 		xMin = getXMin();
 		xMax = getXMax();
 		xSubdiv = getXSubdiv();
-		dataSequences = getDataSequences();
+		
+		// these data won't be saved in the component state
+		EventLineGraph[] graphs = getGraphs();
+		EventLineEvent[] events = getEvents();
+		if (graphs == null) graphs = new EventLineGraph[0];
+		if (events == null) events = new EventLineEvent[0];
 		
 		// total size
 		int totalWidth = LEFT_LABELS_WIDTH + LABELS_MARGIN + width;
 		int totalHeight = TOP_LABELS_HEIGHT + LABELS_MARGIN + height;
+		
+		// render the graphs and save them to disk
+		String[] graphFileNames = new String[graphs.length];
+		for (int i = 0; i < graphs.length; i++)
+		{
+			EventLineGraph data = graphs[i];
+			graphFileNames[i] = renderGraph(data);
+		}
 		
 		// style of the main div
 		StringBuffer mainContainerCssSyle = new StringBuffer();
@@ -166,8 +199,11 @@ public class EventLineComponent extends UIComponentBase
 		
 		// graphs
 		StringBuffer graphCssStyle = new StringBuffer();
-		for (int i = 0; i < dataSequences.length; i++)
+		for (int i = 0; i < graphs.length; i++)
 		{
+			
+			// image location
+			String imageUrl = contextPath + "/eventline/" + graphFileNames[i];
 			
 			// position by CSS and put the image to it
 			graphCssStyle.setLength(0);
@@ -176,7 +212,7 @@ public class EventLineComponent extends UIComponentBase
 			graphCssStyle.append("top: ").append(TOP_LABELS_HEIGHT + LABELS_MARGIN).append("px; ");
 			graphCssStyle.append("width: ").append(width).append("px; ");
 			graphCssStyle.append("height: ").append(height).append("px; ");
-			graphCssStyle.append("background-image: url(").append(dataSequences[i]).append("); ");
+			graphCssStyle.append("background-image: url(").append(imageUrl).append("); ");
 			
 			// HTML
 			writer.startElement("div", this);
@@ -280,16 +316,16 @@ public class EventLineComponent extends UIComponentBase
 		this.yMax = yMax;
 	}
 	
-	public EventLineDataSequence[] getDataSequences()
+	public EventLineGraph[] getGraphs()
 	{
-		return (EventLineDataSequence[]) JsfUtils.getCompPropObject(this, getFacesContext(),
-				"dataSequences", dataSequencesSet, dataSequences);
+		return (EventLineGraph[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"graphs", graphsSet, graphs);
 	}
 
-	public void setDataSequences(EventLineDataSequence[] dataSequences)
+	public void setGraphs(EventLineGraph[] dataSequences)
 	{
-		dataSequencesSet = true;
-		this.dataSequences = dataSequences;
+		graphsSet = true;
+		this.graphs = dataSequences;
 	}
 
 	public int getHeight()
@@ -340,16 +376,16 @@ public class EventLineComponent extends UIComponentBase
 		this.width = width;
 	}
 
-	public EventLineItem[] getItems()
+	public EventLineEvent[] getEvents()
 	{
-		return (EventLineItem[]) JsfUtils.getCompPropObject(this, getFacesContext(),
-				"items", itemsSet, items);
+		return (EventLineEvent[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"events", eventsSet, events);
 	}
 
-	public void setItems(EventLineItem[] items)
+	public void setEvents(EventLineEvent[] items)
 	{
-		itemsSet = true;
-		this.items = items;
+		eventsSet = true;
+		this.events = items;
 	}
 
 }

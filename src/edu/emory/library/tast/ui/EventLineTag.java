@@ -17,8 +17,8 @@ public class EventLineTag extends UIComponentTag
 	private String yMin;
 	private String yMax;
 	private String ySubdiv;
-	private String dataSequences;
-	private String items;
+	private String graphs;
+	private String events;
 
 	public String getComponentType()
 	{
@@ -164,16 +164,16 @@ public class EventLineTag extends UIComponentTag
 			}
 		}
 
-		if (dataSequences != null && isValueReference(dataSequences))
+		if (graphs != null && isValueReference(graphs))
 		{
-			ValueBinding vb = app.createValueBinding(dataSequences);
-			eventLine.setValueBinding("dataSequences", vb);
+			ValueBinding vb = app.createValueBinding(graphs);
+			eventLine.setValueBinding("graphs", vb);
 		}
 
-		if (items != null && isValueReference(items))
+		if (events != null && isValueReference(events))
 		{
-			ValueBinding vb = app.createValueBinding(items);
-			eventLine.setValueBinding("items", vb);
+			ValueBinding vb = app.createValueBinding(events);
+			eventLine.setValueBinding("events", vb);
 		}
 
 	}
@@ -198,14 +198,14 @@ public class EventLineTag extends UIComponentTag
 		this.xMax = extentRight;
 	}
 
-	public String getDataSequences()
+	public String getGraphs()
 	{
-		return dataSequences;
+		return graphs;
 	}
 
-	public void setDataSequences(String graphs)
+	public void setGraphs(String graphs)
 	{
-		this.dataSequences = graphs;
+		this.graphs = graphs;
 	}
 
 	public String getHeight()
@@ -238,14 +238,14 @@ public class EventLineTag extends UIComponentTag
 		this.width = width;
 	}
 
-	public String getItems()
+	public String getEvents()
 	{
-		return items;
+		return events;
 	}
 
-	public void setItems(String items)
+	public void setEvents(String items)
 	{
-		this.items = items;
+		this.events = items;
 	}
 
 	public String getYMax()
