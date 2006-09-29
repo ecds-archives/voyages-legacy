@@ -149,8 +149,23 @@ public class Dictionary {
 	private static Dictionary[] loadDictionaryInternal(String dictionaryName, String p_attrName, Object p_dictVal)
 	{
 		
+		int dictType = 0;
+		try {
+			Class clazz = Class.forName("edu.emory.library.tast.dm.dictionaries." + dictionaryName);
+			dictType = ((Integer)clazz.getField("TYPE").get(null)).intValue();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} 
+
 		Conditions conditions = new Conditions();
 		conditions.addCondition(Dictionary.getAttribute(p_attrName), p_dictVal, Conditions.OP_EQUALS);
+		conditions.addCondition(Dictionary.getAttribute("type"), new Integer(dictType), Conditions.OP_EQUALS);
 		
 		QueryValue qv = new QueryValue(dictionaryName, conditions);
 		qv.setOrderBy(new Attribute[] {Dictionary.getAttribute("name")});

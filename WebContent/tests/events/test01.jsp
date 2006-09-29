@@ -30,14 +30,26 @@ div.event-line-graph {
 	-background-color: #EEFFFF; }
 	
 div.event-line-indicator {
+	-moz-opacity: 0.1;
 	background-color: #333333; }
 	
 div.event-line-indicator-container {
 	-background-color: #EEEEEE;}
 
 div.event-line-indicator-label {
+	background-color: White;
 	border: 1px solid Black;
 	padding: 5px; }
+	
+div.event-line-mark {
+	cursor: pointer;
+	background-image: url(../../event-line-mark.png);
+	background-repeat: no-repeat; }
+
+div.event-line-mark-pressed {
+	cursor: pointer;
+	background-image: url(../../event-line-mark-pressed.png);
+	background-repeat: no-repeat; }
 
 </style>
 
@@ -48,7 +60,7 @@ div.event-line-indicator-label {
 	
 		<s:eventLine
 			graphHeight="#{EventLineTestBean.graphHeight}"
-			barWidth="1"
+			barWidth="#{EventLineTestBean.barWidth}"
 			horizontalLabels="#{EventLineTestBean.horizontalLabels}"
 			verticalLabels="#{EventLineTestBean.verticalLabels}"
 			graphs="#{EventLineTestBean.graphs}"

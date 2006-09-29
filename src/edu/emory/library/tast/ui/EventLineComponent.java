@@ -1,7 +1,9 @@
 package edu.emory.library.tast.ui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +25,8 @@ public class EventLineComponent extends UIComponentBase
 	private static final int LEFT_LABELS_WIDTH = 60;
 	private static final int LEFT_LABELS_HEIGHT = 30;
 	private static final int LABELS_MARGIN = 10;
+	private static final int MARK_WIDTH = 11;
+	private static final int MARK_HEIGHT = 11;
 	
 	private boolean graphHeightSet = false;
 	private int graphHeight;
@@ -98,9 +102,9 @@ public class EventLineComponent extends UIComponentBase
 	}
 	*/
 	
-	private String renderGraph(EventLineGraph graph, int width, int height, int barWidth) throws IOException
+	/*
+	private String renderGraph(EventLineGraph graph, int width, int height, int barWidth, int barOffset, int innerBarWidth) throws IOException
 	{
-		
 		
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D gr = image.createGraphics();
@@ -112,12 +116,12 @@ public class EventLineComponent extends UIComponentBase
 
 		int n = graph.getCount();
 		int[] graphValues = graph.getData();
-
+		
 		for (int i = 0; i < n; i++)
 			gr.fillRect(
-					i*barWidth,
+					i*barWidth + barOffset,
 					height - graphValues[i],
-					barWidth,
+					innerBarWidth,
 					graphValues[i]);
 		
 		gr.dispose();
@@ -132,202 +136,118 @@ public class EventLineComponent extends UIComponentBase
 		return fileName;
 		
 	}
-
-	private void encodeLabel(ResponseWriter writer, String label, String cssClass, int left, int top, int width, int height, String hAlign, String vAlign) throws IOException
-	{
-		
-		StringBuffer cssStyle = new StringBuffer(); 
-		cssStyle.append("position: absolute; ");
-		cssStyle.append("left: ").append(left).append("px; ");
-		cssStyle.append("top: ").append(top).append("px; ");
-		cssStyle.append("width: ").append(width).append("px; ");
-		cssStyle.append("height: ").append(height).append("px;");
-
-		writer.startElement("table", this);
-		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("cellspacing", "0", null);
-		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("style", cssStyle, null);
-		writer.writeAttribute("class", cssClass, null);
-		writer.startElement("tr", this);
-
-		cssStyle.setLength(0);
-		cssStyle.append("text-align: ").append(hAlign).append("; ");
-		cssStyle.append("vertical-align: ").append(vAlign).append(";");
-		
-		writer.startElement("td", this);
-		writer.writeAttribute("style", cssStyle, null);
-		writer.write(label);
-		writer.endElement("td");
-
-		writer.endElement("tr");
-		writer.endElement("table");
-
-	}
+	*/
 	
-	public void encodeBegin(FacesContext context) throws IOException
+	
+	private String createImage(EventLineGraph[] graphs, EventLineEvent[] events, EventLineHorizontalLabels horizontalLabels, int width, int height, int barWidth, int barOffset, int innerBarWidth) throws IOException
 	{
-		
-		// general stuff
-		ResponseWriter writer = context.getResponseWriter();
-		String contextPath = context.getExternalContext().getRequestContextPath();
-//		UIForm form = JsfUtils.getForm(this, context);
 
-		// HTML ids
-		String indicatorContainerId = getClientId(context) + "_indicator_contaiter";
-		String indicatorId = getClientId(context) + "_indicator";
-		String indicatorLabelId = getClientId(context) + "_indicator_label";
-
-		// these data won't be saved in the component state
-		EventLineGraph[] graphs = getGraphs();
-		EventLineEvent[] events = getEvents();
-		EventLineHorizontalLabels horizontalLabels = getHorizontalLabels();
-		EventLineVerticalLabels verticalLabels = getVerticalLabels();
-		graphHeight = getGraphHeight();
-		if (graphs == null) graphs = new EventLineGraph[0];
-		if (events == null) events = new EventLineEvent[0];
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D gr = image.createGraphics();
 		
-		// determine needed width
-		int barsCount = 0;
-		for (int i = 0; i < graphs.length; i++)
-		{
-			EventLineGraph data = graphs[i];
-			if (data.getCount() > barsCount) barsCount = data.getCount(); 
-		}
-
-		// total size
-		int graphWidth = barWidth * barsCount;
-		int totalWidth = LEFT_LABELS_WIDTH + LABELS_MARGIN + graphWidth;
-		int totalHeight = TOP_LABELS_HEIGHT + LABELS_MARGIN + graphHeight;
+		gr.setBackground(new Color(0,0,0,0));
+		gr.clearRect(0, 0, width, height);
 		
-		// render the graphs and save them to disk
-		String[] graphFileNames = new String[graphs.length];
 		for (int i = 0; i < graphs.length; i++)
 		{
 			EventLineGraph graph = graphs[i];
-			graphFileNames[i] = renderGraph(graph, graphWidth, graphHeight, barWidth);
+			
+			gr.setColor(graph.getColor());
+
+			int n = graph.getCount();
+			EventLineDataPoint[] data = graph.getData();
+			
+			for (int j = 0; j < n; j++)
+			{
+				int value = data[j].getValue();
+				gr.fillRect(
+						j*barWidth + barOffset,
+						height - value,
+						innerBarWidth,
+						value);
+			}
+		
 		}
 		
-		// JS registration
-		StringBuffer eventsJS = new StringBuffer();
-		eventsJS.append("EventLineGlobals.registerEventLine(new EventLine(");
-		eventsJS.append("'").append(getClientId(context)).append("', ");
-		eventsJS.append("'").append(indicatorContainerId).append("', ");
-		eventsJS.append("'").append(indicatorId).append("', ");
-		eventsJS.append("'").append(indicatorLabelId).append("', ");
-		eventsJS.append(barWidth).append(", ");
-		eventsJS.append(graphWidth).append(", ");
-		eventsJS.append(LEFT_LABELS_WIDTH + LABELS_MARGIN).append(", ");
-		eventsJS.append(TOP_LABELS_HEIGHT + LABELS_MARGIN).append(", ");
-		
-		// JS events
-		eventsJS.append("[");
+		gr.setColor(Color.BLACK);
 		for (int i = 0; i < events.length; i++)
 		{
 			EventLineEvent event = events[i];
-			if (i > 0) eventsJS.append(", ");
-			eventsJS.append("new EventLineEvent(");
-			eventsJS.append(event.getPosition()).append(", ");
-			eventsJS.append("'").append(JsfUtils.escapeStringForJS(event.getTitle())).append("', ");
-			eventsJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
-			eventsJS.append(")");
-		}
-		eventsJS.append("], ");
-		
-		// JS graphs
-		eventsJS.append("[");
-		for (int i = 0; i < graphs.length; i++)
-		{
-			EventLineGraph graph = graphs[i];
-			if (i > 0) eventsJS.append(", ");
-			eventsJS.append("new EventLineGraph(");
-			eventsJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
-			eventsJS.append("[");
-			int data[] = graph.getData();
-			for (int j = 0; j < data.length; j++)
-			{
-				if (j > 0) eventsJS.append(", ");
-				eventsJS.append(data[j]);
-			}
-			eventsJS.append("]");
-			eventsJS.append(")");
-		}
-		eventsJS.append("]));");
-
-		// render JS
-		JsfUtils.encodeJavaScriptBlock(this, writer, eventsJS);
-		
-		// style of the main div
-		StringBuffer mainContainerCssSyle = new StringBuffer();
-		mainContainerCssSyle.append("position: relative; ");
-		mainContainerCssSyle.append("width: ").append(totalWidth).append("px; ");
-		mainContainerCssSyle.append("height: ").append(totalHeight).append("px; ");
-
-		// main div container
-		writer.startElement("div", this);
-		writer.writeAttribute("id", getClientId(context), null);
-		writer.writeAttribute("style", mainContainerCssSyle, null);
-		writer.writeAttribute("class", "event-line-container", null);
-		
-		// graphs
-		StringBuffer graphCssStyle = new StringBuffer();
-		for (int i = 0; i < graphs.length; i++)
-		{
-			
-			// image location
-			String imageUrl = contextPath + "/eventline/" + graphFileNames[i];
-			
-			// position by CSS and put the image to it
-			graphCssStyle.setLength(0);
-			graphCssStyle.append("position: absolute; ");
-			graphCssStyle.append("left: ").append(LEFT_LABELS_WIDTH + LABELS_MARGIN).append("px; ");
-			graphCssStyle.append("top: ").append(TOP_LABELS_HEIGHT + LABELS_MARGIN).append("px; ");
-			graphCssStyle.append("width: ").append(graphWidth).append("px; ");
-			graphCssStyle.append("height: ").append(graphHeight).append("px; ");
-			graphCssStyle.append("background-image: url(").append(imageUrl).append("); ");
-			
-			// HTML
-			writer.startElement("div", this);
-			writer.writeAttribute("style", graphCssStyle, null);
-			writer.writeAttribute("class", "event-line-graph", null);
-			writer.endElement("div");
-
+			int x = event.getPosition() * barWidth + barOffset + innerBarWidth / 2;
+			gr.drawLine(x, 0, x, height);
 		}
 		
-		// left labels
+		gr.setStroke(new BasicStroke(
+				1.0f,
+				BasicStroke.CAP_BUTT,
+				BasicStroke.JOIN_MITER,
+				10.0f,
+				new float[]{2.0f},
+				0.0f));
+
 		for (int i = 0; i < horizontalLabels.getCount(); i++)
 		{
-			
-			// position
-			int left =
-				(horizontalLabels.getStart() + i * horizontalLabels.getSpace()) * barWidth +
-				barWidth / 2 +
-				LEFT_LABELS_WIDTH -
-				TOP_LABELS_WIDTH / 2 +
-				LABELS_MARGIN;
-			
-			// render
-			encodeLabel(writer, horizontalLabels.getLabel(i), "event-line-top-label",
-					left, 0, TOP_LABELS_WIDTH, TOP_LABELS_HEIGHT, "center", "bottom");
-
+			int x = (horizontalLabels.getStart() + i * horizontalLabels.getSpace()) * barWidth + barOffset + innerBarWidth / 2;
+			gr.drawLine(x, 0, x, height);
 		}
+
+		gr.setStroke(new BasicStroke());
+		gr.drawLine(0, 0, 0, height);
+		gr.drawLine(0, height-1, width, height-1);
+
+		String fileName = new UidGenerator().generate() + ".png";
+		File imageFile = new File(AppConfig.getConfiguration().getString(AppConfig.EVENTLINE_IMAGE_DIR), fileName);
 		
-		// top labels
-		for (int i = 0; i < verticalLabels.getCount(); i++)
+		ImageIO.write(image, "png", imageFile);
+
+		return fileName;
+		
+	}
+
+	private String getEventMarkElementId(FacesContext context, int index)
+	{
+		return getClientId(context) + "_event_mark_" + index;
+	}
+
+	private void encodeEventMarks(FacesContext context, ResponseWriter writer, String mainId, EventLineEvent[] events, int barOffset, int innerBarWidth) throws IOException
+	{
+		// marks for events
+		StringBuffer markCssStyle = new StringBuffer();
+		for (int i = 0; i < events.length; i++)
 		{
-			
-			// position
-			int top =
-				totalHeight -
-				(verticalLabels.getStart() + i * verticalLabels.getSpace()) -  
-				LEFT_LABELS_HEIGHT / 2; 
+			EventLineEvent event = events[i];
 
-			// render
-			encodeLabel(writer, verticalLabels.getLabel(i), "event-line-left-label",
-					0, top, LEFT_LABELS_WIDTH, LEFT_LABELS_HEIGHT, "right", "center");
+			// position
+			int x = event.getPosition() * barWidth + LEFT_LABELS_WIDTH + LABELS_MARGIN +
+				barOffset + innerBarWidth / 2 - (MARK_WIDTH - 1) / 2;
+
+			// CSS
+			markCssStyle.setLength(0);
+			markCssStyle.append("position: absolute; ");
+			markCssStyle.append("left: ").append(x).append("px; ");
+			markCssStyle.append("top: ").append(TOP_LABELS_HEIGHT + LABELS_MARGIN + graphHeight).append("px; ");
+			markCssStyle.append("width: ").append(MARK_WIDTH).append("px; ");
+			markCssStyle.append("height: ").append(MARK_HEIGHT).append("px; ");
+			
+			// onclick
+			String onclick = 
+				"EventLineGlobals.toggleEvent(" +
+				"'" + mainId + "'," +
+				+ i + ")";
+			
+			// image 
+			writer.startElement("div", this);
+			writer.writeAttribute("id", getEventMarkElementId(context, i), null);
+			writer.writeAttribute("style", markCssStyle, null);
+			writer.writeAttribute("class", "event-line-mark", null);
+			writer.writeAttribute("onclick", onclick, null);
+			writer.endElement("div");
 			
 		}
-		
+	}
+	
+	private void encodeIndicator(ResponseWriter writer, String indicatorContainerId, String indicatorId, String indicatorLabelId, int graphWidth, int totalHeight) throws IOException
+	{
 		// style of the indicator container
 		StringBuffer indicatorContainerCssSyle = new StringBuffer();
 		indicatorContainerCssSyle.append("position: absolute; ");
@@ -364,12 +284,260 @@ public class EventLineComponent extends UIComponentBase
 
 		// indicator container
 		writer.endElement("div");
+	}
+
+	private void encodeLabel(ResponseWriter writer, String label, String cssClass, int left, int top, int width, int height, String hAlign, String vAlign) throws IOException
+	{
+		
+		StringBuffer cssStyle = new StringBuffer(); 
+		cssStyle.append("position: absolute; ");
+		cssStyle.append("left: ").append(left).append("px; ");
+		cssStyle.append("top: ").append(top).append("px; ");
+		cssStyle.append("width: ").append(width).append("px; ");
+		cssStyle.append("height: ").append(height).append("px;");
+
+		writer.startElement("table", this);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("style", cssStyle, null);
+		writer.writeAttribute("class", cssClass, null);
+		writer.startElement("tr", this);
+
+		cssStyle.setLength(0);
+		cssStyle.append("text-align: ").append(hAlign).append("; ");
+		cssStyle.append("vertical-align: ").append(vAlign).append(";");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("style", cssStyle, null);
+		writer.write(label);
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.endElement("table");
+
+	}
+	
+	private void encodeImage(ResponseWriter writer, int graphWidth, String imageUrl) throws IOException
+	{
+		
+		StringBuffer imageCssStyle = new StringBuffer();
+		imageCssStyle.append("position: absolute; ");
+		imageCssStyle.append("left: ").append(LEFT_LABELS_WIDTH + LABELS_MARGIN).append("px; ");
+		imageCssStyle.append("top: ").append(TOP_LABELS_HEIGHT + LABELS_MARGIN).append("px; ");
+		imageCssStyle.append("width: ").append(graphWidth).append("px; ");
+		imageCssStyle.append("height: ").append(graphHeight).append("px; ");
+		imageCssStyle.append("background-image: url(").append(imageUrl).append("); ");
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("style", imageCssStyle, null);
+		writer.writeAttribute("class", "event-line-image", null);
+		writer.endElement("div");
+
+	}
+	
+	private void encodeHorozontalLabels(ResponseWriter writer, EventLineVerticalLabels verticalLabels, int totalHeight) throws IOException
+	{
+		for (int i = 0; i < verticalLabels.getCount(); i++)
+		{
+			
+			int top =
+				totalHeight -
+				(verticalLabels.getStart() + i * verticalLabels.getSpace()) -  
+				LEFT_LABELS_HEIGHT / 2; 
+
+			encodeLabel(writer, verticalLabels.getLabel(i), "event-line-left-label",
+					0, top, LEFT_LABELS_WIDTH, LEFT_LABELS_HEIGHT, "right", "center");
+			
+		}
+	}
+
+	private void encodeVerticalLabels(ResponseWriter writer, EventLineHorizontalLabels horizontalLabels) throws IOException
+	{
+		for (int i = 0; i < horizontalLabels.getCount(); i++)
+		{
+			
+			int left =
+				(horizontalLabels.getStart() + i * horizontalLabels.getSpace()) * barWidth +
+				barWidth / 2 +
+				LEFT_LABELS_WIDTH -
+				TOP_LABELS_WIDTH / 2 +
+				LABELS_MARGIN;
+			
+			encodeLabel(writer, horizontalLabels.getLabel(i), "event-line-top-label",
+					left, 0, TOP_LABELS_WIDTH, TOP_LABELS_HEIGHT, "center", "bottom");
+
+		}
+	}
+	
+	private String getEventTextElementId(FacesContext context, int index)
+	{
+		return getClientId(context) + "_event_text_" + index;
+	}
+	
+	private void encodeEvents(FacesContext context, ResponseWriter writer, int graphWidth, EventLineEvent[] events) throws IOException
+	{
+		
+		StringBuffer imageCssStyle = new StringBuffer();
+		imageCssStyle.append("display: none; ");
+		imageCssStyle.append("margin-left: ").append(LEFT_LABELS_WIDTH + LABELS_MARGIN).append("px; ");
+		imageCssStyle.append("width: ").append(graphWidth).append("px;");
+		String imageCssStyleStr = imageCssStyle.toString();
+		
+		for (int i = 0; i < events.length; i++)
+		{
+			EventLineEvent event = events[i];
+			writer.startElement("div", this);
+			writer.writeAttribute("id", getEventTextElementId(context, i), null);
+			writer.writeAttribute("style", imageCssStyleStr, null);
+			writer.write(event.getText());
+			writer.endElement("div");
+		}
+
+	}
+
+	public void encodeBegin(FacesContext context) throws IOException
+	{
+		
+		// general stuff
+		ResponseWriter writer = context.getResponseWriter();
+		String contextPath = context.getExternalContext().getRequestContextPath();
+//		UIForm form = JsfUtils.getForm(this, context);
+
+		// HTML ids
+		String mainId = getClientId(context);
+		String indicatorContainerId = getClientId(context) + "_indicator_contaiter";
+		String indicatorId = getClientId(context) + "_indicator";
+		String indicatorLabelId = getClientId(context) + "_indicator_label";
+
+		// these data won't be saved in the component state
+		barWidth = getBarWidth();
+		graphHeight = getGraphHeight();
+		EventLineGraph[] graphs = getGraphs();
+		EventLineEvent[] events = getEvents();
+		EventLineHorizontalLabels horizontalLabels = getHorizontalLabels();
+		EventLineVerticalLabels verticalLabels = getVerticalLabels();
+		if (graphs == null) graphs = new EventLineGraph[0];
+		if (events == null) events = new EventLineEvent[0];
+		
+		// determine needed width
+		int barsCount = 0;
+		for (int i = 0; i < graphs.length; i++)
+		{
+			EventLineGraph data = graphs[i];
+			if (data.getCount() > barsCount) barsCount = data.getCount(); 
+		}
+
+		// total size
+		int graphWidth = barWidth * barsCount;
+		int totalWidth = LEFT_LABELS_WIDTH + LABELS_MARGIN + graphWidth;
+		int totalHeight = TOP_LABELS_HEIGHT + LABELS_MARGIN + graphHeight;
+		
+		// space between bars
+		int barOffset;
+		int innerBarWidth;
+		if (barWidth == 1)
+		{
+			barOffset = 0;
+			innerBarWidth = barWidth;
+		}
+		else
+		{
+			barOffset = 0;
+			innerBarWidth = barWidth - 1;
+		}
+		
+		// render the graphs and save them to disk
+		String imageName = createImage(graphs, events, horizontalLabels, graphWidth, graphHeight, barWidth, barOffset, innerBarWidth);
+		
+		// JS registration
+		StringBuffer eventsJS = new StringBuffer();
+		eventsJS.append("EventLineGlobals.registerEventLine(new EventLine(");
+		eventsJS.append("'").append(mainId).append("', ");
+		eventsJS.append("'").append(indicatorContainerId).append("', ");
+		eventsJS.append("'").append(indicatorId).append("', ");
+		eventsJS.append("'").append(indicatorLabelId).append("', ");
+		eventsJS.append(barWidth).append(", ");
+		eventsJS.append(graphWidth).append(", ");
+		eventsJS.append(graphHeight).append(", ");
+		eventsJS.append(LEFT_LABELS_WIDTH + LABELS_MARGIN).append(", ");
+		eventsJS.append(TOP_LABELS_HEIGHT + LABELS_MARGIN).append(", ");
+		
+		// JS events
+		eventsJS.append("[");
+		for (int i = 0; i < events.length; i++)
+		{
+			EventLineEvent event = events[i];
+			if (i > 0) eventsJS.append(", ");
+			eventsJS.append("new EventLineEvent(");
+			eventsJS.append(event.getPosition()).append(", ");
+			eventsJS.append("'").append(getEventMarkElementId(context, i)).append("', ");
+			eventsJS.append("'").append(getEventTextElementId(context, i)).append("'");
+			eventsJS.append(")");
+		}
+		eventsJS.append("], ");
+		
+		// JS graphs
+		eventsJS.append("[");
+		for (int i = 0; i < graphs.length; i++)
+		{
+			EventLineGraph graph = graphs[i];
+			if (i > 0) eventsJS.append(", ");
+			eventsJS.append("new EventLineGraph(");
+			eventsJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
+			eventsJS.append("[");
+			EventLineDataPoint data[] = graph.getData();
+			for (int j = 0; j < data.length; j++)
+			{
+				if (j > 0) eventsJS.append(", ");
+				eventsJS.append("new EventLineDataPoint(");
+				eventsJS.append(data[j].getValue()).append(", ");
+				eventsJS.append("'").append(JsfUtils.escapeStringForJS(data[j].getLabel())).append("'");
+				eventsJS.append(")");
+			}
+			eventsJS.append("]");
+			eventsJS.append(")");
+		}
+		eventsJS.append("]));");
+
+		// render JS
+		JsfUtils.encodeJavaScriptBlock(this, writer, eventsJS);
+		
+		// style of the main div
+		StringBuffer mainContainerCssSyle = new StringBuffer();
+		mainContainerCssSyle.append("position: relative; ");
+		mainContainerCssSyle.append("width: ").append(totalWidth).append("px; ");
+		mainContainerCssSyle.append("height: ").append(totalHeight + MARK_HEIGHT).append("px; ");
+
+		// main div container
+		writer.startElement("div", this);
+		writer.writeAttribute("id", getClientId(context), null);
+		writer.writeAttribute("style", mainContainerCssSyle, null);
+		writer.writeAttribute("class", "event-line-container", null);
+		
+		// image
+		encodeImage(writer, graphWidth, contextPath + "/eventline/" + imageName);
+		
+		// left labels
+		encodeVerticalLabels(writer, horizontalLabels);
+		
+		// top labels
+		encodeHorozontalLabels(writer, verticalLabels, totalHeight);
+
+		// event marks
+		encodeEventMarks(context, writer, mainId, events, barOffset, innerBarWidth);
+
+		// indicator
+		encodeIndicator(writer, indicatorContainerId, indicatorId, indicatorLabelId, graphWidth, totalHeight);
 
 		// main div container
 		writer.endElement("div");
 		
+		// text of events
+		encodeEvents(context, writer, graphWidth, events);
+
 	}
-	
+
 	public void encodeChildren(FacesContext context) throws IOException
 	{
 	}

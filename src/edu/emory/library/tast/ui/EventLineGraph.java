@@ -5,21 +5,21 @@ import java.awt.Color;
 public class EventLineGraph
 {
 	
-	private int[] data;
+	private EventLineDataPoint[] data;
 	private Color color;
 	private String name;
 
-	public int[] getData()
+	public EventLineDataPoint[] getData()
 	{
-		if (data == null) data = new int[0];
+		if (data == null) data = new EventLineDataPoint[0];
 		return data;
 	}
 
-	public void setData(int[] data)
+	public void setData(EventLineDataPoint[] data)
 	{
 		this.data = data;
 	}
-	
+
 	public int getCount()
 	{
 		if (data == null) return 0;

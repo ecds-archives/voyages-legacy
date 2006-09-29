@@ -4,12 +4,11 @@ public class EventLineEvent
 {
 	
 	private int position;
-	private String title;
 	private String text;
 	
-	public EventLineEvent(int year, String title, String text)
+	public EventLineEvent(int position, String text)
 	{
-		this.position = year;
+		this.position = position;
 		this.text = text;
 	}
 
@@ -31,16 +30,6 @@ public class EventLineEvent
 	public void setPosition(int year)
 	{
 		this.position = year;
-	}
-
-	public String getTitle()
-	{
-		return title;
-	}
-
-	public void setTitle(String title)
-	{
-		this.title = title;
 	}
 
 }
