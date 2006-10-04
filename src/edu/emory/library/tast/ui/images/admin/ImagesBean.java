@@ -45,6 +45,33 @@ public class ImagesBean
 	private static final String IMAGES_PORTS_LOOKUP = "images-ports-lookup";
 	private static final String IMAGES_PEOPLE_LOOKUP = "images-people-lookup";
 	
+	private static final String[] AUTH_STATUS_SHORT_LABELS = new String[] {
+		"-",
+		"No auth. needed",
+		"Gift",
+		"Personal col.",
+		"Emory owned",
+		"Applied for",
+		"Granted",
+		"Denided"};
+	
+	private static final String[] AUTH_STATUS_LONG_LABELS = new String[] {
+		"-",
+		"No authorization needed",
+		"Gift",
+		"Personal collection",
+		"Emory owned",
+		"Applied for authorization",
+		"Authorization granted",
+		"Authorization denided"};
+
+	private static final String[] IMAGE_STATUS_LABELS = new String[] {
+		"-",
+		"Located",
+		"Digitalized",
+		"Processing",
+		"Ready"};
+	
 	private Map allowedTypes = new HashMap();
 
 	private String listStyle = "table";
@@ -52,7 +79,6 @@ public class ImagesBean
 	private String thumbnailSize = "48x48";
 	
 	private String searchFor = null;
-	private int statusFilter = 0;
 	private String sortBy = "title";
 	
 	private Image image;
@@ -138,11 +164,6 @@ public class ImagesBean
 				add(Restrictions.ilike("references", searchForLocal)));
 		}
 		
-		// filter by status
-		if (statusFilter != 0)
-		{
-			crit.add(Restrictions.eq("workflowStatus", new Integer(statusFilter)));
-		}
 		
 		// sort order
 		crit.addOrder(Order.asc(sortBy));
@@ -160,27 +181,25 @@ public class ImagesBean
 		for (Iterator iter = dbImages.iterator(); iter.hasNext();)
 		{
 			Image image = (Image) iter.next();
-			
-			String statusText;
-			switch (image.getWorkflowStatus())
-			{
-			case 1:
-				statusText = "Applied for auth.";
-				break;
-			case 2:
-				statusText = "Processing";
-				break;
-			case 3:
-				statusText = "Ready to deploy";
-				break;
-			default:
-				statusText = "-";
-			}
+
+			int authStatus = image.getAuthorizationStatus();
+			String authStatusLabel;
+			if (authStatus < 0 || AUTH_STATUS_SHORT_LABELS.length <= authStatus)
+				authStatusLabel = "?";
+			else
+				authStatusLabel = AUTH_STATUS_SHORT_LABELS[authStatus];
+
+			int imgStatus = image.getImageStatus();
+			String imgStatusLabel;
+			if (imgStatus < 0 || IMAGE_STATUS_LABELS.length <= imgStatus)
+				imgStatusLabel = "?";
+			else
+				imgStatusLabel = IMAGE_STATUS_LABELS[imgStatus];
 			
 			String subItems[] = new String[] {
-					image.getHeight() + "x" + image.getHeight(),
-					image.getMimeType(),
-					statusText,
+					image.isReadyToGo() ? "yes" : "no", 
+					authStatusLabel,
+					imgStatusLabel,
 					StringUtils.coalesce(image.getDate(), ""),
 					StringUtils.coalesce(image.getSource(), ""),
 			};
@@ -593,6 +612,26 @@ public class ImagesBean
 			return image.getWidth() + "x" + image.getHeight() +
 			" (" + image.getMimeType() + ")";
 	}
+	
+	public SelectItem[] createListItemsByStringArray(String[] array)
+	{
+		SelectItem[] items = new SelectItem[array.length];
+		for (int i = 0; i < array.length; i++)
+		{
+			items[i] = new SelectItem(String.valueOf(i), array[i]);
+		}
+		return items;
+	}
+
+	public SelectItem[] getImageStatusItems()
+	{
+		return createListItemsByStringArray(IMAGE_STATUS_LABELS);
+	}
+
+	public SelectItem[] getAuthorizationStatusItems()
+	{
+		return createListItemsByStringArray(AUTH_STATUS_LONG_LABELS);
+	}
 
 	public boolean isUploadBoxShown()
 	{
@@ -712,16 +751,6 @@ public class ImagesBean
 	public void setSortBy(String sortBy)
 	{
 		this.sortBy = sortBy;
-	}
-
-	public int getStatusFilter()
-	{
-		return statusFilter;
-	}
-
-	public void setStatusFilter(int statusFilter)
-	{
-		this.statusFilter = statusFilter;
 	}
 
 }

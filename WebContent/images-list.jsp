@@ -92,17 +92,8 @@ div.imagelist-gallery-image {
 				<h:selectOneMenu value="#{ImagesBean.sortBy}">
 					<f:selectItem itemLabel="Title" itemValue="title" />
 					<f:selectItem itemLabel="Date" itemValue="date" />
-				</h:selectOneMenu>
-			</td>
-			<td>
-				&nbsp;Status:&nbsp;
-			</td>
-			<td>
-				<h:selectOneMenu value="#{ImagesBean.statusFilter}">
-					<f:selectItem itemLabel="Any" itemValue="0" />
-					<f:selectItem itemLabel="Applied for auth." itemValue="1" />
-					<f:selectItem itemLabel="Processing" itemValue="2" />
-					<f:selectItem itemLabel="Ready to deploy" itemValue="3" />
+					<f:selectItem itemLabel="Image status" itemValue="imageStatus" />
+					<f:selectItem itemLabel="Auth. status" itemValue="authorizationStatus" />
 				</h:selectOneMenu>
 			</td>
 			<td>
@@ -129,7 +120,7 @@ div.imagelist-gallery-image {
 		
 		<s:imageList
 			id="images"
-			columns="Size, Image type, Status, Date, Source"
+			columns="Ready, Auth., Image, Date, Source"
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
 			selectedImageId="#{ImagesBean.selectedImageId}"

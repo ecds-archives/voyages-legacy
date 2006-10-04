@@ -154,13 +154,20 @@ div.error {
 				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.emoryLocation}" /></td>
 			</tr>
 			<tr>
-				<td>Status</td>
-				<td><h:selectOneMenu value="#{ImagesBean.image.workflowStatus}">
-					<f:selectItem itemLabel="-" itemValue="0" />
-					<f:selectItem itemLabel="Applied for authorization" itemValue="1" />
-					<f:selectItem itemLabel="Processing" itemValue="2" />
-					<f:selectItem itemLabel="Ready to deploy" itemValue="3" />
+				<td>Authorization</td>
+				<td><h:selectOneMenu value="#{ImagesBean.image.authorizationStatus}">
+					<f:selectItems value="#{ImagesBean.authorizationStatusItems}" />
 				</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Image status</td>
+				<td><h:selectOneMenu value="#{ImagesBean.image.imageStatus}">
+					<f:selectItems value="#{ImagesBean.imageStatusItems}" />
+				</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Ready to go</td>
+				<td><h:selectBooleanCheckbox value="#{ImagesBean.image.readyToGo}" /></td>
 			</tr>
 			</table>
 

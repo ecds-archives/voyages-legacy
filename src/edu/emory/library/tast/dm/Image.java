@@ -57,7 +57,9 @@ public class Image
 	private String comments;
 	private boolean emory = false;
 	private String emoryLocation;
-	private int workflowStatus = 0;
+	private int imageStatus = 0;
+	private int authorizationStatus = 0;
+	private boolean readyToGo = false;
 
 	private Set regions; 
 	private Set ports;
@@ -148,16 +150,36 @@ public class Image
 		this.emoryLocation = emoryLocation;
 	}
 
-	public int getWorkflowStatus()
+	public int getImageStatus()
 	{
-		return workflowStatus;
+		return imageStatus;
 	}
 
-	public void setWorkflowStatus(int coordiatorStatus)
+	public void setImageStatus(int imageStatus)
 	{
-		this.workflowStatus = coordiatorStatus;
+		this.imageStatus = imageStatus;
 	}
 
+	public int getAuthorizationStatus()
+	{
+		return authorizationStatus;
+	}
+
+	public void setAuthorizationStatus(int authorizationStatus)
+	{
+		this.authorizationStatus = authorizationStatus;
+	}
+
+	public boolean isReadyToGo()
+	{
+		return readyToGo;
+	}
+
+	public void setReadyToGo(boolean readyToGo)
+	{
+		this.readyToGo = readyToGo;
+	}
+	
 	public String getFileName()
 	{
 		return fileName;
@@ -374,7 +396,7 @@ public class Image
 		return true;
 		
 	}
-	
+
 //	public static void main(String[] args)
 //	{
 //		

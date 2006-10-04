@@ -45,5 +45,25 @@ public class EventLineGraph
 	{
 		this.name = name;
 	}
+	
+	public EventLineGraph getSubGraph(int start, int end)
+	{
+		
+		int n = end - start + 1;
+		
+		EventLineDataPoint[] newData = new EventLineDataPoint[n];
+		EventLineDataPoint[] data = getData();
+		
+		for (int i = start; i <= end; i++)
+			newData[i-start] = data[i];
+		
+		EventLineGraph subGraph = new EventLineGraph();
+		subGraph.setData(newData);
+		subGraph.setColor(color);
+		subGraph.setName(name);
+		
+		return subGraph;
+
+	}
 
 }

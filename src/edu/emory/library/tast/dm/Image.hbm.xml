@@ -26,7 +26,9 @@
 		<property name="comments" column="comments" />
 		<property name="emory" column="emory" />
 		<property name="emoryLocation" column="emory_location" />
-		<property name="workflowStatus" column="workflow_status" />
+		<property name="authorizationStatus" column="authorization_status" />
+		<property name="imageStatus" column="image_status" />
+		<property name="readyToGo" column="ready_to_go" />
 
 		<set name="regions" table="regions_images">
 			<key column="image_id" />

@@ -2,7 +2,7 @@ package edu.emory.library.tast.ui;
 
 import java.awt.Color;
 
-public class EventLineTestBean
+public class EventLineTestBean1
 {
 	
 	private static final int VALUES = 50;

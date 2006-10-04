@@ -292,9 +292,9 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>
-		EventLineTestBean</managed-bean-name>
+		EventLineTestBean1</managed-bean-name>
 		<managed-bean-class>
-		edu.emory.library.tast.ui.EventLineTestBean</managed-bean-class>
+		edu.emory.library.tast.ui.EventLineTestBean1</managed-bean-class>
 		<managed-bean-scope>
 		session</managed-bean-scope>
 	</managed-bean>
@@ -309,6 +309,14 @@
 			<property-name>searchBean</property-name>
 			<value>#{SearchBean}</value>
 		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>
+		EventLineTestBean2</managed-bean-name>
+		<managed-bean-class>
+		edu.emory.library.tast.ui.EventLineTestBean2</managed-bean-class>
+		<managed-bean-scope>
+		session</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>

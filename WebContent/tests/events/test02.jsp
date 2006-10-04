@@ -19,7 +19,11 @@ body {
 	margin: 0px;
 	font-size: 8pt;
 	font-family: Verdana; }
-	
+
+input {	
+	font-size: 8pt;
+	font-family: Verdana; }
+
 table.event-line-left-label {
 	-background-color: #AAFFFF; }
 
@@ -59,18 +63,18 @@ div.event-line-mark-pressed {
 	<h:form id="form">
 	
 		<s:eventLine
-			graphHeight="#{EventLineTestBean1.graphHeight}"
-			barWidth="#{EventLineTestBean1.barWidth}"
-			horizontalLabels="#{EventLineTestBean1.horizontalLabels}"
-			verticalLabels="#{EventLineTestBean1.verticalLabels}"
-			graphs="#{EventLineTestBean1.graphs}"
-			events="#{EventLineTestBean1.events}" />
+			graphHeight="#{EventLineTestBean2.graphHeight}"
+			barWidth="#{EventLineTestBean2.barWidth}"
+			horizontalLabels="#{EventLineTestBean2.horizontalLabels}"
+			verticalLabels="#{EventLineTestBean2.verticalLabels}"
+			graphs="#{EventLineTestBean2.currentGraphs}"
+			events="#{EventLineTestBean2.events}" />
 			
 		<div style="margin-left: 70px; margin-top: 10px">
-			<h:commandButton action="#{EventLineTestBean1.moveLeft}" value="<" />
-			<h:commandButton action="#{EventLineTestBean1.zoomPlus}" value="+" />
-			<h:commandButton action="#{EventLineTestBean1.zoomMinus}" value="-" />
-			<h:commandButton action="#{EventLineTestBean1.moveRight}" value=">" />
+			<h:commandButton action="#{EventLineTestBean2.moveLeft}" value="#{EventLineTestBean2.moveLeftLabel}" />
+			<h:commandButton action="#{EventLineTestBean2.zoomPlus}" value="#{EventLineTestBean2.moveZoomPlusLabel}" />
+			<h:commandButton action="#{EventLineTestBean2.zoomMinus}" value="#{EventLineTestBean2.moveZoomMinusLabel}" />
+			<h:commandButton action="#{EventLineTestBean2.moveRight}" value="#{EventLineTestBean2.moveRightLabel}" />
 		</div>
 			
 		<div id="debug"></div>
