@@ -1,5 +1,5 @@
 <attributes>
-	<objectAttributes objectType="Voyage">
+	<objectAttributes objectType="Voyage">		
 		<attribute importName="adlt3imp" importType="0" attrNumType="Integer"
 			attrType="Numeric" typeDisplayName="Integer" category="1"
 			name="adlt3imp" desc="" id="262938">

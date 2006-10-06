@@ -33,7 +33,13 @@ public class DirectValueAttribute extends Attribute {
 	}
 
 	public String getHQLSelectPath(Map bindings) {
-		return value;
+		StringBuffer buffer = new StringBuffer();
+		if (this.value instanceof String) {
+			buffer.append("'").append(value).append("'");
+		} else {
+			buffer.append(value);
+		}
+		return buffer.toString();
 	}
 
 	public String getHQLWherePath(Map bindings) {

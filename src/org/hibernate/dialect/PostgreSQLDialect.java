@@ -1,4 +1,4 @@
-//$Id: PostgreSQLDialect.java,v 1.3 2006-08-21 17:12:06 pjurczy Exp $
+//$Id: PostgreSQLDialect.java,v 1.4 2006-10-06 14:21:26 pjurczy Exp $
 package org.hibernate.dialect;
 
 import java.sql.Types;
@@ -114,7 +114,7 @@ public class PostgreSQLDialect extends Dialect {
 		
 		registerFunction( "date_part", new StandardSQLFunction( "date_part", Hibernate.INTEGER ) );
 
-		registerFunction( "standarizeSlaveNumber", new StandardSQLFunction( "standarizeSlaveNumber", Hibernate.FLOAT ) );
+		registerFunction( "estimate", new StandardSQLFunction( "estimate", Hibernate.FLOAT ) );
 		
 		getDefaultProperties().setProperty(Environment.STATEMENT_BATCH_SIZE, DEFAULT_BATCH_SIZE);
 	}

@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.Set;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.dictionaries.DepDefinition;
 import edu.emory.library.tast.dm.dictionaries.Editor;
 import edu.emory.library.tast.dm.dictionaries.Fate2;
@@ -63,7 +65,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	/**
 	 * Object's attributes
 	 */
-	private static Attribute[] attributes;
+	private static List attributes = new ArrayList();
 	
 	/**
 	 * Gets all attributes of voyage.
@@ -71,10 +73,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	public static Attribute[] getAttributes() {
 		
-		if (attributes == null) {
-			attributes = Attribute.loadAttributesForType("Voyage");
+		if (attributes.isEmpty()) {
+			attributes.addAll(Arrays.asList(Attribute.loadAttributesForType("Voyage")));
+			attributes.add(new NumericAttribute("iid", "Voyage"));
 		}
-		return attributes;
+		return (Attribute[])attributes.toArray(new Attribute[] {});
 	}
 	
 	/**
@@ -84,12 +87,13 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	public static Attribute getAttribute(String name) {
 		
-		if (attributes == null) {
-			attributes = Attribute.loadAttributesForType("Voyage");
+		if (attributes.isEmpty()) {
+			attributes.addAll(Arrays.asList(Attribute.loadAttributesForType("Voyage")));
+			attributes.add(new NumericAttribute("iid", "Voyage"));
 		}
-		for (int i = 0; i < attributes.length; i++) {
-			if (attributes[i].getName().equals(name)) {
-				return attributes[i];
+		for (int i = 0; i < attributes.size(); i++) {
+			if (((Attribute)attributes.get(i)).getName().equals(name)) {
+				return (Attribute)attributes.get(i);
 			}
 		}
 		return null;
@@ -100,13 +104,14 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * @return
 	 */
 	public static String[] getAllAttrNames() {
-		if (attributes == null) {
-			attributes = Attribute.loadAttributesForType("Voyage");
+		if (attributes.isEmpty()) {
+			attributes.addAll(Arrays.asList(Attribute.loadAttributesForType("Voyage")));
+			attributes.add(new NumericAttribute("iid", "Voyage"));
 		}
 		
-		String[] attrsName = new String[attributes.length];
+		String[] attrsName = new String[attributes.size()];
 		for (int i = 0; i < attrsName.length; i++) {
-			attrsName[i] = attributes[i].getName();
+			attrsName[i] = ((Attribute)attributes.get(i)).getName();
 		}
 		return attrsName;
 	}
