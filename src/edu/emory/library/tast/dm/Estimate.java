@@ -1,12 +1,16 @@
 package edu.emory.library.tast.dm;
 
+import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.dm.dictionaries.ImputedNation;
+import edu.emory.library.tast.util.HibernateUtil;
 
 public class Estimate {
 
-	private String year;
+	private Long id;
+	
+	private Integer year;
 
-	private ImputedNation nation;
+	private Long nation;
 
 	private Long expRegion;
 
@@ -16,11 +20,11 @@ public class Estimate {
 
 	private double slavExported;
 
-	public ImputedNation getNation() {
+	public Long getNation() {
 		return nation;
 	}
 
-	public void setNation(ImputedNation nation) {
+	public void setNation(Long nation) {
 		this.nation = nation;
 	}
 
@@ -40,11 +44,11 @@ public class Estimate {
 		this.slavImported = slavImported;
 	}
 
-	public String getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
@@ -75,10 +79,24 @@ public class Estimate {
 			return false;
 		}
 		Estimate that = (Estimate)o;
-		return this.getNation().getId().equals(that.getNation().getId()) &&
+		return this.getNation().equals(that.getNation()) &&
 				this.year.equals(that.year) &&
-				((this.expRegion == null && that.expRegion == null) || this.expRegion.equals(that.expRegion)) &&
-				((this.expRegion == null && that.expRegion == null) || this.impRegion.equals(that.impRegion));
+				((this.expRegion == null && that.expRegion == null) || 
+						(this.expRegion != null && this.expRegion.equals(that.expRegion))) &&
+				((this.impRegion == null && that.impRegion == null) || 
+						(this.impRegion != null && this.impRegion.equals(that.impRegion)));
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void save() {
+		HibernateConnector.getConnector().saveObject(this);
 	}
 
 }
