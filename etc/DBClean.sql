@@ -1,5 +1,5 @@
 -- super fast
-truncate voyage_slaves, voyages_index, voyages, slaves, dictionary;
+truncate voyage_slaves, voyages_index, voyages, slaves, dictionary, estimates;
 
 -- super slow
 delete from voyage_slaves;

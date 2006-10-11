@@ -514,7 +514,7 @@ public class Import
 		{
 			return false;
 		}
-
+		
 		for (int i = 0; i < attributes.length; i++)
 		{
 			Attribute col = attributes[i];

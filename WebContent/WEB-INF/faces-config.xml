@@ -156,6 +156,13 @@
 			edu.emory.library.tast.ui.EventLineComponent
 		</component-class>
 	</component>
+	
+	<component>
+		<component-type>CheckboxList</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.CheckboxListComponent
+		</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
@@ -315,6 +322,14 @@
 		EventLineTestBean2</managed-bean-name>
 		<managed-bean-class>
 		edu.emory.library.tast.ui.EventLineTestBean2</managed-bean-class>
+		<managed-bean-scope>
+		session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>
+		EstimatesBean</managed-bean-name>
+		<managed-bean-class>
+		edu.emory.library.tast.estimates.EstimatesBean</managed-bean-class>
 		<managed-bean-scope>
 		session</managed-bean-scope>
 	</managed-bean>

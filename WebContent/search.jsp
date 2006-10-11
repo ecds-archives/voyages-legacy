@@ -22,9 +22,6 @@
 	<script src="jslib/aa.js" type="text/javascript" language="javascript"></script>
 	<script src="map.js" language="javascript" type="text/javascript"></script>
 	<script src="utils.js" language="javascript" type="text/javascript"></script>
-	<script src="graphics.js" language="javascript" type="text/javascript"></script>
-	<script src="graphics-svg.js" language="javascript" type="text/javascript"></script>
-	<script src="graphics-vml.js" language="javascript" type="text/javascript"></script>
 	<script src="query-builder.js" language="javascript" type="text/javascript"></script>
 	<script src="tools_map_adds.js" language="javascript" type="text/javascript"></script>
 	<script src="timeline.js" language="javascript" type="text/javascript"></script>
@@ -36,6 +33,7 @@
 		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">
 	</div>
 	<div class="header-path">
+		<a href="gallery.faces">Estimates</a> |
 		<a href="search.faces">Database search</a> |
 		<a href="reports.faces">Precompiled reports</a> |
 		<a href="gallery.faces">Images database</a>
@@ -44,15 +42,15 @@
 	<h:form id="form">
 	
 		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
-			<tr>
-				<td class="side-panel">
-					<%@ include file="search-side-panel.jsp" %>
-				</td>
-				<td class="main-panel">
-					<s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
-					<%@ include file="search-main-panel.jsp" %>
-				</td>
-			</tr>
+		<tr>
+			<td class="side-panel">
+				<%@ include file="search-side-panel.jsp" %>
+			</td>
+			<td class="main-panel">
+				<s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
+				<%@ include file="search-main-panel.jsp" %>
+			</td>
+		</tr>
 		</table>
 		
 	</h:form>

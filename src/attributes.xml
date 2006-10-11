@@ -1162,15 +1162,15 @@
 			name="yrreg" desc="" id="262845">
 		</attribute>
 
-		<attribute attrNumType="Long" attrType="Numeric" typeDisplayName="Float"
+		<attribute attrNumType="Long" importType="-1" attrType="Numeric" typeDisplayName="Float"
 			category="0" name="s_slaximp"
 			userLabel="Adjusted imputed number of slaves embarked">
 		</attribute>
-		<attribute attrNumType="Long" attrType="Numeric" typeDisplayName="Float"
+		<attribute attrNumType="Long" importType="-1" attrType="Numeric" typeDisplayName="Float"
 			category="0" name="s_slamimp"
 			userLabel="Adjusted imputed number of slaves disembarked">
 		</attribute>
-		<attribute attrNumType="Long" attrType="Numeric" typeDisplayName="Long"
+		<attribute attrNumType="Long" importType="-1" attrType="Numeric" typeDisplayName="Long"
 			category="0" name="iid" userLabel="Voyage internal id">
 		</attribute>
 

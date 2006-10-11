@@ -2,16 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="edu.emory.library.tast.dm.Port" table="ports">
+	<class name="edu.emory.library.tast.dm.Area" table="areas">
 		<cache usage="read-write" />
-		<id name="id" column="port_id">
+		<id name="id" column="area_id">
 			<generator class="native"/>
 		</id>
 		<property name="name" />
-		<property name="x" />
-		<property name="y" />
-		<property name="latitude" />
-		<property name="longitude" />
-		<many-to-one name="region" column="region_id" lazy="false" />
+		<property name="america" />
 	</class>
 </hibernate-mapping>

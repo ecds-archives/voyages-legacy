@@ -103,6 +103,7 @@ public abstract class Attribute  {
 	}
 
 	public Integer getImportType() {
+		if (importType == null) return new Integer(IMPORT_TYPE_IGNORE);
 		return importType;
 	}
 

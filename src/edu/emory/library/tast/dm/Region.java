@@ -29,6 +29,17 @@ public class Region extends Location
 	}
 	
 	private Set ports;
+	private Area area;
+	
+	public Area getArea()
+	{
+		return area;
+	}
+
+	public void setArea(Area area)
+	{
+		this.area = area;
+	}
 
 	public Set getPorts()
 	{
@@ -58,7 +69,7 @@ public class Region extends Location
 		return list;
 	}
 	
-	public static List getAllRegions(Session sess)
+	public static List loadAllRegions(Session sess)
 	{
 		return loadRegions(sess, null);
 	}
