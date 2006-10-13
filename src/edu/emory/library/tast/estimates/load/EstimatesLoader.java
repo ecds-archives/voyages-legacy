@@ -35,12 +35,6 @@ public class EstimatesLoader {
 		for (int i = 0; i < positions.length; i++) {
 			System.out.println(positions[i]);
 
-			if (positions[i].getYear() == 1661) {
-				int a = 0;
-				if (a == 0)
-					;
-			}
-
 			if (positions[i].isExportSimpleValue()) {
 				handleSimpleValue(positions[i], "slaximp", positions[i]
 						.getExportFormula(), false);
@@ -199,10 +193,10 @@ public class EstimatesLoader {
 			conditions.addCondition(Voyage.getAttribute("mjselimp"), ports,
 					Conditions.OP_IN);
 		}
-		conditions.addCondition(Voyage.getAttribute("yeardep"), new Integer(
+		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 				position.getYear() + yearWiggleRoom),
 				Conditions.OP_SMALLER_OR_EQUAL);
-		conditions.addCondition(Voyage.getAttribute("yeardep"), new Integer(
+		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 				position.getYear() - yearWiggleRoom),
 				Conditions.OP_GREATER_OR_EQUAL);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
@@ -253,7 +247,7 @@ public class EstimatesLoader {
 			conditions.addCondition(Voyage.getAttribute("mjselimp"), ports,
 					Conditions.OP_IN);
 		}
-		conditions.addCondition(Voyage.getAttribute("yeardep"), new Integer(
+		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 				position.getYear()), Conditions.OP_EQUALS);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("natinimp"),
@@ -300,19 +294,18 @@ public class EstimatesLoader {
 					for (int j = 0; j < ports.length; j++) {
 						ports[j] = Region.loadById(portIds[j]);
 					}
-					while (currentWiggleRoom <= 100
-							&& currentResults < voyagesPerPort
-									* position.getMajselimp().length) {
+					while (currentWiggleRoom <= 99
+							&& currentResults < 100) {
 						Conditions conditions = new Conditions();
 						conditions.addCondition(
 								Voyage.getAttribute("mjselimp"), ports,
 								Conditions.OP_IN);
 
-						conditions.addCondition(Voyage.getAttribute("yeardep"),
+						conditions.addCondition(Voyage.getAttribute("yearam"),
 								new Integer(position.getYear()
 										+ currentWiggleRoom),
 								Conditions.OP_SMALLER_OR_EQUAL);
-						conditions.addCondition(Voyage.getAttribute("yeardep"),
+						conditions.addCondition(Voyage.getAttribute("yearam"),
 								new Integer(position.getYear()
 										- currentWiggleRoom),
 								Conditions.OP_GREATER_OR_EQUAL);
@@ -355,11 +348,11 @@ public class EstimatesLoader {
 						conditions.addCondition(Voyage.getAttribute("portdep"),
 								ports, Conditions.OP_IN);
 
-						conditions.addCondition(Voyage.getAttribute("yeardep"),
+						conditions.addCondition(Voyage.getAttribute("yearam"),
 								new Integer(position.getYear()
 										+ currentWiggleRoom),
 								Conditions.OP_SMALLER_OR_EQUAL);
-						conditions.addCondition(Voyage.getAttribute("yeardep"),
+						conditions.addCondition(Voyage.getAttribute("yearam"),
 								new Integer(position.getYear()
 										- currentWiggleRoom),
 								Conditions.OP_GREATER_OR_EQUAL);

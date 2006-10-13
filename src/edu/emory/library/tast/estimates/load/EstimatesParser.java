@@ -30,11 +30,6 @@ public class EstimatesParser {
 					String exp = columns[5].replaceAll("\"", "");
 					String imp = columns[6].replaceAll("\"", "");
 					String prop = columns[7].replaceAll("\"", "");
-					if (columns[3].trim().compareTo("") == 0
-							&& columns[4].trim().compareTo("") == 0) {
-						throw new RuntimeException(
-								"Only either portdep or slamimp can be filled in");
-					}
 					if (columns[3].trim().compareTo("") != 0) {
 						String[] portdepts = columns[3].replaceAll("\"", "").split(",");
 						int [] ports = new int[portdepts.length];
@@ -46,7 +41,7 @@ public class EstimatesParser {
 							estimates.add(new EstimatesPosition(natimp,
 									ports, null, i, exp, imp, prop));
 						}
-					} else {
+					} else if (columns[4].trim().compareTo("") != 0) {
 						String[] majselimps = columns[4].replaceAll("\"", "").split(",");
 						int [] selpts = new int[majselimps.length];
 						for (int n = 0; n < majselimps.length; n++) {
@@ -56,6 +51,11 @@ public class EstimatesParser {
 						for (int i = from; i <= to; i++) {
 							estimates.add(new EstimatesPosition(natimp,
 									null, selpts, i, exp, imp, prop));
+						}
+					} else {
+						for (int i = from; i <= to; i++) {
+							estimates.add(new EstimatesPosition(natimp,
+									null, null, i, exp, imp, prop));
 						}
 					}
 					System.out.println(" has: " + from + " " + to);
