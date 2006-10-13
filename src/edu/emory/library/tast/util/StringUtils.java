@@ -120,4 +120,17 @@ public class StringUtils
 		return set;
 	}
 
+	public static Integer[] parseIntegerArray(String[] arr)
+	{
+		Integer[] ints = new Integer[arr.length];
+		if (arr != null)
+		{
+			for (int i = 0; i < arr.length; i++)
+			{
+				ints[i] = new Integer(arr[i]);
+			}
+		}
+		return ints;
+	}
+
 }

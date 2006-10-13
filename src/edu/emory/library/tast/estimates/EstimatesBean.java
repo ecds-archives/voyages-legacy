@@ -1,5 +1,6 @@
 package edu.emory.library.tast.estimates;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -7,12 +8,16 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.ui.EventLineGraph;
 import edu.emory.library.tast.ui.SelectItem;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 
 public class EstimatesBean
 {
@@ -20,6 +25,10 @@ public class EstimatesBean
 	private String[] selectedNations;
 	private String[] selectedAfricanRegions;
 	private String[] selectedAmericanRegions;
+	
+//	private Integer[] selectedNations;
+//	private Integer[] selectedAfricanRegions;
+//	private Integer[] selectedAmericanRegions;
 	
 	public SelectItem[] getListOfNations()
 	{
@@ -68,6 +77,50 @@ public class EstimatesBean
 		}
 		
 		return regionsUi;
+	}
+	
+	public String loadData()
+	{
+		
+		Integer[] nations = StringUtils.parseIntegerArray(selectedNations);
+		Integer[] expRegions = StringUtils.parseIntegerArray(selectedAfricanRegions);
+		Integer[] impRegions = StringUtils.parseIntegerArray(selectedAmericanRegions);
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		List results = sess.createCriteria(Estimate.class)
+	    .setProjection(Projections.projectionList()
+	        .add(Projections.sum("slavImported"), "slavImported")
+	        .add(Projections.sum("slavExported"), "slavExported")
+	        .add(Projections.groupProperty("year"), "year"))
+	    .add(Restrictions.in("expRegion", expRegions))
+	    .add(Restrictions.in("impRegion", impRegions))
+	    .add(Restrictions.in("nation", nations))
+	    .addOrder(Order.desc("year"))
+	    .list();		
+		
+		transaction.commit();
+		sess.close();
+		
+		EventLineGraph impGraph = new EventLineGraph(); 
+		EventLineGraph expGraph = new EventLineGraph();
+		
+		
+		
+		
+		
+		EventLineGraph[] graphs =
+			new EventLineGraph[] {impGraph, expGraph}; 
+		
+		return null;
+
+	}
+	
+	public String changeSelection()
+	{
+		
+		return null;
 	}
 	
 	public SelectItem[] getListOfAfricanRegions()
