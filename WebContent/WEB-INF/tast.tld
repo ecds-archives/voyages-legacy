@@ -544,5 +544,27 @@
 		</attribute>
 	</tag>
 	
+	<tag>
+		<name>simpleTable</name>
+		<tag-class>
+			edu.emory.library.tast.ui.SimpleTableTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
+			<name>data</name>
+		</attribute>
+		<attribute>
+			<name>columnLabels</name>
+		</attribute>
+		<attribute>
+			<name>rowLabels</name>
+		</attribute>
+	</tag>
 
 </taglib>

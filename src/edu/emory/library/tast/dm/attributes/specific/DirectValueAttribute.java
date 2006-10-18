@@ -10,10 +10,15 @@ import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
 public class DirectValueAttribute extends Attribute {
 
-	String value;
+	Object value;
 	
 	public DirectValueAttribute(String value) {
 		super(value, null);
+		this.value = value;
+	}
+
+	public DirectValueAttribute(String name, Object value) {
+		super(name, null);
 		this.value = value;
 	}
 
@@ -47,7 +52,7 @@ public class DirectValueAttribute extends Attribute {
 	}
 	
 	public String getHQLParamName() {
-		return this.value;
+		return getName();
 	}
 	
 	public String getHQLOuterJoinPath(Map bindings) {

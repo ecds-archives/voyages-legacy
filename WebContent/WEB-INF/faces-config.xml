@@ -163,6 +163,12 @@
 			edu.emory.library.tast.ui.CheckboxListComponent
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+		SimpleTable</component-type>
+		<component-class>
+		edu.emory.library.tast.ui.SimpleTableComponent</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
@@ -332,6 +338,30 @@
 		edu.emory.library.tast.estimates.EstimatesBean</managed-bean-class>
 		<managed-bean-scope>
 		session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>
+		EstimatesSelectionBean</managed-bean-name>
+		<managed-bean-class>
+		edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</managed-bean-class>
+		<managed-bean-scope>
+		session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>
+		EstimatesTableBean</managed-bean-name>
+		<managed-bean-class>
+		edu.emory.library.tast.estimates.table.EstimatesTableBean</managed-bean-class>
+		<managed-bean-scope>
+		session</managed-bean-scope>
+		<managed-property>
+			<property-name>
+			selectionBean</property-name>
+			<property-class>
+			edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
+			<value>
+			#{EstimatesSelectionBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<navigation-rule>

@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -26,6 +28,7 @@ public class Region extends Location
 		attributes.put("x", new NumericAttribute("x", "Region"));
 		attributes.put("y", new NumericAttribute("y", "Region"));
 		attributes.put("ports", new NumericAttribute("ports", "Region"));
+		attributes.put("area", new DictionaryAttribute("area", "Region"));
 	}
 	
 	private Set ports;
@@ -112,6 +115,34 @@ public class Region extends Location
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
+	}
+
+	public static String[] regionNamesToArray(List regions)
+	{
+		String[] names = new String[regions.size()];
+		
+		int i = 0;
+		for (Iterator iter = regions.iterator(); iter.hasNext();)
+		{
+			Region region = (Region) iter.next();
+			names[i++] = region.getName();
+		}
+		
+		return names;
+	}
+	
+	public static Map createIdIndexMap(List regions)
+	{
+		Map map = new HashMap();
+		
+		int i = 0;
+		for (Iterator iter = regions.iterator(); iter.hasNext();)
+		{
+			Region region = (Region) iter.next();
+			map.put(region.getId(), new Integer(i++));
+		}
+		
+		return map;
 	}
 
 	//	public static void main(String[] args)

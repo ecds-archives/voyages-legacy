@@ -5,7 +5,6 @@
 
 <h:outputText value="&nbsp;" escape="false" />
 
-
 <t:htmlTag value="table" style="border-collapse: collapse; padding-left: 20px; margin-left: auto; margin-right: auto;">
 
 	<t:htmlTag value="tr">

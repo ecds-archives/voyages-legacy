@@ -1,0 +1,12 @@
+div.estimates-table table.simple-table {
+	border-collapse: collapse; }
+	
+div.estimates-table table.simple-table td {
+	text-align: right;
+	padding: 5px;
+	border: 1px solid #DEC77E; }
+
+div.estimates-table table.simple-table td.simple-table-row-label,
+div.estimates-table table.simple-table td.simple-table-col-label {
+	background-color: #F1E7C8;
+	text-align: left; }

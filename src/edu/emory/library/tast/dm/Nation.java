@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,34 @@ public class Nation
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
+	}
+	
+	public static String[] nationNamesToArray(List nations)
+	{
+		String[] names = new String[nations.size()];
+		
+		int i = 0;
+		for (Iterator iter = nations.iterator(); iter.hasNext();)
+		{
+			Nation nation = (Nation) iter.next();
+			names[i++] = nation.getName();
+		}
+		
+		return names;
+	}
+
+	public static Map createIdIndexMap(List nations)
+	{
+		Map map = new HashMap();
+		
+		int i = 0;
+		for (Iterator iter = nations.iterator(); iter.hasNext();)
+		{
+			Nation nation = (Nation) iter.next();
+			map.put(new Integer(nation.getId()), new Integer(i++));
+		}
+		
+		return map;
 	}
 
 }
