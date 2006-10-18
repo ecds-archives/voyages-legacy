@@ -1,15 +1,26 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class Nation
 {
+
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new NumericAttribute("id", "Nation"));
+		attributes.put("name", new StringAttribute("name", "Nation"));
+	}
 	
 	private int id;
 	private String name;
@@ -49,6 +60,11 @@ public class Nation
 		return sess.createCriteria(Nation.class).
 		addOrder(Order.asc("name")).
 		list();
+	}
+
+	public static Attribute getAttribute(String name)
+	{
+		return (Attribute)attributes.get(name);
 	}
 
 }

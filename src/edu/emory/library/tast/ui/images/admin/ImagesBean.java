@@ -148,10 +148,10 @@ public class ImagesBean
 		// open db
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		
+
 		// basic query
 		Criteria crit = sess.createCriteria(Image.class);
-		
+
 		// search for
 		if (!StringUtils.isNullOrEmpty(searchFor))
 		{
@@ -163,20 +163,19 @@ public class ImagesBean
 				add(Restrictions.ilike("source", searchForLocal)).
 				add(Restrictions.ilike("references", searchForLocal)));
 		}
-		
-		
+
 		// sort order
 		crit.addOrder(Order.asc(sortBy));
-		
+
 		// load images from db and create a new list for UI
 		List dbImages = crit.list();
 		List uiImages = new ArrayList(dbImages.size());
-		
+
 		// thumnail size
 		String [] thumbnailSizeArr = thumbnailSize.split("x");
 		String w = thumbnailSizeArr[0];
 		String h = thumbnailSizeArr[1];
-		
+
 		// move them to ui list
 		for (Iterator iter = dbImages.iterator(); iter.hasNext();)
 		{
@@ -195,7 +194,7 @@ public class ImagesBean
 				imgStatusLabel = "?";
 			else
 				imgStatusLabel = IMAGE_STATUS_LABELS[imgStatus];
-			
+
 			String subItems[] = new String[] {
 					image.isReadyToGo() ? "yes" : "no", 
 					authStatusLabel,
@@ -203,7 +202,7 @@ public class ImagesBean
 					StringUtils.coalesce(image.getDate(), ""),
 					StringUtils.coalesce(image.getSource(), ""),
 			};
-			
+
 			ImageListItem uiImage = new ImageListItem();
 			uiImage.setId(String.valueOf(image.getId()));
 			uiImage.setName(image.getTitle());
@@ -215,7 +214,7 @@ public class ImagesBean
 		// close db
 		transaction.commit();
 		sess.close();
-		
+
 		// return list of images
 		return uiImages;
 

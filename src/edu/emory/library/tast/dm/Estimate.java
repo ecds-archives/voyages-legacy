@@ -1,30 +1,45 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.emory.library.tas.util.HibernateConnector;
-import edu.emory.library.tast.dm.dictionaries.ImputedNation;
-import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
 
 public class Estimate {
+
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new NumericAttribute("id", "Estimate"));
+		attributes.put("year", new NumericAttribute("year", "Estimate"));
+		attributes.put("nation", new DictionaryAttribute("nation", "Estimate"));
+		attributes.put("expRegion", new DictionaryAttribute("expRegion", "Estimate"));
+		attributes.put("impRegion", new DictionaryAttribute("impRegion", "Estimate"));
+		attributes.put("slavImported", new NumericAttribute("slavImported", "Estimate"));
+		attributes.put("slavExported", new NumericAttribute("slavExported", "Estimate"));
+	}
 
 	private Long id;
 	
 	private Integer year;
 
-	private Long nation;
+	private Nation nation;
 
-	private Long expRegion;
+	private Region expRegion;
 
-	private Long impRegion;
+	private Region impRegion;
 
 	private double slavImported;
 
 	private double slavExported;
 
-	public Long getNation() {
+	public Nation getNation() {
 		return nation;
 	}
 
-	public void setNation(Long nation) {
+	public void setNation(Nation nation) {
 		this.nation = nation;
 	}
 
@@ -52,19 +67,19 @@ public class Estimate {
 		this.year = year;
 	}
 
-	public Long getExpRegion() {
+	public Region getExpRegion() {
 		return expRegion;
 	}
 
-	public void setExpRegion(Long expRegion) {
+	public void setExpRegion(Region expRegion) {
 		this.expRegion = expRegion;
 	}
 
-	public Long getImpRegion() {
+	public Region getImpRegion() {
 		return impRegion;
 	}
 
-	public void setImpRegion(Long impRegion) {
+	public void setImpRegion(Region impRegion) {
 		this.impRegion = impRegion;
 	}
 
@@ -97,6 +112,11 @@ public class Estimate {
 
 	public void save() {
 		HibernateConnector.getConnector().saveObject(this);
+	}
+
+	public static Attribute getAttribute(String name)
+	{
+		return (Attribute)attributes.get(name);
 	}
 
 }

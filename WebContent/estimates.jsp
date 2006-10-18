@@ -27,40 +27,17 @@
 	
 	<h:form id="form">
 	
-		<input type="button" onclick="" value="Change settings">
-		<div style="position: absolute; background-color: White;">
-			<table border="1" cellspacing="0" cellpadding="0">
-			<tr>
-				<td valign="top">
-					<div style="font-weight: bold;">Nationality</div>
-					
-					<s:checkboxList
-						items="#{EstimatesBean.listOfNations}"
-						selectedValues="#{EstimatesBean.selectedNations}" />
-					
-				</td>
-				<td valign="top">
-					<div style="font-weight: bold;">Regions on West Coast</div>
-
-					<s:checkboxList
-						items="#{EstimatesBean.listOfAmericanRagions}"
-						selectedValues="#{EstimatesBean.selectedAmericanRegions}" />
-					
-				</td>
-				<td valign="top">
-					<div style="font-weight: bold;">Regions on East Coast</div>
-				
-					<s:checkboxList
-						items="#{EstimatesBean.listOfAfricanRegions}"
-						selectedValues="#{EstimatesBean.selectedAfricanRegions}" />
-
-				</td>
-			</tr>
-			</table>
-		</div>
+		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+		<tr>
+			<td style="width: 200px">
+				Here will be a selection or nations, regions in Africa and regions in America.
+			</td>
+			<td>
+				<%@ include file="estimates-main-panel.jsp" %>
+			</td>
+		</tr>
+		</table>
 		
-		<h:commandButton value="Test" />
-	
 	</h:form>
 	
 </f:view>
