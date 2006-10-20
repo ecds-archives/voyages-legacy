@@ -230,8 +230,8 @@ public class TableResultTabBean {
 		}
 
 		// Dictionaries - list of columns with dictionaries.
-
-		Attribute[] populatedAttributes = dataTable.getAttributesForQuery(new Attribute[] {Voyage.getAttribute("voyageId")});
+		dataTable.setKeyAttribute(Voyage.getAttribute("voyageId"));
+		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
 				if (populatedAttributes[i] != null) {

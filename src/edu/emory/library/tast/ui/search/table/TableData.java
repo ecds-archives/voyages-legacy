@@ -63,7 +63,9 @@ public class TableData {
 	 */
 	private List additionalData = new ArrayList();
 
-	private int lastAddedToQuery = 0;
+	private int lastAddedToQuery = 1;
+	
+	private Attribute keyAttribute = null;
 	
 	/**
 	 * Container for raw data that is stored in data and additionalData.
@@ -274,21 +276,15 @@ public class TableData {
 //		return list;
 //	}
 
-	public Attribute[] getAttributesForQuery() {
-		return this.getAttributesForQuery(new Attribute[] {});
-	}
-	
 	/**
 	 * Gets attributes that should be used in query.
 	 * 
 	 * @return
 	 */
-	public Attribute[] getAttributesForQuery(Attribute[] additions) {
+	public Attribute[] getAttributesForQuery() {
 		ArrayList attributes = new ArrayList();
-		for (int i = 0; i < additions.length; i++) {
-			attributes.add(additions[i]);
-		}
-		this.lastAddedToQuery = additions.length;
+		
+		attributes.add(keyAttribute);
 		for (int i = 0; i < columns.size(); i++) {
 //			if (columns.get(i) instanceof Group) {
 //				Group group = (Group) columns.get(i);
@@ -527,5 +523,9 @@ public class TableData {
 	 */
 	public void setOrderByColumn(VisibleAttributeInterface orderByColumn) {
 		this.orderByColumn = orderByColumn;
+	}
+
+	public void setKeyAttribute(Attribute keyAttribute) {
+		this.keyAttribute = keyAttribute;
 	}
 }

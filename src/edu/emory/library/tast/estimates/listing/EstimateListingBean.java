@@ -1,11 +1,13 @@
 package edu.emory.library.tast.estimates.listing;
 
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.estimates.EstimatesBean;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
+import edu.emory.library.tast.ui.search.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.query.Conditions;
@@ -30,8 +32,21 @@ public class EstimateListingBean {
 		visibleAttrs[5] = VisibleAttrEstimate.getAttributeForTable("slavImported");
 		
 		tableData = new TableData();
+		tableData.setKeyAttribute(Estimate.getAttribute("id"));
 		tableData.setVisibleColumns(visibleAttrs);
 		tableData.setOrderByColumn(visibleAttrs[0]);
+		tableData.setFormatter(visibleAttrs[0], new AbstractAttributeFormatter() {
+
+			public String format(Object object) {
+				// TODO Auto-generated method stub
+				return ((Nation)object).getName();
+			}
+
+			public String format(Object[] object) {
+				return "";
+			}
+			
+		});
 		
 	}
 	
