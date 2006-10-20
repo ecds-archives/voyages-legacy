@@ -94,12 +94,12 @@ public class Estimate {
 			return false;
 		}
 		Estimate that = (Estimate)o;
-		return this.getNation().equals(that.getNation()) &&
+		return this.getNation().getId() == that.getNation().getId() &&
 				this.year.equals(that.year) &&
 				((this.expRegion == null && that.expRegion == null) || 
-						(this.expRegion != null && this.expRegion.equals(that.expRegion))) &&
+						(this.expRegion != null && that.expRegion != null && this.expRegion.getId().equals(that.expRegion.getId()))) &&
 				((this.impRegion == null && that.impRegion == null) || 
-						(this.impRegion != null && this.impRegion.equals(that.impRegion)));
+						(this.impRegion != null && that.impRegion != null && this.impRegion.getId().equals(that.impRegion.getId())));
 	}
 
 	public Long getId() {

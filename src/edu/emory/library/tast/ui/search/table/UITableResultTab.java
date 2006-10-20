@@ -13,7 +13,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.ui.search.query.SearchParameters;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -135,7 +135,7 @@ public class UITableResultTab extends UIOutput {
 		UIForm form = JsfUtils.getForm(this, context);
 
 		writer.startElement("tr", this);
-		VisibleAttribute[] populatedAttributes = data.getVisibleAttributes();
+		VisibleAttributeInterface[] populatedAttributes = data.getVisibleAttributes();
 		
 		//Encode header of table
 		if (populatedAttributes != null) {

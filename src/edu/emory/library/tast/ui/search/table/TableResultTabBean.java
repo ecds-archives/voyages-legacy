@@ -27,6 +27,7 @@ import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.ui.search.tabscommon.MemorizedAction;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -159,7 +160,7 @@ public class TableResultTabBean {
 	public TableResultTabBean() {
 
 		// Setup default columns
-		VisibleAttribute[] attrs = new VisibleAttribute[6];
+		VisibleAttributeInterface[] attrs = new VisibleAttributeInterface[6];
 		attrs[0] = VisibleAttribute.getAttributeForTable("voyageId");
 		attrs[1] = VisibleAttribute.getAttributeForTable("shipname");
 		attrs[2] = VisibleAttribute.getAttributeForTable("anycaptain");
@@ -174,7 +175,7 @@ public class TableResultTabBean {
 		data.setVisibleColumns(attrs);
 		this.visibleColumns = Arrays.asList(attrs);
 
-		VisibleAttribute[] additionalAttrs = new VisibleAttribute[] { VoyageIndex.getVisibleAttribute("revisionId"),
+		VisibleAttributeInterface[] additionalAttrs = new VisibleAttributeInterface[] { VoyageIndex.getVisibleAttribute("revisionId"),
 				VoyageIndex.getVisibleAttribute("revisionDate") };
 		detailData.setVisibleAdditionalColumns(additionalAttrs);
 		detailData.setOrderByColumn(VisibleAttribute.getAttributeForTable("revisionId"));
@@ -230,7 +231,7 @@ public class TableResultTabBean {
 
 		// Dictionaries - list of columns with dictionaries.
 
-		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
+		Attribute[] populatedAttributes = dataTable.getAttributesForQuery(new Attribute[] {Voyage.getAttribute("voyageId")});
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
 				if (populatedAttributes[i] != null) {
@@ -253,7 +254,7 @@ public class TableResultTabBean {
 			qValue.addPopulatedAttribute(Voyage.getAttribute("portret"));
 		}
 
-		VisibleAttribute vattr = dataTable.getOrderByColumn();
+		VisibleAttributeInterface vattr = dataTable.getOrderByColumn();
 //		String orderByPrefix = null;
 //		if (vattr != null && Arrays.asList(dataTable.getVisibleAdditionalAttributes()).contains(vattr)) {
 //			orderByPrefix = "v.";
@@ -313,9 +314,9 @@ public class TableResultTabBean {
 			c.addCondition(Voyage.getAttribute("voyageId"), this.detailVoyageId, Conditions.OP_EQUALS);
 
 			List validAttrs = new ArrayList();
-			VisibleAttribute[] attrs = VisibleAttribute.getAllAttributes();
+			VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();
 			for (int i = 0; i < attrs.length; i++) {
-				VisibleAttribute column = attrs[i];
+				VisibleAttributeInterface column = attrs[i];
 				validAttrs.add(column);
 			}
 			detailData.setVisibleColumns(validAttrs);
@@ -381,7 +382,7 @@ public class TableResultTabBean {
 
 		for (Iterator iter = selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-			VisibleAttribute attr = getVisibleAttribute(element);
+			VisibleAttributeInterface attr = getVisibleAttribute(element);
 			List list = new ArrayList(visibleColumns);
 			int index = list.indexOf(attr);
 			if (list.contains(attr)) {
@@ -420,8 +421,8 @@ public class TableResultTabBean {
 		// not - add it
 		for (Iterator iter = this.selectedAttributeToAdd.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-			VisibleAttribute attr = this.getVisibleAttribute(element);
-			VisibleAttribute[] attrs = (VisibleAttribute[]) this.visibleColumns.toArray(new VisibleAttribute[] {});
+			VisibleAttributeInterface attr = this.getVisibleAttribute(element);
+			VisibleAttributeInterface[] attrs = (VisibleAttributeInterface[]) this.visibleColumns.toArray(new VisibleAttributeInterface[] {});
 			boolean is = false;
 			for (int i = 0; i < attrs.length; i++) {
 				if (attrs[i].getName().equals(attr.getName())) {
@@ -464,11 +465,11 @@ public class TableResultTabBean {
 		// Move attributes one position up
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-			VisibleAttribute attr = this.getVisibleAttribute(element);
-			VisibleAttribute[] attrs = (VisibleAttribute[]) this.visibleColumns.toArray(new VisibleAttribute[] {});
+			VisibleAttributeInterface attr = this.getVisibleAttribute(element);
+			VisibleAttributeInterface[] attrs = (VisibleAttributeInterface[]) this.visibleColumns.toArray(new VisibleAttributeInterface[] {});
 			for (int i = 1; i < attrs.length; i++) {
 				if (attrs[i].getName().equals(attr.getName())) {
-					VisibleAttribute tmp = attrs[i];
+					VisibleAttributeInterface tmp = attrs[i];
 					attrs[i] = attrs[i - 1];
 					attrs[i - 1] = tmp;
 					this.needQuery = true;
@@ -476,10 +477,10 @@ public class TableResultTabBean {
 					
 					this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(i)}) {
 						public void performAction() {
-							VisibleAttribute[] attrs = (VisibleAttribute[]) visibleColumns.toArray(new VisibleAttribute[] {});
+							VisibleAttributeInterface[] attrs = (VisibleAttributeInterface[]) visibleColumns.toArray(new VisibleAttributeInterface[] {});
 							
 							int i = ((Integer)this.params[0]).intValue();
-							VisibleAttribute tmp = attrs[i - 1];
+							VisibleAttributeInterface tmp = attrs[i - 1];
 							attrs[i - 1] = attrs[i];
 							attrs[i] = tmp;
 							
@@ -511,11 +512,11 @@ public class TableResultTabBean {
 		// Move each attribute one position down
 		for (Iterator iter = this.selectedAttributeAdded.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
-			VisibleAttribute attr = this.getVisibleAttribute(element);
-			VisibleAttribute[] attrs = (VisibleAttribute[]) this.visibleColumns.toArray(new VisibleAttribute[] {});
+			VisibleAttributeInterface attr = this.getVisibleAttribute(element);
+			VisibleAttributeInterface[] attrs = (VisibleAttributeInterface[]) this.visibleColumns.toArray(new VisibleAttributeInterface[] {});
 			for (int i = 0; i < attrs.length - 1; i++) {
 				if (attrs[i].getName().equals(attr.getName())) {
-					VisibleAttribute tmp = attrs[i];
+					VisibleAttributeInterface tmp = attrs[i];
 					attrs[i] = attrs[i + 1];
 					attrs[i + 1] = tmp;
 					this.needQuery = true;
@@ -523,10 +524,10 @@ public class TableResultTabBean {
 					
 					this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(i)}) {
 						public void performAction() {
-							VisibleAttribute[] attrs = (VisibleAttribute[]) visibleColumns.toArray(new VisibleAttribute[] {});
+							VisibleAttributeInterface[] attrs = (VisibleAttributeInterface[]) visibleColumns.toArray(new VisibleAttributeInterface[] {});
 							
 							int i = ((Integer)this.params[0]).intValue();
-							VisibleAttribute tmp = attrs[i + 1];
+							VisibleAttributeInterface tmp = attrs[i + 1];
 							attrs[i + 1] = attrs[i];
 							attrs[i] = tmp;
 							
@@ -553,7 +554,7 @@ public class TableResultTabBean {
 		String attrToSort = event.getAttributeSort();
 
 		// Get column that will be sorted
-		VisibleAttribute attr = this.getVisibleAttribute(attrToSort);
+		VisibleAttributeInterface attr = this.getVisibleAttribute(attrToSort);
 
 		// Set appropriate order
 		if (this.data.getOrderByColumn().getName().equals(attr.getName())) {
@@ -609,8 +610,8 @@ public class TableResultTabBean {
 	 * @param sAttr
 	 * @return
 	 */
-	private VisibleAttribute getVisibleAttribute(String sAttr) {
-		VisibleAttribute ret = null;
+	private VisibleAttributeInterface getVisibleAttribute(String sAttr) {
+		VisibleAttributeInterface ret = null;
 		if (sAttr.startsWith(ATTRIBUTE)) {
 			String attrId = sAttr.substring(ATTRIBUTE.length(), sAttr.length());
 			
@@ -744,7 +745,7 @@ public class TableResultTabBean {
 	 */
 	private void setVisibleAttributesList(List list) {
 		for (Iterator iter = list.iterator(); iter.hasNext();) {
-			VisibleAttribute element = (VisibleAttribute) iter.next();
+			VisibleAttributeInterface element = (VisibleAttributeInterface) iter.next();
 			if (element.getType().equals("DateAttribute")) {
 				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
 			}
@@ -843,9 +844,9 @@ public class TableResultTabBean {
 		ArrayList res = new ArrayList();
 		Group group = Group.getGroupById(this.selectedGroupSet);
 		if (group != null) {
-			VisibleAttribute[] attrs = group.getVisibleAttributesInUserCategory(this.searchBean.getSearchParameters().getCategory());
+			VisibleAttributeInterface[] attrs = group.getVisibleAttributesInUserCategory(this.searchBean.getSearchParameters().getCategory());
 			for (int i = 0; i < attrs.length; i++) {
-				VisibleAttribute attr = attrs[i];
+				VisibleAttributeInterface attr = attrs[i];
 				//if (attr.getCategory() == this.searchBean.getSearchParameters().getCategory()) {
 					res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
 				//}
@@ -865,7 +866,7 @@ public class TableResultTabBean {
 		List list = new ArrayList();
 		// VisibleColumn[] cols = this.data.getVisibleAttributes();
 		for (Iterator iter = this.visibleColumns.iterator(); iter.hasNext();) {
-			VisibleAttribute element = (VisibleAttribute) iter.next();
+			VisibleAttributeInterface element = (VisibleAttributeInterface) iter.next();
 			list.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
 		}
 		return list;

@@ -2,7 +2,7 @@ package edu.emory.library.tast.ui.search.query;
 
 
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -25,7 +25,7 @@ public class SearchParameters
 	public static final int VALUES_RAW = 2;
 	
 	private Conditions conditions;
-	private VisibleAttribute[] columns = new VisibleAttribute[0]; 
+	private VisibleAttributeInterface[] columns = new VisibleAttributeInterface[0]; 
 	private UserCategory category = UserCategory.Beginners;
 	private int valuesType = NOT_SPECIFIED;
 	private int mapElements = NOT_SPECIFIED;
@@ -40,12 +40,12 @@ public class SearchParameters
 		this.conditions = conditions;
 	}
 
-	public VisibleAttribute[] getColumns()
+	public VisibleAttributeInterface[] getColumns()
 	{
 		return columns;
 	}
 	
-	public void setColumns(VisibleAttribute[] columns)
+	public void setColumns(VisibleAttributeInterface[] columns)
 	{
 		this.columns = columns;
 	}

@@ -20,7 +20,7 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 
-public class VisibleAttribute {
+public class VisibleAttribute implements VisibleAttributeInterface {
 
 	public static final int ATTRIBUTE_TABLE_TAB = 1;
 
@@ -38,12 +38,12 @@ public class VisibleAttribute {
 
 	private int[] validity;
 
-	public static VisibleAttribute[] loadVisibleAttributes(int tabType) {
+	public static VisibleAttributeInterface[] loadVisibleAttributes(int tabType) {
 		if (visibleAttributes.isEmpty()) {
 			loadConfig();
 		}
-		return (VisibleAttribute[]) (((Map) visibleAttributes.get(new Integer(
-				tabType)))).values().toArray(new VisibleAttribute[] {});
+		return (VisibleAttributeInterface[]) (((Map) visibleAttributes.get(new Integer(
+				tabType)))).values().toArray(new VisibleAttributeInterface[] {});
 	}
 
 	private static void loadConfig() {
@@ -77,8 +77,8 @@ public class VisibleAttribute {
 		}
 	}
 	
-	public static VisibleAttribute[] getAllAttributes() {
-		return (VisibleAttribute[])((Map)visibleAttributes.get(new Integer(1))).values().toArray(new VisibleAttribute[] {});
+	public static VisibleAttributeInterface[] getAllAttributes() {
+		return (VisibleAttributeInterface[])((Map)visibleAttributes.get(new Integer(1))).values().toArray(new VisibleAttributeInterface[] {});
 	}
 
 	private static VisibleAttribute fromXML(Node node) {
@@ -126,6 +126,9 @@ public class VisibleAttribute {
 		this.attributes = attributes;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getAttributes()
+	 */
 	public Attribute[] getAttributes() {
 		return attributes;
 	}
@@ -134,6 +137,9 @@ public class VisibleAttribute {
 		this.attributes = attributes;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getUserCategory()
+	 */
 	public UserCategory getUserCategory() {
 		return userCategory;
 	}
@@ -142,6 +148,9 @@ public class VisibleAttribute {
 		this.userCategory = category;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getUserLabel()
+	 */
 	public String getUserLabel() {
 		return userLabel;
 	}
@@ -150,10 +159,16 @@ public class VisibleAttribute {
 		this.userLabel = userLabel;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getValidity()
+	 */
 	public int[] getValidity() {
 		return validity;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getName()
+	 */
 	public String getName() {
 		return name;
 	}
@@ -162,15 +177,24 @@ public class VisibleAttribute {
 		return this.getUserLabelOrName();
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getUserLabelOrName()
+	 */
 	public String getUserLabelOrName() {
 		return (this.userLabel == null || "".equals(this.userLabel)) ? this.name
 				: this.userLabel;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#encodeToString()
+	 */
 	public String encodeToString() {
 		return "Attribute_" + this.getName();
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getType()
+	 */
 	public String getType() {
 		if (this.attributes[0] instanceof DateAttribute) {
 			return "DateAttribute";
@@ -185,16 +209,16 @@ public class VisibleAttribute {
 		}
 	}
 
-	public static VisibleAttribute getAttributeForTable(String string) {
+	public static VisibleAttributeInterface getAttributeForTable(String string) {
 		if (visibleAttributes.isEmpty()) {
 			loadConfig();
 		}
 		HashMap map = (HashMap) visibleAttributes.get(new Integer(
 				VisibleAttribute.ATTRIBUTE_TABLE_TAB));
-		return (VisibleAttribute) map.get(string);
+		return (VisibleAttributeInterface) map.get(string);
 	}
 
-	public static VisibleAttribute getAttribute(String id) {
+	public static VisibleAttributeInterface getAttribute(String id) {
 		if (visibleAttributes.isEmpty()) {
 			loadConfig();
 		}
@@ -203,7 +227,7 @@ public class VisibleAttribute {
 			Map attrMap = (Map) iter.next();
 			Iterator attrMapIter = attrMap.values().iterator();
 			while (attrMapIter.hasNext()) {
-				VisibleAttribute attr = (VisibleAttribute) attrMapIter.next();
+				VisibleAttributeInterface attr = (VisibleAttributeInterface) attrMapIter.next();
 				if (attr.getName().equals(id)) {
 					return attr;
 				}

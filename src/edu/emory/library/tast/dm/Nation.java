@@ -13,6 +13,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public class Nation
 {
@@ -97,7 +99,13 @@ public class Nation
 	}
 
 	public static Nation loadById(int id) {
-		// TODO Auto-generated method stub
+		Conditions cond = new Conditions();
+		cond.addCondition(Nation.getAttribute("id"), new Integer(id), Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue(new String[] {"edu.emory.library.tast.dm.Nation"}, new String[] {"n"}, cond);
+		Object[] ret = qValue.executeQuery();
+		if (ret.length > 0) {
+			return (Nation)ret[0];
+		}
 		return null;
 	}
 

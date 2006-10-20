@@ -20,6 +20,7 @@ import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 public class Group {
 
@@ -37,12 +38,12 @@ public class Group {
 
 	private Map searchableAttributesbyUserCategories = new HashMap();
 
-	private VisibleAttribute[] visibleAttributesAll;
+	private VisibleAttributeInterface[] visibleAttributesAll;
 
 	private Map visibleAttributesbyUserCategories = new HashMap();
 
 	public Group(String id, String userLabel, SearchableAttribute[] all,
-			VisibleAttribute[] visible) {
+			VisibleAttributeInterface[] visible) {
 		this.id = id;
 		this.userLabel = userLabel;
 		this.searchableAttributesAll = all;
@@ -51,7 +52,7 @@ public class Group {
 		}
 		this.visibleAttributesAll = visible;
 		if (this.visibleAttributesAll == null) {
-			this.visibleAttributesAll = new VisibleAttribute[] {};
+			this.visibleAttributesAll = new VisibleAttributeInterface[] {};
 		}
 		splitByUserCategories();
 	}
@@ -96,12 +97,12 @@ public class Group {
 			selected.clear();
 
 			for (int j = 0; j < visibleAttributesAll.length; j++) {
-				VisibleAttribute attr = visibleAttributesAll[j];
+				VisibleAttributeInterface attr = visibleAttributesAll[j];
 				if (attr != null && attr.getUserCategory().equals(category))
 					selected.add(attr);
 			}
 
-			VisibleAttribute[] selectedArr = new VisibleAttribute[selected
+			VisibleAttributeInterface[] selectedArr = new VisibleAttributeInterface[selected
 					.size()];
 			selected.toArray(selectedArr);
 
@@ -137,13 +138,13 @@ public class Group {
 		return getNoOfSearchableAttributesInUserCategory(category) > 0;
 	}
 
-	public VisibleAttribute[] getAllVisibleAttributes() {
+	public VisibleAttributeInterface[] getAllVisibleAttributes() {
 		return visibleAttributesAll;
 	}
 
-	public VisibleAttribute[] getVisibleAttributesInUserCategory(
+	public VisibleAttributeInterface[] getVisibleAttributesInUserCategory(
 			UserCategory category) {
-		return (VisibleAttribute[]) visibleAttributesbyUserCategories
+		return (VisibleAttributeInterface[]) visibleAttributesbyUserCategories
 				.get(category);
 	}
 
@@ -189,7 +190,7 @@ public class Group {
 			// locate <searchable-attributes>
 			NodeList xmlAttrTypes = xmlGroup.getChildNodes();
 			NodeList xmlAttrs = null;
-			VisibleAttribute[] visibleAttrs = null;
+			VisibleAttributeInterface[] visibleAttrs = null;
 			SearchableAttribute[] searchableAttrs = null;
 
 			for (int k = 0; k < xmlAttrTypes.getLength(); k++) {
@@ -217,13 +218,13 @@ public class Group {
 				}
 				if ("table-attributes".equals(xmlAttrType.getNodeName())) {
 					xmlAttrs = xmlAttrType.getChildNodes();
-					visibleAttrs = new VisibleAttribute[xmlAttrs.getLength()];
+					visibleAttrs = new VisibleAttributeInterface[xmlAttrs.getLength()];
 					for (int j = 0; j < xmlAttrs.getLength(); j++) {
 						Node xmlAttr = xmlAttrs.item(j);
 						if (xmlAttr.getNodeType() != Node.COMMENT_NODE) {
 							String attrId = xmlAttr.getAttributes()
 									.getNamedItem("id").getNodeValue();
-							VisibleAttribute attr = VisibleAttribute
+							VisibleAttributeInterface attr = VisibleAttribute
 									.getAttribute(attrId);
 							if (attr == null)
 								throw new RuntimeException(

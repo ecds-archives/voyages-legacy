@@ -22,7 +22,7 @@ import edu.emory.library.tast.ui.MenuItemSelectedEvent;
 import edu.emory.library.tast.ui.MessageBarComponent;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
@@ -107,7 +107,7 @@ public class SearchBean
 	private void searchInternal(boolean storeToHistory)
 	{
 		
-		VisibleAttribute[] columns = new VisibleAttribute[workingQuery.getConditionCount()];
+		VisibleAttributeInterface[] columns = new VisibleAttributeInterface[workingQuery.getConditionCount()];
 		Conditions conditions = new Conditions();
 
 		//int i = 0;
