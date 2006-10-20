@@ -96,4 +96,9 @@ public class Nation
 		return map;
 	}
 
+	public static Nation loadById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

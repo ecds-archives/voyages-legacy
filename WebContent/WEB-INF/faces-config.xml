@@ -170,6 +170,14 @@
 		edu.emory.library.tast.ui.SimpleTableComponent</component-class>
 	</component>
 
+	
+	<component>
+		<component-type>EstimateListing</component-type>
+		<component-class>
+			edu.emory.library.tast.estimates.listing.EstimateListingComponent
+		</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>
@@ -362,6 +370,14 @@
 			<value>
 			#{EstimatesSelectionBean}</value>
 		</managed-property>
+	</managed-bean>
+
+	
+	<managed-bean>
+		<managed-bean-name>EstimateListingBean</managed-bean-name>
+		<managed-bean-class>
+		edu.emory.library.tast.estimates.listing.EstimateListingBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>
