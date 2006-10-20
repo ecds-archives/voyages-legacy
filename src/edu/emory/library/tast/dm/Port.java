@@ -21,8 +21,8 @@ public class Port extends Location
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new StringAttribute("id", "Port"));
-		attributes.put("name", new NumericAttribute("name", "Port"));
+		attributes.put("id", new NumericAttribute("id", "Port"));
+		attributes.put("name", new StringAttribute("name", "Port"));
 		attributes.put("region", new NumericAttribute("region", "Port"));
 	}
 

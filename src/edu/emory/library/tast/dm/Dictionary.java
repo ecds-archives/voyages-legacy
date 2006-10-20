@@ -30,7 +30,7 @@ public class Dictionary {
 	/**
 	 * ID of dictionary
 	 */
-	private Integer id;
+	private Long id;
 
 	/**
 	 * Name (Dictionary entry name)
@@ -221,11 +221,11 @@ public class Dictionary {
 	public Dictionary() {
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
