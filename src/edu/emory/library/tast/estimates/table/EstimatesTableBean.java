@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Region;
@@ -13,6 +16,7 @@ import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -20,22 +24,35 @@ public class EstimatesTableBean
 {
 	
 	private EstimatesSelectionBean selectionBean;
+	private boolean optionsSelected = false;
+	private boolean optionsChanged = true;
+	private Conditions conditions;
 	private String rowGrouping;
 	private String colGrouping;
 	private String[] rowLabels;
 	private String[] colLabels;
 	private String[][] values;
 	
-	public String loadTableData()
+	private void generateTableIfNecessary()
 	{
 		
-		// from select bean
-		List selectedNations = selectionBean.getSelectedNations();
-		List selectedExpRegions = selectionBean.getSelectedExpRegions();
-		List selectedImpRegions = selectionBean.getSelectedImpRegions();
-
 		// conditions from the left column (i.e. from select bean)
-		Conditions conditions = selectionBean.getConditions();
+		Conditions newConditions = selectionBean.getConditions();
+		
+		// check if we have to
+		if (!optionsSelected) return;
+		if (!optionsChanged && newConditions.equals(conditions)) return;
+		optionsChanged = false;
+		conditions = newConditions;
+		
+		// open db
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		// from select bean
+		List selectedNations = selectionBean.loadSelectedNations(sess);
+		List selectedExpRegions = selectionBean.loadSelectedExpRegions(sess);
+		List selectedImpRegions = selectionBean.loadSelectedImpRegions(sess);
 
 		// start query
 		QueryValue query = new QueryValue(
@@ -146,37 +163,56 @@ public class EstimatesTableBean
 						new Attribute[] {Estimate.getAttribute("slavImported")}));
 
 		// finally query the database 
-		Object[] result = query.executeQuery();
+		Object[] result = query.executeQuery(sess);
+		
+		// close db
+		transaction.commit();
+		sess.close();
+		
+		// nothing?
+		boolean noResults = result == null || result.length == 0; 
 		
 		// find max and min year
 		if (rowsByYears)
 		{
-
-			int minYear = ((Integer) ((Object[])result[0])[0]).intValue();
-			int maxYear = ((Integer) ((Object[])result[result.length - 1])[0]).intValue();
-
-			int periods = (maxYear - minYear) / period + 1;
-			rowLabels = new String[periods];
-			for (int i = 0; i < periods; i++)
-			{
-				if (period == 1)
-				{
-					rowLabels[i] =
-						String.valueOf(minYear + i * period);
-				}
-				else
-				{
-					rowLabels[i] =
-						String.valueOf(minYear + i * period) + "<br>" + 
-						String.valueOf(minYear + (i+1) * period - 1);
-				}
-			}
 			
-			rowLookup = new HashMap();
-			for (int i = 0; i < periods; i++)
-				rowLookup.put(
-						new Integer(minYear + i * period),
-						new Integer(i));
+			if (noResults)
+			{
+				
+				rowLabels = new String[0];
+				rowLookup = new HashMap();
+
+			}
+			else
+			{
+
+				int minYear = ((Long) ((Object[])result[0])[0]).intValue();
+				int maxYear = ((Long) ((Object[])result[result.length - 1])[0]).intValue();
+	
+				int periods = (maxYear - minYear) / period + 1;
+				rowLabels = new String[periods];
+				for (int i = 0; i < periods; i++)
+				{
+					if (period == 1)
+					{
+						rowLabels[i] =
+							String.valueOf(minYear + i * period);
+					}
+					else
+					{
+						rowLabels[i] =
+							String.valueOf(minYear + i * period) + "<br>" + 
+							String.valueOf(minYear + (i+1) * period - 1);
+					}
+				}
+				
+				rowLookup = new HashMap();
+				for (int i = 0; i < periods; i++)
+					rowLookup.put(
+							new Long(minYear + i * period),
+							new Integer(i));
+			
+			}
 
 		}
 		
@@ -203,8 +239,8 @@ public class EstimatesTableBean
 		{
 			
 			Object[] row = (Object[]) result[i];
-			Integer rowId = (Integer) row[0];
-			Integer colId = (Integer) row[1];
+			Long rowId = (Long) row[0];
+			Long colId = (Long) row[1];
 			Double imp = (Double) row[2];
 			Double exp = (Double) row[3];
 			
@@ -221,9 +257,13 @@ public class EstimatesTableBean
 			
 		}
 		
-		// stay on the same page
+	}
+
+	public String refreshTable()
+	{
+		optionsSelected = true;
+		optionsChanged = true;
 		return null;
-		
 	}
 
 	public EstimatesSelectionBean getSelectionBean()
@@ -258,25 +298,20 @@ public class EstimatesTableBean
 
 	public String[] getColLabels()
 	{
+		generateTableIfNecessary();
 		return colLabels;
 	}
 
 	public String[] getRowLabels()
 	{
+		generateTableIfNecessary();
 		return rowLabels;
 	}
 
 	public String[][] getValues()
 	{
+		generateTableIfNecessary();
 		return values;
 	}
-	
-//	public static void main(String[] args)
-//	{
-//		EstimatesTableBean bean = new EstimatesTableBean();
-//		EstimatesSelectionBean selectionBean = new EstimatesSelectionBean();
-//		bean.setSelectionBean(selectionBean);
-//		bean.getTableData();
-//	}
 
 }

@@ -10,6 +10,8 @@ public class SelectItem implements Serializable
 	private String value;
 	private String text;
 	private int orderNumber = -1;
+	private SelectItem[] subItems = null;
+	private boolean selectable = true;
 	
 	public SelectItem()
 	{
@@ -27,6 +29,19 @@ public class SelectItem implements Serializable
 		this.text = text;
 		this.value = value;
 		this.orderNumber = orderNumber;
+	}
+	
+	public SelectItem(String text, String value, int orderNumber, SelectItem[] subItems)
+	{
+		this.text = text;
+		this.value = value;
+		this.orderNumber = orderNumber;
+		this.subItems = subItems;
+	}
+	
+	public boolean hasSubItems()
+	{
+		return subItems != null && subItems.length != 0;
 	}
 
 	public String getText()
@@ -58,10 +73,30 @@ public class SelectItem implements Serializable
 	{
 		this.orderNumber = orderNumber;
 	}
-	
+
+	public SelectItem[] getSubItems()
+	{
+		return subItems;
+	}
+
+	public void setSubItems(SelectItem[] subItems)
+	{
+		this.subItems = subItems;
+	}
+
 	public String toString()
 	{
 		return value + ": " + text;
+	}
+
+	public boolean isSelectable()
+	{
+		return selectable;
+	}
+
+	public void setSelectable(boolean selectable)
+	{
+		this.selectable = selectable;
 	}
 
 }

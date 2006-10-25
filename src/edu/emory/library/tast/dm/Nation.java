@@ -25,15 +25,15 @@ public class Nation
 		attributes.put("name", new StringAttribute("name", "Nation"));
 	}
 	
-	private int id;
+	private long id;
 	private String name;
 	
-	public int getId()
+	public long getId()
 	{
 		return id;
 	}
 	
-	public void setId(int id)
+	public void setId(long id)
 	{
 		this.id = id;
 	}
@@ -92,7 +92,7 @@ public class Nation
 		for (Iterator iter = nations.iterator(); iter.hasNext();)
 		{
 			Nation nation = (Nation) iter.next();
-			map.put(new Integer(nation.getId()), new Integer(i++));
+			map.put(new Long(nation.getId()), new Integer(i++));
 		}
 		
 		return map;

@@ -1,4 +1,4 @@
-//$Id: PostgreSQLDialect.java,v 1.5 2006-10-18 21:24:51 jzich Exp $
+//$Id: PostgreSQLDialect.java,v 1.6 2006-10-25 19:25:41 jzich Exp $
 package org.hibernate.dialect;
 
 import java.sql.Types;
@@ -116,7 +116,7 @@ public class PostgreSQLDialect extends Dialect {
 
 		registerFunction( "estimate", new StandardSQLFunction( "estimate", Hibernate.FLOAT ) );
 		
-		registerFunction( "round_to_multiple", new StandardSQLFunction( "round_to_multiple", Hibernate.INTEGER ) );
+		registerFunction( "round_to_multiple", new StandardSQLFunction( "round_to_multiple", Hibernate.LONG ) );
 		
 		getDefaultProperties().setProperty(Environment.STATEMENT_BATCH_SIZE, DEFAULT_BATCH_SIZE);
 	}
