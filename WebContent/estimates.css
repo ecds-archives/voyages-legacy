@@ -10,3 +10,12 @@ div.estimates-table table.simple-table td.simple-table-row-label,
 div.estimates-table table.simple-table td.simple-table-col-label {
 	background-color: #F1E7C8;
 	text-align: left; }
+
+div.african-region-list td.checkbox-list-label-0,
+div.american-region-list td.checkbox-list-label-0 {
+	padding-left: 5px;
+	font-weight: bold; }
+
+div.african-region-list table.checkbox-list-table-1,
+div.american-region-list table.checkbox-list-table-1 {
+	margin-left: 10px; }

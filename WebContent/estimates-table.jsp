@@ -32,7 +32,7 @@
 		</h:selectOneMenu>
 	</t:htmlTag>
 	<t:htmlTag value="td">
-		<h:commandButton action="#{EstimatesTableBean.loadTableData}" value="Show" />
+		<h:commandButton action="#{EstimatesTableBean.refreshTable}" value="Show" />
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
