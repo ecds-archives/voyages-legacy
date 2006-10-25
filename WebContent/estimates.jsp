@@ -11,6 +11,7 @@
 	<link href="main.css" rel="stylesheet" type="text/css">
 	<link href="sections.css" rel="stylesheet" type="text/css">
 	<link href="estimates.css" rel="stylesheet" type="text/css">
+	<link href="search-table.css" rel="stylesheet" type="text/css">
 	<script src="utils.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>

@@ -49,7 +49,6 @@ public class EstimateListingBean {
 		tableData.setFormatter(visibleAttrs[4], new AbstractAttributeFormatter() {
 
 			public String format(Object object) {
-				// TODO Auto-generated method stub
 				return String.valueOf(Math.round((((Number)object).doubleValue() * 100)) / (double)100);
 			}
 
@@ -62,7 +61,6 @@ public class EstimateListingBean {
 		tableData.setFormatter(visibleAttrs[5], new AbstractAttributeFormatter() {
 
 			public String format(Object object) {
-				// TODO Auto-generated method stub
 				return String.valueOf(Math.round((((Number)object).doubleValue() * 100)) / (double)100);
 			}
 

@@ -42,13 +42,13 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		attr = new VisibleAttrEstimate("impRegion", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("impRegion"), Region.getAttribute("name")})});
-		attr.setUserLabel("Imputed major region of slaves embarkation");
+		attr.setUserLabel("Imputed major region of slaves disembarkation");
 		visibleAttributes.put("impRegion", attr);
 		
 		attr = new VisibleAttrEstimate("expRegion", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("expRegion"), Region.getAttribute("name")})});
-		attr.setUserLabel("Imputed major region of slaves disembarkation");
+		attr.setUserLabel("Imputed major region of slaves embarkation");
 		visibleAttributes.put("expRegion", attr);
 		
 		attr = new VisibleAttrEstimate("slavExported", new Attribute[] {Estimate.getAttribute("slavExported")});
