@@ -13,12 +13,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Nation;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 
 public class VisibleAttrEstimate implements VisibleAttributeInterface {
@@ -26,7 +29,9 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 	private static HashMap visibleAttributes = new HashMap();
 
 	static {
-		VisibleAttrEstimate attr = new VisibleAttrEstimate("nation", new Attribute[] {Estimate.getAttribute("nation")});
+		VisibleAttrEstimate attr = new VisibleAttrEstimate("nation", 
+				new Attribute[] {new SequenceAttribute(
+						new Attribute[] {Estimate.getAttribute("nation"), Nation.getAttribute("name")})});
 		attr.setUserLabel("Nationality");
 		visibleAttributes.put("nation", attr);
 		
@@ -34,11 +39,15 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		attr.setUserLabel("Year");
 		visibleAttributes.put("year", attr);
 		
-		attr = new VisibleAttrEstimate("impRegion", new Attribute[] {Estimate.getAttribute("impRegion")});
+		attr = new VisibleAttrEstimate("impRegion", 
+				new Attribute[] {new SequenceAttribute(
+						new Attribute[] {Estimate.getAttribute("impRegion"), Region.getAttribute("name")})});
 		attr.setUserLabel("Imputed major region of slaves embarkation");
 		visibleAttributes.put("impRegion", attr);
 		
-		attr = new VisibleAttrEstimate("expRegion", new Attribute[] {Estimate.getAttribute("expRegion")});
+		attr = new VisibleAttrEstimate("expRegion", 
+				new Attribute[] {new SequenceAttribute(
+						new Attribute[] {Estimate.getAttribute("expRegion"), Region.getAttribute("name")})});
 		attr.setUserLabel("Imputed major region of slaves disembarkation");
 		visibleAttributes.put("expRegion", attr);
 		
