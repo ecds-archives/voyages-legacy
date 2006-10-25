@@ -7,7 +7,6 @@ import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.estimates.EstimatesBean;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;

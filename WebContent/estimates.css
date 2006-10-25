@@ -19,3 +19,34 @@ div.american-region-list td.checkbox-list-label-0 {
 div.african-region-list table.checkbox-list-table-1,
 div.american-region-list table.checkbox-list-table-1 {
 	margin-left: 10px; }
+
+table.event-line-left-label {
+	-background-color: #AAFFFF; }
+
+table.event-line-top-label {
+	-background-color: #AAFFFF; }
+
+div.event-line-graph {
+	-background-color: #EEFFFF; }
+	
+div.event-line-indicator {
+	-moz-opacity: 0.1;
+	background-color: #333333; }
+	
+div.event-line-indicator-container {
+	-background-color: #EEEEEE;}
+
+div.event-line-indicator-label {
+	background-color: White;
+	border: 1px solid Black;
+	padding: 5px; }
+	
+div.event-line-mark {
+	cursor: pointer;
+	background-image: url(../../event-line-mark.png);
+	background-repeat: no-repeat; }
+
+div.event-line-mark-pressed {
+	cursor: pointer;
+	background-image: url(../../event-line-mark-pressed.png);
+	background-repeat: no-repeat; }

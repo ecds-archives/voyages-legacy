@@ -3,3 +3,10 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
+<s:eventLine
+	graphHeight="#{EstimatesTimelineBean.graphHeight}"
+	barWidth="#{EstimatesTimelineBean.barWidth}"
+	horizontalLabels="#{EstimatesTimelineBean.horizontalLabels}"
+	verticalLabels="#{EstimatesTimelineBean.verticalLabels}"
+	graphs="#{EstimatesTimelineBean.graphs}"
+	events="#{EstimatesTimelineBean.events}" />
