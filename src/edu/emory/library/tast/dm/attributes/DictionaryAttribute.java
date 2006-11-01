@@ -16,8 +16,13 @@ public class DictionaryAttribute extends Attribute {
 	
 	private String dictionary;
 
-	public DictionaryAttribute(String name, String objectType) {
+	public DictionaryAttribute(String name, String objType) {
+		this(name, objType, null);
+	}
+	
+	public DictionaryAttribute(String name, String objectType, String string) {
 		super(name, objectType);
+		this.setUserLabel(string);
 	}
 	
 	public DictionaryAttribute(Node xmlNode, String objectType) {

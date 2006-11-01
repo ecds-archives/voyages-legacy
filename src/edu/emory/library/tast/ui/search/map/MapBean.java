@@ -150,9 +150,9 @@ public class MapBean {
 
 	public PointOfInterest[] getPointsOfInterest() {
 		
-		if (this.mapData.getToolTip().length != 0) {
-			System.out.println(this.mapData.getToolTip()[0].getX());
-		}
+//		if (this.mapData.getToolTip().length != 0) {
+//			System.out.println(this.mapData.getToolTip()[0].getX());
+//		}
 		
 		return this.mapData.getToolTip();
 	}

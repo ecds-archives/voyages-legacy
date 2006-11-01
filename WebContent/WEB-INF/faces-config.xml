@@ -363,6 +363,8 @@
 			#{EstimatesSelectionBean}</value>
 		</managed-property>
 	</managed-bean>
+
+	
 	<managed-bean>
 		<managed-bean-name>EstimateListingBean</managed-bean-name>
 		<managed-bean-class>
@@ -376,6 +378,7 @@
 			<value>#{EstimatesSelectionBean}</value>
 		</managed-property>
 	</managed-bean>
+
 	<managed-bean>
 		<managed-bean-name>
 		EstimatesTimelineBean</managed-bean-name>
@@ -390,6 +393,21 @@
 			edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
 			<value>
 			#{EstimatesSelectionBean}</value>
+		</managed-property>
+	</managed-bean>
+
+	
+	<managed-bean>
+		<managed-bean-name>EstimatesMapBean</managed-bean-name>
+		<managed-bean-class>
+		edu.emory.library.tast.estimates.map.EstimatesMapBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+		<property-name>
+			estimatesBean</property-name>
+			<property-class>
+			edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
+			<value>#{EstimatesSelectionBean}</value>
 		</managed-property>
 	</managed-bean>
 

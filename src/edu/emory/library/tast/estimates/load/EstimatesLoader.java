@@ -24,6 +24,11 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class EstimatesLoader {
 
+	private class EstimateResponse {
+		QueryValue qValue;
+		int wiggleRoom;
+	}
+	
 	private File file;
 
 	private List estimates = new ArrayList();
@@ -36,41 +41,39 @@ public class EstimatesLoader {
 		EstimatesPosition[] positions = EstimatesParser.parse(this.file);
 		for (int i = 0; i < positions.length; i++) {
 			System.out.println(positions[i]);
-
+			int wiggleRoom = -1;
+			
 			if (positions[i].isExportSimpleValue()) {
-				handleSimpleValue(positions[i], "slaximp", positions[i]
-						.getExportFormula(), false);
+				wiggleRoom = handleSimpleValue(positions[i], "slaximp", positions[i]
+						.getExportFormula(), false, wiggleRoom);
 			} else {
-				handleConditionValue(positions[i], positions[i]
-						.getExportFormula().toLowerCase().trim(), false);
+				wiggleRoom = handleConditionValue(positions[i], positions[i]
+						.getExportFormula().toLowerCase().trim(), false, wiggleRoom);
 			}
 
 			if (positions[i].isImportSimpleValue()) {
-				handleSimpleValue(positions[i], "slamimp", positions[i]
-						.getImportFormula(), true);
+				wiggleRoom = handleSimpleValue(positions[i], "slamimp", positions[i]
+						.getImportFormula(), true, wiggleRoom);
 			} else {
-				handleConditionValue(positions[i], positions[i]
-						.getImportFormula().toLowerCase().trim(), true);
+				wiggleRoom = handleConditionValue(positions[i], positions[i]
+						.getImportFormula().toLowerCase().trim(), true, wiggleRoom);
 			}
 
 		}
 	}
 
-	private void handleConditionValue(EstimatesPosition position,
-			String positionFormula, boolean imported) {
-		QueryValue qValue = this.getFunctValueQuery(position, positionFormula,
-				imported, true);
-		// System.out.println("condition: " +
-		// qValue.toStringWithParams().conditionString);
-		// System.out.println("params: " +
-		// qValue.toStringWithParams().properties);
-		Object[] voyages = qValue.executeQuery();
-		System.out.println("exp direct: " + voyages.length);
+	private int handleConditionValue(EstimatesPosition position,
+			String positionFormula, boolean imported, int prevWiggleRoom) {
+		EstimateResponse response = this.getFunctValueQuery(position, positionFormula,
+				imported, true, prevWiggleRoom);
+
+		Object[] voyages = response.qValue.executeQuery();
+		System.out.println("exp direct: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 		double sum = 0.0;
 
-		QueryValue qValueTmp = this.getFunctValueQuery(position, positionFormula,
-				imported, false);
-		Object[] voyagesToSum = qValueTmp.executeQuery();
+		EstimateResponse response1 = this.getFunctValueQuery(position, positionFormula,
+				imported, false, prevWiggleRoom);
+		Object[] voyagesToSum = response1.qValue.executeQuery();
 		for (int i = 0; i < voyagesToSum.length; i++) {
 			Object[] row = (Object[]) voyagesToSum[i];
 			if (row[2] != null) {
@@ -81,44 +84,6 @@ public class EstimatesLoader {
 
 		if (voyages.length > 0) {
 			EstimateWeight[] weights = this.getEstimateWeights(voyages);
-
-			// for (int j = 0; j < voyages.length; j++) {
-			//
-			// Object[] row = (Object[]) voyages[j];
-			// Estimate estim = new Estimate();
-			// estim.setNation((Nation) Nation.loadById(position.getNatimp()));
-			// estim.setYear(new Integer(position.getYear()));
-			// estim
-			// .setExpRegion(Region.loadById(((Long) row[0])
-			// .longValue()));
-			// estim
-			// .setImpRegion(Region.loadById(((Long) row[1])
-			// .longValue()));
-			// int index;
-			// if ((index = estimates.indexOf(estim)) != -1) {
-			// Estimate estimate = (Estimate) estimates.get(index);
-			// if (row[2] != null) {
-			// if (imported) {
-			// estimate.setSlavImported(estimate.getSlavImported()
-			// + ((Number) row[2]).doubleValue());
-			// } else {
-			// estimate.setSlavExported(estimate.getSlavExported()
-			// + ((Number) row[2]).doubleValue());
-			// }
-			// }
-			// } else {
-			// if (row[2] != null) {
-			// if (imported) {
-			// estim.setSlavImported(((Number) row[2])
-			// .doubleValue());
-			// } else {
-			// estim.setSlavExported(((Number) row[2])
-			// .doubleValue());
-			// }
-			// }
-			// estimates.add(estim);
-			// }
-			// System.out.println(" Added: " + estim);
 
 			for (int j = 0; j < weights.length; j++) {
 				Estimate estim = new Estimate();
@@ -155,14 +120,15 @@ public class EstimatesLoader {
 			}
 
 		}
+		return response.wiggleRoom;
 	}
 
-	private void handleSimpleValue(EstimatesPosition position,
-			String voyageAttribute, String positionCondition, boolean imported) {
-		QueryValue qValue = this.getFixedValueQuery(position, voyageAttribute,
-				imported);
-		Object[] voyages = qValue.executeQuery();
-		System.out.println("exp simple: " + voyages.length);
+	private int handleSimpleValue(EstimatesPosition position,
+			String voyageAttribute, String positionCondition, boolean imported, int prevWiggleRoom) {
+		EstimateResponse response = this.getFixedValueQuery(position, voyageAttribute,
+				imported, prevWiggleRoom);
+		Object[] voyages = response.qValue.executeQuery();
+		System.out.println("exp simple: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 		// distribution of slaves...
 		if (voyages.length != 0) {
 			EstimateWeight[] weights = this.getEstimateWeights(voyages);
@@ -206,6 +172,7 @@ public class EstimatesLoader {
 				System.out.println("   Added: " + estim);
 			}
 		}
+		return response.wiggleRoom;
 	}
 
 	private EstimateWeight[] getEstimateWeights(Object[] voyages) {
@@ -232,10 +199,16 @@ public class EstimatesLoader {
 		return weights;
 	}
 
-	private QueryValue getFixedValueQuery(EstimatesPosition position,
-			String field, boolean imported) {
+	private EstimateResponse getFixedValueQuery(EstimatesPosition position,
+			String field, boolean imported, int prevWiggleRoom) {
 		// get wiggle room for year
-		int yearWiggleRoom = this.getYearWiggleRoom(position, imported);
+		
+		int yearWiggleRoom = 0;
+		if (prevWiggleRoom == -1) {
+			yearWiggleRoom = this.getYearWiggleRoom(position, imported);
+		} else {
+			yearWiggleRoom = prevWiggleRoom;
+		}
 
 		// prepare conditions
 		Conditions conditions = new Conditions();
@@ -286,15 +259,23 @@ public class EstimatesLoader {
 		qValue.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Voyage.getAttribute(field) }));
 
-		return qValue;
+		EstimateResponse response = new EstimateResponse();
+		response.qValue = qValue;
+		response.wiggleRoom = yearWiggleRoom;
+		return response;
 	}
 
-	private QueryValue getFunctValueQuery(EstimatesPosition position,
-			String field, boolean imported, boolean useWiggleRoom) {
+	private EstimateResponse getFunctValueQuery(EstimatesPosition position,
+			String field, boolean imported, boolean useWiggleRoom, int prevWiggleRoom) {
 		// prepare conditions
 		int yearWiggleRoom = 0;
 		if (useWiggleRoom) {
-			yearWiggleRoom = this.getYearWiggleRoom(position, imported);
+			if (prevWiggleRoom != -1) {
+				yearWiggleRoom = prevWiggleRoom;
+			}
+			else {
+				yearWiggleRoom = this.getYearWiggleRoom(position, imported);
+			}
 		}
 		Conditions conditions = new Conditions();
 		if (position.getPort() != null) {
@@ -348,23 +329,17 @@ public class EstimatesLoader {
 						new Attribute[] { Voyage.getAttribute("iid"),
 								new DirectValueAttribute(field) }) }));
 
-		return qValue;
+		EstimateResponse response = new EstimateResponse();
+		response.qValue = qValue;
+		response.wiggleRoom = yearWiggleRoom;
+		return response;
 	}
 
 	private int getYearWiggleRoom(EstimatesPosition position, boolean imported) {
 		int wiggleRoomExpand = 1;
 		int currentWiggleRoom = -1;
 		int currentResults = 0;
-		// if (position.getMajselimp() == null
-		// || position.getMajselimp().length == 0) {
-		// return 0;
-		// } else {
-		// if (position.getMajselimp().length > 1) {
-		// int[] portIds = position.getMajselimp();
-		// Region[] ports = new Region[portIds.length];
-		// for (int j = 0; j < ports.length; j++) {
-		// ports[j] = Region.loadById(portIds[j]);
-		// }
+
 		Object inP = null;
 		Object inR = null;
 		if (position.getPort() != null) {

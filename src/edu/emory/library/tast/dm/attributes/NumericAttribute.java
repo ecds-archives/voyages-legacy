@@ -24,8 +24,13 @@ public class NumericAttribute extends Attribute {
 	private Integer type;
 
 	public NumericAttribute(String name, String objectType) {
+		this(name, objectType, null);
+	}
+	
+	public NumericAttribute(String name, String objectType, String string) {
 		super(name, objectType);
 		this.type = new Integer(TYPE_UNKNOWN);
+		this.setUserLabel(string);
 	}
 	
 	public NumericAttribute(Node xmlNode, String objectType) {

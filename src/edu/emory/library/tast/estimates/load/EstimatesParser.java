@@ -22,44 +22,49 @@ public class EstimatesParser {
 			String[] columns = line.split(";");
 			if (columns.length >= 6) {
 				try {
-					int from = Integer.parseInt(columns[1]);
-					int to = Integer.parseInt(columns[2]);
-					int natimp = Integer.parseInt(columns[0]);
+					String[] nations = columns[0].replaceAll("\"", "").split(",");
+					for (int j = 0; j < nations.length; j++) {
 
-					
-					String exp = columns[5].replaceAll("\"", "");
-					String imp = columns[6].replaceAll("\"", "");
-					String prop = columns[7].replaceAll("\"", "");
-					if (columns[3].trim().compareTo("") != 0) {
-						String[] portdepts = columns[3].replaceAll("\"", "").split(",");
-						int [] ports = new int[portdepts.length];
-						for (int n = 0; n < portdepts.length; n++) {
-							int portdep = Integer.parseInt(portdepts[n]);
-							ports[n] = portdep;
+						int from = Integer.parseInt(columns[1]);
+						int to = Integer.parseInt(columns[2]);
+						int natimp = Integer.parseInt(nations[j]);
+
+						String exp = columns[5].replaceAll("\"", "");
+						String imp = columns[6].replaceAll("\"", "");
+						String prop = columns[7].replaceAll("\"", "");
+						if (columns[3].trim().compareTo("") != 0) {
+							String[] portdepts = columns[3]
+									.replaceAll("\"", "").split(",");
+							int[] ports = new int[portdepts.length];
+							for (int n = 0; n < portdepts.length; n++) {
+								int portdep = Integer.parseInt(portdepts[n]);
+								ports[n] = portdep;
+							}
+							for (int i = from; i <= to; i++) {
+								estimates.add(new EstimatesPosition(natimp,
+										ports, null, i, exp, imp, prop));
+							}
+						} else if (columns[4].trim().compareTo("") != 0) {
+							String[] majselimps = columns[4].replaceAll("\"",
+									"").split(",");
+							int[] selpts = new int[majselimps.length];
+							for (int n = 0; n < majselimps.length; n++) {
+								int majselimp = Integer.parseInt(majselimps[n]);
+								selpts[n] = majselimp;
+							}
+							for (int i = from; i <= to; i++) {
+								estimates.add(new EstimatesPosition(natimp,
+										null, selpts, i, exp, imp, prop));
+							}
+						} else {
+							for (int i = from; i <= to; i++) {
+								estimates.add(new EstimatesPosition(natimp,
+										null, null, i, exp, imp, prop));
+							}
 						}
-						for (int i = from; i <= to; i++) {
-							estimates.add(new EstimatesPosition(natimp,
-									ports, null, i, exp, imp, prop));
-						}
-					} else if (columns[4].trim().compareTo("") != 0) {
-						String[] majselimps = columns[4].replaceAll("\"", "").split(",");
-						int [] selpts = new int[majselimps.length];
-						for (int n = 0; n < majselimps.length; n++) {
-							int majselimp = Integer.parseInt(majselimps[n]);
-							selpts[n] = majselimp;
-						}
-						for (int i = from; i <= to; i++) {
-							estimates.add(new EstimatesPosition(natimp,
-									null, selpts, i, exp, imp, prop));
-						}
-					} else {
-						for (int i = from; i <= to; i++) {
-							estimates.add(new EstimatesPosition(natimp,
-									null, null, i, exp, imp, prop));
-						}
+						System.out.println(" has: " + from + " " + to + "; nation: " + nations[j]);
+						System.out.println("    Line: " + line);
 					}
-					System.out.println(" has: " + from + " " + to);
-					System.out.println("    Line: " + line);
 				} catch (NumberFormatException e) {
 					System.out.println("Skipped line: " + line);
 				}
@@ -68,7 +73,8 @@ public class EstimatesParser {
 			}
 		}
 
-		return (EstimatesPosition[])estimates.toArray(new EstimatesPosition[] {});
+		return (EstimatesPosition[]) estimates
+				.toArray(new EstimatesPosition[] {});
 	}
 
 }

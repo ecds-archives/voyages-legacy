@@ -13,12 +13,12 @@ public class Estimate {
 	private static Map attributes = new HashMap();
 	static {
 		attributes.put("id", new NumericAttribute("id", "Estimate"));
-		attributes.put("year", new NumericAttribute("year", "Estimate"));
-		attributes.put("nation", new DictionaryAttribute("nation", "Estimate"));
-		attributes.put("expRegion", new DictionaryAttribute("expRegion", "Estimate"));
-		attributes.put("impRegion", new DictionaryAttribute("impRegion", "Estimate"));
-		attributes.put("slavImported", new NumericAttribute("slavImported", "Estimate"));
-		attributes.put("slavExported", new NumericAttribute("slavExported", "Estimate"));
+		attributes.put("year", new NumericAttribute("year", "Estimate", "Year"));
+		attributes.put("nation", new DictionaryAttribute("nation", "Estimate", "Nation"));
+		attributes.put("expRegion", new DictionaryAttribute("expRegion", "Estimate", "Region of slaves disembarkation"));
+		attributes.put("impRegion", new DictionaryAttribute("impRegion", "Estimate", "Region of slaves embarkation"));
+		attributes.put("slavImported", new NumericAttribute("slavImported", "Estimate", "Number of slaves disembarked"));
+		attributes.put("slavExported", new NumericAttribute("slavExported", "Estimate", "Number of slaves embarked"));
 	}
 
 	private Long id;
