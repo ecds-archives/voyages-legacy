@@ -1,39 +1,24 @@
 package edu.emory.library.tast.estimates.timeline;
 
-import java.awt.Color;
-
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
-import edu.emory.library.tast.ui.EventLineDataPoint;
 import edu.emory.library.tast.ui.EventLineEvent;
 import edu.emory.library.tast.ui.EventLineGraph;
-import edu.emory.library.tast.ui.EventLineHorizontalLabels;
 import edu.emory.library.tast.ui.EventLineVerticalLabels;
+import edu.emory.library.tast.ui.EventLineZoomLevel;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class EstimatesTimelineBean
 {
 	
-	private static final int GRAPH_WIDTH = 800;
-	private static final int GRAPH_HEIGHT = 100;
-	private static final int ZOOM_LEVEL_MAX = 5;
-	private static final int[] ZOOM_LEVEL_SPANS = new int[] {400, 200, 100, 50, 25};
-	private static final int[] ZOOM_LEVEL_GAPS = new int[] {100, 50, 25, 10, 5};
-	private static final int[] ZOOM_LEVEL_NUDGES = new int[] {25, 25, 25, 10, 5};
-	private static final int MIN_YEAR = 1500;
-	
 	private EstimatesSelectionBean selectionBean;
 	private Conditions conditions;
-	private int barWidth;
-	private int zoomLevel = 0;
-	private int firstYear = MIN_YEAR;
 	private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
 	private EventLineVerticalLabels verticalLabels;
-	private EventLineHorizontalLabels horizontalLabels;
 	
 	private void generateGraphsIfNecessary()
 	{
@@ -76,106 +61,35 @@ public class EstimatesTimelineBean
 
 		// finally query the database 
 		Object[] result = query.executeQuery();
-		
-		// nothing?
-//		boolean noResults = result == null || result.length == 0; 
-//		
-//		int minYear = ((Long) ((Object[])result[0])[0]).intValue();
-//		int maxYear = ((Long) ((Object[])result[result.length - 1])[0]).intValue();
-		
-		int yearsSpan = ZOOM_LEVEL_SPANS[zoomLevel]; 
-		
-		EventLineDataPoint[] impSlaves = new EventLineDataPoint[yearsSpan];
-		EventLineDataPoint[] expSlaves = new EventLineDataPoint[yearsSpan];
-		
-		Object[] row;
 
-		double imp = 0;
-		double exp = 0;
+		// data arrays
+		int expYears[] = new int[result.length];
+		int impYears[] = new int[result.length];
+		double expValues[] = new double[result.length];
+		double impValues[] = new double[result.length];
 		
-		double impMax = 0;
-		double expMax = 0;
-		
+		// move db data to it
 		for (int i = 0; i < result.length; i++)
 		{
-			row = (Object[]) result[i];
-			exp = ((Double) row[1]).doubleValue();
-			imp = ((Double) row[2]).doubleValue();
-			if (i == 0 || expMax < exp) expMax = exp;
-			if (i == 0 || impMax < imp) impMax = imp;
-		}
-
-		double totalMax = Math.max(impMax, expMax);
-
-		row = (Object[]) result[0];
-		int rowYear = ((Integer) row[0]).intValue();
-
-		for (int year = firstYear, resultIndex = 0; year < firstYear + yearsSpan; year++)
-		{
-			
-			System.out.println(rowYear + " : " + year);
-
-			// we have data from db
-			if (rowYear == year)
-			{
-				
-				// get values from db
-				exp = ((Double) row[1]).doubleValue();
-				imp = ((Double) row[2]).doubleValue();
-				
-				// goto next row
-				resultIndex++;
-				if (resultIndex < result.length)
-				{
-					row = (Object[]) result[resultIndex];
-					rowYear = ((Integer) row[0]).intValue();
-				}
-				
-			}
-			
-			// no record for this year
-			else
-			{
-				exp = 0;
-				imp = 0;
-			}
-			
-			expSlaves[year - firstYear] = new EventLineDataPoint(
-					(int) ((exp / totalMax) * GRAPH_HEIGHT),
-					String.valueOf(Math.round(exp * 100) / 100));
-			
-			impSlaves[year - firstYear] = new EventLineDataPoint(
-					(int) ((imp / totalMax) * GRAPH_HEIGHT),
-					String.valueOf(Math.round(imp * 100) / 100));
-
+			Object[] row = (Object[]) result[i];
+			impYears[i] = expYears[i] = ((Integer) row[0]).intValue();
+			expValues[i] = ((Double) row[1]).doubleValue();
+			impValues[i] = ((Double) row[2]).doubleValue();
 		}
 		
-		// graph for imported
-		graphImp = new EventLineGraph();
-		graphImp.setName("Imported");
-		graphImp.setData(impSlaves);
-		graphImp.setColor(new Color(0.6f, 0.8f, 1.0f, 0.5f));
-
 		// graph for exported
 		graphExp = new EventLineGraph();
 		graphExp.setName("Exported");
-		graphExp.setData(expSlaves);
-		graphExp.setColor(new Color(0.6f, 0.8f, 1.0f, 1.0f));
+		graphExp.setX(expYears);
+		graphExp.setY(expValues);
+		graphExp.setColor("#EEEEEE");
 
-		// bar width
-		barWidth = GRAPH_WIDTH / ZOOM_LEVEL_SPANS[zoomLevel];
-		
-		// generate horizontal labels
-		int gap = ZOOM_LEVEL_GAPS[zoomLevel];
-		int gapsCount = ZOOM_LEVEL_SPANS[zoomLevel] / gap;
-		
-		String[] years = new String[gapsCount + 1];
-		for (int i = 0; i <= gapsCount; i++)
-			years[i] = String.valueOf(firstYear + i*gap);
-		
-		horizontalLabels = new EventLineHorizontalLabels();
-		horizontalLabels.setLabels(years);
-		horizontalLabels.setSpace(ZOOM_LEVEL_SPANS[zoomLevel] / gapsCount);
+		// graph for imported
+		graphImp = new EventLineGraph();
+		graphImp.setName("Imported");
+		graphImp.setX(impYears);
+		graphImp.setY(impValues);
+		graphImp.setColor("#CCCCCC");
 
 		// generate vertical labels
 		verticalLabels = new EventLineVerticalLabels();
@@ -183,71 +97,6 @@ public class EstimatesTimelineBean
 		verticalLabels.setStart(0);
 		verticalLabels.setSpace(25);
 		
-	}
-	
-//	public EstimatesTimelineBean()
-//	{
-//		createRandomGraphs();
-//		changeZoomLevelAndPrepareData(0, MIN_YEAR);
-//	}
-//	
-//	private void createRandomGraphs()
-//	{
-//		graphs = new EventLineGraph[] {
-//				createRandomGraph(new Color(0.6f, 0.8f, 1.0f, 0.5f), "Exported"),
-//				createRandomGraph(new Color(0.6f, 0.8f, 1.0f, 1.0f), "Imported")};
-//	}
-//	
-//	private EventLineGraph createRandomGraph(Color color, String name)
-//	{
-//
-//		EventLineDataPoint[] values = new EventLineDataPoint[ZOOM_LEVEL_SPANS[0]];
-//		int val = (int) (GRAPH_HEIGHT * Math.random());
-//		values[0] = new EventLineDataPoint(val, String.valueOf(val * 100)); 
-//		for (int i = 1; i < values.length; i++)
-//		{
-//			val = (int) (values[i-1].getValue() + GRAPH_HEIGHT * 0.2 * (Math.random() - 0.5));
-//			val = Math.min(val, GRAPH_HEIGHT);
-//			val = Math.max(val, 0);
-//			values[i] = new EventLineDataPoint(val, String.valueOf(val * 100));
-//		}
-//		
-//		EventLineGraph graph = new EventLineGraph();
-//		graph.setColor(color);
-//		graph.setData(values);
-//		graph.setName(name);
-//		
-//		return graph;
-//		
-//	}
-	
-	public int getGraphHeight()
-	{
-		return GRAPH_HEIGHT;
-	}
-	
-	public int getBarWidth()
-	{
-		generateGraphsIfNecessary();
-		return barWidth;
-	}
-
-	public EventLineGraph[] getGraphs()
-	{
-		generateGraphsIfNecessary();
-		return new EventLineGraph[] {graphImp, graphExp};
-	}
-
-	public EventLineHorizontalLabels getHorizontalLabels()
-	{
-		generateGraphsIfNecessary();
-		return horizontalLabels;
-	}
-
-	public EventLineVerticalLabels getVerticalLabels()
-	{
-		generateGraphsIfNecessary();
-		return verticalLabels;
 	}
 	
 	public EventLineEvent[] getEvents()
@@ -262,113 +111,26 @@ public class EstimatesTimelineBean
 //		};
 	}
 	
-	private void changeZoomLevelAndPrepareData(int newZoomLevel, int newFirstYear)
+	public EventLineZoomLevel[] getZoomLevels()
 	{
-		
-//		zoomLevel = newZoomLevel;
-//		firstYear = newFirstYear;
-//		
-//		if (currentGraphs == null)
-//			currentGraphs = new EventLineGraph[graphs.length];
-//		
-//		for (int i = 0; i < graphs.length; i++)
-//			currentGraphs[i] = graphs[i].getSubGraph(
-//					firstYear - MIN_YEAR,
-//					firstYear - MIN_YEAR + ZOOM_LEVEL_SPANS[zoomLevel] - 1);
-		
-	}
-	
-	private void zoomTo(int newZoomLevel)
-	{
-		
-		// can we still?
-		if (zoomLevel < 0 || ZOOM_LEVEL_MAX <= newZoomLevel)
-			return;
-		
-		// year in the middle of the interval
-		int lastYear = firstYear + ZOOM_LEVEL_SPANS[zoomLevel];
-		int middleYear = (lastYear + firstYear) / 2;
-
-		// next first point of the interval
-		int newSpan = ZOOM_LEVEL_SPANS[newZoomLevel];
-		int newFirstYear = middleYear - newSpan / 2;
-		
-		// adjust to multiples of gaps
-		int newGap = ZOOM_LEVEL_GAPS[newZoomLevel];
-		newFirstYear = newGap * Math.round(newFirstYear / newGap);
-		
-		// make sure it's in the max range
-		int maxYear = MIN_YEAR + ZOOM_LEVEL_SPANS[0];
-		if (newFirstYear < MIN_YEAR)
-			newFirstYear = MIN_YEAR;
-		else if (maxYear < newFirstYear + newSpan)
-			newFirstYear = maxYear - newSpan;
-		
-		// set it
-		changeZoomLevelAndPrepareData(newZoomLevel, newFirstYear);
-		
-	}
-	
-	public String zoomMinus()
-	{
-		zoomTo(zoomLevel - 1);
-		return null;
+		return new EventLineZoomLevel[] {
+				new EventLineZoomLevel(2, 100, 400),
+				new EventLineZoomLevel(4, 50, 200),
+				new EventLineZoomLevel(8, 25, 100),
+				new EventLineZoomLevel(16, 10, 50),
+				new EventLineZoomLevel(32, 5, 25)};
 	}
 
-	public String zoomPlus()
+	public EventLineGraph[] getGraphs()
 	{
-		zoomTo(zoomLevel + 1);
-		return null;
+		generateGraphsIfNecessary();
+		return new EventLineGraph[] {graphExp, graphImp};
 	}
 
-	public String moveLeft()
+	public EventLineVerticalLabels getVerticalLabels()
 	{
-		if (firstYear > MIN_YEAR)
-		{
-			int newFirstYear = firstYear - ZOOM_LEVEL_NUDGES[zoomLevel];
-			if (newFirstYear < MIN_YEAR) newFirstYear = MIN_YEAR; 
-			changeZoomLevelAndPrepareData(zoomLevel, newFirstYear);
-		}
-		return null;
-	}
-
-	public String moveRight()
-	{
-		int maxYear = MIN_YEAR + ZOOM_LEVEL_SPANS[0];
-		if (firstYear + ZOOM_LEVEL_SPANS[zoomLevel] < maxYear)
-		{
-			int newFirstYear = firstYear + ZOOM_LEVEL_NUDGES[zoomLevel];
-			if (newFirstYear + ZOOM_LEVEL_SPANS[zoomLevel] > maxYear) newFirstYear = maxYear - ZOOM_LEVEL_SPANS[zoomLevel]; 
-			changeZoomLevelAndPrepareData(zoomLevel, newFirstYear);
-		}
-		return null;
-	}
-
-	
-	public String getMoveLeftLabel()
-	{
-		return "< (previous " + ZOOM_LEVEL_NUDGES[zoomLevel] + " years)";
-	}
-
-	public String getMoveRightLabel()
-	{
-		return "(next " + ZOOM_LEVEL_NUDGES[zoomLevel] + " years) >";
-	}
-
-	public String getMoveZoomPlusLabel()
-	{
-		if (zoomLevel < ZOOM_LEVEL_MAX - 1)
-			return "+ (zoom to " + ZOOM_LEVEL_SPANS[zoomLevel + 1] + " scale)";
-		else
-			return "";
-	}
-
-	public String getMoveZoomMinusLabel()
-	{
-		if (zoomLevel > 0)
-			return "- (zoom to " + ZOOM_LEVEL_SPANS[zoomLevel - 1] + " scale)";
-		else
-			return "";
+		generateGraphsIfNecessary();
+		return verticalLabels;
 	}
 
 	public EstimatesSelectionBean getSelectionBean()

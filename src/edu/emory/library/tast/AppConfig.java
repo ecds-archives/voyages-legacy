@@ -33,8 +33,6 @@ public class AppConfig
 	public static final String IMAGES_REFERENCES_MAXLEN = "images.references.maxlen";
 	public static final String IMAGES_EMORYLOCATION_MAXLEN = "images.emorylocation.maxlen";
 	
-	public static final String EVENTLINE_IMAGE_DIR = "eventline.image.dir";
-	
 //	public static final String IMAGES_THUMBNAIL_WIDTH = "images.thumbnail.width";	
 //	public static final String IMAGES_THUMBNAIL_HEIGHT = "images.thumbnail.height";	
 

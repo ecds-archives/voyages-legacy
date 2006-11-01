@@ -1,37 +1,80 @@
 package edu.emory.library.tast.ui;
 
-import java.awt.Color;
 
 public class EventLineGraph
 {
 	
-	private EventLineDataPoint[] data;
-	private Color color;
 	private String name;
-
-	public EventLineDataPoint[] getData()
+	private String color;
+	private int x[];
+	private double y[];
+	
+	private boolean maxMinComputed = false;
+	private double maxY = 0;
+	private double minY = 0;
+	
+	private void ensureMaxMin()
 	{
-		if (data == null) data = new EventLineDataPoint[0];
-		return data;
+		if (!maxMinComputed)
+		{
+			if (y != null)
+			{
+				maxY = y[0];
+				minY = y[0];
+				for (int i = 1; i < y.length; i++)
+				{
+					if (y[i] > maxY) maxY = y[i];
+					if (y[i] < minY) minY = y[i];
+				}
+			}
+			else
+			{
+				minY = Double.MIN_VALUE;
+				maxY = Double.MAX_VALUE;
+			}
+			maxMinComputed = true;
+		}
+	}
+	
+	public double getMaxValue()
+	{
+		ensureMaxMin();
+		return maxY;
 	}
 
-	public void setData(EventLineDataPoint[] data)
+	public double getMinValue()
 	{
-		this.data = data;
+		ensureMaxMin();
+		return minY;
 	}
 
-	public int getCount()
+	public int[] getX()
 	{
-		if (data == null) return 0;
-		else return data.length;
+		return x;
 	}
 
-	public Color getColor()
+	public void setX(int[] x)
+	{
+		this.x = x;
+	}
+
+	public double[] getY()
+	{
+		return y;
+	}
+
+	public void setY(double[] y)
+	{
+		maxMinComputed = false;
+		this.y = y;
+	}
+
+	public String getColor()
 	{
 		return color;
 	}
 
-	public void setColor(Color color)
+	public void setColor(String color)
 	{
 		this.color = color;
 	}
@@ -46,24 +89,4 @@ public class EventLineGraph
 		this.name = name;
 	}
 	
-	public EventLineGraph getSubGraph(int start, int end)
-	{
-		
-		int n = end - start + 1;
-		
-		EventLineDataPoint[] newData = new EventLineDataPoint[n];
-		EventLineDataPoint[] data = getData();
-		
-		for (int i = start; i <= end; i++)
-			newData[i-start] = data[i];
-		
-		EventLineGraph subGraph = new EventLineGraph();
-		subGraph.setData(newData);
-		subGraph.setColor(color);
-		subGraph.setName(name);
-		
-		return subGraph;
-
-	}
-
 }

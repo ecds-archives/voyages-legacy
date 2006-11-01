@@ -20,6 +20,12 @@ div.african-region-list table.checkbox-list-table-1,
 div.american-region-list table.checkbox-list-table-1 {
 	margin-left: 10px; }
 
+div.event-line-graph-container {
+	-background-color: #EEEEEE; }
+
+div.event-line-selector-container {
+	-border: 1px solid #DEC77E; }
+
 table.event-line-left-label {
 	-background-color: #AAFFFF; }
 
@@ -27,8 +33,13 @@ table.event-line-top-label {
 	-background-color: #AAFFFF; }
 
 div.event-line-graph {
+	border: 1px solid Black;
 	-background-color: #EEFFFF; }
 	
+div.event-line-selector {
+	-moz-opacity: 0.1;
+	background-color: #333333; }
+
 div.event-line-indicator {
 	-moz-opacity: 0.1;
 	background-color: #333333; }

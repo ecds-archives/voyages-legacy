@@ -46,8 +46,8 @@ public class EventLineTestBean2
 		}
 		
 		EventLineGraph graph = new EventLineGraph();
-		graph.setColor(color);
-		graph.setData(values);
+//		graph.setColor(color);
+//		graph.setData(values);
 		graph.setName(name);
 		
 		return graph;
@@ -78,10 +78,10 @@ public class EventLineTestBean2
 		if (currentGraphs == null)
 			currentGraphs = new EventLineGraph[graphs.length];
 		
-		for (int i = 0; i < graphs.length; i++)
-			currentGraphs[i] = graphs[i].getSubGraph(
-					firstYear - MIN_YEAR,
-					firstYear - MIN_YEAR + ZOOM_LEVEL_SPANS[zoomLevel] - 1);
+//		for (int i = 0; i < graphs.length; i++)
+//			currentGraphs[i] = graphs[i].getSubGraph(
+//					firstYear - MIN_YEAR,
+//					firstYear - MIN_YEAR + ZOOM_LEVEL_SPANS[zoomLevel] - 1);
 		
 	}
 	

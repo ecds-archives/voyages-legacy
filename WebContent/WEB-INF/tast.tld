@@ -508,7 +508,13 @@
 			<name>graphHeight</name>
 		</attribute>
 		<attribute>
-			<name>barWidth</name>
+			<name>offset</name>
+		</attribute>
+		<attribute>
+			<name>selectorOffset</name>
+		</attribute>
+		<attribute>
+			<name>zoomLevel</name>
 		</attribute>
 		<attribute>
 			<name>graphs</name>
@@ -517,10 +523,10 @@
 			<name>events</name>
 		</attribute>
 		<attribute>
-			<name>verticalLabels</name>
+			<name>zoomLevels</name>
 		</attribute>
 		<attribute>
-			<name>horizontalLabels</name>
+			<name>verticalLabels</name>
 		</attribute>
 	</tag>
 	

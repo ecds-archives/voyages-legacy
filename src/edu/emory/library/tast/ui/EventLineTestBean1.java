@@ -46,8 +46,8 @@ public class EventLineTestBean1
 		}
 		
 		EventLineGraph graph = new EventLineGraph();
-		graph.setColor(color);
-		graph.setData(values);
+//		graph.setColor(color);
+//		graph.setData(values);
 		graph.setName("Imported");
 		
 		return graph;

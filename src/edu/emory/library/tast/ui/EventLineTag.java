@@ -10,11 +10,13 @@ public class EventLineTag extends UIComponentTag
 {
 	
 	private String graphHeight;
-	private String barWidth;
 	private String graphs;
 	private String events;
-	private String horizontalLabels;
+	private String zoomLevels;
 	private String verticalLabels;
+	private String zoomLevel;
+	private String offset;
+	private String selectorOffset;
 
 	public String getComponentType()
 	{
@@ -48,16 +50,48 @@ public class EventLineTag extends UIComponentTag
 			}
 		}
 		
-		if (barWidth != null && isValueReference(barWidth))
+		if (zoomLevel != null && isValueReference(zoomLevel))
 		{
-			ValueBinding vb = app.createValueBinding(barWidth);
-			eventLine.setValueBinding("barWidth", vb);
+			ValueBinding vb = app.createValueBinding(zoomLevel);
+			eventLine.setValueBinding("zoomLevel", vb);
 		}
 		else
 		{
 			try
 			{
-				eventLine.setBarWidth(Integer.parseInt(barWidth));
+				eventLine.setZoomLevel(Integer.parseInt(zoomLevel));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
+		}
+
+		if (offset != null && isValueReference(offset))
+		{
+			ValueBinding vb = app.createValueBinding(offset);
+			eventLine.setValueBinding("offset", vb);
+		}
+		else
+		{
+			try
+			{
+				eventLine.setOffset(Integer.parseInt(offset));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
+		}
+
+		if (selectorOffset != null && isValueReference(selectorOffset))
+		{
+			ValueBinding vb = app.createValueBinding(selectorOffset);
+			eventLine.setValueBinding("selectorOffset", vb);
+		}
+		else
+		{
+			try
+			{
+				eventLine.setOffset(Integer.parseInt(selectorOffset));
 			}
 			catch (NumberFormatException nfe)
 			{
@@ -76,16 +110,16 @@ public class EventLineTag extends UIComponentTag
 			eventLine.setValueBinding("events", vb);
 		}
 
-		if (horizontalLabels != null && isValueReference(horizontalLabels))
-		{
-			ValueBinding vb = app.createValueBinding(horizontalLabels);
-			eventLine.setValueBinding("horizontalLabels", vb);
-		}
-
 		if (verticalLabels != null && isValueReference(verticalLabels))
 		{
 			ValueBinding vb = app.createValueBinding(verticalLabels);
 			eventLine.setValueBinding("verticalLabels", vb);
+		}
+
+		if (zoomLevels != null && isValueReference(zoomLevels))
+		{
+			ValueBinding vb = app.createValueBinding(zoomLevels);
+			eventLine.setValueBinding("zoomLevels", vb);
 		}
 
 	}
@@ -110,16 +144,6 @@ public class EventLineTag extends UIComponentTag
 		this.graphHeight = height;
 	}
 
-	public String getBarWidth()
-	{
-		return barWidth;
-	}
-
-	public void setBarWidth(String width)
-	{
-		this.barWidth = width;
-	}
-
 	public String getEvents()
 	{
 		return events;
@@ -130,16 +154,6 @@ public class EventLineTag extends UIComponentTag
 		this.events = items;
 	}
 
-	public String getHorizontalLabels()
-	{
-		return horizontalLabels;
-	}
-
-	public void setHorizontalLabels(String horizontalLabels)
-	{
-		this.horizontalLabels = horizontalLabels;
-	}
-
 	public String getVerticalLabels()
 	{
 		return verticalLabels;
@@ -148,6 +162,46 @@ public class EventLineTag extends UIComponentTag
 	public void setVerticalLabels(String verticalLabels)
 	{
 		this.verticalLabels = verticalLabels;
+	}
+
+	public String getZoomLevels()
+	{
+		return zoomLevels;
+	}
+
+	public void setZoomLevels(String zoomLevels)
+	{
+		this.zoomLevels = zoomLevels;
+	}
+
+	public String getOffset()
+	{
+		return offset;
+	}
+
+	public void setOffset(String offset)
+	{
+		this.offset = offset;
+	}
+
+	public String getZoomLevel()
+	{
+		return zoomLevel;
+	}
+
+	public void setZoomLevel(String zoomLevel)
+	{
+		this.zoomLevel = zoomLevel;
+	}
+
+	public String getSelectorOffset()
+	{
+		return selectorOffset;
+	}
+
+	public void setSelectorOffset(String selectorOffset)
+	{
+		this.selectorOffset = selectorOffset;
 	}
 
 }
