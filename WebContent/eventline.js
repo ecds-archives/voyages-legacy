@@ -195,7 +195,7 @@ EventLine.prototype.createSelector = function()
 			slotStyle.position = "absolute";
 			slotStyle.backgroundColor = graph.color;
 			slotStyle.left = (k*this.selectorBarWidth) + "px";
-			slotStyle.width = (this.selectorBarWidth) + "px";
+			slotStyle.width = (this.selectorBarWidth - 1) + "px";
 			slotStyle.top = (this.selectorHeight - barHeight) + "px";
 			slotStyle.height = (barHeight) + "px";
 			
@@ -225,7 +225,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset, forceCreateSlots)
 			if (graph.slots)
 			{
 				var slots = graph.slots;
-				for (var j = 0; j < slots.length; i++)
+				for (var j = 0; j < slots.length; j++)
 				{
 					this.graphsContainer.removeChild(slots[j]);
 				}
@@ -237,7 +237,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset, forceCreateSlots)
 				slot.style.position = "absolute";
 				slot.style.backgroundColor = graph.color;
 				slot.style.left = (j*zoomLevelObj.barWidth) + "px";
-				slot.style.width = (zoomLevelObj.barWidth) + "px";
+				slot.style.width = (zoomLevelObj.barWidth - 1) + "px";
 				slot.style.height = (30) + "px";
 				slots.push(slot);
 				this.graphsContainer.appendChild(slot);
@@ -296,15 +296,11 @@ EventLine.prototype.refresh = function(zoomLevel, offset, forceCreateSlots)
 
 }
 
-EventLine.prototype.redrawSelector = function(offset, span)
+EventLine.prototype.redrawSelectorUsingLeftRight = function(left, right)
 {
-	
-	var left = this.selectorBarWidth * (offset - this.selectorOffset);
-	var width = this.selectorBarWidth * span;
-	var right = left + width;
-	
+
 	this.selector.style.left = left + "px";
-	this.selector.style.width = width + "px";
+	this.selector.style.width = (right - left) + "px";
 	
 	this.leftSelector.style.left = left + "px";
 	this.leftSelector.style.width = "5px";
@@ -313,7 +309,14 @@ EventLine.prototype.redrawSelector = function(offset, span)
 	this.rightSelector.style.left = (right - 5) + "px";
 	this.rightSelector.style.width = "5px";
 	this.rightSelector.style.backgroundColor = "#999999";
-	
+
+}
+
+EventLine.prototype.redrawSelector = function(offset, span)
+{
+	var left = this.selectorBarWidth * (offset - this.selectorOffset);
+	var right = left + this.selectorBarWidth * span;
+	this.redrawSelectorUsingLeftRight(left, right);
 }
 
 EventLine.prototype.graphMouseOver = function(event)
@@ -400,26 +403,91 @@ EventLine.prototype.leftSelectorMouseMove = function(event)
 	var originalRight = originalLeft + originalWidth;
 	
 	var newLeft = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
-	var newWidth = originalRight - newLeft;
 	
-	var newOffset = Math.round(this.selectorOffset + newLeft / this.selectorBarWidth);
-	var newViewSpan = Math.round(newWidth / this.selectorBarWidth);
-	
-	this.redrawSelector(newOffset, newViewSpan);
+	this.redrawSelectorUsingLeftRight(newLeft, originalRight);
 
 }
 
 EventLine.prototype.leftSelectorMouseUp = function(event)
 {
 	
-	var dx = event.clientX - this.selectorDragStartX;
-	var newOffset = Math.round(this.offset + dx / this.selectorBarWidth);
-		
-	this.refresh(this.zoomLevel, newOffset, false);
+	var originalLeft = this.selectorBarWidth * (this.offset - this.selectorOffset)
+	var originalWidth = this.selectorBarWidth * this.zoomLevels[this.zoomLevel].viewSpan;
+	var originalRight = originalLeft + originalWidth;
+	
+	var newLeft = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
+	var newWidth = originalRight - newLeft;
+	
+	var newOffset = Math.round(this.selectorOffset + newLeft / this.selectorBarWidth);
+	var newViewSpan = Math.round(newWidth / this.selectorBarWidth);
+	
+	var newZoomLevel = this.getClosestZoomLevel(newViewSpan);
+	
+	this.refresh(newZoomLevel, newOffset, false);
 	
 	EventAttacher.detachOnWindowEvent("mouseup", this, "leftSelectorMouseUp");
 	EventAttacher.detachOnWindowEvent("mousemove", this, "leftSelectorMouseMove");
 	
+}
+
+EventLine.prototype.rightSelectorMouseDown = function(event)
+{
+	EventAttacher.attachOnWindowEvent("mouseup", this, "rightSelectorMouseUp");
+	EventAttacher.attachOnWindowEvent("mousemove", this, "rightSelectorMouseMove");
+}
+
+EventLine.prototype.rightSelectorMouseMove = function(event)
+{
+
+	var originalLeft = this.selectorBarWidth * (this.offset - this.selectorOffset)
+	
+	var newRight = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
+	var newWidth = newRight - originalLeft;
+	var newViewSpan = Math.round(newWidth / this.selectorBarWidth);
+	
+	this.redrawSelector(this.offset, newViewSpan);
+
+}
+
+EventLine.prototype.rightSelectorMouseUp = function(event)
+{
+	
+	var originalLeft = this.selectorBarWidth * (this.offset - this.selectorOffset)
+	var originalWidth = this.selectorBarWidth * this.zoomLevels[this.zoomLevel].viewSpan;
+	var originalRight = originalLeft + originalWidth;
+	
+	var newRight = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
+	var newWidth = newRight - originalLeft;
+	var newViewSpan = Math.round(newWidth / this.selectorBarWidth);
+	
+	var newZoomLevel = this.getClosestZoomLevel(newViewSpan);
+	var newOffset = Math.round(newRight / this.selectorBarWidth + this.selectorOffset) - this.zoomLevels[newZoomLevel].viewSpan;
+	
+	this.refresh(newZoomLevel, newOffset, false);
+	
+	EventAttacher.detachOnWindowEvent("mouseup", this, "rightSelectorMouseUp");
+	EventAttacher.detachOnWindowEvent("mousemove", this, "rightSelectorMouseMove");
+	
+}
+
+EventLine.prototype.getClosestZoomLevel = function(viewSpan)
+{
+
+	var minDiff = Math.abs(this.zoomLevels[0].viewSpan - viewSpan);
+	var minIndx = 0;
+	
+	for (var i = 1; i < this.zoomLevels.length; i++)
+	{
+		var diff = Math.abs(this.zoomLevels[i].viewSpan - viewSpan);
+		if (diff < minDiff)
+		{
+			minDiff = diff;
+			minIndx = i;
+		}
+	}
+	
+	return minIndx;
+
 }
 
 EventLine.prototype.setEventVisibility = function(eventIndex, visible)

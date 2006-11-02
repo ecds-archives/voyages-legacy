@@ -7,7 +7,7 @@
 	<s:eventLine
 		id="eventLine"
 		graphHeight="200"
-		zoomLevel="1"
+		zoomLevel="0"
 		offset="1600"
 		selectorOffset="1500"
 		graphs="#{EstimatesTimelineBean.graphs}"
