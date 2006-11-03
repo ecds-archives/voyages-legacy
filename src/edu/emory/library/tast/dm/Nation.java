@@ -109,7 +109,7 @@ public class Nation
 
 	public static Nation loadById(int id) {
 		Conditions cond = new Conditions();
-		cond.addCondition(Nation.getAttribute("id"), new Integer(id), Conditions.OP_EQUALS);
+		cond.addCondition(Nation.getAttribute("id"), new Long(id), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue(new String[] {"edu.emory.library.tast.dm.Nation"}, new String[] {"n"}, cond);
 		Object[] ret = qValue.executeQuery();
 		if (ret.length > 0) {

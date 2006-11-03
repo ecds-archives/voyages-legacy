@@ -81,7 +81,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			Location gisPort = (Location) ((Object[]) data[i])[0];
 			
 			//Get color
-			int color = ((Integer) ((Object[]) data[i])[2]).intValue();
+			int color = Integer.parseInt(((Object[]) data[i])[2].toString());
 			
 			//Get valaue
 			Number value = (Number) ((Object[]) data[i])[1];
@@ -176,6 +176,11 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			} else {
 				element.addLegendItem(both);
 			}
+		}
+		
+		if (data.length == 0) {
+			return new TransformerResponse(new AbstractMapItem[] {}, 
+					new LegendItemsGroup[] {});
 		}
 		
 		//Return result response

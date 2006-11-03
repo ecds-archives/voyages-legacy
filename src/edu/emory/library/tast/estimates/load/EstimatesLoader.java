@@ -358,7 +358,7 @@ public class EstimatesLoader {
 			inR = ports;
 		}
 
-		while (currentWiggleRoom < 20 && currentResults < 20) {
+		while (currentWiggleRoom < 0 && currentResults < 20) {
 			currentWiggleRoom += wiggleRoomExpand;
 			Conditions conditions = new Conditions();
 			if (inP != null) {

@@ -33,39 +33,54 @@ public class StatisticBean {
 			conditions.addCondition(VoyageIndex.getRecent());
 			conditions.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 			
-			QueryValue query = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, 
-					new String[] {"vi", "v"}, 
-					conditions);
-			
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}));
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}));
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("vymrtrat")}));
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("voy2imp")}));
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("malrat7")}));
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("chilrat7")}));
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("tonmod")}));
-			query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("crew1")}));
-			query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageId")}));
-			
-			Object[] results = query.executeQuery();
-			
 			elements = new StatisticElement[8];
 			
-			NumberFormat format = DecimalFormat.getInstance();
-			if (results.length > 0) {
-				results = (Object[])results[0];
-				for (int i = 0; i < results.length - 1; i++) {
-					elements[i] = new StatisticElement(statNames[i], 
-							format.format((Number)results[i]), 
-							format.format((Number)results[8]),
-							String.valueOf(Math.round(((Number)results[i]).doubleValue()/((Number)results[8]).doubleValue() * 1000) / (double)1000));
-				}
-			}
+			this.prepareEstimate(0, "slaximp", conditions);
+			this.prepareEstimate(1, "slamimp", conditions);
+			this.prepareEstimate(2, "vymrtrat", conditions);
+			this.prepareEstimate(3, "voy2imp", conditions);
+			this.prepareEstimate(4, "malrat7", conditions);
+			this.prepareEstimate(5, "chilrat7", conditions);
+			this.prepareEstimate(6, "tonmod", conditions);
+			
+//			Object[] results = query.executeQuery();
+//			
+//			
+//			
+//			if (results.length > 0) {
+//				results = (Object[])results[0];
+//				for (int i = 0; i < results.length - 1; i++) {
+//					elements[i] = new StatisticElement(statNames[i], 
+//							format.format((Number)results[i]), 
+//							format.format((Number)results[8]),
+//							String.valueOf(Math.round(((Number)results[i]).doubleValue()/((Number)results[8]).doubleValue() * 1000) / (double)1000));
+//				}
+//			}
 		}
 		
 		return elements;
 	}
 
+	private void prepareEstimate(int i, String attribute, Conditions conditions) {
+		Conditions cond2 = (Conditions)conditions.clone();
+		cond2.addCondition(Voyage.getAttribute(attribute), null, Conditions.OP_IS_NOT);
+		
+		NumberFormat format = DecimalFormat.getInstance();
+		QueryValue query = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, 
+				new String[] {"vi", "v"}, 
+				cond2);
+		query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute(attribute)}));
+		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageId")}));
+		Object[] results = query.executeQuery();
+		if (results.length > 0) {
+			Object[] row = (Object[])results[0];
+			elements[i] = new StatisticElement(statNames[i], 
+					format.format((Number)row[0]), 
+					format.format((Number)row[1]),
+					String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue() * 1000) / (double)1000));
+		}
+	}
+	
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
 	}
