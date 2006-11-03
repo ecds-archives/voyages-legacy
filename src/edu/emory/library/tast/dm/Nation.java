@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -72,13 +73,21 @@ public class Nation
 	
 	public static String[] nationNamesToArray(List nations)
 	{
+		return nationNamesToArray(nations, null);
+	}
+
+	public static String[] nationNamesToArray(List nations, Set includeOnly)
+	{
 		String[] names = new String[nations.size()];
 		
 		int i = 0;
 		for (Iterator iter = nations.iterator(); iter.hasNext();)
 		{
 			Nation nation = (Nation) iter.next();
-			names[i++] = nation.getName();
+			if (includeOnly == null || includeOnly.contains(new Long(nation.getId())))
+			{
+				names[i++] = nation.getName();
+			}
 		}
 		
 		return names;

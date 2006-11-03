@@ -32,6 +32,12 @@
 		</h:selectOneMenu>
 	</t:htmlTag>
 	<t:htmlTag value="td">
+		<h:selectBooleanCheckbox value="#{EstimatesTableBean.omitEmptyRowsAndColumns}" />
+	</t:htmlTag>
+	<t:htmlTag value="td">
+		<h:outputText value="Omit empty rows and columns"/>
+	</t:htmlTag>
+	<t:htmlTag value="td">
 		<h:commandButton action="#{EstimatesTableBean.refreshTable}" value="Show" />
 	</t:htmlTag>
 </t:htmlTag>

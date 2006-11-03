@@ -2,8 +2,10 @@ package edu.emory.library.tast.estimates.table;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -32,6 +34,7 @@ public class EstimatesTableBean
 	private String[] rowLabels;
 	private String[] colLabels;
 	private String[][] values;
+	private boolean omitEmptyRowsAndColumns;
 	
 	private void generateTableIfNecessary()
 	{
@@ -216,6 +219,27 @@ public class EstimatesTableBean
 
 		}
 		
+		// if we are supposed to hide empty rows and cols
+		if (omitEmptyRowsAndColumns)
+		{
+
+			// find id's of the non-empty rows and cols
+			Set nonEmptyRows = new HashSet();
+			Set nonEmptyCols = new HashSet();
+			for (int i = 0; i < result.length; i++)
+			{
+				Object[] row = (Object[]) result[i];
+				Long rowId = (Long) row[0];
+				Long colId = (Long) row[1];
+				nonEmptyRows.add(rowId);
+				nonEmptyCols.add(colId);
+			}
+			
+			// include only the non-empty rows
+			colLabels = Nation.nationNamesToArray(selectedNations);
+			
+		}
+		
 		// how we want to displat it
 		MessageFormat valuesFormat = new MessageFormat(
 				"<div class=\"exp\">{0,number,#}</div>" +
@@ -312,6 +336,16 @@ public class EstimatesTableBean
 	{
 		generateTableIfNecessary();
 		return values;
+	}
+
+	public boolean isOmitEmptyRowsAndColumns()
+	{
+		return omitEmptyRowsAndColumns;
+	}
+
+	public void setOmitEmptyRowsAndColumns(boolean omitEmptyRowsAndColumns)
+	{
+		this.omitEmptyRowsAndColumns = omitEmptyRowsAndColumns;
 	}
 
 }
