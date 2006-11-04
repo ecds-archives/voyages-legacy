@@ -1,23 +1,16 @@
 package edu.emory.library.tast.estimates.table;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.Estimate;
-import edu.emory.library.tast.dm.Nation;
-import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
+import edu.emory.library.tast.ui.SimpleTableLabel;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -31,10 +24,49 @@ public class EstimatesTableBean
 	private Conditions conditions;
 	private String rowGrouping;
 	private String colGrouping;
-	private String[] rowLabels;
-	private String[] colLabels;
+	private SimpleTableLabel[] rowLabels;
+	private SimpleTableLabel[] colLabels;
 	private String[][] values;
 	private boolean omitEmptyRowsAndColumns;
+	
+	private Grouper createGrouper(String groupBy, int resultIndex, List nations, List expRegions, List impRegions)
+	{
+		if ("nation".equals(groupBy))
+		{
+			return new GrouperNations(
+					resultIndex,
+					omitEmptyRowsAndColumns,
+					nations);
+		}
+		else if ("expRegion".equals(groupBy))
+		{
+			return new GrouperRegions(
+					resultIndex,
+					omitEmptyRowsAndColumns,
+					true,
+					expRegions);
+		}
+		else if ("impRegion".equals(groupBy))
+		{
+			return new GrouperRegions(
+					resultIndex,
+					omitEmptyRowsAndColumns,
+					false,
+					impRegions);
+		}
+		else if (groupBy != null && groupBy.startsWith("years"))
+		{
+			int period = Integer.parseInt(rowGrouping.substring(5));
+			return new GrouperYears(
+					resultIndex,
+					omitEmptyRowsAndColumns,
+					period);
+		}
+		else
+		{
+			throw new RuntimeException("invalid group by value");
+		}
+	}
 	
 	private void generateTableIfNecessary()
 	{
@@ -57,103 +89,28 @@ public class EstimatesTableBean
 		List selectedExpRegions = selectionBean.loadSelectedExpRegions(sess);
 		List selectedImpRegions = selectionBean.loadSelectedImpRegions(sess);
 
+		// for grouping rows
+		Grouper rowGrouper = createGrouper(rowGrouping, 0,
+				selectedNations, selectedExpRegions, selectedImpRegions);
+		
+		// for grouping cols
+		Grouper colGrouper = createGrouper(colGrouping, 1,
+				selectedNations, selectedExpRegions, selectedImpRegions);
+
 		// start query
 		QueryValue query = new QueryValue(
 				new String[] {"Estimate"},
 				new String[] {"estimate"},
 				conditions);
-		
-		// shorcut for nation ID
-		Attribute nationId = new SequenceAttribute (new Attribute[] {
-				Estimate.getAttribute("nation"),
-				Nation.getAttribute("id")});
 
-		// shorcut for exp region name
-		Attribute expRegionId = new SequenceAttribute (new Attribute[] {
-				Estimate.getAttribute("expRegion"),
-				Region.getAttribute("id")});
-
-		// shorcut for imp region ID
-		Attribute impRegionId = new SequenceAttribute (new Attribute[] {
-				Estimate.getAttribute("impRegion"),
-				Region.getAttribute("id")});
-
-		// determine columns by which we will group rows
-		Attribute rowGroupingAttributeId = null;
-		Map rowLookup = null;
-		boolean rowsByYears = false;
-		int period = 0;
-		if ("nation".equals(rowGrouping))
-		{
-			rowGroupingAttributeId = nationId;
-			rowLabels = Nation.nationNamesToArray(selectedNations);
-			rowLookup = Nation.createIdIndexMap(selectedNations);
-		}
-		else if ("expRegion".equals(rowGrouping))
-		{
-			rowGroupingAttributeId = expRegionId;
-			rowLabels = Region.regionNamesToArray(selectedExpRegions);
-			rowLookup = Region.createIdIndexMap(selectedExpRegions);
-		}
-		else if ("impRegion".equals(rowGrouping))
-		{
-			rowGroupingAttributeId = impRegionId;
-			rowLabels = Region.regionNamesToArray(selectedImpRegions);
-			rowLookup = Region.createIdIndexMap(selectedImpRegions);
-		}
-		else if (rowGrouping != null && rowGrouping.startsWith("years"))
-		{
-			rowsByYears = true;
-			period = Integer.parseInt(rowGrouping.substring(5));
-			rowGroupingAttributeId =
-				new FunctionAttribute("round_to_multiple", new Attribute[] {
-						Estimate.getAttribute("year"),
-						new DirectValueAttribute("period", new Integer(period))});
-		}
-		else
-		{
-			throw new RuntimeException("invalid rowGrouping value");
-		}
-		
-		// determine columns by which we will group columns
-		Attribute colGroupingAttributeId = null;
-		Map colLookup = null;
-		if ("nation".equals(colGrouping))
-		{
-			colGroupingAttributeId = nationId;
-			colLabels = Nation.nationNamesToArray(selectedNations);
-			colLookup = Nation.createIdIndexMap(selectedNations);
-		}
-		else if ("expRegion".equals(colGrouping))
-		{
-			colGroupingAttributeId = expRegionId;
-			colLabels = Region.regionNamesToArray(selectedExpRegions);
-			colLookup = Region.createIdIndexMap(selectedExpRegions);
-		}
-		else if ("impRegion".equals(colGrouping))
-		{
-			colGroupingAttributeId = impRegionId;
-			colLabels = Region.regionNamesToArray(selectedImpRegions);
-			colLookup = Region.createIdIndexMap(selectedImpRegions);
-		}
-		else
-		{
-			throw new RuntimeException("invalid colGrouping value");
-		}
-		
 		// set grouping in the query
 		query.setGroupBy(new Attribute[] {
-				rowGroupingAttributeId,
-				colGroupingAttributeId});
+				rowGrouper.getGroupingAttribute(),
+				colGrouper.getGroupingAttribute()});
 		
-		// sort by rows so that we are able
-		// to find max and min year later
-		query.setOrder(QueryValue.ORDER_ASC);
-		query.setOrderBy(new Attribute[] {rowGroupingAttributeId});
-
 		// we want to see: row ID, row Name, col ID, col Name 
-		query.addPopulatedAttribute(rowGroupingAttributeId);
-		query.addPopulatedAttribute(colGroupingAttributeId);
+		query.addPopulatedAttribute(rowGrouper.getGroupingAttribute());
+		query.addPopulatedAttribute(colGrouper.getGroupingAttribute());
 
 		// ... and number of slaves exported
 		query.addPopulatedAttribute(
@@ -172,89 +129,23 @@ public class EstimatesTableBean
 		transaction.commit();
 		sess.close();
 		
-		// nothing?
-		boolean noResults = result == null || result.length == 0; 
-		
-		// find max and min year
-		if (rowsByYears)
-		{
-			
-			if (noResults)
-			{
-				
-				rowLabels = new String[0];
-				rowLookup = new HashMap();
-
-			}
-			else
-			{
-
-				int minYear = ((Long) ((Object[])result[0])[0]).intValue();
-				int maxYear = ((Long) ((Object[])result[result.length - 1])[0]).intValue();
-	
-				int periods = (maxYear - minYear) / period + 1;
-				rowLabels = new String[periods];
-				for (int i = 0; i < periods; i++)
-				{
-					if (period == 1)
-					{
-						rowLabels[i] =
-							String.valueOf(minYear + i * period);
-					}
-					else
-					{
-						rowLabels[i] =
-							String.valueOf(minYear + i * period) + "<br>" + 
-							String.valueOf(minYear + (i+1) * period - 1);
-					}
-				}
-				
-				rowLookup = new HashMap();
-				for (int i = 0; i < periods; i++)
-					rowLookup.put(
-							new Long(minYear + i * period),
-							new Integer(i));
-			
-			}
-
-		}
-		
-		// if we are supposed to hide empty rows and cols
-		if (omitEmptyRowsAndColumns)
-		{
-
-			// find id's of the non-empty rows and cols
-			Set nonEmptyRows = new HashSet();
-			Set nonEmptyCols = new HashSet();
-			for (int i = 0; i < result.length; i++)
-			{
-				Object[] row = (Object[]) result[i];
-				Long rowId = (Long) row[0];
-				Long colId = (Long) row[1];
-				nonEmptyRows.add(rowId);
-				nonEmptyCols.add(colId);
-			}
-			
-			// include only the non-empty rows
-			colLabels = Nation.nationNamesToArray(selectedNations);
-			
-		}
+		// init groupers
+		rowGrouper.initSlots(result);
+		colGrouper.initSlots(result);
 		
 		// how we want to displat it
-		MessageFormat valuesFormat = new MessageFormat(
-				"<div class=\"exp\">{0,number,#}</div>" +
-				"<div class=\"imp\">{1,number,#}</div>");
+		MessageFormat valuesFormat = new MessageFormat("{0,number,#}");
 		
 		// prepate the final array of values
-		int rowCount = rowLabels.length;
-		int colCount = colLabels.length;
-		values = new String[rowCount][colCount];
+		int rowCount = rowGrouper.getSlotsCount();
+		int colCount = colGrouper.getSlotsCount();
+		values = new String[rowCount][2*colCount];
+		String zeroValue = valuesFormat.format(new Object[]{new Double(0)});
 		for (int i = 0; i < rowCount; i++)
 		{
-			for (int j = 0; j < colCount; j++)
+			for (int j = 0; j < 2*colCount; j++)
 			{
-				values[i][j] = valuesFormat.format(
-						new Object[]{new Double(0), new Double(0)});
+				values[i][j] = zeroValue;
 			}
 		}
 		
@@ -263,23 +154,23 @@ public class EstimatesTableBean
 		{
 			
 			Object[] row = (Object[]) result[i];
-			Long rowId = (Long) row[0];
-			Long colId = (Long) row[1];
-			Double imp = (Double) row[2];
-			Double exp = (Double) row[3];
+			Double exp = (Double) row[2];
+			Double imp = (Double) row[3];
 			
-			Integer rowIndex = (Integer) rowLookup.get(rowId);
-			Integer colIndex = (Integer) colLookup.get(colId);
+			int rowIndex = rowGrouper.lookupIndex(row);
+			int colIndex = colGrouper.lookupIndex(row);
 			
-			if (rowIndex != null && colIndex != null)
-			{
-				if (imp == null) imp = new Double (0.0);
-				if (exp == null) exp = new Double (0.0);
-				values[rowIndex.intValue()][colIndex.intValue()] =
-					valuesFormat.format(new Object[]{exp, imp});
-			}
+			if (imp == null) imp = new Double (0.0);
+			if (exp == null) exp = new Double (0.0);
+			
+			values[rowIndex][2*colIndex+0] = valuesFormat.format(new Object[]{exp});
+			values[rowIndex][2*colIndex+1] = valuesFormat.format(new Object[]{imp});
 			
 		}
+		
+		// create labels
+		colLabels = SimpleTableLabel.createFromStringArray(colGrouper.getLabels(), 2);
+		rowLabels = SimpleTableLabel.createFromStringArray(rowGrouper.getLabels(), 1);
 		
 	}
 
@@ -320,13 +211,13 @@ public class EstimatesTableBean
 		this.rowGrouping = rowGrouping;
 	}
 
-	public String[] getColLabels()
+	public SimpleTableLabel[] getColLabels()
 	{
 		generateTableIfNecessary();
 		return colLabels;
 	}
 
-	public String[] getRowLabels()
+	public SimpleTableLabel[] getRowLabels()
 	{
 		generateTableIfNecessary();
 		return rowLabels;

@@ -14,11 +14,11 @@ public class SimpleTableComponent extends UIComponentBase
 	private boolean dataSet = false;
 	private String[][] data;
 
-	private boolean columnLabelsSet = false;
-	private String[] columnLabels;
+	private boolean columnsSet = false;
+	private SimpleTableLabel[] columns;
 	
-	private boolean rowLabelsSet = false;
-	private String[] rowLabels;
+	private boolean rowsSet = false;
+	private SimpleTableLabel[] rows;
 
 	public String getFamily()
 	{
@@ -32,18 +32,14 @@ public class SimpleTableComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 		
 		// get data from bean
-		String[] columnLabels = getColumnLabels();
-		String[] rowLabels = getRowLabels();
+		SimpleTableLabel[] cols = getColumns();
+		SimpleTableLabel[] rows = getRows();
 		String[][] data = getData();
 		if (data == null) data = new String[0][0]; 
 		
 		// nothing to display
-		if (columnLabels == null || rowLabels == null)
+		if (cols == null || rows == null)
 			return;
-		
-		// size
-		int colCount = columnLabels.length;
-		int rowCount = rowLabels.length;
 		
 		// table
 		writer.startElement("table", this);
@@ -58,24 +54,46 @@ public class SimpleTableComponent extends UIComponentBase
 		writer.endElement("td");
 		
 		// column labels
-		for (int j = 0; j < colCount; j++)
+		int colCount = 0;
+		for (int j = 0; j < cols.length; j++)
 		{
+			SimpleTableLabel col = cols[j];
+			int span = col.getSpan();
 			writer.startElement("td", this);
+			if (span > 1) writer.writeAttribute("colspan", String.valueOf(span), null);
 			writer.writeAttribute("class", "simple-table-col-label", null);
-			writer.write(columnLabels[j]);
+			writer.write(col.getLabel());
 			writer.endElement("td");
+			colCount += span;
+		}
+		
+		// count rows
+		int rowCount = 0;
+		for (int i = 0; i < rows.length; i++)
+		{
+			SimpleTableLabel row = rows[i];
+			rowCount += row.getSpan();
 		}
 
-		// rows
+		// render table itfself
+		int k = 0;
+		int span = 0;
 		for (int i = 0; i < rowCount; i++)
 		{
 			writer.startElement("tr", this);
 			
 			// row label
-			writer.startElement("td", this);
-			writer.writeAttribute("class", "simple-table-row-label", null);
-			writer.write(rowLabels[i]);
-			writer.endElement("td");
+			if (span == 0)
+			{
+				SimpleTableLabel row = rows[k++];
+				span = row.getSpan();
+				writer.startElement("td", this);
+				if (span > 1) writer.writeAttribute("rowspan", String.valueOf(span), null);
+				writer.writeAttribute("class", "simple-table-row-label", null);
+				writer.write(row.getLabel());
+				writer.endElement("td");
+			}
+			span--;
 
 			// get data
 			String dataRow[] = null;
@@ -120,28 +138,28 @@ public class SimpleTableComponent extends UIComponentBase
 		this.data = data;
 	}
 
-	public String[] getColumnLabels()
+	public SimpleTableLabel[] getColumns()
 	{
-		return JsfUtils.getCompPropStringArray(this, getFacesContext(),
-				"columnLabels", columnLabelsSet, columnLabels);
+		return (SimpleTableLabel[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"columns", columnsSet, columns);
 	}
 
-	public void setColumnLabels(String[] columnLabels)
+	public void setColumnLabels(SimpleTableLabel[] columnLabels)
 	{
-		columnLabelsSet = true;
-		this.columnLabels = columnLabels;
+		columnsSet = true;
+		this.columns = columnLabels;
 	}
 
-	public String[] getRowLabels()
+	public SimpleTableLabel[] getRows()
 	{
-		return JsfUtils.getCompPropStringArray(this, getFacesContext(),
-				"rowLabels", rowLabelsSet, rowLabels);
+		return (SimpleTableLabel[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"rows", rowsSet, rows);
 	}
 
-	public void setRowLabels(String[] rowLabels)
+	public void setRowLabels(SimpleTableLabel[] rowLabels)
 	{
-		rowLabelsSet = true;
-		this.rowLabels = rowLabels;
+		rowsSet = true;
+		this.rows = rowLabels;
 	}
 
 }

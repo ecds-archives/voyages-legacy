@@ -34,7 +34,7 @@
 	<t:htmlTag value="td">
 		<h:selectBooleanCheckbox value="#{EstimatesTableBean.omitEmptyRowsAndColumns}" />
 	</t:htmlTag>
-	<t:htmlTag value="td">
+	<t:htmlTag value="td" style="padding-right: 10px;">
 		<h:outputText value="Omit empty rows and columns"/>
 	</t:htmlTag>
 	<t:htmlTag value="td">
@@ -45,7 +45,7 @@
 
 <t:htmlTag value="div" styleClass="estimates-table" style="padding: 10px;">
 	<s:simpleTable
-		columnLabels="#{EstimatesTableBean.colLabels}"
-		rowLabels="#{EstimatesTableBean.rowLabels}"
+		columns="#{EstimatesTableBean.colLabels}"
+		rows="#{EstimatesTableBean.rowLabels}"
 		data="#{EstimatesTableBean.values}" />
 </t:htmlTag>

@@ -566,10 +566,10 @@
 			<name>data</name>
 		</attribute>
 		<attribute>
-			<name>columnLabels</name>
+			<name>columns</name>
 		</attribute>
 		<attribute>
-			<name>rowLabels</name>
+			<name>rows</name>
 		</attribute>
 	</tag>
 

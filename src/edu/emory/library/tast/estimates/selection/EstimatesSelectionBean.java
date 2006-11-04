@@ -82,8 +82,8 @@ public class EstimatesSelectionBean
 		
 		transaction.commit();
 		sess.close();
-
-		conditions = new Conditions();
+		
+		changeSelection();
 		
 	}
 	

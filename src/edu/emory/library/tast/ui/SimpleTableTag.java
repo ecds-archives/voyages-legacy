@@ -4,14 +4,14 @@ import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-import javax.faces.webapp.UIComponentBodyTag;
+import javax.faces.webapp.UIComponentTag;
 
-public class SimpleTableTag extends UIComponentBodyTag
+public class SimpleTableTag extends UIComponentTag
 {
 	
 	private String data;
-	private String columnLabels;
-	private String rowLabels;
+	private String columns;
+	private String rows;
 
 	public String getComponentType()
 	{
@@ -35,28 +35,28 @@ public class SimpleTableTag extends UIComponentBodyTag
 			simpleTable.setValueBinding("data", vb);
 		}
 		
-		if (columnLabels != null && isValueReference(columnLabels))
+		if (columns != null && isValueReference(columns))
 		{
-			ValueBinding vb = app.createValueBinding(columnLabels);
-			simpleTable.setValueBinding("columnLabels", vb);
+			ValueBinding vb = app.createValueBinding(columns);
+			simpleTable.setValueBinding("columns", vb);
 		}
 
-		if (rowLabels != null && isValueReference(rowLabels))
+		if (rows != null && isValueReference(rows))
 		{
-			ValueBinding vb = app.createValueBinding(rowLabels);
-			simpleTable.setValueBinding("rowLabels", vb);
+			ValueBinding vb = app.createValueBinding(rows);
+			simpleTable.setValueBinding("rows", vb);
 		}
 
 	}
 
-	public String getColumnLabels()
+	public String getColumns()
 	{
-		return columnLabels;
+		return columns;
 	}
 
-	public void setColumnLabels(String columnLabels)
+	public void setColumns(String columnLabels)
 	{
-		this.columnLabels = columnLabels;
+		this.columns = columnLabels;
 	}
 
 	public String getData()
@@ -69,14 +69,14 @@ public class SimpleTableTag extends UIComponentBodyTag
 		this.data = data;
 	}
 
-	public String getRowLabels()
+	public String getRows()
 	{
-		return rowLabels;
+		return rows;
 	}
 
-	public void setRowLabels(String rowLabels)
+	public void setRows(String rowLabels)
 	{
-		this.rowLabels = rowLabels;
+		this.rows = rowLabels;
 	}
 	
 	
