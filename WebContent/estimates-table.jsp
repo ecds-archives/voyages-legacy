@@ -45,7 +45,5 @@
 
 <t:htmlTag value="div" styleClass="estimates-table" style="padding: 10px;">
 	<s:simpleTable
-		columns="#{EstimatesTableBean.colLabels}"
-		rows="#{EstimatesTableBean.rowLabels}"
-		data="#{EstimatesTableBean.values}" />
+		rows="#{EstimatesTableBean.table}" />
 </t:htmlTag>

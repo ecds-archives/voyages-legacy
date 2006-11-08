@@ -5,7 +5,16 @@ div.estimates-table table.simple-table td {
 	text-align: right;
 	padding: 5px;
 	border: 1px solid #DEC77E; }
+	
+div.estimates-table table.simple-table td.tbl-label {
+	background-color: #F1E7C8;
+	text-align: left; }
 
+div.estimates-table table.simple-table td.tbl-total {
+	font-weight: bold;
+	background-color: #F1E7C8; }
+
+/*
 div.estimates-table table.simple-table td.simple-table-row-label,
 div.estimates-table table.simple-table td.simple-table-col-label {
 	background-color: #F1E7C8;
@@ -19,6 +28,7 @@ div.american-region-list td.checkbox-list-label-0 {
 div.african-region-list table.checkbox-list-table-1,
 div.american-region-list table.checkbox-list-table-1 {
 	margin-left: 10px; }
+*/
 
 div.event-line-graph-container {
 	-background-color: #EEEEEE; }

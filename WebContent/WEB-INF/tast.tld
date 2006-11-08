@@ -563,12 +563,6 @@
 			<name>rendered</name>
 		</attribute>
 		<attribute>
-			<name>data</name>
-		</attribute>
-		<attribute>
-			<name>columns</name>
-		</attribute>
-		<attribute>
 			<name>rows</name>
 		</attribute>
 	</tag>

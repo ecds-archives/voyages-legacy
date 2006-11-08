@@ -9,8 +9,6 @@ import javax.faces.webapp.UIComponentTag;
 public class SimpleTableTag extends UIComponentTag
 {
 	
-	private String data;
-	private String columns;
 	private String rows;
 
 	public String getComponentType()
@@ -29,18 +27,6 @@ public class SimpleTableTag extends UIComponentTag
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		SimpleTableComponent simpleTable = (SimpleTableComponent) component;
 		
-		if (data != null && isValueReference(data))
-		{
-			ValueBinding vb = app.createValueBinding(data);
-			simpleTable.setValueBinding("data", vb);
-		}
-		
-		if (columns != null && isValueReference(columns))
-		{
-			ValueBinding vb = app.createValueBinding(columns);
-			simpleTable.setValueBinding("columns", vb);
-		}
-
 		if (rows != null && isValueReference(rows))
 		{
 			ValueBinding vb = app.createValueBinding(rows);
@@ -49,36 +35,14 @@ public class SimpleTableTag extends UIComponentTag
 
 	}
 
-	public String getColumns()
-	{
-		return columns;
-	}
-
-	public void setColumns(String columnLabels)
-	{
-		this.columns = columnLabels;
-	}
-
-	public String getData()
-	{
-		return data;
-	}
-
-	public void setData(String data)
-	{
-		this.data = data;
-	}
-
 	public String getRows()
 	{
 		return rows;
 	}
 
-	public void setRows(String rowLabels)
+	public void setRows(String data)
 	{
-		this.rows = rowLabels;
+		this.rows = data;
 	}
-	
-	
 
 }

@@ -10,7 +10,7 @@ import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
-import edu.emory.library.tast.ui.SimpleTableLabel;
+import edu.emory.library.tast.ui.SimpleTableCell;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -18,15 +18,16 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class EstimatesTableBean
 {
 	
+	private static final String CSS_CLASS_TD_LABEL = "tbl-label";
+	private static final String CSS_CLASS_TD_TOTAL = "tbl-total";
+	
 	private EstimatesSelectionBean selectionBean;
 	private boolean optionsSelected = false;
 	private boolean optionsChanged = true;
 	private Conditions conditions;
 	private String rowGrouping;
 	private String colGrouping;
-	private SimpleTableLabel[] rowLabels;
-	private SimpleTableLabel[] colLabels;
-	private String[][] values;
+	private SimpleTableCell[][] table;
 	private boolean omitEmptyRowsAndColumns;
 	
 	private Grouper createGrouper(String groupBy, int resultIndex, List nations, List expRegions, List impRegions)
@@ -133,21 +134,58 @@ public class EstimatesTableBean
 		rowGrouper.initSlots(result);
 		colGrouper.initSlots(result);
 		
+		// allocate table
+		int rowCount = rowGrouper.getSlotsCount();
+		int colCount = colGrouper.getSlotsCount();
+		table = new SimpleTableCell[rowCount + 3][];
+		
+		// first two rows with titles
+		table[0] = new SimpleTableCell[1 + colCount + 1];
+		table[1] = new SimpleTableCell[1 + 2*colCount + 2];
+		
+		// rows for data
+		for (int i = 0; i < rowCount; i++)
+		{	
+			table[i+2] = new SimpleTableCell[1 + 2*colCount + 2];
+		}
+
+		// last row with totals
+		table[rowCount+2] = new SimpleTableCell[1 + 2*colCount + 2];
+
+		// the column labels
+		String[] colLabels = colGrouper.getLabels();
+		for (int j = 0; j < colCount; j++)
+		{	
+			table[0][j+1] = new SimpleTableCell(colLabels[j]).setColspan(2).setCssClass(CSS_CLASS_TD_LABEL);
+			table[1][2*j+1] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
+			table[1][2*j+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+		}
+		
+		// labels for row totals
+		table[0][colCount+1] = new SimpleTableCell("Totals").setColspan(2).setCssClass(CSS_CLASS_TD_LABEL);
+		table[1][2*colCount+1] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
+		table[1][2*colCount+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+		
+		// the row labels
+		String[] rowLabels = rowGrouper.getLabels();
+		for (int i = 0; i < rowCount; i++)
+		{	
+			table[i+2][0] = new SimpleTableCell(rowLabels[i]).setCssClass(CSS_CLASS_TD_LABEL);
+		}
+		
+		// label for col totals
+		table[rowCount+2][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL);
+
 		// how we want to displat it
 		MessageFormat valuesFormat = new MessageFormat("{0,number,#}");
 		
-		// prepate the final array of values
-		int rowCount = rowGrouper.getSlotsCount();
-		int colCount = colGrouper.getSlotsCount();
-		values = new String[rowCount][2*colCount];
-		String zeroValue = valuesFormat.format(new Object[]{new Double(0)});
-		for (int i = 0; i < rowCount; i++)
-		{
-			for (int j = 0; j < 2*colCount; j++)
-			{
-				values[i][j] = zeroValue;
-			}
-		}
+		// for totals
+		double[] rowExpTotals = new double[rowCount]; 
+		double[] rowImpTotals = new double[rowCount]; 
+		double[] colExpTotals = new double[colCount]; 
+		double[] colImpTotals = new double[colCount];
+		double expTotals = 0; 
+		double impTotals = 0;
 		
 		// fill in the data
 		for (int i = 0; i < result.length; i++)
@@ -163,15 +201,49 @@ public class EstimatesTableBean
 			if (imp == null) imp = new Double (0.0);
 			if (exp == null) exp = new Double (0.0);
 			
-			values[rowIndex][2*colIndex+0] = valuesFormat.format(new Object[]{exp});
-			values[rowIndex][2*colIndex+1] = valuesFormat.format(new Object[]{imp});
+			rowExpTotals[rowIndex] += exp.doubleValue();
+			rowImpTotals[rowIndex] += imp.doubleValue();
+			colExpTotals[colIndex] += exp.doubleValue();
+			colImpTotals[colIndex] += imp.doubleValue();
+			expTotals += exp.doubleValue();
+			impTotals += imp.doubleValue();
+			
+			table[rowIndex+2][2*colIndex+1] = new SimpleTableCell(valuesFormat.format(new Object[]{exp}));
+			table[rowIndex+2][2*colIndex+2] = new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
 			
 		}
 		
-		// create labels
-		colLabels = SimpleTableLabel.createFromStringArray(colGrouper.getLabels(), 2);
-		rowLabels = SimpleTableLabel.createFromStringArray(rowGrouper.getLabels(), 1);
+		// fill gaps
+		String zeroValue = valuesFormat.format(new Object[]{new Double(0)});
+		for (int i = 0; i < rowCount; i++)
+		{
+			for (int j = 0; j < 2*colCount+1; j++)
+			{
+				if (table[i+2][j+1] == null)
+				{
+					table[i+2][j+1] = new SimpleTableCell(zeroValue);
+				}
+			}
+		}
 		
+		// insert row totals
+		for (int i = 0; i < rowCount; i++)
+		{
+			table[i+2][2*colCount+1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowExpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			table[i+2][2*colCount+2] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowImpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
+		}
+		
+		// insert col totals
+		for (int j = 0; j < colCount; j++)
+		{
+			table[rowCount+2][2*j+1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colExpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			table[rowCount+2][2*j+2] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colImpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
+		}
+		
+		// main totals
+		table[rowCount+2][2*colCount+1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(expTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+		table[rowCount+2][2*colCount+2] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(impTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+
 	}
 
 	public String refreshTable()
@@ -211,22 +283,10 @@ public class EstimatesTableBean
 		this.rowGrouping = rowGrouping;
 	}
 
-	public SimpleTableLabel[] getColLabels()
+	public SimpleTableCell[][] getTable()
 	{
 		generateTableIfNecessary();
-		return colLabels;
-	}
-
-	public SimpleTableLabel[] getRowLabels()
-	{
-		generateTableIfNecessary();
-		return rowLabels;
-	}
-
-	public String[][] getValues()
-	{
-		generateTableIfNecessary();
-		return values;
+		return table;
 	}
 
 	public boolean isOmitEmptyRowsAndColumns()
