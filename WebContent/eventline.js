@@ -180,7 +180,8 @@ EventLine.prototype.createSelector = function()
 		for (var k = 0; k < this.selectorViewSpan; k++)
 		{
 
-			var slot = document.createElement("div");
+			//var slot = document.createElement("div");
+			var slot = this.selectorContainer.childNodes[k];
 			var slotStyle = slot.style;
 
 			var value = 0;
@@ -199,7 +200,7 @@ EventLine.prototype.createSelector = function()
 			slotStyle.top = (this.selectorHeight - barHeight) + "px";
 			slotStyle.height = (barHeight) + "px";
 			
-			this.selectorContainer.insertBefore(slot, this.selector);
+			//this.selectorContainer.insertBefore(slot, this.selector);
 
 		}
 
@@ -233,14 +234,15 @@ EventLine.prototype.refresh = function(zoomLevel, offset, forceCreateSlots)
 			var slots = graph.slots = new Array();
 			for (var j = 0; j < zoomLevelObj.viewSpan; j++)
 			{
-				var slot = document.createElement("div");
+				//var slot = document.createElement("div");
+				var slot = this.graphsContainer.childNodes[j];
 				slot.style.position = "absolute";
 				slot.style.backgroundColor = graph.color;
 				slot.style.left = (j*zoomLevelObj.barWidth) + "px";
 				slot.style.width = (zoomLevelObj.barWidth - 1) + "px";
 				slot.style.height = (30) + "px";
 				slots.push(slot);
-				this.graphsContainer.appendChild(slot);
+				//this.graphsContainer.appendChild(slot);
 			}
 		}
 	}

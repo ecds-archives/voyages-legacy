@@ -135,9 +135,9 @@ public class EventLineComponent extends UIComponentBase
 //		}
 //	}
 	
-	private void encodeGraphsContainer(ResponseWriter writer, String graphsContainerId) throws IOException
+	private void encodeGraphsContainer(ResponseWriter writer, String graphsContainerId, int slots) throws IOException
 	{
-
+		
 		// graphs container CSS
 		String graphsContainerCssStyle =
 			"position: absolute; " +
@@ -150,6 +150,15 @@ public class EventLineComponent extends UIComponentBase
 		writer.writeAttribute("id", graphsContainerId, null);
 		writer.writeAttribute("style", graphsContainerCssStyle, null);
 		writer.writeAttribute("class", "event-line-graph-container", null);
+
+		// slots
+		for (int i = 0; i < slots; i++)
+		{
+			writer.startElement("div", this);
+			writer.endElement("div");
+		}
+		
+		// graphs container
 		writer.endElement("div");
 		
 	}
@@ -200,7 +209,7 @@ public class EventLineComponent extends UIComponentBase
 		writer.endElement("div");
 	}
 
-	private void encodeSelector(ResponseWriter writer, String selectorContainerId, String selectorId, String leftSelectorId, String rightSelectorId) throws IOException
+	private void encodeSelector(ResponseWriter writer, String selectorContainerId, String selectorId, String leftSelectorId, String rightSelectorId, int slots) throws IOException
 	{
 		
 		// selector container CSS
@@ -215,6 +224,13 @@ public class EventLineComponent extends UIComponentBase
 		writer.writeAttribute("id", selectorContainerId, null);
 		writer.writeAttribute("style", selectorContainerStyle, null);
 		writer.writeAttribute("class", "event-line-selector-container", null);
+		
+		// slots
+		for (int i = 0; i < slots; i++)
+		{
+			writer.startElement("div", this);
+			writer.endElement("div");
+		}
 		
 		// selector CSS
 		String selectorCssSyle = 
@@ -251,7 +267,7 @@ public class EventLineComponent extends UIComponentBase
 		// selector
 		writer.startElement("div", this);
 		writer.writeAttribute("id", rightSelectorId, null);
-		writer.writeAttribute("style", leftCssSyle, null);
+		writer.writeAttribute("style", rightCssSyle, null);
 		writer.writeAttribute("class", "event-line-right-selector", null);
 		writer.endElement("div");
 
@@ -361,6 +377,13 @@ public class EventLineComponent extends UIComponentBase
 		EventLineVerticalLabels verticalLabels = getVerticalLabels();
 		if (graphs == null) graphs = new EventLineGraph[0];
 		if (events == null) events = new EventLineEvent[0];
+
+		// find max number of slots
+		int slots = 0;
+		for (int i = 0; i < graphs.length; i++)
+		{
+			slots += graphs[i].getX().length;
+		}
 		
 		// JS registration
 		StringBuffer eventsJS = new StringBuffer();
@@ -468,10 +491,10 @@ public class EventLineComponent extends UIComponentBase
 		writer.writeAttribute("class", "event-line-container", null);
 		
 		// graphs
-		encodeGraphsContainer(writer, graphsContainerId);
+		encodeGraphsContainer(writer, graphsContainerId, slots);
 
 		// selector
-		encodeSelector(writer, selectorContainerId, selectorId, leftSelectorId, rightSelectorId);
+		encodeSelector(writer, selectorContainerId, selectorId, leftSelectorId, rightSelectorId, slots);
 		
 		// indicator
 		encodeIndicator(writer, indicatorContainerId, indicatorId, indicatorLabelId);
