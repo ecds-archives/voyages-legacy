@@ -24,7 +24,8 @@
 		<s:checkboxList
 			id="expRegions"
 			items="#{EstimatesSelectionBean.allExpRegions}" 
-			selectedValues="#{EstimatesSelectionBean.checkedExpRegions}" />
+			selectedValues="#{EstimatesSelectionBean.checkedExpRegions}"
+			expandedValues="#{EstimatesSelectionBean.expandedExpRegions}" />
 		</t:div>
 	</s:section>
 
@@ -33,7 +34,8 @@
 		<s:checkboxList
 			id="impRegions"
 			items="#{EstimatesSelectionBean.allImpRegions}"
-			selectedValues="#{EstimatesSelectionBean.checkedImpRegions}" />
+			selectedValues="#{EstimatesSelectionBean.checkedImpRegions}"
+			expandedValues="#{EstimatesSelectionBean.expandedImpRegions}" />
 		</t:div>
 	</s:section>
 

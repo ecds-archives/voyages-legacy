@@ -19,9 +19,9 @@ public class EventLineGraph
 		{
 			if (y != null)
 			{
-				maxY = y[0];
-				minY = y[0];
-				for (int i = 1; i < y.length; i++)
+				maxY = Double.MIN_VALUE;
+				minY = Double.MAX_VALUE;
+				for (int i = 0; i < y.length; i++)
 				{
 					if (y[i] > maxY) maxY = y[i];
 					if (y[i] < minY) minY = y[i];

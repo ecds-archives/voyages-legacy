@@ -1,5 +1,8 @@
 package edu.emory.library.tast.dm;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -145,6 +148,25 @@ public class Region extends Location
 		return map;
 	}
 
+	public static List sortRegionsByArea(List regions)
+	{
+		Region regionsArray[] = new Region[regions.size()];
+		regions.toArray(regionsArray);
+		Arrays.sort(regionsArray, new Comparator() {
+			public int compare(Object obj0, Object obj1)
+			{
+				Area a0 = ((Region) obj0).getArea();
+				Area a1 = ((Region) obj1).getArea();
+				if (a0 == null) return -1;
+				if (a1 == null) return 1;
+				return a0.getName().compareTo(a1.getName());
+			}});
+		List newList = new ArrayList();
+		for (int i = 0; i < regionsArray.length; i++) newList.add(regionsArray[i]);
+		return newList;
+	}
+
+	
 	//	public static void main(String[] args)
 //	{
 //		

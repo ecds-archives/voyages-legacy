@@ -48,7 +48,7 @@ public class GrouperYears extends Grouper
 			if (maxYear < yearInt) maxYear = yearInt;
 		}
 		
-		int periods = (maxYear - minYear) / period + 1;
+		int periods = minYear == Integer.MAX_VALUE ? 0 : (maxYear - minYear) / period + 1;
 		int slots = omitEmpty ? yearsInTable.size() : periods;
 				
 		labels = new String[slots];

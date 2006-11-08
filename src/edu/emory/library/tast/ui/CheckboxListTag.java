@@ -11,6 +11,7 @@ public class CheckboxListTag extends UIComponentTag
 	
 	private String items;
 	private String selectedValues;
+	private String expandedValues;
 
 	public String getComponentType()
 	{
@@ -40,6 +41,12 @@ public class CheckboxListTag extends UIComponentTag
 			eventLine.setValueBinding("selectedValues", vb);
 		}
 
+		if (expandedValues != null && isValueReference(expandedValues))
+		{
+			ValueBinding vb = app.createValueBinding(expandedValues);
+			eventLine.setValueBinding("expandedValues", vb);
+		}
+
 	}
 
 	public String getItems()
@@ -60,6 +67,16 @@ public class CheckboxListTag extends UIComponentTag
 	public void setSelectedValues(String selectedValues)
 	{
 		this.selectedValues = selectedValues;
+	}
+
+	public String getExpandedValues()
+	{
+		return expandedValues;
+	}
+
+	public void setExpandedValues(String expandedValues)
+	{
+		this.expandedValues = expandedValues;
 	}
 
 }

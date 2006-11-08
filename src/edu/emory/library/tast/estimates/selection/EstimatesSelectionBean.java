@@ -28,6 +28,8 @@ public class EstimatesSelectionBean
 	private String[] checkedNations;
 	private String[] checkedExpRegions;
 	private String[] checkedImpRegions;
+	private String[] expandedExpRegions;
+	private String[] expandedImpRegions;
 	
 	private Set selectedNationIds;
 	private Set selectedExpRegionIds;
@@ -63,23 +65,35 @@ public class EstimatesSelectionBean
 		i = 0;
 		selectedExpRegionIds = new HashSet();
 		checkedExpRegions = new String[allExpRegions.size()];
+		Set expandedExpAreas = new HashSet();
 		for (Iterator iter = allExpRegions.iterator(); iter.hasNext();)
 		{
 			Region region = (Region) iter.next();
 			selectedExpRegionIds.add(region.getId());
-			checkedExpRegions[i++] = String.valueOf(region.getId());
+			checkedExpRegions[i] = String.valueOf(region.getId());
+			expandedExpAreas.add("area" + region.getArea().getId());
+			i++;
 		}
+		
+		expandedExpRegions = new String[expandedExpAreas.size()];
+		expandedExpAreas.toArray(expandedExpRegions);
 		
 		i = 0;
 		selectedImpRegionIds = new HashSet();
 		checkedImpRegions = new String[allImpRegions.size()];
+		Set expandedImpAreas = new HashSet();
 		for (Iterator iter = allImpRegions.iterator(); iter.hasNext();)
 		{
 			Region region = (Region) iter.next();
 			selectedImpRegionIds.add(region.getId());
-			checkedImpRegions[i++] = String.valueOf(region.getId());
+			checkedImpRegions[i] = String.valueOf(region.getId());
+			expandedImpAreas.add("area" + region.getArea().getId());
+			i++;
 		}
 		
+		expandedImpRegions = new String[expandedImpAreas.size()];
+		expandedImpAreas.toArray(expandedImpRegions);
+
 		transaction.commit();
 		sess.close();
 		
@@ -176,9 +190,9 @@ public class EstimatesSelectionBean
 				Region.getAttribute("area"),
 				Area.getAttribute("america")});
 		
-		Attribute areaNameAtrribute = new SequenceAttribute(new Attribute[] {
-				Region.getAttribute("area"),
-				Area.getAttribute("name")});
+//		Attribute areaNameAtrribute = new SequenceAttribute(new Attribute[] {
+//				Region.getAttribute("area"),
+//				Area.getAttribute("name")});
 
 		Conditions cond = new Conditions();
 		cond.addCondition(areaAmericaAtrribute,
@@ -189,7 +203,7 @@ public class EstimatesSelectionBean
 		query.setOrderBy(new Attribute[] {
 				Region.getAttribute("name")});
 		
-		return query.executeQueryList(session);
+		return Region.sortRegionsByArea(query.executeQueryList(session));
 
 	}
 	
@@ -253,6 +267,13 @@ public class EstimatesSelectionBean
 		
 		}
 		
+		if (areaIndex != -1)
+		{
+			SelectItem[] regionsUi = new SelectItem[regionsTemp.size()];
+			regionsTemp.toArray(regionsUi);
+			areasUi[areaIndex].setSubItems(regionsUi);
+		}
+
 		transaction.commit();
 		sess.close();
 		
@@ -361,6 +382,26 @@ public class EstimatesSelectionBean
 	public void setCheckedNations(String[] checkedNationValues)
 	{
 		this.checkedNations = checkedNationValues;
+	}
+
+	public String[] getExpandedExpRegions()
+	{
+		return expandedExpRegions;
+	}
+
+	public void setExpandedExpRegions(String[] expandedExpRegions)
+	{
+		this.expandedExpRegions = expandedExpRegions;
+	}
+
+	public String[] getExpandedImpRegions()
+	{
+		return expandedImpRegions;
+	}
+
+	public void setExpandedImpRegions(String[] expandedImpRegions)
+	{
+		this.expandedImpRegions = expandedImpRegions;
 	}
 
 }

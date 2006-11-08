@@ -548,6 +548,9 @@
 		<attribute>
 			<name>selectedValues</name>
 		</attribute>
+		<attribute>
+			<name>expandedValues</name>
+		</attribute>
 	</tag>
 	
 	<tag>
