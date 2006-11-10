@@ -48,7 +48,7 @@ public class EstimateListingBean {
 		tableData.setFormatter(visibleAttrs[4], new AbstractAttributeFormatter() {
 
 			public String format(Object object) {
-				return String.valueOf(Math.round((((Number)object).doubleValue() * 100)) / (double)100);
+				return String.valueOf(Math.round(((Number)object).doubleValue()));
 			}
 
 			public String format(Object[] object) {
