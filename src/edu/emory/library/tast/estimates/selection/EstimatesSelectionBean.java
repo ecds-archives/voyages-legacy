@@ -49,8 +49,8 @@ public class EstimatesSelectionBean
 		Transaction transaction = sess.beginTransaction();
 		
 		List allNations = loadAllNations(sess);
-		List allExpRegions = loadAllRegions(sess, false);
-		List allImpRegions = loadAllRegions(sess, true);
+		List allExpRegions = loadAllRegions(sess, true);
+		List allImpRegions = loadAllRegions(sess, false);
 		
 		i = 0;
 		selectedNationIds = new HashSet();
@@ -183,22 +183,35 @@ public class EstimatesSelectionBean
 		
 	}
 
-	private List loadAllRegions(Session session, boolean america)
+	private List loadAllRegions(Session session, boolean onlyAfrican)
 	{
-		
-		Attribute areaAmericaAtrribute = new SequenceAttribute(new Attribute[] {
-				Region.getAttribute("area"),
-				Area.getAttribute("america")});
 		
 //		Attribute areaNameAtrribute = new SequenceAttribute(new Attribute[] {
 //				Region.getAttribute("area"),
 //				Area.getAttribute("name")});
-
+		
 		Conditions cond = new Conditions();
-		cond.addCondition(areaAmericaAtrribute,
-				new Boolean(america), Conditions.OP_EQUALS);
+		if (onlyAfrican)
+		{
+
+			Attribute areaAmericaAtrribute = new SequenceAttribute(new Attribute[] {
+					Region.getAttribute("area"),
+					Area.getAttribute("america")});
+
+			cond.addCondition(areaAmericaAtrribute,
+					new Boolean(false), Conditions.OP_EQUALS);
+
+		}
+
+		Attribute regionAreaId = new SequenceAttribute(new Attribute[] {
+				Region.getAttribute("area"),
+				Area.getAttribute("id")});
+		
+		cond.addCondition(regionAreaId,
+				null, Conditions.OP_NOT_EQUALS);
 		
 		QueryValue query = new QueryValue("Region", cond);
+
 		query.setOrder(QueryValue.ORDER_ASC);
 		query.setOrderBy(new Attribute[] {
 				Region.getAttribute("name")});
@@ -207,13 +220,38 @@ public class EstimatesSelectionBean
 
 	}
 	
-	private SelectItem[] loadAllRegionsToUi(boolean america)
+	private SelectItem[] loadExportRegionsToUi()
 	{
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		List regionsDb = loadAllRegions(sess, america); 
+		List regionsDb = loadAllRegions(sess, true); 
+		SelectItem[] regionsUi = new SelectItem[regionsDb.size()];
+		
+		int i = 0;
+		for (Iterator iter = regionsDb.iterator(); iter.hasNext();)
+		{
+			Region region = (Region) iter.next();
+			regionsUi[i++] = new SelectItem(
+					region.getName(),
+					String.valueOf(region.getId()));
+		}
+
+		transaction.commit();
+		sess.close();
+		
+		return regionsUi; 
+		
+	}
+	
+	private SelectItem[] loadImportRegionsToUi()
+	{
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		List regionsDb = loadAllRegions(sess, false); 
 		
 		int lastAreaId = -1;
 		int areasCount = 0;
@@ -238,10 +276,6 @@ public class EstimatesSelectionBean
 			Region region = (Region) iter.next();
 			int areaId = region.getArea().getId();
 			
-			regionsTemp.add(new SelectItem(
-					region.getName(),
-					String.valueOf(region.getId())));
-
 			if (lastAreaId != areaId)
 			{
 				
@@ -265,6 +299,10 @@ public class EstimatesSelectionBean
 				
 			}
 		
+			regionsTemp.add(new SelectItem(
+					region.getName(),
+					String.valueOf(region.getId())));
+
 		}
 		
 		if (areaIndex != -1)
@@ -341,12 +379,12 @@ public class EstimatesSelectionBean
 
 	public SelectItem[] getAllExpRegions()
 	{
-		return loadAllRegionsToUi(false);
+		return loadExportRegionsToUi();
 	}
 
 	public SelectItem[] getAllImpRegions()
 	{
-		return loadAllRegionsToUi(true);
+		return loadImportRegionsToUi();
 	}
 	
 	public SelectItem[] getAllNations()

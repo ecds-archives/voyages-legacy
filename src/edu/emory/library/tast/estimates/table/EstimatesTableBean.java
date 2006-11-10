@@ -177,7 +177,7 @@ public class EstimatesTableBean
 		table[rowCount+2][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL);
 
 		// how we want to displat it
-		MessageFormat valuesFormat = new MessageFormat("{0,number,#}");
+		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 		
 		// for totals
 		double[] rowExpTotals = new double[rowCount]; 

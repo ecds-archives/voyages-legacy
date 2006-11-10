@@ -88,6 +88,7 @@ function EventLine(
 	this.selectorHeight = selectorHeight;
 	this.selectorBarWidth = zoomLevels[0].barWidth;
 	this.selectorViewSpan = zoomLevels[0].viewSpan;
+	this.slotsCount = zoomLevels[0].viewSpan;
 
 	this.leftLabelsWidth = leftLabelsWidth;
 	this.leftLabelsMargin = leftLabelsMargin;
@@ -126,11 +127,8 @@ EventLine.prototype.init = function()
 	
 	this.findMaxValue();
 	this.createSelector();
-	
-	this.refresh(
-		parseInt(this.zoomLevelField.value),
-		parseInt(this.offsetField.value),
-		true);
+	this.initSlots();
+	this.refresh(parseInt(this.zoomLevelField.value), parseInt(this.offsetField.value));
 		
 	EventAttacher.attach(this.indicatorContainerElement, "mouseover", this, "graphMouseOver");
 	EventAttacher.attach(this.indicatorContainerElement, "mouseout", this, "graphMouseOut");
@@ -208,7 +206,26 @@ EventLine.prototype.createSelector = function()
 
 }
 
-EventLine.prototype.refresh = function(zoomLevel, offset, forceCreateSlots)
+EventLine.prototype.initSlots = function()
+{
+	for (var i = 0; i < this.graphs.length; i++)
+	{
+		var graph = this.graphs[i];
+		var slots = graph.slots = new Array();
+		for (var j = 0; j < this.slotsCount; j++)
+		{
+			var slot = this.graphsContainer.childNodes[i*this.slotsCount+j];
+			slot.style.position = "absolute";
+			slot.style.backgroundColor = graph.color;
+			slot.style.left = (j*zoomLevelObj.barWidth) + "px";
+			slot.style.width = (zoomLevelObj.barWidth - 1) + "px";
+			slot.style.height = "0px";
+			slots.push(slot);
+		}
+	}
+}
+
+EventLine.prototype.refresh = function(zoomLevel, offset)
 {
 
 	if (!this.graphs || this.graphs.length == 0)
@@ -216,33 +233,16 @@ EventLine.prototype.refresh = function(zoomLevel, offset, forceCreateSlots)
 
 	this.offset = offset;
 	
-	if (forceCreateSlots || zoomLevel != this.zoomLevel)
+	if (zoomLevel != this.zoomLevel)
 	{
 		this.zoomLevel = zoomLevel;
-		var zoomLevelObj = this.zoomLevels[this.zoomLevel];
+		var currentViewSpan = this.zoomLevels[this.zoomLevel].viewSpan;
 		for (var i = 0; i < this.graphs.length; i++)
 		{
-			var graph = this.graphs[i];
-			if (graph.slots)
+			var slots = this.graphs[i].slots;
+			for (var j = currentViewSpan; j < this.slotsCount; j++)
 			{
-				var slots = graph.slots;
-				for (var j = 0; j < slots.length; j++)
-				{
-					this.graphsContainer.removeChild(slots[j]);
-				}
-			}
-			var slots = graph.slots = new Array();
-			for (var j = 0; j < zoomLevelObj.viewSpan; j++)
-			{
-				//var slot = document.createElement("div");
-				var slot = this.graphsContainer.childNodes[j];
-				slot.style.position = "absolute";
-				slot.style.backgroundColor = graph.color;
-				slot.style.left = (j*zoomLevelObj.barWidth) + "px";
-				slot.style.width = (zoomLevelObj.barWidth - 1) + "px";
-				slot.style.height = (30) + "px";
-				slots.push(slot);
-				//this.graphsContainer.appendChild(slot);
+				slots[j].style.display = "none";
 			}
 		}
 	}
@@ -384,7 +384,7 @@ EventLine.prototype.selectorMouseUp = function(event)
 	var dx = event.clientX - this.startDragX;
 	var newOffset = Math.round(this.offset +  dx / this.selectorBarWidth);
 		
-	this.refresh(this.zoomLevel, newOffset, false);
+	this.refresh(this.zoomLevel, newOffset);
 	
 	EventAttacher.detach(this.selector, "mouseup", this, "selectorMouseUp");
 	EventAttacher.detach(this.selector, "mousemove", this, "selectorMouseMove");
@@ -425,7 +425,7 @@ EventLine.prototype.leftSelectorMouseUp = function(event)
 	
 	var newZoomLevel = this.getClosestZoomLevel(newViewSpan);
 	
-	this.refresh(newZoomLevel, newOffset, false);
+	this.refresh(newZoomLevel, newOffset);
 	
 	EventAttacher.detachOnWindowEvent("mouseup", this, "leftSelectorMouseUp");
 	EventAttacher.detachOnWindowEvent("mousemove", this, "leftSelectorMouseMove");
@@ -465,7 +465,7 @@ EventLine.prototype.rightSelectorMouseUp = function(event)
 	var newZoomLevel = this.getClosestZoomLevel(newViewSpan);
 	var newOffset = Math.round(newRight / this.selectorBarWidth + this.selectorOffset) - this.zoomLevels[newZoomLevel].viewSpan;
 	
-	this.refresh(newZoomLevel, newOffset, false);
+	this.refresh(newZoomLevel, newOffset);
 	
 	EventAttacher.detachOnWindowEvent("mouseup", this, "rightSelectorMouseUp");
 	EventAttacher.detachOnWindowEvent("mousemove", this, "rightSelectorMouseMove");

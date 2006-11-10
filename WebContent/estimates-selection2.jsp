@@ -10,7 +10,7 @@
 	tabsStyle="middle"
 	buttonsStyle="middle">
 	
-	<s:section title="Nations" sectionId="nations">
+	<s:section title="National carriers" sectionId="nations">
 		<t:div style="padding: 5px;" styleClass="nation-checkboxes">
 		<s:checkboxList
 			id="nations"
@@ -19,8 +19,8 @@
 		</t:div>
 	</s:section>
 	
-	<s:section title="Africa" sectionId="africanRegions">
-		<t:div style="padding: 5px;" styleClass="african-region-list">
+	<s:section title="Export regions" sectionId="africanRegions">
+		<t:div style="padding: 5px;" styleClass="export-region-list">
 		<s:checkboxList
 			id="expRegions"
 			items="#{EstimatesSelectionBean.allExpRegions}" 
@@ -29,8 +29,8 @@
 		</t:div>
 	</s:section>
 
-	<s:section title="America" sectionId="americanRegions">
-		<t:div style="padding: 5px;" styleClass="american-region-list">
+	<s:section title="Import regions" sectionId="americanRegions">
+		<t:div style="padding: 5px;" styleClass="import-region-list">
 		<s:checkboxList
 			id="impRegions"
 			items="#{EstimatesSelectionBean.allImpRegions}"
