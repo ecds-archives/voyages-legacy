@@ -750,9 +750,7 @@ public class TableResultTabBean {
 				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
 			}
 		}
-		{
 
-		}
 		this.data.setVisibleColumns(list);
 	}
 

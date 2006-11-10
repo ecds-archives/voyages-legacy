@@ -153,6 +153,18 @@ public class QueryValue {
 	 * @param limit
 	 */
 	public QueryValue(String [] objTypes, String [] aliases, Conditions cond, int limit) {
+		if (aliases.length == 0) {
+			aliases = new String[objTypes.length];
+			for (int i = 0; i < aliases.length; i++) {
+				String alias = null;
+				if (objTypes[i].indexOf(".") == -1) {
+					alias = objTypes[i];
+				} else {
+					alias = objTypes[i].substring(1 + objTypes[i].lastIndexOf("."));
+				}
+				aliases[i] = alias.toLowerCase() + "_" + i;
+			}
+		}
 		this.objects = objTypes;
 		this.conditions = cond;
 		this.limit = limit;
@@ -353,6 +365,8 @@ public class QueryValue {
 		//Set cache info
 		q.setCacheable(this.isCacheable());
 
+		//System.out.println(response.conditionString);
+		
 		return q;
 	}
 

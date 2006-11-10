@@ -1,5 +1,7 @@
 package edu.emory.library.tast.ui.search.table.formatters;
 
+import java.text.MessageFormat;
+
 /**
  * Formatter used to format simple attributes.
  * It uses two methods of formatting: first is for Object - toString method called.
@@ -9,6 +11,8 @@ package edu.emory.library.tast.ui.search.table.formatters;
  */
 public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 
+	private MessageFormat formatter = new MessageFormat("{0,number, #,###,###}");
+	
 	/**
 	 * Formats output that will be shown to user for single Object.
 	 */
@@ -16,6 +20,9 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 		if (object == null) {
 			return "";
 		} else {
+//			if (object instanceof Number) {
+//				return formatter.format(new Object[] {object}); 
+//			}
 			return object.toString();
 		}
 	}
@@ -33,7 +40,11 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 					buf.append(", ");
 				}
 				buf.append("'");
-				buf.append(object[i].toString());
+//				if (object[i] instanceof Number) {
+//					buf.append(formatter.format(new Object[] {object[i]}));
+//				} else {
+					buf.append(object[i].toString());
+//				}
 				buf.append("'");
 				added = true;
 			}

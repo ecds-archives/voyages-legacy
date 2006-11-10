@@ -544,7 +544,7 @@
 		</attribute>
 		<attribute userLabel="Imputed nation of ship registration"
 			importName="natinimp" importType="0" attrType="Dictionary"
-			typeDisplayName="List ImputedNation" dictionary="ImputedNation"
+			typeDisplayName="List Nation" dictionary="Nation"
 			category="0" name="natinimp"
 			desc="Imputed nation of ship registration" id="263063">
 		</attribute>
@@ -1161,7 +1161,7 @@
 			attrType="Numeric" typeDisplayName="Integer" category="0"
 			name="yrreg" desc="" id="262845">
 		</attribute>
-
+<!-- 
 		<attribute attrNumType="Long" importType="-1" attrType="Numeric" typeDisplayName="Float"
 			category="0" name="s_slaximp"
 			userLabel="Adjusted imputed number of slaves embarked">
@@ -1170,6 +1170,7 @@
 			category="0" name="s_slamimp"
 			userLabel="Adjusted imputed number of slaves disembarked">
 		</attribute>
+ -->
 		<attribute attrNumType="Long" importType="-1" attrType="Numeric" typeDisplayName="Long"
 			category="0" name="iid" userLabel="Voyage internal id">
 		</attribute>
