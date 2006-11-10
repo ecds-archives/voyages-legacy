@@ -12,9 +12,11 @@
 	<link href="sections.css" rel="stylesheet" type="text/css">
 	<link href="estimates.css" rel="stylesheet" type="text/css">
 	<link href="search-table.css" rel="stylesheet" type="text/css">
+	<link href="map.css" rel="stylesheet" type="text/css">
 	<script src="utils.js" language="javascript" type="text/javascript"></script>
 	<script src="eventline.js" language="javascript" type="text/javascript"></script>
 	<script src="checkbox-list.js" language="javascript" type="text/javascript"></script>
+	<script src="map.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
