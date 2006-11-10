@@ -87,6 +87,7 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 				buffer.append(elements[j].getAttribute());
 				buffer.append(": ").append(elements[j].getValue()).append("<br/>");
 			}
+			buffer.append("<br/>");
 		}
 		
 		PointOfInterest point = new PointOfInterest(this.getProjectedX(), this.getProjectedY());

@@ -16,9 +16,9 @@
 		<property name="latitude" />
 		<property name="longitude" />
 		
-		<many-to-one name="area" column="area_id" />
+		<many-to-one name="area" column="area_id" lazy="false" />
 		
-		<set name="ports" inverse="true" order-by="name asc" lazy="true">
+		<set name="ports" inverse="true" order-by="name asc" lazy="false">
 			<key column="region_id" />
 			<one-to-many class="edu.emory.library.tast.dm.Port" />
 		</set>

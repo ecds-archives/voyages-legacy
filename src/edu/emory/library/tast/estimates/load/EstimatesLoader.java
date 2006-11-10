@@ -23,7 +23,7 @@ import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class EstimatesLoader {
-
+	
 	private class EstimateResponse {
 		QueryValue qValue;
 		int wiggleRoom;
@@ -37,6 +37,18 @@ public class EstimatesLoader {
 		this.file = new File(fileName);
 	}
 
+	public int getMinNumberOfVoyages(double slaves) {
+		if (slaves <= 200) {
+			return 1;
+		} else if (slaves <= 1000) {
+			return 3;
+		} else if (slaves <= 10000) {
+			return 20;
+		} else {
+			return 100;
+		}
+	}
+	
 	public void load() throws IOException {
 		EstimatesPosition[] positions = EstimatesParser.parse(this.file);
 		for (int i = 0; i < positions.length; i++) {
@@ -65,14 +77,14 @@ public class EstimatesLoader {
 	private int handleConditionValue(EstimatesPosition position,
 			String positionFormula, boolean imported, int prevWiggleRoom) {
 		EstimateResponse response = this.getFunctValueQuery(position, positionFormula,
-				imported, true, prevWiggleRoom);
+				imported, true, prevWiggleRoom, 1);
 
 		Object[] voyages = response.qValue.executeQuery();
 		System.out.println("exp direct: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 		double sum = 0.0;
 
 		EstimateResponse response1 = this.getFunctValueQuery(position, positionFormula,
-				imported, false, prevWiggleRoom);
+				imported, false, prevWiggleRoom, 1);
 		Object[] voyagesToSum = response1.qValue.executeQuery();
 		for (int i = 0; i < voyagesToSum.length; i++) {
 			Object[] row = (Object[]) voyagesToSum[i];
@@ -126,7 +138,7 @@ public class EstimatesLoader {
 	private int handleSimpleValue(EstimatesPosition position,
 			String voyageAttribute, String positionCondition, boolean imported, int prevWiggleRoom) {
 		EstimateResponse response = this.getFixedValueQuery(position, voyageAttribute,
-				imported, prevWiggleRoom);
+				imported, prevWiggleRoom, Double.parseDouble(position.getExportFormula()));
 		Object[] voyages = response.qValue.executeQuery();
 		System.out.println("exp simple: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 		// distribution of slaves...
@@ -200,12 +212,12 @@ public class EstimatesLoader {
 	}
 
 	private EstimateResponse getFixedValueQuery(EstimatesPosition position,
-			String field, boolean imported, int prevWiggleRoom) {
+			String field, boolean imported, int prevWiggleRoom, double slaves) {
 		// get wiggle room for year
 		
 		int yearWiggleRoom = 0;
 		if (prevWiggleRoom == -1) {
-			yearWiggleRoom = this.getYearWiggleRoom(position, imported);
+			yearWiggleRoom = this.getYearWiggleRoom(position, imported, slaves);
 		} else {
 			yearWiggleRoom = prevWiggleRoom;
 		}
@@ -266,7 +278,7 @@ public class EstimatesLoader {
 	}
 
 	private EstimateResponse getFunctValueQuery(EstimatesPosition position,
-			String field, boolean imported, boolean useWiggleRoom, int prevWiggleRoom) {
+			String field, boolean imported, boolean useWiggleRoom, int prevWiggleRoom, double slaves) {
 		// prepare conditions
 		int yearWiggleRoom = 0;
 		if (useWiggleRoom) {
@@ -274,7 +286,7 @@ public class EstimatesLoader {
 				yearWiggleRoom = prevWiggleRoom;
 			}
 			else {
-				yearWiggleRoom = this.getYearWiggleRoom(position, imported);
+				yearWiggleRoom = this.getYearWiggleRoom(position, imported, slaves);
 			}
 		}
 		Conditions conditions = new Conditions();
@@ -335,11 +347,15 @@ public class EstimatesLoader {
 		return response;
 	}
 
-	private int getYearWiggleRoom(EstimatesPosition position, boolean imported) {
+	private int getYearWiggleRoom(EstimatesPosition position, boolean imported, double slaves) {
 		int wiggleRoomExpand = 1;
 		int currentWiggleRoom = -1;
 		int currentResults = 0;
 
+		int minVoyages = this.getMinNumberOfVoyages(slaves);
+
+		System.out.println("Minimal number of viyages in sample: " + minVoyages);
+		
 		Object inP = null;
 		Object inR = null;
 		if (position.getPort() != null) {
@@ -358,7 +374,7 @@ public class EstimatesLoader {
 			inR = ports;
 		}
 
-		while (currentWiggleRoom < 0 && currentResults < 20) {
+		while (currentWiggleRoom < 200 && currentResults < minVoyages) {
 			currentWiggleRoom += wiggleRoomExpand;
 			Conditions conditions = new Conditions();
 			if (inP != null) {
