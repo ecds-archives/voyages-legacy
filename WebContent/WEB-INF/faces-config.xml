@@ -158,10 +158,10 @@
 	</component>
 	
 	<component>
-		<component-type>CheckboxList</component-type>
+		<component-type>
+		CheckboxListExpandable</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.CheckboxListComponent
-		</component-class>
+		edu.emory.library.tast.ui.CheckboxListExpandableComponent</component-class>
 	</component>
 	<component>
 		<component-type>
@@ -176,6 +176,12 @@
 		<component-class>
 			edu.emory.library.tast.estimates.listing.EstimateListingComponent
 		</component-class>
+	</component>
+	<component>
+		<component-type>
+		CheckboxListPopup</component-type>
+		<component-class>
+		edu.emory.library.tast.ui.CheckboxListPopupComponent</component-class>
 	</component>
 
 	<managed-bean>

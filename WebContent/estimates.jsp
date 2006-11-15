@@ -14,6 +14,9 @@
 	<link href="search-table.css" rel="stylesheet" type="text/css">
 	<link href="map.css" rel="stylesheet" type="text/css">
 	<script src="utils.js" language="javascript" type="text/javascript"></script>
+	<script src="eventline.js" language="javascript" type="text/javascript"></script>
+	<script src="checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
+	<script src="checkbox-list-popup.js" language="javascript" type="text/javascript"></script>
 	<script src="map.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
@@ -35,14 +38,15 @@
 	
 		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
 		<tr>
-			<td style="width: 180px; vertical-align: top;">
-				<div style="width: 180px; background-color: White; margin: 0px 10px 0px 10px; padding: 10px;">
-					Here will be a selection or nations, regions in Africa and regions in America.
-					For now, all nations and all regions are assumed to be selected.
+			<td style="width: 240px; vertical-align: top;">
+				<div style="margin: 0px 10px 0px 10px;">
+					<%@ include file="estimates-selection.jsp" %>
 				</div>
 			</td>
-			<td>
-				<%@ include file="estimates-main-panel.jsp" %>
+			<td style="vertical-align: top;">
+				<div style="margin: 0px 10px 0px 0px;">
+					<%@ include file="estimates-main-panel.jsp" %>
+				</div>
 			</td>
 		</tr>
 		</table>

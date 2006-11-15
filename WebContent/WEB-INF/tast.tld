@@ -531,9 +531,9 @@
 	</tag>
 	
 	<tag>
-		<name>checkboxList</name>
+		<name>checkboxListExpandable</name>
 		<tag-class>
-			edu.emory.library.tast.ui.CheckboxListTag
+			edu.emory.library.tast.ui.CheckboxListExpandableTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -553,6 +553,52 @@
 		</attribute>
 	</tag>
 	
+	<tag>
+		<name>checkboxListPopup</name>
+		<tag-class>
+			edu.emory.library.tast.ui.CheckboxListPopupTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
+			<name>items</name>
+		</attribute>
+		<attribute>
+			<name>selectedValues</name>
+		</attribute>
+		<attribute>
+			<name>expandedValues</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>checkboxListExpandable</name>
+		<tag-class>
+			edu.emory.library.tast.ui.CheckboxListExpandableTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
+			<name>items</name>
+		</attribute>
+		<attribute>
+			<name>selectedValues</name>
+		</attribute>
+		<attribute>
+			<name>expandedValues</name>
+		</attribute>
+	</tag>
+
 	<tag>
 		<name>simpleTable</name>
 		<tag-class>

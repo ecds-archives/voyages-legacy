@@ -32,10 +32,12 @@ public class Region extends Location
 		attributes.put("y", new NumericAttribute("y", "Region"));
 		attributes.put("ports", new NumericAttribute("ports", "Region"));
 		attributes.put("area", new DictionaryAttribute("area", "Region"));
+		attributes.put("order", new NumericAttribute("order", "Region"));
 	}
 	
 	private Set ports;
 	private Area area;
+	private int order;
 	
 	public Area getArea()
 	{
@@ -55,6 +57,16 @@ public class Region extends Location
 	public void setPorts(Set ports)
 	{
 		this.ports = ports;
+	}
+	
+	public int getOrder()
+	{
+		return order;
+	}
+
+	public void setOrder(int order)
+	{
+		this.order = order;
 	}
 	
 	public static Region[] getRegionsArray()

@@ -69,7 +69,7 @@ public class GrouperYears extends Grouper
 				else
 				{
 					labels[j] =
-						String.valueOf(year + 1) + "<br>" + 
+						String.valueOf(year + 1) + "-" + 
 						String.valueOf(year + period);
 				}
 				j++;

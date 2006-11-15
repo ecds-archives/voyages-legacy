@@ -11,6 +11,7 @@
 		</id>
 		
 		<property name="name" column="name" />
+		<property name="order" column="order_num" />
 
 	</class>
 </hibernate-mapping>

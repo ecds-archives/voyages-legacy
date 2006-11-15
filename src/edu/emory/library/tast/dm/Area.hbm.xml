@@ -9,5 +9,6 @@
 		</id>
 		<property name="name" />
 		<property name="america" />
+		<property name="order" column="order_num" />
 	</class>
 </hibernate-mapping>

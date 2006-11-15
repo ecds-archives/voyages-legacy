@@ -20,14 +20,22 @@ div.estimates-table table.simple-table td.simple-table-col-label {
 	text-align: left; }
 
 div.import-region-list td.checkbox-list-label-0 {
-	padding-left: 3px;
 	font-weight: bold; }
 
-div.import-region-list table.checkbox-list-table-1 {
-	margin-left: 3px; }
+div.import-region-list td.checkbox-list-label-0:hover {
+	background-color: #EEEEEE; }
 
-div.import-region-list td.checkbox-list-arrow {
-	cursor: pointer; }
+div.import-region-list div.checkbox-list-popup-cont {
+	width: 0px;
+	height: 0px;
+	position: absolute; }
+	
+div.import-region-list div.checkbox-list-popup {
+	width: 400px;
+	border: 1px solid Black;
+	background-color: White;
+	left: 200px;
+	position: relative; }
 
 div.event-line-graph-container {
 	-background-color: #EEEEEE; }

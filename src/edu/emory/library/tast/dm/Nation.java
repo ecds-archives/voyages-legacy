@@ -24,9 +24,11 @@ public class Nation
 	static {
 		attributes.put("id", new NumericAttribute("id", "Nation"));
 		attributes.put("name", new StringAttribute("name", "Nation"));
+		attributes.put("order", new NumericAttribute("order", "Nation"));
 	}
 	
 	private long id;
+	private int order;
 	private String name;
 	
 	public long getId()
@@ -49,6 +51,16 @@ public class Nation
 		this.name = name;
 	}
 	
+	public int getOrder()
+	{
+		return order;
+	}
+
+	public void setOrder(int order)
+	{
+		this.order = order;
+	}
+
 	public static List loadAllNations()
 	{
 		Session sess = HibernateUtil.getSession();

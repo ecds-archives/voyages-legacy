@@ -15,9 +15,11 @@ public class Area
 		attributes.put("id", new NumericAttribute("id", "Area"));
 		attributes.put("name", new StringAttribute("name", "Area"));
 		attributes.put("america", new NumericAttribute("america", "Area"));
+		attributes.put("order", new NumericAttribute("order", "Area"));
 	}
 	
 	private int id;
+	private int order;
 	private String name;
 	private boolean america;
 
@@ -44,6 +46,16 @@ public class Area
 	public boolean isAmerica()
 	{
 		return america;
+	}
+
+	public int getOrder()
+	{
+		return order;
+	}
+
+	public void setOrder(int order)
+	{
+		this.order = order;
 	}
 
 	public void setAmerica(boolean america)

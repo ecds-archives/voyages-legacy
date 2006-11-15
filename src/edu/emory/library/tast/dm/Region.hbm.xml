@@ -15,8 +15,9 @@
 		<property name="y" />
 		<property name="latitude" />
 		<property name="longitude" />
+		<property name="order" column="order_num" />
 		
-		<many-to-one name="area" column="area_id" lazy="false" />
+		<many-to-one name="area" column="area_id" />
 		
 		<set name="ports" inverse="true" order-by="name asc" lazy="false">
 			<key column="region_id" />
