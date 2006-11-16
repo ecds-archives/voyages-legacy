@@ -13,31 +13,37 @@ import edu.emory.library.tast.util.StringUtils;
 public class CheckboxListPopupComponent extends CheckboxListComponent
 {
 	
-	private void encodePopup(FacesContext context, ResponseWriter writer, String mainId, String popupId, String inputName, SelectItemWithImage mainItem, SelectItem[] items, Set selectedValuesLookup) throws IOException
+	private void encodePopup(FacesContext context, ResponseWriter writer, String checkboxListId, String popupId, String mainItemId, String inputName, SelectItemWithImage mainItem, SelectItem[] items, Set selectedValuesLookup) throws IOException
 	{
 
 		// show
 		String onMouseOver =
 			"CheckboxListPopupGlobals.popupShow(" +
-			"'" + mainId + "', " +
+			"'" + checkboxListId + "', " +
 			"'" + popupId + "', " +
-			"'" + mainItem.getImageUrl() + "')";
+			"'" + mainItemId + "', " +
+			"null, " +
+			"null)";
 
 		// hide
 		String onMouseOut =
 			"CheckboxListPopupGlobals.popupHide(" +
-			"'" + mainId + "', " +
-			"'" + popupId + "')";
+			"'" + checkboxListId + "', " +
+			"'" + popupId + "', " + 
+			"'" + mainItemId + "', " +
+			"null)";
 		
 		// container
-		writer.startElement("div", this);
-		writer.writeAttribute("id", popupId, null);
-		writer.writeAttribute("class", "checkbox-list-popup-cont", null);
-		writer.writeAttribute("style", "display: none; position: absolute;", null);
+//		writer.startElement("div", this);
+//		writer.writeAttribute("id", popupId, null);
+//		writer.writeAttribute("class", "checkbox-list-popup-cont", null);
+//		writer.writeAttribute("style", "display: none; position: absolute;", null);
 
 		// inner container
 		writer.startElement("div", this);
+		writer.writeAttribute("id", popupId, null);
 		writer.writeAttribute("class", "checkbox-list-popup", null);
+		writer.writeAttribute("style", "display: none; position: absolute;", null);
 		writer.writeAttribute("onmouseover", onMouseOver, null);
 		writer.writeAttribute("onmouseout", onMouseOut, null);
 
@@ -54,23 +60,33 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 
 			SelectItemWithImage item = (SelectItemWithImage) items[i];
 			boolean checked = selectedValuesLookup.contains(item.getValue());
-			String inputId = mainId + "_checkbox_" + item.getValue();
+			String inputId = checkboxListId + "_checkbox_" + item.getValue();
+			String itemId = checkboxListId + "_item_" + item.getValue();
 			
 			// show
 			onMouseOver =
 				"CheckboxListPopupGlobals.popupShow(" +
-				"'" + mainId + "', " +
+				"'" + checkboxListId + "', " +
 				"'" + popupId + "', " +
-				"'" + item.getImageUrl() + "')";
+				"'" + mainItemId + "', " +
+				"'" + itemId + "', " +
+				"'" + item.getImageUrl() + "'); " +
+				"event.cancelBubble = true;";
 
 			// hide
 			onMouseOut =
 				"CheckboxListPopupGlobals.popupHide(" +
-				"'" + mainId + "', " +
-				"'" + popupId + "')";
+				"'" + checkboxListId + "', " +
+				"'" + popupId + "', " +
+				"'" + mainItemId + "', " +
+				"'" + itemId + "')";
 			
 			// item TR begin
 			writer.startElement("tr", this);
+			writer.writeAttribute("id", itemId, null);
+			writer.writeAttribute("class", "checkbox-list-item-1", null);
+			writer.writeAttribute("onmouseover", onMouseOver, null);
+			writer.writeAttribute("onmouseout", onMouseOut, null);
 			
 			// checkbox
 			writer.startElement("td", this);
@@ -106,30 +122,30 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 		
 		// containers
 		writer.endElement("div");
-		writer.endElement("div");
+//		writer.endElement("div");
 
 	}
 	
-	private void encodeMainItems(FacesContext context, ResponseWriter writer, String mainId, String inputName, SelectItemWithImage[] items, Set selectedValuesLookup) throws IOException
+	private void encodeMainItems(FacesContext context, ResponseWriter writer, String checkboxListId, String inputName, SelectItemWithImage[] items, Set selectedValuesLookup) throws IOException
 	{
 		
 		// main table
 		writer.startElement("table", this);
-		writer.writeAttribute("class", "checkbox-list-table", null);
+		writer.writeAttribute("class", "checkbox-list-table-0", null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		
 		// does any item has subitem?
-		boolean hasSubitems = false;
-		for (int i = 0; i < items.length; i++)
-		{
-			if (items[i].hasSubItems())
-			{
-				hasSubitems = true;
-				break;
-			}
-		}
+//		boolean hasSubitems = false;
+//		for (int i = 0; i < items.length; i++)
+//		{
+//			if (items[i].hasSubItems())
+//			{
+//				hasSubitems = true;
+//				break;
+//			}
+//		}
 		
 		// items
 		for (int i = 0; i < items.length; i++)
@@ -137,31 +153,41 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 
 			SelectItemWithImage item = items[i];
 			boolean checked = selectedValuesLookup.contains(item.getValue());
-			String inputId = mainId + "_checkbox_" + item.getValue();
-			String popupId = mainId + "_popup_" + item.getValue();
+			String itemId = checkboxListId + "_item_" + item.getValue();
+			String inputId = checkboxListId + "_checkbox_" + item.getValue();
+			String popupId = checkboxListId + "_popup_" + item.getValue();
 			
 			String onMouseOver =
 				"CheckboxListPopupGlobals.popupShow(" +
-				"'" + mainId + "', " +
+				"'" + checkboxListId + "', " +
 				"'" + popupId + "', " +
+				"'" + itemId + "', " +
+				"null, " +
 				"'" + item.getImageUrl() + "')";
 			
 			String onMouseOut =
 				"CheckboxListPopupGlobals.popupHide(" +
-				"'" + mainId + "', " +
-				"'" + popupId + "')";
+				"'" + checkboxListId + "', " +
+				"'" + popupId + "', " +
+				"'" + itemId + "', " +
+				"null)";
 
 			// item TR begin
 			writer.startElement("tr", this);
+			writer.writeAttribute("id", itemId, null);
+			writer.writeAttribute("class", "checkbox-list-item-0", null);
 			writer.writeAttribute("onmouseover", onMouseOver, null);
 			writer.writeAttribute("onmouseout", onMouseOut, null);
 			
 			// checkbox
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "checkbox-list-checkbox-0", null);
+			writer.writeAttribute("style", "position: relative;", null);
 			if (item.hasSubItems())
 			{
-				encodePopup(context, writer, mainId, popupId, inputName, item, item.getSubItems(), selectedValuesLookup);
+				encodePopup(context, writer,
+						checkboxListId, popupId, itemId, inputName,
+						item, item.getSubItems(), selectedValuesLookup);
 			}
 			if (item.isSelectable())
 			{
@@ -206,12 +232,12 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 		Set selectedValuesLookup = StringUtils.toStringSet(getSelectedValues());
 		
 		// main id for JS
-		String mainId = getClientId(context); 
+		String checkboxListId = getClientId(context); 
 		
 		// JS registration
 		StringBuffer regJS = new StringBuffer();
 		regJS.append("CheckboxListPopupGlobals.registerCheckboxList(new CheckboxListPopup(");
-		regJS.append("'").append(mainId).append("', ");
+		regJS.append("'").append(checkboxListId).append("', ");
 		regJS.append("'").append(form.getClientId(context)).append("'));");
 		
 		// render registration JS
@@ -220,7 +246,7 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 		// encode recursivelly
 		if (items == null) return;
 		encodeMainItems(context, writer,
-				mainId,
+				checkboxListId,
 				getHtmlNameForSelectemValues(context),
 				items,
 				selectedValuesLookup);

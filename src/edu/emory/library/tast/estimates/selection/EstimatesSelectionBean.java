@@ -293,9 +293,9 @@ public class EstimatesSelectionBean
 				SelectItemWithImage areaItem = new SelectItemWithImage(
 						region.getArea().getName(),
 						"area" + areaId,
-						"images/area-" + areaId + ".png");
+						"regions/area-" + areaId + ".png");
 
-				areaItem.setSelectable(false);
+				areaItem.setSelectable(true);
 				areasUi[areaIndex] = areaItem;
 				
 			}
@@ -303,7 +303,7 @@ public class EstimatesSelectionBean
 			regionsTemp.add(new SelectItemWithImage(
 					region.getName(),
 					String.valueOf(region.getId()),
-					"images/region-" + areaId + ".png"));
+					"regions/region-" + region.getId() + ".png"));
 
 		}
 		

@@ -52,7 +52,7 @@
 	<s:section title="Export regions" sectionId="africanRegions">
 		<t:div style="padding: 5px;" styleClass="export-region-list">
 		<s:checkboxListExpandable
-			id="expRegions"
+			id="expReg"
 			items="#{EstimatesSelectionBean.allExpRegions}" 
 			selectedValues="#{EstimatesSelectionBean.checkedExpRegions}"
 			expandedValues="#{EstimatesSelectionBean.expandedExpRegions}" />
@@ -60,9 +60,9 @@
 	</s:section>
 
 	<s:section title="Import regions" sectionId="americanRegions">
-		<t:div style="padding: 5px;" styleClass="import-region-list">
+		<t:div style="padding-top: 5px; padding-bottom: 5px;" styleClass="import-region-list">
 		<s:checkboxListPopup
-			id="impRegions"
+			id="impReg"
 			items="#{EstimatesSelectionBean.allImpRegions}"
 			selectedValues="#{EstimatesSelectionBean.checkedImpRegions}"/>
 		</t:div>
