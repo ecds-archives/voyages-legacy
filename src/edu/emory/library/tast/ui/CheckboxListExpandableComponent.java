@@ -38,7 +38,7 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 	
 	public void processUpdates(FacesContext context)
 	{
-		super.decode(context);
+		super.processUpdates(context);
 		
 		ValueBinding vbExpandedValues = getValueBinding("expandedValues");
 		if (vbExpandedValues != null && expandedValues != null)
