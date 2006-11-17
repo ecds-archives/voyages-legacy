@@ -10,9 +10,9 @@
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 		<h:selectOneMenu value="#{EstimatesTableBean.rowGrouping}">
-			<f:selectItem itemLabel="Nations" itemValue="nation" />
-			<f:selectItem itemLabel="Regions in Africa" itemValue="expRegion" />
-			<f:selectItem itemLabel="Regions in America" itemValue="impRegion" />
+			<f:selectItem itemLabel="National carriers" itemValue="nation" />
+			<f:selectItem itemLabel="Export regions" itemValue="expRegion" />
+			<f:selectItem itemLabel="Import regions" itemValue="impRegion" />
 			<f:selectItem itemLabel="Individual years" itemValue="years1" />
 			<f:selectItem itemLabel="5 year period" itemValue="years5" />
 			<f:selectItem itemLabel="10 year period" itemValue="years10" />
@@ -26,9 +26,9 @@
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 		<h:selectOneMenu value="#{EstimatesTableBean.colGrouping}">
-			<f:selectItem itemLabel="Nations" itemValue="nation" />
-			<f:selectItem itemLabel="Regions in Africa" itemValue="expRegion" />
-			<f:selectItem itemLabel="Regions in America" itemValue="impRegion" />
+			<f:selectItem itemLabel="National carriers" itemValue="nation" />
+			<f:selectItem itemLabel="Export regions" itemValue="expRegion" />
+			<f:selectItem itemLabel="Import regions" itemValue="impRegion" />
 		</h:selectOneMenu>
 	</t:htmlTag>
 	<t:htmlTag value="td">

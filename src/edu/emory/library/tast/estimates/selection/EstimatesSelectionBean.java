@@ -14,6 +14,7 @@ import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.SelectItem;
 import edu.emory.library.tast.ui.SelectItemWithImage;
@@ -24,7 +25,7 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class EstimatesSelectionBean
 {
 	
-	private Conditions conditions;
+	private Conditions geographicConditions;
 
 	private String[] checkedNations;
 	private String[] checkedExpRegions;
@@ -42,19 +43,56 @@ public class EstimatesSelectionBean
 	private String selectedNationsAsText;
 	private String selectedExpRegionsAsText;
 	private String selectedImpRegionsAsText;
+	
+	private int yearFrom = 1500;
+	private int yearTo = 1900;
 
 	public EstimatesSelectionBean()
 	{
-		selectAllNationsAndRegions();
+		initDefaultValues();
 	}
 	
-	private void selectAllNationsAndRegions()
+	private void initDefaultValues()
 	{
-		
-		int i;
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
+
+		selectAllNationsAndRegions(sess);
+		initTimeFrame(sess);
+		
+		transaction.commit();
+		sess.close();
+
+		changeSelection();
+
+	}
+	
+	private void initTimeFrame(Session sess)
+	{
+
+		QueryValue query = new QueryValue("edu.emory.library.tast.dm.Estimate");
+		
+		query.addPopulatedAttribute(
+				new FunctionAttribute("min",
+						new Attribute[] {Estimate.getAttribute("year")}));
+
+		query.addPopulatedAttribute(
+				new FunctionAttribute("max",
+						new Attribute[] {Estimate.getAttribute("year")}));
+		
+		Object[] result = query.executeQuery();
+		Object[] firsrRow = (Object[]) result[0]; 
+			
+		yearFrom = ((Integer) firsrRow[0]).intValue();
+		yearTo = ((Integer) firsrRow[1]).intValue();
+	
+	}
+
+	private void selectAllNationsAndRegions(Session sess)
+	{
+		
+		int i;
 		
 		List allNations = loadAllNations(sess);
 		List allExpRegions = loadAllRegions(sess, true);
@@ -104,11 +142,6 @@ public class EstimatesSelectionBean
 		
 		expandedImpRegions = new String[expandedImpAreas.size()];
 		expandedImpAreas.toArray(expandedImpRegions);
-
-		transaction.commit();
-		sess.close();
-		
-		changeSelection();
 		
 	}
 	
@@ -328,10 +361,10 @@ public class EstimatesSelectionBean
 		Conditions conditionExpRegions = new Conditions(Conditions.JOIN_OR);
 		Conditions conditionImpRegions = new Conditions(Conditions.JOIN_OR);
 		
-		conditions = new Conditions(Conditions.JOIN_AND);
-		conditions.addCondition(conditionNations);
-		conditions.addCondition(conditionExpRegions);
-		conditions.addCondition(conditionImpRegions);
+		geographicConditions = new Conditions(Conditions.JOIN_AND);
+		geographicConditions.addCondition(conditionNations);
+		geographicConditions.addCondition(conditionExpRegions);
+		geographicConditions.addCondition(conditionImpRegions);
 
 		selectedNationIds = new HashSet();
 		selectedExpRegionIds = new HashSet();
@@ -453,9 +486,20 @@ public class EstimatesSelectionBean
 		sess.close();
 	}
 	
+	public Conditions getTimeFrameConditions()
+	{
+		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		cond.addCondition(Estimate.getAttribute("year"), new Integer(yearFrom), Conditions.OP_GREATER_OR_EQUAL);
+		cond.addCondition(Estimate.getAttribute("year"), new Integer(yearTo), Conditions.OP_SMALLER_OR_EQUAL);
+		return cond;
+	}
+
 	public Conditions getConditions()
 	{
-		return conditions;
+		Conditions conds = new Conditions(Conditions.JOIN_AND);
+		conds.addCondition(geographicConditions);
+		conds.addCondition(getTimeFrameConditions());
+		return conds;
 	}
 
 	public SelectItem[] getAllExpRegions()
@@ -551,6 +595,26 @@ public class EstimatesSelectionBean
 	public void setSelectedNationsAsText(String selectedNationsAsText)
 	{
 		this.selectedNationsAsText = selectedNationsAsText;
+	}
+
+	public int getYearFrom()
+	{
+		return yearFrom;
+	}
+
+	public void setYearFrom(int yearFrom)
+	{
+		this.yearFrom = yearFrom;
+	}
+
+	public int getYearTo()
+	{
+		return yearTo;
+	}
+
+	public void setYearTo(int yearTo)
+	{
+		this.yearTo = yearTo;
 	}
 
 }

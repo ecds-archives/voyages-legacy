@@ -24,6 +24,16 @@ public abstract class CheckboxListComponent extends UIComponentBase
 		return getClientId(context);
 	}
 
+	protected String getHtmlIdForCheckbox(FacesContext context, String checkboxListId, SelectItem item)
+	{
+		return checkboxListId + "_checkbox_" + item.getValue();
+	}
+
+	protected String getHtmlIdForItem(FacesContext context, String checkboxListId, SelectItem item)
+	{
+		return checkboxListId + "_item_" + item.getValue();
+	}
+
 	public void decode(FacesContext context)
 	{
 		selectedValues = (String[])
@@ -39,6 +49,23 @@ public abstract class CheckboxListComponent extends UIComponentBase
 			vbSelectedValues.setValue(context, selectedValues);
 	}
 	
+	protected void registerItems(FacesContext context, String checkboxListId, StringBuffer regJS, SelectItem []items)
+	{
+		for (int i = 0; i < items.length; i++)
+		{
+			SelectItem item = items[i];
+			if (i > 0) regJS.append(", ");
+			regJS.append("new SelectItem(");
+			regJS.append("'").append(item.getValue()).append("'");
+			regJS.append(", ");
+			regJS.append("'").append(getHtmlIdForCheckbox(context, checkboxListId, item)).append("'");
+			regJS.append(", ");
+			regJS.append("[");
+			if (item.hasSubItems()) registerItems(context, checkboxListId, regJS, item.getSubItems());
+			regJS.append("])");
+		}
+	}
+
 	public SelectItem[] getItems()
 	{
 		return (SelectItem[]) JsfUtils.getCompPropObject(this, getFacesContext(),

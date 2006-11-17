@@ -4,27 +4,25 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <s:sectionGroup
-    title="Years"
+    title="Time frame"
 	id="selectionYears"
 	backgroundStyle="dark"
 	tabsStyle="middle"
 	buttonsStyle="middle">
-	
-	<t:htmlTag value="div" style="padding: 5px 0px 5px 10px;"><h:outputText value="Select starting and ending year:" /></t:htmlTag>
-	
-	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px;">
+
+	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px">
 			<h:outputText value="From" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:inputText value="1500" style="width: 60px" />
+			<h:inputText value="#{EstimatesSelectionBean.yearFrom}" style="width: 60px" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:outputText value="To" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px;">
-			<h:inputText value="1900" style="width: 60px" />
+			<h:inputText value="#{EstimatesSelectionBean.yearTo}" style="width: 60px" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
@@ -69,24 +67,36 @@
 	</s:section>
 
 </s:sectionGroup>
-	
+
 <div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
 	<h:commandButton
 		value="Change selection"
 		action="#{EstimatesSelectionBean.changeSelection}" />
 </div>
 
-<div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
-	<div>
-		<div style="font-weight: bold;">Selected export regions:</div>
-		<h:outputText value="#{EstimatesSelectionBean.selectedNationsAsText}" escape="false" />
-	</div>
-	<div style="margin-top: 5px;">
-		<div style="font-weight: bold;">Selected export regions:</div>
-		<h:outputText value="#{EstimatesSelectionBean.selectedExpRegionsAsText}" escape="false" />
-	</div>
-	<div style="margin-top: 5px;">
-		<div style="font-weight: bold;">Selected import regions:</div>
-		<h:outputText value="#{EstimatesSelectionBean.selectedImpRegionsAsText}" escape="false" />
-	</div>
-</div>
+<br>
+
+<s:sectionGroup
+    title="Current query"
+	id="currentQuery"
+	backgroundStyle="dark"
+	tabsStyle="middle"
+	buttonsStyle="middle">
+	
+	<t:div style="padding: 5px 5px 5px 5px; background-color: White;">
+		<t:div>
+			<t:div style="font-weight: bold;"><h:outputText value="Selected national carriers:"/></t:div>
+			<h:outputText value="#{EstimatesSelectionBean.selectedNationsAsText}" escape="false" />
+		</t:div>
+		<t:div style="margin-top: 5px;">
+			<t:div style="font-weight: bold;"><h:outputText value="Selected export regions:"/></t:div>
+			<h:outputText value="#{EstimatesSelectionBean.selectedExpRegionsAsText}" escape="false" />
+		</t:div>
+		<t:div style="margin-top: 5px;">
+			<t:div style="font-weight: bold;"><h:outputText value="Selected import regions:"/></t:div>
+			<h:outputText value="#{EstimatesSelectionBean.selectedImpRegionsAsText}" escape="false" />
+		</t:div>
+	</t:div>
+
+</s:sectionGroup>
+

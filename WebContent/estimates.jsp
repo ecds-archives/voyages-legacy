@@ -15,6 +15,7 @@
 	<link href="map.css" rel="stylesheet" type="text/css">
 	<script src="utils.js" language="javascript" type="text/javascript"></script>
 	<script src="eventline.js" language="javascript" type="text/javascript"></script>
+	<script src="checkbox-list.js" language="javascript" type="text/javascript"></script>
 	<script src="checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
 	<script src="checkbox-list-popup.js" language="javascript" type="text/javascript"></script>
 	<script src="map.js" language="javascript" type="text/javascript"></script>

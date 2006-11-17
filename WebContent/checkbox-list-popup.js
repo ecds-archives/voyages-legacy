@@ -19,15 +19,28 @@ var CheckboxListPopupGlobals =
 		var checkboxList = CheckboxListPopupGlobals.checkboxLists[checkboxListId];
 		if (checkboxList) checkboxList.popupHide(popupId, mainItemId, subItemId);
 	}
+	
+	onClick: function(checkboxListId, value)
+	{
+		var checkboxList = CheckboxListPopupGlobals.checkboxLists[checkboxListId];
+		if (checkboxList) checkboxList.onClick(value);
+	}
 
 }
 
 function CheckboxListPopup(
 	checkboxListId,
-	formName)
+	formName,
+	items)
 {
 	this.checkboxListId = checkboxListId;
 	this.formName = formName;
+	this.items = items;
+}
+
+CheckboxListPopup.prototype.initItems = function()
+{
+
 }
 
 CheckboxListPopup.prototype.popupShow = function(popupId, mainItemId, subItemId, imageUrl)
@@ -42,6 +55,16 @@ CheckboxListPopup.prototype.popupShow = function(popupId, mainItemId, subItemId,
 }
 
 CheckboxListPopup.prototype.popupHide = function(popupId, mainItemId, subItemId)
+{
+	var popup = document.getElementById(popupId);
+	var mainItem = document.getElementById(mainItemId);
+	var subItem = document.getElementById(subItemId);
+	popup.style.display = "none";
+	mainItem.className = "checkbox-list-item-0";
+	if (subItem) subItem.className = "checkbox-list-item-1";
+}
+
+CheckboxListPopup.prototype.onClick = function(value)
 {
 	var popup = document.getElementById(popupId);
 	var mainItem = document.getElementById(mainItemId);

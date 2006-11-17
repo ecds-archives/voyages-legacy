@@ -60,8 +60,8 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 
 			SelectItemWithImage item = (SelectItemWithImage) items[i];
 			boolean checked = selectedValuesLookup.contains(item.getValue());
-			String inputId = checkboxListId + "_checkbox_" + item.getValue();
-			String itemId = checkboxListId + "_item_" + item.getValue();
+			String inputId = getHtmlIdForCheckbox(context, checkboxListId, item);
+			String itemId = getHtmlIdForItem(context, checkboxListId, item);
 			
 			// show
 			onMouseOver =
@@ -153,8 +153,8 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 
 			SelectItemWithImage item = items[i];
 			boolean checked = selectedValuesLookup.contains(item.getValue());
-			String itemId = checkboxListId + "_item_" + item.getValue();
-			String inputId = checkboxListId + "_checkbox_" + item.getValue();
+			String inputId = getHtmlIdForCheckbox(context, checkboxListId, item);
+			String itemId = getHtmlIdForItem(context, checkboxListId, item);
 			String popupId = checkboxListId + "_popup_" + item.getValue();
 			
 			String onMouseOver =
@@ -171,7 +171,12 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 				"'" + popupId + "', " +
 				"'" + itemId + "', " +
 				"null)";
-
+			
+			String onClick =
+				"CheckboxListPopupGlobals.click(" +
+				"'" + checkboxListId + "', " +
+				"'" + item.getValue() + ")";
+			
 			// item TR begin
 			writer.startElement("tr", this);
 			writer.writeAttribute("id", itemId, null);
@@ -193,6 +198,7 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 			{
 				writer.startElement("input", this);
 				writer.writeAttribute("type", "checkbox", null);
+				writer.writeAttribute("onclick", onClick, null);
 				writer.writeAttribute("name", inputName, null);
 				writer.writeAttribute("id", inputId, null);
 				writer.writeAttribute("value", item.getValue(), null);
@@ -237,8 +243,12 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 		// JS registration
 		StringBuffer regJS = new StringBuffer();
 		regJS.append("CheckboxListPopupGlobals.registerCheckboxList(new CheckboxListPopup(");
-		regJS.append("'").append(checkboxListId).append("', ");
-		regJS.append("'").append(form.getClientId(context)).append("'));");
+		regJS.append("'").append(checkboxListId).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(form.getClientId(context)).append("'");
+		regJS.append(", ");
+		registerItems(context, checkboxListId, regJS, items);
+		regJS.append("));");
 		
 		// render registration JS
 		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);

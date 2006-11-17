@@ -14,11 +14,11 @@ public class Estimate {
 	static {
 		attributes.put("id", new NumericAttribute("id", "Estimate"));
 		attributes.put("year", new NumericAttribute("year", "Estimate", "Year"));
-		attributes.put("nation", new DictionaryAttribute("nation", "Estimate", "Nation"));
-		attributes.put("expRegion", new DictionaryAttribute("expRegion", "Estimate", "Region of slaves disembarkation"));
-		attributes.put("impRegion", new DictionaryAttribute("impRegion", "Estimate", "Region of slaves embarkation"));
-		attributes.put("slavImported", new NumericAttribute("slavImported", "Estimate", "Number of slaves disembarked"));
-		attributes.put("slavExported", new NumericAttribute("slavExported", "Estimate", "Number of slaves embarked"));
+		attributes.put("nation", new DictionaryAttribute("nation", "Estimate", "National carrier"));
+		attributes.put("expRegion", new DictionaryAttribute("expRegion", "Estimate", "Export region"));
+		attributes.put("impRegion", new DictionaryAttribute("impRegion", "Estimate", "Import region"));
+		attributes.put("slavImported", new NumericAttribute("slavImported", "Estimate", "Imported"));
+		attributes.put("slavExported", new NumericAttribute("slavExported", "Estimate", "Exported"));
 	}
 
 	private Long id;
