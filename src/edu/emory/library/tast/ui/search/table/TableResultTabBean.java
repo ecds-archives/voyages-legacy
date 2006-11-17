@@ -28,6 +28,7 @@ import edu.emory.library.tast.ui.search.table.formatters.SimpleDateAttributeForm
 import edu.emory.library.tast.ui.search.tabscommon.MemorizedAction;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -46,15 +47,17 @@ public class TableResultTabBean {
 
 	private static final int MAX_STEP = 50000;
 
-	/**
-	 * First currently visible record.
-	 */
-	private int current = 0;
-
-	/**
-	 * Number of visible records.
-	 */
-	private int step = 10;
+	private TableLinkManager linkManager = new TableLinkManager(10);
+	
+//	/**
+//	 * First currently visible record.
+//	 */
+//	private int current = 0;
+//
+//	/**
+//	 * Number of visible records.
+//	 */
+//	private int step = 10;
 
 	/**
 	 * Indication of component visibility.
@@ -86,10 +89,10 @@ public class TableResultTabBean {
 	 */
 	private List selectedAttributeToAdd = new ArrayList();
 
-	/**
-	 * Current number of results.
-	 */
-	private Integer numberOfResults;
+//	/**
+//	 * Current number of results.
+//	 */
+//	private Integer numberOfResults;
 
 	/**
 	 * Data for result table.
@@ -194,7 +197,7 @@ public class TableResultTabBean {
 			needQuery = true;
 		}
 		if (this.searchBean.getSearchParameters().getConditions() != null && needQuery) {
-			this.queryAndFillInData(VoyageIndex.getRecent(), this.data, this.getCurrent().intValue(), this.step, false);
+			this.queryAndFillInData(VoyageIndex.getRecent(), this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
 			this.setNumberOfResults();
 			needQuery = false;
 		}
@@ -333,42 +336,42 @@ public class TableResultTabBean {
 		}
 	}
 
-	/**
-	 * Next result set action.
-	 * 
-	 * @return
-	 */
-	public String next() {
-		if (this.numberOfResults != null) {
-			if (current + step < this.numberOfResults.intValue()
-					&& this.searchBean.getSearchParameters().getConditions() != null) {
-				current += step;
-				this.needQuery = true;
-			}
-		}
+//	/**
+//	 * Next result set action.
+//	 * 
+//	 * @return
+//	 */
+//	public String next() {
+//		if (this.numberOfResults != null) {
+//			if (current + step < this.numberOfResults.intValue()
+//					&& this.searchBean.getSearchParameters().getConditions() != null) {
+//				current += step;
+//				this.needQuery = true;
+//			}
+//		}
+//
+//		this.getResultsDB();
+//		return null;
+//	}
 
-		this.getResultsDB();
-		return null;
-	}
-
-	/**
-	 * Previous result set action
-	 * 
-	 * @return
-	 */
-	public String prev() {
-		if (this.numberOfResults != null) {
-			if (current > 0 && this.searchBean.getSearchParameters().getConditions() != null) {
-				current -= step;
-				if (current < 0) {
-					current = 0;
-				}
-				this.needQuery = true;
-			}
-		}
-		this.getResultsDB();
-		return null;
-	}
+//	/**
+//	 * Previous result set action
+//	 * 
+//	 * @return
+//	 */
+//	public String prev() {
+//		if (this.numberOfResults != null) {
+//			if (current > 0 && this.searchBean.getSearchParameters().getConditions() != null) {
+//				current -= step;
+//				if (current < 0) {
+//					current = 0;
+//				}
+//				this.needQuery = true;
+//			}
+//		}
+//		this.getResultsDB();
+//		return null;
+//	}
 
 	/**
 	 * Removing of columns from table (Remove button)
@@ -575,7 +578,7 @@ public class TableResultTabBean {
 		}
 
 		// Indicate need of query
-		this.current = 0;
+		this.linkManager.setCurrentTab(0);
 		this.needQuery = true;
 	}
 
@@ -631,10 +634,10 @@ public class TableResultTabBean {
 	 * @return
 	 */
 	public Integer getFirstDisplayed() {
-		if (numberOfResults == null || numberOfResults.intValue() == 0)
+		if (this.linkManager.getResultsNumber() == 0)
 			return new Integer(0);
 		else
-			return new Integer(current + 1);
+			return new Integer(this.linkManager.getCurrentFirstRecord() + 1);
 	}
 
 	/**
@@ -643,10 +646,11 @@ public class TableResultTabBean {
 	 * @return
 	 */
 	public Integer getLastDisplayed() {
-		if (numberOfResults == null || numberOfResults.intValue() == 0)
+		if (this.linkManager.getResultsNumber() == 0)
 			return new Integer(0);
 		else
-			return new Integer(current + 1 + (this.data.getData() != null ? this.data.getData().length - 1 : 0));
+			return new Integer(this.linkManager.getCurrentFirstRecord() + 1 + 
+					(this.data.getData() != null ? this.data.getData().length - 1 : 0));
 	}
 
 	/**
@@ -655,37 +659,34 @@ public class TableResultTabBean {
 	 * @return
 	 */
 	public Integer getTotalRows() {
-		if (numberOfResults == null)
-			return new Integer(0);
-		else
-			return numberOfResults;
+		return new Integer(this.linkManager.getResultsNumber());
 	}
 
-	/**
-	 * TODO Needed?
-	 * 
-	 * @return
-	 */
-	public Integer getCurrent() {
-		return new Integer(current);
-	}
+//	/**
+//	 * TODO Needed?
+//	 * 
+//	 * @return
+//	 */
+//	public Integer getCurrent() {
+//		return new Integer(current);
+//	}
 
-	public void setCurrent(Integer current) {
-		this.current = current.intValue();
-	}
+//	public void setCurrent(Integer current) {
+//		this.current = current.intValue();
+//	}
 
-	/**
-	 * Gets current step
-	 * 
-	 * @return
-	 */
-	public String getStep() {
-		if (this.step == MAX_STEP) {
-			return "all";
-		} else {
-			return step + "";
-		}
-	}
+//	/**
+//	 * Gets current step
+//	 * 
+//	 * @return
+//	 */
+//	public String getStep() {
+//		if (this.step == MAX_STEP) {
+//			return "all";
+//		} else {
+//			return step + "";
+//		}
+//	}
 
 	/**
 	 * Sets current step
@@ -696,16 +697,16 @@ public class TableResultTabBean {
 		if (step == null)
 			return;
 		if (step.equals("all")) {
-			if (this.step != MAX_STEP) {
+			if (this.linkManager.getStep() != MAX_STEP) {
 				this.needQuery = true;
 			}
-			this.step = MAX_STEP;
+			this.linkManager.setStep(MAX_STEP);
 			return;
 		}
-		if (this.step != new Integer(step).intValue()) {
+		if (this.linkManager.getStep() != new Integer(step).intValue()) {
 			this.needQuery = true;
 		}
-		this.step = new Integer(step).intValue();
+		this.linkManager.setStep(Integer.parseInt(step));
 	}
 
 	/**
@@ -934,7 +935,7 @@ public class TableResultTabBean {
 	 * @return
 	 */
 	public Integer getNumberOfResults() {
-		return numberOfResults;
+		return new Integer(this.linkManager.getResultsNumber());
 	}
 
 	/**
@@ -1069,6 +1070,10 @@ public class TableResultTabBean {
 		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageId")}));
 		Object[] ret = qValue.executeQuery();
-		this.numberOfResults = (Integer) ret[0];
+		this.linkManager.setResultsNumber(((Integer) ret[0]).intValue());
+	}
+
+	public TableLinkManager getLinkManager() {
+		return linkManager;
 	}
 }

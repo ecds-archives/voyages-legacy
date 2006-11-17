@@ -32,7 +32,7 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		VisibleAttrEstimate attr = new VisibleAttrEstimate("nation", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("nation"), Nation.getAttribute("name")})});
-		attr.setUserLabel("Nationality");
+		attr.setUserLabel("National carrier");
 		visibleAttributes.put("nation", attr);
 		
 		attr = new VisibleAttrEstimate("year", new Attribute[] {Estimate.getAttribute("year")});
@@ -42,21 +42,21 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		attr = new VisibleAttrEstimate("impRegion", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("impRegion"), Region.getAttribute("name")})});
-		attr.setUserLabel("Imputed major region of slaves disembarkation");
+		attr.setUserLabel("Import region");
 		visibleAttributes.put("impRegion", attr);
 		
 		attr = new VisibleAttrEstimate("expRegion", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("expRegion"), Region.getAttribute("name")})});
-		attr.setUserLabel("Imputed major region of slaves embarkation");
+		attr.setUserLabel("Export region");
 		visibleAttributes.put("expRegion", attr);
 		
 		attr = new VisibleAttrEstimate("slavExported", new Attribute[] {Estimate.getAttribute("slavExported")});
-		attr.setUserLabel("Number of slaves embarked");
+		attr.setUserLabel("Exported");
 		visibleAttributes.put("slavExported", attr);
 		
 		attr = new VisibleAttrEstimate("slavImported", new Attribute[] {Estimate.getAttribute("slavImported")});
-		attr.setUserLabel("Number of slaves disembarked");
+		attr.setUserLabel("Imported");
 		visibleAttributes.put("slavImported", attr);
 	}
 	
