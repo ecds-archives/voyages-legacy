@@ -393,6 +393,20 @@
 			<name>chosenAttribute</name>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<name>tablelinks</name>
+		<tag-class>
+			edu.emory.library.tast.ui.search.table.TableLinksTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>manager</name>
+		</attribute>
+	</tag>
 
 	<tag>
 		<name>timeline</name>

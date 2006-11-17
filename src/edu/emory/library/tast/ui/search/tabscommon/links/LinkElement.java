@@ -1,6 +1,8 @@
 package edu.emory.library.tast.ui.search.tabscommon.links;
 
-public class LinkElement {
+import java.io.Serializable;
+
+public class LinkElement implements Serializable {
 
 	private int id;
 	private String lablel;

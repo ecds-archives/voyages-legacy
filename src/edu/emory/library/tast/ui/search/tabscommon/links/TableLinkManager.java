@@ -6,19 +6,19 @@ import java.util.ArrayList;
 public class TableLinkManager {
 	
 	private int resultsNumber;
-	private int currentVisibleTab;
 	private int currentFirstRecord;
 	private int step;
+	private boolean modified = false;
 	
 	public TableLinkManager(int step) {
 		this.step = step;
 		this.resultsNumber = 0;
-		this.currentVisibleTab = 0;
+		this.modified = true;
 	}
 	
 	public void setResultsNumber(int resultsNumber) {
 		this.resultsNumber = resultsNumber;
-		this.currentVisibleTab = 0;
+		this.modified = true;
 	}
 
 	public int getStep() {
@@ -27,8 +27,8 @@ public class TableLinkManager {
 	
 	public void clicked(LinkElement element) {
 		int desiredStep = element.getFirstVisible();
-		this.currentFirstRecord = desiredStep * step;
-		this.currentVisibleTab = desiredStep;
+		this.currentFirstRecord = desiredStep;
+		this.modified = true;
 	}
 	
 	public LinkElement[] getLinks() {
@@ -49,17 +49,25 @@ public class TableLinkManager {
 //		}
 //	}
 		
-		if (currentFirstRecord + step < this.resultsNumber) {
+		
+		list.add(new LinkElement(0, "&lt;&lt; First page", true, 0));
+		
+		if (this.currentFirstRecord == 0) {
+			list.add(new LinkElement(1, "&lt; Previous page", false, 0));
+		} else {
 			int first = this.currentFirstRecord - this.step;
 			if (first < 0) {
 				first = 0;
 			}
-			list.add(new LinkElement(0, "Previous", true, first));
+			list.add(new LinkElement(2, "&lt; Previous page", true, first));
 		}
 		if (currentFirstRecord + step < this.resultsNumber) {
-			list.add(new LinkElement(0, "Next", true, this.currentFirstRecord + this.step));
+			list.add(new LinkElement(3, "Next page &gt;", true, this.currentFirstRecord + this.step));
+		} else {
+			list.add(new LinkElement(4, "Next page &gt;", false, 0));
 		}
 		
+		list.add(new LinkElement(5, "Last page &gt;&gt;", true, this.resultsNumber - this.step));
 		
 		return (LinkElement[])list.toArray(new LinkElement[] {});
 	}
@@ -68,21 +76,33 @@ public class TableLinkManager {
 		return currentFirstRecord;
 	}
 
-	public int getCurrentVisibleTab() {
-		return currentVisibleTab;
-	}
+//	public int getCurrentVisibleTab() {
+//		return currentVisibleTab;
+//	}
 
 	public int getResultsNumber() {
 		return resultsNumber;
 	}
 
 	public void setStep(int step) {
-		this.currentFirstRecord = 0;
 		this.step = step;
+		this.modified = true;
 	}
 
-	public void setCurrentTab(int i) {
-		this.currentFirstRecord = i * this.step;
-		this.currentVisibleTab = i;
+//	public void setCurrentTab(int i) {
+//		if (i != this.currentVisibleTab) {
+//			this.modified = true;
+//		}
+//		this.currentFirstRecord = i * this.step;
+//	}
+	
+	public void reset() {
+		this.currentFirstRecord = 0;
+	}
+	
+	public boolean wasModified() {
+		boolean mod = this.modified;
+		this.modified = false;
+		return mod;
 	}
 }

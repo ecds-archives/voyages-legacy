@@ -232,6 +232,13 @@
 		</managed-property>
 	</managed-bean>
 
+	<component>
+		<component-type>TableLinksComponent</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.search.table.TableLinksComponent
+		</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>TimeLineResultTabBean</managed-bean-name>
 		<managed-bean-class>
