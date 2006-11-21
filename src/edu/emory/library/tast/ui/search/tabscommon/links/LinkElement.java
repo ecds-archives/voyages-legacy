@@ -8,12 +8,21 @@ public class LinkElement implements Serializable {
 	private String lablel;
 	private boolean clickable;
 	private int firstVisible;
+	private boolean selectedNumber = false;
 	
 	public LinkElement(int id, String label, boolean clickable, int firstVisible) {
 		this.id = id;
 		this.lablel = label;
 		this.clickable = clickable;
 		this.firstVisible = firstVisible;
+	}
+	
+	public LinkElement(int id, String label, boolean clickable, boolean selectedNumber, int firstVisible) {
+		this.id = id;
+		this.lablel = label;
+		this.clickable = clickable;
+		this.firstVisible = firstVisible;
+		this.selectedNumber = selectedNumber;
 	}
 	
 	public int getId() {
@@ -30,5 +39,9 @@ public class LinkElement implements Serializable {
 
 	public int getFirstVisible() {
 		return firstVisible;
+	}
+	
+	public boolean isSelectedNumber() {
+		return this.selectedNumber ;
 	}
 }

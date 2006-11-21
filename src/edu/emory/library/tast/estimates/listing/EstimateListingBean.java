@@ -14,6 +14,7 @@ import edu.emory.library.tast.ui.search.table.formatters.AbstractAttributeFormat
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -25,10 +26,8 @@ public class EstimateListingBean {
 	private EstimatesSelectionBean estimatesBean;
 	private TableData tableData;
 	private Conditions conditions = null;
-	private int firstResult = 0;
-	private int packageSize = 10;
-	private int resultLen = 0;
 	private boolean requery = false;
+	private TableLinkManager linkManager = new TableLinkManager(10);
 	
 	public EstimateListingBean() {
 		
@@ -89,8 +88,8 @@ public class EstimateListingBean {
 			}
 			qValue.setOrder(this.tableData.getOrder());
 			qValue.setOrderBy(this.tableData.getOrderByColumn().getAttributes());
-			qValue.setFirstResult(this.firstResult);
-			qValue.setLimit(this.packageSize);
+			qValue.setFirstResult(this.linkManager.getCurrentFirstRecord());
+			qValue.setLimit(this.linkManager.getStep());
 			this.tableData.setData(qValue.executeQuery());
 			this.setNumberOfResults();
 			this.requery = false;
@@ -103,7 +102,7 @@ public class EstimateListingBean {
 		QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
 		Object[] ret = qValue.executeQuery();
-		this.resultLen = ((Integer) ret[0]).intValue();
+		this.linkManager.setResultsNumber(((Integer) ret[0]).intValue());
 	}
 
 	public void setTableData(TableData tableData) {
@@ -134,7 +133,7 @@ public class EstimateListingBean {
 		}
 
 		// Indicate need of query
-		this.firstResult = 0;
+		this.linkManager.reset();
 		this.requery = true;
 	}
 	
@@ -147,46 +146,53 @@ public class EstimateListingBean {
 		return ret;
 	}
 
-	public String prev() {
-		this.requery = true;
-		this.firstResult -= this.packageSize;
-		if (this.firstResult < 0) {
-			this.firstResult = 0;
-		}
-		return null;
-	}
-	
-	public String next() {
-		this.requery = true;
-		if (this.firstResult + this.packageSize < this.resultLen) {
-			this.firstResult += this.packageSize;
-		}
-		return null;
-	}
+//	public String prev() {
+//		this.requery = true;
+//		this.firstResult -= this.packageSize;
+//		if (this.firstResult < 0) {
+//			this.firstResult = 0;
+//		}
+//		return null;
+//	}
+//	
+//	public String next() {
+//		this.requery = true;
+//		if (this.firstResult + this.packageSize < this.resultLen) {
+//			this.firstResult += this.packageSize;
+//		}
+//		return null;
+//	}
 	
 	public int getFirstDisplayed() {
-		return this.firstResult + 1;
+		return this.linkManager.getCurrentFirstRecord() + 1;
 	}
 	
 	public int getLastDisplayed() {
-		int number = this.getTableData().getData().length;
-		return this.firstResult + number;
+		if (this.linkManager.getResultsNumber() == 0)
+			return 0;
+		else
+			return this.linkManager.getCurrentFirstRecord() + 1 + 
+					(this.tableData.getData() != null ? this.tableData.getData().length - 1 : 0);
 	}
 	
 	public String getStep() {
-		return String.valueOf(this.packageSize);
+		return String.valueOf(this.linkManager.getStep());
 	}
 	
 	public int getTotalRows() {
-		return this.resultLen;
+		return this.linkManager.getResultsNumber();
 	}
 	
 	public void setStep(String step) {
 		if ("all".equals(step)) {
-			this.packageSize = Integer.MAX_VALUE;
+			this.linkManager.setStep(Integer.MAX_VALUE);
 		} else {
-			this.packageSize = Integer.parseInt(step);
+			this.linkManager.setStep(Integer.parseInt(step));
 		}
 		this.requery = true;
+	}
+	
+	public TableLinkManager getTableManager() {
+		return this.linkManager;
 	}
 }

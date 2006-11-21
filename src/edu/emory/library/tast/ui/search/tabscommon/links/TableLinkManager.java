@@ -49,25 +49,45 @@ public class TableLinkManager {
 //		}
 //	}
 		
-		
-		list.add(new LinkElement(0, "&lt;&lt; First page", true, 0));
+		int i = 0;
 		
 		if (this.currentFirstRecord == 0) {
-			list.add(new LinkElement(1, "&lt; Previous page", false, 0));
+			list.add(new LinkElement(i++, "&nbsp;&lt;&lt;&nbsp;", false, 0));
+			list.add(new LinkElement(i++, "&nbsp;&nbsp;&lt;&nbsp;", false, 0));
 		} else {
 			int first = this.currentFirstRecord - this.step;
 			if (first < 0) {
 				first = 0;
 			}
-			list.add(new LinkElement(2, "&lt; Previous page", true, first));
-		}
-		if (currentFirstRecord + step < this.resultsNumber) {
-			list.add(new LinkElement(3, "Next page &gt;", true, this.currentFirstRecord + this.step));
-		} else {
-			list.add(new LinkElement(4, "Next page &gt;", false, 0));
+			list.add(new LinkElement(i++, "&nbsp;&lt;&lt;&nbsp;", true, 0));
+			list.add(new LinkElement(i++, "&nbsp;&nbsp;&lt;&nbsp;", true, first));
 		}
 		
-		list.add(new LinkElement(5, "Last page &gt;&gt;", true, this.resultsNumber - this.step));
+		int first = this.currentFirstRecord - step * 4;
+		if (first < 0) first = 0;
+		int j = 0;
+		for (j = i; j - i < 9; j++) {
+			if (first == this.currentFirstRecord) {
+				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", false, true, first));
+			} else {
+				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", true, first));
+			}
+			if (first + step >= this.resultsNumber) {
+				break;
+			}
+			first += step;
+		}
+		i = j;
+		
+		if (currentFirstRecord + step < this.resultsNumber) {
+			list.add(new LinkElement(i++, "&nbsp;&nbsp;&gt;&nbsp;", true, this.currentFirstRecord + this.step));
+			list.add(new LinkElement(i++, "&nbsp;&gt;&gt;&nbsp;", true, this.resultsNumber - this.step));
+		} else {
+			list.add(new LinkElement(i++, "&nbsp;&nbsp;&gt;&nbsp;", false, 0));
+			list.add(new LinkElement(i++, "&nbsp;&gt;&gt;&nbsp;", false, this.resultsNumber - this.step));
+		}
+		
+		
 		
 		return (LinkElement[])list.toArray(new LinkElement[] {});
 	}

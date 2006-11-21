@@ -53,7 +53,6 @@ public class TableLinksComponent extends UIOutput {
 						ValueBinding vb = this.getValueBinding("manager");
 						if (vb != null) {
 							TableLinkManager manager = (TableLinkManager) vb.getValue(context);
-							System.out.println("clicked! " + i);
 							manager.clicked(links[i]);
 						}
 					}
@@ -95,11 +94,13 @@ public class TableLinksComponent extends UIOutput {
 			this.links = manager.getLinks();
 		}
 		JsfUtils.encodeHiddenInput(this, writer, getHiddenFieldName(context));
-//		writer.startElement("table", this);
-//		writer.startElement("tr", this);
+		writer.startElement("table", this);
+		writer.writeAttribute("class", "td-table-links", null);
+		writer.startElement("tr", this);
 		for (int i = 0; i < links.length; i++) {
 			writer.startElement("td", this);
 			if (links[i].isClickable()) {
+				writer.writeAttribute("class", "td-table-links", null);
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				String jsSort = JsfUtils.generateSubmitJS(context, form, getHiddenFieldName(context),
@@ -111,12 +112,18 @@ public class TableLinksComponent extends UIOutput {
 				writer.write(links[i].getLabel());
 				writer.endElement("a");
 			} else {
+				if (links[i].isSelectedNumber()) {
+					writer.writeAttribute("class", "td-table-links-td-active", null);
+				} else {
+					writer.writeAttribute("class", "td-table-links-no-hover", null);
+				}
+				
 				writer.write(links[i].getLabel());
 			}
 			writer.endElement("td");
 		}
-//		writer.endElement("tr");
-//		writer.endElement("table");
+		writer.endElement("tr");
+		writer.endElement("table");
 //		
 //		writer.endElement("div");
 	}

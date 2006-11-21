@@ -12,15 +12,9 @@
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="padding: 0px;">
-			<% /*
-				<h:commandLink style="font-weight: bold; text-decoration: none;" value="< Previous page"
-					action="#{TableResultTabBean.prev}" />
-				<h:outputText value=" | " />
-				<h:commandLink style="font-weight: bold; text-decoration: none;" value="Next page >"
-					action="#{TableResultTabBean.next}" />*/ %>
 				<s:tablelinks manager="#{TableResultTabBean.tableManager}"/>
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 0px;">
+			<t:htmlTag value="td" style="padding: 0px; text-align: left">
 				<h:outputText value=" | " />
 				<h:outputText value="Showing " />
 				<h:outputText value="#{TableResultTabBean.firstDisplayed}" />

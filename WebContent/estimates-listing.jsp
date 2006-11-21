@@ -12,15 +12,9 @@
 	<t:htmlTag id="listingEstimates-bottom-bar" value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="padding: 0px;">
-				<h:commandLink style="font-weight: bold; text-decoration: none;" 
-					id="listingEstimates-bottom-prev"
-					value="< Previous page"
-					action="#{EstimateListingBean.prev}" />
-				<h:outputText value=" | " />
-				<h:commandLink style="font-weight: bold; text-decoration: none;" 
-					id="listingEstimates-bottom-next"
-					value="Next page >"
-					action="#{EstimateListingBean.next}" />
+				<s:tablelinks manager="#{EstimateListingBean.tableManager}"/>
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 0px; text-align: left">
 				<h:outputText value=" | " />
 				<h:outputText value="Showing " />
 				<h:outputText value="#{EstimateListingBean.firstDisplayed}" />
