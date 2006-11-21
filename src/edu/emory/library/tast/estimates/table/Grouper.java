@@ -5,25 +5,20 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 public abstract class Grouper
 {
 	
-	protected Attribute groupingAttribute;
 	protected int resultIndex;
 	protected boolean omitEmpty;
 	
+	public abstract Attribute getGroupingAttribute();
+	public abstract Attribute[] addExtraAttributes(int index);
 	public abstract void initSlots(Object[] dataTable);
 	public abstract int lookupIndex(Object[] dataRow);
 	public abstract int getSlotsCount();
 	public abstract String[] getLabels();
 	
-	public Grouper(int resultIndex, boolean omitEmpty, Attribute groupingAttribute)
+	public Grouper(int resultIndex, boolean omitEmpty)
 	{
-		this.groupingAttribute = groupingAttribute;
 		this.resultIndex = resultIndex;
 		this.omitEmpty = omitEmpty;
-	}
-
-	public Attribute getGroupingAttribute()
-	{
-		return groupingAttribute;
 	}
 
 }

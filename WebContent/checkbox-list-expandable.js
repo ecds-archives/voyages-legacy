@@ -1,22 +1,22 @@
-var CheckboxListGlobals = 
+var CheckboxListExpandableGlobals = 
 {
 
 	checkboxLists: new Array(),
 
 	registerCheckboxList: function(checkboxList)
 	{
-		CheckboxListGlobals.checkboxLists[checkboxList.checkboxListId] = checkboxList;
+		CheckboxListExpandableGlobals.checkboxLists[checkboxList.checkboxListId] = checkboxList;
 	},
 	
 	collexp: function(checkboxListId, value, imageElementId, subitemsElementId)
 	{
-		var checkboxList = CheckboxListGlobals.checkboxLists[checkboxListId];
+		var checkboxList = CheckboxListExpandableGlobals.checkboxLists[checkboxListId];
 		if (checkboxList) checkboxList.collexp(value, imageElementId, subitemsElementId);
 	}
 
 }
 
-function CheckboxList(
+function CheckboxListExpandable(
 	checkboxListId,
 	formName,
 	expandedValuesFieldName,
@@ -30,7 +30,7 @@ function CheckboxList(
 	this.collapsedImageUrl = collapsedImageUrl;
 }
 
-CheckboxList.prototype.precomputeExpandedValues = function()
+CheckboxListExpandable.prototype.precomputeExpandedValues = function()
 {
 	if (!this.expandedValues)
 	{
@@ -45,7 +45,7 @@ CheckboxList.prototype.precomputeExpandedValues = function()
 	}
 }
 
-CheckboxList.prototype.saveExpandedValues = function()
+CheckboxListExpandable.prototype.saveExpandedValues = function()
 {
 	var expandedValues = new Array();
 	for (value in this.expandedValues)
@@ -60,7 +60,7 @@ CheckboxList.prototype.saveExpandedValues = function()
 	expandedValuesField.value = expandedValues.join(",");
 }
 
-CheckboxList.prototype.collexp = function(value, imageElementId, subitemsElementId)
+CheckboxListExpandable.prototype.collexp = function(value, imageElementId, subitemsElementId)
 {
 
 	var img = document.getElementById(imageElementId);

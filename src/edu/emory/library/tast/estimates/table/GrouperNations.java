@@ -21,12 +21,22 @@ public class GrouperNations extends Grouper
 	
 	public GrouperNations(int resultIndex, boolean omitEmpty, List nations)
 	{
-		super(resultIndex, omitEmpty, new SequenceAttribute (new Attribute[] {
-				Estimate.getAttribute("nation"),
-				Nation.getAttribute("id")}));
+		super(resultIndex, omitEmpty);
 		this.nations = nations;
 	}
 	
+	public Attribute getGroupingAttribute()
+	{
+		 return new SequenceAttribute (new Attribute[] {
+				 Estimate.getAttribute("nation"),
+				 Nation.getAttribute("id")});
+	}
+
+	public Attribute[] addExtraAttributes(int index)
+	{
+		return new Attribute[] {};
+	}
+
 	public void initSlots(Object[] dataTable)
 	{
 

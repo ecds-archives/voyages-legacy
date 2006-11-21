@@ -18,13 +18,25 @@ public class GrouperRegions extends Grouper
 	private String[] labels;
 	private List regions;
 	private Map lookupTable;
+	private boolean exportRegions; 
 	
 	public GrouperRegions(int resultIndex, boolean omitEmpty, boolean exportRegions, List regions)
 	{
-		super(resultIndex, omitEmpty, new SequenceAttribute (new Attribute[] {
-				Estimate.getAttribute(exportRegions ? "expRegion" : "impRegion"),
-				Region.getAttribute("id")}));
+		super(resultIndex, omitEmpty);
 		this.regions = regions;
+		this.exportRegions = exportRegions;
+	}
+	
+	public Attribute getGroupingAttribute()
+	{
+		 return new SequenceAttribute (new Attribute[] {
+					Estimate.getAttribute(exportRegions ? "expRegion" : "impRegion"),
+					Region.getAttribute("id")});
+	}
+
+	public Attribute[] addExtraAttributes(int index)
+	{
+		return new Attribute[] {};
 	}
 	
 	public void initSlots(Object[] dataTable)

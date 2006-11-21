@@ -20,10 +20,10 @@ var CheckboxListPopupGlobals =
 		if (checkboxList) checkboxList.popupHide(popupId, mainItemId, subItemId);
 	},
 	
-	onClick: function(checkboxListId, value)
+	click: function(checkboxListId, value)
 	{
 		var checkboxList = CheckboxListPopupGlobals.checkboxLists[checkboxListId];
-		if (checkboxList) checkboxList.onClick(value);
+		if (checkboxList) checkboxList.click(value);
 	}
 
 }
@@ -36,11 +36,7 @@ function CheckboxListPopup(
 	this.checkboxListId = checkboxListId;
 	this.formName = formName;
 	this.items = items;
-}
-
-CheckboxListPopup.prototype.initItems = function()
-{
-
+	this.itemsLookup = CheckboxListGlobals.initItems(items);
 }
 
 CheckboxListPopup.prototype.popupShow = function(popupId, mainItemId, subItemId, imageUrl)
@@ -64,12 +60,20 @@ CheckboxListPopup.prototype.popupHide = function(popupId, mainItemId, subItemId)
 	if (subItem) subItem.className = "checkbox-list-item-1";
 }
 
-CheckboxListPopup.prototype.onClick = function(value)
+CheckboxListPopup.prototype.click = function(value)
 {
-	var popup = document.getElementById(popupId);
-	var mainItem = document.getElementById(mainItemId);
-	var subItem = document.getElementById(subItemId);
-	popup.style.display = "none";
-	mainItem.className = "checkbox-list-item-0";
-	if (subItem) subItem.className = "checkbox-list-item-1";
+	var item = this.itemsLookup[value];
+	if (item.parentItem)
+	{
+		var allChecked = item.parentItem.allSubitemsChecked();
+		item.parentItem.setState(allChecked);
+	}
+	else
+	{
+		var state = item.isChecked();
+		for (var i = 0; i < item.subItems.length; i++)
+		{
+			item.subItems[i].setState(state);
+		}
+	}
 }

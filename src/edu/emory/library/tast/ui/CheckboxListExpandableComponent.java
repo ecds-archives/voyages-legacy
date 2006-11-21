@@ -86,7 +86,7 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 
 				// onclick
 				String onclick =
-					"CheckboxListGlobals.collexp(" +
+					"CheckboxListExpandableGlobals.collexp(" +
 					"'" + mainId + "'," +
 					"'" + item.getValue() + "'," +
 					"'" + imageId + "'," +
@@ -192,7 +192,7 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 		
 		// JS registration
 		StringBuffer regJS = new StringBuffer();
-		regJS.append("CheckboxListGlobals.registerCheckboxList(new CheckboxList(");
+		regJS.append("CheckboxListExpandableGlobals.registerCheckboxList(new CheckboxListExpandable(");
 		regJS.append("'").append(mainId).append("', ");
 		regJS.append("'").append(form.getClientId(context)).append("', ");
 		regJS.append("'").append(getHtmlNameForExpandedValues(context)).append("', ");

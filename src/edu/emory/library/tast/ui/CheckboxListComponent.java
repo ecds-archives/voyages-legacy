@@ -51,19 +51,23 @@ public abstract class CheckboxListComponent extends UIComponentBase
 	
 	protected void registerItems(FacesContext context, String checkboxListId, StringBuffer regJS, SelectItem []items)
 	{
-		for (int i = 0; i < items.length; i++)
+		regJS.append("[");
+		if (items != null)
 		{
-			SelectItem item = items[i];
-			if (i > 0) regJS.append(", ");
-			regJS.append("new SelectItem(");
-			regJS.append("'").append(item.getValue()).append("'");
-			regJS.append(", ");
-			regJS.append("'").append(getHtmlIdForCheckbox(context, checkboxListId, item)).append("'");
-			regJS.append(", ");
-			regJS.append("[");
-			if (item.hasSubItems()) registerItems(context, checkboxListId, regJS, item.getSubItems());
-			regJS.append("])");
+			for (int i = 0; i < items.length; i++)
+			{
+				SelectItem item = items[i];
+				if (i > 0) regJS.append(", ");
+				regJS.append("new SelectItem(");
+				regJS.append("'").append(item.getValue()).append("'");
+				regJS.append(", ");
+				regJS.append("'").append(getHtmlIdForCheckbox(context, checkboxListId, item)).append("'");
+				regJS.append(", ");
+				registerItems(context, checkboxListId, regJS, item.getSubItems());
+				regJS.append(")");
+			}
 		}
+		regJS.append("]");
 	}
 
 	public SelectItem[] getItems()

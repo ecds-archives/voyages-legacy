@@ -112,7 +112,7 @@ public class EstimatesTableBean
 		// we want to see: row ID, row Name, col ID, col Name 
 		query.addPopulatedAttribute(rowGrouper.getGroupingAttribute());
 		query.addPopulatedAttribute(colGrouper.getGroupingAttribute());
-
+		
 		// ... and number of slaves exported
 		query.addPopulatedAttribute(
 				new FunctionAttribute("sum",
@@ -122,6 +122,16 @@ public class EstimatesTableBean
 		query.addPopulatedAttribute(
 				new FunctionAttribute("sum",
 						new Attribute[] {Estimate.getAttribute("slavImported")}));
+
+		// row extra attributes
+		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(4);
+		for (int i = 0; i < rowExtraAttributes.length; i++)
+			query.addPopulatedAttribute(rowExtraAttributes[i]);
+		
+		// col extra attributes
+		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(4 + rowExtraAttributes.length);
+		for (int i = 0; i < colExtraAttributes.length; i++)
+			query.addPopulatedAttribute(colExtraAttributes[i]);
 
 		// finally query the database 
 		Object[] result = query.executeQuery(sess);

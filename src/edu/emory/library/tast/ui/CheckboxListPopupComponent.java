@@ -80,6 +80,12 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 				"'" + popupId + "', " +
 				"'" + mainItemId + "', " +
 				"'" + itemId + "')";
+
+			// check
+			String onClick =
+				"CheckboxListPopupGlobals.click(" +
+				"'" + checkboxListId + "', " +
+				"'" + item.getValue() + "')";
 			
 			// item TR begin
 			writer.startElement("tr", this);
@@ -98,6 +104,7 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 				writer.writeAttribute("name", inputName, null);
 				writer.writeAttribute("id", inputId, null);
 				writer.writeAttribute("value", item.getValue(), null);
+				writer.writeAttribute("onclick", onClick, null);
 				if (checked) writer.writeAttribute("checked", "checked", null);
 				writer.endElement("input");
 			}
@@ -175,7 +182,7 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 			String onClick =
 				"CheckboxListPopupGlobals.click(" +
 				"'" + checkboxListId + "', " +
-				"'" + item.getValue() + ")";
+				"'" + item.getValue() + "')";
 			
 			// item TR begin
 			writer.startElement("tr", this);

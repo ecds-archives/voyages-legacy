@@ -16,40 +16,70 @@ public class GrouperYears extends Grouper
 	private int period;
 	private String[] labels;
 	private Map lookupTable;
+	private int minYearInPeriodResultIndex = -1;
+	private int maxYearInPeriodResultIndex = -1;
 	
 	public GrouperYears(int resultIndex, boolean omitEmpty, int period)
 	{
-		super(resultIndex, omitEmpty, getGroupingAttribute(period));
+		super(resultIndex, omitEmpty);
 		this.period = period;
 	}
 	
-	private static Attribute getGroupingAttribute(int period)
+	public Attribute getGroupingAttribute()
 	{
 		if (period > 1)
-			return new FunctionAttribute("round_to_multiple", new Attribute[] {
-				Estimate.getAttribute("year"), new DirectValueAttribute("period", new Integer(period))});
+			return new FunctionAttribute("round_to_multiple",
+					new Attribute[] {Estimate.getAttribute("year"),
+					new DirectValueAttribute("period", new Integer(period))});
 		else
 			return Estimate.getAttribute("year");
+	}
+
+	public Attribute[] addExtraAttributes(int index)
+	{
+		minYearInPeriodResultIndex = index + 0;
+		maxYearInPeriodResultIndex = index + 1;
+		return new Attribute[] {
+				new FunctionAttribute("min", new Attribute[] {Estimate.getAttribute("year")}),
+				new FunctionAttribute("max", new Attribute[] {Estimate.getAttribute("year")})};
 	}
 
 	public void initSlots(Object[] dataTable)
 	{
 		
+		int minYearRounded = Integer.MAX_VALUE;
+		int maxYearRounded = Integer.MIN_VALUE;
 		int minYear = Integer.MAX_VALUE;
 		int maxYear = Integer.MIN_VALUE;
 
 		Set yearsInTable = new HashSet();
 		for (int i = 0; i < dataTable.length; i++)
 		{
-			Integer year = (Integer) ((Object[]) dataTable[i])[resultIndex];
-			int yearInt = year.intValue(); 
-			if (omitEmpty) yearsInTable.add(year);
-			if (yearInt < minYear) minYear = yearInt;
-			if (maxYear < yearInt) maxYear = yearInt;
+			Object[] row = (Object[]) dataTable[i];
+			
+			Integer yearRounded = (Integer) row[resultIndex];
+			Integer minYearInPeriod = (Integer) row[minYearInPeriodResultIndex];
+			Integer maxYearInPeriod = (Integer) row[maxYearInPeriodResultIndex];
+			
+			int yearIntRounded = yearRounded.intValue(); 
+			int minYearInPeriodInt = minYearInPeriod.intValue(); 
+			int maxYearInPeriodInt = maxYearInPeriod.intValue(); 
+			
+			if (omitEmpty) yearsInTable.add(yearRounded);
+			
+			if (yearIntRounded < minYearRounded) minYearRounded = yearIntRounded;
+			if (maxYearRounded < yearIntRounded) maxYearRounded = yearIntRounded;
+			
+			if (minYearInPeriodInt < minYear) minYear = minYearInPeriodInt;
+			if (maxYear < maxYearInPeriodInt) maxYear = maxYearInPeriodInt;
+
 		}
 		
-		int periods = minYear == Integer.MAX_VALUE ? 0 : (maxYear - minYear) / period + 1;
-		int slots = omitEmpty ? yearsInTable.size() : periods;
+		int periods = dataTable.length == 0 ?
+				0 : (maxYearRounded - minYearRounded) / period + 1;
+
+		int slots = omitEmpty ?
+				yearsInTable.size() : periods;
 				
 		labels = new String[slots];
 		lookupTable = new HashMap();
@@ -57,7 +87,7 @@ public class GrouperYears extends Grouper
 		int j = 0;
 		for (int i = 0; i < periods; i++)
 		{
-			int year = minYear + i * period;
+			int year = minYearRounded + i * period;
 			if (!omitEmpty || yearsInTable.contains(new Integer(year)))
 			{
 				lookupTable.put(new Integer(year), new Integer(j));
@@ -73,12 +103,10 @@ public class GrouperYears extends Grouper
 						if (minYear == year + period)
 						{
 							labels[j] = String.valueOf(minYear); 
-							System.out.println("A" + labels[j]);
 						}
 						else
 						{
 							labels[j] = minYear + "-" + (year + period);
-							System.out.println("B" + labels[j]);
 						}
 					}
 					else if (i == periods - 1)
@@ -86,18 +114,15 @@ public class GrouperYears extends Grouper
 						if (year + 1 == maxYear)
 						{
 							labels[j] = String.valueOf(maxYear); 
-							System.out.println("C" + labels[j]);
 						}
 						else
 						{
 							labels[j] = (year + 1) + "-" + maxYear;
-							System.out.println("D" + labels[j]);
 						}
 					}
 					else
 					{
 						labels[j] = (year + 1) + "-" +  (year + period);
-						System.out.println("E" + labels[j]);
 					}
 				}
 				j++;

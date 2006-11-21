@@ -3,6 +3,8 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
+<div id="debug"></div>
+
 <s:sectionGroup
     title="Time frame"
 	id="selectionYears"
@@ -105,4 +107,3 @@
 	</t:div>
 
 </s:sectionGroup>
-
