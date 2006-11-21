@@ -25,6 +25,7 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class EstimatesSelectionBean
 {
 	
+	private Conditions timeFrameConditions;
 	private Conditions geographicConditions;
 
 	private String[] checkedNations;
@@ -64,7 +65,8 @@ public class EstimatesSelectionBean
 		transaction.commit();
 		sess.close();
 
-		changeSelection();
+		changeGeographicSelection();
+		changeTimeFrameSelection();
 
 	}
 	
@@ -354,7 +356,7 @@ public class EstimatesSelectionBean
 
 	}
 	
-	public String changeSelection()
+	public String changeGeographicSelection()
 	{
 		
 		Conditions conditionNations = new Conditions(Conditions.JOIN_OR);
@@ -486,19 +488,40 @@ public class EstimatesSelectionBean
 		sess.close();
 	}
 	
+	public String changeTimeFrameSelection()
+	{
+
+		timeFrameConditions = new Conditions(Conditions.JOIN_AND);
+		
+		timeFrameConditions.addCondition(
+				Estimate.getAttribute("year"),
+				new Integer(yearFrom),
+				Conditions.OP_GREATER_OR_EQUAL);
+		
+		timeFrameConditions.addCondition(
+				Estimate.getAttribute("year"),
+				new Integer(yearTo),
+				Conditions.OP_SMALLER_OR_EQUAL);
+		
+		return null;
+
+	}
+	
 	public Conditions getTimeFrameConditions()
 	{
-		Conditions cond = new Conditions(Conditions.JOIN_AND);
-		cond.addCondition(Estimate.getAttribute("year"), new Integer(yearFrom), Conditions.OP_GREATER_OR_EQUAL);
-		cond.addCondition(Estimate.getAttribute("year"), new Integer(yearTo), Conditions.OP_SMALLER_OR_EQUAL);
-		return cond;
+		return timeFrameConditions;
+	}
+
+	public Conditions getGeographicConditions()
+	{
+		return geographicConditions;
 	}
 
 	public Conditions getConditions()
 	{
 		Conditions conds = new Conditions(Conditions.JOIN_AND);
 		conds.addCondition(geographicConditions);
-		conds.addCondition(getTimeFrameConditions());
+		conds.addCondition(timeFrameConditions);
 		return conds;
 	}
 

@@ -68,9 +68,37 @@ public class GrouperYears extends Grouper
 				}
 				else
 				{
-					labels[j] =
-						String.valueOf(year + 1) + "-" + 
-						String.valueOf(year + period);
+					if (i == 0)
+					{
+						if (minYear == year + period)
+						{
+							labels[j] = String.valueOf(minYear); 
+							System.out.println("A" + labels[j]);
+						}
+						else
+						{
+							labels[j] = minYear + "-" + (year + period);
+							System.out.println("B" + labels[j]);
+						}
+					}
+					else if (i == periods - 1)
+					{
+						if (year + 1 == maxYear)
+						{
+							labels[j] = String.valueOf(maxYear); 
+							System.out.println("C" + labels[j]);
+						}
+						else
+						{
+							labels[j] = (year + 1) + "-" + maxYear;
+							System.out.println("D" + labels[j]);
+						}
+					}
+					else
+					{
+						labels[j] = (year + 1) + "-" +  (year + period);
+						System.out.println("E" + labels[j]);
+					}
 				}
 				j++;
 			}

@@ -29,6 +29,12 @@
 	
 </s:sectionGroup>
 
+<div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
+	<h:commandButton
+		value="Change selection"
+		action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
+</div>
+
 <br>
 
 <s:sectionGroup
@@ -71,7 +77,7 @@
 <div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
 	<h:commandButton
 		value="Change selection"
-		action="#{EstimatesSelectionBean.changeSelection}" />
+		action="#{EstimatesSelectionBean.changeGeographicSelection}" />
 </div>
 
 <br>

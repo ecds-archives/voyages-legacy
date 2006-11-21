@@ -18,7 +18,7 @@ var CheckboxListPopupGlobals =
 	{
 		var checkboxList = CheckboxListPopupGlobals.checkboxLists[checkboxListId];
 		if (checkboxList) checkboxList.popupHide(popupId, mainItemId, subItemId);
-	}
+	},
 	
 	onClick: function(checkboxListId, value)
 	{
