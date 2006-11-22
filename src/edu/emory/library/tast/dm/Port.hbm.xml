@@ -8,8 +8,8 @@
 			<generator class="native"/>
 		</id>
 		<property name="name" />
-		<property name="x" />
-		<property name="y" />
+		<property name="y" column="latitude" insert="false" update="false"/>
+		<property name="x" column="longitude" insert="false" update="false"/>
 		<property name="latitude" />
 		<property name="longitude" />
 		<many-to-one name="region" column="region_id" lazy="false" />
