@@ -33,11 +33,24 @@ function EventLineGraph(name, color, maxValue, minValue, x, y)
 	this.y = y;
 }
 
-function EventLineZoomLevel(barWidth, labelsSpacing, viewSpan)
+function EventLineZoomLevel(barWidth, labelsSpacing, majorLabels, viewSpan)
 {
 	this.barWidth = barWidth;
 	this.labelsSpacing = labelsSpacing;
+	this.majorLabels = majorLabels;
 	this.viewSpan = viewSpan;
+}
+
+function EventLineHorizontalLabel(label, line)
+{
+	this.label = label;
+	this.line = line;
+}
+
+function EventLineVerticalLabel(label, line)
+{
+	this.label = label;
+	this.line = line;
 }
 
 function EventLine(
@@ -53,6 +66,7 @@ function EventLine(
 	indicatorLabelId,
 	zoomLevelFieldName,
 	offsetFieldName,
+	viewportHeight,
 	graphHeight,
 	selectorOffset,
 	selectorHeight,
@@ -62,7 +76,9 @@ function EventLine(
 	topLabelsMargin,
 	events,
 	graphs,
-	zoomLevels)
+	zoomLevels,
+	verticalLabelsSpacing,
+	verticalLabelsMajorSpacing)
 {
 
 	this.eventLineId = eventLineId;
@@ -82,6 +98,7 @@ function EventLine(
 	this.zoomLevelFieldName = zoomLevelFieldName;
 	this.offsetFieldName = offsetFieldName;
 	
+	this.viewportHeight = viewportHeight;
 	this.graphHeight = graphHeight;
 	
 	this.selectorOffset = selectorOffset;
@@ -92,12 +109,15 @@ function EventLine(
 
 	this.leftLabelsWidth = leftLabelsWidth;
 	this.leftLabelsMargin = leftLabelsMargin;
-	this.leftLabelsWidth = leftLabelsWidth;
-	this.topLabelsHeight = topLabelsMargin;
+	this.topLabelsHeight = topLabelsHeight;
+	this.topLabelsMargin = topLabelsMargin;
 	
 	this.events = events;
 	this.graphs = graphs;
 	this.zoomLevels = zoomLevels;
+	
+	this.verticalLabelsSpacing = verticalLabelsSpacing;
+	this.verticalLabelsMajorSpacing = verticalLabelsMajorSpacing;
 	
 	this.visibleEventIndex = -1;
 	
@@ -122,14 +142,28 @@ EventLine.prototype.init = function()
 	this.indicatorLabelElement = document.getElementById(this.indicatorLabelId);
 
 	var frm = document.forms[this.formName];
-	this.zoomLevelField = frm.elements[this.zoomLevelFieldName];;
-	this.offsetField = frm.elements[this.offsetFieldName];;
+	this.zoomLevelField = frm.elements[this.zoomLevelFieldName];
+	this.offsetField = frm.elements[this.offsetFieldName];
 	
+	var t1 = new Date();
 	this.findMaxValue();
+	var t2 = new Date();
 	this.createSelector();
+	var t3 = new Date();
 	this.initSlots();
+	var t4 = new Date();
 	this.refresh(parseInt(this.zoomLevelField.value), parseInt(this.offsetField.value));
-		
+	var t5 = new Date();
+
+	/*	
+	alert(
+		"load HTML = " + (s2.getTime() - s1.getTime()) + "ms, " +
+		"findMaxValue = " + (t2.getTime() - t1.getTime()) + "ms, " +
+		"createSelector = " + (t3.getTime() - t2.getTime()) + "ms, " +
+		"initSlots = " + (t4.getTime() - t3.getTime()) + "ms, " +
+		"refresh = " + (t5.getTime() - t4.getTime()) + "ms");
+	*/	
+
 	EventAttacher.attach(this.indicatorContainerElement, "mouseover", this, "graphMouseOver");
 	EventAttacher.attach(this.indicatorContainerElement, "mouseout", this, "graphMouseOut");
 	EventAttacher.attach(this.indicatorContainerElement, "mousemove", this, "graphMouseMove");
@@ -217,8 +251,6 @@ EventLine.prototype.initSlots = function()
 			var slot = this.graphsContainer.childNodes[i*this.slotsCount+j];
 			slot.style.position = "absolute";
 			slot.style.backgroundColor = graph.color;
-			slot.style.left = (j*zoomLevelObj.barWidth) + "px";
-			slot.style.width = (zoomLevelObj.barWidth - 1) + "px";
 			slot.style.height = "0px";
 			slots.push(slot);
 		}
@@ -240,6 +272,10 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 		for (var i = 0; i < this.graphs.length; i++)
 		{
 			var slots = this.graphs[i].slots;
+			for (var j = 0; j < currentViewSpan; j++)
+			{
+				slots[j].style.display = "block";
+			}
 			for (var j = currentViewSpan; j < this.slotsCount; j++)
 			{
 				slots[j].style.display = "none";
@@ -259,6 +295,8 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 	this.leftSelector.style.display = "block";
 	this.rightSelector.style.display = "block";
 	this.redrawSelector(this.offset, zoomLevelObj.viewSpan);
+	
+	var currBarWidth = zoomLevelObj.barWidth;
 	
 	for (var i = 0; i < this.graphs.length; i++)
 	{
@@ -289,14 +327,21 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 				j++;
 			}
 			currentY.push(value);
-			var barHeight = Math.round((value / this.maxValue) * this.graphHeight);
+			var barHeight = Math.round((value / this.viewportHeight) * this.graphHeight);
+			if (barHeight > this.graphHeight) barHeight = this.graphHeight;
 			slotStyle.top = (this.graphHeight - barHeight) + "px";
 			slotStyle.height = (barHeight) + "px";
+			slotStyle.left = (k*currBarWidth) + "px";
+			slotStyle.width = (currBarWidth - 1) + "px";
 		}
 
 	}
 	
+	this.createHorizontalLabels();
+	this.createVerticalLabels();
+	
 }
+
 
 EventLine.prototype.createHorizontalLabels = function()
 {
@@ -307,7 +352,8 @@ EventLine.prototype.createHorizontalLabels = function()
 	{
 		for (var i = 0; i < this.horizontalLabels.length; i++)
 		{
-			this.containerElement.removeChild;
+			this.containerElement.removeChild(this.horizontalLabels[i].label);
+			this.containerElement.removeChild(this.horizontalLabels[i].line);
 		}
 	}
 
@@ -316,27 +362,98 @@ EventLine.prototype.createHorizontalLabels = function()
 	var viewSpan = this.zoomLevels[this.zoomLevel].viewSpan;
 	var labelsSpacing = this.zoomLevels[this.zoomLevel].labelsSpacing;
 	var barWidth = this.zoomLevels[this.zoomLevel].barWidth;
+	var majorLabels = this.zoomLevels[this.zoomLevel].majorLabels;
 	
 	var firstLabelSlot = labelsSpacing * Math.ceil(this.offset / labelsSpacing) - this.offset;
-		
+	
 	for (var i = firstLabelSlot; i < viewSpan; i += labelsSpacing)
 	{
 	
-		var left = (((i * barWidth) + barWidth / 2) - topLabelsWidth / 2);
+		var left = ((i * barWidth) + barWidth / 2) + this.leftLabelsWidth + this.leftLabelsMargin;
+		var value = i + this.offset;
+		var major = value % majorLabels == 0;
 		
-		var labelTable = null;
-		var labelCell = null;
+		var labelLine = document.createElement("div");
+		labelLine.style.backgroundColor = major ? "#333333" : "#CCCCCC";
+		labelLine.style.position = "absolute";
+		labelLine.style.top = (this.topLabelsHeight + this.topLabelsMargin) + "px";
+		labelLine.style.left = left + "px";
+		labelLine.style.width = "1px";
+		labelLine.style.height = this.graphHeight + "px";
+
+		var labelTable = document.createElement("table");
+		var labelCell = labelTable.insertRow(0).insertCell(0);
 		
-		labelTable.style.position = "absolute;
-		labelTable.style.top = "0px;
-		labelTable.style.left = left + "px;
+		labelTable.style.position = "absolute";
+		labelTable.style.top = "0px";
+		labelTable.style.left = (left - topLabelWidth/2) + "px";
 		labelCell.style.width = topLabelWidth + "px";
-		labelCell.style.height = topLabelsHeight + "px";
-		
+		labelCell.style.height = this.topLabelsHeight + "px";
+		labelCell.style.textAlign = "center";
+		labelCell.style.verticalAlign = "bottom";
+		labelCell.style.fontWeight = major ? "bold" : "normal";
+
 		labelCell.innerHTML = i + this.offset;
 		
-		this.horizontalLabels.push(labelTable);
+		this.horizontalLabels.push(new EventLineHorizontalLabel(labelTable, labelLine));
+		this.containerElement.appendChild(labelTable);
+		this.containerElement.appendChild(labelLine);
 		
+	}
+
+}
+
+EventLine.prototype.createVerticalLabels = function()
+{
+
+	var leftLabelHeight = 25;
+
+	var zoomLevelObj = this.zoomLevels[this.zoomLevel];
+	var graphWidth = zoomLevelObj.barWidth * zoomLevelObj.viewSpan;
+	
+	if (this.verticalLabels)
+	{
+		for (var i = 0; i < this.verticalLabels.length; i++)
+		{
+			this.containerElement.removeChild(this.verticalLabels[i].label);
+			this.containerElement.removeChild(this.verticalLabels[i].line);
+		}
+	}
+	
+	this.verticalLabels = new Array();
+	
+	for (var i = 0; i <= this.viewportHeight; i += this.verticalLabelsSpacing)
+	{
+
+		var barHeight = Math.round((i / this.viewportHeight) * this.graphHeight);
+		var top = this.graphHeight + this.topLabelsHeight + this.topLabelsMargin - barHeight;
+		var major = i % this.verticalLabelsMajorSpacing == 0;
+		
+		var labelLine = document.createElement("div");
+		labelLine.style.backgroundColor = major ? "#333333" : "#CCCCCC";
+		labelLine.style.position = "absolute";
+		labelLine.style.top = top + "px";
+		labelLine.style.left = (this.leftLabelsWidth + this.leftLabelsMargin) + "px";
+		labelLine.style.height = "1px";
+		labelLine.style.width = graphWidth + "px";
+
+		var labelTable = document.createElement("table");
+		var labelCell = labelTable.insertRow(0).insertCell(0);
+		
+		labelTable.style.position = "absolute";
+		labelTable.style.top = (top - leftLabelHeight / 2) + "px";
+		labelTable.style.left = "0px";
+		labelCell.style.width = this.leftLabelsWidth + "px";
+		labelCell.style.height = leftLabelHeight + "px";
+		labelCell.style.textAlign = "right";
+		labelCell.style.fontWeight = major ? "bold" : "normal";
+
+		labelCell.innerHTML = i;
+		
+		this.verticalLabels.push(new EventLineVerticalLabel(labelTable, labelLine));
+		this.containerElement.appendChild(labelTable);
+		this.containerElement.appendChild(labelLine);
+
 	}
 
 }

@@ -519,6 +519,9 @@
 			<name>rendered</name>
 		</attribute>
 		<attribute>
+			<name>viewportHeight</name>
+		</attribute>
+		<attribute>
 			<name>graphHeight</name>
 		</attribute>
 		<attribute>

@@ -3,50 +3,39 @@ package edu.emory.library.tast.ui;
 public class EventLineVerticalLabels
 {
 	
-	private int start;
-	private int space;
-	private String[] labels;
+	private int majorSpacing;
+	private int spacing;
 	
-	public int getCount()
+	public EventLineVerticalLabels(int majorSpacing, int spacing)
 	{
-		if (labels == null) return 0;
-		return labels.length;
+		this.majorSpacing = majorSpacing;
+		this.spacing = spacing;
+	}
+	
+	public EventLineVerticalLabels(int spacing)
+	{
+		this.spacing = spacing;
+		this.majorSpacing = spacing; 
 	}
 
-	public String getLabel(int i)
+	public int getMajorSpacing()
 	{
-		if (labels == null || i < 0 || i >= labels.length) return "";
-		return labels[i];
+		return majorSpacing;
 	}
 	
-	public String[] getLabels()
+	public void setMajorSpacing(int majorSpacing)
 	{
-		return labels;
+		this.majorSpacing = majorSpacing;
 	}
 	
-	public void setLabels(String[] labels)
+	public int getSpacing()
 	{
-		this.labels = labels;
+		return spacing;
 	}
-	
-	public int getSpace()
+
+	public void setSpacing(int spacing)
 	{
-		return space;
-	}
-	
-	public void setSpace(int space)
-	{
-		this.space = space;
-	}
-	
-	public int getStart()
-	{
-		return start;
-	}
-	
-	public void setStart(int start)
-	{
-		this.start = start;
+		this.spacing = spacing;
 	}
 
 }

@@ -50,6 +50,9 @@ public class SearchBean
 	private History history = new History();
 	private Query workingQuery = new Query();
 	private SearchParameters searchParameters = new SearchParameters(new Conditions());
+	
+	private int yearFrom;
+	private int yearTo;
 
 	private MessageBarComponent messageBar;
 	
@@ -109,6 +112,16 @@ public class SearchBean
 		
 		VisibleAttributeInterface[] columns = new VisibleAttributeInterface[workingQuery.getConditionCount()];
 		Conditions conditions = new Conditions();
+		
+		conditions.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearFrom),
+				Conditions.OP_GREATER_OR_EQUAL);
+
+		conditions.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearTo),
+				Conditions.OP_SMALLER_OR_EQUAL);
 
 		//int i = 0;
 		boolean errors = false;
@@ -402,6 +415,26 @@ public class SearchBean
 	public void setMainSectionId(String mainSectionId)
 	{
 		this.mainSectionId = mainSectionId;
+	}
+
+	public int getYearFrom()
+	{
+		return yearFrom;
+	}
+
+	public void setYearFrom(int yearFrom)
+	{
+		this.yearFrom = yearFrom;
+	}
+
+	public int getYearTo()
+	{
+		return yearTo;
+	}
+
+	public void setYearTo(int yearTo)
+	{
+		this.yearTo = yearTo;
 	}
 
 }

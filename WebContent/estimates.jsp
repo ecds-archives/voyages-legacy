@@ -28,24 +28,20 @@
 	</div>
 	<div class="header-path">
 		<a href="estimates.faces">Estimates</a> |
-		<a href="search.faces">Database search</a> |
-		<a href="reports.faces">Precompiled reports</a> |
-		<a href="gallery.faces">Images database</a>
+		<a href="search.faces">Database search</a>
 	</div>
-	
-	<br>
 	
 	<h:form id="form">
 	
 		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
 		<tr>
 			<td style="width: 240px; vertical-align: top;">
-				<div style="margin: 0px 10px 0px 10px;">
+				<div style="margin: 10px 10px 0px 10px;">
 					<%@ include file="estimates-selection.jsp" %>
 				</div>
 			</td>
 			<td style="vertical-align: top;">
-				<div style="margin: 0px 10px 0px 0px;">
+				<div style="margin: 10px 10px 0px 0px;">
 					<%@ include file="estimates-main-panel.jsp" %>
 				</div>
 			</td>

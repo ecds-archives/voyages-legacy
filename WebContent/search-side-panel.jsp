@@ -5,6 +5,34 @@
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
 <s:sectionGroup
+    title="Time frame"
+	id="selectionYears"
+	backgroundStyle="dark"
+	tabsStyle="middle"
+	buttonsStyle="middle">
+
+	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px">
+			<h:outputText value="From" />
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
+			<h:inputText value="#{SearchBean.yearFrom}" style="width: 60px" />
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
+			<h:outputText value="To" />
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 0px;">
+			<h:inputText value="#{SearchBean.yearTo}" style="width: 60px" />
+		</t:htmlTag>
+	</t:htmlTag>
+	</t:htmlTag>
+	
+</s:sectionGroup>
+
+<div class="sections-sepatator"></div>
+
+<s:sectionGroup
 	id="selectAttributeSectionByPopupMenu"
 	backgroundStyle="dark"
 	tabsStyle="middle"

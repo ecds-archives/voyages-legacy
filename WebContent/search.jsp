@@ -34,9 +34,7 @@
 	</div>
 	<div class="header-path">
 		<a href="estimates.faces">Estimates</a> |
-		<a href="search.faces">Database search</a> |
-		<a href="reports.faces">Precompiled reports</a> |
-		<a href="gallery.faces">Images database</a>
+		<a href="search.faces">Database search</a>
 	</div>
 	
 	<h:form id="form">

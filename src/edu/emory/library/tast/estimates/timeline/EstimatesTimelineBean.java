@@ -8,6 +8,7 @@ import edu.emory.library.tast.ui.EventLineEvent;
 import edu.emory.library.tast.ui.EventLineGraph;
 import edu.emory.library.tast.ui.EventLineVerticalLabels;
 import edu.emory.library.tast.ui.EventLineZoomLevel;
+import edu.emory.library.tast.util.MathUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -19,6 +20,7 @@ public class EstimatesTimelineBean
 	private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
 	private EventLineVerticalLabels verticalLabels;
+	private int viewportHeight;
 	
 	private void generateGraphsIfNecessary()
 	{
@@ -73,8 +75,8 @@ public class EstimatesTimelineBean
 		{
 			Object[] row = (Object[]) result[i];
 			impYears[i] = expYears[i] = ((Integer) row[0]).intValue();
-			expValues[i] = ((Double) row[1]).doubleValue();
-			impValues[i] = ((Double) row[2]).doubleValue();
+			expValues[i] = Math.round(((Double) row[1]).doubleValue());
+			impValues[i] = Math.round(((Double) row[2]).doubleValue());
 		}
 		
 		// graph for exported
@@ -91,12 +93,46 @@ public class EstimatesTimelineBean
 		graphImp.setY(impValues);
 		graphImp.setColor("#CCCCCC");
 
-		// generate vertical labels
-		verticalLabels = new EventLineVerticalLabels();
-		verticalLabels.setLabels(new String[] {"0", "25", "50", "75", "100"});
-		verticalLabels.setStart(0);
-		verticalLabels.setSpace(25);
+		// vertical labels
+		createVerticalLabels();
 		
+	}
+
+	private void createVerticalLabels()
+	{
+
+		int maxValue = (int) Math.max(
+				graphExp.getMaxValue(),
+				graphImp.getMaxValue());
+		
+		if (maxValue > 0)
+		{
+
+			int majorSpacing;
+			int minorSpacing;
+
+			int nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
+			if (maxValue / (nextPow10/10) >= 5)
+			{
+				majorSpacing = nextPow10 / 2;
+				minorSpacing = majorSpacing / 5;
+			}
+			else
+			{
+				majorSpacing = nextPow10 / 10;
+				minorSpacing = majorSpacing / 2;
+			}
+
+			viewportHeight = (maxValue / minorSpacing + 1) * minorSpacing;
+			verticalLabels = new EventLineVerticalLabels(majorSpacing, minorSpacing);
+
+		}
+		else
+		{
+			viewportHeight = 100;
+			verticalLabels = new EventLineVerticalLabels(50, 10);
+		}
+
 	}
 	
 	public EventLineEvent[] getEvents()
@@ -114,11 +150,11 @@ public class EstimatesTimelineBean
 	public EventLineZoomLevel[] getZoomLevels()
 	{
 		return new EventLineZoomLevel[] {
-				new EventLineZoomLevel(2, 100, 400),
-				new EventLineZoomLevel(4, 50, 200),
-				new EventLineZoomLevel(8, 25, 100),
-				new EventLineZoomLevel(16, 10, 50),
-				new EventLineZoomLevel(32, 5, 25)};
+				new EventLineZoomLevel(2, 50, 400, 100),
+				new EventLineZoomLevel(4, 25, 200, 50),
+				new EventLineZoomLevel(8, 10, 100, 25),
+				new EventLineZoomLevel(16, 5, 50, 10),
+				new EventLineZoomLevel(32, 5, 25, 5)};
 	}
 
 	public EventLineGraph[] getGraphs()
@@ -141,6 +177,12 @@ public class EstimatesTimelineBean
 	public void setSelectionBean(EstimatesSelectionBean selectionBean)
 	{
 		this.selectionBean = selectionBean;
+	}
+
+	public int getViewportHeight()
+	{
+		generateGraphsIfNecessary();
+		return viewportHeight;
 	}
 
 }

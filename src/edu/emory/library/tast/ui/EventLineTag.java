@@ -9,6 +9,7 @@ import javax.faces.webapp.UIComponentTag;
 public class EventLineTag extends UIComponentTag
 {
 	
+	private String viewportHeight;
 	private String graphHeight;
 	private String graphs;
 	private String events;
@@ -34,6 +35,22 @@ public class EventLineTag extends UIComponentTag
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		EventLineComponent eventLine = (EventLineComponent) component;
 		
+		if (viewportHeight != null && isValueReference(viewportHeight))
+		{
+			ValueBinding vb = app.createValueBinding(viewportHeight);
+			eventLine.setValueBinding("viewportHeight", vb);
+		}
+		else
+		{
+			try
+			{
+				eventLine.setViewportHeight(Integer.parseInt(viewportHeight));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
+		}
+
 		if (graphHeight != null && isValueReference(graphHeight))
 		{
 			ValueBinding vb = app.createValueBinding(graphHeight);
@@ -202,6 +219,16 @@ public class EventLineTag extends UIComponentTag
 	public void setSelectorOffset(String selectorOffset)
 	{
 		this.selectorOffset = selectorOffset;
+	}
+
+	public String getViewportHeight()
+	{
+		return viewportHeight;
+	}
+
+	public void setViewportHeight(String viewportHeight)
+	{
+		this.viewportHeight = viewportHeight;
 	}
 
 }
