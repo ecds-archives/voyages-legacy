@@ -1,0 +1,685 @@
+MAP
+	SIZE 1200 700
+	EXTENT -180 -90 180 90  
+	IMAGETYPE      PNG24
+	IMAGECOLOR 151 183 214
+	UNITS dd
+      
+	SYMBOL
+  		NAME 'circle-1-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-1-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-1-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-2-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-2-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-2-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-3-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-3-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-3-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-4-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-4-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-4-5.png'
+	END
+
+	SYMBOL
+  		NAME 'circle-5-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'circle-5-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/circle-5-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-1-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1-1.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-1-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1-2.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-1-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1-3.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-1-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-1-4.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-2-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-1.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-2-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-2-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-2-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-2-4.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-3-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-3-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-3-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-4-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-4-4.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-5-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-5-4.png'
+	END
+
+	SYMBOL
+  		NAME 'number-1-6-1'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-1.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-6-2'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-2.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-6-3'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-3.png'
+	END
+	
+	SYMBOL
+  		NAME 'number-1-6-4'
+  		TYPE pixmap
+  		FILLED true
+  		IMAGE 'picts/number-1-6-4.png'
+	END
+
+	LAYER
+		NAME Oceans_45000000
+		TYPE POLYGON
+		DATA "45000000/oceana_Diss"
+		STATUS OFF
+		MINSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 110 150 230
+			END
+		END
+	END
+	LAYER
+		NAME regions_45000000
+		TYPE POLYGON
+		DATA "45000000/regions"
+		STATUS DEFAULT
+		MINSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 242 239 233
+				OUTLINECOLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME regions2_45000000
+		TYPE POLYGON
+		DATA "45000000/regions2"
+		STATUS #{map.layer.status.regions}
+		MINSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 227 215 206
+				OUTLINECOLOR 100 100 100
+			END
+		END
+	END	
+	LAYER
+		NAME polbnda_Diss_45000000
+		TYPE LINE
+		DATA "45000000/polbnda_Diss"
+		STATUS #{map.layer.status.boundries}
+		MINSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 100 100 100
+			END
+		END
+	END	
+	
+	LAYER
+		NAME Oceans_10000000
+		TYPE POLYGON
+		DATA "10000000/oceana"
+		STATUS OFF
+		MINSCALE 10000000
+		MAXSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 110 150 230
+			END
+		END
+	END
+	LAYER
+		NAME regions_10000000
+		TYPE POLYGON
+		DATA "10000000/regions"
+		STATUS DEFAULT
+		MINSCALE 10000000
+		MAXSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 242 239 233
+				OUTLINECOLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME regions2_10000000
+		TYPE POLYGON
+		DATA "10000000/regions2"
+		STATUS #{map.layer.status.regions}
+		MINSCALE 10000000
+		MAXSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 227 215 206
+				OUTLINECOLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME polbndl_10000000
+		TYPE LINE
+		DATA "10000000/polbndl"
+		STATUS #{map.layer.status.boundries}
+		MINSCALE 10000000
+		MAXSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME polbnda_10000000
+		TYPE LINE
+		DATA "10000000/polbnda"
+		STATUS OFF
+		MINSCALE 10000000
+		MAXSCALE 100000000
+		CLASS
+			STYLE
+				COLOR 200 150 90
+			END
+		END
+	END
+	
+	
+	LAYER
+		NAME oceana_1000000
+		TYPE POLYGON
+		DATA "1000000/oceana"
+		STATUS OFF
+		MAXSCALE 10000000
+		CLASS
+			STYLE
+				COLOR 110 150 230
+			END
+		END
+	END
+	LAYER
+		NAME regions_1000000
+		TYPE POLYGON
+		DATA "1000000/regions"
+		STATUS DEFAULT
+		MAXSCALE 10000000
+		CLASS
+			STYLE
+				COLOR 242 239 233
+				OUTLINECOLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME regions2_1000000
+		TYPE POLYGON
+		DATA "1000000/regions2"
+		STATUS #{map.layer.status.regions}
+		MAXSCALE 10000000
+		CLASS
+			STYLE
+				COLOR 227 215 206
+				OUTLINECOLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME polbndl_1000000
+		TYPE LINE
+		DATA "1000000/polbndl"
+		STATUS #{map.layer.status.boundries}
+		MAXSCALE 10000000
+		CLASS
+			STYLE
+				COLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME polbnda_1000000
+		TYPE LINE
+		DATA "1000000/polbnda"
+		STATUS OFF
+		MAXSCALE 10000000
+		CLASS
+			STYLE
+				COLOR 100 100 100
+			END
+		END
+	END
+
+
+	LAYER
+		NAME River_45000000
+		TYPE LINE
+		DATA "45000000/River"
+		STATUS #{map.layer.status.rivers}
+		MINSCALE 50000000
+		CLASS
+			STYLE
+				COLOR 151 183 214
+			END
+		END
+	END
+	LAYER
+		NAME hydroa_45000000
+		TYPE LINE
+		DATA "45000000/hydroa"
+		STATUS #{map.layer.status.rivers}
+		MINSCALE 50000000
+		CLASS
+			STYLE
+				COLOR 151 183 214
+			END
+		END
+	END
+	LAYER
+		NAME River_10000000
+		TYPE LINE
+		DATA "10000000/River"
+		STATUS #{map.layer.status.rivers}
+		MINSCALE 1000000
+		MAXSCALE 50000000
+		CLASS
+			STYLE
+				COLOR 151 183 214
+			END
+		END
+	END
+	LAYER
+		NAME hydroa_10000000
+		TYPE LINE
+		DATA "10000000/hydroa"
+		STATUS #{map.layer.status.rivers}
+		MINSCALE 1000000
+		MAXSCALE 50000000
+		CLASS
+			STYLE
+				COLOR 151 183 214
+			END
+		END
+	END
+	LAYER
+		NAME River_1000000
+		TYPE LINE
+		DATA "1000000/River"
+		STATUS #{map.layer.status.rivers}
+		MAXSCALE 1000000
+		CLASS
+			STYLE
+				COLOR 151 183 214
+			END
+		END
+	END
+	LAYER
+		NAME hydroa_1000000
+		TYPE LINE
+		DATA "1000000/hydroa"
+		STATUS #{map.layer.status.rivers}
+		MAXSCALE 1000000
+		CLASS
+			STYLE
+				COLOR 151 183 214
+			END
+		END
+	END
+
+	LAYER
+		NAME July_winds_45000000
+		TYPE LINE
+		DATA "45000000/July_prevailing_winds"
+		STATUS #{map.layer.status.winds}
+		MINSCALE 50000000
+		CLASS
+			STYLE
+				COLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME Jan_winds_45000000
+		TYPE LINE
+		DATA "45000000/Jan_prevailing_winds"
+		STATUS #{map.layer.status.winds}
+		MINSCALE 50000000
+		CLASS
+			STYLE
+				COLOR 100 100 100
+			END
+		END
+	END
+	LAYER
+		NAME currents_45000000
+		TYPE LINE
+		DATA "45000000/currents"
+		STATUS #{map.layer.status.flows}
+		MINSCALE 50000000
+		CLASS
+			STYLE
+				COLOR 70 120 180
+			END
+		END
+	END
+
+	#{generated_code_begin}
+	#{generated_code_end}
+
+END
