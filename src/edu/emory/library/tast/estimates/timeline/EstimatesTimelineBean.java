@@ -137,14 +137,14 @@ public class EstimatesTimelineBean
 	
 	public EventLineEvent[] getEvents()
 	{
-		return new EventLineEvent[0];
-//		return new EventLineEvent[] {
-//				new EventLineEvent(2, "<div style=\"border: 1px solid Black; padding: 5px\"><b>To print a webpage</b><br>When a website address cannot be found, Internet Explorer automatically searches the web to try to find that site by using your default search provider. Follow these steps to set your preferences for how this is done.</div>"),
-//				new EventLineEvent(15, "<div style=\"border: 1px solid Black; padding: 5px\"><b>Understanding security and privacy features</b><br>Feeds, also known as RSS feeds, XML feeds, syndicated content, or web feeds, contain frequently updated content published by a website. They are usually used for news and blog websites, but are also used for distributing other types of digital content, including pictures, audio files, or video. Internet Explorer can discover and display feeds as you visit websites. You can also subscribe to feeds to automatically check for and download updates that you can view later.</div>"),
-//				new EventLineEvent(36, "<div style=\"border: 1px solid Black; padding: 5px\"><b>Delete webpage history</b><br>E-mail is a great way to keep in touch with other people. Unfortunately, it can also open your computer to security risks, computer viruses, and potentially malicious software if you're not careful about the messages and attachments that you open. Before opening any e-mail message or attachment, be sure that you have an up-to-date antivirus program installed. The antivirus program should be configured to scan messages as they arrive (real-time), and to scan all types of file attachments.</div>"),
-//				new EventLineEvent(42, "<div style=\"border: 1px solid Black; padding: 5px\"><b>To disable a browser add-on</b><br>If you are about to send information (such as your credit card number) to a site that is not secure, Internet Explorer will warn you. If the site claims to be secure but its security credentials are in question, Internet Explorer will warn you that the site might have been tampered with or might be misrepresenting itself.</div>"),
-//				new EventLineEvent(46, "<div style=\"border: 1px solid Black; padding: 5px\"><b>How do browser add-ons affect my computer?</b><br>Add-ons, also known as ActiveX controls, browser extensions, browser helper objects, or toolbars, can improve your experience on a website by providing multimedia or interactive content, such as high-quality animations. However, some add-ons can cause your computer to stop responding or display content that you don't want, such as pop-up ads.</div>"),
-//		};
+		generateGraphsIfNecessary();
+		return new EventLineEvent[] {
+				new EventLineEvent(1530, "Event A"),
+				new EventLineEvent(1606, "Event B"),
+				new EventLineEvent(1723, "Event C"),
+				new EventLineEvent(1786, "Event D"),
+				new EventLineEvent(1807, "Event E"),
+		};
 	}
 	
 	public EventLineZoomLevel[] getZoomLevels()

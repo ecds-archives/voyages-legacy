@@ -1,7 +1,6 @@
 package edu.emory.library.tast.ui;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
@@ -14,12 +13,10 @@ public class EventLineComponent extends UIComponentBase
 {
 	
 	private static final int TOP_LABELS_HEIGHT = 25;
-	private static final int TOP_LABELS_WIDTH = 50;
+	// private static final int TOP_LABELS_WIDTH = 50;
 	private static final int LEFT_LABELS_WIDTH = 60;
-	private static final int LEFT_LABELS_HEIGHT = 30;
+	// private static final int LEFT_LABELS_HEIGHT = 30;
 	private static final int LABELS_MARGIN = 10;
-	private static final int MARK_WIDTH = 11;
-	private static final int MARK_HEIGHT = 11;
 	private static final int SELECTOR_HEIGHT = 50;
 	
 	private boolean zoomLevelSet = false;
@@ -100,43 +97,6 @@ public class EventLineComponent extends UIComponentBase
 		zoomLevel = JsfUtils.getParamInt(context, getZoomLevelHiddenFieldName(context), 0);
 		offset = JsfUtils.getParamInt(context, getOffsetHiddenFieldName(context), 0);
 	}
-	
-	//	private void encodeEventMarks(FacesContext context, ResponseWriter writer, String mainId, EventLineEvent[] events, int barOffset, int innerBarWidth) throws IOException
-//	{
-//		// marks for events
-//		StringBuffer markCssStyle = new StringBuffer();
-//		for (int i = 0; i < events.length; i++)
-//		{
-//			EventLineEvent event = events[i];
-//
-//			// position
-//			int x = event.getPosition() * barWidth + LEFT_LABELS_WIDTH + LABELS_MARGIN +
-//				barOffset + innerBarWidth / 2 - (MARK_WIDTH - 1) / 2;
-//
-//			// CSS
-//			markCssStyle.setLength(0);
-//			markCssStyle.append("position: absolute; ");
-//			markCssStyle.append("left: ").append(x).append("px; ");
-//			markCssStyle.append("top: ").append(TOP_LABELS_HEIGHT + LABELS_MARGIN + graphHeight).append("px; ");
-//			markCssStyle.append("width: ").append(MARK_WIDTH).append("px; ");
-//			markCssStyle.append("height: ").append(MARK_HEIGHT).append("px; ");
-//			
-//			// onclick
-//			String onclick = 
-//				"EventLineGlobals.toggleEvent(" +
-//				"'" + mainId + "'," +
-//				+ i + ")";
-//			
-//			// image 
-//			writer.startElement("div", this);
-//			writer.writeAttribute("id", getEventMarkElementId(context, i), null);
-//			writer.writeAttribute("style", markCssStyle, null);
-//			writer.writeAttribute("class", "event-line-mark", null);
-//			writer.writeAttribute("onclick", onclick, null);
-//			writer.endElement("div");
-//			
-//		}
-//	}
 	
 	private void encodeGraphsContainer(ResponseWriter writer, String graphsContainerId, int maxSlots) throws IOException
 	{
@@ -319,96 +279,109 @@ public class EventLineComponent extends UIComponentBase
 		}
 		
 		// JS registration
-		StringBuffer eventsJS = new StringBuffer();
-		eventsJS.append("EventLineGlobals.registerEventLine(new EventLine(");
-		eventsJS.append("'").append(mainId).append("', ");
-		eventsJS.append("'").append(form.getClientId(context)).append("', ");
-		eventsJS.append("'").append(graphsContainerId).append("', ");
-		eventsJS.append("'").append(selectorContainerId).append("', ");
-		eventsJS.append("'").append(selectorId).append("', ");
-		eventsJS.append("'").append(leftSelectorId).append("', ");
-		eventsJS.append("'").append(rightSelectorId).append("', ");
-		eventsJS.append("'").append(indicatorContainerId).append("', ");
-		eventsJS.append("'").append(indicatorId).append("', ");
-		eventsJS.append("'").append(indicatorLabelId).append("', ");
-		eventsJS.append("'").append(getZoomLevelHiddenFieldName(context)).append("', ");
-		eventsJS.append("'").append(getOffsetHiddenFieldName(context)).append("', ");
-		eventsJS.append(viewportHeight).append(", ");
-		eventsJS.append(graphHeight).append(", ");
-		eventsJS.append(selectorOffset).append(", ");
-		eventsJS.append(SELECTOR_HEIGHT).append(", ");
-		eventsJS.append(LEFT_LABELS_WIDTH).append(", ");
-		eventsJS.append(LABELS_MARGIN).append(", ");
-		eventsJS.append(TOP_LABELS_HEIGHT).append(", ");
-		eventsJS.append(LABELS_MARGIN).append(", ");
+		StringBuffer regJS = new StringBuffer();
+		regJS.append("EventLineGlobals.registerEventLine(new EventLine(");
+		regJS.append("'").append(mainId).append("', ");
+		regJS.append("'").append(form.getClientId(context)).append("', ");
+		regJS.append("'").append(graphsContainerId).append("', ");
+		regJS.append("'").append(selectorContainerId).append("', ");
+		regJS.append("'").append(selectorId).append("', ");
+		regJS.append("'").append(leftSelectorId).append("', ");
+		regJS.append("'").append(rightSelectorId).append("', ");
+		regJS.append("'").append(indicatorContainerId).append("', ");
+		regJS.append("'").append(indicatorId).append("', ");
+		regJS.append("'").append(indicatorLabelId).append("', ");
+		regJS.append("'").append(getZoomLevelHiddenFieldName(context)).append("', ");
+		regJS.append("'").append(getOffsetHiddenFieldName(context)).append("', ");
+		regJS.append(viewportHeight).append(", ");
+		regJS.append(graphHeight).append(", ");
+		regJS.append(selectorOffset).append(", ");
+		regJS.append(SELECTOR_HEIGHT).append(", ");
+		regJS.append(LEFT_LABELS_WIDTH).append(", ");
+		regJS.append(LABELS_MARGIN).append(", ");
+		regJS.append(TOP_LABELS_HEIGHT).append(", ");
+		regJS.append(LABELS_MARGIN).append(", ");
 		
 		// JS events
-		eventsJS.append("[");
+		regJS.append("[");
 		for (int i = 0; i < events.length; i++)
 		{
 			EventLineEvent event = events[i];
-			if (i > 0) eventsJS.append(", ");
-			eventsJS.append("new EventLineEvent(");
-			eventsJS.append(event.getPosition()).append(", ");
-			eventsJS.append("'").append(getEventMarkElementId(context, i)).append("', ");
-			eventsJS.append("'").append(getEventTextElementId(context, i)).append("'");
-			eventsJS.append(")");
+			if (i > 0) regJS.append(", ");
+			regJS.append("new EventLineEvent(");
+			regJS.append(event.getX()).append(", ");
+			regJS.append("'").append(getEventMarkElementId(context, i)).append("', ");
+			regJS.append("'").append(getEventTextElementId(context, i)).append("'");
+			regJS.append(")");
 		}
-		eventsJS.append("], ");
+		regJS.append("], ");
 		
 		// JS graphs
-		eventsJS.append("[");
+		regJS.append("[");
 		for (int i = 0; i < graphs.length; i++)
 		{
 			EventLineGraph graph = graphs[i];
 			int x[] = graph.getX();
 			double y[] = graph.getY();
-			if (i > 0) eventsJS.append(", ");
-			eventsJS.append("new EventLineGraph(");
-			eventsJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
-			eventsJS.append("'").append(graph.getColor()).append("', ");
-			eventsJS.append(graph.getMaxValue()).append(", ");
-			eventsJS.append(graph.getMinValue()).append(", ");
-			eventsJS.append("[");
+			if (i > 0) regJS.append(", ");
+			regJS.append("new EventLineGraph(");
+			regJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
+			regJS.append("'").append(graph.getColor()).append("', ");
+			regJS.append(graph.getMaxValue()).append(", ");
+			regJS.append(graph.getMinValue()).append(", ");
+			regJS.append("[");
 			for (int j = 0; j < x.length; j++)
 			{
-				if (j > 0) eventsJS.append(", ");
-				eventsJS.append(x[j]);
+				if (j > 0) regJS.append(", ");
+				regJS.append(x[j]);
 			}
-			eventsJS.append("], ");
-			eventsJS.append("[");
+			regJS.append("], ");
+			regJS.append("[");
 			for (int j = 0; j < y.length; j++)
 			{
-				if (j > 0) eventsJS.append(", ");
-				eventsJS.append(y[j]);
+				if (j > 0) regJS.append(", ");
+				regJS.append(y[j]);
 			}
-			eventsJS.append("]");
-			eventsJS.append(")");
+			regJS.append("]");
+			regJS.append(")");
 		}
-		eventsJS.append("], ");
+		regJS.append("], ");
 		
 		// JS zoom levels
-		eventsJS.append("[");
+		regJS.append("[");
 		for (int i = 0; i < zoomLevels.length; i++)
 		{
 			EventLineZoomLevel zoomLevel = zoomLevels[i];
-			if (i > 0) eventsJS.append(", ");
-			eventsJS.append("new EventLineZoomLevel(");
-			eventsJS.append(zoomLevel.getBarWidth()).append(", ");
-			eventsJS.append(zoomLevel.getLabelSpacing()).append(", ");
-			eventsJS.append(zoomLevel.getMajorLabels()).append(", ");
-			eventsJS.append(zoomLevel.getViewSpan());
-			eventsJS.append(")");
+			if (i > 0) regJS.append(", ");
+			regJS.append("new EventLineZoomLevel(");
+			regJS.append(zoomLevel.getBarWidth()).append(", ");
+			regJS.append(zoomLevel.getLabelSpacing()).append(", ");
+			regJS.append(zoomLevel.getMajorLabels()).append(", ");
+			regJS.append(zoomLevel.getViewSpan());
+			regJS.append(")");
 		}
-		eventsJS.append("], ");
+		regJS.append("], ");
 
 		// vertical labels
-		eventsJS.append(verticalLabels.getSpacing()).append(", ");
-		eventsJS.append(verticalLabels.getMajorSpacing()).append("");
-		eventsJS.append("));");
+		regJS.append(verticalLabels.getSpacing()).append(", ");
+		regJS.append(verticalLabels.getMajorSpacing()).append(", ");
+
+		// JS events
+		regJS.append("[");
+		for (int i = 0; i < events.length; i++)
+		{
+			EventLineEvent event = events[i];
+			if (i > 0) regJS.append(", ");
+			regJS.append("new EventLineEvent(");
+			regJS.append(event.getX()).append(", ");
+			regJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
+			regJS.append(")");
+		}
+		regJS.append("]");
+		regJS.append("));");
 
 		// render JS
-		JsfUtils.encodeJavaScriptBlock(this, writer, eventsJS);
+		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);
 		
 		// hidden field with zoomLevel
 		JsfUtils.encodeHiddenInput(this, writer,
@@ -441,13 +414,6 @@ public class EventLineComponent extends UIComponentBase
 
 		// end of the main container
 		writer.endElement("div");
-
-//		// event marks
-//		encodeEventMarks(context, writer, mainId, events, barOffset, innerBarWidth);
-
-		// text of events
-		// encodeEvents(context, writer, graphWidth, events);
-
 
 	}
 

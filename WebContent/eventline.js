@@ -16,11 +16,10 @@ var EventLineGlobals =
 
 }
 
-function EventLineEvent(position, markElementId, eventElementId)
+function EventLineEvent(x, text)
 {
-	this.position = position;
-	this.markElementId = markElementId;
-	this.eventElementId = eventElementId;
+	this.x = x;
+	this.text = text;
 }
 
 function EventLineGraph(name, color, maxValue, minValue, x, y)

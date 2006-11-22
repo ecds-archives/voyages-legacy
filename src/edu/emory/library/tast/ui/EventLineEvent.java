@@ -3,12 +3,12 @@ package edu.emory.library.tast.ui;
 public class EventLineEvent
 {
 	
-	private int position;
+	private int x;
 	private String text;
 	
-	public EventLineEvent(int position, String text)
+	public EventLineEvent(int x, String text)
 	{
-		this.position = position;
+		this.x = x;
 		this.text = text;
 	}
 
@@ -22,14 +22,14 @@ public class EventLineEvent
 		this.text = text;
 	}
 	
-	public int getPosition()
+	public int getX()
 	{
-		return position;
+		return x;
 	}
 	
-	public void setPosition(int year)
+	public void setX(int year)
 	{
-		this.position = year;
+		this.x = year;
 	}
 
 }
