@@ -95,7 +95,7 @@ public class TileServlet extends HttpServlet {
 		mapObj map = new mapObj(path);
 		map.setSize(tileWidth + 2 * META_SIZE_X, tileHeight + 2 * META_SIZE_Y);
 		map.setExtent(x1, y1, x2, y2);
-		
+
 		//map.setMetaData("labelcache_map_edge_buffer", (META_SIZE_X) + "");
 
 		imageObj img = map.draw();
@@ -126,79 +126,8 @@ public class TileServlet extends HttpServlet {
 
 	}
 
-	public void init() throws ServletException {
+	public void init() throws ServletException
+	{
 	}
 
-	/*
-	 * public static BufferedImage toBufferedImage(Image image) { if (image
-	 * instanceof BufferedImage) { return (BufferedImage) image; }
-	 *  // This code ensures that all the pixels in the image are loaded image =
-	 * new ImageIcon(image).getImage();
-	 *  // Determine if the image has transparent pixels; for this method's //
-	 * implementation, see e661 Determining If an Image Has Transparent //
-	 * Pixels
-	 *  // Create a buffered image with a format that's compatible with the //
-	 * screen BufferedImage bimage = null; GraphicsEnvironment ge =
-	 * GraphicsEnvironment.getLocalGraphicsEnvironment(); try { // Determine the
-	 * type of transparency of the new buffered image int transparency =
-	 * Transparency.OPAQUE;
-	 *  // Create the buffered image GraphicsDevice gs =
-	 * ge.getDefaultScreenDevice(); GraphicsConfiguration gc =
-	 * gs.getDefaultConfiguration(); bimage =
-	 * gc.createCompatibleImage(image.getWidth(null), image.getHeight(null),
-	 * transparency); } catch (HeadlessException e) { // The system does not
-	 * have a screen }
-	 * 
-	 * if (bimage == null) { // Create a buffered image using the default color
-	 * model int type = BufferedImage.TYPE_INT_RGB; bimage = new
-	 * BufferedImage(image.getWidth(null), image.getHeight(null), type); }
-	 *  // Copy image to buffered image Graphics g = bimage.createGraphics();
-	 *  // Paint the image onto the buffered image g.drawImage(image, 0, 0,
-	 * null); g.dispose();
-	 * 
-	 * return bimage; }
-	 */
-
-	/*
-	 * protected void clean() {
-	 * 
-	 * long time = System.currentTimeMillis(); if (lastClean + CLEAN_PERIOD >
-	 * time) { return; } lastClean = time;
-	 * 
-	 * ArrayList toRemove = new ArrayList(); synchronized (cache) { Iterator
-	 * iter = cache.keySet().iterator(); while (iter.hasNext()) { CachedTileKey
-	 * tile = (CachedTileKey) iter.next(); if (tile.isExpired(time)) {
-	 * toRemove.add(tile); } } iter = toRemove.iterator(); while
-	 * (iter.hasNext()) { Object key = iter.next(); byte[] bytes = (byte[])
-	 * cache.get(key); sizeOfCache -= bytes.length; cache.remove(key); } } }
-	 */
-	// public synchronized void init() throws ServletException {
-	// super.init();
-	// if (threadCleaner == null) {
-	// threadCleaner = new Thread(new Runnable() {
-	//
-	// public void run() {
-	// while (true) {
-	// TileServlet.this.clean();
-	// try {
-	// Thread.currentThread().sleep(SLEEP_TIME);
-	// } catch (InterruptedException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-	//
-	// });
-	// threadCleaner.run();
-	// }
-	// System.out.println("init done");
-	// }
-	//	
-	// public synchronized void destroy() {
-	// super.destroy();
-	// if (threadCleaner != null) {
-	// threadCleaner.destroy();
-	// threadCleaner = null;
-	// }
-	// }
 }

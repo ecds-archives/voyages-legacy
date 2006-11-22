@@ -282,7 +282,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 		for (var k = 0; k < slots.length; k++)
 		{
 			var slotStyle = slots[k].style;
-			var value = 20;
+			var value = 0;
 			if (j < x.length && x[j] == this.offset + k)
 			{
 				value = y[j];
@@ -294,6 +294,49 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			slotStyle.height = (barHeight) + "px";
 		}
 
+	}
+	
+}
+
+EventLine.prototype.createHorizontalLabels = function()
+{
+
+	var topLabelWidth = 100;
+	
+	if (this.horizontalLabels)
+	{
+		for (var i = 0; i < this.horizontalLabels.length; i++)
+		{
+			this.containerElement.removeChild;
+		}
+	}
+
+	this.horizontalLabels = new Array();
+	
+	var viewSpan = this.zoomLevels[this.zoomLevel].viewSpan;
+	var labelsSpacing = this.zoomLevels[this.zoomLevel].labelsSpacing;
+	var barWidth = this.zoomLevels[this.zoomLevel].barWidth;
+	
+	var firstLabelSlot = labelsSpacing * Math.ceil(this.offset / labelsSpacing) - this.offset;
+		
+	for (var i = firstLabelSlot; i < viewSpan; i += labelsSpacing)
+	{
+	
+		var left = (((i * barWidth) + barWidth / 2) - topLabelsWidth / 2);
+		
+		var labelTable = null;
+		var labelCell = null;
+		
+		labelTable.style.position = "absolute;
+		labelTable.style.top = "0px;
+		labelTable.style.left = left + "px;
+		labelCell.style.width = topLabelWidth + "px";
+		labelCell.style.height = topLabelsHeight + "px";
+		
+		labelCell.innerHTML = i + this.offset;
+		
+		this.horizontalLabels.push(labelTable);
+		
 	}
 
 }
