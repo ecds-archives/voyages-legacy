@@ -37,8 +37,7 @@
 				refreshAction="#{MapBean.refresh}" 
 				maps="#{MapBean.availableMaps}"
 				chosenMap="#{MapBean.chosenMap}" 
-				availableAttributes="#{MapBean.availableAttributes}"
-				chosenAttribute="#{MapBean.chosenAttribute}" />
+				 />
 		</t:htmlTag>
 	</t:htmlTag>
 

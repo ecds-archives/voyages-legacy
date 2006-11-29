@@ -1,5 +1,7 @@
 package edu.emory.library.tast.estimates.map.mapimpl;
 
+import java.text.MessageFormat;
+
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.Element;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
@@ -23,6 +25,8 @@ public class EstimateMapDataItem extends AbstractMapItem {
 
 	private int size;
 
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
+	
 	public EstimateMapDataItem(double x, double y, String mainLabel) {
 		super(x, y, mainLabel);
 	}
@@ -55,7 +59,7 @@ public class EstimateMapDataItem extends AbstractMapItem {
 		for (int i = 0; i < elements.length; i++) {
 			Element element = elements[i];
 			buffer.append(element.getAttribute().getUserLabelOrName()).append(": ");
-			buffer.append(element.getValue()).append("<br/>");
+			buffer.append(valuesFormat.format(new Object[] {new Long(Math.round(((Number)element.getValue()).doubleValue()))})).append("<br/>");
 		}
 		buffer.append("</div>");
 

@@ -30,7 +30,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 						Region.getAttribute("id") }));
 		qValue1.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Estimate.getAttribute("slavExported") }));
-		qValue1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		qValue1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		qValue1.setGroupBy(new Attribute[] { new SequenceAttribute(
 				new Attribute[] { Estimate.getAttribute("expRegion"),
 						Region.getAttribute("id") }) });
@@ -43,7 +43,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 						Region.getAttribute("id") }));
 		qValue2.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Estimate.getAttribute("slavImported") }));
-		qValue2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		qValue2.setGroupBy(new Attribute[] { new SequenceAttribute(
 				new Attribute[] { Estimate.getAttribute("impRegion"),
 						Region.getAttribute("id") }) });

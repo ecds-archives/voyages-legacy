@@ -44,7 +44,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		QueryValue query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("id")}) });
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
@@ -53,7 +53,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		QueryValue query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("id")}) });
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
@@ -64,7 +64,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"),  Dictionary.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"),  Dictionary.getAttribute("id")}) });
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
@@ -73,7 +73,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"),  Dictionary.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"),  Dictionary.getAttribute("id")}) });
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
@@ -85,7 +85,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuypt"), Dictionary.getAttribute("id")}) });
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
@@ -94,7 +94,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselpt"), Dictionary.getAttribute("id")}) });
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
@@ -106,7 +106,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"), Dictionary.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		query1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbuyrg"), Dictionary.getAttribute("id")}) });
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
@@ -115,7 +115,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2 = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"), Dictionary.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majselrg"), Dictionary.getAttribute("id")})});
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);

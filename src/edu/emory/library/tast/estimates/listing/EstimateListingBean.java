@@ -1,5 +1,7 @@
 package edu.emory.library.tast.estimates.listing;
 
+import java.text.MessageFormat;
+
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Voyage;
@@ -28,6 +30,7 @@ public class EstimateListingBean {
 	private Conditions conditions = null;
 	private boolean requery = false;
 	private TableLinkManager linkManager = new TableLinkManager(10);
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 	
 	public EstimateListingBean() {
 		
@@ -47,7 +50,7 @@ public class EstimateListingBean {
 		tableData.setFormatter(visibleAttrs[4], new AbstractAttributeFormatter() {
 
 			public String format(Object object) {
-				return String.valueOf(Math.round(((Number)object).doubleValue()));
+				return valuesFormat.format(new Object[] {new Long(Math.round(((Number)object).doubleValue()))});
 			}
 
 			public String format(Object[] object) {
@@ -59,7 +62,7 @@ public class EstimateListingBean {
 		tableData.setFormatter(visibleAttrs[5], new AbstractAttributeFormatter() {
 
 			public String format(Object object) {
-				return String.valueOf(Math.round((((Number)object).doubleValue())));
+				return valuesFormat.format(new Object[] {new Long(Math.round((((Number)object).doubleValue())))});
 			}
 
 			public String format(Object[] object) {
@@ -111,7 +114,7 @@ public class EstimateListingBean {
 	
 	public void sortChanged(SortChangeEvent event) {
 //		 Get column that will be sorted
-		System.out.println(event.getAttributeSort());
+		//System.out.println(event.getAttributeSort());
 		VisibleAttributeInterface attr = this.getVisibleAttribute(event.getAttributeSort());
 
 		// Set appropriate order

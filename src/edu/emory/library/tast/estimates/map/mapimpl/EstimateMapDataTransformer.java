@@ -1,5 +1,6 @@
 package edu.emory.library.tast.estimates.map.mapimpl;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,8 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 
 	private static final int CIRCLE_RANGES = 5;
 
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
+	
 	public EstimateMapDataTransformer(AttributesMap map) {
 		super(map);
 	}
@@ -55,9 +58,9 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 				if (max < numberExp) {
 					max = numberExp;
 				}
-				if (expTmp.intValue() == 4) {
-					System.out.println("Spain!");
-				}
+//				if (expTmp.intValue() == 4) {
+//					System.out.println("Spain!");
+//				}
 
 				int index;
 				if ((index = mapDataItems.indexOf(expDataItem)) != -1) {
@@ -83,6 +86,8 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		}
 		ranges[0] = min;
 
+		this.round(ranges);
+		
 		// Set size of each of items created above
 		for (Iterator iter = mapDataItems.iterator(); iter.hasNext();) {
 			EstimateMapDataItem dataItem = (EstimateMapDataItem) iter.next();
@@ -103,13 +108,17 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		
 		//Prepare legend about size of dots
 		for (int i = CIRCLE_RANGES - 1; i >= 0; i--) {
-			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", "symbols/circle-1-" + (i + 1) + ".png", "" + Math.round(ranges[i]) + " - " + Math.round(ranges[i+1]));
+			long to = Math.round(ranges[i+1]);
+			long from = Math.round(ranges[i]);
+			from++;
+			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", "symbols/circle-1-" + (i + 1) + ".png"
+					, "" + valuesFormat.format(new Object[] {new Long(from)}) + " - " + valuesFormat.format(new Object[] {new Long(to)}));
 			legendSizes.addItemToGroup(item);
 		}
 		
 		///Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-1-\\d", "symbols/circle-" + 1 + "-4.png", "Place of embarkation");
-		LegendItem disemb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2 + "-4.png", "Place of disembarkation");
+		LegendItem emb = new LegendItem("circle-1-\\d", "symbols/circle-" + 2 + "-4.png", "Place of embarkation");
+		LegendItem disemb = new LegendItem("circle-2-\\d", "symbols/circle-" + 3 + "-4.png", "Place of disembarkation");
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
@@ -129,11 +138,16 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		}
 		
 		
+		if (data.length == 0) {
+			return new TransformerResponse(new AbstractMapItem[] {}, 
+					new LegendItemsGroup[] {});
+		}
+		
 		TransformerResponse response = new TransformerResponse(
 				(AbstractMapItem[]) mapDataItems
 						.toArray(new AbstractMapItem[] {}),
 				new LegendItemsGroup[] {legendSizes, legendColors});
-
+		
 		return response;
 	}
 

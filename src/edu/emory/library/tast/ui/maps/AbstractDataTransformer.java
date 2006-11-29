@@ -46,4 +46,38 @@ public abstract class AbstractDataTransformer {
 	protected Attribute getAttribute(int i, int j) {
 		return attributesMap.getAttribute(i, j);
 	}
+	
+	protected void round(double[] ranges) {
+		
+		int rounds[] = new int[ranges.length];
+		double range = ranges[ranges.length - 1] - ranges[0]; 
+		
+		for (int i = 0; i < ranges.length; i++) {
+			int cRound = this.getRound(ranges[0], ranges[ranges.length - 1], ranges[i]);
+			rounds[i] = cRound;
+		}
+		
+		int reminder = 0;
+		if (((int)(ranges[0]) % rounds[0]) != 0) {
+			reminder = 1;
+		}
+		ranges[ranges.length - 1] = ((int)(ranges[ranges.length - 1] / rounds[ranges.length - 1]) + reminder) * rounds[ranges.length - 1];
+		for (int i = 0; i < ranges.length- 1; i++) {
+			ranges[i] = ((int)(ranges[i] / rounds[i])) * rounds[i];
+		}
+	}
+	
+	private int getRound(double min, double max, double number) {
+		if (max - min < 10) {
+			return 1;
+		} else if (max - min < 501) {
+			return 10;
+		} else if (max - min < 5001) {
+			return 100;
+		} else if (max - min < 50001) {
+			return 1000;
+		} else {
+			return 10000;
+		}
+	}
 }

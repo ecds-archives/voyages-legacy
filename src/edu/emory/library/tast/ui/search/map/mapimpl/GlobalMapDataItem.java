@@ -1,5 +1,7 @@
 package edu.emory.library.tast.ui.search.map.mapimpl;
 
+import java.text.MessageFormat;
+
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.Element;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
@@ -32,6 +34,8 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	
 	private int i;
 	
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
+	
 	/**
 	 * Data item constructor.
 	 * @param x x coordinate
@@ -55,7 +59,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 */
 	public void setSymbolColor(int color) {
 		this.color = color;
-		System.out.println("Color: " + this.color);
+		//System.out.println("Color: " + this.color);
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(SYMBOL_NAME_PREFIX).append(this.color);
 		buffer.append("-").append(size + 1);
-		System.out.println("Symbol: " + buffer);
+		//System.out.println("Symbol: " + buffer);
 		this.symbolName =  buffer.toString();
 		this.size = size;
 	}
@@ -109,7 +113,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 		for (int i = 0; i < elements.length; i++) {
 			Element element = elements[i];
 			buffer.append(element.getAttribute().getUserLabelOrName()).append(": ");
-			buffer.append(element.getValue()).append("<br/>");
+			buffer.append(valuesFormat.format(new Object[] {new Long(Math.round(((Number)element.getValue()).doubleValue()))})).append("<br/>");
 		}
 		buffer.append("</div>");
 

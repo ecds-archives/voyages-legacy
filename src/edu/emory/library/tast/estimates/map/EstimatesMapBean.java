@@ -66,10 +66,10 @@ public class EstimatesMapBean {
 
 			AbstractMapItem[] items = this.mapData.getItems();
 
-			if (items.length > 0) {
-				this.creator.setMapData(items);
-				this.creator.setMapLegend(this.mapData.getLegend());
-			}
+			//if (items.length > 0) {
+			this.creator.setMapData(items);
+			this.creator.setMapLegend(this.mapData.getLegend());
+			//}
 			if (this.creator.createMapFile()) {
 				sessionParam = MAP_OBJECT_ATTR_NAME
 						+ System.currentTimeMillis();

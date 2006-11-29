@@ -30,11 +30,11 @@ import edu.emory.library.tast.util.query.Conditions;
  */
 public class MapBean {
 
-	public static int PORT_DEPARTURE = 1;
+	public static int PORT_DEPARTURE = 2;
 
-	public static int PORT_ARRIVAL = 2;
+	public static int PORT_ARRIVAL = 3;
 
-	public static int PORT_BOTH = 3;
+	public static int PORT_BOTH = 5;
 
 	private static final String[] MAPS = new String[] { "Ports", "Regions" };
 

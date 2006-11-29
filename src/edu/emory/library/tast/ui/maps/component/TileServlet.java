@@ -44,7 +44,6 @@ public class TileServlet extends HttpServlet {
 //		if (true) {
 //			return;
 //		}
-		
 		String mapFile = request.getParameter("m");
 
 		int col = 0;

@@ -1,5 +1,7 @@
 package edu.emory.library.tast.ui.search.table.mapimpl;
 
+import java.text.MessageFormat;
+
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.Element;
 import edu.emory.library.tast.ui.maps.MapItemElement;
@@ -22,6 +24,8 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 	 * Color of map item.
 	 */
 	private int color;
+	
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 	
 	/**
 	 * Creates new map item.

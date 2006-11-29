@@ -1,5 +1,6 @@
 package edu.emory.library.tast.ui.search.map.mapimpl;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +35,8 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	 * Color of items having more information.
 	 */
 	private static int DOUBLE_COLOR = 5;
+	
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 	
 	/**
 	 * Constructs transformer.
@@ -93,13 +96,13 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 				if (max < value.doubleValue()) {
 					max = value.doubleValue();
 				}
-				System.out.println("Color---: " + color + gisPort.getX() + " " + gisPort.getY());
+				//System.out.println("Color---: " + color + gisPort.getX() + " " + gisPort.getY());
 				//Create test item
 				GlobalMapDataItem testItem = new GlobalMapDataItem(gisPort.getX(), gisPort.getY(), gisPort
 						.getName(), color, i);
 				int index;
 
-				System.out.println("i=" + i + "  Checking port: " + gisPort);
+				//System.out.println("i=" + i + "  Checking port: " + gisPort);
 				
 				//Check if test item is among map items that have already been added
 				if ((index = items.indexOf(testItem)) != -1) {
@@ -108,7 +111,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 					item.getMapItemElements()[0].addElement(new Element(getAttribute(i, 1), new Double(value
 							.doubleValue())));
 					item.setSymbolColor(DOUBLE_COLOR);
-					System.out.println("Equals to: " + item.getI());
+					//System.out.println("Equals to: " + item.getI());
 				} else {
 					//If no - add test item to map items
 					MapItemElement itemElement = new MapItemElement(getAttribute(i, 0));
@@ -129,12 +132,13 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		}
 		ranges[0] = min;
 		
+		this.round(ranges);
 		
 		//Set size of each of items created above
 		for (Iterator iter = items.iterator(); iter.hasNext();) {
 			GlobalMapDataItem dataItem = (GlobalMapDataItem) iter.next();
 
-			System.out.println(dataItem.getMapItemElements()[0].getMaxElement().getValue());
+			//System.out.println(dataItem.getMapItemElements()[0].getMaxElement().getValue());
 			
 			double size = ((Double) dataItem.getMapItemElements()[0].getMaxElement().getValue()).doubleValue();
 			int index = CIRCLE_RANGES - 1;
@@ -153,13 +157,17 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		
 		//Prepare legend about size of dots
 		for (int i = CIRCLE_RANGES - 1; i >= 0; i--) {
-			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", "symbols/circle-1-" + (i + 1) + ".png", "" + Math.round(ranges[i]) + " - " + Math.round(ranges[i+1]));
+			long to = Math.round(ranges[i+1]);
+			long from = Math.round(ranges[i]);
+			from++;
+			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", "symbols/circle-1-" + (i + 1) + ".png", 
+					"" + valuesFormat.format(new Object[] {new Long(from)}) + " - " + valuesFormat.format(new Object[] {new Long(to)}));
 			legendSizes.addItemToGroup(item);
 		}
 		
 		///Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-1-\\d", "symbols/circle-" + 1 + "-4.png", "Place of embarkation");
-		LegendItem disemb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2 + "-4.png", "Place of disembarkation");
+		LegendItem emb = new LegendItem("circle-1-\\d", "symbols/circle-" + 2 + "-4.png", "Place of embarkation");
+		LegendItem disemb = new LegendItem("circle-2-\\d", "symbols/circle-" + 3 + "-4.png", "Place of disembarkation");
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);

@@ -3,6 +3,7 @@ package edu.emory.library.tast.ui.maps;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapDataItem;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 
 /**
@@ -144,9 +145,9 @@ public abstract class AbstractMapItem {
 		}
 		AbstractMapItem that = (AbstractMapItem)o;
 		boolean ret = this.x == that.x && this.y == that.y;
-		if (ret) {
-			System.out.println("EQUALS!!!");
-		}
+//		if (ret) {
+//			System.out.println("EQUALS!!!");
+//		}
 		return ret;
 	}
 
