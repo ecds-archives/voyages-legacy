@@ -84,14 +84,22 @@ public class EstimatesTimelineBean
 		graphExp.setName("Exported");
 		graphExp.setX(expYears);
 		graphExp.setY(expValues);
-		graphExp.setColor("#EEEEEE");
+		graphExp.setBaseColor("#EEEEEE");
+		graphExp.setEventColor("#AAAAAA");
+		
+		graphExp.setBaseColor("#F1E7C8");
+		graphExp.setEventColor("#AAAAAA");
 
 		// graph for imported
 		graphImp = new EventLineGraph();
 		graphImp.setName("Imported");
 		graphImp.setX(impYears);
 		graphImp.setY(impValues);
-		graphImp.setColor("#CCCCCC");
+		graphImp.setBaseColor("#CCCCCC");
+		graphImp.setEventColor("#666666");
+		
+		graphImp.setBaseColor("#E7D59C");
+		graphImp.setEventColor("#666666");
 
 		// vertical labels
 		createVerticalLabels();

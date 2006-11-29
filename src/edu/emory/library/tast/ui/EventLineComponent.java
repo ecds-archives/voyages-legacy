@@ -51,11 +51,6 @@ public class EventLineComponent extends UIComponentBase
 		return null;
 	}
 	
-	private String getEventMarkElementId(FacesContext context, int index)
-	{
-		return getClientId(context) + "_event_mark_" + index;
-	}
-
 	private String getZoomLevelHiddenFieldName(FacesContext context)
 	{
 		return getClientId(context) + "_zoom_level";
@@ -66,11 +61,6 @@ public class EventLineComponent extends UIComponentBase
 		return getClientId(context) + "_offset";
 	}
 
-	private String getEventTextElementId(FacesContext context, int index)
-	{
-		return getClientId(context) + "_event_text_" + index;
-	}
-	
 	public Object saveState(FacesContext context)
 	{
 		Object[] values = new Object[5];
@@ -238,7 +228,16 @@ public class EventLineComponent extends UIComponentBase
 		writer.endElement("div");
 
 	}
-	
+
+	private void encodeLabels(ResponseWriter writer, String labelsContainerId) throws IOException
+	{
+		// only container generated here
+		writer.startElement("div", this);
+		writer.writeAttribute("id", labelsContainerId, null);
+		writer.writeAttribute("style", "position: absolute; top: 0px; left: 0px;", null);
+		writer.endElement("div");
+	}
+
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
@@ -256,6 +255,7 @@ public class EventLineComponent extends UIComponentBase
 		String indicatorContainerId = getClientId(context) + "_indicator_container";
 		String indicatorId = getClientId(context) + "_indicator";
 		String indicatorLabelId = getClientId(context) + "_indicator_label";
+		String labelsContainerId = getClientId(context) + "_labels_container";
 
 		// these data won't be saved in the component state
 		zoomLevel = getZoomLevel();
@@ -291,6 +291,7 @@ public class EventLineComponent extends UIComponentBase
 		regJS.append("'").append(indicatorContainerId).append("', ");
 		regJS.append("'").append(indicatorId).append("', ");
 		regJS.append("'").append(indicatorLabelId).append("', ");
+		regJS.append("'").append(labelsContainerId).append("', ");
 		regJS.append("'").append(getZoomLevelHiddenFieldName(context)).append("', ");
 		regJS.append("'").append(getOffsetHiddenFieldName(context)).append("', ");
 		regJS.append(viewportHeight).append(", ");
@@ -310,8 +311,7 @@ public class EventLineComponent extends UIComponentBase
 			if (i > 0) regJS.append(", ");
 			regJS.append("new EventLineEvent(");
 			regJS.append(event.getX()).append(", ");
-			regJS.append("'").append(getEventMarkElementId(context, i)).append("', ");
-			regJS.append("'").append(getEventTextElementId(context, i)).append("'");
+			regJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
 			regJS.append(")");
 		}
 		regJS.append("], ");
@@ -326,7 +326,8 @@ public class EventLineComponent extends UIComponentBase
 			if (i > 0) regJS.append(", ");
 			regJS.append("new EventLineGraph(");
 			regJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
-			regJS.append("'").append(graph.getColor()).append("', ");
+			regJS.append("'").append(graph.getBaseColor()).append("', ");
+			regJS.append("'").append(graph.getEventOrBaseColor()).append("', ");
 			regJS.append(graph.getMaxValue()).append(", ");
 			regJS.append(graph.getMinValue()).append(", ");
 			regJS.append("[");
@@ -364,20 +365,7 @@ public class EventLineComponent extends UIComponentBase
 
 		// vertical labels
 		regJS.append(verticalLabels.getSpacing()).append(", ");
-		regJS.append(verticalLabels.getMajorSpacing()).append(", ");
-
-		// JS events
-		regJS.append("[");
-		for (int i = 0; i < events.length; i++)
-		{
-			EventLineEvent event = events[i];
-			if (i > 0) regJS.append(", ");
-			regJS.append("new EventLineEvent(");
-			regJS.append(event.getX()).append(", ");
-			regJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
-			regJS.append(")");
-		}
-		regJS.append("]");
+		regJS.append(verticalLabels.getMajorSpacing()).append("");
 		regJS.append("));");
 
 		// render JS
@@ -403,12 +391,15 @@ public class EventLineComponent extends UIComponentBase
 		writer.writeAttribute("style", mainContainerStyle, null);
 		writer.writeAttribute("class", "event-line-container", null);
 		
+		// markers
+		encodeLabels(writer, labelsContainerId);
+
 		// graphs
 		encodeGraphsContainer(writer, graphsContainerId, maxSlots);
-
+		
 		// selector
 		encodeSelector(writer, selectorContainerId, selectorId, leftSelectorId, rightSelectorId, maxSlots);
-		
+
 		// indicator
 		encodeIndicator(writer, indicatorContainerId, indicatorId, indicatorLabelId);
 

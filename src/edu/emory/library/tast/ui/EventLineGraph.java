@@ -5,7 +5,8 @@ public class EventLineGraph
 {
 	
 	private String name;
-	private String color;
+	private String baseColor;
+	private String eventColor;
 	private int x[];
 	private double y[];
 	
@@ -69,14 +70,30 @@ public class EventLineGraph
 		this.y = y;
 	}
 
-	public String getColor()
+	public String getBaseColor()
 	{
-		return color;
+		return baseColor;
 	}
 
-	public void setColor(String color)
+	public void setBaseColor(String color)
 	{
-		this.color = color;
+		this.baseColor = color;
+	}
+
+	public String getEventColor()
+	{
+		return eventColor;
+	}
+
+	public String getEventOrBaseColor()
+	{
+		if (eventColor == null) return baseColor;
+		return eventColor;
+	}
+
+	public void setEventColor(String eventColor)
+	{
+		this.eventColor = eventColor;
 	}
 
 	public String getName()

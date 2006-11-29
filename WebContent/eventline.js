@@ -22,10 +22,11 @@ function EventLineEvent(x, text)
 	this.text = text;
 }
 
-function EventLineGraph(name, color, maxValue, minValue, x, y)
+function EventLineGraph(name, baseColor, eventColor, maxValue, minValue, x, y)
 {
 	this.name = name;
-	this.color = color;
+	this.baseColor = baseColor;
+	this.eventColor = eventColor;
 	this.maxValue = maxValue;
 	this.minValue = minValue;
 	this.x = x;
@@ -63,6 +64,7 @@ function EventLine(
 	indicatorContainerId,
 	indicatorId,
 	indicatorLabelId,
+	labelsContainerId,
 	zoomLevelFieldName,
 	offsetFieldName,
 	viewportHeight,
@@ -94,6 +96,8 @@ function EventLine(
 	this.indicatorId = indicatorId;
 	this.indicatorLabelId = indicatorLabelId;
 	
+	this.labelsContainerId = labelsContainerId;
+	
 	this.zoomLevelFieldName = zoomLevelFieldName;
 	this.offsetFieldName = offsetFieldName;
 	
@@ -105,6 +109,7 @@ function EventLine(
 	this.selectorBarWidth = zoomLevels[0].barWidth;
 	this.selectorViewSpan = zoomLevels[0].viewSpan;
 	this.slotsCount = zoomLevels[0].viewSpan;
+	this.graphWidth = zoomLevels[0].viewSpan * zoomLevels[0].barWidth;
 
 	this.leftLabelsWidth = leftLabelsWidth;
 	this.leftLabelsMargin = leftLabelsMargin;
@@ -139,20 +144,25 @@ EventLine.prototype.init = function()
 	this.indicatorContainerElement = document.getElementById(this.indicatorContainerId);
 	this.indicatorElement = document.getElementById(this.indicatorId);
 	this.indicatorLabelElement = document.getElementById(this.indicatorLabelId);
+	
+	this.labelsContainer = document.getElementById(this.labelsContainerId);
+	this.labelsContainer.style.width = (this.leftLabelsWidth + this.leftLabelsMargin + this.graphWidth) + "px";
+	this.labelsContainer.style.height = (this.topLabelsHeight + this.topLabelsMargin + this.graphHeight + this.selectorHeight) + "px";
 
 	var frm = document.forms[this.formName];
 	this.zoomLevelField = frm.elements[this.zoomLevelFieldName];
 	this.offsetField = frm.elements[this.offsetFieldName];
 	
-	var t1 = new Date();
 	this.findMaxValue();
-	var t2 = new Date();
+	this.initEvents();
+	
 	this.createSelector();
-	var t3 = new Date();
+	this.createHorizontalLabels(this.selectorOffset, 0,
+		this.topLabelsHeight + this.topLabelsMargin + this.graphHeight + this.selectorHeight,
+		"top", false, null);
+	
 	this.initSlots();
-	var t4 = new Date();
 	this.refresh(parseInt(this.zoomLevelField.value), parseInt(this.offsetField.value));
-	var t5 = new Date();
 
 	/*	
 	alert(
@@ -225,11 +235,12 @@ EventLine.prototype.createSelector = function()
 			var barHeight = Math.round((value / this.maxValue) * this.selectorHeight);
 
 			slotStyle.position = "absolute";
-			slotStyle.backgroundColor = graph.color;
 			slotStyle.left = (k*this.selectorBarWidth) + "px";
-			slotStyle.width = (this.selectorBarWidth - 1) + "px";
+			slotStyle.width = (this.selectorBarWidth) + "px";
 			slotStyle.top = (this.selectorHeight - barHeight) + "px";
 			slotStyle.height = (barHeight) + "px";
+			slotStyle.backgroundColor = graph.baseColor;
+			//slotStyle.backgroundColor = this.eventsLookup[this.selectorOffset + k] ? graph.eventColor : graph.baseColor;
 			
 			//this.selectorContainer.insertBefore(slot, this.selector);
 
@@ -249,10 +260,19 @@ EventLine.prototype.initSlots = function()
 		{
 			var slot = this.graphsContainer.childNodes[i*this.slotsCount+j];
 			slot.style.position = "absolute";
-			slot.style.backgroundColor = graph.color;
 			slot.style.height = "0px";
 			slots.push(slot);
 		}
+	}
+}
+
+EventLine.prototype.initEvents = function()
+{
+	this.eventsLookup = new Array();
+	for (var i = 0; i < this.events.length; i++)
+	{
+		var event = this.events[i];
+		this.eventsLookup[event.x] = event;
 	}
 }
 
@@ -284,6 +304,15 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 	
 	var zoomLevelObj = this.zoomLevels[this.zoomLevel];
 	
+	if (this.offset < this.selectorOffset)
+		this.offset = this.selectorOffset;
+
+	if (this.offset + zoomLevelObj.viewSpan > this.selectorOffset + this.selectorViewSpan)
+		this.offset = this.selectorOffset + this.selectorViewSpan - zoomLevelObj.viewSpan;
+		
+	this.zoomLevelField.value = this.zoomLevel;
+	this.offsetField.value = this.offset;
+	
 	this.graphsContainer.style.width = (zoomLevelObj.barWidth * zoomLevelObj.viewSpan) + "px";
 	this.graphsContainer.style.height = (this.graphHeight) + "px";
 	
@@ -296,6 +325,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 	this.redrawSelector(this.offset, zoomLevelObj.viewSpan);
 	
 	var currBarWidth = zoomLevelObj.barWidth;
+	var innerBarWidth = currBarWidth > 2 ? currBarWidth - 1 : currBarWidth;
 	
 	for (var i = 0; i < this.graphs.length; i++)
 	{
@@ -331,72 +361,77 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			slotStyle.top = (this.graphHeight - barHeight) + "px";
 			slotStyle.height = (barHeight) + "px";
 			slotStyle.left = (k*currBarWidth) + "px";
-			slotStyle.width = (currBarWidth - 1) + "px";
+			slotStyle.width = (innerBarWidth) + "px";
+			slotStyle.backgroundColor = this.eventsLookup[this.offset + k] ? graph.eventColor : graph.baseColor;
 		}
 
 	}
 	
-	this.createHorizontalLabels();
 	this.createVerticalLabels();
-	
-}
-
-
-EventLine.prototype.createHorizontalLabels = function()
-{
-
-	var topLabelWidth = 100;
 	
 	if (this.horizontalLabels)
 	{
 		for (var i = 0; i < this.horizontalLabels.length; i++)
 		{
-			this.containerElement.removeChild(this.horizontalLabels[i].label);
-			this.containerElement.removeChild(this.horizontalLabels[i].line);
+			this.labelsContainer.removeChild(this.horizontalLabels[i].label);
+			this.labelsContainer.removeChild(this.horizontalLabels[i].line);
 		}
 	}
-
+	
 	this.horizontalLabels = new Array();
+	this.createHorizontalLabels(this.offset, this.zoomLevel, 0, "bottom", true, this.horizontalLabels);
+
+}
+
+EventLine.prototype.createHorizontalLabels = function(offset, zoomLevel, topPositon, verticalAlign, createLines, array)
+{
+
+	var topLabelWidth = 100;
 	
-	var viewSpan = this.zoomLevels[this.zoomLevel].viewSpan;
-	var labelsSpacing = this.zoomLevels[this.zoomLevel].labelsSpacing;
-	var barWidth = this.zoomLevels[this.zoomLevel].barWidth;
-	var majorLabels = this.zoomLevels[this.zoomLevel].majorLabels;
+	var viewSpan = this.zoomLevels[zoomLevel].viewSpan;
+	var labelsSpacing = this.zoomLevels[zoomLevel].labelsSpacing;
+	var barWidth = this.zoomLevels[zoomLevel].barWidth;
+	var majorLabels = this.zoomLevels[zoomLevel].majorLabels;
 	
-	var firstLabelSlot = labelsSpacing * Math.ceil(this.offset / labelsSpacing) - this.offset;
+	var firstLabelSlot = labelsSpacing * Math.ceil(offset / labelsSpacing) - offset;
 	
 	for (var i = firstLabelSlot; i < viewSpan; i += labelsSpacing)
 	{
 	
 		var left = ((i * barWidth) + barWidth / 2) + this.leftLabelsWidth + this.leftLabelsMargin;
-		var value = i + this.offset;
+		var value = i + offset;
 		var major = value % majorLabels == 0;
 		
-		var labelLine = document.createElement("div");
-		labelLine.style.backgroundColor = major ? "#333333" : "#CCCCCC";
-		labelLine.style.position = "absolute";
-		labelLine.style.top = (this.topLabelsHeight + this.topLabelsMargin) + "px";
-		labelLine.style.left = left + "px";
-		labelLine.style.width = "1px";
-		labelLine.style.height = this.graphHeight + "px";
+		var labelLine = null;
+		if (createLines)
+		{
+			labelLine = document.createElement("div");
+			labelLine.style.backgroundColor = major ? "#CCCCCC" : "#CCCCCC";
+			labelLine.style.position = "absolute";
+			labelLine.style.top = (this.topLabelsHeight + this.topLabelsMargin) + "px";
+			labelLine.style.left = left + "px";
+			labelLine.style.width = "1px";
+			labelLine.style.height = this.graphHeight + "px";
+		}
 
 		var labelTable = document.createElement("table");
 		var labelCell = labelTable.insertRow(0).insertCell(0);
 		
 		labelTable.style.position = "absolute";
-		labelTable.style.top = "0px";
+		labelTable.style.top = topPositon + "px";
 		labelTable.style.left = (left - topLabelWidth/2) + "px";
 		labelCell.style.width = topLabelWidth + "px";
 		labelCell.style.height = this.topLabelsHeight + "px";
 		labelCell.style.textAlign = "center";
-		labelCell.style.verticalAlign = "bottom";
+		labelCell.style.verticalAlign = verticalAlign;
 		labelCell.style.fontWeight = major ? "bold" : "normal";
 
-		labelCell.innerHTML = i + this.offset;
+		labelCell.innerHTML = value;
 		
-		this.horizontalLabels.push(new EventLineHorizontalLabel(labelTable, labelLine));
-		this.containerElement.appendChild(labelTable);
-		this.containerElement.appendChild(labelLine);
+		if (array) array.push(new EventLineHorizontalLabel(labelTable, labelLine));
+		
+		this.labelsContainer.appendChild(labelTable);
+		if (createLines) this.labelsContainer.appendChild(labelLine);
 		
 	}
 
@@ -414,8 +449,8 @@ EventLine.prototype.createVerticalLabels = function()
 	{
 		for (var i = 0; i < this.verticalLabels.length; i++)
 		{
-			this.containerElement.removeChild(this.verticalLabels[i].label);
-			this.containerElement.removeChild(this.verticalLabels[i].line);
+			this.labelsContainer.removeChild(this.verticalLabels[i].label);
+			this.labelsContainer.removeChild(this.verticalLabels[i].line);
 		}
 	}
 	
@@ -429,7 +464,7 @@ EventLine.prototype.createVerticalLabels = function()
 		var major = i % this.verticalLabelsMajorSpacing == 0;
 		
 		var labelLine = document.createElement("div");
-		labelLine.style.backgroundColor = major ? "#333333" : "#CCCCCC";
+		labelLine.style.backgroundColor = major ? "#CCCCCC" : "#CCCCCC";
 		labelLine.style.position = "absolute";
 		labelLine.style.top = top + "px";
 		labelLine.style.left = (this.leftLabelsWidth + this.leftLabelsMargin) + "px";
@@ -450,8 +485,8 @@ EventLine.prototype.createVerticalLabels = function()
 		labelCell.innerHTML = i;
 		
 		this.verticalLabels.push(new EventLineVerticalLabel(labelTable, labelLine));
-		this.containerElement.appendChild(labelTable);
-		this.containerElement.appendChild(labelLine);
+		this.labelsContainer.appendChild(labelTable);
+		this.labelsContainer.appendChild(labelLine);
 
 	}
 
@@ -495,7 +530,7 @@ EventLine.prototype.graphMouseOut = function(event)
 EventLine.prototype.graphMouseMove = function(event)
 {
 
-	var x = event.clientX - ElementUtils.getOffsetLeft(this.indicatorContainerElement);
+	var x = ElementUtils.getEventMouseElementX(event, this.indicatorContainerElement);
 	
 	if (x < 0) x = 0;
 	if (x > this.graphWidth) x = this.graphWidth;
@@ -513,6 +548,9 @@ EventLine.prototype.graphMouseMove = function(event)
 		label += graph.name + ":&nbsp;" + value;
 		//if (data.value > maxValue) maxValue = value;
 	}
+	
+	var event = this.eventsLookup[pos + this.offset];
+	if (event) label += "<br><b>" + event.text + "</b>";
 
 	//this.indicatorElement.style.top = (this.graphHeight + this.graphOffsetTop - maxValue) + "px";
 	//this.indicatorElement.style.height = maxValue + "px";
@@ -524,29 +562,58 @@ EventLine.prototype.graphMouseMove = function(event)
 
 }
 
+EventLine.prototype.getSelectorWidthPx = function()
+{
+	return this.selectorBarWidth * this.zoomLevels[this.zoomLevel].viewSpan;
+}
+
+EventLine.prototype.getSelectorLeftPx = function()
+{
+	return this.selectorBarWidth * (this.offset - this.selectorOffset);
+}
+
+EventLine.prototype.getSelectorRightPx = function()
+{
+	return this.getSelectorLeftPx() + this.getSelectorWidthPx();
+}
+
 EventLine.prototype.selectorMouseDown = function(event)
 {
 	this.startDragX = event.clientX;
-	EventAttacher.attach(this.selector, "mouseup", this, "selectorMouseUp");
-	EventAttacher.attach(this.selector, "mousemove", this, "selectorMouseMove");
+	EventAttacher.attachOnWindowEvent("mouseup", this, "selectorMouseUp");
+	EventAttacher.attachOnWindowEvent("mousemove", this, "selectorMouseMove");
 }
 
 EventLine.prototype.selectorMouseMove = function(event)
 {
+
 	var dx = event.clientX - this.startDragX;
+	
+	var currentViewSpan = this.zoomLevels[this.zoomLevel].viewSpan;
+	var selectorRight = this.selectorOffset + this.selectorViewSpan;
+	
 	var newOffset = Math.round(this.offset +  dx / this.selectorBarWidth);
-	this.redrawSelector(newOffset, this.zoomLevels[this.zoomLevel].viewSpan);
+	if (newOffset < this.selectorOffset) newOffset = this.selectorOffset;
+	if (selectorRight < newOffset + currentViewSpan) newOffset = selectorRight - currentViewSpan;
+	
+	this.redrawSelector(newOffset, currentViewSpan);
 }
 
 EventLine.prototype.selectorMouseUp = function(event)
 {
 	var dx = event.clientX - this.startDragX;
+
+	var currentViewSpan = this.zoomLevels[this.zoomLevel].viewSpan;
+	var selectorRight = this.selectorOffset + this.selectorViewSpan;
+	
 	var newOffset = Math.round(this.offset +  dx / this.selectorBarWidth);
+	if (newOffset < this.selectorOffset) newOffset = this.selectorOffset;
+	if (selectorRight < newOffset + currentViewSpan) newOffset = selectorRight - currentViewSpan;
 		
 	this.refresh(this.zoomLevel, newOffset);
 	
-	EventAttacher.detach(this.selector, "mouseup", this, "selectorMouseUp");
-	EventAttacher.detach(this.selector, "mousemove", this, "selectorMouseMove");
+	EventAttacher.detachOnWindowEvent("mouseup", this, "selectorMouseUp");
+	EventAttacher.detachOnWindowEvent("mousemove", this, "selectorMouseMove");
 	
 }
 
@@ -559,11 +626,11 @@ EventLine.prototype.leftSelectorMouseDown = function(event)
 EventLine.prototype.leftSelectorMouseMove = function(event)
 {
 
-	var originalLeft = this.selectorBarWidth * (this.offset - this.selectorOffset)
-	var originalWidth = this.selectorBarWidth * this.zoomLevels[this.zoomLevel].viewSpan;
-	var originalRight = originalLeft + originalWidth;
-	
-	var newLeft = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
+	var newLeft = ElementUtils.getEventMouseElementX(event, this.selectorContainer);
+
+	var originalRight = this.getSelectorRightPx();
+	if (newLeft < 0) newLeft = 0;
+	if (newLeft > originalRight) newLeft = originalRight;
 	
 	this.redrawSelectorUsingLeftRight(newLeft, originalRight);
 
@@ -572,13 +639,14 @@ EventLine.prototype.leftSelectorMouseMove = function(event)
 EventLine.prototype.leftSelectorMouseUp = function(event)
 {
 	
-	var originalLeft = this.selectorBarWidth * (this.offset - this.selectorOffset)
-	var originalWidth = this.selectorBarWidth * this.zoomLevels[this.zoomLevel].viewSpan;
-	var originalRight = originalLeft + originalWidth;
-	
-	var newLeft = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
+	var originalRight = this.getSelectorRightPx();
+
+	var newLeft = ElementUtils.getEventMouseElementX(event, this.selectorContainer);
 	var newWidth = originalRight - newLeft;
 	
+	if (newLeft < 0) newLeft = 0;
+	if (newLeft > originalRight) newLeft = originalRight;
+
 	var newOffset = Math.round(this.selectorOffset + newLeft / this.selectorBarWidth);
 	var newViewSpan = Math.round(newWidth / this.selectorBarWidth);
 	
@@ -600,9 +668,12 @@ EventLine.prototype.rightSelectorMouseDown = function(event)
 EventLine.prototype.rightSelectorMouseMove = function(event)
 {
 
-	var originalLeft = this.selectorBarWidth * (this.offset - this.selectorOffset)
+	var originalLeft = this.getSelectorLeftPx();
 	
-	var newRight = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
+	var newRight = ElementUtils.getEventMouseElementX(event, this.selectorContainer);
+	if (newRight < originalLeft) newRight = originalLeft;
+	if (newRight > this.selectorWidth) newRight = this.graphWidth;
+	
 	var newWidth = newRight - originalLeft;
 	var newViewSpan = Math.round(newWidth / this.selectorBarWidth);
 	
@@ -613,11 +684,12 @@ EventLine.prototype.rightSelectorMouseMove = function(event)
 EventLine.prototype.rightSelectorMouseUp = function(event)
 {
 	
-	var originalLeft = this.selectorBarWidth * (this.offset - this.selectorOffset)
-	var originalWidth = this.selectorBarWidth * this.zoomLevels[this.zoomLevel].viewSpan;
-	var originalRight = originalLeft + originalWidth;
+	var newRight = ElementUtils.getEventMouseElementX(event, this.selectorContainer);
+
+	var originalLeft = this.getSelectorLeftPx();
+	if (newRight < originalLeft) newRight = originalLeft;
+	if (newRight > this.selectorWidth) newRight = this.graphWidth;
 	
-	var newRight = event.clientX - ElementUtils.getOffsetLeft(this.selectorContainer);
 	var newWidth = newRight - originalLeft;
 	var newViewSpan = Math.round(newWidth / this.selectorBarWidth);
 	

@@ -49,10 +49,15 @@ div.import-region-list div.checkbox-list-popup {
 	left: 230px;
 	position: absolute; }
 	
-	
+div.event-line-left-selector {
+	cursor: move; }
+
+div.event-line-left-selector,
+div.event-line-right-selector {
+	cursor: w-resize; }
 
 div.event-line-graph-container {
-	-background-color: #EEEEEE; }
+	border: 0px solid Black; }
 
 div.event-line-selector-container {
 	-border: 1px solid #DEC77E; }
@@ -68,8 +73,8 @@ div.event-line-graph {
 	-background-color: #EEFFFF; }
 	
 div.event-line-selector {
-	-moz-opacity: 0.1;
-	background-color: #333333; }
+	-moz-opacity: 0.5;
+	background-color: #F1E7C8; }
 
 div.event-line-indicator {
 	-moz-opacity: 0.1;

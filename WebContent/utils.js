@@ -142,6 +142,26 @@ var EventUtils =
 var ElementUtils =
 {
 
+	getEventMouseX: function(event)
+	{
+		return event.clientX + Math.max(document.body.scrollLeft, document.documentElement.scrollLeft);
+	},
+
+	getEventMouseY: function(event)
+	{
+		return event.clientY + Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+	},
+
+	getEventMouseElementX: function(event, el)
+	{
+		return ElementUtils.getEventMouseX(event) - ElementUtils.getOffsetLeft(el);
+	},
+
+	getEventMouseElementY: function(event, el)
+	{
+		return ElementUtils.getEventMouseY(event) - ElementUtils.getOffsetTop(el);
+	},
+
 	getOffsetWidth: function(el)
 	{
 		return el.offsetWidth;
