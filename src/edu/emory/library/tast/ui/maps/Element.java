@@ -20,6 +20,11 @@ public class Element {
 	 * Value that will appear on map.
 	 */
 	private Comparable value;
+
+	//size of dot
+	private int size;
+
+	private int color;
 	
 	/**
 	 * Constructor.
@@ -61,6 +66,22 @@ public class Element {
 	 */
 	public void setValue(Comparable value) {
 		this.value = value;
+	}
+
+	public void setSize(int i) {
+		this.size = i;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public int getColor() {
+		return this.color;
+	}
+	
+	public void setColor(int i) {
+		this.color = i;
 	}
 	
 }

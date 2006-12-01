@@ -151,23 +151,25 @@ public class UITableResultTab extends UIOutput {
 				writer.writeAttribute("border", "0", null);
 				writer.writeAttribute("cellspacing", "0", null);
 				writer.writeAttribute("cellpadding", "0", null);
-				writer.writeAttribute("class", "grid-header", null);
+				if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
+					writer.writeAttribute("class", "grid-header-right", null);
+				} else {
+					writer.writeAttribute("class", "grid-header", null);
+				}
 				writer.startElement("tr", this);
 
 				writer.startElement("td", this);
-				writer.writeAttribute("class", "grid-header-text", null);
-				if (populatedAttributes[i].getType().equals("NumericAttribute")) {
-					writer.startElement("div", this);
-					writer.writeAttribute("style", "text-align: right; background-color: red", null);
+				if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
+					writer.writeAttribute("class", "grid-header-text-right", null);
+				} else {
+					writer.writeAttribute("class", "grid-header-text", null);
 				}
+				
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.writeAttribute("onclick", jsSort, null);
 				writer.write(populatedAttributes[i].getUserLabelOrName());
 				writer.endElement("a");
-				if (populatedAttributes[i].getType().equals("NumericAttribute")) {
-					writer.endElement("div");
-				}
 				writer.endElement("td");
 
 				if (data.getOrderByColumn() != null
@@ -233,6 +235,9 @@ public class UITableResultTab extends UIOutput {
 						}
 					}
 					writer.startElement("td", this);
+					if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
+						writer.writeAttribute("style", "text-align: right", null);
+					}
 					writer.writeAttribute("id", "cell_" + i + "_" + j, null);
 					if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
 					if (visibleToolTop != null) {
@@ -252,16 +257,8 @@ public class UITableResultTab extends UIOutput {
 						writer.endElement("div");
 					}
 					
-					if (visibleLabel != null) {
-						if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
-							writer.startElement("div", this);
-							writer.writeAttribute("style", "text-align: right", null);
-						}
-						writer.write(visibleLabel);
-						if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
-							writer.endElement("div");
-						}
-						
+					if (visibleLabel != null) {						
+						writer.write(visibleLabel);						
 					}
 
 					writer.endElement("td");

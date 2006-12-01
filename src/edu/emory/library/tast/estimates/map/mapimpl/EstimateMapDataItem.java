@@ -26,27 +26,48 @@ public class EstimateMapDataItem extends AbstractMapItem {
 	private int size;
 
 	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
-	
+
 	public EstimateMapDataItem(double x, double y, String mainLabel) {
 		super(x, y, mainLabel);
 	}
 
 	public String[] getLegendSymbolNames() {
-		return new String[] {this.symbolName};
+		return new String[] { this.symbolName };
 	}
 
 	public String[] getSymbolNames() {
-		return new String[] {this.symbolName};
+		return new String[] { this.symbolName };
 	}
 
 	public PointOfInterest getTooltipText() {
-		
+
 		PointOfInterest point = new PointOfInterest(this.getX(), this.getY());
 		point.setText(this.buildToolTipInfo());
+		Element[] elements = this.getMapItemElements()[0].getElements();
+		if (elements.length > 1) {
+			if (elements[0].getSize() < elements[1].getSize()) {
+				point.setSymbols(new String[] {
+						SYMBOL_NAME_PREFIX + elements[1].getColor() + "-"
+								+ elements[1].getSize(),
+						SYMBOL_NAME_PREFIX + elements[0].getColor() + "-"
+								+ elements[0].getSize() });
+			} else {
+				point.setSymbols(new String[] {
+						SYMBOL_NAME_PREFIX + elements[0].getColor() + "-"
+								+ elements[0].getSize(),
+						SYMBOL_NAME_PREFIX + elements[1].getColor() + "-"
+								+ elements[1].getSize() });
+			}
+		} else {
+			point.setSymbols(new String[] { SYMBOL_NAME_PREFIX
+					+ elements[0].getColor() + "-" + elements[0].getSize() });
+		}
+		point.setLabel(this.getMainLabel());
+
 		return point;
-		
+
 	}
-	
+
 	private String buildToolTipInfo() {
 		StringBuffer buffer = new StringBuffer();
 
@@ -58,16 +79,20 @@ public class EstimateMapDataItem extends AbstractMapItem {
 		Element[] elements = this.getMapItemElements()[0].getElements();
 		for (int i = 0; i < elements.length; i++) {
 			Element element = elements[i];
-			buffer.append(element.getAttribute().getUserLabelOrName()).append(": ");
-			buffer.append(valuesFormat.format(new Object[] {new Long(Math.round(((Number)element.getValue()).doubleValue()))})).append("<br/>");
+			buffer.append(element.getAttribute().getUserLabelOrName()).append(
+					": ");
+			buffer.append(
+					valuesFormat
+							.format(new Object[] { new Long(Math
+									.round(((Number) element.getValue())
+											.doubleValue())) }))
+					.append("<br/>");
 		}
 		buffer.append("</div>");
 
 		return buffer.toString();
 
 	}
-
-
 
 	public int getColor() {
 		return color;
@@ -90,6 +115,4 @@ public class EstimateMapDataItem extends AbstractMapItem {
 		this.symbolName = buf.toString();
 	}
 
-	
-	
 }
