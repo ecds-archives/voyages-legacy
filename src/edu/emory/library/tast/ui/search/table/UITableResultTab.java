@@ -156,11 +156,18 @@ public class UITableResultTab extends UIOutput {
 
 				writer.startElement("td", this);
 				writer.writeAttribute("class", "grid-header-text", null);
+				if (populatedAttributes[i].getType().equals("NumericAttribute")) {
+					writer.startElement("div", this);
+					writer.writeAttribute("style", "text-align: right; background-color: red", null);
+				}
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.writeAttribute("onclick", jsSort, null);
 				writer.write(populatedAttributes[i].getUserLabelOrName());
 				writer.endElement("a");
+				if (populatedAttributes[i].getType().equals("NumericAttribute")) {
+					writer.endElement("div");
+				}
 				writer.endElement("td");
 
 				if (data.getOrderByColumn() != null
@@ -246,7 +253,15 @@ public class UITableResultTab extends UIOutput {
 					}
 					
 					if (visibleLabel != null) {
+						if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
+							writer.startElement("div", this);
+							writer.writeAttribute("style", "text-align: right", null);
+						}
 						writer.write(visibleLabel);
+						if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
+							writer.endElement("div");
+						}
+						
 					}
 
 					writer.endElement("td");

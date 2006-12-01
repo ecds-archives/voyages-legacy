@@ -228,7 +228,8 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		} else if (this.attributes[0] instanceof NumericAttribute) {
 			return "NumericAttribute";
 		} else {
-			throw new RuntimeException("Not supported attribute type!");
+			return "Unknown";
+			//throw new RuntimeException("Not supported attribute type! " + this.attributes[0]);
 		}
 	}
 
