@@ -108,14 +108,17 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 				if ((index = items.indexOf(testItem)) != -1) {
 					//If so - add Element to existing item
 					GlobalMapDataItem item = (GlobalMapDataItem) items.get(index);
-					item.getMapItemElements()[0].addElement(new Element(getAttribute(i, 1), new Double(value
-							.doubleValue())));
+					Element el = new Element(getAttribute(i, 1), new Double(value.doubleValue()));
+					item.getMapItemElements()[0].addElement(el);
+					el.setColor(color);
 					item.setSymbolColor(DOUBLE_COLOR);
 					//System.out.println("Equals to: " + item.getI());
 				} else {
 					//If no - add test item to map items
 					MapItemElement itemElement = new MapItemElement(getAttribute(i, 0));
-					itemElement.addElement(new Element(getAttribute(i, 1), new Double(value.doubleValue())));
+					Element el = new Element(getAttribute(i, 1), new Double(value.doubleValue()));
+					el.setColor(color);
+					itemElement.addElement(el);
 					testItem.addMapItemElement(itemElement);
 					//double [] projXY = gisPort.getXYProjected();
 					testItem.setProjXY(gisPort.getX(), gisPort.getY());
@@ -140,14 +143,24 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 
 			//System.out.println(dataItem.getMapItemElements()[0].getMaxElement().getValue());
 			
-			double size = ((Double) dataItem.getMapItemElements()[0].getMaxElement().getValue()).doubleValue();
-			int index = CIRCLE_RANGES - 1;
-			for (int j = 0; j < CIRCLE_RANGES; j++) {
-				if (size >= ranges[j] && size < ranges[j + 1]) {
-					index = j;
+			//double size = ((Double) dataItem.getMapItemElements()[0].getMaxElement().getValue()).doubleValue();
+			Element[] els = dataItem.getMapItemElements()[0].getElements();
+			int maxindex = -1;
+			for (int k = 0; k < els.length; k++) {
+				Element el = els[k];
+				double size = ((Double)el.getValue()).doubleValue();
+				int index = CIRCLE_RANGES - 1; 
+				for (int j = 0; j < CIRCLE_RANGES; j++) {
+					if (size >= ranges[j] && size < ranges[j + 1]) {
+						index = j;
+					}
+				}
+				el.setSize(index + 1);
+				if (index > maxindex) {
+					maxindex = index;
 				}
 			}
-			dataItem.setSymbolSize(index);
+			dataItem.setSymbolSize(maxindex);
 		}
 
 		//Prepare legend

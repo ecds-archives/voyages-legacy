@@ -95,6 +95,27 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	public PointOfInterest getTooltipText() {
 		PointOfInterest point = new PointOfInterest(this.getProjectedX(), this.getProjectedY());
 		point.setText(this.buildToolTipInfo());
+		Element[] elements = this.getMapItemElements()[0].getElements();
+		if (elements.length > 1) {
+			if (elements[0].getSize() < elements[1].getSize()) {
+				point.setSymbols(new String[] {
+						SYMBOL_NAME_PREFIX + elements[1].getColor() + "-"
+								+ elements[1].getSize(),
+						SYMBOL_NAME_PREFIX + elements[0].getColor() + "-"
+								+ elements[0].getSize() });
+			} else {
+				point.setSymbols(new String[] {
+						SYMBOL_NAME_PREFIX + elements[0].getColor() + "-"
+								+ elements[0].getSize(),
+						SYMBOL_NAME_PREFIX + elements[1].getColor() + "-"
+								+ elements[1].getSize() });
+			}
+		} else {
+			point.setSymbols(new String[] { SYMBOL_NAME_PREFIX
+					+ elements[0].getColor() + "-" + elements[0].getSize() });
+		}
+		point.setLabel(this.getMainLabel());
+		
 		return point;
 	}
 	
