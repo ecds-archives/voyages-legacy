@@ -166,8 +166,8 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		}
 		
 		///Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-1-\\d", "symbols/circle-" + 2 + "-4.png", "Place of embarkation");
-		LegendItem disemb = new LegendItem("circle-2-\\d", "symbols/circle-" + 3 + "-4.png", "Place of disembarkation");
+		LegendItem emb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2 + "-4.png", "Place of embarkation");
+		LegendItem disemb = new LegendItem("circle-3-\\d", "symbols/circle-" + 3 + "-4.png", "Place of disembarkation");
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
@@ -176,10 +176,10 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		int i = 0; 
 		for (Iterator iter = items.iterator(); iter.hasNext(); i++) {
 			GlobalMapDataItem element = (GlobalMapDataItem) iter.next();
-			element.addLegendItem(legendSizes.getItems()[element.getSymbolSize()]);
-			if (element.getSymbolColor() == 1) {
+			element.addLegendItem(legendSizes.getItems()[legendSizes.getItems().length - element.getSymbolSize() - 1]);
+			if (element.getSymbolColor() == 2) {
 				element.addLegendItem(emb);
-			} else if (element.getSymbolColor() == 2) {
+			} else if (element.getSymbolColor() == 3) {
 				element.addLegendItem(disemb);
 			} else {
 				element.addLegendItem(both);

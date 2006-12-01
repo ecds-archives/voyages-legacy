@@ -47,6 +47,16 @@ tr.grid-row-last:hover {
 td.grid-header-text {
 	padding: 0px; }
 
+table.grid-header-right {
+	margin-left: auto;
+	margin-right: 0px;
+}
+
+td.grid-header-text-right {
+	padding: 0px; 
+	text-align: right;
+}
+
 td.grid-header-icon {
 	padding-left: 5px;
 	padding-top: 0px;

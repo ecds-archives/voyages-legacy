@@ -137,9 +137,9 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		}
 
 		// /Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-1-\\d", "symbols/circle-" + 2
+		LegendItem emb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2
 				+ "-4.png", "Place of embarkation");
-		LegendItem disemb = new LegendItem("circle-2-\\d", "symbols/circle-"
+		LegendItem disemb = new LegendItem("circle-3-\\d", "symbols/circle-"
 				+ 3 + "-4.png", "Place of disembarkation");
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5
 				+ "-4.png", "Place of embarkatrion / disembarkation");
@@ -151,10 +151,10 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		for (Iterator iter = mapDataItems.iterator(); iter.hasNext(); i++) {
 			EstimateMapDataItem element = (EstimateMapDataItem) iter.next();
 			element
-					.addLegendItem(legendSizes.getItems()[element.getSize() - 1]);
-			if (element.getColor() == 1) {
+					.addLegendItem(legendSizes.getItems()[legendSizes.getItems().length - element.getSize()]);
+			if (element.getColor() == 2) {
 				element.addLegendItem(emb);
-			} else if (element.getColor() == 2) {
+			} else if (element.getColor() == 3) {
 				element.addLegendItem(disemb);
 			} else {
 				element.addLegendItem(both);
