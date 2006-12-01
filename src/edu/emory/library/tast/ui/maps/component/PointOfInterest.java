@@ -10,6 +10,8 @@ public class PointOfInterest
 	private double y;
 	private String name;
 	private String text;
+	private String label;
+	private String[] symbols;
 	
 	public PointOfInterest(double x, double y)
 	{
@@ -84,6 +86,22 @@ public class PointOfInterest
 			return this.x == that.getX() && this.y == that.getY();
 		}
 		return false;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String[] getSymbols() {
+		return symbols;
+	}
+
+	public void setSymbols(String[] symbols) {
+		this.symbols = symbols;
 	}
 	
 }
