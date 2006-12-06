@@ -1,5 +1,7 @@
 package edu.emory.library.tast.ui.search.table.formatters;
 
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
+
 /**
  * Formatter for any attribute. 
  * Formatters are used whenever there is generated string 
@@ -14,13 +16,13 @@ public abstract class AbstractAttributeFormatter {
 	 * @param object
 	 * @return
 	 */
-	public abstract String format(Object object);
+	public abstract String format(VisibleAttributeInterface attr, Object object);
 	
 	/**
 	 * Array of objects formatter.
 	 * @param object
 	 * @return
 	 */
-	public abstract String format(Object[] object);
+	public abstract String format(VisibleAttributeInterface attr, Object[] object);
 	
 }

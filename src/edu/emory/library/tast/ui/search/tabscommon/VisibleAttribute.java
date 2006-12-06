@@ -37,6 +37,8 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 	private String userLabel;
 
 	private int[] validity;
+	
+	private boolean date;
 
 	public static VisibleAttributeInterface[] loadVisibleAttributes(int tabType) {
 		if (visibleAttributes.isEmpty()) {
@@ -90,6 +92,10 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 				.getNodeValue();
 		String userLabel = node.getAttributes().getNamedItem("userLabel")
 				.getNodeValue();
+		boolean date = false;
+		if (node.getAttributes().getNamedItem("date") != null) {
+			date = "true".equals(node.getAttributes().getNamedItem("date").getNodeValue());
+		}
 		String[] tabsStr = validity.split(",");
 		int[] tabs = new int[tabsStr.length];
 		for (int i = 0; i < tabsStr.length; i++) {
@@ -117,6 +123,7 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 				(Attribute[]) attributesList.toArray(new Attribute[] {}));
 		attr.setUserCategory(UserCategory.parse(category));
 		attr.setUserLabel(userLabel);
+		attr.setDate(date);
 		return attr;
 	}
 
@@ -234,6 +241,14 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 			}
 		}
 		return null;
+	}
+
+	public boolean isDate() {
+		return date;
+	}
+
+	public void setDate(boolean date) {
+		this.date = date;
 	}
 
 }

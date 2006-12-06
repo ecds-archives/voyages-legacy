@@ -64,7 +64,7 @@
 			<attribute name="datarr33"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="d1slatr" userCategory="beginners" userLabel="Day began slave purchase">
+	<table-attribute tabs="1,2" id="d1slatr" userCategory="beginners" userLabel="Day began slave purchase" date="true">
 		<attributes>
 			<attribute name="d1slatr"/>
 		</attributes>
@@ -249,7 +249,7 @@
 			<attribute name="vymrtimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="yearam" userCategory="beginners" userLabel="Imputed Year of arrival port of disembarkation">
+	<table-attribute tabs="1,2" id="yearam" userCategory="beginners" userLabel="Imputed Year of arrival port of disembarkation" date="true">
 		<attributes>
 			<attribute name="yearam"/>
 		</attributes>

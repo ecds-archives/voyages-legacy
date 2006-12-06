@@ -18,5 +18,7 @@ public interface VisibleAttributeInterface {
 	public abstract String encodeToString();
 
 	public abstract String getType();
+	
+	public boolean isDate();
 
 }

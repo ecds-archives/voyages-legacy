@@ -3,6 +3,8 @@ package edu.emory.library.tast.ui.search.table.formatters;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
+
 /**
  * Formatter used to format dates.
  * @author Pawel Jurczyk
@@ -26,18 +28,22 @@ public class SimpleDateAttributeFormatter extends AbstractAttributeFormatter {
 	/**
 	 * Formats single Date value
 	 */
-	public String format(Object object) {
+	public String format(VisibleAttributeInterface attr, Object object) {
 		if (object == null) {
 			return "";
 		} else {
-			return dateFormat.format((Date)object);
+			if (object instanceof Date) {
+				return dateFormat.format((Date)object);
+			} else {
+				return object.toString();
+			}
 		}
 	}
 
 	/**
 	 * Formats array of Date values.
 	 */
-	public String format(Object[] object) {
+	public String format(VisibleAttributeInterface attr, Object[] object) {
 		StringBuffer buf = new StringBuffer();
 		boolean added = false;
 		buf.append("[");		
@@ -47,7 +53,11 @@ public class SimpleDateAttributeFormatter extends AbstractAttributeFormatter {
 					buf.append(", ");
 				}
 				buf.append("'");
-				buf.append(dateFormat.format((Date)object[i]));
+				if (object[i] instanceof Date) {
+					buf.append(dateFormat.format((Date)object[i]));
+				} else {
+					buf.append(object[i].toString());
+				}
 				buf.append("'");
 				added = true;
 			}

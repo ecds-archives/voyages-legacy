@@ -236,6 +236,10 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 	public static VisibleAttributeInterface getAttributeForTable(String string) {
 		return (VisibleAttributeInterface) visibleAttributes.get(string);
 	}
+	
+	public boolean isDate() {
+		return true;
+	}
 //
 //	public static VisibleAttributeInterface getAttribute(String id) {
 //		if (visibleAttributes.isEmpty()) {

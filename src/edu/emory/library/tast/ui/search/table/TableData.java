@@ -140,9 +140,9 @@ public class TableData {
 
 		public String toString() {
 			if (this.data.length == 1) {
-				return formatter.format(data[0]);
+				return formatter.format(attribute, data[0]);
 			} else {
-				return formatter.format(data);
+				return formatter.format(attribute, data);
 			}
 		}
 

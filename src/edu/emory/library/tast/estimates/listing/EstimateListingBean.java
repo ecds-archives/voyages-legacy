@@ -49,11 +49,11 @@ public class EstimateListingBean {
 		
 		tableData.setFormatter(visibleAttrs[4], new AbstractAttributeFormatter() {
 
-			public String format(Object object) {
+			public String format(VisibleAttributeInterface attr, Object object) {
 				return valuesFormat.format(new Object[] {new Long(Math.round(((Number)object).doubleValue()))});
 			}
 
-			public String format(Object[] object) {
+			public String format(VisibleAttributeInterface attr, Object[] object) {
 				return "";
 			}
 			
@@ -61,11 +61,11 @@ public class EstimateListingBean {
 
 		tableData.setFormatter(visibleAttrs[5], new AbstractAttributeFormatter() {
 
-			public String format(Object object) {
+			public String format(VisibleAttributeInterface attr, Object object) {
 				return valuesFormat.format(new Object[] {new Long(Math.round((((Number)object).doubleValue())))});
 			}
 
-			public String format(Object[] object) {
+			public String format(VisibleAttributeInterface attr, Object[] object) {
 				return "";
 			}
 			
