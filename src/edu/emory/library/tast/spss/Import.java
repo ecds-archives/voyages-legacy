@@ -974,6 +974,7 @@ public class Import
 					parsedValue = attr.parse(columnValue);
 				}
 
+				/*
 				// import date
 				else if (importType == Attribute.IMPORT_TYPE_DATE)
 				{
@@ -985,6 +986,7 @@ public class Import
 					columnYearValue = record.getValue(varYear);
 					parsedValue = attr.parse(new String[] { columnDayValue, columnMonthValue, columnYearValue });
 				}
+				*/
 
 				// nonexisting dictionary value was inserted
 				if (attr instanceof DictionaryAttribute && parsedValue != null && ((Dictionary) parsedValue).getId() == null)

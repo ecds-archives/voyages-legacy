@@ -154,15 +154,26 @@ public abstract class Attribute  {
 		Node attrType = xmlNode.getAttributes().getNamedItem("attrType");
 		if (attrType != null) {
 			String attrTypeStr = attrType.getNodeValue();
-			if (DateAttribute.ATTR_TYPE_NAME.equals(attrTypeStr)) {
+			if (DateAttribute.ATTR_TYPE_NAME.equals(attrTypeStr))
+			{
 				return new DateAttribute(xmlNode, objectType);
-			} else if (DictionaryAttribute.ATTR_TYPE_NAME.equals(attrTypeStr)) {
+			}
+			/*
+			else if (DictionaryAttribute.ATTR_TYPE_NAME.equals(attrTypeStr))
+			{
 				return new DictionaryAttribute(xmlNode, objectType);
-			} else if (NumericAttribute.ATTR_TYPE_NAME.equals(attrTypeStr)) {
+			}
+			*/
+			else if (NumericAttribute.ATTR_TYPE_NAME.equals(attrTypeStr))
+			{
 				return new NumericAttribute(xmlNode, objectType);
-			} else if (StringAttribute.ATTR_TYPE_NAME.equals(attrTypeStr)) {
+			}
+			else if (StringAttribute.ATTR_TYPE_NAME.equals(attrTypeStr))
+			{
 				return new StringAttribute(xmlNode, objectType);
-			} else {
+			} 
+			else
+			{
 				throw new RuntimeException("Unexpected attrType value: " + attrTypeStr);
 			}
 		} else {
@@ -170,12 +181,7 @@ public abstract class Attribute  {
 		}
 	}
 
-
-	public Object parse(String value, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
-	{
-		return parse(new String[] { value }, options);
-	}
-
+	/*
 	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		return parse(new String[] { value }, 0);
@@ -185,6 +191,7 @@ public abstract class Attribute  {
 	{
 		return parse(values, 0);
 	}
+	*/
 
 	public String getUserLabel() {
 		return userLabel;
@@ -228,13 +235,6 @@ public abstract class Attribute  {
 	}
 
 	
-	public boolean isVisibleByCategory(int category)
-	{
-		return
-			this.category != null &&
-			this.category.intValue() <= category;
-	}
-
 	public String toString() {
 		if (this.userLabel != null && !this.userLabel.equals("")) {
 			return this.userLabel;
@@ -257,7 +257,7 @@ public abstract class Attribute  {
 		return name.hashCode();
 	}
 	
-	public abstract  Object parse(String[] values, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException;
+	public abstract  Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException;
 	
 	public abstract String getTypeDisplayName();
 

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes [
+
+<!ELEMENT attributes (attribute*)>
+<!ELEMENT attribute EMPTY>
+
+<!ATTLIST attribute
+	name CDATA #REQUIRED
+	importName CDATA #REQUIRED
+	type (Numerical|Boolean|Date|String|Port|Region|Area|VesselRig|Nation|Fate|FateSlaves|FateVessel|FateOwner|Insurrection|Integer|NationEstimates) #REQUIRED
+	numericalType CDATA #IMPLIED>
+
+]>
+<attributes>
+
+	<attribute name="voyageid" importName="voyageid" type="Numerical" numericalType="Long" />
+	<attribute name="cd" importName="cd" type="Boolean" />
+	<attribute name="shipname" importName="shipname" type="String" />
+	<attribute name="placcons" importName="placcons" type="Port" />
+	<attribute name="yrcons" importName="yrcons" type="Numerical" numericalType="Integer" />
+	<attribute name="placreg" importName="placreg" type="Port" />
+	<attribute name="yrreg" importName="yrreg" type="Numerical" numericalType="Integer" />
+	<attribute name="natinimp" importName="natinimp" type="Nation" />
+	<attribute name="rig" importName="rig" type="VesselRig" />
+	<attribute name="tonnage" importName="tonnage" type="Numerical" numericalType="Integer" />
+	<attribute name="tonmod" importName="tonmod" type="Numerical" />
+	<attribute name="guns" importName="guns" type="Numerical" numericalType="Integer" />
+	<attribute name="ownera" importName="ownera" type="String" />
+	<attribute name="ownerb" importName="ownerb" type="String" />
+	<attribute name="ownerc" importName="ownerc" type="String" />
+	<attribute name="ownerd" importName="ownerd" type="String" />
+	<attribute name="ownere" importName="ownere" type="String" />
+	<attribute name="ownerf" importName="ownerf" type="String" />
+	<attribute name="ownerg" importName="ownerg" type="String" />
+	<attribute name="ownerh" importName="ownerh" type="String" />
+	<attribute name="owneri" importName="owneri" type="String" />
+	<attribute name="ownerj" importName="ownerj" type="String" />
+	<attribute name="ownerk" importName="ownerk" type="String" />
+	<attribute name="ownerl" importName="ownerl" type="String" />
+	<attribute name="ownerm" importName="ownerm" type="String" />
+	<attribute name="ownern" importName="ownern" type="String" />
+	<attribute name="ownero" importName="ownero" type="String" />
+	<attribute name="ownerp" importName="ownerp" type="String" />
+	<attribute name="fate" importName="fate" type="Fate" />
+	<attribute name="fate2" importName="fate2" type="FateSlaves" />
+	<attribute name="fate3" importName="fate3" type="FateVessel" />
+	<attribute name="fate4" importName="fate4" type="FateOwner" />
+	<attribute name="insurrec" importName="insurrec" type="Insurrection" />
+	<attribute name="ptdepimp" importName="ptdepimp" type="Port" />
+	<attribute name="deptregimp" importName="deptregimp" type="Region" />
+	<attribute name="plac1tra" importName="plac1tra" type="Port" />
+	<attribute name="plac2tra" importName="plac2tra" type="Port" />
+	<attribute name="plac3tra" importName="plac3tra" type="Port" />
+	<attribute name="mjbyptimp" importName="mjbyptimp" type="Port" />
+	<attribute name="regem1" importName="regem1" type="Region" />
+	<attribute name="regem2" importName="regem2" type="Region" />
+	<attribute name="regem3" importName="regem3" type="Region" />
+	<attribute name="majbyimp" importName="majbyimp" type="Region" />
+	<attribute name="npafttra" importName="npafttra" type="Port" />
+	<attribute name="sla1port" importName="sla1port" type="Port" />
+	<attribute name="adpsale1" importName="adpsale1" type="Port" />
+	<attribute name="adpsale2" importName="adpsale2" type="Port" />
+	<attribute name="mjslptimp" importName="mjslptimp" type="Region" />
+	<attribute name="regdis1" importName="regdis1" type="Region" />
+	<attribute name="regdis2" importName="regdis2" type="Region" />
+	<attribute name="regdis3" importName="regdis3" type="Region" />
+	<attribute name="mjselimp" importName="mjselimp" type="Port" />
+	<attribute name="portret" importName="portret" type="Port" />
+	<attribute name="retrnreg" importName="retrnreg" type="Region" />
+	<attribute name="yearam" importName="yearam" type="Numerical" numericalType="Integer" />
+	<attribute name="date_dep" importName="date_dep" type="Date" />
+	<attribute name="date_buy" importName="date_buy" type="Date" />
+	<attribute name="date_leftafr" importName="date_leftafr" type="Date" />
+	<attribute name="date_land1" importName="date_land1" type="Date" />
+	<attribute name="date_land2" importName="date_land2" type="Date" />
+	<attribute name="date_land3" importName="date_land3" type="Date" />
+	<attribute name="date_depam" importName="date_depam" type="Date" />
+	<attribute name="date_end" importName="date_end" type="Date" />
+	<attribute name="voy1imp" importName="voy1imp" type="Numerical" numericalType="Integer" />
+	<attribute name="voy2imp" importName="voy2imp" type="Numerical" numericalType="Integer" />
+	<attribute name="captaina" importName="captaina" type="String" />
+	<attribute name="captainb" importName="captainb" type="String" />
+	<attribute name="captainc" importName="captainc" type="String" />
+	<attribute name="crew1" importName="crew1" type="Integer" />
+	<attribute name="crew3" importName="crew3" type="Integer" />
+	<attribute name="crewdied" importName="crewdied" type="Numerical" numericalType="Integer" />
+	<attribute name="slintend" importName="slintend" type="Numerical" numericalType="Integer" />
+	<attribute name="ncar13" importName="ncar13" type="Numerical" numericalType="Integer" />
+	<attribute name="ncar15" importName="ncar15" type="Numerical" numericalType="Integer" />
+	<attribute name="ncar17" importName="ncar17" type="Numerical" numericalType="Integer" />
+	<attribute name="tslavesd" importName="tslavesd" type="Numerical" numericalType="Integer" />
+	<attribute name="slaarriv" importName="slaarriv" type="Numerical" numericalType="Integer" />
+	<attribute name="slas32" importName="slas32" type="Numerical" numericalType="Integer" />
+	<attribute name="slas36" importName="slas36" type="Numerical" numericalType="Integer" />
+	<attribute name="slas39" importName="slas39" type="Numerical" numericalType="Integer" />
+	<attribute name="slaximp" importName="slaximp" type="Numerical" numericalType="Integer" />
+	<attribute name="slamimp" importName="slamimp" type="Numerical" numericalType="Integer" />
+	<attribute name="menrat7" importName="menrat7" type="Numerical" numericalType="Decimal" />
+	<attribute name="womrat7" importName="womrat7" type="Numerical" numericalType="Decimal" />
+	<attribute name="boyrat7" importName="boyrat7" type="Numerical" numericalType="Decimal" />
+	<attribute name="girlrat7" importName="girlrat7" type="Numerical" numericalType="Decimal" />
+	<attribute name="malrat7" importName="malrat7" type="Numerical" numericalType="Decimal" />
+	<attribute name="chilrat7" importName="chilrat7" type="Numerical" numericalType="Decimal" />
+	<attribute name="jamcaspr" importName="jamcaspr" type="Numerical" numericalType="Decimal" />
+	<attribute name="vymrtimp" importName="vymrtimp" type="Numerical" numericalType="Integer" />
+	<attribute name="vymrtrat" importName="vymrtrat" type="Numerical" numericalType="Decimal" />
+	<attribute name="sourcea" importName="sourcea" type="String" />
+	<attribute name="sourceb" importName="sourceb" type="String" />
+	<attribute name="sourcec" importName="sourcec" type="String" />
+	<attribute name="sourced" importName="sourced" type="String" />
+	<attribute name="sourcee" importName="sourcee" type="String" />
+	<attribute name="sourcef" importName="sourcef" type="String" />
+	<attribute name="sourceg" importName="sourceg" type="String" />
+	<attribute name="sourceh" importName="sourceh" type="String" />
+	<attribute name="sourcei" importName="sourcei" type="String" />
+	<attribute name="sourcej" importName="sourcej" type="String" />
+	<attribute name="sourcek" importName="sourcek" type="String" />
+	<attribute name="sourcel" importName="sourcel" type="String" />
+	<attribute name="sourcem" importName="sourcem" type="String" />
+	<attribute name="sourcen" importName="sourcen" type="String" />
+	<attribute name="sourceo" importName="sourceo" type="String" />
+	<attribute name="sourcep" importName="sourcep" type="String" />
+	<attribute name="sourceq" importName="sourceq" type="String" />
+	<attribute name="sourcer" importName="sourcer" type="String" />
+	<attribute name="e_natinimp" importName="e_natinimp" type="NationEstimates" />
+	<attribute name="e_majbyimp" importName="e_majbyimp" type="Port" />
+	<attribute name="e_mjselimp1" importName="e_mjselimp1" type="Port" />
+	<attribute name="e_mjselimp" importName="e_mjselimp" type="Port" />
+
+</attributes>

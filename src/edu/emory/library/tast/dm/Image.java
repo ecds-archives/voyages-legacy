@@ -14,6 +14,8 @@ import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.PortAttribute;
+import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -35,8 +37,8 @@ public class Image
 		attributes.put("height", new NumericAttribute("height", "Image"));
 		attributes.put("mimeType", new NumericAttribute("mimeType", "Image"));
 		attributes.put("people", new DictionaryAttribute("people", "Image"));
-		attributes.put("regions", new DictionaryAttribute("regions", "Image"));
-		attributes.put("ports", new DictionaryAttribute("ports", "Image"));
+		attributes.put("regions", new RegionAttribute("regions", "Image"));
+		attributes.put("ports", new PortAttribute("ports", "Image"));
 	}
 	
 	private int id;

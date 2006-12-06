@@ -1,47 +1,35 @@
 package edu.emory.library.tast.dm;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.util.HibernateUtil;
 
-public class Area
+public class Area extends Dictionary
 {
 	
 	private static Map attributes = new HashMap();
-	static {
+	static
+	{
 		attributes.put("id", new NumericAttribute("id", "Area"));
 		attributes.put("name", new StringAttribute("name", "Area"));
-		attributes.put("america", new NumericAttribute("america", "Area"));
-		attributes.put("order", new NumericAttribute("order", "Area"));
+		attributes.put("x", new NumericAttribute("x", "Area"));
+		attributes.put("y", new NumericAttribute("y", "Area"));
+		attributes.put("latitude", new NumericAttribute("latitude", "Area"));
+		attributes.put("longitude", new NumericAttribute("longitude", "Area"));
+		attributes.put("regions", new NumericAttribute("regions", "Area"));
 	}
 	
-	private int id;
 	private int order;
-	private String name;
 	private boolean america;
-
-	public int getId()
-	{
-		return id;
-	}
-	
-	public void setId(int id)
-	{
-		this.id = id;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public void setName(String name)
-	{
-		this.name = name;
-	}
 
 	public boolean isAmerica()
 	{
@@ -66,6 +54,23 @@ public class Area
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
+	}
+	
+	public static Area loadById(long areaId)
+	{
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		Area port = loadById(sess, areaId);
+		transaction.commit();
+		sess.close();
+		return port;
+	}
+
+	public static Area loadById(Session sess, long areaId)
+	{
+		List list = sess.createCriteria(Area.class).add(Restrictions.eq("id", new Long(areaId))).list();
+		if (list == null || list.size() == 0) return null;
+		return (Area) list.get(0);
 	}
 
 }

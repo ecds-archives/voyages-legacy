@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
-public class Location extends Dictionary
+
+public abstract class Location extends Dictionary
 {
 	
 	private double x;

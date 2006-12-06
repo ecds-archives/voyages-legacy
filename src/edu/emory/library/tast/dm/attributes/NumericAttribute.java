@@ -12,7 +12,7 @@ import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 public class NumericAttribute extends Attribute {
 	
 	public static final String ATTR_TYPE_NAME = "Numeric";
-	
+
 	public final static int TYPE_INTEGER = 0;
 
 	public final static int TYPE_LONG = 1;
@@ -60,52 +60,39 @@ public class NumericAttribute extends Attribute {
 		}
 	}
 	
-	public Object parse(String[] values, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException {
+	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
 		
-		String value;
-		switch (getType().intValue()) {
+		if (value == null)
+			return null;
+
+		value = value.trim();
+		if (value.length() == 0)
+			return null;
+
+		switch (getType().intValue())
+		{
 
 		case TYPE_INTEGER:
 
-			if (values.length != 1 || values[0] == null)
-				throw new InvalidNumberOfValuesException();
-
-			value = values[0].trim();
-			if (value.length() == 0)
-				return null;
-
 			try {
-				return new Integer(values[0]);
+				return new Integer(value);
 			} catch (NumberFormatException nfe) {
 				throw new InvalidNumberException();
 			}
 
 		case TYPE_LONG:
 
-			if (values.length != 1 || values[0] == null)
-				throw new InvalidNumberOfValuesException();
-
-			value = values[0].trim();
-			if (value.length() == 0)
-				return null;
-
 			try {
-				return new Long(values[0]);
+				return new Long(value);
 			} catch (NumberFormatException nfe) {
 				throw new InvalidNumberException();
 			}
 
 		case TYPE_FLOAT:
 
-			if (values.length != 1 || values[0] == null)
-				throw new InvalidNumberOfValuesException();
-
-			value = values[0].trim();
-			if (value.length() == 0)
-				return null;
-
 			try {
-				return new Float(values[0]);
+				return new Float(value);
 			} catch (NumberFormatException nfe) {
 				throw new InvalidNumberException();
 			}

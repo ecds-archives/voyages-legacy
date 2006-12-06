@@ -2,16 +2,143 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 		"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
 <hibernate-mapping>
+
 	<class name="edu.emory.library.tast.dm.Voyage" table="voyages">
+
 		<id name="iid" column="iid">
 			<generator class="native"/>
 		</id>
+
 		<property name="voyageId" column="vid"/>
-		<property name="shipname" column="ship_name"/>
+		
+		<property name="voyageid" column="voyageid" />
+		<property name="cd" column="cd" />
+		
+		<property name="shipname" column="shipname" />
+		<many-to-one name="placcons" column="placcons" class="edu.emory.library.tast.dm.Port" />
+		<property name="yrcons" column="yrcons" />
+		<many-to-one name="placreg" column="placreg" class="edu.emory.library.tast.dm.Port" />
+		<property name="yrreg" column="yrreg" />
+		<many-to-one name="natinimp" column="natinimp" class="edu.emory.library.tast.dm.Nation" />
+		<many-to-one name="rig" column="rig" class="edu.emory.library.tast.dm.VesselRig" />
+		<property name="tonnage" column="tonnage" />
+		<property name="tonmod" column="tonmod" />
+		<property name="guns" column="guns" />
+		
+		<property name="ownera" column="ownera" />
+		<property name="ownerb" column="ownerb" />
+		<property name="ownerc" column="ownerc" />
+		<property name="ownerd" column="ownerd" />
+		<property name="ownere" column="ownere" />
+		<property name="ownerf" column="ownerf" />
+		<property name="ownerg" column="ownerg" />
+		<property name="ownerh" column="ownerh" />
+		<property name="owneri" column="owneri" />
+		<property name="ownerj" column="ownerj" />
+		<property name="ownerk" column="ownerk" />
+		<property name="ownerl" column="ownerl" />
+		<property name="ownerm" column="ownerm" />
+		<property name="ownern" column="ownern" />
+		<property name="ownero" column="ownero" />
+		<property name="ownerp" column="ownerp" />
+		
+		<many-to-one name="fate" column="fate" class="edu.emory.library.tast.dm.Fate" />
+		<many-to-one name="fate2" column="fate2" class="edu.emory.library.tast.dm.FateSlaves" />
+		<many-to-one name="fate3" column="fate3" class="edu.emory.library.tast.dm.FateVessel" />
+		<many-to-one name="fate4" column="fate4" class="edu.emory.library.tast.dm.FateOwner" />
+		<many-to-one name="insurrec" column="insurrec" class="edu.emory.library.tast.dm.Insurrection" />
+		<many-to-one name="ptdepimp" column="ptdepimp" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="deptregimp" column="deptregimp" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="plac1tra" column="plac1tra" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="plac2tra" column="plac2tra" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="plac3tra" column="plac3tra" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="mjbyptimp" column="mjbyptimp" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="regem1" column="regem1" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regem2" column="regem2" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regem3" column="regem3" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="majbyimp" column="majbyimp" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="npafttra" column="npafttra" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="sla1port" column="sla1port" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="adpsale1" column="adpsale1" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="adpsale2" column="adpsale2" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="mjslptimp" column="mjslptimp" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regdis1" column="regdis1" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regdis2" column="regdis2" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regdis3" column="regdis3" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="mjselimp" column="mjselimp" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="portret" column="portret" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="retrnreg" column="retrnreg" class="edu.emory.library.tast.dm.Region" />
+		
+		<property name="yearam" column="yearam" />
+		<property name="date_dep" column="date_dep" />
+		<property name="date_buy" column="date_buy" />
+		<property name="date_leftafr" column="date_leftafr" />
+		<property name="date_land1" column="date_land1" />
+		<property name="date_land2" column="date_land2" />
+		<property name="date_land3" column="date_land3" />
+		<property name="date_depam" column="date_depam" />
+		<property name="date_end" column="date_end" />
+		<property name="voy1imp" column="voy1imp" />
+		<property name="voy2imp" column="voy2imp" />
+		<property name="captaina" column="captaina" />
+		<property name="captainb" column="captainb" />
+		<property name="captainc" column="captainc" />
+		<property name="crew1" column="crew1" />
+		<property name="crew3" column="crew3" />
+		<property name="crewdied" column="crewdied" />
+		<property name="slintend" column="slintend" />
+		<property name="ncar13" column="ncar13" />
+		<property name="ncar15" column="ncar15" />
+		<property name="ncar17" column="ncar17" />
+		<property name="tslavesd" column="tslavesd" />
+		<property name="slaarriv" column="slaarriv" />
+		<property name="slas32" column="slas32" />
+		<property name="slas36" column="slas36" />
+		<property name="slas39" column="slas39" />
+		<property name="slaximp" column="slaximp" />
+		<property name="slamimp" column="slamimp" />
+		<property name="menrat7" column="menrat7" />
+		<property name="womrat7" column="womrat7" />
+		<property name="boyrat7" column="boyrat7" />
+		<property name="girlrat7" column="girlrat7" />
+		<property name="malrat7" column="malrat7" />
+		<property name="chilrat7" column="chilrat7" />
+		<property name="jamcaspr" column="jamcaspr" />
+		<property name="vymrtimp" column="vymrtimp" />
+		<property name="vymrtrat" column="vymrtrat" />
+		<property name="sourcea" column="sourcea" />
+		<property name="sourceb" column="sourceb" />
+		<property name="sourcec" column="sourcec" />
+		<property name="sourced" column="sourced" />
+		<property name="sourcee" column="sourcee" />
+		<property name="sourcef" column="sourcef" />
+		<property name="sourceg" column="sourceg" />
+		<property name="sourceh" column="sourceh" />
+		<property name="sourcei" column="sourcei" />
+		<property name="sourcej" column="sourcej" />
+		<property name="sourcek" column="sourcek" />
+		<property name="sourcel" column="sourcel" />
+		<property name="sourcem" column="sourcem" />
+		<property name="sourcen" column="sourcen" />
+		<property name="sourceo" column="sourceo" />
+		<property name="sourcep" column="sourcep" />
+		<property name="sourceq" column="sourceq" />
+		<property name="sourcer" column="sourcer" />
+		
+		<many-to-one name="e_natinimp" column="e_natinimp" class="edu.emory.library.tast.dm.NationEstimates" />
+		<many-to-one name="e_majbyimp" column="e_majbyimp" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="e_mjselimp1" column="e_mjselimp1" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="e_mjselimp" column="e_mjselimp" class="edu.emory.library.tast.dm.Port" />
+		
+		<!-- 
+		
+		<property name="shipname" column="shipname"/>
 		<property name="captaina" column="captaina"/>
 		<property name="captainb" column="captainb"/>
 		<property name="captainc" column="captainc"/>
+		
 		<property name="datedep" column="datedep"/>
 		<property name="nppretra" column="nppretra"/>
 		<property name="d1slatr" column="d1slatr"/>
@@ -207,11 +334,6 @@
 		<property name="child7" column="child7"/>
 		<property name="slavemx7" column="slavemx7"/>
 		
-		<!-- 
-		<property name="s_slaximp" formula="standarizeSlaveNumber(slaximp)" update="false" insert="false"/>
-		<property name="s_slamimp" formula="standarizeSlaveNumber(slamimp)" update="false" insert="false"/>
-		 -->
-		
 		<many-to-one name="datepl" class="edu.emory.library.tast.dm.dictionaries.DepDefinition"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="embport" class="edu.emory.library.tast.dm.Port"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="arrport" class="edu.emory.library.tast.dm.Port"  lazy="false" outer-join="false"/>
@@ -256,10 +378,8 @@
 		<many-to-one name="mjselimp" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="constreg" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
 		<many-to-one name="editor" class="edu.emory.library.tast.dm.dictionaries.Editor"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="filter_$" class="edu.emory.library.tast.dm.dictionaries.Filter"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="regarrp2" class="edu.emory.library.tast.dm.Region"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="xmimpflag" class="edu.emory.library.tast.dm.dictionaries.XmimpFlag"  lazy="false" outer-join="true" fetch="join"/>
-		<many-to-one name="temp" class="edu.emory.library.tast.dm.dictionaries.Temp"  lazy="false" outer-join="true" fetch="join"/>
+		
+		 -->
 
 	</class>
 </hibernate-mapping>

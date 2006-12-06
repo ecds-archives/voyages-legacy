@@ -27,18 +27,17 @@ public class StringAttribute extends Attribute {
 		}
 	}
 	
-	public Object parse(String[] values, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException {
-		if (values.length != 1 || values[0] == null)
-			throw new InvalidNumberOfValuesException();
-
-		String value = values[0].trim();
-		if (value.length() == 0)
+	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
+		
+		if (value == null)
 			return null;
 
 		if (length.intValue() != -1 && value.length() > length.intValue())
 			throw new StringTooLongException();
 
 		return value;
+
 	}
 
 	public String getTypeDisplayName() {

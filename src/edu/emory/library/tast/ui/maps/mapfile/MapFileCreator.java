@@ -161,17 +161,17 @@ public class MapFileCreator {
 
 	private void generateFeature(StringBuffer writer, String symbolName, ArrayList list) {
 
-		boolean enabled = true;
-		for (int i = 0; i < this.legend.length; i++) {
-			LegendItem[] legendItems = legend[i].getItems();
-			for (int j = 0; j < legendItems.length; j++) {
-				Pattern pattern = Pattern.compile(legendItems[j].getImageId());
-				Matcher matcher = pattern.matcher(symbolName);
-				if (matcher.find()) {
-					enabled = legendItems[j].isEnabled() && enabled;
-				}
-			}
-		}
+		boolean enabled = false;
+//		for (int i = 0; i < this.legend.length; i++) {
+//			LegendItem[] legendItems = legend[i].getItems();
+//			for (int j = 0; j < legendItems.length; j++) {
+//				Pattern pattern = Pattern.compile(legendItems[j].getImageId());
+//				Matcher matcher = pattern.matcher(symbolName);
+//				if (matcher.find()) {
+//					enabled = legendItems[j].isEnabled() && enabled;
+//				}
+//			}
+//		}
 
 		if (enabled) {
 

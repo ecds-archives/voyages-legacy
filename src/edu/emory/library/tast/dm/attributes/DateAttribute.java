@@ -2,7 +2,6 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Map;
 
 import org.w3c.dom.Node;
@@ -59,54 +58,22 @@ public class DateAttribute extends Attribute {
 		this.importDateYear = importDateYear;
 	}
 
-	public Object parse(String[] values, int options) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException {
-		
-		String value;
-		boolean separate = values.length == 3 && values[0] != null && values[1] != null && values[2] != null;
-		boolean single = values.length == 1 && values[0] != null;
+	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	{
 
-		if (!(separate || single))
-			throw new InvalidNumberOfValuesException();
+		if (value == null || value.length() == 0)
+			return null;
 
-		if (separate) {
-
-			String day = values[0].trim();
-			String month = values[1].trim();
-			String year = values[2].trim();
-
-			if (day.length() == 0 || month.length() == 0
-					|| year.length() == 0)
-				return null;
-
-			try {
-				Calendar cal = Calendar.getInstance();
-				cal.clear();
-				cal.set(Integer.parseInt(year),
-						Integer.parseInt(month) - 1, Integer.parseInt(day));
-				// Timestamp tstamp = new Timestamp(Integer.parseInt(year),
-				// Integer.parseInt(month),
-				// Integer.parseInt(day),
-				// 0,0,0,0);
-				return cal.getTime();
-			} catch (NumberFormatException nfe) {
-				throw new InvalidDateException();
-			}
-
-		} else if (single) {
-
-			value = values[0].trim();
-
-			if (value.length() == 0)
-				return null;
-
-			try {
-				DateFormat dateFormat = DateFormat.getDateInstance();
-				return dateFormat.parse(value);
-			} catch (ParseException e) {
-				throw new InvalidDateException();
-			}
+		try
+		{
+			DateFormat dateFormat = DateFormat.getDateInstance();
+			return dateFormat.parse(value);
 		}
-		return null;
+		catch (ParseException e)
+		{
+			throw new InvalidDateException();
+		}
+
 	}
 
 	public String getTypeDisplayName() {

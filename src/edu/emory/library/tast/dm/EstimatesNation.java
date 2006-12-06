@@ -16,15 +16,14 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
-public class Nation extends Dictionary
+public class EstimatesNation extends Dictionary
 {
 
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "Nation"));
-		attributes.put("name", new StringAttribute("name", "Nation"));
-		attributes.put("order", new NumericAttribute("order", "Nation"));
+		attributes.put("id", new NumericAttribute("id", "EstimatesNation"));
+		attributes.put("name", new StringAttribute("name", "EstimatesNation"));
 	}
 	
 	private int order;
@@ -51,7 +50,7 @@ public class Nation extends Dictionary
 	
 	public static List loadAllNations(Session sess)
 	{
-		return sess.createCriteria(Nation.class).
+		return sess.createCriteria(EstimatesNation.class).
 		addOrder(Order.asc("name")).
 		list();
 	}
@@ -73,7 +72,7 @@ public class Nation extends Dictionary
 		int i = 0;
 		for (Iterator iter = nations.iterator(); iter.hasNext();)
 		{
-			Nation nation = (Nation) iter.next();
+			EstimatesNation nation = (EstimatesNation) iter.next();
 			if (includeOnly == null || includeOnly.contains(nation.getId()))
 			{
 				names[i++] = nation.getName();
@@ -90,28 +89,28 @@ public class Nation extends Dictionary
 		int i = 0;
 		for (Iterator iter = nations.iterator(); iter.hasNext();)
 		{
-			Nation nation = (Nation) iter.next();
+			EstimatesNation nation = (EstimatesNation) iter.next();
 			map.put(nation.getId(), new Integer(i++));
 		}
 		
 		return map;
 	}
 
-	public static Nation loadById(long nationId)
+	public static EstimatesNation loadById(long nationId)
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		Nation nation = loadById(sess, nationId);
+		EstimatesNation nation = loadById(sess, nationId);
 		transaction.commit();
 		sess.close();
 		return nation;
 	}
 
-	public static Nation loadById(Session sess, long nationId)
+	public static EstimatesNation loadById(Session sess, long nationId)
 	{
-		List list = sess.createCriteria(Nation.class).add(Restrictions.eq("id", new Long(nationId))).list();
+		List list = sess.createCriteria(EstimatesNation.class).add(Restrictions.eq("id", new Long(nationId))).list();
 		if (list == null || list.size() == 0) return null;
-		return (Nation) list.get(0);
+		return (EstimatesNation) list.get(0);
 	}
 
 }

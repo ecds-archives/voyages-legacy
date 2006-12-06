@@ -5,8 +5,9 @@ import java.util.Map;
 
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.RegionAttribute;
 
 public class Estimate {
 
@@ -14,9 +15,9 @@ public class Estimate {
 	static {
 		attributes.put("id", new NumericAttribute("id", "Estimate"));
 		attributes.put("year", new NumericAttribute("year", "Estimate", "Year"));
-		attributes.put("nation", new DictionaryAttribute("nation", "Estimate", "National carrier"));
-		attributes.put("expRegion", new DictionaryAttribute("expRegion", "Estimate", "Export region"));
-		attributes.put("impRegion", new DictionaryAttribute("impRegion", "Estimate", "Import region"));
+		attributes.put("nation", new NationAttribute("nation", "Estimate"));
+		attributes.put("expRegion", new RegionAttribute("expRegion", "Estimate"));
+		attributes.put("impRegion", new RegionAttribute("impRegion", "Estimate"));
 		attributes.put("slavImported", new NumericAttribute("slavImported", "Estimate", "Imported"));
 		attributes.put("slavExported", new NumericAttribute("slavExported", "Estimate", "Exported"));
 	}

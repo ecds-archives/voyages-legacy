@@ -1880,12 +1880,31 @@ Map.prototype.precomputePointsPositions = function()
 		pnt.vx = this.fromRealToVportX(pnt.x);
 		pnt.vy = this.fromRealToVportY(pnt.y);
 		
-		if ()
-		
 		for (var j = 0; j < pnt.symbols.length; j++)
 		{
+
+			var symbol = pnt.symbols[j];
+
+			var symbolElement = document.createElement("img");
+			symbolElement.src = symbol.url;
+			symbolElement.width = symbol.width;
+			symbolElement.height = symbol.height;
+
+			/*
+			var symbolElement = document.createElement("div");
+			symbolElement.style.backgroundColor = "Black";
+			symbolElement.style.width = "10px";
+			symbolElement.style.height = "10px";
+			*/
 			
-			pnt.symbols[j];
+			symbolElement.style.position = "absolute";
+			symbolElement.style.left = (pnt.vx - symbol.width + symbol.centerX) + "px";
+			symbolElement.style.top = (pnt.vy - symbol.height + symbol.centerY) + "px";
+			
+			if (symbol.element) this.map_control.removeChild(symbol.element);
+			symbol.element = symbolElement;
+			this.map_control.appendChild(symbolElement);
+
 		}
 
 	}

@@ -15,23 +15,23 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class Region extends Location
 {
 	
 	private static Map attributes = new HashMap();
-	static {
-		attributes.put("id", new StringAttribute("id", "Region"));
-		attributes.put("name", new StringAttribute("name", "Region"));
+	static
+	{
 		attributes.put("x", new NumericAttribute("x", "Region"));
 		attributes.put("y", new NumericAttribute("y", "Region"));
+		attributes.put("latitude", new NumericAttribute("latitude", "Region"));
+		attributes.put("longitude", new NumericAttribute("longitude", "Region"));
 		attributes.put("ports", new NumericAttribute("ports", "Region"));
-		attributes.put("area", new DictionaryAttribute("area", "Region"));
+		attributes.put("area", new AreaAttribute("area", "Region"));
 		attributes.put("order", new NumericAttribute("order", "Region"));
 	}
 	
@@ -125,7 +125,6 @@ public class Region extends Location
 		if (list == null || list.size() == 0) return null;
 		return (Region) list.get(0);
 	}
-	
 	
 	public static Attribute getAttribute(String name)
 	{

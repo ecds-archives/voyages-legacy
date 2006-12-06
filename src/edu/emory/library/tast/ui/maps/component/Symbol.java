@@ -144,7 +144,7 @@ public class Symbol
 				NamedNodeMap xmlSymbolAttrs = xmlLang.getAttributes();
 				
 				String name = xmlSymbolAttrs.getNamedItem("name").getNodeValue();
-				String url = xmlSymbolAttrs.getNamedItem("code").getNodeValue();
+				String url = xmlSymbolAttrs.getNamedItem("url").getNodeValue();
 				int width = Integer.parseInt(xmlSymbolAttrs.getNamedItem("width").getNodeValue());
 				int height = Integer.parseInt(xmlSymbolAttrs.getNamedItem("height").getNodeValue());
 				
