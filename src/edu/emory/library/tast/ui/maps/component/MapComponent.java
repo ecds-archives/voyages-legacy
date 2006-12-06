@@ -501,12 +501,36 @@ public class MapComponent extends UIComponentBase
 			for (int i = 0; i < pointsOfInterest.length; i++)
 			{
 				PointOfInterest pnt = pointsOfInterest[i];
+				String[] symbols = pnt.getSymbols();
 				if (i > 0) jsRegister.append(", ");
 				jsRegister.append("new PointOfInterest(");
-				jsRegister.append(pnt.getX()).append(", ");
-				jsRegister.append(pnt.getY()).append(", ");
-				jsRegister.append("'").append(pnt.getNameJavaScriptSafe()).append("'").append(", ");
-				jsRegister.append("'").append(pnt.getTextJavaScriptSafe()).append("'");
+				jsRegister.append(pnt.getX());
+				jsRegister.append(", ");
+				jsRegister.append(pnt.getY());
+				jsRegister.append(", ");
+				jsRegister.append("'").append(pnt.getLabelJavaScriptSafe()).append("'");
+				jsRegister.append(", ");
+				jsRegister.append("'").append(pnt.getTextJavaScriptSafe());
+				jsRegister.append("', [");
+				for (int j = 0; j < symbols.length; j++)
+				{
+					Symbol symbol = Symbol.get(symbols[j]);
+					if (j > 0) jsRegister.append(", ");
+					jsRegister.append("new MapSymbol(");
+					jsRegister.append("'").append(symbol.getName()).append("'");
+					jsRegister.append(", ");
+					jsRegister.append("'").append(symbol.getUrl()).append("'");
+					jsRegister.append(", ");
+					jsRegister.append(symbol.getWidth());
+					jsRegister.append(", ");
+					jsRegister.append(symbol.getHeight());
+					jsRegister.append(", ");
+					jsRegister.append(symbol.getCenterX());
+					jsRegister.append(", ");
+					jsRegister.append(symbol.getCenterY());
+					jsRegister.append(")");
+				}
+				jsRegister.append("]");
 				jsRegister.append(")");
 			}
 			jsRegister.append("]");

@@ -40,6 +40,7 @@ div.import-region-list tr.checkbox-list-item-1-active {
 	background-color: #F1E7C8; }
 
 div.import-region-list div.checkbox-list-popup {
+	z-index: 1;
 	height: 300px;
 	width: 400px;
 	border: 1px solid #571B1D;
@@ -48,6 +49,10 @@ div.import-region-list div.checkbox-list-popup {
 	background-repeat: no-repeat;
 	left: 230px;
 	position: absolute; }
+	
+/***********************************
+* timeline
+***********************************/	
 	
 div.event-line-left-selector {
 	cursor: move; }

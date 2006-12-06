@@ -95,17 +95,13 @@ div.grid-tooltip div {
 	left: -7px; }
 	
 td.td-table-links {
-	background-color: #622424;
-}
+	background-color: #622424; }
 
 td.td-table-links:hover {
-	background-color: #CA4223;
-}
+	background-color: #CA4223; }
 
 td.td-table-links-td-active {
-	background-color: #CA4223;
-}
+	background-color: #CA4223; }
 
 td.td-table-links-no-hover	{
-	background-color: #622424;
-}
+	background-color: #622424; }

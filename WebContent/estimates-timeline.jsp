@@ -3,10 +3,10 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<t:div style="background-color: White; height: 550px;">
+<t:div style="background-color: White; height: 550px; padding-top: 100px;">
 	<s:eventLine
 		id="eventLine"
-		graphHeight="400"
+		graphHeight="200"
 		zoomLevel="0"
 		offset="1600"
 		selectorOffset="1500"

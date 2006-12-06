@@ -8,7 +8,6 @@ public class PointOfInterest
 	
 	private double x;
 	private double y;
-	private String name;
 	private String text;
 	private String label;
 	private String[] symbols;
@@ -19,29 +18,31 @@ public class PointOfInterest
 		this.y = y;
 	}
 
-	public PointOfInterest(double x, double y, String name, String text)
+	public PointOfInterest(double x, double y, String label, String text)
 	{
 		this.x = x;
 		this.y = y;
-		this.name = name;
+		this.label = label;
 		this.text = text;
 	}
-	
-	public String getName()
+
+	public PointOfInterest(double x, double y, String label)
 	{
-		return name;
+		this.x = x;
+		this.y = y;
+		this.label = label;
+	}
+	
+	public String getLabelJavaScriptSafe()
+	{
+		return JsfUtils.escapeStringForJS(label);
 	}
 
-	public void setName(String name)
+	public String getTextJavaScriptSafe()
 	{
-		this.name = name;
+		return JsfUtils.escapeStringForJS(text);
 	}
-	
-	public String getNameJavaScriptSafe()
-	{
-		return JsfUtils.escapeStringForJS(name);
-	}
-	
+
 	public String getText()
 	{
 		return text;
@@ -50,11 +51,6 @@ public class PointOfInterest
 	public void setText(String text)
 	{
 		this.text = text;
-	}
-	
-	public String getTextJavaScriptSafe()
-	{
-		return JsfUtils.escapeStringForJS(text);
 	}
 	
 	public double getX()

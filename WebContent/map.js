@@ -532,12 +532,23 @@ function MapTile(img)
 	//this.valid = false;
 }
 
-function PointOfInterest(x, y, name, text)
+function PointOfInterest(x, y, label, text, symbols)
 {
 	this.x = x;
 	this.y = y;
-	this.name = name;
+	this.label = label;
 	this.text = text;
+	this.symbols = symbols;
+}
+
+function MapSymbol(name, url, width, height, centerX, centerY)
+{
+	this.name = name;
+	this.url = url;
+	this.width = width;
+	this.height = height;
+	this.centerX = centerX;
+	this.centerY = centerY;
 }
 
 /////////////////////////////////////////////////////////
@@ -807,7 +818,7 @@ Map.prototype.mapStopDrag = function(event)
 		case MapsGlobal.MAP_TOOL_PAN:
 		case MapsGlobal.MAP_TOOL_SELECTOR:
 		
-			// precompute points position wrt. the new vport
+			// precompute points position w.r.t. the new vport
 			this.precomputePointsPositions();
 			
 			// update associated map
@@ -1823,8 +1834,13 @@ Map.prototype.panToolInit = function()
 
 Map.prototype.showHideLabel = function(event)
 {
-	var x = event.clientX - this.vport_offset_left;
-	var y = event.clientY - this.vport_offset_top;
+
+	//var x = event.clientX - this.vport_offset_left;
+	//var y = event.clientY - this.vport_offset_top;
+	
+	var x = ElementUtils.getEventMouseElementX(event, this.map_control);
+	var y = ElementUtils.getEventMouseElementY(event, this.map_control);
+	
 	for (var i=0; i<this.points.length; i++)
 	{
 		var pnt = this.points[i];
@@ -1856,11 +1872,22 @@ Map.prototype.precomputePointsPositions = function()
 	if (!this.points)
 		return;
 
-	for (var i=0; i<this.points.length; i++)
+	for (var i = 0; i < this.points.length; i++)
 	{
+		
 		var pnt = this.points[i];
+		
 		pnt.vx = this.fromRealToVportX(pnt.x);
 		pnt.vy = this.fromRealToVportY(pnt.y);
+		
+		if ()
+		
+		for (var j = 0; j < pnt.symbols.length; j++)
+		{
+			
+			pnt.symbols[j];
+		}
+
 	}
 
 /*
