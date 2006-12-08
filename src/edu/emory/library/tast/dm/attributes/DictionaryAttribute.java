@@ -2,8 +2,8 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
+import edu.emory.library.tas.spss.STSchemaVariable;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 
 public abstract class DictionaryAttribute extends ImportableAttribute
 {
@@ -19,7 +19,12 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 		this.setUserLabel(importName);
 	}
 	
-	protected long parseId(String value) throws InvalidNumberOfValuesException, InvalidNumberException
+	public int getImportType()
+	{
+		return STSchemaVariable.TYPE_NUMERIC;
+	}
+	
+	protected long parseId(String value) throws InvalidNumberException
 	{
 		if (value == null || value.length() == 0)
 		{

@@ -2,15 +2,18 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
+import edu.emory.library.tast.spss.STSchemaVariable;
 
 public class DateAttribute extends ImportableAttribute
 {
+	
+	private DateFormat importDateFormat = new SimpleDateFormat("d/M/y");
 	
 	public DateAttribute(String name, String objectType)
 	{
@@ -22,7 +25,7 @@ public class DateAttribute extends ImportableAttribute
 		super(name, objectType, importName);
 	}
 	
-	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 
 		if (value == null || value.length() == 0)
@@ -30,8 +33,7 @@ public class DateAttribute extends ImportableAttribute
 
 		try
 		{
-			DateFormat dateFormat = DateFormat.getDateInstance();
-			return dateFormat.parse(value);
+			return importDateFormat.parse(value);
 		}
 		catch (ParseException e)
 		{
@@ -75,4 +77,9 @@ public class DateAttribute extends ImportableAttribute
 		return value;
 	}
 	
+	public int getImportType()
+	{
+		return STSchemaVariable.TYPE_DATE;
+	}
+
 }

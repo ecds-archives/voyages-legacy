@@ -2,9 +2,9 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
+import edu.emory.library.tas.spss.STSchemaVariable;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
 public class NumericAttribute extends ImportableAttribute
@@ -38,7 +38,12 @@ public class NumericAttribute extends ImportableAttribute
 		this.type = type;
 	}
 	
-	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	public int getImportType()
+	{
+		return STSchemaVariable.TYPE_NUMERIC;
+	}
+	
+	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		
 		if (value == null)

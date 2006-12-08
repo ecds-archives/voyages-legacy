@@ -2,33 +2,32 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
+import edu.emory.library.tas.spss.STSchemaVariable;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
 public class StringAttribute extends ImportableAttribute
 {
 	
-	private int length = -1;
-
 	public StringAttribute(String name, String objectType)
 	{
 		super(name, objectType);
 	}
 	
-	public StringAttribute(String name, String objectType, String importName)
+	public StringAttribute(String name, String objectType, String importName, int maxImportLength)
 	{
 		super(name, objectType, importName);
+		setMaxImportLength(maxImportLength);
 	}
 
-	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		
 		if (value == null)
 			return null;
 
-		if (length != -1 && value.length() > length)
+		if (isImportLengthLimited() && value.length() > getMaxImportLength())
 			throw new StringTooLongException();
 
 		return value;
@@ -39,14 +38,9 @@ public class StringAttribute extends ImportableAttribute
 		return "Text";
 	}
 	
-	public int getLength()
+	public int getImportType()
 	{
-		return length;
-	}
-
-	public void setLength(int length)
-	{
-		this.length = length;
+		return STSchemaVariable.TYPE_STRING;
 	}
 	
 	public boolean isOuterjoinable() {

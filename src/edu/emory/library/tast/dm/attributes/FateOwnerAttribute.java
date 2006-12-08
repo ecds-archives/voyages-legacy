@@ -3,7 +3,6 @@ package edu.emory.library.tast.dm.attributes;
 import edu.emory.library.tast.dm.FateOwner;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
 public class FateOwnerAttribute extends DictionaryAttribute
@@ -19,9 +18,9 @@ public class FateOwnerAttribute extends DictionaryAttribute
 		super(name, objType, importName);
 	}
 
-	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		return FateOwner.loadById(parseId(value));
 	}
-
+	
 }

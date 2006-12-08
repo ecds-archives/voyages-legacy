@@ -44,5 +44,7 @@ public abstract class AbstractDescriptiveObject
 	{
 		return values;
 	}
+	
+	public abstract void saveOrUpdate();
 
 }
