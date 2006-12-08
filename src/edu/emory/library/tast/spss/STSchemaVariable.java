@@ -17,6 +17,7 @@ public class STSchemaVariable
 	
 	public final static int TYPE_STRING = 0; 
 	public final static int TYPE_NUMERIC = 1; 
+	public final static int TYPE_DATE = 2; 
 	
 	public STSchemaVariable()
 	{

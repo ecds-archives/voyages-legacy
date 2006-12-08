@@ -15,6 +15,11 @@ public class StringAttribute extends ImportableAttribute
 		super(name, objectType);
 	}
 	
+	public StringAttribute(String name, String objectType, String importName)
+	{
+		super(name, objectType, importName);
+	}
+
 	public StringAttribute(String name, String objectType, String importName, int maxImportLength)
 	{
 		super(name, objectType, importName);

@@ -27,6 +27,9 @@ public class STSchemaReader
 	private final static int LABEL_SINGLE_QUOTED = 3; 
 	private final static int LABEL_DOUBLE_QUOTED = 2; 
 	
+	private final static String STRING_TYPE_INDICATOR = "A"; 
+	private final static String DATE_TYPE_INDICATOR = "%d-%m-%Y"; 
+
 	public STSchemaReader()
 	{
 		
@@ -38,7 +41,7 @@ public class STSchemaReader
 			"(\\d+)" + // first column
 			"(?:-(\\d+))?" + // last column
 			"\\s*" +
-			"(?:\\((\\w+)\\))?" + // type
+			"(?:\\((" + STRING_TYPE_INDICATOR + "|" + DATE_TYPE_INDICATOR + ")\\))?" + // type
 			"\\s*" +
 			"(?:\\[(.+)\\])?" + // missing values
 			"\\s*" +
@@ -83,7 +86,7 @@ public class STSchemaReader
 			{
 
 				STSchemaVariable var = new STSchemaVariable();
-
+				
 				var.setName(
 					matcher.group(FIELD_NAME));
 				
@@ -96,10 +99,18 @@ public class STSchemaReader
 					var.getStartColumn());
 				
 				String fieldType = matcher.group(FIELD_TYPE); 
-				var.setType(
-					fieldType != null && fieldType.compareTo("A") == 0 ?
-					STSchemaVariable.TYPE_STRING:
-					STSchemaVariable.TYPE_NUMERIC);
+				if (fieldType != null && fieldType.equals(STRING_TYPE_INDICATOR))
+				{
+					var.setType(STSchemaVariable.TYPE_STRING);
+				}
+				else if (fieldType != null && fieldType.equals(DATE_TYPE_INDICATOR))
+				{
+					var.setType(STSchemaVariable.TYPE_DATE);
+				}
+				else
+				{
+					var.setType(STSchemaVariable.TYPE_NUMERIC);
+				}
 				
 				var.setLabel(
 					matcher.group(FIELD_LABEL));

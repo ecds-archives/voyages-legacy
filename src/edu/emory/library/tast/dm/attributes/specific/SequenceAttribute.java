@@ -3,10 +3,6 @@ package edu.emory.library.tast.dm.attributes.specific;
 import java.util.Map;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
 public class SequenceAttribute extends Attribute {
 
@@ -29,14 +25,6 @@ public class SequenceAttribute extends Attribute {
 		}
 		return joinable;
 	}
-
-	public Object parse(String[] values, int options)
-			throws InvalidNumberOfValuesException, InvalidNumberException,
-			InvalidDateException, StringTooLongException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	public String getHQLSelectPath(Map bindings) {
 		
