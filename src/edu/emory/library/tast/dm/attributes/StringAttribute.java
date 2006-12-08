@@ -2,38 +2,33 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
-import org.w3c.dom.Node;
-
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
-public class StringAttribute extends ImportableAttribute {
+public class StringAttribute extends ImportableAttribute
+{
 	
-	public static final String ATTR_TYPE_NAME = "String";
-	
-	private Integer length = new Integer(-1);
+	private int length = -1;
 
-	public StringAttribute(String name, String objectType) {
+	public StringAttribute(String name, String objectType)
+	{
 		super(name, objectType);
 	}
 	
-	public StringAttribute(Node xmlNode, String objectType) {
-		super(xmlNode, objectType);
-		String len = this.parseAttribute(xmlNode, "length");
-		if (len != null) {
-			this.length = new Integer(len);
-		}
+	public StringAttribute(String name, String objectType, String importName)
+	{
+		super(name, objectType, importName);
 	}
-	
+
 	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		
 		if (value == null)
 			return null;
 
-		if (length.intValue() != -1 && value.length() > length.intValue())
+		if (length != -1 && value.length() > length)
 			throw new StringTooLongException();
 
 		return value;
@@ -44,13 +39,14 @@ public class StringAttribute extends ImportableAttribute {
 		return "Text";
 	}
 	
-	public Integer getLength() {
+	public int getLength()
+	{
 		return length;
 	}
 
-	public void setLength(Integer length) {
-		if (length != null)
-			this.length = length;
+	public void setLength(int length)
+	{
+		this.length = length;
 	}
 	
 	public boolean isOuterjoinable() {

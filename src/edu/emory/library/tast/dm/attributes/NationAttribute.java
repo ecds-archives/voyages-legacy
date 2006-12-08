@@ -1,7 +1,5 @@
 package edu.emory.library.tast.dm.attributes;
 
-import org.w3c.dom.Node;
-
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
@@ -11,18 +9,15 @@ import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 public class NationAttribute extends DictionaryAttribute
 {
 	
-	public static final String ATTR_TYPE_NAME = "Nation";
-	
 	public NationAttribute(String name, String objType)
 	{
 		super(name, objType);
 	}
 
-	public NationAttribute(Node xmlNode, String objectType)
+	public NationAttribute(String name, String objectType, String importName)
 	{
-		super(xmlNode, objectType);
+		super(name, objectType, importName);
 	}
-	
 	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		return Nation.loadById(parseId(value));

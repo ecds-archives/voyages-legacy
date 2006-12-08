@@ -2,30 +2,23 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
-import org.w3c.dom.Node;
-
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 
-public abstract class DictionaryAttribute extends Attribute
+public abstract class DictionaryAttribute extends ImportableAttribute
 {
 	
-	private String dictionary;
-
-	public DictionaryAttribute(String name, String objType) {
+	public DictionaryAttribute(String name, String objType)
+	{
 		this(name, objType, null);
 	}
 	
-	public DictionaryAttribute(String name, String objectType, String string) {
+	public DictionaryAttribute(String name, String objectType, String importName)
+	{
 		super(name, objectType);
-		this.setUserLabel(string);
+		this.setUserLabel(importName);
 	}
 	
-	public DictionaryAttribute(Node xmlNode, String objectType) {
-		super(xmlNode, objectType);
-		this.dictionary = this.parseAttribute(xmlNode, "dictionary");
-	}
-
 	protected long parseId(String value) throws InvalidNumberOfValuesException, InvalidNumberException
 	{
 		if (value == null || value.length() == 0)
@@ -45,19 +38,6 @@ public abstract class DictionaryAttribute extends Attribute
 		}
 	}
 
-	public String getTypeDisplayName()
-	{
-		return "List " + dictionary;
-	}
-	
-	public String getDictionary() {
-		return dictionary;
-	}
-
-	public void setDictionary(String dictionary) {
-		this.dictionary = dictionary;
-	}
-	
 	public boolean isOuterjoinable() {
 		return true;
 	}

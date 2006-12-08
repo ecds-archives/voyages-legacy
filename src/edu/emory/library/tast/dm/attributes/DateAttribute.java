@@ -4,60 +4,24 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Map;
 
-import org.w3c.dom.Node;
-
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
-public class DateAttribute extends Attribute {
+public class DateAttribute extends ImportableAttribute
+{
 	
-	public static final String ATTR_TYPE_NAME = "Date";
-	
-	private String importDateDay;
-
-	private String importDateMonth;
-
-	private String importDateYear;
-	
-	public DateAttribute(String name, String objectType) {
+	public DateAttribute(String name, String objectType)
+	{
 		super(name, objectType);
 	}
 	
-	public DateAttribute(Node xmlNode, String objectType) {
-		super(xmlNode, objectType);
-		
-		this.importDateDay = this.parseAttribute(xmlNode, "importDateDay");
-		this.importDateMonth = this.parseAttribute(xmlNode, "importDateMonth");
-		this.importDateYear = this.parseAttribute(xmlNode, "importDateYear");
-
+	public DateAttribute(String name, String objectType, String importName)
+	{
+		super(name, objectType, importName);
 	}
 	
-	public String getImportDateDay() {
-		return importDateDay;
-	}
-
-	public String getImportDateMonth() {
-		return importDateMonth;
-	}
-
-	public String getImportDateYear() {
-		return importDateYear;
-	}
-	
-	public void setImportDateDay(String importDateDay) {
-		this.importDateDay = importDateDay;
-	}
-
-	public void setImportDateMonth(String importDateMonth) {
-		this.importDateMonth = importDateMonth;
-	}
-
-	public void setImportDateYear(String importDateYear) {
-		this.importDateYear = importDateYear;
-	}
-
 	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 

@@ -7,7 +7,7 @@ import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
-public class BooleanAttribute extends Attribute
+public class BooleanAttribute extends ImportableAttribute
 {
 	
 	public static final String ATTR_TYPE_NAME = "Boolean";
@@ -17,6 +17,11 @@ public class BooleanAttribute extends Attribute
 		super(name, objectType);
 	}
 
+	public BooleanAttribute(String name, String objectType, String importName)
+	{
+		super(name, objectType, importName);
+	}
+	
 	public String getHQLOuterJoinPath(Map bindings)
 	{
 		return null;

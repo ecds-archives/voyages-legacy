@@ -2,62 +2,40 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
-import org.w3c.dom.Node;
-
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
-public class NumericAttribute extends Attribute {
+public class NumericAttribute extends ImportableAttribute
+{
 	
-	public static final String ATTR_TYPE_NAME = "Numeric";
-
 	public final static int TYPE_INTEGER = 0;
-
 	public final static int TYPE_LONG = 1;
-
 	public final static int TYPE_FLOAT = 5;
 	
-	public final static int TYPE_UNKNOWN = -1;
-	
-	private Integer type;
+	private int type;
 
-	public NumericAttribute(String name, String objectType) {
-		this(name, objectType, null);
-	}
-	
-	public NumericAttribute(String name, String objectType, String string) {
+	public NumericAttribute(String name, String objectType, int numericalType)
+	{
 		super(name, objectType);
-		this.type = new Integer(TYPE_UNKNOWN);
-		this.setUserLabel(string);
+		this.type = numericalType;
 	}
 	
-	public NumericAttribute(Node xmlNode, String objectType) {
-
-		super(xmlNode, objectType);
-		
-		String attrNumType = this.parseAttribute(xmlNode, "attrNumType");
-		if ("Integer".equals(attrNumType))
-			this.type = new Integer(TYPE_INTEGER);
-		else if ("Long".equals(attrNumType))
-			this.type = new Integer(TYPE_LONG);
-		else if ("Float".equals(attrNumType))
-			this.type = new Integer(TYPE_FLOAT);
-		else
-			this.type = new Integer(TYPE_UNKNOWN);
+	public NumericAttribute(String name, String objectType, int numericalType, String importName)
+	{
+		super(name, objectType, importName);
+		this.type = numericalType;
 	}
 	
-	public Integer getType() {
+	public int getType()
+	{
 		return type;
 	}
 
-	public void setType(Integer type) {
-		if (type == null) {
-			type = new Integer(-1);
-		} else {
-			this.type = type;
-		}
+	public void setType(int type)
+	{
+		this.type = type;
 	}
 	
 	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
@@ -70,7 +48,7 @@ public class NumericAttribute extends Attribute {
 		if (value.length() == 0)
 			return null;
 
-		switch (getType().intValue())
+		switch (type)
 		{
 
 		case TYPE_INTEGER:
@@ -101,7 +79,7 @@ public class NumericAttribute extends Attribute {
 	}
 
 	public String getTypeDisplayName() {
-		switch (type.intValue()) {
+		switch (type) {
 		case TYPE_INTEGER:
 			return "Integer";
 		case TYPE_LONG:

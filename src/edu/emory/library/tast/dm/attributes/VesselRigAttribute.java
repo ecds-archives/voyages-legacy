@@ -1,7 +1,5 @@
 package edu.emory.library.tast.dm.attributes;
 
-import org.w3c.dom.Node;
-
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
@@ -18,9 +16,9 @@ public class VesselRigAttribute extends DictionaryAttribute
 		super(name, objType);
 	}
 
-	public VesselRigAttribute(Node xmlNode, String objectType)
+	public VesselRigAttribute(String name, String objectType, String importName)
 	{
-		super(xmlNode, objectType);
+		super(name, objectType, importName);
 	}
 	
 	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
