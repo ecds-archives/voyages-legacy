@@ -11,11 +11,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
-
 public abstract class Attribute  {
 
 	private static HashMap config = new HashMap();
@@ -256,8 +251,6 @@ public abstract class Attribute  {
 			return super.hashCode();
 		return name.hashCode();
 	}
-	
-	public abstract  Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException;
 	
 	public abstract String getTypeDisplayName();
 

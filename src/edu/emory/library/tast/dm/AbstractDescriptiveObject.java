@@ -8,23 +8,9 @@ import java.util.Map;
  * @author Pawel Jurczyk
  *
  */
-public abstract class AbstractDescriptiveObject {
+public abstract class AbstractDescriptiveObject
+{
 	
-	/**
-	 * Modified flag.
-	 */
-	public static final int UPDATED = 1;
-	
-	/**
-	 * Unmodified flag.
-	 */
-	public static final int NOT_UPDATED = 0;
-
-	/**
-	 * Field informing whether object was modified/unmodified.
-	 */
-	protected int modified = NOT_UPDATED;
-
 	/**
 	 * Current attribute values.
 	 */
@@ -35,7 +21,8 @@ public abstract class AbstractDescriptiveObject {
 	 * @param p_attrName attribut name
 	 * @return Object representing current attribute value
 	 */
-	public Object getAttrValue(String p_attrName) {
+	public Object getAttrValue(String p_attrName)
+	{
 		return values.get(p_attrName);
 	}
 
@@ -44,11 +31,8 @@ public abstract class AbstractDescriptiveObject {
 	 * @param p_attrName	attribut name
 	 * @param p_attrValue	new attribute value
 	 */
-	public void setAttrValue(String p_attrName, Object p_attrValue) {
-		if ((p_attrValue == null && this.values.get(p_attrName) != null) 
-				|| (p_attrValue != null && !p_attrValue.equals(this.values.get(p_attrName)))) {
-				this.modified = UPDATED;
-			}
+	public void setAttrValue(String p_attrName, Object p_attrValue)
+	{
 		values.put(p_attrName, p_attrValue);
 	}
 
@@ -56,7 +40,9 @@ public abstract class AbstractDescriptiveObject {
 	 * Gets values of all attributes.
 	 * @return Map of values
 	 */
-	public Map getAllAttrValues() {
+	public Map getAllAttrValues()
+	{
 		return values;
 	}
+
 }

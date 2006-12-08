@@ -12,19 +12,6 @@ import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.dm.dictionaries.DepDefinition;
-import edu.emory.library.tast.dm.dictionaries.Editor;
-import edu.emory.library.tast.dm.dictionaries.Fate2;
-import edu.emory.library.tast.dm.dictionaries.Fate3;
-import edu.emory.library.tast.dm.dictionaries.Fate4;
-import edu.emory.library.tast.dm.dictionaries.Filter;
-import edu.emory.library.tast.dm.dictionaries.ImputedNation;
-import edu.emory.library.tast.dm.dictionaries.OldWorldPlace;
-import edu.emory.library.tast.dm.dictionaries.ShipNationality;
-import edu.emory.library.tast.dm.dictionaries.Temp;
-import edu.emory.library.tast.dm.dictionaries.TonesType;
-import edu.emory.library.tast.dm.dictionaries.VesselRig;
-import edu.emory.library.tast.dm.dictionaries.XmimpFlag;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.HibernateUtil;
 
@@ -37,26 +24,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	
 	private static final String VOYAGE = "Voyage";
 
-	/**
-	 * Approved flag.
-	 */
-	private boolean approved = false;
-	
-	/**
-	 * Field informing whether object's slaves were modified/unmodified.
-	 */
-	private int slavesModified = NOT_UPDATED;
-	
-	/**
-	 * Creation flag. If true - object should be created in DB.
-	 */
-	private boolean created = false;
-	
-	/**
-	 * Set of slaves.
-	 */
-	private Set slaves = new HashSet();
-	
 	/**
 	 * ID of voyage.
 	 */
@@ -120,28 +87,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * Creates new Voyage. Object will have new ID.
 	 */
 	public Voyage() {
-		this.created = false;
 	}
 	
-	/**
-	 * Creates new Voyage.
-	 * @param p_created
-	 */
-	private Voyage(boolean p_created) {
-		this.created = p_created;
-	}
-	
-	/**
-	 * Creates voyage with given ID.
-	 * @param voyageId desired voyage ID.
-	 * @return	Created Voyage object
-	 */
-	public static Voyage createNew(Long voyageId) {
-		Voyage voyage = new Voyage(true);
-		voyage.setVoyageId(voyageId);
-		return voyage;
-	}
-
 	/**
 	 * 
 	 * Loads voyage
@@ -168,16 +115,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		session.close();
 		
 		return localVoyage;
-	}
-	
-	private static void cleanObject(Voyage [] objs) {
-		for (int i = 0; i < objs.length; i++) {
-			Iterator iter = objs[i].getSlaves().iterator();
-			while (iter.hasNext()) {
-				((Slave)iter.next()).setModified(0);
-			}
-			objs[i].setModified(0);
-		}
 	}
 	
 	/**

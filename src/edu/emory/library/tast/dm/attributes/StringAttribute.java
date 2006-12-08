@@ -9,7 +9,7 @@ import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberOfValuesException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
-public class StringAttribute extends Attribute {
+public class StringAttribute extends ImportableAttribute {
 	
 	public static final String ATTR_TYPE_NAME = "String";
 	
