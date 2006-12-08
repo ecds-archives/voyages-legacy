@@ -11,7 +11,18 @@ import java.util.Set;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.FateAttribute;
+import edu.emory.library.tast.dm.attributes.FateOwnerAttribute;
+import edu.emory.library.tast.dm.attributes.FateSlavesAttribute;
+import edu.emory.library.tast.dm.attributes.FateVesselAttribute;
+import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.PortAttribute;
+import edu.emory.library.tast.dm.attributes.RegionAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.util.HibernateUtil;
 
@@ -33,17 +44,128 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * Object's attributes
 	 */
 	private static List attributes = new ArrayList();
+	static {
+		attributes.add(new NumericAttribute("iid", NumericAttribute.TYPE_LONG, "Voyage"));
+		attributes.add(new NumericalAttribute("voyageid", "Voyage", NumericAttribute.TYPE_LONG, "voyageid"));
+		attributes.add(new BooleanAttribute("cd", "Voyage", "cd"));
+		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
+		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
+		attributes.add(new NumericalAttribute("yrcons", "Voyage", NumericAttribute.TYPE_INTEGER, "yrcons"));
+		attributes.add(new PortAttribute("placreg", "Voyage", "placreg"));
+		attributes.add(new NumericalAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
+		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
+		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
+		attributes.add(new NumericalAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
+		attributes.add(new NumericalAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
+		attributes.add(new NumericalAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
+		attributes.add(new StringAttribute("ownera", "Voyage", "ownera"));
+		attributes.add(new StringAttribute("ownerb", "Voyage", "ownerb"));
+		attributes.add(new StringAttribute("ownerc", "Voyage", "ownerc"));
+		attributes.add(new StringAttribute("ownerd", "Voyage", "ownerd"));
+		attributes.add(new StringAttribute("ownere", "Voyage", "ownere"));
+		attributes.add(new StringAttribute("ownerf", "Voyage", "ownerf"));
+		attributes.add(new StringAttribute("ownerg", "Voyage", "ownerg"));
+		attributes.add(new StringAttribute("ownerh", "Voyage", "ownerh"));
+		attributes.add(new StringAttribute("owneri", "Voyage", "owneri"));
+		attributes.add(new StringAttribute("ownerj", "Voyage", "ownerj"));
+		attributes.add(new StringAttribute("ownerk", "Voyage", "ownerk"));
+		attributes.add(new StringAttribute("ownerl", "Voyage", "ownerl"));
+		attributes.add(new StringAttribute("ownerm", "Voyage", "ownerm"));
+		attributes.add(new StringAttribute("ownern", "Voyage", "ownern"));
+		attributes.add(new StringAttribute("ownero", "Voyage", "ownero"));
+		attributes.add(new StringAttribute("ownerp", "Voyage", "ownerp"));
+		attributes.add(new FateAttribute("fate", "Voyage", "fate"));
+		attributes.add(new FateSlavesAttribute("fate2", "Voyage", "fate2"));
+		attributes.add(new FateVesselAttribute("fate3", "Voyage", "fate3"));
+		attributes.add(new FateOwnerAttribute("fate4", "Voyage", "fate4"));
+		attributes.add(new InsurrectionAttribute("insurrec", "Voyage", "insurrec"));
+		attributes.add(new PortAttribute("ptdepimp", "Voyage", "ptdepimp"));
+		attributes.add(new RegionAttribute("deptregimp", "Voyage", "deptregimp"));
+		attributes.add(new PortAttribute("plac1tra", "Voyage", "plac1tra"));
+		attributes.add(new PortAttribute("plac2tra", "Voyage", "plac2tra"));
+		attributes.add(new PortAttribute("plac3tra", "Voyage", "plac3tra"));
+		attributes.add(new PortAttribute("mjbyptimp", "Voyage", "mjbyptimp"));
+		attributes.add(new RegionAttribute("regem1", "Voyage", "regem1"));
+		attributes.add(new RegionAttribute("regem2", "Voyage", "regem2"));
+		attributes.add(new RegionAttribute("regem3", "Voyage", "regem3"));
+		attributes.add(new RegionAttribute("majbyimp", "Voyage", "majbyimp"));
+		attributes.add(new PortAttribute("npafttra", "Voyage", "npafttra"));
+		attributes.add(new PortAttribute("sla1port", "Voyage", "sla1port"));
+		attributes.add(new PortAttribute("adpsale1", "Voyage", "adpsale1"));
+		attributes.add(new PortAttribute("adpsale2", "Voyage", "adpsale2"));
+		attributes.add(new RegionAttribute("mjslptimp", "Voyage", "mjslptimp"));
+		attributes.add(new RegionAttribute("regdis1", "Voyage", "regdis1"));
+		attributes.add(new RegionAttribute("regdis2", "Voyage", "regdis2"));
+		attributes.add(new RegionAttribute("regdis3", "Voyage", "regdis3"));
+		attributes.add(new PortAttribute("mjselimp", "Voyage", "mjselimp"));
+		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
+		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
+		attributes.add(new NumericalAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
+		attributes.add(new DateAttribute("date_dep", "Voyage", "date_dep"));
+		attributes.add(new DateAttribute("date_buy", "Voyage", "date_buy"));
+		attributes.add(new DateAttribute("date_leftafr", "Voyage", "date_leftafr"));
+		attributes.add(new DateAttribute("date_land1", "Voyage", "date_land1"));
+		attributes.add(new DateAttribute("date_land2", "Voyage", "date_land2"));
+		attributes.add(new DateAttribute("date_land3", "Voyage", "date_land3"));
+		attributes.add(new DateAttribute("date_depam", "Voyage", "date_depam"));
+		attributes.add(new DateAttribute("date_end", "Voyage", "date_end"));
+		attributes.add(new NumericalAttribute("voy1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy1imp"));
+		attributes.add(new NumericalAttribute("voy2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy2imp"));
+		attributes.add(new StringAttribute("captaina", "Voyage", "captaina"));
+		attributes.add(new StringAttribute("captainb", "Voyage", "captainb"));
+		attributes.add(new StringAttribute("captainc", "Voyage", "captainc"));
+		attributes.add(new NumericalAttribute("crew1", "Voyage", NumericAttribute.TYPE_INTEGER, "crew1"));
+		attributes.add(new NumericalAttribute("crew3", "Voyage", NumericAttribute.TYPE_INTEGER, "crew3"));
+		attributes.add(new NumericalAttribute("crewdied", "Voyage", NumericAttribute.TYPE_INTEGER, "crewdied"));
+		attributes.add(new NumericalAttribute("slintend", "Voyage", TYPE_INTEGER, "slintend"));
+		attributes.add(new NumericalAttribute("ncar13", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar13"));
+		attributes.add(new NumericalAttribute("ncar15", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar15"));
+		attributes.add(new NumericalAttribute("ncar17", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar17"));
+		attributes.add(new NumericalAttribute("tslavesd", "Voyage", NumericAttribute.TYPE_INTEGER, "tslavesd"));
+		attributes.add(new NumericalAttribute("slaarriv", "Voyage", NumericAttribute.TYPE_INTEGER, "slaarriv"));
+		attributes.add(new NumericalAttribute("slas32", "Voyage", NumericAttribute.TYPE_INTEGER, "slas32"));
+		attributes.add(new NumericalAttribute("slas36", "Voyage", NumericAttribute.TYPE_INTEGER, "slas36"));
+		attributes.add(new NumericalAttribute("slas39", "Voyage", NumericAttribute.TYPE_INTEGER, "slas39"));
+		attributes.add(new NumericalAttribute("slaximp", "Voyage", NumericAttribute.TYPE_INTEGER, "slaximp"));
+		attributes.add(new NumericalAttribute("slamimp", "Voyage", NumericAttribute.TYPE_INTEGER, "slamimp"));
+		attributes.add(new NumericalAttribute("menrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat7"));
+		attributes.add(new NumericalAttribute("womrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat7"));
+		attributes.add(new NumericalAttribute("boyrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat7"));
+		attributes.add(new NumericalAttribute("girlrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat7"));
+		attributes.add(new NumericalAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
+		attributes.add(new NumericalAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
+		attributes.add(new NumericalAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
+		attributes.add(new NumericalAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
+		attributes.add(new NumericalAttribute("vymrtrat", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtrat"));
+		attributes.add(new StringAttribute("sourcea", "Voyage", "sourcea"));
+		attributes.add(new StringAttribute("sourceb", "Voyage", "sourceb"));
+		attributes.add(new StringAttribute("sourcec", "Voyage", "sourcec"));
+		attributes.add(new StringAttribute("sourced", "Voyage", "sourced"));
+		attributes.add(new StringAttribute("sourcee", "Voyage", "sourcee"));
+		attributes.add(new StringAttribute("sourcef", "Voyage", "sourcef"));
+		attributes.add(new StringAttribute("sourceg", "Voyage", "sourceg"));
+		attributes.add(new StringAttribute("sourceh", "Voyage", "sourceh"));
+		attributes.add(new StringAttribute("sourcei", "Voyage", "sourcei"));
+		attributes.add(new StringAttribute("sourcej", "Voyage", "sourcej"));
+		attributes.add(new StringAttribute("sourcek", "Voyage", "sourcek"));
+		attributes.add(new StringAttribute("sourcel", "Voyage", "sourcel"));
+		attributes.add(new StringAttribute("sourcem", "Voyage", "sourcem"));
+		attributes.add(new StringAttribute("sourcen", "Voyage", "sourcen"));
+		attributes.add(new StringAttribute("sourceo", "Voyage", "sourceo"));
+		attributes.add(new StringAttribute("sourcep", "Voyage", "sourcep"));
+		attributes.add(new StringAttribute("sourceq", "Voyage", "sourceq"));
+		attributes.add(new StringAttribute("sourcer", "Voyage", "sourcer"));
+		attributes.add(new NationEstimatesAttribute("e_natinimp", "Voyage", "e_natinimp"));
+		attributes.add(new PortAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
+		attributes.add(new PortAttribute("e_mjselimp1", "Voyage", "e_mjselimp1"));
+		attributes.add(new PortAttribute("e_mjselimp", "Voyage", "e_mjselimp")); 
+	}
 	
 	/**
 	 * Gets all attributes of voyage.
 	 * @return
 	 */
 	public static Attribute[] getAttributes() {
-		
-		if (attributes.isEmpty()) {
-			attributes.addAll(Arrays.asList(Attribute.loadAttributesForType("Voyage")));
-			attributes.add(new NumericAttribute("iid", "Voyage"));
-		}
 		return (Attribute[])attributes.toArray(new Attribute[] {});
 	}
 	
@@ -53,11 +175,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * @return attribute, null if there is no attribute with given name
 	 */
 	public static Attribute getAttribute(String name) {
-		
-		if (attributes.isEmpty()) {
-			attributes.addAll(Arrays.asList(Attribute.loadAttributesForType("Voyage")));
-			attributes.add(new NumericAttribute("iid", "Voyage"));
-		}
 		for (int i = 0; i < attributes.size(); i++) {
 			if (((Attribute)attributes.get(i)).getName().equals(name)) {
 				return (Attribute)attributes.get(i);
@@ -71,11 +188,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * @return
 	 */
 	public static String[] getAllAttrNames() {
-		if (attributes.isEmpty()) {
-			attributes.addAll(Arrays.asList(Attribute.loadAttributesForType("Voyage")));
-			attributes.add(new NumericAttribute("iid", "Voyage"));
-		}
-		
 		String[] attrsName = new String[attributes.size()];
 		for (int i = 0; i < attrsName.length; i++) {
 			attrsName[i] = ((Attribute)attributes.get(i)).getName();
@@ -108,9 +220,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		//Prepare result
 		if (voyageIndex.length != 0) {
 			localVoyage = voyageIndex[0].getVoyage();
-			localVoyage.setSlaves(voyageIndex[0].getSlaves());
-			localVoyage.setRevisionId(voyageIndex[0].getRevisionId());
-			cleanObject(new Voyage[] {localVoyage});
 		}
 		session.close();
 		
@@ -159,11 +268,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		//Prepare result
 		for (int i = 0; i < voyageIndex.length; i++) {
 			ret[i] = voyageIndex[i].getVoyage();
-			ret[i].setSlaves(voyageIndex[i].getSlaves());
-			ret[i].setRevisionId(voyageIndex[i].getRevisionId());
-			
 		}
-		cleanObject(ret);
 		session.close();
 		return ret;
 	}
@@ -185,11 +290,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		//Prepare result
 		for (int i = 0; i < voyageIndex.length; i++) {
 			ret[i] = voyageIndex[i].getVoyage();
-			ret[i].setSlaves(voyageIndex[i].getSlaves());
-			ret[i].setRevisionId(voyageIndex[i].getRevisionId());
 			
 		}
-		cleanObject(ret);
 		session.close();
 		return ret;
 	}
@@ -202,7 +304,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public static Voyage loadByRevision(Long voyageId, Long revisionId) {
 		Voyage localVoyage = new Voyage();
 		localVoyage.setVoyageId(voyageId);
-		localVoyage.setRevisionId(revisionId);
 		return loadInternal(localVoyage, 
 				HibernateConnector.WITHOUT_HISTORY);
 	}
@@ -226,10 +327,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		//Prepare result
 		for (int i = 0; i < voyageIndex.length; i++) {
 			Voyage v = voyageIndex[i].getVoyage();
-			v.setSlaves(voyageIndex[i].getSlaves());
-			v.setRevisionId(voyageIndex[i].getRevisionId());
 			list.add(v);
-			cleanObject(new Voyage[] {v});
 		}
 		session.close();
 		//Return result
@@ -245,16 +343,10 @@ public class Voyage extends AbstractDescriptiveObject {
 		VoyageIndex vIndex = new VoyageIndex();
 		vIndex.setVoyage(this);
 		vIndex.setVoyageId(this.getVoyageId());
-		vIndex.setSlaves(this.getSlaves());
 		vIndex.setRevisionDate(new Date(System.currentTimeMillis()));
-		vIndex.setFlag(approved ? new Integer(1): new Integer(0));
 		
 		//Save to DB (or update...)
-		if (this.created) {
-			HibernateConnector.getConnector().createVoyage(vIndex);
-		} else {
-			HibernateConnector.getConnector().updateVoyage(vIndex);
-		}
+		HibernateConnector.getConnector().createVoyage(vIndex);
 	}
 
 	/**
@@ -263,94 +355,13 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Object clone() {
 		//Copy voyage itself
 		Voyage newVoyage = new Voyage();
-
-		newVoyage.setRevisionId(getRevisionId());
 		
 		newVoyage.values = this.values;
-		
-		//Copy slaves
-		Iterator iter = getSlaves().iterator();
-		HashSet set = new HashSet();
-		while (iter.hasNext()) {
-			set.add(((Slave)iter.next()).clone());
-		}
-		newVoyage.setSlaves(set);
-		newVoyage.setModified(getModified());
 		
 		//Return copy object
 		return newVoyage;
 	}
-	
-	/**
-	 * Gets set of slaves.
-	 * @return Set with Slave objects
-	 */
-	public Set getSlaves() {
-		return this.slaves;
-	}
-	
-	/**
-	 * Sets set of slaves.
-	 * @param slaves Set with Slave objects
-	 */
-	public void setSlaves(Set slaves) {
-		this.slaves = slaves;
-	}
-	
-	/**
-	 * Removes slave from list.
-	 * @param slave Slave to remove
-	 */
-	public void removeSlave(Slave slave) {
-		this.slavesModified = UPDATED;
-		this.slaves.remove(slave);
-	}
-	
-	/**
-	 * Adds slave to set of slaves.
-	 * @param slave Slave to add
-	 */
-	public void addSlave(Slave slave) {
-		this.slavesModified = UPDATED;
-		this.slaves.add(slave);
-	}
-	
-	/**
-	 * Gets Slave with given slaveId.
-	 * @param slaveId Slave id
-	 * @return Slave object, null if voyage does not have such a slave
-	 */
-	public Slave getSlave(Long slaveId) {
-		Iterator iter = this.slaves.iterator();
-		while (iter.hasNext()) {
-			Slave slave = (Slave)iter.next();
-			if (slave.getSlaveId().equals(slaveId)) {
-				return slave;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * Sets modified flag.
-	 * @param p_modified
-	 */
-	public void setModified(int p_modified) {
-		this.modified = p_modified;
-	}
-	
-	/**
-	 * Gets modified flag.
-	 * @return
-	 */
-	public int getModified() {
-		return this.modified;
-	}
-	
-	public boolean wereSlavesModified() {
-		return this.slavesModified == UPDATED;
-	}
-	
+
 	public void setIid(Long iid) {
 		this.iid = iid;
 	}
@@ -359,1786 +370,304 @@ public class Voyage extends AbstractDescriptiveObject {
 		return this.iid;
 	}
 	
-	public Long getRevisionId() {
-		return (Long)this.values.get("revisionId");
-	}
-	
-	public void setRevisionId(Long revisionId) {
-		if ((revisionId == null && this.values.get("revisionId") != null) 
-			|| (revisionId != null && !revisionId.equals(this.values.get("revisionId")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("revisionId", revisionId);
-	}
-	
-	public Float getS_slaximp() {
-		return (Float)this.values.get("s_slaximp");
-	}
-	
-	public Float getS_slamimp() {
-		return (Float)this.values.get("s_slamimp");
-	}
-	
-	public void setS_slaximp(Float value) {
-		this.values.put("s_slaximp", value);
-	}
-	
-	public void setS_slamimp(Float value) {
-		this.values.put("s_slamimp", value);
-	}
-	
 	/**
 	 * Returns string representation of object.
 	 */
 	public String toString() {
-		return "Voyage: " + values + " Slaves: " + getSlaves();
+		return "Voyage: " + values;
 	}
 	
 	/*AUTOGENERATED BLOCK*/
 	/** Getters/setters **/
 	public void setVoyageId(Long voyageId) {
-		if ((voyageId == null && this.values.get("voyageId") != null) 
-			|| (voyageId != null && !voyageId.equals(this.values.get("voyageId")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("voyageId", voyageId);
 	}
 	public void setShipname(String shipname) {
-		if ((shipname == null && this.values.get("shipname") != null) 
-			|| (shipname != null && !shipname.equals(this.values.get("shipname")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("shipname", shipname);
 	}
 	public void setCaptaina(String captaina) {
-		if ((captaina == null && this.values.get("captaina") != null) 
-			|| (captaina != null && !captaina.equals(this.values.get("captaina")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("captaina", captaina);
 	}
 	public void setCaptainb(String captainb) {
-		if ((captainb == null && this.values.get("captainb") != null) 
-			|| (captainb != null && !captainb.equals(this.values.get("captainb")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("captainb", captainb);
 	}
 	public void setCaptainc(String captainc) {
-		if ((captainc == null && this.values.get("captainc") != null) 
-			|| (captainc != null && !captainc.equals(this.values.get("captainc")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("captainc", captainc);
 	}
-	public void setDatedep(Date datedep) {
-		if ((datedep == null && this.values.get("datedep") != null) 
-			|| (datedep != null && !datedep.equals(this.values.get("datedep")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("datedep", datedep);
-	}
-	public void setDlslatrb(Date dlslatrb) {
-		if ((dlslatrb == null && this.values.get("dlslatrb") != null) 
-			|| (dlslatrb != null && !dlslatrb.equals(this.values.get("dlslatrb")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("datedep", dlslatrb);
-	}
-	public void setNppretra(Integer nppretra) {
-		if ((nppretra == null && this.values.get("nppretra") != null) 
-			|| (nppretra != null && !nppretra.equals(this.values.get("nppretra")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("nppretra", nppretra);
-	}
-	public void setD1slatr(Date d1slatr) {
-		if ((d1slatr == null && this.values.get("d1slatr") != null) 
-			|| (d1slatr != null && !d1slatr.equals(this.values.get("d1slatr")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("d1slatr", d1slatr);
-	}
-	public void setNpprior(Integer npprior) {
-		if ((npprior == null && this.values.get("npprior") != null) 
-			|| (npprior != null && !npprior.equals(this.values.get("npprior")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("npprior", npprior);
-	}
-	public void setTslavesp(Integer tslavesp) {
-		if ((tslavesp == null && this.values.get("tslavesp") != null) 
-			|| (tslavesp != null && !tslavesp.equals(this.values.get("tslavesp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("tslavesp", tslavesp);
+	public void setDate_dep(Date datedep) {
+		this.values.put("date_dep", datedep);
 	}
 	public void setTslavesd(Integer tslavesd) {
-		if ((tslavesd == null && this.values.get("tslavesd") != null) 
-			|| (tslavesd != null && !tslavesd.equals(this.values.get("tslavesd")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("tslavesd", tslavesd);
 	}
-	public void setSladvoy(Integer sladvoy) {
-		if ((sladvoy == null && this.values.get("sladvoy") != null) 
-			|| (sladvoy != null && !sladvoy.equals(this.values.get("sladvoy")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladvoy", sladvoy);
-	}
 	public void setSlaarriv(Integer slaarriv) {
-		if ((slaarriv == null && this.values.get("slaarriv") != null) 
-			|| (slaarriv != null && !slaarriv.equals(this.values.get("slaarriv")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("slaarriv", slaarriv);
 	}
-	public void setRrdata31(Date rrdata31) {
-		if ((rrdata31 == null && this.values.get("rrdata31") != null) 
-			|| (rrdata31 != null && !rrdata31.equals(this.values.get("rrdata31")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("rrdata31", rrdata31);
-	}
-	public void setSlas32(Integer slas32) {
-		if ((slas32 == null && this.values.get("slas32") != null) 
-			|| (slas32 != null && !slas32.equals(this.values.get("slas32")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slas32", slas32);
-	}
-	public void setDatarr32(Date datarr32) {
-		if ((datarr32 == null && this.values.get("datarr32") != null) 
-			|| (datarr32 != null && !datarr32.equals(this.values.get("datarr32")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("datarr32", datarr32);
-	}
 	public void setSlas36(Integer slas36) {
-		if ((slas36 == null && this.values.get("slas36") != null) 
-			|| (slas36 != null && !slas36.equals(this.values.get("slas36")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("slas36", slas36);
 	}
-	public void setDatarr33(Date datarr33) {
-		if ((datarr33 == null && this.values.get("datarr33") != null) 
-			|| (datarr33 != null && !datarr33.equals(this.values.get("datarr33")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("datarr33", datarr33);
-	}
 	public void setSlas39(Integer slas39) {
-		if ((slas39 == null && this.values.get("slas39") != null) 
-			|| (slas39 != null && !slas39.equals(this.values.get("slas39")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("slas39", slas39);
 	}
-	public void setDdepamb(Date ddepamb) {
-		if ((ddepamb == null && this.values.get("ddepamb") != null) 
-			|| (ddepamb != null && !ddepamb.equals(this.values.get("ddepamb")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("ddepamb", ddepamb);
-	}
-	public void setDatarr4(Date datarr4) {
-		if ((datarr4 == null && this.values.get("datarr4") != null) 
-			|| (datarr4 != null && !datarr4.equals(this.values.get("datarr4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("datarr4", datarr4);
-	}
-	public void setFate(Integer fate) {
-		if ((fate == null && this.values.get("fate") != null) 
-			|| (fate != null && !fate.equals(this.values.get("fate")))) {
-			this.modified = UPDATED;
-		}
+	public void setFate(Fate fate) {
 		this.values.put("fate", fate);
 	}
 	public void setSourcea(String sourcea) {
-		if ((sourcea == null && this.values.get("sourcea") != null) 
-			|| (sourcea != null && !sourcea.equals(this.values.get("sourcea")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcea", sourcea);
 	}
 	public void setSourceb(String sourceb) {
-		if ((sourceb == null && this.values.get("sourceb") != null) 
-			|| (sourceb != null && !sourceb.equals(this.values.get("sourceb")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourceb", sourceb);
 	}
 	public void setSourcec(String sourcec) {
-		if ((sourcec == null && this.values.get("sourcec") != null) 
-			|| (sourcec != null && !sourcec.equals(this.values.get("sourcec")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcec", sourcec);
 	}
 	public void setSourced(String sourced) {
-		if ((sourced == null && this.values.get("sourced") != null) 
-			|| (sourced != null && !sourced.equals(this.values.get("sourced")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourced", sourced);
 	}
 	public void setSourcee(String sourcee) {
-		if ((sourcee == null && this.values.get("sourcee") != null) 
-			|| (sourcee != null && !sourcee.equals(this.values.get("sourcee")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcee", sourcee);
 	}
 	public void setSourcef(String sourcef) {
-		if ((sourcef == null && this.values.get("sourcef") != null) 
-			|| (sourcef != null && !sourcef.equals(this.values.get("sourcef")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcef", sourcef);
 	}
 	public void setSourceg(String sourceg) {
-		if ((sourceg == null && this.values.get("sourceg") != null) 
-			|| (sourceg != null && !sourceg.equals(this.values.get("sourceg")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourceg", sourceg);
 	}
 	public void setSourceh(String sourceh) {
-		if ((sourceh == null && this.values.get("sourceh") != null) 
-			|| (sourceh != null && !sourceh.equals(this.values.get("sourceh")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourceh", sourceh);
 	}
 	public void setSourcei(String sourcei) {
-		if ((sourcei == null && this.values.get("sourcei") != null) 
-			|| (sourcei != null && !sourcei.equals(this.values.get("sourcei")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcei", sourcei);
 	}
 	public void setSourcej(String sourcej) {
-		if ((sourcej == null && this.values.get("sourcej") != null) 
-			|| (sourcej != null && !sourcej.equals(this.values.get("sourcej")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcej", sourcej);
 	}
 	public void setSourcek(String sourcek) {
-		if ((sourcek == null && this.values.get("sourcek") != null) 
-			|| (sourcek != null && !sourcek.equals(this.values.get("sourcek")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcek", sourcek);
 	}
 	public void setSourcel(String sourcel) {
-		if ((sourcel == null && this.values.get("sourcel") != null) 
-			|| (sourcel != null && !sourcel.equals(this.values.get("sourcel")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcel", sourcel);
 	}
 	public void setSourcem(String sourcem) {
-		if ((sourcem == null && this.values.get("sourcem") != null) 
-			|| (sourcem != null && !sourcem.equals(this.values.get("sourcem")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcem", sourcem);
 	}
 	public void setSourcen(String sourcen) {
-		if ((sourcen == null && this.values.get("sourcen") != null) 
-			|| (sourcen != null && !sourcen.equals(this.values.get("sourcen")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcen", sourcen);
 	}
 	public void setSourceo(String sourceo) {
-		if ((sourceo == null && this.values.get("sourceo") != null) 
-			|| (sourceo != null && !sourceo.equals(this.values.get("sourceo")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourceo", sourceo);
 	}
 	public void setSourcep(String sourcep) {
-		if ((sourcep == null && this.values.get("sourcep") != null) 
-			|| (sourcep != null && !sourcep.equals(this.values.get("sourcep")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcep", sourcep);
 	}
 	public void setSourceq(String sourceq) {
-		if ((sourceq == null && this.values.get("sourceq") != null) 
-			|| (sourceq != null && !sourceq.equals(this.values.get("sourceq")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourceq", sourceq);
 	}
 	public void setSourcer(String sourcer) {
-		if ((sourcer == null && this.values.get("sourcer") != null) 
-			|| (sourcer != null && !sourcer.equals(this.values.get("sourcer")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sourcer", sourcer);
 	}
 	public void setSlintend(Integer slintend) {
-		if ((slintend == null && this.values.get("slintend") != null) 
-			|| (slintend != null && !slintend.equals(this.values.get("slintend")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("slintend", slintend);
 	}
 	public void setTonnage(Float tonnage) {
-		if ((tonnage == null && this.values.get("tonnage") != null) 
-			|| (tonnage != null && !tonnage.equals(this.values.get("tonnage")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("tonnage", tonnage);
 	}
 	public void setCrewdied(Integer crewdied) {
-		if ((crewdied == null && this.values.get("crewdied") != null) 
-			|| (crewdied != null && !crewdied.equals(this.values.get("crewdied")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("crewdied", crewdied);
 	}
 	public void setNcar13(Integer ncar13) {
-		if ((ncar13 == null && this.values.get("ncar13") != null) 
-			|| (ncar13 != null && !ncar13.equals(this.values.get("ncar13")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ncar13", ncar13);
 	}
 	public void setNcar15(Integer ncar15) {
-		if ((ncar15 == null && this.values.get("ncar15") != null) 
-			|| (ncar15 != null && !ncar15.equals(this.values.get("ncar15")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ncar15", ncar15);
 	}
 	public void setNcar17(Integer ncar17) {
-		if ((ncar17 == null && this.values.get("ncar17") != null) 
-			|| (ncar17 != null && !ncar17.equals(this.values.get("ncar17")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ncar17", ncar17);
 	}
 	public void setSladamer(Integer sladamer) {
-		if ((sladamer == null && this.values.get("sladamer") != null) 
-			|| (sladamer != null && !sladamer.equals(this.values.get("sladamer")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sladamer", sladamer);
 	}
-	public void setSaild1(Integer saild1) {
-		if ((saild1 == null && this.values.get("saild1") != null) 
-			|| (saild1 != null && !saild1.equals(this.values.get("saild1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("saild1", saild1);
-	}
-	public void setSaild2(Integer saild2) {
-		if ((saild2 == null && this.values.get("saild2") != null) 
-			|| (saild2 != null && !saild2.equals(this.values.get("saild2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("saild2", saild2);
-	}
-	public void setSaild3(Integer saild3) {
-		if ((saild3 == null && this.values.get("saild3") != null) 
-			|| (saild3 != null && !saild3.equals(this.values.get("saild3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("saild3", saild3);
-	}
-	public void setSaild4(Integer saild4) {
-		if ((saild4 == null && this.values.get("saild4") != null) 
-			|| (saild4 != null && !saild4.equals(this.values.get("saild4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("saild4", saild4);
-	}
-	public void setSaild5(Integer saild5) {
-		if ((saild5 == null && this.values.get("saild5") != null) 
-			|| (saild5 != null && !saild5.equals(this.values.get("saild5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("saild5", saild5);
-	}
-	public void setNdesert(Integer ndesert) {
-		if ((ndesert == null && this.values.get("ndesert") != null) 
-			|| (ndesert != null && !ndesert.equals(this.values.get("ndesert")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("ndesert", ndesert);
-	}
-	public void setSlinten2(Integer slinten2) {
-		if ((slinten2 == null && this.values.get("slinten2") != null) 
-			|| (slinten2 != null && !slinten2.equals(this.values.get("slinten2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slinten2", slinten2);
-	}
 	public void setGuns(Integer guns) {
-		if ((guns == null && this.values.get("guns") != null) 
-			|| (guns != null && !guns.equals(this.values.get("guns")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("guns", guns);
 	}
-	public void setVoyage(Integer voyage) {
-		if ((voyage == null && this.values.get("voyage") != null) 
-			|| (voyage != null && !voyage.equals(this.values.get("voyage")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("voyage", voyage);
-	}
 	public void setCrew1(Integer crew1) {
-		if ((crew1 == null && this.values.get("crew1") != null) 
-			|| (crew1 != null && !crew1.equals(this.values.get("crew1")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("crew1", crew1);
 	}
-	public void setChild2(Integer child2) {
-		if ((child2 == null && this.values.get("child2") != null) 
-			|| (child2 != null && !child2.equals(this.values.get("child2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("child2", child2);
-	}
-	public void setChild3(Integer child3) {
-		if ((child3 == null && this.values.get("child3") != null) 
-			|| (child3 != null && !child3.equals(this.values.get("child3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("child3", child3);
-	}
 	public void setYrreg(Integer yrreg) {
-		if ((yrreg == null && this.values.get("yrreg") != null) 
-			|| (yrreg != null && !yrreg.equals(this.values.get("yrreg")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("yrreg", yrreg);
 	}
 	public void setCrew3(Integer crew3) {
-		if ((crew3 == null && this.values.get("crew3") != null) 
-			|| (crew3 != null && !crew3.equals(this.values.get("crew3")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("crew3", crew3);
 	}
-	public void setCrew4(Integer crew4) {
-		if ((crew4 == null && this.values.get("crew4") != null) 
-			|| (crew4 != null && !crew4.equals(this.values.get("crew4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("crew4", crew4);
-	}
-	public void setCrew5(Integer crew5) {
-		if ((crew5 == null && this.values.get("crew5") != null) 
-			|| (crew5 != null && !crew5.equals(this.values.get("crew5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("crew5", crew5);
-	}
-	public void setAdult1(Integer adult1) {
-		if ((adult1 == null && this.values.get("adult1") != null) 
-			|| (adult1 != null && !adult1.equals(this.values.get("adult1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("adult1", adult1);
-	}
-	public void setChild1(Integer child1) {
-		if ((child1 == null && this.values.get("child1") != null) 
-			|| (child1 != null && !child1.equals(this.values.get("child1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("child1", child1);
-	}
-	public void setFemale1(Integer female1) {
-		if ((female1 == null && this.values.get("female1") != null) 
-			|| (female1 != null && !female1.equals(this.values.get("female1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("female1", female1);
-	}
-	public void setMale1(Integer male1) {
-		if ((male1 == null && this.values.get("male1") != null) 
-			|| (male1 != null && !male1.equals(this.values.get("male1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male1", male1);
-	}
-	public void setMen1(Integer men1) {
-		if ((men1 == null && this.values.get("men1") != null) 
-			|| (men1 != null && !men1.equals(this.values.get("men1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men1", men1);
-	}
-	public void setWomen1(Integer women1) {
-		if ((women1 == null && this.values.get("women1") != null) 
-			|| (women1 != null && !women1.equals(this.values.get("women1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women1", women1);
-	}
-	public void setFemale2(Integer female2) {
-		if ((female2 == null && this.values.get("female2") != null) 
-			|| (female2 != null && !female2.equals(this.values.get("female2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("female2", female2);
-	}
-	public void setMale2(Integer male2) {
-		if ((male2 == null && this.values.get("male2") != null) 
-			|| (male2 != null && !male2.equals(this.values.get("male2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male2", male2);
-	}
-	public void setMen2(Integer men2) {
-		if ((men2 == null && this.values.get("men2") != null) 
-			|| (men2 != null && !men2.equals(this.values.get("men2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men2", men2);
-	}
-	public void setWomen2(Integer women2) {
-		if ((women2 == null && this.values.get("women2") != null) 
-			|| (women2 != null && !women2.equals(this.values.get("women2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women2", women2);
-	}
-	public void setBoy2(Integer boy2) {
-		if ((boy2 == null && this.values.get("boy2") != null) 
-			|| (boy2 != null && !boy2.equals(this.values.get("boy2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boy2", boy2);
-	}
-	public void setGirl2(Integer girl2) {
-		if ((girl2 == null && this.values.get("girl2") != null) 
-			|| (girl2 != null && !girl2.equals(this.values.get("girl2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girl2", girl2);
-	}
-	public void setFemale3(Integer female3) {
-		if ((female3 == null && this.values.get("female3") != null) 
-			|| (female3 != null && !female3.equals(this.values.get("female3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("female3", female3);
-	}
-	public void setMale3(Integer male3) {
-		if ((male3 == null && this.values.get("male3") != null) 
-			|| (male3 != null && !male3.equals(this.values.get("male3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male3", male3);
-	}
-	public void setMen3(Integer men3) {
-		if ((men3 == null && this.values.get("men3") != null) 
-			|| (men3 != null && !men3.equals(this.values.get("men3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men3", men3);
-	}
-	public void setWomen3(Integer women3) {
-		if ((women3 == null && this.values.get("women3") != null) 
-			|| (women3 != null && !women3.equals(this.values.get("women3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women3", women3);
-	}
-	public void setBoy3(Integer boy3) {
-		if ((boy3 == null && this.values.get("boy3") != null) 
-			|| (boy3 != null && !boy3.equals(this.values.get("boy3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boy3", boy3);
-	}
-	public void setGirl3(Integer girl3) {
-		if ((girl3 == null && this.values.get("girl3") != null) 
-			|| (girl3 != null && !girl3.equals(this.values.get("girl3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girl3", girl3);
-	}
-	public void setFemale4(Integer female4) {
-		if ((female4 == null && this.values.get("female4") != null) 
-			|| (female4 != null && !female4.equals(this.values.get("female4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("female4", female4);
-	}
-	public void setMale4(Integer male4) {
-		if ((male4 == null && this.values.get("male4") != null) 
-			|| (male4 != null && !male4.equals(this.values.get("male4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male4", male4);
-	}
-	public void setMen4(Integer men4) {
-		if ((men4 == null && this.values.get("men4") != null) 
-			|| (men4 != null && !men4.equals(this.values.get("men4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men4", men4);
-	}
-	public void setWomen4(Integer women4) {
-		if ((women4 == null && this.values.get("women4") != null) 
-			|| (women4 != null && !women4.equals(this.values.get("women4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women4", women4);
-	}
-	public void setBoy4(Integer boy4) {
-		if ((boy4 == null && this.values.get("boy4") != null) 
-			|| (boy4 != null && !boy4.equals(this.values.get("boy4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boy4", boy4);
-	}
-	public void setGirl4(Integer girl4) {
-		if ((girl4 == null && this.values.get("girl4") != null) 
-			|| (girl4 != null && !girl4.equals(this.values.get("girl4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girl4", girl4);
-	}
-	public void setChild4(Integer child4) {
-		if ((child4 == null && this.values.get("child4") != null) 
-			|| (child4 != null && !child4.equals(this.values.get("child4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("child4", child4);
-	}
-	public void setFemale6(Integer female6) {
-		if ((female6 == null && this.values.get("female6") != null) 
-			|| (female6 != null && !female6.equals(this.values.get("female6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("female6", female6);
-	}
-	public void setMale6(Integer male6) {
-		if ((male6 == null && this.values.get("male6") != null) 
-			|| (male6 != null && !male6.equals(this.values.get("male6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male6", male6);
-	}
-	public void setMen6(Integer men6) {
-		if ((men6 == null && this.values.get("men6") != null) 
-			|| (men6 != null && !men6.equals(this.values.get("men6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men6", men6);
-	}
-	public void setWomen6(Integer women6) {
-		if ((women6 == null && this.values.get("women6") != null) 
-			|| (women6 != null && !women6.equals(this.values.get("women6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women6", women6);
-	}
-	public void setBoy6(Integer boy6) {
-		if ((boy6 == null && this.values.get("boy6") != null) 
-			|| (boy6 != null && !boy6.equals(this.values.get("boy6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boy6", boy6);
-	}
-	public void setGirl6(Integer girl6) {
-		if ((girl6 == null && this.values.get("girl6") != null) 
-			|| (girl6 != null && !girl6.equals(this.values.get("girl6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girl6", girl6);
-	}
-	public void setChild6(Integer child6) {
-		if ((child6 == null && this.values.get("child6") != null) 
-			|| (child6 != null && !child6.equals(this.values.get("child6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("child6", child6);
-	}
-	public void setCrew2(Integer crew2) {
-		if ((crew2 == null && this.values.get("crew2") != null) 
-			|| (crew2 != null && !crew2.equals(this.values.get("crew2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("crew2", crew2);
-	}
-	public void setInfantm3(Integer infantm3) {
-		if ((infantm3 == null && this.values.get("infantm3") != null) 
-			|| (infantm3 != null && !infantm3.equals(this.values.get("infantm3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("infantm3", infantm3);
-	}
-	public void setInfantf3(Integer infantf3) {
-		if ((infantf3 == null && this.values.get("infantf3") != null) 
-			|| (infantf3 != null && !infantf3.equals(this.values.get("infantf3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("infantf3", infantf3);
-	}
-	public void setSladafri(Integer sladafri) {
-		if ((sladafri == null && this.values.get("sladafri") != null) 
-			|| (sladafri != null && !sladafri.equals(this.values.get("sladafri")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladafri", sladafri);
-	}
-	public void setSladied5(Integer sladied5) {
-		if ((sladied5 == null && this.values.get("sladied5") != null) 
-			|| (sladied5 != null && !sladied5.equals(this.values.get("sladied5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladied5", sladied5);
-	}
-	public void setSladied4(Integer sladied4) {
-		if ((sladied4 == null && this.values.get("sladied4") != null) 
-			|| (sladied4 != null && !sladied4.equals(this.values.get("sladied4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladied4", sladied4);
-	}
-	public void setSladied2(Integer sladied2) {
-		if ((sladied2 == null && this.values.get("sladied2") != null) 
-			|| (sladied2 != null && !sladied2.equals(this.values.get("sladied2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladied2", sladied2);
-	}
-	public void setSladied1(Integer sladied1) {
-		if ((sladied1 == null && this.values.get("sladied1") != null) 
-			|| (sladied1 != null && !sladied1.equals(this.values.get("sladied1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladied1", sladied1);
-	}
-	public void setSladied3(Integer sladied3) {
-		if ((sladied3 == null && this.values.get("sladied3") != null) 
-			|| (sladied3 != null && !sladied3.equals(this.values.get("sladied3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladied3", sladied3);
-	}
-	public void setSladied6(Integer sladied6) {
-		if ((sladied6 == null && this.values.get("sladied6") != null) 
-			|| (sladied6 != null && !sladied6.equals(this.values.get("sladied6")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sladied6", sladied6);
-	}
 	public void setInsurrec(Integer insurrec) {
-		if ((insurrec == null && this.values.get("insurrec") != null) 
-			|| (insurrec != null && !insurrec.equals(this.values.get("insurrec")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("insurrec", insurrec);
 	}
-	public void setAdult3(Integer adult3) {
-		if ((adult3 == null && this.values.get("adult3") != null) 
-			|| (adult3 != null && !adult3.equals(this.values.get("adult3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("adult3", adult3);
-	}
 	public void setOwnera(String ownera) {
-		if ((ownera == null && this.values.get("ownera") != null) 
-			|| (ownera != null && !ownera.equals(this.values.get("ownera")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownera", ownera);
 	}
 	public void setOwnerb(String ownerb) {
-		if ((ownerb == null && this.values.get("ownerb") != null) 
-			|| (ownerb != null && !ownerb.equals(this.values.get("ownerb")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerb", ownerb);
 	}
 	public void setOwnerc(String ownerc) {
-		if ((ownerc == null && this.values.get("ownerc") != null) 
-			|| (ownerc != null && !ownerc.equals(this.values.get("ownerc")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerc", ownerc);
 	}
 	public void setOwnerd(String ownerd) {
-		if ((ownerd == null && this.values.get("ownerd") != null) 
-			|| (ownerd != null && !ownerd.equals(this.values.get("ownerd")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerd", ownerd);
 	}
 	public void setOwnere(String ownere) {
-		if ((ownere == null && this.values.get("ownere") != null) 
-			|| (ownere != null && !ownere.equals(this.values.get("ownere")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownere", ownere);
 	}
 	public void setOwnerf(String ownerf) {
-		if ((ownerf == null && this.values.get("ownerf") != null) 
-			|| (ownerf != null && !ownerf.equals(this.values.get("ownerf")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerf", ownerf);
 	}
 	public void setOwnerg(String ownerg) {
-		if ((ownerg == null && this.values.get("ownerg") != null) 
-			|| (ownerg != null && !ownerg.equals(this.values.get("ownerg")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerg", ownerg);
 	}
 	public void setOwnerh(String ownerh) {
-		if ((ownerh == null && this.values.get("ownerh") != null) 
-			|| (ownerh != null && !ownerh.equals(this.values.get("ownerh")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerh", ownerh);
 	}
 	public void setOwneri(String owneri) {
-		if ((owneri == null && this.values.get("owneri") != null) 
-			|| (owneri != null && !owneri.equals(this.values.get("owneri")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("owneri", owneri);
 	}
 	public void setOwnerj(String ownerj) {
-		if ((ownerj == null && this.values.get("ownerj") != null) 
-			|| (ownerj != null && !ownerj.equals(this.values.get("ownerj")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerj", ownerj);
 	}
 	public void setOwnerk(String ownerk) {
-		if ((ownerk == null && this.values.get("ownerk") != null) 
-			|| (ownerk != null && !ownerk.equals(this.values.get("ownerk")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerk", ownerk);
 	}
 	public void setOwnerl(String ownerl) {
-		if ((ownerl == null && this.values.get("ownerl") != null) 
-			|| (ownerl != null && !ownerl.equals(this.values.get("ownerl")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerl", ownerl);
 	}
 	public void setOwnerm(String ownerm) {
-		if ((ownerm == null && this.values.get("ownerm") != null) 
-			|| (ownerm != null && !ownerm.equals(this.values.get("ownerm")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerm", ownerm);
 	}
 	public void setOwnern(String ownern) {
-		if ((ownern == null && this.values.get("ownern") != null) 
-			|| (ownern != null && !ownern.equals(this.values.get("ownern")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownern", ownern);
 	}
 	public void setOwnero(String ownero) {
-		if ((ownero == null && this.values.get("ownero") != null) 
-			|| (ownero != null && !ownero.equals(this.values.get("ownero")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownero", ownero);
 	}
 	public void setOwnerp(String ownerp) {
-		if ((ownerp == null && this.values.get("ownerp") != null) 
-			|| (ownerp != null && !ownerp.equals(this.values.get("ownerp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("ownerp", ownerp);
 	}
-	public void setYearaf(Integer yearaf) {
-		if ((yearaf == null && this.values.get("yearaf") != null) 
-			|| (yearaf != null && !yearaf.equals(this.values.get("yearaf")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("yearaf", yearaf);
-	}
-	public void setYeardep(Integer yeardep) {
-		if ((yeardep == null && this.values.get("yeardep") != null) 
-			|| (yeardep != null && !yeardep.equals(this.values.get("yeardep")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("yeardep", yeardep);
-	}
 	public void setYearam(Integer yearam) {
-		if ((yearam == null && this.values.get("yearam") != null) 
-			|| (yearam != null && !yearam.equals(this.values.get("yearam")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("yearam", yearam);
 	}
 	public void setTonmod(Float tonmod) {
-		if ((tonmod == null && this.values.get("tonmod") != null) 
-			|| (tonmod != null && !tonmod.equals(this.values.get("tonmod")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("tonmod", tonmod);
 	}
 	public void setVymrtimp(Integer vymrtimp) {
-		if ((vymrtimp == null && this.values.get("vymrtimp") != null) 
-			|| (vymrtimp != null && !vymrtimp.equals(this.values.get("vymrtimp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("vymrtimp", vymrtimp);
 	}
-	public void setTslmtimp(Integer tslmtimp) {
-		if ((tslmtimp == null && this.values.get("tslmtimp") != null) 
-			|| (tslmtimp != null && !tslmtimp.equals(this.values.get("tslmtimp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("tslmtimp", tslmtimp);
-	}
-	public void setSla32imp(Float sla32imp) {
-		if ((sla32imp == null && this.values.get("sla32imp") != null) 
-			|| (sla32imp != null && !sla32imp.equals(this.values.get("sla32imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sla32imp", sla32imp);
-	}
-	public void setSla36imp(Float sla36imp) {
-		if ((sla36imp == null && this.values.get("sla36imp") != null) 
-			|| (sla36imp != null && !sla36imp.equals(this.values.get("sla36imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sla36imp", sla36imp);
-	}
-	public void setImprat(Float imprat) {
-		if ((imprat == null && this.values.get("imprat") != null) 
-			|| (imprat != null && !imprat.equals(this.values.get("imprat")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("imprat", imprat);
-	}
-	public void setRegdis11(Integer regdis11) {
-		if ((regdis11 == null && this.values.get("regdis11") != null) 
-			|| (regdis11 != null && !regdis11.equals(this.values.get("regdis11")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("regdis11", regdis11);
-	}
-	public void setRegdis21(Integer regdis21) {
-		if ((regdis21 == null && this.values.get("regdis21") != null) 
-			|| (regdis21 != null && !regdis21.equals(this.values.get("regdis21")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("regdis21", regdis21);
-	}
-	public void setSla39imp(Integer sla39imp) {
-		if ((sla39imp == null && this.values.get("sla39imp") != null) 
-			|| (sla39imp != null && !sla39imp.equals(this.values.get("sla39imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sla39imp", sla39imp);
-	}
-	public void setNcr15imp(Float ncr15imp) {
-		if ((ncr15imp == null && this.values.get("ncr15imp") != null) 
-			|| (ncr15imp != null && !ncr15imp.equals(this.values.get("ncr15imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("ncr15imp", ncr15imp);
-	}
-	public void setNcr17imp(Integer ncr17imp) {
-		if ((ncr17imp == null && this.values.get("ncr17imp") != null) 
-			|| (ncr17imp != null && !ncr17imp.equals(this.values.get("ncr17imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("ncr17imp", ncr17imp);
-	}
-	public void setExprat(Float exprat) {
-		if ((exprat == null && this.values.get("exprat") != null) 
-			|| (exprat != null && !exprat.equals(this.values.get("exprat")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("exprat", exprat);
-	}
-	public void setMale1imp(Integer male1imp) {
-		if ((male1imp == null && this.values.get("male1imp") != null) 
-			|| (male1imp != null && !male1imp.equals(this.values.get("male1imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male1imp", male1imp);
-	}
-	public void setFeml1imp(Integer feml1imp) {
-		if ((feml1imp == null && this.values.get("feml1imp") != null) 
-			|| (feml1imp != null && !feml1imp.equals(this.values.get("feml1imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("feml1imp", feml1imp);
-	}
-	public void setChil1imp(Integer chil1imp) {
-		if ((chil1imp == null && this.values.get("chil1imp") != null) 
-			|| (chil1imp != null && !chil1imp.equals(this.values.get("chil1imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("chil1imp", chil1imp);
-	}
-	public void setMalrat1(Float malrat1) {
-		if ((malrat1 == null && this.values.get("malrat1") != null) 
-			|| (malrat1 != null && !malrat1.equals(this.values.get("malrat1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("malrat1", malrat1);
-	}
-	public void setChilrat1(Float chilrat1) {
-		if ((chilrat1 == null && this.values.get("chilrat1") != null) 
-			|| (chilrat1 != null && !chilrat1.equals(this.values.get("chilrat1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("chilrat1", chilrat1);
-	}
-	public void setSlavemx1(Integer slavemx1) {
-		if ((slavemx1 == null && this.values.get("slavemx1") != null) 
-			|| (slavemx1 != null && !slavemx1.equals(this.values.get("slavemx1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavemx1", slavemx1);
-	}
-	public void setSlavema1(Integer slavema1) {
-		if ((slavema1 == null && this.values.get("slavema1") != null) 
-			|| (slavema1 != null && !slavema1.equals(this.values.get("slavema1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavema1", slavema1);
-	}
-	public void setMale3imp(Integer male3imp) {
-		if ((male3imp == null && this.values.get("male3imp") != null) 
-			|| (male3imp != null && !male3imp.equals(this.values.get("male3imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male3imp", male3imp);
-	}
-	public void setFeml3imp(Integer feml3imp) {
-		if ((feml3imp == null && this.values.get("feml3imp") != null) 
-			|| (feml3imp != null && !feml3imp.equals(this.values.get("feml3imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("feml3imp", feml3imp);
-	}
-	public void setChil3imp(Integer chil3imp) {
-		if ((chil3imp == null && this.values.get("chil3imp") != null) 
-			|| (chil3imp != null && !chil3imp.equals(this.values.get("chil3imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("chil3imp", chil3imp);
-	}
-	public void setChilrat3(Float chilrat3) {
-		if ((chilrat3 == null && this.values.get("chilrat3") != null) 
-			|| (chilrat3 != null && !chilrat3.equals(this.values.get("chilrat3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("chilrat3", chilrat3);
-	}
-	public void setMalrat3(Float malrat3) {
-		if ((malrat3 == null && this.values.get("malrat3") != null) 
-			|| (malrat3 != null && !malrat3.equals(this.values.get("malrat3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("malrat3", malrat3);
-	}
-	public void setSlavemx3(Integer slavemx3) {
-		if ((slavemx3 == null && this.values.get("slavemx3") != null) 
-			|| (slavemx3 != null && !slavemx3.equals(this.values.get("slavemx3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavemx3", slavemx3);
-	}
-	public void setSlavema3(Integer slavema3) {
-		if ((slavema3 == null && this.values.get("slavema3") != null) 
-			|| (slavema3 != null && !slavema3.equals(this.values.get("slavema3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavema3", slavema3);
-	}
-	public void setAdlt3imp(Integer adlt3imp) {
-		if ((adlt3imp == null && this.values.get("adlt3imp") != null) 
-			|| (adlt3imp != null && !adlt3imp.equals(this.values.get("adlt3imp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("adlt3imp", adlt3imp);
-	}
 	public void setVymrtrat(Float vymrtrat) {
-		if ((vymrtrat == null && this.values.get("vymrtrat") != null) 
-			|| (vymrtrat != null && !vymrtrat.equals(this.values.get("vymrtrat")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("vymrtrat", vymrtrat);
 	}
 	public void setSlaximp(Float slaximp) {
-		if ((slaximp == null && this.values.get("slaximp") != null) 
-			|| (slaximp != null && !slaximp.equals(this.values.get("slaximp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("slaximp", slaximp);
 	}
 	public void setSlamimp(Float slamimp) {
-		if ((slamimp == null && this.values.get("slamimp") != null) 
-			|| (slamimp != null && !slamimp.equals(this.values.get("slamimp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("slamimp", slamimp);
 	}
 	public void setVoy2imp(Integer voy2imp) {
-		if ((voy2imp == null && this.values.get("voy2imp") != null) 
-			|| (voy2imp != null && !voy2imp.equals(this.values.get("voy2imp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("voy2imp", voy2imp);
 	}
 	public void setVoy1imp(Integer voy1imp) {
-		if ((voy1imp == null && this.values.get("voy1imp") != null) 
-			|| (voy1imp != null && !voy1imp.equals(this.values.get("voy1imp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("voy1imp", voy1imp);
 	}
 	public void setMalrat7(Float malrat7) {
-		if ((malrat7 == null && this.values.get("malrat7") != null) 
-			|| (malrat7 != null && !malrat7.equals(this.values.get("malrat7")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("malrat7", malrat7);
 	}
 	public void setChilrat7(Float chilrat7) {
-		if ((chilrat7 == null && this.values.get("chilrat7") != null) 
-			|| (chilrat7 != null && !chilrat7.equals(this.values.get("chilrat7")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("chilrat7", chilrat7);
 	}
-	public void setSourcex(String sourcex) {
-		if ((sourcex == null && this.values.get("sourcex") != null) 
-			|| (sourcex != null && !sourcex.equals(this.values.get("sourcex")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("sourcex", sourcex);
-	}
-	public void setP(Integer p) {
-		if ((p == null && this.values.get("p") != null) 
-			|| (p != null && !p.equals(this.values.get("p")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("p", p);
-	}
-	public void setEvgreen(Integer evgreen) {
-		if ((evgreen == null && this.values.get("evgreen") != null) 
-			|| (evgreen != null && !evgreen.equals(this.values.get("evgreen")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("evgreen", evgreen);
-	}
-	public void setWomrat1(Float womrat1) {
-		if ((womrat1 == null && this.values.get("womrat1") != null) 
-			|| (womrat1 != null && !womrat1.equals(this.values.get("womrat1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("womrat1", womrat1);
-	}
-	public void setWomrat3(Float womrat3) {
-		if ((womrat3 == null && this.values.get("womrat3") != null) 
-			|| (womrat3 != null && !womrat3.equals(this.values.get("womrat3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("womrat3", womrat3);
-	}
 	public void setWomrat7(Float womrat7) {
-		if ((womrat7 == null && this.values.get("womrat7") != null) 
-			|| (womrat7 != null && !womrat7.equals(this.values.get("womrat7")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("womrat7", womrat7);
 	}
 	public void setMenrat7(Float menrat7) {
-		if ((menrat7 == null && this.values.get("menrat7") != null) 
-			|| (menrat7 != null && !menrat7.equals(this.values.get("menrat7")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("menrat7", menrat7);
 	}
-	public void setMenrat3(Float menrat3) {
-		if ((menrat3 == null && this.values.get("menrat3") != null) 
-			|| (menrat3 != null && !menrat3.equals(this.values.get("menrat3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("menrat3", menrat3);
-	}
-	public void setMenrat1(Float menrat1) {
-		if ((menrat1 == null && this.values.get("menrat1") != null) 
-			|| (menrat1 != null && !menrat1.equals(this.values.get("menrat1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("menrat1", menrat1);
-	}
-	public void setGirlrat1(Float girlrat1) {
-		if ((girlrat1 == null && this.values.get("girlrat1") != null) 
-			|| (girlrat1 != null && !girlrat1.equals(this.values.get("girlrat1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girlrat1", girlrat1);
-	}
-	public void setGirlrat3(Float girlrat3) {
-		if ((girlrat3 == null && this.values.get("girlrat3") != null) 
-			|| (girlrat3 != null && !girlrat3.equals(this.values.get("girlrat3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girlrat3", girlrat3);
-	}
 	public void setGirlrat7(Float girlrat7) {
-		if ((girlrat7 == null && this.values.get("girlrat7") != null) 
-			|| (girlrat7 != null && !girlrat7.equals(this.values.get("girlrat7")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("girlrat7", girlrat7);
 	}
 	public void setBoyrat7(Float boyrat7) {
-		if ((boyrat7 == null && this.values.get("boyrat7") != null) 
-			|| (boyrat7 != null && !boyrat7.equals(this.values.get("boyrat7")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("boyrat7", boyrat7);
 	}
-	public void setBoyrat3(Float boyrat3) {
-		if ((boyrat3 == null && this.values.get("boyrat3") != null) 
-			|| (boyrat3 != null && !boyrat3.equals(this.values.get("boyrat3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boyrat3", boyrat3);
-	}
-	public void setBoyrat1(Float boyrat1) {
-		if ((boyrat1 == null && this.values.get("boyrat1") != null) 
-			|| (boyrat1 != null && !boyrat1.equals(this.values.get("boyrat1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boyrat1", boyrat1);
-	}
 	public void setJamcaspr(Float jamcaspr) {
-		if ((jamcaspr == null && this.values.get("jamcaspr") != null) 
-			|| (jamcaspr != null && !jamcaspr.equals(this.values.get("jamcaspr")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("jamcaspr", jamcaspr);
 	}
-	public void setGirl5(Integer girl5) {
-		if ((girl5 == null && this.values.get("girl5") != null) 
-			|| (girl5 != null && !girl5.equals(this.values.get("girl5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girl5", girl5);
-	}
-	public void setBoy5(Integer boy5) {
-		if ((boy5 == null && this.values.get("boy5") != null) 
-			|| (boy5 != null && !boy5.equals(this.values.get("boy5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boy5", boy5);
-	}
-	public void setMen5(Integer men5) {
-		if ((men5 == null && this.values.get("men5") != null) 
-			|| (men5 != null && !men5.equals(this.values.get("men5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men5", men5);
-	}
-	public void setWomen5(Integer women5) {
-		if ((women5 == null && this.values.get("women5") != null) 
-			|| (women5 != null && !women5.equals(this.values.get("women5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women5", women5);
-	}
-	public void setChild5(Integer child5) {
-		if ((child5 == null && this.values.get("child5") != null) 
-			|| (child5 != null && !child5.equals(this.values.get("child5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("child5", child5);
-	}
-	public void setMale5(Integer male5) {
-		if ((male5 == null && this.values.get("male5") != null) 
-			|| (male5 != null && !male5.equals(this.values.get("male5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male5", male5);
-	}
-	public void setFemale5(Integer female5) {
-		if ((female5 == null && this.values.get("female5") != null) 
-			|| (female5 != null && !female5.equals(this.values.get("female5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("female5", female5);
-	}
-	public void setArrport2(Port arrport2) {
-		if ((arrport2 == null && this.values.get("arrport2") != null) 
-			|| (arrport2 != null && !arrport2.equals(this.values.get("arrport2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("arrport2", arrport2);
-	}
-	public void setInfant3(Integer infant3) {
-		if ((infant3 == null && this.values.get("infant3") != null) 
-			|| (infant3 != null && !infant3.equals(this.values.get("infant3")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("infant3", infant3);
-	}
-	public void setInfant1(Integer infant1) {
-		if ((infant1 == null && this.values.get("infant1") != null) 
-			|| (infant1 != null && !infant1.equals(this.values.get("infant1")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("infant1", infant1);
-	}
-	public void setAdult5(Integer adult5) {
-		if ((adult5 == null && this.values.get("adult5") != null) 
-			|| (adult5 != null && !adult5.equals(this.values.get("adult5")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("adult5", adult5);
-	}
-	public void setAdult2(Integer adult2) {
-		if ((adult2 == null && this.values.get("adult2") != null) 
-			|| (adult2 != null && !adult2.equals(this.values.get("adult2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("adult2", adult2);
-	}
-	public void setAdult4(Integer adult4) {
-		if ((adult4 == null && this.values.get("adult4") != null) 
-			|| (adult4 != null && !adult4.equals(this.values.get("adult4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("adult4", adult4);
-	}
-	public void setInfant4(Integer infant4) {
-		if ((infant4 == null && this.values.get("infant4") != null) 
-			|| (infant4 != null && !infant4.equals(this.values.get("infant4")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("infant4", infant4);
-	}
-	public void setCrew(Integer crew) {
-		if ((crew == null && this.values.get("crew") != null) 
-			|| (crew != null && !crew.equals(this.values.get("crew")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("crew", crew);
-	}
-	public void setMen7(Integer men7) {
-		if ((men7 == null && this.values.get("men7") != null) 
-			|| (men7 != null && !men7.equals(this.values.get("men7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("men7", men7);
-	}
-	public void setMale7(Integer male7) {
-		if ((male7 == null && this.values.get("male7") != null) 
-			|| (male7 != null && !male7.equals(this.values.get("male7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("male7", male7);
-	}
-	public void setFemale7(Integer female7) {
-		if ((female7 == null && this.values.get("female7") != null) 
-			|| (female7 != null && !female7.equals(this.values.get("female7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("female7", female7);
-	}
-	public void setWomen7(Integer women7) {
-		if ((women7 == null && this.values.get("women7") != null) 
-			|| (women7 != null && !women7.equals(this.values.get("women7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("women7", women7);
-	}
-	public void setAdult7(Integer adult7) {
-		if ((adult7 == null && this.values.get("adult7") != null) 
-			|| (adult7 != null && !adult7.equals(this.values.get("adult7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("adult7", adult7);
-	}
-	public void setBoy7(Integer boy7) {
-		if ((boy7 == null && this.values.get("boy7") != null) 
-			|| (boy7 != null && !boy7.equals(this.values.get("boy7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("boy7", boy7);
-	}
-	public void setGirl7(Integer girl7) {
-		if ((girl7 == null && this.values.get("girl7") != null) 
-			|| (girl7 != null && !girl7.equals(this.values.get("girl7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("girl7", girl7);
-	}
-	public void setChild7(Integer child7) {
-		if ((child7 == null && this.values.get("child7") != null) 
-			|| (child7 != null && !child7.equals(this.values.get("child7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("child7", child7);
-	}
-	public void setRice(Float rice) {
-		if ((rice == null && this.values.get("rice") != null) 
-			|| (rice != null && !rice.equals(this.values.get("rice")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("rice", rice);
-	}
-	public void setSlavemx7(Float slavemx7) {
-		if ((slavemx7 == null && this.values.get("slavemx7") != null) 
-			|| (slavemx7 != null && !slavemx7.equals(this.values.get("slavemx7")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("slavemx7", slavemx7);
-	}
-	public void setDatepl(DepDefinition datepl) {
-		if ((datepl == null && this.values.get("datepl") != null) 
-			|| (datepl != null && !datepl.equals(this.values.get("datepl")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("datepl", datepl);
-	}
-	public void setEmbport(Port embport) {
-		if ((embport == null && this.values.get("embport") != null) 
-			|| (embport != null && !embport.equals(this.values.get("embport")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("embport", embport);
-	}
-	public void setArrport(Port arrport) {
-		if ((arrport == null && this.values.get("arrport") != null) 
-			|| (arrport != null && !arrport.equals(this.values.get("arrport")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("arrport", arrport);
-	}
 	public void setPlac1tra(Port plac1tra) {
-		if ((plac1tra == null && this.values.get("plac1tra") != null) 
-			|| (plac1tra != null && !plac1tra.equals(this.values.get("plac1tra")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("plac1tra", plac1tra);
 	}
-	public void setDestin(Port destin) {
-		if ((destin == null && this.values.get("destin") != null) 
-			|| (destin != null && !destin.equals(this.values.get("destin")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("destin", destin);
-	}
 	public void setPlac2tra(Port plac2tra) {
-		if ((plac2tra == null && this.values.get("plac2tra") != null) 
-			|| (plac2tra != null && !plac2tra.equals(this.values.get("plac2tra")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("plac2tra", plac2tra);
 	}
 	public void setPlac3tra(Port plac3tra) {
-		if ((plac3tra == null && this.values.get("plac3tra") != null) 
-			|| (plac3tra != null && !plac3tra.equals(this.values.get("plac3tra")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("plac3tra", plac3tra);
 	}
 	public void setNpafttra(OldWorldPlace npafttra) {
-		if ((npafttra == null && this.values.get("npafttra") != null) 
-			|| (npafttra != null && !npafttra.equals(this.values.get("npafttra")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("npafttra", npafttra);
 	}
 	public void setSla1port(Port sla1port) {
-		if ((sla1port == null && this.values.get("sla1port") != null) 
-			|| (sla1port != null && !sla1port.equals(this.values.get("sla1port")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("sla1port", sla1port);
 	}
 	public void setAdpsale1(Port adpsale1) {
-		if ((adpsale1 == null && this.values.get("adpsale1") != null) 
-			|| (adpsale1 != null && !adpsale1.equals(this.values.get("adpsale1")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("adpsale1", adpsale1);
 	}
 	public void setAdpsale2(Port adpsale2) {
-		if ((adpsale2 == null && this.values.get("adpsale2") != null) 
-			|| (adpsale2 != null && !adpsale2.equals(this.values.get("adpsale2")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("adpsale2", adpsale2);
 	}
 	public void setPortret(Port portret) {
-		if ((portret == null && this.values.get("portret") != null) 
-			|| (portret != null && !portret.equals(this.values.get("portret")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("portret", portret);
 	}
-	public void setTontype(TonesType tontype) {
-		if ((tontype == null && this.values.get("tontype") != null) 
-			|| (tontype != null && !tontype.equals(this.values.get("tontype")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("tontype", tontype);
-	}
-	public void setNational(ShipNationality national) {
-		if ((national == null && this.values.get("national") != null) 
-			|| (national != null && !national.equals(this.values.get("national")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("national", national);
-	}
-	public void setEmbport2(Port embport2) {
-		if ((embport2 == null && this.values.get("embport2") != null) 
-			|| (embport2 != null && !embport2.equals(this.values.get("embport2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("embport2", embport2);
-	}
-	public void setPortdep(Port portdep) {
-		if ((portdep == null && this.values.get("portdep") != null) 
-			|| (portdep != null && !portdep.equals(this.values.get("portdep")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("portdep", portdep);
-	}
 	public void setRig(VesselRig rig) {
-		if ((rig == null && this.values.get("rig") != null) 
-			|| (rig != null && !rig.equals(this.values.get("rig")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("rig", rig);
 	}
 	public void setPlaccons(Port placcons) {
-		if ((placcons == null && this.values.get("placcons") != null) 
-			|| (placcons != null && !placcons.equals(this.values.get("placcons")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("placcons", placcons);
 	}
-	public void setMajselpt(Port majselpt) {
-		if ((majselpt == null && this.values.get("majselpt") != null) 
-			|| (majselpt != null && !majselpt.equals(this.values.get("majselpt")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("majselpt", majselpt);
-	}
-	public void setMajbuypt(Port majbuypt) {
-		if ((majbuypt == null && this.values.get("majbuypt") != null) 
-			|| (majbuypt != null && !majbuypt.equals(this.values.get("majbuypt")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("majbuypt", majbuypt);
-	}
 	public void setNatinimp(ImputedNation natinimp) {
-		if ((natinimp == null && this.values.get("natinimp") != null) 
-			|| (natinimp != null && !natinimp.equals(this.values.get("natinimp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("natinimp", natinimp);
 	}
-	public void setDeptreg(Region deptreg) {
-		if ((deptreg == null && this.values.get("deptreg") != null) 
-			|| (deptreg != null && !deptreg.equals(this.values.get("deptreg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("deptreg", deptreg);
-	}
 	public void setRetrnreg(Region retrnreg) {
-		if ((retrnreg == null && this.values.get("retrnreg") != null) 
-			|| (retrnreg != null && !retrnreg.equals(this.values.get("retrnreg")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("retrnreg", retrnreg);
 	}
-	public void setRegisreg(Region regisreg) {
-		if ((regisreg == null && this.values.get("regisreg") != null) 
-			|| (regisreg != null && !regisreg.equals(this.values.get("regisreg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("regisreg", regisreg);
-	}
 	public void setRegem1(Region regem1) {
-		if ((regem1 == null && this.values.get("regem1") != null) 
-			|| (regem1 != null && !regem1.equals(this.values.get("regem1")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("regem1", regem1);
 	}
 	public void setRegem2(Region regem2) {
-		if ((regem2 == null && this.values.get("regem2") != null) 
-			|| (regem2 != null && !regem2.equals(this.values.get("regem2")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("regem2", regem2);
 	}
 	public void setRegem3(Region regem3) {
-		if ((regem3 == null && this.values.get("regem3") != null) 
-			|| (regem3 != null && !regem3.equals(this.values.get("regem3")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("regem3", regem3);
 	}
-	public void setEmbreg(Region embreg) {
-		if ((embreg == null && this.values.get("embreg") != null) 
-			|| (embreg != null && !embreg.equals(this.values.get("embreg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("embreg", embreg);
-	}
-	public void setEmbreg2(Region embreg2) {
-		if ((embreg2 == null && this.values.get("embreg2") != null) 
-			|| (embreg2 != null && !embreg2.equals(this.values.get("embreg2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("embreg2", embreg2);
-	}
-	public void setMajbuyrg(Region majbuyrg) {
-		if ((majbuyrg == null && this.values.get("majbuyrg") != null) 
-			|| (majbuyrg != null && !majbuyrg.equals(this.values.get("majbuyrg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("majbuyrg", majbuyrg);
-	}
 	public void setMajbyimp(Region majbyimp) {
-		if ((majbyimp == null && this.values.get("majbyimp") != null) 
-			|| (majbyimp != null && !majbyimp.equals(this.values.get("majbyimp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("majbyimp", majbyimp);
 	}
 	public void setRegdis1(Region regdis1) {
-		if ((regdis1 == null && this.values.get("regdis1") != null) 
-			|| (regdis1 != null && !regdis1.equals(this.values.get("regdis1")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("regdis1", regdis1);
 	}
 	public void setRegdis2(Region regdis2) {
-		if ((regdis2 == null && this.values.get("regdis2") != null) 
-			|| (regdis2 != null && !regdis2.equals(this.values.get("regdis2")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("regdis2", regdis2);
 	}
 	public void setRegdis3(Region regdis3) {
-		if ((regdis3 == null && this.values.get("regdis3") != null) 
-			|| (regdis3 != null && !regdis3.equals(this.values.get("regdis3")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("regdis3", regdis3);
 	}
-	public void setRegarrp(Region regarrp) {
-		if ((regarrp == null && this.values.get("regarrp") != null) 
-			|| (regarrp != null && !regarrp.equals(this.values.get("regarrp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("regarrp", regarrp);
-	}
-	public void setMajselrg(Region majselrg) {
-		if ((majselrg == null && this.values.get("majselrg") != null) 
-			|| (majselrg != null && !majselrg.equals(this.values.get("majselrg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("majselrg", majselrg);
-	}
 	public void setFate2(Fate2 fate2) {
-		if ((fate2 == null && this.values.get("fate2") != null) 
-			|| (fate2 != null && !fate2.equals(this.values.get("fate2")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("fate2", fate2);
 	}
 	public void setFate3(Fate3 fate3) {
-		if ((fate3 == null && this.values.get("fate3") != null) 
-			|| (fate3 != null && !fate3.equals(this.values.get("fate3")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("fate3", fate3);
 	}
 	public void setFate4(Fate4 fate4) {
-		if ((fate4 == null && this.values.get("fate4") != null) 
-			|| (fate4 != null && !fate4.equals(this.values.get("fate4")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("fate4", fate4);
 	}
 	public void setMjselimp(Region mjselimp) {
-		if ((mjselimp == null && this.values.get("mjselimp") != null) 
-			|| (mjselimp != null && !mjselimp.equals(this.values.get("mjselimp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("mjselimp", mjselimp);
 	}
-	public void setConstreg(Region constreg) {
-		if ((constreg == null && this.values.get("constreg") != null) 
-			|| (constreg != null && !constreg.equals(this.values.get("constreg")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("constreg", constreg);
-	}
-	public void setEditor(Editor editor) {
-		if ((editor == null && this.values.get("editor") != null) 
-			|| (editor != null && !editor.equals(this.values.get("editor")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("editor", editor);
-	}
-	public void setFilter_$(Filter filter_$) {
-		if ((filter_$ == null && this.values.get("filter_$") != null) 
-			|| (filter_$ != null && !filter_$.equals(this.values.get("filter_$")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("filter_$", filter_$);
-	}
-	public void setRegarrp2(Region regarrp2) {
-		if ((regarrp2 == null && this.values.get("regarrp2") != null) 
-			|| (regarrp2 != null && !regarrp2.equals(this.values.get("regarrp2")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("regarrp2", regarrp2);
-	}
-	public void setXmimpflag(XmimpFlag xmimpflag) {
-		if ((xmimpflag == null && this.values.get("xmimpflag") != null) 
-			|| (xmimpflag != null && !xmimpflag.equals(this.values.get("xmimpflag")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("xmimpflag", xmimpflag);
-	}
-	public void setTemp(Temp temp) {
-		if ((temp == null && this.values.get("temp") != null) 
-			|| (temp != null && !temp.equals(this.values.get("temp")))) {
-			this.modified = UPDATED;
-		}
-		this.values.put("temp", temp);
-	}
 	public void setMjbyptimp(Port purchasePort) {
-		if ((purchasePort == null && this.values.get("mjbyptimp") != null) 
-			|| (purchasePort != null && !purchasePort.equals(this.values.get("mjbyptimp")))) {
-			this.modified = UPDATED;
-		}
 		this.values.put("mjbyptimp", purchasePort);
 	}
+	
 	public Long getVoyageId() {
 		return (Long)this.values.get("voyageId");
 	}
