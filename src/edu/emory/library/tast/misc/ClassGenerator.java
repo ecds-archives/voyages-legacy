@@ -126,19 +126,19 @@ public class ClassGenerator {
 //							type = Attribute.TYPE_DICT;
 //							dict = attrType;
 //						}
-						int importType = Attribute.IMPORT_TYPE_NUMERIC;
-						if ("numeric".equals(attrImportType) || attrImportType == null) {
-							importType = Attribute.IMPORT_TYPE_NUMERIC;
-						} else if ("ignore".equals(attrImportType)) {
-							importType = Attribute.IMPORT_TYPE_IGNORE;
-						} else if ("date".equals(attrImportType)) {
-							importType = Attribute.IMPORT_TYPE_DATE;
-						} else if ("string".equals(attrImportType)) {
-							importType = Attribute.IMPORT_TYPE_STRING;
-						} else {
-							throw new RuntimeException("Wrong switch: "
-									+ attrImportType);
-						}
+//						int importType = Attribute.IMPORT_TYPE_NUMERIC;
+//						if ("numeric".equals(attrImportType) || attrImportType == null) {
+//							importType = Attribute.IMPORT_TYPE_NUMERIC;
+//						} else if ("ignore".equals(attrImportType)) {
+//							importType = Attribute.IMPORT_TYPE_IGNORE;
+//						} else if ("date".equals(attrImportType)) {
+//							importType = Attribute.IMPORT_TYPE_DATE;
+//						} else if ("string".equals(attrImportType)) {
+//							importType = Attribute.IMPORT_TYPE_STRING;
+//						} else {
+//							throw new RuntimeException("Wrong switch: "
+//									+ attrImportType);
+//						}
 
 						types.append("\"").append(attrName).append("\", ");
 						types.append(type).append(", ");
@@ -147,7 +147,7 @@ public class ClassGenerator {
 						} else {
 							types.append("\"").append(dict).append("\", ");
 						}
-						types.append(importType).append(", ");
+						//types.append(importType).append(", ");
 						if (attrImportName != null) {
 							types.append("\"").append(attrImportName).append(
 									"\", ");

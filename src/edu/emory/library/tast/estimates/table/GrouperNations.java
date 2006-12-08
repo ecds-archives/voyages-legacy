@@ -58,7 +58,7 @@ public class GrouperNations extends Grouper
 		for (Iterator iter = nations.iterator(); iter.hasNext();)
 		{
 			Nation nation = (Nation) iter.next();
-			Long nationId = new Long(nation.getId());
+			Long nationId = nation.getId();
 			if (!omitEmpty || listedNationIds.contains(nationId))
 			{
 				labels[i] = nation.getName();

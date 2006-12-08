@@ -105,7 +105,7 @@ public class EstimatesSelectionBean
 		for (Iterator iter = nations.iterator(); iter.hasNext();)
 		{
 			Nation nation = (Nation) iter.next();
-			selectedNationIds.add(new Long(nation.getId()));
+			selectedNationIds.add(nation.getId());
 			checkedNations[i++] = String.valueOf(nation.getId());
 		}
 
@@ -325,7 +325,7 @@ public class EstimatesSelectionBean
 		for (Iterator iter = regionsDb.iterator(); iter.hasNext();)
 		{
 			Region region = (Region) iter.next();
-			int areaId = region.getArea().getId();
+			int areaId = region.getArea().getId().intValue();
 			if (lastAreaId != areaId)
 			{
 				lastAreaId = areaId;
@@ -341,7 +341,7 @@ public class EstimatesSelectionBean
 		for (Iterator iter = regionsDb.iterator(); iter.hasNext();)
 		{
 			Region region = (Region) iter.next();
-			int areaId = region.getArea().getId();
+			int areaId = region.getArea().getId().intValue();
 			
 			if (lastAreaId != areaId)
 			{
@@ -527,7 +527,7 @@ public class EstimatesSelectionBean
 			
 			Iterator iter = selectedImpRegions.iterator();
 			Region region = (Region) iter.next();
-			int lastAreaId = region.getArea().getId();
+			int lastAreaId = region.getArea().getId().intValue();
 			String lastAreaName = region.getArea().getName();
 			
 			StringBuffer selectedImpRegionsInAreaBuff = new StringBuffer(); 
@@ -560,7 +560,7 @@ public class EstimatesSelectionBean
 
 					region = (Region) iter.next();
 					
-					int areaId = region.getArea().getId();
+					int areaId = region.getArea().getId().intValue();
 					if (lastAreaId != areaId)
 					{
 						lastAreaId = areaId;

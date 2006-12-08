@@ -11,11 +11,9 @@ import org.hibernate.Session;
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.dm.dictionaries.Temp;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
@@ -43,60 +41,37 @@ public class HibernateTest {
 				&& !command.equalsIgnoreCase("exit")) {
 
 			if (command.equals("store")) {
-				Voyage v = Voyage.createNew(new Long(System.currentTimeMillis()));
-				v.setShipname("Ship: " + v.getVoyageId().longValue());
-				v.setVoyageId(v.getVoyageId());
+				//Voyage v = Voyage.createNew(new Long(System.currentTimeMillis()));
+				//v.setShipname("Ship: " + v.getVoyageId().longValue());
+				//v.setVoyageId(v.getVoyageId());
 				
-				Slave slave1 = Slave.createNew(new Long(System.currentTimeMillis()));
-				Slave slave2 = Slave.createNew(new Long(System.currentTimeMillis()));
-				slave1.setName("Slave 1");
-				slave2.setName("Slave 2");
-				HashSet slaves = new HashSet();
-				slaves.add(slave1);
-				slaves.add(slave2);
-				v.setSlaves(slaves);
+				//Slave slave1 = Slave.createNew(new Long(System.currentTimeMillis()));
+				//Slave slave2 = Slave.createNew(new Long(System.currentTimeMillis()));
+				//slave1.setName("Slave 1");
+				//slave2.setName("Slave 2");
+				//HashSet slaves = new HashSet();
+				//slaves.add(slave1);
+				//slaves.add(slave2);
+				//v.setSlaves(slaves);
 				
-				v.save();
+				//v.save();
 			} else if (command.equals("list")) {
 				Conditions conditions = new Conditions();
 				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), Conditions.OP_EQUALS);
 				QueryValue val = new QueryValue("Voyage", conditions);
 				Object[] ret = val.executeQuery();
 				Voyage v = (Voyage)ret[0];
-				System.out.println("---> " + v.getS_slamimp() + "  " + v.getS_slaximp());
 			} else if (command.startsWith("modify")) {
 				Long id = new Long(command.split(" ")[1]);
 				Voyage v = Voyage.loadMostRecent(id);
 				if (v != null) {
 					v.setShipname(v.getShipname() + "-");
-					v.setModified(Voyage.UPDATED);
 					v.save();
 				} else {
 					System.out.println("Empty result for given id - cannot update");
 				}
 			} else if (command.equals("dictionary")) {
-				Dictionary[] dicts = Dictionary.loadDictionary("Temp");
-				for (int i = 0; i < dicts.length; i++) {
-					System.out.println("Dict: " + dicts[i]);
-				}
 			} else if (command.equals("testSaving")) {
-				Temp dic = new Temp();
-				dic.setRemoteId(new Integer(10));
-				dic.setName(System.currentTimeMillis() + "");
-				dic.save();
-				Voyage v = Voyage.loadMostRecent(new Long(1));
-				
-				if (v == null) {
-					System.out.println("No object!");
-				} else {
-					System.out.println("After loading: " + v);
-					v.setTemp(dic);
-					System.out.println("Has: " + v.getAdpsale1());
-					v.save();
-				}
-				
-				Voyage v_new = Voyage.loadMostRecent(new Long(1));
-				System.out.println("After loading: " + v_new);
 			} else if (command.equals("limit")) {
 				try {
 					

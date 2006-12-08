@@ -1,5 +1,7 @@
 package edu.emory.library.tast.dm;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+
 
 /**
  * Superclass for any dictionary in the application.
@@ -47,5 +49,5 @@ public abstract class Dictionary
 	{
 		return id.hashCode();
 	}
-
+	
 }

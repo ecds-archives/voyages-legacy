@@ -7,6 +7,7 @@ import java.util.List;
 
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.EstimatesNation;
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
@@ -17,7 +18,6 @@ import edu.emory.library.tast.dm.attributes.specific.CaseNullToZeroAttribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.dm.dictionaries.ImputedNation;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -249,7 +249,7 @@ public class EstimatesLoader {
 				Conditions.OP_GREATER_OR_EQUAL);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("natinimp"),
-				Dictionary.getAttribute("remoteId") }), new Integer(position
+				Region.getAttribute("id") }), new Long(position
 				.getNatimp()), Conditions.OP_EQUALS);
 
 		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
@@ -257,17 +257,17 @@ public class EstimatesLoader {
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("majbyimp"),
-						Dictionary.getAttribute("id") }),
+						Region.getAttribute("id") }),
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("mjselimp"),
-						Dictionary.getAttribute("id") }) });
+						Region.getAttribute("id") }) });
 
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("majbyimp"),
-						Dictionary.getAttribute("id") }));
+						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("mjselimp"),
-						Dictionary.getAttribute("id") }));
+						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Voyage.getAttribute(field) }));
 
@@ -317,7 +317,7 @@ public class EstimatesLoader {
 		// position.getYear()), Conditions.OP_EQUALS);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("natinimp"),
-				Dictionary.getAttribute("remoteId") }), new Integer(position
+				EstimatesNation.getAttribute("remoteId") }), new Integer(position
 				.getNatimp()), Conditions.OP_EQUALS);
 
 		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
@@ -325,17 +325,17 @@ public class EstimatesLoader {
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("majbyimp"),
-						Dictionary.getAttribute("id") }),
+						Region.getAttribute("id") }),
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("mjselimp"),
-						Dictionary.getAttribute("id") }) });
+						Region.getAttribute("id") }) });
 
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("majbyimp"),
-						Dictionary.getAttribute("id") }));
+						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("mjselimp"),
-						Dictionary.getAttribute("id") }));
+						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { new FunctionAttribute("estimate",
 						new Attribute[] { Voyage.getAttribute("iid"),
@@ -394,7 +394,7 @@ public class EstimatesLoader {
 					Conditions.OP_GREATER_OR_EQUAL);
 			conditions.addCondition(new SequenceAttribute(new Attribute[] {
 					Voyage.getAttribute("natinimp"),
-					Dictionary.getAttribute("remoteId") }), new Integer(
+					Region.getAttribute("id") }), new Integer(
 					position.getNatimp()), Conditions.OP_EQUALS);
 
 			QueryValue qValue = new QueryValue(new String[] { "Voyage" },
