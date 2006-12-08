@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tas.dicts.ImputedNation;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -17,7 +18,9 @@ import edu.emory.library.tast.dm.attributes.FateAttribute;
 import edu.emory.library.tast.dm.attributes.FateOwnerAttribute;
 import edu.emory.library.tast.dm.attributes.FateSlavesAttribute;
 import edu.emory.library.tast.dm.attributes.FateVesselAttribute;
+import edu.emory.library.tast.dm.attributes.InsurrectionsAttribute;
 import edu.emory.library.tast.dm.attributes.NationAttribute;
+import edu.emory.library.tast.dm.attributes.NationEstimateAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.PortAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
@@ -45,19 +48,19 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	private static List attributes = new ArrayList();
 	static {
-		attributes.add(new NumericAttribute("iid", NumericAttribute.TYPE_LONG, "Voyage"));
-		attributes.add(new NumericalAttribute("voyageid", "Voyage", NumericAttribute.TYPE_LONG, "voyageid"));
+		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, "Voyage"));
+		attributes.add(new NumericAttribute("voyageid", "Voyage", NumericAttribute.TYPE_LONG, "voyageid"));
 		attributes.add(new BooleanAttribute("cd", "Voyage", "cd"));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
 		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
-		attributes.add(new NumericalAttribute("yrcons", "Voyage", NumericAttribute.TYPE_INTEGER, "yrcons"));
+		attributes.add(new NumericAttribute("yrcons", "Voyage", NumericAttribute.TYPE_INTEGER, "yrcons"));
 		attributes.add(new PortAttribute("placreg", "Voyage", "placreg"));
-		attributes.add(new NumericalAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
+		attributes.add(new NumericAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
 		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
 		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
-		attributes.add(new NumericalAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
-		attributes.add(new NumericalAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
-		attributes.add(new NumericalAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
+		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
+		attributes.add(new NumericAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
+		attributes.add(new NumericAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
 		attributes.add(new StringAttribute("ownera", "Voyage", "ownera"));
 		attributes.add(new StringAttribute("ownerb", "Voyage", "ownerb"));
 		attributes.add(new StringAttribute("ownerc", "Voyage", "ownerc"));
@@ -78,7 +81,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new FateSlavesAttribute("fate2", "Voyage", "fate2"));
 		attributes.add(new FateVesselAttribute("fate3", "Voyage", "fate3"));
 		attributes.add(new FateOwnerAttribute("fate4", "Voyage", "fate4"));
-		attributes.add(new InsurrectionAttribute("insurrec", "Voyage", "insurrec"));
+		attributes.add(new InsurrectionsAttribute("insurrec", "Voyage", "insurrec"));
 		attributes.add(new PortAttribute("ptdepimp", "Voyage", "ptdepimp"));
 		attributes.add(new RegionAttribute("deptregimp", "Voyage", "deptregimp"));
 		attributes.add(new PortAttribute("plac1tra", "Voyage", "plac1tra"));
@@ -100,7 +103,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new PortAttribute("mjselimp", "Voyage", "mjselimp"));
 		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
 		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
-		attributes.add(new NumericalAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
+		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
 		attributes.add(new DateAttribute("date_dep", "Voyage", "date_dep"));
 		attributes.add(new DateAttribute("date_buy", "Voyage", "date_buy"));
 		attributes.add(new DateAttribute("date_leftafr", "Voyage", "date_leftafr"));
@@ -109,34 +112,34 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new DateAttribute("date_land3", "Voyage", "date_land3"));
 		attributes.add(new DateAttribute("date_depam", "Voyage", "date_depam"));
 		attributes.add(new DateAttribute("date_end", "Voyage", "date_end"));
-		attributes.add(new NumericalAttribute("voy1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy1imp"));
-		attributes.add(new NumericalAttribute("voy2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy2imp"));
+		attributes.add(new NumericAttribute("voy1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy1imp"));
+		attributes.add(new NumericAttribute("voy2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy2imp"));
 		attributes.add(new StringAttribute("captaina", "Voyage", "captaina"));
 		attributes.add(new StringAttribute("captainb", "Voyage", "captainb"));
 		attributes.add(new StringAttribute("captainc", "Voyage", "captainc"));
-		attributes.add(new NumericalAttribute("crew1", "Voyage", NumericAttribute.TYPE_INTEGER, "crew1"));
-		attributes.add(new NumericalAttribute("crew3", "Voyage", NumericAttribute.TYPE_INTEGER, "crew3"));
-		attributes.add(new NumericalAttribute("crewdied", "Voyage", NumericAttribute.TYPE_INTEGER, "crewdied"));
-		attributes.add(new NumericalAttribute("slintend", "Voyage", TYPE_INTEGER, "slintend"));
-		attributes.add(new NumericalAttribute("ncar13", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar13"));
-		attributes.add(new NumericalAttribute("ncar15", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar15"));
-		attributes.add(new NumericalAttribute("ncar17", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar17"));
-		attributes.add(new NumericalAttribute("tslavesd", "Voyage", NumericAttribute.TYPE_INTEGER, "tslavesd"));
-		attributes.add(new NumericalAttribute("slaarriv", "Voyage", NumericAttribute.TYPE_INTEGER, "slaarriv"));
-		attributes.add(new NumericalAttribute("slas32", "Voyage", NumericAttribute.TYPE_INTEGER, "slas32"));
-		attributes.add(new NumericalAttribute("slas36", "Voyage", NumericAttribute.TYPE_INTEGER, "slas36"));
-		attributes.add(new NumericalAttribute("slas39", "Voyage", NumericAttribute.TYPE_INTEGER, "slas39"));
-		attributes.add(new NumericalAttribute("slaximp", "Voyage", NumericAttribute.TYPE_INTEGER, "slaximp"));
-		attributes.add(new NumericalAttribute("slamimp", "Voyage", NumericAttribute.TYPE_INTEGER, "slamimp"));
-		attributes.add(new NumericalAttribute("menrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat7"));
-		attributes.add(new NumericalAttribute("womrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat7"));
-		attributes.add(new NumericalAttribute("boyrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat7"));
-		attributes.add(new NumericalAttribute("girlrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat7"));
-		attributes.add(new NumericalAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
-		attributes.add(new NumericalAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
-		attributes.add(new NumericalAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
-		attributes.add(new NumericalAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
-		attributes.add(new NumericalAttribute("vymrtrat", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtrat"));
+		attributes.add(new NumericAttribute("crew1", "Voyage", NumericAttribute.TYPE_INTEGER, "crew1"));
+		attributes.add(new NumericAttribute("crew3", "Voyage", NumericAttribute.TYPE_INTEGER, "crew3"));
+		attributes.add(new NumericAttribute("crewdied", "Voyage", NumericAttribute.TYPE_INTEGER, "crewdied"));
+		attributes.add(new NumericAttribute("slintend", "Voyage", NumericAttribute.TYPE_INTEGER, "slintend"));
+		attributes.add(new NumericAttribute("ncar13", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar13"));
+		attributes.add(new NumericAttribute("ncar15", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar15"));
+		attributes.add(new NumericAttribute("ncar17", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar17"));
+		attributes.add(new NumericAttribute("tslavesd", "Voyage", NumericAttribute.TYPE_INTEGER, "tslavesd"));
+		attributes.add(new NumericAttribute("slaarriv", "Voyage", NumericAttribute.TYPE_INTEGER, "slaarriv"));
+		attributes.add(new NumericAttribute("slas32", "Voyage", NumericAttribute.TYPE_INTEGER, "slas32"));
+		attributes.add(new NumericAttribute("slas36", "Voyage", NumericAttribute.TYPE_INTEGER, "slas36"));
+		attributes.add(new NumericAttribute("slas39", "Voyage", NumericAttribute.TYPE_INTEGER, "slas39"));
+		attributes.add(new NumericAttribute("slaximp", "Voyage", NumericAttribute.TYPE_INTEGER, "slaximp"));
+		attributes.add(new NumericAttribute("slamimp", "Voyage", NumericAttribute.TYPE_INTEGER, "slamimp"));
+		attributes.add(new NumericAttribute("menrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat7"));
+		attributes.add(new NumericAttribute("womrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat7"));
+		attributes.add(new NumericAttribute("boyrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat7"));
+		attributes.add(new NumericAttribute("girlrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat7"));
+		attributes.add(new NumericAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
+		attributes.add(new NumericAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
+		attributes.add(new NumericAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
+		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
+		attributes.add(new NumericAttribute("vymrtrat", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtrat"));
 		attributes.add(new StringAttribute("sourcea", "Voyage", "sourcea"));
 		attributes.add(new StringAttribute("sourceb", "Voyage", "sourceb"));
 		attributes.add(new StringAttribute("sourcec", "Voyage", "sourcec"));
@@ -155,7 +158,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new StringAttribute("sourcep", "Voyage", "sourcep"));
 		attributes.add(new StringAttribute("sourceq", "Voyage", "sourceq"));
 		attributes.add(new StringAttribute("sourcer", "Voyage", "sourcer"));
-		attributes.add(new NationEstimatesAttribute("e_natinimp", "Voyage", "e_natinimp"));
+		attributes.add(new NationEstimateAttribute("e_natinimp", "Voyage", "e_natinimp"));
 		attributes.add(new PortAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
 		attributes.add(new PortAttribute("e_mjselimp1", "Voyage", "e_mjselimp1"));
 		attributes.add(new PortAttribute("e_mjselimp", "Voyage", "e_mjselimp")); 
@@ -484,9 +487,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setNcar17(Integer ncar17) {
 		this.values.put("ncar17", ncar17);
 	}
-	public void setSladamer(Integer sladamer) {
-		this.values.put("sladamer", sladamer);
-	}
 	public void setGuns(Integer guns) {
 		this.values.put("guns", guns);
 	}
@@ -604,7 +604,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setPlac3tra(Port plac3tra) {
 		this.values.put("plac3tra", plac3tra);
 	}
-	public void setNpafttra(OldWorldPlace npafttra) {
+	public void setNpafttra(Port npafttra) {
 		this.values.put("npafttra", npafttra);
 	}
 	public void setSla1port(Port sla1port) {
@@ -652,13 +652,13 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setRegdis3(Region regdis3) {
 		this.values.put("regdis3", regdis3);
 	}
-	public void setFate2(Fate2 fate2) {
+	public void setFate2(FateSlaves fate2) {
 		this.values.put("fate2", fate2);
 	}
-	public void setFate3(Fate3 fate3) {
+	public void setFate3(FateVessel fate3) {
 		this.values.put("fate3", fate3);
 	}
-	public void setFate4(Fate4 fate4) {
+	public void setFate4(FateOwner fate4) {
 		this.values.put("fate4", fate4);
 	}
 	public void setMjselimp(Region mjselimp) {
@@ -666,6 +666,86 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	public void setMjbyptimp(Port purchasePort) {
 		this.values.put("mjbyptimp", purchasePort);
+	}
+	
+	public void setYrcons(Integer obj) {
+		this.values.put("yrcons", obj);
+	}
+	public void setDate_buy(Date obj) {
+		this.values.put("date_buy", obj);
+	}
+	public void setDate_depam(Date obj) {
+		this.values.put("date_depam", obj);
+	}
+	public void setDate_end(Date obj) {
+		this.values.put("date_end", obj);
+	}
+	public void setDate_land1(Date obj) {
+		this.values.put("date_land1", obj);
+	}
+	public void setDate_land2(Date obj) {
+		this.values.put("date_land2", obj);
+	}
+	public void setDate_land3(Date obj) {
+		this.values.put("date_land3", obj);
+	}
+	public void setDate_leftafr(Date obj) {
+		this.values.put("date_leftafr", obj);
+	}
+	public void setDeptregimp(Region obj) {
+		this.values.put("deptregimp", obj);
+	}
+	public void setE_majbyimp(Region obj) {
+		this.values.put("e_majbyimp", obj);
+	}
+	public void setE_mjselimp(Region obj) {
+		this.values.put("e_mjselimp", obj);
+	}
+	public void setE_mjselimp1(Region obj) {
+		this.values.put("e_mjselimp1", obj);
+	}
+	public void setE_natinimp(NationEstimate obj) {
+		this.values.put("e_natinimp", obj);
+	}
+	
+	public Integer getYrcons() {
+		return (Integer)this.values.get("yrcons");
+	}
+	public Date getDate_buy() {
+		return (Date)this.values.get("date_buy");
+	}
+	public Date getDate_depam() {
+		return (Date)this.values.get("date_depam");
+	}
+	public Date getDate_end() {
+		return (Date)this.values.get("date_end");
+	}
+	public Date getDate_land1() {
+		return (Date)this.values.get("date_land1");
+	}
+	public Date getDate_land2() {
+		return (Date)this.values.get("date_land2");
+	}
+	public Date getDate_land3() {
+		return (Date)this.values.get("date_land3");
+	}
+	public Date getDate_leftafr() {
+		return (Date)this.values.get("date_leftafr");
+	}
+	public Region getDeptregimp() {
+		return (Region)this.values.get("deptregimp");
+	}
+	public Region getE_majbyimp() {
+		return (Region)this.values.get("e_majbyimp");
+	}
+	public Region getE_mjselimp() {
+		return (Region)this.values.get("e_mjselimp");
+	}
+	public Region getE_mjselimp1() {
+		return (Region)this.values.get("e_mjselimp1");
+	}
+	public NationEstimate getE_natinimp() {
+		return (NationEstimate)this.values.get("e_natinimp");
 	}
 	
 	public Long getVoyageId() {
@@ -683,62 +763,29 @@ public class Voyage extends AbstractDescriptiveObject {
 	public String getCaptainc() {
 		return (String)this.values.get("captainc");
 	}
-	public Date getDatedep() {
+	public Date getDate_dep() {
 		return (Date)this.values.get("datedep");
-	}
-	public Date getDlslatrb() {
-		return (Date)this.values.get("dlslatrb");
-	}
-	public Integer getNppretra() {
-		return (Integer)this.values.get("nppretra");
-	}
-	public Date getD1slatr() {
-		return (Date)this.values.get("d1slatr");
-	}
-	public Integer getNpprior() {
-		return (Integer)this.values.get("npprior");
-	}
-	public Integer getTslavesp() {
-		return (Integer)this.values.get("tslavesp");
 	}
 	public Integer getTslavesd() {
 		return (Integer)this.values.get("tslavesd");
 	}
-	public Integer getSladvoy() {
-		return (Integer)this.values.get("sladvoy");
-	}
 	public Integer getSlaarriv() {
 		return (Integer)this.values.get("slaarriv");
-	}
-	public Date getRrdata31() {
-		return (Date)this.values.get("rrdata31");
 	}
 	public Integer getSlas32() {
 		return (Integer)this.values.get("slas32");
 	}
-	public Date getDatarr32() {
-		return (Date)this.values.get("datarr32");
-	}
 	public Integer getSlas36() {
 		return (Integer)this.values.get("slas36");
-	}
-	public Date getDatarr33() {
-		return (Date)this.values.get("datarr33");
 	}
 	public Integer getSlas39() {
 		return (Integer)this.values.get("slas39");
 	}
-	public Date getDdepamb() {
-		return (Date)this.values.get("ddepamb");
-	}
-	public Date getDatarr4() {
-		return (Date)this.values.get("datarr4");
-	}
 	public Integer getFate() {
 		return (Integer)this.values.get("fate");
 	}
-	public String getSourcea() {
-		return (String)this.values.get("sourcea");
+	public Fate getSourcea() {
+		return (Fate)this.values.get("sourcea");
 	}
 	public String getSourceb() {
 		return (String)this.values.get("sourceb");
@@ -809,44 +856,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getNcar17() {
 		return (Integer)this.values.get("ncar17");
 	}
-	public Integer getSladamer() {
-		return (Integer)this.values.get("sladamer");
-	}
-	public Integer getSaild1() {
-		return (Integer)this.values.get("saild1");
-	}
-	public Integer getSaild2() {
-		return (Integer)this.values.get("saild2");
-	}
-	public Integer getSaild3() {
-		return (Integer)this.values.get("saild3");
-	}
-	public Integer getSaild4() {
-		return (Integer)this.values.get("saild4");
-	}
-	public Integer getSaild5() {
-		return (Integer)this.values.get("saild5");
-	}
-	public Integer getNdesert() {
-		return (Integer)this.values.get("ndesert");
-	}
-	public Integer getSlinten2() {
-		return (Integer)this.values.get("slinten2");
-	}
 	public Integer getGuns() {
 		return (Integer)this.values.get("guns");
 	}
-	public Integer getVoyage() {
-		return (Integer)this.values.get("voyage");
-	}
 	public Integer getCrew1() {
 		return (Integer)this.values.get("crew1");
-	}
-	public Integer getChild2() {
-		return (Integer)this.values.get("child2");
-	}
-	public Integer getChild3() {
-		return (Integer)this.values.get("child3");
 	}
 	public Integer getYrreg() {
 		return (Integer)this.values.get("yrreg");
@@ -854,143 +868,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getCrew3() {
 		return (Integer)this.values.get("crew3");
 	}
-	public Integer getCrew4() {
-		return (Integer)this.values.get("crew4");
-	}
-	public Integer getCrew5() {
-		return (Integer)this.values.get("crew5");
-	}
-	public Integer getAdult1() {
-		return (Integer)this.values.get("adult1");
-	}
-	public Integer getChild1() {
-		return (Integer)this.values.get("child1");
-	}
-	public Integer getFemale1() {
-		return (Integer)this.values.get("female1");
-	}
-	public Integer getMale1() {
-		return (Integer)this.values.get("male1");
-	}
-	public Integer getMen1() {
-		return (Integer)this.values.get("men1");
-	}
-	public Integer getWomen1() {
-		return (Integer)this.values.get("women1");
-	}
-	public Integer getFemale2() {
-		return (Integer)this.values.get("female2");
-	}
-	public Integer getMale2() {
-		return (Integer)this.values.get("male2");
-	}
-	public Integer getMen2() {
-		return (Integer)this.values.get("men2");
-	}
-	public Integer getWomen2() {
-		return (Integer)this.values.get("women2");
-	}
-	public Integer getBoy2() {
-		return (Integer)this.values.get("boy2");
-	}
-	public Integer getGirl2() {
-		return (Integer)this.values.get("girl2");
-	}
-	public Integer getFemale3() {
-		return (Integer)this.values.get("female3");
-	}
-	public Integer getMale3() {
-		return (Integer)this.values.get("male3");
-	}
-	public Integer getMen3() {
-		return (Integer)this.values.get("men3");
-	}
-	public Integer getWomen3() {
-		return (Integer)this.values.get("women3");
-	}
-	public Integer getBoy3() {
-		return (Integer)this.values.get("boy3");
-	}
-	public Integer getGirl3() {
-		return (Integer)this.values.get("girl3");
-	}
-	public Integer getFemale4() {
-		return (Integer)this.values.get("female4");
-	}
-	public Integer getMale4() {
-		return (Integer)this.values.get("male4");
-	}
-	public Integer getMen4() {
-		return (Integer)this.values.get("men4");
-	}
-	public Integer getWomen4() {
-		return (Integer)this.values.get("women4");
-	}
-	public Integer getBoy4() {
-		return (Integer)this.values.get("boy4");
-	}
-	public Integer getGirl4() {
-		return (Integer)this.values.get("girl4");
-	}
-	public Integer getChild4() {
-		return (Integer)this.values.get("child4");
-	}
-	public Integer getFemale6() {
-		return (Integer)this.values.get("female6");
-	}
-	public Integer getMale6() {
-		return (Integer)this.values.get("male6");
-	}
-	public Integer getMen6() {
-		return (Integer)this.values.get("men6");
-	}
-	public Integer getWomen6() {
-		return (Integer)this.values.get("women6");
-	}
-	public Integer getBoy6() {
-		return (Integer)this.values.get("boy6");
-	}
-	public Integer getGirl6() {
-		return (Integer)this.values.get("girl6");
-	}
-	public Integer getChild6() {
-		return (Integer)this.values.get("child6");
-	}
-	public Integer getCrew2() {
-		return (Integer)this.values.get("crew2");
-	}
-	public Integer getInfantm3() {
-		return (Integer)this.values.get("infantm3");
-	}
-	public Integer getInfantf3() {
-		return (Integer)this.values.get("infantf3");
-	}
-	public Integer getSladafri() {
-		return (Integer)this.values.get("sladafri");
-	}
-	public Integer getSladied5() {
-		return (Integer)this.values.get("sladied5");
-	}
-	public Integer getSladied4() {
-		return (Integer)this.values.get("sladied4");
-	}
-	public Integer getSladied2() {
-		return (Integer)this.values.get("sladied2");
-	}
-	public Integer getSladied1() {
-		return (Integer)this.values.get("sladied1");
-	}
-	public Integer getSladied3() {
-		return (Integer)this.values.get("sladied3");
-	}
-	public Integer getSladied6() {
-		return (Integer)this.values.get("sladied6");
-	}
 	public Integer getInsurrec() {
 		return (Integer)this.values.get("insurrec");
-	}
-	public Integer getAdult3() {
-		return (Integer)this.values.get("adult3");
 	}
 	public String getOwnera() {
 		return (String)this.values.get("ownera");
@@ -1040,12 +919,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public String getOwnerp() {
 		return (String)this.values.get("ownerp");
 	}
-	public Integer getYearaf() {
-		return (Integer)this.values.get("yearaf");
-	}
-	public Integer getYeardep() {
-		return (Integer)this.values.get("yeardep");
-	}
 	public Integer getYearam() {
 		return (Integer)this.values.get("yearam");
 	}
@@ -1054,81 +927,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	public Integer getVymrtimp() {
 		return (Integer)this.values.get("vymrtimp");
-	}
-	public Integer getTslmtimp() {
-		return (Integer)this.values.get("tslmtimp");
-	}
-	public Float getSla32imp() {
-		return (Float)this.values.get("sla32imp");
-	}
-	public Float getSla36imp() {
-		return (Float)this.values.get("sla36imp");
-	}
-	public Float getImprat() {
-		return (Float)this.values.get("imprat");
-	}
-	public Integer getRegdis11() {
-		return (Integer)this.values.get("regdis11");
-	}
-	public Integer getRegdis21() {
-		return (Integer)this.values.get("regdis21");
-	}
-	public Integer getSla39imp() {
-		return (Integer)this.values.get("sla39imp");
-	}
-	public Float getNcr15imp() {
-		return (Float)this.values.get("ncr15imp");
-	}
-	public Integer getNcr17imp() {
-		return (Integer)this.values.get("ncr17imp");
-	}
-	public Float getExprat() {
-		return (Float)this.values.get("exprat");
-	}
-	public Integer getMale1imp() {
-		return (Integer)this.values.get("male1imp");
-	}
-	public Integer getFeml1imp() {
-		return (Integer)this.values.get("feml1imp");
-	}
-	public Integer getChil1imp() {
-		return (Integer)this.values.get("chil1imp");
-	}
-	public Float getMalrat1() {
-		return (Float)this.values.get("malrat1");
-	}
-	public Float getChilrat1() {
-		return (Float)this.values.get("chilrat1");
-	}
-	public Integer getSlavemx1() {
-		return (Integer)this.values.get("slavemx1");
-	}
-	public Integer getSlavema1() {
-		return (Integer)this.values.get("slavema1");
-	}
-	public Integer getMale3imp() {
-		return (Integer)this.values.get("male3imp");
-	}
-	public Integer getFeml3imp() {
-		return (Integer)this.values.get("feml3imp");
-	}
-	public Integer getChil3imp() {
-		return (Integer)this.values.get("chil3imp");
-	}
-	public Float getChilrat3() {
-		return (Float)this.values.get("chilrat3");
-	}
-	public Float getMalrat3() {
-		return (Float)this.values.get("malrat3");
-	}
-	public Integer getSlavemx3() {
-		return (Integer)this.values.get("slavemx3");
-	}
-	public Integer getSlavema3() {
-		return (Integer)this.values.get("slavema3");
-	}
-	public Integer getAdlt3imp() {
-		return (Integer)this.values.get("adlt3imp");
 	}
 	public Float getVymrtrat() {
 		return (Float)this.values.get("vymrtrat");
@@ -1151,38 +949,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Float getChilrat7() {
 		return (Float)this.values.get("chilrat7");
 	}
-	public String getSourcex() {
-		return (String)this.values.get("sourcex");
-	}
-	public Integer getP() {
-		return (Integer)this.values.get("p");
-	}
-	public Integer getEvgreen() {
-		return (Integer)this.values.get("evgreen");
-	}
-	public Float getWomrat1() {
-		return (Float)this.values.get("womrat1");
-	}
-	public Float getWomrat3() {
-		return (Float)this.values.get("womrat3");
-	}
 	public Float getWomrat7() {
 		return (Float)this.values.get("womrat7");
 	}
 	public Float getMenrat7() {
 		return (Float)this.values.get("menrat7");
-	}
-	public Float getMenrat3() {
-		return (Float)this.values.get("menrat3");
-	}
-	public Float getMenrat1() {
-		return (Float)this.values.get("menrat1");
-	}
-	public Float getGirlrat1() {
-		return (Float)this.values.get("girlrat1");
-	}
-	public Float getGirlrat3() {
-		return (Float)this.values.get("girlrat3");
 	}
 	public Float getGirlrat7() {
 		return (Float)this.values.get("girlrat7");
@@ -1190,104 +961,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Float getBoyrat7() {
 		return (Float)this.values.get("boyrat7");
 	}
-	public Float getBoyrat3() {
-		return (Float)this.values.get("boyrat3");
-	}
-	public Float getBoyrat1() {
-		return (Float)this.values.get("boyrat1");
-	}
 	public Float getJamcaspr() {
 		return (Float)this.values.get("jamcaspr");
 	}
-	public Integer getGirl5() {
-		return (Integer)this.values.get("girl5");
-	}
-	public Integer getBoy5() {
-		return (Integer)this.values.get("boy5");
-	}
-	public Integer getMen5() {
-		return (Integer)this.values.get("men5");
-	}
-	public Integer getWomen5() {
-		return (Integer)this.values.get("women5");
-	}
-	public Integer getChild5() {
-		return (Integer)this.values.get("child5");
-	}
-	public Integer getMale5() {
-		return (Integer)this.values.get("male5");
-	}
-	public Integer getFemale5() {
-		return (Integer)this.values.get("female5");
-	}
-	public Port getArrport2() {
-		return (Port)this.values.get("arrport2");
-	}
-	public Integer getInfant3() {
-		return (Integer)this.values.get("infant3");
-	}
-	public Integer getInfant1() {
-		return (Integer)this.values.get("infant1");
-	}
-	public Integer getAdult5() {
-		return (Integer)this.values.get("adult5");
-	}
-	public Integer getAdult2() {
-		return (Integer)this.values.get("adult2");
-	}
-	public Integer getAdult4() {
-		return (Integer)this.values.get("adult4");
-	}
-	public Integer getInfant4() {
-		return (Integer)this.values.get("infant4");
-	}
-	public Integer getCrew() {
-		return (Integer)this.values.get("crew");
-	}
-	public Integer getMen7() {
-		return (Integer)this.values.get("men7");
-	}
-	public Integer getMale7() {
-		return (Integer)this.values.get("male7");
-	}
-	public Integer getFemale7() {
-		return (Integer)this.values.get("female7");
-	}
-	public Integer getWomen7() {
-		return (Integer)this.values.get("women7");
-	}
-	public Integer getAdult7() {
-		return (Integer)this.values.get("adult7");
-	}
-	public Integer getBoy7() {
-		return (Integer)this.values.get("boy7");
-	}
-	public Integer getGirl7() {
-		return (Integer)this.values.get("girl7");
-	}
-	public Integer getChild7() {
-		return (Integer)this.values.get("child7");
-	}
-	public Float getRice() {
-		return (Float)this.values.get("rice");
-	}
-	public Float getSlavemx7() {
-		return (Float)this.values.get("slavemx7");
-	}
-	public DepDefinition getDatepl() {
-		return (DepDefinition)this.values.get("datepl");
-	}
-	public Port getEmbport() {
-		return (Port)this.values.get("embport");
-	}
-	public Port getArrport() {
-		return (Port)this.values.get("arrport");
-	}
 	public Port getPlac1tra() {
 		return (Port)this.values.get("plac1tra");
-	}
-	public Port getDestin() {
-		return (Port)this.values.get("destin");
 	}
 	public Port getPlac2tra() {
 		return (Port)this.values.get("plac2tra");
@@ -1295,11 +973,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Port getPlac3tra() {
 		return (Port)this.values.get("plac3tra");
 	}
-	public OldWorldPlace getNpafttra() {
-		return (OldWorldPlace)this.values.get("npafttra");
-	}
-	public Port getSla1port() {
-		return (Port)this.values.get("sla1port");
+	public Port getNpafttra() {
+		return (Port)this.values.get("npafttra");
 	}
 	public Port getAdpsale1() {
 		return (Port)this.values.get("adpsale1");
@@ -1310,41 +985,17 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Port getPortret() {
 		return (Port)this.values.get("portret");
 	}
-	public TonesType getTontype() {
-		return (TonesType)this.values.get("tontype");
-	}
-	public ShipNationality getNational() {
-		return (ShipNationality)this.values.get("national");
-	}
-	public Port getEmbport2() {
-		return (Port)this.values.get("embport2");
-	}
-	public Port getPortdep() {
-		return (Port)this.values.get("portdep");
-	}
 	public VesselRig getRig() {
 		return (VesselRig)this.values.get("rig");
 	}
 	public Port getPlaccons() {
 		return (Port)this.values.get("placcons");
 	}
-	public Port getMajselpt() {
-		return (Port)this.values.get("majselpt");
-	}
-	public Port getMajbuypt() {
-		return (Port)this.values.get("majbuypt");
-	}
 	public ImputedNation getNatinimp() {
 		return (ImputedNation)this.values.get("natinimp");
 	}
-	public Region getDeptreg() {
-		return (Region)this.values.get("deptreg");
-	}
 	public Region getRetrnreg() {
 		return (Region)this.values.get("retrnreg");
-	}
-	public Region getRegisreg() {
-		return (Region)this.values.get("regisreg");
 	}
 	public Region getRegem1() {
 		return (Region)this.values.get("regem1");
@@ -1354,15 +1005,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	public Region getRegem3() {
 		return (Region)this.values.get("regem3");
-	}
-	public Region getEmbreg() {
-		return (Region)this.values.get("embreg");
-	}
-	public Region getEmbreg2() {
-		return (Region)this.values.get("embreg2");
-	}
-	public Region getMajbuyrg() {
-		return (Region)this.values.get("majbuyrg");
 	}
 	public Region getMajbyimp() {
 		return (Region)this.values.get("majbyimp");
@@ -1376,41 +1018,17 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Region getRegdis3() {
 		return (Region)this.values.get("regdis3");
 	}
-	public Region getRegarrp() {
-		return (Region)this.values.get("regarrp");
+	public FateSlaves getFate2() {
+		return (FateSlaves)this.values.get("fate2");
 	}
-	public Region getMajselrg() {
-		return (Region)this.values.get("majselrg");
+	public FateVessel getFate3() {
+		return (FateVessel)this.values.get("fate3");
 	}
-	public Fate2 getFate2() {
-		return (Fate2)this.values.get("fate2");
-	}
-	public Fate3 getFate3() {
-		return (Fate3)this.values.get("fate3");
-	}
-	public Fate4 getFate4() {
-		return (Fate4)this.values.get("fate4");
+	public FateOwner getFate4() {
+		return (FateOwner)this.values.get("fate4");
 	}
 	public Region getMjselimp() {
 		return (Region)this.values.get("mjselimp");
-	}
-	public Region getConstreg() {
-		return (Region)this.values.get("constreg");
-	}
-	public Editor getEditor() {
-		return (Editor)this.values.get("editor");
-	}
-	public Filter getFilter_$() {
-		return (Filter)this.values.get("filter_$");
-	}
-	public Region getRegarrp2() {
-		return (Region)this.values.get("regarrp2");
-	}
-	public XmimpFlag getXmimpflag() {
-		return (XmimpFlag)this.values.get("xmimpflag");
-	}
-	public Temp getTemp() {
-		return (Temp)this.values.get("temp");
 	}
 	public Port getMjbyptimp() {
 		return (Port)this.values.get("mjbyptimp");

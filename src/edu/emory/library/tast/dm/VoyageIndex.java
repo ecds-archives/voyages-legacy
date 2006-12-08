@@ -80,7 +80,7 @@ public class VoyageIndex {
 	private static Map visibleAttributes = new HashMap();
 	private static Map attributes = new HashMap();
 	static {	
-		Attribute attr = new NumericAttribute("revisionId", "VoyageIndex");
+		Attribute attr = new NumericAttribute("revisionId", "VoyageIndex", NumericAttribute.TYPE_INTEGER);
 		VisibleAttribute visibleAttr = new VisibleAttribute("revisionId", new int [] {1, 2}, new Attribute[] {attr});
 		visibleAttr.setUserLabel("Revision #");
 		visibleAttributes.put("revisionId", visibleAttr);
@@ -93,18 +93,18 @@ public class VoyageIndex {
 		visibleAttributes.put("revisionDate", visibleAttr);
 		attributes.put(attr.getName(), attr);
 		
-		attr = new NumericAttribute("flag", "VoyageIndex");
+		attr = new NumericAttribute("flag", "VoyageIndex", NumericAttribute.TYPE_INTEGER);
 		attr.setName("flag");
 		visibleAttr = new VisibleAttribute("flag", new int [] {1, 2}, new Attribute[] {attr});
 		visibleAttr.setUserLabel("Approved");
 		visibleAttributes.put("flag", visibleAttr);
 		attributes.put(attr.getName(), attr);
 		
-		attr = new NumericAttribute("latest", "VoyageIndex");
+		attr = new NumericAttribute("latest", "VoyageIndex", NumericAttribute.TYPE_INTEGER);
 		attributes.put(attr.getName(), attr);
-		attr = new NumericAttribute("latest_approved", "VoyageIndex");
+		attr = new NumericAttribute("latest_approved", "VoyageIndex", NumericAttribute.TYPE_INTEGER);
 		attributes.put(attr.getName(), attr);
-		attr = new NumericAttribute("remoteVoyageId", "VoyageIndex");
+		attr = new NumericAttribute("remoteVoyageId", "VoyageIndex", NumericAttribute.TYPE_INTEGER);
 		attributes.put(attr.getName(), attr);
 		
 	}
