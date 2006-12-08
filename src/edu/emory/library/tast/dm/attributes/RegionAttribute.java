@@ -1,9 +1,8 @@
 package edu.emory.library.tast.dm.attributes;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
 public class RegionAttribute extends DictionaryAttribute
 {
@@ -18,9 +17,9 @@ public class RegionAttribute extends DictionaryAttribute
 		super(name, objectType, importName);
 	}
 	
-	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
+	protected Object loadObjectById(Session sess, long id) 
 	{
-		return Region.loadById(parseId(value));
+		return Region.loadById(sess, id);
 	}
 
 }

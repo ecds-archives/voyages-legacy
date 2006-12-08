@@ -2,8 +2,11 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tas.spss.STSchemaVariable;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
+import edu.emory.library.tast.dm.attributes.exceptions.MissingDictionaryValueException;
 
 public abstract class DictionaryAttribute extends ImportableAttribute
 {
@@ -15,8 +18,7 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 	
 	public DictionaryAttribute(String name, String objectType, String importName)
 	{
-		super(name, objectType);
-		this.setUserLabel(importName);
+		super(name, objectType, importName);
 	}
 	
 	public int getImportType()
@@ -24,6 +26,32 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 		return STSchemaVariable.TYPE_NUMERIC;
 	}
 	
+	public Object importParse(Session sess, String value) throws MissingDictionaryValueException, InvalidNumberException 
+	{
+		if (value == null || value.length() == 0)
+		{
+			return null;
+		}
+		else
+		{
+			long id = 0;
+			try
+			{
+				id = Long.parseLong(value);
+			}
+			catch (NumberFormatException nfe)
+			{
+				throw new InvalidNumberException();
+			}
+			Object obj = loadObjectById(sess, id);
+			if (obj == null) throw new MissingDictionaryValueException();
+			return obj;
+		}
+	}
+
+	protected abstract Object loadObjectById(Session sess, long id);
+
+	/*
 	protected long parseId(String value) throws InvalidNumberException
 	{
 		if (value == null || value.length() == 0)
@@ -42,6 +70,7 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 			}
 		}
 	}
+	*/
 
 	public boolean isOuterjoinable() {
 		return true;

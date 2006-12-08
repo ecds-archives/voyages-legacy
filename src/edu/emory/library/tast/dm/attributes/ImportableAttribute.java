@@ -1,8 +1,8 @@
 package edu.emory.library.tast.dm.attributes;
 
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
+import org.hibernate.Session;
+
+import edu.emory.library.tast.dm.attributes.exceptions.ParseValueException;
 
 public abstract class ImportableAttribute extends Attribute
 {
@@ -53,7 +53,7 @@ public abstract class ImportableAttribute extends Attribute
 		this.maxImportLength = maxImportLength;
 	}
 
-	public abstract Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException;
+	public abstract Object importParse(Session sess, String value) throws ParseValueException;
 	public abstract int getImportType();
 
 }

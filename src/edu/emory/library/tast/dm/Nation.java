@@ -109,7 +109,7 @@ public class Nation extends Dictionary
 
 	public static Nation loadById(Session sess, long nationId)
 	{
-		List list = sess.createCriteria(Nation.class).add(Restrictions.eq("id", new Long(nationId))).list();
+		List list = sess.createCriteria(Nation.class).add(Restrictions.eq("id", new Long(nationId))).setCacheable(true).list();
 		if (list == null || list.size() == 0) return null;
 		return (Nation) list.get(0);
 	}

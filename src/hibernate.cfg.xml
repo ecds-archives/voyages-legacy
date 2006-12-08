@@ -25,8 +25,8 @@
         <property name="current_session_context_class">thread</property>
 
         <!-- Enable the second-level cache  -->
-        <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
-		<property name="hibernate.cache.use_query_cache">true</property>
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		<property name="hibernate.cache.use_query_cache">false</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
@@ -38,7 +38,6 @@
         <!--property name="hbm2ddl.auto">create</property-->
 
         <mapping resource="edu/emory/library/tast/dm/Voyage.hbm.xml"/>
-        <mapping resource="edu/emory/library/tast/dm/Slave.hbm.xml"/>
         <mapping resource="edu/emory/library/tast/dm/VoyageIndex.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Dictionary.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Configuration.hbm.xml"/>
@@ -49,6 +48,7 @@
 		<mapping resource="edu/emory/library/tast/dm/Person.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Estimate.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Nation.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/EstimatesNation.hbm.xml"/>
 		
     </session-factory>
 

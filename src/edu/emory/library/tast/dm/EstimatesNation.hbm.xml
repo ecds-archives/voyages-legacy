@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
-	<class name="edu.emory.library.tast.dm.Area" table="areas">
+<hibernate-mapping auto-import="false">
 
+	<class name="edu.emory.library.tast.dm.EstimatesNation" table="estimates_nations">
+		
 		<!-- 
 		<cache usage="read-write" />
 		-->
@@ -12,9 +13,8 @@
 			<generator class="native"/>
 		</id>
 		
-		<property name="name" />
-		<property name="america" />
-		<property name="order" column="order_num" />
+		<property name="name" column="name" />
 
 	</class>
+
 </hibernate-mapping>

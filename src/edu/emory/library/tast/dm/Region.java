@@ -124,7 +124,7 @@ public class Region extends Location
 
 	public static Region loadById(Session sess, long regionId)
 	{
-		List list = sess.createCriteria(Region.class).add(Restrictions.eq("id", new Long(regionId))).list();
+		List list = sess.createCriteria(Region.class).add(Restrictions.eq("id", new Long(regionId))).setCacheable(true).list();
 		if (list == null || list.size() == 0) return null;
 		return (Region) list.get(0);
 	}

@@ -40,7 +40,7 @@ public class FateVessel extends Dictionary
 
 	public static FateVessel loadById(Session sess, long fateId)
 	{
-		List list = sess.createCriteria(FateVessel.class).add(Restrictions.eq("id", new Long(fateId))).list();
+		List list = sess.createCriteria(FateVessel.class).add(Restrictions.eq("id", new Long(fateId))).setCacheable(true).list();
 		if (list == null || list.size() == 0) return null;
 		return (FateVessel) list.get(0);
 	}

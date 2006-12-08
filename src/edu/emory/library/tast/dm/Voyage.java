@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tas.dicts.ImputedNation;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -15,6 +14,7 @@ import edu.emory.library.tast.dm.attributes.FateAttribute;
 import edu.emory.library.tast.dm.attributes.FateOwnerAttribute;
 import edu.emory.library.tast.dm.attributes.FateSlavesAttribute;
 import edu.emory.library.tast.dm.attributes.FateVesselAttribute;
+import edu.emory.library.tast.dm.attributes.ImportableAttribute;
 import edu.emory.library.tast.dm.attributes.InsurrectionsAttribute;
 import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
@@ -42,7 +42,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	private static List attributes = new ArrayList();
 	static {
-		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, "Voyage"));
+		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("voyageid", "Voyage", NumericAttribute.TYPE_LONG, "voyageid"));
 		attributes.add(new BooleanAttribute("cd", "Voyage", "cd"));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
@@ -52,7 +52,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
 		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
 		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
-		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
+		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_FLOAT, "tonnage"));
 		attributes.add(new NumericAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
 		attributes.add(new NumericAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
 		attributes.add(new StringAttribute("ownera", "Voyage", "ownera"));
@@ -90,22 +90,22 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new PortAttribute("sla1port", "Voyage", "sla1port"));
 		attributes.add(new PortAttribute("adpsale1", "Voyage", "adpsale1"));
 		attributes.add(new PortAttribute("adpsale2", "Voyage", "adpsale2"));
-		attributes.add(new RegionAttribute("mjslptimp", "Voyage", "mjslptimp"));
+		attributes.add(new PortAttribute("mjslptimp", "Voyage", "mjslptimp"));
 		attributes.add(new RegionAttribute("regdis1", "Voyage", "regdis1"));
 		attributes.add(new RegionAttribute("regdis2", "Voyage", "regdis2"));
 		attributes.add(new RegionAttribute("regdis3", "Voyage", "regdis3"));
-		attributes.add(new PortAttribute("mjselimp", "Voyage", "mjselimp"));
+		attributes.add(new RegionAttribute("mjselimp", "Voyage", "mjselimp"));
 		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
 		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
 		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
-		attributes.add(new DateAttribute("date_dep", "Voyage", "date_dep"));
-		attributes.add(new DateAttribute("date_buy", "Voyage", "date_buy"));
-		attributes.add(new DateAttribute("date_leftafr", "Voyage", "date_leftafr"));
-		attributes.add(new DateAttribute("date_land1", "Voyage", "date_land1"));
-		attributes.add(new DateAttribute("date_land2", "Voyage", "date_land2"));
-		attributes.add(new DateAttribute("date_land3", "Voyage", "date_land3"));
-		attributes.add(new DateAttribute("date_depam", "Voyage", "date_depam"));
-		attributes.add(new DateAttribute("date_end", "Voyage", "date_end"));
+		attributes.add(new DateAttribute("datedep", "Voyage", "date_dep"));
+		attributes.add(new DateAttribute("datebuy", "Voyage", "date_buy"));
+		attributes.add(new DateAttribute("dateleftafr", "Voyage", "date_leftafr"));
+		attributes.add(new DateAttribute("dateland1", "Voyage", "date_land1"));
+		attributes.add(new DateAttribute("dateland2", "Voyage", "date_land2"));
+		attributes.add(new DateAttribute("dateland3", "Voyage", "date_land3"));
+		attributes.add(new DateAttribute("datedepam", "Voyage", "date_depam"));
+		attributes.add(new DateAttribute("dateend", "Voyage", "date_end"));
 		attributes.add(new NumericAttribute("voy1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy1imp"));
 		attributes.add(new NumericAttribute("voy2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy2imp"));
 		attributes.add(new StringAttribute("captaina", "Voyage", "captaina"));
@@ -123,8 +123,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("slas32", "Voyage", NumericAttribute.TYPE_INTEGER, "slas32"));
 		attributes.add(new NumericAttribute("slas36", "Voyage", NumericAttribute.TYPE_INTEGER, "slas36"));
 		attributes.add(new NumericAttribute("slas39", "Voyage", NumericAttribute.TYPE_INTEGER, "slas39"));
-		attributes.add(new NumericAttribute("slaximp", "Voyage", NumericAttribute.TYPE_INTEGER, "slaximp"));
-		attributes.add(new NumericAttribute("slamimp", "Voyage", NumericAttribute.TYPE_INTEGER, "slamimp"));
+		attributes.add(new NumericAttribute("slaximp", "Voyage", NumericAttribute.TYPE_FLOAT, "slaximp"));
+		attributes.add(new NumericAttribute("slamimp", "Voyage", NumericAttribute.TYPE_FLOAT, "slamimp"));
 		attributes.add(new NumericAttribute("menrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat7"));
 		attributes.add(new NumericAttribute("womrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat7"));
 		attributes.add(new NumericAttribute("boyrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat7"));
@@ -153,17 +153,17 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new StringAttribute("sourceq", "Voyage", "sourceq"));
 		attributes.add(new StringAttribute("sourcer", "Voyage", "sourcer"));
 		attributes.add(new EstimatesNationAttribute("e_natinimp", "Voyage", "e_natinimp"));
-		attributes.add(new PortAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
-		attributes.add(new PortAttribute("e_mjselimp1", "Voyage", "e_mjselimp1"));
-		attributes.add(new PortAttribute("e_mjselimp", "Voyage", "e_mjselimp")); 
+		attributes.add(new RegionAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
+		attributes.add(new RegionAttribute("e_mjselimp1", "Voyage", "e_mjselimp1"));
+		attributes.add(new RegionAttribute("e_mjselimp", "Voyage", "e_mjselimp")); 
 	}
 	
 	/**
 	 * Gets all attributes of voyage.
 	 * @return
 	 */
-	public static Attribute[] getAttributes() {
-		return (Attribute[])attributes.toArray(new Attribute[] {});
+	public static ImportableAttribute[] getAttributes() {
+		return (ImportableAttribute[])attributes.toArray(new ImportableAttribute[] {});
 	}
 	
 	/**
@@ -376,12 +376,28 @@ public class Voyage extends AbstractDescriptiveObject {
 	
 	public void saveOrUpdate()
 	{
-		// TODO Auto-generated method stub
-		
+		HibernateConnector.getConnector().saveOrUpdateObject(this);
 	}
 
+	public void saveOrUpdate(Session sess)
+	{
+		sess.saveOrUpdate(this);
+	}
+	
 	public void setVoyageId(Long voyageId) {
 		this.values.put("voyageId", voyageId);
+	}
+	public void setCd(Boolean cd) {
+		this.values.put("cd", cd);
+	}
+	public void setSlas32(Integer  slas32) {
+		this.values.put("slas32", slas32);
+	}
+	public void setMjslptimp(Port mjslptimp) {
+		this.values.put("mjslptimp", mjslptimp);
+	}
+	public Port getMjslptimp() {
+		return (Port) this.values.get("mjslptimp");
 	}
 	public void setShipname(String shipname) {
 		this.values.put("shipname", shipname);
@@ -395,8 +411,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setCaptainc(String captainc) {
 		this.values.put("captainc", captainc);
 	}
-	public void setDate_dep(Date datedep) {
-		this.values.put("date_dep", datedep);
+	public void setDatedep(Date datedep) {
+		this.values.put("datedep", datedep);
 	}
 	public void setTslavesd(Integer tslavesd) {
 		this.values.put("tslavesd", tslavesd);
@@ -497,8 +513,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setCrew3(Integer crew3) {
 		this.values.put("crew3", crew3);
 	}
-	public void setInsurrec(Integer insurrec) {
+	public void setInsurrec(Insurrections insurrec) {
 		this.values.put("insurrec", insurrec);
+	}
+	public void setPtdepimp(Port ptdepimp) {
+		this.values.put("ptdepimp", ptdepimp);
 	}
 	public void setOwnera(String ownera) {
 		this.values.put("ownera", ownera);
@@ -623,7 +642,10 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setPlaccons(Port placcons) {
 		this.values.put("placcons", placcons);
 	}
-	public void setNatinimp(ImputedNation natinimp) {
+	public void setPlacreg(Port placreg) {
+		this.values.put("placreg", placreg);
+	}
+	public void setNatinimp(Nation natinimp) {
 		this.values.put("natinimp", natinimp);
 	}
 	public void setRetrnreg(Region retrnreg) {
@@ -665,30 +687,29 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setMjbyptimp(Port purchasePort) {
 		this.values.put("mjbyptimp", purchasePort);
 	}
-	
 	public void setYrcons(Integer obj) {
 		this.values.put("yrcons", obj);
 	}
-	public void setDate_buy(Date obj) {
-		this.values.put("date_buy", obj);
+	public void setDatebuy(Date obj) {
+		this.values.put("datebuy", obj);
 	}
-	public void setDate_depam(Date obj) {
-		this.values.put("date_depam", obj);
+	public void setDatedepam(Date obj) {
+		this.values.put("datedepam", obj);
 	}
-	public void setDate_end(Date obj) {
-		this.values.put("date_end", obj);
+	public void setDateend(Date obj) {
+		this.values.put("dateend", obj);
 	}
-	public void setDate_land1(Date obj) {
-		this.values.put("date_land1", obj);
+	public void setDateland1(Date obj) {
+		this.values.put("dateland1", obj);
 	}
-	public void setDate_land2(Date obj) {
-		this.values.put("date_land2", obj);
+	public void setDateland2(Date obj) {
+		this.values.put("dateland2", obj);
 	}
-	public void setDate_land3(Date obj) {
-		this.values.put("date_land3", obj);
+	public void setDateland3(Date obj) {
+		this.values.put("dateland3", obj);
 	}
-	public void setDate_leftafr(Date obj) {
-		this.values.put("date_leftafr", obj);
+	public void setDateleftafr(Date obj) {
+		this.values.put("dateleftafr", obj);
 	}
 	public void setDeptregimp(Region obj) {
 		this.values.put("deptregimp", obj);
@@ -706,29 +727,32 @@ public class Voyage extends AbstractDescriptiveObject {
 		this.values.put("e_natinimp", obj);
 	}
 	
+	public Port getSla1port() {
+		return (Port) this.values.get("sla1port");
+	}
 	public Integer getYrcons() {
 		return (Integer)this.values.get("yrcons");
 	}
-	public Date getDate_buy() {
-		return (Date)this.values.get("date_buy");
+	public Date getDatebuy() {
+		return (Date)this.values.get("datebuy");
 	}
-	public Date getDate_depam() {
-		return (Date)this.values.get("date_depam");
+	public Date getDatedepam() {
+		return (Date)this.values.get("datedepam");
 	}
-	public Date getDate_end() {
-		return (Date)this.values.get("date_end");
+	public Date getDateend() {
+		return (Date)this.values.get("dateend");
 	}
-	public Date getDate_land1() {
-		return (Date)this.values.get("date_land1");
+	public Date getDateland1() {
+		return (Date)this.values.get("dateland1");
 	}
-	public Date getDate_land2() {
-		return (Date)this.values.get("date_land2");
+	public Date getDateland2() {
+		return (Date)this.values.get("dateland2");
 	}
-	public Date getDate_land3() {
-		return (Date)this.values.get("date_land3");
+	public Date getDateland3() {
+		return (Date)this.values.get("dateland3");
 	}
-	public Date getDate_leftafr() {
-		return (Date)this.values.get("date_leftafr");
+	public Date getDateleftafr() {
+		return (Date)this.values.get("dateleftafr");
 	}
 	public Region getDeptregimp() {
 		return (Region)this.values.get("deptregimp");
@@ -749,6 +773,9 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Long getVoyageId() {
 		return (Long)this.values.get("voyageId");
 	}
+	public Boolean getCd() {
+		return (Boolean)this.values.get("cd");
+	}
 	public String getShipname() {
 		return (String)this.values.get("shipname");
 	}
@@ -761,7 +788,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	public String getCaptainc() {
 		return (String)this.values.get("captainc");
 	}
-	public Date getDate_dep() {
+	public Date getDatedep() {
 		return (Date)this.values.get("datedep");
 	}
 	public Integer getTslavesd() {
@@ -779,11 +806,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getSlas39() {
 		return (Integer)this.values.get("slas39");
 	}
-	public Integer getFate() {
-		return (Integer)this.values.get("fate");
+	public Fate getFate() {
+		return (Fate)this.values.get("fate");
 	}
-	public Fate getSourcea() {
-		return (Fate)this.values.get("sourcea");
+	public String getSourcea() {
+		return (String)this.values.get("sourcea");
 	}
 	public String getSourceb() {
 		return (String)this.values.get("sourceb");
@@ -866,8 +893,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getCrew3() {
 		return (Integer)this.values.get("crew3");
 	}
-	public Integer getInsurrec() {
-		return (Integer)this.values.get("insurrec");
+	public Insurrections getInsurrec() {
+		return (Insurrections)this.values.get("insurrec");
+	}
+	public Port getPtdepimp() {
+		return (Port)this.values.get("ptdepimp");
 	}
 	public String getOwnera() {
 		return (String)this.values.get("ownera");
@@ -989,8 +1019,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Port getPlaccons() {
 		return (Port)this.values.get("placcons");
 	}
-	public ImputedNation getNatinimp() {
-		return (ImputedNation)this.values.get("natinimp");
+	public Port getPlacreg() {
+		return (Port)this.values.get("placreg");
+	}
+	public Nation getNatinimp() {
+		return (Nation)this.values.get("natinimp");
 	}
 	public Region getRetrnreg() {
 		return (Region)this.values.get("retrnreg");

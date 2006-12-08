@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
@@ -25,7 +27,7 @@ public class DateAttribute extends ImportableAttribute
 		super(name, objectType, importName);
 	}
 	
-	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(Session sess, String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 
 		if (value == null || value.length() == 0)

@@ -40,7 +40,7 @@ public class FateSlaves extends Dictionary
 
 	public static FateSlaves loadById(Session sess, long fateId)
 	{
-		List list = sess.createCriteria(FateSlaves.class).add(Restrictions.eq("id", new Long(fateId))).list();
+		List list = sess.createCriteria(FateSlaves.class).add(Restrictions.eq("id", new Long(fateId))).setCacheable(true).list();
 		if (list == null || list.size() == 0) return null;
 		return (FateSlaves) list.get(0);
 	}

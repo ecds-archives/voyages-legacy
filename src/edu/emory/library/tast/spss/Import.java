@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.dm.AbstractDescriptiveObject;
@@ -15,7 +17,10 @@ import edu.emory.library.tast.dm.VoyageFactory;
 import edu.emory.library.tast.dm.attributes.ImportableAttribute;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
+import edu.emory.library.tast.dm.attributes.exceptions.MissingDictionaryValueException;
+import edu.emory.library.tast.dm.attributes.exceptions.ParseValueException;
 import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
+import edu.emory.library.tast.util.HibernateUtil;
 
 public class Import
 {
@@ -31,11 +36,20 @@ public class Import
 	private String schemaFileName;
 	private Map schema;
 	private ImportableAttribute[] attributes;
+	private String keyVariable;
 	
 	private int totalRecords;
 	private int recordsWithWarnings;
 	
 	private AbstractDescriptiveObjectFactory objectFactory;
+	
+	public Import(String importDir, String keyVariable, AbstractDescriptiveObjectFactory objectFactory, ImportableAttribute[] attributes)
+	{
+		this.keyVariable = keyVariable;
+		this.attributes = attributes;
+		this.objectFactory = objectFactory;
+		this.importDir = importDir;
+	}
 
 	private int calculateSchemaWidth(Map schema)
 	{
@@ -58,7 +72,7 @@ public class Import
 
 		schema = rdr.readSchema(schemaFileName);
 
-		voyagesVidVar = (STSchemaVariable) schema.get("voyageid");
+		voyagesVidVar = (STSchemaVariable) schema.get(keyVariable);
 		int voyagesSchemaWidth = calculateSchemaWidth(schema);
 		recordIOFactory = new RecordIOFactory(
 				voyagesVidVar.getStartColumn(),
@@ -69,7 +83,7 @@ public class Import
 
 	}
 
-	private boolean matchAndVerifySchemaV2() throws DataSchemaMissmatchException
+	private void matchAndVerifySchema() throws DataSchemaMissmatchException
 	{
 		
 		boolean ok = true;
@@ -102,11 +116,11 @@ public class Import
 			}
 		}
 		
-		return ok;
+		if (!ok) throw new DataSchemaMissmatchException(); 
 
 	}
 
-	private boolean updateValues(AbstractDescriptiveObject obj, Record record, int recordNo)
+	private boolean updateValues(Session sess, AbstractDescriptiveObject obj, Record record, int recordNo)
 	{
 
 		boolean valid = true;
@@ -114,19 +128,19 @@ public class Import
 		{
 			
 			ImportableAttribute attr = attributes[i];
+			
+			if (attr.ignoreImport()) continue;
+			
 			STSchemaVariable var = (STSchemaVariable) schema.get(attr.getImportName());
 
 			Object parsedValue = null;
 			String columnValue = null;
-			
-			if (attr.ignoreImport())
-				continue;
 
 			try
 			{
 				
 				columnValue = record.getValue(var);
-				parsedValue = attr.importParse(columnValue);
+				parsedValue = attr.importParse(sess, columnValue);
 				
 				obj.setAttrValue(attr.getName(), parsedValue);
 
@@ -152,6 +166,20 @@ public class Import
 						+ "in variable " + var.getName() +
 						" in record " + recordNo + ".");
 			}
+			catch (MissingDictionaryValueException mdve)
+			{
+				valid = false;
+				log.logWarn("Missing dictionary value for '" + columnValue + "' "
+						+ "in variable " + var.getName() +
+						" in record " + recordNo + ".");
+			}
+			catch (ParseValueException pve)
+			{
+				valid = false;
+				log.logWarn("Unspecified parse exception "
+						+ "in variable " + var.getName() +
+						" in record " + recordNo + ".");
+			}
 
 		}
 
@@ -163,25 +191,34 @@ public class Import
 	{
 		
 		RecordReader voyagesRdr = recordIOFactory.createReader(dataFileName);
-		Record voyageRecord = null;
+		
+		Session sess = HibernateUtil.getSession();
 		
 		int recordNo = 0;
+		Record voyageRecord = null;
+		
 		while ((voyageRecord = voyagesRdr.readRecord()) != null)
 		{
+
+			Transaction transaction = sess.beginTransaction();
+
 			AbstractDescriptiveObject obj = objectFactory.newInstance();
-			updateValues(obj, voyageRecord, recordNo++);
-			obj.saveOrUpdate();
+			updateValues(sess, obj, voyageRecord, recordNo++);
+			System.out.println(voyageRecord.getKey());
+			
+			obj.saveOrUpdate(sess);
+			transaction.commit();
+			
 		}
+
+		sess.close();
 
 	}
 
-	public void runImport(LogWriter log, String importDir, AbstractDescriptiveObjectFactory objectFactory, ImportableAttribute[] attributes)
+	public void runImport(LogWriter log)
 	{
 
-		this.attributes = attributes;
-		this.objectFactory = objectFactory;
 		this.log = log;
-		this.importDir = importDir;
 
 		dataFileName = this.importDir + File.separatorChar + DAT_FILE_NAME;
 		schemaFileName = this.importDir + File.separatorChar + STS_FILE_NAME;
@@ -193,7 +230,7 @@ public class Import
 			loadSchemas();
 
 			log.startStage(LogItem.STAGE_SCHEMA_MATCHING);
-			matchAndVerifySchemaV2();
+			matchAndVerifySchema();
 
 			log.startStage(LogItem.STAGE_IMPORTING_DATA);
 			importData();
@@ -234,12 +271,13 @@ public class Import
 		Configuration conf = AppConfig.getConfiguration();
 		String fullImportDir = conf.getString(AppConfig.IMPORT_ROOTDIR) + File.separatorChar + importDir;
 		LogWriter log = new LogWriter(fullImportDir);
+		log.startImport();
 
 		AbstractDescriptiveObjectFactory objectFactory = new VoyageFactory();
-		ImportableAttribute[] attributes = (ImportableAttribute[]) Voyage.getAttributes();
+		ImportableAttribute[] attributes = Voyage.getAttributes();
 		
-		Import imp = new Import();
-		imp.runImport(log, fullImportDir, objectFactory, attributes);
+		Import imp = new Import(fullImportDir, "voyageid", objectFactory, attributes);
+		imp.runImport(log);
 		log.close();
 
 		

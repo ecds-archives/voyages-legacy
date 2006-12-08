@@ -40,7 +40,7 @@ public class VesselRig extends Dictionary
 
 	public static VesselRig loadById(Session sess, long rigId)
 	{
-		List list = sess.createCriteria(VesselRig.class).add(Restrictions.eq("id", new Long(rigId))).list();
+		List list = sess.createCriteria(VesselRig.class).add(Restrictions.eq("id", new Long(rigId))).setCacheable(true).list();
 		if (list == null || list.size() == 0) return null;
 		return (VesselRig) list.get(0);
 	}

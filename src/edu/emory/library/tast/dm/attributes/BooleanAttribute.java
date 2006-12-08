@@ -2,6 +2,8 @@ package edu.emory.library.tast.dm.attributes;
 
 import java.util.Map;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tas.spss.STSchemaVariable;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
@@ -57,7 +59,7 @@ public class BooleanAttribute extends ImportableAttribute
 		return false;
 	}
 
-	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(Session sess, String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
 	{
 		return new Boolean(value.equals("TRUE") || value.equals("1"));
 	}

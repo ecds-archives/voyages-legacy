@@ -1,9 +1,8 @@
 package edu.emory.library.tast.dm.attributes;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.dm.Area;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 
 public class AreaAttribute extends DictionaryAttribute
 {
@@ -18,9 +17,9 @@ public class AreaAttribute extends DictionaryAttribute
 		super(name, objType, importName);
 	}
 	
-	public Object importParse(String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
+	protected Object loadObjectById(Session sess, long id) 
 	{
-		return Area.loadById(parseId(value));
+		return Area.loadById(sess, id);
 	}
 
 }

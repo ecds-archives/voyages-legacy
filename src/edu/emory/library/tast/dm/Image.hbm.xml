@@ -4,7 +4,9 @@
 <hibernate-mapping>
 	<class name="edu.emory.library.tast.dm.Image" table="images">
 		
+		<!-- 
 		<cache usage="read-write" />
+		-->
 		
 		<id name="id" column="image_id">
 			<generator class="native"/>

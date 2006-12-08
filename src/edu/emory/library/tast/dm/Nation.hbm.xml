@@ -2,11 +2,14 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false">
+
 	<class name="edu.emory.library.tast.dm.Nation" table="nations">
 		
+		<!-- 
 		<cache usage="read-write" />
+		-->
 		
-		<id name="id" column="nation_id">
+		<id name="id" column="id">
 			<generator class="native"/>
 		</id>
 		
@@ -14,4 +17,5 @@
 		<property name="order" column="order_num" />
 
 	</class>
+
 </hibernate-mapping>

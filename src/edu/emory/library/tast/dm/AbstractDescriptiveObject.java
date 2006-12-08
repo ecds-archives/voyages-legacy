@@ -3,6 +3,8 @@ package edu.emory.library.tast.dm;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.Session;
+
 /**
  * Abstract class that provides basic methods for storing properties in object specific classes.
  * @author Pawel Jurczyk
@@ -46,5 +48,6 @@ public abstract class AbstractDescriptiveObject
 	}
 	
 	public abstract void saveOrUpdate();
+	public abstract void saveOrUpdate(Session sess);
 
 }

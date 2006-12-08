@@ -3,7 +3,9 @@
 
 <hibernate-mapping>
 	<class name="edu.emory.library.tast.dm.Event" table="events">
+		<!-- 
 		<cache usage="read-write" />
+		-->
 		<id name="id" column="event_id">
 			<generator class="native"/>
 		</id>

@@ -108,7 +108,7 @@ public class EstimatesNation extends Dictionary
 
 	public static EstimatesNation loadById(Session sess, long nationId)
 	{
-		List list = sess.createCriteria(EstimatesNation.class).add(Restrictions.eq("id", new Long(nationId))).list();
+		List list = sess.createCriteria(EstimatesNation.class).add(Restrictions.eq("id", new Long(nationId))).setCacheable(true).list();
 		if (list == null || list.size() == 0) return null;
 		return (EstimatesNation) list.get(0);
 	}

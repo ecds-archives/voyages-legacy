@@ -1,7 +1,6 @@
 package edu.emory.library.tast.util;
 
 import java.security.InvalidParameterException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +10,6 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -236,17 +234,6 @@ public class HibernateConnector {
 	}
 
 	/**
-	 * Gets VoyageIndex of object having given slave as child.
-	 * 
-	 * @param p_slave
-	 *            Slave object
-	 * @return VoyageIndex object
-	 */
-	public VoyageIndex getVoyageIndexBySlave(Slave p_slave) {
-		throw new UnsupportedOperationException("Not yet implemented!");
-	}
-
-	/**
 	 * Creates new VoyageIndex - saves it into DB.
 	 * @param p_voyage voyage index object
 	 */
@@ -316,6 +303,7 @@ public class HibernateConnector {
 	 */
 	public void updateVoyage(Session p_session, VoyageIndex p_voyage) {
 
+		/*
 		
 		//Transaction transaction = p_session.beginTransaction();
 
@@ -337,24 +325,6 @@ public class HibernateConnector {
 			p_voyage.setRevisionId(new Long(max.longValue() + 1));
 		}
 
-		// Modify slaves
-		Set slaves = p_voyage.getSlaves();
-		Set newSlaves = new HashSet();
-		boolean slaveSaved = false;
-		for (Iterator iter = slaves.iterator(); iter.hasNext();) {
-			// Create new records for changed/created slaves
-			Slave slave = (Slave) iter.next();
-			if (slave.getModified() == Slave.UPDATED) {
-				Slave newSlave = (Slave) slave.clone();
-				newSlaves.add(newSlave);
-				slaveSaved = true;
-				p_session.save(slave);
-				
-			} else {
-				newSlaves.add(slave);
-			}
-
-		}
 
 		if (p_voyage.getVoyage().getModified() == Voyage.UPDATED
 				|| p_voyage.getVoyage().wereSlavesModified() || slaveSaved) {
@@ -376,6 +346,9 @@ public class HibernateConnector {
 
 		// Commit changes
 		//transaction.commit();
+
+		 */
+
 	}
 
 	/**
