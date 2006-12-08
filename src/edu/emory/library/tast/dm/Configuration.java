@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
@@ -23,8 +24,8 @@ public class Configuration {
 	private static Map attributes = new HashMap();
 	static {
 		attributes.put("id", new StringAttribute("id", "Configuration"));
-		attributes.put("creationDate", new NumericAttribute("creationDate", "Configuration"));
-		attributes.put("entries", new NumericAttribute("map_entries", "Configuration"));
+		attributes.put("creationDate", new DateAttribute("creationDate", "Configuration"));
+		attributes.put("entries", new NumericAttribute("map_entries", "Configuration", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	/**

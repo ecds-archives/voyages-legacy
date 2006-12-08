@@ -22,9 +22,9 @@ public class Nation extends Dictionary
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "Nation"));
+		attributes.put("id", new NumericAttribute("id", "Nation", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "Nation"));
-		attributes.put("order", new NumericAttribute("order", "Nation"));
+		attributes.put("order", new NumericAttribute("order", "Nation", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private int order;

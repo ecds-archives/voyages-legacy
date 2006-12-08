@@ -18,6 +18,7 @@ import org.hibernate.criterion.Restrictions;
 import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class Region extends Location
@@ -26,13 +27,15 @@ public class Region extends Location
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("x", new NumericAttribute("x", "Region"));
-		attributes.put("y", new NumericAttribute("y", "Region"));
-		attributes.put("latitude", new NumericAttribute("latitude", "Region"));
-		attributes.put("longitude", new NumericAttribute("longitude", "Region"));
-		attributes.put("ports", new NumericAttribute("ports", "Region"));
+		attributes.put("id", new NumericAttribute("id", "Region", NumericAttribute.TYPE_LONG));
+		attributes.put("name", new StringAttribute("name", "Region"));
+		attributes.put("x", new NumericAttribute("x", "Region", NumericAttribute.TYPE_FLOAT));
+		attributes.put("y", new NumericAttribute("y", "Region", NumericAttribute.TYPE_FLOAT));
+		attributes.put("latitude", new NumericAttribute("latitude", "Region", NumericAttribute.TYPE_FLOAT));
+		attributes.put("longitude", new NumericAttribute("longitude", "Region", NumericAttribute.TYPE_FLOAT));
+		attributes.put("ports", new NumericAttribute("ports", "Region", NumericAttribute.TYPE_LONG));
 		attributes.put("area", new AreaAttribute("area", "Region"));
-		attributes.put("order", new NumericAttribute("order", "Region"));
+		attributes.put("order", new NumericAttribute("order", "Region", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private Set ports;

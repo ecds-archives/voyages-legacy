@@ -12,12 +12,10 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.PortAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
@@ -30,13 +28,13 @@ public class Image
 	static
 	{
 		attributes.put("id", new StringAttribute("id", "Image"));
-		attributes.put("title", new NumericAttribute("title", "Image"));
-		attributes.put("description", new NumericAttribute("description", "Image"));
-		attributes.put("fileName", new NumericAttribute("fileName", "Image"));
-		attributes.put("width", new NumericAttribute("width", "Image"));
-		attributes.put("height", new NumericAttribute("height", "Image"));
-		attributes.put("mimeType", new NumericAttribute("mimeType", "Image"));
-		attributes.put("people", new DictionaryAttribute("people", "Image"));
+		attributes.put("title", new StringAttribute("title", "Image"));
+		attributes.put("description", new StringAttribute("description", "Image"));
+		attributes.put("fileName", new StringAttribute("fileName", "Image"));
+		attributes.put("width", new NumericAttribute("width", "Image", NumericAttribute.TYPE_INTEGER));
+		attributes.put("height", new NumericAttribute("height", "Image", NumericAttribute.TYPE_INTEGER));
+		attributes.put("mimeType", new StringAttribute("mimeType", "Image"));
+		attributes.put("people", new NumericAttribute("people", "Image", NumericAttribute.TYPE_LONG));
 		attributes.put("regions", new RegionAttribute("regions", "Image"));
 		attributes.put("ports", new PortAttribute("ports", "Image"));
 	}
@@ -353,10 +351,10 @@ public class Image
 //		if (list == null || list.size() == 0) return null;
 //		return (Image) list.get(0);
 		
-		Attribute[] orderBy = { 
-			new SequenceAttribute(new Attribute[] {getAttribute("people"), Person.getAttribute("lastName")}),
-			new SequenceAttribute(new Attribute[] {getAttribute("regions"), Region.getAttribute("name")}),
-			new SequenceAttribute(new Attribute[] {getAttribute("ports"), Port.getAttribute("name")})};
+//		Attribute[] orderBy = { 
+//			new SequenceAttribute(new Attribute[] {getAttribute("people"), Person.getAttribute("lastName")}),
+//			new SequenceAttribute(new Attribute[] {getAttribute("regions"), Region.getAttribute("name")}),
+//			new SequenceAttribute(new Attribute[] {getAttribute("ports"), Port.getAttribute("name")})};
 		
 		Conditions conditions = new Conditions();
 		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);

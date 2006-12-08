@@ -19,7 +19,7 @@ public class Insurrections extends Dictionary
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "Insurrections"));
+		attributes.put("id", new NumericAttribute("id", "Insurrections", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "Insurrections"));
 	}
 	

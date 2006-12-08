@@ -22,7 +22,7 @@ public class EstimatesNation extends Dictionary
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "EstimatesNation"));
+		attributes.put("id", new NumericAttribute("id", "EstimatesNation", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesNation"));
 	}
 	

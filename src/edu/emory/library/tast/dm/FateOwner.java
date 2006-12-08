@@ -19,7 +19,7 @@ public class FateOwner extends Dictionary
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "Fate"));
+		attributes.put("id", new NumericAttribute("id", "Fate", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "Fate"));
 	}
 	

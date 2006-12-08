@@ -19,13 +19,13 @@ public class Area extends Dictionary
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "Area"));
+		attributes.put("id", new NumericAttribute("id", "Area", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "Area"));
-		attributes.put("x", new NumericAttribute("x", "Area"));
-		attributes.put("y", new NumericAttribute("y", "Area"));
-		attributes.put("latitude", new NumericAttribute("latitude", "Area"));
-		attributes.put("longitude", new NumericAttribute("longitude", "Area"));
-		attributes.put("regions", new NumericAttribute("regions", "Area"));
+		attributes.put("x", new NumericAttribute("x", "Area", NumericAttribute.TYPE_FLOAT));
+		attributes.put("y", new NumericAttribute("y", "Area", NumericAttribute.TYPE_FLOAT));
+		attributes.put("latitude", new NumericAttribute("latitude", "Area", NumericAttribute.TYPE_FLOAT));
+		attributes.put("longitude", new NumericAttribute("longitude", "Area", NumericAttribute.TYPE_FLOAT));
+		attributes.put("regions", new NumericAttribute("regions", "Area", NumericAttribute.TYPE_LONG));
 	}
 	
 	private int order;

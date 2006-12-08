@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class Port extends Location
@@ -20,7 +21,9 @@ public class Port extends Location
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("region", new NumericAttribute("region", "Port"));
+		attributes.put("id", new NumericAttribute("id", "Port", NumericAttribute.TYPE_LONG));
+		attributes.put("name", new StringAttribute("name", "Port"));
+		attributes.put("region", new NumericAttribute("region", "Port", NumericAttribute.TYPE_LONG));
 	}
 
 	private Region region;
