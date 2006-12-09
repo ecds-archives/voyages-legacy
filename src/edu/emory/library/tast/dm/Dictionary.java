@@ -1,6 +1,5 @@
 package edu.emory.library.tast.dm;
 
-import edu.emory.library.tast.dm.attributes.Attribute;
 
 
 /**

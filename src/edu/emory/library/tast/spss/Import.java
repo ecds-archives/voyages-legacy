@@ -192,25 +192,33 @@ public class Import
 		
 		RecordReader voyagesRdr = recordIOFactory.createReader(dataFileName);
 		
-		Session sess = HibernateUtil.getSession();
-		
 		int recordNo = 0;
 		Record voyageRecord = null;
+
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
 		
 		while ((voyageRecord = voyagesRdr.readRecord()) != null)
 		{
 
-			Transaction transaction = sess.beginTransaction();
+			long t1 = System.currentTimeMillis();
+
 
 			AbstractDescriptiveObject obj = objectFactory.newInstance();
-			updateValues(sess, obj, voyageRecord, recordNo++);
-			System.out.println(voyageRecord.getKey());
+			updateValues(sess, obj, voyageRecord, ++recordNo);
 			
 			obj.saveOrUpdate(sess);
-			transaction.commit();
 			
+			sess.flush();
+			sess.clear();
+			
+			long t2 = System.currentTimeMillis();
+
+			System.out.println("vid = " + voyageRecord.getKey() + " " + (t2 - t1) + " ms");
+
 		}
 
+		transaction.commit();
 		sess.close();
 
 	}
