@@ -27,6 +27,7 @@ public class Import
 
 	public static final String DAT_FILE_NAME = "data.dat";
 	public static final String STS_FILE_NAME = "data.sts";
+	private static final int FLUSH_INTERVAL = 1	;
 
 	private String importDir;
 	private LogWriter log;
@@ -149,7 +150,7 @@ public class Import
 			{
 				valid = false;
 				log.logWarn("Invalid numeric value '" + columnValue + "' " +
-						"in variable " + var.getName() +
+						"in variable " + var.getName() + " " +
 						"in record " + recordNo + ".");
 			}
 			catch (InvalidDateException ide)
@@ -209,8 +210,11 @@ public class Import
 			
 			obj.saveOrUpdate(sess);
 			
-			sess.flush();
-			sess.clear();
+			if (recordNo % FLUSH_INTERVAL == 0)
+			{
+				sess.flush();
+				sess.clear();
+			}
 			
 			long t2 = System.currentTimeMillis();
 

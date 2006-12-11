@@ -132,7 +132,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
 		attributes.add(new NumericAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
 		attributes.add(new NumericAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
-		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
+		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtimp"));
 		attributes.add(new NumericAttribute("vymrtrat", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtrat"));
 		attributes.add(new StringAttribute("sourcea", "Voyage", "sourcea"));
 		attributes.add(new StringAttribute("sourceb", "Voyage", "sourceb"));
@@ -573,7 +573,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setTonmod(Float tonmod) {
 		this.values.put("tonmod", tonmod);
 	}
-	public void setVymrtimp(Integer vymrtimp) {
+	public void setVymrtimp(Float vymrtimp) {
 		this.values.put("vymrtimp", vymrtimp);
 	}
 	public void setVymrtrat(Float vymrtrat) {
@@ -953,8 +953,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Float getTonmod() {
 		return (Float)this.values.get("tonmod");
 	}
-	public Integer getVymrtimp() {
-		return (Integer)this.values.get("vymrtimp");
+	public Float getVymrtimp() {
+		return (Float)this.values.get("vymrtimp");
 	}
 	public Float getVymrtrat() {
 		return (Float)this.values.get("vymrtrat");

@@ -45,7 +45,7 @@
         <property name="name" column="name"/>
     </class>
     
-    <class name="edu.emory.library.tast.dm.Insurrections" table="insurrections">
+    <class name="edu.emory.library.tast.dm.Resistance" table="resistance">
 		<!-- 
 		<cache usage="read-write" />
 		-->

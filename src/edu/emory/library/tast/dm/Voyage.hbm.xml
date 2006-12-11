@@ -46,7 +46,7 @@
 		<many-to-one name="fate2" column="fate2" class="edu.emory.library.tast.dm.FateSlaves" />
 		<many-to-one name="fate3" column="fate3" class="edu.emory.library.tast.dm.FateVessel" />
 		<many-to-one name="fate4" column="fate4" class="edu.emory.library.tast.dm.FateOwner" />
-		<many-to-one name="insurrec" column="insurrec" class="edu.emory.library.tast.dm.Insurrections" />
+		<many-to-one name="resistance" column="resistance" class="edu.emory.library.tast.dm.Resistance" />
 		<many-to-one name="ptdepimp" column="ptdepimp" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="deptregimp" column="deptregimp" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="plac1tra" column="plac1tra" class="edu.emory.library.tast.dm.Port" />
