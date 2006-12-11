@@ -13,7 +13,7 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
-public class Insurrections extends Dictionary
+public class Resistance extends Dictionary
 {
 
 	private static Map attributes = new HashMap();
@@ -28,21 +28,21 @@ public class Insurrections extends Dictionary
 		return (Attribute)attributes.get(name);
 	}
 	
-	public static Insurrections loadById(long insurrectionId)
+	public static Resistance loadById(long insurrectionId)
 	{
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		Insurrections fate = loadById(sess, insurrectionId);
+		Resistance fate = loadById(sess, insurrectionId);
 		transaction.commit();
 		sess.close();
 		return fate;
 	}
 
-	public static Insurrections loadById(Session sess, long insurrectionId)
+	public static Resistance loadById(Session sess, long insurrectionId)
 	{
-		List list = sess.createCriteria(Insurrections.class).add(Restrictions.eq("id", new Long(insurrectionId))).list();
+		List list = sess.createCriteria(Resistance.class).add(Restrictions.eq("id", new Long(insurrectionId))).list();
 		if (list == null || list.size() == 0) return null;
-		return (Insurrections) list.get(0);
+		return (Resistance) list.get(0);
 	}
 
 }

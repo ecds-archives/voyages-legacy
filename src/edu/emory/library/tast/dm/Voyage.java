@@ -15,7 +15,7 @@ import edu.emory.library.tast.dm.attributes.FateOwnerAttribute;
 import edu.emory.library.tast.dm.attributes.FateSlavesAttribute;
 import edu.emory.library.tast.dm.attributes.FateVesselAttribute;
 import edu.emory.library.tast.dm.attributes.ImportableAttribute;
-import edu.emory.library.tast.dm.attributes.InsurrectionsAttribute;
+import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.PortAttribute;
@@ -75,7 +75,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new FateSlavesAttribute("fate2", "Voyage", "fate2"));
 		attributes.add(new FateVesselAttribute("fate3", "Voyage", "fate3"));
 		attributes.add(new FateOwnerAttribute("fate4", "Voyage", "fate4"));
-		attributes.add(new InsurrectionsAttribute("insurrec", "Voyage", "insurrec"));
+		attributes.add(new ResistanceAttribute("resistance", "Voyage", "resistance"));
 		attributes.add(new PortAttribute("ptdepimp", "Voyage", "ptdepimp"));
 		attributes.add(new RegionAttribute("deptregimp", "Voyage", "deptregimp"));
 		attributes.add(new PortAttribute("plac1tra", "Voyage", "plac1tra"));
@@ -513,8 +513,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setCrew3(Integer crew3) {
 		this.values.put("crew3", crew3);
 	}
-	public void setInsurrec(Insurrections insurrec) {
-		this.values.put("insurrec", insurrec);
+	public void setResistance(Resistance resistance) {
+		this.values.put("resistance", resistance);
 	}
 	public void setPtdepimp(Port ptdepimp) {
 		this.values.put("ptdepimp", ptdepimp);
@@ -893,8 +893,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getCrew3() {
 		return (Integer)this.values.get("crew3");
 	}
-	public Insurrections getInsurrec() {
-		return (Insurrections)this.values.get("insurrec");
+	public Resistance getResistance() {
+		return (Resistance)this.values.get("resistance");
 	}
 	public Port getPtdepimp() {
 		return (Port)this.values.get("ptdepimp");
