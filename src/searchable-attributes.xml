@@ -33,7 +33,7 @@
 			<location port="p" region="r" />
 		</locations>
 	</searchable-attribute>
-
+<!-- 
 	<searchable-attribute type="simple" id="adultspurch"
 		userCategory="beginners" userLabel="Adults purchased anywhere">
 		<attributes>
@@ -41,6 +41,7 @@
 			<attribute name="adult1" />
 		</attributes>
 	</searchable-attribute>
+ -->
 	<searchable-attribute type="simple" id="anycaptain"
 		userCategory="beginners" userLabel="Captain">
 		<attributes>
@@ -68,43 +69,43 @@
 			<attribute name="datedep" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="datarr4"
+	<searchable-attribute type="simple" id="dateend"
 		userCategory="beginners" userLabel="Date in which voyage completed">
 		<attributes>
-			<attribute name="datarr4" />
+			<attribute name="dateend" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="datarr32"
+	<searchable-attribute type="simple" id="dateland2"
 		userCategory="general"
 		userLabel="Date of arrival at second port of disembarkation">
 		<attributes>
-			<attribute name="datarr32" />
+			<attribute name="dateland2" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="ddepamb"
+	<searchable-attribute type="simple" id="datedepam"
 		userCategory="beginners"
 		userLabel="Date of departure from last port disembarkation">
 		<attributes>
-			<attribute name="ddepamb" />
+			<attribute name="datedepam" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="rrdata31"
+	<searchable-attribute type="simple" id="dateland1"
 		userCategory="beginners" userLabel="Date of first disembarkation">
 		<attributes>
-			<attribute name="rrdata31" />
+			<attribute name="dateland1" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="datarr33"
+	<searchable-attribute type="simple" id="dateland3"
 		userCategory="general"
 		userLabel="Date of third disembarkation of slaves">
 		<attributes>
-			<attribute name="datarr33" />
+			<attribute name="dateland3" />
 		</attributes>
 	</searchable-attribute>
-	<searchable-attribute type="simple" id="d1slatr"
+	<searchable-attribute type="simple" id="datebuy"
 		userCategory="beginners" userLabel="Day began slave purchase">
 		<attributes>
-			<attribute name="d1slatr" />
+			<attribute name="datebuy" />
 		</attributes>
 	</searchable-attribute>
 	<searchable-attribute type="simple" id="sourcer"
@@ -167,6 +168,7 @@
 			<attribute name="ownera" />
 		</attributes>
 	</searchable-attribute>
+	<!-- 
 	<searchable-attribute type="simple" id="embport"
 		userCategory="general"
 		userLabel="First place of intended embarkation">
@@ -174,6 +176,7 @@
 			<attribute name="embport" />
 		</attributes>
 	</searchable-attribute>
+	 -->
 	<searchable-attribute type="simple" id="plac1tra"
 		userCategory="general" userLabel="First place of slave purchase">
 		<attributes>
