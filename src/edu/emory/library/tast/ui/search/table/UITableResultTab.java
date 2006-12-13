@@ -210,9 +210,16 @@ public class UITableResultTab extends UIOutput {
 					rowClass.append(" grid-row-first");
 				if (i == objs.length - 1)
 					rowClass.append(" grid-row-last");
+				
+				Long voyageId = objs[i].voyageId;
+				String voyageIdString;
+				if (voyageId == null)
+					voyageIdString = "MISSING";
+				else
+					voyageIdString = voyageId.toString();
 
-				String jsClick = JsfUtils.generateSubmitJS(context, form, getClickIdHiddenFieldName(context),
-						objs[i].voyageId.toString().toString());
+				String jsClick = JsfUtils.generateSubmitJS(context, form,
+						getClickIdHiddenFieldName(context), voyageIdString);
 
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);

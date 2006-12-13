@@ -9,17 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Region extends Location
 {
@@ -72,61 +67,14 @@ public class Region extends Location
 		this.order = order;
 	}
 	
-	public static Region[] getRegionsArray()
+	public static List loadAll(Session sess)
 	{
-		List list = loadAllRegions();
-		Region[] regions = new Region[list.size()];
-		list.toArray(regions);
-		return regions;
+		return Port.loadAll(Region.class, sess);
 	}
 	
-	public static List loadAllRegions()
+	public static Region loadById(Session sess, long portId)
 	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		List list = loadRegions(sess, null);
-		transaction.commit();
-		sess.close();
-		return list;
-	}
-	
-	public static List loadAllRegions(Session sess)
-	{
-		return loadRegions(sess, null);
-	}
-
-	public static List loadRegions(String substring)
-	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		List list = loadRegions(sess, substring);
-		transaction.commit();
-		sess.close();
-		return list;
-	}
-	
-	public static List loadRegions(Session sess, String substring)
-	{
-		Criteria crit = sess.createCriteria(Region.class).addOrder(Order.asc("name"));
-		if (substring != null) crit.add(Restrictions.ilike("name", substring));
-		return crit.list();
-	}
-	
-	public static Region loadById(long regionId)
-	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		Region region = loadById(sess, regionId);
-		transaction.commit();
-		sess.close();
-		return region;
-	}
-
-	public static Region loadById(Session sess, long regionId)
-	{
-		List list = sess.createCriteria(Region.class).add(Restrictions.eq("id", new Long(regionId))).setCacheable(true).list();
-		if (list == null || list.size() == 0) return null;
-		return (Region) list.get(0);
+		return (Region) Dictionary.loadById(Region.class, sess, portId);
 	}
 	
 	public static Attribute getAttribute(String name)

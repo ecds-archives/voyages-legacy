@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.ui.LookupSource;
@@ -79,7 +82,9 @@ public class LookupSourcePorts implements LookupSource
 		
 		// load all ports
 		if (searchFor != null) searchFor = "%" + searchFor + "%";
-		List dbPorts = Port.loadPorts(sess, searchFor);
+		Criteria crit = sess.createCriteria(Port.class).createAlias("region", "r", Criteria.LEFT_JOIN).addOrder(Order.asc("r.name")).addOrder(Order.asc("name"));
+		crit.add(Restrictions.ilike("name", searchFor));
+		List dbPorts = crit.list();
 		List uiPorts = new ArrayList(dbPorts.size());
 
 		// fill UI list

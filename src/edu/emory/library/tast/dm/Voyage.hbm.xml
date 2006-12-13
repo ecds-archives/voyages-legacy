@@ -11,7 +11,7 @@
 			<generator class="native"/>
 		</id>
 
-		<property name="voyageId" column="voyageid"/>
+		<property name="voyageid" column="voyageid"/>
 		<property name="cd" column="cd" />
 		
 		<property name="shipname" column="shipname" />

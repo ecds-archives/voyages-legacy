@@ -142,7 +142,11 @@ public class QueryBuilderComponent extends UIComponentBase
 				}
 				else if (queryCondition instanceof QueryConditionList)
 				{
-					ok = decodeDictionaryCondition((QueryConditionList) queryCondition, context);
+					ok = decodeListCondition((QueryConditionList) queryCondition, context);
+				}
+				else if (queryCondition instanceof QueryConditionBoolean)
+				{
+					ok = decodeBooleanCondition((QueryConditionBoolean) queryCondition, context);
 				}
 				
 				if (ok) submittedQuery.addCondition(queryCondition);
@@ -228,6 +232,13 @@ public class QueryBuilderComponent extends UIComponentBase
 						context, form, writer,
 						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
 			}
+			else if (queryCondition instanceof QueryConditionBoolean)
+			{
+				encodeBooleanCondition(
+						(QueryConditionBoolean)queryCondition,
+						context, form, writer,
+						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+			}
 			else if (queryCondition instanceof QueryConditionNumeric)
 			{
 				encodeNumericCondition(
@@ -244,7 +255,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			}
 			else if (queryCondition instanceof QueryConditionList)
 			{
-				encodeDictionaryCondition(
+				encodeListCondition(
 						(QueryConditionList)queryCondition,
 						context, form, writer,
 						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
@@ -547,6 +558,50 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		String value = (String) params.get(fieldName);
 		queryCondition.setValue(value);
+		
+		return true;
+		
+	}
+	
+	private void encodeBooleanCondition(QueryConditionBoolean queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
+	{
+		
+		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.startElement("tr", this);
+		
+		writer.startElement("td", this);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "checkbox", null);
+		writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
+		writer.writeAttribute("name", getHtmlNameForSimpleValue(attribute, context), null);
+		writer.writeAttribute("value", "true", null);
+		if (queryCondition.isChecked()) writer.writeAttribute("checked", "checked", null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-checkbox-label", null);
+		writer.write("Yes");
+		writer.endElement("td");
+
+		writer.endElement("tr");
+		writer.endElement("table");
+
+	}
+	
+	private boolean decodeBooleanCondition(QueryConditionBoolean queryCondition, FacesContext context)
+	{
+		
+		String fieldName = getHtmlNameForSimpleValue(queryCondition.getSearchableAttribute(), context); 
+		
+		Map params = context.getExternalContext().getRequestParameterMap();
+		String value = (String) params.get(fieldName);
+		queryCondition.setChecked(value != null && value.equals("true"));
 		
 		return true;
 		
@@ -1333,7 +1388,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 
-	private void encodeDictionaryCondition(QueryConditionList queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
+	private void encodeListCondition(QueryConditionList queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 		
 		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
@@ -1535,7 +1590,7 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 
-	private boolean decodeDictionaryCondition(QueryConditionList queryCondition, FacesContext context)
+	private boolean decodeListCondition(QueryConditionList queryCondition, FacesContext context)
 	{
 		
 		SearchableAttribute attribute = queryCondition.getSearchableAttribute();

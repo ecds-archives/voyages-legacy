@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.LookupSource;
@@ -76,10 +79,12 @@ public class LookupSourceRegions implements LookupSource
 		// open db
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		
+
 		// load all regions
 		if (searchFor != null) searchFor = "%" + searchFor + "%";
-		List dbRegions = Region.loadRegions(sess, searchFor);
+		Criteria crit = sess.createCriteria(Region.class).addOrder(Order.asc("name"));
+		crit.add(Restrictions.ilike("name", searchFor));
+		List dbRegions = crit.list();
 		List uiRegions = new ArrayList(dbRegions.size());
 
 		// fill UI list

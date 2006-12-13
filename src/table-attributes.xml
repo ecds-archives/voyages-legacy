@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table-attributes>
-	<table-attribute tabs="1,2" id="voyageId" userCategory="beginners" userLabel="Unique identification number">
+	<table-attribute tabs="1,2" id="voyageid" userCategory="beginners" userLabel="Unique identification number">
 		<attributes>
-			<attribute name="voyageId"/>
+			<attribute name="voyageid"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="cd" userCategory="beginners" userLabel="Voyage in 1999 CD-ROM">
@@ -270,11 +270,6 @@
 			<attribute name="voy2imp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="voy3imp" userCategory="beginners" userLabel="Imputed voyage length from departure to return to home port">
-		<attributes>
-			<attribute name="voy3imp"/>
-		</attributes>
-	</table-attribute>	
 	<table-attribute tabs="1" id="anycaptain" userCategory="beginners" userLabel="Captain">
 		<attributes>
 			<attribute name="captaina"/>

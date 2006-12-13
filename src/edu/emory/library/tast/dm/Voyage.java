@@ -230,7 +230,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	public static Voyage loadActive(Long voyageId) {
 		Voyage localVoyage = new Voyage();
-		localVoyage.setVoyageId(voyageId);
+		localVoyage.setVoyageid(voyageId);
 		return loadInternal(localVoyage, 
 				HibernateConnector.APPROVED & HibernateConnector.WITHOUT_HISTORY);
 	}
@@ -242,7 +242,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	public static Voyage loadMostRecent(Long voyageId) {
 		Voyage localVoyage = new Voyage();
-		localVoyage.setVoyageId(voyageId);
+		localVoyage.setVoyageid(voyageId);
 		return loadInternal(localVoyage, 
 				HibernateConnector.APPROVED_AND_NOT_APPROVED & HibernateConnector.WITHOUT_HISTORY);
 	}
@@ -254,7 +254,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	public static Voyage[] loadMostRecent(Long voyageId, int p_packetSize) {
 		Voyage localVoyage = new Voyage();
-		localVoyage.setVoyageId(voyageId);
+		localVoyage.setVoyageid(voyageId);
 		
 		Session session = HibernateUtil.getSession();
 		//Load voyage from DB
@@ -300,7 +300,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	public static Voyage loadByRevision(Long voyageId, Long revisionId) {
 		Voyage localVoyage = new Voyage();
-		localVoyage.setVoyageId(voyageId);
+		localVoyage.setVoyageid(voyageId);
 		return loadInternal(localVoyage, 
 				HibernateConnector.WITHOUT_HISTORY);
 	}
@@ -314,7 +314,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	public static List loadAllRevisions(Long voyageId, int p_option) {
 		int option = p_option | HibernateConnector.WITH_HISTORY;
 		Voyage localVoyage = new Voyage();
-		localVoyage.setVoyageId(voyageId);
+		localVoyage.setVoyageid(voyageId);
 		
 		Session session = HibernateUtil.getSession();
 		//Load info from DB
@@ -339,7 +339,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		//Prepare VoyageIndex
 		VoyageIndex vIndex = new VoyageIndex();
 		vIndex.setVoyage(this);
-		vIndex.setVoyageId(this.getVoyageId());
+		vIndex.setVoyageId(this.getVoyageid());
 		vIndex.setRevisionDate(new Date(System.currentTimeMillis()));
 		
 		//Save to DB (or update...)
@@ -384,8 +384,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		sess.saveOrUpdate(this);
 	}
 	
-	public void setVoyageId(Long voyageId) {
-		this.values.put("voyageId", voyageId);
+	public void setVoyageid(Long voyageId) {
+		this.values.put("voyageid", voyageId);
 	}
 	public void setCd(Boolean cd) {
 		this.values.put("cd", cd);
@@ -770,8 +770,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		return (EstimatesNation)this.values.get("e_natinimp");
 	}
 	
-	public Long getVoyageId() {
-		return (Long)this.values.get("voyageId");
+	public Long getVoyageid() {
+		return (Long)this.values.get("voyageid");
 	}
 	public Boolean getCd() {
 		return (Boolean)this.values.get("cd");

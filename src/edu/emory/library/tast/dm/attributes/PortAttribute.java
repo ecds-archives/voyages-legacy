@@ -32,7 +32,7 @@ public class PortAttribute extends DictionaryAttribute
 
 	public List loadAllObjects(Session sess)
 	{
-		return Port.getAllPorts(sess);
+		return Port.loadAll(sess);
 	}
 	
 }

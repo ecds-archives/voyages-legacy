@@ -16,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
@@ -78,16 +79,25 @@ public class Searchables
 			String id = xmlSearchableAttr.getAttributes().getNamedItem("id").getNodeValue();
 			String type = xmlSearchableAttr.getAttributes().getNamedItem("type").getNodeValue();
 			String userLabel = xmlSearchableAttr.getAttributes().getNamedItem("userLabel").getNodeValue();
-			UserCategory userCategory = UserCategory.parse(xmlSearchableAttr.getAttributes().getNamedItem("userCategory").getNodeValue());
 			
 			// check id uniqueness
 			if (searchableAttributesByIds.containsKey(id))
 				throw new RuntimeException("duplicate attribute id '" + id + "'");
+			
+			// read categories
+			NodeList xmlUserCats = xmlSearchableAttr.getChildNodes().item(0).getChildNodes();
+			UserCategories userCats = new UserCategories();
+			for (int j = 0; j < xmlUserCats.getLength(); j++)
+			{
+				Node xmlUserCat = xmlUserCats.item(j);
+				UserCategory category = UserCategory.parse(xmlUserCat.getAttributes().getNamedItem("name").getNodeValue());
+				if (category != null) userCats.addTo(category);
+			}
 
 			// simple attribute -> read list of db attriutes
 			if ("simple".equals(type))
 			{
-				NodeList xmlAttrs = xmlSearchableAttr.getFirstChild().getChildNodes();
+				NodeList xmlAttrs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
 				Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
 				
 				// read the db attributes
@@ -99,16 +109,15 @@ public class Searchables
 					Attribute attr = Voyage.getAttribute(name);
 					if (attr == null)
 					{
-						throw new RuntimeException("searchable attribute '" + id + "' not found");
+						throw new RuntimeException("searchable attribute '" + name + "' not found");
 					}
 					else if (j == 0)
 					{
 						firstAttr = attr;
-						//attrType = attr.decodeType();
 					}
 					else
 					{
-						if (firstAttr.getClass() == attr.getClass())
+						if (firstAttr.getClass() != attr.getClass())
 							throw new RuntimeException("searchable attribute '" + id + "' contains invalid attributes");
 					}
 					attrs[j] = attr;
@@ -117,19 +126,37 @@ public class Searchables
 				// create the corresponding searchable attribute
 				if (firstAttr instanceof DictionaryAttribute)
 				{
-					searchableAttribute = new SearchableAttributeSimpleDictionary(id, userLabel, userCategory, attrs);
+					searchableAttribute =
+						new SearchableAttributeSimpleDictionary(
+							id, userLabel, userCats, attrs);
 				}
 				else if (firstAttr instanceof StringAttribute) 
 				{
-					searchableAttribute = new SearchableAttributeSimpleText(id, userLabel, userCategory, attrs);
+					searchableAttribute =
+						new SearchableAttributeSimpleText(
+							id, userLabel, userCats, attrs);
 				}
 				else if (firstAttr instanceof NumericAttribute) 
 				{
-					searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
+					searchableAttribute =
+						new SearchableAttributeSimpleNumeric(
+							id, userLabel, userCats, attrs);
 				}
 				else if (firstAttr instanceof DateAttribute)
 				{		
-					searchableAttribute = new SearchableAttributeSimpleDate(id, userLabel, userCategory, attrs);
+					searchableAttribute =
+						new SearchableAttributeSimpleDate(
+							id, userLabel, userCats, attrs);
+				}
+				else if (firstAttr instanceof BooleanAttribute)
+				{		
+					searchableAttribute =
+						new SearchableAttributeSimpleBoolean(
+							id, userLabel, userCats, attrs);
+				}
+				else
+				{
+					throw new RuntimeException("unsupported type for searchable attribute '" + id + "'");					
 				}
 
 			}
@@ -137,29 +164,29 @@ public class Searchables
 			// location -> read list of locations
 			else if ("location".equals(type))
 			{
-				NodeList xmlLocs = xmlSearchableAttr.getFirstChild().getChildNodes();
+				NodeList xmlLocs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
 				Location[] locs = new Location[xmlLocs.getLength()];
 				for (int j = 0; j < xmlLocs.getLength(); j++)
 				{
 					Node xmlLoc = xmlLocs.item(j);
 
-//					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
-//					String region = xmlLoc.getAttributes().getNamedItem("region").getNodeValue();
-//					Attribute attrPort = Voyage.getAttribute(port);
-//					Attribute attrRegion = Voyage.getAttribute(region);
-//					
-//					if (attrPort.getType().intValue() != Attribute.TYPE_DICT ||
-//							attrRegion.getType().intValue() != Attribute.TYPE_DICT || 
-//							!PORT_DICTIONARY.equals(attrPort.getDictionary()) ||
-//							!REGION_DICTIONARY.equals(attrRegion.getDictionary()))
-//						throw new RuntimeException("searchable attribute '" + id + "' invalid location");
-//					
-//					locs[j] = new Location(attrPort, attrRegion);
+					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
+					String region = xmlLoc.getAttributes().getNamedItem("region").getNodeValue();
+					Attribute attrPort = Voyage.getAttribute(port);
+					Attribute attrRegion = Voyage.getAttribute(region);
+					
+					if (attrPort.getType().intValue() != Attribute.TYPE_DICT ||
+							attrRegion.getType().intValue() != Attribute.TYPE_DICT || 
+							!PORT_DICTIONARY.equals(attrPort.getDictionary()) ||
+							!REGION_DICTIONARY.equals(attrRegion.getDictionary()))
+						throw new RuntimeException("searchable attribute '" + id + "' invalid location");
+					
+					locs[j] = new Location(attrPort, attrRegion);
 					locs[j] = new Location(null, null);
 				}
-				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCategory, locs);
+				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCats, locs);
 			}
-
+			
 			// add it to our collection
 			if (searchableAttribute != null)
 			{

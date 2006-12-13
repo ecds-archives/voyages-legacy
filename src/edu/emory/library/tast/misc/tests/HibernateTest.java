@@ -79,7 +79,7 @@ public class HibernateTest {
 
 					for (int i = 0; i < v.length; i++) {
 						Voyage theVoyage = v[i];
-						System.out.println(theVoyage.getVoyageId() + ": " + theVoyage);
+						System.out.println(theVoyage.getVoyageid() + ": " + theVoyage);
 					}
 
 				} catch (NullPointerException e) {

@@ -8,13 +8,13 @@ public abstract class SearchableAttribute
 	
 	private String userLabel;
 	private String id;
-	private UserCategory userCategory;
+	private UserCategories userCategories;
 	
-	public SearchableAttribute(String id, String userLabel, UserCategory userCategory)
+	public SearchableAttribute(String id, String userLabel, UserCategories userCategories)
 	{
 		this.id = id;
 		this.userLabel = userLabel;
-		this.userCategory = userCategory;
+		this.userCategories = userCategories;
 	}
 
 	public String getUserLabel()
@@ -27,11 +27,16 @@ public abstract class SearchableAttribute
 		return id;
 	}
 
-	public UserCategory getUserCategory()
+	public UserCategories getUserCategories()
 	{
-		return userCategory;
+		return userCategories;
 	}
-	
+
+	public boolean isInUserCategory(UserCategory category)
+	{
+		return userCategories.isIn(category);
+	}
+
 	public abstract QueryCondition createQueryCondition();
 	public abstract boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition);
 

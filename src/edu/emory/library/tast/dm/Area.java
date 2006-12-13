@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Area extends Dictionary
 {
@@ -59,26 +55,12 @@ public class Area extends Dictionary
 	
 	public static List loadAll(Session sess)
 	{
-		return sess.createCriteria(Area.class).
-		addOrder(Order.asc("name")).
-		list();
+		return Dictionary.loadAll(Area.class, sess);
 	}
 	
-	public static Area loadById(long areaId)
+	public static Area loadById(Session sess, long portId)
 	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		Area port = loadById(sess, areaId);
-		transaction.commit();
-		sess.close();
-		return port;
-	}
-
-	public static Area loadById(Session sess, long areaId)
-	{
-		List list = sess.createCriteria(Area.class).add(Restrictions.eq("id", new Long(areaId))).list();
-		if (list == null || list.size() == 0) return null;
-		return (Area) list.get(0);
+		return (Area) Dictionary.loadById(Area.class, sess, portId);
 	}
 
 }

@@ -1,5 +1,14 @@
 package edu.emory.library.tast.dm;
 
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import edu.emory.library.tast.util.HibernateUtil;
+
 
 
 /**
@@ -47,6 +56,61 @@ public abstract class Dictionary
 	public int hashCode()
 	{
 		return id.hashCode();
+	}
+	
+	public static List loadAll(Class clazz, Session sess)
+	{
+
+		boolean sessionProvided = sess != null;
+		Transaction transaction = null;
+		if (!sessionProvided)
+		{
+			sess = HibernateUtil.getSession();
+			transaction = sess.beginTransaction();
+		}
+		
+		List rigs = sess.createCriteria(clazz).addOrder(Order.asc("name")).list();
+		
+		if (!sessionProvided)
+		{
+			transaction.commit();
+			sess.close();
+		}
+		
+		return rigs;
+
+	}
+	
+	public static Object loadById(Class clazz, Session sess, long id)
+	{
+
+		boolean sessionProvided = sess != null;
+		Transaction transaction = null;
+		if (!sessionProvided)
+		{
+			sess = HibernateUtil.getSession();
+			transaction = sess.beginTransaction();
+		}
+
+		List list = sess.createCriteria(clazz).add(Restrictions.eq("id", new Long(id))).setCacheable(true).list();
+		Object dictItem = null;
+		if (list == null || list.size() == 0)
+		{
+			dictItem = null;
+		}
+		else
+		{
+			dictItem = list.get(0);
+		}
+
+		if (!sessionProvided)
+		{
+			transaction.commit();
+			sess.close();
+		}
+
+		return dictItem;
+
 	}
 	
 }

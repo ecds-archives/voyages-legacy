@@ -71,13 +71,13 @@ public class HibernateConnector {
 			if (p_fetchSize == -1) {
 				where.append("where ");
 				where.append("voyageIndex.voyage.voyageId = ");
-				where.append(p_voyage.getVoyageId());
+				where.append(p_voyage.getVoyageid());
 				where.append(" ");
 				first = false;
 			} else {
 				where.append("where ");
 				where.append("voyageIndex.voyage.voyageId >= ");
-				where.append(p_voyage.getVoyageId());
+				where.append(p_voyage.getVoyageid());
 				where.append(" ");
 				first = false;
 			}

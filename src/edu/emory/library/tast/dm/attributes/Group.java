@@ -79,7 +79,7 @@ public class Group {
 
 			for (int j = 0; j < searchableAttributesAll.length; j++) {
 				SearchableAttribute attr = searchableAttributesAll[j];
-				if (attr != null && attr.getUserCategory().equals(category))
+				if (attr != null && attr.isInUserCategory(category))
 					selected.add(attr);
 			}
 

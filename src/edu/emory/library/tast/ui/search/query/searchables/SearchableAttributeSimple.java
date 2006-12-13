@@ -8,9 +8,9 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 	private Attribute[] attributes;
 	//private String attributeType;
 
-	public SearchableAttributeSimple(String id, String userLabel, UserCategory userCategory, Attribute[] attributes)
+	public SearchableAttributeSimple(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
 	{
-		super(id, userLabel, userCategory);
+		super(id, userLabel, userCategories);
 		if (attributes == null || attributes.length == 0)
 		{
 			this.attributes = new Attribute[0];

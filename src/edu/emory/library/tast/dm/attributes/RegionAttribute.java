@@ -32,7 +32,7 @@ public class RegionAttribute extends DictionaryAttribute
 
 	public List loadAllObjects(Session sess)
 	{
-		return Region.loadAllRegions(sess);
+		return Region.loadAll(sess);
 	}
 	
 }

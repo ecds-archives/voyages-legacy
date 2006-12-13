@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Resistance extends Dictionary
 {
@@ -31,26 +27,12 @@ public class Resistance extends Dictionary
 	
 	public static List loadAll(Session sess)
 	{
-		return sess.createCriteria(Resistance.class).
-		addOrder(Order.asc("name")).
-		list();
+		return Dictionary.loadAll(Resistance.class, sess);
 	}
 	
-	public static Resistance loadById(long insurrectionId)
+	public static Resistance loadById(Session sess, long rigId)
 	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		Resistance fate = loadById(sess, insurrectionId);
-		transaction.commit();
-		sess.close();
-		return fate;
-	}
-
-	public static Resistance loadById(Session sess, long insurrectionId)
-	{
-		List list = sess.createCriteria(Resistance.class).add(Restrictions.eq("id", new Long(insurrectionId))).list();
-		if (list == null || list.size() == 0) return null;
-		return (Resistance) list.get(0);
+		return (Resistance) Dictionary.loadById(Resistance.class, sess, rigId);
 	}
 
 }

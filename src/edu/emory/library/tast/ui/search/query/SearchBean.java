@@ -11,7 +11,6 @@ import org.dom4j.tree.AbstractAttribute;
 
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -25,7 +24,6 @@ import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
@@ -168,12 +166,13 @@ public class SearchBean
 			queryCondition.addToConditions(conditions, false);
 		}
 		
-		Conditions localCond = (Conditions) conditions.clone();
-		localCond.addCondition(VoyageIndex.getRecent());
-		localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+		//Conditions localCond = (Conditions) conditions.clone();
+		//localCond.addCondition(VoyageIndex.getRecent());
+		//localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 		
-		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
-		qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageId")}));		
+		//QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
+		QueryValue qValue = new QueryValue("Voyage", conditions);
+		qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = qValue.executeQuery();
 		int numberOfResults = ((Integer)ret[0]).intValue();
 		

@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class FateVessel extends Dictionary
 {
@@ -31,26 +27,12 @@ public class FateVessel extends Dictionary
 	
 	public static List loadAll(Session sess)
 	{
-		return sess.createCriteria(FateVessel.class).
-		addOrder(Order.asc("name")).
-		list();
+		return Dictionary.loadAll(FateVessel.class, sess);
 	}
 	
-	public static FateVessel loadById(long fateId)
+	public static FateVessel loadById(Session sess, long rigId)
 	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		FateVessel fate = loadById(sess, fateId);
-		transaction.commit();
-		sess.close();
-		return fate;
-	}
-
-	public static FateVessel loadById(Session sess, long fateId)
-	{
-		List list = sess.createCriteria(FateVessel.class).add(Restrictions.eq("id", new Long(fateId))).setCacheable(true).list();
-		if (list == null || list.size() == 0) return null;
-		return (FateVessel) list.get(0);
+		return (FateVessel) Dictionary.loadById(FateVessel.class, sess, rigId);
 	}
 
 }

@@ -69,9 +69,8 @@
 			<table-attribute id="resistance"/>
 		</table-attributes>
 	</group>
-	<group id="ship" userLabel="Itinerary">
+	<group id="itinerary" userLabel="Itinerary">
 		<searchable-attributes>
-			<searchable-attribute id="portdep"/>
 			<searchable-attribute id="ptdepimp"/>
 			<searchable-attribute id="deptregimp"/>
 			<searchable-attribute id="plac1tra"/>
@@ -95,7 +94,6 @@
 			<searchable-attribute id="retrnreg"/>
 		</searchable-attributes>
 		<table-attributes>
-			<table-attribute id="portdep"/>
 			<table-attribute id="ptdepimp"/>
 			<table-attribute id="deptregimp"/>
 			<table-attribute id="plac1tra"/>
@@ -119,12 +117,12 @@
 			<table-attribute id="retrnreg"/>
 		</table-attributes>
 	</group>
-	<group id="date" userLabel="Dates">
+	<group id="dates" userLabel="Dates">
 		<searchable-attributes>
 			<searchable-attribute id="yearam"/>
 			<searchable-attribute id="datedep"/>
 			<searchable-attribute id="datebuy"/>
-			<searchable-attribute id="dateleftAfr"/>
+			<searchable-attribute id="dateleftafr"/>
 			<searchable-attribute id="dateland1"/>
 			<searchable-attribute id="dateland2"/>
 			<searchable-attribute id="dateland3"/>
@@ -132,13 +130,12 @@
 			<searchable-attribute id="dateend"/>
 			<searchable-attribute id="voy1imp"/>
 			<searchable-attribute id="voy2imp"/>
-			<searchable-attribute id="voy3imp"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="yearam"/>
 			<table-attribute id="datedep"/>
 			<table-attribute id="datebuy"/>
-			<table-attribute id="dateleftAfr"/>
+			<table-attribute id="dateleftafr"/>
 			<table-attribute id="dateland1"/>
 			<table-attribute id="dateland2"/>
 			<table-attribute id="dateland3"/>
@@ -146,20 +143,19 @@
 			<table-attribute id="dateend"/>
 			<table-attribute id="voy1imp"/>
 			<table-attribute id="voy2imp"/>
-			<table-attribute id="voy3imp"/>
 		</table-attributes>
 	</group>
 	<group id="crew" userLabel="Crew">
 		<searchable-attributes>
 			<searchable-attribute id="anycaptain"/>
 			<searchable-attribute id="crew1"/>
-			<searchable-attribute id="crew2"/>
+			<searchable-attribute id="crew3"/>
 			<searchable-attribute id="crewdied"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="anycaptain"/>
 			<table-attribute id="crew1"/>
-			<table-attribute id="crew2"/>
+			<table-attribute id="crew3"/>
 			<table-attribute id="crewdied"/>
 		</table-attributes>
 	</group>

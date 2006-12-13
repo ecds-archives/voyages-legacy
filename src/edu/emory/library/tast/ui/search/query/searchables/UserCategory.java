@@ -7,7 +7,8 @@ public class UserCategory
 	private static final int GENERAL = 2;
 
 	public static final UserCategory Beginners = new UserCategory(BEGINNERS); 
-	public static final UserCategory General = new UserCategory(GENERAL); 
+	public static final UserCategory General = new UserCategory(GENERAL);
+	public static final UserCategory[] AllCategories = new UserCategory[] {Beginners, General};  
 	
 	private int category;
 

@@ -2,47 +2,40 @@ package edu.emory.library.tast.ui.search.query.searchables;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
-import edu.emory.library.tast.ui.search.query.QueryConditionText;
+import edu.emory.library.tast.ui.search.query.QueryConditionBoolean;
 import edu.emory.library.tast.util.query.Conditions;
 
-public class SearchableAttributeSimpleText extends SearchableAttributeSimple
+public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 {
 
-	public SearchableAttributeSimpleText(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
+	public SearchableAttributeSimpleBoolean(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
 	{
 		super(id, userLabel, userCategories, attributes);
 	}
 
 	public QueryCondition createQueryCondition()
 	{
-		return new QueryConditionText(getId());
+		return new QueryConditionBoolean(getId());
 	}
 
 	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
 	{
 		
 		// check
-		if (!(queryCondition instanceof QueryConditionText))
-			throw new IllegalArgumentException("expected QueryConditionText"); 
+		if (!(queryCondition instanceof QueryConditionBoolean))
+			throw new IllegalArgumentException("expected QueryConditionBoolean"); 
 		
-		// retype
-		QueryConditionText queryConditionText =
-			(QueryConditionText) queryCondition;
-
-		// is empty -> no db condition
-		if (!queryConditionText.isNonEmpty())
-			return true;
-		
-		// trivial preprocessing
-		String value = queryConditionText.getValue().trim();
-		if (!value.endsWith("%")) value += "%";
+		// cast
+		QueryConditionBoolean queryConditionBoolean =
+			(QueryConditionBoolean) queryCondition;
 
 		// create db conditions
 		Attribute[] attributes = getAttributes();
 		if (attributes.length == 1)
 		{
 			conditions.addCondition(attributes[0],
-					value, Conditions.OP_LIKE);
+					new Boolean(queryConditionBoolean.isChecked()),
+					Conditions.OP_EQUALS);
 		}
 		else
 		{
@@ -50,7 +43,8 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
 				orCond.addCondition(attributes[i],
-						value, Conditions.OP_LIKE);
+						new Boolean(queryConditionBoolean.isChecked()),
+						Conditions.OP_EQUALS);
 		}
 		
 		// all OK

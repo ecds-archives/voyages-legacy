@@ -164,12 +164,12 @@ public class TableResultTabBean {
 
 		// Setup default columns
 		VisibleAttributeInterface[] attrs = new VisibleAttributeInterface[6];
-		attrs[0] = VisibleAttribute.getAttributeForTable("voyageId");
+		attrs[0] = VisibleAttribute.getAttributeForTable("voyageid");
 		attrs[1] = VisibleAttribute.getAttributeForTable("shipname");
 		attrs[2] = VisibleAttribute.getAttributeForTable("anycaptain");
 		attrs[3] = VisibleAttribute.getAttributeForTable("yearam");
 		attrs[4] = VisibleAttribute.getAttributeForTable("majbyimp");
-		attrs[5] = VisibleAttribute.getAttributeForTable("majselpt");
+		attrs[5] = VisibleAttribute.getAttributeForTable("mjselimp");
 
 		if (attrs[2] == null) {
 			attrs[2] = VisibleAttribute.getAttributeForTable("captaina");
@@ -198,7 +198,7 @@ public class TableResultTabBean {
 			needQuery = true;
 		}
 		if (this.searchBean.getSearchParameters().getConditions() != null && needQuery) {
-			this.queryAndFillInData(VoyageIndex.getRecent(), this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
+			this.queryAndFillInData(new Conditions(), this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
 			this.setNumberOfResults();
 			needQuery = false;
 		}
@@ -221,11 +221,11 @@ public class TableResultTabBean {
 
 		// Build condition
 		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
-		localCond.addCondition(subCondition);
-		localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+		//localCond.addCondition(subCondition);
+		//localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 		
 		// Build query
-		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
+		QueryValue qValue = new QueryValue("Voyage", localCond);
 		if (length != -1) {
 			qValue.setLimit(length);
 		}
@@ -234,7 +234,7 @@ public class TableResultTabBean {
 		}
 
 		// Dictionaries - list of columns with dictionaries.
-		dataTable.setKeyAttribute(Voyage.getAttribute("voyageId"));
+		dataTable.setKeyAttribute(Voyage.getAttribute("voyageid"));
 		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
@@ -253,7 +253,7 @@ public class TableResultTabBean {
 		}
 
 		if (returnBasicInfo) {
-			qValue.addPopulatedAttribute(Voyage.getAttribute("voyageId"));
+			qValue.addPopulatedAttribute(Voyage.getAttribute("voyageid"));
 			qValue.addPopulatedAttribute(Voyage.getAttribute("portdep"));
 			qValue.addPopulatedAttribute(Voyage.getAttribute("portret"));
 		}
@@ -266,7 +266,7 @@ public class TableResultTabBean {
 //			orderByPrefix = "v.voyage.";
 //		}
 		if (dataTable.getOrderByColumn() == null) {
-			qValue.setOrderBy(new Attribute[] { Voyage.getAttribute("voyageId") });
+			qValue.setOrderBy(new Attribute[] { Voyage.getAttribute("voyageid") });
 		} else {
 
 			Attribute[] attr = vattr.getAttributes();
@@ -299,7 +299,7 @@ public class TableResultTabBean {
 		if (returnBasicInfo && ret.length > 0) {
 			int len = ((Object[]) ret[0]).length;
 			return new Object[][] {
-					{ Voyage.getAttribute("voyageId"), Voyage.getAttribute("portdep"), Voyage.getAttribute("portret") },
+					{ Voyage.getAttribute("voyageid"), Voyage.getAttribute("portdep"), Voyage.getAttribute("portret") },
 					{ ((Object[]) ret[0])[len - 3], ((Object[]) ret[0])[len - 2], ((Object[]) ret[0])[len - 1] } };
 		} else {
 			return new Object[][] {};
@@ -315,7 +315,7 @@ public class TableResultTabBean {
 				&& this.searchBean.getSearchParameters().getConditions() != null) {
 			Conditions c = new Conditions();
 			c.addCondition(VoyageIndex.getApproved());
-			c.addCondition(Voyage.getAttribute("voyageId"), this.detailVoyageId, Conditions.OP_EQUALS);
+			c.addCondition(Voyage.getAttribute("voyageid"), this.detailVoyageId, Conditions.OP_EQUALS);
 
 			List validAttrs = new ArrayList();
 			VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();
@@ -1064,12 +1064,13 @@ public class TableResultTabBean {
 	 */
 	private void setNumberOfResults() {
 
-		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
-		localCond.addCondition(VoyageIndex.getRecent());
-		localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+		//Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
+//		localCond.addCondition(VoyageIndex.getRecent());
+//		localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 		
-		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
-		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageId")}));
+		//QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
+		QueryValue qValue = new QueryValue("Voyage");
+		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
 		Object[] ret = qValue.executeQuery();
 		this.linkManager.setResultsNumber(((Integer) ret[0]).intValue());
 	}

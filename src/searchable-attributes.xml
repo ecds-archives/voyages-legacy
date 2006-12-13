@@ -2,19 +2,26 @@
 <!DOCTYPE searchable-attributes [
 
 <!ELEMENT searchable-attributes (searchable-attribute*)>
-<!ELEMENT searchable-attribute ((attributes|locations))>
+<!ELEMENT searchable-attribute (user-categories, (attributes|ports))>
+<!ELEMENT user-categories (category+)>
 <!ELEMENT attributes (attribute+)>
-<!ELEMENT locations (location+)>
+<!ELEMENT ports (port+)>
 <!ELEMENT attribute EMPTY>
 <!ELEMENT location EMPTY>
+<!ELEMENT port EMPTY>
 
 <!ATTLIST searchable-attribute
 	id CDATA #REQUIRED
 	userLabel CDATA #REQUIRED
-	type CDATA #REQUIRED
-	userCategory (beginners|general) #REQUIRED>
+	type (simple|port) #REQUIRED>
+
+<!ATTLIST port
+	port CDATA #REQUIRED
+	region CDATA #IMPLIED
+	area CDATA #IMPLIED>
 
 <!ATTLIST attribute name CDATA #REQUIRED>
+<!ATTLIST category name CDATA #REQUIRED>
 
 <!ATTLIST location
 	port CDATA #REQUIRED
@@ -27,8 +34,11 @@
 	<searchable-attribute
 		type="simple"
 		id="voyageid"
-		userCategory="general"
 		userLabel="Voyage identification number">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="voyageid" />
 		</attributes>
@@ -37,8 +47,11 @@
 	<searchable-attribute
 		type="simple"
 		id="cd"
-		userCategory="general"
 		userLabel="Voyage in 1999 CD-ROM">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="cd" />
 		</attributes>
@@ -47,48 +60,63 @@
 	<searchable-attribute
 		type="simple"
 		id="shipname"
-		userCategory="general"
 		userLabel="Name of slave ship">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="shipname" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="placcons"
-		userCategory="general"
 		userLabel="Place where ship constructed">
-		<attributes>
-			<attribute name="placcons" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="placcons" />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="yrcons"
-		userCategory="general"
 		userLabel="Year of ship construction">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="yrcons" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="placreg"
-		userCategory="general"
 		userLabel="Place where ship registered">
-		<attributes>
-			<attribute name="placreg" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="placreg" />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="yrreg"
-		userCategory="general"
 		userLabel="Year of ship registration">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="yrreg" />
 		</attributes>
@@ -97,8 +125,11 @@
 	<searchable-attribute
 		type="simple"
 		id="natinimp"
-		userCategory="general"
 		userLabel="Imputed national registration">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="natinimp" />
 		</attributes>
@@ -107,8 +138,11 @@
 	<searchable-attribute
 		type="simple"
 		id="rig"
-		userCategory="general"
 		userLabel="Rig of ship">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="rig" />
 		</attributes>
@@ -117,8 +151,11 @@
 	<searchable-attribute
 		type="simple"
 		id="tonnage"
-		userCategory="general"
 		userLabel="Tonnage of ship">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="tonnage" />
 		</attributes>
@@ -127,8 +164,11 @@
 	<searchable-attribute
 		type="simple"
 		id="tonmod"
-		userCategory="general"
 		userLabel="Standardized tonnage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="tonmod" />
 		</attributes>
@@ -137,8 +177,11 @@
 	<searchable-attribute
 		type="simple"
 		id="guns"
-		userCategory="general"
 		userLabel="Number of guns carried">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="guns" />
 		</attributes>
@@ -147,8 +190,11 @@
 	<searchable-attribute
 		type="simple"
 		id="anyowner"
-		userCategory="general"
 		userLabel="An owner">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="ownera" />
 			<attribute name="ownerf" />
@@ -172,8 +218,11 @@
 	<searchable-attribute
 		type="simple"
 		id="fate"
-		userCategory="general"
 		userLabel="Outcome of voyage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="fate" />
 		</attributes>
@@ -182,8 +231,11 @@
 	<searchable-attribute
 		type="simple"
 		id="fate2"
-		userCategory="general"
 		userLabel="Outcome of voyage for slaves">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="fate2" />
 		</attributes>
@@ -192,8 +244,11 @@
 	<searchable-attribute
 		type="simple"
 		id="fate4"
-		userCategory="general"
 		userLabel="Outcome of voyage for owner">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="fate4" />
 		</attributes>
@@ -202,8 +257,11 @@
 	<searchable-attribute
 		type="simple"
 		id="fate3"
-		userCategory="general"
 		userLabel="Outcome of voyage if ship captured">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="fate3" />
 		</attributes>
@@ -212,238 +270,167 @@
 	<searchable-attribute
 		type="simple"
 		id="resistance"
-		userCategory="general"
 		userLabel="Violent incidents">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="resistance" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
-		id="portdep"
-		userCategory="general"
-		userLabel="Port where voyage began">
-		<attributes>
-			<attribute name="portdep" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
+		type="port"
 		id="ptdepimp"
-		userCategory="general"
-		userLabel="Imputed port where voyage began">
-		<attributes>
-			<attribute name="ptdepimp" />
-		</attributes>
+		userLabel="Imputed place where voyage began">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="ptdepimp" region="deptregimp" />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
-		id="deptregimp"
-		userCategory="general"
-		userLabel="Imputed region where voyage began">
-		<attributes>
-			<attribute name="deptregimp" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
+		type="port"
 		id="plac1tra"
-		userCategory="general"
 		userLabel="First place of slave purchase">
-		<attributes>
-			<attribute name="plac1tra" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="plac1tra" region="regem1" />
+		</ports>
 	</searchable-attribute>
-
+	
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="plac2tra"
-		userCategory="general"
 		userLabel="Second place of slave purchase">
-		<attributes>
-			<attribute name="plac2tra" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="plac2tra" region="regem2" />
+		</ports>
 	</searchable-attribute>
-
+	
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="plac3tra"
-		userCategory="general"
 		userLabel="Third place of slave purchase">
-		<attributes>
-			<attribute name="plac3tra" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="plac3tra" region="regem3" />
+		</ports>
 	</searchable-attribute>
-
+	
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="mjbyptimp"
-		userCategory="general"
-		userLabel="Imputed principal place of slave putchase">
-		<attributes>
-			<attribute name="mjbyptimp" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="regem1"
-		userCategory="general"
-		userLabel="First region of slave purchase">
-		<attributes>
-			<attribute name="regem1" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="regem2"
-		userCategory="general"
-		userLabel="Second region of slave purchase">
-		<attributes>
-			<attribute name="regem2" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="regem3"
-		userCategory="general"
-		userLabel="Third region of slave purchase">
-		<attributes>
-			<attribute name="regem3" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="majbyimp"
-		userCategory="general"
-		userLabel="Imputed principal region of slave purchase">
-		<attributes>
-			<attribute name="majbyimp" />
-		</attributes>
+		userLabel="Imputed principal place of slave purchase">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="mjbyptimp" region="majbyimp" />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="npafttra"
-		userCategory="general"
 		userLabel="Places of call before Atlantic crossing">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="npafttra" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="sla1port"
-		userCategory="general"
 		userLabel="First place of landing">
-		<attributes>
-			<attribute name="sla1port" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="sla1port" region="regdis1" />
+		</ports>
 	</searchable-attribute>
-
+	
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="adpsale1"
-		userCategory="general"
 		userLabel="Second place of landing">
-		<attributes>
-			<attribute name="adpsale1" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="adpsale1" region="regdis2" />
+		</ports>
 	</searchable-attribute>
-
+	
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="adpsale2"
-		userCategory="general"
 		userLabel="Third place of landing">
-		<attributes>
-			<attribute name="adpsale2" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="adpsale2" region="regdis3" />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="mjslptimp"
-		userCategory="general"
 		userLabel="Imputed principal place of landing">
-		<attributes>
-			<attribute name="mjslptimp" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="mjslptimp" region="mjselimp" />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
-		id="regdis1"
-		userCategory="general"
-		userLabel="First region of disembarkation">
-		<attributes>
-			<attribute name="regdis1" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="regdis2"
-		userCategory="general"
-		userLabel="Second region of disembarkation">
-		<attributes>
-			<attribute name="regdis2" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="regdis3"
-		userCategory="general"
-		userLabel="Third region of disembarkation">
-		<attributes>
-			<attribute name="regdis3" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="mjselimp"
-		userCategory="general"
-		userLabel="Imputed principal region of disembarkation">
-		<attributes>
-			<attribute name="mjselimp" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
+		type="port"
 		id="portret"
-		userCategory="general"
 		userLabel="Port at which voyage ended">
-		<attributes>
-			<attribute name="portret" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
-		id="retrnreg"
-		userCategory="general"
-		userLabel="Region to which ship returned">
-		<attributes>
-			<attribute name="retrnreg" />
-		</attributes>
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="portret" region="retrnreg"  />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="yearam"
-		userCategory="general"
 		userLabel="Imputed year of arrival at first place of landing">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="yearam" />
 		</attributes>
@@ -452,88 +439,115 @@
 	<searchable-attribute
 		type="simple"
 		id="datedep"
-		userCategory="general"
 		userLabel="Date that voyage began">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_dep" />
+			<attribute name="datedep" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="datebuy"
-		userCategory="general"
 		userLabel="Date that slave purchase began">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_buy" />
+			<attribute name="datebuy" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
-		id="dateleftAfr"
-		userCategory="general"
+		id="dateleftafr"
 		userLabel="Date that vessel left last slaving port">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_leftAfr" />
+			<attribute name="dateleftafr" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="dateland1"
-		userCategory="general"
 		userLabel="Date that slaves landed at first place">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_land1" />
+			<attribute name="dateland1" />
 		</attributes>
 	</searchable-attribute>
-	
+
 	<searchable-attribute
 		type="simple"
 		id="dateland2"
-		userCategory="general"
 		userLabel="Date of arrival at second place of landing">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_land2" />
+			<attribute name="dateland2" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="dateland3"
-		userCategory="general"
 		userLabel="Date that slaves landed at third place">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_land3" />
+			<attribute name="dateland3" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="datedepam"
-		userCategory="general"
 		userLabel="Date that ship left on return voyage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_depam" />
+			<attribute name="datedepam" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="dateend"
-		userCategory="general"
 		userLabel="Date when voyage completed">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
-			<attribute name="Date_end" />
+			<attribute name="dateend" />
 		</attributes>
 	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"
 		id="voy1imp"
-		userCategory="general"
 		userLabel="Imputed voyage length from departure to first port of landing">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="voy1imp" />
 		</attributes>
@@ -542,8 +556,11 @@
 	<searchable-attribute
 		type="simple"
 		id="voy2imp"
-		userCategory="general"
 		userLabel="Imputed length of middle passage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="voy2imp" />
 		</attributes>
@@ -551,19 +568,12 @@
 
 	<searchable-attribute
 		type="simple"
-		id="voy3imp"
-		userCategory="general"
-		userLabel="Imputed voyage length from departure to return to home port">
-		<attributes>
-			<attribute name="voy3imp" />
-		</attributes>
-	</searchable-attribute>
-
-	<searchable-attribute
-		type="simple"
 		id="anycaptain"
-		userCategory="general"
 		userLabel="Name(s) of captain(s)">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="captaina" />
 			<attribute name="captainb" />
@@ -574,8 +584,11 @@
 	<searchable-attribute
 		type="simple"
 		id="crew1"
-		userCategory="general"
 		userLabel="Crew on board at outset of voyage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="crew1" />
 		</attributes>
@@ -584,8 +597,11 @@
 	<searchable-attribute
 		type="simple"
 		id="crew3"
-		userCategory="general"
 		userLabel="Number of crew when first slaves landed">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="crew3" />
 		</attributes>
@@ -594,8 +610,11 @@
 	<searchable-attribute
 		type="simple"
 		id="crewdied"
-		userCategory="general"
 		userLabel="Number of crew who died over entire voyage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="crewdied" />
 		</attributes>
@@ -604,8 +623,11 @@
 	<searchable-attribute
 		type="simple"
 		id="slintend"
-		userCategory="general"
 		userLabel="Number of slaves intended at first place of purchase">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="slintend" />
 		</attributes>
@@ -614,8 +636,11 @@
 	<searchable-attribute
 		type="simple"
 		id="ncar13"
-		userCategory="general"
 		userLabel="Slaves carried from first port of purchase">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="ncar13" />
 		</attributes>
@@ -624,8 +649,11 @@
 	<searchable-attribute
 		type="simple"
 		id="ncar15"
-		userCategory="general"
 		userLabel="Slaves carried from second port of purchase">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="ncar15" />
 		</attributes>
@@ -634,8 +662,11 @@
 	<searchable-attribute
 		type="simple"
 		id="ncar17"
-		userCategory="general"
 		userLabel="Slaves carried from third port of purchase">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="ncar17" />
 		</attributes>
@@ -644,8 +675,11 @@
 	<searchable-attribute
 		type="simple"
 		id="tslavesd"
-		userCategory="general"
 		userLabel="Total slaves carried off from Africa">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="tslavesd" />
 		</attributes>
@@ -654,8 +688,11 @@
 	<searchable-attribute
 		type="simple"
 		id="slaarriv"
-		userCategory="general"
 		userLabel="Number of slaves who arrived at first place of landing">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="slaarriv" />
 		</attributes>
@@ -664,8 +701,11 @@
 	<searchable-attribute
 		type="simple"
 		id="slas32"
-		userCategory="general"
 		userLabel="Number of slaves landed at first place">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="slas32" />
 		</attributes>
@@ -674,8 +714,11 @@
 	<searchable-attribute
 		type="simple"
 		id="slas36"
-		userCategory="general"
 		userLabel="Number of slaves landed at second place">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="slas36" />
 		</attributes>
@@ -684,8 +727,11 @@
 	<searchable-attribute
 		type="simple"
 		id="slas39"
-		userCategory="general"
 		userLabel="Number of slaves landed at third place">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="slas39" />
 		</attributes>
@@ -694,8 +740,11 @@
 	<searchable-attribute
 		type="simple"
 		id="slaximp"
-		userCategory="general"
 		userLabel="Imputed total slaves embarked">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="slaximp" />
 		</attributes>
@@ -704,8 +753,11 @@
 	<searchable-attribute
 		type="simple"
 		id="slamimp"
-		userCategory="general"
 		userLabel="Imputed total slaves disembarked">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="slamimp" />
 		</attributes>
@@ -714,8 +766,11 @@
 	<searchable-attribute
 		type="simple"
 		id="menrat7"
-		userCategory="general"
 		userLabel="Percentage of men at beginning or end of Middle Passage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="menrat7" />
 		</attributes>
@@ -724,8 +779,11 @@
 	<searchable-attribute
 		type="simple"
 		id="womrat7"
-		userCategory="general"
 		userLabel="Percentage of women at beginning or end of Middle Passage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="womrat7" />
 		</attributes>
@@ -734,8 +792,11 @@
 	<searchable-attribute
 		type="simple"
 		id="boyrat7"
-		userCategory="general"
 		userLabel="Percentage of boys at beginning or end of Middle Passage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="boyrat7" />
 		</attributes>
@@ -744,8 +805,11 @@
 	<searchable-attribute
 		type="simple"
 		id="girlrat7"
-		userCategory="general"
 		userLabel="Percentage of girls at beginning or end of Middle Passage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="girlrat7" />
 		</attributes>
@@ -754,8 +818,11 @@
 	<searchable-attribute
 		type="simple"
 		id="malrat7"
-		userCategory="general"
 		userLabel="Imputed sex ratio of the cargo of slaves">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="malrat7" />
 		</attributes>
@@ -764,8 +831,11 @@
 	<searchable-attribute
 		type="simple"
 		id="chilrat7"
-		userCategory="general"
 		userLabel="Imputed ratio of children to adults in the cargo of slaves">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="chilrat7" />
 		</attributes>
@@ -774,8 +844,11 @@
 	<searchable-attribute
 		type="simple"
 		id="jamcaspr"
-		userCategory="general"
 		userLabel="Imputed sterling price of slaves sold in Jamaica">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="jamcaspr" />
 		</attributes>
@@ -784,8 +857,11 @@
 	<searchable-attribute
 		type="simple"
 		id="vymrtimp"
-		userCategory="general"
 		userLabel="Imputed number of slaves who died during the Middle Passage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="vymrtimp" />
 		</attributes>
@@ -794,8 +870,11 @@
 	<searchable-attribute
 		type="simple"
 		id="vymrtrat"
-		userCategory="general"
 		userLabel="Imputed mortality rate (slave deaths / embarkations)">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="vymrtrat" />
 		</attributes>
@@ -804,8 +883,11 @@
 	<searchable-attribute
 		type="simple"
 		id="anysource"
-		userCategory="general"
 		userLabel="Source">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
 		<attributes>
 			<attribute name="sourceg" />
 			<attribute name="sourceh" />
@@ -825,7 +907,6 @@
 			<attribute name="sourced" />
 			<attribute name="sourcee" />
 			<attribute name="sourcef" />
-			<attribute name="sourcex" />
 		</attributes>
 	</searchable-attribute>
 
