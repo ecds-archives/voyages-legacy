@@ -16,6 +16,10 @@ import org.xml.sax.SAXException;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 
 public class Searchables
 {
@@ -87,7 +91,7 @@ public class Searchables
 				Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
 				
 				// read the db attributes
-				String attrType = null;
+				Attribute firstAttr = null;
 				for (int j = 0; j < xmlAttrs.getLength(); j++)
 				{
 					Node xmlAttr = xmlAttrs.item(j);
@@ -99,31 +103,35 @@ public class Searchables
 					}
 					else if (j == 0)
 					{
-						attrType = attr.decodeType();
+						firstAttr = attr;
+						//attrType = attr.decodeType();
 					}
 					else
 					{
-						if (!attrType.equals(attr.decodeType()))
+						if (firstAttr.getClass() == attr.getClass())
 							throw new RuntimeException("searchable attribute '" + id + "' contains invalid attributes");
 					}
 					attrs[j] = attr;
 				}
-				
+
 				// create the corresponding searchable attribute
-				if (attrType.equals(Attribute.DICTIONARY_ATTRIBUTE))
+				if (firstAttr instanceof DictionaryAttribute)
 				{
 					searchableAttribute = new SearchableAttributeSimpleDictionary(id, userLabel, userCategory, attrs);
-				} else if (attrType.equals(Attribute.STRING_ATTRIBUTE)) 
+				}
+				else if (firstAttr instanceof StringAttribute) 
 				{
 					searchableAttribute = new SearchableAttributeSimpleText(id, userLabel, userCategory, attrs);
-				} else if (attrType.equals(Attribute.NUMERIC_ATTRIBUTE)) 
-				{
-					
-					searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
-				} else if (attrType.equals(Attribute.DATE_ATTRIBUTE)) {		
-						searchableAttribute = new SearchableAttributeSimpleDate(id, userLabel, userCategory, attrs);
 				}
-				
+				else if (firstAttr instanceof NumericAttribute) 
+				{
+					searchableAttribute = new SearchableAttributeSimpleNumeric(id, userLabel, userCategory, attrs);
+				}
+				else if (firstAttr instanceof DateAttribute)
+				{		
+					searchableAttribute = new SearchableAttributeSimpleDate(id, userLabel, userCategory, attrs);
+				}
+
 			}
 
 			// location -> read list of locations

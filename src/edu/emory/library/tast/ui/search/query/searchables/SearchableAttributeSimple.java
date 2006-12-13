@@ -6,7 +6,7 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 {
 	
 	private Attribute[] attributes;
-	private String attributeType;
+	//private String attributeType;
 
 	public SearchableAttributeSimple(String id, String userLabel, UserCategory userCategory, Attribute[] attributes)
 	{
@@ -14,12 +14,12 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 		if (attributes == null || attributes.length == 0)
 		{
 			this.attributes = new Attribute[0];
-			this.attributeType = null;
+			//this.attributeType = null;
 		}
 		else
 		{
 			this.attributes = attributes;
-			this.attributeType = Attribute.decodeType(attributes[0]);
+			//this.attributeType = Attribute.decodeType(attributes[0]);
 		}
 	}
 	
@@ -33,9 +33,9 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 		return attributes;
 	}
 
-	public String getAttributeType()
-	{
-		return attributeType;
-	}
+//	public String getAttributeType()
+//	{
+//		return attributeType;
+//	}
 
 }

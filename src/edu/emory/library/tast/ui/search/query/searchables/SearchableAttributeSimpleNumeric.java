@@ -47,7 +47,7 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimple
 		if (number == null) {
 			throw new NumberFormatException();
 		}
-		switch (((NumericAttribute)getAttributes()[0]).getType().intValue())
+		switch (((NumericAttribute)getAttributes()[0]).getType())
 		{
 		case NumericAttribute.TYPE_INTEGER:
 			return new Integer(number);
