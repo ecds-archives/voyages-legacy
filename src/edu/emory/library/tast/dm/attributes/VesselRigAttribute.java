@@ -1,7 +1,10 @@
 package edu.emory.library.tast.dm.attributes;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.VesselRig;
 
 public class VesselRigAttribute extends DictionaryAttribute
@@ -19,14 +22,19 @@ public class VesselRigAttribute extends DictionaryAttribute
 		super(name, objectType, importName);
 	}
 	
-	public Object loadObjectById(Session sess, long id) 
+	public Dictionary loadObjectById(Session sess, long id) 
 	{
 		return VesselRig.loadById(sess, id);
 	}
 
-	public Attribute getAttribute(String name) {
+	public Attribute getAttribute(String name)
+	{
 		return VesselRig.getAttribute(name);
 	}
 
+	public List loadAllObjects(Session sess)
+	{
+		return VesselRig.loadAll(sess);
+	}
 	
 }

@@ -1,7 +1,10 @@
 package edu.emory.library.tast.dm.attributes;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Region;
 
 public class RegionAttribute extends DictionaryAttribute
@@ -17,13 +20,19 @@ public class RegionAttribute extends DictionaryAttribute
 		super(name, objectType, importName);
 	}
 	
-	protected Object loadObjectById(Session sess, long id) 
+	public Dictionary loadObjectById(Session sess, long id) 
 	{
 		return Region.loadById(sess, id);
 	}
 
-	public Attribute getAttribute(String name) {
+	public Attribute getAttribute(String name)
+	{
 		return Region.getAttribute(name);
 	}
 
+	public List loadAllObjects(Session sess)
+	{
+		return Region.loadAllRegions(sess);
+	}
+	
 }

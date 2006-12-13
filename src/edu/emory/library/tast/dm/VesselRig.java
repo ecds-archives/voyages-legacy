@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -26,6 +27,13 @@ public class VesselRig extends Dictionary
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
+	}
+	
+	public static List loadAll(Session sess)
+	{
+		return sess.createCriteria(VesselRig.class).
+		addOrder(Order.asc("name")).
+		list();
 	}
 	
 	public static VesselRig loadById(long rigId)

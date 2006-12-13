@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -30,7 +31,7 @@ public class Area extends Dictionary
 	
 	private int order;
 	private boolean america;
-
+	
 	public boolean isAmerica()
 	{
 		return america;
@@ -54,6 +55,13 @@ public class Area extends Dictionary
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
+	}
+	
+	public static List loadAll(Session sess)
+	{
+		return sess.createCriteria(Area.class).
+		addOrder(Order.asc("name")).
+		list();
 	}
 	
 	public static Area loadById(long areaId)

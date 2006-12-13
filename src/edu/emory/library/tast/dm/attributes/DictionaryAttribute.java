@@ -1,10 +1,12 @@
 package edu.emory.library.tast.dm.attributes;
 
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
 
 import edu.emory.library.tas.spss.STSchemaVariable;
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
 import edu.emory.library.tast.dm.attributes.exceptions.MissingDictionaryValueException;
 
@@ -49,7 +51,8 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 		}
 	}
 
-	protected abstract Object loadObjectById(Session sess, long id);
+	public abstract Dictionary loadObjectById(Session sess, long id);
+	public abstract List loadAllObjects(Session sess);
 
 	/*
 	protected long parseId(String value) throws InvalidNumberException
