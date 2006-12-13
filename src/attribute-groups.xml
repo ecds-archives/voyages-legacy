@@ -21,47 +21,21 @@
 ]>
 
 <groups>
-	<group id="experience" userLabel="Experience">
+	<group id="ship" userLabel="Ship">
 		<searchable-attributes>
-			<searchable-attribute id="yearam"/>
-			<searchable-attribute id="voyageId"/>
+			<searchable-attribute id="voyageid"/>
+			<searchable-attribute id="cd"/>
 			<searchable-attribute id="shipname"/>
-			<searchable-attribute id="sladvoy"/>
-			<searchable-attribute id="slaarriv"/>
-			<searchable-attribute id="slas32"/>
-			<searchable-attribute id="slas36"/>
-			<searchable-attribute id="slas39"/>
-			<searchable-attribute id="ncar13"/>
-			<searchable-attribute id="ncar15"/>
-			<searchable-attribute id="ncar17"/>
-			<searchable-attribute id="vymrtimp"/>
-			<searchable-attribute id="womrat7"/>
-			<searchable-attribute id="girlrat7"/>
-			<searchable-attribute id="boyrat7"/>
-			<searchable-attribute id="jamcaspr"/>
-			<searchable-attribute id="adpsale1"/>
-			<searchable-attribute id="adpsale2"/>
-			<searchable-attribute id="crew1"/>
-			<searchable-attribute id="crew3"/>
-			<searchable-attribute id="crewdied"/>
-			<searchable-attribute id="d1slatr"/>
-			<searchable-attribute id="ddepamb"/>
-			<searchable-attribute id="fate"/>
-			<searchable-attribute id="fate2"/>
-			<!--searchable-attribute id="insurrec"/>-->
-			<searchable-attribute id="malrat7"/>
-			<searchable-attribute id="sla32imp"/>
-			<searchable-attribute id="sla36imp"/>
-			<searchable-attribute id="sla39imp"/>
-			<searchable-attribute id="slamimp"/>
-			<searchable-attribute id="slaximp"/>
-			<searchable-attribute id="voy2imp"/>
-			<searchable-attribute id="vymrtrat"/>
-			<searchable-attribute id="ncr15imp"/>
-			<searchable-attribute id="datarr4"/>
-			<searchable-attribute id="datarr32"/>
-			<searchable-attribute id="datarr33"/>
-			<searchable-attribute id="ncr17imp"/>
+			<searchable-attribute id="placcons"/>
+			<searchable-attribute id="yrcons"/>
+			<searchable-attribute id="placreg"/>
+			<searchable-attribute id="yrreg"/>
+			<searchable-attribute id="natinimp"/>
+			<searchable-attribute id="rig"/>
+			<searchable-attribute id="tonnage"/>
+			<searchable-attribute id="tonmod"/>
+			<searchable-attribute id="guns"/>
+			<searchable-attribute id="anyowner"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="yearam"/>
@@ -105,35 +79,13 @@
 			<table-attribute id="ncr17imp"/>
 		</table-attributes>
 	</group>
-	<group id="geography" userLabel="Geography">
+	<group id="outcome" userLabel="Outcome">
 		<searchable-attributes>
-			<searchable-attribute id="yearam"/>
-			<searchable-attribute id="voyageId"/>
-			<searchable-attribute id="shipname"/>
-			<searchable-attribute id="arrport"/>
-			<searchable-attribute id="embport"/>
-			<searchable-attribute id="regem1"/>
-			<searchable-attribute id="regem2"/>
-			<searchable-attribute id="regem3"/>
-			<searchable-attribute id="majbuyrg"/>
-			<searchable-attribute id="regdis2"/>
-			<searchable-attribute id="regdis3"/>
-			<searchable-attribute id="majselrg"/>
-			<searchable-attribute id="xmimpflag"/>
-			<searchable-attribute id="adpsale1"/>
-			<searchable-attribute id="adpsale2"/>
-			<searchable-attribute id="deptreg"/>
-			<searchable-attribute id="majselpt"/>
-			<searchable-attribute id="majbyimp"/>
-			<searchable-attribute id="mjselimp"/>
-			<searchable-attribute id="regdis1"/>
-			<searchable-attribute id="sla1port"/>
-			<searchable-attribute id="mjbyptimp"/>
-			<searchable-attribute id="plac1tra"/>
-			<searchable-attribute id="plac2tra"/>
-			<searchable-attribute id="plac3tra"/>
-			<searchable-attribute id="portdep"/>
-			<searchable-attribute id="portret"/>
+			<searchable-attribute id="fate"/>
+			<searchable-attribute id="fate2"/>
+			<searchable-attribute id="fate3"/>
+			<searchable-attribute id="fate4"/>
+			<searchable-attribute id="resistance"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="yearam"/>
@@ -165,47 +117,30 @@
 			<table-attribute id="portret"/>
 		</table-attributes>
 	</group>
-	<group id="ship" userLabel="Ship">
+	<group id="ship" userLabel="Itinerary">
 		<searchable-attributes>
-			<searchable-attribute id="yearam"/>
-			<searchable-attribute id="voyageId"/>
-			<searchable-attribute id="natinimp"/>
-			<searchable-attribute id="shipname"/>
-			<searchable-attribute id="rig"/>
-			<searchable-attribute id="tonnage"/>
-			<searchable-attribute id="guns"/>
-			<searchable-attribute id="placcons"/>
-			<searchable-attribute id="tonmod"/>
-			<searchable-attribute id="evgreen"/>
-			<searchable-attribute id="xmimpflag"/>
-			<searchable-attribute id="datedep"/>
-			<searchable-attribute id="fate"/>
-			<searchable-attribute id="fate4"/>
-			<searchable-attribute id="captaina"/>
-			<searchable-attribute id="captainb"/>
-			<searchable-attribute id="captainc"/>
-			<searchable-attribute id="ownera"/>
-			<searchable-attribute id="ownerf"/>
-			<searchable-attribute id="ownerb"/>
-			<searchable-attribute id="ownerc"/>
-			<searchable-attribute id="ownerd"/>
-			<searchable-attribute id="ownere"/>
-			<searchable-attribute id="ownerg"/>
-			<searchable-attribute id="ownerh"/>
-			<searchable-attribute id="owneri"/>
-			<searchable-attribute id="ownerj"/>
-			<searchable-attribute id="ownerk"/>
-			<searchable-attribute id="ownerl"/>
-			<searchable-attribute id="ownerm"/>
-			<searchable-attribute id="ownern"/>
-			<searchable-attribute id="ownero"/>
-			<searchable-attribute id="ownerp"/>
-			<searchable-attribute id="datarr4"/>
-			<searchable-attribute id="fate3"/>
 			<searchable-attribute id="portdep"/>
+			<searchable-attribute id="ptdepimp"/>
+			<searchable-attribute id="deptregimp"/>
+			<searchable-attribute id="plac1tra"/>
+			<searchable-attribute id="plac2tra"/>
+			<searchable-attribute id="plac3tra"/>
+			<searchable-attribute id="mjbyptimp"/>
+			<searchable-attribute id="regem1"/>
+			<searchable-attribute id="regem2"/>
+			<searchable-attribute id="regem3"/>
+			<searchable-attribute id="majbyimp"/>
+			<searchable-attribute id="npafttra"/>
+			<searchable-attribute id="sla1port"/>
+			<searchable-attribute id="adpsale1"/>
+			<searchable-attribute id="adpsale2"/>
+			<searchable-attribute id="mjslptimp"/>
+			<searchable-attribute id="regdis1"/>
+			<searchable-attribute id="regdis2"/>
+			<searchable-attribute id="regdis3"/>
+			<searchable-attribute id="mjselimp"/>
 			<searchable-attribute id="portret"/>
-			<searchable-attribute id="anycaptain"/>
-			<searchable-attribute id="anyowner"/>
+			<searchable-attribute id="retrnreg"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="yearam"/>
@@ -249,18 +184,20 @@
 			<table-attribute id="anyowner"/>
 		</table-attributes>
 	</group>
-	<group id="personnel" userLabel="Ship Personnel">
+	<group id="date" userLabel="Dates">
 		<searchable-attributes>
 			<searchable-attribute id="yearam"/>
-			<searchable-attribute id="voyageId"/>
-			<searchable-attribute id="shipname"/>
-			<searchable-attribute id="crew1"/>
-			<searchable-attribute id="crew3"/>
-			<searchable-attribute id="crewdied"/>
-			<searchable-attribute id="portdep"/>
-			<searchable-attribute id="portret"/>
-			<searchable-attribute id="anycaptain"/>
-			<searchable-attribute id="anyowner"/>
+			<searchable-attribute id="datedep"/>
+			<searchable-attribute id="datebuy"/>
+			<searchable-attribute id="dateleftAfr"/>
+			<searchable-attribute id="dateland1"/>
+			<searchable-attribute id="dateland2"/>
+			<searchable-attribute id="dateland3"/>
+			<searchable-attribute id="datedepam"/>
+			<searchable-attribute id="dateend"/>
+			<searchable-attribute id="voy1imp"/>
+			<searchable-attribute id="voy2imp"/>
+			<searchable-attribute id="voy3imp"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="yearam"/>
@@ -275,62 +212,12 @@
 			<table-attribute id="anyowner"/>
 		</table-attributes>
 	</group>
-	<group id="slaves" userLabel="Slaves">
+	<group id="crew" userLabel="Crew">
 		<searchable-attributes>
-			<searchable-attribute id="yearam"/>
-			<searchable-attribute id="voyageId"/>
-			<searchable-attribute id="shipname"/>
-			<searchable-attribute id="tslavesd"/>
-			<searchable-attribute id="sladvoy"/>
-			<searchable-attribute id="slaarriv"/>
-			<searchable-attribute id="slas32"/>
-			<searchable-attribute id="slas36"/>
-			<searchable-attribute id="slas39"/>
-			<searchable-attribute id="slintend"/>
-			<searchable-attribute id="ncar13"/>
-			<searchable-attribute id="ncar15"/>
-			<searchable-attribute id="ncar17"/>
-			<searchable-attribute id="vymrtimp"/>
-			<searchable-attribute id="regem1"/>
-			<searchable-attribute id="regem2"/>
-			<searchable-attribute id="regem3"/>
-			<searchable-attribute id="majbuyrg"/>
-			<searchable-attribute id="regdis2"/>
-			<searchable-attribute id="regdis3"/>
-			<searchable-attribute id="majselrg"/>
-			<searchable-attribute id="womrat7"/>
-			<searchable-attribute id="menrat7"/>
-			<searchable-attribute id="girlrat7"/>
-			<searchable-attribute id="boyrat7"/>
-			<searchable-attribute id="jamcaspr"/>
-			<searchable-attribute id="adpsale1"/>
-			<searchable-attribute id="adpsale2"/>
-			<searchable-attribute id="chilrat7"/>
-			<searchable-attribute id="d1slatr"/>
-			<searchable-attribute id="ddepamb"/>
-			<searchable-attribute id="fate"/>
-			<searchable-attribute id="fate2"/>
-			<!-- <searchable-attribute id="insurrec"/> -->
-			<searchable-attribute id="majselpt"/>
-			<searchable-attribute id="malrat7"/>
-			<searchable-attribute id="majbyimp"/>
-			<searchable-attribute id="mjselimp"/>
-			<searchable-attribute id="regdis1"/>
-			<searchable-attribute id="sla1port"/>
-			<searchable-attribute id="sla32imp"/>
-			<searchable-attribute id="sla36imp"/>
-			<searchable-attribute id="sla39imp"/>
-			<searchable-attribute id="slamimp"/>
-			<searchable-attribute id="slaximp"/>
-			<searchable-attribute id="vymrtrat"/>
-			<searchable-attribute id="ncr15imp"/>
-			<searchable-attribute id="datarr32"/>
-			<searchable-attribute id="datarr33"/>
-			<searchable-attribute id="mjbyptimp"/>
-			<searchable-attribute id="ncr17imp"/>
-			<searchable-attribute id="plac1tra"/>
-			<searchable-attribute id="plac2tra"/>
-			<searchable-attribute id="plac3tra"/>
+			<searchable-attribute id="anycaptain"/>
+			<searchable-attribute id="crew1"/>
+			<searchable-attribute id="crew2"/>
+			<searchable-attribute id="crewdied"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="yearam"/>
@@ -390,29 +277,19 @@
 			<table-attribute id="plac3tra"/>
 		</table-attributes>
 	</group>
-	<group id="sources" userLabel="Sources">
+	<group id="slaves-numbers" userLabel="Slaves (numbers)">
 		<searchable-attributes>
-			<searchable-attribute id="yearam"/>
-			<searchable-attribute id="voyageId"/>
-			<searchable-attribute id="shipname"/>
-			<searchable-attribute id="sourceg"/>
-			<searchable-attribute id="sourceh"/>
-			<searchable-attribute id="sourcei"/>
-			<searchable-attribute id="sourcej"/>
-			<searchable-attribute id="sourcek"/>
-			<searchable-attribute id="sourcel"/>
-			<searchable-attribute id="sourcem"/>
-			<searchable-attribute id="sourcen"/>
-			<searchable-attribute id="sourceo"/>
-			<searchable-attribute id="sourcep"/>
-			<searchable-attribute id="sourceq"/>
-			<searchable-attribute id="sourcer"/>
-			<searchable-attribute id="sourcea"/>
-			<searchable-attribute id="sourceb"/>
-			<searchable-attribute id="sourcec"/>
-			<searchable-attribute id="sourced"/>
-			<searchable-attribute id="sourcee"/>
-			<searchable-attribute id="sourcef"/>
+			<searchable-attribute id="slintend"/>
+			<searchable-attribute id="ncar13"/>
+			<searchable-attribute id="ncar15"/>
+			<searchable-attribute id="ncar17"/>
+			<searchable-attribute id="tslavesd"/>
+			<searchable-attribute id="slaarriv"/>
+			<searchable-attribute id="slas32"/>
+			<searchable-attribute id="slas36"/>
+			<searchable-attribute id="slas39"/>
+			<searchable-attribute id="slaximp"/>
+			<searchable-attribute id="slamimp"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="yearam"/>
@@ -436,6 +313,28 @@
 			<table-attribute id="sourced"/>
 			<table-attribute id="sourcee"/>
 			<table-attribute id="sourcef"/>
+		</table-attributes>
+	</group>
+	<group id="slaves-chars" userLabel="Slaves (characteristics)">
+		<searchable-attributes>
+			<searchable-attribute id="menrat7"/>
+			<searchable-attribute id="womrat7"/>
+			<searchable-attribute id="boyrat7"/>
+			<searchable-attribute id="girlrat7"/>
+			<searchable-attribute id="malrat7"/>
+			<searchable-attribute id="chilrat7"/>
+			<searchable-attribute id="jamcaspr"/>
+			<searchable-attribute id="vymrtimp"/>
+			<searchable-attribute id="vymrtrat"/>
+		</searchable-attributes>
+		<table-attributes>
+		</table-attributes>
+	</group>
+	<group id="sources" userLabel="Sources">
+		<searchable-attributes>
+			<searchable-attribute id="anysource"/>
+		</searchable-attributes>
+		<table-attributes>
 		</table-attributes>
 	</group>
 </groups>
