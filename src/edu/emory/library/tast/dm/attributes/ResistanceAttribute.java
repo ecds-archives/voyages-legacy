@@ -22,4 +22,9 @@ public class ResistanceAttribute extends DictionaryAttribute
 		return Resistance.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return Resistance.getAttribute(name);
+	}
+
+	
 }

@@ -284,7 +284,7 @@ public class TableResultTabBean {
 					if (!(attr[i] instanceof DictionaryAttribute)) {
 						order[i] = attr[i];
 					} else {
-						order[i] = new SequenceAttribute(new Attribute[] {attr[i], Dictionary.getAttribute("name")});
+						order[i] = new SequenceAttribute(new Attribute[] {attr[i], ((DictionaryAttribute)attr[i]).getAttribute("name")});
 					}
 				}
 				qValue.setOrderBy(order);

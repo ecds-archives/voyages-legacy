@@ -22,4 +22,8 @@ public class FateAttribute extends DictionaryAttribute
 		return Fate.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return Fate.getAttribute(name);
+	}
+
 }

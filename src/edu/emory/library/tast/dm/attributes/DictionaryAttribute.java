@@ -109,5 +109,7 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 	public Object getValueToCondition(Object value) {
 		return value;
 	}
+	
+	public abstract Attribute getAttribute(String name);
 
 }

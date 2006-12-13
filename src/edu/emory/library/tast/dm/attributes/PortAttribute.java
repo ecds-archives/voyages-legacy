@@ -22,4 +22,9 @@ public class PortAttribute extends DictionaryAttribute
 		return Port.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return Port.getAttribute(name);
+	}
+
+	
 }

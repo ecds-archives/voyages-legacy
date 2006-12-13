@@ -22,4 +22,8 @@ public class RegionAttribute extends DictionaryAttribute
 		return Region.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return Region.getAttribute(name);
+	}
+
 }

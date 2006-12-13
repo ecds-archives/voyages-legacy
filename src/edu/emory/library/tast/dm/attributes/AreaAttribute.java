@@ -22,4 +22,8 @@ public class AreaAttribute extends DictionaryAttribute
 		return Area.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return Area.getAttribute(name);
+	}
+
 }

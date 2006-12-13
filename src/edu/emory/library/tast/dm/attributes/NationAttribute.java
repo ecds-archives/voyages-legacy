@@ -22,4 +22,9 @@ public class NationAttribute extends DictionaryAttribute
 		return Nation.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return Nation.getAttribute(name);
+	}
+
+	
 }

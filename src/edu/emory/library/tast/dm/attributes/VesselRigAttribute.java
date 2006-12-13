@@ -24,4 +24,9 @@ public class VesselRigAttribute extends DictionaryAttribute
 		return VesselRig.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return VesselRig.getAttribute(name);
+	}
+
+	
 }

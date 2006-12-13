@@ -22,4 +22,9 @@ public class FateVesselAttribute extends DictionaryAttribute
 		return FateVessel.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return FateVessel.getAttribute(name);
+	}
+
+	
 }

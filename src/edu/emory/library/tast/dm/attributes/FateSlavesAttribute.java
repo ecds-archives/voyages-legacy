@@ -22,4 +22,9 @@ public class FateSlavesAttribute extends DictionaryAttribute
 		return FateSlaves.loadById(sess, id);
 	}
 
+	public Attribute getAttribute(String name) {
+		return FateSlaves.getAttribute(name);
+	}
+
+	
 }

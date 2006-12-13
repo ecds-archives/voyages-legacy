@@ -21,5 +21,9 @@ public class EstimatesNationAttribute extends DictionaryAttribute
 	{
 		return EstimatesNation.loadById(sess, id);
 	}
+
+	public Attribute getAttribute(String name) {
+		return EstimatesNation.getAttribute(name);
+	}
 	
 }

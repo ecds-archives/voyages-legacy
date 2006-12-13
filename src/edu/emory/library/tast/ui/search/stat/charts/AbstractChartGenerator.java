@@ -68,7 +68,7 @@ public abstract class AbstractChartGenerator {
 		if (this.getXAxisAttribute() instanceof DateAttribute) {
 			return new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("'year"), string});
 		} else if (this.getXAxisAttribute() instanceof DictionaryAttribute) {
-			return new SequenceAttribute(new Attribute[] {string, Dictionary.getAttribute("name")});
+			return new SequenceAttribute(new Attribute[] {string, ((DictionaryAttribute)this.getXAxisAttribute()).getAttribute("name")});
 		} else {
 			return string;
 		}

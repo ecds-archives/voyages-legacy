@@ -21,5 +21,10 @@ public class FateOwnerAttribute extends DictionaryAttribute
 	{
 		return FateOwner.loadById(sess, id);
 	}
+
+	public Attribute getAttribute(String name) {
+		return FateOwner.getAttribute(name);
+	}
+
 	
 }
