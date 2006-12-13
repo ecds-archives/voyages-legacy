@@ -88,12 +88,12 @@
 		<servlet-name>upload</servlet-name>
 		<servlet-class>edu.emory.library.tas.web.upload.UploadServlet</servlet-class>
 	</servlet>
--->
+
 	<servlet>
 		<servlet-name>ImportServlet</servlet-name>
 		<servlet-class>edu.emory.library.tast.spss.ImportServlet</servlet-class>
     </servlet>
-	
+-->	
 	<servlet>
 		<servlet-name>JSON-RPC</servlet-name>
 		<servlet-class>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-class>
@@ -157,12 +157,12 @@
 		<servlet-name>JSON-RPC</servlet-name>
 		<url-pattern>/JSON-RPC</url-pattern>
 	</servlet-mapping>
-
+<!-- 
 	<servlet-mapping>
 		<servlet-name>ImportServlet</servlet-name>
 		<url-pattern>/servlet/ImportServlet</url-pattern>
 	</servlet-mapping>
-
+ -->
 	<servlet-mapping>
 		<servlet-name>ImageFeederServlet</servlet-name>
 		<url-pattern>/servlet/ImageFeederServlet</url-pattern>
