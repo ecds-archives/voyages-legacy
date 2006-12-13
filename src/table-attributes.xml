@@ -1,187 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table-attributes>
-	<table-attribute tabs="1" id="adultspurch" userCategory="beginners" userLabel="Adults purchased anywhere">
+	<table-attribute tabs="1,2" id="voyageId" userCategory="beginners" userLabel="Unique identification number">
 		<attributes>
-			<attribute name="adult4"/>
-			<attribute name="adult1"/>
+			<attribute name="voyageId"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1" id="adultspurch" userCategory="beginners" userLabel="Adults purchased anywhere">
+	<table-attribute tabs="1,2" id="cd" userCategory="beginners" userLabel="Voyage in 1999 CD-ROM">
 		<attributes>
-			<attribute name="adult4"/>
-			<attribute name="adult1"/>
+			<attribute name="cd"/>
+		</attributes>
+	</table-attribute>	
+	<table-attribute tabs="1,2" id="shipname" userCategory="beginners" userLabel="Name of slave ship">
+		<attributes>
+			<attribute name="shipname"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1" id="anycaptain" userCategory="beginners" userLabel="Captain">
+	<table-attribute tabs="1,2" id="placcons" userCategory="general" userLabel="Place of ship construction">
 		<attributes>
-			<attribute name="captaina"/>
-			<attribute name="captainb"/>
-			<attribute name="captainc"/>
+			<attribute name="placcons"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="chilrat7" userCategory="beginners" userLabel="Child ratios">
+	<table-attribute tabs="1,2" id="yrcons" userCategory="beginners" userLabel="Year of ship construction">
 		<attributes>
-			<attribute name="chilrat7"/>
+			<attribute name="yrcons"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="crew1" userCategory="general" userLabel="Crew on board at outset of voyage">
+	<table-attribute tabs="1,2" id="placreg" userCategory="beginners" userLabel="Place where ship registered">
 		<attributes>
-			<attribute name="crew1"/>
+			<attribute name="placreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dlslatrb" userCategory="general" userLabel="Date of end of slave purchase">
+	<table-attribute tabs="1,2" id="yrreg" userCategory="beginners" userLabel="Year of ship registration">
 		<attributes>
-			<attribute name="dlslatrb"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="datedep" userCategory="beginners" userLabel="Date began slave voyage">
-		<attributes>
-			<attribute name="datedep"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="datarr4" userCategory="beginners" userLabel="Date in which voyage completed">
-		<attributes>
-			<attribute name="datarr4"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="datarr32" userCategory="general" userLabel="Date of arrival at second port of disembarkation">
-		<attributes>
-			<attribute name="datarr32"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ddepamb" userCategory="beginners" userLabel="Date of departure from last port disembarkation">
-		<attributes>
-			<attribute name="ddepamb"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="rrdata31" userCategory="beginners" userLabel="Date of first disembarkation">
-		<attributes>
-			<attribute name="rrdata31"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="datarr33" userCategory="general" userLabel="Date of third disembarkation of slaves">
-		<attributes>
-			<attribute name="datarr33"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="d1slatr" userCategory="beginners" userLabel="Day began slave purchase" date="true">
-		<attributes>
-			<attribute name="d1slatr"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcer" userCategory="general" userLabel="Eighteenth source of information">
-		<attributes>
-			<attribute name="sourcer"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerh" userCategory="general" userLabel="Eighth owner of venture">
-		<attributes>
-			<attribute name="ownerh"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourceh" userCategory="general" userLabel="Eighth source of information">
-		<attributes>
-			<attribute name="sourceh"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcek" userCategory="general" userLabel="Eleventh source of information">
-		<attributes>
-			<attribute name="sourcek"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownero" userCategory="general" userLabel="Fifteenth owner of venture">
-		<attributes>
-			<attribute name="ownero"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourceo" userCategory="general" userLabel="Fifteenth source of information">
-		<attributes>
-			<attribute name="sourceo"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownere" userCategory="beginners" userLabel="Fifth owner of venture">
-		<attributes>
-			<attribute name="ownere"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcee" userCategory="beginners" userLabel="Fifth source of information">
-		<attributes>
-			<attribute name="sourcee"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="captaina" userCategory="beginners" userLabel="First captain of ship">
-		<attributes>
-			<attribute name="captaina"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownera" userCategory="beginners" userLabel="First owner of venture">
-		<attributes>
-			<attribute name="ownera"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="embport" userCategory="general" userLabel="First place of intended embarkation">
-		<attributes>
-			<attribute name="embport"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="plac1tra" userCategory="general" userLabel="First place of slave purchase">
-		<attributes>
-			<attribute name="plac1tra"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sla1port" userCategory="general" userLabel="First port of disembarkation">
-		<attributes>
-			<attribute name="sla1port"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="arrport" userCategory="general" userLabel="First port of intended disembarkation">
-		<attributes>
-			<attribute name="arrport"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis1" userCategory="beginners" userLabel="First region of disembarkation">
-		<attributes>
-			<attribute name="regdis1"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="regem1" userCategory="general" userLabel="First region of embarkation">
-		<attributes>
-			<attribute name="regem1"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcea" userCategory="beginners" userLabel="First source of information">
-		<attributes>
-			<attribute name="sourcea"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="evgreen" userCategory="general" userLabel="Flag record present in 1999 set">
-		<attributes>
-			<attribute name="evgreen"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownern" userCategory="general" userLabel="Fourteenth owner of venture">
-		<attributes>
-			<attribute name="ownern"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcen" userCategory="general" userLabel="Fourteenth source of information">
-		<attributes>
-			<attribute name="sourcen"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerd" userCategory="beginners" userLabel="Fourth owner of venture">
-		<attributes>
-			<attribute name="ownerd"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourced" userCategory="beginners" userLabel="Fourth source of information">
-		<attributes>
-			<attribute name="sourced"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="voy2imp" userCategory="beginners" userLabel="Imputed length of middle passage">
-		<attributes>
-			<attribute name="voy2imp"/>
+			<attribute name="yrreg"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="natinimp" userCategory="beginners" userLabel="Imputed nation of ship registration">
@@ -189,94 +40,19 @@
 			<attribute name="natinimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sla36imp" userCategory="general" userLabel="Imputed number of slaves at second port arrival">
+	<table-attribute tabs="1,2" id="rig" userCategory="beginners" userLabel="Rig of ship">
 		<attributes>
-			<attribute name="sla36imp"/>
+			<attribute name="rig"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sla39imp" userCategory="general" userLabel="Imputed number of slaves at third port of arrival">
+	<table-attribute tabs="1,2" id="tonnage" userCategory="general" userLabel="Standardized tonnage">
 		<attributes>
-			<attribute name="sla39imp"/>
+			<attribute name="tonnage"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners" userLabel="Imputed number of slaves disembarked">
+	<table-attribute tabs="1,2" id="tonmod" userCategory="general" userLabel="Standardized tonnage">
 		<attributes>
-			<attribute name="slamimp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners" userLabel="Imputed number of slaves embarked">
-		<attributes>
-			<attribute name="slaximp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ncr17imp" userCategory="general" userLabel="Imputed number of slaves embarked third port">
-		<attributes>
-			<attribute name="ncr17imp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sla32imp" userCategory="general" userLabel="Imputed number slaves disembarked at first port">
-		<attributes>
-			<attribute name="sla32imp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ncr15imp" userCategory="general" userLabel="Imputed number slaves embarked second port">
-		<attributes>
-			<attribute name="ncr15imp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="majselpt" userCategory="general" userLabel="Imputed port of slave arrival">
-		<attributes>
-			<attribute name="majselpt"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="general" userLabel="Imputed principal port of slave purchase">
-		<attributes>
-			<attribute name="mjbyptimp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="majbyimp" userCategory="beginners" userLabel="Imputed principal region of embarkation">
-		<attributes>
-			<attribute name="majbyimp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="mjselimp" userCategory="beginners" userLabel="Imputed principal region of sale">
-		<attributes>
-			<attribute name="mjselimp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="vymrtimp" userCategory="beginners" userLabel="Imputed total of slaves died on voyage">
-		<attributes>
-			<attribute name="vymrtimp"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="yearam" userCategory="beginners" userLabel="Imputed Year of arrival port of disembarkation" date="true">
-		<attributes>
-			<attribute name="yearam"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="malrat7" userCategory="beginners" userLabel="Male ratios">
-		<attributes>
-			<attribute name="malrat7"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="shipname" userCategory="beginners" userLabel="Name of vessel">
-		<attributes>
-			<attribute name="shipname"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="owneri" userCategory="general" userLabel="Ninth owner of venture">
-		<attributes>
-			<attribute name="owneri"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcei" userCategory="general" userLabel="Ninth source of information">
-		<attributes>
-			<attribute name="sourcei"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="crew3" userCategory="general" userLabel="Number of crew at first port of disembarkation">
-		<attributes>
-			<attribute name="crew3"/>
+			<attribute name="tonmod"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="guns" userCategory="beginners" userLabel="Number of guns carried">
@@ -284,64 +60,67 @@
 			<attribute name="guns"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="boyrat7" userCategory="general" userLabel="Number of slave boys">
+	<table-attribute tabs="1,2" id="anyowner" userCategory="beginners" userLabel="Owners">
 		<attributes>
-			<attribute name="boyrat7"/>
+			<attribute name="ownera" />
+			<attribute name="ownerf" />
+			<attribute name="ownerb" />
+			<attribute name="ownerc" />
+			<attribute name="ownerd" />
+			<attribute name="ownere" />
+			<attribute name="ownerg" />
+			<attribute name="ownerh" />
+			<attribute name="owneri" />
+			<attribute name="ownerj" />
+			<attribute name="ownerk" />
+			<attribute name="ownerl" />
+			<attribute name="ownerm" />
+			<attribute name="ownern" />
+			<attribute name="ownero" />
+			<attribute name="ownerp" />
 		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="girlrat7" userCategory="general" userLabel="Number of Slave girls">
-		<attributes>
-			<attribute name="girlrat7"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="menrat7" userCategory="general" userLabel="Number of slave men">
-		<attributes>
-			<attribute name="menrat7"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="womrat7" userCategory="general" userLabel="Number of Slave women">
-		<attributes>
-			<attribute name="womrat7"/>
-		</attributes>
-	</table-attribute>
+	</table-attribute>	
 	<table-attribute tabs="1,2" id="fate" userCategory="beginners" userLabel="Outcome of voyage">
 		<attributes>
 			<attribute name="fate"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1" id="anyowner" userCategory="beginners" userLabel="Owner">
+	<table-attribute tabs="1,2" id="fate2" userCategory="beginners" userLabel="Outcome of voyage for slaves">
 		<attributes>
-			<attribute name="ownera"/>
-			<attribute name="ownerb"/>
-			<attribute name="ownerc"/>
-			<attribute name="ownerd"/>
-			<attribute name="ownere"/>
-			<attribute name="ownerf"/>
-			<attribute name="ownerg"/>
-			<attribute name="ownerh"/>
-			<attribute name="owneri"/>
-			<attribute name="ownerj"/>
-			<attribute name="ownerk"/>
-			<attribute name="ownerl"/>
-			<attribute name="ownerm"/>
-			<attribute name="ownern"/>
-			<attribute name="ownero"/>
-			<attribute name="ownerp"/>
+			<attribute name="fate2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="placcons" userCategory="general" userLabel="Place of construction">
+	<table-attribute tabs="1,2" id="fate4" userCategory="beginners" userLabel="Outcome of voyage for owner">
 		<attributes>
-			<attribute name="placcons"/>
+			<attribute name="fate4"/>
+		</attributes>
+	</table-attribute>		
+	<table-attribute tabs="1,2" id="fate3" userCategory="beginners" userLabel="Outcome of voyage if ship captured">
+		<attributes>
+			<attribute name="fate3"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1" id="purchase" userCategory="beginners" userLabel="Place of purchase">
+	<table-attribute tabs="1,2" id="resistance" userCategory="beginners" userLabel="Violent incidents">
 		<attributes>
-			<attribute name="plac3tra"/>
-			<attribute name="plac1tra"/>
-			<attribute name="plac2tra"/>
+			<attribute name="resistance"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="2" id="plac1tra" userCategory="beginners" userLabel="First place of purchase">
+	<table-attribute tabs="1,2" id="portdep" userCategory="general" userLabel="Port where voyage began">
+		<attributes>
+			<attribute name="portdep"/>
+		</attributes>
+	</table-attribute>	
+	<table-attribute tabs="1,2" id="ptdepimp" userCategory="general" userLabel="Imputed port where voyage began">
+		<attributes>
+			<attribute name="ptdepimp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="deptregimp" userCategory="beginners" userLabel="Imputed region where voyage began">
+		<attributes>
+			<attribute name="deptregimp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="plac1tra" userCategory="general" userLabel="First place of slave purchase">
 		<attributes>
 			<attribute name="plac1tra"/>
 		</attributes>
@@ -356,64 +135,59 @@
 			<attribute name="plac3tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="portret" userCategory="beginners" userLabel="Port at which voyage ended">
+	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="general" userLabel="Imputed principal port of slave purchase">
 		<attributes>
-			<attribute name="portret"/>
+			<attribute name="mjbyptimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="portdep" userCategory="general" userLabel="Port of Departure">
+	<table-attribute tabs="1,2" id="regem1" userCategory="general" userLabel="First region of slave purchase">
 		<attributes>
-			<attribute name="portdep"/>
+			<attribute name="regem1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="price" userCategory="general" userLabel="Price of slaves">
+	<table-attribute tabs="1,2" id="regem2" userCategory="general" userLabel="Second region of slave purchase">
 		<attributes>
-			<attribute name="price"/>
+			<attribute name="regem2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="majselrg" userCategory="general" userLabel="Principal region of disembarkation">
+	<table-attribute tabs="1,2" id="regem3" userCategory="general" userLabel="Third region of slave purchase">
 		<attributes>
-			<attribute name="majselrg"/>
+			<attribute name="regem3"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="majbuyrg" userCategory="general" userLabel="Principal region of embarkation">
+	<table-attribute tabs="1,2" id="majbyimp" userCategory="beginners" userLabel="Imputed principal region of slave purchase">
 		<attributes>
-			<attribute name="majbuyrg"/>
+			<attribute name="majbyimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="deptreg" userCategory="beginners" userLabel="Region of departure">
+	<table-attribute tabs="1,2" id="npafttra" userCategory="beginners" userLabel="Places of call before Atlantic crossing">
 		<attributes>
-			<attribute name="deptreg"/>
+			<attribute name="npafttra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="rig" userCategory="beginners" userLabel="Rig of vessel">
+	<table-attribute tabs="1,2" id="sla1port" userCategory="general" userLabel="First port of landing">
 		<attributes>
-			<attribute name="rig"/>
+			<attribute name="sla1port"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="rountrip" userCategory="general" userLabel="Round trip length of voyage">
-		<attributes>
-			<attribute name="rountrip"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="captainb" userCategory="beginners" userLabel="Second captain of ship">
-		<attributes>
-			<attribute name="captainb"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerb" userCategory="beginners" userLabel="Second owner of venture">
-		<attributes>
-			<attribute name="ownerb"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="plac2tra" userCategory="general" userLabel="Second place of slave purchase">
-		<attributes>
-			<attribute name="plac2tra"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="adpsale1" userCategory="general" userLabel="Second port of disembarkation">
+	<table-attribute tabs="1,2" id="adpsale1" userCategory="general" userLabel="Second port of landing">
 		<attributes>
 			<attribute name="adpsale1"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="adpsale2" userCategory="general" userLabel="Third port of landing">
+		<attributes>
+			<attribute name="adpsale2"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="mjslptimp" userCategory="beginners" userLabel="Imputed principal place of landing">
+		<attributes>
+			<attribute name="mjslptimp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="regdis1" userCategory="beginners" userLabel="First region of disembarkation">
+		<attributes>
+			<attribute name="regdis1"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="regdis2" userCategory="general" userLabel="Second region of disembarkation">
@@ -421,49 +195,111 @@
 			<attribute name="regdis2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regem2" userCategory="general" userLabel="Second region of embarkation">
+	<table-attribute tabs="1,2" id="regdis3" userCategory="general" userLabel="Third region of disembarkation">
 		<attributes>
-			<attribute name="regem2"/>
+			<attribute name="regdis3"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sourceb" userCategory="beginners" userLabel="Second source of information">
+	<table-attribute tabs="1,2" id="mjselimp" userCategory="beginners" userLabel="Imputed principal region of disembarkation">
 		<attributes>
-			<attribute name="sourceb"/>
+			<attribute name="mjselimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sourceq" userCategory="general" userLabel="Seventeenth source of information">
+	<table-attribute tabs="1,2" id="portret" userCategory="beginners" userLabel="Port at which voyage ended">
 		<attributes>
-			<attribute name="sourceq"/>
+			<attribute name="portret"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerg" userCategory="general" userLabel="Seventh owner of venture">
+	<table-attribute tabs="1,2" id="retrnreg" userCategory="beginners" userLabel="Region to which ship returned">
 		<attributes>
-			<attribute name="ownerg"/>
+			<attribute name="retrnreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sourceg" userCategory="general" userLabel="Seventh source of information">
+	<table-attribute tabs="1,2" id="yearam" userCategory="beginners" userLabel="Imputed year of arrival at first place of landing" date="true">
 		<attributes>
-			<attribute name="sourceg"/>
+			<attribute name="yearam"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerp" userCategory="general" userLabel="Sixteenth owner of venture">
+	<table-attribute tabs="1,2" id="datedep" userCategory="beginners" userLabel="Date that voyage began">
 		<attributes>
-			<attribute name="ownerp"/>
+			<attribute name="datedep"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcep" userCategory="general" userLabel="Sixteenth source of information">
+	<table-attribute tabs="1,2" id="datebuy" userCategory="beginners" userLabel="Date that slave purchase began">
 		<attributes>
-			<attribute name="sourcep"/>
+			<attribute name="datebuy"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerf" userCategory="general" userLabel="Sixth owner of venture">
+	<table-attribute tabs="1,2" id="dateleftafr" userCategory="beginners" userLabel="Date that vessel left last slaving port">
 		<attributes>
-			<attribute name="ownerf"/>
+			<attribute name="dateleftafr"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcef" userCategory="beginners" userLabel="Sixth source of information">
+	<table-attribute tabs="1,2" id="dateland1" userCategory="beginners" userLabel="Date that slaves landed at first place">
 		<attributes>
-			<attribute name="sourcef"/>
+			<attribute name="dateland1"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="dateland2" userCategory="beginners" userLabel="Date that slaves landed at second place">
+		<attributes>
+			<attribute name="dateland2"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="dateland3" userCategory="beginners" userLabel="Date that slaves landed at third place">
+		<attributes>
+			<attribute name="dateland3"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="datedepam" userCategory="beginners" userLabel="Date that ship left on return voyage">
+		<attributes>
+			<attribute name="datedepam"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="dateend" userCategory="beginners" userLabel="Date when voyage completed">
+		<attributes>
+			<attribute name="dateend"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="voy1imp" userCategory="beginners" userLabel="Imputed voyage length from departure to first port of landing">
+		<attributes>
+			<attribute name="voy1imp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="voy2imp" userCategory="beginners" userLabel="Imputed length of middle passage">
+		<attributes>
+			<attribute name="voy2imp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="voy3imp" userCategory="beginners" userLabel="Imputed voyage length from departure to return to home port">
+		<attributes>
+			<attribute name="voy3imp"/>
+		</attributes>
+	</table-attribute>	
+	<table-attribute tabs="1" id="anycaptain" userCategory="beginners" userLabel="Captain">
+		<attributes>
+			<attribute name="captaina"/>
+			<attribute name="captainb"/>
+			<attribute name="captainc"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="crew1" userCategory="general" userLabel="Crew on board at outset of voyage">
+		<attributes>
+			<attribute name="crew1"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="crew3" userCategory="general" userLabel="Number of crew when first slaves landed">
+		<attributes>
+			<attribute name="crew3"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="crewdied" userCategory="beginners" userLabel="Number of crew who died over entire voyage">
+		<attributes>
+			<attribute name="crewdied"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="slintend" userCategory="general" userLabel="Number of slaves intended at first place of purchase">
+		<attributes>
+			<attribute name="slintend"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="ncar13" userCategory="general" userLabel="Slaves carried from first port of purchase">
@@ -481,34 +317,84 @@
 			<attribute name="ncar17"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sladvoy" userCategory="general" userLabel="Slaves died - last port purchase to first port sale">
+	<table-attribute tabs="1,2" id="tslavesd" userCategory="general" userLabel="Total slaves carried off from Africa">
 		<attributes>
-			<attribute name="sladvoy"/>
+			<attribute name="tslavesd"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners" userLabel="Slaves died on voyage/Slaves embarked">
+	<table-attribute tabs="1,2" id="slaarriv" userCategory="general" userLabel="Number of slaves who arrived at first place of landing">
 		<attributes>
-			<attribute name="vymrtrat"/>
+			<attribute name="slaarriv"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slas32" userCategory="general" userLabel="Slaves disembarked at first port disembarkation">
+	<table-attribute tabs="1,2" id="slas32" userCategory="general" userLabel="Number of slaves landed at first place">
 		<attributes>
 			<attribute name="slas32"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slas36" userCategory="general" userLabel="Slaves disembarked second port">
+	<table-attribute tabs="1,2" id="slas36" userCategory="general" userLabel="Number of slaves landed at second place">
 		<attributes>
 			<attribute name="slas36"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slas39" userCategory="general" userLabel="Slaves disembarked third port disembarkation">
+	<table-attribute tabs="1,2" id="slas39" userCategory="general" userLabel="Number of slaves landed at third place">
 		<attributes>
 			<attribute name="slas39"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slintend" userCategory="general" userLabel="Slaves intended from first port of purchase">
+	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners" userLabel="Imputed number of slaves disembarked">
 		<attributes>
-			<attribute name="slintend"/>
+			<attribute name="slamimp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners" userLabel="Imputed number of slaves embarked">
+		<attributes>
+			<attribute name="slaximp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="boyrat7" userCategory="general" userLabel="Percentage of boys at beginning or end of Middle Passage">
+		<attributes>
+			<attribute name="boyrat7"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="girlrat7" userCategory="general" userLabel="Percentage of girls at beginning or end of Middle Passage">
+		<attributes>
+			<attribute name="girlrat7"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="menrat7" userCategory="general" userLabel="Percentage of men at beginning or end of Middle Passage">
+		<attributes>
+			<attribute name="menrat7"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="womrat7" userCategory="general" userLabel="Percentage of women at beginning or end of Middle Passage">
+		<attributes>
+			<attribute name="womrat7"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="chilrat7" userCategory="beginners" userLabel="Imputed sex ratio of the cargo of slaves">
+		<attributes>
+			<attribute name="chilrat7"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="malrat7" userCategory="beginners" userLabel="Imputed sex ratio of the cargo of slaves">
+		<attributes>
+			<attribute name="malrat7"/>
+		</attributes>
+	</table-attribute>
+	 <table-attribute tabs="1,2" id="jamcaspr" userCategory="general" userLabel="Imputed sterling price of slaves sold in Jamaica">
+		<attributes>
+			<attribute name="jamcaspr"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="vymrtimp" userCategory="beginners" userLabel="Imputed number of slaves who died during the Middle Passage">
+		<attributes>
+			<attribute name="vymrtimp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners" userLabel="Imputed mortality rate (slave deaths / embarkations)">
+		<attributes>
+			<attribute name="vymrtrat"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1" id="anysource" userCategory="beginners" userLabel="Source">
@@ -532,141 +418,6 @@
 			<attribute name="sourcee"/>
 			<attribute name="sourcef"/>
 			<attribute name="sourcex"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="jamcaspr" userCategory="general" userLabel="Standardized price of slaves">
-		<attributes>
-			<attribute name="jamcaspr"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="tonmod" userCategory="general" userLabel="Standardized tonnage">
-		<attributes>
-			<attribute name="tonmod"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerj" userCategory="general" userLabel="Tenth owner of venture">
-		<attributes>
-			<attribute name="ownerj"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerk" userCategory="general" userLabel="Tenth owner of venture">
-		<attributes>
-			<attribute name="ownerk"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcej" userCategory="general" userLabel="Tenth source of information">
-		<attributes>
-			<attribute name="sourcej"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="captainc" userCategory="beginners" userLabel="Third captain of ship">
-		<attributes>
-			<attribute name="captainc"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerc" userCategory="beginners" userLabel="Third owner of venture">
-		<attributes>
-			<attribute name="ownerc"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="plac3tra" userCategory="general" userLabel="Third place of slave purchase">
-		<attributes>
-			<attribute name="plac3tra"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="adpsale2" userCategory="general" userLabel="Third port of disembarkation">
-		<attributes>
-			<attribute name="adpsale2"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis3" userCategory="general" userLabel="Third region of disembarkation">
-		<attributes>
-			<attribute name="regdis3"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="regem3" userCategory="general" userLabel="Third region of embarkation">
-		<attributes>
-			<attribute name="regem3"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcec" userCategory="beginners" userLabel="Third source of information">
-		<attributes>
-			<attribute name="sourcec"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerm" userCategory="general" userLabel="Thirteenth owner of venture">
-		<attributes>
-			<attribute name="ownerm"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcem" userCategory="general" userLabel="Thirteenth source of information">
-		<attributes>
-			<attribute name="sourcem"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="timslave" userCategory="beginners" userLabel="Time spent acquiring slaves">
-		<attributes>
-			<attribute name="timslave"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="tonnage" userCategory="beginners" userLabel="Tonnage of vessel">
-		<attributes>
-			<attribute name="tonnage"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="crewdied" userCategory="beginners" userLabel="Total crew died on voyage">
-		<attributes>
-			<attribute name="crewdied"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="slaarriv" userCategory="general" userLabel="Total slaves arrived first port of disembarkation">
-		<attributes>
-			<attribute name="slaarriv"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="tslavesd" userCategory="general" userLabel="Total slaves at departure from last slaving port">
-		<attributes>
-			<attribute name="tslavesd"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="ownerl" userCategory="general" userLabel="Twelfth owner of venture">
-		<attributes>
-			<attribute name="ownerl"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="sourcel" userCategory="general" userLabel="Twelfth source of information">
-		<attributes>
-			<attribute name="sourcel"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="voyageId" userCategory="beginners" userLabel="Unique identity number">
-		<attributes>
-			<attribute name="voyageId"/>
-		</attributes>
-	</table-attribute>
-	<!--table-attribute tabs="1,2" id="insurrec" userCategory="beginners" userLabel="Violent incidents">
-		<attributes>
-			<attribute name="insurrec"/>
-		</attributes>
-	</table-attribute-->
-	<table-attribute tabs="1,2" id="xmimpflag" userCategory="general" userLabel="Voyage link categ for calculating impute">
-		<attributes>
-			<attribute name="xmimpflag"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="fate3" userCategory="beginners" userLabel="Voyage outcome from perspective of captain">
-		<attributes>
-			<attribute name="fate3"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="fate4" userCategory="beginners" userLabel="voyage outcome from perspective of owner">
-		<attributes>
-			<attribute name="fate4"/>
-		</attributes>
-	</table-attribute>
-	<table-attribute tabs="1,2" id="fate2" userCategory="beginners" userLabel="Voyage outcome from perspective of slaves">
-		<attributes>
-			<attribute name="fate2"/>
 		</attributes>
 	</table-attribute>
 </table-attributes>
