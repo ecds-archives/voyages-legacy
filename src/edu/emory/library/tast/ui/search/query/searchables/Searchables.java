@@ -20,6 +20,8 @@ import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.PortAttribute;
+import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
 public class Searchables
@@ -27,9 +29,6 @@ public class Searchables
 	
 	private static final String SEARCHABLE_ATTRIBUTES_XML = "/searchable-attributes.xml";
 	
-	private static final String PORT_DICTIONARY = "TBD:locationport";
-	private static final String REGION_DICTIONARY = "TBD:locationregiondict";
-
 	private SearchableAttribute[] searchableAttributes = null;
 	private Map searchableAttributesByIds = null;
 	
@@ -161,10 +160,8 @@ public class Searchables
 
 			}
 			
-			/*
-
 			// location -> read list of locations
-			else if ("location".equals(type))
+			else if ("port".equals(type))
 			{
 				NodeList xmlLocs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
 				Location[] locs = new Location[xmlLocs.getLength()];
@@ -174,13 +171,11 @@ public class Searchables
 
 					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
 					String region = xmlLoc.getAttributes().getNamedItem("region").getNodeValue();
+
 					Attribute attrPort = Voyage.getAttribute(port);
 					Attribute attrRegion = Voyage.getAttribute(region);
 					
-					if (attrPort.getType().intValue() != Attribute.TYPE_DICT ||
-							attrRegion.getType().intValue() != Attribute.TYPE_DICT || 
-							!PORT_DICTIONARY.equals(attrPort.getDictionary()) ||
-							!REGION_DICTIONARY.equals(attrRegion.getDictionary()))
+					if (!(attrPort instanceof PortAttribute) || !(attrRegion instanceof RegionAttribute))
 						throw new RuntimeException("searchable attribute '" + id + "' invalid location");
 					
 					locs[j] = new Location(attrPort, attrRegion);
@@ -188,8 +183,6 @@ public class Searchables
 				}
 				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCats, locs);
 			}
-			
-			*/
 			
 			// add it to our collection
 			if (searchableAttribute != null)
