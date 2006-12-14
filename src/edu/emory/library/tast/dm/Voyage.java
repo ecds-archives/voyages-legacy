@@ -91,6 +91,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new PortAttribute("adpsale1", "Voyage", "adpsale1"));
 		attributes.add(new PortAttribute("adpsale2", "Voyage", "adpsale2"));
 		attributes.add(new PortAttribute("mjslptimp", "Voyage", "mjslptimp"));
+		attributes.add(new PortAttribute("portdep", "Voyage", "portdep"));
 		attributes.add(new RegionAttribute("regdis1", "Voyage", "regdis1"));
 		attributes.add(new RegionAttribute("regdis2", "Voyage", "regdis2"));
 		attributes.add(new RegionAttribute("regdis3", "Voyage", "regdis3"));
