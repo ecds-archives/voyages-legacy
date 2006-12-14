@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
@@ -33,6 +37,8 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			AbstractTransformerQueryHolder holder) {
 		Object[] data = holder.getRawQueryResponse();
 		List mapDataItems = new ArrayList();
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
 
 		double min = Double.MAX_VALUE;
 		double max = Double.MIN_VALUE;
@@ -42,7 +48,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			Long expTmp = (Long) row[0];
 			Region exp = null;
 			if (expTmp != null) {
-				exp = Region.loadById(expTmp.longValue());
+				exp = Region.loadById(session, expTmp.longValue());
 			}
 			if (exp != null) {
 				System.out.println(i);
@@ -166,6 +172,9 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 					new LegendItemsGroup[] {});
 		}
 
+		t.begin();
+		session.close();
+		
 		TransformerResponse response = new TransformerResponse(
 				(AbstractMapItem[]) mapDataItems
 						.toArray(new AbstractMapItem[] {}),

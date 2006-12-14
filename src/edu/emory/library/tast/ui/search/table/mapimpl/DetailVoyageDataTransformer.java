@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.Port;
@@ -54,13 +58,15 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		// toMap.addAll(Arrays.asList(parseAfrica(row)));
 		// toMap.addAll(Arrays.asList(parseAmericas(row)));
 		// toMap.addAll(Arrays.asList(parseArrival(row)));
-
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
 		List items = new ArrayList();
 
 		int symbolNumber = 1;
 		Object[][] response = parseDeparture(row);
 		if (response.length != 0) {
-			DetailVoyageMapItem item = addItemToMap(
+			DetailVoyageMapItem item = addItemToMap(session, 
 					(Dictionary) response[0][0], items, rowList, symbolNumber);
 			if (item != null) {
 				symbolNumber++;
@@ -79,7 +85,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		response = parseAfrica(row);
 		if (response.length != 0) {
 			for (int i = 0; i < response[0].length; i++) {
-				DetailVoyageMapItem item = addItemToMap(
+				DetailVoyageMapItem item = addItemToMap(session,
 						(Dictionary) response[0][i], items, rowList,
 						symbolNumber);
 				if (item != null) {
@@ -110,7 +116,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		response = parseAmericas(row);
 		if (response.length != 0) {
 			for (int i = 0; i < response[0].length; i++) {
-				DetailVoyageMapItem item = addItemToMap(
+				DetailVoyageMapItem item = addItemToMap(session,
 						(Dictionary) response[0][i], items, rowList,
 						symbolNumber);
 				if (item != null) {
@@ -131,7 +137,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 
 		response = parseArrival(row);
 		if (response.length != 0) {
-			DetailVoyageMapItem item = addItemToMap(
+			DetailVoyageMapItem item = addItemToMap(session,
 					(Dictionary) response[0][0], items, rowList, symbolNumber);
 			if (item != null) {
 				symbolNumber++;
@@ -165,6 +171,8 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 				element.addLegendItem(legendItem);
 			}
 		}
+		t.commit();
+		session.close();
 
 		// Return result of transformation
 		return new TransformerResponse((AbstractMapItem[]) items
@@ -172,13 +180,13 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 				new LegendItemsGroup[] { legend });
 	}
 
-	private DetailVoyageMapItem addItemToMap(Dictionary dict, List items,
+	private DetailVoyageMapItem addItemToMap(Session session, Dictionary dict, List items,
 			List rowList, int symbolNumber) {
 
 		// Get GIS port
-		Location gisLoc = Port.loadById(dict.getId().longValue());
+		Location gisLoc = Port.loadById(session, dict.getId().longValue());
 		if (gisLoc == null) {
-			gisLoc = Region.loadById(dict.getId().longValue());
+			gisLoc = Region.loadById(session, dict.getId().longValue());
 		}
 		if (gisLoc != null) {
 			// Prepare test item

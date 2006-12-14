@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesNation;
@@ -79,7 +83,10 @@ public class EstimatesLoader {
 		EstimateResponse response = this.getFunctValueQuery(position, positionFormula,
 				imported, true, prevWiggleRoom, 1);
 
-		Object[] voyages = response.qValue.executeQuery();
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		Object[] voyages = response.qValue.executeQuery(session);
 		System.out.println("exp direct: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 		double sum = 0.0;
 
@@ -102,11 +109,11 @@ public class EstimatesLoader {
 				estim.setNation(Nation.loadById(position.getNatimp()));
 				estim.setYear(new Integer(position.getYear()));
 				if (weights[j].expRegion != null) {
-					estim.setExpRegion(Region.loadById(weights[j].expRegion
+					estim.setExpRegion(Region.loadById(session, weights[j].expRegion
 						.longValue()));
 				}
 				if (weights[j].impRegion != null) {
-					estim.setImpRegion(Region.loadById(weights[j].impRegion
+					estim.setImpRegion(Region.loadById(session, weights[j].impRegion
 						.longValue()));
 				}
 				int index;
@@ -130,7 +137,8 @@ public class EstimatesLoader {
 				}
 				System.out.println("   Added: " + estim);
 			}
-
+			t.commit();
+			session.close();
 		}
 		return response.wiggleRoom;
 	}
@@ -139,7 +147,11 @@ public class EstimatesLoader {
 			String voyageAttribute, String positionCondition, boolean imported, int prevWiggleRoom) {
 		EstimateResponse response = this.getFixedValueQuery(position, voyageAttribute,
 				imported, prevWiggleRoom, Double.parseDouble(position.getExportFormula()));
-		Object[] voyages = response.qValue.executeQuery();
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		Object[] voyages = response.qValue.executeQuery(session);
 		System.out.println("exp simple: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 		// distribution of slaves...
 		if (voyages.length != 0) {
@@ -149,11 +161,11 @@ public class EstimatesLoader {
 				estim.setNation(Nation.loadById(position.getNatimp()));
 				estim.setYear(new Integer(position.getYear()));
 				if (weights[j].expRegion != null) {
-					estim.setExpRegion(Region.loadById(weights[j].expRegion
+					estim.setExpRegion(Region.loadById(session, weights[j].expRegion
 						.longValue()));
 				} 
 				if (weights[j].impRegion != null) {
-					estim.setImpRegion(Region.loadById(weights[j].impRegion
+					estim.setImpRegion(Region.loadById(session, weights[j].impRegion
 						.longValue()));
 				}
 				int index;
@@ -184,6 +196,8 @@ public class EstimatesLoader {
 				System.out.println("   Added: " + estim);
 			}
 		}
+		t.commit();
+		session.close();
 		return response.wiggleRoom;
 	}
 
@@ -214,6 +228,8 @@ public class EstimatesLoader {
 	private EstimateResponse getFixedValueQuery(EstimatesPosition position,
 			String field, boolean imported, int prevWiggleRoom, double slaves) {
 		// get wiggle room for year
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
 		
 		int yearWiggleRoom = 0;
 		if (prevWiggleRoom == -1) {
@@ -228,17 +244,17 @@ public class EstimatesLoader {
 			int[] portIds = position.getPort();
 			Port[] ports = new Port[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Port.loadById(portIds[j]);
+				ports[j] = Port.loadById(session, portIds[j]);
 			}
-			conditions.addCondition(Voyage.getAttribute("portdep"), ports,
+			conditions.addCondition(Voyage.getAttribute("e_portdep"), ports,
 					Conditions.OP_IN);
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
 			Region[] ports = new Region[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Region.loadById(portIds[j]);
+				ports[j] = Region.loadById(session, portIds[j]);
 			}
-			conditions.addCondition(Voyage.getAttribute("mjselimp"), ports,
+			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), ports,
 					Conditions.OP_IN);
 		}
 		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
@@ -248,7 +264,7 @@ public class EstimatesLoader {
 				position.getYear() - yearWiggleRoom),
 				Conditions.OP_GREATER_OR_EQUAL);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
-				Voyage.getAttribute("natinimp"),
+				Voyage.getAttribute("e_natinimp"),
 				Region.getAttribute("id") }), new Long(position
 				.getNatimp()), Conditions.OP_EQUALS);
 
@@ -256,21 +272,24 @@ public class EstimatesLoader {
 				new String[] { "v" }, conditions);
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
-						Voyage.getAttribute("majbyimp"),
+						Voyage.getAttribute("e_majbyimp"),
 						Region.getAttribute("id") }),
 				new SequenceAttribute(new Attribute[] {
-						Voyage.getAttribute("mjselimp"),
+						Voyage.getAttribute("e_mjselimp"),
 						Region.getAttribute("id") }) });
 
 		qValue.addPopulatedAttribute(new SequenceAttribute(
-				new Attribute[] { Voyage.getAttribute("majbyimp"),
+				new Attribute[] { Voyage.getAttribute("e_majbyimp"),
 						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new SequenceAttribute(
-				new Attribute[] { Voyage.getAttribute("mjselimp"),
+				new Attribute[] { Voyage.getAttribute("e_mjselimp"),
 						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Voyage.getAttribute(field) }));
 
+		t.commit();
+		session.close();
+		
 		EstimateResponse response = new EstimateResponse();
 		response.qValue = qValue;
 		response.wiggleRoom = yearWiggleRoom;
@@ -280,6 +299,9 @@ public class EstimatesLoader {
 	private EstimateResponse getFunctValueQuery(EstimatesPosition position,
 			String field, boolean imported, boolean useWiggleRoom, int prevWiggleRoom, double slaves) {
 		// prepare conditions
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
 		int yearWiggleRoom = 0;
 		if (useWiggleRoom) {
 			if (prevWiggleRoom != -1) {
@@ -294,17 +316,17 @@ public class EstimatesLoader {
 			int[] portIds = position.getPort();
 			Port[] ports = new Port[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Port.loadById(portIds[j]);
+				ports[j] = Port.loadById(session, portIds[j]);
 			}
-			conditions.addCondition(Voyage.getAttribute("portdep"), ports,
+			conditions.addCondition(Voyage.getAttribute("e_portdep"), ports,
 					Conditions.OP_IN);
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
 			Region[] ports = new Region[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Region.loadById(portIds[j]);
+				ports[j] = Region.loadById(session, portIds[j]);
 			}
-			conditions.addCondition(Voyage.getAttribute("mjselimp"), ports,
+			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), ports,
 					Conditions.OP_IN);
 		}
 		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
@@ -316,7 +338,7 @@ public class EstimatesLoader {
 		// conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 		// position.getYear()), Conditions.OP_EQUALS);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
-				Voyage.getAttribute("natinimp"),
+				Voyage.getAttribute("e_natinimp"),
 				EstimatesNation.getAttribute("remoteId") }), new Integer(position
 				.getNatimp()), Conditions.OP_EQUALS);
 
@@ -324,23 +346,26 @@ public class EstimatesLoader {
 				new String[] { "v" }, conditions);
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
-						Voyage.getAttribute("majbyimp"),
+						Voyage.getAttribute("e_majbyimp"),
 						Region.getAttribute("id") }),
 				new SequenceAttribute(new Attribute[] {
-						Voyage.getAttribute("mjselimp"),
+						Voyage.getAttribute("e_mjselimp"),
 						Region.getAttribute("id") }) });
 
 		qValue.addPopulatedAttribute(new SequenceAttribute(
-				new Attribute[] { Voyage.getAttribute("majbyimp"),
+				new Attribute[] { Voyage.getAttribute("e_majbyimp"),
 						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new SequenceAttribute(
-				new Attribute[] { Voyage.getAttribute("mjselimp"),
+				new Attribute[] { Voyage.getAttribute("e_mjselimp"),
 						Region.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { new FunctionAttribute("estimate",
 						new Attribute[] { Voyage.getAttribute("iid"),
 								new DirectValueAttribute(field) }) }));
 
+		t.commit();
+		session.close();
+		
 		EstimateResponse response = new EstimateResponse();
 		response.qValue = qValue;
 		response.wiggleRoom = yearWiggleRoom;
@@ -352,6 +377,9 @@ public class EstimatesLoader {
 		int currentWiggleRoom = -1;
 		int currentResults = 0;
 
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
 		int minVoyages = this.getMinNumberOfVoyages(slaves);
 
 		System.out.println("Minimal number of viyages in sample: " + minVoyages);
@@ -362,14 +390,14 @@ public class EstimatesLoader {
 			int[] portIds = position.getPort();
 			Port[] ports = new Port[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Port.loadById(portIds[j]);
+				ports[j] = Port.loadById(session, portIds[j]);
 			}
 			inP = ports;
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
 			Region[] ports = new Region[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Region.loadById(portIds[j]);
+				ports[j] = Region.loadById(session, portIds[j]);
 			}
 			inR = ports;
 		}
@@ -404,6 +432,9 @@ public class EstimatesLoader {
 			Object[] ret = qValue.executeQuery();
 			currentResults = ((Integer) ret[0]).intValue();
 		}
+		t.commit();
+		session.close();
+		
 		System.out
 				.println("   Computed year wiggle room: " + currentWiggleRoom);
 		return currentWiggleRoom;

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tas.util.HibernateConnector;
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
@@ -163,11 +168,13 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 	
 	private void executeMapQuery(List response, QueryValue query, boolean ports) {
 
-		Object[] voyages = query.executeQuery();
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Object[] voyages = query.executeQuery(session);
 		if (!ports) {
 			for (int i = 0; i < voyages.length; i++) {
 				if (((Object[])voyages[i])[0] != null) {
-					((Object[])voyages[i])[0] = Region.loadById(((Long)((Object[])voyages[i])[0]).longValue());
+					((Object[])voyages[i])[0] = Region.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
 				}
 			}
 		} else {
@@ -175,10 +182,12 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 				if (((Object[])voyages[i])[0] != null) {
 					//System.out.println("next");
 					//Port port = Port.loadById(((Long)((Object[])voyages[i])[0]).longValue());
-					((Object[])voyages[i])[0] = Port.loadById(((Long)((Object[])voyages[i])[0]).longValue());
+					((Object[])voyages[i])[0] = Port.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
 				}
 			}
 		}
+		t.commit();
+		session.close();
 		response.addAll(Arrays.asList(voyages));
 	}
 
