@@ -69,6 +69,7 @@
 		<many-to-one name="portret" column="portret" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="retrnreg" column="retrnreg" class="edu.emory.library.tast.dm.Region" />
 		
+		<property name="portdep" column="portdep" />
 		<property name="yearam" column="yearam" />
 		<property name="datedep" column="datedep" />
 		<property name="datebuy" column="datebuy" />
