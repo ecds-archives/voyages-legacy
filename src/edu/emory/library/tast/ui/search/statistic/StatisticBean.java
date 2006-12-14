@@ -30,8 +30,8 @@ public class StatisticBean {
 			prevConditions = searchBean.getSearchParameters().getConditions();
 			
 			Conditions conditions = (Conditions)prevConditions.clone();
-			conditions.addCondition(VoyageIndex.getRecent());
-			conditions.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+//			conditions.addCondition(VoyageIndex.getRecent());
+//			conditions.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 			
 			elements = new StatisticElement[8];
 			
@@ -66,11 +66,11 @@ public class StatisticBean {
 		cond2.addCondition(Voyage.getAttribute(attribute), null, Conditions.OP_IS_NOT);
 		
 		NumberFormat format = DecimalFormat.getInstance();
-		QueryValue query = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, 
-				new String[] {"vi", "v"}, 
+		QueryValue query = new QueryValue(new String[] {"Voyage"}, 
+				new String[] {"v"}, 
 				cond2);
 		query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute(attribute)}));
-		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageId")}));
+		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
 		Object[] results = query.executeQuery();
 		if (results.length > 0) {
 			Object[] row = (Object[])results[0];

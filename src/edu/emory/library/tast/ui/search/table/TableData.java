@@ -122,12 +122,16 @@ public class TableData {
 			if (attributes.length > 1) {
 
 				buffer.append("<table class=\"tooltip-class\">");
-				buffer.append("<tr<td><b>Compound attribute:</b></td><td><b>");
-				buffer.append(attribute.getUserLabelOrName()).append("</b></td>");
+				buffer.append("<tr><td><b>Compound attribute: ");
+				buffer.append(attribute.getUserLabelOrName()).append("</b></td></tr>");
 				for (int i = 0; i < attributes.length; i++) {
-					Attribute attribute = attributes[i];
-					buffer.append("<tr><td>").append(attribute.getUserLabelOrName()).append(":</td>");
-					buffer.append("<td>").append(data[i] == null ? "" : data[i]).append("</td></tr>");
+					if (data[i] == null || "".equals(data[i])) {
+						break;
+					}
+					//Attribute attribute = attributes[i];
+					//buffer.append("<tr><td>").append(attribute.getUserLabelOrName()).append(":</td>");
+					//buffer.append("<td>").append(data[i] == null ? "" : data[i]).append("</td></tr>");
+					buffer.append("<tr><td>").append(data[i]).append("</td></tr>");
 				}
 				buffer.append("</table>");
 			} else {

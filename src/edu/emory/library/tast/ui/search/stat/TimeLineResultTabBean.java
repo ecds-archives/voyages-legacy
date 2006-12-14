@@ -21,6 +21,8 @@ import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.ui.search.stat.charts.AbstractChartGenerator;
 import edu.emory.library.tast.ui.search.stat.charts.XYChartGenerator;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -60,7 +62,7 @@ public class TimeLineResultTabBean {
 	/**
 	 * Chosen attribute name.
 	 */
-	private String chosenAttribute = "slaximp";
+	private VisibleAttributeInterface chosenAttribute = VisibleAttribute.getAttribute("slaximp");
 
 	/**
 	 * Current search bean reference.
@@ -100,7 +102,7 @@ public class TimeLineResultTabBean {
 	/**
 	 * Avaialable voyage attributes.
 	 */
-	private Attribute[] attributes = Voyage.getAttributes();
+	private VisibleAttributeInterface[] attributes = VisibleAttribute.getAllAttributes();
 
 	/**
 	 * Default constructor.
@@ -118,8 +120,9 @@ public class TimeLineResultTabBean {
 		//Build list of numeric attributes.
 		this.voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
-			Attribute attr = attributes[i];
-			if ((attr instanceof NumericAttribute)) {
+			VisibleAttributeInterface attr = attributes[i];
+			if ((attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE)) &&
+					attr.getAttributes().length == 1) {
 				String outString = attr.toString();
 				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
 
@@ -162,12 +165,12 @@ public class TimeLineResultTabBean {
 			//Prepare query
 			Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
 			localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
-			localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+//			localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 
-			QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
 			qValue.setGroupBy(new Attribute[] { new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
 			qValue.addPopulatedAttribute(new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")}));
-			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenAggregate, new Attribute[] {Voyage.getAttribute(this.chosenAttribute)}));
+			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenAggregate, this.chosenAttribute.getAttributes()));
 			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
@@ -176,7 +179,7 @@ public class TimeLineResultTabBean {
 			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
 			generator.correctAndCompleteData(ret);
 			generator.addRowToDataSet(ret, new String[] { this.chosenAggregate + "("
-					+ Voyage.getAttribute(this.chosenAttribute) + ")" });
+					+ this.chosenAttribute.getUserLabelOrName() + ")" });
 			chart = generator.getChart("Time line graph", false);
 
 			//Put chart into session.
@@ -214,7 +217,7 @@ public class TimeLineResultTabBean {
 	 * @return
 	 */
 	public String getChosenAttribute() {
-		return chosenAttribute;
+		return chosenAttribute.getName();
 	}
 
 	/**
@@ -223,7 +226,7 @@ public class TimeLineResultTabBean {
 	 */
 	public void setChosenAttribute(String chosenAttribute) {
 		if (chosenAttribute != null && !chosenAttribute.equals(this.chosenAttribute)) {
-			this.chosenAttribute = chosenAttribute;
+			this.chosenAttribute = VisibleAttribute.getAttribute(chosenAttribute);
 			this.attributesChanged = true;
 		}
 

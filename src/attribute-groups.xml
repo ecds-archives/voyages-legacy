@@ -72,30 +72,19 @@
 	<group id="itinerary" userLabel="Itinerary">
 		<searchable-attributes>
 			<searchable-attribute id="ptdepimp"/>
-			<searchable-attribute id="deptregimp"/>
 			<searchable-attribute id="plac1tra"/>
 			<searchable-attribute id="plac2tra"/>
 			<searchable-attribute id="plac3tra"/>
 			<searchable-attribute id="mjbyptimp"/>
-			<searchable-attribute id="regem1"/>
-			<searchable-attribute id="regem2"/>
-			<searchable-attribute id="regem3"/>
-			<searchable-attribute id="majbyimp"/>
 			<searchable-attribute id="npafttra"/>
 			<searchable-attribute id="sla1port"/>
 			<searchable-attribute id="adpsale1"/>
 			<searchable-attribute id="adpsale2"/>
 			<searchable-attribute id="mjslptimp"/>
-			<searchable-attribute id="regdis1"/>
-			<searchable-attribute id="regdis2"/>
-			<searchable-attribute id="regdis3"/>
-			<searchable-attribute id="mjselimp"/>
 			<searchable-attribute id="portret"/>
-			<searchable-attribute id="retrnreg"/>
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="ptdepimp"/>
-			<table-attribute id="deptregimp"/>
 			<table-attribute id="plac1tra"/>
 			<table-attribute id="plac2tra"/>
 			<table-attribute id="plac3tra"/>

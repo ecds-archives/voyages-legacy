@@ -14,10 +14,12 @@ import org.w3c.dom.NodeList;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.UserCategories;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
 
 public class VisibleAttribute implements VisibleAttributeInterface {
@@ -32,7 +34,7 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 
 	private String name;
 
-	private UserCategory userCategory;
+	private UserCategories userCategory;
 
 	private String userLabel;
 
@@ -121,7 +123,12 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 		}
 		VisibleAttribute attr = new VisibleAttribute(name, tabs,
 				(Attribute[]) attributesList.toArray(new Attribute[] {}));
-		attr.setUserCategory(UserCategory.parse(category));
+		String[] cats = category.split(",");
+		UserCategories cat = new UserCategories();
+		for (int i = 0; i < cats.length; i++) {
+			cat.addTo(UserCategory.parse(cats[i]));
+		}
+		attr.setUserCategories(cat);
 		attr.setUserLabel(userLabel);
 		attr.setDate(date);
 		return attr;
@@ -144,14 +151,7 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 		this.attributes = attributes;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface#getUserCategory()
-	 */
-	public UserCategory getUserCategory() {
-		return userCategory;
-	}
-
-	public void setUserCategory(UserCategory category) {
+	public void setUserCategories(UserCategories category) {
 		this.userCategory = category;
 	}
 
@@ -204,15 +204,17 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 	 */
 	public String getType() {
 		if (this.attributes[0] instanceof DateAttribute) {
-			return "DateAttribute";
+			return DATE_ATTRIBUTE;
 		} else if (this.attributes[0] instanceof StringAttribute) {
-			return "StringAttribute";
+			return STRING_ATTRIBUTE;
 		} else if (this.attributes[0] instanceof DictionaryAttribute) {
-			return "DictionaryAttribute";
+			return DICTIONARY_ATTRIBUTE;
 		} else if (this.attributes[0] instanceof NumericAttribute) {
-			return "NumericAttribute";
+			return NUMERIC_ATTRIBUTE;
+		} else if (this.attributes[0] instanceof BooleanAttribute) {
+			return BOOLEAN_ATTRIBUTE;
 		} else {
-			throw new RuntimeException("Not supported attribute type!");
+			throw new RuntimeException("Not supported attribute type: " + this.attributes[0].getClass());
 		}
 	}
 
@@ -249,6 +251,10 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 
 	public void setDate(boolean date) {
 		this.date = date;
+	}
+
+	public boolean isInUserCategory(UserCategory category) {
+		return this.userCategory.isIn(category);
 	}
 
 }

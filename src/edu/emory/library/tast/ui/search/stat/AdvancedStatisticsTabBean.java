@@ -19,6 +19,8 @@ import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.stat.charts.AbstractChartGenerator;
 import edu.emory.library.tast.ui.search.table.ClickEvent;
 import edu.emory.library.tast.ui.search.tabscommon.MemorizedAction;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -63,7 +65,7 @@ public class AdvancedStatisticsTabBean {
 		/**
 		 * Attribute of series.
 		 */
-		public String attribute;
+		public VisibleAttributeInterface attribute;
 
 		/**
 		 * Used aggregate.
@@ -78,7 +80,7 @@ public class AdvancedStatisticsTabBean {
 		 * @param aggregate
 		 *            aggregate function
 		 */
-		public SeriesItem(String attribute, String aggregate) {
+		public SeriesItem(VisibleAttributeInterface attribute, String aggregate) {
 			this.attribute = attribute;
 			this.aggregate = aggregate;
 
@@ -103,7 +105,7 @@ public class AdvancedStatisticsTabBean {
 		public String toString() {
 			StringBuffer buffer = new StringBuffer();
 			if (this.aggregate != null) {
-				return buffer.append(this.aggregate).append("(").append(Voyage.getAttribute(this.attribute))
+				return buffer.append(this.aggregate).append("(").append(this.attribute.getUserLabelOrName())
 						.append(")").toString();
 			} else {
 				return buffer.append(this.attribute).toString();
@@ -141,7 +143,7 @@ public class AdvancedStatisticsTabBean {
 	/**
 	 * Current attribute on y axis (when adding to series list).
 	 */
-	private String yaxis;
+	private VisibleAttributeInterface yaxis;
 
 	/**
 	 * Currently selected aggregate function (when adding new series).
@@ -196,7 +198,7 @@ public class AdvancedStatisticsTabBean {
 	/**
 	 * Avaialble attributes of Voyage.
 	 */
-	private Attribute[] attributes = prepareAttributes();
+	private VisibleAttributeInterface[] attributes = prepareAttributes();
 
 	/**
 	 * Actions that will be performed when rollback is required by user.
@@ -250,8 +252,8 @@ public class AdvancedStatisticsTabBean {
 	 * 
 	 * @return array of Attribute objects.
 	 */
-	private Attribute[] prepareAttributes() {
-		return Voyage.getAttributes();
+	private VisibleAttributeInterface[] prepareAttributes() {
+		return VisibleAttribute.getAllAttributes();
 	}
 
 	/**
@@ -272,9 +274,9 @@ public class AdvancedStatisticsTabBean {
 		localCondition.addCondition(Voyage.getAttribute(this.xaxis), null, Conditions.OP_IS_NOT);
 
 		// We will need join condition (to join VoyageIndex and Voyage).
-		localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+		//localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 
-		QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCondition);
+		QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
 
 		// Get xAxis - consider attribute type (Dictionary, Number...)
 		Attribute xAxis = generator.getXAxisSelectOperator(Voyage.getAttribute(this.xaxis));
@@ -289,9 +291,11 @@ public class AdvancedStatisticsTabBean {
 		if (this.order.equals("1")) {
 			qValue.setOrderBy(new Attribute[] { xAxis });
 			qValue.setOrder(QueryValue.ORDER_ASC);
+			qValue.setGroupBy(new Attribute[] { xAxis });
 		} else if (this.order.equals("2")) {
 			qValue.setOrderBy(new Attribute[] { xAxis });
 			qValue.setOrder(QueryValue.ORDER_DESC);
+			qValue.setGroupBy(new Attribute[] { xAxis });
 		}
 
 		// Add series of chart to query
@@ -299,9 +303,9 @@ public class AdvancedStatisticsTabBean {
 			AdvancedStatisticsTabBean.SeriesItem element = (AdvancedStatisticsTabBean.SeriesItem) iter.next();
 			Attribute out = null;
 			if (element.aggregate != null) {
-				out = new FunctionAttribute(element.aggregate, new Attribute[] {Voyage.getAttribute(element.attribute)});
+				out = new FunctionAttribute(element.aggregate, element.attribute.getAttributes());
 			} else {
-				out = Voyage.getAttribute(element.attribute);
+				out = element.attribute.getAttributes()[0];
 			}
 			qValue.addPopulatedAttribute(out);
 		}
@@ -368,15 +372,14 @@ public class AdvancedStatisticsTabBean {
 	 */
 	public String addSeries() {
 		// Current series and aggregate to add
-		String series = this.yaxis;
 		String aggregate = this.selectedAggregate;
 		SeriesItem tmpSeries;
 
 		// Create appropriate series item
 		if (this.aggregate.booleanValue()) {
-			tmpSeries = new SeriesItem(series, aggregate);
+			tmpSeries = new SeriesItem(this.yaxis, aggregate);
 		} else {
-			tmpSeries = new SeriesItem(series, null);
+			tmpSeries = new SeriesItem(this.yaxis, null);
 		}
 
 		// Checks whether series already present
@@ -709,6 +712,9 @@ public class AdvancedStatisticsTabBean {
 		ArrayList list = new ArrayList();
 		// Look through attributes
 		for (int i = 0; i < attributes.length; i++) {
+			if (attributes[i].getAttributes().length != 1) {
+				continue;
+			}
 			boolean ok = false;
 			// if (this.selectedChart != null && this.selectedChart.equals("0"))
 			// {
@@ -724,7 +730,8 @@ public class AdvancedStatisticsTabBean {
 			ok = true;
 			if (ok) {
 				String outString = null;
-				if (attributes[i].getUserLabel() == null || attributes[i].getUserLabel().equals("")) {
+				if (attributes[i].getUserLabel() == null || 
+						attributes[i].getUserLabel().equals("")) {
 					outString = attributes[i].getName();
 				} else {
 					outString = attributes[i].getUserLabel();
@@ -748,8 +755,9 @@ public class AdvancedStatisticsTabBean {
 
 		voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
-			Attribute attr = attributes[i];
-			if (attr instanceof NumericAttribute) {
+			VisibleAttributeInterface attr = attributes[i];
+			if (attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE) &&
+					attr.getAttributes().length == 1) {
 				String outString = attr.toString();
 				// if (attr.getUserLabel() == null
 				// || attr.getUserLabel().equals("")) {
@@ -758,7 +766,7 @@ public class AdvancedStatisticsTabBean {
 				// outString = attr.getUserLabel();
 				// }
 
-				voyageAttributes.add(new ComparableSelectItem(attributes[i].getName(), outString));
+				voyageAttributes.add(new ComparableSelectItem(attributes[i].getAttributes()[0].getName(), outString));
 
 			}
 		}
@@ -832,7 +840,11 @@ public class AdvancedStatisticsTabBean {
 	 * @return y axis attribute
 	 */
 	public String getYaxis() {
-		return yaxis;
+		if (yaxis == null) {
+			return null;
+		} else {
+			return yaxis.getName();
+		}
 	}
 
 	/**
@@ -842,7 +854,7 @@ public class AdvancedStatisticsTabBean {
 	 *            y axis attribute
 	 */
 	public void setYaxis(String yaxis) {
-		this.yaxis = yaxis;
+		this.yaxis = VisibleAttribute.getAttribute(yaxis);
 	}
 
 	/**

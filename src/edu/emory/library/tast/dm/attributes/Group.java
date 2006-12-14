@@ -98,11 +98,11 @@ public class Group {
 
 			for (int j = 0; j < visibleAttributesAll.length; j++) {
 				VisibleAttributeInterface attr = visibleAttributesAll[j];
-				if (attr != null && attr.getUserCategory().equals(category))
+				if (attr != null && attr.isInUserCategory(category))
 					selected.add(attr);
 			}
 
-			VisibleAttributeInterface[] selectedArr = new VisibleAttributeInterface[selected
+			VisibleAttribute[] selectedArr = new VisibleAttribute[selected
 					.size()];
 			selected.toArray(selectedArr);
 

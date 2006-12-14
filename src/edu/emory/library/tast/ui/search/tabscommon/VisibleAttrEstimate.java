@@ -259,4 +259,9 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 //		return null;
 //	}
 
+	public boolean isInUserCategory(UserCategory category) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }
