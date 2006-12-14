@@ -14,7 +14,7 @@
 		</id>
 
 		<property name="name" column="name" />
-		<property name="order" column="order" />
+		<property name="order" column="order_num" />
 		
 		<many-to-one name="area" column="area_id" />
 

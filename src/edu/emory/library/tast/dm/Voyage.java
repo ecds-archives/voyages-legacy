@@ -716,10 +716,10 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setDeptregimp(Region obj) {
 		this.values.put("deptregimp", obj);
 	}
-	public void setE_majbyimp(Region obj) {
+	public void setE_majbyimp(EstimatesExportRegion obj) {
 		this.values.put("e_majbyimp", obj);
 	}
-	public void setE_mjselimp(Region obj) {
+	public void setE_mjselimp(EstimatesImportRegion obj) {
 		this.values.put("e_mjselimp", obj);
 	}
 	public void setE_natinimp(EstimatesNation obj) {
@@ -762,11 +762,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Region getDeptregimp() {
 		return (Region)this.values.get("deptregimp");
 	}
-	public Region getE_majbyimp() {
-		return (Region)this.values.get("e_majbyimp");
+	public EstimatesExportRegion getE_majbyimp() {
+		return (EstimatesExportRegion)this.values.get("e_majbyimp");
 	}
-	public Region getE_mjselimp() {
-		return (Region)this.values.get("e_mjselimp");
+	public EstimatesImportRegion getE_mjselimp() {
+		return (EstimatesImportRegion)this.values.get("e_mjselimp");
 	}
 	public EstimatesNation getE_natinimp() {
 		return (EstimatesNation)this.values.get("e_natinimp");

@@ -1,7 +1,7 @@
 package edu.emory.library.tast.dm;
 
 
-public abstract class Location extends Dictionary
+public abstract class Location extends DictionaryOrdered
 {
 	
 	private double latitude;

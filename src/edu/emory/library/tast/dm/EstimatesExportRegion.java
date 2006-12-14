@@ -31,9 +31,9 @@ public class EstimatesExportRegion extends DictionaryOrdered
 		return Dictionary.loadAll(EstimatesExportRegion.class, sess, "order");
 	}
 	
-	public static Area loadById(Session sess, long portId)
+	public static EstimatesExportRegion loadById(Session sess, long portId)
 	{
-		return (Area) Dictionary.loadById(EstimatesExportRegion.class, sess, portId);
+		return (EstimatesExportRegion) Dictionary.loadById(EstimatesExportRegion.class, sess, portId);
 	}
 
 }

@@ -204,7 +204,6 @@ public class Import
 
 			long t1 = System.currentTimeMillis();
 
-
 			AbstractDescriptiveObject obj = objectFactory.newInstance();
 			updateValues(sess, obj, voyageRecord, ++recordNo);
 			
