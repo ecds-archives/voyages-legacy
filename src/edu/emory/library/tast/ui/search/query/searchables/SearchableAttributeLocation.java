@@ -46,7 +46,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 	public QueryConditionListItem[] getAvailableItems()
 	{
 		
-		List regions = Region.loadAllRegions();
+		List regions = Region.loadAll(null);
 		QueryConditionListItem[] regionItems = new QueryConditionListItem[regions.size()];
 		
 		int i = 0;

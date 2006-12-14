@@ -160,6 +160,8 @@ public class Searchables
 				}
 
 			}
+			
+			/*
 
 			// location -> read list of locations
 			else if ("location".equals(type))
@@ -186,6 +188,8 @@ public class Searchables
 				}
 				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCats, locs);
 			}
+			
+			*/
 			
 			// add it to our collection
 			if (searchableAttribute != null)
