@@ -67,9 +67,10 @@
 		<many-to-one name="regdis3" column="regdis3" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="mjselimp" column="mjselimp" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="portret" column="portret" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="portdep" column="portdep" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="retrnreg" column="retrnreg" class="edu.emory.library.tast.dm.Region" />
 		
-		<property name="portdep" column="portdep" />
+		
 		<property name="yearam" column="yearam" />
 		<property name="datedep" column="datedep" />
 		<property name="datebuy" column="datebuy" />

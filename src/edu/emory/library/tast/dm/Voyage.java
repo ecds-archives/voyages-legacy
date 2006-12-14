@@ -727,7 +727,13 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setE_natinimp(EstimatesNation obj) {
 		this.values.put("e_natinimp", obj);
 	}
+	public void setPortdep(Port obj) {
+		this.values.put("portdep", obj);
+	}
 	
+	public Port getPortdep() {
+		return (Port) this.values.get("portdep");
+	}
 	public Port getSla1port() {
 		return (Port) this.values.get("sla1port");
 	}
