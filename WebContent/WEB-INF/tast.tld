@@ -633,4 +633,21 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>recordEditor</name>
+		<tag-class>
+			edu.emory.library.tast.reditor.EditorTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>schema</name>
+		</attribute>
+		<attribute>
+			<name>values</name>
+		</attribute>
+	</tag>
+
 </taglib>

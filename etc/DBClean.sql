@@ -1,8 +1,5 @@
--- super fast
-truncate voyage_slaves, voyages_index, voyages, slaves, estimates;
+TRUNCATE voyage_slaves, voyages_index, voyages, slaves, estimates;
 
--- super slow
-delete from voyage_slaves;
-delete from voyages_index;
-delete from voyages;
-delete from slaves;
+TRUNCATE voyages, slaves, voyage_slaves, voyages_index, areas, regions, ports, ports_images, regions_images;
+
+TRUNCATE voyages, voyage_slaves, voyages_index, estimates, estimates_export_regions, estimates_import_areas, estimates_import_regions, estimates_nations;

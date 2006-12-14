@@ -20,12 +20,17 @@ public abstract class FieldValue
 		return name;
 	}
 
+	public static FieldValue createFieldValue(FieldSchema fieldSchema)
+	{
+		return FieldValue.createFieldValue(fieldSchema.getName(), fieldSchema.getType());
+	}
+
 	public static FieldValue createFieldValue(FieldSchemaState fieldState)
 	{
 		return FieldValue.createFieldValue(fieldState.getName(), fieldState.getType());
 	}
 
-	public static FieldValue createFieldValue(String type, String name)
+	public static FieldValue createFieldValue(String name, String type)
 	{
 		if (type == null)
 		{
@@ -45,7 +50,7 @@ public abstract class FieldValue
 		}
 		else
 		{
-			throw new RuntimeException("unsupported field type");
+			throw new RuntimeException("unsupported field type '" + type + "' for '" + name + "'");
 		}
 	}
 	

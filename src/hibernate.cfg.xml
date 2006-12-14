@@ -37,19 +37,26 @@
         <!-- Drop and re-create the database schema on startup -->
         <!--property name="hbm2ddl.auto">create</property-->
 
+		<mapping resource="edu/emory/library/tast/dm/Configuration.hbm.xml"/>
+
         <mapping resource="edu/emory/library/tast/dm/Voyage.hbm.xml"/>
         <mapping resource="edu/emory/library/tast/dm/VoyageIndex.hbm.xml"/>
-		<mapping resource="edu/emory/library/tast/dm/Dictionary.hbm.xml"/>
-		<mapping resource="edu/emory/library/tast/dm/Configuration.hbm.xml"/>
+        
+		<mapping resource="edu/emory/library/tast/dm/Nation.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Area.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Region.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Port.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/OtherDictionaries"/>
+		
 		<mapping resource="edu/emory/library/tast/dm/Image.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Person.hbm.xml"/>
+
 		<mapping resource="edu/emory/library/tast/dm/Estimate.hbm.xml"/>
-		<mapping resource="edu/emory/library/tast/dm/Nation.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/EstimatesExportRegion.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/EstimatesImportArea.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/EstimatesImportRegion.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/EstimatesNation.hbm.xml"/>
-		
+
     </session-factory>
 
 </hibernate-configuration>

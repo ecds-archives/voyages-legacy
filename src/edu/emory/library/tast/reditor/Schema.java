@@ -18,7 +18,7 @@ public class Schema
 	
 	public void addField(FieldSchema field)
 	{
-		fields.add(fields);
+		fields.add(field);
 	}
 	
 	public void registerList(String id, ListItem[] items)

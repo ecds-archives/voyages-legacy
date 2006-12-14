@@ -70,7 +70,6 @@
 		<many-to-one name="portdep" column="portdep" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="retrnreg" column="retrnreg" class="edu.emory.library.tast.dm.Region" />
 		
-		
 		<property name="yearam" column="yearam" />
 		<property name="datedep" column="datedep" />
 		<property name="datebuy" column="datebuy" />
@@ -128,9 +127,8 @@
 		<property name="sourcer" column="sourcer" />
 		
 		<many-to-one name="e_natinimp" column="e_natinimp" class="edu.emory.library.tast.dm.EstimatesNation" />
-		<many-to-one name="e_majbyimp" column="e_majbyimp" class="edu.emory.library.tast.dm.Region" />
-		<many-to-one name="e_mjselimp1" column="e_mjselimp1" class="edu.emory.library.tast.dm.Region" />
-		<many-to-one name="e_mjselimp" column="e_mjselimp" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="e_majbyimp" column="e_majbyimp" class="edu.emory.library.tast.dm.EstimatesExportRegion" />
+		<many-to-one name="e_mjselimp" column="e_mjselimp" class="edu.emory.library.tast.dm.EstimatesImportRegion" />
 
 	</class>
 </hibernate-mapping>

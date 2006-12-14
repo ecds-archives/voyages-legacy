@@ -39,7 +39,7 @@ public class EditorComponent extends UIComponentBase
 	{
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
-		schemaFromState = (FieldSchemaState[]) restoreAttachedState(context, state);
+		schemaFromState = (FieldSchemaState[]) restoreAttachedState(context, values[1]);
 	}
 	
 	public void decode(FacesContext context)
@@ -69,13 +69,14 @@ public class EditorComponent extends UIComponentBase
 		// get schema and values from a bean
 		schema = getSchema();
 		values = getValues();
+		if (values == null) values = new Values(); 
 		
 		// component id
 		String mainId = getClientId(context);
 		
 		// JS registration
 		StringBuffer regJS = new StringBuffer();
-		regJS.append("RecordEditorGlobals.registeRecordEditor(new RecordEditor(");
+		regJS.append("RecordEditorGlobals.registerEditor(new RecordEditor(");
 		regJS.append("'").append(mainId).append("', ");
 		regJS.append("'").append(form.getClientId(context)).append("', ");
 		
@@ -110,7 +111,7 @@ public class EditorComponent extends UIComponentBase
 
 		// start main table
 		writer.startElement("table", this);
-		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("border", "1", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("class", "message-bar", null);
@@ -122,6 +123,7 @@ public class EditorComponent extends UIComponentBase
 			// schema and value
 			FieldSchema fieldSchema = (FieldSchema) iter.next();
 			FieldValue fieldValue = values.getValueFor(fieldSchema.getName());
+			if (fieldValue == null) fieldValue = FieldValue.createFieldValue(fieldSchema);
 
 			writer.startElement("tr", this);
 

@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.EstimatesExportRegionAttribute;
+import edu.emory.library.tast.dm.attributes.EstimatesImportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesNationAttribute;
 import edu.emory.library.tast.dm.attributes.FateAttribute;
 import edu.emory.library.tast.dm.attributes.FateOwnerAttribute;
@@ -154,9 +156,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new StringAttribute("sourceq", "Voyage", "sourceq"));
 		attributes.add(new StringAttribute("sourcer", "Voyage", "sourcer"));
 		attributes.add(new EstimatesNationAttribute("e_natinimp", "Voyage", "e_natinimp"));
-		attributes.add(new RegionAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
-		attributes.add(new RegionAttribute("e_mjselimp1", "Voyage", "e_mjselimp1"));
-		attributes.add(new RegionAttribute("e_mjselimp", "Voyage", "e_mjselimp")); 
+		attributes.add(new EstimatesExportRegionAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
+		attributes.add(new EstimatesImportRegionAttribute("e_mjselimp", "Voyage", "e_mjselimp"));
 	}
 	
 	/**
@@ -721,9 +722,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setE_mjselimp(Region obj) {
 		this.values.put("e_mjselimp", obj);
 	}
-	public void setE_mjselimp1(Region obj) {
-		this.values.put("e_mjselimp1", obj);
-	}
 	public void setE_natinimp(EstimatesNation obj) {
 		this.values.put("e_natinimp", obj);
 	}
@@ -769,9 +767,6 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	public Region getE_mjselimp() {
 		return (Region)this.values.get("e_mjselimp");
-	}
-	public Region getE_mjselimp1() {
-		return (Region)this.values.get("e_mjselimp1");
 	}
 	public EstimatesNation getE_natinimp() {
 		return (EstimatesNation)this.values.get("e_natinimp");
