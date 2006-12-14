@@ -60,6 +60,11 @@ public abstract class Dictionary
 	
 	public static List loadAll(Class clazz, Session sess)
 	{
+		return loadAll(clazz, sess, "name");
+	}
+	
+	public static List loadAll(Class clazz, Session sess, String orderBy)
+	{
 
 		boolean sessionProvided = sess != null;
 		Transaction transaction = null;
@@ -69,7 +74,7 @@ public abstract class Dictionary
 			transaction = sess.beginTransaction();
 		}
 		
-		List rigs = sess.createCriteria(clazz).addOrder(Order.asc("name")).list();
+		List rigs = sess.createCriteria(clazz).addOrder(Order.asc(orderBy)).list();
 		
 		if (!sessionProvided)
 		{
@@ -80,7 +85,7 @@ public abstract class Dictionary
 		return rigs;
 
 	}
-	
+
 	public static Object loadById(Class clazz, Session sess, long id)
 	{
 

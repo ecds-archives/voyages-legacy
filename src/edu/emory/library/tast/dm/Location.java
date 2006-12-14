@@ -4,8 +4,6 @@ package edu.emory.library.tast.dm;
 public abstract class Location extends Dictionary
 {
 	
-	private double x;
-	private double y;
 	private double latitude;
 	private double longitude;
 
@@ -31,22 +29,22 @@ public abstract class Location extends Dictionary
 	
 	public double getX()
 	{
-		return x;
+		return latitude;
 	}
 	
 	public void setX(double x)
 	{
-		this.x = x;
+		this.latitude = x;
 	}
 	
 	public double getY()
 	{
-		return y;
+		return longitude;
 	}
 	
 	public void setY(double y)
 	{
-		this.y = y;
+		this.longitude = y;
 	}
 
 }

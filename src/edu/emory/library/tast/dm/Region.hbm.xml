@@ -13,8 +13,6 @@
 		</id>
 		
 		<property name="name" />
-		<property name="y" column="latitude" insert="false" update="false"/>
-		<property name="x" column="longitude" insert="false" update="false"/>
 		<property name="latitude" />
 		<property name="longitude" />
 		<property name="order" column="order_num" />

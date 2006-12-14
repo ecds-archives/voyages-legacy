@@ -11,22 +11,19 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class Area extends Location
+public class EstimatesImportArea extends DictionaryOrdered
 {
-	
+
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "Area", NumericAttribute.TYPE_LONG));
-		attributes.put("name", new StringAttribute("name", "Area"));
-		attributes.put("latitude", new NumericAttribute("latitude", "Area", NumericAttribute.TYPE_FLOAT));
-		attributes.put("longitude", new NumericAttribute("longitude", "Area", NumericAttribute.TYPE_FLOAT));
-		attributes.put("regions", new NumericAttribute("regions", "Area", NumericAttribute.TYPE_LONG));
-		attributes.put("order", new NumericAttribute("order", "Area", NumericAttribute.TYPE_INTEGER));
+		attributes.put("id", new NumericAttribute("id", "EstimatesImportArea", NumericAttribute.TYPE_LONG));
+		attributes.put("name", new StringAttribute("name", "EstimatesImportArea"));
+		attributes.put("order", new NumericAttribute("name", "EstimatesImportArea", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private Set regions;
-
+	
 	public Set getRegions()
 	{
 		return regions;
@@ -36,7 +33,7 @@ public class Area extends Location
 	{
 		this.regions = regions;
 	}
-
+	
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
@@ -44,12 +41,12 @@ public class Area extends Location
 	
 	public static List loadAll(Session sess)
 	{
-		return Dictionary.loadAll(Area.class, sess);
+		return Dictionary.loadAll(EstimatesImportArea.class, sess, "order");
 	}
 	
 	public static Area loadById(Session sess, long portId)
 	{
-		return (Area) Dictionary.loadById(Area.class, sess, portId);
+		return (Area) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
 	}
 
 }

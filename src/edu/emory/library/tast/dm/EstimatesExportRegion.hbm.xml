@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
-	<class name="edu.emory.library.tast.dm.Port" table="ports">
+<hibernate-mapping auto-import="false">
+
+	<class name="edu.emory.library.tast.dm.EstimatesExportRegion" table="estimates_export_regions">
 		
 		<!-- 
 		<cache usage="read-write" />
@@ -12,11 +13,8 @@
 			<generator class="native"/>
 		</id>
 		
-		<property name="name" />
-		<property name="latitude" />
-		<property name="longitude" />
+		<property name="name" column="name" />
 
-		<many-to-one name="region" column="region_id" />
-		
 	</class>
+
 </hibernate-mapping>

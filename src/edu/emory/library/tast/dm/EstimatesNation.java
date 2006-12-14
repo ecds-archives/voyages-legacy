@@ -16,7 +16,7 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
-public class EstimatesNation extends Dictionary
+public class EstimatesNation extends DictionaryOrdered
 {
 
 	private static Map attributes = new HashMap();
@@ -24,20 +24,9 @@ public class EstimatesNation extends Dictionary
 	{
 		attributes.put("id", new NumericAttribute("id", "EstimatesNation", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesNation"));
+		attributes.put("order", new NumericAttribute("order", "EstimatesNation", NumericAttribute.TYPE_INTEGER));
 	}
 	
-	private int order;
-	
-	public int getOrder()
-	{
-		return order;
-	}
-
-	public void setOrder(int order)
-	{
-		this.order = order;
-	}
-
 	public static List loadAllNations()
 	{
 		Session sess = HibernateUtil.getSession();
