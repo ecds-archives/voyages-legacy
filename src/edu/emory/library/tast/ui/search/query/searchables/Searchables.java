@@ -170,16 +170,22 @@ public class Searchables
 					Node xmlLoc = xmlLocs.item(j);
 
 					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
-					String region = xmlLoc.getAttributes().getNamedItem("region").getNodeValue();
-
 					Attribute attrPort = Voyage.getAttribute(port);
-					Attribute attrRegion = Voyage.getAttribute(region);
-					
-					if (!(attrPort instanceof PortAttribute) || !(attrRegion instanceof RegionAttribute))
-						throw new RuntimeException("searchable attribute '" + id + "' invalid location");
+					if (!(attrPort instanceof PortAttribute))
+						throw new RuntimeException("searchable attribute '" + id + "' invalid port attribute");
+
+					Node xmlRegion = xmlLoc.getAttributes().getNamedItem("region");
+					Attribute attrRegion = null;
+					if (xmlRegion != null)
+					{
+						String region = xmlRegion.getNodeValue();
+						attrRegion = Voyage.getAttribute(region);
+						if (!(attrRegion instanceof RegionAttribute))
+							throw new RuntimeException("searchable attribute '" + id + "' invalid region attribute");
+					}
 					
 					locs[j] = new Location(attrPort, attrRegion);
-					locs[j] = new Location(null, null);
+
 				}
 				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCats, locs);
 			}
