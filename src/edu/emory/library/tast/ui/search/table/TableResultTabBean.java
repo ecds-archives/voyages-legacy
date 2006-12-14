@@ -198,7 +198,7 @@ public class TableResultTabBean {
 			needQuery = true;
 		}
 		if (this.searchBean.getSearchParameters().getConditions() != null && needQuery) {
-			this.queryAndFillInData(new Conditions(), this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
+			this.queryAndFillInData(null, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
 			this.setNumberOfResults();
 			needQuery = false;
 		}
@@ -221,7 +221,9 @@ public class TableResultTabBean {
 
 		// Build condition
 		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
-		//localCond.addCondition(subCondition);
+		if (subCondition != null) {
+			localCond.addCondition(subCondition);
+		}
 		//localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 		
 		// Build query
