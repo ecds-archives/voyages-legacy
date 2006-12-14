@@ -9,6 +9,11 @@ import javax.faces.context.ResponseWriter;
 public class FieldSchemaCheckbox extends FieldSchema
 {
 
+	public String getType()
+	{
+		return FieldValueCheckbox.TYPE;
+	}
+
 	public FieldSchemaCheckbox(String name, String description)
 	{
 		super(name, description);

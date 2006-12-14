@@ -2,6 +2,7 @@ package edu.emory.library.tast.reditor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,5 +35,22 @@ public class Schema
 	{
 		return (ListItem[]) lists.get(id);
 	}
-
+	
+	public Map getLists()
+	{
+		return lists;
+	}
+	
+	public FieldSchemaState[] getSerializableState()
+	{
+		FieldSchemaState[] names = new FieldSchemaState[fields.size()];
+		int i = 0;
+		for (Iterator iter = fields.iterator(); iter.hasNext();)
+		{
+			FieldSchema field = (FieldSchema) iter.next();
+			names[i++] = new FieldSchemaState(field);
+		}
+		return names;
+	}
+	
 }

@@ -13,6 +13,11 @@ public class FieldSchemaTextbox extends FieldSchema
 	{
 		super(name, description);
 	}
+	
+	public String getType()
+	{
+		return FieldValueText.TYPE;
+	}
 
 	public void encode(EditorComponent editor, UIForm form, FacesContext context, Schema schema, FieldValue value) throws IOException
 	{

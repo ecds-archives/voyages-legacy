@@ -20,6 +20,11 @@ public abstract class FieldValue
 		return name;
 	}
 
+	public static FieldValue createFieldValue(FieldSchemaState fieldState)
+	{
+		return FieldValue.createFieldValue(fieldState.getName(), fieldState.getType());
+	}
+
 	public static FieldValue createFieldValue(String type, String name)
 	{
 		if (type == null)

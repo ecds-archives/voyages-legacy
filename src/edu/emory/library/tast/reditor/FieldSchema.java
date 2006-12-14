@@ -13,7 +13,8 @@ public abstract class FieldSchema
 	private String label;
 	
 	public abstract void encode(EditorComponent editor, UIForm form, FacesContext context, Schema schema, FieldValue value) throws IOException;
-
+	public abstract String getType();
+	
 	public FieldSchema(String name, String label)
 	{
 		this.name = name;
