@@ -1,10 +1,12 @@
 package edu.emory.library.tast.estimates.table;
 
+
 public class Label
 {
 	
 	private String text;
 	private Label[] breakdown;
+	private int noOfChildren;
 	
 	public Label(String text)
 	{
@@ -35,6 +37,24 @@ public class Label
 	public void setText(String text)
 	{
 		this.text = text;
+	}
+	
+	public int getNoOfChildren()
+	{
+		return noOfChildren;
+	}
+
+	public int calculateNoOfChildren()
+	{
+		noOfChildren = 1;
+		if (this.breakdown != null)
+		{
+			for (int i = 0; i < breakdown.length; i++)
+			{
+				noOfChildren += breakdown[i].calculateNoOfChildren();
+			}
+		}
+		return noOfChildren;
 	}
 
 }

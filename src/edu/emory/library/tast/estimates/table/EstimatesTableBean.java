@@ -67,6 +67,48 @@ public class EstimatesTableBean
 		}
 	}
 	
+	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx)
+	{
+		
+		SimpleTableCell cell = new SimpleTableCell(label.getText());
+		cell.setColspan(label.getNoOfChildren());
+		cell.setCssClass(CSS_CLASS_TD_LABEL);
+		table[rowIdx][colIdx] = cell;
+		
+		if (label.hasBreakdown())
+		{
+			int colOffset = 0;
+			Label[] breakdown = label.getBreakdown();
+			for (int j = 0; j < breakdown.length; j++)
+			{
+				addColumnLabel(table, breakdown[j], rowIdx + 1, colIdx + colOffset);
+				colOffset += 2*breakdown[j].getNoOfChildren();
+			}
+		}
+
+	}
+	
+	private void addRowLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx)
+	{
+		
+		SimpleTableCell cell = new SimpleTableCell(label.getText());
+		cell.setRowspan(label.getNoOfChildren());
+		cell.setCssClass(CSS_CLASS_TD_LABEL);
+		table[rowIdx][colIdx] = cell;
+		
+		if (label.hasBreakdown())
+		{
+			int rowOffset = 0;
+			Label[] breakdown = label.getBreakdown();
+			for (int i = 0; i < breakdown.length; i++)
+			{
+				addRowLabel(table, breakdown[i], rowIdx + rowOffset, colIdx + 1);
+				rowOffset += breakdown[i].getNoOfChildren();
+			}
+		}
+
+	}
+
 	private void generateTableIfNecessary()
 	{
 		
@@ -142,44 +184,61 @@ public class EstimatesTableBean
 		transaction.commit();
 		sess.close();
 		
-		// allocate table
+		// dimensions of the table
 		int rowCount = rowGrouper.getLeaveLabelsCount();
 		int colCount = colGrouper.getLeaveLabelsCount();
-		table = new SimpleTableCell[rowCount + 3][];
+		int headerTopRowsCount = colGrouper.getBreakdownDepth();
+		int headerLeftColsCount = rowGrouper.getBreakdownDepth();
+		int totalRows = headerLeftColsCount + 1 + rowCount + 1;
+		int totalCols = headerLeftColsCount + 2*colCount + 2;
 		
-		// first two rows with titles
-		table[0] = new SimpleTableCell[1 + colCount + 1];
-		table[1] = new SimpleTableCell[1 + 2*colCount + 2];
+		// create table
+		table = new SimpleTableCell[totalRows][totalCols];
+
+		// (0,0) cell
+		SimpleTableCell topLeftCell = new SimpleTableCell("");
+		topLeftCell.setColspan(headerLeftColsCount);
+		topLeftCell.setRowspan(headerTopRowsCount + 1);
+
+		// get column labels and make sure that the number
+		// of children is precalculated
+		Label[] colLabels = colGrouper.getLabels();
+		for (int j = 0; j < colLabels.length; j++)
+			colLabels[j].calculateNoOfChildren();
 		
-		// rows for data
-		for (int i = 0; i < rowCount; i++)
-		{	
-			table[i+2] = new SimpleTableCell[1 + 2*colCount + 2];
+		// fill them using labels
+		int colIdx = 0;
+		for (int j = 0; j < colLabels.length; j++)
+		{
+			addColumnLabel(table, colLabels[j], 0, colIdx);
+			colIdx += 2*colLabels[j].getNoOfChildren();
 		}
 
-		// last row with totals
-		table[rowCount+2] = new SimpleTableCell[1 + 2*colCount + 2];
+		// get row labels and make sure that the number
+		// of children is precalculated
+		Label[] rowLabels = rowGrouper.getLabels();
+		for (int j = 0; j < rowLabels.length; j++)
+			rowLabels[j].calculateNoOfChildren();
 
-		// the column labels
-		Label[] colLabels = colGrouper.getLabels();
+		// fill them using labels
+		int rowIdx = 0;
+		for (int i = 0; i < rowLabels.length; i++)
+		{
+			addRowLabel(table, colLabels[i], rowIdx, 0);
+			rowIdx += rowLabels[i].getNoOfChildren();
+		}
+
+		// exported/imported columns
 		for (int j = 0; j < colCount; j++)
 		{	
-			//table[0][j+1] = new SimpleTableCell(colLabels[j]).setColspan(2).setCssClass(CSS_CLASS_TD_LABEL);
-			table[1][2*j+1] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
-			table[1][2*j+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+			table[headerTopRowsCount][headerLeftColsCount + 2*j + 0] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
+			table[headerTopRowsCount][headerLeftColsCount + 2*j + 1] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		}
 		
 		// labels for row totals
-		table[0][colCount+1] = new SimpleTableCell("Totals").setColspan(2).setCssClass(CSS_CLASS_TD_LABEL);
-		table[1][2*colCount+1] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
-		table[1][2*colCount+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
-		
-		// the row labels
-		Label[] rowLabels = rowGrouper.getLabels();
-		for (int i = 0; i < rowCount; i++)
-		{	
-			//table[i+2][0] = new SimpleTableCell(rowLabels[i]).setCssClass(CSS_CLASS_TD_LABEL);
-		}
+		table[0][headerLeftColsCount + 2*colCount+1] = new SimpleTableCell("Totals").setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
+		table[headerTopRowsCount][headerLeftColsCount + 2*colCount+1] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
+		table[headerTopRowsCount][headerLeftColsCount + 2*colCount+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// label for col totals
 		table[rowCount+2][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL);
@@ -216,8 +275,11 @@ public class EstimatesTableBean
 			expTotals += exp.doubleValue();
 			impTotals += imp.doubleValue();
 			
-			table[rowIndex+2][2*colIndex+1] = new SimpleTableCell(valuesFormat.format(new Object[]{exp}));
-			table[rowIndex+2][2*colIndex+2] = new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
+			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 0] =
+				new SimpleTableCell(valuesFormat.format(new Object[]{exp}));
+			
+			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 1] =
+				new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
 			
 		}
 		
