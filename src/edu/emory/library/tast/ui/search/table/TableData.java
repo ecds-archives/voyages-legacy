@@ -359,6 +359,9 @@ public class TableData {
 //			attrs.add(attr);
 //		}
 		VisibleAttributeInterface attr = (VisibleAttributeInterface)columns.get(column);
+		if (attr.getAttributes()[0] == null) {
+			System.out.println("NULL IN ATTR: " + attr.getName());
+		}
 		attrs.addAll(Arrays.asList(attr.getAttributes()));
 		return (Attribute[]) attrs.toArray(new Attribute[] {});
 	}
