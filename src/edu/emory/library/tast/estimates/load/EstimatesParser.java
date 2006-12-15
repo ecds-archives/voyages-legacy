@@ -28,9 +28,9 @@ public class EstimatesParser {
 					String[] nations = columns[0].replaceAll("\"", "").split(",");
 					for (int j = 0; j < nations.length; j++) {
 
-						int from = Integer.parseInt(columns[1]);
-						int to = Integer.parseInt(columns[2]);
-						int natimp = Integer.parseInt(nations[j]);
+						int from = Integer.parseInt(columns[1].trim());
+						int to = Integer.parseInt(columns[2].trim());
+						int natimp = Integer.parseInt(nations[j].trim());
 
 						String exp = columns[5].replaceAll("\"", "");
 						String imp = columns[6].replaceAll("\"", "");

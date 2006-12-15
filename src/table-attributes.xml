@@ -63,11 +63,11 @@
 	<table-attribute tabs="1,2" id="anyowner" userCategory="beginners,general" userLabel="Owners">
 		<attributes>
 			<attribute name="ownera" />
-			<attribute name="ownerf" />
 			<attribute name="ownerb" />
 			<attribute name="ownerc" />
 			<attribute name="ownerd" />
 			<attribute name="ownere" />
+			<attribute name="ownerf" />
 			<attribute name="ownerg" />
 			<attribute name="ownerh" />
 			<attribute name="owneri" />
@@ -394,6 +394,12 @@
 	</table-attribute>
 	<table-attribute tabs="1" id="anysource" userCategory="beginners,general" userLabel="Source">
 		<attributes>
+			<attribute name="sourcea"/>
+			<attribute name="sourceb"/>
+			<attribute name="sourcec"/>
+			<attribute name="sourced"/>
+			<attribute name="sourcee"/>
+			<attribute name="sourcef"/>
 			<attribute name="sourceg"/>
 			<attribute name="sourceh"/>
 			<attribute name="sourcei"/>
@@ -406,13 +412,6 @@
 			<attribute name="sourcep"/>
 			<attribute name="sourceq"/>
 			<attribute name="sourcer"/>
-			<attribute name="sourcea"/>
-			<attribute name="sourceb"/>
-			<attribute name="sourcec"/>
-			<attribute name="sourced"/>
-			<attribute name="sourcee"/>
-			<attribute name="sourcef"/>
-			<attribute name="sourcex"/>
 		</attributes>
 	</table-attribute>
 </table-attributes>
