@@ -7,30 +7,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import edu.emory.library.tast.dm.DictionaryOrdered;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
-public class GrouperRegions extends Grouper
+public class GrouperExportRegions extends Grouper
 {
 	
-	private String[] labels;
+	private Label[] labels;
 	private List regions;
 	private Map lookupTable;
-	private boolean exportRegions; 
 	
-	public GrouperRegions(int resultIndex, boolean omitEmpty, boolean exportRegions, List regions)
+	public GrouperExportRegions(int resultIndex, boolean omitEmpty, List regions)
 	{
 		super(resultIndex, omitEmpty);
 		this.regions = regions;
-		this.exportRegions = exportRegions;
 	}
 	
 	public Attribute getGroupingAttribute()
 	{
 		 return new SequenceAttribute (new Attribute[] {
-					Estimate.getAttribute(exportRegions ? "expRegion" : "impRegion"),
+					Estimate.getAttribute("expRegion"),
 					Region.getAttribute("id")});
 	}
 
@@ -56,17 +55,17 @@ public class GrouperRegions extends Grouper
 				regionsIdsInTable.size() :
 					regions.size();
 		
-		labels = new String[noOfRegions];
+		labels = new Label[noOfRegions];
 		lookupTable = new HashMap();
 		
 		int i = 0;
 		for (Iterator iter = regions.iterator(); iter.hasNext();)
 		{
-			Region region = (Region) iter.next();
+			DictionaryOrdered region = (DictionaryOrdered) iter.next();
 			Long regionId = region.getId();
 			if (!omitEmpty || regionsIdsInTable.contains(regionId))
 			{
-				labels[i] = region.getName();
+				labels[i] = new Label(region.getName());
 				lookupTable.put(regionId, new Integer(i));
 				i++;
 			}
@@ -80,12 +79,17 @@ public class GrouperRegions extends Grouper
 		return ((Integer) lookupTable.get(regionId)).intValue();
 	}
 
-	public int getSlotsCount()
+	public int getLeaveLabelsCount()
 	{
 		return labels.length;
 	}
 
-	public String[] getLabels()
+	public int getBreakdownDepth()
+	{
+		return 1;
+	}
+
+	public Label[] getLabels()
 	{
 		return labels;
 	}

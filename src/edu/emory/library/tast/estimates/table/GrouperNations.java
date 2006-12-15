@@ -8,14 +8,14 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.emory.library.tast.dm.Estimate;
-import edu.emory.library.tast.dm.Nation;
+import edu.emory.library.tast.dm.EstimatesNation;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
 public class GrouperNations extends Grouper
 {
 	
-	private String[] labels;
+	private Label[] labels;
 	private List nations;
 	private Map lookupTable;
 	
@@ -29,7 +29,7 @@ public class GrouperNations extends Grouper
 	{
 		 return new SequenceAttribute (new Attribute[] {
 				 Estimate.getAttribute("nation"),
-				 Nation.getAttribute("id")});
+				 EstimatesNation.getAttribute("id")});
 	}
 
 	public Attribute[] addExtraAttributes(int index)
@@ -52,16 +52,16 @@ public class GrouperNations extends Grouper
 					nations.size();
 
 		lookupTable = new HashMap();
-		labels = new String[noOfNations];
+		labels = new Label[noOfNations];
 		
 		int i = 0;
 		for (Iterator iter = nations.iterator(); iter.hasNext();)
 		{
-			Nation nation = (Nation) iter.next();
+			EstimatesNation nation = (EstimatesNation) iter.next();
 			Long nationId = nation.getId();
 			if (!omitEmpty || listedNationIds.contains(nationId))
 			{
-				labels[i] = nation.getName();
+				labels[i] = new Label(nation.getName());
 				lookupTable.put(nationId, new Integer(i));
 				i++;
 			}
@@ -75,12 +75,17 @@ public class GrouperNations extends Grouper
 		return ((Integer) lookupTable.get(nationId)).intValue();
 	}
 
-	public int getSlotsCount()
+	public int getLeaveLabelsCount()
 	{
 		return labels.length;
 	}
 
-	public String[] getLabels()
+	public int getBreakdownDepth()
+	{
+		return 1;
+	}
+
+	public Label[] getLabels()
 	{
 		return labels;
 	}

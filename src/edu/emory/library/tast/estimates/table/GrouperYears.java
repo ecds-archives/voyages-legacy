@@ -14,7 +14,7 @@ public class GrouperYears extends Grouper
 {
 	
 	private int period;
-	private String[] labels;
+	private Label[] labels;
 	private Map lookupTable;
 	private int minYearInPeriodResultIndex = -1;
 	private int maxYearInPeriodResultIndex = -1;
@@ -81,7 +81,7 @@ public class GrouperYears extends Grouper
 		int slots = omitEmpty ?
 				yearsInTable.size() : periods;
 				
-		labels = new String[slots];
+		labels = new Label[slots];
 		lookupTable = new HashMap();
 
 		int j = 0;
@@ -93,8 +93,7 @@ public class GrouperYears extends Grouper
 				lookupTable.put(new Integer(year), new Integer(j));
 				if (period == 1)
 				{
-					labels[j] =
-						String.valueOf(year);
+					labels[j] = new Label(String.valueOf(year));
 				}
 				else
 				{
@@ -102,27 +101,27 @@ public class GrouperYears extends Grouper
 					{
 						if (minYear == year + period)
 						{
-							labels[j] = String.valueOf(minYear); 
+							labels[j] = new Label(String.valueOf(minYear)); 
 						}
 						else
 						{
-							labels[j] = minYear + "-" + (year + period);
+							labels[j] = new Label(minYear + "-" + (year + period));
 						}
 					}
 					else if (i == periods - 1)
 					{
 						if (year + 1 == maxYear)
 						{
-							labels[j] = String.valueOf(maxYear); 
+							labels[j] = new Label(String.valueOf(maxYear)); 
 						}
 						else
 						{
-							labels[j] = (year + 1) + "-" + maxYear;
+							labels[j] = new Label((year + 1) + "-" + maxYear);
 						}
 					}
 					else
 					{
-						labels[j] = (year + 1) + "-" +  (year + period);
+						labels[j] = new Label((year + 1) + "-" +  (year + period));
 					}
 				}
 				j++;
@@ -137,12 +136,17 @@ public class GrouperYears extends Grouper
 		return ((Integer) lookupTable.get(year)).intValue();
 	}
 
-	public int getSlotsCount()
+	public int getLeaveLabelsCount()
 	{
 		return labels.length;
 	}
 
-	public String[] getLabels()
+	public int getBreakdownDepth()
+	{
+		return 1;
+	}
+
+	public Label[] getLabels()
 	{
 		return labels;
 	}

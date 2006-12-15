@@ -12,8 +12,10 @@ public abstract class Grouper
 	public abstract Attribute[] addExtraAttributes(int index);
 	public abstract void initSlots(Object[] dataTable);
 	public abstract int lookupIndex(Object[] dataRow);
-	public abstract int getSlotsCount();
-	public abstract String[] getLabels();
+
+	public abstract Label[] getLabels();
+	public abstract int getLeaveLabelsCount();
+	public abstract int getBreakdownDepth();
 	
 	public Grouper(int resultIndex, boolean omitEmpty)
 	{

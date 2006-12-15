@@ -41,18 +41,16 @@ public class EstimatesTableBean
 		}
 		else if ("expRegion".equals(groupBy))
 		{
-			return new GrouperRegions(
+			return new GrouperExportRegions(
 					resultIndex,
 					omitEmptyRowsAndColumns,
-					true,
 					expRegions);
 		}
 		else if ("impRegion".equals(groupBy))
 		{
-			return new GrouperRegions(
+			return new GrouperImportRegions(
 					resultIndex,
 					omitEmptyRowsAndColumns,
-					false,
 					impRegions);
 		}
 		else if (groupBy != null && groupBy.startsWith("years"))
@@ -136,17 +134,17 @@ public class EstimatesTableBean
 		// finally query the database 
 		Object[] result = query.executeQuery(sess);
 		
+		// init groupers
+		rowGrouper.initSlots(result);
+		colGrouper.initSlots(result);
+
 		// close db
 		transaction.commit();
 		sess.close();
 		
-		// init groupers
-		rowGrouper.initSlots(result);
-		colGrouper.initSlots(result);
-		
 		// allocate table
-		int rowCount = rowGrouper.getSlotsCount();
-		int colCount = colGrouper.getSlotsCount();
+		int rowCount = rowGrouper.getLeaveLabelsCount();
+		int colCount = colGrouper.getLeaveLabelsCount();
 		table = new SimpleTableCell[rowCount + 3][];
 		
 		// first two rows with titles
@@ -163,10 +161,10 @@ public class EstimatesTableBean
 		table[rowCount+2] = new SimpleTableCell[1 + 2*colCount + 2];
 
 		// the column labels
-		String[] colLabels = colGrouper.getLabels();
+		Label[] colLabels = colGrouper.getLabels();
 		for (int j = 0; j < colCount; j++)
 		{	
-			table[0][j+1] = new SimpleTableCell(colLabels[j]).setColspan(2).setCssClass(CSS_CLASS_TD_LABEL);
+			//table[0][j+1] = new SimpleTableCell(colLabels[j]).setColspan(2).setCssClass(CSS_CLASS_TD_LABEL);
 			table[1][2*j+1] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
 			table[1][2*j+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		}
@@ -177,10 +175,10 @@ public class EstimatesTableBean
 		table[1][2*colCount+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// the row labels
-		String[] rowLabels = rowGrouper.getLabels();
+		Label[] rowLabels = rowGrouper.getLabels();
 		for (int i = 0; i < rowCount; i++)
 		{	
-			table[i+2][0] = new SimpleTableCell(rowLabels[i]).setCssClass(CSS_CLASS_TD_LABEL);
+			//table[i+2][0] = new SimpleTableCell(rowLabels[i]).setCssClass(CSS_CLASS_TD_LABEL);
 		}
 		
 		// label for col totals
