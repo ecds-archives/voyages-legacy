@@ -14,9 +14,16 @@ public class FieldSchemaDropdowns extends FieldSchema
 	
 	private String[] listIds;
 
-	public FieldSchemaDropdowns(String name, String description)
+	public FieldSchemaDropdowns(String name, String description, String listId)
 	{
 		super(name, description);
+		this.listIds = new String[] {listId};
+	}
+
+	public FieldSchemaDropdowns(String name, String description, String[] listIds)
+	{
+		super(name, description);
+		this.listIds = listIds;
 	}
 
 	public String getType()
@@ -62,22 +69,22 @@ public class FieldSchemaDropdowns extends FieldSchema
 			String selectName = FieldValueDropdowns.getHtmlSelectName(editor, context, getName(), i);
 			ListItem[] list = schema.getListById(listIds[i]);
 			String selectedValue = valueDropdowns.getValue(i);
-
+			
 			writer.startElement("select", editor);
 			writer.writeAttribute("name", selectName, null);
 			
 			if (i == 0 || !StringUtils.isNullOrEmpty(parentValue))
 			{
 			
-				for (int j = 0; j < list.length; i++)
+				for (int j = 0; j < list.length; j++)
 				{
-					ListItem item = list[i];
+					ListItem item = list[j];
 					if (i == 0 || parentValue.equals(item.getValue()))
 					{
 						writer.startElement("option", editor);
 						if (item.getValue().equals(selectedValue)) writer.writeAttribute("selected", "selected", null);
 						writer.writeAttribute("value", item.getValue(), null);
-						writer.write(item.getText());
+						writer.write(StringUtils.coalesce(item.getText(), ""));
 						writer.endElement("option");
 					}
 				}

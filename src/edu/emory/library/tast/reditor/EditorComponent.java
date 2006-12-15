@@ -2,6 +2,7 @@ package edu.emory.library.tast.reditor;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
@@ -85,9 +86,14 @@ public class EditorComponent extends UIComponentBase
 		int j = 0;
 		for (Iterator iter = schema.getLists().entrySet().iterator(); iter.hasNext();)
 		{
+			Entry listEntry = (Entry) iter.next();;
+			String listName = (String) listEntry.getKey();
+			ListItem[] items = (ListItem[]) listEntry.getValue();
+
 			if (j > 0) regJS.append(", ");
 			regJS.append("new RecordEditorList(");
-			ListItem[] items = (ListItem[]) iter.next();
+			regJS.append("'").append(listName).append("', ");
+			regJS.append("[");
 			for (int i = 0; i < items.length; i++)
 			{
 				ListItem event = items[i];
@@ -98,8 +104,11 @@ public class EditorComponent extends UIComponentBase
 				regJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
 				regJS.append(")");
 			}
+			regJS.append("]");
 			regJS.append(")");
+			
 			j++;
+
 		}
 		regJS.append("]");
 
@@ -124,7 +133,7 @@ public class EditorComponent extends UIComponentBase
 			FieldSchema fieldSchema = (FieldSchema) iter.next();
 			FieldValue fieldValue = values.getValueFor(fieldSchema.getName());
 			if (fieldValue == null) fieldValue = FieldValue.createFieldValue(fieldSchema);
-
+			
 			writer.startElement("tr", this);
 
 			// label

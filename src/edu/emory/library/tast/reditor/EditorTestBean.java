@@ -15,11 +15,20 @@ import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Resistance;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
-import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.FateAttribute;
+import edu.emory.library.tast.dm.attributes.FateOwnerAttribute;
+import edu.emory.library.tast.dm.attributes.FateSlavesAttribute;
+import edu.emory.library.tast.dm.attributes.FateVesselAttribute;
+import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.PortAttribute;
+import edu.emory.library.tast.dm.attributes.RegionAttribute;
+import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class EditorTestBean
@@ -85,10 +94,56 @@ public class EditorTestBean
 				schema.addField(new FieldSchemaCheckbox(
 						attr.getName(), attr.getName()));
 			}
-			else if (attr instanceof DictionaryAttribute)
+			else if (attr instanceof PortAttribute)
 			{
-				schema.addField(new FieldSchemaCheckbox(
-						attr.getName(), attr.getName()));
+           	}
+			else if (attr instanceof RegionAttribute)
+			{
+           	}
+			else if (attr instanceof AreaAttribute)
+			{
+           	}
+			else if (attr instanceof NationAttribute)
+			{
+				schema.addField(new FieldSchemaDropdowns(
+						attr.getName(), attr.getName(),
+						LIST_NATIONS_NAME));
+			}
+			else if (attr instanceof FateAttribute)
+			{
+				schema.addField(new FieldSchemaDropdowns(
+						attr.getName(), attr.getName(),
+						LIST_FATES_NAME));
+			}
+			else if (attr instanceof FateOwnerAttribute)
+			{
+				schema.addField(new FieldSchemaDropdowns(
+						attr.getName(), attr.getName(),
+						LIST_FATES_OWNER_NAME));
+			}
+			else if (attr instanceof FateSlavesAttribute)
+			{
+				schema.addField(new FieldSchemaDropdowns(
+						attr.getName(), attr.getName(),
+						LIST_FATES_SLAVES_NAME));
+			}
+			else if (attr instanceof FateVesselAttribute)
+			{
+				schema.addField(new FieldSchemaDropdowns(
+						attr.getName(), attr.getName(),
+						LIST_FATES_VESSEL_NAME));
+			}
+			else if (attr instanceof VesselRigAttribute)
+			{
+				schema.addField(new FieldSchemaDropdowns(
+						attr.getName(), attr.getName(),
+						LIST_VESSEL_RIGS_NAME));
+			}
+			else if (attr instanceof ResistanceAttribute)
+			{
+				schema.addField(new FieldSchemaDropdowns(
+						attr.getName(), attr.getName(),
+						LIST_RESISTANCE_NAME));
 			}
 		}
 		

@@ -25,7 +25,7 @@ public class Nation extends DictionaryOrdered
 	
 	public static List loadAll(Session sess)
 	{
-		return Dictionary.loadAll(Fate.class, sess);
+		return Dictionary.loadAll(Nation.class, sess);
 	}
 	
 	public static Nation loadById(Session sess, long nationId)
