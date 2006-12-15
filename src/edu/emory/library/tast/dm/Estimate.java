@@ -5,6 +5,9 @@ import java.util.Map;
 
 import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.EstimatesExportRegionAttribute;
+import edu.emory.library.tast.dm.attributes.EstimatesImportRegionAttribute;
+import edu.emory.library.tast.dm.attributes.EstimatesNationAttribute;
 import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
@@ -15,9 +18,9 @@ public class Estimate {
 	static {
 		attributes.put("id", new NumericAttribute("id", "Estimate", NumericAttribute.TYPE_LONG));
 		attributes.put("year", new NumericAttribute("year", "Estimate", NumericAttribute.TYPE_INTEGER));
-		attributes.put("nation", new NationAttribute("nation", "Estimate"));
-		attributes.put("expRegion", new RegionAttribute("expRegion", "Estimate"));
-		attributes.put("impRegion", new RegionAttribute("impRegion", "Estimate"));
+		attributes.put("nation", new EstimatesNationAttribute("nation", "Estimate"));
+		attributes.put("expRegion", new EstimatesExportRegionAttribute("expRegion", "Estimate"));
+		attributes.put("impRegion", new EstimatesImportRegionAttribute("impRegion", "Estimate"));
 		attributes.put("slavImported", new NumericAttribute("slavImported", "Estimate", NumericAttribute.TYPE_INTEGER));
 		attributes.put("slavExported", new NumericAttribute("slavExported", "Estimate", NumericAttribute.TYPE_INTEGER));
 	}
@@ -28,9 +31,9 @@ public class Estimate {
 
 	private Nation nation;
 
-	private Region expRegion;
+	private EstimatesExportRegion expRegion;
 
-	private Region impRegion;
+	private EstimatesImportRegion impRegion;
 
 	private double slavImported;
 
@@ -68,19 +71,19 @@ public class Estimate {
 		this.year = year;
 	}
 
-	public Region getExpRegion() {
+	public EstimatesExportRegion getExpRegion() {
 		return expRegion;
 	}
 
-	public void setExpRegion(Region expRegion) {
+	public void setExpRegion(EstimatesExportRegion expRegion) {
 		this.expRegion = expRegion;
 	}
 
-	public Region getImpRegion() {
+	public EstimatesImportRegion getImpRegion() {
 		return impRegion;
 	}
 
-	public void setImpRegion(Region impRegion) {
+	public void setImpRegion(EstimatesImportRegion impRegion) {
 		this.impRegion = impRegion;
 	}
 
@@ -95,7 +98,7 @@ public class Estimate {
 			return false;
 		}
 		Estimate that = (Estimate)o;
-		return this.getNation().getId() == that.getNation().getId() &&
+		return this.getNation().getId().equals(that.getNation().getId()) &&
 				this.year.equals(that.year) &&
 				((this.expRegion == null && that.expRegion == null) || 
 						(this.expRegion != null && that.expRegion != null && this.expRegion.getId().equals(that.expRegion.getId()))) &&

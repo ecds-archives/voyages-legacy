@@ -8,6 +8,7 @@ import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
 public class Port extends Location
@@ -18,7 +19,7 @@ public class Port extends Location
 	{
 		attributes.put("id", new NumericAttribute("id", "Port", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "Port"));
-		attributes.put("region", new NumericAttribute("region", "Port", NumericAttribute.TYPE_LONG));
+		attributes.put("region", new RegionAttribute("region", "Port"));
 	}
 
 	private Region region;

@@ -16,7 +16,7 @@
 		<property name="latitude" />
 		<property name="longitude" />
 
-		<many-to-one name="region" column="region_id" />
+	<many-to-one name="region" column="region_id" class="edu.emory.library.tast.dm.Region" />
 		
 	</class>
 </hibernate-mapping>

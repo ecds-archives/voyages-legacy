@@ -174,7 +174,7 @@ public class SearchBean
 		QueryValue qValue = new QueryValue("Voyage", conditions);
 		qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = qValue.executeQuery();
-		int numberOfResults = ((Integer)ret[0]).intValue();
+		int numberOfResults = ((Number)ret[0]).intValue();
 		
 		return "Expected number of voyages: " + numberOfResults;
 	}

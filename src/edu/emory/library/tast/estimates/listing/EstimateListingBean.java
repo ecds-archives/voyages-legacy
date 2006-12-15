@@ -105,7 +105,7 @@ public class EstimateListingBean {
 		QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
 		Object[] ret = qValue.executeQuery();
-		this.linkManager.setResultsNumber(((Integer) ret[0]).intValue());
+		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
 	}
 
 	public void setTableData(TableData tableData) {

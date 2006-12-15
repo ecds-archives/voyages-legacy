@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.emory.library.tas.dicts.Mjselrg2;
+
 public class EstimatesParser {
 
 	public static EstimatesPosition[] parse(File file) throws IOException {
@@ -19,6 +21,7 @@ public class EstimatesParser {
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line;
 		while ((line = reader.readLine()) != null) {
+			line = line.replaceAll("\\(.*\\)", "");
 			String[] columns = line.split(";");
 			if (columns.length >= 6) {
 				try {
@@ -35,11 +38,8 @@ public class EstimatesParser {
 						if (columns[3].trim().compareTo("") != 0) {
 							String[] portdepts = columns[3]
 									.replaceAll("\"", "").split(",");
-							int[] ports = new int[portdepts.length];
-							for (int n = 0; n < portdepts.length; n++) {
-								int portdep = Integer.parseInt(portdepts[n]);
-								ports[n] = portdep;
-							}
+							int[] ports = resolveNumbers(portdepts);
+
 							for (int i = from; i <= to; i++) {
 								estimates.add(new EstimatesPosition(natimp,
 										ports, null, i, exp, imp, prop));
@@ -47,11 +47,8 @@ public class EstimatesParser {
 						} else if (columns[4].trim().compareTo("") != 0) {
 							String[] majselimps = columns[4].replaceAll("\"",
 									"").split(",");
-							int[] selpts = new int[majselimps.length];
-							for (int n = 0; n < majselimps.length; n++) {
-								int majselimp = Integer.parseInt(majselimps[n]);
-								selpts[n] = majselimp;
-							}
+							int[] selpts = resolveNumbers(majselimps);
+
 							for (int i = from; i <= to; i++) {
 								estimates.add(new EstimatesPosition(natimp,
 										null, selpts, i, exp, imp, prop));
@@ -75,6 +72,29 @@ public class EstimatesParser {
 
 		return (EstimatesPosition[]) estimates
 				.toArray(new EstimatesPosition[] {});
+	}
+
+	private static int[] resolveNumbers(String[] majselimps) {
+		ArrayList lens = new ArrayList();
+		for (int i = 0; i < majselimps.length; i++) {
+			String str = majselimps[i];
+			if (str.indexOf(" thru ") != -1) {
+				str = str.replaceAll("  ", " ");
+				String[] range = str.split(" ");
+				int a = Integer.parseInt(range[0].trim());
+				int b = Integer.parseInt(range[2].trim());
+				for (int j = a; j <= b; j++) {
+					lens.add(new Integer(j));
+				}
+			} else {
+				lens.add(new Integer(str.trim()));
+			}
+		}
+		int[] ret = new int[lens.size()];
+		for (int i = 0; i < ret.length; i++) {
+			ret[i] = ((Integer)lens.get(i)).intValue();
+		}
+		return ret;
 	}
 
 }

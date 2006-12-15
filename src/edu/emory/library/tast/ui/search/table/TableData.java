@@ -301,6 +301,10 @@ public class TableData {
 //				attributes.add(attr);
 //			}
 			VisibleAttributeInterface attr = (VisibleAttributeInterface)columns.get(i);
+			if (attr.getAttributes() == null) {
+				System.out.println("Null in attribute: " + attr.getName());
+				
+			}
 			attributes.addAll(Arrays.asList(attr.getAttributes()));
 		}
 		return (Attribute[]) attributes.toArray(new Attribute[] {});

@@ -11,6 +11,8 @@ import org.hibernate.Transaction;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.EstimatesExportRegion;
+import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.EstimatesNation;
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.Nation;
@@ -18,6 +20,7 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.EstimatesExportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.CaseNullToZeroAttribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -92,7 +95,7 @@ public class EstimatesLoader {
 
 		EstimateResponse response1 = this.getFunctValueQuery(position, positionFormula,
 				imported, false, prevWiggleRoom, 1);
-		Object[] voyagesToSum = response1.qValue.executeQuery();
+		Object[] voyagesToSum = response1.qValue.executeQuery(session);
 		for (int i = 0; i < voyagesToSum.length; i++) {
 			Object[] row = (Object[]) voyagesToSum[i];
 			if (row[2] != null) {
@@ -106,14 +109,14 @@ public class EstimatesLoader {
 
 			for (int j = 0; j < weights.length; j++) {
 				Estimate estim = new Estimate();
-				estim.setNation(Nation.loadById(position.getNatimp()));
+				estim.setNation(Nation.loadById(session, position.getNatimp()));
 				estim.setYear(new Integer(position.getYear()));
 				if (weights[j].expRegion != null) {
-					estim.setExpRegion(Region.loadById(session, weights[j].expRegion
+					estim.setExpRegion(EstimatesExportRegion.loadById(session, weights[j].expRegion
 						.longValue()));
 				}
 				if (weights[j].impRegion != null) {
-					estim.setImpRegion(Region.loadById(session, weights[j].impRegion
+					estim.setImpRegion(EstimatesImportRegion.loadById(session, weights[j].impRegion
 						.longValue()));
 				}
 				int index;
@@ -158,14 +161,14 @@ public class EstimatesLoader {
 			EstimateWeight[] weights = this.getEstimateWeights(voyages);
 			for (int j = 0; j < weights.length; j++) {
 				Estimate estim = new Estimate();
-				estim.setNation(Nation.loadById(position.getNatimp()));
+				estim.setNation(Nation.loadById(session, position.getNatimp()));
 				estim.setYear(new Integer(position.getYear()));
 				if (weights[j].expRegion != null) {
-					estim.setExpRegion(Region.loadById(session, weights[j].expRegion
+					estim.setExpRegion(EstimatesExportRegion.loadById(session, weights[j].expRegion
 						.longValue()));
 				} 
 				if (weights[j].impRegion != null) {
-					estim.setImpRegion(Region.loadById(session, weights[j].impRegion
+					estim.setImpRegion(EstimatesImportRegion.loadById(session, weights[j].impRegion
 						.longValue()));
 				}
 				int index;
@@ -246,13 +249,13 @@ public class EstimatesLoader {
 			for (int j = 0; j < ports.length; j++) {
 				ports[j] = Port.loadById(session, portIds[j]);
 			}
-			conditions.addCondition(Voyage.getAttribute("e_portdep"), ports,
+			conditions.addCondition(Voyage.getAttribute("portdep"), ports,
 					Conditions.OP_IN);
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
-			Region[] ports = new Region[portIds.length];
+			EstimatesImportRegion[] ports = new EstimatesImportRegion[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Region.loadById(session, portIds[j]);
+				ports[j] = EstimatesImportRegion.loadById(session, portIds[j]);
 			}
 			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), ports,
 					Conditions.OP_IN);
@@ -265,7 +268,7 @@ public class EstimatesLoader {
 				Conditions.OP_GREATER_OR_EQUAL);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("e_natinimp"),
-				Region.getAttribute("id") }), new Long(position
+				EstimatesNation.getAttribute("id") }), new Long(position
 				.getNatimp()), Conditions.OP_EQUALS);
 
 		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
@@ -273,17 +276,17 @@ public class EstimatesLoader {
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("e_majbyimp"),
-						Region.getAttribute("id") }),
+						EstimatesExportRegion.getAttribute("id") }),
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("e_mjselimp"),
-						Region.getAttribute("id") }) });
+						EstimatesImportRegion.getAttribute("id") }) });
 
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("e_majbyimp"),
-						Region.getAttribute("id") }));
+						EstimatesExportRegion.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("e_mjselimp"),
-						Region.getAttribute("id") }));
+						EstimatesImportRegion.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Voyage.getAttribute(field) }));
 
@@ -318,13 +321,13 @@ public class EstimatesLoader {
 			for (int j = 0; j < ports.length; j++) {
 				ports[j] = Port.loadById(session, portIds[j]);
 			}
-			conditions.addCondition(Voyage.getAttribute("e_portdep"), ports,
+			conditions.addCondition(Voyage.getAttribute("portdep"), ports,
 					Conditions.OP_IN);
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
-			Region[] ports = new Region[portIds.length];
+			EstimatesImportRegion[] ports = new EstimatesImportRegion[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Region.loadById(session, portIds[j]);
+				ports[j] = EstimatesImportRegion.loadById(session, portIds[j]);
 			}
 			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), ports,
 					Conditions.OP_IN);
@@ -339,7 +342,7 @@ public class EstimatesLoader {
 		// position.getYear()), Conditions.OP_EQUALS);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("e_natinimp"),
-				EstimatesNation.getAttribute("remoteId") }), new Integer(position
+				EstimatesNation.getAttribute("id") }), new Long(position
 				.getNatimp()), Conditions.OP_EQUALS);
 
 		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
@@ -347,17 +350,17 @@ public class EstimatesLoader {
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("e_majbyimp"),
-						Region.getAttribute("id") }),
+						EstimatesExportRegion.getAttribute("id") }),
 				new SequenceAttribute(new Attribute[] {
 						Voyage.getAttribute("e_mjselimp"),
-						Region.getAttribute("id") }) });
+						EstimatesImportRegion.getAttribute("id") }) });
 
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("e_majbyimp"),
-						Region.getAttribute("id") }));
+						EstimatesExportRegion.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new SequenceAttribute(
 				new Attribute[] { Voyage.getAttribute("e_mjselimp"),
-						Region.getAttribute("id") }));
+						EstimatesImportRegion.getAttribute("id") }));
 		qValue.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { new FunctionAttribute("estimate",
 						new Attribute[] { Voyage.getAttribute("iid"),
@@ -395,9 +398,9 @@ public class EstimatesLoader {
 			inP = ports;
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
-			Region[] ports = new Region[portIds.length];
+			EstimatesImportRegion[] ports = new EstimatesImportRegion[portIds.length];
 			for (int j = 0; j < ports.length; j++) {
-				ports[j] = Region.loadById(session, portIds[j]);
+				ports[j] = EstimatesImportRegion.loadById(session, portIds[j]);
 			}
 			inR = ports;
 		}
@@ -410,7 +413,7 @@ public class EstimatesLoader {
 						Conditions.OP_IN);
 			}
 			if (inR != null) {
-				conditions.addCondition(Voyage.getAttribute("mjselimp"), inR,
+				conditions.addCondition(Voyage.getAttribute("e_mjselimp"), inR,
 						Conditions.OP_IN);
 			}
 
@@ -421,16 +424,16 @@ public class EstimatesLoader {
 					position.getYear() - currentWiggleRoom),
 					Conditions.OP_GREATER_OR_EQUAL);
 			conditions.addCondition(new SequenceAttribute(new Attribute[] {
-					Voyage.getAttribute("natinimp"),
-					Region.getAttribute("id") }), new Integer(
+					Voyage.getAttribute("e_natinimp"),
+					EstimatesNation.getAttribute("id") }), new Long(
 					position.getNatimp()), Conditions.OP_EQUALS);
 
 			QueryValue qValue = new QueryValue(new String[] { "Voyage" },
 					new String[] { "v" }, conditions);
 			qValue.addPopulatedAttribute(new FunctionAttribute("count",
 					new Attribute[] { Voyage.getAttribute("iid") }));
-			Object[] ret = qValue.executeQuery();
-			currentResults = ((Integer) ret[0]).intValue();
+			Object[] ret = qValue.executeQuery(session);
+			currentResults = ((Long) ret[0]).intValue();
 		}
 		t.commit();
 		session.close();

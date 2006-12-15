@@ -96,7 +96,7 @@ public abstract class Dictionary
 			sess = HibernateUtil.getSession();
 			transaction = sess.beginTransaction();
 		}
-
+		//System.out.println(clazz + " id: " + id);
 		List list = sess.createCriteria(clazz).add(Restrictions.eq("id", new Long(id))).setCacheable(true).list();
 		Object dictItem = null;
 		if (list == null || list.size() == 0)

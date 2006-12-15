@@ -1074,7 +1074,7 @@ public class TableResultTabBean {
 		QueryValue qValue = new QueryValue("Voyage", localCond);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
 		Object[] ret = qValue.executeQuery();
-		this.linkManager.setResultsNumber(((Integer) ret[0]).intValue());
+		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
 	}
 
 	public TableLinkManager getTableManager() {
