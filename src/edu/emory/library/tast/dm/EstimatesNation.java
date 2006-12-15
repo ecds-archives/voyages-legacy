@@ -7,14 +7,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class EstimatesNation extends DictionaryOrdered
 {
@@ -27,23 +23,21 @@ public class EstimatesNation extends DictionaryOrdered
 		attributes.put("order", new NumericAttribute("order", "EstimatesNation", NumericAttribute.TYPE_INTEGER));
 	}
 	
-	public static List loadAllNations()
+	public static List loadAll(Session sess)
 	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		List list = loadAllNations(sess);
-		transaction.commit();
-		sess.close();
-		return list;
+		return Dictionary.loadAll(EstimatesNation.class, sess, "order");
 	}
 	
-	public static List loadAllNations(Session sess)
+	public static List loadAll(Session sess, String orderBy)
 	{
-		return sess.createCriteria(EstimatesNation.class).
-		addOrder(Order.asc("name")).
-		list();
+		return Dictionary.loadAll(EstimatesNation.class, sess, orderBy);
 	}
 
+	public static EstimatesNation loadById(Session sess, long portId)
+	{
+		return (EstimatesNation) Dictionary.loadById(EstimatesNation.class, sess, portId);
+	}
+	
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
@@ -83,23 +77,6 @@ public class EstimatesNation extends DictionaryOrdered
 		}
 		
 		return map;
-	}
-
-	public static EstimatesNation loadById(long nationId)
-	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		EstimatesNation nation = loadById(sess, nationId);
-		transaction.commit();
-		sess.close();
-		return nation;
-	}
-
-	public static EstimatesNation loadById(Session sess, long nationId)
-	{
-		List list = sess.createCriteria(EstimatesNation.class).add(Restrictions.eq("id", new Long(nationId))).setCacheable(true).list();
-		if (list == null || list.size() == 0) return null;
-		return (EstimatesNation) list.get(0);
 	}
 
 }
