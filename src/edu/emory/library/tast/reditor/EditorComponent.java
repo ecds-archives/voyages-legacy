@@ -144,11 +144,11 @@ public class EditorComponent extends UIComponentBase
 		writer.endElement("table");
 
 	}
-	
+
 	public void encodeChildren(FacesContext context) throws IOException
 	{
 	}
-	
+
 	public void encodeEnd(FacesContext context) throws IOException
 	{
 	}

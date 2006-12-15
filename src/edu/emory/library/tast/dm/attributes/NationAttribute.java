@@ -32,7 +32,7 @@ public class NationAttribute extends DictionaryAttribute
 
 	public List loadAllObjects(Session sess)
 	{
-		return Nation.loadAllNations(sess);
+		return Nation.loadAll(sess);
 	}
 	
 }

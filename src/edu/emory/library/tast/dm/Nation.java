@@ -7,14 +7,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Nation extends DictionaryOrdered
 {
@@ -27,23 +23,16 @@ public class Nation extends DictionaryOrdered
 		attributes.put("order", new NumericAttribute("order", "Nation", NumericAttribute.TYPE_INTEGER));
 	}
 	
-	public static List loadAllNations()
+	public static List loadAll(Session sess)
 	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		List list = loadAllNations(sess);
-		transaction.commit();
-		sess.close();
-		return list;
+		return Dictionary.loadAll(Fate.class, sess);
 	}
 	
-	public static List loadAllNations(Session sess)
+	public static Nation loadById(Session sess, long nationId)
 	{
-		return sess.createCriteria(Nation.class).
-		addOrder(Order.asc("name")).
-		list();
+		return (Nation) Dictionary.loadById(Nation.class, sess, nationId);
 	}
-
+	
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
@@ -83,23 +72,6 @@ public class Nation extends DictionaryOrdered
 		}
 		
 		return map;
-	}
-
-	public static Nation loadById(long nationId)
-	{
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		Nation nation = loadById(sess, nationId);
-		transaction.commit();
-		sess.close();
-		return nation;
-	}
-
-	public static Nation loadById(Session sess, long nationId)
-	{
-		List list = sess.createCriteria(Nation.class).add(Restrictions.eq("id", new Long(nationId))).setCacheable(true).list();
-		if (list == null || list.size() == 0) return null;
-		return (Nation) list.get(0);
 	}
 
 }
