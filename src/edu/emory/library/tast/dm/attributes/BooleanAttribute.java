@@ -31,27 +31,34 @@ public class BooleanAttribute extends ImportableAttribute
 
 	public String getHQLParamName()
 	{
-		return null;
+		return this.getName();
 	}
 
 	public String getHQLSelectPath(Map bindings)
 	{
-		return null;
+		if (!bindings.containsKey(this.getObjectType())) {
+			return this.getName();
+		}
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(bindings.get(this.getObjectType()));
+		buffer.append(".");
+		buffer.append(this.getName());
+		return buffer.toString();
 	}
 
 	public String getHQLWherePath(Map bindings)
 	{
-		return null;
+		return this.getHQLSelectPath(bindings);
 	}
 
 	public String getTypeDisplayName()
 	{
-		return null;
+		return "Boolean";
 	}
 
 	public Object getValueToCondition(Object value)
 	{
-		return null;
+		return value;
 	}
 
 	public boolean isOuterjoinable()

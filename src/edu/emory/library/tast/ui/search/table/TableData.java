@@ -497,6 +497,9 @@ public class TableData {
 	 * @return
 	 */
 	public DataTableItem[] getAdditionalData() {
+		if (this.additionalData.size() == 0) {
+			return null;
+		}
 		return (DataTableItem[]) this.additionalData.toArray(new DataTableItem[] {});
 	}
 
