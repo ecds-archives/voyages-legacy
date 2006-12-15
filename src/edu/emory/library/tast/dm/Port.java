@@ -36,9 +36,14 @@ public class Port extends Location
 	
 	public static List loadAll(Session sess)
 	{
-		return Port.loadAll(Port.class, sess);
+		return Dictionary.loadAll(Port.class, sess, "order");
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(Port.class, sess, orderBy);
+	}
+
 	public static Port loadById(Session sess, long portId)
 	{
 		return (Port) Dictionary.loadById(Port.class, sess, portId);

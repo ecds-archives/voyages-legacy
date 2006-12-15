@@ -30,6 +30,11 @@ public class Fate extends Dictionary
 		return Dictionary.loadAll(Fate.class, sess);
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(Fate.class, sess, orderBy);
+	}
+
 	public static Fate loadById(Session sess, long rigId)
 	{
 		return (Fate) Dictionary.loadById(Fate.class, sess, rigId);

@@ -44,9 +44,14 @@ public class Area extends Location
 	
 	public static List loadAll(Session sess)
 	{
-		return Dictionary.loadAll(Area.class, sess);
+		return Dictionary.loadAll(Area.class, sess, "order");
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(Area.class, sess, orderBy);
+	}
+
 	public static Area loadById(Session sess, long portId)
 	{
 		return (Area) Dictionary.loadById(Area.class, sess, portId);

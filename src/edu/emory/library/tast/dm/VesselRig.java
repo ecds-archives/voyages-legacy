@@ -30,6 +30,11 @@ public class VesselRig extends Dictionary
 		return Dictionary.loadAll(VesselRig.class, sess);
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(VesselRig.class, sess, orderBy);
+	}
+	
 	public static VesselRig loadById(Session sess, long rigId)
 	{
 		return (VesselRig) Dictionary.loadById(VesselRig.class, sess, rigId);

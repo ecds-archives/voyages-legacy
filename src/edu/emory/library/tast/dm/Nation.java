@@ -28,6 +28,11 @@ public class Nation extends DictionaryOrdered
 		return Dictionary.loadAll(Nation.class, sess);
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(Nation.class, sess, orderBy);
+	}
+
 	public static Nation loadById(Session sess, long nationId)
 	{
 		return (Nation) Dictionary.loadById(Nation.class, sess, nationId);

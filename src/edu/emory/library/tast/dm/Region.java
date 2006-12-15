@@ -69,9 +69,14 @@ public class Region extends Location
 	
 	public static List loadAll(Session sess)
 	{
-		return Port.loadAll(Region.class, sess);
+		return Dictionary.loadAll(Region.class, sess, "order");
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(Region.class, sess, orderBy);
+	}
+
 	public static Region loadById(Session sess, long portId)
 	{
 		return (Region) Dictionary.loadById(Region.class, sess, portId);

@@ -30,6 +30,11 @@ public class Resistance extends Dictionary
 		return Dictionary.loadAll(Resistance.class, sess);
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(Resistance.class, sess, orderBy);
+	}
+	
 	public static Resistance loadById(Session sess, long rigId)
 	{
 		return (Resistance) Dictionary.loadById(Resistance.class, sess, rigId);

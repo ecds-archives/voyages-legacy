@@ -99,8 +99,8 @@ public class EditorComponent extends UIComponentBase
 				ListItem event = items[i];
 				if (i > 0) regJS.append(", ");
 				regJS.append("new ListItem(");
-				regJS.append("'").append(event.getValue()).append("'");
-				regJS.append("'").append(event.getParentValue()).append("'");
+				regJS.append("'").append(event.getValue()).append("', ");
+				regJS.append("'").append(event.getParentValue()).append("', ");
 				regJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
 				regJS.append(")");
 			}
@@ -120,10 +120,10 @@ public class EditorComponent extends UIComponentBase
 
 		// start main table
 		writer.startElement("table", this);
-		writer.writeAttribute("border", "1", null);
+		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "message-bar", null);
+		writer.writeAttribute("class", "reditor", null);
 		
 		// for all fields in schema
 		for (Iterator iter = schema.getFields().iterator(); iter.hasNext();)
@@ -133,21 +133,23 @@ public class EditorComponent extends UIComponentBase
 			FieldSchema fieldSchema = (FieldSchema) iter.next();
 			FieldValue fieldValue = values.getValueFor(fieldSchema.getName());
 			if (fieldValue == null) fieldValue = FieldValue.createFieldValue(fieldSchema);
-			
+
 			writer.startElement("tr", this);
 
 			// label
 			writer.startElement("td", this);
+			writer.writeAttribute("class", "reditor-label", null);
 			writer.write(fieldSchema.getLabel());
 			writer.endElement("td");
 			
 			// value
 			writer.startElement("td", this);
+			writer.writeAttribute("class", "reditor-field", null);
 			fieldSchema.encode(this, form, context, schema, fieldValue);
 			writer.endElement("td");
 
 			writer.endElement("tr");
-		
+
 		}
 		
 		writer.endElement("table");

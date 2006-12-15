@@ -30,6 +30,11 @@ public class FateVessel extends Dictionary
 		return Dictionary.loadAll(FateVessel.class, sess);
 	}
 	
+	public static List loadAll(Session sess, String orderBy)
+	{
+		return Dictionary.loadAll(FateVessel.class, sess, orderBy);
+	}
+	
 	public static FateVessel loadById(Session sess, long rigId)
 	{
 		return (FateVessel) Dictionary.loadById(FateVessel.class, sess, rigId);
