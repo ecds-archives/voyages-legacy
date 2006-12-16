@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyCheck;
+
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -185,12 +187,12 @@ public class EstimatesTableBean
 		sess.close();
 		
 		// dimensions of the table
-		int rowCount = rowGrouper.getLeaveLabelsCount();
-		int colCount = colGrouper.getLeaveLabelsCount();
+		int dataRowCount = rowGrouper.getLeaveLabelsCount();
+		int dataColCount = colGrouper.getLeaveLabelsCount();
 		int headerTopRowsCount = colGrouper.getBreakdownDepth();
 		int headerLeftColsCount = rowGrouper.getBreakdownDepth();
-		int totalRows = headerLeftColsCount + 1 + rowCount + 1;
-		int totalCols = headerLeftColsCount + 2*colCount + 2;
+		int totalRows = headerLeftColsCount + 1 + dataRowCount + 1;
+		int totalCols = headerLeftColsCount + 2*dataColCount + 2;
 		
 		// create table
 		table = new SimpleTableCell[totalRows][totalCols];
@@ -228,29 +230,29 @@ public class EstimatesTableBean
 			rowIdx += rowLabels[i].getNoOfChildren();
 		}
 
-		// exported/imported columns
-		for (int j = 0; j < colCount; j++)
+		// extra row with exported/imported labels
+		for (int j = 0; j < dataColCount; j++)
 		{	
 			table[headerTopRowsCount][headerLeftColsCount + 2*j + 0] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
 			table[headerTopRowsCount][headerLeftColsCount + 2*j + 1] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		}
 		
 		// labels for row totals
-		table[0][headerLeftColsCount + 2*colCount+1] = new SimpleTableCell("Totals").setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
-		table[headerTopRowsCount][headerLeftColsCount + 2*colCount+1] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
-		table[headerTopRowsCount][headerLeftColsCount + 2*colCount+2] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+		table[0][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell("Totals").setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
+		table[headerTopRowsCount][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
+		table[headerTopRowsCount][headerLeftColsCount + 2*dataColCount + 1] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// label for col totals
-		table[rowCount+2][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL);
+		table[headerLeftColsCount + 1 + dataRowCount][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
 
 		// how we want to displat it
 		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 		
 		// for totals
-		double[] rowExpTotals = new double[rowCount]; 
-		double[] rowImpTotals = new double[rowCount]; 
-		double[] colExpTotals = new double[colCount]; 
-		double[] colImpTotals = new double[colCount];
+		double[] rowExpTotals = new double[dataRowCount]; 
+		double[] rowImpTotals = new double[dataRowCount]; 
+		double[] colExpTotals = new double[dataColCount]; 
+		double[] colImpTotals = new double[dataColCount];
 		double expTotals = 0; 
 		double impTotals = 0;
 		
@@ -275,44 +277,41 @@ public class EstimatesTableBean
 			expTotals += exp.doubleValue();
 			impTotals += imp.doubleValue();
 			
-			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 0] =
-				new SimpleTableCell(valuesFormat.format(new Object[]{exp}));
-			
-			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 1] =
-				new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
+			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{exp}));
+			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
 			
 		}
 		
 		// fill gaps
 		String zeroValue = valuesFormat.format(new Object[]{new Double(0)});
-		for (int i = 0; i < rowCount; i++)
+		for (int i = 0; i < dataRowCount; i++)
 		{
-			for (int j = 0; j < 2*colCount+1; j++)
+			for (int j = 0; j < 2*dataColCount; j++)
 			{
-				if (table[i+2][j+1] == null)
+				if (table[headerTopRowsCount + 1 + i][headerLeftColsCount + j] == null)
 				{
-					table[i+2][j+1] = new SimpleTableCell(zeroValue);
+					table[headerTopRowsCount + 1 + i][headerLeftColsCount + j] = new SimpleTableCell(zeroValue);
 				}
 			}
 		}
 		
 		// insert row totals
-		for (int i = 0; i < rowCount; i++)
+		for (int i = 0; i < dataRowCount; i++)
 		{
-			table[i+2][2*colCount+1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowExpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
-			table[i+2][2*colCount+2] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowImpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			table[headerTopRowsCount + 1 + i][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowExpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			table[headerTopRowsCount + 1 + i][headerLeftColsCount + 2*dataColCount + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowImpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
 		}
 		
 		// insert col totals
-		for (int j = 0; j < colCount; j++)
+		for (int j = 0; j < dataColCount; j++)
 		{
-			table[rowCount+2][2*j+1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colExpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
-			table[rowCount+2][2*j+2] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colImpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*j + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colExpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*j + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colImpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
 		}
 		
 		// main totals
-		table[rowCount+2][2*colCount+1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(expTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
-		table[rowCount+2][2*colCount+2] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(impTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+		table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(expTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+		table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*dataColCount + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(impTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
 
 	}
 
