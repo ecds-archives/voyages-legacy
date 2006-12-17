@@ -6,7 +6,7 @@ public class Label
 	
 	private String text;
 	private Label[] breakdown;
-	private int noOfChildren;
+	private int leavesCount;
 	
 	public Label(String text)
 	{
@@ -39,22 +39,26 @@ public class Label
 		this.text = text;
 	}
 	
-	public int getNoOfChildren()
+	public int getLeavesCount()
 	{
-		return noOfChildren;
+		return leavesCount;
 	}
 
-	public int calculateNoOfChildren()
+	public int calculateLeaves()
 	{
-		noOfChildren = 1;
-		if (this.breakdown != null)
+		if (this.breakdown == null || this.breakdown.length == 0)
 		{
+			leavesCount = 1;
+		}
+		else
+		{
+			leavesCount = 0;
 			for (int i = 0; i < breakdown.length; i++)
 			{
-				noOfChildren += breakdown[i].calculateNoOfChildren();
+				leavesCount += breakdown[i].calculateLeaves();
 			}
 		}
-		return noOfChildren;
+		return leavesCount;
 	}
 
 }

@@ -44,16 +44,16 @@ public class SimpleTableComponent extends UIComponentBase
 			for (int j = 0; j < row.length; j++)
 			{
 				SimpleTableCell cell = row[j];
-				writer.startElement("td", this);
 				if (cell != null)
 				{
+					writer.startElement("td", this);
 					if (cell.getCssStyle() != null) writer.writeAttribute("style", cell.getCssStyle(), null);
 					if (cell.getColspan() != 1) writer.writeAttribute("colspan", String.valueOf(cell.getColspan()), null);
 					if (cell.getRowspan() != 1) writer.writeAttribute("rowspan", String.valueOf(cell.getRowspan()), null);
 					if (cell.getCssClass() != null) writer.writeAttribute("class", cell.getCssClass(), null);
 					writer.write(cell.getText());
+					writer.endElement("td");
 				}
-				writer.endElement("td");
 			}
 			writer.endElement("tr");
 		}

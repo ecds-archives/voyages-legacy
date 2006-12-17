@@ -18,7 +18,7 @@ public class EstimatesExportRegion extends DictionaryOrdered
 	{
 		attributes.put("id", new NumericAttribute("id", "EstimatesExportRegion", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesExportRegion"));
-		attributes.put("order", new NumericAttribute("name", "EstimatesExportRegion", NumericAttribute.TYPE_INTEGER));
+		attributes.put("order", new NumericAttribute("order", "EstimatesExportRegion", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	public static Attribute getAttribute(String name)

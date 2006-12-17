@@ -19,7 +19,7 @@ public class EstimatesImportArea extends DictionaryOrdered
 	{
 		attributes.put("id", new NumericAttribute("id", "EstimatesImportArea", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesImportArea"));
-		attributes.put("order", new NumericAttribute("name", "EstimatesImportArea", NumericAttribute.TYPE_INTEGER));
+		attributes.put("order", new NumericAttribute("order", "EstimatesImportArea", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private Set regions;

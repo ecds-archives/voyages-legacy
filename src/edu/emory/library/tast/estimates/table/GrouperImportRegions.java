@@ -98,9 +98,12 @@ public class GrouperImportRegions extends Grouper
 
 		if (areaLabel != null)
 		{
-			Label[] regionsArray = new Label[regionsInArea.size()];
-			regionsInArea.toArray(regionsArray);
-			areaLabel.setBreakdown(regionsArray);
+			if (regionsInArea.size() > 1)
+			{
+				Label[] regionsArray = new Label[regionsInArea.size()];
+				regionsInArea.toArray(regionsArray);
+				areaLabel.setBreakdown(regionsArray);
+			}
 		}
 
 		labels = new Label[areas.size()];

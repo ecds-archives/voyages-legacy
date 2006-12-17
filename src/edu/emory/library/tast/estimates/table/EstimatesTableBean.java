@@ -6,8 +6,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyCheck;
-
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -69,12 +67,13 @@ public class EstimatesTableBean
 		}
 	}
 	
-	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx)
+	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth)
 	{
 		
 		SimpleTableCell cell = new SimpleTableCell(label.getText());
-		cell.setColspan(label.getNoOfChildren());
+		cell.setColspan(2*label.getLeavesCount());
 		cell.setCssClass(CSS_CLASS_TD_LABEL);
+		if (!label.hasBreakdown()) cell.setRowspan(maxDepth - depth + 1);
 		table[rowIdx][colIdx] = cell;
 		
 		if (label.hasBreakdown())
@@ -83,19 +82,20 @@ public class EstimatesTableBean
 			Label[] breakdown = label.getBreakdown();
 			for (int j = 0; j < breakdown.length; j++)
 			{
-				addColumnLabel(table, breakdown[j], rowIdx + 1, colIdx + colOffset);
-				colOffset += 2*breakdown[j].getNoOfChildren();
+				addColumnLabel(table, breakdown[j], rowIdx + 1, colIdx + colOffset, depth + 1, maxDepth);
+				colOffset += 2*breakdown[j].getLeavesCount();
 			}
 		}
 
 	}
 	
-	private void addRowLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx)
+	private void addRowLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth)
 	{
 		
 		SimpleTableCell cell = new SimpleTableCell(label.getText());
-		cell.setRowspan(label.getNoOfChildren());
+		cell.setRowspan(label.getLeavesCount());
 		cell.setCssClass(CSS_CLASS_TD_LABEL);
+		if (!label.hasBreakdown()) cell.setColspan(maxDepth - depth + 1);
 		table[rowIdx][colIdx] = cell;
 		
 		if (label.hasBreakdown())
@@ -104,8 +104,8 @@ public class EstimatesTableBean
 			Label[] breakdown = label.getBreakdown();
 			for (int i = 0; i < breakdown.length; i++)
 			{
-				addRowLabel(table, breakdown[i], rowIdx + rowOffset, colIdx + 1);
-				rowOffset += breakdown[i].getNoOfChildren();
+				addRowLabel(table, breakdown[i], rowIdx + rowOffset, colIdx + 1, depth + 1, maxDepth);
+				rowOffset += breakdown[i].getLeavesCount();
 			}
 		}
 
@@ -191,7 +191,7 @@ public class EstimatesTableBean
 		int dataColCount = colGrouper.getLeaveLabelsCount();
 		int headerTopRowsCount = colGrouper.getBreakdownDepth();
 		int headerLeftColsCount = rowGrouper.getBreakdownDepth();
-		int totalRows = headerLeftColsCount + 1 + dataRowCount + 1;
+		int totalRows = headerTopRowsCount + 1 + dataRowCount + 1;
 		int totalCols = headerLeftColsCount + 2*dataColCount + 2;
 		
 		// create table
@@ -201,33 +201,34 @@ public class EstimatesTableBean
 		SimpleTableCell topLeftCell = new SimpleTableCell("");
 		topLeftCell.setColspan(headerLeftColsCount);
 		topLeftCell.setRowspan(headerTopRowsCount + 1);
+		table[0][0] = topLeftCell;
 
 		// get column labels and make sure that the number
 		// of children is precalculated
 		Label[] colLabels = colGrouper.getLabels();
 		for (int j = 0; j < colLabels.length; j++)
-			colLabels[j].calculateNoOfChildren();
+			colLabels[j].calculateLeaves();
 		
 		// fill them using labels
-		int colIdx = 0;
+		int colIdx = headerLeftColsCount;
 		for (int j = 0; j < colLabels.length; j++)
 		{
-			addColumnLabel(table, colLabels[j], 0, colIdx);
-			colIdx += 2*colLabels[j].getNoOfChildren();
+			addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount);
+			colIdx += 2*colLabels[j].getLeavesCount();
 		}
 
 		// get row labels and make sure that the number
 		// of children is precalculated
 		Label[] rowLabels = rowGrouper.getLabels();
 		for (int j = 0; j < rowLabels.length; j++)
-			rowLabels[j].calculateNoOfChildren();
+			rowLabels[j].calculateLeaves();
 
 		// fill them using labels
-		int rowIdx = 0;
+		int rowIdx = headerTopRowsCount + 1;
 		for (int i = 0; i < rowLabels.length; i++)
 		{
-			addRowLabel(table, colLabels[i], rowIdx, 0);
-			rowIdx += rowLabels[i].getNoOfChildren();
+			addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount);
+			rowIdx += rowLabels[i].getLeavesCount();
 		}
 
 		// extra row with exported/imported labels
@@ -243,7 +244,7 @@ public class EstimatesTableBean
 		table[headerTopRowsCount][headerLeftColsCount + 2*dataColCount + 1] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// label for col totals
-		table[headerLeftColsCount + 1 + dataRowCount][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
+		table[headerTopRowsCount + 1 + dataRowCount][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
 
 		// how we want to displat it
 		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
