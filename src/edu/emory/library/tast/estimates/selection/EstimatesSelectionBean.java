@@ -303,9 +303,12 @@ public class EstimatesSelectionBean
 				
 				if (areaIndex != -1)
 				{
-					SelectItemWithImage[] regionsUi = new SelectItemWithImage[regionsTemp.size()];
-					regionsTemp.toArray(regionsUi);
-					areasUi[areaIndex].setSubItems(regionsUi);
+					if (regionsTemp.size() > 1)
+					{
+						SelectItemWithImage[] regionsUi = new SelectItemWithImage[regionsTemp.size()];
+						regionsTemp.toArray(regionsUi);
+						areasUi[areaIndex].setSubItems(regionsUi);
+					}
 				}
 				
 				areaIndex++;
@@ -331,9 +334,12 @@ public class EstimatesSelectionBean
 		
 		if (areaIndex != -1)
 		{
-			SelectItemWithImage[] regionsUi = new SelectItemWithImage[regionsTemp.size()];
-			regionsTemp.toArray(regionsUi);
-			areasUi[areaIndex].setSubItems(regionsUi);
+			if (regionsTemp.size() > 1)
+			{
+				SelectItemWithImage[] regionsUi = new SelectItemWithImage[regionsTemp.size()];
+				regionsTemp.toArray(regionsUi);
+				areasUi[areaIndex].setSubItems(regionsUi);
+			}
 		}
 
 		transaction.commit();

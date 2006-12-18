@@ -243,7 +243,7 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 		// get data from beans
 		SelectItemWithImage[] items = (SelectItemWithImage[]) getItems();
 		Set selectedValuesLookup = StringUtils.toStringSet(getSelectedValues());
-		
+
 		// main id for JS
 		String checkboxListId = getClientId(context); 
 		
