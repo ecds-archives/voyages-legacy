@@ -62,7 +62,7 @@ public class SequenceAttribute extends Attribute {
 				continue;
 			}
 			if (i != 0) {
-				buffer.append(", ");
+				buffer.append(".");
 			}
 			buffer.append(attributes[i].getHQLOuterJoinPath(bindings));
 		}

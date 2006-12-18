@@ -96,12 +96,26 @@ public class EditorComponent extends UIComponentBase
 			regJS.append("[");
 			for (int i = 0; i < items.length; i++)
 			{
-				ListItem event = items[i];
+				ListItem item = items[i];
 				if (i > 0) regJS.append(", ");
 				regJS.append("new ListItem(");
-				regJS.append("'").append(event.getValue()).append("', ");
-				regJS.append("'").append(event.getParentValue()).append("', ");
-				regJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
+				if (item.getValue() == null)
+				{
+					regJS.append("null, ");
+				}
+				else
+				{
+					regJS.append("'").append(item.getValue()).append("', ");
+				}
+				if (item.getParentValue() == null)
+				{
+					regJS.append("null, ");
+				}
+				else
+				{
+					regJS.append("'").append(item.getParentValue()).append("', ");
+				}
+				regJS.append("'").append(JsfUtils.escapeStringForJS(item.getText())).append("'");
 				regJS.append(")");
 			}
 			regJS.append("]");
@@ -109,6 +123,18 @@ public class EditorComponent extends UIComponentBase
 			
 			j++;
 
+		}
+		regJS.append("], ");
+
+		// fields
+		regJS.append("[");
+		j = 0;
+		for (Iterator iter = schema.getFields().iterator(); iter.hasNext();)
+		{
+			FieldSchema fieldSchema = (FieldSchema) iter.next();
+			if (j > 0) regJS.append(", ");
+			fieldSchema.createRegJS(this, mainId, form, context, schema, regJS);
+			j++;
 		}
 		regJS.append("]");
 
@@ -145,7 +171,7 @@ public class EditorComponent extends UIComponentBase
 			// value
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "reditor-field", null);
-			fieldSchema.encode(this, form, context, schema, fieldValue);
+			fieldSchema.encode(this, mainId, form, context, schema, fieldValue);
 			writer.endElement("td");
 
 			writer.endElement("tr");

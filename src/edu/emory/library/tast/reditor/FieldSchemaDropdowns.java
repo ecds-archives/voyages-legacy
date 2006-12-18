@@ -40,8 +40,27 @@ public class FieldSchemaDropdowns extends FieldSchema
 	{
 		this.listIds = listIds;
 	}
+	
+	public void createRegJS(EditorComponent editor, String editorId, UIForm form, FacesContext context, Schema schema, StringBuffer regJS) throws IOException
+	{
+		regJS.append("new RecordEditorDropdowns(");
+		regJS.append("'").append(getName()).append("'");
+		regJS.append(", [");
+		for (int i = 0; i < listIds.length; i++)
+		{
+			if (i > 0) regJS.append(", ");
+			regJS.append("'").append(FieldValueDropdowns.getHtmlSelectName(editor, context, getName(), i)).append("'");
+		}
+		regJS.append("], [");
+		for (int i = 0; i < listIds.length; i++)
+		{
+			if (i > 0) regJS.append(", ");
+			regJS.append("'").append(listIds[i]).append("'");
+		}
+		regJS.append("])");
+	}
 
-	public void encode(EditorComponent editor, UIForm form, FacesContext context, Schema schema, FieldValue value) throws IOException
+	public void encode(EditorComponent editor, String editorId, UIForm form, FacesContext context, Schema schema, FieldValue value) throws IOException
 	{
 		
 		// type check
@@ -70,25 +89,29 @@ public class FieldSchemaDropdowns extends FieldSchema
 			ListItem[] list = schema.getListById(listIds[i]);
 			String selectedValue = valueDropdowns.getValue(i);
 			
+			String onChange = "RecordEditorGlobals.dropdownValueChanged(" +
+					"'" + editorId + "'," +
+					"'" + getName() + "'," +
+					+ i + ")";
+			
 			writer.startElement("select", editor);
 			writer.writeAttribute("name", selectName, null);
+			writer.writeAttribute("onchange", onChange, null);
 			
-			if (i == 0 || !StringUtils.isNullOrEmpty(parentValue))
+			for (int j = 0; j < list.length; j++)
 			{
-			
-				for (int j = 0; j < list.length; j++)
+				ListItem item = list[j];
+				if (i == 0 ||
+						(item.getParentValue() == null) ||
+						(parentValue == null && item.getValue() == null) ||
+						(parentValue != null && parentValue.equals(item.getParentValue())))
 				{
-					ListItem item = list[j];
-					if (i == 0 || parentValue.equals(item.getValue()))
-					{
-						writer.startElement("option", editor);
-						if (item.getValue().equals(selectedValue)) writer.writeAttribute("selected", "selected", null);
-						writer.writeAttribute("value", item.getValue(), null);
-						writer.write(StringUtils.coalesce(item.getText(), ""));
-						writer.endElement("option");
-					}
+					writer.startElement("option", editor);
+					if (StringUtils.compareStrings(item.getValue(), selectedValue)) writer.writeAttribute("selected", "selected", null);
+					writer.writeAttribute("value", item.getValue(), null);
+					writer.write(StringUtils.coalesce(item.getText(), ""));
+					writer.endElement("option");
 				}
-			
 			}
 			
 			writer.endElement("select");

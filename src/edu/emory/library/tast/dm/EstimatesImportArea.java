@@ -48,5 +48,18 @@ public class EstimatesImportArea extends DictionaryOrdered
 	{
 		return (Area) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
 	}
+	
+	public boolean equals(Object that)
+	{
+		if (that instanceof EstimatesImportArea)
+		{
+			EstimatesImportArea thatArea = (EstimatesImportArea) that;
+			return getId().equals(thatArea.getId());
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 }

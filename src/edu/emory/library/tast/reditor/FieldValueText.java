@@ -36,4 +36,16 @@ public class FieldValueText extends FieldValue
 		this.value = value;
 	}
 
+	public String[] getLines()
+	{
+		if (value == null)
+		{
+			return new String[0];
+		}
+		else
+		{
+			return value.split("\n");
+		}
+	}
+
 }

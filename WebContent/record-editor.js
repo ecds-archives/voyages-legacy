@@ -33,12 +33,17 @@ function RecordEditor(editorId, formName, lists, fields)
 	
 	this.listsById = new Array();
 	for (var i = 0; i < this.lists.length; i++)
+	{
 		this.listsById[this.lists[i].listId] = lists[i];
+	}
 
 	this.fieldsById = new Array();
 	for (var i = 0; i < this.fields.length; i++)
+	{
+		this.fields[i].init(this);
 		this.fieldsById[this.fields[i].name] = fields[i];
-
+	}
+	
 }
 
 function RecordEditorList(listId, items)
@@ -73,7 +78,7 @@ function RecordEditorCheckbox(name)
 	this.name = name;
 }
 
-RecordEditorTexbox.prototype.init = function(editor)
+RecordEditorCheckbox.prototype.init = function(editor)
 {
 	this.editor = editor;
 }
@@ -103,12 +108,33 @@ RecordEditorDropdowns.prototype.init = function(editor)
 RecordEditorDropdowns.prototype.dropdownValueChanged = function(index)
 {
 
-	var sel = document.forms[editor.formName].elements[this.selectNames[index]];
+	var frm = document.forms[this.editor.formName];
+	var sel = frm.elements[this.selectNames[index]];
 	var parentValue = sel.value;
 	
 	for (var i = index+1; i < this.count; i++)
 	{
-		ElementUtils.deleteAllChildren();
+	
+		sel = frm.elements[this.selectNames[i]];
+		ElementUtils.deleteAllChildren(sel);
+		
+		var list = this.editor.listsById[this.listIds[i]];
+		var nextParentValue = null;
+		var itemsCount = 0;
+		
+		for (var j = 0; j < list.items.length; j++)
+		{
+			var listItem = list.items[j];
+			if (listItem.parentValue == parentValue || listItem.parentValue == null)
+			{
+				if (itemsCount == 0) nextParentValue = listItem.value;
+				ElementUtils.addOption(sel, listItem.value, listItem.text);
+				itemsCount++;
+			}
+		}
+		
+		parentValue = nextParentValue;
+
 	}
 	
 }

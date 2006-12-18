@@ -37,24 +37,29 @@ import edu.emory.library.tast.util.HibernateUtil;
 public class EditorTestBean
 {
 	
+	private static final String NOT_KNOWN = "not known";
+
 	private static final String LIST_VESSEL_RIGS_NAME = "vessel-rigs";
 	private static final String LIST_RESISTANCE_NAME = "resistance";
+	private static final String LIST_FATES_NAME = "fates";
 	private static final String LIST_FATES_VESSEL_NAME = "fates-vessel";
 	private static final String LIST_FATES_SLAVES_NAME = "fates-slaves";
 	private static final String LIST_FATES_OWNER_NAME = "fates-owner";
-	private static final String LIST_FATES_NAME = "fates";
 	private static final String LIST_NATIONS_NAME = "nations";
 	private static final String LIST_AREAS_NAME = "areas";
 	private static final String LIST_REGIONS_NAME = "regions";
 	private static final String LIST_PORTS_NAME = "ports";
+	private static final String[] LISTS_LOCATION = {LIST_AREAS_NAME, LIST_REGIONS_NAME, LIST_PORTS_NAME};
+	
 	private Values values;
 	
 	private void registerDictionary(String listId, Schema schema, Session sess, List dictionary)
 	{
 		
-		ListItem[] list = new ListItem[dictionary.size()];
+		ListItem[] list = new ListItem[dictionary.size() + 1];
+		list[0] = new ListItem(null, NOT_KNOWN);
 		
-		int i = 0;
+		int i = 1;
 		for (Iterator iter = dictionary.iterator(); iter.hasNext();)
 		{
 			Dictionary dictItem = (Dictionary) iter.next();
@@ -70,9 +75,10 @@ public class EditorTestBean
 	private void registerAreas(Schema schema, Session sess, List areas)
 	{
 		
-		ListItem[] list = new ListItem[areas.size()];
+		ListItem[] list = new ListItem[areas.size() + 1];
+		list[0] = new ListItem(null, NOT_KNOWN);
 		
-		int i = 0;
+		int i = 1;
 		for (Iterator iter = areas.iterator(); iter.hasNext();)
 		{
 			Area area = (Area) iter.next();
@@ -88,9 +94,10 @@ public class EditorTestBean
 	private void registerRegions(Schema schema, Session sess, List regions)
 	{
 		
-		ListItem[] list = new ListItem[regions.size()];
+		ListItem[] list = new ListItem[regions.size() + 1];
+		list[0] = new ListItem(null, NOT_KNOWN);
 		
-		int i = 0;
+		int i = 1;
 		for (Iterator iter = regions.iterator(); iter.hasNext();)
 		{
 			Region region = (Region) iter.next();
@@ -107,9 +114,10 @@ public class EditorTestBean
 	private void registerPorts(Schema schema, Session sess, List ports)
 	{
 		
-		ListItem[] list = new ListItem[ports.size()];
+		ListItem[] list = new ListItem[ports.size() + 1];
+		list[0] = new ListItem(null, NOT_KNOWN);
 		
-		int i = 0;
+		int i = 1;
 		for (Iterator iter = ports.iterator(); iter.hasNext();)
 		{
 			Port port = (Port) iter.next();
@@ -121,6 +129,55 @@ public class EditorTestBean
 		
 		schema.registerList(LIST_PORTS_NAME, list);
 		
+	}
+
+	private void registerListOfNations(Schema schema, Session sess)
+	{
+		registerDictionary(LIST_NATIONS_NAME,
+				schema, sess,
+				Nation.loadAll(sess, "order"));
+	}
+	
+	private void registerVesselRig(Schema schema, Session sess)
+	{
+		registerDictionary(LIST_VESSEL_RIGS_NAME,
+				schema, sess,
+				VesselRig.loadAll(sess, "id"));
+	}
+
+	private void registerListOfFates(Schema schema, Session sess)
+	{
+		registerDictionary(LIST_FATES_NAME,
+				schema, sess,
+				Fate.loadAll(sess, "id"));
+	}
+	
+	private void registerListOfFatesVessel(Schema schema, Session sess)
+	{
+		registerDictionary(LIST_FATES_VESSEL_NAME,
+				schema, sess,
+				FateVessel.loadAll(sess, "id"));
+	}
+
+	private void registerListOfFatesSlaves(Schema schema, Session sess)
+	{
+		registerDictionary(LIST_FATES_SLAVES_NAME,
+				schema, sess,
+				FateSlaves.loadAll(sess, "id"));
+	}
+
+	private void registerListOfFatesOwner(Schema schema, Session sess)
+	{
+		registerDictionary(LIST_FATES_OWNER_NAME,
+				schema, sess,
+				FateOwner.loadAll(sess, "id"));
+	}
+
+	private void registerListOfResistances(Schema schema, Session sess)
+	{
+		registerDictionary(LIST_RESISTANCE_NAME,
+				schema, sess,
+				Resistance.loadAll(sess, "id"));
 	}
 
 	public Schema getSchema()
@@ -148,7 +205,7 @@ public class EditorTestBean
 		
 		schema.addField(new FieldSchemaDropdowns(
 				"portdep", "Place of departure",
-				new String[] {LIST_NATIONS_NAME, LIST_REGIONS_NAME, LIST_PORTS_NAME}));
+				new String[] {LIST_AREAS_NAME, LIST_REGIONS_NAME, LIST_PORTS_NAME}));
 
 		Attribute[] attrs = Voyage.getAttributes();
 		for (int i = 0; i < attrs.length; i++)
@@ -219,6 +276,109 @@ public class EditorTestBean
 		
 		return schema;
 
+	}
+
+	public Schema getShipSchema()
+	{
+
+		Schema schema = new Schema();
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		registerListOfNations(schema, sess);
+		registerVesselRig(schema, sess);
+
+		registerAreas(schema, sess, Area.loadAll(sess));
+		registerRegions(schema, sess, Region.loadAll(sess));
+		registerPorts(schema, sess, Port.loadAll(sess));
+
+		tran.commit();
+		sess.close();
+		
+		schema.addField(new FieldSchemaTextbox("voyageid", "Voyage ID"));
+		schema.addField(new FieldSchemaCheckbox("cd", "CD 1999"));
+		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship"));
+		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship"));
+		schema.addField(new FieldSchemaDropdowns("placcons", "Place of construction", LISTS_LOCATION));
+		schema.addField(new FieldSchemaTextbox("yrcons", "Year of consruction"));
+		schema.addField(new FieldSchemaTextbox("placreg", "Place of registration"));
+		schema.addField(new FieldSchemaTextbox("yrreg", "Year of registration"));
+		schema.addField(new FieldSchemaDropdowns("natinimp", "Imputed nation", LIST_NATIONS_NAME));
+		schema.addField(new FieldSchemaDropdowns("rig", "Vessel rig", LIST_VESSEL_RIGS_NAME));
+		schema.addField(new FieldSchemaTextbox("tonnage", "Tonnage"));
+		schema.addField(new FieldSchemaTextbox("tonmod", "Tonnage"));
+		schema.addField(new FieldSchemaTextbox("guns", "Number of guns"));
+		schema.addField(new FieldSchemaTextbox("owners", "Owners", true, 10));
+		
+		return schema;
+		
+	}
+	
+	public Schema getOutcomeSchema()
+	{
+
+		Schema schema = new Schema();
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		registerListOfFates(schema, sess);
+		registerListOfFatesOwner(schema, sess);
+		registerListOfFatesSlaves(schema, sess);
+		registerListOfFatesVessel(schema, sess);
+		registerListOfResistances(schema, sess);
+
+		registerAreas(schema, sess, Area.loadAll(sess));
+		registerRegions(schema, sess, Region.loadAll(sess));
+		registerPorts(schema, sess, Port.loadAll(sess));
+
+		tran.commit();
+		sess.close();
+		
+		schema.addField(new FieldSchemaDropdowns("fate", "Outcome of voyage", LIST_FATES_NAME));
+		schema.addField(new FieldSchemaDropdowns("fate2", "Outcome of voyage for slaves", LIST_FATES_SLAVES_NAME));
+		schema.addField(new FieldSchemaDropdowns("fate3", "Outcome of voyage if ship captured", LIST_FATES_VESSEL_NAME));
+		schema.addField(new FieldSchemaDropdowns("fate4", "Outcome of voyage for owner", LIST_FATES_OWNER_NAME));
+		schema.addField(new FieldSchemaDropdowns("resistance", "Violent incidents", LIST_RESISTANCE_NAME));
+		
+		return schema;
+		
+	}
+
+	public Schema getItinerarySchema()
+	{
+
+		Schema schema = new Schema();
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		registerAreas(schema, sess, Area.loadAll(sess));
+		registerRegions(schema, sess, Region.loadAll(sess));
+		registerPorts(schema, sess, Port.loadAll(sess));
+		
+		registerAreas(schema, sess, Area.loadAll(sess));
+		registerRegions(schema, sess, Region.loadAll(sess));
+		registerPorts(schema, sess, Port.loadAll(sess));
+
+		tran.commit();
+		sess.close();
+		
+		schema.addField(new FieldSchemaDropdowns("ptdepimp", "Imputed place where voyage began", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("plac1tra", "First place of slave purchase", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("plac2tra", "Second place of slave purchase", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("plac3tra", "Third place of slave purchase", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("mjbyptimp", "Imputed principal place of slave purchase", LISTS_LOCATION));
+		schema.addField(new FieldSchemaTextbox("npafttra", "Places of call before Atlantic crossing"));
+		schema.addField(new FieldSchemaDropdowns("sla1port", "First place of landing", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("adpsale1", "Second place of landing", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("adpsale2", "Third place of landing", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("mjslptimp", "Imputed principal place of landing", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("portret", "Port at which voyage ended", LISTS_LOCATION));
+		
+		return schema;
+		
 	}
 
 	public Values getValues()

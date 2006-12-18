@@ -18,8 +18,15 @@ public class FieldSchemaCheckbox extends FieldSchema
 	{
 		super(name, description);
 	}
+	
+	public void createRegJS(EditorComponent editor, String editorId, UIForm form, FacesContext context, Schema schema, StringBuffer regJS) throws IOException
+	{
+		regJS.append("new RecordEditorCheckbox(");
+		regJS.append("'").append(getName()).append("'");
+		regJS.append(")");
+	}
 
-	public void encode(EditorComponent editor, UIForm form, FacesContext context, Schema schema, FieldValue value) throws IOException
+	public void encode(EditorComponent editor, String editorId, UIForm form, FacesContext context, Schema schema, FieldValue value) throws IOException
 	{
 		
 		// type check
@@ -38,6 +45,7 @@ public class FieldSchemaCheckbox extends FieldSchema
 		// main div container
 		writer.startElement("input", editor);
 		writer.writeAttribute("name", htmlFieldName, null);
+		writer.writeAttribute("type", "checkbox", null);
 		if (valueCheckbox.isChecked()) writer.writeAttribute("checked", "checked", null);
 		writer.endElement("input");
 

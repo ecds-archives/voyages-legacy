@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.EstimatesImportAreaAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
@@ -19,6 +20,7 @@ public class EstimatesImportRegion extends DictionaryOrdered
 		attributes.put("id", new NumericAttribute("id", "EstimatesImportRegion", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesImportRegion"));
 		attributes.put("order", new NumericAttribute("order", "EstimatesImportRegion", NumericAttribute.TYPE_INTEGER));
+		attributes.put("area", new EstimatesImportAreaAttribute("area", "EstimatesImportRegion"));
 	}
 	
 	private EstimatesImportArea area;

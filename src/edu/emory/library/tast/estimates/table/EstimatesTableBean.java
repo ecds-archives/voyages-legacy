@@ -29,8 +29,9 @@ public class EstimatesTableBean
 	private String colGrouping;
 	private SimpleTableCell[][] table;
 	private boolean omitEmptyRowsAndColumns;
+	private String showMode = "both";
 	
-	private Grouper createGrouper(String groupBy, int resultIndex, List nations, List expRegions, List impRegions)
+	private Grouper createGrouper(String groupBy, int resultIndex, List nations, List expRegions, List impRegions, List impAreas)
 	{
 		if ("nation".equals(groupBy))
 		{
@@ -51,6 +52,13 @@ public class EstimatesTableBean
 			return new GrouperImportRegions(
 					resultIndex,
 					omitEmptyRowsAndColumns,
+					impAreas);
+		}
+		else if ("impRegionBreakdowns".equals(groupBy))
+		{
+			return new GrouperImportRegionsWithBreakdowns(
+					resultIndex,
+					omitEmptyRowsAndColumns,
 					impRegions);
 		}
 		else if (groupBy != null && groupBy.startsWith("years"))
@@ -67,11 +75,11 @@ public class EstimatesTableBean
 		}
 	}
 	
-	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth)
+	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth, int subCols)
 	{
 		
 		SimpleTableCell cell = new SimpleTableCell(label.getText());
-		cell.setColspan(2*label.getLeavesCount());
+		cell.setColspan(subCols*label.getLeavesCount());
 		cell.setCssClass(CSS_CLASS_TD_LABEL);
 		if (!label.hasBreakdown()) cell.setRowspan(maxDepth - depth + 1);
 		table[rowIdx][colIdx] = cell;
@@ -82,8 +90,8 @@ public class EstimatesTableBean
 			Label[] breakdown = label.getBreakdown();
 			for (int j = 0; j < breakdown.length; j++)
 			{
-				addColumnLabel(table, breakdown[j], rowIdx + 1, colIdx + colOffset, depth + 1, maxDepth);
-				colOffset += 2*breakdown[j].getLeavesCount();
+				addColumnLabel(table, breakdown[j], rowIdx + 1, colIdx + colOffset, depth + 1, maxDepth, subCols);
+				colOffset += subCols*breakdown[j].getLeavesCount();
 			}
 		}
 
@@ -131,14 +139,21 @@ public class EstimatesTableBean
 		List selectedNations = selectionBean.loadSelectedNations(sess);
 		List selectedExpRegions = selectionBean.loadSelectedExpRegions(sess);
 		List selectedImpRegions = selectionBean.loadSelectedImpRegions(sess);
-
+		List selectedImpAreas = selectionBean.loadSelectedImpAreas(sess);
+		
 		// for grouping rows
 		Grouper rowGrouper = createGrouper(rowGrouping, 0,
-				selectedNations, selectedExpRegions, selectedImpRegions);
+				selectedNations,
+				selectedExpRegions,
+				selectedImpRegions,
+				selectedImpAreas);
 		
 		// for grouping cols
 		Grouper colGrouper = createGrouper(colGrouping, 1,
-				selectedNations, selectedExpRegions, selectedImpRegions);
+				selectedNations,
+				selectedExpRegions,
+				selectedImpRegions,
+				selectedImpAreas);
 
 		// start query
 		QueryValue query = new QueryValue(
@@ -186,13 +201,48 @@ public class EstimatesTableBean
 		transaction.commit();
 		sess.close();
 		
+		// what to show
+		boolean showExp = true;
+		boolean showImp = true;
+		int subCols = 2;
+		int extraHeaderRows = 1;
+		int expColOffset = 0;
+		int impColOffset = 1;
+		if ("exp".equals(showMode))
+		{
+			showExp = true;
+			showImp = false;
+			subCols = 1;
+			extraHeaderRows = 0;
+			expColOffset = 0;
+			impColOffset = 0;
+		}
+		else if ("imp".equals(showMode))
+		{
+			showExp = false;
+			showImp = true;
+			subCols = 1;
+			extraHeaderRows = 0;
+			expColOffset = 0;
+			impColOffset = 0;
+		}
+		else
+		{
+			showExp = true;
+			showImp = true;
+			subCols = 2;
+			extraHeaderRows = 1;
+			expColOffset = 0;
+			impColOffset = 1;
+		}
+
 		// dimensions of the table
 		int dataRowCount = rowGrouper.getLeaveLabelsCount();
 		int dataColCount = colGrouper.getLeaveLabelsCount();
 		int headerTopRowsCount = colGrouper.getBreakdownDepth();
 		int headerLeftColsCount = rowGrouper.getBreakdownDepth();
-		int totalRows = headerTopRowsCount + 1 + dataRowCount + 1;
-		int totalCols = headerLeftColsCount + 2*dataColCount + 2;
+		int totalRows = headerTopRowsCount + extraHeaderRows + dataRowCount + 1;
+		int totalCols = headerLeftColsCount + subCols*(dataColCount + 1);
 		
 		// create table
 		table = new SimpleTableCell[totalRows][totalCols];
@@ -200,7 +250,7 @@ public class EstimatesTableBean
 		// (0,0) cell
 		SimpleTableCell topLeftCell = new SimpleTableCell("");
 		topLeftCell.setColspan(headerLeftColsCount);
-		topLeftCell.setRowspan(headerTopRowsCount + 1);
+		topLeftCell.setRowspan(headerTopRowsCount + extraHeaderRows);
 		table[0][0] = topLeftCell;
 
 		// get column labels and make sure that the number
@@ -213,8 +263,8 @@ public class EstimatesTableBean
 		int colIdx = headerLeftColsCount;
 		for (int j = 0; j < colLabels.length; j++)
 		{
-			addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount);
-			colIdx += 2*colLabels[j].getLeavesCount();
+			addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount, subCols);
+			colIdx += subCols*colLabels[j].getLeavesCount();
 		}
 
 		// get row labels and make sure that the number
@@ -224,7 +274,7 @@ public class EstimatesTableBean
 			rowLabels[j].calculateLeaves();
 
 		// fill them using labels
-		int rowIdx = headerTopRowsCount + 1;
+		int rowIdx = headerTopRowsCount + extraHeaderRows;
 		for (int i = 0; i < rowLabels.length; i++)
 		{
 			addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount);
@@ -232,19 +282,22 @@ public class EstimatesTableBean
 		}
 
 		// extra row with exported/imported labels
-		for (int j = 0; j < dataColCount; j++)
-		{	
-			table[headerTopRowsCount][headerLeftColsCount + 2*j + 0] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
-			table[headerTopRowsCount][headerLeftColsCount + 2*j + 1] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+		if (showExp && showImp)
+		{
+			for (int j = 0; j < dataColCount; j++)
+			{
+				table[headerTopRowsCount][headerLeftColsCount + subCols*j + expColOffset] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
+				table[headerTopRowsCount][headerLeftColsCount + subCols*j + impColOffset] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+			}
 		}
 		
 		// labels for row totals
-		table[0][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell("Totals").setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
-		table[headerTopRowsCount][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
-		table[headerTopRowsCount][headerLeftColsCount + 2*dataColCount + 1] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+		table[0][headerLeftColsCount + subCols*dataColCount + 0] = new SimpleTableCell("Totals").setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
+		if (showExp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
+		if (showImp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// label for col totals
-		table[headerTopRowsCount + 1 + dataRowCount][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
+		table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
 
 		// how we want to displat it
 		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
@@ -278,8 +331,8 @@ public class EstimatesTableBean
 			expTotals += exp.doubleValue();
 			impTotals += imp.doubleValue();
 			
-			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{exp}));
-			table[headerTopRowsCount + 1 + rowIndex][headerLeftColsCount + 2*colIndex + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
+			if (showExp) table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols*colIndex + expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{exp})); 
+			if (showImp) table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols*colIndex + impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
 			
 		}
 		
@@ -287,11 +340,11 @@ public class EstimatesTableBean
 		String zeroValue = valuesFormat.format(new Object[]{new Double(0)});
 		for (int i = 0; i < dataRowCount; i++)
 		{
-			for (int j = 0; j < 2*dataColCount; j++)
+			for (int j = 0; j < subCols*dataColCount; j++)
 			{
-				if (table[headerTopRowsCount + 1 + i][headerLeftColsCount + j] == null)
+				if (table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + j] == null)
 				{
-					table[headerTopRowsCount + 1 + i][headerLeftColsCount + j] = new SimpleTableCell(zeroValue);
+					table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + j] = new SimpleTableCell(zeroValue);
 				}
 			}
 		}
@@ -299,23 +352,23 @@ public class EstimatesTableBean
 		// insert row totals
 		for (int i = 0; i < dataRowCount; i++)
 		{
-			table[headerTopRowsCount + 1 + i][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowExpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
-			table[headerTopRowsCount + 1 + i][headerLeftColsCount + 2*dataColCount + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowImpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			if (showExp) table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowExpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			if (showImp) table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(rowImpTotals[i])})).setCssClass(CSS_CLASS_TD_TOTAL);
 		}
 		
 		// insert col totals
 		for (int j = 0; j < dataColCount; j++)
 		{
-			table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*j + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colExpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
-			table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*j + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colImpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			if (showExp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*j + expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colExpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
+			if (showImp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*j + impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(colImpTotals[j])})).setCssClass(CSS_CLASS_TD_TOTAL);
 		}
 		
 		// main totals
-		table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*dataColCount + 0] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(expTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
-		table[headerTopRowsCount + 1 + dataRowCount][headerLeftColsCount + 2*dataColCount + 1] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(impTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+		if (showExp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(expTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+		if (showImp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(impTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
 
 	}
-
+	
 	public String refreshTable()
 	{
 		optionsSelected = true;
@@ -367,6 +420,16 @@ public class EstimatesTableBean
 	public void setOmitEmptyRowsAndColumns(boolean omitEmptyRowsAndColumns)
 	{
 		this.omitEmptyRowsAndColumns = omitEmptyRowsAndColumns;
+	}
+
+	public String getShowMode()
+	{
+		return showMode;
+	}
+
+	public void setShowMode(String showMode)
+	{
+		this.showMode = showMode;
 	}
 
 }

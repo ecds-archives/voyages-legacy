@@ -8,6 +8,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Editor</title>
+<script src="../../utils.js" language="javascript" type="text/javascript"></script>
 <script src="../../record-editor.js" language="javascript" type="text/javascript"></script>
 
 <style type="text/css">
@@ -34,10 +35,24 @@ td.reditor-field {
 <f:view>
 	<h:form id="form">
 
-		<s:recordEditor id="ed"
-			schema="#{EditorTestBean.schema}"
+		<h2>Outcome</h2>
+
+		<s:recordEditor id="ship"
+			schema="#{EditorTestBean.shipSchema}"
 			values="#{EditorTestBean.values}" />
 			
+		<h2>Outcome</h2>
+			
+		<s:recordEditor id="outcome"
+			schema="#{EditorTestBean.outcomeSchema}"
+			values="#{EditorTestBean.values}" />
+
+		<h2>Itinerary</h2>
+			
+		<s:recordEditor id="itinerary"
+			schema="#{EditorTestBean.itinerarySchema}"
+			values="#{EditorTestBean.values}" />
+
 		<h:commandButton value="Test submit" />
 	
 	</h:form>

@@ -311,6 +311,14 @@ var ElementUtils =
 			offset = document.body.scrollTop;
 		}
 		return offset;
+	},
+	
+	addOption: function(sel, value, text)
+	{
+		var opt = document.createElement("option");
+		opt.value = value;
+		opt.text = text;
+		sel.appendChild(opt);
 	}
 
 }
