@@ -34,9 +34,25 @@ public class PagerComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-//		Object[] values = new Objecy[];
-//		return super.saveState(context);
-		return null;
+		Object[] values = new Object[6];
+		values[0] = super.saveState(context);
+		values[1] = new Integer(pageSize);
+		values[2] = new Integer(maxShownPages);
+		values[3] = new Integer(firstRecord);
+		values[4] = new Integer(lastRecord);
+		values[5] = new Integer(currentPage);
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		pageSize = ((Integer) values[1]).intValue();
+		maxShownPages = ((Integer) values[2]).intValue();
+		firstRecord = ((Integer) values[3]).intValue();
+		lastRecord = ((Integer) values[4]).intValue();
+		currentPage = ((Integer) values[5]).intValue();
 	}
 	
 	private String getHtmlCurrentPageNameInput(FacesContext context)

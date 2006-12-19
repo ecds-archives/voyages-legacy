@@ -395,11 +395,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setSlas32(Integer  slas32) {
 		this.values.put("slas32", slas32);
 	}
-	public void setMjslptimp(Region mjslptimp) {
+	public void setMjslptimp(Port mjslptimp) {
 		this.values.put("mjslptimp", mjslptimp);
 	}
-	public Region getMjslptimp() {
-		return (Region) this.values.get("mjslptimp");
+	public Port getMjslptimp() {
+		return (Port) this.values.get("mjslptimp");
 	}
 	public void setShipname(String shipname) {
 		this.values.put("shipname", shipname);
