@@ -22,7 +22,9 @@ import edu.emory.library.tast.reditor.FieldSchemaCheckbox;
 import edu.emory.library.tast.reditor.FieldSchemaDate;
 import edu.emory.library.tast.reditor.FieldSchemaDouble;
 import edu.emory.library.tast.reditor.FieldSchemaDropdowns;
+import edu.emory.library.tast.reditor.FieldSchemaFloat;
 import edu.emory.library.tast.reditor.FieldSchemaInteger;
+import edu.emory.library.tast.reditor.FieldSchemaLong;
 import edu.emory.library.tast.reditor.FieldSchemaTextbox;
 import edu.emory.library.tast.reditor.FieldValueCheckbox;
 import edu.emory.library.tast.reditor.FieldValueDropdowns;
@@ -210,19 +212,18 @@ public class VoyageBean
 		tran.commit();
 		sess.close();
 
-		schema.addField(new FieldSchemaTextbox("voyageid", "Voyage ID"));
+		schema.addField(new FieldSchemaLong("voyageid", "Voyage ID"));
 		schema.addField(new FieldSchemaCheckbox("cd", "CD 1999"));
 		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship"));
-		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship"));
 		schema.addField(new FieldSchemaDropdowns("placcons", "Place of construction", LISTS_LOCATION));
-		schema.addField(new FieldSchemaTextbox("yrcons", "Year of consruction"));
-		schema.addField(new FieldSchemaTextbox("placreg", "Place of registration"));
-		schema.addField(new FieldSchemaTextbox("yrreg", "Year of registration"));
+		schema.addField(new FieldSchemaInteger("yrcons", "Year of construction"));
+		schema.addField(new FieldSchemaDropdowns("placreg", "Place of registration", LIST_NATIONS_NAME));
+		schema.addField(new FieldSchemaInteger("yrreg", "Year of registration"));
 		schema.addField(new FieldSchemaDropdowns("natinimp", "Imputed nation", LIST_NATIONS_NAME));
 		schema.addField(new FieldSchemaDropdowns("rig", "Vessel rig", LIST_VESSEL_RIGS_NAME));
-		schema.addField(new FieldSchemaTextbox("tonnage", "Tonnage"));
-		schema.addField(new FieldSchemaTextbox("tonmod", "Tonnage"));
-		schema.addField(new FieldSchemaTextbox("guns", "Number of guns"));
+		schema.addField(new FieldSchemaFloat("tonnage", "Tonnage"));
+		schema.addField(new FieldSchemaFloat("tonmod", "Tonnage"));
+		schema.addField(new FieldSchemaInteger("guns", "Number of guns"));
 		schema.addField(new FieldSchemaTextbox("owners", "Owners", true, 10));
 
 		return schema;

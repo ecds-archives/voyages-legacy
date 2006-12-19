@@ -9,6 +9,7 @@
 	<title>Voyage</title>
 	<link href="main.css" rel="stylesheet" type="text/css">
 	<script src="../record-editor.js" language="javascript" type="text/javascript"></script>
+	<script src="../utils.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
@@ -17,8 +18,10 @@
 		<h2>Outcome</h2>
 
 		<s:recordEditor id="ship"
-			schema="#{EditorTestBean.shipSchema}"
-			values="#{EditorTestBean.values}" />
+			schema="#{AdminVoyageBean.shipSchema}"
+			values="#{AdminVoyageBean.shipValues}" />
+			
+		<%--
 			
 		<h2>Outcome</h2>
 			
@@ -61,6 +64,8 @@
 		<s:recordEditor id="sources"
 			schema="#{EditorTestBean.sourcesSchema}"
 			values="#{EditorTestBean.values}" />
+			
+		--%>
 
 		<h:commandButton value="Test submit" />
 	
