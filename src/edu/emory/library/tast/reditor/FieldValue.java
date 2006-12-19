@@ -48,6 +48,18 @@ public abstract class FieldValue
 		{
 			return new FieldValueDropdowns(name);
 		}
+		else if (FieldValueDate.TYPE.equals(type))
+		{
+			return new FieldValueDate(name);
+		}
+		else if (FieldValueInteger.TYPE.equals(type))
+		{
+			return new FieldValueInteger(name);
+		}
+		else if (FieldValueDouble.TYPE.equals(type))
+		{
+			return new FieldValueDouble(name);
+		}
 		else
 		{
 			throw new RuntimeException("unsupported field type '" + type + "' for '" + name + "'");

@@ -3,6 +3,8 @@ package edu.emory.library.tast.reditor;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import edu.emory.library.tast.util.StringUtils;
+
 public class FieldValueText extends FieldValue
 {
 	
@@ -26,6 +28,11 @@ public class FieldValueText extends FieldValue
 		value = (String) context.getExternalContext().getRequestParameterMap().get(htmlFieldName);
 	}
 
+	public boolean isEmpty()
+	{
+		return StringUtils.isNullOrEmpty(value); 
+	}
+	
 	public String getValue()
 	{
 		return value;

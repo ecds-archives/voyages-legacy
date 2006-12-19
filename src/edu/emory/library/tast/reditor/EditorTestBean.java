@@ -381,6 +381,92 @@ public class EditorTestBean
 		
 	}
 
+	public Schema getDatesSchema()
+	{
+
+		Schema schema = new Schema();
+		
+		schema.addField(new FieldSchemaTextbox("yearam", "Imputed year of arrival at first place of landing"));
+		schema.addField(new FieldSchemaDate("datedep", "Date that voyage began"));
+		schema.addField(new FieldSchemaDate("datebuy", "Date that slave purchase began"));
+		schema.addField(new FieldSchemaDate("dateleftafr", "Date that vessel left last slaving port"));
+		schema.addField(new FieldSchemaDate("dateland1", "Date that slaves landed at first place"));
+		schema.addField(new FieldSchemaDate("dateland2", "Date of arrival at second place of landing"));
+		schema.addField(new FieldSchemaDate("dateland3", "Date that slaves landed at third place"));
+		schema.addField(new FieldSchemaDate("datedepam", "Date that ship left on return voyage"));
+		schema.addField(new FieldSchemaDate("dateend", "Date when voyage completed"));
+		schema.addField(new FieldSchemaInteger("voy1imp", "Imputed voyage length from departure to first port of landing"));
+		schema.addField(new FieldSchemaInteger("voy2imp", "Imputed length of middle passage"));
+		
+		return schema;
+		
+	}
+
+	public Schema getCrewSchema()
+	{
+
+		Schema schema = new Schema();
+		
+		schema.addField(new FieldSchemaTextbox("captains", "Captains", true, 3));
+		schema.addField(new FieldSchemaInteger("crew1", "Crew on board at outset of voyage"));
+		schema.addField(new FieldSchemaInteger("crew3", "Number of crew when first slaves landed"));
+		schema.addField(new FieldSchemaInteger("crewdied", "Number of crew who died over entire voyage"));
+		
+		return schema;
+		
+	}
+
+	public Schema getSlaveNumbersSchema()
+	{
+
+		Schema schema = new Schema();
+		
+		schema.addField(new FieldSchemaInteger("slintend", "Number of slaves intended at first place of purchase"));
+		schema.addField(new FieldSchemaInteger("ncar13", "Slaves carried from first port of purchase"));
+		schema.addField(new FieldSchemaInteger("ncar15", "Slaves carried from second port of purchase"));
+		schema.addField(new FieldSchemaInteger("ncar17", "Slaves carried from third port of purchase"));
+		schema.addField(new FieldSchemaInteger("tslavesd", "Total slaves carried off from Africa"));
+		schema.addField(new FieldSchemaInteger("slaarriv", "Number of slaves who arrived at first place of landing"));
+		schema.addField(new FieldSchemaInteger("slas32", "Number of slaves landed at first place"));
+		schema.addField(new FieldSchemaInteger("slas36", "Number of slaves landed at second place"));
+		schema.addField(new FieldSchemaInteger("slas39", "Number of slaves landed at third place"));
+		schema.addField(new FieldSchemaInteger("slaximp", "Imputed total slaves embarked"));
+		schema.addField(new FieldSchemaInteger("slamimp", "Imputed total slaves disembarked"));
+		
+		return schema;
+		
+	}
+
+	public Schema getSlaveCharacteriticsSchema()
+	{
+
+		Schema schema = new Schema();
+
+		schema.addField(new FieldSchemaDouble("menrat7", "Percentage of men at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaDouble("womrat7", "Percentage of women at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaDouble("boyrat7", "Percentage of boys at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaDouble("girlrat7", "Percentage of girls at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaDouble("malrat7", "Imputed sex ratio of the cargo of slaves"));
+		schema.addField(new FieldSchemaDouble("chilrat7", "Imputed ratio of children to adults in the cargo of slaves"));
+		schema.addField(new FieldSchemaDouble("jamcaspr", "Imputed sterling price of slaves sold in Jamaica"));
+		schema.addField(new FieldSchemaDouble("vymrtimp", "Imputed number of slaves who died during the Middle Passage"));
+		schema.addField(new FieldSchemaDouble("vymrtrat", "Imputed mortality rate (slave deaths / embarkations)"));
+		
+		return schema;
+		
+	}
+
+	public Schema getSourcesSchema()
+	{
+
+		Schema schema = new Schema();
+
+		schema.addField(new FieldSchemaTextbox("sources", "Source", true, 10));
+		
+		return schema;
+		
+	}
+
 	public Values getValues()
 	{
 		return values;
