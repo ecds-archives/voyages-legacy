@@ -6,6 +6,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
 
@@ -58,6 +59,18 @@ public class PagerComponent extends UIComponentBase
 	private String getHtmlCurrentPageNameInput(FacesContext context)
 	{
 		return getClientId(context);
+	}
+	
+	public void decode(FacesContext context)
+	{
+		currentPage = JsfUtils.getParamInt(context, getHtmlCurrentPageNameInput(context), 0);
+	}
+	
+	public void processUpdates(FacesContext context)
+	{
+		ValueBinding vb = getValueBinding("currentPage");
+		if (vb != null) vb.setValue(context, new Integer(currentPage));
+		super.processUpdates(context);
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException

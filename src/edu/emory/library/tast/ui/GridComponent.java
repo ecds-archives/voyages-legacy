@@ -2,13 +2,19 @@ package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.UICommand;
+import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.MethodBinding;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
-public class GridComponent extends UIComponentBase
+public class GridComponent extends UICommand
 {
 	
 	private boolean rowsSet = false;
@@ -17,9 +23,61 @@ public class GridComponent extends UIComponentBase
 	private boolean columnsSet = false;
 	private GridColumn[] columns;
 
+	private MethodBinding onOpenRow;
+
+	public String getRendererType()
+	{
+		return null;
+	}
+	
 	public String getFamily()
 	{
 		return null;
+	}
+	
+	public Object saveState(FacesContext context)
+	{
+		Object[] values = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = saveAttachedState(context, onOpenRow);
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		onOpenRow = (MethodBinding) restoreAttachedState(context, values[1]);
+	}
+	
+	private String getHiddenFieldNameForToOpen(FacesContext context)
+	{
+		return getClientId(context) + "_to_open";
+	}
+
+	public void decode(FacesContext context)
+	{
+		
+		String toOpenRowId = JsfUtils.getParamString(context,
+				getHiddenFieldNameForToOpen(context));
+		
+		if (!StringUtils.isNullOrEmpty(toOpenRowId))
+		{
+			queueEvent(new ActionEvent(this));
+			queueEvent(new GridOpenRowEvent(this, toOpenRowId));
+		}
+
+	}
+	
+	public void broadcast(FacesEvent event) throws AbortProcessingException
+	{
+
+		super.broadcast(event);
+		
+		if (event instanceof GridOpenRowEvent)
+			if (onOpenRow != null)
+				onOpenRow.invoke(getFacesContext(), new Object[] {event});
+	
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException
@@ -27,6 +85,7 @@ public class GridComponent extends UIComponentBase
 		
 		// standard stuff
 		ResponseWriter writer = context.getResponseWriter();
+		UIForm form = JsfUtils.getForm(this, context);
 		
 		// get data from bean
 		GridRow[] rows = getRows();
@@ -34,6 +93,10 @@ public class GridComponent extends UIComponentBase
 		if (columns == null || columns.length == 0) return; 
 		if (rows == null) rows = new GridRow[0];
 		int columnsCount = columns.length;
+		
+		// hidden field for id of the row to be opened
+		String rowIdField = getHiddenFieldNameForToOpen(context); 
+		JsfUtils.encodeHiddenInput(this, writer, rowIdField);
 		
 		// table
 		writer.startElement("table", this);
@@ -61,8 +124,13 @@ public class GridComponent extends UIComponentBase
 			
 			GridRow row = rows[i];
 			
+			String onClick = JsfUtils.generateSubmitJS(context, form,
+					rowIdField, row.getRowId());
+			
 			writer.startElement("tr", this);
 			if (row.hasCssClass()) writer.writeAttribute("class", row.getClass(), null);
+			writer.writeAttribute("class", row.getClass(), null);
+			writer.writeAttribute("onclick", onClick, null);
 			
 			for (int j = 0; j < columnsCount; j++)
 			{
@@ -115,6 +183,16 @@ public class GridComponent extends UIComponentBase
 	{
 		columnsSet = true;
 		this.columns = columns;
+	}
+
+	public MethodBinding getOnOpenRow()
+	{
+		return onOpenRow;
+	}
+
+	public void setOnOpenRow(MethodBinding onOpenRow)
+	{
+		this.onOpenRow = onOpenRow;
 	}
 
 }

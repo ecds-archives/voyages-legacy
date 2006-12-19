@@ -17,6 +17,12 @@ public class FieldValueText extends FieldValue
 		super(name);
 	}
 	
+	public FieldValueText(String name, String value)
+	{
+		super(name);
+		this.value = value;
+	}
+
 	public static String getHtmlFieldName(UIComponent component, FacesContext context, String name)
 	{
 		return component.getClientId(context) + "_" + name;

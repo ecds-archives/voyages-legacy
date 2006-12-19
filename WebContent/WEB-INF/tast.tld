@@ -665,6 +665,12 @@
 		<attribute>
 			<name>rows</name>
 		</attribute>
+		<attribute>
+			<name>onOpenRow</name>
+		</attribute>
+		<attribute>
+			<name>action</name>
+		</attribute>
 	</tag>
 
 	<tag>

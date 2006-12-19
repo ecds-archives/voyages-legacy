@@ -31,3 +31,17 @@ table.pager td {
 	border: 1px solid #CCCCCC;
 	padding: 3px 5px 3px 5px; }
 	
+table.pager td.pager-page,
+table.pager td.pager-previous-enabled,
+table.pager td.pager-next-enabled {
+	cursor: pointer; }
+
+table.pager td.pager-page-current {
+	background-color: #CCCCCC;
+	cursor: default; }
+
+table.pager td.pager-page:hover,
+table.pager td.pager-previous-enabled:hover,
+table.pager td.pager-next-enabled:hover {
+	background-color: #EEEEEE; }
+	

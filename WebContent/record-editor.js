@@ -31,6 +31,8 @@ function RecordEditor(editorId, formName, lists, fields)
 	this.lists = lists;
 	this.fields = fields;
 	
+	return;
+	
 	this.listsById = new Array();
 	for (var i = 0; i < this.lists.length; i++)
 	{
@@ -67,6 +69,18 @@ function RecordEditorTexbox(name)
 }
 
 RecordEditorTexbox.prototype.init = function(editor)
+{
+	this.editor = editor;
+}
+
+/////////////////////////////////////////////////////////////
+
+function RecordEditorDate(name)
+{
+	this.name = name;
+}
+
+RecordEditorDate.prototype.init = function(editor)
 {
 	this.editor = editor;
 }

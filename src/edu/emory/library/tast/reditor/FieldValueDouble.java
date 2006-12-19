@@ -14,7 +14,19 @@ public class FieldValueDouble extends FieldValueText
 	{
 		super(name);
 	}
+
+	public FieldValueDouble(String name, double doubleValue)
+	{
+		super(name);
+		setDouble(doubleValue);
+	}
 	
+	public FieldValueDouble(String name, Double doubleValue)
+	{
+		super(name);
+		setDouble(doubleValue);
+	}
+
 	public boolean isValid()
 	{
 		if (!parsed)

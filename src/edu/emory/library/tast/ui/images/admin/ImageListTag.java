@@ -5,10 +5,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
+import javax.faces.webapp.UIComponentTag;
 
-import org.apache.myfaces.shared_impl.taglib.UIComponentTagBase;
-
-public class ImageListTag extends UIComponentTagBase
+public class ImageListTag extends UIComponentTag
 {
 	
 	private String images;

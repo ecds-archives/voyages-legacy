@@ -14,7 +14,19 @@ public class FieldValueInteger extends FieldValueText
 	{
 		super(name);
 	}
+
+	public FieldValueInteger(String name, int intValue)
+	{
+		super(name);
+		setInteger(intValue);
+	}
 	
+	public FieldValueInteger(String name, Integer intValue)
+	{
+		super(name);
+		setInteger(intValue);
+	}
+
 	public boolean isValid()
 	{
 		if (!parsed)
@@ -44,5 +56,26 @@ public class FieldValueInteger extends FieldValueText
 			return new Integer(intValue);
 		}
 	}
+	
+	public void setInteger(int intValue)
+	{
+		this.intValue = intValue;
+		super.setValue(String.valueOf(intValue));
+		valid = true;
+		parsed = true;
+	}
+
+	public void setInteger(Integer intValue)
+	{
+		if (intValue != null)
+		{
+			setInteger(intValue.intValue());
+		}
+		else
+		{
+			setValue("");
+		}
+	}
+	
 
 }

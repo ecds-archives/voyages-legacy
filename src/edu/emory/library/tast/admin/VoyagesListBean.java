@@ -28,6 +28,11 @@ public class VoyagesListBean
 	private int lastRecordIndex;
 	private int pageSize = 20;
 	
+	public String openVoyage()
+	{
+		return "edit";
+	}
+
 	private void loadDataIfNecessary()
 	{
 
@@ -39,6 +44,7 @@ public class VoyagesListBean
 
 		// load voyages
 		QueryValue query = new QueryValue("Voyage");
+		query.setOrder(QueryValue.ORDER_ASC);
 		query.setOrderBy(new Attribute[] {Voyage.getAttribute("voyageid")});
 		query.setFirstResult(currentPage * pageSize);
 		query.setLimit(pageSize);

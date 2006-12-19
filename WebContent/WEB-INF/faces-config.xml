@@ -451,10 +451,6 @@
 			edu.emory.library.tast.admin.VoyagesListBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>voyageBean</property-name>
-			<value>#{AdminVoyageBean}</value>
-		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -608,6 +604,14 @@
 		<navigation-case>
 			<from-outcome>list</from-outcome>
 			<to-view-id>/images-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/admin/voyages.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>edit</from-outcome>
+			<to-view-id>/admin/voyage-edit.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

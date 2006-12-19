@@ -59,7 +59,6 @@ public class ImageListComponent extends UICommand
 		columns = (ImageListColumn[]) values[3];
 	}
 	
-	
 	private String getFieldNameForSelectedImageId(FacesContext context)
 	{
 		return getClientId(context) + "_selected_id";

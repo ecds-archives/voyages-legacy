@@ -15,6 +15,18 @@ public class FieldValueCheckbox extends FieldValue
 		super(name);
 	}
 
+	public FieldValueCheckbox(String name, boolean checked)
+	{
+		super(name);
+		this.checked = checked;
+	}
+
+	public FieldValueCheckbox(String name, Boolean checked)
+	{
+		super(name);
+		this.checked = checked != null && checked.booleanValue();
+	}
+
 	public static String getHtmlFieldName(UIComponent component, FacesContext context, String name)
 	{
 		return component.getClientId(context) + "_" + name;

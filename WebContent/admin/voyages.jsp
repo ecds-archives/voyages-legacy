@@ -17,7 +17,9 @@
 	
 		<s:grid id="voyges"
 			columns="#{AdminVoyagesListBean.columns}"
-			rows="#{AdminVoyagesListBean.rows}" />
+			rows="#{AdminVoyagesListBean.rows}"
+			action="#{AdminVoyagesListBean.openVoyage}"
+			onOpenRow="#{AdminVoyageBean.openVoyage}" />
 	
 		<s:pager id="voyagesPager"
 			currentPage="#{AdminVoyagesListBean.currentPage}"

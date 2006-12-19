@@ -295,7 +295,7 @@ public class EditorTestBean
 
 		tran.commit();
 		sess.close();
-		
+
 		schema.addField(new FieldSchemaTextbox("voyageid", "Voyage ID"));
 		schema.addField(new FieldSchemaCheckbox("cd", "CD 1999"));
 		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship"));
@@ -335,7 +335,7 @@ public class EditorTestBean
 
 		tran.commit();
 		sess.close();
-		
+
 		schema.addField(new FieldSchemaDropdowns("fate", "Outcome of voyage", LIST_FATES_NAME));
 		schema.addField(new FieldSchemaDropdowns("fate2", "Outcome of voyage for slaves", LIST_FATES_SLAVES_NAME));
 		schema.addField(new FieldSchemaDropdowns("fate3", "Outcome of voyage if ship captured", LIST_FATES_VESSEL_NAME));
@@ -353,10 +353,6 @@ public class EditorTestBean
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
-		
-		registerAreas(schema, sess, Area.loadAll(sess));
-		registerRegions(schema, sess, Region.loadAll(sess));
-		registerPorts(schema, sess, Port.loadAll(sess));
 		
 		registerAreas(schema, sess, Area.loadAll(sess));
 		registerRegions(schema, sess, Region.loadAll(sess));

@@ -8,6 +8,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Voyage</title>
 	<link href="main.css" rel="stylesheet" type="text/css">
+	<script src="../record-editor.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>

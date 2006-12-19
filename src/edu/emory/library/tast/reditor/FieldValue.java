@@ -56,6 +56,10 @@ public abstract class FieldValue
 		{
 			return new FieldValueInteger(name);
 		}
+		else if (FieldValueLong.TYPE.equals(type))
+		{
+			return new FieldValueLong(name);
+		}
 		else if (FieldValueDouble.TYPE.equals(type))
 		{
 			return new FieldValueDouble(name);
