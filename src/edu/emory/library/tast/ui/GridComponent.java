@@ -40,7 +40,7 @@ public class GridComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "grid-table", null);
+		writer.writeAttribute("class", "grid", null);
 		
 		// header
 		writer.startElement("tr", this);
@@ -48,10 +48,10 @@ public class GridComponent extends UIComponentBase
 		for (int j = 0; j < columnsCount; j++)
 		{
 			GridColumn col = columns[j];
-			writer.startElement("td", this);
+			writer.startElement("th", this);
 			if (col.hasCssClass()) writer.writeAttribute("class", col.getClass(), null);
 			writer.write(col.getHeader());
-			writer.endElement("td");
+			writer.endElement("th");
 		}
 		writer.endElement("tr");
 
@@ -72,7 +72,7 @@ public class GridComponent extends UIComponentBase
 				
 				writer.startElement("td", this);
 				if (col.hasCssClass()) writer.writeAttribute("class", col.getClass(), null);
-				writer.write(value);
+				if (value != null) writer.write(value);
 				writer.endElement("td");
 				
 			}

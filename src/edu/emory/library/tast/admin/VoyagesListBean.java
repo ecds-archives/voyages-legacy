@@ -30,13 +30,13 @@ public class VoyagesListBean
 	
 	private void loadDataIfNecessary()
 	{
-		
+
 		if (dataValid) return;
 
 		// open db
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
-		
+
 		// load voyages
 		QueryValue query = new QueryValue("Voyage");
 		query.setOrderBy(new Attribute[] {Voyage.getAttribute("voyageid")});
@@ -54,16 +54,24 @@ public class VoyagesListBean
 		{
 			
 			Voyage voyage = (Voyage) iter.next();
-			String nation = voyage.getNatinimp() == null ?
-					null : voyage.getNatinimp().getName();
 			
-			rows[i++] = new GridRow(new String[] {
+			String rowId = voyage.getIid().toString();
+			
+			String nation = voyage.getNatinimp() == null ? null :
+				voyage.getNatinimp().getName();
+			
+			String slaximp = voyage.getSlaximp() == null ? null :
+				slaveNumFmt.format(new Object[] {voyage.getSlaximp()});
+			
+			String slamimp = voyage.getSlamimp() == null ? null :
+				slaveNumFmt.format(new Object[] {voyage.getSlamimp()});
+			
+			String yearam = voyage.getYearam() == null ? null :
+				String.valueOf(voyage.getYearam());
+
+			rows[i++] = new GridRow(rowId, new String[] {
 					String.valueOf(voyage.getVoyageid()),
-					voyage.getShipname(),
-					String.valueOf(voyage.getYearam()),
-					nation,
-					slaveNumFmt.format(voyage.getSlaximp()),
-					slaveNumFmt.format(voyage.getSlamimp())});
+					voyage.getShipname(), yearam, nation, slaximp, slamimp});
 
 		}
 
@@ -131,6 +139,11 @@ public class VoyagesListBean
 	public void setVoyageBean(VoyageBean voyageBean)
 	{
 		this.voyageBean = voyageBean;
+	}
+
+	public int getPageSize()
+	{
+		return pageSize;
 	}
 
 }

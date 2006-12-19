@@ -97,7 +97,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new RegionAttribute("regdis1", "Voyage", "regdis1"));
 		attributes.add(new RegionAttribute("regdis2", "Voyage", "regdis2"));
 		attributes.add(new RegionAttribute("regdis3", "Voyage", "regdis3"));
-		attributes.add(new PortAttribute("mjselimp", "Voyage", "mjselimp"));
+		attributes.add(new RegionAttribute("mjselimp", "Voyage", "mjselimp"));
 		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
 		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
 		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
@@ -683,7 +683,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setFate4(FateOwner fate4) {
 		this.values.put("fate4", fate4);
 	}
-	public void setMjselimp(Port mjselimp) {
+	public void setMjselimp(Region mjselimp) {
 		this.values.put("mjselimp", mjselimp);
 	}
 	public void setMjbyptimp(Port purchasePort) {
@@ -1060,8 +1060,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public FateOwner getFate4() {
 		return (FateOwner)this.values.get("fate4");
 	}
-	public Port getMjselimp() {
-		return (Port)this.values.get("mjselimp");
+	public Region getMjselimp() {
+		return (Region)this.values.get("mjselimp");
 	}
 	public Port getMjbyptimp() {
 		return (Port)this.values.get("mjbyptimp");

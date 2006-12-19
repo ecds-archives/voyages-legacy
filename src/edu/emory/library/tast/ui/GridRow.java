@@ -7,9 +7,11 @@ public class GridRow
 	
 	private String[] values;
 	private String cssClass;
+	private String rowId;
 	
-	public GridRow(String[] values)
+	public GridRow(String rowId, String[] values)
 	{
+		this.rowId = rowId;
 		this.values = values;
 	}
 	
@@ -53,6 +55,16 @@ public class GridRow
 	public void setValues(String[] values)
 	{
 		this.values = values;
+	}
+
+	public String getRowId()
+	{
+		return rowId;
+	}
+
+	public void setRowId(String rowId)
+	{
+		this.rowId = rowId;
 	}
 
 }

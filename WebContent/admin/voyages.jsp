@@ -13,9 +13,11 @@
 <f:view>
 	<h:form id="form">
 	
+		<h1>Voyages</h1>
+	
 		<s:grid id="voyges"
 			columns="#{AdminVoyagesListBean.columns}"
-			columns="#{AdminVoyagesListBean.rows}" />
+			rows="#{AdminVoyagesListBean.rows}" />
 	
 		<s:pager id="voyagesPager"
 			currentPage="#{AdminVoyagesListBean.currentPage}"

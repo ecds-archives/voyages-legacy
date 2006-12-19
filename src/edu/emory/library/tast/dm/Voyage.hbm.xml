@@ -61,11 +61,11 @@
 		<many-to-one name="sla1port" column="sla1port" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="adpsale1" column="adpsale1" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="adpsale2" column="adpsale2" class="edu.emory.library.tast.dm.Port" />
-		<many-to-one name="mjslptimp" column="mjslptimp" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="mjslptimp" column="mjslptimp" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="regdis1" column="regdis1" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="regdis2" column="regdis2" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="regdis3" column="regdis3" class="edu.emory.library.tast.dm.Region" />
-		<many-to-one name="mjselimp" column="mjselimp" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="mjselimp" column="mjselimp" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="portret" column="portret" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="portdep" column="portdep" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="retrnreg" column="retrnreg" class="edu.emory.library.tast.dm.Region" />

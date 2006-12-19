@@ -32,6 +32,13 @@ public class PagerComponent extends UIComponentBase
 		return null;
 	}
 	
+	public Object saveState(FacesContext context)
+	{
+//		Object[] values = new Objecy[];
+//		return super.saveState(context);
+		return null;
+	}
+	
 	private String getHtmlCurrentPageNameInput(FacesContext context)
 	{
 		return getClientId(context);
@@ -64,6 +71,7 @@ public class PagerComponent extends UIComponentBase
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("align", "left", null);
+		writer.writeAttribute("class", "pager", null);
 		writer.startElement("tr", this);
 		
 		if (currentPage > 1)
@@ -138,7 +146,7 @@ public class PagerComponent extends UIComponentBase
 				writer.startElement("td", this);
 				writer.writeAttribute("class", "pager-page", null);
 				writer.writeAttribute("onclick", onClick, null);
-				writer.write(page);
+				writer.write(String.valueOf(page));
 				writer.endElement("td");
 
 			}
@@ -147,7 +155,7 @@ public class PagerComponent extends UIComponentBase
 
 				writer.startElement("td", this);
 				writer.writeAttribute("class", "pager-page-current", null);
-				writer.write("Previous");
+				writer.write(String.valueOf(page));
 				writer.endElement("td");
 
 			}
