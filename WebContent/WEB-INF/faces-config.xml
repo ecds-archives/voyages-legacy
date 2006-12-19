@@ -184,10 +184,18 @@
 	</component>
 
 	<component>
-		<component-type>
-		CheckboxListPopup</component-type>
-		<component-class>
-		edu.emory.library.tast.ui.CheckboxListPopupComponent</component-class>
+		<component-type>CheckboxListPopup</component-type>
+		<component-class>edu.emory.library.tast.ui.CheckboxListPopupComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>Pager</component-type>
+		<component-class>edu.emory.library.tast.ui.PagerComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>Grid</component-type>
+		<component-class>edu.emory.library.tast.ui.GridComponent</component-class>
 	</component>
 
 	<managed-bean>
@@ -422,7 +430,6 @@
 			#{EstimatesSelectionBean}</value>
 		</managed-property>
 	</managed-bean>
-
 	
 	<managed-bean>
 		<managed-bean-name>EstimatesMapBean</managed-bean-name>
@@ -436,6 +443,26 @@
 			edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
 			<value>#{EstimatesSelectionBean}</value>
 		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>AdminVoyagesListBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.admin.VoyagesListBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>voyageBean</property-name>
+			<value>#{AdminVoyageBean}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>AdminVoyageBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.admin.VoyageBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>

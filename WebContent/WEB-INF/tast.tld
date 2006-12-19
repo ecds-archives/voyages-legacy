@@ -650,4 +650,47 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>grid</name>
+		<tag-class>
+			edu.emory.library.tast.ui.GridTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>columns</name>
+		</attribute>
+		<attribute>
+			<name>rows</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>pager</name>
+		<tag-class>
+			edu.emory.library.tast.ui.PagerTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>firstRecord</name>
+		</attribute>
+		<attribute>
+			<name>lastRecord</name>
+		</attribute>
+		<attribute>
+			<name>pageSize</name>
+		</attribute>
+		<attribute>
+			<name>currentPage</name>
+		</attribute>
+		<attribute>
+			<name>maxShownPages</name>
+		</attribute>
+	</tag>
+
 </taglib>
