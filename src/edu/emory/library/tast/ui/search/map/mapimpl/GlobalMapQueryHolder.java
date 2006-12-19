@@ -43,10 +43,12 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 
 		// We will need join condition (to join VoyageIndex and Voyage).
 		//localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
-
+		Conditions c = new Conditions();
 		
 		querySetPorts = new QueryValue[2];
-		QueryValue query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		QueryValue query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
@@ -55,7 +57,10 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetPorts[0] = query1;
 				
-		QueryValue query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
+		c = new Conditions();
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		QueryValue query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
@@ -66,71 +71,77 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		
 	
 		querySetRegions = new QueryValue[2];
-		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
-		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"),  Region.getAttribute("id")}));
+		c = new Conditions();
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbuyimp"), Region.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbuyimp"), Region.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbuyimp"),  Region.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"),  Region.getAttribute("id")}) });
+		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbuyimp"),  Region.getAttribute("id")}) });
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[0] = query1;
-				
+			
+		c = new Conditions();
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
 		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
-		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"),  Region.getAttribute("id")}));
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"),  Region.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"),  Region.getAttribute("id")}) });
+		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"),  Region.getAttribute("id")}) });
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[1] = query2;
 		
 		
 		
-		querySetPortsAdj = new QueryValue[2];
-		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
-		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
-		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}) });
-		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
-		query1.setOrder(QueryValue.ORDER_ASC);
-		querySetPortsAdj[0] = query1;
-				
-		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
-		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
-		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}) });
-		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
-		query2.setOrder(QueryValue.ORDER_ASC);
-		querySetPortsAdj[1] = query2;
-		
-		
-		
-		querySetRegionsAdj = new QueryValue[2];
-		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
-		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
-		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}) });
-		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
-		query1.setOrder(QueryValue.ORDER_ASC);
-		querySetRegionsAdj[0] = query1;
-				
-		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
-		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
-		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")})});
-		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
-		query2.setOrder(QueryValue.ORDER_ASC);
-		querySetRegionsAdj[1] = query2;
-		
+//		querySetPortsAdj = new QueryValue[2];
+//		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
+//		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
+//		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
+//		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
+//		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}) });
+//		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
+//		query1.setOrder(QueryValue.ORDER_ASC);
+//		querySetPortsAdj[0] = query1;
+//				
+//		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
+//		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
+//		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
+//		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
+//		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}) });
+//		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
+//		query2.setOrder(QueryValue.ORDER_ASC);
+//		querySetPortsAdj[1] = query2;
+//		
+//		
+//		
+//		querySetRegionsAdj = new QueryValue[2];
+//		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
+//		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
+//		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")})));
+//		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
+//		query1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}) });
+//		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slaximp")}))});
+//		query1.setOrder(QueryValue.ORDER_ASC);
+//		querySetRegionsAdj[0] = query1;
+//				
+//		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"});
+//		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
+//		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")})));
+//		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
+//		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")})});
+//		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("s_slamimp")}))});
+//		query2.setOrder(QueryValue.ORDER_ASC);
+//		querySetRegionsAdj[1] = query2;
+//		
 		
 		this.addQuery(availableQuerySets[0], querySetPorts);
 		this.addQuery(availableQuerySets[1], querySetRegions);
-		this.addQuery(availableQuerySets[2], querySetPortsAdj);
-		this.addQuery(availableQuerySets[3], querySetRegionsAdj);
+//		this.addQuery(availableQuerySets[2], querySetPortsAdj);
+//		this.addQuery(availableQuerySets[3], querySetRegionsAdj);
 	}
 	
 	protected void performExecuteQuery(QueryValue[] queries) {

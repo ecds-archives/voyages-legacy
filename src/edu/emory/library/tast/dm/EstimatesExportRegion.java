@@ -10,7 +10,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class EstimatesExportRegion extends DictionaryOrdered
+public class EstimatesExportRegion extends Location
 {
 
 	private static Map attributes = new HashMap();
@@ -18,6 +18,8 @@ public class EstimatesExportRegion extends DictionaryOrdered
 	{
 		attributes.put("id", new NumericAttribute("id", "EstimatesExportRegion", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesExportRegion"));
+		attributes.put("longitude", new StringAttribute("longitude", "Port"));
+		attributes.put("latitude", new StringAttribute("latitude", "Port"));
 		attributes.put("order", new NumericAttribute("order", "EstimatesExportRegion", NumericAttribute.TYPE_INTEGER));
 	}
 	

@@ -13,6 +13,8 @@
 			<generator class="native"/>
 		</id>
 
+		<property name="latitude" />
+		<property name="longitude" />
 		<property name="name" column="name" />
 		<property name="order" column="order_num" />
 		

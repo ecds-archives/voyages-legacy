@@ -9,6 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.dm.EstimatesExportRegion;
+import edu.emory.library.tast.dm.EstimatesImportRegion;
+import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
@@ -46,12 +49,15 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		for (int i = 0; i < data.length; i++) {
 			Object[] row = (Object[]) data[i];
 			Long expTmp = (Long) row[0];
-			Region exp = null;
+			Location exp = null;
 			if (expTmp != null) {
-				exp = Region.loadById(session, expTmp.longValue());
+				exp = EstimatesExportRegion.loadById(session, expTmp.longValue());
+				if (exp == null) {
+					exp = EstimatesImportRegion.loadById(session, expTmp.longValue());
+				}
 			}
 			if (exp != null) {
-				System.out.println(i);
+				//System.out.println(i);
 				double numberExp = Math
 						.round(((Number) row[1]).doubleValue() * 100)
 						/ (double) 100;

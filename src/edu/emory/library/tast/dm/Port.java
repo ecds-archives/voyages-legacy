@@ -19,6 +19,8 @@ public class Port extends Location
 	{
 		attributes.put("id", new NumericAttribute("id", "Port", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "Port"));
+		attributes.put("longitude", new StringAttribute("longitude", "Port"));
+		attributes.put("latitude", new StringAttribute("latitude", "Port"));
 		attributes.put("region", new RegionAttribute("region", "Port"));
 	}
 

@@ -270,7 +270,9 @@ public class EstimatesLoader {
 				Voyage.getAttribute("e_natinimp"),
 				EstimatesNation.getAttribute("id") }), new Long(position
 				.getNatimp()), Conditions.OP_EQUALS);
-
+		conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, Conditions.OP_IS_NOT);
+		conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, Conditions.OP_IS_NOT);
+		
 		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
 				new String[] { "v" }, conditions);
 		qValue.setGroupBy(new Attribute[] {
@@ -342,9 +344,10 @@ public class EstimatesLoader {
 		// position.getYear()), Conditions.OP_EQUALS);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("e_natinimp"),
-				EstimatesNation.getAttribute("id") }), new Long(position
-				.getNatimp()), Conditions.OP_EQUALS);
-
+				EstimatesNation.getAttribute("id") }), new Long(position.getNatimp()), Conditions.OP_EQUALS);
+		conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, Conditions.OP_IS_NOT);
+		conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, Conditions.OP_IS_NOT);
+		
 		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
 				new String[] { "v" }, conditions);
 		qValue.setGroupBy(new Attribute[] {
@@ -365,6 +368,7 @@ public class EstimatesLoader {
 				new Attribute[] { new FunctionAttribute("estimate",
 						new Attribute[] { Voyage.getAttribute("iid"),
 								new DirectValueAttribute(field) }) }));
+		
 
 		t.commit();
 		session.close();

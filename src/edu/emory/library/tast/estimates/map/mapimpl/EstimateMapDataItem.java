@@ -41,7 +41,7 @@ public class EstimateMapDataItem extends AbstractMapItem {
 
 	public PointOfInterest getTooltipText() {
 
-		PointOfInterest point = new PointOfInterest(this.getX(), this.getY());
+		PointOfInterest point = new PointOfInterest(this.getY(), this.getX());
 		point.setText(this.buildToolTipInfo());
 		Element[] elements = this.getMapItemElements()[0].getElements();
 		if (elements.length > 1) {

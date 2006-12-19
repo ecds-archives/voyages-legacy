@@ -93,7 +93,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 * Gets tooltip text of map item.
 	 */
 	public PointOfInterest getTooltipText() {
-		PointOfInterest point = new PointOfInterest(this.getProjectedX(), this.getProjectedY());
+		PointOfInterest point = new PointOfInterest(this.getProjectedY(), this.getProjectedX());
 		point.setText(this.buildToolTipInfo());
 		Element[] elements = this.getMapItemElements()[0].getElements();
 		if (elements.length > 1) {

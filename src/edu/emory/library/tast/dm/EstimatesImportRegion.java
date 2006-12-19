@@ -11,7 +11,7 @@ import edu.emory.library.tast.dm.attributes.EstimatesImportAreaAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class EstimatesImportRegion extends DictionaryOrdered
+public class EstimatesImportRegion extends Location
 {
 
 	private static Map attributes = new HashMap();

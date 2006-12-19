@@ -11,7 +11,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class EstimatesImportArea extends DictionaryOrdered
+public class EstimatesImportArea extends Location
 {
 
 	private static Map attributes = new HashMap();
@@ -19,6 +19,8 @@ public class EstimatesImportArea extends DictionaryOrdered
 	{
 		attributes.put("id", new NumericAttribute("id", "EstimatesImportArea", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesImportArea"));
+		attributes.put("longitude", new StringAttribute("longitude", "Port"));
+		attributes.put("latitude", new StringAttribute("latitude", "Port"));
 		attributes.put("order", new NumericAttribute("order", "EstimatesImportArea", NumericAttribute.TYPE_INTEGER));
 	}
 	

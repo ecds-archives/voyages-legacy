@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.EstimatesExportRegion;
+import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
@@ -22,31 +24,45 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 	public QueryValue[] estimateMapQuerys = null;
 
 	public EstimateMapQueryHolder(Conditions conditions) {
+		
+		
+		Conditions c = new Conditions();
+		c.addCondition(conditions);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
 		QueryValue qValue1 = new QueryValue(new String[] { "Estimate" },
-				new String[] { "e" }, conditions);
+				new String[] { "e" }, c);
 		qValue1
 				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
 						Estimate.getAttribute("expRegion"),
-						Region.getAttribute("id") }));
+						EstimatesExportRegion.getAttribute("id") }));
 		qValue1.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Estimate.getAttribute("slavExported") }));
 		qValue1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		qValue1.setGroupBy(new Attribute[] { new SequenceAttribute(
 				new Attribute[] { Estimate.getAttribute("expRegion"),
-						Region.getAttribute("id") }) });
+						EstimatesExportRegion.getAttribute("id") }) });
 
+		c = new Conditions();
+		c.addCondition(conditions);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesExportRegion.getAttribute("longitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesExportRegion.getAttribute("latitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
 		QueryValue qValue2 = new QueryValue(new String[] { "Estimate" },
-				new String[] { "e" }, conditions);
+				new String[] { "e" }, c);
 		qValue2
 				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
 						Estimate.getAttribute("impRegion"),
-						Region.getAttribute("id") }));
+						EstimatesImportRegion.getAttribute("id") }));
 		qValue2.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Estimate.getAttribute("slavImported") }));
 		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		qValue2.setGroupBy(new Attribute[] { new SequenceAttribute(
 				new Attribute[] { Estimate.getAttribute("impRegion"),
-						Region.getAttribute("id") }) });
+						EstimatesImportRegion.getAttribute("id") }) });
 
 		this.estimateMapQuerys = new QueryValue[] { qValue1, qValue2 };
 		this.addQuery("", this.estimateMapQuerys);
