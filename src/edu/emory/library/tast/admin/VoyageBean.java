@@ -193,6 +193,33 @@ public class VoyageBean
 				schema, sess,
 				Resistance.loadAll(sess, "id"));
 	}
+	
+	private String[] createLocationValues(Region region, Port port)
+	{
+		String[] values = new String[3];
+		if (port != null)
+		{
+			values[0] = String.valueOf(port.getRegion().getArea().getId());
+			values[1] = String.valueOf(port.getRegion().getId());
+			values[2] = String.valueOf(port.getId());
+		}
+		else if (region != null)
+		{
+			values[0] = String.valueOf(region.getArea().getId());
+			values[1] = String.valueOf(region.getId());
+		}
+		return values;
+	}
+
+	private String[] createDictionaryValue(Dictionary dictItem)
+	{
+		String[] values = new String[1];
+		if (dictItem != null)
+		{
+			values[0] = String.valueOf(dictItem.getId());
+		}
+		return values;
+	}
 
 	public Schema getShipSchema()
 	{
@@ -237,12 +264,12 @@ public class VoyageBean
 		shipValues.addValue(new FieldValueLong("voyageid", voyage.getVoyageid()));
 		shipValues.addValue(new FieldValueCheckbox("cd", voyage.getCd()));
 		shipValues.addValue(new FieldValueText("shipname", voyage.getShipname()));
-		shipValues.addValue(new FieldValueDropdowns("placcons"));
+		shipValues.addValue(new FieldValueDropdowns("placcons", createLocationValues(null, voyage.getPlaccons())));
 		shipValues.addValue(new FieldValueInteger("yrcons", voyage.getYrcons()));
-		shipValues.addValue(new FieldValueDropdowns("placreg"));
+		shipValues.addValue(new FieldValueDropdowns("placreg", createLocationValues(null, voyage.getPlacreg())));
 		shipValues.addValue(new FieldValueInteger("yrreg", voyage.getYrreg()));
-		shipValues.addValue(new FieldValueDropdowns("natinimp"));
-		shipValues.addValue(new FieldValueDropdowns("rig"));
+		shipValues.addValue(new FieldValueDropdowns("natinimp", createDictionaryValue(voyage.getNatinimp())));
+		shipValues.addValue(new FieldValueDropdowns("rig", createDictionaryValue(voyage.getRig())));
 		shipValues.addValue(new FieldValueFloat("tonnage", voyage.getTonmod()));
 		shipValues.addValue(new FieldValueFloat("tonmod", voyage.getTonmod()));
 		shipValues.addValue(new FieldValueInteger("guns", voyage.getGuns()));

@@ -17,6 +17,12 @@ public class FieldValueDropdowns extends FieldValue
 		super(name);
 	}
 	
+	public FieldValueDropdowns(String name, String values[])
+	{
+		super(name);
+		this.values = values;
+	}
+
 	public static String getHtmlCountHiddenFieldName(UIComponent component, FacesContext context, String name)
 	{
 		return component.getClientId(context) + "_" + name + "_count";
