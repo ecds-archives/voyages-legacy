@@ -614,6 +614,14 @@
 			<to-view-id>/admin/voyage-edit.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/admin/voyage-edit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/admin/voyages.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<render-kit />
 

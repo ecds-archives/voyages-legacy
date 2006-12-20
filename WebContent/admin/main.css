@@ -4,7 +4,7 @@ body, input, textarea, select {
 	
 body {
 	margin: 0px;
-	padding: 0px; }
+	padding: 20px; }
 	
 /**********************************
 * grid
@@ -44,4 +44,3 @@ table.pager td.pager-page:hover,
 table.pager td.pager-previous-enabled:hover,
 table.pager td.pager-next-enabled:hover {
 	background-color: #EEEEEE; }
-	

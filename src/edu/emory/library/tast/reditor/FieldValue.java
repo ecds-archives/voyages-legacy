@@ -60,6 +60,10 @@ public abstract class FieldValue
 		{
 			return new FieldValueLong(name);
 		}
+		else if (FieldValueFloat.TYPE.equals(type))
+		{
+			return new FieldValueFloat(name);
+		}
 		else if (FieldValueDouble.TYPE.equals(type))
 		{
 			return new FieldValueDouble(name);

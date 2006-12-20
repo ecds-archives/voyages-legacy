@@ -95,7 +95,7 @@ public class StringUtils
 		}
 	}
 
-	public static String join(String[] arr, String sep)
+	public static String join(String sep, String[] arr)
 	{
 		if (arr == null) return "";
 		StringBuffer res = new StringBuffer();
@@ -107,6 +107,21 @@ public class StringUtils
 		return res.toString();
 	}
 	
+	public static String joinNonEmpty(String sep, String[] arr)
+	{
+		if (arr == null) return "";
+		StringBuffer res = new StringBuffer();
+		for (int i = 0; i < arr.length; i++)
+		{
+			if (!StringUtils.isNullOrEmpty(arr[i]))
+			{
+				if (i > 0) res.append(sep);
+				res.append(arr[i]);
+			}
+		}
+		return res.toString();
+	}
+
 	public static Set toStringSet(String[] arr)
 	{
 		Set set = new HashSet();

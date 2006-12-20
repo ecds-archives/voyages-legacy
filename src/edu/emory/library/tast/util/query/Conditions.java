@@ -48,6 +48,8 @@ public class Conditions {
 	public static final int OP_SMALLER_OR_EQUAL = 6;
 
 	public static final int OP_LIKE = 7;
+	
+	public static final int OP_ILIKE = 11;
 
 	public static final int OP_IS = 8;
 
@@ -194,6 +196,9 @@ public class Conditions {
 			break;
 		case OP_LIKE:
 			opStr = " like ";
+			break;
+		case OP_ILIKE:
+			opStr = " ilike ";
 			break;
 		case OP_IS:
 			opStr = " is ";

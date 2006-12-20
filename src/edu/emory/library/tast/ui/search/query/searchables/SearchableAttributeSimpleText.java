@@ -1,12 +1,17 @@
 package edu.emory.library.tast.ui.search.query.searchables;
 
+import java.util.regex.Pattern;
+
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionText;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 {
+	
+	private final static Pattern sepRegex = Pattern.compile("[^a-zA-Z_0-9]+");
 
 	public SearchableAttributeSimpleText(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
 	{
@@ -33,25 +38,28 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 		if (!queryConditionText.isNonEmpty())
 			return true;
 		
-		// trivial preprocessing
-		String value = queryConditionText.getValue().trim();
-		if (!value.endsWith("%")) value += "%";
+		// consider only alfanum and digits
+		String value = queryConditionText.getValue().toUpperCase();
+		String[] keywords = sepRegex.split(value);
+		if (keywords.length == 0)
+			return false;
 
-		// create db conditions
+		// add keywords to query
+		Conditions subCond = new Conditions(Conditions.JOIN_AND);
 		Attribute[] attributes = getAttributes();
-		if (attributes.length == 1)
+		for (int i = 0; i < keywords.length; i++)
 		{
-			conditions.addCondition(attributes[0],
-					value, Conditions.OP_LIKE);
+			Conditions kewordCond = new Conditions(Conditions.JOIN_OR);
+			for (int j = 0; j < attributes.length; j++)
+			{
+				kewordCond.addCondition(
+						new FunctionAttribute("upper", new Attribute[]{attributes[j]}),
+						"%" + keywords[i] + "%",
+						Conditions.OP_LIKE);
+			}
+			subCond.addCondition(kewordCond);
 		}
-		else
-		{
-			Conditions orCond = new Conditions(Conditions.JOIN_OR);
-			conditions.addCondition(orCond);
-			for (int i = 0; i < attributes.length; i++)
-				orCond.addCondition(attributes[i],
-						value, Conditions.OP_LIKE);
-		}
+		conditions.addCondition(subCond);
 		
 		// all OK
 		return true;

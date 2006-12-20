@@ -2,12 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Voyage</title>
 	<link href="main.css" rel="stylesheet" type="text/css">
+	<link href="tabs.css" rel="stylesheet" type="text/css">
 	<script src="../record-editor.js" language="javascript" type="text/javascript"></script>
 	<script src="../utils.js" language="javascript" type="text/javascript"></script>
 </head>
@@ -15,7 +17,8 @@
 <f:view>
 	<h:form id="form">
 	
-		<s:tabBar id="bar" selectedTabId="#{Switcher.selectedModuleId}">
+		<s:tabBar id="bar" selectedTabId="#{AdminVoyageBean.selectedGroupId}">
+			<s:tab text="Ship" tabId="ship" />
 			<s:tab text="Outcome" tabId="outcome" />
 			<s:tab text="Itinerary" tabId="itinerary" />
 			<s:tab text="Dates" tabId="dates" />
@@ -25,57 +28,66 @@
 			<s:tab text="Sources" tabId="sources" />
 		</s:tabBar>
 	
-		<h:panelGroup render="#{AdminVoyageBean.groupOutcomeSelected}">
-			<h2>Outcome</h2>
+		<h:panelGroup rendered="#{AdminVoyageBean.groupShipSelected}">
+			<t:htmlTag value="h2"><h:outputText value="Ship" /></t:htmlTag>
 			<s:recordEditor id="ship"
 				schema="#{AdminVoyageBean.shipSchema}"
 				values="#{AdminVoyageBean.shipValues}" />
 		</h:panelGroup>
 
-		<h:panelGroup render="#{AdminVoyageBean.groupItinerarySelected}">
-			<h2>Itinerary</h2>
+		<h:panelGroup rendered="#{AdminVoyageBean.groupOutcomeSelected}">
+			<t:htmlTag value="h2"><h:outputText value="Outcome" /></t:htmlTag>
+			<s:recordEditor id="ship"
+				schema="#{AdminVoyageBean.outcomeSchema}"
+				values="#{AdminVoyageBean.outcomeValues}" />
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{AdminVoyageBean.groupItinerarySelected}">
+			<t:htmlTag value="h2"><h:outputText value="Itinerary" /></t:htmlTag>
 			<s:recordEditor id="itinerary"
-				schema="#{EditorTestBean.itinerarySchema}"
-				values="#{EditorTestBean.itineraryValues}" />
+				schema="#{AdminVoyageBean.itinerarySchema}"
+				values="#{AdminVoyageBean.itineraryValues}" />
 		</h:panelGroup>
 
-		<h:panelGroup render="#{AdminVoyageBean.groupDatesSelected}">
-			<h2>Dates</h2>
+		<h:panelGroup rendered="#{AdminVoyageBean.groupDatesSelected}">
+			<t:htmlTag value="h2"><h:outputText value="Dates" /></t:htmlTag>
 			<s:recordEditor id="dates"
-				schema="#{EditorTestBean.datesSchema}"
-				values="#{EditorTestBean.datesvalues}" />
+				schema="#{AdminVoyageBean.datesSchema}"
+				values="#{AdminVoyageBean.datesValues}" />
 		</h:panelGroup>
 
-		<h:panelGroup render="#{AdminVoyageBean.groupCrewSelected}">
-			<h2>Crew</h2>
+		<h:panelGroup rendered="#{AdminVoyageBean.groupCrewSelected}">
+			<t:htmlTag value="h2"><h:outputText value="Crew" /></t:htmlTag>
 			<s:recordEditor id="crew"
-				schema="#{EditorTestBean.crewSchema}"
-				values="#{EditorTestBean.crewValues}" />
+				schema="#{AdminVoyageBean.crewSchema}"
+				values="#{AdminVoyageBean.crewValues}" />
 		</h:panelGroup>
 
-		<h:panelGroup render="#{AdminVoyageBean.groupSlaveNumbersSelected}">
-			<h2>Slave (numbers)</h2>
-			<s:recordEditor id="slaveNumbers"
-				schema="#{EditorTestBean.slaveNumbersSchema}"
-				values="#{EditorTestBean.slaveValues}" />
+		<h:panelGroup rendered="#{AdminVoyageBean.groupSlaveNumsSelected}">
+			<t:htmlTag value="h2"><h:outputText value="Slave (numbers)" /></t:htmlTag>
+			<s:recordEditor id="slaveNums"
+				schema="#{AdminVoyageBean.slaveNumsSchema}"
+				values="#{AdminVoyageBean.slaveNumsValues}" />
 		</h:panelGroup>
 
-		<h:panelGroup render="#{AdminVoyageBean.groupSlaveCharsSelected}">
-			<h2>Slave (characteritics)</h2>
+		<h:panelGroup rendered="#{AdminVoyageBean.groupSlaveCharsSelected}">
+			<t:htmlTag value="h2"><h:outputText value="Slave (characteritics)" /></t:htmlTag>
 			<s:recordEditor id="slaveChars"
-				schema="#{EditorTestBean.slaveCharsSchema}"
-				values="#{EditorTestBean.slaveCharsValues}" />
+				schema="#{AdminVoyageBean.slaveCharsSchema}"
+				values="#{AdminVoyageBean.slaveCharsValues}" />
 		</h:panelGroup>
 
-		<h:panelGroup render="#{AdminVoyageBean.groupSourcesSelected}">
-			<h2>Sources</h2>
+		<h:panelGroup rendered="#{AdminVoyageBean.groupSourcesSelected}">
+			<t:htmlTag value="h2"><h:outputText value="Sources" /></t:htmlTag>
 			<s:recordEditor id="sources"
-				schema="#{EditorTestBean.slaveCharsSchema}"
-				values="#{EditorTestBean.slaveCharsValues}" />
+				schema="#{AdminVoyageBean.sourcesSchema}"
+				values="#{AdminVoyageBean.sourcesValues}" />
 		</h:panelGroup>
 
-		<h:commandButton value="Test submit" />
+		<h:commandButton value="Save" />
 	
+		<h:commandButton value="Cancel" action="cancel" />
+
 	</h:form>
 </f:view>
 </body>

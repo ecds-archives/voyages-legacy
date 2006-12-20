@@ -87,7 +87,8 @@ public class PagerComponent extends UIComponentBase
 		maxShownPages = getMaxShownPages();
 		
 		JsfUtils.encodeHiddenInput(this, writer,
-				currentPageField);
+				currentPageField,
+				String.valueOf(currentPage));
 		
 		int totalCount = lastRecord - firstRecord + 1;
 		if (totalCount <= 0) return;

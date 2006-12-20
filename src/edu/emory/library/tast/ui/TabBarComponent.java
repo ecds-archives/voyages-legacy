@@ -74,32 +74,48 @@ public class TabBarComponent extends UIComponentBase
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("class", "tab-bar", null);
+		writer.writeAttribute("class", "tabs", null);
 		writer.startElement("tr", this);
 		
+		int i = 0;
 		for (Iterator iter = getChildren().iterator(); iter.hasNext();)
 		{
+			
 			TabComponent tab = (TabComponent) iter.next();
 			
 			String jsOnClick = JsfUtils.generateSubmitJS(
 					context, form,
 					getHiddenFieldName(context), tab.getTabId());
 			
+			if (i > 0)
+			{
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "tabs-separator", null);
+				writer.endElement("td");
+			}
+			
 			writer.startElement("td", this);
 			if (StringUtils.compareStrings(selectedTabId, tab.getTabId()))
 			{
-				writer.writeAttribute("class", "tab-selected", null);
+				writer.writeAttribute("class", "tabs-tab-active", null);
 			}
 			else
 			{
-				writer.writeAttribute("class", "tab", null);
+				writer.writeAttribute("class", "tabs-tab", null);
 				writer.writeAttribute("onclick", jsOnClick, null);
 			}
 			writer.write(tab.getText());
 			writer.endElement("td");
 			
+			i++;
+			
 		}
 		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "tabs-right-extent", null);
+		writer.write("&nbsp;");
+		writer.endElement("td");
+
 		writer.endElement("tr");
 		writer.endElement("table");
 	

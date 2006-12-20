@@ -47,7 +47,7 @@ public class FieldSchemaTextbox extends FieldSchema
 		
 		// type check
 		if (!(value instanceof FieldValueText))
-			throw new RuntimeException("FieldSchemaTextbox expected FieldValueText");
+			throw new RuntimeException("FieldSchemaTextbox expected FieldValueText, name = " + getName());
 				
 		// cast
 		FieldValueText valueText = (FieldValueText) value;

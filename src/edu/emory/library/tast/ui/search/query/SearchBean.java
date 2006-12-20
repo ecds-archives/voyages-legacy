@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui.search.query;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -49,44 +50,44 @@ public class SearchBean
 	private Query workingQuery = new Query();
 	private SearchParameters searchParameters = new SearchParameters(new Conditions());
 	
-	private int yearFrom;
-	private int yearTo;
+	private int yearFrom = 1501;
+	private int yearTo = 1865;
 
 	private MessageBarComponent messageBar;
 	
-	/**
-	 * Called by {@link #addQueryConditionBeginner} or
-	 * {@link #addQueryConditionGeneral()}. Inserts a new condition on the
-	 * attribute with the given ID to the current query {@link #workingQuery}.
-	 * 
-	 * @param selectedAttributeId
-	 *            ID of {@link Attribute} or {@link CompoundAttribute} to add.
-	 */
+	public SearchBean()
+	{
+		determineTimeFrameExtent();
+	}
+
+	private void determineTimeFrameExtent()
+	{
+
+		QueryValue query = new QueryValue("Voyage");
+		
+		query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] {Voyage.getAttribute("yearam")}));
+		query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] {Voyage.getAttribute("yearam")}));
+		
+		List ret = query.executeQueryList();
+		if (ret != null && ret.size() == 1)
+		{
+			Object[] row = (Object[]) ret.get(0); 
+			yearFrom = ((Integer) row[0]).intValue();
+			yearTo = ((Integer) row[1]).intValue();
+		}
+
+	}
+	
 	private void addQueryCondition(String selectedAttributeId)
 	{
 		workingQuery.addConditionOn(selectedAttributeId);
 	}
 	
-	/**
-	 * Bind to both menu components (beginner and general) in UI. Each menu item
-	 * has an id which is the id of the corresponding attribute or compounded
-	 * attribute.
-	 * 
-	 * @param event
-	 */
 	public void addConditionFromMenu(MenuItemSelectedEvent event)
 	{
 		addQueryCondition(event.getMenuId());
 	}
 
-	/**
-	 * Bind a button in UI. Activated when the user clicks on the search button
-	 * under the list of conditions. Calles {@link #searchInternal(boolean)}
-	 * with <code>true</code> meaning that the current query should be stored
-	 * in the history list.
-	 * 
-	 * @return Always <code>null</code>, i.e. we stay on the same page.
-	 */
 	public String search()
 	{
 		messageBar.setRendered(false);
@@ -94,17 +95,6 @@ public class SearchBean
 		return null;
 	}
 
-	/**
-	 * Do actuall seach. Not called directly from UI
-	 * Construct a database query ({@link Conditions})
-	 * from {@link #workingQuery} by calling
-	 * {@link QueryCondition#addToConditions(Conditions, boolean)} on each condition.
-	 * Then, is the query is different from the last query in the history list
-	 * and if <code>storeToHistory</code> is <code>true</code> the stores
-	 * {@link #workingQuery} to the history list {@link #history}.
-	 * 
-	 * @param storeToHistory
-	 */
 	private void searchInternal(boolean storeToHistory)
 	{
 		
@@ -140,10 +130,6 @@ public class SearchBean
 
 	}
 	
-	/**
-	 * AJAX refresh. Uses AjaxAnywhere. Bind to a QueryBuilder.
-	 * @param event
-	 */
 	public void updateTotal(QueryUpdateTotalEvent event)
 	{
 		HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
@@ -151,11 +137,6 @@ public class SearchBean
 			AAUtils.addZonesToRefresh(request,"total"); 
 	}
 	
-	/**
-	 * Returns the number compute in {@link #updateTotal(QueryUpdateTotalEvent)}.
-	 * The number of results is reset any time the user presses search.
-	 * @return
-	 */
 	public String getNumberOfResultsText()
 	{
 		
@@ -166,41 +147,29 @@ public class SearchBean
 			queryCondition.addToConditions(conditions, false);
 		}
 		
-		//Conditions localCond = (Conditions) conditions.clone();
-		//localCond.addCondition(VoyageIndex.getRecent());
-		//localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
-		
-		//QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
-		QueryValue qValue = new QueryValue("Voyage", conditions);
-		qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
-		Object[] ret = qValue.executeQuery();
+		conditions.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearFrom),
+				Conditions.OP_GREATER_OR_EQUAL);
+
+		conditions.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearTo),
+				Conditions.OP_SMALLER_OR_EQUAL);
+
+		QueryValue query = new QueryValue("Voyage", conditions);
+		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
+		Object[] ret = query.executeQuery();
 		int numberOfResults = ((Number)ret[0]).intValue();
 		
 		return "Expected number of voyages: " + numberOfResults;
 	}
 
-	/**
-	 * Handler of an event from the history list. Deletes the given history item
-	 * from {@link #history}. The deletion is not handled directly by the
-	 * {@link HistoryListComponent} because the component does not hold the data
-	 * itself (it only gets them from this bean when rendering).
-	 * 
-	 * @param event
-	 *            Contains the history ID to delete.
-	 */
 	public void historyItemDelete(HistoryItemDeleteEvent event)
 	{
 		history.deleteItem(event.getHistoryId());
 	}
 	
-	/**
-	 * Handler of an event from the history list. Restores the given history
-	 * item from {@link #history} and replaces by it the current query
-	 * {@link #workingQuery} and invokes search.
-	 * 
-	 * @param event
-	 *            Contains the history ID to restore.
-	 */
 	public void historyItemRestore(HistoryItemRestoreEvent event)
 	{
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
@@ -208,14 +177,6 @@ public class SearchBean
 		searchInternal(false);
 	}
 	
-	/**
-	 * Handler of the onPermlink event from the history list. Creates a permlink
-	 * to a given history item. It saves it to the database and displays a
-	 * message to the user with the genearated URL.
-	 * 
-	 * @param event
-	 *            Contains the history ID to create a permlink to.
-	 */
 	public void historyItemPermlink(HistoryItemPermlinkEvent event)
 	{
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
@@ -233,16 +194,6 @@ public class SearchBean
 		
 	}
 
-	/**
-	 * When a page is opened with ?permlink parameter in URL, we retrieved the
-	 * stored permlink from db and restore the correspodind query. This method
-	 * is responsible for it. It is called from any getter which works with
-	 * current query and history list, namely {@link #getWorkingQuery},
-	 * {@link #getHistory()}, {@link #getSearchParameters()}, so that the
-	 * correspoding components have the correct values. It has to be done this
-	 * way, since JSF does not provide any other mean to detect that the page is
-	 * loaded for the first time.
-	 */
 	private void restorePermlinkIfAny()
 	{
 		
@@ -266,17 +217,6 @@ public class SearchBean
 
 	}
 
-	/**
-	 * Returns a two-level menu data structure with groups in the first level
-	 * and its attributes in the second level as required by the menu component
-	 * {@link MenuComponent}.
-	 * 
-	 * @param category
-	 *            User category. One of
-	 *            {@link AbstractAttribute#CATEGORY_BEGINNER} or
-	 *            {@link AbstractAttribute#CATEGORY_GENERAL}.
-	 * @return
-	 */
 	private MenuItemMain[] getMenuAttributes(UserCategory category)
 	{
 		
@@ -324,29 +264,11 @@ public class SearchBean
 		return mainItems;
 	}
 
-	/**
-	 * Bind in UI to a menu component {@link MenuComponent}. Calls
-	 * {@link #getMenuAttributes} with
-	 * {@link AbstractAttribute#CATEGORY_BEGINNER}. Returns a two-level menu
-	 * data structure with groups in the first level and its attributes in the
-	 * second level.
-	 * 
-	 * @return An array of {@link MenuItemMain}.
-	 */
 	public MenuItemMain[] getMenuAttributesBeginners()
 	{
 		return getMenuAttributes(UserCategory.Beginners);
 	}
 
-	/**
-	 * Bind in UI to a menu component {@link MenuComponent}. Calls
-	 * {@link #getMenuAttributes} with
-	 * {@link AbstractAttribute#CATEGORY_GENERAL}. Returns a two-level menu
-	 * data structure with groups in the first level and its attributes in the
-	 * second level.
-	 * 
-	 * @return An array of {@link MenuItemMain}.
-	 */
 	public MenuItemMain[] getMenuAttributesGeneral()
 	{
 		return getMenuAttributes(UserCategory.General);

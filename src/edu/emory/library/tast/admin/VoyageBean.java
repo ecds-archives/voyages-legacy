@@ -20,13 +20,13 @@ import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.reditor.FieldSchemaCheckbox;
 import edu.emory.library.tast.reditor.FieldSchemaDate;
-import edu.emory.library.tast.reditor.FieldSchemaDouble;
 import edu.emory.library.tast.reditor.FieldSchemaDropdowns;
 import edu.emory.library.tast.reditor.FieldSchemaFloat;
 import edu.emory.library.tast.reditor.FieldSchemaInteger;
 import edu.emory.library.tast.reditor.FieldSchemaLong;
 import edu.emory.library.tast.reditor.FieldSchemaTextbox;
 import edu.emory.library.tast.reditor.FieldValueCheckbox;
+import edu.emory.library.tast.reditor.FieldValueDate;
 import edu.emory.library.tast.reditor.FieldValueDropdowns;
 import edu.emory.library.tast.reditor.FieldValueFloat;
 import edu.emory.library.tast.reditor.FieldValueInteger;
@@ -37,6 +37,7 @@ import edu.emory.library.tast.reditor.Schema;
 import edu.emory.library.tast.reditor.Values;
 import edu.emory.library.tast.ui.GridOpenRowEvent;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -44,7 +45,7 @@ public class VoyageBean
 {
 	
 	
-	private static final String NOT_KNOWN = "not known";
+	private static final String NOT_KNOWN = "-";
 
 	private static final String LIST_VESSEL_RIGS_NAME = "vessel-rigs";
 	private static final String LIST_RESISTANCE_NAME = "resistance";
@@ -58,13 +59,24 @@ public class VoyageBean
 	private static final String LIST_PORTS_NAME = "ports";
 	private static final String[] LISTS_LOCATION = {LIST_AREAS_NAME, LIST_REGIONS_NAME, LIST_PORTS_NAME};
 	
+	private String selectedGroupId = SHIP_TAB_ID;
+
+	private static final String SHIP_TAB_ID = "ship";
+	private static final String OUTCOME_TAB_ID = "outcome";
+	private static final String ITINERARY_TAB_ID = "itinerary";
+	private static final String DATES_TAB_ID = "dates";
+	private static final String CREW_TAB_ID = "crew";
+	private static final String SLAVE_NUMS_TAB_ID = "slaveNumbers";
+	private static final String SLAVE_CHARS_TAB_ID = "slaveChars";
+	private static final String SOURCES_TAB_ID = "sources";
+	
 	private Values shipValues;
 	private Values outcomeValues;
 	private Values itineraryValues;
 	private Values datesValues;
 	private Values crewValues;
-	private Values slaveNumbersValues;
-	private Values slaveCharacteriticsValues;
+	private Values slaveNumsValues;
+	private Values slaveCharsValues;
 	private Values sourcesValues;
 
 	private void registerDictionary(String listId, Schema schema, Session sess, List dictionary)
@@ -249,7 +261,7 @@ public class VoyageBean
 		schema.addField(new FieldSchemaDropdowns("natinimp", "Imputed nation", LIST_NATIONS_NAME));
 		schema.addField(new FieldSchemaDropdowns("rig", "Vessel rig", LIST_VESSEL_RIGS_NAME));
 		schema.addField(new FieldSchemaFloat("tonnage", "Tonnage"));
-		schema.addField(new FieldSchemaFloat("tonmod", "Tonnage"));
+		schema.addField(new FieldSchemaFloat("tonmod", "Standardized tonnage"));
 		schema.addField(new FieldSchemaInteger("guns", "Number of guns"));
 		schema.addField(new FieldSchemaTextbox("owners", "Owners", true, 10));
 
@@ -259,8 +271,27 @@ public class VoyageBean
 	
 	private void fillShipValues(Voyage voyage)
 	{
+		
+		String owners = StringUtils.joinNonEmpty("\n", new String[] {
+				voyage.getOwnera(),
+				voyage.getOwnerb(),
+				voyage.getOwnerc(),
+				voyage.getOwnerd(),
+				voyage.getOwnere(),
+				voyage.getOwnerf(),
+				voyage.getOwnerg(),
+				voyage.getOwnerh(),
+				voyage.getOwneri(),
+				voyage.getOwnerj(),
+				voyage.getOwnerk(),
+				voyage.getOwnerl(),
+				voyage.getOwnerm(),
+				voyage.getOwnern(),
+				voyage.getOwnero(),
+				voyage.getOwnerp()});
 
 		shipValues = new Values();
+		
 		shipValues.addValue(new FieldValueLong("voyageid", voyage.getVoyageid()));
 		shipValues.addValue(new FieldValueCheckbox("cd", voyage.getCd()));
 		shipValues.addValue(new FieldValueText("shipname", voyage.getShipname()));
@@ -273,6 +304,7 @@ public class VoyageBean
 		shipValues.addValue(new FieldValueFloat("tonnage", voyage.getTonmod()));
 		shipValues.addValue(new FieldValueFloat("tonmod", voyage.getTonmod()));
 		shipValues.addValue(new FieldValueInteger("guns", voyage.getGuns()));
+		shipValues.addValue(new FieldValueText("owners", owners));
 
 	}
 	
@@ -307,6 +339,18 @@ public class VoyageBean
 		
 	}
 
+	private void fillOutcomeValues(Voyage voyage)
+	{
+		
+		outcomeValues = new Values();
+		outcomeValues.addValue(new FieldValueDropdowns("fate", createDictionaryValue(voyage.getFate())));
+		outcomeValues.addValue(new FieldValueDropdowns("fate2", createDictionaryValue(voyage.getFate2())));
+		outcomeValues.addValue(new FieldValueDropdowns("fate3", createDictionaryValue(voyage.getFate3())));
+		outcomeValues.addValue(new FieldValueDropdowns("fate4", createDictionaryValue(voyage.getFate4())));
+		outcomeValues.addValue(new FieldValueDropdowns("resistance", createDictionaryValue(voyage.getResistance())));
+		
+	}
+	
 	public Schema getItinerarySchema()
 	{
 
@@ -322,12 +366,13 @@ public class VoyageBean
 		tran.commit();
 		sess.close();
 		
+		schema.addField(new FieldSchemaDropdowns("portdep", "Place where voyage began", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("ptdepimp", "Imputed place where voyage began", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("plac1tra", "First place of slave purchase", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("plac2tra", "Second place of slave purchase", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("plac3tra", "Third place of slave purchase", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("mjbyptimp", "Imputed principal place of slave purchase", LISTS_LOCATION));
-		schema.addField(new FieldSchemaTextbox("npafttra", "Places of call before Atlantic crossing"));
+		schema.addField(new FieldSchemaDropdowns("npafttra", "Places of call before Atlantic crossing", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("sla1port", "First place of landing", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("adpsale1", "Second place of landing", LISTS_LOCATION));
 		schema.addField(new FieldSchemaDropdowns("adpsale2", "Third place of landing", LISTS_LOCATION));
@@ -337,13 +382,32 @@ public class VoyageBean
 		return schema;
 		
 	}
+	
+	private void fillItineraryValues(Voyage voyage)
+	{
+		
+		itineraryValues = new Values();
+		
+		itineraryValues.addValue(new FieldValueDropdowns("portdep", createLocationValues(null, voyage.getPortdep())));
+		itineraryValues.addValue(new FieldValueDropdowns("ptdepimp", createLocationValues(voyage.getDeptregimp(), voyage.getPtdepimp())));
+		itineraryValues.addValue(new FieldValueDropdowns("plac1tra", createLocationValues(voyage.getRegem1(), voyage.getPlac1tra())));
+		itineraryValues.addValue(new FieldValueDropdowns("plac2tra", createLocationValues(voyage.getRegem2(), voyage.getPlac2tra())));
+		itineraryValues.addValue(new FieldValueDropdowns("plac3tra", createLocationValues(voyage.getRegem3(), voyage.getPlac3tra())));
+		itineraryValues.addValue(new FieldValueDropdowns("mjbyptimp", createLocationValues(voyage.getMajbyimp(), voyage.getMjbyptimp())));
+		itineraryValues.addValue(new FieldValueDropdowns("npafttra", createLocationValues(null, voyage.getMjbyptimp())));
+		itineraryValues.addValue(new FieldValueDropdowns("sla1port", createLocationValues(voyage.getRegdis1(), voyage.getSla1port())));
+		itineraryValues.addValue(new FieldValueDropdowns("adpsale1", createLocationValues(voyage.getRegdis2(), voyage.getAdpsale1())));
+		itineraryValues.addValue(new FieldValueDropdowns("adpsale2", createLocationValues(voyage.getRegdis3(), voyage.getAdpsale2())));
+		itineraryValues.addValue(new FieldValueDropdowns("portret", createLocationValues(voyage.getRetrnreg(), voyage.getPortret())));
+
+	}
 
 	public Schema getDatesSchema()
 	{
 
 		Schema schema = new Schema();
 		
-		schema.addField(new FieldSchemaTextbox("yearam", "Imputed year of arrival at first place of landing"));
+		schema.addField(new FieldSchemaInteger("yearam", "Imputed year of arrival at first place of landing"));
 		schema.addField(new FieldSchemaDate("datedep", "Date that voyage began"));
 		schema.addField(new FieldSchemaDate("datebuy", "Date that slave purchase began"));
 		schema.addField(new FieldSchemaDate("dateleftafr", "Date that vessel left last slaving port"));
@@ -357,6 +421,25 @@ public class VoyageBean
 		
 		return schema;
 		
+	}
+	
+	private void fillDateValues(Voyage voyage)
+	{
+		
+		datesValues = new Values();
+		
+		datesValues.addValue(new FieldValueInteger("yearam", voyage.getYearam()));
+		datesValues.addValue(new FieldValueDate("datedep", voyage.getDatedep()));
+		datesValues.addValue(new FieldValueDate("datebuy", voyage.getDatebuy()));
+		datesValues.addValue(new FieldValueDate("dateleftafr", voyage.getDateleftafr()));
+		datesValues.addValue(new FieldValueDate("dateland1", voyage.getDateland1()));
+		datesValues.addValue(new FieldValueDate("dateland2", voyage.getDateland2()));
+		datesValues.addValue(new FieldValueDate("dateland3", voyage.getDateland3()));
+		datesValues.addValue(new FieldValueDate("datedepam", voyage.getDatedepam()));
+		datesValues.addValue(new FieldValueDate("dateend", voyage.getDateend()));
+		datesValues.addValue(new FieldValueInteger("voy1imp", voyage.getVoy1imp()));
+		datesValues.addValue(new FieldValueInteger("voy2imp", voyage.getVoy2imp()));
+
 	}
 
 	public Schema getCrewSchema()
@@ -372,8 +455,25 @@ public class VoyageBean
 		return schema;
 		
 	}
+	
+	private void fillCrewValues(Voyage voyage)
+	{
+		
+		String captains = StringUtils.joinNonEmpty("\n", new String[] {
+				voyage.getCaptaina(),
+				voyage.getCaptainb(),
+				voyage.getCaptainc()});
 
-	public Schema getSlaveNumbersSchema()
+		crewValues = new Values();
+		
+		crewValues.addValue(new FieldValueText("captains", captains));
+		crewValues.addValue(new FieldValueInteger("crew1", voyage.getCrew1()));
+		crewValues.addValue(new FieldValueInteger("crew3", voyage.getCrew3()));
+		crewValues.addValue(new FieldValueInteger("crewdied", voyage.getCrewdied()));
+		
+	}
+
+	public Schema getSlaveNumsSchema()
 	{
 
 		Schema schema = new Schema();
@@ -387,30 +487,66 @@ public class VoyageBean
 		schema.addField(new FieldSchemaInteger("slas32", "Number of slaves landed at first place"));
 		schema.addField(new FieldSchemaInteger("slas36", "Number of slaves landed at second place"));
 		schema.addField(new FieldSchemaInteger("slas39", "Number of slaves landed at third place"));
-		schema.addField(new FieldSchemaInteger("slaximp", "Imputed total slaves embarked"));
-		schema.addField(new FieldSchemaInteger("slamimp", "Imputed total slaves disembarked"));
+		schema.addField(new FieldSchemaFloat("slaximp", "Imputed total slaves embarked"));
+		schema.addField(new FieldSchemaFloat("slamimp", "Imputed total slaves disembarked"));
+		
+		return schema;
+		
+	}
+	
+	private void fillSlaveNumsValues(Voyage voyage)
+	{
+		
+		slaveNumsValues = new Values();
+		
+		slaveNumsValues.addValue(new FieldValueInteger("slintend", voyage.getSlintend()));
+		slaveNumsValues.addValue(new FieldValueInteger("ncar13", voyage.getNcar13()));
+		slaveNumsValues.addValue(new FieldValueInteger("ncar15", voyage.getNcar15()));
+		slaveNumsValues.addValue(new FieldValueInteger("ncar17", voyage.getNcar17()));
+		slaveNumsValues.addValue(new FieldValueInteger("tslavesd", voyage.getTslavesd()));
+		slaveNumsValues.addValue(new FieldValueInteger("slaarriv", voyage.getSlaarriv()));
+		slaveNumsValues.addValue(new FieldValueInteger("slas32", voyage.getSlas32()));
+		slaveNumsValues.addValue(new FieldValueInteger("slas36", voyage.getSlas36()));
+		slaveNumsValues.addValue(new FieldValueInteger("slas39", voyage.getSlas39()));
+		slaveNumsValues.addValue(new FieldValueFloat("slaximp", voyage.getSlaximp()));
+		slaveNumsValues.addValue(new FieldValueFloat("slamimp", voyage.getSlamimp()));
+		
+	}
+
+	public Schema getSlaveCharsSchema()
+	{
+
+		Schema schema = new Schema();
+
+		schema.addField(new FieldSchemaFloat("menrat7", "Percentage of men at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaFloat("womrat7", "Percentage of women at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaFloat("boyrat7", "Percentage of boys at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaFloat("girlrat7", "Percentage of girls at beginning or end of Middle Passage"));
+		schema.addField(new FieldSchemaFloat("malrat7", "Imputed sex ratio of the cargo of slaves"));
+		schema.addField(new FieldSchemaFloat("chilrat7", "Imputed ratio of children to adults in the cargo of slaves"));
+		schema.addField(new FieldSchemaFloat("jamcaspr", "Imputed sterling price of slaves sold in Jamaica"));
+		schema.addField(new FieldSchemaFloat("vymrtimp", "Imputed number of slaves who died during the Middle Passage"));
+		schema.addField(new FieldSchemaFloat("vymrtrat", "Imputed mortality rate (slave deaths / embarkations)"));
 		
 		return schema;
 		
 	}
 
-	public Schema getSlaveCharacteriticsSchema()
+	private void fillSlaveCharsValues(Voyage voyage)
 	{
-
-		Schema schema = new Schema();
-
-		schema.addField(new FieldSchemaDouble("menrat7", "Percentage of men at beginning or end of Middle Passage"));
-		schema.addField(new FieldSchemaDouble("womrat7", "Percentage of women at beginning or end of Middle Passage"));
-		schema.addField(new FieldSchemaDouble("boyrat7", "Percentage of boys at beginning or end of Middle Passage"));
-		schema.addField(new FieldSchemaDouble("girlrat7", "Percentage of girls at beginning or end of Middle Passage"));
-		schema.addField(new FieldSchemaDouble("malrat7", "Imputed sex ratio of the cargo of slaves"));
-		schema.addField(new FieldSchemaDouble("chilrat7", "Imputed ratio of children to adults in the cargo of slaves"));
-		schema.addField(new FieldSchemaDouble("jamcaspr", "Imputed sterling price of slaves sold in Jamaica"));
-		schema.addField(new FieldSchemaDouble("vymrtimp", "Imputed number of slaves who died during the Middle Passage"));
-		schema.addField(new FieldSchemaDouble("vymrtrat", "Imputed mortality rate (slave deaths / embarkations)"));
 		
-		return schema;
+		slaveCharsValues = new Values();
 		
+		slaveCharsValues.addValue(new FieldValueFloat("menrat7", voyage.getMalrat7()));
+		slaveCharsValues.addValue(new FieldValueFloat("womrat7", voyage.getWomrat7()));
+		slaveCharsValues.addValue(new FieldValueFloat("boyrat7", voyage.getBoyrat7()));
+		slaveCharsValues.addValue(new FieldValueFloat("girlrat7", voyage.getGirlrat7()));
+		slaveCharsValues.addValue(new FieldValueFloat("malrat7", voyage.getMalrat7()));
+		slaveCharsValues.addValue(new FieldValueFloat("chilrat7", voyage.getChilrat7()));
+		slaveCharsValues.addValue(new FieldValueFloat("jamcaspr", voyage.getJamcaspr()));
+		slaveCharsValues.addValue(new FieldValueFloat("vymrtimp", voyage.getVymrtimp()));
+		slaveCharsValues.addValue(new FieldValueFloat("vymrtrat", voyage.getVymrtrat()));
+
 	}
 
 	public Schema getSourcesSchema()
@@ -422,6 +558,35 @@ public class VoyageBean
 		
 		return schema;
 		
+	}
+
+	private void fillSourcesValues(Voyage voyage)
+	{
+
+		String sources = StringUtils.joinNonEmpty("\n", new String[] {
+				voyage.getSourcea(),
+				voyage.getSourceb(),
+				voyage.getSourcec(),
+				voyage.getSourced(),
+				voyage.getSourcee(),
+				voyage.getSourcef(),
+				voyage.getSourceg(),
+				voyage.getSourceh(),
+				voyage.getSourcei(),
+				voyage.getSourcej(),
+				voyage.getSourcek(),
+				voyage.getSourcel(),
+				voyage.getSourcem(),
+				voyage.getSourcen(),
+				voyage.getSourceo(),
+				voyage.getSourcep(),
+				voyage.getSourceq(),
+				voyage.getSourcer()});
+		
+		sourcesValues = new Values();
+		
+		sourcesValues.addValue(new FieldValueText("sources", sources));
+
 	}
 	
 	public void openVoyage(GridOpenRowEvent event)
@@ -441,6 +606,13 @@ public class VoyageBean
 		Voyage voyage = (Voyage) query.executeQueryList(sess).get(0);
 		
 		fillShipValues(voyage);
+		fillOutcomeValues(voyage);
+		fillItineraryValues(voyage);
+		fillDateValues(voyage);
+		fillCrewValues(voyage);
+		fillSlaveNumsValues(voyage);
+		fillSlaveCharsValues(voyage);
+		fillSourcesValues(voyage);
 		
 		tran.commit();
 		sess.close();
@@ -497,24 +669,24 @@ public class VoyageBean
 		this.shipValues = shipValues;
 	}
 
-	public Values getSlaveCharacteriticsValues()
+	public Values getSlaveCharsValues()
 	{
-		return slaveCharacteriticsValues;
+		return slaveCharsValues;
 	}
 
-	public void setSlaveCharacteriticsValues(Values slaveCharacteriticsValues)
+	public void setSlaveCharsValues(Values slaveCharacteriticsValues)
 	{
-		this.slaveCharacteriticsValues = slaveCharacteriticsValues;
+		this.slaveCharsValues = slaveCharacteriticsValues;
 	}
 
-	public Values getSlaveNumbersValues()
+	public Values getSlaveNumsValues()
 	{
-		return slaveNumbersValues;
+		return slaveNumsValues;
 	}
 
-	public void setSlaveNumbersValues(Values slaveNumbersValues)
+	public void setSlaveNumsValues(Values slaveNumbersValues)
 	{
-		this.slaveNumbersValues = slaveNumbersValues;
+		this.slaveNumsValues = slaveNumbersValues;
 	}
 
 	public Values getSourcesValues()
@@ -525,6 +697,56 @@ public class VoyageBean
 	public void setSourcesValues(Values sourcesValues)
 	{
 		this.sourcesValues = sourcesValues;
+	}
+
+	public String getSelectedGroupId()
+	{
+		return selectedGroupId;
+	}
+
+	public void setSelectedGroupId(String selectedGroupId)
+	{
+		this.selectedGroupId = selectedGroupId;
+	}
+
+	public boolean isGroupShipSelected()
+	{
+		return SHIP_TAB_ID.equals(selectedGroupId);
+	}
+
+	public boolean isGroupCrewSelected()
+	{
+		return CREW_TAB_ID.equals(selectedGroupId);
+	}
+
+	public boolean isGroupDatesSelected()
+	{
+		return DATES_TAB_ID.equals(selectedGroupId);
+	}
+
+	public boolean isGroupItinerarySelected()
+	{
+		return ITINERARY_TAB_ID.equals(selectedGroupId);
+	}
+
+	public boolean isGroupOutcomeSelected()
+	{
+		return OUTCOME_TAB_ID.equals(selectedGroupId);
+	}
+
+	public boolean isGroupSlaveCharsSelected()
+	{
+		return SLAVE_CHARS_TAB_ID.equals(selectedGroupId);
+	}
+
+	public boolean isGroupSlaveNumsSelected()
+	{
+		return SLAVE_NUMS_TAB_ID.equals(selectedGroupId);
+	}
+
+	public boolean isGroupSourcesSelected()
+	{
+		return SOURCES_TAB_ID.equals(selectedGroupId);
 	}
 
 }

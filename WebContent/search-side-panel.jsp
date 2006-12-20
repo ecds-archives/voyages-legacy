@@ -17,13 +17,19 @@
 			<h:outputText value="From" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:inputText value="#{SearchBean.yearFrom}" style="width: 60px" />
+			<h:inputText
+				value="#{SearchBean.yearFrom}"
+				style="width: 60px"
+				onkeypress="QueryBuilderGlobals.updateTotal('form:queryBuilder', 1000)" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:outputText value="To" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px;">
-			<h:inputText value="#{SearchBean.yearTo}" style="width: 60px" />
+			<h:inputText
+				value="#{SearchBean.yearTo}"
+				style="width: 60px"
+				onkeypress="QueryBuilderGlobals.updateTotal('form:queryBuilder', 1000)" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
@@ -96,96 +102,6 @@ function animateAttribute(menuItem, submitFunction)
 }
 
 </script>
-
-<%--
-<s:sectionGroup
-	id="selectAttributeSectionBySliderMenu"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle"
-	selectedSectionId="beginner">
-
-	<s:section title="Beginner" sectionId="beginner">
-		<s:menuSlider
-			id="sliderMenuAttributesBeginner"
-			items="#{SearchBean.menuAttributesBeginner}"
-			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
-	</s:section>
-
-	<s:section title="General" sectionId="general">
-		<s:menuSlider
-			id="sliderMenuAttributesGeneral"
-			items="#{SearchBean.menuAttributesGeneral}"
-			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
-	</s:section>
-
-</s:sectionGroup>
-
-<div class="sections-sepatator"></div>
---%>
-
-<%--
-<s:sectionGroup
-	id="selectAttributeSection"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle"
-	selectedSectionId="#{SearchBean.selectedCategory}">
-	
-	<s:section title="Beginner" sectionId="beginner">
-
-		<h:selectOneMenu
-			id="selectBeginnerGroupId"
-			value="#{SearchBean.selectedBeginnerGroupId}"
-			onchange="form.submit();"
-			styleClass="attributes-and-groups">
-			<f:selectItems value="#{SearchBean.voyageAttributeBeginnerGroups}" />
-		</h:selectOneMenu>
-
-		<h:selectOneMenu
-			id="selectBeginnerAttributeId"
-			value="#{SearchBean.selectedBeginnerAtttibuteId}"
-			styleClass="attributes-and-groups">
-			<f:selectItems value="#{SearchBean.voyageBeginnerAttributes}" />
-		</h:selectOneMenu>
-	
-		<h:commandButton
-			id="buttonAddQueryConditionBeginner"
-			styleClass="main-box-button"
-			action="#{SearchBean.addQueryConditionBeginner}"
-			value="Add" />
-	
-	</s:section>
-	
-	<s:section title="General" sectionId="general">
-
-		<h:selectOneMenu
-			id="selectGeneralGroupId"
-			value="#{SearchBean.selectedGeneralGroupId}"
-			onchange="form.submit();"
-			styleClass="attributes-and-groups">
-			<f:selectItems value="#{SearchBean.voyageAttributeGeneralGroups}" />
-		</h:selectOneMenu>
-	
-		<h:selectOneMenu
-			id="selectGeneralAttributeId"
-			value="#{SearchBean.selectedGeneralAtttibuteId}"
-			styleClass="attributes-and-groups">
-			<f:selectItems value="#{SearchBean.voyageGeneralAttributes}" />
-		</h:selectOneMenu>
-	
-		<h:commandButton
-			id="buttonAddQueryConditionGeneral"
-			styleClass="main-box-button"
-			action="#{SearchBean.addQueryConditionGeneral}"
-			value="Add" />
-
-	</s:section>
-
-</s:sectionGroup>
-
-<div class="sections-sepatator"></div>
---%>
 
 <div id="animateAttributeDest">
 <s:sectionGroup

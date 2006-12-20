@@ -32,7 +32,7 @@ public class EditorComponent extends UIComponentBase
 	{
 		Object[] values = new Object[2];
 		values[0] = super.saveState(context);
-		values[1] = saveAttachedState(context, schema.getSerializableState());
+		if (schema != null) values[1] = saveAttachedState(context, schema.getSerializableState());
 		return values;
 	}
 	
@@ -56,8 +56,11 @@ public class EditorComponent extends UIComponentBase
 	
 	public void processUpdates(FacesContext context)
 	{
-		ValueBinding vb = getValueBinding("values");
-		if (vb != null) vb.setValue(context, values);
+		if (values != null)
+		{
+			ValueBinding vb = getValueBinding("values");
+			if (vb != null) vb.setValue(context, values);
+		}
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException

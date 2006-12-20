@@ -29,6 +29,12 @@ public class FieldValueDate extends FieldValue
 		super(name);
 	}
 	
+	public FieldValueDate(String name, Date date)
+	{
+		super(name);
+		setDate(date);
+	}
+
 	public static String getHtmlDayFieldName(UIComponent component, FacesContext context, String name)
 	{
 		return component.getClientId(context) + "_" + name + "_" + "day";
@@ -103,20 +109,36 @@ public class FieldValueDate extends FieldValue
 	public void setDate(Date date)
 	{
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
+		if (date == null)
+		{
+			
+			year = "";
+			month = "";
+			day = "";
+			
+			valid = false;
+			
+		}
+		else
+		{
 		
-		yearInt = cal.get(Calendar.YEAR);
-		monthInt = cal.get(Calendar.MONTH);
-		dayInt = cal.get(Calendar.DAY_OF_MONTH);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			
+			yearInt = cal.get(Calendar.YEAR);
+			monthInt = cal.get(Calendar.MONTH);
+			dayInt = cal.get(Calendar.DAY_OF_MONTH);
+			
+			year = String.valueOf(yearInt);
+			month = String.valueOf(monthInt);
+			day = String.valueOf(dayInt);
 		
-		year = String.valueOf(yearInt);
-		month = String.valueOf(monthInt);
-		day = String.valueOf(dayInt);
+			valid = true;
+
+		}
 		
 		parsed = true;
-		valid = true;
-		
+
 	}
 
 	public String getDay()

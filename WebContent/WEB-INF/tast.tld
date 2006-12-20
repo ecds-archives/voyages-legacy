@@ -70,7 +70,7 @@
 	<tag>
 		<name>tabBar</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.TabBarTag
+			edu.emory.library.tast.ui.TabBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -87,7 +87,7 @@
 	<tag>
 		<name>tab</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.TabTag
+			edu.emory.library.tast.ui.TabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

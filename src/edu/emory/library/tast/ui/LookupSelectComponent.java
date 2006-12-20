@@ -83,7 +83,7 @@ public class LookupSelectComponent extends UIComponentBase
 		// a field for selected values
 		JsfUtils.encodeHiddenInput(this, writer,
 				getFieldNameForSelectedValues(context),
-				StringUtils.join(selectedValues, ","));
+				StringUtils.join(",", selectedValues));
 
 		// render the list of items
 		writer.startElement("select", this);

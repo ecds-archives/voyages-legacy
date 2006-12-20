@@ -202,7 +202,7 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 		// remember expanded values in a hidden field
 		JsfUtils.encodeHiddenInput(this, writer,
 				getHtmlNameForExpandedValues(context),
-				StringUtils.join(expandedValues, ","));
+				StringUtils.join(",", expandedValues));
 
 		// render registration JS
 		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);

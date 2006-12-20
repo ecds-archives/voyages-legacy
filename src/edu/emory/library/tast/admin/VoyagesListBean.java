@@ -23,7 +23,7 @@ public class VoyagesListBean
 
 	private GridRow[] rows;
 
-	private int currentPage = 0;
+	private int currentPage = 1;
 	private int firstRecordIndex = 1;
 	private int lastRecordIndex;
 	private int pageSize = 20;
@@ -46,7 +46,7 @@ public class VoyagesListBean
 		QueryValue query = new QueryValue("Voyage");
 		query.setOrder(QueryValue.ORDER_ASC);
 		query.setOrderBy(new Attribute[] {Voyage.getAttribute("voyageid")});
-		query.setFirstResult(currentPage * pageSize);
+		query.setFirstResult((currentPage-1) * pageSize);
 		query.setLimit(pageSize);
 		List voyages = query.executeQueryList(sess);
 		
