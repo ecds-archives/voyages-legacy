@@ -225,9 +225,9 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 
 	private Object[][] parseDeparture(Object[] data) {
 		if (data[0] != null) {
-			return new Object[][] { { data[0] }, { data[27] } };
+			return new Object[][] { { data[0] }, { data[19] } };
 		} else if (data[1] != null) {
-			return new Object[][] { { data[1] }, { data[27] } };
+			return new Object[][] { { data[1] }, { data[19] } };
 		} else {
 			// Unknown port - add '?' mark
 			return new Object[][] {};
@@ -244,7 +244,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 			if (data[4] != null) {
 				ports.add(data[4]);
 			}
-			return new Object[][] { ports.toArray(), { data[28], data[29] } };
+			return new Object[][] { ports.toArray(), { data[20], data[21] } };
 		} else if (data[5] != null) {
 			List regions = new ArrayList();
 			regions.add(data[5]);
@@ -254,82 +254,75 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 			if (data[7] != null) {
 				regions.add(data[7]);
 			}
-			return new Object[][] { regions.toArray(), { data[28], data[29] } };
+			return new Object[][] { regions.toArray(), { data[20], data[21] } };
 		} else if (data[8] != null) {
-			List ports = new ArrayList();
-			ports.add(data[8]);
-			if (data[9] != null) {
-				ports.add(data[9]);
-			}
-			return new Object[][] { ports.toArray(), { data[28], data[29] } };
-		} else if (data[10] != null) {
-			List regions = new ArrayList();
-			regions.add(data[10]);
-			if (data[11] != null) {
-				regions.add(data[11]);
-			}
-			return new Object[][] { regions.toArray(), { data[28], data[29] } };
-		} else if (data[12] != null) {
-			return new Object[][] { { data[12] }, { data[28], data[29] } };
-		} else if (data[13] != null) {
-			return new Object[][] { { data[13] }, { data[28], data[29] } };
+			return new Object[][] {{data[8]}, {data[20], data[21]}};
+		} else if (data[9] != null) {
+			return new Object[][] {{data[9]}, {data[20], data[21]}};
 		} else {
 			return new Object[][] {};
 		}
+//		else if (data[8] != null) {
+//			List ports = new ArrayList();
+//			ports.add(data[8]);
+//			if (data[9] != null) {
+//				ports.add(data[9]);
+//			}
+//			return new Object[][] { ports.toArray(), { data[28], data[29] } };
+//		} else if (data[10] != null) {
+//			List regions = new ArrayList();
+//			regions.add(data[10]);
+//			if (data[11] != null) {
+//				regions.add(data[11]);
+//			}
+//			return new Object[][] { regions.toArray(), { data[28], data[29] } };
+//		} else if (data[12] != null) {
+//			return new Object[][] { { data[12] }, { data[28], data[29] } };
+//		} else if (data[13] != null) {
+//			return new Object[][] { { data[13] }, { data[28], data[29] } };
+//		} else {
+//			return new Object[][] {};
+//		}
 	}
 
 	private Object[][] parseAmericas(Object[] data) {
-		if (data[14] != null) {
+		if (data[10] != null) {
 			List ports = new ArrayList();
-			ports.add(data[14]);
+			ports.add(data[10]);
+			if (data[11] != null) {
+				ports.add(data[11]);
+			}
+			if (data[12] != null) {
+				ports.add(data[12]);
+			}
+			return new Object[][] { ports.toArray(),
+					{ data[22], data[23], data[24], data[25] } };
+		} else if (data[13] != null) {
+			List regions = new ArrayList();
+			regions.add(data[13]);
+			if (data[14] != null) {
+				regions.add(data[14]);
+			}
 			if (data[15] != null) {
-				ports.add(data[3]);
-			}
-			if (data[16] != null) {
-				ports.add(data[4]);
-			}
-			return new Object[][] { ports.toArray(),
-					{ data[30], data[31], data[32], data[33] } };
-		} else if (data[17] != null) {
-			List regions = new ArrayList();
-			regions.add(data[17]);
-			if (data[18] != null) {
-				regions.add(data[18]);
-			}
-			if (data[19] != null) {
-				regions.add(data[19]);
+				regions.add(data[15]);
 			}
 			return new Object[][] { regions.toArray(),
-					{ data[30], data[31], data[32], data[33] } };
-		} else if (data[20] != null) {
+					{ data[22], data[23], data[24], data[25] } };
+		} else if (data[16] != null) {
 			List ports = new ArrayList();
-			ports.add(data[20]);
-			if (data[21] != null) {
-				ports.add(data[21]);
-			}
+			ports.add(data[16]);
 			return new Object[][] { ports.toArray(),
-					{ data[30], data[31], data[32], data[33] } };
-		} else if (data[22] != null) {
-			List regions = new ArrayList();
-			regions.add(data[22]);
-			if (data[23] != null) {
-				regions.add(data[23]);
-			}
-			return new Object[][] { regions.toArray(),
-					{ data[30], data[31], data[32], data[33] } };
-		} else if (data[24] != null) {
-			return new Object[][] { { data[24] },
-					{ data[30], data[31], data[32], data[33] } };
+					{ data[22], data[23], data[24], data[25] } };
 		} else {
 			return new Object[][] {};
 		}
 	}
 
 	private Object[][] parseArrival(Object[] data) {
-		if (data[25] != null) {
-			return new Object[][] { { data[25] }, { data[34] } };
-		} else if (data[26] != null) {
-			return new Object[][] { { data[26] }, { data[34] } };
+		if (data[17] != null) {
+			return new Object[][] { { data[17] }, { data[26] } };
+		} else if (data[18] != null) {
+			return new Object[][] { { data[18] }, { data[26] } };
 		} else {
 			// Unknown port - add '?' mark
 			return new Object[][] {};

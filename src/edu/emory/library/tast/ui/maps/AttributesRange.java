@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui.maps;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**
  * Range of attribute. Used in Attributes map.
@@ -12,7 +13,7 @@ public class AttributesRange {
 	/**
 	 * Attribute.
 	 */
-	private Attribute attribute;
+	private VisibleAttributeInterface attribute;
 	
 	/**
 	 * Start index of range of Attribute coverage.
@@ -30,7 +31,7 @@ public class AttributesRange {
 	 * @param start start index of range of Attribute
 	 * @param end end index of range of Attribute
 	 */
-	public AttributesRange(Attribute attr, int start, int end) {
+	public AttributesRange(VisibleAttributeInterface attr, int start, int end) {
 		this.attribute = attr;
 		this.start = start;
 		this.end = end;
@@ -40,7 +41,7 @@ public class AttributesRange {
 	 * Gets attribute assigned to range.
 	 * @return Attribute object
 	 */
-	public Attribute getAttribute() {
+	public VisibleAttributeInterface getAttribute() {
 		return attribute;
 	}
 	

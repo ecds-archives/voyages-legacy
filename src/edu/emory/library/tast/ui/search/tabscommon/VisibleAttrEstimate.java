@@ -240,11 +240,11 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 	public boolean isDate() {
 		return true;
 	}
-//
+
 //	public static VisibleAttributeInterface getAttribute(String id) {
-//		if (visibleAttributes.isEmpty()) {
-//			loadConfig();
-//		}
+////		if (visibleAttributes.isEmpty()) {
+////			loadConfig();
+////		}
 //		Iterator iter = visibleAttributes.values().iterator();
 //		while (iter.hasNext()) {
 //			Map attrMap = (Map) iter.next();

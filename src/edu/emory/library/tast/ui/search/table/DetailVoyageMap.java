@@ -44,7 +44,7 @@ public class DetailVoyageMap {
 		this.queryNeeded = false;
 
 		Conditions conditions = new Conditions();
-		conditions.addCondition(Voyage.getAttribute("voyageId"), this.voyageId, Conditions.OP_EQUALS);
+		conditions.addCondition(Voyage.getAttribute("iid"), this.voyageId, Conditions.OP_EQUALS);
 		
 		DetailQueryHolder queryHolder = new DetailQueryHolder(conditions);
 		queryHolder.executeQuery(0);

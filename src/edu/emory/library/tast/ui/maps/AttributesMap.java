@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**
  * Map of attributes that helps to decide about attribute in given column and row in data
@@ -43,7 +44,7 @@ public class AttributesMap {
 	 * @param j j index
 	 * @return Attribute, null if there is no such an attribute
 	 */
-	public Attribute getAttribute(int i, int j) {
+	public VisibleAttributeInterface getAttribute(int i, int j) {
 		
 		//Get desired column
 		List list = (List)this.columns.get(j);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**
  * Map item element class that represent one of elements of map item.
@@ -17,7 +18,7 @@ public class MapItemElement {
 	/**
 	 * Main attribute of map element items.
 	 */
-	private Attribute attribute;
+	private VisibleAttributeInterface attribute;
 	
 	private Object[] attributes;
 	
@@ -35,7 +36,7 @@ public class MapItemElement {
 	 * Constructs map item element.
 	 * @param attribute main attribute of map item element
 	 */
-	public MapItemElement(Attribute attribute) {
+	public MapItemElement(VisibleAttributeInterface attribute) {
 		this(attribute, null);
 	}
 	
@@ -43,7 +44,7 @@ public class MapItemElement {
 	 * Constructs map item element.
 	 * @param attribute main attribute of map item element
 	 */
-	public MapItemElement(Attribute attribute, Object[] attributes) {
+	public MapItemElement(VisibleAttributeInterface attribute, Object[] attributes) {
 		this.attribute = attribute;
 		this.attributes = attributes;
 	}
@@ -83,7 +84,7 @@ public class MapItemElement {
 	 * Gets main Attribute.
 	 * @return
 	 */
-	public Attribute getAttribute() {
+	public VisibleAttributeInterface getAttribute() {
 		return attribute;
 	}
 

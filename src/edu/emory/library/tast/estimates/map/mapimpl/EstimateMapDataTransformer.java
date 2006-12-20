@@ -157,7 +157,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 				+ "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
-		legendColors.addItemToGroup(both);
+		//legendColors.addItemToGroup(both);
 
 		int i = 0;
 		for (Iterator iter = mapDataItems.iterator(); iter.hasNext(); i++) {

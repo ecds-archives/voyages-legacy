@@ -1010,9 +1010,9 @@ public class TableResultTabBean {
 
 	private void setVisibleColumns() {
 		List cols = new ArrayList(this.visibleColumns);
-		if (attachSearchedParams.booleanValue()) {
-			cols.addAll(Arrays.asList(this.searchBean.getSearchParameters().getColumns()));
-		}
+//		if (attachSearchedParams.booleanValue()) {
+//			cols.addAll(Arrays.asList(this.searchBean.getSearchParameters().getColumns()));
+//		}
 		setVisibleAttributesList(cols);
 	}
 

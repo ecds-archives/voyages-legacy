@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table-attributes>
-	<table-attribute tabs="1,2" id="voyageid" userCategory="beginners,general" userLabel="Unique identification number">
+	<table-attribute tabs="1,2" id="voyageid" date="true" userCategory="beginners,general" userLabel="Unique identification number">
 		<attributes>
 			<attribute name="voyageid"/>
 		</attributes>

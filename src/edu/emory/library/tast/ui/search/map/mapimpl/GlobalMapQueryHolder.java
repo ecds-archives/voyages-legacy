@@ -23,6 +23,8 @@ import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.AttributesRange;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -161,11 +163,11 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		
 			executeMapQuery(response, queries[i], ports);
 			if (i == 0) {
-				col1.add(new AttributesRange(Voyage.getAttribute("mjbyptimp"), beginSize, beginSize + response.size() - 1));
-				col2.add(new AttributesRange(Voyage.getAttribute("slamimp"), beginSize, beginSize + response.size() - 1));
+				col1.add(new AttributesRange(VisibleAttribute.getAttribute("mjbyptimp"), beginSize, beginSize + response.size() - 1));
+				col2.add(new AttributesRange(VisibleAttribute.getAttribute("slamimp"), beginSize, beginSize + response.size() - 1));
 			} else {
-				col1.add(new AttributesRange(Voyage.getAttribute("mjslptimp"), beginSize, beginSize + response.size() - 1));
-				col2.add(new AttributesRange(Voyage.getAttribute("slaximp"), beginSize, beginSize + response.size() - 1));
+				col1.add(new AttributesRange(VisibleAttribute.getAttribute("mjslptimp"), beginSize, beginSize + response.size() - 1));
+				col2.add(new AttributesRange(VisibleAttribute.getAttribute("slaximp"), beginSize, beginSize + response.size() - 1));
 			}
 
 			map.addColumn(col1);

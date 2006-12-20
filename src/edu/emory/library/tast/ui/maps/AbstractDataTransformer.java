@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui.maps;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**
  * Abstract class that should be used as superclass for any classes that will
@@ -43,7 +44,7 @@ public abstract class AbstractDataTransformer {
 	 * @param j j position
 	 * @return
 	 */
-	protected Attribute getAttribute(int i, int j) {
+	protected VisibleAttributeInterface getAttribute(int i, int j) {
 		return attributesMap.getAttribute(i, j);
 	}
 	

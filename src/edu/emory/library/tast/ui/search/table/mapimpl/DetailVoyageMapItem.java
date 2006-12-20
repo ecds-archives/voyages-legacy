@@ -94,8 +94,25 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 			buffer.append("<br/>");
 		}
 		
-		PointOfInterest point = new PointOfInterest(this.getProjectedX(), this.getProjectedY());
+		PointOfInterest point = new PointOfInterest(this.getProjectedY(), this.getProjectedX());
 		point.setText(buffer.toString());
+		
+		Element[] elements = this.getMapItemElements()[0].getElements();
+//		if (elements.length > 1) {
+//			if (elements[0].getSize() < elements[1].getSize()) {
+//				point.setSymbols(new String[] {
+//						SYMBOL_NAME_PREFIX + elements[1].getColor() + "-"
+//								+ elements[1].getSize()});
+//			} else {
+//				point.setSymbols(new String[] {
+//						SYMBOL_NAME_PREFIX + elements[0].getColor() + "-"
+//								+ elements[0].getSize()});
+//			}
+//		} else {
+			point.setSymbols(getSymbolNames());
+//		}
+		point.setLabel(this.getMainLabel());
+		
 		return point;
 	}
 

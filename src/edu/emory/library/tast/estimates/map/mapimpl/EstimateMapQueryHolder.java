@@ -86,10 +86,10 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 //					shift + results.length - 1));
 //			attributes.addColumn(list);
 			
-			list0.add(new AttributesRange(Estimate.getAttribute(i == 0 ? "expRegion" : "impRegion"),
+			list0.add(new AttributesRange(VisibleAttrEstimate.getAttributeForTable(i == 0 ? "expRegion" : "impRegion"),
 					shift, shift + results.length - 1));
 			
-			list1.add(new AttributesRange(Estimate.getAttribute(i == 0 ? "slavExported" : "slavImported"),
+			list1.add(new AttributesRange(VisibleAttrEstimate.getAttributeForTable(i == 0 ? "slavExported" : "slavImported"),
 					shift, shift + results.length - 1));
 		}
 		attributes.addColumn(list0);

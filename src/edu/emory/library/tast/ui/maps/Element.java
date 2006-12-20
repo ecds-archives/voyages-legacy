@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui.maps;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**
  * Single element in map.
@@ -14,7 +15,7 @@ public class Element {
 	/**
 	 * Attribute of element
 	 */
-	private Attribute attribute;
+	private VisibleAttributeInterface attribute;
 	
 	/**
 	 * Value that will appear on map.
@@ -31,7 +32,7 @@ public class Element {
 	 * @param attribute Attribute that will appear on map
 	 * @param value value associated to attribute. If null then only attribute name will be shown
 	 */
-	public Element(Attribute attribute, Comparable value) {
+	public Element(VisibleAttributeInterface attribute, Comparable value) {
 		this.attribute = attribute;
 		this.value = value;
 	}
@@ -40,7 +41,7 @@ public class Element {
 	 * Gets attribute of element.
 	 * @return
 	 */
-	public Attribute getAttribute() {
+	public VisibleAttributeInterface getAttribute() {
 		return attribute;
 	}
 
@@ -48,7 +49,7 @@ public class Element {
 	 * Sets attribute of element.
 	 * @param attribute
 	 */
-	public void setAttribute(Attribute attribute) {
+	public void setAttribute(VisibleAttributeInterface attribute) {
 		this.attribute = attribute;
 	}
 

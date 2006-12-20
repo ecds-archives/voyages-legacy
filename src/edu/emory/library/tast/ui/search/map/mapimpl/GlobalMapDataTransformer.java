@@ -184,7 +184,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
-		legendColors.addItemToGroup(both);
+		//legendColors.addItemToGroup(both);
 		
 		int i = 0; 
 		for (Iterator iter = items.iterator(); iter.hasNext(); i++) {
