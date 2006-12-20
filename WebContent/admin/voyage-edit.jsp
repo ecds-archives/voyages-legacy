@@ -14,58 +14,65 @@
 <body>
 <f:view>
 	<h:form id="form">
+	
+		<s:tabBar id="bar" selectedTabId="#{Switcher.selectedModuleId}">
+			<s:tab text="Outcome" tabId="outcome" />
+			<s:tab text="Itinerary" tabId="itinerary" />
+			<s:tab text="Dates" tabId="dates" />
+			<s:tab text="Crew" tabId="crew" />
+			<s:tab text="Slave (numbers)" tabId="slaveNumbers" />
+			<s:tab text="Slave (characteritics)" tabId="slaveChars" />
+			<s:tab text="Sources" tabId="sources" />
+		</s:tabBar>
+	
+		<h:panelGroup render="#{AdminVoyageBean.groupOutcomeSelected}">
+			<h2>Outcome</h2>
+			<s:recordEditor id="ship"
+				schema="#{AdminVoyageBean.shipSchema}"
+				values="#{AdminVoyageBean.shipValues}" />
+		</h:panelGroup>
 
-		<h2>Outcome</h2>
+		<h:panelGroup render="#{AdminVoyageBean.groupItinerarySelected}">
+			<h2>Itinerary</h2>
+			<s:recordEditor id="itinerary"
+				schema="#{EditorTestBean.itinerarySchema}"
+				values="#{EditorTestBean.itineraryValues}" />
+		</h:panelGroup>
 
-		<s:recordEditor id="ship"
-			schema="#{AdminVoyageBean.shipSchema}"
-			values="#{AdminVoyageBean.shipValues}" />
-			
-		<%--
-			
-		<h2>Outcome</h2>
-			
-		<s:recordEditor id="outcome"
-			schema="#{EditorTestBean.outcomeSchema}"
-			values="#{EditorTestBean.values}" />
+		<h:panelGroup render="#{AdminVoyageBean.groupDatesSelected}">
+			<h2>Dates</h2>
+			<s:recordEditor id="dates"
+				schema="#{EditorTestBean.datesSchema}"
+				values="#{EditorTestBean.datesvalues}" />
+		</h:panelGroup>
 
-		<h2>Itinerary</h2>
-			
-		<s:recordEditor id="itinerary"
-			schema="#{EditorTestBean.itinerarySchema}"
-			values="#{EditorTestBean.values}" />
+		<h:panelGroup render="#{AdminVoyageBean.groupCrewSelected}">
+			<h2>Crew</h2>
+			<s:recordEditor id="crew"
+				schema="#{EditorTestBean.crewSchema}"
+				values="#{EditorTestBean.crewValues}" />
+		</h:panelGroup>
 
-		<h2>Dates</h2>
-			
-		<s:recordEditor id="dates"
-			schema="#{EditorTestBean.datesSchema}"
-			values="#{EditorTestBean.values}" />
+		<h:panelGroup render="#{AdminVoyageBean.groupSlaveNumbersSelected}">
+			<h2>Slave (numbers)</h2>
+			<s:recordEditor id="slaveNumbers"
+				schema="#{EditorTestBean.slaveNumbersSchema}"
+				values="#{EditorTestBean.slaveValues}" />
+		</h:panelGroup>
 
-		<h2>Crew</h2>
+		<h:panelGroup render="#{AdminVoyageBean.groupSlaveCharsSelected}">
+			<h2>Slave (characteritics)</h2>
+			<s:recordEditor id="slaveChars"
+				schema="#{EditorTestBean.slaveCharsSchema}"
+				values="#{EditorTestBean.slaveCharsValues}" />
+		</h:panelGroup>
 
-		<s:recordEditor id="crew"
-			schema="#{EditorTestBean.crewSchema}"
-			values="#{EditorTestBean.values}" />
-
-		<h2>Slave (numbers)</h2>
-
-		<s:recordEditor id="slaveNumbers"
-			schema="#{EditorTestBean.slaveNumbersSchema}"
-			values="#{EditorTestBean.values}" />
-
-		<h2>Slave (characteritics)</h2>
-
-		<s:recordEditor id="slaveChars"
-			schema="#{EditorTestBean.slaveCharacteriticsSchema}"
-			values="#{EditorTestBean.values}" />
-
-		<h2>Sources</h2>
-
-		<s:recordEditor id="sources"
-			schema="#{EditorTestBean.sourcesSchema}"
-			values="#{EditorTestBean.values}" />
-			
-		--%>
+		<h:panelGroup render="#{AdminVoyageBean.groupSourcesSelected}">
+			<h2>Sources</h2>
+			<s:recordEditor id="sources"
+				schema="#{EditorTestBean.slaveCharsSchema}"
+				values="#{EditorTestBean.slaveCharsValues}" />
+		</h:panelGroup>
 
 		<h:commandButton value="Test submit" />
 	

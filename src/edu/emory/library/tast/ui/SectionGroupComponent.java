@@ -287,7 +287,9 @@ public class SectionGroupComponent extends UIComponentBase
 				{
 					sect.setRendered(true);
 					JsfUtils.renderChild(context, sect);
-				} else {
+				}
+				else
+				{
 					sect.setRendered(false);
 				}
 			}

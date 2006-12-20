@@ -82,9 +82,6 @@
 		<attribute>
 			<name>selectedTabId</name>
 		</attribute>
-		<attribute>
-			<name>onTabChanged</name>
-		</attribute>
 	</tag>
 
 	<tag>
