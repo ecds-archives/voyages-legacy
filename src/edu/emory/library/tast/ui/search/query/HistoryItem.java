@@ -3,7 +3,7 @@ package edu.emory.library.tast.ui.search.query;
 /**
  * This class represents a sinle item in the histoty list in the search UI. In
  * fact, it only contains a query of the type
- * {@link edu.emory.library.tast.ui.search.query.Query} and a history ID. The history ID is
+ * {@link edu.emory.library.tast.ui.search.query.QueryBuilderQuery} and a history ID. The history ID is
  * used to access, reffer and manipulate the history items in the history list.
  * 
  * @author Jan Zich
@@ -14,6 +14,8 @@ public class HistoryItem
 
 	private String id;
 	private Query query;
+	private int timeFrameFrom;
+	private int timeFrameTo;
 
 	public String getId()
 	{
@@ -33,6 +35,26 @@ public class HistoryItem
 	public void setQuery(Query query)
 	{
 		this.query = query;
+	}
+
+	public int getTimeFrameFrom()
+	{
+		return timeFrameFrom;
+	}
+
+	public void setTimeFrameFrom(int timeFrameFrom)
+	{
+		this.timeFrameFrom = timeFrameFrom;
+	}
+
+	public int getTimeFrameTo()
+	{
+		return timeFrameTo;
+	}
+
+	public void setTimeFrameTo(int timeFrameTo)
+	{
+		this.timeFrameTo = timeFrameTo;
 	}
 
 }

@@ -1,6 +1,5 @@
 package edu.emory.library.tast.ui.search.query;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -8,21 +7,18 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
-import org.dom4j.tree.AbstractAttribute;
 
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.ui.MenuComponent;
 import edu.emory.library.tast.ui.MenuItem;
 import edu.emory.library.tast.ui.MenuItemMain;
 import edu.emory.library.tast.ui.MenuItemSelectedEvent;
 import edu.emory.library.tast.ui.MessageBarComponent;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -32,7 +28,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  * currently built query and the history list. It passes search parameters (the
  * current query and the current list of attributes) to other beans and
  * components in {@link SearchParameters}. When a user clicks the search
- * button, an internal representation of the query, represented by {@link Query},
+ * button, an internal representation of the query, represented by {@link QueryBuilderQuery},
  * is converted to a database query represented by
  * {@link edu.emory.library.tast.util.query.Conditions} and stored in
  * {@link #searchParameters}.
@@ -50,9 +46,6 @@ public class SearchBean
 	private Query workingQuery = new Query();
 	private SearchParameters searchParameters = new SearchParameters(new Conditions());
 	
-	private int yearFrom = 1501;
-	private int yearTo = 1865;
-
 	private MessageBarComponent messageBar;
 	
 	public SearchBean()
@@ -71,16 +64,16 @@ public class SearchBean
 		List ret = query.executeQueryList();
 		if (ret != null && ret.size() == 1)
 		{
-			Object[] row = (Object[]) ret.get(0); 
-			yearFrom = ((Integer) row[0]).intValue();
-			yearTo = ((Integer) row[1]).intValue();
+			Object[] row = (Object[]) ret.get(0);
+			workingQuery.setYearFrom(((Integer) row[0]).intValue());
+			workingQuery.setYearTo(((Integer) row[1]).intValue());
 		}
 
 	}
 	
 	private void addQueryCondition(String selectedAttributeId)
 	{
-		workingQuery.addConditionOn(selectedAttributeId);
+		workingQuery.getBuilderQuery().addConditionOn(selectedAttributeId);
 	}
 	
 	public void addConditionFromMenu(MenuItemSelectedEvent event)
@@ -98,35 +91,29 @@ public class SearchBean
 	private void searchInternal(boolean storeToHistory)
 	{
 		
-		VisibleAttributeInterface[] columns = new VisibleAttributeInterface[workingQuery.getConditionCount()];
-		Conditions conditions = new Conditions();
-		
-		conditions.addCondition(
-				Voyage.getAttribute("yearam"),
-				new Integer(yearFrom),
-				Conditions.OP_GREATER_OR_EQUAL);
-
-		conditions.addCondition(
-				Voyage.getAttribute("yearam"),
-				new Integer(yearTo),
-				Conditions.OP_SMALLER_OR_EQUAL);
-
-		//int i = 0;
-		boolean errors = false;
-		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
+		try
 		{
-			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			if (!queryCondition.addToConditions(conditions, false)) errors = true;
-			//columns[i++] = queryCondition.getSearchableAttributeId();
-		}
-		if (errors) return;
 		
-		searchParameters = new SearchParameters();
-		searchParameters.setConditions(conditions);
-		searchParameters.setColumns(columns);
-
-		if (storeToHistory && !workingQuery.equals(history.getLatestQuery()))
-			history.addQuery((Query) workingQuery.clone());
+			Conditions dbConds = new Conditions();
+			boolean errors = workingQuery.addToDbConditions(false, dbConds);
+			if (errors) return;
+			
+			searchParameters = new SearchParameters();
+			searchParameters.setConditions(dbConds);
+			searchParameters.setColumns(null);
+	
+			if (storeToHistory && !workingQuery.equals(history.getLatestQuery()))
+			{
+				HistoryItem historyItem = new HistoryItem();
+				historyItem.setQuery((Query) workingQuery.clone());
+				history.addItem(historyItem);
+			}
+		
+		}
+		catch (CloneNotSupportedException cns)
+		{
+			throw new RuntimeException(cns);
+		}
 
 	}
 	
@@ -140,24 +127,10 @@ public class SearchBean
 	public String getNumberOfResultsText()
 	{
 		
-		Conditions conditions = new Conditions();
-		for (Iterator iterQueryCondition = workingQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
-		{
-			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			queryCondition.addToConditions(conditions, false);
-		}
-		
-		conditions.addCondition(
-				Voyage.getAttribute("yearam"),
-				new Integer(yearFrom),
-				Conditions.OP_GREATER_OR_EQUAL);
+		Conditions dbConds = new Conditions();
+		workingQuery.addToDbConditions(false, dbConds);
 
-		conditions.addCondition(
-				Voyage.getAttribute("yearam"),
-				new Integer(yearTo),
-				Conditions.OP_SMALLER_OR_EQUAL);
-
-		QueryValue query = new QueryValue("Voyage", conditions);
+		QueryValue query = new QueryValue("Voyage", dbConds);
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = query.executeQuery();
 		int numberOfResults = ((Number)ret[0]).intValue();
@@ -172,13 +145,21 @@ public class SearchBean
 	
 	public void historyItemRestore(HistoryItemRestoreEvent event)
 	{
-		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
-		workingQuery = (Query) historyItem.getQuery().clone();
-		searchInternal(false);
+		try
+		{
+			HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
+			workingQuery = (Query) historyItem.getQuery().clone();
+			searchInternal(false);
+		}
+		catch (CloneNotSupportedException cns)
+		{
+			throw new RuntimeException(cns);
+		}
 	}
 	
 	public void historyItemPermlink(HistoryItemPermlinkEvent event)
 	{
+
 		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
 		
 		//UidGenerator generator = new UidGenerator();
@@ -221,6 +202,7 @@ public class SearchBean
 	{
 		
 		Group[] groups = Group.getGroups();
+		QueryBuilderQuery builderQuery = workingQuery.getBuilderQuery();
 		
 		MenuItemMain[] mainItems = new MenuItemMain[groups.length];
 		for (int i = 0; i < groups.length; i++)
@@ -248,7 +230,7 @@ public class SearchBean
 					MenuItem subItem = new MenuItem();
 					subItems[k++] = subItem;
 					subItem.setId(attr.getId());
-					if (workingQuery != null && workingQuery.containsConditionOn(attr.getId()))
+					if (workingQuery != null && builderQuery.containsConditionOn(attr.getId()))
 					{
 						subItem.setText("<span class=\"attribute-selected\">" + attr.getUserLabel() + "</span>");
 					}
@@ -274,15 +256,15 @@ public class SearchBean
 		return getMenuAttributes(UserCategory.General);
 	}
 
-	public Query getWorkingQuery()
+	public QueryBuilderQuery getWorkingQuery()
 	{
 		restorePermlinkIfAny();
-		return workingQuery;
+		return workingQuery.getBuilderQuery();
 	}
 
-	public void setWorkingQuery(Query newWorkingQuery)
+	public void setWorkingQuery(QueryBuilderQuery newWorkingQuery)
 	{
-		this.workingQuery = newWorkingQuery;
+		this.workingQuery.setBuilderQuery(newWorkingQuery);
 	}
 
 	public History getHistory()
@@ -340,22 +322,22 @@ public class SearchBean
 
 	public int getYearFrom()
 	{
-		return yearFrom;
+		return workingQuery.getYearFrom();
 	}
 
 	public void setYearFrom(int yearFrom)
 	{
-		this.yearFrom = yearFrom;
+		workingQuery.setYearFrom(yearFrom);
 	}
 
 	public int getYearTo()
 	{
-		return yearTo;
+		return workingQuery.getYearTo();
 	}
 
 	public void setYearTo(int yearTo)
 	{
-		this.yearTo = yearTo;
+		workingQuery.setYearTo(yearTo);
 	}
 
 }

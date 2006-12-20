@@ -21,7 +21,7 @@ public class History
 {
 	
 	private List items = new ArrayList();
-	
+
 	public void clear()
 	{
 		items.clear();
@@ -30,21 +30,20 @@ public class History
 	public Query getLatestQuery()
 	{
 		if (isEmpty()) return null;
-		return ((HistoryItem)items.get(0)).getQuery();
+		return getLatestItem().getQuery();
 	}
 	
+	public HistoryItem getLatestItem()
+	{
+		if (isEmpty()) return null;
+		return (HistoryItem) items.get(0);
+	}
+
 	public boolean isEmpty()
 	{
 		return items.size() == 0;
 	}
 	
-	public void addQuery(Query query)
-	{
-		HistoryItem historyItem = new HistoryItem();
-		historyItem.setQuery(query);
-		addItem(historyItem);
-	}
-
 	public void addItem(HistoryItem item)
 	{
 		

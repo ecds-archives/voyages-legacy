@@ -1,144 +1,98 @@
 package edu.emory.library.tast.ui.search.query;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
-import edu.emory.library.tast.ui.search.query.searchables.Searchables;
+import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.util.query.Conditions;
 
-/**
- * Holds the list of conditions, i.e. objects of types
- * {@link edu.emory.library.tast.ui.search.query.QueryCondition}. Represents the currently
- * built query. Used by {@link edu.emory.library.tast.ui.search.query.QueryBuilderComponent}.
- * Also, it is important that this class implements {@link #clone()} and
- * {@link #equals(Object)} since is the two methods are used when storing and
- * restoring the query in the history list.
- * 
- * @author Jan Zich
- * 
- */
-public class Query implements Serializable
+public class Query implements Cloneable
 {
-
-	private static final long serialVersionUID = 5986829888479480030L;
-
-	private List conditions = new ArrayList();
-	private transient Map conditionsByAttributes = null;
 	
-	private void ensureMap()
+	private QueryBuilderQuery builderQuery = new QueryBuilderQuery();
+	private int yearFrom;
+	private int yearTo;
+
+	public QueryBuilderQuery getBuilderQuery()
 	{
-		if (conditionsByAttributes == null)
-		{
-			Map newMap = new HashMap();
-			for (Iterator iter = conditions.iterator(); iter.hasNext();)
-			{
-				QueryCondition queryCondition = (QueryCondition) iter.next();
-				newMap.put(queryCondition.getSearchableAttributeId(), queryCondition);
-			}
-			conditionsByAttributes = newMap;
-		}
+		return builderQuery;
 	}
 	
-	public void addCondition(QueryCondition queryCondition)
+	public boolean addToDbConditions(boolean markErrors, Conditions dbConds)
 	{
 		
-		if (queryCondition == null) return;
-		
-		conditions.add(queryCondition);
-		
-		ensureMap();
-		conditionsByAttributes.put(queryCondition.getSearchableAttributeId(), queryCondition);
-	
-	}
-	
-	public boolean addConditionOn(String searchableAttributeId)
-	{
-		
-		if (containsConditionOn(searchableAttributeId))
-			return false;
-		
-		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
-		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
-		
-		if (queryCondition != null)
-		{
-			addCondition(queryCondition);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-		
-	}
+		dbConds.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearFrom),
+				Conditions.OP_GREATER_OR_EQUAL);
 
-	public List getConditions()
-	{
-		return conditions;
-	}
+		dbConds.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearTo),
+				Conditions.OP_SMALLER_OR_EQUAL);
 
-	public Map getConditionsByAttributes()
-	{
-		ensureMap();
-		return conditionsByAttributes;
-	}
-	
-	public int getConditionCount()
-	{
-		return conditions.size();
-	}
-	
-	public boolean containsConditionOn(String searchableAttributeId)
-	{
-		ensureMap();
-		return conditionsByAttributes.containsKey(searchableAttributeId);
-	}
-
-	public QueryCondition getCondition(String searchableAttributeId)
-	{
-		ensureMap();
-		return (QueryCondition) conditionsByAttributes.get(searchableAttributeId);
-	}
-
-	protected Object clone()
-	{
-		Query newQuery = new Query();
-		for (Iterator iterQueryCondition = conditions.iterator(); iterQueryCondition.hasNext();)
+		boolean errors = false;
+		for (Iterator iterQueryCondition = builderQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-			newQuery.addCondition((QueryCondition) queryCondition.clone());
+			if (!queryCondition.addToConditions(dbConds, markErrors)) errors = true;
 		}
-		return newQuery;
+
+		return errors;
+		
+	}
+
+	public void setBuilderQuery(QueryBuilderQuery builderQuery)
+	{
+		this.builderQuery = builderQuery;
+	}
+
+	public int getYearFrom()
+	{
+		return yearFrom;
+	}
+
+	public void setYearFrom(int yearFrom)
+	{
+		this.yearFrom = yearFrom;
+	}
+
+	public int getYearTo()
+	{
+		return yearTo;
+	}
+
+	public void setYearTo(int yearTo)
+	{
+		this.yearTo = yearTo;
 	}
 	
+	protected Object clone() throws CloneNotSupportedException
+	{
+		Query newQuery = new Query();
+		newQuery.setYearFrom(yearFrom);
+		newQuery.setYearTo(yearTo);
+		newQuery.setBuilderQuery((QueryBuilderQuery) builderQuery.clone());
+		return newQuery;
+	}
+
 	public boolean equals(Object obj)
 	{
-		if (obj == null || !(obj instanceof Query))
+		if (!(obj instanceof Query))
 			return false;
-		
+
 		Query that = (Query) obj;
 		
-		if (this.getConditionCount() != that.getConditionCount())
+		if (that.yearFrom != yearFrom)
 			return false;
 		
-		for (Iterator iterAttr = getConditionsByAttributes().keySet().iterator(); iterAttr.hasNext();)
-		{
-			String attrId = (String) iterAttr.next();
-			QueryCondition thisQueryCondition = this.getCondition(attrId);
-			QueryCondition thatQueryCondition = that.getCondition(attrId);
-			
-			if (thatQueryCondition == null)
-				return false;
-			
-			if (!thatQueryCondition.equals(thisQueryCondition))
-				return false;
-		}
+		if (that.yearTo != yearTo)
+			return false;
+		
+		if ((that.builderQuery == null && this.builderQuery == null) || !that.builderQuery.equals(this.builderQuery))
+			return false;
 		
 		return true;
+		
 	}
 
 }

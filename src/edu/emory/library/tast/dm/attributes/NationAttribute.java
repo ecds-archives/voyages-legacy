@@ -35,4 +35,9 @@ public class NationAttribute extends DictionaryAttribute
 		return Nation.loadAll(sess);
 	}
 	
+	public NumericAttribute getItAttribute()
+	{
+		return (NumericAttribute) Nation.getAttribute("id");
+	}
+
 }

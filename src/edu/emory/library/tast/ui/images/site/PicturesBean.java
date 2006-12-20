@@ -22,7 +22,7 @@ import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.ui.search.query.Query;
+import edu.emory.library.tast.ui.search.query.QueryBuilderQuery;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
 import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;

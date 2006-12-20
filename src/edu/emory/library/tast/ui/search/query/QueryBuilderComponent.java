@@ -13,6 +13,10 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.Searchables;
@@ -23,7 +27,7 @@ import edu.emory.library.tast.util.StringUtils;
  * <p>
  * This is the JSF component responsible for bulding search query. It is bind
  * with the bean {@link edu.emory.library.tast.ui.search.query.SearchBean} via the currently
- * built quuery, represented by {@link edu.emory.library.tast.ui.search.query.Query}. When
+ * built quuery, represented by {@link edu.emory.library.tast.ui.search.query.QueryBuilderQuery}. When
  * rendering, it gets the current query from the bean and renders appropriately
  * each search condition. When processing postback, it completely recreates the
  * query from incomming parameters and in the update application phase it passes
@@ -59,8 +63,8 @@ public class QueryBuilderComponent extends UIComponentBase
 	private static final int UPDATE_DELAY = 1000;
 	private static final String ID_SEPARATOR = ":";
 
-	private Query submittedQuery;
-	private Query setQuery;
+	private QueryBuilderQuery submittedQuery;
+	private QueryBuilderQuery setQuery;
 	private boolean querySet = false;
 	private MethodBinding onUpdateTotal;
 
@@ -115,7 +119,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			queueEvent(new QueryUpdateTotalEvent(this));
 		
 		String submittedAttributesStr = (String) params.get(attrFieldName);
-		submittedQuery = new Query();
+		submittedQuery = new QueryBuilderQuery();
 
 		if (!StringUtils.isNullOrEmpty(submittedAttributesStr))
 		{
@@ -179,7 +183,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
 		
-		Query query = getQuery();
+		QueryBuilderQuery query = getQuery();
 		
 		// start of the registration JS
 		StringBuffer regJS = new StringBuffer();
@@ -212,6 +216,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		JsfUtils.encodeHiddenInput(this, writer,
 				getHtmlNameForTotal(context),
 				"false");
+		
+		// we will need to access db
+		Session session = HibernateUtil.getSession();
+		Transaction trans = session.beginTransaction();
 
 		int i = 0;
 		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();  i++)
@@ -258,7 +266,8 @@ public class QueryBuilderComponent extends UIComponentBase
 				encodeListCondition(
 						(QueryConditionList)queryCondition,
 						context, form, writer,
-						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS, 
+						session);
 			}
 			encodeEndQueryConditionBox(queryCondition, context, form, writer);
 			
@@ -267,6 +276,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		}
 		
 		regJS.append("}));");
+
+		// done with db
+		trans.commit();
+		session.close();
 		
 		JsfUtils.encodeJavaScriptStart(this, writer);
 		writer.write(regJS.toString());
@@ -1388,7 +1401,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 
-	private void encodeListCondition(QueryConditionList queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
+	private void encodeListCondition(QueryConditionList queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS, Session session) throws IOException
 	{
 		
 		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
@@ -1398,7 +1411,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		String editElementId = getClientId(context) + "_" + attribute.getId() + "_edit";
 		String editListElementId = getClientId(context) + "_" + attribute.getId() + "_edit_list";
 		
-		QueryConditionListItem[] allItems = ((ListItemsSource)attribute).getAvailableItems();
+		QueryConditionListItem[] allItems = ((ListItemsSource)attribute).getAvailableItems(session);
 
 		regJS.append(", ");
 		regJS.append("stateFieldName: '").append(getHtmlNameForListState(attribute, context)).append("'");
@@ -1611,15 +1624,15 @@ public class QueryBuilderComponent extends UIComponentBase
 
 	}
 	
-	public Query getQuery()
+	public QueryBuilderQuery getQuery()
 	{
 		if (querySet) return setQuery;
 		ValueBinding vb = getValueBinding("query");
 		if (vb == null) return submittedQuery;
-		return (Query) vb.getValue(getFacesContext());
+		return (QueryBuilderQuery) vb.getValue(getFacesContext());
 	}
 
-	public void setQuery(Query query)
+	public void setQuery(QueryBuilderQuery query)
 	{
 		querySet = true;
 		this.setQuery = query;

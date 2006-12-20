@@ -37,4 +37,9 @@ public class VesselRigAttribute extends DictionaryAttribute
 		return VesselRig.loadAll(sess);
 	}
 	
+	public NumericAttribute getItAttribute()
+	{
+		return (NumericAttribute) VesselRig.getAttribute("id");
+	}
+	
 }

@@ -9,7 +9,7 @@ import edu.emory.library.tast.util.query.Conditions;
 
 /**
  * This class represents one condition in the list of conditions, represented by
- * {@link edu.emory.library.tast.ui.search.query.Query}, in the currently built query in the
+ * {@link edu.emory.library.tast.ui.search.query.QueryBuilderQuery}, in the currently built query in the
  * search UI. It is abstract. It provides only the necessary methods and
  * properties for specialized conditions. It is important that this class and,
  * in particular, its descendants implement {@link #clone()} and

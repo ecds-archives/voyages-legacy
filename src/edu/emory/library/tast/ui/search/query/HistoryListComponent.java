@@ -13,6 +13,10 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -262,9 +266,10 @@ public class HistoryListComponent extends UIComponentBase
 	 * @param form
 	 *            Enclosing JSF form. Needed because the JavaScript needs to
 	 *            reference the hiddem fields.
+	 * @param session 
 	 * @throws IOException
 	 */
-	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form) throws IOException
+	private void encodeHistoryItem(HistoryItem item, ResponseWriter writer, FacesContext context, UIForm form, Session session) throws IOException
 	{
 		
 		if (item.getId() == null) return;
@@ -287,106 +292,130 @@ public class HistoryListComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
 		
-		if (item.getQuery().getConditionCount() == 0)
+		QueryBuilderQuery builderQuery = item.getQuery().getBuilderQuery();
+		
+		writer.write("Time frame: ");
+		writer.startElement("b", this);
+		writer.write(String.valueOf(item.getQuery().getYearFrom()));
+		writer.endElement("b");
+		writer.write(" - ");
+		writer.startElement("b", this);
+		writer.write(String.valueOf(item.getQuery().getYearTo()));
+		writer.endElement("b");
+		
+		writer.startElement("br", this);
+		writer.endElement("br");
+
+		for (Iterator iterQueryCondition = builderQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
-			writer.write("No conditions. This query returns everything.");
-		}
-		else
-		{
+			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
+			writer.write(queryCondition.getSearchableAttribute().getUserLabel());
 			
-			for (Iterator iterQueryCondition = item.getQuery().getConditions().iterator(); iterQueryCondition.hasNext();)
+			if (queryCondition instanceof QueryConditionBoolean)
 			{
-				QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
-				writer.write(queryCondition.getSearchableAttribute().getUserLabel());
-				
-				if (queryCondition instanceof QueryConditionText)
+				QueryConditionBoolean queryConditionBoolean = (QueryConditionBoolean) queryCondition;
+				writer.write(": ");
+				writer.startElement("b", this);
+				if (queryConditionBoolean.isChecked())
 				{
-					QueryConditionText queryConditionText = (QueryConditionText) queryCondition;
-					writer.write(" is ");
-					if (queryConditionText.isNonEmpty())
-					{
+					writer.write("Yes");
+				}
+				else
+				{
+					writer.write("No");
+				}
+				writer.endElement("b");
+			}
+			
+			else if (queryCondition instanceof QueryConditionText)
+			{
+				QueryConditionText queryConditionText = (QueryConditionText) queryCondition;
+				writer.write(" is ");
+				if (queryConditionText.isNonEmpty())
+				{
+					writer.startElement("b", this);
+					writer.write(queryConditionText.getValue());
+					writer.endElement("b");
+				}
+				else
+				{
+					writer.startElement("i", this);
+					writer.write("[anything]");
+					writer.endElement("i");
+				}
+			}
+			
+			else if (queryCondition instanceof QueryConditionRange)
+			{
+				QueryConditionRange queryConditionRange = (QueryConditionRange) queryCondition;
+				switch (queryConditionRange.getType())
+				{
+					case QueryConditionRange.TYPE_BETWEEN:
+						writer.write(" is between ");
 						writer.startElement("b", this);
-						writer.write(queryConditionText.getValue());
+						writer.write(queryConditionRange.getFromForDisplay());
 						writer.endElement("b");
-					}
-					else
-					{
-						writer.startElement("i", this);
-						writer.write("[anything]");
-						writer.endElement("i");
-					}
-				}
-				
-				else if (queryCondition instanceof QueryConditionRange)
-				{
-					QueryConditionRange queryConditionRange = (QueryConditionRange) queryCondition;
-					switch (queryConditionRange.getType())
-					{
-						case QueryConditionRange.TYPE_BETWEEN:
-							writer.write(" is between ");
-							writer.startElement("b", this);
-							writer.write(queryConditionRange.getFromForDisplay());
-							writer.endElement("b");
-							writer.write(" and ");
-							writer.startElement("b", this);
-							writer.write(queryConditionRange.getToForDisplay());
-							writer.endElement("b");
-							break;
-						
-						case QueryConditionRange.TYPE_LE:
-							writer.write(" is at most ");
-							writer.startElement("b", this);
-							writer.write(queryConditionRange.getLeForDisplay());
-							writer.endElement("b");
-							break;
-							
-						case QueryConditionRange.TYPE_GE:
-							writer.write(" is at least ");
-							writer.startElement("b", this);
-							writer.write(queryConditionRange.getGeForDisplay());
-							writer.endElement("b");
-							break;
-	
-						case QueryConditionRange.TYPE_EQ:
-							writer.write(" is equal ");
-							writer.startElement("b", this);
-							writer.write(queryConditionRange.getEqForDisplay());
-							writer.endElement("b");
-							break;
-					}
+						writer.write(" and ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getToForDisplay());
+						writer.endElement("b");
+						break;
 					
+					case QueryConditionRange.TYPE_LE:
+						writer.write(" is at most ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getLeForDisplay());
+						writer.endElement("b");
+						break;
+						
+					case QueryConditionRange.TYPE_GE:
+						writer.write(" is at least ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getGeForDisplay());
+						writer.endElement("b");
+						break;
+
+					case QueryConditionRange.TYPE_EQ:
+						writer.write(" is equal ");
+						writer.startElement("b", this);
+						writer.write(queryConditionRange.getEqForDisplay());
+						writer.endElement("b");
+						break;
 				}
 				
-				else if (queryCondition instanceof QueryConditionList)
+			}
+			
+			else if (queryCondition instanceof QueryConditionList)
+			{
+				QueryConditionList queryConditionList = (QueryConditionList) queryCondition;
+				ListItemsSource itemsSource = (ListItemsSource) queryConditionList.getSearchableAttribute();
+				writer.write(" is ");
+				if (queryConditionList.getSelectedIds().size() > 0)
 				{
-					QueryConditionList queryConditionList = (QueryConditionList) queryCondition;
-					ListItemsSource itemsSource = (ListItemsSource) queryConditionList.getSearchableAttribute();
-					writer.write(" is ");
-					if (queryConditionList.getSelectedIds().size() > 0)
+					for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
 					{
-						for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
+						QueryConditionListItem listItem = itemsSource.getItemByFullId(session, (String) iter.next());
+						if (listItem != null)
 						{
-							QueryConditionListItem listItem = itemsSource.getItemByFullId((String) iter.next());
 							writer.startElement("b", this);
 							writer.write(listItem.getText());
 							writer.endElement("b");
 							if (iter.hasNext()) writer.write(" or ");
 						}
 					}
-					else
-					{
-						writer.startElement("i", this);
-						writer.write("[anything]");
-						writer.endElement("i");
-					}
 				}
-				
-				if (iterQueryCondition.hasNext())
+				else
 				{
-					writer.startElement("br", this);
-					writer.endElement("br");
+					writer.startElement("i", this);
+					writer.write("[anything]");
+					writer.endElement("i");
 				}
-				
+			}
+			
+			if (iterQueryCondition.hasNext())
+			{
+				writer.startElement("br", this);
+				writer.endElement("br");
 			}
 		}
 		
@@ -423,16 +452,22 @@ public class HistoryListComponent extends UIComponentBase
 		JsfUtils.encodeHiddenInput(this, writer, getToRestoreHiddenFieldName(context));
 		JsfUtils.encodeHiddenInput(this, writer, getToPermlinkHiddenFieldName(context));
 		
+		Session session = HibernateUtil.getSession();
+		Transaction trans = session.beginTransaction();
+		
 		History history = getItems();
 		if (history != null)
 		{
 			for (Iterator iter = history.getItems().iterator(); iter.hasNext();)
 			{
 				HistoryItem item = (HistoryItem) iter.next();
-				encodeHistoryItem(item, writer, context, form);
+				encodeHistoryItem(item, writer, context, form, session);
 			}
 		}
 		
+		trans.commit();
+		session.close();
+
 	}
 
 	/**

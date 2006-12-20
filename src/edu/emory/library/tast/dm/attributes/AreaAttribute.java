@@ -35,4 +35,9 @@ public class AreaAttribute extends DictionaryAttribute
 		return Area.loadAll(sess);
 	}
 
+	public NumericAttribute getItAttribute()
+	{
+		return (NumericAttribute) Area.getAttribute("id");
+	}
+
 }

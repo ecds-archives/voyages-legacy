@@ -12,7 +12,6 @@ import edu.emory.library.tast.dm.attributes.exceptions.MissingDictionaryValueExc
 
 public abstract class DictionaryAttribute extends ImportableAttribute
 {
-	
 	public DictionaryAttribute(String name, String objType)
 	{
 		this(name, objType, null);
@@ -22,6 +21,8 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 	{
 		super(name, objectType, importName);
 	}
+	
+	public abstract NumericAttribute getItAttribute(); 
 	
 	public int getImportType()
 	{

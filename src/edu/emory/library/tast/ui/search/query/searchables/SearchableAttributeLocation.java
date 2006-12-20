@@ -3,8 +3,13 @@ package edu.emory.library.tast.ui.search.query.searchables;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Session;
+
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
 import edu.emory.library.tast.ui.search.query.QueryConditionListItem;
@@ -40,75 +45,106 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 
 	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
 	{
-		return false;
+
+		// check
+		if (!(queryCondition instanceof QueryConditionList))
+			throw new IllegalArgumentException("expected QueryConditionList"); 
+		
+		// cast
+		QueryConditionList queryConditionList =
+			(QueryConditionList) queryCondition;
+		
+		// is empty -> no db condition
+		if (queryConditionList.getSelectedIdsCount() == 0)
+			return true;
+		
+		// add locations to the query
+		Conditions subCond = new Conditions(Conditions.JOIN_OR);
+		for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
+		{
+			String[] ids = ((String) iter.next()).split(":");
+			if (ids.length == 3)
+			{
+				long id = Long.parseLong(ids[2]);
+				for (int j = 0; j < locations.length; j++)
+					subCond.addCondition(
+							new SequenceAttribute(new Attribute[] {locations[j].getPort(), Port.getAttribute("id")}),
+							new Long(id), Conditions.OP_EQUALS);
+			}
+		}
+		conditions.addCondition(subCond);
+		
+		return true;
+
 	}
 	
-	public QueryConditionListItem[] getAvailableItems()
+	public QueryConditionListItem[] getAvailableItems(Session session)
 	{
 		
-		List regions = Region.loadAll(null);
-		QueryConditionListItem[] regionItems = new QueryConditionListItem[regions.size()];
-		
-		int i = 0;
-		for (Iterator regionIter = regions.iterator(); regionIter.hasNext();)
+		List areas = Area.loadAll(session);
+		QueryConditionListItem[] areasItems = new QueryConditionListItem[areas.size()];
+
+		int k = 0;
+		for (Iterator areaIter = areas.iterator(); areaIter.hasNext();)
 		{
-
-			Region region = (Region) regionIter.next();
+			Area area = (Area) areaIter.next();
 			
-			QueryConditionListItem regionItem = new QueryConditionListItem(
-					String.valueOf(region.getId()),
-					region.getName());
+			QueryConditionListItem areaItem = new QueryConditionListItem(
+					String.valueOf(area.getId()),
+					area.getName());
 			
-			QueryConditionListItem[] portItems =
-				new QueryConditionListItem[region.getPorts().size()];
+			QueryConditionListItem[] regionsItems =
+				new QueryConditionListItem[area.getRegions().size()];
 
-			int j = 0;
-			for (Iterator iterPort = region.getPorts().iterator(); iterPort.hasNext();)
+			int i = 0;
+			for (Iterator regionIter = area.getRegions().iterator(); regionIter.hasNext();)
 			{
-				Port port = (Port) iterPort.next();
-				portItems[j++] = new QueryConditionListItem(
-						String.valueOf(port.getId()),
-						port.getName());
+				Region region = (Region) regionIter.next();
+				
+				QueryConditionListItem regionItem = new QueryConditionListItem(
+						String.valueOf(region.getId()),
+						region.getName());
+				
+				QueryConditionListItem[] portItems =
+					new QueryConditionListItem[region.getPorts().size()];
+
+				int j = 0;
+				for (Iterator iterPort = region.getPorts().iterator(); iterPort.hasNext();)
+				{
+					Port port = (Port) iterPort.next();
+					portItems[j++] = new QueryConditionListItem(
+							String.valueOf(port.getId()),
+							port.getName());
+				}
+				
+				regionItem.setChildren(portItems);
+				regionsItems[i++] = regionItem;
+
 			}
 			
-			regionItem.setChildren(portItems);
-			regionItems[i++] = regionItem;
+			areaItem.setChildren(regionsItems);
+			areasItems[k++] = areaItem;
 
 		}
 		
-		return regionItems;
+		return areasItems;
 
-//		return new QueryConditionListItem[] {
-//				new QueryConditionListItem("a", "Europe", new QueryConditionListItem[] {
-//						new QueryConditionListItem("1", "Germany"),
-//						new QueryConditionListItem("2", "Great Britain", new QueryConditionListItem[] {
-//								new QueryConditionListItem("x", "England"),
-//								new QueryConditionListItem("y", "Ireland"),
-//								new QueryConditionListItem("z", "Scottland")
-//						}),
-//						new QueryConditionListItem("3", "France")
-//				}),
-//				new QueryConditionListItem("b", "Africa",
-//						new QueryConditionListItem[] {
-//						new QueryConditionListItem("1", "Kenya"),
-//						new QueryConditionListItem("2", "Angola"),
-//						new QueryConditionListItem("3", "Congo"),
-//						new QueryConditionListItem("4", "Uganda"),
-//						new QueryConditionListItem("5", "Zambia"),
-//						new QueryConditionListItem("6", "Zimbabwe")
-//				}),
-//				new QueryConditionListItem("c", "America",
-//						new QueryConditionListItem[] {
-//						new QueryConditionListItem("a", "USA"),
-//						new QueryConditionListItem("b", "Mexico"),
-//						new QueryConditionListItem("c", "Canada")
-//				})
-//		};
 	}
 
-	public QueryConditionListItem getItemByFullId(String id)
+	public QueryConditionListItem getItemByFullId(Session session, String id)
 	{
-		return null;
+		String[] ids = id.split(":");
+		if (ids.length == 3)
+		{
+			Port port = Port.loadById(session, Long.parseLong(ids[2]));
+			return new QueryConditionListItem(
+					port.getId().toString(),
+					port.getRegion().getName() + " / " + port.getName());
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 }

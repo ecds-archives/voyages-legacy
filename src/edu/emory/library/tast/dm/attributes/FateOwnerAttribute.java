@@ -34,5 +34,10 @@ public class FateOwnerAttribute extends DictionaryAttribute
 	{
 		return FateOwner.loadAll(sess);
 	}
+
+	public NumericAttribute getItAttribute()
+	{
+		return (NumericAttribute) FateOwner.getAttribute("id");
+	}
 	
 }

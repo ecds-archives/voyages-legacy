@@ -35,4 +35,9 @@ public class EstimatesImportAreaAttribute extends DictionaryAttribute
 		return EstimatesImportArea.loadAll(sess);
 	}
 	
+	public NumericAttribute getItAttribute()
+	{
+		return (NumericAttribute) EstimatesImportArea.getAttribute("id");
+	}
+	
 }

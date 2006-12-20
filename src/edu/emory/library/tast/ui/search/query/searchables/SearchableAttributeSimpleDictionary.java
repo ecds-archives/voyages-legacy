@@ -8,10 +8,11 @@ import org.hibernate.Session;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
 import edu.emory.library.tast.ui.search.query.QueryConditionListItem;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
@@ -22,22 +23,6 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		super(id, userLabel, userCategories, attributes);
 	}
 
-	public void addSingleAttributeToConditions(QueryConditionList queryConditionList, Attribute attribute, Conditions conditions, Session sess)
-	{
-		
-		DictionaryAttribute firstAttr = (DictionaryAttribute)(getAttributes()[0]);
-		
-		Conditions subCondition = new Conditions(Conditions.JOIN_OR);
-		for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
-		{
-			String id = (String) iter.next();
-			Dictionary dictItem = firstAttr.loadObjectById(sess, Long.parseLong(id));
-			subCondition.addCondition(attribute, dictItem, Conditions.OP_EQUALS);
-		}
-		conditions.addCondition(subCondition);
-
-	}
-	
 	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
 	{
 
@@ -50,24 +35,23 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		if (queryConditionList.getSelectedIdsCount() == 0)
 			return true;
 		
-		Session sess = HibernateUtil.getSession();
+		Conditions subCond = new Conditions(Conditions.JOIN_OR);
 		
-		Attribute[] attributes = getAttributes();
-		if (attributes.length == 1)
+		for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
 		{
-			addSingleAttributeToConditions(queryConditionList,
-					attributes[0], conditions, sess);
-		}
-		else
-		{
-			Conditions orCond = new Conditions(Conditions.JOIN_OR);
-			conditions.addCondition(orCond);
+
+			Long id = new Long((String) iter.next());
+
+			Attribute[] attributes = getAttributes();
 			for (int i = 0; i < attributes.length; i++)
-				addSingleAttributeToConditions(queryConditionList,
-						attributes[i], orCond, sess);
+			{
+				DictionaryAttribute attribute = (DictionaryAttribute) attributes[i];
+				NumericAttribute idAttr = attribute.getItAttribute();
+				subCond.addCondition(new SequenceAttribute(new Attribute[] {attribute, idAttr}), id, Conditions.OP_EQUALS);
+			}
+			
 		}
-		
-		sess.close();
+		conditions.addCondition(subCond);
 		
 		return true;
 	}
@@ -77,12 +61,12 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		return new QueryConditionList(getId());
 	}
 	
-	public QueryConditionListItem[] getAvailableItems()
+	public QueryConditionListItem[] getAvailableItems(Session session)
 	{
 		
 		DictionaryAttribute firstAttr = (DictionaryAttribute)(getAttributes()[0]);
 
-		List dictItems = (firstAttr).loadAllObjects(null);
+		List dictItems = firstAttr.loadAllObjects(session);
 		QueryConditionListItem items[] = new QueryConditionListItem[dictItems.size()];
 		
 		int i = 0;
@@ -98,11 +82,11 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 
 	}
 
-	public QueryConditionListItem getItemByFullId(String id)
+	public QueryConditionListItem getItemByFullId(Session session, String id)
 	{
 
 		DictionaryAttribute firstAttr = (DictionaryAttribute)(getAttributes()[0]);
-		Dictionary dictItem = firstAttr.loadObjectById(null, Long.parseLong(id));
+		Dictionary dictItem = firstAttr.loadObjectById(session, Long.parseLong(id));
 
 		return new QueryConditionListItem(
 				dictItem.getId().toString(),

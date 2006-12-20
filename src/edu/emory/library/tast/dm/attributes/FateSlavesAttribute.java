@@ -35,4 +35,9 @@ public class FateSlavesAttribute extends DictionaryAttribute
 		return FateSlaves.loadAll(sess);
 	}
 	
+	public NumericAttribute getItAttribute()
+	{
+		return (NumericAttribute) FateSlaves.getAttribute("id");
+	}
+	
 }

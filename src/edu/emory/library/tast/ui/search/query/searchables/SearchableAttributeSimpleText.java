@@ -30,7 +30,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 		if (!(queryCondition instanceof QueryConditionText))
 			throw new IllegalArgumentException("expected QueryConditionText"); 
 		
-		// retype
+		// cast
 		QueryConditionText queryConditionText =
 			(QueryConditionText) queryCondition;
 
