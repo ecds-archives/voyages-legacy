@@ -108,6 +108,11 @@ public class QueryValue {
 	private boolean cacheable = false;
 
 	/**
+	 * SELECT distincs
+	 */
+	private boolean distinct = false;
+
+	/**
 	 * Array of Populated attributes.
 	 */
 	private ArrayList populateValues = null;
@@ -233,6 +238,7 @@ public class QueryValue {
 		//Prepare select part and left outer join part (for dictionaries)
 		if (this.populateValues != null) {
 			buf.append("select ");
+			if (distinct) buf.append("distinct ");
 			boolean first = true;
 			Iterator iter = this.populateValues.iterator();
 			while (iter.hasNext()) {
@@ -417,5 +423,15 @@ public class QueryValue {
 	 */
 	public void setCacheable(boolean cacheable) {
 		this.cacheable = cacheable;
+	}
+
+	public boolean isDistinct()
+	{
+		return distinct;
+	}
+
+	public void setDistinct(boolean distinct)
+	{
+		this.distinct = distinct;
 	}
 }

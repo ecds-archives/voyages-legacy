@@ -70,6 +70,8 @@ public class VoyageBean
 	private static final String SLAVE_CHARS_TAB_ID = "slaveChars";
 	private static final String SOURCES_TAB_ID = "sources";
 	
+	private Long voyageIid;
+	
 	private Values shipValues;
 	private Values outcomeValues;
 	private Values itineraryValues;
@@ -222,7 +224,7 @@ public class VoyageBean
 		}
 		return values;
 	}
-
+	
 	private String[] createDictionaryValue(Dictionary dictItem)
 	{
 		String[] values = new String[1];
@@ -231,6 +233,50 @@ public class VoyageBean
 			values[0] = String.valueOf(dictItem.getId());
 		}
 		return values;
+	}
+
+	private Port getLocationValue(Session session, String[] ids)
+	{
+		if (ids[2] != null)
+		{
+			return Port.loadById(session, Long.parseLong(ids[2])); 
+		}
+		else if (ids[1] != null)
+		{
+			return Port.loadById(session, Long.parseLong(ids[1])); 
+		}
+		else if (ids[0] != null)
+		{
+			return Port.loadById(session, Long.parseLong(ids[0])); 
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	private Nation getNationValue(Session session, String[] ids)
+	{
+		if (ids[0] != null)
+		{
+			return Nation.loadById(session, Long.parseLong(ids[0])); 
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	private VesselRig getVesselRigValue(Session session, String[] ids)
+	{
+		if (ids[0] != null)
+		{
+			return VesselRig.loadById(session, Long.parseLong(ids[0])); 
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	public Schema getShipSchema()
@@ -308,6 +354,40 @@ public class VoyageBean
 
 	}
 	
+	private void saveShipValues(Session sess, Voyage voyage)
+	{
+		
+		FieldValueLong voyageIdValue = ((FieldValueLong) shipValues.getValueFor("voyageid"));
+		FieldValueCheckbox cdValue = ((FieldValueCheckbox) shipValues.getValueFor("cd"));
+		FieldValueText shipNameValue = ((FieldValueText) shipValues.getValueFor("shipname"));
+		FieldValueDropdowns placconsValue = ((FieldValueDropdowns) shipValues.getValueFor("placcons"));
+		FieldValueInteger yrconsValue = ((FieldValueInteger) shipValues.getValueFor("yrcons"));
+		FieldValueDropdowns placregValue = ((FieldValueDropdowns) shipValues.getValueFor("placreg"));
+		FieldValueInteger yrregValue = ((FieldValueInteger) shipValues.getValueFor("yrreg"));
+		FieldValueDropdowns natinimpValue = ((FieldValueDropdowns) shipValues.getValueFor("natinimp"));
+		FieldValueDropdowns rigValue = ((FieldValueDropdowns) shipValues.getValueFor("rig"));
+		FieldValueFloat tonnageValue = ((FieldValueFloat) shipValues.getValueFor("tonnage"));
+		FieldValueFloat tonmodValue = ((FieldValueFloat) shipValues.getValueFor("tonmod"));
+		FieldValueInteger gunsValue = ((FieldValueInteger) shipValues.getValueFor("guns"));
+		FieldValueText ownersValue = ((FieldValueText) shipValues.getValueFor("owners"));
+		
+		voyage.setVoyageid(voyageIdValue.getLong());
+		voyage.setCd(cdValue.getBoolean());
+		voyage.setShipname(shipNameValue.getValue());
+		voyage.setPlaccons(getLocationValue(sess, placconsValue.getValues()));
+		voyage.setYrcons(yrconsValue.getInteger());
+		voyage.setPlacreg(getLocationValue(sess, placregValue.getValues()));
+		voyage.setYrreg(yrregValue.getInteger());
+		voyage.setNatinimp(Nation.loadById(sess, natinimpValue.getValues()[0]));
+		voyage.setRig(VesselRig.loadById(sess, rigValue.getValues()[0]));
+		voyage.setTonnage(tonnageValue.getFloat());
+		voyage.setTonmod(tonmodValue.getFloat());
+		voyage.setGuns(gunsValue.getInteger());
+		
+		String[] owners = StringUtils.removeEmpty(ownersValue.getLines());
+		
+	}
+	
 	public Schema getOutcomeSchema()
 	{
 
@@ -337,6 +417,10 @@ public class VoyageBean
 		
 		return schema;
 		
+	}
+
+	private void saveOutcomeValues(Session sess, Voyage voyage)
+	{
 	}
 
 	private void fillOutcomeValues(Voyage voyage)
@@ -401,6 +485,10 @@ public class VoyageBean
 		itineraryValues.addValue(new FieldValueDropdowns("portret", createLocationValues(voyage.getRetrnreg(), voyage.getPortret())));
 
 	}
+	
+	private void saveItineraryValues(Session sess, Voyage voyage)
+	{
+	}
 
 	public Schema getDatesSchema()
 	{
@@ -441,6 +529,10 @@ public class VoyageBean
 		datesValues.addValue(new FieldValueInteger("voy2imp", voyage.getVoy2imp()));
 
 	}
+	
+	private void saveDateValues(Session sess, Voyage voyage)
+	{
+	}
 
 	public Schema getCrewSchema()
 	{
@@ -471,6 +563,10 @@ public class VoyageBean
 		crewValues.addValue(new FieldValueInteger("crew3", voyage.getCrew3()));
 		crewValues.addValue(new FieldValueInteger("crewdied", voyage.getCrewdied()));
 		
+	}
+	
+	private void saveCrewValues(Session sess, Voyage voyage)
+	{
 	}
 
 	public Schema getSlaveNumsSchema()
@@ -513,6 +609,10 @@ public class VoyageBean
 		
 	}
 
+	private void saveSlaveNumsValues(Session sess, Voyage voyage)
+	{
+	}
+
 	public Schema getSlaveCharsSchema()
 	{
 
@@ -547,6 +647,10 @@ public class VoyageBean
 		slaveCharsValues.addValue(new FieldValueFloat("vymrtimp", voyage.getVymrtimp()));
 		slaveCharsValues.addValue(new FieldValueFloat("vymrtrat", voyage.getVymrtrat()));
 
+	}
+
+	private void saveSlaveCharsValues(Session sess, Voyage voyage)
+	{
 	}
 
 	public Schema getSourcesSchema()
@@ -589,16 +693,20 @@ public class VoyageBean
 
 	}
 	
+	private void saveSourcesValues(Session sess, Voyage voyage)
+	{
+	}
+	
 	public void openVoyage(GridOpenRowEvent event)
 	{
 		
-		Long iid = new Long(event.getRowId());
+		voyageIid = new Long(event.getRowId());
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		Conditions cond = new Conditions();
-		cond.addCondition(Voyage.getAttribute("iid"), iid, Conditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("iid"), voyageIid, Conditions.OP_EQUALS);
 
 		QueryValue query = new QueryValue("Voyage", cond);
 		query.setFirstResult(0);
@@ -617,6 +725,36 @@ public class VoyageBean
 		tran.commit();
 		sess.close();
 
+	}
+	
+	public String saveVoyage()
+	{
+
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		Conditions cond = new Conditions();
+		cond.addCondition(Voyage.getAttribute("iid"), voyageIid, Conditions.OP_EQUALS);
+
+		QueryValue query = new QueryValue("Voyage", cond);
+		query.setFirstResult(0);
+		query.setLimit(1);
+		Voyage voyage = (Voyage) query.executeQueryList(sess).get(0);
+		
+		saveShipValues(sess, voyage);
+		saveOutcomeValues(sess, voyage);
+		saveItineraryValues(sess, voyage);
+		saveDateValues(sess, voyage);
+		saveCrewValues(sess, voyage);
+		saveSlaveNumsValues(sess, voyage);
+		saveSlaveCharsValues(sess, voyage);
+		saveSourcesValues(sess, voyage);
+		
+		tran.commit();
+		sess.close();
+
+		return null;
+		
 	}
 
 	public Values getCrewValues()

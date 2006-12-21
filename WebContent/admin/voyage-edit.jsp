@@ -87,7 +87,7 @@
 		
 		<br>
 
-		<h:commandButton value="Save" />
+		<h:commandButton value="Save" action="#{AdminVoyageBean.saveVoyage}" />
 	
 		<h:commandButton value="Cancel" action="cancel" />
 

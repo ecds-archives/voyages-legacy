@@ -24,7 +24,8 @@
 				<td style="padding-right: 10px"><h:inputText value="#{AdminVoyagesListBean.yearFrom}" style="width: 40px;" /></td>
 				<td style="padding-right: 5px">To</td>
 				<td style="padding-right: 10px"><h:inputText value="#{AdminVoyagesListBean.yearTo}" style="width: 40px;" /></td>
-				<td><h:commandButton value="Show" /></td>
+				<td style="padding-right: 5px"><h:commandButton value="Show" /></td>
+				<td><h:commandButton value="Default" action="#{AdminVoyagesListBean.restoreDefaultOptions}" /></td>
 			</tr>
 			</table>
 		</div>		

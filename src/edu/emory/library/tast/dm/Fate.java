@@ -40,4 +40,9 @@ public class Fate extends Dictionary
 		return (Fate) Dictionary.loadById(Fate.class, sess, rigId);
 	}
 
+	public static Fate loadById(Session sess, String rigId)
+	{
+		return (Fate) Dictionary.loadById(Fate.class, sess, rigId);
+	}
+
 }

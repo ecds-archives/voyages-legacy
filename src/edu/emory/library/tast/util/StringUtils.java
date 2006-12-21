@@ -148,4 +148,16 @@ public class StringUtils
 		return ints;
 	}
 
+	public static String[] removeEmpty(String[] lines)
+	{
+		if (lines == null)
+		{
+			return null;
+		}
+		else
+		{
+		}
+		return null;
+	}
+
 }

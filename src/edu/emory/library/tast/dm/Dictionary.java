@@ -86,6 +86,50 @@ public abstract class Dictionary
 
 	}
 
+	public static Object loadById(Class clazz, Session sess, String idStr)
+	{
+		if (idStr == null)
+		{
+			return null;
+		}
+		else
+		{
+			long id;
+			try
+			{
+				id = Long.parseLong(idStr);
+			}
+			catch (NumberFormatException nfe)
+			{
+				return null;
+			}
+			return loadById(clazz, sess, id);
+		}
+	}
+
+	public static List loadByIds(Class clazz, Session sess, Long ids[], String orderBy)
+	{
+		
+		boolean sessionProvided = sess != null;
+		Transaction transaction = null;
+		if (!sessionProvided)
+		{
+			sess = HibernateUtil.getSession();
+			transaction = sess.beginTransaction();
+		}
+
+		List list = sess.createCriteria(clazz).add(Restrictions.in("id", ids)).addOrder(Order.asc(orderBy)).list();
+
+		if (!sessionProvided)
+		{
+			transaction.commit();
+			sess.close();
+		}
+
+		return list;
+
+	}
+
 	public static Object loadById(Class clazz, Session sess, long id)
 	{
 
@@ -96,7 +140,7 @@ public abstract class Dictionary
 			sess = HibernateUtil.getSession();
 			transaction = sess.beginTransaction();
 		}
-		//System.out.println(clazz + " id: " + id);
+
 		List list = sess.createCriteria(clazz).add(Restrictions.eq("id", new Long(id))).setCacheable(true).list();
 		Object dictItem = null;
 		if (list == null || list.size() == 0)

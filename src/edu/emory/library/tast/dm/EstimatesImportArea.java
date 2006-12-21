@@ -51,6 +51,11 @@ public class EstimatesImportArea extends Location
 		return (Area) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
 	}
 	
+	public static Area loadById(Session sess, String portId)
+	{
+		return (Area) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
+	}
+
 	public boolean equals(Object that)
 	{
 		if (that instanceof EstimatesImportArea)

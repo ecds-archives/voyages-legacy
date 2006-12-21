@@ -40,4 +40,9 @@ public class FateVessel extends Dictionary
 		return (FateVessel) Dictionary.loadById(FateVessel.class, sess, rigId);
 	}
 
+	public static FateVessel loadById(Session sess, String rigId)
+	{
+		return (FateVessel) Dictionary.loadById(FateVessel.class, sess, rigId);
+	}
+	
 }

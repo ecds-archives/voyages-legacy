@@ -82,6 +82,11 @@ public class Region extends Location
 		return (Region) Dictionary.loadById(Region.class, sess, portId);
 	}
 	
+	public static Region loadById(Session sess, String portId)
+	{
+		return (Region) Dictionary.loadById(Region.class, sess, portId);
+	}
+
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);

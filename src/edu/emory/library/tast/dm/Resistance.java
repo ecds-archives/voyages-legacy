@@ -40,4 +40,9 @@ public class Resistance extends Dictionary
 		return (Resistance) Dictionary.loadById(Resistance.class, sess, rigId);
 	}
 
+	public static Resistance loadById(Session sess, String rigId)
+	{
+		return (Resistance) Dictionary.loadById(Resistance.class, sess, rigId);
+	}
+
 }

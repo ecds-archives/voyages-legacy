@@ -45,7 +45,7 @@ public class FieldValueLong extends FieldValueText
 		return valid;
 	}
 	
-	public Long getInteger()
+	public Long getLong()
 	{
 		if (!isValid())
 		{
@@ -76,6 +76,5 @@ public class FieldValueLong extends FieldValueText
 			setValue("");
 		}
 	}
-	
 
 }

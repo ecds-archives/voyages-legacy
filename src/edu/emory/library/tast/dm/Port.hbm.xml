@@ -17,7 +17,7 @@
 		<property name="longitude" />
 		<property name="order" column="order_num" />
 
-	<many-to-one name="region" column="region_id" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="region" column="region_id" class="edu.emory.library.tast.dm.Region" />
 		
 	</class>
 </hibernate-mapping>

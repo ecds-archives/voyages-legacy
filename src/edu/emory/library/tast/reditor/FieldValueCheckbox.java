@@ -48,4 +48,9 @@ public class FieldValueCheckbox extends FieldValue
 		this.checked = checked;
 	}
 
+	public Boolean getBoolean()
+	{
+		return new Boolean(checked);
+	}
+
 }

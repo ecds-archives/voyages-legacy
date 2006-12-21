@@ -40,4 +40,9 @@ public class VesselRig extends Dictionary
 		return (VesselRig) Dictionary.loadById(VesselRig.class, sess, rigId);
 	}
 
+	public static VesselRig loadById(Session sess, String rigId)
+	{
+		return (VesselRig) Dictionary.loadById(VesselRig.class, sess, rigId);
+	}
+
 }

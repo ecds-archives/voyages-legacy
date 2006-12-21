@@ -22,6 +22,7 @@ public class Port extends Location
 		attributes.put("longitude", new StringAttribute("longitude", "Port"));
 		attributes.put("latitude", new StringAttribute("latitude", "Port"));
 		attributes.put("region", new RegionAttribute("region", "Port"));
+		attributes.put("order", new NumericAttribute("order", "Port", NumericAttribute.TYPE_INTEGER));
 	}
 
 	private Region region;
@@ -47,6 +48,11 @@ public class Port extends Location
 	}
 
 	public static Port loadById(Session sess, long portId)
+	{
+		return (Port) Dictionary.loadById(Port.class, sess, portId);
+	}
+
+	public static Port loadById(Session sess, String portId)
 	{
 		return (Port) Dictionary.loadById(Port.class, sess, portId);
 	}

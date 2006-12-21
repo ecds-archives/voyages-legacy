@@ -39,6 +39,36 @@ public class VoyagesListBean
 	
 	private String nationId;
 	
+	public VoyagesListBean()
+	{
+		restoreDefaultOptions();
+	}
+	
+	public String restoreDefaultOptions()
+	{
+		
+		nationId = "";
+		
+		QueryValue query = new QueryValue("Voyage");
+		
+		query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] {Voyage.getAttribute("yearam")}));
+		query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] {Voyage.getAttribute("yearam")}));
+		
+		List ret = query.executeQueryList();
+		if (ret != null && ret.size() == 1)
+		{
+			Object[] row = (Object[]) ret.get(0);
+			yearFrom = ((Integer) row[0]).intValue();
+			yearTo = ((Integer) row[1]).intValue();
+		}
+		
+		dataValid = false;
+		currentPage = 1;
+		
+		return null;
+		
+	}
+	
 	public String openVoyage()
 	{
 		return "edit";
@@ -55,7 +85,7 @@ public class VoyagesListBean
 		
 		// prepare conditions
 		Conditions conds = new Conditions(Conditions.JOIN_AND);
-		
+
 		// year to
 		conds.addCondition(
 				Voyage.getAttribute("yearam"),

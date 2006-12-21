@@ -73,7 +73,7 @@
 	<searchable-attribute
 		type="port"
 		id="placcons"
-		userLabel="Place where ship constructed">
+		userLabel="Place/region where ship constructed">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -99,7 +99,7 @@
 	<searchable-attribute
 		type="port"
 		id="placreg"
-		userLabel="Place where ship registered">
+		userLabel="Place/region where ship registered">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -283,7 +283,7 @@
 	<searchable-attribute
 		type="port"
 		id="ptdepimp"
-		userLabel="Imputed place where voyage began">
+		userLabel="Imputed place/region where voyage began">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -296,7 +296,7 @@
 	<searchable-attribute
 		type="port"
 		id="plac1tra"
-		userLabel="First place of slave purchase">
+		userLabel="First place/region of slave purchase">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -309,7 +309,7 @@
 	<searchable-attribute
 		type="port"
 		id="plac2tra"
-		userLabel="Second place of slave purchase">
+		userLabel="Second place/region of slave purchase">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -322,7 +322,7 @@
 	<searchable-attribute
 		type="port"
 		id="plac3tra"
-		userLabel="Third place of slave purchase">
+		userLabel="Third place/region of slave purchase">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -335,7 +335,7 @@
 	<searchable-attribute
 		type="port"
 		id="mjbyptimp"
-		userLabel="Imputed principal place of slave purchase">
+		userLabel="Imputed principal place/region of slave purchase">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -361,7 +361,7 @@
 	<searchable-attribute
 		type="port"
 		id="sla1port"
-		userLabel="First place of landing">
+		userLabel="First place/region of landing">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -374,7 +374,7 @@
 	<searchable-attribute
 		type="port"
 		id="adpsale1"
-		userLabel="Second place of landing">
+		userLabel="Second place/region  of landing">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -387,7 +387,7 @@
 	<searchable-attribute
 		type="port"
 		id="adpsale2"
-		userLabel="Third place of landing">
+		userLabel="Third place/region  of landing">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -400,7 +400,7 @@
 	<searchable-attribute
 		type="port"
 		id="mjslptimp"
-		userLabel="Imputed principal place of landing">
+		userLabel="Imputed principal place/region  of landing">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -413,7 +413,7 @@
 	<searchable-attribute
 		type="port"
 		id="portret"
-		userLabel="Port at which voyage ended">
+		userLabel="Place/region at which voyage ended">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

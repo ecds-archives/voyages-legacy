@@ -57,4 +57,9 @@ public class Area extends Location
 		return (Area) Dictionary.loadById(Area.class, sess, portId);
 	}
 
+	public static Area loadById(Session sess, String portId)
+	{
+		return (Area) Dictionary.loadById(Area.class, sess, portId);
+	}
+
 }

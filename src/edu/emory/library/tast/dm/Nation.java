@@ -38,6 +38,11 @@ public class Nation extends DictionaryOrdered
 		return (Nation) Dictionary.loadById(Nation.class, sess, nationId);
 	}
 	
+	public static Nation loadById(Session sess, String nationId)
+	{
+		return (Nation) Dictionary.loadById(Nation.class, sess, nationId);
+	}
+
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);

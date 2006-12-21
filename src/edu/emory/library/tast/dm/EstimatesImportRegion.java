@@ -50,4 +50,9 @@ public class EstimatesImportRegion extends Location
 		return (EstimatesImportRegion) Dictionary.loadById(EstimatesImportRegion.class, sess, portId);
 	}
 
+	public static EstimatesImportRegion loadById(Session sess, String portId)
+	{
+		return (EstimatesImportRegion) Dictionary.loadById(EstimatesImportRegion.class, sess, portId);
+	}
+
 }
