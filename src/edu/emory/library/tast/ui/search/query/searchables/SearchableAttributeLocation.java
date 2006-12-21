@@ -134,6 +134,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 			areaItem.setId("A" + area.getId());
 			areaItem.setText(area.getName());
 			areaItem.setExpandable(true);
+			areaItem.setExpanded(false);
 			
 			tmpAreas.add(areaItem);
 			tmpRegions.clear();
@@ -146,6 +147,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 				regionItem.setId("R" + region.getId());
 				regionItem.setText(region.getName());
 				regionItem.setExpandable(true);
+				regionItem.setExpanded(false);
 				
 				tmpRegions.add(regionItem);
 				tmpPorts.clear();

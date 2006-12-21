@@ -1236,6 +1236,11 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attribute.getId() + "_list_chld_" + fullId;
 	}
 
+	private String getHtmlNameListArrowElement(SearchableAttribute attribute, FacesContext context, String fullId)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "arrow" + fullId;
+	}
+
 	private String getHtmlNameForListCheckbox(SearchableAttribute attribute, FacesContext context, String fullId)
 	{
 		return getClientId(context) + "_" + attribute.getId() + "_list_cb_" + fullId;
@@ -1246,6 +1251,11 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attribute.getId() + "_list_state";
 	}
 	
+	private String getHtmlNameForListExpanded(SearchableAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_expanded_ids";
+	}
+
 	private void createRegJsForListItem(SearchableAttribute attribute, FacesContext context, QueryConditionListItem item, String parentId, StringBuffer regJS)
 	{
 		
@@ -1264,6 +1274,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		regJS.append("itemElementId: '").append(getHtmlNameListItemElement(attribute, context, fullId)).append("'");
 		regJS.append(", ");
 		regJS.append("childrenElementId: '").append(getHtmlNameListChildElement(attribute, context, fullId)).append("'");
+		regJS.append(", ");
+		regJS.append("arrowElementId: '").append(getHtmlNameListArrowElement(attribute, context, fullId)).append("'");
+		regJS.append(", ");
+		regJS.append("expanded: ").append(item.isExpanded() ? "true" : "false");
 		
 		if (item.getChildrenCount() > 0)
 		{
@@ -1315,6 +1329,10 @@ public class QueryBuilderComponent extends UIComponentBase
 		else
 			fullId = parentId + ID_SEPARATOR + item.getId();
 		
+		boolean showArrow = 
+			item.isExpandable() &&
+			item.getChildrenCount() > 0;
+		
 		String jsCheckboxClick = 
 			"QueryBuilderGlobals.listItemToggled(" +
 			"'" + getClientId(context) + "'," +
@@ -1328,28 +1346,29 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		writer.writeAttribute("id", getHtmlNameListItemElement(attribute, context, fullId), null);
 
-//		not yet implemented
-//		writer.startElement("td", this);
-//		if (item.isExpandable())
-//		{
-//
-//			String jsArrowClick = 
-//				"QueryBuilderGlobals.listItemExpandCollapse(" +
-//				"'" + getClientId(context) + "'," +
-//				"'" + attribute.getId() + "'," +
-//				"'" + fullId + "'," +
-//				"this)";
-//			
-//			String arrowClassName =
-//				"query-builder-list-item-expanded";
-//			
-//			writer.startElement("div", this);
-//			writer.writeAttribute("class", arrowClassName, null);
-//			writer.writeAttribute("onclick", jsArrowClick, null);
-//			writer.endElement("div");
-//			
-//		}
-//		writer.endElement("td");
+		writer.startElement("td", this);
+		if (showArrow)
+		{
+
+			String jsArrowClick = 
+				"QueryBuilderGlobals.listItemExpandCollapse(" +
+				"'" + getClientId(context) + "'," +
+				"'" + attribute.getId() + "'," +
+				"'" + fullId + "'," +
+				"this)";
+			
+			String arrowClassName = item.isExpanded() ? 
+				"query-builder-list-item-expanded" :
+				"query-builder-list-item-collapsed";
+			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", arrowClassName, null);
+			writer.writeAttribute("onclick", jsArrowClick, null);
+			writer.writeAttribute("id", getHtmlNameListArrowElement(attribute, context, fullId), null);
+			writer.endElement("div");
+			
+		}
+		writer.endElement("td");
 
 		writer.startElement("td", this);
 		if (item.isSelectable())
@@ -1378,10 +1397,14 @@ public class QueryBuilderComponent extends UIComponentBase
 			
 			writer.startElement("tr", this);
 			writer.writeAttribute("id", getHtmlNameListChildElement(attribute, context, fullId), null);
+			if (item.isExpandable() && !item.isExpanded()) writer.writeAttribute("style", "display: none", null);
 			
 			writer.startElement("td", this);
 			writer.endElement("td");
 
+			writer.startElement("td", this);
+			writer.endElement("td");
+			
 			writer.startElement("td", this);
 			writer.startElement("table", this);
 			writer.writeAttribute("cellspacing", "0", null);
@@ -1413,6 +1436,8 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		QueryConditionListItem[] allItems = ((ListItemsSource)attribute).getAvailableItems(session);
 
+		regJS.append(", ");
+		regJS.append("expandedIdsFieldName: '").append(getHtmlNameForListExpanded(attribute, context)).append("'");
 		regJS.append(", ");
 		regJS.append("stateFieldName: '").append(getHtmlNameForListState(attribute, context)).append("'");
 		regJS.append(", ");
@@ -1608,17 +1633,17 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
 		
-		Map params = context.getExternalContext().getRequestParameterValuesMap();
-		String[] values = (String[]) params.get(getHtmlNameForList(attribute, context));
-		if (values == null || values.length == 0)
-			return false;
+		Map params = context.getExternalContext().getRequestParameterMap();
+		Map paramValues = context.getExternalContext().getRequestParameterValuesMap();
 		
-		for (int i = 0; i < values.length; i++)
-			queryCondition.addId(values[i]);
+		String[] selectedIds = (String[]) paramValues.get(getHtmlNameForList(attribute, context));
+		if (selectedIds != null) queryCondition.setSelectedIds(selectedIds);
 		
-		queryCondition.setEdit(
-				JsfUtils.getParamString(context,
-						getHtmlNameForListState(attribute, context), "show").compareTo("edit") == 0);
+		String expandedIds = (String) params.get(getHtmlNameForListExpanded(attribute, context));
+		if (expandedIds != null) queryCondition.setExpandedIds(expandedIds.split(ID_SEPARATOR));
+		
+		String status = (String) params.get(getHtmlNameForListState(attribute, context));
+		queryCondition.setEdit(status == null || "show".equals(status)); 
 		
 		return true;
 

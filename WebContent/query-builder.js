@@ -124,6 +124,12 @@ var QueryBuilderGlobals =
 	{
 		var builder = this.builders[builderId];
 		if (builder) builder.listItemToggled(attributeId, input);
+	},
+	
+	listItemExpandCollapse: function(builderId, attributeId, fullId)
+	{
+		var builder = this.builders[builderId];
+		if (builder) builder.listItemExpandCollapse(attributeId, fullId);
 	}
 
 }
@@ -379,6 +385,7 @@ QueryBuilder.prototype.prepareListItem = function(item, parent)
 	item.itemElement = document.getElementById(item.itemElementId);
 	item.childrenElement = document.getElementById(item.childrenElementId);
 	item.checkbox = document.getElementById(item.checkboxId);
+	item.arrowElementId = document.getElementById(item.arrowElementId);
 	item.textLowerCase = item.text.toLowerCase();
 	item.parent = parent;
 	
@@ -403,6 +410,22 @@ QueryBuilder.prototype.prepareList = function(cond)
 	cond.listPrepared = true;
 }
 
+QueryBuilder.prototype.restoreDefaultTreeState = function(item)
+{
+
+	if (item.children)
+	{
+	
+		for (var id in item.children)
+			this.restoreDefaultTreeState(item.children[id]);
+			
+		item.childrenElement.style.display =
+			item.expanded ? "" : "none";
+			
+	}
+
+}
+
 QueryBuilder.prototype.quickSearchTree = function(item, searchFor)
 {
 
@@ -422,19 +445,27 @@ QueryBuilder.prototype.quickSearchTree = function(item, searchFor)
 			(subtreeMatches > 0) ? "" : "none";
 	
 	return directMatch || subtreeMatches > 0;
-
 }
 
 QueryBuilder.prototype.quickSearchList = function(attributeId, input)
 {
+
 	var cond = this.conditions[attributeId];
 	this.prepareList(cond);
 
 	var searchFor = input.value.toLowerCase();
 	cond.searchFor = searchFor;
-
-	for (var id in cond.items)
-		this.quickSearchTree(cond.items[id], searchFor);
+	
+	if (searchFor == "")
+	{
+		for (var id in cond.items)
+			this.restoreDefaultTreeState(cond.items[id]);
+	}
+	else
+	{
+		for (var id in cond.items)
+			this.quickSearchTree(cond.items[id], searchFor);
+	}
 
 }
 
@@ -538,4 +569,26 @@ QueryBuilder.prototype.listItemToggled = function(attributeId, input)
 	
 	this.updateTotal(0);
 	
+}
+
+QueryBuilder.prototype.listItemExpandCollapse = function(attributeId, fullId)
+{
+	var cond = this.conditions[attributeId];
+	
+	this.prepareList(cond);
+	var item = this.getListItemById(cond, fullId, 0);
+
+	if (item.expanded)
+	{
+		item.expanded = false;
+		item.childrenElement.style.display = "none";
+		item.arrowElementId.className = "query-builder-list-item-collapsed";
+	}
+	else
+	{
+		item.expanded = true;
+		item.childrenElement.style.display = "";
+		item.arrowElementId.className = "query-builder-list-item-expanded";
+	}
+
 }

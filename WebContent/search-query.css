@@ -184,7 +184,7 @@ td.quer-builder-list-item-2 {
 	}	
 
 td.query-builder-list-item-with-children {
-	font-weight: bold; }
+	font-weight: normal; }
 	
 div.query-builder-list-item-expanded {
 	background-image: url(icon-arrow-down.png);
