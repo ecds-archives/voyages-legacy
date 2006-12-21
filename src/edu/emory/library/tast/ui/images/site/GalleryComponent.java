@@ -197,8 +197,8 @@ public class GalleryComponent extends UICommand {
 			writer.endElement("table");
 
 			if (params.getVisiblePicture() != null) {
-				GaleryImage visibleImage = picts[Integer.parseInt(params
-						.getVisiblePicture())];
+				int size = Integer.parseInt(params.getVisiblePicture());
+				GaleryImage visibleImage = picts[size >= picts.length ? picts.length - 1:size];
 				writer.write(visibleImage.getImage().getTitle());
 				writer.write("<br/>");
 				writer.startElement("img", this);
@@ -223,6 +223,19 @@ public class GalleryComponent extends UICommand {
 		writer.writeAttribute("class", "gallery-info-table", null);
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
+		writer.write("Title:");
+		writer.endElement("td");
+		writer.startElement("td", this);
+		if (visibleImage.getImage().getTitle() != null) {
+			writer.write(visibleImage.getImage().getTitle());
+		} else {
+			writer.write("none");
+		}
+		writer.endElement("td");
+		writer.endElement("tr");
+
+		writer.startElement("tr", this);
+		writer.startElement("td", this);
 		writer.write("Description:");
 		writer.endElement("td");
 		writer.startElement("td", this);
@@ -233,101 +246,138 @@ public class GalleryComponent extends UICommand {
 		}
 		writer.endElement("td");
 		writer.endElement("tr");
-
+		
+		
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
-		writer.write("Related people:");
+		writer.write("Date:");
 		writer.endElement("td");
 		writer.startElement("td", this);
-		Person[] persons = visibleImage.getPeople();
-		if (persons != null) {
-			for (int i = 0; i < persons.length; i++) {
-				Person person = persons[i];
-				writer.startElement("a", this);
-
-				StringBuffer link = new StringBuffer();
-				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
-				link.append("=").append("people");
-				link.append("&").append(GalleryRequestBean.ID);
-				link.append("=").append(person.getId());
-				link.append("&").append(GalleryRequestBean.SET);
-				link.append("=1");				
-				writer.writeAttribute("href", link, null);
-				if (person.getFirstName() != null) {
-					writer.write(person.getFirstName());
-				}
-				writer.write(" ");
-				if (person.getLastName() != null) {
-					writer.write(person.getLastName());
-				}
-				writer.endElement("a");
-				if (i + 1 < persons.length) {
-					writer.write("; ");
-				}
-			}
+		if (visibleImage.getImage().getDate() != null) {
+			writer.write(visibleImage.getImage().getDate());
+		} else {
+			writer.write("unknown");
 		}
 		writer.endElement("td");
 		writer.endElement("tr");
-
+		
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
-		writer.write("Related ports:");
+		writer.write("Source:");
 		writer.endElement("td");
 		writer.startElement("td", this);
-		Port[] ports = visibleImage.getPorts();
-		if (ports != null) {
-			for (int i = 0; i < ports.length; i++) {
-				Port port = ports[i];
-				writer.startElement("a", this);
-				
-				StringBuffer link = new StringBuffer();
-				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
-				link.append("=").append("ports");
-				link.append("&").append(GalleryRequestBean.ID);
-				link.append("=").append(port.getId());
-				link.append("&").append(GalleryRequestBean.SET);
-				link.append("=1");
-				writer.writeAttribute("href", link, null);
-
-				writer.write(port.getName());
-				writer.endElement("a");
-				if (i + 1 < ports.length) {
-					writer.write("; ");
-				}
-			}
+		if (visibleImage.getImage().getSource() != null) {
+			writer.write(visibleImage.getImage().getSource());
+		} else {
+			writer.write("unknown");
 		}
 		writer.endElement("td");
 		writer.endElement("tr");
-
+		
 		writer.startElement("tr", this);
 		writer.startElement("td", this);
-		writer.write("Related regions:");
+		writer.write("Creator:");
 		writer.endElement("td");
 		writer.startElement("td", this);
-		Region[] regions = visibleImage.getRegions();
-		if (regions != null) {
-			for (int i = 0; i < regions.length; i++) {
-				Region region = regions[i];
-				writer.startElement("a", this);
-				
-				StringBuffer link = new StringBuffer();
-				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
-				link.append("=").append("regions");
-				link.append("&").append(GalleryRequestBean.ID);
-				link.append("=").append(region.getId());
-				link.append("&").append(GalleryRequestBean.SET);
-				link.append("=1");
-				writer.writeAttribute("href", link, null);
-
-				writer.write(region.getName());
-				writer.endElement("a");
-				if (i + 1 < regions.length) {
-					writer.write("; ");
-				}
-			}
+		if (visibleImage.getImage().getCreator() != null) {
+			writer.write(visibleImage.getImage().getCreator());
+		} else {
+			writer.write("unknown");
 		}
 		writer.endElement("td");
 		writer.endElement("tr");
+//		writer.write("Related people:");
+//		writer.endElement("td");
+//		writer.startElement("td", this);
+//		Person[] persons = visibleImage.getPeople();
+//		if (persons != null) {
+//			for (int i = 0; i < persons.length; i++) {
+//				Person person = persons[i];
+//				writer.startElement("a", this);
+//
+//				StringBuffer link = new StringBuffer();
+//				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
+//				link.append("=").append("people");
+//				link.append("&").append(GalleryRequestBean.ID);
+//				link.append("=").append(person.getId());
+//				link.append("&").append(GalleryRequestBean.SET);
+//				link.append("=1");				
+//				writer.writeAttribute("href", link, null);
+//				if (person.getFirstName() != null) {
+//					writer.write(person.getFirstName());
+//				}
+//				writer.write(" ");
+//				if (person.getLastName() != null) {
+//					writer.write(person.getLastName());
+//				}
+//				writer.endElement("a");
+//				if (i + 1 < persons.length) {
+//					writer.write("; ");
+//				}
+//			}
+//		}
+//		writer.endElement("td");
+//		writer.endElement("tr");
+//
+//		writer.startElement("tr", this);
+//		writer.startElement("td", this);
+//		writer.write("Related ports:");
+//		writer.endElement("td");
+//		writer.startElement("td", this);
+//		Port[] ports = visibleImage.getPorts();
+//		if (ports != null) {
+//			for (int i = 0; i < ports.length; i++) {
+//				Port port = ports[i];
+//				writer.startElement("a", this);
+//				
+//				StringBuffer link = new StringBuffer();
+//				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
+//				link.append("=").append("ports");
+//				link.append("&").append(GalleryRequestBean.ID);
+//				link.append("=").append(port.getId());
+//				link.append("&").append(GalleryRequestBean.SET);
+//				link.append("=1");
+//				writer.writeAttribute("href", link, null);
+//
+//				writer.write(port.getName());
+//				writer.endElement("a");
+//				if (i + 1 < ports.length) {
+//					writer.write("; ");
+//				}
+//			}
+//		}
+//		writer.endElement("td");
+//		writer.endElement("tr");
+//
+//		writer.startElement("tr", this);
+//		writer.startElement("td", this);
+//		writer.write("Related regions:");
+//		writer.endElement("td");
+//		writer.startElement("td", this);
+//		Region[] regions = visibleImage.getRegions();
+//		if (regions != null) {
+//			for (int i = 0; i < regions.length; i++) {
+//				Region region = regions[i];
+//				writer.startElement("a", this);
+//				
+//				StringBuffer link = new StringBuffer();
+//				link.append("galleryp.faces?").append(GalleryRequestBean.GALLERY_TYPE);				
+//				link.append("=").append("regions");
+//				link.append("&").append(GalleryRequestBean.ID);
+//				link.append("=").append(region.getId());
+//				link.append("&").append(GalleryRequestBean.SET);
+//				link.append("=1");
+//				writer.writeAttribute("href", link, null);
+//
+//				writer.write(region.getName());
+//				writer.endElement("a");
+//				if (i + 1 < regions.length) {
+//					writer.write("; ");
+//				}
+//			}
+//		}
+//		writer.endElement("td");
+//		writer.endElement("tr");
 		writer.endElement("table");
 		writer.endElement("div");
 	}

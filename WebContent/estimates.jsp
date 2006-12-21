@@ -28,7 +28,8 @@
 	</div>
 	<div class="header-path">
 		<a href="estimates.faces">Estimates</a> |
-		<a href="search.faces">Database search</a>
+		<a href="search.faces">Database search</a> | 
+		<a href="galleryp.faces?obj=1&id=1&set=1&pict=0">Images database</a>
 	</div>
 	
 	<h:form id="form">

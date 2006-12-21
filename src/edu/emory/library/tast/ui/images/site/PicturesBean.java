@@ -22,7 +22,7 @@ import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.ui.search.query.QueryBuilderQuery;
+import edu.emory.library.tast.ui.search.query.Query;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
 import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;
@@ -110,22 +110,22 @@ public class PicturesBean {
 			this.id = id;
 			this.object = object;
 			Conditions conditions = new Conditions();
-			QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"}, conditions);
-			if (object.equals("people")) {
-				conditions.addCondition(new DirectValueAttribute(id),
-						new SequenceAttribute(new Attribute[] {Image.getAttribute("people"), Person.getAttribute("id")}), 
-					Conditions.OP_IN);
-			} else if (object.equals("ports")) {
-				conditions.addCondition(new DirectValueAttribute(id),
-						new SequenceAttribute(new Attribute[] {Image.getAttribute("ports"), Person.getAttribute("id")}), 
-					Conditions.OP_IN);
-			} else if (object.equals("regions")) {
-				conditions.addCondition(new DirectValueAttribute(id),
-						new SequenceAttribute(new Attribute[] {Image.getAttribute("regions"), Person.getAttribute("id")}), 
-					Conditions.OP_IN);
-			} else if (object.equals("ships")) {
-				
-			}
+			QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"});
+//			if (object.equals("people")) {
+//				conditions.addCondition(new DirectValueAttribute(id),
+//						new SequenceAttribute(new Attribute[] {Image.getAttribute("people"), Person.getAttribute("id")}), 
+//					Conditions.OP_IN);
+//			} else if (object.equals("ports")) {
+//				conditions.addCondition(new DirectValueAttribute(id),
+//						new SequenceAttribute(new Attribute[] {Image.getAttribute("ports"), Person.getAttribute("id")}), 
+//					Conditions.OP_IN);
+//			} else if (object.equals("regions")) {
+//				conditions.addCondition(new DirectValueAttribute(id),
+//						new SequenceAttribute(new Attribute[] {Image.getAttribute("regions"), Person.getAttribute("id")}), 
+//					Conditions.OP_IN);
+//			} else if (object.equals("ships")) {
+//				
+//			}
 			System.out.println(qValue.toStringWithParams().conditionString);
 			Session session = HibernateUtil.getSession();
 			Transaction transaction = session.beginTransaction();
@@ -263,9 +263,9 @@ public class PicturesBean {
 	}
 
 	private Object[] getImagesWith(Attribute attr, Session session) {
-		Conditions conditions = new Conditions();
-		conditions.addCondition(attr, new DirectValue(new DirectValueAttribute("empty")), Conditions.OP_IS_NOT);
-		QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"}, conditions);
+//		Conditions conditions = new Conditions();
+//		conditions.addCondition(attr, new DirectValue(new DirectValueAttribute("empty")), Conditions.OP_IS_NOT);
+		QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"});
 		Object[] result = qValue.executeQuery(session);
 		return result;
 	}
