@@ -413,6 +413,8 @@ QueryBuilder.prototype.prepareList = function(cond)
 QueryBuilder.prototype.restoreDefaultTreeState = function(item)
 {
 
+	item.itemElement.style.display = "";
+
 	if (item.children)
 	{
 	
