@@ -15,6 +15,7 @@ table.tabs td.tabs-tab-active {
 	width: 1%; }
 	
 table.tabs td.tabs-tab {
+	cursor: pointer;
 	background-color: #EEEEEE;
 	border-left: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;

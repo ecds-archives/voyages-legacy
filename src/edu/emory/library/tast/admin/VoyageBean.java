@@ -251,19 +251,19 @@ public class VoyageBean
 		tran.commit();
 		sess.close();
 
-		schema.addField(new FieldSchemaLong("voyageid", "Voyage ID"));
+		schema.addField(new FieldSchemaLong("voyageid", "Voyage ID", "voyageid"));
 		schema.addField(new FieldSchemaCheckbox("cd", "CD 1999"));
-		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship"));
-		schema.addField(new FieldSchemaDropdowns("placcons", "Place of construction", LISTS_LOCATION));
-		schema.addField(new FieldSchemaInteger("yrcons", "Year of construction"));
-		schema.addField(new FieldSchemaDropdowns("placreg", "Place of registration", LIST_NATIONS_NAME));
-		schema.addField(new FieldSchemaInteger("yrreg", "Year of registration"));
+		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship", "shipname"));
+		schema.addField(new FieldSchemaDropdowns("placcons", "Place of construction", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaInteger("yrcons", "Year of construction", "year"));
+		schema.addField(new FieldSchemaDropdowns("placreg", "Place of registration", LIST_NATIONS_NAME, "locations"));
+		schema.addField(new FieldSchemaInteger("yrreg", "Year of registration", "year"));
 		schema.addField(new FieldSchemaDropdowns("natinimp", "Imputed nation", LIST_NATIONS_NAME));
 		schema.addField(new FieldSchemaDropdowns("rig", "Vessel rig", LIST_VESSEL_RIGS_NAME));
 		schema.addField(new FieldSchemaFloat("tonnage", "Tonnage"));
 		schema.addField(new FieldSchemaFloat("tonmod", "Standardized tonnage"));
 		schema.addField(new FieldSchemaInteger("guns", "Number of guns"));
-		schema.addField(new FieldSchemaTextbox("owners", "Owners", true, 10));
+		schema.addField(new FieldSchemaTextbox("owners", "Owners", true, 10, "owners"));
 
 		return schema;
 		
@@ -329,11 +329,11 @@ public class VoyageBean
 		tran.commit();
 		sess.close();
 
-		schema.addField(new FieldSchemaDropdowns("fate", "Outcome of voyage", LIST_FATES_NAME));
-		schema.addField(new FieldSchemaDropdowns("fate2", "Outcome of voyage for slaves", LIST_FATES_SLAVES_NAME));
-		schema.addField(new FieldSchemaDropdowns("fate3", "Outcome of voyage if ship captured", LIST_FATES_VESSEL_NAME));
-		schema.addField(new FieldSchemaDropdowns("fate4", "Outcome of voyage for owner", LIST_FATES_OWNER_NAME));
-		schema.addField(new FieldSchemaDropdowns("resistance", "Violent incidents", LIST_RESISTANCE_NAME));
+		schema.addField(new FieldSchemaDropdowns("fate", "Outcome of voyage", LIST_FATES_NAME, "fates"));
+		schema.addField(new FieldSchemaDropdowns("fate2", "Outcome of voyage for slaves", LIST_FATES_SLAVES_NAME, "fates"));
+		schema.addField(new FieldSchemaDropdowns("fate3", "Outcome of voyage if ship captured", LIST_FATES_VESSEL_NAME, "fates"));
+		schema.addField(new FieldSchemaDropdowns("fate4", "Outcome of voyage for owner", LIST_FATES_OWNER_NAME, "fates"));
+		schema.addField(new FieldSchemaDropdowns("resistance", "Violent incidents", LIST_RESISTANCE_NAME, "fates"));
 		
 		return schema;
 		
@@ -366,18 +366,18 @@ public class VoyageBean
 		tran.commit();
 		sess.close();
 		
-		schema.addField(new FieldSchemaDropdowns("portdep", "Place where voyage began", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("ptdepimp", "Imputed place where voyage began", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("plac1tra", "First place of slave purchase", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("plac2tra", "Second place of slave purchase", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("plac3tra", "Third place of slave purchase", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("mjbyptimp", "Imputed principal place of slave purchase", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("npafttra", "Places of call before Atlantic crossing", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("sla1port", "First place of landing", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("adpsale1", "Second place of landing", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("adpsale2", "Third place of landing", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("mjslptimp", "Imputed principal place of landing", LISTS_LOCATION));
-		schema.addField(new FieldSchemaDropdowns("portret", "Port at which voyage ended", LISTS_LOCATION));
+		schema.addField(new FieldSchemaDropdowns("portdep", "Place where voyage began", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("ptdepimp", "Imputed place where voyage began", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("plac1tra", "First place of slave purchase", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("plac2tra", "Second place of slave purchase", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("plac3tra", "Third place of slave purchase", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("mjbyptimp", "Imputed principal place of slave purchase", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("npafttra", "Places of call before Atlantic crossing", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("sla1port", "First place of landing", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("adpsale1", "Second place of landing", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("adpsale2", "Third place of landing", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("mjslptimp", "Imputed principal place of landing", LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaDropdowns("portret", "Port at which voyage ended", LISTS_LOCATION, "locations"));
 		
 		return schema;
 		
@@ -407,7 +407,7 @@ public class VoyageBean
 
 		Schema schema = new Schema();
 		
-		schema.addField(new FieldSchemaInteger("yearam", "Imputed year of arrival at first place of landing"));
+		schema.addField(new FieldSchemaInteger("yearam", "Imputed year of arrival at first place of landing", "year"));
 		schema.addField(new FieldSchemaDate("datedep", "Date that voyage began"));
 		schema.addField(new FieldSchemaDate("datebuy", "Date that slave purchase began"));
 		schema.addField(new FieldSchemaDate("dateleftafr", "Date that vessel left last slaving port"));
@@ -447,7 +447,7 @@ public class VoyageBean
 
 		Schema schema = new Schema();
 		
-		schema.addField(new FieldSchemaTextbox("captains", "Captains", true, 3));
+		schema.addField(new FieldSchemaTextbox("captains", "Captains", true, 3, "captains"));
 		schema.addField(new FieldSchemaInteger("crew1", "Crew on board at outset of voyage"));
 		schema.addField(new FieldSchemaInteger("crew3", "Number of crew when first slaves landed"));
 		schema.addField(new FieldSchemaInteger("crewdied", "Number of crew who died over entire voyage"));
@@ -554,7 +554,7 @@ public class VoyageBean
 
 		Schema schema = new Schema();
 
-		schema.addField(new FieldSchemaTextbox("sources", "Source", true, 10));
+		schema.addField(new FieldSchemaTextbox("sources", "Source", true, 10, "sources"));
 		
 		return schema;
 		

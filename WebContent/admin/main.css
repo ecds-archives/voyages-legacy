@@ -19,7 +19,13 @@ table.grid th {
 	border-top: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
 	padding: 3px 10px 3px 3px; }
-	
+
+table.grid td {
+	cursor: pointer; }
+
+table.grid tr.focused td {
+	background-color: #EEEEEE; }
+
 /**********************************
 * pager
 ***********************************/
@@ -30,6 +36,9 @@ table.pager {
 table.pager td {
 	border: 1px solid #CCCCCC;
 	padding: 3px 5px 3px 5px; }
+	
+table.pager td.pager-counter {
+	padding-right: 10px; }
 	
 table.pager td.pager-page,
 table.pager td.pager-previous-enabled,

@@ -131,6 +131,8 @@ public class GridComponent extends UICommand
 			if (row.hasCssClass()) writer.writeAttribute("class", row.getClass(), null);
 			writer.writeAttribute("class", row.getClass(), null);
 			writer.writeAttribute("onclick", onClick, null);
+			writer.writeAttribute("onmouseover", "this.className = 'focused'", null);
+			writer.writeAttribute("onmouseout", "this.className = ''", null);
 			
 			for (int j = 0; j < columnsCount; j++)
 			{

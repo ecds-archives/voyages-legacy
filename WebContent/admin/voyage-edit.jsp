@@ -10,6 +10,7 @@
 	<title>Voyage</title>
 	<link href="main.css" rel="stylesheet" type="text/css">
 	<link href="tabs.css" rel="stylesheet" type="text/css">
+	<link href="edit.css" rel="stylesheet" type="text/css">
 	<script src="../record-editor.js" language="javascript" type="text/javascript"></script>
 	<script src="../utils.js" language="javascript" type="text/javascript"></script>
 </head>
@@ -83,6 +84,8 @@
 				schema="#{AdminVoyageBean.sourcesSchema}"
 				values="#{AdminVoyageBean.sourcesValues}" />
 		</h:panelGroup>
+		
+		<br>
 
 		<h:commandButton value="Save" />
 	

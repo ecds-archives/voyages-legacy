@@ -49,6 +49,7 @@ public class FieldSchemaDate extends FieldSchema
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", dayFieldName, null);
 		writer.writeAttribute("value", valueDate.getDayOrEmpty(), null);
+		writer.writeAttribute("class", "record-editor-date-day", null);
 		writer.endElement("input");
 		
 		// month
@@ -56,6 +57,7 @@ public class FieldSchemaDate extends FieldSchema
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", monthFieldName, null);
 		writer.writeAttribute("value", valueDate.getMonthOrEmpty(), null);
+		writer.writeAttribute("class", "record-editor-date-month", null);
 		writer.endElement("input");
 
 		// year
@@ -63,6 +65,7 @@ public class FieldSchemaDate extends FieldSchema
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", yearFieldName, null);
 		writer.writeAttribute("value", valueDate.getYearOrEmpty(), null);
+		writer.writeAttribute("class", "record-editor-date-year", null);
 		writer.endElement("input");
 
 	}

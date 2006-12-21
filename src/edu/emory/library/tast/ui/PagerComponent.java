@@ -104,6 +104,16 @@ public class PagerComponent extends UIComponentBase
 		writer.writeAttribute("class", "pager", null);
 		writer.startElement("tr", this);
 		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "pager-counter", null);
+		writer.write("Total: ");
+		writer.write(String.valueOf(lastRecord - firstRecord + 1));
+		writer.write(", showing: ");
+		writer.write(String.valueOf(firstRecord + ((currentPage - 1) * pageSize)));
+		writer.write(" - ");
+		writer.write(String.valueOf(firstRecord + (currentPage * pageSize) - 1));
+		writer.endElement("td");
+		
 		if (currentPage > 1)
 		{
 			

@@ -152,7 +152,7 @@ public class EditorComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "reditor", null);
+		writer.writeAttribute("class", "record-editor", null);
 		
 		// for all fields in schema
 		for (Iterator iter = schema.getFields().iterator(); iter.hasNext();)
@@ -167,13 +167,16 @@ public class EditorComponent extends UIComponentBase
 
 			// label
 			writer.startElement("td", this);
-			writer.writeAttribute("class", "reditor-label", null);
+			writer.writeAttribute("class", "record-editor-label", null);
 			writer.write(fieldSchema.getLabel());
+			writer.write(" (");
+			writer.write(fieldSchema.getName());
+			writer.write(")");
 			writer.endElement("td");
 			
 			// value
 			writer.startElement("td", this);
-			writer.writeAttribute("class", "reditor-field", null);
+			writer.writeAttribute("class", "record-editor-field", null);
 			fieldSchema.encode(this, mainId, form, context, schema, fieldValue);
 			writer.endElement("td");
 

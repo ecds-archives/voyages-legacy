@@ -14,14 +14,33 @@
 	<h:form id="form">
 	
 		<h1>Voyages</h1>
+		
+		<div style="padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td style="padding-right: 5px">From</td>
+				<td style="padding-right: 10px"><h:selectOneMenu value="#{AdminVoyagesListBean.nationId}"><f:selectItems value="#{AdminVoyagesListBean.nations}"/></h:selectOneMenu></td>
+				<td style="padding-right: 5px">From</td>
+				<td style="padding-right: 10px"><h:inputText value="#{AdminVoyagesListBean.yearFrom}" style="width: 40px;" /></td>
+				<td style="padding-right: 5px">To</td>
+				<td style="padding-right: 10px"><h:inputText value="#{AdminVoyagesListBean.yearTo}" style="width: 40px;" /></td>
+				<td><h:commandButton value="Show" /></td>
+			</tr>
+			</table>
+		</div>		
+		
+		<br>
 	
-		<s:grid id="voyges"
+		<s:grid id="voyges" 
 			columns="#{AdminVoyagesListBean.columns}"
 			rows="#{AdminVoyagesListBean.rows}"
 			action="#{AdminVoyagesListBean.openVoyage}"
 			onOpenRow="#{AdminVoyageBean.openVoyage}" />
+			
+		<br>
 	
 		<s:pager id="voyagesPager"
+			maxShownPages="15"
 			currentPage="#{AdminVoyagesListBean.currentPage}"
 			firstRecord="#{AdminVoyagesListBean.firstRecordIndex}"
 			lastRecord="#{AdminVoyagesListBean.lastRecordIndex}"

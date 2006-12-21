@@ -1,0 +1,53 @@
+table.record-editor {
+	}
+
+td.record-editor-label,
+td.record-editor-field {
+	border-top: 1px solid #CCCCCC;
+	padding-top: 5px; 
+	padding-bottom: 5px; }
+
+td.record-editor-label {
+	padding-right: 10px; }
+
+input.record-editor-integer {
+	text-align: right;
+	width: 60px; }
+
+input.record-editor-float {
+	text-align: right;
+	width: 100px; }
+
+input.record-editor-date-day {
+	margin-right: 5px;
+	width: 20px; }
+
+input.record-editor-date-month {
+	margin-right: 5px;
+	width: 20px; }
+
+input.record-editor-date-year {
+	width: 40px; }
+
+input.year {
+	width: 40px; }
+	
+input.voyageid {
+	width: 50px; }
+
+input.shipname {
+	width: 300px; }
+
+textarea.owners,
+textarea.captains {
+	width: 300px; }
+	
+textarea.sources {
+	width: 600px; }
+	
+select.fates {
+	width: 600px; }
+	
+select.locations {
+	margin-bottom: 3px;
+	width: 400px; }

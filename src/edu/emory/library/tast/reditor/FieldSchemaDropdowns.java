@@ -13,6 +13,7 @@ public class FieldSchemaDropdowns extends FieldSchema
 {
 	
 	private String[] listIds;
+	private String cssClass;
 
 	public FieldSchemaDropdowns(String name, String description, String listId)
 	{
@@ -24,6 +25,20 @@ public class FieldSchemaDropdowns extends FieldSchema
 	{
 		super(name, description);
 		this.listIds = listIds;
+	}
+
+	public FieldSchemaDropdowns(String name, String description, String listId, String cssClass)
+	{
+		super(name, description);
+		this.listIds = new String[] {listId};
+		this.cssClass = cssClass;
+	}
+
+	public FieldSchemaDropdowns(String name, String description, String[] listIds, String cssClass)
+	{
+		super(name, description);
+		this.listIds = listIds;
+		this.cssClass = cssClass;
 	}
 
 	public String getType()
@@ -39,6 +54,16 @@ public class FieldSchemaDropdowns extends FieldSchema
 	public void setListIds(String[] listIds)
 	{
 		this.listIds = listIds;
+	}
+	
+	public String getCssClass()
+	{
+		return cssClass;
+	}
+
+	public void setCssClass(String cssClass)
+	{
+		this.cssClass = cssClass;
 	}
 	
 	public void createRegJS(EditorComponent editor, String editorId, UIForm form, FacesContext context, Schema schema, StringBuffer regJS) throws IOException
@@ -94,9 +119,12 @@ public class FieldSchemaDropdowns extends FieldSchema
 					"'" + getName() + "'," +
 					+ i + ")";
 			
+			writer.startElement("div", editor);
+			
 			writer.startElement("select", editor);
 			writer.writeAttribute("name", selectName, null);
 			writer.writeAttribute("onchange", onChange, null);
+			if (!StringUtils.isNullOrEmpty(cssClass)) writer.writeAttribute("class", cssClass, null);
 			
 			for (int j = 0; j < list.length; j++)
 			{
@@ -115,6 +143,7 @@ public class FieldSchemaDropdowns extends FieldSchema
 			}
 			
 			writer.endElement("select");
+			writer.endElement("div");
 			
 			parentValue = selectedValue;
 
