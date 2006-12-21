@@ -77,7 +77,10 @@ public class MapData {
 		List localPoints = new ArrayList();
 		for (int i = 0; i < this.items.length; i++) {
 			if (this.items[i].isPointEnabled()) {
-				localPoints.add(this.items[i].getTooltipText());
+				PointOfInterest pt = this.items[i].getTooltipText(legendItems);
+				if (pt != null) {
+					localPoints.add(pt);
+				}
 			}
 		}			
 		this.points = (PointOfInterest[])localPoints.toArray(new PointOfInterest[] {});

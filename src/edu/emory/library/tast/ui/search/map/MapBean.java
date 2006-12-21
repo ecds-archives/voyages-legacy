@@ -110,12 +110,12 @@ public class MapBean {
 		if (this.neededQuery) {
 
 			Conditions conditions = (Conditions) this.conditions.clone();
-			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
-					MARKERS[this.yearBegin.intValue()]),
-					Conditions.OP_GREATER_OR_EQUAL);
-			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
-					MARKERS[this.yearEnd.intValue()]),
-					Conditions.OP_SMALLER_OR_EQUAL);
+//			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
+//					MARKERS[this.yearBegin.intValue()]),
+//					Conditions.OP_GREATER_OR_EQUAL);
+//			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
+//					MARKERS[this.yearEnd.intValue()]),
+//					Conditions.OP_SMALLER_OR_EQUAL);
 
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(

@@ -74,10 +74,14 @@ public class StatisticBean {
 		Object[] results = query.executeQuery();
 		if (results.length > 0) {
 			Object[] row = (Object[])results[0];
-			elements[i] = new StatisticElement(statNames[i], 
+			if (row[0] == null || row[1] == null) {
+				elements[i] = new StatisticElement(statNames[i], "not available", "not available", "not available");
+			} else {
+				elements[i] = new StatisticElement(statNames[i], 
 					format.format((Number)row[0]), 
 					format.format((Number)row[1]),
 					String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue() * 1000) / (double)1000));
+			}
 		}
 	}
 	

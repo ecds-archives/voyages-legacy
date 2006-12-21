@@ -420,6 +420,10 @@ public class Conditions {
 		return out;
 	}
 
+	public boolean isEmpty() {
+		return this.conditions.isEmpty() && this.subConditions.isEmpty();
+	}
+
 	// /**
 	// * Gets all attributes that are present in conditions.
 	// * @return

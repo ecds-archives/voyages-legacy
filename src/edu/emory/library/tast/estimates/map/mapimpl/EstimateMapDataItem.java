@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.Element;
+import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 
 public class EstimateMapDataItem extends AbstractMapItem {
@@ -39,7 +40,7 @@ public class EstimateMapDataItem extends AbstractMapItem {
 		return new String[] { this.symbolName };
 	}
 
-	public PointOfInterest getTooltipText() {
+	public PointOfInterest getTooltipText(LegendItemsGroup[] legend) {
 
 		PointOfInterest point = new PointOfInterest(this.getY(), this.getX());
 		point.setText(this.buildToolTipInfo());

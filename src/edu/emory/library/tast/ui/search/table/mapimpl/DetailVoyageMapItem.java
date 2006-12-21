@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.Element;
+import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapItemElement;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 
@@ -76,7 +77,7 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 	/**
 	 * Gets tooltip for item.
 	 */
-	public PointOfInterest getTooltipText() {
+	public PointOfInterest getTooltipText(LegendItemsGroup[] legend) {
 		
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<b>").append("Location: ");

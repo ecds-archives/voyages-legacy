@@ -107,9 +107,10 @@ public abstract class AbstractMapItem {
 	
 	/**
 	 * Gets tooltip of map item.
+	 * @param legendItems 
 	 * @return PointOfInterest that is used as tooltip by mapcomponent.
 	 */
-	public abstract PointOfInterest getTooltipText();
+	public abstract PointOfInterest getTooltipText(LegendItemsGroup[] legendItems);
 
 	/**
 	 * Gets main label of item.
