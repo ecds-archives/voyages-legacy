@@ -80,6 +80,9 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 	
 		querySetRegions = new QueryValue[2];
 		c = new Conditions();
+		if (!conditions.isEmpty()) {
+			c.addCondition(conditions);
+		}
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
 		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
@@ -92,6 +95,9 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		querySetRegions[0] = query1;
 			
 		c = new Conditions();
+		if (!conditions.isEmpty()) {
+			c.addCondition(conditions);
+		}
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
 		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
