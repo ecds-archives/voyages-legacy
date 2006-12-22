@@ -11,7 +11,7 @@ public class PointOfInterest
 	private String text;
 	private String label;
 	private String[] symbols;
-	private double value;
+	private double value = Double.MAX_VALUE;
 	
 	public PointOfInterest(double x, double y)
 	{

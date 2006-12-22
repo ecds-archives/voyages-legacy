@@ -1,6 +1,8 @@
 package edu.emory.library.tast.ui.maps.component;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
@@ -376,7 +378,16 @@ public class MapComponent extends UIComponentBase
 		miniMapPosition = getMiniMapPosition();
 		miniMapWidth = getMiniMapWidth();
 		miniMapHeight = getMiniMapHeight();
-		
+
+		// sort points of interest
+		Arrays.sort(pointsOfInterest, new Comparator() {
+			public int compare(Object arg0, Object arg1)
+			{
+				PointOfInterest pnt0 = (PointOfInterest) arg0;
+				PointOfInterest pnt1 = (PointOfInterest) arg1;
+				return pnt0.getValue() == pnt1.getValue() ? 0 : pnt0.getValue() > pnt1.getValue() ? 1 : -1;
+			}});
+
 		// at least the default map size
 		if (mapSizes == null || mapSizes.length == 0)
 			mapSizes = new MapSize[] {defaultMapSize};
@@ -495,6 +506,8 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append(", ");
 		
 		// points of interest
+		int pointOrderGroup = 0;
+		double lastPointValue = Double.MAX_VALUE;
 		if (pointsOfInterest != null)
 		{
 			jsRegister.append("[");
@@ -502,11 +515,18 @@ public class MapComponent extends UIComponentBase
 			{
 				PointOfInterest pnt = pointsOfInterest[i];
 				String[] symbols = pnt.getSymbols();
+				if (lastPointValue != pnt.getValue())
+				{
+					pointOrderGroup++;
+					lastPointValue = pnt.getValue();
+				}
 				if (i > 0) jsRegister.append(", ");
 				jsRegister.append("new PointOfInterest(");
 				jsRegister.append(pnt.getX());
 				jsRegister.append(", ");
 				jsRegister.append(pnt.getY());
+				jsRegister.append(", ");
+				jsRegister.append(pointOrderGroup);
 				jsRegister.append(", ");
 				jsRegister.append("'").append(pnt.getLabelJavaScriptSafe()).append("'");
 				jsRegister.append(", ");

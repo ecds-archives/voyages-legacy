@@ -532,10 +532,11 @@ function MapTile(img)
 	//this.valid = false;
 }
 
-function PointOfInterest(x, y, label, text, symbols)
+function PointOfInterest(x, y, orderGroup, label, text, symbols)
 {
 	this.x = x;
 	this.y = y;
+	this.orderGroup = orderGroup;
 	this.label = label;
 	this.text = text;
 	this.symbols = symbols;
