@@ -56,3 +56,7 @@ table.gallery-info-table td {
 	font-size: 8pt;
 	text-align: left;
 }
+
+td.gallery-selected {
+	border: 2px solid #CF5435;
+}

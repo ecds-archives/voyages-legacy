@@ -13,7 +13,7 @@
 	</t:htmlTag>
 </t:htmlTag>
 
-<t:htmlTag id="div_table" value="div" style="padding: 2px;">
+<t:htmlTag id="div_table" value="div" style="padding: 2px; height: 770px;">
 
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag id="tr_third" value="tr">

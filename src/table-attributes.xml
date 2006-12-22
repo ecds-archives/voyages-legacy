@@ -125,12 +125,12 @@
 			<attribute name="plac1tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="2" id="plac2tra" userCategory="beginners,general" userLabel="Second place of purchase">
+	<table-attribute tabs="1,2" id="plac2tra" userCategory="beginners,general" userLabel="Second place of purchase">
 		<attributes>
 			<attribute name="plac2tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="2" id="plac3tra" userCategory="beginners,general" userLabel="Third place of purchase">
+	<table-attribute tabs="1,2" id="plac3tra" userCategory="beginners,general" userLabel="Third place of purchase">
 		<attributes>
 			<attribute name="plac3tra"/>
 		</attributes>

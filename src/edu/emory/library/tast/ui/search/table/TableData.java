@@ -8,6 +8,7 @@ import java.util.Map;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.ui.search.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleAttributeFormatter;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
@@ -541,5 +542,9 @@ public class TableData {
 
 	public void setKeyAttribute(Attribute keyAttribute) {
 		this.keyAttribute = keyAttribute;
+	}
+
+	public Group[] loadAttrGroups() {
+		return Group.getGroups();
 	}
 }

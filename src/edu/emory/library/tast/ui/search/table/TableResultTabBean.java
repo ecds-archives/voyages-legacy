@@ -255,9 +255,9 @@ public class TableResultTabBean {
 		}
 
 		if (returnBasicInfo) {
-			qValue.addPopulatedAttribute(Voyage.getAttribute("voyageid"));
-			qValue.addPopulatedAttribute(Voyage.getAttribute("portdep"));
-			qValue.addPopulatedAttribute(Voyage.getAttribute("portret"));
+			qValue.addPopulatedAttribute(VisibleAttribute.getAttribute("voyageid").getAttributes()[0]);
+//			qValue.addPopulatedAttribute(Voyage.getAttribute("portdep"));
+//			qValue.addPopulatedAttribute(Voyage.getAttribute("portret"));
 		}
 
 		VisibleAttributeInterface vattr = dataTable.getOrderByColumn();
@@ -301,8 +301,8 @@ public class TableResultTabBean {
 		if (returnBasicInfo && ret.length > 0) {
 			int len = ((Object[]) ret[0]).length;
 			return new Object[][] {
-					{ Voyage.getAttribute("voyageid"), Voyage.getAttribute("portdep"), Voyage.getAttribute("portret") },
-					{ ((Object[]) ret[0])[len - 3], ((Object[]) ret[0])[len - 2], ((Object[]) ret[0])[len - 1] } };
+					{ VisibleAttribute.getAttribute("voyageid") },
+					{ ((Object[]) ret[0])[len - 1]} };
 		} else {
 			return new Object[][] {};
 		}
@@ -331,7 +331,7 @@ public class TableResultTabBean {
 
 			this.detailVoyageInfo = new DetailVoyageInfo[info[0].length];
 			for (int i = 0; i < info[0].length; i++) {
-				this.detailVoyageInfo[i] = new DetailVoyageInfo((Attribute) info[0][i], info[1][i]);
+				this.detailVoyageInfo[i] = new DetailVoyageInfo((VisibleAttribute) info[0][i], info[1][i]);
 			}
 
 			this.needDetailQuery = false;

@@ -4,22 +4,23 @@ import java.util.Date;
 
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 
 public class DetailVoyageInfo {
 	
-	private Attribute attribute;
+	private VisibleAttribute attribute;
 	private Object value;
 	
-	public DetailVoyageInfo(Attribute attr, Object value) {
+	public DetailVoyageInfo(VisibleAttribute attr, Object value) {
 		this.attribute = attr;
 		this.value = value;
 	}
 
-	public Attribute getAttribute() {
+	public VisibleAttribute getAttribute() {
 		return attribute;
 	}
 
-	public void setAttribute(Attribute attribute) {
+	public void setAttribute(VisibleAttribute attribute) {
 		this.attribute = attribute;
 	}
 

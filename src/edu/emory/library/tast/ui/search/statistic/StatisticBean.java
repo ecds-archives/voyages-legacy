@@ -7,6 +7,7 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.ui.SimpleTableCell;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
@@ -23,7 +24,7 @@ public class StatisticBean {
 	private SearchBean searchBean = null;
 	private StatisticElement[] elements = new StatisticElement[] {};
 	
-	public StatisticElement[] getStatisticElements() {
+	public SimpleTableCell[][] getStatisticElements() {
 		
 		if (prevConditions == null || 
 				!prevConditions.equals(searchBean.getSearchParameters().getConditions())) {
@@ -33,7 +34,7 @@ public class StatisticBean {
 //			conditions.addCondition(VoyageIndex.getRecent());
 //			conditions.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 			
-			elements = new StatisticElement[8];
+			elements = new StatisticElement[7];
 			
 			this.prepareEstimate(0, "slaximp", conditions);
 			this.prepareEstimate(1, "slamimp", conditions);
@@ -58,7 +59,22 @@ public class StatisticBean {
 //			}
 		}
 		
-		return elements;
+		SimpleTableCell[][] cells = new SimpleTableCell[elements.length + 1][];
+		
+		cells[0] = new SimpleTableCell[4];
+		cells[0][0] = new SimpleTableCell("", "search-simple-stat-h_c1", null);
+		cells[0][1] = new SimpleTableCell("Total sum", "search-simple-stat-h_c2", null);
+		cells[0][2] = new SimpleTableCell("Sample", "search-simple-stat-h_c3", null);
+		cells[0][3] = new SimpleTableCell("Average", "search-simple-stat-h_c4", null);
+		for (int i = 1; i < cells.length; i++) {
+			cells[i] = new SimpleTableCell[4];
+			cells[i][0] = new SimpleTableCell(elements[i-1].getName(), "search-simple-stat-c_c1", null);
+			cells[i][1] = new SimpleTableCell(elements[i-1].getTotal(), "search-simple-stat-c_c2", null);
+			cells[i][2] = new SimpleTableCell(elements[i-1].getSampleTotal(), "search-simple-stat-c_c3", null);
+			cells[i][3] = new SimpleTableCell(elements[i-1].getAvrg(), "search-simple-stat-c_c4", null);
+		}
+		
+		return cells;
 	}
 
 	private void prepareEstimate(int i, String attribute, Conditions conditions) {

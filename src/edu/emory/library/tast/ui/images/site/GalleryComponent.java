@@ -115,7 +115,7 @@ public class GalleryComponent extends UICommand {
 			js.append(prevset);
 			if (params.getVisiblePicture() != null) {
 				js.append("&").append(GalleryRequestBean.PICT).append("=");
-				js.append(params.getVisiblePicture());
+				js.append("0");
 			}
 			js.append("'");
 			this.encodeButton(context, form, writer, GALLERY_BACK_BUTTON, js.toString());
@@ -129,6 +129,12 @@ public class GalleryComponent extends UICommand {
 					writer.startElement("tr", this);
 				}
 				writer.startElement("td", this);
+				if (params.getVisiblePicture() != null) {
+					int n = Integer.parseInt(params.getVisiblePicture());
+					if (n == i) {
+						writer.writeAttribute("class", "gallery-selected", null);
+					}
+				}
 				Image image = picts[i].getImage();
 				writer.startElement("a", this);
 				StringBuffer link = new StringBuffer();
@@ -189,7 +195,7 @@ public class GalleryComponent extends UICommand {
 			js.append(nextset);
 			if (params.getVisiblePicture() != null) {
 				js.append("&").append(GalleryRequestBean.PICT).append("=");
-				js.append(params.getVisiblePicture());
+				js.append("0");
 			}
 			js.append("'");
 			this.encodeButton(context, form, writer, GALLERY_FORWARD_BUTTON, js.toString());
