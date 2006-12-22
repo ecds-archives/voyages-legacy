@@ -12,6 +12,7 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.ui.search.query.QueryBuilderComponent;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionList;
 import edu.emory.library.tast.ui.search.query.QueryConditionListItem;
@@ -53,7 +54,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 		}
 		else
 		{
-			String[] ids = fullId.split(":");
+			String[] ids = fullId.split(QueryBuilderComponent.ID_SEPARATOR);
 			String lastId = ids[ids.length - 1];
 			if (lastId.startsWith("P"))
 			{

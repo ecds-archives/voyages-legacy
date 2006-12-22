@@ -346,16 +346,16 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="port"
 		id="npafttra"
 		userLabel="Places of call before Atlantic crossing">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
-		<attributes>
-			<attribute name="npafttra" />
-		</attributes>
+		<ports>
+			<port port="npafttra" />
+		</ports>
 	</searchable-attribute>
 
 	<searchable-attribute

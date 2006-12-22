@@ -652,6 +652,10 @@ Map.prototype.roundAndCapScale = function(s)
 	return s;
 }
 
+Map.prototype.isPointInsideVport = function(vx, vy)
+{
+	return 0 <= vx && vx < this.getVportWidth() && 0 <= vy && vy < this.getVportHeight();
+}
 
 /////////////////////////////////////////////////////////
 // selector drawing and hiding
@@ -866,6 +870,8 @@ Map.prototype.mapMouseMove = function(event)
 				this.selectorX2 = this.fromVportToRealX(this.selectorVportX2);
 				this.selectorY2 = this.fromVportToRealX(this.selectorVportY2);
 			}
+			
+			this.precomputePointsPositions();
 			
 			break;
 			
@@ -1872,6 +1878,9 @@ Map.prototype.precomputePointsPositions = function()
 	if (!this.points)
 		return;
 
+	var vportWidth = this.getVportWidth();
+	var vportHeight = this.getVportHeight();
+
 	for (var i = 0; i < this.points.length; i++)
 	{
 		
@@ -1879,32 +1888,50 @@ Map.prototype.precomputePointsPositions = function()
 		
 		pnt.vx = this.fromRealToVportX(pnt.x);
 		pnt.vy = this.fromRealToVportY(pnt.y);
-		
-		for (var j = 0; j < pnt.symbols.length; j++)
+
+		// point visible		
+		if (0 <= pnt.vx && pnt.vx < vportWidth && 0 <= pnt.vy && pnt.vy < vportHeight)
 		{
 
-			var symbol = pnt.symbols[j];
-
-			var symbolElement = document.createElement("img");
-			symbolElement.src = symbol.url;
-			symbolElement.width = symbol.width;
-			symbolElement.height = symbol.height;
-
-			/*
-			var symbolElement = document.createElement("div");
-			symbolElement.style.backgroundColor = "Black";
-			symbolElement.style.width = "10px";
-			symbolElement.style.height = "10px";
-			*/
-			
-			symbolElement.style.position = "absolute";
-			symbolElement.style.left = (pnt.vx - symbol.width + symbol.centerX) + "px";
-			symbolElement.style.top = (pnt.vy - symbol.height + symbol.centerY) + "px";
-			
-			if (symbol.element) this.map_control.removeChild(symbol.element);
-			symbol.element = symbolElement;
-			this.map_control.appendChild(symbolElement);
-
+			for (var j = 0; j < pnt.symbols.length; j++)
+			{
+	
+				var symbol = pnt.symbols[j];
+				
+				var symbolElement;
+				if (!symbol.element)
+				{
+					symbolElement = symbol.element = document.createElement("img");
+					symbolElement.src = symbol.url;
+					symbolElement.width = symbol.width;
+					symbolElement.height = symbol.height;
+					symbolElement.style.position = "absolute";
+					this.map_control.appendChild(symbolElement);
+				}
+				else
+				{
+					symbolElement = symbol.element;
+				}
+				
+				symbolElement.style.display = "";
+				symbolElement.style.left = (pnt.vx - symbol.width + symbol.centerX) + "px";
+				symbolElement.style.top = (pnt.vy - symbol.height + symbol.centerY) + "px";
+	
+			}
+		
+		}
+		
+		// not visible -> only hide if created
+		else
+		{
+			for (var j = 0; j < pnt.symbols.length; j++)
+			{
+				var symbol = pnt.symbols[j];
+				if (symbol.element)
+				{
+					symbol.element.style.display = "none";
+				}
+			}
 		}
 
 	}

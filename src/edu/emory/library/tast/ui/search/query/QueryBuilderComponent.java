@@ -61,7 +61,7 @@ public class QueryBuilderComponent extends UIComponentBase
 {
 
 	private static final int UPDATE_DELAY = 1000;
-	private static final String ID_SEPARATOR = ":";
+	public static final String ID_SEPARATOR = "_";
 
 	private QueryBuilderQuery submittedQuery;
 	private QueryBuilderQuery setQuery;
@@ -1643,7 +1643,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		if (expandedIds != null) queryCondition.setExpandedIds(expandedIds.split(ID_SEPARATOR));
 		
 		String status = (String) params.get(getHtmlNameForListState(attribute, context));
-		queryCondition.setEdit(status == null || "show".equals(status)); 
+		queryCondition.setEdit("edit".equals(status)); 
 		
 		return true;
 
