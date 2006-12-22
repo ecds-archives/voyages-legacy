@@ -17,7 +17,7 @@ public class SimpleTableCell
 	public SimpleTableCell(String text, String cssClass)
 	{
 		this.text = text;
-		this.cssStyle = cssClass;
+		this.cssClass = cssClass;
 	}
 	
 	public SimpleTableCell(String text, String cssClass, String cssStyle)
