@@ -870,7 +870,8 @@ Map.prototype.mapMouseMove = function(event)
 				this.selectorX2 = this.fromVportToRealX(this.selectorVportX2);
 				this.selectorY2 = this.fromVportToRealX(this.selectorVportY2);
 			}
-			
+
+			// ?			
 			this.precomputePointsPositions();
 			
 			break;
@@ -1862,14 +1863,14 @@ Map.prototype.showHideLabel = function(event)
 Map.prototype.watchForLabels = function()
 {
 	if (!this.points) return;
-	EventAttacher.attach(this.frame, "mousemove", this, "showHideLabel");
+	//EventAttacher.attach(this.frame, "mousemove", this, "showHideLabel");
 }
 
 Map.prototype.forgetLabels = function()
 {
 	if (!this.points) return;
 	this.hideLabel(null);
-	EventAttacher.detach(this.frame, "mousemove", this, "showHideLabel");
+	//EventAttacher.detach(this.frame, "mousemove", this, "showHideLabel");
 }
 
 Map.prototype.precomputePointsPositions = function()
@@ -1892,7 +1893,27 @@ Map.prototype.precomputePointsPositions = function()
 		// point visible		
 		if (0 <= pnt.vx && pnt.vx < vportWidth && 0 <= pnt.vy && pnt.vy < vportHeight)
 		{
-
+		
+			var nameElement;
+			if (!pnt.nameElement)
+			{
+				nameElement = pnt.nameElement = document.createElement("div");
+				nameElement.innerHTML = pnt.label;
+				nameElement.style.padding = "2px";
+				nameElement.style.border = "1px solid Black";
+				nameElement.style.backgroundColor = "White";
+				nameElement.style.position = "absolute";
+				this.frame.appendChild(nameElement);
+			}
+			else
+			{
+				nameElement = pnt.nameElement;
+			}
+			
+			nameElement.style.display = "";
+			nameElement.style.left = pnt.vx + "px";
+			nameElement.style.top = pnt.vy + "px";
+		
 			for (var j = 0; j < pnt.symbols.length; j++)
 			{
 	
@@ -1906,7 +1927,10 @@ Map.prototype.precomputePointsPositions = function()
 					symbolElement.width = symbol.width;
 					symbolElement.height = symbol.height;
 					symbolElement.style.position = "absolute";
-					this.map_control.appendChild(symbolElement);
+					symbolElement.style.cursor = "default";
+					this.frame.appendChild(symbolElement);
+					EventAttacher.attach(symbolElement, "mouseover", this, "showLabel", i);
+					EventAttacher.attach(symbolElement, "mouseout", this, "hideLabel");
 				}
 				else
 				{
@@ -1924,6 +1948,10 @@ Map.prototype.precomputePointsPositions = function()
 		// not visible -> only hide if created
 		else
 		{
+			if (pnt.nameElement)
+			{
+				pnt.nameElement.style.display = "none";
+			}
 			for (var j = 0; j < pnt.symbols.length; j++)
 			{
 				var symbol = pnt.symbols[j];
@@ -2006,7 +2034,7 @@ Map.prototype.showLabel = function(event, pntIndex)
 	this.bubble.style.left = (x + 5) + "px";
 	this.bubble.style.top = (y - 5 - this.bubble.offsetHeight) + "px";
 	
-	this.frame.style.cursor = "pointer";
+	//this.frame.style.cursor = "pointer";
 
 }
 

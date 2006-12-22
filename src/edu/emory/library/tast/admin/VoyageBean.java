@@ -385,7 +385,23 @@ public class VoyageBean
 		voyage.setGuns(gunsValue.getInteger());
 		
 		String[] owners = StringUtils.removeEmpty(ownersValue.getLines());
-		
+		if (owners.length > 0) voyage.setOwnera(owners[0]); else voyage.setOwnerp(owners[0]);
+		if (owners.length > 1) voyage.setOwnerb(owners[1]); else voyage.setOwnerp(owners[1]);
+		if (owners.length > 2) voyage.setOwnerc(owners[2]); else voyage.setOwnerp(owners[2]);
+		if (owners.length > 3) voyage.setOwnerd(owners[3]); else voyage.setOwnerp(owners[3]);
+		if (owners.length > 4) voyage.setOwnere(owners[4]); else voyage.setOwnerp(owners[4]);
+		if (owners.length > 5) voyage.setOwnerb(owners[5]); else voyage.setOwnerp(owners[5]);
+		if (owners.length > 6) voyage.setOwnerg(owners[6]); else voyage.setOwnerp(owners[6]);
+		if (owners.length > 7) voyage.setOwnerb(owners[7]); else voyage.setOwnerp(owners[7]);
+		if (owners.length > 8) voyage.setOwneri(owners[8]); else voyage.setOwnerp(owners[8]);
+		if (owners.length > 9) voyage.setOwnerj(owners[9]); else voyage.setOwnerp(owners[9]);
+		if (owners.length > 10) voyage.setOwnerk(owners[10]); else voyage.setOwnerp(owners[10]);
+		if (owners.length > 11) voyage.setOwnerl(owners[11]); else voyage.setOwnerp(owners[11]);
+		if (owners.length > 12) voyage.setOwnerm(owners[12]); else voyage.setOwnerp(owners[12]);
+		if (owners.length > 13) voyage.setOwnern(owners[13]); else voyage.setOwnerp(owners[13]);
+		if (owners.length > 14) voyage.setOwnero(owners[14]); else voyage.setOwnerp(owners[14]);
+		if (owners.length > 15) voyage.setOwnerp(owners[15]); else voyage.setOwnerp(owners[15]); 
+
 	}
 	
 	public Schema getOutcomeSchema()
@@ -419,10 +435,6 @@ public class VoyageBean
 		
 	}
 
-	private void saveOutcomeValues(Session sess, Voyage voyage)
-	{
-	}
-
 	private void fillOutcomeValues(Voyage voyage)
 	{
 		
@@ -434,7 +446,13 @@ public class VoyageBean
 		outcomeValues.addValue(new FieldValueDropdowns("resistance", createDictionaryValue(voyage.getResistance())));
 		
 	}
-	
+
+	private void saveOutcomeValues(Session sess, Voyage voyage)
+	{
+		
+		
+	}
+
 	public Schema getItinerarySchema()
 	{
 

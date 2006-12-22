@@ -339,8 +339,8 @@ public class MapComponent extends UIComponentBase
 		String serverBaseUrl = getServerBaseUrl();
 		
 		String mapId = getClientId(context);
-		String mapControlId = getClientId(context) + "_contol";
-		String mapFrameId = getClientId(context) + "_frame";
+		String mapControlId = getClientId(context) + "_control";
+		String tilesContainerId = getClientId(context) + "_tiles_container";
 		
 		String toolsBackId = getClientId(context) + "_back";
 		String toolsForwardId = getClientId(context) + "_forward";
@@ -418,7 +418,7 @@ public class MapComponent extends UIComponentBase
 		// main HTML elements
 		jsRegister.append("'").append(mapControlId).append("'");
 		jsRegister.append(", ");
-		jsRegister.append("'").append(mapFrameId).append("'");
+		jsRegister.append("'").append(tilesContainerId).append("'");
 		jsRegister.append(", ");
 
 		// HTML elements for tools (not used now)
@@ -632,9 +632,9 @@ public class MapComponent extends UIComponentBase
 		writer.writeAttribute("style", mainDivStyle, null);
 		writer.writeAttribute("class", "map-control", null);
 
-		// map frame for tiles
+		// container for tiles
 		writer.startElement("div", this);
-		writer.writeAttribute("id", mapFrameId, null);
+		writer.writeAttribute("id", tilesContainerId, null);
 		writer.writeAttribute("style", frameDivStyle, null);
 		writer.endElement("div");
 		

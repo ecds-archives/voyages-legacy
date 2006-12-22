@@ -11,6 +11,7 @@ public class PointOfInterest
 	private String text;
 	private String label;
 	private String[] symbols;
+	private double value;
 	
 	public PointOfInterest(double x, double y)
 	{
@@ -32,7 +33,31 @@ public class PointOfInterest
 		this.y = y;
 		this.label = label;
 	}
-	
+
+	public PointOfInterest(double x, double y, double value)
+	{
+		this.x = x;
+		this.y = y;
+		this.value = value;
+	}
+
+	public PointOfInterest(double x, double y, String label, String text, double value)
+	{
+		this.x = x;
+		this.y = y;
+		this.label = label;
+		this.text = text;
+		this.value = value;
+	}
+
+	public PointOfInterest(double x, double y, String label, double value)
+	{
+		this.x = x;
+		this.y = y;
+		this.label = label;
+		this.value = value;
+	}
+
 	public String getLabelJavaScriptSafe()
 	{
 		return JsfUtils.escapeStringForJS(label);
@@ -98,6 +123,16 @@ public class PointOfInterest
 
 	public void setSymbols(String[] symbols) {
 		this.symbols = symbols;
+	}
+
+	public double getValue()
+	{
+		return value;
+	}
+
+	public void setValue(double value)
+	{
+		this.value = value;
 	}
 	
 }
