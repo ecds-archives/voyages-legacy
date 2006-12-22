@@ -39,6 +39,7 @@ var MapsGlobal =
 		mapSizes, // available map sizes
 		fieldNameForMapSize, // hidden field for selected map size
 		pointsOfInterest, // array of points with labels
+		pointGroups, // last order group
 		bubbleId, // bubble <table>
 		bubbleTextId, // inner <td> for the text in the bubble
 		scaleIndicatorTextId,
@@ -83,6 +84,7 @@ var MapsGlobal =
 		
 		// points
 		map.points = pointsOfInterest;
+		map.pointGroups = pointGroups;
 		
 		// bubble
 		map.bubbleId = bubbleId;
@@ -1874,6 +1876,51 @@ Map.prototype.forgetLabels = function()
 	//EventAttacher.detach(this.frame, "mousemove", this, "showHideLabel");
 }
 
+Map.prototype.initPoints = function()
+{
+
+	if (!this.points)
+		return;
+
+	for (var i = this.points.length - 1; 0 <= i; i--)
+	{
+	
+		var pnt = this.points[i];
+
+		var labelElement = pnt.labelElement = document.createElement("div");
+		labelElement.innerHTML = pnt.label;
+		labelElement.style.padding = "2px";
+		labelElement.style.border = "1px solid Black";
+		labelElement.style.backgroundColor = "White";
+		labelElement.style.position = "absolute";
+		labelElement.style.display = "";
+
+		this.frame.appendChild(labelElement);
+
+		for (var j = 0; j < pnt.symbols.length; j++)
+		{
+
+			var symbol = pnt.symbols[j];
+			
+			var symbolElement = symbol.element = document.createElement("img");
+			symbolElement.src = symbol.url;
+			symbolElement.width = symbol.width;
+			symbolElement.height = symbol.height;
+			symbolElement.style.position = "absolute";
+			symbolElement.style.cursor = "default";
+			symbolElement.style.display = "";
+			
+			EventAttacher.attach(symbolElement, "mouseover", this, "showLabel", i);
+			EventAttacher.attach(symbolElement, "mouseout", this, "hideLabel");
+
+			this.frame.appendChild(symbolElement);
+
+		}
+
+	}
+
+}
+
 Map.prototype.precomputePointsPositions = function()
 {
 
@@ -1883,6 +1930,10 @@ Map.prototype.precomputePointsPositions = function()
 	var vportWidth = this.getVportWidth();
 	var vportHeight = this.getVportHeight();
 
+	var eps = 0.005;
+	var scaleRat = (this.scale - 1) / (this.scaleMax - 1);
+	var lastVisibleGroup = Math.round((scaleRat * (1 - eps) + eps) * this.pointGroups);
+
 	for (var i = 0; i < this.points.length; i++)
 	{
 		
@@ -1891,75 +1942,41 @@ Map.prototype.precomputePointsPositions = function()
 		pnt.vx = this.fromRealToVportX(pnt.x);
 		pnt.vy = this.fromRealToVportY(pnt.y);
 
-		// point visible		
 		if (0 <= pnt.vx && pnt.vx < vportWidth && 0 <= pnt.vy && pnt.vy < vportHeight)
 		{
 		
-			var nameElement;
-			if (!pnt.nameElement)
+			for (var j = 0; j < pnt.symbols.length; j++)
 			{
-				nameElement = pnt.nameElement = document.createElement("div");
-				nameElement.innerHTML = pnt.label;
-				nameElement.style.padding = "2px";
-				nameElement.style.border = "1px solid Black";
-				nameElement.style.backgroundColor = "White";
-				nameElement.style.position = "absolute";
-				this.frame.appendChild(nameElement);
+				var symbol = pnt.symbols[j];
+				var symbolElementStyle = symbol.element.style;
+				symbolElementStyle.display = "";
+				symbolElementStyle.left = (pnt.vx - symbol.width + symbol.centerX) + "px";
+				symbolElementStyle.top = (pnt.vy - symbol.height + symbol.centerY) + "px";
+			}
+
+			var labelElementStyle = pnt.labelElement.style;
+			if (pnt.orderGroup <= lastVisibleGroup)
+			{
+				labelElementStyle.display = "";
+				labelElementStyle.left = pnt.vx + "px";
+				labelElementStyle.top = pnt.vy + "px";
 			}
 			else
 			{
-				nameElement = pnt.nameElement;
+				labelElementStyle.display = "none";
 			}
-			
-			nameElement.style.display = "";
-			nameElement.style.left = pnt.vx + "px";
-			nameElement.style.top = pnt.vy + "px";
-		
-			for (var j = 0; j < pnt.symbols.length; j++)
-			{
-	
-				var symbol = pnt.symbols[j];
-				
-				var symbolElement;
-				if (!symbol.element)
-				{
-					symbolElement = symbol.element = document.createElement("img");
-					symbolElement.src = symbol.url;
-					symbolElement.width = symbol.width;
-					symbolElement.height = symbol.height;
-					symbolElement.style.position = "absolute";
-					symbolElement.style.cursor = "default";
-					this.frame.appendChild(symbolElement);
-					EventAttacher.attach(symbolElement, "mouseover", this, "showLabel", i);
-					EventAttacher.attach(symbolElement, "mouseout", this, "hideLabel");
-				}
-				else
-				{
-					symbolElement = symbol.element;
-				}
-				
-				symbolElement.style.display = "";
-				symbolElement.style.left = (pnt.vx - symbol.width + symbol.centerX) + "px";
-				symbolElement.style.top = (pnt.vy - symbol.height + symbol.centerY) + "px";
-	
-			}
-		
+
 		}
 		
-		// not visible -> only hide if created
 		else
 		{
-			if (pnt.nameElement)
-			{
-				pnt.nameElement.style.display = "none";
-			}
 			for (var j = 0; j < pnt.symbols.length; j++)
 			{
-				var symbol = pnt.symbols[j];
-				if (symbol.element)
-				{
-					symbol.element.style.display = "none";
-				}
+				pnt.symbols[j].element.style.display = "none";
+			}
+			if (pnt.labelElement)
+			{
+				pnt.labelElement.style.display = "none";
 			}
 		}
 
@@ -2345,6 +2362,9 @@ Map.prototype.init = function(restoreState)
 	
 	// zoom history
 	this.zoomHistoryRestore();
+	
+	// points
+	this.initPoints();
 	
 	// show something
 	if (restoreState)

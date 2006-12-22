@@ -38,7 +38,7 @@
 
 		<h:panelGroup rendered="#{AdminVoyageBean.groupOutcomeSelected}">
 			<t:htmlTag value="h2"><h:outputText value="Outcome" /></t:htmlTag>
-			<s:recordEditor id="ship"
+			<s:recordEditor id="outcome"
 				schema="#{AdminVoyageBean.outcomeSchema}"
 				values="#{AdminVoyageBean.outcomeValues}" />
 		</h:panelGroup>

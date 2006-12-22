@@ -235,17 +235,17 @@ public class VoyageBean
 		return values;
 	}
 
-	private Port getLocationValue(Session session, String[] ids)
+	private Port getPortValue(Session session, String[] ids)
 	{
-		if (ids[2] != null)
+		if (ids[2] != null && ids[2].length() > 0)
 		{
 			return Port.loadById(session, Long.parseLong(ids[2])); 
 		}
-		else if (ids[1] != null)
+		else if (ids[1] != null && ids[1].length() > 0)
 		{
 			return Port.loadById(session, Long.parseLong(ids[1])); 
 		}
-		else if (ids[0] != null)
+		else if (ids[0] != null && ids[0].length() > 0)
 		{
 			return Port.loadById(session, Long.parseLong(ids[0])); 
 		}
@@ -255,29 +255,23 @@ public class VoyageBean
 		}
 	}
 
-	private Nation getNationValue(Session session, String[] ids)
+	/*
+	private Region getRegionValue(Session session, String[] ids)
 	{
-		if (ids[0] != null)
+		if (ids[1] != null)
 		{
-			return Nation.loadById(session, Long.parseLong(ids[0])); 
+			return Region.loadById(session, Long.parseLong(ids[1])); 
+		}
+		else if (ids[0] != null)
+		{
+			return Region.loadById(session, Long.parseLong(ids[0])); 
 		}
 		else
 		{
 			return null;
 		}
 	}
-
-	private VesselRig getVesselRigValue(Session session, String[] ids)
-	{
-		if (ids[0] != null)
-		{
-			return VesselRig.loadById(session, Long.parseLong(ids[0])); 
-		}
-		else
-		{
-			return null;
-		}
-	}
+	*/
 
 	public Schema getShipSchema()
 	{
@@ -302,7 +296,7 @@ public class VoyageBean
 		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship", "shipname"));
 		schema.addField(new FieldSchemaDropdowns("placcons", "Place of construction", LISTS_LOCATION, "locations"));
 		schema.addField(new FieldSchemaInteger("yrcons", "Year of construction", "year"));
-		schema.addField(new FieldSchemaDropdowns("placreg", "Place of registration", LIST_NATIONS_NAME, "locations"));
+		schema.addField(new FieldSchemaDropdowns("placreg", "Place of registration", LISTS_LOCATION, "locations"));
 		schema.addField(new FieldSchemaInteger("yrreg", "Year of registration", "year"));
 		schema.addField(new FieldSchemaDropdowns("natinimp", "Imputed nation", LIST_NATIONS_NAME));
 		schema.addField(new FieldSchemaDropdowns("rig", "Vessel rig", LIST_VESSEL_RIGS_NAME));
@@ -374,9 +368,9 @@ public class VoyageBean
 		voyage.setVoyageid(voyageIdValue.getLong());
 		voyage.setCd(cdValue.getBoolean());
 		voyage.setShipname(shipNameValue.getValue());
-		voyage.setPlaccons(getLocationValue(sess, placconsValue.getValues()));
+		voyage.setPlaccons(getPortValue(sess, placconsValue.getValues()));
 		voyage.setYrcons(yrconsValue.getInteger());
-		voyage.setPlacreg(getLocationValue(sess, placregValue.getValues()));
+		voyage.setPlacreg(getPortValue(sess, placregValue.getValues()));
 		voyage.setYrreg(yrregValue.getInteger());
 		voyage.setNatinimp(Nation.loadById(sess, natinimpValue.getValues()[0]));
 		voyage.setRig(VesselRig.loadById(sess, rigValue.getValues()[0]));
@@ -385,22 +379,22 @@ public class VoyageBean
 		voyage.setGuns(gunsValue.getInteger());
 		
 		String[] owners = StringUtils.removeEmpty(ownersValue.getLines());
-		if (owners.length > 0) voyage.setOwnera(owners[0]); else voyage.setOwnerp(owners[0]);
-		if (owners.length > 1) voyage.setOwnerb(owners[1]); else voyage.setOwnerp(owners[1]);
-		if (owners.length > 2) voyage.setOwnerc(owners[2]); else voyage.setOwnerp(owners[2]);
-		if (owners.length > 3) voyage.setOwnerd(owners[3]); else voyage.setOwnerp(owners[3]);
-		if (owners.length > 4) voyage.setOwnere(owners[4]); else voyage.setOwnerp(owners[4]);
-		if (owners.length > 5) voyage.setOwnerb(owners[5]); else voyage.setOwnerp(owners[5]);
-		if (owners.length > 6) voyage.setOwnerg(owners[6]); else voyage.setOwnerp(owners[6]);
-		if (owners.length > 7) voyage.setOwnerb(owners[7]); else voyage.setOwnerp(owners[7]);
-		if (owners.length > 8) voyage.setOwneri(owners[8]); else voyage.setOwnerp(owners[8]);
-		if (owners.length > 9) voyage.setOwnerj(owners[9]); else voyage.setOwnerp(owners[9]);
-		if (owners.length > 10) voyage.setOwnerk(owners[10]); else voyage.setOwnerp(owners[10]);
-		if (owners.length > 11) voyage.setOwnerl(owners[11]); else voyage.setOwnerp(owners[11]);
-		if (owners.length > 12) voyage.setOwnerm(owners[12]); else voyage.setOwnerp(owners[12]);
-		if (owners.length > 13) voyage.setOwnern(owners[13]); else voyage.setOwnerp(owners[13]);
-		if (owners.length > 14) voyage.setOwnero(owners[14]); else voyage.setOwnerp(owners[14]);
-		if (owners.length > 15) voyage.setOwnerp(owners[15]); else voyage.setOwnerp(owners[15]); 
+		if (owners != null && owners.length > 0) voyage.setOwnera(owners[0]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 1) voyage.setOwnerb(owners[1]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 2) voyage.setOwnerc(owners[2]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 3) voyage.setOwnerd(owners[3]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 4) voyage.setOwnere(owners[4]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 5) voyage.setOwnerb(owners[5]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 6) voyage.setOwnerg(owners[6]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 7) voyage.setOwnerb(owners[7]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 8) voyage.setOwneri(owners[8]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 9) voyage.setOwnerj(owners[9]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 10) voyage.setOwnerk(owners[10]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 11) voyage.setOwnerl(owners[11]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 12) voyage.setOwnerm(owners[12]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 13) voyage.setOwnern(owners[13]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 14) voyage.setOwnero(owners[14]); else voyage.setOwnerp(null);
+		if (owners != null && owners.length > 15) voyage.setOwnerp(owners[15]); else voyage.setOwnerp(null); 
 
 	}
 	
@@ -449,7 +443,18 @@ public class VoyageBean
 
 	private void saveOutcomeValues(Session sess, Voyage voyage)
 	{
-		
+
+		FieldValueDropdowns fateValue = ((FieldValueDropdowns) outcomeValues.getValueFor("fate"));
+		FieldValueDropdowns fate2Value = ((FieldValueDropdowns) outcomeValues.getValueFor("fate2"));
+		FieldValueDropdowns fate3Value = ((FieldValueDropdowns) outcomeValues.getValueFor("fate3"));
+		FieldValueDropdowns fate4Value = ((FieldValueDropdowns) outcomeValues.getValueFor("fate4"));
+		FieldValueDropdowns resistanceValue = ((FieldValueDropdowns) outcomeValues.getValueFor("resistance"));
+
+		voyage.setFate(Fate.loadById(sess, fateValue.getValues()[0]));
+		voyage.setFate2(FateSlaves.loadById(sess, fate2Value.getValues()[0]));
+		voyage.setFate3(FateVessel.loadById(sess, fate3Value.getValues()[0]));
+		voyage.setFate4(FateOwner.loadById(sess, fate4Value.getValues()[0]));
+		voyage.setResistance(Resistance.loadById(sess, resistanceValue.getValues()[0]));
 		
 	}
 
@@ -506,6 +511,31 @@ public class VoyageBean
 	
 	private void saveItineraryValues(Session sess, Voyage voyage)
 	{
+
+		FieldValueDropdowns portdepValue = ((FieldValueDropdowns) itineraryValues.getValueFor("portdep"));
+		FieldValueDropdowns ptdepimpValue = ((FieldValueDropdowns) itineraryValues.getValueFor("ptdepimp"));
+		FieldValueDropdowns plac1traValue = ((FieldValueDropdowns) itineraryValues.getValueFor("plac1tra"));
+		FieldValueDropdowns plac2traValue = ((FieldValueDropdowns) itineraryValues.getValueFor("plac2tra"));
+		FieldValueDropdowns plac3traValue = ((FieldValueDropdowns) itineraryValues.getValueFor("plac3tra"));
+		FieldValueDropdowns mjbyptimpValue = ((FieldValueDropdowns) itineraryValues.getValueFor("mjbyptimp"));
+		FieldValueDropdowns npafttraValue = ((FieldValueDropdowns) itineraryValues.getValueFor("npafttra"));
+		FieldValueDropdowns sla1portValue = ((FieldValueDropdowns) itineraryValues.getValueFor("sla1port"));
+		FieldValueDropdowns adpsale1Value = ((FieldValueDropdowns) itineraryValues.getValueFor("adpsale1"));
+		FieldValueDropdowns adpsale2Value = ((FieldValueDropdowns) itineraryValues.getValueFor("adpsale2"));
+		FieldValueDropdowns portretValue = ((FieldValueDropdowns) itineraryValues.getValueFor("portret"));
+
+		voyage.setPortdep(getPortValue(sess, portdepValue.getValues()));
+		voyage.setPtdepimp(getPortValue(sess, ptdepimpValue.getValues()));
+		voyage.setPlac1tra(getPortValue(sess, plac1traValue.getValues()));
+		voyage.setPlac2tra(getPortValue(sess, plac2traValue.getValues()));
+		voyage.setPlac3tra(getPortValue(sess, plac3traValue.getValues()));
+		voyage.setMjbyptimp(getPortValue(sess, mjbyptimpValue.getValues()));
+		voyage.setNpafttra(getPortValue(sess, npafttraValue.getValues()));
+		voyage.setSla1port(getPortValue(sess, sla1portValue.getValues()));
+		voyage.setAdpsale1(getPortValue(sess, adpsale1Value.getValues()));
+		voyage.setAdpsale2(getPortValue(sess, adpsale2Value.getValues()));
+		voyage.setPortret(getPortValue(sess, portretValue.getValues()));
+
 	}
 
 	public Schema getDatesSchema()
@@ -550,6 +580,31 @@ public class VoyageBean
 	
 	private void saveDateValues(Session sess, Voyage voyage)
 	{
+
+		FieldValueInteger yearamValue = ((FieldValueInteger) datesValues.getValueFor("yearam"));
+		FieldValueDate datedepValue = ((FieldValueDate) datesValues.getValueFor("datedep"));
+		FieldValueDate datebuyValue = ((FieldValueDate) datesValues.getValueFor("datebuy"));
+		FieldValueDate dateleftafrValue = ((FieldValueDate) datesValues.getValueFor("dateleftafr"));
+		FieldValueDate dateland1Value = ((FieldValueDate) datesValues.getValueFor("dateland1"));
+		FieldValueDate dateland2Value = ((FieldValueDate) datesValues.getValueFor("dateland2"));
+		FieldValueDate dateland3Value = ((FieldValueDate) datesValues.getValueFor("dateland3"));
+		FieldValueDate datedepamValue = ((FieldValueDate) datesValues.getValueFor("datedepam"));
+		FieldValueDate dateendValue = ((FieldValueDate) datesValues.getValueFor("dateend"));
+		FieldValueInteger voy1impValue = ((FieldValueInteger) datesValues.getValueFor("voy1imp"));
+		FieldValueInteger voy2impValue = ((FieldValueInteger) datesValues.getValueFor("voy2imp"));
+		
+		voyage.setYearam(yearamValue.getInteger());
+		voyage.setDatedep(datedepValue.getDate());
+		voyage.setDatedep(datebuyValue.getDate());
+		voyage.setDateleftafr(dateleftafrValue.getDate());
+		voyage.setDateland1(dateland1Value.getDate());
+		voyage.setDateland3(dateland2Value.getDate());
+		voyage.setDateland3(dateland3Value.getDate());
+		voyage.setDatedepam(datedepamValue.getDate());
+		voyage.setDateend(dateendValue.getDate());
+		voyage.setVoy1imp(voy1impValue.getInteger());
+		voyage.setVoy2imp(voy2impValue.getInteger());
+	
 	}
 
 	public Schema getCrewSchema()
@@ -585,6 +640,21 @@ public class VoyageBean
 	
 	private void saveCrewValues(Session sess, Voyage voyage)
 	{
+		
+		FieldValueText captainsValue = ((FieldValueText) crewValues.getValueFor("captains"));
+		FieldValueInteger crew1Value = ((FieldValueInteger) crewValues.getValueFor("crew1"));
+		FieldValueInteger crew3Value = ((FieldValueInteger) crewValues.getValueFor("crew3"));
+		FieldValueInteger crewdiedValue = ((FieldValueInteger) crewValues.getValueFor("crewdied"));
+		
+		String[] captains = StringUtils.removeEmpty(captainsValue.getLines());
+		if (captains != null && captains.length > 0) voyage.setCaptaina(captains[0]); else voyage.setOwnerp(null);
+		if (captains != null && captains.length > 1) voyage.setCaptainb(captains[1]); else voyage.setOwnerp(null);
+		if (captains != null && captains.length > 2) voyage.setCaptainc(captains[2]); else voyage.setOwnerp(null);
+
+		voyage.setCrew1(crew1Value.getInteger());
+		voyage.setCrew3(crew3Value.getInteger());
+		voyage.setCrewdied(crewdiedValue.getInteger());
+		
 	}
 
 	public Schema getSlaveNumsSchema()
@@ -629,6 +699,31 @@ public class VoyageBean
 
 	private void saveSlaveNumsValues(Session sess, Voyage voyage)
 	{
+		
+		FieldValueInteger slintendValue = (FieldValueInteger) slaveNumsValues.getValueFor("slintend");
+		FieldValueInteger ncar13Value = (FieldValueInteger) slaveNumsValues.getValueFor("ncar13");
+		FieldValueInteger ncar15Value = (FieldValueInteger) slaveNumsValues.getValueFor("ncar15");
+		FieldValueInteger ncar17Value = (FieldValueInteger) slaveNumsValues.getValueFor("ncar17");
+		FieldValueInteger tslavesdValue = (FieldValueInteger) slaveNumsValues.getValueFor("tslavesd");
+		FieldValueInteger slaarrivValue = (FieldValueInteger) slaveNumsValues.getValueFor("slaarriv");
+		FieldValueInteger slas32Value = (FieldValueInteger) slaveNumsValues.getValueFor("slas32");
+		FieldValueInteger slas36Value = (FieldValueInteger) slaveNumsValues.getValueFor("slas36");
+		FieldValueInteger slas39Value = (FieldValueInteger) slaveNumsValues.getValueFor("slas39");
+		FieldValueFloat slaximpValue = (FieldValueFloat) slaveNumsValues.getValueFor("slaximp");
+		FieldValueFloat slamimpValue = (FieldValueFloat) slaveNumsValues.getValueFor("slamimp");
+		
+		voyage.setSlintend(slintendValue.getInteger());
+		voyage.setNcar13(ncar13Value.getInteger());
+		voyage.setNcar15(ncar15Value.getInteger());
+		voyage.setNcar17(ncar17Value.getInteger());
+		voyage.setTslavesd(tslavesdValue.getInteger());
+		voyage.setSlaarriv(slaarrivValue.getInteger());
+		voyage.setSlas32(slas32Value.getInteger());
+		voyage.setSlas36(slas36Value.getInteger());
+		voyage.setSlas39(slas39Value.getInteger());
+		voyage.setSlaximp(slaximpValue.getFloat());
+		voyage.setSlamimp(slamimpValue.getFloat());
+		
 	}
 
 	public Schema getSlaveCharsSchema()
@@ -669,6 +764,27 @@ public class VoyageBean
 
 	private void saveSlaveCharsValues(Session sess, Voyage voyage)
 	{
+		
+		FieldValueFloat menrat7Value = (FieldValueFloat) slaveCharsValues.getValueFor("menrat7");
+		FieldValueFloat womrat7Value = (FieldValueFloat) slaveCharsValues.getValueFor("womrat7");
+		FieldValueFloat boyrat7Value = (FieldValueFloat) slaveCharsValues.getValueFor("boyrat7");
+		FieldValueFloat girlrat7Value = (FieldValueFloat) slaveCharsValues.getValueFor("girlrat7");
+		FieldValueFloat malrat7Value = (FieldValueFloat) slaveCharsValues.getValueFor("malrat7");
+		FieldValueFloat chilrat7Value = (FieldValueFloat) slaveCharsValues.getValueFor("chilrat7");
+		FieldValueFloat jamcasprValue = (FieldValueFloat) slaveCharsValues.getValueFor("jamcaspr");
+		FieldValueFloat vymrtimpValue = (FieldValueFloat) slaveCharsValues.getValueFor("vymrtimp");
+		FieldValueFloat vymrtratValue = (FieldValueFloat) slaveCharsValues.getValueFor("vymrtrat");
+		
+		voyage.setMenrat7(menrat7Value.getFloat());
+		voyage.setWomrat7(womrat7Value.getFloat());
+		voyage.setBoyrat7(boyrat7Value.getFloat());
+		voyage.setGirlrat7(girlrat7Value.getFloat());
+		voyage.setMalrat7(malrat7Value.getFloat());
+		voyage.setChilrat7(chilrat7Value.getFloat());
+		voyage.setJamcaspr(jamcasprValue.getFloat());
+		voyage.setVymrtimp(vymrtimpValue.getFloat());
+		voyage.setVymrtrat(vymrtratValue.getFloat());
+
 	}
 
 	public Schema getSourcesSchema()
@@ -713,23 +829,57 @@ public class VoyageBean
 	
 	private void saveSourcesValues(Session sess, Voyage voyage)
 	{
+		
+		FieldValueText sourcesValue = (FieldValueText) sourcesValues.getValueFor("sources"); 
+
+		String[] sources = StringUtils.removeEmpty(sourcesValue.getLines());
+		if (sources != null && sources.length > 0) voyage.setSourcea(sources[0]); else voyage.setSourcea(null);
+		if (sources != null && sources.length > 1) voyage.setSourceb(sources[1]); else voyage.setSourceb(null);
+		if (sources != null && sources.length > 2) voyage.setSourcec(sources[2]); else voyage.setSourcec(null);
+		if (sources != null && sources.length > 3) voyage.setSourced(sources[3]); else voyage.setSourced(null);
+		if (sources != null && sources.length > 4) voyage.setSourcee(sources[4]); else voyage.setSourcee(null);
+		if (sources != null && sources.length > 5) voyage.setSourcef(sources[5]); else voyage.setSourcef(null);
+		if (sources != null && sources.length > 6) voyage.setSourceg(sources[6]); else voyage.setSourceg(null);
+		if (sources != null && sources.length > 7) voyage.setSourceh(sources[7]); else voyage.setSourceh(null);
+		if (sources != null && sources.length > 8) voyage.setSourcei(sources[8]); else voyage.setSourcei(null);
+		if (sources != null && sources.length > 9) voyage.setSourcej(sources[9]); else voyage.setSourcej(null);
+		if (sources != null && sources.length > 10) voyage.setSourcek(sources[10]); else voyage.setSourcek(null);
+		if (sources != null && sources.length > 11) voyage.setSourcel(sources[11]); else voyage.setSourcel(null);
+		if (sources != null && sources.length > 12) voyage.setSourcem(sources[12]); else voyage.setSourcem(null);
+		if (sources != null && sources.length > 13) voyage.setSourcen(sources[13]); else voyage.setSourcen(null);
+		if (sources != null && sources.length > 14) voyage.setSourceo(sources[14]); else voyage.setSourceo(null);
+		if (sources != null && sources.length > 15) voyage.setSourcep(sources[15]); else voyage.setSourcep(null);
+		if (sources != null && sources.length > 16) voyage.setSourceq(sources[16]); else voyage.setSourceq(null);
+		if (sources != null && sources.length > 17) voyage.setSourcer(sources[17]); else voyage.setSourcer(null);
+	
 	}
 	
-	public void openVoyage(GridOpenRowEvent event)
+	private void openOrCreateVoyage(Long voyageIid)
 	{
-		
-		voyageIid = new Long(event.getRowId());
+
+		this.voyageIid = voyageIid;
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 		
-		Conditions cond = new Conditions();
-		cond.addCondition(Voyage.getAttribute("iid"), voyageIid, Conditions.OP_EQUALS);
+		Voyage voyage;
 
-		QueryValue query = new QueryValue("Voyage", cond);
-		query.setFirstResult(0);
-		query.setLimit(1);
-		Voyage voyage = (Voyage) query.executeQueryList(sess).get(0);
+		if (voyageIid != null)
+		{
+		
+			Conditions cond = new Conditions();
+			cond.addCondition(Voyage.getAttribute("iid"), voyageIid, Conditions.OP_EQUALS);
+			
+			QueryValue query = new QueryValue("Voyage", cond);
+			query.setFirstResult(0);
+			query.setLimit(1);
+			voyage = (Voyage) query.executeQueryList(sess).get(0);
+			
+		}
+		else
+		{
+			voyage = new Voyage();
+		}
 		
 		fillShipValues(voyage);
 		fillOutcomeValues(voyage);
@@ -742,22 +892,46 @@ public class VoyageBean
 		
 		tran.commit();
 		sess.close();
-
+	
 	}
 	
+	public String createVoyage()
+	{
+		openOrCreateVoyage(null);
+		return "edit";
+	}
+	
+	public void openVoyage(GridOpenRowEvent event)
+	{
+		openOrCreateVoyage(new Long(event.getRowId()));
+	}
+
 	public String saveVoyage()
 	{
 
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 		
-		Conditions cond = new Conditions();
-		cond.addCondition(Voyage.getAttribute("iid"), voyageIid, Conditions.OP_EQUALS);
+		Voyage voyage;
 
-		QueryValue query = new QueryValue("Voyage", cond);
-		query.setFirstResult(0);
-		query.setLimit(1);
-		Voyage voyage = (Voyage) query.executeQueryList(sess).get(0);
+		if (voyageIid != null)
+		{
+
+			Conditions cond = new Conditions();
+			cond.addCondition(Voyage.getAttribute("iid"), voyageIid, Conditions.OP_EQUALS);
+
+			QueryValue query = new QueryValue("Voyage", cond);
+			query.setFirstResult(0);
+			query.setLimit(1);
+			voyage = (Voyage) query.executeQueryList(sess).get(0);
+			
+		}
+		else
+		{
+			
+			voyage = new Voyage();
+
+		}
 		
 		saveShipValues(sess, voyage);
 		saveOutcomeValues(sess, voyage);
@@ -768,11 +942,13 @@ public class VoyageBean
 		saveSlaveCharsValues(sess, voyage);
 		saveSourcesValues(sess, voyage);
 		
+		sess.saveOrUpdate(voyage);
+		
 		tran.commit();
 		sess.close();
 
-		return null;
-		
+		return "list";
+
 	}
 
 	public Values getCrewValues()

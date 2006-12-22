@@ -72,8 +72,8 @@ public class ThumbnailServlet extends HttpServlet
 			int clipHeight = (int) Math.round(((double) thumbnailHeight / (double) thumbnailWidth) * (double) imageWidth); 
 			clipX1 = 0; 
 			clipY1 = imageWidth - 1; 
-			clipX2 = (imageWidth - clipHeight) / 2; 
-			clipY2 = clipHeight + (imageWidth - clipHeight) / 2;
+			clipX2 =  clipHeight + (imageWidth - clipHeight) / 2;
+			clipY2 = (imageHeight - clipHeight) / 2;
 		}
 
 		// draw the thumbnail

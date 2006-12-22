@@ -15,6 +15,12 @@
 	
 		<h1>Voyages</h1>
 		
+		<h:commandButton
+			action="#{AdminVoyageBean.createVoyage}"
+			value="Create new" />
+			
+		<br><br>
+		
 		<div style="padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>

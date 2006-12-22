@@ -385,7 +385,7 @@ public class MapComponent extends UIComponentBase
 			{
 				PointOfInterest pnt0 = (PointOfInterest) arg0;
 				PointOfInterest pnt1 = (PointOfInterest) arg1;
-				return pnt0.getValue() == pnt1.getValue() ? 0 : pnt0.getValue() > pnt1.getValue() ? 1 : -1;
+				return pnt0.getValue() == pnt1.getValue() ? 0 : pnt0.getValue() < pnt1.getValue() ? 1 : -1;
 			}});
 
 		// at least the default map size
@@ -560,6 +560,12 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("null");
 		}
 		jsRegister.append(", ");
+		
+		// index of the last group
+		jsRegister.append(pointOrderGroup);
+		jsRegister.append(", ");
+
+		// bubble
 		jsRegister.append("'").append(bubbleId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(bubbleTextId).append("'");

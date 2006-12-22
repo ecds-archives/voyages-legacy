@@ -1,6 +1,8 @@
 package edu.emory.library.tast.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class StringUtils
@@ -148,16 +150,26 @@ public class StringUtils
 		return ints;
 	}
 
-	public static String[] removeEmpty(String[] lines)
+	public static String[] removeEmpty(String[] arr)
 	{
-		if (lines == null)
+		if (arr == null)
 		{
 			return null;
 		}
 		else
 		{
+			List tmp = new ArrayList();
+			for (int i = 0; i < arr.length; i++)
+			{
+				if (!StringUtils.isNullOrEmpty(arr[i]))
+				{
+					tmp.add(arr[i]);
+				}
+			}
+			String[] newArr = new String[tmp.size()];
+			tmp.toArray(newArr);
+			return newArr;
 		}
-		return null;
 	}
 
 }
