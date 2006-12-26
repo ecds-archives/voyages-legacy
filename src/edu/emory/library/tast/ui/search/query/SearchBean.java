@@ -1,5 +1,6 @@
 package edu.emory.library.tast.ui.search.query;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -39,17 +40,25 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class SearchBean
 {
 	
-	private UserCategory selectedCategory = UserCategory.Beginners;
+	private UserCategory selectedCategory = UserCategory.General;
 	private String mainSectionId = "listing";
 
-	private History history = new History();
-	private Query workingQuery = new Query();
-	private SearchParameters searchParameters = new SearchParameters(new Conditions());
+	private History history;
+	private Query workingQuery;
+	private SearchParameters searchParameters;
 	
 	private MessageBarComponent messageBar;
 	
 	public SearchBean()
 	{
+		history = new History();
+		initNewQuery();
+	}
+	
+	private void initNewQuery()
+	{
+		searchParameters = new SearchParameters(new Conditions());
+		workingQuery = new Query();
 		determineTimeFrameExtent();
 	}
 
@@ -71,14 +80,16 @@ public class SearchBean
 
 	}
 	
-	private void addQueryCondition(String selectedAttributeId)
-	{
-		workingQuery.getBuilderQuery().addConditionOn(selectedAttributeId);
-	}
-	
 	public void addConditionFromMenu(MenuItemSelectedEvent event)
 	{
-		addQueryCondition(event.getMenuId());
+		workingQuery.addConditionOn(event.getMenuId());
+	}
+	
+	public String startAgain()
+	{
+		initNewQuery();
+		searchInternal(false);
+		return null;
 	}
 
 	public String search()
@@ -135,7 +146,8 @@ public class SearchBean
 		Object[] ret = query.executeQuery();
 		int numberOfResults = ((Number)ret[0]).intValue();
 		
-		return "Expected number of voyages: " + numberOfResults;
+		MessageFormat fmt = new MessageFormat("Expected results: {0,number,#,###,###}");
+		return fmt.format(new Object[] {new Integer(numberOfResults)});
 	}
 
 	public void historyItemDelete(HistoryItemDeleteEvent event)
@@ -216,7 +228,7 @@ public class SearchBean
 				
 				String mainItemText =
 					"<b>" + group.getUserLabel() + "</b> " +
-					"(" + attributes.length + " attributes)";
+					"(" + attributes.length + " variables)";
 				
 				mainItems[i] = mainItem;
 				mainItem.setId(group.getId().toString());

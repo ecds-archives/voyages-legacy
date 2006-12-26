@@ -15,11 +15,6 @@ import edu.emory.library.tast.dm.AbstractDescriptiveObjectFactory;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageFactory;
 import edu.emory.library.tast.dm.attributes.ImportableAttribute;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.MissingDictionaryValueException;
-import edu.emory.library.tast.dm.attributes.exceptions.ParseValueException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class Import
@@ -137,50 +132,9 @@ public class Import
 			Object parsedValue = null;
 			String columnValue = null;
 
-			try
-			{
-				
-				columnValue = record.getValue(var);
-				parsedValue = attr.importParse(sess, columnValue);
-				
-				obj.setAttrValue(attr.getName(), parsedValue);
-
-			}
-			catch (InvalidNumberException ine)
-			{
-				valid = false;
-				log.logWarn("Invalid numeric value '" + columnValue + "' " +
-						"in variable " + var.getName() + " " +
-						"in record " + recordNo + ".");
-			}
-			catch (InvalidDateException ide)
-			{
-				valid = false;
-				log.logWarn("Invalid date value '" + columnValue + "' " +
-						"in variable " + var.getName() +
-						"in record " + recordNo + ".");
-			}
-			catch (StringTooLongException stle)
-			{
-				valid = false;
-				log.logWarn("String '" + parsedValue + "' too long "
-						+ "in variable " + var.getName() +
-						" in record " + recordNo + ".");
-			}
-			catch (MissingDictionaryValueException mdve)
-			{
-				valid = false;
-				log.logWarn("Missing dictionary value for '" + columnValue + "' "
-						+ "in variable " + var.getName() +
-						" in record " + recordNo + ".");
-			}
-			catch (ParseValueException pve)
-			{
-				valid = false;
-				log.logWarn("Unspecified parse exception "
-						+ "in variable " + var.getName() +
-						" in record " + recordNo + ".");
-			}
+			columnValue = record.getValue(var);
+			parsedValue = attr.importParse(sess, columnValue, log, recordNo);
+			obj.setAttrValue(attr.getName(), parsedValue);
 
 		}
 

@@ -169,18 +169,23 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 
 				}
 				
-				if (tmpPorts.size() == 1)
-				{
-					QueryConditionListItem singlePort = (QueryConditionListItem) tmpPorts.get(0);
-					regionItem.setText(singlePort.getText());
-					regionItem.setId(singlePort.getId());
-				}
-				else
-				{
-					QueryConditionListItem portItems[] = new QueryConditionListItem[tmpPorts.size()];
-					tmpPorts.toArray(portItems);
-					regionItem.setChildren(portItems);
-				}
+				// 6/12/2006 disabled
+//				if (tmpPorts.size() == 1 && false) 
+//				{
+//					QueryConditionListItem singlePort = (QueryConditionListItem) tmpPorts.get(0);
+//					regionItem.setText(singlePort.getText());
+//					regionItem.setId(singlePort.getId());
+//				}
+//				else
+//				{
+//					QueryConditionListItem portItems[] = new QueryConditionListItem[tmpPorts.size()];
+//					tmpPorts.toArray(portItems);
+//					regionItem.setChildren(portItems);
+//				}
+
+				QueryConditionListItem portItems[] = new QueryConditionListItem[tmpPorts.size()];
+				tmpPorts.toArray(portItems);
+				regionItem.setChildren(portItems);
 
 			}
 			

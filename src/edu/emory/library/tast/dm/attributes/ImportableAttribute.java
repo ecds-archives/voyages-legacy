@@ -2,7 +2,7 @@ package edu.emory.library.tast.dm.attributes;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tast.dm.attributes.exceptions.ParseValueException;
+import edu.emory.library.tast.spss.LogWriter;
 
 public abstract class ImportableAttribute extends Attribute
 {
@@ -53,7 +53,7 @@ public abstract class ImportableAttribute extends Attribute
 		this.maxImportLength = maxImportLength;
 	}
 
-	public abstract Object importParse(Session sess, String value) throws ParseValueException;
+	public abstract Object importParse(Session sess, String value, LogWriter log, int recordNo);
 	public abstract int getImportType();
 
 }

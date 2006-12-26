@@ -54,7 +54,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
 		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
 		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
-		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_FLOAT, "tonnage"));
+		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
 		attributes.add(new NumericAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
 		attributes.add(new NumericAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
 		attributes.add(new StringAttribute("ownera", "Voyage", "ownera"));
@@ -126,8 +126,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("slas32", "Voyage", NumericAttribute.TYPE_INTEGER, "slas32"));
 		attributes.add(new NumericAttribute("slas36", "Voyage", NumericAttribute.TYPE_INTEGER, "slas36"));
 		attributes.add(new NumericAttribute("slas39", "Voyage", NumericAttribute.TYPE_INTEGER, "slas39"));
-		attributes.add(new NumericAttribute("slaximp", "Voyage", NumericAttribute.TYPE_FLOAT, "slaximp"));
-		attributes.add(new NumericAttribute("slamimp", "Voyage", NumericAttribute.TYPE_FLOAT, "slamimp"));
+		attributes.add(new NumericAttribute("slaximp", "Voyage", NumericAttribute.TYPE_INTEGER, "slaximp"));
+		attributes.add(new NumericAttribute("slamimp", "Voyage", NumericAttribute.TYPE_INTEGER, "slamimp"));
 		attributes.add(new NumericAttribute("menrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat7"));
 		attributes.add(new NumericAttribute("womrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat7"));
 		attributes.add(new NumericAttribute("boyrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat7"));
@@ -135,7 +135,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
 		attributes.add(new NumericAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
 		attributes.add(new NumericAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
-		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtimp"));
+		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
 		attributes.add(new NumericAttribute("vymrtrat", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtrat"));
 		attributes.add(new StringAttribute("sourcea", "Voyage", "sourcea"));
 		attributes.add(new StringAttribute("sourceb", "Voyage", "sourceb"));
@@ -488,7 +488,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setSlintend(Integer slintend) {
 		this.values.put("slintend", slintend);
 	}
-	public void setTonnage(Float tonnage) {
+	public void setTonnage(Integer tonnage) {
 		this.values.put("tonnage", tonnage);
 	}
 	public void setCrewdied(Integer crewdied) {
@@ -575,16 +575,16 @@ public class Voyage extends AbstractDescriptiveObject {
 	public void setTonmod(Float tonmod) {
 		this.values.put("tonmod", tonmod);
 	}
-	public void setVymrtimp(Float vymrtimp) {
+	public void setVymrtimp(Integer vymrtimp) {
 		this.values.put("vymrtimp", vymrtimp);
 	}
 	public void setVymrtrat(Float vymrtrat) {
 		this.values.put("vymrtrat", vymrtrat);
 	}
-	public void setSlaximp(Float slaximp) {
+	public void setSlaximp(Integer slaximp) {
 		this.values.put("slaximp", slaximp);
 	}
-	public void setSlamimp(Float slamimp) {
+	public void setSlamimp(Integer slamimp) {
 		this.values.put("slamimp", slamimp);
 	}
 	public void setVoy2imp(Integer voy2imp) {
@@ -868,8 +868,8 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getSlintend() {
 		return (Integer)this.values.get("slintend");
 	}
-	public Float getTonnage() {
-		return (Float)this.values.get("tonnage");
+	public Integer getTonnage() {
+		return (Integer)this.values.get("tonnage");
 	}
 	public Integer getCrewdied() {
 		return (Integer)this.values.get("crewdied");
@@ -955,17 +955,17 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Float getTonmod() {
 		return (Float)this.values.get("tonmod");
 	}
-	public Float getVymrtimp() {
-		return (Float)this.values.get("vymrtimp");
+	public Integer getVymrtimp() {
+		return (Integer)this.values.get("vymrtimp");
 	}
 	public Float getVymrtrat() {
 		return (Float)this.values.get("vymrtrat");
 	}
-	public Float getSlaximp() {
-		return (Float)this.values.get("slaximp");
+	public Integer getSlaximp() {
+		return (Integer)this.values.get("slaximp");
 	}
-	public Float getSlamimp() {
-		return (Float)this.values.get("slamimp");
+	public Integer getSlamimp() {
+		return (Integer)this.values.get("slamimp");
 	}
 	public Integer getVoy2imp() {
 		return (Integer)this.values.get("voy2imp");

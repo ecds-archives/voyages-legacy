@@ -79,6 +79,9 @@ public class Searchables
 			String type = xmlSearchableAttr.getAttributes().getNamedItem("type").getNodeValue();
 			String userLabel = xmlSearchableAttr.getAttributes().getNamedItem("userLabel").getNodeValue();
 			
+			// substype
+			Node xmlSubType = xmlSearchableAttr.getAttributes().getNamedItem("subType");
+			
 			// check id uniqueness
 			if (searchableAttributesByIds.containsKey(id))
 				throw new RuntimeException("duplicate attribute id '" + id + "'");
@@ -137,9 +140,26 @@ public class Searchables
 				}
 				else if (firstAttr instanceof NumericAttribute) 
 				{
+					int subType;
+					if (xmlSubType == null)
+					{
+						subType = SearchableAttributeSimpleNumeric.TYPE_GENERAL;
+					}
+					else if (xmlSubType.getNodeValue().equals("ratio"))
+					{
+						subType = SearchableAttributeSimpleNumeric.TYPE_RATIO;
+					}
+					else if (xmlSubType.getNodeValue().equals("year"))
+					{
+						subType = SearchableAttributeSimpleNumeric.TYPE_YEAR;
+					}
+					else
+					{
+						subType = SearchableAttributeSimpleNumeric.TYPE_GENERAL;	
+					}
 					searchableAttribute =
 						new SearchableAttributeSimpleNumeric(
-							id, userLabel, userCats, attrs);
+							id, userLabel, userCats, attrs, subType);
 				}
 				else if (firstAttr instanceof DateAttribute)
 				{		

@@ -60,7 +60,7 @@ public abstract class Dictionary
 	
 	public static List loadAll(Class clazz, Session sess)
 	{
-		return loadAll(clazz, sess, "name");
+		return loadAll(clazz, sess, "id");
 	}
 	
 	public static List loadAll(Class clazz, Session sess, String orderBy)

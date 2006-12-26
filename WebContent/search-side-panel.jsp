@@ -5,7 +5,7 @@
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
 <s:sectionGroup
-    title="Time frame"
+    title="Select time frame"
 	id="selectionYears"
 	backgroundStyle="dark"
 	tabsStyle="middle"
@@ -117,16 +117,23 @@ function animateAttribute(menuItem, submitFunction)
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
-		<t:htmlTag value="td" style="padding: 0px;">
+		<t:htmlTag value="td" style="padding: 10px 0px 10px 10px;">
 
 			<h:commandButton
 				id="buttonSearch"
-				styleClass="main-box-button"
 				action="#{SearchBean.search}"
 				value="Search" />
+
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 10px 0px 10px 5px;">
+
+			<h:commandButton
+				id="buttonAgain"
+				action="#{SearchBean.startAgain}"
+				value="New query" />
 	
 		</t:htmlTag>
-		<t:htmlTag value="td" style="padding: 0px 0px 0px 5px;">
+		<t:htmlTag value="td" style="padding: 10px 0px 10px 10px;">
 
 			<aa:zoneJSF id="total">
 				<h:outputText value="#{SearchBean.numberOfResultsText}" />

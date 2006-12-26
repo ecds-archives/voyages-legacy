@@ -7,9 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
-import edu.emory.library.tast.ui.search.query.searchables.Searchables;
-
 /**
  * Holds the list of conditions, i.e. objects of types
  * {@link edu.emory.library.tast.ui.search.query.QueryCondition}. Represents the currently
@@ -56,26 +53,26 @@ public class QueryBuilderQuery implements Serializable, Cloneable
 	
 	}
 	
-	public boolean addConditionOn(String searchableAttributeId)
-	{
-		
-		if (containsConditionOn(searchableAttributeId))
-			return false;
-		
-		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
-		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
-		
-		if (queryCondition != null)
-		{
-			addCondition(queryCondition);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-		
-	}
+//	public boolean addConditionOn(String searchableAttributeId)
+//	{
+//		
+//		if (containsConditionOn(searchableAttributeId))
+//			return false;
+//		
+//		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
+//		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
+//		
+//		if (queryCondition != null)
+//		{
+//			addCondition(queryCondition);
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//		
+//	}
 
 	public List getConditions()
 	{

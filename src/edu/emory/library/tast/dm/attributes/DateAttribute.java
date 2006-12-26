@@ -7,9 +7,7 @@ import java.util.Map;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
+import edu.emory.library.tast.spss.LogWriter;
 import edu.emory.library.tast.spss.STSchemaVariable;
 
 public class DateAttribute extends ImportableAttribute
@@ -27,7 +25,7 @@ public class DateAttribute extends ImportableAttribute
 		super(name, objectType, importName);
 	}
 	
-	public Object importParse(Session sess, String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(Session sess, String value, LogWriter log, int recordNo)
 	{
 
 		if (value == null || value.length() == 0)
@@ -39,7 +37,12 @@ public class DateAttribute extends ImportableAttribute
 		}
 		catch (ParseException e)
 		{
-			throw new InvalidDateException();
+			log.logWarn(
+					"Variable " + getName() + ", " +
+					"record " + recordNo + ": " +
+					"invalid date '" + value + "'. " +
+					"Imported as NULL (MISSING).");
+			return null;
 		}
 
 	}

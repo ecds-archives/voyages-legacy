@@ -29,6 +29,7 @@ div.menu-popup-submenu {
 	border: 1px solid #571B1D; }
 
 div.menu-popup-submenu-item {
+	white-space: nowrap;
 	color: Black !important;
 	cursor: pointer;
 	background-color: White;

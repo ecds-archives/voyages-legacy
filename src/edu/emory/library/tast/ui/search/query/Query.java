@@ -3,6 +3,10 @@ package edu.emory.library.tast.ui.search.query;
 import java.util.Iterator;
 
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttributeSimpleDate;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttributeSimpleNumeric;
+import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class Query implements Cloneable
@@ -15,6 +19,36 @@ public class Query implements Cloneable
 	public QueryBuilderQuery getBuilderQuery()
 	{
 		return builderQuery;
+	}
+	
+	public void addConditionOn(String searchableAttributeId)
+	{
+		
+		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
+		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
+		
+		if (searchableAttribute instanceof SearchableAttributeSimpleDate)
+		{
+			QueryConditionDate queryConditionDate = (QueryConditionDate) queryCondition;
+			queryConditionDate.setFromMonth("01");
+			queryConditionDate.setFromYear(String.valueOf(yearFrom));
+			queryConditionDate.setToMonth("12");
+			queryConditionDate.setToYear(String.valueOf(yearTo));
+		}
+		
+		if (searchableAttribute instanceof SearchableAttributeSimpleNumeric)
+		{
+			SearchableAttributeSimpleNumeric searchableAttributeNumeric = (SearchableAttributeSimpleNumeric) searchableAttribute;
+			if (searchableAttributeNumeric.getType() == SearchableAttributeSimpleNumeric.TYPE_YEAR)
+			{
+				QueryConditionNumeric queryConditionNumeric = (QueryConditionNumeric) queryCondition;
+				queryConditionNumeric.setFrom(String.valueOf(yearFrom));
+				queryConditionNumeric.setTo(String.valueOf(yearTo));
+			}
+		}
+		
+		builderQuery.addCondition(queryCondition);
+		
 	}
 	
 	public boolean addToDbConditions(boolean markErrors, Conditions dbConds)

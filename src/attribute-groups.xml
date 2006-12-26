@@ -200,7 +200,7 @@
 			<table-attribute id="vymrtrat"/>
 		</table-attributes>
 	</group>
-	<group id="sources" userLabel="Sources">
+	<group id="sources" userLabel="Source">
 		<searchable-attributes>
 			<searchable-attribute id="anysource"/>
 		</searchable-attributes>

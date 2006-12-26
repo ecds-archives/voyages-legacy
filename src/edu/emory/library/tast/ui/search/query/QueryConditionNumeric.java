@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui.search.query;
 
 
+
 public class QueryConditionNumeric extends QueryConditionRange
 {
 	

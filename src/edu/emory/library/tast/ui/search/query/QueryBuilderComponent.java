@@ -19,6 +19,9 @@ import org.hibernate.Transaction;
 import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttributeSimpleDate;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttributeSimpleNumeric;
+import edu.emory.library.tast.ui.search.query.searchables.SearchableAttributeSimpleRange;
 import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -650,7 +653,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		return getClientId(context) + "_" + attribute.getId() + "_eq";
 	}
 
-	private void encodeRangeSelect(ResponseWriter writer, String htmlNameForRangeType, String jsOnChange, int type) throws IOException
+	private void encodeRangeSelect(ResponseWriter writer, SearchableAttributeSimpleRange attribute, String htmlNameForRangeType, String jsOnChange, int type) throws IOException
 	{
 		
 		writer.startElement("td", this);
@@ -662,25 +665,25 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "between", null);
 		if (type == QueryConditionNumeric.TYPE_BETWEEN) writer.writeAttribute("selected", "selected", null);
-		writer.write("Between");
+		writer.write(attribute.getLabelBetween());
 		writer.endElement("option");
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "le", null);
 		if (type == QueryConditionNumeric.TYPE_LE) writer.writeAttribute("selected", "selected", null);
-		writer.write("at most");
+		writer.write(attribute.getLabelTo());
 		writer.endElement("option");
 
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "ge", null);
 		if (type == QueryConditionNumeric.TYPE_GE) writer.writeAttribute("selected", "selected", null);
-		writer.write("at least");
+		writer.write(attribute.getLabelFrom());
 		writer.endElement("option");
 		
 		writer.startElement("option", this);
 		writer.writeAttribute("value", "eq", null);
 		if (type == QueryConditionNumeric.TYPE_EQ) writer.writeAttribute("selected", "selected", null);
-		writer.write("is equal");
+		writer.write(attribute.getLabelEquals());
 		writer.endElement("option");
 		
 		writer.endElement("select");
@@ -721,7 +724,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 
-		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
+		SearchableAttributeSimpleNumeric attribute = (SearchableAttributeSimpleNumeric)queryCondition.getSearchableAttribute();
 		
 		String tdFromId = getClientId(context) + "_" + attribute.getId() + "_td_from";
 		String tdDashId = getClientId(context) + "_" + attribute.getId() + "_td_dash";
@@ -766,6 +769,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		encodeRangeSelect(writer,
+				attribute,
 				htmlNameForRangeType, jsOnTypeChange,
 				type);
 
@@ -973,7 +977,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeDateCondition(QueryConditionDate queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 
-		SearchableAttribute attribute = queryCondition.getSearchableAttribute();
+		SearchableAttributeSimpleDate attribute = (SearchableAttributeSimpleDate) queryCondition.getSearchableAttribute();
 		
 		String tdFromMonthId = getClientId(context) + "_" + attribute.getId() + "_td_from_month";
 		String tdSlashBetweenStartId = getClientId(context) + "_" + attribute.getId() + "_td_slash_between_start";
@@ -1069,7 +1073,9 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		encodeRangeSelect(writer,
-				htmlNameForRangeType, jsOnTypeChange,
+				attribute,
+				htmlNameForRangeType,
+				jsOnTypeChange,
 				type);
 
 		encodeDateField(context, form, writer, 
@@ -1614,7 +1620,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "Delect all", null);
+		writer.writeAttribute("value", "Deselect all", null);
 		writer.writeAttribute("onclick", jsDeselectAll, null);
 		writer.endElement("input");
 		writer.endElement("td");

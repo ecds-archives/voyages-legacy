@@ -13,7 +13,8 @@
 <!ATTLIST searchable-attribute
 	id CDATA #REQUIRED
 	userLabel CDATA #REQUIRED
-	type (simple|port) #REQUIRED>
+	type (simple|port) #REQUIRED
+	subType (general|year|ratio) #IMPLIED>
 
 <!ATTLIST port
 	port CDATA #REQUIRED
@@ -85,6 +86,7 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="year"
 		id="yrcons"
 		userLabel="Year of ship construction">
 		<user-categories>
@@ -111,6 +113,7 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="year"
 		id="yrreg"
 		userLabel="Year of ship registration">
 		<user-categories>
@@ -131,7 +134,7 @@
 			<category name="general" />
 		</user-categories>
 		<attributes>
-			<attribute name="natinimp" />
+			<attribute name="e_natinimp" />
 		</attributes>
 	</searchable-attribute>
 
@@ -190,7 +193,7 @@
 	<searchable-attribute
 		type="simple"
 		id="anyowner"
-		userLabel="An owner">
+		userLabel="Owner's name">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -218,7 +221,7 @@
 	<searchable-attribute
 		type="simple"
 		id="fate"
-		userLabel="Outcome of voyage">
+		userLabel="Particular outcome of voyage">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -425,6 +428,7 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="year"
 		id="yearam"
 		userLabel="Imputed year of arrival at first place of landing">
 		<user-categories>
@@ -543,7 +547,7 @@
 	<searchable-attribute
 		type="simple"
 		id="voy1imp"
-		userLabel="Imputed voyage length from departure to first port of landing">
+		userLabel="Imputed voyage length from departure to first port of landing (days)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -556,7 +560,7 @@
 	<searchable-attribute
 		type="simple"
 		id="voy2imp"
-		userLabel="Imputed length of middle passage">
+		userLabel="Imputed length of middle passage (days)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -569,7 +573,7 @@
 	<searchable-attribute
 		type="simple"
 		id="anycaptain"
-		userLabel="Name(s) of captain(s)">
+		userLabel="Captain's name">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -765,8 +769,9 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="ratio"
 		id="menrat7"
-		userLabel="Percentage of men at beginning or end of Middle Passage">
+		userLabel="Percentage of men at beginning or end of Middle Passage (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -778,8 +783,9 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="ratio"
 		id="womrat7"
-		userLabel="Percentage of women at beginning or end of Middle Passage">
+		userLabel="Percentage of women at beginning or end of Middle Passage (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -791,8 +797,9 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="ratio"
 		id="boyrat7"
-		userLabel="Percentage of boys at beginning or end of Middle Passage">
+		userLabel="Percentage of boys at beginning or end of Middle Passage (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -804,8 +811,9 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="ratio"
 		id="girlrat7"
-		userLabel="Percentage of girls at beginning or end of Middle Passage">
+		userLabel="Percentage of girls at beginning or end of Middle Passage (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -817,8 +825,9 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="ratio"
 		id="malrat7"
-		userLabel="Imputed sex ratio of the cargo of slaves">
+		userLabel="Percentage sex ratio of the cargo of slaves (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -830,8 +839,9 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="ratio"
 		id="chilrat7"
-		userLabel="Imputed ratio of children to adults in the cargo of slaves">
+		userLabel="Percentage of children to adults in the cargo of slaves (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -869,8 +879,9 @@
 
 	<searchable-attribute
 		type="simple"
+		subType="ratio"
 		id="vymrtrat"
-		userLabel="Imputed mortality rate (slave deaths / embarkations)">
+		userLabel="Imputed mortality rate (slave deaths / embarkations) (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

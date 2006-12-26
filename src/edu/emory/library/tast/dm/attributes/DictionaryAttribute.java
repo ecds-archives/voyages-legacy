@@ -7,8 +7,7 @@ import org.hibernate.Session;
 
 import edu.emory.library.tas.spss.STSchemaVariable;
 import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.MissingDictionaryValueException;
+import edu.emory.library.tast.spss.LogWriter;
 
 public abstract class DictionaryAttribute extends ImportableAttribute
 {
@@ -29,27 +28,41 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 		return STSchemaVariable.TYPE_NUMERIC;
 	}
 	
-	public Object importParse(Session sess, String value) throws MissingDictionaryValueException, InvalidNumberException 
+	public Object importParse(Session sess, String value, LogWriter log, int recordNo) 
 	{
+		
 		if (value == null || value.length() == 0)
+			return null;
+		
+		long id = 0;
+		
+		try
 		{
+			id = Long.parseLong(value);
+		}
+		catch (NumberFormatException nfe)
+		{
+			log.logWarn(
+					"Variable " + getName() + ", " +
+					"record " + recordNo + ": " +
+					"values '" + value + "' is expected to be an integer. " +
+					"Imported as NULL (MISSING).");
 			return null;
 		}
-		else
+		
+		Object obj = loadObjectById(sess, id);
+		if (obj == null)
 		{
-			long id = 0;
-			try
-			{
-				id = Long.parseLong(value);
-			}
-			catch (NumberFormatException nfe)
-			{
-				throw new InvalidNumberException();
-			}
-			Object obj = loadObjectById(sess, id);
-			if (obj == null) throw new MissingDictionaryValueException();
-			return obj;
+			log.logWarn(
+					"Variable " + getName() + ", " +
+					"record " + recordNo + ": " +
+					"label for code '" + value + "' is not defined. " +
+					"Imported as NULL (MISSING).");
+			return null;
 		}
+
+		return obj;
+
 	}
 
 	public abstract Dictionary loadObjectById(Session sess, long id);

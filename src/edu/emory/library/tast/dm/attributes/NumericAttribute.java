@@ -5,9 +5,7 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tas.spss.STSchemaVariable;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
+import edu.emory.library.tast.spss.LogWriter;
 
 public class NumericAttribute extends ImportableAttribute
 {
@@ -45,7 +43,7 @@ public class NumericAttribute extends ImportableAttribute
 		return STSchemaVariable.TYPE_NUMERIC;
 	}
 	
-	public Object importParse(Session sess, String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(Session sess, String value, LogWriter log, int recordNo)
 	{
 		
 		if (value == null)
@@ -59,27 +57,81 @@ public class NumericAttribute extends ImportableAttribute
 		{
 
 		case TYPE_INTEGER:
-
-			try {
-				return new Integer(value);
-			} catch (NumberFormatException nfe) {
-				throw new InvalidNumberException();
+		case TYPE_LONG:
+			
+			double dblValue = 0;
+			try
+			{
+				dblValue = Double.parseDouble(value);
+			}
+			catch (NumberFormatException nfe)
+			{
+				log.logWarn(
+						"Variable " + getName() + ", " +
+						"record " + recordNo + ": " +
+						"value '" + value + "' is not an number. " +
+						"Imported as NULL (MISSING).");
+				return null;
+			}
+			
+			double roundedValue = Math.rint(dblValue);
+			if (roundedValue != dblValue)
+			{
+				log.logWarn(
+						"Variable " + getName() + ", " +
+						"record " + recordNo + ": " +
+						"value '" + value + "' expected to be an integer. " +
+						"Imported, but rounded to integer.");
 			}
 
-		case TYPE_LONG:
+			if (type == TYPE_INTEGER)
+			{
+				try
+				{
+					return new Integer((int)roundedValue);
+				}
+				catch (NumberFormatException nfe)
+				{
+					log.logWarn(
+							"Variable " + getName() + ", " +
+							"record " + recordNo + ": " +
+							"value '" + value + "' too large for int. " +
+							"Imported as NULL (MISSING).");
+					return null;
+				}
+			}
 
-			try {
-				return new Long(value);
-			} catch (NumberFormatException nfe) {
-				throw new InvalidNumberException();
+			if (type == TYPE_LONG)
+			{
+				try
+				{
+					return new Long((long)roundedValue);
+				}
+				catch (NumberFormatException nfe)
+				{
+					log.logWarn(
+							"Variable " + getName() + ", " +
+							"record " + recordNo + ": " +
+							"value '" + value + "' too large for long. " +
+							"Imported as NULL (MISSING).");
+					return null;
+				}
 			}
 
 		case TYPE_FLOAT:
 
-			try {
+			try
+			{
 				return new Float(value);
-			} catch (NumberFormatException nfe) {
-				throw new InvalidNumberException();
+			}
+			catch (NumberFormatException nfe)
+			{
+				log.logWarn(
+						"Variable " + getName() + ", " +
+						"record " + recordNo + ": " +
+						"value '" + value + "' is not an decimal number. " +
+						"Imported as NULL (MISSING).");
+				return null;
 			}
 		}
 		return null;

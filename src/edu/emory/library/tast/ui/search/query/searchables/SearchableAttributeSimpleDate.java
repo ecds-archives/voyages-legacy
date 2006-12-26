@@ -11,7 +11,7 @@ import edu.emory.library.tast.ui.search.query.QueryConditionDate;
 import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;
 import edu.emory.library.tast.util.query.Conditions;
 
-public class SearchableAttributeSimpleDate extends SearchableAttributeSimple
+public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRange
 {
 
 	public SearchableAttributeSimpleDate(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
@@ -178,6 +178,26 @@ public class SearchableAttributeSimpleDate extends SearchableAttributeSimple
 	public QueryCondition createQueryCondition()
 	{
 		return new QueryConditionDate(getId());
+	}
+
+	public String getLabelFrom()
+	{
+		return "After";
+	}
+
+	public String getLabelTo()
+	{
+		return "Before";
+	}
+	
+	public String getLabelEquals()
+	{
+		return "In";
+	}
+
+	public String getLabelBetween()
+	{
+		return "Between";
 	}
 
 }

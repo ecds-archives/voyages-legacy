@@ -6,12 +6,25 @@ import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;
 import edu.emory.library.tast.util.query.Conditions;
 
-public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimple
+public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleRange
 {
+	
+	final public static int TYPE_GENERAL = 0;
+	final public static int TYPE_YEAR = 1;
+	final public static int TYPE_RATIO = 2;
+	
+	private int type = TYPE_GENERAL;
+
+	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int type)
+	{
+		super(id, userLabel, userCategories, attributes);
+		this.type = type;
+	}
 
 	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
 	{
 		super(id, userLabel, userCategories, attributes);
+		this.type = TYPE_GENERAL;
 	}
 
 	public QueryCondition createQueryCondition()
@@ -44,23 +57,32 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimple
 	
 	private Object parseNumber(String number)
 	{
-		if (number == null) {
+
+		if (number == null)
 			throw new NumberFormatException();
-		}
+		
+		number = number.trim();
+
+		if (type == TYPE_RATIO && number.endsWith("%"))
+			number = number.substring(0, number.length() - 1);
+		
 		switch (((NumericAttribute)getAttributes()[0]).getType())
 		{
-		case NumericAttribute.TYPE_INTEGER:
-			return new Integer(number);
-		
-		case NumericAttribute.TYPE_FLOAT:
-			return new Float(number);
-		
-		case NumericAttribute.TYPE_LONG:
-			return new Long(number);
-
-		default:
-			throw new RuntimeException("unsupported type");
+			case NumericAttribute.TYPE_INTEGER:
+				return new Integer(number);
+			
+			case NumericAttribute.TYPE_FLOAT:
+				float value = Float.parseFloat(number);
+				if (type == TYPE_RATIO) value /= 100.0;
+				return new Float(value);
+			
+			case NumericAttribute.TYPE_LONG:
+				return new Long(number);
+	
+			default:
+				throw new RuntimeException("unsupported type");
 		}
+
 	}
 
 	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
@@ -127,6 +149,43 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimple
 		
 		return true;
 		
+	}
+	
+	public int getType()
+	{
+		return type;
+	}
+	
+	public String getLabelFrom()
+	{
+		switch (type)
+		{
+			case TYPE_YEAR: return "After";
+			default: return "At least";
+		}
+	}
+
+	public String getLabelTo()
+	{
+		switch (type)
+		{
+			case TYPE_YEAR: return "Before";
+			default: return "At most";
+		}
+	}
+	
+	public String getLabelEquals()
+	{
+		switch (type)
+		{
+			case TYPE_YEAR: return "In";
+			default: return "Is equal";
+		}
+	}
+
+	public String getLabelBetween()
+	{
+		return "Between";
 	}
 
 }

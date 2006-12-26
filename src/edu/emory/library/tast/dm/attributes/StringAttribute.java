@@ -5,9 +5,7 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tas.spss.STSchemaVariable;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidDateException;
-import edu.emory.library.tast.dm.attributes.exceptions.InvalidNumberException;
-import edu.emory.library.tast.dm.attributes.exceptions.StringTooLongException;
+import edu.emory.library.tast.spss.LogWriter;
 
 public class StringAttribute extends ImportableAttribute
 {
@@ -28,14 +26,22 @@ public class StringAttribute extends ImportableAttribute
 		setMaxImportLength(maxImportLength);
 	}
 
-	public Object importParse(Session sess, String value) throws InvalidNumberException, InvalidDateException, StringTooLongException
+	public Object importParse(Session sess, String value, LogWriter log, int recordNo)
 	{
 		
 		if (value == null)
 			return null;
 
 		if (isImportLengthLimited() && value.length() > getMaxImportLength())
-			throw new StringTooLongException();
+		{
+			log.logWarn(
+					"Variable " + getName() + ", " +
+					"record " + recordNo + ": " +
+					"string '" + value + "' too long. " +
+					"Expected maximal length is " + getMaxImportLength() + ". " +
+					"Imported as NULL (MISSING).");
+			return null;
+		}
 
 		return value;
 
