@@ -14,7 +14,7 @@
 		<%@ include file="search-tab-table.jsp" %>
 	</s:section>
 	
-	<s:section title="Basic graph" sectionId="basic-graph">
+	<s:section title="Timeline" sectionId="basic-graph">
 		<s:stattab
 			styleClass="data-container">
 		<%@ include file="search-tab-graph.jsp" %>

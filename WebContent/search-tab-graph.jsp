@@ -19,7 +19,23 @@
 		</t:htmlTag>
 	</h:panelGroup>
 
+	<h:panelGroup rendered="true" style="background: white; height: 300px;">
+		<t:htmlTag value="div" id="div-timeline" style="background: white; height: 550px; padding-top: 100px;">
+			<s:eventLine
+				id="eventLine_db"
+				graphHeight="200"
+				zoomLevel="0"
+				offset="1600"
+				selectorOffset="1500"
+				viewportHeight="#{TimeLineResultTabBean.viewportHeight}"
+				graphs="#{TimeLineResultTabBean.graphs}"
+				events="#{TimeLineResultTabBean.events}" 
+				zoomLevels="#{TimeLineResultTabBean.zoomLevels}"
+				verticalLabels="#{TimeLineResultTabBean.verticalLabels}" />
+		</t:htmlTag>
+	</h:panelGroup>	
 	<%/* Graph data */%>
+	<% /*
 	<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
 		<t:htmlTag value="div" styleClass="section-inside-group">
 			<t:htmlTag value="div" style="overflow:auto; width: 100%; height: 500px">
@@ -28,7 +44,6 @@
 		</t:htmlTag>
 	</h:panelGroup>
 
-	<%/* Change size panel */%>
 	<h:panelGroup rendered="#{TimeLineResultTabBean.chartReady}">
 		<t:htmlTag value="div" styleClass="section-inside-footer">
 			<h:outputText value="Width: " />
@@ -38,5 +53,5 @@
 			<h:commandButton id="enlarge" value="Change size" action="#{TimeLineResultTabBean.setNewView}" />
 		</t:htmlTag>
 	</h:panelGroup>
-	
+	*/ %>
 </h:panelGrid>

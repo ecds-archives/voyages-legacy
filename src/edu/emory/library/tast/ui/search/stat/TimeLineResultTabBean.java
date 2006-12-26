@@ -1,5 +1,8 @@
 package edu.emory.library.tast.ui.search.stat;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,12 +20,17 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.ui.EventLineEvent;
+import edu.emory.library.tast.ui.EventLineGraph;
+import edu.emory.library.tast.ui.EventLineVerticalLabels;
+import edu.emory.library.tast.ui.EventLineZoomLevel;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.ui.search.stat.charts.AbstractChartGenerator;
 import edu.emory.library.tast.ui.search.stat.charts.XYChartGenerator;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.util.MathUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -98,11 +106,19 @@ public class TimeLineResultTabBean {
 	 * Current chart width.
 	 */
 	private String chartWidth = DEFAULT_CHART_WIDTH;
+	
+	//private EventLineGraph graphImp;
+	private EventLineGraph graphExp;
+	private int viewportHeight;
+	int expYears[] = {1500, 1600, 1700};
+	double expValues[] = {45, 50, 30};
 
 	/**
 	 * Avaialable voyage attributes.
 	 */
 	private VisibleAttributeInterface[] attributes = VisibleAttribute.getAllAttributes();
+
+	private EventLineVerticalLabels verticalLabels;
 
 	/**
 	 * Default constructor.
@@ -175,16 +191,29 @@ public class TimeLineResultTabBean {
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
 
-			//Prepare chart generator.
-			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
-			generator.correctAndCompleteData(ret);
-			generator.addRowToDataSet(ret, new String[] { this.chosenAggregate + "("
-					+ this.chosenAttribute.getUserLabelOrName() + ")" });
-			chart = generator.getChart("Time line graph", false);
-
-			//Put chart into session.
-			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute("__chart__object", chart);
+			DateFormat format = new SimpleDateFormat("yyyy");
+			this.expValues = new double[ret.length];
+			this.expYears = new int[ret.length];
+			for (int i = 0; i < ret.length; i++) {
+				Object[] row = (Object[])ret[i];
+				this.expYears[i] = Integer.parseInt(format.format((Timestamp)row[0]));
+				if (row[1] != null) {
+					this.expValues[i] = Math.round(((Number)row[1]).doubleValue());
+				} else {
+					this.expValues[i] = 0;
+				}
+			}
+			
+//			//Prepare chart generator.
+//			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
+//			generator.correctAndCompleteData(ret);
+//			generator.addRowToDataSet(ret, new String[] { this.chosenAggregate + "("
+//					+ this.chosenAttribute.getUserLabelOrName() + ")" });
+//			chart = generator.getChart("Time line graph", false);
+//
+//			//Put chart into session.
+//			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
+//			((HttpSession) servletContext.getSession(true)).setAttribute("__chart__object", chart);
 
 			this.needQuery = false;
 			this.attributesChanged = false;
@@ -295,5 +324,108 @@ public class TimeLineResultTabBean {
 
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
+	}
+	
+	
+	
+	/* -New implementation- */
+	public Integer getViewportHeight() {
+		showTimeLine();
+		return this.viewportHeight;
+	}
+	public EventLineGraph[] getGraphs() {
+		
+		this.showTimeLine();
+//		int impYears[] = {1500, 1600, 1700};
+//		double impValues[] = {50, 44, 35};
+		
+		
+		
+		graphExp = new EventLineGraph();
+		graphExp.setName("Exported");
+		graphExp.setX(expYears);
+		graphExp.setY(expValues);
+		graphExp.setBaseColor("#EEEEEE");
+		graphExp.setEventColor("#AAAAAA");
+		
+		graphExp.setBaseColor("#F1E7C8");
+		graphExp.setEventColor("#AAAAAA");
+
+//		// graph for imported
+//		graphImp = new EventLineGraph();
+//		graphImp.setName("Imported");
+//		graphImp.setX(impYears);
+//		graphImp.setY(impValues);
+//		graphImp.setBaseColor("#CCCCCC");
+//		graphImp.setEventColor("#666666");
+//		
+//		graphImp.setBaseColor("#E7D59C");
+//		graphImp.setEventColor("#666666");
+		
+		createVerticalLabels();
+		
+		return new EventLineGraph[] {graphExp};
+	}
+	
+	private void createVerticalLabels()
+	{
+
+//		int maxValue = (int) Math.max(
+//				graphExp.getMaxValue(),
+//				graphImp.getMaxValue());
+		int maxValue = (int)graphExp.getMaxValue();
+		
+		if (maxValue > 0)
+		{
+
+			int majorSpacing;
+			int minorSpacing;
+
+			int nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
+			if (maxValue / (nextPow10/10) >= 5)
+			{
+				majorSpacing = nextPow10 / 2;
+				minorSpacing = majorSpacing / 5;
+			}
+			else
+			{
+				majorSpacing = nextPow10 / 10;
+				minorSpacing = majorSpacing / 2;
+			}
+
+			viewportHeight = (maxValue / minorSpacing + 1) * minorSpacing;
+			verticalLabels = new EventLineVerticalLabels(majorSpacing, minorSpacing);
+
+		}
+		else
+		{
+			viewportHeight = 100;
+			verticalLabels = new EventLineVerticalLabels(50, 10);
+		}
+
+	}
+	
+	public EventLineEvent[] getEvents() {
+		showTimeLine();
+		return new EventLineEvent[] {
+				new EventLineEvent(1530, "Event A"),
+				new EventLineEvent(1606, "Event B"),
+				new EventLineEvent(1723, "Event C"),
+				new EventLineEvent(1786, "Event D"),
+				new EventLineEvent(1807, "Event E"),
+		};
+	}
+	public EventLineZoomLevel[] getZoomLevels() {
+		showTimeLine();
+		return new EventLineZoomLevel[] {
+				new EventLineZoomLevel(2, 50, 400, 100),
+				new EventLineZoomLevel(4, 25, 200, 50),
+				new EventLineZoomLevel(8, 10, 100, 25),
+				new EventLineZoomLevel(16, 5, 50, 10),
+				new EventLineZoomLevel(32, 5, 25, 5)};
+	}
+	public EventLineVerticalLabels getVerticalLabels() {
+		showTimeLine();
+		return verticalLabels;
 	}
 }

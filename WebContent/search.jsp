@@ -16,6 +16,7 @@
 	<link href="search-table.css" rel="stylesheet" type="text/css">
 	<link href="map.css" rel="stylesheet" type="text/css">
 	<link href="timeline.css" rel="stylesheet" type="text/css">
+	<script src="eventline.js" language="javascript" type="text/javascript"></script>
 	<script src="tooltip.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="jslib/scriptaculous.js" type="text/javascript" language="javascript"></script>

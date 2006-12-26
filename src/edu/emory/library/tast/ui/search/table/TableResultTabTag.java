@@ -8,6 +8,7 @@ import javax.faces.webapp.UIComponentTag;
 
 import org.apache.myfaces.el.MethodBindingImpl;
 
+
 /**
  * Class represents html tag for table results.
  * @author Pawel Jurczyk
@@ -25,7 +26,7 @@ import org.apache.myfaces.el.MethodBindingImpl;
  *
  */
 public class TableResultTabTag extends UIComponentTag {
-
+	
 	private static final String TABLE_RESULT_TAB = "TableResultTab";
 
 	/**
