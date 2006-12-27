@@ -12,6 +12,7 @@
 	<link href="sections.css" rel="stylesheet" type="text/css">
 	<link href="menu.css" rel="stylesheet" type="text/css">
 	<link href="map.css" rel="stylesheet" type="text/css">
+	<link href="search.css" rel="stylesheet" type="text/css">
 	<script src="utils.js" language="javascript" type="text/javascript"></script>
 	<script src="map.js" language="javascript" type="text/javascript"></script>
 </head>
@@ -34,8 +35,58 @@
 	
 	<h:form id="form">
 	
-		<h:outputText value="#{VoyageDetailBean.testValue}" />
-	
+	<h:panelGrid style="padding-left: 5px;" columns="2">
+		<h:outputText value="Detail information about voyage" style="font-size: 150%;" />
+		<t:htmlTag value="div" styleClass="section-inside-footer">
+			<h:commandButton id="backFromDetailMap" value="Back to results" action="#{VoyageDetailBean.back}" />
+		</t:htmlTag>
+	</h:panelGrid>
+
+	<h:dataTable value="#{VoyageDetailBean.detailVoyageInfo}" var="info" style="padding-left: 10px;">
+		<h:column>
+			<h:outputText value="#{info.attribute}:" />
+		</h:column>
+		<h:column>
+			<h:outputText value="#{info.value==null? \"not set\" : info.value}" />
+		</h:column>
+	</h:dataTable>
+
+	<s:sectionGroup id="detailPanelSection" backgroundStyle="dark" tabsStyle="middle" buttonsStyle="middle"
+		selectedSectionId="listing">
+
+		<s:section title="Voyage details" sectionId="listing">
+
+			<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
+
+		</s:section>
+
+		<s:section title="Voyage map" sectionId="maps">
+
+			<h:outputText value="&nbsp;" escape="false" />
+
+			<t:htmlTag value="table" id="DetailMap" style="border-collapse: collapse; padding-left: 20px; margin-left: auto; margin-right: auto;">
+
+				<t:htmlTag value="tr">
+					<t:htmlTag value="td">
+						<s:map mapFile="#{VoyageDetailBean.mapPath}" pointsOfInterest="#{VoyageDetailBean.pointsOfInterest}"
+							serverBaseUrl="servlet/maptile" miniMap="true" />
+						<h:outputText value="&nbsp;" escape="false" />
+					</t:htmlTag>
+
+					<t:htmlTag value="td" style="vertical-align: top;">
+						<s:legend id="mapLegend-component-detailvoyage" 
+								styleClass="map-legend-div"
+								legend="#{VoyageDetailBean.legend}"
+								layers="#{VoyageDetailBean.layers}"
+								refreshAction="#{VoyageDetailBean.refresh}" />
+					</t:htmlTag>
+				</t:htmlTag>
+			</t:htmlTag>
+
+
+		</s:section>
+
+	</s:sectionGroup>
 		
 	</h:form>
 

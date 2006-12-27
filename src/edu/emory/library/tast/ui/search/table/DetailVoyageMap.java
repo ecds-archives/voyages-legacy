@@ -23,6 +23,8 @@ public class DetailVoyageMap {
 	private MapFileCreator creator = new MapFileCreator();
 
 	private Long voyageId = null;
+	
+	private String attribute;
 
 	private boolean queryNeeded = false;
 
@@ -44,7 +46,7 @@ public class DetailVoyageMap {
 		this.queryNeeded = false;
 
 		Conditions conditions = new Conditions();
-		conditions.addCondition(Voyage.getAttribute("iid"), this.voyageId, Conditions.OP_EQUALS);
+		conditions.addCondition(Voyage.getAttribute(getAttribute()), this.voyageId, Conditions.OP_EQUALS);
 		
 		DetailQueryHolder queryHolder = new DetailQueryHolder(conditions);
 		queryHolder.executeQuery(0);
@@ -79,5 +81,13 @@ public class DetailVoyageMap {
 
 	public MapLayer[] getLayers() {
 		return this.creator.getLayers();
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 }

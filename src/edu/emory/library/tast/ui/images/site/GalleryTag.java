@@ -1,11 +1,16 @@
 package edu.emory.library.tast.ui.images.site;
 
+import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
 import org.apache.myfaces.el.MethodBindingImpl;
+
+import edu.emory.library.tast.ui.search.table.ShowDetailsEvent;
+import edu.emory.library.tast.ui.search.table.UITableResultTab;
 
 public class GalleryTag extends UIComponentTag {
 
@@ -18,9 +23,10 @@ public class GalleryTag extends UIComponentTag {
 	private String thumbnailHeight;
 	
 	private String thumbnailWidth;
-	
+
 	private String galleryParams;
-	
+
+	private String showEventHandler;
 	
 	public String getComponentType() {
 		return "Gallery";
@@ -91,6 +97,12 @@ public class GalleryTag extends UIComponentTag {
 				component.getAttributes().put("galleryParams", galleryParams);
 			}
 		}
+		
+		if (component instanceof GalleryComponent && showEventHandler != null) {
+			GalleryComponent tab = (GalleryComponent)component;
+			Application app = FacesContext.getCurrentInstance().getApplication();
+			tab.setShowEventHandler(new MethodBindingImpl(app, showEventHandler, new Class[] {ShowVoyageEvent.class}));
+		}
 	}
 	
 	public String getRendererType() {
@@ -156,6 +168,16 @@ public class GalleryTag extends UIComponentTag {
 
 	public void setGalleryParams(String action) {
 		this.galleryParams = action;
+	}
+
+
+	public String getShowEventHandler() {
+		return showEventHandler;
+	}
+
+
+	public void setShowEventHandler(String showEventHandler) {
+		this.showEventHandler = showEventHandler;
 	}
 
 }

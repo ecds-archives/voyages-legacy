@@ -44,8 +44,6 @@ public class TableResultTabBean {
 
 	private static final String ATTRIBUTE = "Attribute_";
 
-	private static final String MAP_SESSION_KEY = "detail_map__";
-
 	private static final int MAX_STEP = 50000;
 
 	private TableLinkManager linkManager = new TableLinkManager(10);
@@ -103,11 +101,6 @@ public class TableResultTabBean {
 	private TableData data = new TableData();
 
 	/**
-	 * Data for detail voyage view.
-	 */
-	private TableData detailData = new TableData();
-
-	/**
 	 * Indication of detail mode.
 	 */
 	private Boolean detailMode = new Boolean(false);
@@ -146,13 +139,6 @@ public class TableResultTabBean {
 	 * Conditions used in query last time.
 	 */
 	private Conditions conditions = null;
-
-	/**
-	 * Map creator for detail voyage map.
-	 */
-	private DetailVoyageMap detailVoyageMap = new DetailVoyageMap();
-
-	private DetailVoyageInfo[] detailVoyageInfo = new DetailVoyageInfo[] {};
 	
 	/**
 	 * A list of actions that will be performed after apply configuration was pressed.
@@ -259,29 +245,14 @@ public class TableResultTabBean {
 
 		if (returnBasicInfo) {
 			qValue.addPopulatedAttribute(VisibleAttribute.getAttribute("voyageid").getAttributes()[0]);
-//			qValue.addPopulatedAttribute(Voyage.getAttribute("portdep"));
-//			qValue.addPopulatedAttribute(Voyage.getAttribute("portret"));
 		}
 
 		VisibleAttributeInterface vattr = dataTable.getOrderByColumn();
-//		String orderByPrefix = null;
-//		if (vattr != null && Arrays.asList(dataTable.getVisibleAdditionalAttributes()).contains(vattr)) {
-//			orderByPrefix = "v.";
-//		} else {
-//			orderByPrefix = "v.voyage.";
-//		}
 		if (dataTable.getOrderByColumn() == null) {
 			qValue.setOrderBy(new Attribute[] { Voyage.getAttribute("voyageid") });
 		} else {
 
 			Attribute[] attr = vattr.getAttributes();
-//			if (vattr instanceof Attribute) {
-//				attr = new Attribute[] { (Attribute) vattr };
-//			} else if (vattr instanceof CompoundAttribute) {
-//				CompoundAttribute cAttr = (CompoundAttribute) vattr;
-//				List attrs = dataTable.getAttrForCAttribute(cAttr);
-//				attr = (Attribute[]) attrs.toArray(new Attribute[] {});
-//			}
 
 			if (attr != null) {
 				Attribute[] order = new Attribute[attr.length];
@@ -311,73 +282,6 @@ public class TableResultTabBean {
 		}
 	}
 
-	/**
-	 * Queries DB for detail voyage info.
-	 * 
-	 */
-	private void getResultsDetailDB() {
-		if (this.needDetailQuery && this.detailVoyageId != null
-				&& this.searchBean.getSearchParameters().getConditions() != null) {
-			Conditions c = new Conditions();
-			//c.addCondition(VoyageIndex.getApproved());
-			c.addCondition(Voyage.getAttribute("iid"), this.detailVoyageId, Conditions.OP_EQUALS);
-
-			List validAttrs = new ArrayList();
-			VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();
-			for (int i = 0; i < attrs.length; i++) {
-				VisibleAttributeInterface column = attrs[i];
-				validAttrs.add(column);
-			}
-			detailData.setVisibleColumns(validAttrs);
-
-			Object[][] info = this.queryAndFillInData(c, this.detailData, -1, -1, true);
-
-			this.detailVoyageInfo = new DetailVoyageInfo[info[0].length];
-			for (int i = 0; i < info[0].length; i++) {
-				this.detailVoyageInfo[i] = new DetailVoyageInfo((VisibleAttribute) info[0][i], info[1][i]);
-			}
-
-			this.needDetailQuery = false;
-
-		}
-	}
-
-//	/**
-//	 * Next result set action.
-//	 * 
-//	 * @return
-//	 */
-//	public String next() {
-//		if (this.numberOfResults != null) {
-//			if (current + step < this.numberOfResults.intValue()
-//					&& this.searchBean.getSearchParameters().getConditions() != null) {
-//				current += step;
-//				this.needQuery = true;
-//			}
-//		}
-//
-//		this.getResultsDB();
-//		return null;
-//	}
-
-//	/**
-//	 * Previous result set action
-//	 * 
-//	 * @return
-//	 */
-//	public String prev() {
-//		if (this.numberOfResults != null) {
-//			if (current > 0 && this.searchBean.getSearchParameters().getConditions() != null) {
-//				current -= step;
-//				if (current < 0) {
-//					current = 0;
-//				}
-//				this.needQuery = true;
-//			}
-//		}
-//		this.getResultsDB();
-//		return null;
-//	}
 
 	/**
 	 * Removing of columns from table (Remove button)
@@ -594,8 +498,11 @@ public class TableResultTabBean {
 	 * @param event
 	 */
 	public void showDetails(ShowDetailsEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
 		voyageBean.openVoyage(event.getVoyageId().intValue());
-		FacesContext context = FacesContext.getCurrentInstance(); 
+		voyageBean.setVoyageAttr("iid");
+		voyageBean.setBackPage("search-interface");
+		
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
 //		this.configurationMode = new Boolean(false);
 //		this.detailMode = new Boolean(true);
@@ -632,10 +539,10 @@ public class TableResultTabBean {
 		return ret;
 	}
 	
-	public String refresh() {
-		this.detailVoyageMap.refresh();
-		return null;
-	}
+//	public String refresh() {
+//		this.detailVoyageMap.refresh();
+//		return null;
+//	}
 
 	/**
 	 * Gets number of first record displayed in current table view.
@@ -948,25 +855,6 @@ public class TableResultTabBean {
 	}
 
 	/**
-	 * Gets detail voyage table data.
-	 * 
-	 * @return
-	 */
-	public TableData getDetailData() {
-		this.getResultsDetailDB();
-		return detailData;
-	}
-
-	/**
-	 * Sets detail voyage data.
-	 * 
-	 * @param detailData
-	 */
-	public void setDetailData(TableData detailData) {
-		this.detailData = detailData;
-	}
-
-	/**
 	 * Checks if detail mode is enabled.
 	 * 
 	 * @return
@@ -1022,48 +910,12 @@ public class TableResultTabBean {
 		setVisibleAttributesList(cols);
 	}
 
-	public String getMapPath() {
-
-		this.detailVoyageMap.setVoyageId(this.detailVoyageId);
-
-		if (this.detailVoyageMap.prepareMapFile()) {
-
-			long time = System.currentTimeMillis();
-			
-			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute(MAP_SESSION_KEY + time, this.detailVoyageMap
-					.getCurrentMapFilePath());
-			return MAP_SESSION_KEY + time;
-		}
-		return "";
-	}
-
-	public void setMapPath(String path) {
-	}
-
-	public PointOfInterest[] getPointsOfInterest() {
-		return this.detailVoyageMap.getPointsOfInterest();
-	}
-
-	public DetailVoyageInfo[] getDetailVoyageInfo() {
-		getResultsDetailDB();
-		return this.detailVoyageInfo;
-	}
-
 	public SearchBean getSearchBean() {
 		return searchBean;
 	}
 
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
-	}
-	
-	public LegendItemsGroup[] getLegend() {
-		return this.detailVoyageMap.getLegend();
-	}
-	
-	public MapLayer[] getLayers() {
-		return this.detailVoyageMap.getLayers();
 	}
 
 	/**

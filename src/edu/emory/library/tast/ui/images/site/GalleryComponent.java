@@ -7,17 +7,22 @@ import javax.faces.component.UICommand;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.servlet.ServletContext;
 
+import org.apache.myfaces.el.MethodBindingImpl;
 import org.hibernate.mapping.ValueVisitor;
 
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.ui.search.table.ShowDetailsEvent;
+import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.util.JsfUtils;
 
 public class GalleryComponent extends UICommand {
@@ -26,61 +31,39 @@ public class GalleryComponent extends UICommand {
 
 	private static final String GALLERY_FORWARD_BUTTON = "gallery-forward-button";
 
+	private MethodBinding showEvent;
+	
+	public void restoreState(FacesContext arg0, Object arg1) {
+		Object[] state = (Object[])arg1;
+		super.restoreState(arg0, state[0]);
+		this.showEvent = (MethodBinding)restoreAttachedState(arg0, state[1]);
+	}
+
+	public Object saveState(FacesContext arg0) {
+		Object[] state = new Object[2];
+		state[0] = super.saveState(arg0); 
+		state[1] = saveAttachedState(arg0, showEvent);
+		return state;
+	}
+
 	public void decode(FacesContext context) {
-//		Map params = context.getExternalContext().getRequestParameterMap();
+		Map params = context.getExternalContext().getRequestParameterMap();
 
-//			int rows = Integer.parseInt(this.getValueOrAttribute(context,
-//					"rows").toString());
-//			int cols = Integer.parseInt(this.getValueOrAttribute(context,
-//					"columns").toString());
-//			PictureGalery pictures = (PictureGalery) this.getBoundedValue(
-//					context, "pictures");
-//			String set = (String)params.get(GalleryRequestBean.SET);
-			
-//			ValueBinding searchCondition = (ValueBinding) this
-//					.getValueBinding("searchCondition");
-
-//			if (action.startsWith("search_")) {
-//				if (searchCondition != null) {
-//					searchCondition.setValue(context, action
-//							.substring("search_".length()));
-//					this.queueEvent(new ActionEvent(this));
-//				}
-//			}
-//			
-//			if (set != null) {
-//				int s = Integer.parseInt(set) - 1;
-//				pictures.setFirstVisible(s * rows * cols);
-//			}
-			/*
-			else if (pictures != null) {
-				if (GALLERY_FORWARD_BUTTON.equals(action)) {
-					if (pictures.canMoveForward(rows * cols)) {
-						pictures.moveForward(rows * cols);
-					}
-				} else if (GALLERY_BACK_BUTTON.equals(action)) {
-					if (pictures.canMoveBackward(rows * cols)) {
-						pictures.moveBackward(rows * cols);
-					}
-				}
-			}
-			*/
+		System.out.println("Decode!!!!");
+		if (params.get(this.getHiddenFieldId(context)) != null) {
+			String param = (String)params.get(this.getHiddenFieldId(context));
+			queueEvent(new ShowVoyageEvent(this, new Integer(param)));
+		}
 
 	}
 	
-	public void processUpdates(FacesContext context)
-	{
-		
-		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this.getValueOrAttribute(context, "galleryParams");
+	public void broadcast(FacesEvent event) throws AbortProcessingException {
+		super.broadcast(event);
 
-		if (params.getVid() != null) {
-			System.out.println("VID!!!!");
-			System.out.println("redirect!!!");
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, "gotosearch");
-			return;
+		if (event instanceof ShowVoyageEvent && showEvent != null) {
+			showEvent.invoke(getFacesContext(), new Object[] { event });
 		}
-		
+
 	}
 
 	public void encodeBegin(FacesContext context) throws IOException {
@@ -91,8 +74,7 @@ public class GalleryComponent extends UICommand {
 		writer.startElement("div", this);
 		writer.writeAttribute("align", "center", null);
 
-		JsfUtils
-				.encodeHiddenInput(this, writer, this.getHiddenFieldId(context));
+		JsfUtils.encodeHiddenInput(this, writer, this.getHiddenFieldId(context));
 
 		int rows = Integer.parseInt(this.getValueOrAttribute(context, "rows")
 				.toString());
@@ -109,6 +91,8 @@ public class GalleryComponent extends UICommand {
 		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this
 				.getValueOrAttribute(context, "galleryParams");
 
+		params.restoreState();
+		
 		if (pictures != null) {
 
 			int set = Integer.parseInt(params.getVisibleSet());
@@ -321,7 +305,10 @@ public class GalleryComponent extends UICommand {
 			link.append(visibleImage.getImage().getVoyageid() + "");
 			
 			writer.startElement("a", this);
-			writer.writeAttribute("href", link, null);
+			writer.writeAttribute("href", "#", null);
+			String jsClick = JsfUtils.generateSubmitJS(context, form,
+					getHiddenFieldId(context), "" + visibleImage.getImage().getVoyageid());
+			writer.writeAttribute("onclick", jsClick, null);
 			writer.write(visibleImage.getImage().getVoyageid() + "");
 			writer.endElement("a");
 		} else {
@@ -461,5 +448,9 @@ public class GalleryComponent extends UICommand {
 
 	private String getHiddenFieldId(FacesContext context) {
 		return this.getId() + "_actionSensor";
+	}
+
+	public void setShowEventHandler(MethodBindingImpl impl) {
+		this.showEvent = impl;
 	}
 }

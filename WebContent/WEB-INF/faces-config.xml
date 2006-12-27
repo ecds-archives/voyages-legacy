@@ -346,6 +346,10 @@
 			<property-name>searchBean</property-name>
 			<value>#{SearchBean}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>voyageBean</property-name>
+			<value>#{VoyageDetailBean}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
@@ -354,7 +358,12 @@
 			edu.emory.library.tast.ui.images.site.GalleryRequestBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>picturesBean</property-name>
+			<value>#{PicturesBean}</value>
+		</managed-property>
 	</managed-bean>
+		
 	<managed-bean>
 		<managed-bean-name>
 		EventLineTestBean1</managed-bean-name>
@@ -649,6 +658,17 @@
 		<navigation-case>
 			<from-outcome>gotosearch</from-outcome>
 			<to-view-id>/search.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>search-interface</from-outcome>
+			<to-view-id>/search.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>images-interface</from-outcome>
+			<to-view-id>/galleryp.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

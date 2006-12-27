@@ -484,6 +484,9 @@
 		<attribute>
 			<name>galleryParams</name>
 		</attribute>		
+		<attribute>
+			<name>showEventHandler</name>
+		</attribute>	
 	</tag>
 
 	<tag>

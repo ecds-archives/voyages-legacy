@@ -8,6 +8,7 @@ import javax.servlet.ServletRequest;
 public class GalleryRequestBean {
 	
 	public class GalleryParams {
+		
 		private String galleryType;
 		private String id;
 		private String visibleSet;
@@ -28,9 +29,24 @@ public class GalleryRequestBean {
 			if (params.containsKey(PICT)) {
 				visiblePicture = (String)params.get(PICT);
 			}
-			if (params.containsKey(VID)) {
-				vid = (String)params.get(VID);
+		}
+		
+		public void saveState() {
+			picturesBean.saveGalleryType(galleryType);
+			picturesBean.saveId(id);
+			picturesBean.saveVisibleSet(visibleSet);
+			picturesBean.saveVisiblePicture(visiblePicture);
+		}
+		
+		public void restoreState() {
+			if (galleryType == null && id == null && visibleSet == null &&
+					visiblePicture == null && vid == null) {
+				galleryType = picturesBean.restoreGalleryType();
+				id = picturesBean.restoreId();
+				visibleSet = picturesBean.restoreVisibleSet();
+				visiblePicture = picturesBean.restoreVisiblePicture();
 			}
+			this.saveState();
 		}
 		
 		public String getGalleryType() {
@@ -57,6 +73,8 @@ public class GalleryRequestBean {
 	public static final String GALLERY_TYPE = "obj";
 	public static final String VID = "vid";
 	
+	private PicturesBean picturesBean;
+	
 	private GalleryParams params = null;
 	
 	public GalleryRequestBean() {
@@ -65,6 +83,15 @@ public class GalleryRequestBean {
 	
 	public GalleryRequestBean.GalleryParams getGalleryParams() {
 		return params;
+	}
+	
+	public PicturesBean getPicturesBean() {
+		return picturesBean;
+	}
+
+	public void setPicturesBean(PicturesBean picturesBean) {
+		this.picturesBean = picturesBean;
+		this.picturesBean.setGalleryBean(this);
 	}
 	
 }

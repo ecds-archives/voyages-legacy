@@ -33,10 +33,6 @@ public class PictureGalery {
 		return ret;
 	}
 
-	public void setPictures(GaleryImage[] pictures) {
-		this.pictures = pictures;
-	}
-
 	public void setVisiblePicture(GaleryImage image) {
 		this.visiblePicture = image;
 	}

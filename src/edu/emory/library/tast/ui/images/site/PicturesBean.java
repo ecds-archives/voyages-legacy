@@ -31,6 +31,7 @@ import edu.emory.library.tast.ui.search.query.QueryConditionText;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
+import edu.emory.library.tast.ui.voyage.VoyageDetailBean;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
@@ -59,6 +60,8 @@ public class PicturesBean {
 
 	private SearchBean searchBean;
 	
+	private VoyageDetailBean voyageBean;
+	
 	private String visibleImage;
 
 	private String lastGalleryName;
@@ -66,6 +69,16 @@ public class PicturesBean {
 	private Object object;
 
 	private Object id;
+
+	private String savedGalleryType;
+
+	private String savedId;
+
+	private String savedVisibleSet;
+
+	private String savedVisiblePicture;
+	
+	private GalleryRequestBean galleryBean;
 
 	public PicturesBean() {
 
@@ -104,8 +117,16 @@ public class PicturesBean {
 	}
 
 	public PictureGalery getPictureGalery() {
-		String object = this.getURLParam("obj");
-		String id = this.getURLParam("id");
+		String object = null;
+		String id = null;
+		if (this.galleryBean != null) {
+			object = this.galleryBean.getGalleryParams().getGalleryType();
+			id = this.galleryBean.getGalleryParams().getId();
+		} else {
+			object = getURLParam("obj");
+			id = getURLParam("id");
+		}
+		
 		if (object != null && id != null && (!object.equals(this.object) || !id.equals(this.id))) {
 			this.id = id;
 			this.object = object;
@@ -147,6 +168,11 @@ public class PicturesBean {
 		return pictureGalery;
 	}
 
+	private String getURLParam(String string) {
+		Map params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		return String.valueOf(params.get(string));
+	}
+
 	public void setPictureGalery(PictureGalery pictures) {
 		this.pictureGalery = pictures;
 	}
@@ -170,7 +196,8 @@ public class PicturesBean {
 		
 		ArrayList items = new ArrayList();
 		
-		String gallery = this.getURLParam("gal");
+		///??????
+		String gallery = this.galleryBean.getGalleryParams().getGalleryType();
 		System.out.println("Gallery is: " + gallery);
 		this.lastGalleryName = gallery;
 		if ("people".equals(gallery)) {
@@ -279,29 +306,21 @@ public class PicturesBean {
 	}
 	
 	public String getGallery() {
-		return this.getURLParam("gal");
+		////??????
+		return this.galleryBean.getGalleryParams().getGalleryType();
 	}
 	
 	public String getGalleryUserName() {
-		if (this.getURLParam("gal") == null) {
+		if (this.galleryBean.getGalleryParams().getGalleryType() == null) {
 			return (String)galleryUserLabels.get("people");
 		}
-		return (String)galleryUserLabels.get(this.getURLParam("gal"));
-	}
-	
-	private String getURLParam(String paramName) {
-		if (((ServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameterMap() == null) {
-			return null;
-		}
-		return ((ServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest())
-					.getParameter(paramName);
-		
+		return (String)galleryUserLabels.get(this.galleryBean.getGalleryParams().getGalleryType());
 	}
 	
 	public String getCurrentPath() {
 		
-		String object = this.getURLParam("obj");
-		String id = this.getURLParam("id");
+		String object = this.galleryBean.getGalleryParams().getGalleryType();
+		String id = this.galleryBean.getGalleryParams().getId();
 		Conditions conditions = new Conditions();
 		QueryValue qValue = null;
 		if (object == null || id == null) {
@@ -331,5 +350,62 @@ public class PicturesBean {
 			buffer.append("unknown");
 		}
 		return buffer.toString();
+	}
+
+	public String restoreGalleryType() {
+		return this.savedGalleryType;
+	}
+
+	public String restoreId() {
+		return this.savedId;
+	}
+
+	public String restoreVisibleSet() {
+		return this.savedVisibleSet;
+	}
+
+	public String restoreVisiblePicture() {
+		return this.savedVisiblePicture;
+	}
+
+	public void saveGalleryType(String galleryType) {
+		this.savedGalleryType = galleryType;
+	}
+
+	public void saveId(String id2) {
+		this.savedId = id2;
+	}
+
+	public void saveVisibleSet(String visibleSet) {
+		this.savedVisibleSet = visibleSet;
+	}
+
+	public void saveVisiblePicture(String visiblePicture) {
+		this.savedVisiblePicture = visiblePicture;
+	}
+	
+	public String showEventHandler(ShowVoyageEvent e) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		voyageBean.openVoyage(e.getVoyageid().intValue());
+		voyageBean.setVoyageAttr("voyageid");
+		voyageBean.setBackPage("images-interface");
+		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
+		return null;
+	}
+
+	public VoyageDetailBean getVoyageBean() {
+		return voyageBean;
+	}
+
+	public void setVoyageBean(VoyageDetailBean voyageBean) {
+		this.voyageBean = voyageBean;
+	}
+
+	public GalleryRequestBean getGalleryBean() {
+		return galleryBean;
+	}
+
+	public void setGalleryBean(GalleryRequestBean galleryBean) {
+		this.galleryBean = galleryBean;
 	}
 }

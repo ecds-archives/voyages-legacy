@@ -46,7 +46,8 @@
 			</t:div>
 			*/%>
 			<s:picture-gallery pictures="#{PicturesBean.pictureGalery}" rows="5" columns="1"
-				thumbnailWidth="150" thumbnailHeight="100" galleryParams="#{GalleryRequestBean.galleryParams}" />
+				thumbnailWidth="150" thumbnailHeight="100" galleryParams="#{GalleryRequestBean.galleryParams}" 
+				showEventHandler="#{PicturesBean.showEventHandler}"/>
 		 </t:htmlTag>
 
 	
