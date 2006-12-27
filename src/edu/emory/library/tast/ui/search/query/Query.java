@@ -1,5 +1,6 @@
 package edu.emory.library.tast.ui.search.query;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import edu.emory.library.tast.dm.Voyage;
@@ -9,9 +10,11 @@ import edu.emory.library.tast.ui.search.query.searchables.SearchableAttributeSim
 import edu.emory.library.tast.ui.search.query.searchables.Searchables;
 import edu.emory.library.tast.util.query.Conditions;
 
-public class Query implements Cloneable
+public class Query implements Serializable, Cloneable
 {
 	
+	private static final long serialVersionUID = 6693392749775025817L;
+
 	private QueryBuilderQuery builderQuery = new QueryBuilderQuery();
 	private int yearFrom;
 	private int yearTo;

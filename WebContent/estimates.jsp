@@ -26,10 +26,15 @@
 	<div class="header">
 		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">
 	</div>
-	<div class="header-path">
-		<a href="estimates.faces">Estimates</a> |
-		<a href="search.faces">Database search</a> | 
-		<a href="galleryp.faces?obj=1&id=1&set=1&pict=0">Images database</a>
+	
+	<div class="header-links">
+		<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td><div class="header-link-active"><a href="estimates.faces">Estimates</a></div></td>
+			<td><div class="header-link"><a href="search.faces">Database search</a></div></td>
+			<td><div class="header-link"><a href="galleryp.faces?obj=1&id=1&set=1&pict=0">Images database</a></div></td>
+		</tr>
+		</table>
 	</div>
 	
 	<h:form id="form">

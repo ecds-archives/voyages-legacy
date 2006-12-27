@@ -340,6 +340,7 @@ public class SearchBean
 
 	public int getYearFrom()
 	{
+		restorePermlinkIfAny();
 		return workingQuery.getYearFrom();
 	}
 
@@ -350,6 +351,7 @@ public class SearchBean
 
 	public int getYearTo()
 	{
+		restorePermlinkIfAny();
 		return workingQuery.getYearTo();
 	}
 

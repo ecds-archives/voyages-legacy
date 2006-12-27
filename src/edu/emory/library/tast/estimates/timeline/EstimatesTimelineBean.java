@@ -22,15 +22,23 @@ public class EstimatesTimelineBean
 	private EventLineVerticalLabels verticalLabels;
 	private int viewportHeight;
 	
-	private void generateGraphsIfNecessary()
+	private void regenerateIfNecessary()
 	{
 		
-		// conditions from the left column (i.e. from select bean)
+		// conditions from the left column (i.e. from select bean),
+		// and check we we have to regenerate the graphs
 		Conditions newConditions = selectionBean.getConditions();
-
-		// check if we have to
 		if (newConditions.equals(conditions)) return;
+
+		// yes, we have to
 		conditions = newConditions;
+		generateGraphs();
+		createVerticalLabels();
+
+	}
+	
+	private void generateGraphs()
+	{
 		
 		// start query
 		QueryValue query = new QueryValue(
@@ -100,9 +108,6 @@ public class EstimatesTimelineBean
 		
 		graphImp.setBaseColor("#E7D59C");
 		graphImp.setEventColor("#666666");
-
-		// vertical labels
-		createVerticalLabels();
 		
 	}
 
@@ -145,7 +150,7 @@ public class EstimatesTimelineBean
 	
 	public EventLineEvent[] getEvents()
 	{
-		generateGraphsIfNecessary();
+		regenerateIfNecessary();
 		return new EventLineEvent[] {
 				new EventLineEvent(1530, "Event A"),
 				new EventLineEvent(1606, "Event B"),
@@ -167,14 +172,20 @@ public class EstimatesTimelineBean
 
 	public EventLineGraph[] getGraphs()
 	{
-		generateGraphsIfNecessary();
+		regenerateIfNecessary();
 		return new EventLineGraph[] {graphExp, graphImp};
 	}
 
 	public EventLineVerticalLabels getVerticalLabels()
 	{
-		generateGraphsIfNecessary();
+		regenerateIfNecessary();
 		return verticalLabels;
+	}
+
+	public int getViewportHeight()
+	{
+		regenerateIfNecessary();
+		return viewportHeight;
 	}
 
 	public EstimatesSelectionBean getSelectionBean()
@@ -185,12 +196,6 @@ public class EstimatesTimelineBean
 	public void setSelectionBean(EstimatesSelectionBean selectionBean)
 	{
 		this.selectionBean = selectionBean;
-	}
-
-	public int getViewportHeight()
-	{
-		generateGraphsIfNecessary();
-		return viewportHeight;
 	}
 
 }
