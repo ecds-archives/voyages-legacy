@@ -226,9 +226,15 @@ public class SearchBean
 				MenuItemMain mainItem = new MenuItemMain();
 				MenuItem[] subItems = new MenuItem[attributes.length];
 				
-				String mainItemText =
-					"<b>" + group.getUserLabel() + "</b> " +
-					"(" + attributes.length + " variables)";
+				String mainItemText = "<b>" + group.getUserLabel() + "</b>";
+				if (attributes.length > 1)
+				{
+					mainItemText += " (" + attributes.length + " variables)";					
+				}
+				else
+				{
+					mainItemText += " (1 variable)";					
+				}
 				
 				mainItems[i] = mainItem;
 				mainItem.setId(group.getId().toString());

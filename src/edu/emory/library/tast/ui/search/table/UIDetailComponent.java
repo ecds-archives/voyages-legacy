@@ -1,7 +1,6 @@
 package edu.emory.library.tast.ui.search.table;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -106,7 +105,7 @@ public class UIDetailComponent extends UIComponentBase {
 			writer.startElement("tr", this);
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "detail-label", null);
-			writer.writeAttribute("rowspan", group.getAllVisibleAttributes().length, null);
+			writer.writeAttribute("rowspan", String.valueOf(group.getAllVisibleAttributes().length), null);
 			writer.write(group.getUserLabel());
 			writer.endElement("td");
 			

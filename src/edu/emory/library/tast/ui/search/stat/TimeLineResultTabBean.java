@@ -7,17 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpSession;
 
 import org.jfree.chart.JFreeChart;
 
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.EventLineEvent;
@@ -25,14 +20,10 @@ import edu.emory.library.tast.ui.EventLineGraph;
 import edu.emory.library.tast.ui.EventLineVerticalLabels;
 import edu.emory.library.tast.ui.EventLineZoomLevel;
 import edu.emory.library.tast.ui.search.query.SearchBean;
-import edu.emory.library.tast.ui.search.query.SearchParameters;
-import edu.emory.library.tast.ui.search.stat.charts.AbstractChartGenerator;
-import edu.emory.library.tast.ui.search.stat.charts.XYChartGenerator;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.MathUtils;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
@@ -331,7 +322,7 @@ public class TimeLineResultTabBean {
 	/* -New implementation- */
 	public Integer getViewportHeight() {
 		showTimeLine();
-		return this.viewportHeight;
+		return new Integer(this.viewportHeight);
 	}
 	public EventLineGraph[] getGraphs() {
 		
