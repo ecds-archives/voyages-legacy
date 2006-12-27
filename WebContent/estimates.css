@@ -111,13 +111,19 @@ table.event-line-event-table {
 	margin-bottom: 20px; 
 	margin-left: 70px; }
 
+tr.event-line-event {
+	}
+
+tr.event-line-event-selected td.event-line-event-table-label {
+	background-color: #CA4223; }
+
 td.event-line-event-space {
 	height: 5px; }
 
 td.event-line-event-table-label {
 	color: White;
 	text-align: center;
-	background-color: #666666;
+	background-color: #571B1D;
 	width: 20px;
 	height: 20px; }
 
@@ -127,3 +133,15 @@ td.event-line-event-table-x {
 
 td.event-line-event-table-text {
 	padding-left: 10px; }
+
+table.event-line-event-label td, 
+table.event-line-event-label-selected td {
+	text-align: center;
+	color: White;
+	cursor: pointer; }
+	
+table.event-line-event-label td {
+	background-color: #571B1D; }
+
+table.event-line-event-label-selected td {
+	background-color: #CA4223; }

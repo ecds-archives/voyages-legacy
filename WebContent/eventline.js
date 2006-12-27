@@ -12,6 +12,18 @@ var EventLineGlobals =
 	{
 		var eventLine = EventLineGlobals.eventLines[eventLineId];
 		if (eventLine) eventLine.toggleEvent(eventIndex);
+	},
+	
+	highlightEvent: function(eventLineId, eventIndex)
+	{
+		var eventLine = EventLineGlobals.eventLines[eventLineId];
+		if (eventLine) eventLine.highlightEvent(eventIndex);
+	},
+	
+	blurEvent: function(eventLineId, eventIndex)
+	{
+		var eventLine = EventLineGlobals.eventLines[eventLineId];
+		if (eventLine) eventLine.blurEvent(eventIndex);
 	}
 
 }
@@ -371,6 +383,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			slotStyle.left = (k*currBarWidth) + "px";
 			slotStyle.width = (innerBarWidth) + "px";
 			slotStyle.backgroundColor = this.eventsLookup[this.offset + k] ? graph.eventColor : graph.baseColor;
+			//slotStyle.backgroundColor = graph.baseColor;
 		}
 
 	}
@@ -390,23 +403,20 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			
 				eventTable = event.element = document.createElement("table");
 				
-				eventTable.cellspacing = "0";
-				eventTable.cellpadding = "0";
-				eventTable.border = "0";
-			
+				eventTable.cellSpacing = 0;
+				eventTable.cellPadding = 0;
+				eventTable.border = 0;
+				
 				eventTable.style.position = "absolute";
-				eventTable.style.backgroundColor = "#666666";
-				eventTable.style.color = "White";
-				eventTable.style.height = "20px";
-				eventTable.style.paddingTop = "0px";
-				eventTable.style.paddingBottom = "0px";
-				eventTable.style.paddingLeft = "4px";
-				eventTable.style.paddingRight = "4px";
-				eventTable.style.cursor = "pointer";
-
+				eventTable.style.height = this.eventsHeight + "px";
+				eventTable.style.width = this.eventsHeight + "px";
+				eventTable.className = "event-line-event-label";
+				
 				eventTable.insertRow(0).insertCell(0).innerHTML = (i + 1);
 
 				this.graphsContainer.appendChild(eventTable);
+				EventAttacher.attach(eventTable, "mouseover", this, "eventMouseOver", i);
+				EventAttacher.attach(eventTable, "mouseout", this, "eventMouseOut", i);
 
 			}
 			
@@ -420,6 +430,8 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			if (event.element)
 			{
 				this.graphsContainer.removeChild(event.element);
+				EventAttacher.detach(eventTable, "mouseover", this, "eventMouseOver");
+				EventAttacher.detach(eventTable, "mouseout", this, "eventMouseOut");
 				event.element = null;
 			}
 		
@@ -439,6 +451,44 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 	this.horizontalLabels = new Array();
 	this.createHorizontalLabels(this.offset, this.zoomLevel, 0, "bottom", true, this.horizontalLabels);
 
+}
+
+EventLine.prototype.blurEvent = function(index)
+{
+	var event = this.events[index]
+	event.element.className = "event-line-event-label";
+	document.getElementById(event.textId).className = "event-line-event";
+}
+
+EventLine.prototype.eventMouseOut = function(mouseEvent, index)
+{
+	this.blurEvent(index);
+}
+
+EventLine.prototype.highlightEvent = function(index)
+{
+	var event = this.events[index]
+	event.element.className = "event-line-event-label-selected";
+	document.getElementById(event.textId).className = "event-line-event-selected";
+}
+
+EventLine.prototype.eventMouseOver = function(mouseEvent, index)
+{
+	this.highlightEvent(index);
+
+	/*
+	
+	if (this.selectedEvent && this.selectedEvent.element)
+	{
+		this.selectedEvent.element.className = "event-line-event-label";
+		document.getElementById(this.selectedEvent.textId).className = "event-line-event";
+	}
+		
+	this.selectedEvent = this.events[index];
+	this.selectedEvent.element.className = "event-line-event-label-selected";
+	document.getElementById(this.selectedEvent.textId).className = "event-line-event-selected";
+	
+	*/
 }
 
 EventLine.prototype.createHorizontalLabels = function(offset, zoomLevel, topPositon, verticalAlign, createLines, array)

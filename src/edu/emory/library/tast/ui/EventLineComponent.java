@@ -243,7 +243,7 @@ public class EventLineComponent extends UIComponentBase
 		writer.endElement("div");
 	}
 
-	private void encodeEvents(FacesContext context, ResponseWriter writer) throws IOException
+	private void encodeEvents(FacesContext context, ResponseWriter writer, String mainId) throws IOException
 	{
 		
 		writer.startElement("table", this);
@@ -265,11 +265,19 @@ public class EventLineComponent extends UIComponentBase
 				writer.endElement("tr");
 			}
 			
+			String onMouseOver = "EventLineGlobals.highlightEvent(" +
+					"'" + mainId + "', " +  i + ")";
+			
+			String onMouseOut = "EventLineGlobals.blurEvent(" +
+					"'" + mainId + "', " +  i + ")";
+
 			writer.startElement("tr", this);
 			writer.writeAttribute("id", getEventTextId(context, i), null);
 			
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "event-line-event-table-label", null);
+			writer.writeAttribute("onmouseover", onMouseOver, null);
+			writer.writeAttribute("onmouseout", onMouseOut, null);
 			writer.write(String.valueOf(i+1));
 			writer.endElement("td");
 			
@@ -469,7 +477,7 @@ public class EventLineComponent extends UIComponentBase
 		writer.endElement("div");
 		
 		// render events
-		encodeEvents(context, writer);
+		encodeEvents(context, writer, mainId);
 
 	}
 
