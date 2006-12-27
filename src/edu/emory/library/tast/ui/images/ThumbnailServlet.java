@@ -62,24 +62,26 @@ public class ThumbnailServlet extends HttpServlet
 		{
 			
 			int clipWidth = (int) Math.round(((double) thumbnailWidth / (double) thumbnailHeight) * (double) imageHeight); 
-			clipX1 = (imageWidth - clipWidth) / 2; 
-			clipY1 = clipWidth + (imageWidth - clipWidth) / 2;
-			clipX2 = 0; 
-			clipY2 = imageHeight - 1; 
+			int imgCenterX = imageWidth / 2; 
+			clipX1 = imgCenterX - clipWidth / 2; 
+			clipX2 = imgCenterX + clipWidth / 2; 
+			clipY1 = 0;
+			clipY2 = imageHeight; 
 		}
 		else
 		{
-			int clipHeight = (int) Math.round(((double) thumbnailHeight / (double) thumbnailWidth) * (double) imageWidth); 
+			int clipHeight = (int) Math.round(((double) thumbnailHeight / (double) thumbnailWidth) * (double) imageWidth);
+			int imgCenterY = imageHeight / 2; 
 			clipX1 = 0; 
-			clipY1 = imageWidth - 1; 
-			clipX2 =  clipHeight + (imageWidth - clipHeight) / 2;
-			clipY2 = (imageHeight - clipHeight) / 2;
+			clipX2 = imageWidth; 
+			clipY1 = imgCenterY - clipHeight / 2;
+			clipY2 = imgCenterY + clipHeight / 2;
 		}
 
 		// draw the thumbnail
 		gr.drawImage(image,
 				0, 0, thumbnailWidth, thumbnailHeight,
-				clipX1, clipX2, clipY1, clipY2, null);
+				clipX1, clipY1, clipX2, clipY2, null);
 		
 		// and we are done
 		gr.dispose();

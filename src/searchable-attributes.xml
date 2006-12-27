@@ -261,7 +261,7 @@
 	<searchable-attribute
 		type="simple"
 		id="resistance"
-		userLabel="Violent incidents">
+		userLabel="Resistance">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

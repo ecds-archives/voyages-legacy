@@ -103,4 +103,27 @@ div.event-line-mark-pressed {
 	background-image: url(../../event-line-mark-pressed.png);
 	background-repeat: no-repeat; }
 	
-	
+/***********************************
+* event line
+***********************************/
+
+table.event-line-event-table {
+	margin-bottom: 20px; 
+	margin-left: 70px; }
+
+td.event-line-event-space {
+	height: 5px; }
+
+td.event-line-event-table-label {
+	color: White;
+	text-align: center;
+	background-color: #666666;
+	width: 20px;
+	height: 20px; }
+
+td.event-line-event-table-x {
+	font-weight: bold;
+	padding-left: 10px; }
+
+td.event-line-event-table-text {
+	padding-left: 10px; }

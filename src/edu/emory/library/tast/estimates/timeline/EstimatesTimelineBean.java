@@ -20,7 +20,7 @@ public class EstimatesTimelineBean
 	private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
 	private EventLineVerticalLabels verticalLabels;
-	private int viewportHeight;
+	private double viewportHeight;
 	
 	private void regenerateIfNecessary()
 	{
@@ -121,10 +121,10 @@ public class EstimatesTimelineBean
 		if (maxValue > 0)
 		{
 
-			int majorSpacing;
-			int minorSpacing;
+			double majorSpacing;
+			double minorSpacing;
 
-			int nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
+			double nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
 			if (maxValue / (nextPow10/10) >= 5)
 			{
 				majorSpacing = nextPow10 / 2;
@@ -150,14 +150,21 @@ public class EstimatesTimelineBean
 	
 	public EventLineEvent[] getEvents()
 	{
-		regenerateIfNecessary();
 		return new EventLineEvent[] {
-				new EventLineEvent(1530, "Event A"),
-				new EventLineEvent(1606, "Event B"),
-				new EventLineEvent(1723, "Event C"),
-				new EventLineEvent(1786, "Event D"),
-				new EventLineEvent(1807, "Event E"),
-		};
+				new EventLineEvent(1525, "First slave voyage direct from Africa to the Americas"),
+				new EventLineEvent(1560, "Continuous slave trade from Brazil begins"),
+				new EventLineEvent(1641, "Sugar exports from Eastern Caribbean begin"),
+				new EventLineEvent(1655, "English capture Jamaica"),
+				new EventLineEvent(1695, "Gold discovered in Minas Gerais (Brazil)"),
+				new EventLineEvent(1697, "French obtain St Domingue in Treaty of Rywsick"),
+				new EventLineEvent(1756, "Seven years war begins"),
+				new EventLineEvent(1776, "American Revolutionary War begins"),
+				new EventLineEvent(1789, "Bourbon reforms open Spanish colonial ports to slaves"),
+				new EventLineEvent(1791, "St Domingue revolution begins"),
+				new EventLineEvent(1808, "Abolition of British and US slave trades takes effect"),
+				new EventLineEvent(1830, "Anglo-Brazilian anti-slave trade treaty"),
+				new EventLineEvent(1850, "Brazil suppresses slave trade"),
+				new EventLineEvent(1867, "Last transatlantic slave voyage sails")};
 	}
 	
 	public EventLineZoomLevel[] getZoomLevels()
@@ -182,7 +189,7 @@ public class EstimatesTimelineBean
 		return verticalLabels;
 	}
 
-	public int getViewportHeight()
+	public double getViewportHeight()
 	{
 		regenerateIfNecessary();
 		return viewportHeight;

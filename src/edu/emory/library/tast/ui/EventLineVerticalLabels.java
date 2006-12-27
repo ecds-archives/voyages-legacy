@@ -3,10 +3,10 @@ package edu.emory.library.tast.ui;
 public class EventLineVerticalLabels
 {
 	
-	private int majorSpacing;
-	private int spacing;
+	private double majorSpacing;
+	private double spacing;
 	
-	public EventLineVerticalLabels(int majorSpacing, int spacing)
+	public EventLineVerticalLabels(double majorSpacing, double spacing)
 	{
 		this.majorSpacing = majorSpacing;
 		this.spacing = spacing;
@@ -18,7 +18,7 @@ public class EventLineVerticalLabels
 		this.majorSpacing = spacing; 
 	}
 
-	public int getMajorSpacing()
+	public double getMajorSpacing()
 	{
 		return majorSpacing;
 	}
@@ -28,7 +28,7 @@ public class EventLineVerticalLabels
 		this.majorSpacing = majorSpacing;
 	}
 	
-	public int getSpacing()
+	public double getSpacing()
 	{
 		return spacing;
 	}

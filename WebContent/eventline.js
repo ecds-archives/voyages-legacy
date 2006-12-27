@@ -16,8 +16,9 @@ var EventLineGlobals =
 
 }
 
-function EventLineEvent(x, text)
+function EventLineEvent(textId, x, text)
 {
+	this.textId = textId;
 	this.x = x;
 	this.text = text;
 }
@@ -75,6 +76,7 @@ function EventLine(
 	leftLabelsMargin,
 	topLabelsHeight,
 	topLabelsMargin,
+	eventsHeight,
 	events,
 	graphs,
 	zoomLevels,
@@ -115,6 +117,7 @@ function EventLine(
 	this.leftLabelsMargin = leftLabelsMargin;
 	this.topLabelsHeight = topLabelsHeight;
 	this.topLabelsMargin = topLabelsMargin;
+	this.eventsHeight = eventsHeight;
 	
 	this.events = events;
 	this.graphs = graphs;
@@ -155,14 +158,17 @@ EventLine.prototype.init = function()
 	
 	this.findMaxValue();
 	this.initEvents();
-	
+
 	this.createSelector();
-	this.createHorizontalLabels(this.selectorOffset, 0,
-		this.topLabelsHeight + this.topLabelsMargin + this.graphHeight + this.selectorHeight,
-		"top", false, null);
-	
+
 	this.initSlots();
 	this.refresh(parseInt(this.zoomLevelField.value), parseInt(this.offsetField.value));
+
+	this.createVerticalLabels();
+
+	this.createHorizontalLabels(this.selectorOffset, 0,
+		this.topLabelsHeight + this.topLabelsMargin + this.graphHeight + this.eventsHeight + this.selectorHeight,
+		"top", false, null);
 
 	/*	
 	alert(
@@ -261,6 +267,7 @@ EventLine.prototype.initSlots = function()
 			var slot = this.graphsContainer.childNodes[i*this.slotsCount+j];
 			slot.style.position = "absolute";
 			slot.style.height = "0px";
+			slot.style.backgroundColor = graph.baseColor;
 			slots.push(slot);
 		}
 	}
@@ -325,6 +332,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 	this.redrawSelector(this.offset, zoomLevelObj.viewSpan);
 	
 	var currBarWidth = zoomLevelObj.barWidth;
+	var currViewSpan = zoomLevelObj.viewSpan;
 	var innerBarWidth = currBarWidth > 2 ? currBarWidth - 1 : currBarWidth;
 	
 	for (var i = 0; i < this.graphs.length; i++)
@@ -367,7 +375,57 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 
 	}
 	
-	this.createVerticalLabels();
+	for (var i = 0; i < this.events.length; i++)
+	{
+	
+		var event = this.events[i];
+		
+		if (i + this.offset <= event.x && event.x <= i + this.offset + currViewSpan)
+		{
+		
+			var eventTable = event.element;
+			
+			if (!eventTable)
+			{
+			
+				eventTable = event.element = document.createElement("table");
+				
+				eventTable.cellspacing = "0";
+				eventTable.cellpadding = "0";
+				eventTable.border = "0";
+			
+				eventTable.style.position = "absolute";
+				eventTable.style.backgroundColor = "#666666";
+				eventTable.style.color = "White";
+				eventTable.style.height = "20px";
+				eventTable.style.paddingTop = "0px";
+				eventTable.style.paddingBottom = "0px";
+				eventTable.style.paddingLeft = "4px";
+				eventTable.style.paddingRight = "4px";
+				eventTable.style.cursor = "pointer";
+
+				eventTable.insertRow(0).insertCell(0).innerHTML = (i + 1);
+
+				this.graphsContainer.appendChild(eventTable);
+
+			}
+			
+			eventTable.style.left = (currBarWidth * (event.x - this.offset)) + "px";
+			eventTable.style.top = (this.graphHeight) + "px";
+			
+		}
+		else
+		{
+		
+			if (event.element)
+			{
+				this.graphsContainer.removeChild(event.element);
+				event.element = null;
+			}
+		
+		}
+		
+	}
 	
 	if (this.horizontalLabels)
 	{
@@ -456,6 +514,17 @@ EventLine.prototype.createVerticalLabels = function()
 	
 	this.verticalLabels = new Array();
 	
+	var decimalPlaces = 0;
+	if (this.verticalLabelsSpacing <= 1)
+	{
+		var pow = this.verticalLabelsSpacing;
+		while (pow < 1)
+		{
+			decimalPlaces ++;
+			pow *= 10;
+		}
+	}
+	
 	for (var i = 0; i <= this.viewportHeight; i += this.verticalLabelsSpacing)
 	{
 
@@ -482,7 +551,7 @@ EventLine.prototype.createVerticalLabels = function()
 		labelCell.style.textAlign = "right";
 		labelCell.style.fontWeight = major ? "bold" : "normal";
 
-		labelCell.innerHTML = i;
+		labelCell.innerHTML = i.toFixed(decimalPlaces);
 		
 		this.verticalLabels.push(new EventLineVerticalLabel(labelTable, labelLine));
 		this.labelsContainer.appendChild(labelTable);

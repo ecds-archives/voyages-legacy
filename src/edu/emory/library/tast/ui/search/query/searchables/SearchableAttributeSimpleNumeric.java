@@ -179,7 +179,7 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 		switch (type)
 		{
 			case TYPE_YEAR: return "In";
-			default: return "Is equal";
+			default: return "Is equal to";
 		}
 	}
 

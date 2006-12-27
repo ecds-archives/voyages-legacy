@@ -12,12 +12,12 @@ import edu.emory.library.tast.util.JsfUtils;
 public class EventLineComponent extends UIComponentBase
 {
 	
-	private static final int TOP_LABELS_HEIGHT = 25;
-	// private static final int TOP_LABELS_WIDTH = 50;
-	private static final int LEFT_LABELS_WIDTH = 60;
-	// private static final int LEFT_LABELS_HEIGHT = 30;
-	private static final int LABELS_MARGIN = 10;
+	private static final int HORIZONTAL_LABELS_HEIGHT = 25;
+	private static final int VERTICAL_LABELS_WIDTH = 60;
+	private static final int EVENTS_HEIGHT = 20;
 	private static final int SELECTOR_HEIGHT = 50;
+	private static final int HORIZONTAL_LABELS_MARGIN = 10;
+	private static final int VERTICAL_LABELS_MARGIN = 10;
 	
 	private boolean zoomLevelSet = false;
 	private int zoomLevel = 0;
@@ -32,7 +32,7 @@ public class EventLineComponent extends UIComponentBase
 	private int graphHeight;
 
 	private boolean viewportHeightSet = false;
-	private int viewportHeight;
+	private double viewportHeight;
 
 	private boolean verticalLabelsSet = false;
 	private EventLineVerticalLabels verticalLabels;
@@ -59,6 +59,11 @@ public class EventLineComponent extends UIComponentBase
 	private String getOffsetHiddenFieldName(FacesContext context)
 	{
 		return getClientId(context) + "_offset";
+	}
+
+	private String getEventTextId(FacesContext context, int index)
+	{
+		return getClientId(context) + "_event_text_" + index;
 	}
 
 	public Object saveState(FacesContext context)
@@ -94,8 +99,8 @@ public class EventLineComponent extends UIComponentBase
 		// graphs container CSS
 		String graphsContainerCssStyle =
 			"position: absolute; " +
-			"left: " + (LEFT_LABELS_WIDTH + LABELS_MARGIN) + "px; " +
-			"top: " + (TOP_LABELS_HEIGHT + LABELS_MARGIN) + "px; " +
+			"left: " + (VERTICAL_LABELS_WIDTH + VERTICAL_LABELS_MARGIN) + "px; " +
+			"top: " + (HORIZONTAL_LABELS_HEIGHT + HORIZONTAL_LABELS_MARGIN) + "px; " +
 			"height: " + graphHeight + "px";
 		
 		// graphs container
@@ -122,8 +127,8 @@ public class EventLineComponent extends UIComponentBase
 		// style of the indicator container
 		String indicatorContainerCssSyle =
 			"position: absolute; " +
-			"left: " + (LEFT_LABELS_WIDTH + LABELS_MARGIN) + "px; " +
-			"top: " + (TOP_LABELS_HEIGHT + LABELS_MARGIN) + "px; " +
+			"left: " + (VERTICAL_LABELS_WIDTH + VERTICAL_LABELS_MARGIN) + "px; " +
+			"top: " + (HORIZONTAL_LABELS_HEIGHT + HORIZONTAL_LABELS_MARGIN) + "px; " +
 			"height: " + graphHeight + "px";
 
 		// indicator container
@@ -168,8 +173,8 @@ public class EventLineComponent extends UIComponentBase
 		// selector container CSS
 		String selectorContainerStyle =
 			"position: absolute; " +
-			"left: " + (LEFT_LABELS_WIDTH + LABELS_MARGIN) + "px; " +
-			"top: " + (TOP_LABELS_HEIGHT + LABELS_MARGIN + graphHeight) + "px; " +
+			"left: " + (VERTICAL_LABELS_WIDTH + VERTICAL_LABELS_MARGIN) + "px; " +
+			"top: " + (HORIZONTAL_LABELS_HEIGHT + HORIZONTAL_LABELS_MARGIN + graphHeight + EVENTS_HEIGHT) + "px; " +
 			"height: " + SELECTOR_HEIGHT + "px";
 
 		// selector container
@@ -238,6 +243,54 @@ public class EventLineComponent extends UIComponentBase
 		writer.endElement("div");
 	}
 
+	private void encodeEvents(FacesContext context, ResponseWriter writer) throws IOException
+	{
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("class", "event-line-event-table", null);
+		
+		for (int i = 0; i < events.length; i++)
+		{
+			EventLineEvent event = events[i];
+			
+			if (i > 0)
+			{
+				writer.startElement("tr", this);
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "event-line-event-space", null);
+				writer.endElement("tr");
+				writer.endElement("tr");
+			}
+			
+			writer.startElement("tr", this);
+			writer.writeAttribute("id", getEventTextId(context, i), null);
+			
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "event-line-event-table-label", null);
+			writer.write(String.valueOf(i+1));
+			writer.endElement("td");
+			
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "event-line-event-table-x", null);
+			writer.write(String.valueOf(event.getX()));
+			writer.endElement("td");
+
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "event-line-event-table-text", null);
+			writer.write(event.getText());
+			writer.endElement("td");
+
+			writer.endElement("tr");
+
+		}
+		
+		writer.endElement("table");
+		
+	}
+
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
@@ -263,10 +316,10 @@ public class EventLineComponent extends UIComponentBase
 		graphHeight = getGraphHeight();
 		viewportHeight = getViewportHeight();
 		selectorOffset = getSelectorOffset();
-		EventLineGraph[] graphs = getGraphs();
-		EventLineEvent[] events = getEvents();
-		EventLineZoomLevel[] zoomLevels = getZoomLevels();
-		EventLineVerticalLabels verticalLabels = getVerticalLabels();
+		graphs = getGraphs();
+		events = getEvents();
+		zoomLevels = getZoomLevels();
+		verticalLabels = getVerticalLabels();
 		if (graphs == null) graphs = new EventLineGraph[0];
 		if (events == null) events = new EventLineEvent[0];
 
@@ -298,10 +351,11 @@ public class EventLineComponent extends UIComponentBase
 		regJS.append(graphHeight).append(", ");
 		regJS.append(selectorOffset).append(", ");
 		regJS.append(SELECTOR_HEIGHT).append(", ");
-		regJS.append(LEFT_LABELS_WIDTH).append(", ");
-		regJS.append(LABELS_MARGIN).append(", ");
-		regJS.append(TOP_LABELS_HEIGHT).append(", ");
-		regJS.append(LABELS_MARGIN).append(", ");
+		regJS.append(VERTICAL_LABELS_WIDTH).append(", ");
+		regJS.append(VERTICAL_LABELS_MARGIN).append(", ");
+		regJS.append(HORIZONTAL_LABELS_HEIGHT).append(", ");
+		regJS.append(HORIZONTAL_LABELS_MARGIN).append(", ");
+		regJS.append(EVENTS_HEIGHT).append(", ");
 		
 		// JS events
 		regJS.append("[");
@@ -310,6 +364,7 @@ public class EventLineComponent extends UIComponentBase
 			EventLineEvent event = events[i];
 			if (i > 0) regJS.append(", ");
 			regJS.append("new EventLineEvent(");
+			regJS.append("'").append(getEventTextId(context, i)).append("', ");
 			regJS.append(event.getX()).append(", ");
 			regJS.append("'").append(JsfUtils.escapeStringForJS(event.getText())).append("'");
 			regJS.append(")");
@@ -383,7 +438,14 @@ public class EventLineComponent extends UIComponentBase
 		
 		// main container CSS
 		String mainContainerStyle =
-			"position: relative;";
+			"position: relative; " +
+			"height: " + (
+					HORIZONTAL_LABELS_HEIGHT +
+					HORIZONTAL_LABELS_MARGIN +
+					graphHeight +
+					EVENTS_HEIGHT +
+					SELECTOR_HEIGHT +
+					HORIZONTAL_LABELS_HEIGHT) + "px;";
 
 		// main div container
 		writer.startElement("div", this);
@@ -405,6 +467,9 @@ public class EventLineComponent extends UIComponentBase
 
 		// end of the main container
 		writer.endElement("div");
+		
+		// render events
+		encodeEvents(context, writer);
 
 	}
 
@@ -512,9 +577,9 @@ public class EventLineComponent extends UIComponentBase
 		this.selectorOffset = selectorOffset;
 	}
 
-	public int getViewportHeight()
+	public double getViewportHeight()
 	{
-		return JsfUtils.getCompPropInt(this, getFacesContext(),
+		return JsfUtils.getCompPropDouble(this, getFacesContext(),
 				"viewportHeight", viewportHeightSet, viewportHeight);
 	}
 

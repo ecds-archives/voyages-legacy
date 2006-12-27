@@ -15,14 +15,26 @@ public class MathUtils
 		return j;
 	}
 	
-	public static int firstGreaterOrEqualPow10(int n)
+	public static double firstGreaterOrEqualPow10(double x)
 	{
-		int j = 0;
-		int p = 1;
-		while (p < n)
+		double j = 0;
+		double p = 1;
+		if (x > 1)
 		{
+			while (p < x)
+			{
+				p *= 10;
+				j++;
+			}
+		}
+		else if (x < 1)
+		{
+			while (x <= p)
+			{
+				p /= 10;
+				j++;
+			}
 			p *= 10;
-			j++;
 		}
 		return p;
 	}

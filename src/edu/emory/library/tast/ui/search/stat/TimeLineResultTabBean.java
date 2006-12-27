@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,7 +101,7 @@ public class TimeLineResultTabBean {
 	
 	//private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
-	private int viewportHeight;
+	private double viewportHeight;
 	int expYears[] = {1500, 1600, 1700};
 	double expValues[] = {45, 50, 30};
 
@@ -181,15 +182,19 @@ public class TimeLineResultTabBean {
 			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
-
-			DateFormat format = new SimpleDateFormat("yyyy");
+			
+			Calendar cal = Calendar.getInstance();
+			//DateFormat format = new SimpleDateFormat("yyyy");
+			
 			this.expValues = new double[ret.length];
 			this.expYears = new int[ret.length];
 			for (int i = 0; i < ret.length; i++) {
 				Object[] row = (Object[])ret[i];
-				this.expYears[i] = Integer.parseInt(format.format((Timestamp)row[0]));
+				//this.expYears[i] = Integer.parseInt(format.format((Timestamp)row[0]));
+				cal.setTime((Timestamp)row[0]);
+				this.expYears[i] = cal.get(Calendar.YEAR);
 				if (row[1] != null) {
-					this.expValues[i] = Math.round(((Number)row[1]).doubleValue());
+					this.expValues[i] = ((Number)row[1]).doubleValue();
 				} else {
 					this.expValues[i] = 0;
 				}
@@ -321,10 +326,10 @@ public class TimeLineResultTabBean {
 	
 	
 	/* -New implementation- */
-	public Integer getViewportHeight() {
+	public double getViewportHeight() {
 		showTimeLine();
 		createVerticalLabels();
-		return new Integer(this.viewportHeight);
+		return this.viewportHeight;
 	}
 	public EventLineGraph[] getGraphs() {
 		
@@ -337,18 +342,15 @@ public class TimeLineResultTabBean {
 	private void createVerticalLabels()
 	{
 
-//		int maxValue = (int) Math.max(
-//				graphExp.getMaxValue(),
-//				graphImp.getMaxValue());
-		int maxValue = (int)graphExp.getMaxValue();
+		double maxValue = graphExp.getMaxValue();
 		
 		if (maxValue > 0)
 		{
 
-			int majorSpacing;
-			int minorSpacing;
+			double majorSpacing;
+			double minorSpacing;
 
-			int nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
+			double nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
 			if (maxValue / (nextPow10/10) >= 5)
 			{
 				majorSpacing = nextPow10 / 2;
