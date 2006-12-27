@@ -20,13 +20,12 @@ td.main-panel {
 
 div.message-bar {
 	color: White;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	padding-left: 5px;
 	padding-right: 5px;
-	background-color: #E2873B; 
-	border-bottom: 2px solid #F5F0D3; }
+	background-color: #CF5435; }
 	
 td.message-bar-button {
 	padding-left: 10px; }

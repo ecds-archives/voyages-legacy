@@ -186,7 +186,17 @@ public class SearchBean
 		messageBar.setRendered(true);
 		
 	}
+	
+	public String getFakeHiddenForPermlinkRestore()
+	{
+		restorePermlinkIfAny();
+		return null;
+	}
 
+	public void setFakeHiddenForPermlinkRestore(String value)
+	{
+	}
+	
 	private void restorePermlinkIfAny()
 	{
 		
@@ -199,7 +209,6 @@ public class SearchBean
 		if (StringUtils.isNullOrEmpty(permlink))
 			return;
 
-		params.remove("permlink");
 		Configuration conf = Configuration.loadConfiguration(permlink);
 		if (conf == null)
 			return;
@@ -276,7 +285,6 @@ public class SearchBean
 
 	public QueryBuilderQuery getWorkingQuery()
 	{
-		restorePermlinkIfAny();
 		return workingQuery.getBuilderQuery();
 	}
 
@@ -287,7 +295,6 @@ public class SearchBean
 
 	public History getHistory()
 	{
-		restorePermlinkIfAny();
 		return history;
 	}
 
@@ -298,7 +305,6 @@ public class SearchBean
 
 	public SearchParameters getSearchParameters()
 	{
-		restorePermlinkIfAny();
 		return searchParameters;
 	}
 
@@ -340,7 +346,6 @@ public class SearchBean
 
 	public int getYearFrom()
 	{
-		restorePermlinkIfAny();
 		return workingQuery.getYearFrom();
 	}
 
@@ -351,7 +356,6 @@ public class SearchBean
 
 	public int getYearTo()
 	{
-		restorePermlinkIfAny();
 		return workingQuery.getYearTo();
 	}
 

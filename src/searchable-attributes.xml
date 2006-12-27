@@ -50,7 +50,6 @@
 		id="cd"
 		userLabel="Voyage in 1999 CD-ROM">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -76,7 +75,6 @@
 		id="placcons"
 		userLabel="Place/region where ship constructed">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -90,7 +88,6 @@
 		id="yrcons"
 		userLabel="Year of ship construction">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -103,7 +100,6 @@
 		id="placreg"
 		userLabel="Place/region where ship registered">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -130,7 +126,6 @@
 		id="natinimp"
 		userLabel="Imputed national registration">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -143,7 +138,6 @@
 		id="rig"
 		userLabel="Rig of ship">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -156,7 +150,6 @@
 		id="tonnage"
 		userLabel="Tonnage of ship">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -169,7 +162,6 @@
 		id="tonmod"
 		userLabel="Standardized tonnage">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -182,7 +174,6 @@
 		id="guns"
 		userLabel="Number of guns carried">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -195,7 +186,6 @@
 		id="anyowner"
 		userLabel="Owner's name">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -223,7 +213,6 @@
 		id="fate"
 		userLabel="Particular outcome of voyage">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -262,7 +251,6 @@
 		id="fate3"
 		userLabel="Outcome of voyage if ship captured">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -301,7 +289,6 @@
 		id="plac1tra"
 		userLabel="First place/region of slave purchase">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -314,7 +301,6 @@
 		id="plac2tra"
 		userLabel="Second place/region of slave purchase">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -327,7 +313,6 @@
 		id="plac3tra"
 		userLabel="Third place/region of slave purchase">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -353,7 +338,6 @@
 		id="npafttra"
 		userLabel="Places of call before Atlantic crossing">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -366,7 +350,6 @@
 		id="sla1port"
 		userLabel="First place/region of landing">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -379,7 +362,6 @@
 		id="adpsale1"
 		userLabel="Second place/region  of landing">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -392,7 +374,6 @@
 		id="adpsale2"
 		userLabel="Third place/region  of landing">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<ports>
@@ -403,7 +384,7 @@
 	<searchable-attribute
 		type="port"
 		id="mjslptimp"
-		userLabel="Imputed principal place/region  of landing">
+		userLabel="Imputed principal place/region of landing">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -445,7 +426,6 @@
 		id="datedep"
 		userLabel="Date that voyage began">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -458,7 +438,6 @@
 		id="datebuy"
 		userLabel="Date that slave purchase began">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -471,7 +450,6 @@
 		id="dateleftafr"
 		userLabel="Date that vessel left last slaving port">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -484,7 +462,6 @@
 		id="dateland1"
 		userLabel="Date that slaves landed at first place">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -497,7 +474,6 @@
 		id="dateland2"
 		userLabel="Date of arrival at second place of landing">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -510,7 +486,6 @@
 		id="dateland3"
 		userLabel="Date that slaves landed at third place">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -523,7 +498,6 @@
 		id="datedepam"
 		userLabel="Date that ship left on return voyage">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -536,7 +510,6 @@
 		id="dateend"
 		userLabel="Date when voyage completed">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -549,7 +522,6 @@
 		id="voy1imp"
 		userLabel="Imputed voyage length from departure to first port of landing (days)">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -562,7 +534,6 @@
 		id="voy2imp"
 		userLabel="Imputed length of middle passage (days)">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -603,7 +574,6 @@
 		id="crew3"
 		userLabel="Number of crew when first slaves landed">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -629,7 +599,6 @@
 		id="slintend"
 		userLabel="Number of slaves intended at first place of purchase">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -642,7 +611,6 @@
 		id="ncar13"
 		userLabel="Slaves carried from first port of purchase">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -655,7 +623,6 @@
 		id="ncar15"
 		userLabel="Slaves carried from second port of purchase">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -668,7 +635,6 @@
 		id="ncar17"
 		userLabel="Slaves carried from third port of purchase">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -681,7 +647,6 @@
 		id="tslavesd"
 		userLabel="Total slaves carried off from Africa">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -694,7 +659,6 @@
 		id="slaarriv"
 		userLabel="Number of slaves who arrived at first place of landing">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -707,7 +671,6 @@
 		id="slas32"
 		userLabel="Number of slaves landed at first place">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -720,7 +683,6 @@
 		id="slas36"
 		userLabel="Number of slaves landed at second place">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -733,7 +695,6 @@
 		id="slas39"
 		userLabel="Number of slaves landed at third place">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -787,7 +748,6 @@
 		id="womrat7"
 		userLabel="Percentage of women at beginning or end of Middle Passage (%)">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -856,7 +816,6 @@
 		id="jamcaspr"
 		userLabel="Imputed sterling price of slaves sold in Jamaica">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -869,7 +828,6 @@
 		id="vymrtimp"
 		userLabel="Imputed number of slaves who died during the Middle Passage">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>

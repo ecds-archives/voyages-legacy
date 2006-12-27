@@ -220,6 +220,11 @@
 			edu.emory.library.tast.ui.search.query.RestorePermlinkBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>permlink</property-name>
+			<property-class>java.lang.String</property-class>
+			<value>#{param.permlink}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
@@ -251,6 +256,10 @@
 		<managed-property>
 			<property-name>searchBean</property-name>
 			<value>#{SearchBean}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>voyageBean</property-name>
+			<value>#{VoyageDetailBean}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -460,6 +469,14 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>VoyageDetailBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.voyage.VoyageDetailBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<from-view-id>/reports.jsp</from-view-id>
@@ -632,6 +649,13 @@
 		<navigation-case>
 			<from-outcome>gotosearch</from-outcome>
 			<to-view-id>/search.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>voyage-detail</from-outcome>
+			<to-view-id>/voyage.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

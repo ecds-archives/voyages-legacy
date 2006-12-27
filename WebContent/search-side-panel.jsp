@@ -4,6 +4,8 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
+<h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
+
 <s:sectionGroup
     title="Select time frame"
 	id="selectionYears"

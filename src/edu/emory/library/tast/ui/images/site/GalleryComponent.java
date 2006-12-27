@@ -67,6 +67,21 @@ public class GalleryComponent extends UICommand {
 			*/
 
 	}
+	
+	public void processUpdates(FacesContext context)
+	{
+		
+		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this.getValueOrAttribute(context, "galleryParams");
+
+		if (params.getVid() != null) {
+			System.out.println("VID!!!!");
+			System.out.println("redirect!!!");
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "gotosearch");
+			return;
+		}
+		
+	}
 
 	public void encodeBegin(FacesContext context) throws IOException {
 
@@ -94,13 +109,6 @@ public class GalleryComponent extends UICommand {
 		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this
 				.getValueOrAttribute(context, "galleryParams");
 
-		if (params.getVid() != null) {
-			System.out.println("VID!!!!");
-			System.out.println("redirect!!!");
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, "gotosearch");
-		}
-		
 		if (pictures != null) {
 
 			int set = Integer.parseInt(params.getVisibleSet());

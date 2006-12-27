@@ -29,6 +29,7 @@ import edu.emory.library.tast.ui.search.tabscommon.MemorizedAction;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
+import edu.emory.library.tast.ui.voyage.VoyageDetailBean;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -48,6 +49,8 @@ public class TableResultTabBean {
 	private static final int MAX_STEP = 50000;
 
 	private TableLinkManager linkManager = new TableLinkManager(10);
+	
+	private VoyageDetailBean voyageBean;
 	
 //	/**
 //	 * First currently visible record.
@@ -591,11 +594,14 @@ public class TableResultTabBean {
 	 * @param event
 	 */
 	public void showDetails(ShowDetailsEvent event) {
-		this.configurationMode = new Boolean(false);
-		this.detailMode = new Boolean(true);
-		this.resultsMode = new Boolean(false);
-		this.detailVoyageId = event.getVoyageId();
-		this.needDetailQuery = true;
+		voyageBean.openVoyage(event.getVoyageId().intValue());
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
+//		this.configurationMode = new Boolean(false);
+//		this.detailMode = new Boolean(true);
+//		this.resultsMode = new Boolean(false);
+//		this.detailVoyageId = event.getVoyageId();
+//		this.needDetailQuery = true;
 	}
 	
 	public String cancelConfiguration() {
@@ -1079,5 +1085,15 @@ public class TableResultTabBean {
 
 	public TableLinkManager getTableManager() {
 		return linkManager;
+	}
+
+	public VoyageDetailBean getVoyageBean()
+	{
+		return voyageBean;
+	}
+
+	public void setVoyageBean(VoyageDetailBean voyageBean)
+	{
+		this.voyageBean = voyageBean;
 	}
 }
