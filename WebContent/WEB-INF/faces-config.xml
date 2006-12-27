@@ -626,6 +626,14 @@
 			<to-view-id>/admin/voyage-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/galleryp.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>gotosearch</from-outcome>
+			<to-view-id>/search.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<render-kit />
 

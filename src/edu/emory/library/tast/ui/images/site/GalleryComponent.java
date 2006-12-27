@@ -10,6 +10,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
+import javax.servlet.ServletContext;
 
 import org.hibernate.mapping.ValueVisitor;
 
@@ -93,6 +94,13 @@ public class GalleryComponent extends UICommand {
 		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this
 				.getValueOrAttribute(context, "galleryParams");
 
+		if (params.getVid() != null) {
+			System.out.println("VID!!!!");
+			System.out.println("redirect!!!");
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "gotosearch");
+		}
+		
 		if (pictures != null) {
 
 			int set = Integer.parseInt(params.getVisibleSet());
@@ -292,6 +300,28 @@ public class GalleryComponent extends UICommand {
 		}
 		writer.endElement("td");
 		writer.endElement("tr");
+		
+		
+		writer.startElement("tr", this);
+		writer.startElement("td", this);
+		writer.write("Linked voyage:");
+		writer.endElement("td");
+		writer.startElement("td", this);	
+		if (visibleImage.getImage().getVoyageid() != null) {
+			StringBuffer link = new StringBuffer();
+			link.append("galleryp.faces?").append("vid=");
+			link.append(visibleImage.getImage().getVoyageid() + "");
+			
+			writer.startElement("a", this);
+			writer.writeAttribute("href", link, null);
+			writer.write(visibleImage.getImage().getVoyageid() + "");
+			writer.endElement("a");
+		} else {
+			writer.write("none");
+		}
+		writer.endElement("td");
+		writer.endElement("tr");
+		
 //		writer.write("Related people:");
 //		writer.endElement("td");
 //		writer.startElement("td", this);

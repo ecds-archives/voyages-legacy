@@ -37,6 +37,7 @@ public class Image
 		attributes.put("people", new NumericAttribute("people", "Image", NumericAttribute.TYPE_LONG));
 		attributes.put("regions", new RegionAttribute("regions", "Image"));
 		attributes.put("ports", new PortAttribute("ports", "Image"));
+		attributes.put("voyageid", new NumericAttribute("voyageid", "Image", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private int id;
@@ -60,6 +61,7 @@ public class Image
 	private int imageStatus = 0;
 	private int authorizationStatus = 0;
 	private boolean readyToGo = false;
+	private Integer voyageid;
 
 	private Set regions; 
 	private Set ports;
@@ -395,6 +397,14 @@ public class Image
 
 		return true;
 		
+	}
+
+	public Integer getVoyageid() {
+		return voyageid;
+	}
+
+	public void setVoyageid(Integer voyageid) {
+		this.voyageid = voyageid;
 	}
 
 //	public static void main(String[] args)

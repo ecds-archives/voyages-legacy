@@ -12,6 +12,7 @@ public class GalleryRequestBean {
 		private String id;
 		private String visibleSet;
 		private String visiblePicture;
+		private String vid;
 		
 		public GalleryParams() {
 			Map params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -27,6 +28,9 @@ public class GalleryRequestBean {
 			if (params.containsKey(PICT)) {
 				visiblePicture = (String)params.get(PICT);
 			}
+			if (params.containsKey(VID)) {
+				vid = (String)params.get(VID);
+			}
 		}
 		
 		public String getGalleryType() {
@@ -41,12 +45,17 @@ public class GalleryRequestBean {
 		public String getVisibleSet() {
 			return visibleSet;
 		}
+
+		public String getVid() {
+			return vid;
+		}
 	}
 	
 	public static final String PICT = "pict";
 	public static final String SET = "set";
 	public static final String ID = "id";
 	public static final String GALLERY_TYPE = "obj";
+	public static final String VID = "vid";
 	
 	private GalleryParams params = null;
 	
