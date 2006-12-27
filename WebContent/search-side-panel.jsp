@@ -45,7 +45,7 @@
 	buttonsStyle="middle"
 	selectedSectionId="#{SearchBean.selectedCategory}">
 
-	<s:section title="Beginner" sectionId="beginners">
+	<s:section title="Basic" sectionId="beginners">
 		<s:menuPopup
 			customSubmitFunction="animateAttribute"
 			id="popupMenuAttributesBeginner"
