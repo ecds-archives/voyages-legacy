@@ -195,17 +195,18 @@ public class TimeLineResultTabBean {
 				}
 			}
 			
-//			//Prepare chart generator.
-//			AbstractChartGenerator generator = new XYChartGenerator(Voyage.getAttribute("datedep"));
-//			generator.correctAndCompleteData(ret);
-//			generator.addRowToDataSet(ret, new String[] { this.chosenAggregate + "("
-//					+ this.chosenAttribute.getUserLabelOrName() + ")" });
-//			chart = generator.getChart("Time line graph", false);
-//
-//			//Put chart into session.
-//			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-//			((HttpSession) servletContext.getSession(true)).setAttribute("__chart__object", chart);
+			
+			graphExp = new EventLineGraph();
+			graphExp.setName("Exported");
+			graphExp.setX(expYears);
+			graphExp.setY(expValues);
+			graphExp.setBaseColor("#EEEEEE");
+			graphExp.setEventColor("#AAAAAA");
+			
+			graphExp.setBaseColor("#F1E7C8");
+			graphExp.setEventColor("#AAAAAA");
 
+			
 			this.needQuery = false;
 			this.attributesChanged = false;
 		}
@@ -322,37 +323,12 @@ public class TimeLineResultTabBean {
 	/* -New implementation- */
 	public Integer getViewportHeight() {
 		showTimeLine();
+		createVerticalLabels();
 		return new Integer(this.viewportHeight);
 	}
 	public EventLineGraph[] getGraphs() {
 		
 		this.showTimeLine();
-//		int impYears[] = {1500, 1600, 1700};
-//		double impValues[] = {50, 44, 35};
-		
-		
-		
-		graphExp = new EventLineGraph();
-		graphExp.setName("Exported");
-		graphExp.setX(expYears);
-		graphExp.setY(expValues);
-		graphExp.setBaseColor("#EEEEEE");
-		graphExp.setEventColor("#AAAAAA");
-		
-		graphExp.setBaseColor("#F1E7C8");
-		graphExp.setEventColor("#AAAAAA");
-
-//		// graph for imported
-//		graphImp = new EventLineGraph();
-//		graphImp.setName("Imported");
-//		graphImp.setX(impYears);
-//		graphImp.setY(impValues);
-//		graphImp.setBaseColor("#CCCCCC");
-//		graphImp.setEventColor("#666666");
-//		
-//		graphImp.setBaseColor("#E7D59C");
-//		graphImp.setEventColor("#666666");
-		
 		createVerticalLabels();
 		
 		return new EventLineGraph[] {graphExp};
@@ -399,11 +375,11 @@ public class TimeLineResultTabBean {
 	public EventLineEvent[] getEvents() {
 		showTimeLine();
 		return new EventLineEvent[] {
-				new EventLineEvent(1530, "Event A"),
-				new EventLineEvent(1606, "Event B"),
-				new EventLineEvent(1723, "Event C"),
-				new EventLineEvent(1786, "Event D"),
-				new EventLineEvent(1807, "Event E"),
+//				new EventLineEvent(1530, "Event A"),
+//				new EventLineEvent(1606, "Event B"),
+//				new EventLineEvent(1723, "Event C"),
+//				new EventLineEvent(1786, "Event D"),
+//				new EventLineEvent(1807, "Event E"),
 		};
 	}
 	public EventLineZoomLevel[] getZoomLevels() {
