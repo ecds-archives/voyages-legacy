@@ -227,4 +227,8 @@ public class VoyageDetailBean {
 		this.voyageAttr = voyageAttr;
 	}
 
+	public String refresh() {
+		this.detailVoyageMap.refresh();
+		return null;
+	}
 }
