@@ -45,7 +45,7 @@
 			<attribute name="rig"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="tonnage" userCategory="beginners,general" userLabel="Standardized tonnage">
+	<table-attribute tabs="1,2" id="tonnage" userCategory="beginners,general" userLabel="Tonnage of vessel">
 		<attributes>
 			<attribute name="tonnage"/>
 		</attributes>
