@@ -337,12 +337,12 @@
 			<attribute name="slas39"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners,general" userLabel="Total embarked">
+	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners,general" userLabel="Total disembarked">
 		<attributes>
 			<attribute name="slamimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners,general" userLabel="Total disembarked">
+	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners,general" userLabel="Total embarked">
 		<attributes>
 			<attribute name="slaximp"/>
 		</attributes>

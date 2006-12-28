@@ -57,9 +57,9 @@ div.import-region-list div.checkbox-list-popup {
 div.event-line-left-selector {
 	cursor: move; }
 
-div.event-line-left-selector,
-div.event-line-right-selector {
-	cursor: w-resize; }
+div.event-line-selector-handle {
+	cursor: w-resize;
+	background-color: #CA4223; }
 
 div.event-line-graph-container {
 	border: 0px solid Black; }

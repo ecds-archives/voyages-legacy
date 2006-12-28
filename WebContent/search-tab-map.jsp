@@ -18,6 +18,8 @@
 				miniMapHeight="100"
 				serverBaseUrl="servlet/maptile" />
 				
+			<% /* 
+				
 			<h:outputText value="&nbsp;" escape="false" />
 			<h:outputText value="View by time period:" />
 			
@@ -27,6 +29,9 @@
 				leftExtent="#{MapBean.yearBegin}"		
 				rightExtent="#{MapBean.yearEnd}"
 				markerWidth="40" />
+				
+				*/ %>
+
 		</t:htmlTag>
 
  		<t:htmlTag value="td" style="vertical-align: top;">

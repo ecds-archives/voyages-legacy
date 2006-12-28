@@ -620,12 +620,12 @@ EventLine.prototype.redrawSelectorUsingLeftRight = function(left, right)
 	this.selector.style.width = (right - left) + "px";
 	
 	this.leftSelector.style.left = left + "px";
-	this.leftSelector.style.width = "5px";
-	this.leftSelector.style.backgroundColor = "#999999";
+	this.leftSelector.style.width = "2px";
+	this.leftSelector.className = "event-line-selector-handle";
 	
-	this.rightSelector.style.left = (right - 5) + "px";
-	this.rightSelector.style.width = "5px";
-	this.rightSelector.style.backgroundColor = "#999999";
+	this.rightSelector.style.left = (right - 2) + "px";
+	this.rightSelector.style.width = "2px";
+	this.rightSelector.className = "event-line-selector-handle";
 
 }
 

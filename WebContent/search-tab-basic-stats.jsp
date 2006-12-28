@@ -3,7 +3,7 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
 
-<t:htmlTag value="div" style="padding: 10px; width: 100%;">
+<t:htmlTag value="div" style="padding: 10px;">
 	<s:simpleTable id="stat-table" rows="#{StatisticBean.statisticElements}"/>
 
 <%/*	<h:dataTable var="statEl" value="#{StatisticBean.statisticElements}" 

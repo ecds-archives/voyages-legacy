@@ -4,8 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import org.jfree.chart.JFreeChart;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.EventLineEvent;
@@ -243,15 +241,17 @@ public class TimeLineResultTabBean {
 			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
-
-			DateFormat format = new SimpleDateFormat("yyyy");
+			
+			Calendar cal = Calendar.getInstance();
+			
 			this.expValues = new double[ret.length];
 			this.expYears = new int[ret.length];
 			for (int i = 0; i < ret.length; i++) {
 				Object[] row = (Object[])ret[i];
-				this.expYears[i] = Integer.parseInt(format.format((Timestamp)row[0]));
+				cal.setTime((Timestamp)row[0]);
+				this.expYears[i] = cal.get(Calendar.YEAR);
 				if (row[1] != null) {
-					this.expValues[i] = ((Number)row[1]).doubleValue();
+					this.expValues[i] = ((Number)row[1]).intValue();
 				} else {
 					this.expValues[i] = 0;
 				}

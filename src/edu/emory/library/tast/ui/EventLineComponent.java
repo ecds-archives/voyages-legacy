@@ -251,7 +251,7 @@ public class EventLineComponent extends UIComponentBase
 	private void encodeEvents(FacesContext context, ResponseWriter writer, String mainId) throws IOException
 	{
 		
-		if (this.events == null && this.events.length == 0)
+		if (this.events == null || this.events.length == 0)
 			return;
 		
 		writer.startElement("div", this);
