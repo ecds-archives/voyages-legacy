@@ -438,6 +438,8 @@ public class AdvancedStatisticsTabBean {
 			this.conditions = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
 			neededQuery = true;
 		}
+//		this.conditions = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+//		neededQuery = true;
 		
 		// Check whether we should query DB
 		if (this.searchBean.getSearchParameters().getConditions() != null && this.neededQuery) {
@@ -917,6 +919,7 @@ public class AdvancedStatisticsTabBean {
 	 * @return
 	 */
 	public String getChartPath() {
+		this.showGraph();
 		return IMAGE_FEEDED_SERVLET + "?path=" + STAT_OBJECT_NAME + "&&height=" + this.chartHeight + "&width="
 				+ this.chartWidth;
 	}
