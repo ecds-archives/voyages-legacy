@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -55,15 +56,15 @@ public class TimeLineResultTabBean {
 	 */
 	private List aggregateFunctions;
 
-	/**
-	 * Chosen aggregate.
-	 */
-	private String chosenAggregate = "sum";
+//	/**
+//	 * Chosen aggregate.
+//	 */
+//	private String chosenAggregate = "sum";
 
 	/**
 	 * Chosen attribute name.
 	 */
-	private VisibleAttributeInterface chosenAttribute = VisibleAttribute.getAttribute("slaximp");
+	private StatOption chosenOption = null;
 
 	/**
 	 * Current search bean reference.
@@ -109,21 +110,68 @@ public class TimeLineResultTabBean {
 	/**
 	 * Avaialable voyage attributes.
 	 */
-	private VisibleAttributeInterface[] attributes = null;//VisibleAttribute.getAllAttributes();
+	//private VisibleAttributeInterface[] attributes = null;//VisibleAttribute.getAllAttributes();
 
 	private EventLineVerticalLabels verticalLabels;
 
+	private ArrayList availableStats;
+
+	private class StatOption {
+		public VisibleAttributeInterface attr;
+		public String aggregate;
+		public String userLabel;
+		public StatOption(VisibleAttributeInterface attr, String agregate, String userLabel) {
+			this.attr = attr;
+			this.aggregate = agregate;
+			this.userLabel = userLabel;
+		}
+	}
+	
 	/**
 	 * Default constructor.
 	 *
 	 */
 	public TimeLineResultTabBean() {
-		ArrayList list = new ArrayList();
-		Group groups[] = Group.getGroups();
-		for (int i = 0; i < groups.length; i++) {
-			list.addAll(Arrays.asList(groups[i].getAllVisibleAttributes()));
-		}
-		attributes = (VisibleAttributeInterface[])list.toArray(new VisibleAttributeInterface[] {});
+		
+		
+		this.availableStats = new ArrayList();
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("voyageid"), "count", "Number of voyages per year"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonnage"), "sum", VisibleAttribute.getAttribute("tonnage").getUserLabelOrName() + " - sum"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonnage"), "avg", VisibleAttribute.getAttribute("tonnage").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonmod"), "sum", VisibleAttribute.getAttribute("tonmod").getUserLabelOrName() + " - sum"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonmod"), "avg", VisibleAttribute.getAttribute("tonmod").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("guns"), "avg", VisibleAttribute.getAttribute("guns").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("voy1imp"), "avg", VisibleAttribute.getAttribute("voy1imp").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("voy2imp"), "avg", VisibleAttribute.getAttribute("voy2imp").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crew1"), "avg", VisibleAttribute.getAttribute("crew1").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crew3"), "avg", VisibleAttribute.getAttribute("crew3").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crewdied"), "sum", VisibleAttribute.getAttribute("crewdied").getUserLabelOrName() + " - sum"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crewdied"), "avg", VisibleAttribute.getAttribute("crewdied").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slintend"), "sum", VisibleAttribute.getAttribute("slintend").getUserLabelOrName() + " - sum"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slintend"), "avg", VisibleAttribute.getAttribute("slintend").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slaximp"), "sum", VisibleAttribute.getAttribute("slaximp").getUserLabelOrName() + " - sum"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slaximp"), "avg", VisibleAttribute.getAttribute("slaximp").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slamimp"), "sum", VisibleAttribute.getAttribute("slamimp").getUserLabelOrName() + " - sum"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slaximp"), "avg", VisibleAttribute.getAttribute("slaximp").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("vymrtimp"), "sum", VisibleAttribute.getAttribute("vymrtimp").getUserLabelOrName() + " - sum"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("vymrtimp"), "avg", VisibleAttribute.getAttribute("vymrtimp").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("boyrat7"), "avg", VisibleAttribute.getAttribute("boyrat7").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("girlrat7"), "avg", VisibleAttribute.getAttribute("girlrat7").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("menrat7"), "avg", VisibleAttribute.getAttribute("menrat7").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("womrat7"), "avg", VisibleAttribute.getAttribute("womrat7").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("chilrat7"), "avg", VisibleAttribute.getAttribute("chilrat7").getUserLabelOrName() + " - average"));
+		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("malrat7"), "avg", VisibleAttribute.getAttribute("malrat7").getUserLabelOrName() + " - average"));
+		
+		
+		this.chosenOption = (StatOption)this.availableStats.get(0);
+		
+		
+//		ArrayList list = new ArrayList();
+//		Group groups[] = Group.getGroups();
+//		for (int i = 0; i < groups.length; i++) {
+//			list.addAll(Arrays.asList(groups[i].getAllVisibleAttributes()));
+//		}
+//		attributes = (VisibleAttributeInterface[])list.toArray(new VisibleAttributeInterface[] {});
 	}
 
 	/**
@@ -134,33 +182,39 @@ public class TimeLineResultTabBean {
 
 		//Build list of numeric attributes.
 		this.voyageAttributes = new ArrayList();
-		for (int i = 0; i < attributes.length; i++) {
-			VisibleAttributeInterface attr = attributes[i];
-			if (attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE) && (!attr.isDate() || attr.getName().equals("voyageid")) &&
-					attr.getAttributes().length == 1) {
-				String outString = attr.toString();
-				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
-
-			}
-		}
+//		for (int i = 0; i < attributes.length; i++) {
+//			VisibleAttributeInterface attr = attributes[i];
+//			if (attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE) && (!attr.isDate() || attr.getName().equals("voyageid")) &&
+//					attr.getAttributes().length == 1) {
+//				String outString = attr.toString();
+//				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
+//
+//			}
+//		}
 		//Collections.sort(voyageAttributes);
 
+		Iterator iter = this.availableStats.iterator();
+		while (iter.hasNext()) {
+			StatOption option = (StatOption)iter.next();
+			this.voyageAttributes.add(new SelectItem(String.valueOf(option.hashCode()), option.userLabel));
+		}
+		
 		return this.voyageAttributes;
 	}
 
-	/**
-	 * Gets avaialable aggregates.
-	 * @return
-	 */
-	public List getAggregateFunctions() {
-		if (this.aggregateFunctions == null) {
-			this.aggregateFunctions = new ArrayList();
-			for (int i = 0; i < aggregates.length; i++) {
-				this.aggregateFunctions.add(new SelectItem(aggregates[i], aggregatesUL[i]));
-			}
-		}
-		return this.aggregateFunctions;
-	}
+//	/**
+//	 * Gets avaialable aggregates.
+//	 * @return
+//	 */
+//	public List getAggregateFunctions() {
+//		if (this.aggregateFunctions == null) {
+//			this.aggregateFunctions = new ArrayList();
+//			for (int i = 0; i < aggregates.length; i++) {
+//				this.aggregateFunctions.add(new SelectItem(aggregates[i], aggregatesUL[i]));
+//			}
+//		}
+//		return this.aggregateFunctions;
+//	}
 
 	/**
 	 * Shows time line chart.
@@ -185,7 +239,7 @@ public class TimeLineResultTabBean {
 			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
 			qValue.setGroupBy(new Attribute[] { new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
 			qValue.addPopulatedAttribute(new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")}));
-			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenAggregate, this.chosenAttribute.getAttributes()));
+			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenOption.aggregate, this.chosenOption.attr.getAttributes()));
 			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
@@ -205,7 +259,7 @@ public class TimeLineResultTabBean {
 			
 			
 			graphExp = new EventLineGraph();
-			graphExp.setName(chosenAttribute.getUserLabelOrName());
+			graphExp.setName(chosenOption.userLabel);
 			graphExp.setX(expYears);
 			graphExp.setY(expValues);
 			graphExp.setBaseCssClass("timeline-color");
@@ -219,31 +273,31 @@ public class TimeLineResultTabBean {
 		return null;
 	}
 
-	/**
-	 * Gets currently chosen aggregate.
-	 * @return
-	 */
-	public String getChosenAggregate() {
-		return chosenAggregate;
-	}
+//	/**
+//	 * Gets currently chosen aggregate.
+//	 * @return
+//	 */
+//	public String getChosenAggregate() {
+//		return chosenAggregate;
+//	}
 
-	/**
-	 * Sets currently chosen aggregate.
-	 * @param chosenAggregate
-	 */
-	public void setChosenAggregate(String chosenAggregate) {
-		if (chosenAggregate != null && !chosenAggregate.equals(this.chosenAttribute)) {
-			this.chosenAggregate = chosenAggregate;
-			this.attributesChanged = true;
-		}
-	}
+//	/**
+//	 * Sets currently chosen aggregate.
+//	 * @param chosenAggregate
+//	 */
+//	public void setChosenAggregate(String chosenAggregate) {
+//		if (chosenAggregate != null && !chosenAggregate.equals(this.chosenAttribute)) {
+//			this.chosenAggregate = chosenAggregate;
+//			this.attributesChanged = true;
+//		}
+//	}
 
 	/**
 	 * Gets currently chosen attribute.
 	 * @return
 	 */
 	public String getChosenAttribute() {
-		return chosenAttribute.getName();
+		return String.valueOf(chosenOption.hashCode());
 	}
 
 	/**
@@ -251,9 +305,16 @@ public class TimeLineResultTabBean {
 	 * @param chosenAttribute
 	 */
 	public void setChosenAttribute(String chosenAttribute) {
-		if (chosenAttribute != null && !chosenAttribute.equals(this.chosenAttribute)) {
-			this.chosenAttribute = VisibleAttribute.getAttribute(chosenAttribute);
-			this.attributesChanged = true;
+		this.attributesChanged = true;
+		if (chosenAttribute != null) {
+			Iterator iter = this.availableStats.iterator();
+			while (iter.hasNext()) {
+				StatOption option = (StatOption) iter.next();
+				if (option.hashCode() == Integer.parseInt(chosenAttribute)) {
+					this.chosenOption = option;
+					break;
+				}
+			}
 		}
 
 	}

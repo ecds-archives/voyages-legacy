@@ -9,9 +9,11 @@
 	<h:panelGroup>
 		<t:htmlTag value="div" styleClass="section-inside-group">
 			<h:outputText value="Y axis value: " />
+			<%/* 
 			<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAggregate}" id="tLAggregates">
 				<f:selectItems value="#{TimeLineResultTabBean.aggregateFunctions}" />
 			</h:selectOneMenu>
+			 */%>
 			<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAttribute}" id="tLAttributes">
 				<f:selectItems value="#{TimeLineResultTabBean.voyageNumericAttributes}" />
 			</h:selectOneMenu>
