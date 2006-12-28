@@ -94,7 +94,7 @@ public class EstimatesTimelineBean
 		graphExp.setY(expValues);
 		graphExp.setBaseColor("#EEEEEE");
 		graphExp.setEventColor("#AAAAAA");
-		
+
 		graphExp.setBaseColor("#F1E7C8");
 		graphExp.setEventColor("#AAAAAA");
 
@@ -105,7 +105,7 @@ public class EstimatesTimelineBean
 		graphImp.setY(impValues);
 		graphImp.setBaseColor("#CCCCCC");
 		graphImp.setEventColor("#666666");
-		
+
 		graphImp.setBaseColor("#E7D59C");
 		graphImp.setEventColor("#666666");
 		

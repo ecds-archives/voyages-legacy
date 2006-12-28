@@ -121,6 +121,7 @@ td.event-line-event-space {
 	height: 5px; }
 
 td.event-line-event-table-label {
+	cursor: pointer;
 	color: White;
 	text-align: center;
 	background-color: #571B1D;
@@ -145,3 +146,25 @@ table.event-line-event-label td {
 
 table.event-line-event-label-selected td {
 	background-color: #CA4223; }
+	
+table.event-line-legend {
+	margin-left: 70px;
+	margin-bottom: 15px; }
+
+td.event-line-legend-sample {
+	padding-right: 5px; }
+
+td.event-line-legend-sample div {
+	border: 1px solid Black;
+	overflow: hidden;
+	width: 12px;
+	height: 12px; }
+	
+td.event-line-legend-name {
+	}
+
+td.event-line-legend-value {
+	padding-right: 5px; }
+	
+div.event-line-events-title {
+	display: none; }

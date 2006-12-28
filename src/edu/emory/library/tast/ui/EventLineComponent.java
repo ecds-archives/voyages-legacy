@@ -66,6 +66,11 @@ public class EventLineComponent extends UIComponentBase
 		return getClientId(context) + "_event_text_" + index;
 	}
 
+	private String getLegendValueElementId(FacesContext context, int index)
+	{
+		return getClientId(context) + "_legend_" + index;
+	}
+
 	public Object saveState(FacesContext context)
 	{
 		Object[] values = new Object[5];
@@ -246,6 +251,14 @@ public class EventLineComponent extends UIComponentBase
 	private void encodeEvents(FacesContext context, ResponseWriter writer, String mainId) throws IOException
 	{
 		
+		if (this.events == null && this.events.length == 0)
+			return;
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "event-line-events-title", null);
+		writer.write("Events");
+		writer.endElement("div");
+		
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
@@ -297,6 +310,48 @@ public class EventLineComponent extends UIComponentBase
 		
 		writer.endElement("table");
 		
+	}
+
+	private void encodeLegend(FacesContext context, ResponseWriter writer, String mainId) throws IOException
+	{
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("class", "event-line-legend", null);
+		writer.startElement("tr", this);
+		
+		for (int i = 0; i < graphs.length; i++)
+		{
+			
+			EventLineGraph graph = graphs[i];
+			
+			String cssStyle =
+				"background-color: " + graph.getBaseColor();
+			
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "event-line-legend-sample", null);
+			writer.startElement("div", this);
+			writer.writeAttribute("style", cssStyle, null);
+			writer.endElement("div");
+			writer.endElement("td");
+
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "event-line-legend-name", null);
+			writer.write(graph.getName());
+			writer.endElement("td");
+
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "event-line-legend-value", null);
+			writer.writeAttribute("id", getLegendValueElementId(context, i), null);
+			writer.endElement("td");
+
+		}
+
+		writer.endElement("tr");
+		writer.endElement("table");
+
 	}
 
 	public void encodeBegin(FacesContext context) throws IOException
@@ -389,6 +444,7 @@ public class EventLineComponent extends UIComponentBase
 			if (i > 0) regJS.append(", ");
 			regJS.append("new EventLineGraph(");
 			regJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
+			regJS.append("'").append(getLegendValueElementId(context, i)).append("', ");
 			regJS.append("'").append(graph.getBaseColor()).append("', ");
 			regJS.append("'").append(graph.getEventOrBaseColor()).append("', ");
 			regJS.append(graph.getMaxValue()).append(", ");
@@ -475,6 +531,9 @@ public class EventLineComponent extends UIComponentBase
 
 		// end of the main container
 		writer.endElement("div");
+		
+		// render legend
+		encodeLegend(context, writer, mainId);
 		
 		// render events
 		encodeEvents(context, writer, mainId);

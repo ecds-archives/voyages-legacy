@@ -35,13 +35,14 @@ function EventLineEvent(textId, x, text)
 	this.text = text;
 }
 
-function EventLineGraph(name, baseColor, eventColor, maxValue, minValue, x, y)
+function EventLineGraph(name, legendValueElementId, baseColor, eventColor, maxValue, minValue, x, y)
 {
 	this.name = name;
 	this.baseColor = baseColor;
 	this.eventColor = eventColor;
 	this.maxValue = maxValue;
 	this.minValue = minValue;
+	this.legendValueElementId = legendValueElementId;
 	this.x = x;
 	this.y = y;
 }
@@ -637,17 +638,38 @@ EventLine.prototype.redrawSelector = function(offset, span)
 EventLine.prototype.graphMouseOver = function(event)
 {
 	this.indicatorElement.style.display = "block";
-	this.indicatorLabelElement.style.display = "block";
+	//this.indicatorLabelElement.style.display = "block";
 }
 
 EventLine.prototype.graphMouseOut = function(event)
 {
 	this.indicatorElement.style.display = "none";
-	this.indicatorLabelElement.style.display = "none";
+	//this.indicatorLabelElement.style.display = "none";
 }
 
 EventLine.prototype.graphMouseMove = function(event)
 {
+
+	var x = ElementUtils.getEventMouseElementX(event, this.indicatorContainerElement);
+	
+	if (x < 0) x = 0;
+	if (x > this.graphWidth) x = this.graphWidth;
+
+	var barWidth = this.zoomLevels[this.zoomLevel].barWidth;
+	var pos = Math.floor(x / barWidth);
+
+	for (var i = 0; i < this.graphs.length; i++)
+	{
+		var graph = this.graphs[i];
+		var value = graph.currentY[pos];
+		var legendValueElement = document.getElementById(graph.legendValueElementId);
+		if (legendValueElement)	legendValueElement.innerHTML = ": " + value;
+	}
+	
+	this.indicatorElement.style.left = (pos * barWidth) + "px";
+	this.indicatorLabelElement.style.left = (pos * barWidth) + "px";
+
+	/*
 
 	var x = ElementUtils.getEventMouseElementX(event, this.indicatorContainerElement);
 	
@@ -678,6 +700,8 @@ EventLine.prototype.graphMouseMove = function(event)
 	this.indicatorLabelElement.style.left = (pos * barWidth) + "px";
 
 	this.indicatorLabelElement.innerHTML = label;
+	
+	*/
 
 }
 
