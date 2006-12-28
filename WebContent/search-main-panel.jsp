@@ -34,7 +34,7 @@
 		</s:stattab>
 	</s:section>
 	
-	<s:section title="Map of ports" sectionId="map-ports">
+	<s:section title="Maps" sectionId="map-ports">
 		<s:stattab>
 		<%@ include file="search-tab-map.jsp" %>
 		</s:stattab>

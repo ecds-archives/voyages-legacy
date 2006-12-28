@@ -177,4 +177,11 @@ td.search-simple-stat-h_c2, td.search-simple-stat-h_c3, td.search-simple-stat-h_
 	font-weight: bold;
 	text-align: right;
 }
+
+table.multiline-attr-table {
+}
 	
+table.multiline-attr-table td {
+	padding: 0px !important;
+	white-space: nowrap;
+}

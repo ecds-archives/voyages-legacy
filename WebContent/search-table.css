@@ -22,14 +22,17 @@ table.grid th a {
 	
 tr.grid-row-even {
 	cursor: pointer;
-	border-bottom: 2px solid #F1E7C8; }
+	border-bottom: 2px solid #F1E7C8; 
+}
 
 tr.grid-row-odd {
 	cursor: pointer;
 	border-bottom: 2px solid #F1E7C8; }
 
 tr.grid-row-odd td, tr.grid-row-even td { 
-	padding: 5px; }
+	padding: 5px; 
+	vertical-align: top;
+}
 		
 tr.grid-row-last {
 	cursor: pointer;

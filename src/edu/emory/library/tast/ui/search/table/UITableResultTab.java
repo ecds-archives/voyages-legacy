@@ -24,7 +24,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class UITableResultTab extends UIOutput {
 
-	private static final int TRIM_LENGTH = 35;
+	private static final int TRIM_LENGTH = 300005;
 
 	/**
 	 * Sort changed binding.
@@ -238,7 +238,8 @@ public class UITableResultTab extends UIOutput {
 							//visibleToolTop = objString.replaceAll(" ", "&nbsp;");
 							visibleToolTop = columnData.getToolTipText(data);
 						} else {
-							visibleLabel = columnData.toString().replaceAll(" ", "&nbsp;");
+							//visibleLabel = columnData.toString().replaceAll(" ", "&nbsp;");
+							visibleLabel = columnData.toString();
 						}
 					}
 					writer.startElement("td", this);

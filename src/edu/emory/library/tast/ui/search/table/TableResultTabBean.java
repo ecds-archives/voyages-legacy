@@ -746,7 +746,7 @@ public class TableResultTabBean {
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
 			this.selectedGroupSet = (groupSets[0]).getId().toString();
 		}
-		Collections.sort(res);
+		//Collections.sort(res);
 		return res;
 	}
 
@@ -768,7 +768,7 @@ public class TableResultTabBean {
 			}
 		}
 
-		Collections.sort(res);
+		//Collections.sort(res);
 		return res;
 	}
 

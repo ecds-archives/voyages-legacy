@@ -13,7 +13,7 @@ import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
  */
 public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 
-	private MessageFormat formatter = new MessageFormat("{0,number, #,###,###}");
+	private MessageFormat formatter = new MessageFormat("{0,number, #,###,###.##}");
 	
 	/**
 	 * Formats output that will be shown to user for single Object.
@@ -43,17 +43,13 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 	public String format(VisibleAttributeInterface attr, Object[] object) {
 		StringBuffer buf = new StringBuffer();
 		boolean added = false;
-		buf.append("[");		
+//		buf.append("[");		
+		buf.append("<table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" class=\"multiline-attr-table\">");
 		for (int i = 0; i < object.length; i++) {
-			if (object[i] != null) {
-				if (i > 0 && added) {
-					buf.append(", ");
-				}
-				buf.append("'");
-//				if (object[i] instanceof Number) {
-//					buf.append(formatter.format(new Object[] {object[i]}));
-//				} else {
-//				}
+			if (object[i] != null && !String.valueOf(object[i]).trim().equals("")) {
+				
+				buf.append("<tr><td>");
+				added = true;
 				if (!attr.isDate()) {
 					if (object[i] instanceof Number) {
 						buf.append(formatter.format(new Object[] {object[i]}));
@@ -64,13 +60,54 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 					buf.append(object[i].toString());
 				}
 
-				buf.append("'");
+				buf.append("</td></tr>\n");
 				added = true;
 			}
 
 		}
-		buf.append("]");
+		if (!added) {
+			buf.append("<tr><td> \n");
+			buf.append("</td></tr>\n");
+		}
+//		buf.append("]");
+		buf.append("</table>");
 		return buf.toString();
 	}
 
+	
+//	/**
+//	 * Formats output that will be shown to user for Object array.
+//	 */
+//	public String format(VisibleAttributeInterface attr, Object[] object) {
+//		StringBuffer buf = new StringBuffer();
+//		boolean added = false;
+//		buf.append("[");		
+//		for (int i = 0; i < object.length; i++) {
+//			if (object[i] != null) {
+//				if (i > 0 && added) {
+//					buf.append(", ");
+//				}
+//				buf.append("'");
+////				if (object[i] instanceof Number) {
+////					buf.append(formatter.format(new Object[] {object[i]}));
+////				} else {
+////				}
+//				if (!attr.isDate()) {
+//					if (object[i] instanceof Number) {
+//						buf.append(formatter.format(new Object[] {object[i]}));
+//					} else {
+//						buf.append(object[i].toString());
+//					}
+//				} else {
+//					buf.append(object[i].toString());
+//				}
+//
+//				buf.append("'");
+//				added = true;
+//			}
+//
+//		}
+//		buf.append("]");
+//		return buf.toString();
+//	}
 }

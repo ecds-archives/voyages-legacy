@@ -36,13 +36,13 @@ public class StatisticBean {
 			
 			elements = new StatisticElement[7];
 			
-			this.prepareEstimate(0, "slaximp", conditions);
-			this.prepareEstimate(1, "slamimp", conditions);
-			this.prepareEstimate(2, "vymrtrat", conditions);
-			this.prepareEstimate(3, "voy2imp", conditions);
-			this.prepareEstimate(4, "malrat7", conditions);
-			this.prepareEstimate(5, "chilrat7", conditions);
-			this.prepareEstimate(6, "tonmod", conditions);
+			this.prepareEstimate(0, "slaximp", conditions, true, false);
+			this.prepareEstimate(1, "slamimp", conditions, true, false);
+			this.prepareEstimate(2, "vymrtrat", conditions, false, true);
+			this.prepareEstimate(3, "voy2imp", conditions, true, false);
+			this.prepareEstimate(4, "malrat7", conditions, false, true);
+			this.prepareEstimate(5, "chilrat7", conditions, false, true);
+			this.prepareEstimate(6, "tonnage", conditions, true, false);
 			
 //			Object[] results = query.executeQuery();
 //			
@@ -64,7 +64,7 @@ public class StatisticBean {
 		cells[0] = new SimpleTableCell[4];
 		cells[0][0] = new SimpleTableCell("", "search-simple-stat-h_c1", null);
 		cells[0][1] = new SimpleTableCell("Total sum", "search-simple-stat-h_c2", null);
-		cells[0][2] = new SimpleTableCell("Sample", "search-simple-stat-h_c3", null);
+		cells[0][2] = new SimpleTableCell("Number of voyages", "search-simple-stat-h_c3", null);
 		cells[0][3] = new SimpleTableCell("Average", "search-simple-stat-h_c4", null);
 		for (int i = 1; i < cells.length; i++) {
 			cells[i] = new SimpleTableCell[4];
@@ -77,7 +77,7 @@ public class StatisticBean {
 		return cells;
 	}
 
-	private void prepareEstimate(int i, String attribute, Conditions conditions) {
+	private void prepareEstimate(int i, String attribute, Conditions conditions, boolean showTotal, boolean percent) {
 		Conditions cond2 = (Conditions)conditions.clone();
 		cond2.addCondition(Voyage.getAttribute(attribute), null, Conditions.OP_IS_NOT);
 		
@@ -93,10 +93,23 @@ public class StatisticBean {
 			if (row[0] == null || row[1] == null) {
 				elements[i] = new StatisticElement(statNames[i], "not available", "not available", "not available");
 			} else {
-				elements[i] = new StatisticElement(statNames[i], 
-					format.format((Number)row[0]), 
-					format.format((Number)row[1]),
-					String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue() * 1000) / (double)1000));
+				String stat = "";
+				if (percent) {
+					stat = String.valueOf(Math.round(100*((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue())) + "%";
+				} else {
+					stat = String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue()));						
+				}
+				if (showTotal) {	
+					elements[i] = new StatisticElement(statNames[i], 
+							format.format((Number)row[0]), 
+							format.format((Number)row[1]),
+							stat);
+				} else {
+					elements[i] = new StatisticElement(statNames[i], 
+							"",
+							format.format((Number)row[1]),
+							stat);
+				}
 			}
 		}
 	}

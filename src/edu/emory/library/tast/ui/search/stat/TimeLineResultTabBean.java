@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +14,7 @@ import org.jfree.chart.JFreeChart;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.EventLineEvent;
@@ -38,7 +39,7 @@ public class TimeLineResultTabBean {
 
 	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
 
-	private static final String[] aggregatesUL = { "Avg", "Min", "Max", "Sum", "Count" };
+	private static final String[] aggregatesUL = { "Average", "Minimum", "Maximum", "Sum", "Count" };
 
 	private static final String DEFAULT_CHART_HEIGHT = "480";
 
@@ -101,14 +102,14 @@ public class TimeLineResultTabBean {
 	
 	//private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
-	private double viewportHeight;
+	private int viewportHeight;
 	int expYears[] = {1500, 1600, 1700};
 	double expValues[] = {45, 50, 30};
 
 	/**
 	 * Avaialable voyage attributes.
 	 */
-	private VisibleAttributeInterface[] attributes = VisibleAttribute.getAllAttributes();
+	private VisibleAttributeInterface[] attributes = null;//VisibleAttribute.getAllAttributes();
 
 	private EventLineVerticalLabels verticalLabels;
 
@@ -117,6 +118,12 @@ public class TimeLineResultTabBean {
 	 *
 	 */
 	public TimeLineResultTabBean() {
+		ArrayList list = new ArrayList();
+		Group groups[] = Group.getGroups();
+		for (int i = 0; i < groups.length; i++) {
+			list.addAll(Arrays.asList(groups[i].getAllVisibleAttributes()));
+		}
+		attributes = (VisibleAttributeInterface[])list.toArray(new VisibleAttributeInterface[] {});
 	}
 
 	/**
@@ -129,14 +136,14 @@ public class TimeLineResultTabBean {
 		this.voyageAttributes = new ArrayList();
 		for (int i = 0; i < attributes.length; i++) {
 			VisibleAttributeInterface attr = attributes[i];
-			if ((attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE)) &&
+			if (attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE) && (!attr.isDate() || attr.getName().equals("voyageid")) &&
 					attr.getAttributes().length == 1) {
 				String outString = attr.toString();
 				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
 
 			}
 		}
-		Collections.sort(voyageAttributes);
+		//Collections.sort(voyageAttributes);
 
 		return this.voyageAttributes;
 	}
@@ -182,19 +189,15 @@ public class TimeLineResultTabBean {
 			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			Object[] ret = qValue.executeQuery();
-			
-			Calendar cal = Calendar.getInstance();
-			//DateFormat format = new SimpleDateFormat("yyyy");
-			
+
+			DateFormat format = new SimpleDateFormat("yyyy");
 			this.expValues = new double[ret.length];
 			this.expYears = new int[ret.length];
 			for (int i = 0; i < ret.length; i++) {
 				Object[] row = (Object[])ret[i];
-				//this.expYears[i] = Integer.parseInt(format.format((Timestamp)row[0]));
-				cal.setTime((Timestamp)row[0]);
-				this.expYears[i] = cal.get(Calendar.YEAR);
+				this.expYears[i] = Integer.parseInt(format.format((Timestamp)row[0]));
 				if (row[1] != null) {
-					this.expValues[i] = ((Number)row[1]).doubleValue();
+					this.expValues[i] = Math.round(((Number)row[1]).doubleValue());
 				} else {
 					this.expValues[i] = 0;
 				}
@@ -202,14 +205,14 @@ public class TimeLineResultTabBean {
 			
 			
 			graphExp = new EventLineGraph();
-			graphExp.setName("Exported");
+			graphExp.setName(chosenAttribute.getUserLabelOrName());
 			graphExp.setX(expYears);
 			graphExp.setY(expValues);
-			graphExp.setBaseCssClass("#EEEEEE");
-			graphExp.setEventCssClass("#AAAAAA");
+			graphExp.setBaseColor("#EEEEEE");
+			graphExp.setEventColor("#AAAAAA");
 			
-			graphExp.setBaseCssClass("#F1E7C8");
-			graphExp.setEventCssClass("#AAAAAA");
+			graphExp.setBaseColor("#F1E7C8");
+			graphExp.setEventColor("#AAAAAA");
 
 			
 			this.needQuery = false;
@@ -326,10 +329,10 @@ public class TimeLineResultTabBean {
 	
 	
 	/* -New implementation- */
-	public double getViewportHeight() {
+	public Integer getViewportHeight() {
 		showTimeLine();
 		createVerticalLabels();
-		return this.viewportHeight;
+		return new Integer(this.viewportHeight);
 	}
 	public EventLineGraph[] getGraphs() {
 		
@@ -342,15 +345,18 @@ public class TimeLineResultTabBean {
 	private void createVerticalLabels()
 	{
 
-		double maxValue = graphExp.getMaxValue();
+//		int maxValue = (int) Math.max(
+//				graphExp.getMaxValue(),
+//				graphImp.getMaxValue());
+		int maxValue = (int)graphExp.getMaxValue();
 		
 		if (maxValue > 0)
 		{
 
-			double majorSpacing;
-			double minorSpacing;
+			int majorSpacing;
+			int minorSpacing;
 
-			double nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
+			int nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
 			if (maxValue / (nextPow10/10) >= 5)
 			{
 				majorSpacing = nextPow10 / 2;
