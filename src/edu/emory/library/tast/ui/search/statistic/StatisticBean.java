@@ -95,7 +95,7 @@ public class StatisticBean {
 			} else {
 				String stat = "";
 				if (percent) {
-					stat = String.valueOf(Math.round(100*((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue())) + "%";
+					stat = String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue())) + "%";
 				} else {
 					stat = String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue()));						
 				}

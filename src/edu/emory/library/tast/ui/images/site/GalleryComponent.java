@@ -49,7 +49,6 @@ public class GalleryComponent extends UICommand {
 	public void decode(FacesContext context) {
 		Map params = context.getExternalContext().getRequestParameterMap();
 
-		System.out.println("Decode!!!!");
 		if (params.get(this.getHiddenFieldId(context)) != null) {
 			String param = (String)params.get(this.getHiddenFieldId(context));
 			queueEvent(new ShowVoyageEvent(this, new Integer(param)));

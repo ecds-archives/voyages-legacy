@@ -127,7 +127,7 @@ public class AdvancedStatisticsTabBean {
 	 * Indication of aggregate functions enabling. If aggregates are enabled -
 	 * true.
 	 */
-	private Boolean aggregate = new Boolean(false);
+	private Boolean aggregate = new Boolean(true);
 
 	/**
 	 * Currently used order (asc, desc, ignore). See QueryValue.ORDER_*

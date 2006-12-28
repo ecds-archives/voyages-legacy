@@ -19,8 +19,7 @@
 		</t:htmlTag>
 	</h:panelGroup>
 
-	<h:panelGroup rendered="true" style="background: white; height: 300px;">
-		<t:htmlTag value="div" id="div-timeline" style="background: white; height: 550px; padding-top: 100px;">
+	<h:panelGroup rendered="true" style="background: white;">
 			<s:eventLine
 				id="eventLine_db"
 				graphHeight="200"
@@ -32,7 +31,7 @@
 				events="#{TimeLineResultTabBean.events}" 
 				zoomLevels="#{TimeLineResultTabBean.zoomLevels}"
 				verticalLabels="#{TimeLineResultTabBean.verticalLabels}" />
-		</t:htmlTag>
+
 	</h:panelGroup>	
 	<%/* Graph data */%>
 	<% /*

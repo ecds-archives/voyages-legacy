@@ -42,15 +42,18 @@
 							<f:selectItems value="#{AdvancedStatisticsTabBean.voyageSelectedAttributes}" />
 						</h:selectOneMenu>
 
-						<h:panelGrid columns="2">
+
+						<h:panelGrid id="stat-filler-1"  columns="2">
+						<%/*
 							<h:selectBooleanCheckbox onclick="submit()" disabled="#{AdvancedStatisticsTabBean.errorPresent}"
 								value="#{AdvancedStatisticsTabBean.aggregate}" />
 							<h:outputText value="Enable aggregate functions" />
+						*/%>
 						</h:panelGrid>
 
-						<h:outputText value="Order: " />
+						<h:outputText id="stat-label-1" value="Order: " />
 
-						<h:selectOneMenu style="width: 300px;" value="#{AdvancedStatisticsTabBean.order}" id="order_select">
+						<h:selectOneMenu id="stat-select-y" style="width: 300px;" value="#{AdvancedStatisticsTabBean.order}" id="order_select">
 							<f:selectItems value="#{AdvancedStatisticsTabBean.availableOrders}" />
 						</h:selectOneMenu>
 

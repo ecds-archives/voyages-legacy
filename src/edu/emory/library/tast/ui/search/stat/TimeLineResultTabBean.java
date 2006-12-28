@@ -102,7 +102,7 @@ public class TimeLineResultTabBean {
 	
 	//private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
-	private int viewportHeight;
+	private double viewportHeight;
 	int expYears[] = {1500, 1600, 1700};
 	double expValues[] = {45, 50, 30};
 
@@ -197,7 +197,7 @@ public class TimeLineResultTabBean {
 				Object[] row = (Object[])ret[i];
 				this.expYears[i] = Integer.parseInt(format.format((Timestamp)row[0]));
 				if (row[1] != null) {
-					this.expValues[i] = Math.round(((Number)row[1]).doubleValue());
+					this.expValues[i] = ((Number)row[1]).doubleValue();
 				} else {
 					this.expValues[i] = 0;
 				}
@@ -208,11 +208,8 @@ public class TimeLineResultTabBean {
 			graphExp.setName(chosenAttribute.getUserLabelOrName());
 			graphExp.setX(expYears);
 			graphExp.setY(expValues);
-			graphExp.setBaseColor("#EEEEEE");
-			graphExp.setEventColor("#AAAAAA");
-			
-			graphExp.setBaseColor("#F1E7C8");
-			graphExp.setEventColor("#AAAAAA");
+			graphExp.setBaseCssClass("timeline-color");
+			//graphExp.setEventColor("#AAAAAA");
 
 			
 			this.needQuery = false;
@@ -325,14 +322,11 @@ public class TimeLineResultTabBean {
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
 	}
-	
-	
-	
-	/* -New implementation- */
-	public Integer getViewportHeight() {
+
+	public Double getViewportHeight() {
 		showTimeLine();
 		createVerticalLabels();
-		return new Integer(this.viewportHeight);
+		return new Double(this.viewportHeight);
 	}
 	public EventLineGraph[] getGraphs() {
 		
@@ -348,15 +342,15 @@ public class TimeLineResultTabBean {
 //		int maxValue = (int) Math.max(
 //				graphExp.getMaxValue(),
 //				graphImp.getMaxValue());
-		int maxValue = (int)graphExp.getMaxValue();
+		double maxValue = graphExp.getMaxValue();
 		
 		if (maxValue > 0)
 		{
 
-			int majorSpacing;
-			int minorSpacing;
+			double majorSpacing;
+			double minorSpacing;
 
-			int nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
+			double nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
 			if (maxValue / (nextPow10/10) >= 5)
 			{
 				majorSpacing = nextPow10 / 2;
