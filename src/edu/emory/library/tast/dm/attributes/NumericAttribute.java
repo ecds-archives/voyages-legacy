@@ -12,9 +12,10 @@ public class NumericAttribute extends ImportableAttribute
 	
 	public final static int TYPE_INTEGER = 0;
 	public final static int TYPE_LONG = 1;
-	public final static int TYPE_FLOAT = 5;
+	public final static int TYPE_FLOAT = 2;
 	
 	private int type;
+	private boolean percentage = false;
 
 	public NumericAttribute(String name, String objectType, int numericalType)
 	{

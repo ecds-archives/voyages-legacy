@@ -53,11 +53,11 @@ public class SearchBean
 	{
 		history = new History();
 		initNewQuery();
+		searchInternal(false);
 	}
 	
 	private void initNewQuery()
 	{
-		searchParameters = new SearchParameters(new Conditions());
 		workingQuery = new Query();
 		determineTimeFrameExtent();
 	}
