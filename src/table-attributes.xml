@@ -20,7 +20,7 @@
 			<attribute name="placcons"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="yrcons" userCategory="beginners,general" userLabel="Year of construction">
+	<table-attribute tabs="1,2" date="true" id="yrcons" userCategory="beginners,general" userLabel="Year of construction">
 		<attributes>
 			<attribute name="yrcons"/>
 		</attributes>
@@ -30,7 +30,7 @@
 			<attribute name="placreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="yrreg" userCategory="beginners,general" userLabel="Year of registration">
+	<table-attribute tabs="1,2" date="true" id="yrreg" userCategory="beginners,general" userLabel="Year of registration">
 		<attributes>
 			<attribute name="yrreg"/>
 		</attributes>
@@ -85,12 +85,12 @@
 			<attribute name="fate"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="fate2" userCategory="beginners,general" userLabel="Outcome (slave perspective)">
+	<table-attribute tabs="1,2" id="fate2" userCategory="beginners,general" userLabel="Outcome - slave perspective">
 		<attributes>
 			<attribute name="fate2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="fate4" userCategory="beginners,general" userLabel="Outcome (owner perspective)">
+	<table-attribute tabs="1,2" id="fate4" userCategory="beginners,general" userLabel="Outcome - owner perspective">
 		<attributes>
 			<attribute name="fate4"/>
 		</attributes>
@@ -135,7 +135,7 @@
 			<attribute name="plac3tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="beginners,general" userLabel="Main place purchase">
+	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="beginners,general" userLabel="Main place of purchase">
 		<attributes>
 			<attribute name="mjbyptimp"/>
 		</attributes>
@@ -215,7 +215,7 @@
 			<attribute name="retrnreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="yearam" userCategory="beginners,general" userLabel="Arrival (1st place)" date="true">
+	<table-attribute tabs="1,2" id="yearam" userCategory="beginners,general" userLabel="Arrival - Africa" date="true">
 		<attributes>
 			<attribute name="yearam"/>
 		</attributes>
@@ -235,17 +235,17 @@
 			<attribute name="dateleftafr"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dateland1" userCategory="beginners,general" userLabel="Arrival (1st place)">
+	<table-attribute tabs="1,2" id="dateland1" userCategory="beginners,general" userLabel="Arrival - America 1st place">
 		<attributes>
 			<attribute name="dateland1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dateland2" userCategory="beginners,general" userLabel="Arrival (2nd place)">
+	<table-attribute tabs="1,2" id="dateland2" userCategory="beginners,general" userLabel="Arrival - America 2nd place">
 		<attributes>
 			<attribute name="dateland2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dateland3" userCategory="beginners,general" userLabel="Arrival (3rd place)">
+	<table-attribute tabs="1,2" id="dateland3" userCategory="beginners,general" userLabel="Arrival - America 3rd place">
 		<attributes>
 			<attribute name="dateland3"/>
 		</attributes>
@@ -282,7 +282,7 @@
 			<attribute name="crew1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="crew3" userCategory="beginners,general" userLabel="Crew at first landing">
+	<table-attribute tabs="1,2" id="crew3" userCategory="beginners,general" userLabel="Crew - 1st place">
 		<attributes>
 			<attribute name="crew3"/>
 		</attributes>
@@ -297,17 +297,17 @@
 			<attribute name="slintend"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="ncar13" userCategory="beginners,general" userLabel="1st place of purchase">
+	<table-attribute tabs="1,2" id="ncar13" userCategory="beginners,general" userLabel="Embarked - 1st place">
 		<attributes>
 			<attribute name="ncar13"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="ncar15" userCategory="beginners,general" userLabel="2nd place of purchase">
+	<table-attribute tabs="1,2" id="ncar15" userCategory="beginners,general" userLabel="Embarked - 2nd place">
 		<attributes>
 			<attribute name="ncar15"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="ncar17" userCategory="beginners,general" userLabel="3rd place of purchase">
+	<table-attribute tabs="1,2" id="ncar17" userCategory="beginners,general" userLabel="Embarked - 3rd place">
 		<attributes>
 			<attribute name="ncar17"/>
 		</attributes>
@@ -322,27 +322,27 @@
 			<attribute name="slaarriv"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slas32" userCategory="beginners,general" userLabel="Slaves landed at first place">
+	<table-attribute tabs="1,2" id="slas32" userCategory="beginners,general" userLabel="Disembarked - 1st place">
 		<attributes>
 			<attribute name="slas32"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slas36" userCategory="beginners,general" userLabel="Slaves landed at second place">
+	<table-attribute tabs="1,2" id="slas36" userCategory="beginners,general" userLabel="Disembarked - 2st place">
 		<attributes>
 			<attribute name="slas36"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slas39" userCategory="beginners,general" userLabel="Slaves landed at third place">
+	<table-attribute tabs="1,2" id="slas39" userCategory="beginners,general" userLabel="Disembarked - 3rd place">
 		<attributes>
 			<attribute name="slas39"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners,general" userLabel="Total slaves embarked">
+	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners,general" userLabel="Total embarked">
 		<attributes>
 			<attribute name="slamimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners,general" userLabel="Total slaves disembarked">
+	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners,general" userLabel="Total disembarked">
 		<attributes>
 			<attribute name="slaximp"/>
 		</attributes>
@@ -377,12 +377,12 @@
 			<attribute name="malrat7"/>
 		</attributes>
 	</table-attribute>
-	 <table-attribute tabs="1,2" id="jamcaspr" userCategory="beginners,general" userLabel="Price (standardized)">
+	 <table-attribute tabs="1,2" id="jamcaspr" userCategory="beginners,general" userLabel="Standardized price">
 		<attributes>
 			<attribute name="jamcaspr"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="vymrtimp" userCategory="beginners,general" userLabel="Deaths">
+	<table-attribute tabs="1,2" id="vymrtimp" userCategory="beginners,general" userLabel="Slaves deaths">
 		<attributes>
 			<attribute name="vymrtimp"/>
 		</attributes>
@@ -392,7 +392,7 @@
 			<attribute name="vymrtrat"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1" id="anysource" userCategory="beginners,general" userLabel="Source">
+	<table-attribute tabs="1" id="anysource" userCategory="beginners,general" userLabel="Sources">
 		<attributes>
 			<attribute name="sourcea"/>
 			<attribute name="sourceb"/>

@@ -31,36 +31,6 @@ td.message-bar-button {
 	padding-left: 10px; }
 
 
-/* detail */
-
-table.detail {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	border-collapse: collapse; 
-}
-/*	
-table.detail td, table.detail th {
-	text-align: left;
-	padding-left: 10px;
-	padding-right: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	border-bottom: 2px solid #F1E7C8;
-	border-right: 2px solid #F1E7C8; }
-*/
-td.detail-label {
-	border: 1px solid #DEC77E;
-	background-color: #F1E7C8;
-	padding: 5px;
-	font-weight: bold;
-	text-align: left;
-}
-
-td.detail-data {
-	border: 1px solid #DEC77E;
-	text-align: left;
-	padding: 5px;
-}
 
 div.chart-back-button {
 	position: absolute; 

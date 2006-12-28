@@ -22,11 +22,10 @@ public class EstimatesTableBean
 	private static final String CSS_CLASS_TD_TOTAL = "tbl-total";
 	
 	private EstimatesSelectionBean selectionBean;
-	private boolean optionsSelected = false;
 	private boolean optionsChanged = true;
 	private Conditions conditions;
-	private String rowGrouping;
-	private String colGrouping;
+	private String rowGrouping = "years25";;
+	private String colGrouping = "nation";
 	private SimpleTableCell[][] table;
 	private boolean omitEmptyRowsAndColumns;
 	private String showMode = "both";
@@ -126,7 +125,6 @@ public class EstimatesTableBean
 		Conditions newConditions = selectionBean.getConditions();
 		
 		// check if we have to
-		if (!optionsSelected) return;
 		if (!optionsChanged && newConditions.equals(conditions)) return;
 		optionsChanged = false;
 		conditions = newConditions;
@@ -371,7 +369,6 @@ public class EstimatesTableBean
 	
 	public String refreshTable()
 	{
-		optionsSelected = true;
 		optionsChanged = true;
 		return null;
 	}

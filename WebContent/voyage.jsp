@@ -12,7 +12,7 @@
 	<link href="sections.css" rel="stylesheet" type="text/css">
 	<link href="menu.css" rel="stylesheet" type="text/css">
 	<link href="map.css" rel="stylesheet" type="text/css">
-	<link href="search.css" rel="stylesheet" type="text/css">
+	<link href="voyage.css" rel="stylesheet" type="text/css">
 	<script src="utils.js" language="javascript" type="text/javascript"></script>
 	<script src="map.js" language="javascript" type="text/javascript"></script>
 </head>
@@ -35,29 +35,24 @@
 	
 	<h:form id="form">
 	
-	<h:panelGrid style="padding-left: 5px;" columns="2">
-		<h:outputText value="Detail information about voyage" style="font-size: 150%;" />
-		<t:htmlTag value="div" styleClass="section-inside-footer">
-			<h:commandButton id="backFromDetailMap" value="Back to results" action="#{VoyageDetailBean.back}" />
-		</t:htmlTag>
-	</h:panelGrid>
+	<div class="detail-title">
+		Voyage detail (ID = <h:outputText value="#{VoyageDetailBean.detailVoyageInfo[0].value}" />)
+	</div>
 
-	<h:dataTable value="#{VoyageDetailBean.detailVoyageInfo}" var="info" style="padding-left: 10px;">
-		<h:column>
-			<h:outputText value="#{info.attribute}:" />
-		</h:column>
-		<h:column>
-			<h:outputText value="#{info.value==null? \"not set\" : info.value}" />
-		</h:column>
-	</h:dataTable>
+	<div class="detail-link-back">
+		&lt; <h:commandLink id="backFromDetailMap" value="go back" action="#{VoyageDetailBean.back}" />
+	</div>
 
-	<s:sectionGroup id="detailPanelSection" backgroundStyle="dark" tabsStyle="middle" buttonsStyle="middle"
+	<div style="margin: 10px 10px 0px 10px;">
+	<s:sectionGroup
+		id="detailPanelSection"
+		backgroundStyle="dark"
+		tabsStyle="middle"
+		buttonsStyle="middle"
 		selectedSectionId="listing">
 
-		<s:section title="Voyage details" sectionId="listing">
-
+		<s:section title="Voyage variables" sectionId="listing">
 			<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
-
 		</s:section>
 
 		<s:section title="Voyage map" sectionId="maps">
@@ -87,7 +82,8 @@
 		</s:section>
 
 	</s:sectionGroup>
-		
+	</div>
+
 	</h:form>
 
 </f:view>

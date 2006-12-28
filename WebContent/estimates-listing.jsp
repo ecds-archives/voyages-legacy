@@ -28,7 +28,7 @@
 					<f:selectItem itemValue="25" itemLabel="25" />
 					<f:selectItem itemValue="50" itemLabel="50" />
 					<f:selectItem itemValue="100" itemLabel="100" />
-					<f:selectItem itemValue="all" itemLabel="all" />
+					<f:selectItem itemValue="200" itemLabel="200" />
 				</h:selectOneMenu>
 				<h:outputText value="  results per page." />
 			</t:htmlTag>

@@ -13,7 +13,7 @@ import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
  */
 public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 
-	private MessageFormat formatter = new MessageFormat("{0,number, #,###,###.##}");
+	private MessageFormat formatter = new MessageFormat("{0,number, #,###,###}");
 	
 	/**
 	 * Formats output that will be shown to user for single Object.
