@@ -72,9 +72,7 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 				return new Integer(number);
 			
 			case NumericAttribute.TYPE_FLOAT:
-				float value = Float.parseFloat(number);
-				if (type == TYPE_RATIO) value /= 100.0;
-				return new Float(value);
+				return new Float(number);
 			
 			case NumericAttribute.TYPE_LONG:
 				return new Long(number);

@@ -123,7 +123,9 @@ public class NumericAttribute extends ImportableAttribute
 
 			try
 			{
-				return new Float(value);
+				float floatValue = Float.parseFloat(value);
+				if (percentage) floatValue *= 100;
+				return new Float(floatValue);
 			}
 			catch (NumberFormatException nfe)
 			{
@@ -180,5 +182,15 @@ public class NumericAttribute extends ImportableAttribute
 
 	public Object getValueToCondition(Object value) {
 		return value;
+	}
+
+	public boolean isPercentage()
+	{
+		return percentage;
+	}
+
+	public void setPercentage(boolean percentage)
+	{
+		this.percentage = percentage;
 	}
 }
