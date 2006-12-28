@@ -2601,7 +2601,6 @@ MapZoomSlider.prototype.init = function()
 
 	this.sliderWidth = ElementUtils.getOffsetWidth(this.bg);
 	this.knobWidth = ElementUtils.getOffsetWidth(this.knob);
-	this.sliderOffsetLeft = ElementUtils.getOffsetLeft(this.bg);
 	this.sliderEffectiveWidth = this.bg.offsetWidth - this.knob.offsetWidth;
 	
 	EventAttacher.attach(this.knob, "mousedown", this, "mouseDown");
@@ -2629,11 +2628,9 @@ MapZoomSlider.prototype.setKnobPosition = function(knobLeft)
 
 MapZoomSlider.prototype.click = function(event)
 {
-	//alert(this.sliderOffsetLeft);
-	//alert(event.clientX);
-	var pos = event.clientX;
-	this.setKnobPosition(pos - this.sliderOffsetLeft - this.knobWidth / 2);
-	var capPos = this.capKnobPosition(pos - this.sliderOffsetLeft - this.knobWidth / 2);
+	var pos = ElementUtils.getEventMouseElementX(event, this.bg);
+	this.setKnobPosition(pos - this.knobWidth / 2);
+	var capPos = this.capKnobPosition(pos - this.knobWidth / 2);
 	var t = capPos / this.sliderEffectiveWidth;
 	this.map.changeScaleNormalized(t, false);
 }

@@ -51,6 +51,15 @@ table.gallery-table-thumbnails td {
 	
 }
 
+table.gallery-table-thumbnails a:hover {
+	text-decoration: none; }
+
+table.gallery-table-thumbnails img {
+	border: 2px solid #571B1D; }
+
+table.gallery-table-thumbnails td.gallery-selected img {
+	border: 2px solid #CA4223; }
+
 table.gallery-info-table td {
 	font-family: Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
 	font-size: 8pt;
@@ -58,5 +67,6 @@ table.gallery-info-table td {
 }
 
 td.gallery-selected {
-	border: 2px solid #CF5435;
+	/*background-color: #CF5435;*/
+	/*border: 2px solid #CF5435; */
 }

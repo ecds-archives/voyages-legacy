@@ -45,9 +45,16 @@
 				</h:outputLink>
 			</t:div>
 			*/%>
-			<s:picture-gallery pictures="#{PicturesBean.pictureGalery}" rows="5" columns="1"
-				thumbnailWidth="150" thumbnailHeight="100" galleryParams="#{GalleryRequestBean.galleryParams}" 
-				showEventHandler="#{PicturesBean.showEventHandler}"/>
+
+			<s:picture-gallery
+				rows="5"
+				columns="1"
+				thumbnailWidth="150"
+				thumbnailHeight="100"
+				pictures="#{PicturesBean.pictureGalery}"
+				galleryParams="#{GalleryRequestBean.galleryParams}" 
+				showEventHandler="#{PicturesBean.showEventHandler}" />
+
 		 </t:htmlTag>
 
 	

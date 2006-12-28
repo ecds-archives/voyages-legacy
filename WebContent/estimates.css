@@ -32,17 +32,22 @@ div.import-region-list td.checkbox-list-checkbox-0 {
 div.import-region-list td.checkbox-list-label-0 {
 	width: 100%; }
 
-div.import-region-list td.checkbox-list-label-0 {
-	font-weight: bold; }
+div.import-region-list td.checkbox-list-label-1 {
+	padding-right: 10px; }
 
-div.import-region-list tr.checkbox-list-item-0-active,
+div.import-region-list tr.checkbox-list-item-0-active {
+	background-color: #F1E7C8; }
+
 div.import-region-list tr.checkbox-list-item-1-active {
+	padding-right: 10px;
 	background-color: #F1E7C8; }
 
 div.import-region-list div.checkbox-list-popup {
 	z-index: 1;
+	/*
 	height: 300px;
 	width: 400px;
+	*/
 	border: 1px solid #571B1D;
 	background-color: White;
 	background-position: right top;

@@ -183,6 +183,7 @@ public class TableResultTabBean {
 	private void getResultsDB() {
 		needQuery = this.linkManager.wasModified();
 		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
+			this.linkManager.reset();
 			this.conditions = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
 			needQuery = true;
 		}
