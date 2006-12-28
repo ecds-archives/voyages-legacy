@@ -205,11 +205,11 @@ public class TimeLineResultTabBean {
 			graphExp.setName("Exported");
 			graphExp.setX(expYears);
 			graphExp.setY(expValues);
-			graphExp.setBaseColor("#EEEEEE");
-			graphExp.setEventColor("#AAAAAA");
+			graphExp.setBaseCssClass("#EEEEEE");
+			graphExp.setEventCssClass("#AAAAAA");
 			
-			graphExp.setBaseColor("#F1E7C8");
-			graphExp.setEventColor("#AAAAAA");
+			graphExp.setBaseCssClass("#F1E7C8");
+			graphExp.setEventCssClass("#AAAAAA");
 
 			
 			this.needQuery = false;

@@ -168,3 +168,15 @@ td.event-line-legend-value {
 	
 div.event-line-events-title {
 	display: none; }
+	
+.color-timeline-exported {
+	background-color: #F1E7C8; }
+	
+.color-timeline-exported-event {
+	background-color: #CA4223; }
+
+.color-timeline-imported {
+	background-color: #E7D59C; }
+	
+.color-timeline-imported-event {
+	background-color: #571B1D; }

@@ -92,22 +92,16 @@ public class EstimatesTimelineBean
 		graphExp.setName("Exported");
 		graphExp.setX(expYears);
 		graphExp.setY(expValues);
-		graphExp.setBaseColor("#EEEEEE");
-		graphExp.setEventColor("#AAAAAA");
-
-		graphExp.setBaseColor("#F1E7C8");
-		graphExp.setEventColor("#AAAAAA");
+		graphExp.setBaseCssClass("color-timeline-exported");
+		graphExp.setEventCssClass("color-timeline-exported-event");
 
 		// graph for imported
 		graphImp = new EventLineGraph();
 		graphImp.setName("Imported");
 		graphImp.setX(impYears);
 		graphImp.setY(impValues);
-		graphImp.setBaseColor("#CCCCCC");
-		graphImp.setEventColor("#666666");
-
-		graphImp.setBaseColor("#E7D59C");
-		graphImp.setEventColor("#666666");
+		graphImp.setBaseCssClass("color-timeline-imported");
+		graphImp.setEventCssClass("color-timeline-imported-event");
 		
 	}
 

@@ -35,11 +35,11 @@ function EventLineEvent(textId, x, text)
 	this.text = text;
 }
 
-function EventLineGraph(name, legendValueElementId, baseColor, eventColor, maxValue, minValue, x, y)
+function EventLineGraph(name, legendValueElementId, baseCssClass, eventCssClass, maxValue, minValue, x, y)
 {
 	this.name = name;
-	this.baseColor = baseColor;
-	this.eventColor = eventColor;
+	this.baseCssClass = baseCssClass;
+	this.eventCssClass = eventCssClass;
 	this.maxValue = maxValue;
 	this.minValue = minValue;
 	this.legendValueElementId = legendValueElementId;
@@ -258,7 +258,7 @@ EventLine.prototype.createSelector = function()
 			slotStyle.width = (this.selectorBarWidth) + "px";
 			slotStyle.top = (this.selectorHeight - barHeight) + "px";
 			slotStyle.height = (barHeight) + "px";
-			slotStyle.backgroundColor = graph.baseColor;
+			slot.className = graph.baseCssClass;
 			//slotStyle.backgroundColor = this.eventsLookup[this.selectorOffset + k] ? graph.eventColor : graph.baseColor;
 			
 			//this.selectorContainer.insertBefore(slot, this.selector);
@@ -280,7 +280,7 @@ EventLine.prototype.initSlots = function()
 			var slot = this.graphsContainer.childNodes[i*this.slotsCount+j];
 			slot.style.position = "absolute";
 			slot.style.height = "0px";
-			slot.style.backgroundColor = graph.baseColor;
+			slot.style.className = graph.baseCssClass;
 			slots.push(slot);
 		}
 	}
@@ -369,7 +369,8 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 
 		for (var k = 0; k < slots.length; k++)
 		{
-			var slotStyle = slots[k].style;
+			var slot = slots[k];
+			var slotStyle = slot.style;
 			var value = 0;
 			if (j < x.length && x[j] == this.offset + k)
 			{
@@ -383,7 +384,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			slotStyle.height = (barHeight) + "px";
 			slotStyle.left = (k*currBarWidth) + "px";
 			slotStyle.width = (innerBarWidth) + "px";
-			slotStyle.backgroundColor = this.eventsLookup[this.offset + k] ? graph.eventColor : graph.baseColor;
+			slot.className = this.eventsLookup[this.offset + k] ? graph.eventCssClass : graph.baseCssClass;
 			//slotStyle.backgroundColor = graph.baseColor;
 		}
 

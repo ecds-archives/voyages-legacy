@@ -327,13 +327,10 @@ public class EventLineComponent extends UIComponentBase
 			
 			EventLineGraph graph = graphs[i];
 			
-			String cssStyle =
-				"background-color: " + graph.getBaseColor();
-			
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "event-line-legend-sample", null);
 			writer.startElement("div", this);
-			writer.writeAttribute("style", cssStyle, null);
+			writer.writeAttribute("class", graph.getBaseCssClass(), null);
 			writer.endElement("div");
 			writer.endElement("td");
 
@@ -445,7 +442,7 @@ public class EventLineComponent extends UIComponentBase
 			regJS.append("new EventLineGraph(");
 			regJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
 			regJS.append("'").append(getLegendValueElementId(context, i)).append("', ");
-			regJS.append("'").append(graph.getBaseColor()).append("', ");
+			regJS.append("'").append(graph.getBaseCssClass()).append("', ");
 			regJS.append("'").append(graph.getEventOrBaseColor()).append("', ");
 			regJS.append(graph.getMaxValue()).append(", ");
 			regJS.append(graph.getMinValue()).append(", ");
