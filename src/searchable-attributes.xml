@@ -787,7 +787,7 @@
 		type="simple"
 		subType="ratio"
 		id="malrat7"
-		userLabel="Percentage sex ratio of the cargo of slaves (%)">
+		userLabel="Percentage of male captives (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -801,7 +801,7 @@
 		type="simple"
 		subType="ratio"
 		id="chilrat7"
-		userLabel="Percentage of children to adults in the cargo of slaves (%)">
+		userLabel="Percentage of child captives (%)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

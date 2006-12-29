@@ -72,15 +72,15 @@
 	<group id="itinerary" userLabel="Itinerary">
 		<searchable-attributes>
 			<searchable-attribute id="ptdepimp"/>
+			<searchable-attribute id="mjbyptimp"/>
 			<searchable-attribute id="plac1tra"/>
 			<searchable-attribute id="plac2tra"/>
 			<searchable-attribute id="plac3tra"/>
-			<searchable-attribute id="mjbyptimp"/>
 			<searchable-attribute id="npafttra"/>
+			<searchable-attribute id="mjslptimp"/>
 			<searchable-attribute id="sla1port"/>
 			<searchable-attribute id="adpsale1"/>
 			<searchable-attribute id="adpsale2"/>
-			<searchable-attribute id="mjslptimp"/>
 			<searchable-attribute id="portret"/>
 		</searchable-attributes>
 		<table-attributes>
@@ -155,11 +155,11 @@
 			<searchable-attribute id="ncar15"/>
 			<searchable-attribute id="ncar17"/>
 			<searchable-attribute id="tslavesd"/>
-			<searchable-attribute id="slaarriv"/>
+			<searchable-attribute id="slaximp"/>
 			<searchable-attribute id="slas32"/>
 			<searchable-attribute id="slas36"/>
 			<searchable-attribute id="slas39"/>
-			<searchable-attribute id="slaximp"/>
+			<searchable-attribute id="slaarriv"/>
 			<searchable-attribute id="slamimp"/>
 		</searchable-attributes>
 		<table-attributes>
