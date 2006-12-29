@@ -395,7 +395,7 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 	
 		var event = this.events[i];
 		
-		if (i + this.offset <= event.x && event.x <= i + this.offset + currViewSpan)
+		if (this.offset <= event.x && event.x < this.offset + currViewSpan)
 		{
 		
 			var eventTable = event.element;
@@ -516,7 +516,7 @@ EventLine.prototype.createHorizontalLabels = function(offset, zoomLevel, topPosi
 		if (createLines)
 		{
 			labelLine = document.createElement("div");
-			labelLine.style.backgroundColor = major ? "#CCCCCC" : "#CCCCCC";
+			labelLine.style.backgroundColor = major ? "#F1E7C8" : "#F1E7C8";
 			labelLine.style.position = "absolute";
 			labelLine.style.top = (this.topLabelsHeight + this.topLabelsMargin) + "px";
 			labelLine.style.left = left + "px";
@@ -585,7 +585,7 @@ EventLine.prototype.createVerticalLabels = function()
 		var major = i % this.verticalLabelsMajorSpacing == 0;
 		
 		var labelLine = document.createElement("div");
-		labelLine.style.backgroundColor = major ? "#CCCCCC" : "#CCCCCC";
+		labelLine.style.backgroundColor = major ? "#F1E7C8" : "#F1E7C8";
 		labelLine.style.position = "absolute";
 		labelLine.style.top = top + "px";
 		labelLine.style.left = (this.leftLabelsWidth + this.leftLabelsMargin) + "px";

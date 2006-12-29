@@ -382,6 +382,9 @@ public class EventLineComponent extends UIComponentBase
 		verticalLabels = getVerticalLabels();
 		if (graphs == null) graphs = new EventLineGraph[0];
 		if (events == null) events = new EventLineEvent[0];
+		
+		// max view
+		EventLineZoomLevel baseZoomLevel = zoomLevels[0];
 
 		// find max number of slots
 		int maxSlots = 0;
@@ -500,6 +503,10 @@ public class EventLineComponent extends UIComponentBase
 		// main container CSS
 		String mainContainerStyle =
 			"position: relative; " +
+			"width: " + (
+					VERTICAL_LABELS_WIDTH + 
+					VERTICAL_LABELS_MARGIN +
+					baseZoomLevel.getBarWidth() * baseZoomLevel.getViewSpan()) + "px; " + 
 			"height: " + (
 					HORIZONTAL_LABELS_HEIGHT +
 					HORIZONTAL_LABELS_MARGIN +

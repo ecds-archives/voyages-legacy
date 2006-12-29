@@ -188,7 +188,7 @@ div.event-line-selector {
 	background-color: #F1E7C8; }
 
 div.event-line-indicator {
-	-moz-opacity: 0.1;
+	-moz-opacity: 0.3;
 	background-color: #333333; }
 	
 div.event-line-indicator-container {
@@ -202,6 +202,10 @@ div.event-line-indicator-label {
 .timeline-color {
 	background: #F1E7C8;
 }
+
+div.event-line-graph-container,
+div.event-line-selector-container {
+	border: 1px solid #571B1D; }
 
 table.event-line-legend {
 	margin-left: 70px;
