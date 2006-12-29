@@ -35,7 +35,7 @@
 	<h:form id="form">
 
 		<t:htmlTag value="div">
-			<h:outputText escape="false" value="&nbsp"/>
+
 			<%/*
 			<t:div id="gallsery-div-back-to-list" style="text-align: center;">
 				<h:outputText value="#{PicturesBean.currentPath}"/>

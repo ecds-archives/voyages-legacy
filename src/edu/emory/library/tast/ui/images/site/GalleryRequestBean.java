@@ -3,7 +3,6 @@ package edu.emory.library.tast.ui.images.site;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletRequest;
 
 public class GalleryRequestBean {
 	

@@ -10,27 +10,24 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
-import javax.servlet.ServletContext;
 
 import org.apache.myfaces.el.MethodBindingImpl;
-import org.hibernate.mapping.ValueVisitor;
 
 import edu.emory.library.tast.dm.Image;
-import edu.emory.library.tast.dm.Person;
-import edu.emory.library.tast.dm.Port;
-import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.ui.search.table.ShowDetailsEvent;
-import edu.emory.library.tast.ui.search.table.SortChangeEvent;
+import edu.emory.library.tast.ui.images.site.GalleryRequestBean.GalleryParams;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
-public class GalleryComponent extends UICommand {
+public class GalleryComponent extends UICommand
+{
 
 	private static final String GALLERY_BACK_BUTTON = "gallery-back-button";
-
 	private static final String GALLERY_FORWARD_BUTTON = "gallery-forward-button";
 
+	private static final int IMG_MAX_WIDTH = 600;
+	private static final int IMG_MAX_HEIGHT = 480;
+	
 	private MethodBinding showEvent;
 	
 	public void restoreState(FacesContext arg0, Object arg1) {
@@ -65,77 +62,104 @@ public class GalleryComponent extends UICommand {
 
 	}
 
-	public void encodeBegin(FacesContext context) throws IOException {
+	public void encodeBegin(FacesContext context) throws IOException
+	{
 
 		UIForm form = JsfUtils.getForm(this, context);
-
 		ResponseWriter writer = context.getResponseWriter();
-		writer.startElement("div", this);
-		writer.writeAttribute("align", "center", null);
 
 		JsfUtils.encodeHiddenInput(this, writer, this.getHiddenFieldId(context));
 
-		int rows = Integer.parseInt(this.getValueOrAttribute(context, "rows")
-				.toString());
-		int cols = Integer.parseInt(this
-				.getValueOrAttribute(context, "columns").toString());
-		int thumbnailWidth = Integer.parseInt(this.getValueOrAttribute(context,
-				"thumbnailWidth").toString());
-		int thumbnailHeight = Integer.parseInt(this.getValueOrAttribute(
-				context, "thumbnailHeight").toString());
+		int rows = Integer.parseInt(this.getValueOrAttribute(context, "rows").toString());
+		int cols = Integer.parseInt(this.getValueOrAttribute(context, "columns").toString());
+		int thumbnailWidth = Integer.parseInt(this.getValueOrAttribute(context, "thumbnailWidth").toString());
+		int thumbnailHeight = Integer.parseInt(this.getValueOrAttribute(context, "thumbnailHeight").toString());
+		PictureGalery pictures = (PictureGalery) this.getBoundedValue(context, "pictures");
 
-		PictureGalery pictures = (PictureGalery) this.getBoundedValue(context,
-				"pictures");
-
-		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this
-				.getValueOrAttribute(context, "galleryParams");
-
+		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this.getValueOrAttribute(context, "galleryParams");
 		params.restoreState();
 		
-		if (pictures != null) {
+		StringBuffer js = new StringBuffer();
+		
+		if (pictures != null)
+		{
 
 			int set = Integer.parseInt(params.getVisibleSet());
+			int pict = Integer.parseInt(params.getVisiblePicture());
 			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "gallery-thumbnails", null);
+
 			writer.startElement("table", this);
-			writer.writeAttribute("class", "gallery-table", null);
+			writer.writeAttribute("border", "0", null);
+			writer.writeAttribute("cellspacing", "0", null);
+			writer.writeAttribute("cellpadding", "0", null);
+			writer.writeAttribute("class", "gallery-thumbnails-table", null);
 			writer.startElement("tr", this);
-
-			int prevset = Integer.parseInt(params.getVisibleSet());
-			if (pictures.canMoveBackward(set, rows * cols)) {
-				prevset--;
-			}
-			StringBuffer js = new StringBuffer();
-			js.append("window.location='galleryp.faces?");
-			js.append(GalleryRequestBean.GALLERY_TYPE).append("=");
-			js.append(params.getGalleryType());
-			js.append("&").append(GalleryRequestBean.ID).append("=");
-			js.append(params.getId());
-			js.append("&").append(GalleryRequestBean.SET).append("=");
-			js.append(prevset);
-			if (params.getVisiblePicture() != null) {
-				js.append("&").append(GalleryRequestBean.PICT).append("=");
-				js.append("0");
-			}
-			js.append("'");
-			this.encodeButton(context, form, writer, GALLERY_BACK_BUTTON, js.toString());
-
+			
 			writer.startElement("td", this);
-			writer.startElement("table", this);
-			writer.writeAttribute("class", "gallery-table-thumbnails", null);
-			GaleryImage[] picts = pictures.getPictures(set, rows * cols);
-			for (int i = 0; i < rows * cols && i < picts.length; i++) {
-				if (i % rows == 0) {
-					writer.startElement("tr", this);
+			writer.writeAttribute("class", "gallery-arrow-prev", null);
+
+			int prevPictIndex = (set - 1) * (rows * cols) + pict - 1; 
+			if (prevPictIndex > 0)
+			{
+				
+				int prevSet = set;
+				int prevPict = pict - 1;
+				if (prevPict == -1)
+				{
+					prevPict = cols * rows - 1;
+					prevSet--;
 				}
-				writer.startElement("td", this);
-				if (params.getVisiblePicture() != null) {
-					int n = Integer.parseInt(params.getVisiblePicture());
-					if (n == i) {
-						writer.writeAttribute("class", "gallery-selected", null);
-					}
-				}
-				Image image = picts[i].getImage();
+				
+				js.setLength(0);
+				js.append("galleryp.faces");
+				js.append("?").append(GalleryRequestBean.GALLERY_TYPE).append("=").append(params.getGalleryType());
+				js.append("&").append(GalleryRequestBean.ID).append("=").append(params.getId());
+				js.append("&").append(GalleryRequestBean.SET).append("=").append(prevSet);
+				js.append("&").append(GalleryRequestBean.PICT).append("=").append(prevPict);
+				
 				writer.startElement("a", this);
+				writer.writeAttribute("href", js.toString(), null);
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-prev-active.png", null);
+				writer.endElement("img");
+				writer.endElement("a");
+
+			}
+			else
+			{
+				
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-prev-blurred.png", null);
+				writer.endElement("img");
+				
+			}
+			
+			writer.endElement("td");		
+
+//			writer.startElement("td", this);
+//			writer.startElement("table", this);
+//			writer.writeAttribute("border", "1", null);
+//			writer.writeAttribute("cellspacing", "0", null);
+//			writer.writeAttribute("cellpadding", "0", null);
+//			writer.writeAttribute("class", "gallery-table-thumbnails", null);
+			GaleryImage[] picts = pictures.getPictures(set, rows * cols);
+			for (int i = 0; i < rows * cols && i < picts.length; i++)
+			{
+
+//				if (i % rows == 0) {
+//					writer.startElement("tr", this);
+//				}
+
+				Image image = picts[i].getImage();
+
 				StringBuffer link = new StringBuffer();
 				link.append("galleryp.faces?");
 				link.append(GalleryRequestBean.GALLERY_TYPE).append("=");
@@ -146,74 +170,281 @@ public class GalleryComponent extends UICommand {
 				link.append(params.getVisibleSet());
 				link.append("&").append(GalleryRequestBean.PICT).append("=");
 				link.append(i);
+				
+				writer.startElement("td", this);
+				if (params.getVisiblePicture() != null)
+				{
+					int n = Integer.parseInt(params.getVisiblePicture());
+					if (n == i)
+					{
+						writer.writeAttribute("class", "gallery-thumbnail-selected", null);
+					}
+					else
+					{
+						writer.writeAttribute("class", "gallery-thumbnail", null);
+					}
+				}
+				
+				String thumbnailSrc = "servlet/thumbnail" + 
+					"?i=" + image.getFileName() +
+					"&w=" + thumbnailWidth +
+					"&h=" + thumbnailHeight;
+
+				writer.startElement("a", this);
 				writer.writeAttribute("href", link.toString(), null);
-
 				writer.startElement("img", this);
-				if (thumbnailWidth != -1) {
-					writer.writeAttribute("width", String
-							.valueOf(thumbnailWidth), null);
-				}
-				if (thumbnailHeight != -1) {
-					writer.writeAttribute("height", String
-							.valueOf(thumbnailHeight), null);
-				}
-				writer.writeAttribute("src", "servlet/thumbnail?i="
-						+ image.getFileName() + "&w=" + thumbnailWidth + "&h="
-						+ thumbnailHeight, null);
-
-				writer.writeAttribute("style", "cursor: pointer;", null);
-
-				writer.write("<br/>");
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", String.valueOf(thumbnailWidth), null);
+				writer.writeAttribute("height", String .valueOf(thumbnailHeight), null);
+				writer.writeAttribute("src", thumbnailSrc, null);
+				writer.endElement("img");
+				writer.endElement("a");
+				
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "gallery-thumbnail-title", null);
+				writer.startElement("a", this);
+				writer.writeAttribute("href", link.toString(), null);
 				writer.write(image.getTitle());
+				writer.endElement("a");
+				writer.endElement("div");
 
 				writer.endElement("td");
-				if ((i + 1) % rows == 0) {
-					writer.endElement("tr");
-				}
+//				if ((i + 1) % rows == 0) {
+//					writer.endElement("tr");
+//				}
 			}
-			writer.endElement("table");
-			writer.startElement("div", this);
-			writer.writeAttribute("align", "right;", null);
-			writer.write("Showing images from " + (pictures.getFirst(set, rows * cols) + 1)
-					+ " to " + (pictures.getLast(set, rows * cols)) + " out of "
-					+ pictures.getNumberOfAll());
-			writer.endElement("div");
+//			writer.endElement("table");
+//			writer.startElement("div", this);
+//			writer.writeAttribute("align", "right;", null);
+//			writer.write("Showing images from " + (pictures.getFirst(set, rows * cols) + 1)
+//					+ " to " + (pictures.getLast(set, rows * cols)) + " out of "
+//					+ pictures.getNumberOfAll());
+//			writer.endElement("div");
+//			writer.endElement("td");
+
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "gallery-arrow-next", null);
+			
+			
+			int nextPictIndex = (set - 1) * (rows * cols) + pict + 1; 
+			if (nextPictIndex < pictures.getNumberOfAll())
+			{
+				
+				int nextSet = set;
+				int nextPict = pict + 1;
+				if (nextPict == rows * cols)
+				{
+					nextSet++;
+					nextPict = 0;
+				}
+				
+				js.setLength(0);
+				js.append("galleryp.faces");
+				js.append("?").append(GalleryRequestBean.GALLERY_TYPE).append("=").append(params.getGalleryType());
+				js.append("&").append(GalleryRequestBean.ID).append("=").append(params.getId());
+				js.append("&").append(GalleryRequestBean.SET).append("=").append(nextSet);
+				js.append("&").append(GalleryRequestBean.PICT).append("=").append(nextPict);
+				
+				writer.startElement("a", this);
+				writer.writeAttribute("href", js.toString(), null);
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-next-active.png", null);
+				writer.endElement("img");
+				writer.endElement("a");
+
+			}
+			else
+			{
+				
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-next-blurred.png", null);
+				writer.endElement("img");
+				
+			}
+			
 			writer.endElement("td");
 
-			int nextset = Integer.parseInt(params.getVisibleSet());
-			if (pictures.canMoveForward(set, rows * cols)) {
-				nextset++;
-			}
-			js = new StringBuffer();
-			js.append("window.location='galleryp.faces?");
-			js.append(GalleryRequestBean.GALLERY_TYPE).append("=");
-			js.append(params.getGalleryType());
-			js.append("&").append(GalleryRequestBean.ID).append("=");
-			js.append(params.getId());
-			js.append("&").append(GalleryRequestBean.SET).append("=");
-			js.append(nextset);
-			if (params.getVisiblePicture() != null) {
-				js.append("&").append(GalleryRequestBean.PICT).append("=");
-				js.append("0");
-			}
-			js.append("'");
-			this.encodeButton(context, form, writer, GALLERY_FORWARD_BUTTON, js.toString());
 			writer.endElement("tr");
 			writer.endElement("table");
 
-			if (params.getVisiblePicture() != null) {
+			writer.endElement("div");
+			
+			if (params.getVisiblePicture() != null)
+			{
+
 				int size = Integer.parseInt(params.getVisiblePicture());
-				GaleryImage visibleImage = picts[size >= picts.length ? picts.length - 1:size];
-				writer.write(visibleImage.getImage().getTitle());
-				writer.write("<br/>");
+				GaleryImage visibleImage = picts[size >= picts.length ? picts.length - 1 : size];
+				
+				int imageWidth = visibleImage.getImage().getWidth(); 
+				int imageHeight = visibleImage.getImage().getHeight();
+				
+				if (IMG_MAX_HEIGHT * imageWidth >= IMG_MAX_WIDTH * imageHeight)
+				{
+					imageHeight = (int)(((double)IMG_MAX_WIDTH / (double)imageWidth) * imageHeight);
+					imageWidth = IMG_MAX_WIDTH;
+				}
+				else
+				{
+					imageWidth = (int)(((double)IMG_MAX_HEIGHT / (double)imageHeight) * imageWidth);
+					imageHeight = IMG_MAX_HEIGHT;
+				}
+				
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "gallery-image", null);
+				
+				writer.startElement("table", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("cellspacing", "0", null);
+				writer.writeAttribute("cellpadding", "0", null);
+				writer.writeAttribute("class", "gallery-image-table", null);
+				writer.startElement("tr", this);
+				
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "gallery-image", null);
+				
 				writer.startElement("img", this);
-				writer.writeAttribute("src", "images/"
-						+ visibleImage.getImage().getFileName(), null);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", String.valueOf(imageWidth), null);
+				writer.writeAttribute("height", String.valueOf(imageHeight), null);
+				writer.writeAttribute("src", "servlet/thumbnail" + 
+					"?i=" + visibleImage.getImage().getFileName() +
+					"&w=" + imageWidth +
+					"&h=" + imageHeight, null);
+				
 				writer.endElement("img");
-				this.printImageInfo(context, form, writer, visibleImage, params);
+				writer.endElement("td");
+				
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "gallery-image-info", null);
+				this.printImageInfoNew(context, form, writer, visibleImage, params);
+				writer.endElement("td");
+
+				writer.endElement("tr");
+				writer.endElement("table");
+				
+				writer.endElement("div");
+
 			}
 
 		}
+	}
+	
+	private void startInfoTableElement(ResponseWriter writer) throws IOException
+	{
+		writer.startElement("tr", this);
+	}
+	
+	private void printInfoTableLabel(ResponseWriter writer, String label) throws IOException
+	{
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "gallery-image-info-table-label", null);
+		writer.write(label);
+		writer.endElement("td");
+	}
+
+	private void startInfoTableValue(ResponseWriter writer) throws IOException
+	{
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "gallery-image-info-table-value", null);
+	}
+
+	private void endInfoTableValue(ResponseWriter writer) throws IOException
+	{
+		writer.endElement("td");
+	}
+
+	private void endInfoTableElement(ResponseWriter writer) throws IOException
+	{
+		writer.endElement("tr");
+	}
+
+	private void printInfoTableElement(ResponseWriter writer, String label, String value) throws IOException
+	{
+		startInfoTableElement(writer);
+		printInfoTableLabel(writer, label);
+		startInfoTableValue(writer);
+		writer.write(value);
+		endInfoTableValue(writer);
+		endInfoTableElement(writer);
+	}
+
+	private void printImageInfoNew(FacesContext context, UIForm form, ResponseWriter writer, GaleryImage visibleImage, GalleryParams params) throws IOException
+	{
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "gallery-image-title", null);
+		writer.write(visibleImage.getImage().getTitle());
+		if (visibleImage.getImage().getDate() != null)
+		{
+			writer.write(" ");
+			writer.startElement("span", this);
+			writer.writeAttribute("class", "gallery-image-year", null);
+			writer.write(" (");
+			writer.write(visibleImage.getImage().getDate());
+			writer.write(")");
+			writer.endElement("span");
+		}
+		writer.endElement("div");
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "gallery-image-description", null);
+		writer.write(visibleImage.getImage().getDescription());
+		writer.endElement("div");
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "gallery-image-info-table", null);
+
+		String source = visibleImage.getImage().getSource(); 
+		if (!StringUtils.isNullOrEmpty(source))
+			printInfoTableElement(writer,
+					"Source", source);
+
+		String creator = visibleImage.getImage().getCreator(); 
+		if (!StringUtils.isNullOrEmpty(creator))
+			printInfoTableElement(writer,
+					"Creator", creator);
+
+		if (visibleImage.getImage().getVoyageid() != null)
+		{
+			
+//			StringBuffer link = new StringBuffer();
+//			link.append("galleryp.faces?").append("vid=");
+//			link.append(visibleImage.getImage().getVoyageid());
+
+			String jsClick = JsfUtils.generateSubmitJS(context, form,
+					getHiddenFieldId(context),
+					String.valueOf(visibleImage.getImage().getVoyageid()));
+
+			startInfoTableElement(writer);
+			printInfoTableLabel(writer, "Voyage");
+			startInfoTableValue(writer);
+			
+			writer.write("ID = ");
+			writer.write(String.valueOf(visibleImage.getImage().getVoyageid()));
+			writer.write(", ");
+
+			writer.startElement("a", this);
+			writer.writeAttribute("href", "#", null);
+			writer.writeAttribute("onclick", jsClick, null);
+			writer.write("see details");
+			writer.endElement("a");
+			
+			endInfoTableValue(writer);
+			endInfoTableElement(writer);
+
+		}
+
+		writer.endElement("table");
+
 	}
 
 	private void printImageInfo(FacesContext context, UIForm form,

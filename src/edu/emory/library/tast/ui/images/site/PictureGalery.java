@@ -1,8 +1,5 @@
 package edu.emory.library.tast.ui.images.site;
 
-import java.util.Arrays;
-
-import edu.emory.library.tast.dm.Image;
 
 public class PictureGalery {
 	private GaleryImage[] pictures;
