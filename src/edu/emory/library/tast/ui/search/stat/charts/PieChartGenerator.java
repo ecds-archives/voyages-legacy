@@ -50,6 +50,9 @@ public class PieChartGenerator extends AbstractChartGenerator {
 	 * @inheritDoc
 	 */
 	public void addRowToDataSet(Object[] data, Object[] series) {
+		if (series.length == 0) {
+			return;
+		}
 		for (int i = 0; i < data.length; i++) {
 			Object [] row = (Object[])data[i];
 			pieDataset.setValue(row[0].toString(), (Number)row[1]);

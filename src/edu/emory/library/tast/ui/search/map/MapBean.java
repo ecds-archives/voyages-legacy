@@ -73,7 +73,7 @@ public class MapBean {
 
 	private MapData mapData = new MapData();
 
-	private int chosenMap = 0;
+	private int chosenMap = 1;
 
 	private int chosenAttribute = 0;
 

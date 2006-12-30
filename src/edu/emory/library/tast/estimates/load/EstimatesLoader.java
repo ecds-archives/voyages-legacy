@@ -345,8 +345,10 @@ public class EstimatesLoader {
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("e_natinimp"),
 				EstimatesNation.getAttribute("id") }), new Long(position.getNatimp()), Conditions.OP_EQUALS);
-		conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, Conditions.OP_IS_NOT);
-		conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, Conditions.OP_IS_NOT);
+		if (useWiggleRoom) {
+			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, Conditions.OP_IS_NOT);
+			conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, Conditions.OP_IS_NOT);
+		}
 		
 		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
 				new String[] { "v" }, conditions);

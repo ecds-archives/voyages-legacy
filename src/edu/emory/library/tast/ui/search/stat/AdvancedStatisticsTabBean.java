@@ -188,7 +188,7 @@ public class AdvancedStatisticsTabBean {
 	/**
 	 * Selected chart type.
 	 */
-	private String selectedChart = "0";
+	private String selectedChart = "1";
 
 	/**
 	 * Available charts.
@@ -247,6 +247,13 @@ public class AdvancedStatisticsTabBean {
 	
 	private int firstResult = 0;
 
+	public AdvancedStatisticsTabBean() {
+		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slaximp"), "sum"));
+		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slamimp"), "sum"));
+		this.xaxis = VisibleAttribute.getAttribute("yearam").getName();
+		this.statReady = new Boolean(true);
+	}
+	
 	/**
 	 * Gets list of attributes of Voyage.
 	 * 
