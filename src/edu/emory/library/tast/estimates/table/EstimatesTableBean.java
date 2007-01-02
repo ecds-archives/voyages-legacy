@@ -28,7 +28,7 @@ public class EstimatesTableBean
 	private String colGrouping = "nation";
 	private SimpleTableCell[][] table;
 	private boolean omitEmptyRowsAndColumns;
-	private String showMode = "both";
+	private String showMode = "exp";
 	
 	private Grouper createGrouper(String groupBy, int resultIndex, List nations, List expRegions, List impRegions, List impAreas)
 	{
