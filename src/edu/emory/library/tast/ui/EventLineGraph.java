@@ -7,8 +7,9 @@ public class EventLineGraph
 	private String name;
 	private String baseCssClass;
 	private String eventCssClass;
-	private int x[];
-	private double y[];
+	private int[] x;
+	private double[] y;
+	private String[] labels;
 	
 	private boolean maxMinComputed = false;
 	private double maxY = 0;
@@ -104,6 +105,16 @@ public class EventLineGraph
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public String[] getLabels()
+	{
+		return labels;
+	}
+
+	public void setLabels(String[] labels)
+	{
+		this.labels = labels;
 	}
 	
 }

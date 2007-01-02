@@ -85,17 +85,17 @@
 			<attribute name="fate"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="fate2" userCategory="beginners,general" userLabel="Outcome - slave perspective">
+	<table-attribute tabs="1,2" id="fate2" userCategory="beginners,general" userLabel="Outcome (for slave)*">
 		<attributes>
 			<attribute name="fate2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="fate4" userCategory="beginners,general" userLabel="Outcome - owner perspective">
+	<table-attribute tabs="1,2" id="fate4" userCategory="beginners,general" userLabel="Outcome if captured*">
 		<attributes>
 			<attribute name="fate4"/>
 		</attributes>
 	</table-attribute>		
-	<table-attribute tabs="1,2" id="fate3" userCategory="beginners,general" userLabel="Capture of vessel">
+	<table-attribute tabs="1,2" id="fate3" userCategory="beginners,general" userLabel="Outcome (for owner)*">
 		<attributes>
 			<attribute name="fate3"/>
 		</attributes>
@@ -105,12 +105,12 @@
 			<attribute name="resistance"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="portdep" userCategory="beginners,general" userLabel="Departure place">
+	<table-attribute tabs="1,2" id="portdep" userCategory="beginners,general" userLabel="Departure port">
 		<attributes>
 			<attribute name="portdep"/>
 		</attributes>
 	</table-attribute>	
-	<table-attribute tabs="1,2" id="ptdepimp" userCategory="beginners,general" userLabel="Departure place">
+	<table-attribute tabs="1,2" id="ptdepimp" userCategory="beginners,general" userLabel="Departure port*">
 		<attributes>
 			<attribute name="ptdepimp"/>
 		</attributes>
@@ -120,42 +120,42 @@
 			<attribute name="deptregimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="plac1tra" userCategory="beginners,general" userLabel="1st place of purchase">
+	<table-attribute tabs="1,2" id="plac1tra" userCategory="beginners,general" userLabel="Place of purchase (1)">
 		<attributes>
 			<attribute name="plac1tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="plac2tra" userCategory="beginners,general" userLabel="2nd place of purchase">
+	<table-attribute tabs="1,2" id="plac2tra" userCategory="beginners,general" userLabel="Place of purchase (2)">
 		<attributes>
 			<attribute name="plac2tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="plac3tra" userCategory="beginners,general" userLabel="3rd place of purchase">
+	<table-attribute tabs="1,2" id="plac3tra" userCategory="beginners,general" userLabel="Place of purchase (3)">
 		<attributes>
 			<attribute name="plac3tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="beginners,general" userLabel="Main place of purchase">
+	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="beginners,general" userLabel="Main place of purchase*">
 		<attributes>
 			<attribute name="mjbyptimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regem1" userCategory="beginners,general" userLabel="1st region of purchase">
+	<table-attribute tabs="1,2" id="regem1" userCategory="beginners,general" userLabel="Region of purchase (1)*">
 		<attributes>
 			<attribute name="regem1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regem2" userCategory="beginners,general" userLabel="2nd region of purchase">
+	<table-attribute tabs="1,2" id="regem2" userCategory="beginners,general" userLabel="Region of purchase (2)*">
 		<attributes>
 			<attribute name="regem2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regem3" userCategory="beginners,general" userLabel="3rd region of purchase">
+	<table-attribute tabs="1,2" id="regem3" userCategory="beginners,general" userLabel="Region of purchase (3)*">
 		<attributes>
 			<attribute name="regem3"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="majbyimp" userCategory="beginners,general" userLabel="Main region of purchase">
+	<table-attribute tabs="1,2" id="majbyimp" userCategory="beginners,general" userLabel="Main region of purchase*">
 		<attributes>
 			<attribute name="majbyimp"/>
 		</attributes>
@@ -165,47 +165,47 @@
 			<attribute name="npafttra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sla1port" userCategory="beginners,general" userLabel="1st place of landing">
+	<table-attribute tabs="1,2" id="sla1port" userCategory="beginners,general" userLabel="Place of landing (1)">
 		<attributes>
 			<attribute name="sla1port"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="adpsale1" userCategory="beginners,general" userLabel="2nd place of landing">
+	<table-attribute tabs="1,2" id="adpsale1" userCategory="beginners,general" userLabel="Place of landing (2)">
 		<attributes>
 			<attribute name="adpsale1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="adpsale2" userCategory="beginners,general" userLabel="3rd place of landing">
+	<table-attribute tabs="1,2" id="adpsale2" userCategory="beginners,general" userLabel="Place of landing (3)">
 		<attributes>
 			<attribute name="adpsale2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="mjslptimp" userCategory="beginners,general" userLabel="Main place of landing">
+	<table-attribute tabs="1,2" id="mjslptimp" userCategory="beginners,general" userLabel="Main place of landing*">
 		<attributes>
 			<attribute name="mjslptimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis1" userCategory="beginners,general" userLabel="1st region of landing">
+	<table-attribute tabs="1,2" id="regdis1" userCategory="beginners,general" userLabel="Region of landing (1)*">
 		<attributes>
 			<attribute name="regdis1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis2" userCategory="beginners,general" userLabel="2nd region of landing">
+	<table-attribute tabs="1,2" id="regdis2" userCategory="beginners,general" userLabel="Region of landing (2)*">
 		<attributes>
 			<attribute name="regdis2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis3" userCategory="beginners,general" userLabel="3rd region of landing">
+	<table-attribute tabs="1,2" id="regdis3" userCategory="beginners,general" userLabel="Region of landing (3)*">
 		<attributes>
 			<attribute name="regdis3"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="mjselimp" userCategory="beginners,general" userLabel="Main region of landing">
+	<table-attribute tabs="1,2" id="mjselimp" userCategory="beginners,general" userLabel="Main region of landing*">
 		<attributes>
 			<attribute name="mjselimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="portret" userCategory="beginners,general" userLabel="Place of return">
+	<table-attribute tabs="1,2" id="portret" userCategory="beginners,general" userLabel="Port of return">
 		<attributes>
 			<attribute name="portret"/>
 		</attributes>
@@ -215,17 +215,17 @@
 			<attribute name="retrnreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="yearam" userCategory="beginners,general" userLabel="Arrival - Africa" date="true">
+	<table-attribute tabs="1,2" id="yearam" userCategory="beginners,general" userLabel="Year of arrival*" date="true">
 		<attributes>
 			<attribute name="yearam"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="datedep" userCategory="beginners,general" userLabel="Voyage began">
+	<table-attribute tabs="1,2" id="datedep" userCategory="beginners,general" userLabel="Date voyage began">
 		<attributes>
 			<attribute name="datedep"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="datebuy" userCategory="beginners,general" userLabel="Purchase began">
+	<table-attribute tabs="1,2" id="datebuy" userCategory="beginners,general" userLabel="Date purchase began">
 		<attributes>
 			<attribute name="datebuy"/>
 		</attributes>
@@ -235,37 +235,37 @@
 			<attribute name="dateleftafr"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dateland1" userCategory="beginners,general" userLabel="Arrival - America 1st place">
+	<table-attribute tabs="1,2" id="dateland1" userCategory="beginners,general" userLabel="Arrival date - 1st place">
 		<attributes>
 			<attribute name="dateland1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dateland2" userCategory="beginners,general" userLabel="Arrival - America 2nd place">
+	<table-attribute tabs="1,2" id="dateland2" userCategory="beginners,general" userLabel="Arrival date - 2nd place">
 		<attributes>
 			<attribute name="dateland2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dateland3" userCategory="beginners,general" userLabel="Arrival - America 3rd place">
+	<table-attribute tabs="1,2" id="dateland3" userCategory="beginners,general" userLabel="Arrival date - 3rd place">
 		<attributes>
 			<attribute name="dateland3"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="datedepam" userCategory="beginners,general" userLabel="Date returned">
+	<table-attribute tabs="1,2" id="datedepam" userCategory="beginners,general" userLabel="Date began return">
 		<attributes>
 			<attribute name="datedepam"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="dateend" userCategory="beginners,general" userLabel="Date completed">
+	<table-attribute tabs="1,2" id="dateend" userCategory="beginners,general" userLabel="Date returned">
 		<attributes>
 			<attribute name="dateend"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="voy1imp" userCategory="beginners,general" userLabel="First leg of voyage (days)">
+	<table-attribute tabs="1,2" id="voy1imp" userCategory="beginners,general" userLabel="Voyage to 1st place (day)*">
 		<attributes>
 			<attribute name="voy1imp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="voy2imp" userCategory="beginners,general" userLabel="Middle passage (days)">
+	<table-attribute tabs="1,2" id="voy2imp" userCategory="beginners,general" userLabel="Middle passage (days)*">
 		<attributes>
 			<attribute name="voy2imp"/>
 		</attributes>
@@ -282,7 +282,7 @@
 			<attribute name="crew1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="crew3" userCategory="beginners,general" userLabel="Crew - 1st place">
+	<table-attribute tabs="1,2" id="crew3" userCategory="beginners,general" userLabel="Crew at first landing">
 		<attributes>
 			<attribute name="crew3"/>
 		</attributes>
@@ -292,7 +292,7 @@
 			<attribute name="crewdied"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slintend" userCategory="beginners,general" userLabel="Intended purchases">
+	<table-attribute tabs="1,2" id="slintend" userCategory="beginners,general" userLabel="Intended slave purchase">
 		<attributes>
 			<attribute name="slintend"/>
 		</attributes>
@@ -312,12 +312,12 @@
 			<attribute name="ncar17"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="tslavesd" userCategory="beginners,general" userLabel="Total exports">
+	<table-attribute tabs="1,2" id="tslavesd" userCategory="beginners,general" userLabel="Total embarked">
 		<attributes>
 			<attribute name="tslavesd"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slaarriv" userCategory="beginners,general" userLabel="Total imports">
+	<table-attribute tabs="1,2" id="slaarriv" userCategory="beginners,general" userLabel="Total disembarked">
 		<attributes>
 			<attribute name="slaarriv"/>
 		</attributes>
@@ -327,7 +327,7 @@
 			<attribute name="slas32"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slas36" userCategory="beginners,general" userLabel="Disembarked - 2st place">
+	<table-attribute tabs="1,2" id="slas36" userCategory="beginners,general" userLabel="Disembarked - 2nd place">
 		<attributes>
 			<attribute name="slas36"/>
 		</attributes>
@@ -337,37 +337,37 @@
 			<attribute name="slas39"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners,general" userLabel="Total disembarked">
+	<table-attribute tabs="1,2" id="slamimp" userCategory="beginners,general" userLabel="Total disembarked*">
 		<attributes>
 			<attribute name="slamimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners,general" userLabel="Total embarked">
+	<table-attribute tabs="1,2" id="slaximp" userCategory="beginners,general" userLabel="Total embarked*">
 		<attributes>
 			<attribute name="slaximp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="boyrat7" userCategory="beginners,general" userLabel="Boys %">
+	<table-attribute tabs="1,2" id="boyrat7" userCategory="beginners,general" userLabel="Percent boys*">
 		<attributes>
 			<attribute name="boyrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="girlrat7" userCategory="beginners,general" userLabel="Girls %">
+	<table-attribute tabs="1,2" id="girlrat7" userCategory="beginners,general" userLabel="Percent girls*">
 		<attributes>
 			<attribute name="girlrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="menrat7" userCategory="beginners,general" userLabel="Men %">
+	<table-attribute tabs="1,2" id="menrat7" userCategory="beginners,general" userLabel="Percent males*">
 		<attributes>
 			<attribute name="menrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="womrat7" userCategory="beginners,general" userLabel="Women %">
+	<table-attribute tabs="1,2" id="womrat7" userCategory="beginners,general" userLabel="Percent women*">
 		<attributes>
 			<attribute name="womrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="chilrat7" userCategory="beginners,general" userLabel="Child %">
+	<table-attribute tabs="1,2" id="chilrat7" userCategory="beginners,general" userLabel="Percent children*">
 		<attributes>
 			<attribute name="chilrat7"/>
 		</attributes>
@@ -377,17 +377,17 @@
 			<attribute name="malrat7"/>
 		</attributes>
 	</table-attribute>
-	 <table-attribute tabs="1,2" id="jamcaspr" userCategory="beginners,general" userLabel="Standardized price">
+	 <table-attribute tabs="1,2" id="jamcaspr" userCategory="beginners,general" userLabel="Price (standardized)*">
 		<attributes>
 			<attribute name="jamcaspr"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="vymrtimp" userCategory="beginners,general" userLabel="Slaves deaths">
+	<table-attribute tabs="1,2" id="vymrtimp" userCategory="beginners,general" userLabel="Slave deaths at sea*">
 		<attributes>
 			<attribute name="vymrtimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners,general" userLabel="Mortality %">
+	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners,general" userLabel="Percent slaves died at sea*">
 		<attributes>
 			<attribute name="vymrtrat"/>
 		</attributes>

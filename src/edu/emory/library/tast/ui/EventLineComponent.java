@@ -35,7 +35,7 @@ public class EventLineComponent extends UIComponentBase
 	private double viewportHeight;
 
 	private boolean verticalLabelsSet = false;
-	private EventLineVerticalLabels verticalLabels;
+	private EventLineLabel[] verticalLabels;
 
 	private boolean zoomLevelsSet = false;
 	private EventLineZoomLevel[] zoomLevels;
@@ -439,8 +439,9 @@ public class EventLineComponent extends UIComponentBase
 		for (int i = 0; i < graphs.length; i++)
 		{
 			EventLineGraph graph = graphs[i];
-			int x[] = graph.getX();
-			double y[] = graph.getY();
+			int[] x = graph.getX();
+			double[] y = graph.getY();
+			String[] labels = graph.getLabels();
 			if (i > 0) regJS.append(", ");
 			regJS.append("new EventLineGraph(");
 			regJS.append("'").append(JsfUtils.escapeStringForJS(graph.getName())).append("', ");
@@ -462,10 +463,18 @@ public class EventLineComponent extends UIComponentBase
 				if (j > 0) regJS.append(", ");
 				regJS.append(y[j]);
 			}
+			regJS.append("], ");
+			regJS.append("[");
+			for (int j = 0; j < y.length; j++)
+			{
+				if (j > 0) regJS.append(", ");
+				regJS.append("'").append(JsfUtils.escapeStringForJS(labels[j])).append("'");
+			}
 			regJS.append("]");
 			regJS.append(")");
 		}
-		regJS.append("], ");
+		regJS.append("]");
+		regJS.append(", ");
 		
 		// JS zoom levels
 		regJS.append("[");
@@ -480,11 +489,24 @@ public class EventLineComponent extends UIComponentBase
 			regJS.append(zoomLevel.getViewSpan());
 			regJS.append(")");
 		}
-		regJS.append("], ");
+		regJS.append("]");
+		regJS.append(", ");
 
 		// vertical labels
-		regJS.append(verticalLabels.getSpacing()).append(", ");
-		regJS.append(verticalLabels.getMajorSpacing()).append("");
+		regJS.append("[");
+		for (int i = 0; i < verticalLabels.length; i++)
+		{
+			EventLineLabel verticalLabel = verticalLabels[i];
+			if (i > 0) regJS.append(", ");
+			regJS.append("new EventLineLabel(");
+			regJS.append(verticalLabel.getValue()).append(", ");
+			regJS.append("'").append(JsfUtils.escapeStringForJS(verticalLabel.getLabel())).append("', ");
+			regJS.append(verticalLabel.isMajor() ? "true" : "false");
+			regJS.append(")");
+		}
+		regJS.append("]");
+		
+		// end if JS
 		regJS.append("));");
 
 		// render JS
@@ -588,13 +610,13 @@ public class EventLineComponent extends UIComponentBase
 		this.events = items;
 	}
 
-	public EventLineVerticalLabels getVerticalLabels()
+	public EventLineLabel[] getVerticalLabels()
 	{
-		return (EventLineVerticalLabels) JsfUtils.getCompPropObject(this, getFacesContext(),
+		return (EventLineLabel[]) JsfUtils.getCompPropObject(this, getFacesContext(),
 				"verticalLabels", verticalLabelsSet, verticalLabels);
 	}
 
-	public void setVerticalLabels(EventLineVerticalLabels verticalLabels)
+	public void setVerticalLabels(EventLineLabel[] verticalLabels)
 	{
 		verticalLabelsSet = true;
 		this.verticalLabels = verticalLabels;

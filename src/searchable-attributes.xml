@@ -113,7 +113,6 @@
 		id="yrreg"
 		userLabel="Year of ship registration">
 		<user-categories>
-			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -126,6 +125,7 @@
 		id="natinimp"
 		userLabel="Imputed national registration">
 		<user-categories>
+			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -732,7 +732,7 @@
 		type="simple"
 		subType="ratio"
 		id="menrat7"
-		userLabel="Percentage of men at beginning or end of Middle Passage (%)">
+		userLabel="Percentage of men at beginning or end of Middle Passage">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -746,7 +746,7 @@
 		type="simple"
 		subType="ratio"
 		id="womrat7"
-		userLabel="Percentage of women at beginning or end of Middle Passage (%)">
+		userLabel="Percentage of women at beginning or end of Middle Passage">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -759,7 +759,7 @@
 		type="simple"
 		subType="ratio"
 		id="boyrat7"
-		userLabel="Percentage of boys at beginning or end of Middle Passage (%)">
+		userLabel="Percentage of boys at beginning or end of Middle Passage">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -773,7 +773,7 @@
 		type="simple"
 		subType="ratio"
 		id="girlrat7"
-		userLabel="Percentage of girls at beginning or end of Middle Passage (%)">
+		userLabel="Percentage of girls at beginning or end of Middle Passage">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -787,7 +787,7 @@
 		type="simple"
 		subType="ratio"
 		id="malrat7"
-		userLabel="Percentage of male captives (%)">
+		userLabel="Percentage of male captives">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -801,7 +801,7 @@
 		type="simple"
 		subType="ratio"
 		id="chilrat7"
-		userLabel="Percentage of child captives (%)">
+		userLabel="Percentage of child captives">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -839,7 +839,7 @@
 		type="simple"
 		subType="ratio"
 		id="vymrtrat"
-		userLabel="Imputed mortality rate (slave deaths / embarkations) (%)">
+		userLabel="Imputed mortality percetage rate (slave deaths / embarkations)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

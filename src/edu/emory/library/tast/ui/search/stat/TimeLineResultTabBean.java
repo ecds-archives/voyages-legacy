@@ -1,31 +1,24 @@
 package edu.emory.library.tast.ui.search.stat;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.jfree.chart.JFreeChart;
+import org.hibernate.Hibernate;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
-import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.ui.EventLineEvent;
 import edu.emory.library.tast.ui.EventLineGraph;
-import edu.emory.library.tast.ui.EventLineVerticalLabels;
+import edu.emory.library.tast.ui.EventLineLabel;
 import edu.emory.library.tast.ui.EventLineZoomLevel;
 import edu.emory.library.tast.ui.search.query.SearchBean;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.util.MathUtils;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Bean for time line statistics.
@@ -36,9 +29,9 @@ public class TimeLineResultTabBean {
 
 	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
 
-	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
+//	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
 
-	private static final String[] aggregatesUL = { "Average", "Minimum", "Maximum", "Sum", "Count" };
+//	private static final String[] aggregatesUL = { "Average", "Minimum", "Maximum", "Sum", "Count" };
 
 	private static final String DEFAULT_CHART_HEIGHT = "480";
 
@@ -49,11 +42,11 @@ public class TimeLineResultTabBean {
 	 */
 	private List voyageAttributes;
 
-	/**
-	 * List of available aggregates.
-	 */
-	private List aggregateFunctions;
-
+//	/**
+//	 * List of available aggregates.
+//	 */
+//	private List aggregateFunctions;
+//
 //	/**
 //	 * Chosen aggregate.
 //	 */
@@ -84,10 +77,10 @@ public class TimeLineResultTabBean {
 	 */
 	private boolean attributesChanged = false;
 
-	/**
-	 * Chart presented to user.
-	 */
-	private JFreeChart chart;
+//	/**
+//	 * Chart presented to user.
+//	 */
+//	private JFreeChart chart;
 
 	/**
 	 * Current chart height.
@@ -100,29 +93,33 @@ public class TimeLineResultTabBean {
 	private String chartWidth = DEFAULT_CHART_WIDTH;
 	
 	//private EventLineGraph graphImp;
-	private EventLineGraph graphExp;
+	private EventLineGraph graph;
 	private double viewportHeight;
-	int expYears[] = {1500, 1600, 1700};
-	double expValues[] = {45, 50, 30};
 
 	/**
 	 * Avaialable voyage attributes.
 	 */
 	//private VisibleAttributeInterface[] attributes = null;//VisibleAttribute.getAllAttributes();
 
-	private EventLineVerticalLabels verticalLabels;
+	private EventLineLabel[] verticalLabels;
 
 	private ArrayList availableStats;
 
-	private class StatOption {
-		public VisibleAttributeInterface attr;
-		public String aggregate;
+	private class StatOption
+	{
+
 		public String userLabel;
-		public StatOption(VisibleAttributeInterface attr, String agregate, String userLabel) {
-			this.attr = attr;
-			this.aggregate = agregate;
+		public String sqlValue;
+		public Object sqlWhere = null;
+		public String formatString;
+		
+		public StatOption(String sqlValue, String userLabel, String formatString)
+		{
+			this.sqlValue = sqlValue;
 			this.userLabel = userLabel;
+			this.formatString = formatString;
 		}
+
 	}
 	
 	/**
@@ -133,34 +130,142 @@ public class TimeLineResultTabBean {
 		
 		
 		this.availableStats = new ArrayList();
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("voyageid"), "count", "Number of voyages per year"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonnage"), "sum", VisibleAttribute.getAttribute("tonnage").getUserLabelOrName() + " - sum"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonnage"), "avg", VisibleAttribute.getAttribute("tonnage").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonmod"), "sum", VisibleAttribute.getAttribute("tonmod").getUserLabelOrName() + " - sum"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("tonmod"), "avg", VisibleAttribute.getAttribute("tonmod").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("guns"), "avg", VisibleAttribute.getAttribute("guns").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("voy1imp"), "avg", VisibleAttribute.getAttribute("voy1imp").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("voy2imp"), "avg", VisibleAttribute.getAttribute("voy2imp").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crew1"), "avg", VisibleAttribute.getAttribute("crew1").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crew3"), "avg", VisibleAttribute.getAttribute("crew3").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crewdied"), "sum", VisibleAttribute.getAttribute("crewdied").getUserLabelOrName() + " - sum"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("crewdied"), "avg", VisibleAttribute.getAttribute("crewdied").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slintend"), "sum", VisibleAttribute.getAttribute("slintend").getUserLabelOrName() + " - sum"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slintend"), "avg", VisibleAttribute.getAttribute("slintend").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slaximp"), "sum", VisibleAttribute.getAttribute("slaximp").getUserLabelOrName() + " - sum"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slaximp"), "avg", VisibleAttribute.getAttribute("slaximp").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slamimp"), "sum", VisibleAttribute.getAttribute("slamimp").getUserLabelOrName() + " - sum"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("slaximp"), "avg", VisibleAttribute.getAttribute("slaximp").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("vymrtimp"), "sum", VisibleAttribute.getAttribute("vymrtimp").getUserLabelOrName() + " - sum"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("vymrtimp"), "avg", VisibleAttribute.getAttribute("vymrtimp").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("boyrat7"), "avg", VisibleAttribute.getAttribute("boyrat7").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("girlrat7"), "avg", VisibleAttribute.getAttribute("girlrat7").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("menrat7"), "avg", VisibleAttribute.getAttribute("menrat7").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("womrat7"), "avg", VisibleAttribute.getAttribute("womrat7").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("chilrat7"), "avg", VisibleAttribute.getAttribute("chilrat7").getUserLabelOrName() + " - average"));
-		this.availableStats.add(new StatOption(VisibleAttribute.getAttribute("malrat7"), "avg", VisibleAttribute.getAttribute("malrat7").getUserLabelOrName() + " - average"));
 		
+		this.availableStats.add(new StatOption(
+				"COUNT(voyageid)",
+				"Number of voyages",
+				"{0,number,#,###,###}"));
 		
+		this.availableStats.add(new StatOption(
+				"AVG(tonnage)",
+				"Average tonnage",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(tonmod)",
+				"Average tonnage (standardized)",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(guns)",
+				"Average number of guns",
+				"{0,number,#,###,###.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(LEAST(COALESCE(resistance, 0), 1)) * 100",
+				"Rate of resistance",
+				"{0,number,#,###,##0.0}%"));
+
+		this.availableStats.add(new StatOption(
+				"AVG(voy1imp)",
+				"Average duration of first leg of voyage (days)",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(voy2imp)",
+				"Average duration of middle passage (days)",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(crew1)",
+				"Average crew at outset",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(crew30)",
+				"Average crew at first landing of slaves",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"SUM(crewdied)",
+				"Number of crew deaths",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(crewdied)",
+				"Average crew deaths",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"SUM(slintend)",
+				"Intended number of purchases",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(slintend)",
+				"Average intended purchases",
+				"{0,number,#,###,###.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"SUM(slaximp)",
+				"Total number of captives embarked",
+				"{0,number,#,###,###}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(slaximp)",
+				"Average number of captives embarked",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"SUM(slamimp)",
+				"Total number of captives disembarked",
+				"{0,number,#,###,###}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(slamimp)",
+				"Average number of captives disembarked",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(menrat7)",
+				"Percent men (among captives)",
+				"{0,number,#,###,##0.0}%"));
+
+		this.availableStats.add(new StatOption(
+				"AVG(womrat7)",
+				"Percent women (among captives)",
+				"{0,number,#,###,##0.0}%"));
+
+		this.availableStats.add(new StatOption(
+				"AVG(boyrat7)",
+				"Percent boys (among captives)",
+				"{0,number,#,###,##0.0}%"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(girlrat7)",
+				"Percent girls (among captives)",
+				"{0,number,#,###,##0.0}%"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(malrat7)",
+				"Percent males (among captives)",
+				"{0,number,#,###,##0.0}%"));
+
+		this.availableStats.add(new StatOption(
+				"AVG(chilrat7)",
+				"Percent children (among captives)",
+				"{0,number,#,###,##0.0}%"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(jamcaspr)",
+				"Average price (standardized)",
+				"{0,number,#,###,##0.0}"));
+
+		this.availableStats.add(new StatOption(
+				"SUM(vymrtimp)",
+				"Number of slave deaths",
+				"{0,number,#,###,###}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(vymrtimp)",
+				"Average slave deaths",
+				"{0,number,#,###,##0.0}"));
+		
+		this.availableStats.add(new StatOption(
+				"AVG(vymrtrat)",
+				"Slave mortality rate",
+				"{0,number,#,###,##0.0}%"));
+
 		this.chosenOption = (StatOption)this.availableStats.get(0);
 		
 		
@@ -228,49 +333,100 @@ public class TimeLineResultTabBean {
 		//Check if we can construct chart
 		if ((this.needQuery || this.attributesChanged) && this.searchBean.getSearchParameters().getConditions() != null) {
 
+			Session sess = HibernateUtil.getSession();
+			Transaction tran = sess.beginTransaction();
 			
-			//Prepare query
-			Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
-			localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
-//			localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT ");
+			sql.append("yearam AS year");
+			sql.append(", ");
+			sql.append(this.chosenOption.sqlValue).append(" AS value");
+			sql.append(" ");
+			sql.append("FROM voyages ");
+			sql.append("WHERE ");
+			sql.append("datedep IS NOT NULL ");
+			if (this.chosenOption.sqlWhere != null)
+			{
+				sql.append("AND ");
+				sql.append(this.chosenOption.sqlWhere);
+				sql.append(" ");
+			}
+			sql.append("GROUP BY year");
+			sql.append(" ");
+			sql.append("ORDER BY year");
+			
+			SQLQuery query = sess.createSQLQuery(sql.toString());
+			query.addScalar("year", Hibernate.DOUBLE);
+			query.addScalar("value", Hibernate.DOUBLE);
+			List ret = query.list();
 
-			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
-			qValue.setGroupBy(new Attribute[] { new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
-			qValue.addPopulatedAttribute(new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")}));
-			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenOption.aggregate, this.chosenOption.attr.getAttributes()));
-			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
-			qValue.setOrder(QueryValue.ORDER_ASC);
-			Object[] ret = qValue.executeQuery();
+//			Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+//			localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
+//			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
+//			qValue.setGroupBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
+//			qValue.addPopulatedAttribute(new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")}));
+//			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenOption.aggregate, this.chosenOption.attr.getAttributes()));
+//			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
+//			qValue.setOrder(QueryValue.ORDER_ASC);
+//			List ret = qValue.executeQueryList(sess);
 			
-			Calendar cal = Calendar.getInstance();
+			MessageFormat fmt = new MessageFormat(chosenOption.formatString);
+			Object[] valueHolder = new Object[1];
+			Double zeroDouble = new Double(0);
+
+			double[] values = new double[ret.size()];
+			String[] stringValues = new String[ret.size()];
+			int[] years = new int[ret.size()];
 			
-			this.expValues = new double[ret.length];
-			this.expYears = new int[ret.length];
-			for (int i = 0; i < ret.length; i++) {
-				Object[] row = (Object[])ret[i];
-				cal.setTime((Timestamp)row[0]);
-				this.expYears[i] = cal.get(Calendar.YEAR);
-				if (row[1] != null) {
-					this.expValues[i] = ((Number)row[1]).intValue();
-				} else {
-					this.expValues[i] = 0;
+			int i = 0;
+			for (Iterator iter = ret.iterator(); iter.hasNext();)
+			{
+				Object[] row = (Object[]) iter.next();
+				years[i] = ((Number)row[0]).intValue();
+				if (row[1] != null)
+				{
+					valueHolder[0] = row[1];
+					values[i] = ((Number)row[1]).doubleValue();
 				}
+				else
+				{
+					valueHolder[0] = zeroDouble;
+					values[i] = 0;
+				}
+				stringValues[i] = fmt.format(valueHolder);
+				i++;
 			}
 			
+			graph = new EventLineGraph();
+			graph.setName(chosenOption.userLabel);
+			graph.setX(years);
+			graph.setY(values);
+			graph.setLabels(stringValues);
+			graph.setBaseCssClass("timeline-color");
 			
-			graphExp = new EventLineGraph();
-			graphExp.setName(chosenOption.userLabel);
-			graphExp.setX(expYears);
-			graphExp.setY(expValues);
-			graphExp.setBaseCssClass("timeline-color");
-			//graphExp.setEventColor("#AAAAAA");
+			tran.commit();
+			sess.close();
+			
+			double maxValue = graph.getMaxValue();
 
-			
+			if (maxValue > 0)
+			{
+				verticalLabels = EventLineLabel.createStandardLabels(maxValue, fmt);
+				viewportHeight = verticalLabels[verticalLabels.length - 1].getValue();
+			}
+			else
+			{
+				verticalLabels = new EventLineLabel[] {new EventLineLabel(0.0, "0", true)};
+				viewportHeight = 100;
+			}
+
 			this.needQuery = false;
 			this.attributesChanged = false;
+
 		}
 
 		return null;
+		
 	}
 
 //	/**
@@ -386,65 +542,19 @@ public class TimeLineResultTabBean {
 
 	public Double getViewportHeight() {
 		showTimeLine();
-		createVerticalLabels();
 		return new Double(this.viewportHeight);
 	}
 	public EventLineGraph[] getGraphs() {
 		
 		this.showTimeLine();
-		createVerticalLabels();
-		
-		return new EventLineGraph[] {graphExp};
-	}
-	
-	private void createVerticalLabels()
-	{
-
-//		int maxValue = (int) Math.max(
-//				graphExp.getMaxValue(),
-//				graphImp.getMaxValue());
-		double maxValue = graphExp.getMaxValue();
-		
-		if (maxValue > 0)
-		{
-
-			double majorSpacing;
-			double minorSpacing;
-
-			double nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
-			if (maxValue / (nextPow10/10) >= 5)
-			{
-				majorSpacing = nextPow10 / 2;
-				minorSpacing = majorSpacing / 5;
-			}
-			else
-			{
-				majorSpacing = nextPow10 / 10;
-				minorSpacing = majorSpacing / 2;
-			}
-
-			viewportHeight = (maxValue / minorSpacing + 1) * minorSpacing;
-			verticalLabels = new EventLineVerticalLabels(majorSpacing, minorSpacing);
-
-		}
-		else
-		{
-			viewportHeight = 100;
-			verticalLabels = new EventLineVerticalLabels(50, 10);
-		}
-
+		return new EventLineGraph[] {graph};
 	}
 	
 	public EventLineEvent[] getEvents() {
 		showTimeLine();
-		return new EventLineEvent[] {
-//				new EventLineEvent(1530, "Event A"),
-//				new EventLineEvent(1606, "Event B"),
-//				new EventLineEvent(1723, "Event C"),
-//				new EventLineEvent(1786, "Event D"),
-//				new EventLineEvent(1807, "Event E"),
-		};
+		return new EventLineEvent[] {};
 	}
+
 	public EventLineZoomLevel[] getZoomLevels() {
 		showTimeLine();
 		return new EventLineZoomLevel[] {
@@ -454,7 +564,7 @@ public class TimeLineResultTabBean {
 				new EventLineZoomLevel(16, 5, 50, 10),
 				new EventLineZoomLevel(32, 5, 25, 5)};
 	}
-	public EventLineVerticalLabels getVerticalLabels() {
+	public EventLineLabel[] getVerticalLabels() {
 		showTimeLine();
 		return verticalLabels;
 	}

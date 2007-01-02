@@ -1,14 +1,15 @@
 package edu.emory.library.tast.estimates.timeline;
 
+import java.text.MessageFormat;
+
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.ui.EventLineEvent;
 import edu.emory.library.tast.ui.EventLineGraph;
-import edu.emory.library.tast.ui.EventLineVerticalLabels;
+import edu.emory.library.tast.ui.EventLineLabel;
 import edu.emory.library.tast.ui.EventLineZoomLevel;
-import edu.emory.library.tast.util.MathUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -19,7 +20,7 @@ public class EstimatesTimelineBean
 	private Conditions conditions;
 	private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
-	private EventLineVerticalLabels verticalLabels;
+	private EventLineLabel[] verticalLabels;
 	private double viewportHeight;
 	
 	private void regenerateIfNecessary()
@@ -114,30 +115,14 @@ public class EstimatesTimelineBean
 		
 		if (maxValue > 0)
 		{
-
-			double majorSpacing;
-			double minorSpacing;
-
-			double nextPow10 = MathUtils.firstGreaterOrEqualPow10(maxValue);
-			if (maxValue / (nextPow10/10) >= 5)
-			{
-				majorSpacing = nextPow10 / 2;
-				minorSpacing = majorSpacing / 5;
-			}
-			else
-			{
-				majorSpacing = nextPow10 / 10;
-				minorSpacing = majorSpacing / 2;
-			}
-
-			viewportHeight = (maxValue / minorSpacing + 1) * minorSpacing;
-			verticalLabels = new EventLineVerticalLabels(majorSpacing, minorSpacing);
-
+			MessageFormat fmt = new MessageFormat("{0,number,integer}");
+			verticalLabels = EventLineLabel.createStandardLabels(maxValue, fmt);
+			viewportHeight = verticalLabels[verticalLabels.length - 1].getValue();
 		}
 		else
 		{
+			verticalLabels = new EventLineLabel[] {new EventLineLabel(0.0, "0", true)};
 			viewportHeight = 100;
-			verticalLabels = new EventLineVerticalLabels(50, 10);
 		}
 
 	}
@@ -177,7 +162,7 @@ public class EstimatesTimelineBean
 		return new EventLineGraph[] {graphExp, graphImp};
 	}
 
-	public EventLineVerticalLabels getVerticalLabels()
+	public EventLineLabel[] getVerticalLabels()
 	{
 		regenerateIfNecessary();
 		return verticalLabels;

@@ -156,10 +156,10 @@
 			<searchable-attribute id="ncar17"/>
 			<searchable-attribute id="tslavesd"/>
 			<searchable-attribute id="slaximp"/>
+			<searchable-attribute id="slaarriv"/>
 			<searchable-attribute id="slas32"/>
 			<searchable-attribute id="slas36"/>
 			<searchable-attribute id="slas39"/>
-			<searchable-attribute id="slaarriv"/>
 			<searchable-attribute id="slamimp"/>
 		</searchable-attributes>
 		<table-attributes>

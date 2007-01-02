@@ -35,7 +35,7 @@ function EventLineEvent(textId, x, text)
 	this.text = text;
 }
 
-function EventLineGraph(name, legendValueElementId, baseCssClass, eventCssClass, maxValue, minValue, x, y)
+function EventLineGraph(name, legendValueElementId, baseCssClass, eventCssClass, maxValue, minValue, x, y, labels)
 {
 	this.name = name;
 	this.baseCssClass = baseCssClass;
@@ -45,6 +45,7 @@ function EventLineGraph(name, legendValueElementId, baseCssClass, eventCssClass,
 	this.legendValueElementId = legendValueElementId;
 	this.x = x;
 	this.y = y;
+	this.labels = labels;
 }
 
 function EventLineZoomLevel(barWidth, labelsSpacing, majorLabels, viewSpan)
@@ -61,10 +62,11 @@ function EventLineHorizontalLabel(label, line)
 	this.line = line;
 }
 
-function EventLineVerticalLabel(label, line)
+function EventLineLabel(value, label, major)
 {
+	this.value = value;
 	this.label = label;
-	this.line = line;
+	this.major = major;
 }
 
 function EventLine(
@@ -93,8 +95,7 @@ function EventLine(
 	events,
 	graphs,
 	zoomLevels,
-	verticalLabelsSpacing,
-	verticalLabelsMajorSpacing)
+	verticalLabels)
 {
 
 	this.eventLineId = eventLineId;
@@ -136,8 +137,7 @@ function EventLine(
 	this.graphs = graphs;
 	this.zoomLevels = zoomLevels;
 	
-	this.verticalLabelsSpacing = verticalLabelsSpacing;
-	this.verticalLabelsMajorSpacing = verticalLabelsMajorSpacing;
+	this.verticalLabels = verticalLabels;
 	
 	this.visibleEventIndex = -1;
 	
@@ -355,8 +355,9 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 		var slots = graph.slots;
 		var x = graph.x;
 		var y = graph.y;
+		var labels = graph.labels;
 		
-		var currentY = graph.currentY = new Array();
+		var currentLabels = graph.currentLabels = new Array();
 		
 		var j = 0;
  		for (j = 0; j < x.length; j++)
@@ -376,8 +377,12 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			{
 				value = y[j];
 				j++;
+				currentLabels.push(labels[j]);
 			}
-			currentY.push(value);
+			else
+			{
+				currentLabels.push("");			
+			}
 			var barHeight = Math.round((value / this.viewportHeight) * this.graphHeight);
 			if (barHeight > this.graphHeight) barHeight = this.graphHeight;
 			slotStyle.top = (this.graphHeight - barHeight) + "px";
@@ -555,17 +560,45 @@ EventLine.prototype.createVerticalLabels = function()
 	var zoomLevelObj = this.zoomLevels[this.zoomLevel];
 	var graphWidth = zoomLevelObj.barWidth * zoomLevelObj.viewSpan;
 	
-	if (this.verticalLabels)
+	for (var i = 0; i < this.verticalLabels.length; i++)
 	{
-		for (var i = 0; i < this.verticalLabels.length; i++)
-		{
-			this.labelsContainer.removeChild(this.verticalLabels[i].label);
-			this.labelsContainer.removeChild(this.verticalLabels[i].line);
-		}
+
+		var label = this.verticalLabels[i];
+
+		if (label.labelElement) this.labelsContainer.removeChild(label.labelElement);
+		if (label.lineElement) this.labelsContainer.removeChild(label.lineElement);
+
+		var barHeight = Math.round((label.value / this.viewportHeight) * this.graphHeight);
+		var top = this.graphHeight + this.topLabelsHeight + this.topLabelsMargin - barHeight;
+		
+		var labelLine = document.createElement("div");
+		labelLine.style.backgroundColor = label.major ? "#F1E7C8" : "#F1E7C8";
+		labelLine.style.position = "absolute";
+		labelLine.style.top = top + "px";
+		labelLine.style.left = (this.leftLabelsWidth + this.leftLabelsMargin) + "px";
+		labelLine.style.height = "1px";
+		labelLine.style.width = graphWidth + "px";
+
+		var labelTable = document.createElement("table");
+		var labelCell = labelTable.insertRow(0).insertCell(0);
+		
+		labelTable.style.position = "absolute";
+		labelTable.style.top = (top - leftLabelHeight / 2) + "px";
+		labelTable.style.left = "0px";
+		labelCell.style.width = this.leftLabelsWidth + "px";
+		labelCell.style.height = leftLabelHeight + "px";
+		labelCell.style.textAlign = "right";
+		labelCell.style.fontWeight = label.major ? "bold" : "normal";
+
+		labelCell.innerHTML = label.label;
+		
+		this.labelsContainer.appendChild(labelTable);
+		this.labelsContainer.appendChild(labelLine);
+
 	}
 	
-	this.verticalLabels = new Array();
-	
+
+	/*	
 	var decimalPlaces = 0;
 	if (this.verticalLabelsSpacing <= 1)
 	{
@@ -610,6 +643,7 @@ EventLine.prototype.createVerticalLabels = function()
 		this.labelsContainer.appendChild(labelLine);
 
 	}
+	*/
 
 }
 
@@ -662,9 +696,8 @@ EventLine.prototype.graphMouseMove = function(event)
 	for (var i = 0; i < this.graphs.length; i++)
 	{
 		var graph = this.graphs[i];
-		var value = graph.currentY[pos];
 		var legendValueElement = document.getElementById(graph.legendValueElementId);
-		if (legendValueElement)	legendValueElement.innerHTML = ": " + value;
+		if (legendValueElement)	legendValueElement.innerHTML = ": " + graph.currentLabels[pos];
 	}
 	
 	this.indicatorElement.style.left = (pos * barWidth) + "px";

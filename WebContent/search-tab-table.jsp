@@ -51,7 +51,7 @@
 	<t:htmlTag value="div" styleClass="section-inside-group">
 
 		<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
-			<h:outputText value="Choose group of attributes" />
+			<h:outputText value="Choose group of variables" />
 		</t:htmlTag>
 
 		<t:htmlTag value="div" style="margin-bottom: 5px; padding-bottom: 5px;">
@@ -66,7 +66,7 @@
 
 				<t:htmlTag value="td" style="padding: 0px;">
 					<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
-						<h:outputText value="Available attributes" />
+						<h:outputText value="Available variables" />
 					</t:htmlTag>
 					<h:selectManyListbox style="width: 300px" id="configure_availAttributes" size="10"
 						value="#{TableResultTabBean.selectedAttributeToAdd}">
@@ -109,6 +109,7 @@
 			</t:htmlTag>
 		</t:htmlTag>
 
+		<% /* 
 		<t:htmlTag value="div" style="margin-top: 10px;">
 			<t:htmlTag value="table" style="border-collapse: collapse;">
 				<t:htmlTag value="tr">
@@ -121,6 +122,7 @@
 				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
+		*/ %>
 
 	</t:htmlTag>
 
