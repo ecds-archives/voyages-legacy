@@ -748,6 +748,7 @@
 		id="womrat7"
 		userLabel="Percentage of women at beginning or end of Middle Passage">
 		<user-categories>
+			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
@@ -839,7 +840,7 @@
 		type="simple"
 		subType="ratio"
 		id="vymrtrat"
-		userLabel="Imputed mortality percetage rate (slave deaths / embarkations)">
+		userLabel="Imputed mortality rate (slave deaths / embarkations)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

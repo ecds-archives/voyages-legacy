@@ -34,7 +34,6 @@ public class EstimatesTimelineBean
 		// yes, we have to
 		conditions = newConditions;
 		generateGraphs();
-		createVerticalLabels();
 
 	}
 	
@@ -78,6 +77,9 @@ public class EstimatesTimelineBean
 		int impYears[] = new int[result.length];
 		double expValues[] = new double[result.length];
 		double impValues[] = new double[result.length];
+		String expStrings[] = new String[result.length];
+		String impStrings[] = new String[result.length];
+		MessageFormat fmt = new MessageFormat("{0,number,#,###,###}");
 		
 		// move db data to it
 		for (int i = 0; i < result.length; i++)
@@ -86,6 +88,8 @@ public class EstimatesTimelineBean
 			impYears[i] = expYears[i] = ((Integer) row[0]).intValue();
 			expValues[i] = Math.round(((Double) row[1]).doubleValue());
 			impValues[i] = Math.round(((Double) row[2]).doubleValue());
+			expStrings[i] = fmt.format(new Object[] {row[1]}); 
+			impStrings[i] = fmt.format(new Object[] {row[2]}); 
 		}
 		
 		// graph for exported
@@ -93,6 +97,7 @@ public class EstimatesTimelineBean
 		graphExp.setName("Exported");
 		graphExp.setX(expYears);
 		graphExp.setY(expValues);
+		graphExp.setLabels(expStrings);
 		graphExp.setBaseCssClass("color-timeline-exported");
 		graphExp.setEventCssClass("color-timeline-exported-event");
 
@@ -101,21 +106,14 @@ public class EstimatesTimelineBean
 		graphImp.setName("Imported");
 		graphImp.setX(impYears);
 		graphImp.setY(impValues);
+		graphImp.setLabels(impStrings);
 		graphImp.setBaseCssClass("color-timeline-imported");
 		graphImp.setEventCssClass("color-timeline-imported-event");
 		
-	}
-
-	private void createVerticalLabels()
-	{
-
-		int maxValue = (int) Math.max(
-				graphExp.getMaxValue(),
-				graphImp.getMaxValue());
-		
+		// vertical labels and viewport height
+		int maxValue = (int) Math.max(graphExp.getMaxValue(), graphImp.getMaxValue());
 		if (maxValue > 0)
 		{
-			MessageFormat fmt = new MessageFormat("{0,number,integer}");
 			verticalLabels = EventLineLabel.createStandardLabels(maxValue, fmt);
 			viewportHeight = verticalLabels[verticalLabels.length - 1].getValue();
 		}
@@ -126,7 +124,7 @@ public class EstimatesTimelineBean
 		}
 
 	}
-	
+
 	public EventLineEvent[] getEvents()
 	{
 		return new EventLineEvent[] {
