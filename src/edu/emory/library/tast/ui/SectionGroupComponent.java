@@ -110,7 +110,7 @@ public class SectionGroupComponent extends UIComponentBase
 		{
 			if (!newSelectedTabId.equals(selectedSectionId))
 			{
-				queueEvent(new TabChangeEvent(this, newSelectedTabId));
+				queueEvent(new TabChangedEvent(this, newSelectedTabId));
 				selectedSectionId = newSelectedTabId;
 			}
 		}

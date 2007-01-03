@@ -45,6 +45,9 @@ public class EventLineComponent extends UIComponentBase
 	
 	private boolean eventsSet = false;
 	private EventLineEvent[] events;
+
+	private boolean eventsColumnsSet = false;
+	private int eventsColumns;
 	
 	public String getFamily()
 	{
@@ -73,12 +76,13 @@ public class EventLineComponent extends UIComponentBase
 
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[5];
+		Object[] values = new Object[6];
 		values[0] = super.saveState(context);
 		values[1] = new Integer(zoomLevel);
 		values[2] = new Integer(offset);
 		values[3] = new Integer(graphHeight);
 		values[4] = new Integer(selectorOffset);
+		values[5] = new Integer(eventsColumns);
 		return values;
 	}
 	
@@ -90,6 +94,7 @@ public class EventLineComponent extends UIComponentBase
 		offset = ((Integer) values[2]).intValue();
 		graphHeight = ((Integer) values[3]).intValue();
 		selectorOffset = ((Integer) values[4]).intValue();
+		eventsColumns = ((Integer) values[5]).intValue();
 	}
 	
 	public void decode(FacesContext context)
@@ -248,7 +253,7 @@ public class EventLineComponent extends UIComponentBase
 		writer.endElement("div");
 	}
 
-	private void encodeEvents(FacesContext context, ResponseWriter writer, String mainId) throws IOException
+	private void encodeEvents(FacesContext context, ResponseWriter writer, String mainId, int eventsColumns) throws IOException
 	{
 		
 		if (this.events == null || this.events.length == 0)
@@ -259,17 +264,39 @@ public class EventLineComponent extends UIComponentBase
 		writer.write("Events");
 		writer.endElement("div");
 		
+		int eventsPerColumn = this.events.length / eventsColumns;
+		if (this.events.length % eventsColumns != 0) eventsPerColumn++;
+		
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("class", "event-line-event-table", null);
-		
+		writer.writeAttribute("class", "event-line-event-columns", null);
+		writer.startElement("tr", this);
+
 		for (int i = 0; i < events.length; i++)
 		{
-			EventLineEvent event = events[i];
 			
-			if (i > 0)
+			EventLineEvent event = events[i];
+
+			if (i % eventsPerColumn == 0)
+			{
+				
+				if (i > 0) writer.endElement("table");
+
+				if (i > 0) writer.endElement("td");
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "event-line-event-column", null);
+
+				writer.startElement("table", this);
+				writer.writeAttribute("cellspacing", "0", null);
+				writer.writeAttribute("cellpadding", "0", null);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("class", "event-line-event-table", null);
+				
+			}
+
+			if (i % eventsPerColumn != 0)
 			{
 				writer.startElement("tr", this);
 				writer.startElement("td", this);
@@ -305,14 +332,16 @@ public class EventLineComponent extends UIComponentBase
 			writer.endElement("td");
 
 			writer.endElement("tr");
-
+			
 		}
-		
+
+		writer.endElement("td");
+		writer.endElement("tr");
 		writer.endElement("table");
 		
 	}
 
-	private void encodeLegend(FacesContext context, ResponseWriter writer, String mainId) throws IOException
+	private void encodeLegend(FacesContext context, ResponseWriter writer, String mainId, String horizontalLegedId) throws IOException
 	{
 		
 		writer.startElement("table", this);
@@ -322,6 +351,12 @@ public class EventLineComponent extends UIComponentBase
 		writer.writeAttribute("class", "event-line-legend", null);
 		writer.startElement("tr", this);
 		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "event-line-legend-horizontal", null);
+		//writer.writeAttribute("style", "display: none", null);
+		writer.writeAttribute("id", horizontalLegedId, null);
+		writer.endElement("td");
+
 		for (int i = 0; i < graphs.length; i++)
 		{
 			
@@ -369,8 +404,9 @@ public class EventLineComponent extends UIComponentBase
 		String indicatorId = getClientId(context) + "_indicator";
 		String indicatorLabelId = getClientId(context) + "_indicator_label";
 		String labelsContainerId = getClientId(context) + "_labels_container";
+		String horizontalLegedId = getClientId(context) + "_horizontal_legend";
 
-		// these data won't be saved in the component state
+		// get data
 		zoomLevel = getZoomLevel();
 		offset = getOffset();
 		graphHeight = getGraphHeight();
@@ -380,6 +416,7 @@ public class EventLineComponent extends UIComponentBase
 		events = getEvents();
 		zoomLevels = getZoomLevels();
 		verticalLabels = getVerticalLabels();
+		eventsColumns = getEventsColumns();
 		if (graphs == null) graphs = new EventLineGraph[0];
 		if (events == null) events = new EventLineEvent[0];
 		
@@ -408,6 +445,7 @@ public class EventLineComponent extends UIComponentBase
 		regJS.append("'").append(indicatorId).append("', ");
 		regJS.append("'").append(indicatorLabelId).append("', ");
 		regJS.append("'").append(labelsContainerId).append("', ");
+		regJS.append("'").append(horizontalLegedId).append("', ");
 		regJS.append("'").append(getZoomLevelHiddenFieldName(context)).append("', ");
 		regJS.append("'").append(getOffsetHiddenFieldName(context)).append("', ");
 		regJS.append(viewportHeight).append(", ");
@@ -492,6 +530,10 @@ public class EventLineComponent extends UIComponentBase
 		regJS.append("]");
 		regJS.append(", ");
 
+		// horizontal labels
+		regJS.append("'Year'");
+		regJS.append(", ");
+
 		// vertical labels
 		regJS.append("[");
 		for (int i = 0; i < verticalLabels.length; i++)
@@ -559,10 +601,10 @@ public class EventLineComponent extends UIComponentBase
 		writer.endElement("div");
 		
 		// render legend
-		encodeLegend(context, writer, mainId);
+		encodeLegend(context, writer, mainId, horizontalLegedId);
 		
 		// render events
-		encodeEvents(context, writer, mainId);
+		encodeEvents(context, writer, mainId, eventsColumns);
 
 	}
 
@@ -680,6 +722,18 @@ public class EventLineComponent extends UIComponentBase
 	{
 		viewportHeightSet = true;
 		this.viewportHeight = viewportHeight;
+	}
+
+	public int getEventsColumns()
+	{
+		return JsfUtils.getCompPropInt(this, getFacesContext(),
+				"eventsColumns", eventsColumnsSet, eventsColumns);
+	}
+
+	public void setEventsColumns(int eventsColumns)
+	{
+		eventsColumnsSet = true;
+		this.eventsColumns = eventsColumns;
 	}
 
 }

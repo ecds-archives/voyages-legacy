@@ -477,6 +477,11 @@
 			edu.emory.library.tast.admin.VoyageBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>listBean</property-name>
+			<property-class>edu.emory.library.tast.admin.VoyagesListBean</property-class>
+			<value>#{AdminVoyagesListBean}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>

@@ -18,6 +18,7 @@ public class EventLineTag extends UIComponentTag
 	private String zoomLevel;
 	private String offset;
 	private String selectorOffset;
+	private String eventsColumns = "1";
 
 	public String getComponentType()
 	{
@@ -115,6 +116,22 @@ public class EventLineTag extends UIComponentTag
 			}
 		}
 
+		if (eventsColumns != null && isValueReference(eventsColumns))
+		{
+			ValueBinding vb = app.createValueBinding(eventsColumns);
+			eventLine.setValueBinding("eventsColumns", vb);
+		}
+		else
+		{
+			try
+			{
+				eventLine.setEventsColumns(Integer.parseInt(eventsColumns));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
+		}
+		
 		if (graphs != null && isValueReference(graphs))
 		{
 			ValueBinding vb = app.createValueBinding(graphs);
@@ -229,6 +246,16 @@ public class EventLineTag extends UIComponentTag
 	public void setViewportHeight(String viewportHeight)
 	{
 		this.viewportHeight = viewportHeight;
+	}
+
+	public String getEventsColumns()
+	{
+		return eventsColumns;
+	}
+
+	public void setEventsColumns(String eventsColumns)
+	{
+		this.eventsColumns = eventsColumns;
 	}
 
 }

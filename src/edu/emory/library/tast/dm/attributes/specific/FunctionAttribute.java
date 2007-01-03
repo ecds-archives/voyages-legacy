@@ -69,7 +69,7 @@ public class FunctionAttribute extends Attribute {
 			}
 			buffer.append(attributes[i].getHQLOuterJoinPath(bindings));
 		}
-		buffer.append(")");
+		//buffer.append(")");
 		
 		return buffer.toString().equals("") ? null : buffer.toString();
 	}

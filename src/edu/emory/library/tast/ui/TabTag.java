@@ -11,7 +11,6 @@ public class TabTag extends UIComponentTag
 	
 	private String text;
 	private String tabId;
-//	private String selected;
 	
 	protected void setProperties(UIComponent component)
 	{
@@ -38,16 +37,6 @@ public class TabTag extends UIComponentTag
 		{
 			tab.setTabId(tabId);
 		}
-		
-//		if (selected != null && isValueReference(selected))
-//		{
-//			ValueBinding vb = app.createValueBinding(selected);
-//			tab.setValueBinding("selected", vb);
-//		}
-//		else
-//		{
-//			tab.setSelected("true".equals(selected));
-//		}
 
 	}
 
@@ -80,15 +69,5 @@ public class TabTag extends UIComponentTag
 	{
 		this.text = text;
 	}
-
-//	public String getSelected()
-//	{
-//		return selected;
-//	}
-//
-//	public void setSelected(String selected)
-//	{
-//		this.selected = selected;
-//	}
 
 }

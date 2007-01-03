@@ -13,12 +13,16 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.EventLineEvent;
 import edu.emory.library.tast.ui.EventLineGraph;
 import edu.emory.library.tast.ui.EventLineLabel;
 import edu.emory.library.tast.ui.EventLineZoomLevel;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Bean for time line statistics.
@@ -112,10 +116,12 @@ public class TimeLineResultTabBean {
 		public String sqlValue;
 		public Object sqlWhere = null;
 		public String formatString;
+		public Attribute attributeValue;
 		
-		public StatOption(String sqlValue, String userLabel, String formatString)
+		public StatOption(String sqlValue, Attribute valueAttribute, String userLabel, String formatString)
 		{
 			this.sqlValue = sqlValue;
+			this.attributeValue = valueAttribute;
 			this.userLabel = userLabel;
 			this.formatString = formatString;
 		}
@@ -133,136 +139,163 @@ public class TimeLineResultTabBean {
 		
 		this.availableStats.add(new StatOption(
 				"COUNT(voyageid)",
+				new FunctionAttribute("COUNT", new Attribute[] {Voyage.getAttribute("voyageid")}),
 				"Number of voyages",
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(tonnage)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonnage")}),
 				"Average tonnage",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(tonmod)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonmod")}),
 				"Average tonnage (standardized)",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(guns)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("guns")}),
 				"Average number of guns",
 				"{0,number,#,###,###.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(LEAST(COALESCE(resistance, 0), 1)) * 100",
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})}),
 				"Rate of resistance",
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(voy1imp)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy1imp")}),
 				"Average duration of first leg of voyage (days)",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(voy2imp)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy2imp")}),
 				"Average duration of middle passage (days)",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(crew1)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonnage")}),
 				"Average crew at outset",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(crew30)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crew30")}),
 				"Average crew at first landing of slaves",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(crewdied)",
+				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("crewdied")}),
 				"Number of crew deaths",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(crewdied)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crewdied")}),
 				"Average crew deaths",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(slintend)",
+				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slintend")}),
 				"Intended number of purchases",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(slintend)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slintend")}),
 				"Average intended purchases",
 				"{0,number,#,###,###.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(slaximp)",
+				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slaximp")}),
 				"Total number of captives embarked",
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(slaximp)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slaximp")}),
 				"Average number of captives embarked",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(slamimp)",
+				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slamimp")}),
 				"Total number of captives disembarked",
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(slamimp)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slamimp")}),
 				"Average number of captives disembarked",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(menrat7)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("menrat7")}),
 				"Percent men (among captives)",
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(womrat7)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("womrat7")}),
 				"Percent women (among captives)",
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(boyrat7)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("boyrat7")}),
 				"Percent boys (among captives)",
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(girlrat7)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("girlrat7")}),
 				"Percent girls (among captives)",
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(malrat7)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("malrat7")}),
 				"Percent males (among captives)",
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(chilrat7)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("chilrat7")}),
 				"Percent children (among captives)",
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(jamcaspr)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("jamcaspr")}),
 				"Average price (standardized)",
 				"{0,number,#,###,##0.0}"));
 
 		this.availableStats.add(new StatOption(
 				"SUM(vymrtimp)",
+				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("vymrtimp")}),
 				"Number of slave deaths",
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(vymrtimp)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("vymrtimp")}),
 				"Average slave deaths",
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(vymrtrat)",
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("vymrtrat")}),
 				"Slave mortality rate",
 				"{0,number,#,###,##0.0}%"));
 
@@ -336,39 +369,42 @@ public class TimeLineResultTabBean {
 			Session sess = HibernateUtil.getSession();
 			Transaction tran = sess.beginTransaction();
 			
-			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT ");
-			sql.append("yearam AS year");
-			sql.append(", ");
-			sql.append(this.chosenOption.sqlValue).append(" AS value");
-			sql.append(" ");
-			sql.append("FROM voyages ");
-			sql.append("WHERE ");
-			sql.append("datedep IS NOT NULL ");
-			if (this.chosenOption.sqlWhere != null)
-			{
-				sql.append("AND ");
-				sql.append(this.chosenOption.sqlWhere);
-				sql.append(" ");
-			}
-			sql.append("GROUP BY year");
-			sql.append(" ");
-			sql.append("ORDER BY year");
-			
-			SQLQuery query = sess.createSQLQuery(sql.toString());
-			query.addScalar("year", Hibernate.DOUBLE);
-			query.addScalar("value", Hibernate.DOUBLE);
-			List ret = query.list();
+//			StringBuffer sql = new StringBuffer();
+//			sql.append("SELECT ");
+//			sql.append("yearam AS year");
+//			sql.append(", ");
+//			sql.append(this.chosenOption.sqlValue).append(" AS value");
+//			sql.append(" ");
+//			sql.append("FROM voyages ");
+//			sql.append("WHERE ");
+//			sql.append("datedep IS NOT NULL ");
+//			if (this.chosenOption.sqlWhere != null)
+//			{
+//				sql.append("AND ");
+//				sql.append(this.chosenOption.sqlWhere);
+//				sql.append(" ");
+//			}
+//			sql.append("GROUP BY year");
+//			sql.append(" ");
+//			sql.append("ORDER BY year");
+//			
+//			SQLQuery query = sess.createSQLQuery(sql.toString());
+//			query.addScalar("year", Hibernate.DOUBLE);
+//			query.addScalar("value", Hibernate.DOUBLE);
+//			List ret = query.list();
 
-//			Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
-//			localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
-//			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
-//			qValue.setGroupBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
-//			qValue.addPopulatedAttribute(new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")}));
-//			qValue.addPopulatedAttribute(new FunctionAttribute(this.chosenOption.aggregate, this.chosenOption.attr.getAttributes()));
-//			qValue.setOrderBy(new Attribute[] {new FunctionAttribute("date_trunc", new Attribute[] {new DirectValueAttribute("year"), Voyage.getAttribute("datedep")})});
-//			qValue.setOrder(QueryValue.ORDER_ASC);
-//			List ret = qValue.executeQueryList(sess);
+			Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+			localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
+			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
+			qValue.setGroupBy(new Attribute[] {Voyage.getAttribute("yearam")});
+			qValue.addPopulatedAttribute(Voyage.getAttribute("yearam"));
+			qValue.addPopulatedAttribute(this.chosenOption.attributeValue);
+			qValue.setOrderBy(new Attribute[] {Voyage.getAttribute("yearam")});
+			qValue.setOrder(QueryValue.ORDER_ASC);
+			
+			System.out.println(qValue.toStringWithParams().conditionString);
+			
+			List ret = qValue.executeQueryList(sess);
 			
 			MessageFormat fmt = new MessageFormat(chosenOption.formatString);
 			Object[] valueHolder = new Object[1];

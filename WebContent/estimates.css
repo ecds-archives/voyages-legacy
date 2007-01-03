@@ -112,10 +112,17 @@ div.event-line-mark-pressed {
 * event line
 ***********************************/
 
-table.event-line-event-table {
-	margin-bottom: 20px; 
-	margin-left: 70px; }
+table.event-line-event-columns {
+	margin-left: 50px; 
+	margin-bottom: 20px; }
 
+td.event-line-event-column {
+	padding-left: 20px;
+	vertical-align: top; }
+
+table.event-line-event-table {
+	}
+	
 tr.event-line-event {
 	}
 
@@ -189,3 +196,6 @@ div.event-line-events-title {
 div.event-line-graph-container,
 div.event-line-selector-container {
 	border: 1px solid #571B1D; }
+
+td.event-line-legend-horizontal {
+	padding-right: 10px;}

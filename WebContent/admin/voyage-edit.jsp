@@ -18,7 +18,7 @@
 <f:view>
 	<h:form id="form">
 	
-		<s:tabBar id="bar" selectedTabId="#{AdminVoyageBean.selectedGroupId}">
+		<s:tabBar id="bar" selectedTabId="ship" onTabChanged="#{AdminVoyageBean.onGroupChanged}">
 			<s:tab text="Ship" tabId="ship" />
 			<s:tab text="Outcome" tabId="outcome" />
 			<s:tab text="Itinerary" tabId="itinerary" />

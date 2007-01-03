@@ -200,7 +200,8 @@ div.event-line-indicator-label {
 	padding: 5px; }
 
 .timeline-color {
-	background: #F1E7C8;
+	background-color: #F1E7C8;
+	background-color: #CA4223;
 }
 
 div.event-line-graph-container,
@@ -225,3 +226,6 @@ td.event-line-legend-name {
 
 td.event-line-legend-value {
 	padding-right: 5px; }
+
+td.event-line-legend-horizontal {
+	padding-right: 10px;}

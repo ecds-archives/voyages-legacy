@@ -5,21 +5,21 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 
-public class TabChangeEvent extends FacesEvent
+public class TabChangedEvent extends FacesEvent
 {
 
 	private static final long serialVersionUID = -1216486761966348663L;
 	
 	private String tabId;
 
-	public TabChangeEvent(UIComponent uiComponent, String tabId)
+	public TabChangedEvent(UIComponent uiComponent, String tabId)
 	{
 		super(uiComponent);
 		this.tabId = tabId;
 		this.setPhaseId(PhaseId.INVOKE_APPLICATION);
 	}
 
-	public TabChangeEvent(UIComponent uiComponent)
+	public TabChangedEvent(UIComponent uiComponent)
 	{
 		super(uiComponent);
 	}

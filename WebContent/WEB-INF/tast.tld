@@ -82,6 +82,9 @@
 		<attribute>
 			<name>selectedTabId</name>
 		</attribute>
+		<attribute>
+			<name>onTabChanged</name>
+		</attribute>
 	</tag>
 
 	<tag>
@@ -544,6 +547,9 @@
 		</attribute>
 		<attribute>
 			<name>verticalLabels</name>
+		</attribute>
+		<attribute>
+			<name>eventsColumns</name>
 		</attribute>
 	</tag>
 	

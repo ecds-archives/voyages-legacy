@@ -10,6 +10,7 @@
 		zoomLevel="0"
 		offset="1600"
 		selectorOffset="1500"
+		eventsColumns="2"
 		viewportHeight="#{EstimatesTimelineBean.viewportHeight}"
 		graphs="#{EstimatesTimelineBean.graphs}"
 		events="#{EstimatesTimelineBean.events}" 

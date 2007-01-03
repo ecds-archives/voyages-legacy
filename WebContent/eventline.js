@@ -81,6 +81,7 @@ function EventLine(
 	indicatorId,
 	indicatorLabelId,
 	labelsContainerId,
+	horizontalLegedElementId,
 	zoomLevelFieldName,
 	offsetFieldName,
 	viewportHeight,
@@ -95,6 +96,7 @@ function EventLine(
 	events,
 	graphs,
 	zoomLevels,
+	horizontalVariableName,
 	verticalLabels)
 {
 
@@ -137,6 +139,8 @@ function EventLine(
 	this.graphs = graphs;
 	this.zoomLevels = zoomLevels;
 	
+	this.horizontalLegedElementId = horizontalLegedElementId;
+	this.horizontalVariableName = horizontalVariableName;
 	this.verticalLabels = verticalLabels;
 	
 	this.visibleEventIndex = -1;
@@ -160,6 +164,8 @@ EventLine.prototype.init = function()
 	this.indicatorContainerElement = document.getElementById(this.indicatorContainerId);
 	this.indicatorElement = document.getElementById(this.indicatorId);
 	this.indicatorLabelElement = document.getElementById(this.indicatorLabelId);
+	
+	this.horizontalLegedElement = document.getElementById(this.horizontalLegedElementId);
 	
 	this.labelsContainer = document.getElementById(this.labelsContainerId);
 	this.labelsContainer.style.width = (this.leftLabelsWidth + this.leftLabelsMargin + this.graphWidth) + "px";
@@ -376,12 +382,12 @@ EventLine.prototype.refresh = function(zoomLevel, offset)
 			if (j < x.length && x[j] == this.offset + k)
 			{
 				value = y[j];
-				j++;
 				currentLabels.push(labels[j]);
+				j++;
 			}
 			else
 			{
-				currentLabels.push("");			
+				currentLabels.push("");
 			}
 			var barHeight = Math.round((value / this.viewportHeight) * this.graphHeight);
 			if (barHeight > this.graphHeight) barHeight = this.graphHeight;
@@ -670,16 +676,26 @@ EventLine.prototype.redrawSelector = function(offset, span)
 	this.redrawSelectorUsingLeftRight(left, right);
 }
 
+EventLine.prototype.setLegendStatus = function(status)
+{
+	this.indicatorElement.style.display = status ? "" : "none";
+	this.horizontalLegedElement.style.display = status ? "" : "none";
+	for (var i = 0; i < this.graphs.length; i++)
+	{
+		var graph = this.graphs[i];
+		var legendValueElement = document.getElementById(graph.legendValueElementId);
+		legendValueElement.style.display = status ? "" : "none";
+	}
+}
+
 EventLine.prototype.graphMouseOver = function(event)
 {
-	this.indicatorElement.style.display = "block";
-	//this.indicatorLabelElement.style.display = "block";
+	this.setLegendStatus(true);
 }
 
 EventLine.prototype.graphMouseOut = function(event)
 {
-	this.indicatorElement.style.display = "none";
-	//this.indicatorLabelElement.style.display = "none";
+	this.setLegendStatus(false);
 }
 
 EventLine.prototype.graphMouseMove = function(event)
@@ -696,9 +712,19 @@ EventLine.prototype.graphMouseMove = function(event)
 	for (var i = 0; i < this.graphs.length; i++)
 	{
 		var graph = this.graphs[i];
+		var currentValue = graph.currentLabels[pos];
 		var legendValueElement = document.getElementById(graph.legendValueElementId);
-		if (legendValueElement)	legendValueElement.innerHTML = ": " + graph.currentLabels[pos];
+		if (currentValue == "")
+		{
+			legendValueElement.innerHTML = "";
+		}
+		else
+		{
+			legendValueElement.innerHTML = ": " + currentValue;
+		}
 	}
+	
+	this.horizontalLegedElement.innerHTML = this.horizontalVariableName + ": " + (pos + this.offset);
 	
 	this.indicatorElement.style.left = (pos * barWidth) + "px";
 	this.indicatorLabelElement.style.left = (pos * barWidth) + "px";

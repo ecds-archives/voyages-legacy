@@ -25,6 +25,8 @@ public class VoyagesListBean
 {
 	
 	private VoyageBean voyageBean;
+	private boolean filterChanged = true;
+	private boolean currentPageChanged = true;
 	private boolean dataValid = false;
 
 	private GridRow[] rows;
@@ -62,7 +64,6 @@ public class VoyagesListBean
 			yearTo = ((Integer) row[1]).intValue();
 		}
 		
-		dataValid = false;
 		currentPage = 1;
 		
 		return null;
@@ -76,8 +77,19 @@ public class VoyagesListBean
 	
 	private void loadDataIfNecessary()
 	{
-
-		if (dataValid) return;
+		
+		// no need
+		if (dataValid && !filterChanged && !currentPageChanged)
+			return;
+		
+		// reset page if some filter changed
+		if (filterChanged)
+			currentPage = 1;
+		
+		// clean states
+		filterChanged = false;
+		currentPageChanged = false;
+		dataValid = true;
 
 		// open db
 		Session sess = HibernateUtil.getSession();
@@ -161,9 +173,6 @@ public class VoyagesListBean
 		tran.commit();
 		sess.close();
 		
-		// mark a loaded
-		dataValid = true;
-
 	}
 
 	public GridColumn[] getColumns()
@@ -199,6 +208,11 @@ public class VoyagesListBean
 		
 	}
 	
+	public void invalidateList()
+	{
+		dataValid = false;
+	}
+	
 	public GridRow[] getRows()
 	{
 		loadDataIfNecessary();
@@ -226,7 +240,7 @@ public class VoyagesListBean
 	{
 		if (currentPage != this.currentPage)
 		{
-			dataValid = false;
+			currentPageChanged = true;
 			this.currentPage = currentPage;
 		}
 	}
@@ -255,9 +269,8 @@ public class VoyagesListBean
 	{
 		if (!StringUtils.compareStrings(nationId, this.nationId))
 		{
-			dataValid = false;
+			filterChanged = true;
 			this.nationId = nationId;
-			this.currentPage = 1;
 		}
 	}
 
@@ -270,9 +283,8 @@ public class VoyagesListBean
 	{
 		if (yearFrom != this.yearFrom)
 		{
-			dataValid = false;
+			filterChanged = true;
 			this.yearFrom = yearFrom;
-			this.currentPage = 1;
 		}
 	}
 
@@ -285,7 +297,7 @@ public class VoyagesListBean
 	{
 		if (yearTo != this.yearTo)
 		{
-			dataValid = false;
+			filterChanged = true;
 			this.yearTo = yearTo;
 			this.currentPage = 1;
 		}

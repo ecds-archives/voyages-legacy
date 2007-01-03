@@ -3,6 +3,7 @@ package edu.emory.library.tast.ui;
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
@@ -10,6 +11,7 @@ public class TabBarTag extends UIComponentTag
 {
 
 	private String selectedTabId;
+	private String onTabChanged;
 
 	protected void setProperties(UIComponent component)
 	{
@@ -27,6 +29,12 @@ public class TabBarTag extends UIComponentTag
 		else
 		{
 			tabBar.setSelectedTabId(selectedTabId);
+		}
+
+		if (onTabChanged != null && isValueReference(onTabChanged))
+		{
+			MethodBinding mb = app.createMethodBinding(onTabChanged, new Class[] {TabChangedEvent.class});
+			tabBar.setOnTabChanged(mb);
 		}
 
 	}
@@ -49,6 +57,16 @@ public class TabBarTag extends UIComponentTag
 	public void setSelectedTabId(String selectedTabId)
 	{
 		this.selectedTabId = selectedTabId;
+	}
+
+	public String getOnTabChanged()
+	{
+		return onTabChanged;
+	}
+
+	public void setOnTabChanged(String onTabChanged)
+	{
+		this.onTabChanged = onTabChanged;
 	}
 	
 }

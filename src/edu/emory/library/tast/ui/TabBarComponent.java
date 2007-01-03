@@ -7,7 +7,10 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -17,6 +20,8 @@ public class TabBarComponent extends UIComponentBase
 	
 	private String selectedTabId;
 	private boolean selectedTabIdSet = false;
+	
+	private MethodBinding onTabChanged;
 	
 	public boolean getRendersChildren()
 	{
@@ -30,9 +35,10 @@ public class TabBarComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[2];
+		Object values[] = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = selectedTabId;
+		values[2] = saveAttachedState(context, onTabChanged);
 		return values;
 	}
 	
@@ -41,6 +47,7 @@ public class TabBarComponent extends UIComponentBase
 		Object values[] = (Object[]) state;
 		super.restoreState(context, values[0]);
 		selectedTabId = (String) values[1];
+		onTabChanged = (MethodBinding) restoreAttachedState(context, values[2]);
 	}
 
 	private String getHiddenFieldName(FacesContext context)
@@ -50,7 +57,21 @@ public class TabBarComponent extends UIComponentBase
 
 	public void decode(FacesContext context)
 	{
-		selectedTabId = JsfUtils.getParamString(context, getHiddenFieldName(context));
+		String newSelectedTabId = JsfUtils.getParamString(context, getHiddenFieldName(context));
+		if (!StringUtils.compareStrings(newSelectedTabId, selectedTabId))
+		{
+			selectedTabId = newSelectedTabId;
+			queueEvent(new TabChangedEvent(this, selectedTabId));
+		}
+	}
+	
+	public void broadcast(FacesEvent event) throws AbortProcessingException
+	{
+		
+		if (event instanceof TabChangedEvent)
+			if (onTabChanged != null)
+				onTabChanged.invoke(getFacesContext(), new Object[] {event});
+		
 	}
 	
 	public void processUpdates(FacesContext context)
@@ -65,7 +86,7 @@ public class TabBarComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
 		
-		String selectedTabId = getSelectedTabId();
+		selectedTabId = getSelectedTabId();
 		
 		JsfUtils.encodeHiddenInput(this, writer,
 				getHiddenFieldName(context), selectedTabId);
@@ -131,6 +152,16 @@ public class TabBarComponent extends UIComponentBase
 	{
 		return JsfUtils.getCompPropString(this, getFacesContext(),
 				"selectedTabId", selectedTabIdSet, selectedTabId);
+	}
+
+	public MethodBinding getOnTabChanged()
+	{
+		return onTabChanged;
+	}
+
+	public void setOnTabChanged(MethodBinding onTabChanged)
+	{
+		this.onTabChanged = onTabChanged;
 	}
 
 }
