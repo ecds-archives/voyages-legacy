@@ -7,15 +7,11 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tas.util.HibernateUtil;
-import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.CaseNullToZeroAttribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -24,9 +20,7 @@ import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.AttributesRange;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {

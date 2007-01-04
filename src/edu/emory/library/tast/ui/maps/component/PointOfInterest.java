@@ -98,17 +98,6 @@ public class PointOfInterest
 		this.y = y;
 	}
 	
-	public boolean equals(Object o) {
-		if (o instanceof PointOfInterest) {
-			PointOfInterest that = (PointOfInterest)o;
-			return this.x == that.x && this.y == that.y;
-		} else if (o instanceof Location) {
-			Location that = (Location)o;
-			return this.x == that.getX() && this.y == that.getY();
-		}
-		return false;
-	}
-
 	public String getLabel() {
 		return label;
 	}
@@ -135,4 +124,15 @@ public class PointOfInterest
 		this.value = value;
 	}
 	
+	public boolean equals(Object o) {
+		if (o instanceof PointOfInterest) {
+			PointOfInterest that = (PointOfInterest)o;
+			return this.x == that.x && this.y == that.y;
+		} else if (o instanceof Location) {
+			Location that = (Location)o;
+			return this.x == that.getX() && this.y == that.getY();
+		}
+		return false;
+	}
+
 }

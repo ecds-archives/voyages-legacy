@@ -6,6 +6,7 @@ public abstract class Location extends DictionaryOrdered
 	
 	private double latitude;
 	private double longitude;
+	private int showAtZoom;
 
 	public double getLatitude()
 	{
@@ -45,6 +46,16 @@ public abstract class Location extends DictionaryOrdered
 	public void setY(double y)
 	{
 		this.longitude = y;
+	}
+
+	public int getShowAtZoom()
+	{
+		return showAtZoom;
+	}
+
+	public void setShowAtZoom(int showAtZoom)
+	{
+		this.showAtZoom = showAtZoom;
 	}
 
 }

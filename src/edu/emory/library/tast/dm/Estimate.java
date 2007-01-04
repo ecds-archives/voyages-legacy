@@ -8,9 +8,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.EstimatesExportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesImportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesNationAttribute;
-import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.dm.attributes.RegionAttribute;
 
 public class Estimate {
 

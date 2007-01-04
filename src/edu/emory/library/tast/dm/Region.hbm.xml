@@ -16,6 +16,7 @@
 		<property name="latitude" />
 		<property name="longitude" />
 		<property name="order" column="order_num" />
+		<property name="showAtZoom" column="show_at_zoom" />
 		
 		<many-to-one name="area" column="area_id" />
 		

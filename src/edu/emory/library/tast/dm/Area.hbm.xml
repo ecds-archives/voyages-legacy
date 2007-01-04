@@ -16,6 +16,7 @@
 
 		<property name="latitude" />
 		<property name="longitude" />
+		<property name="showAtZoom" column="show_at_zoom" />
 
 		<property name="order" column="order_num" />
 

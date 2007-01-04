@@ -12,7 +12,6 @@ import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Location;
-import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
@@ -22,7 +21,6 @@ import edu.emory.library.tast.ui.maps.LegendItem;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapItemElement;
 import edu.emory.library.tast.ui.maps.TransformerResponse;
-import edu.emory.library.tast.ui.search.map.mapimpl.GlobalMapDataItem;
 
 public class EstimateMapDataTransformer extends AbstractDataTransformer {
 

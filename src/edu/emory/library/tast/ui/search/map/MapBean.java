@@ -8,7 +8,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
-import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapData;

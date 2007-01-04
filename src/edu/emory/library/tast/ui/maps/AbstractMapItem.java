@@ -3,7 +3,6 @@ package edu.emory.library.tast.ui.maps;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapDataItem;
 import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 
 /**
