@@ -3,7 +3,7 @@ package edu.emory.library.tast.ui.images.site;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.faces.component.UICommand;
+import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -19,11 +19,11 @@ import edu.emory.library.tast.ui.images.site.GalleryRequestBean.GalleryParams;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
-public class GalleryComponent extends UICommand
+public class GalleryComponent extends UIComponentBase
 {
 
-	private static final String GALLERY_BACK_BUTTON = "gallery-back-button";
-	private static final String GALLERY_FORWARD_BUTTON = "gallery-forward-button";
+//	private static final String GALLERY_BACK_BUTTON = "gallery-back-button";
+//	private static final String GALLERY_FORWARD_BUTTON = "gallery-forward-button";
 
 	private static final int IMG_MAX_WIDTH = 600;
 	private static final int IMG_MAX_HEIGHT = 480;
@@ -74,14 +74,14 @@ public class GalleryComponent extends UICommand
 		int cols = Integer.parseInt(this.getValueOrAttribute(context, "columns").toString());
 		int thumbnailWidth = Integer.parseInt(this.getValueOrAttribute(context, "thumbnailWidth").toString());
 		int thumbnailHeight = Integer.parseInt(this.getValueOrAttribute(context, "thumbnailHeight").toString());
-		PictureGalery pictures = (PictureGalery) this.getBoundedValue(context, "pictures");
+		PictureGalery gallery = (PictureGalery) this.getBoundedValue(context, "pictures");
 
 		GalleryRequestBean.GalleryParams params = (GalleryRequestBean.GalleryParams) this.getValueOrAttribute(context, "galleryParams");
 		params.restoreState();
 		
 		StringBuffer js = new StringBuffer();
 		
-		if (pictures != null)
+		if (gallery != null)
 		{
 
 			int set = Integer.parseInt(params.getVisibleSet());
@@ -101,7 +101,7 @@ public class GalleryComponent extends UICommand
 			writer.writeAttribute("class", "gallery-arrow-prev", null);
 
 			int prevPictIndex = (set - 1) * (rows * cols) + pict - 1; 
-			if (prevPictIndex > 0)
+			if (prevPictIndex >= 0)
 			{
 				
 				int prevSet = set;
@@ -150,7 +150,7 @@ public class GalleryComponent extends UICommand
 //			writer.writeAttribute("cellspacing", "0", null);
 //			writer.writeAttribute("cellpadding", "0", null);
 //			writer.writeAttribute("class", "gallery-table-thumbnails", null);
-			GaleryImage[] picts = pictures.getPictures(set, rows * cols);
+			GaleryImage[] picts = gallery.getPictures(set, rows * cols);
 			for (int i = 0; i < rows * cols && i < picts.length; i++)
 			{
 
@@ -227,7 +227,7 @@ public class GalleryComponent extends UICommand
 			
 			
 			int nextPictIndex = (set - 1) * (rows * cols) + pict + 1; 
-			if (nextPictIndex < pictures.getNumberOfAll())
+			if (nextPictIndex < gallery.getNumberOfAll())
 			{
 				
 				int nextSet = set;
@@ -295,6 +295,11 @@ public class GalleryComponent extends UICommand
 					imageHeight = IMG_MAX_HEIGHT;
 				}
 				
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "gallery-counter", null);
+				writer.write(((set - 1) * (rows * cols) + pict + 1) + " / " + gallery.getNumberOfAll());
+				writer.endElement("div");
+
 				writer.startElement("div", this);
 				writer.writeAttribute("class", "gallery-image", null);
 				
@@ -380,7 +385,7 @@ public class GalleryComponent extends UICommand
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "gallery-image-title", null);
 		writer.write(visibleImage.getImage().getTitle());
-		if (visibleImage.getImage().getDate() != null)
+		if (!StringUtils.isNullOrEmpty(visibleImage.getImage().getDate()))
 		{
 			writer.write(" ");
 			writer.startElement("span", this);
@@ -446,6 +451,12 @@ public class GalleryComponent extends UICommand
 		writer.endElement("table");
 
 	}
+	
+	public void encodeEnd(FacesContext context) throws IOException
+	{
+	}
+	
+	/*
 
 	private void printImageInfo(FacesContext context, UIForm form,
 			ResponseWriter writer, GaleryImage visibleImage, GalleryRequestBean.GalleryParams params) throws IOException {
@@ -657,6 +668,7 @@ public class GalleryComponent extends UICommand
 		ResponseWriter writer = context.getResponseWriter();
 		writer.endElement("div");
 	}
+	*/
 
 	private Object getBoundedValue(FacesContext context, String string) {
 		ValueBinding vb = this.getValueBinding(string);
@@ -682,5 +694,11 @@ public class GalleryComponent extends UICommand
 
 	public void setShowEventHandler(MethodBindingImpl impl) {
 		this.showEvent = impl;
+	}
+
+	public String getFamily()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

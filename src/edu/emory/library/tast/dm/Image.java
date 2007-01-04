@@ -38,6 +38,7 @@ public class Image
 		attributes.put("regions", new RegionAttribute("regions", "Image"));
 		attributes.put("ports", new PortAttribute("ports", "Image"));
 		attributes.put("voyageid", new NumericAttribute("voyageid", "Image", NumericAttribute.TYPE_INTEGER));
+		attributes.put("order", new NumericAttribute("order", "Image", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private int id;
@@ -46,6 +47,7 @@ public class Image
 	private int size;
 	private String fileName;
 	private String mimeType;
+	private int order;
 
 	private String title;
 	private String description;
@@ -291,6 +293,24 @@ public class Image
 	{
 		this.people = people;
 	}
+	
+	public Integer getVoyageid() {
+		return voyageid;
+	}
+
+	public void setVoyageid(Integer voyageid) {
+		this.voyageid = voyageid;
+	}
+
+	public int getOrder()
+	{
+		return order;
+	}
+
+	public void setOrder(int order)
+	{
+		this.order = order;
+	}
 
 	public static Image[] getImagesArray()
 	{
@@ -398,21 +418,6 @@ public class Image
 		return true;
 		
 	}
-
-	public Integer getVoyageid() {
-		return voyageid;
-	}
-
-	public void setVoyageid(Integer voyageid) {
-		this.voyageid = voyageid;
-	}
-
-//	public static void main(String[] args)
-//	{
-//		
-//		Image.checkDate("1234");
-//		
-//	}
 
 }
 	

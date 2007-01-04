@@ -30,7 +30,6 @@ div.gallery-thumbnail-title {
 	width: 150px; }
 	
 div.gallery-image {
-	margin-top: 20px;
 	margin-left: 35px; }
 	
 td.gallery-image {
@@ -82,6 +81,17 @@ td.gallery-arrow-prev {
 	
 td.gallery-arrow-next {
 	text-align: left; }
+	
+div.gallery-counter {	
+	margin-bottom: 2px;
+	margin-top: 10px;
+	margin-left: 35px; }	
+	
+	
+	
+	
+	
+	
 
 
 div.gallery-back-button {
@@ -156,3 +166,6 @@ td.gallery-selected {
 	/*background-color: #CF5435;*/
 	/*border: 2px solid #CF5435; */
 }
+
+
+	

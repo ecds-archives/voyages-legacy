@@ -9,32 +9,20 @@ import java.util.Set;
 
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.servlet.ServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Person;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
-import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.ui.search.query.Query;
-import edu.emory.library.tast.ui.search.query.QueryCondition;
-import edu.emory.library.tast.ui.search.query.QueryConditionList;
-import edu.emory.library.tast.ui.search.query.QueryConditionNumeric;
-import edu.emory.library.tast.ui.search.query.QueryConditionRange;
-import edu.emory.library.tast.ui.search.query.QueryConditionText;
 import edu.emory.library.tast.ui.search.query.SearchBean;
-import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
 import edu.emory.library.tast.ui.voyage.VoyageDetailBean;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class PicturesBean {
@@ -132,6 +120,8 @@ public class PicturesBean {
 			this.object = object;
 			Conditions conditions = new Conditions();
 			QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"});
+			qValue.setOrder(QueryValue.ORDER_ASC);
+			qValue.setOrderBy(new Attribute[] {Image.getAttribute("order")});
 //			if (object.equals("people")) {
 //				conditions.addCondition(new DirectValueAttribute(id),
 //						new SequenceAttribute(new Attribute[] {Image.getAttribute("people"), Person.getAttribute("id")}), 
@@ -147,7 +137,6 @@ public class PicturesBean {
 //			} else if (object.equals("ships")) {
 //				
 //			}
-			System.out.println(qValue.toStringWithParams().conditionString);
 			Session session = HibernateUtil.getSession();
 			Transaction transaction = session.beginTransaction();
 			Object[] ret = qValue.executeQuery(session);

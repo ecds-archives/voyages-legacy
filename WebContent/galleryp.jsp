@@ -17,7 +17,6 @@
 <body>
 <f:view>
 
-
 	<div class="header">
 		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">
 	</div>
@@ -34,29 +33,24 @@
 
 	<h:form id="form">
 
-		<t:htmlTag value="div">
+		<%/*
+		<t:div id="gallsery-div-back-to-list" style="text-align: center;">
+			<h:outputText value="#{PicturesBean.currentPath}"/>
+			<t:htmlTag value="br"/>
+			<h:outputLink value="gallery.faces?gal=#{PicturesBean.lastGalleryName}">
+				<h:outputText value="Back to gallery list"/>
+			</h:outputLink>
+		</t:div>
+		*/%>
 
-			<%/*
-			<t:div id="gallsery-div-back-to-list" style="text-align: center;">
-				<h:outputText value="#{PicturesBean.currentPath}"/>
-				<t:htmlTag value="br"/>
-				<h:outputLink value="gallery.faces?gal=#{PicturesBean.lastGalleryName}">
-					<h:outputText value="Back to gallery list"/>
-				</h:outputLink>
-			</t:div>
-			*/%>
-
-			<s:picture-gallery
-				rows="5"
-				columns="1"
-				thumbnailWidth="150"
-				thumbnailHeight="100"
-				pictures="#{PicturesBean.pictureGalery}"
-				galleryParams="#{GalleryRequestBean.galleryParams}" 
-				showEventHandler="#{PicturesBean.showEventHandler}" />
-
-		 </t:htmlTag>
-
+		<s:picture-gallery
+			rows="5"
+			columns="1"
+			thumbnailWidth="150"
+			thumbnailHeight="100"
+			pictures="#{PicturesBean.pictureGalery}"
+			galleryParams="#{GalleryRequestBean.galleryParams}" 
+			showEventHandler="#{PicturesBean.showEventHandler}" />
 	
 	</h:form>
 	

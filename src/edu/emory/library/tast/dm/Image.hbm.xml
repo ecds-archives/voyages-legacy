@@ -17,6 +17,7 @@
 		<property name="height" column="height" />
 		<property name="size" column="size" />
 		<property name="mimeType" column="mime_type" />
+		<property name="order" column="order_num" />
 		
 		<property name="title" column="title" />
 		<property name="description" column="description" />
