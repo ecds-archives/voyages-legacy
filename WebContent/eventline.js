@@ -684,7 +684,7 @@ EventLine.prototype.setLegendStatus = function(status)
 	{
 		var graph = this.graphs[i];
 		var legendValueElement = document.getElementById(graph.legendValueElementId);
-		legendValueElement.style.display = status ? "" : "none";
+		legendValueElement.innerHTML = "";
 	}
 }
 
