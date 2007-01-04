@@ -393,9 +393,9 @@ public class TimeLineResultTabBean {
 //			query.addScalar("value", Hibernate.DOUBLE);
 //			List ret = query.list();
 
-			Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
-			localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
-			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
+			//Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+			//localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
+			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, this.searchBean.getSearchParameters().getConditions());
 			qValue.setGroupBy(new Attribute[] {Voyage.getAttribute("yearam")});
 			qValue.addPopulatedAttribute(Voyage.getAttribute("yearam"));
 			qValue.addPopulatedAttribute(this.chosenOption.attributeValue);
