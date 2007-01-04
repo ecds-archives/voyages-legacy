@@ -98,6 +98,44 @@ public class GalleryComponent extends UIComponentBase
 			writer.startElement("tr", this);
 			
 			writer.startElement("td", this);
+			writer.writeAttribute("class", "gallery-arrow-prev-page", null);
+			
+			if (set > 1)
+			{
+				
+				js.setLength(0);
+				js.append("galleryp.faces");
+				js.append("?").append(GalleryRequestBean.GALLERY_TYPE).append("=").append(params.getGalleryType());
+				js.append("&").append(GalleryRequestBean.ID).append("=").append(params.getId());
+				js.append("&").append(GalleryRequestBean.SET).append("=").append(set - 1);
+				js.append("&").append(GalleryRequestBean.PICT).append("=").append(cols * rows - 1);
+				
+				writer.startElement("a", this);
+				writer.writeAttribute("href", js.toString(), null);
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-prev-page-active.png", null);
+				writer.endElement("img");
+				writer.endElement("a");
+				
+			}
+			else
+			{
+
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-prev-page-blurred.png", null);
+				writer.endElement("img");
+				
+			}
+			
+			writer.endElement("td");		
+			
+			writer.startElement("td", this);
 			writer.writeAttribute("class", "gallery-arrow-prev", null);
 
 			int prevPictIndex = (set - 1) * (rows * cols) + pict - 1; 
@@ -142,7 +180,7 @@ public class GalleryComponent extends UIComponentBase
 				
 			}
 			
-			writer.endElement("td");		
+			writer.endElement("td");
 
 //			writer.startElement("td", this);
 //			writer.startElement("table", this);
@@ -269,6 +307,46 @@ public class GalleryComponent extends UIComponentBase
 			}
 			
 			writer.endElement("td");
+			
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "gallery-arrow-prev-page", null);
+			
+			int totalSets = gallery.getNumberOfAll() / (cols * rows);
+			if (gallery.getNumberOfAll() % (cols * rows) != 0) totalSets++; 
+			if (set < totalSets)
+			{
+				
+				js.setLength(0);
+				js.append("galleryp.faces");
+				js.append("?").append(GalleryRequestBean.GALLERY_TYPE).append("=").append(params.getGalleryType());
+				js.append("&").append(GalleryRequestBean.ID).append("=").append(params.getId());
+				js.append("&").append(GalleryRequestBean.SET).append("=").append(set + 1);
+				js.append("&").append(GalleryRequestBean.PICT).append("=").append(0);
+				
+				writer.startElement("a", this);
+				writer.writeAttribute("href", js.toString(), null);
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-next-page-active.png", null);
+				writer.endElement("img");
+				writer.endElement("a");
+				
+			}
+			else
+			{
+
+				writer.startElement("img", this);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("width", "16", null);
+				writer.writeAttribute("height", "16", null);
+				writer.writeAttribute("src", "gallery-arrow-next-page-blurred.png", null);
+				writer.endElement("img");
+				
+			}
+			
+			writer.endElement("td");		
 
 			writer.endElement("tr");
 			writer.endElement("table");
