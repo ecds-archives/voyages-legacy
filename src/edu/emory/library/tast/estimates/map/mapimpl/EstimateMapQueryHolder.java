@@ -7,7 +7,6 @@ import java.util.List;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
-import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -41,9 +40,8 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		qValue1.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Estimate.getAttribute("slavExported") }));
 		qValue1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		qValue1.setGroupBy(new Attribute[] { new SequenceAttribute(
-				new Attribute[] { Estimate.getAttribute("expRegion"),
-						EstimatesExportRegion.getAttribute("id") }) });
+		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}));
+		qValue1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }) });
 
 		c = new Conditions();
 		c.addCondition(conditions);
@@ -60,9 +58,8 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		qValue2.addPopulatedAttribute(new FunctionAttribute("sum",
 				new Attribute[] { Estimate.getAttribute("slavImported") }));
 		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		qValue2.setGroupBy(new Attribute[] { new SequenceAttribute(
-				new Attribute[] { Estimate.getAttribute("impRegion"),
-						EstimatesImportRegion.getAttribute("id") }) });
+		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}));
+		qValue2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("id") }) });
 
 		this.estimateMapQuerys = new QueryValue[] { qValue1, qValue2 };
 		this.addQuery("", this.estimateMapQuerys);

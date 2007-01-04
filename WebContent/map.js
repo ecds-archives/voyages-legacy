@@ -39,7 +39,6 @@ var MapsGlobal =
 		mapSizes, // available map sizes
 		fieldNameForMapSize, // hidden field for selected map size
 		pointsOfInterest, // array of points with labels
-		pointGroups, // last order group
 		bubbleId, // bubble <table>
 		bubbleTextId, // inner <td> for the text in the bubble
 		scaleIndicatorTextId,
@@ -84,7 +83,6 @@ var MapsGlobal =
 		
 		// points
 		map.points = pointsOfInterest;
-		map.pointGroups = pointGroups;
 		
 		// bubble
 		map.bubbleId = bubbleId;
@@ -534,11 +532,11 @@ function MapTile(img)
 	//this.valid = false;
 }
 
-function PointOfInterest(x, y, orderGroup, label, text, symbols)
+function PointOfInterest(x, y, showAtZoom, label, text, symbols)
 {
 	this.x = x;
 	this.y = y;
-	this.orderGroup = orderGroup;
+	this.showAtZoom = showAtZoom;
 	this.label = label;
 	this.text = text;
 	this.symbols = symbols;
@@ -1930,9 +1928,9 @@ Map.prototype.precomputePointsPositions = function()
 	var vportWidth = this.getVportWidth();
 	var vportHeight = this.getVportHeight();
 
-	var eps = 0.005;
-	var scaleRat = (this.scale - 1) / (this.scaleMax - 1);
-	var lastVisibleGroup = Math.round((scaleRat * (1 - eps) + eps) * this.pointGroups);
+	var scaleRat = (this.scale - 1) / (this.scaleMax - 1) * 100;
+	//var eps = 0.005;
+	//var lastVisibleGroup = Math.round((scaleRat * (1 - eps) + eps) * this.pointGroups);
 
 	for (var i = 0; i < this.points.length; i++)
 	{
@@ -1955,7 +1953,7 @@ Map.prototype.precomputePointsPositions = function()
 			}
 
 			var labelElementStyle = pnt.labelElement.style;
-			if (pnt.orderGroup <= lastVisibleGroup)
+			if (pnt.showAtZoom <= scaleRat)
 			{
 				labelElementStyle.display = "";
 				labelElementStyle.left = pnt.vx + "px";

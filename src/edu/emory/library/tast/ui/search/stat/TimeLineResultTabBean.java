@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.hibernate.Hibernate;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

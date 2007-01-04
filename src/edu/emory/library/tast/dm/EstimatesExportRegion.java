@@ -21,6 +21,7 @@ public class EstimatesExportRegion extends Location
 		attributes.put("longitude", new StringAttribute("longitude", "Port"));
 		attributes.put("latitude", new StringAttribute("latitude", "Port"));
 		attributes.put("order", new NumericAttribute("order", "EstimatesExportRegion", NumericAttribute.TYPE_INTEGER));
+		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "EstimatesExportRegion", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	public static Attribute getAttribute(String name)

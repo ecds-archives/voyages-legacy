@@ -21,6 +21,7 @@ public class EstimatesImportRegion extends Location
 		attributes.put("name", new StringAttribute("name", "EstimatesImportRegion"));
 		attributes.put("order", new NumericAttribute("order", "EstimatesImportRegion", NumericAttribute.TYPE_INTEGER));
 		attributes.put("area", new EstimatesImportAreaAttribute("area", "EstimatesImportRegion"));
+		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "EstimatesImportRegion", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private EstimatesImportArea area;

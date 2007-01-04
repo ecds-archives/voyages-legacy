@@ -31,6 +31,7 @@ public class Region extends Location
 		attributes.put("ports", new NumericAttribute("ports", "Region", NumericAttribute.TYPE_LONG));
 		attributes.put("area", new AreaAttribute("area", "Region"));
 		attributes.put("order", new NumericAttribute("order", "Region", NumericAttribute.TYPE_INTEGER));
+		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "Region", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private Set ports;

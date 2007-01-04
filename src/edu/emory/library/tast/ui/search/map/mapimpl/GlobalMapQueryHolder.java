@@ -51,7 +51,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}) });
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showAtZoom")}));
+		query1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}) });
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetPorts[0] = query1;
@@ -66,7 +67,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}) });
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("showAtZoom")}));
+		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}) });
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetPorts[1] = query2;
@@ -83,7 +85,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"),  Region.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"),  Region.getAttribute("id")}) });
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("showAtZoom")}));
+		query1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"),  Region.getAttribute("id")}) });
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
 		query1.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[0] = query1;
@@ -98,7 +101,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"),  Region.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.setGroupBy(new Attribute[] { new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"),  Region.getAttribute("id")}) });
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("showAtZoom")}));
+		query2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"),  Region.getAttribute("id")}) });
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[1] = query2;

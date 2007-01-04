@@ -23,6 +23,7 @@ public class Port extends Location
 		attributes.put("latitude", new StringAttribute("latitude", "Port"));
 		attributes.put("region", new RegionAttribute("region", "Port"));
 		attributes.put("order", new NumericAttribute("order", "Port", NumericAttribute.TYPE_INTEGER));
+		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "Port", NumericAttribute.TYPE_INTEGER));
 	}
 
 	private Region region;

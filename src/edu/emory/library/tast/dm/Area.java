@@ -23,6 +23,7 @@ public class Area extends Location
 		attributes.put("longitude", new NumericAttribute("longitude", "Area", NumericAttribute.TYPE_FLOAT));
 		attributes.put("regions", new NumericAttribute("regions", "Area", NumericAttribute.TYPE_LONG));
 		attributes.put("order", new NumericAttribute("order", "Area", NumericAttribute.TYPE_INTEGER));
+		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "Area", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private Set regions;

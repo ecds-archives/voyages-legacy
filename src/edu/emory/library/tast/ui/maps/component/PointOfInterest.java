@@ -11,7 +11,7 @@ public class PointOfInterest
 	private String text;
 	private String label;
 	private String[] symbols;
-	private double value = Double.MAX_VALUE;
+	private int showAtZoom = -1;
 	
 	public PointOfInterest(double x, double y)
 	{
@@ -34,28 +34,28 @@ public class PointOfInterest
 		this.label = label;
 	}
 
-	public PointOfInterest(double x, double y, double value)
+	public PointOfInterest(double x, double y, int showAtZoom)
 	{
 		this.x = x;
 		this.y = y;
-		this.value = value;
+		this.showAtZoom = showAtZoom;
 	}
 
-	public PointOfInterest(double x, double y, String label, String text, double value)
+	public PointOfInterest(double x, double y, String label, String text, int showAtZoom)
 	{
 		this.x = x;
 		this.y = y;
 		this.label = label;
 		this.text = text;
-		this.value = value;
+		this.showAtZoom = showAtZoom;
 	}
 
-	public PointOfInterest(double x, double y, String label, double value)
+	public PointOfInterest(double x, double y, String label, int showAtZoom)
 	{
 		this.x = x;
 		this.y = y;
 		this.label = label;
-		this.value = value;
+		this.showAtZoom = showAtZoom;
 	}
 
 	public String getLabelJavaScriptSafe()
@@ -114,16 +114,16 @@ public class PointOfInterest
 		this.symbols = symbols;
 	}
 
-	public double getValue()
+	public int getShowAtZoom()
 	{
-		return value;
+		return showAtZoom;
 	}
 
-	public void setValue(double value)
+	public void setShowAtZoom(int showAtZoom)
 	{
-		this.value = value;
+		this.showAtZoom = showAtZoom;
 	}
-	
+
 	public boolean equals(Object o) {
 		if (o instanceof PointOfInterest) {
 			PointOfInterest that = (PointOfInterest)o;

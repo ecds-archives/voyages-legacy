@@ -48,6 +48,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			Object[] row = (Object[]) data[i];
 			Long expTmp = (Long) row[0];
 			Location exp = null;
+			int showAtZoom = ((Integer)row[3]).intValue();
 			if (expTmp != null) {
 				exp = EstimatesExportRegion.loadById(session, expTmp.longValue());
 				if (exp == null) {
@@ -65,6 +66,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 				Element element = new Element(this.getAttribute(i, 1),
 						new Double(numberExp));
 				element.setColor(color);
+				element.setShowAtZoom(showAtZoom);
 
 				if (min > numberExp) {
 					min = numberExp;
@@ -78,13 +80,11 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 
 				int index;
 				if ((index = mapDataItems.indexOf(expDataItem)) != -1) {
-					EstimateMapDataItem item = (EstimateMapDataItem) mapDataItems
-							.get(index);
+					EstimateMapDataItem item = (EstimateMapDataItem) mapDataItems.get(index);
 					item.getMapItemElements()[0].addElement(element);
 					item.setColor(DOUBLE_COLOR);
 				} else {
-					MapItemElement expElement = new MapItemElement(this
-							.getAttribute(i, 1));
+					MapItemElement expElement = new MapItemElement(this.getAttribute(i, 1));
 					expElement.addElement(element);
 					expDataItem.addMapItemElement(expElement);
 					expDataItem.setColor(color);

@@ -15,7 +15,6 @@ import edu.emory.library.tast.ui.maps.LegendItem;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapItemElement;
 import edu.emory.library.tast.ui.maps.TransformerResponse;
-import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Data transformer that transforms DB respnse for global map.
@@ -80,12 +79,18 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		
 		//Parse each response row
 		for (int i = 0; i < data.length; i++) {
+			
+			Object[] row = (Object[]) data[i];
+			
 			//Get port
-			Location gisPort = (Location) ((Object[]) data[i])[0];
+			Location gisPort = (Location) (row)[0];
 			
 			//Get color
-			int color = Integer.parseInt(((Object[]) data[i])[2].toString());
+			int color = Integer.parseInt(row[2].toString());
 			
+			//Get zoom
+			int showAtzoom = ((Integer)row[3]).intValue();
+
 			//Get valaue
 			Number value = (Number) ((Object[]) data[i])[1];
 			if (gisPort != null) {
@@ -111,6 +116,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 					Element el = new Element(getAttribute(i, 1), new Double(value.doubleValue()));
 					item.getMapItemElements()[0].addElement(el);
 					el.setColor(color);
+					el.setShowAtZoom(showAtzoom);
 					item.setSymbolColor(DOUBLE_COLOR);
 					//System.out.println("Equals to: " + item.getI());
 				} else {
@@ -118,6 +124,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 					MapItemElement itemElement = new MapItemElement(getAttribute(i, 0));
 					Element el = new Element(getAttribute(i, 1), new Double(value.doubleValue()));
 					el.setColor(color);
+					el.setShowAtZoom(showAtzoom);
 					itemElement.addElement(el);
 					testItem.addMapItemElement(itemElement);
 					//double [] projXY = gisPort.getXYProjected();

@@ -52,19 +52,21 @@ public class EstimateMapDataItem extends AbstractMapItem {
 								+ elements[1].getSize(),
 						SYMBOL_NAME_PREFIX + elements[0].getColor() + "-"
 								+ elements[0].getSize() });
-					point.setValue(((Double)elements[1].getValue()).doubleValue());
+					point.setShowAtZoom(elements[1].getShowAtZoom());
 			} else {
 				point.setSymbols(new String[] {
 						SYMBOL_NAME_PREFIX + elements[0].getColor() + "-"
 								+ elements[0].getSize(),
 						SYMBOL_NAME_PREFIX + elements[1].getColor() + "-"
 								+ elements[1].getSize() });
-				point.setValue(((Double)elements[0].getValue()).doubleValue());
+				point.setShowAtZoom(elements[0].getShowAtZoom());
+
 			}
 		} else {
 			point.setSymbols(new String[] { SYMBOL_NAME_PREFIX
 					+ elements[0].getColor() + "-" + elements[0].getSize() });
-			point.setValue(((Double)elements[0].getValue()).doubleValue());
+			point.setShowAtZoom(elements[0].getShowAtZoom());
+
 		}
 		point.setLabel(this.getMainLabel());
 

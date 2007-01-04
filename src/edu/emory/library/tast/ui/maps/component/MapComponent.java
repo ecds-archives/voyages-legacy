@@ -385,7 +385,7 @@ public class MapComponent extends UIComponentBase
 			{
 				PointOfInterest pnt0 = (PointOfInterest) arg0;
 				PointOfInterest pnt1 = (PointOfInterest) arg1;
-				return pnt0.getValue() == pnt1.getValue() ? 0 : pnt0.getValue() < pnt1.getValue() ? 1 : -1;
+				return pnt0.getShowAtZoom() == pnt1.getShowAtZoom() ? 0 : pnt0.getShowAtZoom() < pnt1.getShowAtZoom() ? 1 : -1;
 			}});
 
 		// at least the default map size
@@ -506,8 +506,6 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append(", ");
 		
 		// points of interest
-		int pointOrderGroup = 0;
-		double lastPointValue = Double.MAX_VALUE;
 		if (pointsOfInterest != null)
 		{
 			jsRegister.append("[");
@@ -515,18 +513,13 @@ public class MapComponent extends UIComponentBase
 			{
 				PointOfInterest pnt = pointsOfInterest[i];
 				String[] symbols = pnt.getSymbols();
-				if (lastPointValue != pnt.getValue())
-				{
-					pointOrderGroup++;
-					lastPointValue = pnt.getValue();
-				}
 				if (i > 0) jsRegister.append(", ");
 				jsRegister.append("new PointOfInterest(");
 				jsRegister.append(pnt.getX());
 				jsRegister.append(", ");
 				jsRegister.append(pnt.getY());
 				jsRegister.append(", ");
-				jsRegister.append(pointOrderGroup);
+				jsRegister.append(pnt.getShowAtZoom());
 				jsRegister.append(", ");
 				jsRegister.append("'").append(pnt.getLabelJavaScriptSafe()).append("'");
 				jsRegister.append(", ");
@@ -561,10 +554,6 @@ public class MapComponent extends UIComponentBase
 		}
 		jsRegister.append(", ");
 		
-		// index of the last group
-		jsRegister.append(pointOrderGroup);
-		jsRegister.append(", ");
-
 		// bubble
 		jsRegister.append("'").append(bubbleId).append("'");
 		jsRegister.append(", ");

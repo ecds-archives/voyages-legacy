@@ -117,10 +117,8 @@ public class MapBean {
 //					Conditions.OP_SMALLER_OR_EQUAL);
 
 			this.pointsOfInterest.clear();
-			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(
-					conditions);
-			queryHolder.executeQuery(this.chosenMap + this.chosenAttribute
-					* ATTRS.length);
+			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
+			queryHolder.executeQuery(this.chosenMap + this.chosenAttribute * ATTRS.length);
 
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());

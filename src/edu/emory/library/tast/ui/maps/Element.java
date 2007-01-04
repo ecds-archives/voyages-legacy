@@ -24,6 +24,8 @@ public class Element {
 	//size of dot
 	private int size;
 
+	private int showAtZoom;
+
 	private int color;
 	
 	/**
@@ -82,6 +84,16 @@ public class Element {
 	
 	public void setColor(int i) {
 		this.color = i;
+	}
+
+	public int getShowAtZoom()
+	{
+		return showAtZoom;
+	}
+
+	public void setShowAtZoom(int showAtZoom)
+	{
+		this.showAtZoom = showAtZoom;
 	}
 	
 }
