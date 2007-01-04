@@ -114,7 +114,6 @@ public class EstimatesSelectionBean
 	private void selectExportRegions(List regions)
 	{
 
-		totalExpRegionsCount = regions.size();
 		checkedExpRegions = new String[regions.size()];
 		
 		int i = 0;
@@ -177,6 +176,10 @@ public class EstimatesSelectionBean
 		List allNations = EstimatesNation.loadAll(sess);
 		List allExpRegions = EstimatesExportRegion.loadAll(sess);
 		List allImpRegions = EstimatesImportRegion.loadAll(sess);
+		
+		totalNationsCount = allNations.size(); 
+		totalExpRegionsCount = allExpRegions.size(); 
+		totalImpRegionsCount = allImpRegions.size();
 		
 		selectNations(allNations);
 		selectExportRegions(allExpRegions);
@@ -246,6 +249,41 @@ public class EstimatesSelectionBean
 		
 		return query.executeQueryList(session);
 
+	}
+	
+	public boolean isAllNationsSelected()
+	{
+		return totalNationsCount == selectedNationIds.size();
+	}
+
+	public boolean isAllExpRegionsSelected()
+	{
+		return totalExpRegionsCount == selectedExpRegionIds.size();
+	}
+
+	public boolean isAllImpRegionsSelected()
+	{
+		return totalImpRegionsCount == selectedImpRegionIds.size();
+	}
+	
+	public Set getSelectedExpRegionIds()
+	{
+		return selectedExpRegionIds == null ? new HashSet() : selectedExpRegionIds;
+	}
+
+	public Set getSelectedImpAreaIds()
+	{
+		return selectedImpAreaIds == null ? new HashSet() : selectedImpRegionIds;
+	}
+
+	public Set getSelectedImpRegionIds()
+	{
+		return selectedImpRegionIds == null ? new HashSet() : selectedImpRegionIds;
+	}
+
+	public Set getSelectedNationIds()
+	{
+		return selectedNationIds == null ? new HashSet() : selectedNationIds;
 	}
 
 	private SelectItem[] loadAllNationsToUi()

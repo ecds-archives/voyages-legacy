@@ -1,6 +1,7 @@
 package edu.emory.library.tast.estimates.timeline;
 
 import java.text.MessageFormat;
+import java.util.Set;
 
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -22,6 +23,7 @@ public class EstimatesTimelineBean
 	private EventLineGraph graphExp;
 	private EventLineLabel[] verticalLabels;
 	private double viewportHeight;
+	private EventLineEvent[] events;
 	
 	private void regenerateIfNecessary()
 	{
@@ -34,6 +36,7 @@ public class EstimatesTimelineBean
 		// yes, we have to
 		conditions = newConditions;
 		generateGraphs();
+		presetEvents();
 
 	}
 	
@@ -124,10 +127,17 @@ public class EstimatesTimelineBean
 		}
 
 	}
-
-	public EventLineEvent[] getEvents()
+	
+	private void presetEvents()
 	{
-		return new EventLineEvent[] {
+		
+		Set impRegions = selectionBean.getSelectedImpRegionIds();
+		Set expRegions = selectionBean.getSelectedExpRegionIds();
+		
+		if (selectionBean.isAllExpRegionsSelected() && selectionBean.isAllImpRegionsSelected() && selectionBean.isAllNationsSelected())
+		{
+		
+			events = new EventLineEvent[] {
 				new EventLineEvent(1525, "First slave voyage direct from Africa to the Americas"),
 				new EventLineEvent(1560, "Continuous slave trade from Brazil begins"),
 				new EventLineEvent(1641, "Sugar exports from Eastern Caribbean begin"),
@@ -142,6 +152,44 @@ public class EstimatesTimelineBean
 				new EventLineEvent(1830, "Anglo-Brazilian anti-slave trade treaty"),
 				new EventLineEvent(1850, "Brazil suppresses slave trade"),
 				new EventLineEvent(1867, "Last transatlantic slave voyage sails")};
+			
+		}
+		else if (expRegions.size() == 1 && expRegions.contains(new Long(5)))
+		{
+
+			events = new EventLineEvent[] {
+				new EventLineEvent(1663, "English create trading post at Allada (Ardrah)"),
+				new EventLineEvent(1671, "French trading post established at Whydah"),
+				new EventLineEvent(1678, "Tobacco Roll imports from Bahia begin"),
+				new EventLineEvent(1692, "Offra/Jaquin destroyed King of Little Popo"),
+				new EventLineEvent(1727, "Dahomey conquest of Whydah"),
+				new EventLineEvent(1785, "Oyo Empire enters long decline"),
+				new EventLineEvent(1851, "Brazilian slave trade ends/British conquest of Whydah")};
+		
+		}
+		else if (impRegions.size() == 1 && impRegions.contains(new Long(203)))
+		{
+
+			events = new EventLineEvent[] {
+				new EventLineEvent(1699, "Rice exports begin"),
+				new EventLineEvent(1739, "Stono Rebellion"),
+				new EventLineEvent(1774, "Non-importation agreement"),
+				new EventLineEvent(1803, "South Carolina re-opens ports to slave trade from Africa"),
+				new EventLineEvent(1851, "US abolishes African slave trade")};
+			
+		}
+		else
+		{
+			
+			events = null;
+	
+		}
+
+	}
+
+	public EventLineEvent[] getEvents()
+	{
+		return events;
 	}
 	
 	public EventLineZoomLevel[] getZoomLevels()
