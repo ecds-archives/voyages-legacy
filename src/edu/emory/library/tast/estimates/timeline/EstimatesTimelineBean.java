@@ -175,7 +175,7 @@ public class EstimatesTimelineBean
 				new EventLineEvent(1739, "Stono Rebellion"),
 				new EventLineEvent(1774, "Non-importation agreement"),
 				new EventLineEvent(1803, "South Carolina re-opens ports to slave trade from Africa"),
-				new EventLineEvent(1851, "US abolishes African slave trade")};
+				new EventLineEvent(1808, "US abolishes African slave trade")};
 			
 		}
 		else
