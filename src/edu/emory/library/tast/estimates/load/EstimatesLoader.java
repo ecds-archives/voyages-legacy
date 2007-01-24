@@ -127,19 +127,9 @@ public class EstimatesLoader {
 	private int handleConditionValue(EstimatesPosition position,
 			String positionFormula, boolean imported, int prevWiggleRoom) {
 		
-		//prepare query that will take into account desired wiggle room for year
-		//(wiggle room will be computed based on David's suggestion)
-		//Response also will contain computed wiggle room - just to save some time later
-		//(not important from algorithm's point of view)
-		EstimateResponse response = this.getFunctValueQuery(position, positionFormula,
-				imported, true, prevWiggleRoom, 1);
-
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		//Get voyages included in estimate position + wiggle room set
-		Object[] voyages = response.qValue.executeQuery(session);
-		System.out.println("exp direct: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 		double sum = 0.0;
 
 		//We need to know exact value of slaves (w/o wiggle room). Only this number of slaves needs
@@ -153,6 +143,18 @@ public class EstimatesLoader {
 				sum += ((Number) row[2]).doubleValue();
 			}
 		}
+		
+		
+		//prepare query that will take into account desired wiggle room for year
+		//(wiggle room will be computed based on David's suggestion)
+		//Response also will contain computed wiggle room - just to save some time later
+		//(not important from algorithm's point of view)
+		EstimateResponse response = this.getFunctValueQuery(position, positionFormula,
+				imported, true, prevWiggleRoom, sum);
+		
+		//Get voyages included in estimate position + wiggle room set
+		Object[] voyages = response.qValue.executeQuery(session);
+		System.out.println("exp direct: " + voyages.length + "; wiggle room = " + response.wiggleRoom);
 	
 		//now: sum contains number of slaves w/o wiggle room
 		//now: voyages contains locations that will be taken into account
