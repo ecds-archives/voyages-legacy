@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Search</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/search.css" rel="stylesheet" type="text/css">
 	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
 	<link href="../styles/menu.css" rel="stylesheet" type="text/css">
@@ -16,24 +17,29 @@
 	<link href="../styles/search-table.css" rel="stylesheet" type="text/css">
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	<link href="../styles/timeline.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/tooltip.js" type="text/javascript" language="javascript"></script>
-	<script src="../jslib/prototype.js" type="text/javascript" language="javascript"></script>
-	<script src="../jslib/scriptaculous.js" type="text/javascript" language="javascript"></script>
-	<script src="../jslib/aa.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/tools_map_adds.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/timeline.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-	<div class="header">
-		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">
+	<div class="top-bar">
+		<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
+			<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="database" activePageId="search" /></td>
+		</tr>
+		</table>
 	</div>
 
 	<div class="header-links">

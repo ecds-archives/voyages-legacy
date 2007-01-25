@@ -29,7 +29,7 @@ public class MainMenuBean
 						"database",
 						"images/main-menu-database-normal.png",
 						"images/main-menu-database-active.png",
-						120, 30,
+						140, 30,
 						new MainMenuBarPageItem[] {
 								new MainMenuBarPageItem(
 										"intro",
