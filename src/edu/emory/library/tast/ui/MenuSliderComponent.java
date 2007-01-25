@@ -79,12 +79,12 @@ public class MenuSliderComponent extends MenuComponent
 		JsfUtils.encodeHiddenInput(this, writer,
 				expandedSubIdFieldName);
 
-		MenuItemMain[] items = getItems();
+		MenuItemSection[] items = getItems();
 		
 		StringBuffer jsOnClick = new StringBuffer();
 		for (int i = 0; i < items.length; i++)
 		{
-			MenuItemMain mainItem = items[i];
+			MenuItemSection mainItem = items[i];
 			boolean expanded = mainItem.getId().equals(expandedMainMenuId);
 			
 			String mainMenuDivId = getClientId(context) + "_main_" + i;

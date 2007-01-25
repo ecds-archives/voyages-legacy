@@ -17,7 +17,7 @@ import edu.emory.library.tast.util.JsfUtils;
 public abstract class MenuComponent extends UIComponentBase
 {
 	
-	private MenuItemMain[] items;
+	private MenuItemSection[] items;
 	private boolean itemsSet = false;
 	private MethodBinding onMenuSelected;
 	private String customSubmitFunction = null;
@@ -113,15 +113,15 @@ public abstract class MenuComponent extends UIComponentBase
 	{
 	}
 
-	public MenuItemMain[] getItems()
+	public MenuItemSection[] getItems()
 	{
 		if (itemsSet) return items;
 		ValueBinding vb = getValueBinding("items");
 		if (vb == null) return items;
-		return (MenuItemMain[]) vb.getValue(getFacesContext());
+		return (MenuItemSection[]) vb.getValue(getFacesContext());
 	}
 
-	public void setItems(MenuItemMain[] items)
+	public void setItems(MenuItemSection[] items)
 	{
 		itemsSet = true;
 		this.items = items;

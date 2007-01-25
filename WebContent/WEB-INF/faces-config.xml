@@ -163,6 +163,7 @@
 		<component-class>
 		edu.emory.library.tast.ui.CheckboxListExpandableComponent</component-class>
 	</component>
+	
 	<component>
 		<component-type>
 		SimpleTable</component-type>
@@ -196,6 +197,11 @@
 	<component>
 		<component-type>Grid</component-type>
 		<component-class>edu.emory.library.tast.ui.GridComponent</component-class>
+	</component>
+	
+	<component>
+		<component-type>MainMenuBar</component-type>
+		<component-class>edu.emory.library.tast.ui.MainMenuBarComponent</component-class>
 	</component>
 
 	<managed-bean>
@@ -490,6 +496,12 @@
 			edu.emory.library.tast.ui.voyage.VoyageDetailBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>MainMenuBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.common.MainMenuBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>

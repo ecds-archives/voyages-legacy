@@ -1,0 +1,36 @@
+div.top-bar {
+	background-image: url(../images/menu-bg.png);
+	background-repeat: no-repeat;
+	background-color: #008CA8; }
+
+td.main-menu-section {
+	vertical-align: top; }
+	
+div.main-menu-section-image {
+	margin-right: 5px; }
+	
+img.main-menu-section-image {
+	cursor: pointer; }
+	
+div.main-menu-pages {
+	margin-top: 0px;
+	margin-left: 32px;
+	margin-right: 5px; }
+
+div.main-menu-pages a {
+	text-decoration: none;
+	color: White; }
+	
+div.main-menu-pages a:hover {
+	color: #93CED9; }
+
+td.main-menu-container {
+	vertical-align: top;
+	padding-left: 15px;
+	padding-top: 10px; }
+	
+div.main-menu-page-normal {
+	}
+	
+div.main-menu-page-active {
+	font-weight: bold; }

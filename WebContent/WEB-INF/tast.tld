@@ -705,4 +705,24 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>mainMenuBar</name>
+		<tag-class>
+			edu.emory.library.tast.ui.MainMenuBarTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>menuItems</name>
+		</attribute>
+		<attribute>
+			<name>activeSectionId</name>
+		</attribute>
+		<attribute>
+			<name>activePageId</name>
+		</attribute>
+	</tag>
+
 </taglib>

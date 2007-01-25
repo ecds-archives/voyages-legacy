@@ -15,7 +15,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.MenuItem;
-import edu.emory.library.tast.ui.MenuItemMain;
+import edu.emory.library.tast.ui.MenuItemSection;
 import edu.emory.library.tast.ui.MenuItemSelectedEvent;
 import edu.emory.library.tast.ui.MessageBarComponent;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
@@ -219,20 +219,20 @@ public class SearchBean
 
 	}
 
-	private MenuItemMain[] getMenuAttributes(UserCategory category)
+	private MenuItemSection[] getMenuAttributes(UserCategory category)
 	{
 		
 		Group[] groups = Group.getGroups();
 		QueryBuilderQuery builderQuery = workingQuery.getBuilderQuery();
 		
-		MenuItemMain[] mainItems = new MenuItemMain[groups.length];
+		MenuItemSection[] mainItems = new MenuItemSection[groups.length];
 		for (int i = 0; i < groups.length; i++)
 		{
 			Group group = groups[i];
 			SearchableAttribute[] attributes = group.getSearchableAttributesInUserCategory(category);
 			if (attributes != null && attributes.length > 0)
 			{
-				MenuItemMain mainItem = new MenuItemMain();
+				MenuItemSection mainItem = new MenuItemSection();
 				MenuItem[] subItems = new MenuItem[attributes.length];
 				
 				String mainItemText = "<b>" + group.getUserLabel() + "</b>";
@@ -273,12 +273,12 @@ public class SearchBean
 		return mainItems;
 	}
 
-	public MenuItemMain[] getMenuAttributesBeginners()
+	public MenuItemSection[] getMenuAttributesBeginners()
 	{
 		return getMenuAttributes(UserCategory.Beginners);
 	}
 
-	public MenuItemMain[] getMenuAttributesGeneral()
+	public MenuItemSection[] getMenuAttributesGeneral()
 	{
 		return getMenuAttributes(UserCategory.General);
 	}

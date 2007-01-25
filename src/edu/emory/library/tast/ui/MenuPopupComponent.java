@@ -53,11 +53,11 @@ public class MenuPopupComponent extends MenuComponent
 		
 		String customSubmitFunction =getCustomSubmitFunction();
 		
-		MenuItemMain[] items = getItems();
+		MenuItemSection[] items = getItems();
 		
 		for (int i = 0; i < items.length; i++)
 		{
-			MenuItemMain mainItem = items[i];
+			MenuItemSection mainItem = items[i];
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "menu-popup-item-main", null);
