@@ -16,13 +16,13 @@
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 0px; text-align: left">
 				<h:outputText value=" | " />
-				<h:outputText value="Showing " />
+				<h:outputText value="#{res.estimates_list_showing} " />
 				<h:outputText value="#{EstimateListingBean.firstDisplayed}" />
 				<h:outputText value="-" />
 				<h:outputText value="#{EstimateListingBean.lastDisplayed}" />
-				<h:outputText value=" out of " />
+				<h:outputText value=" #{res.estimates_list_outof} " />
 				<h:outputText value="#{EstimateListingBean.totalRows}" />
-				<h:outputText value=" | Show " />
+				<h:outputText value=" | #{res.estimates_list_show} " />
 				<h:selectOneMenu onchange="submit()" value="#{EstimateListingBean.step}">
 					<f:selectItem itemValue="10" itemLabel="10" />
 					<f:selectItem itemValue="25" itemLabel="25" />
@@ -30,7 +30,7 @@
 					<f:selectItem itemValue="100" itemLabel="100" />
 					<f:selectItem itemValue="200" itemLabel="200" />
 				</h:selectOneMenu>
-				<h:outputText value="  results per page." />
+				<h:outputText value="  #{res.estimates_list_resperpage}" />
 			</t:htmlTag>
 		</t:htmlTag>
 	</t:htmlTag>

@@ -6,51 +6,51 @@
 <t:htmlTag value="table" style="border-collapse: collapse; margin-top: 10px;">
 <t:htmlTag value="tr">
 	<t:htmlTag value="td" style="padding: 5px 10px 5px 10px;">
-		<h:outputText value="Rows"/>
+		<h:outputText value="#{res.estimates_table_rows}"/>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 		<h:selectOneMenu value="#{EstimatesTableBean.rowGrouping}">
-			<f:selectItem itemLabel="National carriers" itemValue="nation" />
-			<f:selectItem itemLabel="Export regions" itemValue="expRegion" />
-			<f:selectItem itemLabel="Import regions" itemValue="impRegion" />
-			<f:selectItem itemLabel="Import regions (breakdowns)" itemValue="impRegionBreakdowns" />
-			<f:selectItem itemLabel="Individual years" itemValue="years1" />
-			<f:selectItem itemLabel="5 year period" itemValue="years5" />
-			<f:selectItem itemLabel="10 year period" itemValue="years10" />
-			<f:selectItem itemLabel="25 year period" itemValue="years25" />
-			<f:selectItem itemLabel="50 year period" itemValue="years50" />
-			<f:selectItem itemLabel="100 year period" itemValue="years100" />
+			<f:selectItem itemLabel="#{res.estimates_table_natcarier}" itemValue="nation" />
+			<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
+			<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
+			<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
+			<f:selectItem itemLabel="#{res.estimates_table_individualyears}" itemValue="years1" />
+			<f:selectItem itemLabel="#{res.estimates_table_5years}" itemValue="years5" />
+			<f:selectItem itemLabel="#{res.estimates_table_10years}" itemValue="years10" />
+			<f:selectItem itemLabel="#{res.estimates_table_25years}" itemValue="years25" />
+			<f:selectItem itemLabel="#{res.estimates_table_50years}" itemValue="years50" />
+			<f:selectItem itemLabel="#{res.estimates_table_100years}" itemValue="years100" />
 		</h:selectOneMenu>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
-		<h:outputText value="Columns"/>
+		<h:outputText value="#{res.estimates_table_columns}"/>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 		<h:selectOneMenu value="#{EstimatesTableBean.colGrouping}">
-			<f:selectItem itemLabel="National carriers" itemValue="nation" />
-			<f:selectItem itemLabel="Export regions" itemValue="expRegion" />
-			<f:selectItem itemLabel="Import regions" itemValue="impRegion" />
-			<f:selectItem itemLabel="Import regions (breakdowns)" itemValue="impRegionBreakdowns" />
+			<f:selectItem itemLabel="#{res.estimates_table_natcarier}" itemValue="nation" />
+			<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
+			<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
+			<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
 		</h:selectOneMenu>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
-		<h:outputText value="Show"/>
+		<h:outputText value="#{res.estimates_table_show}"/>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 		<h:selectOneMenu value="#{EstimatesTableBean.showMode}">
-			<f:selectItem itemLabel="Exported/Imported" itemValue="both" />
-			<f:selectItem itemLabel="Only exported" itemValue="exp" />
-			<f:selectItem itemLabel="Only imported" itemValue="imp" />
+			<f:selectItem itemLabel="#{res.estimates_table_expimp}" itemValue="both" />
+			<f:selectItem itemLabel="#{res.estimates_table_onlyexp}" itemValue="exp" />
+			<f:selectItem itemLabel="#{res.estimates_table_onlyimp}" itemValue="imp" />
 		</h:selectOneMenu>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
 		<h:selectBooleanCheckbox value="#{EstimatesTableBean.omitEmptyRowsAndColumns}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" style="padding-right: 10px;">
-		<h:outputText value="Omit empty"/>
+		<h:outputText value="#{res.estimates_table_omitempty}"/>
 	</t:htmlTag>
 	<t:htmlTag value="td">
-		<h:commandButton action="#{EstimatesTableBean.refreshTable}" value="Show" />
+		<h:commandButton action="#{EstimatesTableBean.refreshTable}" value="#{res.estimates_table_show}" />
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>

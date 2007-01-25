@@ -659,17 +659,17 @@
 	</navigation-rule>
 	
 	<navigation-rule>
-		<from-view-id>/galleryp.jsp</from-view-id>
+		<from-view-id>/database/galleryp.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>gotosearch</from-outcome>
-			<to-view-id>/search.jsp</to-view-id>
+			<to-view-id>/database/search.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>search-interface</from-outcome>
-			<to-view-id>/search.jsp</to-view-id>
+			<to-view-id>/database/search.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>images-interface</from-outcome>
@@ -680,7 +680,7 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>voyage-detail</from-outcome>
-			<to-view-id>/voyage.jsp</to-view-id>
+			<to-view-id>/database/voyage.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

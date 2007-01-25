@@ -8,20 +8,22 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Estimates</title>
-	<link href="main.css" rel="stylesheet" type="text/css">
-	<link href="sections.css" rel="stylesheet" type="text/css">
-	<link href="estimates.css" rel="stylesheet" type="text/css">
-	<link href="search-table.css" rel="stylesheet" type="text/css">
-	<link href="map.css" rel="stylesheet" type="text/css">
-	<script src="utils.js" language="javascript" type="text/javascript"></script>
-	<script src="eventline.js" language="javascript" type="text/javascript"></script>
-	<script src="checkbox-list.js" language="javascript" type="text/javascript"></script>
-	<script src="checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
-	<script src="checkbox-list-popup.js" language="javascript" type="text/javascript"></script>
-	<script src="map.js" language="javascript" type="text/javascript"></script>
+	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
+	<link href="../styles/estimates.css" rel="stylesheet" type="text/css">
+	<link href="../styles/search-table.css" rel="stylesheet" type="text/css">
+	<link href="../styles/map.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/utils.jseventline.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/utils.jscheckbox-list.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/utils.jscheckbox-list-expandable.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/utils.jscheckbox-list-popup.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/utils.jsmap.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
+
+	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
 	<div class="header">
 		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">

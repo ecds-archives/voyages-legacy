@@ -10,19 +10,19 @@
 	tabsStyle="middle"
 	buttonsStyle="middle">
 	
-	<s:section title="Table" sectionId="table">
+	<s:section title="#{res.estimates_main_table}" sectionId="table">
 		<%@ include file="estimates-table.jsp" %>
 	</s:section>
 	
-	<s:section title="Listing" sectionId="listing">
+	<s:section title="#{res.estimates_main_list}" sectionId="listing">
 		<%@ include file="estimates-listing.jsp" %>
 	</s:section>
 
-	<s:section title="Map" sectionId="map">
+	<s:section title="#{res.estimates_main_map}" sectionId="map">
 		<%@ include file="estimates-map.jsp" %>
 	</s:section>
 
-	<s:section title="Timeline" sectionId="timeline">
+	<s:section title="#{res.estimates_main_timeline}" sectionId="timeline">
 		<%@ include file="estimates-timeline.jsp" %>
 	</s:section>
 

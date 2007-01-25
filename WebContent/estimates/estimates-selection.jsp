@@ -15,13 +15,13 @@
 	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px">
-			<h:outputText value="From" />
+			<h:outputText value="#{res.estimates_left_from}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:inputText value="#{EstimatesSelectionBean.yearFrom}" style="width: 60px" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:outputText value="To" />
+			<h:outputText value="#{res.estimates_left_to}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px;">
 			<h:inputText value="#{EstimatesSelectionBean.yearTo}" style="width: 60px" />
@@ -33,7 +33,7 @@
 
 <div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
 	<h:commandButton
-		value="Change selection"
+		value="#{res.estimates_left_changeselection}"
 		action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
 </div>
 
@@ -46,7 +46,7 @@
 	tabsStyle="middle"
 	buttonsStyle="middle">
 	
-	<s:section title="National carriers" sectionId="nations">
+	<s:section title="#{res.estimates_left_natcarriers}" sectionId="nations">
 		<t:div style="padding: 5px;" styleClass="nation-checkboxes">
 		<s:checkboxListExpandable
 			id="nations"
@@ -55,7 +55,7 @@
 		</t:div>
 	</s:section>
 	
-	<s:section title="Export regions" sectionId="africanRegions">
+	<s:section title="#{res.estimates_left_expregions}" sectionId="africanRegions">
 		<t:div style="padding: 5px;" styleClass="export-region-list">
 		<s:checkboxListExpandable
 			id="expReg"
@@ -65,7 +65,7 @@
 		</t:div>
 	</s:section>
 
-	<s:section title="Import regions" sectionId="americanRegions">
+	<s:section title="#{res.estimates_left_impregions}" sectionId="americanRegions">
 		<t:div style="padding-top: 5px; padding-bottom: 5px;" styleClass="import-region-list">
 		<s:checkboxListPopup
 			id="impReg"
@@ -78,14 +78,14 @@
 
 <div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
 	<h:commandButton
-		value="Change selection"
+		value="#{res.estimates_left_changeselection}"
 		action="#{EstimatesSelectionBean.changeGeographicSelection}" />
 </div>
 
 <br>
 
 <s:sectionGroup
-    title="Current query"
+    title="#{res.estimates_left_currentquery}"
 	id="currentQuery"
 	backgroundStyle="dark"
 	tabsStyle="middle"
@@ -93,15 +93,15 @@
 	
 	<t:div style="padding: 5px 5px 5px 5px; background-color: White;">
 		<t:div>
-			<t:div style="font-weight: bold;"><h:outputText value="Selected national carriers:"/></t:div>
+			<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectednations}"/></t:div>
 			<h:outputText value="#{EstimatesSelectionBean.selectedNationsAsText}" escape="false" />
 		</t:div>
 		<t:div style="margin-top: 5px;">
-			<t:div style="font-weight: bold;"><h:outputText value="Selected export regions:"/></t:div>
+			<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectedexport}"/></t:div>
 			<h:outputText value="#{EstimatesSelectionBean.selectedExpRegionsAsText}" escape="false" />
 		</t:div>
 		<t:div style="margin-top: 5px;">
-			<t:div style="font-weight: bold;"><h:outputText value="Selected import regions:"/></t:div>
+			<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectedimport}"/></t:div>
 			<h:outputText value="#{EstimatesSelectionBean.selectedImpRegionsAsText}" escape="false" />
 		</t:div>
 	</t:div>
