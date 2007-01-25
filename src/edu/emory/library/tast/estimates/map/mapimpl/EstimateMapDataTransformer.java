@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Location;
@@ -128,8 +129,8 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			dataItem.setSize(maxSize);
 		}
 
-		LegendItemsGroup legendSizes = new LegendItemsGroup("Number of slaves");
-		LegendItemsGroup legendColors = new LegendItemsGroup("Places");
+		LegendItemsGroup legendSizes = new LegendItemsGroup(TastResource.getText("estimates_map_leg_slavnum"));
+		LegendItemsGroup legendColors = new LegendItemsGroup(TastResource.getText("estimates_map_leg_places"));
 
 		// Prepare legend about size of dots
 		for (int i = CIRCLE_RANGES - 1; i >= 0; i--) {
@@ -148,11 +149,11 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 
 		// /Prepare legend about colors
 		LegendItem emb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2
-				+ "-4.png", "Place of embarkation");
+				+ "-4.png", TastResource.getText("estimates_map_leg_embplace"));
 		LegendItem disemb = new LegendItem("circle-3-\\d", "symbols/circle-"
-				+ 3 + "-4.png", "Place of disembarkation");
+				+ 3 + "-4.png", TastResource.getText("estimates_map_leg_disembplace"));
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5
-				+ "-4.png", "Place of embarkatrion / disembarkation");
+				+ "-4.png", TastResource.getText("estimates_map_leg_bothplaces"));
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
 		//legendColors.addItemToGroup(both);

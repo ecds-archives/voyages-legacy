@@ -2,6 +2,7 @@ package edu.emory.library.tast.estimates.map.mapimpl;
 
 import java.text.MessageFormat;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.ui.maps.AbstractMapItem;
 import edu.emory.library.tast.ui.maps.Element;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
@@ -79,7 +80,7 @@ public class EstimateMapDataItem extends AbstractMapItem {
 
 		buffer.append("<div style=\"white-space: nowrap\">");
 		buffer.append("<b>");
-		buffer.append("Location : ").append(this.getMainLabel());
+		buffer.append(TastResource.getText("estimates_map_location") + " ").append(this.getMainLabel());
 		buffer.append("</b><br/>");
 
 		Element[] elements = this.getMapItemElements()[0].getElements();

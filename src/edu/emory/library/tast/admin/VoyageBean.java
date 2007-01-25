@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Fate;
@@ -294,19 +295,19 @@ public class VoyageBean
 		tran.commit();
 		sess.close();
 
-		schema.addField(new FieldSchemaLong("voyageid", "Voyage ID", "voyageid"));
-		schema.addField(new FieldSchemaCheckbox("cd", "CD 1999"));
-		schema.addField(new FieldSchemaTextbox("shipname", "Name of ship", "shipname"));
-		schema.addField(new FieldSchemaDropdowns("placcons", "Place of construction", LISTS_LOCATION, "locations"));
-		schema.addField(new FieldSchemaInteger("yrcons", "Year of construction", "year"));
-		schema.addField(new FieldSchemaDropdowns("placreg", "Place of registration", LISTS_LOCATION, "locations"));
-		schema.addField(new FieldSchemaInteger("yrreg", "Year of registration", "year"));
-		schema.addField(new FieldSchemaDropdowns("natinimp", "Imputed nation", LIST_NATIONS_NAME));
-		schema.addField(new FieldSchemaDropdowns("rig", "Vessel rig", LIST_VESSEL_RIGS_NAME));
-		schema.addField(new FieldSchemaInteger("tonnage", "Tonnage"));
-		schema.addField(new FieldSchemaFloat("tonmod", "Standardized tonnage"));
-		schema.addField(new FieldSchemaInteger("guns", "Number of guns"));
-		schema.addField(new FieldSchemaTextbox("owners", "Owners", true, 10, "owners"));
+		schema.addField(new FieldSchemaLong("voyageid", TastResource.getText("database_attributes_voyageid"), "voyageid"));
+		schema.addField(new FieldSchemaCheckbox("cd", TastResource.getText("database_attributes_cd")));
+		schema.addField(new FieldSchemaTextbox("shipname", TastResource.getText("database_attributes_shipname"), "shipname"));
+		schema.addField(new FieldSchemaDropdowns("placcons", TastResource.getText("database_attributes_placcons"), LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaInteger("yrcons", TastResource.getText("database_attributes_yrcons"), "year"));
+		schema.addField(new FieldSchemaDropdowns("placreg", TastResource.getText("database_attributes_placereg"), LISTS_LOCATION, "locations"));
+		schema.addField(new FieldSchemaInteger("yrreg", TastResource.getText("database_attributes_yrreg"), "year"));
+		schema.addField(new FieldSchemaDropdowns("natinimp", TastResource.getText("database_attributes_natinimp"), LIST_NATIONS_NAME));
+		schema.addField(new FieldSchemaDropdowns("rig", TastResource.getText("database_attributes_rig"), LIST_VESSEL_RIGS_NAME));
+		schema.addField(new FieldSchemaInteger("tonnage", TastResource.getText("database_attributes_tonnage")));
+		schema.addField(new FieldSchemaFloat("tonmod", TastResource.getText("database_attributes_tonmod")));
+		schema.addField(new FieldSchemaInteger("guns", TastResource.getText("database_attributes_guns")));
+		schema.addField(new FieldSchemaTextbox("owners", TastResource.getText("database_attributes_owners"), true, 10, "owners"));
 
 		return schema;
 		
