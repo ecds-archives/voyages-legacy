@@ -8,16 +8,18 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Voyage</title>
-	<link href="main.css" rel="stylesheet" type="text/css">
-	<link href="sections.css" rel="stylesheet" type="text/css">
-	<link href="menu.css" rel="stylesheet" type="text/css">
-	<link href="map.css" rel="stylesheet" type="text/css">
-	<link href="voyage.css" rel="stylesheet" type="text/css">
-	<script src="utils.js" language="javascript" type="text/javascript"></script>
-	<script src="map.js" language="javascript" type="text/javascript"></script>
+	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
+	<link href="../styles/menu.css" rel="stylesheet" type="text/css">
+	<link href="../styles/map.css" rel="stylesheet" type="text/css">
+	<link href="../styles/voyage.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
+
+	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
 	<div class="header">
 		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">
@@ -36,7 +38,7 @@
 	<h:form id="form">
 	
 	<div class="detail-title">
-		Voyage detail (ID = <h:outputText value="#{VoyageDetailBean.detailVoyageInfo[0].value}" />)
+		<h:outputText id="text1_res" value="#{res.database_voyage_voyagedetail} (ID = #{VoyageDetailBean.detailVoyageInfo[0].value})"/> 
 	</div>
 
 	<div class="detail-link-back">
@@ -51,11 +53,11 @@
 		buttonsStyle="middle"
 		selectedSectionId="listing">
 
-		<s:section title="Voyage variables" sectionId="listing">
+		<s:section title="#{res.database_voyage_voyagevariables}" sectionId="listing">
 			<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
 		</s:section>
 
-		<s:section title="Voyage map" sectionId="maps">
+		<s:section title="#{res.database_voyage_voyagemap}" sectionId="maps">
 
 			<h:outputText value="&nbsp;" escape="false" />
 

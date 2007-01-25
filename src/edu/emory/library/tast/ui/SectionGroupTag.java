@@ -42,7 +42,16 @@ public class SectionGroupTag extends UIComponentTag
 		sectionGroup.setTabsStyle(tabsStyle);
 		sectionGroup.setButtonsStyle(buttonsStyle);
 
-		sectionGroup.setTitle(title);
+		if (title != null) {
+			if (isValueReference(title)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(title);
+				component.setValueBinding("title", vb);
+			} else {
+				component.getAttributes().put("title", title);
+			}
+		}
+		//sectionGroup.setTitle(title);
 		
 		if (selectedSectionId != null && isValueReference(selectedSectionId))
 		{

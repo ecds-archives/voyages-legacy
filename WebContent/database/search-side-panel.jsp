@@ -7,7 +7,7 @@
 <h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
 <s:sectionGroup
-    title="Select time frame"
+    title="#{res.database_search_selecttimeframe}"
 	id="selectionYears"
 	backgroundStyle="dark"
 	tabsStyle="middle"
@@ -16,7 +16,7 @@
 	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px">
-			<h:outputText value="From" />
+			<h:outputText value="#{res.database_search_from}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:inputText
@@ -25,7 +25,7 @@
 				onkeypress="QueryBuilderGlobals.updateTotal('form:queryBuilder', 1000)" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:outputText value="To" />
+			<h:outputText value="#{res.database_search_to}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px;">
 			<h:inputText
@@ -47,7 +47,7 @@
 	buttonsStyle="middle"
 	selectedSectionId="#{SearchBean.selectedCategory}">
 
-	<s:section title="Basic" sectionId="beginners">
+	<s:section title="#{res.database_search_basic}" sectionId="beginners">
 		<s:menuPopup
 			customSubmitFunction="animateAttribute"
 			id="popupMenuAttributesBeginner"
@@ -55,7 +55,7 @@
 			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
 	</s:section>
 
-	<s:section title="General" sectionId="general">
+	<s:section title="#{res.database_search_general}" sectionId="general">
 		<s:menuPopup
 			customSubmitFunction="animateAttribute"
 			id="popupMenuAttributesGeneral"
@@ -108,7 +108,7 @@ function animateAttribute(menuItem, submitFunction)
 <div id="animateAttributeDest">
 <s:sectionGroup
 	id="queryBuilderSection"
-	title="Current query"
+	title="#{res.database_search_currentquery}"
 	backgroundStyle="middle"
 	buttonsStyle="dark">
 
@@ -124,7 +124,7 @@ function animateAttribute(menuItem, submitFunction)
 			<h:commandButton
 				id="buttonSearch"
 				action="#{SearchBean.search}"
-				value="Search" />
+				value="#{res.database_search_searchbutton}" />
 
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 10px 0px 10px 5px;">
@@ -132,7 +132,7 @@ function animateAttribute(menuItem, submitFunction)
 			<h:commandButton
 				id="buttonAgain"
 				action="#{SearchBean.startAgain}"
-				value="New query" />
+				value="#{res.database_search_newquery}" />
 	
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 10px 0px 10px 10px;">
@@ -174,7 +174,7 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 
 <s:sectionGroup
 	id="historySection"
-	title="History"
+	title="#{res.database_search_history}"
 	backgroundStyle="middle"
 	buttonsStyle="dark">
 	

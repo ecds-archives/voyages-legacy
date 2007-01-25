@@ -1,6 +1,7 @@
 package edu.emory.library.tast.ui;
 
 import javax.faces.component.UIComponent;
+import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
 /**
@@ -30,7 +31,17 @@ public class SectionTag extends UIComponentTag
 		
 		SectionComponent section = (SectionComponent) component;
 
-		section.setTitle(title);
+		if (title != null) {
+			if (isValueReference(title)) {
+				ValueBinding vb = getFacesContext().getApplication()
+						.createValueBinding(title);
+				component.setValueBinding("title", vb);
+			} else {
+				component.getAttributes().put("title", title);
+			}
+		}
+		
+		//section.setTitle(title);
 		section.setSectionId(sectionId);
 		
 	}

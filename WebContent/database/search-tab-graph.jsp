@@ -8,7 +8,7 @@
 	<%/* Configuration of graph */%>
 	<h:panelGroup>
 		<t:htmlTag value="div" styleClass="section-inside-group">
-			<h:outputText value="Y axis value: " />
+			<h:outputText value="#{res.database_search_yaxisval} " />
 			<%/* 
 			<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAggregate}" id="tLAggregates">
 				<f:selectItems value="#{TimeLineResultTabBean.aggregateFunctions}" />
@@ -17,7 +17,7 @@
 			<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAttribute}" id="tLAttributes">
 				<f:selectItems value="#{TimeLineResultTabBean.voyageNumericAttributes}" />
 			</h:selectOneMenu>
-			<h:commandButton id="showStat" value="Show" action="#{TimeLineResultTabBean.showTimeLine}" />
+			<h:commandButton id="showStat" value="#{res.database_search_show}" action="#{TimeLineResultTabBean.showTimeLine}" />
 		</t:htmlTag>
 	</h:panelGroup>
 

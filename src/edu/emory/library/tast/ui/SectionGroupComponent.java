@@ -128,7 +128,7 @@ public class SectionGroupComponent extends UIComponentBase
 	{
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "section-title-text", null);
-		writer.write(title);
+		writer.write(getTitle());
 		writer.endElement("div");
 	}
 
@@ -308,7 +308,8 @@ public class SectionGroupComponent extends UIComponentBase
 	
 	public String getTitle()
 	{
-		return title;
+		String val = JsfUtils.getCompPropString(this, this.getFacesContext(), "title", false, title);
+		return val;
 	}
 
 	public void setTitle(String title)

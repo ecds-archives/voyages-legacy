@@ -10,31 +10,31 @@
 	buttonsStyle="middle"
 	selectedSectionId="#{SearchBean.mainSectionId}">
 	
-	<s:section title="Result listing" sectionId="listing">
+	<s:section title="#{res.database_search_listing}" sectionId="listing">
 		<%@ include file="search-tab-table.jsp" %>
 	</s:section>
 	
-	<s:section title="Timeline" sectionId="basic-graph">
+	<s:section title="#{res.database_search_timeline}" sectionId="basic-graph">
 		<s:stattab
 			styleClass="data-container">
 		<%@ include file="search-tab-graph.jsp" %>
 		</s:stattab>
 	</s:section>
 
-	<s:section title="Custom graphs" sectionId="custom-graphs">
+	<s:section title="#{res.database_search_customgraphs}" sectionId="custom-graphs">
 		<s:stattab
 			styleClass="data-container">
 		<%@ include file="search-tab-stat.jsp" %>
 		</s:stattab>
 	</s:section>
 
-	<s:section title="Summary statistics" sectionId="basic-statistics">
+	<s:section title="#{res.database_search_summarystats}" sectionId="basic-statistics">
 		<s:stattab>
 		<%@ include file="search-tab-basic-stats.jsp" %>
 		</s:stattab>
 	</s:section>
 	
-	<s:section title="Maps" sectionId="map-ports">
+	<s:section title="#{res.database_search_maps}" sectionId="map-ports">
 		<s:stattab>
 		<%@ include file="search-tab-map.jsp" %>
 		</s:stattab>

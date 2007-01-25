@@ -16,13 +16,13 @@
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 0px; text-align: left">
 				<h:outputText value=" | " />
-				<h:outputText value="Showing " />
+				<h:outputText value="#{res.database_search_showing} " />
 				<h:outputText value="#{TableResultTabBean.firstDisplayed}" />
 				<h:outputText value="-" />
 				<h:outputText value="#{TableResultTabBean.lastDisplayed}" />
-				<h:outputText value=" out of " />
+				<h:outputText value=" #{res.database_search_outof} " />
 				<h:outputText value="#{TableResultTabBean.totalRows}" />
-				<h:outputText value=" | Show " />
+				<h:outputText value=" #{res.database_search_showandline}" />
 				<h:selectOneMenu onchange="submit()" value="#{TableResultTabBean.tableManager.step}">
 					<f:selectItem itemValue="10" itemLabel="10" />
 					<f:selectItem itemValue="25" itemLabel="25" />
@@ -30,7 +30,7 @@
 					<f:selectItem itemValue="100" itemLabel="100" />
 					<f:selectItem itemValue="200" itemLabel="200" />
 				</h:selectOneMenu>
-				<h:outputText value="  results per page." />
+				<h:outputText value=" #{res.database_search_resperpage}" />
 			</t:htmlTag>
 			<t:htmlTag value="td"
 				style="padding-left: 0px; padding-bottom: 0px; padding-top: 0px; padding-right: 5px; text-align: right">
@@ -45,13 +45,13 @@
 <t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 
 	<t:htmlTag value="div" styleClass="section-inside-title">
-		<h:outputText value="Configure columns" />
+		<h:outputText value="#{res.database_search_configcolumns}" />
 	</t:htmlTag>
 
 	<t:htmlTag value="div" styleClass="section-inside-group">
 
 		<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
-			<h:outputText value="Choose group of variables" />
+			<h:outputText value="#{res.database_search_choosegroupofvariables}" />
 		</t:htmlTag>
 
 		<t:htmlTag value="div" style="margin-bottom: 5px; padding-bottom: 5px;">
@@ -66,7 +66,7 @@
 
 				<t:htmlTag value="td" style="padding: 0px;">
 					<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
-						<h:outputText value="Available variables" />
+						<h:outputText value="#{res.database_search_availablevariables}" />
 					</t:htmlTag>
 					<h:selectManyListbox style="width: 300px" id="configure_availAttributes" size="10"
 						value="#{TableResultTabBean.selectedAttributeToAdd}">
@@ -97,11 +97,11 @@
 
 				<t:htmlTag value="td" style="padding-left: 10px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
 					<t:htmlTag value="div" style="margin-bottom: 5px;">
-						<h:commandButton style="width: 80px" id="configure_UpAttrButton" value="Move up"
+						<h:commandButton style="width: 80px" id="configure_UpAttrButton" value="#{res.database_search_movep}"
 							action="#{TableResultTabBean.moveAttrUp}" />
 					</t:htmlTag>
 					<t:htmlTag value="div">
-						<h:commandButton style="width: 80px" id="configure_DownAttrButton" value="Move down"
+						<h:commandButton style="width: 80px" id="configure_DownAttrButton" value="#{res.database_search_movedown}"
 							action="#{TableResultTabBean.moveAttrDown}" />
 					</t:htmlTag>
 				</t:htmlTag>
@@ -117,7 +117,7 @@
 						<h:selectBooleanCheckbox onchange="submit();" value="#{TableResultTabBean.attachSearchedParams}" />
 					</t:htmlTag>
 					<t:htmlTag value="td" style="padding-left: 5px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;">
-						<h:outputText value="Attach to the result attributes from the search query" />
+						<h:outputText value="#{res.database_search_qattachresultstoattrs}" />
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
@@ -127,10 +127,10 @@
 	</t:htmlTag>
 
 	<t:htmlTag value="div" styleClass="section-inside-footer">
-		<h:commandButton id="configureApplyConfigButton" value="Apply configuration"
+		<h:commandButton id="configureApplyConfigButton" value="#{res.database_search_applyconfig}"
 			action="#{TableResultTabBean.resultsMode}" />
 		<h:outputText value=" " />
-		<h:commandButton id="configureCancel" value="Cancel" action="#{TableResultTabBean.cancelConfiguration}" />
+		<h:commandButton id="configureCancel" value="#{res.database_search_cancel}" action="#{TableResultTabBean.cancelConfiguration}" />
 	</t:htmlTag>
 
 </t:htmlTag>

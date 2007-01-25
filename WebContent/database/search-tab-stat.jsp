@@ -7,8 +7,8 @@
 	<t:htmlTag value="div" id="div_error" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
 		<h:panelGrid columns="3">
 			<h:outputText value="#{AdvancedStatisticsTabBean.errorMessage}" />
-			<h:commandButton id="fixError" value="Fix error" action="#{AdvancedStatisticsTabBean.fixError}" />
-			<h:commandButton id="goBackOnError" value="Back" action="#{AdvancedStatisticsTabBean.rollback}" />
+			<h:commandButton id="fixError" value="#{res.database_search_fixerror}" action="#{AdvancedStatisticsTabBean.fixError}" />
+			<h:commandButton id="goBackOnError" value="#{res.database_search_back}" action="#{AdvancedStatisticsTabBean.rollback}" />
 		</h:panelGrid>
 	</t:htmlTag>
 </t:htmlTag>
@@ -18,11 +18,11 @@
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag id="tr_third" value="tr">
 			<t:htmlTag id="td_setup_label" value="th">
-				<h:outputText value="Chart setup" />
+				<h:outputText value="#{res.database_search_chartsetup}" />
 			</t:htmlTag>
 
 			<t:htmlTag value="th" style="border-left: 2px solid #F1E7C8; margin-bottom: 10px;">
-				<h:outputText value="Current series" />
+				<h:outputText value="#{res.database_search_currentseries}" />
 			</t:htmlTag>
 		</t:htmlTag>
 
@@ -36,7 +36,7 @@
 				</h:selectOneRadio>
 				<t:htmlTag value="div">
 					<h:panelGrid columns="3">
-						<h:outputText value="X axis value: " />
+						<h:outputText value="#{res.database_search_xaxisval} " />
 
 						<h:selectOneMenu style="width: 300px;" value="#{AdvancedStatisticsTabBean.xaxis}" id="xaxis_select">
 							<f:selectItems value="#{AdvancedStatisticsTabBean.voyageSelectedAttributes}" />
@@ -60,7 +60,7 @@
 						<t:htmlTag value="div">
 						</t:htmlTag>
 
-						<h:outputText value="Y axis value: " />
+						<h:outputText value="#{res.database_search_yaxisval} " />
 
 						<t:htmlTag value="div">
 							<h:selectOneMenu style="width: 50px;" disabled="#{AdvancedStatisticsTabBean.notAggregate}"
@@ -72,7 +72,7 @@
 							</h:selectOneMenu>
 						</t:htmlTag>
 
-						<h:commandButton id="addSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}" value="Add series"
+						<h:commandButton id="addSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}" value="#{res.database_search_addseries}"
 							action="#{AdvancedStatisticsTabBean.addSeries}" />
 					</h:panelGrid>
 				</t:htmlTag>
@@ -83,11 +83,11 @@
 					<h:selectManyCheckbox id="to_remove_check" layout="pageDirection" value="#{AdvancedStatisticsTabBean.toRemove}">
 						<f:selectItems value="#{AdvancedStatisticsTabBean.series}" />
 					</h:selectManyCheckbox>
-					<h:commandButton id="removeSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}" value="Remove selected"
+					<h:commandButton id="removeSeries" disabled="#{AdvancedStatisticsTabBean.errorPresent}" value="#{res.database_search_remseries}"
 						action="#{AdvancedStatisticsTabBean.removeSeries}" style="" />
 				</t:htmlTag>
 				<t:htmlTag value="div" rendered="#{!AdvancedStatisticsTabBean.seriesAdded}">
-					<h:outputText value="No series added" />
+					<h:outputText value="#{res.database_search_noseriesmsg}" />
 				</t:htmlTag>
 			</t:htmlTag>
 
@@ -99,7 +99,7 @@
 		
 		<t:htmlTag value="div">
 			<h:commandButton
-				style="margin: 3px;" id="showGraph" value="Show"
+				style="margin: 3px;" id="showGraph" value="#{res.database_search_show}"
 				disabled="#{AdvancedStatisticsTabBean.errorPresent}"
 				action="#{AdvancedStatisticsTabBean.showGraph}" />
 		</t:htmlTag>
@@ -117,11 +117,11 @@
 		</t:htmlTag>
 
 		<h:panelGroup rendered="#{AdvancedStatisticsTabBean.statReady}">
-			<h:outputText value="Width: " />
+			<h:outputText value="#{res.database_search_width} " />
 			<h:inputText value="#{AdvancedStatisticsTabBean.chartWidth}" style="width: 40px;" />
-			<h:outputText value="Height: " />
+			<h:outputText value="#{res.database_search_height} " />
 			<h:inputText value="#{AdvancedStatisticsTabBean.chartHeight}" style="width: 40px;" />
-			<h:commandButton id="enlargeStat" value="Change size" action="#{AdvancedStatisticsTabBean.setNewView}" />
+			<h:commandButton id="enlargeStat" value="#{res.database_search_changesize}" action="#{AdvancedStatisticsTabBean.setNewView}" />
 		</h:panelGroup>
 		
 		<t:htmlTag rendered="#{AdvancedStatisticsTabBean.statReady}" value="div">

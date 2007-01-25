@@ -1,7 +1,11 @@
 package edu.emory.library.tast.ui;
 
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
+
+import edu.emory.library.tast.util.JsfUtils;
 
 /**
  * <p>
@@ -46,7 +50,8 @@ public class SectionComponent extends UIComponentBase
 	
 	public String getTitle()
 	{
-		return title;
+		String val = JsfUtils.getCompPropString(this, this.getFacesContext(), "title", false, title);
+		return val;
 	}
 
 	public void setTitle(String text)
