@@ -1,5 +1,6 @@
 package edu.emory.library.tast.ui.search.query.searchables;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
@@ -158,8 +159,8 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 	{
 		switch (type)
 		{
-			case TYPE_YEAR: return "After";
-			default: return "At least";
+			case TYPE_YEAR: return TastResource.getText("components_search_after");
+			default: return TastResource.getText("components_search_atleast");
 		}
 	}
 
@@ -167,8 +168,8 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 	{
 		switch (type)
 		{
-			case TYPE_YEAR: return "Before";
-			default: return "At most";
+			case TYPE_YEAR: return TastResource.getText("components_search_before");
+			default: return TastResource.getText("components_search_atmost");
 		}
 	}
 	
@@ -176,14 +177,14 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 	{
 		switch (type)
 		{
-			case TYPE_YEAR: return "In";
-			default: return "Is equal to";
+			case TYPE_YEAR: return TastResource.getText("components_search_in");
+			default: return TastResource.getText("components_search_isequalto");
 		}
 	}
 
 	public String getLabelBetween()
 	{
-		return "Between";
+		return TastResource.getText("components_search_between");
 	}
 
 }

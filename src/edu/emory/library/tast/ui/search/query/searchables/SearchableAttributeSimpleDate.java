@@ -3,6 +3,7 @@ package edu.emory.library.tast.ui.search.query.searchables;
 import java.util.Calendar;
 import java.util.Date;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -182,22 +183,22 @@ public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRang
 
 	public String getLabelFrom()
 	{
-		return "After";
+		return TastResource.getText("components_search_after");
 	}
 
 	public String getLabelTo()
 	{
-		return "Before";
+		return TastResource.getText("components_search_before");
 	}
 	
 	public String getLabelEquals()
 	{
-		return "In";
+		return TastResource.getText("components_search_in");
 	}
 
 	public String getLabelBetween()
 	{
-		return "Between";
+		return TastResource.getText("components_search_between");
 	}
 
 }
