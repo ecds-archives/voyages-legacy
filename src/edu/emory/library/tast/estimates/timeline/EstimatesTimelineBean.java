@@ -3,6 +3,7 @@ package edu.emory.library.tast.estimates.timeline;
 import java.text.MessageFormat;
 import java.util.Set;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -97,7 +98,7 @@ public class EstimatesTimelineBean
 		
 		// graph for exported
 		graphExp = new EventLineGraph();
-		graphExp.setName("Exported");
+		graphExp.setName(TastResource.getText("estimates_timeline_exported"));
 		graphExp.setX(expYears);
 		graphExp.setY(expValues);
 		graphExp.setLabels(expStrings);
@@ -106,7 +107,7 @@ public class EstimatesTimelineBean
 
 		// graph for imported
 		graphImp = new EventLineGraph();
-		graphImp.setName("Imported");
+		graphImp.setName(TastResource.getText("estimates_timeline_imported"));
 		graphImp.setX(impYears);
 		graphImp.setY(impValues);
 		graphImp.setLabels(impStrings);

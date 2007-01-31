@@ -296,7 +296,7 @@ public class EstimatesTableBean
 		if (showImp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell(TastResource.getText("estimates_table_imported")).setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// label for col totals
-		table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
+		table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell(TastResource.getText("estimates_table_totals")).setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
 
 		// how we want to displat it
 		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
