@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -284,15 +285,15 @@ public class EstimatesTableBean
 		{
 			for (int j = 0; j < dataColCount; j++)
 			{
-				table[headerTopRowsCount][headerLeftColsCount + subCols*j + expColOffset] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL);
-				table[headerTopRowsCount][headerLeftColsCount + subCols*j + impColOffset] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+				table[headerTopRowsCount][headerLeftColsCount + subCols*j + expColOffset] = new SimpleTableCell(TastResource.getText("estimates_table_exported")).setCssClass(CSS_CLASS_TD_LABEL);
+				table[headerTopRowsCount][headerLeftColsCount + subCols*j + impColOffset] = new SimpleTableCell(TastResource.getText("estimates_table_imported")).setCssClass(CSS_CLASS_TD_LABEL);
 			}
 		}
 		
 		// labels for row totals
-		table[0][headerLeftColsCount + subCols*dataColCount + 0] = new SimpleTableCell("Totals").setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
-		if (showExp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell("Exported").setCssClass(CSS_CLASS_TD_LABEL); 
-		if (showImp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell("Imported").setCssClass(CSS_CLASS_TD_LABEL);
+		table[0][headerLeftColsCount + subCols*dataColCount + 0] = new SimpleTableCell(TastResource.getText("estimates_table_totals")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
+		if (showExp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell(TastResource.getText("estimates_table_exported")).setCssClass(CSS_CLASS_TD_LABEL); 
+		if (showImp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell(TastResource.getText("estimates_table_imported")).setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// label for col totals
 		table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell("Totals").setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
