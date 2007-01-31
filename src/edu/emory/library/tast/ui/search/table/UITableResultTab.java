@@ -12,6 +12,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.JsfUtils;
@@ -214,7 +215,7 @@ public class UITableResultTab extends UIOutput {
 				Long voyageId = objs[i].voyageId;
 				String voyageIdString;
 				if (voyageId == null)
-					voyageIdString = "MISSING";
+					voyageIdString = TastResource.getText("components_table_missingid");
 				else
 					voyageIdString = voyageId.toString();
 

@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Region;
@@ -32,31 +33,31 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		VisibleAttrEstimate attr = new VisibleAttrEstimate("nation", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("nation"), Nation.getAttribute("name")})});
-		attr.setUserLabel("National carrier");
+		attr.setUserLabel(TastResource.getText("components_estimate_nationcarrierattr"));
 		visibleAttributes.put("nation", attr);
 		
 		attr = new VisibleAttrEstimate("year", new Attribute[] {Estimate.getAttribute("year")});
-		attr.setUserLabel("Year");
+		attr.setUserLabel(TastResource.getText("components_estimate_yearattr"));
 		visibleAttributes.put("year", attr);
 		
 		attr = new VisibleAttrEstimate("impRegion", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("impRegion"), Region.getAttribute("name")})});
-		attr.setUserLabel("Import region");
+		attr.setUserLabel(TastResource.getText("components_estimate_impregionattr"));
 		visibleAttributes.put("impRegion", attr);
 		
 		attr = new VisibleAttrEstimate("expRegion", 
 				new Attribute[] {new SequenceAttribute(
 						new Attribute[] {Estimate.getAttribute("expRegion"), Region.getAttribute("name")})});
-		attr.setUserLabel("Export region");
+		attr.setUserLabel(TastResource.getText("components_estimate_expregionattr"));
 		visibleAttributes.put("expRegion", attr);
 		
 		attr = new VisibleAttrEstimate("slavExported", new Attribute[] {Estimate.getAttribute("slavExported")});
-		attr.setUserLabel("Exported");
+		attr.setUserLabel(TastResource.getText("components_estimate_exportedattr"));
 		visibleAttributes.put("slavExported", attr);
 		
 		attr = new VisibleAttrEstimate("slavImported", new Attribute[] {Estimate.getAttribute("slavImported")});
-		attr.setUserLabel("Imported");
+		attr.setUserLabel(TastResource.getText("components_estimate_importedattr"));
 		visibleAttributes.put("slavImported", attr);
 	}
 	

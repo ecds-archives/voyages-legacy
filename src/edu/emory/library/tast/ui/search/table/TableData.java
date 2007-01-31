@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
@@ -123,7 +124,7 @@ public class TableData {
 			if (attributes.length > 1) {
 
 				buffer.append("<table class=\"tooltip-class\">");
-				buffer.append("<tr><td><b>Compound attribute: ");
+				buffer.append("<tr><td><b>" + TastResource.getText("components_table_compoundattr") + ": ");
 				buffer.append(attribute.getUserLabelOrName()).append("</b></td></tr>");
 				for (int i = 0; i < attributes.length; i++) {
 					if (data[i] == null || "".equals(data[i])) {
@@ -302,10 +303,6 @@ public class TableData {
 //				attributes.add(attr);
 //			}
 			VisibleAttributeInterface attr = (VisibleAttributeInterface)columns.get(i);
-			if (attr.getAttributes() == null) {
-				System.out.println("Null in attribute: " + attr.getName());
-				
-			}
 			attributes.addAll(Arrays.asList(attr.getAttributes()));
 		}
 		return (Attribute[]) attributes.toArray(new Attribute[] {});
@@ -360,9 +357,6 @@ public class TableData {
 //			attrs.add(attr);
 //		}
 		VisibleAttributeInterface attr = (VisibleAttributeInterface)columns.get(column);
-		if (attr.getAttributes()[0] == null) {
-			System.out.println("NULL IN ATTR: " + attr.getName());
-		}
 		attrs.addAll(Arrays.asList(attr.getAttributes()));
 		return (Attribute[]) attrs.toArray(new Attribute[] {});
 	}
