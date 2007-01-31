@@ -13,6 +13,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 
@@ -42,7 +43,7 @@ public class BarChartGenerator extends AbstractChartGenerator {
 		
 		//Create chart
 		JFreeChart chart = ChartFactory.createBarChart(title,
-				getXAxis(), "Value", dataset, PlotOrientation.VERTICAL,
+				getXAxis(), TastResource.getText("components_charts_barvalue"), dataset, PlotOrientation.VERTICAL,
 			 showLegend, true, false);
 				
 		//Update chart

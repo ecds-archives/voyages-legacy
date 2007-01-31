@@ -14,6 +14,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 
@@ -60,7 +61,7 @@ public class XYChartGenerator extends AbstractChartGenerator {
 	 * @return
 	 */
 	private JFreeChart prepareXYChart(String title, boolean showLegend) {
-		JFreeChart chart = ChartFactory.createLineChart(title, getXAxis(), "Value", (DefaultCategoryDataset) dataset,
+		JFreeChart chart = ChartFactory.createLineChart(title, getXAxis(), TastResource.getText("components_charts_xyvalue"), (DefaultCategoryDataset) dataset,
 				PlotOrientation.VERTICAL, showLegend, true, false);
 
 		CategoryPlot xyplot = (CategoryPlot) chart.getPlot();

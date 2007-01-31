@@ -10,6 +10,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -41,9 +42,17 @@ public class AdvancedStatisticsTabBean {
 
 	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
 
-	private static final String[] aggregatesUL = { "Avg", "Min", "Max", "Sum", "Count" };
+	private static final String[] aggregatesUL = { 
+		TastResource.getText("components_charts_avg"), 
+		TastResource.getText("components_charts_min"), 
+		TastResource.getText("components_charts_max"), 
+		TastResource.getText("components_charts_sum"), 
+		TastResource.getText("components_charts_count")};
 
-	private static final String[] availableChartsLabels = { "XY chart", "Bar chart", "Pie chart" };
+	private static final String[] availableChartsLabels = { 
+		TastResource.getText("components_charts_xy"),
+		TastResource.getText("components_charts_bar"), 
+		TastResource.getText("components_charts_pie")};
 
 	private static final String[] chartGenerators = { "XYChartGenerator", "BarChartGenerator", "PieChartGenerator" };
 
@@ -365,7 +374,7 @@ public class AdvancedStatisticsTabBean {
 	 */
 	private void validateSelectedChart() {
 		if (this.selectedChart != null && this.selectedChart.equals("2") && this.series.size() > 1) {
-			this.warningMessage = "Pie chart should have only one series. All series besides first will be ignored.";
+			this.warningMessage = TastResource.getText("components_charts_piemoreseries");
 			this.warningPresent = new Boolean(true);
 		} else {
 			this.warningPresent = new Boolean(false);
@@ -392,7 +401,7 @@ public class AdvancedStatisticsTabBean {
 		// Checks whether series already present
 		if (this.series.contains(tmpSeries)) {
 			// If present - show warning
-			this.warningMessage = "Series has already been added.";
+			this.warningMessage = TastResource.getText("components_charts_seriesadded");
 			this.warningPresent = new Boolean(true);
 		} else {
 			// If not - we will add it
@@ -478,10 +487,11 @@ public class AdvancedStatisticsTabBean {
 				}
 				
 				if (objs.length > MAX_RESULTS_PER_GRAPH || this.firstResult != 0) {
-					this.warningMessage = "Current query returns more than " + MAX_RESULTS_PER_GRAPH
-						+ " results. Graph shows chunks of data by " + MAX_RESULTS_PER_GRAPH + " results." +
-								"Use arrow buttons below to navigate between visible chunks. " +
-								"Currently visible results from " + (this.firstResult + 1) + " to " + 
+					this.warningMessage = TastResource.getText("components_charts_toomanyres1") + " " + MAX_RESULTS_PER_GRAPH
+						+ " " + TastResource.getText("components_charts_toomanyres2") + " " + MAX_RESULTS_PER_GRAPH + " results." +
+								TastResource.getText("components_charts_toomanyres3") + " " +
+								TastResource.getText("components_charts_toomanyres4") + " " + (this.firstResult + 1) + 
+								" " + TastResource.getText("components_charts_toomanyres5") + " " + 
 								(this.firstResult + realobjs.length) + ".";
 					this.warningPresent = new Boolean(true);
 				}

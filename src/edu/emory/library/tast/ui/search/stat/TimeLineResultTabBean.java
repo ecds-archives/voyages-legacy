@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -138,163 +139,163 @@ public class TimeLineResultTabBean {
 		this.availableStats.add(new StatOption(
 				"COUNT(voyageid)",
 				new FunctionAttribute("COUNT", new Attribute[] {Voyage.getAttribute("voyageid")}),
-				"Number of voyages",
+				TastResource.getText("components_timeline_stat_numofvoyages"),
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(tonnage)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonnage")}),
-				"Average tonnage",
+				TastResource.getText("components_timeline_stat_averagetonnage"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(tonmod)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonmod")}),
-				"Average tonnage (standardized)",
+				TastResource.getText("components_timeline_stat_averagetonnagestand"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(guns)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("guns")}),
-				"Average number of guns",
+				TastResource.getText("components_timeline_stat_averageguns"),
 				"{0,number,#,###,###.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(LEAST(COALESCE(resistance, 0), 1)) * 100",
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})}),
-				"Rate of resistance",
+				TastResource.getText("components_timeline_stat_rateresistance"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(voy1imp)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy1imp")}),
-				"Average duration of first leg of voyage (days)",
+				TastResource.getText("components_timeline_stat_averagedurationfirst"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(voy2imp)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy2imp")}),
-				"Average duration of middle passage (days)",
+				TastResource.getText("components_timeline_stat_averagedurationmiddle"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(crew1)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonnage")}),
-				"Average crew at outset",
+				TastResource.getText("components_timeline_stat_averagecrew"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(crew30)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crew30")}),
-				"Average crew at first landing of slaves",
+				TastResource.getText("components_timeline_stat_averagecrewfirst"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(crewdied)",
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("crewdied")}),
-				"Number of crew deaths",
+				TastResource.getText("components_timeline_stat_crewdeaths"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(crewdied)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crewdied")}),
-				"Average crew deaths",
+				TastResource.getText("components_timeline_stat_averagecrewdeaths"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(slintend)",
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slintend")}),
-				"Intended number of purchases",
+				TastResource.getText("components_timeline_stat_intnumpurchases"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(slintend)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slintend")}),
-				"Average intended purchases",
+				TastResource.getText("components_timeline_stat_averageintpurchases"),
 				"{0,number,#,###,###.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(slaximp)",
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slaximp")}),
-				"Total number of captives embarked",
+				TastResource.getText("components_timeline_stat_totalnumcaptivesemb"),
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(slaximp)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slaximp")}),
-				"Average number of captives embarked",
+				TastResource.getText("components_timeline_stat_averagenumcaptivesemb"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"SUM(slamimp)",
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slamimp")}),
-				"Total number of captives disembarked",
+				TastResource.getText("components_timeline_stat_totalnumcaptivesdisemb"),
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(slamimp)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slamimp")}),
-				"Average number of captives disembarked",
+				TastResource.getText("components_timeline_stat_averagenumcaptivesdisemb"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(menrat7)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("menrat7")}),
-				"Percent men (among captives)",
+				TastResource.getText("components_timeline_stat_percentmen"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(womrat7)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("womrat7")}),
-				"Percent women (among captives)",
+				TastResource.getText("components_timeline_stat_percentwomen"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(boyrat7)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("boyrat7")}),
-				"Percent boys (among captives)",
+				TastResource.getText("components_timeline_stat_percentboys"),
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(girlrat7)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("girlrat7")}),
-				"Percent girls (among captives)",
+				TastResource.getText("components_timeline_stat_percentgirls"),
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(malrat7)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("malrat7")}),
-				"Percent males (among captives)",
+				TastResource.getText("components_timeline_stat_percentmales"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(chilrat7)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("chilrat7")}),
-				"Percent children (among captives)",
+				TastResource.getText("components_timeline_stat_percentchildren"),
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(jamcaspr)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("jamcaspr")}),
-				"Average price (standardized)",
+				TastResource.getText("components_timeline_stat_averageprice"),
 				"{0,number,#,###,##0.0}"));
 
 		this.availableStats.add(new StatOption(
 				"SUM(vymrtimp)",
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("vymrtimp")}),
-				"Number of slave deaths",
+				TastResource.getText("components_timeline_stat_numdeaths"),
 				"{0,number,#,###,###}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(vymrtimp)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("vymrtimp")}),
-				"Average slave deaths",
+				TastResource.getText("components_timeline_stat_averagedeaths"),
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(vymrtrat)",
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("vymrtrat")}),
-				"Slave mortality rate",
+				TastResource.getText("components_timeline_stat_mortrate"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.chosenOption = (StatOption)this.availableStats.get(0);
