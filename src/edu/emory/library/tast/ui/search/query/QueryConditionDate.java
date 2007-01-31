@@ -2,6 +2,7 @@ package edu.emory.library.tast.ui.search.query;
 
 import java.util.Arrays;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.util.StringUtils;
 
 public class QueryConditionDate extends QueryConditionRange
@@ -10,8 +11,19 @@ public class QueryConditionDate extends QueryConditionRange
 	private static final long serialVersionUID = -5784093870244195009L;
 
 	public static final String[] MONTH_NAMES = {
-		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+		TastResource.getText("components_search_jan"),
+		TastResource.getText("components_search_feb"),
+		TastResource.getText("components_search_mar"),
+		TastResource.getText("components_search_apr"),
+		TastResource.getText("components_search_may"),
+		TastResource.getText("components_search_jun"),
+		TastResource.getText("components_search_jul"),
+		TastResource.getText("components_search_aug"),
+		TastResource.getText("components_search_sep"),
+		TastResource.getText("components_search_oct"),
+		TastResource.getText("components_search_nov"),
+		TastResource.getText("components_search_dec")};
+
 	
 	public static final String EMPTY_MONTH = "MM";
 	public static final String EMPTY_YEAR = "YYYY";

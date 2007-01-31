@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -294,7 +295,7 @@ public class HistoryListComponent extends UIComponentBase
 		
 		QueryBuilderQuery builderQuery = item.getQuery().getBuilderQuery();
 		
-		writer.write("Time frame: ");
+		writer.write(TastResource.getText("components_search_timeframe") + " ");
 		writer.startElement("b", this);
 		writer.write(String.valueOf(item.getQuery().getYearFrom()));
 		writer.endElement("b");
@@ -318,11 +319,11 @@ public class HistoryListComponent extends UIComponentBase
 				writer.startElement("b", this);
 				if (queryConditionBoolean.isChecked())
 				{
-					writer.write("Yes");
+					writer.write(TastResource.getText("components_search_yes"));
 				}
 				else
 				{
-					writer.write("No");
+					writer.write(TastResource.getText("components_search_no"));
 				}
 				writer.endElement("b");
 			}
@@ -330,7 +331,7 @@ public class HistoryListComponent extends UIComponentBase
 			else if (queryCondition instanceof QueryConditionText)
 			{
 				QueryConditionText queryConditionText = (QueryConditionText) queryCondition;
-				writer.write(" is ");
+				writer.write(" " + TastResource.getText("components_search_is") + " ");
 				if (queryConditionText.isNonEmpty())
 				{
 					writer.startElement("b", this);
@@ -340,7 +341,7 @@ public class HistoryListComponent extends UIComponentBase
 				else
 				{
 					writer.startElement("i", this);
-					writer.write("[anything]");
+					writer.write(TastResource.getText("components_search_anything"));
 					writer.endElement("i");
 				}
 			}
@@ -351,32 +352,32 @@ public class HistoryListComponent extends UIComponentBase
 				switch (queryConditionRange.getType())
 				{
 					case QueryConditionRange.TYPE_BETWEEN:
-						writer.write(" is between ");
+						writer.write(" " + TastResource.getText("components_search_between") + " ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getFromForDisplay());
 						writer.endElement("b");
-						writer.write(" and ");
+						writer.write(" " + TastResource.getText("components_search_and") + " ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getToForDisplay());
 						writer.endElement("b");
 						break;
 					
 					case QueryConditionRange.TYPE_LE:
-						writer.write(" is at most ");
+						writer.write(" " + TastResource.getText("components_search_isatmost") + " ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getLeForDisplay());
 						writer.endElement("b");
 						break;
 						
 					case QueryConditionRange.TYPE_GE:
-						writer.write(" is at least ");
+						writer.write(" " + TastResource.getText("components_search_isatleast") + " ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getGeForDisplay());
 						writer.endElement("b");
 						break;
 
 					case QueryConditionRange.TYPE_EQ:
-						writer.write(" is equal ");
+						writer.write(" " + TastResource.getText("components_search_isequal") + " ");
 						writer.startElement("b", this);
 						writer.write(queryConditionRange.getEqForDisplay());
 						writer.endElement("b");
@@ -389,7 +390,7 @@ public class HistoryListComponent extends UIComponentBase
 			{
 				QueryConditionList queryConditionList = (QueryConditionList) queryCondition;
 				ListItemsSource itemsSource = (ListItemsSource) queryConditionList.getSearchableAttribute();
-				writer.write(" is ");
+				writer.write(" " + TastResource.getText("components_search_isequal") + " ");
 				if (queryConditionList.getSelectedIds().size() > 0)
 				{
 					for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
@@ -400,14 +401,14 @@ public class HistoryListComponent extends UIComponentBase
 							writer.startElement("b", this);
 							writer.write(listItem.getText());
 							writer.endElement("b");
-							if (iter.hasNext()) writer.write(" or ");
+							if (iter.hasNext()) writer.write(" " + TastResource.getText("components_search_or") + " ");
 						}
 					}
 				}
 				else
 				{
 					writer.startElement("i", this);
-					writer.write("[anything]");
+					writer.write(TastResource.getText("components_search_anything"));
 					writer.endElement("i");
 				}
 			}
@@ -420,11 +421,11 @@ public class HistoryListComponent extends UIComponentBase
 		}
 		
 		encodeIconsStart(writer);
-		encodeIcon(writer, "icon-remove.png", jsToDelete, "delete");
+		encodeIcon(writer, "icon-remove.png", jsToDelete, TastResource.getText("components_search_delete"));
 		encodeIconSeparator(writer);
-		encodeIcon(writer, "icon-restore.png", jsToRestore, "restore");
+		encodeIcon(writer, "icon-restore.png", jsToRestore, TastResource.getText("components_search_restore"));
 		encodeIconSeparator(writer);
-		encodeIcon(writer, "icon-permlink.png", jsToPermlink, "permlink");
+		encodeIcon(writer, "icon-permlink.png", jsToPermlink, TastResource.getText("components_search_permlink"));
 		encodeIconsEnd(writer);
 		
 		writer.endElement("div");

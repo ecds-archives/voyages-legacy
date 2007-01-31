@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.SearchableAttributeSimpleDate;
@@ -602,7 +603,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "query-checkbox-label", null);
-		writer.write("Yes");
+		writer.write(TastResource.getText("components_search_yes"));
 		writer.endElement("td");
 
 		writer.endElement("tr");
@@ -1475,7 +1476,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			appendSelectedItems(displayList, queryCondition, allItems[i], "");
 		
 		if (displayList.length() == 0)
-			displayList.append("[<i>nothing selected</i>]");
+			displayList.append("[<i>" + TastResource.getText("components_search_nothingselected") + "</i>]");
 
 		// state (edit/show)
 		JsfUtils.encodeHiddenInput(this, writer,
@@ -1531,7 +1532,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.writeAttribute("class", "query-builder-list-button", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "Select", null);
+		writer.writeAttribute("value", TastResource.getText("components_search_select"), null);
 		writer.writeAttribute("onclick", jsOpenList, null);
 		writer.endElement("input");
 		writer.endElement("div");
@@ -1556,7 +1557,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		// quicksearch title
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "query-builder-quicksearch-label", null);
-		writer.write("Quicksearch");
+		writer.write(TastResource.getText("components_search_quicksearch"));
 		writer.endElement("td");
 
 		// quicksearch
@@ -1602,7 +1603,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "OK", null);
+		writer.writeAttribute("value", TastResource.getText("components_search_ok"), null);
 		writer.writeAttribute("onclick", jsCloseList, null);
 		writer.endElement("input");
 		writer.endElement("td");
@@ -1611,7 +1612,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "Select all", null);
+		writer.writeAttribute("value", TastResource.getText("components_search_selall"), null);
 		writer.writeAttribute("onclick", jsSelectAll, null);
 		writer.endElement("input");
 		writer.endElement("td");
@@ -1620,7 +1621,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("td", this);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("value", "Deselect all", null);
+		writer.writeAttribute("value", TastResource.getText("components_search_deselall"), null);
 		writer.writeAttribute("onclick", jsDeselectAll, null);
 		writer.endElement("input");
 		writer.endElement("td");

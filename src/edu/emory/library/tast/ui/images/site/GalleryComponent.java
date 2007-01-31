@@ -14,6 +14,7 @@ import javax.faces.event.FacesEvent;
 
 import org.apache.myfaces.el.MethodBindingImpl;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.ui.images.site.GalleryRequestBean.GalleryParams;
 import edu.emory.library.tast.util.JsfUtils;
@@ -489,12 +490,12 @@ public class GalleryComponent extends UIComponentBase
 		String source = visibleImage.getImage().getSource(); 
 		if (!StringUtils.isNullOrEmpty(source))
 			printInfoTableElement(writer,
-					"Source", source);
+					TastResource.getText("components_gallery_source"), source);
 
 		String creator = visibleImage.getImage().getCreator(); 
 		if (!StringUtils.isNullOrEmpty(creator))
 			printInfoTableElement(writer,
-					"Creator", creator);
+					TastResource.getText("components_gallery_creator"), creator);
 
 		if (visibleImage.getImage().getVoyageid() != null)
 		{
@@ -508,10 +509,10 @@ public class GalleryComponent extends UIComponentBase
 					String.valueOf(visibleImage.getImage().getVoyageid()));
 
 			startInfoTableElement(writer);
-			printInfoTableLabel(writer, "Voyage");
+			printInfoTableLabel(writer, TastResource.getText("components_gallery_voyage"));
 			startInfoTableValue(writer);
 			
-			writer.write("ID = ");
+			writer.write(TastResource.getText("components_gallery_id") + " = ");
 			writer.write(String.valueOf(visibleImage.getImage().getVoyageid()));
 			writer.write(", ");
 

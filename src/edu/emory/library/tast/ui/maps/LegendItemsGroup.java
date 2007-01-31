@@ -3,6 +3,8 @@ package edu.emory.library.tast.ui.maps;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.emory.library.tast.TastResource;
+
 /**
  * A group that appear in legend of map.
  * Single legend can have several groups. Each LegendItemsGroup can have
@@ -68,7 +70,7 @@ public class LegendItemsGroup {
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("Legend group:" ).append(this.title).append("\n");
+		buffer.append(TastResource.getText("components_map_legendgroup") ).append(this.title).append("\n");
 		LegendItem[] items = this.getItems();
 		for (int i = 0; i < items.length; i++) {
 			buffer.append("   ").append(items[i]).append("\n");
