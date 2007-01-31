@@ -2,6 +2,8 @@ package edu.emory.library.tast.util;
 
 import java.util.Date;
 
+import edu.emory.library.tast.TastResource;
+
 public class DateTimeUtils
 {
 	
@@ -14,20 +16,20 @@ public class DateTimeUtils
 		1 };
 	
 	private static final String[] timeUnitNamesPlular = new String[] {
-		"weeks",
-		"days",
-		"hours",
-		"min",
-		"sec",
-		"ms" };
+		TastResource.getText("components_utilsdate_weeks"),
+		TastResource.getText("components_utilsdate_days"),
+		TastResource.getText("components_utilsdate_hours"),
+		TastResource.getText("components_utilsdate_mins"),
+		TastResource.getText("components_utilsdate_secs"),
+		TastResource.getText("components_utilsdate_mss") };
 
 	private static final String[] timeUnitNamesSingular = new String[] {
-		"week",
-		"day",
-		"hour",
-		"min",
-		"sec",
-		"ms" };
+		TastResource.getText("components_utilsdate_week"),
+		TastResource.getText("components_utilsdate_day"),
+		TastResource.getText("components_utilsdate_hour"),
+		TastResource.getText("components_utilsdate_min"),
+		TastResource.getText("components_utilsdate_sec"),
+		TastResource.getText("components_utilsdate_ms") };
 	
 	public static final int TIME_INTERVAL_NO_ROUNDING = -1; 
 	public static final int TIME_INTERVAL_ROUND_TO_MS = 5; 
