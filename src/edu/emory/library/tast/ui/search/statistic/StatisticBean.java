@@ -3,6 +3,7 @@ package edu.emory.library.tast.ui.search.statistic;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -15,10 +16,15 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class StatisticBean {
 	
-	public static final String[] statNames = {"Slaves embarked", 
-		"Slaves disembarked", "Share of slaves embarked who died during voyage", 
-		"Length of Middle Passage (in days)", "Percentage male", 
-		"Percentage children", "Tonnage of vessel", "Number of crew at outset"};
+	public static final String[] statNames = {
+		TastResource.getText("components_statistictab_slavemb"), 
+		TastResource.getText("components_statistictab_slavdisemb"), 
+		TastResource.getText("components_statistictab_slavdead"), 
+		TastResource.getText("components_statistictab_lenmiddlepass"), 
+		TastResource.getText("components_statistictab_percentmale"), 
+		TastResource.getText("components_statistictab_percentchil"), 
+		TastResource.getText("components_statistictab_tonnagevessel"), 
+		TastResource.getText("components_statistictab_crewatoutset")};
 	
 	private Conditions prevConditions = null;
 	private SearchBean searchBean = null;
@@ -63,9 +69,9 @@ public class StatisticBean {
 		
 		cells[0] = new SimpleTableCell[4];
 		cells[0][0] = new SimpleTableCell("", "search-simple-stat-h_c1", null);
-		cells[0][1] = new SimpleTableCell("Total", "search-simple-stat-h_c2", null);
-		cells[0][2] = new SimpleTableCell("Number of voyages", "search-simple-stat-h_c3", null);
-		cells[0][3] = new SimpleTableCell("Average", "search-simple-stat-h_c4", null);
+		cells[0][1] = new SimpleTableCell(TastResource.getText("components_statistictab_total"), "search-simple-stat-h_c2", null);
+		cells[0][2] = new SimpleTableCell(TastResource.getText("components_statistictab_total"), "search-simple-stat-h_c3", null);
+		cells[0][3] = new SimpleTableCell(TastResource.getText("components_statistictab_total"), "search-simple-stat-h_c4", null);
 		for (int i = 1; i < cells.length; i++) {
 			cells[i] = new SimpleTableCell[4];
 			cells[i][0] = new SimpleTableCell(elements[i-1].getName(), "search-simple-stat-c_c1", null);
@@ -91,7 +97,7 @@ public class StatisticBean {
 		if (results.length > 0) {
 			Object[] row = (Object[])results[0];
 			if (row[0] == null || row[1] == null) {
-				elements[i] = new StatisticElement(statNames[i], "not available", "not available", "not available");
+				elements[i] = new StatisticElement(statNames[i], TastResource.getText("components_statistictab_notavailable"), TastResource.getText("components_statistictab_notavailable"), TastResource.getText("components_statistictab_notavailable"));
 			} else {
 				String stat = "";
 				if (percent) {
