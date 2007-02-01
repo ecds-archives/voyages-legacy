@@ -16,8 +16,6 @@ public class ExpandableBoxComponent extends UIComponentBase
 	
 	private static final String EXPANEDED = "expanded";
 	private static final String COLLAPSED = "collapsed";
-	//private static final String COLLAPSE_SYMBOL = "-";
-	//private static final String EXPANED_SYMBOL = "+";
 
 	private boolean collapsed = false;
 
@@ -113,8 +111,6 @@ public class ExpandableBoxComponent extends UIComponentBase
 	private void writeHeaderTable(FacesContext context, ResponseWriter writer) throws IOException {
 		
 		UIForm form = JsfUtils.getForm(this, context);
-		
-		//String tdWithSymbolId = getClientId(context) + "_symbol";
 		
 		JsfUtils.encodeHiddenInput(this, writer,
 				getStateHiddenFieldName(context),
