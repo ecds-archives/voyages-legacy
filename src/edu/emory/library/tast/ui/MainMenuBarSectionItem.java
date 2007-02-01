@@ -6,14 +6,15 @@ public class MainMenuBarSectionItem
 	private String id;
 	private String imageUrlNormal;
 	private String imageUrlActive;
+	private String url;
 	private int imageWidth;
 	private int imageHeight;
 	private MainMenuBarPageItem[] subItems;
 	
-	public MainMenuBarSectionItem(String id, String imageUrlNormal, String imageUrlActive, int imageWidth, int imageHeight, MainMenuBarPageItem[] subItems)
+	public MainMenuBarSectionItem(String id, String url, String imageUrlNormal, String imageUrlActive, int imageWidth, int imageHeight, MainMenuBarPageItem[] subItems)
 	{
-		super();
 		this.id = id;
+		this.url = url;
 		this.imageUrlNormal = imageUrlNormal;
 		this.imageUrlActive = imageUrlActive;
 		this.imageWidth = imageWidth;
@@ -79,6 +80,16 @@ public class MainMenuBarSectionItem
 	public void setSubItems(MainMenuBarPageItem[] subItems)
 	{
 		this.subItems = subItems;
+	}
+
+	public String getUrl()
+	{
+		return url;
+	}
+
+	public void setUrl(String url)
+	{
+		this.url = url;
 	}
 
 }

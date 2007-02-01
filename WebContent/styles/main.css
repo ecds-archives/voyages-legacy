@@ -2,17 +2,9 @@
 
 body {
 	font-family: Arial, Helvetica, Bitstream Vera Sans, Sans, sans-serif;
-	background: #F1E7C8;
 	font-size: 8pt;
 	margin: 0px;
 	padding: 0px; }
-
-a {
-	text-decoration: none;
-	color: #CC3300; }
-
-a:hover {
-	text-decoration: underline; }
 
 input, textarea, select {
 	font-family: Arial, sans-serif;
@@ -20,7 +12,7 @@ input, textarea, select {
 
 
 /* header */
-
+/*
 div.header {
 	padding-top: 10px;
 	padding-left: 10px;
@@ -48,3 +40,4 @@ div.header-link-active {
 div.header-link a,
 div.header-link-active a {
 	color: White; }
+*/

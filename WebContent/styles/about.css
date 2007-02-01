@@ -1,0 +1,19 @@
+body {
+	background-position: 0px 105px;
+	background-image: url(../images/about-bg.png);
+	background-repeat: repeat-x; }
+	
+div#content {
+	border-top: 5px solid #5A636B; }
+	
+td.section-index-right-column {
+	border-left-color: #5A636B; }
+	
+div.section-index-intro-blank-icon {
+	background-image: url(../images/about-index-icon.png); }
+	
+div.section-index-intro-icon-title {
+	color: #5A636B; }
+	
+a {
+	color: #5A636B; }

@@ -11,87 +11,91 @@ public class MainMenuBean
 		return new MainMenuBarSectionItem[] {
 				
 				new MainMenuBarSectionItem(
-						"estimates",
-						"images/main-menu-estimates-normal.png",
-						"images/main-menu-estimates-active.png",
-						190, 30,
-						new MainMenuBarPageItem[] {
+						"assessment",
+						"assessment/index.faces",
+						"images/main-menu-assessment-normal.png",
+						"images/main-menu-assessment-active.png", 190,
+						30, new MainMenuBarPageItem[] {
 								new MainMenuBarPageItem(
-										"intro",
-										"Introduction",
-										"estimates/intro.faces"),
+										"essays",
+										"Essays",
+										"assessment/essays.faces"),
 								new MainMenuBarPageItem(
-										"intro",
-										"Asses Trade Slave",
-										"estimates/estimates.faces")}),
+										"estimates",
+										"Asses the Trade Slave",
+										"assessment/estimates.faces")}),
 						
 				new MainMenuBarSectionItem(
 						"database",
+						"database/index.faces",
 						"images/main-menu-database-normal.png",
-						"images/main-menu-database-active.png",
-						140, 30,
-						new MainMenuBarPageItem[] {
-								new MainMenuBarPageItem(
-										"intro",
-										"Introduction",
-										"database/intro.faces"),
+						"images/main-menu-database-active.png", 160,
+						30, new MainMenuBarPageItem[] {
 								new MainMenuBarPageItem(
 										"search",
-										"Search database",
+										"Search the Database",
 										"database/search.faces"),
 								new MainMenuBarPageItem(
-										"prepared",
-										"Standardard Queries",
-										"database/prepared.faces")}),
+										"download",
+										"Download the Database",
+										"database/download.faces"),
+								new MainMenuBarPageItem(
+										"methodology",
+										"Methodology",
+										"database/methodology.faces")}),
 
 				new MainMenuBarSectionItem(
 						"resources",
+						"resources/index.faces",
 						"images/main-menu-resources-normal.png",
-						"images/main-menu-resources-active.png",
-						120, 30,
-						new MainMenuBarPageItem[] {
-								new MainMenuBarPageItem(
-										"intro",
-										"Introduction",
-										"resources/intro.faces"),
+						"images/main-menu-resources-active.png", 120,
+						30, new MainMenuBarPageItem[] {
 								new MainMenuBarPageItem(
 										"images",
-										"Image Database",
-										"resources/images.faces")}),
+										"Images",
+										"resources/images.faces"),
+								new MainMenuBarPageItem(
+										"images",
+										"Names Database",
+										"resources/slaves.faces")}),
 						
 				new MainMenuBarSectionItem(
 						"lessons",
+						"lessons/index.faces",
 						"images/main-menu-lessons-normal.png",
-						"images/main-menu-lessons-active.png",
-						175, 30,
-						new MainMenuBarPageItem[] {
+						"images/main-menu-lessons-active.png", 175,
+						30, new MainMenuBarPageItem[] {
 								new MainMenuBarPageItem(
-										"intro",
-										"Introduction",
-										"lessons/intro.faces"),
+										"plan",
+										"Lesson Plan",
+										"lessons/plan.faces"),
 								new MainMenuBarPageItem(
-										"images",
-										"Lesson Plans",
-										"lessons/lessons.faces")}),
+										"map",
+										"Lesson Map",
+										"lessons/map.faces"),
+								new MainMenuBarPageItem(
+										"glossary",
+										"Glossary",
+										"lessons/glossary.faces")}),
 
 				new MainMenuBarSectionItem(
 						"about",
+						"about/index.faces",
 						"images/main-menu-about-normal.png",
-						"images/main-menu-about-active.png",
-						145, 30,
-						new MainMenuBarPageItem[] {
+						"images/main-menu-about-active.png", 145,
+						30, new MainMenuBarPageItem[] {
 								new MainMenuBarPageItem(
-										"intro",
-										"Introduction",
-										"about/intro.faces"),
+										"bios",
+										"Bios of Researchers",
+										"about/bios.faces"),
 								new MainMenuBarPageItem(
-										"institutions",
-										"Institutions",
-										"about/institutions.faces"),
+										"about",
+										"About the Grand and Partners",
+										"about/about.faces"),
 								new MainMenuBarPageItem(
-										"images",
-										"Researchers",
-										"about/researchers.faces")}),
+										"contact",
+										"Contact Us",
+										"about/contact.faces")}),
 
 		};
 	}

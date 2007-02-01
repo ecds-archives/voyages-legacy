@@ -1,0 +1,19 @@
+body {
+	background-position: 0px 105px;
+	background-image: url(../images/lessons-bg.png);
+	background-repeat: repeat-x; }
+	
+div#content {
+	border-top: 5px solid #09367C; }
+	
+td.section-index-right-column {
+	border-left-color: #09367C; }
+	
+div.section-index-intro-blank-icon {
+	background-image: url(../images/lessons-index-icon.png); }
+	
+div.section-index-intro-icon-title {
+	color: #09367C; }
+	
+a {
+	color: #09367C; }

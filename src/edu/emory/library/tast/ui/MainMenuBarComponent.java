@@ -94,6 +94,9 @@ public class MainMenuBarComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "main-menu-section-image", null);
 		
+		writer.startElement("a", this);
+		writer.writeAttribute("href", baseUrl + "/" + section.getUrl(), null);
+
 		writer.startElement("img", this);
 		writer.writeAttribute("id", sectionImgId, null);
 		writer.writeAttribute("width", String.valueOf(section.getImageWidth()), null);
@@ -112,6 +115,8 @@ public class MainMenuBarComponent extends UIComponentBase
 		}
 		writer.endElement("img");
 		
+		writer.endElement("a");
+
 		writer.endElement("div");
 		
 		writer.startElement("div", this);
