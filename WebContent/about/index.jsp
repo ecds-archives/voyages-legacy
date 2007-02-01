@@ -11,10 +11,13 @@
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/about.css" rel="stylesheet" type="text/css">
+	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/about-expandable-box.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
+<h:form id="main">
 
 	<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
@@ -31,7 +34,9 @@
 		<tr>
 			<td class="section-index-left-column">
 			
-				
+				<s:expandableBox text="Quick Start">
+					<h:outputText value="Suspendisse sollicitudin eros quis odio. Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit." />
+				</s:expandableBox>				
 			</td>
 			<td class="section-index-right-column">
 
@@ -71,6 +76,7 @@
 		
 	</div>
 
+</h:form>
 </f:view>
 </body>
 </html>

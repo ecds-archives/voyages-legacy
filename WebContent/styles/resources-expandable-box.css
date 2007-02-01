@@ -1,0 +1,44 @@
+table.box-main-table td {
+	border-color: #165B31; }
+		
+td.box-upper-row-left {
+	background-image: url(../images/resources-box-title-left.png); }
+	
+td.box-upper-row-middle {
+	background-image: url(../images/resources-box-title-center.png); }
+
+td.box-upper-row-right {
+	background-image: url(../images/resources-box-title-right.png); }
+	
+td.box-upper-row-left-collapsed {
+	background-image: url(../images/resources-box-title-left.png); }
+	
+td.box-upper-row-middle-collapsed {
+	background-image: url(../images/resources-box-title-center.png); }
+
+td.box-upper-row-right-collapsed {
+	background-image: url(../images/resources-box-title-right.png); }
+	
+td.box-middle-row-left {
+	background-image: url(../images/resources-box-content-center.png); }
+	
+td.box-middle-row-middle {
+	background-image: url(../images/resources-box-content-center.png); }
+	
+td.box-middle-row-right {
+	background-image: url(../images/resources-box-content-center.png); }
+
+td.box-lower-row-left {
+	background-image: url(../images/resources-box-bottom-left.png); }
+		
+td.box-lower-row-middle {
+	 }
+	
+td.box-lower-row-right {
+	background-image: url(../images/resources-box-bottom-right.png); }
+
+div.box-button-collapsed {
+	background-image: url(../images/resources-box-plus.png); }
+
+div.box-button {
+	background-image: url(../images/resources-box-minus.png); }
