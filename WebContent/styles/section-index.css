@@ -34,3 +34,6 @@ div.section-index-intro-icon p.section-index-intro {
 div.section-index-intro-icon-title {
 	font-size: 12pt;
 	margin-left: 15px; }
+
+td.section-index-left-column table.box-main-table {
+	width: 280px; }

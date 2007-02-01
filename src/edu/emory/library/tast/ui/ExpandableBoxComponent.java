@@ -116,20 +116,23 @@ public class ExpandableBoxComponent extends UIComponentBase
 				getStateHiddenFieldName(context),
 				collapsed ? COLLAPSED : EXPANEDED);
 		StringBuffer js = new StringBuffer();
-
-		js.append("if (state.value == '").append(COLLAPSED).append("') {");
-		js.append("state.value = '").append(EXPANEDED).append("'; ");
-		js.append("} else {");
-		js.append("state.value = '").append(COLLAPSED).append("'; ");
-		js.append("}");
-		JsfUtils.appendSubmitJS(js, context, form, null, null);
 		
+		if (collapsed)
+		{
+			JsfUtils.appendSubmitJS(js, context, form, 
+					getStateHiddenFieldName(context), EXPANEDED);
+		}
+		else
+		{
+			JsfUtils.appendSubmitJS(js, context, form,
+					getStateHiddenFieldName(context), COLLAPSED);
+		}
 		
 		writer.startElement("table", null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "header-table", null);
+		writer.writeAttribute("class", "box-header-table", null);
 		
 		writer.startElement("tr", null);
 		writer.startElement("td", null);
@@ -163,12 +166,12 @@ public class ExpandableBoxComponent extends UIComponentBase
 		
 		writer.endElement("div");
 		writer.endElement("td");
-		writeSimpleTd(writer, "middle-row-right");
+		writeSimpleTd(writer, "box-middle-row-right");
 		writer.endElement("tr");
 		writer.startElement("tr", null);
-		writeSimpleTd(writer, "lower-row-left");
-		writeSimpleTd(writer, "lower-row-middle");
-		writeSimpleTd(writer, "lower-row-right");
+		writeSimpleTd(writer, "box-lower-row-left");
+		writeSimpleTd(writer, "box-lower-row-middle");
+		writeSimpleTd(writer, "box-lower-row-right");
 		writer.endElement("tr");
 	
 		writer.endElement("table");
