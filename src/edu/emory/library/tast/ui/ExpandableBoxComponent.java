@@ -31,7 +31,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 	
 	public boolean getRendersChildren()
 	{
-		return false;
+		return true;
 	}
 	
 	public Object saveState(FacesContext context)
@@ -69,7 +69,49 @@ public class ExpandableBoxComponent extends UIComponentBase
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
-		ResponseWriter writer = context.getResponseWriter();
+		ResponseWriter writer = context.getResponseWriter();		
+		
+		writer.startElement("table", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "main-table", null);
+		
+		writer.startElement("tr", null);
+		writeSimpleTd(writer, "upper-row-left");
+		writer.startElement("td", null);
+		writer.writeAttribute("class", "upper-row-middle", null);
+		writeHeaderTable(context, writer);
+		writer.endElement("td");
+		writeSimpleTd(writer, "upper-row-right");
+		writer.endElement("tr");
+		
+		
+		writer.startElement("tr", null);
+		
+		writeSimpleTd(writer, "middle-row-left");
+		
+		writer.startElement("td", null);
+		writer.writeAttribute("class", "middle-row-middle", null);
+		writer.startElement("div", null);
+		writer.writeAttribute("id", getClientId(context), null);
+		writer.writeAttribute("class", "div-main-text", null);
+		if (collapsed) {
+			writer.writeAttribute("style", "display: none;", null);
+		}
+	
+	}
+	
+	
+	
+	public void encodeChildren(FacesContext context) throws IOException {
+		if (!collapsed) {
+			JsfUtils.renderChildren(context, this);
+		}
+	}
+
+	private void writeHeaderTable(FacesContext context, ResponseWriter writer) throws IOException {
+		
 		UIForm form = JsfUtils.getForm(this, context);
 		
 		String tdWithSymbolId = getClientId(context) + "_symbol";
@@ -77,66 +119,63 @@ public class ExpandableBoxComponent extends UIComponentBase
 		JsfUtils.encodeHiddenInput(this, writer,
 				getStateHiddenFieldName(context),
 				collapsed ? COLLAPSED : EXPANEDED);
-		
 		StringBuffer js = new StringBuffer();
-		
-		js.append("var box = ");
-		JsfUtils.appendElementRefJS(js, getClientId(context));
-		js.append("; ");
-		
-		js.append("var state = ");
-		JsfUtils.appendFormElementRefJS(js, context, form, getStateHiddenFieldName(context));
-		js.append("; ");
-
-		js.append("var symbol = ");
-		JsfUtils.appendElementRefJS(js, tdWithSymbolId);
-		js.append("; ");
 
 		js.append("if (state.value == '").append(COLLAPSED).append("') {");
 		js.append("state.value = '").append(EXPANEDED).append("'; ");
-		js.append("box.style.display = 'block'; ");
-		js.append("symbol.innerHTML = '").append(COLLAPSE_SYMBOL).append("';");
 		js.append("} else {");
 		js.append("state.value = '").append(COLLAPSED).append("'; ");
-		js.append("box.style.display = 'none'; ");
-		js.append("symbol.innerHTML = '").append(EXPANED_SYMBOL).append("';");
 		js.append("}");
+		JsfUtils.appendSubmitJS(js, context, form, null, null);
 		
-		writer.startElement("div", this);
-		writer.writeAttribute("class", "side-panel-section", null);
-		writer.writeAttribute("onclick", js.toString(), null);
 		
-		writer.startElement("table", this);
+		writer.startElement("table", null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.startElement("tr", this);
+		writer.writeAttribute("class", "header-table", null);
 		
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "side-panel-section-text", null);
+		writer.startElement("tr", null);
+		writer.startElement("td", null);
 		writer.write(getText());
 		writer.endElement("td");
-		
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "side-panel-section-symbol", null);
-		writer.writeAttribute("id", tdWithSymbolId, null);
-		writer.write(collapsed ?  EXPANED_SYMBOL : COLLAPSE_SYMBOL);
-		writer.endElement("td");
-
-		writer.endElement("tr");
-		writer.endElement("table");
+		writer.startElement("td", null);
+		writer.startElement("div", null);
+		if (collapsed) {
+			writer.writeAttribute("style", "div-button-collapsed", null);
+		} else {
+			writer.writeAttribute("style", "div-button", null);
+		}
+		writer.writeAttribute("onclick", js, null);
 		writer.endElement("div");
-
-		writer.startElement("div", this);
-		writer.writeAttribute("id", getClientId(context), null);
-		if (collapsed) writer.writeAttribute("style", "display: none;", null);
-	
+		writer.endElement("td");
+		writer.endElement("tr");
+		
+		writer.endElement("table");
 	}
-	
+
+	private void writeSimpleTd(ResponseWriter writer, String styleClass) throws IOException {
+		writer.startElement("td", null);
+		writer.writeAttribute("class", styleClass, null);
+		writer.endElement("td");
+	}
+
 	public void encodeEnd(FacesContext context) throws IOException
 	{
-		ResponseWriter writer = context.getResponseWriter();
+		ResponseWriter writer = context.getResponseWriter();	
+		
+		
 		writer.endElement("div");
+		writer.endElement("td");
+		writeSimpleTd(writer, "middle-row-right");
+		writer.endElement("tr");
+		writer.startElement("tr", null);
+		writeSimpleTd(writer, "lower-row-left");
+		writeSimpleTd(writer, "lower-row-middle");
+		writeSimpleTd(writer, "lower-row-right");
+		writer.endElement("tr");
+	
+		writer.endElement("table");
 	}
 
 	public String getText()
