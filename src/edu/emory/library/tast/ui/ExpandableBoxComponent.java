@@ -16,8 +16,8 @@ public class ExpandableBoxComponent extends UIComponentBase
 	
 	private static final String EXPANEDED = "expanded";
 	private static final String COLLAPSED = "collapsed";
-	private static final String COLLAPSE_SYMBOL = "-";
-	private static final String EXPANED_SYMBOL = "+";
+	//private static final String COLLAPSE_SYMBOL = "-";
+	//private static final String EXPANED_SYMBOL = "+";
 
 	private boolean collapsed = false;
 
@@ -75,27 +75,27 @@ public class ExpandableBoxComponent extends UIComponentBase
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
-		writer.writeAttribute("class", "main-table", null);
+		writer.writeAttribute("class", "box-main-table", null);
 		
 		writer.startElement("tr", null);
-		writeSimpleTd(writer, "upper-row-left");
+		writeSimpleTd(writer, "box-upper-row-left");
 		writer.startElement("td", null);
-		writer.writeAttribute("class", "upper-row-middle", null);
+		writer.writeAttribute("class", "box-upper-row-middle", null);
 		writeHeaderTable(context, writer);
 		writer.endElement("td");
-		writeSimpleTd(writer, "upper-row-right");
+		writeSimpleTd(writer, "box-upper-row-right");
 		writer.endElement("tr");
 		
 		
 		writer.startElement("tr", null);
 		
-		writeSimpleTd(writer, "middle-row-left");
+		writeSimpleTd(writer, "box-middle-row-left");
 		
 		writer.startElement("td", null);
-		writer.writeAttribute("class", "middle-row-middle", null);
+		writer.writeAttribute("class", "box-middle-row-middle", null);
 		writer.startElement("div", null);
 		writer.writeAttribute("id", getClientId(context), null);
-		writer.writeAttribute("class", "div-main-text", null);
+		writer.writeAttribute("class", "box-main-text", null);
 		if (collapsed) {
 			writer.writeAttribute("style", "display: none;", null);
 		}
@@ -114,7 +114,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		
 		UIForm form = JsfUtils.getForm(this, context);
 		
-		String tdWithSymbolId = getClientId(context) + "_symbol";
+		//String tdWithSymbolId = getClientId(context) + "_symbol";
 		
 		JsfUtils.encodeHiddenInput(this, writer,
 				getStateHiddenFieldName(context),
@@ -142,9 +142,9 @@ public class ExpandableBoxComponent extends UIComponentBase
 		writer.startElement("td", null);
 		writer.startElement("div", null);
 		if (collapsed) {
-			writer.writeAttribute("style", "div-button-collapsed", null);
+			writer.writeAttribute("class", "box-button-collapsed", null);
 		} else {
-			writer.writeAttribute("style", "div-button", null);
+			writer.writeAttribute("class", "box-button", null);
 		}
 		writer.writeAttribute("onclick", js, null);
 		writer.endElement("div");
