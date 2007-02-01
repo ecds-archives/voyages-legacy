@@ -76,26 +76,25 @@ public class ExpandableBoxComponent extends UIComponentBase
 		writer.writeAttribute("class", "box-main-table", null);
 		
 		writer.startElement("tr", null);
-		writeSimpleTd(writer, "box-upper-row-left");
+		writeSimpleTd(writer, "box-upper-row-left" + (collapsed ? "-collapsed" : ""));
 		writer.startElement("td", null);
-		writer.writeAttribute("class", "box-upper-row-middle", null);
+		writer.writeAttribute("class", "box-upper-row-middle" + (collapsed ? "-collapsed" : ""), null);
 		writeHeaderTable(context, writer);
 		writer.endElement("td");
-		writeSimpleTd(writer, "box-upper-row-right");
+		writeSimpleTd(writer, "box-upper-row-right" + (collapsed ? "-collapsed" : ""));
 		writer.endElement("tr");
 		
+		if (!collapsed) {
+			writer.startElement("tr", null);
 		
-		writer.startElement("tr", null);
+			writeSimpleTd(writer, "box-middle-row-left");
 		
-		writeSimpleTd(writer, "box-middle-row-left");
-		
-		writer.startElement("td", null);
-		writer.writeAttribute("class", "box-middle-row-middle", null);
-		writer.startElement("div", null);
-		writer.writeAttribute("id", getClientId(context), null);
-		writer.writeAttribute("class", "box-main-text", null);
-		if (collapsed) {
-			writer.writeAttribute("style", "display: none;", null);
+			writer.startElement("td", null);
+			writer.writeAttribute("class", "box-middle-row-middle", null);
+			writer.startElement("div", null);
+			writer.writeAttribute("id", getClientId(context), null);
+			writer.writeAttribute("class", "box-main-text", null);
+			//writer.writeAttribute("style", "display: none;", null);
 		}
 	
 	}
@@ -163,16 +162,17 @@ public class ExpandableBoxComponent extends UIComponentBase
 	{
 		ResponseWriter writer = context.getResponseWriter();	
 		
-		
-		writer.endElement("div");
-		writer.endElement("td");
-		writeSimpleTd(writer, "box-middle-row-right");
-		writer.endElement("tr");
-		writer.startElement("tr", null);
-		writeSimpleTd(writer, "box-lower-row-left");
-		writeSimpleTd(writer, "box-lower-row-middle");
-		writeSimpleTd(writer, "box-lower-row-right");
-		writer.endElement("tr");
+		if (!collapsed) {
+			writer.endElement("div");
+			writer.endElement("td");
+			writeSimpleTd(writer, "box-middle-row-right");
+			writer.endElement("tr");
+			writer.startElement("tr", null);
+			writeSimpleTd(writer, "box-lower-row-left");
+			writeSimpleTd(writer, "box-lower-row-middle");
+			writeSimpleTd(writer, "box-lower-row-right");
+			writer.endElement("tr");
+		}
 	
 		writer.endElement("table");
 	}

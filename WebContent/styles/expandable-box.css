@@ -14,6 +14,29 @@ td.box-upper-row-right {
 	background-repeat: no-repeat;
 	width: 10px;
 	overflow: hidden; }
+	
+td.box-upper-row-left-collapsed {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	background-position: left top;
+	background-repeat: no-repeat;
+	width: 10px;
+	overflow: hidden; }
+	
+td.box-upper-row-middle-collapsed {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-repeat: repeat-x; }
+
+td.box-upper-row-right-collapsed {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	background-position: right top;
+	background-repeat: no-repeat;
+	width: 10px;
+	overflow: hidden; }
 
 td.box-middle-row-left {
 	border-top-width: 1px;
