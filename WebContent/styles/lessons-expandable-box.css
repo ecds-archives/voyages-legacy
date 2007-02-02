@@ -2,23 +2,21 @@ table.box-main-table td {
 	border-color: #09367C; }
 		
 td.box-upper-row-left {
-	background-image: url(../images/lessons-box-title-left.png); }
-	
-td.box-upper-row-middle {
-	background-image: url(../images/lessons-box-title-center.png); }
-
-td.box-upper-row-right {
-	background-image: url(../images/lessons-box-title-right.png); }
+	background-image: url(../images/lessons-box-expanded-title-left.png); }
 	
 td.box-upper-row-left-collapsed {
-	background-image: url(../images/lessons-box-title-left.png); }
-	
+	background-image: url(../images/lessons-box-collapsed-title-left.png); }
+
+td.box-upper-row-middle,
 td.box-upper-row-middle-collapsed {
 	background-image: url(../images/lessons-box-title-center.png); }
 
-td.box-upper-row-right-collapsed {
-	background-image: url(../images/lessons-box-title-right.png); }
+td.box-upper-row-right {
+	background-image: url(../images/lessons-box-expanded-title-right.png); }
 	
+td.box-upper-row-right-collapsed {
+	background-image: url(../images/lessons-box-collapsed-title-right.png); }
+
 td.box-middle-row-left {
 	background-image: url(../images/lessons-box-content-center.png); }
 	

@@ -135,6 +135,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		
 		writer.startElement("tr", null);
 		writer.startElement("td", null);
+		writer.writeAttribute("class", "box-label", null);
 		writer.write(getText());
 		writer.endElement("td");
 		writer.startElement("td", null);

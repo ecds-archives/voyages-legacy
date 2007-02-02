@@ -1,46 +1,27 @@
-td.box-upper-row-left {
-	background-position: left top;
-	background-repeat: no-repeat;
-	width: 10px;
-	overflow: hidden; }
-	
-td.box-upper-row-middle {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	background-repeat: repeat-x; }
-
-td.box-upper-row-right {
-	background-position: right top;
-	background-repeat: no-repeat;
-	width: 10px;
-	overflow: hidden; }
-	
+td.box-upper-row-left,
 td.box-upper-row-left-collapsed {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	height: 26px;
+	width: 10px;
 	background-position: left top;
 	background-repeat: no-repeat;
-	width: 10px;
 	overflow: hidden; }
 	
+td.box-upper-row-middle,
 td.box-upper-row-middle-collapsed {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	height: 26px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-repeat: repeat-x; }
 
+td.box-upper-row-right, 
 td.box-upper-row-right-collapsed {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	height: 26px;
+	width: 10px;
 	background-position: right top;
 	background-repeat: no-repeat;
-	width: 10px;
 	overflow: hidden; }
 
 td.box-middle-row-left {
-	border-top-width: 1px;
-	border-top-style: solid;
 	background-color: White;
 	background-position: left top;
 	background-repeat: no-repeat;
@@ -49,16 +30,12 @@ td.box-middle-row-left {
 	overflow: hidden; }
 	
 td.box-middle-row-middle {
-	padding-top: 9px;
-	border-top-width: 1px;
-	border-top-style: solid;
 	background-color: White;
+	padding-top: 9px;
 	background-position: left top;
 	background-repeat: repeat-x; }
 
 td.box-middle-row-right {
-	border-top-width: 1px;
-	border-top-style: solid;
 	background-color: White;
 	background-position: right top;
 	background-repeat: no-repeat;
@@ -87,6 +64,9 @@ td.box-lower-row-right {
 	
 table.box-header-table {
 	width: 100%; }
+	
+td.box-label {
+	font-weight: bold; }
 	
 div.box-button-collapsed,
 div.box-button {

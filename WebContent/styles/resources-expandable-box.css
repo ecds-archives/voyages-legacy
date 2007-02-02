@@ -2,22 +2,20 @@ table.box-main-table td {
 	border-color: #165B31; }
 		
 td.box-upper-row-left {
-	background-image: url(../images/resources-box-title-left.png); }
-	
-td.box-upper-row-middle {
-	background-image: url(../images/resources-box-title-center.png); }
-
-td.box-upper-row-right {
-	background-image: url(../images/resources-box-title-right.png); }
+	background-image: url(../images/resources-box-expanded-title-left.png); }
 	
 td.box-upper-row-left-collapsed {
-	background-image: url(../images/resources-box-title-left.png); }
-	
+	background-image: url(../images/resources-box-collapsed-title-left.png); }
+
+td.box-upper-row-middle,
 td.box-upper-row-middle-collapsed {
 	background-image: url(../images/resources-box-title-center.png); }
 
+td.box-upper-row-right {
+	background-image: url(../images/resources-box-expanded-title-right.png); }
+	
 td.box-upper-row-right-collapsed {
-	background-image: url(../images/resources-box-title-right.png); }
+	background-image: url(../images/resources-box-collapsed-title-right.png); }
 	
 td.box-middle-row-left {
 	background-image: url(../images/resources-box-content-center.png); }
@@ -42,3 +40,6 @@ div.box-button-collapsed {
 
 div.box-button {
 	background-image: url(../images/resources-box-minus.png); }
+	
+td.box-label {
+	color: White; }

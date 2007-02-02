@@ -33,10 +33,31 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="section-index-layout">
 		<tr>
 			<td class="section-index-left-column">
+
 				<s:expandableBox text="Quick Start">
 					<h:outputText value="Suspendisse sollicitudin eros quis odio. Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit." />
 				</s:expandableBox>
 				
+				<br>
+				
+				<s:expandableBox text="Top FAQ">
+					<f:verbatim escape="false">
+						<ul class="box">
+							<li>Which European country was the first to engage in the slave trade in Central Africa?</li>
+							<li>Why were the slaves taken from Africa?</li>
+							<li>Where were they taken to?</li>
+							<li>Who sold the slaves to the European slavers?</li>
+							<li>Has there ever been evidence of a slave earning his freedom and returning to Africa in their lifetime?</li>
+							<li>Which country brought more slaves from Africa than any other country?</li>
+							<li>What was the first country to get slaves from Africa?</li>
+							<li>How long did it take to transport slaves fom Africa to America?</li>
+							<li>Why did European interest in Africa turn from the slave trade to colonization?</li>
+							<li>How did the atlantic slave trade effect the economy of Europe, Africa, and America?</li>
+							<li>show me more questions ...</li>
+						</ul>
+					</f:verbatim>
+				</s:expandableBox>
+
 			</td>
 			<td class="section-index-right-column">
 

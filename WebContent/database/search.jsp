@@ -33,7 +33,7 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-	<div class="top-bar">
+	<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>

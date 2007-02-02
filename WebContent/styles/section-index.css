@@ -37,3 +37,12 @@ div.section-index-intro-icon-title {
 
 td.section-index-left-column table.box-main-table {
 	width: 280px; }
+
+ul.box {
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px; }
+	
+ul.box li {
+	margin-bottom: 0.5em;
+	margin-left: 15px; }

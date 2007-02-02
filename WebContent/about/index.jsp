@@ -35,8 +35,19 @@
 			<td class="section-index-left-column">
 			
 				<s:expandableBox text="Quick Start">
-					<h:outputText value="Suspendisse sollicitudin eros quis odio. Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit." />
+					<h:outputText value="Suspendisse sollicitudin eros quis odio. Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit. Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit." />
 				</s:expandableBox>				
+
+				<br>		
+
+				<s:expandableBox text="Contact Us">
+					<f:verbatim escape="false">
+					<b>Emory University 2005</b><br>
+					Robert W. Woodruff Library, 540 Asbury Circle<br>
+					Atlanta, Georgia 30322
+					</f:verbatim>
+				</s:expandableBox>				
+
 			</td>
 			<td class="section-index-right-column">
 

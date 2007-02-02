@@ -2,23 +2,21 @@ table.box-main-table td {
 	border-color: #5A636B; }
 		
 td.box-upper-row-left {
-	background-image: url(../images/about-box-title-left.png); }
-	
-td.box-upper-row-middle {
-	background-image: url(../images/about-box-title-center.png); }
-
-td.box-upper-row-right {
-	background-image: url(../images/about-box-title-right.png); }
+	background-image: url(../images/about-box-light-expanded-title-left.png); }
 	
 td.box-upper-row-left-collapsed {
-	background-image: url(../images/about-box-title-left.png); }
-	
-td.box-upper-row-middle-collapsed {
-	background-image: url(../images/about-box-title-center.png); }
+	background-image: url(../images/about-box-light-collapsed-title-left.png); }
 
-td.box-upper-row-right-collapsed {
-	background-image: url(../images/about-box-title-right.png); }
+td.box-upper-row-middle,
+td.box-upper-row-middle-collapsed {
+	background-image: url(../images/about-box-light-title-center.png); }
+
+td.box-upper-row-right {
+	background-image: url(../images/about-box-light-expanded-title-right.png); }
 	
+td.box-upper-row-right-collapsed {
+	background-image: url(../images/about-box-light-collapsed-title-right.png); }
+
 td.box-middle-row-left {
 	background-image: url(../images/about-box-content-center.png); }
 	
@@ -42,3 +40,6 @@ div.box-button-collapsed {
 
 div.box-button {
 	background-image: url(../images/about-box-minus.png); }
+	
+div.box-label {
+	color: White; }

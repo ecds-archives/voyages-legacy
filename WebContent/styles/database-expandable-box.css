@@ -2,22 +2,20 @@ table.box-main-table td {
 	border-color: #8A5D04; }
 		
 td.box-upper-row-left {
-	background-image: url(../images/database-box-title-left.png); }
-	
-td.box-upper-row-middle {
-	background-image: url(../images/database-box-title-center.png); }
-
-td.box-upper-row-right {
-	background-image: url(../images/database-box-title-right.png); }
+	background-image: url(../images/database-box-expanded-title-left.png); }
 	
 td.box-upper-row-left-collapsed {
-	background-image: url(../images/database-box-title-left.png); }
-	
+	background-image: url(../images/database-box-collapsed-title-left.png); }
+
+td.box-upper-row-middle,
 td.box-upper-row-middle-collapsed {
 	background-image: url(../images/database-box-title-center.png); }
 
+td.box-upper-row-right {
+	background-image: url(../images/database-box-expanded-title-right.png); }
+
 td.box-upper-row-right-collapsed {
-	background-image: url(../images/database-box-title-right.png); }
+	background-image: url(../images/database-box-collapsed-title-right.png); }
 	
 td.box-middle-row-left {
 	background-image: url(../images/database-box-content-center.png); }
