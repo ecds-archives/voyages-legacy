@@ -1,0 +1,27 @@
+td.tabs-tab-left-selected,
+td.tabs-tab-left {
+	height: 26px;
+	width: 10px;
+	background-position: left top;
+	background-repeat: no-repeat;
+	overflow: hidden; }
+
+td.tabs-tab-middle-selected,
+td.tabs-tab-middle {
+	text-align: left;
+	height: 26px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-repeat: repeat-x; }
+
+td.tabs-tab-right-selected,
+td.tabs-tab-right {
+	height: 26px;
+	width: 10px;
+	background-position: right top;
+	background-repeat: no-repeat;
+	overflow: hidden; }
+
+td.tabs-tab-filler {
+	width: 2px;
+}

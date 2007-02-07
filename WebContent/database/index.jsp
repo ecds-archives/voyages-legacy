@@ -13,6 +13,8 @@
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-tabs.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
@@ -33,6 +35,17 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="section-index-layout">
 		<tr>
 			<td class="section-index-left-column">
+			
+				<s:panelTabSet id="mainPanelSection" selectedSectionId="#{SearchBean.mainSectionId}">
+					<s:panelTab title="tab 1" sectionId="listing">
+						<h:outputText value="tab 1 contents"/>
+					</s:panelTab>
+					<s:panelTab title="tab 2" sectionId="maps">
+						<h:outputText value="tab 2 contents"/>
+					</s:panelTab>
+				</s:panelTabSet>
+			
+				<br>
 			
 				<s:expandableBox text="Quick Start">
 					<h:outputText value="Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit. Suspendisse sollicitudin eros quis odio." />
