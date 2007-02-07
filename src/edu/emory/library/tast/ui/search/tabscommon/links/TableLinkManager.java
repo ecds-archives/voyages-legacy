@@ -68,9 +68,9 @@ public class TableLinkManager {
 		int j = 0;
 		for (j = i; j - i < 9; j++) {
 			if (first == this.currentFirstRecord) {
-				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", false, true, first, "pager-number-active"));
+				list.add(new LinkElement(j, String.valueOf(first / step + 1), false, true, first, "pager-number-active"));
 			} else {
-				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", true, first, "pager-number"));
+				list.add(new LinkElement(j, String.valueOf(first / step + 1), true, first, "pager-number"));
 			}
 			if (first + step >= this.resultsNumber) {
 				break;

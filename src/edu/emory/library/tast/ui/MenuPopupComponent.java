@@ -60,7 +60,18 @@ public class MenuPopupComponent extends MenuComponent
 			MenuItemSection mainItem = items[i];
 			
 			writer.startElement("div", this);
-			writer.writeAttribute("class", "menu-popup-item-main", null);
+			if (i == 0)
+			{
+				writer.writeAttribute("class", "menu-popup-item-main-first", null);
+			}
+			else if (i < items.length - 1)
+			{
+				writer.writeAttribute("class", "menu-popup-item-main", null);
+			}
+			else
+			{
+				writer.writeAttribute("class", "menu-popup-item-main-last", null);
+			}
 			writer.writeAttribute("onmouseover", "this.firstChild.style.display = 'block';", null);
 			writer.writeAttribute("onmouseout", "this.firstChild.style.display = 'none';", null);
 			encodeSubmenu(mainItem, context, writer, form, customSubmitFunction);

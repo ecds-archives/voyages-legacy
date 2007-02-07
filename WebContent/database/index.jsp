@@ -11,6 +11,7 @@
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">

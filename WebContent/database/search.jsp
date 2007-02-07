@@ -6,20 +6,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 	<title>Search</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-expandable-box.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-tabs.css" rel="stylesheet" type="text/css">
-	<link href="../styles/search.css" rel="stylesheet" type="text/css">
-	<link href="../styles/menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/search-query.css" rel="stylesheet" type="text/css">
-	<link href="../styles/search-table.css" rel="stylesheet" type="text/css">
+	
+	<link href="../styles/database.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-search.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-search-menu.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-search-query.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-search-table.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	<link href="../styles/timeline.css" rel="stylesheet" type="text/css">
+	
 	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
@@ -30,6 +39,7 @@
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/tools_map_adds.js" language="javascript" type="text/javascript"></script>
+
 </head>
 <body>
 <f:view>

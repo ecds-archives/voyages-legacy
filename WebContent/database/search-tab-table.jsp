@@ -9,11 +9,10 @@
 		<t:htmlTag value="h1"><h:outputText value="List of voyages" /></t:htmlTag>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="text-align: right;">
-		<h:commandLink value="Preferences" action="#{TableResultTabBean.configurationMode}" />
+		<h:commandLink value="Configure columns of the table" action="#{TableResultTabBean.configurationMode}" />
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
-
 
 <s:tabletab
 	id="tableResults"

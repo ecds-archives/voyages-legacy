@@ -1,0 +1,115 @@
+table.grid {
+	width: 100%;
+	background: white;
+	border-collapse: collapse; 
+	border: 1px solid #895D03; }
+
+table.grid th {
+	padding: 5px;
+	text-align: left;
+	background-color: #EED083; }
+
+table.grid th a {
+	text-decoration: none;
+	color: Black; }
+	
+tr.grid-row-even,
+tr.grid-row-odd {
+	cursor: pointer; }
+
+tr.grid-row-odd td,
+tr.grid-row-even td,
+table.grid th {
+	border: 1px solid #895D03; }
+
+tr.grid-row-odd td,
+tr.grid-row-even td { 
+	padding: 5px; 
+	vertical-align: top; }
+		
+tr.grid-row-last {
+	cursor: pointer;
+	border-bottom-style: none; }
+	
+tr.grid-row-even:hover,
+tr.grid-row-odd:hover,
+tr.grid-row-last:hover {
+	background-color: #F7EAC7; }
+	
+table.multiline-attr-table {
+}
+	
+table.multiline-attr-table td {
+	border: 0px !important;
+	padding: 0px !important;
+	white-space: nowrap;
+}
+	
+td.grid-header-text {
+	padding: 0px; }
+
+table.grid-header-right {
+	margin-left: auto;
+	margin-right: 0px;
+}
+
+td.grid-header-text-right {
+	padding: 0px; 
+	text-align: right;
+}
+
+td.grid-header-icon {
+	padding-left: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px; }
+	
+td.grid-first-column,
+th.grid-first-column {
+	padding-left: 10px !important; }
+
+div.table-bottom-tools {
+	margin-top: 10px;
+	color: White; }
+	
+div.pager a {
+	color: White; }
+	
+div.pager select {
+	border: 0px; }
+	
+table.td-table-links {
+	margin-left: auto; }
+
+td.pager-number a,
+td.pager-fast-forward a,
+td.pager-fast-back a,
+td.pager-forward a,
+td.pager-back a {
+	display: block;
+	border: 1px solid #895D03;
+	padding: 2px 5px 2px 5px; }
+
+td.pager-number-active {
+	border: 1px solid #895D03;
+	padding: 3px;
+	background-color: #EED083; }
+
+td.pager-fast-forward-no-click,
+td.pager-fast-back-no-click,
+td.pager-forward-no-click,
+td.pager-back-no-click {
+	border: 1px solid #895D03;
+	padding: 3px; }
+
+td.pager-number a:hover,
+td.pager-fast-forward a:hover,
+td.pager-forward a:hover,
+td.pager-fast-back a:hover,
+td.pager-back a:hover	{
+	background-color: #EED083; }
+
+td.pager-fast-forward-no-click {
+	border: 1px solid #895D03;
+	padding: 5px;
+	background-color: #EED083; }

@@ -12,7 +12,6 @@ td.search-side-panel {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 10px;
-	padding-right: 5px;
 	width: 300px;
 	vertical-align: top; }
 
@@ -20,8 +19,19 @@ td.search-main-panel {
 	vertical-align: top; }
 	
 h1 {
-	}
+	margin-bottom: 10px; }
+
+td.search-side-panel table.box-main-table {
+	margin-bottom: 10px; }
+
+td.search-side-panel td.box-upper-row-middle,
+td.search-side-panel td.box-upper-row-middle-collapsed,
+td.search-side-panel td.box-middle-row-middle,
+td.search-side-panel td.box-lower-row-middle {
+	width: 270px; }
 	
+div.search-panel {
+	padding: 10px; }
 
 /* message */
 
@@ -153,14 +163,6 @@ td.search-simple-stat-h_c2, td.search-simple-stat-h_c3, td.search-simple-stat-h_
 	padding: 5px;
 	font-weight: bold;
 	text-align: right;
-}
-
-table.multiline-attr-table {
-}
-	
-table.multiline-attr-table td {
-	padding: 0px !important;
-	white-space: nowrap;
 }
 
 /***********************************

@@ -36,7 +36,7 @@ public class AdvancedStatisticsTabBean {
 
 	private static final String STAT_OBJECT_NAME = "__stat__object";
 
-	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
+	public static final String IMAGE_FEEDED_SERVLET = "../servlet/ImageFeederServlet";
 
 	private static final String[] orders = { "Ignore", "Asc", "Desc" };
 

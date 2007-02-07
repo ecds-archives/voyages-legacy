@@ -1,21 +1,36 @@
-div.menu-popup-item-main {
-	cursor: pointer;
-	/*width: 285px;*/
-	border: 0px solid Black;
-	border-bottom: 2px solid #F1E7C8;
-	padding-left: 10px;
+div.menu-popup-item-main-first,
+div.menu-popup-item-main,
+div.menu-popup-item-main-last {
 	padding-bottom: 5px;
 	padding-top: 5px;
-	padding-right: 5px;
+	padding-left: 5px;
+	cursor: pointer;
 	background-repeat: no-repeat;
-	background-position: 280px center;
-	background-image: url(icon-arrow-right.png); }
+	background-position: 255px center;
+	background-image: url(../images/icon-arrow-right.png); }
 
-div.menu-popup-item-main:hover {
-	background-color: #F1E7C8;
-	/*
-	-background-color: #571B1D;
-	-color: White; */}
+div.menu-popup-item-main-first {
+	border-bottom: 1px solid #EEDAA2; }
+
+div.menu-popup-item-main {
+	border-bottom: 1px solid #EEDAA2; }
+
+div.menu-popup-item-main-last {
+	}
+
+div.menu-popup-item-main-first {
+	cursor: pointer;
+	border-bottom: 1px solid #EEDAA2;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	background-repeat: no-repeat;
+	background-position: 255px center;
+	background-image: url(../images/icon-arrow-right.png); }
+
+div.menu-popup-item-main-first:hover,
+div.menu-popup-item-main:hover,
+div.menu-popup-item-main-last:hover {
+	background-color: #F1E7C8; }
 
 div.menu-popup-submenu-frame {
 	z-index: 1;	
@@ -26,7 +41,7 @@ div.menu-popup-submenu-frame {
 
 div.menu-popup-submenu {
 	position: absolute;
-	border: 1px solid #571B1D; }
+	border: 1px solid #895D03; }
 
 div.menu-popup-submenu-item {
 	white-space: nowrap;
@@ -41,7 +56,7 @@ div.menu-popup-submenu-item {
 div.menu-popup-submenu-item:hover {
 	background-color: #CA4223;
 	color: White !important; }
-	
+
 div.menu-slider-item-main-collapsed {
 	cursor: pointer;
 	border-bottom: 2px solid #F1E7C8;

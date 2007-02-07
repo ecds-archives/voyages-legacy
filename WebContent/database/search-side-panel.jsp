@@ -8,7 +8,7 @@
 
 <s:expandableBox text="#{res.database_search_selecttimeframe}">
 
-	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
+	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px">
 			<h:outputText value="#{res.database_search_from}" />
@@ -33,8 +33,6 @@
 	
 </s:expandableBox>
 
-<br>
-
 <s:expandableBox text="#{res.database_search_basic}">
 
 	<s:menuPopup
@@ -45,8 +43,6 @@
 
 </s:expandableBox>
 
-<br>
-
 <s:expandableBox text="#{res.database_search_general}">
 
 	<s:menuPopup
@@ -56,8 +52,6 @@
 		onMenuSelected="#{SearchBean.addConditionFromMenu}" />
 
 </s:expandableBox>
-
-<br>
 
 <script type="text/javascript" language="javascript">
 
@@ -108,7 +102,7 @@ function animateAttribute(menuItem, submitFunction)
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
-		<t:htmlTag value="td" style="padding: 10px 0px 10px 10px;">
+		<t:htmlTag value="td" style="padding: 10px 0px 10px 0px;">
 
 			<h:commandButton
 				id="buttonSearch"
@@ -158,9 +152,6 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 }
 
 </script>
-
-
-<br>
 
 <s:expandableBox text="#{res.database_search_history}">
 	
