@@ -3,19 +3,31 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<%/* Table with results */%>
-<s:tabletab id="tableResults" onclick="#{TableResultTabBean.showDetails}" rendered="#{TableResultTabBean.resultsMode}"
-	data="#{TableResultTabBean.data}" componentVisible="#{TableResultTabBean.componentVisible}"
-	sortChanged="#{TableResultTabBean.sortChanged}" style="overflow: auto;" />
+<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
+<t:htmlTag value="tr">
+	<t:htmlTag value="td">
+		<t:htmlTag value="h1"><h:outputText value="List of voyages" /></t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="td" style="text-align: right;">
+		<h:commandLink value="Preferences" action="#{TableResultTabBean.configurationMode}" />
+	</t:htmlTag>
+</t:htmlTag>
+</t:htmlTag>
 
-<t:htmlTag value="div" styleClass="pager" rendered="#{TableResultTabBean.resultsMode}">
+
+<s:tabletab
+	id="tableResults"
+	onclick="#{TableResultTabBean.showDetails}"
+	rendered="#{TableResultTabBean.resultsMode}"
+	data="#{TableResultTabBean.data}"
+	componentVisible="#{TableResultTabBean.componentVisible}"
+	sortChanged="#{TableResultTabBean.sortChanged}"
+	style="overflow: auto;" />
+
+<t:htmlTag value="div" styleClass="table-bottom-tools" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
-			<t:htmlTag value="td" style="padding: 0px;">
-				<s:tablelinks manager="#{TableResultTabBean.tableManager}"/>
-			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 0px; text-align: left">
-				<h:outputText value=" | " />
 				<h:outputText value="#{res.database_search_showing} " />
 				<h:outputText value="#{TableResultTabBean.firstDisplayed}" />
 				<h:outputText value="-" />
@@ -32,9 +44,8 @@
 				</h:selectOneMenu>
 				<h:outputText value=" #{res.database_search_resperpage}" />
 			</t:htmlTag>
-			<t:htmlTag value="td"
-				style="padding-left: 0px; padding-bottom: 0px; padding-top: 0px; padding-right: 5px; text-align: right">
-				<h:commandLink value="Preferences" action="#{TableResultTabBean.configurationMode}" />
+			<t:htmlTag value="td" style="padding: 0px;">
+				<s:tablelinks manager="#{TableResultTabBean.tableManager}"/>
 			</t:htmlTag>
 		</t:htmlTag>
 	</t:htmlTag>

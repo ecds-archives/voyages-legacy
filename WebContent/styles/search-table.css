@@ -69,12 +69,9 @@ td.grid-header-icon {
 td.grid-first-column, th.grid-first-column {
 	padding-left: 10px !important; }
 
-div.pager {
-	color: White;
-	background-color: #E79C5F;
-	background-color: #F1E7C8;
-	background-color: #571B1D;
-	padding: 5px; }
+div.table-bottom-tools {
+	margin-top: 10px;
+	color: White; }
 	
 div.pager a {
 	color: White; }
@@ -97,6 +94,9 @@ div.grid-tooltip div {
 	top: -7px;
 	left: -7px; }
 	
+table.td-table-links {
+	margin-left: auto; }
+
 td.td-table-links {
 	background-color: #622424; }
 
@@ -108,3 +108,5 @@ td.td-table-links-td-active {
 
 td.td-table-links-no-hover	{
 	background-color: #622424; }
+
+	

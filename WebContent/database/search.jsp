@@ -10,9 +10,11 @@
 	<title>Search</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
+	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-tabs.css" rel="stylesheet" type="text/css">
 	<link href="../styles/search.css" rel="stylesheet" type="text/css">
-	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
 	<link href="../styles/menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/search-query.css" rel="stylesheet" type="text/css">
 	<link href="../styles/search-table.css" rel="stylesheet" type="text/css">

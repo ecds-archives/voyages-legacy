@@ -33,7 +33,7 @@
 	
 </s:expandableBox>
 
-<div class="sections-sepatator"></div>
+<br>
 
 <s:expandableBox text="#{res.database_search_basic}">
 
@@ -45,6 +45,8 @@
 
 </s:expandableBox>
 
+<br>
+
 <s:expandableBox text="#{res.database_search_general}">
 
 	<s:menuPopup
@@ -55,7 +57,7 @@
 
 </s:expandableBox>
 
-<div class="sections-sepatator"></div>
+<br>
 
 <script type="text/javascript" language="javascript">
 
@@ -158,7 +160,7 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 </script>
 
 
-<div class="sections-sepatator"></div>
+<br>
 
 <s:expandableBox text="#{res.database_search_history}">
 	

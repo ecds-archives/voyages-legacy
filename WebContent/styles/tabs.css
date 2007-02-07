@@ -15,6 +15,11 @@ td.tabs-tab-middle {
 	padding-bottom: 5px;
 	background-repeat: repeat-x; }
 
+td.tabs-tab-middle,
+td.tabs-tab-left,
+td.tabs-tab-right {
+	cursor: pointer; }
+		
 td.tabs-tab-right-selected,
 td.tabs-tab-right {
 	height: 32px;
