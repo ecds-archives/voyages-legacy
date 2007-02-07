@@ -47,12 +47,12 @@
 
 	<h:form id="form">
 	
-		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+		<table border="0" cellspacing="0" cellpadding="0" class="search-main-table">
 		<tr>
-			<td class="side-panel">
+			<td class="search-side-panel">
 				<%@ include file="search-side-panel.jsp" %>
 			</td>
-			<td class="main-panel">
+			<td class="search-main-panel">
 				<s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
 				<%@ include file="search-main-panel.jsp" %>
 			</td>

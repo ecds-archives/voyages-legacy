@@ -1,6 +1,10 @@
-/* main two pannels */
+/* main pannels */
 
-td.side-panel {
+table.search-main-table {
+	width: 100%;
+	border-top: 5px solid #895D03; }
+	
+td.search-side-panel {
 	background-image: url(../images/database-bg.png);
 	background-position: top left;
 	background-repeat: repeat-x;
@@ -12,9 +16,13 @@ td.side-panel {
 	width: 300px;
 	vertical-align: top; }
 
-td.main-panel {
+td.search-main-panel {
 	vertical-align: top; }
 	
+h1 {
+	}
+	
+
 /* message */
 
 div.message-bar {
