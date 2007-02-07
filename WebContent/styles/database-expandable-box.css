@@ -9,6 +9,7 @@ td.box-upper-row-left-collapsed {
 
 td.box-upper-row-middle,
 td.box-upper-row-middle-collapsed {
+	width: 270px;
 	background-image: url(../images/database-box-title-center.png); }
 
 td.box-upper-row-right {

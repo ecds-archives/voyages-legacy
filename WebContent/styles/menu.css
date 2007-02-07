@@ -20,7 +20,7 @@ div.menu-popup-item-main:hover {
 div.menu-popup-submenu-frame {
 	z-index: 1;	
 	top: -7px;
-	left: 290px;
+	left: 260px;
 	position: relative;
 	display: none; }
 
