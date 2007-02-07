@@ -97,16 +97,35 @@ div.grid-tooltip div {
 table.td-table-links {
 	margin-left: auto; }
 
-td.td-table-links {
+td.pager-number {
 	background-color: #622424; }
-
-td.td-table-links:hover {
+td.pager-number:hover {
+	background-color: #CA4223; }
+td.pager-number-active {
 	background-color: #CA4223; }
 
-td.td-table-links-td-active {
-	background-color: #CA4223; }
-
-td.td-table-links-no-hover	{
+td.pager-fast-forward-no-click {
 	background-color: #622424; }
-
+td.pager-forward-no-click	{
+	background-color: #622424; }
+td.pager-fast-forward {
+	background-color: #622424; }
+td.pager-fast-forward:hover	{
+	background-color: #CA4223; }
+td.pager-forward	{
+	background-color: #622424; }
+td.pager-forward:hover	{
+	background-color: #CA4223; }
+td.pager-fast-back-no-click {
+	background-color: #622424; }
+td.pager-back-no-click	{
+	background-color: #622424; }
+td.pager-fast-back {
+	background-color: #622424; }
+td.pager-fast-back:hover	{
+	background-color: #CA4223; }
+td.pager-back	{
+	background-color: #622424; }	
+td.pager-back:hover	{
+	background-color: #CA4223; }	
 	

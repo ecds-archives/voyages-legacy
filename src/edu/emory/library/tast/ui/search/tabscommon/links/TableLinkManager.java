@@ -52,15 +52,15 @@ public class TableLinkManager {
 		int i = 0;
 		
 		if (this.currentFirstRecord == 0) {
-			list.add(new LinkElement(i++, "&nbsp;&lt;&lt;&nbsp;", false, 0));
-			list.add(new LinkElement(i++, "&nbsp;&nbsp;&lt;&nbsp;", false, 0));
+			list.add(new LinkElement(i++, "&nbsp;", false, 0, "pager-fast-back-no-click"));
+			list.add(new LinkElement(i++, "&nbsp;", false, 0, "pager-back-no-click"));
 		} else {
 			int first = this.currentFirstRecord - this.step;
 			if (first < 0) {
 				first = 0;
 			}
-			list.add(new LinkElement(i++, "&nbsp;&lt;&lt;&nbsp;", true, 0));
-			list.add(new LinkElement(i++, "&nbsp;&nbsp;&lt;&nbsp;", true, first));
+			list.add(new LinkElement(i++, "&nbsp;&lt;&lt;&nbsp;", true, 0, "pager-fast-back"));
+			list.add(new LinkElement(i++, "&nbsp;&nbsp;&lt;&nbsp;", true, first, "pager-fast-back"));
 		}
 		
 		int first = this.currentFirstRecord - step * 4;
@@ -68,9 +68,9 @@ public class TableLinkManager {
 		int j = 0;
 		for (j = i; j - i < 9; j++) {
 			if (first == this.currentFirstRecord) {
-				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", false, true, first));
+				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", false, true, first, "pager-number-active"));
 			} else {
-				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", true, first));
+				list.add(new LinkElement(j, "&nbsp;&nbsp;" + (first / step + 1) + "&nbsp;&nbsp;", true, first, "pager-number"));
 			}
 			if (first + step >= this.resultsNumber) {
 				break;
@@ -80,11 +80,11 @@ public class TableLinkManager {
 		i = j;
 		
 		if (currentFirstRecord + step < this.resultsNumber) {
-			list.add(new LinkElement(i++, "&nbsp;&nbsp;&gt;&nbsp;", true, this.currentFirstRecord + this.step));
-			list.add(new LinkElement(i++, "&nbsp;&gt;&gt;&nbsp;", true, this.resultsNumber - this.step));
+			list.add(new LinkElement(i++, "&nbsp;", true, this.currentFirstRecord + this.step, "pager-fast-forward"));
+			list.add(new LinkElement(i++, "&nbsp;", true, this.resultsNumber - this.step, "pager-forward"));
 		} else {
-			list.add(new LinkElement(i++, "&nbsp;&nbsp;&gt;&nbsp;", false, 0));
-			list.add(new LinkElement(i++, "&nbsp;&gt;&gt;&nbsp;", false, this.resultsNumber - this.step));
+			list.add(new LinkElement(i++, "&nbsp;", false, 0, "pager-fast-forward-no-click"));
+			list.add(new LinkElement(i++, "&nbsp;", false, this.resultsNumber - this.step, "pager-forward-no-click"));
 		}
 		
 		

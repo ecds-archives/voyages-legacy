@@ -100,7 +100,7 @@ public class TableLinksComponent extends UIOutput {
 		for (int i = 0; i < links.length; i++) {
 			writer.startElement("td", this);
 			if (links[i].isClickable()) {
-				writer.writeAttribute("class", "td-table-links", null);
+				writer.writeAttribute("class", links[i].getClassStyle(), null);
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				String jsSort = JsfUtils.generateSubmitJS(context, form, getHiddenFieldName(context),
@@ -112,12 +112,7 @@ public class TableLinksComponent extends UIOutput {
 				writer.write(links[i].getLabel());
 				writer.endElement("a");
 			} else {
-				if (links[i].isSelectedNumber()) {
-					writer.writeAttribute("class", "td-table-links-td-active", null);
-				} else {
-					writer.writeAttribute("class", "td-table-links-no-hover", null);
-				}
-				
+				writer.writeAttribute("class", links[i].getClassStyle(), null);				
 				writer.write(links[i].getLabel());
 			}
 			writer.endElement("td");
