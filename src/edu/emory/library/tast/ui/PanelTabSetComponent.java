@@ -82,12 +82,13 @@ public class PanelTabSetComponent extends UIComponentBase {
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("class", "tabs-selection", null);
 		writer.startElement("tr", this);
-
+		
+		writeSimpleTd(writer, "tabs-tab-first-filler");
+		
 		for (Iterator iter = getChildren().iterator(); iter.hasNext();) {
 			PanelTabComponent sect = (PanelTabComponent) iter.next();
 			boolean isSelected = selectedSectionId.equals(sect.getSectionId());
 
-			writeSimpleTd(writer, "tabs-tab-filler");
 			writeSimpleTd(writer, "tabs-tab-left" + (isSelected ? "-selected" : ""));
 			String tabClass = "tabs-tab-middle" + (isSelected ? "-selected" : "");
 
@@ -103,6 +104,7 @@ public class PanelTabSetComponent extends UIComponentBase {
 			writer.endElement("td");
 			
 			writeSimpleTd(writer, "tabs-tab-right" + (isSelected ? "-selected" : ""));
+			writeSimpleTd(writer, "tabs-tab-filler");
 		}
 
 		writer.endElement("tr");

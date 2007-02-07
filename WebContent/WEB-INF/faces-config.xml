@@ -94,6 +94,20 @@
 			edu.emory.library.tast.ui.SectionComponent
 		</component-class>
 	</component>
+	
+	<component>
+		<component-type>PanelTabSet</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.PanelTabSetComponent
+		</component-class>
+	</component>
+
+	<component>
+		<component-type>PanelTab</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.PanelTabComponent
+		</component-class>
+	</component>
 
 	<component>
 		<component-type>MenuPopup</component-type>

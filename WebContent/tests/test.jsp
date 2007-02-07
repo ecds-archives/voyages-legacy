@@ -18,13 +18,20 @@
 <f:view>
 	
 	<h:form id="form">
-		<h:outputText value="ccc"/>
 	
-	<s:expandableBox text="test tag">
-		<h:outputText value="fj fjsladkj fklasd fsjadlk"/>
-		<h:outputText value="fj fjsladkj fklasd fsjadlk"/>
-		<h:outputText value="fj fjsladkj fklasd fsjadlk"/>
-	</s:expandableBox>
+	<s:panelTabSet 
+		id="mainPanelSection"
+		selectedSectionId="#{SearchBean.mainSectionId}">
+	
+		<s:panelTab title="tab 1" sectionId="listing">
+			<h:outputText value="tab 1 contents"/>
+		</s:panelTab>
+
+		<s:panelTab title="tab 2" sectionId="maps">
+			<h:outputText value="tab 2 contents"/>
+		</s:panelTab>
+		
+	</s:panelTabSet>
 	
 	</h:form>
 	
