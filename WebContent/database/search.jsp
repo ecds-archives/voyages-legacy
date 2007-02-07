@@ -10,6 +10,7 @@
 	<title>Search</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/search.css" rel="stylesheet" type="text/css">
 	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
 	<link href="../styles/menu.css" rel="stylesheet" type="text/css">
@@ -42,16 +43,6 @@
 		</table>
 	</div>
 
-	<div class="header-links">
-		<table border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td><div class="header-link"><a href="estimates.faces">Estimates</a></div></td>
-			<td><div class="header-link-active"><a href="search.faces">Database search</a></div></td>
-			<td><div class="header-link"><a href="galleryp.faces?obj=1&id=1&set=1&pict=0">Images database</a></div></td>
-		</tr>
-		</table>
-	</div>
-	
 	<h:form id="form">
 	
 		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">

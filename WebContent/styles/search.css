@@ -1,6 +1,7 @@
 /* main two pannels */
 
 td.side-panel {
+	background-image: url(../images/database-bg.png);
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 10px;

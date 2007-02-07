@@ -6,12 +6,7 @@
 
 <h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
-<s:sectionGroup
-    title="#{res.database_search_selecttimeframe}"
-	id="selectionYears"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle">
+<s:expandableBox text="#{res.database_search_selecttimeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
 	<t:htmlTag value="tr">
@@ -36,34 +31,29 @@
 	</t:htmlTag>
 	</t:htmlTag>
 	
-</s:sectionGroup>
+</s:expandableBox>
 
 <div class="sections-sepatator"></div>
 
-<s:sectionGroup
-	id="selectAttributeSectionByPopupMenu"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle"
-	selectedSectionId="#{SearchBean.selectedCategory}">
+<s:expandableBox text="#{res.database_search_basic}">
 
-	<s:section title="#{res.database_search_basic}" sectionId="beginners">
-		<s:menuPopup
-			customSubmitFunction="animateAttribute"
-			id="popupMenuAttributesBeginner"
-			items="#{SearchBean.menuAttributesBeginners}"
-			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
-	</s:section>
+	<s:menuPopup
+		customSubmitFunction="animateAttribute"
+		id="popupMenuAttributesBeginner"
+		items="#{SearchBean.menuAttributesBeginners}"
+		onMenuSelected="#{SearchBean.addConditionFromMenu}" />
 
-	<s:section title="#{res.database_search_general}" sectionId="general">
-		<s:menuPopup
-			customSubmitFunction="animateAttribute"
-			id="popupMenuAttributesGeneral"
-			items="#{SearchBean.menuAttributesGeneral}"
-			onMenuSelected="#{SearchBean.addConditionFromMenu}" />
-	</s:section>
+</s:expandableBox>
 
-</s:sectionGroup>
+<s:expandableBox text="#{res.database_search_general}">
+
+	<s:menuPopup
+		customSubmitFunction="animateAttribute"
+		id="popupMenuAttributesGeneral"
+		items="#{SearchBean.menuAttributesGeneral}"
+		onMenuSelected="#{SearchBean.addConditionFromMenu}" />
+
+</s:expandableBox>
 
 <div class="sections-sepatator"></div>
 
@@ -106,11 +96,8 @@ function animateAttribute(menuItem, submitFunction)
 </script>
 
 <div id="animateAttributeDest">
-<s:sectionGroup
-	id="queryBuilderSection"
-	title="#{res.database_search_currentquery}"
-	backgroundStyle="middle"
-	buttonsStyle="dark">
+
+<s:expandableBox text="#{res.database_search_currentquery}">
 
 	<s:queryBuilder
 		id="queryBuilder"
@@ -148,7 +135,8 @@ function animateAttribute(menuItem, submitFunction)
 	</t:htmlTag>
 	</t:htmlTag>
 
-</s:sectionGroup>
+</s:expandableBox>
+
 </div>
 
 <script type="text/javascript" language="javascript">
@@ -172,11 +160,7 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 
 <div class="sections-sepatator"></div>
 
-<s:sectionGroup
-	id="historySection"
-	title="#{res.database_search_history}"
-	backgroundStyle="middle"
-	buttonsStyle="dark">
+<s:expandableBox text="#{res.database_search_history}">
 	
 	<s:historyList
 		id="history"
@@ -185,4 +169,4 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 		onPermlink="#{SearchBean.historyItemPermlink}"
 		history="#{SearchBean.history}" />
 
-</s:sectionGroup>
+</s:expandableBox>
