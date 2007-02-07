@@ -20,7 +20,7 @@ public class ExpandableBoxTag extends UIComponentTag
 		if (text !=null && isValueReference(text))
 		{
 			ValueBinding vb = app.createValueBinding(text);
-			component.setValueBinding("query", vb);
+			component.setValueBinding("text", vb);
 		}
 		else
 		{
