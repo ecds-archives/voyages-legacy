@@ -70,13 +70,13 @@ th.grid-first-column {
 
 div.pager {
 	margin-top: 10px;
-	color: White; }
+	color: Black; }
 	
 div.pager a {
 	color: Black; }
 	
 div.pager select {
-	border: 0px; }
+	}
 	
 table.td-table-links {
 	margin-left: auto; }

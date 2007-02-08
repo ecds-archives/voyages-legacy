@@ -55,7 +55,7 @@ public class MainMenuBean
 										"Images",
 										"resources/images.faces"),
 								new MainMenuBarPageItem(
-										"names",
+										"slaves",
 										"Names Database",
 										"resources/slaves.faces")}),
 						
