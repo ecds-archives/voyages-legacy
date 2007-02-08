@@ -10,6 +10,7 @@ public class ExpandableBoxTag extends UIComponentTag
 {
 	
 	private String text;
+	private String collapsed;
 	
 	protected void setProperties(UIComponent component)
 	{
@@ -25,6 +26,16 @@ public class ExpandableBoxTag extends UIComponentTag
 		else
 		{
 			box.setText(text);
+		}
+		
+		if (collapsed !=null && isValueReference(collapsed))
+		{
+			ValueBinding vb = app.createValueBinding(collapsed);
+			component.setValueBinding("collapsed", vb);
+		}
+		else
+		{
+			box.setCollapsed(collapsed);
 		}
 		
 	}
@@ -47,6 +58,14 @@ public class ExpandableBoxTag extends UIComponentTag
 	public void setText(String text)
 	{
 		this.text = text;
+	}
+
+	public String getCollapsed() {
+		return collapsed;
+	}
+
+	public void setCollapsed(String collapsed) {
+		this.collapsed = collapsed;
 	}
 
 }

@@ -32,7 +32,7 @@
 
 <br>
 
-<s:expandableBox text="#{res.estimates_left_natcarriers}">
+<s:expandableBox text="#{res.estimates_left_natcarriers}" collapsed="true">
 	
 	<t:div style="padding: 5px;" styleClass="nation-checkboxes">
 	<s:checkboxListExpandable
@@ -56,7 +56,7 @@
 
 <br>
 
-<s:expandableBox text="#{res.estimates_left_impregions}">
+<s:expandableBox text="#{res.estimates_left_impregions}" collapsed="true">
 	<t:div style="padding-top: 5px; padding-bottom: 5px;" styleClass="import-region-list">
 	<s:checkboxListPopup
 		id="impReg"

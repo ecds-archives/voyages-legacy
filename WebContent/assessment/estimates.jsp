@@ -19,6 +19,7 @@
 	<link href="../styles/assessment-tabs.css" rel="stylesheet" type="text/css">
 	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
 	<link href="../styles/estimates.css" rel="stylesheet" type="text/css">
+	<link href="../styles/estimates-tab-listing.css" rel="stylesheet" type="text/css">
 	<link href="../styles/search-table.css" rel="stylesheet" type="text/css">
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>

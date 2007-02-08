@@ -8,19 +8,27 @@
 	id="mainPanelSection">
 	
 	<s:panelTab title="#{res.estimates_main_table}" sectionId="table">
-		<%@ include file="estimates-table.jsp" %>
+		<t:htmlTag value="div" styleClass="results-panel">
+			<%@ include file="estimates-table.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 	
 	<s:panelTab title="#{res.estimates_main_list}" sectionId="listing">
-		<%@ include file="estimates-listing.jsp" %>
+		<t:htmlTag value="div" styleClass="results-panel">
+			<%@ include file="estimates-listing.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.estimates_main_map}" sectionId="map">
-		<%@ include file="estimates-map.jsp" %>
+		<t:htmlTag value="div" styleClass="results-panel">
+			<%@ include file="estimates-map.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.estimates_main_timeline}" sectionId="timeline">
-		<%@ include file="estimates-timeline.jsp" %>
+		<t:htmlTag value="div" styleClass="results-panel">
+			<%@ include file="estimates-timeline.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 
 </s:panelTabSet>

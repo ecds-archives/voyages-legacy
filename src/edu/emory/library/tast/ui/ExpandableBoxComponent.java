@@ -17,7 +17,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 	private static final String EXPANEDED = "expanded";
 	private static final String COLLAPSED = "collapsed";
 
-	private boolean collapsed = false;
+	private Boolean collapsed = new Boolean(false);
 
 	private String text = "";
 	private boolean textSet = false;
@@ -60,7 +60,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		String stateStr = (String) externalContex.getRequestParameterMap().get(
 				getStateHiddenFieldName(context));
 		
-		collapsed = COLLAPSED.equals(stateStr); 
+		collapsed = new Boolean(COLLAPSED.equals(stateStr)); 
 		
 	}
 	
@@ -76,15 +76,15 @@ public class ExpandableBoxComponent extends UIComponentBase
 		writer.writeAttribute("class", "box-main-table", null);
 		
 		writer.startElement("tr", null);
-		writeSimpleTd(writer, "box-upper-row-left" + (collapsed ? "-collapsed" : ""));
+		writeSimpleTd(writer, "box-upper-row-left" + (isCollapsed() ? "-collapsed" : ""));
 		writer.startElement("td", null);
-		writer.writeAttribute("class", "box-upper-row-middle" + (collapsed ? "-collapsed" : ""), null);
+		writer.writeAttribute("class", "box-upper-row-middle" + (isCollapsed() ? "-collapsed" : ""), null);
 		writeHeaderTable(context, writer);
 		writer.endElement("td");
-		writeSimpleTd(writer, "box-upper-row-right" + (collapsed ? "-collapsed" : ""));
+		writeSimpleTd(writer, "box-upper-row-right" + (isCollapsed() ? "-collapsed" : ""));
 		writer.endElement("tr");
 		
-		if (!collapsed) {
+		if (!isCollapsed()) {
 			writer.startElement("tr", null);
 		
 			writeSimpleTd(writer, "box-middle-row-left");
@@ -102,7 +102,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 	
 	
 	public void encodeChildren(FacesContext context) throws IOException {
-		if (!collapsed) {
+		if (!isCollapsed()) {
 			JsfUtils.renderChildren(context, this);
 		}
 	}
@@ -113,10 +113,10 @@ public class ExpandableBoxComponent extends UIComponentBase
 		
 		JsfUtils.encodeHiddenInput(this, writer,
 				getStateHiddenFieldName(context),
-				collapsed ? COLLAPSED : EXPANEDED);
+				isCollapsed() ? COLLAPSED : EXPANEDED);
 		StringBuffer js = new StringBuffer();
 		
-		if (collapsed)
+		if (isCollapsed())
 		{
 			JsfUtils.appendSubmitJS(js, context, form, 
 					getStateHiddenFieldName(context), EXPANEDED);
@@ -140,7 +140,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		writer.endElement("td");
 		writer.startElement("td", null);
 		writer.startElement("div", null);
-		if (collapsed) {
+		if (isCollapsed()) {
 			writer.writeAttribute("class", "box-button-collapsed", null);
 		} else {
 			writer.writeAttribute("class", "box-button", null);
@@ -163,7 +163,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 	{
 		ResponseWriter writer = context.getResponseWriter();	
 		
-		if (!collapsed) {
+		if (!isCollapsed()) {
 			writer.endElement("div");
 			writer.endElement("td");
 			writeSimpleTd(writer, "box-middle-row-right");
@@ -190,6 +190,16 @@ public class ExpandableBoxComponent extends UIComponentBase
 	{
 		textSet = true;
 		this.text = text;
+	}
+
+	public void setCollapsed(String collapsed) {
+		if (collapsed != null) {
+			this.collapsed = new Boolean(collapsed.equals("true"));
+		}
+	}
+	
+	public boolean isCollapsed() {
+		return collapsed.booleanValue();
 	}
 
 }
