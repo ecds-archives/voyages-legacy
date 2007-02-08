@@ -26,6 +26,7 @@
 	<link href="../styles/database-search-query.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-search-table.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-search-basic-stats.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-search-graph.css" rel="stylesheet" type="text/css">
 	
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	<link href="../styles/timeline.css" rel="stylesheet" type="text/css">

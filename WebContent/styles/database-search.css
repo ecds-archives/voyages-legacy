@@ -72,31 +72,6 @@ div.chart-back-button:hover {
 	background-position: 0px -24px; 
 }
 
-div.chart-forward-button {
-	position: absolute; 
-	top: 290px; 
-	left: 623px; 
-	cursor: pointer;
-	width: 24px;
-	height: 24px;
-	overflow: hidden;
-	background-repeat: no-repeat;
-	background-image: url(map-icon-forward.png); }
-
-div.chart-forward-button:hover {
-	background-position: 0px -24px; }
-
-table.tooltip-class {
-	width: 300px;
-	border-collapse: collapse;
-}
-
-table.tooltip-class tr {	
-	border-bottom: 2px solid #CF5435;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
 div.detailTab {
 	padding-top: 5px;
 	padding-left: 5px;
@@ -138,77 +113,3 @@ input.map-legend-refresh {
 table.legend-table-layers {
 	padding-left: 10px;
 }
-
-/***********************************
-* timeline
-***********************************/	
-	
-div.event-line-left-selector {
-	cursor: move; }
-
-div.event-line-selector-handle {
-	cursor: w-resize;
-	background-color: #CA4223; }
-
-div.event-line-graph-container {
-	border: 0px solid Black; }
-
-div.event-line-selector-container {
-	-border: 1px solid #DEC77E; }
-
-table.event-line-left-label {
-	-background-color: #AAFFFF; }
-
-table.event-line-top-label {
-	-background-color: #AAFFFF; }
-
-div.event-line-graph {
-	border: 1px solid Black;
-	-background-color: #EEFFFF; }
-	
-div.event-line-selector {
-	-moz-opacity: 0.5;
-	background-color: #F1E7C8; }
-
-div.event-line-indicator {
-	-moz-opacity: 0.3;
-	background-color: #333333; }
-	
-div.event-line-indicator-container {
-	-background-color: #EEEEEE;}
-
-div.event-line-indicator-label {
-	background-color: White;
-	border: 1px solid Black;
-	padding: 5px; }
-
-.timeline-color {
-	background-color: #F1E7C8;
-	background-color: #CA4223;
-}
-
-div.event-line-graph-container,
-div.event-line-selector-container {
-	border: 1px solid #571B1D; }
-
-table.event-line-legend {
-	margin-left: 70px;
-	margin-bottom: 15px; }
-
-td.event-line-legend-sample {
-	padding-right: 5px; }
-
-td.event-line-legend-sample div {
-	border: 1px solid Black;
-	overflow: hidden;
-	width: 12px;
-	height: 12px; }
-	
-td.event-line-legend-name {
-	}
-
-td.event-line-legend-value {
-	padding-right: 5px; }
-
-td.event-line-legend-horizontal {
-	padding-right: 10px;}

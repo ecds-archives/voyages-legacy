@@ -1,0 +1,76 @@
+div.event-line-left-selector {
+	cursor: move; }
+
+div.event-line-selector-handle {
+	cursor: w-resize;
+	background-color: #CA4223; }
+
+div.event-line-graph-container {
+	border: 0px solid Black; }
+
+div.event-line-selector-container {
+	-border: 1px solid #DEC77E; }
+
+table.event-line-left-label {
+	-background-color: #AAFFFF; }
+
+table.event-line-top-label {
+	-background-color: #AAFFFF; }
+
+div.event-line-graph {
+	border: 1px solid Black;
+	-background-color: #EEFFFF; }
+	
+div.event-line-selector {
+	-moz-opacity: 0.5;
+	background-color: #F1E7C8; }
+
+div.event-line-indicator {
+	-moz-opacity: 0.3;
+	background-color: #333333; }
+	
+div.event-line-indicator-container {
+	-background-color: #EEEEEE;}
+
+div.event-line-indicator-label {
+	background-color: White;
+	border: 1px solid Black;
+	padding: 5px; }
+
+.timeline-color {
+	background-color: #F1E7C8;
+	background-color: #CA4223;
+}
+
+div.event-line-graph-container,
+div.event-line-selector-container {
+	border: 1px solid #571B1D; }
+
+table.event-line-legend {
+	margin-left: 70px;
+	margin-bottom: 15px; }
+
+td.event-line-legend-sample {
+	padding-right: 5px; }
+
+td.event-line-legend-sample div {
+	border: 1px solid Black;
+	overflow: hidden;
+	width: 12px;
+	height: 12px; }
+	
+td.event-line-legend-name {
+	}
+
+td.event-line-legend-value {
+	padding-right: 5px; }
+
+td.event-line-legend-horizontal {
+	padding-right: 10px;}
+
+div.database-graph-options {
+	background-color: #ECD698;
+	border: 1px solid #895D03;
+	padding: 5px 10px 5px 10px;	}
+	
+	

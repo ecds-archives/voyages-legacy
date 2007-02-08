@@ -3,24 +3,24 @@ div.tabs-body {
 }
 
 td.tabs-tab-left {
-	background-image: url(../images/database-tabs-normal-left.png); }
+	background-image: url(../images/assessment-tabs-normal-left.png); }
 	
 td.tabs-tab-middle {
-	background-image: url(../images/database-tabs-normal-center.png); }
+	background-image: url(../images/assessment-tabs-normal-center.png); }
 
 td.tabs-tab-right {
-	background-image: url(../images/database-tabs-normal-right.png); }
+	background-image: url(../images/assessment-tabs-normal-right.png); }
 
 td.tabs-tab-left-selected {
-	background-image: url(../images/database-tabs-selected-left.png); }
+	background-image: url(../images/assessment-tabs-selected-left.png); }
 
 td.tabs-tab-middle-selected {
-	background-image: url(../images/database-tabs-selected-center.png); }
+	background-image: url(../images/assessment-tabs-selected-center.png); }
 	
 td.tabs-tab-right-selected {
-	background-image: url(../images/database-tabs-selected-right.png); }
+	background-image: url(../images/assessment-tabs-selected-right.png); }
 
 div.tabs-selection {
-	background-image: url(../images/database-tabs-bg.png);
+	background-image: url(../images/assessment-tabs-bg.png);
 	background-repeat: repeat-x;
 }

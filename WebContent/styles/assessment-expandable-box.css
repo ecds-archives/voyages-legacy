@@ -5,9 +5,10 @@ td.box-upper-row-left {
 	background-image: url(../images/assessment-box-expanded-title-left.png); }
 
 td.box-upper-row-left-collapsed {
-	background-image: url(../images/assesment-box-collapsed-title-left.png); }
+	background-image: url(../images/assessment-box-collapsed-title-left.png); }
 
-td.box-upper-row-middle {
+td.box-upper-row-middle,
+td.box-upper-row-middle-collapsed {
 	background-image: url(../images/assessment-box-title-center.png); }
 
 td.box-upper-row-right {
@@ -16,15 +17,6 @@ td.box-upper-row-right {
 td.box-upper-row-right-collapsed {
 	background-image: url(../images/assessment-box-collapsed-title-right.png); }
 
-td.box-upper-row-left-collapsed {
-	background-image: url(../images/assessment-box-title-left.png); }
-	
-td.box-upper-row-middle-collapsed {
-	background-image: url(../images/assessment-box-title-center.png); }
-
-td.box-upper-row-right-collapsed {
-	background-image: url(../images/assessment-box-title-right.png); }
-	
 td.box-middle-row-left {
 	background-image: url(../images/assessment-box-content-center.png); }
 	

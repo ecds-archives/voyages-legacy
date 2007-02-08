@@ -7,32 +7,34 @@
 
 <s:expandableBox text="Time frame">
 
-	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
+	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px">
 			<h:outputText value="#{res.estimates_left_from}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:inputText value="#{EstimatesSelectionBean.yearFrom}" style="width: 60px" />
+			<h:inputText value="#{EstimatesSelectionBean.yearFrom}" style="width: 40px" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:outputText value="#{res.estimates_left_to}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px;">
-			<h:inputText value="#{EstimatesSelectionBean.yearTo}" style="width: 60px" />
+			<h:inputText value="#{EstimatesSelectionBean.yearTo}" style="width: 40px" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
-	
-	<h:commandButton
-		value="#{res.estimates_left_changeselection}"
-		action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
+
+	<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
+		<h:commandButton
+			value="#{res.estimates_left_changeselection}"
+			action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
+	</t:htmlTag>
 
 </s:expandableBox>
 
 <br>
 
-<s:expandableBox text="#{res.estimates_left_natcarriers}" collapsed="true">
+<s:expandableBox text="#{res.estimates_left_natcarriers}">
 	
 	<t:div style="padding: 5px;" styleClass="nation-checkboxes">
 	<s:checkboxListExpandable
@@ -44,7 +46,7 @@
 
 <br>
 	
-<s:expandableBox text="#{res.estimates_left_expregions}">
+<s:expandableBox text="#{res.estimates_left_expregions}" collapsed="true">
 	<t:div style="padding: 5px;" styleClass="export-region-list">
 	<s:checkboxListExpandable
 		id="expReg"
