@@ -527,7 +527,7 @@ EventLine.prototype.createHorizontalLabels = function(offset, zoomLevel, topPosi
 		if (createLines)
 		{
 			labelLine = document.createElement("div");
-			labelLine.style.backgroundColor = major ? "#F1E7C8" : "#F1E7C8";
+			labelLine.className = major ? "event-line-grid-major" : "event-line-grid-major";
 			labelLine.style.position = "absolute";
 			labelLine.style.top = (this.topLabelsHeight + this.topLabelsMargin) + "px";
 			labelLine.style.left = left + "px";
@@ -578,7 +578,7 @@ EventLine.prototype.createVerticalLabels = function()
 		var top = this.graphHeight + this.topLabelsHeight + this.topLabelsMargin - barHeight;
 		
 		var labelLine = document.createElement("div");
-		labelLine.style.backgroundColor = label.major ? "#F1E7C8" : "#F1E7C8";
+		labelLine.className = label.major ? "event-line-grid-major" : "event-line-grid-major";
 		labelLine.style.position = "absolute";
 		labelLine.style.top = top + "px";
 		labelLine.style.left = (this.leftLabelsWidth + this.leftLabelsMargin) + "px";

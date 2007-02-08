@@ -40,7 +40,6 @@
 	<script src="../scripts/tooltip.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/tools_map_adds.js" language="javascript" type="text/javascript"></script>
 
 </head>
 <body>

@@ -1,3 +1,8 @@
+div.database-graph-options {
+	background-color: #ECD698;
+	border: 1px solid #895D03;
+	padding: 5px 10px 5px 10px;	}
+
 div.event-line-left-selector {
 	cursor: move; }
 
@@ -68,9 +73,8 @@ td.event-line-legend-value {
 td.event-line-legend-horizontal {
 	padding-right: 10px;}
 
-div.database-graph-options {
-	background-color: #ECD698;
-	border: 1px solid #895D03;
-	padding: 5px 10px 5px 10px;	}
-	
+div.event-line-grid-major,
+div.event-line-grid-minor {
+	background-color: #F1E7C8;
+	background-color: #F1E7C8; }
 	

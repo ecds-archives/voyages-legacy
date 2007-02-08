@@ -71,7 +71,7 @@
 
 				<div class="section-index-intro-icon section-index-intro-blank-icon">
 				
-					<div class="section-index-intro-icon-title"><a href="#">Search the Database</a></div>
+					<div class="section-index-intro-icon-title"><a href="search.faces">Search the Database</a></div>
 				
 					<p class="section-index-intro">Suspendisse sollicitudin eros quis odio. Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit.</p>
 					

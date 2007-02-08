@@ -14,6 +14,34 @@ td.td-side-panel {
 h1 {
 	margin-bottom: 10px; }
 
+/***********************************
+* selection
+***********************************/
+
+div.import-region-list table.checkbox-list-table-0 {
+	width: 100%; }
+	
+div.import-region-list td.checkbox-list-label-0 {
+	width: 100%; }
+
+div.import-region-list td.checkbox-list-label-1 {
+	padding-right: 10px; }
+
+div.import-region-list tr.checkbox-list-item-0-active {
+	background-color: #9EDEE0; }
+	
+div.import-region-list tr.checkbox-list-item-1-active {
+	padding-right: 5px;
+	background-color: #9EDEE0; }
+
+div.import-region-list div.checkbox-list-popup {
+	z-index: 1;
+	border: 1px solid #115676;
+	background-color: White;
+	background-position: right top;
+	background-repeat: no-repeat;
+	left: 200px;
+	position: absolute; }
 
 /***********************************
 * boxes in the left column
@@ -57,35 +85,6 @@ div.estimates-table table.simple-table td.simple-table-row-label,
 div.estimates-table table.simple-table td.simple-table-col-label {
 	background-color: #F1E7C8;
 	text-align: left; }
-
-/***********************************
-* selection
-***********************************/
-
-div.import-region-list table.checkbox-list-table-0 {
-	width: 100%; }
-	
-div.import-region-list td.checkbox-list-label-0 {
-	width: 100%; }
-
-div.import-region-list td.checkbox-list-label-1 {
-	padding-right: 10px; }
-
-div.import-region-list tr.checkbox-list-item-0-active {
-	background-color: #9EDEE0; }
-	
-div.import-region-list tr.checkbox-list-item-1-active {
-	padding-right: 5px;
-	background-color: #9EDEE0; }
-
-div.import-region-list div.checkbox-list-popup {
-	z-index: 1;
-	border: 1px solid #115676;
-	background-color: White;
-	background-position: right top;
-	background-repeat: no-repeat;
-	left: 200px;
-	position: absolute; }
 	
 /***********************************
 * timeline
@@ -96,7 +95,7 @@ div.event-line-left-selector {
 
 div.event-line-selector-handle {
 	cursor: w-resize;
-	background-color: #CA4223; }
+	background-color: #115676; }
 
 div.event-line-graph-container {
 	border: 0px solid Black; }
@@ -116,7 +115,7 @@ div.event-line-graph {
 	
 div.event-line-selector {
 	-moz-opacity: 0.3;
-	background-color: #F1E7C8; }
+	background-color: #A9E1E2; }
 
 div.event-line-indicator {
 	-moz-opacity: 0.3;
@@ -140,10 +139,6 @@ div.event-line-mark-pressed {
 	background-image: url(../../event-line-mark-pressed.png);
 	background-repeat: no-repeat; }
 	
-/***********************************
-* event line
-***********************************/
-
 table.event-line-event-columns {
 	margin-left: 50px; 
 	margin-bottom: 20px; }
@@ -168,7 +163,7 @@ td.event-line-event-table-label {
 	cursor: pointer;
 	color: White;
 	text-align: center;
-	background-color: #571B1D;
+	background-color: #115676;
 	width: 20px;
 	height: 20px; }
 
@@ -186,7 +181,7 @@ table.event-line-event-label-selected td {
 	cursor: pointer; }
 	
 table.event-line-event-label td {
-	background-color: #571B1D; }
+	background-color: #115676; }
 
 table.event-line-event-label-selected td {
 	background-color: #CA4223; }
@@ -214,16 +209,16 @@ div.event-line-events-title {
 	display: none; }
 	
 .color-timeline-exported {
-	background-color: #F1E7C8; }
+	background-color: #A9E1E2; }
 	
 .color-timeline-exported-event {
-	background-color: #CA4223; }
+	background-color: #115676; }
 
 .color-timeline-imported {
-	background-color: #E7D59C; }
+	background-color: #49BFC2; }
 	
 .color-timeline-imported-event {
-	background-color: #571B1D; }
+	background-color: #115676; }
 	
 div.event-line-graph-container,
 div.event-line-selector-container {
@@ -231,3 +226,133 @@ div.event-line-selector-container {
 
 td.event-line-legend-horizontal {
 	padding-right: 10px;}
+	
+div.event-line-grid-major,
+div.event-line-grid-minor {
+	background-color: #A9E1E2;
+	background-color: #A9E1E2; }
+	
+/***********************************
+* listing
+***********************************/
+	
+table.grid {
+	width: 100%;
+	background: white;
+	border-collapse: collapse; 
+	border: 1px solid #115676; }
+
+table.grid th {
+	padding: 5px;
+	text-align: left;
+	background-color: #b4e6e6; }
+
+table.grid th a {
+	text-decoration: none;
+	color: Black; }
+	
+tr.grid-row-even,
+tr.grid-row-odd {
+	cursor: pointer; }
+
+tr.grid-row-odd td,
+tr.grid-row-even td,
+table.grid th {
+	border: 1px solid #115676; }
+
+tr.grid-row-odd td,
+tr.grid-row-even td { 
+	padding: 5px; 
+	vertical-align: top; }
+		
+tr.grid-row-last {
+	cursor: pointer;
+	border-bottom-style: none; }
+	
+tr.grid-row-even:hover,
+tr.grid-row-odd:hover,
+tr.grid-row-last:hover {
+	background-color: #e9ffff; }
+	
+table.multiline-attr-table {
+}
+	
+table.multiline-attr-table td {
+	border: 0px !important;
+	padding: 0px !important;
+	white-space: nowrap;
+}
+	
+td.grid-header-text {
+	padding: 0px; }
+
+table.grid-header-right {
+	margin-left: auto;
+	margin-right: 0px;
+}
+
+td.grid-header-text-right {
+	padding: 0px; 
+	text-align: right;
+}
+
+td.grid-header-icon {
+	padding-left: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px; }
+	
+td.grid-first-column,
+th.grid-first-column {
+	padding-left: 10px !important; }
+
+div.pager {
+	margin-top: 10px;
+	color: Black; }
+	
+div.pager a {
+	color: Black; }
+	
+div.pager select {
+	}
+	
+table.td-table-links {
+	margin-left: auto; }
+
+td.pager-number,
+td.pager-number-active,
+td.pager-back,
+td.pager-fast-back,
+td.pager-forward,
+td.pager-fast-forward {
+	padding: 0px;
+	border: 1px solid #115676; }
+
+td.pager-number a,
+td.pager-back a,
+td.pager-fast-back a,
+td.pager-forward a,
+td.pager-fast-forward a {
+	text-decoration: none;
+	display: block;
+	padding: 2px 5px 2px 5px; }
+
+td.pager-number-active {
+	color: Black;
+	padding: 2px 5px 2px 5px;
+	background-color: #b4e6e6; }
+
+td.pager-fast-forward-no-click,
+td.pager-fast-back-no-click,
+td.pager-forward-no-click,
+td.pager-back-no-click {
+	color: #118696;
+	border: 1px solid #118696;
+	padding: 2px 5px 2px 5px; }
+
+td.pager-number a:hover,
+td.pager-fast-forward a:hover,
+td.pager-forward a:hover,
+td.pager-fast-back a:hover,
+td.pager-back a:hover	{
+	background-color: #b4e6e6; }

@@ -24,8 +24,6 @@
 	<link href="../styles/assessment.css" rel="stylesheet" type="text/css">
 	<link href="../styles/assessment-estimates.css" rel="stylesheet" type="text/css">
 	
-	<link href="../styles/assessment-estimates-listing.css" rel="stylesheet" type="text/css">
-	
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>

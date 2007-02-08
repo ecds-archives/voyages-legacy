@@ -217,6 +217,13 @@
 		<component-type>MainMenuBar</component-type>
 		<component-class>edu.emory.library.tast.ui.MainMenuBarComponent</component-class>
 	</component>
+	
+	<component>
+		<component-type>Gallery</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.images.GalleryComponent
+		</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
