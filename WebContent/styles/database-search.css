@@ -21,6 +21,13 @@ td.search-main-panel {
 h1 {
 	margin-bottom: 10px; }
 
+h1.with-subtitle {
+	margin-bottom: 0px; }
+	
+div.subtitle {
+	margin-bottom: 5px;
+	font-weight: bold; }
+ 
 td.search-side-panel table.box-main-table {
 	margin-bottom: 10px; }
 
@@ -130,39 +137,6 @@ input.map-legend-refresh {
 
 table.legend-table-layers {
 	padding-left: 10px;
-}
-
-
-table.simple-table {
-	border-collapse: collapse;	
-}
-
-td.search-simple-stat-c_c1 {
-	border: 1px solid #DEC77E;
-	background-color: #F1E7C8;
-	padding: 5px;
-}
-	
-td.search-simple-stat-c_c2, td.search-simple-stat-c_c3, td.search-simple-stat-c_c4 {
-	border: 1px solid #DEC77E;
-	text-align: right;
-	padding: 5px;
-	padding-left: 30px;
-	width: 70px;
-}
-
-td.search-simple-stat-h_c1 {
-	border: 1px solid #DEC77E;
-	text-align: center;
-	padding: 5px;
-}
-	
-td.search-simple-stat-h_c2, td.search-simple-stat-h_c3, td.search-simple-stat-h_c4 {
-	border: 1px solid #DEC77E;
-	background-color: #F1E7C8;
-	padding: 5px;
-	font-weight: bold;
-	text-align: right;
 }
 
 /***********************************

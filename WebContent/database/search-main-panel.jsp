@@ -12,19 +12,27 @@
 	</s:panelTab>
 	
 	<s:panelTab title="#{res.database_search_timeline}" sectionId="basic-graph">
-		<%@ include file="search-tab-graph.jsp" %>
+		<t:htmlTag value="div" styleClass="search-panel">
+			<%@ include file="search-tab-graph.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.database_search_customgraphs}" sectionId="custom-graphs">
-		<%@ include file="search-tab-stat.jsp" %>
+		<t:htmlTag value="div" styleClass="search-panel">
+			<%@ include file="search-tab-stat.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.database_search_summarystats}" sectionId="basic-statistics">
-		<%@ include file="search-tab-basic-stats.jsp" %>
+		<t:htmlTag value="div" styleClass="search-panel">
+			<%@ include file="search-tab-basic-stats.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 	
 	<s:panelTab title="#{res.database_search_maps}" sectionId="map-ports">
-		<%@ include file="search-tab-map.jsp" %>
+		<t:htmlTag value="div" styleClass="search-panel">
+			<%@ include file="search-tab-map.jsp" %>
+		</t:htmlTag>
 	</s:panelTab>
 
 </s:panelTabSet>

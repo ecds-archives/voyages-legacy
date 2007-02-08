@@ -3,10 +3,13 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
 
-<t:htmlTag value="div" style="padding: 10px;">
-	<s:simpleTable id="stat-table" rows="#{StatisticBean.statisticElements}"/>
+<t:htmlTag value="h1"><h:outputText value="Summary statistics" /></t:htmlTag>
 
-<%/*	<h:dataTable var="statEl" value="#{StatisticBean.statisticElements}" 
+<s:simpleTable id="stat-table" rows="#{StatisticBean.statisticElements}"/>
+
+<%/*
+
+<h:dataTable var="statEl" value="#{StatisticBean.statisticElements}" 
 					styleClass="basic-stat-tab"
 					headerClass="search-simple-stat-h_c1,search-simple-stat-h_c2,search-simple-stat-h_c3,search-simple-stat-h_c4"
 					columnClasses="search-simple-stat-r_c1,search-simple-stat-r_c2,search-simple-stat-r_c3,search-simple-stat-r_c4">
@@ -39,5 +42,4 @@
 			<h:outputText value="#{statEl.avrg}"/>
 		</h:column>
 	</h:dataTable>
-	*/%>
-</t:htmlTag>
+*/%>

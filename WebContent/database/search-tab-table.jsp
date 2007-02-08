@@ -3,15 +3,17 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
-<t:htmlTag value="tr">
-	<t:htmlTag value="td">
-		<t:htmlTag value="h1"><h:outputText value="List of voyages" /></t:htmlTag>
+<t:htmlTag value="div" rendered="#{TableResultTabBean.resultsMode}">
+	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
+			<t:htmlTag value="h1"><h:outputText value="List of voyages" /></t:htmlTag>
+		</t:htmlTag>
+		<t:htmlTag value="td" style="text-align: right;">
+			<h:commandLink value="Configure columns of the table" action="#{TableResultTabBean.configurationMode}" />
+		</t:htmlTag>
 	</t:htmlTag>
-	<t:htmlTag value="td" style="text-align: right;">
-		<h:commandLink value="Configure columns of the table" action="#{TableResultTabBean.configurationMode}" />
 	</t:htmlTag>
-</t:htmlTag>
 </t:htmlTag>
 
 <s:tabletab
@@ -33,10 +35,12 @@
 				<h:outputText value="#{TableResultTabBean.lastDisplayed}" />
 				<h:outputText value=" #{res.database_search_outof} " />
 				<h:outputText value="#{TableResultTabBean.totalRows}" />
-				<h:outputText value=" #{res.database_search_showandline}" />
+				<h:outputText value="#{res.database_search_showandline}" />
 				<h:selectOneMenu onchange="submit()" value="#{TableResultTabBean.tableManager.step}">
 					<f:selectItem itemValue="10" itemLabel="10" />
-					<f:selectItem itemValue="25" itemLabel="25" />
+					<f:selectItem itemValue="15" itemLabel="15" />
+					<f:selectItem itemValue="20" itemLabel="20" />
+					<f:selectItem itemValue="30" itemLabel="30" />
 					<f:selectItem itemValue="50" itemLabel="50" />
 					<f:selectItem itemValue="100" itemLabel="100" />
 					<f:selectItem itemValue="200" itemLabel="200" />
@@ -50,15 +54,12 @@
 	</t:htmlTag>
 </t:htmlTag>
 
+<t:htmlTag value="h1" styleClass="with-subtitle" rendered="#{TableResultTabBean.configurationMode}"><h:outputText value="List of voyages" /></t:htmlTag>
+<t:htmlTag value="div" styleClass="subtitle" rendered="#{TableResultTabBean.configurationMode}"><h:outputText value="Configure columns" /></t:htmlTag>
 
-<%/* Configuration of table */%>
 <t:htmlTag value="div" rendered="#{TableResultTabBean.configurationMode}">
 
-	<t:htmlTag value="div" styleClass="section-inside-title">
-		<h:outputText value="#{res.database_search_configcolumns}" />
-	</t:htmlTag>
-
-	<t:htmlTag value="div" styleClass="section-inside-group">
+	<t:htmlTag value="div" styleClass="database-configure-columns-pane">
 
 		<t:htmlTag value="div" style="font-weight: normal; margin-bottom: 5px;">
 			<h:outputText value="#{res.database_search_choosegroupofvariables}" />
@@ -136,7 +137,7 @@
 
 	</t:htmlTag>
 
-	<t:htmlTag value="div" styleClass="section-inside-footer">
+	<t:htmlTag value="div" styleClass="database-configure-columns-buttons">
 		<h:commandButton id="configureApplyConfigButton" value="#{res.database_search_applyconfig}"
 			action="#{TableResultTabBean.resultsMode}" />
 		<h:outputText value=" " />
