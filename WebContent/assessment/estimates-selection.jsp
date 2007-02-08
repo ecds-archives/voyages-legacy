@@ -35,8 +35,7 @@
 <br>
 
 <s:expandableBox text="#{res.estimates_left_natcarriers}">
-	
-	<t:div style="padding: 5px;" styleClass="nation-checkboxes">
+	<t:div styleClass="nation-checkboxes">
 	<s:checkboxListExpandable
 		id="nations"
 		items="#{EstimatesSelectionBean.allNations}"
@@ -47,7 +46,7 @@
 <br>
 	
 <s:expandableBox text="#{res.estimates_left_expregions}" collapsed="true">
-	<t:div style="padding: 5px;" styleClass="export-region-list">
+	<t:div styleClass="export-region-list">
 	<s:checkboxListExpandable
 		id="expReg"
 		items="#{EstimatesSelectionBean.allExpRegions}" 
@@ -59,7 +58,7 @@
 <br>
 
 <s:expandableBox text="#{res.estimates_left_impregions}" collapsed="true">
-	<t:div style="padding-top: 5px; padding-bottom: 5px;" styleClass="import-region-list">
+	<t:div styleClass="import-region-list">
 	<s:checkboxListPopup
 		id="impReg"
 		items="#{EstimatesSelectionBean.allImpRegions}"
@@ -77,22 +76,17 @@
 
 <br>
 
-<s:expandableBox
-    text="#{res.estimates_left_currentquery}">
-	
-	<t:div style="padding: 5px 5px 5px 5px;">
-		<t:div>
-			<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectednations}"/></t:div>
-			<h:outputText value="#{EstimatesSelectionBean.selectedNationsAsText}" escape="false" />
-		</t:div>
-		<t:div style="margin-top: 5px;">
-			<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectedexport}"/></t:div>
-			<h:outputText value="#{EstimatesSelectionBean.selectedExpRegionsAsText}" escape="false" />
-		</t:div>
-		<t:div style="margin-top: 5px;">
-			<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectedimport}"/></t:div>
-			<h:outputText value="#{EstimatesSelectionBean.selectedImpRegionsAsText}" escape="false" />
-		</t:div>
+<s:expandableBox text="#{res.estimates_left_currentquery}">
+	<t:div>
+		<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectednations}"/></t:div>
+		<h:outputText value="#{EstimatesSelectionBean.selectedNationsAsText}" escape="false" />
 	</t:div>
-
+	<t:div style="margin-top: 5px;">
+		<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectedexport}"/></t:div>
+		<h:outputText value="#{EstimatesSelectionBean.selectedExpRegionsAsText}" escape="false" />
+	</t:div>
+	<t:div style="margin-top: 5px;">
+		<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectedimport}"/></t:div>
+		<h:outputText value="#{EstimatesSelectionBean.selectedImpRegionsAsText}" escape="false" />
+	</t:div>
 </s:expandableBox>

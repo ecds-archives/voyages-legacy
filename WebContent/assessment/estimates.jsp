@@ -6,29 +6,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 	<title>Estimates</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
-	<link href="../styles/assessment.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/assessment-expandable-box.css" rel="stylesheet" type="text/css">
-	<link href="../styles/assessment-search-expandable-box.css" rel="stylesheet" type="text/css">
+
 	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
 	<link href="../styles/assessment-tabs.css" rel="stylesheet" type="text/css">
-	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
-	<link href="../styles/estimates.css" rel="stylesheet" type="text/css">
-	<link href="../styles/estimates-tab-listing.css" rel="stylesheet" type="text/css">
-	<link href="../styles/search-table.css" rel="stylesheet" type="text/css">
+
+	<link href="../styles/assessment.css" rel="stylesheet" type="text/css">
+	<link href="../styles/assessment-estimates.css" rel="stylesheet" type="text/css">
+	
+	<link href="../styles/assessment-estimates-listing.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
-	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/checkbox-list.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/checkbox-list-popup.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
+
 </head>
 <body>
 <f:view>

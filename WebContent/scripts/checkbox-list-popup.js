@@ -44,6 +44,7 @@ CheckboxListPopup.prototype.popupShow = function(popupId, mainItemId, subItemId,
 	var popup = document.getElementById(popupId);
 	var mainItem = document.getElementById(mainItemId);
 	var subItem = document.getElementById(subItemId);
+	if (!popup) return;
 	popup.style.display = "block";
 	if (imageUrl) popup.style.backgroundImage = "url(" + imageUrl + ")";
 	mainItem.className = "checkbox-list-item-0-active";
@@ -55,6 +56,7 @@ CheckboxListPopup.prototype.popupHide = function(popupId, mainItemId, subItemId)
 	var popup = document.getElementById(popupId);
 	var mainItem = document.getElementById(mainItemId);
 	var subItem = document.getElementById(subItemId);
+	if (!popup) return;
 	popup.style.display = "none";
 	mainItem.className = "checkbox-list-item-0";
 	if (subItem) subItem.className = "checkbox-list-item-1";

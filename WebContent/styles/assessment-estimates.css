@@ -1,3 +1,7 @@
+/***********************************
+* main elements
+***********************************/
+
 td.td-main-panel {
 	vertical-align: top; 
 	background-color: white;}
@@ -5,10 +9,33 @@ td.td-main-panel {
 td.td-side-panel {
 	width: 280px; 
 	vertical-align: top;
-	border-right: 1px solid #115676;}
+	border-right: 1px solid #115676; }
+	
+h1 {
+	margin-bottom: 10px; }
+
+
+/***********************************
+* boxes in the left column
+***********************************/
+
+td.td-side-panel td.box-upper-row-middle,
+td.td-side-panel td.box-upper-row-middle-collapsed {
+	width: 250px; }
+
+
+/***********************************
+* table
+***********************************/
 	
 div.results-panel {
 	padding: 10px;}
+	
+div.estimates-table-options {
+	margin-bottom: 10px;
+	background-color: #D0EFF0;
+	border: 1px solid #115676;
+	padding: 5px 10px 5px 10px;	}
 
 div.estimates-table table.simple-table {
 	border-collapse: collapse; }
@@ -19,12 +46,12 @@ div.estimates-table table.simple-table td {
 	border: 1px solid #115676; }
 	
 div.estimates-table table.simple-table td.tbl-label {
-	background-color: #b4e6e6;
+	background-color: #D0EFF0;
 	text-align: left; }
 
 div.estimates-table table.simple-table td.tbl-total {
 	font-weight: bold;
-	background-color: #b4e6e6; }
+	background-color: #D0EFF0; }
 
 div.estimates-table table.simple-table td.simple-table-row-label,
 div.estimates-table table.simple-table td.simple-table-col-label {
@@ -32,15 +59,12 @@ div.estimates-table table.simple-table td.simple-table-col-label {
 	text-align: left; }
 
 /***********************************
-* import regions
+* selection
 ***********************************/
 
 div.import-region-list table.checkbox-list-table-0 {
 	width: 100%; }
 	
-div.import-region-list td.checkbox-list-checkbox-0 {
-	padding-left: 5px; }
-
 div.import-region-list td.checkbox-list-label-0 {
 	width: 100%; }
 
@@ -48,23 +72,19 @@ div.import-region-list td.checkbox-list-label-1 {
 	padding-right: 10px; }
 
 div.import-region-list tr.checkbox-list-item-0-active {
-	background-color: #F1E7C8; }
-
+	background-color: #9EDEE0; }
+	
 div.import-region-list tr.checkbox-list-item-1-active {
-	padding-right: 10px;
-	background-color: #F1E7C8; }
+	padding-right: 5px;
+	background-color: #9EDEE0; }
 
 div.import-region-list div.checkbox-list-popup {
 	z-index: 1;
-	/*
-	height: 300px;
-	width: 400px;
-	*/
-	border: 1px solid #571B1D;
+	border: 1px solid #115676;
 	background-color: White;
 	background-position: right top;
 	background-repeat: no-repeat;
-	left: 230px;
+	left: 200px;
 	position: absolute; }
 	
 /***********************************

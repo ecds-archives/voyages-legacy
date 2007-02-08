@@ -1,6 +1,5 @@
 div.tabs-body {
-	border: 1px solid #8A5D04; 
-}
+	border: 1px solid #8A5D04; }
 
 td.tabs-tab-left {
 	background-image: url(../images/assessment-tabs-normal-left.png); }
@@ -22,5 +21,4 @@ td.tabs-tab-right-selected {
 
 div.tabs-selection {
 	background-image: url(../images/assessment-tabs-bg.png);
-	background-repeat: repeat-x;
-}
+	background-repeat: repeat-x; }
