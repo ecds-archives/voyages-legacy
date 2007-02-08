@@ -3,6 +3,16 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
+<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
+<t:htmlTag value="tr">
+	<t:htmlTag value="td">
+		<t:htmlTag value="h1"><h:outputText value="Table" /></t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="td" style="text-align: right;">
+	</t:htmlTag>
+</t:htmlTag>
+</t:htmlTag>
+
 <t:htmlTag value="table" style="border-collapse: collapse; margin-top: 10px;">
 <t:htmlTag value="tr">
 	<t:htmlTag value="td" style="padding: 5px 10px 5px 10px;">

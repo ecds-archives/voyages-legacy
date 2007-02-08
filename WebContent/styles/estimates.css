@@ -1,3 +1,12 @@
+td.td-main-panel {
+	vertical-align: top; 
+	background-color: white;}
+	
+td.td-side-panel {
+	width: 240px; 
+	vertical-align: top;
+	border-right: 1px solid #115676;}
+
 div.estimates-table table.simple-table {
 	border-collapse: collapse; }
 	

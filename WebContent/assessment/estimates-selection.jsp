@@ -5,12 +5,7 @@
 
 <div id="debug"></div>
 
-<s:sectionGroup
-    title="Time frame"
-	id="selectionYears"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle">
+<s:expandableBox text="Time frame">
 
 	<t:htmlTag value="table" style="border-collapse: collapse; margin-left: 10px; margin-bottom: 10px; margin-top: 10px;">
 	<t:htmlTag value="tr">
@@ -29,52 +24,48 @@
 	</t:htmlTag>
 	</t:htmlTag>
 	
-</s:sectionGroup>
-
-<div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
 	<h:commandButton
 		value="#{res.estimates_left_changeselection}"
 		action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
-</div>
+
+</s:expandableBox>
 
 <br>
 
-<s:sectionGroup
-	selectedSectionId="nations"
-	id="selectionNationsAndRegions"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle">
+<s:expandableBox text="#{res.estimates_left_natcarriers}">
 	
-	<s:section title="#{res.estimates_left_natcarriers}" sectionId="nations">
-		<t:div style="padding: 5px;" styleClass="nation-checkboxes">
-		<s:checkboxListExpandable
-			id="nations"
-			items="#{EstimatesSelectionBean.allNations}"
-			selectedValues="#{EstimatesSelectionBean.checkedNations}" />
-		</t:div>
-	</s:section>
+	<t:div style="padding: 5px;" styleClass="nation-checkboxes">
+	<s:checkboxListExpandable
+		id="nations"
+		items="#{EstimatesSelectionBean.allNations}"
+		selectedValues="#{EstimatesSelectionBean.checkedNations}" />
+	</t:div>
+</s:expandableBox>
+
+<br>
 	
-	<s:section title="#{res.estimates_left_expregions}" sectionId="africanRegions">
-		<t:div style="padding: 5px;" styleClass="export-region-list">
-		<s:checkboxListExpandable
-			id="expReg"
-			items="#{EstimatesSelectionBean.allExpRegions}" 
-			selectedValues="#{EstimatesSelectionBean.checkedExpRegions}"
-			expandedValues="#{EstimatesSelectionBean.expandedExpRegions}" />
-		</t:div>
-	</s:section>
+<s:expandableBox text="#{res.estimates_left_expregions}">
+	<t:div style="padding: 5px;" styleClass="export-region-list">
+	<s:checkboxListExpandable
+		id="expReg"
+		items="#{EstimatesSelectionBean.allExpRegions}" 
+		selectedValues="#{EstimatesSelectionBean.checkedExpRegions}"
+		expandedValues="#{EstimatesSelectionBean.expandedExpRegions}" />
+	</t:div>
+</s:expandableBox>
 
-	<s:section title="#{res.estimates_left_impregions}" sectionId="americanRegions">
-		<t:div style="padding-top: 5px; padding-bottom: 5px;" styleClass="import-region-list">
-		<s:checkboxListPopup
-			id="impReg"
-			items="#{EstimatesSelectionBean.allImpRegions}"
-			selectedValues="#{EstimatesSelectionBean.checkedImpRegions}"/>
-		</t:div>
-	</s:section>
+<br>
 
-</s:sectionGroup>
+<s:expandableBox text="#{res.estimates_left_impregions}">
+	<t:div style="padding-top: 5px; padding-bottom: 5px;" styleClass="import-region-list">
+	<s:checkboxListPopup
+		id="impReg"
+		items="#{EstimatesSelectionBean.allImpRegions}"
+		selectedValues="#{EstimatesSelectionBean.checkedImpRegions}"/>
+	</t:div>
+</s:expandableBox>
+
+<br>
 
 <div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
 	<h:commandButton
@@ -84,14 +75,10 @@
 
 <br>
 
-<s:sectionGroup
-    title="#{res.estimates_left_currentquery}"
-	id="currentQuery"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle">
+<s:expandableBox
+    text="#{res.estimates_left_currentquery}">
 	
-	<t:div style="padding: 5px 5px 5px 5px; background-color: White;">
+	<t:div style="padding: 5px 5px 5px 5px;">
 		<t:div>
 			<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectednations}"/></t:div>
 			<h:outputText value="#{EstimatesSelectionBean.selectedNationsAsText}" escape="false" />
@@ -106,4 +93,4 @@
 		</t:div>
 	</t:div>
 
-</s:sectionGroup>
+</s:expandableBox>

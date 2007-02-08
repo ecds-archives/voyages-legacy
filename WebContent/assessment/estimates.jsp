@@ -9,10 +9,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Estimates</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
+	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
+	<link href="../styles/assessment.css" rel="stylesheet" type="text/css">
+	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/assessment-expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/assessment-search-expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
+	<link href="../styles/assessment-tabs.css" rel="stylesheet" type="text/css">
 	<link href="../styles/sections.css" rel="stylesheet" type="text/css">
 	<link href="../styles/estimates.css" rel="stylesheet" type="text/css">
 	<link href="../styles/search-table.css" rel="stylesheet" type="text/css">
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/utils.jseventline.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/utils.jscheckbox-list.js" language="javascript" type="text/javascript"></script>
@@ -22,41 +31,37 @@
 </head>
 <body>
 <f:view>
+<h:form id="form">
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-	<div class="header">
-		<img src="header-text.png" width="600" height="40" border="0" alt="TAST">
-	</div>
-	
-	<div class="header-links">
+		<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
-			<td><div class="header-link-active"><a href="estimates.faces">Estimates</a></div></td>
-			<td><div class="header-link"><a href="search.faces">Database search</a></div></td>
-			<td><div class="header-link"><a href="galleryp.faces?obj=1&id=1&set=1&pict=0">Images database</a></div></td>
+			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
+			<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="assessment" activePageId="estimates" /></td>
 		</tr>
 		</table>
 	</div>
 	
-	<h:form id="form">
+	<div id="content">
 	
 		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
 		<tr>
-			<td style="width: 240px; vertical-align: top;">
+			<td class="td-side-panel">
 				<div style="margin: 10px 10px 0px 10px;">
 					<%@ include file="estimates-selection.jsp" %>
 				</div>
 			</td>
-			<td style="vertical-align: top;">
-				<div style="margin: 10px 10px 0px 0px;">
+			<td class="td-main-panel">
+				<div>
 					<%@ include file="estimates-main-panel.jsp" %>
 				</div>
 			</td>
 		</tr>
 		</table>
-		
-	</h:form>
+	</div>
+</h:form>
 	
 </f:view>
 </body>

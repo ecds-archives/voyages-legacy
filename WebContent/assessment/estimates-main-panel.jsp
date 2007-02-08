@@ -3,27 +3,24 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<s:sectionGroup
+<s:panelTabSet
 	selectedSectionId="table"
-	id="mainPanelSection"
-	backgroundStyle="dark"
-	tabsStyle="middle"
-	buttonsStyle="middle">
+	id="mainPanelSection">
 	
-	<s:section title="#{res.estimates_main_table}" sectionId="table">
+	<s:panelTab title="#{res.estimates_main_table}" sectionId="table">
 		<%@ include file="estimates-table.jsp" %>
-	</s:section>
+	</s:panelTab>
 	
-	<s:section title="#{res.estimates_main_list}" sectionId="listing">
+	<s:panelTab title="#{res.estimates_main_list}" sectionId="listing">
 		<%@ include file="estimates-listing.jsp" %>
-	</s:section>
+	</s:panelTab>
 
-	<s:section title="#{res.estimates_main_map}" sectionId="map">
+	<s:panelTab title="#{res.estimates_main_map}" sectionId="map">
 		<%@ include file="estimates-map.jsp" %>
-	</s:section>
+	</s:panelTab>
 
-	<s:section title="#{res.estimates_main_timeline}" sectionId="timeline">
+	<s:panelTab title="#{res.estimates_main_timeline}" sectionId="timeline">
 		<%@ include file="estimates-timeline.jsp" %>
-	</s:section>
+	</s:panelTab>
 
-</s:sectionGroup>
+</s:panelTabSet>
