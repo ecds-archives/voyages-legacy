@@ -81,35 +81,40 @@ div.pager select {
 table.td-table-links {
 	margin-left: auto; }
 
+td.pager-number,
+td.pager-number-active,
+td.pager-back,
+td.pager-fast-back,
+td.pager-forward,
+td.pager-fast-forward {
+	padding: 0px;
+	border: 1px solid #895D03; }
+
 td.pager-number a,
-td.pager-fast-forward a,
+td.pager-back a,
 td.pager-fast-back a,
 td.pager-forward a,
-td.pager-back a {
+td.pager-fast-forward a {
+	text-decoration: none;
 	display: block;
-	border: 1px solid #895D03;
 	padding: 2px 5px 2px 5px; }
 
 td.pager-number-active {
-	border: 1px solid #895D03;
-	padding: 3px;
+	color: Black;
+	padding: 2px 5px 2px 5px;
 	background-color: #EED083; }
 
 td.pager-fast-forward-no-click,
 td.pager-fast-back-no-click,
 td.pager-forward-no-click,
 td.pager-back-no-click {
-	border: 1px solid #895D03;
-	padding: 3px; }
+	color: #EED083;
+	border: 1px solid #EED083;
+	padding: 2px 5px 2px 5px; }
 
 td.pager-number a:hover,
 td.pager-fast-forward a:hover,
 td.pager-forward a:hover,
 td.pager-fast-back a:hover,
 td.pager-back a:hover	{
-	background-color: #EED083; }
-
-td.pager-fast-forward-no-click {
-	border: 1px solid #895D03;
-	padding: 5px;
 	background-color: #EED083; }

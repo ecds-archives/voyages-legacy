@@ -52,15 +52,15 @@ public class TableLinkManager {
 		int i = 0;
 		
 		if (this.currentFirstRecord == 0) {
-			list.add(new LinkElement(i++, "&nbsp;", false, 0, "pager-fast-back-no-click"));
-			list.add(new LinkElement(i++, "&nbsp;", false, 0, "pager-back-no-click"));
+			list.add(new LinkElement(i++, "&laquo; First", false, 0, "pager-fast-back-no-click"));
+			list.add(new LinkElement(i++, "&laquo; Prev", false, 0, "pager-back-no-click"));
 		} else {
 			int first = this.currentFirstRecord - this.step;
 			if (first < 0) {
 				first = 0;
 			}
-			list.add(new LinkElement(i++, "&nbsp;&lt;&lt;&nbsp;", true, 0, "pager-fast-back"));
-			list.add(new LinkElement(i++, "&nbsp;&nbsp;&lt;&nbsp;", true, first, "pager-fast-back"));
+			list.add(new LinkElement(i++, "&laquo; First", true, 0, "pager-fast-back"));
+			list.add(new LinkElement(i++, "&laquo; Prev", true, first, "pager-fast-back"));
 		}
 		
 		int first = this.currentFirstRecord - step * 4;
@@ -80,11 +80,11 @@ public class TableLinkManager {
 		i = j;
 		
 		if (currentFirstRecord + step < this.resultsNumber) {
-			list.add(new LinkElement(i++, "&nbsp;", true, this.currentFirstRecord + this.step, "pager-fast-forward"));
-			list.add(new LinkElement(i++, "&nbsp;", true, this.resultsNumber - this.step, "pager-forward"));
+			list.add(new LinkElement(i++, "Next &raquo;", true, this.currentFirstRecord + this.step, "pager-fast-forward"));
+			list.add(new LinkElement(i++, "Last &raquo;", true, this.resultsNumber - this.step, "pager-forward"));
 		} else {
-			list.add(new LinkElement(i++, "&nbsp;", false, 0, "pager-fast-forward-no-click"));
-			list.add(new LinkElement(i++, "&nbsp;", false, this.resultsNumber - this.step, "pager-forward-no-click"));
+			list.add(new LinkElement(i++, "Next &raquo;", false, 0, "pager-fast-forward-no-click"));
+			list.add(new LinkElement(i++, "Last &raquo;", false, this.resultsNumber - this.step, "pager-forward-no-click"));
 		}
 		
 		

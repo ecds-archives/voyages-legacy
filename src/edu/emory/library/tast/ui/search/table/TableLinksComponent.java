@@ -106,7 +106,6 @@ public class TableLinksComponent extends UIOutput {
 				String jsSort = JsfUtils.generateSubmitJS(context, form, getHiddenFieldName(context),
 						links[i].getId() + "");
 				writer.writeAttribute("onclick", jsSort, null);
-				writer.writeAttribute("style", "font-weight: bold; text-decoration: none;", null);
 				
 				
 				writer.write(links[i].getLabel());
