@@ -7,14 +7,15 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Resources</title>
+	<title>Slaves database</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
-	<link href="../styles/images.css" rel="stylesheet" type="text/css">
+	<link href="../styles/slaves.css" rel="stylesheet" type="text/css">
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/slaves-search-expandable-box.css" rel="stylesheet" type="text/css">	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
@@ -27,7 +28,7 @@
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
-			<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="resources" activePageId="images" /></td>
+			<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="resources" activePageId="slaves" /></td>
 		</tr>
 		</table>
 	</div>

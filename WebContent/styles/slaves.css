@@ -1,0 +1,10 @@
+td.td-main-panel {
+	vertical-align: top; 
+	background-image: url(../images/resources-bg.png);
+	padding: 10px;}
+	
+td.td-side-panel {
+	width: 280px; 
+	vertical-align: top;
+	border-right: 1px solid #165B31;}
+	

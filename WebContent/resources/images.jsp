@@ -15,6 +15,7 @@
 	<link href="../styles/images.css" rel="stylesheet" type="text/css">
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/images-search-expandable-box.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
