@@ -24,11 +24,11 @@
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/utils.jseventline.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/utils.jscheckbox-list.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/utils.jscheckbox-list-expandable.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/utils.jscheckbox-list-popup.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/utils.jsmap.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/checkbox-list.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/checkbox-list-popup.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
