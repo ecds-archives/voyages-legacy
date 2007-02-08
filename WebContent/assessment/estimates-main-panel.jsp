@@ -9,25 +9,25 @@
 	
 	<s:panelTab title="#{res.estimates_main_table}" sectionId="table">
 		<t:htmlTag value="div" styleClass="results-panel">
-			<%@ include file="estimates-table.jsp" %>
+			<%@ include file="estimates-tab-table.jsp" %>
 		</t:htmlTag>
 	</s:panelTab>
 	
 	<s:panelTab title="#{res.estimates_main_list}" sectionId="listing">
 		<t:htmlTag value="div" styleClass="results-panel">
-			<%@ include file="estimates-listing.jsp" %>
+			<%@ include file="estimates-tab-listing.jsp" %>
 		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.estimates_main_map}" sectionId="map">
 		<t:htmlTag value="div" styleClass="results-panel">
-			<%@ include file="estimates-map.jsp" %>
+			<%@ include file="estimates-tab-map.jsp" %>
 		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.estimates_main_timeline}" sectionId="timeline">
 		<t:htmlTag value="div" styleClass="results-panel">
-			<%@ include file="estimates-timeline.jsp" %>
+			<%@ include file="estimates-tab-timeline.jsp" %>
 		</t:htmlTag>
 	</s:panelTab>
 

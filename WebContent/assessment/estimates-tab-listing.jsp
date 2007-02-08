@@ -38,11 +38,9 @@
 				</h:selectOneMenu>
 				<h:outputText value="  #{res.estimates_list_resperpage}" />
 			</t:htmlTag>
-		</t:htmlTag>
-		
-		<t:htmlTag value="td" style="padding: 0px;">
+			<t:htmlTag value="td" style="padding: 0px;">
 				<s:tablelinks manager="#{EstimateListingBean.tableManager}"/>
 			</t:htmlTag>
-		
+		</t:htmlTag>
 	</t:htmlTag>
 </t:htmlTag>
