@@ -30,10 +30,14 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 	public void decode(FacesContext context)
 	{
 		super.decode(context);
-		expandedValues = (String[]) ((String)
+		if (context.getExternalContext().
+				getRequestParameterMap().
+				get(getHtmlNameForExpandedValues(context)) != null) {
+			expandedValues = (String[]) ((String)
 				context.getExternalContext().
 				getRequestParameterMap().
 				get(getHtmlNameForExpandedValues(context))).split(",");
+		}
 	}
 	
 	public void processUpdates(FacesContext context)

@@ -34,9 +34,10 @@ public class ExpandableBoxComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[2];
+		Object[] values = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = text;
+		values[2] = collapsed;
 		return values;
 	}
 	
@@ -45,6 +46,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
 		text = (String) values[1];
+		collapsed = (Boolean)values[2];
 	}
 	
 	private String getStateHiddenFieldName(FacesContext context)

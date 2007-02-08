@@ -119,6 +119,9 @@
 		<attribute>
 			<name>text</name>
 		</attribute>
+		<attribute>
+			<name>collapsed</name>
+		</attribute>
 	</tag>
 	
 	<tag>
