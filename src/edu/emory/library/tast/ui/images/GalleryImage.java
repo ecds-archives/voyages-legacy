@@ -5,21 +5,24 @@ import edu.emory.library.tast.util.StringUtils;
 public class GalleryImage
 {
 	
+	private String id;
 	private String imageName;
 	private String label;
 	private String description;
 	
-	public GalleryImage(String imageName, String label, String description)
+	public GalleryImage(String id, String imageName, String label, String description)
 	{
 		this.imageName = imageName;
 		this.label = label;
 		this.description = description;
+		this.id = id;
 	}
 
-	public GalleryImage(String imageName, String label)
+	public GalleryImage(String id, String imageName, String label)
 	{
 		this.imageName = imageName;
 		this.label = label;
+		this.id = id;
 	}
 
 	public String getDescription()
@@ -55,6 +58,14 @@ public class GalleryImage
 	public void setLabel(String label)
 	{
 		this.label = label;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

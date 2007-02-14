@@ -12,6 +12,8 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.CategoryAttribute;
+import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.PortAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
@@ -39,6 +41,7 @@ public class Image
 		attributes.put("ports", new PortAttribute("ports", "Image"));
 		attributes.put("voyageid", new NumericAttribute("voyageid", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("order", new NumericAttribute("order", "Image", NumericAttribute.TYPE_INTEGER));
+		attributes.put("category", new CategoryAttribute("category", "Image"));
 	}
 	
 	private int id;
@@ -64,6 +67,7 @@ public class Image
 	private int authorizationStatus = 0;
 	private boolean readyToGo = false;
 	private Integer voyageid;
+	private Category category;
 
 	private Set regions; 
 	private Set ports;
@@ -417,6 +421,14 @@ public class Image
 
 		return true;
 		
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }
