@@ -534,7 +534,7 @@
 	</tag>
 	
 	<tag>
-		<name>pictures-blah</name>
+		<name>pictures</name>
 		<tag-class>
 			edu.emory.library.tast.ui.images.GalleryTag
 		</tag-class>
