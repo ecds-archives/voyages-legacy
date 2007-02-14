@@ -41,7 +41,7 @@ public class ThumbnailServlet extends HttpServlet
 		File thumbnailFile = new File(imagesDir, thumbnailFileName);
 		if (thumbnailFile.exists())
 		{
-			response.sendRedirect(request.getContextPath() + "/images/" + thumbnailFileName);
+			response.sendRedirect(request.getContextPath() + "/images-database/" + thumbnailFileName);
 			return;
 		}
 
@@ -88,7 +88,7 @@ public class ThumbnailServlet extends HttpServlet
 		ImageIO.write(thumbnail, "png", thumbnailFile);
 		
 		// redirect to it
-		response.sendRedirect(request.getContextPath() + "/images/" + thumbnailFileName);
+		response.sendRedirect(request.getContextPath() + "/images-database/" + thumbnailFileName);
 
 	}
 

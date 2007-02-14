@@ -4,6 +4,6 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <s:pictures images="#{NewImagesBean.images}" 
-			columnsCount="4"
-			thumbnailHeight="50" 
-			thumbnailWidth="70" />
+			columnsCount="5"
+			thumbnailHeight="100" 
+			thumbnailWidth="100" />

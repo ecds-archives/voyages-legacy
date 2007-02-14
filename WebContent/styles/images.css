@@ -1,10 +1,45 @@
 td.td-main-panel {
 	vertical-align: top; 
 	background-image: url(../images/resources-bg.png);
+	background-repeat: no-repeat;
 	padding: 10px;}
 	
 td.td-side-panel {
 	width: 280px; 
 	vertical-align: top;
 	border-right: 1px solid #165B31;}
-	
+
+td.gallery-image {
+	vertical-align: top;
+	width: 160px;
+}
+
+div.gallery-image {
+	margin-left: auto;
+	margin-right: auto;
+	width: 106px;
+	height: 106px;
+	position: relative;
+}
+
+div.gallery-image img {
+	position: absolute;
+	left: 3px;
+	top: 3px;
+}
+
+div.gallery-image-frame {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 106px;
+	height: 106px;	
+	background: url(../images/resources-image-frame.png) no-repeat;
+}
+
+div.gallery-image-label {
+	text-align: center;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}

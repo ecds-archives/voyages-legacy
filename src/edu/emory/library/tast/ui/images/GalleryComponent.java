@@ -65,7 +65,6 @@ public class GalleryComponent extends UIComponentBase
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("class", "gallery-table", null);
-
 		int column = 0;
 		for (int i = 0; i < images.length; i++)
 		{
@@ -74,7 +73,7 @@ public class GalleryComponent extends UIComponentBase
 			
 			String url =
 				context.getExternalContext().getRequestContextPath() +
-				"/ThumbnailServlet" +
+				"/servlet/thumbnail" +
 				"?i=" + image.getImageName() +
 				"&w=" + thumbnailWidthString +
 				"&h=" + thumbnailHeightString;
@@ -85,10 +84,8 @@ public class GalleryComponent extends UIComponentBase
 				writer.startElement("tr", this);
 				column = 0;
 			}
-			else
-			{
-				column++;
-			}
+			column++;
+			
 			
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "gallery-image", null);
@@ -105,6 +102,7 @@ public class GalleryComponent extends UIComponentBase
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "gallery-image-frame", null);
+			writer.write("&nbsp;");
 			writer.endElement("div");
 
 			writer.endElement("div");
