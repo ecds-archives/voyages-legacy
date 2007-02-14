@@ -3,4 +3,8 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<h:outputText value="Gallery of images"/>
+
+<s:pictures-blah images="#{NewImagesBean.images}" 
+			columnsCount="4", 
+			thumbnailHeight="50" 
+			thumbnailWidth="70" />

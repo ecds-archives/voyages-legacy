@@ -532,6 +532,26 @@
 			<name>showEventHandler</name>
 		</attribute>	
 	</tag>
+	
+	<tag>
+		<name>pictures-blah</name>
+		<tag-class>
+			edu.emory.library.tast.ui.images.GalleryTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>columnsCount</name>
+		</attribute>
+		<attribute>
+			<name>thumbnailHeight</name>
+		</attribute>
+		<attribute>
+			<name>thumbnailWidth</name>
+		</attribute>
+		<attribute>
+			<name>images</name>
+		</attribute>
+	</tag>
 
 	<tag>
 		<name>lookupSelect</name>

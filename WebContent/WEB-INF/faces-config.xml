@@ -380,6 +380,30 @@
 	</managed-bean>
 	
 	<managed-bean>
+		<managed-bean-name>PicturesBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.images.site.PicturesBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>voyageBean</property-name>
+			<value>#{VoyageDetailBean}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>NewImagesBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.images.site.NewImagesBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
 		<managed-bean-name>GalleryRequestBean</managed-bean-name>
 		<managed-bean-class>
 			edu.emory.library.tast.ui.images.site.GalleryRequestBean
