@@ -12,17 +12,17 @@ input.main-box-button {
 	margin-top: 10px;
 	margin-bottom: 10px; }
 	
+div.query-builder {
+	}
+	
 div.side-box {
 	color: black;
 	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
-	margin-bottom: 0px;
-	padding-top: 5px;
-	padding-bottom: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-	border-bottom: 2px solid #F1E7C8; }
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #EEDAA2; }
 	
 img.query-builder-remove-button {
 	float: right;
@@ -64,13 +64,13 @@ td.query-builder-button-separator {
 
 table.query-builder-label {
 	margin-bottom: 5px;
-	width: 280px; }
+	width: 270px; }
 
 input.query-builder-text {
 	background-color: #F1E7C8;
 	border: 0px;
 	padding: 2px;
-	width: 276px; }
+	width: 266px; }
 
 td.query-builder-range-type {
 	width: 115px; }

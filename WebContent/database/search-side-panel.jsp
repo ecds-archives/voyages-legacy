@@ -43,7 +43,7 @@
 
 </s:expandableBox>
 
-<s:expandableBox text="#{res.database_search_general}">
+<s:expandableBox text="#{res.database_search_general}" collapsed="true">
 
 	<s:menuPopup
 		customSubmitFunction="animateAttribute"
@@ -102,7 +102,7 @@ function animateAttribute(menuItem, submitFunction)
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
-		<t:htmlTag value="td" style="padding: 10px 0px 10px 0px;">
+		<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
 
 			<h:commandButton
 				id="buttonSearch"
@@ -110,7 +110,7 @@ function animateAttribute(menuItem, submitFunction)
 				value="#{res.database_search_searchbutton}" />
 
 		</t:htmlTag>
-		<t:htmlTag value="td" style="padding: 10px 0px 10px 5px;">
+		<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
 
 			<h:commandButton
 				id="buttonAgain"
@@ -118,7 +118,7 @@ function animateAttribute(menuItem, submitFunction)
 				value="#{res.database_search_newquery}" />
 	
 		</t:htmlTag>
-		<t:htmlTag value="td" style="padding: 10px 0px 10px 10px;">
+		<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;">
 
 			<aa:zoneJSF id="total">
 				<h:outputText value="#{SearchBean.numberOfResultsText}" />

@@ -224,62 +224,72 @@ public class QueryBuilderComponent extends UIComponentBase
 		// we will need to access db
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
-
-		int i = 0;
-		for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();  i++)
+		
+		if (query.getConditionCount() > 0)
 		{
 			
-			QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
-			String searchableAttributeId = queryCondition.getSearchableAttributeId();
-			
-			if (i > 0) regJS.append(", ");
-			regJS.append("'").append(searchableAttributeId).append("': {");
-			regJS.append("conditionDivId: '").append(getConditionDivId(context, queryCondition)).append("'");
-			
-			encodeStartQueryConditionBox(queryCondition, context, form, writer);
-			if (queryCondition instanceof QueryConditionText)
-			{
-				encodeSimpleCondition(
-						(QueryConditionText)queryCondition,
-						context, form, writer,
-						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-			}
-			else if (queryCondition instanceof QueryConditionBoolean)
-			{
-				encodeBooleanCondition(
-						(QueryConditionBoolean)queryCondition,
-						context, form, writer,
-						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-			}
-			else if (queryCondition instanceof QueryConditionNumeric)
-			{
-				encodeNumericCondition(
-						(QueryConditionNumeric) queryCondition,
-						context, form, writer,
-						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-			}
-			else if (queryCondition instanceof QueryConditionDate)
-			{
-				encodeDateCondition(
-						(QueryConditionDate) queryCondition,
-						context, form, writer,
-						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
-			}
-			else if (queryCondition instanceof QueryConditionList)
-			{
-				encodeListCondition(
-						(QueryConditionList)queryCondition,
-						context, form, writer,
-						jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS, 
-						session);
-			}
-			encodeEndQueryConditionBox(queryCondition, context, form, writer);
-			
-			regJS.append("}");
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "query-builder", null);
 
+			int i = 0;
+			for (Iterator iterFieldName = query.getConditions().iterator(); iterFieldName.hasNext();  i++)
+			{
+				
+				QueryCondition queryCondition = (QueryCondition) iterFieldName.next();
+				String searchableAttributeId = queryCondition.getSearchableAttributeId();
+				
+				if (i > 0) regJS.append(", ");
+				regJS.append("'").append(searchableAttributeId).append("': {");
+				regJS.append("conditionDivId: '").append(getConditionDivId(context, queryCondition)).append("'");
+				
+				encodeStartQueryConditionBox(queryCondition, context, form, writer);
+				if (queryCondition instanceof QueryConditionText)
+				{
+					encodeSimpleCondition(
+							(QueryConditionText)queryCondition,
+							context, form, writer,
+							jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+				}
+				else if (queryCondition instanceof QueryConditionBoolean)
+				{
+					encodeBooleanCondition(
+							(QueryConditionBoolean)queryCondition,
+							context, form, writer,
+							jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+				}
+				else if (queryCondition instanceof QueryConditionNumeric)
+				{
+					encodeNumericCondition(
+							(QueryConditionNumeric) queryCondition,
+							context, form, writer,
+							jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+				}
+				else if (queryCondition instanceof QueryConditionDate)
+				{
+					encodeDateCondition(
+							(QueryConditionDate) queryCondition,
+							context, form, writer,
+							jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS);
+				}
+				else if (queryCondition instanceof QueryConditionList)
+				{
+					encodeListCondition(
+							(QueryConditionList)queryCondition,
+							context, form, writer,
+							jsUpdateTotalPostponed, jsUpdateTotalImmediate, regJS, 
+							session);
+				}
+				encodeEndQueryConditionBox(queryCondition, context, form, writer);
+				
+				regJS.append("}");
+	
+			}
+			
+			regJS.append("}));");
+			
+			writer.endElement("div");
+			
 		}
-		
-		regJS.append("}));");
 
 		// done with db
 		trans.commit();
