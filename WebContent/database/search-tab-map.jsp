@@ -16,7 +16,7 @@
 				miniMapFile="#{MapBean.miniMapFile}"
 				miniMapWidth="100"
 				miniMapHeight="100"
-				serverBaseUrl="servlet/maptile" />
+				serverBaseUrl="../servlet/maptile" />
 				
 			<% /* 
 				

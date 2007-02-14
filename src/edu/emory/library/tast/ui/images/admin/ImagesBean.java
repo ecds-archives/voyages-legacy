@@ -585,7 +585,7 @@ public class ImagesBean
 	{
 		if (image.getFileName() != null)
 		{
-			return "images/" + image.getFileName();
+			return "images-database/" + image.getFileName();
 		}
 		else
 		{

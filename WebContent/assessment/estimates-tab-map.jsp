@@ -28,7 +28,7 @@
 				miniMapFile="#{EstimatesMapBean.miniMapFile}"
 				miniMapWidth="100"
 				miniMapHeight="100"
-				serverBaseUrl="servlet/maptile" />
+				serverBaseUrl="../servlet/maptile" />
 				
 			<h:outputText value="&nbsp;" escape="false" />
 			<%/*
