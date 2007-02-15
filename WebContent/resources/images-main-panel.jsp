@@ -7,7 +7,7 @@
 <t:htmlTag value="table" styleClass="table-main-images">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="border-bottom: 3px solid #165B31;">
-			<t:htmlTag value="h1"><h:outputText value="Vessles"/> </t:htmlTag >
+			<t:htmlTag value="h1"><h:outputText value="Vessels"/> </t:htmlTag >
 		</t:htmlTag >
 	</t:htmlTag >
 	<t:htmlTag value="tr">

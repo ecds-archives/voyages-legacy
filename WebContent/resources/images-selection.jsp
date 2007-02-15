@@ -19,9 +19,45 @@
 <br>
 
 <s:expandableBox text="Search for images">
-	<f:verbatim escape="false">
-		There will be a search options. User will be able to choose year range for image, author, place etc.
-		<br> <br>
-	</f:verbatim>
-	<h:commandButton value="Search images"/>
+	<t:htmlTag value="table">
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
+			<h:outputText value="Image: "/>
+		</t:htmlTag>
+		<t:htmlTag value="td">	
+			<h:inputText style="width: 150px;" value="#{NewImagesBean.imageLike}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
+			<h:outputText value="Category: "/>
+		</t:htmlTag>
+		<t:htmlTag value="td">			
+			<h:selectOneMenu style="width: 150px;" 
+					value="#{NewImagesBean.selectedCategory}">
+				<f:selectItems value="#{NewImagesBean.categories}" />
+			</h:selectOneMenu>
+		</t:htmlTag>
+	</t:htmlTag>
+
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
+			<h:outputText value="Date range: "/>
+		</t:htmlTag>
+		<t:htmlTag value="td">
+			<h:inputText style="width: 40px;" value="#{NewImagesBean.from}"/>
+			<h:outputText escape="false" value="&nbsp;-&nbsp;"/>
+			<h:inputText style="width: 40px;" value="#{NewImagesBean.to}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">						
+		</t:htmlTag>
+		<t:htmlTag value="td">			
+			<h:commandButton value="Search images" action="#{NewImagesBean.search}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	</t:htmlTag>
 </s:expandableBox>

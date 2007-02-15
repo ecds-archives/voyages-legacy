@@ -13,6 +13,8 @@ public class GalleryTag extends UIComponentTag
 	private String thumbnailHeight;
 	private String columnsCount;
 	private String images;
+	private String action;
+	private String selectedImageId;
 
 	public String getComponentType()
 	{
@@ -65,6 +67,16 @@ public class GalleryTag extends UIComponentTag
 			ValueBinding vb = app.createValueBinding(images);
 			gallery.setValueBinding("images", vb);
 		}
+		if (action != null && isValueReference(images))
+		{
+			gallery.setAction(action);
+		}
+		
+		if (selectedImageId != null && isValueReference(selectedImageId))
+		{
+			ValueBinding vb = app.createValueBinding(selectedImageId);
+			gallery.setValueBinding("selectedImageId", vb);
+		}
 
 	}
 
@@ -106,6 +118,22 @@ public class GalleryTag extends UIComponentTag
 	public void setThumbnailWidth(String thumbnailWidth)
 	{
 		this.thumbnailWidth = thumbnailWidth;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getSelectedImageId() {
+		return selectedImageId;
+	}
+
+	public void setSelectedImageId(String selectedImageId) {
+		this.selectedImageId = selectedImageId;
 	}
 
 }

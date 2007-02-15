@@ -1,14 +1,25 @@
 package edu.emory.library.tast.ui.images;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.faces.application.Application;
+import javax.faces.component.UICommand;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.MethodBinding;
+import javax.faces.el.ValueBinding;
+import javax.faces.event.ActionEvent;
 
+import org.apache.myfaces.el.MethodBindingImpl;
+
+import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
-public class GalleryComponent extends UIComponentBase
+public class GalleryComponent extends UICommand
 {
 	
 	private boolean thumbnailWidthSet = false;
@@ -22,7 +33,13 @@ public class GalleryComponent extends UIComponentBase
 
 	private boolean imagesSet = false;
 	private GalleryImage[] images;
+	private String selectedImageId;
 
+	public String getRendererType()
+	{
+		return null;
+	}
+	
 	public String getFamily()
 	{
 		return null;
@@ -47,10 +64,36 @@ public class GalleryComponent extends UIComponentBase
 		columnsCount = ((Integer) values[3]).intValue();
 	}
 	
+	private String getFieldNameForSelectedImageId(FacesContext context)
+	{
+		return getClientId(context) + "_selected_id";
+	}
+	
+	public void decode(FacesContext context)
+	{
+
+		Map params = context.getExternalContext().getRequestParameterMap();
+		
+		String imageId = JsfUtils.getParamString(params, getFieldNameForSelectedImageId(context));
+		if (!StringUtils.isNullOrEmpty(imageId))
+		{
+			selectedImageId = imageId;
+			queueEvent(new ActionEvent(this));
+		}
+
+	}
+	
+	public void processUpdates(FacesContext context)
+	{
+        ValueBinding vb = getValueBinding("selectedImageId");
+        if (vb != null) vb.setValue(context, selectedImageId);
+	}
+	
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 
 		ResponseWriter writer = context.getResponseWriter();
+		UIForm form = JsfUtils.getForm(this, context);
 		
 		images = getImages();
 		thumbnailWidth = getThumbnailWidth();
@@ -60,6 +103,8 @@ public class GalleryComponent extends UIComponentBase
 		String thumbnailWidthString = String.valueOf(thumbnailWidth);
 		String thumbnailHeightString = String.valueOf(thumbnailHeight);
 		
+		JsfUtils.encodeHiddenInput(this, writer,
+				getFieldNameForSelectedImageId(context));
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -89,6 +134,15 @@ public class GalleryComponent extends UIComponentBase
 			
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "gallery-image", null);
+			if (getAction() != null) {
+				writer.startElement("a", this);
+				writer.writeAttribute("style", "cursor: pointer;", null);
+				String onClick = JsfUtils.generateSubmitJS(
+					context, form,
+					getFieldNameForSelectedImageId(context),
+					image.getId());
+				writer.writeAttribute("onclick", onClick, null);
+			}
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "gallery-image", null);
@@ -119,7 +173,9 @@ public class GalleryComponent extends UIComponentBase
 				writer.write(image.getDescription());
 				writer.endElement("div");
 			}
-
+			if (getAction() != null) {
+				writer.endElement("a");
+			}
 			writer.endElement("td");
 			
 		}
@@ -176,6 +232,11 @@ public class GalleryComponent extends UIComponentBase
 	{
 		columnsCountSet = true;
 		this.columnsCount = columns;
+	}
+
+	public void setAction(String action) {
+		Application app = FacesContext.getCurrentInstance().getApplication();
+		super.setAction(app.createMethodBinding(action, null));
 	}
 
 }

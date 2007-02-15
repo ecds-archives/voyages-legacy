@@ -740,6 +740,20 @@
 			<to-view-id>/database/voyage.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>images-query</from-outcome>
+			<to-view-id>/resources/images-query.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>images-detail</from-outcome>
+			<to-view-id>/resources/images-detail.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<render-kit />
 

@@ -551,6 +551,12 @@
 		<attribute>
 			<name>images</name>
 		</attribute>
+		<attribute>
+			<name>action</name>
+		</attribute>
+		<attribute>
+			<name>selectedImageId</name>
+		</attribute>
 	</tag>
 
 	<tag>

@@ -42,6 +42,7 @@ public class Image
 		attributes.put("voyageid", new NumericAttribute("voyageid", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("order", new NumericAttribute("order", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("category", new CategoryAttribute("category", "Image"));
+		attributes.put("date", new StringAttribute("date", "Image"));
 	}
 	
 	private int id;
