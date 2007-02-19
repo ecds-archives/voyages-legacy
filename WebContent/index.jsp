@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,6 +12,7 @@
 	<link href="./styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="./styles/index.css" rel="stylesheet" type="text/css">
 	<script src="./scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	<script src="./scripts/welcome-map.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
@@ -26,7 +28,18 @@
 	
 	<div class="index-middle">
 		<div class="index-middle-img">
-			&nbsp;
+
+			<div style="padding: 20px 0px 0px 300px;">
+
+			<s:welcomeMap
+				id="welcomeMap"
+				imageUrl="#{HomePageBean.welcomeMapImage}"
+				imageHeight="#{HomePageBean.welcomeMapHeight}"
+				imageWidth="#{HomePageBean.welcomeMapWidth}"
+				places="#{HomePageBean.welcomeMapPlaces}" />
+				
+			</div>
+		
 		</div>
 	</div>
 

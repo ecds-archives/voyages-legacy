@@ -13,3 +13,75 @@ div.index-middle-img {
 	height: 300px;
 	background-image: url(../images/index-middle-img.png); 
 	background-repeat: no-repeat; }
+	
+/* welcome map */
+
+table.welcome-map {
+	}
+	
+td.welcome-map-top-left {
+	background-image: url(../images/welcome-map-top-left.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	width: 10px;
+	height: 10px; }
+	
+td.welcome-map-top-middle {
+	background-image: url(../images/welcome-map-top-middle.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	height: 10px; }
+	
+td.welcome-map-top-right {
+	background-image: url(../images/welcome-map-top-right.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	width: 10px;
+	height: 10px; }
+	
+td.welcome-map-middle-left {
+	background-image: url(../images/welcome-map-middle-left.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	width: 10px; }
+	
+td.welcome-map-image {
+	vertical-align: top; }
+	
+div.welcome-map-text {
+	-moz-opacity: 0.5;
+	background-color: Black; }
+
+div.welcome-map-text div {
+	padding: 5px 10px 5px 10px;
+	color: White;
+	background-color: Black; }
+
+td.welcome-map-middle-right {
+	background-image: url(../images/welcome-map-middle-right.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	width: 10px; }
+
+td.welcome-map-bottom-left {
+	background-image: url(../images/welcome-map-bottom-left.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	width: 10px;
+	height: 10px; }
+	
+td.welcome-map-bottom-middle {
+	background-image: url(../images/welcome-map-bottom-middle.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	height: 10px; }
+	
+td.welcome-map-bottom-right {
+	background-image: url(../images/welcome-map-bottom-right.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+	width: 10px;
+	height: 10px; }
+	
+img.welcome-map-place {
+	cursor: pointer; }

@@ -220,9 +220,12 @@
 	
 	<component>
 		<component-type>Gallery</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.images.GalleryComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.ui.images.GalleryComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>WelcomeMap</component-type>
+		<component-class>edu.emory.library.tast.homepage.WelcomeMapComponent</component-class>
 	</component>
 
 	<managed-bean>
@@ -546,6 +549,12 @@
 	<managed-bean>
 		<managed-bean-name>MainMenuBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.common.MainMenuBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>HomePageBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.homepage.HomePageBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
