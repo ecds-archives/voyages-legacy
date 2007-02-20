@@ -14,6 +14,31 @@ div.index-middle-img {
 	background-image: url(../images/index-middle-img.png); 
 	background-repeat: no-repeat; }
 	
+div.index-bottom {
+	margin-left: 660px;
+	width: 430px;
+	background-image: url(../images/index-blue-gradient.png); 
+	background-repeat: repeat-x; }
+	
+/* highlights */
+
+div.index-highlight {
+	margin: 15px 0px 10px 20px;
+	background-repeat: no-repeat;
+	background-image: url(../images/index-icon.png); }
+	
+div.index-highlight-title {
+	padding-bottom: 5px;
+	padding-left: 75px; }
+
+div.index-highlight-title a {
+	font-size: 12pt;
+	color: #008CA5; }
+
+div.index-highlight-text {
+	padding-right: 10px;
+	padding-left: 75px; }
+
 /* welcome map */
 
 table.welcome-map {

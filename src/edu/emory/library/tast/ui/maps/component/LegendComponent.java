@@ -97,17 +97,9 @@ public class LegendComponent extends UIComponentBase {
 			writer.writeAttribute("class", styleClass, null);
 		}
 
-		
-		writer.startElement("table", this);
 		this.encodeAttrsChoose(context, writer);
-		
 		this.encodeMapsChoose(context, writer);
-		writer.endElement("table");
-		
-		writer.write("<b>Legend:</b><br/>");
-		
 		this.encodeLegend(context, writer);
-		
 		this.encodeComponentButton(context, writer);
 
 	}
@@ -118,11 +110,15 @@ public class LegendComponent extends UIComponentBase {
 		Integer selectedMap = (Integer)this.getValueBinding(context, "chosenMap");
 		
 		if (maps != null && selectedMap != null) {
-			writer.startElement("tr", this);
-			writer.startElement("td", this);
-			writer.write("<b>Show: </b>");
-			writer.endElement("td");
-			writer.startElement("td", this);
+			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "map-legend-section-title", null);
+			writer.write("Select map");
+			writer.endElement("div");
+
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "map-legend-section", null);
+			
 			writer.startElement("select", this);
 			writer.writeAttribute("id", this.getId() + "_availableMap", null);
 			StringBuffer buffer = new StringBuffer();
@@ -141,16 +137,16 @@ public class LegendComponent extends UIComponentBase {
 				writer.write(maps[i].getLabel());
 				writer.endElement("option");
 			}
-			writer.endElement("input");
+			writer.endElement("select");
 			
+			writer.endElement("div");
+
 			writer.startElement("input", this);
 			writer.writeAttribute("name", this.getMapTypeHiddenFieldName(context), null);
 			writer.writeAttribute("type", "hidden", null);
 			writer.writeAttribute("value", selectedMap, null);
 			writer.endElement("input");
 			
-			writer.endElement("td");
-			writer.endElement("tr");
 		}
 	}
 
@@ -161,11 +157,15 @@ public class LegendComponent extends UIComponentBase {
 		Integer selectedAttr = (Integer)this.getValueBinding(context, "chosenAttribute");
 		
 		if (attrs != null && selectedAttr != null) {
-			writer.startElement("tr", this);
-			writer.startElement("td", this);
-			writer.write("<b>Values: </b>");
-			writer.endElement("td");
-			writer.startElement("td", this);
+			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "map-legend-section-title", null);
+			writer.write("Values");
+			writer.endElement("div");
+			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "map-legend-section", null);
+			
 			writer.startElement("select", this);
 			writer.writeAttribute("id", this.getId() + "_availableAttr", null);
 			StringBuffer buffer = new StringBuffer();
@@ -183,16 +183,16 @@ public class LegendComponent extends UIComponentBase {
 				writer.write(attrs[i].getLabel());
 				writer.endElement("option");
 			}
-			writer.endElement("input");
+			writer.endElement("select");
 			
+			writer.endElement("div");
+
 			writer.startElement("input", this);
 			writer.writeAttribute("name", this.getAttrTypeHiddenFieldName(context), null);
 			writer.writeAttribute("type", "hidden", null);
 			writer.writeAttribute("value", selectedAttr, null);
 			writer.endElement("input");
 			
-			writer.endElement("td");
-			writer.endElement("tr");
 		}
 	}
 	
@@ -201,52 +201,71 @@ public class LegendComponent extends UIComponentBase {
 		LegendItemsGroup[] legendGroups = (LegendItemsGroup[])getValueBinding(context, "legend");
 		
 		if (legendGroups != null) {
-			writer.startElement("table", this);
-			writer.writeAttribute("class", "legend-table-main", null);
 		
 			for (int i = 0; i < legendGroups.length; i++) {
-				writer.startElement("tr", this);
-				writer.startElement("td", this);			
+
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "map-legend-section-title", null);
 				writer.write(legendGroups[i].getTitle());
+				writer.endElement("div");
+				
 				LegendItem[] items = legendGroups[i].getItems();
+				
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "map-legend-section", null);
+
 				writer.startElement("table", this);
-				writer.writeAttribute("class", "legend-table-detail", null);
+				writer.writeAttribute("class", "map-legend-items", null);
+				writer.writeAttribute("border", "0", null);
+				writer.writeAttribute("cellspacing", "0", null);
+				writer.writeAttribute("cellpadding", "0", null);
 				
 				for (int j = 0; j < items.length; j++) {
 					writer.startElement("tr", this);
 					
 					writer.startElement("td", this);
-					writer.writeAttribute("class", "legend-table-detail-col3", null);
+					writer.writeAttribute("class", "map-legend-checkbox", null);
 					encodeCheckbox(context, writer, "_legend_" + i + "_" + j, items[j].isEnabled());
 					writer.endElement("td");
 					
 					writer.startElement("td", this);
-					writer.writeAttribute("class", "legend-table-detail-col1", null);
+					writer.writeAttribute("class", "map-legend-symbol", null);
 					writer.startElement("img", this);
 					writer.writeAttribute("src", items[j].getImagePath(), null);
 					writer.endElement("img");
 					writer.endElement("td");
 					
 					writer.startElement("td", this);
-					writer.writeAttribute("class", "legend-table-detail-col2", null);
+					writer.writeAttribute("class", "map-legend-label", null);
 					writer.write(items[j].getLegendString());					
 					writer.endElement("td");
 					
 					writer.endElement("tr");
-				}				
+				}
+				
 				writer.endElement("table");
-				writer.endElement("td");
-				writer.endElement("tr");
+				writer.endElement("div");
+
 			}
 		
-			writer.endElement("table");
 		}
 		
 		MapLayer[] layers = (MapLayer[])getValueBinding(context, "layers");
 		if (layers.length > 0) {
-			writer.write("<br/><b>Layers:</b><br/>");
+			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "map-legend-section-title", null);
+			writer.write("Layers");
+			writer.endElement("div");
+			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "map-legend-section", null);
+			
 			writer.startElement("table", this);
-			writer.writeAttribute("class", "legend-table-layers", null);
+			writer.writeAttribute("class", "map-legend-items", null);
+			writer.writeAttribute("border", "0", null);
+			writer.writeAttribute("cellspacing", "0", null);
+			writer.writeAttribute("cellpadding", "0", null);
 			
 			for (int i = 0; i < layers.length; i++) {
 				writer.startElement("tr", this);
@@ -263,6 +282,8 @@ public class LegendComponent extends UIComponentBase {
 			}
 			
 			writer.endElement("table");
+			writer.endElement("div");
+
 		}
 	}
 	

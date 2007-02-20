@@ -72,15 +72,15 @@
 	<group id="itinerary" userLabel="Itinerary">
 		<searchable-attributes>
 			<searchable-attribute id="ptdepimp"/>
-			<searchable-attribute id="mjbyptimp"/>
 			<searchable-attribute id="plac1tra"/>
 			<searchable-attribute id="plac2tra"/>
 			<searchable-attribute id="plac3tra"/>
+			<searchable-attribute id="mjbyptimp"/>
 			<searchable-attribute id="npafttra"/>
-			<searchable-attribute id="mjslptimp"/>
 			<searchable-attribute id="sla1port"/>
 			<searchable-attribute id="adpsale1"/>
 			<searchable-attribute id="adpsale2"/>
+			<searchable-attribute id="mjslptimp"/>
 			<searchable-attribute id="portret"/>
 		</searchable-attributes>
 		<table-attributes>
@@ -113,8 +113,6 @@
 			<searchable-attribute id="datebuy"/>
 			<searchable-attribute id="dateleftafr"/>
 			<searchable-attribute id="dateland1"/>
-			<searchable-attribute id="dateland2"/>
-			<searchable-attribute id="dateland3"/>
 			<searchable-attribute id="datedepam"/>
 			<searchable-attribute id="dateend"/>
 			<searchable-attribute id="voy1imp"/>
@@ -126,8 +124,6 @@
 			<table-attribute id="datebuy"/>
 			<table-attribute id="dateleftafr"/>
 			<table-attribute id="dateland1"/>
-			<table-attribute id="dateland2"/>
-			<table-attribute id="dateland3"/>
 			<table-attribute id="datedepam"/>
 			<table-attribute id="dateend"/>
 			<table-attribute id="voy1imp"/>
