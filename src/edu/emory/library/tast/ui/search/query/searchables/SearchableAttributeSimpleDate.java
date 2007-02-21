@@ -90,7 +90,7 @@ public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRang
 		
 		if (!queryConditionDate.areAllMonthsSelected())
 			conditions.addCondition(
-					new FunctionAttribute("date_part", new Attribute[] {new DirectValueAttribute("'month'"), attribute}),
+					new FunctionAttribute("date_part", new Attribute[] {new DirectValueAttribute("month"), attribute}),
 					queryConditionDate.getSelectedMonthsAsArray(),
 					Conditions.OP_IN);
 		

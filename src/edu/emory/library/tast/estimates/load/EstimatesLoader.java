@@ -170,7 +170,7 @@ public class EstimatesLoader {
 			//just create extimates and add them to list of estimates.
 			for (int j = 0; j < weights.length; j++) {
 				Estimate estim = new Estimate();
-				estim.setNation(Nation.loadById(session, position.getNatimp()));
+				estim.setNation(EstimatesNation.loadById(session, position.getNatimp()));
 				estim.setYear(new Integer(position.getYear()));
 				if (weights[j].expRegion != null) {
 					estim.setExpRegion(EstimatesExportRegion.loadById(session, weights[j].expRegion
@@ -245,7 +245,7 @@ public class EstimatesLoader {
 			//Just create estimates
 			for (int j = 0; j < weights.length; j++) {
 				Estimate estim = new Estimate();
-				estim.setNation(Nation.loadById(session, position.getNatimp()));
+				estim.setNation(EstimatesNation.loadById(session, position.getNatimp()));
 				estim.setYear(new Integer(position.getYear()));
 				if (weights[j].expRegion != null) {
 					estim.setExpRegion(EstimatesExportRegion.loadById(session, weights[j].expRegion

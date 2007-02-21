@@ -84,7 +84,7 @@
 				
 				<div class="section-index-intro-icon section-index-intro-blank-icon">
 				
-					<div class="section-index-intro-icon-title"><a href="#">Essays</a></div>
+					<div class="section-index-intro-icon-title"><a href="essays-intro.faces">Essays</a></div>
 				
 					<p class="section-index-intro">
 					Suspendisse id velit nec urna suscipit dignissim.

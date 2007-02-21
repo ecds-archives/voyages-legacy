@@ -1,22 +1,13 @@
 package edu.emory.library.tast.ui.search.tabscommon;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.EstimatesExportRegion;
+import edu.emory.library.tast.dm.EstimatesImportRegion;
+import edu.emory.library.tast.dm.EstimatesNation;
 import edu.emory.library.tast.dm.Nation;
-import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
@@ -32,7 +23,7 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 	static {
 		VisibleAttrEstimate attr = new VisibleAttrEstimate("nation", 
 				new Attribute[] {new SequenceAttribute(
-						new Attribute[] {Estimate.getAttribute("nation"), Nation.getAttribute("name")})});
+						new Attribute[] {Estimate.getAttribute("nation"), EstimatesNation.getAttribute("name")})});
 		attr.setUserLabel(TastResource.getText("components_estimate_nationcarrierattr"));
 		visibleAttributes.put("nation", attr);
 		
@@ -42,13 +33,13 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		
 		attr = new VisibleAttrEstimate("impRegion", 
 				new Attribute[] {new SequenceAttribute(
-						new Attribute[] {Estimate.getAttribute("impRegion"), Region.getAttribute("name")})});
+						new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("name")})});
 		attr.setUserLabel(TastResource.getText("components_estimate_impregionattr"));
 		visibleAttributes.put("impRegion", attr);
 		
 		attr = new VisibleAttrEstimate("expRegion", 
 				new Attribute[] {new SequenceAttribute(
-						new Attribute[] {Estimate.getAttribute("expRegion"), Region.getAttribute("name")})});
+						new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("name")})});
 		attr.setUserLabel(TastResource.getText("components_estimate_expregionattr"));
 		visibleAttributes.put("expRegion", attr);
 		

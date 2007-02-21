@@ -216,7 +216,14 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 
 			// label
 			writer.startElement("td", this);
-			writer.writeAttribute("class", "checkbox-list-label-0", null);
+			if (item.hasSubItems())
+			{
+				writer.writeAttribute("class", "checkbox-list-label-0-expandable", null);
+			}
+			else
+			{
+				writer.writeAttribute("class", "checkbox-list-label-0", null);
+			}
 			writer.startElement("label", this);
 			writer.writeAttribute("for", inputId, null);
 			writer.write(item.getText());

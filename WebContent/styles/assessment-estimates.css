@@ -18,11 +18,20 @@ h1 {
 * selection
 ***********************************/
 
+div.import-region-list {
+	padding-right: 5px; }
+
 div.import-region-list table.checkbox-list-table-0 {
 	width: 100%; }
 	
 div.import-region-list td.checkbox-list-label-0 {
 	width: 100%; }
+
+div.import-region-list td.checkbox-list-label-0-expandable {
+	width: 100%;
+	background-image: url(../images/assessment-icon-arrow-right.png);
+	background-repeat: no-repeat;
+	background-position: center right; }
 
 div.import-region-list td.checkbox-list-label-1 {
 	padding-right: 10px; }
@@ -40,7 +49,7 @@ div.import-region-list div.checkbox-list-popup {
 	background-color: White;
 	background-position: right top;
 	background-repeat: no-repeat;
-	left: 200px;
+	left: 250px;
 	position: absolute; }
 
 /***********************************
@@ -215,8 +224,9 @@ div.event-line-events-title {
 	background-color: #115676; }
 
 .color-timeline-imported {
-	background-color: #49BFC2; }
-	
+	background-color: #49BFC2;
+	background-color: #008CA5; }
+
 .color-timeline-imported-event {
 	background-color: #115676; }
 	
@@ -356,3 +366,27 @@ td.pager-forward a:hover,
 td.pager-fast-back a:hover,
 td.pager-back a:hover	{
 	background-color: #b4e6e6; }
+
+
+/***********************************
+* map legend
+***********************************/
+	
+div.map-legend-section-title {
+	background-color: #CCEEEE;
+	font-weight: bold;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	padding-left: 5px;
+	padding-right: 10px;
+	border-bottom: 0px solid #895D03; }
+
+div.map-legend-section {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 10px; }
+
+input.map-legend-refresh {
+	margin-top: 0px; }	

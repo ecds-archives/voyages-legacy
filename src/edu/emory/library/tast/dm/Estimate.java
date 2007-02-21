@@ -27,7 +27,7 @@ public class Estimate {
 	
 	private Integer year;
 
-	private Nation nation;
+	private EstimatesNation nation;
 
 	private EstimatesExportRegion expRegion;
 
@@ -37,11 +37,11 @@ public class Estimate {
 
 	private double slavExported;
 
-	public Nation getNation() {
+	public EstimatesNation getNation() {
 		return nation;
 	}
 
-	public void setNation(Nation nation) {
+	public void setNation(EstimatesNation nation) {
 		this.nation = nation;
 	}
 

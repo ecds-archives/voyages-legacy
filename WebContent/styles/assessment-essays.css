@@ -1,0 +1,36 @@
+table.essays-layout {
+	margin-top: 15px;
+	margin-left: 15px; }
+
+table.essays-layout td {
+	vertical-align: top; }
+	
+td.essays-left-column {
+	padding-right: 15px;
+	width: 290px; }
+
+td.essays-right-column {
+	border-left-color: #115676;
+	border-left-style: solid;
+	border-left-width: 1px;
+	padding-left: 20px;
+	padding-right: 10px; }
+
+td.essays-left-column table.box-main-table {
+	width: 280px; }
+	
+ol.toc {
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px; }
+	
+ol.toc li {
+	margin-bottom: 0.5em;
+	margin-left: 20px; }
+	
+ol.toc li.current-essay {
+	font-weight: bold; }
+
+p {
+	width: 600px;
+	line-height: 160%; }

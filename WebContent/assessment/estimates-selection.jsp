@@ -5,7 +5,7 @@
 
 <div id="debug"></div>
 
-<s:expandableBox text="Time frame">
+<s:expandableBox text="#{res.estimates_left_timeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
@@ -69,9 +69,15 @@
 <br>
 
 <div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
+
 	<h:commandButton
 		value="#{res.estimates_left_changeselection}"
 		action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+
+	<h:commandButton
+		value="#{res.estimates_left_resetselection}"
+		action="#{EstimatesSelectionBean.resetSelection}" />
+
 </div>
 
 <br>

@@ -21,7 +21,7 @@
 
 	</t:htmlTag>
 
-	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 10px; border-left: 0px solid #895D03;">
+	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px; border-left: 0px solid #895D03;">
 		
 		<s:legend id="mapLegend-component" 
 			styleClass="map-legend-div"

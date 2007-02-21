@@ -624,6 +624,12 @@ public class EstimatesSelectionBean
 
 	}
 	
+	public String resetSelection()
+	{
+		initDefaultValues();
+		return null;
+	}
+	
 	public String changeTimeFrameSelection()
 	{
 

@@ -35,7 +35,7 @@ public class MapBean {
 
 	public static int PORT_BOTH = 5;
 
-	private static final String[] MAPS = new String[] { "Ports", "Regions" };
+	private static final String[] MAPS = new String[] { "Places", "Regions" };
 
 	private static final String[] ATTRS = new String[] { "Raw", "Adjusted" };
 

@@ -19,10 +19,10 @@ public class MainMenuBean
 								new MainMenuBarPageItem(
 										"essays",
 										"Essays",
-										"assessment/essays.faces"),
+										"assessment/essays-intro.faces"),
 								new MainMenuBarPageItem(
 										"estimates",
-										"Asses the Trade Slave",
+										"Estimates",
 										"assessment/estimates.faces")}),
 						
 				new MainMenuBarSectionItem(
@@ -77,7 +77,7 @@ public class MainMenuBean
 										"glossary",
 										"Glossary",
 										"lessons/glossary.faces")}),
-
+/*
 				new MainMenuBarSectionItem(
 						"about",
 						"about/index.faces",
@@ -96,7 +96,7 @@ public class MainMenuBean
 										"contact",
 										"Contact Us",
 										"about/contact.faces")}),
-
+*/
 		};
 	}
 
