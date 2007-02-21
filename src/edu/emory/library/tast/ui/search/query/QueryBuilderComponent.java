@@ -476,11 +476,11 @@ public class QueryBuilderComponent extends UIComponentBase
 //		jsMoveDown.append("}");
 
 		encodeConditionButtonsStart(writer);
-		encodeConditionButton(writer, "icon-move-up.png", jsMoveUp.toString());
+		encodeConditionButton(writer, "../images/icon-move-up.png", jsMoveUp.toString());
 		encodeConditionButtonSeparator(writer);
-		encodeConditionButton(writer, "icon-move-down.png", jsMoveDown.toString());
+		encodeConditionButton(writer, "../images/icon-move-down.png", jsMoveDown.toString());
 		encodeConditionButtonSeparator(writer);
-		encodeConditionButton(writer, "icon-remove.png", jsDelete.toString());
+		encodeConditionButton(writer, "../images/icon-remove.png", jsDelete.toString());
 		encodeConditionButtonsEnd(writer);
 		
 	}

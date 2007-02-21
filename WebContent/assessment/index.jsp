@@ -98,7 +98,7 @@
 
 				<div class="section-index-intro-icon section-index-intro-blank-icon">
 				
-					<div class="section-index-intro-icon-title"><a href="#">Asses the Slave Trade</a></div>
+					<div class="section-index-intro-icon-title"><a href="estimates.faces">Estimates</a></div>
 				
 					<p class="section-index-intro">
 					Quisque nibh tellus,
