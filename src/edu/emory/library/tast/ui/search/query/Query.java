@@ -27,6 +27,9 @@ public class Query implements Serializable, Cloneable
 	public void addConditionOn(String searchableAttributeId)
 	{
 		
+		if (builderQuery.containsConditionOn(searchableAttributeId))
+			return;
+		
 		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
 		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
 		

@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.Category;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.ui.images.GalleryImage;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -218,17 +220,45 @@ public class NewImagesBean {
 		this.imageId = imageId;
 	}
 	
-	public String getImageURL() {
+	public String getImageTitle()
+	{
+		Image img = Image.loadById(Integer.parseInt(this.imageId));
+		return img.getTitle();
+	}
+
+	public String getImageDescription()
+	{
+		Image img = Image.loadById(Integer.parseInt(this.imageId));
+		return img.getDescription();
+	}
+	
+	public String getImageURL()
+	{
 		Image img = Image.loadById(Integer.parseInt(this.imageId));
 		return "../images-database/" + img.getFileName();
 	}
-	
-	public ImageInfo[] getImageInfo() {
+
+	public List getImageInfo()
+	{
+		
+		List info = new ArrayList();
+		
 		Image img = Image.loadById(Integer.parseInt(this.imageId));
-		ImageInfo title = new ImageInfo("Title: ", img.getTitle());
-		ImageInfo date = new ImageInfo("Date: ", img.getDate());
-		ImageInfo creator = new ImageInfo("Creator: ", img.getCreator());
-		ImageInfo description = new ImageInfo("Description: ", img.getDescription());		
-		return new ImageInfo[] {title, date, creator, description};
+		
+		if (!StringUtils.isNullOrEmpty(img.getDate()))
+			info.add(new ImageInfo("Date:", img.getDate()));
+
+		if (!StringUtils.isNullOrEmpty(img.getCreator()))
+			info.add(new ImageInfo("Creator:", img.getCreator()));
+			
+		if (!StringUtils.isNullOrEmpty(img.getSource()))
+			info.add(new ImageInfo("Source:", img.getSource()));
+
+		if (!StringUtils.isNullOrEmpty(img.getLanguage()))
+			info.add(new ImageInfo("Language:", img.getLanguageName()));
+
+		return info;
+
 	}
+
 }

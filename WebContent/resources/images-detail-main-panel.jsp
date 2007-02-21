@@ -3,21 +3,30 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
+<t:htmlTag value="table" style="border-collapse: collapse;">
+<t:htmlTag value="tr">
 
-<t:htmlTag value="table">
-	<t:htmlTag value="tr">
-		<t:htmlTag value="td">
-			<h:graphicImage url="#{NewImagesBean.imageURL}" style="width: 500px;"/>
-		</t:htmlTag>
-		<t:htmlTag value="td">
-			<h:dataTable var="info" value="#{NewImagesBean.imageInfo}">
-				<h:column>
-					<h:outputText value="#{info.name}"/>
-				</h:column>
-				<h:column>
-					<h:outputText value="#{info.value}"/>
-				</h:column>
-			</h:dataTable>		
-		</t:htmlTag>
+	<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
+		<h:graphicImage url="#{NewImagesBean.imageURL}" styleClass="image"/>
 	</t:htmlTag>
+
+	<t:htmlTag value="td" style="padding: 0px 10px 0px 10px; vertical-align: top;">
+
+		<t:htmlTag value="div" styleClass="image-title"><h:outputText value="#{NewImagesBean.imageTitle}" /></t:htmlTag>
+		<t:htmlTag value="div" styleClass="image-description"><h:outputText value="#{NewImagesBean.imageDescription}" /></t:htmlTag>
+
+		<h:dataTable var="info" value="#{NewImagesBean.imageInfo}" styleClass="image-detail-info">
+			<h:column>
+				<t:htmlTag value="div" styleClass="image-detail-info-label">
+					<h:outputText value="#{info.name}" />
+				</t:htmlTag>
+			</h:column>
+			<h:column>
+				<h:outputText value="#{info.value}" />
+			</h:column>
+		</h:dataTable>
+		
+	</t:htmlTag>
+
+</t:htmlTag>
 </t:htmlTag>

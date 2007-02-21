@@ -4,9 +4,10 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 
-<s:pictures images="#{NewImagesBean.queryResponse}" 
-				columnsCount="5"
-				thumbnailHeight="100" 
-				thumbnailWidth="100"
-				action="#{NewImagesBean.detailRequested}" 
-				selectedImageId="#{NewImagesBean.imageId}" />
+<s:pictures
+	images="#{NewImagesBean.queryResponse}" 
+	columnsCount="5"
+	thumbnailHeight="100" 
+	thumbnailWidth="100"
+	action="#{NewImagesBean.detailRequested}" 
+	selectedImageId="#{NewImagesBean.imageId}" />

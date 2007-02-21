@@ -1,3 +1,22 @@
+table.images-category {
+	border-collapse: collapse;
+	width: 800px;
+	border-bottom: 1px solid #165B31;
+	margin-bottom: 10px; }
+
+td.images-category-name {
+	font-size: 14pt; }
+
+td.images-category-link {
+	text-align: right;
+	vertical-align: bottom; }
+
+td.images-category-link a {
+	text-decoration: none; }
+	
+div.images-category-sample {
+	margin-bottom: 20px; }
+
 td.td-main-panel {
 	vertical-align: top; 
 	background-image: url(../images/resources-bg.png);
@@ -46,3 +65,25 @@ div.gallery-image-label {
 
 a.link-images {
 	}
+	
+img.image {
+	border: 1px solid #165B31; }
+	
+div.image-title {
+	font-size: 14pt; }
+	
+div.image-description {
+	margin-top: 5px; }
+
+table.image-detail-info {
+	margin-top: 15px;
+	border-collapse: collapse; }
+	
+table.image-detail-info td {
+	border-top: 1px solid #165B31;
+	border-bottom: 1px solid #165B31;
+	padding: 5px 0px 5px 0px; }
+
+div.image-detail-info-label {
+	margin-right: 10px; 
+	font-style: italic; }
