@@ -35,6 +35,8 @@ public class GalleryComponent extends UICommand
 	private GalleryImage[] images;
 	private String selectedImageId;
 
+	private static String cID = System.currentTimeMillis() + "";
+	
 	public String getRendererType()
 	{
 		return null;
@@ -79,14 +81,18 @@ public class GalleryComponent extends UICommand
 		{
 			selectedImageId = imageId;
 			queueEvent(new ActionEvent(this));
+		} else {
+			selectedImageId = null;
 		}
 
 	}
 	
 	public void processUpdates(FacesContext context)
 	{
-        ValueBinding vb = getValueBinding("selectedImageId");
-        if (vb != null) vb.setValue(context, selectedImageId);
+		if (selectedImageId != null) {
+			ValueBinding vb = getValueBinding("selectedImageId");
+        	if (vb != null) vb.setValue(context, selectedImageId);
+		}
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException

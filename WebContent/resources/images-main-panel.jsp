@@ -12,10 +12,13 @@
 	</t:htmlTag >
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">	
+		
 			<s:pictures images="#{NewImagesBean.sampleVessels}" 
 				columnsCount="5"
 				thumbnailHeight="100" 
-				thumbnailWidth="100" />
+				thumbnailWidth="100" 
+				action="#{NewImagesBean.detailRequested}" 
+				selectedImageId="#{NewImagesBean.imageId}"/>
 			<t:htmlTag value="div" style="width: 100%; margin-left: auto; text-align: right;">
 				<h:commandLink value="See all ->" action="#{NewImagesBean.seeVessels}" styleClass="link-images"/>
 			</t:htmlTag>
@@ -31,7 +34,9 @@
 			<s:pictures images="#{NewImagesBean.sampleSlaves}" 
 				columnsCount="5"
 				thumbnailHeight="100" 
-				thumbnailWidth="100" />
+				thumbnailWidth="100" 
+				action="#{NewImagesBean.detailRequested}" 
+				selectedImageId="#{NewImagesBean.imageId}"/>
 			<t:htmlTag value="div" style="width: 100%; margin-left: auto; text-align: right;">
 				<h:commandLink value="See all ->" action="#{NewImagesBean.seeSlaves}" styleClass="link-images"/>
 			</t:htmlTag>
@@ -47,7 +52,9 @@
 			<s:pictures images="#{NewImagesBean.sampleSlavers}" 
 				columnsCount="5"
 				thumbnailHeight="100" 
-				thumbnailWidth="100" />
+				thumbnailWidth="100" 
+				action="#{NewImagesBean.detailRequested}" 
+				selectedImageId="#{NewImagesBean.imageId}"/>
 			<t:htmlTag value="div" style="width: 100%; margin-left: auto; text-align: right;">
 				<h:commandLink value="See all ->" action="#{NewImagesBean.seeSlavers}" styleClass="link-images"/>
 			</t:htmlTag>
@@ -63,7 +70,9 @@
 			<s:pictures images="#{NewImagesBean.samplePorts}" 
 				columnsCount="5"
 				thumbnailHeight="100" 
-				thumbnailWidth="100" />
+				thumbnailWidth="100" 
+				action="#{NewImagesBean.detailRequested}" 
+				selectedImageId="#{NewImagesBean.imageId}"/>
 			<t:htmlTag value="div" style="width: 100%; margin-left: auto; text-align: right;">
 				<h:commandLink value="See all ->" action="#{NewImagesBean.seePorts}" styleClass="link-images"/>
 			</t:htmlTag>
@@ -79,7 +88,9 @@
 			<s:pictures images="#{NewImagesBean.sampleRegions}" 
 				columnsCount="5"
 				thumbnailHeight="100" 
-				thumbnailWidth="100" />
+				thumbnailWidth="100" 
+				action="#{NewImagesBean.detailRequested}" 
+				selectedImageId="#{NewImagesBean.imageId}"/>
 			<t:htmlTag value="div" style="width: 100%; margin-left: auto; text-align: right;">
 				<h:commandLink value="See all ->" action="#{NewImagesBean.seeRegions}" styleClass="link-images"/>
 			</t:htmlTag>			
