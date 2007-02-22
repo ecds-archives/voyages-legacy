@@ -77,29 +77,6 @@ div.detailTab {
 	padding-left: 5px;
 	padding-right: 5px;
 }
-
-table.legend-table-main {
-	padding-left: 10px;
-}
-
-table.legend-table-detail {
-	border-collapse: collapse;
-	padding-left: 5px;
-}
-
-td.legend-table-detail-col1 {
-	text-align: center;
-	padding-top: 5px;
-}
-
-td.legend-table-detail-col2 {
-	padding-left: 10px;
-	text-align: left;
-	padding-top: 3px;
-}
-
-div.map-legend-div {
-	}
 	
 div.map-legend-section-title {
 	background-color: #F2E3B8;
@@ -119,7 +96,3 @@ div.map-legend-section {
 
 input.map-legend-refresh {
 	margin-top: 0px; }
-
-table.legend-table-layers {
-	padding-left: 10px;
-}

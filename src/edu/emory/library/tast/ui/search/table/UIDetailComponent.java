@@ -104,7 +104,7 @@ public class UIDetailComponent extends UIComponentBase {
 			
 			writer.startElement("tr", this);
 			writer.startElement("td", this);
-			writer.writeAttribute("class", "detail-label", null);
+			writer.writeAttribute("class", "detail-label-main", null);
 			writer.writeAttribute("rowspan", String.valueOf(group.getAllVisibleAttributes().length), null);
 			writer.write(group.getUserLabel());
 			writer.endElement("td");

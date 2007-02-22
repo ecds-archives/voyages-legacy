@@ -2,10 +2,7 @@ body {
 	background-position: 0px 105px;
 	background-image: url(../images/database-bg.png);
 	background-repeat: repeat-x; }
-	
-div#content {
-	border-top: 5px solid #8A5D04; }
-	
+
 td.section-index-right-column {
 	border-left-color: #8A5D04; }
 	
