@@ -758,12 +758,45 @@
 	</navigation-rule>
 	
 	<navigation-rule>
+		<from-view-id>/resources/images-query.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>images-detail</from-outcome>
 			<to-view-id>/resources/images-detail.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/resources/images.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>images-detail</from-outcome>
+			<to-view-id>/resources/images-detail-from-main.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/resources/images-detail.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>images-back</from-outcome>
+			<to-view-id>/resources/images-query.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/resources/images-detail-from-main.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>images-back</from-outcome>
+			<to-view-id>/resources/images.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/resources/images-query.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>images-back</from-outcome>
+			<to-view-id>/resources/images.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<render-kit />
 
 	<application>

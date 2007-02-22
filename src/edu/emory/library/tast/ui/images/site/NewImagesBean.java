@@ -29,6 +29,7 @@ public class NewImagesBean {
 	private String from = "";
 	private String to = "";
 	private String imageId;
+	//private String backAction = null;
 	
 	public NewImagesBean() {
 	}
@@ -171,35 +172,74 @@ public class NewImagesBean {
 	
 	public String seeVessels() {
 		this.selectedCategory = "1";
+		//this.backAction = "images-main";
 		return "images-query";
 	}
 
 	public String seeSlaves() {
 		this.selectedCategory = "2";
+		//this.backAction = "images-query";
 		return "images-query";
 	}
 
 	public String seeSlavers() {
 		this.selectedCategory = "3";
+		//this.backAction = "images-query";
 		return "images-query";
 	}
 	
 	public String seePorts() {
 		this.selectedCategory = "4";
+		//this.backAction = "images-query";
 		return "images-query";
 	}
 	
 	public String seeRegions() {
 		this.selectedCategory = "5";
+		//this.backAction = "images-query";
 		return "images-query";
 	}
 	
 	public String search() {
+		//this.backAction = "images-main";
 		return "images-query";
 	}
 	
 	public String detailRequested() {
 		return "images-detail";
+	}
+	
+	public String next() {
+		if (this.galleryImages != null) {
+			for (int i = 0; i < this.galleryImages.length - 1; i++) {
+				if (this.galleryImages[i].getId().equals(this.imageId)) {
+					this.imageId = this.galleryImages[i + 1].getId();
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public String prev() {
+		if (this.galleryImages != null) {
+			for (int i = 1; i < this.galleryImages.length; i++) {
+				if (this.galleryImages[i].getId().equals(this.imageId)) {
+					this.imageId = this.galleryImages[i - 1].getId();
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public String back() {
+		/*if ("images-query".equals(this.backAction)) {
+			String ret = this.backAction;
+			this.backAction = "images-main";
+			return ret;
+		}*/
+		return "images-back";
 	}
 	
 	public GalleryImage[] getGalleryImages()

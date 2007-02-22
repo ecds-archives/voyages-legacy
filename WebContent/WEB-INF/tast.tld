@@ -122,6 +122,9 @@
 		<attribute>
 			<name>collapsed</name>
 		</attribute>
+		<attribute>
+			<name>gid</name>
+		</attribute>
 	</tag>
 	
 	<tag>

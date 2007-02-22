@@ -4,7 +4,7 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <t:htmlTag value="h1"><h:outputText value="#{res.images_query_title}" /></t:htmlTag>
-<t:htmlTag value="div" styleClass="images-query"><h:outputText value="#{NewImagesBean.queryTitle}" /></t:htmlTag>
+<t:htmlTag value="div" styleClass="images-query"><h:outputText value="#{NewImagesBean.queryTitle} (" /> <h:commandLink value="#{res.images_back}" action="#{NewImagesBean.back}" styleClass="link-images"/><h:outputText value=" )" /> </t:htmlTag>
 
 <s:pictures
 	images="#{NewImagesBean.queryResponse}" 
