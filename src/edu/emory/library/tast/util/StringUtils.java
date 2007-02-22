@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class StringUtils
 {
+	
+	private final static Pattern sepRegex = Pattern.compile("[^a-zA-Z_0-9]+");
 	
 	public static int indexOf(String key, String[] haystack)
 	{
@@ -170,6 +173,19 @@ public class StringUtils
 			tmp.toArray(newArr);
 			return newArr;
 		}
+	}
+	
+	public static String[] extractQueryKeywords(String query, boolean upperCase)
+	{
+		
+		if (query == null)
+			return new String[] {};
+		
+		if (upperCase)
+			query = query.toUpperCase();
+		
+		return sepRegex.split(query);
+
 	}
 
 }

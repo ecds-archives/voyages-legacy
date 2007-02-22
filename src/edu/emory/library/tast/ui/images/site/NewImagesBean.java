@@ -213,14 +213,16 @@ public class NewImagesBean {
 		String[] keywords = StringUtils.extractQueryKeywords(this.imageLike, true);
 		if (keywords.length > 0)
 		{
-			Conditions keywordsSubCond = new Conditions(Conditions.JOIN_OR);
+			Conditions keywordsSubCond = new Conditions(Conditions.JOIN_AND);
 			Attribute titleUpperAttr = new FunctionAttribute("upper", new Attribute[] {Image.getAttribute("title")}); 
 			Attribute descUpperAttr = new FunctionAttribute("upper", new Attribute[] {Image.getAttribute("description")}); 
 			for (int i = 0; i < keywords.length; i++)
 			{
 				String keyword = "%" + keywords[i] + "%";
-				keywordsSubCond.addCondition(titleUpperAttr, keyword, Conditions.OP_LIKE);
-				keywordsSubCond.addCondition(descUpperAttr, keyword, Conditions.OP_LIKE);
+				Conditions keywordSubCond = new Conditions(Conditions.JOIN_OR);
+				keywordSubCond.addCondition(titleUpperAttr, keyword, Conditions.OP_LIKE);
+				keywordSubCond.addCondition(descUpperAttr, keyword, Conditions.OP_LIKE);
+				keywordsSubCond.addCondition(keywordSubCond);
 			}
 			conds.addCondition(keywordsSubCond);
 		}

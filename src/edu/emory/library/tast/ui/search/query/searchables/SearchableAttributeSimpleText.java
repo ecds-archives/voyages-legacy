@@ -1,18 +1,15 @@
 package edu.emory.library.tast.ui.search.query.searchables;
 
-import java.util.regex.Pattern;
-
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.query.QueryCondition;
 import edu.emory.library.tast.ui.search.query.QueryConditionText;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 {
 	
-	private final static Pattern sepRegex = Pattern.compile("[^a-zA-Z_0-9]+");
-
 	public SearchableAttributeSimpleText(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
 	{
 		super(id, userLabel, userCategories, attributes);
@@ -39,8 +36,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			return true;
 		
 		// consider only alfanum and digits
-		String value = queryConditionText.getValue().toUpperCase();
-		String[] keywords = sepRegex.split(value);
+		String[] keywords = StringUtils.extractQueryKeywords(queryConditionText.getValue(), true);
 		if (keywords.length == 0)
 			return false;
 
