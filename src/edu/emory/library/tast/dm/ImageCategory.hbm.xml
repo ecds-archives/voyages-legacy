@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="edu.emory.library.tast.dm.Category" table="categories">
+	<class name="edu.emory.library.tast.dm.ImageCategory" table="image_categories">
 		
 		<id name="id" column="id">
 			<generator class="native"/>

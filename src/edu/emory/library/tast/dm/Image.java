@@ -68,7 +68,7 @@ public class Image
 	private int authorizationStatus = 0;
 	private boolean readyToGo = false;
 	private Integer voyageid;
-	private Category category;
+	private ImageCategory category;
 
 	private Set regions; 
 	private Set ports;
@@ -424,11 +424,11 @@ public class Image
 		
 	}
 
-	public Category getCategory() {
+	public ImageCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(ImageCategory category) {
 		this.category = category;
 	}
 

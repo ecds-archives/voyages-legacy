@@ -43,9 +43,7 @@
 				</div>
 			</td>
 			<td class="td-main-panel">
-				<div>
-					<%@ include file="images-query-main-panel.jsp" %>
-				</div>
+				<%@ include file="images-query-main-panel.jsp" %>
 			</td>
 		</tr>
 		</table>

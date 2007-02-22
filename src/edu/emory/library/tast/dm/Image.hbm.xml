@@ -34,7 +34,7 @@
 		<property name="readyToGo" column="ready_to_go" />
 		<property name="voyageid" column="voyageid" />
 
-		<many-to-one name="category" class="edu.emory.library.tast.dm.Category" column="category" lazy="proxy" />
+		<many-to-one name="category" class="edu.emory.library.tast.dm.ImageCategory" column="category" lazy="proxy" />
 
 		<set name="regions" table="regions_images">
 			<key column="image_id" />

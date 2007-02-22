@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tast.dm.Category;
+import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Port;
 
@@ -23,17 +23,17 @@ public class CategoryAttribute extends DictionaryAttribute
 	
 	public Dictionary loadObjectById(Session sess, long id) 
 	{
-		return Category.loadById(sess, id);
+		return ImageCategory.loadById(sess, id);
 	}
 
 	public Attribute getAttribute(String name)
 	{
-		return Category.getAttribute(name);
+		return ImageCategory.getAttribute(name);
 	}
 
 	public List loadAllObjects(Session sess)
 	{
-		return Category.loadAll(sess);
+		return ImageCategory.loadAll(sess);
 	}
 	
 	public NumericAttribute getItAttribute()

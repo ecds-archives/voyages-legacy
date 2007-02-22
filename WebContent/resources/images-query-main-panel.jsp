@@ -3,6 +3,8 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
+<t:htmlTag value="h1"><h:outputText value="#{res.images_query_title}" /></t:htmlTag>
+<t:htmlTag value="div" styleClass="images-query"><h:outputText value="#{NewImagesBean.queryTitle}" /></t:htmlTag>
 
 <s:pictures
 	images="#{NewImagesBean.queryResponse}" 

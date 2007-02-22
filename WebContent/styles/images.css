@@ -87,3 +87,7 @@ table.image-detail-info td {
 div.image-detail-info-label {
 	margin-right: 10px; 
 	font-style: italic; }
+	
+div.images-query {
+	border-bottom: 1px solid #165B31;
+	margin-bottom: 15px; }
