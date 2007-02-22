@@ -111,6 +111,7 @@ public class GalleryComponent extends UICommand
 		
 		JsfUtils.encodeHiddenInput(this, writer,
 				getFieldNameForSelectedImageId(context));
+
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);

@@ -64,6 +64,17 @@ public class JsfUtils
 
 	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value)
 	{
+		/*
+		js.append("var inpt = document.createElement('input'); ");
+		js.append("inpt.type = 'hidden'; ");
+		js.append("inpt.name = '");
+		js.append(elementName);
+		js.append("'; ");
+
+		js.append("document.forms['");
+		js.append(form.getClientId(context));
+		js.append("'].appendChild(inpt); ");
+		*/
 		
 		js.append("if (typeof(saveScrolling) == 'function') ");
 		js.append("saveScrolling('" + form.getClientId(context) + "'); ");
