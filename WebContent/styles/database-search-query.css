@@ -187,13 +187,13 @@ td.query-builder-list-item-with-children {
 	font-weight: normal; }
 	
 div.query-builder-list-item-expanded {
-	background-image: url(icon-arrow-down.png);
+	background-image: url(../images/icon-arrow-down.png);
 	background-repeat: no-repeat;
 	width: 11px;
 	height: 11px; }
 
 div.query-builder-list-item-collapsed {
-	background-image: url(icon-arrow-right.png);
+	background-image: url(../images/icon-arrow-right.png);
 	background-repeat: no-repeat;
 	width: 11px;
 	height: 11px; }

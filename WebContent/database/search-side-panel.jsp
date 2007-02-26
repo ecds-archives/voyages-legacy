@@ -33,7 +33,7 @@
 	
 </s:expandableBox>
 
-<s:expandableBox text="#{res.database_search_basic}">
+<s:expandableBox text="#{res.database_search_basic}" collapsed="true">
 
 	<s:menuPopup
 		customSubmitFunction="animateAttribute"
@@ -43,7 +43,7 @@
 
 </s:expandableBox>
 
-<s:expandableBox text="#{res.database_search_general}" collapsed="true">
+<s:expandableBox text="#{res.database_search_general}">
 
 	<s:menuPopup
 		customSubmitFunction="animateAttribute"
