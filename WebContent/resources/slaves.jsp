@@ -6,17 +6,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Slaves database</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
-	<link href="../styles/slaves.css" rel="stylesheet" type="text/css">
+	<link href="../styles/resources-slaves.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/slaves-search-expandable-box.css" rel="stylesheet" type="text/css">	
+	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+
 </head>
 <body>
 <f:view>
@@ -24,7 +30,7 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-		<div id="top-bar">
+	<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>

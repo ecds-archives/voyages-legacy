@@ -9,6 +9,10 @@ public class ShowVoyageEvent extends FacesEvent {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	private Integer voyageid;
 	
 	public ShowVoyageEvent(UIComponent uiComponent, Integer voyageid) {
