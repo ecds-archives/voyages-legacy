@@ -41,7 +41,7 @@ public class SlavesTableBean {
 	private boolean queryWoman;
 	private boolean queryFemail;
 	private String queryCountry;
-	private String queryExpRegion;
+	private String queryExpPort;
 	private boolean querySierraLeona;
 	private boolean queryHavana;
 	
@@ -219,14 +219,14 @@ public class SlavesTableBean {
 		this.queryCountry = queryCountry;
 	}
 
-	public String getQueryExpRegion()
+	public String getQueryExpPort()
 	{
-		return queryExpRegion;
+		return queryExpPort;
 	}
 
-	public void setQueryExpRegion(String queryExpRegion)
+	public void setQueryExpPort(String queryExpRegion)
 	{
-		this.queryExpRegion = queryExpRegion;
+		this.queryExpPort = queryExpRegion;
 	}
 
 	public boolean isQueryFemail()
