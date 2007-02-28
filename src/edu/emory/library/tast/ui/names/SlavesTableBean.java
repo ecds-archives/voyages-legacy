@@ -2,14 +2,18 @@ package edu.emory.library.tast.ui.names;
 
 import java.text.MessageFormat;
 
+import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -18,15 +22,13 @@ public class SlavesTableBean {
 	private static final String ATTRIBUTE = "Attribute_";
 	
 	private TableData tableData;
-	private Conditions conditions = new Conditions();
-	//private boolean requery = false;
 	private TableLinkManager linkManager = new TableLinkManager(20);
 	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 	
-	private int queryAgeFrom;
-	private int queryAgeTo;
-	private int queryHeightFrom;
-	private int queryHeightTo;
+	private Integer queryAgeFrom;
+	private Integer queryAgeTo;
+	private Integer queryHeightFrom;
+	private Integer queryHeightTo;
 	private String querySlaveName;
 	private String queryShipName;
 	private boolean queryBoy;
@@ -62,23 +64,9 @@ public class SlavesTableBean {
 	}
 	
 	public TableData getTableData() {
-//		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || requery) {
-//			this.conditions = this.getEstimatesBean().getConditions();
-//			QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
-//			Attribute[] attrs = this.tableData.getAttributesForQuery();
-//			for (int i = 0; i < attrs.length; i++) {
-//				qValue.addPopulatedAttribute(attrs[i]);
-//			}
-//			qValue.setOrder(this.tableData.getOrder());
-//			qValue.setOrderBy(this.tableData.getOrderByColumn().getAttributes());
-//			qValue.setFirstResult(this.linkManager.getCurrentFirstRecord());
-//			qValue.setLimit(this.linkManager.getStep());
-//			this.tableData.setData(qValue.executeQuery());
-//			this.setNumberOfResults();
-//			this.requery = false;
-//		}
+		Conditions conditions = this.prepareConditions();
 		
-		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"s"}, this.conditions);
+		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"s"}, conditions);
 		Attribute[] attrs = this.tableData.getAttributesForQuery();
 		for (int i = 0; i < attrs.length; i++) {
 			qValue.addPopulatedAttribute(attrs[i]);
@@ -95,10 +83,51 @@ public class SlavesTableBean {
 	
 	private void setNumberOfResults() {
 		//this.conditions = this.getEstimatesBean().getConditions();
-		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"e"}, this.conditions);
+		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"e"}, this.prepareConditions());
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
 		Object[] ret = qValue.executeQuery();
 		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
+	}
+
+	private Conditions prepareConditions() {
+		Conditions c = new Conditions();
+		if (this.queryAgeFrom != null) {
+			c.addCondition(Slave.getAttribute("age"), this.queryAgeFrom, Conditions.OP_GREATER_OR_EQUAL);
+		}
+		if (this.queryAgeTo != null) {
+			c.addCondition(Slave.getAttribute("age"), this.queryAgeTo, Conditions.OP_SMALLER_OR_EQUAL);
+		}
+		if (this.queryHeightFrom != null) {
+			c.addCondition(Slave.getAttribute("height"), new Double(this.queryHeightFrom.intValue()), Conditions.OP_GREATER_OR_EQUAL);
+		}
+		if (this.queryHeightTo != null) {
+			c.addCondition(Slave.getAttribute("height"), new Double(this.queryHeightTo.intValue()), Conditions.OP_SMALLER_OR_EQUAL);
+		}
+		if (!StringUtils.isNullOrEmpty(this.querySlaveName)) {
+			String[] s = StringUtils.extractQueryKeywords(this.querySlaveName, true);
+			for (int i = 0; i < s.length; i++) {
+				c.addCondition(new FunctionAttribute("upper", new Attribute[] {Slave.getAttribute("name")}), "%" + s[i] + "%", Conditions.OP_LIKE);
+			}
+		}
+		if (!StringUtils.isNullOrEmpty(this.queryShipName)) {
+			String[] s = StringUtils.extractQueryKeywords(this.queryShipName, true);
+			for (int i = 0; i < s.length; i++) {
+				c.addCondition(new FunctionAttribute("upper", new Attribute[] {Slave.getAttribute("shipname")}), "%" + s[i] + "%", Conditions.OP_LIKE);
+			}
+		}
+		if (!StringUtils.isNullOrEmpty(this.queryCountry)) {
+			String[] s = StringUtils.extractQueryKeywords(this.queryCountry, true);
+			for (int i = 0; i < s.length; i++) {
+				c.addCondition(new SequenceAttribute(new Attribute[] {Slave.getAttribute("country"), Country.getAttribute("name")}), "%" + s[i] + "%", Conditions.OP_LIKE);
+			}
+		}
+		if (!StringUtils.isNullOrEmpty(this.queryExpPort)) {
+			String[] s = StringUtils.extractQueryKeywords(this.queryCountry, true);
+			for (int i = 0; i < s.length; i++) {
+				c.addCondition(new SequenceAttribute(new Attribute[] {Slave.getAttribute("majbuypt"), Country.getAttribute("name")}), "%" + s[i] + "%", Conditions.OP_LIKE);
+			}
+		}
+		return c;
 	}
 
 	public void setTableData(TableData tableData) {
@@ -174,22 +203,22 @@ public class SlavesTableBean {
 		return this.linkManager;
 	}
 
-	public int getQueryAgeFrom()
+	public Integer getQueryAgeFrom()
 	{
 		return queryAgeFrom;
 	}
 
-	public void setQueryAgeFrom(int queryAgeFrom)
+	public void setQueryAgeFrom(Integer queryAgeFrom)
 	{
 		this.queryAgeFrom = queryAgeFrom;
 	}
 
-	public int getQueryAgeTo()
+	public Integer getQueryAgeTo()
 	{
 		return queryAgeTo;
 	}
 
-	public void setQueryAgeTo(int queryAgeTo)
+	public void setQueryAgeTo(Integer queryAgeTo)
 	{
 		this.queryAgeTo = queryAgeTo;
 	}
@@ -254,22 +283,22 @@ public class SlavesTableBean {
 		this.queryHavana = queryHavana;
 	}
 
-	public int getQueryHeightFrom()
+	public Integer getQueryHeightFrom()
 	{
 		return queryHeightFrom;
 	}
 
-	public void setQueryHeightFrom(int queryHeightFrom)
+	public void setQueryHeightFrom(Integer queryHeightFrom)
 	{
 		this.queryHeightFrom = queryHeightFrom;
 	}
 
-	public int getQueryHeightTo()
+	public Integer getQueryHeightTo()
 	{
 		return queryHeightTo;
 	}
 
-	public void setQueryHeightTo(int queryHeightTo)
+	public void setQueryHeightTo(Integer queryHeightTo)
 	{
 		this.queryHeightTo = queryHeightTo;
 	}
