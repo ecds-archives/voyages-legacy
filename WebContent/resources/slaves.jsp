@@ -20,7 +20,7 @@
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/slaves-search-expandable-box.css" rel="stylesheet" type="text/css">	
-	
+	<link href="../styles/slaves-table.css" rel="stylesheet" type="text/css">	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
 </head>

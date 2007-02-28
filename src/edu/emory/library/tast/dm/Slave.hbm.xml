@@ -20,7 +20,7 @@
 		<property name="datearr"/>
 		<property name="source"/>
 		
-		<many-to-one name="country" class="edu.emory.library.tast.dm.Country"/>
+		<many-to-one name="country" column="country_id" class="edu.emory.library.tast.dm.Country"/>
 		<many-to-one name="sexage" class="edu.emory.library.tast.dm.SexAge"/>
 		<many-to-one name="majselpt" class="edu.emory.library.tast.dm.Port"/>
 		<many-to-one name="majbuypt" class="edu.emory.library.tast.dm.Port"/>

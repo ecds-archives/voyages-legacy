@@ -3,6 +3,7 @@ package edu.emory.library.tast.ui.names;
 import java.text.MessageFormat;
 
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.CountryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
@@ -40,12 +41,12 @@ public class SlavesTableBean {
 	private boolean queryWoman;
 	private boolean queryFemail;
 	private String queryCountry;
-	private String queryExpPort;
+	private String queryExpRegion;
 	private boolean querySierraLeona;
 	private boolean queryHavana;
 	
 	public SlavesTableBean() {
-		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[11];
+		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[12];
 		visibleAttrs[0] = VisibleAttrSlave.getAttributeForTable("id");
 		visibleAttrs[1] = VisibleAttrSlave.getAttributeForTable("voyageId");
 		visibleAttrs[2] = VisibleAttrSlave.getAttributeForTable("name");
@@ -54,13 +55,13 @@ public class SlavesTableBean {
 		visibleAttrs[5] = VisibleAttrSlave.getAttributeForTable("height");
 		visibleAttrs[6] = VisibleAttrSlave.getAttributeForTable("datearr");
 		visibleAttrs[7] = VisibleAttrSlave.getAttributeForTable("source");
-		visibleAttrs[8] = VisibleAttrSlave.getAttributeForTable("country");
-		visibleAttrs[9] = VisibleAttrSlave.getAttributeForTable("sexage");
+		visibleAttrs[8] = VisibleAttrSlave.getAttributeForTable("sexage");
+		visibleAttrs[9] = VisibleAttrSlave.getAttributeForTable("country");
 		visibleAttrs[10] = VisibleAttrSlave.getAttributeForTable("majselpt");
 		visibleAttrs[11] = VisibleAttrSlave.getAttributeForTable("majbuypt");
 		
 		tableData = new TableData();
-		tableData.setKeyAttribute(Estimate.getAttribute("id"));
+		tableData.setKeyAttribute(Slave.getAttribute("id"));
 		tableData.setVisibleColumns(visibleAttrs);
 		tableData.setOrderByColumn(visibleAttrs[0]);
 	}
@@ -218,14 +219,14 @@ public class SlavesTableBean {
 		this.queryCountry = queryCountry;
 	}
 
-	public String getQueryExpPort()
+	public String getQueryExpRegion()
 	{
-		return queryExpPort;
+		return queryExpRegion;
 	}
 
-	public void setQueryExpPort(String queryExpRegion)
+	public void setQueryExpRegion(String queryExpRegion)
 	{
-		this.queryExpPort = queryExpRegion;
+		this.queryExpRegion = queryExpRegion;
 	}
 
 	public boolean isQueryFemail()

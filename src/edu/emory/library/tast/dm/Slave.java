@@ -14,7 +14,7 @@ public class Slave {
 	
 	private static Map attributes = new HashMap();
 	static {
-		attributes.put("id", new NumericAttribute("id", "Estimate", NumericAttribute.TYPE_LONG));
+		attributes.put("id", new NumericAttribute("id", "Slave", NumericAttribute.TYPE_LONG));
 		attributes.put("voyageId", new NumericAttribute("voyageId", "Slave", NumericAttribute.TYPE_INTEGER));
 		attributes.put("name", new StringAttribute("name", "Slave"));
 		attributes.put("shipname", new StringAttribute("shipname", "Slave"));
