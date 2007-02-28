@@ -22,6 +22,22 @@ public class SlavesTableBean {
 	private TableLinkManager linkManager = new TableLinkManager(10);
 	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 	
+	private int queryAgeFrom;
+	private int queryAgeTo;
+	private int queryHeightFrom;
+	private int queryHeightTo;
+	private String querySlaveName;
+	private String queryShipName;
+	private boolean queryBoy;
+	private boolean queryMan;
+	private boolean queryMale;
+	private boolean queryGirl;
+	private boolean queryWoman;
+	private boolean queryFemail;
+	private String queryCountry;
+	private String queryExpRegion;
+	private boolean querySierraLeona;
+	private boolean queryHavana;
 	
 	public SlavesTableBean() {
 		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[4];
@@ -147,5 +163,165 @@ public class SlavesTableBean {
 	
 	public TableLinkManager getTableManager() {
 		return this.linkManager;
+	}
+
+	public int getQueryAgeFrom()
+	{
+		return queryAgeFrom;
+	}
+
+	public void setQueryAgeFrom(int queryAgeFrom)
+	{
+		this.queryAgeFrom = queryAgeFrom;
+	}
+
+	public int getQueryAgeTo()
+	{
+		return queryAgeTo;
+	}
+
+	public void setQueryAgeTo(int queryAgeTo)
+	{
+		this.queryAgeTo = queryAgeTo;
+	}
+
+	public boolean isQueryBoy()
+	{
+		return queryBoy;
+	}
+
+	public void setQueryBoy(boolean queryBoy)
+	{
+		this.queryBoy = queryBoy;
+	}
+
+	public String getQueryCountry()
+	{
+		return queryCountry;
+	}
+
+	public void setQueryCountry(String queryCountry)
+	{
+		this.queryCountry = queryCountry;
+	}
+
+	public String getQueryExpRegion()
+	{
+		return queryExpRegion;
+	}
+
+	public void setQueryExpRegion(String queryExpRegion)
+	{
+		this.queryExpRegion = queryExpRegion;
+	}
+
+	public boolean isQueryFemail()
+	{
+		return queryFemail;
+	}
+
+	public void setQueryFemail(boolean queryFemail)
+	{
+		this.queryFemail = queryFemail;
+	}
+
+	public boolean isQueryGirl()
+	{
+		return queryGirl;
+	}
+
+	public void setQueryGirl(boolean queryGirl)
+	{
+		this.queryGirl = queryGirl;
+	}
+
+	public boolean isQueryHavana()
+	{
+		return queryHavana;
+	}
+
+	public void setQueryHavana(boolean queryHavana)
+	{
+		this.queryHavana = queryHavana;
+	}
+
+	public int getQueryHeightFrom()
+	{
+		return queryHeightFrom;
+	}
+
+	public void setQueryHeightFrom(int queryHeightFrom)
+	{
+		this.queryHeightFrom = queryHeightFrom;
+	}
+
+	public int getQueryHeightTo()
+	{
+		return queryHeightTo;
+	}
+
+	public void setQueryHeightTo(int queryHeightTo)
+	{
+		this.queryHeightTo = queryHeightTo;
+	}
+
+	public boolean isQueryMale()
+	{
+		return queryMale;
+	}
+
+	public void setQueryMale(boolean queryMale)
+	{
+		this.queryMale = queryMale;
+	}
+
+	public boolean isQueryMan()
+	{
+		return queryMan;
+	}
+
+	public void setQueryMan(boolean queryMan)
+	{
+		this.queryMan = queryMan;
+	}
+
+	public String getQueryShipName()
+	{
+		return queryShipName;
+	}
+
+	public void setQueryShipName(String queryShipName)
+	{
+		this.queryShipName = queryShipName;
+	}
+
+	public boolean isQuerySierraLeona()
+	{
+		return querySierraLeona;
+	}
+
+	public void setQuerySierraLeona(boolean querySierraLeona)
+	{
+		this.querySierraLeona = querySierraLeona;
+	}
+
+	public String getQuerySlaveName()
+	{
+		return querySlaveName;
+	}
+
+	public void setQuerySlaveName(String querySlaveName)
+	{
+		this.querySlaveName = querySlaveName;
+	}
+
+	public boolean isQueryWoman()
+	{
+		return queryWoman;
+	}
+
+	public void setQueryWoman(boolean queryWoman)
+	{
+		this.queryWoman = queryWoman;
 	}
 }
