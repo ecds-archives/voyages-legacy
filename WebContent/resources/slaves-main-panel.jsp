@@ -32,7 +32,7 @@
 				<h:outputText value=" | #{res.estimates_list_show} " />
 				<h:selectOneMenu onchange="submit()" value="#{SlavesTableBean.step}">
 					<f:selectItem itemValue="10" itemLabel="10" />
-					<f:selectItem itemValue="25" itemLabel="25" />
+					<f:selectItem itemValue="20" itemLabel="20" />
 					<f:selectItem itemValue="50" itemLabel="50" />
 					<f:selectItem itemValue="100" itemLabel="100" />
 					<f:selectItem itemValue="200" itemLabel="200" />

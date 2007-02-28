@@ -1,9 +1,12 @@
 td.td-main-panel {
 	vertical-align: top; 
-	background-image: url(../images/resources-bg.png);
+	background-image: none;
 	padding: 10px; }
 	
 td.td-side-panel {
+	background-image: url(../images/resources-bg.png);
+	background-repeat: repeat-x;
+	
 	width: 280px; 
 	vertical-align: top;
 	border-right: 1px solid #165B31; }

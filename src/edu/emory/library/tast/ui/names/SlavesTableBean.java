@@ -5,11 +5,6 @@ import java.text.MessageFormat;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.CountryAttribute;
-import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.dm.attributes.PortAttribute;
-import edu.emory.library.tast.dm.attributes.SexAgeAttribute;
-import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
@@ -25,7 +20,7 @@ public class SlavesTableBean {
 	private TableData tableData;
 	private Conditions conditions = new Conditions();
 	//private boolean requery = false;
-	private TableLinkManager linkManager = new TableLinkManager(10);
+	private TableLinkManager linkManager = new TableLinkManager(20);
 	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 	
 	private int queryAgeFrom;

@@ -11,7 +11,7 @@
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
-	<link href="../styles/images.css" rel="stylesheet" type="text/css">
+	<link href="../styles/resources-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>

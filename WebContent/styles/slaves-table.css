@@ -2,12 +2,13 @@ table.grid {
 	width: 100%;
 	background: white;
 	border-collapse: collapse; 
-	border: 1px solid #895D03; }
+	border: 1px solid #165B31; }
 
 table.grid th {
 	padding: 5px;
 	text-align: left;
-	background-color: #ECD698; }
+	color: white;
+	background-color: #b4d6cd; }
 
 table.grid th a {
 	text-decoration: none;
@@ -20,7 +21,7 @@ tr.grid-row-odd {
 tr.grid-row-odd td,
 tr.grid-row-even td,
 table.grid th {
-	border: 1px solid #895D03; }
+	border: 1px solid #165B31; }
 
 tr.grid-row-odd td,
 tr.grid-row-even td { 
@@ -87,7 +88,7 @@ td.pager-fast-back,
 td.pager-forward,
 td.pager-fast-forward {
 	padding: 0px;
-	border: 1px solid #895D03; }
+	border: 1px solid #165B31; }
 
 td.pager-number a,
 td.pager-back a,
@@ -109,7 +110,7 @@ td.pager-fast-back-no-click,
 td.pager-forward-no-click,
 td.pager-back-no-click {
 	color: #EED083;
-	border: 1px solid #EED083;
+	border: 1px solid #165B31;
 	padding: 2px 5px 2px 5px; }
 
 td.pager-number a:hover,
