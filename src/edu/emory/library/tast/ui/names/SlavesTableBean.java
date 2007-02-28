@@ -7,7 +7,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.util.query.Conditions;
@@ -25,11 +24,11 @@ public class SlavesTableBean {
 	
 	
 	public SlavesTableBean() {
-		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[6];
+		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[4];
 		visibleAttrs[0] = VisibleAttrSlave.getAttributeForTable("id");
 		visibleAttrs[1] = VisibleAttrSlave.getAttributeForTable("voyageId");
 		visibleAttrs[2] = VisibleAttrSlave.getAttributeForTable("name");
-		visibleAttrs[3] = VisibleAttrSlave.getAttributeForTable("ship");
+		visibleAttrs[3] = VisibleAttrSlave.getAttributeForTable("shipname");
 		
 		tableData = new TableData();
 		tableData.setKeyAttribute(Estimate.getAttribute("id"));
@@ -71,7 +70,7 @@ public class SlavesTableBean {
 	
 	private void setNumberOfResults() {
 		//this.conditions = this.getEstimatesBean().getConditions();
-		QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
+		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"e"}, this.conditions);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
 		Object[] ret = qValue.executeQuery();
 		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
@@ -112,7 +111,7 @@ public class SlavesTableBean {
 		VisibleAttributeInterface ret = null;
 		if (attributeSort.startsWith(ATTRIBUTE)) {
 			String attrId = attributeSort.substring(ATTRIBUTE.length(), attributeSort.length());
-			ret = VisibleAttrEstimate.getAttributeForTable(attrId);
+			ret = VisibleAttrSlave.getAttributeForTable(attrId);
 		} 
 		return ret;
 	}

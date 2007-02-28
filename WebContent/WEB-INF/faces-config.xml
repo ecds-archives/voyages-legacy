@@ -547,6 +547,14 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>SlavesTableBean</managed-bean-name>
+		<managed-bean-class>
+			edu.emory.library.tast.ui.names.SlavesTableBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>MainMenuBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.common.MainMenuBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>

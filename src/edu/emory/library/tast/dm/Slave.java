@@ -1,9 +1,37 @@
 package edu.emory.library.tast.dm;
 
-public class Slave {
-	private long slaveid;
+import java.util.HashMap;
+import java.util.Map;
 
-	private long voyageid;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.CountryAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.PortAttribute;
+import edu.emory.library.tast.dm.attributes.SexAgeAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
+
+public class Slave {
+	
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new NumericAttribute("id", "Estimate", NumericAttribute.TYPE_LONG));
+		attributes.put("voyageId", new NumericAttribute("voyageId", "Slave", NumericAttribute.TYPE_INTEGER));
+		attributes.put("name", new StringAttribute("name", "Slave"));
+		attributes.put("shipname", new StringAttribute("shipname", "Slave"));
+		attributes.put("age", new NumericAttribute("age", "Slave", NumericAttribute.TYPE_INTEGER));
+		attributes.put("height", new NumericAttribute("height", "Slave", NumericAttribute.TYPE_FLOAT));
+		attributes.put("datearr", new NumericAttribute("datearr", "Slave", NumericAttribute.TYPE_INTEGER));
+		attributes.put("source", new StringAttribute("source", "Slave"));
+		attributes.put("country", new CountryAttribute("country", "Slave"));
+		attributes.put("sexage", new SexAgeAttribute("sexage", "Slave"));
+		attributes.put("majselpt", new PortAttribute("majselpt", "Slave"));
+		attributes.put("majbuypt", new PortAttribute("majbuypt", "Slave"));
+	}
+	
+	
+	private long id;
+
+	private long voyageId;
 
 	private int age;
 
@@ -97,12 +125,12 @@ public class Slave {
 		this.shipname = shipname;
 	}
 
-	public long getSlaveid() {
-		return slaveid;
+	public long getId() {
+		return id;
 	}
 
-	public void setSlaveid(long slaveid) {
-		this.slaveid = slaveid;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getSource() {
@@ -113,11 +141,16 @@ public class Slave {
 		this.source = source;
 	}
 
-	public long getVoyageid() {
-		return voyageid;
+	public long getVoyageId() {
+		return voyageId;
 	}
 
-	public void setVoyageid(long voyageid) {
-		this.voyageid = voyageid;
+	public void setVoyageId(long voyageid) {
+		this.voyageId = voyageid;
+	}
+	
+	public static Attribute getAttribute(String name)
+	{
+		return (Attribute)attributes.get(name);
 	}
 }

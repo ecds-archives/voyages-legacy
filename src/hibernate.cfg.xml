@@ -58,6 +58,10 @@
 		<mapping resource="edu/emory/library/tast/dm/EstimatesImportRegion.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/EstimatesNation.hbm.xml"/>
 
+		<mapping resource="edu/emory/library/tast/dm/Slave.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/Country.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/SexAge.hbm.xml"/>
+
     </session-factory>
 
 </hibernate-configuration>

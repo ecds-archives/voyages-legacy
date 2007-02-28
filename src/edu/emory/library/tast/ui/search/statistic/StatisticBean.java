@@ -67,9 +67,9 @@ public class StatisticBean {
 		
 		cells[0] = new SimpleTableCell[4];
 		cells[0][0] = new SimpleTableCell("", "search-simple-stat-h_c1", null);
-		cells[0][1] = new SimpleTableCell(TastResource.getText("components_statistictab_total"), "search-simple-stat-h_c2", null);
-		cells[0][2] = new SimpleTableCell(TastResource.getText("components_statistictab_total"), "search-simple-stat-h_c3", null);
-		cells[0][3] = new SimpleTableCell(TastResource.getText("components_statistictab_total"), "search-simple-stat-h_c4", null);
+		cells[0][1] = new SimpleTableCell(TastResource.getText("components_statistictab_total_slaves"), "search-simple-stat-h_c2", null);
+		cells[0][2] = new SimpleTableCell(TastResource.getText("components_statistictab_total_voyages"), "search-simple-stat-h_c3", null);
+		cells[0][3] = new SimpleTableCell(TastResource.getText("components_statistictab_average"), "search-simple-stat-h_c4", null);
 		for (int i = 1; i < cells.length; i++) {
 			cells[i] = new SimpleTableCell[4];
 			cells[i][0] = new SimpleTableCell(elements[i-1].getName(), "search-simple-stat-c_c1", null);

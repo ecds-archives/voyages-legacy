@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
@@ -17,19 +18,19 @@ public class VisibleAttrSlave {
 	private static HashMap visibleAttributes = new HashMap();
 
 	static {
-		VisibleAttrEstimate attr = new VisibleAttrEstimate("id", new Attribute[] {Estimate.getAttribute("id")});
+		VisibleAttrEstimate attr = new VisibleAttrEstimate("id", new Attribute[] {Slave.getAttribute("id")});
 		attr.setUserLabel(TastResource.getText("components_names_attributes_id"));
 		visibleAttributes.put("id", attr);
 		
-		attr = new VisibleAttrEstimate("voyageId", new Attribute[] {Estimate.getAttribute("voyageId")});
+		attr = new VisibleAttrEstimate("voyageId", new Attribute[] {Slave.getAttribute("voyageId")});
 		attr.setUserLabel(TastResource.getText("components_names_attributes_voyageid"));
 		visibleAttributes.put("voyageId", attr);
 
-		attr = new VisibleAttrEstimate("name", new Attribute[] {Estimate.getAttribute("name")});
+		attr = new VisibleAttrEstimate("name", new Attribute[] {Slave.getAttribute("name")});
 		attr.setUserLabel(TastResource.getText("components_names_attributes_name"));
 		visibleAttributes.put("name", attr);
 		
-		attr = new VisibleAttrEstimate("shipname", new Attribute[] {Estimate.getAttribute("shipname")});
+		attr = new VisibleAttrEstimate("shipname", new Attribute[] {Slave.getAttribute("shipname")});
 		attr.setUserLabel(TastResource.getText("components_names_attributes_shipname"));
 		visibleAttributes.put("shipname", attr);
 		

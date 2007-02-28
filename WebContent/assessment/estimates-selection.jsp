@@ -42,8 +42,6 @@
 		selectedValues="#{EstimatesSelectionBean.checkedNations}" />
 	</t:div>
 </s:expandableBox>
-
-<br>
 	
 <s:expandableBox text="#{res.estimates_left_expregions}" collapsed="true">
 	<t:div styleClass="export-region-list">
@@ -54,8 +52,6 @@
 		expandedValues="#{EstimatesSelectionBean.expandedExpRegions}" />
 	</t:div>
 </s:expandableBox>
-
-<br>
 
 <s:expandableBox text="#{res.estimates_left_impregions}" collapsed="true">
 	<t:div styleClass="import-region-list">
