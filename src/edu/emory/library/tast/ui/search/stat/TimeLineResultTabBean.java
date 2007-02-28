@@ -10,7 +10,7 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;

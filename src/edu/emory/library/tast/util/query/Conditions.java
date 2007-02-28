@@ -5,12 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.function.SQLFunction;
-import org.hibernate.impl.SessionFactoryImpl;
-
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Class that represents any conditions for query. It helps to build conditions.

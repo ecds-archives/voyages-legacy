@@ -99,7 +99,7 @@ public class DetailVoyageMapItem extends AbstractMapItem {
 		PointOfInterest point = new PointOfInterest(this.getProjectedY(), this.getProjectedX());
 		point.setText(buffer.toString());
 		
-		Element[] elements = this.getMapItemElements()[0].getElements();
+		//Element[] elements = this.getMapItemElements()[0].getElements();
 //		if (elements.length > 1) {
 //			if (elements[0].getSize() < elements[1].getSize()) {
 //				point.setSymbols(new String[] {

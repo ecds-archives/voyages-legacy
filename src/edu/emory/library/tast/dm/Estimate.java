@@ -3,12 +3,12 @@ package edu.emory.library.tast.dm;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.EstimatesExportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesImportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesNationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.util.HibernateConnector;
 
 public class Estimate {
 

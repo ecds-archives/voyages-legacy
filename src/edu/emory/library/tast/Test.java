@@ -3,7 +3,7 @@ package edu.emory.library.tast;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.util.HibernateUtil;
 
 public class Test
 {

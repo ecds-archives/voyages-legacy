@@ -1,7 +1,5 @@
 package edu.emory.library.tast.estimates.load;
 
-import edu.emory.library.tast.dm.Location;
-
 public class EstimateWeight {
 	public Long expRegion;
 	public Long impRegion;

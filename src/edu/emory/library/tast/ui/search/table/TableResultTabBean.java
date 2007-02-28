@@ -3,25 +3,17 @@ package edu.emory.library.tast.ui.search.table;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
-import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.ui.maps.LegendItemsGroup;
-import edu.emory.library.tast.ui.maps.MapLayer;
-import edu.emory.library.tast.ui.maps.component.PointOfInterest;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.ui.search.stat.ComparableSelectItem;
 import edu.emory.library.tast.ui.search.table.formatters.SimpleDateAttributeFormatter;
@@ -31,7 +23,6 @@ import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.ui.voyage.VoyageDetailBean;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
@@ -50,16 +41,6 @@ public class TableResultTabBean {
 	
 	private VoyageDetailBean voyageBean;
 	
-//	/**
-//	 * First currently visible record.
-//	 */
-//	private int current = 0;
-//
-//	/**
-//	 * Number of visible records.
-//	 */
-//	private int step = 10;
-
 	/**
 	 * Indication of component visibility.
 	 */
@@ -90,10 +71,6 @@ public class TableResultTabBean {
 	 */
 	private List selectedAttributeToAdd = new ArrayList();
 
-//	/**
-//	 * Current number of results.
-//	 */
-//	private Integer numberOfResults;
 
 	/**
 	 * Data for result table.
@@ -114,16 +91,6 @@ public class TableResultTabBean {
 	 * Indication of results mode.
 	 */
 	private Boolean resultsMode = new Boolean(true);
-
-	/**
-	 * voyage ID when claiming detail view.
-	 */
-	private Long detailVoyageId;
-
-	/**
-	 * Indication if query for detail voyage info is needed.
-	 */
-	private boolean needDetailQuery;
 
 	/**
 	 * Indication if parameters from search should be attached.
@@ -304,7 +271,7 @@ public class TableResultTabBean {
 				visibleColumns = list;
 				setVisibleColumns();
 				needQuery = true;
-				needDetailQuery = true;
+				//needDetailQuery = true;
 				
 				this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(index), attr}) {
 					public void performAction() {
@@ -349,7 +316,7 @@ public class TableResultTabBean {
 				this.visibleColumns = list;
 				this.setVisibleColumns();
 				this.needQuery = true;
-				this.needDetailQuery = true;
+				//this.needDetailQuery = true;
 				
 				int index = list.indexOf(attr);
 				this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(index)}) {
@@ -387,7 +354,7 @@ public class TableResultTabBean {
 					attrs[i] = attrs[i - 1];
 					attrs[i - 1] = tmp;
 					this.needQuery = true;
-					this.needDetailQuery = true;
+					//this.needDetailQuery = true;
 					
 					this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(i)}) {
 						public void performAction() {
@@ -434,7 +401,7 @@ public class TableResultTabBean {
 					attrs[i] = attrs[i + 1];
 					attrs[i + 1] = tmp;
 					this.needQuery = true;
-					this.needDetailQuery = true;
+					//this.needDetailQuery = true;
 					
 					this.actionsToPerform.add(new MemorizedAction (new Object[] {new Integer(i)}) {
 						public void performAction() {

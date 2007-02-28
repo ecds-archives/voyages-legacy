@@ -3,7 +3,6 @@ package edu.emory.library.tast.ui.search.table.mapimpl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tas.util.HibernateUtil;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.Port;
@@ -25,6 +23,7 @@ import edu.emory.library.tast.ui.maps.LegendItem;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapItemElement;
 import edu.emory.library.tast.ui.maps.TransformerResponse;
+import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Transformer used to transform mapping data for map of single voyage. It

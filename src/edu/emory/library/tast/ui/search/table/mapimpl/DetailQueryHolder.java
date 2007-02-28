@@ -3,17 +3,12 @@ package edu.emory.library.tast.ui.search.table.mapimpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.ui.maps.AttributesMap;
 import edu.emory.library.tast.ui.maps.AttributesRange;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class DetailQueryHolder extends AbstractTransformerQueryHolder {

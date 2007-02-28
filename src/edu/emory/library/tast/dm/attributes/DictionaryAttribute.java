@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tas.spss.STSchemaVariable;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.spss.LogWriter;
+import edu.emory.library.tast.spss.STSchemaVariable;
 
 public abstract class DictionaryAttribute extends ImportableAttribute
 {

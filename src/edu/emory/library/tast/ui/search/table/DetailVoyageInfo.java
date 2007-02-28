@@ -1,9 +1,5 @@
 package edu.emory.library.tast.ui.search.table;
 
-import java.util.Date;
-
-import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 
 public class DetailVoyageInfo {

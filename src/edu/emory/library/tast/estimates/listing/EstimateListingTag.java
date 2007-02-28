@@ -1,16 +1,8 @@
 package edu.emory.library.tast.estimates.listing;
 
-import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
-
-import org.apache.myfaces.el.MethodBindingImpl;
-
-import edu.emory.library.tast.ui.search.table.ShowDetailsEvent;
-import edu.emory.library.tast.ui.search.table.SortChangeEvent;
-import edu.emory.library.tast.ui.search.table.UITableResultTab;
 
 public class EstimateListingTag extends UIComponentTag {
 

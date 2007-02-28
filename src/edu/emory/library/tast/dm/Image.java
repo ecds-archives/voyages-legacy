@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.CategoryAttribute;
-import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.PortAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;

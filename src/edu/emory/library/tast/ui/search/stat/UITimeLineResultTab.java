@@ -7,7 +7,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tast.ui.search.query.SearchParameters;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**

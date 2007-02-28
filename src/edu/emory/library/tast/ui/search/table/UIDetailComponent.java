@@ -10,7 +10,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**
@@ -44,60 +43,11 @@ public class UIDetailComponent extends UIComponentBase {
 		//Voyages info
 		TableData.DataTableItem[] objs = data.getData();
 		
-		//Voyages Indexes info
-		TableData.DataTableItem[] addObjs = data.getAdditionalData();
-		
 		//Columns of voyage
 		VisibleAttributeInterface[] columns = data.getVisibleAttributes();
 		
-		//Columns of voyage index
-		VisibleAttributeInterface[] additionalColumns = data.getVisibleAdditionalAttributes();
-		
 		Group[] groups = data.loadAttrGroups();
 		
-		//Load data about voyage index into table if possible
-//		if (addObjs != null) {
-//			
-////			//Create table header
-////			writer.startElement("th", this);
-////			writer.writeAttribute("class", "detail-header", null);
-////			writer.write(additionalColumns[0].getUserLabelOrName());
-////			writer.endElement("th");							
-////			for (int j = 0; j < addObjs.length; j++) {
-////				writer.startElement("th", this);
-////				writer.writeAttribute("class", "detail-header", null);
-////				Object[] row = addObjs[j].dataRow;
-////				if (row[0] != null) {
-////					writer.write(row[0].toString());
-////				}
-////				writer.endElement("th");
-////			}			
-//			
-//			//Create table data
-//			for (int i = 0; i < additionalColumns.length; i++) {
-//				
-//				writer.startElement("tr", this);
-//				writer.startElement("td", this);
-//				writer.writeAttribute("class", "detail-label", null);
-//				writer.write(additionalColumns[i].getUserLabelOrName());				
-//				writer.endElement("td");
-//								
-//				for (int j = 0; j < addObjs.length; j++) {
-//					writer.startElement("td", this);
-//					writer.writeAttribute("class", "detail-data", null);
-//					Object[] row = addObjs[j].dataRow;
-//					if (row[i] != null) {
-//						writer.write(row[i].toString());
-//					}
-//					writer.endElement("td");
-//				}
-//				
-//				writer.endElement("tr");
-//
-//			}
-//		}
-		
-		VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();
 		List colsCollection = Arrays.asList(columns);
 		for (int i = 0; i < groups.length; i++) {
 			Group group = groups[i];

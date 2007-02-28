@@ -1,54 +1,38 @@
-package edu.emory.library.tast.ui.search.tabscommon;
+package edu.emory.library.tast.ui.names;
 
 import java.util.HashMap;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Estimate;
-import edu.emory.library.tast.dm.EstimatesExportRegion;
-import edu.emory.library.tast.dm.EstimatesImportRegion;
-import edu.emory.library.tast.dm.EstimatesNation;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttrEstimate;
+import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
-public class VisibleAttrEstimate implements VisibleAttributeInterface {
-
+public class VisibleAttrSlave {
 	private static HashMap visibleAttributes = new HashMap();
 
 	static {
-		VisibleAttrEstimate attr = new VisibleAttrEstimate("nation", 
-				new Attribute[] {new SequenceAttribute(
-						new Attribute[] {Estimate.getAttribute("nation"), EstimatesNation.getAttribute("name")})});
-		attr.setUserLabel(TastResource.getText("components_estimate_nationcarrierattr"));
-		visibleAttributes.put("nation", attr);
+		VisibleAttrEstimate attr = new VisibleAttrEstimate("id", new Attribute[] {Estimate.getAttribute("id")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_id"));
+		visibleAttributes.put("id", attr);
 		
-		attr = new VisibleAttrEstimate("year", new Attribute[] {Estimate.getAttribute("year")});
-		attr.setUserLabel(TastResource.getText("components_estimate_yearattr"));
-		visibleAttributes.put("year", attr);
+		attr = new VisibleAttrEstimate("voyageId", new Attribute[] {Estimate.getAttribute("voyageId")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_voyageid"));
+		visibleAttributes.put("voyageId", attr);
+
+		attr = new VisibleAttrEstimate("name", new Attribute[] {Estimate.getAttribute("name")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_name"));
+		visibleAttributes.put("name", attr);
 		
-		attr = new VisibleAttrEstimate("impRegion", 
-				new Attribute[] {new SequenceAttribute(
-						new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("name")})});
-		attr.setUserLabel(TastResource.getText("components_estimate_impregionattr"));
-		visibleAttributes.put("impRegion", attr);
+		attr = new VisibleAttrEstimate("shipname", new Attribute[] {Estimate.getAttribute("shipname")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_shipname"));
+		visibleAttributes.put("shipname", attr);
 		
-		attr = new VisibleAttrEstimate("expRegion", 
-				new Attribute[] {new SequenceAttribute(
-						new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("name")})});
-		attr.setUserLabel(TastResource.getText("components_estimate_expregionattr"));
-		visibleAttributes.put("expRegion", attr);
-		
-		attr = new VisibleAttrEstimate("slavExported", new Attribute[] {Estimate.getAttribute("slavExported")});
-		attr.setUserLabel(TastResource.getText("components_estimate_exportedattr"));
-		visibleAttributes.put("slavExported", attr);
-		
-		attr = new VisibleAttrEstimate("slavImported", new Attribute[] {Estimate.getAttribute("slavImported")});
-		attr.setUserLabel(TastResource.getText("components_estimate_importedattr"));
-		visibleAttributes.put("slavImported", attr);
 	}
 	
 	private Attribute[] attributes;
@@ -63,7 +47,7 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		return (VisibleAttributeInterface[])visibleAttributes.values().toArray(new VisibleAttributeInterface[] {});
 	}
 
-	public VisibleAttrEstimate(String name, Attribute[] attributes) {
+	public VisibleAttrSlave(String name, Attribute[] attributes) {
 		this.name = name;
 		this.attributes = attributes;
 	}
@@ -156,5 +140,4 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 	public boolean isInUserCategory(UserCategory category) {
 		return true;
 	}
-
 }

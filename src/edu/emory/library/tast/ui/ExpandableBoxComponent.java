@@ -1,6 +1,10 @@
 package edu.emory.library.tast.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
@@ -14,6 +18,29 @@ import edu.emory.library.tast.util.JsfUtils;
 public class ExpandableBoxComponent extends UIComponentBase
 {
 	
+	private static class GroupsManager {
+		private Map actives = new HashMap();
+		private Map groups = new HashMap();
+		public void setActive(Object gid, Object component) {
+			actives.put(gid, component);
+		}
+		public Object getActive(Object gid) {
+			return this.actives.get(gid);
+		}
+		public void addToGroup(Object gid, Object component) {
+			if (!groups.containsKey(gid)) {
+				groups.put(gid, new ArrayList());
+			}
+			List groupElements = (List)groups.get(gid);
+			groupElements.add(component);
+		}
+		public ExpandableBoxComponent[] getComponentsInGroup(Object gid) {
+			return (ExpandableBoxComponent[])((List)this.groups.get(gid)).toArray(new ExpandableBoxComponent[] {});
+		}
+	}
+	
+	private static final GroupsManager groupsManager = new GroupsManager();
+	
 	private static final String EXPANEDED = "expanded";
 	private static final String COLLAPSED = "collapsed";
 
@@ -21,6 +48,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 
 	private String text = "";
 	private boolean textSet = false;
+	private String gid = null;
 
 	public String getFamily()
 	{
@@ -34,10 +62,11 @@ public class ExpandableBoxComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[3];
+		Object[] values = new Object[4];
 		values[0] = super.saveState(context);
 		values[1] = text;
 		values[2] = collapsed;
+		values[3] = gid;
 		return values;
 	}
 	
@@ -47,6 +76,7 @@ public class ExpandableBoxComponent extends UIComponentBase
 		super.restoreState(context, values[0]);
 		text = (String) values[1];
 		collapsed = (Boolean)values[2];
+		gid = (String)values[3];
 	}
 	
 	private String getStateHiddenFieldName(FacesContext context)
@@ -62,10 +92,28 @@ public class ExpandableBoxComponent extends UIComponentBase
 		String stateStr = (String) externalContex.getRequestParameterMap().get(
 				getStateHiddenFieldName(context));
 		
-		collapsed = new Boolean(COLLAPSED.equals(stateStr)); 
-		
+		if (this.gid != null) {
+			if (COLLAPSED.equals(stateStr) != collapsed.booleanValue() && !COLLAPSED.equals(stateStr)) {
+				groupsManager.setActive(gid, this);
+				ExpandableBoxComponent[] comps = groupsManager.getComponentsInGroup(gid);
+				for (int i = 0; i < comps.length; i++) {
+					if (!comps[i].equals(this)) {
+						comps[i].collapse();
+					}
+				}
+				this.collapsed = new Boolean(false);
+			} else if (COLLAPSED.equals(stateStr) != collapsed.booleanValue()) {
+				this.collapse();
+			}
+		} else {
+			collapsed = new Boolean(COLLAPSED.equals(stateStr));
+		}
 	}
 	
+	private void collapse() {
+		this.collapsed = new Boolean(true);
+	}
+
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
@@ -197,11 +245,25 @@ public class ExpandableBoxComponent extends UIComponentBase
 	public void setCollapsed(String collapsed) {
 		if (collapsed != null) {
 			this.collapsed = new Boolean(collapsed.equals("true"));
+			if (!this.collapsed.booleanValue()) {
+				if (this.gid != null) {
+					groupsManager.setActive(gid, this);
+				}
+			}
 		}
 	}
 	
 	public boolean isCollapsed() {
-		return collapsed.booleanValue();
+		if (this.gid == null) {
+			return collapsed.booleanValue();
+		} else {
+			return !this.equals(groupsManager.getActive(gid));
+		}
+	}
+
+	public void setGid(String gid) {
+		groupsManager.addToGroup(gid, this);
+		this.gid  = gid;
 	}
 
 }

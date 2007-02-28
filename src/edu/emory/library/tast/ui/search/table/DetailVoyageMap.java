@@ -1,13 +1,6 @@
 package edu.emory.library.tast.ui.search.table;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.ui.maps.AttributesMap;
-import edu.emory.library.tast.ui.maps.AttributesRange;
 import edu.emory.library.tast.ui.maps.LegendItemsGroup;
 import edu.emory.library.tast.ui.maps.MapData;
 import edu.emory.library.tast.ui.maps.MapLayer;
@@ -16,7 +9,6 @@ import edu.emory.library.tast.ui.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.ui.search.table.mapimpl.DetailQueryHolder;
 import edu.emory.library.tast.ui.search.table.mapimpl.DetailVoyageDataTransformer;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
 
 public class DetailVoyageMap {
 

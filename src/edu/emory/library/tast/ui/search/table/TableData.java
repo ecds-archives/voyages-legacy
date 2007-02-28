@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import edu.emory.library.tast.TastResource;
-import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.ui.search.table.formatters.AbstractAttributeFormatter;

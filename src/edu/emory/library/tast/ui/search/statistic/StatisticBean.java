@@ -5,13 +5,11 @@ import java.text.NumberFormat;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.SimpleTableCell;
 import edu.emory.library.tast.ui.search.query.SearchBean;
 import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.DirectValue;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class StatisticBean {

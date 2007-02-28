@@ -3,7 +3,6 @@ package edu.emory.library.tast.ui.search.stat.charts;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.RectangleInsets;
 
-import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;

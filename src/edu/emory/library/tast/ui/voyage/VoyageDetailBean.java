@@ -36,8 +36,6 @@ public class VoyageDetailBean {
 
 	private String backLink;
 
-	private String deta;
-
 	private String voyageAttr;
 
 	public void openVoyage(int voyageId) {

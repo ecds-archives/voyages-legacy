@@ -16,7 +16,7 @@ import javax.faces.event.FacesEvent;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tas.util.HibernateUtil;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.ui.search.query.searchables.ListItemsSource;
 import edu.emory.library.tast.util.JsfUtils;
