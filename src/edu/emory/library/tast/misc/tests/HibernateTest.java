@@ -3,12 +3,11 @@ package edu.emory.library.tast.misc.tests;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import edu.emory.library.tast.util.HibernateConnector;
 import edu.emory.library.tast.dm.Configuration;
-import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Group;

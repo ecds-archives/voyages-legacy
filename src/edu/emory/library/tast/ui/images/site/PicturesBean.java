@@ -118,7 +118,7 @@ public class PicturesBean {
 		if (object != null && id != null && (!object.equals(this.object) || !id.equals(this.id))) {
 			this.id = id;
 			this.object = object;
-			Conditions conditions = new Conditions();
+			//Conditions conditions = new Conditions();
 			QueryValue qValue = new QueryValue(new String[] {"Image"}, new String[] {"i"});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			qValue.setOrderBy(new Attribute[] {Image.getAttribute("order")});

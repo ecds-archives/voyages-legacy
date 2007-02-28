@@ -1,6 +1,5 @@
 package edu.emory.library.tast.ui.maps;
 
-import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**

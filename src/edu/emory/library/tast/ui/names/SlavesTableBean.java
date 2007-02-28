@@ -19,7 +19,7 @@ public class SlavesTableBean {
 	
 	private TableData tableData;
 	private Conditions conditions = new Conditions();
-	private boolean requery = false;
+	//private boolean requery = false;
 	private TableLinkManager linkManager = new TableLinkManager(10);
 	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
 	
@@ -105,7 +105,7 @@ public class SlavesTableBean {
 
 		// Indicate need of query
 		this.linkManager.reset();
-		this.requery = true;
+		//this.requery = true;
 	}
 	
 	private VisibleAttributeInterface getVisibleAttribute(String attributeSort) {
@@ -143,7 +143,7 @@ public class SlavesTableBean {
 		} else {
 			this.linkManager.setStep(Integer.parseInt(step));
 		}
-		this.requery = true;
+		//this.requery = true;
 	}
 	
 	public TableLinkManager getTableManager() {

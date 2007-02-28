@@ -6,7 +6,6 @@ public class LogRecordWriter
 {
 	
 	private LogWriter lorWriter;
-	private STSchemaVariable variable;
 	private Attribute attribute;
 	
 	public LogRecordWriter(LogWriter lorWriter)
@@ -16,7 +15,6 @@ public class LogRecordWriter
 	
 	public void setContext(STSchemaVariable variable, Attribute attribute)
 	{
-		this.variable = variable;
 		this.attribute = attribute;
 	}
 	

@@ -1,6 +1,5 @@
 package edu.emory.library.tast.ui.maps;
 
-import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 
 /**
@@ -51,7 +50,7 @@ public abstract class AbstractDataTransformer {
 	protected void round(double[] ranges) {
 		
 		int rounds[] = new int[ranges.length];
-		double range = ranges[ranges.length - 1] - ranges[0]; 
+		//double range = ranges[ranges.length - 1] - ranges[0]; 
 		
 		for (int i = 0; i < ranges.length; i++) {
 			int cRound = this.getRound(ranges[0], ranges[ranges.length - 1], ranges[i]);
