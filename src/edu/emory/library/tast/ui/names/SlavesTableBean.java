@@ -4,6 +4,11 @@ import java.text.MessageFormat;
 
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.CountryAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.PortAttribute;
+import edu.emory.library.tast.dm.attributes.SexAgeAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
@@ -40,11 +45,19 @@ public class SlavesTableBean {
 	private boolean queryHavana;
 	
 	public SlavesTableBean() {
-		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[4];
+		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[11];
 		visibleAttrs[0] = VisibleAttrSlave.getAttributeForTable("id");
 		visibleAttrs[1] = VisibleAttrSlave.getAttributeForTable("voyageId");
 		visibleAttrs[2] = VisibleAttrSlave.getAttributeForTable("name");
 		visibleAttrs[3] = VisibleAttrSlave.getAttributeForTable("shipname");
+		visibleAttrs[4] = VisibleAttrSlave.getAttributeForTable("age");
+		visibleAttrs[5] = VisibleAttrSlave.getAttributeForTable("height");
+		visibleAttrs[6] = VisibleAttrSlave.getAttributeForTable("datearr");
+		visibleAttrs[7] = VisibleAttrSlave.getAttributeForTable("source");
+		visibleAttrs[8] = VisibleAttrSlave.getAttributeForTable("country");
+		visibleAttrs[9] = VisibleAttrSlave.getAttributeForTable("sexage");
+		visibleAttrs[10] = VisibleAttrSlave.getAttributeForTable("majselpt");
+		visibleAttrs[11] = VisibleAttrSlave.getAttributeForTable("majbuypt");
 		
 		tableData = new TableData();
 		tableData.setKeyAttribute(Estimate.getAttribute("id"));

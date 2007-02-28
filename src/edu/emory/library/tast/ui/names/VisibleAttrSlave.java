@@ -3,7 +3,6 @@ package edu.emory.library.tast.ui.names;
 import java.util.HashMap;
 
 import edu.emory.library.tast.TastResource;
-import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -33,6 +32,38 @@ public class VisibleAttrSlave {
 		attr = new VisibleAttrEstimate("shipname", new Attribute[] {Slave.getAttribute("shipname")});
 		attr.setUserLabel(TastResource.getText("components_names_attributes_shipname"));
 		visibleAttributes.put("shipname", attr);
+		
+		attr = new VisibleAttrEstimate("age", new Attribute[] {Slave.getAttribute("age")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_age"));
+		visibleAttributes.put("age", attr);
+		
+		attr = new VisibleAttrEstimate("height", new Attribute[] {Slave.getAttribute("height")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_height"));
+		visibleAttributes.put("height", attr);
+		
+		attr = new VisibleAttrEstimate("datearr", new Attribute[] {Slave.getAttribute("datearr")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_datearr"));
+		visibleAttributes.put("datearr", attr);
+		
+		attr = new VisibleAttrEstimate("source", new Attribute[] {Slave.getAttribute("source")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_source"));
+		visibleAttributes.put("source", attr);
+		
+		attr = new VisibleAttrEstimate("country", new Attribute[] {Slave.getAttribute("country")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_country"));
+		visibleAttributes.put("country", attr);
+
+		attr = new VisibleAttrEstimate("sexage", new Attribute[] {Slave.getAttribute("sexage")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_sexage"));
+		visibleAttributes.put("sexage", attr);
+		
+		attr = new VisibleAttrEstimate("majselpt", new Attribute[] {Slave.getAttribute("majselpt")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_majselpt"));
+		visibleAttributes.put("majselpt", attr);
+		
+		attr = new VisibleAttrEstimate("majbuypt", new Attribute[] {Slave.getAttribute("majbuypt")});
+		attr.setUserLabel(TastResource.getText("components_names_attributes_majbuypt"));
+		visibleAttributes.put("majbuypt", attr);
 		
 	}
 	
