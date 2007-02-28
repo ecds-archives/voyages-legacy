@@ -34,23 +34,43 @@ public class NewImagesBean {
 	public NewImagesBean() {
 	}
 	
-	private GalleryImage[] getSample(ImageCategory cat, int size) {
+	private GalleryImage[] getSample(int catId, int size)
+	{
+
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		ImageCategory cat = ImageCategory.loadById(sess, catId);
+		
 		Conditions cond = new Conditions();
 		cond.addCondition(Image.getAttribute("category"), cat, Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Image", cond);
+		
 		qValue.setLimit(size);
+		
 		qValue.addPopulatedAttribute(Image.getAttribute("id"));
 		qValue.addPopulatedAttribute(Image.getAttribute("fileName"));
 		qValue.addPopulatedAttribute(Image.getAttribute("title"));
-		Object[] images = (Object[])qValue.executeQuery();
 		
+		qValue.setOrderBy(new Attribute[] {Image.getAttribute("order")});
+		qValue.setOrder(QueryValue.ORDER_ASC);
+
+		Object[] images = (Object[])qValue.executeQuery(sess);
+		size = Math.min(size, images.length);
 		GalleryImage[] ret = new GalleryImage[size];
-		for (int i = 0; i < images.length; i++) {
+
+		for (int i = 0; i < size; i++)
+		{
 			Object[] row = (Object[])images[i];
-			ret[i] = new GalleryImage(row[0].toString(), row[1].toString(), row[2].toString());
+			GalleryImage img = new GalleryImage(row[0].toString(), row[1].toString(), row[2].toString());
+			ret[i] = img;
 		}
 		
+		transaction.commit();
+		sess.close();
+
 		return ret;
+
 	}
 	
 	public GalleryImage[] getQueryResponse()
@@ -151,23 +171,27 @@ public class NewImagesBean {
 	}
 
 	public GalleryImage[] getSampleVessels() {
-		return this.getSample(ImageCategory.loadById(HibernateUtil.getSession(), 1), 5);
+		return this.getSample(1, 5);
 	}
 	
 	public GalleryImage[] getSampleSlaves() {
-		return this.getSample(ImageCategory.loadById(HibernateUtil.getSession(), 2), 5);
+		return this.getSample(2, 5);
 	}
 	
 	public GalleryImage[] getSampleSlavers() {
-		return this.getSample(ImageCategory.loadById(HibernateUtil.getSession(), 3), 5);
+		return this.getSample(3, 5);
 	}
 	
 	public GalleryImage[] getSamplePorts() {
-		return this.getSample(ImageCategory.loadById(HibernateUtil.getSession(), 4), 5);
+		return this.getSample(4, 5);
 	}
 	
 	public GalleryImage[] getSampleRegions() {
-		return this.getSample(ImageCategory.loadById(HibernateUtil.getSession(), 5), 5);
+		return this.getSample(5, 5);
+	}
+	
+	public GalleryImage[] getSamplePresentation() {
+		return this.getSample(99, 5);
 	}
 	
 	public String seeVessels() {
@@ -200,13 +224,45 @@ public class NewImagesBean {
 		return "images-query";
 	}
 	
+	public String seePresentation() {
+		this.selectedCategory = "99";
+		//this.backAction = "images-query";
+		return "images-query";
+	}
+
 	public String search() {
 		//this.backAction = "images-main";
 		return "images-query";
 	}
 	
-	public String detailRequested() {
+	public String detailRequested()
+	{
+		
+		imageLike = "";
+		selectedCategory = "";
+		from = "";
+		to = "";
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		Image img = Image.loadById(Integer.parseInt(imageId), sess);
+		if (img != null)
+		{
+			ImageCategory cat = img.getCategory();
+			if (cat != null)
+			{
+				selectedCategory = String.valueOf(cat.getId().intValue());
+			}
+		}
+		
+		transaction.commit();
+		sess.close();
+		
+		getGalleryImages();
+		
 		return "images-detail";
+		
 	}
 	
 	public String next() {
@@ -271,12 +327,17 @@ public class NewImagesBean {
 		if (cat != null) conds.addCondition(Image.getAttribute("category"), cat, Conditions.OP_EQUALS);
 		
 		QueryValue qValue = new QueryValue("Image", conds);
+
 		qValue.addPopulatedAttribute(Image.getAttribute("id"));
 		qValue.addPopulatedAttribute(Image.getAttribute("fileName"));
 		qValue.addPopulatedAttribute(Image.getAttribute("title"));
 		qValue.addPopulatedAttribute(Image.getAttribute("date"));
 		
+		qValue.setOrderBy(new Attribute[] {Image.getAttribute("order")});
+		qValue.setOrder(QueryValue.ORDER_ASC);
+		
 		Object[] response = qValue.executeQuery(sess);
+
 		List galImagesList = new ArrayList();
 		for (int i = 0; i < response.length; i++) {
 			Object[] row = (Object[]) response[i];
@@ -335,7 +396,7 @@ public class NewImagesBean {
 	public List getCategories() {
 		if (categories == null) {
 			categories = new ArrayList();
-			categories.add(new SelectItem("-1", "Select category"));
+			categories.add(new SelectItem("-1", TastResource.getText("images_all_categories")));
 			List cats = ImageCategory.loadAll(HibernateUtil.getSession(), "id");
 			Iterator iter = cats.iterator();
 			while (iter.hasNext()) {
@@ -410,7 +471,7 @@ public class NewImagesBean {
 		if (!StringUtils.isNullOrEmpty(img.getSource()))
 			info.add(new ImageInfo("Source:", img.getSource()));
 
-		if (!StringUtils.isNullOrEmpty(img.getLanguage()))
+		if (!StringUtils.isNullOrEmpty(img.getLanguage(), true))
 			info.add(new ImageInfo("Language:", img.getLanguageName()));
 
 		return info;

@@ -6,6 +6,30 @@
 <t:htmlTag value="table" styleClass="images-category">
 <t:htmlTag value="tr">
 	<t:htmlTag value="td" styleClass="images-category-name">
+		<h:outputText value="Presentation" />
+	</t:htmlTag>
+	<t:htmlTag value="td" styleClass="images-category-link">
+		<h:commandLink value="Show all images ..." action="#{NewImagesBean.seePresentation}" styleClass="link-images"/>
+	</t:htmlTag>
+</t:htmlTag>
+</t:htmlTag>
+
+<t:htmlTag value="div" styleClass="images-category-sample">
+
+	<s:pictures
+		images="#{NewImagesBean.samplePresentation}" 
+		columnsCount="5"
+		thumbnailHeight="100" 
+		thumbnailWidth="100" 
+		action="#{NewImagesBean.detailRequested}" 
+		selectedImageId="#{NewImagesBean.imageId}"/>
+
+</t:htmlTag>
+
+
+<t:htmlTag value="table" styleClass="images-category">
+<t:htmlTag value="tr">
+	<t:htmlTag value="td" styleClass="images-category-name">
 		<h:outputText value="#{res.images_vessels}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
