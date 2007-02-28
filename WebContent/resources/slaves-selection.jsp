@@ -48,18 +48,26 @@
 	</t:htmlTag>
 	
 	<t:htmlTag value="tr">
+		<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
+	</t:htmlTag>
+	
+	<t:htmlTag value="tr">
 		<t:htmlTag value="td" styleClass="slaves-query-variable-title"><h:outputText value="#{res.slaves_query_age}" /></t:htmlTag>
 		<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
 			<t:htmlTag value="div" styleClass="slaves-query-variable-controls">
 				<t:htmlTag value="table" style="border-collapse: collapse;">
 				<t:htmlTag value="tr">
-					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 60px;" value="#{SlavesTableBean.queryAgeFrom}" /></t:htmlTag>
+					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.queryAgeFrom}" /></t:htmlTag>
 					<t:htmlTag value="td" style="padding: 0px 5px 0px 5px"><h:outputText value="-" /></t:htmlTag>
-					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 60px;" value="#{SlavesTableBean.queryAgeTo}" /></t:htmlTag>
+					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.queryAgeTo}" /></t:htmlTag>
 				</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
+	</t:htmlTag>
+	
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
 	</t:htmlTag>
 		
 	<t:htmlTag value="tr">
@@ -68,9 +76,9 @@
 			<t:htmlTag value="div" styleClass="slaves-query-variable-controls">
 				<t:htmlTag value="table" style="border-collapse: collapse;">
 				<t:htmlTag value="tr">
-					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 60px;" value="#{SlavesTableBean.queryHeightFrom}" /></t:htmlTag>
+					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.queryHeightFrom}" /></t:htmlTag>
 					<t:htmlTag value="td" style="padding: 0px 5px 0px 5px"><h:outputText value="-" /></t:htmlTag>
-					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 60px;" value="#{SlavesTableBean.queryHeightTo}" /></t:htmlTag>
+					<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.queryHeightTo}" /></t:htmlTag>
 				</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
@@ -78,23 +86,43 @@
 	</t:htmlTag>
 	
 	<t:htmlTag value="tr">
+		<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
+	</t:htmlTag>
+	
+	<t:htmlTag value="tr">
 		<t:htmlTag value="td" styleClass="slaves-query-variable-title"><h:outputText value="#{res.slaves_query_slave_name}" /></t:htmlTag>
-		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 120px;" value="#{SlavesTableBean.querySlaveName}" /></t:htmlTag>
+		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 140px;" value="#{SlavesTableBean.querySlaveName}" /></t:htmlTag>
+	</t:htmlTag>
+
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
 	</t:htmlTag>
 
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" styleClass="slaves-query-variable-title"><h:outputText value="#{res.slaves_query_ship_name}" /></t:htmlTag>
-		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 120px;" value="#{SlavesTableBean.queryShipName}" /></t:htmlTag>
+		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 140px;" value="#{SlavesTableBean.queryShipName}" /></t:htmlTag>
+	</t:htmlTag>
+
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
 	</t:htmlTag>
 
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" styleClass="slaves-query-variable-title"><h:outputText value="#{res.slaves_query_country}" /></t:htmlTag>
-		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 120px;" value="#{SlavesTableBean.queryCountry}" /></t:htmlTag>
+		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 140px;" value="#{SlavesTableBean.queryCountry}" /></t:htmlTag>
+	</t:htmlTag>
+
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
 	</t:htmlTag>
 
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" styleClass="slaves-query-variable-title"><h:outputText value="#{res.slaves_query_exp_port}" /></t:htmlTag>
-		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 120px;" value="#{SlavesTableBean.queryExpPort}" /></t:htmlTag>
+		<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 140px;" value="#{SlavesTableBean.queryExpPort}" /></t:htmlTag>
+	</t:htmlTag>
+
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
 	</t:htmlTag>
 
 	</t:htmlTag>
