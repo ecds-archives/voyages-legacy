@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.SexAge;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -12,6 +14,7 @@ import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -40,6 +43,15 @@ public class SlavesTableBean {
 	private String queryExpPort;
 	private boolean querySierraLeone = true;
 	private boolean queryHavana = true;
+	private Port havanaPort = Port.loadById(HibernateUtil.getSession(), 30112);
+	private Port slPort = Port.loadById(HibernateUtil.getSession(), 60220);
+	
+	private SexAge sBoy = SexAge.loadById(HibernateUtil.getSession(), 2);
+	private SexAge sGirl = SexAge.loadById(HibernateUtil.getSession(), 6);
+	private SexAge sMale = SexAge.loadById(HibernateUtil.getSession(), 3);
+	private SexAge sFemale = SexAge.loadById(HibernateUtil.getSession(), 4);
+	private SexAge sMan = SexAge.loadById(HibernateUtil.getSession(), 1);
+	private SexAge sWoman = SexAge.loadById(HibernateUtil.getSession(), 5);
 	
 	public SlavesTableBean() {
 		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[12];
@@ -117,14 +129,53 @@ public class SlavesTableBean {
 		if (!StringUtils.isNullOrEmpty(this.queryCountry)) {
 			String[] s = StringUtils.extractQueryKeywords(this.queryCountry, true);
 			for (int i = 0; i < s.length; i++) {
-				c.addCondition(new SequenceAttribute(new Attribute[] {Slave.getAttribute("country"), Country.getAttribute("name")}), "%" + s[i] + "%", Conditions.OP_LIKE);
+				c.addCondition(new FunctionAttribute("upper", new Attribute[] {new SequenceAttribute(new Attribute[] {Slave.getAttribute("country"), Country.getAttribute("name")})}), "%" + s[i] + "%", Conditions.OP_LIKE);
 			}
 		}
 		if (!StringUtils.isNullOrEmpty(this.queryExpPort)) {
-			String[] s = StringUtils.extractQueryKeywords(this.queryCountry, true);
+			String[] s = StringUtils.extractQueryKeywords(this.queryExpPort, true);
 			for (int i = 0; i < s.length; i++) {
-				c.addCondition(new SequenceAttribute(new Attribute[] {Slave.getAttribute("majbuypt"), Country.getAttribute("name")}), "%" + s[i] + "%", Conditions.OP_LIKE);
+				c.addCondition(new FunctionAttribute("upper", new Attribute[] {new SequenceAttribute(new Attribute[] {Slave.getAttribute("majbuypt"), Port.getAttribute("name")})}), "%" + s[i] + "%", Conditions.OP_LIKE);
 			}
+		}
+		
+		Conditions subGender = null;
+		if (!queryBoy && !queryFemail && !queryGirl && !queryMale && !queryMan && !queryWoman) {
+			subGender = new Conditions(Conditions.JOIN_AND);
+			subGender.addCondition(Slave.getAttribute("sexage"), sBoy, Conditions.OP_NOT_EQUALS);
+			subGender.addCondition(Slave.getAttribute("sexage"), sGirl, Conditions.OP_NOT_EQUALS);
+			subGender.addCondition(Slave.getAttribute("sexage"), sMale, Conditions.OP_NOT_EQUALS);
+			subGender.addCondition(Slave.getAttribute("sexage"), sFemale, Conditions.OP_NOT_EQUALS);
+			subGender.addCondition(Slave.getAttribute("sexage"), sMan, Conditions.OP_NOT_EQUALS);
+			subGender.addCondition(Slave.getAttribute("sexage"), sWoman, Conditions.OP_NOT_EQUALS);
+		} else {
+			subGender = new Conditions(Conditions.JOIN_OR);
+			if (queryBoy) subGender.addCondition(Slave.getAttribute("sexage"), sBoy, Conditions.OP_EQUALS);
+			if (queryGirl) subGender.addCondition(Slave.getAttribute("sexage"), sGirl, Conditions.OP_EQUALS);
+			if (queryMale) subGender.addCondition(Slave.getAttribute("sexage"), sMale, Conditions.OP_EQUALS);
+			if (queryFemail) subGender.addCondition(Slave.getAttribute("sexage"), sFemale, Conditions.OP_EQUALS);
+			if (queryMan) subGender.addCondition(Slave.getAttribute("sexage"), sMan, Conditions.OP_EQUALS);
+			if (queryWoman) subGender.addCondition(Slave.getAttribute("sexage"), sWoman, Conditions.OP_EQUALS);
+		}
+		if (subGender != null) {
+			c.addCondition(subGender);
+		}
+		
+		Conditions subSell = null;
+		if (!this.queryHavana && !this.querySierraLeone)  {
+			subSell = new Conditions(Conditions.JOIN_AND);
+			subSell.addCondition(Slave.getAttribute("majselpt"), havanaPort, Conditions.OP_NOT_EQUALS);
+			subSell.addCondition(Slave.getAttribute("majselpt"), slPort, Conditions.OP_NOT_EQUALS);
+		} else if (!this.queryHavana || !this.querySierraLeone) {
+			subSell = new Conditions(Conditions.JOIN_AND);
+			if (this.queryHavana) {
+				subSell.addCondition(Slave.getAttribute("majselpt"), havanaPort, Conditions.OP_EQUALS);
+			} else {
+				subSell.addCondition(Slave.getAttribute("majselpt"), slPort, Conditions.OP_EQUALS);
+			}
+		} 
+		if (subSell != null) {
+			c.addCondition(subSell);
 		}
 		return c;
 	}
