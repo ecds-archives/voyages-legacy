@@ -22,6 +22,8 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class NewImagesBean {
 
+	private static final int POPUP_EXTRA_HEIGHT = 50;
+	private static final int POPUP_EXTRA_WIDTH = 30;
 	private static final int DETAIL_IMAGE_WIDTH = 600;
 	private List categories = null;
 	private GalleryImage[] galleryImages;
@@ -349,7 +351,40 @@ public class NewImagesBean {
 		return galleryImages;
 		
 	}
+	
+	public String getExpandJavaScript()
+	{
+		
+		Image img = Image.loadById(Integer.parseInt(this.imageId));
+		
+		StringBuffer js = new StringBuffer();
+		js.append("window.open(");
+		
+		js.append("'images-detail-expanded.faces'");
+		js.append(", ");
 
+		js.append("'imagedetail'");
+		js.append(", ");
+		
+		js.append("'");
+		js.append("width=").append(img.getWidth() + POPUP_EXTRA_WIDTH);
+		js.append(", ");
+		js.append("height=").append(img.getHeight() + POPUP_EXTRA_HEIGHT);
+		js.append(", ");
+		js.append("menubar=no");
+		js.append(", ");
+		js.append("resizable=yes");
+		js.append(", ");
+		js.append("status=no");
+		js.append(", ");
+		js.append("toolbar=no");
+		js.append("'");
+
+		js.append(");");
+
+		return js.toString();
+		
+	}
 
 	public void setGalleryImages(GalleryImage[] galleryImages) {
 		this.galleryImages = galleryImages;
@@ -438,6 +473,12 @@ public class NewImagesBean {
 				"?i=" + img.getFileName() +
 				"&w=" + DETAIL_IMAGE_WIDTH +
 				"&h=0";
+	}
+	
+	public String getImageExpandedURL()
+	{
+		Image img = Image.loadById(Integer.parseInt(this.imageId));
+		return "../images-database/" + img.getFileName();
 	}
 
 	public List getImageInfo()

@@ -68,7 +68,8 @@ div.gallery-image-description {
 a.link-images {
 	}
 	
-img.image {
+img.image-detail {
+	cursor: pointer;
 	border: 1px solid #165B31; }
 	
 div.image-title {
@@ -111,7 +112,7 @@ table.image-navigation a {
 	
 table.image-navigation a:hover {
 	background-color: White; }
-	
+
 /*
 
 body {

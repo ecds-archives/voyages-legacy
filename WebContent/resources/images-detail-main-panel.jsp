@@ -23,7 +23,7 @@
 <t:htmlTag value="tr">
 
 	<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
-		<h:graphicImage url="#{NewImagesBean.imageURL}" styleClass="image"/>
+		<h:graphicImage url="#{NewImagesBean.imageURL}" styleClass="image-detail" onclick="#{NewImagesBean.expandJavaScript}"/>
 	</t:htmlTag>
 
 	<t:htmlTag value="td" style="padding: 0px 10px 0px 10px; vertical-align: top;">
