@@ -847,4 +847,24 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>welcomeMap</name>
+		<tag-class>
+			edu.emory.library.tast.ui.LookupCheckboxListTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
+			<name>items</name>
+		</attribute>
+		<attribute>
+			<name>selectedValues</name>
+		</attribute>
+	</tag>
+
 </taglib>

@@ -8,7 +8,6 @@ import edu.emory.library.tast.util.StringUtils;
 
 public class QueryConditionListItem implements Serializable
 {
-	
 	private static final long serialVersionUID = -2205785794349321757L;
 
 	private String id;
