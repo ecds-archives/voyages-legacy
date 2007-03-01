@@ -172,6 +172,6 @@
 
 	</t:htmlTag>
 	
-	<h:commandButton value="Search database"/>
+	<h:commandButton value="Search database" action="#{SlavesTableBean.search}"/>
 
 </s:expandableBox>

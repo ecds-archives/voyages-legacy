@@ -249,6 +249,12 @@ public class SlavesTableBean {
 		//this.requery = true;
 	}
 	
+	public String search() {
+		System.out.println("Search!!!!!");
+		this.linkManager.reset();
+		return null;
+	}
+	
 	public TableLinkManager getTableManager() {
 		return this.linkManager;
 	}
