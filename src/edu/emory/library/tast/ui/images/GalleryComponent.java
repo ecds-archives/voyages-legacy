@@ -138,39 +138,50 @@ public class GalleryComponent extends UICommand
 			}
 			column++;
 			
-			
-			writer.startElement("td", this);
-			writer.writeAttribute("class", "gallery-image", null);
-			if (getAction() != null) {
-				writer.startElement("a", this);
-				writer.writeAttribute("style", "cursor: pointer;", null);
-				String onClick = JsfUtils.generateSubmitJS(
+			String onClick = null;
+			if (getAction() != null) 
+				onClick = JsfUtils.generateSubmitJS(
 					context, form,
 					getFieldNameForSelectedImageId(context),
 					image.getId());
-				writer.writeAttribute("onclick", onClick, null);
-			}
+			
+			writer.startElement("td", this);
+			writer.writeAttribute("class", "gallery-image", null);
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "gallery-image", null);
-
 			writer.startElement("img", this);
+			if (onClick != null) writer.writeAttribute("onclick", onClick, null);
 			writer.writeAttribute("src", url, null);
 			writer.writeAttribute("width", thumbnailWidthString, null);
 			writer.writeAttribute("height", thumbnailHeightString, null);
 			writer.writeAttribute("border", "0", null);
 			writer.endElement("img");
 			
+			/*
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "gallery-image-frame", null);
 			writer.write("&nbsp;");
 			writer.endElement("div");
+			*/
 
 			writer.endElement("div");
 			
 			writer.startElement("div", this);
+			writer.writeAttribute("class", "gallery-image-text", null);
+
+			writer.startElement("div", this);
 			writer.writeAttribute("class", "gallery-image-label", null);
+			if (onClick != null)
+			{
+				writer.startElement("a", this);
+				writer.writeAttribute("onclick", onClick, null);
+			}
 			writer.write(image.getLabel());
+			if (onClick != null)
+			{
+				writer.endElement("a");
+			}
 			writer.endElement("div");
 			
 			if (image.hasDescription())
@@ -180,9 +191,9 @@ public class GalleryComponent extends UICommand
 				writer.write(image.getDescription());
 				writer.endElement("div");
 			}
-			if (getAction() != null) {
-				writer.endElement("a");
-			}
+
+			writer.endElement("div");
+			
 			writer.endElement("td");
 			
 		}

@@ -46,10 +46,5 @@
 			<many-to-many column="port_id" class="edu.emory.library.tast.dm.Port" />
 		</set>
 
-		<set name="people" table="people_images">
-			<key column="image_id" />
-			<many-to-many column="person_id" class="edu.emory.library.tast.dm.Person" />
-		</set>
-
 	</class>
 </hibernate-mapping>

@@ -35,13 +35,12 @@ public class Image
 		attributes.put("width", new NumericAttribute("width", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("height", new NumericAttribute("height", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("mimeType", new StringAttribute("mimeType", "Image"));
-		attributes.put("people", new NumericAttribute("people", "Image", NumericAttribute.TYPE_LONG));
 		attributes.put("regions", new RegionAttribute("regions", "Image"));
 		attributes.put("ports", new PortAttribute("ports", "Image"));
 		attributes.put("voyageid", new NumericAttribute("voyageid", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("order", new NumericAttribute("order", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("category", new CategoryAttribute("category", "Image"));
-		attributes.put("date", new StringAttribute("date", "Image"));
+		attributes.put("date", new NumericAttribute("date", "Image", NumericAttribute.TYPE_INTEGER));
 	}
 	
 	private int id;
@@ -56,7 +55,7 @@ public class Image
 	private String description;
 	private String creator;
 	private String source;
-	private String date;
+	private int date;
 	private String language;
 	
 	private String references;
@@ -71,16 +70,15 @@ public class Image
 
 	private Set regions; 
 	private Set ports;
-	private Set people;
 	
-	public String getDate()
+	public int getDate()
 	{
 		return date;
 	}
 
-	public void setDate(String dateCreated)
+	public void setDate(int date)
 	{
-		this.date = dateCreated;
+		this.date = date;
 	}
 
 	public String getLanguage()
@@ -286,16 +284,6 @@ public class Image
 	public void setRegions(Set regions)
 	{
 		this.regions = regions;
-	}
-	
-	public Set getPeople()
-	{
-		return people;
-	}
-
-	public void setPeople(Set people)
-	{
-		this.people = people;
 	}
 	
 	public Integer getVoyageid() {

@@ -49,7 +49,6 @@
 		<mapping resource="edu/emory/library/tast/dm/OtherDictionaries.hbm.xml"/>
 		
 		<mapping resource="edu/emory/library/tast/dm/Image.hbm.xml"/>
-		<mapping resource="edu/emory/library/tast/dm/Person.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/ImageCategory.hbm.xml"/>
 
 		<mapping resource="edu/emory/library/tast/dm/Estimate.hbm.xml"/>

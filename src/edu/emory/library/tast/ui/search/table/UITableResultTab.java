@@ -223,7 +223,7 @@ public class UITableResultTab extends UIOutput {
 
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
-				writer.writeAttribute("onclick", jsClick, null);
+				if (showDetails != null) writer.writeAttribute("onclick", jsClick, null);
 				Object[] values = objs[i].dataRow;
 				for (int j = 0; j < values.length; j++) {
 					String visibleLabel = null;

@@ -50,7 +50,15 @@ public class ThumbnailServlet extends HttpServlet
 		BufferedImage image = ImageIO.read(imageFile);
 		int imageWidth = image.getWidth();
 		int imageHeight = image.getHeight();
+
+		// height is calculated automatically
+		if (thumbnailHeight == 0)
+			thumbnailHeight = (int) ((double)thumbnailWidth / (double)imageWidth * (double)imageHeight);  
 		
+		// width is calculated automatically
+		if (thumbnailWidth == 0)
+			thumbnailWidth = (int) ((double)thumbnailHeight / (double)imageHeight * (double)imageWidth);  
+
 		// create an empty thumbnail
 		BufferedImage thumbnail = new BufferedImage(thumbnailWidth, thumbnailHeight, BufferedImage.TYPE_INT_RGB);
 		Graphics2D gr = thumbnail.createGraphics();

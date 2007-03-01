@@ -12,15 +12,14 @@
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
-	
-	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
-	<link href="../styles/resources-slaves.css" rel="stylesheet" type="text/css">
 	
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
-	<link href="../styles/slaves-search-expandable-box.css" rel="stylesheet" type="text/css">	
-	<link href="../styles/slaves-table.css" rel="stylesheet" type="text/css">	
+
+	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
+	<link href="../styles/resources-slaves.css" rel="stylesheet" type="text/css">
+	<link href="../styles/resources-slaves-table.css" rel="stylesheet" type="text/css">	
+	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
 </head>

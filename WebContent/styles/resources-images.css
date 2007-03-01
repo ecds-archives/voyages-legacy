@@ -1,0 +1,224 @@
+body {
+	background-position: 0px 105px;
+	background-image: url(../images/resources-bg.png);
+	background-repeat: repeat-x; }
+
+table.images-category {
+	border-collapse: collapse;
+	width: 800px;
+	border-bottom: 1px solid #165B31;
+	margin-bottom: 10px; }
+
+td.images-category-name {
+	font-size: 14pt; }
+
+td.images-category-link {
+	text-align: right;
+	vertical-align: bottom; }
+
+td.images-category-link a {
+	text-decoration: none; }
+	
+div.images-category-sample {
+	margin-bottom: 20px; }
+
+td.td-main-panel {
+	vertical-align: top; 
+	padding: 10px;}
+	
+td.td-side-panel {
+	width: 280px; 
+	vertical-align: top;
+	border-right: 1px solid #165B31;}
+
+td.gallery-image {
+	vertical-align: top;
+	width: 160px; }
+
+div.gallery-image {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100px; }
+
+div.gallery-image img {
+	cursor: pointer;
+	border: 1px solid #165B31; }
+
+div.gallery-image-frame {
+	display: none;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 106px;
+	height: 106px;	
+	background: url(../images/resources-image-frame.png) no-repeat; }
+	
+div.gallery-image-text {
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-right: 5px; }
+
+div.gallery-image-label {
+	margin-top: 3px;
+	text-align: center; }
+
+div.gallery-image-description {
+	text-align: center; }
+
+a.link-images {
+	}
+	
+img.image {
+	border: 1px solid #165B31; }
+	
+div.image-title {
+	font-size: 14pt; }
+	
+div.image-description {
+	margin-top: 0px; }
+
+table.image-detail-info {
+	margin-top: 15px;
+	border-collapse: collapse; }
+	
+table.image-detail-info td {
+	border-top: 1px solid #165B31;
+	border-bottom: 1px solid #165B31;
+	padding: 5px 0px 5px 0px; }
+
+div.image-detail-info-label {
+	margin-right: 10px; 
+	font-style: italic; }
+	
+div.images-query {
+	border-bottom: 1px solid #165B31;
+	margin-bottom: 15px; }
+	
+div.images-query a {
+	text-decoration: none; }
+
+table.image-navigation {
+	margin-top: 5px;
+	margin-bottom: 5px; }
+	
+table.image-navigation a {
+	border: 1px solid #165B31;
+	background-color: #DEEFE8;
+	color: Black;
+	text-decoration: none;
+	display: block;
+	padding: 2px 5px 2px 5px; }
+	
+table.image-navigation a:hover {
+	background-color: White; }
+	
+/*
+
+body {
+	background-position: 0px 105px;
+	background-image: url(../images/about-bg.png);
+	background-repeat: repeat-x; }
+
+table.images-category {
+	border-collapse: collapse;
+	width: 800px;
+	border-bottom: 1px solid #596169;
+	margin-bottom: 10px; }
+
+td.images-category-name {
+	font-size: 14pt; }
+
+td.images-category-link {
+	text-align: right;
+	vertical-align: bottom; }
+
+td.images-category-link a {
+	text-decoration: none; }
+	
+div.images-category-sample {
+	margin-bottom: 20px; }
+
+td.td-main-panel {
+	vertical-align: top; 
+	padding: 10px;}
+	
+td.td-side-panel {
+	width: 280px; 
+	vertical-align: top;
+	border-right: 1px solid #596169;}
+
+td.gallery-image {
+	vertical-align: top;
+	width: 160px;
+}
+
+div.gallery-image {
+	margin-left: auto;
+	margin-right: auto;
+	width: 106px;
+	height: 106px;
+	position: relative;
+}
+
+div.gallery-image img {
+	border: 1px solid #596169;
+	position: absolute;
+	left: 3px;
+	top: 3px;
+}
+
+div.gallery-image-label {
+	text-align: center;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+a.link-images {
+	}
+	
+img.image {
+	border: 1px solid #596169; }
+	
+div.image-title {
+	font-size: 14pt; }
+	
+div.image-description {
+	margin-top: 0px; }
+
+table.image-detail-info {
+	margin-top: 15px;
+	border-collapse: collapse; }
+	
+table.image-detail-info td {
+	border-top: 1px solid #596169;
+	border-bottom: 1px solid #596169;
+	padding: 5px 0px 5px 0px; }
+
+div.image-detail-info-label {
+	margin-right: 10px; 
+	font-style: italic; }
+	
+div.images-query {
+	border-bottom: 1px solid #596169;
+	margin-bottom: 15px; }
+	
+div.images-query a {
+	text-decoration: none; }
+
+table.image-navigation {
+	margin-top: 5px;
+	margin-bottom: 5px; }
+	
+table.image-navigation a {
+	border: 1px solid #596169;
+	background-color: #F0F1F1;
+	color: Black;
+	text-decoration: none;
+	display: block;
+	padding: 2px 5px 2px 5px; }
+	
+table.image-navigation a:hover {
+	background-color: White; }
+
+*/

@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
-import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -31,16 +30,16 @@ public class SlavesTableBean {
 	private Integer queryHeightTo;
 	private String querySlaveName;
 	private String queryShipName;
-	private boolean queryBoy;
-	private boolean queryMan;
-	private boolean queryMale;
-	private boolean queryGirl;
-	private boolean queryWoman;
-	private boolean queryFemail;
+	private boolean queryBoy = true;
+	private boolean queryMan = true;
+	private boolean queryMale = true;
+	private boolean queryGirl = true;
+	private boolean queryWoman = true;
+	private boolean queryFemail = true;
 	private String queryCountry;
 	private String queryExpPort;
-	private boolean querySierraLeona;
-	private boolean queryHavana;
+	private boolean querySierraLeone = true;
+	private boolean queryHavana = true;
 	
 	public SlavesTableBean() {
 		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[12];
@@ -333,14 +332,14 @@ public class SlavesTableBean {
 		this.queryShipName = queryShipName;
 	}
 
-	public boolean isQuerySierraLeona()
+	public boolean isQuerySierraLeone()
 	{
-		return querySierraLeona;
+		return querySierraLeone;
 	}
 
-	public void setQuerySierraLeona(boolean querySierraLeona)
+	public void setQuerySierraLeone(boolean querySierraLeona)
 	{
-		this.querySierraLeona = querySierraLeona;
+		this.querySierraLeone = querySierraLeona;
 	}
 
 	public String getQuerySlaveName()

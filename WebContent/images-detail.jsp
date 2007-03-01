@@ -104,7 +104,15 @@ div.error {
 		
 			<table border="0" cellspacing="5" cellpadding="0">
 			<tr>
-				<td style="width: 100px;">Source</td>
+				<td style="width: 100px;">Category</td>
+				<td>
+					<h:selectOneMenu value="#{ImagesBean.imageCategoryId}">
+						<f:selectItems value="#{ImagesBean.detailCategories}" />
+					</h:selectOneMenu>
+				</td>
+			</tr>
+			<tr>
+				<td>Source</td>
 				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.source}" /></td>
 			</tr>
 			<tr>
@@ -117,9 +125,11 @@ div.error {
 			</tr>
 			<tr>
 				<td>Language</td>
-				<td><h:selectOneMenu value="#{ImagesBean.image.language}">
-					<f:selectItems value="#{ImagesBean.languages}" />
-				</h:selectOneMenu></td>
+				<td>
+					<h:selectOneMenu value="#{ImagesBean.image.language}">
+						<f:selectItems value="#{ImagesBean.languages}" />
+					</h:selectOneMenu>
+				</td>
 			</tr>
 			</table>
 
@@ -198,16 +208,6 @@ div.error {
 					sourceId="#{ImagesBean.portsLookupSourceId}"
 					selectedValues="#{ImagesBean.selectedPortsIds}" />
 			
-			</td>
-			<td>
-			
-				<div style="margin-bottom: 5px; font-weight: bold;">People</div>
-				
-				<s:lookupSelect
-					id="people"
-					sourceId="#{ImagesBean.peopleLookupSourceId}"
-					selectedValues="#{ImagesBean.selectedPeopleIds}" />
-
 			</td>
 		</tr>
 		</table>

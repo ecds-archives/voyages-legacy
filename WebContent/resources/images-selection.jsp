@@ -3,21 +3,6 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<s:expandableBox text="Sample queries">
-	<f:verbatim escape="false">
-		<ul class="box">
-			<li>How did the atlantic slave trade effect the economy of Europe, Africa, and America?</li>
-			<li>Where were they taken to?</li>
-			<li>Which European country was the first to engage in the slave trade in Central Africa?</li>
-			<li>Has there ever been evidence of a slave earning his freedom and returning to Africa in their lifetime?</li>
-			<li>Why were the slaves taken from Africa?</li>
-			<li>show me more queries...</li>
-		</ul>
-	</f:verbatim>
-</s:expandableBox>
-
-<br>
-
 <s:expandableBox text="Search for images">
 	<t:htmlTag value="table">
 	<t:htmlTag value="tr">

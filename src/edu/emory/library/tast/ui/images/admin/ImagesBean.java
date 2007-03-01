@@ -30,7 +30,7 @@ import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.Language;
 import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.Image;
-import edu.emory.library.tast.dm.Person;
+import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.ui.LookupSources;
@@ -77,16 +77,17 @@ public class ImagesBean
 	private String listStyle = "table";
 	private String selectedImageId;
 	private String thumbnailSize = "48x48";
+	private long listCategoryId;
 	
 	private String searchFor = null;
-	private String sortBy = "title";
+	private String sortBy = "cat.name";
 	
 	private Image image;
+	private long imageCategoryId;
 	private UploadedFile uploadedImage;
 	private boolean uploadBoxShown;
 	private String[] selectedRegionsIds;
 	private String[] selectedPortsIds;
-	private String[] selectedPeopleIds;
 	private String errorText;
 
 	private int scrollPosX;
@@ -151,6 +152,14 @@ public class ImagesBean
 
 		// basic query
 		Criteria crit = sess.createCriteria(Image.class);
+		crit.createAlias("category", "cat");
+		
+		// category
+		if (listCategoryId != 0)
+		{
+			ImageCategory cat = ImageCategory.loadById(sess, listCategoryId);
+			crit.add(Restrictions.eq("category", cat));
+		}
 
 		// search for
 		if (!StringUtils.isNullOrEmpty(searchFor))
@@ -166,6 +175,7 @@ public class ImagesBean
 
 		// sort order
 		crit.addOrder(Order.asc(sortBy));
+		if (!"date".equals(sortBy)) crit.addOrder(Order.asc("date"));
 
 		// load images from db and create a new list for UI
 		List dbImages = crit.list();
@@ -199,9 +209,9 @@ public class ImagesBean
 					image.isReadyToGo() ? "yes" : "no", 
 					authStatusLabel,
 					imgStatusLabel,
-					StringUtils.coalesce(image.getDate(), ""),
-					StringUtils.coalesce(image.getSource(), ""),
-			};
+					image.getCategory().getName(),
+					String.valueOf(image.getDate()),
+					StringUtils.coalesce(image.getSource(), "")};
 
 			ImageListItem uiImage = new ImageListItem();
 			uiImage.setId(String.valueOf(image.getId()));
@@ -238,11 +248,13 @@ public class ImagesBean
 		
 		// load image itself
 		image = Image.loadById(Integer.parseInt(selectedImageId), sess);
+		
+		// image category has to be in its own variable
+		imageCategoryId = image.getCategory().getId().intValue();
 
 		// sort
 		List regions = sess.createFilter(image.getRegions(), "order by this.name").list();		
 		List ports = sess.createFilter(image.getPorts(), "order by this.name").list();		
-		List people = sess.createFilter(image.getPeople(), "order by this.lastName, this.firstName, this.middleName").list();		
 
 		// selected regions
 		int i = 0;
@@ -260,15 +272,6 @@ public class ImagesBean
 		{
 			Port dbPort = (Port) iter.next();
 			selectedPortsIds[j++] = String.valueOf(dbPort.getId());
-		}
-
-		// selected people
-		int k = 0;
-		selectedPeopleIds = new String[people.size()];
-		for (Iterator iter = people.iterator(); iter.hasNext();)
-		{
-			Person dbPerson = (Person) iter.next();
-			selectedPeopleIds[k++] = String.valueOf(dbPerson.getId());
 		}
 
 		// close db
@@ -297,9 +300,6 @@ public class ImagesBean
 		// clean the list of ports
 		selectedPortsIds = new String[0];
 
-		// clean the list of people
-		selectedPeopleIds = new String[0];
-		
 		// goto detail
 		cleanAndPrepareDetailPage();
 		return "detail";
@@ -326,11 +326,6 @@ public class ImagesBean
 				IMAGES_PORTS_LOOKUP,
 				new LookupSourcePorts());
 
-		// register people lookup source
-		LookupSources.registerLookupSource(
-				IMAGES_PEOPLE_LOOKUP,
-				new LookupSourcePeople());
-		
 	}
 
 	public String uploadNewImage()
@@ -443,16 +438,6 @@ public class ImagesBean
 				imagePorts.add(dbPort);
 			}
 	
-			// links to people
-			Set imagePeople = new HashSet();
-			image.setPeople(imagePeople);
-			for (int i = 0; i < selectedPeopleIds.length; i++)
-			{
-				int personId = Integer.parseInt(selectedPeopleIds[i]);
-				Person dbPerson = Person.loadById(sess, personId);
-				imagePeople.add(dbPerson);
-			}
-			
 			// we will use it often
 			Configuration appConf = AppConfig.getConfiguration();
 			
@@ -482,12 +467,15 @@ public class ImagesBean
 					appConf.getInt(AppConfig.IMAGES_EMORYLOCATION_MAXLEN), true);
 
 			// check date
-			String dateLocal = image.getDate().trim();
-			if (!StringUtils.isNullOrEmpty(dateLocal, true) && !Image.checkDate(dateLocal))
-				throw new SaveImageException("Date is invalid. Expected YYYY or YYYY-MM or YYYY-MM-DD.");
+//			String dateLocal = image.getDate().trim();
+//			if (!StringUtils.isNullOrEmpty(dateLocal, true) && !Image.checkDate(dateLocal))
+//				throw new SaveImageException("Date is invalid. Expected YYYY or YYYY-MM or YYYY-MM-DD.");
+			
+			// category
+			ImageCategory cat = ImageCategory.loadById(sess, imageCategoryId);
 
 			// save
-			image.setDate(dateLocal);
+			image.setCategory(cat);
 			image.setTitle(titleLocal);
 			image.setSource(sourceLocal);
 			image.setCreator(creatorLocal);
@@ -564,6 +552,44 @@ public class ImagesBean
 		}
 		return langSelItems;
 
+	}
+	
+	private SelectItem[] loadCategories(boolean includeAll)
+	{
+		
+		Session sess = HibernateUtil.getSession();;
+		Transaction transaction = sess.beginTransaction();
+		
+		int extraItem = includeAll ? 1 : 0;
+		
+		List cats = ImageCategory.loadAll(sess);
+		SelectItem[] catsSelItems = new SelectItem[cats.size() + extraItem];
+		
+		if (includeAll) catsSelItems[0] = new SelectItem("0", "all categories");
+		
+		int i = 0;
+		for (Iterator iter = cats.iterator(); iter.hasNext();)
+		{
+			ImageCategory cat = (ImageCategory) iter.next();
+			catsSelItems[i + extraItem] = new SelectItem(cat.getId().toString(), cat.getName());
+			i++;
+		}
+		
+		transaction.commit();
+		sess.close();
+		
+		return catsSelItems;
+
+	}
+
+	public SelectItem[] getDetailCategories()
+	{
+		return loadCategories(false);
+	}
+
+	public SelectItem[] getListCategories()
+	{
+		return loadCategories(true);
 	}
 	
 	public String getListStyle()
@@ -667,16 +693,6 @@ public class ImagesBean
 		return IMAGES_PEOPLE_LOOKUP;
 	}
 
-	public String[] getSelectedPeopleIds()
-	{
-		return selectedPeopleIds;
-	}
-
-	public void setSelectedPeopleIds(String[] selectedPeopleIds)
-	{
-		this.selectedPeopleIds = selectedPeopleIds;
-	}
-
 	public String[] getSelectedPortsIds()
 	{
 		return selectedPortsIds;
@@ -750,6 +766,26 @@ public class ImagesBean
 	public void setSortBy(String sortBy)
 	{
 		this.sortBy = sortBy;
+	}
+
+	public long getImageCategoryId()
+	{
+		return imageCategoryId;
+	}
+
+	public void setImageCategoryId(long imageCategoryId)
+	{
+		this.imageCategoryId = imageCategoryId;
+	}
+
+	public long getListCategoryId()
+	{
+		return listCategoryId;
+	}
+
+	public void setListCategoryId(long listCategoryId)
+	{
+		this.listCategoryId = listCategoryId;
 	}
 
 }

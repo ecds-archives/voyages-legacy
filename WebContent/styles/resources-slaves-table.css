@@ -14,10 +14,6 @@ table.grid th a {
 	text-decoration: none;
 	color: Black; }
 	
-tr.grid-row-even,
-tr.grid-row-odd {
-	cursor: pointer; }
-
 tr.grid-row-odd td,
 tr.grid-row-even td,
 table.grid th {
@@ -29,14 +25,15 @@ tr.grid-row-even td {
 	vertical-align: top; }
 		
 tr.grid-row-last {
-	cursor: pointer;
 	border-bottom-style: none; }
 	
+/*
 tr.grid-row-even:hover,
 tr.grid-row-odd:hover,
 tr.grid-row-last:hover {
 	background-color: #F7EAC7; }
-	
+*/
+
 table.multiline-attr-table {
 }
 	
@@ -72,6 +69,9 @@ th.grid-first-column {
 div.table-bottom-tools {
 	margin-top: 10px; }
 	
+div.pager {
+	margin-top: 5px; }
+
 div.pager a {
 	color: White; }
 	
@@ -100,14 +100,14 @@ td.pager-fast-forward a {
 td.pager-number-active {
 	color: Black;
 	padding: 2px 5px 2px 5px;
-	background-color: #EED083; }
+	background-color: #B4D6CD; }
 
 td.pager-fast-forward-no-click,
 td.pager-fast-back-no-click,
 td.pager-forward-no-click,
 td.pager-back-no-click {
-	color: #EED083;
-	border: 1px solid #165B31;
+	color: #B4D6CD;
+	border: 1px solid #B4D6CD;
 	padding: 2px 5px 2px 5px; }
 
 td.pager-number a:hover,
@@ -115,7 +115,7 @@ td.pager-fast-forward a:hover,
 td.pager-forward a:hover,
 td.pager-fast-back a:hover,
 td.pager-back a:hover	{
-	background-color: #EED083; }
+	background-color: #E3F2EC; }
 	
 div.database-configure-columns-pane {
 	padding-top: 10px;

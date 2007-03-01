@@ -22,12 +22,13 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class NewImagesBean {
 
+	private static final int DETAIL_IMAGE_WIDTH = 600;
 	private List categories = null;
 	private GalleryImage[] galleryImages;
 	private String imageLike;
 	private String selectedCategory = "-1";
-	private String from = "";
-	private String to = "";
+	private Integer from = null;
+	private Integer to = null;
 	private String imageId;
 	//private String backAction = null;
 	
@@ -51,8 +52,9 @@ public class NewImagesBean {
 		qValue.addPopulatedAttribute(Image.getAttribute("id"));
 		qValue.addPopulatedAttribute(Image.getAttribute("fileName"));
 		qValue.addPopulatedAttribute(Image.getAttribute("title"));
+		qValue.addPopulatedAttribute(Image.getAttribute("date"));
 		
-		qValue.setOrderBy(new Attribute[] {Image.getAttribute("order")});
+		qValue.setOrderBy(new Attribute[] {Image.getAttribute("date")});
 		qValue.setOrder(QueryValue.ORDER_ASC);
 
 		Object[] images = (Object[])qValue.executeQuery(sess);
@@ -62,8 +64,11 @@ public class NewImagesBean {
 		for (int i = 0; i < size; i++)
 		{
 			Object[] row = (Object[])images[i];
-			GalleryImage img = new GalleryImage(row[0].toString(), row[1].toString(), row[2].toString());
-			ret[i] = img;
+			ret[i] = new GalleryImage(
+					row[0].toString(),
+					(String)row[1],
+					(String)row[2],
+					((Integer)row[3]).intValue() != 0 ? "(" + row[3] + ")" : null);
 		}
 		
 		transaction.commit();
@@ -114,56 +119,32 @@ public class NewImagesBean {
 			title.append(cat.getName());
 		}
 		
-		int fromInt = 0;
-		boolean fromOk;
-		try
-		{
-			fromInt = Integer.parseInt(from);
-			fromOk = true;
-		}
-		catch (NumberFormatException nfe)
-		{
-			fromOk = false;
-		}
-		
-		int toInt = 0;
-		boolean toOk;
-		try
-		{
-			toInt = Integer.parseInt(to);
-			toOk = true;
-		}
-		catch (NumberFormatException nfe)
-		{
-			toOk = false;
-		}
-		
-		if (fromOk && toOk)
+		if (from != null && to != null)
 		{
 			title.append(" ");
 			title.append(titleOriginated);
 			title.append(" ");
-			title.append(fromInt);
+			title.append(from);
 			title.append(" - ");
-			title.append(toInt);
+			title.append(to);
 		}
-		else if (fromOk)
+		else if (from != null)
 		{
 			title.append(" ");
 			title.append(titleOriginated);
 			title.append(" ");
 			title.append(titleAfter);
 			title.append(" ");
-			title.append(fromInt);
+			title.append(from);
 		}
-		else if (toOk)
+		else if (to != null)
 		{
 			title.append(" ");
 			title.append(titleOriginated);
 			title.append(" ");
 			title.append(titleBefore);
 			title.append(" ");
-			title.append(toInt);
+			title.append(to);
 		}
 
 		return title.toString();
@@ -189,7 +170,11 @@ public class NewImagesBean {
 	public GalleryImage[] getSampleRegions() {
 		return this.getSample(5, 5);
 	}
-	
+
+	public GalleryImage[] getSampleManuscripts() {
+		return this.getSample(6, 5);
+	}
+
 	public GalleryImage[] getSamplePresentation() {
 		return this.getSample(99, 5);
 	}
@@ -224,6 +209,12 @@ public class NewImagesBean {
 		return "images-query";
 	}
 	
+	public String seeManuscripts() {
+		this.selectedCategory = "6";
+		//this.backAction = "images-query";
+		return "images-query";
+	}
+
 	public String seePresentation() {
 		this.selectedCategory = "99";
 		//this.backAction = "images-query";
@@ -240,8 +231,8 @@ public class NewImagesBean {
 		
 		imageLike = "";
 		selectedCategory = "";
-		from = "";
-		to = "";
+		from = null;
+		to = null;
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
@@ -326,6 +317,9 @@ public class NewImagesBean {
 		ImageCategory cat = ImageCategory.loadById(sess, Long.parseLong(this.selectedCategory));
 		if (cat != null) conds.addCondition(Image.getAttribute("category"), cat, Conditions.OP_EQUALS);
 		
+		if (from != null) conds.addCondition(Image.getAttribute("date"), from, Conditions.OP_GREATER_OR_EQUAL);
+		if (to != null) conds.addCondition(Image.getAttribute("date"), to, Conditions.OP_SMALLER_OR_EQUAL);
+		
 		QueryValue qValue = new QueryValue("Image", conds);
 
 		qValue.addPopulatedAttribute(Image.getAttribute("id"));
@@ -333,33 +327,21 @@ public class NewImagesBean {
 		qValue.addPopulatedAttribute(Image.getAttribute("title"));
 		qValue.addPopulatedAttribute(Image.getAttribute("date"));
 		
-		qValue.setOrderBy(new Attribute[] {Image.getAttribute("order")});
+		qValue.setOrderBy(new Attribute[] {Image.getAttribute("date")});
 		qValue.setOrder(QueryValue.ORDER_ASC);
 		
 		Object[] response = qValue.executeQuery(sess);
+		galleryImages = new GalleryImage[response.length];
 
-		List galImagesList = new ArrayList();
-		for (int i = 0; i < response.length; i++) {
+		for (int i = 0; i < response.length; i++)
+		{
 			Object[] row = (Object[]) response[i];
-			if (from.equals("") && to.equals("")) {
-				galImagesList.add(new GalleryImage(row[0].toString(), row[1].toString(), row[2].toString()));
-			} else if (row[3] != null && !row[3].equals("")) {
-				boolean firstok = true;
-				boolean secondok = true;
-				int year = Integer.parseInt(row[3].toString());
-				if (!from.equals("") && year < Integer.parseInt(from)) {
-					firstok = false;
-				}
-				if (!to.equals("") && year > Integer.parseInt(to)) {
-					secondok = false;
-				}
-				if (firstok && secondok) {
-					galImagesList.add(new GalleryImage(row[0].toString(), row[1].toString(), row[2].toString()));
-				}
-			}
+			galleryImages[i] = new GalleryImage(
+					row[0].toString(),
+					(String)row[1],
+					(String)row[2],
+					((Integer)row[3]).intValue() != 0 ? "(" + row[3] + ")" : null);
 		}
-		
-		galleryImages = (GalleryImage[]) galImagesList.toArray(new GalleryImage[] {});
 		
 		transaction.commit();
 		sess.close();;
@@ -408,22 +390,22 @@ public class NewImagesBean {
 	}
 
 
-	public String getFrom() {
+	public Integer getFrom() {
 		return from;
 	}
 
 
-	public void setFrom(String from) {
+	public void setFrom(Integer  from) {
 		this.from = from;
 	}
 
 
-	public String getTo() {
+	public Integer getTo() {
 		return to;
 	}
 
 
-	public void setTo(String to) {
+	public void setTo(Integer to) {
 		this.to = to;
 	}
 
@@ -452,7 +434,10 @@ public class NewImagesBean {
 	public String getImageURL()
 	{
 		Image img = Image.loadById(Integer.parseInt(this.imageId));
-		return "../images-database/" + img.getFileName();
+		return "../servlet/thumbnail" +
+				"?i=" + img.getFileName() +
+				"&w=" + DETAIL_IMAGE_WIDTH +
+				"&h=0";
 	}
 
 	public List getImageInfo()
@@ -462,8 +447,8 @@ public class NewImagesBean {
 		
 		Image img = Image.loadById(Integer.parseInt(this.imageId));
 		
-		if (!StringUtils.isNullOrEmpty(img.getDate()))
-			info.add(new ImageInfo("Date:", img.getDate()));
+		if (img.getDate() != 0)
+			info.add(new ImageInfo("Date:", String.valueOf(img.getDate())));
 
 		if (!StringUtils.isNullOrEmpty(img.getCreator()))
 			info.add(new ImageInfo("Creator:", img.getCreator()));

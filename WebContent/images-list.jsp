@@ -90,10 +90,19 @@ div.imagelist-gallery-image {
 			</td>
 			<td>
 				<h:selectOneMenu value="#{ImagesBean.sortBy}">
-					<f:selectItem itemLabel="Title" itemValue="title" />
+					<f:selectItem itemLabel="Category" itemValue="cat.name" />
 					<f:selectItem itemLabel="Date" itemValue="date" />
+					<f:selectItem itemLabel="Title" itemValue="title" />
 					<f:selectItem itemLabel="Image status" itemValue="imageStatus" />
 					<f:selectItem itemLabel="Auth. status" itemValue="authorizationStatus" />
+				</h:selectOneMenu>
+			</td>
+			<td>
+				&nbsp;Category:&nbsp;
+			</td>
+			<td>
+				<h:selectOneMenu value="#{ImagesBean.listCategoryId}">
+					<f:selectItems value="#{ImagesBean.listCategories}" />
 				</h:selectOneMenu>
 			</td>
 			<td>
@@ -120,7 +129,7 @@ div.imagelist-gallery-image {
 		
 		<s:imageList
 			id="images"
-			columns="Ready, Auth., Image, Date, Source"
+			columns="Ready, Auth., Image, Category, Date, Source"
 			images="#{ImagesBean.allImages}"
 			listStyle="#{ImagesBean.listStyle}"
 			selectedImageId="#{ImagesBean.selectedImageId}"

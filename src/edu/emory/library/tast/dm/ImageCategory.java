@@ -26,7 +26,7 @@ public class ImageCategory extends Dictionary {
 
 	public static List loadAll(Session sess)
 	{
-		return Dictionary.loadAll(ImageCategory.class, sess, null);
+		return Dictionary.loadAll(ImageCategory.class, sess, "name");
 	}
 	
 	public static ImageCategory loadById(Session sess, long catId)

@@ -6,17 +6,27 @@ td.td-main-panel {
 td.td-side-panel {
 	background-image: url(../images/resources-bg.png);
 	background-repeat: repeat-x;
-	
 	width: 280px; 
 	vertical-align: top;
 	border-right: 1px solid #165B31; }
 	
 td.slaves-query-variable-title {
-	padding: 0px 5px 0px 0px;
-	font-weight: bold; }
+	width: 80px;
+	font-weight: normal; }
 
 td.slaves-query-variable-controls {
 	}
 
 td.slaves-query-spacer {
 	height: 3px; }
+
+td.slaves-query-spacer-line {
+	height: 0px;
+	border-top: 1px solid #B4D6CD;
+	border-color: #B4D6CD; }
+
+td.box-upper-row-middle {
+	width: 250px; }
+
+td.box-upper-row-middle-collapsed {
+	width: 250px; }

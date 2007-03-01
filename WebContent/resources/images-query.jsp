@@ -10,8 +10,8 @@
 	<title>Resources</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
+	<link href="../styles/resources-images.css" rel="stylesheet" type="text/css">
 	<link href="../styles/images.css" rel="stylesheet" type="text/css">
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
