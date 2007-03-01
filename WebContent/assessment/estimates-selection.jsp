@@ -5,7 +5,9 @@
 
 <div id="debug"></div>
 
-<s:expandableBox text="#{res.estimates_left_timeframe}">
+
+<s:expandableBoxSet expandedId="time-frame">
+<s:expandableBox boxId="time-frame" text="#{res.estimates_left_timeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
@@ -28,53 +30,81 @@
 		<h:commandButton
 			value="#{res.estimates_left_changeselection}"
 			action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
+			
+		<h:commandButton
+			value="#{res.estimates_left_resetselection}"
+			action="#{EstimatesSelectionBean.resetSelection}" />
 	</t:htmlTag>
 
 </s:expandableBox>
 
-<br>
-
-<s:expandableBox text="#{res.estimates_left_natcarriers}">
+<s:expandableBox boxId="nations" text="#{res.estimates_left_natcarriers}">
 	<t:div styleClass="nation-checkboxes">
 	<s:checkboxListExpandable
 		id="nations"
 		items="#{EstimatesSelectionBean.allNations}"
 		selectedValues="#{EstimatesSelectionBean.checkedNations}" />
+		
+	<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
+		<h:commandButton
+			value="#{res.estimates_left_changeselection}"
+			action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+
+		<h:commandButton
+			value="#{res.estimates_left_resetselection}"
+			action="#{EstimatesSelectionBean.resetSelection}" />
+
+	</t:htmlTag>
+		
 	</t:div>
 </s:expandableBox>
 	
-<s:expandableBox text="#{res.estimates_left_expregions}" collapsed="true">
+<s:expandableBox boxId="exp-regions" text="#{res.estimates_left_expregions}">
 	<t:div styleClass="export-region-list">
 	<s:checkboxListExpandable
 		id="expReg"
 		items="#{EstimatesSelectionBean.allExpRegions}" 
 		selectedValues="#{EstimatesSelectionBean.checkedExpRegions}"
 		expandedValues="#{EstimatesSelectionBean.expandedExpRegions}" />
+		
+	<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
+
+		<h:commandButton
+				value="#{res.estimates_left_changeselection}"
+				action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+
+		<h:commandButton
+				value="#{res.estimates_left_resetselection}"
+				action="#{EstimatesSelectionBean.resetSelection}" />
+
+	</t:htmlTag>		
+
 	</t:div>
 </s:expandableBox>
 
-<s:expandableBox text="#{res.estimates_left_impregions}" collapsed="true">
+<s:expandableBox boxId="imp-regions" text="#{res.estimates_left_impregions}">
 	<t:div styleClass="import-region-list">
 	<s:checkboxListPopup
 		id="impReg"
 		items="#{EstimatesSelectionBean.allImpRegions}"
 		selectedValues="#{EstimatesSelectionBean.checkedImpRegions}"/>
+		
+		
+		<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
+
+			<h:commandButton
+				value="#{res.estimates_left_changeselection}"
+				action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+
+			<h:commandButton
+				value="#{res.estimates_left_resetselection}"
+				action="#{EstimatesSelectionBean.resetSelection}" />
+
+		</t:htmlTag>
 	</t:div>
 </s:expandableBox>
 
-<br>
-
-<div style="margin-top: 2px; padding: 5px 5px 5px 5px; background-color: White;">
-
-	<h:commandButton
-		value="#{res.estimates_left_changeselection}"
-		action="#{EstimatesSelectionBean.changeGeographicSelection}" />
-
-	<h:commandButton
-		value="#{res.estimates_left_resetselection}"
-		action="#{EstimatesSelectionBean.resetSelection}" />
-
-</div>
+</s:expandableBoxSet>
 
 <br>
 

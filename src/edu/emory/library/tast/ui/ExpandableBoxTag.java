@@ -11,7 +11,7 @@ public class ExpandableBoxTag extends UIComponentTag
 	
 	private String text;
 	private String collapsed;
-	private String gid;
+	private String boxId;
 	
 	protected void setProperties(UIComponent component)
 	{
@@ -29,9 +29,6 @@ public class ExpandableBoxTag extends UIComponentTag
 			box.setText(text);
 		}
 		
-		if (gid != null) {
-			box.setGid(gid);
-		}
 		if (collapsed !=null && isValueReference(collapsed))
 		{
 			ValueBinding vb = app.createValueBinding(collapsed);
@@ -40,7 +37,11 @@ public class ExpandableBoxTag extends UIComponentTag
 		else
 		{
 			box.setCollapsed(collapsed);
-		}		
+		}	
+		
+		if (boxId != null) {
+			box.setBoxId(boxId);
+		}
 		
 	}
 
@@ -72,12 +73,12 @@ public class ExpandableBoxTag extends UIComponentTag
 		this.collapsed = collapsed;
 	}
 
-	public String getGid() {
-		return gid;
+	public String getBoxId() {
+		return boxId;
 	}
 
-	public void setGid(String gid) {
-		this.gid = gid;
+	public void setBoxId(String gid) {
+		this.boxId = gid;
 	}
 
 }

@@ -123,7 +123,18 @@
 			<name>collapsed</name>
 		</attribute>
 		<attribute>
-			<name>gid</name>
+			<name>boxId</name>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>expandableBoxSet</name>
+		<tag-class>
+			edu.emory.library.tast.ui.ExpandableBoxSetTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>expandedId</name>
 		</attribute>
 	</tag>
 	

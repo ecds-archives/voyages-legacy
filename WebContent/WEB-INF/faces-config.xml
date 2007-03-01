@@ -33,6 +33,13 @@
 	</component>
 
 	<component>
+		<component-type>ExpandableBoxSet</component-type>
+		<component-class>
+			edu.emory.library.tast.ui.ExpandableBoxSetComponent
+		</component-class>
+	</component>
+
+	<component>
 		<component-type>HistoryList</component-type>
 		<component-class>
 			edu.emory.library.tast.ui.search.query.HistoryListComponent
