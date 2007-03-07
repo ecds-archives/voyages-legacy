@@ -29,12 +29,18 @@ div.subtitle {
 	font-weight: bold; }
  
 td.search-side-panel table.box-main-table {
-	margin-bottom: 10px; }
+	margin-bottom: 0px; }
 
 td.search-side-panel td.box-upper-row-middle,
 td.search-side-panel td.box-upper-row-middle-collapsed,
 td.search-side-panel td.box-middle-row-middle,
-td.search-side-panel td.box-lower-row-middle {
+td.search-side-panel td.box-lower-row-middle,
+td.search-side-panel td.box-set-upper-row-upper-middle-collapsed,
+td.search-side-panel td.box-set-upper-row-upper-middle, 
+td.search-side-panel td.box-set-upper-row-middle-middle-collapsed,
+td.search-side-panel td.box-set-upper-row-middle-middle, 
+td.search-side-panel td.box-set-upper-row-bottom-middle-collapsed,
+td.search-side-panel td.box-set-upper-row-bottom-middle {
 	width: 270px; }
 	
 div.search-panel {

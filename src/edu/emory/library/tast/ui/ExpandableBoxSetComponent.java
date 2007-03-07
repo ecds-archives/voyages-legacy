@@ -2,6 +2,7 @@ package edu.emory.library.tast.ui;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIComponentBase;
@@ -54,11 +55,18 @@ public class ExpandableBoxSetComponent extends UIComponentBase {
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException {
-		
-		for (Iterator iter = getChildren().iterator(); iter.hasNext();) {
-			ExpandableBoxComponent sect = (ExpandableBoxComponent) iter.next();
+		List children = getChildren();
+		for (int i = 0; i < children.size(); i++) {
+			ExpandableBoxComponent sect = (ExpandableBoxComponent) children.get(i);
 			sect.setFieldId(this.getSelectedBoxHiddenFieldName(context));
 			sect.setExpanded(!this.expandedId.equals(sect.getBoxId()));
+			if (i == 0) {
+				sect.setPositionType(ExpandableBoxComponent.SET_TOP_BOX);
+			} else if (i < children.size() - 1) {
+				sect.setPositionType(ExpandableBoxComponent.SET_MIDDLE_BOX);
+			} else {
+				sect.setPositionType(ExpandableBoxComponent.SET_BOTTOM_BOX);
+			}
 			JsfUtils.renderChild(context, sect);
 		}
 	}

@@ -32,8 +32,9 @@
 	</t:htmlTag>
 	
 </s:expandableBox>
-
-<s:expandableBox text="#{res.database_search_basic}" collapsed="true">
+<br>
+<s:expandableBoxSet expandedId="basic">
+<s:expandableBox boxId="basic" text="#{res.database_search_basic}">
 
 	<s:menuPopup
 		customSubmitFunction="animateAttribute"
@@ -43,7 +44,7 @@
 
 </s:expandableBox>
 
-<s:expandableBox text="#{res.database_search_general}">
+<s:expandableBox boxId="general" text="#{res.database_search_general}">
 
 	<s:menuPopup
 		customSubmitFunction="animateAttribute"
@@ -52,7 +53,8 @@
 		onMenuSelected="#{SearchBean.addConditionFromMenu}" />
 
 </s:expandableBox>
-
+</s:expandableBoxSet>
+<br>
 <script type="text/javascript" language="javascript">
 
 function animateAttribute(menuItem, submitFunction)
@@ -134,7 +136,7 @@ function animateAttribute(menuItem, submitFunction)
 </s:expandableBox>
 
 </div>
-
+<br>
 <script type="text/javascript" language="javascript">
 
 AjaxAnywhere.prototype.showLoadingMessage = function()

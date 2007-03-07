@@ -57,7 +57,13 @@ div.import-region-list div.checkbox-list-popup {
 ***********************************/
 
 td.td-side-panel td.box-upper-row-middle,
-td.td-side-panel td.box-upper-row-middle-collapsed {
+td.td-side-panel td.box-upper-row-middle-collapsed,
+td.td-side-panel td.box-set-upper-row-upper-middle-collapsed,
+td.td-side-panel td.box-set-upper-row-upper-middle, 
+td.td-side-panel td.box-set-upper-row-middle-middle-collapsed,
+td.td-side-panel td.box-set-upper-row-middle-middle, 
+td.td-side-panel td.box-set-upper-row-bottom-middle-collapsed,
+td.td-side-panel td.box-set-upper-row-bottom-middle {
 	width: 250px; }
 
 

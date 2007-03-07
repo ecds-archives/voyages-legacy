@@ -17,6 +17,10 @@ import edu.emory.library.tast.util.JsfUtils;
 
 public class ExpandableBoxComponent extends UIComponentBase {
 
+	public static final int SET_TOP_BOX = 1;
+	public static final int SET_MIDDLE_BOX = 2;
+	public static final int SET_BOTTOM_BOX = 3;
+	
 	private static final String EXPANEDED = "expanded";
 
 	private static final String COLLAPSED = "collapsed";
@@ -30,6 +34,7 @@ public class ExpandableBoxComponent extends UIComponentBase {
 	private boolean textSet = false;
 
 	private String boxId = null;
+	private int positionType;
 
 	public String getFamily() {
 		return null;
@@ -40,11 +45,12 @@ public class ExpandableBoxComponent extends UIComponentBase {
 	}
 
 	public Object saveState(FacesContext context) {
-		Object[] values = new Object[4];
+		Object[] values = new Object[5];
 		values[0] = super.saveState(context);
 		values[1] = text;
 		values[2] = collapsed;
 		values[3] = boxId;
+		values[4] = new Integer(positionType);
 		return values;
 	}
 
@@ -54,6 +60,7 @@ public class ExpandableBoxComponent extends UIComponentBase {
 		text = (String) values[1];
 		collapsed = (Boolean) values[2];
 		boxId = (String) values[3];
+		positionType = ((Integer)values[4]).intValue();
 	}
 
 	private String getStateHiddenFieldName(FacesContext context) {
@@ -83,15 +90,30 @@ public class ExpandableBoxComponent extends UIComponentBase {
 		writer.writeAttribute("class", "box-main-table", null);
 
 		writer.startElement("tr", null);
-		writeSimpleTd(writer, "box-upper-row-left"
+		if (this.fieldId == null) {
+			writeSimpleTd(writer, "box-upper-row-left"
 				+ (isCollapsed() ? "-collapsed" : ""));
+		} else {
+			writeSimpleTd(writer, "box-set-upper-row-" + this.getBoxTypePrefix() + "-left"
+					+ (isCollapsed() ? "-collapsed" : ""));
+		}
 		writer.startElement("td", null);
-		writer.writeAttribute("class", "box-upper-row-middle"
+		if (this.fieldId == null) {
+			writer.writeAttribute("class", "box-upper-row-middle"
 				+ (isCollapsed() ? "-collapsed" : ""), null);
+		} else {
+			writer.writeAttribute("class", "box-set-upper-row-" + this.getBoxTypePrefix() + "-middle"
+					+ (isCollapsed() ? "-collapsed" : ""), null);
+		}
 		writeHeaderTable(context, writer);
 		writer.endElement("td");
-		writeSimpleTd(writer, "box-upper-row-right"
+		if (this.fieldId == null) {
+			writeSimpleTd(writer, "box-upper-row-right"
 				+ (isCollapsed() ? "-collapsed" : ""));
+		} else {
+			writeSimpleTd(writer, "box-set-upper-row-" + this.getBoxTypePrefix() + "-right"
+					+ (isCollapsed() ? "-collapsed" : ""));
+		}
 		writer.endElement("tr");
 
 		if (!isCollapsed()) {
@@ -106,6 +128,16 @@ public class ExpandableBoxComponent extends UIComponentBase {
 			writer.writeAttribute("class", "box-main-text", null);
 		}
 
+	}
+
+	private String getBoxTypePrefix() {
+		if (this.positionType == SET_BOTTOM_BOX) {
+			return "bottom";
+		} else if (this.positionType == SET_MIDDLE_BOX) {
+			return "middle";
+		} else {
+			return "upper";
+		}
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException {
@@ -182,9 +214,21 @@ public class ExpandableBoxComponent extends UIComponentBase {
 			writeSimpleTd(writer, "box-middle-row-right");
 			writer.endElement("tr");
 			writer.startElement("tr", null);
-			writeSimpleTd(writer, "box-lower-row-left");
-			writeSimpleTd(writer, "box-lower-row-middle");
-			writeSimpleTd(writer, "box-lower-row-right");
+			if (this.fieldId == null) {
+				writeSimpleTd(writer, "box-lower-row-left");
+			} else {
+				writeSimpleTd(writer, "box-set-lower-row-" + getBoxTypePrefix() + "-left");
+			}
+			if (this.fieldId == null) {
+				writeSimpleTd(writer, "box-lower-row-middle");
+			} else {
+				writeSimpleTd(writer, "box-set-lower-row-" + getBoxTypePrefix() + "-middle");
+			}
+			if (this.fieldId == null) {
+				writeSimpleTd(writer, "box-lower-row-right");
+			} else {
+				writeSimpleTd(writer, "box-set-lower-row-" + getBoxTypePrefix() + "-right");
+			}
 			writer.endElement("tr");
 		}
 
@@ -229,6 +273,10 @@ public class ExpandableBoxComponent extends UIComponentBase {
 
 	public String getBoxId() {
 		return boxId;
+	}
+
+	public void setPositionType(int position) {
+		this.positionType = position;
 	}
 
 }
