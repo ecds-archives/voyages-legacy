@@ -1,3 +1,6 @@
+table.box-main-table {
+	border-collapse: collapse; }
+
 td.box-upper-row-left, td.box-set-upper-row-upper-left, td.box-set-upper-row-middle-left, td.box-set-upper-row-bottom-left,
 td.box-upper-row-left-collapsed, td.box-set-upper-row-upper-left-collapsed, td.box-set-upper-row-middle-left-collapsed, td.box-set-upper-row-bottom-left-collapsed {
 	height: 26px;
@@ -14,7 +17,7 @@ td.box-set-upper-row-middle-middle-collapsed,
 td.box-set-upper-row-middle-middle, 
 td.box-set-upper-row-bottom-middle-collapsed,
 td.box-set-upper-row-bottom-middle {
-	height: 26px;
+	
 	padding-top: 5px;
 	padding-bottom: 4px;
 	background-repeat: repeat-x; }

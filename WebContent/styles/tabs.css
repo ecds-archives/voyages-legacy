@@ -10,7 +10,6 @@ td.tabs-tab-middle-selected,
 td.tabs-tab-middle {
 	text-align: center;
 	vertical-align: bottom !important;
-	height: 32px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-repeat: repeat-x; }
