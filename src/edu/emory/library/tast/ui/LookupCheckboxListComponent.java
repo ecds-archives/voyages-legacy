@@ -1,12 +1,14 @@
 package edu.emory.library.tast.ui;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.util.JsfUtils;
@@ -60,6 +62,30 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	private String getHtmlNameForListExpanded(FacesContext context)
 	{
 		return getClientId(context) + "_expanded_ids";
+	}
+	
+	public void decode(FacesContext context)
+	{
+		
+		Map params = context.getExternalContext().getRequestParameterMap();
+		Map paramValues = context.getExternalContext().getRequestParameterValuesMap();
+		
+		selectedValues = (String[]) paramValues.get(getHtmlNameForList(context));
+		
+		String expandedIdsStr = (String) params.get(getHtmlNameForListExpanded(context));
+		if (expandedIdsStr != null) expandedValues = expandedIdsStr.split(ID_SEPARATOR);
+		
+	}
+	
+	public void processUpdates(FacesContext context)
+	{
+		
+		ValueBinding vbSelectedValues = getValueBinding("selectedValues");
+		if (vbSelectedValues != null) vbSelectedValues.setValue(context, selectedValues);
+		
+		ValueBinding vbExpandedValues = getValueBinding("expandedValues");
+		if (vbExpandedValues != null) vbExpandedValues.setValue(context, expandedValues);
+
 	}
 
 	private void createRegJsForListItem(FacesContext context, LookupCheckboxItem item, String parentId, StringBuffer regJS, Set expandedValuesLookup)
@@ -120,7 +146,7 @@ public class LookupCheckboxListComponent extends UIComponentBase
 			"this)";
 		
 		String className =
-			"query-builder-list-item-" + level + 
+			"lookup-checkbox-list-item-" + level + 
 			(item.hasChildren() ? " query-builder-list-item-with-children" : "");
 		
 		writer.startElement("tr", this);
@@ -137,8 +163,8 @@ public class LookupCheckboxListComponent extends UIComponentBase
 				"this)";
 			
 			String arrowClassName = isExpanded ? 
-				"query-builder-list-item-expanded" :
-				"query-builder-list-item-collapsed";
+				"lookup-checkbox-list-item-expanded" :
+				"lookup-checkbox-list-item-collapsed";
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", arrowClassName, null);
@@ -225,17 +251,17 @@ public class LookupCheckboxListComponent extends UIComponentBase
 		regJS.append(", ");
 		regJS.append("'").append(ID_PARTS_SEPARATOR).append("'");
 		regJS.append(", ");
+		regJS.append("'").append(ID_SEPARATOR).append("'");
+		regJS.append(", ");
 		regJS.append("true");
 		regJS.append(", ");
-		regJS.append("'").append(getHtmlNameForList(context)).append("'");
-		regJS.append(", ");
-		regJS.append("[");
+		regJS.append("{");
 		for (int i = 0; i < items.length; i++)
 		{
 			if (i > 0) regJS.append(", ");
 			createRegJsForListItem(context, items[i], "", regJS, expandedValuesLookup);
 		}
-		regJS.append("]))");
+		regJS.append("}))");
 
 		// render js
 		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);
@@ -261,27 +287,23 @@ public class LookupCheckboxListComponent extends UIComponentBase
 			"'" + getClientId(context) + "', " +
 			"this)";
 		
-		// start
-		writer.startElement("div", this);
-		writer.writeAttribute("class", "query-builder-edit", null);
-
 		// quicksearch table container: start
 		writer.startElement("table", this);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("class", "query-builder-quicksearch", null);
+		writer.writeAttribute("class", "lookup-checkbox-list-quicksearch", null);
 		writer.startElement("tr", this);
 		
 		// quicksearch title
 		writer.startElement("td", this);
-		writer.writeAttribute("class", "query-builder-quicksearch-label", null);
+		writer.writeAttribute("class", "lookup-checkbox-list-quicksearch-label", null);
 		writer.write(TastResource.getText("components_search_quicksearch"));
 		writer.endElement("td");
 
 		// quicksearch
 		writer.startElement("td", this);
-		writer.writeAttribute("class", "query-builder-quicksearch-input", null);
+		writer.writeAttribute("class", "lookup-checkbox-list-quicksearch-input", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", "", null);
@@ -292,6 +314,10 @@ public class LookupCheckboxListComponent extends UIComponentBase
 		// quicksearch table container: end
 		writer.endElement("tr");
 		writer.endElement("table");
+
+		// main list container
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "lookup-checkbox-list", null);
 
 		// main list
 		writer.startElement("table", this);
@@ -316,7 +342,7 @@ public class LookupCheckboxListComponent extends UIComponentBase
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
 		writer.writeAttribute("border", "0", null);
-		writer.writeAttribute("class", "query-builder-list-buttons", null);
+		writer.writeAttribute("class", "lookup-checkbox-list-buttons", null);
 		writer.startElement("tr", this);
 		
 		// select all

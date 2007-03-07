@@ -48,7 +48,6 @@ public class SlavesTableBean {
 	private String queryCountry;
 	private String queryExpPort;
 	private String[] selectedCountries = new String[] {};
-	private String[] expandedCountries = new String[] {};
 	private boolean querySierraLeone = true;
 	private boolean queryHavana = true;
 	private Port havanaPort;
@@ -281,10 +280,10 @@ public class SlavesTableBean {
 	
 	public LookupCheckboxItem[] getCountries()
 	{
-		
+
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
-		
+
 		List countries = Country.loadAll(sess, "name");
 		LookupCheckboxItem[] countryUi = new LookupCheckboxItem[countries.size()];
 		
@@ -296,12 +295,12 @@ public class SlavesTableBean {
 					String.valueOf(country.getId()),
 					country.getName());
 		}
-		
+
 		tran.commit();
 		sess.close();
-		
+
 		return countryUi;
-		
+
 	}
 	
 	public TableLinkManager getTableManager() {
@@ -466,16 +465,6 @@ public class SlavesTableBean {
 	public void setQueryWoman(boolean queryWoman)
 	{
 		this.queryWoman = queryWoman;
-	}
-
-	public String[] getExpandedCountries()
-	{
-		return expandedCountries;
-	}
-
-	public void setExpandedCountries(String[] expandedCountries)
-	{
-		this.expandedCountries = expandedCountries;
 	}
 
 	public String[] getSelectedCountries()

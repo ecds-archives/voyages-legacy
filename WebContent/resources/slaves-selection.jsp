@@ -172,11 +172,11 @@
 
 	</t:htmlTag>
 	
+	<s:lookupCheckboxList
+		id="c"
+		items="#{SlavesTableBean.countries}"
+		selectedValues="#{SlavesTableBean.selectedCountries}" />
+	
 	<h:commandButton value="Search database" action="#{SlavesTableBean.search}" />
 
 </s:expandableBox>
-
-<s:lookupCheckboxList
-	items="#{SlavesTableBean.countries}"
-	selectedValues="#{SlavesTableBean.selectedCountries}"
-	expandedValues="#{SlavesTableBean.expandedCountries}" />

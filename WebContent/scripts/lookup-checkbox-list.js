@@ -8,39 +8,39 @@ var LookupCheckboxListGlobals =
 		this.lists[list.listId] = list;
 	},
 
-	quickSearch: function(builderId, input)
+	quickSearch: function(listId, input)
 	{
-		var list = this.lists[listId];
-		if (list) list.quickSearchList(input);
+		var list = LookupCheckboxListGlobals.lists[listId];
+		if (list) list.quickSearch(input);
 	},
 	
 	selectAll: function(listId)
 	{
-		var list = this.lists[listId];
+		var list = LookupCheckboxListGlobals.lists[listId];
 		if (list) list.selectAll();
 	},
 
 	deselectAll: function(listId)
 	{
-		var list = this.lists[listId];
-		if (list) builder.deselectAll();
+		var list = LookupCheckboxListGlobals.lists[listId];
+		if (list) list.deselectAll();
 	},
 
 	itemToggled: function(listId, input)
 	{
-		var list = this.lists[listId];
+		var list = LookupCheckboxListGlobals.lists[listId];
 		if (list) list.itemToggled(input);
 	},
 	
 	itemExpandCollapse: function(listId, fullId)
 	{
-		var list = this.lists[listId];
+		var list = LookupCheckboxListGlobals.lists[listId];
 		if (list) list.itemExpandCollapse(fullId);
 	}
 
 }
 
-function LookupCheckboxList(listId, formName, expandedIdsFieldName, idPartsSeparator, idSeparator, itemsFieldName, items)
+function LookupCheckboxList(listId, formName, expandedIdsFieldName, idPartsSeparator, idSeparator, autoSelection, items)
 {
 
 	this.listId = listId;
@@ -49,16 +49,7 @@ function LookupCheckboxList(listId, formName, expandedIdsFieldName, idPartsSepar
 	this.idPartsSeparator = idPartsSeparator;
 	this.idSeparator = idSeparator;
 	this.autoSelection = autoSelection;
-	this.itemsFieldName = itemsFieldName;
 	this.items = items;
-	
-	this.form = document.forms[this.formName];
-	this.expandedIdsField = form.elements[this.expandedIdsFieldName];
-	
-	this.expandedIds = [];
-	var expandedIdsArray = expandedIdsField.value.split(this.idSeparator);
-	for (var i = 0; i < expandedIdsArray.length; i++)
-		this.expandedIds[expandedIdsArray[i]] = true;
 	
 }
 
@@ -76,7 +67,7 @@ LookupCheckboxList.prototype.getListItemById = function(id, offset)
 
 }
 
-LookupCheckboxList.prototype.prepareListItem = function(item, parent)
+LookupCheckboxList.prototype.prepareItem = function(item, parent)
 {
 
 	item.itemElement = document.getElementById(item.itemElementId);
@@ -98,13 +89,23 @@ LookupCheckboxList.prototype.prepareListItem = function(item, parent)
 
 LookupCheckboxList.prototype.prepare = function()
 {
+
 	if (this.prepared)
 		return;
+		
+	var form = document.forms[this.formName];
+	this.expandedIdsField = form.elements[this.expandedIdsFieldName];
+	
+	this.expandedIds = [];
+	var expandedIdsArray = this.expandedIdsField.value.split(this.idSeparator);
+	for (var i = 0; i < expandedIdsArray.length; i++)
+		this.expandedIds[expandedIdsArray[i]] = true;
 		
 	for (var id in this.items)
 		this.prepareItem(this.items[id], null);
 
-	this.prepare = true;
+	this.prepared = true;
+
 }
 
 LookupCheckboxList.prototype.restoreDefaultTreeState = function(item)
@@ -146,7 +147,7 @@ LookupCheckboxList.prototype.quickSearchTree = function(item, searchFor)
 	return directMatch || subtreeMatches > 0;
 }
 
-LookupCheckboxList.prototype.quickSearchList = function(input)
+LookupCheckboxList.prototype.quickSearch = function(input)
 {
 
 	this.prepare();
@@ -228,13 +229,13 @@ LookupCheckboxList.prototype.selectItem = function(item, state)
 
 LookupCheckboxList.prototype.itemToggled = function(input)
 {
-	
+
 	if (this.autoSelection)
 	{
 		this.prepare();
 		
 		var item = this.getListItemById(input.value, 0);
-		this.listSelectItem(item, item.checkbox.checked);
+		this.selectItem(item, item.checkbox.checked);
 		
 		var parent = item.parent;
 		while (parent)

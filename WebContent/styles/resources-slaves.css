@@ -30,3 +30,27 @@ td.box-upper-row-middle {
 
 td.box-upper-row-middle-collapsed {
 	width: 250px; }
+	
+td.lookup-checkbox-list-quicksearch {
+	margin-bottom: 5px; }
+
+td.lookup-checkbox-list-quicksearch-label {
+	width: 80px; }
+	
+td.lookup-checkbox-list-quicksearch-input input {
+	width: 100px; }
+	
+div.lookup-checkbox-list {
+	border: 1px solid #B4D6CD;
+	/* background-color: #DCEFE7; */
+	margin-top: 5px;
+	padding: 3px;
+	width: 230px;
+	height: 200px;
+	overflow: scroll; }
+
+table.lookup-checkbox-list-buttons {
+	margin-top: 5px; }
+	
+table.lookup-checkbox-list-buttons td {
+	padding-right: 5px; }
