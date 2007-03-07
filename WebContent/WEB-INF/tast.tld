@@ -859,7 +859,7 @@
 	</tag>
 
 	<tag>
-		<name>welcomeMap</name>
+		<name>lookupCheckboxList</name>
 		<tag-class>
 			edu.emory.library.tast.ui.LookupCheckboxListTag
 		</tag-class>
@@ -875,6 +875,9 @@
 		</attribute>
 		<attribute>
 			<name>selectedValues</name>
+		</attribute>
+		<attribute>
+			<name>expandedValues</name>
 		</attribute>
 	</tag>
 

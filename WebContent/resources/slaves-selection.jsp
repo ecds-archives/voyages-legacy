@@ -172,6 +172,11 @@
 
 	</t:htmlTag>
 	
-	<h:commandButton value="Search database" action="#{SlavesTableBean.search}"/>
+	<h:commandButton value="Search database" action="#{SlavesTableBean.search}" />
 
 </s:expandableBox>
+
+<s:lookupCheckboxList
+	items="#{SlavesTableBean.countries}"
+	selectedValues="#{SlavesTableBean.selectedCountries}"
+	expandedValues="#{SlavesTableBean.expandedCountries}" />

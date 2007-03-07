@@ -10,8 +10,9 @@ import org.apache.myfaces.shared_impl.taglib.UIComponentTagBase;
 public class LookupCheckboxListTag extends UIComponentTagBase
 {
 	
-	private String selectedValues;
 	private String items;
+	private String selectedValues;
+	private String expandedValues;
 
 	public String getComponentType()
 	{
@@ -29,18 +30,54 @@ public class LookupCheckboxListTag extends UIComponentTagBase
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		LookupCheckboxListComponent lookupList = (LookupCheckboxListComponent) component;
 		
-		if (selectedValues != null && isValueReference(selectedValues))
-		{
-			ValueBinding vb = app.createValueBinding(selectedValues);
-			lookupList.setValueBinding("selectedValues", vb);
-		}
-		
 		if (items != null && isValueReference(items))
 		{
 			ValueBinding vb = app.createValueBinding(items);
 			lookupList.setValueBinding("items", vb);
 		}
 
+		if (selectedValues != null && isValueReference(selectedValues))
+		{
+			ValueBinding vb = app.createValueBinding(selectedValues);
+			lookupList.setValueBinding("selectedValues", vb);
+		}
+
+		if (expandedValues != null && isValueReference(expandedValues))
+		{
+			ValueBinding vb = app.createValueBinding(expandedValues);
+			lookupList.setValueBinding("expandedValues", vb);
+		}
+
+	}
+
+	public String getExpandedValues()
+	{
+		return expandedValues;
+	}
+
+	public void setExpandedValues(String expandedValues)
+	{
+		this.expandedValues = expandedValues;
+	}
+
+	public String getItems()
+	{
+		return items;
+	}
+
+	public void setItems(String items)
+	{
+		this.items = items;
+	}
+
+	public String getSelectedValues()
+	{
+		return selectedValues;
+	}
+
+	public void setSelectedValues(String selectedValues)
+	{
+		this.selectedValues = selectedValues;
 	}
 
 }

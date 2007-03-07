@@ -22,6 +22,8 @@
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
+	<script src="../scripts/lookup-checkbox-list.js" language="javascript" type="text/javascript"></script>
+
 </head>
 <body>
 <f:view>

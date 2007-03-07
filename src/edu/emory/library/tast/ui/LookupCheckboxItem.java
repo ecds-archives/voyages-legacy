@@ -8,7 +8,6 @@ public class LookupCheckboxItem
 	
 	private String id;
 	private String text;
-	private boolean expanded = true;
 	private transient Map childrenById = null;
 	private LookupCheckboxItem[] children;
 	
@@ -54,6 +53,11 @@ public class LookupCheckboxItem
 		return (LookupCheckboxItem) childrenById.get(id);
 	}
 	
+	public boolean hasChildren()
+	{
+		return children != null && children.length > 0;
+	}
+
 	public LookupCheckboxItem[] getChildren()
 	{
 		return children;
@@ -62,16 +66,6 @@ public class LookupCheckboxItem
 	public void setChildren(LookupCheckboxItem[] children)
 	{
 		this.children = children;
-	}
-	
-	public boolean isExpanded()
-	{
-		return expanded;
-	}
-	
-	public void setExpanded(boolean expanded)
-	{
-		this.expanded = expanded;
 	}
 	
 	public String getId()

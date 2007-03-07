@@ -1,6 +1,11 @@
 package edu.emory.library.tast.ui.names;
 
 import java.text.MessageFormat;
+import java.util.Iterator;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
@@ -10,6 +15,7 @@ import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.ui.LookupCheckboxItem;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
@@ -41,19 +47,22 @@ public class SlavesTableBean {
 	private boolean queryFemail = true;
 	private String queryCountry;
 	private String queryExpPort;
+	private String[] selectedCountries = new String[] {};
+	private String[] expandedCountries = new String[] {};
 	private boolean querySierraLeone = true;
 	private boolean queryHavana = true;
-	private Port havanaPort = Port.loadById(HibernateUtil.getSession(), 30112);
-	private Port slPort = Port.loadById(HibernateUtil.getSession(), 60220);
+	private Port havanaPort;
+	private Port slPort;
+	private SexAge sBoy;
+	private SexAge sGirl;
+	private SexAge sMale;
+	private SexAge sFemale;
+	private SexAge sMan;
+	private SexAge sWoman;
 	
-	private SexAge sBoy = SexAge.loadById(HibernateUtil.getSession(), 2);
-	private SexAge sGirl = SexAge.loadById(HibernateUtil.getSession(), 6);
-	private SexAge sMale = SexAge.loadById(HibernateUtil.getSession(), 3);
-	private SexAge sFemale = SexAge.loadById(HibernateUtil.getSession(), 4);
-	private SexAge sMan = SexAge.loadById(HibernateUtil.getSession(), 1);
-	private SexAge sWoman = SexAge.loadById(HibernateUtil.getSession(), 5);
-	
-	public SlavesTableBean() {
+	public SlavesTableBean()
+	{
+		
 		VisibleAttributeInterface[] visibleAttrs = new VisibleAttributeInterface[12];
 		visibleAttrs[0] = VisibleAttrSlave.getAttributeForTable("id");
 		visibleAttrs[1] = VisibleAttrSlave.getAttributeForTable("voyageId");
@@ -72,6 +81,22 @@ public class SlavesTableBean {
 		tableData.setKeyAttribute(Slave.getAttribute("id"));
 		tableData.setVisibleColumns(visibleAttrs);
 		tableData.setOrderByColumn(visibleAttrs[0]);
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		havanaPort = Port.loadById(sess, 30112);
+		slPort = Port.loadById(sess, 60220);
+		sBoy = SexAge.loadById(sess, 2);
+		sGirl = SexAge.loadById(sess, 6);
+		sMale = SexAge.loadById(sess, 3);
+		sFemale = SexAge.loadById(sess, 4);
+		sMan = SexAge.loadById(sess, 1);
+		sWoman = SexAge.loadById(sess, 5);
+		
+		tran.commit();
+		sess.close();
+		
 	}
 	
 	public TableData getTableData() {
@@ -250,9 +275,33 @@ public class SlavesTableBean {
 	}
 	
 	public String search() {
-		System.out.println("Search!!!!!");
 		this.linkManager.reset();
 		return null;
+	}
+	
+	public LookupCheckboxItem[] getCountries()
+	{
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		List countries = Country.loadAll(sess, "name");
+		LookupCheckboxItem[] countryUi = new LookupCheckboxItem[countries.size()];
+		
+		int i = 0;
+		for (Iterator iter = countries.iterator(); iter.hasNext();)
+		{
+			Country country = (Country) iter.next();
+			countryUi[i++] = new LookupCheckboxItem(
+					String.valueOf(country.getId()),
+					country.getName());
+		}
+		
+		tran.commit();
+		sess.close();
+		
+		return countryUi;
+		
 	}
 	
 	public TableLinkManager getTableManager() {
@@ -418,4 +467,25 @@ public class SlavesTableBean {
 	{
 		this.queryWoman = queryWoman;
 	}
+
+	public String[] getExpandedCountries()
+	{
+		return expandedCountries;
+	}
+
+	public void setExpandedCountries(String[] expandedCountries)
+	{
+		this.expandedCountries = expandedCountries;
+	}
+
+	public String[] getSelectedCountries()
+	{
+		return selectedCountries;
+	}
+
+	public void setSelectedCountries(String[] selectedCountries)
+	{
+		this.selectedCountries = selectedCountries;
+	}
+
 }
