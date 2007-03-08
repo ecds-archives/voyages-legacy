@@ -1,21 +1,27 @@
 package edu.emory.library.tast.ui.names;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.SexAge;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.ui.LookupCheckboxItem;
+import edu.emory.library.tast.ui.LookupCheckboxListComponent;
 import edu.emory.library.tast.ui.search.table.SortChangeEvent;
 import edu.emory.library.tast.ui.search.table.TableData;
 import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
@@ -48,6 +54,8 @@ public class SlavesTableBean {
 	private String queryCountry;
 	private String queryExpPort;
 	private String[] selectedCountries = new String[] {};
+	private String[] selectedExpPorts = new String[] {};
+	private String[] expandedExpPorts = new String[] {};
 	private boolean querySierraLeone = true;
 	private boolean queryHavana = true;
 	private Port havanaPort;
@@ -81,6 +89,8 @@ public class SlavesTableBean {
 		tableData.setVisibleColumns(visibleAttrs);
 		tableData.setOrderByColumn(visibleAttrs[0]);
 		
+		expandedExpPorts = new String[] {"60000"};
+		
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 		
@@ -98,33 +108,46 @@ public class SlavesTableBean {
 		
 	}
 	
-	public TableData getTableData() {
-		Conditions conditions = this.prepareConditions();
+	public TableData getTableData()
+	{
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		Conditions conditions = this.prepareConditions(sess);
 		
 		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"s"}, conditions);
 		Attribute[] attrs = this.tableData.getAttributesForQuery();
-		for (int i = 0; i < attrs.length; i++) {
+		for (int i = 0; i < attrs.length; i++)
+		{
 			qValue.addPopulatedAttribute(attrs[i]);
 		}
 		qValue.setOrder(this.tableData.getOrder());
 		qValue.setOrderBy(this.tableData.getOrderByColumn().getAttributes());
 		qValue.setFirstResult(this.linkManager.getCurrentFirstRecord());
 		qValue.setLimit(this.linkManager.getStep());
-		this.tableData.setData(qValue.executeQuery());
-		this.setNumberOfResults();
+		this.tableData.setData(qValue.executeQuery(sess));
+		this.setNumberOfResults(sess);
+		
+		tran.commit();
+		sess.close();
 		
 		return tableData;
+		
 	}
 	
-	private void setNumberOfResults() {
+	private void setNumberOfResults(Session sess)
+	{
 		//this.conditions = this.getEstimatesBean().getConditions();
-		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"e"}, this.prepareConditions());
+		QueryValue qValue = new QueryValue(new String[] {"Slave"}, new String[] {"e"}, this.prepareConditions(sess));
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
 		Object[] ret = qValue.executeQuery();
 		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
 	}
 
-	private Conditions prepareConditions() {
+	private Conditions prepareConditions(Session sess)
+	{
+		
 		Conditions c = new Conditions();
 		if (this.queryAgeFrom != null) {
 			c.addCondition(Slave.getAttribute("age"), this.queryAgeFrom, Conditions.OP_GREATER_OR_EQUAL);
@@ -150,6 +173,38 @@ public class SlavesTableBean {
 				c.addCondition(new FunctionAttribute("upper", new Attribute[] {Slave.getAttribute("shipname")}), "%" + s[i] + "%", Conditions.OP_LIKE);
 			}
 		}
+		
+		if (selectedExpPorts != null && selectedExpPorts.length > 0)
+		{
+			Conditions condPorts = new Conditions(Conditions.JOIN_OR);
+			Pattern idSplitter = Pattern.compile(LookupCheckboxListComponent.ID_PARTS_SEPARATOR); 
+			for (int i = 0; i < selectedExpPorts.length; i++)
+			{
+				String[] idParts = idSplitter.split(selectedExpPorts[i]);
+				if (idParts.length == 3)
+				{
+					condPorts.addCondition(
+							Slave.getAttribute("majbuypt"),
+							Port.loadById(sess, Long.parseLong(idParts[2])),
+							Conditions.OP_EQUALS);
+				}
+			}
+			c.addCondition(condPorts);
+		}
+		
+		if (selectedCountries != null && selectedCountries.length > 0)
+		{
+			Conditions condCountries = new Conditions(Conditions.JOIN_OR);
+			for (int i = 0; i < selectedCountries.length; i++)
+			{
+				condCountries.addCondition(
+						Slave.getAttribute("country"),
+						Country.loadById(sess, Long.parseLong(selectedCountries[i])),
+						Conditions.OP_EQUALS);
+			}
+			c.addCondition(condCountries);
+		}
+
 		if (!StringUtils.isNullOrEmpty(this.queryCountry)) {
 			String[] s = StringUtils.extractQueryKeywords(this.queryCountry, true);
 			for (int i = 0; i < s.length; i++) {
@@ -281,10 +336,17 @@ public class SlavesTableBean {
 	public LookupCheckboxItem[] getCountries()
 	{
 
+		String hsql =
+			"from Country c " +
+			"where c in (select s.country from Slave s group by s.country) " +
+			"order by c.name";
+
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
+		
+		Query query = sess.createQuery(hsql);
+		List countries = query.list();
 
-		List countries = Country.loadAll(sess, "name");
 		LookupCheckboxItem[] countryUi = new LookupCheckboxItem[countries.size()];
 		
 		int i = 0;
@@ -303,6 +365,107 @@ public class SlavesTableBean {
 
 	}
 	
+	public LookupCheckboxItem[] getExpPorts()
+	{
+
+		String hsql =
+			"from Port p " +
+			"where p in (select s.majbuypt from Slave s group by s.majbuypt) " +
+			"order by p.region.area.order, p.region.order, p.order";
+
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
+		
+		Query query = sess.createQuery(hsql);
+		List portsDb = query.list();
+		
+		int portsCount = portsDb.size();
+
+		Port port = (Port) portsDb.get(0);
+		Region region = port.getRegion();
+		Area area = region.getArea();
+		
+		List tmpAreas = new ArrayList();
+		List tmpRegions = new ArrayList();
+		List tmpPorts = new ArrayList();
+
+		int i = 0;
+		while (i < portsCount)
+		{
+			Area groupArea = area;
+			
+			LookupCheckboxItem areaItem = new LookupCheckboxItem();
+			areaItem.setId(String.valueOf(area.getId()));
+			areaItem.setText(area.getName());
+			
+			tmpAreas.add(areaItem);
+			tmpRegions.clear();
+
+			while (i < portsCount && groupArea.equals(area))
+			{
+				Region groupRegion = region;
+				
+				LookupCheckboxItem regionItem = new LookupCheckboxItem();
+				regionItem.setId(String.valueOf(region.getId()));
+				regionItem.setText(region.getName());
+				
+				tmpRegions.add(regionItem);
+				tmpPorts.clear();
+
+				while (i < portsCount && groupRegion.equals(region))
+				{
+					
+					tmpPorts.add(new LookupCheckboxItem(
+							String.valueOf(port.getId()),
+							port.getName()));
+
+					if (++i < portsCount)
+					{
+						port = (Port) portsDb.get(i);
+						region = port.getRegion();
+						area = region.getArea();
+					}
+
+				}
+				
+				LookupCheckboxItem portItems[] = new LookupCheckboxItem[tmpPorts.size()];
+				tmpPorts.toArray(portItems);
+				regionItem.setChildren(portItems);
+
+			}
+			
+			LookupCheckboxItem regionItems[] = new LookupCheckboxItem[tmpRegions.size()];
+			tmpRegions.toArray(regionItems);
+			areaItem.setChildren(regionItems);
+			
+		}
+		
+		LookupCheckboxItem areaItems[] = new LookupCheckboxItem[tmpAreas.size()];
+		tmpAreas.toArray(areaItems);
+
+		/*
+		Query query = sess.createQuery(hsql);
+		List countries = query.list();
+
+		LookupCheckboxItem[] countryUi = new LookupCheckboxItem[countries.size()];
+		
+		int i = 0;
+		for (Iterator iter = countries.iterator(); iter.hasNext();)
+		{
+			Country country = (Country) iter.next();
+			countryUi[i++] = new LookupCheckboxItem(
+					String.valueOf(country.getId()),
+					country.getName());
+		}
+		*/
+
+		tran.commit();
+		sess.close();
+
+		return areaItems;
+
+	}
+
 	public TableLinkManager getTableManager() {
 		return this.linkManager;
 	}
@@ -475,6 +638,26 @@ public class SlavesTableBean {
 	public void setSelectedCountries(String[] selectedCountries)
 	{
 		this.selectedCountries = selectedCountries;
+	}
+
+	public String[] getExpandedExpPorts()
+	{
+		return expandedExpPorts;
+	}
+
+	public void setExpandedExpPorts(String[] expandedExpRegions)
+	{
+		this.expandedExpPorts = expandedExpRegions;
+	}
+
+	public String[] getSelectedExpPorts()
+	{
+		return selectedExpPorts;
+	}
+
+	public void setSelectedExpPorts(String[] selectedExpRegions)
+	{
+		this.selectedExpPorts = selectedExpRegions;
 	}
 
 }

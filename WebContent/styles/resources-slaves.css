@@ -45,7 +45,7 @@ div.lookup-checkbox-list {
 	/* background-color: #DCEFE7; */
 	margin-top: 5px;
 	padding: 3px;
-	width: 230px;
+	width: 220px;
 	height: 200px;
 	overflow: scroll; }
 
@@ -54,3 +54,15 @@ table.lookup-checkbox-list-buttons {
 	
 table.lookup-checkbox-list-buttons td {
 	padding-right: 5px; }
+	
+div.lookup-checkbox-list-item-collapsed {
+	background-image: url(../images/resources-icon-arrow-right.png);
+	background-repeat: no-repeat;
+	width: 11px;
+	height: 11px; }
+
+div.lookup-checkbox-list-item-expanded {
+	background-image: url(../images/resources-icon-arrow-down.png);
+	background-repeat: no-repeat;
+	width: 11px;
+	height: 11px; }

@@ -17,7 +17,7 @@ import edu.emory.library.tast.util.StringUtils;
 public class LookupCheckboxListComponent extends UIComponentBase
 {
 	
-	public static final String ID_PARTS_SEPARATOR = "_";
+	public static final String ID_PARTS_SEPARATOR = ":";
 	private static final String ID_SEPARATOR = ",";
 	
 	private boolean selectedValuesSet = false;
@@ -80,11 +80,17 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	public void processUpdates(FacesContext context)
 	{
 		
-		ValueBinding vbSelectedValues = getValueBinding("selectedValues");
-		if (vbSelectedValues != null) vbSelectedValues.setValue(context, selectedValues);
-		
-		ValueBinding vbExpandedValues = getValueBinding("expandedValues");
-		if (vbExpandedValues != null) vbExpandedValues.setValue(context, expandedValues);
+		if (selectedValues != null)
+		{
+			ValueBinding vbSelectedValues = getValueBinding("selectedValues");
+			if (vbSelectedValues != null) vbSelectedValues.setValue(context, selectedValues);
+		}
+
+		if (expandedValues != null)
+		{
+			ValueBinding vbExpandedValues = getValueBinding("expandedValues");
+			if (vbExpandedValues != null) vbExpandedValues.setValue(context, expandedValues);
+		}
 
 	}
 
@@ -235,6 +241,7 @@ public class LookupCheckboxListComponent extends UIComponentBase
 		// get data from a bean
 		items = getItems();
 		selectedValues = getSelectedValues();
+		expandedValues = getExpandedValues();
 		
 		// lookup for selected and expanded values
 		Set selectedValuesLookup = StringUtils.toStringSet(selectedValues);

@@ -81,7 +81,7 @@ LookupCheckboxList.prototype.prepareItem = function(item, parent)
 	{
 		for (var id in item.children)
 		{
-			this.prepareListItem(item.children[id], item);
+			this.prepareItem(item.children[id], item);
 		}
 	}
 
@@ -222,7 +222,7 @@ LookupCheckboxList.prototype.selectItem = function(item, state)
 	{
 		for (var id in item.children)
 		{
-			this.listSelectItem(item.children[id], state);
+			this.selectItem(item.children[id], state);
 		}
 	}
 }
@@ -275,13 +275,13 @@ LookupCheckboxList.prototype.itemExpandCollapse = function(fullId)
 	{
 		item.expanded = false;
 		item.childrenElement.style.display = "none";
-		item.arrowElementId.className = "query-builder-list-item-collapsed";
+		item.arrowElementId.className = "lookup-checkbox-list-item-collapsed";
 	}
 	else
 	{
 		item.expanded = true;
 		item.childrenElement.style.display = "";
-		item.arrowElementId.className = "query-builder-list-item-expanded";
+		item.arrowElementId.className = "lookup-checkbox-list-item-expanded";
 	}
 
 	this.expandedIds[fullId] = item.expanded;
