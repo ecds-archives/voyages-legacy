@@ -11,15 +11,15 @@ import edu.emory.library.tast.util.JsfUtils;
 public class MenuPopupComponent extends MenuComponent
 {
 
-	private void encodeSubmenu(MenuItem item, FacesContext context, ResponseWriter writer, UIForm form, String customSubmitFunction) throws IOException
+	private void encodeSubmenu(int n, MenuItem item, FacesContext context, ResponseWriter writer, UIForm form, String customSubmitFunction) throws IOException
 	{
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "menu-popup-submenu-frame", null);
 
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "menu-popup-submenu", null);
-		writer.writeAttribute("onmouseover", "this.parentNode.style.display = 'block';", null);
-		writer.writeAttribute("onmouseout", "this.parentNode.style.display = 'none';", null);
+		writer.writeAttribute("onmouseover", "AttributesMenu.cancelclose(" + n + ", this.parentNode);", null);
+		writer.writeAttribute("onmouseout", "AttributesMenu.delayclose(" + n + ", this.parentNode);", null);
 		
 		MenuItem[] items = item.getSubmenu();
 		for (int i = 0; i < items.length; i++)
@@ -72,9 +72,9 @@ public class MenuPopupComponent extends MenuComponent
 			{
 				writer.writeAttribute("class", "menu-popup-item-main-last", null);
 			}
-			writer.writeAttribute("onmouseover", "this.firstChild.style.display = 'block';", null);
-			writer.writeAttribute("onmouseout", "this.firstChild.style.display = 'none';", null);
-			encodeSubmenu(mainItem, context, writer, form, customSubmitFunction);
+			writer.writeAttribute("onmouseover", "AttributesMenu.cancelclose(" + i + ", this.firstChild);", null);
+			writer.writeAttribute("onmouseout", "AttributesMenu.delayclose(" + i + ", this.firstChild);", null);
+			encodeSubmenu(i + items.length, mainItem, context, writer, form, customSubmitFunction);
 			writer.write(mainItem.getText());
 			writer.endElement("div");
 		}
