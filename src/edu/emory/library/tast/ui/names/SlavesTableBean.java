@@ -45,19 +45,19 @@ public class SlavesTableBean {
 	private Integer queryHeightTo;
 	private String querySlaveName;
 	private String queryShipName;
-	private boolean queryBoy = true;
-	private boolean queryMan = true;
-	private boolean queryMale = true;
-	private boolean queryGirl = true;
-	private boolean queryWoman = true;
-	private boolean queryFemail = true;
+	private Boolean queryBoy = new Boolean(true);
+	private Boolean queryMan = new Boolean(true);
+	private Boolean queryMale = new Boolean(true);
+	private Boolean queryGirl = new Boolean(true);
+	private Boolean queryWoman = new Boolean(true);
+	private Boolean queryFemail = new Boolean(true);
 	private String queryCountry;
 	private String queryExpPort;
 	private String[] selectedCountries = new String[] {};
 	private String[] selectedExpPorts = new String[] {};
 	private String[] expandedExpPorts = new String[] {};
-	private boolean querySierraLeone = true;
-	private boolean queryHavana = true;
+	private Boolean querySierraLeone = new Boolean(true);
+	private Boolean queryHavana = new Boolean(true);
 	private Port havanaPort;
 	private Port slPort;
 	private SexAge sBoy;
@@ -219,7 +219,7 @@ public class SlavesTableBean {
 		}
 		
 		Conditions subGender = null;
-		if (!queryBoy && !queryFemail && !queryGirl && !queryMale && !queryMan && !queryWoman) {
+		if (!queryBoy.booleanValue() && !queryFemail.booleanValue() && !queryGirl.booleanValue() && !queryMale.booleanValue() && !queryMan.booleanValue() && !queryWoman.booleanValue()) {
 			subGender = new Conditions(Conditions.JOIN_AND);
 			subGender.addCondition(Slave.getAttribute("sexage"), sBoy, Conditions.OP_NOT_EQUALS);
 			subGender.addCondition(Slave.getAttribute("sexage"), sGirl, Conditions.OP_NOT_EQUALS);
@@ -229,25 +229,25 @@ public class SlavesTableBean {
 			subGender.addCondition(Slave.getAttribute("sexage"), sWoman, Conditions.OP_NOT_EQUALS);
 		} else {
 			subGender = new Conditions(Conditions.JOIN_OR);
-			if (queryBoy) subGender.addCondition(Slave.getAttribute("sexage"), sBoy, Conditions.OP_EQUALS);
-			if (queryGirl) subGender.addCondition(Slave.getAttribute("sexage"), sGirl, Conditions.OP_EQUALS);
-			if (queryMale) subGender.addCondition(Slave.getAttribute("sexage"), sMale, Conditions.OP_EQUALS);
-			if (queryFemail) subGender.addCondition(Slave.getAttribute("sexage"), sFemale, Conditions.OP_EQUALS);
-			if (queryMan) subGender.addCondition(Slave.getAttribute("sexage"), sMan, Conditions.OP_EQUALS);
-			if (queryWoman) subGender.addCondition(Slave.getAttribute("sexage"), sWoman, Conditions.OP_EQUALS);
+			if (queryBoy.booleanValue()) subGender.addCondition(Slave.getAttribute("sexage"), sBoy, Conditions.OP_EQUALS);
+			if (queryGirl.booleanValue()) subGender.addCondition(Slave.getAttribute("sexage"), sGirl, Conditions.OP_EQUALS);
+			if (queryMale.booleanValue()) subGender.addCondition(Slave.getAttribute("sexage"), sMale, Conditions.OP_EQUALS);
+			if (queryFemail.booleanValue()) subGender.addCondition(Slave.getAttribute("sexage"), sFemale, Conditions.OP_EQUALS);
+			if (queryMan.booleanValue()) subGender.addCondition(Slave.getAttribute("sexage"), sMan, Conditions.OP_EQUALS);
+			if (queryWoman.booleanValue()) subGender.addCondition(Slave.getAttribute("sexage"), sWoman, Conditions.OP_EQUALS);
 		}
 		if (subGender != null) {
 			c.addCondition(subGender);
 		}
 		
 		Conditions subSell = null;
-		if (!this.queryHavana && !this.querySierraLeone)  {
+		if (!this.queryHavana.booleanValue() && !this.querySierraLeone.booleanValue())  {
 			subSell = new Conditions(Conditions.JOIN_AND);
 			subSell.addCondition(Slave.getAttribute("majselpt"), havanaPort, Conditions.OP_NOT_EQUALS);
 			subSell.addCondition(Slave.getAttribute("majselpt"), slPort, Conditions.OP_NOT_EQUALS);
-		} else if (!this.queryHavana || !this.querySierraLeone) {
+		} else if (!this.queryHavana.booleanValue() || !this.querySierraLeone.booleanValue()) {
 			subSell = new Conditions(Conditions.JOIN_AND);
-			if (this.queryHavana) {
+			if (this.queryHavana.booleanValue()) {
 				subSell.addCondition(Slave.getAttribute("majselpt"), havanaPort, Conditions.OP_EQUALS);
 			} else {
 				subSell.addCondition(Slave.getAttribute("majselpt"), slPort, Conditions.OP_EQUALS);
@@ -490,14 +490,16 @@ public class SlavesTableBean {
 		this.queryAgeTo = queryAgeTo;
 	}
 
-	public boolean isQueryBoy()
+	public Boolean getQueryBoy()
 	{
 		return queryBoy;
 	}
 
-	public void setQueryBoy(boolean queryBoy)
+	public void setQueryBoy(Boolean queryBoy)
 	{
-		this.queryBoy = queryBoy;
+		System.out.println("queryBoy = '" + queryBoy + "'");
+		if (queryBoy != null)
+			this.queryBoy = queryBoy;
 	}
 
 	public String getQueryCountry()
@@ -520,34 +522,37 @@ public class SlavesTableBean {
 		this.queryExpPort = queryExpRegion;
 	}
 
-	public boolean isQueryFemail()
+	public Boolean getQueryFemail()
 	{
 		return queryFemail;
 	}
 
-	public void setQueryFemail(boolean queryFemail)
+	public void setQueryFemail(Boolean queryFemail)
 	{
-		this.queryFemail = queryFemail;
+		if (queryFemail != null)
+			this.queryFemail = queryFemail;
 	}
 
-	public boolean isQueryGirl()
+	public Boolean getQueryGirl()
 	{
 		return queryGirl;
 	}
 
-	public void setQueryGirl(boolean queryGirl)
+	public void setQueryGirl(Boolean queryGirl)
 	{
-		this.queryGirl = queryGirl;
+		if (queryGirl != null)
+			this.queryGirl = queryGirl;
 	}
 
-	public boolean isQueryHavana()
+	public Boolean getQueryHavana()
 	{
 		return queryHavana;
 	}
 
-	public void setQueryHavana(boolean queryHavana)
+	public void setQueryHavana(Boolean queryHavana)
 	{
-		this.queryHavana = queryHavana;
+		if (queryHavana != null)
+			this.queryHavana = queryHavana;
 	}
 
 	public Integer getQueryHeightFrom()
@@ -570,24 +575,26 @@ public class SlavesTableBean {
 		this.queryHeightTo = queryHeightTo;
 	}
 
-	public boolean isQueryMale()
+	public Boolean getQueryMale()
 	{
 		return queryMale;
 	}
 
-	public void setQueryMale(boolean queryMale)
+	public void setQueryMale(Boolean queryMale)
 	{
-		this.queryMale = queryMale;
+		if (queryMale != null)
+			this.queryMale = queryMale;
 	}
 
-	public boolean isQueryMan()
+	public Boolean getQueryMan()
 	{
 		return queryMan;
 	}
 
-	public void setQueryMan(boolean queryMan)
+	public void setQueryMan(Boolean queryMan)
 	{
-		this.queryMan = queryMan;
+		if (queryMan != null)
+			this.queryMan = queryMan;
 	}
 
 	public String getQueryShipName()
@@ -597,17 +604,20 @@ public class SlavesTableBean {
 
 	public void setQueryShipName(String queryShipName)
 	{
-		this.queryShipName = queryShipName;
+		if (queryShipName != null)
+			this.queryShipName = queryShipName;
 	}
 
-	public boolean isQuerySierraLeone()
+	public Boolean getQuerySierraLeone()
 	{
 		return querySierraLeone;
 	}
 
-	public void setQuerySierraLeone(boolean querySierraLeona)
+	public void setQuerySierraLeone(Boolean querySierraLeona)
 	{
-		this.querySierraLeone = querySierraLeona;
+		System.out.println("querySierraLeona = '" + querySierraLeona + "'");
+		if (querySierraLeona != null)
+			this.querySierraLeone = querySierraLeona;
 	}
 
 	public String getQuerySlaveName()
@@ -620,14 +630,15 @@ public class SlavesTableBean {
 		this.querySlaveName = querySlaveName;
 	}
 
-	public boolean isQueryWoman()
+	public Boolean getQueryWoman()
 	{
 		return queryWoman;
 	}
 
-	public void setQueryWoman(boolean queryWoman)
+	public void setQueryWoman(Boolean queryWoman)
 	{
-		this.queryWoman = queryWoman;
+		if (queryWoman != null)
+			this.queryWoman = queryWoman;
 	}
 
 	public String[] getSelectedCountries()

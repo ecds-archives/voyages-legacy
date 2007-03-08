@@ -3,9 +3,11 @@ package edu.emory.library.tast.ui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.ExternalContext;
@@ -141,6 +143,14 @@ public class ExpandableBoxComponent extends UIComponentBase {
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException {
+        if (getChildCount() > 0)
+        {
+            for (Iterator it = getChildren().iterator(); it.hasNext(); )
+            {
+                UIComponent child = (UIComponent)it.next();
+                child.setRendered(!isCollapsed());
+            }
+        }
 		if (!isCollapsed()) {
 			JsfUtils.renderChildren(context, this);
 		}

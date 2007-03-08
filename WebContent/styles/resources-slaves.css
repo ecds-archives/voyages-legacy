@@ -20,10 +20,14 @@ td.slaves-query-variable-controls {
 td.slaves-query-spacer {
 	height: 3px; }
 
-td.slaves-query-spacer-line {
-	height: 0px;
-	border-top: 1px solid #B4D6CD;
-	border-color: #B4D6CD; }
+td.lookup-checkbox-list-item-1,
+td.lookup-checkbox-list-item-2 {
+	white-space: nowrap; }
+
+div.slaves-query-section {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #B4D6CD; }
 
 td.box-upper-row-middle {
 	width: 250px; }

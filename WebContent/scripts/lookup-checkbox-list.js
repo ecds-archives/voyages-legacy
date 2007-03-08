@@ -201,7 +201,7 @@ LookupCheckboxList.prototype.itemChangeSelectionAll = function(item, state, forc
 
 	if (item.children)
 		for (var id in item.children)
-			this.listItemChangeSelectionAll(item.children[id], state, force);
+			this.itemChangeSelectionAll(item.children[id], state, force);
 
 }
 

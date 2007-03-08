@@ -67,6 +67,8 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	public void decode(FacesContext context)
 	{
 		
+		System.out.println("decode");
+		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		Map paramValues = context.getExternalContext().getRequestParameterValuesMap();
 		
@@ -80,16 +82,26 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	public void processUpdates(FacesContext context)
 	{
 		
+		System.out.println("processUpdates");
+
 		if (selectedValues != null)
 		{
 			ValueBinding vbSelectedValues = getValueBinding("selectedValues");
 			if (vbSelectedValues != null) vbSelectedValues.setValue(context, selectedValues);
+		}
+		else
+		{
+			System.out.println("selectedValues = null -> not updating");
 		}
 
 		if (expandedValues != null)
 		{
 			ValueBinding vbExpandedValues = getValueBinding("expandedValues");
 			if (vbExpandedValues != null) vbExpandedValues.setValue(context, expandedValues);
+		}
+		else
+		{
+			System.out.println("expandedValues = null -> not updating");
 		}
 
 	}
