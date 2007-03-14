@@ -1,6 +1,7 @@
 div.menu-popup-item-main-first,
 div.menu-popup-item-main,
 div.menu-popup-item-main-last {
+	width: 265px;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	padding-left: 5px;

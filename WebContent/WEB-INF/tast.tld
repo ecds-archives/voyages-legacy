@@ -18,7 +18,7 @@
 	<tag>
 		<name>tabletab</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.table.TableResultTabTag
+			edu.emory.library.tast.database.table.TableResultTabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -50,7 +50,7 @@
 	<tag>
 		<name>stattab</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.stat.TimeLineResultTabTag
+			edu.emory.library.tast.database.stat.TimeLineResultTabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -70,7 +70,7 @@
 	<tag>
 		<name>tabBar</name>
 		<tag-class>
-			edu.emory.library.tast.ui.TabBarTag
+			edu.emory.library.tast.common.TabBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -90,7 +90,7 @@
 	<tag>
 		<name>tab</name>
 		<tag-class>
-			edu.emory.library.tast.ui.TabTag
+			edu.emory.library.tast.common.TabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -113,7 +113,7 @@
 	<tag>
 		<name>expandableBox</name>
 		<tag-class>
-			edu.emory.library.tast.ui.ExpandableBoxTag
+			edu.emory.library.tast.common.ExpandableBoxTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -130,7 +130,7 @@
 	<tag>
 		<name>expandableBoxSet</name>
 		<tag-class>
-			edu.emory.library.tast.ui.ExpandableBoxSetTag
+			edu.emory.library.tast.common.ExpandableBoxSetTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -141,7 +141,7 @@
 	<tag>
 		<name>historyList</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.HistoryListTag
+			edu.emory.library.tast.database.query.HistoryListTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -164,7 +164,7 @@
 	<tag>
 		<name>queryBuilder</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.QueryBuilderTag
+			edu.emory.library.tast.database.query.QueryBuilderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -181,7 +181,7 @@
 	<tag>
 		<name>selectAndOrder</name>
 		<tag-class>
-			edu.emory.library.tast.ui.SelectAndOrderTag
+			edu.emory.library.tast.common.SelectAndOrderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -198,7 +198,7 @@
 	<tag>
 		<name>voyageDetail</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.table.DetailTag
+			edu.emory.library.tast.database.table.DetailTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -215,7 +215,7 @@
 	<tag>
 		<name>messageBar</name>
 		<tag-class>
-			edu.emory.library.tast.ui.MessageBarTag
+			edu.emory.library.tast.common.MessageBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -232,7 +232,7 @@
 	<tag>
 		<name>sectionGroup</name>
 		<tag-class>
-			edu.emory.library.tast.ui.SectionGroupTag
+			edu.emory.library.tast.common.SectionGroupTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -264,7 +264,7 @@
 	<tag>
 		<name>section</name>
 		<tag-class>
-			edu.emory.library.tast.ui.SectionTag
+			edu.emory.library.tast.common.SectionTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -282,7 +282,7 @@
 	<tag>
 		<name>panelTabSet</name>
 		<tag-class>
-			edu.emory.library.tast.ui.PanelTabSetTag
+			edu.emory.library.tast.common.PanelTabSetTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -302,7 +302,7 @@
 	<tag>
 		<name>panelTab</name>
 		<tag-class>
-			edu.emory.library.tast.ui.PanelTabTag
+			edu.emory.library.tast.common.PanelTabTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -319,7 +319,7 @@
 	<tag>
 		<name>menuSlider</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.query.MenuSliderTag
+			edu.emory.library.tast.database.query.MenuSliderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -339,7 +339,7 @@
 	<tag>
 		<name>menuPopup</name>
 		<tag-class>
-			edu.emory.library.tast.ui.MenuPopupTag
+			edu.emory.library.tast.common.MenuPopupTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -359,7 +359,7 @@
 	<tag>
 		<name>map</name>
 		<tag-class>
-			edu.emory.library.tast.ui.maps.component.MapTag
+			edu.emory.library.tast.maps.component.MapTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -394,7 +394,7 @@
 	<tag>
 		<name>divbutton</name>
 		<tag-class>
-			edu.emory.library.tast.ui.DivButtonTag
+			edu.emory.library.tast.common.DivButtonTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -414,7 +414,7 @@
 	<tag>
 		<name>legend</name>
 		<tag-class>
-			edu.emory.library.tast.ui.maps.component.LegendTag
+			edu.emory.library.tast.maps.component.LegendTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -452,7 +452,7 @@
 	<tag>
 		<name>tablelinks</name>
 		<tag-class>
-			edu.emory.library.tast.ui.search.table.TableLinksTag
+			edu.emory.library.tast.database.table.TableLinksTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -466,7 +466,7 @@
 	<tag>
 		<name>timeline</name>
 		<tag-class>
-			edu.emory.library.tast.ui.TimelineTag
+			edu.emory.library.tast.common.TimelineTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -489,7 +489,7 @@
 	<tag>
 		<name>imageList</name>
 		<tag-class>
-			edu.emory.library.tast.ui.images.admin.ImageListTag
+			edu.emory.library.tast.images.admin.ImageListTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -521,7 +521,7 @@
 	<tag>
 		<name>picture-gallery</name>
 		<tag-class>
-			edu.emory.library.tast.ui.images.site.GalleryTag
+			edu.emory.library.tast.images.site.GalleryTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -550,7 +550,7 @@
 	<tag>
 		<name>pictures</name>
 		<tag-class>
-			edu.emory.library.tast.ui.images.GalleryTag
+			edu.emory.library.tast.images.GalleryTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -576,7 +576,7 @@
 	<tag>
 		<name>lookupSelect</name>
 		<tag-class>
-			edu.emory.library.tast.ui.LookupSelectTag
+			edu.emory.library.tast.LookupSelectTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -593,7 +593,7 @@
 	<tag>
 		<name>eventLine</name>
 		<tag-class>
-			edu.emory.library.tast.ui.EventLineTag
+			edu.emory.library.tast.common.EventLineTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -637,7 +637,7 @@
 	<tag>
 		<name>checkboxListExpandable</name>
 		<tag-class>
-			edu.emory.library.tast.ui.CheckboxListExpandableTag
+			edu.emory.library.tast.common.CheckboxListExpandableTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -660,7 +660,7 @@
 	<tag>
 		<name>checkboxListPopup</name>
 		<tag-class>
-			edu.emory.library.tast.ui.CheckboxListPopupTag
+			edu.emory.library.tast.common.CheckboxListPopupTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -683,7 +683,7 @@
 	<tag>
 		<name>checkboxListExpandable</name>
 		<tag-class>
-			edu.emory.library.tast.ui.CheckboxListExpandableTag
+			edu.emory.library.tast.common.CheckboxListExpandableTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -706,7 +706,7 @@
 	<tag>
 		<name>simpleTable</name>
 		<tag-class>
-			edu.emory.library.tast.ui.SimpleTableTag
+			edu.emory.library.tast.common.SimpleTableTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -740,7 +740,7 @@
 	<tag>
 		<name>grid</name>
 		<tag-class>
-			edu.emory.library.tast.ui.GridTag
+			edu.emory.library.tast.common.GridTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -763,7 +763,7 @@
 	<tag>
 		<name>pager</name>
 		<tag-class>
-			edu.emory.library.tast.ui.PagerTag
+			edu.emory.library.tast.common.PagerTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -789,7 +789,7 @@
 	<tag>
 		<name>mainMenuBar</name>
 		<tag-class>
-			edu.emory.library.tast.ui.MainMenuBarTag
+			edu.emory.library.tast.common.MainMenuBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -809,7 +809,7 @@
 	<tag>
 		<name>gallery</name>
 		<tag-class>
-			edu.emory.library.tast.ui.images.GalleryTag
+			edu.emory.library.tast.common.images.GalleryTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -861,7 +861,7 @@
 	<tag>
 		<name>lookupCheckboxList</name>
 		<tag-class>
-			edu.emory.library.tast.ui.LookupCheckboxListTag
+			edu.emory.library.tast.common.LookupCheckboxListTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

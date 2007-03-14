@@ -4,14 +4,14 @@ import java.text.MessageFormat;
 import java.util.Set;
 
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.common.EventLineEvent;
+import edu.emory.library.tast.common.EventLineGraph;
+import edu.emory.library.tast.common.EventLineLabel;
+import edu.emory.library.tast.common.EventLineZoomLevel;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
-import edu.emory.library.tast.ui.EventLineEvent;
-import edu.emory.library.tast.ui.EventLineGraph;
-import edu.emory.library.tast.ui.EventLineLabel;
-import edu.emory.library.tast.ui.EventLineZoomLevel;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 

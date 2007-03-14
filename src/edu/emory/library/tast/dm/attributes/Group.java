@@ -16,11 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import edu.emory.library.tast.ui.search.query.searchables.SearchableAttribute;
-import edu.emory.library.tast.ui.search.query.searchables.Searchables;
-import edu.emory.library.tast.ui.search.query.searchables.UserCategory;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttribute;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
+import edu.emory.library.tast.database.query.searchables.Searchables;
+import edu.emory.library.tast.database.query.searchables.UserCategory;
+import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 
 public class Group {
 

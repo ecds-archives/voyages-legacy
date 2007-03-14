@@ -37,7 +37,6 @@
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/tooltip.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
 	
@@ -58,7 +57,7 @@
 		</table>
 	</div>
 
-	<h:form id="form">
+	<h:form id="form" style="margin: 0px;">
 	
 		<table border="0" cellspacing="0" cellpadding="0" class="search-main-table">
 		<tr>
@@ -73,6 +72,8 @@
 		</table>
 		
 	</h:form>
+	
+	<div id="debug"></div>
 
 </f:view>
 </body>

@@ -6,197 +6,142 @@
 
 	<component>
 		<component-type>TableResultTab</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.search.table.UITableResultTab
-		</component-class>
+		<component-class>edu.emory.library.tast.database.table.UITableResultTab</component-class>
 	</component>
 
 	<component>
 		<component-type>TimeLineResultTab</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.search.stat.UITimeLineResultTab
-		</component-class>
+		<component-class>edu.emory.library.tast.database.stat.UITimeLineResultTab</component-class>
 	</component>
 
 	<component>
 		<component-type>TabBar</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.TabBarComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.TabBarComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>ExpandableBox</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.ExpandableBoxComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.ExpandableBoxComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>ExpandableBoxSet</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.ExpandableBoxSetComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.ExpandableBoxSetComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>HistoryList</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.search.query.HistoryListComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.database.query.HistoryListComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>Tab</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.TabComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.TabComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>QueryBuilder</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.search.query.QueryBuilderComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.database.query.QueryBuilderComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>VoyageDetail</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.search.table.UIDetailComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.database.table.UIDetailComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>Legend</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.maps.component.LegendComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.maps.component.LegendComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>SelectAndOrder</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.SelectAndOrderComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.SelectAndOrderComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>MessageBar</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.MessageBarComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.MessageBarComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>SectionGroup</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.SectionGroupComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.SectionGroupComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>Section</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.SectionComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.SectionComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>PanelTabSet</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.PanelTabSetComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.PanelTabSetComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>PanelTab</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.PanelTabComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.PanelTabComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>MenuPopup</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.MenuPopupComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.MenuPopupComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>MenuSlider</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.MenuSliderComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.MenuSliderComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>Map</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.maps.component.MapComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.maps.component.MapComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>DivButton</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.UIDivButton
-		</component-class>
+		<component-class>edu.emory.library.tast.common.UIDivButton</component-class>
 	</component>
 
 	<component>
 		<component-type>Timeline</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.TimelineComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.TimelineComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>ImageList</component-type>
-		<component-class>
-		edu.emory.library.tast.ui.images.admin.ImageListComponent</component-class>
+		<component-class>edu.emory.library.tast.images.admin.ImageListComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>LookupSelect</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.LookupSelectComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.LookupSelectComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>Gallery</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.images.site.GalleryComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.images.site.GalleryComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>EventLine</component-type>
-		<component-class>
-			edu.emory.library.tast.ui.EventLineComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.EventLineComponent</component-class>
 	</component>
 	
 	<component>
-		<component-type>
-		CheckboxListExpandable</component-type>
-		<component-class>
-		edu.emory.library.tast.ui.CheckboxListExpandableComponent</component-class>
+		<component-type>CheckboxListExpandable</component-type>
+		<component-class>edu.emory.library.tast.common.CheckboxListExpandableComponent</component-class>
 	</component>
 	
 	<component>
-		<component-type>
-		SimpleTable</component-type>
-		<component-class>
-		edu.emory.library.tast.ui.SimpleTableComponent</component-class>
+		<component-type>SimpleTable</component-type>
+		<component-class>edu.emory.library.tast.common.SimpleTableComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>EstimateListing</component-type>
-		<component-class>
-			edu.emory.library.tast.estimates.listing.EstimateListingComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.estimates.listing.EstimateListingComponent</component-class>
 	</component>
 
 	<component>
@@ -207,27 +152,27 @@
 
 	<component>
 		<component-type>CheckboxListPopup</component-type>
-		<component-class>edu.emory.library.tast.ui.CheckboxListPopupComponent</component-class>
+		<component-class>edu.emory.library.tast.common.CheckboxListPopupComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>Pager</component-type>
-		<component-class>edu.emory.library.tast.ui.PagerComponent</component-class>
+		<component-class>edu.emory.library.tast.common.PagerComponent</component-class>
 	</component>
 
 	<component>
 		<component-type>Grid</component-type>
-		<component-class>edu.emory.library.tast.ui.GridComponent</component-class>
+		<component-class>edu.emory.library.tast.common.GridComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>MainMenuBar</component-type>
-		<component-class>edu.emory.library.tast.ui.MainMenuBarComponent</component-class>
+		<component-class>edu.emory.library.tast.common.MainMenuBarComponent</component-class>
 	</component>
 	
 	<component>
 		<component-type>Gallery</component-type>
-		<component-class>edu.emory.library.tast.ui.images.GalleryComponent</component-class>
+		<component-class>edu.emory.library.tast.images.GalleryComponent</component-class>
 	</component>
 
 	<component>
@@ -237,29 +182,25 @@
 
 	<component>
 		<component-type>LookupCheckboxList</component-type>
-		<component-class>edu.emory.library.tast.ui.LookupCheckboxListComponent</component-class>
+		<component-class>edu.emory.library.tast.common.LookupCheckboxListComponent</component-class>
 	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.search.query.SearchBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.database.query.SearchBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>EditorTestBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.reditor.EditorTestBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.reditor.EditorTestBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>RestorePermlinkBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.search.query.RestorePermlinkBean
+			edu.emory.library.tast.database.query.RestorePermlinkBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
@@ -272,7 +213,7 @@
 	<managed-bean>
 		<managed-bean-name>DictionaryListBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.search.query.DictionaryListBean
+			edu.emory.library.tast.database.query.DictionaryListBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
@@ -280,7 +221,7 @@
 	<managed-bean>
 		<managed-bean-name>AdvancedStatisticsTabBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.search.stat.AdvancedStatisticsTabBean
+			edu.emory.library.tast.database.stat.AdvancedStatisticsTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -292,7 +233,7 @@
 	<managed-bean>
 		<managed-bean-name>TableResultTabBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.search.table.TableResultTabBean
+			edu.emory.library.tast.database.table.TableResultTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -308,14 +249,14 @@
 	<component>
 		<component-type>TableLinksComponent</component-type>
 		<component-class>
-			edu.emory.library.tast.ui.search.table.TableLinksComponent
+			edu.emory.library.tast.database.table.TableLinksComponent
 		</component-class>
 	</component>
 
 	<managed-bean>
 		<managed-bean-name>TimeLineResultTabBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.search.stat.TimeLineResultTabBean
+			edu.emory.library.tast.database.stat.TimeLineResultTabBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -327,7 +268,7 @@
 	<managed-bean>
 		<managed-bean-name>ImportLog</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.spss.ImportLogBean
+			edu.emory.library.tast.common.spss.ImportLogBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -335,7 +276,7 @@
 	<managed-bean>
 		<managed-bean-name>MapBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.search.map.MapBean
+			edu.emory.library.tast.database.map.MapBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -346,17 +287,13 @@
 	
 	<managed-bean>
 		<managed-bean-name>TestMapBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.maps.component.TestMapBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.maps.component.TestMapBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>ReportBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.reports.ReportBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.common.reports.ReportBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -366,23 +303,19 @@
 
 	<managed-bean>
 		<managed-bean-name>ImagesBean</managed-bean-name>
-		<managed-bean-class>
-		edu.emory.library.tast.ui.images.admin.ImagesBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.images.admin.ImagesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>LookupBean</managed-bean-name>
-		<managed-bean-class>
-		edu.emory.library.tast.ui.LookupBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.common.LookupBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>PicturesBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.images.site.PicturesBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.images.site.PicturesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -396,9 +329,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>PicturesBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.images.site.PicturesBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.images.site.PicturesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -412,17 +343,13 @@
 	
 	<managed-bean>
 		<managed-bean-name>NewImagesBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.images.site.NewImagesBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.images.site.NewImagesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>GalleryRequestBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.images.site.GalleryRequestBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.images.site.GalleryRequestBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>picturesBean</property-name>
@@ -431,10 +358,8 @@
 	</managed-bean>
 		
 	<managed-bean>
-		<managed-bean-name>
-		EventLineTestBean1</managed-bean-name>
-		<managed-bean-class>
-		edu.emory.library.tast.ui.EventLineTestBean1</managed-bean-class>
+		<managed-bean-name>EventLineTestBean1</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.common.EventLineTestBean1</managed-bean-class>
 		<managed-bean-scope>
 		session</managed-bean-scope>
 	</managed-bean>
@@ -442,7 +367,7 @@
 	<managed-bean>
 		<managed-bean-name>StatisticBean</managed-bean-name>
 		<managed-bean-class>
-			edu.emory.library.tast.ui.search.statistic.StatisticBean
+			edu.emory.library.tast.database.statistic.StatisticBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -454,7 +379,7 @@
 		<managed-bean-name>
 		EventLineTestBean2</managed-bean-name>
 		<managed-bean-class>
-		edu.emory.library.tast.ui.EventLineTestBean2</managed-bean-class>
+		edu.emory.library.tast.common.EventLineTestBean2</managed-bean-class>
 		<managed-bean-scope>
 		session</managed-bean-scope>
 	</managed-bean>
@@ -486,8 +411,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>EstimateListingBean</managed-bean-name>
-		<managed-bean-class>
-		edu.emory.library.tast.estimates.listing.EstimateListingBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.estimates.listing.EstimateListingBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 		<property-name>
@@ -499,10 +423,8 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>
-		EstimatesTimelineBean</managed-bean-name>
-		<managed-bean-class>
-		edu.emory.library.tast.estimates.timeline.EstimatesTimelineBean</managed-bean-class>
+		<managed-bean-name>EstimatesTimelineBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.estimates.timeline.EstimatesTimelineBean</managed-bean-class>
 		<managed-bean-scope>
 		session</managed-bean-scope>
 		<managed-property>
@@ -517,8 +439,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>EstimatesMapBean</managed-bean-name>
-		<managed-bean-class>
-		edu.emory.library.tast.estimates.map.EstimatesMapBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.estimates.map.EstimatesMapBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 		<property-name>
@@ -531,17 +452,13 @@
 	
 	<managed-bean>
 		<managed-bean-name>AdminVoyagesListBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.admin.VoyagesListBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.admin.VoyagesListBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>AdminVoyageBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.admin.VoyageBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.admin.VoyageBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>listBean</property-name>
@@ -552,17 +469,13 @@
 	
 	<managed-bean>
 		<managed-bean-name>VoyageDetailBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.voyage.VoyageDetailBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.common.voyage.VoyageDetailBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>SlavesTableBean</managed-bean-name>
-		<managed-bean-class>
-			edu.emory.library.tast.ui.names.SlavesTableBean
-		</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.slaves.SlavesTableBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
@@ -11,10 +12,9 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
-import edu.emory.library.tast.ui.maps.AttributesMap;
-import edu.emory.library.tast.ui.maps.AttributesRange;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttrEstimate;
+import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
+import edu.emory.library.tast.maps.AttributesMap;
+import edu.emory.library.tast.maps.AttributesRange;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 

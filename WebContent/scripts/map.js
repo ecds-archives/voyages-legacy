@@ -671,8 +671,6 @@ Map.prototype.drawSelector = function(x1, y1, x2, y2)
 	x2 = Math.round(x2);
 	y2 = Math.round(y2);
 
-	//debug("drawSelector (x1 = " + x1 + ", y1 = " + y1 + ", x2 = " + x2 + ", y2 = " + y2 + ")");
-
 	// make sure that they are in correct order
 	if (x1 > x2)
 	{
@@ -777,8 +775,8 @@ Map.prototype.mapStartDrag = function(event)
 {
 
 	// set onMouseMove handler
-	EventAttacher.attachOnWindowEvent("mousemove", this, "mapMouseMove");
-	EventAttacher.attachOnWindowEvent("mouseup", this, "mapStopDrag");
+	EventAttacher.attach(document, "mousemove", this, "mapMouseMove");
+	EventAttacher.attach(document, "mouseup", this, "mapStopDrag");
 	this.forgetLabels();
 	
 	// init position
@@ -791,8 +789,8 @@ Map.prototype.mapStopDrag = function(event)
 {
 
 	// cancel onMouseMove handler
-	EventAttacher.detachOnWindowEvent("mousemove", this, "mapMouseMove");
-	EventAttacher.detachOnWindowEvent("mouseup", this, "mapStopDrag");
+	EventAttacher.detach(document, "mousemove", this, "mapMouseMove");
+	EventAttacher.detach(document, "mouseup", this, "mapStopDrag");
 	this.watchForLabels();
 
 	// new position
@@ -2639,8 +2637,8 @@ MapZoomSlider.prototype.mouseDown = function(event)
 	this.startPos = event.clientX;
 	this.startOffsetLeft = this.knob.offsetLeft;
 	this.lastPos = this.startPos;
-	EventAttacher.attachOnWindowEvent("mousemove", this, "mouseMove");
-	EventAttacher.attachOnWindowEvent("mouseup", this, "mouseUp");
+	EventAttacher.attach(document, "mousemove", this, "mouseMove");
+	EventAttacher.attach(document, "mouseup", this, "mouseUp");
 }
 
 MapZoomSlider.prototype.mouseMove = function(event)
@@ -2652,8 +2650,8 @@ MapZoomSlider.prototype.mouseMove = function(event)
 
 MapZoomSlider.prototype.mouseUp = function(event)
 {
-	EventAttacher.detachOnWindowEvent("mousemove", this, "mouseMove");
-	EventAttacher.detachOnWindowEvent("mouseup", this, "mouseUp");
+	EventAttacher.detach(document, "mousemove", this, "mouseMove");
+	EventAttacher.detach(document, "mouseup", this, "mouseUp");
 }
 
 MapZoomSlider.prototype.zoomChanged = function()

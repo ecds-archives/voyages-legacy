@@ -8,20 +8,20 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.maps.AbstractDataTransformer;
+import edu.emory.library.tast.maps.AbstractMapItem;
+import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
+import edu.emory.library.tast.maps.AttributesMap;
+import edu.emory.library.tast.maps.Element;
+import edu.emory.library.tast.maps.LegendItem;
+import edu.emory.library.tast.maps.LegendItemsGroup;
+import edu.emory.library.tast.maps.MapItemElement;
+import edu.emory.library.tast.maps.TransformerResponse;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Location;
-import edu.emory.library.tast.ui.maps.AbstractDataTransformer;
-import edu.emory.library.tast.ui.maps.AbstractMapItem;
-import edu.emory.library.tast.ui.maps.AbstractTransformerQueryHolder;
-import edu.emory.library.tast.ui.maps.AttributesMap;
-import edu.emory.library.tast.ui.maps.Element;
-import edu.emory.library.tast.ui.maps.LegendItem;
-import edu.emory.library.tast.ui.maps.LegendItemsGroup;
-import edu.emory.library.tast.ui.maps.MapItemElement;
-import edu.emory.library.tast.ui.maps.TransformerResponse;
 
 public class EstimateMapDataTransformer extends AbstractDataTransformer {
 

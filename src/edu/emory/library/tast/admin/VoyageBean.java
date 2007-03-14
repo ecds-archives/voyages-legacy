@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.common.GridOpenRowEvent;
+import edu.emory.library.tast.common.TabChangedEvent;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Fate;
@@ -36,8 +38,6 @@ import edu.emory.library.tast.reditor.FieldValueText;
 import edu.emory.library.tast.reditor.ListItem;
 import edu.emory.library.tast.reditor.Schema;
 import edu.emory.library.tast.reditor.Values;
-import edu.emory.library.tast.ui.GridOpenRowEvent;
-import edu.emory.library.tast.ui.TabChangedEvent;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;

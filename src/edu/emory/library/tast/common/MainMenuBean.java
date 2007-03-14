@@ -1,7 +1,5 @@
 package edu.emory.library.tast.common;
 
-import edu.emory.library.tast.ui.MainMenuBarPageItem;
-import edu.emory.library.tast.ui.MainMenuBarSectionItem;
 
 public class MainMenuBean
 {

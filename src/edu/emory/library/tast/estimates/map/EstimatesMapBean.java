@@ -10,12 +10,12 @@ import javax.servlet.http.HttpSession;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapDataTransformer;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapQueryHolder;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
-import edu.emory.library.tast.ui.maps.AbstractMapItem;
-import edu.emory.library.tast.ui.maps.LegendItemsGroup;
-import edu.emory.library.tast.ui.maps.MapData;
-import edu.emory.library.tast.ui.maps.MapLayer;
-import edu.emory.library.tast.ui.maps.component.PointOfInterest;
-import edu.emory.library.tast.ui.maps.mapfile.MapFileCreator;
+import edu.emory.library.tast.maps.AbstractMapItem;
+import edu.emory.library.tast.maps.LegendItemsGroup;
+import edu.emory.library.tast.maps.MapData;
+import edu.emory.library.tast.maps.MapLayer;
+import edu.emory.library.tast.maps.component.PointOfInterest;
+import edu.emory.library.tast.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class EstimatesMapBean {

@@ -98,20 +98,20 @@
 		<servlet-name>JSON-RPC</servlet-name>
 		<servlet-class>com.metaparadigm.jsonrpc.JSONRPCServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>ImageFeederServlet</servlet-name>
-		<servlet-class>edu.emory.library.tast.ui.search.stat.ImageFeederServlet</servlet-class>
+		<servlet-class>edu.emory.library.tast.database.stat.ImageFeederServlet</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>TileServlet</servlet-name>
-		<servlet-class>edu.emory.library.tast.ui.maps.component.TileServlet</servlet-class>
+		<servlet-class>edu.emory.library.tast.maps.component.TileServlet</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>ThumbnailServlet</servlet-name>
-		<servlet-class>edu.emory.library.tast.ui.images.ThumbnailServlet</servlet-class>
+		<servlet-class>edu.emory.library.tast.images.ThumbnailServlet</servlet-class>
 	</servlet>
 
 <!-- 
@@ -163,6 +163,7 @@
 		<url-pattern>/servlet/ImportServlet</url-pattern>
 	</servlet-mapping>
  -->
+
 	<servlet-mapping>
 		<servlet-name>ImageFeederServlet</servlet-name>
 		<url-pattern>/servlet/ImageFeederServlet</url-pattern>

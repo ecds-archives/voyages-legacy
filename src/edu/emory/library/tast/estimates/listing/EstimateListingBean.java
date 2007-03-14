@@ -2,16 +2,16 @@ package edu.emory.library.tast.estimates.listing;
 
 import java.text.MessageFormat;
 
+import edu.emory.library.tast.database.table.SortChangeEvent;
+import edu.emory.library.tast.database.table.TableData;
+import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
+import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
+import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.database.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
-import edu.emory.library.tast.ui.search.table.SortChangeEvent;
-import edu.emory.library.tast.ui.search.table.TableData;
-import edu.emory.library.tast.ui.search.table.formatters.AbstractAttributeFormatter;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttrEstimate;
-import edu.emory.library.tast.ui.search.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.ui.search.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
