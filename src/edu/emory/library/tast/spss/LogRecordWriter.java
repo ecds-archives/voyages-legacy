@@ -17,8 +17,5 @@ public class LogRecordWriter
 	{
 		this.attribute = attribute;
 	}
-	
-	
-	
 
 }

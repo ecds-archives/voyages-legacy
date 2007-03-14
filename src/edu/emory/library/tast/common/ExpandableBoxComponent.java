@@ -1,11 +1,7 @@
 package edu.emory.library.tast.common;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;

@@ -1,9 +1,7 @@
 package edu.emory.library.tast.common;
 
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
 

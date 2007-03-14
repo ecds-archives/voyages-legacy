@@ -3,12 +3,11 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<t:htmlTag value="h1" style="margin: 0px 0px 10px 0px;"><h:outputText value="Slaves" /></t:htmlTag>
+<t:htmlTag value="h1" style="margin: 0px 0px 10px 0px;"><h:outputText value="#{res.slaves_listing_title}" /></t:htmlTag>
 
 <s:tabletab id="listingEstimates"
 	data="#{SlavesTableBean.tableData}"
-	sortChanged="#{SlavesTableBean.sortChanged}"
-	style="overflow: auto;" />
+	sortChanged="#{SlavesTableBean.sortChanged}" />
 
 <t:htmlTag value="div" styleClass="pager">
 	<t:htmlTag id="listingEstimates-bottom-bar" value="table" style="border-collapse: collapse; width: 100%;">
