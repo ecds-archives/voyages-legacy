@@ -6,7 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.ajaxanywhere.AAUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -41,6 +43,7 @@ public class SlavesTableBean
 	private TableLinkManager pager;
 	private TableData tableData;
 	private List querySummary;
+	private int expectedResults;
 
 	private SlavesQuery workingQuery = new SlavesQuery();
 	private SlavesQuery currentQuery = new SlavesQuery();
@@ -520,7 +523,7 @@ public class SlavesTableBean
 	
 	private void loadData(boolean refreshCount, boolean refreshText)
 	{
-			
+		
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 		
@@ -548,6 +551,7 @@ public class SlavesTableBean
 			queryValueCount.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
 			Object[] ret = queryValueCount.executeQuery();
 			this.pager.setResultsNumber(((Number) ret[0]).intValue());
+			expectedResults = ((Number) ret[0]).intValue();
 		}
 		
 		tran.commit();
@@ -555,24 +559,77 @@ public class SlavesTableBean
 
 	}
 	
-	public String search() throws CloneNotSupportedException
+	private void updateExpectedCount()
 	{
 		
-		// nothing has changed
-		if (currentQuery.equals(workingQuery))
-			return null;
+		Session sess = HibernateUtil.getSession();
+		Transaction tran = sess.beginTransaction();
 		
-		// reset pager
-		this.pager.reset();
+		Conditions conditions = workingQuery.createConditions(sess, null);
 		
-		// copy working query
-		currentQuery = (SlavesQuery) workingQuery.clone();
+		QueryValue queryValueCount = new QueryValue(new String[] {"Slave"}, new String[] {"e"}, conditions);
+		queryValueCount.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
+		Object[] ret = queryValueCount.executeQuery();
+		expectedResults = ((Number) ret[0]).intValue();
 		
-		// refresh data, count and the current query text
-		loadData(true, true);
-
-		// done
+		tran.commit();
+		sess.close();
+		
+	}
+	
+	public String searchFromBasicBox()
+	{
+		search("totalBoxBasic");
 		return null;
+	}
+	
+	public String searchFromCountryBox()
+	{
+		search("totalBoxCountry");
+		return null;
+	}
+
+	public String searchFromPlacesBox()
+	{
+		search("totalBoxPlaces");
+		return null;
+	}
+
+	private void search(String zoneName)
+	{
+		
+		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		if (AAUtils.isAjaxRequest(request))
+		{
+
+			// indicate what should be rendered
+			AAUtils.addZonesToRefresh(request, zoneName);
+			
+			// and update count
+			updateExpectedCount();
+			
+		}
+		else
+		{
+
+			// nothing has changed
+			if (currentQuery.equals(workingQuery))
+				return;
+			
+			// reset pager
+			this.pager.reset();
+
+			// copy working query
+			try
+			{
+				currentQuery = (SlavesQuery) workingQuery.clone();
+			}
+			catch (CloneNotSupportedException cnse) {}
+			
+			// refresh data, count and the current query text
+			loadData(true, true);
+			
+		}
 		
 	}
 	
@@ -635,25 +692,13 @@ public class SlavesTableBean
 		
 		// get value
 		int newStep = "all".equals(step) ? Integer.MAX_VALUE : Integer.parseInt(step);
-		System.out.println("Step: " + step);
 		
 		// changed?
-		if (newStep != this.pager.getStep()) {
+		if (newStep != this.pager.getStep())
+		{
 			this.pager.setStep(newStep);
+			loadData(false, false);
 		}
-		
-		// refresh data, but not count of query text
-		loadData(false, false);
-		
-	}
-	
-	public String getNumberOfResultsText()
-	{
-
-		System.out.println("getNumberOfResultsText");
-		
-		MessageFormat fmt = new MessageFormat(TastResource.getText("database_search_expected"));
-		return fmt.format(new Object[] {new Integer(0)});
 		
 	}
 	
@@ -790,6 +835,16 @@ public class SlavesTableBean
 
 	}
 	
+	public String showDetails(ShowDetailsEvent event)
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		voyageBean.openVoyage(event.getVoyageId().intValue());
+		voyageBean.setVoyageAttr("voyageid");
+		voyageBean.setBackPage("names-interface");
+		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
+		return null;
+	}
+	
 	public TableData getTableData()
 	{
 		return this.tableData;
@@ -848,21 +903,21 @@ public class SlavesTableBean
 	{
 		return querySummary;
 	}
-	
-	public String showDetails(ShowDetailsEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		voyageBean.openVoyage(event.getVoyageId().intValue());
-		voyageBean.setVoyageAttr("voyageid");
-		voyageBean.setBackPage("names-interface");
-		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
-		return null;
-	}
 
-	public VoyageDetailBean getVoyageBean() {
+	public VoyageDetailBean getVoyageBean()
+	{
 		return voyageBean;
 	}
 
-	public void setVoyageBean(VoyageDetailBean voyageBean) {
+	public void setVoyageBean(VoyageDetailBean voyageBean)
+	{
 		this.voyageBean = voyageBean;
 	}
+	
+	public String getNumberOfExpectedResultsText()
+	{
+		MessageFormat fmt = new MessageFormat(TastResource.getText("database_search_expected"));
+		return fmt.format(new Object[] {new Integer(expectedResults)});
+	}
+	
 }

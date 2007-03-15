@@ -31,6 +31,7 @@ td.box-upper-row-right-collapsed, td.box-set-upper-row-upper-right-collapsed, td
 	overflow: hidden; }
 
 td.box-middle-row-left {
+	width: 10px;
 	background-color: White;
 	background-position: left top;
 	vertical-align: top;
@@ -40,6 +41,7 @@ td.box-middle-row-left {
 	overflow: hidden; }
 	
 div.box-middle-row-left {
+	width: 10px;
 	background-color: White;
 	background-position: left top;
 	background-repeat: no-repeat;

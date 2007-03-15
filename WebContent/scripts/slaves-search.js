@@ -1,13 +1,17 @@
 AjaxAnywhere.prototype.showLoadingMessage = function()
 {
-	//document.getElementById("totalContainer").style.display = "none";
-	//document.getElementById("totalUpdateIndicator").style.display = "";
+	ElementUtils.show(
+		"totalUpdateIndicatorBoxBasic",
+		"totalUpdateIndicatorBoxCountry",
+		"totalUpdateIndicatorBoxPlaces");
 }
 
 AjaxAnywhere.prototype.hideLoadingMessage = function()
 {
-	//document.getElementById("totalContainer").style.display = "";
-	//document.getElementById("totalUpdateIndicator").style.display = "none";
+	ElementUtils.hide(
+		"totalUpdateIndicatorBoxBasic",
+		"totalUpdateIndicatorBoxCountry",
+		"totalUpdateIndicatorBoxPlaces");
 }
 
 AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
@@ -17,34 +21,44 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 var SlavesSearch = 
 {
 
-	searchFromBasicBox: function()
+	searchFromBasicBox: function(postpone)
 	{
-		this.search("submitBoxBasic");
+		this.search(postpone, "submitBoxBasic");
 	},
 	
-	searchFromCountryBox: function()
+	searchFromCountryBox: function(postpone)
 	{
-		this.search("submitBoxCountry");
+		this.search(postpone, "submitBoxCountry");
 	},
 
-	searchFromPlacesBox: function()
+	searchFromPlacesBox: function(postpone)
 	{
-		this.search("submitBoxPlaces");
+		this.search(postpone, "submitBoxPlaces");
 	},
 
-	search: function(buttonId)
+	search: function(postpone, buttonId)
 	{
 	
 		if (!ajaxAnywhere) return;
 	
 		var button = document.getElementById(buttonId);
 		if (!button) return;
-	
-		this.timeoutId = Timer.extendCall(
-			this.timeoutId,
-			this, "doUpdateExpectedTotal",
-			delay,
-			button);
+
+		if (postpone)
+		{
+		
+			this.timeoutId = Timer.extendCall(
+				this.timeoutId,
+				this, "doUpdateExpectedTotal",
+				1000,
+				button);
+
+		}
+		else
+		{
+			Timer.cancelCall(this.timeoutId);
+			this.doUpdateExpectedTotal(button);
+		}
 
 	},
 	

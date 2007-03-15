@@ -13,6 +13,7 @@ public class LookupCheckboxListTag extends UIComponentTagBase
 	private String items;
 	private String selectedValues;
 	private String expandedValues;
+	private String onChange;
 
 	public String getComponentType()
 	{
@@ -48,6 +49,16 @@ public class LookupCheckboxListTag extends UIComponentTagBase
 			lookupList.setValueBinding("expandedValues", vb);
 		}
 
+		if (onChange != null && isValueReference(onChange))
+		{
+			ValueBinding vb = app.createValueBinding(onChange);
+			lookupList.setValueBinding("onChange", vb);
+		}
+		else
+		{
+			lookupList.setOnChange(onChange);
+		}
+
 	}
 
 	public String getExpandedValues()
@@ -78,6 +89,16 @@ public class LookupCheckboxListTag extends UIComponentTagBase
 	public void setSelectedValues(String selectedValues)
 	{
 		this.selectedValues = selectedValues;
+	}
+
+	public String getOnChange()
+	{
+		return onChange;
+	}
+
+	public void setOnChange(String onchange)
+	{
+		this.onChange = onchange;
 	}
 
 }

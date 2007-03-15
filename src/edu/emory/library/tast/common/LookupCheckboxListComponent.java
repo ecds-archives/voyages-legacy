@@ -29,6 +29,9 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	private boolean itemsSet = false;
 	private LookupCheckboxItem[] items;
 
+	private boolean onChangeSet = false;
+	private String onChange;
+
 	public String getFamily()
 	{
 		return null;
@@ -37,6 +40,21 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	private String getHtmlNameForList(FacesContext context)
 	{
 		return getClientId(context);
+	}
+	
+	public Object saveState(FacesContext context)
+	{
+		Object[] values = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = onChange;
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		onChange = (String) values[1];
 	}
 	
 	private String getHtmlNameListItemElement(FacesContext context, String fullId)
@@ -67,8 +85,6 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	public void decode(FacesContext context)
 	{
 		
-		System.out.println("decode");
-		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		Map paramValues = context.getExternalContext().getRequestParameterValuesMap();
 		
@@ -82,8 +98,6 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	public void processUpdates(FacesContext context)
 	{
 		
-		System.out.println("processUpdates");
-
 		if (selectedValues != null)
 		{
 			ValueBinding vbSelectedValues = getValueBinding("selectedValues");
@@ -254,6 +268,7 @@ public class LookupCheckboxListComponent extends UIComponentBase
 		items = getItems();
 		selectedValues = getSelectedValues();
 		expandedValues = getExpandedValues();
+		onChange = getOnChange();
 		
 		// lookup for selected and expanded values
 		Set selectedValuesLookup = StringUtils.toStringSet(selectedValues);
@@ -280,7 +295,10 @@ public class LookupCheckboxListComponent extends UIComponentBase
 			if (i > 0) regJS.append(", ");
 			createRegJsForListItem(context, items[i], "", regJS, expandedValuesLookup);
 		}
-		regJS.append("}))");
+		regJS.append("}");
+		regJS.append(", ");
+		if (onChange != null) regJS.append(onChange); else regJS.append("null"); 
+		regJS.append("))");
 
 		// render js
 		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);
@@ -430,6 +448,18 @@ public class LookupCheckboxListComponent extends UIComponentBase
 	{
 		expandedValuesSet = true;
 		this.expandedValues = expandedValues;
+	}
+
+	public String getOnChange()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"onChange", onChangeSet, onChange);
+	}
+
+	public void setOnChange(String onchange)
+	{
+		onChangeSet = true;
+		this.onChange = onchange;
 	}
 
 }

@@ -142,6 +142,24 @@ var EventUtils =
 var ElementUtils =
 {
 
+	show: function()
+	{
+		for (var i = 0; i < arguments.length; i++)
+		{
+			var el = document.getElementById(arguments[i]);
+			if (el) el.style.display = "";
+		}
+	},
+
+	hide: function()
+	{
+		for (var i = 0; i < arguments.length; i++)
+		{
+			var el = document.getElementById(arguments[i]);
+			if (el) el.style.display = "none";
+		}
+	},
+
 	getEventMouseX: function(event)
 	{
 		return event.clientX + Math.max(document.body.scrollLeft, document.documentElement.scrollLeft);
