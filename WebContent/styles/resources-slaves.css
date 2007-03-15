@@ -30,6 +30,9 @@ div.slaves-query-section {
 	border-bottom: 1px solid #B4D6CD;}
 
 td.box-upper-row-middle,
+td.box-middle-row-middle,
+td.box-set-lower-row-upper-middle,
+td.box-set-upper-row-upper-middle,
 td.box-upper-row-middle-collapsed,
 td.td-side-panel td.box-set-upper-row-upper-middle-collapsed,
 td.td-side-panel td.box-set-upper-row-upper-middle, 
@@ -37,7 +40,7 @@ td.td-side-panel td.box-set-upper-row-middle-middle-collapsed,
 td.td-side-panel td.box-set-upper-row-middle-middle, 
 td.td-side-panel td.box-set-upper-row-bottom-middle-collapsed,
 td.td-side-panel td.box-set-upper-row-bottom-middle {	
-	width: 250px; }
+	width: 240px; }
 	
 td.lookup-checkbox-list-quicksearch {
 	margin-bottom: 5px; }

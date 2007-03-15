@@ -231,7 +231,7 @@ public class ExpandableBoxComponent extends UIComponentBase {
 		if (!isCollapsed()) {
 			writer.endElement("div");
 			writer.endElement("td");
-			writeSimpleTd(writer, "box-middle-row-right");
+			writeSimpleTd(writer, "box-middle-row-right", true);
 			writer.endElement("tr");
 			writer.startElement("tr", null);
 			if (this.fieldId == null) {

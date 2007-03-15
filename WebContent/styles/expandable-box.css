@@ -17,7 +17,6 @@ td.box-set-upper-row-middle-middle-collapsed,
 td.box-set-upper-row-middle-middle, 
 td.box-set-upper-row-bottom-middle-collapsed,
 td.box-set-upper-row-bottom-middle {
-	
 	padding-top: 5px;
 	padding-bottom: 4px;
 	background-repeat: repeat-x; }
@@ -35,9 +34,6 @@ td.box-middle-row-left {
 	background-color: White;
 	background-position: left top;
 	vertical-align: top;
-	/*background-repeat: no-repeat;
-	border-left-width: 1px;
-	border-left-style: solid;*/
 	overflow: hidden; }
 	
 div.box-middle-row-left {
@@ -47,7 +43,6 @@ div.box-middle-row-left {
 	background-repeat: no-repeat;
 	height: 50px;
 	overflow: hidden; }	
-
 	
 td.box-middle-row-middle {
 	background-color: White;
@@ -56,12 +51,14 @@ td.box-middle-row-middle {
 	background-repeat: repeat-x; }
 
 td.box-middle-row-right {
+	width: 10px;
 	background-color: White;
 	background-position: right top;
-	background-repeat: no-repeat;
-	border-right-width: 1px;
-	border-right-style: solid;
+	vertical-align: top;
 	overflow: hidden; }
+	
+div.box-middle-row-right {
+	width: 10px; }
 
 td.box-lower-row-left, td.box-set-lower-row-upper-left, td.box-set-lower-row-middle-left, td.box-set-lower-row-bottom-left {
 	background-position: left bottom;
