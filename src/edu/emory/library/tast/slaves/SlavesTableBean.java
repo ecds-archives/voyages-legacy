@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.common.LookupCheckboxItem;
+import edu.emory.library.tast.common.voyage.VoyageDetailBean;
+import edu.emory.library.tast.database.table.ShowDetailsEvent;
 import edu.emory.library.tast.database.table.SortChangeEvent;
 import edu.emory.library.tast.database.table.TableData;
 import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
@@ -40,6 +44,7 @@ public class SlavesTableBean
 	private SlavesQuery currentQuery = new SlavesQuery();
 
 	private String[] expandedEmbPorts;
+	private VoyageDetailBean voyageBean;
 
 	/*
 	private Integer queryAgeFrom;
@@ -84,7 +89,7 @@ public class SlavesTableBean
 			VisibleAttrSlave.getAttributeForTable("majbuypt")};
 			
 		tableData = new TableData();
-		tableData.setKeyAttribute(Slave.getAttribute("id"));
+		tableData.setKeyAttribute(Slave.getAttribute("voyageId"));
 		tableData.setVisibleColumns(visibleAttrs);
 		tableData.setOrderByColumn(visibleAttrs[0]);
 		tableData.setFormatter(VisibleAttrSlave.getAttributeForTable("majselpt"), 
@@ -628,10 +633,12 @@ public class SlavesTableBean
 		
 		// get value
 		int newStep = "all".equals(step) ? Integer.MAX_VALUE : Integer.parseInt(step);
-
+		System.out.println("Step: " + step);
+		
 		// changed?
-		if (newStep == this.pager.getStep())
-			return;
+		if (newStep != this.pager.getStep()) {
+			this.pager.setStep(newStep);
+		}
 		
 		// refresh data, but not count of query text
 		loadData(false, false);
@@ -830,4 +837,20 @@ public class SlavesTableBean
 		return querySummary;
 	}
 	
+	public String showDetails(ShowDetailsEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		voyageBean.openVoyage(event.getVoyageId().intValue());
+		voyageBean.setVoyageAttr("voyageid");
+		voyageBean.setBackPage("names-interface");
+		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
+		return null;
+	}
+
+	public VoyageDetailBean getVoyageBean() {
+		return voyageBean;
+	}
+
+	public void setVoyageBean(VoyageDetailBean voyageBean) {
+		this.voyageBean = voyageBean;
+	}
 }

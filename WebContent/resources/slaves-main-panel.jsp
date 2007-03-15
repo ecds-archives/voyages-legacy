@@ -5,9 +5,10 @@
 
 <t:htmlTag value="h1" style="margin: 0px 0px 10px 0px;"><h:outputText value="#{res.slaves_listing_title}" /></t:htmlTag>
 
-<s:tabletab id="listingEstimates"
+<s:tabletab id="listingEstimates" 
 	data="#{SlavesTableBean.tableData}"
-	sortChanged="#{SlavesTableBean.sortChanged}" />
+	sortChanged="#{SlavesTableBean.sortChanged}" 
+	onclick="#{SlavesTableBean.showDetails}"/>
 
 <t:htmlTag value="div" styleClass="pager">
 	<t:htmlTag id="listingEstimates-bottom-bar" value="table" style="border-collapse: collapse; width: 100%;">

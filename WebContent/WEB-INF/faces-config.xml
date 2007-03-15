@@ -482,6 +482,10 @@
 		<managed-bean-name>SlavesTableBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.slaves.SlavesTableBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>voyageBean</property-name>
+			<value>#{VoyageDetailBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -678,6 +682,10 @@
 		<navigation-case>
 			<from-outcome>images-interface</from-outcome>
 			<to-view-id>/galleryp.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>names-interface</from-outcome>
+			<to-view-id>/resources/slaves.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

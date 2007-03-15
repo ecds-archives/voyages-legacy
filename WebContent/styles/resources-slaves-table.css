@@ -27,12 +27,12 @@ tr.grid-row-even td {
 tr.grid-row-last {
 	border-bottom-style: none; }
 	
-/*
+
 tr.grid-row-even:hover,
 tr.grid-row-odd:hover,
 tr.grid-row-last:hover {
-	background-color: #F7EAC7; }
-*/
+	background-color: #c6e7da; }
+
 
 table.multiline-attr-table {
 }
