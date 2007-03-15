@@ -299,7 +299,7 @@ table.multiline-attr-table td {
 	white-space: nowrap;
 }
 	
-td.grid-header-text {
+div.grid-header-text {
 	padding: 0px; }
 
 table.grid-header-right {
@@ -307,16 +307,24 @@ table.grid-header-right {
 	margin-right: 0px;
 }
 
-td.grid-header-text-right {
+div.grid-header-text-right {
 	padding: 0px; 
 	text-align: right;
 }
 
-td.grid-header-icon {
-	padding-left: 5px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	padding-right: 0px; }
+div.grid-header-icon-asc {
+	margin-right: 5px;
+	padding-right: 15px;
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-image: url(../images/assessment-icon-arrow-down.png); }
+
+div.grid-header-icon-desc {
+	margin-right: 5px;
+	padding-right: 15px;
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-image: url(../images/assessment-icon-arrow-up.png); }
 	
 td.grid-first-column,
 th.grid-first-column {

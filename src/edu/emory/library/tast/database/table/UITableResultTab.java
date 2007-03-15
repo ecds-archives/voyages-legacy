@@ -19,8 +19,9 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Component used for presenting table result.
+ * 
  * @author Pawel Jurczyk
- *
+ * 
  */
 public class UITableResultTab extends UIOutput {
 
@@ -38,7 +39,7 @@ public class UITableResultTab extends UIOutput {
 
 	/**
 	 * Default constructor.
-	 *
+	 * 
 	 */
 	public UITableResultTab() {
 		super();
@@ -72,17 +73,31 @@ public class UITableResultTab extends UIOutput {
 
 		Map params = context.getExternalContext().getRequestParameterMap();
 
-		String newSelectedTabId = (String) params.get(getSortHiddenFieldName(context));
+		String newSelectedTabId = (String) params
+				.get(getSortHiddenFieldName(context));
 		if (newSelectedTabId != null && newSelectedTabId.length() > 0) {
 			queueEvent(new SortChangeEvent(this, newSelectedTabId));
 		}
 
-		String newSelectedVoyageId = (String) params.get(getClickIdHiddenFieldName(context));
+		String newSelectedVoyageId = (String) params
+				.get(getClickIdHiddenFieldName(context));
 		if (newSelectedVoyageId != null && newSelectedVoyageId.length() > 0) {
 			queueEvent(new ShowDetailsEvent(this, new Long(newSelectedVoyageId)));
 		}
 
 	}
+	
+	
+	private String appendStyle(String style, String toAppend) {
+		if (style == null) {
+			return toAppend;
+		} else if (!style.trim().equals("")) {
+			return style + " " + toAppend;
+		} else {
+			return toAppend;
+		}
+	}
+	
 
 	/**
 	 * Encode begin overload.
@@ -92,10 +107,10 @@ public class UITableResultTab extends UIOutput {
 		
 		ResponseWriter writer = context.getResponseWriter();
 		
-		//Start div
+		// Start div
 		writer.startElement("div", this);
 
-		//Bind style/style class.
+		// Bind style/style class.
 		ValueBinding vb = this.getValueBinding("style");
 		if (vb != null && vb.getValue(context) != null) {
 			writer.writeAttribute("style", vb.getValue(context), null);
@@ -105,11 +120,11 @@ public class UITableResultTab extends UIOutput {
 			writer.writeAttribute("class", vb.getValue(context), null);
 		}
 
-		//Encode hidden fields.
+		// Encode hidden fields.
 		JsfUtils.encodeHiddenInput(this, writer, getSortHiddenFieldName(context));
 		JsfUtils.encodeHiddenInput(this, writer, getClickIdHiddenFieldName(context));
 
-		//Start table
+		// Start table
 		writer.startElement("table", this);
 		writer.writeAttribute("class", "grid", null);
 
@@ -137,7 +152,7 @@ public class UITableResultTab extends UIOutput {
 		writer.startElement("tr", this);
 		VisibleAttributeInterface[] populatedAttributes = data.getVisibleAttributes();
 		
-		//Encode header of table
+		// Encode header of table
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
 
@@ -145,25 +160,35 @@ public class UITableResultTab extends UIOutput {
 						populatedAttributes[i].encodeToString());
 
 				writer.startElement("th", this);
-				if (i == 0) writer.writeAttribute("class", "grid-first-column", null);
-
-				writer.startElement("table", this);
-				writer.writeAttribute("border", "0", null);
-				writer.writeAttribute("cellspacing", "0", null);
-				writer.writeAttribute("cellpadding", "0", null);
+				writer.startElement("div", null);
+				
+				String classStr = "";
+				if (i == 0) classStr = this.appendStyle(classStr, "grid-first-column"); 
+					
 				if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
-					writer.writeAttribute("class", "grid-header-right", null);
-				} else {
-					writer.writeAttribute("class", "grid-header", null);
-				}
-				writer.startElement("tr", this);
+					if (data.getOrderByColumn() != null
+							&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
 
-				writer.startElement("td", this);
-				if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
-					writer.writeAttribute("class", "grid-header-text-right", null);
+						if (data.getOrder() == QueryValue.ORDER_DESC) {
+							classStr = this.appendStyle(classStr, "grid-header-icon-desc");
+						} else if (data.getOrder() == QueryValue.ORDER_ASC) {
+							classStr = this.appendStyle(classStr, "grid-header-icon-asc");
+						}
+					}
+					classStr = this.appendStyle(classStr, "grid-header-text-right");
 				} else {
-					writer.writeAttribute("class", "grid-header-text", null);
+					if (data.getOrderByColumn() != null
+							&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
+
+						if (data.getOrder() == QueryValue.ORDER_DESC) {
+							classStr = this.appendStyle(classStr, "grid-header-icon-desc");
+						} else if (data.getOrder() == QueryValue.ORDER_ASC) {
+							classStr = this.appendStyle(classStr, "grid-header-icon-asc");
+						}
+					}
+					classStr = this.appendStyle(classStr, "grid-header-text");
 				}
+				writer.writeAttribute("class", classStr, null);
 				
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
@@ -171,33 +196,67 @@ public class UITableResultTab extends UIOutput {
 				writer.write(populatedAttributes[i].getUserLabelOrName());
 				writer.endElement("a");
 				writer.endElement("td");
-
-				if (data.getOrderByColumn() != null
-						&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
-
-					writer.startElement("td", this);
-					writer.writeAttribute("class", "grid-header-icon", null);
-					if (data.getOrder() == QueryValue.ORDER_DESC) {
-						writer.write("<img src=\"up2.gif\" width=\"15\" height=\"15\">");
-					} else if (data.getOrder() == QueryValue.ORDER_ASC) {
-						writer.write("<img src=\"down2.gif\" width=\"15\" height=\"15\">");
-					}
-					writer.endElement("td");
-				}
-
-				writer.endElement("tr");
-				writer.endElement("table");
-
+				
+				
+				writer.endElement("div");
 				writer.endElement("th");
-
 			}
 		}
-		writer.endElement("tr");
+		
+		writer.endElement("tr");				
+				
+				
+				
+// writer.startElement("table", this);
+// writer.writeAttribute("border", "0", null);
+// writer.writeAttribute("cellspacing", "0", null);
+// writer.writeAttribute("cellpadding", "0", null);
+// if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
+// writer.writeAttribute("class", "grid-header-right", null);
+// } else {
+// writer.writeAttribute("class", "grid-header", null);
+// }
+// writer.startElement("tr", this);
+//
+// writer.startElement("td", this);
+// if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
+// writer.writeAttribute("class", "grid-header-text-right", null);
+// } else {
+// writer.writeAttribute("class", "grid-header-text", null);
+// }
+//				
+// writer.startElement("a", this);
+// writer.writeAttribute("href", "#", null);
+// writer.writeAttribute("onclick", jsSort, null);
+// writer.write(populatedAttributes[i].getUserLabelOrName());
+// writer.endElement("a");
+// writer.endElement("td");
+//
+// if (data.getOrderByColumn() != null
+// &&
+// data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
+//
+// //writer.startElement("td", this);
+// //writer.startElement("div", null);
+// if (data.getOrder() == QueryValue.ORDER_DESC) {
+// writer.writeAttribute("class", "grid-header-icon-desc", null);
+// //writer.write("<img src=\"up2.gif\" width=\"15\" height=\"15\">");
+// } else if (data.getOrder() == QueryValue.ORDER_ASC) {
+// writer.writeAttribute("class", "grid-header-icon-asc", null);
+// //writer.write("<img src=\"down2.gif\" width=\"15\" height=\"15\">");
+// }
+// writer.endElement("div");
+// writer.endElement("td");
+// }
+//
+// writer.endElement("tr");
+// writer.endElement("table");
+
 
 		StringBuffer rowClass = new StringBuffer();
 		TableData.DataTableItem[] objs = data.getData();
 		
-		//Encode data.
+		// Encode data.
 		if (objs != null) {
 			for (int i = 0; i < objs.length; i++) {
 
@@ -235,10 +294,12 @@ public class UITableResultTab extends UIOutput {
 							visibleLabel = "empty";
 						} else if (columnData.toString().length() > TRIM_LENGTH) {
 							visibleLabel = columnData.toString().substring(0, TRIM_LENGTH) + " ...";
-							//visibleToolTop = objString.replaceAll(" ", "&nbsp;");
+							// visibleToolTop = objString.replaceAll(" ",
+							// "&nbsp;");
 							visibleToolTop = columnData.getToolTipText(data);
 						} else {
-							//visibleLabel = columnData.toString().replaceAll(" ", "&nbsp;");
+							// visibleLabel = columnData.toString().replaceAll("
+							// ", "&nbsp;");
 							visibleLabel = columnData.toString();
 						}
 					}

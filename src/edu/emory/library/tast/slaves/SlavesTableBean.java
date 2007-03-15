@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.common.LookupCheckboxItem;
 import edu.emory.library.tast.database.table.SortChangeEvent;
 import edu.emory.library.tast.database.table.TableData;
+import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.database.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.dm.Area;
@@ -86,6 +87,19 @@ public class SlavesTableBean
 		tableData.setKeyAttribute(Slave.getAttribute("id"));
 		tableData.setVisibleColumns(visibleAttrs);
 		tableData.setOrderByColumn(visibleAttrs[0]);
+		tableData.setFormatter(VisibleAttrSlave.getAttributeForTable("majselpt"), 
+				new AbstractAttributeFormatter() {
+
+					public String format(VisibleAttributeInterface attr, Object object) {
+						return Slave.getDisembarkationCode((Port)object);
+					}
+
+					public String format(VisibleAttributeInterface attr, Object[] object) {						
+						return null;
+					}
+			
+		});
+		
 		
 		expandedEmbPorts = new String[] {String.valueOf(AFRICA_ID)};
 		
