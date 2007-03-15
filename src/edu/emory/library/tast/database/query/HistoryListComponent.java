@@ -206,7 +206,7 @@ public class HistoryListComponent extends UIComponentBase
 		writer.writeAttribute("class", "history-list-icon", null);
 		writer.writeAttribute("onclick", jsOnClick, null);
 		writer.startElement("img", this);
-		writer.writeAttribute("src", imgSrc, null);
+		writer.writeAttribute("src", "../images/" + imgSrc, null);
 		writer.writeAttribute("class", "history-list-icon", null);
 		writer.writeAttribute("width", "12", null);
 		writer.writeAttribute("height", "12", null);

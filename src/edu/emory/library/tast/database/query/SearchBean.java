@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.MenuItem;
 import edu.emory.library.tast.common.MenuItemSection;
 import edu.emory.library.tast.common.MenuItemSelectedEvent;
@@ -146,7 +147,7 @@ public class SearchBean
 		Object[] ret = query.executeQuery();
 		int numberOfResults = ((Number)ret[0]).intValue();
 		
-		MessageFormat fmt = new MessageFormat("Expected results: {0,number,#,###,###}");
+		MessageFormat fmt = new MessageFormat(TastResource.getText("database_search_expected"));
 		return fmt.format(new Object[] {new Integer(numberOfResults)});
 	}
 

@@ -120,7 +120,7 @@ function animateAttribute(menuItem, submitFunction)
 				value="#{res.database_search_newquery}" />
 	
 		</t:htmlTag>
-		<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;">
+		<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" id="totalContainer" forceId="true">
 
 			<aa:zoneJSF id="total">
 				<h:outputText value="#{SearchBean.numberOfResultsText}" />
@@ -128,7 +128,7 @@ function animateAttribute(menuItem, submitFunction)
 
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
-			<h:graphicImage url="ajax-loader.gif" width="16" height="16" alt="" />
+			<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
@@ -141,11 +141,13 @@ function animateAttribute(menuItem, submitFunction)
 
 AjaxAnywhere.prototype.showLoadingMessage = function()
 {
+	//document.getElementById("totalContainer").style.display = "none";
 	document.getElementById("totalUpdateIndicator").style.display = "";
 }
 
 AjaxAnywhere.prototype.hideLoadingMessage = function()
 {
+	//document.getElementById("totalContainer").style.display = "";
 	document.getElementById("totalUpdateIndicator").style.display = "none";
 }
 

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
 <s:expandableBoxSet expandedId="basic">
 
@@ -130,9 +131,36 @@
 		
 		</t:htmlTag>
 		
-		<h:commandButton value="#{res.slaves_search_button}" action="#{SlavesTableBean.search}" />
-		<h:outputText value=" " />
-		<h:commandButton value="#{res.slaves_reset_button}" action="#{SlavesTableBean.reset}" />
+		<t:htmlTag value="table" style="border-collapse: collapse;">
+		<t:htmlTag value="tr">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
+			
+				<t:commandButton 
+					forceId="true"
+					id="submitBoxBasic"
+					value="#{res.slaves_search_button}"
+					action="#{SlavesTableBean.search}" />
+	
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
+	
+				<h:commandButton
+					value="#{res.slaves_reset_button}"
+					action="#{SlavesTableBean.reset}" />
+		
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" id="totalContainer" forceId="true">
+	
+				<aa:zoneJSF id="total">
+					<h:outputText value="#{SlavesTableBean.numberOfResultsText}" />
+				</aa:zoneJSF>
+	
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
+				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
+			</t:htmlTag>
+		</t:htmlTag>
+		</t:htmlTag>
 	
 	</s:expandableBox>
 	
@@ -147,9 +175,36 @@
 			
 		</t:htmlTag>
 	
-		<h:commandButton value="Search database" action="#{SlavesTableBean.search}" />
-		<h:outputText value=" " />
-		<h:commandButton value="#{res.slaves_reset_button}" action="#{SlavesTableBean.reset}" />
+		<t:htmlTag value="table" style="border-collapse: collapse;">
+		<t:htmlTag value="tr">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
+			
+				<t:commandButton 
+					forceId="true"
+					id="submitBoxCountry"
+					value="#{res.slaves_search_button}"
+					action="#{SlavesTableBean.search}" />
+	
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
+	
+				<h:commandButton
+					value="#{res.slaves_reset_button}"
+					action="#{SlavesTableBean.reset}" />
+		
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" id="totalContainer" forceId="true">
+	
+				<aa:zoneJSF id="total">
+					<h:outputText value="#{SlavesTableBean.numberOfResultsText}" />
+				</aa:zoneJSF>
+	
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
+				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
+			</t:htmlTag>
+		</t:htmlTag>
+		</t:htmlTag>
 		
 	</s:expandableBox>
 	
@@ -196,9 +251,36 @@
 		
 		</t:htmlTag>
 
-		<h:commandButton value="Search database" action="#{SlavesTableBean.search}" />
-		<h:outputText value=" " />
-		<h:commandButton value="#{res.slaves_reset_button}" action="#{SlavesTableBean.reset}" />
+		<t:htmlTag value="table" style="border-collapse: collapse;">
+		<t:htmlTag value="tr">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
+			
+				<t:commandButton 
+					forceId="true"
+					id="submitBoxPlaces"
+					value="#{res.slaves_search_button}"
+					action="#{SlavesTableBean.search}" />
+	
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
+	
+				<h:commandButton
+					value="#{res.slaves_reset_button}"
+					action="#{SlavesTableBean.reset}" />
+		
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" id="totalContainer" forceId="true">
+	
+				<aa:zoneJSF id="total">
+					<h:outputText value="#{SlavesTableBean.numberOfResultsText}" />
+				</aa:zoneJSF>
+	
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
+				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
+			</t:htmlTag>
+		</t:htmlTag>
+		</t:htmlTag>
 
 	</s:expandableBox>
 
