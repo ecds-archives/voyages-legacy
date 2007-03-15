@@ -9,7 +9,6 @@ td.box-upper-row-left {
 td.box-upper-row-left-collapsed {
 	background-image: url(../images/resources-box-collapsed-title-left.png); }
 
-
 td.box-set-upper-row-upper-left {
 	background-image: url(../images/resources-box-set-collapsed-title-upper-left.png); }
 
@@ -105,7 +104,10 @@ td.box-middle-row-middle {
 	background-image: url(../images/resources-box-content-center.png); }
 	
 td.box-middle-row-right {
-	background-image: url(../images/resources-box-content-center.png); }
+	background-image: url(../images/resources-box-set-bottom-right.png); }
+
+div.box-middle-row-right {
+	background-image: url(../images/resources-box-content-right.png); }
 
 td.box-lower-row-left {
 	background-image: url(../images/resources-box-bottom-left.png); }

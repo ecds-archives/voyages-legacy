@@ -54,10 +54,12 @@ td.box-middle-row-right {
 	width: 10px;
 	background-color: White;
 	background-position: right top;
+	background-repeat: repeat-y;
 	vertical-align: top;
 	overflow: hidden; }
 	
 div.box-middle-row-right {
+	height: 50px;
 	width: 10px; }
 
 td.box-lower-row-left, td.box-set-lower-row-upper-left, td.box-set-lower-row-middle-left, td.box-set-lower-row-bottom-left {
