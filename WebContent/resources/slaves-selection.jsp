@@ -13,13 +13,37 @@
 			<t:htmlTag value="table" style="border-collapse: collapse;">
 			
 			<t:htmlTag value="tr">
-				<t:htmlTag value="td" styleClass="slaves-query-variable-title"><h:outputText value="#{res.slaves_query_slave_name}" /></t:htmlTag>
-				<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 150px;;" value="#{SlavesTableBean.workingQuery.slaveName}" /></t:htmlTag>
+				
+				<t:htmlTag value="td" styleClass="slaves-query-variable-title">
+					<h:outputText value="#{res.slaves_query_slave_name}" />
+				</t:htmlTag>
+				
+				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
+				
+					<h:inputText
+						style="width: 150px;"
+						value="#{SlavesTableBean.workingQuery.slaveName}"
+						onkeyup="SlavesSearch.searchFromBasicBox()" />
+					
+				</t:htmlTag>
+
 			</t:htmlTag>
 		
 			<t:htmlTag value="tr">
-				<t:htmlTag value="td" styleClass="slaves-query-variable-title"><h:outputText value="#{res.slaves_query_ship_name}" /></t:htmlTag>
-				<t:htmlTag value="td" styleClass="slaves-query-variable-controls"><h:inputText style="width: 150px;;" value="#{SlavesTableBean.workingQuery.shipName}" /></t:htmlTag>
+			
+				<t:htmlTag value="td" styleClass="slaves-query-variable-title">
+					<h:outputText value="#{res.slaves_query_ship_name}" />
+				</t:htmlTag>
+
+				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
+				
+					<h:inputText
+						style="width: 150px;"
+						value="#{SlavesTableBean.workingQuery.shipName}"
+						onkeyup="SlavesSearch.searchFromBasicBox()" />
+					
+				</t:htmlTag>
+
 			</t:htmlTag>
 		
 			<t:htmlTag value="tr">
@@ -149,14 +173,14 @@
 					action="#{SlavesTableBean.reset}" />
 		
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" id="totalContainer" forceId="true">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="true">
 	
-				<aa:zoneJSF id="total">
+				<aa:zoneJSF id="totalBoxBasic">
 					<h:outputText value="#{SlavesTableBean.numberOfResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxBasic" forceId="true">
 				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
 			</t:htmlTag>
 		</t:htmlTag>
@@ -193,14 +217,14 @@
 					action="#{SlavesTableBean.reset}" />
 		
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" id="totalContainer" forceId="true">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;">
 	
-				<aa:zoneJSF id="total">
+				<aa:zoneJSF id="totalBoxCountry">
 					<h:outputText value="#{SlavesTableBean.numberOfResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxCountry" forceId="true">
 				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
 			</t:htmlTag>
 		</t:htmlTag>
@@ -269,14 +293,14 @@
 					action="#{SlavesTableBean.reset}" />
 		
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" id="totalContainer" forceId="true">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;">
 	
-				<aa:zoneJSF id="total">
+				<aa:zoneJSF id="totalBoxPlaces">
 					<h:outputText value="#{SlavesTableBean.numberOfResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicator" forceId="true">
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxPlaces" forceId="true">
 				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
 			</t:htmlTag>
 		</t:htmlTag>

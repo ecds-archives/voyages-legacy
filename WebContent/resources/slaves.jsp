@@ -20,9 +20,12 @@
 	<link href="../styles/resources-slaves.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-slaves-table.css" rel="stylesheet" type="text/css">	
 	
-	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/lib/aa.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 
+	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/lookup-checkbox-list.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/slaves-search.js" language="javascript" type="text/javascript"></script>
 
 </head>
 <body>

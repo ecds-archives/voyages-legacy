@@ -147,7 +147,7 @@ public class SearchBean
 		Object[] ret = query.executeQuery();
 		int numberOfResults = ((Number)ret[0]).intValue();
 		
-		MessageFormat fmt = new MessageFormat(TastResource.getText("database_search_expected"));
+		MessageFormat fmt = new MessageFormat(TastResource.getText("slaves_search_expected"));
 		return fmt.format(new Object[] {new Integer(numberOfResults)});
 	}
 

@@ -1,5 +1,6 @@
 package edu.emory.library.tast.slaves;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.LookupCheckboxItem;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.table.ShowDetailsEvent;
@@ -642,6 +644,16 @@ public class SlavesTableBean
 		
 		// refresh data, but not count of query text
 		loadData(false, false);
+		
+	}
+	
+	public String getNumberOfResultsText()
+	{
+
+		System.out.println("getNumberOfResultsText");
+		
+		MessageFormat fmt = new MessageFormat(TastResource.getText("database_search_expected"));
+		return fmt.format(new Object[] {new Integer(0)});
 		
 	}
 	
