@@ -74,3 +74,14 @@ div.lookup-checkbox-list-item-expanded {
 	background-repeat: no-repeat;
 	width: 11px;
 	height: 11px; }
+	
+div.query-summary-item {
+	border-bottom: 1px solid #B4D6CD;
+	padding-bottom: 5px;
+	margin-bottom: 5px; }
+	
+div.query-summary-item-last {
+	}
+	
+span.query-summary-variable {
+	font-weight: bold; }

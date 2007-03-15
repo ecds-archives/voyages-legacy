@@ -33,7 +33,7 @@ public class SlavesTableBean
 	
 	private TableLinkManager pager;
 	private TableData tableData;
-	private String queryText;
+	private List querySummary;
 
 	private SlavesQuery workingQuery = new SlavesQuery();
 	private SlavesQuery currentQuery = new SlavesQuery();
@@ -503,12 +503,9 @@ public class SlavesTableBean
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 		
-		StringBuffer textBuff = null;
-		if (refreshText) textBuff = new StringBuffer();
-		
-		Conditions conditions = currentQuery.createConditions(sess, textBuff);
-
-		if (refreshText) queryText = textBuff.toString();
+		if (refreshText) querySummary = new ArrayList();
+		Conditions conditions = currentQuery.createConditions(sess,
+				refreshText ? querySummary : null);
 
 		QueryValue queryValueTable = new QueryValue(new String[] {"Slave"}, new String[] {"s"}, conditions);
 
@@ -544,8 +541,6 @@ public class SlavesTableBean
 		if (currentQuery.equals(workingQuery))
 			return null;
 		
-		System.out.println("not equal");
-		
 		// reset pager
 		this.pager.reset();
 		
@@ -562,8 +557,6 @@ public class SlavesTableBean
 	
 	public String reset()
 	{
-		
-		System.out.println("he?");
 		
 		// restore default query
 		workingQuery = new SlavesQuery();
@@ -779,11 +772,6 @@ public class SlavesTableBean
 		return workingQuery;
 	}
 
-	public String getQueryText()
-	{
-		return queryText;
-	}
-
 	public int getFirstDisplayed()
 	{
 		return this.pager.getCurrentFirstRecord() + 1;
@@ -816,6 +804,16 @@ public class SlavesTableBean
 	public void setExpandedEmbPorts(String[] expandedExpPorts)
 	{
 		this.expandedEmbPorts = expandedExpPorts;
+	}
+
+	public SlavesQuery getCurrentQuery()
+	{
+		return currentQuery;
+	}
+
+	public List getQuerySummary()
+	{
+		return querySummary;
 	}
 	
 }

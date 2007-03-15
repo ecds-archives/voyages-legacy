@@ -56,7 +56,7 @@ public class EqualsUtil
 			return false;
 		
 		for (int i = 0; i < a.length; i++)
-			if (!EqualsUtil.areEqual(a, b))
+			if (!EqualsUtil.areEqual(a[i], b[i]))
 				return false;
 		
 		return true;

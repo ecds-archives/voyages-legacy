@@ -27,13 +27,17 @@
 	</t:htmlTag>
 
 	<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
+
 		<h:commandButton
 			value="#{res.estimates_left_changeselection}"
 			action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
+
+		<h:outputText value=" " />
 			
 		<h:commandButton
 			value="#{res.estimates_left_resetselection}"
 			action="#{EstimatesSelectionBean.resetSelection}" />
+
 	</t:htmlTag>
 
 </s:expandableBox>
@@ -46,9 +50,12 @@
 		selectedValues="#{EstimatesSelectionBean.checkedNations}" />
 		
 	<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
+
 		<h:commandButton
 			value="#{res.estimates_left_changeselection}"
 			action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+
+		<h:outputText value=" " />
 
 		<h:commandButton
 			value="#{res.estimates_left_resetselection}"
@@ -72,6 +79,8 @@
 		<h:commandButton
 				value="#{res.estimates_left_changeselection}"
 				action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+				
+		<h:outputText value=" " />
 
 		<h:commandButton
 				value="#{res.estimates_left_resetselection}"
@@ -89,12 +98,13 @@
 		items="#{EstimatesSelectionBean.allImpRegions}"
 		selectedValues="#{EstimatesSelectionBean.checkedImpRegions}"/>
 		
-		
 		<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
 
 			<h:commandButton
 				value="#{res.estimates_left_changeselection}"
 				action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+				
+			<h:outputText value=" " />
 
 			<h:commandButton
 				value="#{res.estimates_left_resetselection}"

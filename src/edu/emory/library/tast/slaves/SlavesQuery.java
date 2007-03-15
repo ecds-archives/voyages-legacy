@@ -1,11 +1,13 @@
 package edu.emory.library.tast.slaves;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.hibernate.Session;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.LookupCheckboxListComponent;
+import edu.emory.library.tast.common.QuerySummaryItem;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.SexAge;
@@ -47,7 +49,7 @@ public class SlavesQuery implements Cloneable
 	private String[] embPorts;
 	private Boolean disembSierraLeone;
 	private Boolean disembHavana;
-	
+
 	public SlavesQuery()
 	{
 		
@@ -72,7 +74,7 @@ public class SlavesQuery implements Cloneable
 		
 	}
 	
-	private Conditions prepareMultiselectConditions(Attribute attr, Boolean[] states, Object[] values, StringBuffer queryTextBuff, String variableName, String[] labels)
+	private Conditions prepareMultiselectConditions(Attribute attr, Boolean[] states, Object[] values, List querySummary, String variableName, String[] labels)
 	{
 
 		boolean allSelected = true;
@@ -95,34 +97,34 @@ public class SlavesQuery implements Cloneable
 		
 		Conditions conditions = new Conditions(Conditions.JOIN_OR);
 		
-		if (queryTextBuff != null)
-		{
-			queryTextBuff.append("<div class=\"current-query-condition\">");
-			queryTextBuff.append("<span class=\"current-query-variable\">");
-			queryTextBuff.append(variableName);
-			queryTextBuff.append("</span>: ");
-		}
+		StringBuffer querySummaryValue = null;
+		if (querySummary != null)
+			querySummaryValue = new StringBuffer();
 		
 		int j = 0;
 		for (int i = 0; i < states.length; i++)
 		{
 			if (states[i].booleanValue())
 			{
-				if (queryTextBuff != null)
+				if (querySummary != null)
 				{
-					if (j > 0) queryTextBuff.append(", ");
-					queryTextBuff.append(labels[i]);
+					if (j > 0) querySummaryValue.append(", ");
+					querySummaryValue.append(labels[i]);
 				}
 				conditions.addCondition(attr, values[i], Conditions.OP_EQUALS);
 				j++;
 			}
 		}
 		
+		if (querySummary != null)
+			querySummary.add(new QuerySummaryItem(
+					variableName, querySummaryValue.toString()));
+
 		return conditions;
 
 	}
 	
-	public Conditions createConditions(Session sess, StringBuffer queryTextBuff)
+	public Conditions createConditions(Session sess, List querySummary)
 	{
 		
 		Port portHavana = Port.loadById(sess, HAVANA_ID);
@@ -145,16 +147,11 @@ public class SlavesQuery implements Cloneable
 			{
 				c.addCondition(slaveNameUpperAttr, "%" + s[i] + "%", Conditions.OP_LIKE);
 			}
-			if (s.length > 0)
+			if (querySummary != null && s.length > 0)
 			{
-				queryTextBuff.append("<div class=\"current-query-condition\">");
-				queryTextBuff.append("<span class=\"current-query-variable\">");
-				queryTextBuff.append(TastResource.getText("slaves_query_slave_name"));
-				queryTextBuff.append("</span>: ");
-				queryTextBuff.append("<span class=\"current-query-value\">");
-				queryTextBuff.append(this.slaveName.trim());
-				queryTextBuff.append("</span>");
-				queryTextBuff.append("</div>");
+				querySummary.add(new QuerySummaryItem(
+						TastResource.getText("slaves_query_slave_name"),
+						this.slaveName.trim()));
 			}
 		}
 		
@@ -166,16 +163,11 @@ public class SlavesQuery implements Cloneable
 			{
 				c.addCondition(shipNameUpperAttr, "%" + s[i] + "%", Conditions.OP_LIKE);
 			}
-			if (s.length > 0)
+			if (querySummary != null && s.length > 0)
 			{
-				queryTextBuff.append("<div class=\"current-query-condition\">");
-				queryTextBuff.append("<span class=\"current-query-variable\">");
-				queryTextBuff.append(TastResource.getText("slaves_query_ship_name"));
-				queryTextBuff.append("</span>: ");
-				queryTextBuff.append("<span class=\"current-query-value\">");
-				queryTextBuff.append(this.shipName.trim());
-				queryTextBuff.append("</span>");
-				queryTextBuff.append("</div>");
+				querySummary.add(new QuerySummaryItem(
+						TastResource.getText("slaves_query_ship_name"),
+						this.shipName.trim()));
 			}
 		}
 		
@@ -189,145 +181,145 @@ public class SlavesQuery implements Cloneable
 			c.addCondition(Slave.getAttribute("datearr"), this.yearTo, Conditions.OP_SMALLER_OR_EQUAL);
 		}
 		
-		if (this.yearFrom != null || this.yearTo != null)
+		if (querySummary != null && (this.yearFrom != null || this.yearTo != null))
 		{
-			queryTextBuff.append("<div class=\"current-query-condition\">");
-			queryTextBuff.append("<span class=\"current-query-variable\">");
-			queryTextBuff.append(TastResource.getText("slaves_query_year"));
-			queryTextBuff.append("</span>: ");
-			queryTextBuff.append("<span class=\"current-query-value\">");
+			QuerySummaryItem querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_ship_name"));
+			querySummary.add(querySummaryItem);
 			if (this.yearFrom == null)
 			{
-				queryTextBuff.append(TastResource.getText("slaves_query_year_to"));
-				queryTextBuff.append(" ");
-				queryTextBuff.append(this.yearTo);
+				querySummaryItem.setValue(
+						TastResource.getText("slaves_query_year_to") + " " +
+						this.yearTo);
 			}
 			else if (this.yearTo == null)
 			{
-				queryTextBuff.append(TastResource.getText("slaves_query_year_from"));
-				queryTextBuff.append(" ");
-				queryTextBuff.append(this.yearFrom);
+				querySummaryItem.setValue(
+						TastResource.getText("slaves_query_year_from") + " " +
+						this.yearFrom);
 			}
 			else
 			{
-				queryTextBuff.append(this.yearFrom);
-				queryTextBuff.append(" - ");
-				queryTextBuff.append(this.yearTo);
+				querySummaryItem.setValue(
+						this.yearFrom + " - " +
+						this.yearTo);
 			}
-			queryTextBuff.append("</span>");
-			queryTextBuff.append("</div>");
-			
 		}
 
 		if (this.ageFrom != null)
 		{
-			c.addCondition(Slave.getAttribute("age"), this.ageFrom, Conditions.OP_GREATER_OR_EQUAL);
+			c.addCondition(
+					Slave.getAttribute("age"),
+					this.ageFrom,
+					Conditions.OP_GREATER_OR_EQUAL);
 		}
 		
 		if (this.ageTo != null)
 		{
-			c.addCondition(Slave.getAttribute("age"), this.ageTo, Conditions.OP_SMALLER_OR_EQUAL);
+			c.addCondition(
+					Slave.getAttribute("age"),
+					this.ageTo,
+					Conditions.OP_SMALLER_OR_EQUAL);
 		}
 		
-		if (this.ageFrom != null || this.ageTo != null)
+		if (querySummary != null && (this.ageFrom != null || this.ageTo != null))
 		{
-			queryTextBuff.append("<div class=\"current-query-condition\">");
-			queryTextBuff.append("<span class=\"current-query-variable\">");
-			queryTextBuff.append(TastResource.getText("slaves_query_age"));
-			queryTextBuff.append("</span>: ");
-			queryTextBuff.append("<span class=\"current-query-value\">");
+			QuerySummaryItem querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_age"));
+			querySummary.add(querySummaryItem);
 			if (this.ageFrom == null)
 			{
-				queryTextBuff.append(TastResource.getText("slaves_query_age_to"));
-				queryTextBuff.append(" ");
-				queryTextBuff.append(this.ageTo);
+				querySummaryItem.setValue(
+						TastResource.getText("slaves_query_age_to") + " " +
+						this.ageTo);
 			}
 			else if (this.ageTo == null)
 			{
-				queryTextBuff.append(TastResource.getText("slaves_query_age_from"));
-				queryTextBuff.append(" ");
-				queryTextBuff.append(this.ageFrom);
+				querySummaryItem.setValue(
+						TastResource.getText("slaves_query_age_from") + " " +
+						this.ageFrom);
 			}
 			else
 			{
-				queryTextBuff.append(this.ageFrom);
-				queryTextBuff.append(" - ");
-				queryTextBuff.append(this.ageTo);
+				querySummaryItem.setValue(
+						this.ageFrom + " - " +
+						this.ageTo);
 			}
-			queryTextBuff.append("</span>");
-			queryTextBuff.append("</div>");
-			
 		}
 
 		if (this.heightFrom != null)
 		{
-			c.addCondition(Slave.getAttribute("height"), new Double(this.heightFrom.intValue()), Conditions.OP_GREATER_OR_EQUAL);
+			c.addCondition(
+					Slave.getAttribute("height"),
+					new Double(this.heightFrom.intValue()),
+					Conditions.OP_GREATER_OR_EQUAL);
 		}
 		
 		if (this.heightTo != null)
 		{
-			c.addCondition(Slave.getAttribute("height"), new Double(this.heightTo.intValue()), Conditions.OP_SMALLER_OR_EQUAL);
+			c.addCondition(
+					Slave.getAttribute("height"),
+					new Double(this.heightTo.intValue()),
+					Conditions.OP_SMALLER_OR_EQUAL);
 		}
 		
-		if (this.heightFrom != null || this.heightTo != null)
+		if (querySummary != null && (this.heightFrom != null || this.heightTo != null))
 		{
-			queryTextBuff.append("<div class=\"current-query-condition\">");
-			queryTextBuff.append("<span class=\"current-query-variable\">");
-			queryTextBuff.append(TastResource.getText("slaves_query_height"));
-			queryTextBuff.append("</span>: ");
-			queryTextBuff.append("<span class=\"current-query-value\">");
+			QuerySummaryItem querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_height"));
+			querySummary.add(querySummaryItem);
 			if (this.heightFrom == null)
 			{
-				queryTextBuff.append(TastResource.getText("slaves_query_height_to"));
-				queryTextBuff.append(" ");
-				queryTextBuff.append(this.ageTo);
+				querySummaryItem.setValue(
+						TastResource.getText("slaves_query_height_to") + " " +
+						this.ageTo);
 			}
 			else if (this.heightTo == null)
 			{
-				queryTextBuff.append(TastResource.getText("slaves_query_height_from"));
-				queryTextBuff.append(" ");
-				queryTextBuff.append(this.heightFrom);
+				querySummaryItem.setValue(
+						TastResource.getText("slaves_query_height_from") + " " +
+						this.ageFrom);
 			}
 			else
 			{
-				queryTextBuff.append(this.heightFrom);
-				queryTextBuff.append(" - ");
-				queryTextBuff.append(this.heightTo);
+				querySummaryItem.setValue(
+						this.heightFrom + " - " +
+						this.heightTo);
 			}
-			queryTextBuff.append("</span>");
-			queryTextBuff.append("</div>");
-			
 		}
-		
+
 		if (embPorts != null && embPorts.length > 0)
 		{
-			
+
 			Conditions condPorts = new Conditions(Conditions.JOIN_OR);
 			Pattern idSplitter = Pattern.compile(LookupCheckboxListComponent.ID_PARTS_SEPARATOR);
-			
-			queryTextBuff.append("<div class=\"current-query-condition\">");
-			queryTextBuff.append("<span class=\"current-query-variable\">");
-			queryTextBuff.append(TastResource.getText("slaves_query_embarkation"));
-			queryTextBuff.append("</span>: ");
-			queryTextBuff.append("<span class=\"current-query-value\">");
-			
+
+			QuerySummaryItem querySummaryItem = null;
+			StringBuffer portsBuff = null;
+			if (querySummary != null)
+			{
+				portsBuff = new StringBuffer();
+				querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_embarkation"));
+				querySummary.add(querySummaryItem);
+			}
+
 			for (int i = 0; i < embPorts.length; i++)
 			{
 				String[] idParts = idSplitter.split(embPorts[i]);
 				if (idParts.length == 3)
 				{
 					Port port = Port.loadById(sess, Long.parseLong(idParts[2]));
-					
-					if (i > 0) queryTextBuff.append(", ");
-					queryTextBuff.append(port.getName());
-					
+
+					if (querySummary != null)
+					{
+						if (i > 0) portsBuff.append(", ");
+						portsBuff.append(port.getName());
+					}
+
 					condPorts.addCondition(Slave.getAttribute("majbuypt"), port, Conditions.OP_EQUALS);
 				}
 			}
 
-			queryTextBuff.append("</span>");
-			queryTextBuff.append("</div>");
-			
+			if (querySummary != null)
+				querySummaryItem.setValue(portsBuff.toString());
+
 			c.addCondition(condPorts);
 
 		}
@@ -337,26 +329,30 @@ public class SlavesQuery implements Cloneable
 
 			Conditions condCountries = new Conditions(Conditions.JOIN_OR);
 			
-			queryTextBuff.append("<div class=\"current-query-condition\">");
-			queryTextBuff.append("<span class=\"current-query-variable\">");
-			queryTextBuff.append(TastResource.getText("slaves_query_country"));
-			queryTextBuff.append("</span>: ");
-			queryTextBuff.append("<span class=\"current-query-value\">");
+			QuerySummaryItem querySummaryItem = null;
+			StringBuffer countriesBuff = null;
+			if (querySummary != null)
+			{
+				countriesBuff = new StringBuffer();
+				querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_country"));
+				querySummary.add(querySummaryItem);
+			}
 			
 			for (int i = 0; i < countries.length; i++)
 			{
-				
 				Country country = Country.loadById(sess, Long.parseLong(countries[i]));
 				
-				if (i > 0) queryTextBuff.append(", ");
-				queryTextBuff.append(country.getName());
+				if (querySummary != null)
+				{
+					if (i > 0) countriesBuff.append(", ");
+					countriesBuff.append(country.getName());
+				}
 				
 				condCountries.addCondition(Slave.getAttribute("country"), country, Conditions.OP_EQUALS);
-
 			}
-
-			queryTextBuff.append("</span>");
-			queryTextBuff.append("</div>");
+			
+			if (querySummary != null)
+				querySummaryItem.setValue(countriesBuff.toString());
 
 			c.addCondition(condCountries);
 
@@ -378,7 +374,7 @@ public class SlavesQuery implements Cloneable
 					genderGirl,
 					genderWoman,
 					genderFemale},
-				queryTextBuff,
+				querySummary,
 				TastResource.getText("slaves_query_sexage"),
 				new String[] {
 					TastResource.getText("slaves_checkbox_boys"),
@@ -399,7 +395,7 @@ public class SlavesQuery implements Cloneable
 				new Object[] {
 					portHavana,
 					portSierraLeone},
-				queryTextBuff,
+				querySummary,
 				TastResource.getText("slaves_query_captured"),
 				new String[] {
 					TastResource.getText("slaves_captured_havana"),
@@ -407,10 +403,6 @@ public class SlavesQuery implements Cloneable
 
 		if (subDisembarkation != null)
 			c.addCondition(subDisembarkation);
-		
-		if (queryTextBuff != null)
-			if (queryTextBuff.length() == 0)
-				queryTextBuff.append(TastResource.getText("slaves_current_no_query"));
 		
 		return c;
 		

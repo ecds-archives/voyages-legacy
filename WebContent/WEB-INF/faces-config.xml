@@ -185,6 +185,11 @@
 		<component-class>edu.emory.library.tast.common.LookupCheckboxListComponent</component-class>
 	</component>
 
+	<component>
+		<component-type>QuerySummary</component-type>
+		<component-class>edu.emory.library.tast.common.QuerySummaryComponent</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.query.SearchBean</managed-bean-class>

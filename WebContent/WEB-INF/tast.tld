@@ -881,4 +881,24 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>querySummary</name>
+		<tag-class>
+			edu.emory.library.tast.common.QuerySummaryTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
+			<name>items</name>
+		</attribute>
+		<attribute>
+			<name>noQueryText</name>
+		</attribute>
+	</tag>
+
 </taglib>

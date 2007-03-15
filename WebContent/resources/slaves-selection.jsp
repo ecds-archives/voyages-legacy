@@ -207,5 +207,9 @@
 <br>
 
 <s:expandableBox text="#{res.slaves_current_query}">
-	<h:outputText escape="false" value="#{SlavesTableBean.queryText}" />
+
+	<s:querySummary
+		items="#{SlavesTableBean.querySummary}"
+		noQueryText="#{res.slaves_current_no_query}" />
+	
 </s:expandableBox>
