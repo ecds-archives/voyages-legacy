@@ -71,8 +71,7 @@
 	<s:checkboxListExpandable
 		id="expReg"
 		items="#{EstimatesSelectionBean.allExpRegions}" 
-		selectedValues="#{EstimatesSelectionBean.checkedExpRegions}"
-		expandedValues="#{EstimatesSelectionBean.expandedExpRegions}" />
+		selectedValues="#{EstimatesSelectionBean.checkedExpRegions}" />
 		
 	<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
 

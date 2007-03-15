@@ -275,6 +275,9 @@ public class CheckboxListPopupComponent extends CheckboxListComponent
 				items,
 				selectedValuesLookup);
 		
+		// select/delect all
+		encodeSelectDeselectAll(writer, checkboxListId);
+		
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException

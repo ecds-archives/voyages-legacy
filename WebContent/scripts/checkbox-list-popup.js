@@ -1,29 +1,39 @@
 var CheckboxListPopupGlobals = 
 {
 
-	checkboxLists: new Array(),
-
 	registerCheckboxList: function(checkboxList)
 	{
-		CheckboxListPopupGlobals.checkboxLists[checkboxList.checkboxListId] = checkboxList;
+		CheckboxListGlobals.checkboxLists[checkboxList.checkboxListId] = checkboxList;
 	},
 	
 	popupShow: function(checkboxListId, popupId, mainItemId, subItemId, imageUrl)
 	{
-		var checkboxList = CheckboxListPopupGlobals.checkboxLists[checkboxListId];
+		var checkboxList = CheckboxListGlobals.checkboxLists[checkboxListId];
 		if (checkboxList) checkboxList.popupShow(popupId, mainItemId, subItemId, imageUrl);
 	},
 
 	popupHide: function(checkboxListId, popupId, mainItemId, subItemId)
 	{
-		var checkboxList = CheckboxListPopupGlobals.checkboxLists[checkboxListId];
+		var checkboxList = CheckboxListGlobals.checkboxLists[checkboxListId];
 		if (checkboxList) checkboxList.popupHide(popupId, mainItemId, subItemId);
 	},
 	
 	click: function(checkboxListId, value)
 	{
-		var checkboxList = CheckboxListPopupGlobals.checkboxLists[checkboxListId];
+		var checkboxList = CheckboxListGlobals.checkboxLists[checkboxListId];
 		if (checkboxList) checkboxList.click(value);
+	},
+
+	checkAll: function(checkboxListId)
+	{
+		var checkboxList = CheckboxListGlobals.checkboxLists[checkboxListId];
+		if (checkboxList) checkboxList.checkAll();
+	},
+
+	uncheckAll: function(checkboxListId)
+	{
+		var checkboxList = CheckboxListGlobals.checkboxLists[checkboxListId];
+		if (checkboxList) checkboxList.uncheckAll();
 	}
 
 }

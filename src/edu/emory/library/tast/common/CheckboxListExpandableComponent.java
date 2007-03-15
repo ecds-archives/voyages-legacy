@@ -175,6 +175,7 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 		
 		// end mail table
 		writer.endElement("table");
+		
 	}
 	
 	
@@ -201,7 +202,9 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 		regJS.append("'").append(form.getClientId(context)).append("', ");
 		regJS.append("'").append(getHtmlNameForExpandedValues(context)).append("', ");
 		regJS.append("'").append(ARROW_EXPANDED).append("', ");
-		regJS.append("'").append(ARROW_COLLAPSED).append("'))");
+		regJS.append("'").append(ARROW_COLLAPSED).append("', ");
+		registerItems(context, mainId, regJS, items);
+		regJS.append("))");
 		
 		// remember expanded values in a hidden field
 		JsfUtils.encodeHiddenInput(this, writer,
@@ -219,6 +222,9 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 				items,
 				selectedValuesLookup,
 				expandedValuesLookup, 0);
+		
+		// select/deselect all
+		encodeSelectDeselectAll(writer, mainId);
 		
 	}
 

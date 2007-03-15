@@ -1,9 +1,13 @@
 package edu.emory.library.tast.common;
 
+import java.io.IOException;
+
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.util.JsfUtils;
 
 public abstract class CheckboxListComponent extends UIComponentBase
@@ -68,6 +72,57 @@ public abstract class CheckboxListComponent extends UIComponentBase
 			}
 		}
 		regJS.append("]");
+	}
+	
+	protected void encodeSelectDeselectAll(ResponseWriter writer, String checkboxListId) throws IOException
+	{
+		
+		String selectAllJS =
+			"CheckboxListGlobals.checkAll(" +
+			"'" + checkboxListId + "');";
+	
+		String deselectAllJS =
+			"CheckboxListGlobals.uncheckAll(" +
+			"'" + checkboxListId + "');";
+		
+		// main table
+		writer.startElement("table", this);
+		writer.writeAttribute("class", "checkbox-list-select-deselect-all", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.startElement("tr", this);
+
+		// label
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "checkbox-list-select-deselect-all-label", null);
+		writer.write(TastResource.getText("checkbox_list_select_deselect_all"));
+		writer.endElement("td");
+
+		// select all
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "checkbox-list-select-all", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("onclick", selectAllJS, null);
+		writer.writeAttribute("value", "+", null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+		// deselect all
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "checkbox-list-deselect-all", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("onclick", deselectAllJS, null);
+		writer.writeAttribute("value", "-", null);
+		writer.endElement("input");
+		writer.endElement("td");
+
+		// done
+		writer.endElement("tr");
+		writer.endElement("table");
+
 	}
 
 	public SelectItem[] getItems()

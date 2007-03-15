@@ -51,6 +51,12 @@ div.import-region-list div.checkbox-list-popup {
 	background-repeat: no-repeat;
 	left: 250px;
 	position: absolute; }
+	
+td.checkbox-list-select-deselect-all-label {
+	padding-right: 5px; }
+
+td.checkbox-list-select-all {
+	padding-right: 5px; }
 
 /***********************************
 * boxes in the left column

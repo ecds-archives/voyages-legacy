@@ -1,16 +1,14 @@
 var CheckboxListExpandableGlobals = 
 {
 
-	checkboxLists: new Array(),
-
 	registerCheckboxList: function(checkboxList)
 	{
-		CheckboxListExpandableGlobals.checkboxLists[checkboxList.checkboxListId] = checkboxList;
+		CheckboxListGlobals.checkboxLists[checkboxList.checkboxListId] = checkboxList;
 	},
 	
 	collexp: function(checkboxListId, value, imageElementId, subitemsElementId)
 	{
-		var checkboxList = CheckboxListExpandableGlobals.checkboxLists[checkboxListId];
+		var checkboxList = CheckboxListGlobals.checkboxLists[checkboxListId];
 		if (checkboxList) checkboxList.collexp(value, imageElementId, subitemsElementId);
 	}
 
@@ -21,13 +19,15 @@ function CheckboxListExpandable(
 	formName,
 	expandedValuesFieldName,
 	expandedImageUrl,
-	collapsedImageUrl)
+	collapsedImageUrl,
+	items)
 {
 	this.checkboxListId = checkboxListId;
 	this.formName = formName;
 	this.expandedValuesFieldName = expandedValuesFieldName;
 	this.expandedImageUrl = expandedImageUrl;
 	this.collapsedImageUrl = collapsedImageUrl;
+	this.items = items;
 }
 
 CheckboxListExpandable.prototype.precomputeExpandedValues = function()
