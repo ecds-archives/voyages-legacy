@@ -71,7 +71,11 @@ td.box-set-upper-row-bottom-right-collapsed {
 
 
 td.box-middle-row-left {
-	background-image: url(../images/database-box-content-center.png); }
+	background-image: url(../images/database-box-set-bottom-left.png); }
+	
+div.box-middle-row-left {
+	background-image: url(../images/database-box-content-left.png); }
+	
 	
 td.box-middle-row-middle {
 	background-image: url(../images/database-box-content-center.png); }

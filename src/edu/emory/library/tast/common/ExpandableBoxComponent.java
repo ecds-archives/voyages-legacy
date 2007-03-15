@@ -117,7 +117,7 @@ public class ExpandableBoxComponent extends UIComponentBase {
 		if (!isCollapsed()) {
 			writer.startElement("tr", null);
 
-			writeSimpleTd(writer, "box-middle-row-left");
+			writeSimpleTd(writer, "box-middle-row-left", true);
 
 			writer.startElement("td", null);
 			writer.writeAttribute("class", "box-middle-row-middle", null);
@@ -194,6 +194,9 @@ public class ExpandableBoxComponent extends UIComponentBase {
 			if (this.fieldId == null) {
 				JsfUtils.appendSubmitJS(js, context, form,
 						getStateHiddenFieldName(context), COLLAPSED);
+			} else {
+				JsfUtils.appendSubmitJS(js, context, form,
+						this.fieldId, ExpandableBoxSetComponent.expandedNone);
 			}
 		}
 		writer.writeAttribute("onclick", js, null);
@@ -204,10 +207,21 @@ public class ExpandableBoxComponent extends UIComponentBase {
 		writer.endElement("table");
 	}
 
-	private void writeSimpleTd(ResponseWriter writer, String styleClass)
+	private void writeSimpleTd(ResponseWriter writer, String styleClass) throws IOException {
+		this.writeSimpleTd(writer, styleClass, false);
+	}
+	
+	private void writeSimpleTd(ResponseWriter writer, String styleClass, boolean div)
 			throws IOException {
 		writer.startElement("td", null);
-		writer.writeAttribute("class", styleClass, null);
+		if (!div) {
+			writer.writeAttribute("class", styleClass, null);
+		} else {
+			writer.writeAttribute("class", styleClass, null);
+			writer.startElement("div", null);
+			writer.writeAttribute("class", styleClass, null);
+			writer.endElement("div");
+		}
 		writer.endElement("td");
 	}
 

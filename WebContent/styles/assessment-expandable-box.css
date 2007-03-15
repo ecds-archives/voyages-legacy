@@ -67,7 +67,11 @@ td.box-set-upper-row-bottom-right-collapsed {
 
 
 td.box-middle-row-left {
-	background-image: url(../images/assessment-box-content-center.png); }
+	background-image: url(../images/assessment-box-set-bottom-middle-left.png); }
+	
+div.box-middle-row-left {
+	background-image: url(../images/assessment-box-content-left.png); }
+	
 	
 td.box-middle-row-middle {
 	background-image: url(../images/assessment-box-content-center.png); }

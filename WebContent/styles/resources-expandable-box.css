@@ -96,7 +96,10 @@ td.box-upper-row-right-collapsed {
 	background-image: url(../images/resources-box-collapsed-title-right.png); }
 	
 td.box-middle-row-left {
-	background-image: url(../images/resources-box-content-center.png); }
+	background-image: url(../images/resources-box-set-bottom-left.png); }
+	
+div.box-middle-row-left {
+	background-image: url(../images/resources-box-content-left.png); }
 	
 td.box-middle-row-middle {
 	background-image: url(../images/resources-box-content-center.png); }

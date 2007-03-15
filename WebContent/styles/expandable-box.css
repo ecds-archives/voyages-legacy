@@ -33,10 +33,19 @@ td.box-upper-row-right-collapsed, td.box-set-upper-row-upper-right-collapsed, td
 td.box-middle-row-left {
 	background-color: White;
 	background-position: left top;
-	background-repeat: no-repeat;
+	vertical-align: top;
+	/*background-repeat: no-repeat;
 	border-left-width: 1px;
-	border-left-style: solid;
+	border-left-style: solid;*/
 	overflow: hidden; }
+	
+div.box-middle-row-left {
+	background-color: White;
+	background-position: left top;
+	background-repeat: no-repeat;
+	height: 50px;
+	overflow: hidden; }	
+
 	
 td.box-middle-row-middle {
 	background-color: White;
