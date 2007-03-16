@@ -72,12 +72,14 @@ td.box-middle-row-left {
 div.box-middle-row-left {
 	background-image: url(../images/assessment-box-content-left.png); }
 	
-	
 td.box-middle-row-middle {
 	background-image: url(../images/assessment-box-content-center.png); }
 	
 td.box-middle-row-right {
-	background-image: url(../images/assessment-box-content-center.png); }
+	background-image: url(../images/assessment-box-set-bottom-middle-right.png); }
+
+div.box-middle-row-right {
+	background-image: url(../images/assessment-box-content-right.png); }
 
 td.box-lower-row-left {
 	background-image: url(../images/assessment-box-bottom-left.png); }
