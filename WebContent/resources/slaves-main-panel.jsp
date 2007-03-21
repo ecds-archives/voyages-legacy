@@ -6,22 +6,22 @@
 <t:htmlTag value="h1" style="margin: 0px 0px 10px 0px;"><h:outputText value="#{res.slaves_listing_title}" /></t:htmlTag>
 
 <s:tabletab id="listingEstimates" 
-	data="#{SlavesTableBean.tableData}"
-	sortChanged="#{SlavesTableBean.sortChanged}" 
-	onclick="#{SlavesTableBean.showDetails}"/>
+	data="#{SlavesBean.tableData}"
+	sortChanged="#{SlavesBean.sortChanged}" 
+	onclick="#{SlavesBean.showDetails}"/>
 
 <t:htmlTag value="div" styleClass="pager">
 	<t:htmlTag id="listingEstimates-bottom-bar" value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="padding: 0px; text-align: left">
 				<h:outputText value="#{res.estimates_list_showing} " />
-				<h:outputText value="#{SlavesTableBean.firstDisplayed}" />
+				<h:outputText value="#{SlavesBean.firstDisplayed}" />
 				<h:outputText value="-" />
-				<h:outputText value="#{SlavesTableBean.lastDisplayed}" />
+				<h:outputText value="#{SlavesBean.lastDisplayed}" />
 				<h:outputText value=" #{res.estimates_list_outof} " />
-				<h:outputText value="#{SlavesTableBean.totalRows}" />
+				<h:outputText value="#{SlavesBean.totalRows}" />
 				<h:outputText value=" | #{res.estimates_list_show} " />
-				<h:selectOneMenu onchange="submit()" value="#{SlavesTableBean.step}">
+				<h:selectOneMenu onchange="submit()" value="#{SlavesBean.step}">
 					<f:selectItem itemValue="10" itemLabel="10" />
 					<f:selectItem itemValue="20" itemLabel="20" />
 					<f:selectItem itemValue="50" itemLabel="50" />
@@ -31,7 +31,7 @@
 				<h:outputText value="  #{res.estimates_list_resperpage}" />
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 0px;">
-				<s:tablelinks manager="#{SlavesTableBean.tableManager}"/>
+				<s:tablelinks manager="#{SlavesBean.tableManager}"/>
 			</t:htmlTag>
 		</t:htmlTag>
 	</t:htmlTag>

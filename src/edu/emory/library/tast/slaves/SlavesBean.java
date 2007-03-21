@@ -34,6 +34,44 @@ import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+/**
+ * This bean coordinates everything in the names database. It is a session scope
+ * bean. It connects the components representing the query on the left hand side
+ * with the table on the right hand side of the page. It holds the current not
+ * yet confirmed query (i.e. before the uses presses the Search button) in the
+ * <p>
+ * {@link #workingQuery} field. When the uses submits the query in the left
+ * column on the page, the {@link #search(String)} method is called. If this is
+ * not an AJAX submittion (see more on the below), this method compares
+ * {@link #workingQuery} with {@link #currentQuery}, and if they differ it
+ * replaces {@link #currentQuery}, and executes search.
+ * <p>
+ * The search itself is done by {@link #loadData(boolean, boolean)}. The first
+ * parameter determines if the current total results count should be computed,
+ * and the second parameter determines if the current query summary (which is in
+ * the bottom in the left column of the page) should be also refreshed. The
+ * current total number of results is held in {@link #pager}, and the current
+ * summary is held in {@link #querySummary}.
+ * {@link #loadData(boolean, boolean)} is called when the search is presses,
+ * when the current page in the listing is changed, and when the number of
+ * results displayed on the page is changed. In the second two cases, the total
+ * number of results is not recomputed, as well as the summary of the query.
+ * <p>
+ * Current data of results visible on the page are held in {@link #tableData}.
+ * It is refreshed by {@link #loadData(boolean, boolean)} as indicated above.
+ * Current page a the number of results is held in {@link #pager}.
+ * <p>
+ * The values of the compoments in the left seach column are linked directly to
+ * {@link #workingQuery} by exposing {@link #workingQuery} via
+ * {@link #getWorkingQuery()}. The only two compoments which need some
+ * additional data are the selection box for countries and the selection box
+ * embarkation ports. The data for these two compoments are loaded everytime the
+ * page is refreshed using {@link #getCountries()} and {@link #getExpPorts()}
+ * respectively. The second compoment also needs to remeber which regions of the
+ * ports are expanded. This is stored in {@link #expandedEmbPorts}.
+ * </p>
+ */
+
 public class SlavesBean
 {
 	
@@ -42,13 +80,13 @@ public class SlavesBean
 	
 	private TableLinkManager pager;
 	private TableData tableData;
-	private List querySummary;
-	private int expectedResults;
 
 	private SlavesQuery workingQuery = new SlavesQuery();
 	private SlavesQuery currentQuery = new SlavesQuery();
-
+	private List querySummary;
 	private String[] expandedEmbPorts;
+	private int expectedResults;
+
 	private VoyageDetailBean voyageBean;
 
 	public SlavesBean()
@@ -161,25 +199,11 @@ public class SlavesBean
 		
 	}
 	
-	public String searchFromBasicBox()
-	{
-		search("totalBoxBasic");
-		return null;
-	}
-	
-	public String searchFromCountryBox()
-	{
-		search("totalBoxCountry");
-		return null;
-	}
-
-	public String searchFromPlacesBox()
-	{
-		search("totalBoxPlaces");
-		return null;
-	}
-
-	private void search(String zoneName)
+	/**
+	 * Bound to the search button in the left column.
+	 * @return
+	 */
+	public String search()
 	{
 		
 		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
@@ -187,7 +211,9 @@ public class SlavesBean
 		{
 
 			// indicate what should be rendered
-			AAUtils.addZonesToRefresh(request, zoneName);
+			AAUtils.addZonesToRefresh(request, "totalBoxBasic");
+			AAUtils.addZonesToRefresh(request, "totalBoxCountry");
+			AAUtils.addZonesToRefresh(request, "totalBoxPlaces");
 			
 			// and update count
 			updateExpectedCount();
@@ -198,7 +224,7 @@ public class SlavesBean
 
 			// nothing has changed
 			if (currentQuery.equals(workingQuery))
-				return;
+				return null;
 			
 			// reset pager
 			this.pager.reset();
@@ -215,8 +241,14 @@ public class SlavesBean
 			
 		}
 		
+		return null;
+		
 	}
 	
+	/**
+	 * Bound to the reset button in the left column.
+	 * @return
+	 */
 	public String reset()
 	{
 		
@@ -235,6 +267,10 @@ public class SlavesBean
 		
 	}
 	
+	/**
+	 * Bound to the event of the table indicating the change of sorting.
+	 * @return
+	 */
 	public void sortChanged(SortChangeEvent event)
 	{
 		
@@ -271,6 +307,10 @@ public class SlavesBean
 		
 	}
 	
+	/**
+	 * Bound to select with the sizes of pages.
+	 * @return
+	 */
 	public void setStep(String step)
 	{
 		
@@ -286,6 +326,11 @@ public class SlavesBean
 		
 	}
 	
+	/**
+	 * Bound to list of counties. Called every time the page is reloaded.
+	 * 
+	 * @return
+	 */
 	public LookupCheckboxItem[] getCountries()
 	{
 
@@ -318,6 +363,12 @@ public class SlavesBean
 
 	}
 	
+	/**
+	 * Bound to list of embarkation ports. Called every time the page is
+	 * reloaded.
+	 * 
+	 * @return
+	 */
 	public LookupCheckboxItem[] getExpPorts()
 	{
 

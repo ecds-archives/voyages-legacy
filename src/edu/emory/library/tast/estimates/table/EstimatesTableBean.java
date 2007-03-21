@@ -16,6 +16,15 @@ import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+/**
+ * This bean is responsible for managing the cross-table in the estimates. It
+ * has a reference to
+ * {@link #edu.emory.library.tast.estimates.selection.EstimatesSelectionBean}.
+ * It holds the entire table in {@link #table}. The table is refreshed every
+ * time the query is changed or the user clicks to the refresh button. The main
+ * method which generates the table is {@link #generateTableIfNecessary()}.
+ * 
+ */
 public class EstimatesTableBean
 {
 	
@@ -23,14 +32,30 @@ public class EstimatesTableBean
 	private static final String CSS_CLASS_TD_TOTAL = "tbl-total";
 	
 	private EstimatesSelectionBean selectionBean;
-	private boolean optionsChanged = true;
 	private Conditions conditions;
+	private boolean optionsChanged = true;
+	
 	private String rowGrouping = "years25";;
 	private String colGrouping = "nation";
-	private SimpleTableCell[][] table;
 	private boolean omitEmptyRowsAndColumns;
 	private String showMode = "exp";
+
+	private SimpleTableCell[][] table;
 	
+	/**
+	 * An internal method calle by {@link #refreshTable()}.
+	 * {@link #refreshTable()} needs to create two groupers: one for columns and
+	 * one for rows. This method creates the instances a grouper based on the
+	 * given parameters.
+	 * 
+	 * @param groupBy
+	 * @param resultIndex
+	 * @param nations
+	 * @param expRegions
+	 * @param impRegions
+	 * @param impAreas
+	 * @return
+	 */
 	private Grouper createGrouper(String groupBy, int resultIndex, List nations, List expRegions, List impRegions, List impAreas)
 	{
 		if ("nation".equals(groupBy))
@@ -75,6 +100,18 @@ public class EstimatesTableBean
 		}
 	}
 	
+	/**
+	 * Adds column labels to {@link #table}. It is recursive because label can
+	 * be generally broken down to sub-labels.
+	 * 
+	 * @param table
+	 * @param label
+	 * @param rowIdx
+	 * @param colIdx
+	 * @param depth
+	 * @param maxDepth
+	 * @param subCols
+	 */
 	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth, int subCols)
 	{
 		
@@ -97,6 +134,17 @@ public class EstimatesTableBean
 
 	}
 	
+	/**
+	 * Adds column labels to {@link #table}. It is recursive because label can
+	 * be generally broken down to sub-labels.
+
+	 * @param table
+	 * @param label
+	 * @param rowIdx
+	 * @param colIdx
+	 * @param depth
+	 * @param maxDepth
+	 */
 	private void addRowLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth)
 	{
 		
@@ -118,7 +166,30 @@ public class EstimatesTableBean
 		}
 
 	}
-
+	
+	/**
+	 * The main method of the bean. Generates the data for the table stores it
+	 * in {@link #table}. First, it checks if it is really necessary. Then
+	 * creates a grouper for columns and rows depending on the choice of values
+	 * in columns and rows. Finally, it queries the database and uses the
+	 * groupers to fill the table.
+	 * <p>
+	 * The main of a grouper is to find a row (or column) given the id of an
+	 * item (port or nation). It also helps to construct the GROUP BY part of
+	 * the query for the database. When the data for the table are loaded from
+	 * the database they are not sorted in any particular way. The records are
+	 * read one by one and the two groupes are used to determine the row and
+	 * column which should hold the given value (the imported/exported slaves).
+	 * <p>
+	 * The groupers for nations and regions do not require any special
+	 * initializations except providing the list of ports or nations which
+	 * should appear in the rows/columns. The only exception is the grouper for
+	 * years. It has to use the result from the database to determine the min
+	 * and max year. That is why the {@link Grouper#initSlots(Object[])} needs
+	 * to have an access to the data from the database. Also, when empty cells
+	 * are supposed to be hidden, a grouper needs to first scan the data in
+	 * order to determine the used nations and regions.
+	 */
 	private void generateTableIfNecessary()
 	{
 		
@@ -368,63 +439,128 @@ public class EstimatesTableBean
 
 	}
 	
+	/**
+	 * Bound to UI. Marks the data as invalid in order to trigger
+	 * {@link #generateTableIfNecessary()}
+	 * 
+	 * @return
+	 */
 	public String refreshTable()
 	{
 		optionsChanged = true;
 		return null;
 	}
-
+	
+	/**
+	 * Bound by faces-config.xml to
+	 * {@link #edu.emory.library.tast.estimates.selection.EstimatesSelectionBean}.
+	 * 
+	 * @return
+	 */
 	public EstimatesSelectionBean getSelectionBean()
 	{
 		return selectionBean;
 	}
 
+	/**
+	 * Bound by faces-config.xml to
+	 * {@link #edu.emory.library.tast.estimates.selection.EstimatesSelectionBean}.
+	 * 
+	 * @return
+	 */
 	public void setSelectionBean(EstimatesSelectionBean selectionBean)
 	{
 		this.selectionBean = selectionBean;
 	}
 
+	/**
+	 * Bound to a HTML select which determines what should be in columns.
+	 * Wrapper for {@link #colGrouping}.
+	 * @return
+	 */
 	public String getColGrouping()
 	{
 		return colGrouping;
 	}
 
+	/**
+	 * Bound to a HTML select which determines what should be in columns.
+	 * Wrapper for {@link #colGrouping}.
+	 * @return
+	 */
 	public void setColGrouping(String colGrouping)
 	{
 		this.colGrouping = colGrouping;
 	}
 
+	/**
+	 * Bound to a HTML select which determines what should be in rows.
+	 * Wrapper for {@link #rowGrouping}.
+	 * @return
+	 */
 	public String getRowGrouping()
 	{
 		return rowGrouping;
 	}
 
+	/**
+	 * Bound to a HTML select which determines what should be in rows.
+	 * Wrapper for {@link #rowGrouping}.
+	 * @return
+	 */
 	public void setRowGrouping(String rowGrouping)
 	{
 		this.rowGrouping = rowGrouping;
 	}
-
+	
+	/**
+	 * Bound to UI. Wrapper for {@link #table}. Also, calles
+	 * {@link #generateTableIfNecessary()}. This is the only place where
+	 * {@link #generateTableIfNecessary()} is called.
+	 * 
+	 * @return
+	 */
 	public SimpleTableCell[][] getTable()
 	{
 		generateTableIfNecessary();
 		return table;
 	}
 
+	/**
+	 * Bound to UI. Wrapper for {@link #omitEmptyRowsAndColumns}.
+	 * 
+	 * @return
+	 */
 	public boolean isOmitEmptyRowsAndColumns()
 	{
 		return omitEmptyRowsAndColumns;
 	}
 
+	/**
+	 * Bound to UI. Wrapper for {@link #omitEmptyRowsAndColumns}.
+	 * 
+	 * @return
+	 */
 	public void setOmitEmptyRowsAndColumns(boolean omitEmptyRowsAndColumns)
 	{
 		this.omitEmptyRowsAndColumns = omitEmptyRowsAndColumns;
 	}
 
+	/**
+	 * Bound to UI. Wrapper for {@link #showMode}.
+	 * 
+	 * @return
+	 */
 	public String getShowMode()
 	{
 		return showMode;
 	}
 
+	/**
+	 * Bound to UI. Wrapper for {@link #showMode}.
+	 * 
+	 * @return
+	 */
 	public void setShowMode(String showMode)
 	{
 		this.showMode = showMode;

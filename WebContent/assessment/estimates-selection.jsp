@@ -30,7 +30,7 @@
 
 		<h:commandButton
 			value="#{res.estimates_left_changeselection}"
-			action="#{EstimatesSelectionBean.changeTimeFrameSelection}" />
+			action="#{EstimatesSelectionBean.changeSelection}" />
 
 		<h:outputText value=" " />
 			
@@ -53,7 +53,7 @@
 
 		<h:commandButton
 			value="#{res.estimates_left_changeselection}"
-			action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+			action="#{EstimatesSelectionBean.changeSelection}" />
 
 		<h:outputText value=" " />
 
@@ -77,7 +77,7 @@
 
 		<h:commandButton
 				value="#{res.estimates_left_changeselection}"
-				action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+				action="#{EstimatesSelectionBean.changeSelection}" />
 				
 		<h:outputText value=" " />
 
@@ -101,7 +101,7 @@
 
 			<h:commandButton
 				value="#{res.estimates_left_changeselection}"
-				action="#{EstimatesSelectionBean.changeGeographicSelection}" />
+				action="#{EstimatesSelectionBean.changeSelection}" />
 				
 			<h:outputText value=" " />
 
