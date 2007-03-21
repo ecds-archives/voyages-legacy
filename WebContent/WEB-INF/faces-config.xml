@@ -406,7 +406,7 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>SlavesTableBean</managed-bean-name>
+		<managed-bean-name>SlavesBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.slaves.SlavesTableBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>

@@ -140,6 +140,32 @@ public class StringUtils
 		return set;
 	}
 
+	public static Set toLongSet(String[] arr)
+	{
+		Set set = new HashSet();
+		if (arr != null)
+		{
+			for (int i = 0; i < arr.length; i++)
+			{
+				set.add(new Long(arr[i]));
+			}
+		}
+		return set;
+	}
+
+	public static Set toIntegerSet(String[] arr)
+	{
+		Set set = new HashSet();
+		if (arr != null)
+		{
+			for (int i = 0; i < arr.length; i++)
+			{
+				set.add(new Integer(arr[i]));
+			}
+		}
+		return set;
+	}
+	
 	public static Integer[] parseIntegerArray(String[] arr)
 	{
 		Integer[] ints = new Integer[arr.length];
