@@ -104,9 +104,5 @@ public class BarChartGenerator extends AbstractChartGenerator {
 		}
 	}
 
-//	public String getXAxisSelectOperator(String xAxisAttribute) {
-//		
-//		return xAxisAttribute + ".id";
-//	}
 
 }

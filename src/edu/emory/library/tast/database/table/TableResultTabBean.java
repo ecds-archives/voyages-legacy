@@ -26,10 +26,14 @@ import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
- * Backing bean for Table results presented in TAST web interface.
- * 
- * @author Pawel Jurczyk
- * 
+ * Backing bean for table results presented in web interface.
+ * The bean is used in database/search-tab-table.jsp.
+ * The main functionality of this bean is to manage visible attributes in table,
+ * currently visible data, quering the database, sort column and all the
+ * remaining functionality available in table (including switching to details view
+ * for particular voyage). 
+ * This bean has a reference to search bean which provides current conditions
+ * that should be satisfied by results visible in the table.
  */
 public class TableResultTabBean {
 
@@ -37,8 +41,10 @@ public class TableResultTabBean {
 
 	private static final int MAX_STEP = 50000;
 
+	//Manager for pager (pager is a component that switches between chunks of data)
 	private TableLinkManager linkManager = new TableLinkManager(10);
 	
+	//reference to current instance of voyage bean
 	private VoyageDetailBean voyageBean;
 	
 	/**
@@ -114,7 +120,7 @@ public class TableResultTabBean {
 	
 	/**
 	 * Constructor.
-	 * 
+	 * It fills in default visible attributes in table and sets default sort column.
 	 */
 	public TableResultTabBean() {
 
@@ -133,18 +139,11 @@ public class TableResultTabBean {
 
 		data.setVisibleColumns(attrs);
 		this.visibleColumns = Arrays.asList(attrs);
-
-//		VisibleAttributeInterface[] additionalAttrs = new VisibleAttributeInterface[] { VoyageIndex.getVisibleAttribute("revisionId"),
-//				VoyageIndex.getVisibleAttribute("revisionDate") };
-//		detailData.setVisibleAdditionalColumns(additionalAttrs);
-//		detailData.setOrderByColumn(VisibleAttribute.getAttributeForTable("revisionId"));
-//		detailData.setOrder(QueryValue.ORDER_DESC);
-//		detailData.setFormatter(additionalAttrs[1],
-//				new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
 	}
 
 	/**
-	 * Queries DB for voyages if needed.
+	 * Queries DB for voyages if needed and sets new data in table. 
+	 * Otherwise, it does nothing.
 	 * 
 	 */
 	private void getResultsDB() {
@@ -252,8 +251,8 @@ public class TableResultTabBean {
 
 
 	/**
-	 * Removing of columns from table (Remove button)
-	 * 
+	 * Removing visible column from table (Remove button)
+	 * This function is associated with configuration view of table tab.
 	 * @return
 	 */
 	public String remSelectedAttributeFromList() {
@@ -289,7 +288,8 @@ public class TableResultTabBean {
 	}
 
 	/**
-	 * Adding of attributes to table (Add button).
+	 * Adding visible columns to table (Add button).
+	 * This function is associated with configuration view of table tab.
 	 * 
 	 * @return
 	 */
@@ -334,8 +334,8 @@ public class TableResultTabBean {
 	}
 
 	/**
-	 * Moves attributes up.
-	 * 
+	 * Moves column to left direction (Up button).
+	 * This function is associated with configuration view of table tab.
 	 * @return
 	 */
 	public String moveAttrUp() {
@@ -381,7 +381,8 @@ public class TableResultTabBean {
 	}
 
 	/**
-	 * Moves attributes down
+	 * Moves column one step left (Down button).
+	 * This function is associated with configuration view of table tab.
 	 * 
 	 * @return
 	 */
@@ -428,6 +429,7 @@ public class TableResultTabBean {
 
 	/**
 	 * Action invoked when sort has been changed.
+	 * The action changes sort order as follows: nosort -> asc -> desc -> nosort...
 	 * 
 	 * @param event
 	 */
@@ -472,11 +474,6 @@ public class TableResultTabBean {
 		voyageBean.setBackPage("search-interface");
 		
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
-//		this.configurationMode = new Boolean(false);
-//		this.detailMode = new Boolean(true);
-//		this.resultsMode = new Boolean(false);
-//		this.detailVoyageId = event.getVoyageId();
-//		this.needDetailQuery = true;
 	}
 	
 	public String cancelConfiguration() {
@@ -506,11 +503,6 @@ public class TableResultTabBean {
 		} 
 		return ret;
 	}
-	
-//	public String refresh() {
-//		this.detailVoyageMap.refresh();
-//		return null;
-//	}
 
 	/**
 	 * Gets number of first record displayed in current table view.
@@ -545,32 +537,6 @@ public class TableResultTabBean {
 	public Integer getTotalRows() {
 		return new Integer(this.linkManager.getResultsNumber());
 	}
-
-//	/**
-//	 * TODO Needed?
-//	 * 
-//	 * @return
-//	 */
-//	public Integer getCurrent() {
-//		return new Integer(current);
-//	}
-
-//	public void setCurrent(Integer current) {
-//		this.current = current.intValue();
-//	}
-
-//	/**
-//	 * Gets current step
-//	 * 
-//	 * @return
-//	 */
-//	public String getStep() {
-//		if (this.step == MAX_STEP) {
-//			return "all";
-//		} else {
-//			return step + "";
-//		}
-//	}
 
 	/**
 	 * Sets current step
@@ -872,9 +838,6 @@ public class TableResultTabBean {
 
 	private void setVisibleColumns() {
 		List cols = new ArrayList(this.visibleColumns);
-//		if (attachSearchedParams.booleanValue()) {
-//			cols.addAll(Arrays.asList(this.searchBean.getSearchParameters().getColumns()));
-//		}
 		setVisibleAttributesList(cols);
 	}
 
@@ -893,10 +856,6 @@ public class TableResultTabBean {
 	private void setNumberOfResults() {
 
 		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
-//		localCond.addCondition(VoyageIndex.getRecent());
-//		localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
-		
-		//QueryValue qValue = new QueryValue(new String[] {"VoyageIndex", "Voyage"}, new String[] {"vi", "v"}, localCond);
 		QueryValue qValue = new QueryValue("Voyage", localCond);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
 		Object[] ret = qValue.executeQuery();

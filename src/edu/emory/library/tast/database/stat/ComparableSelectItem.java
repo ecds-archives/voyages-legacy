@@ -4,7 +4,7 @@ import javax.faces.model.SelectItem;
 
 
 /**
- * SelectItem that implements Comparable object.
+ * SelectItem that implements Comparable interface.
  * @author Pawel Jurczyk
  *
  */

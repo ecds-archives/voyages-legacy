@@ -50,14 +50,6 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	 */
 	public TransformerResponse transformData(AbstractTransformerQueryHolder data) {
 
-//		//Prepare ranges of circles size
-//		double[] rangeBoundries = new double[CIRCLE_RANGES + 1];
-//		double step = (max - min) / CIRCLE_RANGES;
-//		for (int i = 0; i < CIRCLE_RANGES; i++) {
-//			rangeBoundries[i + 1] = i * step + step + min;
-//		}
-//		rangeBoundries[0] = min;
-
 		//Get items
 		return this.getItems(data);
 	}

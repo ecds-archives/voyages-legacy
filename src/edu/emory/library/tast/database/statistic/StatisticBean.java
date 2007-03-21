@@ -12,8 +12,17 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+
+/**
+ * The bean is used to generate statistic table for voyages. It is used in
+ * database/search-tab-basic-stats.jsp. The bean is connected to search bean
+ * which provides current conditions that should be satisfied by voyages taken
+ * into account when statistics are calculated.
+ *
+ */
 public class StatisticBean {
 	
+	//names for statistics - user will see those labels in first column of statistical table
 	public static final String[] statNames = {
 		TastResource.getText("components_statistictab_slavemb"), 
 		TastResource.getText("components_statistictab_slavdisemb"), 
@@ -24,22 +33,32 @@ public class StatisticBean {
 		TastResource.getText("components_statistictab_tonnagevessel"), 
 		TastResource.getText("components_statistictab_crewatoutset")};
 	
+	//previously used conditions
 	private Conditions prevConditions = null;
+	
+	//search bean reference
 	private SearchBean searchBean = null;
+	
+	//statistical elements - represent rows in statistical table
 	private StatisticElement[] elements = new StatisticElement[] {};
 	
+	/**
+	 * This method queries the database if required and calculates statistics
+	 * defined for voyages.
+	 * @return
+	 */
 	public SimpleTableCell[][] getStatisticElements() {
 		
+		//if required, prepare query for statistics and query the database
 		if (prevConditions == null || 
 				!prevConditions.equals(searchBean.getSearchParameters().getConditions())) {
 			prevConditions = searchBean.getSearchParameters().getConditions();
 			
 			Conditions conditions = (Conditions)prevConditions.clone();
-//			conditions.addCondition(VoyageIndex.getRecent());
-//			conditions.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 			
 			elements = new StatisticElement[7];
 			
+			//fill in elements with appropriate statistical elements
 			this.prepareEstimate(0, "slaximp", conditions, true, false);
 			this.prepareEstimate(1, "slamimp", conditions, true, false);
 			this.prepareEstimate(2, "vymrtrat", conditions, false, true);
@@ -48,21 +67,9 @@ public class StatisticBean {
 			this.prepareEstimate(5, "chilrat7", conditions, false, true);
 			this.prepareEstimate(6, "tonnage", conditions, false, false);
 			
-//			Object[] results = query.executeQuery();
-//			
-//			
-//			
-//			if (results.length > 0) {
-//				results = (Object[])results[0];
-//				for (int i = 0; i < results.length - 1; i++) {
-//					elements[i] = new StatisticElement(statNames[i], 
-//							format.format((Number)results[i]), 
-//							format.format((Number)results[8]),
-//							String.valueOf(Math.round(((Number)results[i]).doubleValue()/((Number)results[8]).doubleValue() * 1000) / (double)1000));
-//				}
-//			}
 		}
 		
+		//prepare cells in statistical table
 		SimpleTableCell[][] cells = new SimpleTableCell[elements.length + 1][];
 		
 		cells[0] = new SimpleTableCell[4];
@@ -81,6 +88,16 @@ public class StatisticBean {
 		return cells;
 	}
 
+	/**
+	 * The method fills in ith element of elements table.
+	 * It perpares query for given attribute, queries the database
+	 * and creates StatisticElement
+	 * @param i
+	 * @param attribute
+	 * @param conditions
+	 * @param showTotal
+	 * @param percent
+	 */
 	private void prepareEstimate(int i, String attribute, Conditions conditions, boolean showTotal, boolean percent) {
 		Conditions cond2 = (Conditions)conditions.clone();
 		cond2.addCondition(Voyage.getAttribute(attribute), null, Conditions.OP_IS_NOT);
@@ -118,6 +135,10 @@ public class StatisticBean {
 		}
 	}
 	
+	/**
+	 * Called by JSF mechanisms - sets current instance of search bean.
+	 * @param searchBean
+	 */
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
 	}

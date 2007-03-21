@@ -24,36 +24,23 @@ import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
- * Bean for time line statistics.
- * @author Pawel Jurczyk
+ * Bean for time line.
+ * The bean has a reference to search bean which provides current conditions that should be
+ * used while database is queried. It is used in database/search-tab-graph.jsp.
+ * Basically, this bean runs different queries on database (depending on statistic type
+ * that is chosen on web iunterface) and generates yearly distribution of this data.
+ * 
+ * The implementation of time-line does not use JFreeChart package. It provides
+ * data that is directly used by TimeLineComponent. For more details, please refer to
+ * documentation of TimeLine component.
  *
  */
 public class TimeLineResultTabBean {
-
-	public static final String IMAGE_FEEDED_SERVLET = "servlet/ImageFeederServlet";
-
-//	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
-
-//	private static final String[] aggregatesUL = { "Average", "Minimum", "Maximum", "Sum", "Count" };
-
-	private static final String DEFAULT_CHART_HEIGHT = "480";
-
-	private static final String DEFAULT_CHART_WIDTH = "640";
 
 	/**
 	 * List of voyage attributes.
 	 */
 	private List voyageAttributes;
-
-//	/**
-//	 * List of available aggregates.
-//	 */
-//	private List aggregateFunctions;
-//
-//	/**
-//	 * Chosen aggregate.
-//	 */
-//	private String chosenAggregate = "sum";
 
 	/**
 	 * Chosen attribute name.
@@ -80,34 +67,29 @@ public class TimeLineResultTabBean {
 	 */
 	private boolean attributesChanged = false;
 
-//	/**
-//	 * Chart presented to user.
-//	 */
-//	private JFreeChart chart;
-
-	/**
-	 * Current chart height.
-	 */
-	private String chartHeight = DEFAULT_CHART_HEIGHT;
-
-	/**
-	 * Current chart width.
-	 */
-	private String chartWidth = DEFAULT_CHART_WIDTH;
-	
-	//private EventLineGraph graphImp;
+	//Event line series
 	private EventLineGraph graph;
+	
+	//viewport height
 	private double viewportHeight;
 
 	/**
 	 * Avaialable voyage attributes.
 	 */
-	//private VisibleAttributeInterface[] attributes = null;//VisibleAttribute.getAllAttributes();
-
+	
+	//Labels for certical axis 
 	private EventLineLabel[] verticalLabels;
 
+	//list of available statistics - filled in in constructor
 	private ArrayList availableStats;
 
+	/**
+	 * Class that represents available statistics.
+	 * Each statistic has a user label which represents string visible to user,
+	 * sqlValue (sql formula that should be executed) and sqlWhere which defines rows for which 
+	 * statistic can be computed. I also provide information about format that should be used by output values.
+	 *
+	 */
 	private class StatOption
 	{
 
@@ -129,7 +111,8 @@ public class TimeLineResultTabBean {
 	
 	/**
 	 * Default constructor.
-	 *
+	 * This constructor fills in available statistics by putting into availableStats 
+	 * different StatOptions.
 	 */
 	public TimeLineResultTabBean() {
 		
@@ -300,34 +283,15 @@ public class TimeLineResultTabBean {
 
 		this.chosenOption = (StatOption)this.availableStats.get(0);
 		
-		
-//		ArrayList list = new ArrayList();
-//		Group groups[] = Group.getGroups();
-//		for (int i = 0; i < groups.length; i++) {
-//			list.addAll(Arrays.asList(groups[i].getAllVisibleAttributes()));
-//		}
-//		attributes = (VisibleAttributeInterface[])list.toArray(new VisibleAttributeInterface[] {});
 	}
 
 	/**
-	 * Gets numeric attributes of voyage.
+	 * Gets available list of statistics for voyages.
 	 * @return
 	 */
 	public List getVoyageNumericAttributes() {
 
-		//Build list of numeric attributes.
 		this.voyageAttributes = new ArrayList();
-//		for (int i = 0; i < attributes.length; i++) {
-//			VisibleAttributeInterface attr = attributes[i];
-//			if (attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE) && (!attr.isDate() || attr.getName().equals("voyageid")) &&
-//					attr.getAttributes().length == 1) {
-//				String outString = attr.toString();
-//				voyageAttributes.add(new ComparableSelectItem(attr.getName(), outString));
-//
-//			}
-//		}
-		//Collections.sort(voyageAttributes);
-
 		Iterator iter = this.availableStats.iterator();
 		while (iter.hasNext()) {
 			StatOption option = (StatOption)iter.next();
@@ -337,22 +301,10 @@ public class TimeLineResultTabBean {
 		return this.voyageAttributes;
 	}
 
-//	/**
-//	 * Gets avaialable aggregates.
-//	 * @return
-//	 */
-//	public List getAggregateFunctions() {
-//		if (this.aggregateFunctions == null) {
-//			this.aggregateFunctions = new ArrayList();
-//			for (int i = 0; i < aggregates.length; i++) {
-//				this.aggregateFunctions.add(new SelectItem(aggregates[i], aggregatesUL[i]));
-//			}
-//		}
-//		return this.aggregateFunctions;
-//	}
 
 	/**
 	 * Shows time line chart.
+	 * This function queries the database if necessary.
 	 * @return
 	 */
 	public String showTimeLine() {
@@ -367,33 +319,7 @@ public class TimeLineResultTabBean {
 
 			Session sess = HibernateUtil.getSession();
 			Transaction tran = sess.beginTransaction();
-			
-//			StringBuffer sql = new StringBuffer();
-//			sql.append("SELECT ");
-//			sql.append("yearam AS year");
-//			sql.append(", ");
-//			sql.append(this.chosenOption.sqlValue).append(" AS value");
-//			sql.append(" ");
-//			sql.append("FROM voyages ");
-//			sql.append("WHERE ");
-//			sql.append("datedep IS NOT NULL ");
-//			if (this.chosenOption.sqlWhere != null)
-//			{
-//				sql.append("AND ");
-//				sql.append(this.chosenOption.sqlWhere);
-//				sql.append(" ");
-//			}
-//			sql.append("GROUP BY year");
-//			sql.append(" ");
-//			sql.append("ORDER BY year");
-//			
-//			SQLQuery query = sess.createSQLQuery(sql.toString());
-//			query.addScalar("year", Hibernate.DOUBLE);
-//			query.addScalar("value", Hibernate.DOUBLE);
-//			List ret = query.list();
 
-			//Conditions localCondition = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
-			//localCondition.addCondition(Voyage.getAttribute("datedep"), null, Conditions.OP_IS_NOT);
 			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, this.searchBean.getSearchParameters().getConditions());
 			qValue.setGroupBy(new Attribute[] {Voyage.getAttribute("yearam")});
 			qValue.addPopulatedAttribute(Voyage.getAttribute("yearam"));
@@ -464,25 +390,6 @@ public class TimeLineResultTabBean {
 		
 	}
 
-//	/**
-//	 * Gets currently chosen aggregate.
-//	 * @return
-//	 */
-//	public String getChosenAggregate() {
-//		return chosenAggregate;
-//	}
-
-//	/**
-//	 * Sets currently chosen aggregate.
-//	 * @param chosenAggregate
-//	 */
-//	public void setChosenAggregate(String chosenAggregate) {
-//		if (chosenAggregate != null && !chosenAggregate.equals(this.chosenAttribute)) {
-//			this.chosenAggregate = chosenAggregate;
-//			this.attributesChanged = true;
-//		}
-//	}
-
 	/**
 	 * Gets currently chosen attribute.
 	 * @return
@@ -510,61 +417,9 @@ public class TimeLineResultTabBean {
 
 	}
 
-	/**
-	 * Gets path to chart image.
-	 * @return
-	 */
-	public String getChartPath() {
-		this.showTimeLine();
-		return IMAGE_FEEDED_SERVLET + "?path=__chart__object&&height=" + this.chartHeight + "&width=" + this.chartWidth;
-	}
-	public void setChartPath(String path) {
-	}
+
 	public String setNewView() {
 		return null;
-	}
-
-	/**
-	 * Checks if any chart is ready to show.
-	 */
-	public boolean getChartReady() {
-		//return this.chart != null;
-		return true;
-	}
-	
-
-	/**
-	 * Gets chart height.
-	 * @return
-	 */
-	public String getChartHeight() {
-		return chartHeight;
-	}
-
-	/**
-	 * Gets chart height.
-	 * @param chartHeight
-	 */
-	public void setChartHeight(String chartHeight) {
-		if (chartHeight == null) return;
-		this.chartHeight = chartHeight;
-	}
-
-	/**
-	 * Gets chart width.
-	 * @param chartHeight
-	 */
-	public String getChartWidth() {
-		return chartWidth;
-	}
-
-	/**
-	 * Sets chart width.
-	 * @param chartWidth
-	 */
-	public void setChartWidth(String chartWidth) {
-		if (chartWidth == null) return;
-		this.chartWidth = chartWidth;
 	}
 
 	public SearchBean getSearchBean() {
@@ -579,17 +434,30 @@ public class TimeLineResultTabBean {
 		showTimeLine();
 		return new Double(this.viewportHeight);
 	}
+	
+	/**
+	 * Gets available series in timeline - by default only one here.
+	 * @return
+	 */
 	public EventLineGraph[] getGraphs() {
 		
 		this.showTimeLine();
 		return new EventLineGraph[] {graph};
 	}
 	
+	/**
+	 * Gets current events associated with dates.
+	 * @return
+	 */
 	public EventLineEvent[] getEvents() {
 		showTimeLine();
 		return new EventLineEvent[] {};
 	}
 
+	/**
+	 * Gets avaialble zoom levels.
+	 * @return
+	 */
 	public EventLineZoomLevel[] getZoomLevels() {
 		showTimeLine();
 		return new EventLineZoomLevel[] {

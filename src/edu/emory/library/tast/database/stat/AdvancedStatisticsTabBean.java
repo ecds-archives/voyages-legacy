@@ -24,21 +24,33 @@ import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
- * Bean used for generating graphs.
+ * Bean used for generating custom graphs. The graps is a connecrtion point between JSF and jFreeCharts
+ * component that is used in order to generate graphs. The bean is connected with search bean which
+ * provides current query conditions that should be used when retrieving data.
+ * This bean is mainly used in database/search-tab-stat.jsp page.
+ * The bean uses different implementations of AbstractChartGenerator classes depending on type
+ * of chosen graph. Currently, there are 3 types of used chart generators:
+ * BarChartGenerator - for bar charts
+ * PieChartGenerator - for pie charts
+ * XYChartGenerator - for line charts
  * 
- * @author Pawel Jurczyk
+ * Each of generators above uses JFreeCharts appropriately and generates graph represented as image.
  * 
  */
 public class AdvancedStatisticsTabBean {
 
 	private static final String STAT_OBJECT_NAME = "__stat__object";
 
+	//servlet providing generated image to client
 	public static final String IMAGE_FEEDED_SERVLET = "../servlet/ImageFeederServlet";
 
+	//available order for data
 	private static final String[] orders = { "Ignore", "Asc", "Desc" };
 
+	//available aggregate functions
 	private static final String[] aggregates = { "avg", "min", "max", "sum", "count" };
 
+	//user labels for aggregate functions
 	private static final String[] aggregatesUL = { 
 		TastResource.getText("components_charts_avg"), 
 		TastResource.getText("components_charts_min"), 
@@ -46,11 +58,13 @@ public class AdvancedStatisticsTabBean {
 		TastResource.getText("components_charts_sum"), 
 		TastResource.getText("components_charts_count")};
 
+	//labels for chart types
 	private static final String[] availableChartsLabels = { 
 		TastResource.getText("components_charts_xy"),
 		TastResource.getText("components_charts_bar"), 
 		TastResource.getText("components_charts_pie")};
 
+	//Names of used chart generators
 	private static final String[] chartGenerators = { "XYChartGenerator", "BarChartGenerator", "PieChartGenerator" };
 
 	private static final String DEFAULT_CHART_HEIGHT = "480";
@@ -253,6 +267,11 @@ public class AdvancedStatisticsTabBean {
 	
 	private int firstResult = 0;
 
+	/**
+	 * Constructor which creates chart that is visible by default.
+	 * Current default chart shows number of embarked/disembarked slaves per year.
+	 *
+	 */
 	public AdvancedStatisticsTabBean() {
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slaximp"), "sum"));
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slamimp"), "sum"));
@@ -380,8 +399,6 @@ public class AdvancedStatisticsTabBean {
 
 	/**
 	 * Adds series to chart.
-	 * 
-	 * @return
 	 */
 	public String addSeries() {
 		// Current series and aggregate to add
@@ -451,8 +468,6 @@ public class AdvancedStatisticsTabBean {
 			this.conditions = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
 			neededQuery = true;
 		}
-//		this.conditions = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
-//		neededQuery = true;
 		
 		// Check whether we should query DB
 		if (this.searchBean.getSearchParameters().getConditions() != null && this.neededQuery) {
@@ -506,37 +521,6 @@ public class AdvancedStatisticsTabBean {
 
 		return null;
 	}
-
-//	/**
-//	 * Gets current number of result by invoking specific query.
-//	 * 
-//	 * @param generator
-//	 *            currently used generator
-//	 * @return number of results
-//	 */
-//	private int getNumberOfResults(AbstractChartGenerator generator) {
-//
-//		// Add prefix (we will use "v" alias for Voyage in query)
-//		Conditions localCondition = this.conditions.addAttributesPrefix("v.");
-//		localCondition.addCondition("v." + this.xaxis, null, Conditions.OP_IS_NOT);
-//		localCondition.addCondition("vi.remoteVoyageId", new DirectValue("v.id"), Conditions.OP_EQUALS);
-//
-//		// Build query
-//		QueryValue qValue = new QueryValue("VoyageIndex as vi, Voyage v", localCondition);
-//
-//		// set populated attributes
-//		String xAxis = generator.getXAxisSelectOperator("v." + this.xaxis);
-//		if (this.aggregate.booleanValue()) {
-//			qValue.setGroupBy(new String[] { xAxis });
-//		}
-//		qValue.addPopulatedAttribute(xAxis, false);
-//		qValue.setLimit(MAX_RESULTS_PER_GRAPH + 1);
-//
-//		// Execute query
-//		Object[] ret = qValue.executeQuery();
-//
-//		return ret.length;
-//	}
 
 	public String setNewView() {
 		return null;
@@ -732,17 +716,6 @@ public class AdvancedStatisticsTabBean {
 				continue;
 			}
 			boolean ok = false;
-			// if (this.selectedChart != null && this.selectedChart.equals("0"))
-			// {
-			// ok = true;
-			// } else {
-			// if (attributes[i].getType().intValue() == Attribute.TYPE_INTEGER
-			// || attributes[i].getType().intValue() == Attribute.TYPE_LONG
-			// || attributes[i].getType().intValue() == Attribute.TYPE_FLOAT
-			// || attributes[i].getType().intValue() == Attribute.TYPE_DICT) {
-			// ok = true;
-			// }
-			// }
 			ok = true;
 			if (ok) {
 				String outString = null;

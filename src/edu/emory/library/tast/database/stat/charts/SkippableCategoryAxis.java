@@ -33,15 +33,6 @@ public class SkippableCategoryAxis extends CategoryAxis {
 
 	private static final long serialVersionUID = -5591468602200139851L;
 
-	// private double lowerMargin;
-	// private double upperMargin;
-	// private double categoryMargin;
-	// private int maximumCategoryLabelLines;
-	// private float maximumCategoryLabelWidthRatio;
-	// private CategoryLabelPositions categoryLabelPositions;
-	// private int categoryLabelPositionOffset;
-	// private HashMap categoryLabelToolTips;
-
 	/**
 	 * Constructor.
 	 */

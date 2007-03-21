@@ -13,7 +13,6 @@ import edu.emory.library.tast.util.query.Conditions;
  * Component for presenting stats/charts.
  * Component is a div section. Also, it connects SearchBean with specific bean responsible for
  * performing desired action.
- * @author Pawel Jurczyk
  *
  */
 public class UITimeLineResultTab extends UIOutput {

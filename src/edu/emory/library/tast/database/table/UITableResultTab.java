@@ -20,7 +20,6 @@ import edu.emory.library.tast.util.query.QueryValue;
 /**
  * Component used for presenting table result.
  * 
- * @author Pawel Jurczyk
  * 
  */
 public class UITableResultTab extends UIOutput {

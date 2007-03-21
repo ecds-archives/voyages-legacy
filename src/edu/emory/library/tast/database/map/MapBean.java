@@ -21,10 +21,15 @@ import edu.emory.library.tast.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
- * ./configure --with-proj --with-ogr --with-gdal --with-postgis=yes
- * --with-threads --verbose=yes
+ * The bean provides support for map tab in the database part of the system. It is used
+ * in the database/search-tab-map.jsp page. This bean is connected with SearchBean which provides
+ * current query that should be used when retrieving data from database. Data retrieved from dababase
+ * are mainly ports/regions with number of slaves embarked/disembarked. The data later is shown in
+ * map.
+ * The main functionalities of this bean include: 
+ * 1) provides a path that can be used to obtain map or mini-map tail.  
+ * 2) reacts to changes on map and refreshes map.
  * 
- * @author juri
  * 
  */
 public class MapBean {
@@ -36,18 +41,7 @@ public class MapBean {
 	public static int PORT_BOTH = 5;
 
 	private static final String[] MAPS = new String[] { "Places", "Regions" };
-
-	private static final String[] ATTRS = new String[] { "Raw", "Adjusted" };
-
-	private static final String[] MARKERS = new String[] { "1519", "1600",
-			"1650", "1675", "1700", "1725", "1750", "1800", "1825", "1850",
-			"1867" };
-
-	private static final String[] markersList = MARKERS;
-
-	// private static final String markersList =
-	// "1519,1600,1650,1675,1700,1725,1750,1800,1825,1850,1867";
-
+	
 	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";
 
 	/**
@@ -60,25 +54,26 @@ public class MapBean {
 	 */
 	private Conditions conditions = null;
 
+	//indicates if requery is required
 	private boolean neededQuery = false;
 
+	//Map creator - provides link between JSF and MapServer
 	private MapFileCreator creator = new MapFileCreator();
 
+	//Parameter for session that indicates map path
 	private String sessionParam;
 
+	//Parameter for session that indicates mini-map path
 	private String sessionParamMini;
 
+	//Information show on-mouse-over (when mouse is over given point)
 	private List pointsOfInterest = new ArrayList();
 
+	//Data that is in map
 	private MapData mapData = new MapData();
 
+	//Ports or regions
 	private int chosenMap = 1;
-
-	private int chosenAttribute = 0;
-
-	private Integer yearBegin = new Integer(0);
-
-	private Integer yearEnd = new Integer(MARKERS.length - 1);
 
 	private void setMapData() {
 
@@ -95,30 +90,16 @@ public class MapBean {
 				}
 			}
 
-			if (params.getValuesType() != SearchParameters.NOT_SPECIFIED) {
-				if (params.getMapElements() == SearchParameters.VALUES_ADJUSTED) {
-					this.chosenAttribute = 1;
-				} else {
-					this.chosenAttribute = 0;
-				}
-			}
-
 			neededQuery = true;
 		}
 
 		if (this.neededQuery) {
 
 			Conditions conditions = (Conditions) this.conditions.clone();
-//			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
-//					MARKERS[this.yearBegin.intValue()]),
-//					Conditions.OP_GREATER_OR_EQUAL);
-//			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
-//					MARKERS[this.yearEnd.intValue()]),
-//					Conditions.OP_SMALLER_OR_EQUAL);
 
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
-			queryHolder.executeQuery(this.chosenMap + this.chosenAttribute * ATTRS.length);
+			queryHolder.executeQuery(this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
 
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -148,16 +129,28 @@ public class MapBean {
 
 	}
 
+	/**
+	 * Returns path that should be used as source of image that presents map
+	 * @return
+	 */
 	public String getMapPath() {
 		setMapData();
 		return sessionParam;
 	}
 
+	/**
+	 * Returns path that should be used as source of image that presents mini-map
+	 * @return
+	 */
 	public String getMiniMapFile() {
 		setMapData();
 		return sessionParamMini;
 	}
 
+	/**
+	 * Refreshes any data in map. It queries the database if needed.
+	 * @return
+	 */
 	public String refresh() {
 		if (this.creator.createMapFile()) {
 			sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
@@ -173,31 +166,50 @@ public class MapBean {
 		return null;
 	}
 
+	/**
+	 * Returns list of points of interests. Point of interest shows some description on-mouse-over event.
+	 * @return
+	 */
 	public PointOfInterest[] getPointsOfInterest() {
-
-		// if (this.mapData.getToolTip().length != 0) {
-		// System.out.println(this.mapData.getToolTip()[0].getX());
-		// }
-
 		return this.mapData.getToolTip();
 	}
 
+	/**
+	 * Gets legend of current map.
+	 * @return
+	 */
 	public LegendItemsGroup[] getLegend() {
 		return this.mapData.getLegend();
 	}
 
+	/**
+	 * Gets search bean instance for current application.
+	 * @return
+	 */
 	public SearchBean getSearchBean() {
 		return searchBean;
 	}
 
+	/**
+	 * Invoked by JSF - sets search bean instance for current application context
+	 * @param searchBean
+	 */
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
 	}
 
+	/**
+	 * Gets available layers for map.
+	 * @return
+	 */
 	public MapLayer[] getLayers() {
 		return this.creator.getLayers();
 	}
 
+	/**
+	 * Sets chosen map (regions/ports)
+	 * @param value
+	 */
 	public void setChosenMap(Integer value) {
 		if (this.chosenMap != value.intValue()) {
 			this.neededQuery = true;
@@ -217,55 +229,5 @@ public class MapBean {
 		}
 		return items;
 	}
-
-	public Integer getChosenAttribute() {
-		return new Integer(this.chosenAttribute);
-	}
-
-	public void setChosenAttribute(Integer value) {
-		if (this.chosenAttribute != value.intValue()) {
-			this.neededQuery = true;
-		}
-		this.chosenAttribute = value.intValue();
-	}
-
-	public SelectItem[] getAvailableAttributes() {
-		String[] maps = ATTRS;
-		SelectItem[] items = new SelectItem[maps.length];
-		for (int i = 0; i < items.length; i++) {
-			items[i] = new SelectItem(new Integer(i), maps[i]);
-		}
-		return items;
-	}
-
-	public Integer getYearBegin() {
-		return this.yearBegin;
-	}
-
-	public Integer getYearEnd() {
-		return this.yearEnd;
-	}
-
-	public void setYearBegin(Integer yearBegin) {
-		if (!this.yearBegin.equals(yearBegin)) {
-			this.neededQuery = true;
-		}
-		this.yearBegin = yearBegin;
-	}
-
-	public void setYearEnd(Integer yearEnd) {
-		if (!this.yearEnd.equals(yearEnd)) {
-			this.neededQuery = true;
-		}
-		this.yearEnd = yearEnd;
-	}
-
-	public String[] getMarkers() {
-		return markersList;
-	}
-
-	// public void setLayers(MapLayer[] layers) {
-	// this.creator.setLayers(layers);
-	// }
 
 }

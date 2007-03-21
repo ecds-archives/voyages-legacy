@@ -1,5 +1,12 @@
 package edu.emory.library.tast.database.statistic;
 
+/**
+ * Class that represents row in statistical table.
+ * Each row has name of statistic, number of voyages in sample,
+ * total value for field which is the base of current statistical  
+ * item and average value for this field.
+ *
+ */
 public class StatisticElement {
 	private String name;
 	private String total;
