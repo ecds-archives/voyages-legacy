@@ -1,15 +1,17 @@
 package edu.emory.library.tast.slaves;
 
+import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Set;
 
 import org.hibernate.Session;
 
 import edu.emory.library.tast.TastResource;
-import edu.emory.library.tast.common.LookupCheckboxListComponent;
 import edu.emory.library.tast.common.QuerySummaryItem;
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.SexAge;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -284,39 +286,150 @@ public class SlavesQuery implements Cloneable
 						this.heightTo);
 			}
 		}
+		
+		
+		if (countries != null && countries.length > 0)
+		{
+			
+			Set countriesSet = StringUtils.toLongSet(countries);
+			
+			Conditions condCountries = new Conditions(Conditions.JOIN_OR);
+
+			String allCountriesHQL =
+				"from Country c " +
+				"where c in (select s.country from Slave s group by s.country) " +
+				"order by c.name";
+
+			List allCountries = sess.createQuery(allCountriesHQL).list();
+			
+			boolean allCountriesSelected = countriesSet.size() == allCountries.size();
+			
+			QuerySummaryItem querySummaryItem = null;
+			StringBuffer countriesBuff = null;
+			if (querySummary != null && !allCountriesSelected)
+			{
+				countriesBuff = new StringBuffer();
+				querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_country"));
+				querySummary.add(querySummaryItem);
+			}
+
+			int i = 0;
+			for (Iterator iter = allCountries.iterator(); iter.hasNext();)
+			{
+				Country country = (Country) iter.next();
+				if (countriesSet.contains(country.getId()))
+				{
+					if (querySummary != null && !allCountriesSelected)
+					{
+						if (i > 0) countriesBuff.append(", ");
+						countriesBuff.append(country.getName());
+					}
+					condCountries.addCondition(Slave.getAttribute("country"), country, Conditions.OP_EQUALS);
+					i++;
+				}
+			}
+			
+			if (querySummary != null && !allCountriesSelected)
+				querySummaryItem.setValue(countriesBuff.toString());
+
+			c.addCondition(condCountries);
+			
+		}
 
 		if (embPorts != null && embPorts.length > 0)
 		{
+			
+			Set embPortsSet = StringUtils.toStringSet(embPorts);
 
 			Conditions condPorts = new Conditions(Conditions.JOIN_OR);
-			Pattern idSplitter = Pattern.compile(LookupCheckboxListComponent.ID_PARTS_SEPARATOR);
+			
+			String allEmbPortsHQL =
+				"from Port p " +
+				"where p in (select s.majbuypt from Slave s group by s.majbuypt) " +
+				"order by p.region.area.order, p.region.order, p.order";
+			
+			List allEmpPorts = sess.createQuery(allEmbPortsHQL).list();
 
 			QuerySummaryItem querySummaryItem = null;
 			StringBuffer portsBuff = null;
+			int portsBuffItems = 0;
+
 			if (querySummary != null)
 			{
 				portsBuff = new StringBuffer();
 				querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_embarkation"));
 				querySummary.add(querySummaryItem);
 			}
+			
+			int portsCount = allEmpPorts.size();
+			Port port = (Port) allEmpPorts.get(0);
+			Region region = port.getRegion();
+			Region prevRegion = region;
+			Area area = region.getArea();
+			int i = 0;
 
-			for (int i = 0; i < embPorts.length; i++)
+			while (i < portsCount)
 			{
-				String[] idParts = idSplitter.split(embPorts[i]);
-				if (idParts.length == 3)
+				Area groupArea = area;
+				
+				while (i < portsCount && groupArea.equals(area))
 				{
-					Port port = Port.loadById(sess, Long.parseLong(idParts[2]));
-
-					if (querySummary != null)
+					Region groupRegion = region;
+					
+					boolean allPortsInRegionSelected = true;
+					boolean somePortsInRegionSelected = false;
+					StringBuffer portsInRegionBuff = new StringBuffer(); 
+					int portsInRegionBuffItems = 0;
+					
+					while (i < portsCount && groupRegion.equals(region))
 					{
-						if (i > 0) portsBuff.append(", ");
-						portsBuff.append(port.getName());
+						
+						if (embPortsSet.contains(area.getId() + ":" + region.getId() + ":" + port.getId()))
+						{
+							condPorts.addCondition(Slave.getAttribute("majbuypt"), port, Conditions.OP_EQUALS);
+							if (querySummary != null)
+							{
+								if (portsInRegionBuffItems > 0) portsInRegionBuff.append(", ");
+								portsInRegionBuff.append(port.getName());
+								portsInRegionBuffItems++;
+							}
+							somePortsInRegionSelected = true;
+						}
+						else
+						{
+							allPortsInRegionSelected = false;
+						}
+
+						prevRegion = region;
+						if (++i < portsCount)
+						{
+							port = (Port) allEmpPorts.get(i);
+							region = port.getRegion();
+							area = region.getArea();
+						}
+
+					}
+					
+					if (querySummary != null && somePortsInRegionSelected)
+					{
+						if (portsBuffItems > 0) portsBuff.append(", ");
+						portsBuff.append(prevRegion.getName());
+						portsBuff.append(": ");
+						if (allPortsInRegionSelected)
+						{
+							portsBuff.append(TastResource.getText("slaves_all_port_selected"));
+						}
+						else
+						{
+							portsBuff.append(portsInRegionBuff);
+						}
+						portsBuffItems++;
 					}
 
-					condPorts.addCondition(Slave.getAttribute("majbuypt"), port, Conditions.OP_EQUALS);
 				}
+				
 			}
-
+			
 			if (querySummary != null)
 				querySummaryItem.setValue(portsBuff.toString());
 
@@ -324,40 +437,6 @@ public class SlavesQuery implements Cloneable
 
 		}
 		
-		if (countries != null && countries.length > 0)
-		{
-
-			Conditions condCountries = new Conditions(Conditions.JOIN_OR);
-			
-			QuerySummaryItem querySummaryItem = null;
-			StringBuffer countriesBuff = null;
-			if (querySummary != null)
-			{
-				countriesBuff = new StringBuffer();
-				querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_country"));
-				querySummary.add(querySummaryItem);
-			}
-			
-			for (int i = 0; i < countries.length; i++)
-			{
-				Country country = Country.loadById(sess, Long.parseLong(countries[i]));
-				
-				if (querySummary != null)
-				{
-					if (i > 0) countriesBuff.append(", ");
-					countriesBuff.append(country.getName());
-				}
-				
-				condCountries.addCondition(Slave.getAttribute("country"), country, Conditions.OP_EQUALS);
-			}
-			
-			if (querySummary != null)
-				querySummaryItem.setValue(countriesBuff.toString());
-
-			c.addCondition(condCountries);
-
-		}
-
 		Conditions subGender = prepareMultiselectConditions(
 				Slave.getAttribute("sexage"),
 				new Boolean[] {

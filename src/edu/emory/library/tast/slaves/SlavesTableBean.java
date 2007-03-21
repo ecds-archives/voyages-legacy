@@ -812,22 +812,6 @@ public class SlavesTableBean
 		LookupCheckboxItem areaItems[] = new LookupCheckboxItem[tmpAreas.size()];
 		tmpAreas.toArray(areaItems);
 
-		/*
-		Query query = sess.createQuery(hsql);
-		List countries = query.list();
-
-		LookupCheckboxItem[] countryUi = new LookupCheckboxItem[countries.size()];
-		
-		int i = 0;
-		for (Iterator iter = countries.iterator(); iter.hasNext();)
-		{
-			Country country = (Country) iter.next();
-			countryUi[i++] = new LookupCheckboxItem(
-					String.valueOf(country.getId()),
-					country.getName());
-		}
-		*/
-
 		tran.commit();
 		sess.close();
 
