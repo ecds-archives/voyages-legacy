@@ -22,7 +22,7 @@
 				
 					<h:inputText
 						style="width: 150px;"
-						value="#{SlavesTableBean.workingQuery.slaveName}"
+						value="#{SlavesBean.workingQuery.slaveName}"
 						onkeyup="SlavesSearch.searchFromBasicBox(true)" />
 					
 				</t:htmlTag>
@@ -39,7 +39,7 @@
 				
 					<h:inputText
 						style="width: 150px;"
-						value="#{SlavesTableBean.workingQuery.shipName}"
+						value="#{SlavesBean.workingQuery.shipName}"
 						onkeyup="SlavesSearch.searchFromBasicBox(true)" />
 					
 				</t:htmlTag>
@@ -56,9 +56,9 @@
 					<t:htmlTag value="div" styleClass="slaves-query-variable-controls">
 						<t:htmlTag value="table" style="border-collapse: collapse;">
 						<t:htmlTag value="tr">
-							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.workingQuery.yearFrom}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
+							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesBean.workingQuery.yearFrom}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
 							<t:htmlTag value="td" style="padding: 0px 5px 0px 5px"><h:outputText value="-" /></t:htmlTag>
-							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.workingQuery.yearTo}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
+							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesBean.workingQuery.yearTo}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
 						</t:htmlTag>
 						</t:htmlTag>
 					</t:htmlTag>
@@ -75,9 +75,9 @@
 					<t:htmlTag value="div" styleClass="slaves-query-variable-controls">
 						<t:htmlTag value="table" style="border-collapse: collapse;">
 						<t:htmlTag value="tr">
-							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.workingQuery.ageFrom}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
+							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesBean.workingQuery.ageFrom}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
 							<t:htmlTag value="td" style="padding: 0px 5px 0px 5px"><h:outputText value="-" /></t:htmlTag>
-							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.workingQuery.ageTo}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
+							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesBean.workingQuery.ageTo}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
 						</t:htmlTag>
 						</t:htmlTag>
 					</t:htmlTag>
@@ -94,9 +94,9 @@
 					<t:htmlTag value="div" styleClass="slaves-query-variable-controls">
 						<t:htmlTag value="table" style="border-collapse: collapse;">
 						<t:htmlTag value="tr">
-							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.workingQuery.heightFrom}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
+							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesBean.workingQuery.heightFrom}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
 							<t:htmlTag value="td" style="padding: 0px 5px 0px 5px"><h:outputText value="-" /></t:htmlTag>
-							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesTableBean.workingQuery.heightTo}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
+							<t:htmlTag value="td" style="padding: 0px;"><h:inputText style="width: 40px;" value="#{SlavesBean.workingQuery.heightTo}" onkeyup="SlavesSearch.searchFromBasicBox(true)"/></t:htmlTag>
 						</t:htmlTag>
 						</t:htmlTag>
 					</t:htmlTag>
@@ -112,9 +112,9 @@
 				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
 					<t:htmlTag value="table" style="border-collapse: collapse;">
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.boys}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.boys}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px; width: 40px;"><h:outputText value="#{res.slaves_checkbox_boys}"/></t:htmlTag>
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.girls}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.girls}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px;"><h:outputText value="#{res.slaves_checkbox_girls}"/></t:htmlTag>
 					</t:htmlTag>
 					</t:htmlTag>
@@ -125,9 +125,9 @@
 				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
 					<t:htmlTag value="table" style="border-collapse: collapse;">
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.men}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.men}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px; width: 40px;"><h:outputText value="#{res.slaves_checkbox_man}" /></t:htmlTag>
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.women}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.women}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px;"><h:outputText value="#{res.slaves_checkbox_woman}" /></t:htmlTag>
 					</t:htmlTag>
 					</t:htmlTag>
@@ -138,9 +138,9 @@
 				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
 					<t:htmlTag value="table" style="border-collapse: collapse;">
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.males}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.males}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px; width: 40px;"><h:outputText value="#{res.slaves_checkbox_males}" /></t:htmlTag>
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.females}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.females}" onclick="SlavesSearch.searchFromBasicBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px"><h:outputText value="#{res.slaves_checkbox_females}" /></t:htmlTag>
 					</t:htmlTag>
 					</t:htmlTag>
@@ -163,20 +163,20 @@
 					forceId="true"
 					id="submitBoxBasic"
 					value="#{res.slaves_search_button}"
-					action="#{SlavesTableBean.searchFromBasicBox}" />
+					action="#{SlavesBean.searchFromBasicBox}" />
 	
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
 	
 				<h:commandButton
 					value="#{res.slaves_reset_button}"
-					action="#{SlavesTableBean.reset}" />
+					action="#{SlavesBean.reset}" />
 		
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="true">
 	
 				<aa:zoneJSF id="totalBoxBasic">
-					<h:outputText value="#{SlavesTableBean.numberOfExpectedResultsText}" />
+					<h:outputText value="#{SlavesBean.numberOfExpectedResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
@@ -194,8 +194,8 @@
 
 			<s:lookupCheckboxList
 				id="c"
-				items="#{SlavesTableBean.countries}"
-				selectedValues="#{SlavesTableBean.workingQuery.countries}" 
+				items="#{SlavesBean.countries}"
+				selectedValues="#{SlavesBean.workingQuery.countries}" 
 				onChange="function() {SlavesSearch.searchFromCountryBox(false)}" />
 			
 		</t:htmlTag>
@@ -208,20 +208,20 @@
 					forceId="true"
 					id="submitBoxCountry"
 					value="#{res.slaves_search_button}"
-					action="#{SlavesTableBean.searchFromCountryBox}" />
+					action="#{SlavesBean.searchFromCountryBox}" />
 	
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
 	
 				<h:commandButton
 					value="#{res.slaves_reset_button}"
-					action="#{SlavesTableBean.reset}" />
+					action="#{SlavesBean.reset}" />
 		
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;">
 	
 				<aa:zoneJSF id="totalBoxCountry">
-					<h:outputText value="#{SlavesTableBean.numberOfExpectedResultsText}" />
+					<h:outputText value="#{SlavesBean.numberOfExpectedResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
@@ -241,9 +241,9 @@
 	
 			<s:lookupCheckboxList
 				id="r"
-				items="#{SlavesTableBean.expPorts}"
-				selectedValues="#{SlavesTableBean.workingQuery.embPorts}"
-				expandedValues="#{SlavesTableBean.expandedEmbPorts}"
+				items="#{SlavesBean.expPorts}"
+				selectedValues="#{SlavesBean.workingQuery.embPorts}"
+				expandedValues="#{SlavesBean.expandedEmbPorts}"
 				onChange="function() {SlavesSearch.searchFromPlacesBox(false)}" />
 				
 		</t:htmlTag>
@@ -256,7 +256,7 @@
 				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
 					<t:htmlTag value="table" style="border-collapse: collapse;">
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.disembSierraLeone}" onclick="SlavesSearch.searchFromPlacesBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.disembSierraLeone}" onclick="SlavesSearch.searchFromPlacesBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px;"><h:outputText value="#{res.slaves_captured_sierra_leone}" /></t:htmlTag>
 					</t:htmlTag>
 					</t:htmlTag>
@@ -267,7 +267,7 @@
 				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
 					<t:htmlTag value="table" style="border-collapse: collapse;">
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesTableBean.workingQuery.disembHavana}" onclick="SlavesSearch.searchFromPlacesBox(false)"/></t:htmlTag>
+						<t:htmlTag value="td" style="padding: 0px;"><h:selectBooleanCheckbox value="#{SlavesBean.workingQuery.disembHavana}" onclick="SlavesSearch.searchFromPlacesBox(false)"/></t:htmlTag>
 						<t:htmlTag value="td" style="padding: 0px;"><h:outputText value="#{res.slaves_captured_havana}" /></t:htmlTag>
 					</t:htmlTag>
 					</t:htmlTag>
@@ -285,20 +285,20 @@
 					forceId="true"
 					id="submitBoxPlaces"
 					value="#{res.slaves_search_button}"
-					action="#{SlavesTableBean.searchFromPlacesBox}" />
+					action="#{SlavesBean.searchFromPlacesBox}" />
 	
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
 	
 				<h:commandButton
 					value="#{res.slaves_reset_button}"
-					action="#{SlavesTableBean.reset}" />
+					action="#{SlavesBean.reset}" />
 		
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;">
 	
 				<aa:zoneJSF id="totalBoxPlaces">
-					<h:outputText value="#{SlavesTableBean.numberOfExpectedResultsText}" />
+					<h:outputText value="#{SlavesBean.numberOfExpectedResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
@@ -317,7 +317,7 @@
 <s:expandableBox text="#{res.slaves_current_query}">
 
 	<s:querySummary
-		items="#{SlavesTableBean.querySummary}"
+		items="#{SlavesBean.querySummary}"
 		noQueryText="#{res.slaves_current_no_query}" />
 	
 </s:expandableBox>

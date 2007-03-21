@@ -34,7 +34,7 @@ import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
-public class SlavesTableBean
+public class SlavesBean
 {
 	
 	private static final int AFRICA_ID = 60000;
@@ -51,7 +51,7 @@ public class SlavesTableBean
 	private String[] expandedEmbPorts;
 	private VoyageDetailBean voyageBean;
 
-	public SlavesTableBean()
+	public SlavesBean()
 	{
 		
 		pager = new TableLinkManager(20);
