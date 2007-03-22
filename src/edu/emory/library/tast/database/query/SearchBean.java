@@ -26,17 +26,14 @@ import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
- * This bean is used in UI to manage the list of groups, atributes, the
+ * This bean is used to manage the list of groups, atributes, the
  * currently built query and the history list. It passes search parameters (the
  * current query and the current list of attributes) to other beans and
  * components in {@link SearchParameters}. When a user clicks the search
- * button, an internal representation of the query, represented by {@link QueryBuilderQuery},
- * is converted to a database query represented by
+ * button, an internal representation of the query, represented by
+ * {@link QueryBuilderQuery}, is converted to a database query represented by
  * {@link edu.emory.library.tast.util.query.Conditions} and stored in
  * {@link #searchParameters}.
- * 
- * @author Jan Zich
- * 
  */
 public class SearchBean
 {
@@ -57,12 +54,21 @@ public class SearchBean
 		searchInternal(false);
 	}
 	
+	/**
+	 * Reininitializes the working query to its default state, i.e. it creates a
+	 * new one. Also determines min and max year. Used in the constructor and
+	 * when the user presses the "Reset to defaults" button.
+	 */
 	private void initNewQuery()
 	{
 		workingQuery = new Query();
 		determineTimeFrameExtent();
 	}
-
+	
+	/**
+	 * Finds the min a max year among all voyages in the database. The "yearam"
+	 * field is used.
+	 */
 	private void determineTimeFrameExtent()
 	{
 
@@ -80,26 +86,50 @@ public class SearchBean
 		}
 
 	}
-	
+
+	/**
+	 * Bound to UI. Event handler for adding a new condition to the current
+	 * working query.
+	 * 
+	 * @param event
+	 */
 	public void addConditionFromMenu(MenuItemSelectedEvent event)
 	{
 		workingQuery.addConditionOn(event.getMenuId());
 	}
 	
+	/**
+	 * Bound to UI to the "Reset to defaults" button. Uses {@link #initNewQuery()}
+	 * and the it calls {@link #searchInternal(boolean)}. 
+	 * @return
+	 */
 	public String startAgain()
 	{
 		initNewQuery();
 		searchInternal(false);
 		return null;
 	}
-
+	
+	/**
+	 * Bound to UI to the "Search" button. 
+	 * @return
+	 */
 	public String search()
 	{
 		messageBar.setRendered(false);
 		searchInternal(true);
 		return null;
 	}
-
+	
+	/**
+	 * This invokes the search. It consruct the database query first. When there
+	 * are any errors it stops. Then it stores the consturcted query in
+	 * {@link #searchParameters}. Finally, it compares {@link #workingQuery}
+	 * with the latest query in the history, and if they differ it adds
+	 * {@link #workingQuery} to the history.
+	 * 
+	 * @param storeToHistory
+	 */
 	private void searchInternal(boolean storeToHistory)
 	{
 		
@@ -129,13 +159,29 @@ public class SearchBean
 
 	}
 	
+	/**
+	 * Bound to UI to the query builder compoment. It is invoked whenever the
+	 * users changes anything in the HTML form representing the query. The
+	 * request is then sent to server on background using AJAX.
+	 * 
+	 * @param event
+	 */
 	public void updateTotal(QueryUpdateTotalEvent event)
 	{
-		HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
 		if (AAUtils.isAjaxRequest(request))
-			AAUtils.addZonesToRefresh(request,"total"); 
+			AAUtils.addZonesToRefresh(request, "total"); 
 	}
 	
+	/**
+	 * Bound to UI. Calculates the number of expected results based on
+	 * {@link #workingQuery}. It is called everytime the page is reloaded.
+	 * Also, when the page is requested by AJAX via
+	 * {@link #updateTotal(QueryUpdateTotalEvent)}, this is only part of bean
+	 * which is invoked.
+	 * 
+	 * @return
+	 */
 	public String getNumberOfResultsText()
 	{
 		
@@ -149,13 +195,26 @@ public class SearchBean
 		
 		MessageFormat fmt = new MessageFormat(TastResource.getText("slaves_search_expected"));
 		return fmt.format(new Object[] {new Integer(numberOfResults)});
-	}
 
+	}
+	
+	/**
+	 * Bound to UI. Deletes a chosen history item. Called by the history list
+	 * component.
+	 * 
+	 * @param event
+	 */
 	public void historyItemDelete(HistoryItemDeleteEvent event)
 	{
 		history.deleteItem(event.getHistoryId());
 	}
 	
+	/**
+	 * Bound to UI. Replaces {@link #workingQuery} by a chosen item from the
+	 * history list, and executes search. Called by the history list component.
+	 * 
+	 * @param event
+	 */
 	public void historyItemRestore(HistoryItemRestoreEvent event)
 	{
 		try
@@ -170,6 +229,12 @@ public class SearchBean
 		}
 	}
 	
+	/**
+	 * Bound to UI. Creates a permlink of a selected history item, and shows on
+	 * the page. Called by the history list component.
+	 * 
+	 * @param event
+	 */
 	public void historyItemPermlink(HistoryItemPermlinkEvent event)
 	{
 
@@ -188,16 +253,34 @@ public class SearchBean
 		
 	}
 	
+	/**
+	 * Ugly trick (because of limitations of JSF). This is called every time the
+	 * page is reloaded (because it is bound to a textbox). Calls
+	 * {@link #restorePermlinkIfAny()}.
+	 * 
+	 * @return
+	 */
 	public String getFakeHiddenForPermlinkRestore()
 	{
 		restorePermlinkIfAny();
 		return null;
 	}
 
+	/**
+	 * Ugly trick (because of limitations of JSF). See
+	 * {@link #getFakeHiddenForPermlinkRestore()}.
+	 * 
+	 * @return
+	 */
 	public void setFakeHiddenForPermlinkRestore(String value)
 	{
 	}
 	
+	/**
+	 * Check the current URL if there is permlink=XXX. If there is, the
+	 * corresponding query is retrieved from the database, {@link #workingQuery}
+	 * is set to it, and search is invoked.
+	 */
 	private void restorePermlinkIfAny()
 	{
 		
@@ -219,7 +302,14 @@ public class SearchBean
 		searchInternal(true);
 
 	}
-
+	
+	/**
+	 * Bound to UI. Provides a list of attributes for the menu components in the
+	 * left column on the page.
+	 * 
+	 * @param category
+	 * @return
+	 */
 	private MenuItemSection[] getMenuAttributes(UserCategory category)
 	{
 		
@@ -273,42 +363,74 @@ public class SearchBean
 		
 		return mainItems;
 	}
-
+	
+	/**
+	 * Gets a list of attributes for beginners. 
+	 * @return
+	 */
 	public MenuItemSection[] getMenuAttributesBeginners()
 	{
 		return getMenuAttributes(UserCategory.Beginners);
 	}
 
+	/**
+	 * Gets a list of attributes for general audience. 
+	 * @return
+	 */
 	public MenuItemSection[] getMenuAttributesGeneral()
 	{
 		return getMenuAttributes(UserCategory.General);
 	}
 
+	/**
+	 * Wrapper for {@link #workingQuery}. 
+	 * @return
+	 */
 	public QueryBuilderQuery getWorkingQuery()
 	{
 		return workingQuery.getBuilderQuery();
 	}
 
+	/**
+	 * Wrapper for {@link #workingQuery}. 
+	 * @return
+	 */
 	public void setWorkingQuery(QueryBuilderQuery newWorkingQuery)
 	{
 		this.workingQuery.setBuilderQuery(newWorkingQuery);
 	}
 
+	/**
+	 * Wrapper for {@link #history}. 
+	 * @return
+	 */
 	public History getHistory()
 	{
 		return history;
 	}
 
+	/**
+	 * Wrapper for {@link #history}. 
+	 * @return
+	 */
 	public void setHistory(History history)
 	{
 		this.history = history;
 	}
 
+	/**
+	 * Wrapper for {@link #searchParameters}. 
+	 * @return
+	 */
 	public SearchParameters getSearchParameters()
 	{
 		return searchParameters;
 	}
 
+	/**
+	 * Wrapper for {@link #searchParameters}. 
+	 * @return
+	 */
 	public MessageBarComponent getMessageBar()
 	{
 		return messageBar;
@@ -335,31 +457,55 @@ public class SearchBean
 		this.searchParameters.setCategory(this.selectedCategory);
 	}
 
+	/**
+	 * Wrapper for {@link #mainSectionId} - the current tab. 
+	 * @return
+	 */
 	public String getMainSectionId()
 	{
 		return mainSectionId;
 	}
 
+	/**
+	 * Wrapper for {@link #mainSectionId} - the current tab. 
+	 * @return
+	 */
 	public void setMainSectionId(String mainSectionId)
 	{
 		this.mainSectionId = mainSectionId;
 	}
 
+	/**
+	 * Wrapper for the starting year of {@link #workingQuery}. 
+	 * @return
+	 */
 	public int getYearFrom()
 	{
 		return workingQuery.getYearFrom();
 	}
 
+	/**
+	 * Wrapper for the starting year of {@link #workingQuery}. 
+	 * @return
+	 */
 	public void setYearFrom(int yearFrom)
 	{
 		workingQuery.setYearFrom(yearFrom);
 	}
 
+	/**
+	 * Wrapper for the ending year of {@link #workingQuery}. 
+	 * @return
+	 */
 	public int getYearTo()
 	{
 		return workingQuery.getYearTo();
 	}
 
+	/**
+	 * Wrapper for the ending year of {@link #workingQuery}. 
+	 * @return
+	 */
 	public void setYearTo(int yearTo)
 	{
 		workingQuery.setYearTo(yearTo);
