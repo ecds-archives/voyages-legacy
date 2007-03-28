@@ -13,7 +13,6 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
  * Map item that is shown on detail voyage map.
  * This type of map items use numbered circles as symbols on map.
  * 
- * @author Pawel Jurczyk
  */
 public class DetailVoyageMapItem extends AbstractMapItem {
 

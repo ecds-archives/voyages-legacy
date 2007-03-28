@@ -2,7 +2,8 @@ package edu.emory.library.tast.database.tabscommon;
 
 /**
  * Action that memores any parameters that can be used in performAction method.
- * @author Pawel Jurczyk
+ * This type of action is used in table bean to record operations performed
+ * on GUI and gives a possibility of reverting them (cancel feature)
  *
  */
 public abstract class MemorizedAction {

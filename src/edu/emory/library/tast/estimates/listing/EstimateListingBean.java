@@ -14,7 +14,14 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
-
+/**
+* Backing bean for table visible in estimates.
+* This bean fills in TableData object with current 
+* query response. It also cooperates with pager in order to
+* find out which data set is requested by user.
+* The bean also supports sort change event fired when user presses
+* the header of any column in table tab.
+*/ 
 public class EstimateListingBean {
 	
 	private static final String ATTRIBUTE = "Attribute_";

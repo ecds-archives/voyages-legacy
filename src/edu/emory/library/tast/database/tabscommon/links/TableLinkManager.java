@@ -2,7 +2,11 @@ package edu.emory.library.tast.database.tabscommon.links;
 
 import java.util.ArrayList;
 
-
+/**
+ * Class which manages pager component. Pager component is situated below the
+ * table component and allows switching between visible data sets.
+ *
+ */
 public class TableLinkManager {
 	
 	private int resultsNumber;

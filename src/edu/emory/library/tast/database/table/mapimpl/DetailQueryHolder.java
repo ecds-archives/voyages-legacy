@@ -11,6 +11,11 @@ import edu.emory.library.tast.maps.AttributesRange;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+/**
+ * Query holder for map tab in database.
+ * The class provides query and its 'parser' for database. 
+ *
+ */
 public class DetailQueryHolder extends AbstractTransformerQueryHolder {
 
 	public DetailQueryHolder(Conditions conditions) {

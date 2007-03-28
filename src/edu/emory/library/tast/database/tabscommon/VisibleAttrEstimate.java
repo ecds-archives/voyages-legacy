@@ -15,6 +15,10 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
+/**
+ * Attributes used in estimates table.
+ *
+ */
 public class VisibleAttrEstimate implements VisibleAttributeInterface {
 
 	private static HashMap visibleAttributes = new HashMap();
