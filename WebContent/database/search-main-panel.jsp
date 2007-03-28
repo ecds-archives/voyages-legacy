@@ -13,19 +13,19 @@
 	
 	<s:panelTab title="#{res.database_search_timeline}" sectionId="basic-graph">
 		<t:htmlTag value="div" styleClass="search-panel">
-			<%@ include file="search-tab-graph.jsp" %>
+			<%@ include file="search-tab-timeline.jsp" %>
 		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.database_search_customgraphs}" sectionId="custom-graphs">
 		<t:htmlTag value="div" styleClass="search-panel">
-			<%@ include file="search-tab-stat.jsp" %>
+			<%@ include file="search-tab-graph.jsp" %>
 		</t:htmlTag>
 	</s:panelTab>
 
 	<s:panelTab title="#{res.database_search_summarystats}" sectionId="basic-statistics">
 		<t:htmlTag value="div" styleClass="search-panel">
-			<%@ include file="search-tab-basic-stats.jsp" %>
+			<%@ include file="search-tab-summary.jsp" %>
 		</t:htmlTag>
 	</s:panelTab>
 	
