@@ -3,6 +3,12 @@ package edu.emory.library.tast.common;
 import javax.faces.component.UIComponent;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * Tag for expandableBoxSet component.
+ * The tag can have following attributes:
+ * expandedId - id of expanded box (see ExpandedBoxTag)
+ *
+ */
 public class ExpandableBoxSetTag extends UIComponentTag {
 
 	public String expandedId;

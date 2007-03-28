@@ -13,6 +13,15 @@ import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
 
+/**
+ * Component which provides expandable panel for applications.
+ * Expandable panel can be either collapsed or expanded.
+ * Used in almost all pages.
+ * Component name in jsp pages is expandableBox.
+ * 
+ * This component can be child of expandableBoxSet component.
+ *
+ */
 public class ExpandableBoxComponent extends UIComponentBase {
 
 	public static final int SET_TOP_BOX = 1;

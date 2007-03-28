@@ -63,16 +63,6 @@
 		<component-type>MessageBar</component-type>
 		<component-class>edu.emory.library.tast.common.MessageBarComponent</component-class>
 	</component>
-
-	<component>
-		<component-type>SectionGroup</component-type>
-		<component-class>edu.emory.library.tast.common.SectionGroupComponent</component-class>
-	</component>
-
-	<component>
-		<component-type>Section</component-type>
-		<component-class>edu.emory.library.tast.common.SectionComponent</component-class>
-	</component>
 	
 	<component>
 		<component-type>PanelTabSet</component-type>

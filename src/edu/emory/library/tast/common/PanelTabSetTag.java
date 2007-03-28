@@ -6,12 +6,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * Provides tag definition for panel tab set component.
+ * The tag can have following attributes:
+ * title - title of panel tab set
+ * selectedSectionId - id of selected panel tab.
+ * For more details please refer to PanelTabTag.
+ *
+ */
 public class PanelTabSetTag extends UIComponentTag {
 
 	private String title;
-//	private String backgroundStyle;
-//	private String tabsStyle;
-//	private String buttonsStyle;
 	private String selectedSectionId;
 	
 	public String getComponentType() {

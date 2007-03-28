@@ -12,6 +12,15 @@ import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
 
+/**
+ * This component groups some number of panel tabls and provides synchronization
+ * between them. Basically, it provides tabs functionality to our application.
+ * As children of this component one can put panelTab elements. Each panelTab element
+ * provides one panel and one tab. The component allows only one panelTab to be opened
+ * at a time.
+ * Tag for this component used in jsp is panelTabSet.
+ *
+ */
 public class PanelTabSetComponent extends UIComponentBase {
 
 	private String title;

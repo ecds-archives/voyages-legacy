@@ -4,6 +4,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * Tag for panel tabs.
+ * The tag can have following attributes:
+ * title - title visible on header of this tab
+ * sectionId - id of this tab (used to recognize selected tab; see PanelTabSetTag for more information)
+ *
+ */
 public class PanelTabTag extends UIComponentTag {
 
 	private String title;

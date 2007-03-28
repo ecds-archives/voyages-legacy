@@ -5,6 +5,15 @@ import javax.faces.context.FacesContext;
 
 import edu.emory.library.tast.util.JsfUtils;
 
+/**
+ * Panel which is used as a tab.
+ * When one wants to use additional panel in tab set component,
+ * all the components of the tab should be children of this panel tab.
+ * Component tag name used in jsp files is panelTab.
+ * This component appears as children of component panelTabSet.
+ * For more details see PanelTabSetComponent.
+ *
+ */
 public class PanelTabComponent extends UIComponentBase {
 
 	private String title;

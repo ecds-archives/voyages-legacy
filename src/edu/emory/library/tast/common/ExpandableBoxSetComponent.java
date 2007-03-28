@@ -10,6 +10,16 @@ import javax.faces.context.ResponseWriter;
 
 import edu.emory.library.tast.util.JsfUtils;
 
+/**
+ * The role of this component is to group some number of expandableBoxes.
+ * After expandableBoxes have been grouped, only one of them can be currently opened.
+ * After user tries to open some of expandableBoxes, currently expanded box is immediately
+ * closed.
+ * 
+ * This component has tag name expandableBoxSet.
+ * See also expandableBox.
+ *
+ */
 public class ExpandableBoxSetComponent extends UIComponentBase {
 
 	public static final String expandedNone = "expanded-none-jfksdfsdjkalfjaslkfnviaruawe";

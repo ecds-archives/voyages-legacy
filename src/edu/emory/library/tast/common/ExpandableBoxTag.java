@@ -6,6 +6,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * Tag for expandableBox.
+ * The attributes which can be used:
+ * boxId - id of box - used in expandableBoxSet (see ExpandableBoxSet)
+ * text - text visible in top bar of expandable box
+ * collapsed - default value for box (expanded/collapsed)
+ *
+ */
 public class ExpandableBoxTag extends UIComponentTag
 {
 	
