@@ -18,6 +18,12 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.util.query.Conditions;
 
+/**
+ * Backing bean for map tab in estimates.
+ * The bean provides paths for map/minimap.
+ * It also provides legend / points of interests.
+ *
+ */
 public class EstimatesMapBean {
 
 	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";

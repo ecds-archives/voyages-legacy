@@ -18,6 +18,10 @@ import edu.emory.library.tast.maps.AttributesRange;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+/**
+ * Class providing query for estimates map.
+ *
+ */
 public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 
 	public QueryValue[] estimateMapQuerys = null;

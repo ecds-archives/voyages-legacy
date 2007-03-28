@@ -26,7 +26,6 @@ import edu.emory.library.tast.util.query.QueryValue;
 /**
  * Class generates estimate rows basing on the Final.xls file.
  * The estimate row has the following columns: nation, year, from, to, exported, imported.
- * @author juri
  *
  */
 public class EstimatesLoader {

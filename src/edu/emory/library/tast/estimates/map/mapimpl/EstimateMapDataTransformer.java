@@ -23,6 +23,11 @@ import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Location;
 
+/**
+ * Class providing parsing functionality of query response for 
+ * mad data in estimates.
+ *
+ */
 public class EstimateMapDataTransformer extends AbstractDataTransformer {
 
 	private static int DOUBLE_COLOR = 5;
