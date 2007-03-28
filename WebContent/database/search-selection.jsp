@@ -6,6 +6,8 @@
 
 <h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
+<s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
+
 <s:expandableBox text="#{res.database_search_selecttimeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">

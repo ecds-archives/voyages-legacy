@@ -62,11 +62,46 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="search-main-table">
 		<tr>
 			<td class="search-side-panel">
+
 				<%@ include file="search-selection.jsp" %>
+
 			</td>
 			<td class="search-main-panel">
-				<s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
-				<%@ include file="search-main-panel.jsp" %>
+			
+				<s:panelTabSet id="mainPanelSection" selectedSectionId="#{SearchBean.mainSectionId}">
+
+					<s:panelTab title="#{res.database_search_listing}" sectionId="listing">
+						<t:htmlTag value="div" styleClass="search-panel">
+							<%@ include file="search-tab-table.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+					
+					<s:panelTab title="#{res.database_search_timeline}" sectionId="basic-graph">
+						<t:htmlTag value="div" styleClass="search-panel">
+							<%@ include file="search-tab-timeline.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+				
+					<s:panelTab title="#{res.database_search_customgraphs}" sectionId="custom-graphs">
+						<t:htmlTag value="div" styleClass="search-panel">
+							<%@ include file="search-tab-graph.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+				
+					<s:panelTab title="#{res.database_search_summarystats}" sectionId="basic-statistics">
+						<t:htmlTag value="div" styleClass="search-panel">
+							<%@ include file="search-tab-summary.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+					
+					<s:panelTab title="#{res.database_search_maps}" sectionId="map-ports">
+						<t:htmlTag value="div" styleClass="search-panel">
+							<%@ include file="search-tab-map.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+				
+				</s:panelTabSet>
+				
 			</td>
 		</tr>
 		</table>

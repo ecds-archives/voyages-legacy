@@ -41,7 +41,7 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-		<div id="top-bar">
+	<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
@@ -51,22 +51,50 @@
 	</div>
 	
 	<div id="content">
-	
+
 		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
 		<tr>
 			<td class="td-side-panel">
+
 				<div style="margin: 10px 10px 0px 10px;">
 					<%@ include file="estimates-selection.jsp" %>
 				</div>
+
 			</td>
 			<td class="td-main-panel">
-				<div>
-					<%@ include file="estimates-main-panel.jsp" %>
-				</div>
+
+				<s:panelTabSet selectedSectionId="table" id="mainPanelSection">
+					
+					<s:panelTab title="#{res.estimates_main_table}" sectionId="table">
+						<t:htmlTag value="div" styleClass="results-panel">
+							<%@ include file="estimates-tab-table.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+					
+					<s:panelTab title="#{res.estimates_main_list}" sectionId="listing">
+						<t:htmlTag value="div" styleClass="results-panel">
+							<%@ include file="estimates-tab-listing.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+				
+					<s:panelTab title="#{res.estimates_main_map}" sectionId="map">
+						<t:htmlTag value="div" styleClass="results-panel">
+							<%@ include file="estimates-tab-map.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+				
+					<s:panelTab title="#{res.estimates_main_timeline}" sectionId="timeline">
+						<t:htmlTag value="div" styleClass="results-panel">
+							<%@ include file="estimates-tab-timeline.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+				
+				</s:panelTabSet>			
+
 			</td>
 		</tr>
 		</table>
-	</div>
+
 </h:form>
 	
 </f:view>
