@@ -8,7 +8,7 @@ import javax.faces.webapp.UIComponentTag;
 
 import org.apache.myfaces.el.MethodBindingImpl;
 
-import edu.emory.library.tast.database.table.ClickEvent;
+import edu.emory.library.tast.common.table.ClickEvent;
 
 
 public class DivButtonTag extends UIComponentTag {

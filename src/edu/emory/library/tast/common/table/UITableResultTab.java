@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.table;
+package edu.emory.library.tast.common.table;
 
 import java.io.IOException;
 import java.util.Map;

@@ -6,7 +6,7 @@
 
 	<component>
 		<component-type>TableResultTab</component-type>
-		<component-class>edu.emory.library.tast.database.table.UITableResultTab</component-class>
+		<component-class>edu.emory.library.tast.common.table.UITableResultTab</component-class>
 	</component>
 
 	<component>
@@ -46,7 +46,7 @@
 	
 	<component>
 		<component-type>VoyageDetail</component-type>
-		<component-class>edu.emory.library.tast.database.table.UIDetailComponent</component-class>
+		<component-class>edu.emory.library.tast.common.table.UIDetailComponent</component-class>
 	</component>
 	
 	<component>
@@ -193,7 +193,7 @@
 	<component>
 		<component-type>TableLinksComponent</component-type>
 		<component-class>
-			edu.emory.library.tast.database.table.TableLinksComponent
+			edu.emory.library.tast.common.table.TableLinksComponent
 		</component-class>
 	</component>
 

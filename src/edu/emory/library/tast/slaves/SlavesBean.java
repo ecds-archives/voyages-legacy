@@ -15,13 +15,13 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.LookupCheckboxItem;
+import edu.emory.library.tast.common.table.ShowDetailsEvent;
+import edu.emory.library.tast.common.table.SortChangeEvent;
+import edu.emory.library.tast.common.table.TableData;
+import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
-import edu.emory.library.tast.database.table.ShowDetailsEvent;
-import edu.emory.library.tast.database.table.SortChangeEvent;
-import edu.emory.library.tast.database.table.TableData;
 import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.database.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;

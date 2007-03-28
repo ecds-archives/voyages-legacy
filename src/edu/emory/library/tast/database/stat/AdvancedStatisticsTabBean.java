@@ -11,9 +11,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.common.table.ClickEvent;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.stat.charts.AbstractChartGenerator;
-import edu.emory.library.tast.database.table.ClickEvent;
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;

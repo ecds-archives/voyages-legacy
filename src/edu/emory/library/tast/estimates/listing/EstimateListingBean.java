@@ -2,12 +2,12 @@ package edu.emory.library.tast.estimates.listing;
 
 import java.text.MessageFormat;
 
-import edu.emory.library.tast.database.table.SortChangeEvent;
-import edu.emory.library.tast.database.table.TableData;
+import edu.emory.library.tast.common.table.SortChangeEvent;
+import edu.emory.library.tast.common.table.TableData;
+import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.database.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;

@@ -7,9 +7,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.table.DetailVoyageInfo;
 import edu.emory.library.tast.database.table.DetailVoyageMap;
-import edu.emory.library.tast.database.table.TableData;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Voyage;

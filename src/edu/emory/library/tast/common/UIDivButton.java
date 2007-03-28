@@ -11,7 +11,7 @@ import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
-import edu.emory.library.tast.database.table.ClickEvent;
+import edu.emory.library.tast.common.table.ClickEvent;
 import edu.emory.library.tast.util.JsfUtils;
 
 public class UIDivButton extends UIOutput {

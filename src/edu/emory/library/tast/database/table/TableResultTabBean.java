@@ -8,6 +8,10 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 
+import edu.emory.library.tast.common.table.ShowDetailsEvent;
+import edu.emory.library.tast.common.table.SortChangeEvent;
+import edu.emory.library.tast.common.table.TableData;
+import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.stat.ComparableSelectItem;
@@ -15,7 +19,6 @@ import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeForma
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.database.tabscommon.links.TableLinkManager;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;

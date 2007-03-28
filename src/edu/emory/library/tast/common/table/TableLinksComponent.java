@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.table;
+package edu.emory.library.tast.common.table;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -10,8 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tast.database.tabscommon.links.LinkElement;
-import edu.emory.library.tast.database.tabscommon.links.TableLinkManager;
+import edu.emory.library.tast.common.table.links.LinkElement;
+import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.util.JsfUtils;
 
 public class TableLinksComponent extends UIOutput {

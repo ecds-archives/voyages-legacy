@@ -15,7 +15,7 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.myfaces.el.MethodBindingImpl;
 
-import edu.emory.library.tast.database.table.SortChangeEvent;
+import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
