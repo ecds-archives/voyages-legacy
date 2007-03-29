@@ -5,6 +5,10 @@ import org.hibernate.property.Getter;
 import org.hibernate.property.PropertyAccessor;
 import org.hibernate.property.Setter;
 
+/**
+ * not used now, maybe in future
+ */
+
 public class VoyagePropertyAccessor implements PropertyAccessor
 {
 

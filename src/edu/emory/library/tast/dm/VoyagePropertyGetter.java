@@ -7,6 +7,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.property.Getter;
 
+/**
+ * not used now, maybe in future
+ */
+
 public class VoyagePropertyGetter implements Getter
 {
 

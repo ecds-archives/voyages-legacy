@@ -15,11 +15,11 @@
 <h:form id="main">
 
 	<div class="image-expanded-title">
-		<h:outputText value="#{NewImagesBean.imageTitle}" />
+		<h:outputText value="#{ImagesBean.imageTitle}" />
 	</div>
 
 	<div class="image-expanded-container">
-		<h:graphicImage url="#{NewImagesBean.imageExpandedURL}" />
+		<h:graphicImage url="#{ImagesBean.imageExpandedURL}" />
 	</div>
 
 </h:form>

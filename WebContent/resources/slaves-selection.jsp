@@ -163,7 +163,7 @@
 					forceId="true"
 					id="submitBoxBasic"
 					value="#{res.slaves_search_button}"
-					action="#{SlavesBean.searchFromBasicBox}" />
+					action="#{SlavesBean.search}" />
 	
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
@@ -208,7 +208,7 @@
 					forceId="true"
 					id="submitBoxCountry"
 					value="#{res.slaves_search_button}"
-					action="#{SlavesBean.searchFromCountryBox}" />
+					action="#{SlavesBean.search}" />
 	
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">
@@ -285,7 +285,7 @@
 					forceId="true"
 					id="submitBoxPlaces"
 					value="#{res.slaves_search_button}"
-					action="#{SlavesBean.searchFromPlacesBox}" />
+					action="#{SlavesBean.search}" />
 	
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px 5px 5px;">

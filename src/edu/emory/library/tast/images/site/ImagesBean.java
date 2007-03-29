@@ -20,7 +20,7 @@ import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
-public class NewImagesBean {
+public class ImagesBean {
 
 	private static final int POPUP_EXTRA_HEIGHT = 50;
 	private static final int POPUP_EXTRA_WIDTH = 30;
@@ -34,7 +34,7 @@ public class NewImagesBean {
 	private String imageId;
 	//private String backAction = null;
 	
-	public NewImagesBean() {
+	public ImagesBean() {
 	}
 	
 	private GalleryImage[] getSample(int catId, int size)

@@ -60,6 +60,5 @@
 </t:div>
 
 <t:htmlTag value="div" styleClass="estimates-table">
-	<s:simpleTable
-		rows="#{EstimatesTableBean.table}" />
+	<s:simpleTable rows="#{EstimatesTableBean.table}" />
 </t:htmlTag>

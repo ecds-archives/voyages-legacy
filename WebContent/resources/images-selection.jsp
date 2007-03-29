@@ -10,7 +10,7 @@
 			<h:outputText value="Image: "/>
 		</t:htmlTag>
 		<t:htmlTag value="td">	
-			<h:inputText style="width: 150px;" value="#{NewImagesBean.imageLike}"/>
+			<h:inputText style="width: 150px;" value="#{ImagesBean.imageLike}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	
@@ -20,8 +20,8 @@
 		</t:htmlTag>
 		<t:htmlTag value="td">			
 			<h:selectOneMenu style="width: 150px;" 
-					value="#{NewImagesBean.selectedCategory}">
-				<f:selectItems value="#{NewImagesBean.categories}" />
+					value="#{ImagesBean.selectedCategory}">
+				<f:selectItems value="#{ImagesBean.categories}" />
 			</h:selectOneMenu>
 		</t:htmlTag>
 	</t:htmlTag>
@@ -31,9 +31,9 @@
 			<h:outputText value="Date range: "/>
 		</t:htmlTag>
 		<t:htmlTag value="td">
-			<h:inputText style="width: 40px;" value="#{NewImagesBean.from}"/>
+			<h:inputText style="width: 40px;" value="#{ImagesBean.from}"/>
 			<h:outputText escape="false" value="&nbsp;-&nbsp;"/>
-			<h:inputText style="width: 40px;" value="#{NewImagesBean.to}"/>
+			<h:inputText style="width: 40px;" value="#{ImagesBean.to}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	
@@ -41,7 +41,7 @@
 		<t:htmlTag value="td">						
 		</t:htmlTag>
 		<t:htmlTag value="td">			
-			<h:commandButton value="Search images" action="#{NewImagesBean.search}"/>
+			<h:commandButton value="Search images" action="#{ImagesBean.search}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>

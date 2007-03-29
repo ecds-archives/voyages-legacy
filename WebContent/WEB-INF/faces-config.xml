@@ -271,7 +271,7 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>ImagesBean</managed-bean-name>
+		<managed-bean-name>AdminImagesBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.images.admin.ImagesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -283,16 +283,15 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>NewImagesBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.images.site.NewImagesBean</managed-bean-class>
+		<managed-bean-name>ImagesBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.images.site.ImagesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>EventLineTestBean1</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.common.EventLineTestBean1</managed-bean-class>
-		<managed-bean-scope>
-		session</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
@@ -322,12 +321,9 @@
 		<managed-bean-class>edu.emory.library.tast.estimates.table.EstimatesTableBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>
-			selectionBean</property-name>
-			<property-class>
-			edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
-			<value>
-			#{EstimatesSelectionBean}</value>
+			<property-name>selectionBean</property-name>
+			<property-class>edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
+			<value>#{EstimatesSelectionBean}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -336,10 +332,8 @@
 		<managed-bean-class>edu.emory.library.tast.estimates.listing.EstimateListingBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-		<property-name>
-			estimatesBean</property-name>
-			<property-class>
-			edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
+			<property-name>estimatesBean</property-name>
+			<property-class>edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
 			<value>#{EstimatesSelectionBean}</value>
 		</managed-property>
 	</managed-bean>
@@ -364,10 +358,8 @@
 		<managed-bean-class>edu.emory.library.tast.estimates.map.EstimatesMapBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-		<property-name>
-			estimatesBean</property-name>
-			<property-class>
-			edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
+			<property-name>estimatesBean</property-name>
+			<property-class>edu.emory.library.tast.estimates.selection.EstimatesSelectionBean</property-class>
 			<value>#{EstimatesSelectionBean}</value>
 		</managed-property>
 	</managed-bean>
@@ -632,7 +624,7 @@
 		<from-view-id>/resources/images.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>images-detail</from-outcome>
-			<to-view-id>/resources/images-detail-from-main.jsp</to-view-id>
+			<to-view-id>/resources/images-detail.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

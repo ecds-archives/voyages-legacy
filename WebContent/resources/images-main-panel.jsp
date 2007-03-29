@@ -9,7 +9,7 @@
 		<h:outputText value="Presentation" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<h:commandLink value="Show all images ..." action="#{NewImagesBean.seePresentation}" styleClass="link-images"/>
+		<h:commandLink value="Show all images ..." action="#{ImagesBean.seePresentation}" styleClass="link-images"/>
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
@@ -17,12 +17,12 @@
 <t:htmlTag value="div" styleClass="images-category-sample">
 
 	<s:pictures
-		images="#{NewImagesBean.samplePresentation}" 
+		images="#{ImagesBean.samplePresentation}" 
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{NewImagesBean.detailRequested}" 
-		selectedImageId="#{NewImagesBean.imageId}"/>
+		action="#{ImagesBean.detailRequested}" 
+		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
 
@@ -33,7 +33,7 @@
 		<h:outputText value="#{res.images_slaves}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<h:commandLink value="#{res.images_slaves_link}" action="#{NewImagesBean.seeSlaves}" styleClass="link-images"/>
+		<h:commandLink value="#{res.images_slaves_link}" action="#{ImagesBean.seeSlaves}" styleClass="link-images"/>
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
@@ -41,12 +41,12 @@
 <t:htmlTag value="div" styleClass="images-category-sample">
 
 	<s:pictures
-		images="#{NewImagesBean.sampleSlaves}" 
+		images="#{ImagesBean.sampleSlaves}" 
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{NewImagesBean.detailRequested}" 
-		selectedImageId="#{NewImagesBean.imageId}"/>
+		action="#{ImagesBean.detailRequested}" 
+		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
 
@@ -57,7 +57,7 @@
 		<h:outputText value="#{res.images_slavers}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<h:commandLink value="#{res.images_slavers_link}" action="#{NewImagesBean.seeSlavers}" styleClass="link-images"/>
+		<h:commandLink value="#{res.images_slavers_link}" action="#{ImagesBean.seeSlavers}" styleClass="link-images"/>
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
@@ -65,12 +65,12 @@
 <t:htmlTag value="div" styleClass="images-category-sample">
 
 	<s:pictures
-		images="#{NewImagesBean.sampleSlavers}" 
+		images="#{ImagesBean.sampleSlavers}" 
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{NewImagesBean.detailRequested}" 
-		selectedImageId="#{NewImagesBean.imageId}"/>
+		action="#{ImagesBean.detailRequested}" 
+		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
 
@@ -81,7 +81,7 @@
 		<h:outputText value="#{res.images_vessels}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<h:commandLink value="#{res.images_vessels_link}" action="#{NewImagesBean.seeVessels}" styleClass="link-images"/>
+		<h:commandLink value="#{res.images_vessels_link}" action="#{ImagesBean.seeVessels}" styleClass="link-images"/>
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
@@ -89,12 +89,12 @@
 <t:htmlTag value="div" styleClass="images-category-sample">
 
 	<s:pictures
-		images="#{NewImagesBean.sampleVessels}" 
+		images="#{ImagesBean.sampleVessels}" 
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{NewImagesBean.detailRequested}" 
-		selectedImageId="#{NewImagesBean.imageId}"/>
+		action="#{ImagesBean.detailRequested}" 
+		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
 
@@ -105,7 +105,7 @@
 		<h:outputText value="#{res.images_ports}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<h:commandLink value="#{res.images_ports_link}" action="#{NewImagesBean.seePorts}" styleClass="link-images"/>
+		<h:commandLink value="#{res.images_ports_link}" action="#{ImagesBean.seePorts}" styleClass="link-images"/>
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
@@ -113,12 +113,12 @@
 <t:htmlTag value="div" styleClass="images-category-sample">
 
 	<s:pictures
-		images="#{NewImagesBean.samplePorts}" 
+		images="#{ImagesBean.samplePorts}" 
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{NewImagesBean.detailRequested}" 
-		selectedImageId="#{NewImagesBean.imageId}"/>
+		action="#{ImagesBean.detailRequested}" 
+		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
 
@@ -129,7 +129,7 @@
 		<h:outputText value="#{res.images_regions}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<h:commandLink value="#{res.images_regions_link}" action="#{NewImagesBean.seeRegions}" styleClass="link-images"/>
+		<h:commandLink value="#{res.images_regions_link}" action="#{ImagesBean.seeRegions}" styleClass="link-images"/>
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
@@ -137,12 +137,12 @@
 <t:htmlTag value="div" styleClass="images-category-sample">
 
 	<s:pictures
-		images="#{NewImagesBean.sampleRegions}" 
+		images="#{ImagesBean.sampleRegions}" 
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{NewImagesBean.detailRequested}" 
-		selectedImageId="#{NewImagesBean.imageId}"/>
+		action="#{ImagesBean.detailRequested}" 
+		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
 
@@ -153,7 +153,7 @@
 		<h:outputText value="#{res.images_manuscripts}" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<h:commandLink value="#{res.images_manuscripts_link}" action="#{NewImagesBean.seeManuscripts}" styleClass="link-images"/>
+		<h:commandLink value="#{res.images_manuscripts_link}" action="#{ImagesBean.seeManuscripts}" styleClass="link-images"/>
 	</t:htmlTag>
 </t:htmlTag>
 </t:htmlTag>
@@ -161,11 +161,11 @@
 <t:htmlTag value="div" styleClass="images-category-sample">
 
 	<s:pictures
-		images="#{NewImagesBean.sampleManuscripts}" 
+		images="#{ImagesBean.sampleManuscripts}" 
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{NewImagesBean.detailRequested}" 
-		selectedImageId="#{NewImagesBean.imageId}"/>
+		action="#{ImagesBean.detailRequested}" 
+		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
