@@ -130,5 +130,84 @@
 		<many-to-one name="e_majbyimp" column="e_majbyimp" class="edu.emory.library.tast.dm.EstimatesExportRegion" />
 		<many-to-one name="e_mjselimp" column="e_mjselimp" class="edu.emory.library.tast.dm.EstimatesImportRegion" />
 
+
+
+		<many-to-one name="embport" column="embport" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="arrport" column="arrport" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="embport2" column="embport2" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="arrport2" column="arrport2" class="edu.emory.library.tast.dm.Port" />
+		<property name="tontype" />
+		<property name="sladamer" />
+		<property name="saild1" />
+		<property name="saild2" />
+		<property name="saild3" />
+		<property name="saild4" />
+		<property name="saild5" />
+		<property name="voyage" />
+		<property name="child2" />
+		<property name="child3" />
+		<property name="crew4" />
+		<property name="crew5" />
+		<property name="adult1" />
+		<property name="child1" />
+		<property name="female1" />
+		<property name="male1" />
+		<property name="men1" />
+		<property name="women1" />
+		<property name="boy1" />
+		<property name="girl1" />
+		<property name="adult2" />
+		<property name="female2" />
+		<property name="male2" />
+		<property name="men2" />
+		<property name="women2" />
+		<property name="boy2" />
+		<property name="girl2" />
+		<property name="adult3" />
+		<property name="female3" />
+		<property name="male3" />
+		<property name="men3" />
+		<property name="women3" />
+		<property name="boy3" />
+		<property name="girl3" />
+		<property name="child4" />
+		<property name="female4" />
+		<property name="male4" />
+		<property name="men4" />
+		<property name="women4" />
+		<property name="boy4" />
+		<property name="girl4" />
+		<property name="child6" />
+		<property name="female6" />
+		<property name="male6" />
+		<property name="men6" />
+		<property name="women6" />
+		<property name="boy6" />
+		<property name="girl6" />
+		<property name="crew2" />
+		<property name="infantm3" />
+		<property name="infantf3" />
+		<property name="sladied1" />
+		<property name="sladied2" />
+		<property name="sladied3" />
+		<property name="sladied4" />
+		<property name="sladied5" />
+		<property name="sladied6" />
+		<property name="insurrec" />
+		<property name="evgreen" />
+		<property name="female5" />
+		<property name="male5" />
+		<property name="child5" />
+		<property name="men5" />
+		<property name="women5" />
+		<property name="boy5" />
+		<property name="girl5" />
+		<property name="infant3" />
+		<property name="infant1" />
+		<property name="adult5" />
+		<property name="adult4" />
+		<property name="infant4" />
+		<property name="crew" />
+		
 	</class>
 </hibernate-mapping>
