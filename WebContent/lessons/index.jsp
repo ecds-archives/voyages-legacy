@@ -43,37 +43,21 @@
 				<img src="../images/lessons-index-title.png" width="350" height="40" border="0" alt="Educational Material">
 				
 				<p class="section-index-intro">
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vestibulum molestie
-				nulla in sapien. Pellentesque id mi. Aliquam luctus nisi at ipsum. Praesent non
-				risus. Aliquam purus pede, egestas eget, fringilla id, imperdiet sed, dui.
-				Integer nec neque. Cras condimentum iaculis turpis. Suspendisse id velit nec
-				urna suscipit dignissim. Ut porttitor. Fusce urna tortor, convallis ac, ultricies et,
-				scelerisque vel, nisl. Aliquam at diam in urna posuere vulputate. Ut eget odio.
-				Quisque nibh tellus, faucibus nec, porta et, dignissim vitae, tellus. Sed eros dolor,
-				suscipit non, pharetra sed, molestie in, velit. Proin quam elit, consectetuer varius,
-				volutpat eu, vehicula vel, sapien.</p>
-
-				<p class="section-index-intro">
-				Cras condimentum iaculis turpis. Suspendisse id velit nec urna suscipit dignissim.
-				Ut porttitor. Fusce urna tortor, convallis ac, ultricies et, scelerisque vel, nisl.
-				Aliquam at diam in urna posuere vulputate. Ut eget odio. Quisque nibh tellus,
-				faucibus nec, porta et, dignissim vitae, tellus. Sed eros dolor, suscipit non,
-				pharetra sed, molestie in, velit. Proin quam elit, consectetuer varius, volutpat eu,
-				vehicula vel, sapien.</p>
+				One of the goals of the Trans Atlantic Slave Trade Online Database has been to bring the work of historians to a K-12 audience and allow students to engage in the process of historical inquiry.  A variety of lesson plans spanning a range of grade levels have been developed to offer teachers diverse approaches from which to teach students about the largest forced migration in history.  The lesson plans are tied to national standards in Social Studies (National Council for the Social Studies), History (National Center for History in the Schools), and Geography (National Council Geography Education), and when applicable Economics (National Council on Economic Education) and State standards.</p>
 				
 				<div class="section-index-intro-icon section-index-intro-blank-icon">
 				
 					<div class="section-index-intro-icon-title"><a href="#">Lesson Plan</a></div>
 				
-					<p class="section-index-intro">Phasellus sed est. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse venenatis convallis nisl. Sed mi velit, volutpat et, dapibus vitae, accumsan id, risus. Ut lorem. Aenean pharetra, lectus ac bibendum tincidunt, est turpis blandit tortor, at sodales lectus nibh quis arcu. Mauris suscipit.</p>
-
+					<p class="section-index-intro">Here you will find a variety standards-based lesson plans for use in your classroom.</p>
+					<p>&nbsp;</p>
 				</div>
 
 				<div class="section-index-intro-icon section-index-intro-blank-icon">
 				
 					<div class="section-index-intro-icon-title"><a href="#">Lesson Maps</a></div>
 				
-					<p class="section-index-intro">Aenean dictum sapien eget neque. Aliquam dapibus tellus eu lacus. Maecenas hendrerit semper ipsum. Cras varius leo. Nunc dolor ligula, tempus nec, ultrices in, viverra sodales, lorem. Vestibulum erat quam, vestibulum sed, tempor ac, tempus ut, ligula.</p>
+					<p class="section-index-intro">Here you will find maps for teaching and testing geographical understanding of the slave trade. [This may be a feature we add to later versions of the database. We are including it here as a placeholder and to see what suggestions test users have for adding additional K-12 tools and resources.]</p>
 
 				</div>
 
@@ -81,8 +65,8 @@
 				
 					<div class="section-index-intro-icon-title"><a href="#">Glossary</a></div>
 				
-					<p class="section-index-intro">Sed sem mi, placerat quis, condimentum vel, malesuada ut, ipsum. Maecenas condimentum libero id purus. Etiam at lectus. Morbi non turpis. Proin placerat velit. Fusce ac orci. Duis pede est, tincidunt in, euismod ac, posuere in, lorem. Nam lacinia, mi at fermentum adipiscing, ligula libero tincidunt eros, sed aliquet augue nunc sit amet elit.</p>
-
+					<p class="section-index-intro">A guide to important terms and concepts related to the Trans Atlantic Slave Trade.</p>
+					<p>&nbsp;</p>
 				</div>
 
 			</td>
