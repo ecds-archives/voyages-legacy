@@ -38,6 +38,8 @@
 					<h:outputText value="Suspendisse sollicitudin eros quis odio. Nulla libero massa, condimentum quis, varius eu, volutpat vitae, massa. Pellentesque pellentesque libero sed nisi. Integer vitae elit." />
 				</s:expandableBox>
 				
+				<% /*
+				
 				<br>
 				
 				<s:expandableBox text="Top FAQ">
@@ -57,6 +59,8 @@
 						</ul>
 					</f:verbatim>
 				</s:expandableBox>
+				
+				*/ %>
 
 			</td>
 			<td class="section-index-right-column">
