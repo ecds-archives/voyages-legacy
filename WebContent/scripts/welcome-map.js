@@ -1,29 +1,61 @@
 var WelcomeMapGlobals = 
 {
 
-	showPlace: function(welcomeMapId, textElementId, imageElementId, imageUrl, text)
-	{
-		
-		var textElement = document.getElementById(textElementId);
-		var imageElement = document.getElementById(imageElementId);
-		
-		textElement.style.display = "block";
-		textElement.firstChild.innerHTML = text;
-		
-		imageElement.src = imageUrl;
+	welcomeMaps: new Array(),
 	
+	register: function(welcomeMap)
+	{
+		WelcomeMapGlobals.welcomeMaps[welcomeMap.welcomeMapId] = welcomeMap;
 	},
 
-	hidePlace: function(welcomeMapId, textElementId, imageElementId, imageUrl)
+	showPlace: function(welcomeMapId, placeIndex)
 	{
+		var welcomeMap = WelcomeMapGlobals.welcomeMaps[welcomeMapId];
+		if (welcomeMap) welcomeMap.showPlace(placeIndex);
+	},
 
-		var textElement = document.getElementById(textElementId);
-		var imageElement = document.getElementById(imageElementId);
-		
-		textElement.style.display = "none";
-	
-		imageElement.src = imageUrl;
-
+	hidePlace: function(welcomeMapId, placeIndex)
+	{
+		var welcomeMap = WelcomeMapGlobals.welcomeMaps[welcomeMapId];
+		if (welcomeMap) welcomeMap.hidePlace(placeIndex);
 	}
+
+}
+
+function WelcomeMap(welcomeMapId, initialText, textElementId, places)
+{
+	this.welcomeMapId = welcomeMapId;
+	this.initialText = initialText;
+	this.textElementId = textElementId;
+	this.places = places;
+}
+
+function WelcomeMapPlace(imageElementId, normalUrl, highlightedUrl, text)
+{
+	this.imageElementId = imageElementId;
+	this.normalUrl = normalUrl;
+	this.highlightedUrl = highlightedUrl;
+	this.text = text;
+}
+
+WelcomeMap.prototype.showPlace = function(placeIndex)
+{
+
+	var textElement = document.getElementById(this.textElementId);
+	var imageElement = document.getElementById(this.places[placeIndex].imageElementId);
+	
+	textElement.innerHTML = this.places[placeIndex].text;
+	imageElement.src = this.places[placeIndex].highlightedUrl;
+
+}
+
+WelcomeMap.prototype.hidePlace = function(placeIndex)
+{
+
+	var textElement = document.getElementById(this.textElementId);
+	var imageElement = document.getElementById(this.places[placeIndex].imageElementId);
+	
+	textElement.innerHTML = this.initialText;
+	imageElement.src = this.places[placeIndex].normalUrl;
 
 }

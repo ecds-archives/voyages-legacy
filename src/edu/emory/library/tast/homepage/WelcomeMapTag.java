@@ -13,6 +13,7 @@ public class WelcomeMapTag extends UIComponentTag
 	private String imageWidth;
 	private String imageHeight;
 	private String places;
+	private String initialText;
 
 	public String getComponentType()
 	{
@@ -66,6 +67,16 @@ public class WelcomeMapTag extends UIComponentTag
 			welcomeMap.setValueBinding("places", vb);
 		}
 
+		if (initialText != null && isValueReference(initialText))
+		{
+			ValueBinding vb = app.createValueBinding(initialText);
+			welcomeMap.setValueBinding("initialText", vb);
+		}
+		else
+		{
+			welcomeMap.setInitialText(initialText);
+		}
+
 	}
 
 	public String getImageHeight()
@@ -106,6 +117,16 @@ public class WelcomeMapTag extends UIComponentTag
 	public void setPlaces(String places)
 	{
 		this.places = places;
+	}
+
+	public String getInitialText()
+	{
+		return initialText;
+	}
+
+	public void setInitialText(String initialText)
+	{
+		this.initialText = initialText;
 	}
 
 }

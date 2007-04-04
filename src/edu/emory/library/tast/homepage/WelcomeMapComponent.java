@@ -23,16 +23,24 @@ public class WelcomeMapComponent extends UIComponentBase
 	private boolean placesSet = false;
 	private WelcomeMapPlace[] places;
 
+	private boolean initialTextSet = false;
+	private String initialText;
+
 	public String getFamily()
 	{
 		return null;
 	}
 	
-	public void encodePlace(FacesContext context, ResponseWriter writer, String textElementId, int imageIndex) throws IOException
+	private String getImageElementId(FacesContext context, int imageIndex)
+	{
+		return getClientId(context) + "_image_" + imageIndex;
+	}
+	
+	private void encodePlace(FacesContext context, ResponseWriter writer, String textElementId, int imageIndex) throws IOException
 	{
 		
 		WelcomeMapPlace place = places[imageIndex];
-		String imageId = getClientId(context) + "_image_" + imageIndex;
+		String imageId = getImageElementId(context, imageIndex);
 		
 		String cssStyle = 
 			"top: " + place.getY() + "px; " +
@@ -40,17 +48,12 @@ public class WelcomeMapComponent extends UIComponentBase
 			"position: absolute;";
 		
 		String onMouseOver = "WelcomeMapGlobals.showPlace(" +
-			"'" + textElementId + "', " +
-			"'" + textElementId + "', " +
-			"'" + imageId + "', " +
-			"'" + place.getImageUrlSelected() + "', " +
-			"'" + JsfUtils.escapeStringForJS(place.getText()) + "')";
+			"'" + getClientId(context) + "', " +
+			"'" + imageIndex + "')";
 		
 		String onMouseOut = "WelcomeMapGlobals.hidePlace(" +
-			"'" + textElementId + "', " +
-			"'" + textElementId + "', " +
-			"'" + imageId + "', " +
-			"'" + place.getImageUrl() + "')";
+			"'" + getClientId(context) + "', " +
+			"'" + imageIndex + "')";
 
 		writer.startElement("img", this);
 		writer.writeAttribute("src", place.getImageUrl(), null);
@@ -65,8 +68,9 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.endElement("img");
 
 	}
-	
-	public void encodePlaces(FacesContext context, ResponseWriter writer, String textElementId) throws IOException
+
+	/*
+	private void encodePlaces(FacesContext context, ResponseWriter writer, String textElementId) throws IOException
 	{
 		
 		String cssStyle =
@@ -87,7 +91,7 @@ public class WelcomeMapComponent extends UIComponentBase
 		
 	}
 	
-	public void encodeTextContainer(FacesContext context, ResponseWriter writer, String textElementId) throws IOException
+	private void encodeTextContainer(FacesContext context, ResponseWriter writer, String textElementId) throws IOException
 	{
 		
 		String cssStyleCont =
@@ -122,31 +126,22 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.endElement("div");
 		
 	}
-	
-	public void encodeBegin(FacesContext context) throws IOException
+	*/
+
+	private void encodeMap(FacesContext context, ResponseWriter writer, String textElementId) throws IOException
 	{
-		
-		ResponseWriter writer = context.getResponseWriter();
-		
-		String textElementId = getClientId(context);
-		
-		imageUrl = getImageUrl();
-		imageWidth = getImageWidth();
-		imageHeight = getImageHeight();
-		places = getPlaces();
-		
 		String cssStyleMainCell =
-			"width: " + imageWidth + "px; " +
-			"height: " + imageHeight + "px; " +
-			"background-image: url('" + imageUrl + "')";
-		
-		String cssStylePositionedCont =
-			"position: absolute; " +
 			"width: " + imageWidth + "px; " +
 			"height: " + imageHeight + "px;";
 
+		String cssStylePositionedCont =
+			"position: relative; " +
+			"width: " + imageWidth + "px; " +
+			"height: " + imageHeight + "px; " + 
+			"background-image: url('" + imageUrl + "')";
+
 		writer.startElement("table", this);
-		writer.writeAttribute("class", "welcome-map", null);
+		writer.writeAttribute("class", "welcome-map-frame", null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
@@ -181,8 +176,8 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.writeAttribute("class", "welcome-map-container", null);
 		writer.writeAttribute("style", cssStylePositionedCont, null);
 		
-		encodeTextContainer(context, writer, textElementId);
-		encodePlaces(context, writer, textElementId);
+		for (int i = 0; i < places.length; i++)
+			encodePlace(context, writer, textElementId, i);
 
 		writer.endElement("div");
 
@@ -211,7 +206,71 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.endElement("tr");
 
 		writer.endElement("table");
+
+	}
+	
+	public void encodeBegin(FacesContext context) throws IOException
+	{
 		
+		ResponseWriter writer = context.getResponseWriter();
+
+		String textElementId = getClientId(context);
+		
+		imageUrl = getImageUrl();
+		imageWidth = getImageWidth();
+		imageHeight = getImageHeight();
+		places = getPlaces();
+		initialText = getInitialText();
+		
+		StringBuffer regJS = new StringBuffer();
+		regJS.append("WelcomeMapGlobals.register(new WelcomeMap(");
+		regJS.append("'").append(getClientId(context)).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(JsfUtils.escapeStringForJS(initialText)).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(textElementId).append("'");
+		regJS.append(", ");
+		regJS.append("[");
+		for (int i = 0; i < places.length; i++)
+		{
+			WelcomeMapPlace place = places[i];
+			if (i > 0) regJS.append(", ");
+			regJS.append("new WelcomeMapPlace(");
+			regJS.append("'").append(getImageElementId(context, i)).append("'");
+			regJS.append(", ");
+			regJS.append("'").append(place.getImageUrl()).append("'");
+			regJS.append(", ");
+			regJS.append("'").append(place.getImageUrlSelected()).append("'");
+			regJS.append(", ");
+			regJS.append("'").append(JsfUtils.escapeStringForJS(place.getText())).append("'");
+			regJS.append(")");
+		}
+		regJS.append("]));");
+		
+		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);
+		
+		writer.startElement("table", this);
+		writer.writeAttribute("class", "welcome-map", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		
+		writer.startElement("tr", this);
+
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "welcome-map", null);
+		encodeMap(context, writer, textElementId);
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("id", textElementId, null);
+		writer.writeAttribute("class", "welcome-map-text", null);
+		writer.write(initialText);
+		writer.endElement("td");
+		
+		writer.endElement("tr");
+		writer.endElement("table");
+
 	}
 	
 	public void encodeChildren(FacesContext context) throws IOException
@@ -268,6 +327,18 @@ public class WelcomeMapComponent extends UIComponentBase
 	{
 		placesSet = true;
 		this.places = places;
+	}
+
+	public String getInitialText()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"initialText", initialTextSet, initialText);
+	}
+
+	public void setInitialText(String initialText)
+	{
+		initialTextSet = true;
+		this.initialText = initialText;
 	}
 
 }

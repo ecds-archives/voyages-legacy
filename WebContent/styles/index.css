@@ -42,7 +42,17 @@ div.index-highlight-text {
 /* welcome map */
 
 table.welcome-map {
-	}
+	margin-top: 20px;
+	margin-left: 320px; }
+	
+td.welcome-map {
+	vertical-align: top; }
+
+td.welcome-map-text {
+	padding-top: 10px;
+	padding-left: 10px;
+	vertical-align: top;
+	width: 320px; }
 	
 td.welcome-map-top-left {
 	background-image: url(../images/welcome-map-top-left.png);
@@ -73,15 +83,6 @@ td.welcome-map-middle-left {
 td.welcome-map-image {
 	vertical-align: top; }
 	
-div.welcome-map-text {
-	-moz-opacity: 0.5;
-	background-color: Black; }
-
-div.welcome-map-text div {
-	padding: 5px 10px 5px 10px;
-	color: White;
-	background-color: Black; }
-
 td.welcome-map-middle-right {
 	background-image: url(../images/welcome-map-middle-right.png);
 	background-repeat: no-repeat;
@@ -110,3 +111,22 @@ td.welcome-map-bottom-right {
 	
 img.welcome-map-place {
 	cursor: pointer; }
+	
+div.welcome-main-text {
+	border-top: 1px solid #48605F;
+	font-size: 8pt;
+	line-height: 130%;
+	padding-top: 5px;
+	margin-top: 5px; }
+	
+div.welcome-place-title {
+	border-top: 1px solid #48605F;
+	font-size: 8pt;
+	font-weight: bold;
+	padding-top: 5px;
+	margin-top: 5px;
+	line-height: 130%; }
+
+div.welcome-place-text {
+	font-size: 8pt;
+	line-height: 130%; }

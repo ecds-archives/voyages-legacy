@@ -856,6 +856,9 @@
 		<attribute>
 			<name>places</name>
 		</attribute>
+		<attribute>
+			<name>initialText</name>
+		</attribute>
 	</tag>
 
 	<tag>
