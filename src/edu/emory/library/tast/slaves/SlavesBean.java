@@ -87,6 +87,8 @@ public class SlavesBean
 	private String[] expandedEmbPorts;
 	private int expectedResults;
 
+	private int firstVisibleRecord = -1;
+	
 	private VoyageDetailBean voyageBean;
 
 	public SlavesBean()
@@ -145,6 +147,8 @@ public class SlavesBean
 	
 	private void loadData(boolean refreshCount, boolean refreshText)
 	{
+		
+		this.firstVisibleRecord = this.pager.getCurrentFirstRecord();
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
@@ -318,7 +322,7 @@ public class SlavesBean
 		int newStep = "all".equals(step) ? Integer.MAX_VALUE : Integer.parseInt(step);
 		
 		// changed?
-		if (newStep != this.pager.getStep())
+		if (newStep != this.pager.getStep() || this.firstVisibleRecord != this.pager.getCurrentFirstRecord())
 		{
 			this.pager.setStep(newStep);
 			loadData(false, false);
