@@ -79,8 +79,8 @@ public class HomePageBean
 		return new WelcomeMapPlace[] {
 
 				new WelcomeMapPlace(0, 0, 140, 105,
-						"./images/welcome-maps/01/north-america.png",
-						"./images/welcome-maps/01/north-america.png",
+						"./images/welcome-maps/02/north-america.png",
+						"./images/welcome-maps/02/north-america-highlighted.png",
 						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">North American</div>" +
 						"<div class=\"welcome-place-text\">" +
@@ -95,7 +95,7 @@ public class HomePageBean
 						
 				new WelcomeMapPlace(140, 0, 180, 85,
 						"./images/welcome-maps/02/europe.png",
-						"./images/welcome-maps/02/europe.png",
+						"./images/welcome-maps/02/europe-highlighted.png",
 						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Europe</div>" +
 						"<div class=\"welcome-place-text\">" +
@@ -110,7 +110,7 @@ public class HomePageBean
 
 				new WelcomeMapPlace(200, 85, 120, 155,
 						"./images/welcome-maps/02/africa.png",
-						"./images/welcome-maps/02/africa.png",
+						"./images/welcome-maps/02/africa-highlighted.png",
 						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Africa</div>" +
 						"<div class=\"welcome-place-text\">" +
@@ -127,7 +127,7 @@ public class HomePageBean
 
 				new WelcomeMapPlace(0, 105, 150, 40,
 						"./images/welcome-maps/02/caribbean.png",
-						"./images/welcome-maps/02/caribbean.png",
+						"./images/welcome-maps/02/caribbean-highlighted.png",
 						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Caribbean</div>" +
 						"<div class=\"welcome-place-text\">" +
@@ -143,7 +143,7 @@ public class HomePageBean
 
 				new WelcomeMapPlace(0, 160, 160, 80,
 						"./images/welcome-maps/02/brazil.png",
-						"./images/welcome-maps/02/brazil.png",
+						"./images/welcome-maps/02/brazil-highlighted.png",
 						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Brazil</div>" +
 						"<div class=\"welcome-place-text\">" +

@@ -182,9 +182,12 @@
 
 	<component>
 		<component-type>TableLinksComponent</component-type>
-		<component-class>
-			edu.emory.library.tast.common.table.TableLinksComponent
-		</component-class>
+		<component-class>edu.emory.library.tast.common.table.TableLinksComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>GridEditor</component-type>
+		<component-class>edu.emory.library.tast.common.grideditor.GridEditorComponent</component-class>
 	</component>
 
 	<managed-bean>
@@ -407,6 +410,12 @@
 		<managed-bean-name>HomePageBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.homepage.HomePageBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>GridEditorTestBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.common.grideditor.GridEditorTestBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>
