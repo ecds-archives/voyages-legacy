@@ -369,7 +369,7 @@ public class Voyage extends AbstractDescriptiveObject {
 				return (Attribute) attributes.get(i);
 			}
 		}
-		return null;
+		throw new RuntimeException("Attribute " + name + " is not defined in Voyage");
 	}
 
 	/**
