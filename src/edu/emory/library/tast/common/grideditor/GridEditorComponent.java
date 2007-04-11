@@ -43,16 +43,25 @@ public class GridEditorComponent extends UIComponentBase
 		return getClientId(context) + "_column_name_" + columnIndex;
 	}
 	
-	private String getCellInputPrefix(FacesContext context, String column, String row)
+	private String getValueInputPrefix(FacesContext context, String column, String row)
 	{
-		return getClientId(context) + "_" + column + "_" + row;
+		return getClientId(context) + "_" + column + "_value_" + row;
 	}
 	
+	private String getValueErrorFlagFieldName(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_error_" + row;
+	}
+
+	private String getValueErrorMessageFieldName(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_error_msg_" + row;
+	}
+
 	public void decode(FacesContext context)
 	{
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
-		
 		values = new Values();
 		
 		int rowCount = 0;
@@ -71,9 +80,15 @@ public class GridEditorComponent extends UIComponentBase
 			while ((columName = (String) params.get(getColumnFieldName(context, columnCount++))) != null)
 			{
 				
-				values.setValue(columName, rowName,
-						adapter.decode(context,
-								getCellInputPrefix(context, columName, rowName), this));
+				String inputPrefix = getValueInputPrefix(context, columName, rowName);
+				String errorFlagFieldName = getValueErrorFlagFieldName(context, columName, rowName);
+				String errorMessageFieldName = getValueErrorMessageFieldName(context, columName, rowName);
+				
+				Value value = adapter.decode(context, inputPrefix, this);
+				values.setValue(columName, rowName, value);
+				
+				if (Boolean.parseBoolean((String) params.get(errorFlagFieldName)))
+					value.setErrorMessage((String) params.get(errorMessageFieldName));
 
 			}
 
@@ -90,6 +105,20 @@ public class GridEditorComponent extends UIComponentBase
 			if (vbValues != null) vbValues.setValue(context, values);
 		}
 		
+	}
+	
+	private void encodeErrorMessage(FacesContext context, ResponseWriter writer, String columnName, String rowName, Value value) throws IOException
+	{
+
+		JsfUtils.encodeHiddenInput(this, writer,
+				getValueErrorMessageFieldName(context, columnName, rowName),
+				value.getErrorMessage());
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "grid-editor-error", null);
+		writer.write(value.getErrorMessage());
+		writer.endElement("div");
+
 	}
 
 	public void encodeBegin(FacesContext context) throws IOException
@@ -145,6 +174,8 @@ public class GridEditorComponent extends UIComponentBase
 		{
 			
 			Row row = rows[i];
+			String rowName = row.getName();
+			
 			Adapter adapter = AdapterFactory.getAdapter(row.getType());
 			
 			writer.startElement("tr", this);
@@ -156,12 +187,21 @@ public class GridEditorComponent extends UIComponentBase
 			for (int j = 0; j < columns.length; j++)
 			{
 				Column column = columns[j];
+				String columnName = column.getName();
+				Value value = values.getValue(columnName, rowName);
 				
 				writer.startElement("td", this);
-				
+
 				adapter.encode(context, this, form,
-						getCellInputPrefix(context, column.getName(), row.getName()),
-						values.getValue(column.getName(), row.getName()), false);
+						getValueInputPrefix(context, columnName, rowName),
+						value, column.isReadOnly());
+				
+				JsfUtils.encodeHiddenInput(this, writer,
+						getValueErrorFlagFieldName(context, columnName, rowName),
+						Boolean.toString(value.isError()));
+
+				if (value.isError())
+					encodeErrorMessage(context, writer, columnName, rowName, value);
 				
 				writer.endElement("td");
 				

@@ -12,26 +12,57 @@ import edu.emory.library.tast.common.grideditor.Value;
 
 public class TextboxAdapter extends Adapter
 {
+
+	public static final String TYPE = "textbox";
 	
-	public static final String TYPE = "textbox"; 
+	protected String getSubmittedValue(FacesContext context, String inputPrefix)
+	{
+		return (String) context.getExternalContext().getRequestParameterMap().get(inputPrefix);
+	}
 
 	public Value decode(FacesContext context, String inputPrefix, GridEditorComponent gridEditor)
 	{
-		String text = (String) context.getExternalContext().getRequestParameterMap().get(inputPrefix);
-		return new TextboxValue(text);
+		return new TextboxValue(getSubmittedValue(context, inputPrefix));
 	}
-	
+
+	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer) throws IOException
+	{
+
+		writer.startElement("input", gridEditor);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("name", inputPrefix, null);
+		writer.writeAttribute("value", textboxValue.getText(), null);
+		writer.endElement("input");
+
+	}
+
+	private void encodeReadOnlyMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer) throws IOException
+	{
+
+		writer.write(textboxValue.getText());
+
+		writer.startElement("input", gridEditor);
+		writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("name", inputPrefix, null);
+		writer.writeAttribute("value", textboxValue.getText(), null);
+		writer.endElement("input");
+
+	}
+
 	public void encode(FacesContext context, GridEditorComponent gridEditor, UIForm form, String inputPrefix, Value value, boolean readOnly) throws IOException
 	{
 		
 		TextboxValue textboxValue = (TextboxValue) value;
 		ResponseWriter writer = context.getResponseWriter();
 		
-		writer.startElement("input", gridEditor);
-		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputPrefix, null);
-		writer.writeAttribute("value", textboxValue.getText(), null);
-		writer.endElement("input");
+		if (readOnly)
+		{
+			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer);
+		}
+		else
+		{
+			encodeReadOnlyMode(gridEditor, inputPrefix, textboxValue, writer);
+		}
 		
 	}
 
