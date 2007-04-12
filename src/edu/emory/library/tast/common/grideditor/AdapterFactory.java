@@ -3,6 +3,7 @@ package edu.emory.library.tast.common.grideditor;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.emory.library.tast.common.grideditor.date.DateAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatAdapter;
@@ -18,6 +19,7 @@ public class AdapterFactory
 	{
 		adapters = new HashMap();
 		adapters.put(TextboxAdapter.TYPE, new TextboxAdapter());
+		adapters.put(DateAdapter.TYPE, new DateAdapter());
 		adapters.put(TextboxIntegerAdapter.TYPE, new TextboxIntegerAdapter());
 		adapters.put(TextboxLongAdapter.TYPE, new TextboxLongAdapter());
 		adapters.put(TextboxFloatAdapter.TYPE, new TextboxFloatAdapter());
