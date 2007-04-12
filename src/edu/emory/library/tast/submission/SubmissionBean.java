@@ -38,6 +38,7 @@ public class SubmissionBean {
 		
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(1), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Voyage", c);
 		for (int i = 0; i < attrs.length; i++) {
 			Attribute[] attributes = attrs[i].getAttribute();
@@ -87,6 +88,7 @@ public class SubmissionBean {
 	}
 	
 	public String submit() {
+		System.out.println("Voyage submission saved");
 		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
 		Voyage vNew = new Voyage();
 		vNew.setVoyageid(new Long(this.voyageId));
@@ -99,6 +101,8 @@ public class SubmissionBean {
 				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 		}
+		vNew.save();
+		System.out.println("Voyage submission saved");
 		return null;
 	}
 		

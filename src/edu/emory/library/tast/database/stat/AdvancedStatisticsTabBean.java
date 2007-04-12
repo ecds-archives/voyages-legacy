@@ -304,7 +304,7 @@ public class AdvancedStatisticsTabBean {
 		// We will use "v" prefix for Voyage object.
 		Conditions localCondition = (Conditions)this.conditions.clone();
 		localCondition.addCondition(Voyage.getAttribute(this.xaxis), null, Conditions.OP_IS_NOT);
-
+		
 		// We will need join condition (to join VoyageIndex and Voyage).
 		//localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 

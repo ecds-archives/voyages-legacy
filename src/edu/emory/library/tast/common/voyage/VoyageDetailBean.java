@@ -37,7 +37,7 @@ public class VoyageDetailBean {
 	private String backLink;
 
 	private String voyageAttr;
-
+	
 	public void openVoyage(int voyageId) {
 		this.voyageId = voyageId;
 	}
@@ -229,4 +229,5 @@ public class VoyageDetailBean {
 		this.detailVoyageMap.refresh();
 		return null;
 	}
+
 }

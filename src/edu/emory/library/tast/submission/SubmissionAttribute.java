@@ -53,16 +53,25 @@ public class SubmissionAttribute {
 	}
 
 	public Value getValue(Object[] toBeFormatted) {
-		if (toBeFormatted[0] == null) {
-			return new TextboxValue("Empty");
-		}
 		if (type.equals(TextboxAdapter.TYPE)) {
+			if (toBeFormatted[0] == null) {
+				return new TextboxValue("Empty");
+			}
 			return new TextboxValue(toBeFormatted[0].toString());
 		} else if (type.equals(DateAdapter.TYPE)) {
+			if (toBeFormatted[0] == null) {
+				return new DateValue(null, null, null);
+			}
 			return new DateValue((Date)toBeFormatted[0]);
 		} else if (type.equals(TextboxIntegerAdapter.TYPE)) {
+			if (toBeFormatted[0] == null) {
+				return new TextboxIntegerValue((Integer)null);
+			}
 			return new TextboxIntegerValue(toBeFormatted[0].toString());
 		} else if (type.equals(TextboxFloatAdapter.TYPE)) {
+			if (toBeFormatted[0] == null) {
+				return new TextboxFloatValue((Float)null);
+			}
 			return new TextboxFloatValue(toBeFormatted[0].toString());
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");

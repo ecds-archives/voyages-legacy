@@ -566,14 +566,15 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * 
 	 */
 	public void save() {
-		// Prepare VoyageIndex
-		VoyageIndex vIndex = new VoyageIndex();
-		vIndex.setVoyage(this);
-		vIndex.setVoyageId(this.getVoyageid());
-		vIndex.setRevisionDate(new Date(System.currentTimeMillis()));
-
-		// Save to DB (or update...)
-		HibernateConnector.getConnector().createVoyage(vIndex);
+		HibernateConnector.getConnector().saveObject(this);
+//		// Prepare VoyageIndex
+//		VoyageIndex vIndex = new VoyageIndex();
+//		vIndex.setVoyage(this);
+//		vIndex.setVoyageId(this.getVoyageid());
+//		vIndex.setRevisionDate(new Date(System.currentTimeMillis()));
+//
+//		// Save to DB (or update...)
+//		HibernateConnector.getConnector().createVoyage(vIndex);
 	}
 
 	/**

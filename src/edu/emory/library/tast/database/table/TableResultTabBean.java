@@ -183,6 +183,7 @@ public class TableResultTabBean {
 		if (subCondition != null) {
 			localCond.addCondition(subCondition);
 		}
+		//localCond.addCondition(Voyage.getAttribute("revision"), new Integer(1), Conditions.OP_EQUALS);
 		//localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
 		
 		// Build query
