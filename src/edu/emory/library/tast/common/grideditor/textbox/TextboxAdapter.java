@@ -17,7 +17,12 @@ public class TextboxAdapter extends Adapter
 	
 	protected String getSubmittedValue(FacesContext context, String inputPrefix)
 	{
-		return (String) context.getExternalContext().getRequestParameterMap().get(inputPrefix);
+		String val = (String) context.getExternalContext().getRequestParameterMap().get(inputPrefix);
+		if (val != null && !val.trim().equals("")) {
+			return val;
+		} else {
+			return null;
+		}
 	}
 
 	public Value decode(FacesContext context, String inputPrefix, GridEditorComponent gridEditor)

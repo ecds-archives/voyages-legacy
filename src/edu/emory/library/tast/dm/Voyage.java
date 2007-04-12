@@ -47,6 +47,14 @@ public class Voyage extends AbstractDescriptiveObject {
 				NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("voyageid", "Voyage",
 				NumericAttribute.TYPE_LONG, "voyageid"));
+		attributes.add(new BooleanAttribute("suggestion", "Voyage", null));
+		attributes.add(new BooleanAttribute("approved", "Voyage", null));
+		attributes.add(new NumericAttribute("revision", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "revision"));
+		attributes.add(new NumericAttribute("iid", "Voyage",
+				NumericAttribute.TYPE_LONG, null));
+		attributes.add(new NumericAttribute("iid", "Voyage",
+				NumericAttribute.TYPE_LONG, null));
 		attributes.add(new BooleanAttribute("cd", "Voyage", "cd"));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
 		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
@@ -347,6 +355,10 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new PortAttribute("arrport2", "Voyage", "arrport2"));
 	}
 
+	private int revision;
+	private boolean suggestion;
+	private boolean approved;
+	
 	/**
 	 * Gets all attributes of voyage.
 	 * 
@@ -2114,5 +2126,29 @@ public class Voyage extends AbstractDescriptiveObject {
 
 	public void setCrew(Integer val) {
 		this.values.put("crew", val);
+	}
+	
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+	public int getRevision() {
+		return revision;
+	}
+
+	public void setRevision(int revision) {
+		this.revision = revision;
+	}
+
+	public boolean isSuggestion() {
+		return suggestion;
+	}
+
+	public void setSuggestion(boolean suggestion) {
+		this.suggestion = suggestion;
 	}
 }

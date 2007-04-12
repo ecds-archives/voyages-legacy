@@ -54,6 +54,8 @@ public class TextboxLongValue extends TextboxValue
 			catch(NumberFormatException nfe)
 			{
 				valid = false;
+			} catch (NullPointerException npe) {
+				valid = false;
 			}
 			parsed = true;
 		}

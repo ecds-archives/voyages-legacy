@@ -13,6 +13,10 @@
 
 		<property name="voyageid" column="voyageid"/>
 		<property name="cd" column="cd" />
+		<property name="suggestion" />
+		<property name="revision"  />
+		<property name="approved" />
+		
 		
 		<property name="shipname" column="shipname" />
 		<many-to-one name="placcons" column="placcons" class="edu.emory.library.tast.dm.Port" />

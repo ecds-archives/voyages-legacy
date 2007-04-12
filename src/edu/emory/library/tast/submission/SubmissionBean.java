@@ -1,5 +1,7 @@
 package edu.emory.library.tast.submission;
 
+import java.util.Map;
+
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
@@ -18,7 +20,7 @@ public class SubmissionBean {
 	
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getSubmissionAttributes(); 
 	private long voyageId = -1;
-	
+	private Values valsToSubmit = null;
 	
 	public void setVoyageId(long voyageId) {
 		this.voyageId = voyageId;
@@ -57,7 +59,7 @@ public class SubmissionBean {
 				toBeFormatted[j] = voyageAttrs[j + index];
 			}
 			vals.setValue(ORIGINAL_VOYAGE, attrs[i].getUserLabel(), attrs[i].getValue(toBeFormatted));
-			vals.setValue(CHANGED_VOYAGE, attrs[i].getUserLabel(), new TextboxValue(""));
+			vals.setValue(CHANGED_VOYAGE, attrs[i].getUserLabel(), attrs[i].getEmptyValue());
 			index += attribute.getAttribute().length;
 		}
 		
@@ -75,15 +77,29 @@ public class SubmissionBean {
 	public Row[] getRows() {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
-			rows[i] = new Row(TextboxAdapter.TYPE, attrs[i].getUserLabel(), attrs[i].getUserLabel());
+			rows[i] = new Row(attrs[i].getType(), attrs[i].getUserLabel(), attrs[i].getUserLabel());
 		}
 		return rows;
 	}
-		
-		
-	public static void main(String[] args) {
-		SubmissionBean bean = new SubmissionBean();
-		bean.setVoyageId(1000);
-		//System.out.println(bean.getOriginalValues());
+	
+	public void setValues(Values vals) {
+		this.valsToSubmit = vals;
 	}
+	
+	public String submit() {
+		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
+		Voyage vNew = new Voyage();
+		vNew.setVoyageid(new Long(this.voyageId));
+		vNew.setSuggestion(true);
+		vNew.setRevision(-1);
+		vNew.setApproved(false);
+		for (int i = 0; i < attrs.length; i++) {
+			Object[] vals = attrs[i].getValues(newValues.get(attrs[i].getUserLabel()));
+			for (int j = 0; j < vals.length; j++) {
+				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+			}
+		}
+		return null;
+	}
+		
 }
