@@ -9,14 +9,14 @@ public class Column
 	
 	public Column(String name, String label)
 	{
-		this.label = label;
 		this.name = name;
+		this.label = label;
 	}
 
 	public Column(String name, String label, boolean readOnly)
 	{
-		this.label = label;
 		this.name = name;
+		this.label = label;
 		this.readOnly = readOnly;
 	}
 
@@ -24,6 +24,7 @@ public class Column
 	{
 		return label;
 	}
+
 	public String getName()
 	{
 		return name;

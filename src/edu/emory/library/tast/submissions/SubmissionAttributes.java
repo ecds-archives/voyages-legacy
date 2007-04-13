@@ -1,6 +1,5 @@
 package edu.emory.library.tast.submissions;
 
-import sun.security.jca.GetInstance;
 import edu.emory.library.tast.dm.Voyage;
 
 public class SubmissionAttributes {
@@ -18,16 +17,16 @@ public class SubmissionAttributes {
 	private SubmissionAttributes() {
 		attributes = new SubmissionAttribute[10];
 		
-		attributes[0] = new SubmissionAttribute(Voyage.getAttribute("shipname"), "Name of ship", null);
-		attributes[1] = new SubmissionAttribute(Voyage.getAttribute("datedep"), "Departure date", null);
-		attributes[2] = new SubmissionAttribute(Voyage.getAttribute("captaina"), "First captain", null);
-		attributes[3] = new SubmissionAttribute(Voyage.getAttribute("captainb"), "Second captain", null);
-		attributes[4] = new SubmissionAttribute(Voyage.getAttribute("portdep"), "Port of departure", null);
-		attributes[5] = new SubmissionAttribute(Voyage.getAttribute("arrport"), "Port of arrival", null);
-		attributes[6] = new SubmissionAttribute(Voyage.getAttribute("crew1"), "Crew 1", null);
-		attributes[7] = new SubmissionAttribute(Voyage.getAttribute("crew3"), "Crew 2", null);
-		attributes[8] = new SubmissionAttribute(Voyage.getAttribute("tonnage"), "Tinnage of vessel", null);
-		attributes[9] = new SubmissionAttribute(Voyage.getAttribute("guns"), "Guns", null);
+		attributes[0] = new SubmissionAttribute("shipname", Voyage.getAttribute("shipname"), "Name of ship", null);
+		attributes[1] = new SubmissionAttribute("datedep", Voyage.getAttribute("datedep"), "Departure date", null);
+		attributes[2] = new SubmissionAttribute("captaina", Voyage.getAttribute("captaina"), "First captain", null);
+		attributes[3] = new SubmissionAttribute("captainb", Voyage.getAttribute("captainb"), "Second captain", null);
+		attributes[4] = new SubmissionAttribute("portdep", Voyage.getAttribute("portdep"), "Port of departure", null);
+		attributes[5] = new SubmissionAttribute("arrport", Voyage.getAttribute("arrport"), "Port of arrival", null);
+		attributes[6] = new SubmissionAttribute("crew1", Voyage.getAttribute("crew1"), "Crew 1", null);
+		attributes[7] = new SubmissionAttribute("crew3", Voyage.getAttribute("crew3"), "Crew 2", null);
+		attributes[8] = new SubmissionAttribute("tonnage", Voyage.getAttribute("tonnage"), "Tinnage of vessel", null);
+		attributes[9] = new SubmissionAttribute("guns", Voyage.getAttribute("guns"), "Guns", null);
 		
 	}
 

@@ -6,8 +6,6 @@ import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.Values;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.query.Conditions;
@@ -15,8 +13,10 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class SubmissionBean {
 	
-	public static final String ORIGINAL_VOYAGE = TastResource.getText("submissions_oryginal_voyage");
-	public static final String CHANGED_VOYAGE = TastResource.getText("submissions_changed_voyage");
+	public static final String ORIGINAL_VOYAGE_LABEL = TastResource.getText("submissions_oryginal_voyage");
+	public static final String CHANGED_VOYAGE_LABEL = TastResource.getText("submissions_changed_voyage");
+	public static final String ORIGINAL_VOYAGE = "old";
+	public static final String CHANGED_VOYAGE = "new";
 	
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getSubmissionAttributes(); 
 	private long voyageId = -1;
@@ -59,8 +59,8 @@ public class SubmissionBean {
 			for (int j = 0; j < toBeFormatted.length; j++) {
 				toBeFormatted[j] = voyageAttrs[j + index];
 			}
-			vals.setValue(ORIGINAL_VOYAGE, attrs[i].getUserLabel(), attrs[i].getValue(toBeFormatted));
-			vals.setValue(CHANGED_VOYAGE, attrs[i].getUserLabel(), attrs[i].getEmptyValue());
+			vals.setValue(ORIGINAL_VOYAGE, attrs[i].getName(), attrs[i].getValue(toBeFormatted));
+			vals.setValue(CHANGED_VOYAGE, attrs[i].getName(), attrs[i].getEmptyValue());
 			index += attribute.getAttribute().length;
 		}
 		
@@ -70,15 +70,15 @@ public class SubmissionBean {
 	
 	public Column[] getColumns() {
 		Column[] cols = new Column[2];
-		cols[0] = new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE, false);
-		cols[1] = new Column(CHANGED_VOYAGE, CHANGED_VOYAGE, true);
+		cols[0] = new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, false);
+		cols[1] = new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, true);
 		return cols;
 	}
 	
 	public Row[] getRows() {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
-			rows[i] = new Row(attrs[i].getType(), attrs[i].getUserLabel(), attrs[i].getUserLabel());
+			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i].getUserLabel());
 		}
 		return rows;
 	}
@@ -89,7 +89,7 @@ public class SubmissionBean {
 	
 	public String submit() {
 		System.out.println("Voyage submission saved");
-		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
+		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE_LABEL);
 		Voyage vNew = new Voyage();
 		vNew.setVoyageid(new Long(this.voyageId));
 		vNew.setSuggestion(true);

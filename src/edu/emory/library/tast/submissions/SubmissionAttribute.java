@@ -9,14 +9,17 @@ public class SubmissionAttribute {
 	private Attribute attribute[];
 	private String userLabel;
 	private String comment;
+	private String name;
 	
-	public SubmissionAttribute(Attribute attr, String userLabel, String comment) {
+	public SubmissionAttribute(String name, Attribute attr, String userLabel, String comment) {
+		this.name = name;
 		this.attribute = new Attribute[] {attr};
 		this.userLabel = userLabel;
 		this.comment = comment;
 	}
 	
-	public SubmissionAttribute(Attribute[] attrs, String userLabel, String comment) {
+	public SubmissionAttribute(String name, Attribute[] attrs, String userLabel, String comment) {
+		this.name = name;
 		this.attribute = attrs;
 		this.userLabel = userLabel;
 		this.comment = comment;
@@ -43,5 +46,10 @@ public class SubmissionAttribute {
 
 	public Value getValue(Object[] toBeFormatted) {
 		return new TextboxValue(toBeFormatted[0].toString());
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 }

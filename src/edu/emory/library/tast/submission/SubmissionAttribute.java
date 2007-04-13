@@ -19,8 +19,10 @@ public class SubmissionAttribute {
 	private String userLabel;
 	private String comment;
 	private String type;
+	private String name;
 	
-	public SubmissionAttribute(Attribute attr, String userLabel, String comment, String type) {
+	public SubmissionAttribute(String name, Attribute attr, String userLabel, String comment, String type) {
+		this.name = name;
 		this.attribute = new Attribute[] {attr};
 		this.userLabel = userLabel;
 		this.comment = comment;
@@ -109,5 +111,10 @@ public class SubmissionAttribute {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
 		
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 }

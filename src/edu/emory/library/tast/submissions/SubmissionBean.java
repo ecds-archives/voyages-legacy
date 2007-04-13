@@ -79,7 +79,7 @@ public class SubmissionBean {
 	public Row[] getRows() {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
-			rows[i] = new Row(TextboxAdapter.TYPE, attrs[i].getUserLabel(), attrs[i].getUserLabel());
+			rows[i] = new Row(TextboxAdapter.TYPE, attrs[i].getName(), attrs[i].getUserLabel());
 		}
 		return rows;
 	}

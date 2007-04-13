@@ -13,9 +13,13 @@
 <f:view>
 <h:form id="main">
 
-	<s:gridEditor rows="#{SubmissionBean.rows}" columns="#{SubmissionBean.columns}" values="#{SubmissionBean.values}"/>
+	<s:gridEditor
+		rows="#{SubmissionBean.rows}"
+		columns="#{SubmissionBean.columns}"
+		values="#{SubmissionBean.values}"/>
 
 	<h:commandButton value="Send" action="#{SubmissionBean.submit}"/>
+
 </h:form>
 </f:view>
 </body>
