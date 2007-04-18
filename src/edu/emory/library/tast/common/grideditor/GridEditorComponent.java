@@ -60,68 +60,40 @@ public class GridEditorComponent extends UIComponentBase
 
 	public void decode(FacesContext context)
 	{
-		decodeValues(context);
-	}
-
-	private Values decodeValues(FacesContext context)
-	{
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
-		Values values = new Values();
+		values = new Values();
 		
-		// for all rows ...
 		int rowCount = 0;
 		String rowName;
 		while ((rowName = (String) params.get(getRowFieldName(context, rowCount))) != null)
 		{
 			
-			// get type of the row
 			String rowType = (String) params.get(getRowFieldTypeName(context, rowCount));
-			rowCount++;
-			
-			// invalid request: missing row type
 			if (rowType == null) throw new RuntimeException("missing row type for row " + rowName);
+			rowCount++;
 
-			// decoder/encoder for the current row type 
 			Adapter adapter = AdapterFactory.getAdapter(rowType);
 			
-			// invalid request: incorrect row type
-			if (adapter == null) throw new RuntimeException("invalid row type " + rowType);
-
-			// for all columns ...
 			int columnCount = 0;
 			String columName;
 			while ((columName = (String) params.get(getColumnFieldName(context, columnCount++))) != null)
 			{
 				
-				// name of the sumbitted fields
 				String inputPrefix = getValueInputPrefix(context, columName, rowName);
 				String errorFlagFieldName = getValueErrorFlagFieldName(context, columName, rowName);
 				String errorMessageFieldName = getValueErrorMessageFieldName(context, columName, rowName);
 				
-				// decode using the field implmenetation
 				Value value = adapter.decode(context, inputPrefix, this);
+				values.setValue(columName, rowName, value);
 				
-				// there should not be ANY problem
-				// all fields have to be in POST
-				if (value == null) return null;
-
-				// decode error status
-				String errorFlagStr = (String) params.get(errorFlagFieldName);
-				if (errorFlagStr == null) return null;
 				if (Boolean.parseBoolean((String) params.get(errorFlagFieldName)))
 					value.setErrorMessage((String) params.get(errorMessageFieldName));
-				
-				// and put it into the collection
-				values.setValue(columName, rowName, value);
 
 			}
 
 		}
 		
-		// all has gone well
-		return values;
-
 	}
 	
 	public void processUpdates(FacesContext context)
@@ -217,9 +189,6 @@ public class GridEditorComponent extends UIComponentBase
 				Column column = columns[j];
 				String columnName = column.getName();
 				Value value = values.getValue(columnName, rowName);
-				
-				if (value == null)
-					throw new NullPointerException("missing value for (" + rowName + ", " + columnName + ")");
 				
 				writer.startElement("td", this);
 
