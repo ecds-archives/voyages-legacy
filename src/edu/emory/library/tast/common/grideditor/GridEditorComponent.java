@@ -1,7 +1,9 @@
 package edu.emory.library.tast.common.grideditor;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
@@ -22,6 +24,9 @@ public class GridEditorComponent extends UIComponentBase
 	
 	private boolean valuesSet = false;
 	private Values values = null;
+	
+	private boolean extensionsSet = false;
+	private Map extensions = null;
 
 	public String getFamily()
 	{
@@ -120,37 +125,75 @@ public class GridEditorComponent extends UIComponentBase
 		writer.endElement("div");
 
 	}
+	
+	private void encodeRegJS(FacesContext context, ResponseWriter writer, UIForm form, String mainId) throws IOException
+	{
 
-	public void encodeBegin(FacesContext context) throws IOException
+		// JS registration
+		StringBuffer regJS = new StringBuffer();
+		regJS.append("GridEditorGlobals.registerEditor(new GridEditor(");
+		
+		// main id
+		regJS.append("'").append(mainId).append("', ");
+		
+		// form name
+		regJS.append("'").append(form.getClientId(context)).append("' ");
+		
+		// fields
+		regJS.append(", ");
+		regJS.append("[");
+		for (int i = 0; i < rows.length; i++)
+		{
+			Row row = rows[i];
+			String rowName = row.getName();
+			Adapter adapter = AdapterFactory.getAdapter(row.getType());
+			regJS.append(rowName).append(": {");
+			for (int j = 0; j < columns.length; j++)
+			{
+				
+				Column column = columns[j];
+				String columnName = column.getName();
+				Value value = values.getValue(columnName, rowName);
+				
+				regJS.append(columnName).append(": ");
+				adapter.encodeRegJS(
+						context,
+						regJS,
+						this,
+						getValueInputPrefix(context, columnName, rowName),
+						value,
+						column.isReadOnly());
+
+			}
+			regJS.append("}");
+		}
+		regJS.append("]");
+
+		// extensions
+		regJS.append(", [");
+		int j = 0;
+		for (Iterator iter = extensions.entrySet().iterator(); iter.hasNext();)
+		{
+			Entry listEntry = (Entry) iter.next();;
+			Extension ext = (Extension) listEntry.getValue();
+			String extName = (String) listEntry.getKey();
+			if (j > 0) regJS.append(", ");
+			regJS.append(extName).append(": ");
+			ext.encodeRegJS(regJS);
+		}
+		regJS.append("]");
+
+		// end js registration
+		regJS.append("));");
+
+		// render JS
+		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);
+
+	}
+	
+	private void encodeGrid(FacesContext context, ResponseWriter writer, UIForm form, String mainId) throws IOException
 	{
 		
-		// standard stuff
-		ResponseWriter writer = context.getResponseWriter();
-		UIForm form = JsfUtils.getForm(this, context);
-		
-		// get data from bean
-		rows = getRows();
-		columns = getColumns();
-		values = getValues();
-		
-		// hidden fields with column names
-		for (int i = 0; i < columns.length; i++)
-			JsfUtils.encodeHiddenInput(this, writer,
-					getColumnFieldName(context, i),
-					columns[i].getName());
-		
-		// hidden fields with row names
-		for (int i = 0; i < rows.length; i++)
-			JsfUtils.encodeHiddenInput(this, writer,
-					getRowFieldName(context, i),
-					rows[i].getName());
-		
-		// hidden fields with row types
-		for (int i = 0; i < rows.length; i++)
-			JsfUtils.encodeHiddenInput(this, writer,
-					getRowFieldTypeName(context, i),
-					rows[i].getType());
-
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "1", null);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -192,9 +235,15 @@ public class GridEditorComponent extends UIComponentBase
 				
 				writer.startElement("td", this);
 
-				adapter.encode(context, this, form,
+				adapter.encode(context,
+						this,
+						mainId,
+						form,
+						row,
+						extensions,
 						getValueInputPrefix(context, columnName, rowName),
-						value, column.isReadOnly());
+						value,
+						column.isReadOnly());
 				
 				JsfUtils.encodeHiddenInput(this, writer,
 						getValueErrorFlagFieldName(context, columnName, rowName),
@@ -212,9 +261,51 @@ public class GridEditorComponent extends UIComponentBase
 		}
 		
 		writer.endElement("table");
+		
+	}
+
+	public void encodeBegin(FacesContext context) throws IOException
+	{
+		
+		// standard stuff
+		ResponseWriter writer = context.getResponseWriter();
+		UIForm form = JsfUtils.getForm(this, context);
+		
+		// get data from bean
+		rows = getRows();
+		columns = getColumns();
+		values = getValues();
+		extensions = getExtensions();
+		
+		// client id of the grid
+		String mainId = getClientId(context);
+		
+		// hidden fields with column names
+		for (int i = 0; i < columns.length; i++)
+			JsfUtils.encodeHiddenInput(this, writer,
+					getColumnFieldName(context, i),
+					columns[i].getName());
+		
+		// hidden fields with row names
+		for (int i = 0; i < rows.length; i++)
+			JsfUtils.encodeHiddenInput(this, writer,
+					getRowFieldName(context, i),
+					rows[i].getName());
+		
+		// hidden fields with row types
+		for (int i = 0; i < rows.length; i++)
+			JsfUtils.encodeHiddenInput(this, writer,
+					getRowFieldTypeName(context, i),
+					rows[i].getType());
+		
+		// registration JavaScript
+		encodeRegJS(context, writer, form, mainId);
+
+		// main grid
+		encodeGrid(context, writer, form, mainId);
 
 	}
-	
+
 	public void encodeChildren(FacesContext context) throws IOException
 	{
 	}
@@ -257,6 +348,18 @@ public class GridEditorComponent extends UIComponentBase
 	{
 		valuesSet = true;
 		this.values = values;
+	}
+
+	public Map getExtensions()
+	{
+		return (Map) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"extensions", extensionsSet, extensions);
+	}
+
+	public void setExtensions(Map sharedLists)
+	{
+		extensionsSet = true;
+		this.extensions = sharedLists;
 	}
 
 }
