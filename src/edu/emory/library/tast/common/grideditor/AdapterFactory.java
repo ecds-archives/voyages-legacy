@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.emory.library.tast.common.grideditor.date.DateAdapter;
+import edu.emory.library.tast.common.grideditor.list.ListAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
@@ -26,12 +27,13 @@ public class AdapterFactory
 		adapters.put(TextboxFloatAdapter.TYPE, new TextboxFloatAdapter());
 		adapters.put(TextboxDoubleAdapter.TYPE, new TextboxDoubleAdapter());
 		adapters.put(TextareaAdapter.TYPE, new TextareaAdapter());
+		adapters.put(ListAdapter.TYPE, new ListAdapter());
 	}
 	
 	public static Adapter getAdapter(String type)
 	{
 		Adapter adapater = (Adapter) adapters.get(type);
-		if (adapater == null) new RuntimeException("invalid adapter type " + type);
+		if (adapater == null) throw new RuntimeException("invalid adapter type " + type);
 		return adapater;
 	}
 

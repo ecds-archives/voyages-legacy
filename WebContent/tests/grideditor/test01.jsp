@@ -8,19 +8,20 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Test</title>
+	<script src="../../scripts/grid-editor.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
 	<h:form id="form">
 	
-	<s:gridEditor
-		id="grid"
-		rows="#{GridEditorTestBean.rows}"
-		columns="#{GridEditorTestBean.columns}"
-		values="#{GridEditorTestBean.values}"
-		extensions="#{GridEditorTestBean.extensions}" />
-		
-	<h:commandButton value="Test submit" />
+		<s:gridEditor
+			id="grid"
+			rows="#{GridEditorTestBean.rows}"
+			columns="#{GridEditorTestBean.columns}"
+			values="#{GridEditorTestBean.values}"
+			extensions="#{GridEditorTestBean.extensions}" />
+			
+		<h:commandButton value="Test submit" />
 
 	</h:form>
 </f:view>

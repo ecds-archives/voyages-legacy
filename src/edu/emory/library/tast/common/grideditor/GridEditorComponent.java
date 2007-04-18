@@ -90,6 +90,12 @@ public class GridEditorComponent extends UIComponentBase
 				String errorMessageFieldName = getValueErrorMessageFieldName(context, columName, rowName);
 				
 				Value value = adapter.decode(context, inputPrefix, this);
+				if (value == null)
+				{
+					values = null;
+					return;
+				}
+				
 				values.setValue(columName, rowName, value);
 				
 				if (Boolean.parseBoolean((String) params.get(errorFlagFieldName)))
@@ -141,12 +147,16 @@ public class GridEditorComponent extends UIComponentBase
 		
 		// fields
 		regJS.append(", ");
-		regJS.append("[");
+		regJS.append("{");
 		for (int i = 0; i < rows.length; i++)
 		{
+			
 			Row row = rows[i];
 			String rowName = row.getName();
 			Adapter adapter = AdapterFactory.getAdapter(row.getType());
+			
+			if (i > 0) regJS.append(", ");
+			
 			regJS.append(rowName).append(": {");
 			for (int j = 0; j < columns.length; j++)
 			{
@@ -155,35 +165,40 @@ public class GridEditorComponent extends UIComponentBase
 				String columnName = column.getName();
 				Value value = values.getValue(columnName, rowName);
 				
+				if (j > 0) regJS.append(", ");
+
 				regJS.append(columnName).append(": ");
 				adapter.encodeRegJS(
 						context,
 						regJS,
 						this,
 						getValueInputPrefix(context, columnName, rowName),
+						row,
+						column,
 						value,
 						column.isReadOnly());
 
 			}
 			regJS.append("}");
 		}
-		regJS.append("]");
+		regJS.append("}");
 
 		// extensions
-		regJS.append(", [");
+		regJS.append(", {");
 		int j = 0;
-		if (extensions != null) {
-		for (Iterator iter = extensions.entrySet().iterator(); iter.hasNext();)
+		if (extensions != null)
 		{
-			Entry listEntry = (Entry) iter.next();;
-			Extension ext = (Extension) listEntry.getValue();
-			String extName = (String) listEntry.getKey();
-			if (j > 0) regJS.append(", ");
-			regJS.append(extName).append(": ");
-			ext.encodeRegJS(regJS);
+			for (Iterator iter = extensions.entrySet().iterator(); iter.hasNext();)
+			{
+				Entry listEntry = (Entry) iter.next();;
+				Extension ext = (Extension) listEntry.getValue();
+				String extName = (String) listEntry.getKey();
+				if (j > 0) regJS.append(", ");
+				regJS.append(extName).append(": ");
+				ext.encodeRegJS(regJS);
+			}
 		}
-		}
-		regJS.append("]");
+		regJS.append("}");
 
 		// end js registration
 		regJS.append("));");
@@ -242,10 +257,10 @@ public class GridEditorComponent extends UIComponentBase
 						mainId,
 						form,
 						row,
+						column,
 						extensions,
 						getValueInputPrefix(context, columnName, rowName),
-						value,
-						column.isReadOnly());
+						value, column.isReadOnly());
 				
 				JsfUtils.encodeHiddenInput(this, writer,
 						getValueErrorFlagFieldName(context, columnName, rowName),

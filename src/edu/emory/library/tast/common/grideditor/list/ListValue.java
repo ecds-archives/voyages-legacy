@@ -7,6 +7,10 @@ public class ListValue extends Value
 	
 	private String values[];
 	
+	public ListValue()
+	{
+	}
+
 	public ListValue(String[] values)
 	{
 		this.values = values;

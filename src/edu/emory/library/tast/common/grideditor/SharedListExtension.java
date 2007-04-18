@@ -8,6 +8,11 @@ public class SharedListExtension extends Extension
 	
 	private ListItem[] list = null;
 
+	public SharedListExtension(ListItem[] list)
+	{
+		this.list = list;
+	}
+
 	private void encodeSharedListRec(StringBuffer regJS, ListItem[] items)
 	{
 		regJS.append("[");
@@ -30,7 +35,6 @@ public class SharedListExtension extends Extension
 			regJS.append(")");
 		}
 		regJS.append("]");
-		regJS.append(")");
 	}
 
 	public void encodeRegJS(StringBuffer regJS)

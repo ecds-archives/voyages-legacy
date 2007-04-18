@@ -10,8 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import edu.emory.library.tast.common.grideditor.Adapter;
+import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.GridEditorComponent;
 import edu.emory.library.tast.common.grideditor.Row;
+import edu.emory.library.tast.common.grideditor.SharedListExtension;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -33,13 +35,41 @@ public class ListAdapter extends Adapter
 
 	public Value decode(FacesContext context, String inputPrefix, GridEditorComponent gridEditor)
 	{
-		return null;
+		
+		Map params = context.getExternalContext().getRequestParameterMap();
+		
+		try
+		{
+
+			int valuesCount = Integer.parseInt((String) params.get(getDepthFieldName(inputPrefix)));
+			if (valuesCount < 0) return null;
+		
+			String[] values = new String[valuesCount];
+			for (int i = 0; i < valuesCount; i++)
+			{
+				String value = (String) params.get(getHtmlSelectNamePrefix(inputPrefix) + i);
+				if (value == null) return null;
+				values[i] = value;
+			}
+			
+			return new ListValue(values);
+
+		}
+		catch (NumberFormatException nfe)
+		{
+			return null;
+		}
+
 	}
 
-	public void encodeRegJS(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Value value, boolean readOnly) throws IOException
+	public void encodeRegJS(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
 	{
+		
+		ListRow listRow = (ListRow) row;
 
 		regJS.append("new GridEditorList(");
+		regJS.append("'").append(listRow.getListName()).append("'");
+		regJS.append(", ");
 		regJS.append("'").append(getHtmlSelectNamePrefix(inputPrefix)).append("'");
 		regJS.append(", ");
 		regJS.append("'").append(getDepthFieldName(inputPrefix)).append("'");
@@ -81,20 +111,20 @@ public class ListAdapter extends Adapter
 		
 	}
 	
-	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Map extensions, String inputPrefix, Value value, boolean readOnly) throws IOException
+	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, Map extensions, String inputPrefix, Value value, boolean readOnly) throws IOException
 	{
 
 		ListValue listValue = (ListValue) value;
 		ListRow listRow = (ListRow) row;
 		ResponseWriter writer = context.getResponseWriter();
-		ListItem[] listItems = (ListItem[]) extensions.get(listRow.getListName());
+		SharedListExtension sharedListExt = (SharedListExtension) extensions.get(listRow.getListName());
 		
-		String[] listValues = matchValues(listValue.getValues(), listItems);
-		int maxDepth = ListItem.determineMaxDepth(listItems);
+		String[] listValues = matchValues(listValue.getValues(), sharedListExt.getList());
+		int maxDepth = ListItem.determineMaxDepth(sharedListExt.getList());
 		
 		JsfUtils.encodeHiddenInput(gridEditor, writer,
 				getDepthFieldName(inputPrefix),
-				String.valueOf(listValues));
+				String.valueOf(listValues.length));
 
 		writer.startElement("table", gridEditor);
 		writer.writeAttribute("border", "0", null);
@@ -104,7 +134,7 @@ public class ListAdapter extends Adapter
 		writer.startElement("tr", gridEditor);
 
 		String cssStyle = null;
-		ListItem[] items = listItems;
+		ListItem[] items = sharedListExt.getList();
 		ListItem[] nextItems = null;
 
  		for (int i = 0; i < maxDepth; i++)
@@ -118,7 +148,9 @@ public class ListAdapter extends Adapter
  			
  			String onchange =
  				"GridEditorGlobals.listItemSelected(" +
- 				"'$this->name', " +
+ 				"'" + clientGridId + "', " +
+ 				"'" + row.getName() + "', " +
+ 				"'" + column.getName() + "', " +
  				"" + i + ")";
 
  			writer.startElement("td", gridEditor);
@@ -130,7 +162,7 @@ public class ListAdapter extends Adapter
 
 	 	 	if (i < listValues.length)
 	 	 	{
-	 	 		for (int j = 0; j < maxDepth; j++)
+	 	 		for (int j = 0; j < items.length; j++)
 				{
 	 	 			
 	 	 			ListItem item = items[j];

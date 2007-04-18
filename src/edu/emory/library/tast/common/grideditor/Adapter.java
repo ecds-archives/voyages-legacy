@@ -20,6 +20,7 @@ abstract public class Adapter
 			String clientGridId,
 			UIForm form,
 			Row row,
+			Column column,
 			Map extensions,
 			String inputPrefix,
 			Value value,
@@ -30,6 +31,8 @@ abstract public class Adapter
 			StringBuffer regJS,
 			GridEditorComponent gridEditor,
 			String inputPrefix,
+			Row row,
+			Column column,
 			Value value,
 			boolean readOnly) throws IOException
 	{

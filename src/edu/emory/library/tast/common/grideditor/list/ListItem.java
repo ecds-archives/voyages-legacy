@@ -99,7 +99,7 @@ public class ListItem
 	
 	public static int determineMaxDepth(ListItem[] items)
 	{
-		int max = Integer.MIN_VALUE;
+		int max = 0;
 		if (items != null)
 		{
 			for (int i = 0; i < items.length; i++)
@@ -117,7 +117,7 @@ public class ListItem
 		{
 			for (int i = 0; i < subItems.length; i++)
 			{
-				max = Math.max(subItems[i].determineMaxDepth(), max);
+				max = Math.max(subItems[i].determineMaxDepth() + 1, max);
 			}
 		}
 		return max;
