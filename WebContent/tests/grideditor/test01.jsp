@@ -17,7 +17,8 @@
 		id="grid"
 		rows="#{GridEditorTestBean.rows}"
 		columns="#{GridEditorTestBean.columns}"
-		values="#{GridEditorTestBean.values}" />
+		values="#{GridEditorTestBean.values}"
+		extensions="#{GridEditorTestBean.extensions}" />
 		
 	<h:commandButton value="Test submit" />
 

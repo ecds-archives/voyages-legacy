@@ -13,6 +13,7 @@ import edu.emory.library.tast.common.grideditor.Adapter;
 import edu.emory.library.tast.common.grideditor.GridEditorComponent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.Value;
+import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
 public class ListAdapter extends Adapter
@@ -20,9 +21,14 @@ public class ListAdapter extends Adapter
 
 	public static final String TYPE = "list";
 	
-	private String getHtmlSelectName(String inputPrefix, int i)
+	private String getHtmlSelectNamePrefix(String inputPrefix)
 	{
-		return inputPrefix + "_" + i;
+		return inputPrefix + "_select_";
+	}
+
+	private String getDepthFieldName(String inputPrefix)
+	{
+		return inputPrefix + "_depth";
 	}
 
 	public Value decode(FacesContext context, String inputPrefix, GridEditorComponent gridEditor)
@@ -32,9 +38,13 @@ public class ListAdapter extends Adapter
 
 	public void encodeRegJS(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Value value, boolean readOnly) throws IOException
 	{
-		regJS.append("{");
-		regJS.append("selectsNamePrefix: ");
-		regJS.append("}");
+
+		regJS.append("new GridEditorList(");
+		regJS.append("'").append(getHtmlSelectNamePrefix(inputPrefix)).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(getDepthFieldName(inputPrefix)).append("'");
+		regJS.append(")");
+
 	}
 	
 	private String[] matchValues(String[] values, ListItem[] items)
@@ -81,6 +91,10 @@ public class ListAdapter extends Adapter
 		
 		String[] listValues = matchValues(listValue.getValues(), listItems);
 		int maxDepth = ListItem.determineMaxDepth(listItems);
+		
+		JsfUtils.encodeHiddenInput(gridEditor, writer,
+				getDepthFieldName(inputPrefix),
+				String.valueOf(listValues));
 
 		writer.startElement("table", gridEditor);
 		writer.writeAttribute("border", "0", null);
@@ -98,6 +112,9 @@ public class ListAdapter extends Adapter
  			
  			if (i == listValues.length)
  				cssStyle = "display: none";
+
+ 			String selectName =
+ 					getHtmlSelectNamePrefix(inputPrefix) + i;
  			
  			String onchange =
  				"GridEditorGlobals.listItemSelected(" +
@@ -107,7 +124,7 @@ public class ListAdapter extends Adapter
  			writer.startElement("td", gridEditor);
 
  			writer.startElement("select", gridEditor);
- 			writer.writeAttribute("name", getHtmlSelectName(inputPrefix, i), null);
+			writer.writeAttribute("name", selectName, null);
  			writer.writeAttribute("onchange", onchange, null);
  			if (cssStyle != null) writer.writeAttribute("style", cssStyle, null);
 

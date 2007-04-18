@@ -15,6 +15,13 @@ public class ListItem
 		this.text = text;
 	}
 
+	public ListItem(String value, String text, ListItem[] subItems)
+	{
+		this.value = value;
+		this.text = text;
+		this.subItems = subItems;
+	}
+
 	public ListItem[] getSubItems()
 	{
 		if (subItems == null)

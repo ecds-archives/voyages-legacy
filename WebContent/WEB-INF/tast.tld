@@ -925,6 +925,9 @@
 		<attribute>
 			<name>values</name>
 		</attribute>
+		<attribute>
+			<name>extensions</name>
+		</attribute>
 	</tag>
 
 </taglib>

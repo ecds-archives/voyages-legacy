@@ -1,7 +1,7 @@
 var RecordEditorGlobals =
 {
 
-	editors: Array(),
+	editors: new Array(),
 	
 	registerEditor: function(editor)
 	{

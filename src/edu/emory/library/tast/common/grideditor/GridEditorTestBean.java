@@ -1,6 +1,10 @@
 package edu.emory.library.tast.common.grideditor;
 
-import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.emory.library.tast.common.grideditor.list.ListItem;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxRow;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
 
 public class GridEditorTestBean
@@ -22,9 +26,9 @@ public class GridEditorTestBean
 	public Row[] getRows()
 	{
 		return new Row[] {
-				new Row(TextboxAdapter.TYPE, "firstName", "First name"),
-				new Row(TextboxAdapter.TYPE, "lastName", "Last name"),
-				new Row(TextboxAdapter.TYPE, "phone", "Phone number")
+				new TextboxRow("firstName", "First name"),
+				new TextboxRow("lastName", "Last name"),
+				new TextboxRow("phone", "Phone number")
 		};
 	}
 
@@ -34,6 +38,38 @@ public class GridEditorTestBean
 				new Column("old", "Old"),
 				new Column("new", "New")
 		};
+	}
+	
+	public Map getExtensions()
+	{
+		
+		ListItem[] states = new ListItem[] {
+
+				new ListItem("DS", "Deep South", new ListItem[] {
+						new ListItem("AL", "Alabama"),
+						new ListItem("FL", "Florida"),
+						new ListItem("GA", "Georgia"),
+						new ListItem("LU", "Louisiana"),
+						new ListItem("MS", "Mississippi")}),
+						
+				new ListItem("MS", "Mid-South", new ListItem[] {
+						new ListItem("AL", "Kentucky"),
+						new ListItem("FL", "North Carolina"),
+						new ListItem("GA", "South Carolina"),
+						new ListItem("LU", "Tennessee"),
+						new ListItem("MS", "Virginia")}),
+						
+				new ListItem("PW", "Pacific West", new ListItem[] {
+						new ListItem("AL", "Alaska"),
+						new ListItem("FL", "California"),
+						new ListItem("GA", "Hawaii")})
+						
+		};
+		
+		Map extensions = new HashMap();
+		extensions.put("states", states);
+		return extensions;
+		
 	}
 
 	public Values getValues()
