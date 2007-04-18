@@ -10,6 +10,7 @@ import javax.faces.context.ResponseWriter;
 import edu.emory.library.tast.common.grideditor.Adapter;
 import edu.emory.library.tast.common.grideditor.GridEditorComponent;
 import edu.emory.library.tast.common.grideditor.Value;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class DateAdapter extends Adapter
 {
@@ -48,19 +49,14 @@ public class DateAdapter extends Adapter
 		
 	}
 
-	public void encode(FacesContext context, GridEditorComponent gridEditor, UIForm form, String inputPrefix, Value value, boolean readOnly) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, DateValue dateValue, ResponseWriter writer) throws IOException
 	{
-		
-		DateValue dateValue = (DateValue) value;
-		
-		// get writer
-		ResponseWriter writer = context.getResponseWriter();
 		
 		// day
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getYearFieldName(inputPrefix), null);
-		writer.writeAttribute("value", dateValue.getDayOrEmpty(), null);
+		writer.writeAttribute("value", dateValue.getYearOrEmpty(), null);
 		writer.writeAttribute("class", "record-gridEditor-date-day", null);
 		writer.endElement("input");
 		
@@ -76,9 +72,42 @@ public class DateAdapter extends Adapter
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getDayFieldName(inputPrefix), null);
-		writer.writeAttribute("value", dateValue.getYearOrEmpty(), null);
+		writer.writeAttribute("value", dateValue.getDayOrEmpty(), null);
 		writer.writeAttribute("class", "record-gridEditor-date-year", null);
 		writer.endElement("input");
+
+	}
+
+	private void encodeReadOnlyMode(GridEditorComponent gridEditor, String inputPrefix, DateValue dateValue, ResponseWriter writer) throws IOException
+	{
+		
+		JsfUtils.encodeHiddenInput(gridEditor, writer,
+				getYearFieldName(inputPrefix), dateValue.getYearOrEmpty());
+
+		JsfUtils.encodeHiddenInput(gridEditor, writer,
+				getMonthFieldName(inputPrefix), dateValue.getMonthOrEmpty());
+
+		JsfUtils.encodeHiddenInput(gridEditor, writer,
+				getDayFieldName(inputPrefix), dateValue.getDayOrEmpty());
+		
+		writer.write(dateValue.getYearOrEmpty());
+		writer.write("/");
+		writer.write(dateValue.getMonthOrEmpty());
+		writer.write("/");
+		writer.write(dateValue.getDayOrEmpty());
+		
+	}
+	
+	public void encode(FacesContext context, GridEditorComponent gridEditor, UIForm form, String inputPrefix, Value value, boolean readOnly) throws IOException
+	{
+		
+		DateValue dateValue = (DateValue) value;
+		ResponseWriter writer = context.getResponseWriter();
+		
+		if (!readOnly)
+			encodeEditMode(gridEditor, inputPrefix, dateValue, writer);
+		else
+			encodeReadOnlyMode(gridEditor, inputPrefix, dateValue, writer);
 		
 	}
 

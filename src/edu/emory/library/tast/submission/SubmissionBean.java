@@ -89,14 +89,14 @@ public class SubmissionBean {
 	
 	public String submit() {
 		System.out.println("Voyage submission saved");
-		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE_LABEL);
+		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
 		Voyage vNew = new Voyage();
 		vNew.setVoyageid(new Long(this.voyageId));
 		vNew.setSuggestion(true);
 		vNew.setRevision(-1);
 		vNew.setApproved(false);
 		for (int i = 0; i < attrs.length; i++) {
-			Object[] vals = attrs[i].getValues(newValues.get(attrs[i].getUserLabel()));
+			Object[] vals = attrs[i].getValues(newValues.get(attrs[i].getName()));
 			for (int j = 0; j < vals.length; j++) {
 				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
