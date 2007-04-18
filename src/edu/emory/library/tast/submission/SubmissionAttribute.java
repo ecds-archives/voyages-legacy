@@ -10,6 +10,8 @@ import org.w3c.dom.NodeList;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.date.DateAdapter;
 import edu.emory.library.tast.common.grideditor.date.DateValue;
+import edu.emory.library.tast.common.grideditor.textbox.TextareaAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextareaValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatValue;
@@ -93,6 +95,12 @@ public class SubmissionAttribute {
 				return new TextboxLongValue((Integer)null);
 			}
 			return new TextboxFloatValue(toBeFormatted[0].toString());
+		} else if (type.equals(TextareaAdapter.TYPE)) {
+			String[] strArr = new String[toBeFormatted.length];
+			for (int i = 0; i < strArr.length; i++) {
+				strArr[i] = toBeFormatted[i].toString();
+			}
+			return new TextareaValue(strArr);
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
@@ -109,6 +117,8 @@ public class SubmissionAttribute {
 			return new TextboxFloatValue((Float)null);
 		} else if (type.equals(TextboxLongAdapter.TYPE)) {
 			return new TextboxLongValue((Integer)null);
+		} else if (type.equals(TextareaAdapter.TYPE)) {
+			return new TextareaValue(null);
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
@@ -129,6 +139,8 @@ public class SubmissionAttribute {
 			return new Object[]{((TextboxFloatValue)object).getFloat()};
 		} else if (type.equals(TextboxLongAdapter.TYPE)) {
 			return new Object[]{((TextboxLongValue)object).getInteger()};
+		} else if (type.equals(TextareaAdapter.TYPE)) {
+			return ((TextareaValue)object).getTexts();
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
@@ -173,7 +185,11 @@ public class SubmissionAttribute {
 		
 		String attrType = null;
 		if (type.equals("string")) {
-			attrType = TextboxAdapter.TYPE;
+			if (attributesList.size() > 1) {
+				attrType = TextareaAdapter.TYPE;
+			} else {
+				attrType = TextboxAdapter.TYPE;
+			}
 		} else if (type.equals("integer")) {
 			attrType = TextboxIntegerAdapter.TYPE;
 		} else if (type.equals("float")) {

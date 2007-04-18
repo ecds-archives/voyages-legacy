@@ -172,6 +172,7 @@ public class GridEditorComponent extends UIComponentBase
 		// extensions
 		regJS.append(", [");
 		int j = 0;
+		if (extensions != null) {
 		for (Iterator iter = extensions.entrySet().iterator(); iter.hasNext();)
 		{
 			Entry listEntry = (Entry) iter.next();;
@@ -180,6 +181,7 @@ public class GridEditorComponent extends UIComponentBase
 			if (j > 0) regJS.append(", ");
 			regJS.append(extName).append(": ");
 			ext.encodeRegJS(regJS);
+		}
 		}
 		regJS.append("]");
 
