@@ -353,6 +353,24 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new PortAttribute("embport2", "Voyage", "embport2"));
 		attributes.add(new PortAttribute("arrport", "Voyage", "arrport"));
 		attributes.add(new PortAttribute("arrport2", "Voyage", "arrport2"));
+		
+		attributes.add(new NumericAttribute("nppretra", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "nppretra"));
+		attributes.add(new NumericAttribute("tslavesp", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "tslavesp"));
+		attributes.add(new NumericAttribute("sladvoy", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "sladvoy"));
+		attributes.add(new NumericAttribute("npprior", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "npprior"));
+		attributes.add(new NumericAttribute("national", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "national"));
+		attributes.add(new NumericAttribute("slinten2", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "slinten2"));
+		attributes.add(new NumericAttribute("ndesert", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "ndesert"));
+		attributes.add(new NumericAttribute("sladafri", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "sladafri"));
+		
 	}
 
 	private int revision;
@@ -2151,5 +2169,72 @@ public class Voyage extends AbstractDescriptiveObject {
 
 	public void setSuggestion(boolean suggestion) {
 		this.suggestion = suggestion;
+	}
+	
+	
+	
+	
+	public Integer getNppretra() {
+		return (Integer)this.values.get("nppretra");
+	}
+	
+	public void setNppretra(Integer val) {
+		this.values.put("nppretra", val);
+	}
+	
+	public Integer getTslavesp() {
+		return (Integer)this.values.get("tslavesp");
+	}
+	
+	public void setTslavesp(Integer val) {
+		this.values.put("tslavesp", val);
+	}
+	
+	public Integer getSladvoy() {
+		return (Integer)this.values.get("sladvoy");
+	}
+	
+	public void setSladvoy(Integer val) {
+		this.values.put("sladvoy", val);
+	}
+	
+	public Integer getNpprior() {
+		return (Integer)this.values.get("npprior");
+	}
+	
+	public void setNpprior(Integer val) {
+		this.values.put("npprior", val);
+	}
+	
+	public Integer getNational() {
+		return (Integer)this.values.get("national");
+	}
+	
+	public void setNational(Integer val) {
+		this.values.put("national", val);
+	}
+	
+	public Integer getSlinten2() {
+		return (Integer)this.values.get("slinten2");
+	}
+	
+	public void setSlinten2(Integer val) {
+		this.values.put("slinten2", val);
+	}
+	
+	public void setSladafri(Integer val) {
+		this.values.put("sladafri", val);
+	}
+	
+	public Integer getSladafri() {
+		return (Integer)this.values.get("sladafri");
+	}
+	
+	public void setNdesert(Integer val) {
+		this.values.put("ndesert", val);
+	}
+	
+	public Integer getNdesert() {
+		return (Integer)this.values.get("ndesert");
 	}
 }

@@ -2,8 +2,6 @@ package edu.emory.library.tast.submission;
 
 import java.util.Map;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
-
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
@@ -27,7 +25,7 @@ public class SubmissionBean {
 	public static final String CHANGED_VOYAGE = "new";
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes
-			.getConfiguration().getSubmissionAttributes();
+			.getConfiguration().getPublicAttributes();
 
 	private long voyageId = -1;
 
@@ -44,7 +42,7 @@ public class SubmissionBean {
 	public Values getValues() {
 
 		if (!wasError || vals == null) {
-			this.voyageId = 1;
+			this.voyageId = 43;
 
 			if (this.voyageId == -1) {
 				throw new RuntimeException("Voyage ID was not set!");

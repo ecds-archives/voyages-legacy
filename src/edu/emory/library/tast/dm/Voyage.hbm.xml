@@ -213,5 +213,14 @@
 		<property name="infant4" />
 		<property name="crew" />
 		
+		<property name="nppretra" />
+		<property name="tslavesp" />
+		<property name="sladvoy" />
+		<property name="npprior" />
+		<property name="national" />
+		<property name="slinten2" />
+		<property name="ndesert" />
+		<property name="sladafri" />
+		
 	</class>
 </hibernate-mapping>
