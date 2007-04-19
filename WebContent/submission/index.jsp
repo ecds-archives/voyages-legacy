@@ -8,6 +8,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Submission</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/grid-editor.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
@@ -16,7 +18,8 @@
 	<s:gridEditor
 		rows="#{SubmissionBean.rows}"
 		columns="#{SubmissionBean.columns}"
-		values="#{SubmissionBean.values}"/>
+		values="#{SubmissionBean.values}"
+		fieldTypes="#{SubmissionBean.fieldTypes}"/>
 
 	<h:commandButton value="Send" action="#{SubmissionBean.submit}"/>
 
