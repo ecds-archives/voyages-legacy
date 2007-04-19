@@ -9,6 +9,7 @@ import javax.faces.context.ResponseWriter;
 
 import edu.emory.library.tast.common.grideditor.Adapter;
 import edu.emory.library.tast.common.grideditor.Column;
+import edu.emory.library.tast.common.grideditor.FieldType;
 import edu.emory.library.tast.common.grideditor.GridEditorComponent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.Value;
@@ -100,7 +101,7 @@ public class DateAdapter extends Adapter
 		
 	}
 	
-	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, Map extensions, String inputPrefix, Value value, boolean readOnly) throws IOException
+	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly) throws IOException
 	{
 		
 		DateValue dateValue = (DateValue) value;

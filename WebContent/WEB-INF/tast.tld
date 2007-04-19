@@ -926,7 +926,7 @@
 			<name>values</name>
 		</attribute>
 		<attribute>
-			<name>extensions</name>
+			<name>fieldTypes</name>
 		</attribute>
 	</tag>
 

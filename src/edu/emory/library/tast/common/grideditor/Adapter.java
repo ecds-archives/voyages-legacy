@@ -1,7 +1,6 @@
 package edu.emory.library.tast.common.grideditor;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
@@ -21,12 +20,12 @@ abstract public class Adapter
 			UIForm form,
 			Row row,
 			Column column,
-			Map extensions,
+			FieldType fieldType,
 			String inputPrefix,
 			Value value,
 			boolean readOnly) throws IOException;
 	
-	public void encodeRegJS(
+	public void createValueJavaScript(
 			FacesContext context,
 			StringBuffer regJS,
 			GridEditorComponent gridEditor,
@@ -35,6 +34,15 @@ abstract public class Adapter
 			Column column,
 			Value value,
 			boolean readOnly) throws IOException
+	{
+		regJS.append("{}");
+	}
+
+	public void createFieldTypeJavaScript(
+			FacesContext context,
+			StringBuffer regJS,
+			GridEditorComponent gridEditor,
+			FieldType fieldType) throws IOException
 	{
 		regJS.append("{}");
 	}

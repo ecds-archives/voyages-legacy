@@ -3,16 +3,18 @@ package edu.emory.library.tast.common.grideditor;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.emory.library.tast.common.grideditor.list.ListFieldType;
 import edu.emory.library.tast.common.grideditor.list.ListItem;
-import edu.emory.library.tast.common.grideditor.list.ListRow;
 import edu.emory.library.tast.common.grideditor.list.ListValue;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxRow;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxFieldType;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
 
 public class GridEditorTestBean
 {
-	
-	private static final String LIST_OF_STATES = "listOfStates";
+
+	private static final String FIELD_TYPE_STATES = "listOfStates";
+	private static final String FIELD_TYPE_NAME = "name";
+	private static final String FIELD_TYPE_PHONE = "phone";
 
 	private Values values;
 	
@@ -32,10 +34,10 @@ public class GridEditorTestBean
 	public Row[] getRows()
 	{
 		return new Row[] {
-				new TextboxRow("firstName", "First name"),
-				new TextboxRow("lastName", "Last name"),
-				new TextboxRow("phone", "Phone number"),
-				new ListRow("state", "Phone number", LIST_OF_STATES)
+				new Row(FIELD_TYPE_NAME, "firstName", "First name"),
+				new Row(FIELD_TYPE_NAME, "lastName", "Last name"),
+				new Row(FIELD_TYPE_PHONE, "phone", "Phone number"),
+				new Row(FIELD_TYPE_STATES, "state", "State")
 		};
 	}
 
@@ -47,7 +49,7 @@ public class GridEditorTestBean
 		};
 	}
 	
-	public Map getExtensions()
+	public Map getFieldTypes()
 	{
 		
 		ListItem[] states = new ListItem[] {
@@ -73,9 +75,21 @@ public class GridEditorTestBean
 						
 		};
 		
-		Map extensions = new HashMap();
-		extensions.put(LIST_OF_STATES, new SharedListExtension(states));
-		return extensions;
+		Map fieldTypes = new HashMap();
+		
+		fieldTypes.put(
+				FIELD_TYPE_NAME,
+				new TextboxFieldType(FIELD_TYPE_NAME));
+		
+		fieldTypes.put(
+				FIELD_TYPE_PHONE,
+				new TextboxFieldType(FIELD_TYPE_PHONE));
+		
+		fieldTypes.put(
+				FIELD_TYPE_STATES,
+				new ListFieldType(FIELD_TYPE_STATES, states));
+		
+		return fieldTypes;
 		
 	}
 

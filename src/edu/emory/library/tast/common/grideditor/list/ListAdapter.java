@@ -11,9 +11,9 @@ import javax.faces.context.ResponseWriter;
 
 import edu.emory.library.tast.common.grideditor.Adapter;
 import edu.emory.library.tast.common.grideditor.Column;
+import edu.emory.library.tast.common.grideditor.FieldType;
 import edu.emory.library.tast.common.grideditor.GridEditorComponent;
 import edu.emory.library.tast.common.grideditor.Row;
-import edu.emory.library.tast.common.grideditor.SharedListExtension;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -61,14 +61,42 @@ public class ListAdapter extends Adapter
 		}
 
 	}
+	
+	private void createSharedListRec(StringBuffer regJS, ListItem[] items)
+	{
+		regJS.append("[");
+		for (int i = 0; i < items.length; i++)
+		{
+			ListItem item = items[i];
+			if (i > 0) regJS.append(", ");
+			regJS.append("new GridEditorListItem(");
+			if (item.getValue() == null)
+			{
+				regJS.append("null, ");
+			}
+			else
+			{
+				regJS.append("'").append(item.getValue()).append("', ");
+			}
+			regJS.append("'").append(JsfUtils.escapeStringForJS(item.getText())).append("'");
+			regJS.append(", ");
+			createSharedListRec(regJS, item.getSubItems());
+			regJS.append(")");
+		}
+		regJS.append("]");
+	}
+	
+	public void createFieldTypeJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, FieldType fieldType) throws IOException
+	{
+		ListFieldType listFieldType = (ListFieldType) fieldType;
+		createSharedListRec(regJS, listFieldType.getListItems());
+	}
 
-	public void encodeRegJS(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
 	{
 		
-		ListRow listRow = (ListRow) row;
-
 		regJS.append("new GridEditorList(");
-		regJS.append("'").append(listRow.getListName()).append("'");
+		regJS.append("'").append(row.getType()).append("'");
 		regJS.append(", ");
 		regJS.append("'").append(getHtmlSelectNamePrefix(inputPrefix)).append("'");
 		regJS.append(", ");
@@ -111,16 +139,15 @@ public class ListAdapter extends Adapter
 		
 	}
 	
-	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, Map extensions, String inputPrefix, Value value, boolean readOnly) throws IOException
+	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly) throws IOException
 	{
 
 		ListValue listValue = (ListValue) value;
-		ListRow listRow = (ListRow) row;
 		ResponseWriter writer = context.getResponseWriter();
-		SharedListExtension sharedListExt = (SharedListExtension) extensions.get(listRow.getListName());
+		ListFieldType listFieldType = (ListFieldType) fieldType;
 		
-		String[] listValues = matchValues(listValue.getValues(), sharedListExt.getList());
-		int maxDepth = ListItem.determineMaxDepth(sharedListExt.getList());
+		String[] listValues = matchValues(listValue.getValues(), listFieldType.getListItems());
+		int maxDepth = ListItem.determineMaxDepth(listFieldType.getListItems());
 		
 		JsfUtils.encodeHiddenInput(gridEditor, writer,
 				getDepthFieldName(inputPrefix),
@@ -134,7 +161,7 @@ public class ListAdapter extends Adapter
 		writer.startElement("tr", gridEditor);
 
 		String cssStyle = null;
-		ListItem[] items = sharedListExt.getList();
+		ListItem[] items = listFieldType.getListItems();
 		ListItem[] nextItems = null;
 
  		for (int i = 0; i < maxDepth; i++)

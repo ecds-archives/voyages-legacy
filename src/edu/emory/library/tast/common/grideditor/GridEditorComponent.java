@@ -24,9 +24,9 @@ public class GridEditorComponent extends UIComponentBase
 	
 	private boolean valuesSet = false;
 	private Values values = null;
-	
-	private boolean extensionsSet = false;
-	private Map extensions = null;
+
+	private boolean fieldTypesSet = false;
+	private Map fieldTypes = null;
 
 	public String getFamily()
 	{
@@ -168,7 +168,7 @@ public class GridEditorComponent extends UIComponentBase
 				if (j > 0) regJS.append(", ");
 
 				regJS.append(columnName).append(": ");
-				adapter.encodeRegJS(
+				adapter.createValueJavaScript(
 						context,
 						regJS,
 						this,
@@ -183,19 +183,20 @@ public class GridEditorComponent extends UIComponentBase
 		}
 		regJS.append("}");
 
-		// extensions
+		// field types
 		regJS.append(", {");
 		int j = 0;
-		if (extensions != null)
+		if (fieldTypes != null)
 		{
-			for (Iterator iter = extensions.entrySet().iterator(); iter.hasNext();)
+			for (Iterator iter = fieldTypes.entrySet().iterator(); iter.hasNext();)
 			{
 				Entry listEntry = (Entry) iter.next();;
-				Extension ext = (Extension) listEntry.getValue();
+				FieldType fieldType = (FieldType) listEntry.getValue();
 				String extName = (String) listEntry.getKey();
+				Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
 				if (j > 0) regJS.append(", ");
 				regJS.append(extName).append(": ");
-				ext.encodeRegJS(regJS);
+				adapter.createFieldTypeJavaScript(context, regJS, this, fieldType);
 			}
 		}
 		regJS.append("}");
@@ -237,6 +238,7 @@ public class GridEditorComponent extends UIComponentBase
 			String rowName = row.getName();
 			
 			Adapter adapter = AdapterFactory.getAdapter(row.getType());
+			FieldType fieldType = (FieldType) fieldTypes.get(row.getType());
 			
 			writer.startElement("tr", this);
 
@@ -258,7 +260,7 @@ public class GridEditorComponent extends UIComponentBase
 						form,
 						row,
 						column,
-						extensions,
+						fieldType,
 						getValueInputPrefix(context, columnName, rowName),
 						value, column.isReadOnly());
 				
@@ -292,7 +294,7 @@ public class GridEditorComponent extends UIComponentBase
 		rows = getRows();
 		columns = getColumns();
 		values = getValues();
-		extensions = getExtensions();
+		fieldTypes = getFieldTypes();
 		
 		// client id of the grid
 		String mainId = getClientId(context);
@@ -367,16 +369,16 @@ public class GridEditorComponent extends UIComponentBase
 		this.values = values;
 	}
 
-	public Map getExtensions()
+	public Map getFieldTypes()
 	{
 		return (Map) JsfUtils.getCompPropObject(this, getFacesContext(),
-				"extensions", extensionsSet, extensions);
+				"fieldTypes", fieldTypesSet, fieldTypes);
 	}
 
-	public void setExtensions(Map sharedLists)
+	public void setFieldTypes(Map fieldTypes)
 	{
-		extensionsSet = true;
-		this.extensions = sharedLists;
+		fieldTypesSet = true;
+		this.fieldTypes = fieldTypes;
 	}
 
 }
