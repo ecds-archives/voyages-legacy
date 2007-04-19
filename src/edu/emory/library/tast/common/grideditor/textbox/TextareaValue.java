@@ -12,6 +12,11 @@ public class TextareaValue extends Value
 		this.texts = texts;
 	}
 
+	public TextareaValue(String text)
+	{
+		texts = new String[] {text};
+	}
+
 	public String getText()
 	{
 		StringBuffer buffer = new StringBuffer();

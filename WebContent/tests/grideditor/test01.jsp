@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Test</title>
 	<script src="../../scripts/grid-editor.js" language="javascript" type="text/javascript"></script>
+	<link href="../../scripts/grid-editor.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>

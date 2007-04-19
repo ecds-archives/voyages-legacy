@@ -6,6 +6,7 @@ public class ListFieldType extends FieldType
 {
 	
 	private ListItem[] listItems;
+	private String separator = " / ";
 
 	public ListFieldType(String name)
 	{
@@ -16,6 +17,13 @@ public class ListFieldType extends FieldType
 	{
 		super(name);
 		this.listItems = listItems;
+	}
+
+	public ListFieldType(String name, ListItem[] listItems, String separator)
+	{
+		super(name);
+		this.listItems = listItems;
+		this.separator = separator;
 	}
 
 	public String getType()
@@ -31,6 +39,16 @@ public class ListFieldType extends FieldType
 	public void setListItems(ListItem[] listItems)
 	{
 		this.listItems = listItems;
+	}
+
+	public String getSeparator()
+	{
+		return separator;
+	}
+
+	public void setSeparator(String separator)
+	{
+		this.separator = separator;
 	}
 
 }

@@ -46,12 +46,12 @@ public class TextareaAdapter extends Adapter
 	private void encodeReadOnlyMode(GridEditorComponent gridEditor, String inputPrefix, TextareaValue textboxValue, ResponseWriter writer) throws IOException
 	{
 
-		writer.write(textboxValue.getText().replaceAll("\n", "<br>"));
-		
 		JsfUtils.encodeHiddenInput(
 				gridEditor, writer,
 				inputPrefix,
 				textboxValue.getText());
+
+		writer.write(textboxValue.getText().replaceAll("\n", "<br>"));
 
 	}
 
@@ -64,11 +64,11 @@ public class TextareaAdapter extends Adapter
 		
 		if (readOnly)
 		{
-			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer, textareaFieldType);
+			encodeReadOnlyMode(gridEditor, inputPrefix, textboxValue, writer);
 		}
 		else
 		{
-			encodeReadOnlyMode(gridEditor, inputPrefix, textboxValue, writer);
+			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer, textareaFieldType);
 		}
 		
 	}

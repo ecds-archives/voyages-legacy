@@ -110,7 +110,7 @@ public class ListAdapter extends Adapter
 
 	}
 	
-	private String[] matchValues(String[] values, ListItem[] items)
+	private ListItem[] matchValues(String[] values, ListItem[] items)
 	{
 		
 		List newValues = new ArrayList();
@@ -128,36 +128,24 @@ public class ListAdapter extends Adapter
 				{
 					items = item.getSubItems();
 				}
-				newValues.add(item.getValue());
+				newValues.add(item);
 			}
 		}
 		
 		while (items != null && items.length > 0)
 		{
-			newValues.add(items[0].getValue());
+			newValues.add(items[0]);
 			items = items[0].getSubItems();
 		}
 		
-		String[] newValuesArray = new String[newValues.size()];
+		ListItem[] newValuesArray = new ListItem[newValues.size()];
 		newValues.toArray(newValuesArray);
 		return newValuesArray;
 		
 	}
 	
-	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, Row row, Column column, String inputPrefix, ResponseWriter writer, ListFieldType listFieldType, ListItem[] selListItems, int maxDepth) throws IOException
 	{
-
-		ListValue listValue = (ListValue) value;
-		ResponseWriter writer = context.getResponseWriter();
-		ListFieldType listFieldType = (ListFieldType) fieldType;
-		
-		String[] listValues = matchValues(listValue.getValues(), listFieldType.getListItems());
-		int maxDepth = ListItem.determineMaxDepth(listFieldType.getListItems());
-		
-		JsfUtils.encodeHiddenInput(gridEditor, writer,
-				getDepthFieldName(inputPrefix),
-				String.valueOf(listValues.length));
-
 		writer.startElement("table", gridEditor);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -172,7 +160,7 @@ public class ListAdapter extends Adapter
  		for (int i = 0; i < maxDepth; i++)
  		{
  			
- 			if (i == listValues.length)
+ 			if (i == selListItems.length)
  				cssStyle = "display: none";
 
  			String selectName =
@@ -192,7 +180,7 @@ public class ListAdapter extends Adapter
  			writer.writeAttribute("onchange", onchange, null);
  			if (cssStyle != null) writer.writeAttribute("style", cssStyle, null);
 
-	 	 	if (i < listValues.length)
+	 	 	if (i < selListItems.length)
 	 	 	{
 	 	 		for (int j = 0; j < items.length; j++)
 				{
@@ -200,10 +188,10 @@ public class ListAdapter extends Adapter
 	 	 			ListItem item = items[j];
 	 	 			
 					boolean selected;
-					if (StringUtils.compareStrings(item.getValue(), listValues[i]))
+					if (StringUtils.compareStrings(item.getValue(), selListItems[i].getValue()))
 					{
 						selected = true;
-						if (i < listValues.length - 1) nextItems = item.getSubItems();
+						if (i < selListItems.length - 1) nextItems = item.getSubItems();
 					}
 					else
 					{
@@ -228,6 +216,42 @@ public class ListAdapter extends Adapter
  		
  		writer.endElement("tr");
  		writer.endElement("table");
+	}
+	
+	private void encodeReadOnlyMode(GridEditorComponent gridEditor, String clientGridId, Row row, Column column, String inputPrefix, ResponseWriter writer, ListFieldType listFieldType, ListItem[] selListItems, int maxDepth) throws IOException
+	{
+		
+		for (int i = 0; i < selListItems.length; i++)
+			JsfUtils.encodeHiddenInput(gridEditor, writer,
+					getHtmlSelectNamePrefix(inputPrefix) + i,
+					selListItems[i].getValue());
+
+		for (int i = 0; i < selListItems.length; i++)
+		{
+			if (i > 0) writer.write(listFieldType.getSeparator());
+			writer.write(selListItems[i].getText());
+		}
+		
+	}
+	
+	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly) throws IOException
+	{
+
+		ListValue listValue = (ListValue) value;
+		ResponseWriter writer = context.getResponseWriter();
+		ListFieldType listFieldType = (ListFieldType) fieldType;
+		
+		ListItem[] selListItems = matchValues(listValue.getValues(), listFieldType.getListItems());
+		int maxDepth = ListItem.determineMaxDepth(listFieldType.getListItems());
+		
+		JsfUtils.encodeHiddenInput(gridEditor, writer,
+				getDepthFieldName(inputPrefix),
+				String.valueOf(selListItems.length));
+
+		if (!readOnly)
+			encodeEditMode(gridEditor, clientGridId, row, column, inputPrefix, writer, listFieldType, selListItems, maxDepth);
+		else
+			encodeReadOnlyMode(gridEditor, clientGridId, row, column, inputPrefix, writer, listFieldType, selListItems, maxDepth);
 		
 	}
 
