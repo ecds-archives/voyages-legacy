@@ -51,7 +51,7 @@ public class GridEditorTag extends UIComponentTag
 		if (fieldTypes != null && isValueReference(fieldTypes))
 		{
 			ValueBinding vb = app.createValueBinding(fieldTypes);
-			gridEditor.setValueBinding("extensions", vb);
+			gridEditor.setValueBinding("fieldTypes", vb);
 		}
 
 	}

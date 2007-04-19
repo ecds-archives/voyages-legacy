@@ -19,7 +19,7 @@
 			rows="#{GridEditorTestBean.rows}"
 			columns="#{GridEditorTestBean.columns}"
 			values="#{GridEditorTestBean.values}"
-			extensions="#{GridEditorTestBean.extensions}" />
+			fieldTypes="#{GridEditorTestBean.fieldTypes}" />
 			
 		<h:commandButton value="Test submit" />
 

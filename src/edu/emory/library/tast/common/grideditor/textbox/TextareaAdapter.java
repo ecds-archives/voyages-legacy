@@ -12,6 +12,7 @@ import edu.emory.library.tast.common.grideditor.FieldType;
 import edu.emory.library.tast.common.grideditor.GridEditorComponent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.Value;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class TextareaAdapter extends Adapter
 {
@@ -30,13 +31,14 @@ public class TextareaAdapter extends Adapter
 		return new TextareaValue(submittedValue.split("\n"));
 	}
 	
-	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextareaValue textboxValue, ResponseWriter writer) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextareaValue textboxValue, ResponseWriter writer, TextareaFieldType textareaFieldType) throws IOException
 	{
 
-		writer.startElement("input", gridEditor);
+		writer.startElement("textarea", gridEditor);
 		writer.writeAttribute("type", "textarea", null);
 		writer.writeAttribute("name", inputPrefix, null);
-		writer.writeAttribute("value", textboxValue.getText(), null);
+		if (textareaFieldType.getRows() != TextareaFieldType.ROWS_DEFAULT) writer.writeAttribute("rows", String.valueOf(textareaFieldType.getRows()), null);
+		writer.write(textboxValue.getText());
 		writer.endElement("input");
 
 	}
@@ -45,12 +47,11 @@ public class TextareaAdapter extends Adapter
 	{
 
 		writer.write(textboxValue.getText().replaceAll("\n", "<br>"));
-
-		writer.startElement("input", gridEditor);
-		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("name", inputPrefix, null);
-		writer.writeAttribute("value", textboxValue.getText(), null);
-		writer.endElement("input");
+		
+		JsfUtils.encodeHiddenInput(
+				gridEditor, writer,
+				inputPrefix,
+				textboxValue.getText());
 
 	}
 
@@ -58,11 +59,12 @@ public class TextareaAdapter extends Adapter
 	{
 		
 		TextareaValue textboxValue = (TextareaValue) value;
+		TextareaFieldType textareaFieldType = (TextareaFieldType) fieldType;
 		ResponseWriter writer = context.getResponseWriter();
 		
 		if (readOnly)
 		{
-			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer);
+			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer, textareaFieldType);
 		}
 		else
 		{

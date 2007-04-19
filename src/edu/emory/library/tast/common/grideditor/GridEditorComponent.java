@@ -145,6 +145,25 @@ public class GridEditorComponent extends UIComponentBase
 		// form name
 		regJS.append("'").append(form.getClientId(context)).append("' ");
 		
+		// field types
+		regJS.append(", {");
+		if (fieldTypes != null)
+		{
+			int j = 0;
+			for (Iterator iter = fieldTypes.entrySet().iterator(); iter.hasNext();)
+			{
+				Entry listEntry = (Entry) iter.next();;
+				FieldType fieldType = (FieldType) listEntry.getValue();
+				String extName = (String) listEntry.getKey();
+				Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
+				if (j > 0) regJS.append(", ");
+				regJS.append("'").append(extName).append("': ");
+				adapter.createFieldTypeJavaScript(context, regJS, this, fieldType);
+				j++;
+			}
+		}
+		regJS.append("}");
+		
 		// fields
 		regJS.append(", ");
 		regJS.append("{");
@@ -153,11 +172,14 @@ public class GridEditorComponent extends UIComponentBase
 			
 			Row row = rows[i];
 			String rowName = row.getName();
-			Adapter adapter = AdapterFactory.getAdapter(row.getType());
+			
+			System.out.println(row.getType());
+			FieldType fieldType = (FieldType) fieldTypes.get(row.getType());
+			Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
 			
 			if (i > 0) regJS.append(", ");
 			
-			regJS.append(rowName).append(": {");
+			regJS.append("'").append(rowName).append("': {");
 			for (int j = 0; j < columns.length; j++)
 			{
 				
@@ -167,7 +189,7 @@ public class GridEditorComponent extends UIComponentBase
 				
 				if (j > 0) regJS.append(", ");
 
-				regJS.append(columnName).append(": ");
+				regJS.append("'").append(columnName).append("': ");
 				adapter.createValueJavaScript(
 						context,
 						regJS,
@@ -180,24 +202,6 @@ public class GridEditorComponent extends UIComponentBase
 
 			}
 			regJS.append("}");
-		}
-		regJS.append("}");
-
-		// field types
-		regJS.append(", {");
-		int j = 0;
-		if (fieldTypes != null)
-		{
-			for (Iterator iter = fieldTypes.entrySet().iterator(); iter.hasNext();)
-			{
-				Entry listEntry = (Entry) iter.next();;
-				FieldType fieldType = (FieldType) listEntry.getValue();
-				String extName = (String) listEntry.getKey();
-				Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
-				if (j > 0) regJS.append(", ");
-				regJS.append(extName).append(": ");
-				adapter.createFieldTypeJavaScript(context, regJS, this, fieldType);
-			}
 		}
 		regJS.append("}");
 
@@ -237,8 +241,8 @@ public class GridEditorComponent extends UIComponentBase
 			Row row = rows[i];
 			String rowName = row.getName();
 			
-			Adapter adapter = AdapterFactory.getAdapter(row.getType());
 			FieldType fieldType = (FieldType) fieldTypes.get(row.getType());
+			Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
 			
 			writer.startElement("tr", this);
 
@@ -315,7 +319,7 @@ public class GridEditorComponent extends UIComponentBase
 		for (int i = 0; i < rows.length; i++)
 			JsfUtils.encodeHiddenInput(this, writer,
 					getRowFieldTypeName(context, i),
-					rows[i].getType());
+					((FieldType) fieldTypes.get(rows[i].getType())).getType());
 		
 		// registration JavaScript
 		encodeRegJS(context, writer, form, mainId);

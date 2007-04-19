@@ -88,8 +88,13 @@ public class ListAdapter extends Adapter
 	
 	public void createFieldTypeJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, FieldType fieldType) throws IOException
 	{
+		
 		ListFieldType listFieldType = (ListFieldType) fieldType;
+		
+		regJS.append("new GridEditorListFieldType(");
 		createSharedListRec(regJS, listFieldType.getListItems());
+		regJS.append(")");
+
 	}
 
 	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException

@@ -30,12 +30,13 @@ public class TextboxAdapter extends Adapter
 		return new TextboxValue(submittedValue);
 	}
 	
-	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer, TextboxFieldType textboxFieldType) throws IOException
 	{
 
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputPrefix, null);
+		if (textboxFieldType.getMaxLength() != Integer.MAX_VALUE) writer.writeAttribute("maxlength", String.valueOf(textboxFieldType.getMaxLength()), null);
 		writer.writeAttribute("value", textboxValue.getText(), null);
 		writer.endElement("input");
 
@@ -59,14 +60,15 @@ public class TextboxAdapter extends Adapter
 		
 		TextboxValue textboxValue = (TextboxValue) value;
 		ResponseWriter writer = context.getResponseWriter();
+		TextboxFieldType textboxFieldType = (TextboxFieldType) fieldType;
 		
 		if (readOnly)
 		{
-			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer);
+			encodeReadOnlyMode(gridEditor, inputPrefix, textboxValue, writer);
 		}
 		else
 		{
-			encodeReadOnlyMode(gridEditor, inputPrefix, textboxValue, writer);
+			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer, textboxFieldType);
 		}
 		
 	}

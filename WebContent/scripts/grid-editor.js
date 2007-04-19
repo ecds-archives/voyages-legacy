@@ -27,12 +27,17 @@ var GridEditorGlobals =
 * constructors
 *********************************************/
 
-function GridEditor(gridEditorId, formName, fields, extensions)
+function GridEditor(gridEditorId, formName, fieldTypes, fields)
 {
 	this.gridEditorId = gridEditorId;
 	this.formName = formName;
+	this.fieldTypes = fieldTypes;
 	this.fields = fields;
-	this.extensions = extensions;
+}
+
+function GridEditorListFieldType(list)
+{
+	this.list = list;
 }
 
 function GridEditorListItem(value, text, subItems)
@@ -50,9 +55,9 @@ function GridEditorDate()
 {
 }
 
-function GridEditorList(sharedListName, selectsNamePrefix, depthFieldName)
+function GridEditorList(fieldTypeName, selectsNamePrefix, depthFieldName)
 {
-	this.sharedListName = sharedListName;
+	this.fieldTypeName = fieldTypeName;
 	this.selectsNamePrefix = selectsNamePrefix;
 	this.depthFieldName = depthFieldName;
 }
@@ -84,7 +89,7 @@ GridEditorList.prototype.itemSelected = function(gridEditor, depth)
 	var form = document.forms[gridEditor.formName];
 	var i = 0;
 	
-	var items = gridEditor.extensions[this.sharedListName];
+	var items = gridEditor.fieldTypes[this.fieldTypeName].list;
 	while (i <= depth)
 	{
 		items = items[form.elements[this.selectsNamePrefix + i].selectedIndex].subItems;
@@ -135,11 +140,10 @@ GridEditorList.prototype.itemSelected = function(gridEditor, depth)
 	
 	form.elements[this.depthFieldName].value = i;
 
-	while (i < this.selectsNames.length)
+	while (sel)
 	{
-		var sel = form.elements[this.selectsNames[i]];
 		sel.style.display = "none";
-		i++;
+		sel = form.elements[this.selectsNamePrefix + (++i)];
 	}
 
 }
