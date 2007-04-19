@@ -12,7 +12,7 @@ public class GridEditorTag extends UIComponentTag
 	private String rows;
 	private String columns;
 	private String values;
-	private String extensions;
+	private String fieldTypes;
 
 	public String getComponentType()
 	{
@@ -48,9 +48,9 @@ public class GridEditorTag extends UIComponentTag
 			gridEditor.setValueBinding("values", vb);
 		}
 	
-		if (extensions != null && isValueReference(extensions))
+		if (fieldTypes != null && isValueReference(fieldTypes))
 		{
-			ValueBinding vb = app.createValueBinding(extensions);
+			ValueBinding vb = app.createValueBinding(fieldTypes);
 			gridEditor.setValueBinding("extensions", vb);
 		}
 
@@ -86,14 +86,14 @@ public class GridEditorTag extends UIComponentTag
 		this.values = values;
 	}
 
-	public String getExtensions()
+	public String getFieldTypes()
 	{
-		return extensions;
+		return fieldTypes;
 	}
 
-	public void setExtensions(String extensions)
+	public void setFieldTypes(String extensions)
 	{
-		this.extensions = extensions;
+		this.fieldTypes = extensions;
 	}
 
 }
