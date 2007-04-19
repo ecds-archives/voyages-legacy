@@ -48,8 +48,9 @@ public class TextboxAdapter extends Adapter
 	private void encodeReadOnlyMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer) throws IOException
 	{
 
-		writer.write(textboxValue.getText());
-
+		if (textboxValue.getText() != null) {
+			writer.write(textboxValue.getText());
+		}
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("name", inputPrefix, null);
@@ -60,7 +61,7 @@ public class TextboxAdapter extends Adapter
 
 	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly) throws IOException
 	{
-		
+		System.out.println(row.getName());
 		TextboxValue textboxValue = (TextboxValue) value;
 		ResponseWriter writer = context.getResponseWriter();
 		TextboxFieldType textboxFieldType = (TextboxFieldType) fieldType;

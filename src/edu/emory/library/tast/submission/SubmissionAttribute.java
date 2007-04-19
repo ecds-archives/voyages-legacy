@@ -118,7 +118,7 @@ public class SubmissionAttribute {
 		} else if (type.equals(TextboxLongAdapter.TYPE)) {
 			return new TextboxLongValue((Integer)null);
 		} else if (type.equals(TextareaAdapter.TYPE)) {
-			return new TextareaValue(null);
+			return new TextareaValue((String)null);
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}

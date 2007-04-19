@@ -1,5 +1,6 @@
 package edu.emory.library.tast.submission;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import edu.emory.library.tast.TastResource;
@@ -7,6 +8,16 @@ import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.date.DateAdapter;
+import edu.emory.library.tast.common.grideditor.date.DateFieldType;
+import edu.emory.library.tast.common.grideditor.textbox.TextareaAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextareaFieldType;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxFieldType;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatFieldType;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerFieldType;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.query.Conditions;
@@ -89,8 +100,8 @@ public class SubmissionBean {
 
 	public Column[] getColumns() {
 		Column[] cols = new Column[2];
-		cols[0] = new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, false);
-		cols[1] = new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, true);
+		cols[0] = new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, true);
+		cols[1] = new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, false);
 		return cols;
 	}
 
@@ -105,6 +116,18 @@ public class SubmissionBean {
 
 	public void setValues(Values vals) {
 		this.valsToSubmit = vals;
+	}
+	
+	public Map getFieldTypes() {
+		
+		Map map = new HashMap();
+		map.put(TextboxAdapter.TYPE, new TextboxFieldType(TextboxAdapter.TYPE));
+		map.put(TextboxIntegerAdapter.TYPE, new TextboxIntegerFieldType(TextboxIntegerAdapter.TYPE));
+		map.put(TextboxFloatAdapter.TYPE, new TextboxFloatFieldType(TextboxFloatAdapter.TYPE));
+		map.put(DateAdapter.TYPE, new DateFieldType(DateAdapter.TYPE));
+		map.put(TextareaAdapter.TYPE, new TextareaFieldType(TextareaAdapter.TYPE, 10));
+		return map;
+		
 	}
 
 	public String submit() {
