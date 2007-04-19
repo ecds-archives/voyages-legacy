@@ -89,11 +89,11 @@ public class GridEditorTestBean
 		
 		fieldTypes.put(
 				FIELD_TYPE_NAME,
-				new TextboxFieldType(FIELD_TYPE_NAME));
+				new TextboxFieldType(FIELD_TYPE_NAME, "grid-editor-name"));
 		
 		fieldTypes.put(
 				FIELD_TYPE_PHONE,
-				new TextboxFieldType(FIELD_TYPE_PHONE));
+				new TextboxFieldType(FIELD_TYPE_PHONE, "grid-editor-phone"));
 		
 		fieldTypes.put(
 				FIELD_TYPE_STATES,
@@ -101,7 +101,7 @@ public class GridEditorTestBean
 		
 		fieldTypes.put(
 				FIELD_TYPE_DESC,
-				new TextareaFieldType(FIELD_TYPE_DESC, 10));
+				new TextareaFieldType(FIELD_TYPE_DESC, "grid-editor-desc", 10));
 
 		return fieldTypes;
 		

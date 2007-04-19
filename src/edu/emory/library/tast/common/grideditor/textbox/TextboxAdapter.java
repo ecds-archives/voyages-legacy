@@ -12,6 +12,7 @@ import edu.emory.library.tast.common.grideditor.FieldType;
 import edu.emory.library.tast.common.grideditor.GridEditorComponent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.Value;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class TextboxAdapter extends Adapter
 {
@@ -36,7 +37,9 @@ public class TextboxAdapter extends Adapter
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputPrefix, null);
-		if (textboxFieldType.getMaxLength() != Integer.MAX_VALUE) writer.writeAttribute("maxlength", String.valueOf(textboxFieldType.getMaxLength()), null);
+		JsfUtils.writeParamIfNotDefault(writer, "maxlength", textboxFieldType.getMaxLength(), Integer.MAX_VALUE);
+		JsfUtils.writeParamIfNotNull(writer, "class", textboxFieldType.getCssClass());
+		JsfUtils.writeParamIfNotNull(writer, "style", textboxFieldType.getCssStyle());
 		writer.writeAttribute("value", textboxValue.getText(), null);
 		writer.endElement("input");
 

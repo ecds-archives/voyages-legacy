@@ -217,9 +217,10 @@ public class GridEditorComponent extends UIComponentBase
 	{
 		
 		writer.startElement("table", this);
-		writer.writeAttribute("border", "1", null);
+		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
-		writer.writeAttribute("cellpadding", "5", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "grid-editor", null);
 		
 		writer.startElement("tr", this);
 

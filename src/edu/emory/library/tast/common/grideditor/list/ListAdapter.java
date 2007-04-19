@@ -146,10 +146,12 @@ public class ListAdapter extends Adapter
 	
 	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, Row row, Column column, String inputPrefix, ResponseWriter writer, ListFieldType listFieldType, ListItem[] selListItems, int maxDepth) throws IOException
 	{
+		
 		writer.startElement("table", gridEditor);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "grid-editor-list", null);
 		
 		writer.startElement("tr", gridEditor);
 

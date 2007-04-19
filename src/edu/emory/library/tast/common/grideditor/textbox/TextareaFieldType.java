@@ -1,22 +1,43 @@
 package edu.emory.library.tast.common.grideditor.textbox;
 
-import edu.emory.library.tast.common.grideditor.FieldType;
 
-public class TextareaFieldType extends FieldType
+public class TextareaFieldType extends AbstractTextFieldType
 {
 	
 	public static final int ROWS_DEFAULT = -1;
 	private int rows = ROWS_DEFAULT;
+
+	public TextareaFieldType(String name, int rows)
+	{
+		super(name);
+		this.rows = rows;
+	}
+
+	public TextareaFieldType(String name, String cssClass, int rows)
+	{
+		super(name, cssClass);
+		this.rows = rows;
+	}
+
+	public TextareaFieldType(String name, String cssClass, String cssStyle, int rows)
+	{
+		super(name, cssClass, cssStyle);
+		this.rows = rows;
+	}
 
 	public TextareaFieldType(String name)
 	{
 		super(name);
 	}
 
-	public TextareaFieldType(String name, int rows)
+	public TextareaFieldType(String name, String cssClass)
 	{
-		super(name);
-		this.rows = rows;
+		super(name, cssClass);
+	}
+
+	public TextareaFieldType(String name, String cssClass, String cssStyle)
+	{
+		super(name, cssClass, cssStyle);
 	}
 
 	public String getType()

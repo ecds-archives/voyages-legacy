@@ -1,8 +1,7 @@
 package edu.emory.library.tast.common.grideditor.textbox;
 
-import edu.emory.library.tast.common.grideditor.FieldType;
 
-public class TextboxFieldType extends FieldType
+public class TextboxFieldType extends AbstractTextFieldType
 {
 	
 	private int maxLength = Integer.MAX_VALUE;
@@ -17,9 +16,31 @@ public class TextboxFieldType extends FieldType
 		return TextboxAdapter.TYPE;
 	}
 
+	public TextboxFieldType(String name, String cssClass)
+	{
+		super(name, cssClass);
+	}
+
+	public TextboxFieldType(String name, String cssClass, String cssStyle)
+	{
+		super(name, cssClass, cssStyle);
+	}
+
 	public TextboxFieldType(String name, int maxLength)
 	{
 		super(name);
+		this.maxLength = maxLength;
+	}
+
+	public TextboxFieldType(String name, String cssClass, int maxLength)
+	{
+		super(name, cssClass);
+		this.maxLength = maxLength;
+	}
+
+	public TextboxFieldType(String name, String cssClass, String cssStyle, int maxLength)
+	{
+		super(name, cssClass, cssStyle);
 		this.maxLength = maxLength;
 	}
 

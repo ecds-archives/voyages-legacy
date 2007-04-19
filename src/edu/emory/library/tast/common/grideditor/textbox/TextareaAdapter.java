@@ -37,9 +37,11 @@ public class TextareaAdapter extends Adapter
 		writer.startElement("textarea", gridEditor);
 		writer.writeAttribute("type", "textarea", null);
 		writer.writeAttribute("name", inputPrefix, null);
-		if (textareaFieldType.getRows() != TextareaFieldType.ROWS_DEFAULT) writer.writeAttribute("rows", String.valueOf(textareaFieldType.getRows()), null);
+		JsfUtils.writeParamIfNotDefault(writer, "rows", textareaFieldType.getRows(), TextareaFieldType.ROWS_DEFAULT);
+		JsfUtils.writeParamIfNotNull(writer, "class", textareaFieldType.getCssClass());
+		JsfUtils.writeParamIfNotNull(writer, "style", textareaFieldType.getCssStyle());
 		writer.write(textboxValue.getText());
-		writer.endElement("input");
+		writer.endElement("textarea");
 
 	}
 

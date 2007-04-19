@@ -463,5 +463,14 @@ public class JsfUtils
         if (vb == null) return value;
         return vb.getValue(context);
     }
-
+    
+    public static void writeParamIfNotNull(ResponseWriter writer, String name, String value) throws IOException
+    {
+    	if (value != null) writer.writeAttribute(name, value, null);
+    }
+    
+    public static void writeParamIfNotDefault(ResponseWriter writer, String name, int value, int def) throws IOException
+    {
+    	if (value != def) writer.writeAttribute(name, String.valueOf(value), null);
+    }
 }
