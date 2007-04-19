@@ -41,6 +41,13 @@
 
 	textarea.grid-editor-desc {
 		width: 200px; }
+		
+	input.record-gridEditor-date-day,
+	input.record-gridEditor-date-month {
+		width: 20px; }
+		
+	input.record-gridEditor-date-year {
+		width: 40px; }
 
 	</style>
 	

@@ -3,6 +3,8 @@ package edu.emory.library.tast.common.grideditor;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.emory.library.tast.common.grideditor.date.DateFieldType;
+import edu.emory.library.tast.common.grideditor.date.DateValue;
 import edu.emory.library.tast.common.grideditor.list.ListFieldType;
 import edu.emory.library.tast.common.grideditor.list.ListItem;
 import edu.emory.library.tast.common.grideditor.list.ListValue;
@@ -18,6 +20,7 @@ public class GridEditorTestBean
 	private static final String FIELD_TYPE_NAME = "name";
 	private static final String FIELD_TYPE_PHONE = "phone";
 	private static final String FIELD_TYPE_DESC = "description";
+	private static final String FIELD_TYPE_DATE = "date";
 
 	private Values values;
 	
@@ -31,12 +34,14 @@ public class GridEditorTestBean
 		values.setValue("old", "phone", new TextboxValue("111"));
 		values.setValue("old", "state", new ListValue(new String[] {"DS", "GA"}));
 		values.setValue("old", "description", new TextareaValue("We need all the exposure we can get. Make it your mission to convert as many of your friends, family members and coworkers as possible. If you're a student, get it distributed at your college. Submit a story to  Slashdot and other news sites about the release. Make some noise on your blog. Mass distribution via the Internet is possible."));
+		values.setValue("old", "dob", new DateValue("2000", "1", "1"));
 
 		values.setValue("new", "firstName", new TextboxValue("Bill"));
 		values.setValue("new", "lastName", new TextboxValue("Gates"));
 		values.setValue("new", "phone", new TextboxValue("555"));
 		values.setValue("new", "state", new ListValue());
 		values.setValue("new", "description", new TextareaValue("Removing Thunderbird 2 won't remove your email messages, extensions or other add-ons. This data is stored in your profile folder, which is located in one of the following locations depending on your operating system."));
+		values.setValue("new", "dob", new DateValue("2001", "1", "1"));
 		
 	}
 	
@@ -47,7 +52,8 @@ public class GridEditorTestBean
 				new Row(FIELD_TYPE_NAME, "lastName", "Last name"),
 				new Row(FIELD_TYPE_PHONE, "phone", "Phone number"),
 				new Row(FIELD_TYPE_STATES, "state", "State"),
-				new Row(FIELD_TYPE_DESC, "description", "Description")
+				new Row(FIELD_TYPE_DESC, "description", "Description"),
+				new Row(FIELD_TYPE_DATE, "dob", "Date of birth")
 		};
 	}
 
@@ -102,6 +108,10 @@ public class GridEditorTestBean
 		fieldTypes.put(
 				FIELD_TYPE_DESC,
 				new TextareaFieldType(FIELD_TYPE_DESC, "grid-editor-desc", 10));
+
+		fieldTypes.put(
+				FIELD_TYPE_DATE,
+				new DateFieldType(FIELD_TYPE_DATE));
 
 		return fieldTypes;
 		

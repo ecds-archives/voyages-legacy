@@ -173,7 +173,6 @@ public class GridEditorComponent extends UIComponentBase
 			Row row = rows[i];
 			String rowName = row.getName();
 			
-			System.out.println(row.getType());
 			FieldType fieldType = (FieldType) fieldTypes.get(row.getType());
 			Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
 			

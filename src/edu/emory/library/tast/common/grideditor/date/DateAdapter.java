@@ -1,6 +1,7 @@
 package edu.emory.library.tast.common.grideditor.date;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 import javax.faces.component.UIForm;
@@ -85,33 +86,39 @@ public class DateAdapter extends Adapter
 	{
 		
 		JsfUtils.encodeHiddenInput(gridEditor, writer,
-				getYearFieldName(inputPrefix), dateValue.getYearOrEmpty());
+				getYearFieldName(inputPrefix),
+				dateValue.getYearOrEmpty());
 
 		JsfUtils.encodeHiddenInput(gridEditor, writer,
-				getMonthFieldName(inputPrefix), dateValue.getMonthOrEmpty());
+				getMonthFieldName(inputPrefix),
+				dateValue.getMonthOrEmpty());
 
 		JsfUtils.encodeHiddenInput(gridEditor, writer,
-				getDayFieldName(inputPrefix), dateValue.getDayOrEmpty());
-		
-		writer.write(dateValue.getYearOrEmpty());
-		writer.write("/");
-		writer.write(dateValue.getMonthOrEmpty());
-		writer.write("/");
-		writer.write(dateValue.getDayOrEmpty());
-		
+				getDayFieldName(inputPrefix),
+				dateValue.getDayOrEmpty());
+
+		if (dateValue.isValid())
+		{
+			writer.write(dateValue.getYearOrEmpty());
+			writer.write("/");
+			writer.write(dateValue.getMonthOrEmpty());
+			writer.write("/");
+			writer.write(dateValue.getDayOrEmpty());
+		}
+
 	}
-	
+
 	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly) throws IOException
 	{
-		
+
 		DateValue dateValue = (DateValue) value;
 		ResponseWriter writer = context.getResponseWriter();
-		
+
 		if (!readOnly)
 			encodeEditMode(gridEditor, inputPrefix, dateValue, writer);
 		else
 			encodeReadOnlyMode(gridEditor, inputPrefix, dateValue, writer);
-		
+
 	}
 
 }
