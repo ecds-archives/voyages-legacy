@@ -19,6 +19,9 @@ public class GridEditorComponent extends UIComponentBase
 	private boolean rowsSet = false;
 	private Row[] rows;
 	
+	private boolean rowGroupsSet = false;
+	private RowGroup[] rowGroups;
+
 	private boolean columnsSet = false;
 	private Column[] columns;
 	
@@ -383,6 +386,18 @@ public class GridEditorComponent extends UIComponentBase
 	{
 		fieldTypesSet = true;
 		this.fieldTypes = fieldTypes;
+	}
+
+	public RowGroup[] getRowGroups()
+	{
+		return (RowGroup[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"rowGroups", rowGroupsSet, rowGroups);
+	}
+
+	public void setRowGroups(RowGroup[] rowGroups)
+	{
+		rowGroupsSet = true;
+		this.rowGroups = rowGroups;
 	}
 
 }

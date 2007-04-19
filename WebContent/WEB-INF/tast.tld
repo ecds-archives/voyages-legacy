@@ -923,6 +923,9 @@
 			<name>rows</name>
 		</attribute>
 		<attribute>
+			<name>rowGroups</name>
+		</attribute>
+		<attribute>
 			<name>values</name>
 		</attribute>
 		<attribute>
