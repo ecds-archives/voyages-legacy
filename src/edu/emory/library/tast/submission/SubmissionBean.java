@@ -1,7 +1,13 @@
 package edu.emory.library.tast.submission;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
@@ -10,6 +16,8 @@ import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.date.DateAdapter;
 import edu.emory.library.tast.common.grideditor.date.DateFieldType;
+import edu.emory.library.tast.common.grideditor.list.ListFieldType;
+import edu.emory.library.tast.common.grideditor.list.ListItem;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaFieldType;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
@@ -18,8 +26,14 @@ import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatFieldType;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerFieldType;
+import edu.emory.library.tast.dm.Area;
+import edu.emory.library.tast.dm.Dictionary;
+import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.FateAttribute;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -35,6 +49,13 @@ public class SubmissionBean {
 
 	public static final String CHANGED_VOYAGE = "new";
 
+	public static final String LOCATIONS = "locations";	
+	public static final String PORTS = "ports";	
+	public static final String FATES = "fates";
+	public static final String RIGS = "rigs";
+	public static final String COUNTRIES = "countries";
+	public static final String RESISTANCES = "resistances";
+
 	private static SubmissionAttribute[] attrs = SubmissionAttributes
 			.getConfiguration().getPublicAttributes();
 
@@ -46,6 +67,73 @@ public class SubmissionBean {
 
 	private Values vals = null;
 
+	private ListItem[] areas;	
+	private ListItem[] ports;
+	private ListItem[] fates;
+	private ListItem[] rigs;
+	private ListItem[] countries;
+	private ListItem[] resistances;
+	
+	
+	public SubmissionBean() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction(); 
+		List areasL = Area.loadAll(session);
+		areas = new ListItem[areasL.size() + 1];
+		Iterator areasI = areasL.iterator();
+		int i = 1;
+		while (areasI.hasNext()) {
+			Area a = (Area) areasI.next();
+			
+			Set regions = a.getRegions();
+			ListItem[] regionsArray = new ListItem[regions.size()];
+			//regionsArray[0] = new ListItem("-1", "Unknown");
+			int j = 0;
+			for (Iterator iter = regions.iterator(); iter.hasNext();) {
+				Region region = (Region) iter.next();
+				Set ports = region.getPorts();
+				ListItem[] portsArray = new ListItem[ports.size()];
+				//portsArray[0] = new ListItem("-1", "Unknown");
+				int k = 0;
+				for (Iterator iterator = ports.iterator(); iterator.hasNext();) {
+					Port element = (Port) iterator.next();
+					portsArray[k++] = new ListItem(element.getId().toString(), element.getName());
+				}
+				regionsArray[j++] = new ListItem(region.getId().toString(), region.getName(), portsArray);
+			}
+			areas[i++] = new ListItem(a.getId().toString(), a.getName(), regionsArray);
+		}
+		areas[0] = new ListItem("-1", "Unknown");
+		
+		List allPorts = Port.loadAll(session);
+		ports = new ListItem[allPorts.size() + 1];
+		ports[0] = new ListItem("-1", "Unknown");
+		for (i = 1; i < ports.length; i++) {
+			Port port = (Port) allPorts.get(i-1);
+			ports[i] = new ListItem(port.getId().toString(), port.getName());
+		}
+		
+		fates = fillIn(session, FateAttribute.class);
+		
+		t.commit();
+		session.close();
+		
+	}
+	
+	
+
+	private ListItem[] fillIn(Session sessios, Class clazz) {
+		List dics = Dictionary.loadAll(clazz, session);
+		ListItem[] items = new ListItem[dics.size() + 1];
+		int i = 1;
+		for (Iterator iter = dics.iterator(); iter.hasNext();) {
+			type element = (type) iter.next();
+			
+		}
+	}
+
+
+
 	public void setVoyageId(long voyageId) {
 		this.voyageId = voyageId;
 	}
@@ -53,12 +141,16 @@ public class SubmissionBean {
 	public Values getValues() {
 
 		if (!wasError || vals == null) {
+			
 			this.voyageId = 43;
 
 			if (this.voyageId == -1) {
 				throw new RuntimeException("Voyage ID was not set!");
 			}
 
+			
+			Session session = HibernateUtil.getSession();
+			Transaction t = session.beginTransaction();
 			vals = new Values();
 
 			Conditions c = new Conditions();
@@ -73,7 +165,7 @@ public class SubmissionBean {
 					qValue.addPopulatedAttribute(attributes[j]);
 				}
 			}
-			Object[] res = qValue.executeQuery();
+			Object[] res = qValue.executeQuery(session);
 			if (res.length == 0) {
 				return null;
 			}
@@ -92,6 +184,9 @@ public class SubmissionBean {
 						.getEmptyValue());
 				index += attribute.getAttribute().length;
 			}
+			
+			t.commit();
+			session.close();
 		}
 
 		return vals;
@@ -126,6 +221,8 @@ public class SubmissionBean {
 		map.put(TextboxFloatAdapter.TYPE, new TextboxFloatFieldType(TextboxFloatAdapter.TYPE));
 		map.put(DateAdapter.TYPE, new DateFieldType(DateAdapter.TYPE));
 		map.put(TextareaAdapter.TYPE, new TextareaFieldType(TextareaAdapter.TYPE, 10));
+		map.put(LOCATIONS, new ListFieldType(LOCATIONS, areas));
+		map.put(PORTS, new ListFieldType(PORTS, ports));
 		return map;
 		
 	}

@@ -43,6 +43,7 @@
 	</submission-attributes>
 	<submission-attributes name="portdep" editable="Y" type="port" userLabel="Port of Departure">
 		<attributes>
+			<attribute name="deptregimp"/>
 			<attribute name="portdep"/>
 		</attributes>
 	</submission-attributes>
@@ -73,16 +74,19 @@
 	</submission-attributes>
 	<submission-attributes name="plac1tra" editable="Y" type="port" userLabel="First place of slave purchase">
 		<attributes>
+			<attribute name="regem1"/>
 			<attribute name="plac1tra"/>
 		</attributes>
 	</submission-attributes>	
 	<submission-attributes name="plac2tra" editable="Y" type="port" userLabel="Second place of slave purchase">
 		<attributes>
+			<attribute name="regem2"/>
 			<attribute name="plac2tra"/>
 		</attributes>
 	</submission-attributes>
 	<submission-attributes name="plac3tra" editable="Y" type="port" userLabel="Third place of slave purchase">
 		<attributes>
+			<attribute name="regem3"/>
 			<attribute name="plac3tra"/>
 		</attributes>
 	</submission-attributes>
@@ -128,6 +132,7 @@
 	</submission-attributes>
 	<submission-attributes name="sla1port" editable="Y" type="port" userLabel="First place of landing">
 		<attributes>
+			<attribute name="regdis1"/>
 			<attribute name="sla1port"/>
 		</attributes>
 	</submission-attributes>
@@ -143,6 +148,7 @@
 	</submission-attributes> 
 	<submission-attributes name="adpsale1" editable="Y" type="port" userLabel="Second place of landing">
 		<attributes>
+			<attribute name="regdis2"/>
 			<attribute name="adpsale1"/>
 		</attributes>
 	</submission-attributes> 
@@ -158,6 +164,7 @@
 	</submission-attributes> 
 	<submission-attributes name="adpsale2" editable="Y" type="port" userLabel="Third place of landing">
 		<attributes>
+			<attribute name="regdis1"/>
 			<attribute name="adpsale2"/>
 		</attributes>
 	</submission-attributes> 
@@ -173,17 +180,13 @@
 	</submission-attributes> 
 	<submission-attributes name="portret" editable="Y" type="port" userLabel="Port at which voyage ended">
 		<attributes>
+			<attribute name="retrnreg"/>
 			<attribute name="portret"/>
 		</attributes>
 	</submission-attributes>
 	<submission-attributes name="datedepam" editable="Y" type="date" userLabel="Date that ship left on return voyage">
 		<attributes>
 			<attribute name="datedepam"/>
-		</attributes>
-	</submission-attributes> 
-	<submission-attributes name="portret" editable="Y" type="port" userLabel="Port at which voyage ended">
-		<attributes>
-			<attribute name="portret"/>
 		</attributes>
 	</submission-attributes> 
 	<submission-attributes name="dateend" editable="Y" type="date" userLabel="Date when voyage completed">

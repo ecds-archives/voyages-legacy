@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.date.DateAdapter;
 import edu.emory.library.tast.common.grideditor.date.DateValue;
+import edu.emory.library.tast.common.grideditor.list.ListValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
@@ -20,6 +22,8 @@ import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
+import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 
@@ -101,6 +105,24 @@ public class SubmissionAttribute {
 				strArr[i] = toBeFormatted[i].toString();
 			}
 			return new TextareaValue(strArr);
+		} else if (type.equals(SubmissionBean.LOCATIONS)) {
+			if (toBeFormatted[1] == null) {
+				return new ListValue();
+			}
+			Port port = (Port) toBeFormatted[1];			
+			return new ListValue(new String[] 
+			               {port.getRegion().getArea().getId().toString(),
+			            	   port.getRegion().getId().toString(),
+			            	   port.getId().toString()});
+		} else if (type.equals(SubmissionBean.PORTS)) {
+			if (toBeFormatted[0] == null) {
+				return new ListValue();
+			}
+			Port port = (Port) toBeFormatted[0];			
+			return new ListValue(new String[] 
+			               {port.getRegion().getArea().getId().toString(),
+			            	   port.getRegion().getId().toString(),
+			            	   port.getId().toString()});
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
@@ -119,6 +141,8 @@ public class SubmissionAttribute {
 			return new TextboxLongValue((Integer)null);
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			return new TextareaValue((String)null);
+		} else if (type.equals(SubmissionBean.LOCATIONS) || type.equals(SubmissionBean.PORTS)) {
+			return new ListValue();
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
@@ -130,6 +154,9 @@ public class SubmissionAttribute {
 
 	public Object[] getValues(Object object) {
 		if (type.equals(TextboxAdapter.TYPE)) {
+			if ("".equals(((TextboxValue)object).getText())) {
+				return new Object[] {null};
+			}
 			return new Object[]{((TextboxValue)object).getText()};
 		} else if (type.equals(DateAdapter.TYPE)) {
 			return new Object[]{((DateValue)object).getDate()};
@@ -141,6 +168,28 @@ public class SubmissionAttribute {
 			return new Object[]{((TextboxLongValue)object).getInteger()};
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			return ((TextareaValue)object).getTexts();
+		} else if (type.equals(SubmissionBean.LOCATIONS)) {
+			String regionId = "-1";
+			String portId = "-1";
+			if (((ListValue)object).getValues().length != 1) {
+				regionId = ((ListValue)object).getValues()[1];
+				portId = ((ListValue)object).getValues()[2];
+			}
+			Region region = null;
+			Port port = null;
+			if (!portId.equals("-1")) {
+				port = Port.loadById(null, portId);
+			}
+			if (!regionId.equals("-1")) {
+				region = Region.loadById(null, portId);
+			}
+			return new Object[] {region, port};
+		} else if (type.equals(SubmissionBean.PORTS)) {
+			String portId = ((ListValue)object).getValues()[0];
+			if (portId.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Port.loadById(null, portId)};
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
@@ -197,7 +246,11 @@ public class SubmissionAttribute {
 		} else if (type.equals("date")) {
 			attrType = DateAdapter.TYPE;
 		} else if (type.equals("port")) {
-			attrType = TextboxAdapter.TYPE;
+			if (attributesList.size() > 1) {
+				attrType = SubmissionBean.LOCATIONS;
+			} else {
+				attrType = SubmissionBean.PORTS;
+			}
 		} else if (type.equals("dictionary")) {
 			attrType = TextboxAdapter.TYPE;
 		} else if (type.equals("boolean")) {

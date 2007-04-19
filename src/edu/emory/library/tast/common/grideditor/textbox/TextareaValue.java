@@ -1,6 +1,7 @@
 package edu.emory.library.tast.common.grideditor.textbox;
 
 import edu.emory.library.tast.common.grideditor.Value;
+import edu.emory.library.tast.util.StringUtils;
 
 public class TextareaValue extends Value
 {
@@ -22,7 +23,9 @@ public class TextareaValue extends Value
 		StringBuffer buffer = new StringBuffer();
 		if (texts != null) {
 			for (int i = 0; i < texts.length; i++) {
-				buffer.append(texts[i]).append("\n");
+				if (!StringUtils.isNullOrEmpty(texts[i])) {
+					buffer.append(texts[i]).append("\n");
+				}
 			}
 		}
 		return buffer.toString();
