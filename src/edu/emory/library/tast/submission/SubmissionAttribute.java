@@ -22,10 +22,20 @@ import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
+import edu.emory.library.tast.dm.Dictionary;
+import edu.emory.library.tast.dm.Fate;
+import edu.emory.library.tast.dm.FateOwner;
+import edu.emory.library.tast.dm.FateSlaves;
+import edu.emory.library.tast.dm.FateVessel;
+import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.FateAttribute;
+import edu.emory.library.tast.dm.attributes.NationAttribute;
+import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 
 public class SubmissionAttribute {
 	
@@ -102,7 +112,9 @@ public class SubmissionAttribute {
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			String[] strArr = new String[toBeFormatted.length];
 			for (int i = 0; i < strArr.length; i++) {
-				strArr[i] = toBeFormatted[i].toString();
+				if (toBeFormatted[i] != null) {
+					strArr[i] = toBeFormatted[i].toString();
+				}
 			}
 			return new TextareaValue(strArr);
 		} else if (type.equals(SubmissionBean.LOCATIONS)) {
@@ -123,9 +135,21 @@ public class SubmissionAttribute {
 			               {port.getRegion().getArea().getId().toString(),
 			            	   port.getRegion().getId().toString(),
 			            	   port.getId().toString()});
+		} else if (type.equals(SubmissionDictionaries.BOOLEAN)) {
+			if (toBeFormatted[0] == null) {
+				return new ListValue();
+			}
+			return new ListValue(new String[] {((Integer)toBeFormatted[0]).intValue() == 1 ? "true" : "false"});
 		} else {
-			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
-		}
+			if (toBeFormatted[0] == null) {
+				return new ListValue();
+			}
+			Dictionary dict = (Dictionary) toBeFormatted[0];			
+			return new ListValue(new String[] {dict.getId().toString()});
+		} 
+//		else {
+//			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
+//		}
 	}
 
 	public Value getEmptyValue() {
@@ -141,11 +165,12 @@ public class SubmissionAttribute {
 			return new TextboxLongValue((Integer)null);
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			return new TextareaValue((String)null);
-		} else if (type.equals(SubmissionBean.LOCATIONS) || type.equals(SubmissionBean.PORTS)) {
-			return new ListValue();
 		} else {
-			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
+			return new ListValue();
 		}
+//		else {
+//			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
+//		}
 	}
 
 	public String getType() {
@@ -190,6 +215,48 @@ public class SubmissionAttribute {
 				return new Object[] {null};
 			}
 			return new Object[] {Port.loadById(null, portId)};
+		} else if (type.equals(SubmissionDictionaries.FATES)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Fate.class, null, id)};
+		} else if (type.equals(SubmissionDictionaries.RIGS)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(VesselRig.class, null, id)};
+		} else if (type.equals(SubmissionDictionaries.NATIONALS)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Nation.class, null, id)};
+		} else if (type.equals(SubmissionDictionaries.FATE2)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(FateSlaves.class, null, id)};
+		} else if (type.equals(SubmissionDictionaries.FATE3)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(FateVessel.class, null, id)};
+		} else if (type.equals(SubmissionDictionaries.FATE4)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(FateOwner.class, null, id)};
+		} else if (type.equals(SubmissionDictionaries.BOOLEAN)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {"true".equals(id) ? new Integer(1) : new Integer(0)};
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
@@ -253,12 +320,12 @@ public class SubmissionAttribute {
 			}
 		} else if (type.equals("dictionary")) {
 			attrType = TextboxAdapter.TYPE;
-		} else if (type.equals("boolean")) {
-			attrType = TextboxAdapter.TYPE;
+			
 		} else if (type.equals("long")) {
 			attrType = TextboxLongAdapter.TYPE;
 		} else {
-			throw new RuntimeException("Type: " + type + " not allowed in submission attributes");
+			attrType = type;
+			//throw new RuntimeException("Type: " + type + " not allowed in submission attributes");
 		}
 		
 		SubmissionAttribute attr = new SubmissionAttribute(name, 

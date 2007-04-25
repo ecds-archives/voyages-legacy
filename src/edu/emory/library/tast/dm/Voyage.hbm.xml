@@ -217,7 +217,7 @@
 		<property name="tslavesp" />
 		<property name="sladvoy" />
 		<property name="npprior" />
-		<property name="national" />
+		<many-to-one name="national" column="national" class="edu.emory.library.tast.dm.Nation" />
 		<property name="slinten2" />
 		<property name="ndesert" />
 		<property name="sladafri" />

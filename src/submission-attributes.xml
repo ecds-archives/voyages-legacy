@@ -41,7 +41,7 @@
 			<attribute name="crew1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="portdep" editable="Y" type="port" userLabel="Port of Departure">
+	<submission-attributes name="portdep" editable="Y" type="locations" userLabel="Port of Departure">
 		<attributes>
 			<attribute name="deptregimp"/>
 			<attribute name="portdep"/>
@@ -52,17 +52,17 @@
 			<attribute name="datedep"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="embport" editable="Y" type="port" userLabel="First port of intended embarkation">
+	<submission-attributes name="embport" editable="Y" type="ports" userLabel="First port of intended embarkation">
 		<attributes>
 			<attribute name="embport"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="arrport" editable="Y" type="port" userLabel="First port of intended disembarkation">
+	<submission-attributes name="arrport" editable="Y" type="ports" userLabel="First port of intended disembarkation">
 		<attributes>
 			<attribute name="arrport"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="rig" editable="Y" type="dictionary" userLabel="Rig of ship">
+	<submission-attributes name="rig" editable="Y" type="rigs" userLabel="Rig of ship">
 		<attributes>
 			<attribute name="rig"/>
 		</attributes>
@@ -72,19 +72,19 @@
 			<attribute name="nppretra"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="plac1tra" editable="Y" type="port" userLabel="First place of slave purchase">
+	<submission-attributes name="plac1tra" editable="Y" type="locations" userLabel="First place of slave purchase">
 		<attributes>
 			<attribute name="regem1"/>
 			<attribute name="plac1tra"/>
 		</attributes>
 	</submission-attributes>	
-	<submission-attributes name="plac2tra" editable="Y" type="port" userLabel="Second place of slave purchase">
+	<submission-attributes name="plac2tra" editable="Y" type="locations" userLabel="Second place of slave purchase">
 		<attributes>
 			<attribute name="regem2"/>
 			<attribute name="plac2tra"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="plac3tra" editable="Y" type="port" userLabel="Third place of slave purchase">
+	<submission-attributes name="plac3tra" editable="Y" type="locations" userLabel="Third place of slave purchase">
 		<attributes>
 			<attribute name="regem3"/>
 			<attribute name="plac3tra"/>
@@ -110,7 +110,7 @@
 			<attribute name="tslavesd"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="npafttra" editable="Y" type="dictionary" userLabel="Places of call before Atlantic crossing">
+	<submission-attributes name="npafttra" editable="Y" type="ports" userLabel="Places of call before Atlantic crossing">
 		<attributes>
 			<attribute name="npafttra"/>
 		</attributes>
@@ -130,7 +130,7 @@
 			<attribute name="slaarriv"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="sla1port" editable="Y" type="port" userLabel="First place of landing">
+	<submission-attributes name="sla1port" editable="Y" type="locations" userLabel="First place of landing">
 		<attributes>
 			<attribute name="regdis1"/>
 			<attribute name="sla1port"/>
@@ -146,7 +146,7 @@
 			<attribute name="slas32"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="adpsale1" editable="Y" type="port" userLabel="Second place of landing">
+	<submission-attributes name="adpsale1" editable="Y" type="locations" userLabel="Second place of landing">
 		<attributes>
 			<attribute name="regdis2"/>
 			<attribute name="adpsale1"/>
@@ -162,7 +162,7 @@
 			<attribute name="slas36"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="adpsale2" editable="Y" type="port" userLabel="Third place of landing">
+	<submission-attributes name="adpsale2" editable="Y" type="locations" userLabel="Third place of landing">
 		<attributes>
 			<attribute name="regdis1"/>
 			<attribute name="adpsale2"/>
@@ -178,7 +178,7 @@
 			<attribute name="slas39"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="portret" editable="Y" type="port" userLabel="Port at which voyage ended">
+	<submission-attributes name="portret" editable="Y" type="locations" userLabel="Port at which voyage ended">
 		<attributes>
 			<attribute name="retrnreg"/>
 			<attribute name="portret"/>
@@ -194,7 +194,7 @@
 			<attribute name="dateend"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="fate" editable="Y" type="dictionary" userLabel="Outcome of voyage">
+	<submission-attributes name="fate" editable="Y" type="fates" userLabel="Outcome of voyage">
 		<attributes>
 			<attribute name="fate"/>
 		</attributes>
@@ -231,12 +231,12 @@
 			<attribute name="tonnage"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="tontype" editable="Y" type="dictionary" userLabel="Naionality of ship's tonnage">
+	<submission-attributes name="tontype" editable="Y" type="integer" userLabel="Naionality of ship's tonnage">
 		<attributes>
 			<attribute name="tontype"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="national" editable="Y" type="dictionary" userLabel="Country in which ship registered">
+	<submission-attributes name="national" editable="Y" type="nationals" userLabel="Country in which ship registered">
 		<attributes>
 			<attribute name="national"/>
 		</attributes>
@@ -286,7 +286,7 @@
 			<attribute name="saild5"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="embport2" editable="Y" type="port" userLabel="Second port of intended embarkation">
+	<submission-attributes name="embport2" editable="Y" type="ports" userLabel="Second port of intended embarkation">
 		<attributes>
 			<attribute name="embport2"/>
 		</attributes>
@@ -316,7 +316,7 @@
 			<attribute name="child3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="placcons" editable="Y" type="dictionary" userLabel="Place where ship constructed">
+	<submission-attributes name="placcons" editable="Y" type="ports" userLabel="Place where ship constructed">
 		<attributes>
 			<attribute name="placcons"/>
 		</attributes>
@@ -326,7 +326,7 @@
 			<attribute name="yrcons"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="placreg" editable="Y" type="dictionary" userLabel="Place where ship registered">
+	<submission-attributes name="placreg" editable="Y" type="ports" userLabel="Place where ship registered">
 		<attributes>
 			<attribute name="placreg"/>
 		</attributes>
@@ -690,17 +690,17 @@
 			<attribute name="crew"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="fate2" editable="Y" type="dictionary" userLabel="Outcome of voyage for slaves">
+	<submission-attributes name="fate2" editable="N" type="fate2" userLabel="Outcome of voyage for slaves">
 		<attributes>
 			<attribute name="fate2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="fate3" editable="Y" type="dictionary" userLabel="Outcome of voyage if ship captured">
+	<submission-attributes name="fate3" editable="N" type="fate3" userLabel="Outcome of voyage if ship captured">
 		<attributes>
 			<attribute name="fate3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="fate4" editable="Y" type="dictionary" userLabel="Outcome of voyage for owner">
+	<submission-attributes name="fate4" editable="N" type="fate4" userLabel="Outcome of voyage for owner">
 		<attributes>
 			<attribute name="fate4"/>
 		</attributes>

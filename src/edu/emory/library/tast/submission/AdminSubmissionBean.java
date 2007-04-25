@@ -1,10 +1,6 @@
 package edu.emory.library.tast.submission;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,52 +10,28 @@ import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
-import edu.emory.library.tast.common.grideditor.date.DateAdapter;
-import edu.emory.library.tast.common.grideditor.date.DateFieldType;
-import edu.emory.library.tast.common.grideditor.list.ListFieldType;
-import edu.emory.library.tast.common.grideditor.list.ListItem;
-import edu.emory.library.tast.common.grideditor.textbox.TextareaAdapter;
-import edu.emory.library.tast.common.grideditor.textbox.TextareaFieldType;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxFieldType;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatAdapter;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatFieldType;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerFieldType;
-import edu.emory.library.tast.dm.Area;
-import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.Fate;
-import edu.emory.library.tast.dm.Nation;
-import edu.emory.library.tast.dm.Port;
-import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.FateAttribute;
-import edu.emory.library.tast.dm.attributes.NationAttribute;
-import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
-public class SubmissionBean {
+public class AdminSubmissionBean {
 
 	public static final String ORIGINAL_VOYAGE_LABEL = TastResource
 			.getText("submissions_oryginal_voyage");
 
 	public static final String CHANGED_VOYAGE_LABEL = TastResource
-			.getText("submissions_changed_voyage");
+			.getText("submissions_suggested_voyage");
 
 	public static final String ORIGINAL_VOYAGE = "old";
 
 	public static final String CHANGED_VOYAGE = "new";
-
-	public static final String LOCATIONS = "locations";	
-	public static final String PORTS = "ports";	
 	
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes
-			.getConfiguration().getPublicAttributes();
+			.getConfiguration().getSubmissionAttributes();
 
 	private long voyageId = -1;
 
@@ -69,36 +41,33 @@ public class SubmissionBean {
 
 	private Values vals = null;
 	
+	private int suggestionsCount = 0;
 	
-	
-	public SubmissionBean() {
+	public AdminSubmissionBean() {
+		
+		
 	}
-	
-	
-
-	private ListItem[] fillIn(Session sessios, Class clazz) {
-		List dics = Dictionary.loadAll(clazz, sessios);
-		ListItem[] items = new ListItem[dics.size() + 1];
-		items[0] = new ListItem("-1", "Unknown");
-		int i = 1;
-		for (Iterator iter = dics.iterator(); iter.hasNext();) {
-			Dictionary element = (Dictionary) iter.next();
-			items[i++] = new ListItem(element.getId().toString(), element.getName().toString());
-		}
-		return items;
-	}
-
-
 
 	public void setVoyageId(long voyageId) {
 		this.voyageId = voyageId;
+		Conditions c = new Conditions();
+		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId),
+				Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(true),
+				Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("approved"), new Boolean(false),
+				Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("Voyage", c);
+		qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voyageid")}));
+		Object[] res = qValue.executeQuery();
+		this.suggestionsCount = ((Long)res[0]).intValue();
 	}
 
 	public Values getValues() {
 
 		if (!wasError || vals == null) {
 			
-			this.voyageId = 43;
+			this.setVoyageId(43);
 
 			if (this.voyageId == -1) {
 				throw new RuntimeException("Voyage ID was not set!");
@@ -126,6 +95,23 @@ public class SubmissionBean {
 				return null;
 			}
 
+			c = new Conditions();
+			c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId),
+					Conditions.OP_EQUALS);
+			c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(true),
+					Conditions.OP_EQUALS);
+			c.addCondition(Voyage.getAttribute("approved"), new Boolean(false),
+					Conditions.OP_EQUALS);
+			qValue = new QueryValue("Voyage", c);
+			for (int i = 0; i < attrs.length; i++) {
+				Attribute[] attributes = attrs[i].getAttribute();
+				for (int j = 0; j < attributes.length; j++) {
+					qValue.addPopulatedAttribute(attributes[j]);
+				}
+			}
+			Object[] suggestions = qValue.executeQuery(session);
+			
+			
 			Object[] voyageAttrs = (Object[]) res[0];
 			int index = 0;
 			for (int i = 0; i < attrs.length; i++) {
@@ -137,8 +123,15 @@ public class SubmissionBean {
 				}
 				vals.setValue(ORIGINAL_VOYAGE, attrs[i].getName(), attrs[i]
 						.getValue(toBeFormatted));
-				vals.setValue(CHANGED_VOYAGE, attrs[i].getName(), attrs[i]
-						.getEmptyValue());
+				for (int j = 0; j < suggestions.length; j++) {
+					Object[] suggestionAttrs = (Object[]) suggestions[j]; 
+					String label = CHANGED_VOYAGE + "-" + (j + 1);
+					Object[] suggestionAttrsToEdit = new Object[attribute.getAttribute().length];
+					for (int k = 0; k < suggestionAttrsToEdit.length; k++) {
+						suggestionAttrsToEdit[k] = suggestionAttrs[k + index];
+					}
+					vals.setValue(label, attrs[i].getName(), attrs[i].getValue(suggestionAttrsToEdit));
+				}
 				index += attribute.getAttribute().length;
 			}
 			
@@ -151,13 +144,17 @@ public class SubmissionBean {
 	}
 
 	public Column[] getColumns() {
-		Column[] cols = new Column[2];
-		cols[0] = new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, true);
-		cols[1] = new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, false);
+		this.setVoyageId(43);
+		Column[] cols = new Column[1 + this.suggestionsCount];
+		cols[0] = new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, false);
+		for (int i = 0; i < this.suggestionsCount; i++) {
+			cols[i + 1] = new Column(CHANGED_VOYAGE + "-" + (i+1), CHANGED_VOYAGE_LABEL + " " + (i+1), true);
+		}
 		return cols;
 	}
 
 	public Row[] getRows() {
+		this.setVoyageId(43);
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
 			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i]
@@ -175,13 +172,13 @@ public class SubmissionBean {
 	}
 
 	public String submit() {
-		System.out.println("Voyage submission saved");
-		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
+		System.out.println("Voyage correction saved");
+		Map newValues = valsToSubmit.getColumnValues(ORIGINAL_VOYAGE);
 		Voyage vNew = new Voyage();
 		vNew.setVoyageid(new Long(this.voyageId));
-		vNew.setSuggestion(true);
+		vNew.setSuggestion(false);
 		vNew.setRevision(-1);
-		vNew.setApproved(false);
+		vNew.setApproved(true);
 		wasError = false;
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());

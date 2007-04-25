@@ -362,8 +362,7 @@ public class Voyage extends AbstractDescriptiveObject {
 				NumericAttribute.TYPE_INTEGER, "sladvoy"));
 		attributes.add(new NumericAttribute("npprior", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "npprior"));
-		attributes.add(new NumericAttribute("national", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "national"));
+		attributes.add(new NationAttribute("national", "Voyage", "national"));
 		attributes.add(new NumericAttribute("slinten2", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "slinten2"));
 		attributes.add(new NumericAttribute("ndesert", "Voyage",
@@ -2206,11 +2205,11 @@ public class Voyage extends AbstractDescriptiveObject {
 		this.values.put("npprior", val);
 	}
 	
-	public Integer getNational() {
-		return (Integer)this.values.get("national");
+	public Nation getNational() {
+		return (Nation)this.values.get("national");
 	}
 	
-	public void setNational(Integer val) {
+	public void setNational(Nation val) {
 		this.values.put("national", val);
 	}
 	
