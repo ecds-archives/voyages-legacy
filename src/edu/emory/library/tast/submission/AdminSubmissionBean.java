@@ -197,6 +197,22 @@ public class AdminSubmissionBean {
 		if (!wasError) {
 			vNew.save();
 		}
+		
+		Conditions c = new Conditions();
+		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId),
+				Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(true),
+				Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("approved"), new Boolean(false),
+				Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("Voyage", c);
+		Object[] voyages = qValue.executeQuery();
+		for (int i = 0; i < voyages.length; i++) {
+			Voyage v = (Voyage) voyages[i];
+			v.setApproved(true);
+			v.saveOrUpdate();
+		}
+		
 		System.out.println("Voyage submission saved");
 		return null;
 	}
