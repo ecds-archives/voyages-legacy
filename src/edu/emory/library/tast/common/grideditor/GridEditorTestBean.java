@@ -49,12 +49,21 @@ public class GridEditorTestBean
 	public Row[] getRows()
 	{
 		return new Row[] {
-				new Row(FIELD_TYPE_NAME, "firstName", "First name"),
-				new Row(FIELD_TYPE_NAME, "lastName", "Last name"),
-				new Row(FIELD_TYPE_PHONE, "phone", "Phone number"),
-				new Row(FIELD_TYPE_STATES, "state", "State"),
-				new Row(FIELD_TYPE_DESC, "description", "Description"),
-				new Row(FIELD_TYPE_DATE, "dob", "Date of birth")
+				new Row(FIELD_TYPE_NAME, "firstName", "First name", null, "name"),
+				new Row(FIELD_TYPE_NAME, "lastName", "Last name", null, "name"),
+				new Row(FIELD_TYPE_PHONE, "phone", "Phone number", null, "contact"),
+				new Row(FIELD_TYPE_STATES, "state", "State", null, "contact"),
+				new Row(FIELD_TYPE_DESC, "description", "Description", null, "other"),
+				new Row(FIELD_TYPE_DATE, "dob", "Date of birth", null, "xyz")
+		};
+	}
+	
+	public RowGroup[] getRowGroups()
+	{
+		return new RowGroup[] {
+				new RowGroup("name", "Name"),
+				new RowGroup("contact", "Contact"),
+				new RowGroup("other", "Other"),
 		};
 	}
 

@@ -59,6 +59,7 @@
 		<s:gridEditor
 			id="grid"
 			rows="#{GridEditorTestBean.rows}"
+			rowGroups="#{GridEditorTestBean.rowGroups}"
 			columns="#{GridEditorTestBean.columns}"
 			values="#{GridEditorTestBean.values}"
 			fieldTypes="#{GridEditorTestBean.fieldTypes}" />

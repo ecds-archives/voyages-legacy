@@ -1,7 +1,6 @@
 package edu.emory.library.tast.common.grideditor.date;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 
 import javax.faces.component.UIForm;

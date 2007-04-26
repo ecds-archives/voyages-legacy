@@ -1,7 +1,11 @@
 package edu.emory.library.tast.common.grideditor;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -218,6 +222,52 @@ public class GridEditorComponent extends UIComponentBase
 	private void encodeGrid(FacesContext context, ResponseWriter writer, UIForm form, String mainId) throws IOException
 	{
 		
+		List internalGroups = new ArrayList(); 
+		
+		// no row groups
+		if (rowGroups == null)
+		{
+			RowGroupInternal fakeGroup = new RowGroupInternal();
+			fakeGroup.label = null;
+			fakeGroup.renderTitle = false;
+			fakeGroup.rows = Arrays.asList(rows);
+			internalGroups.add(fakeGroup);
+		}
+		
+		// we have some groups
+		else
+		{
+			
+			// given groups
+			Map rowGroupMap = new HashMap();
+			for (int i = 0; i < rowGroups.length; i++)
+			{
+				RowGroup row = rowGroups[i];
+				RowGroupInternal internalGroup = new RowGroupInternal();
+				internalGroup.label = row.getLabel();
+				internalGroup.renderTitle = true;
+				rowGroupMap.put(row.getName(), internalGroup);
+				internalGroups.add(internalGroup);
+			}
+			
+			// special group for unspecified
+			RowGroupInternal unspecifiedGroup = new RowGroupInternal();
+			unspecifiedGroup.label = "Unspecified";
+			unspecifiedGroup.renderTitle = true;
+			rowGroupMap.put(null, unspecifiedGroup);
+			internalGroups.add(unspecifiedGroup);
+			
+			// group rows by groupName
+			for (int i = 0; i < rows.length; i++)
+			{
+				Row row = rows[i];
+				RowGroupInternal internalGroup = (RowGroupInternal) rowGroupMap.get(row.getGroupName());
+				if (internalGroup == null) internalGroup = (RowGroupInternal) rowGroupMap.get(null);
+				internalGroup.rows.add(row);
+			}
+			
+		}
+		
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -237,57 +287,77 @@ public class GridEditorComponent extends UIComponentBase
 		}
 
 		writer.endElement("tr");
-
-		for (int i = 0; i < rows.length; i++)
+		
+		for (Iterator iter = internalGroups.iterator(); iter.hasNext();)
 		{
 			
-			Row row = rows[i];
-			String rowName = row.getName();
+			RowGroupInternal internalGroup = (RowGroupInternal) iter.next();
 			
-			FieldType fieldType = (FieldType) fieldTypes.get(row.getType());
-			Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
-			
-			writer.startElement("tr", this);
-
-			writer.startElement("th", this);
-			writer.write(row.getLabel());
-			writer.endElement("th");
-
-			for (int j = 0; j < columns.length; j++)
+			if (internalGroup.rows.size() != 0)
 			{
-				Column column = columns[j];
-				String columnName = column.getName();
-				Value value = values.getValue(columnName, rowName);
 				
-				writer.startElement("td", this);
-
-				adapter.encode(context,
-						this,
-						mainId,
-						form,
-						row,
-						column,
-						fieldType,
-						getValueInputPrefix(context, columnName, rowName),
-						value, column.isReadOnly());
-				
-				JsfUtils.encodeHiddenInput(this, writer,
-						getValueErrorFlagFieldName(context, columnName, rowName),
-						Boolean.toString(value.isError()));
-
-				if (value.isError())
+				if (internalGroup.renderTitle && internalGroup.label != null)
 				{
-					System.out.println("ERROR " + value.getErrorMessage());
-					encodeErrorMessage(context, writer, columnName, rowName, value);
+					writer.startElement("tr", this);
+					writer.startElement("th", this);
+					writer.writeAttribute("colspan", String.valueOf(columns.length + 1), null);
+					writer.writeAttribute("class", "grid-editor-row-group", null);
+					writer.write(internalGroup.label);
+					writer.endElement("th");
+					writer.endElement("tr");
 				}
 				
-				writer.endElement("td");
+				for (Iterator iterRows = internalGroup.rows.iterator(); iterRows.hasNext();)
+				{
+					
+					Row row = (Row) iterRows.next();
+					String rowName = row.getName();
+					
+					FieldType fieldType = (FieldType) fieldTypes.get(row.getType());
+					Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
+					
+					writer.startElement("tr", this);
+		
+					writer.startElement("th", this);
+					writer.write(row.getLabel());
+					writer.endElement("th");
+		
+					for (int j = 0; j < columns.length; j++)
+					{
+						Column column = columns[j];
+						String columnName = column.getName();
+						Value value = values.getValue(columnName, rowName);
+						
+						writer.startElement("td", this);
+		
+						adapter.encode(context,
+								this,
+								mainId,
+								form,
+								row,
+								column,
+								fieldType,
+								getValueInputPrefix(context, columnName, rowName),
+								value, column.isReadOnly());
+						
+						JsfUtils.encodeHiddenInput(this, writer,
+								getValueErrorFlagFieldName(context, columnName, rowName),
+								Boolean.toString(value.isError()));
+		
+						if (value.isError())
+							encodeErrorMessage(context, writer, columnName, rowName, value);
+						
+						writer.endElement("td");
+						
+					}
+					
+					writer.endElement("tr");
+					
+				}
 				
 			}
-			
-			writer.endElement("tr");
-			
-		}
+		
+		}		
 		
 		writer.endElement("table");
 		
@@ -302,6 +372,7 @@ public class GridEditorComponent extends UIComponentBase
 		
 		// get data from bean
 		rows = getRows();
+		rowGroups = getRowGroups();
 		columns = getColumns();
 		values = getValues();
 		fieldTypes = getFieldTypes();
@@ -413,4 +484,11 @@ public class GridEditorComponent extends UIComponentBase
 		this.rowGroups = rowGroups;
 	}
 
+}
+
+class RowGroupInternal
+{
+	public boolean renderTitle;
+	public String label;
+	public List rows = new ArrayList();
 }
