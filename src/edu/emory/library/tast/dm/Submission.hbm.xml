@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="edu.emory.library.tast.dm.Submission" table="submissions">
+	
+	    <id name="id" column="id">
+	        <generator class="native"/>
+	    </id>
+	    
+	    <discriminator column="type" type="integer"/>
+	    
+		<property name="time" />
+	    
+	    <subclass name="edu.emory.library.tast.dm.SubmissionNew" discriminator-value="1">
+	        <property name="newVoyage" />
+	    </subclass>
+	    
+	    <subclass name="edu.emory.library.tast.dm.SubmissionEdit" discriminator-value="2">
+	        <property name="newVoyage" />
+	        <property name="oldVoyage" />
+	    </subclass>
+	    
+	    <subclass name="edu.emory.library.tast.dm.SubmissionMerge" discriminator-value="3">
+			<set name="mergedVoyages">
+				<key column="region_id" />
+				<one-to-many class="edu.emory.library.tast.dm.Port" />
+			</set>
+	        <property name="proposedNewVoyage" />
+	    </subclass>
+
+	</class>
+
+</hibernate-mapping>
