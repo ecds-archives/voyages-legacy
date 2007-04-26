@@ -202,7 +202,14 @@ public class SubmissionAttribute {
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			return ((TextareaValue)object).getTexts();
 		} else if (type.equals(SubmissionBean.LOCATIONS)) {
-			
+			if (this.attribute.length == 1) {
+				String portId = ((ListValue)object).getValues()[0];
+				Port port = null;
+				if (!portId.equals("-1")) {
+					port = Port.loadById(null, portId);
+				}
+				return new Object[] {port};
+			} else {
 				String regionId = "-1";
 				String portId = "-1";
 				if (((ListValue)object).getValues().length != 1) {
@@ -218,7 +225,7 @@ public class SubmissionAttribute {
 					region = Region.loadById(null, portId);
 				}
 				return new Object[] {region, port};
-//			}
+			}
 		} else if (type.equals(SubmissionBean.PORTS)) {
 			String portId = ((ListValue)object).getValues()[0];
 			if (portId.equals("-1")) {
