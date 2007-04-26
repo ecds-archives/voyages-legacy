@@ -118,14 +118,22 @@ public class SubmissionAttribute {
 			}
 			return new TextareaValue(strArr);
 		} else if (type.equals(SubmissionBean.LOCATIONS)) {
-			if (toBeFormatted[1] == null) {
-				return new ListValue();
-			}
-			Port port = (Port) toBeFormatted[1];			
-			return new ListValue(new String[] 
-			               {port.getRegion().getArea().getId().toString(),
-			            	   port.getRegion().getId().toString(),
-			            	   port.getId().toString()});
+			if (toBeFormatted.length == 1) {
+				if (toBeFormatted[0] == null) {
+					return new ListValue();
+				}
+				Port port = (Port) toBeFormatted[0];
+				return new ListValue(new String[] {port.getId().toString()});
+			} else {
+				if (toBeFormatted[1] == null) {
+					return new ListValue();
+				}
+				Port port = (Port) toBeFormatted[1];
+				return new ListValue(new String[] 
+				     			               {port.getRegion().getArea().getId().toString(),
+				     			            	   port.getRegion().getId().toString(),
+				     			            	   port.getId().toString()});
+			}			
 		} else if (type.equals(SubmissionBean.PORTS)) {
 			if (toBeFormatted[0] == null) {
 				return new ListValue();
@@ -194,21 +202,23 @@ public class SubmissionAttribute {
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			return ((TextareaValue)object).getTexts();
 		} else if (type.equals(SubmissionBean.LOCATIONS)) {
-			String regionId = "-1";
-			String portId = "-1";
-			if (((ListValue)object).getValues().length != 1) {
-				regionId = ((ListValue)object).getValues()[1];
-				portId = ((ListValue)object).getValues()[2];
-			}
-			Region region = null;
-			Port port = null;
-			if (!portId.equals("-1")) {
-				port = Port.loadById(null, portId);
-			}
-			if (!regionId.equals("-1")) {
-				region = Region.loadById(null, portId);
-			}
-			return new Object[] {region, port};
+			
+				String regionId = "-1";
+				String portId = "-1";
+				if (((ListValue)object).getValues().length != 1) {
+					regionId = ((ListValue)object).getValues()[1];
+					portId = ((ListValue)object).getValues()[2];
+				}
+				Region region = null;
+				Port port = null;
+				if (!portId.equals("-1")) {
+					port = Port.loadById(null, portId);
+				}
+				if (!regionId.equals("-1")) {
+					region = Region.loadById(null, portId);
+				}
+				return new Object[] {region, port};
+//			}
 		} else if (type.equals(SubmissionBean.PORTS)) {
 			String portId = ((ListValue)object).getValues()[0];
 			if (portId.equals("-1")) {
