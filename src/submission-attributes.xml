@@ -52,12 +52,12 @@
 			<attribute name="datedep"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="embport" editable="Y" type="ports" userLabel="First port of intended embarkation">
+	<submission-attributes name="embport" editable="Y" type="locations" userLabel="First port of intended embarkation">
 		<attributes>
 			<attribute name="embport"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="arrport" editable="Y" type="ports" userLabel="First port of intended disembarkation">
+	<submission-attributes name="arrport" editable="Y" type="locations" userLabel="First port of intended disembarkation">
 		<attributes>
 			<attribute name="arrport"/>
 		</attributes>
@@ -110,7 +110,7 @@
 			<attribute name="tslavesd"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="npafttra" editable="Y" type="ports" userLabel="Places of call before Atlantic crossing">
+	<submission-attributes name="npafttra" editable="Y" type="locations" userLabel="Places of call before Atlantic crossing">
 		<attributes>
 			<attribute name="npafttra"/>
 		</attributes>
@@ -286,7 +286,7 @@
 			<attribute name="saild5"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="embport2" editable="Y" type="ports" userLabel="Second port of intended embarkation">
+	<submission-attributes name="embport2" editable="Y" type="locations" userLabel="Second port of intended embarkation">
 		<attributes>
 			<attribute name="embport2"/>
 		</attributes>
@@ -316,7 +316,7 @@
 			<attribute name="child3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="placcons" editable="Y" type="ports" userLabel="Place where ship constructed">
+	<submission-attributes name="placcons" editable="Y" type="locations" userLabel="Place where ship constructed">
 		<attributes>
 			<attribute name="placcons"/>
 		</attributes>
@@ -326,7 +326,7 @@
 			<attribute name="yrcons"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="placreg" editable="Y" type="ports" userLabel="Place where ship registered">
+	<submission-attributes name="placreg" editable="Y" type="locations" userLabel="Place where ship registered">
 		<attributes>
 			<attribute name="placreg"/>
 		</attributes>

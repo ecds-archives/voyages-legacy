@@ -64,6 +64,7 @@
 			fieldTypes="#{GridEditorTestBean.fieldTypes}" />
 			
 		<h:commandButton value="Test submit" />
+		<h:commandButton value="Test error" action="#{GridEditorTestBean.testError}" />
 
 	</h:form>
 </f:view>

@@ -12,6 +12,7 @@ import edu.emory.library.tast.common.grideditor.textbox.TextareaFieldType;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxFieldType;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
+import edu.emory.library.tast.util.StringUtils;
 
 public class GridEditorTestBean
 {
@@ -125,6 +126,22 @@ public class GridEditorTestBean
 	public void setValues(Values values)
 	{
 		this.values = values;
+	}
+	
+	public String testError()
+	{
+		
+		TextboxValue firstNameVal = (TextboxValue) values.getValue("new", "firstName");
+		TextboxValue lastNameVal = (TextboxValue) values.getValue("new", "lastName");
+		
+		if (StringUtils.isNullOrEmpty(firstNameVal.getText()))
+			firstNameVal.setErrorMessage("First name cannot be empty.");
+		
+		if (StringUtils.isNullOrEmpty(lastNameVal.getText()))
+			firstNameVal.setErrorMessage("Last name cannot be empty.");
+
+		return null;
+
 	}
 
 }

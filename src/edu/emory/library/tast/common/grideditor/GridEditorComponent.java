@@ -11,8 +11,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
-
 import edu.emory.library.tast.util.JsfUtils;
 
 public class GridEditorComponent extends UIComponentBase
@@ -278,7 +276,10 @@ public class GridEditorComponent extends UIComponentBase
 						Boolean.toString(value.isError()));
 
 				if (value.isError())
+				{
+					System.out.println("ERROR " + value.getErrorMessage());
 					encodeErrorMessage(context, writer, columnName, rowName, value);
+				}
 				
 				writer.endElement("td");
 				
@@ -321,14 +322,21 @@ public class GridEditorComponent extends UIComponentBase
 					rows[i].getName());
 		
 		// hidden fields with row types
-		for (int i = 0; i < rows.length; i++) {
-			if (fieldTypes.get(rows[i].getType()) == null) {
-				throw new RuntimeException("No registered field type for: " + rows[i].getType());
-			}
+		for (int i = 0; i < rows.length; i++)
+		{
+
+			String userType = rows[i].getType();
+			FieldType fieldType = (FieldType) fieldTypes.get(userType);
+
+			if (fieldType == null)
+				throw new RuntimeException("No registered field type for: " + userType);
+			
 			JsfUtils.encodeHiddenInput(this, writer,
 					getRowFieldTypeName(context, i),
-					((FieldType) fieldTypes.get(rows[i].getType())).getType());
+					fieldType.getType());
+
 		}
+
 		// registration JavaScript
 		encodeRegJS(context, writer, form, mainId);
 
