@@ -1,18 +1,31 @@
 package edu.emory.library.tast.dm;
 
-public class SubmissionNew
+import java.util.Map;
+
+public class SubmissionNew extends Submission
 {
 	
-	private Voyage voyage;
+	private Voyage newVoyage;
+	private Map attributeNotes;
 
-	public Voyage getVoyage()
+	public Voyage getNewVoyage()
 	{
-		return voyage;
+		return newVoyage;
 	}
 
-	public void setVoyage(Voyage voyage)
+	public void setNewVoyage(Voyage voyage)
 	{
-		this.voyage = voyage;
+		this.newVoyage = voyage;
+	}
+
+	public Map getAttributeNotes()
+	{
+		return attributeNotes;
+	}
+
+	public void setAttributeNotes(Map attributeNotes)
+	{
+		this.attributeNotes = attributeNotes;
 	}
 
 }

@@ -9,27 +9,89 @@
 	        <generator class="native"/>
 	    </id>
 	    
-	    <discriminator column="type" type="integer"/>
+		<property name="time"/>
+		<property name="note"/>
+		
+		<set name="sources" inverse="true" cascade="all-delete-orphan">
+			<key column="submission_id" />
+			<one-to-many class="edu.emory.library.tast.dm.SubmissionSource" />
+		</set>
+		
+		<joined-subclass name="edu.emory.library.tast.dm.SubmissionNew" table="submissions_new">
+			<key column="submission_id"/>
+			<many-to-one name="newVoyage" column="voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
+			<map name="attributeNotes" table="submissions_attribute_notes">
+				<key column="submission_id"/>
+				<index column="attribute_name" type="string"/>
+				<element column="note" type="string"/>
+			</map>
+		</joined-subclass>
 	    
-		<property name="time" />
-	    
-	    <subclass name="edu.emory.library.tast.dm.SubmissionNew" discriminator-value="1">
-	        <property name="newVoyage" />
-	    </subclass>
-	    
-	    <subclass name="edu.emory.library.tast.dm.SubmissionEdit" discriminator-value="2">
-	        <property name="newVoyage" />
-	        <property name="oldVoyage" />
-	    </subclass>
-	    
-	    <subclass name="edu.emory.library.tast.dm.SubmissionMerge" discriminator-value="3">
-			<set name="mergedVoyages">
-				<key column="region_id" />
-				<one-to-many class="edu.emory.library.tast.dm.Port" />
+		<joined-subclass name="edu.emory.library.tast.dm.SubmissionEdit" table="submissions_edit">
+			<key column="submission_id"/>
+			<many-to-one name="newVoyage" column="new_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
+			<many-to-one name="oldVoyage" column="old_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
+			<map name="attributeNotes" table="submissions_attribute_notes">
+				<key column="submission_id"/>
+				<index column="attribute_name" type="string"/>
+				<element column="note" type="string"/>
+			</map>
+		</joined-subclass>
+		
+		<joined-subclass name="edu.emory.library.tast.dm.SubmissionMerge" table="submissions_merge">
+			<key column="submission_id"/>
+			<many-to-one name="proposedNewVoyage" column="merge_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
+			<set name="mergedVoyages" table="submissions_merge_voyages">
+				<key column="submission_id" />
+				<many-to-many column="voyage_iid" unique="true" class="edu.emory.library.tast.dm.Voyage" />
 			</set>
-	        <property name="proposedNewVoyage" />
-	    </subclass>
+			<map name="attributeNotes" table="submissions_attribute_notes">
+				<key column="submission_id"/>
+				<index column="attribute_name" type="string"/>
+				<element column="note" type="string"/>
+			</map>
+		</joined-subclass>
 
+	</class>
+	
+	<class name="edu.emory.library.tast.dm.SubmissionSource" table="submissions_sources">
+	
+	    <id name="id" column="id">
+	        <generator class="native"/>
+	    </id>
+	    
+		<property name="note"/>
+		
+	    <many-to-one name="submission" column="submission_id" not-null="true"/>
+		
+		<joined-subclass name="edu.emory.library.tast.dm.SubmissionSourcePaper" table="submissions_sources_papers">
+			<key column="source_id"/>
+			<property name="authors" column="authors" />
+			<property name="journal" column="journal" />
+			<property name="pageFrom" column="page_from" />
+			<property name="pageTo" column="page_to" />
+			<property name="year" column="year" />
+		</joined-subclass>
+		
+		<joined-subclass name="edu.emory.library.tast.dm.SubmissionSourceBook" table="submissions_sources_books">
+			<key column="source_id"/>
+			<property name="authors" column="authors" />
+			<property name="placeOfPublication" column="place_of_publication" />
+			<property name="title" column="title" />
+			<property name="publisher" column="publisher" />
+			<property name="pageFrom" column="page_from" />
+			<property name="pageTo" column="page_to" />
+			<property name="year" column="year" />
+		</joined-subclass>
+		
+		<joined-subclass name="edu.emory.library.tast.dm.SubmissionSourceOther" table="submissions_sources_others">
+			<key column="source_id"/>
+			<property name="title" column="title" />
+			<property name="location" column="location" />
+			<property name="folioOrPage" column="folio_or_page" />
+			<property name="classNumber" column="class_number" />
+		</joined-subclass>
+	
 	</class>
 
 </hibernate-mapping>

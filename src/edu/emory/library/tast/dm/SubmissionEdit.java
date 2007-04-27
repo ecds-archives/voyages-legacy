@@ -1,29 +1,42 @@
 package edu.emory.library.tast.dm;
 
-public class SubmissionEdit
+import java.util.Map;
+
+public class SubmissionEdit extends Submission
 {
 	
-	private Voyage voyageNew;
-	private Voyage voyageOld;
+	private Voyage newVoyage;
+	private Voyage oldVoyage;
+	private Map attributeNotes;
 
-	public Voyage getVoyageNew()
+	public Map getAttributeNotes()
 	{
-		return voyageNew;
+		return attributeNotes;
+	}
+
+	public void setAttributeNotes(Map attributeNotes)
+	{
+		this.attributeNotes = attributeNotes;
+	}
+
+	public Voyage getNewVoyage()
+	{
+		return newVoyage;
 	}
 	
-	public void setVoyageNew(Voyage voyageNew)
+	public void setNewVoyage(Voyage voyageNew)
 	{
-		this.voyageNew = voyageNew;
+		this.newVoyage = voyageNew;
 	}
 	
-	public Voyage getVoyageOld()
+	public Voyage getOldVoyage()
 	{
-		return voyageOld;
+		return oldVoyage;
 	}
 	
-	public void setVoyageOld(Voyage voyageOld)
+	public void setOldVoyage(Voyage voyageOld)
 	{
-		this.voyageOld = voyageOld;
+		this.oldVoyage = voyageOld;
 	}
 
 }

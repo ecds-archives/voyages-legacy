@@ -1,31 +1,43 @@
 package edu.emory.library.tast.dm;
 
+import java.util.Map;
 import java.util.Set;
 
-public class SubmissionMerge
+public class SubmissionMerge extends Submission
 {
 	
-	private Voyage voyageNew;
-	private Set voyagesOld;
+	private Voyage proposedNewVoyage;
+	private Set mergedVoyages;
+	private Map attributeNotes;
 	
-	public Voyage getVoyageNew()
+	public Voyage getProposedNewVoyage()
 	{
-		return voyageNew;
+		return proposedNewVoyage;
 	}
 	
-	public void setVoyageNew(Voyage voyageNew)
+	public void setProposedNewVoyage(Voyage voyageNew)
 	{
-		this.voyageNew = voyageNew;
+		this.proposedNewVoyage = voyageNew;
 	}
 	
-	public Set getVoyagesOld()
+	public Set getMergedVoyages()
 	{
-		return voyagesOld;
+		return mergedVoyages;
 	}
 
-	public void setVoyagesOld(Set voyagesOld)
+	public void setMergedVoyages(Set mergedVoyages)
 	{
-		this.voyagesOld = voyagesOld;
+		this.mergedVoyages = mergedVoyages;
+	}
+
+	public Map getAttributeNotes()
+	{
+		return attributeNotes;
+	}
+
+	public void setAttributeNotes(Map attributeNotes)
+	{
+		this.attributeNotes = attributeNotes;
 	}
 
 }

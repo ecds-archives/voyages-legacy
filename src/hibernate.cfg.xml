@@ -60,6 +60,8 @@
 		<mapping resource="edu/emory/library/tast/dm/Slave.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Country.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/SexAge.hbm.xml"/>
+		
+		<mapping resource="edu/emory/library/tast/dm/Submission.hbm.xml"/>
 
     </session-factory>
 
