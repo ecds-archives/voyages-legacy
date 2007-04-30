@@ -44,40 +44,40 @@ div.error {
 		Trans-Atlantic Slave Trade / Image database
 		</div>
 		
-		<t:htmlTag value="div" styleClass="error" rendered="#{ImagesBean.errorText != null}">
-			<h:outputText value="#{ImagesBean.errorText}" />
+		<t:htmlTag value="div" styleClass="error" rendered="#{AdminImagesBean.errorText != null}">
+			<h:outputText value="#{AdminImagesBean.errorText}" />
 		</t:htmlTag>
 		
 		<div class="section">Image</div>
 	
 		<h:graphicImage 
-			url="#{ImagesBean.imageUrl}"
-			width="#{ImagesBean.image.width}"
-			height="#{ImagesBean.image.height}" />
+			url="#{AdminImagesBean.imageUrl}"
+			width="#{AdminImagesBean.image.width}"
+			height="#{AdminImagesBean.image.height}" />
 			
 		<br>
 		
-		<h:outputText value="#{ImagesBean.imageInfo}" />
+		<h:outputText value="#{AdminImagesBean.imageInfo}" />
 		
 		<br>
 			
 		<h:commandButton
 			value="Upload new image"
-			action="#{ImagesBean.showUploadBox}"
-			rendered="#{!ImagesBean.uploadBoxShown}" />
+			action="#{AdminImagesBean.showUploadBox}"
+			rendered="#{!AdminImagesBean.uploadBoxShown}" />
 		
-		<h:panelGroup rendered="#{ImagesBean.uploadBoxShown}">
+		<h:panelGroup rendered="#{AdminImagesBean.uploadBoxShown}">
 			
 			<t:inputFileUpload
 				storage="file"
-				value="#{ImagesBean.uploadedImage}" />
+				value="#{AdminImagesBean.uploadedImage}" />
 				
 			<h:commandButton
-				action="#{ImagesBean.uploadNewImage}"
+				action="#{AdminImagesBean.uploadNewImage}"
 				value="Upload" />
 			
 			<h:commandButton
-				action="#{ImagesBean.hideUploadBox}"
+				action="#{AdminImagesBean.hideUploadBox}"
 				value="Cancel" />
 				
 		</h:panelGroup>
@@ -92,11 +92,11 @@ div.error {
 			<table border="0" cellspacing="5" cellpadding="0">
 			<tr>
 				<td style="width: 80px;">Title</td>
-				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.title}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.title}" /></td>
 			</tr>
 			<tr>
 				<td>Description</td>
-				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{ImagesBean.image.description}" /></td>
+				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{AdminImagesBean.image.description}" /></td>
 			</tr>
 			</table>
 		
@@ -106,28 +106,28 @@ div.error {
 			<tr>
 				<td style="width: 100px;">Category</td>
 				<td>
-					<h:selectOneMenu value="#{ImagesBean.imageCategoryId}">
-						<f:selectItems value="#{ImagesBean.detailCategories}" />
+					<h:selectOneMenu value="#{AdminImagesBean.imageCategoryId}">
+						<f:selectItems value="#{AdminImagesBean.detailCategories}" />
 					</h:selectOneMenu>
 				</td>
 			</tr>
 			<tr>
 				<td>Source</td>
-				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.source}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.source}" /></td>
 			</tr>
 			<tr>
 				<td>Date</td>
-				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.date}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.date}" /></td>
 			</tr>
 			<tr>
 				<td>Creator</td>
-				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.creator}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.creator}" /></td>
 			</tr>
 			<tr>
 				<td>Language</td>
 				<td>
-					<h:selectOneMenu value="#{ImagesBean.image.language}">
-						<f:selectItems value="#{ImagesBean.languages}" />
+					<h:selectOneMenu value="#{AdminImagesBean.image.language}">
+						<f:selectItems value="#{AdminImagesBean.languages}" />
 					</h:selectOneMenu>
 				</td>
 			</tr>
@@ -144,11 +144,11 @@ div.error {
 			<table border="0" cellspacing="5" cellpadding="0">
 			<tr>
 				<td style="width: 80px;">Comments</td>
-				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.comments}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.comments}" /></td>
 			</tr>
 			<tr>
 				<td>References</td>
-				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{ImagesBean.image.references}" /></td>
+				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{AdminImagesBean.image.references}" /></td>
 			</tr>
 			</table>
 
@@ -157,27 +157,27 @@ div.error {
 			<table border="0" cellspacing="5" cellpadding="0">
 			<tr>
 				<td style="width: 100px;">Is at Emory</td>
-				<td><h:selectBooleanCheckbox value="#{ImagesBean.image.emory}" /></td>
+				<td><h:selectBooleanCheckbox value="#{AdminImagesBean.image.emory}" /></td>
 			</tr>
 			<tr>
 				<td>Emory location</td>
-				<td><h:inputText style="width: 300px;" value="#{ImagesBean.image.emoryLocation}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.emoryLocation}" /></td>
 			</tr>
 			<tr>
 				<td>Authorization</td>
-				<td><h:selectOneMenu value="#{ImagesBean.image.authorizationStatus}">
-					<f:selectItems value="#{ImagesBean.authorizationStatusItems}" />
+				<td><h:selectOneMenu value="#{AdminImagesBean.image.authorizationStatus}">
+					<f:selectItems value="#{AdminImagesBean.authorizationStatusItems}" />
 				</h:selectOneMenu></td>
 			</tr>
 			<tr>
 				<td>Image status</td>
-				<td><h:selectOneMenu value="#{ImagesBean.image.imageStatus}">
-					<f:selectItems value="#{ImagesBean.imageStatusItems}" />
+				<td><h:selectOneMenu value="#{AdminImagesBean.image.imageStatus}">
+					<f:selectItems value="#{AdminImagesBean.imageStatusItems}" />
 				</h:selectOneMenu></td>
 			</tr>
 			<tr>
 				<td>Ready to go</td>
-				<td><h:selectBooleanCheckbox value="#{ImagesBean.image.readyToGo}" /></td>
+				<td><h:selectBooleanCheckbox value="#{AdminImagesBean.image.readyToGo}" /></td>
 			</tr>
 			</table>
 
@@ -195,8 +195,8 @@ div.error {
 
 				<s:lookupSelect
 					id="regions"
-					sourceId="#{ImagesBean.regionsLookupSourceId}"
-					selectedValues="#{ImagesBean.selectedRegionsIds}" />
+					sourceId="#{AdminImagesBean.regionsLookupSourceId}"
+					selectedValues="#{AdminImagesBean.selectedRegionsIds}" />
 			
 			</td>
 			<td valign="top" style="padding-right: 10px;">
@@ -205,8 +205,8 @@ div.error {
 			
 				<s:lookupSelect
 					id="ports"
-					sourceId="#{ImagesBean.portsLookupSourceId}"
-					selectedValues="#{ImagesBean.selectedPortsIds}" />
+					sourceId="#{AdminImagesBean.portsLookupSourceId}"
+					selectedValues="#{AdminImagesBean.selectedPortsIds}" />
 			
 			</td>
 		</tr>
@@ -214,9 +214,9 @@ div.error {
 		
 		<div style="margin-top: 10px; border-bottom: 2px solid #CCCCCC; margin-bottom: 10px;"></div>
 		
-		<h:commandButton value="Save" action="#{ImagesBean.saveImage}" />
-		<h:commandButton value="Delete" onclick="if (!confirm('Are you sure?')) return false;" action="#{ImagesBean.deleteImage}" rendered="#{ImagesBean.image.id != 0}" />
-		<h:commandButton value="Cancel" action="#{ImagesBean.cancelEdit}" />
+		<h:commandButton value="Save" action="#{AdminImagesBean.saveImage}" />
+		<h:commandButton value="Delete" onclick="if (!confirm('Are you sure?')) return false;" action="#{AdminImagesBean.deleteImage}" rendered="#{AdminImagesBean.image.id != 0}" />
+		<h:commandButton value="Cancel" action="#{AdminImagesBean.cancelEdit}" />
 
 	</h:form>
 </f:view>

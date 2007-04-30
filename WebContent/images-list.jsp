@@ -54,7 +54,7 @@ div.imagelist-gallery-image {
 		<input type="hidden" name="scrollPosX">
 		<input type="hidden" name="scrollPosY">
 		<script type="text/javascript" language="javascript">
-		<h:outputText value="#{ImagesBean.scrollToJavaScript}" />
+		<h:outputText value="#{AdminImagesBean.scrollToJavaScript}" />
 		</script>
 		
 		<div style="font-size: 12pt; font-weight: bold; padding: 0px 5px 5px 5px; font-family: Arial, sans-serif;">
@@ -68,7 +68,7 @@ div.imagelist-gallery-image {
 				List:&nbsp;
 			</td>
 			<td>
-				<h:selectOneMenu value="#{ImagesBean.listStyle}">
+				<h:selectOneMenu value="#{AdminImagesBean.listStyle}">
 					<f:selectItem itemLabel="Table" itemValue="table" />
 					<f:selectItem itemLabel="List" itemValue="list" />
 					<f:selectItem itemLabel="Gallery" itemValue="gallery" />
@@ -78,7 +78,7 @@ div.imagelist-gallery-image {
 				&nbsp;Thumnails:&nbsp;
 			</td>
 			<td>
-				<h:selectOneMenu value="#{ImagesBean.thumbnailSize}">
+				<h:selectOneMenu value="#{AdminImagesBean.thumbnailSize}">
 					<f:selectItem itemLabel="Small" itemValue="32x32" />
 					<f:selectItem itemLabel="Medium" itemValue="48x48" />
 					<f:selectItem itemLabel="Big" itemValue="64x64" />
@@ -89,7 +89,7 @@ div.imagelist-gallery-image {
 				&nbsp;Sort by:&nbsp;
 			</td>
 			<td>
-				<h:selectOneMenu value="#{ImagesBean.sortBy}">
+				<h:selectOneMenu value="#{AdminImagesBean.sortBy}">
 					<f:selectItem itemLabel="Category" itemValue="cat.name" />
 					<f:selectItem itemLabel="Date" itemValue="date" />
 					<f:selectItem itemLabel="Title" itemValue="title" />
@@ -101,15 +101,15 @@ div.imagelist-gallery-image {
 				&nbsp;Category:&nbsp;
 			</td>
 			<td>
-				<h:selectOneMenu value="#{ImagesBean.listCategoryId}">
-					<f:selectItems value="#{ImagesBean.listCategories}" />
+				<h:selectOneMenu value="#{AdminImagesBean.listCategoryId}">
+					<f:selectItems value="#{AdminImagesBean.listCategories}" />
 				</h:selectOneMenu>
 			</td>
 			<td>
 				&nbsp;Search for:&nbsp;
 			</td>
 			<td>
-				<h:inputText value="#{ImagesBean.searchFor}" />	
+				<h:inputText value="#{AdminImagesBean.searchFor}" />	
 			</td>
 			<td>
 				&nbsp;
@@ -121,7 +121,7 @@ div.imagelist-gallery-image {
 				&nbsp;
 			</td>
 			<td>
-				<h:commandButton action="#{ImagesBean.newImage}" value="New image" />
+				<h:commandButton action="#{AdminImagesBean.newImage}" value="New image" />
 			</td>
 		</tr>
 		</table>
@@ -130,10 +130,10 @@ div.imagelist-gallery-image {
 		<s:imageList
 			id="images"
 			columns="Ready, Auth., Image, Category, Date, Source"
-			images="#{ImagesBean.allImages}"
-			listStyle="#{ImagesBean.listStyle}"
-			selectedImageId="#{ImagesBean.selectedImageId}"
-			action="#{ImagesBean.openImage}" />
+			images="#{AdminImagesBean.allImages}"
+			listStyle="#{AdminImagesBean.listStyle}"
+			selectedImageId="#{AdminImagesBean.selectedImageId}"
+			action="#{AdminImagesBean.openImage}" />
 
 	</h:form>
 </f:view>
