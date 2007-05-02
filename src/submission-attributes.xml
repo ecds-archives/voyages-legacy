@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <submission-attributes>
 
-	<submission-attributes name="voyageid" group="Ship" editable="N" type="long" userLabel="Voyage identification number">
+	<submission-attributes name="voyageid" group="Ship, nation, owners" editable="N" type="long" userLabel="Voyage identification number">
 		<attributes>
 			<attribute name="voyageid"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="shipname" group="Ship" editable="Y" type="string" userLabel="Name of slave ship">
+	<submission-attributes name="shipname" group="Ship, nation, owners" editable="Y" type="string" userLabel="Name of slave ship">
 		<attributes>
 			<attribute name="shipname"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="captaina" group="Crew" editable="Y" type="string" userLabel="First captain of voyage">
+	<submission-attributes name="captaina" group="Captain and Crew" editable="Y" type="string" userLabel="First captain of voyage">
 		<attributes>
 			<attribute name="captaina"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="ownera" group="Ship" editable="Y" type="string" userLabel="First or managing owner of venture">
+	<submission-attributes name="ownera" group="Ship, nation, owners" editable="Y" type="string" userLabel="First or managing owner of venture">
 		<attributes>
 			<attribute name="ownera"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="captainb" group="Crew" editable="Y" type="string" userLabel="Second captain of voyage">
+	<submission-attributes name="captainb" group="Captain and Crew" editable="Y" type="string" userLabel="Second captain of voyage">
 		<attributes>
 			<attribute name="captainb"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="captainc" group="Crew" editable="Y" type="string" userLabel="Third captain of voyage">
+	<submission-attributes name="captainc" group="Captain and Crew" editable="Y" type="string" userLabel="Third captain of voyage">
 		<attributes>
 			<attribute name="captainc"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="ownerb" group="Ship" editable="Y" type="string" userLabel="Second owner of venture">
+	<submission-attributes name="ownerb" group="Ship, nation, owners" editable="Y" type="string" userLabel="Second owner of venture">
 		<attributes>
 			<attribute name="ownerb"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="crew1" group="Crew" editable="Y" type="integer" userLabel="Number of crew at departure">
+	<submission-attributes name="crew1" group="Captain and Crew" editable="Y" type="integer" userLabel="Number of crew at departure">
 		<attributes>
 			<attribute name="crew1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="portdep" group="Itinerary" editable="Y" type="locations" userLabel="Port of Departure">
+	<submission-attributes name="portdep" group="Voyage Itinerary" editable="Y" type="locations" userLabel="Port of Departure">
 		<attributes>
 			<attribute name="deptregimp"/>
 			<attribute name="portdep"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="datedep" group="Dates" editable="Y" type="date" userLabel="Date of Departure">
+	<submission-attributes name="datedep" group="Voyage Dates" editable="Y" type="date" userLabel="Date of Departure">
 		<attributes>
 			<attribute name="datedep"/>
 		</attributes>
@@ -62,7 +62,7 @@
 			<attribute name="arrport"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="rig" group="Ship" editable="Y" type="rigs" userLabel="Rig of ship">
+	<submission-attributes name="rig" group="Ship, nation, owners" editable="Y" type="rigs" userLabel="Rig of ship">
 		<attributes>
 			<attribute name="rig"/>
 		</attributes>
@@ -72,30 +72,30 @@
 			<attribute name="nppretra"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="plac1tra" group="Itinerary" editable="Y" type="locations" userLabel="First place of slave purchase">
+	<submission-attributes name="plac1tra" group="Voyage Itinerary" editable="Y" type="locations" userLabel="First place of slave purchase">
 		<attributes>
 			<attribute name="regem1"/>
 			<attribute name="plac1tra"/>
 		</attributes>
 	</submission-attributes>	
-	<submission-attributes name="plac2tra" group="Itinerary" editable="Y" type="locations" userLabel="Second place of slave purchase">
+	<submission-attributes name="plac2tra" group="Voyage Itinerary" editable="Y" type="locations" userLabel="Second place of slave purchase">
 		<attributes>
 			<attribute name="regem2"/>
 			<attribute name="plac2tra"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="plac3tra" group="Itinerary" editable="Y" type="locations" userLabel="Third place of slave purchase">
+	<submission-attributes name="plac3tra" group="Voyage Itinerary" editable="Y" type="locations" userLabel="Third place of slave purchase">
 		<attributes>
 			<attribute name="regem3"/>
 			<attribute name="plac3tra"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="datebuy" group="Dates" editable="Y" type="date" userLabel="Date that slave purchase began">
+	<submission-attributes name="datebuy" group="Voyage Dates" editable="Y" type="date" userLabel="Date that slave purchase began">
 		<attributes>
 			<attribute name="datebuy"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="dateleftafr" group="Dates" editable="Y" type="date" userLabel="Date that vessel left last slaving port">
+	<submission-attributes name="dateleftafr" group="Voyage Dates" editable="Y" type="date" userLabel="Date that vessel left last slaving port">
 		<attributes>
 			<attribute name="dateleftafr"/>
 		</attributes>
@@ -110,7 +110,7 @@
 			<attribute name="tslavesd"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="npafttra" group="Itinerary" editable="Y" type="locations" userLabel="Places of call before Atlantic crossing">
+	<submission-attributes name="npafttra" group="Voyage Itinerary" editable="Y" type="locations" userLabel="Places of call before Atlantic crossing">
 		<attributes>
 			<attribute name="npafttra"/>
 		</attributes>
@@ -130,13 +130,13 @@
 			<attribute name="slaarriv"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="sla1port" group="Itinerary" editable="Y" type="locations" userLabel="First place of landing">
+	<submission-attributes name="sla1port" group="Voyage Itinerary" editable="Y" type="locations" userLabel="First place of landing">
 		<attributes>
 			<attribute name="regdis1"/>
 			<attribute name="sla1port"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="dateland1" group="Dates" editable="Y" type="date" userLabel="Date of first disembarkation of slaves">
+	<submission-attributes name="dateland1" group="Voyage Dates" editable="Y" type="date" userLabel="Date of first disembarkation of slaves">
 		<attributes>
 			<attribute name="dateland1"/>
 		</attributes>
@@ -146,13 +146,13 @@
 			<attribute name="slas32"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="adpsale1" group="Itinerary" editable="Y" type="locations" userLabel="Second place of landing">
+	<submission-attributes name="adpsale1" group="Voyage Itinerary" editable="Y" type="locations" userLabel="Second place of landing">
 		<attributes>
 			<attribute name="regdis2"/>
 			<attribute name="adpsale1"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="dateland2" group="Dates" editable="Y" type="date" userLabel="Date of second disembarkation of slaves">
+	<submission-attributes name="dateland2" group="Voyage Dates" editable="Y" type="date" userLabel="Date of second disembarkation of slaves">
 		<attributes>
 			<attribute name="dateland2"/>
 		</attributes>
@@ -162,13 +162,13 @@
 			<attribute name="slas36"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="adpsale2" group="Itinerary" editable="Y" type="locations" userLabel="Third place of landing">
+	<submission-attributes name="adpsale2" group="Voyage Itinerary" editable="Y" type="locations" userLabel="Third place of landing">
 		<attributes>
 			<attribute name="regdis1"/>
 			<attribute name="adpsale2"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="dateland3" group="Dates" editable="Y" type="date" userLabel="Date of third disembarkation of slaves">
+	<submission-attributes name="dateland3" group="Voyage Dates" editable="Y" type="date" userLabel="Date of third disembarkation of slaves">
 		<attributes>
 			<attribute name="dateland3"/>
 		</attributes>
@@ -178,23 +178,23 @@
 			<attribute name="slas39"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="portret" group="Itinerary" editable="Y" type="locations" userLabel="Port at which voyage ended">
+	<submission-attributes name="portret" group="Voyage Itinerary" editable="Y" type="locations" userLabel="Port at which voyage ended">
 		<attributes>
 			<attribute name="retrnreg"/>
 			<attribute name="portret"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="datedepam" group="Dates" editable="Y" type="date" userLabel="Date that ship left on return voyage">
+	<submission-attributes name="datedepam" group="Voyage Dates" editable="Y" type="date" userLabel="Date that ship left on return voyage">
 		<attributes>
 			<attribute name="datedepam"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="dateend" group="Dates" editable="Y" type="date" userLabel="Date when voyage completed">
+	<submission-attributes name="dateend" group="Voyage Dates" editable="Y" type="date" userLabel="Date when voyage completed">
 		<attributes>
 			<attribute name="dateend"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="fate" group="Outcome" editable="Y" type="fates" userLabel="Outcome of voyage">
+	<submission-attributes name="fate" group="Voyage Outcome" editable="Y" type="fates" userLabel="Outcome of voyage">
 		<attributes>
 			<attribute name="fate"/>
 		</attributes>
@@ -226,17 +226,17 @@
 			<attribute name="slintend"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="tonnage" group="Ship" editable="Y" type="float" userLabel="Tonnage of ship">
+	<submission-attributes name="tonnage" group="Ship, nation, owners" editable="Y" type="float" userLabel="Tonnage of ship">
 		<attributes>
 			<attribute name="tonnage"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="tontype" group="Ship" editable="Y" type="integer" userLabel="Naionality of ship's tonnage">
+	<submission-attributes name="tontype" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Naionality of ship's tonnage">
 		<attributes>
 			<attribute name="tontype"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="national" group="Ship" editable="Y" type="nationals" userLabel="Country in which ship registered">
+	<submission-attributes name="national" group="Ship, nation, owners" editable="Y" type="nationals" userLabel="Country in which ship registered">
 		<attributes>
 			<attribute name="national"/>
 		</attributes>
@@ -261,27 +261,27 @@
 			<attribute name="sladamer"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="saild1" group="Crew" editable="Y" type="integer" userLabel="Crew died before first port of purchase">
+	<submission-attributes name="saild1" group="Captain and Crew" editable="Y" type="integer" userLabel="Crew died before first port of purchase">
 		<attributes>
 			<attribute name="saild1"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="saild2" group="Crew" editable="Y" type="integer" userLabel="Crew died during slaving">
+	<submission-attributes name="saild2" group="Captain and Crew" editable="Y" type="integer" userLabel="Crew died during slaving">
 		<attributes>
 			<attribute name="saild2"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="saild3" group="Crew" editable="Y" type="integer" userLabel="Crew died on middle passage">
+	<submission-attributes name="saild3" group="Captain and Crew" editable="Y" type="integer" userLabel="Crew died on middle passage">
 		<attributes>
 			<attribute name="saild3"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="saild4" group="Crew" editable="Y" type="integer" userLabel="Crew died in Americas ">
+	<submission-attributes name="saild4" group="Captain and Crew" editable="Y" type="integer" userLabel="Crew died in Americas ">
 		<attributes>
 			<attribute name="saild4"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="saild5" group="Crew" editable="Y" type="integer" userLabel="Crew died on voyage to port of return">
+	<submission-attributes name="saild5" group="Captain and Crew" editable="Y" type="integer" userLabel="Crew died on voyage to port of return">
 		<attributes>
 			<attribute name="saild5"/>
 		</attributes>
@@ -296,7 +296,7 @@
 			<attribute name="slinten2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="guns" group="Ship" editable="Y" type="integer" userLabel="Number of guns carried">
+	<submission-attributes name="guns" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Number of guns carried">
 		<attributes>
 			<attribute name="guns"/>
 		</attributes>
@@ -316,27 +316,27 @@
 			<attribute name="child3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="placcons" group="Ship" editable="Y" type="locations" userLabel="Place where ship constructed">
+	<submission-attributes name="placcons" group="Ship, nation, owners" editable="Y" type="locations" userLabel="Place where ship constructed">
 		<attributes>
 			<attribute name="placcons"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="yrcons" group="Ship" editable="Y" type="integer" userLabel="Year of ship construction">
+	<submission-attributes name="yrcons" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Year of ship construction">
 		<attributes>
 			<attribute name="yrcons"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="placreg" group="Ship" editable="Y" type="locations" userLabel="Place where ship registered">
+	<submission-attributes name="placreg" group="Ship, nation, owners" editable="Y" type="locations" userLabel="Place where ship registered">
 		<attributes>
 			<attribute name="placreg"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="yrreg" group="Ship" editable="Y" type="integer" userLabel="Year of ship registration">
+	<submission-attributes name="yrreg" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Year of ship registration">
 		<attributes>
 			<attribute name="yrreg"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="crewdied" group="Crew" editable="Y" type="integer" userLabel="Total crew died">
+	<submission-attributes name="crewdied" group="Captain and Crew" editable="Y" type="integer" userLabel="Total crew died">
 		<attributes>
 			<attribute name="crewdied"/>
 		</attributes>
@@ -346,17 +346,17 @@
 			<attribute name="ndesert"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="crew3" group="Crew" editable="Y" type="integer" userLabel="Number of crew at first disembarkation">
+	<submission-attributes name="crew3" group="Captain and Crew" editable="Y" type="integer" userLabel="Number of crew at first disembarkation">
 		<attributes>
 			<attribute name="crew3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="crew4" group="Crew" editable="Y" type="integer" userLabel="Number of crew leaving disembarkation port   ">
+	<submission-attributes name="crew4" group="Captain and Crew" editable="Y" type="integer" userLabel="Number of crew leaving disembarkation port   ">
 		<attributes>
 			<attribute name="crew4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="crew5" group="Crew" editable="Y" type="integer" userLabel="Number of crew at end of voyage">
+	<submission-attributes name="crew5" group="Captain and Crew" editable="Y" type="integer" userLabel="Number of crew at end of voyage">
 		<attributes>
 			<attribute name="crew5"/>
 		</attributes>
@@ -532,7 +532,7 @@
 			<attribute name="girl6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="crew2" group="Crew" editable="Y" type="integer" userLabel="Crew leaving Africa">
+	<submission-attributes name="crew2" group="Captain and Crew" editable="Y" type="integer" userLabel="Crew leaving Africa">
 		<attributes>
 			<attribute name="crew2"/>
 		</attributes>
@@ -592,7 +592,7 @@
 			<attribute name="adult3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="owners" group="Ship" editable="Y" type="string" userLabel="Other owners">
+	<submission-attributes name="owners" group="Ship, nation, owners" editable="Y" type="string" userLabel="Other owners">
 		<attributes>
 			<attribute name="ownerc"/>
 			<attribute name="ownerd"/>
@@ -610,7 +610,7 @@
 			<attribute name="ownerp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="evgreen" group="Ship" editable="Y" type="boolean" userLabel="Voyage in 1999 CD-ROM">
+	<submission-attributes name="evgreen" group="Ship, nation, owners" editable="Y" type="boolean" userLabel="Voyage in 1999 CD-ROM">
 		<attributes>
 			<attribute name="evgreen"/>
 		</attributes>
@@ -685,32 +685,32 @@
 			<attribute name="infant4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="crew" group="Crew" editable="Y" type="integer" userLabel="Crew at unspecified phase of voyage">
+	<submission-attributes name="crew" group="Captain and Crew" editable="Y" type="integer" userLabel="Crew at unspecified phase of voyage">
 		<attributes>
 			<attribute name="crew"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="fate2" group="Outcome" editable="N" type="fate2" userLabel="Outcome of voyage for slaves">
+	<submission-attributes name="fate2" group="Voyage Outcome" editable="N" type="fate2" userLabel="Outcome of voyage for slaves">
 		<attributes>
 			<attribute name="fate2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="fate3" group="Outcome" editable="N" type="fate3" userLabel="Outcome of voyage if ship captured">
+	<submission-attributes name="fate3" group="Voyage Outcome" editable="N" type="fate3" userLabel="Outcome of voyage if ship captured">
 		<attributes>
 			<attribute name="fate3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="fate4" group="Outcome" editable="N" type="fate4" userLabel="Outcome of voyage for owner">
+	<submission-attributes name="fate4" group="Voyage Outcome" editable="N" type="fate4" userLabel="Outcome of voyage for owner">
 		<attributes>
 			<attribute name="fate4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="voy1imp" group="Dates" editable="N" type="float" userLabel="Imputed voyage length from departure to first port of landing">
+	<submission-attributes name="voy1imp" group="Voyage Dates" editable="N" type="float" userLabel="Imputed voyage length from departure to first port of landing">
 		<attributes>
 			<attribute name="voy1imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="voy2imp" group="Dates" editable="N" type="float" userLabel="Imputed length of middle passage">
+	<submission-attributes name="voy2imp" group="Voyage Dates" editable="N" type="float" userLabel="Imputed length of middle passage">
 		<attributes>
 			<attribute name="voy2imp"/>
 		</attributes>
