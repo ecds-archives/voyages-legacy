@@ -43,7 +43,7 @@ public class SubmissionBean
 	private Submission submission = null;
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
-	private long voyageId = -1;
+	private long voyageId = 0;
 	private Values valsToSubmit = null;
 	private boolean wasError = false;
 	private Values gridValues = null;
@@ -98,9 +98,8 @@ public class SubmissionBean
 		{
 			currentSubmissionType = SUBMISSION_TYPE_EDIT;
 			submission = new SubmissionEdit();
-			initNewVoyage();
 		}
-		return null;
+		return "select-voyage";
 	}
 
 	public String selectTypeMerge()
@@ -112,7 +111,13 @@ public class SubmissionBean
 		}
 		return null;
 	}
-
+	
+	public String loadEdit()
+	{
+		loadCurrentVoyage();
+		return "form";
+	}
+	
 	private void initNewVoyage()
 	{
 		gridValues = new Values();
@@ -125,8 +130,6 @@ public class SubmissionBean
 	
 	private boolean loadCurrentVoyage()
 	{
-		
-		this.voyageId = 43;
 		
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
@@ -281,6 +284,16 @@ public class SubmissionBean
 	public void setSubmissionTypeNew(boolean submissionTypeNew)
 	{
 		selectedSubmissionType = SUBMISSION_TYPE_NEW;
+	}
+
+	public long getVoyageId()
+	{
+		return voyageId;
+	}
+
+	public void setVoyageId(long voyageId)
+	{
+		this.voyageId = voyageId;
 	}
 
 }

@@ -169,7 +169,7 @@ public class TimeLineResultTabBean {
 		
 		this.availableStats.add(new StatOption(
 				"AVG(crew30)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crew30")}),
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crew3")}),
 				TastResource.getText("components_timeline_stat_averagecrewfirst"),
 				"{0,number,#,###,##0.0}"));
 		
