@@ -59,29 +59,29 @@ public class HibernateTest {
 				Object[] ret = val.executeQuery();
 				Voyage v = (Voyage)ret[0];
 			} else if (command.startsWith("modify")) {
-				Long id = new Long(command.split(" ")[1]);
-				Voyage v = Voyage.loadMostRecent(id);
-				if (v != null) {
-					v.setShipname(v.getShipname() + "-");
-					v.save();
-				} else {
-					System.out.println("Empty result for given id - cannot update");
-				}
+//				Long id = new Long(command.split(" ")[1]);
+//				Voyage v = Voyage.loadMostRecent(id);
+//				if (v != null) {
+//					v.setShipname(v.getShipname() + "-");
+//					v.save();
+//				} else {
+//					System.out.println("Empty result for given id - cannot update");
+//				}
 			} else if (command.equals("dictionary")) {
 			} else if (command.equals("testSaving")) {
 			} else if (command.equals("limit")) {
-				try {
-					
-					Voyage v[] = Voyage.loadMostRecent(new Long(30001), 10);
-
-					for (int i = 0; i < v.length; i++) {
-						Voyage theVoyage = v[i];
-						System.out.println(theVoyage.getVoyageid() + ": " + theVoyage);
-					}
-
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					
+//					Voyage v[] = Voyage.loadMostRecent(new Long(30001), 10);
+//
+//					for (int i = 0; i < v.length; i++) {
+//						Voyage theVoyage = v[i];
+//						System.out.println(theVoyage.getVoyageid() + ": " + theVoyage);
+//					}
+//
+//				} catch (NullPointerException e) {
+//					e.printStackTrace();
+//				}
 			} else if (command.equals("query")) {
 				
 				Conditions conditions = new Conditions();

@@ -76,15 +76,15 @@ public class QueryTest
 		
 		int pageSize = 100;
 		int firstRecord = 0;
-		while ((voyages = Voyage.loadAllMostRecent(firstRecord, pageSize)).length > 0)
-		{
-			for (int i = 0; i < voyages.length; i++)
-			{
-				System.out.println((firstRecord+i+1) + ". " + voyages[i].getShipname());
-			}
-			firstRecord += voyages.length;
-			if (firstRecord >= 1000) break;
-		}
+//		while ((voyages = Voyage.loadAllMostRecent(firstRecord, pageSize)).length > 0)
+//		{
+//			for (int i = 0; i < voyages.length; i++)
+//			{
+//				System.out.println((firstRecord+i+1) + ". " + voyages[i].getShipname());
+//			}
+//			firstRecord += voyages.length;
+//			if (firstRecord >= 1000) break;
+//		}
 		
 		long endTime = System.currentTimeMillis();
 		System.out.println("Total time = " + (endTime - startTime) / 1000 + " seconds.");

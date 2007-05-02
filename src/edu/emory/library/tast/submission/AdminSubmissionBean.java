@@ -187,7 +187,7 @@ public class AdminSubmissionBean {
 				val.setErrorMessage("Error in value!");
 				wasError = true;
 			}
-			Object[] vals = attrs[i].getValues(val);
+			Object[] vals = attrs[i].getValues(null, val);
 			for (int j = 0; j < vals.length; j++) {
 				vNew
 						.setAttrValue(attrs[i].getAttribute()[j].getName(),

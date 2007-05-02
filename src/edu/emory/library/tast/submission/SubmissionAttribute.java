@@ -188,7 +188,7 @@ public class SubmissionAttribute {
 		return type;
 	}
 
-	public Object[] getValues(Object object) {
+	public Object[] getValues(Session sess, Object object) {
 		if (type.equals(TextboxAdapter.TYPE)) {
 			if ("".equals(((TextboxValue)object).getText())) {
 				return new Object[] {null};
@@ -209,7 +209,7 @@ public class SubmissionAttribute {
 				String portId = ((ListValue)object).getValues()[0];
 				Port port = null;
 				if (!portId.equals("-1")) {
-					port = Port.loadById(null, portId);
+					port = Port.loadById(sess, portId);
 				}
 				return new Object[] {port};
 			} else {
@@ -222,10 +222,10 @@ public class SubmissionAttribute {
 				Region region = null;
 				Port port = null;
 				if (!portId.equals("-1")) {
-					port = Port.loadById(null, portId);
+					port = Port.loadById(sess, portId);
 				}
 				if (!regionId.equals("-1")) {
-					region = Region.loadById(null, portId);
+					region = Region.loadById(sess, portId);
 				}
 				return new Object[] {region, port};
 			}
@@ -240,37 +240,37 @@ public class SubmissionAttribute {
 			if (id.equals("-1")) {
 				return new Object[] {null};
 			}
-			return new Object[] {Dictionary.loadById(Fate.class, null, id)};
+			return new Object[] {Dictionary.loadById(Fate.class, sess, id)};
 		} else if (type.equals(SubmissionDictionaries.RIGS)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};
 			}
-			return new Object[] {Dictionary.loadById(VesselRig.class, null, id)};
+			return new Object[] {Dictionary.loadById(VesselRig.class, sess, id)};
 		} else if (type.equals(SubmissionDictionaries.NATIONALS)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};
 			}
-			return new Object[] {Dictionary.loadById(Nation.class, null, id)};
+			return new Object[] {Dictionary.loadById(Nation.class, sess, id)};
 		} else if (type.equals(SubmissionDictionaries.FATE2)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};
 			}
-			return new Object[] {Dictionary.loadById(FateSlaves.class, null, id)};
+			return new Object[] {Dictionary.loadById(FateSlaves.class, sess, id)};
 		} else if (type.equals(SubmissionDictionaries.FATE3)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};
 			}
-			return new Object[] {Dictionary.loadById(FateVessel.class, null, id)};
+			return new Object[] {Dictionary.loadById(FateVessel.class, sess, id)};
 		} else if (type.equals(SubmissionDictionaries.FATE4)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};
 			}
-			return new Object[] {Dictionary.loadById(FateOwner.class, null, id)};
+			return new Object[] {Dictionary.loadById(FateOwner.class, sess, id)};
 		} else if (type.equals(SubmissionDictionaries.BOOLEAN)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {

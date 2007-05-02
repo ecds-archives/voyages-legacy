@@ -1,12 +1,14 @@
 package edu.emory.library.tast.submission;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
@@ -41,6 +43,8 @@ public class SubmissionBean
 	private int currentSubmissionType = SUBMISSION_TYPE_NOT_SELECTED;
 	private int selectedSubmissionType = SUBMISSION_TYPE_NOT_SELECTED;
 	private Submission submission = null;
+
+	private int submissionType = 0;
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
 	private long voyageId = 0;
@@ -137,7 +141,7 @@ public class SubmissionBean
 
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(1), Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Voyage", c);
 
 		for (int i = 0; i < attrs.length; i++) {
@@ -170,15 +174,20 @@ public class SubmissionBean
 		
 	}
 	
-	public String submit()
+	public String submitVoyage()
 	{
-		
+
+		Session sess = HibernateUtil.getSession();
+		Transaction t = sess.beginTransaction();
+
 		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
 		Voyage vNew = new Voyage();
+
 		vNew.setVoyageid(new Long(this.voyageId));
 		vNew.setSuggestion(true);
 		vNew.setRevision(-1);
 		vNew.setApproved(false);
+
 		wasError = false;
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
@@ -187,16 +196,35 @@ public class SubmissionBean
 				val.setErrorMessage("Error in value!");
 				wasError = true;
 			}
-			Object[] vals = attrs[i].getValues(val);
-			for (int j = 0; j < vals.length; j++) {
-				vNew
-						.setAttrValue(attrs[i].getAttribute()[j].getName(),
-								vals[j]);
+			Object[] vals = attrs[i].getValues(sess, val);
+			for (int j = 0; j < vals.length; j++)
+			{
+				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 		}
-		if (!wasError) {
-			vNew.save();
+
+
+		Submission submission = null;
+		if (submissionType == SUBMISSION_TYPE_NEW)
+		{
+			SubmissionNew submissionNew = new SubmissionNew();
+			submissionNew.setNewVoyage(vNew);
+			submission = submissionNew;
 		}
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
+		{
+			SubmissionEdit submissionEdit = new SubmissionEdit();
+			submissionEdit.setNewVoyage(vNew);
+			submissionEdit.setOldVoyage(Voyage.loadCurrentRevision(sess, voyageId));
+			submission = submissionEdit;
+		}		
+		submission.setTime(new Date());
+
+		sess.save(vNew);
+		sess.save(submission);
+		
+		t.commit();
+		sess.close();
 
 		return null;
 
