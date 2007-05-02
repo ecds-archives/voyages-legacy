@@ -19,7 +19,8 @@
 		rows="#{SubmissionBean.rows}"
 		columns="#{SubmissionBean.columns}"
 		values="#{SubmissionBean.values}"
-		fieldTypes="#{SubmissionBean.fieldTypes}"/>
+		fieldTypes="#{SubmissionBean.fieldTypes}"
+		rowGroups="#{SubmissionBean.rowGroups}"/>
 
 	<h:commandButton value="Send" action="#{SubmissionBean.submit}"/>
 

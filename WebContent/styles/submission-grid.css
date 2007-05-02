@@ -37,3 +37,8 @@ input.record-gridEditor-date-day,input.record-gridEditor-date-month {
 input.record-gridEditor-date-year {
 	width: 40px;
 }
+
+th.grid-editor-row-group {
+	font-size: 12pt;
+	background-color: #CCCCCC !IMPORTANT;
+}

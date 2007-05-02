@@ -44,24 +44,27 @@ public class SubmissionAttribute {
 	private String comment;
 	private String type;
 	private String name;
+	private String group;
 	private boolean editable = false;
 	
-	public SubmissionAttribute(String name, Attribute attr, String userLabel, String comment, String type, boolean editable) {
+	public SubmissionAttribute(String name, Attribute attr, String userLabel, String group, String comment, String type, boolean editable) {
 		this.name = name;
 		this.attribute = new Attribute[] {attr};
 		this.userLabel = userLabel;
 		this.comment = comment;
 		this.type = type;
 		this.editable = editable;
+		this.group = group;
 	}
 	
-	public SubmissionAttribute(String name, Attribute[] attrs, String userLabel, String comment, String type, boolean editable) {
+	public SubmissionAttribute(String name, Attribute[] attrs, String userLabel, String group, String comment, String type, boolean editable) {
 		this.attribute = attrs;
 		this.userLabel = userLabel;
 		this.comment = comment;
 		this.name = name;
 		this.type = type;
 		this.editable = editable;
+		this.group = group;
 	}
 	
 	public Attribute[] getAttribute() {
@@ -344,10 +347,14 @@ public class SubmissionAttribute {
 			attrType = type;
 			//throw new RuntimeException("Type: " + type + " not allowed in submission attributes");
 		}
+		String group = null;
+		if (node.getAttributes().getNamedItem("group") != null) {
+			group = node.getAttributes().getNamedItem("group").getNodeValue();
+		}
 		
 		SubmissionAttribute attr = new SubmissionAttribute(name, 
 				(Attribute[]) attributesList.toArray(new Attribute[] {}), 
-				userLabel, comment, attrType, editable);
+				userLabel, group, comment, attrType, editable);
 		System.out.println("Added attribute: " + attr);
 		return attr;
 	}
@@ -358,5 +365,9 @@ public class SubmissionAttribute {
 
 	public boolean isPublic() {
 		return this.editable;
+	}
+
+	public String getGroupName() {
+		return this.group;
 	}
 }

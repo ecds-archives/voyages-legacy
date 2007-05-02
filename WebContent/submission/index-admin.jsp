@@ -19,7 +19,8 @@
 		rows="#{AdminSubmissionBean.rows}"
 		columns="#{AdminSubmissionBean.columns}"
 		values="#{AdminSubmissionBean.values}"
-		fieldTypes="#{AdminSubmissionBean.fieldTypes}"/>
+		fieldTypes="#{AdminSubmissionBean.fieldTypes}"
+		rowGroups="#{AdminSubmissionBean.rowGroups}"/>
 
 	<h:commandButton value="Apply changes" action="#{AdminSubmissionBean.submit}"/>
 

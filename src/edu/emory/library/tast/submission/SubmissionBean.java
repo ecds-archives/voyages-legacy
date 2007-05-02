@@ -1,5 +1,6 @@
 package edu.emory.library.tast.submission;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
+import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.date.DateAdapter;
@@ -69,9 +71,20 @@ public class SubmissionBean {
 
 	private Values vals = null;
 	
-	
+	private RowGroup[] rowGroups;
 	
 	public SubmissionBean() {
+		List rowGroupsList = new ArrayList();
+		for (int i = 0; i < attrs.length; i++) {
+			if (!rowGroupsList.contains(attrs[i].getGroupName())) {
+				rowGroupsList.add(attrs[i].getGroupName());
+			}
+		}
+		this.rowGroups = new RowGroup[rowGroupsList.size()];
+		for (int i = 0; i < this.rowGroups.length; i++) {
+			String rowGroup = (String) rowGroupsList.get(i);
+			this.rowGroups[i] = new RowGroup(rowGroup, rowGroup);
+		}
 	}
 	
 	
@@ -85,6 +98,7 @@ public class SubmissionBean {
 			Dictionary element = (Dictionary) iter.next();
 			items[i++] = new ListItem(element.getId().toString(), element.getName().toString());
 		}
+		
 		return items;
 	}
 
@@ -161,7 +175,7 @@ public class SubmissionBean {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
 			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i]
-					.getUserLabel());
+					.getUserLabel(), null, attrs[i].getGroupName());
 		}
 		return rows;
 	}
@@ -172,6 +186,10 @@ public class SubmissionBean {
 	
 	public Map getFieldTypes() {
 		return SubmissionDictionaries.fieldTypes;
+	}
+	
+	public RowGroup[] getRowGroups() {
+		return this.rowGroups;
 	}
 
 	public String submit() {
