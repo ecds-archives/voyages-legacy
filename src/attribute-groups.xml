@@ -21,7 +21,7 @@
 ]>
 
 <groups>
-	<group id="ship" userLabel="Ship">
+	<group id="ship" userLabel="Ship, nation, owners">
 		<searchable-attributes>
 			<searchable-attribute id="voyageid"/>
 			<searchable-attribute id="cd"/>
@@ -53,7 +53,7 @@
 			<table-attribute id="anyowner"/>
 		</table-attributes>
 	</group>
-	<group id="outcome" userLabel="Outcome">
+	<group id="outcome" userLabel="Voyage Outcome">
 		<searchable-attributes>
 			<searchable-attribute id="fate"/>
 			<searchable-attribute id="fate2"/>
@@ -69,7 +69,7 @@
 			<table-attribute id="resistance"/>
 		</table-attributes>
 	</group>
-	<group id="itinerary" userLabel="Itinerary">
+	<group id="itinerary" userLabel="Voyage Itinerary">
 		<searchable-attributes>
 			<searchable-attribute id="ptdepimp"/>
 			<searchable-attribute id="plac1tra"/>
@@ -106,7 +106,7 @@
 			<table-attribute id="retrnreg"/>
 		</table-attributes>
 	</group>
-	<group id="dates" userLabel="Dates">
+	<group id="dates" userLabel="Voyage Dates">
 		<searchable-attributes>
 			<searchable-attribute id="yearam"/>
 			<searchable-attribute id="datedep"/>
@@ -130,7 +130,7 @@
 			<table-attribute id="voy2imp"/>
 		</table-attributes>
 	</group>
-	<group id="crew" userLabel="Crew">
+	<group id="crew" userLabel="Captain and Crew">
 		<searchable-attributes>
 			<searchable-attribute id="anycaptain"/>
 			<searchable-attribute id="crew1"/>

@@ -10,6 +10,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public abstract class Submission
@@ -19,6 +22,15 @@ public abstract class Submission
 	private Date time;
 	private String note;
 	private Set sources;
+	
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
+		attributes.put("time", new DateAttribute("id", null));
+	}
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
+	}
 
 	public String getNote()
 	{

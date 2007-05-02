@@ -1,6 +1,11 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
 
 public class SubmissionEdit extends Submission
 {
@@ -8,7 +13,7 @@ public class SubmissionEdit extends Submission
 	private Voyage newVoyage;
 	private Voyage oldVoyage;
 	private Map attributeNotes;
-
+	
 	public Map getAttributeNotes()
 	{
 		return attributeNotes;
