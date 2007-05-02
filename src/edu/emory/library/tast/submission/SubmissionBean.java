@@ -42,7 +42,7 @@ public class SubmissionBean
 
 	private int currentSubmissionType = SUBMISSION_TYPE_NOT_SELECTED;
 	private int selectedSubmissionType = SUBMISSION_TYPE_NOT_SELECTED;
-	private Submission submission = null;
+	//private Submission submission = null;
 
 	private int submissionType = 0;
 
@@ -90,7 +90,7 @@ public class SubmissionBean
 		if (currentSubmissionType != SUBMISSION_TYPE_NEW)
 		{
 			currentSubmissionType = SUBMISSION_TYPE_NEW;
-			submission = new SubmissionNew();
+			//submission = new SubmissionNew();
 			initNewVoyage();
 		}
 		return "form";
@@ -101,7 +101,7 @@ public class SubmissionBean
 		if (currentSubmissionType != SUBMISSION_TYPE_EDIT)
 		{
 			currentSubmissionType = SUBMISSION_TYPE_EDIT;
-			submission = new SubmissionEdit();
+			//submission = new SubmissionEdit();
 		}
 		return "select-voyage";
 	}
@@ -111,7 +111,7 @@ public class SubmissionBean
 		if (currentSubmissionType != SUBMISSION_TYPE_MERGE)
 		{
 			currentSubmissionType = SUBMISSION_TYPE_MERGE;
-			submission = new SubmissionMerge();
+			//submission = new SubmissionMerge();
 		}
 		return null;
 	}
@@ -205,13 +205,13 @@ public class SubmissionBean
 
 
 		Submission submission = null;
-		if (submissionType == SUBMISSION_TYPE_NEW)
+		if (currentSubmissionType == SUBMISSION_TYPE_NEW)
 		{
 			SubmissionNew submissionNew = new SubmissionNew();
 			submissionNew.setNewVoyage(vNew);
 			submission = submissionNew;
 		}
-		else if (submissionType == SUBMISSION_TYPE_EDIT)
+		else if (currentSubmissionType == SUBMISSION_TYPE_EDIT)
 		{
 			SubmissionEdit submissionEdit = new SubmissionEdit();
 			submissionEdit.setNewVoyage(vNew);
