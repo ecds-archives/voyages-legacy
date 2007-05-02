@@ -2,13 +2,14 @@ package edu.emory.library.tast.submission;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tas.util.HibernateConnector;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
@@ -40,20 +41,24 @@ public class SubmissionBean
 	public static final int SUBMISSION_TYPE_EDIT = 2;	
 	public static final int SUBMISSION_TYPE_MERGE = 3;	
 
-	private int currentSubmissionType = SUBMISSION_TYPE_NOT_SELECTED;
-	private int selectedSubmissionType = SUBMISSION_TYPE_NOT_SELECTED;
-	//private Submission submission = null;
-
-	private int submissionType = 0;
+	private int submissionType = SUBMISSION_TYPE_NOT_SELECTED;
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
-	private long voyageId = 0;
+	
+	private long[] mergedVoyageIds = new long[] {};
+	
 	private Values valsToSubmit = null;
-	private boolean wasError = false;
 	private Values gridValues = null;
 	
 	private RowGroup[] rowGroups;
-	
+
+	private long lookupVoyageId = 0;
+	private boolean lookupPerformed = false;
+	private SelectedVoyageInfo lookedUpVoyage = null;
+
+	private SelectedVoyageInfo selectedVoyageForEdit = null;
+	private List selectedVoyageForMerge = new ArrayList();
+
 	public SubmissionBean()
 	{
 		
@@ -87,10 +92,9 @@ public class SubmissionBean
 	
 	public String selectTypeNew()
 	{
-		if (currentSubmissionType != SUBMISSION_TYPE_NEW)
+		if (submissionType != SUBMISSION_TYPE_NEW)
 		{
-			currentSubmissionType = SUBMISSION_TYPE_NEW;
-			//submission = new SubmissionNew();
+			submissionType = SUBMISSION_TYPE_NEW;
 			initNewVoyage();
 		}
 		return "form";
@@ -98,55 +102,119 @@ public class SubmissionBean
 	
 	public String selectTypeEdit()
 	{
-		if (currentSubmissionType != SUBMISSION_TYPE_EDIT)
+		if (submissionType != SUBMISSION_TYPE_EDIT)
 		{
-			currentSubmissionType = SUBMISSION_TYPE_EDIT;
-			//submission = new SubmissionEdit();
+			submissionType = SUBMISSION_TYPE_EDIT;
+			lookupPerformed = false;
 		}
+		else
+		{
+			if (selectedVoyageForEdit != null)
+			{
+				lookedUpVoyage = selectedVoyageForEdit;
+				lookupVoyageId = selectedVoyageForEdit.getVoyageId();
+			}
+		}
+		lookupPerformed = true;
 		return "select-voyage";
 	}
 
 	public String selectTypeMerge()
 	{
-		if (currentSubmissionType != SUBMISSION_TYPE_MERGE)
+		lookupPerformed = false;
+		lookedUpVoyage = null;
+		if (submissionType != SUBMISSION_TYPE_MERGE)
 		{
-			currentSubmissionType = SUBMISSION_TYPE_MERGE;
-			//submission = new SubmissionMerge();
+			submissionType = SUBMISSION_TYPE_MERGE;
 		}
 		return null;
 	}
 	
-	public String loadEdit()
+	public String editVoyage()
 	{
-		loadCurrentVoyage();
+		selectedVoyageForEdit = lookedUpVoyage;
+		loadVoyageForEdit();
 		return "form";
 	}
 	
+	public String goBackFromSelectVoyage()
+	{
+		return "back";
+	}
+	
+	public String goBackFromForm()
+	{
+		if (submissionType == SUBMISSION_TYPE_NEW)
+		{
+			return "back-new";
+		}
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
+		{
+			return "back-edit";
+		}
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
+		{
+			return "back-merge";
+		}
+		else
+		{
+			throw new RuntimeException("unspecified submission type, session probably expired");
+		}
+	}
+
 	private void initNewVoyage()
 	{
 		gridValues = new Values();
+		initColumnForNewVoyaye(gridValues, CHANGED_VOYAGE);
+	}
+
+	private boolean loadVoyageForEdit()
+	{
+		
+		gridValues = new Values();
+
+		Session session = HibernateUtil.getSession();
+		Transaction trans = session.beginTransaction();
+		
+		loadVoyageToColumn(session, selectedVoyageForEdit.getVoyageId(), gridValues, ORIGINAL_VOYAGE);
+		initColumnForNewVoyaye(gridValues, CHANGED_VOYAGE);
+		
+		trans.commit();
+		session.close();
+		
+		return true;
+		
+	}
+	
+//	private boolean loadVoyagesForMerge()
+//	{
+//		
+//		return false;
+//
+//	}
+	
+	private void initColumnForNewVoyaye(Values values, String columnName)
+	{
 		for (int i = 0; i < attrs.length; i++)
-			gridValues.setValue(
-					CHANGED_VOYAGE,
+			values.setValue(
+					columnName,
 					attrs[i].getName(),
 					attrs[i].getEmptyValue());
 	}
 	
-	private boolean loadCurrentVoyage()
+	private boolean loadVoyageToColumn(Session session, long voyageId, Values values, String columnName)
 	{
 		
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
-		gridValues = new Values();
+		Conditions cond = new Conditions();
+		cond.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("Voyage", cond);
 
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", c);
-
-		for (int i = 0; i < attrs.length; i++) {
+		for (int i = 0; i < attrs.length; i++)
+		{
 			Attribute[] attributes = attrs[i].getAttribute();
-			for (int j = 0; j < attributes.length; j++) {
+			for (int j = 0; j < attributes.length; j++)
+			{
 				qValue.addPopulatedAttribute(attributes[j]);
 			}
 		}
@@ -155,79 +223,162 @@ public class SubmissionBean
 
 		Object[] voyageAttrs = (Object[]) res[0];
 		int index = 0;
-		for (int i = 0; i < attrs.length; i++) {
+		for (int i = 0; i < attrs.length; i++)
+		{
 			SubmissionAttribute attribute = attrs[i];
-			System.out.println("Attr: " + attrs[i]);
 			Object[] toBeFormatted = new Object[attribute.getAttribute().length];
-			for (int j = 0; j < toBeFormatted.length; j++) {
+			for (int j = 0; j < toBeFormatted.length; j++)
+			{
 				toBeFormatted[j] = voyageAttrs[j + index];
 			}
-			gridValues.setValue(ORIGINAL_VOYAGE, attrs[i].getName(), attrs[i].getValue(toBeFormatted));
-			gridValues.setValue(CHANGED_VOYAGE, attrs[i].getName(), attrs[i].getEmptyValue());
+			gridValues.setValue(columnName, attrs[i].getName(), attrs[i].getValue(toBeFormatted));
 			index += attribute.getAttribute().length;
 		}
-		
-		t.commit();
-		session.close();
 		
 		return true;
 		
 	}
 	
-	public String submitVoyage()
+	public String submit()
 	{
 
 		Session sess = HibernateUtil.getSession();
-		Transaction t = sess.beginTransaction();
+		Transaction trans = sess.beginTransaction();
 
 		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
-		Voyage vNew = new Voyage();
+		Voyage voyage = new Voyage();
+		
+		if (submissionType == SUBMISSION_TYPE_NEW)
+		{
+			voyage.setVoyageid(null);
+		}
 
-		vNew.setVoyageid(new Long(this.voyageId));
-		vNew.setSuggestion(true);
-		vNew.setRevision(-1);
-		vNew.setApproved(false);
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
+		{
+			voyage.setVoyageid(new Long(selectedVoyageForEdit.getVoyageId()));
+		}
 
-		wasError = false;
+		else if (submissionType == SUBMISSION_TYPE_MERGE)
+		{
+			voyage.setVoyageid(null);
+		}
+		
+		voyage.setSuggestion(true);
+		voyage.setRevision(Voyage.getCurrentRevision());
+		voyage.setApproved(false);
+
+		// boolean wasError = false;
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
 			if (val.isError()) {
-				System.out.println("ERROR!!!!");
 				val.setErrorMessage("Error in value!");
-				wasError = true;
+				// wasError = true;
 			}
 			Object[] vals = attrs[i].getValues(sess, val);
 			for (int j = 0; j < vals.length; j++)
 			{
-				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+				voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 		}
 
-
 		Submission submission = null;
-		if (currentSubmissionType == SUBMISSION_TYPE_NEW)
+		
+		if (submissionType == SUBMISSION_TYPE_NEW)
 		{
+
 			SubmissionNew submissionNew = new SubmissionNew();
-			submissionNew.setNewVoyage(vNew);
 			submission = submissionNew;
+
+			submissionNew.setNewVoyage(voyage);
+
 		}
-		else if (currentSubmissionType == SUBMISSION_TYPE_EDIT)
+
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
 		{
+
 			SubmissionEdit submissionEdit = new SubmissionEdit();
-			submissionEdit.setNewVoyage(vNew);
-			submissionEdit.setOldVoyage(Voyage.loadCurrentRevision(sess, voyageId));
 			submission = submissionEdit;
-		}		
+
+			submissionEdit.setNewVoyage(voyage);
+			submissionEdit.setOldVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId));
+
+		}
+
+		else if (submissionType == SUBMISSION_TYPE_MERGE)
+		{
+
+			SubmissionMerge submissionMerge = new SubmissionMerge();
+			submission = submissionMerge;
+
+			submissionMerge.setProposedNewVoyage(voyage);
+
+			Set mergedVoyages = new HashSet();
+			submissionMerge.setMergedVoyages(mergedVoyages);
+			for (int i = 0; i < mergedVoyageIds.length; i++)
+				mergedVoyages.add((Voyage.loadCurrentRevision(sess, mergedVoyageIds[i])));
+
+		}
+
 		submission.setTime(new Date());
 
-		sess.save(vNew);
+		sess.save(voyage);
 		sess.save(submission);
 		
-		t.commit();
+		trans.commit();
 		sess.close();
 
 		return null;
 
+	}
+	
+	private SelectedVoyageInfo lookupVoyage(long voyageId)
+	{
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction trans = sess.beginTransaction();
+		
+		Conditions cond = new Conditions();
+		cond.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
+		
+		QueryValue query = new QueryValue("Voyage", cond);
+		query.setLimit(1);
+
+		query.addPopulatedAttribute(Voyage.getAttribute("shipname"));
+		query.addPopulatedAttribute(Voyage.getAttribute("captaina"));
+		query.addPopulatedAttribute(Voyage.getAttribute("yearam"));
+		
+		List voyages = query.executeQueryList(sess);
+
+		SelectedVoyageInfo voyageInfo = null;
+		if (voyages.size() != 0)
+		{
+			Object[] voyageInfoDb = (Object[]) voyages.get(0);
+			voyageInfo = new SelectedVoyageInfo(
+					lookupVoyageId,
+					(String) voyageInfoDb[0],
+					(String) voyageInfoDb[1],
+					voyageInfoDb[2] != null ? voyageInfoDb[2].toString() : "not known");
+		}
+		
+		trans.commit();
+		sess.close();
+		
+		return voyageInfo;
+		
+	}
+	
+	public String lookupVoyageForEdit()
+	{
+		lookupPerformed = true;
+		lookedUpVoyage = lookupVoyage(lookupVoyageId);
+		return null;
+	}
+
+	public String lookupVoyageForMerge()
+	{
+		lookupPerformed = true;
+		lookedUpVoyage = lookupVoyage(lookupVoyageId);
+		return null;
 	}
 
 	public Values getValues()
@@ -242,18 +393,18 @@ public class SubmissionBean
 
 	public Column[] getColumns()
 	{
-		if (currentSubmissionType == SUBMISSION_TYPE_NEW)
+		if (submissionType == SUBMISSION_TYPE_NEW)
 		{
 			return new Column[] {
 					new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, false)};
 		}
-		else if (currentSubmissionType == SUBMISSION_TYPE_EDIT)
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
 		{
 			return new Column[] {
 					new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, true),
 					new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, false)};
 		}
-		else if (currentSubmissionType == SUBMISSION_TYPE_MERGE)
+		else if (submissionType == SUBMISSION_TYPE_MERGE)
 		{
 			return new Column[] {
 					new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, true),
@@ -284,44 +435,34 @@ public class SubmissionBean
 		return SubmissionDictionaries.fieldTypes;
 	}
 
-	public boolean isSubmissionTypeEdit()
+	public long getLookupVoyageId()
 	{
-		return selectedSubmissionType == SUBMISSION_TYPE_EDIT;
+		return lookupVoyageId;
 	}
 
-	public void setSubmissionTypeEdit(boolean submissionTypeEdit)
+	public void setLookupVoyageId(long voyageId)
 	{
-		selectedSubmissionType = SUBMISSION_TYPE_EDIT;
+		this.lookupVoyageId = voyageId;
 	}
 
-	public boolean isSubmissionTypeMerge()
+	public boolean isShowLookedUpVoyage()
 	{
-		return selectedSubmissionType == SUBMISSION_TYPE_MERGE;
+		return lookupPerformed && lookedUpVoyage != null;
 	}
 
-	public void setSubmissionTypeMerge(boolean submissionTypeMerge)
+	public boolean isShowLookupFailed()
 	{
-		selectedSubmissionType = SUBMISSION_TYPE_MERGE;
+		return lookupPerformed && lookedUpVoyage == null;
 	}
 
-	public boolean isSubmissionTypeNew()
+	public SelectedVoyageInfo getLookedUpVoyage()
 	{
-		return selectedSubmissionType == SUBMISSION_TYPE_MERGE;
+		return lookedUpVoyage;
 	}
 
-	public void setSubmissionTypeNew(boolean submissionTypeNew)
+	public List getSelectedVoyageForMerge()
 	{
-		selectedSubmissionType = SUBMISSION_TYPE_NEW;
-	}
-
-	public long getVoyageId()
-	{
-		return voyageId;
-	}
-
-	public void setVoyageId(long voyageId)
-	{
-		this.voyageId = voyageId;
+		return selectedVoyageForMerge;
 	}
 
 }

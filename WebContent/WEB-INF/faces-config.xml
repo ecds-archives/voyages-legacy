@@ -681,15 +681,47 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>select-voyage</from-outcome>
-			<to-view-id>/submission/submission-select-voyage.jsp</to-view-id>
+			<to-view-id>/submission/submission-select-voyage-edit.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/submission/submission-select-voyage.jsp</from-view-id>
+		<from-view-id>/submission/submission-select-voyage-edit.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>form</from-outcome>
 			<to-view-id>/submission/submission-form.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-select-voyages-merge.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>form</from-outcome>
+			<to-view-id>/submission/submission-form.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-form.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back-new</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back-edit</from-outcome>
+			<to-view-id>/submission/submission-select-voyage-edit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back-merge</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
@@ -707,7 +739,7 @@
 			<from-outcome>back-to-admin-main</from-outcome>
 			<to-view-id>/submission/submission-admin-main.jsp</to-view-id>
 		</navigation-case>
-	</navigation-rule>
+	</navigation-rule>	
 
 	<render-kit />
 

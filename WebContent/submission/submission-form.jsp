@@ -26,7 +26,10 @@
 		fieldTypes="#{SubmissionBean.fieldTypes}"
 		rowGroups="#{SubmissionBean.rowGroups}" />
 
-	<h:commandButton value="Next >" action="#{SubmissionBean.submitVoyage}"/>
+	<div style="margin-top: 10px; margin-bottom: 10px;">
+		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>
+		<h:commandButton value="Submit" action="#{SubmissionBean.submit}"/>
+	</div>
 
 </h:form>
 </f:view>
