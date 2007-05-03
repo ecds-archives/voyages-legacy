@@ -485,6 +485,15 @@ public class Voyage extends AbstractDescriptiveObject {
 		return loadCurrentRevision(sess, new Long(voyageId));
 	}
 	
+	public static Voyage loadById(Session session, Long iid) {
+		Conditions c = new Conditions();
+		c.addCondition(Voyage.getAttribute("iid"), iid, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("Voyage", c);
+		List res = qValue.executeQueryList(session);
+		if (res.size() == 0) return null;
+		return (Voyage)res.get(0);
+	}
+	
 //	/**
 //	 * Loads most recent (not necessary active) voyage with given ID.
 //	 * 
@@ -2264,4 +2273,5 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getNdesert() {
 		return (Integer)this.values.get("ndesert");
 	}
+
 }

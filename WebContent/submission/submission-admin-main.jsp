@@ -14,9 +14,7 @@
 <f:view>
 <h:form id="main">
 
-	<h1>Submission - select voyage</h1>
-	
-	<h:commandButton value="Apply changes" action="#{AdminSubmissionBean.submit}"/>
+	<h1>Submission - resolve pending requests</h1>
 	
 	<br>
 	

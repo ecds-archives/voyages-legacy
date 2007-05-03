@@ -750,10 +750,10 @@
 	</navigation-rule>
 	
 	<navigation-rule>
-		<from-view-id>/submission/submission-admin-step-2.jsp</from-view-id>
+		<from-view-id>/submission/submission-admin-resolve.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>back-to-admin-main</from-outcome>
-			<to-view-id>/submission/submission-admin-main.jsp</to-view-id>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>	
 

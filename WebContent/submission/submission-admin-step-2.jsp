@@ -15,11 +15,28 @@
 <f:view>
 <h:form id="main">
 
-	jfklasd jfkldsa fdjal
+	<div style="margin: 10px;">
+	<h1>Request details</h1>
 	
-	<h:commandButton action="back-to-admin-main" value="&lt; Back"/>
-	<h:commandButton action="back-to-admin-main" value="Continue &gt;"/>
-
+	<br>
+	
+	<h:dataTable var="info" value="#{AdminSubmissionBean.submissionInfo}" styleClass="image-detail-info">
+		<h:column>
+			<t:htmlTag value="div" styleClass="image-detail-info-label">
+				<h:outputText value="#{info.name}" />
+			</t:htmlTag>
+		</h:column>
+		<h:column>
+			<h:outputText value="#{info.value}" />
+		</h:column>
+	</h:dataTable>
+			
+	<br>
+	
+	
+	<h:commandButton action="back-to-admin-main" value="< Back"/>
+	<h:commandButton action="back-to-admin-main" value="Continue >"/>
+	</div>
 </h:form>
 </f:view>
 </body>

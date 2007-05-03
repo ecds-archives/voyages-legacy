@@ -22,6 +22,9 @@
 		fieldTypes="#{AdminSubmissionBean.fieldTypes}"
 		rowGroups="#{AdminSubmissionBean.rowGroups}"/>
 
+	<br>
+	
+	<h:commandButton value="< Back" action="back"/>
 	<h:commandButton value="Apply changes" action="#{AdminSubmissionBean.submit}"/>
 
 </h:form>
