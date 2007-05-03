@@ -14,6 +14,7 @@ public class GridEditorTag extends UIComponentTag
 	private String values;
 	private String fieldTypes;
 	private String rowGroups;
+	private String expandedGroups;
 
 	public String getComponentType()
 	{
@@ -59,6 +60,12 @@ public class GridEditorTag extends UIComponentTag
 		{
 			ValueBinding vb = app.createValueBinding(rowGroups);
 			gridEditor.setValueBinding("rowGroups", vb);
+		}
+		
+		if (expandedGroups != null && isValueReference(expandedGroups))
+		{
+			ValueBinding vb = app.createValueBinding(expandedGroups);
+			gridEditor.setValueBinding("expandedGroups", vb);
 		}
 
 	}
@@ -111,6 +118,16 @@ public class GridEditorTag extends UIComponentTag
 	public void setRowGroups(String rowGroups)
 	{
 		this.rowGroups = rowGroups;
+	}
+
+	public String getExpandedGroups()
+	{
+		return expandedGroups;
+	}
+
+	public void setExpandedGroups(String expandedRows)
+	{
+		this.expandedGroups = expandedRows;
 	}
 
 }

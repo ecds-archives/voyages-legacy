@@ -39,7 +39,7 @@ public class GridEditorComponent extends UIComponentBase
 	private Map fieldTypes = null;
 
 	private boolean expandedGroupsSet = false;
-	private Set expandedGroups = new HashSet();
+	private Set expandedGroups = null;
 	
 	public String getFamily()
 	{
@@ -123,9 +123,10 @@ public class GridEditorComponent extends UIComponentBase
 
 		}
 		
-		String expandedGroupsStr = (String) params.get(getExpandedGroups());
-		if (expandedGroupsStr != null)
+		String expandedGroupsStr = (String) params.get(getExpandedGroupsFieldName(context));
+		if (!StringUtils.isNullOrEmpty(expandedGroupsStr))
 		{
+			expandedGroups = new HashSet();
 			String expandedGroupsIndexes[] = expandedGroupsStr.split(",");
 			for (int i = 0; i < expandedGroupsIndexes.length; i++)
 			{
@@ -142,6 +143,12 @@ public class GridEditorComponent extends UIComponentBase
 		{
 			ValueBinding vbValues = getValueBinding("values");
 			if (vbValues != null) vbValues.setValue(context, values);
+		}
+		
+		if (expandedGroups != null)
+		{
+			ValueBinding vbExpandedGroups = getValueBinding("expandedGroups");
+			if (vbExpandedGroups != null) vbExpandedGroups.setValue(context, expandedGroups);
 		}
 		
 	}
@@ -473,6 +480,7 @@ public class GridEditorComponent extends UIComponentBase
 		values = getValues();
 		fieldTypes = getFieldTypes();
 		expandedGroups = getExpandedGroups();
+		if (expandedGroups == null) expandedGroups = new HashSet();
 		
 		// client id of the grid
 		String mainId = getClientId(context);

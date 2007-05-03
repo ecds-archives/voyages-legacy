@@ -106,9 +106,9 @@ GridEditor.prototype.toggleRowGroup = function(rowGroupIndex)
 		mainTable.rows[i].style.display = rowGroup.expanded ? "" : "none";
 
 	var expandedRowsIndexes = new Array();
-	for (var i = 0; i < rowGroups.length; i++)
+	for (var i = 0; i < this.rowGroups.length; i++)
 	{
-		if (rowGroups[i].expanded)
+		if (this.rowGroups[i].expanded)
 		{
 			expandedRowsIndexes.push(i);		
 		}

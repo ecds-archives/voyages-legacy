@@ -24,7 +24,8 @@
 		columns="#{SubmissionBean.columns}"
 		values="#{SubmissionBean.values}"
 		fieldTypes="#{SubmissionBean.fieldTypes}"
-		rowGroups="#{SubmissionBean.rowGroups}" />
+		rowGroups="#{SubmissionBean.rowGroups}"
+		expandedGroups="#{SubmissionBean.expandedGridRows}" />
 
 	<div style="margin-top: 10px; margin-bottom: 10px;">
 		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>

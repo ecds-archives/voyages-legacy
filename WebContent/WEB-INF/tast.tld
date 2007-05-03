@@ -926,10 +926,13 @@
 			<name>rowGroups</name>
 		</attribute>
 		<attribute>
+			<name>fieldTypes</name>
+		</attribute>
+		<attribute>
 			<name>values</name>
 		</attribute>
 		<attribute>
-			<name>fieldTypes</name>
+			<name>expandedGroups</name>
 		</attribute>
 	</tag>
 

@@ -67,6 +67,8 @@ public class SubmissionBean
 	private long toRemovedVoyageId;
 	
 	private boolean errorSelectAtLeastTwo = false;
+	
+	private Set expandedGridRows;
 
 	public SubmissionBean()
 	{
@@ -94,6 +96,7 @@ public class SubmissionBean
 		if (submissionType != SUBMISSION_TYPE_NEW)
 		{
 			submissionType = SUBMISSION_TYPE_NEW;
+			expandedGridRows = null;
 			initNewVoyage();
 		}
 		return "form";
@@ -106,6 +109,7 @@ public class SubmissionBean
 			submissionType = SUBMISSION_TYPE_EDIT;
 			lookupVoyageId = null;
 			lookupPerformed = false;
+			expandedGridRows = null;
 		}
 		else
 		{
@@ -126,6 +130,7 @@ public class SubmissionBean
 		if (submissionType != SUBMISSION_TYPE_MERGE)
 		{
 			submissionType = SUBMISSION_TYPE_MERGE;
+			expandedGridRows = null;
 		}
 		return "merge";
 	}
@@ -587,6 +592,16 @@ public class SubmissionBean
 	public boolean isErrorSelectAtLeastTwo()
 	{
 		return errorSelectAtLeastTwo;
+	}
+
+	public Set getExpandedGridRows()
+	{
+		return expandedGridRows;
+	}
+
+	public void setExpandedGridRows(Set expandedGridRows)
+	{
+		this.expandedGridRows = expandedGridRows;
 	}
 
 }
