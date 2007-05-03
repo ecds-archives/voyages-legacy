@@ -391,8 +391,12 @@ public class SubmissionBean
 		
 		trans.commit();
 		sess.close();
+		
+		lookupPerformed = false;
+		lookedUpVoyage = null;
+		selectedVoyagesForMerge.clear();
 
-		return null;
+		return "done";
 
 	}
 	

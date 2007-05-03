@@ -40,5 +40,6 @@ input.record-gridEditor-date-year {
 
 th.grid-editor-row-group {
 	font-size: 12pt;
-	background-color: #CCCCCC !IMPORTANT;
+	background-color: #DDDDDD !important;
+	cursor: pointer;
 }

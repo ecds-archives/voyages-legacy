@@ -19,6 +19,12 @@ var GridEditorGlobals =
 	{
 		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
 		if (gridEditor) gridEditor.listItemSelected(rowName, columnName, depth);
+	},
+	
+	toggleRowGroup: function(gridEditorId, rowGroupIndex)
+	{
+		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
+		if (gridEditor) gridEditor.toggleRowGroup(rowGroupIndex);
 	}
 
 }
@@ -27,12 +33,15 @@ var GridEditorGlobals =
 * constructors
 *********************************************/
 
-function GridEditor(gridEditorId, formName, fieldTypes, fields)
+function GridEditor(gridEditorId, formName, mainTableId, expandedGroupsFieldName, fieldTypes, fields, rowGroups)
 {
 	this.gridEditorId = gridEditorId;
+	this.mainTableId = mainTableId;
 	this.formName = formName;
 	this.fieldTypes = fieldTypes;
 	this.fields = fields;
+	this.rowGroups = rowGroups;
+	this.expandedGroupsFieldName = expandedGroupsFieldName;
 }
 
 function GridEditorListFieldType(list)
@@ -62,6 +71,13 @@ function GridEditorList(fieldTypeName, selectsNamePrefix, depthFieldName)
 	this.depthFieldName = depthFieldName;
 }
 
+function GridEditorRowGroup(firstRowIndex, lastRowIndex, expanded)
+{
+	this.firstRowIndex = firstRowIndex;
+	this.lastRowIndex = lastRowIndex;
+	this.expanded = expanded;
+}
+
 /********************************************
 * GridEditor object
 *********************************************/
@@ -77,6 +93,30 @@ GridEditor.prototype.listItemSelected = function(rowName, columnName, depth)
 {
 	var field = this.getField(rowName, columnName);
 	if (field) field.itemSelected(this, depth);
+}
+
+GridEditor.prototype.toggleRowGroup = function(rowGroupIndex)
+{
+
+	var rowGroup = this.rowGroups[rowGroupIndex];
+	rowGroup.expanded = !rowGroup.expanded;
+
+	var mainTable = document.getElementById(this.mainTableId);	
+	for (var i = rowGroup.firstRowIndex; i <= rowGroup.lastRowIndex; i++)
+		mainTable.rows[i].style.display = rowGroup.expanded ? "" : "none";
+
+	var expandedRowsIndexes = new Array();
+	for (var i = 0; i < rowGroups.length; i++)
+	{
+		if (rowGroups[i].expanded)
+		{
+			expandedRowsIndexes.push(i);		
+		}
+	}
+	
+	document.forms[this.formName].elements[this.expandedGroupsFieldName].value =
+		expandedRowsIndexes.join(",");
+	
 }
 
 /********************************************

@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.faces.component.UIComponentBase;
@@ -16,6 +18,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 public class GridEditorComponent extends UIComponentBase
 {
@@ -35,6 +38,9 @@ public class GridEditorComponent extends UIComponentBase
 	private boolean fieldTypesSet = false;
 	private Map fieldTypes = null;
 
+	private boolean expandedGroupsSet = false;
+	private Set expandedGroups = new HashSet();
+	
 	public String getFamily()
 	{
 		return null;
@@ -68,6 +74,11 @@ public class GridEditorComponent extends UIComponentBase
 	private String getValueErrorMessageFieldName(FacesContext context, String column, String row)
 	{
 		return getClientId(context) + "_" + column + "_error_msg_" + row;
+	}
+
+	private String getExpandedGroupsFieldName(FacesContext context)
+	{
+		return getClientId(context) + "_expanded_groups";
 	}
 
 	public void decode(FacesContext context)
@@ -112,6 +123,16 @@ public class GridEditorComponent extends UIComponentBase
 
 		}
 		
+		String expandedGroupsStr = (String) params.get(getExpandedGroups());
+		if (expandedGroupsStr != null)
+		{
+			String expandedGroupsIndexes[] = expandedGroupsStr.split(",");
+			for (int i = 0; i < expandedGroupsIndexes.length; i++)
+			{
+				expandedGroups.add(new Integer(expandedGroupsIndexes[i]));
+			}
+		}
+		
 	}
 	
 	public void processUpdates(FacesContext context)
@@ -139,7 +160,7 @@ public class GridEditorComponent extends UIComponentBase
 
 	}
 	
-	private void encodeRegJS(FacesContext context, ResponseWriter writer, UIForm form, String mainId) throws IOException
+	private void encodeRegJS(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
 	{
 
 		// JS registration
@@ -147,11 +168,20 @@ public class GridEditorComponent extends UIComponentBase
 		regJS.append("GridEditorGlobals.registerEditor(new GridEditor(");
 		
 		// main id
-		regJS.append("'").append(mainId).append("', ");
+		regJS.append("'").append(mainId).append("'");
 		
 		// form name
-		regJS.append("'").append(form.getClientId(context)).append("' ");
+		regJS.append(", ");
+		regJS.append("'").append(form.getClientId(context)).append("'");
 		
+		// main table id
+		regJS.append(", ");
+		regJS.append("'").append(mainTableId).append("'");
+
+		// hidden field with the list of expanded row groups
+		regJS.append(", ");
+		regJS.append("'").append(getExpandedGroupsFieldName(context)).append("'");
+
 		// field types
 		regJS.append(", {");
 		if (fieldTypes != null)
@@ -210,6 +240,49 @@ public class GridEditorComponent extends UIComponentBase
 			regJS.append("}");
 		}
 		regJS.append("}");
+		
+		// groups
+		regJS.append(", ");
+		regJS.append("[");
+		int rowIndex = 1;
+		int i = 0;
+		for (Iterator iter = internalGroups.iterator(); iter.hasNext();)
+		{
+			
+			RowGroupInternal internalGroup = (RowGroupInternal) iter.next();
+			
+			if (internalGroup.rows.size() > 0)
+			{
+			
+				if (i > 0) regJS.append(", ");
+				
+				regJS.append("new GridEditorRowGroup(");
+	
+				if (internalGroup.renderTitle) rowIndex++;
+				regJS.append(rowIndex);
+				
+				regJS.append(", ");
+				rowIndex += internalGroup.rows.size();
+				regJS.append(rowIndex - 1);
+				
+				regJS.append(", ");
+				if (expandedGroups.contains(new Integer(i)))
+				{
+					regJS.append("true");
+				}
+				else
+				{
+					regJS.append("false");
+				}
+				
+				regJS.append(")");
+				
+				i++;
+			
+			}
+			
+		}
+		regJS.append("]");
 
 		// end js registration
 		regJS.append("));");
@@ -219,7 +292,7 @@ public class GridEditorComponent extends UIComponentBase
 
 	}
 	
-	private void encodeGrid(FacesContext context, ResponseWriter writer, UIForm form, String mainId) throws IOException
+	private List prepateInternalGroups()
 	{
 		
 		List internalGroups = new ArrayList(); 
@@ -268,7 +341,15 @@ public class GridEditorComponent extends UIComponentBase
 			
 		}
 		
+		return internalGroups;
+		
+	}
+	
+	private void encodeGrid(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
+	{
+		
 		writer.startElement("table", this);
+		writer.writeAttribute("id", mainTableId, null);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
 		writer.writeAttribute("cellpadding", "0", null);
@@ -288,6 +369,7 @@ public class GridEditorComponent extends UIComponentBase
 
 		writer.endElement("tr");
 		
+		int rowGroupIndex = 0;
 		for (Iterator iter = internalGroups.iterator(); iter.hasNext();)
 		{
 			
@@ -296,15 +378,26 @@ public class GridEditorComponent extends UIComponentBase
 			if (internalGroup.rows.size() != 0)
 			{
 				
+				boolean groupExpanded = true;
+				
 				if (internalGroup.renderTitle && internalGroup.label != null)
 				{
+					
+					String onClick = "GridEditorGlobals.toggleRowGroup(" +
+							"'" + mainId + "', " +
+							"" + rowGroupIndex + ")";
+					
+					groupExpanded = expandedGroups.contains(new Integer(rowGroupIndex));
+					
 					writer.startElement("tr", this);
 					writer.startElement("th", this);
 					writer.writeAttribute("colspan", String.valueOf(columns.length + 1), null);
 					writer.writeAttribute("class", "grid-editor-row-group", null);
+					writer.writeAttribute("onclick", onClick, null);
 					writer.write(internalGroup.label);
 					writer.endElement("th");
 					writer.endElement("tr");
+
 				}
 				
 				for (Iterator iterRows = internalGroup.rows.iterator(); iterRows.hasNext();)
@@ -317,6 +410,7 @@ public class GridEditorComponent extends UIComponentBase
 					Adapter adapter = AdapterFactory.getAdapter(fieldType.getType());
 					
 					writer.startElement("tr", this);
+					if (!groupExpanded) writer.writeAttribute("style", "display: none;", null);
 		
 					writer.startElement("th", this);
 					writer.write(row.getLabel());
@@ -355,6 +449,8 @@ public class GridEditorComponent extends UIComponentBase
 					
 				}
 				
+				rowGroupIndex++;
+				
 			}
 		
 		}		
@@ -376,9 +472,11 @@ public class GridEditorComponent extends UIComponentBase
 		columns = getColumns();
 		values = getValues();
 		fieldTypes = getFieldTypes();
+		expandedGroups = getExpandedGroups();
 		
 		// client id of the grid
 		String mainId = getClientId(context);
+		String mainTableId = mainId;
 		
 		// hidden fields with column names
 		for (int i = 0; i < columns.length; i++)
@@ -407,12 +505,20 @@ public class GridEditorComponent extends UIComponentBase
 					fieldType.getType());
 
 		}
+		
+		// hidden field with the list of expanded row groups
+		JsfUtils.encodeHiddenInput(this, writer,
+				getExpandedGroupsFieldName(context),
+				StringUtils.join(",", expandedGroups));
+		
+		// prepate a list for rendering
+		List internalGroups = prepateInternalGroups();
 
 		// registration JavaScript
-		encodeRegJS(context, writer, form, mainId);
+		encodeRegJS(context, writer, form, mainId, mainTableId, internalGroups);
 
 		// main grid
-		encodeGrid(context, writer, form, mainId);
+		encodeGrid(context, writer, form, mainId, mainTableId, internalGroups);
 
 	}
 
@@ -482,6 +588,18 @@ public class GridEditorComponent extends UIComponentBase
 	{
 		rowGroupsSet = true;
 		this.rowGroups = rowGroups;
+	}
+
+	public Set getExpandedGroups()
+	{
+		return (Set) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"expandedGroups", expandedGroupsSet, expandedGroups);
+	}
+
+	public void setExpandedGroups(Set expandedGroups)
+	{
+		expandedGroupsSet = true;
+		this.expandedGroups = expandedGroups;
 	}
 
 }

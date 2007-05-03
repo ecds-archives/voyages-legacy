@@ -739,6 +739,10 @@
 			<from-outcome>start</from-outcome>
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>done</from-outcome>
+			<to-view-id>/submission/submission-thankyou.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
