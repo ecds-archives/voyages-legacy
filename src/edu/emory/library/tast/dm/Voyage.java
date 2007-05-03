@@ -469,15 +469,20 @@ public class Voyage extends AbstractDescriptiveObject {
 		return 1;
 	}
 
-	public static Voyage loadCurrentRevision(Session sess, long voyageId) {
+	public static Voyage loadCurrentRevision(Session sess, Long voyageId)
+	{
 		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, Conditions.OP_EQUALS);
 		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Voyage", c);
-		Object[] res = qValue.executeQuery(sess);
-		if (res.length == 0) return null;
+		List res = qValue.executeQueryList(sess);
+		if (res.size() == 0) return null;
+		return (Voyage)res.get(0);
+	}
 
-		return (Voyage)res[0];
+	public static Voyage loadCurrentRevision(Session sess, long voyageId)
+	{
+		return loadCurrentRevision(sess, new Long(voyageId));
 	}
 	
 //	/**

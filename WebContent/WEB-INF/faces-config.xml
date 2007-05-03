@@ -680,8 +680,12 @@
 			<to-view-id>/submission/submission-form.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>select-voyage</from-outcome>
+			<from-outcome>edit</from-outcome>
 			<to-view-id>/submission/submission-select-voyage-edit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>merge</from-outcome>
+			<to-view-id>/submission/submission-select-voyages-merge.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -695,6 +699,10 @@
 			<from-outcome>back</from-outcome>
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>start</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
@@ -705,6 +713,10 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>start</from-outcome>
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -721,6 +733,10 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>back-merge</from-outcome>
+			<to-view-id>/submission/submission-select-voyages-merge.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>start</from-outcome>
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -748,5 +764,9 @@
 			<default-locale>en</default-locale>
 		</locale-config>
 	</application>
+	
+	<lifecycle>
+	   <phase-listener>edu.emory.library.tast.submission.SubmissionPhaseListerner</phase-listener>
+	</lifecycle>
 
 </faces-config>

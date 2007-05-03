@@ -473,4 +473,16 @@ public class JsfUtils
     {
     	if (value != def) writer.writeAttribute(name, String.valueOf(value), null);
     }
+
+	public static void navigateTo(String outcome)
+	{
+		navigateTo(null, outcome);
+	}
+	
+	public static void navigateTo(String fromAction, String outcome)
+	{
+		FacesContext fc = FacesContext.getCurrentInstance(); 
+		fc.getApplication().getNavigationHandler().handleNavigation(fc, fromAction, outcome);
+	}
+
 }

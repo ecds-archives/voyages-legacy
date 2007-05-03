@@ -25,7 +25,7 @@
 	</div>
 	
 	<div style="border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; margin-top: 5px; padding-bottom: 10px;">
-		<h:inputText value="#{SubmissionBean.editedVoyageId}" />
+		<h:inputText value="#{SubmissionBean.lookupVoyageId}" />
 		<h:commandButton value="Lookup ..." action="#{SubmissionBean.lookupVoyage}" />
 	</div>
 
@@ -38,19 +38,19 @@
 		<t:htmlTag value="table" style="border-collapse: collapse">
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; background-color: #EEEEEE; padding: 5px;"><h:outputText value="Voyage ID" /></t:htmlTag>
-			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.editedVoyageId}" /></t:htmlTag>
+			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.lookedUpVoyage.voyageId}" /></t:htmlTag>
 		</t:htmlTag>
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; background-color: #EEEEEE; padding: 5px;"><h:outputText value="Captain" /></t:htmlTag>
-			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.lookedUpVoyageCaptain}" /></t:htmlTag>
+			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.lookedUpVoyage.captain}" /></t:htmlTag>
 		</t:htmlTag>
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; background-color: #EEEEEE; padding: 5px;"><h:outputText value="Ship" /></t:htmlTag>
-			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.lookedUpVoyageShipname}" /></t:htmlTag>
+			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.lookedUpVoyage.shipname}" /></t:htmlTag>
 		</t:htmlTag>
 		<t:htmlTag value="tr">
 			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; background-color: #EEEEEE; padding: 5px;"><h:outputText value="Year when arrived to America" /></t:htmlTag>
-			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.lookedUpVoyageYear}" /></t:htmlTag>
+			<t:htmlTag value="td" style="border: 1px solid #CCCCCC; font-weight: bold; padding: 5px;"><h:outputText value="#{SubmissionBean.lookedUpVoyage.year}" /></t:htmlTag>
 		</t:htmlTag>
 		</t:htmlTag>
 	
@@ -61,7 +61,7 @@
 	</t:htmlTag>
 
 	<t:htmlTag value="div">
-		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromSelectVoyage}"/>
+		<h:commandButton value="< Previous" action="back"/>
 	</t:htmlTag>
 
 </h:form>
