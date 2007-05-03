@@ -742,10 +742,10 @@
 	</navigation-rule>
 	
 	<navigation-rule>
-		<from-view-id>/submission/submission-admin-main.jsp</from-view-id>
+		<from-view-id>/submission/submission-admin.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>admin-step-1</from-outcome>
-			<to-view-id>/submission/submission-admin-step-2.jsp</to-view-id>
+			<from-outcome>resolve-request</from-outcome>
+			<to-view-id>/submission/submission-admin-resolve.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
