@@ -11,6 +11,7 @@
 	    
 		<property name="time"/>
 		<property name="note"/>
+		<property name="solved"/>
 		
 		<set name="sources" inverse="true" cascade="all-delete-orphan">
 			<key column="submission_id" />

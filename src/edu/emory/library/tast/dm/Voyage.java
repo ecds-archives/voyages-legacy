@@ -50,7 +50,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("voyageid", "Voyage",
 				NumericAttribute.TYPE_LONG, "voyageid"));
 		attributes.add(new BooleanAttribute("suggestion", "Voyage", null));
-		attributes.add(new BooleanAttribute("approved", "Voyage", null));
 		attributes.add(new NumericAttribute("revision", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "revision"));
 		attributes.add(new NumericAttribute("iid", "Voyage",

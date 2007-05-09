@@ -15,7 +15,6 @@
 		<property name="cd" column="cd" />
 		<property name="suggestion" />
 		<property name="revision"  />
-		<property name="approved" />
 		
 		
 		<property name="shipname" column="shipname" />

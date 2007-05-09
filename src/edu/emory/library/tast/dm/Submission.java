@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -22,11 +23,13 @@ public abstract class Submission
 	private Date time;
 	private String note;
 	private Set sources;
+	private boolean solved;
 	
 	private static Map attributes = new HashMap();
 	static {
 		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
 		attributes.put("time", new DateAttribute("id", null));
+		attributes.put("solved", new BooleanAttribute("solved", "Submission", null));
 	}
 	public static Attribute getAttribute(String name) {
 		return (Attribute)attributes.get(name);
@@ -132,6 +135,14 @@ public abstract class Submission
 		transaction.commit();
 		sess.close();
 		
+	}
+
+	public boolean isSolved() {
+		return solved;
+	}
+
+	public void setSolved(boolean solved) {
+		this.solved = solved;
 	}
 
 }
