@@ -21,7 +21,7 @@
 	
 	<br>
 	
-	<s:tabBar id="bar" selectedTabId="voyages" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
+	<s:tabBar id="bar" selectedTabId="#{AdminSubmissionBean.selectedTab}" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
 		<s:tab text="Voyages list" tabId="voyages" />
 		<s:tab text="Requests list" tabId="requests" />
 	</s:tabBar>

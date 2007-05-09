@@ -320,7 +320,8 @@ public class AdminSubmissionBean {
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionNew submission = (SubmissionNew) subs[i];
 				l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request", "Unknown",
-						submission.getTime().toString(), "New voyage - ID not yet assigned" }));
+						submission.getTime().toString(), "New voyage - ID not yet assigned", 
+						submission.getModifiedVoyage() != null ? "Yes" : "No"}));
 			}
 		}
 
@@ -332,7 +333,8 @@ public class AdminSubmissionBean {
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionEdit submission = (SubmissionEdit) subs[i];
 				l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request", "Unknown",
-						submission.getTime().toString(), submission.getOldVoyage().getVoyageid().toString() }));
+						submission.getTime().toString(), submission.getOldVoyage().getVoyageid().toString() ,
+						submission.getModifiedVoyage() != null ? "Yes" : "No"}));
 			}
 		}
 
@@ -355,7 +357,8 @@ public class AdminSubmissionBean {
 					first = false;
 				}
 				l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request", "Unknown",
-						submission.getTime().toString(), involvedStr }));
+						submission.getTime().toString(), involvedStr ,
+						submission.getModifiedVoyage() != null ? "Yes" : "No"}));
 			}
 		}
 		t.commit();
@@ -366,7 +369,7 @@ public class AdminSubmissionBean {
 
 	public GridColumn[] getRequestColumns() {
 		return new GridColumn[] { new GridColumn("Type"), new GridColumn("User"), new GridColumn("Date"),
-				new GridColumn("Involved voyages ID") };
+				new GridColumn("Involved voyages ID"), new GridColumn("Temporary result saved") };
 	}
 
 	public void newRequestId(GridOpenRowEvent e) {
@@ -429,6 +432,37 @@ public class AdminSubmissionBean {
 	}
 	
 	public String save() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Map newValues = valsToSubmit.getColumnValues(DECIDED_VOYAGE);
+		Voyage vNew = null;
+//		if () {
+//			
+//		}
+		for (int i = 0; i < attrs.length; i++) {
+			Value val = (Value) newValues.get(attrs[i].getName());
+			if (val.isError()) {
+				val.setErrorMessage("Error in value!");
+				wasError = true;
+			}
+			Object[] vals = attrs[i].getValues(session, val);
+			for (int j = 0; j < vals.length; j++) {
+				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+			}
+		}
+		if (!wasError) {
+			vNew.save();
+			if (this.submission instanceof SubmissionNew) {
+				((SubmissionNew)this.submission).setModifiedVoyage(vNew);
+			} else if (this.submission instanceof SubmissionEdit) {
+				((SubmissionEdit)this.submission).setModifiedVoyage(vNew);
+			} else {
+				((SubmissionMerge)this.submission).setModifiedVoyage(vNew);
+			}
+		}
+		session.update(this.submission);
+		t.commit();
+		session.close();
 		return null;
 	}
 }

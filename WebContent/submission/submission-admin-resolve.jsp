@@ -25,8 +25,9 @@
 	<br>
 	
 	<h:commandButton value="< Back" action="back"/>
+	<h:commandButton value="Save" action="#{AdminSubmissionBean.save}"/>
 	<h:commandButton value="Apply changes" action="#{AdminSubmissionBean.submit}"/>
-
+	<h:commandButton value="Reject request" action="#{AdminSubmissionBean.rejectSubmission}" rendered="#{AdminSubmissionBean.rejectAvailable}"/>
 </h:form>
 </f:view>
 </body>
