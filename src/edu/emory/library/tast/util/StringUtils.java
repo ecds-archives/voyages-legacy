@@ -54,6 +54,12 @@ public class StringUtils
 		return str.length() == 0;
 	}
 
+	public static String unNull(String str)
+	{
+		if (str == null) return "";
+		return str;
+	}
+
 	public static String coalesce(String str1, String str2)
 	{
 		if (str1 != null) return str1;

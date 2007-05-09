@@ -27,5 +27,10 @@ public class TextboxValue extends Value
 	{
 		return StringUtils.isNullOrEmpty(text);
 	}
+	
+	public String toString()
+	{
+		return text;
+	}
 
 }

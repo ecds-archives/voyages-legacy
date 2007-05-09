@@ -2,6 +2,7 @@ package edu.emory.library.tast.submission;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -50,9 +51,6 @@ public class SubmissionBean
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
 	
-	private long[] mergedVoyageIds = new long[] {};
-	
-	private Values valsToSubmit = null;
 	private Values gridValues = null;
 	
 	private RowGroup[] rowGroups;
@@ -315,7 +313,7 @@ public class SubmissionBean
 		Session sess = HibernateUtil.getSession();
 		Transaction trans = sess.beginTransaction();
 
-		Map newValues = valsToSubmit.getColumnValues(CHANGED_VOYAGE);
+		Map newValues = gridValues.getColumnValues(CHANGED_VOYAGE);
 		Voyage voyage = new Voyage();
 		
 		if (submissionType == SUBMISSION_TYPE_NEW)
@@ -334,8 +332,10 @@ public class SubmissionBean
 		}
 		
 		voyage.setSuggestion(true);
-		voyage.setRevision(Voyage.getCurrentRevision());
-		voyage.setApproved(false);
+		voyage.setRevision(-1);
+		//voyage.setApproved(false);
+		
+		Map notes = new HashMap(); 
 
 		// boolean wasError = false;
 		for (int i = 0; i < attrs.length; i++) {
@@ -344,13 +344,16 @@ public class SubmissionBean
 				val.setErrorMessage("Error in value!");
 				// wasError = true;
 			}
+			if (val.hasNote())
+			{
+				notes.put(attrs[i].getName(), val.getNote().trim());
+			}
 			Object[] vals = attrs[i].getValues(sess, val);
 			for (int j = 0; j < vals.length; j++)
 			{
 				voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 		}
-
 		Submission submission = null;
 		
 		if (submissionType == SUBMISSION_TYPE_NEW)
@@ -360,6 +363,7 @@ public class SubmissionBean
 			submission = submissionNew;
 
 			submissionNew.setNewVoyage(voyage);
+			submissionNew.setAttributeNotes(notes);
 
 		}
 
@@ -371,6 +375,7 @@ public class SubmissionBean
 
 			submissionEdit.setNewVoyage(voyage);
 			submissionEdit.setOldVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId));
+			submissionEdit.setAttributeNotes(notes);
 
 		}
 
@@ -384,8 +389,13 @@ public class SubmissionBean
 
 			Set mergedVoyages = new HashSet();
 			submissionMerge.setMergedVoyages(mergedVoyages);
-			for (int i = 0; i < mergedVoyageIds.length; i++)
-				mergedVoyages.add((Voyage.loadCurrentRevision(sess, mergedVoyageIds[i])));
+			for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();)
+			{
+				SelectedVoyageInfo voyageInfo = (SelectedVoyageInfo) iter.next();
+				mergedVoyages.add((Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())));
+			}
+			
+			submissionMerge.setAttributeNotes(notes);
 
 		}
 
@@ -480,7 +490,7 @@ public class SubmissionBean
 	
 	public void setValues(Values vals)
 	{
-		this.valsToSubmit = vals;
+		this.gridValues = vals;
 	}
 
 	public Column[] getColumns()
@@ -522,11 +532,24 @@ public class SubmissionBean
 
 	public Row[] getRows()
 	{
+		
 		Row[] rows = new Row[attrs.length];
-		for (int i = 0; i < rows.length; i++) {
-			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i]
-					.getUserLabel(), null, attrs[i].getGroupName());
+		
+		for (int i = 0; i < rows.length; i++)
+		{
+			
+			Row row = new Row(
+					attrs[i].getType(),
+					attrs[i].getName(),
+					attrs[i].getUserLabel(),
+					null,
+					attrs[i].getGroupName());
+			
+			row.setNoteEnabled(true);
+			rows[i] = row;
+
 		}
+		
 		return rows;
 	}
 	

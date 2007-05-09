@@ -8,6 +8,7 @@ public class Row
 	private String label;
 	private String description;
 	private String groupName;
+	private boolean noteEnabled = false;
 
 	public Row(String type, String name, String label, String description, String groupName)
 	{
@@ -81,6 +82,16 @@ public class Row
 	public void setType(String type)
 	{
 		this.type = type;
+	}
+
+	public boolean isNoteEnabled()
+	{
+		return noteEnabled;
+	}
+
+	public void setNoteEnabled(boolean noteEnabled)
+	{
+		this.noteEnabled = noteEnabled;
 	}
 
 }

@@ -1,6 +1,7 @@
 package edu.emory.library.tast.common.grideditor.list;
 
 import edu.emory.library.tast.common.grideditor.Value;
+import edu.emory.library.tast.util.StringUtils;
 
 public class ListValue extends Value
 {
@@ -24,6 +25,11 @@ public class ListValue extends Value
 	public void setValues(String[] values)
 	{
 		this.values = values;
+	}
+	
+	public String toString()
+	{
+		return StringUtils.join("/", values);
 	}
 
 }

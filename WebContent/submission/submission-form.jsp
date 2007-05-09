@@ -19,7 +19,8 @@
 	
 	<br>
 	
-	<s:gridEditor
+	<s:gridEditor 
+		id="grid"
 		rows="#{SubmissionBean.rows}"
 		columns="#{SubmissionBean.columns}"
 		values="#{SubmissionBean.values}"
@@ -30,6 +31,7 @@
 	<div style="margin-top: 10px; margin-bottom: 10px;">
 		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>
 		<h:commandButton value="Submit" action="#{SubmissionBean.submit}"/>
+		<h:commandButton value="Refresh test" />
 	</div>
 
 </h:form>

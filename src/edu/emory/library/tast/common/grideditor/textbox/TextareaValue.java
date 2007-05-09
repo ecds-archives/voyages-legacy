@@ -44,6 +44,10 @@ public class TextareaValue extends Value
 	public String[] getTexts() {
 		return texts;
 	}
-
+	
+	public String toString()
+	{
+		return StringUtils.join("\n", texts);
+	}
 
 }

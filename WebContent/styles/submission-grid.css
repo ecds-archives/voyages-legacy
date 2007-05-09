@@ -41,5 +41,12 @@ input.record-gridEditor-date-year {
 th.grid-editor-row-group {
 	font-size: 12pt;
 	background-color: #DDDDDD !important;
+	cursor: pointer; }
+	
+span.grid-editor-edit-node-button {
 	cursor: pointer;
-}
+	color: #2288BB; }
+
+span.grid-editor-edit-node-button:hover {
+	background-color: #2288BB;
+	color: White; }

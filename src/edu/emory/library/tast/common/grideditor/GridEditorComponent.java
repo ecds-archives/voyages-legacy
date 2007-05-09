@@ -23,6 +23,8 @@ import edu.emory.library.tast.util.StringUtils;
 public class GridEditorComponent extends UIComponentBase
 {
 
+	private static final String NOTE_COLLAPSED = "collapsed";
+	private static final String NOTE_EXPANDED = "expanded";
 	private boolean rowsSet = false;
 	private Row[] rows;
 	
@@ -63,22 +65,57 @@ public class GridEditorComponent extends UIComponentBase
 	
 	private String getValueInputPrefix(FacesContext context, String column, String row)
 	{
-		return getClientId(context) + "_" + column + "_value_" + row;
+		return getClientId(context) + "_" + column + "_" + row + "_value";
 	}
 	
 	private String getValueErrorFlagFieldName(FacesContext context, String column, String row)
 	{
-		return getClientId(context) + "_" + column + "_error_" + row;
+		return getClientId(context) + "_" + column + "_" + row + "_error";
 	}
 
 	private String getValueErrorMessageFieldName(FacesContext context, String column, String row)
 	{
-		return getClientId(context) + "_" + column + "_error_msg_" + row;
+		return getClientId(context) + "_" + column + "_" + row + "_error_msg";
 	}
 
 	private String getExpandedGroupsFieldName(FacesContext context)
 	{
 		return getClientId(context) + "_expanded_groups";
+	}
+
+	private String getNoteExpandedStatusFieldName(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_note_status";
+	}
+
+	private String getNoteFieldName(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_note";
+	}
+
+	private String getNoteEditBoxId(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_note_edit";
+	}
+
+	private String getNoteReadBoxId(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_note_read";
+	}
+
+	private String getNoteTextDisplayId(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_note_text";
+	}
+
+	private String getNoteAddButtonId(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_note_add_button";
+	}
+
+	private String getNoteEditButtonId(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_note_edit_button";
 	}
 
 	public void decode(FacesContext context)
@@ -99,14 +136,18 @@ public class GridEditorComponent extends UIComponentBase
 			Adapter adapter = AdapterFactory.getAdapter(rowType);
 			
 			int columnCount = 0;
-			String columName;
-			while ((columName = (String) params.get(getColumnFieldName(context, columnCount++))) != null)
+			String columnName;
+			while ((columnName = (String) params.get(getColumnFieldName(context, columnCount++))) != null)
 			{
-				
-				String inputPrefix = getValueInputPrefix(context, columName, rowName);
-				String errorFlagFieldName = getValueErrorFlagFieldName(context, columName, rowName);
-				String errorMessageFieldName = getValueErrorMessageFieldName(context, columName, rowName);
-				
+
+				// field names
+				String inputPrefix = getValueInputPrefix(context, columnName, rowName);
+				String errorFlagFieldName = getValueErrorFlagFieldName(context, columnName, rowName);
+				String errorMessageFieldName = getValueErrorMessageFieldName(context, columnName, rowName);
+				String noteFieldName = getNoteFieldName(context, columnName, rowName);
+				String noteExpandedStatusFieldName = getNoteExpandedStatusFieldName(context, columnName, rowName);
+
+				// decode value
 				Value value = adapter.decode(context, inputPrefix, this);
 				if (value == null)
 				{
@@ -114,19 +155,47 @@ public class GridEditorComponent extends UIComponentBase
 					return;
 				}
 				
-				values.setValue(columName, rowName, value);
+				// add value
+				values.setValue(columnName, rowName, value);
+
+				// decode error
+				if (params.containsKey(errorFlagFieldName))
+				{
+					if (Boolean.parseBoolean((String) params.get(errorFlagFieldName)))
+					{
+						String error = (String) params.get(errorMessageFieldName);
+						if (error != null)
+						{
+							value.setErrorMessage(error);
+						}
+						else
+						{
+							values = null;
+							return;
+						}
+					}
+				}
+				else
+				{
+					values = null;
+					return;
+				}
 				
-				if (Boolean.parseBoolean((String) params.get(errorFlagFieldName)))
-					value.setErrorMessage((String) params.get(errorMessageFieldName));
+				// decode note
+				if (params.containsKey(noteFieldName) && params.containsKey(noteExpandedStatusFieldName))
+				{
+					value.setNoteExpanded(NOTE_EXPANDED.equals((String)params.get(noteExpandedStatusFieldName)));
+					value.setNote((String)params.get(noteFieldName));
+				}
 
 			}
 
 		}
 		
 		String expandedGroupsStr = (String) params.get(getExpandedGroupsFieldName(context));
+		expandedGroups = new HashSet();
 		if (!StringUtils.isNullOrEmpty(expandedGroupsStr))
 		{
-			expandedGroups = new HashSet();
 			String expandedGroupsIndexes[] = expandedGroupsStr.split(",");
 			for (int i = 0; i < expandedGroupsIndexes.length; i++)
 			{
@@ -151,20 +220,6 @@ public class GridEditorComponent extends UIComponentBase
 			if (vbExpandedGroups != null) vbExpandedGroups.setValue(context, expandedGroups);
 		}
 		
-	}
-	
-	private void encodeErrorMessage(FacesContext context, ResponseWriter writer, String columnName, String rowName, Value value) throws IOException
-	{
-
-		JsfUtils.encodeHiddenInput(this, writer,
-				getValueErrorMessageFieldName(context, columnName, rowName),
-				value.getErrorMessage());
-
-		writer.startElement("div", this);
-		writer.writeAttribute("class", "grid-editor-error", null);
-		writer.write(value.getErrorMessage());
-		writer.endElement("div");
-
 	}
 	
 	private void encodeRegJS(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
@@ -352,6 +407,110 @@ public class GridEditorComponent extends UIComponentBase
 		
 	}
 	
+	private void encodeErrorMessage(FacesContext context, ResponseWriter writer, String columnName, String rowName, Value value) throws IOException
+	{
+
+		JsfUtils.encodeHiddenInput(this, writer,
+				getValueErrorMessageFieldName(context, columnName, rowName),
+				value.getErrorMessage());
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "grid-editor-error", null);
+		writer.write(value.getErrorMessage());
+		writer.endElement("div");
+
+	}
+	
+	private void encodeNote(FacesContext context, ResponseWriter writer, String mainId, String columnName, String rowName, Value value) throws IOException
+	{
+		
+		String noteFieldName = getNoteFieldName(context, columnName, rowName);
+		String noteStatusFieldName = getNoteExpandedStatusFieldName(context, columnName, rowName);
+		String editBoxId = getNoteEditBoxId(context, columnName, rowName);
+		String readBoxId = getNoteReadBoxId(context, columnName, rowName);
+		String displayTextId = getNoteTextDisplayId(context, columnName, rowName);
+		String addButtonId = getNoteAddButtonId(context, columnName, rowName);
+		String editButtonId = getNoteEditButtonId(context, columnName, rowName);
+		
+		String cssStyleEditMode = value.isNoteExpanded() ? "" : "display: none";
+		String cssStyleReadMode = value.isNoteExpanded() ? "display: none" : "";
+		
+		String cssStyleAddButton = value.hasNote() ? "display: none" : "";
+		String cssStyleEditButton = value.hasNote() ? "" : "display: none";
+
+		String onClickEdit = "GridEditorGlobals.editNote(" +
+			"'" + mainId + "', " +
+			"'" + columnName + "', " +
+			"'" + rowName + "')";
+
+		String onClickSave = "GridEditorGlobals.saveNote(" +
+			"'" + mainId + "', " +
+			"'" + columnName + "', " +
+			"'" + rowName + "')";
+
+		JsfUtils.encodeHiddenInput(this, writer,
+				noteStatusFieldName,
+				value.isNoteExpanded() ? NOTE_EXPANDED : NOTE_COLLAPSED);
+		
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "grid-editor-note", null);
+
+		writer.startElement("div", this);
+		writer.writeAttribute("id", editBoxId, null);
+		writer.writeAttribute("class", "grid-editor-note-edit", null);
+		writer.writeAttribute("style", cssStyleEditMode, null);
+
+		writer.startElement("textarea", this);
+		writer.writeAttribute("name", noteFieldName, null);
+		writer.writeAttribute("class", "grid-editor-note-box", null);
+		writer.write(StringUtils.unNull(value.getNote()));
+		writer.endElement("textarea");
+
+		writer.startElement("div", this);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("value", "OK", null);
+		writer.writeAttribute("onclick", onClickSave, null);
+		writer.endElement("input");
+		writer.endElement("div");
+
+		writer.endElement("div");
+
+		writer.startElement("div", this);
+		writer.writeAttribute("id", readBoxId, null);
+		writer.writeAttribute("class", "grid-editor-note-read", null);
+		writer.writeAttribute("style", cssStyleReadMode, null);
+
+		writer.startElement("div", this);
+		
+		writer.startElement("span", this);
+		writer.writeAttribute("class", "grid-editor-note-text", null);
+		writer.writeAttribute("id", displayTextId, null);
+		writer.write(StringUtils.unNull(value.getNote()));
+		writer.endElement("span");
+
+		writer.write(" ");
+
+		writer.startElement("span", this);
+		writer.writeAttribute("id", addButtonId, null);
+		writer.writeAttribute("class", "grid-editor-edit-node-button", null);
+		writer.writeAttribute("style", cssStyleAddButton, null);
+		writer.writeAttribute("onclick", onClickEdit, null);
+		writer.write("Add note");
+		writer.endElement("span");
+
+		writer.startElement("span", this);
+		writer.writeAttribute("id", editButtonId, null);
+		writer.writeAttribute("class", "grid-editor-edit-node-button", null);
+		writer.writeAttribute("style", cssStyleEditButton, null);
+		writer.writeAttribute("onclick", onClickEdit, null);
+		writer.write("Edit note");
+		writer.endElement("span");
+
+		writer.endElement("div");
+
+	}
+	
 	private void encodeGrid(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
 	{
 		
@@ -447,6 +606,9 @@ public class GridEditorComponent extends UIComponentBase
 		
 						if (value.isError())
 							encodeErrorMessage(context, writer, columnName, rowName, value);
+						
+						if (row.isNoteEnabled() && !column.isReadOnly())
+							encodeNote(context, writer, mainId, columnName, rowName, value);
 						
 						writer.endElement("td");
 						

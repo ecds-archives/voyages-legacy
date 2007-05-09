@@ -194,5 +194,10 @@ public class DateValue extends Value
 		parsed = false;
 		this.year = year;
 	}
+	
+	public String toString()
+	{
+		return year + " / " + month + " / " + day;
+	}
 
 }

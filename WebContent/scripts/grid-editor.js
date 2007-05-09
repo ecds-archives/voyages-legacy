@@ -25,6 +25,18 @@ var GridEditorGlobals =
 	{
 		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
 		if (gridEditor) gridEditor.toggleRowGroup(rowGroupIndex);
+	},
+	
+	editNote: function(gridEditorId, columnName, rowName)
+	{
+		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
+		if (gridEditor) gridEditor.editNote(columnName, rowName);
+	},
+
+	saveNote: function(gridEditorId, columnName, rowName)
+	{
+		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
+		if (gridEditor) gridEditor.saveNote(columnName, rowName);
 	}
 
 }
@@ -82,6 +94,41 @@ function GridEditorRowGroup(firstRowIndex, lastRowIndex, expanded)
 * GridEditor object
 *********************************************/
 
+GridEditor.prototype.getNoteExpandedStatusFieldName = function(column, row)
+{
+	return this.gridEditorId + "_" + column + "_" + row + "_note_status";
+}
+
+GridEditor.prototype.getNoteFieldName = function(column, row)
+{
+	return this.gridEditorId + "_" + column + "_" + row + "_note";
+}
+
+GridEditor.prototype.getNoteEditBoxId = function(column, row)
+{
+	return this.gridEditorId + "_" + column + "_" + row + "_note_edit";
+}
+
+GridEditor.prototype.getNoteReadBoxId = function(column, row)
+{
+	return this.gridEditorId + "_" + column + "_" + row + "_note_read";
+}
+
+GridEditor.prototype.getNoteTextDisplayId = function(column, row)
+{
+	return this.gridEditorId + "_" + column + "_" + row + "_note_text";
+}
+
+GridEditor.prototype.getNoteAddButtonId = function(column, row)
+{
+	return this.gridEditorId + "_" + column + "_" + row + "_note_add_button";
+}
+
+GridEditor.prototype.getNoteEditButtonId = function(column, row)
+{
+	return this.gridEditorId + "_" + column + "_" + row + "_note_edit_button";
+}
+
 GridEditor.prototype.getField = function(rowName, columnName)
 {
 	var row = this.fields[rowName];
@@ -117,6 +164,75 @@ GridEditor.prototype.toggleRowGroup = function(rowGroupIndex)
 	document.forms[this.formName].elements[this.expandedGroupsFieldName].value =
 		expandedRowsIndexes.join(",");
 	
+}
+
+GridEditor.prototype.changeNoteStatus = function(columnName, rowName, expanded)
+{
+
+	var statusFieldName = this.getNoteExpandedStatusFieldName(columnName, rowName);
+	var noteFieldName = this.getNoteFieldName(columnName, rowName);
+	var editBoxId = this.getNoteEditBoxId(columnName, rowName);
+	var readBoxId = this.getNoteReadBoxId(columnName, rowName);
+	var textDisplayId = this.getNoteTextDisplayId(columnName, rowName);
+	var addButtonId = this.getNoteAddButtonId(columnName, rowName);
+	var editButtonId = this.getNoteEditButtonId(columnName, rowName);
+	
+	var frm = document.forms[this.formName];
+
+	var readBox = document.getElementById(readBoxId);
+	var editBox = document.getElementById(editBoxId);
+	
+	if (expanded)
+	{
+	
+		readBox.style.display = "none";
+		editBox.style.display = "block";
+
+		frm.elements[statusFieldName].value = "expanded";
+	
+	}
+	else
+	{
+
+		readBox.style.display = "block";
+		editBox.style.display = "none";
+
+		frm.elements[statusFieldName].value = "collapsed";
+
+		var note = frm.elements[noteFieldName].value;
+		var isEmpty = note.match(/^\s*$/);
+		
+		var textDisplay = document.getElementById(textDisplayId);
+		var addButton = document.getElementById(addButtonId);
+		var editButton = document.getElementById(editButtonId);
+
+		if (isEmpty)
+		{
+			textDisplay.innerHTML = "";
+			textDisplay.style.display = "none";
+			addButton.style.display = "";
+			editButton.style.display = "none";
+		}
+		else
+		{
+			textDisplay.innerHTML = note;
+			textDisplay.style.display = "";
+			addButton.style.display = "none";
+			editButton.style.display = "";
+		}
+
+	}
+
+}
+
+GridEditor.prototype.editNote = function(columnName, rowName)
+{
+	this.changeNoteStatus(columnName, rowName, true);
+}
+
+GridEditor.prototype.saveNote = function(columnName, rowName)
+{
+	this.changeNoteStatus(columnName, rowName, false);
 }
 
 /********************************************
