@@ -13,6 +13,7 @@ public class SubmissionNew extends Submission
 {
 	
 	private Voyage newVoyage;
+	private Voyage modifiedVoyage;
 	private Map attributeNotes;
 	
 	private static Map attributes = new HashMap();
@@ -45,6 +46,14 @@ public class SubmissionNew extends Submission
 	public void setAttributeNotes(Map attributeNotes)
 	{
 		this.attributeNotes = attributeNotes;
+	}
+
+	public Voyage getModifiedVoyage() {
+		return modifiedVoyage;
+	}
+
+	public void setModifiedVoyage(Voyage modifiedVoyage) {
+		this.modifiedVoyage = modifiedVoyage;
 	}
 
 }

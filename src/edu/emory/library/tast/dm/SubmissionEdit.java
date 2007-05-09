@@ -11,7 +11,7 @@ import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 
 public class SubmissionEdit extends Submission
 {
-	
+	private Voyage modifiedVoyage;
 	private Voyage newVoyage;
 	private Voyage oldVoyage;
 	private Map attributeNotes;
@@ -57,6 +57,14 @@ public class SubmissionEdit extends Submission
 	public void setOldVoyage(Voyage voyageOld)
 	{
 		this.oldVoyage = voyageOld;
+	}
+
+	public Voyage getModifiedVoyage() {
+		return modifiedVoyage;
+	}
+
+	public void setModifiedVoyage(Voyage modifiedVoyage) {
+		this.modifiedVoyage = modifiedVoyage;
 	}
 
 }

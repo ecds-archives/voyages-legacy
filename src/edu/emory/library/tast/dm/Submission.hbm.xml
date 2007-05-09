@@ -21,6 +21,7 @@
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionNew" table="submissions_new">
 			<key column="submission_id"/>
 			<many-to-one name="newVoyage" column="voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
+			<many-to-one name="modifiedVoyage" column="m_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
 			<map name="attributeNotes" table="submissions_attribute_notes">
 				<key column="submission_id"/>
 				<index column="attribute_name" type="string"/>
@@ -30,6 +31,7 @@
 	    
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionEdit" table="submissions_edit">
 			<key column="submission_id"/>
+			<many-to-one name="modifiedVoyage" column="m_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
 			<many-to-one name="newVoyage" column="new_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
 			<many-to-one name="oldVoyage" column="old_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
 			<map name="attributeNotes" table="submissions_attribute_notes">
@@ -41,6 +43,7 @@
 		
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionMerge" table="submissions_merge">
 			<key column="submission_id"/>
+			<many-to-one name="modifiedVoyage" column="m_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
 			<many-to-one name="proposedNewVoyage" column="merge_voyage_iid" class="edu.emory.library.tast.dm.Voyage" />
 			<set name="mergedVoyages" table="submissions_merge_voyages">
 				<key column="submission_id" />

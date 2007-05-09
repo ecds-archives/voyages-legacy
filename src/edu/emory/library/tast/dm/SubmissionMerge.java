@@ -13,6 +13,7 @@ import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 public class SubmissionMerge extends Submission
 {
 	
+	private Voyage modifiedVoyage;
 	private Voyage proposedNewVoyage;
 	private Set mergedVoyages;
 	private Map attributeNotes;
@@ -56,6 +57,14 @@ public class SubmissionMerge extends Submission
 	public void setAttributeNotes(Map attributeNotes)
 	{
 		this.attributeNotes = attributeNotes;
+	}
+
+	public Voyage getModifiedVoyage() {
+		return modifiedVoyage;
+	}
+
+	public void setModifiedVoyage(Voyage modifiedVoyage) {
+		this.modifiedVoyage = modifiedVoyage;
 	}
 
 }
