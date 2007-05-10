@@ -43,10 +43,12 @@ th.grid-editor-row-group {
 	background-color: #DDDDDD !important;
 	cursor: pointer; }
 	
-span.grid-editor-edit-node-button {
+span.grid-editor-edit-note-button,
+span.grid-editor-copy-button {
 	cursor: pointer;
 	color: #2288BB; }
 
-span.grid-editor-edit-node-button:hover {
-	background-color: #2288BB;
+span.grid-editor-edit-note-button:hover,
+span.grid-editor-copy-button:hover {
+		background-color: #2288BB;
 	color: White; }

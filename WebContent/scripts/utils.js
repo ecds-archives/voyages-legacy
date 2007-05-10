@@ -337,6 +337,12 @@ var ElementUtils =
 		opt.value = value;
 		opt.text = text;
 		sel.appendChild(opt);
+	},
+	
+	removeAllOptions: function(sel)
+	{
+		while (sel.length > 0)
+			sel.remove(0);
 	}
 
 }

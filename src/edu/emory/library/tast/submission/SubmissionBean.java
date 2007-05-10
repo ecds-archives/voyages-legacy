@@ -499,15 +499,28 @@ public class SubmissionBean
 		{
 			
 			return new Column[] {
-					new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, false)};
+					new Column(
+							CHANGED_VOYAGE,
+							CHANGED_VOYAGE_LABEL,
+							false)};
 
 		}
 		else if (submissionType == SUBMISSION_TYPE_EDIT)
 		{
 			
 			return new Column[] {
-					new Column(ORIGINAL_VOYAGE, ORIGINAL_VOYAGE_LABEL, true),
-					new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, false)};
+
+					new Column(
+							ORIGINAL_VOYAGE,
+							ORIGINAL_VOYAGE_LABEL,
+							true,
+							CHANGED_VOYAGE,
+							"Copy >"),
+					
+					new Column(
+							CHANGED_VOYAGE,
+							CHANGED_VOYAGE_LABEL,
+							false)};
 
 		}
 		else if (submissionType == SUBMISSION_TYPE_MERGE)
@@ -516,9 +529,17 @@ public class SubmissionBean
 			Column columns[] = new Column[selectedVoyagesForMerge.size() + 1];
 			
 			for (int i = 0; i < selectedVoyagesForMerge.size(); i++)
-				columns[i] = new Column(MERGED_VOYAGE_PREFIX + i, ORIGINAL_VOYAGE_LABEL, true);
+				columns[i] = new Column(
+						MERGED_VOYAGE_PREFIX + i,
+						ORIGINAL_VOYAGE_LABEL,
+						true,
+						CHANGED_VOYAGE,
+						"Copy >");
 			
-			columns[selectedVoyagesForMerge.size()] = new Column(CHANGED_VOYAGE, CHANGED_VOYAGE_LABEL, false);
+			columns[selectedVoyagesForMerge.size()] = new Column(
+					CHANGED_VOYAGE,
+					CHANGED_VOYAGE_LABEL,
+					false);
 			
 			return columns;
 

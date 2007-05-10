@@ -37,6 +37,12 @@ var GridEditorGlobals =
 	{
 		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
 		if (gridEditor) gridEditor.saveNote(columnName, rowName);
+	},
+	
+	copy: function(gridEditorId, srcColumnName, dstColumnName, rowName)
+	{
+		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
+		if (gridEditor) gridEditor.copy(srcColumnName, dstColumnName, rowName);
 	}
 
 }
@@ -68,12 +74,21 @@ function GridEditorListItem(value, text, subItems)
 	this.subItems = subItems;
 }
 
-function GridEditorTextbox()
+function GridEditorTextbox(inputName)
 {
+	this.inputName = inputName;
 }
 
-function GridEditorDate()
+function GridEditorTextarea(inputName)
 {
+	this.inputName = inputName;
+}
+
+function GridEditorDate(yearInputName, monthInputName, dayInputName)
+{
+	this.yearInputName = yearInputName;
+	this.monthInputName = monthInputName;
+	this.dayInputName = dayInputName;
 }
 
 function GridEditorList(fieldTypeName, selectsNamePrefix, depthFieldName)
@@ -235,17 +250,139 @@ GridEditor.prototype.saveNote = function(columnName, rowName)
 	this.changeNoteStatus(columnName, rowName, false);
 }
 
+GridEditor.prototype.copy = function(srcColumnName, dstColumnName, rowName)
+{
+
+	var row = this.fields[rowName];
+	if (!row) return;
+
+	var srcField = row[srcColumnName];
+	var dstField = row[dstColumnName];
+	if (!srcField || !dstField) return;
+	
+	var value = srcField.getValue(this);
+	dstField.setValue(this, value);
+
+}
+
+/********************************************
+* GridEditorTextbox object
+*********************************************/
+
+GridEditorTextbox.prototype.getValue = function(grid)
+{
+	return document.forms[grid.formName].elements[this.inputName].value;
+}
+
+GridEditorTextbox.prototype.setValue = function(grid, value)
+{
+	document.forms[grid.formName].elements[this.inputName].value = value;
+}
+
+/********************************************
+* GridEditorTextarea object
+*********************************************/
+
+GridEditorTextarea.prototype.getValue = GridEditorTextbox.prototype.getValue;
+GridEditorTextarea.prototype.setValue = GridEditorTextbox.prototype.setValue;
+
+/********************************************
+* GridEditorDate object
+*********************************************/
+
+GridEditorDate.prototype.getValue = function(grid)
+{
+	var frm = document.forms[grid.formName];
+	return {
+		year: frm.elements[this.yearInputName].value,
+		month: frm.elements[this.monthInputName].value,
+		day: frm.elements[this.dayInputName].value};
+}
+
+GridEditorDate.prototype.setValue = function(grid, value)
+{
+	var frm = document.forms[grid.formName];
+	frm.elements[this.yearInputName].value = value.year;
+	frm.elements[this.monthInputName].value = value.month;
+	frm.elements[this.dayInputName].value = value.day;
+}
+
 /********************************************
 * GridEditorList object
 *********************************************/
 
-GridEditorList.prototype.itemSelected = function(gridEditor, depth)
+GridEditorList.prototype.getValue = function(grid)
+{
+	
+	var frm = document.forms[grid.formName];
+	var depth = parseInt(frm.elements[this.depthFieldName].value);
+
+	var values = new Array();	
+	for (var i = 0; i < depth; i++)
+	{
+		var sel = frm.elements[this.selectsNamePrefix + i];
+		values[i] = sel.value;
+	}
+	
+	return values;
+
+}
+
+GridEditorList.prototype.setValue = function(grid, values)
 {
 
-	var form = document.forms[gridEditor.formName];
+	var frm = document.forms[grid.formName];
+	var nextItems = grid.fieldTypes[this.fieldTypeName].list;
+	
+	var i = 0;
+	while (nextItems && nextItems.length != 0)
+	{
+	
+		var items = nextItems;
+
+		var sel = frm.elements[this.selectsNamePrefix + i];;
+		sel.style.display = "";
+		
+		ElementUtils.removeAllOptions(sel);
+
+		for (var k = 0; k < items.length; k++)
+			ElementUtils.addOption(sel,
+				items[k].value,
+				items[k].text);
+				
+		nextItems = null;
+
+		for (var j = 0; j < items.length; j++)
+		{
+			if (items[j].value == values[i])
+			{
+				nextItems = items[j].subItems;
+				sel.selectedIndex = j;
+			}
+		}
+		
+		i++;
+
+	}
+	
+	frm.elements[this.depthFieldName].value = i;
+	
+	var sel = frm.elements[this.selectsNamePrefix + i];
+	while (sel)
+	{
+		sel.style.display = "none";
+		sel = frm.elements[this.selectsNamePrefix + (i++)];
+	}
+
+}
+
+GridEditorList.prototype.itemSelected = function(grid, depth)
+{
+
+	var form = document.forms[grid.formName];
 	var i = 0;
 	
-	var items = gridEditor.fieldTypes[this.fieldTypeName].list;
+	var items = grid.fieldTypes[this.fieldTypeName].list;
 	while (i <= depth)
 	{
 		items = items[form.elements[this.selectsNamePrefix + i].selectedIndex].subItems;
@@ -259,26 +396,12 @@ GridEditorList.prototype.itemSelected = function(gridEditor, depth)
 		
 		sel.style.display = "";
 		
-		while (sel.length > 0)
-			sel.remove(0);
+		ElementUtils.removeAllOptions(sel);
 		
 		for (var j = 0; j < items.length; j++)
-		{
-		
-			var opt = document.createElement("option");
-			opt.value = items[j].value;
-			opt.text = items[j].text;
-		
-			try
-			{
-			    sel.add(opt, null);
-			}
-			catch(ex)
-			{
-				sel.add(opt);
-			}
-
-		}
+			ElementUtils.addOption(sel,
+				items[j].value,
+				items[j].text);
 		
 		i++;
 		sel = form.elements[this.selectsNamePrefix + i];

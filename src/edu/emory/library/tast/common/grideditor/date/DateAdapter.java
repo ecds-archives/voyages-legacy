@@ -52,6 +52,14 @@ public class DateAdapter extends Adapter
 		
 	}
 	
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	{
+		regJS.append("new GridEditorDate(" +
+			"'" + getYearFieldName(inputPrefix) + "', " +
+			"'" + getMonthFieldName(inputPrefix) + "', " +
+			"'" + getDayFieldName(inputPrefix) + "')");
+	} 
+	
 	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, DateValue dateValue, ResponseWriter writer) throws IOException
 	{
 		
@@ -60,7 +68,7 @@ public class DateAdapter extends Adapter
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getYearFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getYearOrEmpty(), null);
-		writer.writeAttribute("class", "record-gridEditor-date-day", null);
+		writer.writeAttribute("class", "record-gridEditor-date-year", null);
 		writer.endElement("input");
 		
 		// month
@@ -76,7 +84,7 @@ public class DateAdapter extends Adapter
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getDayFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getDayOrEmpty(), null);
-		writer.writeAttribute("class", "record-gridEditor-date-year", null);
+		writer.writeAttribute("class", "record-gridEditor-date-day", null);
 		writer.endElement("input");
 
 	}

@@ -19,9 +19,14 @@ public class TextareaAdapter extends Adapter
 
 	public static final String TYPE = "textarea";
 	
+	private String getInputName(String inputPrefix)
+	{
+		return inputPrefix;
+	}
+
 	protected String getSubmittedValue(FacesContext context, String inputPrefix)
 	{
-		return (String) context.getExternalContext().getRequestParameterMap().get(inputPrefix);
+		return (String) context.getExternalContext().getRequestParameterMap().get(getInputName(inputPrefix));
 	}
 
 	public Value decode(FacesContext context, String inputPrefix, GridEditorComponent gridEditor)
@@ -31,12 +36,17 @@ public class TextareaAdapter extends Adapter
 		return new TextareaValue(submittedValue.split("\n"));
 	}
 	
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	{
+		regJS.append("new GridEditorTextarea('" + getInputName(inputPrefix) + "')");
+	}
+
 	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextareaValue textboxValue, ResponseWriter writer, TextareaFieldType textareaFieldType) throws IOException
 	{
 
 		writer.startElement("textarea", gridEditor);
 		writer.writeAttribute("type", "textarea", null);
-		writer.writeAttribute("name", inputPrefix, null);
+		writer.writeAttribute("name", getInputName(inputPrefix), null);
 		JsfUtils.writeParamIfNotDefault(writer, "rows", textareaFieldType.getRows(), TextareaFieldType.ROWS_DEFAULT);
 		JsfUtils.writeParamIfNotNull(writer, "class", textareaFieldType.getCssClass());
 		JsfUtils.writeParamIfNotNull(writer, "style", textareaFieldType.getCssStyle());
@@ -50,7 +60,7 @@ public class TextareaAdapter extends Adapter
 
 		JsfUtils.encodeHiddenInput(
 				gridEditor, writer,
-				inputPrefix,
+				getInputName(inputPrefix),
 				textboxValue.getText());
 
 		writer.write(textboxValue.getText().replaceAll("\n", "<br>"));

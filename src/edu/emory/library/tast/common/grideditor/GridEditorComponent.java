@@ -493,7 +493,7 @@ public class GridEditorComponent extends UIComponentBase
 
 		writer.startElement("span", this);
 		writer.writeAttribute("id", addButtonId, null);
-		writer.writeAttribute("class", "grid-editor-edit-node-button", null);
+		writer.writeAttribute("class", "grid-editor-edit-note-button", null);
 		writer.writeAttribute("style", cssStyleAddButton, null);
 		writer.writeAttribute("onclick", onClickEdit, null);
 		writer.write("Add note");
@@ -501,10 +501,32 @@ public class GridEditorComponent extends UIComponentBase
 
 		writer.startElement("span", this);
 		writer.writeAttribute("id", editButtonId, null);
-		writer.writeAttribute("class", "grid-editor-edit-node-button", null);
+		writer.writeAttribute("class", "grid-editor-edit-note-button", null);
 		writer.writeAttribute("style", cssStyleEditButton, null);
 		writer.writeAttribute("onclick", onClickEdit, null);
 		writer.write("Edit note");
+		writer.endElement("span");
+
+		writer.endElement("div");
+
+	}
+	
+	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName) throws IOException
+	{
+
+		String onClickCopy = "GridEditorGlobals.copy(" +
+			"'" + mainId + "', " +
+			"'" + column.getName() + "', " +
+			"'" + column.getCopyToColumn() + "', " +
+			"'" + rowName + "')";
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "grid-editor-copy", null);
+
+		writer.startElement("span", this);
+		writer.writeAttribute("class", "grid-editor-copy-button", null);
+		writer.writeAttribute("onclick", onClickCopy, null);
+		writer.write(column.getCopyToLabel());
 		writer.endElement("span");
 
 		writer.endElement("div");
@@ -609,6 +631,9 @@ public class GridEditorComponent extends UIComponentBase
 						
 						if (row.isNoteEnabled() && !column.isReadOnly())
 							encodeNote(context, writer, mainId, columnName, rowName, value);
+						
+						if (column.isCopyToEnabled())
+							encodeCopyButton(context, writer, mainId, column, rowName);
 						
 						writer.endElement("td");
 						

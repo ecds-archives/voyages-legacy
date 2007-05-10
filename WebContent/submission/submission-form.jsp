@@ -9,6 +9,7 @@
 	<title>Submission - step 1</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/utils.js" type="text/javascript" langiage="javascript"></script>
 	<script src="../scripts/grid-editor.js" type="text/javascript" langiage="javascript"></script>
 </head>
 <body style="margin: 15px;">

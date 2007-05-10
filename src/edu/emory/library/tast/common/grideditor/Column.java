@@ -6,6 +6,8 @@ public class Column
 	private String label;
 	private String name;
 	private boolean readOnly = false;
+	private String copyToColumn = null;
+	private String copyToLabel = null;
 	
 	public Column(String name, String label)
 	{
@@ -20,6 +22,15 @@ public class Column
 		this.readOnly = readOnly;
 	}
 
+	public Column(String name, String label, boolean readOnly, String copyToColumnName, String copyToLabel)
+	{
+		this.label = label;
+		this.name = name;
+		this.readOnly = readOnly;
+		this.copyToColumn = copyToColumnName;
+		this.copyToLabel = copyToLabel;
+	}
+
 	public String getLabel()
 	{
 		return label;
@@ -32,6 +43,37 @@ public class Column
 	public boolean isReadOnly()
 	{
 		return readOnly;
+	}
+	
+	public void enableCopy(String columnName, String label)
+	{
+		copyToColumn = columnName;
+		copyToLabel = label;
+	}
+	
+	public boolean isCopyToEnabled()
+	{
+		return copyToColumn != null;
+	}
+
+	public String getCopyToColumn()
+	{
+		return copyToColumn;
+	}
+
+	public void setCopyToColumn(String copyToColumn)
+	{
+		this.copyToColumn = copyToColumn;
+	}
+
+	public String getCopyToLabel()
+	{
+		return copyToLabel;
+	}
+
+	public void setCopyToLabel(String copyToLabel)
+	{
+		this.copyToLabel = copyToLabel;
 	}
 
 }

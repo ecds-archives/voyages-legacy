@@ -31,12 +31,22 @@ public class TextboxAdapter extends Adapter
 		return new TextboxValue(submittedValue);
 	}
 	
+	private String getInputName(String inputPrefix)
+	{
+		return inputPrefix;
+	}
+	
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	{
+		regJS.append("new GridEditorTextbox('" + getInputName(inputPrefix) + "')");
+	}
+	
 	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer, TextboxFieldType textboxFieldType) throws IOException
 	{
 
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
-		writer.writeAttribute("name", inputPrefix, null);
+		writer.writeAttribute("name", getInputName(inputPrefix), null);
 		JsfUtils.writeParamIfNotDefault(writer, "maxlength", textboxFieldType.getMaxLength(), Integer.MAX_VALUE);
 		JsfUtils.writeParamIfNotNull(writer, "class", textboxFieldType.getCssClass());
 		JsfUtils.writeParamIfNotNull(writer, "style", textboxFieldType.getCssStyle());
@@ -53,7 +63,7 @@ public class TextboxAdapter extends Adapter
 		}
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("name", inputPrefix, null);
+		writer.writeAttribute("name", getInputName(inputPrefix), null);
 		writer.writeAttribute("value", textboxValue.getText(), null);
 		writer.endElement("input");
 
