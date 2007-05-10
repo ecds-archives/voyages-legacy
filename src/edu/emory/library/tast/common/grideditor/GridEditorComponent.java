@@ -420,10 +420,11 @@ public class GridEditorComponent extends UIComponentBase
 		writer.endElement("div");
 
 	}
-	
-	private void encodeNote(FacesContext context, ResponseWriter writer, String mainId, String columnName, String rowName, Value value) throws IOException
+
+	private void encodeNoteEditable(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
 	{
 		
+		String columnName = column.getName();
 		String noteFieldName = getNoteFieldName(context, columnName, rowName);
 		String noteStatusFieldName = getNoteExpandedStatusFieldName(context, columnName, rowName);
 		String editBoxId = getNoteEditBoxId(context, columnName, rowName);
@@ -509,6 +510,24 @@ public class GridEditorComponent extends UIComponentBase
 
 		writer.endElement("div");
 
+	}
+	
+	private void encodeNoteReadOnly(FacesContext context, ResponseWriter writer, Value value) throws IOException
+	{
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "grid-editor-note-read-only", null);
+		if (value.getNote() != null) writer.write(value.getNote());
+		writer.endElement("div");
+
+	}
+
+	private void encodeNote(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
+	{
+		if (!column.isReadOnly())
+			encodeNoteEditable(context, writer, mainId, column, rowName, value);
+		else
+			encodeNoteReadOnly(context, writer, value);
 	}
 	
 	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName) throws IOException
@@ -611,7 +630,7 @@ public class GridEditorComponent extends UIComponentBase
 						Value value = values.getValue(columnName, rowName);
 						
 						writer.startElement("td", this);
-		
+						
 						adapter.encode(context,
 								this,
 								mainId,
@@ -629,11 +648,11 @@ public class GridEditorComponent extends UIComponentBase
 						if (value.isError())
 							encodeErrorMessage(context, writer, columnName, rowName, value);
 						
-						if (row.isNoteEnabled() && !column.isReadOnly())
-							encodeNote(context, writer, mainId, columnName, rowName, value);
-						
 						if (column.isCopyToEnabled())
 							encodeCopyButton(context, writer, mainId, column, rowName);
+
+						if (row.isNoteEnabled())
+							encodeNote(context, writer, mainId, column, rowName, value);
 						
 						writer.endElement("td");
 						

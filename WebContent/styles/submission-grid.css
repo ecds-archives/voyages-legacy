@@ -1,11 +1,9 @@
 table.grid-editor {
-	border-collapse: collapse;
-}
+	border-collapse: collapse; }
 
 table.grid-editor td,table.grid-editor th {
 	padding: 3px 5px 3px 5px;
-	border: 1px solid #CCCCCC;
-}
+	border: 1px solid #CCCCCC; }
 
 table.grid-editor th {
 	text-align: left;
@@ -43,6 +41,10 @@ th.grid-editor-row-group {
 	background-color: #DDDDDD !important;
 	cursor: pointer; }
 	
+div.grid-editor-note,
+div.grid-editor-copy {
+	font-size: 6pt; }
+		
 span.grid-editor-edit-note-button,
 span.grid-editor-copy-button {
 	cursor: pointer;
@@ -50,5 +52,5 @@ span.grid-editor-copy-button {
 
 span.grid-editor-edit-note-button:hover,
 span.grid-editor-copy-button:hover {
-		background-color: #2288BB;
+	background-color: #2288BB;
 	color: White; }
