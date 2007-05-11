@@ -366,6 +366,8 @@ public class SubmissionBean
 			EditedVoyage eVoyage = new EditedVoyage(voyage, notes);
 			
 			submissionNew.setNewVoyage(eVoyage);
+			sess.save(voyage);
+			sess.save(eVoyage);
 
 		}
 
@@ -391,7 +393,7 @@ public class SubmissionBean
 
 			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
 			
-			submissionMerge.setProposedNewVoyage(eNewVoyage);
+			submissionMerge.setProposedVoyage(eNewVoyage);
 
 			Set mergedVoyages = new HashSet();
 			submissionMerge.setMergedVoyages(mergedVoyages);
@@ -400,6 +402,7 @@ public class SubmissionBean
 				SelectedVoyageInfo voyageInfo = (SelectedVoyageInfo) iter.next();
 				EditedVoyage eVoyage = new EditedVoyage((Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())), null);
 				mergedVoyages.add(eVoyage);
+				
 			}
 			
 
