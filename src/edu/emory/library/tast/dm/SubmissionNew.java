@@ -14,7 +14,7 @@ public class SubmissionNew extends Submission
 {
 	
 	private EditedVoyage newVoyage;
-	private EditedVoyage modifiedVoyage;
+	private EditedVoyage editorVoyage;
 	
 	private static Map attributes = new HashMap();
 	static {
@@ -39,12 +39,12 @@ public class SubmissionNew extends Submission
 		this.newVoyage = voyage;
 	}
 
-	public EditedVoyage getModifiedVoyage() {
-		return modifiedVoyage;
+	public EditedVoyage getEditorVoyage() {
+		return editorVoyage;
 	}
 
-	public void setModifiedVoyage(EditedVoyage modifiedVoyage) {
-		this.modifiedVoyage = modifiedVoyage;
+	public void setEditorVoyage(EditedVoyage modifiedVoyage) {
+		this.editorVoyage = modifiedVoyage;
 	}
 
 }

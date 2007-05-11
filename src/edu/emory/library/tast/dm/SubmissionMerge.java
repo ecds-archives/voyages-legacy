@@ -13,8 +13,8 @@ import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 public class SubmissionMerge extends Submission
 {
 	
-	private EditedVoyage modifiedVoyage;
-	private EditedVoyage proposedNewVoyage;
+	private EditedVoyage editorVoyage;
+	private EditedVoyage proposedVoyage;
 	private Set mergedVoyages;
 	
 	private static Map attributes = new HashMap();
@@ -29,14 +29,14 @@ public class SubmissionMerge extends Submission
 		return (Attribute)attributes.get(name);
 	}
 	
-	public EditedVoyage getProposedNewVoyage()
+	public EditedVoyage getProposedVoyage()
 	{
-		return proposedNewVoyage;
+		return proposedVoyage;
 	}
 	
-	public void setProposedNewVoyage(EditedVoyage voyageNew)
+	public void setProposedVoyage(EditedVoyage voyageNew)
 	{
-		this.proposedNewVoyage = voyageNew;
+		this.proposedVoyage = voyageNew;
 	}
 	
 	public Set getMergedVoyages()
@@ -49,12 +49,12 @@ public class SubmissionMerge extends Submission
 		this.mergedVoyages = mergedVoyages;
 	}
 
-	public EditedVoyage getModifiedVoyage() {
-		return modifiedVoyage;
+	public EditedVoyage getEditorVoyage() {
+		return editorVoyage;
 	}
 
-	public void setModifiedVoyage(EditedVoyage modifiedVoyage) {
-		this.modifiedVoyage = modifiedVoyage;
+	public void setEditorVoyage(EditedVoyage modifiedVoyage) {
+		this.editorVoyage = modifiedVoyage;
 	}
 
 }

@@ -357,6 +357,8 @@ public class SubmissionBean
 		}
 		Submission submission = null;
 		
+		sess.save(voyage);
+		
 		if (submissionType == SUBMISSION_TYPE_NEW)
 		{
 
@@ -364,10 +366,9 @@ public class SubmissionBean
 			submission = submissionNew;
 
 			EditedVoyage eVoyage = new EditedVoyage(voyage, notes);
+			sess.save(eVoyage);
 			
 			submissionNew.setNewVoyage(eVoyage);
-			sess.save(voyage);
-			sess.save(eVoyage);
 
 		}
 
@@ -379,6 +380,8 @@ public class SubmissionBean
 
 			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
 			EditedVoyage eOldVoyage = new EditedVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId), null);
+			sess.save(eOldVoyage);
+			sess.save(eNewVoyage);
 			
 			submissionEdit.setNewVoyage(eNewVoyage);
 			submissionEdit.setOldVoyage(eOldVoyage);
@@ -392,6 +395,7 @@ public class SubmissionBean
 			submission = submissionMerge;
 
 			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
+			sess.save(eNewVoyage);
 			
 			submissionMerge.setProposedVoyage(eNewVoyage);
 
@@ -402,15 +406,12 @@ public class SubmissionBean
 				SelectedVoyageInfo voyageInfo = (SelectedVoyageInfo) iter.next();
 				EditedVoyage eVoyage = new EditedVoyage((Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())), null);
 				mergedVoyages.add(eVoyage);
-				
+				sess.save(eVoyage);				
 			}
 			
 
 		}
-
-		submission.setTime(new Date());
-
-		sess.save(voyage);
+		
 		sess.save(submission);
 		
 		trans.commit();

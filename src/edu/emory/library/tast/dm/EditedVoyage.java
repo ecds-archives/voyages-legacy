@@ -3,6 +3,8 @@ package edu.emory.library.tast.dm;
 import java.util.Map;
 
 public class EditedVoyage {
+	
+	private Long id;
 	private Voyage voyage;
 	private Map attributeNotes;
 	
@@ -22,5 +24,13 @@ public class EditedVoyage {
 	}
 	public void setVoyage(Voyage voyage) {
 		this.voyage = voyage;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

@@ -12,7 +12,7 @@ import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 
 public class SubmissionEdit extends Submission
 {
-	private EditedVoyage modifiedVoyage;
+	private EditedVoyage editorVoyage;
 	private EditedVoyage newVoyage;
 	private EditedVoyage oldVoyage;
 	
@@ -50,12 +50,12 @@ public class SubmissionEdit extends Submission
 		this.oldVoyage = voyageOld;
 	}
 
-	public EditedVoyage getModifiedVoyage() {
-		return modifiedVoyage;
+	public EditedVoyage getEditorVoyage() {
+		return editorVoyage;
 	}
 
-	public void setModifiedVoyage(EditedVoyage modifiedVoyage) {
-		this.modifiedVoyage = modifiedVoyage;
+	public void setEditorVoyage(EditedVoyage modifiedVoyage) {
+		this.editorVoyage = modifiedVoyage;
 	}
 
 }
