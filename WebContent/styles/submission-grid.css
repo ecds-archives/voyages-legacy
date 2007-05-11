@@ -54,3 +54,9 @@ span.grid-editor-edit-note-button:hover,
 span.grid-editor-copy-button:hover {
 	background-color: #2288BB;
 	color: White; }
+	
+td.grid-editor-dist-value {
+	}	
+	
+td.grid-editor-same-value {
+	background-color: #BBDDFF; }

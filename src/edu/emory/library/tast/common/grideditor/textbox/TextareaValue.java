@@ -41,13 +41,32 @@ public class TextareaValue extends Value
 		return texts == null;
 	}
 
-	public String[] getTexts() {
+	public String[] getTexts()
+	{
 		return texts;
 	}
-	
+
 	public String toString()
 	{
 		return StringUtils.join("\n", texts);
+	}
+
+	public boolean equals(Object obj)
+	{
+
+		if (obj == this)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (!(obj instanceof TextareaValue))
+			return false;
+
+		TextareaValue that = (TextareaValue) obj;
+
+		return StringUtils.compareStringArrays(this.texts, that.texts);
+		
 	}
 
 }

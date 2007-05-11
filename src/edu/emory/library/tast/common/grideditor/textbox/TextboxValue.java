@@ -32,5 +32,23 @@ public class TextboxValue extends Value
 	{
 		return text;
 	}
+	
+	public boolean equals(Object obj)
+	{
+		
+		if (obj == this)
+			return true;
+		
+		if (obj == null)
+			return false;
+		
+		if (!(obj instanceof TextboxValue))
+			return false;
+		
+		TextboxValue that = (TextboxValue) obj;
+		
+		return StringUtils.compareStrings(this.text, that.text);
+		
+	}
 
 }

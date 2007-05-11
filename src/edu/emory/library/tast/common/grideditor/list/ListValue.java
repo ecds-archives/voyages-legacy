@@ -32,4 +32,22 @@ public class ListValue extends Value
 		return StringUtils.join("/", values);
 	}
 
+	public boolean equals(Object obj)
+	{
+
+		if (obj == this)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (!(obj instanceof ListValue))
+			return false;
+
+		ListValue that = (ListValue) obj;
+
+		return StringUtils.compareStringArrays(this.values, that.values);
+		
+	}
+	
 }

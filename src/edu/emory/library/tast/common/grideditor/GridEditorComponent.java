@@ -222,6 +222,19 @@ public class GridEditorComponent extends UIComponentBase
 		
 	}
 	
+	private Column getCompateToColumn()
+	{
+		for (int i = 0; i < columns.length; i++)
+		{
+			Column column = columns[i];
+			if (column.isCompareTo())
+			{
+				return column;
+			}
+		}
+		return null;
+	}
+	
 	private void encodeRegJS(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
 	{
 
@@ -345,6 +358,18 @@ public class GridEditorComponent extends UIComponentBase
 			
 		}
 		regJS.append("]");
+
+		// compare to column
+		Column compareToColumn = getCompateToColumn();
+		regJS.append(", ");
+		if (compareToColumn != null)
+		{
+			regJS.append("'").append(compareToColumn.getName()).append("'");
+		}
+		else
+		{
+			regJS.append("null");
+		}
 
 		// end js registration
 		regJS.append("));");
@@ -555,6 +580,8 @@ public class GridEditorComponent extends UIComponentBase
 	private void encodeGrid(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
 	{
 		
+		Column compareToColumn = getCompateToColumn();
+		
 		writer.startElement("table", this);
 		writer.writeAttribute("id", mainTableId, null);
 		writer.writeAttribute("border", "0", null);
@@ -622,14 +649,42 @@ public class GridEditorComponent extends UIComponentBase
 					writer.startElement("th", this);
 					writer.write(row.getLabel());
 					writer.endElement("th");
-		
+
+					Value compareToValue = null;
+					if (compareToColumn != null)
+						compareToValue = values.getValue(
+								compareToColumn.getName(),
+								rowName);
+
 					for (int j = 0; j < columns.length; j++)
 					{
 						Column column = columns[j];
 						String columnName = column.getName();
 						Value value = values.getValue(columnName, rowName);
+
+						String cellCssClass = null;
+						if (compareToValue != null)
+						{
+							if (compareToColumn == column)
+							{
+								cellCssClass = "grid-editor-compared-value";
+							}
+							else if (compareToValue.equals(value))
+							{
+								cellCssClass = "grid-editor-same-value";
+							}
+							else
+							{
+								cellCssClass = "grid-editor-dist-value";
+							}
+						}
+						else
+						{
+							cellCssClass = "";
+						}
 						
 						writer.startElement("td", this);
+						writer.writeAttribute("class", cellCssClass, null);
 						
 						adapter.encode(context,
 								this,

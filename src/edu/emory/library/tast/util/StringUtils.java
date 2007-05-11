@@ -93,7 +93,11 @@ public class StringUtils
 	
 	public static boolean compareStrings(String s1, String s2)
 	{
-		if (s1 == null && s2 == null)
+		if (s1 == s2)
+		{
+			return true;
+		}
+		else if (s1 == null && s2 == null)
 		{
 			return true;
 		}
@@ -104,6 +108,42 @@ public class StringUtils
 		else
 		{
 			 return s2.equals(s1);
+		}
+	}
+
+	public static boolean compareStringArrays(String []a1, String []a2)
+	{
+		if (a1 == a2)
+		{
+			return true;
+		}
+		else if (a1 == null && a2 == null)
+		{
+			return true;
+		}
+		else if (a1 != null && a2 == null)
+		{
+			 return false;
+		}
+		else if (a1 == null && a2 != null)
+		{
+			 return false;
+		}
+		else if (a1.length != a2.length)
+		{
+			 return false;
+		}
+		else
+		{
+			int n = a1.length;
+			for (int i = 0; i < n; i++)
+			{
+				if (!StringUtils.compareStrings(a1[i], a2[i]))
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 

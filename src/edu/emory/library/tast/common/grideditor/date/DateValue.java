@@ -199,5 +199,29 @@ public class DateValue extends Value
 	{
 		return year + " / " + month + " / " + day;
 	}
+	
+	public boolean equals(Object obj)
+	{
+
+		if (obj == this)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (!(obj instanceof DateValue))
+			return false;
+
+		DateValue that = (DateValue) obj;
+		
+		if (this.isValid() && that.isValid())
+			return this.getDate().equals(that.getDate());
+
+		return
+			StringUtils.compareStrings(this.year, that.year) && 
+			StringUtils.compareStrings(this.month, that.month) && 
+			StringUtils.compareStrings(this.day, that.day); 
+		
+	}
 
 }

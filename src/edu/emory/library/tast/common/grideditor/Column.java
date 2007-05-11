@@ -8,6 +8,7 @@ public class Column
 	private boolean readOnly = false;
 	private String copyToColumn = null;
 	private String copyToLabel = null;
+	private boolean compareTo = false;
 	
 	public Column(String name, String label)
 	{
@@ -74,6 +75,16 @@ public class Column
 	public void setCopyToLabel(String copyToLabel)
 	{
 		this.copyToLabel = copyToLabel;
+	}
+
+	public boolean isCompareTo()
+	{
+		return compareTo;
+	}
+
+	public void setCompareTo(boolean compareTo)
+	{
+		this.compareTo = compareTo;
 	}
 
 }
