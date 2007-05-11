@@ -97,6 +97,10 @@ public abstract class Submission
 		notes.put("shipname", "xyz");
 		notes.put("captain", "abc");
 		
+		Map notesEditor = new HashMap();
+		notesEditor.put("shipname1", "xyz");
+		notesEditor.put("captain1", "abc");
+		
 		SubmissionSourceBook book = new SubmissionSourceBook();
 		book.setAuthors("Jan Zich");
 		book.setTitle("Some title");
@@ -111,24 +115,25 @@ public abstract class Submission
 		
 		SubmissionNew sn = new SubmissionNew();
 		book.setSubmission(sn);
-		sn.setNewVoyage(v1);
+		//sn.setNewVoyage(v1);
 		sn.setTime(new Date());
-		sn.setAttributeNotes(notes);
+		//sn.setAttributeNotes(notes);
+		//sn.setEditorNotes(notesEditor);
 		sn.setSources(sources);
 		sess.save(sn);
 		
 		System.out.println("new submission created, id = " + sn.getId());
 
 		SubmissionEdit se = new SubmissionEdit();
-		se.setOldVoyage(v1);
-		se.setNewVoyage(v2);
+		//se.setOldVoyage(v1);
+		//se.setNewVoyage(v2);
 		se.setTime(new Date());
 		sess.save(se);
 		
 		System.out.println("new submission created, id = " + se.getId());
 		
 		SubmissionMerge sm = new SubmissionMerge();
-		sm.setProposedNewVoyage(v1);
+		//sm.setProposedNewVoyage(v1);
 		Set mergedVoyages = new HashSet();
 		mergedVoyages.add(v1);
 		mergedVoyages.add(v2);
@@ -170,5 +175,6 @@ public abstract class Submission
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
 	}
+
 
 }

@@ -13,10 +13,9 @@ import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 public class SubmissionMerge extends Submission
 {
 	
-	private Voyage modifiedVoyage;
-	private Voyage proposedNewVoyage;
+	private EditedVoyage modifiedVoyage;
+	private EditedVoyage proposedNewVoyage;
 	private Set mergedVoyages;
-	private Map attributeNotes;
 	
 	private static Map attributes = new HashMap();
 	static {
@@ -30,12 +29,12 @@ public class SubmissionMerge extends Submission
 		return (Attribute)attributes.get(name);
 	}
 	
-	public Voyage getProposedNewVoyage()
+	public EditedVoyage getProposedNewVoyage()
 	{
 		return proposedNewVoyage;
 	}
 	
-	public void setProposedNewVoyage(Voyage voyageNew)
+	public void setProposedNewVoyage(EditedVoyage voyageNew)
 	{
 		this.proposedNewVoyage = voyageNew;
 	}
@@ -50,21 +49,11 @@ public class SubmissionMerge extends Submission
 		this.mergedVoyages = mergedVoyages;
 	}
 
-	public Map getAttributeNotes()
-	{
-		return attributeNotes;
-	}
-
-	public void setAttributeNotes(Map attributeNotes)
-	{
-		this.attributeNotes = attributeNotes;
-	}
-
-	public Voyage getModifiedVoyage() {
+	public EditedVoyage getModifiedVoyage() {
 		return modifiedVoyage;
 	}
 
-	public void setModifiedVoyage(Voyage modifiedVoyage) {
+	public void setModifiedVoyage(EditedVoyage modifiedVoyage) {
 		this.modifiedVoyage = modifiedVoyage;
 	}
 

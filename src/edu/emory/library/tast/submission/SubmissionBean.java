@@ -18,6 +18,7 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
 import edu.emory.library.tast.dm.SubmissionMerge;
@@ -362,8 +363,9 @@ public class SubmissionBean
 			SubmissionNew submissionNew = new SubmissionNew();
 			submission = submissionNew;
 
-			submissionNew.setNewVoyage(voyage);
-			submissionNew.setAttributeNotes(notes);
+			EditedVoyage eVoyage = new EditedVoyage(voyage, notes);
+			
+			submissionNew.setNewVoyage(eVoyage);
 
 		}
 
@@ -373,9 +375,11 @@ public class SubmissionBean
 			SubmissionEdit submissionEdit = new SubmissionEdit();
 			submission = submissionEdit;
 
-			submissionEdit.setNewVoyage(voyage);
-			submissionEdit.setOldVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId));
-			submissionEdit.setAttributeNotes(notes);
+			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
+			EditedVoyage eOldVoyage = new EditedVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId), null);
+			
+			submissionEdit.setNewVoyage(eNewVoyage);
+			submissionEdit.setOldVoyage(eOldVoyage);
 
 		}
 
@@ -385,17 +389,19 @@ public class SubmissionBean
 			SubmissionMerge submissionMerge = new SubmissionMerge();
 			submission = submissionMerge;
 
-			submissionMerge.setProposedNewVoyage(voyage);
+			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
+			
+			submissionMerge.setProposedNewVoyage(eNewVoyage);
 
 			Set mergedVoyages = new HashSet();
 			submissionMerge.setMergedVoyages(mergedVoyages);
 			for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();)
 			{
 				SelectedVoyageInfo voyageInfo = (SelectedVoyageInfo) iter.next();
-				mergedVoyages.add((Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())));
+				EditedVoyage eVoyage = new EditedVoyage((Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())), null);
+				mergedVoyages.add(eVoyage);
 			}
 			
-			submissionMerge.setAttributeNotes(notes);
 
 		}
 
