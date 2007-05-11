@@ -36,6 +36,8 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class AdminSubmissionBean {
 
+	private static final String COPY_LABEL = "Copy";
+
 	private static final String REQUEST_MERGE_PREFIX = "merge_";
 
 	private static final String REQUEST_EDIT_PREFIX = "edit_";
@@ -89,8 +91,10 @@ public class AdminSubmissionBean {
 	private String chosenTab = "voyages";
 
 	private String requestType = "1";
+	
+	private String requestStatus = "1";
 
-	private Submission submission = null;
+	private Long submissionId = null;
 
 	private Object[] editRequests = null;
 
@@ -122,23 +126,45 @@ public class AdminSubmissionBean {
 			Transaction t = session.beginTransaction();
 			Voyage[] toVals = null;
 			String[] cols = null;
-			if (this.submission instanceof SubmissionNew) {
+			Map attributeNotes = null;
+			Voyage vNew = null;
+			Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+			
+			if (lSubmisssion instanceof SubmissionNew) {
+				vNew = ((SubmissionNew)lSubmisssion).getModifiedVoyage();
+				attributeNotes = ((SubmissionNew)lSubmisssion).getAttributeNotes();
+			} else if (lSubmisssion instanceof SubmissionEdit) {
+				vNew = ((SubmissionEdit)lSubmisssion).getModifiedVoyage();
+				attributeNotes = ((SubmissionEdit)lSubmisssion).getAttributeNotes();
+			} else {
+				vNew = ((SubmissionMerge)lSubmisssion).getModifiedVoyage();	
+				attributeNotes = ((SubmissionMerge)lSubmisssion).getAttributeNotes();
+			}
+			if (lSubmisssion instanceof SubmissionNew) {
 				toVals = new Voyage[2];
 				cols = new String[2];
-				toVals[0] = Voyage.loadById(session, ((SubmissionNew) this.submission).getNewVoyage().getIid());
-				toVals[1] = new Voyage();
-				cols[0] = ORYGINAL_VOYAGE;
+				toVals[0] = Voyage.loadById(session, ((SubmissionNew) lSubmisssion).getNewVoyage().getIid());
+				if (vNew == null) {
+					toVals[1] =  new Voyage();
+				} else {
+					toVals[1] =  vNew;
+				}
+				cols[0] = ORYGINAL_VOYAGE; 
 				cols[1] = DECIDED_VOYAGE;
-			} else if (this.submission instanceof SubmissionEdit) {
+			} else if (lSubmisssion instanceof SubmissionEdit) {
 				toVals = new Voyage[2 + this.editRequests.length];
 				cols = new String[2 + this.editRequests.length];
 				cols[0] = ORYGINAL_VOYAGE;
-				toVals[0] = Voyage.loadById(session, ((SubmissionEdit) this.submission).getOldVoyage().getIid());
+				toVals[0] = Voyage.loadById(session, ((SubmissionEdit) lSubmisssion).getOldVoyage().getIid());
 				for (int i = 1; i < toVals.length - 1; i++) {
 					toVals[i] = Voyage.loadById(session, (Long) this.editRequests[i - 1]);
 					cols[i] = CHANGED_VOYAGE + "_" + i;
 				}
-				toVals[toVals.length - 1] = getCurrentlyPreparedVoyage(session, toVals[0].getVoyageid());
+				if (vNew == null) {
+					toVals[toVals.length - 1] = getCurrentlyPreparedVoyage(session, toVals[0].getVoyageid());
+				} else {
+					toVals[toVals.length - 1] = vNew;
+				}				
 				cols[cols.length - 1] = DECIDED_VOYAGE;
 			} else {
 				toVals = new Voyage[2 + this.editRequests.length];
@@ -149,7 +175,11 @@ public class AdminSubmissionBean {
 				}
 				toVals[toVals.length - 2] = Voyage.loadById(session, this.mergeMainVoyage);
 				cols[cols.length - 2] = ORYGINAL_VOYAGE;
-				toVals[toVals.length - 1] = new Voyage();
+				if (vNew == null) {
+					toVals[toVals.length - 1] = new Voyage();
+				} else {
+					toVals[toVals.length - 1] = vNew;
+				}	
 				cols[cols.length - 1] = DECIDED_VOYAGE;
 			}
 			vals = new Values();
@@ -161,7 +191,9 @@ public class AdminSubmissionBean {
 					for (int j = 0; j < toBeFormatted.length; j++) {
 						toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());
 					}
-					vals.setValue(cols[n], attrs[i].getName(), attrs[i].getValue(toBeFormatted));
+					Value value = attrs[i].getValue(toBeFormatted);
+					value.setNote((String)attributeNotes.get(attrs[i].getName()));
+					vals.setValue(cols[n], attrs[i].getName(), value);
 				}
 			}
 
@@ -190,25 +222,30 @@ public class AdminSubmissionBean {
 
 	public Column[] getColumns() {
 		Column[] cols = null;
-		if (this.submission instanceof SubmissionNew) {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+		if (lSubmisssion instanceof SubmissionNew) {
 			cols = new Column[2];
-			cols[0] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true);
+			cols[0] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
 			cols[1] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
-		} else if (this.submission instanceof SubmissionEdit) {
+		} else if (lSubmisssion instanceof SubmissionEdit) {
 			cols = new Column[2 + this.editRequests.length];
-			cols[0] = new Column(ORYGINAL_VOYAGE, ORYGINAL_VOYAGE_LABEL, true);
+			cols[0] = new Column(ORYGINAL_VOYAGE, ORYGINAL_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
 			for (int i = 1; i < cols.length - 1; i++) {
-				cols[i] = new Column(CHANGED_VOYAGE + "_" + i, CHANGED_VOYAGE_LABEL + " #" + i, true);
+				cols[i] = new Column(CHANGED_VOYAGE + "_" + i, CHANGED_VOYAGE_LABEL + " #" + i, true, DECIDED_VOYAGE, COPY_LABEL);
 			}
 			cols[cols.length - 1] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
 		} else {
 			cols = new Column[2 + this.editRequests.length];
 			for (int i = 0; i < cols.length - 2; i++) {
-				cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i+1), true);
+				cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i+1), true, DECIDED_VOYAGE, COPY_LABEL);
 			}
-			cols[cols.length - 2] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true);
+			cols[cols.length - 2] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
 			cols[cols.length - 1] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
 		}
+		t.commit();
+		session.close();
 		return cols;
 	}
 
@@ -216,6 +253,7 @@ public class AdminSubmissionBean {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
 			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i].getUserLabel(), null, attrs[i].getGroupName());
+			rows[i].setNoteEnabled(true);
 		}
 		return rows;
 	}
@@ -229,43 +267,70 @@ public class AdminSubmissionBean {
 	}
 
 	public String submit() {
-		System.out.println("Voyage correction saved");
-		Map newValues = valsToSubmit.getColumnValues(ORYGINAL_VOYAGE);
-		Voyage vNew = new Voyage();
-		vNew.setVoyageid(new Long(this.voyageId));
-		vNew.setSuggestion(false);
-		vNew.setRevision(-1);
-		vNew.setApproved(true);
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Map newValues = valsToSubmit.getColumnValues(DECIDED_VOYAGE);
+		Submission lSubmission = Submission.loadById(session, this.submissionId);
+		Voyage vNew = null;
+		Voyage mergedVoyage = updateMergedVoyage(session, lSubmission, newValues);
+		
+		if (lSubmission instanceof SubmissionMerge) {
+			System.out.println("Will delete all merged voyages");
+		} else {
+			Conditions cond = new Conditions();
+			cond.addCondition(Voyage.getAttribute("voyageid"), mergedVoyage.getVoyageid(), Conditions.OP_EQUALS);
+			cond.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("Voyage", cond);
+			Object[] voyage = qValue.executeQuery(session);
+			if (voyage.length != 0) {
+				vNew = (Voyage) voyage[0];
+			} else {
+				vNew = new Voyage();
+				vNew.setRevision(-1);
+			}
+		}
+		
+		
 		wasError = false;
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
+			
 			if (val.isError()) {
 				val.setErrorMessage("Error in value!");
 				wasError = true;
 			}
 			Object[] vals = attrs[i].getValues(null, val);
+			
+			if (attrs[i].getName().equals("voyageid") && vals[0] == null) {
+				val.setErrorMessage("This field is required!");
+				wasError = true;
+			}
+			
 			for (int j = 0; j < vals.length; j++) {
 				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 		}
 		if (!wasError) {
-			vNew.save();
+			vNew.saveOrUpdate();
 		}
 
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(true), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("approved"), new Boolean(false), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", c);
-		Object[] voyages = qValue.executeQuery();
-		for (int i = 0; i < voyages.length; i++) {
-			Voyage v = (Voyage) voyages[i];
-			v.setApproved(true);
-			v.saveOrUpdate();
+		if (lSubmission instanceof SubmissionEdit) {
+			Conditions c = new Conditions();
+			c.addCondition(SubmissionEdit.getAttribute("oldVoyage"), ((SubmissionEdit)lSubmission).getOldVoyage(), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("SubmissionEdit", c);
+			Object[] toUpdate = qValue.executeQuery(session);
+			for (int i = 0; i < toUpdate.length; i++) {
+				SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
+				edit.setSolved(true);
+				edit.setAccepted(true);
+				session.update(edit);
+			}
 		}
-
+		
 		System.out.println("Voyage submission saved");
-		return null;
+		t.commit();
+		session.close();
+		return "back";
 	}
 
 	public RowGroup[] getRowGroups() {
@@ -305,6 +370,14 @@ public class AdminSubmissionBean {
 	public void setRequestType(String type) {
 		this.requestType = type;
 	}
+	
+	public void setRequestStatus(String status) {
+		this.requestStatus = status;
+	}
+	
+	public String getRequestStatus() {
+		return this.requestStatus;
+	}
 
 	public GridRow[] getRequestRows() {
 
@@ -312,35 +385,55 @@ public class AdminSubmissionBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 
-		if (this.requestType.equals("1") || this.requestType.equals("2")) {
-			Conditions c = new Conditions();
-			c.addCondition(SubmissionNew.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
+		Conditions c = new Conditions();
+		if (this.requestStatus.equals("2")) {
+			c.addCondition(Submission.getAttribute("modifiedVoyage"), null, Conditions.OP_IS_NOT);
+			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
+		} else if (this.requestStatus.equals("3")) {
+			c.addCondition(Submission.getAttribute("modifiedVoyage"), null, Conditions.OP_IS);
+			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
+		} else if (this.requestStatus.equals("4")) {
+			c.addCondition(Submission.getAttribute("solved"), new Boolean(true), Conditions.OP_EQUALS);
+		}		
+		if (this.requestType.equals("1") || this.requestType.equals("2")) {				
 			QueryValue q = new QueryValue("SubmissionNew", c);
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionNew submission = (SubmissionNew) subs[i];
+				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
+				if (submission.isSolved()) {
+					if (submission.isAccepted()) {
+						lastCol += "/Accepted";
+					} else {
+						lastCol += "/Rejected";
+					}
+				}
 				l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request", "Unknown",
 						submission.getTime().toString(), "New voyage - ID not yet assigned", 
-						submission.getModifiedVoyage() != null ? "Yes" : "No"}));
+						submission.getModifiedVoyage() != null ? "Yes" : "No", lastCol}));
 			}
 		}
 
 		if (this.requestType.equals("1") || this.requestType.equals("3")) {
-			Conditions c = new Conditions();
-			c.addCondition(SubmissionEdit.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
 			QueryValue q = new QueryValue("SubmissionEdit", c);
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionEdit submission = (SubmissionEdit) subs[i];
+				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
+				if (submission.isSolved()) {
+					if (submission.isAccepted()) {
+						lastCol += "/Accepted";
+					} else {
+						lastCol += "/Rejected";
+					}
+				}
 				l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request", "Unknown",
 						submission.getTime().toString(), submission.getOldVoyage().getVoyageid().toString() ,
-						submission.getModifiedVoyage() != null ? "Yes" : "No"}));
+						submission.getModifiedVoyage() != null ? "Yes" : "No", lastCol}));
 			}
 		}
 
 		if (this.requestType.equals("1") || this.requestType.equals("4")) {
-			Conditions c = new Conditions();
-			c.addCondition(SubmissionMerge.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
 			QueryValue q = new QueryValue("SubmissionMerge", c);
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
@@ -356,9 +449,17 @@ public class AdminSubmissionBean {
 					involvedStr += element.getVoyageid();
 					first = false;
 				}
+				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
+				if (submission.isSolved()) {
+					if (submission.isAccepted()) {
+						lastCol += "/Accepted";
+					} else {
+						lastCol += "/Rejected";
+					}
+				}
 				l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request", "Unknown",
 						submission.getTime().toString(), involvedStr ,
-						submission.getModifiedVoyage() != null ? "Yes" : "No"}));
+						submission.getModifiedVoyage() != null ? "Yes" : "No", lastCol}));
 			}
 		}
 		t.commit();
@@ -369,7 +470,7 @@ public class AdminSubmissionBean {
 
 	public GridColumn[] getRequestColumns() {
 		return new GridColumn[] { new GridColumn("Type"), new GridColumn("User"), new GridColumn("Date"),
-				new GridColumn("Involved voyages ID"), new GridColumn("Temporary result saved") };
+				new GridColumn("Involved voyages ID"), new GridColumn("Reviewed"), new GridColumn("Status") };
 	}
 
 	public void newRequestId(GridOpenRowEvent e) {
@@ -383,9 +484,10 @@ public class AdminSubmissionBean {
 
 		Object[] res = q.executeQuery(session);
 		if (res.length != 0) {
-			this.submission = (Submission) res[0];
-			if (this.submission instanceof SubmissionEdit) {
-				Long vid = ((SubmissionEdit) this.submission).getOldVoyage().getVoyageid();
+			Submission lSubmission = (Submission) res[0];
+			this.submissionId = lSubmission.getId();
+			if (lSubmission instanceof SubmissionEdit) {
+				Long vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyageid();
 				c = new Conditions();
 				c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
 						Voyage.getAttribute("voyageid") }), vid, Conditions.OP_EQUALS);
@@ -396,18 +498,18 @@ public class AdminSubmissionBean {
 				for (int i = 0; i < editRequests.length; i++) {
 					editRequests[i] = ((SubmissionEdit) rets[i]).getNewVoyage().getIid();
 				}
-			} else if (this.submission instanceof SubmissionMerge) {
-				Set voyagesToMerge = ((SubmissionMerge) this.submission).getMergedVoyages();
+			} else if (lSubmission instanceof SubmissionMerge) {
+				Set voyagesToMerge = ((SubmissionMerge) lSubmission).getMergedVoyages();
 				editRequests = new Object[voyagesToMerge.size()];
 				Iterator iter = voyagesToMerge.iterator();
 				int i = 0;
 				while (iter.hasNext()) {
 					editRequests[i++] = ((Voyage) iter.next()).getIid();
 				}
-				this.mergeMainVoyage = ((SubmissionMerge) this.submission).getProposedNewVoyage().getIid();
+				this.mergeMainVoyage = ((SubmissionMerge) lSubmission).getProposedNewVoyage().getIid();
 			}
 		} else {
-			this.submission = null;
+			this.submissionId = null;
 		}
 		t.commit();
 		session.close();
@@ -418,27 +520,73 @@ public class AdminSubmissionBean {
 	}
 	
 	public Boolean getRejectAvailable() {
-		return new Boolean(true);
-	}
-	
-	public String rejectSubmission() {
-		this.submission.setSolved(true);
+		Boolean avail = null;
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
-		session.update(this.submission);
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+		avail = new Boolean(!lSubmisssion.isSolved());
+		t.commit();
+		session.close();
+		return avail;
+		
+	}
+	
+	/**
+	 * Action fired when reject button was pressed
+	 */
+	public String rejectSubmission() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+		if (lSubmisssion instanceof SubmissionEdit) {
+			Conditions c = new Conditions();
+			c.addCondition(SubmissionEdit.getAttribute("oldVoyage"), ((SubmissionEdit)lSubmisssion).getOldVoyage(), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("SubmissionEdit", c);
+			Object[] toUpdate = qValue.executeQuery(session);
+			for (int i = 0; i < toUpdate.length; i++) {
+				SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
+				edit.setSolved(true);
+				edit.setAccepted(false);
+				session.update(edit);
+			}
+		} else {		
+			lSubmisssion.setSolved(true);
+			lSubmisssion.setAccepted(false);
+			session.update(lSubmisssion);
+		}
 		t.commit();
 		session.close();
 		return "back";
 	}
 	
+	/**
+	 * Action fired when accept button was pressed
+	 */
 	public String save() {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
 		Map newValues = valsToSubmit.getColumnValues(DECIDED_VOYAGE);
-		Voyage vNew = null;
-//		if () {
-//			
-//		}
+		
+		updateMergedVoyage(session, lSubmisssion, newValues);
+		
+		t.commit();
+		session.close();
+		return "back";
+	}
+
+	private Voyage updateMergedVoyage(Session session, Submission lSubmisssion, Map newValues) {
+		Voyage vNew = null;				
+		if (lSubmisssion instanceof SubmissionNew) {
+			vNew = ((SubmissionNew)lSubmisssion).getModifiedVoyage();
+		} else if (lSubmisssion instanceof SubmissionEdit) {
+			vNew = ((SubmissionEdit)lSubmisssion).getModifiedVoyage();
+		} else {
+			vNew = ((SubmissionMerge)lSubmisssion).getModifiedVoyage();	
+		}
+		if (vNew == null) {
+			vNew = new Voyage();
+		}
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
 			if (val.isError()) {
@@ -450,19 +598,28 @@ public class AdminSubmissionBean {
 				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 		}
+		vNew.setSuggestion(true);
 		if (!wasError) {
-			vNew.save();
-			if (this.submission instanceof SubmissionNew) {
-				((SubmissionNew)this.submission).setModifiedVoyage(vNew);
-			} else if (this.submission instanceof SubmissionEdit) {
-				((SubmissionEdit)this.submission).setModifiedVoyage(vNew);
+			session.saveOrUpdate(vNew);
+			if (lSubmisssion instanceof SubmissionNew) {
+				((SubmissionNew)lSubmisssion).setModifiedVoyage(vNew);
+				session.update(lSubmisssion);
+			} else if (lSubmisssion instanceof SubmissionEdit) {
+				Conditions c = new Conditions();
+				c.addCondition(SubmissionEdit.getAttribute("oldVoyage"), ((SubmissionEdit)lSubmisssion).getOldVoyage(), Conditions.OP_EQUALS);
+				QueryValue qValue = new QueryValue("SubmissionEdit", c);
+				Object[] toUpdate = qValue.executeQuery(session);
+				for (int i = 0; i < toUpdate.length; i++) {
+					SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
+					edit.setModifiedVoyage(vNew);
+					session.update(edit);
+				}
 			} else {
-				((SubmissionMerge)this.submission).setModifiedVoyage(vNew);
+				((SubmissionMerge)lSubmisssion).setModifiedVoyage(vNew);
+				session.update(lSubmisssion);
 			}
+			
 		}
-		session.update(this.submission);
-		t.commit();
-		session.close();
-		return null;
+		return vNew;
 	}
 }

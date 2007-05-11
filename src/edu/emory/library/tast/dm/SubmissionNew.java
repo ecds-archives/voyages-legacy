@@ -22,6 +22,7 @@ public class SubmissionNew extends Submission
 		attributes.put("time", new DateAttribute("id", null));
 		attributes.put("newVoyage", new VoyageAttribute("newVoyage", "Voyage"));
 		attributes.put("solved", new BooleanAttribute("solved", "SubmissionNew", null));
+		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
 	}
 	
 	public static Attribute getAttribute(String name) {

@@ -23,6 +23,7 @@ public class SubmissionEdit extends Submission
 		attributes.put("newVoyage", new VoyageAttribute("newVoyage", "Voyage"));
 		attributes.put("oldVoyage", new VoyageAttribute("oldVoyage", "Voyage"));
 		attributes.put("solved", new BooleanAttribute("solved", "SubmissionEdit", null));
+		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
 	}
 	
 	public static Attribute getAttribute(String name) {

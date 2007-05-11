@@ -78,7 +78,18 @@
 			<tr>
 				<td style="padding-right: 5px">Type of request</td>
 				<td style="padding-right: 10px"></f:verbatim><h:selectOneMenu value="#{AdminSubmissionBean.requestType}"><f:selectItems value="#{AdminSubmissionBean.requestTypes}"/></h:selectOneMenu><f:verbatim></td>
+				<td style="padding-right: 5px">
+				
+				<td style="padding-right: 5px">Status of request</td>
+				<td style="padding-right: 10px"></f:verbatim>
+						<h:selectOneMenu value="#{AdminSubmissionBean.requestStatus}">
+							<f:selectItem itemLabel="All requests" itemValue="1"/>
+							<f:selectItem itemLabel="Reviewed, not solved" itemValue="2"/>
+							<f:selectItem itemLabel="Not reviewed, not solved" itemValue="3"/>
+							<f:selectItem itemLabel="Solved" itemValue="4"/>
+						</h:selectOneMenu><f:verbatim></td>
 				<td style="padding-right: 5px"></f:verbatim><h:commandButton value="Show" /><f:verbatim></td>
+				
 			</tr>
 			</table>
 		</div>

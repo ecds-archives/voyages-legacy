@@ -14,7 +14,10 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public abstract class Submission
 {
@@ -24,12 +27,15 @@ public abstract class Submission
 	private String note;
 	private Set sources;
 	private boolean solved;
+	private boolean accepted;
 	
 	private static Map attributes = new HashMap();
 	static {
 		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
 		attributes.put("time", new DateAttribute("id", null));
 		attributes.put("solved", new BooleanAttribute("solved", "Submission", null));
+		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
+		attributes.put("modifiedVoyage", new VoyageAttribute("modifiedVoyage", "Voyage"));
 	}
 	public static Attribute getAttribute(String name) {
 		return (Attribute)attributes.get(name);
@@ -143,6 +149,26 @@ public abstract class Submission
 
 	public void setSolved(boolean solved) {
 		this.solved = solved;
+	}
+
+	public static Submission loadById(Session session, Long id) {
+		Conditions c = new Conditions();
+		c.addCondition(getAttribute("id"), id, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("Submission", c);
+		Object[] ret = qValue.executeQuery(session);
+		if (ret.length == 0) {
+			return null;
+		} else {
+			return (Submission) ret[0];
+		}
+	}
+
+	public boolean isAccepted() {
+		return accepted;
+	}
+
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
 	}
 
 }

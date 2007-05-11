@@ -924,7 +924,8 @@ public class VoyageBean
 
 			Conditions cond = new Conditions();
 			cond.addCondition(Voyage.getAttribute("iid"), voyageIid, Conditions.OP_EQUALS);
-
+			cond.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
+			
 			QueryValue query = new QueryValue("Voyage", cond);
 			query.setFirstResult(0);
 			query.setLimit(1);

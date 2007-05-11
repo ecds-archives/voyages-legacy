@@ -50,8 +50,9 @@ public class VoyagesListBean
 	{
 		
 		nationId = "";
-		
-		QueryValue query = new QueryValue("Voyage");
+		Conditions cond = new Conditions();
+		cond.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
+		QueryValue query = new QueryValue("Voyage", cond);
 		
 		query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] {Voyage.getAttribute("yearam")}));
 		query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] {Voyage.getAttribute("yearam")}));
@@ -118,6 +119,7 @@ public class VoyagesListBean
 					Conditions.OP_EQUALS);
 
 		// load voyages
+		conds.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("Voyage", conds);
 		query.setOrder(QueryValue.ORDER_ASC);
 		query.setOrderBy(new Attribute[] {Voyage.getAttribute("voyageid")});

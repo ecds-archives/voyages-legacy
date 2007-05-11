@@ -226,7 +226,7 @@
 			<attribute name="slintend"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="tonnage" group="Ship, nation, owners" editable="Y" type="float" userLabel="Tonnage of ship">
+	<submission-attributes name="tonnage" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Tonnage of ship">
 		<attributes>
 			<attribute name="tonnage"/>
 		</attributes>

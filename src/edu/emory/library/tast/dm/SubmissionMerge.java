@@ -23,6 +23,7 @@ public class SubmissionMerge extends Submission
 		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
 		attributes.put("time", new DateAttribute("id", null));
 		attributes.put("solved", new BooleanAttribute("solved", "SubmissionMerge", null));
+		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
 	}
 	
 	public static Attribute getAttribute(String name) {
