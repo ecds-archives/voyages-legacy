@@ -22,7 +22,7 @@
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionNew" table="submissions_new">
 			<key column="submission_id"/>
 			<many-to-one name="editorVoyage" column="editor_edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />			
-			<many-to-one name="newVoyage" column="new_edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />			
+			<many-to-one name="newVoyage" column="new_edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />
 		</joined-subclass>
 	    
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionEdit" table="submissions_edit">
@@ -30,7 +30,6 @@
 			<many-to-one name="editorVoyage" column="editor_edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />			
 			<many-to-one name="newVoyage" column="new_edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />
 			<many-to-one name="oldVoyage" column="old_edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />
-			
 		</joined-subclass>
 		
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionMerge" table="submissions_merge">
@@ -41,7 +40,6 @@
 				<key column="submission_id" />
 				<many-to-many column="edited_voyage_id" unique="true" class="edu.emory.library.tast.dm.EditedVoyage" />
 			</set>
-								
 		</joined-subclass>
 
 	</class>
