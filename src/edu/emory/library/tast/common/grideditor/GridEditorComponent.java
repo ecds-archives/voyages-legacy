@@ -161,7 +161,7 @@ public class GridEditorComponent extends UIComponentBase
 				// decode error
 				if (params.containsKey(errorFlagFieldName))
 				{
-					if (Boolean.parseBoolean((String) params.get(errorFlagFieldName)))
+					if (Boolean.getBoolean((String) params.get(errorFlagFieldName)))
 					{
 						String error = (String) params.get(errorMessageFieldName);
 						if (error != null)
