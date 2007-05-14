@@ -22,6 +22,7 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
 import edu.emory.library.tast.dm.SubmissionMerge;
@@ -127,27 +128,24 @@ public class AdminSubmissionBean {
 			Voyage[] toVals = null;
 			String[] cols = null;
 			Map attributeNotes = null;
-			Voyage vNew = null;
+			EditedVoyage vNew = null;
 			Submission lSubmisssion = Submission.loadById(session, this.submissionId);
 			
 			if (lSubmisssion instanceof SubmissionNew) {
 				vNew = ((SubmissionNew)lSubmisssion).getEditorVoyage();
-				attributeNotes = ((SubmissionNew)lSubmisssion).getAttributeNotes();
 			} else if (lSubmisssion instanceof SubmissionEdit) {
 				vNew = ((SubmissionEdit)lSubmisssion).getEditorVoyage();
-				attributeNotes = ((SubmissionEdit)lSubmisssion).getAttributeNotes();
 			} else {
 				vNew = ((SubmissionMerge)lSubmisssion).getEditorVoyage();	
-				attributeNotes = ((SubmissionMerge)lSubmisssion).getAttributeNotes();
 			}
 			if (lSubmisssion instanceof SubmissionNew) {
 				toVals = new Voyage[2];
 				cols = new String[2];
-				toVals[0] = Voyage.loadById(session, ((SubmissionNew) lSubmisssion).getNewVoyage().getIid());
+				toVals[0] = Voyage.loadById(session, ((SubmissionNew) lSubmisssion).getNewVoyage().getVoyage().getIid());
 				if (vNew == null) {
 					toVals[1] =  new Voyage();
 				} else {
-					toVals[1] =  vNew;
+					toVals[1] =  vNew.getVoyage();
 				}
 				cols[0] = ORYGINAL_VOYAGE; 
 				cols[1] = DECIDED_VOYAGE;
@@ -155,7 +153,7 @@ public class AdminSubmissionBean {
 				toVals = new Voyage[2 + this.editRequests.length];
 				cols = new String[2 + this.editRequests.length];
 				cols[0] = ORYGINAL_VOYAGE;
-				toVals[0] = Voyage.loadById(session, ((SubmissionEdit) lSubmisssion).getOldVoyage().getIid());
+				toVals[0] = Voyage.loadById(session, ((SubmissionEdit) lSubmisssion).getOldVoyage().getVoyage().getIid());
 				for (int i = 1; i < toVals.length - 1; i++) {
 					toVals[i] = Voyage.loadById(session, (Long) this.editRequests[i - 1]);
 					cols[i] = CHANGED_VOYAGE + "_" + i;
@@ -163,7 +161,7 @@ public class AdminSubmissionBean {
 				if (vNew == null) {
 					toVals[toVals.length - 1] = getCurrentlyPreparedVoyage(session, toVals[0].getVoyageid());
 				} else {
-					toVals[toVals.length - 1] = vNew;
+					toVals[toVals.length - 1] = vNew.getVoyage();
 				}				
 				cols[cols.length - 1] = DECIDED_VOYAGE;
 			} else {
@@ -178,7 +176,7 @@ public class AdminSubmissionBean {
 				if (vNew == null) {
 					toVals[toVals.length - 1] = new Voyage();
 				} else {
-					toVals[toVals.length - 1] = vNew;
+					toVals[toVals.length - 1] = vNew.getVoyage();
 				}	
 				cols[cols.length - 1] = DECIDED_VOYAGE;
 			}
@@ -428,7 +426,7 @@ public class AdminSubmissionBean {
 					}
 				}
 				l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request", "Unknown",
-						submission.getTime().toString(), submission.getOldVoyage().getVoyageid().toString() ,
+						submission.getTime().toString(), submission.getOldVoyage().getVoyage().getVoyageid().toString() ,
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol}));
 			}
 		}
@@ -487,7 +485,7 @@ public class AdminSubmissionBean {
 			Submission lSubmission = (Submission) res[0];
 			this.submissionId = lSubmission.getId();
 			if (lSubmission instanceof SubmissionEdit) {
-				Long vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyageid();
+				Long vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage().getVoyageid();
 				c = new Conditions();
 				c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
 						Voyage.getAttribute("voyageid") }), vid, Conditions.OP_EQUALS);
@@ -496,7 +494,7 @@ public class AdminSubmissionBean {
 				Object[] rets = q.executeQuery(session);
 				editRequests = new Object[rets.length];
 				for (int i = 0; i < editRequests.length; i++) {
-					editRequests[i] = ((SubmissionEdit) rets[i]).getNewVoyage().getIid();
+					editRequests[i] = ((SubmissionEdit) rets[i]).getNewVoyage().getVoyage().getIid();
 				}
 			} else if (lSubmission instanceof SubmissionMerge) {
 				Set voyagesToMerge = ((SubmissionMerge) lSubmission).getMergedVoyages();
@@ -506,7 +504,7 @@ public class AdminSubmissionBean {
 				while (iter.hasNext()) {
 					editRequests[i++] = ((Voyage) iter.next()).getIid();
 				}
-				this.mergeMainVoyage = ((SubmissionMerge) lSubmission).getProposedVoyage().getIid();
+				this.mergeMainVoyage = ((SubmissionMerge) lSubmission).getProposedVoyage().getVoyage().getIid();
 			}
 		} else {
 			this.submissionId = null;
@@ -576,13 +574,17 @@ public class AdminSubmissionBean {
 	}
 
 	private Voyage updateMergedVoyage(Session session, Submission lSubmisssion, Map newValues) {
-		Voyage vNew = null;				
+		Voyage vNew = null;		
+		EditedVoyage editedVoyage = null;
 		if (lSubmisssion instanceof SubmissionNew) {
-			vNew = ((SubmissionNew)lSubmisssion).getEditorVoyage();
+			editedVoyage = ((SubmissionNew)lSubmisssion).getEditorVoyage();
+			vNew = editedVoyage.getVoyage();
 		} else if (lSubmisssion instanceof SubmissionEdit) {
-			vNew = ((SubmissionEdit)lSubmisssion).getEditorVoyage();
+			editedVoyage = ((SubmissionEdit)lSubmisssion).getEditorVoyage();
+			vNew = editedVoyage.getVoyage();
 		} else {
-			vNew = ((SubmissionMerge)lSubmisssion).getEditorVoyage();	
+			editedVoyage = ((SubmissionMerge)lSubmisssion).getEditorVoyage();
+			vNew = editedVoyage.getVoyage();
 		}
 		if (vNew == null) {
 			vNew = new Voyage();
@@ -599,10 +601,14 @@ public class AdminSubmissionBean {
 			}
 		}
 		vNew.setSuggestion(true);
-		if (!wasError) {
+		if (!wasError) {			
 			session.saveOrUpdate(vNew);
+			if (editedVoyage == null) {
+				editedVoyage = new EditedVoyage(vNew, null);
+				session.save(editedVoyage);
+			}
 			if (lSubmisssion instanceof SubmissionNew) {
-				((SubmissionNew)lSubmisssion).setEditorVoyage(vNew);
+				((SubmissionNew)lSubmisssion).setEditorVoyage(editedVoyage);
 				session.update(lSubmisssion);
 			} else if (lSubmisssion instanceof SubmissionEdit) {
 				Conditions c = new Conditions();
@@ -611,11 +617,11 @@ public class AdminSubmissionBean {
 				Object[] toUpdate = qValue.executeQuery(session);
 				for (int i = 0; i < toUpdate.length; i++) {
 					SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
-					edit.setEditorVoyage(vNew);
+					edit.setEditorVoyage(editedVoyage);
 					session.update(edit);
 				}
 			} else {
-				((SubmissionMerge)lSubmisssion).setEditorVoyage(vNew);
+				((SubmissionMerge)lSubmisssion).setEditorVoyage(editedVoyage);
 				session.update(lSubmisssion);
 			}
 			
