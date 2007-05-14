@@ -20,8 +20,8 @@ public class SubmissionEdit extends Submission
 	static {
 		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
 		attributes.put("time", new DateAttribute("id", null));
-		attributes.put("newVoyage", new EditedVoyageAttribute("newVoyage", "Voyage"));
-		attributes.put("oldVoyage", new EditedVoyageAttribute("oldVoyage", "Voyage"));
+		attributes.put("newVoyage", new EditedVoyageAttribute("newVoyage", "EditedVoyage"));
+		attributes.put("oldVoyage", new EditedVoyageAttribute("oldVoyage", "EditedVoyage"));
 		attributes.put("solved", new BooleanAttribute("solved", "SubmissionEdit", null));
 		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
 	}

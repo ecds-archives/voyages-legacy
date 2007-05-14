@@ -357,6 +357,7 @@ public class SubmissionBean
 		}
 		Submission submission = null;
 		
+		sess.save(voyage);
 		if (submissionType == SUBMISSION_TYPE_NEW)
 		{
 
@@ -412,7 +413,6 @@ public class SubmissionBean
 		
 		submission.setTime(new Date());
 		
-		sess.save(voyage);
 		sess.save(submission);
 		
 		trans.commit();
