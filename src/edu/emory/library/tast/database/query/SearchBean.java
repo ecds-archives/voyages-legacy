@@ -140,7 +140,7 @@ public class SearchBean
 			boolean errors = workingQuery.addToDbConditions(false, dbConds);
 			if (errors) return;
 			
-			dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(1), Conditions.OP_EQUALS);
+			dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 			
 			searchParameters = new SearchParameters();
 			searchParameters.setConditions(dbConds);
@@ -188,6 +188,7 @@ public class SearchBean
 	{
 		
 		Conditions dbConds = new Conditions();
+		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 		workingQuery.addToDbConditions(false, dbConds);
 
 		QueryValue query = new QueryValue("Voyage", dbConds);
