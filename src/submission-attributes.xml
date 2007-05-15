@@ -705,12 +705,12 @@
 			<attribute name="fate4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="voy1imp" group="Voyage Dates" editable="N" type="float" userLabel="Imputed voyage length from departure to first port of landing">
+	<submission-attributes name="voy1imp" group="Voyage Dates" editable="N" type="integer" userLabel="Imputed voyage length from departure to first port of landing">
 		<attributes>
 			<attribute name="voy1imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="voy2imp" group="Voyage Dates" editable="N" type="float" userLabel="Imputed length of middle passage">
+	<submission-attributes name="voy2imp" group="Voyage Dates" editable="N" type="integer" userLabel="Imputed length of middle passage">
 		<attributes>
 			<attribute name="voy2imp"/>
 		</attributes>

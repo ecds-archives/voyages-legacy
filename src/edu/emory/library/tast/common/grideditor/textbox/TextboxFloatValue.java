@@ -1,5 +1,7 @@
 package edu.emory.library.tast.common.grideditor.textbox;
 
+import edu.emory.library.tast.util.StringUtils;
+
 public class TextboxFloatValue extends TextboxValue
 {
 	
@@ -109,4 +111,10 @@ public class TextboxFloatValue extends TextboxValue
 		}
 	}
 
+	public boolean isCorrectValue() {
+		if (StringUtils.isNullOrEmpty(this.getText())) {
+			return true;
+		}
+		return isValid();
+	}
 }

@@ -224,4 +224,13 @@ public class DateValue extends Value
 		
 	}
 
+	public boolean isCorrectValue() {
+		if (StringUtils.isNullOrEmpty(this.year) && 
+				StringUtils.isNullOrEmpty(this.month) && 
+				StringUtils.isNullOrEmpty(this.day)) {
+			return true;
+		}
+		return this.isValid();
+	}
+
 }

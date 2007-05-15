@@ -50,4 +50,8 @@ public class ListValue extends Value
 		
 	}
 	
+	public boolean isCorrectValue() {
+		return true;
+	}
+	
 }

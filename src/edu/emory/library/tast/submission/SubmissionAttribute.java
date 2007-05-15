@@ -370,4 +370,5 @@ public class SubmissionAttribute {
 	public String getGroupName() {
 		return this.group;
 	}
+
 }

@@ -36,8 +36,11 @@ public class VoyagesListBean
 	private int lastRecordIndex;
 	private int pageSize = 30;
 
-	private int yearFrom = 1500;
-	private int yearTo = 1900;
+	private int yearFrom = -1;
+	private int yearTo = -1;
+	
+	private int voyageIdFrom = -1;
+	private int voyageIdTo = -1;
 	
 	private String nationId;
 	
@@ -50,20 +53,10 @@ public class VoyagesListBean
 	{
 		
 		nationId = "";
-		Conditions cond = new Conditions();
-		cond.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("Voyage", cond);
-		
-		query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] {Voyage.getAttribute("yearam")}));
-		query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] {Voyage.getAttribute("yearam")}));
-		
-		List ret = query.executeQueryList();
-		if (ret != null && ret.size() == 1)
-		{
-			Object[] row = (Object[]) ret.get(0);
-			yearFrom = ((Integer) row[0]).intValue();
-			yearTo = ((Integer) row[1]).intValue();
-		}
+		this.yearFrom = -1;
+		this.yearTo = -1;
+		this.voyageIdFrom = -1;
+		this.voyageIdTo = -1;
 		
 		currentPage = 1;
 		
@@ -100,17 +93,37 @@ public class VoyagesListBean
 		Conditions conds = new Conditions(Conditions.JOIN_AND);
 
 		// year to
-		conds.addCondition(
+		if (yearFrom != -1) {
+			conds.addCondition(
 				Voyage.getAttribute("yearam"),
 				new Integer(yearFrom),
 				Conditions.OP_GREATER_OR_EQUAL);
-
+		}
+		
 		// year to
-		conds.addCondition(
+		if (yearTo != -1) {
+			conds.addCondition(
 				Voyage.getAttribute("yearam"),
 				new Integer(yearTo),
 				Conditions.OP_SMALLER_OR_EQUAL);
-
+		}
+		
+		//voyage id From
+		if (voyageIdFrom != -1) {
+			conds.addCondition(
+				Voyage.getAttribute("voyageid"),
+				new Long(voyageIdFrom),
+				Conditions.OP_GREATER_OR_EQUAL);
+		}
+		
+		// voyage id to
+		if (voyageIdTo != -1) {
+			conds.addCondition(
+				Voyage.getAttribute("voyageid"),
+				new Long(voyageIdTo),
+				Conditions.OP_SMALLER_OR_EQUAL);
+		}
+		
 		// nation
 		if (!StringUtils.isNullOrEmpty(nationId))
 			conds.addCondition(
@@ -120,6 +133,7 @@ public class VoyagesListBean
 
 		// load voyages
 		conds.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
+		conds.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("Voyage", conds);
 		query.setOrder(QueryValue.ORDER_ASC);
 		query.setOrderBy(new Attribute[] {Voyage.getAttribute("voyageid")});
@@ -276,33 +290,79 @@ public class VoyagesListBean
 		}
 	}
 
-	public int getYearFrom()
+	public String getYearFrom()
 	{
-		return yearFrom;
+		if (yearFrom == -1) {
+			return "";
+		}
+		return String.valueOf(yearFrom);
 	}
 
-	public void setYearFrom(int yearFrom)
+	public void setYearFrom(String yearFrom)
 	{
-		if (yearFrom != this.yearFrom)
-		{
+		if (StringUtils.isNullOrEmpty(yearFrom)){
+			this.yearFrom = -1;
 			filterChanged = true;
-			this.yearFrom = yearFrom;
+		} else {
+			int yearFromI = Integer.parseInt(yearFrom);
+			if (yearFromI != this.yearFrom)
+			{
+				filterChanged = true;
+				this.yearFrom = yearFromI;
+			}
 		}
 	}
 
-	public int getYearTo()
+	public String getYearTo()
 	{
-		return yearTo;
+		if (yearTo == -1) {
+			return "";
+		}
+		return String.valueOf(yearTo);
 	}
 
-	public void setYearTo(int yearTo)
+	public void setYearTo(String yearTo)
 	{
-		if (yearTo != this.yearTo)
-		{
-			filterChanged = true;
-			this.yearTo = yearTo;
-			this.currentPage = 1;
+		if (StringUtils.isNullOrEmpty(yearTo)) {
+			this.yearTo = -1;
+			this.filterChanged = true;
+		} else {
+			int yearToI = Integer.parseInt(yearTo);
+			if (yearToI != this.yearTo)
+			{
+				filterChanged = true;
+				this.yearTo = yearToI;
+				this.currentPage = 1;
+			}
 		}
+	}
+
+	public String getVoyageIdFrom() {
+		if (voyageIdFrom == -1) {
+			return "";
+		}
+		return String.valueOf(voyageIdFrom);
+	}
+
+	public void setVoyageIdFrom(String voyageIdFrom) {
+		if (StringUtils.isNullOrEmpty(voyageIdFrom)) {
+			this.voyageIdFrom = -1;
+		}
+		this.voyageIdFrom = Integer.parseInt(voyageIdFrom);
+	}
+
+	public String getVoyageIdTo() {
+		if (voyageIdTo == -1) {
+			return "";
+		}
+		return String.valueOf(voyageIdTo);
+	}
+
+	public void setVoyageIdTo(String voyageIdTo) {
+		if (StringUtils.isNullOrEmpty(voyageIdTo)) {
+			this.voyageIdTo = -1;
+		}
+		this.voyageIdTo = Integer.parseInt(voyageIdTo);
 	}
 
 }

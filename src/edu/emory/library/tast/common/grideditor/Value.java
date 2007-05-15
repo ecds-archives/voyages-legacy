@@ -49,4 +49,6 @@ abstract public class Value
 		this.noteExpanded = noteExpanded;
 	}
 	
+	public abstract boolean isCorrectValue();
+	
 }

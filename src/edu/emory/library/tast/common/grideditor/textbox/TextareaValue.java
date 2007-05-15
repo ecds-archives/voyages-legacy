@@ -68,5 +68,9 @@ public class TextareaValue extends Value
 		return StringUtils.compareStringArrays(this.texts, that.texts);
 		
 	}
+	
+	public boolean isCorrectValue() {
+		return true;
+	}
 
 }

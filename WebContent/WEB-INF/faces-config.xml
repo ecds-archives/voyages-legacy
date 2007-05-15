@@ -575,24 +575,16 @@
 			<to-view-id>/images-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/admin/voyage-list.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>edit</from-outcome>
-			<to-view-id>/admin/voyage-edit.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
 	
 	<navigation-rule>
-		<from-view-id>/admin/voyage-edit.jsp</from-view-id>
+		<from-view-id>/admin/edit.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>cancel</from-outcome>
-			<to-view-id>/admin/voyage-list.jsp</to-view-id>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>list</from-outcome>
-			<to-view-id>/admin/voyage-list.jsp</to-view-id>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
@@ -751,6 +743,10 @@
 			<from-outcome>resolve-request</from-outcome>
 			<to-view-id>/submission/submission-admin-resolve.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>edit</from-outcome>
+			<to-view-id>/admin/edit.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
@@ -758,6 +754,22 @@
 		<navigation-case>
 			<from-outcome>back</from-outcome>
 			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>approve-delete</from-outcome>
+			<to-view-id>/submission/submission-admin-approve-delete.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>	
+
+	<navigation-rule>
+		<from-view-id>/submission/submission-admin-approve-delete.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>main-menu</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-admin-resolve.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>	
 

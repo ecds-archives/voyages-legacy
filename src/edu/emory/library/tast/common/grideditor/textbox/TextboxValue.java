@@ -51,4 +51,7 @@ public class TextboxValue extends Value
 		
 	}
 
+	public boolean isCorrectValue() {
+		return true;
+	}
 }

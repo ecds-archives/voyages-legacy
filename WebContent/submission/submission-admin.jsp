@@ -38,12 +38,19 @@
 			<tr>
 				<td style="padding-right: 5px">From</td>
 				<td style="padding-right: 10px"></f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.nationId}"><f:selectItems value="#{AdminVoyagesListBean.nations}"/></h:selectOneMenu><f:verbatim></td>
-				<td style="padding-right: 5px">From</td>
+				
+				<td style="padding-right: 5px">Yearam from</td>
 				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.yearFrom}" style="width: 40px;" /><f:verbatim></td>
-				<td style="padding-right: 5px">To</td>
+				<td style="padding-right: 5px">to</td>
 				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.yearTo}" style="width: 40px;" /><f:verbatim></td>
+				
+				<td style="padding-right: 5px">Voyage ID from</td>
+				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdFrom}" style="width: 40px;" /><f:verbatim></td>
+				<td style="padding-right: 5px">to</td>
+				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdTo}" style="width: 40px;" /><f:verbatim></td>
+				
 				<td style="padding-right: 5px"><h:commandButton value="Show" /></td>
-				<td></f:verbatim><h:commandButton value="Default" action="#{AdminVoyagesListBean.restoreDefaultOptions}" /><f:verbatim></td>
+				<td></f:verbatim><h:commandButton value="Restore default" action="#{AdminVoyagesListBean.restoreDefaultOptions}" /><f:verbatim></td>
 			</tr>
 			</table>
 		</div>
