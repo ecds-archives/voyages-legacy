@@ -13,7 +13,6 @@ var MapsGlobal =
 		mapTilesServer, // servlet
 		mapFile, // ServerMap map file
 		miniMapFile, // minimap ServerMap map file
-		zoomLevels, // zoom levels
 		scaleFactor, // scale demominator
 		scaleMax, // max magnification w.r.t. scale = 1
 		mapControlId, // main container 
@@ -69,13 +68,17 @@ var MapsGlobal =
 		map.fixedSize = fixedSize;
 		map.map_control_id = mapControlId;
 		map.frameId = mapFrameId;
+		map.map_control_top_tools_id = mapToolsTopId;
+		map.map_control_bottom_tools_id = mapToolsBottomId;
+		map.map_control_left_tools_id = mapToolsLeftId;
+		map.map_control_right_tools_id = mapToolsRightId;
 		
 		// hidden fields for maitaining state
-		map.formName = formName;
-		map.fieldNameX1 = fieldNameX1;
-		map.fieldNameY1 = fieldNameX2;
-		map.fieldNameX2 = fieldNameY1;
-		map.fieldNameY2 = fieldNameY2;
+		map.form_name = formName;
+		map.field_name_x1 = fieldNameX1;
+		map.field_name_y1 = fieldNameX2;
+		map.field_name_x2 = fieldNameY1;
+		map.field_name_y2 = fieldNameY2;
 		map.field_name_zoom_history = fieldNameZoomHistory;
 		
 		// points
@@ -397,6 +400,16 @@ function Map()
 	this.scale_factor_plus = 2.0;
 	this.scale_factor_minus = 0.5;
 
+	// tools
+	this.map_control_top_tools = null;
+	this.map_control_top_tools_id = null;
+	this.map_control_bottom_tools = null;
+	this.map_control_bottom_tools_id = null;
+	this.map_control_left_tools = null;
+	this.map_control_left_tools_id = null;
+	this.map_control_right_tools = null;
+	this.map_control_right_tools_id = null;
+	
 	// references to HTML elements
 	this.frame = null;
 	this.frameId = null;
@@ -485,14 +498,14 @@ function Map()
 	// hidden fields for maitaining state
 	this.hasHiddenExtendFields = false;
 	this.formName = null;
-	this.fieldNameX1 = null;
-	this.fieldNameY1 = null;
-	this.fieldNameX2 = null;
-	this.fieldNameY2 = null;
-	this.fieldX1 = null;
-	this.fieldY1 = null;
-	this.fieldX2 = null;
-	this.fieldY2 = null;
+	this.field_name_x1 = null;
+	this.field_name_y1 = null;
+	this.field_name_x2 = null;
+	this.field_name_y2 = null;
+	this.field_x1 = null;
+	this.field_y1 = null;
+	this.field_x2 = null;
+	this.field_y2 = null;
 	
 	// init handler
 	this.initListeners = new EventQueue();
@@ -537,16 +550,6 @@ function MapSymbol(name, url, width, height, centerX, centerY)
 	this.height = height;
 	this.centerX = centerX;
 	this.centerY = centerY;
-}
-
-function MapZoomLevel(bottomLeftTileX, bottomLeftTileY, tilesNumX, tilesNumY, scale, tilesDir)
-{
-	this.bottomLeftTileX = bottomLeftTileX;
-	this.bottomLeftTileY = bottomLeftTileY;
-	this.tilesNumX = tilesNumX;
-	this.tilesNumY = tilesNumY;
-	this.scale = scale; // (1px ~ scale degrees)
-	this.tilesDir = tilesDir;
 }
 
 /////////////////////////////////////////////////////////
@@ -1144,7 +1147,7 @@ Map.prototype.initMiniMap = function()
 		EventAttacher.attach(this.miniMapToggle, "click", this, "hideShowMiniMap")
 
 	this.fieldMiniMapVisibility =
-		document.forms[this.formName].elements[this.fieldNameMiniMapVisibility];
+		document.forms[this.form_name].elements[this.fieldNameMiniMapVisibility];
 
 }
 
@@ -1265,10 +1268,10 @@ Map.prototype.saveState = function()
 {
 	if (this.hasHiddenExtendFields)
 	{
-		this.fieldX1.value = this.getMapX1();
-		this.fieldY1.value = this.getMapY1();
-		this.fieldX2.value = this.getMapX2();
-		this.fieldY2.value = this.getMapY2();
+		this.field_x1.value = this.getMapX1();
+		this.field_y1.value = this.getMapY1();
+		this.field_x2.value = this.getMapX2();
+		this.field_y2.value = this.getMapY2();
 	}
 }
 
@@ -1629,7 +1632,7 @@ Map.prototype.zoomHistoryRestore = function()
 {
 
 	// main form
-	var form = document.forms[this.formName];
+	var form = document.forms[this.form_name];
 	if (!form) return;
 
 	// hidden field
@@ -2099,10 +2102,10 @@ Map.prototype.updateControlsLayout = function()
 {
 	
 	// offsets
-	var top = 0;
-	var bottom = 0;
-	var left = 0;
-	var right = 0;
+	var top = this.map_control_top_tools ? this.map_control_top_tools.offsetHeight : 0;
+	var bottom = this.map_control_bottom_tools ? this.map_control_bottom_tools.offsetHeight : 0;
+	var left = this.map_control_left_tools ? this.map_control_left_tools.offsetWidth : 0;
+	var right = this.map_control_right_tools ? this.map_control_right_tools.offsetWidth : 0;
 	
 	// set vport size
 	this.vport_width = this.width - left - right;
@@ -2118,6 +2121,38 @@ Map.prototype.updateControlsLayout = function()
 	{
 		this.map_control.style.width = this.width + "px";
 		this.map_control.style.height = this.height + "px";
+	}
+	
+	// top tools
+	if (this.map_control_top_tools)
+	{
+		this.map_control_top_tools.style.left = "0px";
+		this.map_control_top_tools.style.top = "0px";
+		this.map_control_top_tools.style.width = (this.width) + "px";
+	}
+
+	// bottom tools
+	if (this.map_control_bottom_tools)
+	{
+		this.map_control_bottom_tools.style.left = "0px";
+		this.map_control_bottom_tools.style.top = (this.height - bottom) + "px";
+		this.map_control_bottom_tools.style.width = (this.width) + "px";
+	}
+
+	// left tools
+	if (this.map_control_left_tools)
+	{
+		this.map_control_left_tools.style.left = "0px";
+		this.map_control_left_tools.style.top = (top) + "px";
+		this.map_control_left_tools.style.height = (this.height - bottom - top) + "px";
+	}
+
+	// right tools
+	if (this.map_control_right_tools)
+	{
+		this.map_control_right_tools.style.left = (this.width - right) + "px";
+		this.map_control_right_tools.style.top = (top) + "px";
+		this.map_control_right_tools.style.height = (this.height - bottom - top) + "px";
 	}
 	
 	// this is used at many places
@@ -2187,6 +2222,18 @@ Map.prototype.mapControlsInit = function()
 	this.map_control = document.getElementById(this.map_control_id);
 	//this.map_control.style.display = "block";
 	
+	this.map_control_top_tools = document.getElementById(this.map_control_top_tools_id);
+	if (this.map_control_top_tools) this.map_control_top_tools.style.position = "absolute";
+	
+	this.map_control_bottom_tools = document.getElementById(this.map_control_bootom_tools_id);
+	if (this.map_control_bottom_tools) this.map_control_bottom_tools.style.position = "absolute";
+
+	this.map_control_left_tools = document.getElementById(this.map_control_left_tools_id);
+	if (this.map_control_left_tools) this.map_control_left_tools.style.position = "absolute";
+	
+	this.map_control_right_tools = document.getElementById(this.map_control_right_tools_id);
+	if (this.map_control_right_tools) this.map_control_right_tools.style.position = "absolute";
+	
 	this.bubble = document.getElementById(this.bubbleId)
 	this.bubbleText = document.getElementById(this.bubbleTextId)
 	if (this.bubble) this.bubble.style.position = "absolute";
@@ -2236,19 +2283,19 @@ Map.prototype.mapControlsInit = function()
 Map.prototype.hiddenFieldsInit = function()
 {
 
-	var form = document.forms[this.formName];
+	var form = document.forms[this.form_name];
 	if (!form)
 	{
 		this.hasHiddenExtendFields = false;
 		return;
 	}
 
-	this.fieldX1 = form.elements[this.fieldNameX1];
-	this.fieldY1 = form.elements[this.fieldNameY1];
-	this.fieldX2 = form.elements[this.fieldNameX2];
-	this.fieldY2 = form.elements[this.fieldNameY2];
+	this.field_x1 = form.elements[this.field_name_x1];
+	this.field_y1 = form.elements[this.field_name_y1];
+	this.field_x2 = form.elements[this.field_name_x2];
+	this.field_y2 = form.elements[this.field_name_y2];
 	
-	this.hasHiddenExtendFields = this.fieldX1 && this.fieldY1 && this.fieldX2 && this.fieldY2;
+	this.hasHiddenExtendFields = this.field_x1 && this.field_y1 && this.field_x2 && this.field_y2;
 
 }
 
@@ -2258,10 +2305,10 @@ Map.prototype.restoreState = function()
 	// zoom
 	if (this.hasHiddenExtendFields)
 	{
-		var x1 = parseFloat(this.fieldX1.value);
-		var y1 = parseFloat(this.fieldY1.value);
-		var x2 = parseFloat(this.fieldX2.value);
-		var y2 = parseFloat(this.fieldY2.value);
+		var x1 = parseFloat(this.field_x1.value);
+		var y1 = parseFloat(this.field_y1.value);
+		var x2 = parseFloat(this.field_x2.value);
+		var y2 = parseFloat(this.field_y2.value);
 		this.zoomMapTo(x1, y1, x2, y2, false, 0, false, false, true);
 	}
 	
