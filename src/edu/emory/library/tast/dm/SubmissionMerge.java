@@ -7,6 +7,7 @@ import java.util.Set;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 
@@ -23,6 +24,7 @@ public class SubmissionMerge extends Submission
 		attributes.put("time", new DateAttribute("id", null));
 		attributes.put("solved", new BooleanAttribute("solved", "SubmissionMerge", null));
 		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
+		attributes.put("editorVoyage", new EditedVoyageAttribute("editorVoyage", "EditedVoyage"));
 	}
 	
 	public static Attribute getAttribute(String name) {

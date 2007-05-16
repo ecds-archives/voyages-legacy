@@ -20,6 +20,7 @@ public class SubmissionNew extends Submission
 	static {
 		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
 		attributes.put("time", new DateAttribute("id", null));
+		attributes.put("editorVoyage", new EditedVoyageAttribute("editorVoyage", "EditedVoyage"));
 		attributes.put("newVoyage", new EditedVoyageAttribute("newVoyage", "EditedVoyage"));
 		attributes.put("solved", new BooleanAttribute("solved", "SubmissionNew", null));
 		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));

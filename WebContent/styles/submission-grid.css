@@ -60,3 +60,8 @@ td.grid-editor-dist-value {
 	
 td.grid-editor-same-value {
 	background-color: #BBDDFF; }
+	
+div.grid-editor-error {
+	font-weight: bold;
+	color: red;
+}

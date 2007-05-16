@@ -149,6 +149,7 @@ public class AdminSubmissionBean {
 				attributeNotes[0] = (((SubmissionNew) lSubmisssion).getNewVoyage().getAttributeNotes());
 				if (vNew == null) {
 					toVals[1] =  new Voyage();
+					attributeNotes[1] = new HashMap();
 				} else {
 					toVals[1] =  vNew.getVoyage();
 					attributeNotes[1] = vNew.getAttributeNotes();
@@ -337,10 +338,10 @@ public class AdminSubmissionBean {
 
 		Conditions c = new Conditions();
 		if (this.requestStatus.equals("2")) {
-			c.addCondition(Submission.getAttribute("editedVoyage"), null, Conditions.OP_IS_NOT);
+			c.addCondition(Submission.getAttribute("editorVoyage"), null, Conditions.OP_IS_NOT);
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
 		} else if (this.requestStatus.equals("3")) {
-			c.addCondition(Submission.getAttribute("editedVoyage"), null, Conditions.OP_IS);
+			c.addCondition(Submission.getAttribute("editorVoyage"), null, Conditions.OP_IS);
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
 		} else if (this.requestStatus.equals("4")) {
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(true), Conditions.OP_EQUALS);

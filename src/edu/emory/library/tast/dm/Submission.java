@@ -36,7 +36,7 @@ public abstract class Submission
 		attributes.put("time", new DateAttribute("id", null));
 		attributes.put("solved", new BooleanAttribute("solved", "Submission", null));
 		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
-		attributes.put("editedVoyage", new EditedVoyageAttribute("editedVoyage", "EditedVoyage"));
+		attributes.put("editorVoyage", new EditedVoyageAttribute("editorVoyage", "EditedVoyage"));
 	}
 	public static Attribute getAttribute(String name) {
 		return (Attribute)attributes.get(name);
