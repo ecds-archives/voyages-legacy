@@ -15,10 +15,10 @@ var GridEditorGlobals =
 		return gridEditor.getField(rowName, columnName);
 	},
 
-	listItemSelected: function(gridEditorId, rowName, columnName, depth)
+	listItemSelected: function(gridEditorId, rowName, columnName, depth, invokeCompare)
 	{
 		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
-		if (gridEditor) gridEditor.listItemSelected(rowName, columnName, depth);
+		if (gridEditor) gridEditor.listItemSelected(rowName, columnName, depth, invokeCompare);
 	},
 	
 	toggleRowGroup: function(gridEditorId, rowGroupIndex)
@@ -81,25 +81,29 @@ function GridEditorListItem(value, text, subItems)
 	this.subItems = subItems;
 }
 
-function GridEditorTextbox(inputName)
+function GridEditorTextbox(cellId, inputName)
 {
+	this.cellId = cellId;
 	this.inputName = inputName;
 }
 
-function GridEditorTextarea(inputName)
+function GridEditorTextarea(cellId, inputName)
 {
+	this.cellId = cellId;
 	this.inputName = inputName;
 }
 
-function GridEditorDate(yearInputName, monthInputName, dayInputName)
+function GridEditorDate(cellId, yearInputName, monthInputName, dayInputName)
 {
+	this.cellId = cellId;
 	this.yearInputName = yearInputName;
 	this.monthInputName = monthInputName;
 	this.dayInputName = dayInputName;
 }
 
-function GridEditorList(fieldTypeName, selectsNamePrefix, depthFieldName)
+function GridEditorList(cellId, fieldTypeName, selectsNamePrefix, depthFieldName)
 {
+	this.cellId = cellId;
 	this.fieldTypeName = fieldTypeName;
 	this.selectsNamePrefix = selectsNamePrefix;
 	this.depthFieldName = depthFieldName;
@@ -158,10 +162,14 @@ GridEditor.prototype.getField = function(rowName, columnName)
 	return row[columnName];
 }
 
-GridEditor.prototype.listItemSelected = function(rowName, columnName, depth)
+GridEditor.prototype.listItemSelected = function(rowName, columnName, depth, invokeCompare)
 {
 	var field = this.getField(rowName, columnName);
-	if (field) field.itemSelected(this, depth);
+	if (field)
+	{
+		field.itemSelected(this, depth, invokeCompare);
+		if (invokeCompare) this.compare(rowName, columnName);
+	}
 }
 
 GridEditor.prototype.toggleRowGroup = function(rowGroupIndex)
@@ -269,20 +277,31 @@ GridEditor.prototype.copy = function(srcColumnName, dstColumnName, rowName)
 	
 	var value = srcField.getValue(this);
 	dstField.setValue(this, value);
+	
+	if (this.compareToColumn)
+		this.compare(rowName, this.compareToColumn);
 
 }
 
 GridEditor.prototype.compare = function(rowName, columnName)
 {
 
-	// alert("column = " + columnName + ", row = " + rowName);
+	var value = this.fields[rowName][columnName].getValue(this);
 
 	var rowFields = this.fields[rowName];
 	for (c in rowFields)
 	{
 		if (c != columnName)
 		{
-			//alert(rowFields[c]);
+			var cell = document.getElementById(rowFields[c].cellId);
+			if (rowFields[c].compareTo(this, value))
+			{
+				cell.className = "grid-editor-same-value";
+			}
+			else
+			{
+				cell.className = "grid-editor-dist-value";
+			}
 		}
 	}
 	
@@ -302,12 +321,29 @@ GridEditorTextbox.prototype.setValue = function(grid, value)
 	document.forms[grid.formName].elements[this.inputName].value = value;
 }
 
+GridEditorTextbox.prototype.compareTo = function(grid, value)
+{
+	return value == this.getValue(grid);
+}
+
 /********************************************
 * GridEditorTextarea object
 *********************************************/
 
-GridEditorTextarea.prototype.getValue = GridEditorTextbox.prototype.getValue;
-GridEditorTextarea.prototype.setValue = GridEditorTextbox.prototype.setValue;
+GridEditorTextarea.prototype.getValue = function(grid)
+{
+	return StringUtils.splitByLinesAndRemoveEmpty(document.forms[grid.formName].elements[this.inputName].value);
+}
+
+GridEditorTextarea.prototype.setValue = function(grid, values)
+{
+	document.forms[grid.formName].elements[this.inputName].value = values.join("\n");
+}
+
+GridEditorTextarea.prototype.compareTo = function(grid, values)
+{
+	return StringUtils.compareArrays(values, this.getValue(grid));
+}
 
 /********************************************
 * GridEditorDate object
@@ -317,9 +353,9 @@ GridEditorDate.prototype.getValue = function(grid)
 {
 	var frm = document.forms[grid.formName];
 	return {
-		year: frm.elements[this.yearInputName].value,
-		month: frm.elements[this.monthInputName].value,
-		day: frm.elements[this.dayInputName].value};
+		year: frm.elements[this.yearInputName].value.replace(/^0+/, ""),
+		month: frm.elements[this.monthInputName].value.replace(/^0+/, ""),
+		day: frm.elements[this.dayInputName].value.replace(/^0+/, "") };
 }
 
 GridEditorDate.prototype.setValue = function(grid, value)
@@ -328,6 +364,12 @@ GridEditorDate.prototype.setValue = function(grid, value)
 	frm.elements[this.yearInputName].value = value.year;
 	frm.elements[this.monthInputName].value = value.month;
 	frm.elements[this.dayInputName].value = value.day;
+}
+
+GridEditorDate.prototype.compareTo = function(grid, value)
+{
+	var thisValue = this.getValue(grid);
+	return thisValue.year == value.year && thisValue.month == value.month && thisValue.day == value.day;
 }
 
 /********************************************
@@ -397,6 +439,27 @@ GridEditorList.prototype.setValue = function(grid, values)
 		sel = frm.elements[this.selectsNamePrefix + (i++)];
 	}
 
+}
+
+GridEditorList.prototype.compareTo = function(grid, values)
+{
+	var thisValues = this.getValue(grid);
+	if (thisValues.length != values.length)
+	{
+		return false;
+	}
+	else
+	{
+		var n = thisValues.length;
+		for (var i = 0; i < n; i++)
+		{
+			if (thisValues[i] != values[i])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 GridEditorList.prototype.itemSelected = function(grid, depth)

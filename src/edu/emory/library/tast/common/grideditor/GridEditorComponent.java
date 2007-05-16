@@ -83,6 +83,11 @@ public class GridEditorComponent extends UIComponentBase
 		return getClientId(context) + "_expanded_groups";
 	}
 
+	private String getCellId(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row;
+	}
+
 	private String getNoteExpandedStatusFieldName(FacesContext context, String column, String row)
 	{
 		return getClientId(context) + "_" + column + "_" + row + "_note_status";
@@ -308,8 +313,8 @@ public class GridEditorComponent extends UIComponentBase
 						getValueInputPrefix(context, columnName, rowName),
 						row,
 						column,
-						value,
-						column.isReadOnly());
+						getCellId(context, columnName, rowName),
+						value, column.isReadOnly());
 
 			}
 			regJS.append("}");
@@ -685,6 +690,7 @@ public class GridEditorComponent extends UIComponentBase
 						
 						writer.startElement("td", this);
 						writer.writeAttribute("class", cellCssClass, null);
+						writer.writeAttribute("id", getCellId(context, columnName, rowName), null);
 						
 						adapter.encode(context,
 								this,

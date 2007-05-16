@@ -52,23 +52,41 @@ public class DateAdapter extends Adapter
 		
 	}
 	
-	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, String cellId, Value value, boolean readOnly) throws IOException
 	{
-		regJS.append("new GridEditorDate(" +
-			"'" + getYearFieldName(inputPrefix) + "', " +
-			"'" + getMonthFieldName(inputPrefix) + "', " +
-			"'" + getDayFieldName(inputPrefix) + "')");
+		regJS.append("new GridEditorDate(");
+		regJS.append("'").append(cellId).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(getYearFieldName(inputPrefix)).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(getMonthFieldName(inputPrefix)).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(getDayFieldName(inputPrefix)).append("'");
+		regJS.append(")");
 	} 
 	
-	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, DateValue dateValue, ResponseWriter writer) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, String inputPrefix, DateValue dateValue, ResponseWriter writer, Row row, Column column, boolean invokeCompare) throws IOException
 	{
+		
+		String compareJS = null;
+		if (invokeCompare)
+			compareJS = 
+				"GridEditorGlobals.compare('" +
+				"" + clientGridId + "', " +
+				"'" + row.getName() + "', " +
+				"'" + column.getName() + "')";
 		
 		// day
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getYearFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getYearOrEmpty(), null);
-		writer.writeAttribute("class", "record-gridEditor-date-year", null);
+		writer.writeAttribute("class", "grid-editor-date-year", null);
+		if (invokeCompare)
+		{
+			writer.writeAttribute("onkeyup", compareJS, null);
+			writer.writeAttribute("onchange", compareJS, null);
+		}
 		writer.endElement("input");
 		
 		// month
@@ -76,7 +94,12 @@ public class DateAdapter extends Adapter
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getMonthFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getMonthOrEmpty(), null);
-		writer.writeAttribute("class", "record-gridEditor-date-month", null);
+		writer.writeAttribute("class", "grid-editor-date-month", null);
+		if (invokeCompare)
+		{
+			writer.writeAttribute("onkeyup", compareJS, null);
+			writer.writeAttribute("onchange", compareJS, null);
+		}
 		writer.endElement("input");
 
 		// year
@@ -84,7 +107,12 @@ public class DateAdapter extends Adapter
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getDayFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getDayOrEmpty(), null);
-		writer.writeAttribute("class", "record-gridEditor-date-day", null);
+		writer.writeAttribute("class", "grid-editor-date-day", null);
+		if (invokeCompare)
+		{
+			writer.writeAttribute("onkeyup", compareJS, null);
+			writer.writeAttribute("onchange", compareJS, null);
+		}
 		writer.endElement("input");
 
 	}
@@ -122,7 +150,7 @@ public class DateAdapter extends Adapter
 		ResponseWriter writer = context.getResponseWriter();
 
 		if (!readOnly)
-			encodeEditMode(gridEditor, inputPrefix, dateValue, writer);
+			encodeEditMode(gridEditor, clientGridId, inputPrefix, dateValue, writer, row, column, invokeCompare);
 		else
 			encodeReadOnlyMode(gridEditor, inputPrefix, dateValue, writer);
 

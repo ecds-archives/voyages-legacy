@@ -97,10 +97,12 @@ public class ListAdapter extends Adapter
 
 	}
 
-	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, String cellId, Value value, boolean readOnly) throws IOException
 	{
 		
 		regJS.append("new GridEditorList(");
+		regJS.append("'").append(cellId).append("'");
+		regJS.append(", ");
 		regJS.append("'").append(row.getType()).append("'");
 		regJS.append(", ");
 		regJS.append("'").append(getHtmlSelectNamePrefix(inputPrefix)).append("'");
@@ -144,7 +146,7 @@ public class ListAdapter extends Adapter
 		
 	}
 	
-	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, Row row, Column column, String inputPrefix, ResponseWriter writer, ListFieldType listFieldType, ListItem[] selListItems, int maxDepth) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, Row row, Column column, String inputPrefix, ResponseWriter writer, ListFieldType listFieldType, ListItem[] selListItems, int maxDepth, boolean invokeCompare) throws IOException
 	{
 		
 		writer.startElement("table", gridEditor);
@@ -173,7 +175,8 @@ public class ListAdapter extends Adapter
  				"'" + clientGridId + "', " +
  				"'" + row.getName() + "', " +
  				"'" + column.getName() + "', " +
- 				"" + i + ")";
+ 				"" + i + ", " + 
+ 				(invokeCompare ? "true" : "false") + ")";
 
  			writer.startElement("td", gridEditor);
 
@@ -251,7 +254,7 @@ public class ListAdapter extends Adapter
 				String.valueOf(selListItems.length));
 
 		if (!readOnly)
-			encodeEditMode(gridEditor, clientGridId, row, column, inputPrefix, writer, listFieldType, selListItems, maxDepth);
+			encodeEditMode(gridEditor, clientGridId, row, column, inputPrefix, writer, listFieldType, selListItems, maxDepth, invokeCompare);
 		else
 			encodeReadOnlyMode(gridEditor, clientGridId, row, column, inputPrefix, writer, listFieldType, selListItems, maxDepth);
 		

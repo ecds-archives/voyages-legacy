@@ -397,7 +397,7 @@
 	<searchable-attribute
 		type="port"
 		id="portret"
-		userLabel="Place/region* whwre voyage ended">
+		userLabel="Place/region* where voyage ended">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

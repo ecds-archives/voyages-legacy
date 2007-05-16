@@ -33,8 +33,8 @@ abstract public class Adapter
 			String inputPrefix,
 			Row row,
 			Column column,
-			Value value,
-			boolean readOnly) throws IOException
+			String cellId,
+			Value value, boolean readOnly) throws IOException
 	{
 		regJS.append("{}");
 	}

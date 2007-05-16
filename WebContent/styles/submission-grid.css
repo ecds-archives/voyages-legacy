@@ -28,13 +28,12 @@ textarea.grid-editor-desc {
 	width: 200px;
 }
 
-input.record-gridEditor-date-day,input.record-gridEditor-date-month {
-	width: 20px;
-}
+input.grid-editor-date-day,
+input.grid-editor-date-month {
+	width: 20px; }
 
-input.record-gridEditor-date-year {
-	width: 40px;
-}
+input.grid-editor-date-year {
+	width: 40px; }
 
 th.grid-editor-row-group {
 	font-size: 12pt;
@@ -56,7 +55,7 @@ span.grid-editor-copy-button:hover {
 	color: White; }
 	
 td.grid-editor-dist-value {
-	}	
+	}
 	
 td.grid-editor-same-value {
 	background-color: #BBDDFF; }

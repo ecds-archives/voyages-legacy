@@ -626,6 +626,10 @@ var Timer =
 
 }
 
+/////////////////////////////////////////////////////////
+// ObjectUtils
+/////////////////////////////////////////////////////////
+
 var ObjectUtils = 
 {
 
@@ -647,4 +651,56 @@ var ObjectUtils =
 	{
 		alert(this.toString(obj));
 	}
+}
+
+/////////////////////////////////////////////////////////
+// StringUtils
+/////////////////////////////////////////////////////////
+
+var StringUtils = 
+{
+
+	splitByLines: function(str)
+	{
+		return str.split(/[\n\r]+/);
+	},
+
+	removeEmptyStrings: function(strArray)
+	{
+		var newArray = new Array();
+		for(var i = 0; i < strArray.length; i++)
+		{
+			if (strArray[i] != "")
+			{
+				newArray.push(strArray[i]);
+			}
+		}
+		return newArray;
+	},
+	
+	splitByLinesAndRemoveEmpty: function(str)
+	{
+		return StringUtils.removeEmptyStrings(StringUtils.splitByLines(str));
+	},
+	
+	compareArrays: function(a1, a2)
+	{
+		if (a1.length != a2.length)
+		{
+			return false;
+		}
+		else
+		{
+			var n = a1.length;
+			for(var i = 0; i < n; i++)
+			{
+				if (a1[i] != a2[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
 }

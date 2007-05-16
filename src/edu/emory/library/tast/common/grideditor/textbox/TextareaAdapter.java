@@ -33,15 +33,19 @@ public class TextareaAdapter extends Adapter
 	{
 		String submittedValue = getSubmittedValue(context, inputPrefix);
 		if (submittedValue == null) return null;
-		return new TextareaValue(submittedValue.split("\n"));
+		return new TextareaValue(submittedValue.split("[\n\r]+"));
 	}
 	
-	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, String cellId, Value value, boolean readOnly) throws IOException
 	{
-		regJS.append("new GridEditorTextarea('" + getInputName(inputPrefix) + "')");
+		regJS.append("new GridEditorTextarea(");
+		regJS.append("'").append(cellId).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(getInputName(inputPrefix)).append("'");
+		regJS.append(")");
 	}
 
-	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextareaValue textboxValue, ResponseWriter writer, TextareaFieldType textareaFieldType) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, String inputPrefix, TextareaValue textboxValue, ResponseWriter writer, Row row, Column column, TextareaFieldType textareaFieldType, boolean invokeCompare) throws IOException
 	{
 
 		writer.startElement("textarea", gridEditor);
@@ -50,6 +54,12 @@ public class TextareaAdapter extends Adapter
 		JsfUtils.writeParamIfNotDefault(writer, "rows", textareaFieldType.getRows(), TextareaFieldType.ROWS_DEFAULT);
 		JsfUtils.writeParamIfNotNull(writer, "class", textareaFieldType.getCssClass());
 		JsfUtils.writeParamIfNotNull(writer, "style", textareaFieldType.getCssStyle());
+		if (invokeCompare)
+		{
+			String compareJS = "GridEditorGlobals.compare('" + clientGridId + "', '" + row.getName() + "', '" + column.getName() + "')";
+			writer.writeAttribute("onkeyup", compareJS, null);
+			writer.writeAttribute("onchange", compareJS, null);
+		}
 		writer.write(textboxValue.getText());
 		writer.endElement("textarea");
 
@@ -75,13 +85,9 @@ public class TextareaAdapter extends Adapter
 		ResponseWriter writer = context.getResponseWriter();
 		
 		if (readOnly)
-		{
 			encodeReadOnlyMode(gridEditor, inputPrefix, textboxValue, writer);
-		}
 		else
-		{
-			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer, textareaFieldType);
-		}
+			encodeEditMode(gridEditor, clientGridId, inputPrefix, textboxValue, writer, row, column, textareaFieldType, invokeCompare);
 		
 	}
 

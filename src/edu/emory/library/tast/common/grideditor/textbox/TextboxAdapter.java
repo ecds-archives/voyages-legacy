@@ -36,9 +36,13 @@ public class TextboxAdapter extends Adapter
 		return inputPrefix;
 	}
 	
-	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, Value value, boolean readOnly) throws IOException
+	public void createValueJavaScript(FacesContext context, StringBuffer regJS, GridEditorComponent gridEditor, String inputPrefix, Row row, Column column, String cellId, Value value, boolean readOnly) throws IOException
 	{
-		regJS.append("new GridEditorTextbox('" + getInputName(inputPrefix) + "')");
+		regJS.append("new GridEditorTextbox(");
+		regJS.append("'").append(cellId).append("'");
+		regJS.append(", ");
+		regJS.append("'").append(getInputName(inputPrefix)).append("'");
+		regJS.append(")");
 	}
 	
 	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer, Row row, Column column, TextboxFieldType textboxFieldType, boolean invokeCompare) throws IOException
