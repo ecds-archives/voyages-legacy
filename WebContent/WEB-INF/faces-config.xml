@@ -577,18 +577,6 @@
 	</navigation-rule>
 	
 	<navigation-rule>
-		<from-view-id>/admin/edit.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>cancel</from-outcome>
-			<to-view-id>/submission/submission-admin.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>list</from-outcome>
-			<to-view-id>/submission/submission-admin.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
 		<from-view-id>/database/galleryp.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>gotosearch</from-outcome>
@@ -771,7 +759,35 @@
 			<from-outcome>back</from-outcome>
 			<to-view-id>/submission/submission-admin-resolve.jsp</to-view-id>
 		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/submission/submission-admin-approve-delete-voyage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>main-menu</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/admin/edit.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>	
+	
+	<navigation-rule>
+		<from-view-id>/admin/edit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>save</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>delete</from-outcome>
+			<to-view-id>/submission/submission-admin-approve-delete-voyage.jsp</to-view-id>
+		</navigation-case>				
+	</navigation-rule>
 
 	<render-kit />
 

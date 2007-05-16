@@ -17,17 +17,17 @@
 <h:form id="main">
 
 	<s:gridEditor
-		rows="#{VoyageBean.rows}"
-		columns="#{VoyageBean.columns}"
-		values="#{VoyageBean.values}"
-		fieldTypes="#{VoyageBean.fieldTypes}"
-		rowGroups="#{VoyageBean.rowGroups}"/>
+		rows="#{AdminVoyageBean.rows}"
+		columns="#{AdminVoyageBean.columns}"
+		values="#{AdminVoyageBean.values}"
+		fieldTypes="#{AdminVoyageBean.fieldTypes}"
+		rowGroups="#{AdminVoyageBean.rowGroups}"/>
 
 	<br>
 	
 	<h:commandButton value="< Back" action="back"/>
-	<h:commandButton value="Save voyage" action="#{VoyageBean.save}"/>
-	<h:commandButton value="Delete voyage" action="#{VoyageBean.delete}"/>
+	<h:commandButton value="Save voyage" action="#{AdminVoyageBean.save}"/>
+	<h:commandButton value="Delete voyage" action="delete"/>
 </h:form>
 </f:view>
 </body>

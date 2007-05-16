@@ -1,6 +1,7 @@
 package edu.emory.library.tast.admin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +14,16 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.dm.EditedVoyage;
+import edu.emory.library.tast.dm.SubmissionEdit;
+import edu.emory.library.tast.dm.SubmissionMerge;
+import edu.emory.library.tast.dm.SubmissionNew;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.submission.SubmissionAttribute;
 import edu.emory.library.tast.submission.SubmissionAttributes;
 import edu.emory.library.tast.submission.SubmissionDictionaries;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 
 public class VoyageBean {
 
@@ -30,13 +36,15 @@ public class VoyageBean {
 	private static final String COLUMN_OLD = "old";
 
 	private static SubmissionAttribute attrs[] = SubmissionAttributes.getConfiguration().getSubmissionAttributes();
-	
-	
+
 	private VoyagesListBean listBean;
+
 	private Long rowId;
+
 	private Values values;
+
 	private RowGroup[] rowGroups;
-	
+
 	public VoyageBean() {
 		List rowGroupsList = new ArrayList();
 		for (int i = 0; i < attrs.length; i++) {
@@ -50,12 +58,16 @@ public class VoyageBean {
 			this.rowGroups[i] = new RowGroup(rowGroup, rowGroup);
 		}
 	}
-	
+
 	public void openVoyage(GridOpenRowEvent event) {
 		this.rowId = new Long(event.getRowId());
 		this.values = null;
 	}
-	
+
+	public String openVoyageAction() {
+		return "edit";
+	}
+
 	public Column[] getColumns() {
 		Column[] cols = new Column[2];
 		cols[0] = new Column(COLUMN_OLD, COLUMN_OLD_LABEL, true);
@@ -88,7 +100,8 @@ public class VoyageBean {
 		if (values == null) {
 			Session session = HibernateUtil.getSession();
 			Transaction t = session.beginTransaction();
-			
+			values = new Values();
+
 			Voyage voyage = Voyage.loadById(session, this.rowId);
 			for (int i = 0; i < attrs.length; i++) {
 				SubmissionAttribute attribute = attrs[i];
@@ -101,10 +114,10 @@ public class VoyageBean {
 				values.setValue(COLUMN_OLD, attrs[i].getName(), valueOld);
 				values.setValue(COLUMN_NEW, attrs[i].getName(), valueNew);
 			}
-			
+
 			t.commit();
 			session.close();
-			
+
 		}
 		return values;
 	}
@@ -115,6 +128,58 @@ public class VoyageBean {
 
 	public void setListBean(VoyagesListBean listBean) {
 		this.listBean = listBean;
+	}
+	
+	public String save() {		
+		boolean wasError = false;		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Voyage vNew = Voyage.loadById(session, this.rowId);		
+		if (vNew == null) {
+			return "save";
+		}
+		
+		Map newValues = values.getColumnValues(COLUMN_NEW);
+		for (int i = 0; i < attrs.length; i++) {
+			Value val = (Value) newValues.get(attrs[i].getName());
+			if (!val.isCorrectValue()) {
+				val.setErrorMessage("Value incorrect");
+				wasError = true;
+			}
+			Object[] vals = attrs[i].getValues(session, val);
+			for (int j = 0; j < vals.length; j++) {
+				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+			}
+			if (attrs[i].getName().equals("voyageid") && 
+					vNew.getVoyageid() == null) {
+				wasError = true;
+				val.setErrorMessage("This field is required");
+			}
+		};
+		
+		if (!wasError) {
+			vNew.saveOrUpdate();
+		}
+		
+		t.commit();
+		session.close();
+		
+		return "save";
+	}
+	
+	public String delete() {
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Voyage vNew = Voyage.loadById(session, this.rowId);	
+		if (vNew == null) {
+			return "main-menu";
+		}
+		session.delete(vNew);
+		t.commit();
+		session.close();
+		
+		return "main-menu";
 	}
 
 }

@@ -89,7 +89,7 @@ public class SubmissionAttribute {
 	public Value getValue(Object[] toBeFormatted) {
 		if (type.equals(TextboxAdapter.TYPE)) {
 			if (toBeFormatted[0] == null) {
-				return new TextboxValue("Empty");
+				return new TextboxValue(null);
 			}
 			return new TextboxValue(toBeFormatted[0].toString());
 		} else if (type.equals(DateAdapter.TYPE)) {
@@ -126,7 +126,9 @@ public class SubmissionAttribute {
 					return new ListValue();
 				}
 				Port port = (Port) toBeFormatted[0];
-				return new ListValue(new String[] {port.getId().toString()});
+				return new ListValue(new String[] {port.getRegion().getArea().getId().toString(),
+		            	   port.getRegion().getId().toString(),
+			            	   port.getId().toString()});
 			} else {
 				if (toBeFormatted[1] == null) {
 					return new ListValue();
@@ -206,7 +208,7 @@ public class SubmissionAttribute {
 			return ((TextareaValue)object).getTexts();
 		} else if (type.equals(SubmissionBean.LOCATIONS)) {
 			if (this.attribute.length == 1) {
-				String portId = ((ListValue)object).getValues()[0];
+				String portId = ((ListValue)object).getValues()[((ListValue)object).getValues().length - 1];
 				Port port = null;
 				if (!portId.equals("-1")) {
 					port = Port.loadById(sess, portId);

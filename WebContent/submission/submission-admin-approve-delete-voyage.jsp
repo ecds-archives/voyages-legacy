@@ -19,12 +19,12 @@
 
 	<h1>Confirm operation</h1>
 	<div style="width: 400px;">
-	Approving this request will cause deletion of some voyages.<br>
+	Approving this request will cause deletion of chosen voyage.<br>
 	Are you sure you want to continue?
 	</div>
 	
-	<h:commandButton value="< No, go back" action="#{AdminSubmissionBean.rejectDelete}"/>
-	<h:commandButton value="Yes, proceed >" action="#{AdminSubmissionBean.approveDelete}"/>
+	<h:commandButton value="< No, go back" action="back"/>
+	<h:commandButton value="Yes, proceed >" action="#{AdminVoyageBean.delete}"/>
 
 </h:form>
 </f:view>

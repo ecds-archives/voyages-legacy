@@ -651,6 +651,9 @@ public class AdminSubmissionBean {
 		Map notes = new HashMap();
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
+			if (attrs[i].getName().startsWith("placc")) {
+				int a = 0;
+			}
 			if (!val.isCorrectValue()) {
 				val.setErrorMessage("Value incorrect");
 				wasError = true;
@@ -712,4 +715,10 @@ public class AdminSubmissionBean {
 	public String rejectDelete() {
 		return "main-menu";
 	}
+	public String openVoyageAction()
+	{
+		System.out.println("Opening voyage here!!!!!!!!!!");
+		return "edit";
+	}
+	
 }

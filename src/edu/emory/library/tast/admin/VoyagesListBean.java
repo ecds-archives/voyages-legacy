@@ -66,6 +66,7 @@ public class VoyagesListBean
 	
 	public String openVoyage()
 	{
+		System.out.println("Opening voyage here!!!!!!!!!!");
 		return "edit";
 	}
 	
@@ -347,6 +348,7 @@ public class VoyagesListBean
 	public void setVoyageIdFrom(String voyageIdFrom) {
 		if (StringUtils.isNullOrEmpty(voyageIdFrom)) {
 			this.voyageIdFrom = -1;
+			return;
 		}
 		this.voyageIdFrom = Integer.parseInt(voyageIdFrom);
 	}
@@ -361,6 +363,7 @@ public class VoyagesListBean
 	public void setVoyageIdTo(String voyageIdTo) {
 		if (StringUtils.isNullOrEmpty(voyageIdTo)) {
 			this.voyageIdTo = -1;
+			return;
 		}
 		this.voyageIdTo = Integer.parseInt(voyageIdTo);
 	}

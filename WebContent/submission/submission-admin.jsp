@@ -59,7 +59,7 @@
 		<s:grid id="voyges" 
 			columns="#{AdminVoyagesListBean.columns}"
 			rows="#{AdminVoyagesListBean.rows}"
-			action="#{AdminVoyagesListBean.openVoyage}"
+			action="#{AdminVoyageBean.openVoyageAction}"
 			onOpenRow="#{AdminVoyageBean.openVoyage}" />
 		<f:verbatim>	
 		<br>
