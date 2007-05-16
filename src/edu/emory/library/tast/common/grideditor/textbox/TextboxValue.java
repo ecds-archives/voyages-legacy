@@ -47,7 +47,7 @@ public class TextboxValue extends Value
 		
 		TextboxValue that = (TextboxValue) obj;
 		
-		return StringUtils.compareStrings(this.text, that.text);
+		return StringUtils.compareStrings(this.text, that.text, true);
 		
 	}
 

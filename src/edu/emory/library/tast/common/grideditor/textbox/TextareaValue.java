@@ -10,12 +10,22 @@ public class TextareaValue extends Value
 
 	public TextareaValue(String[] texts)
 	{
-		this.texts = texts;
+		
+		int n = 0;
+		for (int i = 0; i < texts.length; i++)
+			if (!StringUtils.isNullOrEmpty(texts[i])) n++;
+		
+		int j = 0;
+		this.texts = new String[n];
+		for (int i = 0; i < texts.length; i++)
+			if (!StringUtils.isNullOrEmpty(texts[i]))
+				this.texts[j++] = texts[i];
+
 	}
 
 	public TextareaValue(String text)
 	{
-		texts = new String[] {text};
+		this(new String[] {text});
 	}
 
 	public String getText()
@@ -65,7 +75,7 @@ public class TextareaValue extends Value
 
 		TextareaValue that = (TextareaValue) obj;
 
-		return StringUtils.compareStringArrays(this.texts, that.texts);
+		return StringUtils.compareStringArrays(this.texts, that.texts, true);
 		
 	}
 	

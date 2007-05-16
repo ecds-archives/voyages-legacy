@@ -23,6 +23,14 @@ public class Column
 		this.readOnly = readOnly;
 	}
 
+	public Column(String name, String label, boolean readOnly, boolean compareTo)
+	{
+		this.label = label;
+		this.name = name;
+		this.readOnly = readOnly;
+		this.compareTo = compareTo;
+	}
+
 	public Column(String name, String label, boolean readOnly, String copyToColumnName, String copyToLabel)
 	{
 		this.label = label;
@@ -30,6 +38,16 @@ public class Column
 		this.readOnly = readOnly;
 		this.copyToColumn = copyToColumnName;
 		this.copyToLabel = copyToLabel;
+	}
+
+	public Column(String name, String label, boolean readOnly, String copyToColumnName, String copyToLabel, boolean compareTo)
+	{
+		this.label = label;
+		this.name = name;
+		this.readOnly = readOnly;
+		this.copyToColumn = copyToColumnName;
+		this.copyToLabel = copyToLabel;
+		this.compareTo = compareTo;
 	}
 
 	public String getLabel()

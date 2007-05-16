@@ -41,7 +41,7 @@ public class TextboxAdapter extends Adapter
 		regJS.append("new GridEditorTextbox('" + getInputName(inputPrefix) + "')");
 	}
 	
-	private void encodeEditMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer, TextboxFieldType textboxFieldType) throws IOException
+	private void encodeEditMode(GridEditorComponent gridEditor, String clientGridId, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer, Row row, Column column, TextboxFieldType textboxFieldType, boolean invokeCompare) throws IOException
 	{
 
 		writer.startElement("input", gridEditor);
@@ -51,6 +51,12 @@ public class TextboxAdapter extends Adapter
 		JsfUtils.writeParamIfNotNull(writer, "class", textboxFieldType.getCssClass());
 		JsfUtils.writeParamIfNotNull(writer, "style", textboxFieldType.getCssStyle());
 		writer.writeAttribute("value", textboxValue.getText(), null);
+		if (invokeCompare)
+		{
+			String compareJS = "GridEditorGlobals.compare('" + clientGridId + "', '" + row.getName() + "', '" + column.getName() + "')";
+			writer.writeAttribute("onkeyup", compareJS, null);
+			writer.writeAttribute("onchange", compareJS, null);
+		}
 		writer.endElement("input");
 
 	}
@@ -69,7 +75,7 @@ public class TextboxAdapter extends Adapter
 
 	}
 
-	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly) throws IOException
+	public void encode(FacesContext context, GridEditorComponent gridEditor, String clientGridId, UIForm form, Row row, Column column, FieldType fieldType, String inputPrefix, Value value, boolean readOnly, boolean invokeCompare) throws IOException
 	{
 
 		TextboxValue textboxValue = (TextboxValue) value;
@@ -82,7 +88,7 @@ public class TextboxAdapter extends Adapter
 		}
 		else
 		{
-			encodeEditMode(gridEditor, inputPrefix, textboxValue, writer, textboxFieldType);
+			encodeEditMode(gridEditor, clientGridId, inputPrefix, textboxValue, writer, row, column, textboxFieldType, invokeCompare);
 		}
 		
 	}

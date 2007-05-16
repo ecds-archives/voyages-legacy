@@ -23,7 +23,8 @@ abstract public class Adapter
 			FieldType fieldType,
 			String inputPrefix,
 			Value value,
-			boolean readOnly) throws IOException;
+			boolean readOnly,
+			boolean invokeCompare) throws IOException;
 	
 	public void createValueJavaScript(
 			FacesContext context,

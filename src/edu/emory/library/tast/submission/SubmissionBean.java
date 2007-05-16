@@ -531,7 +531,8 @@ public class SubmissionBean
 					new Column(
 							CHANGED_VOYAGE,
 							CHANGED_VOYAGE_LABEL,
-							false)};
+							false,
+							true)};
 
 		}
 		else if (submissionType == SUBMISSION_TYPE_MERGE)

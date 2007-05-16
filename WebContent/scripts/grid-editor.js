@@ -43,6 +43,12 @@ var GridEditorGlobals =
 	{
 		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
 		if (gridEditor) gridEditor.copy(srcColumnName, dstColumnName, rowName);
+	},
+
+	compare: function(gridEditorId, rowName, columnName)
+	{
+		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
+		if (gridEditor) gridEditor.compare(rowName, columnName);
 	}
 
 }
@@ -51,7 +57,7 @@ var GridEditorGlobals =
 * constructors
 *********************************************/
 
-function GridEditor(gridEditorId, formName, mainTableId, expandedGroupsFieldName, fieldTypes, fields, rowGroups)
+function GridEditor(gridEditorId, formName, mainTableId, expandedGroupsFieldName, fieldTypes, fields, rowGroups, compareToColumn)
 {
 	this.gridEditorId = gridEditorId;
 	this.mainTableId = mainTableId;
@@ -60,6 +66,7 @@ function GridEditor(gridEditorId, formName, mainTableId, expandedGroupsFieldName
 	this.fields = fields;
 	this.rowGroups = rowGroups;
 	this.expandedGroupsFieldName = expandedGroupsFieldName;
+	this.compareToColumn = compareToColumn;
 }
 
 function GridEditorListFieldType(list)
@@ -263,6 +270,22 @@ GridEditor.prototype.copy = function(srcColumnName, dstColumnName, rowName)
 	var value = srcField.getValue(this);
 	dstField.setValue(this, value);
 
+}
+
+GridEditor.prototype.compare = function(rowName, columnName)
+{
+
+	// alert("column = " + columnName + ", row = " + rowName);
+
+	var rowFields = this.fields[rowName];
+	for (c in rowFields)
+	{
+		if (c != columnName)
+		{
+			//alert(rowFields[c]);
+		}
+	}
+	
 }
 
 /********************************************

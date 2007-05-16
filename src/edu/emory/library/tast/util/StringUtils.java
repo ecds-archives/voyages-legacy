@@ -91,19 +91,41 @@ public class StringUtils
 		return buffer.toString();
 	}
 	
-	public static boolean compareStrings(String s1, String s2)
+	public static boolean compareStrings(String s1, String s2, boolean nullSameAsEmpty)
 	{
 		if (s1 == s2)
 		{
 			return true;
 		}
-		else if (s1 == null && s2 == null)
+		else if (s1 == null)
 		{
-			return true;
+			if (s2 == null)
+			{
+				return true;
+			}
+			else if (nullSameAsEmpty && s2.length() == 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
-		else if (s1 != null)
+		else if (s2 == null)
 		{
-			 return s1.equals(s2);
+			if (s1 == null)
+			{
+				return true;
+			}
+			else if (nullSameAsEmpty && s1.length() == 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
@@ -111,7 +133,12 @@ public class StringUtils
 		}
 	}
 
-	public static boolean compareStringArrays(String []a1, String []a2)
+	public static boolean compareStrings(String s1, String s2)
+	{
+		return compareStrings(s1, s2, false);
+	}
+
+	public static boolean compareStringArrays(String []a1, String []a2, boolean nullSameAsEmpty)
 	{
 		if (a1 == a2)
 		{
@@ -138,13 +165,18 @@ public class StringUtils
 			int n = a1.length;
 			for (int i = 0; i < n; i++)
 			{
-				if (!StringUtils.compareStrings(a1[i], a2[i]))
+				if (!StringUtils.compareStrings(a1[i], a2[i], nullSameAsEmpty))
 				{
 					return false;
 				}
 			}
 			return true;
 		}
+	}
+	
+	public static boolean compareStringArrays(String []a1, String []a2)
+	{
+		return compareStringArrays(a1, a2, false);
 	}
 
 	public static String join(String sep, Set objects)

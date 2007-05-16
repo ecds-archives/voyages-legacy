@@ -379,7 +379,7 @@ public class GridEditorComponent extends UIComponentBase
 
 	}
 	
-	private List prepateInternalGroups()
+	private List prepareInternalGroups()
 	{
 		
 		List internalGroups = new ArrayList(); 
@@ -694,7 +694,8 @@ public class GridEditorComponent extends UIComponentBase
 								column,
 								fieldType,
 								getValueInputPrefix(context, columnName, rowName),
-								value, column.isReadOnly());
+								value, column.isReadOnly(),
+								compareToColumn == column);
 						
 						JsfUtils.encodeHiddenInput(this, writer,
 								getValueErrorFlagFieldName(context, columnName, rowName),
@@ -781,7 +782,7 @@ public class GridEditorComponent extends UIComponentBase
 				StringUtils.join(",", expandedGroups));
 		
 		// prepate a list for rendering
-		List internalGroups = prepateInternalGroups();
+		List internalGroups = prepareInternalGroups();
 
 		// registration JavaScript
 		encodeRegJS(context, writer, form, mainId, mainTableId, internalGroups);
