@@ -39,6 +39,7 @@
 			<exclude name="attribute-groups.xml" />
 			<exclude name="searchable-attributes.xml" />
 			<exclude name="table-attributes.xml" />
+			<exclude name="submission-attributes.xml" />
 		</jar>
 	</target>
 
@@ -55,6 +56,7 @@
 				<include name="attribute-groups.xml" />
 				<include name="searchable-attributes.xml" />
 				<include name="table-attributes.xml" />
+				<include name="submission-attributes.xml" />
 			</classes>
 			<fileset dir="${webdir}" />
 		</war>
