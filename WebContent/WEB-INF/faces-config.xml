@@ -428,6 +428,24 @@
 		<managed-bean-name>AdminSubmissionBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.submission.AdminSubmissionBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>voyageBean</property-name>
+			<value>#{AdminVoyageBean}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>SubmissionUsersBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.submission.SubmissionUsersBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>submissionBean</property-name>
+			<value>#{SubmissionBean}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>adminSubmissionBean</property-name>
+			<value>#{AdminSubmissionBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<navigation-rule>
@@ -667,6 +685,10 @@
 			<from-outcome>merge</from-outcome>
 			<to-view-id>/submission/submission-select-voyages-merge.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
@@ -683,6 +705,10 @@
 			<from-outcome>start</from-outcome>
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
@@ -698,6 +724,10 @@
 		<navigation-case>
 			<from-outcome>start</from-outcome>
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
@@ -720,6 +750,10 @@
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>done</from-outcome>
 			<to-view-id>/submission/submission-thankyou.jsp</to-view-id>
 		</navigation-case>
@@ -735,6 +769,14 @@
 			<from-outcome>edit</from-outcome>
 			<to-view-id>/admin/edit.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>		
 	</navigation-rule>
 	
 	<navigation-rule>
@@ -746,6 +788,10 @@
 		<navigation-case>
 			<from-outcome>approve-delete</from-outcome>
 			<to-view-id>/submission/submission-admin-approve-delete.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>	
 
@@ -759,6 +805,10 @@
 			<from-outcome>back</from-outcome>
 			<to-view-id>/submission/submission-admin-resolve.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
@@ -770,6 +820,10 @@
 		<navigation-case>
 			<from-outcome>back</from-outcome>
 			<to-view-id>/admin/edit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>	
 	
@@ -786,7 +840,35 @@
 		<navigation-case>
 			<from-outcome>delete</from-outcome>
 			<to-view-id>/submission/submission-admin-approve-delete-voyage.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>				
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-login.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>admin-logged-in</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>logged-in</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>				
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/submission/submission-thankyou.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>new-submission</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>		
 	</navigation-rule>
 
 	<render-kit />

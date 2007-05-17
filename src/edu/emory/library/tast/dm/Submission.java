@@ -29,6 +29,7 @@ public abstract class Submission
 	private Set sources;
 	private boolean solved;
 	private boolean accepted;
+	private User user;
 	
 	private static Map attributes = new HashMap();
 	static {
@@ -175,6 +176,14 @@ public abstract class Submission
 
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 

@@ -21,7 +21,15 @@ public class MainMenuBean
 								new MainMenuBarPageItem(
 										"estimates",
 										"Estimates",
-										"assessment/estimates.faces")}),
+										"assessment/estimates.faces"),
+								new MainMenuBarPageItem(
+										"intromaps",
+										"Introductory Maps",
+										"assessment/intromaps.faces"),
+								new MainMenuBarPageItem(
+										"furtherstudy",
+										"Further Study",
+										"assessment/furtherstudy.faces")}),
 						
 				new MainMenuBarSectionItem(
 						"database",
@@ -39,7 +47,7 @@ public class MainMenuBean
 										"database/download.faces"),
 								new MainMenuBarPageItem(
 										"methodology",
-										"Methodology",
+										"Understanding the database",
 										"database/methodology.faces")}),
 
 				new MainMenuBarSectionItem(

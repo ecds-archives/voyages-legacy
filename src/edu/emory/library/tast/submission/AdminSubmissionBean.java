@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.admin.VoyageBean;
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
@@ -29,6 +30,7 @@ import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
 import edu.emory.library.tast.dm.SubmissionMerge;
 import edu.emory.library.tast.dm.SubmissionNew;
+import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -82,7 +84,7 @@ public class AdminSubmissionBean {
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getSubmissionAttributes();
 
-	private long voyageId = -1;
+	private VoyageBean voyageBean = null;
 
 	private boolean wasError = false;
 
@@ -104,6 +106,8 @@ public class AdminSubmissionBean {
 
 	private boolean deleteApproved = false;
 
+	private User authenticateduser = null;
+	
 	public AdminSubmissionBean() {
 		List rowGroupsList = new ArrayList();
 		for (int i = 0; i < attrs.length; i++) {
@@ -117,10 +121,6 @@ public class AdminSubmissionBean {
 			this.rowGroups[i] = new RowGroup(rowGroup, rowGroup);
 		}
 
-	}
-
-	public void setVoyageId(long voyageId) {
-		this.voyageId = voyageId;
 	}
 
 	public Values getValues() {
@@ -309,6 +309,10 @@ public class AdminSubmissionBean {
 		return new Boolean(this.chosenTab.equals("requests"));
 	}
 
+	public Boolean getUsersListSelected() {
+		return new Boolean(this.chosenTab.equals("users"));
+	}
+	
 	public SelectItem[] getRequestTypes() {
 		return new SelectItem[] { new SelectItem("1", REQUEST_ALL), new SelectItem("2", REQUEST_NEW), new SelectItem("3", REQUEST_EDIT),
 				new SelectItem("4", REQUEST_MERGE), };
@@ -359,7 +363,7 @@ public class AdminSubmissionBean {
 						lastCol += "/Rejected";
 					}
 				}
-				l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request", "Unknown",
+				l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request", submission.getUser().getUserName(),
 						submission.getTime().toString(), "New voyage - ID not yet assigned", 
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol}));
 			}
@@ -378,7 +382,7 @@ public class AdminSubmissionBean {
 						lastCol += "/Rejected";
 					}
 				}
-				l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request", "Unknown",
+				l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request", submission.getUser().getUserName(),
 						submission.getTime().toString(), submission.getOldVoyage().getVoyage().getVoyageid().toString() ,
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol}));
 			}
@@ -408,7 +412,7 @@ public class AdminSubmissionBean {
 						lastCol += "/Rejected";
 					}
 				}
-				l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request", "Unknown",
+				l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request", submission.getUser().getUserName(),
 						submission.getTime().toString(), involvedStr ,
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol}));
 			}
@@ -651,9 +655,6 @@ public class AdminSubmissionBean {
 		Map notes = new HashMap();
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
-			if (attrs[i].getName().startsWith("placc")) {
-				int a = 0;
-			}
 			if (!val.isCorrectValue()) {
 				val.setErrorMessage("Value incorrect");
 				wasError = true;
@@ -715,10 +716,48 @@ public class AdminSubmissionBean {
 	public String rejectDelete() {
 		return "main-menu";
 	}
-	public String openVoyageAction()
-	{
-		System.out.println("Opening voyage here!!!!!!!!!!");
+	public String openVoyageAction() {
 		return "edit";
 	}
 	
+	public String logout() {
+		this.authenticateduser = null;
+		return null;
+	}
+
+	public User getAuthenticateduser() {
+		return authenticateduser;
+	}
+
+	public void setAuthenticateduser(User authenticateduser) {
+		this.authenticateduser = authenticateduser;
+	}
+	
+	public Boolean getIsAdmin() {
+		return new Boolean(this.authenticateduser.isAdmin());
+	}
+
+	public boolean isDeleteMergeValid() {
+		return this.submissionId != null;
+	}
+
+	public boolean isEditValid() {
+		return this.voyageBean.isEditValid();
+	}
+
+	public boolean isDeleteValid() {
+		return this.voyageBean.isDeleteValid();
+	}
+
+	public boolean isResolveValid() {
+		return this.submissionId != null;
+	}
+
+	public VoyageBean getVoyageBean() {
+		return voyageBean;
+	}
+
+	public void setVoyageBean(VoyageBean voyageBean) {
+		this.voyageBean = voyageBean;
+	}
 }

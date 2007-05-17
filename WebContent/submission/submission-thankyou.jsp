@@ -22,6 +22,10 @@
 	The submission process has been completed. Your submission
 	has been stored in the system, and it soon reviewed.
 	</div>
+	
+	<h:commandLink value="Submit next request" action="#{SubmissionBean.submitNext}"/>
+	<br>
+	<h:commandLink value="Logout" action="#{SubmissionBean.logout}"/>
 
 </h:form>
 </f:view>

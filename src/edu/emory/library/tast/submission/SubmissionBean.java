@@ -23,6 +23,7 @@ import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
 import edu.emory.library.tast.dm.SubmissionMerge;
 import edu.emory.library.tast.dm.SubmissionNew;
+import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -69,6 +70,8 @@ public class SubmissionBean
 	
 	private Set expandedGridRows;
 
+	private User authenticatedUser = null;
+	
 	public SubmissionBean()
 	{
 		
@@ -411,6 +414,7 @@ public class SubmissionBean
 
 		}
 		
+		submission.setUser(this.authenticatedUser);
 		submission.setTime(new Date());
 		
 		sess.save(submission);
@@ -658,6 +662,23 @@ public class SubmissionBean
 	public void setExpandedGridRows(Set expandedGridRows)
 	{
 		this.expandedGridRows = expandedGridRows;
+	}
+
+	public User getAuthenticatedUser() {
+		return authenticatedUser;
+	}
+
+	public void setAuthenticatedUser(User authenticatedUser) {
+		this.authenticatedUser = authenticatedUser;
+	}
+	
+	public String logout() {
+		this.authenticatedUser = null;
+		return "logout";
+	}
+	
+	public String submitNext() {
+		return "new-submission";
 	}
 
 }

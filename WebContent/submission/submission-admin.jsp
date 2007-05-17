@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Submission - step 1</title>
+	<title>Slave voyages - Administration panel</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../admin/main.css" rel="stylesheet" type="text/css">
 	<link href="../admin/tabs.css" rel="stylesheet" type="text/css">
@@ -17,14 +17,24 @@
 <f:view>
 <h:form id="main">
 
-	<h1>Administration panel</h1>
+	<h1>Slave voyages - Administration panel (<h:commandLink value="logout" action="#{AdminSubmissionBean.logout}"/>)</h1>
 	
 	<br>
 	
-	<s:tabBar id="bar" selectedTabId="#{AdminSubmissionBean.selectedTab}" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
-		<s:tab text="Voyages list" tabId="voyages" />
-		<s:tab text="Requests list" tabId="requests" />
-	</s:tabBar>
+	<t:htmlTag rendered="#{!AdminSubmissionBean.isAdmin}" value="div">
+		<s:tabBar id="bar" selectedTabId="#{AdminSubmissionBean.selectedTab}" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
+			<s:tab text="Voyages list" tabId="voyages" />
+			<s:tab text="Requests list" tabId="requests" />
+		</s:tabBar>
+	</t:htmlTag>
+	
+	<t:htmlTag rendered="#{AdminSubmissionBean.isAdmin}" value="div">
+		<s:tabBar id="bar" selectedTabId="#{AdminSubmissionBean.selectedTab}" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
+			<s:tab text="Voyages list" tabId="voyages" />
+			<s:tab text="Requests list" tabId="requests" />
+			<s:tab text="Users list" tabId="users" />
+		</s:tabBar>
+	</t:htmlTag>
 	
 	<h:panelGroup rendered="#{AdminSubmissionBean.voyagesListSelected}">
 	
@@ -112,6 +122,36 @@
 			rows="#{AdminSubmissionBean.requestRows}" 
 			onOpenRow="#{AdminSubmissionBean.newRequestId}"
 			action="#{AdminSubmissionBean.resolveRequest}" />
+		
+		<f:verbatim>
+		</div>
+		</f:verbatim>
+	
+	</h:panelGroup>
+
+	<h:panelGroup rendered="#{AdminSubmissionBean.usersListSelected}">
+	
+		<t:htmlTag value="br"/>
+		<t:htmlTag value="br"/>
+		<f:verbatim>
+		<div value="div" style="padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
+			
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td style="padding-right: 10px">User name: </td>
+				<td style="padding-right: 5px"></f:verbatim><h:inputText value="#{SubmissionUsersBean.newUserName}" style="width: 80px;" /><f:verbatim></td>
+				<td style="padding-right: 10px">Password: </td>
+				<td style="padding-right: 5px"></f:verbatim><h:inputText value="#{SubmissionUsersBean.newUserPassword}" style="width: 80px;" /><f:verbatim></td>
+				<td></f:verbatim><h:commandButton value="Create new user" action="#{SubmissionUsersBean.createNewUser}" /><f:verbatim></td>
+			</tr>
+			</table>
+		</div>
+		<div style="height: 500px; overflow: auto;">
+		</f:verbatim>
+		
+		<s:grid id="voyges" 
+			columns="#{SubmissionUsersBean.userColumns}"
+			rows="#{SubmissionUsersBean.userRows}" />
 		
 		<f:verbatim>
 		</div>

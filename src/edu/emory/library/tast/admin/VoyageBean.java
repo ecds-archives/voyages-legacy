@@ -182,4 +182,12 @@ public class VoyageBean {
 		return "main-menu";
 	}
 
+	public boolean isEditValid() {
+		return this.rowId != null;
+	}
+
+	public boolean isDeleteValid() {
+		return this.rowId != null;
+	}
+
 }
