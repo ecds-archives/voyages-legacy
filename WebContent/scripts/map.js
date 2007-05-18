@@ -410,8 +410,8 @@ function Map()
 	this.vport_offset_top = -1;
 	this.vport_width = -1;
 	this.vport_height = -1;
-	this.tile_width = 160;
-	this.tile_height = 120;
+	this.tileWidth = 160;
+	this.tileHeight = 120;
 	this.postponed_refresh_id = -1;
 	
 	// zoom history
@@ -539,16 +539,6 @@ function MapSymbol(name, url, width, height, centerX, centerY)
 	this.centerY = centerY;
 }
 
-function MapZoomLevel(bottomLeftTileX, bottomLeftTileY, tilesNumX, tilesNumY, scale, tilesDir)
-{
-	this.bottomLeftTileX = bottomLeftTileX;
-	this.bottomLeftTileY = bottomLeftTileY;
-	this.tilesNumX = tilesNumX;
-	this.tilesNumY = tilesNumY;
-	this.scale = scale; // (1px ~ scale degrees)
-	this.tilesDir = tilesDir;
-}
-
 /////////////////////////////////////////////////////////
 // generic functions for coordinates etc.
 /////////////////////////////////////////////////////////
@@ -624,12 +614,12 @@ Map.prototype.getCenterX = function()
 
 Map.prototype.getTileRealWidth = function()
 {
-	return this.fromPxToReal(this.tile_width);
+	return this.fromPxToReal(this.tileWidth);
 }
 
 Map.prototype.getTileRealHeight = function()
 {
-	return this.fromPxToReal(this.tile_height);
+	return this.fromPxToReal(this.tileHeight);
 }
 
 Map.prototype.fromPxToReal = function(v)
@@ -1066,15 +1056,15 @@ Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZo
 	var vy = Math.round(this.getVportHeight()/2 - this.fromRealToPx((row+1) * this.getTileRealHeight() - y));
 	
 	// compute the position of the top left tile
-	while (!(-this.tile_width < vx && vx <= 0))
+	while (!(-this.tileWidth < vx && vx <= 0))
 	{
 		col --;
-		vx -= this.tile_width;
+		vx -= this.tileWidth;
 	}
-	while (!(-this.tile_height < vy && vy <= 0))
+	while (!(-this.tileHeight < vy && vy <= 0))
 	{
 		row ++;
-		vy -= this.tile_height;
+		vy -= this.tileHeight;
 	}
 
 	// set it (these are the most important variables)
@@ -1384,8 +1374,8 @@ Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, c
 				tile.valid = true;
 			}
 			*/
-			tile.img.style.left = (this.first_tile_vx + (j * this.tile_width)) + "px";
-			tile.img.style.top = (this.first_tile_vy + (i * this.tile_height)) + "px";
+			tile.img.style.left = (this.first_tile_vx + (j * this.tileWidth)) + "px";
+			tile.img.style.top = (this.first_tile_vy + (i * this.tileHeight)) + "px";
 		}
 	}
 	
@@ -1396,8 +1386,8 @@ Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, c
 			this.updateTile(
 				update_img,
 				this.tiles_map[i][j], 
-				this.first_tile_vx + (j * this.tile_width),
-				this.first_tile_vy + (i * this.tile_height),
+				this.first_tile_vx + (j * this.tileWidth),
+				this.first_tile_vy + (i * this.tileHeight),
 				this.first_tile_col + j,
 				this.first_tile_row - i);
 	
@@ -1427,7 +1417,7 @@ Map.prototype.adjustTilesAfterPan = function()
 	
 		update_col_from ++;
 	
-		this.first_tile_vx -= this.tile_width;
+		this.first_tile_vx -= this.tileWidth;
 		this.first_tile_col --;
 		
 		for (var i=0; i<this.visible_rows+1; i++)
@@ -1445,12 +1435,12 @@ Map.prototype.adjustTilesAfterPan = function()
 	}
 
 	// move columns from left to right
-	while (this.first_tile_vx < -this.tile_width)
+	while (this.first_tile_vx < -this.tileWidth)
 	{
 
 		update_col_to --;
 
-		this.first_tile_vx += this.tile_width;
+		this.first_tile_vx += this.tileWidth;
 		this.first_tile_col ++;
 		
 		for (var i=0; i<this.visible_rows+1; i++)
@@ -1460,7 +1450,7 @@ Map.prototype.adjustTilesAfterPan = function()
 			this.tiles_map[i].push(map_tile);
 			
 //			this.updateTile(true, map_tile, 
-//				(this.first_tile_vx + (this.visible_cols+1)*this.tile_width), null,
+//				(this.first_tile_vx + (this.visible_cols+1)*this.tileWidth), null,
 //				this.first_tile_col + this.visible_cols, this.first_tile_row - i);
 			
 		}
@@ -1473,7 +1463,7 @@ Map.prototype.adjustTilesAfterPan = function()
 	
 		update_row_from ++;
 	
-		this.first_tile_vy -= this.tile_height;
+		this.first_tile_vy -= this.tileHeight;
 		this.first_tile_row ++;
 		
 		var first_map_row = this.tiles_map.pop();
@@ -1491,12 +1481,12 @@ Map.prototype.adjustTilesAfterPan = function()
 	}
 	
 	// move rows from top to bottom
-	while (this.first_tile_vy < -this.tile_height)
+	while (this.first_tile_vy < -this.tileHeight)
 	{
 	
 		update_row_to --;
 
-		this.first_tile_vy += this.tile_height;
+		this.first_tile_vy += this.tileHeight;
 		this.first_tile_row --;
 		
 		var last_map_row = this.tiles_map.shift();
@@ -1506,7 +1496,7 @@ Map.prototype.adjustTilesAfterPan = function()
 		{
 		
 //			this.updateTile(true, last_map_row[j], 
-//				null, (this.first_tile_vy + (this.visible_rows+1)*this.tile_height),
+//				null, (this.first_tile_vy + (this.visible_rows+1)*this.tileHeight),
 //				this.first_tile_col + j, this.first_tile_row - this.visible_rows);
 		
 		}
@@ -1527,8 +1517,8 @@ Map.prototype.createTileUrl = function(col, row)
 		"c=" + col + "&" +
 		"r=" + row + "&" +
 		"s=" + this.scale + "&" +
-		"w=" + this.tile_width + "&" +
-		"h=" + this.tile_height + "&" +
+		"w=" + this.tileWidth + "&" +
+		"h=" + this.tileHeight + "&" +
 		"m=" + this.mapFile;
 }
 
@@ -2010,8 +2000,8 @@ Map.prototype.precomputePointsPositions = function()
 		}
 		
 		// position on the tile
-		var posOnTileX = this.fromRealToPx(pnt.x) - col*this.tile_width + this.pointsExtraSpace;
-		var posOnTileY = (row+1)*this.tile_height - this.fromRealToPx(pnt.y) + this.pointsExtraSpace;
+		var posOnTileX = this.fromRealToPx(pnt.x) - col*this.tileWidth + this.pointsExtraSpace;
+		var posOnTileY = (row+1)*this.tileHeight - this.fromRealToPx(pnt.y) + this.pointsExtraSpace;
 		
 		// draw a point on the tile
 		var circ = pointsTile.createCircle();
@@ -2131,8 +2121,8 @@ Map.prototype.updateControlsLayout = function()
 	this.frame.style.height = (this.vport_height) + "px";
 	
 	// number of tiles needed
-	this.visible_cols = Math.floor(this.vport_width / this.tile_width) + 1;
-	this.visible_rows = Math.floor(this.vport_height / this.tile_height) + 1;
+	this.visible_cols = Math.floor(this.vport_width / this.tileWidth) + 1;
+	this.visible_rows = Math.floor(this.vport_height / this.tileHeight) + 1;
 	
 	// delete old tiles for map
 	if (this.tiles_map != null)
@@ -2170,10 +2160,10 @@ Map.prototype.updateControlsLayout = function()
 			}
 			tile.onmousedown = MapUtils.falseFnc;
 			tile.style.position = "absolute";
-			tile.width = this.tile_width;
-			tile.height = this.tile_height;
-			tile.style.left = (j * this.tile_width) + "px";
-			tile.style.top = (i * this.tile_height) + "px";
+			tile.width = this.tileWidth;
+			tile.height = this.tileHeight;
+			tile.style.left = (j * this.tileWidth) + "px";
+			tile.style.top = (i * this.tileHeight) + "px";
 			tile.points = null;
 			this.frame.insertBefore(tile, this.selector);
 		}
