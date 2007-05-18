@@ -114,6 +114,7 @@
 		<property name="editor" column="editor"/>
 		<property name="admin" column="admin"/>
 		<property name="enabled" column="enabled"/>
+		<property name="createDate"/>
 		
 	</class>
 

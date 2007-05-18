@@ -15,6 +15,7 @@ import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.UserAttribute;
 import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
@@ -38,6 +39,7 @@ public abstract class Submission
 		attributes.put("solved", new BooleanAttribute("solved", "Submission", null));
 		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
 		attributes.put("editorVoyage", new EditedVoyageAttribute("editorVoyage", "EditedVoyage"));
+		attributes.put("user", new UserAttribute("user", "User"));
 	}
 	public static Attribute getAttribute(String name) {
 		return (Attribute)attributes.get(name);

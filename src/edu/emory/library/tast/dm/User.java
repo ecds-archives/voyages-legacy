@@ -1,7 +1,10 @@
 package edu.emory.library.tast.dm;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
@@ -15,6 +18,7 @@ public class User {
 	private boolean editor;
 	private boolean admin;
 	private boolean enabled;
+	private Date createDate;
 	
 	
 	private static Map attributes = new HashMap();
@@ -75,6 +79,18 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public static User loadById(Session session, Long checkedUserId) {
+		return (User) Dictionary.loadById(User.class, session, checkedUserId.longValue());
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 	
 	

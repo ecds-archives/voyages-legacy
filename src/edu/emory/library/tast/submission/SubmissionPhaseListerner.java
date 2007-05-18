@@ -99,6 +99,12 @@ public class SubmissionPhaseListerner implements PhaseListener
 				JsfUtils.navigateTo("back");
 			}
 		}
+		else if (viewId.equals("/submission/submission-admin-user.fsp"))
+		{
+			if (adminBean.getAuthenticateduser() == null) {
+				JsfUtils.navigateTo("login");
+			}
+		}
 	}
 
 	public PhaseId getPhaseId()

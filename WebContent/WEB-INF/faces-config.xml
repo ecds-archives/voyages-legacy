@@ -777,6 +777,10 @@
 			<from-outcome>logout</from-outcome>
 			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>		
+		<navigation-case>
+			<from-outcome>edit-user</from-outcome>
+			<to-view-id>/submission/submission-admin-user.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
@@ -857,6 +861,14 @@
 			<from-outcome>logged-in</from-outcome>
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>				
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-admin-user.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>main-menu</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>	
 	</navigation-rule>
 
 	<navigation-rule>

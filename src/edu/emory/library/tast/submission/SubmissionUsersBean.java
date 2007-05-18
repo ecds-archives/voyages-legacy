@@ -1,12 +1,18 @@
 package edu.emory.library.tast.submission;
 
+import java.util.Date;
+
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.common.GridColumn;
+import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
@@ -25,6 +31,12 @@ public class SubmissionUsersBean {
 	
 	private String newUserName;
 	private String newUserPassword;
+	
+	private Long checkedUserId;
+	private String checkedUserName;
+	private String checkedPassword;
+	private String checkedDate;
+	private Boolean checkedActive;
 	
 	public String auth() {
 		Conditions c = new Conditions();
@@ -56,7 +68,8 @@ public class SubmissionUsersBean {
 		return new GridColumn[] {
 				new GridColumn("User name"),
 				new GridColumn("Password"),
-				new GridColumn("User active")
+				new GridColumn("User active"),
+				new GridColumn("Number of requests")
 		};
 	}
 	
@@ -72,12 +85,25 @@ public class SubmissionUsersBean {
 			return new GridRow[] {};
 		} else {
 			GridRow[] response = new GridRow[users.length];
+			
 			for (int i = 0; i < response.length; i++) {
 				User user = (User) users[i];
+				
+				c = new Conditions();
+				c.addCondition(Submission.getAttribute("user"), user, Conditions.OP_EQUALS);
+				qValue = new QueryValue("Submission", c);
+				qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Submission.getAttribute("id")}));
+				Object[] res = qValue.executeQuery();
+				String numPosts = "N/A";
+				if (res.length != 0) {
+					numPosts = ((Long)res[0]).toString();
+				}
+				
 				response[i] = new GridRow(user.getId().toString(), new String[] {
 					user.getUserName(),
 					user.getPassword(),
-					user.isEnabled() ? "Yes":"No"
+					user.isEnabled() ? "Yes":"No",
+					numPosts
 				});
 			}
 			return response;
@@ -139,6 +165,7 @@ public class SubmissionUsersBean {
 		
 		User user = new User(this.newUserName, this.newUserPassword);
 		user.setEnabled(true);
+		user.setCreateDate(new Date());
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		session.save(user);
@@ -147,6 +174,89 @@ public class SubmissionUsersBean {
 		this.newUserName = "";
 		this.newUserPassword = "";
 		return null;
+	}
+		
+	public void editUser(GridOpenRowEvent event) {
+		this.checkedUserId = new Long(event.getRowId());
+	}
+	
+	public String enterEditUser() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		User user = User.loadById(session, this.checkedUserId);
+		if (user == null) {
+			t.commit();
+			session.close();
+			return null;
+		}
+		
+		this.checkedUserName = user.getUserName();		
+		this.checkedPassword = user.getPassword();
+		this.checkedDate = user.getCreateDate().toString();
+		this.checkedActive = new Boolean(user.isEnabled());
+		t.commit();
+		session.close();
+		return "edit-user";
+	}
+	
+	public String updateUser() {
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		User user = User.loadById(session, this.checkedUserId);
+		if (user == null) {
+			t.commit();
+			session.close();
+			return null;
+		}
+		user.setEnabled(this.checkedActive.booleanValue());
+		user.setUserName(this.checkedUserName);
+		user.setPassword(this.checkedPassword);
+		
+		t.commit();
+		session.close();
+		this.checkedUserId = null;
+		return "main-menu";
+	}
+
+	public Boolean getCheckedActive() {
+		return checkedActive;
+	}
+
+	public void setCheckedActive(Boolean checkedActive) {
+		this.checkedActive = checkedActive;
+	}
+
+	public String getCheckedDate() {
+		return checkedDate;
+	}
+
+	public void setCheckedDate(String checkedDate) {
+		this.checkedDate = checkedDate;
+	}
+
+	public String getCheckedPassword() {
+		return checkedPassword;
+	}
+
+	public void setCheckedPassword(String checkedPassword) {
+		this.checkedPassword = checkedPassword;
+	}
+
+	public Long getCheckedUserId() {
+		return checkedUserId;
+	}
+
+	public void setCheckedUserId(Long checkedUserId) {
+		this.checkedUserId = checkedUserId;
+	}
+
+	public String getCheckedUserName() {
+		return checkedUserName;
+	}
+
+	public void setCheckedUserName(String checkedUserName) {
+		this.checkedUserName = checkedUserName;
 	}
 	
 }

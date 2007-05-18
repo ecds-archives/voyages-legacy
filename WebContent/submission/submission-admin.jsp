@@ -151,7 +151,9 @@
 		
 		<s:grid id="voyges" 
 			columns="#{SubmissionUsersBean.userColumns}"
-			rows="#{SubmissionUsersBean.userRows}" />
+			rows="#{SubmissionUsersBean.userRows}" 
+			action="#{SubmissionUsersBean.enterEditUser}"
+			onOpenRow="#{SubmissionUsersBean.editUser}" />
 		
 		<f:verbatim>
 		</div>
