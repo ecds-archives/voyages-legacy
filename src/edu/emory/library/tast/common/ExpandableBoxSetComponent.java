@@ -22,6 +22,8 @@ import edu.emory.library.tast.util.JsfUtils;
  */
 public class ExpandableBoxSetComponent extends UIComponentBase {
 
+	public static final String expandedNone = "expanded-none-56238945982314123746329146";
+	
 	private String expandedId = null;
 	
 	public String getFamily() {
