@@ -25,13 +25,15 @@
 		<tr>
 			<td valign="top">
 			
-				<s:map 
+				<s:map
 					id="testMap"
-					pointsOfInterest="#{TestMapBean.getCities}"
+					zoomLevels="#{TestMapBean.zoomLevels}"
+					pointsOfInterest="#{TestMapBean.cities}"
+					miniMap="true"
+					miniMapZoomLevel="#{TestMapBean.miniMapZoomLevel}"
 					miniMapHeight="100"
 					miniMapWidth="100"
-					miniMapPosition="bottom right"
-					serverBaseUrl="../../servlet/maptile" />
+					miniMapPosition="bottom right" />
 
 				<h:commandButton value="OK" />
 

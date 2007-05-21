@@ -10,13 +10,10 @@ var MapsGlobal =
 	registerMap: function(
 		mapId, // unique id
 		fixedSize, // true/false
+		formName, // name of the form
 		mapControlId, // main container 
 		mapFrameId, // frame for the map
 		zoomLevels, // available zooms and their configurations
-		defaultZoomLevel, // default zoom level (if there is nothing in the hidden fields)
-		defaultCenterX, // default center x (if there is nothing in the hidden fields)
-		defaultCenterY, // default center y (if there is nothing in the hidden fields)
-		formName, // form name containing the hidden fields
 		fieldNameCenterX, // name of the hidden field for center x
 		fieldNameCenterY, // name of the hidden field for center y
 		fieldNameZoomLevel, // name of the hidden field for center y
@@ -39,6 +36,7 @@ var MapsGlobal =
 		scaleIndicatorBarId,
 		miniMapControlId,
 		miniMapFrameId,
+		miniMapZoomLevel,
 		miniMapToggleId,
 		fieldNameMiniMapVisibility,
 		miniMapPosition,
@@ -59,11 +57,11 @@ var MapsGlobal =
 		map.formName = formName;
 		map.fieldNameCenterX = fieldNameCenterX;
 		map.fieldNameCenterY = fieldNameCenterY;
+		map.fieldNameZoomLevel = fieldNameZoomLevel;
 		map.fieldNameZoomHistory = fieldNameZoomHistory;
 
-		// zooms		
+		// zooms
 		map.zoomLevels = zoomLevels;
-		map.defaultZoomLevel = defaultZoomLevel;
 
 		// points
 		map.points = pointsOfInterest;
@@ -85,7 +83,7 @@ var MapsGlobal =
 			miniMap.mapControlId = miniMapControlId;
 			miniMap.frameId = miniMapFrameId;
 			miniMap.mainMap = map;
-			miniMap.scaleFactor = scaleFactor;
+			miniMap.zoomLevels = [miniMapZoomLevel];
 			
 			map.miniMap = miniMap;
 			map.fieldNameMiniMapVisibility = fieldNameMiniMapVisibility;
@@ -194,129 +192,12 @@ var MapsGlobal =
 }
 
 /////////////////////////////////////////////////////////
-// rectangle structure
-/////////////////////////////////////////////////////////
-
-function MapRectangle(x1, y1, x2, y2)
-{
-	if (x2 < x1)
-	{
-		var x = x2;
-		x2 = x1;
-		x1 = x;
-	}
-	if (y2 < y1)
-	{
-		var y = y2;
-		y2 = y1;
-		y1 = y;
-	}
-	this.x1 = x1;
-	this.x2 = x2;
-	this.y1 = y1;
-	this.y2 = y2;
-}
-
-MapRectangle.prototype.getX1 = function()
-{
-	return this.x1;
-}
-
-MapRectangle.prototype.getX2 = function()
-{
-	return this.x2;
-}
-
-MapRectangle.prototype.getY1 = function()
-{
-	return this.y1;
-}
-
-MapRectangle.prototype.getY2 = function()
-{
-	return this.y2;
-}
-
-MapRectangle.prototype.getCenterX = function()
-{
-	return 0.5 * (this.x1 + this.x2);
-}
-
-MapRectangle.prototype.getCenterY = function()
-{
-	return 0.5 * (this.y1 + this.y2);
-}
-
-MapRectangle.prototype.getWidth = function()
-{
-	return this.x2 - this.x1;
-}
-
-MapRectangle.prototype.getHeight = function()
-{
-	return this.y2 - this.y1;
-}
-
-MapRectangle.prototype.scaleBy = function(scale)
-{
-	var cx = this.getCenterX();
-	var cy = this.getCenterY();
-	var w = this.getWidth();
-	var h = this.getHeight();
-	x1 = cx - scale * w/2;
-	x2 = cx + scale * w/2;
-	y1 = cy - scale * h/2;
-	y2 = cy + scale * h/2;
-}
-
-/////////////////////////////////////////////////////////
 // utilities
 /////////////////////////////////////////////////////////
 
 var MapUtils =
 {
 
-	RECTANGLE_FIT_DEST_OVER_SRC: 1,
-	RECTANGLE_FIT_SRC_OVER_DEST: 2,
-
-	fitRectangle: function(srcRect, destWidth, destHeight, type, border)
-	{
-		return MapUtils.fitRectangleByDimen(
-			srcRect.getWidth(), srcRect.getHeight(),
-			destWidth, destHeight,
-			type, border);
-	},
-
-	fitRectangleByDimen: function(srcWidth, srcHeight, destWidth, destHeight, type, border)
-	{
-	
-		// compute where we have to fit it
-		if (border == null) border = 0;
-		var destEffectiveWidth = destWidth - 2*border;
-		var destEffectiveHeight = destHeight - 2*border;
-	
-		// adjust to the ratio
-		var destRatio = destEffectiveWidth / destEffectiveHeight;
-		var srcRatio = srcWidth / srcHeight;
-		
-		// set scale
-		if (srcRatio < destRatio)
-		{
-			if (type == MapUtils.RECTANGLE_FIT_DEST_OVER_SRC)
-				return destEffectiveHeight / srcHeight;
-			else
-				return srcHeight / destEffectiveHeight;
-		}
-		else
-		{
-			if (type == MapUtils.RECTANGLE_FIT_DEST_OVER_SRC)
-				return destEffectiveWidth / srcWidth;
-			else
-				return srcWidth / destEffectiveWidth;
-		}
-		
-	},
-	
 	computeLength: function(x, y)
 	{
 		return Math.sqrt(MapUtils.computeLengthSquared(x, y));
@@ -932,7 +813,7 @@ Map.prototype.zoomMapToInternal = function(x1, y1, x2, y2, border, saveState, no
 
 	// requested real width and height
 	var widthReal = Math.abs(x2 - x1);
-	var hightReal = Math.abs(y2 - y1);
+	var heightReal = Math.abs(y2 - y1);
 	
 	// current viewport size (in pixels)
 	var vportWidth = this.getVportWidth();
@@ -943,8 +824,8 @@ Map.prototype.zoomMapToInternal = function(x1, y1, x2, y2, border, saveState, no
 	var newZoomLevel = 0;
 	for (var i = this.zoomLevels.length - 1; 0 <= i; i--)
 	{
-		var widthPx = w / this.zoomLevels[i].scale;
-		var heightPx = h / this.zoomLevels[i].scale;
+		var widthPx = widthReal / this.zoomLevels[i].scale;
+		var heightPx = heightReal / this.zoomLevels[i].scale;
 		if (widthPx + 2*border <= vportWidth && heightPx + 2*border <= vportHeight)
 		{
 			newZoomLevel = i;
@@ -1046,12 +927,14 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 	var zoomLevelObj = this.zoomLevels[this.zoomLevel];
 	var vportRealWidth = zoomLevelObj.scale * this.vportWidth;
 	var vportRealHeight = zoomLevelObj.scale * this.vportHeight;
+	var tileRealWidth = zoomLevelObj.scale * this.tileWidth;
+	var tileRealHeight = zoomLevelObj.scale * this.tileHeight;
 	var vportBottomLeftRealX = x - vportRealWidth / 2;
 	var vportBottomLeftRealY = y - vportRealHeight / 2;
 	this.bottomLeftTileCol = Math.floor((vportBottomLeftRealX - zoomLevelObj.bottomLeftTileX) / vportRealWidth);
 	this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / vportRealHeight);
-	this.bottomLeftTileVportX = Math.round((vportBottomLeftRealX - this.bottomLeftTileCol * vportRealWidth + zoomLevelObj.bottomLeftTileX) / zoomLevelObj.scale);
-	this.bottomLeftTileVportY = Math.round((vportBottomLeftRealY - this.bottomLeftTileCol * vportRealWidth + zoomLevelObj.bottomLeftTileX) / zoomLevelObj.scale);
+	this.bottomLeftTileVportX = Math.round((vportBottomLeftRealX - (this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX)) / zoomLevelObj.scale);
+	this.bottomLeftTileVportY = Math.round((vportBottomLeftRealY - (this.bottomLeftTileCol * tileRealHeight + zoomLevelObj.bottomLeftTileY)) / zoomLevelObj.scale);
 	
 	// points of interest
 	this.precomputePointsPositions();
@@ -1235,8 +1118,8 @@ Map.prototype.saveState = function()
 {
 	if (this.hasHiddenExtendFields)
 	{
-		this.fieldCenterX.value = this.getMapCenterX();
-		this.fieldCenterY.value = this.getMapCenterY();
+		this.fieldCenterX.value = this.getCenterX();
+		this.fieldCenterY.value = this.getCenterY();
 		this.fieldZoomLevel.value = this.zoomLevel;
 	}
 }
@@ -1544,6 +1427,30 @@ Map.prototype.setMouseMode = function(mode)
 {
 	this.mouseMode = mode;
 	this.setMouseCursors();
+}
+
+Map.prototype.setMouseCursors = function()
+{
+	if (this.mouseMode == MapsGlobal.MAP_TOOL_PAN)
+	{
+		this.frame.style.cursor = "move";
+		this.selector.style.cursor = "default";
+	}
+	else if (this.mouseMode == MapsGlobal.MAP_TOOL_ZOOM)
+	{
+		this.frame.style.cursor = "crosshair";
+		this.selector.style.cursor = "default";
+	}
+	else if (this.mouseMode == MapsGlobal.MAP_TOOL_SELECTOR)
+	{
+		this.frame.style.cursor = "move";
+		this.selector.style.cursor = "move";
+	}
+	else
+	{
+		this.frame.style.cursor = "default";
+		this.selector.style.cursor = "default";
+	}
 }
 
 /////////////////////////////////////////////////////////
@@ -1958,9 +1865,9 @@ Map.prototype.hiddenFieldsInit = function()
 	this.fieldCenterX = form.elements[this.fieldNameCenterX];
 	this.fieldCenterY = form.elements[this.fieldNameCenterY];
 	this.fieldZoomLevel = form.elements[this.fieldNameZoomLevel];
-	
-	this.hasHiddenExtendFields = this.fieldCenterX && this.fieldCenterY && this.fieldZoomLevel;
 
+	this.hasHiddenExtendFields = this.fieldCenterX && this.fieldCenterY && this.fieldZoomLevel ? true : false;
+	
 }
 
 Map.prototype.restoreState = function()
@@ -1971,16 +1878,15 @@ Map.prototype.restoreState = function()
 	{
 		var cx = parseFloat(this.fieldCenterX.value);
 		var cy = parseFloat(this.fieldCenterY.value);
-		var zoomLevel = parseInt(this.fieldNameZoomLevel.value);
+		var zoomLevel = parseInt(this.fieldZoomLevel.value);
 		this.setZoomAndCenterTo(zoomLevel, cx, cy, false, false, false, true);
 	}
 	
 	// in case that the server components is not interested
 	// in saving the max extent -> so we show the minimal
-	// scale (i.e. scale = minScale = 1 = the most distant view)
 	else
 	{
-		this.setZoomAndCenterTo(this.defaultZoomLevel, 0, 0, false, false, false, true);
+		// this.setZoomAndCenterTo(0, 0, 0, false, false, false, true);
 	}
 	
 	// and init history if empty
@@ -2316,5 +2222,5 @@ MapZoomSlider.prototype.mouseUp = function(event)
 
 MapZoomSlider.prototype.zoomChanged = function()
 {
-	this.setKnobNormalizedPosition(this.map.getScaleNormalized());
+	// this.setKnobNormalizedPosition(this.map.getScaleNormalized());
 }

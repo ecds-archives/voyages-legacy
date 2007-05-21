@@ -366,13 +366,16 @@
 			<name>id</name>
 		</attribute>
 		<attribute>
-			<name>serverBaseUrl</name>
+			<name>zoomLevels</name>
 		</attribute>
 		<attribute>
 			<name>pointsOfInterest</name>
 		</attribute>
 		<attribute>
 			<name>miniMap</name>
+		</attribute>
+		<attribute>
+			<name>miniMapZoomLevel</name>
 		</attribute>
 		<attribute>
 			<name>miniMapPosition</name>
