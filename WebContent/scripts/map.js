@@ -10,23 +10,16 @@ var MapsGlobal =
 	registerMap: function(
 		mapId, // unique id
 		fixedSize, // true/false
-		mapTilesServer, // servlet
-		mapFile, // ServerMap map file
-		miniMapFile, // minimap ServerMap map file
-		zoomLevels, // zoom levels
-		scaleFactor, // scale demominator
-		scaleMax, // max magnification w.r.t. scale = 1
 		mapControlId, // main container 
 		mapFrameId, // frame for the map
-		mapToolsTopId, // top tools element
-		mapToolsBottomId, // bottom tools element
-		mapToolsLeftId, // left tools element
-		mapToolsRightId, // top tools element
+		zoomLevels, // available zooms and their configurations
+		defaultZoomLevel, // default zoom level (if there is nothing in the hidden fields)
+		defaultCenterX, // default center x (if there is nothing in the hidden fields)
+		defaultCenterY, // default center y (if there is nothing in the hidden fields)
 		formName, // form name containing the hidden fields
-		fieldNameX1, // name of the hidden field for x1
-		fieldNameX2, // name of the hidden field for x2
-		fieldNameY1, // name of the hidden field for y1
-		fieldNameY2,  // name of the hidden field for y2
+		fieldNameCenterX, // name of the hidden field for center x
+		fieldNameCenterY, // name of the hidden field for center y
+		fieldNameZoomLevel, // name of the hidden field for center y
 		fieldNameZoomHistory, // field for serialized zoom history 
 		buttonBackId, // back button
 		buttonForwardId, // forward button
@@ -57,27 +50,21 @@ var MapsGlobal =
 		var map = new Map();
 		this.maps[mapId] = map;
 		
-		// server and map file
-		map.mapFile = mapFile;
-		map.server = mapTilesServer;
-		
-		// scale
-		map.scaleFactor = scaleFactor;
-		map.scaleMax = scaleMax;
-		
 		// HTML
 		map.fixedSize = fixedSize;
-		map.map_control_id = mapControlId;
+		map.mapControlId = mapControlId;
 		map.frameId = mapFrameId;
 		
 		// hidden fields for maitaining state
 		map.formName = formName;
-		map.fieldNameX1 = fieldNameX1;
-		map.fieldNameY1 = fieldNameX2;
-		map.fieldNameX2 = fieldNameY1;
-		map.fieldNameY2 = fieldNameY2;
-		map.field_name_zoom_history = fieldNameZoomHistory;
-		
+		map.fieldNameCenterX = fieldNameCenterX;
+		map.fieldNameCenterY = fieldNameCenterY;
+		map.fieldNameZoomHistory = fieldNameZoomHistory;
+
+		// zooms		
+		map.zoomLevels = zoomLevels;
+		map.defaultZoomLevel = defaultZoomLevel;
+
 		// points
 		map.points = pointsOfInterest;
 		
@@ -92,11 +79,10 @@ var MapsGlobal =
 		// minimap
 		if (miniMapControlId && miniMapFrameId)
 		{
+
 			var miniMap = new Map();
-			miniMap.mapFile = miniMapFile;
-			miniMap.server = mapTilesServer;
 			miniMap.fixedSize = true;
-			miniMap.map_control_id = miniMapControlId;
+			miniMap.mapControlId = miniMapControlId;
 			miniMap.frameId = miniMapFrameId;
 			miniMap.mainMap = map;
 			miniMap.scaleFactor = scaleFactor;
@@ -107,6 +93,7 @@ var MapsGlobal =
 			map.miniMapWidth = miniMapWidth;
 			map.miniMapHeight = miniMapHeight;
 			if (miniMapToggleId) map.miniMapToggleId = miniMapToggleId;
+
 		}
 		
 		// button: back
@@ -372,60 +359,57 @@ var MapUtils =
 function Map()
 {
 
-	// server and map file
-	this.mapFile = null;
-	this.server = "servlet/maptile";
-
 	// container
 	this.fixedSize = true;
 	this.width = 0;
 	this.height = 0;
-	this.map_control = null;
-	this.map_control_id = null;
-	this.min_map_control_width = 600;
-	this.min_map_control_height = 400;
+	this.mapControl = null;
+	this.mapControlId = null;
+	this.min_mapControl_width = 600;
+	this.min_mapControl_height = 400;
 	
 	// current position
-	this.first_tile_col = null;
-	this.first_tile_row = null;
-	this.first_tile_vx = null;
-	this.first_tile_vy = null;
+	/*
+	this.bottomLeftTileCol = null;
+	this.bottomLeftTileRow = null;
+	this.bottomLeftTileVportX = null;
+	this.bottomLeftTileVportY = null;
 	this.scaleFactor = 1;
 	this.scale = null;
 	this.scaleMin = 1;
 	this.scaleMax = 100000;
 	this.scale_factor_plus = 2.0;
 	this.scale_factor_minus = 0.5;
+	*/
+	
+	this.tilesNameNumberLength = 2;
 
 	// references to HTML elements
 	this.frame = null;
 	this.frameId = null;
-	this.tiles_map = null;
+	this.tilesMap = null;
 	this.map_blank_img = "../../blank.png";
 	
 	// viewport config
-	this.visible_rows = -1;
-	this.visible_cols = -1;
-	this.vport_offset_left = -1;
-	this.vport_offset_top = -1;
-	this.vport_width = -1;
-	this.vport_height = -1;
+	this.visibleRows = -1;
+	this.visibleCols = -1;
+	this.vportWidth = -1;
+	this.vportHeight = -1;
 	this.tileWidth = 160;
 	this.tileHeight = 120;
-	this.postponed_refresh_id = -1;
 	
 	// zoom history
-	this.field_name_zoom_history = null;
-	this.field_zoom_history = null;
-	this.zoom_history = new Array();
-	this.zoom_history_pos = -1;
-	this.zoom_history_max = 100;
+	this.fieldNameZoomHistory = null;
+	this.fieldZoomHistory = null;
+	this.zoomHistory = new Array();
+	this.zoomHistoryPos = -1;
+	this.zoomHistoryMax = 100;
 	this.go_back_button = null;
 	this.go_forward_button = null;
 	
 	// for dragging
-	this.dragging_start_x = null;
-	this.dragging_start_y = null;
+	this.draggingStartX = null;
+	this.draggingStartY = null;
 	
 	// zooming and panning
 	this.mouseMode = MapsGlobal.MAP_TOOL_PAN;
@@ -470,29 +454,6 @@ function Map()
 	this.scale_bar_indicator = null;
 	this.scale_text_indicator = null;
 	this.hasScaleIndicator = false;
-	
-	// pan tools
-	this.tool_pan_up = null;
-	this.tool_pan_down = null;
-	this.tool_pan_left = null;
-	this.tool_pan_right = null;
-	this.pan_tool_delta = 20;
-	this.pan_tool_delay = 50;
-	this.pan_tool_timeout_id = null;
-	this.pan_tool_dx = null;
-	this.pan_tool_dy = null;
-	
-	// hidden fields for maitaining state
-	this.hasHiddenExtendFields = false;
-	this.formName = null;
-	this.fieldNameX1 = null;
-	this.fieldNameY1 = null;
-	this.fieldNameX2 = null;
-	this.fieldNameY2 = null;
-	this.fieldX1 = null;
-	this.fieldY1 = null;
-	this.fieldX2 = null;
-	this.fieldY2 = null;
 	
 	// init handler
 	this.initListeners = new EventQueue();
@@ -539,6 +500,16 @@ function MapSymbol(name, url, width, height, centerX, centerY)
 	this.centerY = centerY;
 }
 
+function MapZoomLevel(bottomLeftTileX, bottomLeftTileY, tilesNumX, tilesNumY, scale, tilesDir)
+{
+	this.bottomLeftTileX = bottomLeftTileX;
+	this.bottomLeftTileY = bottomLeftTileY;
+	this.tilesNumX = tilesNumX;
+	this.tilesNumY = tilesNumY;
+	this.scale = scale; // (1px ~ scale degrees)
+	this.tilesDir = tilesDir;
+}
+
 /////////////////////////////////////////////////////////
 // generic functions for coordinates etc.
 /////////////////////////////////////////////////////////
@@ -550,36 +521,36 @@ Map.prototype.getVportRatio = function()
 
 Map.prototype.getVportWidth = function()
 {
-	return this.vport_width;
+	return this.vportWidth;
 }
 
 Map.prototype.getVportHeight = function()
 {
-	return this.vport_height;
+	return this.vportHeight;
 }
 
 Map.prototype.fromVportToRealX = function(x)
 {
-	return this.first_tile_col * this.getTileRealWidth() +
-		this.fromPxToReal(x-this.first_tile_vx);
+	return this.bottomLeftTileCol * this.getTileRealWidth() +
+		this.fromPxToReal(x - this.bottomLeftTileVportX);
 }
 
 Map.prototype.fromVportToRealY = function(y)
 {
-	return (this.first_tile_row+1) * this.getTileRealHeight() -
-		this.fromPxToReal(y-this.first_tile_vy);
+	return (this.bottomLeftTileRow+1) * this.getTileRealHeight() -
+		this.fromPxToReal(y - this.bottomLeftTileVportY);
 }
 
 Map.prototype.fromRealToVportX = function(x)
 {
-	return this.fromRealToPx(x - this.first_tile_col * this.getTileRealWidth()) +
-		this.first_tile_vx;
+	return this.fromRealToPx(x - this.bottomLeftTileCol * this.getTileRealWidth()) +
+		this.bottomLeftTileVportX;
 }
 
 Map.prototype.fromRealToVportY = function(y)
 {
-	return this.fromRealToPx((this.first_tile_row+1) * this.getTileRealHeight() - y) +
-		this.first_tile_vy;
+	return this.fromRealToPx(y - this.bottomLeftTileRow * this.getTileRealHeight()) +
+		this.bottomLeftTileVportY;
 }
 
 Map.prototype.getMapX1 = function()
@@ -624,12 +595,12 @@ Map.prototype.getTileRealHeight = function()
 
 Map.prototype.fromPxToReal = function(v)
 {
-	return v / (this.scale / this.scaleFactor);
+	return v * this.zoomLevels[this.zoomLevel].scale;
 }
 
 Map.prototype.fromRealToPx = function(v)
 {
-	return v * (this.scale / this.scaleFactor);
+	return v / this.zoomLevels[this.zoomLevel].scale;
 }
 
 Map.prototype.roundAndCapScale = function(s)
@@ -767,8 +738,8 @@ Map.prototype.mapStartDrag = function(event)
 	this.forgetLabels();
 	
 	// init position
-	this.dragging_start_x = event.clientX - this.vport_offset_left;
-	this.dragging_start_y = event.clientY - this.vport_offset_top;
+	this.draggingStartX = ElementUtils.getEventMouseElementX(event, this.mapControl);
+	this.draggingStartY = ElementUtils.getEventMouseElementY(event, this.mapControl);
 	
 }
 
@@ -781,8 +752,8 @@ Map.prototype.mapStopDrag = function(event)
 	this.watchForLabels();
 
 	// new position
-	var x = event.clientX - this.vport_offset_left;
-	var y = event.clientY - this.vport_offset_top;
+	var x = ElementUtils.getEventMouseElementX(event, this.mapControl);
+	var y = ElementUtils.getEventMouseElementY(event, this.mapControl);
 	
 	switch (this.mouseMode)
 	{
@@ -792,16 +763,19 @@ Map.prototype.mapStopDrag = function(event)
 			this.hideSelector();
 			
 			// has the mouse moved?
-			if (this.dragging_start_x == x && this.dragging_start_y == y)
+			if (this.draggingStartX == x && this.draggingStartY == y)
 				return;
 			
 			// and zoom
 			this.zoomMapTo(
-				this.fromVportToRealX(this.dragging_start_x),
-				this.fromVportToRealY(this.dragging_start_y),
+				this.fromVportToRealX(this.draggingStartX),
+				this.fromVportToRealY(this.draggingStartY),
 				this.fromVportToRealX(x),
 				this.fromVportToRealY(y),
-				true, 0, true);
+				true, /* saveState */
+				true, /* notifyZoomChange */
+				false, /* updateMainMap */
+				true /* updateMiniMap */ );
 			
 			break;
 			
@@ -825,8 +799,8 @@ Map.prototype.mapMouseMove = function(event)
 {
 
 	// new position
-	var x = event.clientX - this.vport_offset_left;
-	var y = event.clientY - this.vport_offset_top;
+	var x = ElementUtils.getEventMouseElementX(event, this.mapControl);
+	var y = ElementUtils.getEventMouseElementY(event, this.mapControl);
 	
 	switch (this.mouseMode)
 	{
@@ -834,16 +808,16 @@ Map.prototype.mapMouseMove = function(event)
 		case MapsGlobal.MAP_TOOL_SELECTOR:
 		
 			// position change
-			var dx = x - this.dragging_start_x;
-			var dy = y - this.dragging_start_y;
+			var dx = x - this.draggingStartX;
+			var dy = y - this.draggingStartY;
 
 			// remember for the next turn
-			this.dragging_start_x = x;
-			this.dragging_start_y = y;
+			this.draggingStartX = x;
+			this.draggingStartY = y;
 			
 			// change pos
-			this.first_tile_vx += dx;
-			this.first_tile_vy += dy;
+			this.bottomLeftTileVportX += dx;
+			this.bottomLeftTileVportY += dy;
 
 			// adjust tile if needed
 			this.adjustTilesAfterPan();
@@ -866,7 +840,7 @@ Map.prototype.mapMouseMove = function(event)
 
 			// draw selector
 			this.drawSelector(
-				this.dragging_start_x, this.dragging_start_y,
+				this.draggingStartX, this.draggingStartY,
 				x, y);
 
 			break;
@@ -880,11 +854,11 @@ Map.prototype.mapMouseWheel = function(event)
 	// change the zoom
 	if (event.wheelDelta < 0)
 	{
-		this.changeScale((-event.wheelDelta/120) * this.scale * this.scale_factor_plus, true);
+		this.zoomPlus();
 	}
 	else
 	{
-		this.changeScale(event.wheelDelta/120 * this.scale * this.scale_factor_minus, true);
+		this.zoomMinus();
 	}
 	
 	// we don't want to scroll the page
@@ -899,18 +873,16 @@ Map.prototype.mapMouseWheel = function(event)
 
 Map.prototype.zoomPlus = function(notifyZoomChange)
 {
-	this.changeScale(
-		this.scale * this.scale_factor_plus,
-		notifyZoomChange);
+	this.changeZoomLevel(this.zoomLevel + 1, notifyZoomChange);
 }
 
 Map.prototype.zoomMinus = function(notifyZoomChange)
 {
-	this.changeScale(
-		this.scale * this.scale_factor_minus,
-		notifyZoomChange);
+	this.changeZoomLevel(this.zoomLevel - 1, notifyZoomChange);
 }
 
+// to be changed ...
+/*
 Map.prototype.changeScaleNormalized = function(t, notifyZoomChange)
 {
 	this.changeScale(
@@ -922,6 +894,8 @@ Map.prototype.getScaleNormalized = function()
 {
 	return (this.scale - this.scaleMin) / (this.scaleMax - this.scaleMin);
 }
+*/
+
 
 Map.prototype.registerZoomSlider = function(zoom_slider)
 {
@@ -933,49 +907,75 @@ Map.prototype.notifyZoomChange = function()
 	if (this.zoom_slider) this.zoom_slider.zoomChanged();
 }
 
-Map.prototype.changeScale = function(newScale, notifyZoomChange)
+Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
 {
 
+	// make sure that the zoom level is ok
+	if (newZoomLevel < 0) newZoomLevel = 0;
+	if (this.zoomLevels.length <= newZoomLevel) newZoomLevel = this.zoomLevels.length - 1;
+	
 	// has it changed?
-	new_scale = this.roundAndCapScale(newScale);
-	if (newScale == this.scale) return;
+	if (newZoomLevel == this.zoomLevel) return;
 	
 	// get old center
 	var cx = this.getCenterX();
 	var cy = this.getCenterY();
 	
 	// center
-	this.setScaleAndCenterTo(newScale, cx, cy, true, notifyZoomChange, true, true);
+	this.setZoomAndCenterTo(newZoomLevel, cx, cy, true, notifyZoomChange, true, true);
+
+}
+
+// PRIVATE
+Map.prototype.zoomMapToInternal = function(x1, y1, x2, y2, border, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
+{
+
+	// requested real width and height
+	var widthReal = Math.abs(x2 - x1);
+	var hightReal = Math.abs(y2 - y1);
+	
+	// current viewport size (in pixels)
+	var vportWidth = this.getVportWidth();
+	var vportHeight = this.getVportHeight();
+	
+	// find optimal zoom level, i.e. the closest
+	// one which contains all, or the first one
+	var newZoomLevel = 0;
+	for (var i = this.zoomLevels.length - 1; 0 <= i; i--)
+	{
+		var widthPx = w / this.zoomLevels[i].scale;
+		var heightPx = h / this.zoomLevels[i].scale;
+		if (widthPx + 2*border <= vportWidth && heightPx + 2*border <= vportHeight)
+		{
+			newZoomLevel = i;
+			break;
+		}
+	}
+	
+	// zoom
+	this.setZoomAndCenterTo(
+		newZoomLevel,
+		(x1 + x2) / 2,
+		(y1 + y2) / 2,
+		saveState,
+		notifyZoomChange,
+		updateMainMap,
+		updateMiniMap);
 
 }
 
 // PUBLIC
-Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, border, notifyZoomChange, updateMainMap, updateMiniMap)
+Map.prototype.zoomMapTo = function(x1, y1, x2, y2, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
 
 	// does not make sense in selector mode
 	if (this.mouseMode == MapsGlobal.MAP_TOOL_SELECTOR)
 		return;
-
-	// what we want to see
-	var rect = new MapRectangle(x1, y1, x2, y2);
-
-	// compute new scale
-	var newScale = MapUtils.fitRectangle(
-		rect,
-		this.getVportWidth(),
-		this.getVportHeight(),
-		MapUtils.RECTANGLE_FIT_DEST_OVER_SRC,
-		border);
-		
-	// adjust by factor
-	newScale *= this.scaleFactor;
 		
 	// zoom
-	this.setScaleAndCenterTo(
-		newScale,
-		rect.getCenterX(),
-		rect.getCenterY(),
+	this.zoomMapToInternal(
+		x1, y1, x2, y2,
+		0,
 		saveState,
 		notifyZoomChange,
 		updateMainMap,
@@ -997,37 +997,22 @@ Map.prototype.positionBySelector = function(x1, y1, x2, y2, saveState, notifyZoo
 	this.selectorX2 = x2;
 	this.selectorY2 = y2;
 	
-	// what we want to see
-	var rect = new MapRectangle(x1, y1, x2, y2);
-
-	// compute new scale
-	var newScale = MapUtils.fitRectangle(
-		rect,
-		this.getVportWidth(),
-		this.getVportHeight(),
-		MapUtils.RECTANGLE_FIT_DEST_OVER_SRC,
-		this.selectorBorder);
-		
-	// adjust by factor
-	newScale *= this.scaleFactor;
-
 	// zoom
-	this.setScaleAndCenterTo(
-		newScale,
-		rect.getCenterX(),
-		rect.getCenterY(),
+	this.zoomMapToInternal(
+		x1, y1, x2, y2,
+		this.selectorBorder,
 		saveState,
 		notifyZoomChange,
 		updateMainMap,
 		updateMiniMap);
-
+	
 }
 
 // PUBLIC
 Map.prototype.centerTo = function(x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
-	this.setScaleAndCenterTo(
-		this.scale,
+	this.setZoomAndCenterTo(
+		this.zoomLevel,
 		x, y,
 		saveState,
 		notifyZoomChange,
@@ -1036,48 +1021,43 @@ Map.prototype.centerTo = function(x, y, saveState, notifyZoomChange, updateMainM
 }
 
 // PRIVATE
-Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
+Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
 
-	// scale has changed
-	newScale = this.roundAndCapScale(newScale);
-	if (this.scale != newScale)
+	// make sure that the zoom level is ok
+	if (newZoomLevel < 0) newZoomLevel = 0;
+	if (this.zoomLevels.length <= newZoomLevel) newZoomLevel = this.zoomLevels.length - 1;
+
+	// has the zoom changed?
+	if (this.zoomLevel != newZoomLevel)
 	{
-		this.scale = newScale;
+		this.zoomLevel = newZoomLevel;
 		this.updateScaleIndicator();
 	}
 	
-	// middle tile
-	var col = Math.floor(x / this.getTileRealWidth());
-	var row = Math.floor(y / this.getTileRealHeight());
-	
-	// position of the middle tile in vport
-	var vx = Math.round(this.getVportWidth()/2 - this.fromRealToPx(x - col * this.getTileRealWidth()));
-	var vy = Math.round(this.getVportHeight()/2 - this.fromRealToPx((row+1) * this.getTileRealHeight() - y));
-	
-	// compute the position of the top left tile
-	while (!(-this.tileWidth < vx && vx <= 0))
-	{
-		col --;
-		vx -= this.tileWidth;
-	}
-	while (!(-this.tileHeight < vy && vy <= 0))
-	{
-		row ++;
-		vy -= this.tileHeight;
-	}
-
-	// set it (these are the most important variables)
-	this.first_tile_col = col;
-	this.first_tile_row = row;
-	this.first_tile_vx = vx;
-	this.first_tile_vy = vy;
+	// calculate the main state variables:
+	//   * this.bottomLeftTileCol
+	//   * this.bottomLeftTileRow
+	//   * this.bottomLeftTileVportX
+	//   * this.bottomLeftTileVportY
+	// it's safer to do all calculations by hand than rely
+	// on the helper functions since the helper functions 
+	// depend on the four previous variables
+	var zoomLevelObj = this.zoomLevels[this.zoomLevel];
+	var vportRealWidth = zoomLevelObj.scale * this.vportWidth;
+	var vportRealHeight = zoomLevelObj.scale * this.vportHeight;
+	var vportBottomLeftRealX = x - vportRealWidth / 2;
+	var vportBottomLeftRealY = y - vportRealHeight / 2;
+	this.bottomLeftTileCol = Math.floor((vportBottomLeftRealX - zoomLevelObj.bottomLeftTileX) / vportRealWidth);
+	this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / vportRealHeight);
+	this.bottomLeftTileVportX = Math.round((vportBottomLeftRealX - this.bottomLeftTileCol * vportRealWidth + zoomLevelObj.bottomLeftTileX) / zoomLevelObj.scale);
+	this.bottomLeftTileVportY = Math.round((vportBottomLeftRealY - this.bottomLeftTileCol * vportRealWidth + zoomLevelObj.bottomLeftTileX) / zoomLevelObj.scale);
 	
 	// points of interest
 	this.precomputePointsPositions();
 	
 	// draw all tiles
-	this.positionTiles(true, false);
+	this.positionTiles();
 	
 	// position selector (if in selector mode)
 	if (this.mouseMode == MapsGlobal.MAP_TOOL_SELECTOR)
@@ -1109,17 +1089,17 @@ Map.prototype.setScaleAndCenterTo = function(newScale, x, y, saveState, notifyZo
 
 Map.prototype.show = function()
 {
-	this.map_control.style.visibility = "visible";
+	this.mapControl.style.visibility = "visible";
 }
 
 Map.prototype.hide = function()
 {
-	this.map_control.style.visibility = "hidden";
+	this.mapControl.style.visibility = "hidden";
 }
 
 Map.prototype.isVisible = function()
 {
-	return this.map_control.style.visibility != "hidden";
+	return this.mapControl.style.visibility != "hidden";
 }
 
 Map.prototype.initMiniMap = function()
@@ -1186,7 +1166,7 @@ Map.prototype.hideShowMiniMap = function()
 	{
 	
 		var miniMapHideFunction = function(miniMap) {miniMap.hide()};
-		var a = new Animation(this.miniMap.map_control, 10, 400, miniMapHideFunction, this.miniMap);
+		var a = new Animation(this.miniMap.mapControl, 10, 400, miniMapHideFunction, this.miniMap);
 		//a.setSizes(this.miniMapWidth, this.miniMapHeight, 0, 0);
 		a.setOpacities(1, 0);
 		a.start();
@@ -1199,7 +1179,7 @@ Map.prototype.hideShowMiniMap = function()
 	{
 
 		this.miniMap.show();
-		var a = new Animation(this.miniMap.map_control, 10, 400);
+		var a = new Animation(this.miniMap.mapControl, 10, 400);
 		//a.setSizes(0, 0, this.miniMapWidth, this.miniMapHeight);
 		a.setOpacities(0, 1);
 		a.start();
@@ -1255,150 +1235,41 @@ Map.prototype.saveState = function()
 {
 	if (this.hasHiddenExtendFields)
 	{
-		this.fieldX1.value = this.getMapX1();
-		this.fieldY1.value = this.getMapY1();
-		this.fieldX2.value = this.getMapX2();
-		this.fieldY2.value = this.getMapY2();
+		this.fieldCenterX.value = this.getMapCenterX();
+		this.fieldCenterY.value = this.getMapCenterY();
+		this.fieldZoomLevel.value = this.zoomLevel;
 	}
 }
 
-/*
-Map.prototype.updateTile = function(update_img, map_tile, x, y, col, row)
+Map.prototype.positionTiles = function(rowFrom, rowTo, colFrom, colTo)
 {
-	//if (update_img)
-	//{
-	
-		// points
-//		if (map_tile.points)
-//		{
-//			this.frame.removeChild(map_tile.points.getRoot());
-//		}
-//		var pointsTile = this.pointsByTiles[col + ":" + row];
-//		if (pointsTile)
-//		{
-//			map_tile.points = pointsTile;
-//			this.frame.insertBefore(pointsTile.getRoot(), this.selector);
-//		}
-//		else
-//		{
-//			map_tile.points = null;
-//		}
-		
-		// map
-		if (map_tile.url != map_tile.oldUrl)
-		{
-			map_tile.valid = false;
-			map_tile.img.src = this.getBlankTileUrl();
-		}
-		else
-		{
-			map_tile.valid = true;
-		}
-
-	//}
-	if (x != null)
-	{
-		if (map_tile.points) map_tile.points.setX(x - this.pointsExtraSpace);
-		map_tile.img.style.left = x + "px";
-	}
-	if (y != null)
-	{
-		if (map_tile.points) map_tile.points.setY(y - this.pointsExtraSpace);
-		map_tile.img.style.top = y + "px";
-	}
-}
-
-Map.prototype.updateInvalidatedTiles = function()
-{
-	for (var i=0; i<this.visible_rows+1; i++)
-	{
-		for (var j=0; j<this.visible_cols+1; j++)
-		{
-			var tile = this.tiles_map[i][j];
-			if (!tile.valid)
-			{
-				tile.valid = true;
-				tile.url = tile.newUrl;
-				tile.img.src = tile.newUrl;
-			}
-		}
-	}
-}
-*/
-
-Map.prototype.positionTiles = function(update_img, postpone, row_from, row_to, col_from, col_to)
-{
-
-	postpone = false;
 
 	this.saveState();
 	
-	if (row_from == null) row_from = 0;
-	if (row_to == null) row_to = this.visible_rows;
-	if (col_from == null) col_from = 0;
-	if (col_to == null) col_to = this.visible_cols;
+	if (rowFrom == null) rowFrom = 0;
+	if (rowTo == null) rowTo = this.visibleRows;
+	if (colFrom == null) colFrom = 0;
+	if (colTo == null) colTo = this.visibleCols;
 	
 	var needPosponedUpdate = false;
-	for (var i=row_from; i<=row_to; i++)
+	for (var i = rowFrom; i <= rowTo; i++)
 	{
-		for (var j=col_from; j<=col_to; j++)
+		for (var j = colFrom; j <= colTo; j++)
 		{
-			var tile = this.tiles_map[i][j];
-			var col = this.first_tile_col + j;
-			var row = this.first_tile_row - i;
+			var tile = this.tilesMap[i][j];
+			var col = this.bottomLeftTileCol + j;
+			var row = this.bottomLeftTileRow + i;
 			var newUrl = this.createTileUrl(col, row);
 			if (newUrl != tile.url)
 			{
 				tile.url = newUrl;
 				tile.img.style.visibility = "hidden";
 				tile.img.src = newUrl;
-				/*
-				if (postpone)
-				{
-					if (tile.valid) tile.img.src = this.getBlankTileUrl();
-					tile.newUrl = newUrl;
-					tile.valid = false;
-					needPosponedUpdate = true;
-				}
-				else
-				{
-					tile.url = newUrl;
-					tile.valid = true;
-					tile.img.src = newUrl;
-				}
-				*/
 			}
-			/*
-			else
-			{
-				tile.valid = true;
-			}
-			*/
-			tile.img.style.left = (this.first_tile_vx + (j * this.tileWidth)) + "px";
-			tile.img.style.top = (this.first_tile_vy + (i * this.tileHeight)) + "px";
+			tile.img.style.left = (this.bottomLeftTileVportX + (j * this.tileWidth)) + "px";
+			tile.img.style.top = (this.bottomLeftTileVportY + (i * this.tileHeight)) + "px";
 		}
 	}
-	
-	
-	/*
-	for (var i=row_from; i<=row_to; i++)
-		for (var j=col_from; j<=col_to; j++)
-			this.updateTile(
-				update_img,
-				this.tiles_map[i][j], 
-				this.first_tile_vx + (j * this.tileWidth),
-				this.first_tile_vy + (i * this.tileHeight),
-				this.first_tile_col + j,
-				this.first_tile_row - i);
-	
-	*/
-
-	/*
-	if (postpone && needPosponedUpdate)
-	{
-		Timer.cancelCall(this.postponed_refresh_id);
-		this.postponed_refresh_id = Timer.delayedCall(this, "updateInvalidatedTiles", 10);		
-	*/
 
 }
 
@@ -1406,127 +1277,91 @@ Map.prototype.adjustTilesAfterPan = function()
 {
 
 	// unchanged rectangle of tiles
-	var update_row_from = 0;
-	var update_row_to = this.visible_rows;
-	var update_col_from = 0;
-	var update_col_to = this.visible_cols;
+	var updateRowFrom = 0;
+	var updateRowTo = this.visibleRows;
+	var updateColFrom = 0;
+	var updateColTo = this.visibleCols;
 	
 	// move columns from right to left
-	while (0 < this.first_tile_vx)
+	while (0 < this.bottomLeftTileVportX)
 	{
 	
-		update_col_from ++;
+		updateColFrom ++;
 	
-		this.first_tile_vx -= this.tileWidth;
-		this.first_tile_col --;
+		this.bottomLeftTileVportX -= this.tileWidth;
+		this.bottomLeftTileCol --;
 		
-		for (var i=0; i<this.visible_rows+1; i++)
+		for (var i=0; i<this.visibleRows+1; i++)
 		{
-
-			var map_tile = this.tiles_map[i].pop();
-			this.tiles_map[i].unshift(map_tile);
-			
-//			this.updateTile(true, map_tile, 
-//				this.first_tile_vx, null,
-//				this.first_tile_col, this.first_tile_row - i);
-				
+			var mapTile = this.tilesMap[i].pop();
+			this.tilesMap[i].unshift(mapTile);
 		}
 		
 	}
 
 	// move columns from left to right
-	while (this.first_tile_vx < -this.tileWidth)
+	while (this.bottomLeftTileVportX < -this.tileWidth)
 	{
 
-		update_col_to --;
+		updateColTo --;
 
-		this.first_tile_vx += this.tileWidth;
-		this.first_tile_col ++;
+		this.bottomLeftTileVportX += this.tileWidth;
+		this.bottomLeftTileCol ++;
 		
-		for (var i=0; i<this.visible_rows+1; i++)
+		for (var i=0; i<this.visibleRows+1; i++)
 		{
-		
-			var map_tile = this.tiles_map[i].shift();
-			this.tiles_map[i].push(map_tile);
-			
-//			this.updateTile(true, map_tile, 
-//				(this.first_tile_vx + (this.visible_cols+1)*this.tileWidth), null,
-//				this.first_tile_col + this.visible_cols, this.first_tile_row - i);
-			
+			var mapTile = this.tilesMap[i].shift();
+			this.tilesMap[i].push(mapTile);
 		}
 		
 	}
 
 	// move rows from bottom to top
-	while (0 < this.first_tile_vy)
+	while (0 < this.bottomLeftTileVportY)
 	{
 	
-		update_row_from ++;
+		updateRowFrom ++;
 	
-		this.first_tile_vy -= this.tileHeight;
-		this.first_tile_row ++;
+		this.bottomLeftTileVportY -= this.tileHeight;
+		this.bottomLeftTileRow --;
 		
-		var first_map_row = this.tiles_map.pop();
-		this.tiles_map.unshift(first_map_row);
-		
-		for (var j=0; j<this.visible_cols+1; j++)
-		{
-
-//			this.updateTile(true, first_map_row[j], 
-//				null, this.first_tile_vy,
-//				this.first_tile_col + j, this.first_tile_row);
-			
-		}
+		var firstMapRow = this.tilesMap.pop();
+		this.tilesMap.unshift(firstMapRow);
 		
 	}
 	
 	// move rows from top to bottom
-	while (this.first_tile_vy < -this.tileHeight)
+	while (this.bottomLeftTileVportY < -this.tileHeight)
 	{
 	
-		update_row_to --;
+		updateRowTo --;
 
-		this.first_tile_vy += this.tileHeight;
-		this.first_tile_row --;
+		this.bottomLeftTileVportY += this.tileHeight;
+		this.bottomLeftTileRow ++;
 		
-		var last_map_row = this.tiles_map.shift();
-		this.tiles_map.push(last_map_row);
-		
-		for (var j=0; j<this.visible_cols+1; j++)
-		{
-		
-//			this.updateTile(true, last_map_row[j], 
-//				null, (this.first_tile_vy + (this.visible_rows+1)*this.tileHeight),
-//				this.first_tile_col + j, this.first_tile_row - this.visible_rows);
-		
-		}
+		var lastMapRow = this.tilesMap.shift();
+		this.tilesMap.push(lastMapRow);
 		
 	}
 	
 	// position last unchanged rectangle of tiles
 	// false means = do not change URLs of them
-	this.positionTiles(true, true);
-//		update_row_from, update_row_to,
-//		update_col_from, update_col_to);
-//		
+	this.positionTiles();
+
+}
+
+Map.prototype.formatTileNumber = function(num)
+{
+	var numStr = num.toString();
+	for (var i = 0; i < this.tilesNameNumberLength - numStr.length; i++) numStr = "0" + numStr;
+	return numStr;
 }
 
 Map.prototype.createTileUrl = function(col, row)
 {
-	return this.server + "?" +
-		"c=" + col + "&" +
-		"r=" + row + "&" +
-		"s=" + this.scale + "&" +
-		"w=" + this.tileWidth + "&" +
-		"h=" + this.tileHeight + "&" +
-		"m=" + this.mapFile;
-}
-
-Map.prototype.getBlankTileUrl = function()
-{
-	return this.map_blank_img;
-//	return this.server + "?" +
-//		"m=" + this.mapFile;
+	return this.zoomLevels[this.zoomLevel].tilesDir + "/" + 
+		this.formatTileNumber(col) + "-" +
+		this.formatTileNumber(row) + ".png";
 }
 
 /////////////////////////////////////////////////////////
@@ -1543,18 +1378,18 @@ Map.prototype.zoomSaveState = function()
 		this.getCenterY());
 
 	// delete elements after current element
-	while (this.zoom_history_pos+1 < this.zoom_history.length)
-		this.zoom_history.pop();
+	while (this.zoomHistoryPos+1 < this.zoomHistory.length)
+		this.zoomHistory.pop();
 	
 	// save the state
-	this.zoom_history_pos++;
-	this.zoom_history.push(state);
+	this.zoomHistoryPos++;
+	this.zoomHistory.push(state);
 	
 	// too many?
-	while (this.zoom_history_max < this.zoom_history.length)
+	while (this.zoomHistoryMax < this.zoomHistory.length)
 	{
-		this.zoom_history.shift();
-		this.zoom_history_pos--;
+		this.zoomHistory.shift();
+		this.zoomHistoryPos--;
 	}
 
 	// save the entire history
@@ -1569,16 +1404,16 @@ Map.prototype.zoomHistoryMoveAndRestore = function(dir)
 {
 
 	// check
-	var new_pos = this.zoom_history_pos + dir;
-	if (!(0 <= new_pos && new_pos < this.zoom_history.length))
+	var new_pos = this.zoomHistoryPos + dir;
+	if (!(0 <= new_pos && new_pos < this.zoomHistory.length))
 		return;
 
 	// restore
-	var state = this.zoom_history[new_pos];
-	this.setScaleAndCenterTo(state.scale, state.cx, state.cy, false, true);
+	var state = this.zoomHistory[new_pos];
+	this.setZoomAndCenterTo(state.scale, state.cx, state.cy, false, true);
 
 	// goto
-	this.zoom_history_pos = new_pos;
+	this.zoomHistoryPos = new_pos;
 	
 	// let buttons know
 	this.zoomHistoryFireEvents();
@@ -1592,26 +1427,26 @@ Map.prototype.zoomHistorySave = function()
 {
 
 	// check if we care about saving the state
-	if (!this.field_zoom_history)
+	if (!this.fieldZoomHistory)
 		return;
 
 	// "buffer"
 	var str = new Array();
 	
 	// first the the position
-	str.push(this.zoom_history_pos);
+	str.push(this.zoomHistoryPos);
 	
 	// next the states
-	for (var i = 0; i < this.zoom_history.length; i++)
+	for (var i = 0; i < this.zoomHistory.length; i++)
 	{
-		var state = this.zoom_history[i];
+		var state = this.zoomHistory[i];
 		str.push(state.scale);
 		str.push(state.cx);
 		str.push(state.cy);
 	}
 	
 	// store
-	this.field_zoom_history.value = str.join(" ");
+	this.fieldZoomHistory.value = str.join(" ");
 	
 }
 
@@ -1623,23 +1458,23 @@ Map.prototype.zoomHistoryRestore = function()
 	if (!form) return;
 
 	// hidden field
-	this.field_zoom_history = form.elements[this.field_name_zoom_history];
-	if (!this.field_zoom_history) return;
+	this.fieldZoomHistory = form.elements[this.fieldNameZoomHistory];
+	if (!this.fieldZoomHistory) return;
 	
 	// split values
-	var values = this.field_zoom_history.value.split(/\s+/);
+	var values = this.fieldZoomHistory.value.split(/\s+/);
 	
 	// simple check
 	if (values.length % 3 != 1)
 		return;
 		
 	// history position
-	this.zoom_history_pos = parseInt(values[0]);
+	this.zoomHistoryPos = parseInt(values[0]);
 	
 	// history states
 	var n = (values.length - 1) / 3;
 	for (var i = 0; i < n; i++)
-		this.zoom_history.push(
+		this.zoomHistory.push(
 			new MapZoomState(
 				parseInt(values[3*i+0]),
 				parseFloat(values[3*i+1]),
@@ -1668,12 +1503,12 @@ Map.prototype.zoomGoForward = function()
 
 Map.prototype.zoomCanGoBack = function()
 {
-	return this.zoom_history_pos > 0;
+	return this.zoomHistoryPos > 0;
 }
 
 Map.prototype.zoomCanGoForward = function()
 {
-	return this.zoom_history_pos+1 < this.zoom_history.length;
+	return this.zoomHistoryPos+1 < this.zoomHistory.length;
 }
 
 Map.prototype.registerGoForwardButton = function(button)
@@ -1712,116 +1547,6 @@ Map.prototype.setMouseMode = function(mode)
 }
 
 /////////////////////////////////////////////////////////
-// panning by arrows around the map (not used)
-/////////////////////////////////////////////////////////
-
-Map.prototype.setMouseCursors = function()
-{
-	if (this.mouseMode == MapsGlobal.MAP_TOOL_PAN)
-	{
-		this.frame.style.cursor = "move";
-		this.selector.style.cursor = "default";
-	}
-	else if (this.mouseMode == MapsGlobal.MAP_TOOL_ZOOM)
-	{
-		this.frame.style.cursor = "crosshair";
-		this.selector.style.cursor = "default";
-	}
-	else if (this.mouseMode == MapsGlobal.MAP_TOOL_SELECTOR)
-	{
-		this.frame.style.cursor = "move";
-		this.selector.style.cursor = "move";
-	}
-	else
-	{
-		this.frame.style.cursor = "default";
-		this.selector.style.cursor = "default";
-	}
-}
-
-Map.prototype.panningNextMove = function()
-{
-
-	this.first_tile_vx += this.pan_tool_dx;
-	this.first_tile_vy += this.pan_tool_dy;
-	this.adjustTilesAfterPan();
-	
-	this.pan_tool_timeout_id = Timer.delayedCall(this, "panningNextMove", this.pan_tool_delay);
-
-}
-
-Map.prototype.panUpMouseDown = function()
-{
-	this.pan_tool_dx = 0;
-	this.pan_tool_dy = this.pan_tool_delta;
-	this.panningNextMove();
-}
-
-Map.prototype.panDownMouseDown = function()
-{
-	pan_tool_dx = 0;
-	pan_tool_dy = -pan_tool_delta;
-	this.panningNextMove();
-}
-
-Map.prototype.panLeftMouseDown = function()
-{
-	this.pan_tool_dx = this.pan_tool_delta;
-	this.pan_tool_dy = 0;
-	this.panningNextMove();
-}
-
-Map.prototype.panRightMouseDown = function()
-{
-	this.pan_tool_dx = -this.pan_tool_delta;
-	this.pan_tool_dy = 0;
-	this.panningNextMove();
-}
-
-Map.prototype.panMouseUp = function()
-{
-	Timer.cancelCall(this.pan_tool_timeout_id);
-}
-
-Map.prototype.panToolInit = function()
-{
-
-	this.tool_pan_up = document.getElementById("pan-up");
-	this.tool_pan_down = document.getElementById("pan-down");
-	this.tool_pan_left = document.getElementById("pan-left");
-	this.tool_pan_right = document.getElementById("pan-right");
-	
-	if (this.tool_pan_up)
-	{
-		this.tool_pan_up.unselectable = "on";
-		EventAttacher.attach(this.tool_pan_up, "mousedown", this, "panUpMouseDown");
-		EventAttacher.attach(this.tool_pan_up, "mouseup", this, "panMouseUp");
-	}
-	
-	if (this.tool_pan_down)
-	{
-		tool_pan_down.unselectable = "on";
-		EventAttacher.attach(this.tool_pan_down, "mousedown", this, "panDownMouseDown");
-		EventAttacher.attach(this.tool_pan_down, "mouseup", this, "panMouseUp");
-	}
-	
-	if (this.tool_pan_left)
-	{
-		this.tool_pan_left.unselectable = "on";
-		EventAttacher.attach(this.tool_pan_left, "mousedown", this, "panLeftMouseDown");
-		EventAttacher.attach(this.tool_pan_left, "mouseup", this, "panMouseUp");
-	}
-	
-	if (this.tool_pan_right)
-	{
-		this.tool_pan_right.unselectable = "on";
-		EventAttacher.attach(this.tool_pan_right, "mousedown", this, "panRightMouseDown");
-		EventAttacher.attach(this.tool_pan_right, "mouseup", this, "panMouseUp");
-	}
-	
-}
-
-/////////////////////////////////////////////////////////
 // points of interest
 /////////////////////////////////////////////////////////
 
@@ -1831,8 +1556,8 @@ Map.prototype.showHideLabel = function(event)
 	//var x = event.clientX - this.vport_offset_left;
 	//var y = event.clientY - this.vport_offset_top;
 	
-	var x = ElementUtils.getEventMouseElementX(event, this.map_control);
-	var y = ElementUtils.getEventMouseElementY(event, this.map_control);
+	var x = ElementUtils.getEventMouseElementX(event, this.mapControl);
+	var y = ElementUtils.getEventMouseElementY(event, this.mapControl);
 	
 	for (var i=0; i<this.points.length; i++)
 	{
@@ -2060,9 +1785,9 @@ Map.prototype.setSize = function(width, height)
 	var cy = this.getCenterY();
 	
 	this.updateControlsLayout();
-	this.positionTiles(true, false);
+	this.positionTiles();
 	
-	this.setScaleAndCenterTo(this.scale, cx, cy, false, true);
+	this.setZoomAndCenterTo(this.scale, cx, cy, false, true);
 
 }
 
@@ -2070,19 +1795,19 @@ Map.prototype.mapWindowResize = function()
 {	
 	this.changeSizeByWindow();
 	this.updateControlsLayout();
-	this.positionTiles(true, false);
+	this.positionTiles();
 }
 
 Map.prototype.initSizeByHTML = function()
 {
-	this.width = this.map_control.clientWidth;
-	this.height = this.map_control.clientHeight;
+	this.width = this.mapControl.clientWidth;
+	this.height = this.mapControl.clientHeight;
 }
 	
 Map.prototype.changeSizeByWindow = function()
 {
-	this.width = Math.max((ElementUtils.getPageWidth() - this.map_control.offsetLeft), this.min_map_control_width);
-	this.height = Math.max((ElementUtils.getPageHeight() - this.map_control.offsetTop), this.min_map_control_height);
+	this.width = Math.max((ElementUtils.getPageWidth() - this.mapControl.offsetLeft), this.min_mapControl_width);
+	this.height = Math.max((ElementUtils.getPageHeight() - this.mapControl.offsetTop), this.min_mapControl_height);
 }
 
 Map.prototype.updateControlsLayout = function()
@@ -2095,43 +1820,40 @@ Map.prototype.updateControlsLayout = function()
 	var right = 0;
 	
 	// set vport size
-	this.vport_width = this.width - left - right;
-	this.vport_height = this.height - top - bottom;
+	this.vportWidth = this.width - left - right;
+	this.vportHeight = this.height - top - bottom;
 	
 	// control
 	if (!this.fixedSize)
 	{
-		this.map_control.style.left = this.map_control.offsetLeft + "px";
-		this.map_control.style.top = this.map_control.offsetTop + "px";
+		this.mapControl.style.left = this.mapControl.offsetLeft + "px";
+		this.mapControl.style.top = this.mapControl.offsetTop + "px";
 	}
-	if (this.map_control)
-	{
-		this.map_control.style.width = this.width + "px";
-		this.map_control.style.height = this.height + "px";
-	}
+	this.mapControl.style.width = this.width + "px";
+	this.mapControl.style.height = this.height + "px";
 	
 	// this is used at many places
-	this.vport_offset_left = left + this.map_control.offsetLeft;
-	this.vport_offset_top = top + this.map_control.offsetTop;
+	this.vport_offset_left = left + this.mapControl.offsetLeft;
+	this.vport_offset_top = top + this.mapControl.offsetTop;
 
 	// map itself
 	this.frame.style.left = (left) + "px";
 	this.frame.style.top = (top) + "px";
-	this.frame.style.width = (this.vport_width) + "px";
-	this.frame.style.height = (this.vport_height) + "px";
+	this.frame.style.width = (this.vportWidth) + "px";
+	this.frame.style.height = (this.vportHeight) + "px";
 	
 	// number of tiles needed
-	this.visible_cols = Math.floor(this.vport_width / this.tileWidth) + 1;
-	this.visible_rows = Math.floor(this.vport_height / this.tileHeight) + 1;
+	this.visibleCols = Math.floor(this.vportWidth / this.tileWidth) + 1;
+	this.visibleRows = Math.floor(this.vportHeight / this.tileHeight) + 1;
 	
 	// delete old tiles for map
-	if (this.tiles_map != null)
+	if (this.tilesMap != null)
 	{
-		for (var i=0; i<this.tiles_map.length; i++)
+		for (var i=0; i<this.tilesMap.length; i++)
 		{
-			for (var j=0; j<this.tiles_map[i].length; j++)
+			for (var j=0; j<this.tilesMap[i].length; j++)
 			{
-				var tile = this.tiles_map[i][j];
+				var tile = this.tilesMap[i][j];
 				this.frame.removeChild(tile.img);
 				if (tile.points) this.frame.removeChild(tile.points.getRoot());
 			}
@@ -2139,15 +1861,15 @@ Map.prototype.updateControlsLayout = function()
 	}
 	
 	// tiles for maps
-	this.tiles_map = new Array();
-	for (var i=0; i<this.visible_rows+1; i++)
+	this.tilesMap = new Array();
+	for (var i=0; i<this.visibleRows+1; i++)
 	{
-		this.tiles_map[i] = new Array();
-		for (var j=0; j<this.visible_cols+1; j++)
+		this.tilesMap[i] = new Array();
+		for (var j=0; j<this.visibleCols+1; j++)
 		{			
 			var tile = document.createElement("IMG");
 			tile.onload = function() {this.style.visibility = "visible"};
-			this.tiles_map[i][j] = new MapTile(tile);
+			this.tilesMap[i][j] = new MapTile(tile);
 			if (IE)
 			{
 				tile.unselectable = "on";
@@ -2174,8 +1896,8 @@ Map.prototype.updateControlsLayout = function()
 Map.prototype.mapControlsInit = function()
 {
 
-	this.map_control = document.getElementById(this.map_control_id);
-	//this.map_control.style.display = "block";
+	this.mapControl = document.getElementById(this.mapControlId);
+	//this.mapControl.style.display = "block";
 	
 	this.bubble = document.getElementById(this.bubbleId)
 	this.bubbleText = document.getElementById(this.bubbleTextId)
@@ -2232,13 +1954,12 @@ Map.prototype.hiddenFieldsInit = function()
 		this.hasHiddenExtendFields = false;
 		return;
 	}
-
-	this.fieldX1 = form.elements[this.fieldNameX1];
-	this.fieldY1 = form.elements[this.fieldNameY1];
-	this.fieldX2 = form.elements[this.fieldNameX2];
-	this.fieldY2 = form.elements[this.fieldNameY2];
 	
-	this.hasHiddenExtendFields = this.fieldX1 && this.fieldY1 && this.fieldX2 && this.fieldY2;
+	this.fieldCenterX = form.elements[this.fieldNameCenterX];
+	this.fieldCenterY = form.elements[this.fieldNameCenterY];
+	this.fieldZoomLevel = form.elements[this.fieldNameZoomLevel];
+	
+	this.hasHiddenExtendFields = this.fieldCenterX && this.fieldCenterY && this.fieldZoomLevel;
 
 }
 
@@ -2248,11 +1969,10 @@ Map.prototype.restoreState = function()
 	// zoom
 	if (this.hasHiddenExtendFields)
 	{
-		var x1 = parseFloat(this.fieldX1.value);
-		var y1 = parseFloat(this.fieldY1.value);
-		var x2 = parseFloat(this.fieldX2.value);
-		var y2 = parseFloat(this.fieldY2.value);
-		this.zoomMapTo(x1, y1, x2, y2, false, 0, false, false, true);
+		var cx = parseFloat(this.fieldCenterX.value);
+		var cy = parseFloat(this.fieldCenterY.value);
+		var zoomLevel = parseInt(this.fieldNameZoomLevel.value);
+		this.setZoomAndCenterTo(zoomLevel, cx, cy, false, false, false, true);
 	}
 	
 	// in case that the server components is not interested
@@ -2260,11 +1980,11 @@ Map.prototype.restoreState = function()
 	// scale (i.e. scale = minScale = 1 = the most distant view)
 	else
 	{
-		this.setScaleAndCenterTo(this.minScale, 0, 0, false, false, false, true);
+		this.setZoomAndCenterTo(this.defaultZoomLevel, 0, 0, false, false, false, true);
 	}
 	
 	// and init history if empty
-	if (this.zoom_history_pos == -1)
+	if (this.zoomHistoryPos == -1)
 	{
 		this.zoomSaveState();
 	}
@@ -2296,9 +2016,6 @@ Map.prototype.init = function(restoreState)
 	// scale indicator	
 	this.scaleIndicatorInit();
 
-	// pan tools
-	this.panToolInit();
-	
 	// zoom history
 	this.zoomHistoryRestore();
 	
