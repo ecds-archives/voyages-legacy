@@ -25,6 +25,8 @@
 	sortChanged="#{TableResultTabBean.sortChanged}"
 	style="overflow: auto;" />
 
+<t:commandLink value="Save results into csv file" action="#{TableResultTabBean.getFile}"/>
+
 <t:htmlTag value="div" styleClass="table-bottom-tools" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
