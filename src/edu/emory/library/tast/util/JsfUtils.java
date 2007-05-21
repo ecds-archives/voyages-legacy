@@ -432,6 +432,14 @@ public class JsfUtils
         return ((Integer) vb.getValue(context)).intValue();
     }
 
+    public static boolean getCompPropBoolean(UIComponent component, FacesContext context, String name, boolean set, boolean value)
+    {
+        if (set) return value;
+        ValueBinding vb = component.getValueBinding(name);
+        if (vb == null) return value;
+        return ((Boolean) vb.getValue(context)).booleanValue();
+    }
+
     public static double getCompPropDouble(UIComponent component, FacesContext context, String name, boolean set, double value)
     {
         if (set) return value;

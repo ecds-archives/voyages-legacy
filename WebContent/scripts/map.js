@@ -242,8 +242,6 @@ function Map()
 
 	// container
 	this.fixedSize = true;
-	this.width = 0;
-	this.height = 0;
 	this.mapControl = null;
 	this.mapControlId = null;
 	this.min_mapControl_width = 600;
@@ -931,10 +929,11 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 	var tileRealHeight = zoomLevelObj.scale * this.tileHeight;
 	var vportBottomLeftRealX = x - vportRealWidth / 2;
 	var vportBottomLeftRealY = y - vportRealHeight / 2;
-	this.bottomLeftTileCol = Math.floor((vportBottomLeftRealX - zoomLevelObj.bottomLeftTileX) / vportRealWidth);
-	this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / vportRealHeight);
-	this.bottomLeftTileVportX = Math.round((vportBottomLeftRealX - (this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX)) / zoomLevelObj.scale);
-	this.bottomLeftTileVportY = Math.round((vportBottomLeftRealY - (this.bottomLeftTileCol * tileRealHeight + zoomLevelObj.bottomLeftTileY)) / zoomLevelObj.scale);
+	this.bottomLeftTileCol = Math.floor((vportBottomLeftRealX - zoomLevelObj.bottomLeftTileX) / tileRealWidth);
+	this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / tileRealHeight);
+	this.bottomLeftTileVportX = Math.round(((this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX) - vportBottomLeftRealX) / zoomLevelObj.scale);
+	this.bottomLeftTileVportY = Math.round(((this.bottomLeftTileRow * tileRealHeight + zoomLevelObj.bottomLeftTileY) - vportBottomLeftRealY) / zoomLevelObj.scale);
+	//alert(vportBottomLeftRealX + " vs " + (this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX));
 	
 	// points of interest
 	this.precomputePointsPositions();
@@ -1146,7 +1145,7 @@ Map.prototype.positionTiles = function(rowFrom, rowTo, colFrom, colTo)
 			if (newUrl != tile.url)
 			{
 				tile.url = newUrl;
-				tile.img.style.visibility = "hidden";
+				//tile.img.style.visibility = "hidden";
 				tile.img.src = newUrl;
 			}
 			tile.img.style.left = (this.bottomLeftTileVportX + (j * this.tileWidth)) + "px";
@@ -1685,50 +1684,24 @@ Map.prototype.hideLabel = function(event)
 Map.prototype.setSize = function(width, height)
 {
 
-	this.width = width;
-	this.height = height;
-	
-	var cx = this.getCenterX();
-	var cy = this.getCenterY();
+	this.vportWidth = width;
+	this.vportHeight = height;
 	
 	this.updateControlsLayout();
-	this.positionTiles();
 	
-	this.setZoomAndCenterTo(this.scale, cx, cy, false, true);
+	this.setZoomAndCenterTo(
+		this.zoomLevel,
+		this.getCenterX(),
+		this.getCenterY(),
+		true,
+		false,
+		false,
+		true);
 
-}
-
-Map.prototype.mapWindowResize = function()
-{	
-	this.changeSizeByWindow();
-	this.updateControlsLayout();
-	this.positionTiles();
-}
-
-Map.prototype.initSizeByHTML = function()
-{
-	this.width = this.mapControl.clientWidth;
-	this.height = this.mapControl.clientHeight;
-}
-	
-Map.prototype.changeSizeByWindow = function()
-{
-	this.width = Math.max((ElementUtils.getPageWidth() - this.mapControl.offsetLeft), this.min_mapControl_width);
-	this.height = Math.max((ElementUtils.getPageHeight() - this.mapControl.offsetTop), this.min_mapControl_height);
 }
 
 Map.prototype.updateControlsLayout = function()
 {
-	
-	// offsets
-	var top = 0;
-	var bottom = 0;
-	var left = 0;
-	var right = 0;
-	
-	// set vport size
-	this.vportWidth = this.width - left - right;
-	this.vportHeight = this.height - top - bottom;
 	
 	// control
 	if (!this.fixedSize)
@@ -1736,16 +1709,16 @@ Map.prototype.updateControlsLayout = function()
 		this.mapControl.style.left = this.mapControl.offsetLeft + "px";
 		this.mapControl.style.top = this.mapControl.offsetTop + "px";
 	}
-	this.mapControl.style.width = this.width + "px";
-	this.mapControl.style.height = this.height + "px";
+	this.mapControl.style.width = this.vportWidth + "px";
+	this.mapControl.style.height = this.vportHeight + "px";
 	
 	// this is used at many places
-	this.vport_offset_left = left + this.mapControl.offsetLeft;
-	this.vport_offset_top = top + this.mapControl.offsetTop;
+	this.vport_offset_left = this.mapControl.offsetLeft;
+	this.vport_offset_top = this.mapControl.offsetTop;
 
 	// map itself
-	this.frame.style.left = (left) + "px";
-	this.frame.style.top = (top) + "px";
+	this.frame.style.left = "0px";
+	this.frame.style.top = "0px";
 	this.frame.style.width = (this.vportWidth) + "px";
 	this.frame.style.height = (this.vportHeight) + "px";
 	
@@ -1774,8 +1747,8 @@ Map.prototype.updateControlsLayout = function()
 		this.tilesMap[i] = new Array();
 		for (var j=0; j<this.visibleCols+1; j++)
 		{			
-			var tile = document.createElement("IMG");
-			tile.onload = function() {this.style.visibility = "visible"};
+			var tile = document.createElement("img");
+			//tile.onload = function() {tile.style.visibility = "visible"};
 			this.tilesMap[i][j] = new MapTile(tile);
 			if (IE)
 			{
@@ -1804,7 +1777,6 @@ Map.prototype.mapControlsInit = function()
 {
 
 	this.mapControl = document.getElementById(this.mapControlId);
-	//this.mapControl.style.display = "block";
 	
 	this.bubble = document.getElementById(this.bubbleId)
 	this.bubbleText = document.getElementById(this.bubbleTextId)
@@ -1823,6 +1795,9 @@ Map.prototype.mapControlsInit = function()
 		this.frame.style.MozUserFocus = "none";
 		this.frame.style.MozUserSelect = "none";
 	}
+	
+	this.vportWidth = this.mapControl.offsetWidth;
+	this.vportHeight = this.mapControl.offsetHeight;
 
 	EventAttacher.attach(this.frame, "mousedown", this, "mapStartDrag");
 	if (IE) EventAttacher.attach(this.frame, "mousewheel", this, "mapMouseWheel");
@@ -1847,9 +1822,6 @@ Map.prototype.mapControlsInit = function()
 	bg.style.backgroundColor = this.selector_color;
 	this.selector.appendChild(bg);
 
-	if (!this.fixedSize)
-		EventAttacher.attachOnWindowEvent("resize", this, "mapWindowResize");
-	
 }
 
 Map.prototype.hiddenFieldsInit = function()
@@ -1916,7 +1888,6 @@ Map.prototype.init = function(restoreState)
 
 	// control
 	this.mapControlsInit();
-	this.initSizeByHTML();
 	this.updateControlsLayout();
 	
 	// scale indicator	

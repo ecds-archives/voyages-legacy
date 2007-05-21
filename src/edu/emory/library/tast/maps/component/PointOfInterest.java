@@ -13,49 +13,55 @@ public class PointOfInterest
 	private String[] symbols;
 	private int showAtZoom = -1;
 	
-	public PointOfInterest(double x, double y)
+	public PointOfInterest(double x, double y, String[] symbols)
 	{
 		this.x = x;
 		this.y = y;
+		this.symbols = symbols;
 	}
 
-	public PointOfInterest(double x, double y, String label, String text)
+	public PointOfInterest(double x, double y, String[] symbols, String label, String text)
 	{
 		this.x = x;
 		this.y = y;
 		this.label = label;
 		this.text = text;
+		this.symbols = symbols;
 	}
 
-	public PointOfInterest(double x, double y, String label)
+	public PointOfInterest(double x, double y, String[] symbols, String label)
 	{
 		this.x = x;
 		this.y = y;
 		this.label = label;
+		this.symbols = symbols;
 	}
 
-	public PointOfInterest(double x, double y, int showAtZoom)
+	public PointOfInterest(double x, double y, String[] symbols, int showAtZoom)
 	{
 		this.x = x;
 		this.y = y;
 		this.showAtZoom = showAtZoom;
+		this.symbols = symbols;
 	}
 
-	public PointOfInterest(double x, double y, String label, String text, int showAtZoom)
+	public PointOfInterest(double x, double y, String[] symbols, String label, String text, int showAtZoom)
 	{
 		this.x = x;
 		this.y = y;
 		this.label = label;
 		this.text = text;
 		this.showAtZoom = showAtZoom;
+		this.symbols = symbols;
 	}
 
-	public PointOfInterest(double x, double y, String label, int showAtZoom)
+	public PointOfInterest(double x, double y, String[] symbols, String label, int showAtZoom)
 	{
 		this.x = x;
 		this.y = y;
 		this.label = label;
 		this.showAtZoom = showAtZoom;
+		this.symbols = symbols;
 	}
 
 	public String getLabelJavaScriptSafe()

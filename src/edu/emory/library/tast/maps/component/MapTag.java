@@ -9,11 +9,10 @@ import javax.faces.webapp.UIComponentTag;
 public class MapTag extends UIComponentTag
 {
 	
-	private String mapFile;
-	private String miniMapFile;
-	private String serverBaseUrl;
+	private String zoomLevels;
 	private String pointsOfInterest;
 	private String miniMap;
+	private String miniMapZoomLevel;
 	private String miniMapPosition;
 	private String miniMapWidth;
 	private String miniMapHeight;
@@ -34,34 +33,10 @@ public class MapTag extends UIComponentTag
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		MapComponent map = (MapComponent) component;
 		
-		if (mapFile != null && isValueReference(mapFile))
+		if (zoomLevels != null && isValueReference(zoomLevels))
 		{
-			ValueBinding vb = app.createValueBinding(mapFile);
-			component.setValueBinding("mapFile", vb);
-		}
-		else
-		{
-			map.setMapFile(mapFile);
-		}
-		
-		if (miniMapFile != null && isValueReference(miniMapFile))
-		{
-			ValueBinding vb = app.createValueBinding(miniMapFile);
-			component.setValueBinding("miniMapFile", vb);
-		}
-		else
-		{
-			map.setMapFile(miniMapFile);
-		}
-
-		if (serverBaseUrl != null && isValueReference(serverBaseUrl))
-		{
-			ValueBinding vb = app.createValueBinding(serverBaseUrl);
-			component.setValueBinding("serverBaseUrl", vb);
-		}
-		else
-		{
-			map.setServerBaseUrl(serverBaseUrl);
+			ValueBinding vb = app.createValueBinding(zoomLevels);
+			component.setValueBinding("zoomLevels", vb);
 		}
 		
 		if (pointsOfInterest != null && isValueReference(pointsOfInterest))
@@ -78,6 +53,12 @@ public class MapTag extends UIComponentTag
 		else
 		{
 			map.setMiniMap("true".equalsIgnoreCase(miniMap));
+		}
+		
+		if (miniMapZoomLevel != null && isValueReference(miniMapZoomLevel))
+		{
+			ValueBinding vb = app.createValueBinding(miniMapZoomLevel);
+			component.setValueBinding("miniMapZoomLevel", vb);
 		}
 
 		if (miniMapPosition != null && isValueReference(miniMapPosition))
@@ -124,24 +105,14 @@ public class MapTag extends UIComponentTag
 
 	}
 
-	public String getMapFile()
+	public String getZoomLevels()
 	{
-		return mapFile;
+		return zoomLevels;
 	}
 
-	public void setMapFile(String mapFile)
+	public void setZoomLevels(String serverBaseUrl)
 	{
-		this.mapFile = mapFile;
-	}
-
-	public String getServerBaseUrl()
-	{
-		return serverBaseUrl;
-	}
-
-	public void setServerBaseUrl(String serverBaseUrl)
-	{
-		this.serverBaseUrl = serverBaseUrl;
+		this.zoomLevels = serverBaseUrl;
 	}
 
 	public String getPointsOfInterest()
@@ -194,14 +165,14 @@ public class MapTag extends UIComponentTag
 		this.miniMapWidth = miniMapWidth;
 	}
 
-	public String getMiniMapFile()
+	public String getMiniMapZoomLevel()
 	{
-		return miniMapFile;
+		return miniMapZoomLevel;
 	}
 
-	public void setMiniMapFile(String miniMapFile)
+	public void setMiniMapZoomLevel(String miniMapZoomLevel)
 	{
-		this.miniMapFile = miniMapFile;
+		this.miniMapZoomLevel = miniMapZoomLevel;
 	}
 
 }

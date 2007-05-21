@@ -17,14 +17,8 @@ public class AppConfig
 	public static final String IMPORT_DATEFORMAT = "import.dateformat";
 	public static final String IMPORT_LOGITEM_DATEFORMAT = "import.logitem.dateformat";
 	
-	public static final String MAP_FILE_SKELETON = "mapserver.mapfile.skeleton";
-	public static final String MAP_FILE_OUTPUT = "mapserver.mapfile.output";
-	public static final String MAP_DEFAULT_EXTENT_X_MIN = "map.default.extent.x.min";
-	public static final String MAP_DEFAULT_EXTENT_X_MAX = "map.default.extent.x.max";
-	public static final String MAP_DEFAULT_EXTENT_Y_MIN = "map.default.extent.y.min";
-	public static final String MAP_DEFAULT_EXTENT_Y_MAX = "map.default.extent.y.max";
-	public static final String MAP_SCALE_FACTOR = "map.scale.factor";
-	public static final String MAP_MAX_MAGNIFICATION = "map.max.magnification";	
+	public static final String MAP_DEFAULT_CENTER_X = "map.default.center.x";
+	public static final String MAP_DEFAULT_CENTER_Y = "map.default.center.y";
 	
 	public static final String IMAGES_DIRECTORY = "images.dir";
 	public static final String IMAGES_TITLE_MAXLEN = "images.title.maxlen";

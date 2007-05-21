@@ -9,16 +9,18 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.AppConfig;
-import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 public class MapComponent extends UIComponentBase
 {
 	
 	private final static MapSize defaultMapSize = new MapSize(480, 320);
+
+	private boolean zoomLevelsSet = false;
+	private ZoomLevel[] zoomLevels = null;
 
 	private boolean mapSizesSet = false;
 	private MapSize[] mapSizes = new MapSize[] {
@@ -30,33 +32,28 @@ public class MapComponent extends UIComponentBase
 	private boolean mapSizeSet = false;
 	private MapSize mapSize = (MapSize) defaultMapSize.clone();
 
-	private boolean mapFileSet = false;
-	private String mapFile = null;
-
-	private boolean miniMapFileSet = false;
-	private String miniMapFile = null;
-
-	private boolean serverBaseUrlSet = false;
-	private String serverBaseUrl = null;
-
 	private boolean pointsOfInterestSet = false;
 	private PointOfInterest[] pointsOfInterest = null;
 
-	private double x1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_X_MIN);
-	private double y1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_Y_MIN);
-	private double x2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_X_MAX);
-	private double y2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_EXTENT_Y_MAX);
+	private double centerX = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_CENTER_X);
+	private double centerY = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_CENTER_Y);
+	private int zoomLevel = 0;
+	
+	private boolean miniMapZoomLevelSet = false;
+	private ZoomLevel miniMapZoomLevel = null;
 	
 	private boolean miniMapSet = false;
 	private boolean miniMap = true;
+	
 	private boolean miniMapVisible = true;
 	
 	private boolean miniMapPositionSet = false;
 	private MiniMapPosition miniMapPosition = MiniMapPosition.BottomRight;
 
 	private boolean miniMapWidthSet = false;
-	private boolean miniMapHeightSet = false;
 	private int miniMapWidth = 100;
+
+	private boolean miniMapHeightSet = false;
 	private int miniMapHeight = 100;
 
 	private ZoomHistory zoomHistory = new ZoomHistory();
@@ -76,18 +73,16 @@ public class MapComponent extends UIComponentBase
 	{
 		return new Object[] {
 			super.saveState(context),
-			mapFile,
-			miniMapFile,
-			serverBaseUrl,
-			new Double(x1),
-			new Double(y1),
-			new Double(x2),
-			new Double(y2),
+			zoomLevels,
+			new Double(centerX),
+			new Double(centerY),
+			new Integer(zoomLevel),
 			mouseMode,
 			mapSizes,
 			mapSize,
 			zoomHistory,
 			new Boolean(miniMap),
+			miniMapZoomLevel,
 			new Boolean(miniMapVisible),
 			miniMapPosition,
 			new Integer(miniMapWidth),
@@ -96,44 +91,38 @@ public class MapComponent extends UIComponentBase
 	
 	public void restoreState(FacesContext context, Object state)
 	{
+		int i = 0;
 		Object[] values = (Object[]) state;
-		super.restoreState(context, values[0]);
-		mapFile = (String) values[1];
-		miniMapFile = (String) values[2];
-		serverBaseUrl = (String) values[3];
-		x1 = ((Double)values[4]).doubleValue();
-		y1 = ((Double)values[5]).doubleValue();
-		x2 = ((Double)values[6]).doubleValue();
-		y2 = ((Double)values[7]).doubleValue();
-		mouseMode = (MouseMode)values[8];
-		mapSizes = (MapSize[]) values[9];
-		mapSize = (MapSize) values[10];
-		zoomHistory = (ZoomHistory) values[11];
-		miniMap = ((Boolean)values[12]).booleanValue();
-		miniMapVisible = ((Boolean)values[13]).booleanValue();
-		miniMapPosition = (MiniMapPosition) values[14];
-		miniMapWidth = ((Integer)values[15]).intValue();
-		miniMapHeight = ((Integer)values[16]).intValue();
+		super.restoreState(context, values[i++]);
+		zoomLevels = (ZoomLevel[]) values[i++];
+		centerX = ((Double)values[i++]).doubleValue();
+		centerY = ((Double)values[i++]).doubleValue();
+		zoomLevel = ((Integer)values[i++]).intValue();
+		mouseMode = (MouseMode)values[i++];
+		mapSizes = (MapSize[]) values[i++];
+		mapSize = (MapSize) values[i++];
+		zoomHistory = (ZoomHistory) values[i++];
+		miniMap = ((Boolean)values[i++]).booleanValue();
+		miniMapZoomLevel = (ZoomLevel)values[i++];
+		miniMapVisible = ((Boolean)values[i++]).booleanValue();
+		miniMapPosition = (MiniMapPosition) values[i++];
+		miniMapWidth = ((Integer)values[i++]).intValue();
+		miniMapHeight = ((Integer)values[i++]).intValue();
 	}
 	
-	private String getHiddenFieldNameForX1(FacesContext context)
+	private String getHiddenFieldNameForCenterX(FacesContext context)
 	{
-		return getClientId(context) + "_x1";
+		return getClientId(context) + "_center_x";
 	}
 	
-	private String getHiddenFieldNameForY1(FacesContext context)
+	private String getHiddenFieldNameForCenterY(FacesContext context)
 	{
-		return getClientId(context) + "_y1";
+		return getClientId(context) + "_center_y";
 	}
 
-	private String getHiddenFieldNameForX2(FacesContext context)
+	private String getHiddenFieldNameForZoomLevel(FacesContext context)
 	{
-		return getClientId(context) + "_x2";
-	}
-
-	private String getHiddenFieldNameForY2(FacesContext context)
-	{
-		return getClientId(context) + "_y2";
+		return getClientId(context) + "_zoom_level";
 	}
 
 	private String getHiddenFieldNameForMouseMode(FacesContext context)
@@ -161,10 +150,9 @@ public class MapComponent extends UIComponentBase
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
 		
-		x1 = JsfUtils.getParamDouble(params, getHiddenFieldNameForX1(context), x1);
-		y1 = JsfUtils.getParamDouble(params, getHiddenFieldNameForY1(context), y1);
-		x2 = JsfUtils.getParamDouble(params, getHiddenFieldNameForX2(context), x2);
-		y2 = JsfUtils.getParamDouble(params, getHiddenFieldNameForY2(context), y2);
+		centerX = JsfUtils.getParamDouble(params, getHiddenFieldNameForCenterX(context), centerX);
+		centerY = JsfUtils.getParamDouble(params, getHiddenFieldNameForCenterY(context), centerY);
+		zoomLevel = JsfUtils.getParamInt(params, getHiddenFieldNameForZoomLevel(context), zoomLevel);
 		
 		String mouseModeStr = JsfUtils.getParamString(params, getHiddenFieldNameForMouseMode(context));
 		if (!StringUtils.isNullOrEmpty(mouseModeStr))
@@ -337,8 +325,7 @@ public class MapComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
 		
-		String mapFile = getMapFile();
-		String serverBaseUrl = getServerBaseUrl();
+		ZoomLevel[] zoomLevels = getZoomLevels();
 		
 		String mapId = getClientId(context);
 		String mapControlId = getClientId(context) + "_control";
@@ -360,10 +347,9 @@ public class MapComponent extends UIComponentBase
 		String miniMapFrameId = getClientId(context) + "_minimap_frame";
 		String miniMapToggleId = getClientId(context) + "_minimap_toggle";
 
-		String hiddenFieldNameForX1 = getHiddenFieldNameForX1(context);
-		String hiddenFieldNameForY1 = getHiddenFieldNameForY1(context);
-		String hiddenFieldNameForX2 = getHiddenFieldNameForX2(context);
-		String hiddenFieldNameForY2 = getHiddenFieldNameForY2(context);
+		String hiddenFieldNameCenterX = getHiddenFieldNameForCenterX(context);
+		String hiddenFieldNameCenterY = getHiddenFieldNameForCenterY(context);
+		String hiddenFieldNameZoomLevel = getHiddenFieldNameForZoomLevel(context);
 		String hiddenFieldNameForMouseMode = getHiddenFieldNameForMouseMode(context);
 		String hiddenFieldNameForZoomHistory = getHiddenFieldNameForZoomHistory(context);
 		String hiddenFieldNameForMapSize = getHiddenFieldNameForMapSize(context);
@@ -374,7 +360,7 @@ public class MapComponent extends UIComponentBase
 		mapSizes = getMapSizes();
 		PointOfInterest[] pointsOfInterest = getPointsOfInterest();
 		miniMap = isMiniMap();
-		miniMapFile = getMiniMapFile();
+		miniMapZoomLevel = getMiniMapZoomLevel();
 		miniMapPosition = getMiniMapPosition();
 		miniMapWidth = getMiniMapWidth();
 		miniMapHeight = getMiniMapHeight();
@@ -392,10 +378,6 @@ public class MapComponent extends UIComponentBase
 		if (mapSizes == null || mapSizes.length == 0)
 			mapSizes = new MapSize[] {defaultMapSize};
 
-		// scale configuration and extent
-		double scaleFactor = AppConfig.getConfiguration().getDouble(AppConfig.MAP_SCALE_FACTOR);
-		int scaleMax = AppConfig.getConfiguration().getInt(AppConfig.MAP_MAX_MAGNIFICATION);
-		
 		// init JS
 		StringBuffer jsRegister = new StringBuffer();
 		
@@ -408,52 +390,39 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("true");
 		jsRegister.append(", ");
 		
-		// servlet
-		jsRegister.append("'").append(serverBaseUrl).append("'");
+		// form name
+		jsRegister.append("'").append(form.getId()).append("'");
 		jsRegister.append(", ");
-
-		// mapfile parameter
-		jsRegister.append("'").append(mapFile).append("'");
-		jsRegister.append(", ");
-
-		// minimap mapfile parameter
-		jsRegister.append("'").append(miniMapFile).append("'");
-		jsRegister.append(", ");
-
-		// scale factor (i.e. denominator)
-		jsRegister.append("'").append(scaleFactor).append("'");
-		jsRegister.append(", ");
-		jsRegister.append("'").append(scaleMax).append("'");
-		jsRegister.append(", ");
-
+		
 		// main HTML elements
 		jsRegister.append("'").append(mapControlId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(tilesContainerId).append("'");
 		jsRegister.append(", ");
+		
+		// zoom levels
+		jsRegister.append("[");
+		for (int i = 0; i < zoomLevels.length; i++)
+		{
+			ZoomLevel zoomLevel = zoomLevels[i];
+			jsRegister.append("new MapZoomLevel(");
+			jsRegister.append(zoomLevel.getBottomLeftTileX()).append(", ");
+			jsRegister.append(zoomLevel.getBottomLeftTileY()).append(", ");
+			jsRegister.append(zoomLevel.getTilesNumX()).append(", ");
+			jsRegister.append(zoomLevel.getTilesNumY()).append(", ");
+			jsRegister.append(zoomLevel.getScale()).append(", ");
+			jsRegister.append("'").append(zoomLevel.getTilesDir()).append("'");
+			jsRegister.append(")");
+		}
+		jsRegister.append("]");
+		jsRegister.append(", ");
 
-		// HTML elements for tools (not used now)
-		jsRegister.append("null");
-		jsRegister.append(", ");
-		jsRegister.append("null");
-		jsRegister.append(", ");
-		jsRegister.append("null");
-		jsRegister.append(", ");
-		jsRegister.append("null");
-		jsRegister.append(", ");
-		
-		// form name
-		jsRegister.append("'").append(form.getId()).append("'");
-		jsRegister.append(", ");
-		
 		// hidden fields: extends
-		jsRegister.append("'").append(hiddenFieldNameForX1).append("'");
+		jsRegister.append("'").append(hiddenFieldNameCenterX).append("'");
 		jsRegister.append(", ");
-		jsRegister.append("'").append(hiddenFieldNameForY1).append("'");
+		jsRegister.append("'").append(hiddenFieldNameCenterY).append("'");
 		jsRegister.append(", ");
-		jsRegister.append("'").append(hiddenFieldNameForX2).append("'");
-		jsRegister.append(", ");
-		jsRegister.append("'").append(hiddenFieldNameForY2).append("'");
+		jsRegister.append("'").append(hiddenFieldNameZoomLevel).append("'");
 		jsRegister.append(", ");
 		
 		// zoom history
@@ -559,7 +528,7 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append(", ");
 		jsRegister.append("'").append(bubbleTextId).append("'");
 		jsRegister.append(", ");
-		
+
 		// scale indicator
 		jsRegister.append("'").append(scaleIndicatorTextId).append("'");
 		jsRegister.append(", ");
@@ -572,6 +541,15 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("'").append(miniMapControlId).append("'");
 			jsRegister.append(", ");
 			jsRegister.append("'").append(miniMapFrameId).append("'");
+			jsRegister.append(", ");
+			jsRegister.append("new MapZoomLevel(");
+			jsRegister.append(miniMapZoomLevel.getBottomLeftTileX()).append(", ");
+			jsRegister.append(miniMapZoomLevel.getBottomLeftTileY()).append(", ");
+			jsRegister.append(miniMapZoomLevel.getTilesNumX()).append(", ");
+			jsRegister.append(miniMapZoomLevel.getTilesNumY()).append(", ");
+			jsRegister.append(miniMapZoomLevel.getScale()).append(", ");
+			jsRegister.append("'").append(miniMapZoomLevel.getTilesDir()).append("'");
+			jsRegister.append(")");
 			jsRegister.append(", ");
 			jsRegister.append("'").append(miniMapToggleId).append("'");
 			jsRegister.append(", ");
@@ -598,6 +576,8 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("null");
 			jsRegister.append(", ");
 			jsRegister.append("null");
+			jsRegister.append(", ");
+			jsRegister.append("null");
 		}
 		
 		// end of init JS
@@ -609,10 +589,9 @@ public class MapComponent extends UIComponentBase
 		JsfUtils.encodeJavaScriptEnd(this, writer);
 		
 		// hidden fields for extend
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForX1, String.valueOf(x1));
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForY1, String.valueOf(y1));
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForX2, String.valueOf(x2));
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForY2, String.valueOf(y2));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameCenterX, String.valueOf(centerX));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameCenterY, String.valueOf(centerY));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameZoomLevel, String.valueOf(zoomLevel));
 		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForMiniMapVisibility, String.valueOf(miniMapVisible));
 		
 		// hidden field: mouse mod
@@ -737,48 +716,6 @@ public class MapComponent extends UIComponentBase
 	{
 	}
 
-	public String getMapFile()
-	{
-        if (mapFileSet) return mapFile;
-        ValueBinding vb = getValueBinding("mapFile");
-        if (vb == null) return mapFile;
-        return (String) vb.getValue(getFacesContext());
-	}
-
-	public void setMapFile(String mapFile)
-	{
-		mapFileSet = true;
-		this.mapFile = mapFile;
-	}
-
-	public void setMiniMapFile(String miniMapFile)
-	{
-		miniMapFileSet = true;
-		this.miniMapFile = miniMapFile;
-	}
-
-	public String getMiniMapFile()
-	{
-        if (miniMapFileSet) return miniMapFile;
-        ValueBinding vb = getValueBinding("miniMapFile");
-        if (vb == null) return miniMapFile;
-        return (String) vb.getValue(getFacesContext());
-	}
-
-	public String getServerBaseUrl()
-	{
-        if (serverBaseUrlSet) return serverBaseUrl;
-        ValueBinding vb = getValueBinding("serverBaseUrl");
-        if (vb == null) return serverBaseUrl;
-        return (String) vb.getValue(getFacesContext());
-	}
-
-	public void setServerBaseUrl(String serverBaseUrl)
-	{
-		serverBaseUrlSet = true;
-		this.serverBaseUrl = serverBaseUrl;
-	}
-
 	public void setMapSizes(MapSize[] mapSizes)
 	{
 		mapSizesSet = true; 
@@ -787,10 +724,8 @@ public class MapComponent extends UIComponentBase
 
 	public MapSize[] getMapSizes()
 	{
-        if (mapSizesSet) return mapSizes;
-        ValueBinding vb = getValueBinding("mapSizes");
-        if (vb == null) return mapSizes;
-        return (MapSize[]) vb.getValue(getFacesContext());
+		return (MapSize[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"mapSizes", mapSizesSet, mapSizes);
 	}
 
 	public void setMapSize(MapSize mapSize)
@@ -801,10 +736,8 @@ public class MapComponent extends UIComponentBase
 
 	public MapSize getMapSize()
 	{
-        if (mapSizeSet) return mapSize;
-        ValueBinding vb = getValueBinding("mapSize");
-        if (vb == null) return mapSize;
-        return (MapSize) vb.getValue(getFacesContext());
+		return (MapSize) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"mapSize", mapSizeSet, mapSize);
 	}
 
 	public void setPointsOfInterest(PointOfInterest[] pointsOfInterest)
@@ -815,10 +748,8 @@ public class MapComponent extends UIComponentBase
 
 	public PointOfInterest[] getPointsOfInterest()
 	{
-        if (pointsOfInterestSet) return pointsOfInterest;
-        ValueBinding vb = getValueBinding("pointsOfInterest");
-        if (vb == null) return pointsOfInterest;
-        return (PointOfInterest[]) vb.getValue(getFacesContext());
+		return (PointOfInterest[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"pointsOfInterest", pointsOfInterestSet, pointsOfInterest);
 	}
 
 	public void setMiniMap(boolean miniMap)
@@ -829,10 +760,8 @@ public class MapComponent extends UIComponentBase
 
 	public boolean isMiniMap()
 	{
-        if (miniMapSet) return miniMap;
-        ValueBinding vb = getValueBinding("miniMap");
-        if (vb == null) return miniMap;
-        return ((Boolean) vb.getValue(getFacesContext())).booleanValue();
+		return JsfUtils.getCompPropBoolean(this, getFacesContext(),
+				"miniMap", miniMapSet, miniMap);
 	}
 
 	public void setMiniMapPosition(MiniMapPosition miniMapPosition)
@@ -843,10 +772,8 @@ public class MapComponent extends UIComponentBase
 
 	public MiniMapPosition getMiniMapPosition()
 	{
-        if (miniMapPositionSet) return miniMapPosition;
-        ValueBinding vb = getValueBinding("miniMapPosition");
-        if (vb == null) return miniMapPosition;
-        return (MiniMapPosition) vb.getValue(getFacesContext());
+		return (MiniMapPosition) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"miniMapPosition", miniMapPositionSet, miniMapPosition);
 	}
 
 	public void setMiniMapWidth(int miniMapWidth)
@@ -871,6 +798,30 @@ public class MapComponent extends UIComponentBase
 	{
 		return JsfUtils.getComponentInt(this, getFacesContext(),
 				miniMapHeightSet, miniMapHeight, "miniMapHeight");
+	}
+
+	public ZoomLevel[] getZoomLevels()
+	{
+		return (ZoomLevel[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"zoomLevels", zoomLevelsSet, zoomLevels);
+	}
+
+	public void setZoomLevels(ZoomLevel[] zoomLevels)
+	{
+		zoomLevelsSet = true;
+		this.zoomLevels = zoomLevels;
+	}
+
+	public ZoomLevel getMiniMapZoomLevel()
+	{
+		return (ZoomLevel) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"miniMapZoomLevel", miniMapZoomLevelSet, miniMapZoomLevel);
+	}
+
+	public void setMiniMapZoomLevel(ZoomLevel miniMapZoomLevel)
+	{
+		miniMapZoomLevelSet = true;
+		this.miniMapZoomLevel = miniMapZoomLevel;
 	}
 
 }
