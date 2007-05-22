@@ -62,6 +62,7 @@ public class VoyageDetailBean {
 		// c.addCondition(VoyageIndex.getApproved());
 		c.addCondition(Voyage.getAttribute(fieldName), new Long(this.voyageId),
 				Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 
 		List validAttrs = new ArrayList();
 		VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();

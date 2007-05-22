@@ -78,9 +78,7 @@
 						<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
 						
 							<s:map
-								mapFile="#{VoyageDetailBean.mapPath}"
 								pointsOfInterest="#{VoyageDetailBean.pointsOfInterest}"
-								serverBaseUrl="../servlet/maptile"
 								miniMap="true" />
 
 						</t:htmlTag>
