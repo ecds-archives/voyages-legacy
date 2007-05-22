@@ -11,13 +11,10 @@
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px;">
 	
 		<s:map
-			mapFile="#{MapBean.mapPath}"
 			pointsOfInterest="#{MapBean.pointsOfInterest}"
 			miniMap="true"
-			miniMapFile="#{MapBean.miniMapFile}"
 			miniMapWidth="100"
-			miniMapHeight="100"
-			serverBaseUrl="../servlet/maptile" />
+			miniMapHeight="100"/>
 
 	</t:htmlTag>
 

@@ -8,3 +8,8 @@
 <s:simpleTable
 	id="stat-table"
 	rows="#{StatisticBean.statisticElements}"/>
+
+<t:htmlTag value="div" style="margin-top: 5px;">
+	<t:commandButton value="Save table data" action="#{StatisticBean.getFileAllData}"
+		styleClass="button-save"/>
+</t:htmlTag>

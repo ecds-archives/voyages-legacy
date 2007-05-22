@@ -21,6 +21,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.xerces.util.HTTPInputSource;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -42,6 +44,8 @@ import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.util.CSVUtils;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -195,6 +199,23 @@ public class TableResultTabBean {
 	private Object[][] queryAndFillInData(Conditions subCondition, TableData dataTable, int start, int length,
 			boolean returnBasicInfo) {
 
+		QueryValue qValue = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
+
+		// Execute query
+		Object[] ret = qValue.executeQuery();
+		dataTable.setData(ret);
+
+		if (returnBasicInfo && ret.length > 0) {
+			int len = ((Object[]) ret[0]).length;
+			return new Object[][] {
+					{ VisibleAttribute.getAttribute("voyageid") },
+					{ ((Object[]) ret[0])[len - 1]} };
+		} else {
+			return new Object[][] {};
+		}
+	}
+
+	private QueryValue getQuery(Conditions subCondition, TableData dataTable, int start, int length, boolean returnBasicInfo) {
 		// Build condition
 		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
 		if (subCondition != null) {
@@ -211,7 +232,9 @@ public class TableResultTabBean {
 		}
 
 		// Dictionaries - list of columns with dictionaries.
-		dataTable.setKeyAttribute(Voyage.getAttribute("iid"));
+		if (dataTable != null) {
+			dataTable.setKeyAttribute(Voyage.getAttribute("iid"));
+		}
 		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
@@ -253,19 +276,7 @@ public class TableResultTabBean {
 				qValue.setOrder(dataTable.getOrder());
 			}
 		}
-
-		// Execute query
-		Object[] ret = qValue.executeQuery();
-		dataTable.setData(ret);
-
-		if (returnBasicInfo && ret.length > 0) {
-			int len = ((Object[]) ret[0]).length;
-			return new Object[][] {
-					{ VisibleAttribute.getAttribute("voyageid") },
-					{ ((Object[]) ret[0])[len - 1]} };
-		} else {
-			return new Object[][] {};
-		}
+		return qValue;
 	}
 
 
@@ -895,46 +906,28 @@ public class TableResultTabBean {
 		this.voyageBean = voyageBean;
 	}
 	
-	public Object[] getAllData() {
-		Object[] response = new Object[this.data.getData().length];
-//		DataTableItem dataTable[] =  this.getSimpleData();
-//		for (int i = 0; i < dataTable.length; i++) {
-//			Object[] row = dataTable[i].dataRow;
-//			response[i] = new String[row.length];
-//			for (int j = 0; j < row.length; j++) {
-//				((Object[])response[i])[j] = row[j].toString();
-//			}
-//		}
-		return response;
+	public String getFileCurrentData() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		QueryValue q = this.getQuery(this.conditions, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
+		CSVUtils.writeResponse(session, q);
+		
+		t.commit();
+		session.close();
+		return null;
 	}
 	
 	
-	public String getFile() {
+	public String getFileAllData() {	
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
 		
-		try {
-			//File file = new File("/home/juri/" + System.currentTimeMillis() + ".csv");
-			FacesContext fc = FacesContext.getCurrentInstance();			
-			HttpServletResponse response = (HttpServletResponse)fc.getExternalContext().getResponse();
-			response.setContentType("application/zip");
-			response.setHeader("content-disposition", "attachment; filename=data.zip");
-			ZipOutputStream zipOS = new ZipOutputStream(response.getOutputStream());
-			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-			CSVWriter writer = new CSVWriter(new OutputStreamWriter(bytes));
-			Object[] data = this.getAllData();
-			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			for (int i = 0; i < data.length; i++) {
-				String[] row = (String[]) data[i];
-				writer.writeNext(row);
-			}
-			writer.close();
-			zipOS.write(bytes.toByteArray());
-			zipOS.finish();
-			zipOS.close();
-			fc.responseComplete();
-		} catch (IOException io) {
-			io.printStackTrace();
-		}
+		QueryValue q = this.getQuery(this.conditions, this.data, 0, -1, false);
+		CSVUtils.writeResponse(session, q);	
 		
+		t.commit();
+		session.close();
 		return null;
 	}
 }

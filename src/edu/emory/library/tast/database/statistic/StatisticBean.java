@@ -3,12 +3,17 @@ package edu.emory.library.tast.database.statistic;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.util.CSVUtils;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -42,6 +47,8 @@ public class StatisticBean {
 	//statistical elements - represent rows in statistical table
 	private StatisticElement[] elements = new StatisticElement[] {};
 	
+	private SimpleTableCell[][] cells;
+	
 	/**
 	 * This method queries the database if required and calculates statistics
 	 * defined for voyages.
@@ -70,7 +77,7 @@ public class StatisticBean {
 		}
 		
 		//prepare cells in statistical table
-		SimpleTableCell[][] cells = new SimpleTableCell[elements.length + 1][];
+		cells = new SimpleTableCell[elements.length + 1][];
 		
 		cells[0] = new SimpleTableCell[4];
 		cells[0][0] = new SimpleTableCell("", "search-simple-stat-h_c1", null);
@@ -141,6 +148,23 @@ public class StatisticBean {
 	 */
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
+	}
+	
+	public String getFileAllData() {	
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		String[][] data = new String[this.cells.length][this.cells[0].length];		
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[0].length; j++) {
+				data[i][j] = this.cells[i][j].getText();
+			}
+		}
+		CSVUtils.writeResponse(session, data);
+		
+		t.commit();
+		session.close();
+		return null;
 	}
 	
 }

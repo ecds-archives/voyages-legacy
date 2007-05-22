@@ -138,3 +138,15 @@ div.database-configure-columns-buttons {
 	margin-right: 10px;
 	padding-top: 10px;
 	padding-bottom: 10px; }
+	
+	
+input.button-save {	
+	border:1px solid; 
+	text-decoration:none; 
+	background-color: white; 
+	border-color: #B4D6CD; 
+	background-color: white;}
+
+input.button-save:hover {	
+	background-color: #B4D6CD;}
+	

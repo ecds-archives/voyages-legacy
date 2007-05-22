@@ -62,3 +62,8 @@
 <t:htmlTag value="div" styleClass="estimates-table">
 	<s:simpleTable rows="#{EstimatesTableBean.table}" />
 </t:htmlTag>
+
+<t:htmlTag value="div" style="margin-top: 5px;">
+	<t:commandButton value="Save table data" action="#{EstimatesTableBean.getFileAllData}"
+		styleClass="button-save"/>
+</t:htmlTag>

@@ -10,6 +10,7 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.EventLineEvent;
@@ -470,5 +471,23 @@ public class TimeLineResultTabBean {
 	public EventLineLabel[] getVerticalLabels() {
 		showTimeLine();
 		return verticalLabels;
+	}
+	
+	public String getFileAllData() {	
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		String[][] data = new String[this.graph.getX().length + 1][2];
+		data[0][0] = "year";
+		data[0][1] = this.chosenOption.userLabel;
+		for (int i = 0; i < data.length - 1; i++) {
+			data[i + 1][0] = String.valueOf(this.graph.getX()[i]);
+			data[i + 1][1] = String.valueOf(this.graph.getY()[i]);
+		}
+		CSVUtils.writeResponse(session, data);
+		
+		t.commit();
+		session.close();
+		return null;
 	}
 }

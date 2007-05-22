@@ -1,6 +1,19 @@
 package edu.emory.library.tast.estimates.listing;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import au.com.bytecode.opencsv.CSVWriter;
 
 import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.common.table.TableData;
@@ -12,6 +25,8 @@ import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
+import edu.emory.library.tast.util.CSVUtils;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 /**
@@ -84,21 +99,26 @@ public class EstimateListingBean {
 
 	public TableData getTableData() {
 		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || requery) {
-			this.conditions = this.getEstimatesBean().getConditions();
-			QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
-			Attribute[] attrs = this.tableData.getAttributesForQuery();
-			for (int i = 0; i < attrs.length; i++) {
-				qValue.addPopulatedAttribute(attrs[i]);
-			}
-			qValue.setOrder(this.tableData.getOrder());
-			qValue.setOrderBy(this.tableData.getOrderByColumn().getAttributes());
-			qValue.setFirstResult(this.linkManager.getCurrentFirstRecord());
-			qValue.setLimit(this.linkManager.getStep());
+			QueryValue qValue = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());
 			this.tableData.setData(qValue.executeQuery());
 			this.setNumberOfResults();
 			this.requery = false;
 		}
 		return tableData;
+	}
+
+	private QueryValue getQuery(int first, int limit) {
+		this.conditions = this.getEstimatesBean().getConditions();
+		QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
+		Attribute[] attrs = this.tableData.getAttributesForQuery();
+		for (int i = 0; i < attrs.length; i++) {
+			qValue.addPopulatedAttribute(attrs[i]);
+		}
+		qValue.setOrder(this.tableData.getOrder());
+		qValue.setOrderBy(this.tableData.getOrderByColumn().getAttributes());
+		qValue.setFirstResult(first);
+		qValue.setLimit(limit);
+		return qValue;
 	}
 	
 	private void setNumberOfResults() {
@@ -198,5 +218,30 @@ public class EstimateListingBean {
 	
 	public TableLinkManager getTableManager() {
 		return this.linkManager;
+	}
+	
+	public String getFileCurrentData() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		QueryValue q = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());;
+		CSVUtils.writeResponse(session, q);
+		
+		t.commit();
+		session.close();
+		return null;
+	}
+	
+	
+	public String getFileAllData() {	
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		QueryValue q = getQuery(0, -1);
+		CSVUtils.writeResponse(session, q);
+		
+		t.commit();
+		session.close();
+		return null;
 	}
 }

@@ -34,3 +34,8 @@
 	events="#{TimeLineResultTabBean.events}" 
 	zoomLevels="#{TimeLineResultTabBean.zoomLevels}"
 	verticalLabels="#{TimeLineResultTabBean.verticalLabels}" />
+	
+<t:htmlTag value="div" style="margin-top: 5px;">
+	<t:commandButton value="Save timeline data" action="#{TimeLineResultTabBean.getFileAllData}"
+		styleClass="button-save"/>
+</t:htmlTag>

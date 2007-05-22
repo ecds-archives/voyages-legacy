@@ -469,6 +469,15 @@ public class HibernateConnector {
 		}
 	}
 	
+	public ScrollableResults loadScroll(Session p_session, QueryValue p_query)
+	{
+		//Transaction transaction = p_session.beginTransaction();
+		ScrollableResults list = p_query.getQuery(p_session).scroll();
+		//transaction.commit();
+		
+		return list;
+	}
+	
 	/**
 	 * Loads object for given QueryValue.
 	 * @param p_session session context

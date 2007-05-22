@@ -3,6 +3,9 @@ package edu.emory.library.tast.estimates.timeline;
 import java.text.MessageFormat;
 import java.util.Set;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.EventLineEvent;
 import edu.emory.library.tast.common.EventLineGraph;
@@ -12,6 +15,8 @@ import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
+import edu.emory.library.tast.util.CSVUtils;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -229,6 +234,26 @@ public class EstimatesTimelineBean
 	public void setSelectionBean(EstimatesSelectionBean selectionBean)
 	{
 		this.selectionBean = selectionBean;
+	}
+	
+	public String getFileAllData() {	
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		String[][] data = new String[this.graphImp.getX().length + 1][3];
+		data[0][0] = "year";
+		data[0][1] = "imported";
+		data[0][2] = "exported";
+		for (int i = 0; i < data.length - 1; i++) {
+			data[i+1][0] = String.valueOf(this.graphImp.getX()[i]);
+			data[i+1][1] = String.valueOf(this.graphImp.getY()[i]);
+			data[i+1][2] = String.valueOf(this.graphExp.getY()[i]);
+		}
+		CSVUtils.writeResponse(session, data);
+		
+		t.commit();
+		session.close();
+		return null;
 	}
 
 }

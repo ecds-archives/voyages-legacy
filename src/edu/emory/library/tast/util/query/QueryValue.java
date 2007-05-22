@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -408,6 +409,10 @@ public class QueryValue {
 	public Object[] executeQuery(Session p_session) {
 		return HibernateConnector.getConnector().loadObjects(p_session, this);
 	}
+	
+	public ScrollableResults executeScrollableQuery(Session p_session) {
+		return HibernateConnector.getConnector().loadScroll(p_session, this);
+	}
 
 	/**
 	 * Sets cache usage for query cache.
@@ -433,5 +438,9 @@ public class QueryValue {
 	public void setDistinct(boolean distinct)
 	{
 		this.distinct = distinct;
+	}
+
+	public Attribute[] getPopulatedAttributes() {
+		return (Attribute[]) this.populateValues.toArray(new Attribute[] {});
 	}
 }

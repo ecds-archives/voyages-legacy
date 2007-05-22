@@ -10,13 +10,10 @@
 
 	<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
 		<s:map id="estimates-map-compo"
-			mapFile="#{EstimatesMapBean.mapPath}"
 			pointsOfInterest="#{EstimatesMapBean.pointsOfInterest}"
 			miniMap="true"
-			miniMapFile="#{EstimatesMapBean.miniMapFile}"
 			miniMapWidth="100"
-			miniMapHeight="100"
-			serverBaseUrl="../servlet/maptile" />
+			miniMapHeight="100"/>
 	</t:htmlTag>
 	
 	<t:htmlTag value="td" style="padding: 0px 0px 0px 10px; vertical-align: top;">

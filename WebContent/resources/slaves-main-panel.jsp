@@ -36,3 +36,11 @@
 		</t:htmlTag>
 	</t:htmlTag>
 </t:htmlTag>
+
+<t:htmlTag value="div" style="margin-top: 5px;">
+	<t:commandButton value="Save results into csv file (only current view)" action="#{SlavesBean.getFileCurrentData}"
+		styleClass="button-save"/>
+	<t:outputText escape="false" value="&nbsp;&nbsp;"/>
+	<t:commandButton value="Save results into csv file (all results)" action="#{SlavesBean.getFileAllData}"
+		styleClass="button-save"/>
+</t:htmlTag>

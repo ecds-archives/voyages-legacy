@@ -12,6 +12,7 @@ import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
+import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -564,6 +565,27 @@ public class EstimatesTableBean
 	public void setShowMode(String showMode)
 	{
 		this.showMode = showMode;
+	}
+	
+	public String getFileAllData() {	
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		String[][] data = new String[this.table.length][this.table[0].length];
+		for (int i = 0; i < data.length - 1; i++) {
+			for (int j = 0; j < this.table[i].length; j++) {
+				if (this.table[i][j] != null) {
+					data[i][j] = this.table[i][j].getText();
+				} else {
+					data[i][j] = "";
+				}
+			}
+		}
+		CSVUtils.writeResponse(session, data);
+		
+		t.commit();
+		session.close();
+		return null;
 	}
 
 }

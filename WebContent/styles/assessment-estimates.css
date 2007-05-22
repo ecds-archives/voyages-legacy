@@ -410,3 +410,15 @@ div.map-legend-section {
 
 input.map-legend-refresh {
 	margin-top: 0px; }	
+	
+	
+input.button-save {	
+	border:1px solid; 
+	text-decoration:none; 
+	background-color: white; 
+	border-color: #115676; 
+	background-color: white;}
+
+input.button-save:hover {	
+	background-color: #B4E6E6;}
+	

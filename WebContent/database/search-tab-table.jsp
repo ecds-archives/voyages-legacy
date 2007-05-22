@@ -25,8 +25,6 @@
 	sortChanged="#{TableResultTabBean.sortChanged}"
 	style="overflow: auto;" />
 
-<t:commandLink value="Save results into csv file" action="#{TableResultTabBean.getFile}"/>
-
 <t:htmlTag value="div" styleClass="table-bottom-tools" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 		<t:htmlTag value="tr">
@@ -55,6 +53,15 @@
 		</t:htmlTag>
 	</t:htmlTag>
 </t:htmlTag>
+
+<t:htmlTag value="div" style="margin-top: 5px;" rendered="#{TableResultTabBean.resultsMode}">
+	<t:commandButton value="Save results into csv file (only current view)" action="#{TableResultTabBean.getFileCurrentData}"
+		styleClass="button-save"/>
+	<t:outputText escape="false" value="&nbsp;&nbsp;"/>
+	<t:commandButton value="Save results into csv file (all results)" action="#{TableResultTabBean.getFileAllData}"
+		styleClass="button-save"/>
+</t:htmlTag>
+
 
 <t:htmlTag value="h1" styleClass="with-subtitle" rendered="#{TableResultTabBean.configurationMode}"><h:outputText value="List of voyages" /></t:htmlTag>
 <t:htmlTag value="div" styleClass="subtitle" rendered="#{TableResultTabBean.configurationMode}"><h:outputText value="Configure columns" /></t:htmlTag>
