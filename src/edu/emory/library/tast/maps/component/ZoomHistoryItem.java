@@ -7,7 +7,7 @@ public class ZoomHistoryItem implements Serializable
 	
 	private static final long serialVersionUID = -435520343082690652L;
 	
-	private int scale;
+	private double scale;
 	private double centerX;
 	private double centerY;
 	
@@ -45,12 +45,12 @@ public class ZoomHistoryItem implements Serializable
 		this.centerY = centerY;
 	}
 	
-	public int getScale()
+	public double getScale()
 	{
 		return scale;
 	}
 	
-	public void setScale(int scale)
+	public void setScale(double scale)
 	{
 		this.scale = scale;
 	}

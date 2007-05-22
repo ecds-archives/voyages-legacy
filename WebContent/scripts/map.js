@@ -345,9 +345,9 @@ function Map()
 
 function MapZoomState(scale, cx, cy)
 {
+	this.scale = scale;
 	this.cx = cx;
 	this.cy = cy;
-	this.scale = scale;
 }
 
 function MapTile(img)
@@ -410,26 +410,30 @@ Map.prototype.getVportHeight = function()
 
 Map.prototype.fromVportToRealX = function(x)
 {
-	return this.bottomLeftTileCol * this.getTileRealWidth() +
+	return this.zoomLevels[this.zoomLevel].bottomLeftTileX + 
+		this.bottomLeftTileCol * this.getTileRealWidth() +
 		this.fromPxToReal(x - this.bottomLeftTileVportX);
 }
 
 Map.prototype.fromVportToRealY = function(y)
 {
-	return (this.bottomLeftTileRow+1) * this.getTileRealHeight() -
-		this.fromPxToReal(y - this.bottomLeftTileVportY);
+	return this.zoomLevels[this.zoomLevel].bottomLeftTileY + 
+		this.bottomLeftTileRow * this.getTileRealHeight() +
+		this.fromPxToReal(this.vportHeight - y - this.bottomLeftTileVportY);
 }
 
 Map.prototype.fromRealToVportX = function(x)
 {
-	return this.fromRealToPx(x - this.bottomLeftTileCol * this.getTileRealWidth()) +
+	return this.fromRealToPx(x -
+		(this.zoomLevels[this.zoomLevel].bottomLeftTileX + this.bottomLeftTileCol * this.getTileRealWidth())) +
 		this.bottomLeftTileVportX;
 }
 
 Map.prototype.fromRealToVportY = function(y)
 {
-	return this.fromRealToPx(y - this.bottomLeftTileRow * this.getTileRealHeight()) +
-		this.bottomLeftTileVportY;
+	return - this.fromRealToPx(y -
+		(this.zoomLevels[this.zoomLevel].bottomLeftTileY + this.bottomLeftTileRow * this.getTileRealHeight())) -
+		this.bottomLeftTileVportY + this.vportHeight;
 }
 
 Map.prototype.getMapX1 = function()
@@ -493,6 +497,22 @@ Map.prototype.roundAndCapScale = function(s)
 Map.prototype.isPointInsideVport = function(vx, vy)
 {
 	return 0 <= vx && vx < this.getVportWidth() && 0 <= vy && vy < this.getVportHeight();
+}
+
+Map.prototype.getClosestZoomLevel = function(scale)
+{
+	var minIndx = -1;
+	var minDiff = 0;
+	for (var i = 0; i < this.zoomLevels.length; i++)
+	{
+		var diff = Math.abs(this.zoomLevels[i].scale - scale);
+		if (minIndx == -1 || diff < minDiff)
+		{
+			minIndx = i;
+			minDiff = diff;
+		}
+	}
+	return minIndx;
 }
 
 /////////////////////////////////////////////////////////
@@ -696,7 +716,7 @@ Map.prototype.mapMouseMove = function(event)
 			
 			// change pos
 			this.bottomLeftTileVportX += dx;
-			this.bottomLeftTileVportY += dy;
+			this.bottomLeftTileVportY -= dy;
 
 			// adjust tile if needed
 			this.adjustTilesAfterPan();
@@ -906,7 +926,7 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 	// make sure that the zoom level is ok
 	if (newZoomLevel < 0) newZoomLevel = 0;
 	if (this.zoomLevels.length <= newZoomLevel) newZoomLevel = this.zoomLevels.length - 1;
-
+	
 	// has the zoom changed?
 	if (this.zoomLevel != newZoomLevel)
 	{
@@ -933,8 +953,7 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 	this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / tileRealHeight);
 	this.bottomLeftTileVportX = Math.round(((this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX) - vportBottomLeftRealX) / zoomLevelObj.scale);
 	this.bottomLeftTileVportY = Math.round(((this.bottomLeftTileRow * tileRealHeight + zoomLevelObj.bottomLeftTileY) - vportBottomLeftRealY) / zoomLevelObj.scale);
-	//alert(vportBottomLeftRealX + " vs " + (this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX));
-	
+
 	// points of interest
 	this.precomputePointsPositions();
 	
@@ -1145,12 +1164,62 @@ Map.prototype.positionTiles = function(rowFrom, rowTo, colFrom, colTo)
 			if (newUrl != tile.url)
 			{
 				tile.url = newUrl;
-				//tile.img.style.visibility = "hidden";
+				tile.img.style.visibility = "hidden";
 				tile.img.src = newUrl;
 			}
 			tile.img.style.left = (this.bottomLeftTileVportX + (j * this.tileWidth)) + "px";
-			tile.img.style.top = (this.bottomLeftTileVportY + (i * this.tileHeight)) + "px";
+			tile.img.style.top = (this.vportHeight - this.tileHeight - (this.bottomLeftTileVportY + (i * this.tileHeight))) + "px";
 		}
+	}
+
+}
+
+Map.prototype.ensureInsideMap = function()
+{
+
+	// we will need this often
+	var zoomLevelObj = this.zoomLevels[this.zoomLevel];
+	var tileRealWidth = this.getTileRealWidth();
+	var tileRealHeight = this.getTileRealHeight();
+	
+	// real extents of the map 
+	var mapX1 = zoomLevelObj.bottomLeftTileX;
+	var mapX2 = zoomLevelObj.bottomLeftTileX + zoomLevelObj.tilesNumX * tileRealWidth;
+	var mapY1 = zoomLevelObj.bottomLeftTileY;
+	var mapY2 = zoomLevelObj.bottomLeftTileY + zoomLevelObj.tilesNumY * tileRealHeight;
+	
+	// size of the view port in the actual coordinates
+	var vportX1 = this.getMapX1();
+	var vportX2 = this.getMapX2();
+	var vportY1 = this.getMapY1();
+	var vportY2 = this.getMapY2();
+	
+	// too right, i.e. there is empty space on the left
+	if (vportX1 < mapX1)
+	{
+		this.bottomLeftTileVportX -= mapX1 - vportX1;
+		// TBD
+	}
+	
+	// too left, i.e. there is empty space on the right
+	else if (mapX2 < vportX2)
+	{
+		this.bottomLeftTileVportX += vportX2 - mapX2;
+		// TBD
+	}
+	
+	// too down, i.e. there is empty space on the left
+	if (vportY1 < mapY1)
+	{
+		this.bottomLeftTileVportY -= mapY1 - vportY1;
+		// TBD
+	}
+	
+	// too up, i.e. there is empty space on the right
+	else if (mapY2 < vportY2)
+	{
+		this.bottomLeftTileVportY += vportY2 - mapY2;
+		// TBD
 	}
 
 }
@@ -1242,8 +1311,8 @@ Map.prototype.formatTileNumber = function(num)
 Map.prototype.createTileUrl = function(col, row)
 {
 	return this.zoomLevels[this.zoomLevel].tilesDir + "/" + 
-		this.formatTileNumber(col) + "-" +
-		this.formatTileNumber(row) + ".png";
+		this.formatTileNumber(row) + "-" +
+		this.formatTileNumber(col) + ".png";
 }
 
 /////////////////////////////////////////////////////////
@@ -1255,7 +1324,7 @@ Map.prototype.zoomSaveState = function()
 	
 	// current state
 	var state = new MapZoomState(
-		this.scale,
+		this.zoomLevels[this.zoomLevel].scale,
 		this.getCenterX(),
 		this.getCenterY());
 
@@ -1292,7 +1361,16 @@ Map.prototype.zoomHistoryMoveAndRestore = function(dir)
 
 	// restore
 	var state = this.zoomHistory[new_pos];
-	this.setZoomAndCenterTo(state.scale, state.cx, state.cy, false, true);
+	
+	// find the best zoom and zoom to it
+	this.setZoomAndCenterTo(
+		this.getClosestZoomLevel(state.scale),
+		state.cx,
+		state.cy,
+		false,
+		true,
+		false,
+		true);
 
 	// goto
 	this.zoomHistoryPos = new_pos;
@@ -1748,7 +1826,7 @@ Map.prototype.updateControlsLayout = function()
 		for (var j=0; j<this.visibleCols+1; j++)
 		{			
 			var tile = document.createElement("img");
-			//tile.onload = function() {tile.style.visibility = "visible"};
+			tile.onload = function() {this.style.visibility = "visible";};
 			this.tilesMap[i][j] = new MapTile(tile);
 			if (IE)
 			{

@@ -89,7 +89,7 @@ public class ZoomHistory implements Serializable
 			for (int i = 0; i < n; i++)
 			{
 				ZoomHistoryItem item = new ZoomHistoryItem();
-				item.setScale(Integer.parseInt(values[3*i+1]));
+				item.setScale(Double.parseDouble(values[3*i+1]));
 				item.setCenterX(Double.parseDouble(values[3*i+2]));
 				item.setCenterY(Double.parseDouble(values[3*i+3]));
 				history.addItem(item);
