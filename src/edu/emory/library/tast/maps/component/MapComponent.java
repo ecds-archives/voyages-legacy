@@ -355,6 +355,8 @@ public class MapComponent extends UIComponentBase
 		String hiddenFieldNameForMapSize = getHiddenFieldNameForMapSize(context);
 		String hiddenFieldNameForMiniMapVisibility = getHiddenFieldNameForMiniMapVisibility(context);
 		
+		String contextPath = context.getExternalContext().getRequestContextPath();
+		
 		// from beans or prev values
 		mapSize = getMapSize();
 		mapSizes = getMapSizes();
@@ -405,6 +407,7 @@ public class MapComponent extends UIComponentBase
 		for (int i = 0; i < zoomLevels.length; i++)
 		{
 			ZoomLevel zoomLevel = zoomLevels[i];
+			if (i > 0) jsRegister.append(", ");
 			jsRegister.append("new MapZoomLevel(");
 			jsRegister.append(zoomLevel.getBottomLeftTileX()).append(", ");
 			jsRegister.append(zoomLevel.getBottomLeftTileY()).append(", ");
@@ -501,7 +504,7 @@ public class MapComponent extends UIComponentBase
 					jsRegister.append("new MapSymbol(");
 					jsRegister.append("'").append(symbol.getName()).append("'");
 					jsRegister.append(", ");
-					jsRegister.append("'").append(symbol.getUrl()).append("'");
+					jsRegister.append("'").append(contextPath).append(symbol.getUrl()).append("'");
 					jsRegister.append(", ");
 					jsRegister.append(symbol.getWidth());
 					jsRegister.append(", ");

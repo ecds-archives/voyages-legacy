@@ -1,3 +1,5 @@
+TRUNCATE voyages_index, voyages;
+
 TRUNCATE voyage_slaves, voyages_index, voyages, slaves, estimates;
 
 TRUNCATE voyages, slaves, voyage_slaves, voyages_index, areas, regions, ports, ports_images, regions_images;

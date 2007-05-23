@@ -7,25 +7,44 @@ public class TestMapBean
 	{
 		return new ZoomLevel[] {
 				new ZoomLevel(
-						-111.676667,
-						-54.84,
+						-112.1825, -52.008889,
+						5, 5,
+						1.0/5.0,
+						"../../map-assets/tiles/05"),
+				new ZoomLevel(
+						-105.8625, -52.088889,
+						27, 25,
+						1.0/25.0,
+						"../../map-assets/tiles/25"),
+				new ZoomLevel(
+						-111.676667, -54.84,
 						54, 50,
 						1.0/50.0,
-						"../../map-assets/tiles/1") };
+						"../../map-assets/tiles/50") };
 	}
 	
 	public ZoomLevel getMiniMapZoomLevel()
 	{
 		return new ZoomLevel(
-				-111.676667, -54.84,
-				54, 50,
-				1.0/50.0,
-				"../../map-assets/tiles/1");
+			-112.1825, -52.008889,
+			5, 5,
+			1.0/5.0,
+			"../../map-assets/tiles/05");
 	}
-
+	
 	public PointOfInterest[] getCities()
 	{
 		return new PointOfInterest[] {
+				new PointOfInterest(-59.616667, 13.1, new String[] {"circle-1-2"}, "",  "Barbados (-59.616667, 13.1)"),
+				new PointOfInterest(40.73576, -15.038455, new String[] {"circle-1-2"}, "",  "Mozambique (40.73576, -15.038455)"),
+		};
+	}
+
+	/*
+	public PointOfInterest[] getCities()
+	{
+		return new PointOfInterest[] {
+				new PointOfInterest(-59.616667, 13.1, new String[] {"circle-1-2"}, "",  "Barbados (-59.616667, 13.1)"),
 				new PointOfInterest(65.46, 31.54, new String[] {"circle-1-2"}, "",  "Armarah"),
 				new PointOfInterest(66.76, 33.12, new String[] {"circle-1-2"}, "", "Malek Bor Kalay"),
 				new PointOfInterest(65.69, 31.7, new String[] {"circle-1-2"}, "", "Mazra`"),
@@ -229,5 +248,6 @@ public class TestMapBean
 				
 		};
 	}
+	 */
 
 }

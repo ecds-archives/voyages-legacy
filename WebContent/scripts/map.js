@@ -1227,17 +1227,19 @@ Map.prototype.ensureInsideMap = function()
 Map.prototype.adjustTilesAfterPan = function()
 {
 
-	// unchanged rectangle of tiles
-	var updateRowFrom = 0;
-	var updateRowTo = this.visibleRows;
-	var updateColFrom = 0;
-	var updateColTo = this.visibleCols;
+	// we may need this often
+	var tilesNumX = this.zoomLevels[this.zoomLevel].tilesNumX;
+	var tilesNumY = this.zoomLevels[this.zoomLevel].tilesNumY;
 	
 	// move columns from right to left
 	while (0 < this.bottomLeftTileVportX)
 	{
 	
-		updateColFrom ++;
+		if (this.bottomLeftTileCol == 0)
+		{
+			this.bottomLeftTileVportX = 0;
+			break;
+		}
 	
 		this.bottomLeftTileVportX -= this.tileWidth;
 		this.bottomLeftTileCol --;
@@ -1251,10 +1253,14 @@ Map.prototype.adjustTilesAfterPan = function()
 	}
 
 	// move columns from left to right
-	while (this.bottomLeftTileVportX < -this.tileWidth)
+	while (this.bottomLeftTileVportX + (this.visibleCols + 1) * this.tileWidth < this.vportWidth)
 	{
-
-		updateColTo --;
+	
+		if (tilesNumX - this.bottomLeftTileCol == this.visibleCols + 1)
+		{
+			this.bottomLeftTileVportX = this.vportWidth - (this.visibleCols + 1) * this.tileWidth;
+			break;
+		}
 
 		this.bottomLeftTileVportX += this.tileWidth;
 		this.bottomLeftTileCol ++;
@@ -1271,7 +1277,11 @@ Map.prototype.adjustTilesAfterPan = function()
 	while (0 < this.bottomLeftTileVportY)
 	{
 	
-		updateRowFrom ++;
+		if (this.bottomLeftTileRow == 0)
+		{
+			this.bottomLeftTileVportY = 0;
+			break;
+		}
 	
 		this.bottomLeftTileVportY -= this.tileHeight;
 		this.bottomLeftTileRow --;
@@ -1282,10 +1292,14 @@ Map.prototype.adjustTilesAfterPan = function()
 	}
 	
 	// move rows from top to bottom
-	while (this.bottomLeftTileVportY < -this.tileHeight)
+	while (this.bottomLeftTileVportY + (this.visibleRows + 1) * this.tileHeight < this.vportHeight)
 	{
 	
-		updateRowTo --;
+		if (tilesNumY - this.bottomLeftTileRow == this.visibleRows + 1)
+		{
+			this.bottomLeftTileVportY = this.vportHeight - (this.visibleRows + 1) * this.tileHeight;
+			break;
+		}
 
 		this.bottomLeftTileVportY += this.tileHeight;
 		this.bottomLeftTileRow ++;
