@@ -160,10 +160,10 @@ public class HibernateTest {
 					System.out.println(object);
 				}
 			} else if ("csave".equalsIgnoreCase(command)) {
-				Configuration conf = new Configuration();
-				conf.addEntry("my1", "firstEntry_" + System.currentTimeMillis());
-				conf.addEntry("my2", "secondEntry_" + System.currentTimeMillis());
-				conf.save();
+				//Configuration conf = new Configuration();
+				//conf.addEntry("my1", "firstEntry_" + System.currentTimeMillis());
+				//conf.addEntry("my2", "secondEntry_" + System.currentTimeMillis());
+				//conf.save();
 			} else if ("gis".equalsIgnoreCase(command)) {
 				Conditions c = new Conditions();
 				QueryValue qValue = new QueryValue("GISPortLocation", c);

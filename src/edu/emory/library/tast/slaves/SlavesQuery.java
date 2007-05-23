@@ -23,8 +23,8 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SlavesQuery implements Cloneable
 {
 	
-	private static final int SIERRA_LEONE_ID = 60220;
-	private static final int HAVANA_ID = 30112;
+	private static final int SIERRA_LEONE_ID = 60200;
+	private static final int HAVANA_ID = 31312;
 
 	private static final int WOMAN_ID = 5;
 	private static final int MAN_ID = 1;
