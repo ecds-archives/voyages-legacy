@@ -13,6 +13,12 @@ public class PointOfInterest
 	private String[] symbols;
 	private int showAtZoom = -1;
 	
+	public PointOfInterest(double x, double y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+
 	public PointOfInterest(double x, double y, String[] symbols)
 	{
 		this.x = x;

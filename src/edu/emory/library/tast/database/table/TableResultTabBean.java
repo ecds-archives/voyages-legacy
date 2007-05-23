@@ -1,35 +1,19 @@
 package edu.emory.library.tast.database.table;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.zip.GZIPOutputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseStream;
-import javax.faces.context.ResponseWriter;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.xerces.util.HTTPInputSource;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import au.com.bytecode.opencsv.CSVWriter;
 
 import edu.emory.library.tast.common.table.ShowDetailsEvent;
 import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.common.table.TableData;
-import edu.emory.library.tast.common.table.TableData.DataTableItem;
 import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.query.SearchBean;
