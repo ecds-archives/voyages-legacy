@@ -14,31 +14,12 @@ public class TestMapBean
 	
 	public ZoomLevel[] getZoomLevels()
 	{
-		return new ZoomLevel[] {
-				new ZoomLevel(
-						-105.89815, -44.2191667,
-						5, 4,
-						1.0/5.0,
-						"../../map-assets/tiles/05"),
-				new ZoomLevel(
-						-111.93815, -53.6591667,
-						27, 24,
-						1.0/25.0,
-						"../../map-assets/tiles/25"),
-				new ZoomLevel(
-						-111.91815, -54.9591667,
-						54, 49,
-						1.0/50.0,
-						"../../map-assets/tiles/50") };
+		return StandardMaps.getZoomLevels();
 	}
 	
 	public ZoomLevel getMiniMapZoomLevel()
 	{
-		return new ZoomLevel(
-			-112.1825, -52.008889,
-			5, 5,
-			1.0/5.0,
-			"../../map-assets/tiles/05");
+		return StandardMaps.getMiniMapZoomLevel();
 	}
 	
 	public PointOfInterest[] getCities()
