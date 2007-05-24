@@ -707,19 +707,15 @@ Map.prototype.mapMouseMove = function(event)
 		case MapsGlobal.MAP_TOOL_SELECTOR:
 		
 			// position change
-			var dx = x - this.draggingStartX;
-			var dy = y - this.draggingStartY;
+			var dx =  (x - this.draggingStartX);
+			var dy = -(y - this.draggingStartY);
 
 			// remember for the next turn
 			this.draggingStartX = x;
 			this.draggingStartY = y;
 			
-			// change pos
-			this.bottomLeftTileVportX += dx;
-			this.bottomLeftTileVportY -= dy;
-
-			// adjust tile if needed
-			this.adjustTilesAfterPan();
+			// pan
+			this.panMapBy(dx, dy);
 			
 			// if selector -> recompute its position
 			if (this.mouseMode == MapsGlobal.MAP_TOOL_SELECTOR)
@@ -949,10 +945,27 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 	var tileRealHeight = zoomLevelObj.scale * this.tileHeight;
 	var vportBottomLeftRealX = x - vportRealWidth / 2;
 	var vportBottomLeftRealY = y - vportRealHeight / 2;
-	this.bottomLeftTileCol = Math.floor((vportBottomLeftRealX - zoomLevelObj.bottomLeftTileX) / tileRealWidth);
-	this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / tileRealHeight);
-	this.bottomLeftTileVportX = Math.round(((this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX) - vportBottomLeftRealX) / zoomLevelObj.scale);
-	this.bottomLeftTileVportY = Math.round(((this.bottomLeftTileRow * tileRealHeight + zoomLevelObj.bottomLeftTileY) - vportBottomLeftRealY) / zoomLevelObj.scale);
+	if (zoomLevelObj.tilesNumX * tileRealWidth <= vportRealWidth)
+	{
+		this.bottomLeftTileCol = 0;
+		this.bottomLeftTileVportX = Math.round((vportRealWidth - zoomLevelObj.tilesNumX * tileRealWidth) / zoomLevelObj.scale / 2);
+	}
+	else
+	{
+		this.bottomLeftTileCol = Math.floor((vportBottomLeftRealX - zoomLevelObj.bottomLeftTileX) / tileRealWidth);
+		this.bottomLeftTileVportX = Math.round(((this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX) - vportBottomLeftRealX) / zoomLevelObj.scale);
+	}
+	
+	if (zoomLevelObj.tilesNumY * tileRealHeight <= vportRealHeight)
+	{
+		this.bottomLeftTileRow = 0;
+		this.bottomLeftTileVportY = Math.round((vportRealHeight - zoomLevelObj.tilesNumY * tileRealHeight) / zoomLevelObj.scale / 2);
+	}
+	else
+	{
+		this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / tileRealHeight);
+		this.bottomLeftTileVportY = Math.round(((this.bottomLeftTileRow * tileRealHeight + zoomLevelObj.bottomLeftTileY) - vportBottomLeftRealY) / zoomLevelObj.scale);
+	}
 
 	// points of interest
 	this.precomputePointsPositions();
@@ -1224,89 +1237,105 @@ Map.prototype.ensureInsideMap = function()
 
 }
 
-Map.prototype.adjustTilesAfterPan = function()
+Map.prototype.panMapBy = function(dx, dy)
 {
 
 	// we may need this often
 	var tilesNumX = this.zoomLevels[this.zoomLevel].tilesNumX;
 	var tilesNumY = this.zoomLevels[this.zoomLevel].tilesNumY;
 	
-	// move columns from right to left
-	while (0 < this.bottomLeftTileVportX)
+	// more only if the map is bigger than the viewport
+	if (tilesNumX * this.tileWidth > this.vportWidth)
 	{
 	
-		if (this.bottomLeftTileCol == 0)
+		this.bottomLeftTileVportX += dx;
+	
+		// move columns from right to left
+		while (0 < this.bottomLeftTileVportX)
 		{
-			this.bottomLeftTileVportX = 0;
-			break;
+		
+			if (this.bottomLeftTileCol == 0)
+			{
+				this.bottomLeftTileVportX = 0;
+				break;
+			}
+		
+			this.bottomLeftTileVportX -= this.tileWidth;
+			this.bottomLeftTileCol --;
+			
+			for (var i=0; i<this.visibleRows+1; i++)
+			{
+				var mapTile = this.tilesMap[i].pop();
+				this.tilesMap[i].unshift(mapTile);
+			}
+			
 		}
 	
-		this.bottomLeftTileVportX -= this.tileWidth;
-		this.bottomLeftTileCol --;
-		
-		for (var i=0; i<this.visibleRows+1; i++)
+		// move columns from left to right
+		while (this.bottomLeftTileVportX + (this.visibleCols + 1) * this.tileWidth < this.vportWidth)
 		{
-			var mapTile = this.tilesMap[i].pop();
-			this.tilesMap[i].unshift(mapTile);
+		
+			if (tilesNumX - this.bottomLeftTileCol == this.visibleCols + 1)
+			{
+				this.bottomLeftTileVportX = this.vportWidth - (this.visibleCols + 1) * this.tileWidth;
+				break;
+			}
+	
+			this.bottomLeftTileVportX += this.tileWidth;
+			this.bottomLeftTileCol ++;
+			
+			for (var i=0; i<this.visibleRows+1; i++)
+			{
+				var mapTile = this.tilesMap[i].shift();
+				this.tilesMap[i].push(mapTile);
+			}
+			
 		}
 		
 	}
-
-	// move columns from left to right
-	while (this.bottomLeftTileVportX + (this.visibleCols + 1) * this.tileWidth < this.vportWidth)
+	
+	// more only if the map is bigger than the viewport
+	if (tilesNumY * this.tileHeight > this.vportHeight)
 	{
 	
-		if (tilesNumX - this.bottomLeftTileCol == this.visibleCols + 1)
-		{
-			this.bottomLeftTileVportX = this.vportWidth - (this.visibleCols + 1) * this.tileWidth;
-			break;
-		}
+		this.bottomLeftTileVportY += dy;
 
-		this.bottomLeftTileVportX += this.tileWidth;
-		this.bottomLeftTileCol ++;
-		
-		for (var i=0; i<this.visibleRows+1; i++)
+		// move rows from bottom to top
+		while (0 < this.bottomLeftTileVportY)
 		{
-			var mapTile = this.tilesMap[i].shift();
-			this.tilesMap[i].push(mapTile);
+		
+			if (this.bottomLeftTileRow == 0)
+			{
+				this.bottomLeftTileVportY = 0;
+				break;
+			}
+		
+			this.bottomLeftTileVportY -= this.tileHeight;
+			this.bottomLeftTileRow --;
+			
+			var firstMapRow = this.tilesMap.pop();
+			this.tilesMap.unshift(firstMapRow);
+			
 		}
 		
-	}
-
-	// move rows from bottom to top
-	while (0 < this.bottomLeftTileVportY)
-	{
-	
-		if (this.bottomLeftTileRow == 0)
+		// move rows from top to bottom
+		while (this.bottomLeftTileVportY + (this.visibleRows + 1) * this.tileHeight < this.vportHeight)
 		{
-			this.bottomLeftTileVportY = 0;
-			break;
+		
+			if (tilesNumY - this.bottomLeftTileRow == this.visibleRows + 1)
+			{
+				this.bottomLeftTileVportY = this.vportHeight - (this.visibleRows + 1) * this.tileHeight;
+				break;
+			}
+	
+			this.bottomLeftTileVportY += this.tileHeight;
+			this.bottomLeftTileRow ++;
+			
+			var lastMapRow = this.tilesMap.shift();
+			this.tilesMap.push(lastMapRow);
+			
 		}
 	
-		this.bottomLeftTileVportY -= this.tileHeight;
-		this.bottomLeftTileRow --;
-		
-		var firstMapRow = this.tilesMap.pop();
-		this.tilesMap.unshift(firstMapRow);
-		
-	}
-	
-	// move rows from top to bottom
-	while (this.bottomLeftTileVportY + (this.visibleRows + 1) * this.tileHeight < this.vportHeight)
-	{
-	
-		if (tilesNumY - this.bottomLeftTileRow == this.visibleRows + 1)
-		{
-			this.bottomLeftTileVportY = this.vportHeight - (this.visibleRows + 1) * this.tileHeight;
-			break;
-		}
-
-		this.bottomLeftTileVportY += this.tileHeight;
-		this.bottomLeftTileRow ++;
-		
-		var lastMapRow = this.tilesMap.shift();
-		this.tilesMap.push(lastMapRow);
-		
 	}
 	
 	// position last unchanged rectangle of tiles
@@ -2253,6 +2282,8 @@ MapZoomSlider.prototype.setKnobPosition = function(knobLeft)
 
 MapZoomSlider.prototype.click = function(event)
 {
+	alert("Not implemented yet");
+	return;
 	var pos = ElementUtils.getEventMouseElementX(event, this.bg);
 	this.setKnobPosition(pos - this.knobWidth / 2);
 	var capPos = this.capKnobPosition(pos - this.knobWidth / 2);

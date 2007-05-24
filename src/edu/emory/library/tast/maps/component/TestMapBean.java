@@ -1,5 +1,14 @@
 package edu.emory.library.tast.maps.component;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.util.HibernateUtil;
+
 public class TestMapBean
 {
 	
@@ -7,18 +16,18 @@ public class TestMapBean
 	{
 		return new ZoomLevel[] {
 				new ZoomLevel(
-						-112.1825, -52.008889,
-						5, 5,
+						-105.89815, -44.2191667,
+						5, 4,
 						1.0/5.0,
 						"../../map-assets/tiles/05"),
 				new ZoomLevel(
-						-105.8625, -52.088889,
-						27, 25,
+						-111.93815, -53.6591667,
+						27, 24,
 						1.0/25.0,
 						"../../map-assets/tiles/25"),
 				new ZoomLevel(
-						-111.676667, -54.84,
-						54, 50,
+						-111.91815, -54.9591667,
+						54, 49,
 						1.0/50.0,
 						"../../map-assets/tiles/50") };
 	}
@@ -34,13 +43,45 @@ public class TestMapBean
 	
 	public PointOfInterest[] getCities()
 	{
+		
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction trans = sess.beginTransaction();
+		
+		List ports = Port.loadAll(sess);
+		PointOfInterest points[] = new PointOfInterest[ports.size()];
+		
+		int i = 0;
+		for (Iterator iter = ports.iterator(); iter.hasNext();)
+		{
+			Port port = (Port) iter.next();
+			points[i++] = new PointOfInterest(
+					port.getLongitude(),
+					port.getLatitude(),
+					new String[] {"circle-1-2"},
+					port.getName(),
+					port.getName());
+		}
+		
+		trans.commit();
+		sess.close();
+		
+		return points;
+		
+	}
+	
+	/*
+
+	public PointOfInterest[] getCities()
+	{
 		return new PointOfInterest[] {
 				new PointOfInterest(-59.616667, 13.1, new String[] {"circle-1-2"}, "",  "Barbados (-59.616667, 13.1)"),
 				new PointOfInterest(40.73576, -15.038455, new String[] {"circle-1-2"}, "",  "Mozambique (40.73576, -15.038455)"),
+				new PointOfInterest(39.183333, -6.166667, new String[] {"circle-1-2"}, "",  "Zanzibar (39.183333, -6.166667)"),
+				new PointOfInterest(39.4, -8.75, new String[] {"circle-1-2"}, "",  "Kilwa (39.4, -8.75)"),
 		};
 	}
 
-	/*
 	public PointOfInterest[] getCities()
 	{
 		return new PointOfInterest[] {
