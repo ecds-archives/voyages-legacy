@@ -1,11 +1,15 @@
 package edu.emory.library.tast.database.query;
 
+import org.w3c.dom.Node;
+
 
 public class QueryConditionBoolean extends QueryCondition
 {
 	
 	private static final long serialVersionUID = 940301730134650051L;
 
+	public static final String TYPE = "boolean";
+	
 	private boolean checked = true;
 
 	public QueryConditionBoolean(String searchableAttributeId)
@@ -44,4 +48,19 @@ public class QueryConditionBoolean extends QueryCondition
 		return newQueryCondition;
 	}
 
+	public String toXML() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<condition >");
+		appendAttribute(buffer, "type", TYPE);
+		appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
+		appendAttribute(buffer, "value", new Boolean(this.checked));
+		buffer.append("/>\n");
+		return buffer.toString();
+	}
+
+	public static QueryCondition fromXML(Node node) {
+		QueryConditionBoolean qc = new QueryConditionBoolean(getXMLProperty(node, "attribute"));
+		qc.checked = Boolean.parseBoolean(getXMLProperty(node, "value"));
+		return qc;
+	}
 }

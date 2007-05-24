@@ -19,7 +19,7 @@ public class MapFileCreator {
 
 	private static String TIME_SYMBOL_REGEX = "\\{TIME\\}";
 
-	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
+//	private static String MAP_FILE_OUTPUT = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_OUTPUT);
 
 //	private static String PROJ_IN = StringUtils.getProjectionStringForMapFile(AppConfig.getConfiguration()
 //			.getStringArray(AppConfig.MAP_PROJ_IN));
@@ -95,13 +95,13 @@ public class MapFileCreator {
 
 	public boolean createMapFile() {
 		
-		this.filePath = MAP_FILE_OUTPUT;
-		String time = System.currentTimeMillis() + "";
-		this.filePath = this.filePath.replaceAll(TIME_SYMBOL_REGEX, time);
-
-		this.fileSmallMapPath = MAP_FILE_OUTPUT + MINI;
-		this.fileSmallMapPath = this.fileSmallMapPath.replaceAll(TIME_SYMBOL_REGEX, time);
-		
+//		this.filePath = MAP_FILE_OUTPUT;
+//		String time = System.currentTimeMillis() + "";
+//		this.filePath = this.filePath.replaceAll(TIME_SYMBOL_REGEX, time);
+//
+//		this.fileSmallMapPath = MAP_FILE_OUTPUT + MINI;
+//		this.fileSmallMapPath = this.fileSmallMapPath.replaceAll(TIME_SYMBOL_REGEX, time);
+//		
 		return this.createMapFileInt(this.filePath, true) &&  this.createMapFileInt(this.fileSmallMapPath, false);
 
 	}

@@ -1,5 +1,7 @@
 package edu.emory.library.tast.database.query;
 
+import org.w3c.dom.Node;
+
 
 
 public class QueryConditionNumeric extends QueryConditionRange
@@ -7,6 +9,8 @@ public class QueryConditionNumeric extends QueryConditionRange
 	
 	private static final long serialVersionUID = -7863875106659949813L;
 
+	public static final String TYPE = "numeric";
+	
 	private String from;
 	private String to;
 	private String ge;
@@ -132,5 +136,30 @@ public class QueryConditionNumeric extends QueryConditionRange
 		newQueryCondition.setEq(eq);
 		return newQueryCondition;
 	}
+
+	public String toXML() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<condition ");
+		appendAttribute(buffer, "type", TYPE);
+		appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
+		appendAttribute(buffer, "from", from);
+		appendAttribute(buffer, "to", to);
+		appendAttribute(buffer, "ge", ge);
+		appendAttribute(buffer, "le", le);
+		appendAttribute(buffer, "eq", eq);
+		appendAttribute(buffer, "querytype", new Integer(this.type));
+		buffer.append("/>\n");
+		return buffer.toString();
+	}
 	
+	public static QueryCondition fromXML(Node node) {
+		QueryConditionNumeric qc = new QueryConditionNumeric(getXMLProperty(node, "attribute"));
+		qc.from = getXMLProperty(node, "from");
+		qc.to = getXMLProperty(node, "to");
+		qc.ge = getXMLProperty(node, "ge");
+		qc.le = getXMLProperty(node, "le");
+		qc.eq = getXMLProperty(node, "eq");
+		qc.type = Integer.parseInt(getXMLProperty(node, "querytype"));
+		return qc;
+	}
 }

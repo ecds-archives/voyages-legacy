@@ -1,9 +1,19 @@
 package edu.emory.library.tast.dm;
 
 import java.io.Serializable;
+import java.io.StringReader;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.tools.ant.util.ReaderInputStream;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -20,6 +30,8 @@ import edu.emory.library.tast.util.query.QueryValue;
  *
  */
 public class Configuration {
+	
+	public static final String XML_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 	
 	private static Map attributes = new HashMap();
 	static {
@@ -48,7 +60,7 @@ public class Configuration {
 	 * @param entry entry key
 	 * @param value	entry value
 	 */
-	public void addEntry(String entry, Object value) {
+	public void addEntry(String entry, XMLExportable value) {
 		this.entries.put(entry, value);
 	}
 	
@@ -57,26 +69,61 @@ public class Configuration {
 	 * @param entry
 	 * @return
 	 */
-	public Object getEntry(String entry) {
-		return this.entries.get(entry);
+	public XMLExportable getEntry(String entry) {
+		return (XMLExportable) this.entries.get(entry);
 	}
 	
-	/**
-	 * Gets all entries.
-	 * @return serializable object (HashMap)
-	 */
-	public Serializable getEntries() {
-		return this.entries;
+	public String getEntries() {
+		System.out.println("get entries");
+		StringBuffer outXml = new StringBuffer();
+		outXml.append(XML_PREFIX).append("\n").append("<entries>\n");
+		Iterator entries = this.entries.keySet().iterator();
+		while (entries.hasNext()) {
+			String key = (String) entries.next();
+			XMLExportable entry = (XMLExportable) this.entries.get(key);
+			outXml.append("<entry name=\"").append(key).append("\" class=\"");
+			outXml.append(entry.getClass().getName()).append("\">\n");
+			outXml.append(entry.toXML());
+			outXml.append("</entry>\n");
+		}
+		outXml.append("</entries>");
+		return outXml.toString();
 	}
 	
-	/**
-	 * Sets serializable object entries.
-	 * @param entries HahMap instance
-	 */
-	public void setEntries(Serializable entries) {
-		this.entries = (HashMap)entries; 
+	public void setEntries(String entries) {
+		System.out.println("set entries");
+		try {
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document document = builder.parse(new ReaderInputStream(new StringReader(entries)));
+			NodeList nodes = document.getChildNodes();
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Node node = nodes.item(i);
+				if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("entries")) {
+					this.parseEntries(node);
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
+	private void parseEntries(Node node) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		NodeList list = node.getChildNodes();
+		for (int i = 0; i < list.getLength(); i++) {
+			Node entry = list.item(i);
+			if (entry.getNodeType() == Node.ELEMENT_NODE && entry.getNodeName().equals("entry")) {
+				String className = entry.getAttributes().getNamedItem("class").getNodeValue();
+				String entryName = entry.getAttributes().getNamedItem("name").getNodeValue();
+				Class clazz = Class.forName(className);
+				XMLExportable export = (XMLExportable) clazz.newInstance();
+				export.restoreFromXML(entry);
+				this.entries.put(entryName , export);
+			}
+		}
+		
+	}
+
 	/**
 	 * Saves config to DB.
 	 *

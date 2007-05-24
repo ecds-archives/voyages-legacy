@@ -17,7 +17,7 @@ import edu.emory.library.tast.AppConfig;
 
 public class MapSchemaReader {
 
-	private static String MAP_FILE_SKELETON = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_SKELETON);
+//	private static String MAP_FILE_SKELETON = AppConfig.getConfiguration().getString(AppConfig.MAP_FILE_SKELETON);
 
 	private static String PARAM_REGEX = "\\#\\{.*\\}";
 
@@ -45,56 +45,56 @@ public class MapSchemaReader {
 	public boolean beginReading() {
 		BufferedReader reader = null;
 		BufferedWriter writer = null;
-		try {
-			reader = new BufferedReader(new FileReader(MAP_FILE_SKELETON));
-			String line = null;
-
-			while ((line = reader.readLine()) != null) {
-				file.append(line).append("\n");
-			}
-
-			Pattern pattern = Pattern.compile(PARAM_REGEX);
-			Matcher matcher = pattern.matcher(file);
-
-			while (matcher.find()) {
-				//System.out.println(matcher.group());
-				int matchIndex = matcher.end();
-				Integer index = new Integer(matchIndex - matcher.group().length());
-				if (!markers.containsKey(matcher.group())) {
-					ArrayList list = new ArrayList();
-					list.add(index);
-					markers.put(matcher.group(), list);
-				} else {
-					ArrayList list = (ArrayList)markers.get(matcher.group());
-					list.add(index);
-				}
-				this.revMarkers.add(new ChangeableItem(index, matcher.group()));
-			}
-
-			return true;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if (writer != null) {
-					writer.flush();
-					writer.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		try {
+//			reader = new BufferedReader(new FileReader(MAP_FILE_SKELETON));
+//			String line = null;
+//
+//			while ((line = reader.readLine()) != null) {
+//				file.append(line).append("\n");
+//			}
+//
+//			Pattern pattern = Pattern.compile(PARAM_REGEX);
+//			Matcher matcher = pattern.matcher(file);
+//
+//			while (matcher.find()) {
+//				//System.out.println(matcher.group());
+//				int matchIndex = matcher.end();
+//				Integer index = new Integer(matchIndex - matcher.group().length());
+//				if (!markers.containsKey(matcher.group())) {
+//					ArrayList list = new ArrayList();
+//					list.add(index);
+//					markers.put(matcher.group(), list);
+//				} else {
+//					ArrayList list = (ArrayList)markers.get(matcher.group());
+//					list.add(index);
+//				}
+//				this.revMarkers.add(new ChangeableItem(index, matcher.group()));
+//			}
+//
+//			return true;
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (writer != null) {
+//					writer.flush();
+//					writer.close();
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			try {
+//				if (reader != null) {
+//					reader.close();
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return false;
 	}
 	

@@ -2,6 +2,9 @@ package edu.emory.library.tast.database.query;
 
 import java.io.Serializable;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.Searchables;
 import edu.emory.library.tast.util.StringUtils;
@@ -65,4 +68,24 @@ public abstract class QueryCondition implements Serializable
 		return Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
 	}
 
+	public abstract String toXML();
+	
+	protected static StringBuffer appendAttribute(StringBuffer buffer, String attribute, Object value) {
+		if (value == null) {
+			buffer.append(attribute).append("=\"\" ");
+		} else {
+			buffer.append(attribute).append("=\"").append(value).append("\" ");
+		}
+		return buffer;
+	}
+	
+	protected static String getXMLProperty(Node node, String propertyName) {
+		Node attr = node.getAttributes().getNamedItem(propertyName);
+		System.out.println("prop: " + propertyName + " -> " + attr.getNodeValue());
+		if (attr != null && !"".equals(attr.getNodeValue())) {
+			return attr.getNodeValue();
+		} else {
+			return null;
+		}
+	}
 }

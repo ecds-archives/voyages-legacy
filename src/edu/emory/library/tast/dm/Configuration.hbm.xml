@@ -15,7 +15,7 @@
         	<generator class="native"/>
         </id>
         
-        <property name="entries" column="map_entries"/>
+        <property name="entries" column="entries"/>
     </class>
     
 </hibernate-mapping>

@@ -1,10 +1,14 @@
 package edu.emory.library.tast.database.query;
 
+import org.w3c.dom.Node;
+
 
 public class QueryConditionText extends QueryCondition
 {
 	
 	private static final long serialVersionUID = -650415782530711623L;
+	
+	public static final String TYPE = "text";
 	
 	private String value = "";
 	
@@ -49,4 +53,19 @@ public class QueryConditionText extends QueryCondition
 		return newQueryCondition;
 	}
 
+	public String toXML() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<condition ");
+		appendAttribute(buffer, "type", TYPE);
+		appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
+		appendAttribute(buffer, "value", value);
+		buffer.append("/>\n");
+		return buffer.toString();
+	}
+
+	public static QueryCondition fromXML(Node node) {
+		QueryConditionText qc = new QueryConditionText(getXMLProperty(node, "attribute"));
+		qc.value = getXMLProperty(node, "value");
+		return qc;
+	}
 }

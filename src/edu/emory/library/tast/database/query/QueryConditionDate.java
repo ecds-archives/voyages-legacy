@@ -2,6 +2,8 @@ package edu.emory.library.tast.database.query;
 
 import java.util.Arrays;
 
+import org.w3c.dom.Node;
+
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.util.StringUtils;
 
@@ -10,6 +12,8 @@ public class QueryConditionDate extends QueryConditionRange
 	
 	private static final long serialVersionUID = -5784093870244195009L;
 
+	public static final String TYPE = "date";
+	
 	public static final String[] MONTH_NAMES = {
 		TastResource.getText("components_search_jan"),
 		TastResource.getText("components_search_feb"),
@@ -364,4 +368,61 @@ public class QueryConditionDate extends QueryConditionRange
 		return newQueryCondition;
 	}
 
+	public String toXML() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<condition ");
+		appendAttribute(buffer, "type", TYPE);
+		appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
+		appendAttribute(buffer, "fromMonth", fromMonth);
+		appendAttribute(buffer, "fromYear", fromYear);
+		appendAttribute(buffer, "toMonth", toMonth);
+		appendAttribute(buffer, "toYear", toYear);
+		appendAttribute(buffer, "leMonth", leMonth);
+		appendAttribute(buffer, "leYear", leYear);
+		appendAttribute(buffer, "geMonth", geMonth);
+		appendAttribute(buffer, "geYear", geYear);
+		appendAttribute(buffer, "eqMonth", eqMonth);
+		appendAttribute(buffer, "eqYear", eqYear);
+		appendAttribute(buffer, "querytype", new Integer(type));
+		appendAttribute(buffer, "selected", prepareList(selectedMonths));
+		buffer.append("/>\n");
+		return buffer.toString();
+	}
+
+	private static String prepareList(boolean []list) {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.length; i++) {
+			if (i != 0) {
+				buffer.append(",");
+			}
+			buffer.append(list[i]);
+		}
+		return buffer.toString();
+	}
+	
+	private static boolean[] parseListBack(String list) {
+		String[] elements = list.split(",");
+		boolean []ret = new boolean[elements.length];
+		for (int i = 0; i < ret.length; i++) {
+			ret[i] = Boolean.parseBoolean(elements[i]);
+		}
+		return ret;
+	}
+	
+	public static QueryCondition fromXML(Node node) {
+		QueryConditionDate qc = new QueryConditionDate(getXMLProperty(node, "attribute"));
+		qc.fromMonth = getXMLProperty(node, "fromMonth");
+		qc.fromYear = getXMLProperty(node, "fromYear");
+		qc.toMonth = getXMLProperty(node, "toMonth");
+		qc.toYear = getXMLProperty(node, "toYear");
+		qc.leMonth = getXMLProperty(node, "leMonth");
+		qc.leYear = getXMLProperty(node, "leYear");
+		qc.geMonth = getXMLProperty(node, "geMonth");
+		qc.geYear = getXMLProperty(node, "geYear");
+		qc.eqMonth = getXMLProperty(node, "eqMonth");
+		qc.eqYear = getXMLProperty(node, "eqYear");
+		qc.type = Integer.parseInt(getXMLProperty(node, "querytype"));
+		qc.setSelectedMonths(parseListBack(getXMLProperty(node, "selected")));
+		return qc;
+	}
 }
