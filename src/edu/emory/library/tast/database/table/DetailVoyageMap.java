@@ -5,14 +5,10 @@ import edu.emory.library.tast.database.table.mapimpl.DetailVoyageDataTransformer
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
-import edu.emory.library.tast.maps.MapLayer;
 import edu.emory.library.tast.maps.component.PointOfInterest;
-import edu.emory.library.tast.maps.mapfile.MapFileCreator;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class DetailVoyageMap {
-
-	private MapFileCreator creator = new MapFileCreator();
 
 	private Long voyageId = null;
 	
@@ -27,9 +23,10 @@ public class DetailVoyageMap {
 			this.voyageId = voyageId;
 			this.queryNeeded = true;
 		}
+		this.refreshData();
 	}
 
-	public boolean prepareMapFile() {
+	public boolean refreshData() {
 
 		if (!this.queryNeeded) {
 			return true;
@@ -47,32 +44,21 @@ public class DetailVoyageMap {
 
 			DetailVoyageDataTransformer transformer = new DetailVoyageDataTransformer(queryHolder.getAttributesMap());
 			this.mapData.setMapData(queryHolder, transformer);
-			this.creator.setMapData(this.mapData.getItems());
-			this.creator.setMapLegend(this.mapData.getLegend());
-			return this.creator.createMapFile();
-
 		}
-		return false;
+		return true;
 	}
 	
 	public void refresh() {
-		this.creator.createMapFile();
+		this.refreshData();
 	}
 
-	public String getCurrentMapFilePath() {
-		return this.creator.getFilePath();
-	}
-	
 	public PointOfInterest[] getPointsOfInterest() {
+		this.refreshData();
 		return this.mapData.getToolTip();
 	}
 
 	public LegendItemsGroup[] getLegend() {
 		return this.mapData.getLegend();
-	}
-
-	public MapLayer[] getLayers() {
-		return this.creator.getLayers();
 	}
 
 	public String getAttribute() {

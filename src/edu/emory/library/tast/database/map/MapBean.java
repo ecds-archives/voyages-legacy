@@ -3,21 +3,17 @@ package edu.emory.library.tast.database.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.query.SearchParameters;
-import edu.emory.library.tast.maps.AbstractMapItem;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
-import edu.emory.library.tast.maps.MapLayer;
 import edu.emory.library.tast.maps.component.PointOfInterest;
-import edu.emory.library.tast.maps.mapfile.MapFileCreator;
+import edu.emory.library.tast.maps.component.StandardMaps;
+import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -42,8 +38,6 @@ public class MapBean {
 
 	private static final String[] MAPS = new String[] { "Places", "Regions" };
 	
-	private static final String MAP_OBJECT_ATTR_NAME = "__map__file_";
-
 	/**
 	 * Reference to Search bean.
 	 */
@@ -57,14 +51,8 @@ public class MapBean {
 	//indicates if requery is required
 	private boolean neededQuery = false;
 
-	//Map creator - provides link between JSF and MapServer
-	private MapFileCreator creator = new MapFileCreator();
-
-	//Parameter for session that indicates map path
-	private String sessionParam;
-
-	//Parameter for session that indicates mini-map path
-	private String sessionParamMini;
+//	//Map creator - provides link between JSF and MapServer
+//	private MapFileCreator creator = new MapFileCreator();
 
 	//Information show on-mouse-over (when mouse is over given point)
 	private List pointsOfInterest = new ArrayList();
@@ -104,25 +92,6 @@ public class MapBean {
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());
 			this.mapData.setMapData(queryHolder, transformer);
-
-			AbstractMapItem[] items = this.mapData.getItems();
-
-			if (items.length >= 0) {
-				this.creator.setMapData(items);
-				this.creator.setMapLegend(this.mapData.getLegend());
-			}
-			
-			if (this.creator.createMapFile()) {
-				sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
-				sessionParamMini = MAP_OBJECT_ATTR_NAME + "_mini_"
-						+ System.currentTimeMillis();
-				ExternalContext servletContext = FacesContext.getCurrentInstance()
-						.getExternalContext();
-				HttpSession session = (HttpSession) servletContext.getSession(true);
-				session.setAttribute(sessionParam, creator.getFilePath());
-				session.setAttribute(sessionParamMini, creator
-						.getSmallMapFilePath());
-			}
 			
 			this.neededQuery = false;
 		}
@@ -130,39 +99,11 @@ public class MapBean {
 	}
 
 	/**
-	 * Returns path that should be used as source of image that presents map
-	 * @return
-	 */
-	public String getMapPath() {
-		setMapData();
-		return sessionParam;
-	}
-
-	/**
-	 * Returns path that should be used as source of image that presents mini-map
-	 * @return
-	 */
-	public String getMiniMapFile() {
-		setMapData();
-		return sessionParamMini;
-	}
-
-	/**
 	 * Refreshes any data in map. It queries the database if needed.
 	 * @return
 	 */
 	public String refresh() {
-		if (this.creator.createMapFile()) {
-			sessionParam = MAP_OBJECT_ATTR_NAME + System.currentTimeMillis();
-			sessionParamMini = MAP_OBJECT_ATTR_NAME + "_mini_"
-					+ System.currentTimeMillis();
-			ExternalContext servletContext = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			HttpSession session = (HttpSession) servletContext.getSession(true);
-			session.setAttribute(sessionParam, creator.getFilePath());
-			session.setAttribute(sessionParamMini, creator
-					.getSmallMapFilePath());
-		}
+		this.setMapData();
 		return null;
 	}
 
@@ -171,6 +112,7 @@ public class MapBean {
 	 * @return
 	 */
 	public PointOfInterest[] getPointsOfInterest() {
+		setMapData();
 		return this.mapData.getToolTip();
 	}
 
@@ -199,14 +141,6 @@ public class MapBean {
 	}
 
 	/**
-	 * Gets available layers for map.
-	 * @return
-	 */
-	public MapLayer[] getLayers() {
-		return this.creator.getLayers();
-	}
-
-	/**
 	 * Sets chosen map (regions/ports)
 	 * @param value
 	 */
@@ -229,5 +163,14 @@ public class MapBean {
 		}
 		return items;
 	}
-
+	
+	public ZoomLevel[] getZoomLevels() {
+		setMapData();
+		return StandardMaps.getZoomLevels();
+	}
+	
+	public ZoomLevel getMiniMapZoomLevel() {
+		setMapData();
+		return StandardMaps.getMiniMapZoomLevel();
+	}
 }

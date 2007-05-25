@@ -78,8 +78,15 @@
 						<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
 						
 							<s:map
+								id="map"
+								zoomLevels="#{VoyageDetailBean.zoomLevels}"
 								pointsOfInterest="#{VoyageDetailBean.pointsOfInterest}"
-								miniMap="true" />
+								miniMap="true" 
+								miniMap="true"
+								miniMapZoomLevel="#{VoyageDetailBean.miniMapZoomLevel}"
+								miniMapHeight="100"
+								miniMapWidth="100"
+								miniMapPosition="bottom right"/>
 
 						</t:htmlTag>
 	
@@ -89,7 +96,6 @@
 								id="mapLegend-component-detailvoyage" 
 								styleClass="legend"
 								legend="#{VoyageDetailBean.legend}"
-								layers="#{VoyageDetailBean.layers}"
 								refreshAction="#{VoyageDetailBean.refresh}" />
 
 						</t:htmlTag>

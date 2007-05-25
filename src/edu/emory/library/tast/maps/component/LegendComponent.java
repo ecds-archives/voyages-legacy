@@ -251,7 +251,7 @@ public class LegendComponent extends UIComponentBase {
 		}
 		
 		MapLayer[] layers = (MapLayer[])getValueBinding(context, "layers");
-		if (layers.length > 0) {
+		if (layers != null && layers.length > 0) {
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "map-legend-section-title", null);

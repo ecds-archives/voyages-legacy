@@ -11,10 +11,14 @@
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px;">
 	
 		<s:map
+			id="map"
+			zoomLevels="#{MapBean.zoomLevels}"
 			pointsOfInterest="#{MapBean.pointsOfInterest}"
 			miniMap="true"
+			miniMapZoomLevel="#{MapBean.miniMapZoomLevel}"
+			miniMapHeight="100"
 			miniMapWidth="100"
-			miniMapHeight="100"/>
+			miniMapPosition="bottom right"/>
 
 	</t:htmlTag>
 
@@ -23,10 +27,9 @@
 		<s:legend id="mapLegend-component" 
 			styleClass="map-legend-div"
 			legend="#{MapBean.legend}"
-			layers="#{MapBean.layers}"
 			refreshAction="#{MapBean.refresh}" 
 			maps="#{MapBean.availableMaps}"
-			chosenMap="#{MapBean.chosenMap}"  />
+			chosenMap="#{MapBean.chosenMap}"/>
 			
 	</t:htmlTag>
 	

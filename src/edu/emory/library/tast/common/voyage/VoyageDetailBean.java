@@ -3,9 +3,7 @@ package edu.emory.library.tast.common.voyage;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.table.DetailVoyageInfo;
@@ -17,15 +15,14 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.maps.LegendItemsGroup;
-import edu.emory.library.tast.maps.MapLayer;
 import edu.emory.library.tast.maps.component.PointOfInterest;
+import edu.emory.library.tast.maps.component.StandardMaps;
+import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class VoyageDetailBean {
 
-	private static final String MAP_SESSION_KEY = "detail_map__";
-	
 	private int voyageId;
 
 	private TableData detailData = new TableData();
@@ -40,6 +37,8 @@ public class VoyageDetailBean {
 	
 	public void openVoyage(int voyageId) {
 		this.voyageId = voyageId;
+		this.detailVoyageMap.setAttribute("iid");
+		this.detailVoyageMap.setVoyageId(new Long(this.voyageId));
 	}
 
 	public int getTestValue() {
@@ -181,26 +180,6 @@ public class VoyageDetailBean {
 	public void setDetailData(TableData detailData) {
 		this.detailData = detailData;
 	}
-	
-	public String getMapPath() {
-
-		this.detailVoyageMap.setVoyageId(new Long(this.voyageId));
-		this.detailVoyageMap.setAttribute(this.voyageAttr);
-		
-		if (this.detailVoyageMap.prepareMapFile()) {
-
-			long time = System.currentTimeMillis();
-			
-			ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
-			((HttpSession) servletContext.getSession(true)).setAttribute(MAP_SESSION_KEY + time, this.detailVoyageMap
-					.getCurrentMapFilePath());
-			return MAP_SESSION_KEY + time;
-		}
-		return "";
-	}
-
-	public void setMapPath(String path) {
-	}
 
 	public PointOfInterest[] getPointsOfInterest() {
 		return this.detailVoyageMap.getPointsOfInterest();
@@ -214,10 +193,6 @@ public class VoyageDetailBean {
 		return this.detailVoyageMap.getLegend();
 	}
 	
-	public MapLayer[] getLayers() {
-		return this.detailVoyageMap.getLayers();
-	}
-
 	public void setBackPage(String viewId) {
 		this.backLink = viewId;
 	}
@@ -229,6 +204,15 @@ public class VoyageDetailBean {
 	public String refresh() {
 		this.detailVoyageMap.refresh();
 		return null;
+	}
+	
+	
+	public ZoomLevel[] getZoomLevels() {
+		return StandardMaps.getZoomLevels();
+	}
+	
+	public ZoomLevel getMiniMapZoomLevel() {
+		return StandardMaps.getMiniMapZoomLevel();
 	}
 
 }

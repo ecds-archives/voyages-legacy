@@ -11,16 +11,18 @@
 	<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
 		<s:map id="estimates-map-compo"
 			pointsOfInterest="#{EstimatesMapBean.pointsOfInterest}"
+			zoomLevels="#{EstimatesMapBean.zoomLevels}"
+			miniMapZoomLevel="#{EstimatesMapBean.miniMapZoomLevel}"
 			miniMap="true"
 			miniMapWidth="100"
-			miniMapHeight="100"/>
+			miniMapHeight="100"
+			miniMapPosition="bottom right"/>
 	</t:htmlTag>
 	
 	<t:htmlTag value="td" style="padding: 0px 0px 0px 10px; vertical-align: top;">
 		<s:legend id="mapLegend-component" 
 			styleClass="map-legend-div"
 			legend="#{EstimatesMapBean.legend}"
-			layers="#{EstimatesMapBean.layers}"
 			refreshAction="#{EstimatesMapBean.refresh}" /> 
 	</t:htmlTag>
 		
