@@ -1,14 +1,7 @@
 package edu.emory.library.tast.database.query;
 
-import java.io.Serializable;
-import java.io.StringReader;
 import java.util.Iterator;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.tools.ant.util.ReaderInputStream;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

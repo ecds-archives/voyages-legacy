@@ -5,17 +5,12 @@ import java.util.Map;
 
 import javax.faces.application.Application;
 import javax.faces.component.UICommand;
-import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
 
-import org.apache.myfaces.el.MethodBindingImpl;
-
-import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
@@ -35,7 +30,7 @@ public class GalleryComponent extends UICommand
 	private GalleryImage[] images;
 	private String selectedImageId;
 
-	private static String cID = System.currentTimeMillis() + "";
+	//private static String cID = System.currentTimeMillis() + "";
 	
 	public String getRendererType()
 	{

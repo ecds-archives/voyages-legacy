@@ -60,7 +60,7 @@ public class QueryConditionBoolean extends QueryCondition
 
 	public static QueryCondition fromXML(Node node) {
 		QueryConditionBoolean qc = new QueryConditionBoolean(getXMLProperty(node, "attribute"));
-		qc.checked = Boolean.parseBoolean(getXMLProperty(node, "value"));
+		qc.checked = Boolean.valueOf(getXMLProperty(node, "value")).booleanValue();
 		return qc;
 	}
 }

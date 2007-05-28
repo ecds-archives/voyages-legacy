@@ -2,7 +2,6 @@ package edu.emory.library.tast.database.query;
 
 import java.io.Serializable;
 
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;

@@ -1,6 +1,5 @@
 package edu.emory.library.tast.dm;
 
-import java.io.Serializable;
 import java.io.StringReader;
 import java.util.Date;
 import java.util.HashMap;

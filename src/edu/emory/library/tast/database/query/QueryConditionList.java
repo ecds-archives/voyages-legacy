@@ -182,8 +182,8 @@ public class QueryConditionList extends QueryCondition
 	
 	public static QueryCondition fromXML(Node node) {
 		QueryConditionList qc = new QueryConditionList(getXMLProperty(node, "attribute"));
-		qc.edit = Boolean.parseBoolean(getXMLProperty(node, "edit"));
-		qc.autoSelection = Boolean.parseBoolean(getXMLProperty(node, "auto"));
+		qc.edit = Boolean.valueOf(getXMLProperty(node, "edit")).booleanValue();
+		qc.autoSelection = Boolean.valueOf(getXMLProperty(node, "auto")).booleanValue();
 		restoreIDs(qc.expandedIds, getXMLProperty(node, "expanded"));
 		restoreIDs(qc.selectedIds, getXMLProperty(node, "selected"));
 		return qc;

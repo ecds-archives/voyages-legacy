@@ -8,7 +8,6 @@ import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.dm.attributes.VoyageAttribute;
 
 public class SubmissionEdit extends Submission
 {

@@ -17,15 +17,14 @@ import edu.emory.library.tast.dm.attributes.FateOwnerAttribute;
 import edu.emory.library.tast.dm.attributes.FateSlavesAttribute;
 import edu.emory.library.tast.dm.attributes.FateVesselAttribute;
 import edu.emory.library.tast.dm.attributes.ImportableAttribute;
-import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.PortAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
+import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
