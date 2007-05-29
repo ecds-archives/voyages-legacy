@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.w3c.dom.Node;
 
+import edu.emory.library.tast.util.XMLUtils;
+
 public class QueryConditionList extends QueryCondition
 {
 	
@@ -146,12 +148,12 @@ public class QueryConditionList extends QueryCondition
 	public String toXML() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<condition ");
-		appendAttribute(buffer, "type", TYPE);
-		appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
-		appendAttribute(buffer, "edit", new Boolean(this.edit));
-		appendAttribute(buffer, "auto", new Boolean(this.autoSelection));
-		appendAttribute(buffer, "expanded", getIDs(this.expandedIds));
-		appendAttribute(buffer, "selected", getIDs(this.selectedIds));
+		XMLUtils.appendAttribute(buffer, "type", TYPE);
+		XMLUtils.appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
+		XMLUtils.appendAttribute(buffer, "edit", new Boolean(this.edit));
+		XMLUtils.appendAttribute(buffer, "auto", new Boolean(this.autoSelection));
+		XMLUtils.appendAttribute(buffer, "expanded", getIDs(this.expandedIds));
+		XMLUtils.appendAttribute(buffer, "selected", getIDs(this.selectedIds));
 		buffer.append("/>\n");
 		return buffer.toString();
 	}
@@ -181,11 +183,11 @@ public class QueryConditionList extends QueryCondition
 	}
 	
 	public static QueryCondition fromXML(Node node) {
-		QueryConditionList qc = new QueryConditionList(getXMLProperty(node, "attribute"));
-		qc.edit = Boolean.valueOf(getXMLProperty(node, "edit")).booleanValue();
-		qc.autoSelection = Boolean.valueOf(getXMLProperty(node, "auto")).booleanValue();
-		restoreIDs(qc.expandedIds, getXMLProperty(node, "expanded"));
-		restoreIDs(qc.selectedIds, getXMLProperty(node, "selected"));
+		QueryConditionList qc = new QueryConditionList(XMLUtils.getXMLProperty(node, "attribute"));
+		qc.edit = Boolean.parseBoolean(XMLUtils.getXMLProperty(node, "edit"));
+		qc.autoSelection = Boolean.parseBoolean(XMLUtils.getXMLProperty(node, "auto"));
+		restoreIDs(qc.expandedIds, XMLUtils.getXMLProperty(node, "expanded"));
+		restoreIDs(qc.selectedIds, XMLUtils.getXMLProperty(node, "selected"));
 		return qc;
 	}
 

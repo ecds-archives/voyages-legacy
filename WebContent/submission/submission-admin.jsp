@@ -33,6 +33,7 @@
 			<s:tab text="Voyages list" tabId="voyages" />
 			<s:tab text="Requests list" tabId="requests" />
 			<s:tab text="Users list" tabId="users" />
+			<s:tab text="Publish new database revision" tabId="publish" />
 		</s:tabBar>
 	</t:htmlTag>
 	
@@ -58,6 +59,10 @@
 				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdFrom}" style="width: 40px;" /><f:verbatim></td>
 				<td style="padding-right: 5px">to</td>
 				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdTo}" style="width: 40px;" /><f:verbatim></td>
+				<td style="padding-right: 5px">Revision: </td>
+				<td style="padding-right: 10px"></f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.revision}" style="width: 150px;"> 
+						<f:selectItems value="#{AdminVoyagesListBean.revisions}"/> </h:selectOneMenu><f:verbatim></td>
+				
 				
 				<td style="padding-right: 5px"><h:commandButton value="Show" /></td>
 				<td></f:verbatim><h:commandButton value="Restore default" action="#{AdminVoyagesListBean.restoreDefaultOptions}" /><f:verbatim></td>
@@ -159,6 +164,18 @@
 		</div>
 		</f:verbatim>
 	
+	</h:panelGroup>
+	
+	<h:panelGroup rendered="#{AdminSubmissionBean.publishSelected}">
+		<t:htmlTag value="br"/>
+		<t:htmlTag value="br"/>
+		<f:verbatim>
+			<h2>Warning!</h2>
+			After after applying changes, new database revision will immediately be published.<br>
+			The process can take few minutes. Please do not press the button twice or do not
+			refresh the page.<br>
+		</f:verbatim>
+		<h:commandButton value="Publish new revision" action="#{AdminSubmissionBean.publish}"/>
 	</h:panelGroup>
 
 </h:form>

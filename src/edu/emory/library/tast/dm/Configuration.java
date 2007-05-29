@@ -19,6 +19,7 @@ import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
+import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -30,7 +31,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class Configuration {
 	
-	public static final String XML_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	public static final String XML_PREFIX = XMLUtils.XML_PREFIX;
 	
 	private static Map attributes = new HashMap();
 	static {

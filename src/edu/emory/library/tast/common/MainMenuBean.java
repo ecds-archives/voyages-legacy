@@ -73,11 +73,11 @@ public class MainMenuBean
 						30, new MainMenuBarPageItem[] {
 								new MainMenuBarPageItem(
 										"plan",
-										"Lesson Plan",
+										"Lesson Plans",
 										"lessons/plan.faces"),
 								new MainMenuBarPageItem(
 										"map",
-										"Lesson Map",
+										"Lesson Maps",
 										"lessons/map.faces"),
 								new MainMenuBarPageItem(
 										"glossary",

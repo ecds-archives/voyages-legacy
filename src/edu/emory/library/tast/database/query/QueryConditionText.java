@@ -2,6 +2,8 @@ package edu.emory.library.tast.database.query;
 
 import org.w3c.dom.Node;
 
+import edu.emory.library.tast.util.XMLUtils;
+
 
 public class QueryConditionText extends QueryCondition
 {
@@ -56,16 +58,16 @@ public class QueryConditionText extends QueryCondition
 	public String toXML() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<condition ");
-		appendAttribute(buffer, "type", TYPE);
-		appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
-		appendAttribute(buffer, "value", value);
+		XMLUtils.appendAttribute(buffer, "type", TYPE);
+		XMLUtils.appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
+		XMLUtils.appendAttribute(buffer, "value", value);
 		buffer.append("/>\n");
 		return buffer.toString();
 	}
 
 	public static QueryCondition fromXML(Node node) {
-		QueryConditionText qc = new QueryConditionText(getXMLProperty(node, "attribute"));
-		qc.value = getXMLProperty(node, "value");
+		QueryConditionText qc = new QueryConditionText(XMLUtils.getXMLProperty(node, "attribute"));
+		qc.value = XMLUtils.getXMLProperty(node, "value");
 		return qc;
 	}
 }

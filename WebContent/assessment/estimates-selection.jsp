@@ -5,6 +5,9 @@
 
 <div id="debug"></div>
 
+<h:inputHidden value="#{EstimatesSelectionBean.fakeHiddenForPermlinkRestore}" />
+
+<s:messageBar rendered="false" binding="#{EstimatesSelectionBean.messageBar}" />
 
 <s:expandableBoxSet expandedId="time-frame">
 <s:expandableBox boxId="time-frame" text="#{res.estimates_left_timeframe}">
@@ -129,5 +132,9 @@
 	<t:div style="margin-top: 5px;">
 		<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectedimport}"/></t:div>
 		<h:outputText value="#{EstimatesSelectionBean.selectedImpRegionsAsText}" escape="false" />
+	</t:div>
+	
+	<t:div style="margin-top: 5px;">
+		<h:commandButton value="Get link" action="#{EstimatesSelectionBean.createPermanentLink}"/>
 	</t:div>
 </s:expandableBox>

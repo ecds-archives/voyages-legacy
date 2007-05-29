@@ -12,6 +12,7 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridRow;
 import edu.emory.library.tast.dm.Nation;
+import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -42,6 +43,8 @@ public class VoyagesListBean
 	private int voyageIdFrom = -1;
 	private int voyageIdTo = -1;
 	
+	private int revision = -1;
+	
 	private String nationId;
 	
 	public VoyagesListBean()
@@ -66,13 +69,11 @@ public class VoyagesListBean
 	
 	public String openVoyage()
 	{
-		System.out.println("Opening voyage here!!!!!!!!!!");
 		return "edit";
 	}
 	
 	private void loadDataIfNecessary()
 	{
-		
 		// no need
 		if (dataValid && !filterChanged && !currentPageChanged)
 			return;
@@ -133,7 +134,7 @@ public class VoyagesListBean
 					Conditions.OP_EQUALS);
 
 		// load voyages
-		conds.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
+		conds.addCondition(Voyage.getAttribute("revision"), new Integer(this.revision), Conditions.OP_EQUALS);
 		conds.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
 		QueryValue query = new QueryValue("Voyage", conds);
 		query.setOrder(QueryValue.ORDER_ASC);
@@ -367,5 +368,25 @@ public class VoyagesListBean
 		}
 		this.voyageIdTo = Integer.parseInt(voyageIdTo);
 	}
+	
+	public SelectItem[] getRevisions() {
+		QueryValue qValue = new QueryValue("Revision");
+		qValue.setOrderBy(new Attribute[] {Revision.getAttribute("id")});
+		Object[] revisions = qValue.executeQuery();
+		SelectItem[] revs = new SelectItem[revisions.length + 1];
+		revs[0] = new SelectItem("-1", "*Future revision*");
+		for (int i = 0; i < revisions.length; i++) {
+			revs[i + 1] = new SelectItem(((Revision)revisions[i]).getId().toString(), ((Revision)revisions[i]).getName());
+		}
+		return revs;
+	}
 
+	public String getRevision() {
+		return String.valueOf(revision);
+	}
+
+	public void setRevision(String revision) {
+		this.revision = Integer.parseInt(revision);
+	}
+	
 }

@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.admin.VoyageBean;
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridOpenRowEvent;
@@ -22,6 +24,7 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -30,6 +33,7 @@ import edu.emory.library.tast.dm.SubmissionNew;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
@@ -220,7 +224,7 @@ public class AdminSubmissionBean {
 
 	}
 
-	private Voyage getCurrentlyPreparedVoyage(Session sess, Integer voyageid2) {
+	private Voyage getCurrentlyPreparedVoyage(Session sess, Long voyageid2) {
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), voyageid2, Conditions.OP_EQUALS);
 		c.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
@@ -307,6 +311,10 @@ public class AdminSubmissionBean {
 
 	public Boolean getUsersListSelected() {
 		return new Boolean(this.chosenTab.equals("users"));
+	}
+	
+	public Boolean getPublishSelected() {
+		return new Boolean(this.chosenTab.equals("publish"));
 	}
 	
 	public SelectItem[] getRequestTypes() {
@@ -438,7 +446,7 @@ public class AdminSubmissionBean {
 			Submission lSubmission = (Submission) res[0];
 			this.submissionId = lSubmission.getId();
 			if (lSubmission instanceof SubmissionEdit) {
-				Integer vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage().getVoyageid();
+				Long vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage().getVoyageid();
 				c = new Conditions();
 				c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
 						EditedVoyage.getAttribute("voyage"), Voyage.getAttribute("voyageid") }), vid, Conditions.OP_EQUALS);
@@ -537,8 +545,8 @@ public class AdminSubmissionBean {
 			Set voyagesToDelete = ((SubmissionMerge)lSubmission).getMergedVoyages();
 			for (Iterator iter = voyagesToDelete.iterator(); iter.hasNext();) {
 				EditedVoyage element = (EditedVoyage) iter.next();
-				Integer voyageId = element.getVoyage().getVoyageid();
-				Voyage voyage = Voyage.loadFutureRevision(session, voyageId.intValue());
+				Long voyageId = element.getVoyage().getVoyageid();
+				Voyage voyage = Voyage.loadFutureRevision(session, voyageId);
 				if (voyage != null) {
 					session.delete(voyage);				
 				}
@@ -755,5 +763,15 @@ public class AdminSubmissionBean {
 
 	public void setVoyageBean(VoyageBean voyageBean) {
 		this.voyageBean = voyageBean;
+	}
+	
+	public String publish() {
+		System.out.println("publish");
+		try {
+			Thread.currentThread().sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

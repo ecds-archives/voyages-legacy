@@ -4,22 +4,35 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.SelectItem;
 import edu.emory.library.tast.common.SelectItemWithImage;
+import edu.emory.library.tast.database.query.HistoryItem;
+import edu.emory.library.tast.database.query.Query;
+import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportArea;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.EstimatesNation;
+import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -71,6 +84,58 @@ public class EstimatesSelectionBean
 	private static final int TIME_SPAN_INITIAL_FROM = 1500;
 	private static final int TIME_SPAN_INITIAL_TO = 1900;
 	
+	public static class EstimatesSelection implements XMLExportable {
+		
+		private Set selectedNationIds;
+		private Set selectedExpRegionIds;
+		private Set selectedImpRegionIds;
+		private Set selectedImpAreaIds;
+		
+		public EstimatesSelection() {			
+		}
+		
+		public EstimatesSelection(EstimatesSelectionBean bean) {
+			this.selectedNationIds = bean.selectedNationIds;
+			this.selectedExpRegionIds = bean.selectedExpRegionIds;
+			this.selectedImpRegionIds = bean.selectedImpRegionIds;
+			this.selectedImpAreaIds = bean.selectedImpAreaIds;
+		}
+
+		public void restoreFromXML(Node entry) {
+			NodeList childNodes = entry.getChildNodes();
+			for (int i = 0; i < childNodes.getLength(); i++) {
+				Node child = childNodes.item(i);
+				if (child.getNodeType() == Node.ELEMENT_NODE &&
+						child.getNodeName().equals("set")) {
+					String setName = XMLUtils.getXMLProperty(child, "setName");
+					Set set = XMLUtils.restoreSetOfLongs(child);
+					if (setName.equals("nations")) {
+						this.selectedNationIds = set;
+					} else if (setName.equals("exported")) {
+						this.selectedExpRegionIds = set;
+					} else if (setName.equals("impAreas")) {
+						this.selectedImpAreaIds = set;
+					} else {
+						this.selectedImpRegionIds = set;
+					}
+				}
+			}
+		}
+
+		public String toXML() {
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("<estimatesSelection>\n");
+			buffer.append(XMLUtils.encodeSet("nations", this.selectedNationIds));
+			buffer.append(XMLUtils.encodeSet("exported", this.selectedExpRegionIds));
+			buffer.append(XMLUtils.encodeSet("impAreas", this.selectedImpAreaIds));
+			buffer.append(XMLUtils.encodeSet("impRegions", this.selectedImpRegionIds));
+			buffer.append("</estimatesSelection>\n");
+			return buffer.toString();
+		}
+	}
+	
+	private MessageBarComponent messageBar;
+	
 	private Conditions timeFrameConditions;
 	private Conditions geographicConditions;
 
@@ -94,7 +159,7 @@ public class EstimatesSelectionBean
 	
 	private int yearFrom = TIME_SPAN_INITIAL_FROM;
 	private int yearTo = TIME_SPAN_INITIAL_TO;
-
+	
 	public EstimatesSelectionBean()
 	{
 		initDefaultValues();
@@ -1026,6 +1091,72 @@ public class EstimatesSelectionBean
 	public void setYearTo(int yearTo)
 	{
 		this.yearTo = yearTo;
+	}
+	
+	public String createPermanentLink() {
+		
+		//UidGenerator generator = new UidGenerator();
+		//String uid = generator.generate();
+		
+		Configuration conf = new Configuration();
+		conf.addEntry("permlinkEstimates", new EstimatesSelection(this));
+		conf.save();
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
+		messageBar.setRendered(true);
+		
+		return null;
+	}
+
+	public MessageBarComponent getMessageBar() {
+		return messageBar;
+	}
+
+	public void setMessageBar(MessageBarComponent messageBar) {
+		this.messageBar = messageBar;
+	}
+	
+	/**
+	 * Ugly trick (because of limitations of JSF). This is called every time the
+	 * page is reloaded (because it is bound to a textbox). Calls
+	 * {@link #restorePermlinkIfAny()}.
+	 * 
+	 * @return
+	 */
+	public String getFakeHiddenForPermlinkRestore()
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map params = context.getExternalContext().getRequestParameterMap();
+		if (!params.containsKey("permlink"))
+			return null;
+		
+		String permlink = (String)params.get("permlink");
+		if (StringUtils.isNullOrEmpty(permlink))
+			return null;
+
+		Configuration conf = Configuration.loadConfiguration(permlink);
+		if (conf == null)
+			return null;
+		
+		if (conf.getEntry("permlinkEstimates") != null) {
+			EstimatesSelection selection = (EstimatesSelection) conf.getEntry("permlinkEstimates");
+			this.selectedExpRegionIds = selection.selectedExpRegionIds;
+			this.selectedImpAreaIds = selection.selectedImpAreaIds;
+			this.selectedImpRegionIds = selection.selectedImpRegionIds;
+			this.selectedNationIds = selection.selectedNationIds;
+		}
+		return null;
+	}
+
+	/**
+	 * Ugly trick (because of limitations of JSF). See
+	 * {@link #getFakeHiddenForPermlinkRestore()}.
+	 * 
+	 * @return
+	 */
+	public void setFakeHiddenForPermlinkRestore(String value)
+	{
 	}
 
 }

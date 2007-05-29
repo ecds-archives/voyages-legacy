@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.XMLUtils;
 
 public class QueryConditionDate extends QueryConditionRange
 {
@@ -371,20 +372,20 @@ public class QueryConditionDate extends QueryConditionRange
 	public String toXML() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<condition ");
-		appendAttribute(buffer, "type", TYPE);
-		appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
-		appendAttribute(buffer, "fromMonth", fromMonth);
-		appendAttribute(buffer, "fromYear", fromYear);
-		appendAttribute(buffer, "toMonth", toMonth);
-		appendAttribute(buffer, "toYear", toYear);
-		appendAttribute(buffer, "leMonth", leMonth);
-		appendAttribute(buffer, "leYear", leYear);
-		appendAttribute(buffer, "geMonth", geMonth);
-		appendAttribute(buffer, "geYear", geYear);
-		appendAttribute(buffer, "eqMonth", eqMonth);
-		appendAttribute(buffer, "eqYear", eqYear);
-		appendAttribute(buffer, "querytype", new Integer(type));
-		appendAttribute(buffer, "selected", prepareList(selectedMonths));
+		XMLUtils.appendAttribute(buffer, "type", TYPE);
+		XMLUtils.appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
+		XMLUtils.appendAttribute(buffer, "fromMonth", fromMonth);
+		XMLUtils.appendAttribute(buffer, "fromYear", fromYear);
+		XMLUtils.appendAttribute(buffer, "toMonth", toMonth);
+		XMLUtils.appendAttribute(buffer, "toYear", toYear);
+		XMLUtils.appendAttribute(buffer, "leMonth", leMonth);
+		XMLUtils.appendAttribute(buffer, "leYear", leYear);
+		XMLUtils.appendAttribute(buffer, "geMonth", geMonth);
+		XMLUtils.appendAttribute(buffer, "geYear", geYear);
+		XMLUtils.appendAttribute(buffer, "eqMonth", eqMonth);
+		XMLUtils.appendAttribute(buffer, "eqYear", eqYear);
+		XMLUtils.appendAttribute(buffer, "querytype", new Integer(type));
+		XMLUtils.appendAttribute(buffer, "selected", prepareList(selectedMonths));
 		buffer.append("/>\n");
 		return buffer.toString();
 	}
@@ -404,25 +405,25 @@ public class QueryConditionDate extends QueryConditionRange
 		String[] elements = list.split(",");
 		boolean []ret = new boolean[elements.length];
 		for (int i = 0; i < ret.length; i++) {
-			ret[i] = Boolean.valueOf(elements[i]).booleanValue();
+			ret[i] = Boolean.parseBoolean(elements[i]);
 		}
 		return ret;
 	}
 	
 	public static QueryCondition fromXML(Node node) {
-		QueryConditionDate qc = new QueryConditionDate(getXMLProperty(node, "attribute"));
-		qc.fromMonth = getXMLProperty(node, "fromMonth");
-		qc.fromYear = getXMLProperty(node, "fromYear");
-		qc.toMonth = getXMLProperty(node, "toMonth");
-		qc.toYear = getXMLProperty(node, "toYear");
-		qc.leMonth = getXMLProperty(node, "leMonth");
-		qc.leYear = getXMLProperty(node, "leYear");
-		qc.geMonth = getXMLProperty(node, "geMonth");
-		qc.geYear = getXMLProperty(node, "geYear");
-		qc.eqMonth = getXMLProperty(node, "eqMonth");
-		qc.eqYear = getXMLProperty(node, "eqYear");
-		qc.type = Integer.parseInt(getXMLProperty(node, "querytype"));
-		qc.setSelectedMonths(parseListBack(getXMLProperty(node, "selected")));
+		QueryConditionDate qc = new QueryConditionDate(XMLUtils.getXMLProperty(node, "attribute"));
+		qc.fromMonth = XMLUtils.getXMLProperty(node, "fromMonth");
+		qc.fromYear = XMLUtils.getXMLProperty(node, "fromYear");
+		qc.toMonth = XMLUtils.getXMLProperty(node, "toMonth");
+		qc.toYear = XMLUtils.getXMLProperty(node, "toYear");
+		qc.leMonth = XMLUtils.getXMLProperty(node, "leMonth");
+		qc.leYear = XMLUtils.getXMLProperty(node, "leYear");
+		qc.geMonth = XMLUtils.getXMLProperty(node, "geMonth");
+		qc.geYear = XMLUtils.getXMLProperty(node, "geYear");
+		qc.eqMonth = XMLUtils.getXMLProperty(node, "eqMonth");
+		qc.eqYear = XMLUtils.getXMLProperty(node, "eqYear");
+		qc.type = Integer.parseInt(XMLUtils.getXMLProperty(node, "querytype"));
+		qc.setSelectedMonths(parseListBack(XMLUtils.getXMLProperty(node, "selected")));
 		return qc;
 	}
 }
