@@ -52,8 +52,8 @@ div.error {
 	
 		<h:graphicImage 
 			url="#{AdminImagesBean.imageUrl}"
-			width="#{AdminImagesBean.image.width}"
-			height="#{AdminImagesBean.image.height}" />
+			width="#{AdminImagesBean.imageWidth}"
+			height="#{AdminImagesBean.imageHeight}" />
 			
 		<br>
 		
@@ -92,11 +92,11 @@ div.error {
 			<table border="0" cellspacing="5" cellpadding="0">
 			<tr>
 				<td style="width: 80px;">Title</td>
-				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.title}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.imageTitle}" /></td>
 			</tr>
 			<tr>
 				<td>Description</td>
-				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{AdminImagesBean.image.description}" /></td>
+				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{AdminImagesBean.imageDescription}" /></td>
 			</tr>
 			</table>
 		
@@ -113,20 +113,20 @@ div.error {
 			</tr>
 			<tr>
 				<td>Source</td>
-				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.source}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.imageSource}" /></td>
 			</tr>
 			<tr>
 				<td>Date</td>
-				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.date}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.imageDate}" /></td>
 			</tr>
 			<tr>
 				<td>Creator</td>
-				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.creator}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.imageCreator}" /></td>
 			</tr>
 			<tr>
 				<td>Language</td>
 				<td>
-					<h:selectOneMenu value="#{AdminImagesBean.image.language}">
+					<h:selectOneMenu value="#{AdminImagesBean.imageLanguage}">
 						<f:selectItems value="#{AdminImagesBean.languages}" />
 					</h:selectOneMenu>
 				</td>
@@ -144,11 +144,11 @@ div.error {
 			<table border="0" cellspacing="5" cellpadding="0">
 			<tr>
 				<td style="width: 80px;">Comments</td>
-				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.comments}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.imageComments}" /></td>
 			</tr>
 			<tr>
 				<td>References</td>
-				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{AdminImagesBean.image.references}" /></td>
+				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{AdminImagesBean.imageReferences}" /></td>
 			</tr>
 			</table>
 
@@ -157,27 +157,27 @@ div.error {
 			<table border="0" cellspacing="5" cellpadding="0">
 			<tr>
 				<td style="width: 100px;">Is at Emory</td>
-				<td><h:selectBooleanCheckbox value="#{AdminImagesBean.image.emory}" /></td>
+				<td><h:selectBooleanCheckbox value="#{AdminImagesBean.imageEmory}" /></td>
 			</tr>
 			<tr>
 				<td>Emory location</td>
-				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.image.emoryLocation}" /></td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.imageEmoryLocation}" /></td>
 			</tr>
 			<tr>
 				<td>Authorization</td>
-				<td><h:selectOneMenu value="#{AdminImagesBean.image.authorizationStatus}">
+				<td><h:selectOneMenu value="#{AdminImagesBean.imageAuthorizationStatus}">
 					<f:selectItems value="#{AdminImagesBean.authorizationStatusItems}" />
 				</h:selectOneMenu></td>
 			</tr>
 			<tr>
 				<td>Image status</td>
-				<td><h:selectOneMenu value="#{AdminImagesBean.image.imageStatus}">
+				<td><h:selectOneMenu value="#{AdminImagesBean.imageImageStatus}">
 					<f:selectItems value="#{AdminImagesBean.imageStatusItems}" />
 				</h:selectOneMenu></td>
 			</tr>
 			<tr>
 				<td>Ready to go</td>
-				<td><h:selectBooleanCheckbox value="#{AdminImagesBean.image.readyToGo}" /></td>
+				<td><h:selectBooleanCheckbox value="#{AdminImagesBean.imageReadyToGo}" /></td>
 			</tr>
 			</table>
 
@@ -187,6 +187,25 @@ div.error {
 
 		<div class="section">Database connections</div>
 		
+		<table border="0" cellspacing="0" cellpadding="0"><tr><td valign="top">
+		
+			<table border="0" cellspacing="5" cellpadding="0">
+			<tr>
+				<td style="width: 80px;">Voyages</td>
+				<td><h:inputTextarea style="width: 300px;" rows="10" value="#{AdminImagesBean.imageVoyageIds}" /></td>
+			</tr>
+			</table>
+			
+		</td><td style="width: 20px;"></td><td valign="top" style="padding-top: 10px; padding-left: 5px; font-style: italic; width: 300px;">
+			
+			Notes:
+			Insert voyage IDs on separate lines.
+			Voyage IDs are not validated agains the database.
+			You can create links to voyages do not exist yet.
+
+		</td></tr></table>
+		
+		<!-- 
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td valign="top" style="padding-left: 5px; padding-right: 10px;">
@@ -211,11 +230,12 @@ div.error {
 			</td>
 		</tr>
 		</table>
+		 -->
 		
 		<div style="margin-top: 10px; border-bottom: 2px solid #CCCCCC; margin-bottom: 10px;"></div>
 		
 		<h:commandButton value="Save" action="#{AdminImagesBean.saveImage}" />
-		<h:commandButton value="Delete" onclick="if (!confirm('Are you sure?')) return false;" action="#{AdminImagesBean.deleteImage}" rendered="#{AdminImagesBean.image.id != 0}" />
+		<h:commandButton value="Delete" onclick="if (!confirm('Are you sure?')) return false;" action="#{AdminImagesBean.deleteImage}" rendered="#{AdminImagesBean.imageId != 0}" />
 		<h:commandButton value="Cancel" action="#{AdminImagesBean.cancelEdit}" />
 
 	</h:form>

@@ -32,7 +32,6 @@
 		<property name="authorizationStatus" column="authorization_status" />
 		<property name="imageStatus" column="image_status" />
 		<property name="readyToGo" column="ready_to_go" />
-		<property name="voyageid" column="voyageid" />
 
 		<many-to-one name="category" class="edu.emory.library.tast.dm.ImageCategory" column="category" lazy="proxy" />
 
@@ -44,6 +43,11 @@
 		<set name="ports" table="ports_images">
 			<key column="image_id" />
 			<many-to-many column="port_id" class="edu.emory.library.tast.dm.Port" />
+		</set>
+		
+		<set name="voyageIds" table="images_voyages" order-by="voyageid">
+			<key column="image_id" />
+			<element column="voyageid" type="integer" />
 		</set>
 
 	</class>

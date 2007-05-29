@@ -47,7 +47,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new NumericAttribute("iid", "Voyage",
 				NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("voyageid", "Voyage",
-				NumericAttribute.TYPE_LONG, "voyageid"));
+				NumericAttribute.TYPE_INTEGER, "voyageid"));
 		attributes.add(new BooleanAttribute("suggestion", "Voyage", null));
 		attributes.add(new NumericAttribute("revision", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "revision"));
@@ -483,7 +483,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		return loadCurrentRevision(sess, new Long(voyageId));
 	}
 	
-	public static Voyage loadFutureRevision(Session sess, long voyageId) {
+	public static Voyage loadFutureRevision(Session sess, int voyageId) {
 		return loadFutureRevision(sess, new Long(voyageId));
 	}
 	
@@ -680,7 +680,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		sess.saveOrUpdate(this);
 	}
 
-	public void setVoyageid(Long voyageId) {
+	public void setVoyageid(Integer voyageId) {
 		this.values.put("voyageid", voyageId);
 	}
 
@@ -1192,8 +1192,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		return (EstimatesNation) this.values.get("e_natinimp");
 	}
 
-	public Long getVoyageid() {
-		return (Long) this.values.get("voyageid");
+	public Integer getVoyageid() {
+		return (Integer) this.values.get("voyageid");
 	}
 
 	public Boolean getCd() {

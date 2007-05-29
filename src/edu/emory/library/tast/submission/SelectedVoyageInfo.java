@@ -3,12 +3,12 @@ package edu.emory.library.tast.submission;
 public class SelectedVoyageInfo
 {
 	
-	private long voyageId;
+	private int voyageId;
 	private String captain;
 	private String shipname;
 	private String year;
 	
-	public SelectedVoyageInfo(long voyageId, String captain, String shipname, String year)
+	public SelectedVoyageInfo(int voyageId, String captain, String shipname, String year)
 	{
 		this.voyageId = voyageId;
 		this.captain = captain;
@@ -26,7 +26,7 @@ public class SelectedVoyageInfo
 		return shipname;
 	}
 	
-	public long getVoyageId()
+	public int getVoyageId()
 	{
 		return voyageId;
 	}

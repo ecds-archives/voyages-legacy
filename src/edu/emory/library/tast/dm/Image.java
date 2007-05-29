@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.regex.Pattern;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -65,7 +67,7 @@ public class Image
 	private int imageStatus = 0;
 	private int authorizationStatus = 0;
 	private boolean readyToGo = false;
-	private Integer voyageid;
+	private Set voyageIds;
 	private ImageCategory category;
 
 	private Set regions; 
@@ -285,14 +287,6 @@ public class Image
 	{
 		this.regions = regions;
 	}
-	
-	public Integer getVoyageid() {
-		return voyageid;
-	}
-
-	public void setVoyageid(Integer voyageid) {
-		this.voyageid = voyageid;
-	}
 
 	public int getOrder()
 	{
@@ -358,6 +352,18 @@ public class Image
 		sess.close();
 		return image;
 	}
+	
+	public static List getImagesByVoyageId(Session sess, Integer voyageId)
+	{
+
+		String hqlImages =
+				"from Image i " +
+				"where " + voyageId + " = some elements(i.voyageIds) " +
+				"order by i.date";
+
+		return sess.createQuery(hqlImages).list();
+
+	}
 
 	public static Image loadById(int imageId, Session sess)
 	{
@@ -419,5 +425,65 @@ public class Image
 		this.category = category;
 	}
 
-}
+	public Set getVoyageIds()
+	{
+		return voyageIds;
+	}
+
+	public void setVoyageIds(Set voyageids)
+	{
+		this.voyageIds = voyageids;
+	}
 	
+	public static void main(String[] args)
+	{
+		
+		Integer testImageId = new Integer(711844);
+		Integer testVoyageId = new Integer(666);
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		List images = sess.createCriteria(Image.class).add(Restrictions.eq("id", testImageId)).list();
+		Image image = (Image) images.get(0);
+
+		List voyages = sess.createCriteria(Voyage.class).
+			add(Restrictions.in("voyageid", image.getVoyageIds())).
+			add(Restrictions.eq("revision", new Integer(Voyage.getCurrentRevision()))).list();
+
+		System.out.println("Image ID = " + image.getId());
+
+		System.out.println("Voyage IDs in image:");
+		for (Iterator iter = image.getVoyageIds().iterator(); iter.hasNext();)
+		{
+			Integer vid = (Integer) iter.next();
+			System.out.println(" * " + vid);
+		}
+		
+		System.out.println("Actual voyages:");
+		for (Iterator iter = voyages.iterator(); iter.hasNext();)
+		{
+			Voyage v = (Voyage) iter.next();
+			System.out.println(" * " + v.getVoyageid());
+		}
+		
+		/*
+		String hqlImages = "from Image i where " + testVoyageId + " = some elements(i.voyageIds)";
+		List imagesByVoyageId = sess.createQuery(hqlImages).list();
+		*/
+		
+		List imagesByVoyageId = Image.getImagesByVoyageId(sess, testVoyageId);
+
+		System.out.println("Images with linked to voyage ID = " + testVoyageId);
+		for (Iterator iter = imagesByVoyageId.iterator(); iter.hasNext();)
+		{
+			Image i = (Image) iter.next();
+			System.out.println(" * " + i.getTitle() + " (" + i.getDate() + ")");
+		}
+
+		transaction.commit();
+		sess.close();
+
+	}
+
+}

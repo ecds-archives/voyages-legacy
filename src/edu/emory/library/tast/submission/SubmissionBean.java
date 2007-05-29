@@ -327,7 +327,7 @@ public class SubmissionBean
 
 		else if (submissionType == SUBMISSION_TYPE_EDIT)
 		{
-			voyage.setVoyageid(new Long(selectedVoyageForEdit.getVoyageId()));
+			voyage.setVoyageid(new Integer(selectedVoyageForEdit.getVoyageId()));
 		}
 
 		else if (submissionType == SUBMISSION_TYPE_MERGE)
@@ -463,7 +463,7 @@ public class SubmissionBean
 		{
 			Object[] voyageInfoDb = (Object[]) voyages.get(0);
 			lookedUpVoyage = new SelectedVoyageInfo(
-					lookupVoyageId.longValue(),
+					lookupVoyageId.intValue(),
 					(String) voyageInfoDb[0],
 					(String) voyageInfoDb[1],
 					voyageInfoDb[2] != null ? voyageInfoDb[2].toString() : "not known");

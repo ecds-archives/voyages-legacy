@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -82,12 +83,34 @@ public class ImagesBean
 	private String searchFor = null;
 	private String sortBy = "cat.name";
 	
-	private Image image;
+	private int imageId;
+	
+	private String imageTitle;
+	private String imageDescription;
+	private String imageCreator;
+	private String imageSource;
+	private int imageDate;
+	private String imageLanguage;
+	private String imageComments;
+	private String imageReferences;
+	private boolean imageEmory;
+	private String imageEmoryLocation;
+	private int imageAuthorizationStatus;
+	private int imageImageStatus;
+	private boolean imageReadyToGo;
 	private long imageCategoryId;
-	private UploadedFile uploadedImage;
-	private boolean uploadBoxShown;
+	private String imageVoyageIds;
+	private int imageWidth;
+	private int imageHeight;
+	private int imageSize;
+	private String imageFileName;
+	private String imageMimeType;
 	private String[] selectedRegionsIds;
 	private String[] selectedPortsIds;
+
+	private UploadedFile uploadedImage;
+	private boolean uploadBoxShown;
+	
 	private String errorText;
 
 	private int scrollPosX;
@@ -247,10 +270,33 @@ public class ImagesBean
 		Transaction transaction = sess.beginTransaction();
 		
 		// load image itself
-		image = Image.loadById(Integer.parseInt(selectedImageId), sess);
+		Image image = Image.loadById(Integer.parseInt(selectedImageId), sess);
 		
-		// image category has to be in its own variable
+		// load basic info to bean members
+		imageTitle = image.getTitle();
+		imageDescription = image.getDescription();
+		imageSource = image.getSource();
+		imageDate = image.getDate();
+		imageCreator = image.getCreator();
+		imageLanguage = image.getLanguage();
+		imageComments = image.getComments();
+		imageReferences = image.getReferences();
+		imageEmory = image.isEmory();
+		imageEmoryLocation = image.getEmoryLocation();
+		imageAuthorizationStatus = image.getAuthorizationStatus();
+		imageImageStatus = image.getImageStatus();
+		imageReadyToGo = image.isReadyToGo();
 		imageCategoryId = image.getCategory().getId().intValue();
+		
+		// image properties
+		imageWidth = image.getWidth();
+		imageHeight = image.getHeight();
+		imageSize = image.getSize();
+		imageFileName = image.getFileName();
+		imageMimeType = image.getMimeType();
+		
+		// linked voyage IDs
+		imageVoyageIds = StringUtils.join("\n", image.getVoyageIds());
 
 		// sort
 		List regions = sess.createFilter(image.getRegions(), "order by this.name").list();		
@@ -290,15 +336,31 @@ public class ImagesBean
 		// we come from list -> detail
 		// so save the position in the list
 		saveScrollPosition();
-
-		// create an empty image
-		image = new Image();
 		
+		// init values
+		imageTitle = "";
+		imageDescription = "";
+		imageSource = "";
+		imageDate = 0;
+		imageCreator = "";
+		imageLanguage = "en";
+		imageComments = "";
+		imageReferences = "";
+		imageEmory = false;
+		imageEmoryLocation = "";
+		imageAuthorizationStatus = 0;
+		imageImageStatus = 0;
+		imageReadyToGo = false;
+		imageCategoryId = 0;
+
 		// clean the list of regions
 		selectedRegionsIds = new String[0];
 
 		// clean the list of ports
 		selectedPortsIds = new String[0];
+		
+		// linked voyage IDs
+		imageVoyageIds = "";
 
 		// goto detail
 		cleanAndPrepareDetailPage();
@@ -369,11 +431,11 @@ public class ImagesBean
 			int height = rdr.getHeight(0);
 			
 			// replace current image
-			image.setWidth(width);
-			image.setHeight(height);
-			image.setSize(size);
-			image.setMimeType(uploadedImage.getContentType());
-			image.setFileName(fileName);
+			imageWidth = width;
+			imageHeight = height;
+			imageSize = size;
+			imageMimeType = uploadedImage.getContentType();
+			imageFileName = fileName;
 			
 			// all ok
 			uploadBoxShown = false;
@@ -418,7 +480,78 @@ public class ImagesBean
 			sess = HibernateUtil.getSession();
 			transaction = sess.beginTransaction();
 			
-			// links to regions
+			// load image
+			Image image = Image.loadById(imageId, sess);
+			
+			// we will use it often
+			Configuration appConf = AppConfig.getConfiguration();
+			
+			// image properties
+			image.setWidth(imageWidth);
+			image.setHeight(imageHeight);
+			image.setSize(imageSize);
+			image.setFileName(imageFileName);
+			image.setMimeType(imageMimeType);
+
+			// title
+			String titleLocal = checkTextField(
+					image.getTitle(), "title",
+					appConf.getInt(AppConfig.IMAGES_TITLE_MAXLEN), false);
+			image.setTitle(titleLocal);
+			
+			// description
+			image.setDescription(imageDescription);
+			
+			// category
+			ImageCategory cat = ImageCategory.loadById(sess, imageCategoryId);
+			image.setCategory(cat);
+
+			// check source
+			String sourceLocal = checkTextField(
+					image.getSource(), "source",
+					appConf.getInt(AppConfig.IMAGES_SOURCE_MAXLEN), true);
+			image.setSource(sourceLocal);
+			
+			// date
+			image.setDate(imageDate);
+			
+			// check creator
+			String creatorLocal = checkTextField(
+					image.getCreator(), "creator",
+					appConf.getInt(AppConfig.IMAGES_CREATOR_MAXLEN), true);
+			image.setCreator(creatorLocal);
+			
+			// language
+			image.setLanguage(imageLanguage);
+			
+			// comments
+			image.setComments(imageComments);
+			
+			// check references
+			String referencesLocal = checkTextField(
+					image.getReferences(), "references",
+					appConf.getInt(AppConfig.IMAGES_REFERENCES_MAXLEN), true);
+			image.setReferences(referencesLocal);
+			
+			// is at Emory
+			image.setEmory(imageEmory);
+			
+			// check emory location
+			String emoryLocationLocal = checkTextField(
+					image.getEmoryLocation(), "Emory location",
+					appConf.getInt(AppConfig.IMAGES_EMORYLOCATION_MAXLEN), true);
+			image.setEmoryLocation(emoryLocationLocal);
+			
+			// authorization status
+			image.setAuthorizationStatus(imageAuthorizationStatus);
+			
+			// image status
+			image.setImageStatus(imageImageStatus);
+			
+			// image ready to go
+			image.setReadyToGo(imageReadyToGo);
+
+			// links to regions (not shown now)
 			Set imageRegions = new HashSet();
 			image.setRegions(imageRegions);
 			for (int i = 0; i < selectedRegionsIds.length; i++)
@@ -428,7 +561,7 @@ public class ImagesBean
 				imageRegions.add(dbRegion);
 			}
 			
-			// links to ports
+			// links to ports (not shown now)
 			Set imagePorts = new HashSet();
 			image.setPorts(imagePorts);
 			for (int i = 0; i < selectedPortsIds.length; i++)
@@ -438,49 +571,12 @@ public class ImagesBean
 				imagePorts.add(dbPort);
 			}
 	
-			// we will use it often
-			Configuration appConf = AppConfig.getConfiguration();
+			// links to voyages
+			Set voyageIds = image.getVoyageIds();
+			voyageIds.clear();
+			Collections.addAll(voyageIds, StringUtils.removeEmpty(StringUtils.splitByLines(imageVoyageIds)));
 			
-			// title
-			String titleLocal = checkTextField(
-					image.getTitle(), "title",
-					appConf.getInt(AppConfig.IMAGES_TITLE_MAXLEN), false);
-
-			// source
-			String sourceLocal = checkTextField(
-					image.getSource(), "source",
-					appConf.getInt(AppConfig.IMAGES_SOURCE_MAXLEN), true);
-
-			// creator
-			String creatorLocal = checkTextField(
-					image.getCreator(), "creator",
-					appConf.getInt(AppConfig.IMAGES_CREATOR_MAXLEN), true);
-
-			// creator
-			String referencesLocal = checkTextField(
-					image.getReferences(), "references",
-					appConf.getInt(AppConfig.IMAGES_REFERENCES_MAXLEN), true);
-			
-			// creator
-			String emoryLocationLocal = checkTextField(
-					image.getEmoryLocation(), "Emory location",
-					appConf.getInt(AppConfig.IMAGES_EMORYLOCATION_MAXLEN), true);
-
-			// check date
-//			String dateLocal = image.getDate().trim();
-//			if (!StringUtils.isNullOrEmpty(dateLocal, true) && !Image.checkDate(dateLocal))
-//				throw new SaveImageException("Date is invalid. Expected YYYY or YYYY-MM or YYYY-MM-DD.");
-			
-			// category
-			ImageCategory cat = ImageCategory.loadById(sess, imageCategoryId);
-
 			// save
-			image.setCategory(cat);
-			image.setTitle(titleLocal);
-			image.setSource(sourceLocal);
-			image.setCreator(creatorLocal);
-			image.setReferences(referencesLocal);
-			image.setEmoryLocation(emoryLocationLocal);
 			sess.saveOrUpdate(image);
 
 			// commit
@@ -500,7 +596,7 @@ public class ImagesBean
 		{
 			if (transaction != null) transaction.rollback();
 			if (sess != null) sess.close();
-			setErrorText("Internal error accessing database. Sorry for the inconvenience.");
+			setErrorText("Internal problem with database. Sorry for the inconvenience.");
 			return null;
 		}
 
@@ -517,6 +613,7 @@ public class ImagesBean
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
+		Image image = Image.loadById(imageId);
 		sess.delete(image);
 
 		transaction.commit();
@@ -602,21 +699,26 @@ public class ImagesBean
 		this.listStyle = listStyle;
 	}
 
-	public Image getImage()
-	{
-		return image;
-	}
-	
 	public String getImageUrl()
 	{
-		if (image.getFileName() != null)
+		if (imageFileName != null)
 		{
-			return "images-database/" + image.getFileName();
+			return "images-database/" + imageFileName;
 		}
 		else
 		{
 			return "blank.png";
 		}
+	}
+	
+	public String getImageVoyageIds()
+	{
+		return imageVoyageIds;
+	}
+
+	public void setImageVoyageIds(String imageVoyageIds)
+	{
+		this.imageVoyageIds = imageVoyageIds;
 	}
 
 	public UploadedFile getUploadedImage()
@@ -631,11 +733,11 @@ public class ImagesBean
 	
 	public String getImageInfo()
 	{
-		if (image.getMimeType() == null)
+		if (imageMimeType == null)
 			return "";
 		else
-			return image.getWidth() + "x" + image.getHeight() +
-			" (" + image.getMimeType() + ")";
+			return imageWidth + "x" + imageHeight +
+			" (" + imageMimeType + ")";
 	}
 	
 	public SelectItem[] createListItemsByStringArray(String[] array)
@@ -786,6 +888,196 @@ public class ImagesBean
 	public void setListCategoryId(long listCategoryId)
 	{
 		this.listCategoryId = listCategoryId;
+	}
+
+	public String getImageCreator()
+	{
+		return imageCreator;
+	}
+
+	public void setImageCreator(String imageCreator)
+	{
+		this.imageCreator = imageCreator;
+	}
+
+	public int getImageDate()
+	{
+		return imageDate;
+	}
+
+	public void setImageDate(int imageDate)
+	{
+		this.imageDate = imageDate;
+	}
+
+	public String getImageDescription()
+	{
+		return imageDescription;
+	}
+
+	public void setImageDescription(String imageDescription)
+	{
+		this.imageDescription = imageDescription;
+	}
+
+	public String getImageLanguage()
+	{
+		return imageLanguage;
+	}
+
+	public void setImageLanguage(String imageLanguage)
+	{
+		this.imageLanguage = imageLanguage;
+	}
+
+	public String getImageSource()
+	{
+		return imageSource;
+	}
+
+	public void setImageSource(String imageSource)
+	{
+		this.imageSource = imageSource;
+	}
+
+	public String getImageTitle()
+	{
+		return imageTitle;
+	}
+
+	public void setImageTitle(String imageTitle)
+	{
+		this.imageTitle = imageTitle;
+	}
+
+	public int getImageSize()
+	{
+		return imageSize;
+	}
+
+	public void setImageSize(int imageSize)
+	{
+		this.imageSize = imageSize;
+	}
+
+	public String getImageComments()
+	{
+		return imageComments;
+	}
+
+	public void setImageComments(String imageComments)
+	{
+		this.imageComments = imageComments;
+	}
+
+	public int getImageAuthorizationStatus()
+	{
+		return imageAuthorizationStatus;
+	}
+
+	public void setImageAuthorizationStatus(int imageAuthorizationStatus)
+	{
+		this.imageAuthorizationStatus = imageAuthorizationStatus;
+	}
+
+	public String getImageEmoryLocation()
+	{
+		return imageEmoryLocation;
+	}
+
+	public void setImageEmoryLocation(String imageEmoryLocation)
+	{
+		this.imageEmoryLocation = imageEmoryLocation;
+	}
+
+	public int getImageImageStatus()
+	{
+		return imageImageStatus;
+	}
+
+	public void setImageImageStatus(int imageImageStatus)
+	{
+		this.imageImageStatus = imageImageStatus;
+	}
+
+	public boolean isImageEmory()
+	{
+		return imageEmory;
+	}
+
+	public void setImageEmory(boolean imageIsEmory)
+	{
+		this.imageEmory = imageIsEmory;
+	}
+
+	public String getImageReferences()
+	{
+		return imageReferences;
+	}
+
+	public void setImageReferences(String imageReferences)
+	{
+		this.imageReferences = imageReferences;
+	}
+
+	public boolean isImageReadyToGo()
+	{
+		return imageReadyToGo;
+	}
+
+	public void setImageReadyToGo(boolean imageReadyToGo)
+	{
+		this.imageReadyToGo = imageReadyToGo;
+	}
+
+	public String getImageFileName()
+	{
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName)
+	{
+		this.imageFileName = imageFileName;
+	}
+
+	public int getImageHeight()
+	{
+		return imageHeight;
+	}
+
+	public void setImageHeight(int imageHeight)
+	{
+		this.imageHeight = imageHeight;
+	}
+
+	public String getImageMimeType()
+	{
+		return imageMimeType;
+	}
+
+	public void setImageMimeType(String imageMimeType)
+	{
+		this.imageMimeType = imageMimeType;
+	}
+
+	public int getImageWidth()
+	{
+		return imageWidth;
+	}
+
+	public void setImageWidth(int imageWidth)
+	{
+		this.imageWidth = imageWidth;
+	}
+
+	public int getImageId()
+	{
+		return imageId;
+	}
+
+	public void setImageId(int imageId)
+	{
+		this.imageId = imageId;
 	}
 
 }

@@ -306,5 +306,17 @@ public class StringUtils
 		return sepRegex.split(query);
 
 	}
+	
+	public static String[] splitByLines(String str)
+	{
+		if (str == null)
+		{
+			return new String[0];
+		}
+		else
+		{
+			return str.split("[\n\r]+");
+		}
+	}
 
 }
