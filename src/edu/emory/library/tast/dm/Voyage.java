@@ -1,10 +1,13 @@
 package edu.emory.library.tast.dm;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
@@ -507,7 +510,43 @@ public class Voyage extends AbstractDescriptiveObject {
 		return (Voyage)res.get(0);
 	}
 	
-//	/**
+	public static Voyage loadByVoyageId(Session session, int voyageId, int revisionId)
+	{
+		Conditions c = new Conditions();
+		c.addCondition(Voyage.getAttribute("voyageid"), new Integer(voyageId), Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(revisionId), Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("Voyage", c);
+		List res = qValue.executeQueryList(session);
+		if (res.size() == 0) return null;
+		return (Voyage)res.get(0);
+	}
+
+	public static Voyage loadByVoyageId(Session session, int voyageId)
+	{
+		return loadByVoyageId(session, voyageId, getCurrentRevision());
+	}
+
+	public static List loadByVoyageIds(Session session, Collection voyageIds, int revisionId)
+	{
+		if (voyageIds == null || voyageIds.size() == 0)
+		{
+			return null;
+		}
+		else
+		{
+			return session.createCriteria(Voyage.class).
+			add(Restrictions.in("voyageid", voyageIds)).
+			add(Restrictions.eq("revision", new Integer(revisionId))).
+			addOrder(Order.asc("voyageid")).list();
+		}
+	}
+	
+	public static List loadByVoyageIds(Session session, Collection voyageIds)
+	{
+		return loadByVoyageIds(session, voyageIds, getCurrentRevision());
+	}
+
+	//	/**
 //	 * Loads most recent (not necessary active) voyage with given ID.
 //	 * 
 //	 * @param voyageId

@@ -47,11 +47,14 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Slave;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.images.site.ImageLinkedVoyageInfo;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
@@ -453,12 +456,31 @@ public class SlavesBean {
 
 	}
 
-	public String showDetails(ShowDetailsEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		voyageBean.openVoyage(event.getVoyageId().intValue());
-		voyageBean.setVoyageAttr("voyageid");
-		voyageBean.setBackPage("names-interface");
-		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
+	public String showDetails(ShowDetailsEvent event)
+	{
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		Voyage voyage = Voyage.loadByVoyageId(sess, event.getVoyageId().intValue());
+		
+		long iid = -1;
+		if (voyage != null) iid = voyage.getIid().longValue();
+
+		transaction.commit();
+		sess.close();
+		
+		if (iid != -1)
+		{
+
+			voyageBean.openVoyage(iid);
+			voyageBean.setBackPage("names-interface");
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
+			
+		}
+		
 		return null;
 	}
 

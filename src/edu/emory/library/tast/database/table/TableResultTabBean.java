@@ -484,7 +484,6 @@ public class TableResultTabBean {
 	public void showDetails(ShowDetailsEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		voyageBean.openVoyage(event.getVoyageId().intValue());
-		voyageBean.setVoyageAttr("iid");
 		voyageBean.setBackPage("search-interface");
 		
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");

@@ -37,10 +37,22 @@
 				</t:htmlTag>
 			</h:column>
 			<h:column>
-				<h:outputText value="#{info.value}" />
+				<h:outputText value="#{info.value}" escape="false" />
 			</h:column>
 		</h:dataTable>
 		
+		<t:htmlTag value="div" styleClass="image-detail-voyages-title"><h:outputText value="#{res.images_related_voyages}" /></t:htmlTag>
+		
+		<h:dataTable var="voyage" value="#{ImagesBean.imageVoyages}" binding="#{ImagesBean.linkedVoyagesTable}" styleClass="image-detail-voyages">
+			<h:column>
+				<f:param id="voyageId" value="#{voyage.voyageId}" />
+				<h:outputText value="#{res.images_voyage_id}" />
+				<h:commandLink action="#{ImagesBean.gotoVoyage}" value="#{voyage.voyageId}" />
+				<h:outputText value=" - " />
+				<h:outputText value="#{voyage.info}" />
+			</h:column>
+		</h:dataTable>
+
 	</t:htmlTag>
 
 </t:htmlTag>

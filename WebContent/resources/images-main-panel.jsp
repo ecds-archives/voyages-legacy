@@ -21,7 +21,7 @@
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{ImagesBean.detailRequested}" 
+		action="#{ImagesBean.gotoDetailFromHomepage}" 
 		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
@@ -45,7 +45,7 @@
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{ImagesBean.detailRequested}" 
+		action="#{ImagesBean.gotoDetailFromHomepage}" 
 		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
@@ -69,7 +69,7 @@
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{ImagesBean.detailRequested}" 
+		action="#{ImagesBean.gotoDetailFromHomepage}" 
 		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
@@ -93,7 +93,7 @@
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{ImagesBean.detailRequested}" 
+		action="#{ImagesBean.gotoDetailFromHomepage}" 
 		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
@@ -117,7 +117,7 @@
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{ImagesBean.detailRequested}" 
+		action="#{ImagesBean.gotoDetailFromHomepage}" 
 		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
@@ -141,7 +141,7 @@
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{ImagesBean.detailRequested}" 
+		action="#{ImagesBean.gotoDetailFromHomepage}" 
 		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>
@@ -165,7 +165,7 @@
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
-		action="#{ImagesBean.detailRequested}" 
+		action="#{ImagesBean.gotoDetailFromHomepage}" 
 		selectedImageId="#{ImagesBean.imageId}"/>
 
 </t:htmlTag>

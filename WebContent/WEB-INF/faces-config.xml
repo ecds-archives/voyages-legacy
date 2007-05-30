@@ -289,6 +289,10 @@
 		<managed-bean-name>ImagesBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.images.site.ImagesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>voyageBean</property-name>
+			<value>#{VoyageDetailBean}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
@@ -881,6 +885,13 @@
 			<from-outcome>logout</from-outcome>
 			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>		
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>images-detail</from-outcome>
+			<to-view-id>/resources/images-detail.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<render-kit />

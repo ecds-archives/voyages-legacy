@@ -10,9 +10,9 @@
 </t:htmlTag>
 
 <s:pictures
-	images="#{ImagesBean.queryResponse}" 
+	images="#{ImagesBean.galleryImages}" 
 	columnsCount="5"
 	thumbnailHeight="100" 
 	thumbnailWidth="100"
-	action="#{ImagesBean.detailRequested}" 
+	action="#{ImagesBean.gotoDetailFromGallery}" 
 	selectedImageId="#{ImagesBean.imageId}" />

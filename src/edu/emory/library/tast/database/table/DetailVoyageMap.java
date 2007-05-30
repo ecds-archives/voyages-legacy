@@ -10,17 +10,15 @@ import edu.emory.library.tast.util.query.Conditions;
 
 public class DetailVoyageMap {
 
-	private Long voyageId = null;
-	
-	private String attribute;
+	private long iid;
 
 	private boolean queryNeeded = false;
 
 	private MapData mapData = new MapData();
 
-	public void setVoyageId(Long voyageId) {
-		if (!voyageId.equals(this.voyageId)) {
-			this.voyageId = voyageId;
+	public void setVoyageIid(long iid) {
+		if (iid != this.iid) {
+			this.iid = iid;
 			this.queryNeeded = true;
 		}
 		this.refreshData();
@@ -35,7 +33,7 @@ public class DetailVoyageMap {
 		this.queryNeeded = false;
 
 		Conditions conditions = new Conditions();
-		conditions.addCondition(Voyage.getAttribute(getAttribute()), this.voyageId, Conditions.OP_EQUALS);
+		conditions.addCondition(Voyage.getAttribute("iid"), new Long(iid), Conditions.OP_EQUALS);
 		
 		DetailQueryHolder queryHolder = new DetailQueryHolder(conditions);
 		queryHolder.executeQuery(0);
@@ -59,13 +57,5 @@ public class DetailVoyageMap {
 
 	public LegendItemsGroup[] getLegend() {
 		return this.mapData.getLegend();
-	}
-
-	public String getAttribute() {
-		return attribute;
-	}
-
-	public void setAttribute(String attribute) {
-		this.attribute = attribute;
 	}
 }

@@ -23,8 +23,6 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class VoyageDetailBean {
 
-	private int voyageId;
-
 	private TableData detailData = new TableData();
 
 	private DetailVoyageMap detailVoyageMap = new DetailVoyageMap();
@@ -33,20 +31,15 @@ public class VoyageDetailBean {
 
 	private String backLink;
 
-	private String voyageAttr;
+	private long voyageIid;
 	
-	public void openVoyage(int voyageId) {
-		this.voyageId = voyageId;
-		this.detailVoyageMap.setAttribute("iid");
-		this.detailVoyageMap.setVoyageId(new Long(this.voyageId));
+	public void openVoyage(long voyageIid)
+	{
+		this.voyageIid = voyageIid;
+		this.detailVoyageMap.setVoyageIid(voyageIid);
 	}
 
-	public int getTestValue() {
-		return voyageId;
-	}
-	
 	public void back() {
-		System.out.println(this.backLink);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, this.backLink);
 	}
@@ -55,13 +48,12 @@ public class VoyageDetailBean {
 	 * Queries DB for detail voyage info.
 	 * 
 	 */
-	private void getResultsDetailDB(String fieldName) {
+	private void getResultsDetailDB()
+	{
 
 		Conditions c = new Conditions();
-		// c.addCondition(VoyageIndex.getApproved());
-		c.addCondition(Voyage.getAttribute(fieldName), new Long(this.voyageId),
-				Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
+		
+		c.addCondition(Voyage.getAttribute("iid"), new Long(this.voyageIid), Conditions.OP_EQUALS);
 
 		List validAttrs = new ArrayList();
 		VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();
@@ -71,8 +63,7 @@ public class VoyageDetailBean {
 		}
 		detailData.setVisibleColumns(validAttrs);
 
-		Object[][] info = this.queryAndFillInData(c, this.detailData, -1, -1,
-				true);
+		Object[][] info = this.queryAndFillInData(c, this.detailData, -1, -1, true);
 
 		this.detailVoyageInfo = new DetailVoyageInfo[info[0].length];
 		for (int i = 0; i < info[0].length; i++) {
@@ -168,7 +159,7 @@ public class VoyageDetailBean {
 	 * @return
 	 */
 	public TableData getDetailData() {
-		this.getResultsDetailDB(this.voyageAttr);
+		this.getResultsDetailDB();
 		return detailData;
 	}
 
@@ -186,7 +177,7 @@ public class VoyageDetailBean {
 	}
 
 	public DetailVoyageInfo[] getDetailVoyageInfo() {
-		getResultsDetailDB(this.voyageAttr);
+		getResultsDetailDB();
 		return this.detailVoyageInfo;
 	}
 	public LegendItemsGroup[] getLegend() {
@@ -197,8 +188,10 @@ public class VoyageDetailBean {
 		this.backLink = viewId;
 	}
 
-	public void setVoyageAttr(String voyageAttr) {
-		this.voyageAttr = voyageAttr;
+	public void setBackPageToCurrentView()
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		this.backLink = context.getViewRoot().getViewId();
 	}
 
 	public String refresh() {

@@ -91,6 +91,19 @@ div.image-detail-info-label {
 	margin-right: 10px; 
 	font-style: italic; }
 	
+div.image-detail-voyages-title {
+	margin-top: 20px;
+	font-weight: bold;
+	margin-bottom: 5px; }
+
+table.image-detail-voyages {
+	border-collapse: collapse; }
+	
+table.image-detail-voyages td {
+	border-top: 1px solid #165B31;
+	border-bottom: 1px solid #165B31;
+	padding: 5px 0px 5px 0px; }
+
 div.images-query {
 	border-bottom: 1px solid #165B31;
 	margin-bottom: 15px; }
