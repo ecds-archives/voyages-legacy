@@ -261,12 +261,30 @@ public class StringUtils
 	
 	public static Integer[] parseIntegerArray(String[] arr)
 	{
+		return parseIntegerArray(arr, false);
+	}
+
+	public static Integer[] parseIntegerArray(String[] arr, boolean omitInvalid)
+	{
 		Integer[] ints = new Integer[arr.length];
 		if (arr != null)
 		{
 			for (int i = 0; i < arr.length; i++)
 			{
-				ints[i] = new Integer(arr[i]);
+				if (omitInvalid)
+				{
+					try
+					{
+						ints[i] = new Integer(arr[i]);
+					}
+					catch (NumberFormatException nfe)
+					{
+					}
+				}
+				else
+				{
+					ints[i] = new Integer(arr[i]);
+				}
 			}
 		}
 		return ints;
@@ -317,6 +335,11 @@ public class StringUtils
 		{
 			return str.split("[\n\r]+");
 		}
+	}
+	
+	public static String[] splitByLinesAndRemoveEmpty(String str)
+	{
+		return removeEmpty(splitByLines(str));
 	}
 
 }

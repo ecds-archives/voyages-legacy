@@ -83,8 +83,7 @@ public class ImagesBean
 	private String searchFor = null;
 	private String sortBy = "cat.name";
 	
-	private int imageId;
-	
+	private int editedImageId;
 	private String imageTitle;
 	private String imageDescription;
 	private String imageCreator;
@@ -261,6 +260,8 @@ public class ImagesBean
 	public String openImage()
 	{
 		
+		editedImageId = Integer.parseInt(selectedImageId);
+		
 		// we come from list -> detail
 		// so save the position in the list
 		saveScrollPosition();
@@ -270,7 +271,7 @@ public class ImagesBean
 		Transaction transaction = sess.beginTransaction();
 		
 		// load image itself
-		Image image = Image.loadById(Integer.parseInt(selectedImageId), sess);
+		Image image = Image.loadById(editedImageId, sess);
 		
 		// load basic info to bean members
 		imageTitle = image.getTitle();
@@ -332,6 +333,8 @@ public class ImagesBean
 	
 	public String newImage()
 	{
+		
+		editedImageId = 0;
 		
 		// we come from list -> detail
 		// so save the position in the list
@@ -481,7 +484,7 @@ public class ImagesBean
 			transaction = sess.beginTransaction();
 			
 			// load image
-			Image image = Image.loadById(imageId, sess);
+			Image image = Image.loadById(Integer.parseInt(selectedImageId), sess);
 			
 			// we will use it often
 			Configuration appConf = AppConfig.getConfiguration();
@@ -572,9 +575,18 @@ public class ImagesBean
 			}
 	
 			// links to voyages
+			Integer[] newVoyageIds;
+			try
+			{
+				newVoyageIds = StringUtils.parseIntegerArray(StringUtils.splitByLinesAndRemoveEmpty(imageVoyageIds));
+			}
+			catch (NumberFormatException nfe)
+			{
+				throw new SaveImageException("All linked voyage IDs have to be integers.");
+			}
 			Set voyageIds = image.getVoyageIds();
 			voyageIds.clear();
-			Collections.addAll(voyageIds, StringUtils.removeEmpty(StringUtils.splitByLines(imageVoyageIds)));
+			Collections.addAll(voyageIds, newVoyageIds);
 			
 			// save
 			sess.saveOrUpdate(image);
@@ -613,7 +625,7 @@ public class ImagesBean
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		Image image = Image.loadById(imageId);
+		Image image = Image.loadById(Integer.parseInt(selectedImageId));
 		sess.delete(image);
 
 		transaction.commit();
@@ -1070,14 +1082,14 @@ public class ImagesBean
 		this.imageWidth = imageWidth;
 	}
 
-	public int getImageId()
+	public int getEditedImageId()
 	{
-		return imageId;
+		return editedImageId;
 	}
 
-	public void setImageId(int imageId)
+	public void setEditedImageId(int editedImageId)
 	{
-		this.imageId = imageId;
+		this.editedImageId = editedImageId;
 	}
 
 }

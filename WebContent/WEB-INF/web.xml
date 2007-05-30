@@ -86,11 +86,9 @@
 		<servlet-name>ThumbnailServlet</servlet-name>
 		<url-pattern>/servlet/thumbnail</url-pattern>
 	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.faces</welcome-file>
+	</welcome-file-list>
 
-<!-- 
-	<servlet-mapping>
-		<servlet-name>TestServlet</servlet-name>
-		<url-pattern>/servlet/test</url-pattern>
-	</servlet-mapping>
- -->	
 </web-app>

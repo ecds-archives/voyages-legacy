@@ -367,23 +367,9 @@ public class Image
 
 	public static Image loadById(int imageId, Session sess)
 	{
-//		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
-//		if (list == null || list.size() == 0) return null;
-//		return (Image) list.get(0);
-		
-//		Attribute[] orderBy = { 
-//			new SequenceAttribute(new Attribute[] {getAttribute("people"), Person.getAttribute("lastName")}),
-//			new SequenceAttribute(new Attribute[] {getAttribute("regions"), Region.getAttribute("name")}),
-//			new SequenceAttribute(new Attribute[] {getAttribute("ports"), Port.getAttribute("name")})};
-		
-		Conditions conditions = new Conditions();
-		conditions.addCondition(Image.getAttribute("id"), new Integer(imageId), Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue(new String[] {"Image"}, new String[] {"i"}, conditions);
-//		query.setOrderBy(orderBy);
-//		query.setOrder(QueryValue.ORDER_ASC);
-		List list = query.executeQueryList(sess);
+		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
 		if (list == null || list.size() == 0) return null;
-		return (Image) list.get(0);		
+		return (Image) list.get(0);
 	}
 	
 	public static Attribute getAttribute(String name)

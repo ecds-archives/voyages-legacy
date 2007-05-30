@@ -8,7 +8,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Images</title>
-<script type="text/javascript" src="scrolling.js"></script>
+<script type="text/javascript" src="./scripts/scrolling.js"></script>
 
 <style type="text/css">
 

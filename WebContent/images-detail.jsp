@@ -9,9 +9,9 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Images</title>
-<script type="text/javascript" src="utils.js"></script>
-<script type="text/javascript" src="select-and-order.js"></script>
-<script type="text/javascript" src="lookup-select.js"></script>
+<script type="text/javascript" src="./scripts/utils.js"></script>
+<script type="text/javascript" src="./scripts/select-and-order.js"></script>
+<script type="text/javascript" src="./scripts/lookup-select.js"></script>
 	
 <style type="text/css">
 
@@ -235,7 +235,7 @@ div.error {
 		<div style="margin-top: 10px; border-bottom: 2px solid #CCCCCC; margin-bottom: 10px;"></div>
 		
 		<h:commandButton value="Save" action="#{AdminImagesBean.saveImage}" />
-		<h:commandButton value="Delete" onclick="if (!confirm('Are you sure?')) return false;" action="#{AdminImagesBean.deleteImage}" rendered="#{AdminImagesBean.imageId != 0}" />
+		<h:commandButton value="Delete" onclick="if (!confirm('Are you sure?')) return false;" action="#{AdminImagesBean.deleteImage}" rendered="#{AdminImagesBean.editedImageId != 0}" />
 		<h:commandButton value="Cancel" action="#{AdminImagesBean.cancelEdit}" />
 
 	</h:form>
