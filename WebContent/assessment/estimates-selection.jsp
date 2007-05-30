@@ -24,7 +24,7 @@
 			<h:outputText value="#{res.estimates_left_to}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px;">
-			<h:inputText value="#{EstimatesSelectionBean.yearTo}" style="width: 40px" />
+			<h:inputText  value="#{EstimatesSelectionBean.yearTo}" style="width: 40px" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
@@ -135,6 +135,6 @@
 	</t:div>
 	
 	<t:div style="margin-top: 5px;">
-		<h:commandButton value="Get link" action="#{EstimatesSelectionBean.createPermanentLink}"/>
+		<h:commandButton value="permlink" styleClass="button-save" action="#{EstimatesSelectionBean.createPermanentLink}"/>
 	</t:div>
 </s:expandableBox>

@@ -224,7 +224,7 @@ public class AdminSubmissionBean {
 
 	}
 
-	private Voyage getCurrentlyPreparedVoyage(Session sess, Long voyageid2) {
+	private Voyage getCurrentlyPreparedVoyage(Session sess, Integer voyageid2) {
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), voyageid2, Conditions.OP_EQUALS);
 		c.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
@@ -446,7 +446,7 @@ public class AdminSubmissionBean {
 			Submission lSubmission = (Submission) res[0];
 			this.submissionId = lSubmission.getId();
 			if (lSubmission instanceof SubmissionEdit) {
-				Long vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage().getVoyageid();
+				Integer vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage().getVoyageid();
 				c = new Conditions();
 				c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
 						EditedVoyage.getAttribute("voyage"), Voyage.getAttribute("voyageid") }), vid, Conditions.OP_EQUALS);
@@ -545,8 +545,8 @@ public class AdminSubmissionBean {
 			Set voyagesToDelete = ((SubmissionMerge)lSubmission).getMergedVoyages();
 			for (Iterator iter = voyagesToDelete.iterator(); iter.hasNext();) {
 				EditedVoyage element = (EditedVoyage) iter.next();
-				Long voyageId = element.getVoyage().getVoyageid();
-				Voyage voyage = Voyage.loadFutureRevision(session, voyageId);
+				Integer voyageId = element.getVoyage().getVoyageid();
+				Voyage voyage = Voyage.loadFutureRevision(session, voyageId.intValue());
 				if (voyage != null) {
 					session.delete(voyage);				
 				}

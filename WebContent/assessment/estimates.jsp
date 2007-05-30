@@ -63,7 +63,7 @@
 			</td>
 			<td class="td-main-panel">
 
-				<s:panelTabSet selectedSectionId="table" id="mainPanelSection">
+				<s:panelTabSet selectedSectionId="#{EstimatesSelectionBean.selectedTab}" id="mainPanelSection">
 					
 					<s:panelTab title="#{res.estimates_main_table}" sectionId="table">
 						<t:htmlTag value="div" styleClass="results-panel">

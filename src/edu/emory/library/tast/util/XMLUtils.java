@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class XMLUtils {
 	
@@ -100,5 +101,17 @@ public class XMLUtils {
 	public static String[] decodeIntegerArray(String value) {
 		String[] vals = value.split(",");
 		return vals;
+	}
+	
+	public static Node getChildNode(Node node, String name) {
+		NodeList childNodes = node.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			Node child = childNodes.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE &&
+					child.getNodeName().equals(name)) {
+				return child;
+			}
+		}
+		return null;
 	}
 }

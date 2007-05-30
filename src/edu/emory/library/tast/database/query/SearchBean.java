@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
+import org.w3c.dom.Node;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.MenuItem;
@@ -18,10 +19,12 @@ import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -248,6 +251,7 @@ public class SearchBean
 		
 		Configuration conf = new Configuration();
 		conf.addEntry("permlink", historyItem.getQuery());
+		conf.addEntry("section", new StoredSection(this.mainSectionId));
 		conf.save();
 
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -301,6 +305,10 @@ public class SearchBean
 			return;
 		
 		workingQuery = (Query) conf.getEntry("permlink");
+		StoredSection section = (StoredSection) conf.getEntry("section");
+		if (section != null) {
+			this.mainSectionId = section.getTabId();
+		}
 		history.clear();
 		searchInternal(true);
 
@@ -512,6 +520,34 @@ public class SearchBean
 	public void setYearTo(int yearTo)
 	{
 		workingQuery.setYearTo(yearTo);
+	}
+	
+	public static class StoredSection implements XMLExportable {
+
+		private String sectionId = null;
+		
+		public StoredSection() {
+		}
+		
+		public StoredSection(String sectionId) {
+			this.sectionId = sectionId;
+		}
+		
+		public String getTabId() {
+			return this.sectionId;
+		}
+
+		public void restoreFromXML(Node entry) {
+			Node section = XMLUtils.getChildNode(entry, "storedSection");
+			if (section != null) {
+				this.sectionId = XMLUtils.getXMLProperty(section, "id");
+			}
+		}
+
+		public String toXML() {
+			return "<storedSection id=\"" + this.sectionId + "\" />";
+		}
+		
 	}
 
 }

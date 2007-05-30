@@ -26,6 +26,7 @@ import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportArea;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.EstimatesNation;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -78,53 +79,76 @@ import edu.emory.library.tast.util.query.QueryValue;
  * (without going to the database) which region does it represent.
  */
 
-public class EstimatesSelectionBean
-{
-	
+public class EstimatesSelectionBean {
+
 	private static final int TIME_SPAN_INITIAL_FROM = 1500;
+
 	private static final int TIME_SPAN_INITIAL_TO = 1900;
-	
+
 	public static class EstimatesSelection implements XMLExportable {
-		
+
+		private int yearFrom;
+
+		private int yearTo;
+
 		private Set selectedNationIds;
+
 		private Set selectedExpRegionIds;
+
 		private Set selectedImpRegionIds;
+
 		private Set selectedImpAreaIds;
 		
-		public EstimatesSelection() {			
+		private String selectedTab;
+
+		public EstimatesSelection() {
 		}
-		
+
 		public EstimatesSelection(EstimatesSelectionBean bean) {
+			this.yearFrom = bean.yearFrom;
+			this.yearTo = bean.yearTo;
 			this.selectedNationIds = bean.selectedNationIds;
 			this.selectedExpRegionIds = bean.selectedExpRegionIds;
 			this.selectedImpRegionIds = bean.selectedImpRegionIds;
 			this.selectedImpAreaIds = bean.selectedImpAreaIds;
+			this.selectedTab = bean.selectedTab;
 		}
 
 		public void restoreFromXML(Node entry) {
-			NodeList childNodes = entry.getChildNodes();
-			for (int i = 0; i < childNodes.getLength(); i++) {
-				Node child = childNodes.item(i);
-				if (child.getNodeType() == Node.ELEMENT_NODE &&
-						child.getNodeName().equals("set")) {
-					String setName = XMLUtils.getXMLProperty(child, "setName");
-					Set set = XMLUtils.restoreSetOfLongs(child);
-					if (setName.equals("nations")) {
-						this.selectedNationIds = set;
-					} else if (setName.equals("exported")) {
-						this.selectedExpRegionIds = set;
-					} else if (setName.equals("impAreas")) {
-						this.selectedImpAreaIds = set;
-					} else {
-						this.selectedImpRegionIds = set;
+
+			Node estimatesSelection = XMLUtils.getChildNode(entry, "estimatesSelection");
+			if (estimatesSelection != null) {
+				this.yearFrom = Integer.parseInt(XMLUtils.getXMLProperty(estimatesSelection, "yearFrom"));
+				this.yearTo = Integer.parseInt(XMLUtils.getXMLProperty(estimatesSelection, "yearTo"));
+				this.selectedTab = XMLUtils.getXMLProperty(estimatesSelection, "selectedTab");
+				NodeList list = estimatesSelection.getChildNodes();
+				for (int i = 0; i < list.getLength(); i++) {
+					Node child = list.item(i);
+					if (child.getNodeType() == Node.ELEMENT_NODE && child.getNodeName().equals("set")) {
+						String setName = XMLUtils.getXMLProperty(child, "name");
+						Set set = XMLUtils.restoreSetOfLongs(child);
+						if (setName.equals("nations")) {
+							this.selectedNationIds = set;
+						} else if (setName.equals("exported")) {
+							this.selectedExpRegionIds = set;
+						} else if (setName.equals("impAreas")) {
+							this.selectedImpAreaIds = set;
+						} else {
+							this.selectedImpRegionIds = set;
+						}
 					}
 				}
 			}
+
 		}
 
 		public String toXML() {
 			StringBuffer buffer = new StringBuffer();
-			buffer.append("<estimatesSelection>\n");
+			buffer.append("<estimatesSelection ");
+			XMLUtils.appendAttribute(buffer, "yearFrom", String.valueOf(this.yearFrom));
+			XMLUtils.appendAttribute(buffer, "yearTo", String.valueOf(this.yearTo));
+			XMLUtils.appendAttribute(buffer, "selectedTab", this.selectedTab);
+			buffer.append(">/n");
 			buffer.append(XMLUtils.encodeSet("nations", this.selectedNationIds));
 			buffer.append(XMLUtils.encodeSet("exported", this.selectedExpRegionIds));
 			buffer.append(XMLUtils.encodeSet("impAreas", this.selectedImpAreaIds));
@@ -133,38 +157,53 @@ public class EstimatesSelectionBean
 			return buffer.toString();
 		}
 	}
-	
+
 	private MessageBarComponent messageBar;
-	
+
 	private Conditions timeFrameConditions;
+
 	private Conditions geographicConditions;
 
 	private String[] checkedNations;
+
 	private String[] checkedExpRegions;
+
 	private String[] checkedImpRegions;
+
 	private String[] expandedExpRegions;
+
 	private String[] expandedImpRegions;
+
 	private int totalNationsCount;
+
 	private int totalExpRegionsCount;
+
 	private int totalImpRegionsCount;
-	
+
 	private Set selectedNationIds;
+
 	private Set selectedExpRegionIds;
+
 	private Set selectedImpRegionIds;
+
 	private Set selectedImpAreaIds;
-	
+
 	private String selectedNationsAsText;
+
 	private String selectedExpRegionsAsText;
+
 	private String selectedImpRegionsAsText;
-	
+
 	private int yearFrom = TIME_SPAN_INITIAL_FROM;
+
 	private int yearTo = TIME_SPAN_INITIAL_TO;
+
+	private String selectedTab = "table";
 	
-	public EstimatesSelectionBean()
-	{
+	public EstimatesSelectionBean() {
 		initDefaultValues();
 	}
-	
+
 	/**
 	 * Used only during inicialization and when user presses the Reset button.
 	 * Load the default values, i.e. all nations and regions are selected and
@@ -174,64 +213,57 @@ public class EstimatesSelectionBean
 	 * 
 	 * @param sess
 	 */
-	private void initDefaultValues()
-	{
-		
+	private void initDefaultValues() {
+
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		checkAllNationsAndRegions(sess);
 		initDefaultTimeFrame(sess);
-		
+
 		transaction.commit();
 		sess.close();
 
 		changeSelection();
 
 	}
-	
+
 	/**
 	 * Used only during inicialization and when user presses the Reset button.
 	 * 
 	 * @param sess
 	 */
-	private void initDefaultTimeFrame(Session sess)
-	{
+	private void initDefaultTimeFrame(Session sess) {
 
 		QueryValue query = new QueryValue("edu.emory.library.tast.dm.Estimate");
-		
-		query.addPopulatedAttribute(
-				new FunctionAttribute("min",
-						new Attribute[] {Estimate.getAttribute("year")}));
 
-		query.addPopulatedAttribute(
-				new FunctionAttribute("max",
-						new Attribute[] {Estimate.getAttribute("year")}));
-		
+		query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] { Estimate.getAttribute("year") }));
+
+		query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] { Estimate.getAttribute("year") }));
+
 		Object[] result = query.executeQuery();
-		Object[] firsrRow = (Object[]) result[0]; 
-			
+		Object[] firsrRow = (Object[]) result[0];
+
 		yearFrom = ((Integer) firsrRow[0]).intValue();
 		yearTo = ((Integer) firsrRow[1]).intValue();
-	
+
 	}
-	
+
 	/**
 	 * General method, which changes {@link #checkedNations} by the given list
 	 * of nations from the database. Now used only during inicialization and
 	 * when user presses the Reset button.
 	 * 
-	 * @param nations List of nations.
+	 * @param nations
+	 *            List of nations.
 	 */
-	private void checkNations(List nations)
-	{
-		
+	private void checkNations(List nations) {
+
 		totalNationsCount = nations.size();
 		checkedNations = new String[nations.size()];
-		
+
 		int i = 0;
-		for (Iterator iter = nations.iterator(); iter.hasNext();)
-		{
+		for (Iterator iter = nations.iterator(); iter.hasNext();) {
 			EstimatesNation nation = (EstimatesNation) iter.next();
 			checkedNations[i++] = String.valueOf(nation.getId());
 		}
@@ -239,20 +271,19 @@ public class EstimatesSelectionBean
 	}
 
 	/**
-	 * General method, which changes {@link #checkedExpRegions} by the given list
-	 * of regions from the database. Now used only during inicialization and
-	 * when user presses the Reset button.
+	 * General method, which changes {@link #checkedExpRegions} by the given
+	 * list of regions from the database. Now used only during inicialization
+	 * and when user presses the Reset button.
 	 * 
-	 * @param nations List of nations.
+	 * @param nations
+	 *            List of nations.
 	 */
-	private void checkExpRegions(List regions)
-	{
+	private void checkExpRegions(List regions) {
 
 		checkedExpRegions = new String[regions.size()];
-		
+
 		int i = 0;
-		for (Iterator iter = regions.iterator(); iter.hasNext();)
-		{
+		for (Iterator iter = regions.iterator(); iter.hasNext();) {
 			EstimatesExportRegion region = (EstimatesExportRegion) iter.next();
 			checkedExpRegions[i] = String.valueOf(region.getId());
 			i++;
@@ -261,49 +292,42 @@ public class EstimatesSelectionBean
 	}
 
 	/**
-	 * General method, which changes {@link #checkedImpRegions} by the given list
-	 * of regions from the database. Now used only during inicialization and
-	 * when user presses the Reset button.
+	 * General method, which changes {@link #checkedImpRegions} by the given
+	 * list of regions from the database. Now used only during inicialization
+	 * and when user presses the Reset button.
 	 * 
-	 * @param nations List of nations.
+	 * @param nations
+	 *            List of nations.
 	 */
-	private void checkImpRegions(List regions)
-	{
+	private void checkImpRegions(List regions) {
 
 		int i = 0;
 		int regionsCount = regions.size();
-		
+
 		List tempIds = new ArrayList();
 
-		while(i < regionsCount)
-		{
-			
+		while (i < regionsCount) {
+
 			EstimatesImportRegion region = (EstimatesImportRegion) regions.get(i);
 			EstimatesImportArea area = region.getArea();
 			Long lastRegionId = region.getId();
-			
+
 			int regionsInArea = 0;
-			while (area.equals(region.getArea()))
-			{
+			while (area.equals(region.getArea())) {
 				lastRegionId = region.getId();
 				tempIds.add("R" + lastRegionId);
 				regionsInArea++;
-				if (++i == regionsCount) break;
+				if (++i == regionsCount)
+					break;
 				region = (EstimatesImportRegion) regions.get(i);
 			}
-			
-			if (regionsInArea > 1)
-			{
-				tempIds.add(
-						"A" + area.getId());
+
+			if (regionsInArea > 1) {
+				tempIds.add("A" + area.getId());
+			} else {
+				tempIds.add("A" + area.getId() + "_" + "R" + lastRegionId);
 			}
-			else
-			{
-				tempIds.add(
-						"A" + area.getId() + "_" +
-						"R" + lastRegionId);
-			}
-			
+
 		}
 
 		checkedImpRegions = new String[tempIds.size()];
@@ -316,206 +340,194 @@ public class EstimatesSelectionBean
 	 * 
 	 * @param sess
 	 */
-	private void checkAllNationsAndRegions(Session sess)
-	{
-		
+	private void checkAllNationsAndRegions(Session sess) {
+
 		List allNations = EstimatesNation.loadAll(sess);
 		List allExpRegions = EstimatesExportRegion.loadAll(sess);
 		List allImpRegions = EstimatesImportRegion.loadAll(sess);
-		
-		totalNationsCount = allNations.size(); 
-		totalExpRegionsCount = allExpRegions.size(); 
+
+		totalNationsCount = allNations.size();
+		totalExpRegionsCount = allExpRegions.size();
 		totalImpRegionsCount = allImpRegions.size();
-		
+
 		checkNations(allNations);
 		checkExpRegions(allExpRegions);
 		checkImpRegions(allImpRegions);
-		
+
 	}
-	
+
 	/**
 	 * Used by {@link edu.emory.library.tast.estimates.table.EstimatesTableBean}
-	 * to load the names of the selected nations to the table. 
+	 * to load the names of the selected nations to the table.
+	 * 
 	 * @param session
 	 * @return
 	 */
-	public List loadSelectedNations(Session session)
-	{
-		
+	public List loadSelectedNations(Session session) {
+
 		Conditions cond = new Conditions(Conditions.JOIN_OR);
 		for (Iterator iter = selectedNationIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesNation.getAttribute("id"),
-					iter.next(), Conditions.OP_EQUALS);
-		
+			cond.addCondition(EstimatesNation.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+
 		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesNation", cond);
-		query.setOrderBy(new Attribute[] {EstimatesNation.getAttribute("order")});
+		query.setOrderBy(new Attribute[] { EstimatesNation.getAttribute("order") });
 		query.setOrder(QueryValue.ORDER_ASC);
-		
+
 		return query.executeQueryList(session);
-	
+
 	}
 
 	/**
 	 * Used by {@link edu.emory.library.tast.estimates.table.EstimatesTableBean}
-	 * to load the names of the selected export regions to the table. 
+	 * to load the names of the selected export regions to the table.
+	 * 
 	 * @return
 	 */
-	public List loadSelectedExpRegions(Session session)
-	{
+	public List loadSelectedExpRegions(Session session) {
 
 		Conditions cond = new Conditions(Conditions.JOIN_OR);
 		for (Iterator iter = selectedExpRegionIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesExportRegion.getAttribute("id"),
-					iter.next(), Conditions.OP_EQUALS);
-		
+			cond.addCondition(EstimatesExportRegion.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+
 		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesExportRegion", cond);
-		query.setOrderBy(new Attribute[] {EstimatesExportRegion.getAttribute("order")});
+		query.setOrderBy(new Attribute[] { EstimatesExportRegion.getAttribute("order") });
 		query.setOrder(QueryValue.ORDER_ASC);
-		
+
 		return query.executeQueryList(session);
 
 	}
 
 	/**
 	 * Used by {@link edu.emory.library.tast.estimates.table.EstimatesTableBean}
-	 * to load the names of the selected import regions to the table. 
+	 * to load the names of the selected import regions to the table.
+	 * 
 	 * @return
 	 */
-	public List loadSelectedImpRegions(Session session)
-	{
-		
+	public List loadSelectedImpRegions(Session session) {
+
 		Conditions cond = new Conditions(Conditions.JOIN_OR);
 		for (Iterator iter = selectedImpRegionIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesImportRegion.getAttribute("id"),
-					iter.next(), Conditions.OP_EQUALS);
-		
+			cond.addCondition(EstimatesImportRegion.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+
 		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesImportRegion", cond);
-		query.setOrderBy(new Attribute[] {EstimatesImportRegion.getAttribute("order")});
+		query.setOrderBy(new Attribute[] { EstimatesImportRegion.getAttribute("order") });
 		query.setOrder(QueryValue.ORDER_ASC);
-		
+
 		return query.executeQueryList(session);
 
 	}
 
 	/**
 	 * Used by {@link edu.emory.library.tast.estimates.table.EstimatesTableBean}
-	 * to load the names of the selected import areas to the table. 
+	 * to load the names of the selected import areas to the table.
+	 * 
 	 * @return
 	 */
-	public List loadSelectedImpAreas(Session session)
-	{
-		
+	public List loadSelectedImpAreas(Session session) {
+
 		Conditions cond = new Conditions(Conditions.JOIN_OR);
 		for (Iterator iter = selectedImpAreaIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesImportArea.getAttribute("id"),
-					iter.next(), Conditions.OP_EQUALS);
-		
+			cond.addCondition(EstimatesImportArea.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+
 		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesImportArea", cond);
-		query.setOrderBy(new Attribute[] {EstimatesImportRegion.getAttribute("order")});
+		query.setOrderBy(new Attribute[] { EstimatesImportRegion.getAttribute("order") });
 		query.setOrder(QueryValue.ORDER_ASC);
-		
+
 		return query.executeQueryList(session);
 
 	}
-	
+
 	/**
 	 * Convenience method.
+	 * 
 	 * @return
 	 */
-	public boolean isAllNationsSelected()
-	{
+	public boolean isAllNationsSelected() {
 		return totalNationsCount == selectedNationIds.size();
 	}
 
 	/**
 	 * Convenience method.
+	 * 
 	 * @return
 	 */
-	public boolean isAllExpRegionsSelected()
-	{
+	public boolean isAllExpRegionsSelected() {
 		return totalExpRegionsCount == selectedExpRegionIds.size();
 	}
 
 	/**
 	 * Convenience method.
+	 * 
 	 * @return
 	 */
-	public boolean isAllImpRegionsSelected()
-	{
+	public boolean isAllImpRegionsSelected() {
 		return totalImpRegionsCount == selectedImpRegionIds.size();
 	}
-	
+
 	/**
 	 * Convenience method.
+	 * 
 	 * @return
 	 */
-	public Set getSelectedExpRegionIds()
-	{
+	public Set getSelectedExpRegionIds() {
 		return selectedExpRegionIds == null ? new HashSet() : selectedExpRegionIds;
 	}
 
 	/**
 	 * Convenience method.
+	 * 
 	 * @return
 	 */
-	public Set getSelectedImpAreaIds()
-	{
+	public Set getSelectedImpAreaIds() {
 		return selectedImpAreaIds == null ? new HashSet() : selectedImpRegionIds;
 	}
 
 	/**
 	 * Convenience method.
+	 * 
 	 * @return
 	 */
-	public Set getSelectedImpRegionIds()
-	{
+	public Set getSelectedImpRegionIds() {
 		return selectedImpRegionIds == null ? new HashSet() : selectedImpRegionIds;
 	}
 
 	/**
 	 * Convenience method.
+	 * 
 	 * @return
 	 */
-	public Set getSelectedNationIds()
-	{
+	public Set getSelectedNationIds() {
 		return selectedNationIds == null ? new HashSet() : selectedNationIds;
 	}
-	
+
 	/**
 	 * Bound to the Change Selection buttons. Calles {@link #createConditions()}
-	 * and {@link #updateSelectionInfo()}. 
+	 * and {@link #updateSelectionInfo()}.
+	 * 
 	 * @return
 	 */
-	public String changeSelection()
-	{
+	public String changeSelection() {
 		createConditions();
 		updateSelectionInfo();
 		return null;
 	}
-	
+
 	/**
 	 * Uses {@link #checkedNations}, {@link #checkedExpRegions},
 	 * {@link #checkedImpRegions}, {@link #yearFrom} and {@link #yearTo} to
 	 * create the current query.
 	 */
-	private void createConditions()
-	{
+	private void createConditions() {
 		timeFrameConditions = new Conditions(Conditions.JOIN_AND);
-		
-		timeFrameConditions.addCondition(
-				Estimate.getAttribute("year"),
-				new Integer(yearFrom),
-				Conditions.OP_GREATER_OR_EQUAL);
-		
-		timeFrameConditions.addCondition(
-				Estimate.getAttribute("year"),
-				new Integer(yearTo),
-				Conditions.OP_SMALLER_OR_EQUAL);
+
+		timeFrameConditions.addCondition(Estimate.getAttribute("year"), new Integer(yearFrom), Conditions.OP_GREATER_OR_EQUAL);
+
+		timeFrameConditions.addCondition(Estimate.getAttribute("year"), new Integer(yearTo), Conditions.OP_SMALLER_OR_EQUAL);
 
 		Conditions conditionNations = new Conditions(Conditions.JOIN_OR);
 		Conditions conditionExpRegions = new Conditions(Conditions.JOIN_OR);
 		Conditions conditionImpRegions = new Conditions(Conditions.JOIN_OR);
-		
+
 		geographicConditions = new Conditions(Conditions.JOIN_AND);
 		geographicConditions.addCondition(conditionNations);
 		geographicConditions.addCondition(conditionExpRegions);
@@ -525,61 +537,124 @@ public class EstimatesSelectionBean
 		selectedExpRegionIds = new HashSet();
 		selectedImpRegionIds = new HashSet();
 		selectedImpAreaIds = new HashSet();
-		
-		Attribute nationIdAttr = new SequenceAttribute(new Attribute[] {
-				Estimate.getAttribute("nation"),
-				EstimatesNation.getAttribute("id")});
-		
-		for (int i = 0; i < checkedNations.length; i++)
-		{
+
+		Attribute nationIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("nation"),
+				EstimatesNation.getAttribute("id") });
+
+		for (int i = 0; i < checkedNations.length; i++) {
 			Long nationId = new Long(checkedNations[i]);
 			selectedNationIds.add(nationId);
 			conditionNations.addCondition(nationIdAttr, nationId, Conditions.OP_EQUALS);
 		}
-		
-		Attribute regionExpIdAttr = new SequenceAttribute(new Attribute[] {
-				Estimate.getAttribute("expRegion"),
-				EstimatesExportRegion.getAttribute("id")});
 
-		for (int i = 0; i < checkedExpRegions.length; i++)
-		{
+		Attribute regionExpIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"),
+				EstimatesExportRegion.getAttribute("id") });
+
+		for (int i = 0; i < checkedExpRegions.length; i++) {
 			Long regionId = new Long(checkedExpRegions[i]);
 			selectedExpRegionIds.add(regionId);
 			conditionExpRegions.addCondition(regionExpIdAttr, regionId, Conditions.OP_EQUALS);
 		}
 
-		Attribute regionImpIdAttr = new SequenceAttribute(new Attribute[] {
-				Estimate.getAttribute("impRegion"),
-				EstimatesImportRegion.getAttribute("id")});
+		Attribute regionImpIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"),
+				EstimatesImportRegion.getAttribute("id") });
 
-		for (int i = 0; i < checkedImpRegions.length; i++)
-		{
+		for (int i = 0; i < checkedImpRegions.length; i++) {
 			String[] ids = checkedImpRegions[i].split("_");
-			for (int j = 0; j < ids.length; j++)
-			{
+			for (int j = 0; j < ids.length; j++) {
 				Long id = new Long(ids[j].substring(1));
-				if (ids[j].startsWith("A"))
-				{
+				if (ids[j].startsWith("A")) {
 					selectedImpAreaIds.add(id);
-				}
-				else
-				{
+				} else {
 					selectedImpRegionIds.add(id);
 					conditionImpRegions.addCondition(regionImpIdAttr, id, Conditions.OP_EQUALS);
 				}
 			}
 		}
 	}
-	
+
+	/**
+	 * Restores proper conditions after using permanent link
+	 * 
+	 */
+	public void restoreConditions(Session session) {
+		timeFrameConditions = new Conditions(Conditions.JOIN_AND);
+
+		timeFrameConditions.addCondition(Estimate.getAttribute("year"), new Integer(yearFrom), Conditions.OP_GREATER_OR_EQUAL);
+
+		timeFrameConditions.addCondition(Estimate.getAttribute("year"), new Integer(yearTo), Conditions.OP_SMALLER_OR_EQUAL);
+
+		Conditions conditionNations = new Conditions(Conditions.JOIN_OR);
+		Conditions conditionExpRegions = new Conditions(Conditions.JOIN_OR);
+		Conditions conditionImpRegions = new Conditions(Conditions.JOIN_OR);
+
+		geographicConditions = new Conditions(Conditions.JOIN_AND);
+		geographicConditions.addCondition(conditionNations);
+		geographicConditions.addCondition(conditionExpRegions);
+		geographicConditions.addCondition(conditionImpRegions);
+
+		Attribute nationIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("nation"),
+				EstimatesNation.getAttribute("id") });
+
+		Iterator iter = this.selectedNationIds.iterator();
+		this.checkedNations = new String[this.selectedNationIds.size()];
+		int i = 0;
+		while (iter.hasNext()) {
+			Long nationId = (Long) iter.next();
+			this.checkedNations[i++] = String.valueOf(nationId);
+			conditionNations.addCondition(nationIdAttr, nationId, Conditions.OP_EQUALS);
+		}
+
+		Attribute regionExpIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"),
+				EstimatesExportRegion.getAttribute("id") });
+
+		iter = this.selectedExpRegionIds.iterator();
+		this.checkedExpRegions = new String[this.selectedExpRegionIds.size()];
+		i = 0;
+		while (iter.hasNext()) {
+			Long regionId = (Long) iter.next();
+			this.checkedExpRegions[i++] = regionId.toString();
+			conditionExpRegions.addCondition(regionExpIdAttr, regionId, Conditions.OP_EQUALS);
+		}
+
+		Attribute regionImpIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"),
+				EstimatesImportRegion.getAttribute("id") });
+
+		iter = this.selectedImpRegionIds.iterator();
+		List tmpList = new ArrayList();
+		List addedAreas = new ArrayList();
+		while (iter.hasNext()) {
+			Long regionId = (Long) iter.next();
+			EstimatesImportRegion region = EstimatesImportRegion.loadById(session, regionId.longValue());
+			EstimatesImportArea area = region.getArea();
+			if (area.getRegions().size() == 1) {
+				tmpList.add("A" + area.getId() + "_R" + regionId);
+				addedAreas.add(area.getId());
+			} else {
+				tmpList.add("R" + regionId);
+			}
+			conditionImpRegions.addCondition(regionImpIdAttr, regionId, Conditions.OP_EQUALS);
+		}
+		
+		iter = this.selectedImpAreaIds.iterator();
+		while (iter.hasNext()) {
+			Long areaId = (Long) iter.next();
+			if (!addedAreas.contains(areaId)) {
+				tmpList.add("A" + areaId);
+			}
+		}
+		
+		this.checkedImpRegions = (String[]) tmpList.toArray(new String[] {});
+	}
+
 	/**
 	 * Recalculates {@link #selectedNationsAsText},
 	 * {@link #selectedExpRegionsAsText} and {@link #selectedImpRegionsAsText}
 	 * based on {@link #selectedExpRegionIds}, {@link #selectedExpRegionIds},
 	 * {@link #selectedImpRegionIds} and {@link #selectedImpAreaIds}.
 	 */
-	private void updateSelectionInfo()
-	{
-		
+	private void updateSelectionInfo() {
+
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 
@@ -594,27 +669,24 @@ public class EstimatesSelectionBean
 
 	/**
 	 * Part of {@link #updateSelectionInfo()}. Split for clarity.
+	 * 
 	 * @param sess
 	 */
-	private void updateSelectedNationsInfo(Session sess)
-	{
-		
-		StringBuffer selectedNationsBuff = new StringBuffer(); 
+	private void updateSelectedNationsInfo(Session sess) {
 
-		if (totalNationsCount > selectedNationIds.size())
-		{
+		StringBuffer selectedNationsBuff = new StringBuffer();
+
+		if (totalNationsCount > selectedNationIds.size()) {
 			int i = 0;
 			List selectedNations = loadSelectedNations(sess);
-			for (Iterator iter = selectedNations.iterator(); iter.hasNext();)
-			{
+			for (Iterator iter = selectedNations.iterator(); iter.hasNext();) {
 				EstimatesNation nation = (EstimatesNation) iter.next();
-				if (i > 0) selectedNationsBuff.append(", ");
+				if (i > 0)
+					selectedNationsBuff.append(", ");
 				selectedNationsBuff.append(nation.getName());
 				i++;
 			}
-		}
-		else
-		{
+		} else {
 			selectedNationsBuff.append("<i>all</i>");
 		}
 
@@ -624,193 +696,175 @@ public class EstimatesSelectionBean
 
 	/**
 	 * Part of {@link #updateSelectionInfo()}. Split for clarity.
+	 * 
 	 * @param sess
 	 */
-	private void updateSelectedExpRegionsInfo(Session sess)
-	{
+	private void updateSelectedExpRegionsInfo(Session sess) {
 
-		StringBuffer selectedExpRegionsBuff = new StringBuffer(); 
+		StringBuffer selectedExpRegionsBuff = new StringBuffer();
 
-		if (totalExpRegionsCount > selectedExpRegionIds.size())
-		{
+		if (totalExpRegionsCount > selectedExpRegionIds.size()) {
 			int i = 0;
 			List selectedExpRegions = loadSelectedExpRegions(sess);
-			for (Iterator iter = selectedExpRegions.iterator(); iter.hasNext();)
-			{
+			for (Iterator iter = selectedExpRegions.iterator(); iter.hasNext();) {
 				EstimatesExportRegion region = (EstimatesExportRegion) iter.next();
-				if (i > 0) selectedExpRegionsBuff.append(", ");
+				if (i > 0)
+					selectedExpRegionsBuff.append(", ");
 				selectedExpRegionsBuff.append(region.getName());
 				i++;
 			}
-		}
-		else
-		{
+		} else {
 			selectedExpRegionsBuff.append("<i>all</i>");
 		}
 
 		selectedExpRegionsAsText = selectedExpRegionsBuff.toString();
-		
+
 	}
 
 	/**
 	 * Part of {@link #updateSelectionInfo()}. Split for clarity.
+	 * 
 	 * @param sess
 	 */
-	private void updateSelectedImpRegionsInfo(Session sess)
-	{
+	private void updateSelectedImpRegionsInfo(Session sess) {
 
 		StringBuffer selectedImpRegionsBuff = new StringBuffer();
-		
-		if (totalImpRegionsCount > selectedImpRegionIds.size())
-		{
-			
+
+		if (totalImpRegionsCount > selectedImpRegionIds.size()) {
+
 			int i = 0;
-			
+
 			List selectedImpRegions = EstimatesImportRegion.loadAll(sess);
-			
+
 			Iterator iter = selectedImpRegions.iterator();
 			EstimatesImportRegion region = (EstimatesImportRegion) iter.next();
 			int lastAreaId = region.getArea().getId().intValue();
 			String lastAreaName = region.getArea().getName();
-			
-			StringBuffer selectedImpRegionsInAreaBuff = new StringBuffer(); 
-			
-			while (iter.hasNext())
-			{
+
+			StringBuffer selectedImpRegionsInAreaBuff = new StringBuffer();
+
+			while (iter.hasNext()) {
 
 				int j = 0;
 				boolean allSelected = true;
 				boolean noSelected = true;
-				
+
 				lastAreaName = region.getArea().getName();
 
 				selectedImpRegionsInAreaBuff.setLength(0);
-				
-				while (iter.hasNext())
-				{
 
-					if (selectedImpRegionIds.contains(region.getId()))
-					{
-						if (j > 0) selectedImpRegionsInAreaBuff.append(", ");
+				while (iter.hasNext()) {
+
+					if (selectedImpRegionIds.contains(region.getId())) {
+						if (j > 0)
+							selectedImpRegionsInAreaBuff.append(", ");
 						selectedImpRegionsInAreaBuff.append(region.getName());
 						noSelected = false;
 						j++;
-					}
-					else
-					{
+					} else {
 						allSelected = false;
 					}
 
 					region = (EstimatesImportRegion) iter.next();
-					
+
 					int areaId = region.getArea().getId().intValue();
-					if (lastAreaId != areaId)
-					{
+					if (lastAreaId != areaId) {
 						lastAreaId = areaId;
 						break;
 					}
-					
+
 				}
-				
-				if (allSelected || !noSelected)
-				{
-					
-					if (i > 0) selectedImpRegionsBuff.append("<br>");
+
+				if (allSelected || !noSelected) {
+
+					if (i > 0)
+						selectedImpRegionsBuff.append("<br>");
 
 					selectedImpRegionsBuff.append("<i>");
 					selectedImpRegionsBuff.append(lastAreaName);
 					selectedImpRegionsBuff.append("</i>: ");
-					
-					if (allSelected)
-					{
+
+					if (allSelected) {
 						selectedImpRegionsBuff.append("all regions");
-					}
-					else
-					{
+					} else {
 						selectedImpRegionsBuff.append(selectedImpRegionsInAreaBuff);
 					}
 
 					i++;
-					
+
 				}
 
 			}
-		}
-		else
-		{
+		} else {
 			selectedImpRegionsBuff.append("<i>all</i>");
 		}
-		
+
 		selectedImpRegionsAsText = selectedImpRegionsBuff.toString();
 
 	}
-	
+
 	/**
 	 * Bound to the reset button.
+	 * 
 	 * @return null
 	 */
-	public String resetSelection()
-	{
+	public String resetSelection() {
 		initDefaultValues();
 		return null;
 	}
-	
+
 	/**
 	 * Used by the other beans.
+	 * 
 	 * @return
 	 */
-	public Conditions getTimeFrameConditions()
-	{
+	public Conditions getTimeFrameConditions() {
 		return timeFrameConditions;
 	}
 
 	/**
 	 * Used by the other beans.
+	 * 
 	 * @return
 	 */
-	public Conditions getGeographicConditions()
-	{
+	public Conditions getGeographicConditions() {
 		return geographicConditions;
 	}
 
 	/**
 	 * Used by the other beans.
+	 * 
 	 * @return
 	 */
-	public Conditions getConditions()
-	{
+	public Conditions getConditions() {
 		Conditions conds = new Conditions(Conditions.JOIN_AND);
 		conds.addCondition(geographicConditions);
 		conds.addCondition(timeFrameConditions);
 		return conds;
 	}
-	
+
 	/**
 	 * Bound to UI. It loads all export regions from the database and convert
 	 * them to an array or {@link #edu.emory.library.tast.common.SelectItem}.
 	 * 
 	 * @return
 	 */
-	public SelectItem[] getAllExpRegions()
-	{
+	public SelectItem[] getAllExpRegions() {
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		
-		List regionsDb = EstimatesExportRegion.loadAll(sess); 
+
+		List regionsDb = EstimatesExportRegion.loadAll(sess);
 		SelectItem[] regionsUi = new SelectItem[regionsDb.size()];
-		
+
 		int i = 0;
-		for (Iterator iter = regionsDb.iterator(); iter.hasNext();)
-		{
+		for (Iterator iter = regionsDb.iterator(); iter.hasNext();) {
 			EstimatesExportRegion region = (EstimatesExportRegion) iter.next();
-			regionsUi[i++] = new SelectItem(
-					region.getName(),
-					String.valueOf(region.getId()));
+			regionsUi[i++] = new SelectItem(region.getName(), String.valueOf(region.getId()));
 		}
-		
+
 		transaction.commit();
 		sess.close();
-		
+
 		return regionsUi;
 	}
 
@@ -822,282 +876,269 @@ public class EstimatesSelectionBean
 	 * 
 	 * @return
 	 */
-	public SelectItem[] getAllImpRegions()
-	{
+	public SelectItem[] getAllImpRegions() {
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		
+
 		List regionsDb = EstimatesImportRegion.loadAll(sess);
-		
+
 		List areasTemp = new ArrayList();
 		List regionsTemp = new ArrayList();
-		
+
 		int i = 0;
 		int regionsCount = regionsDb.size();
-		
-		while(i < regionsCount)
-		{
-			
+
+		while (i < regionsCount) {
+
 			EstimatesImportRegion region = (EstimatesImportRegion) regionsDb.get(i);
 			EstimatesImportArea area = region.getArea();
-			
+
 			regionsTemp.clear();
-			
-			while (area.equals(region.getArea()))
-			{
-				regionsTemp.add(new SelectItemWithImage(
-						region.getName(),
-						"R" + region.getId(),
-						"regions/region-" + region.getId() + ".png"));
-				if (++i == regionsCount) break;
+
+			while (area.equals(region.getArea())) {
+				regionsTemp
+						.add(new SelectItemWithImage(region.getName(), "R" + region.getId(), "regions/region-" + region.getId() + ".png"));
+				if (++i == regionsCount)
+					break;
 				region = (EstimatesImportRegion) regionsDb.get(i);
 			}
-			
-			SelectItemWithImage areaItem = new SelectItemWithImage(
-					area.getName(),
-					null,
-					"regions/area-" + area.getId() + ".png");
-		
+
+			SelectItemWithImage areaItem = new SelectItemWithImage(area.getName(), null, "regions/area-" + area.getId() + ".png");
+
 			areaItem.setSelectable(true);
 			areasTemp.add(areaItem);
-			
-			if (regionsTemp.size() > 1)
-			{
+
+			if (regionsTemp.size() > 1) {
 				SelectItemWithImage[] regionsUi = new SelectItemWithImage[regionsTemp.size()];
 				regionsTemp.toArray(regionsUi);
 				areaItem.setSubItems(regionsUi);
 				areaItem.setValue("A" + area.getId());
-			}
-			else
-			{
+			} else {
 				SelectItemWithImage singleRegion = (SelectItemWithImage) regionsTemp.get(0);
 				areaItem.setValue("A" + area.getId() + "_" + singleRegion.getValue());
 			}
-			
+
 		}
-		
+
 		transaction.commit();
 		sess.close();
-		
+
 		SelectItemWithImage[] areasUi = new SelectItemWithImage[areasTemp.size()];
 		areasTemp.toArray(areasUi);
-		
+
 		return areasUi;
 	}
-	
+
 	/**
 	 * Bound to UI. It loads all nations from the database and convert them to
-	 * an array or {@link #edu.emory.library.tast.common.SelectItem}. 
+	 * an array or {@link #edu.emory.library.tast.common.SelectItem}.
+	 * 
 	 * @return
 	 */
-	public SelectItem[] getAllNations()
-	{
+	public SelectItem[] getAllNations() {
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		
+
 		List nationsDb = EstimatesNation.loadAll(sess);
 		SelectItem[] nationsUi = new SelectItem[nationsDb.size()];
-		
+
 		int i = 0;
-		for (Iterator iter = nationsDb.iterator(); iter.hasNext();)
-		{
+		for (Iterator iter = nationsDb.iterator(); iter.hasNext();) {
 			EstimatesNation nation = (EstimatesNation) iter.next();
-			nationsUi[i++] = new SelectItem(
-					nation.getName(),
-					String.valueOf(nation.getId()));
+			nationsUi[i++] = new SelectItem(nation.getName(), String.valueOf(nation.getId()));
 		}
-		
+
 		transaction.commit();
 		sess.close();
-		
+
 		return nationsUi;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String[] getCheckedExpRegions()
-	{
+	public String[] getCheckedExpRegions() {
 		return checkedExpRegions;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setCheckedExpRegions(String[] checkedExpRegionValues)
-	{
+	public void setCheckedExpRegions(String[] checkedExpRegionValues) {
 		this.checkedExpRegions = checkedExpRegionValues;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String[] getCheckedImpRegions()
-	{
+	public String[] getCheckedImpRegions() {
 		return checkedImpRegions;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setCheckedImpRegions(String[] checkedImpRegionValues)
-	{
+	public void setCheckedImpRegions(String[] checkedImpRegionValues) {
 		this.checkedImpRegions = checkedImpRegionValues;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String[] getCheckedNations()
-	{
+	public String[] getCheckedNations() {
 		return checkedNations;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setCheckedNations(String[] checkedNationValues)
-	{
+	public void setCheckedNations(String[] checkedNationValues) {
 		this.checkedNations = checkedNationValues;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String[] getExpandedExpRegions()
-	{
+	public String[] getExpandedExpRegions() {
 		return expandedExpRegions;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setExpandedExpRegions(String[] expandedExpRegions)
-	{
+	public void setExpandedExpRegions(String[] expandedExpRegions) {
 		this.expandedExpRegions = expandedExpRegions;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String[] getExpandedImpRegions()
-	{
+	public String[] getExpandedImpRegions() {
 		return expandedImpRegions;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setExpandedImpRegions(String[] expandedImpRegions)
-	{
+	public void setExpandedImpRegions(String[] expandedImpRegions) {
 		this.expandedImpRegions = expandedImpRegions;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String getSelectedExpRegionsAsText()
-	{
+	public String getSelectedExpRegionsAsText() {
 		return selectedExpRegionsAsText;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setSelectedExpRegionsAsText(String selectedExpRegionsAsText)
-	{
+	public void setSelectedExpRegionsAsText(String selectedExpRegionsAsText) {
 		this.selectedExpRegionsAsText = selectedExpRegionsAsText;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String getSelectedImpRegionsAsText()
-	{
+	public String getSelectedImpRegionsAsText() {
 		return selectedImpRegionsAsText;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setSelectedImpRegionsAsText(String selectedImpRegionsAsText)
-	{
+	public void setSelectedImpRegionsAsText(String selectedImpRegionsAsText) {
 		this.selectedImpRegionsAsText = selectedImpRegionsAsText;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public String getSelectedNationsAsText()
-	{
+	public String getSelectedNationsAsText() {
 		return selectedNationsAsText;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setSelectedNationsAsText(String selectedNationsAsText)
-	{
+	public void setSelectedNationsAsText(String selectedNationsAsText) {
 		this.selectedNationsAsText = selectedNationsAsText;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public int getYearFrom()
-	{
+	public int getYearFrom() {
 		return yearFrom;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setYearFrom(int yearFrom)
-	{
+	public void setYearFrom(int yearFrom) {
 		this.yearFrom = yearFrom;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public int getYearTo()
-	{
+	public int getYearTo() {
 		return yearTo;
 	}
 
 	/**
 	 * Bound to UI. Wrapper.
+	 * 
 	 * @return
 	 */
-	public void setYearTo(int yearTo)
-	{
+	public void setYearTo(int yearTo) {
 		this.yearTo = yearTo;
 	}
-	
+
 	public String createPermanentLink() {
-		
-		//UidGenerator generator = new UidGenerator();
-		//String uid = generator.generate();
-		
+
+		// UidGenerator generator = new UidGenerator();
+		// String uid = generator.generate();
+
 		Configuration conf = new Configuration();
 		conf.addEntry("permlinkEstimates", new EstimatesSelection(this));
 		conf.save();
@@ -1105,7 +1146,7 @@ public class EstimatesSelectionBean
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
 		messageBar.setRendered(true);
-		
+
 		return null;
 	}
 
@@ -1116,7 +1157,7 @@ public class EstimatesSelectionBean
 	public void setMessageBar(MessageBarComponent messageBar) {
 		this.messageBar = messageBar;
 	}
-	
+
 	/**
 	 * Ugly trick (because of limitations of JSF). This is called every time the
 	 * page is reloaded (because it is bound to a textbox). Calls
@@ -1124,27 +1165,41 @@ public class EstimatesSelectionBean
 	 * 
 	 * @return
 	 */
-	public String getFakeHiddenForPermlinkRestore()
-	{
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map params = context.getExternalContext().getRequestParameterMap();
-		if (!params.containsKey("permlink"))
-			return null;
-		
-		String permlink = (String)params.get("permlink");
-		if (StringUtils.isNullOrEmpty(permlink))
-			return null;
+	public String getFakeHiddenForPermlinkRestore() {
 
-		Configuration conf = Configuration.loadConfiguration(permlink);
-		if (conf == null)
-			return null;
-		
-		if (conf.getEntry("permlinkEstimates") != null) {
-			EstimatesSelection selection = (EstimatesSelection) conf.getEntry("permlinkEstimates");
-			this.selectedExpRegionIds = selection.selectedExpRegionIds;
-			this.selectedImpAreaIds = selection.selectedImpAreaIds;
-			this.selectedImpRegionIds = selection.selectedImpRegionIds;
-			this.selectedNationIds = selection.selectedNationIds;
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map params = context.getExternalContext().getRequestParameterMap();
+			if (!params.containsKey("permlink"))
+				return null;
+
+			String permlink = (String) params.get("permlink");
+			if (StringUtils.isNullOrEmpty(permlink))
+				return null;
+
+			Configuration conf = Configuration.loadConfiguration(permlink);
+			if (conf == null)
+				return null;
+
+			if (conf.getEntry("permlinkEstimates") != null) {
+				EstimatesSelection selection = (EstimatesSelection) conf.getEntry("permlinkEstimates");
+				this.selectedExpRegionIds = selection.selectedExpRegionIds;
+				this.selectedImpAreaIds = selection.selectedImpAreaIds;
+				this.selectedImpRegionIds = selection.selectedImpRegionIds;
+				this.selectedNationIds = selection.selectedNationIds;
+				this.yearFrom = selection.yearFrom;
+				this.yearTo = selection.yearTo;
+				if (selection.selectedTab != null) {
+					this.selectedTab = selection.selectedTab;
+				}
+				this.restoreConditions(session);
+				this.updateSelectionInfo();
+			}
+		} finally {
+			t.commit();
+			session.close();
 		}
 		return null;
 	}
@@ -1155,8 +1210,15 @@ public class EstimatesSelectionBean
 	 * 
 	 * @return
 	 */
-	public void setFakeHiddenForPermlinkRestore(String value)
-	{
+	public void setFakeHiddenForPermlinkRestore(String value) {
+	}
+
+	public String getSelectedTab() {
+		return selectedTab;
+	}
+
+	public void setSelectedTab(String selectedTab) {
+		this.selectedTab = selectedTab;
 	}
 
 }

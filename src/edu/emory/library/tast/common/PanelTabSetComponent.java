@@ -177,6 +177,7 @@ public class PanelTabSetComponent extends UIComponentBase {
 
 	public void setSelectedSectionId(String selectedSectionId) {
 		this.selectedSectionId = selectedSectionId;
+		this.selectedSectionIdSet = true;
 	}
 
 }
