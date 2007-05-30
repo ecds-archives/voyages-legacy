@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,6 +19,7 @@ import edu.emory.library.tast.admin.VoyageBean;
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.TabChangedEvent;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
@@ -26,6 +28,7 @@ import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.dm.EditedVoyage;
+import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
 import edu.emory.library.tast.dm.SubmissionMerge;
@@ -40,6 +43,14 @@ import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+/**
+ * The bean that is responsible for requests administration/user administration and new revisions publishingl.
+ * The main methods that are executed (as actions) from user interface are:
+ *  - publish
+ * 
+ *  - 
+ *
+ */
 public class AdminSubmissionBean {
 
 	private static final String COPY_LABEL = "Copy";
@@ -82,32 +93,102 @@ public class AdminSubmissionBean {
 
 	public static final int TYPE_MERGE = 3;
 
+	public static final SelectItem[] REQUESTS_TYPES = new SelectItem[] { 
+			new SelectItem("1", REQUEST_ALL), 
+			new SelectItem("2", REQUEST_NEW), 
+			new SelectItem("3", REQUEST_EDIT),
+			new SelectItem("4", REQUEST_MERGE), 
+		};
+	
+	public static final GridColumn[] REQUESTS_LIST_COLS = new GridColumn[] { 
+			new GridColumn("Type"), 
+			new GridColumn("User"), 
+			new GridColumn("Date"),
+			new GridColumn("Involved voyages ID"), 
+			new GridColumn("Reviewed"), 
+			new GridColumn("Status") 
+		};
+	
+	/**
+	 * Attributes that are available for administrator/editor.
+	 */
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getSubmissionAttributes();
 
+	/**
+	 * Reference to voyage bean - to provide way of showing voyage details.
+	 */
 	private VoyageBean voyageBean = null;
 
+	/**
+	 * Indicator is error occured (if wrong value was entered into any field).
+	 */
 	private boolean wasError = false;
 
+	/**
+	 * Values for DataGrid component.
+	 */
 	private Values vals = null;
 
+	/**
+	 * Rows for DataGrid component.
+	 */
 	private RowGroup[] rowGroups;
 
+	/**
+	 * Indication of chosen tab.
+	 */
 	private String chosenTab = "voyages";
 
+	/**
+	 * Chosen request type (1 - all, 2 - new, 3 - edit, 4 - merge). 
+	 */
 	private String requestType = "1";
-	
+
+	/**
+	 * Status of request (1 - all).
+	 */
 	private String requestStatus = "1";
 
+	/**
+	 * Id of submission that is expanded.
+	 */
 	private Long submissionId = null;
 
+	/**
+	 * In case of edit request - one can have more than one submission solved at once.
+	 */
 	private Long[] editRequests = null;
 
+	/**
+	 * Main voyage id in merge request.
+	 */
 	private Long mergeMainVoyage = null;
 
+	/**
+	 * When deletion is approved, this is set to true
+	 */
 	private boolean deleteApproved = false;
 
+	/**
+	 * Loggenin user - if null - no user was logged in
+	 */
 	private User authenticateduser = null;
-	
+
+	/**
+	 * Name of new, published revision
+	 */
+	private String revisionName;
+
+	/**
+	 * Message that is shown after the publish button was pressed.
+	 */
+	private String message;
+
+	/**
+	 * Constructor.
+	 * Creartes some basic structures like rows and row groups (for DataGrid component)
+	 *
+	 */
 	public AdminSubmissionBean() {
 		List rowGroupsList = new ArrayList();
 		for (int i = 0; i < attrs.length; i++) {
@@ -123,6 +204,11 @@ public class AdminSubmissionBean {
 
 	}
 
+	/**
+	 * Gets values for grid component.
+	 * If required - queries DB to fill in values.
+	 * @return
+	 */
 	public Values getValues() {
 
 		if (!wasError || vals == null) {
@@ -133,13 +219,13 @@ public class AdminSubmissionBean {
 			Map[] attributeNotes = null;
 			EditedVoyage vNew = null;
 			Submission lSubmisssion = Submission.loadById(session, this.submissionId);
-			
+
 			if (lSubmisssion instanceof SubmissionNew) {
-				vNew = ((SubmissionNew)lSubmisssion).getEditorVoyage();
+				vNew = ((SubmissionNew) lSubmisssion).getEditorVoyage();
 			} else if (lSubmisssion instanceof SubmissionEdit) {
-				vNew = ((SubmissionEdit)lSubmisssion).getEditorVoyage();
+				vNew = ((SubmissionEdit) lSubmisssion).getEditorVoyage();
 			} else {
-				vNew = ((SubmissionMerge)lSubmisssion).getEditorVoyage();	
+				vNew = ((SubmissionMerge) lSubmisssion).getEditorVoyage();
 			}
 			if (lSubmisssion instanceof SubmissionNew) {
 				toVals = new Voyage[2];
@@ -148,13 +234,13 @@ public class AdminSubmissionBean {
 				toVals[0] = Voyage.loadById(session, ((SubmissionNew) lSubmisssion).getNewVoyage().getVoyage().getIid());
 				attributeNotes[0] = (((SubmissionNew) lSubmisssion).getNewVoyage().getAttributeNotes());
 				if (vNew == null) {
-					toVals[1] =  new Voyage();
+					toVals[1] = new Voyage();
 					attributeNotes[1] = new HashMap();
 				} else {
-					toVals[1] =  vNew.getVoyage();
+					toVals[1] = vNew.getVoyage();
 					attributeNotes[1] = vNew.getAttributeNotes();
 				}
-				cols[0] = ORYGINAL_VOYAGE; 
+				cols[0] = ORYGINAL_VOYAGE;
 				cols[1] = DECIDED_VOYAGE;
 			} else if (lSubmisssion instanceof SubmissionEdit) {
 				toVals = new Voyage[2 + this.editRequests.length];
@@ -175,7 +261,7 @@ public class AdminSubmissionBean {
 				} else {
 					toVals[toVals.length - 1] = vNew.getVoyage();
 					attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
-				}				
+				}
 				cols[cols.length - 1] = DECIDED_VOYAGE;
 			} else {
 				toVals = new Voyage[2 + this.editRequests.length];
@@ -197,7 +283,7 @@ public class AdminSubmissionBean {
 				} else {
 					toVals[toVals.length - 1] = vNew.getVoyage();
 					attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
-				}	
+				}
 				cols[cols.length - 1] = DECIDED_VOYAGE;
 			}
 			vals = new Values();
@@ -210,7 +296,7 @@ public class AdminSubmissionBean {
 						toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());
 					}
 					Value value = attrs[i].getValue(toBeFormatted);
-					value.setNote((String)attributeNotes[n].get(attrs[i].getName()));
+					value.setNote((String) attributeNotes[n].get(attrs[i].getName()));
 					vals.setValue(cols[n], attrs[i].getName(), value);
 				}
 			}
@@ -223,7 +309,21 @@ public class AdminSubmissionBean {
 		return vals;
 
 	}
+	
+	/**
+	 * Sets values when user returns form with GridComponent.
+	 * @param vals
+	 */
+	public void setValues(Values vals) {
+		this.vals = vals;
+	}
 
+	/**
+	 * Returns voyage that will be published in next publish process.
+	 * @param sess
+	 * @param voyageid2
+	 * @return
+	 */
 	private Voyage getCurrentlyPreparedVoyage(Session sess, Integer voyageid2) {
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), voyageid2, Conditions.OP_EQUALS);
@@ -238,6 +338,10 @@ public class AdminSubmissionBean {
 		}
 	}
 
+	/**
+	 * Gets columns for GridComponent. The result depends on type of submission that is handled. 
+	 * @return
+	 */
 	public Column[] getColumns() {
 		Column[] cols = null;
 		Session session = HibernateUtil.getSession();
@@ -257,7 +361,7 @@ public class AdminSubmissionBean {
 		} else {
 			cols = new Column[2 + this.editRequests.length];
 			for (int i = 0; i < cols.length - 2; i++) {
-				cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i+1), true, DECIDED_VOYAGE, COPY_LABEL);
+				cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i + 1), true, DECIDED_VOYAGE, COPY_LABEL);
 			}
 			cols[cols.length - 2] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
 			cols[cols.length - 1] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
@@ -267,6 +371,10 @@ public class AdminSubmissionBean {
 		return cols;
 	}
 
+	/**
+	 * Returns rows for GridComponent.
+	 * @return
+	 */
 	public Row[] getRows() {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
@@ -276,68 +384,122 @@ public class AdminSubmissionBean {
 		return rows;
 	}
 
-	public void setValues(Values vals) {
-		this.vals = vals;
-	}
-
+	/**
+	 * Gets supported field types (items in lists etc) (for GridComponent).
+	 * @return
+	 */
 	public Map getFieldTypes() {
 		return SubmissionDictionaries.fieldTypes;
 	}
 
+	/**
+	 * Gets groups for rows - GridComponent requirement.
+	 * @return
+	 */
 	public RowGroup[] getRowGroups() {
 		return this.rowGroups;
 	}
 
+	/**
+	 * Called when active tab is changed.
+	 * @param e
+	 */
 	public void onTabChanged(TabChangedEvent e) {
 		this.chosenTab = e.getTabId();
-		System.out.println("Chosen tab: " + e.getTabId());
 	}
 
+	/**
+	 * Gets currently selected tab name.
+	 * @return
+	 */
 	public String getSelectedTab() {
 		return this.chosenTab;
 	}
 
+	/**
+	 * Sets selected tab.
+	 * @param tab
+	 */
 	public void setSelectedTab(String tab) {
 		this.chosenTab = tab;
 	}
 
+	/**
+	 * Checks if list of voyages is selected.
+	 * @return
+	 */
 	public Boolean getVoyagesListSelected() {
 		return new Boolean(this.chosenTab.equals("voyages"));
 	}
 
+	/**
+	 * Checks if list of requests is selected.
+	 * @return
+	 */
 	public Boolean getRequestsListSelected() {
 		return new Boolean(this.chosenTab.equals("requests"));
 	}
 
+	/**
+	 * Checks if list of users is selected.
+	 * @return
+	 */
 	public Boolean getUsersListSelected() {
 		return new Boolean(this.chosenTab.equals("users"));
 	}
 	
+	/**
+	 * Checks if publish is selected.
+	 * @return
+	 */
 	public Boolean getPublishSelected() {
 		return new Boolean(this.chosenTab.equals("publish"));
 	}
-	
+
+	/**
+	 * Returns types of available requests.
+	 * @return
+	 */
 	public SelectItem[] getRequestTypes() {
-		return new SelectItem[] { new SelectItem("1", REQUEST_ALL), new SelectItem("2", REQUEST_NEW), new SelectItem("3", REQUEST_EDIT),
-				new SelectItem("4", REQUEST_MERGE), };
+		return REQUESTS_TYPES;
 	}
 
+	/**
+	 * Gets currently chosen request type (requests of this type will be visible).
+	 * @return
+	 */
 	public String getRequestType() {
 		return this.requestType;
 	}
 
+	/**
+	 * Sets requests type filter .
+	 * @param type
+	 */
 	public void setRequestType(String type) {
 		this.requestType = type;
 	}
-	
+
+	/**
+	 * Sets request status filter.
+	 * @param status
+	 */
 	public void setRequestStatus(String status) {
 		this.requestStatus = status;
 	}
-	
+
+	/**
+	 * Gets request status filter.
+	 * @return
+	 */
 	public String getRequestStatus() {
 		return this.requestStatus;
 	}
 
+	/**
+	 * Gets rows which represent requests that correspond to current filter setting.
+	 * @return
+	 */
 	public GridRow[] getRequestRows() {
 
 		List l = new ArrayList();
@@ -353,8 +515,8 @@ public class AdminSubmissionBean {
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
 		} else if (this.requestStatus.equals("4")) {
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(true), Conditions.OP_EQUALS);
-		}		
-		if (this.requestType.equals("1") || this.requestType.equals("2")) {				
+		}
+		if (this.requestType.equals("1") || this.requestType.equals("2")) {
 			QueryValue q = new QueryValue("SubmissionNew", c);
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
@@ -367,9 +529,9 @@ public class AdminSubmissionBean {
 						lastCol += "/Rejected";
 					}
 				}
-				l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request", submission.getUser().getUserName(),
-						submission.getTime().toString(), "New voyage - ID not yet assigned", 
-						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol}));
+				l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
+						submission.getUser().getUserName(), submission.getTime().toString(), "New voyage - ID not yet assigned",
+						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 			}
 		}
 
@@ -386,9 +548,10 @@ public class AdminSubmissionBean {
 						lastCol += "/Rejected";
 					}
 				}
-				l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request", submission.getUser().getUserName(),
-						submission.getTime().toString(), submission.getOldVoyage().getVoyage().getVoyageid().toString() ,
-						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol}));
+				l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request",
+						submission.getUser().getUserName(), submission.getTime().toString(),
+						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
+						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 			}
 		}
 
@@ -416,9 +579,9 @@ public class AdminSubmissionBean {
 						lastCol += "/Rejected";
 					}
 				}
-				l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request", submission.getUser().getUserName(),
-						submission.getTime().toString(), involvedStr ,
-						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol}));
+				l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request",
+						submission.getUser().getUserName(), submission.getTime().toString(), involvedStr,
+						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 			}
 		}
 		t.commit();
@@ -427,11 +590,19 @@ public class AdminSubmissionBean {
 		return (GridRow[]) l.toArray(new GridRow[] {});
 	}
 
+	/**
+	 * Gets columns for requests list.
+	 * @return
+	 */
 	public GridColumn[] getRequestColumns() {
-		return new GridColumn[] { new GridColumn("Type"), new GridColumn("User"), new GridColumn("Date"),
-				new GridColumn("Involved voyages ID"), new GridColumn("Reviewed"), new GridColumn("Status") };
+		return REQUESTS_LIST_COLS;
 	}
 
+	/**
+	 * Invoked when user clicks on any row of list showing requests.
+	 * Prepares data for request handling.
+	 * @param e
+	 */
 	public void newRequestId(GridOpenRowEvent e) {
 
 		Session session = HibernateUtil.getSession();
@@ -477,7 +648,7 @@ public class AdminSubmissionBean {
 	public String resolveRequest() {
 		return "resolve-request";
 	}
-	
+
 	public Boolean getRejectAvailable() {
 		Boolean avail = null;
 		Session session = HibernateUtil.getSession();
@@ -487,9 +658,9 @@ public class AdminSubmissionBean {
 		t.commit();
 		session.close();
 		return avail;
-		
+
 	}
-	
+
 	/**
 	 * Action fired when reject button was pressed
 	 */
@@ -499,7 +670,7 @@ public class AdminSubmissionBean {
 		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
 		if (lSubmisssion instanceof SubmissionEdit) {
 			Conditions c = new Conditions();
-			c.addCondition(SubmissionEdit.getAttribute("oldVoyage"), ((SubmissionEdit)lSubmisssion).getOldVoyage(), Conditions.OP_EQUALS);
+			c.addCondition(SubmissionEdit.getAttribute("oldVoyage"), ((SubmissionEdit) lSubmisssion).getOldVoyage(), Conditions.OP_EQUALS);
 			QueryValue qValue = new QueryValue("SubmissionEdit", c);
 			Object[] toUpdate = qValue.executeQuery(session);
 			for (int i = 0; i < toUpdate.length; i++) {
@@ -508,7 +679,7 @@ public class AdminSubmissionBean {
 				edit.setAccepted(false);
 				session.update(edit);
 			}
-		} else {		
+		} else {
 			lSubmisssion.setSolved(true);
 			lSubmisssion.setAccepted(false);
 			session.update(lSubmisssion);
@@ -517,38 +688,38 @@ public class AdminSubmissionBean {
 		session.close();
 		return "back";
 	}
-	
+
 	public String submit() {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		Map newValues = vals.getColumnValues(DECIDED_VOYAGE);
 		Submission lSubmission = Submission.loadById(session, this.submissionId);
-		
+
 		if (lSubmission instanceof SubmissionMerge && !deleteApproved) {
 			t.commit();
 			session.close();
 			return "approve-delete";
 		}
-		deleteApproved  = false;
-		
+		deleteApproved = false;
+
 		Voyage vNew = null;
 		Voyage mergedVoyage = updateMergedVoyage(session, lSubmission, newValues);
-		
+
 		if (mergedVoyage == null) {
 			t.commit();
 			session.close();
 			return null;
 		}
-		
+
 		if (lSubmission instanceof SubmissionMerge) {
 			System.out.println("Will delete all merged voyages");
-			Set voyagesToDelete = ((SubmissionMerge)lSubmission).getMergedVoyages();
+			Set voyagesToDelete = ((SubmissionMerge) lSubmission).getMergedVoyages();
 			for (Iterator iter = voyagesToDelete.iterator(); iter.hasNext();) {
 				EditedVoyage element = (EditedVoyage) iter.next();
 				Integer voyageId = element.getVoyage().getVoyageid();
 				Voyage voyage = Voyage.loadFutureRevision(session, voyageId.intValue());
 				if (voyage != null) {
-					session.delete(voyage);				
+					session.delete(voyage);
 				}
 			}
 		}
@@ -562,25 +733,23 @@ public class AdminSubmissionBean {
 		} else {
 			vNew = new Voyage();
 			vNew.setRevision(-1);
-		}	
-		
-		
-		
+		}
+
 		wasError = false;
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
-			
+
 			if (val.isError()) {
 				val.setErrorMessage("Error in value!");
 				wasError = true;
 			}
 			Object[] vals = attrs[i].getValues(null, val);
-			
+
 			if (attrs[i].getName().equals("voyageid") && vals[0] == null) {
 				val.setErrorMessage("This field is required!");
 				wasError = true;
 			}
-			
+
 			for (int j = 0; j < vals.length; j++) {
 				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
@@ -591,7 +760,10 @@ public class AdminSubmissionBean {
 
 		if (lSubmission instanceof SubmissionEdit) {
 			Conditions c = new Conditions();
-			c.addCondition(new SequenceAttribute(new Attribute[] {SubmissionEdit.getAttribute("oldVoyage"), EditedVoyage.getAttribute("voyage")}), ((SubmissionEdit)lSubmission).getOldVoyage().getVoyage(), Conditions.OP_EQUALS);
+			c
+					.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
+							EditedVoyage.getAttribute("voyage") }), ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage(),
+							Conditions.OP_EQUALS);
 			qValue = new QueryValue("SubmissionEdit", c);
 			Object[] toUpdate = qValue.executeQuery(session);
 			for (int i = 0; i < toUpdate.length; i++) {
@@ -605,13 +777,13 @@ public class AdminSubmissionBean {
 			lSubmission.setAccepted(true);
 			session.update(lSubmission);
 		}
-		
+
 		System.out.println("Voyage submission saved");
 		t.commit();
 		session.close();
 		return "back";
 	}
-	
+
 	/**
 	 * Action fired when accept button was pressed
 	 */
@@ -620,35 +792,35 @@ public class AdminSubmissionBean {
 		Transaction t = session.beginTransaction();
 		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
 		Map newValues = vals.getColumnValues(DECIDED_VOYAGE);
-		
+
 		if (updateMergedVoyage(session, lSubmisssion, newValues) == null) {
 			t.commit();
 			session.close();
 			return null;
 		}
-		
+
 		t.commit();
 		session.close();
 		return "back";
 	}
 
 	private Voyage updateMergedVoyage(Session session, Submission lSubmisssion, Map newValues) {
-		
+
 		this.wasError = false;
-		Voyage vNew = null;		
+		Voyage vNew = null;
 		EditedVoyage editedVoyage = null;
 		if (lSubmisssion instanceof SubmissionNew) {
-			editedVoyage = ((SubmissionNew)lSubmisssion).getEditorVoyage();
+			editedVoyage = ((SubmissionNew) lSubmisssion).getEditorVoyage();
 			if (editedVoyage != null) {
 				vNew = editedVoyage.getVoyage();
 			}
 		} else if (lSubmisssion instanceof SubmissionEdit) {
-			editedVoyage = ((SubmissionEdit)lSubmisssion).getEditorVoyage();
+			editedVoyage = ((SubmissionEdit) lSubmisssion).getEditorVoyage();
 			if (editedVoyage != null) {
 				vNew = editedVoyage.getVoyage();
 			}
 		} else {
-			editedVoyage = ((SubmissionMerge)lSubmisssion).getEditorVoyage();
+			editedVoyage = ((SubmissionMerge) lSubmisssion).getEditorVoyage();
 			if (editedVoyage != null) {
 				vNew = editedVoyage.getVoyage();
 			}
@@ -670,14 +842,13 @@ public class AdminSubmissionBean {
 			if (!StringUtils.isNullOrEmpty(val.getNote())) {
 				notes.put(attrs[i].getName(), val.getNote());
 			}
-			if (attrs[i].getName().equals("voyageid") && 
-					vNew.getVoyageid() == null) {
+			if (attrs[i].getName().equals("voyageid") && vNew.getVoyageid() == null) {
 				wasError = true;
 				val.setErrorMessage("This field is required");
 			}
 		}
 		vNew.setSuggestion(true);
-		if (!wasError) {			
+		if (!wasError) {
 			session.saveOrUpdate(vNew);
 			if (editedVoyage == null) {
 				editedVoyage = new EditedVoyage(vNew, null);
@@ -685,12 +856,13 @@ public class AdminSubmissionBean {
 			}
 			editedVoyage.setAttributeNotes(notes);
 			if (lSubmisssion instanceof SubmissionNew) {
-				((SubmissionNew)lSubmisssion).setEditorVoyage(editedVoyage);
+				((SubmissionNew) lSubmisssion).setEditorVoyage(editedVoyage);
 				session.update(lSubmisssion);
 			} else if (lSubmisssion instanceof SubmissionEdit) {
 				Conditions c = new Conditions();
-				c.addCondition(new SequenceAttribute(new Attribute[] {SubmissionEdit.getAttribute("oldVoyage"), EditedVoyage.getAttribute("voyage")}), 
-						((SubmissionEdit)lSubmisssion).getOldVoyage().getVoyage(), Conditions.OP_EQUALS);
+				c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
+						EditedVoyage.getAttribute("voyage") }), ((SubmissionEdit) lSubmisssion).getOldVoyage().getVoyage(),
+						Conditions.OP_EQUALS);
 				QueryValue qValue = new QueryValue("SubmissionEdit", c);
 				Object[] toUpdate = qValue.executeQuery(session);
 				for (int i = 0; i < toUpdate.length; i++) {
@@ -699,16 +871,16 @@ public class AdminSubmissionBean {
 					session.update(edit);
 				}
 			} else {
-				((SubmissionMerge)lSubmisssion).setEditorVoyage(editedVoyage);
+				((SubmissionMerge) lSubmisssion).setEditorVoyage(editedVoyage);
 				session.update(lSubmisssion);
 			}
-			
-			return vNew;			
+
+			return vNew;
 		} else {
 			return null;
 		}
 	}
-	
+
 	public String approveDelete() {
 		this.deleteApproved = true;
 		if (this.submit() == null) {
@@ -716,14 +888,15 @@ public class AdminSubmissionBean {
 		}
 		return "main-menu";
 	}
-	
+
 	public String rejectDelete() {
 		return "main-menu";
 	}
+
 	public String openVoyageAction() {
 		return "edit";
 	}
-	
+
 	public String logout() {
 		this.authenticateduser = null;
 		return null;
@@ -736,7 +909,7 @@ public class AdminSubmissionBean {
 	public void setAuthenticateduser(User authenticateduser) {
 		this.authenticateduser = authenticateduser;
 	}
-	
+
 	public Boolean getIsAdmin() {
 		return new Boolean(this.authenticateduser.isAdmin());
 	}
@@ -764,14 +937,42 @@ public class AdminSubmissionBean {
 	public void setVoyageBean(VoyageBean voyageBean) {
 		this.voyageBean = voyageBean;
 	}
-	
+
 	public String publish() {
-		System.out.println("publish");
+
+		if (this.revisionName == null || "".equals(this.revisionName)) {
+			this.message = "Revision name cannot be empty!";
+			return null;
+		}
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+
 		try {
-			Thread.currentThread().sleep(10000);
-		} catch (InterruptedException e) {
+			System.out.println("publish");
+			SQLQuery query = session.createSQLQuery("select publish('" + this.revisionName.replaceAll("'", "''") + "');");
+			query.list();
+			this.message = "New revision named '" + this.revisionName + "' has just been published.";
+			this.revisionName = null;
+		} catch (Exception e) {
 			e.printStackTrace();
+			this.message = "Something was wrong... Contact system administrator!";
+		}finally {
+			t.commit();
+			session.close();
 		}
 		return null;
+	}
+
+	public String getRevisionName() {
+		return revisionName;
+	}
+
+	public void setRevisionName(String revisionName) {
+		this.revisionName = revisionName;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 }

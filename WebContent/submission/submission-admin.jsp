@@ -175,6 +175,11 @@
 			The process can take few minutes. Please do not press the button twice or do not
 			refresh the page.<br>
 		</f:verbatim>
+		<h:outputText value="Revision name: "/>
+		<h:inputText value="#{AdminSubmissionBean.revisionName}"/>
+		<t:htmlTag value="br"></t:htmlTag>
+		<h:outputText value="#{AdminSubmissionBean.message}" rendered="#{AdminSubmissionBean.message != null}"/>
+		<t:htmlTag value="br"></t:htmlTag>
 		<h:commandButton value="Publish new revision" action="#{AdminSubmissionBean.publish}"/>
 	</h:panelGroup>
 
