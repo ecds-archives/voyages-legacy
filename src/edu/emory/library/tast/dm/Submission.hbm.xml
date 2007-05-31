@@ -116,6 +116,16 @@
 		<property name="enabled" column="enabled"/>
 		<property name="createDate"/>
 		
+		<property name="firstName" column="first_name"/>
+		<property name="lastName" column="last_name"/>
+		<property name="institution" column="institution"/>
+		<property name="email" column="email"/>
+		
+		<set name="submissions" table="submissions" inverse="true">
+			<key column="user_id" />
+			<many-to-many column="id" class="edu.emory.library.tast.dm.Submission" />
+		</set>
+		
 	</class>
 
 </hibernate-mapping>

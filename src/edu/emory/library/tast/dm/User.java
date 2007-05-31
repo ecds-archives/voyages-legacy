@@ -3,12 +3,16 @@ package edu.emory.library.tast.dm;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.tools.ant.types.CommandlineJava;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public class User {
 	
@@ -19,6 +23,13 @@ public class User {
 	private boolean admin;
 	private boolean enabled;
 	private Date createDate;
+	
+	private String firstName;
+	private String lastName;
+	private String institution;
+	private String email;
+	
+	private Set submissions;
 	
 	
 	private static Map attributes = new HashMap();
@@ -84,6 +95,17 @@ public class User {
 	public static User loadById(Session session, Long checkedUserId) {
 		return (User) Dictionary.loadById(User.class, session, checkedUserId.longValue());
 	}
+	
+	public static User loadByName(Session session, String newUserName) {
+		Conditions c = new Conditions();
+		c.addCondition(getAttribute("userName"), newUserName, Conditions.OP_EQUALS);
+		QueryValue qVal = new QueryValue("User", c);
+		Object[] objects = qVal.executeQuery(session);
+		if (objects.length == 0) {
+			return null;
+		}
+		return (User) objects[0];
+	}
 
 	public Date getCreateDate() {
 		return createDate;
@@ -92,7 +114,44 @@ public class User {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Set getSubmissions() {
+		return submissions;
+	}	
 	
-	
-	
+	public void setSubmissions(Set submissions) {
+		this.submissions = submissions;
+	}
 }

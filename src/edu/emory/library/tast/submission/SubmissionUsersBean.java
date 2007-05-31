@@ -2,6 +2,8 @@ package edu.emory.library.tast.submission;
 
 import java.util.Date;
 
+import javax.faces.model.SelectItem;
+
 import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,24 +21,86 @@ import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class SubmissionUsersBean {
-	
+
 	public static final String ERROR_LOGIN = "Login error! Try again";
+
 	public static final String ERROR_INACTIVE = "Your account is inactive, please contact us.";
 	
+	
+	private SubmissionBean submissionBean;
+
+	private AdminSubmissionBean adminSubmissionBean;
+
+	private String errorMessage;
+
+	///////////////////////////////
+	////LOGIN STUFF////////////////
 	private String userName;
 	private String password;
-	private SubmissionBean submissionBean;
-	private AdminSubmissionBean adminSubmissionBean;
-	private String errorMessage;
 	
-	private String newUserName;
-	private String newUserPassword;
-	
+	///////////////////////////////////
+	/////////Admin user edit STUFF/////
 	private Long checkedUserId;
+
 	private String checkedUserName;
+
 	private String checkedPassword;
+
+	private String checkedFirstName;
+	
+	private String checkedLastName;
+	
+	private String checkedEmail;
+	
+	private String checkedInstitution;
+	
 	private String checkedDate;
+
 	private Boolean checkedActive;
+	
+	private String checkedUserErrorMessage;
+
+	
+	//////////////////////////////////
+	////New user stuff////////////////
+	private String newUserName;
+
+	private String newUserFirstName;
+
+	private String newUserLastName;
+
+	private String newUserInstitution;
+
+	private String newUserEmail;
+
+	private String newUserVerificationString;
+
+	private String verificationString;
+
+	private String newUserErrorMessage;
+
+	private String newUserPassword;
+
+	private String newUserPasswordAgain;
+
+	
+	////////////////////////////////////
+	/////Admin users list stuff/////////
+	public static final SelectItem[] accountTypes = new SelectItem[] {
+		new SelectItem("1", "All accounts"),
+		new SelectItem("2", "Only active accounts"),
+		new SelectItem("3", "Only inactive accounts")
+	};
+	
+	private String accountType;
+	
+	public SubmissionUsersBean() {
+		char[] verif = new char[6];
+		for (int i = 0; i < verif.length; i++) {
+			verif[i] = (char) (Math.random()* (double)26 + 65);
+		}
+		this.verificationString = new String(verif);
+	}
 	
 	public String auth() {
 		Conditions c = new Conditions();
@@ -63,80 +127,100 @@ public class SubmissionUsersBean {
 			}
 		}
 	}
-	
+
 	public GridColumn[] getUserColumns() {
-		return new GridColumn[] {
-				new GridColumn("User name"),
-				new GridColumn("Password"),
+		return new GridColumn[] { 
+				new GridColumn("User name"), 
+				new GridColumn("First name"), 
+				new GridColumn("Last name"),
+				new GridColumn("E-mail"), 
 				new GridColumn("User active"),
-				new GridColumn("Number of requests")
+				new GridColumn("Number of requests") 
 		};
 	}
-	
+
 	public GridRow[] getUserRows() {
 		Conditions c = new Conditions();
 		c.addCondition(User.getAttribute("editor"), new Boolean(false), Conditions.OP_EQUALS);
 		c.addCondition(User.getAttribute("admin"), new Boolean(false), Conditions.OP_EQUALS);
+		if ("2".equals(this.accountType)) {
+			c.addCondition(User.getAttribute("enabled"), new Boolean(true), Conditions.OP_EQUALS);
+		} else if ("3".equals(this.accountType)) {
+			c.addCondition(User.getAttribute("enabled"), new Boolean(false), Conditions.OP_EQUALS);
+		}
+		
 		QueryValue qValue = new QueryValue("User", c);
-		qValue.setOrderBy(new Attribute[] {User.getAttribute("userName")});
+		qValue.setOrderBy(new Attribute[] { User.getAttribute("userName") });
 		qValue.setOrder(QueryValue.ORDER_ASC);
 		Object[] users = qValue.executeQuery();
 		if (users.length == 0) {
 			return new GridRow[] {};
 		} else {
 			GridRow[] response = new GridRow[users.length];
-			
+
 			for (int i = 0; i < response.length; i++) {
 				User user = (User) users[i];
-				
+
 				c = new Conditions();
 				c.addCondition(Submission.getAttribute("user"), user, Conditions.OP_EQUALS);
 				qValue = new QueryValue("Submission", c);
-				qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Submission.getAttribute("id")}));
+				qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] { Submission.getAttribute("id") }));
 				Object[] res = qValue.executeQuery();
 				String numPosts = "N/A";
 				if (res.length != 0) {
-					numPosts = ((Long)res[0]).toString();
+					numPosts = ((Long) res[0]).toString();
 				}
-				
-				response[i] = new GridRow(user.getId().toString(), new String[] {
-					user.getUserName(),
-					user.getPassword(),
-					user.isEnabled() ? "Yes":"No",
-					numPosts
-				});
+
+				response[i] = new GridRow(user.getId().toString(), 
+						new String[] { 
+							user.getUserName(), 
+							user.getFirstName(), 
+							user.getLastName(), 
+							user.getEmail(),
+							user.isEnabled() ? "Yes" : "No", 
+							numPosts 
+						});
 			}
 			return response;
 		}
 	}
-		
+
 	public AdminSubmissionBean getAdminSubmissionBean() {
 		return adminSubmissionBean;
 	}
+
 	public void setAdminSubmissionBean(AdminSubmissionBean adminSubmissionBean) {
 		this.adminSubmissionBean = adminSubmissionBean;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public SubmissionBean getSubmissionBean() {
 		return submissionBean;
 	}
+
 	public void setSubmissionBean(SubmissionBean submissionBean) {
 		this.submissionBean = submissionBean;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
@@ -149,37 +233,41 @@ public class SubmissionUsersBean {
 		this.newUserName = newUserName;
 	}
 
-	public String getNewUserPassword() {
-		return newUserPassword;
-	}
+	// public String getNewUserPassword() {
+	// return newUserPassword;
+	// }
+	//
+	// public void setNewUserPassword(String newUserPassword) {
+	// this.newUserPassword = newUserPassword;
+	// }
+	//	
+	// public String createNewUser() {
+	// if (StringUtils.isNullOrEmpty(this.newUserName) ||
+	// StringUtils.isNullOrEmpty(this.newUserPassword)) {
+	// return null;
+	// }
+	//		
+	// User user = new User(this.newUserName, this.newUserPassword);
+	// user.setEnabled(true);
+	// user.setCreateDate(new Date());
+	// Session session = HibernateUtil.getSession();
+	// Transaction t = session.beginTransaction();
+	// session.save(user);
+	// t.commit();
+	// session.close();
+	// this.newUserName = "";
+	// this.newUserPassword = "";
+	// return null;
+	// }
 
-	public void setNewUserPassword(String newUserPassword) {
-		this.newUserPassword = newUserPassword;
-	}
-	
-	public String createNewUser() {
-		if (StringUtils.isNullOrEmpty(this.newUserName) || 
-				StringUtils.isNullOrEmpty(this.newUserPassword)) {
-			return null;
-		}
-		
-		User user = new User(this.newUserName, this.newUserPassword);
-		user.setEnabled(true);
-		user.setCreateDate(new Date());
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
-		session.save(user);
-		t.commit();
-		session.close();		
-		this.newUserName = "";
-		this.newUserPassword = "";
-		return null;
-	}
-		
 	public void editUser(GridOpenRowEvent event) {
 		this.checkedUserId = new Long(event.getRowId());
 	}
 	
+	public String refresh() {
+		return null;
+	}
+
 	public String enterEditUser() {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
@@ -189,18 +277,37 @@ public class SubmissionUsersBean {
 			session.close();
 			return null;
 		}
-		
-		this.checkedUserName = user.getUserName();		
+
+		this.checkedUserName = user.getUserName();
 		this.checkedPassword = user.getPassword();
 		this.checkedDate = user.getCreateDate().toString();
 		this.checkedActive = new Boolean(user.isEnabled());
+		this.checkedFirstName = user.getFirstName();
+		this.checkedLastName = user.getLastName();
+		this.checkedInstitution = user.getInstitution();
+		this.checkedEmail = user.getEmail();
+		this.checkedUserErrorMessage = null;
 		t.commit();
 		session.close();
 		return "edit-user";
 	}
+
+	public String deleteUser() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		User user = User.loadById(session, this.checkedUserId);
+		if (user.getSubmissions().size() != 0) {
+			this.checkedUserErrorMessage = "Cannot delete user who has submitted some requests.";
+			return null;
+		}
+		session.delete(user);
+		t.commit();
+		session.close();
+		return "main-menu";
+	}
 	
 	public String updateUser() {
-		
+
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		User user = User.loadById(session, this.checkedUserId);
@@ -212,7 +319,7 @@ public class SubmissionUsersBean {
 		user.setEnabled(this.checkedActive.booleanValue());
 		user.setUserName(this.checkedUserName);
 		user.setPassword(this.checkedPassword);
-		
+
 		t.commit();
 		session.close();
 		this.checkedUserId = null;
@@ -258,5 +365,168 @@ public class SubmissionUsersBean {
 	public void setCheckedUserName(String checkedUserName) {
 		this.checkedUserName = checkedUserName;
 	}
+
+	// /////////////////////////////////////////////////////////////
+	// / NEW USER REGISTRATION /////////////////////////////////////
+	// /////////////////////////////////////////////////////////////
+
+	public String getNewUserEmail() {
+		return newUserEmail;
+	}
+
+	public void setNewUserEmail(String newUserEmail) {
+		this.newUserEmail = newUserEmail;
+	}
+
+	public String getNewUserFirstName() {
+		return newUserFirstName;
+	}
+
+	public void setNewUserFirstName(String newUserFirstName) {
+		this.newUserFirstName = newUserFirstName;
+	}
+
+	public String getNewUserInstitution() {
+		return newUserInstitution;
+	}
+
+	public void setNewUserInstitution(String newUserInstitution) {
+		this.newUserInstitution = newUserInstitution;
+	}
+
+	public String getNewUserLastName() {
+		return newUserLastName;
+	}
+
+	public void setNewUserLastName(String newUserLastName) {
+		this.newUserLastName = newUserLastName;
+	}
+
+	public String getNewUserVerificationString() {
+		return newUserVerificationString;
+	}
+
+	public void setNewUserVerificationString(String newUserVerificationString) {
+		this.newUserVerificationString = newUserVerificationString;
+	}
+
+	public String getVerificationString() {
+		return verificationString;
+	}
 	
+	public String getNewUserErrorMessage() {
+		return newUserErrorMessage;
+	}
+
+	public String getNewUserPassword() {
+		return newUserPassword;
+	}
+
+	public void setNewUserPassword(String newUserNamePassword) {
+		this.newUserPassword = newUserNamePassword;
+	}
+
+	public String getNewUserPasswordAgain() {
+		return newUserPasswordAgain;
+	}
+
+	public void setNewUserPasswordAgain(String newUserPasswordAgain) {
+		this.newUserPasswordAgain = newUserPasswordAgain;
+	}
+
+	public String createNewUser() {
+		if (StringUtils.isNullOrEmpty(this.newUserName)) {
+			this.newUserErrorMessage = "User name cannot be empty!";
+			return null;
+		} else if (StringUtils.isNullOrEmpty(this.newUserFirstName)) {
+			this.newUserErrorMessage = "User's first name cannot be empty!";
+			return null;
+		} else if (StringUtils.isNullOrEmpty(this.newUserLastName)) {
+			this.newUserErrorMessage = "User's last name cannot be empty!";
+			return null;
+		} else if (StringUtils.isNullOrEmpty(this.newUserPassword)) {
+			this.newUserErrorMessage = "Password cannot be empty!";
+			return null;
+		} else if (StringUtils.isNullOrEmpty(this.newUserEmail)) {
+			this.newUserErrorMessage = "Email cannot be empty!";
+			return null;
+		} else if (!this.newUserPassword.equals(this.newUserPasswordAgain)) {
+			this.newUserErrorMessage = "Passwords have to match!";
+			return null;
+		} else if (!this.verificationString.equals(this.newUserVerificationString)) {
+			this.newUserErrorMessage = "Verification strings have to match!";
+			return null;
+		}
+
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		User existingUser = User.loadByName(session, this.newUserName);
+		if (existingUser != null) {
+			this.newUserErrorMessage = "User name already exists!";	
+			return null;
+		} else {		
+		User user = new User(this.newUserName, this.newUserPassword);
+		user.setEnabled(false);
+		user.setCreateDate(new Date());
+		user.setEmail(this.newUserEmail);
+		user.setFirstName(this.newUserFirstName);
+		user.setLastName(this.newUserLastName);
+		user.setInstitution(this.newUserInstitution);
+		this.newUserErrorMessage = "";
+		session.save(user);
+		t.commit();
+		session.close();
+		return "created";
+		}
+	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public SelectItem[] getAccountTypes() {
+		return accountTypes;
+	}
+
+	public String getCheckedEmail() {
+		return checkedEmail;
+	}
+
+	public void setCheckedEmail(String checkedEmail) {
+		this.checkedEmail = checkedEmail;
+	}
+
+	public String getCheckedFirstName() {
+		return checkedFirstName;
+	}
+
+	public void setCheckedFirstName(String checkedFistName) {
+		this.checkedFirstName = checkedFistName;
+	}
+
+	public String getCheckedInstitution() {
+		return checkedInstitution;
+	}
+
+	public void setCheckedInstitution(String checkedInstitution) {
+		this.checkedInstitution = checkedInstitution;
+	}
+
+	public String getCheckedLastName() {
+		return checkedLastName;
+	}
+
+	public void setCheckedLastName(String checkedLastName) {
+		this.checkedLastName = checkedLastName;
+	}
+
+	public String getCheckedUserErrorMessage() {
+		return checkedUserErrorMessage;
+	}
+
 }

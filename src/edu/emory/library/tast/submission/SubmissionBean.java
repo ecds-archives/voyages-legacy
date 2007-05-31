@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -680,5 +681,13 @@ public class SubmissionBean
 	public String submitNext() {
 		return "new-submission";
 	}
+	
+	public String toSources() {
+		System.out.println("Sources!");
+		return "sources";
+	}
 
+	public String bookSource() {
+		return null;
+	}
 }
