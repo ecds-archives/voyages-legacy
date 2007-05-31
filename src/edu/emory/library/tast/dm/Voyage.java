@@ -470,7 +470,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		return 1;
 	}
 
-	public static Voyage loadCurrentRevision(Session sess, Long voyageId)
+	public static Voyage loadCurrentRevision(Session sess, Integer voyageId)
 	{
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, Conditions.OP_EQUALS);
@@ -481,9 +481,9 @@ public class Voyage extends AbstractDescriptiveObject {
 		return (Voyage)res.get(0);
 	}
 
-	public static Voyage loadCurrentRevision(Session sess, long voyageId)
+	public static Voyage loadCurrentRevision(Session sess, int voyageId)
 	{
-		return loadCurrentRevision(sess, new Long(voyageId));
+		return loadCurrentRevision(sess, new Integer(voyageId));
 	}
 	
 	public static Voyage loadFutureRevision(Session sess, int voyageId) {

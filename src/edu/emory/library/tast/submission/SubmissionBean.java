@@ -58,7 +58,7 @@ public class SubmissionBean
 	
 	private RowGroup[] rowGroups;
 
-	private Long lookupVoyageId = null;
+	private Integer lookupVoyageId = null;
 	private boolean lookupPerformed = false;
 	private SelectedVoyageInfo lookedUpVoyage = null;
 
@@ -119,7 +119,7 @@ public class SubmissionBean
 			if (selectedVoyageForEdit != null)
 			{
 				lookedUpVoyage = selectedVoyageForEdit;
-				lookupVoyageId = new Long(selectedVoyageForEdit.getVoyageId());
+				lookupVoyageId = new Integer(selectedVoyageForEdit.getVoyageId());
 			}
 		}
 		return "edit";
@@ -600,12 +600,12 @@ public class SubmissionBean
 		return SubmissionDictionaries.fieldTypes;
 	}
 
-	public Long getLookupVoyageId()
+	public Integer getLookupVoyageId()
 	{
 		return lookupVoyageId;
 	}
 
-	public void setLookupVoyageId(Long voyageId)
+	public void setLookupVoyageId(Integer voyageId)
 	{
 		this.lookupVoyageId = voyageId;
 	}
