@@ -271,11 +271,11 @@ public class SubmissionBean
 					attrs[i].getEmptyValue());
 	}
 	
-	private boolean loadVoyageToColumn(Session session, long voyageId, Values values, String columnName)
+	private boolean loadVoyageToColumn(Session session, int voyageId, Values values, String columnName)
 	{
 		
 		Conditions cond = new Conditions();
-		cond.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("voyageid"), new Integer(voyageId), Conditions.OP_EQUALS);
 		cond.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Voyage", cond);
 
