@@ -26,11 +26,14 @@ public class GalleryComponent extends UICommand
 	private boolean columnsCountSet = false;
 	private int columnsCount;
 
-	private boolean imagesSet = false;
-	private GalleryImage[] images;
+	private boolean showLabelsSet = false;
+	private boolean showLabels;
+
+	private boolean selectedImageIdSet = false;
 	private String selectedImageId;
 
-	//private static String cID = System.currentTimeMillis() + "";
+	private boolean imagesSet = false;
+	private GalleryImage[] images;
 	
 	public String getRendererType()
 	{
@@ -44,11 +47,13 @@ public class GalleryComponent extends UICommand
 	
 	public Object saveState(FacesContext context)
 	{
-		Object values[] = new Object[4];
+		Object values[] = new Object[6];
 		values[0] = super.saveState(context);
 		values[1] = new Integer(thumbnailWidth);
 		values[2] = new Integer(thumbnailHeight);
 		values[3] = new Integer(columnsCount);
+		values[4] = new Boolean(showLabels);
+		values[5] = selectedImageId;
 		return values;
 	}
 	
@@ -59,6 +64,8 @@ public class GalleryComponent extends UICommand
 		thumbnailWidth = ((Integer) values[1]).intValue();
 		thumbnailHeight = ((Integer) values[2]).intValue();
 		columnsCount = ((Integer) values[3]).intValue();
+		showLabels = ((Boolean) values[4]).booleanValue();
+		selectedImageId = (String) values[5];
 	}
 	
 	private String getFieldNameForSelectedImageId(FacesContext context)
@@ -100,7 +107,9 @@ public class GalleryComponent extends UICommand
 		thumbnailWidth = getThumbnailWidth();
 		thumbnailHeight = getThumbnailHeight();
 		columnsCount = getColumnsCount();
-		
+		showLabels = isShowLabels();
+		selectedImageId = getSelectedImageId();
+
 		String thumbnailWidthString = String.valueOf(thumbnailWidth);
 		String thumbnailHeightString = String.valueOf(thumbnailHeight);
 		
@@ -140,8 +149,12 @@ public class GalleryComponent extends UICommand
 					getFieldNameForSelectedImageId(context),
 					image.getId());
 			
+			boolean isSelected =
+					selectedImageId != null &&
+					selectedImageId.equals(image.getId());
+			
 			writer.startElement("td", this);
-			writer.writeAttribute("class", "gallery-image", null);
+			writer.writeAttribute("class", isSelected ? "gallery-image-selected" : "gallery-image", null);
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "gallery-image", null);
@@ -152,42 +165,39 @@ public class GalleryComponent extends UICommand
 			writer.writeAttribute("height", thumbnailHeightString, null);
 			writer.writeAttribute("border", "0", null);
 			writer.endElement("img");
-			
-			/*
-			writer.startElement("div", this);
-			writer.writeAttribute("class", "gallery-image-frame", null);
-			writer.write("&nbsp;");
-			writer.endElement("div");
-			*/
-
 			writer.endElement("div");
 			
-			writer.startElement("div", this);
-			writer.writeAttribute("class", "gallery-image-text", null);
-
-			writer.startElement("div", this);
-			writer.writeAttribute("class", "gallery-image-label", null);
-			if (onClick != null)
+			if (showLabels)
 			{
-				writer.startElement("a", this);
-				writer.writeAttribute("onclick", onClick, null);
-			}
-			writer.write(image.getLabel());
-			if (onClick != null)
-			{
-				writer.endElement("a");
-			}
-			writer.endElement("div");
 			
-			if (image.hasDescription())
-			{
 				writer.startElement("div", this);
-				writer.writeAttribute("class", "gallery-image-description", null);
-				writer.write(image.getDescription());
+				writer.writeAttribute("class", "gallery-image-text", null);
+	
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "gallery-image-label", null);
+				if (onClick != null)
+				{
+					writer.startElement("a", this);
+					writer.writeAttribute("onclick", onClick, null);
+				}
+				writer.write(image.getLabel());
+				if (onClick != null)
+				{
+					writer.endElement("a");
+				}
 				writer.endElement("div");
+				
+				if (image.hasDescription())
+				{
+					writer.startElement("div", this);
+					writer.writeAttribute("class", "gallery-image-description", null);
+					writer.write(image.getDescription());
+					writer.endElement("div");
+				}
+	
+				writer.endElement("div");
+			
 			}
-
-			writer.endElement("div");
 			
 			writer.endElement("td");
 			
@@ -197,6 +207,12 @@ public class GalleryComponent extends UICommand
 		
 		writer.endElement("table");
 
+	}
+	
+	public void setAction(String action)
+	{
+		Application app = FacesContext.getCurrentInstance().getApplication();
+		super.setAction(app.createMethodBinding(action, null));
 	}
 
 	public GalleryImage[] getImages()
@@ -247,9 +263,28 @@ public class GalleryComponent extends UICommand
 		this.columnsCount = columns;
 	}
 
-	public void setAction(String action) {
-		Application app = FacesContext.getCurrentInstance().getApplication();
-		super.setAction(app.createMethodBinding(action, null));
+	public boolean isShowLabels()
+	{
+		return JsfUtils.getCompPropBoolean(this, getFacesContext(),
+				"showLabels", showLabelsSet, showLabels);
+	}
+
+	public void setShowLabels(boolean showLabels)
+	{
+		showLabelsSet = true;
+		this.showLabels = showLabels;
+	}
+
+	public String getSelectedImageId()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"selectedImageId", selectedImageIdSet, selectedImageId);
+	}
+
+	public void setSelectedImageId(String selectedImageId)
+	{
+		selectedImageIdSet = true;
+		this.selectedImageId = selectedImageId;
 	}
 
 }

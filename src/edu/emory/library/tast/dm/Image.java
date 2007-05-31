@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.Languages;
@@ -453,12 +454,19 @@ public class Image
 			System.out.println(" * " + v.getVoyageid());
 		}
 		
-		/*
-		String hqlImages = "from Image i where " + testVoyageId + " = some elements(i.voyageIds)";
-		List imagesByVoyageId = sess.createQuery(hqlImages).list();
-		*/
+		// String hqlImages = "from Image i where " + testVoyageId + " = some elements(i.voyageIds)";
+		// List imagesByVoyageId = sess.createQuery(hqlImages).list();
 		
-		List imagesByVoyageId = Image.getImagesByVoyageId(sess, testVoyageId);
+//		String hqlImages = "from Image i join i.voyageIds as voyageId where voyageId = " + testVoyageId;
+//		List imagesByVoyageId = sess.createQuery(hqlImages).list();
+		
+		List imagesByVoyageId =
+			sess.createCriteria(Image.class).
+			createCriteria("voyageIds").
+			add(Restrictions.eq("voyageId", testVoyageId)).
+			list();
+
+		// List imagesByVoyageId = Image.getImagesByVoyageId(sess, testVoyageId);
 
 		System.out.println("Images with linked to voyage ID = " + testVoyageId);
 		for (Iterator iter = imagesByVoyageId.iterator(); iter.hasNext();)

@@ -9,10 +9,15 @@
 	(<h:commandLink value="#{res.images_back}" action="#{ImagesBean.back}" styleClass="link-images"/>)
 </t:htmlTag>
 
-<s:pictures
-	images="#{ImagesBean.galleryImages}" 
-	columnsCount="5"
-	thumbnailHeight="100" 
-	thumbnailWidth="100"
-	action="#{ImagesBean.gotoDetailFromGallery}" 
-	selectedImageId="#{ImagesBean.imageId}" />
+<t:htmlTag value="div" styleClass="images-gallery-query">
+
+	<s:pictures
+		images="#{ImagesBean.galleryImages}"
+		showLabels="true"
+		columnsCount="5"
+		thumbnailHeight="100" 
+		thumbnailWidth="100"
+		action="#{ImagesBean.gotoDetailFromGallery}" 
+		selectedImageId="#{ImagesBean.imageId}" />
+
+</t:htmlTag>

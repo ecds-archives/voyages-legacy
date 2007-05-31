@@ -568,6 +568,9 @@
 		<attribute>
 			<name>selectedImageId</name>
 		</attribute>
+		<attribute>
+			<name>showLabels</name>
+		</attribute>	
 	</tag>
 
 	<tag>

@@ -1,9 +1,9 @@
 package edu.emory.library.tast.images.site;
 
-public class ImageInfo {
+public class ImageDetailInfo {
 	private String name;
 	private String value;
-	public ImageInfo(String name, String val) {
+	public ImageDetailInfo(String name, String val) {
 		this.name = name;
 		this.value = val;
 	}

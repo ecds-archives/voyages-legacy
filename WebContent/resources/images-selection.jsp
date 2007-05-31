@@ -27,6 +27,15 @@
 
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
+			<h:outputText value="Voyage ID"/>
+		</t:htmlTag>
+		<t:htmlTag value="td">	
+			<h:inputText style="width: 150px;" value="#{ImagesBean.searchVoyageId}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
 			<h:outputText value="Category"/>
 		</t:htmlTag>
 		<t:htmlTag value="td">			

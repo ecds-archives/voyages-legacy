@@ -26,6 +26,7 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class ImagesBean
 {
 
+	private static final int DETAIL_THUMBS_COUNT = 8;
 	private static final int POPUP_EXTRA_HEIGHT = 50;
 	private static final int POPUP_EXTRA_WIDTH = 30;
 	private static final int DETAIL_IMAGE_WIDTH = 600;
@@ -33,12 +34,14 @@ public class ImagesBean
 	private List categories = null;
 	
 	private GalleryImage[] galleryImages;
+	private int selectedImageIndex;
 	
 	private String searchQueryTitle;
 	private String searchQueryDescription;
 	private String searchQueryCategory = "-1";
 	private Integer searchQueryFrom = null;
 	private Integer searchQueryTo = null;
+	private Integer searchVoyageId = null;
 	
 	private String imageId;
 	private String imageTitle;
@@ -109,11 +112,13 @@ public class ImagesBean
 		StringBuffer title = new StringBuffer();
 		
 		String titleImages = TastResource.getText("images_query_showing");
-		String titleContaining = TastResource.getText("images_query_title_containing");
+		String titleContaining = TastResource.getText("images_query_title_title");
+		String descriptionContaining = TastResource.getText("images_query_title_description");
 		String titleFrom = TastResource.getText("images_query_title_from");
 		String titleOriginated = TastResource.getText("images_query_title_originated");
 		String titleBefore = TastResource.getText("images_query_title_before");
 		String titleAfter = TastResource.getText("images_query_title_after");
+		String titleVoyageId = TastResource.getText("images_query_title_voyage_id");
 		
 		title.append(titleImages);
 		
@@ -130,6 +135,19 @@ public class ImagesBean
 			}
 		}
 		
+		if (searchQueryDescription != null)
+		{
+			String query = searchQueryDescription.trim();
+			if (searchQueryDescription.length() != 0)
+			{
+				title.append(" ");
+				title.append(descriptionContaining);
+				title.append(" '");
+				title.append(query);
+				title.append("'");
+			}
+		}
+
 		ImageCategory cat = ImageCategory.loadById(null, Integer.parseInt(searchQueryCategory));
 		if (cat != null)
 		{
@@ -138,7 +156,16 @@ public class ImagesBean
 			title.append(" ");
 			title.append(cat.getName());
 		}
-		
+
+		if (searchVoyageId != null)
+		{
+			title.append(" ");
+			title.append(titleVoyageId);
+			title.append(" '");
+			title.append(searchVoyageId);
+			title.append("'");
+		}
+
 		if (searchQueryFrom != null && searchQueryTo != null)
 		{
 			title.append(" ");
@@ -260,6 +287,12 @@ public class ImagesBean
 		return "images-detail";
 	}
 	
+	public String gotoDetailFromDetail()
+	{
+		loadDetail(false);
+		return "images-detail";
+	}
+
 	public String gotoDetailFromHomepage()
 	{
 		resetSearchParameters();
@@ -267,23 +300,50 @@ public class ImagesBean
 		loadGallery();
 		return "images-detail";
 	}
-
-	public String next()
+	
+	public boolean isHasPrevImage()
 	{
-		if (this.galleryImages != null) {
-			for (int i = 0; i < this.galleryImages.length - 1; i++) {
-				if (this.galleryImages[i].getId().equals(this.imageId)) {
-					this.imageId = this.galleryImages[i + 1].getId();
-					loadDetail(false);
-					return null;
-				}
-			}
-		}
-		return null;
+		return selectedImageIndex > 0;
 	}
 	
-	public String prev()
+	public boolean isHasNextImage()
 	{
+		return selectedImageIndex < galleryImages.length - 1;
+	}
+	
+	private String getImageGalleryUrl(int imageIndex)
+	{
+		return "/servlet/thumbnail" +
+		"?i=" + galleryImages[imageIndex].getImageName() +
+		"&w=" + "100" +
+		"&h=" + "100";
+	}
+	
+	public String getPrevThumbImageUrl()
+	{
+		return getImageGalleryUrl(selectedImageIndex-1);
+	}
+
+	public String getCurrThumbImageUrl()
+	{
+		return getImageGalleryUrl(selectedImageIndex);
+	}
+
+	public String getNextThumbImageUrl()
+	{
+		return getImageGalleryUrl(selectedImageIndex+1);
+	}
+
+	public String gotoPrev()
+	{
+		if (selectedImageIndex > 0)
+		{
+			selectedImageIndex--;
+			imageId = galleryImages[selectedImageIndex].getId();
+			loadDetail(false);
+		}
+		return null;
+		/*
 		if (this.galleryImages != null) {
 			for (int i = 1; i < this.galleryImages.length; i++) {
 				if (this.galleryImages[i].getId().equals(this.imageId)) {
@@ -294,6 +354,30 @@ public class ImagesBean
 			}
 		}
 		return null;
+		*/
+	}
+
+	public String gotoNext()
+	{
+		if (selectedImageIndex < galleryImages.length - 1)
+		{
+			selectedImageIndex++;
+			imageId = galleryImages[selectedImageIndex].getId();
+			loadDetail(false);
+		}
+		return null;
+		/*
+		if (this.galleryImages != null) {
+			for (int i = 0; i < this.galleryImages.length - 1; i++) {
+				if (this.galleryImages[i].getId().equals(this.imageId)) {
+					this.imageId = this.galleryImages[i + 1].getId();
+					loadDetail(false);
+					return null;
+				}
+			}
+		}
+		return null;
+		*/
 	}
 	
 	public String back()
@@ -332,16 +416,16 @@ public class ImagesBean
 			imageInfo = new ArrayList();
 	
 			if (img.getDate() != 0)
-				imageInfo.add(new ImageInfo("Date:", String.valueOf(img.getDate())));
+				imageInfo.add(new ImageDetailInfo("Date:", String.valueOf(img.getDate())));
 	
 			if (!StringUtils.isNullOrEmpty(img.getCreator()))
-				imageInfo.add(new ImageInfo("Creator:", img.getCreator()));
+				imageInfo.add(new ImageDetailInfo("Creator:", img.getCreator()));
 				
 			if (!StringUtils.isNullOrEmpty(img.getSource()))
-				imageInfo.add(new ImageInfo("Source:", img.getSource()));
+				imageInfo.add(new ImageDetailInfo("Source:", img.getSource()));
 	
 			if (!StringUtils.isNullOrEmpty(img.getLanguage(), true))
-				imageInfo.add(new ImageInfo("Language:", img.getLanguageName()));
+				imageInfo.add(new ImageDetailInfo("Language:", img.getLanguageName()));
 			
 			imageVoyagesInfo = new ArrayList();
 			
@@ -438,11 +522,14 @@ public class ImagesBean
 		Object[] response = qValue.executeQuery(sess);
 		galleryImages = new GalleryImage[response.length];
 
+		selectedImageIndex = -1;
 		for (int i = 0; i < response.length; i++)
 		{
 			Object[] row = (Object[]) response[i];
+			String galleryImageId = row[0].toString();
+			if (galleryImageId.equals(imageId)) selectedImageIndex = i;
 			galleryImages[i] = new GalleryImage(
-					row[0].toString(),
+					galleryImageId,
 					(String)row[1],
 					(String)row[2],
 					((Integer)row[3]).intValue() != 0 ? "(" + row[3] + ")" : null);
@@ -450,8 +537,6 @@ public class ImagesBean
 		
 		transaction.commit();
 		sess.close();
-		
-		System.out.println("loaded = " + galleryImages.length);
 		
 	}
 	
@@ -517,6 +602,49 @@ public class ImagesBean
 		}
 		return categories;
 	}
+	
+	public GalleryImage[] getDetailThumbsImages()
+	{
+		
+		int thumbsCount = Math.min(DETAIL_THUMBS_COUNT, galleryImages.length);
+
+		int startIndex;
+		int endIndex;
+		
+		if (galleryImages.length <= DETAIL_THUMBS_COUNT)
+		{
+			startIndex = 0;
+			endIndex = galleryImages.length - 1;
+		}
+		else if (selectedImageIndex == 0)
+		{
+			startIndex = 0;
+			endIndex = DETAIL_THUMBS_COUNT - 1;
+		}
+		else if (selectedImageIndex - 1 + DETAIL_THUMBS_COUNT - 1 >= galleryImages.length)
+		{
+			startIndex = galleryImages.length - DETAIL_THUMBS_COUNT; 
+			endIndex = galleryImages.length - 1;
+		}
+		else
+		{
+			startIndex = selectedImageIndex - 1;
+			endIndex = startIndex + DETAIL_THUMBS_COUNT - 1;
+		}
+		
+		GalleryImage[] thumbs = new GalleryImage[thumbsCount];
+
+		for (int i = startIndex; i <= endIndex; i++)
+			thumbs[i - startIndex] = galleryImages[i];
+		
+		return thumbs;
+
+	}
+
+	public String getGalleryPositionIndicator()
+	{
+		return (selectedImageIndex + 1) + " / " + galleryImages.length;
+	}
 
 	public String getSearchQueryTitle()
 	{
@@ -565,6 +693,17 @@ public class ImagesBean
 
 	public void setImageId(String imageId)
 	{
+		if (galleryImages != null)
+		{
+			for (int i = 0; i < galleryImages.length; i++)
+			{
+				if (galleryImages[i].getId().equals(imageId))
+				{
+					selectedImageIndex = i;
+					break;
+				}
+			}
+		}
 		this.imageId = imageId;
 	}
 	
@@ -593,6 +732,11 @@ public class ImagesBean
 		return imageInfo;
 	}
 	
+	public boolean isHasImageVoyages()
+	{
+		return imageVoyagesInfo != null && imageVoyagesInfo.size() != 0; 
+	}
+
 	public List getImageVoyages()
 	{
 		return imageVoyagesInfo;
@@ -631,6 +775,21 @@ public class ImagesBean
 	public void setSearchQueryDescription(String searchQueryOther)
 	{
 		this.searchQueryDescription = searchQueryOther;
+	}
+
+	public int getDetailThumbsCount()
+	{
+		return DETAIL_THUMBS_COUNT;
+	}
+
+	public Integer getSearchVoyageId()
+	{
+		return searchVoyageId;
+	}
+
+	public void setSearchVoyageId(Integer searchVoyageId)
+	{
+		this.searchVoyageId = searchVoyageId;
 	}
 
 }

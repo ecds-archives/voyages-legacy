@@ -15,6 +15,7 @@ public class GalleryTag extends UIComponentTag
 	private String images;
 	private String action;
 	private String selectedImageId;
+	private String showLabels;
 
 	public String getComponentType()
 	{
@@ -77,6 +78,16 @@ public class GalleryTag extends UIComponentTag
 			ValueBinding vb = app.createValueBinding(selectedImageId);
 			gallery.setValueBinding("selectedImageId", vb);
 		}
+		
+		if (showLabels != null && isValueReference(showLabels))
+		{
+			ValueBinding vb = app.createValueBinding(showLabels);
+			gallery.setValueBinding("showLabels", vb);
+		}
+		else
+		{
+			gallery.setShowLabels(Boolean.parseBoolean(showLabels));
+		}
 
 	}
 
@@ -134,6 +145,16 @@ public class GalleryTag extends UIComponentTag
 
 	public void setSelectedImageId(String selectedImageId) {
 		this.selectedImageId = selectedImageId;
+	}
+
+	public String getShowLabels()
+	{
+		return showLabels;
+	}
+
+	public void setShowLabels(String showLabels)
+	{
+		this.showLabels = showLabels;
 	}
 
 }

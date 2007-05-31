@@ -11,12 +11,28 @@
 			<h:commandLink value="#{res.images_back}" action="#{ImagesBean.back}" styleClass="link-images"/>
 		</t:htmlTag>				
 		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
-			<h:commandLink value="#{res.images_prev_detail_image}" action="#{ImagesBean.prev}" styleClass="link-images"/>
+			<h:commandLink value="#{res.images_prev_detail_image}" action="#{ImagesBean.gotoPrev}" styleClass="link-images"/>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px;">
-			<h:commandLink value="#{res.images_next_detail_image}" action="#{ImagesBean.next}" styleClass="link-images"/>
+			<h:commandLink value="#{res.images_next_detail_image}" action="#{ImagesBean.gotoNext}" styleClass="link-images"/>
+		</t:htmlTag>				
+		<t:htmlTag value="td" style="padding: 0px 0px 0px 10px;">
+			<h:outputText value="#{ImagesBean.galleryPositionIndicator}" />
 		</t:htmlTag>				
 	</t:htmlTag>
+</t:htmlTag>
+
+<t:htmlTag value="div" styleClass="images-gallery-detail">
+
+	<s:pictures
+		images="#{ImagesBean.detailThumbsImages}"
+		columnsCount="#{ImagesBean.detailThumbsCount}"
+		showLabels="false"
+		thumbnailHeight="75"
+		thumbnailWidth="75"
+		action="#{ImagesBean.gotoDetailFromDetail}" 
+		selectedImageId="#{ImagesBean.imageId}" />
+
 </t:htmlTag>
 
 <t:htmlTag value="table" style="border-collapse: collapse;">
@@ -41,9 +57,9 @@
 			</h:column>
 		</h:dataTable>
 		
-		<t:htmlTag value="div" styleClass="image-detail-voyages-title"><h:outputText value="#{res.images_related_voyages}" /></t:htmlTag>
+		<t:htmlTag value="div" styleClass="image-detail-voyages-title" rendered="#{ImagesBean.hasImageVoyages}"><h:outputText value="#{res.images_related_voyages}" /></t:htmlTag>
 		
-		<h:dataTable var="voyage" value="#{ImagesBean.imageVoyages}" binding="#{ImagesBean.linkedVoyagesTable}" styleClass="image-detail-voyages">
+		<h:dataTable var="voyage" value="#{ImagesBean.imageVoyages}" binding="#{ImagesBean.linkedVoyagesTable}" rendered="#{ImagesBean.hasImageVoyages}" styleClass="image-detail-voyages">
 			<h:column>
 				<f:param id="voyageId" value="#{voyage.voyageId}" />
 				<h:outputText value="#{res.images_voyage_id}" />
@@ -52,7 +68,7 @@
 				<h:outputText value="#{voyage.info}" />
 			</h:column>
 		</h:dataTable>
-
+		
 	</t:htmlTag>
 
 </t:htmlTag>
