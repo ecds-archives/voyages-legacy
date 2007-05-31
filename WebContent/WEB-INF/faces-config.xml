@@ -873,6 +873,10 @@
 			<from-outcome>main-menu</from-outcome>
 			<to-view-id>/submission/submission-admin.jsp</to-view-id>
 		</navigation-case>	
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>	
 	</navigation-rule>
 
 	<navigation-rule>
@@ -891,6 +895,14 @@
 		<navigation-case>
 			<from-outcome>images-detail</from-outcome>
 			<to-view-id>/resources/images-detail.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/submission/new-user.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>created</from-outcome>
+			<to-view-id>/submission/new-user-created.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
