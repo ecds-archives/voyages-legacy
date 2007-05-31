@@ -9,12 +9,22 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Submission - step 1</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
 </head>
 <body style="margin: 15px;">
 <f:view>
 <h:form id="main">
+	
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="step-indicator-active-left">Type of submission</td>
+			<td class="step-indicator-middle">Submission content</td>
+			<td class="step-indicator-middle">Sources</td>
+			<td class="step-indicator-right">Finish</td>
+		</tr>
+	</table>
 
-	<h1>Submission - step 1</h1>
+	<h1>Choose type of submission</h1>
 	
 	<br>
 	

@@ -9,6 +9,7 @@
 	<title>Submission - step 1</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
+	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/utils.js" type="text/javascript" langiage="javascript"></script>
 	<script src="../scripts/grid-editor.js" type="text/javascript" langiage="javascript"></script>
 </head>
@@ -16,7 +17,16 @@
 <f:view>
 <h:form id="main">
 
-	<h1>New submission - edit</h1>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="step-indicator-left">Type of submission</td>
+			<td class="step-indicator-active-middle">Submission content</td>
+			<td class="step-indicator-middle">Sources</td>
+			<td class="step-indicator-right">Finish</td>
+		</tr>
+	</table>
+
+	<h1>Submission content</h1>
 	
 	<br>
 	
@@ -31,8 +41,7 @@
 
 	<div style="margin-top: 10px; margin-bottom: 10px;">
 		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>
-		<h:commandButton value="Submit" action="#{SubmissionBean.submit}"/>
-		<h:commandButton value="Refresh test" />
+		<h:commandButton value="Next > " action="#{SubmissionBean.toSources}"/>
 	</div>
 
 </h:form>

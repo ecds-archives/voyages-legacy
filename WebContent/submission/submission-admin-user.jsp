@@ -25,11 +25,27 @@
 		<table>
 			<tr>
 				<td>User name:</td>
-				<td><h:inputText value="#{SubmissionUsersBean.checkedUserName}"/></td>
+				<td><h:outputText value="#{SubmissionUsersBean.checkedUserName}"/></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
 				<td><h:inputText value="#{SubmissionUsersBean.checkedPassword}"/></td>
+			</tr>
+			<tr>
+				<td>First name:</td>
+				<td><h:inputText value="#{SubmissionUsersBean.checkedFirstName}"/></td>
+			</tr>
+			<tr>
+				<td>Last name:</td>
+				<td><h:inputText value="#{SubmissionUsersBean.checkedLastName}"/></td>
+			</tr>
+			<tr>
+				<td>Institution:</td>
+				<td><h:inputText value="#{SubmissionUsersBean.checkedInstitution}"/></td>
+			</tr>
+			<tr>
+				<td>Email address:</td>
+				<td><h:inputText value="#{SubmissionUsersBean.checkedEmail}"/></td>
 			</tr>
 			<tr>
 				<td>Date created:</td>
@@ -41,14 +57,15 @@
 			</tr>
 			<tr>
 				<td></td>
+				<td><h:outputText rendered="#{SubmissionUsersBean.checkedUserErrorMessage != null}" value="#{SubmissionUsersBean.checkedUserErrorMessage}"/></td>
+			</tr>
+			<tr>
+				<td></td>
 				<td><h:commandButton value="< Back" action="main-menu"/>
+				<h:commandButton value="Delete user" action="#{SubmissionUsersBean.deleteUser}"/>
 				<h:commandButton value="Save changes >" action="#{SubmissionUsersBean.updateUser}"/></td>
 			</tr>			
 		</table>
-	</div>
-	<div style="width: 400px;">
-	If you don't have an account, <a href="#">send us e-mail</a> with brief description of 
-	what kind of information you have.
 	</div>
 </h:form>
 </f:view>

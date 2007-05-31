@@ -1,0 +1,52 @@
+td.step-indicator-right {
+	width: 150px;
+	border: 1px solid #CCCCCC;
+	border-left: none;
+	background-color: #d3f1e5;
+	text-align: center;
+}
+
+td.step-indicator-middle {
+	width: 150px;
+	border: 1px solid #CCCCCC;
+	border-right: none;
+	border-left: none;
+	background-color: #d3f1e5;
+	text-align: center;
+}
+
+td.step-indicator-left {
+	width: 150px;
+	border: 1px solid #CCCCCC;
+	border-right: none;
+	background-color: #d3f1e5;
+	text-align: center;
+}
+
+td.step-indicator-active-left {
+	width: 150px;
+	border: 1px solid #CCCCCC;
+	border-right: none;
+	background-color: #51b0ad;
+	text-align: center;
+	font-weight: bold;
+}
+
+td.step-indicator-active-middle {
+	width: 150px;
+	border: 1px solid #CCCCCC;
+	border-right: none;
+	border-left: none;
+	background-color: #51b0ad;
+	text-align: center;
+	font-weight: bold;
+}
+
+td.step-indicator-active-right {
+	width: 150px;
+	border: 1px solid #CCCCCC;
+	border-left: none;
+	background-color: #51b0ad;
+	text-align: center;
+	font-weight: bold;
+}

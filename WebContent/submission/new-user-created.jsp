@@ -7,35 +7,27 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Submission completed</title>
+	<title>Submission - step 1</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
-	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
 </head>
 <body style="margin: 15px;">
 <f:view>
 <h:form id="main">
 
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="step-indicator-left">Type of submission</td>
-			<td class="step-indicator-middle">Submission content</td>
-			<td class="step-indicator-middle">Sources</td>
-			<td class="step-indicator-active-right">Finish</td>
-		</tr>
-	</table>
-
-	<h1>Submission completed</h1>
+	<h1>New user registration</h1>
 	
 	<br>
 	
+	<div style="font-weight: bold; font-size: 12pt">User created</div>
 	<div style="width: 400px;">
-	The submission process has been completed. Your submission
-	has been stored in the system, and it soon reviewed.
+	New user has been created. Your account is currently inactive. After we 
+	review your request and the account is activated, you will be able to login using 
+	<a href="submission-login.faces">login</a> page. We will notify you by e-mail when activation
+	us completed.
 	</div>
+	</div>
+
 	
-	<h:commandLink value="Submit next request" action="#{SubmissionBean.submitNext}"/>
-	<br>
-	<h:commandLink value="Logout" action="#{SubmissionBean.logout}"/>
 
 </h:form>
 </f:view>

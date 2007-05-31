@@ -43,8 +43,7 @@
 		</table>
 	</div>
 	<div style="width: 400px;">
-	If you don't have an account, <a href="#">send us e-mail</a> with brief description of 
-	what kind of information you have.
+	If you don't have an account, <a href="new-user.faces">click here</a>.
 	</div>
 </h:form>
 </f:view>

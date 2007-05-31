@@ -130,7 +130,7 @@
 		
 		<f:verbatim>
 		</div>
-		</f:verbatim>
+		</f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.nationId}"><f:selectItems value="#{AdminVoyagesListBean.nations}"/></h:selectOneMenu>
 	
 	</h:panelGroup>
 
@@ -143,11 +143,9 @@
 			
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td style="padding-right: 10px">User name: </td>
-				<td style="padding-right: 5px"></f:verbatim><h:inputText value="#{SubmissionUsersBean.newUserName}" style="width: 80px;" /><f:verbatim></td>
-				<td style="padding-right: 10px">Password: </td>
-				<td style="padding-right: 5px"></f:verbatim><h:inputText value="#{SubmissionUsersBean.newUserPassword}" style="width: 80px;" /><f:verbatim></td>
-				<td></f:verbatim><h:commandButton value="Create new user" action="#{SubmissionUsersBean.createNewUser}" /><f:verbatim></td>
+				<td style="padding-right: 10px">Show: </td>
+				<td style="padding-right: 5px"></f:verbatim><h:selectOneMenu value="#{SubmissionUsersBean.accountType}"><f:selectItems value="#{SubmissionUsersBean.accountTypes}"/></h:selectOneMenu><f:verbatim></td>
+				<td></f:verbatim><h:commandButton value="Refresh" action="#{SubmissionUsersBean.refresh}" /><f:verbatim></td>
 			</tr>
 			</table>
 		</div>

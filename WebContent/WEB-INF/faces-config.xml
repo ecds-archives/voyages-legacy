@@ -754,12 +754,24 @@
 			<to-view-id>/submission/submission-type.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>sources</from-outcome>
+			<to-view-id>/submission/submission-sources.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>login</from-outcome>
 			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-sources.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>done</from-outcome>
 			<to-view-id>/submission/submission-thankyou.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-form.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
