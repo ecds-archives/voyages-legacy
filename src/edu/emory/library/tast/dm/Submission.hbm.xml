@@ -80,6 +80,7 @@
 			<property name="pageFrom" column="page_from" />
 			<property name="pageTo" column="page_to" />
 			<property name="year" column="year" />
+			<property name="volume" column="volume" />
 		</joined-subclass>
 		
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionSourceBook" table="submissions_sources_books">

@@ -426,6 +426,16 @@
 		<managed-bean-name>SubmissionBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.submission.SubmissionBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>sourcesBean</property-name>
+			<value>#{SourcesBean}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>SourcesBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.submission.SourcesBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>

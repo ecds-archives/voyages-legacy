@@ -50,9 +50,11 @@ public class SubmissionBean
 	public static final int SUBMISSION_TYPE_EDIT = 2;	
 	public static final int SUBMISSION_TYPE_MERGE = 3;	
 
-	private int submissionType = SUBMISSION_TYPE_NOT_SELECTED;
-
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
+	
+	private SourcesBean sourcesBean = null;
+	
+	private int submissionType = SUBMISSION_TYPE_NOT_SELECTED;
 	
 	private Values gridValues = null;
 	
@@ -314,114 +316,8 @@ public class SubmissionBean
 	
 	public String submit()
 	{
-
-		Session sess = HibernateUtil.getSession();
-		Transaction trans = sess.beginTransaction();
-
-		Map newValues = gridValues.getColumnValues(CHANGED_VOYAGE);
-		Voyage voyage = new Voyage();
 		
-		if (submissionType == SUBMISSION_TYPE_NEW)
-		{
-			voyage.setVoyageid(null);
-		}
-
-		else if (submissionType == SUBMISSION_TYPE_EDIT)
-		{
-			voyage.setVoyageid(new Integer(selectedVoyageForEdit.getVoyageId()));
-		}
-
-		else if (submissionType == SUBMISSION_TYPE_MERGE)
-		{
-			voyage.setVoyageid(null);
-		}
-		
-		voyage.setSuggestion(true);
-		voyage.setRevision(-1);
-		//voyage.setApproved(false);
-		
-		Map notes = new HashMap(); 
-
-		// boolean wasError = false;
-		for (int i = 0; i < attrs.length; i++) {
-			Value val = (Value) newValues.get(attrs[i].getName());
-			if (val.isError()) {
-				val.setErrorMessage("Error in value!");
-				// wasError = true;
-			}
-			if (val.hasNote())
-			{
-				notes.put(attrs[i].getName(), val.getNote().trim());
-			}
-			Object[] vals = attrs[i].getValues(sess, val);
-			for (int j = 0; j < vals.length; j++)
-			{
-				voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
-			}
-		}
-		Submission submission = null;
-		
-		sess.save(voyage);
-		if (submissionType == SUBMISSION_TYPE_NEW)
-		{
-
-			SubmissionNew submissionNew = new SubmissionNew();
-			submission = submissionNew;
-
-			EditedVoyage eVoyage = new EditedVoyage(voyage, notes);
-			sess.save(eVoyage);
-			
-			submissionNew.setNewVoyage(eVoyage);
-
-		}
-
-		else if (submissionType == SUBMISSION_TYPE_EDIT)
-		{
-
-			SubmissionEdit submissionEdit = new SubmissionEdit();
-			submission = submissionEdit;
-
-			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
-			EditedVoyage eOldVoyage = new EditedVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId), null);
-			sess.save(eOldVoyage);
-			sess.save(eNewVoyage);
-			
-			submissionEdit.setNewVoyage(eNewVoyage);
-			submissionEdit.setOldVoyage(eOldVoyage);
-
-		}
-
-		else if (submissionType == SUBMISSION_TYPE_MERGE)
-		{
-
-			SubmissionMerge submissionMerge = new SubmissionMerge();
-			submission = submissionMerge;
-
-			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
-			sess.save(eNewVoyage);
-			
-			submissionMerge.setProposedVoyage(eNewVoyage);
-
-			Set mergedVoyages = new HashSet();
-			submissionMerge.setMergedVoyages(mergedVoyages);
-			for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();)
-			{
-				SelectedVoyageInfo voyageInfo = (SelectedVoyageInfo) iter.next();
-				EditedVoyage eVoyage = new EditedVoyage((Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())), null);
-				mergedVoyages.add(eVoyage);
-				sess.save(eVoyage);				
-			}
-			
-
-		}
-		
-		submission.setUser(this.authenticatedUser);
-		submission.setTime(new Date());
-		
-		sess.save(submission);
-		
-		trans.commit();
-		sess.close();
+		this.sourcesBean.submit();
 		
 		lookupPerformed = false;
 		lookedUpVoyage = null;
@@ -683,11 +579,129 @@ public class SubmissionBean
 	}
 	
 	public String toSources() {
-		System.out.println("Sources!");
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction trans = sess.beginTransaction();
+
+		Map newValues = gridValues.getColumnValues(CHANGED_VOYAGE);
+		Voyage voyage = new Voyage();
+		
+		if (submissionType == SUBMISSION_TYPE_NEW)
+		{
+			voyage.setVoyageid(null);
+		}
+
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
+		{
+			voyage.setVoyageid(new Integer(selectedVoyageForEdit.getVoyageId()));
+		}
+
+		else if (submissionType == SUBMISSION_TYPE_MERGE)
+		{
+			voyage.setVoyageid(null);
+		}
+		
+		voyage.setSuggestion(true);
+		voyage.setRevision(-1);
+		//voyage.setApproved(false);
+		
+		Map notes = new HashMap(); 
+
+		// boolean wasError = false;
+		for (int i = 0; i < attrs.length; i++) {
+			Value val = (Value) newValues.get(attrs[i].getName());
+			if (val.isError()) {
+				val.setErrorMessage("Error in value!");
+				// wasError = true;
+			}
+			if (val.hasNote())
+			{
+				notes.put(attrs[i].getName(), val.getNote().trim());
+			}
+			Object[] vals = attrs[i].getValues(sess, val);
+			for (int j = 0; j < vals.length; j++)
+			{
+				voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+			}
+		}
+		Submission submission = null;
+		
+		sess.save(voyage);
+		if (submissionType == SUBMISSION_TYPE_NEW)
+		{
+
+			SubmissionNew submissionNew = new SubmissionNew();
+			submission = submissionNew;
+
+			EditedVoyage eVoyage = new EditedVoyage(voyage, notes);
+			sess.save(eVoyage);
+			
+			submissionNew.setNewVoyage(eVoyage);
+
+		}
+
+		else if (submissionType == SUBMISSION_TYPE_EDIT)
+		{
+
+			SubmissionEdit submissionEdit = new SubmissionEdit();
+			submission = submissionEdit;
+
+			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
+			EditedVoyage eOldVoyage = new EditedVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId), null);
+			sess.save(eOldVoyage);
+			sess.save(eNewVoyage);
+			
+			submissionEdit.setNewVoyage(eNewVoyage);
+			submissionEdit.setOldVoyage(eOldVoyage);
+
+		}
+
+		else if (submissionType == SUBMISSION_TYPE_MERGE)
+		{
+
+			SubmissionMerge submissionMerge = new SubmissionMerge();
+			submission = submissionMerge;
+
+			EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
+			sess.save(eNewVoyage);
+			
+			submissionMerge.setProposedVoyage(eNewVoyage);
+
+			Set mergedVoyages = new HashSet();
+			submissionMerge.setMergedVoyages(mergedVoyages);
+			for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();)
+			{
+				SelectedVoyageInfo voyageInfo = (SelectedVoyageInfo) iter.next();
+				EditedVoyage eVoyage = new EditedVoyage((Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())), null);
+				mergedVoyages.add(eVoyage);
+				sess.save(eVoyage);				
+			}
+			
+
+		}
+		
+		submission.setUser(this.authenticatedUser);
+		submission.setTime(new Date());
+		
+		sess.save(submission);
+		
+		trans.commit();
+		sess.close();
+		
+		this.sourcesBean.setSubmission(submission);
+		
 		return "sources";
 	}
 
 	public String bookSource() {
 		return null;
+	}
+
+	public SourcesBean getSourcesBean() {
+		return sourcesBean;
+	}
+
+	public void setSourcesBean(SourcesBean sourcesBean) {
+		this.sourcesBean = sourcesBean;
 	}
 }

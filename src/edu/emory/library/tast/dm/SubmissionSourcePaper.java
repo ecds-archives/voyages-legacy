@@ -11,6 +11,7 @@ public class SubmissionSourcePaper extends SubmissionSource
 	private int year;
 	private int pageFrom;
 	private int pageTo;
+	private int volume;
 	
 	public String getAuthors()
 	{
@@ -95,4 +96,11 @@ public class SubmissionSourcePaper extends SubmissionSource
 
 	}
 
+	public void setVolume(int volume) {
+		this.volume = volume;
+	}
+
+	public int getVolume() {
+		return this.volume;
+	}
 }
