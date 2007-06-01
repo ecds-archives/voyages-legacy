@@ -1,127 +1,96 @@
 package edu.emory.library.tast.common.voyage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import edu.emory.library.tast.common.table.TableData;
-import edu.emory.library.tast.database.table.DetailVoyageInfo;
 import edu.emory.library.tast.database.table.DetailVoyageMap;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.images.GalleryImage;
+import edu.emory.library.tast.images.site.ImagesBean;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
-public class VoyageDetailBean {
+public class VoyageDetailBean
+{
 
 	private TableData detailData = new TableData();
-
 	private DetailVoyageMap detailVoyageMap = new DetailVoyageMap();
-
-	private DetailVoyageInfo[] detailVoyageInfo = new DetailVoyageInfo[] {};
-
-	private String backLink;
-
+	
 	private long voyageIid;
+	private int voyageId;
+	
+	private String previousViewId;
+
+	private GalleryImage[] imagesGallery = new GalleryImage[0];
+	private String selectedImageId;
 	
 	public void openVoyage(long voyageIid)
 	{
+		
 		this.voyageIid = voyageIid;
 		this.detailVoyageMap.setVoyageIid(voyageIid);
-	}
-
-	public void back() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.getApplication().getNavigationHandler().handleNavigation(context, null, this.backLink);
-	}
-
-	/**
-	 * Queries DB for detail voyage info.
-	 * 
-	 */
-	private void getResultsDetailDB()
-	{
-
-		Conditions c = new Conditions();
 		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("iid"), new Long(this.voyageIid), Conditions.OP_EQUALS);
-
+		
 		List validAttrs = new ArrayList();
 		VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();
-		for (int i = 0; i < attrs.length; i++) {
+		for (int i = 0; i < attrs.length; i++)
+		{
 			VisibleAttributeInterface column = attrs[i];
 			validAttrs.add(column);
 		}
-		detailData.setVisibleColumns(validAttrs);
-
-		Object[][] info = this.queryAndFillInData(c, this.detailData, -1, -1, true);
-
-		this.detailVoyageInfo = new DetailVoyageInfo[info[0].length];
-		for (int i = 0; i < info[0].length; i++) {
-			this.detailVoyageInfo[i] = new DetailVoyageInfo(
-					(VisibleAttribute) info[0][i], info[1][i]);
-		}
-
-	}
-
-	private Object[][] queryAndFillInData(Conditions subCondition,
-			TableData dataTable, int start, int length, boolean returnBasicInfo) {
-
-		// localCond.addCondition(VoyageIndex.getAttribute("remoteVoyageId"),
-		// new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
-
+		this.detailData.setVisibleColumns(validAttrs);
+		
 		// Build query
-		QueryValue qValue = new QueryValue("Voyage", subCondition);
-		if (length != -1) {
-			qValue.setLimit(length);
-		}
-		if (start != -1) {
-			qValue.setFirstResult(start);
-		}
-
+		QueryValue qValue = new QueryValue("Voyage", c);
+		
 		// Dictionaries - list of columns with dictionaries.
-		dataTable.setKeyAttribute(Voyage.getAttribute("iid"));
-		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
-		if (populatedAttributes != null) {
-			for (int i = 0; i < populatedAttributes.length; i++) {
-				if (populatedAttributes[i] != null) {
+		this.detailData.setKeyAttribute(Voyage.getAttribute("iid"));
+		Attribute[] populatedAttributes = this.detailData.getAttributesForQuery();
+		if (populatedAttributes != null)
+		{
+			for (int i = 0; i < populatedAttributes.length; i++)
+			{
+				if (populatedAttributes[i] != null)
+				{
 					qValue.addPopulatedAttribute(populatedAttributes[i]);
 				}
 			}
 		}
-
-		// Add populated attributes
-		Attribute[] populatedAdditionalAttributes = dataTable
-				.getAdditionalAttributesForQuery();
-		if (populatedAdditionalAttributes != null) {
-			for (int i = 0; i < populatedAdditionalAttributes.length; i++) {
-				qValue.addPopulatedAttribute(populatedAdditionalAttributes[i]);
-			}
+		
+		// last is voyage id
+		qValue.addPopulatedAttribute(VisibleAttribute.getAttribute("voyageid").getAttributes()[0]);
+		
+		VisibleAttributeInterface vattr = this.detailData.getOrderByColumn();
+		if (this.detailData.getOrderByColumn() == null)
+		{
+			qValue.setOrderBy(new Attribute[] { Voyage.getAttribute("voyageid") });
 		}
-
-		if (returnBasicInfo) {
-			qValue.addPopulatedAttribute(VisibleAttribute.getAttribute(
-					"voyageid").getAttributes()[0]);
-		}
-
-		VisibleAttributeInterface vattr = dataTable.getOrderByColumn();
-		if (dataTable.getOrderByColumn() == null) {
-			qValue
-					.setOrderBy(new Attribute[] { Voyage
-							.getAttribute("voyageid") });
-		} else {
-
+		else
+		{
 			Attribute[] attr = vattr.getAttributes();
-
 			if (attr != null) {
 				Attribute[] order = new Attribute[attr.length];
 				for (int i = 0; i < attr.length; i++) {
@@ -129,83 +98,115 @@ public class VoyageDetailBean {
 						order[i] = attr[i];
 					} else {
 						order[i] = new SequenceAttribute(new Attribute[] {
-								attr[i],
-								((DictionaryAttribute) attr[i])
-										.getAttribute("name") });
+								attr[i], ((DictionaryAttribute) attr[i]).getAttribute("name") });
 					}
 				}
 				qValue.setOrderBy(order);
-				qValue.setOrder(dataTable.getOrder());
+				qValue.setOrder(this.detailData.getOrder());
 			}
 		}
 
 		// Execute query
-		Object[] ret = qValue.executeQuery();
-		dataTable.setData(ret);
+		Object[] ret = qValue.executeQuery(sess);
+		this.detailData.setData(ret);
 
-		if (returnBasicInfo && ret.length > 0) {
-			int len = ((Object[]) ret[0]).length;
-			return new Object[][] {
-					{ VisibleAttribute.getAttribute("voyageid") },
-					{ ((Object[]) ret[0])[len - 1] } };
-		} else {
-			return new Object[][] {};
+		// voyage id (is the last)
+		Object[] voyageValues = (Object[]) ret[0];
+		voyageId = ((Integer)(voyageValues[voyageValues.length - 1])).intValue();
+		
+		// load related images
+		List images = Image.getImagesByVoyageId(sess, voyageId);
+		imagesGallery = new GalleryImage[images.size()];
+		int imageIndex = 0;
+		for (Iterator iter = images.iterator(); iter.hasNext();)
+		{
+			Image image = (Image) iter.next();
+			imagesGallery[imageIndex++] = new GalleryImage(
+					String.valueOf(image.getId()),
+					image.getFileName(),
+					image.getTitle());
 		}
+
+		// done with db
+		transaction.commit();
+		sess.close();
+
+	}
+
+	public void back()
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getApplication().getNavigationHandler().handleNavigation(context, null, this.previousViewId);
+	}
+
+	public String refresh()
+	{
+		this.detailVoyageMap.refresh();
+		return null;
 	}
 	
-	/**
-	 * Gets detail voyage table data.
-	 * 
-	 * @return
-	 */
-	public TableData getDetailData() {
-		this.getResultsDetailDB();
+	public String openImageDetail()
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		ImagesBean imagesBean = (ImagesBean) context.getApplication().createValueBinding("#{ImagesBean}").getValue(context);
+		imagesBean.openImageFromVoyageDetail(this.voyageId, this.selectedImageId);
+		return "images-detail";
+	}
+	
+	public TableData getDetailData()
+	{
 		return detailData;
 	}
 
-	/**
-	 * Sets detail voyage data.
-	 * 
-	 * @param detailData
-	 */
-	public void setDetailData(TableData detailData) {
-		this.detailData = detailData;
-	}
-
-	public PointOfInterest[] getPointsOfInterest() {
+	public PointOfInterest[] getPointsOfInterest()
+	{
 		return this.detailVoyageMap.getPointsOfInterest();
 	}
 
-	public DetailVoyageInfo[] getDetailVoyageInfo() {
-		getResultsDetailDB();
-		return this.detailVoyageInfo;
-	}
-	public LegendItemsGroup[] getLegend() {
+	public LegendItemsGroup[] getLegend()
+	{
 		return this.detailVoyageMap.getLegend();
 	}
 	
-	public void setBackPage(String viewId) {
-		this.backLink = viewId;
+	public void setPreviousView(String viewId)
+	{
+		this.previousViewId = viewId;
 	}
 
 	public void setBackPageToCurrentView()
 	{
 		FacesContext context = FacesContext.getCurrentInstance();
-		this.backLink = context.getViewRoot().getViewId();
+		this.previousViewId = context.getViewRoot().getViewId();
 	}
 
-	public String refresh() {
-		this.detailVoyageMap.refresh();
-		return null;
-	}
-	
-	
-	public ZoomLevel[] getZoomLevels() {
+	public ZoomLevel[] getZoomLevels()
+	{
 		return StandardMaps.getZoomLevels();
 	}
 	
-	public ZoomLevel getMiniMapZoomLevel() {
+	public ZoomLevel getMiniMapZoomLevel()
+	{
 		return StandardMaps.getMiniMapZoomLevel();
+	}
+
+	public String getSelectedImageId()
+	{
+		return selectedImageId;
+	}
+
+	public void setSelectedImageId(String selectedImageId)
+	{
+		this.selectedImageId = selectedImageId;
+	}
+
+	public GalleryImage[] getImagesGallery()
+	{
+		return imagesGallery;
+	}
+
+	public int getVoyageId()
+	{
+		return voyageId;
 	}
 
 }

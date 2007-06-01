@@ -283,6 +283,14 @@ public class ImagesBean
 		return "images-query";
 	}
 	
+	public void openImageFromVoyageDetail(int voyageId, String imageId)
+	{
+		resetSearchParameters();
+		this.imageId = imageId;
+		this.searchVoyageId = new Integer(voyageId);
+		loadGallery();
+	}
+
 	public String gotoDetailFromGallery()
 	{
 		loadDetail(false);
@@ -603,7 +611,7 @@ public class ImagesBean
 		ImageLinkedVoyageInfo voyageInfo = (ImageLinkedVoyageInfo) linkedVoyagesTable.getRowData();
 		
 		voyageBean.openVoyage(voyageInfo.getVoyageIid());
-		voyageBean.setBackPage("images-detail");
+		voyageBean.setPreviousView("images-detail");
 		
 		return "voyage-detail";
 		

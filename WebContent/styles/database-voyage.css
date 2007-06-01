@@ -52,3 +52,30 @@ div.map-legend-section {
 
 input.map-legend-refresh {
 	margin-top: 0px; }
+
+
+td.gallery-image,
+td.gallery-image-selected {
+	vertical-align: top;
+	width: 160px; }
+	
+div.gallery-image {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100px; }
+
+div.gallery-image img {
+	cursor: pointer;
+	border: 1px solid #895D03; }
+
+div.gallery-image-text {
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-right: 5px; }
+
+div.gallery-image-label {
+	margin-top: 3px;
+	text-align: center; }
+
+div.gallery-image-description {
+	text-align: center; }

@@ -50,7 +50,7 @@
 			<s:panelTab title="#{res.database_voyage_voyagevariables}" sectionId="variables">
 			
 				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.detailVoyageInfo[0].value}"/> 
+					<h:outputText value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.voyageId}"/> 
 				</t:htmlTag>
 			
 				<t:htmlTag value="div" styleClass="detail-link-back">
@@ -64,7 +64,7 @@
 			<s:panelTab title="#{res.database_voyage_voyagemap}" sectionId="map">
 			
 				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.detailVoyageInfo[0].value}"/> 
+					<h:outputText value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.voyageId}"/> 
 				</t:htmlTag>
 			
 				<t:htmlTag value="div" styleClass="detail-link-back">
@@ -102,6 +102,27 @@
 					</t:htmlTag>
 				</t:htmlTag>
 			
+			</s:panelTab>
+
+			<s:panelTab title="#{res.database_voyage_voyageimages}" sectionId="images">
+
+				<t:htmlTag value="div" styleClass="detail-title">
+					<h:outputText value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.voyageId}"/> 
+				</t:htmlTag>
+				
+				<t:htmlTag value="div" styleClass="detail-link-back">
+					<h:commandLink value="< go back" action="#{VoyageDetailBean.back}" />
+				</t:htmlTag>
+
+				<s:pictures
+					images="#{VoyageDetailBean.imagesGallery}"
+					columnsCount="5"
+					showLabels="true"
+					thumbnailHeight="100" 
+					thumbnailWidth="100"
+					action="#{VoyageDetailBean.openImageDetail}" 
+					selectedImageId="#{VoyageDetailBean.selectedImageId}" />			
+
 			</s:panelTab>
 
 		</s:panelTabSet>

@@ -354,13 +354,13 @@ public class Image
 		return image;
 	}
 	
-	public static List getImagesByVoyageId(Session sess, Integer voyageId)
+	public static List getImagesByVoyageId(Session sess, int voyageId)
 	{
 
 		String hqlImages =
-				"from Image i " +
-				"where " + voyageId + " = some elements(i.voyageIds) " +
-				"order by i.date";
+				"from Image " +
+				"where " + voyageId + " = some elements(voyageIds) " +
+				"order by date asc, id asc";
 
 		return sess.createQuery(hqlImages).list();
 

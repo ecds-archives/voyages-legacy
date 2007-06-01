@@ -474,7 +474,7 @@ public class SlavesBean {
 		{
 
 			voyageBean.openVoyage(iid);
-			voyageBean.setBackPage("names-interface");
+			voyageBean.setPreviousView("names-interface");
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
