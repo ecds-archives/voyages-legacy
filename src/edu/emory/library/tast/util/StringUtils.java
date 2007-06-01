@@ -321,7 +321,15 @@ public class StringUtils
 		if (upperCase)
 			query = query.toUpperCase();
 		
-		return sepRegex.split(query);
+		String[] keywords = sepRegex.split(query);
+		if (keywords.length == 1 && keywords[0].length() == 0)
+		{
+			return new String[0];
+		}
+		else
+		{
+			return keywords;
+		}
 
 	}
 	

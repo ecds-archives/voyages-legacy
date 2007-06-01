@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.component.UIData;
 import javax.faces.model.SelectItem;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -16,7 +17,6 @@ import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.images.GalleryImage;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
@@ -25,6 +25,8 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class ImagesBean
 {
+
+	private static final long ALL_CATEGORIES_ID = 0;
 
 	private static final int DETAIL_THUMBS_COUNT = 8;
 	private static final int POPUP_EXTRA_HEIGHT = 50;
@@ -38,7 +40,7 @@ public class ImagesBean
 	
 	private String searchQueryTitle;
 	private String searchQueryDescription;
-	private String searchQueryCategory = "-1";
+	private long searchQueryCategory = ALL_CATEGORIES_ID;
 	private Integer searchQueryFrom = null;
 	private Integer searchQueryTo = null;
 	private Integer searchVoyageId = null;
@@ -57,7 +59,7 @@ public class ImagesBean
 	private void resetSearchParameters()
 	{
 		searchQueryTitle = "";
-		searchQueryCategory = "";
+		searchQueryCategory = ALL_CATEGORIES_ID;
 		searchQueryDescription = "";
 		searchQueryFrom = null;
 		searchQueryTo = null;
@@ -84,7 +86,7 @@ public class ImagesBean
 		
 		qValue.setOrderBy(new Attribute[] {Image.getAttribute("date"), Image.getAttribute("id")});
 		qValue.setOrder(QueryValue.ORDER_ASC);
-
+		
 		Object[] images = (Object[])qValue.executeQuery(sess);
 		size = Math.min(size, images.length);
 		GalleryImage[] ret = new GalleryImage[size];
@@ -148,7 +150,7 @@ public class ImagesBean
 			}
 		}
 
-		ImageCategory cat = ImageCategory.loadById(null, Integer.parseInt(searchQueryCategory));
+		ImageCategory cat = ImageCategory.loadById(null, searchQueryCategory);
 		if (cat != null)
 		{
 			title.append(" ");
@@ -228,49 +230,49 @@ public class ImagesBean
 	
 	public String seeVessels() {
 		resetSearchParameters();
-		this.searchQueryCategory = "1";
+		this.searchQueryCategory = 1;
 		loadGallery();
 		return "images-query";
 	}
 
 	public String seeSlaves() {
 		resetSearchParameters();
-		this.searchQueryCategory = "2";
+		this.searchQueryCategory = 2;
 		loadGallery();
 		return "images-query";
 	}
 
 	public String seeSlavers() {
 		resetSearchParameters();
-		this.searchQueryCategory = "3";
+		this.searchQueryCategory = 3;
 		loadGallery();
 		return "images-query";
 	}
 	
 	public String seePorts() {
 		resetSearchParameters();
-		this.searchQueryCategory = "4";
+		this.searchQueryCategory = 4;
 		loadGallery();
 		return "images-query";
 	}
 	
 	public String seeRegions() {
 		resetSearchParameters();
-		this.searchQueryCategory = "5";
+		this.searchQueryCategory = 5;
 		loadGallery();
 		return "images-query";
 	}
 	
 	public String seeManuscripts() {
 		resetSearchParameters();
-		this.searchQueryCategory = "6";
+		this.searchQueryCategory = 6;
 		loadGallery();
 		return "images-query";
 	}
 
 	public String seePresentation() {
 		resetSearchParameters();
-		this.searchQueryCategory = "99";
+		this.searchQueryCategory = 99;
 		loadGallery();
 		return "images-query";
 	}
@@ -410,7 +412,7 @@ public class ImagesBean
 			if (setCategory)
 			{
 				ImageCategory cat = img.getCategory();
-				if (cat != null) searchQueryCategory = String.valueOf(cat.getId().intValue());
+				if (cat != null) searchQueryCategory = cat.getId().intValue();
 			}
 		
 			imageInfo = new ArrayList();
@@ -475,60 +477,115 @@ public class ImagesBean
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		Conditions conds = new Conditions();
-		
+		StringBuffer hqlWhere = new StringBuffer();
+		int conditionsCount = 0;
+
 		String[] keywordsTitle = StringUtils.extractQueryKeywords(this.searchQueryTitle, true);
 		if (keywordsTitle.length > 0)
 		{
-			Conditions keywordsSubCond = new Conditions(Conditions.JOIN_AND);
-			Attribute titleUpperAttr = new FunctionAttribute("upper", new Attribute[] {Image.getAttribute("title")}); 
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append("(");
 			for (int i = 0; i < keywordsTitle.length; i++)
 			{
-				String keyword = "%" + keywordsTitle[i] + "%";
-				keywordsSubCond.addCondition(titleUpperAttr, keyword, Conditions.OP_LIKE);
+				if (i > 0) hqlWhere.append(" and ");
+				hqlWhere.append("upper(title) like ");
+				hqlWhere.append("upper(:title").append(i).append(")");
 			}
-			conds.addCondition(keywordsSubCond);
+			hqlWhere.append(")");
+			conditionsCount++;
 		}
-		
+
 		String[] keywordsDescripton = StringUtils.extractQueryKeywords(this.searchQueryDescription, true);
 		if (keywordsDescripton.length > 0)
 		{
-			Conditions keywordsSubCond = new Conditions(Conditions.JOIN_AND);
-			Attribute descUpperAttr = new FunctionAttribute("upper", new Attribute[] {Image.getAttribute("description")}); 
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append("(");
 			for (int i = 0; i < keywordsDescripton.length; i++)
 			{
-				String keyword = "%" + keywordsDescripton[i] + "%";
-				keywordsSubCond.addCondition(descUpperAttr, keyword, Conditions.OP_LIKE);
+				if (i > 0) hqlWhere.append(" and ");
+				hqlWhere.append("upper(description) like ");
+				hqlWhere.append("upper(:description").append(i).append(")");
 			}
-			conds.addCondition(keywordsSubCond);
+			hqlWhere.append(")");
+			conditionsCount++;
 		}
+		
+		if (this.searchQueryCategory != ALL_CATEGORIES_ID)
+		{
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append("category.id = :categoryId");
+			conditionsCount++;
+		}
+		
+		if (searchQueryFrom != null)
+		{
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append("date >= :dateFrom");
+			conditionsCount++;
+		}
+		
+		if (searchQueryTo != null)
+		{
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append("date <= :dateTo");
+			conditionsCount++;
+		}
+		
+		if (searchVoyageId != null)
+		{
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append(":voyageId = some elements(voyageIds)");
+			conditionsCount++;
+		}
+		
+		StringBuffer hsql = new StringBuffer();
+		hsql.append("select id, fileName, title, date from Image");
+		if (hqlWhere.length() > 0)
+		{
+			hsql.append(" where ");
+			hsql.append(hqlWhere);
+		}
+		hsql.append(" order by date asc, id asc");
+		
+		System.out.println(hsql.toString());
+		
+		Query query = sess.createQuery(hsql.toString());
+		
+		for (int i = 0; i < keywordsTitle.length; i++)
+		{
+			System.out.println("title" + i + " like '" + "%" + keywordsTitle[i] + "%" + "'");
+			query.setParameter("title" + i, "%" + keywordsTitle[i] + "%");
+		}
+		
+		for (int i = 0; i < keywordsDescripton.length; i++)
+		{
+			System.out.println("description" + i + " like '" + "%" + keywordsDescripton[i] + "%" + "'");
+			query.setParameter("description" + i, "%" + keywordsDescripton[i] + "%");
+		}
+		
+		if (this.searchQueryCategory != ALL_CATEGORIES_ID)
+			query.setParameter("categoryId", new Long(this.searchQueryCategory));
+		
+		if (searchQueryFrom != null)
+			query.setParameter("dateFrom", searchQueryFrom);
 
-		ImageCategory cat = ImageCategory.loadById(sess, Long.parseLong(this.searchQueryCategory));
-		if (cat != null) conds.addCondition(Image.getAttribute("category"), cat, Conditions.OP_EQUALS);
-		
-		if (searchQueryFrom != null) conds.addCondition(Image.getAttribute("date"), searchQueryFrom, Conditions.OP_GREATER_OR_EQUAL);
-		if (searchQueryTo != null) conds.addCondition(Image.getAttribute("date"), searchQueryTo, Conditions.OP_SMALLER_OR_EQUAL);
-		
-		QueryValue qValue = new QueryValue("Image", conds);
+		if (searchQueryTo != null)
+			query.setParameter("dateTo", searchQueryTo);
 
-		qValue.addPopulatedAttribute(Image.getAttribute("id"));
-		qValue.addPopulatedAttribute(Image.getAttribute("fileName"));
-		qValue.addPopulatedAttribute(Image.getAttribute("title"));
-		qValue.addPopulatedAttribute(Image.getAttribute("date"));
+		if (searchVoyageId != null)
+			query.setParameter("voyageId", searchVoyageId);
 		
-		qValue.setOrderBy(new Attribute[] {Image.getAttribute("date"), Image.getAttribute("id")});
-		qValue.setOrder(QueryValue.ORDER_ASC);
-		
-		Object[] response = qValue.executeQuery(sess);
-		galleryImages = new GalleryImage[response.length];
+		List response = query.list();
+		galleryImages = new GalleryImage[response.size()];
 
 		selectedImageIndex = -1;
-		for (int i = 0; i < response.length; i++)
+		int imageIndex = 0;
+		for (Iterator iter = response.iterator(); iter.hasNext();)
 		{
-			Object[] row = (Object[]) response[i];
+			Object[] row = (Object[]) iter.next();
 			String galleryImageId = row[0].toString();
-			if (galleryImageId.equals(imageId)) selectedImageIndex = i;
-			galleryImages[i] = new GalleryImage(
+			if (galleryImageId.equals(imageId)) selectedImageIndex = imageIndex;
+			galleryImages[imageIndex++] = new GalleryImage(
 					galleryImageId,
 					(String)row[1],
 					(String)row[2],
@@ -591,7 +648,7 @@ public class ImagesBean
 		if (categories == null)
 		{
 			categories = new ArrayList();
-			categories.add(new SelectItem("-1", TastResource.getText("images_all_categories")));
+			categories.add(new SelectItem(String.valueOf(ALL_CATEGORIES_ID), TastResource.getText("images_all_categories")));
 			List cats = ImageCategory.loadAll(HibernateUtil.getSession(), "id");
 			Iterator iter = cats.iterator();
 			while (iter.hasNext())
@@ -656,12 +713,12 @@ public class ImagesBean
 		this.searchQueryTitle = imageLike;
 	}
 
-	public String getSearchQueryCategory()
+	public long getSearchQueryCategory()
 	{
 		return searchQueryCategory;
 	}
 
-	public void setSearchQueryCategory(String selectedCategory)
+	public void setSearchQueryCategory(long selectedCategory)
 	{
 		this.searchQueryCategory = selectedCategory;
 	}
