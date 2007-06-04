@@ -397,10 +397,10 @@ public class ImagesBean
 	
 	private void loadDetail(boolean setCategory)
 	{
-		
+
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-		
+
 		Image img = Image.loadById(Integer.parseInt(imageId), sess);
 
 		if (img != null)
@@ -422,47 +422,47 @@ public class ImagesBean
 				ImageCategory cat = img.getCategory();
 				if (cat != null) searchQueryCategory = cat.getId().intValue();
 			}
-		
+
 			imageInfo = new ArrayList();
-	
+
 			if (img.getDate() != 0)
 				imageInfo.add(new ImageDetailInfo("Date:", String.valueOf(img.getDate())));
-	
+
 			if (!StringUtils.isNullOrEmpty(img.getCreator()))
 				imageInfo.add(new ImageDetailInfo("Creator:", img.getCreator()));
-				
+
 			if (!StringUtils.isNullOrEmpty(img.getSource()))
 				imageInfo.add(new ImageDetailInfo("Source:", img.getSource()));
-	
+
 			if (!StringUtils.isNullOrEmpty(img.getLanguage(), true))
 				imageInfo.add(new ImageDetailInfo("Language:", img.getLanguageName()));
-			
+
 			imageVoyagesInfo = new ArrayList();
-			
+
 			List voyages = Voyage.loadByVoyageIds(sess, img.getVoyageIds());
-			
+
 			if (voyages != null && voyages.size() > 0)
 			{
-			
+
 				StringBuffer info = new StringBuffer();
-				
+
 				for (Iterator iter = voyages.iterator(); iter.hasNext();)
 				{
-					
+
 					Voyage voyage = (Voyage) iter.next();
-					
+
 					info.setLength(0);
 					if (StringUtils.isNullOrEmpty(voyage.getShipname()))
 						info.append(TastResource.getText("images_shipname_unknown"));
 					else
 						info.append(voyage.getShipname());
-					
+
 					info.append(", ");
 					if (voyage.getYearam() == null)
 						info.append(TastResource.getText("images_year_unknown"));
 					else
 						info.append(voyage.getYearam());
-		
+
 					imageVoyagesInfo.add(new ImageLinkedVoyageInfo(
 							voyage.getIid().longValue(),
 							voyage.getVoyageid().intValue(),
@@ -470,7 +470,6 @@ public class ImagesBean
 				}
 
 			}
-			
 
 		}
 		
@@ -496,8 +495,8 @@ public class ImagesBean
 			for (int i = 0; i < keywordsTitle.length; i++)
 			{
 				if (i > 0) hqlWhere.append(" and ");
-				hqlWhere.append("upper(title) like ");
-				hqlWhere.append("upper(:title").append(i).append(")");
+				hqlWhere.append("remove_accents(upper(title)) like ");
+				hqlWhere.append("remove_accents(upper(:title").append(i).append("))");
 			}
 			hqlWhere.append(")");
 			conditionsCount++;
@@ -511,8 +510,8 @@ public class ImagesBean
 			for (int i = 0; i < keywordsDescripton.length; i++)
 			{
 				if (i > 0) hqlWhere.append(" and ");
-				hqlWhere.append("upper(description) like ");
-				hqlWhere.append("upper(:description").append(i).append(")");
+				hqlWhere.append("remove_accents(upper(description) like ");
+				hqlWhere.append("remove_accents(upper(:description").append(i).append("))");
 			}
 			hqlWhere.append(")");
 			conditionsCount++;
@@ -560,16 +559,10 @@ public class ImagesBean
 		Query query = sess.createQuery(hsql.toString());
 		
 		for (int i = 0; i < keywordsTitle.length; i++)
-		{
-			System.out.println("title" + i + " like '" + "%" + keywordsTitle[i] + "%" + "'");
 			query.setParameter("title" + i, "%" + keywordsTitle[i] + "%");
-		}
 		
 		for (int i = 0; i < keywordsDescripton.length; i++)
-		{
-			System.out.println("description" + i + " like '" + "%" + keywordsDescripton[i] + "%" + "'");
 			query.setParameter("description" + i, "%" + keywordsDescripton[i] + "%");
-		}
 		
 		if (this.searchQueryCategory != ALL_CATEGORIES_ID)
 			query.setParameter("categoryId", new Long(this.searchQueryCategory));

@@ -1,4 +1,4 @@
-//$Id: PostgreSQLDialect.java,v 1.8 2007-01-03 21:45:06 jzich Exp $
+//$Id: PostgreSQLDialect.java,v 1.9 2007-06-04 18:10:23 jzich Exp $
 package org.hibernate.dialect;
 
 import java.sql.Types;
@@ -119,6 +119,7 @@ public class PostgreSQLDialect extends Dialect {
 		registerFunction( "round_to_multiple", new StandardSQLFunction( "round_to_multiple", Hibernate.INTEGER ) );
 		registerFunction( "crop_to_0_100", new StandardSQLFunction( "crop_to_0_100", Hibernate.BIG_INTEGER ) );
 		registerFunction( "crop_to_0_100", new StandardSQLFunction( "crop_to_0_100", Hibernate.BIG_INTEGER ) );
+		registerFunction( "remove_accents", new StandardSQLFunction( "remove_accents", Hibernate.STRING ) );
 		
 		getDefaultProperties().setProperty(Environment.STATEMENT_BATCH_SIZE, DEFAULT_BATCH_SIZE);
 	}

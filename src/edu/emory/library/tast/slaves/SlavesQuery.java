@@ -141,7 +141,10 @@ public class SlavesQuery implements Cloneable
 		
 		Conditions c = new Conditions();
 		
-		FunctionAttribute slaveNameUpperAttr = new FunctionAttribute("upper", new Attribute[] {Slave.getAttribute("name")});
+		FunctionAttribute slaveNameUpperAttr = new FunctionAttribute(
+				"remove_accents", new Attribute[] {
+						new FunctionAttribute("upper", new Attribute[] {Slave.getAttribute("name")})});
+		
 		if (!StringUtils.isNullOrEmpty(this.slaveName, true))
 		{
 			String[] s = StringUtils.extractQueryKeywords(this.slaveName, true);
@@ -157,7 +160,10 @@ public class SlavesQuery implements Cloneable
 			}
 		}
 		
-		FunctionAttribute shipNameUpperAttr = new FunctionAttribute("upper", new Attribute[] {Slave.getAttribute("shipname")});
+		FunctionAttribute shipNameUpperAttr = new FunctionAttribute(
+				"remove_accents", new Attribute[] {
+						new FunctionAttribute("upper", new Attribute[] {Slave.getAttribute("shipname")})});
+		
 		if (!StringUtils.isNullOrEmpty(this.shipName, true))
 		{
 			String[] s = StringUtils.extractQueryKeywords(this.shipName, true);

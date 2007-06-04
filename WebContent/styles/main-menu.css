@@ -25,6 +25,7 @@ div.main-menu-pages a:hover {
 	color: #93CED9; }
 
 td.main-menu-container {
+	line-height: 130%;
 	vertical-align: top;
 	padding-left: 15px;
 	padding-top: 10px; }

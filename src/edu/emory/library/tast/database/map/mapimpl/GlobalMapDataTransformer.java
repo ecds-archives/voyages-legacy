@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.maps.AbstractDataTransformer;
 import edu.emory.library.tast.maps.AbstractMapItem;
@@ -63,6 +65,8 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	private TransformerResponse getItems(AbstractTransformerQueryHolder holder) {
 
 		Object[] data = holder.getRawQueryResponse();
+		
+		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
 		
 		List items = new ArrayList();
 
@@ -172,7 +176,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			long to = Math.round(ranges[i+1]);
 			long from = Math.round(ranges[i]);
 			from++;
-			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", "symbols/circle-1-" + (i + 1) + ".png", 
+			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", contextPath + "/map-assets/symbols/circle-1-" + (i + 1) + ".png", 
 					"" + valuesFormat.format(new Object[] {new Long(from)}) + " - " + valuesFormat.format(new Object[] {new Long(to)}));
 			legendSizes.addItemToGroup(item);
 		}

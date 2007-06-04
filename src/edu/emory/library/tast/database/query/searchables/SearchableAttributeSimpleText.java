@@ -45,15 +45,23 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 		Attribute[] attributes = getAttributes();
 		for (int i = 0; i < keywords.length; i++)
 		{
+			
+			String keyword = "%" + keywords[i] + "%";
 			Conditions kewordCond = new Conditions(Conditions.JOIN_OR);
+			
 			for (int j = 0; j < attributes.length; j++)
 			{
-				kewordCond.addCondition(
-						new FunctionAttribute("upper", new Attribute[]{attributes[j]}),
-						"%" + keywords[i] + "%",
-						Conditions.OP_LIKE);
+				
+				FunctionAttribute attr =
+					new FunctionAttribute("remove_accents", new Attribute[] {
+								new FunctionAttribute("upper", new Attribute[]{attributes[j]})});
+				
+				kewordCond.addCondition(attr, keyword, Conditions.OP_LIKE);
+
 			}
+			
 			subCond.addCondition(kewordCond);
+
 		}
 		conditions.addCondition(subCond);
 		

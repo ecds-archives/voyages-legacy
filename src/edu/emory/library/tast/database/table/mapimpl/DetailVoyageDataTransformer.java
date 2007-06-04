@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -53,6 +55,8 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		// Retrieve first row
 		Object[] row = (Object[]) data.getRawQueryResponse()[0];
 		List rowList = Arrays.asList(row);
+		
+		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
 
 		// toMap.addAll(Arrays.asList(parseAfrica(row)));
 		// toMap.addAll(Arrays.asList(parseAmericas(row)));
@@ -164,8 +168,8 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 			String[] legendSymbols = element.getLegendSymbolNames();
 			for (int j = 0; j < legendSymbols.length; j++) {
 				LegendItem legendItem = new LegendItem(legendSymbols[j],
-						"symbols/" + legendSymbols[j] + ".png", element
-								.getLegendTexts()[j]);
+						contextPath + "/map-assets/symbols/" + legendSymbols[j] + ".png",
+						element.getLegendTexts()[j]);
 				legend.addItemToGroup(legendItem);
 				element.addLegendItem(legendItem);
 			}

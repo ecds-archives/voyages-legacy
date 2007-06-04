@@ -18,6 +18,7 @@
 
 	<s:pictures
 		images="#{ImagesBean.samplePresentation}" 
+		showLabels="true"
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
@@ -42,6 +43,7 @@
 
 	<s:pictures
 		images="#{ImagesBean.sampleSlaves}" 
+		showLabels="true"
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
@@ -66,6 +68,7 @@
 
 	<s:pictures
 		images="#{ImagesBean.sampleSlavers}" 
+		showLabels="true"
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
@@ -90,6 +93,7 @@
 
 	<s:pictures
 		images="#{ImagesBean.sampleVessels}" 
+		showLabels="true"
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
@@ -114,6 +118,7 @@
 
 	<s:pictures
 		images="#{ImagesBean.samplePorts}" 
+		showLabels="true"
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
@@ -138,6 +143,7 @@
 
 	<s:pictures
 		images="#{ImagesBean.sampleRegions}" 
+		showLabels="true"
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 
@@ -162,6 +168,7 @@
 
 	<s:pictures
 		images="#{ImagesBean.sampleManuscripts}" 
+		showLabels="true"
 		columnsCount="5"
 		thumbnailHeight="100" 
 		thumbnailWidth="100" 

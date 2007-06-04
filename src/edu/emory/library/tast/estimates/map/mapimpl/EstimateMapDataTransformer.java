@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -46,6 +48,8 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		List mapDataItems = new ArrayList();
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
+		
+		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
 
 		double min = Double.MAX_VALUE;
 		double max = Double.MIN_VALUE;
@@ -143,7 +147,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			long from = Math.round(ranges[i]);
 			from++;
 			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$",
-					"symbols/circle-1-" + (i + 1) + ".png", ""
+					contextPath + "/map-assets/symbols/circle-1-" + (i + 1) + ".png", ""
 							+ valuesFormat
 									.format(new Object[] { new Long(from) })
 							+ " - "

@@ -8,7 +8,7 @@ var MainMenuBar =
 		var pagesElement = document.getElementById(pagesElementId);
 		
 		imgElement.src = imgUrl;
-		pagesElement.style.display = "block";
+		pagesElement.style.visibility = "visible";
 		//Effect.SlideDown(pagesElement, {duration: 0.2});
 		
 	},
@@ -20,7 +20,7 @@ var MainMenuBar =
 		var pagesElement = document.getElementById(pagesElementId);
 		
 		imgElement.src = imgUrl;
-		pagesElement.style.display = "none";
+		pagesElement.style.visibility = "hidden";
 	
 	}
 

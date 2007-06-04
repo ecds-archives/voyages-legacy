@@ -122,7 +122,7 @@ public class MainMenuBarComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("id", pagesImgId, null);
 		writer.writeAttribute("class", "main-menu-pages", null);
-		if (!sectionActive) writer.writeAttribute("style", "display: none", null);
+		if (!sectionActive) writer.writeAttribute("style", "visibility: hidden", null);
 		writer.startElement("div", this);
 		
 		MainMenuBarPageItem[] pages = section.getSubItems(); 

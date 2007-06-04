@@ -71,12 +71,6 @@
 						</t:htmlTag>
 					</s:panelTab>
 					
-					<s:panelTab title="#{res.estimates_main_list}" sectionId="listing">
-						<t:htmlTag value="div" styleClass="results-panel">
-							<%@ include file="estimates-tab-listing.jsp" %>
-						</t:htmlTag>
-					</s:panelTab>
-				
 					<s:panelTab title="#{res.estimates_main_map}" sectionId="map">
 						<t:htmlTag value="div" styleClass="results-panel">
 							<%@ include file="estimates-tab-map.jsp" %>

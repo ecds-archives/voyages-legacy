@@ -409,6 +409,8 @@ public class MapComponent extends UIComponentBase
 			ZoomLevel zoomLevel = zoomLevels[i];
 			if (i > 0) jsRegister.append(", ");
 			jsRegister.append("new MapZoomLevel(");
+			jsRegister.append(zoomLevel.getTileWidth()).append(", ");
+			jsRegister.append(zoomLevel.getTileHeight()).append(", ");
 			jsRegister.append(zoomLevel.getBottomLeftTileX()).append(", ");
 			jsRegister.append(zoomLevel.getBottomLeftTileY()).append(", ");
 			jsRegister.append(zoomLevel.getTilesNumX()).append(", ");
@@ -546,6 +548,8 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("'").append(miniMapFrameId).append("'");
 			jsRegister.append(", ");
 			jsRegister.append("new MapZoomLevel(");
+			jsRegister.append(miniMapZoomLevel.getTileWidth()).append(", ");
+			jsRegister.append(miniMapZoomLevel.getTileHeight()).append(", ");
 			jsRegister.append(miniMapZoomLevel.getBottomLeftTileX()).append(", ");
 			jsRegister.append(miniMapZoomLevel.getBottomLeftTileY()).append(", ");
 			jsRegister.append(miniMapZoomLevel.getTilesNumX()).append(", ");
