@@ -62,6 +62,7 @@
 		<mapping resource="edu/emory/library/tast/dm/SexAge.hbm.xml"/>
 		
 		<mapping resource="edu/emory/library/tast/dm/Submission.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/Revision.hbm.xml"/>
 
     </session-factory>
 
