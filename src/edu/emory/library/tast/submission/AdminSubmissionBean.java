@@ -33,6 +33,11 @@ import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
 import edu.emory.library.tast.dm.SubmissionMerge;
 import edu.emory.library.tast.dm.SubmissionNew;
+import edu.emory.library.tast.dm.SubmissionSource;
+import edu.emory.library.tast.dm.SubmissionSourceBook;
+import edu.emory.library.tast.dm.SubmissionSourceOther;
+import edu.emory.library.tast.dm.SubmissionSourcePaper;
+import edu.emory.library.tast.dm.SubmissionSourcePrimary;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -507,6 +512,7 @@ public class AdminSubmissionBean {
 		Transaction t = session.beginTransaction();
 
 		Conditions c = new Conditions();
+		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), Conditions.OP_EQUALS);
 		if (this.requestStatus.equals("2")) {
 			c.addCondition(Submission.getAttribute("editorVoyage"), null, Conditions.OP_IS_NOT);
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
@@ -975,4 +981,75 @@ public class AdminSubmissionBean {
 	public String getMessage() {
 		return message;
 	}
+		
+	public GridColumn[] getSourcesColumns() {
+		return new GridColumn[] {
+				new GridColumn("Source type"),
+				new GridColumn("Source details")
+		};
+	}
+	
+	public GridRow[] getSourcesRows() {
+		
+		int i = 0;
+		
+		Conditions c = new Conditions();
+		c.addCondition(new SequenceAttribute(new Attribute[] {SubmissionSource.getAttribute("submission"), Submission.getAttribute("id")}), this.submissionId, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("SubmissionSource", c);
+		List list = qValue.executeQueryList();
+		Iterator iter = list.iterator();
+		
+		GridRow[] rows = new GridRow[list.size()];
+		
+		while (iter.hasNext()) {
+			SubmissionSource source = (SubmissionSource)iter.next();
+			if (source instanceof SubmissionSourceBook) {
+				SubmissionSourceBook book = (SubmissionSourceBook)source;
+				String desc = "Title: " + this.shortenIfNecessary(book.getTitle()) + 
+				"; Authors: " + this.shortenIfNecessary(book.getAuthors());
+				rows[i++] = new GridRow(book.getId().toString(), new String[] {
+					"Book",
+					desc
+				});
+			} else if (source instanceof SubmissionSourcePaper) {
+				SubmissionSourcePaper paper = (SubmissionSourcePaper)source;
+				String desc = "Title: " + this.shortenIfNecessary(paper.getTitle()) + 
+					"; Authors: " + this.shortenIfNecessary(paper.getAuthors());
+				rows[i++] = new GridRow(paper.getId().toString(), new String[] {
+					"Article",
+					desc
+				});
+			} else if (source instanceof SubmissionSourceOther) {
+				SubmissionSourceOther other = (SubmissionSourceOther)source;
+				String desc = "Title: " + this.shortenIfNecessary(other.getTitle()) + 
+				"; Location: " + this.shortenIfNecessary(other.getLocation());
+				rows[i++] = new GridRow(other.getId().toString(), new String[] {
+					"Other",
+					desc
+				});
+			} else if (source instanceof SubmissionSourcePrimary) {
+				SubmissionSourcePrimary primary = (SubmissionSourcePrimary)source;
+				String desc = "Name: " + this.shortenIfNecessary(primary.getName()) + 
+				"; Location: " + this.shortenIfNecessary(primary.getLocation());
+				rows[i++] = new GridRow(primary.getId().toString(), new String[] {
+					"Primary source",
+					desc
+				});
+			}
+		}
+		
+		return rows;
+	}
+	
+	private String shortenIfNecessary(String string) {
+		if (string == null) {
+			return "none";
+		}
+		if (string.length() > 40) {
+			return string.substring(0, 40) + "...";
+		} else {
+			return string;
+		}
+	}
+	
 }

@@ -48,7 +48,8 @@ public class SubmissionBean
 	public static final int SUBMISSION_TYPE_NOT_SELECTED = 0;	
 	public static final int SUBMISSION_TYPE_NEW = 1;	
 	public static final int SUBMISSION_TYPE_EDIT = 2;	
-	public static final int SUBMISSION_TYPE_MERGE = 3;	
+	public static final int SUBMISSION_TYPE_MERGE = 3;
+	private static final Integer STATE_ID = new Integer(1);	
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
 	
@@ -578,8 +579,7 @@ public class SubmissionBean
 		return "new-submission";
 	}
 	
-	public String toSources() {
-		
+	private Submission createSubmission() {
 		Session sess = HibernateUtil.getSession();
 		Transaction trans = sess.beginTransaction();
 
@@ -682,14 +682,17 @@ public class SubmissionBean
 		
 		submission.setUser(this.authenticatedUser);
 		submission.setTime(new Date());
+		submission.setSavedState(STATE_ID);
 		
 		sess.save(submission);
 		
 		trans.commit();
 		sess.close();
-		
-		this.sourcesBean.setSubmission(submission);
-		
+		return submission;
+	}
+	
+	public String toSources() {		
+		this.sourcesBean.setSubmission(this.createSubmission());		
 		return "sources";
 	}
 
@@ -703,5 +706,11 @@ public class SubmissionBean
 
 	public void setSourcesBean(SourcesBean sourcesBean) {
 		this.sourcesBean = sourcesBean;
+	}
+	
+	public String saveState() {
+		this.authenticatedUser = null;
+		this.createSubmission();
+		return null;
 	}
 }

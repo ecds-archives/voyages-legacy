@@ -1,10 +1,34 @@
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.hibernate.Session;
+
+import edu.emory.library.tast.database.query.QueryCondition;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
+import edu.emory.library.tast.dm.attributes.DateAttribute;
+import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.SubmissionAttribute;
+import edu.emory.library.tast.dm.attributes.UserAttribute;
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public class SubmissionSource
 {
 
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
+		attributes.put("submission", new SubmissionAttribute("submission", "Submission"));
+	}
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
+	}
+	
 	private Long id;
 	private String note;
 	private Submission submission;
@@ -71,6 +95,17 @@ public class SubmissionSource
 		return
 			StringUtils.compareStrings(this.note, that.note);
 
+	}
+
+	public static SubmissionSource loadById(Session session, Long id) {
+		Conditions c = new Conditions();
+		c.addCondition(getAttribute("id"), id, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("SubmissionSource", c);
+		Object[] response = qValue.executeQuery(session);
+		if (response.length != 0) {
+			return (SubmissionSource)response[0];		
+		}
+		return null;
 	}
 
 }

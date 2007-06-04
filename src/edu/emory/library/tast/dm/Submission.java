@@ -29,7 +29,9 @@ public abstract class Submission
 	private Set sources;
 	private boolean solved;
 	private boolean accepted;
+	private boolean submitted;
 	private User user;
+	private Integer savedState;
 	
 	private static Map attributes = new HashMap();
 	static {
@@ -37,8 +39,10 @@ public abstract class Submission
 		attributes.put("time", new DateAttribute("id", null));
 		attributes.put("solved", new BooleanAttribute("solved", "Submission", null));
 		attributes.put("accepted", new BooleanAttribute("accepted", "Submission", null));
+		attributes.put("submitted", new BooleanAttribute("submitted", "Submission", null));
 		attributes.put("editorVoyage", new EditedVoyageAttribute("editorVoyage", "EditedVoyage"));
 		attributes.put("user", new UserAttribute("user", "User"));
+		attributes.put("savedState", new NumericAttribute("savedState", null, NumericAttribute.TYPE_INTEGER));
 	}
 	public static Attribute getAttribute(String name) {
 		return (Attribute)attributes.get(name);
@@ -185,6 +189,22 @@ public abstract class Submission
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean isSubmitted() {
+		return submitted;
+	}
+
+	public void setSubmitted(boolean submitted) {
+		this.submitted = submitted;
+	}
+
+	public Integer getSavedState() {
+		return savedState;
+	}
+
+	public void setSavedState(Integer savedState) {
+		this.savedState = savedState;
 	}
 
 

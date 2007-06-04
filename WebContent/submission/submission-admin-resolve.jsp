@@ -11,10 +11,13 @@
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/grid-editor.js" language="javascript" type="text/javascript"></script>
+	<link href="../admin/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <f:view>
 <h:form id="main">
+
+	<h1>Request details</h1>
 
 	<s:gridEditor
 		rows="#{AdminSubmissionBean.rows}"
@@ -22,7 +25,14 @@
 		values="#{AdminSubmissionBean.values}"
 		fieldTypes="#{AdminSubmissionBean.fieldTypes}"
 		rowGroups="#{AdminSubmissionBean.rowGroups}"/>
-
+	<br>
+	
+	<h2>Submitted sources</h2>
+	
+	<s:grid id="voyges" 
+			columns="#{AdminSubmissionBean.sourcesColumns}"
+			rows="#{AdminSubmissionBean.sourcesRows}" 
+			onOpenRow="#{AdminSubmissionBean.openSourcesRow}" />
 	<br>
 	
 	<h:commandButton value="< Back" action="back"/>

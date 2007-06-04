@@ -31,31 +31,32 @@
 	<br>
 	
 	<table>
-	<tr>
-		<td>
-			<h:commandButton style="width: 180px;" value="Provide primary source" action="#{SourcesBean.primarySource}"/>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<h:commandButton style="width: 180px;" value="Provide article description" action="#{SourcesBean.articleSource}"/>
-		</td>
-	</tr>
-	<tr>
-		<td>		
-			<h:commandButton style="width: 180px;" value="Provide book description" action="#{SourcesBean.bookSource}"/>
-		</td>
-	</tr>
-	<tr>
-		<td>		
-			<h:commandButton style="width: 180px;" value="Provide description" action="#{SourcesBean.otherSource}"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>		
+	<h:panelGroup rendered="#{SourcesBean.newSourceType==-1}">
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
+			<h:commandButton style="width: 180px;" value="Add primary source" action="#{SourcesBean.primarySource}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
+			<h:commandButton style="width: 180px;" value="Add article" action="#{SourcesBean.articleSource}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">	
+			<h:commandButton style="width: 180px;" value="Add book" action="#{SourcesBean.bookSource}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
+			<h:commandButton style="width: 180px;" value="Add other source" action="#{SourcesBean.otherSource}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	</h:panelGroup>
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==1}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="New book" style="font-weight: bold;"/>
+				<h:outputText value="#{SourcesBean.modeLabel} book source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Author(s)"/></t:htmlTag>
@@ -96,13 +97,17 @@
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"></t:htmlTag>
-						<t:htmlTag value="td"><h:commandButton value="Add source" action="#{SourcesBean.addSource}"/></t:htmlTag>
+						<t:htmlTag value="td">
+							<h:commandButton value="#{SourcesBean.applyLabel}" action="#{SourcesBean.addSource}"/>
+							<h:commandButton value="Delete" action="#{SourcesBean.deleteSource}" rendered="#{SourcesBean.mode==true}"/>
+							<h:commandButton value="Cancel" action="#{SourcesBean.cancelAddSource}"/>
+						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
 			
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==2}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="New article" style="font-weight: bold;"/>
+				<h:outputText value="#{SourcesBean.modeLabel} article source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Author(s)"/></t:htmlTag>
@@ -143,49 +148,100 @@
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"></t:htmlTag>
-						<t:htmlTag value="td"><h:commandButton value="Add source" action="#{SourcesBean.addSource}"/></t:htmlTag>
+						<t:htmlTag value="td">
+							<h:commandButton value="#{SourcesBean.applyLabel}" action="#{SourcesBean.addSource}"/>
+							<h:commandButton value="Delete" action="#{SourcesBean.deleteSource}" rendered="#{SourcesBean.mode==true}"/>
+							<h:commandButton value="Cancel" action="#{SourcesBean.cancelAddSource}"/>
+						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
 			
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==3}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="Other source" style="font-weight: bold;"/>
+				<h:outputText value="#{SourcesBean.modeLabel} other source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 					<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Title"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newOther.title}"/></t:htmlTag>
+					</t:htmlTag>
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Location"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newOther.location}"/></t:htmlTag>
+					</t:htmlTag>
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Page"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 30px;" value="#{SourcesBean.newOther.pageOrFolio}"/></t:htmlTag>
+					</t:htmlTag>
+					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Information about source"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="Other info" /></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="#{SourcesBean.newOther.note}" /></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"></t:htmlTag>
-						<t:htmlTag value="td"><h:commandButton value="Add source" action="#{SourcesBean.addSource}"/></t:htmlTag>
+						<t:htmlTag value="td">
+							<h:commandButton value="#{SourcesBean.applyLabel}" action="#{SourcesBean.addSource}"/>
+							<h:commandButton value="Delete" action="#{SourcesBean.deleteSource}" rendered="#{SourcesBean.mode==true}"/>
+							<h:commandButton value="Cancel" action="#{SourcesBean.cancelAddSource}"/>
+						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
 			
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==4}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="New primary source" style="font-weight: bold;"/>
+				<h:outputText value="#{SourcesBean.modeLabel} primary source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
+				<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Location"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.location}"/></t:htmlTag>
+					</t:htmlTag>
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Series number or letter"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.series}"/></t:htmlTag>
+					</t:htmlTag>
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Name of archive"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.name}"/></t:htmlTag>
+					</t:htmlTag>
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Volume or box number"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 30px;" value="#{SourcesBean.newPrimary.volume}"/></t:htmlTag>
+					</t:htmlTag>
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td"  style="width: 150px;"><h:outputText value="Document detail (page or folio number, and/or date of document)"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 80px;" value="#{SourcesBean.newPrimary.details}"/></t:htmlTag>
+					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Information about source"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="Other info" /></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="#{SourcesBean.newPrimary.note}" /></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"></t:htmlTag>
-						<t:htmlTag value="td"><h:commandButton value="Add source" action="#{SourcesBean.addSource}"/></t:htmlTag>
+						<t:htmlTag value="td">
+							<h:commandButton value="#{SourcesBean.applyLabel}" action="#{SourcesBean.addSource}"/>
+							<h:commandButton value="Delete" action="#{SourcesBean.deleteSource}" rendered="#{SourcesBean.mode==true}"/>
+							<h:commandButton value="Cancel" action="#{SourcesBean.cancelAddSource}"/>
+						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
-		</td>
-	</tr>
+		</t:htmlTag>
+	</t:htmlTag>
 	
-	<tr>
-		<td>
-			<h2>Submitted sources</h2>
-			<s:grid id="voyges" 
-				columns="#{SourcesBean.columns}"
-				rows="#{SourcesBean.rows}" />
-		</td>
-	</tr>
+	<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==-1}">
+		<f:verbatim>
+		<tr>
+			<td>
+				<h2>Submitted sources</h2>
+				</f:verbatim>
+				<s:grid id="voyges" 
+					columns="#{SourcesBean.columns}"
+					rows="#{SourcesBean.rows}" 
+					onOpenRow="#{SourcesBean.openRow}" />
+				<f:verbatim>
+			</td>
+		</tr>
+		</f:verbatim>
+	</t:htmlTag>
 	</table>
 	
 	<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==-1}">
