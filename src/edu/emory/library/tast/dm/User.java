@@ -19,6 +19,7 @@ public class User {
 	private Long id;
 	private String userName;
 	private String password;
+	private boolean chiefEditor;
 	private boolean editor;
 	private boolean admin;
 	private boolean enabled;
@@ -153,5 +154,13 @@ public class User {
 	
 	public void setSubmissions(Set submissions) {
 		this.submissions = submissions;
+	}
+
+	public boolean isChiefEditor() {
+		return chiefEditor;
+	}
+
+	public void setChiefEditor(boolean chiefEditor) {
+		this.chiefEditor = chiefEditor;
 	}
 }

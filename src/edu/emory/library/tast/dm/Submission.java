@@ -32,6 +32,7 @@ public abstract class Submission
 	private boolean submitted;
 	private User user;
 	private Integer savedState;
+	private Set submissionEditors;
 	
 	private static Map attributes = new HashMap();
 	static {
@@ -43,6 +44,7 @@ public abstract class Submission
 		attributes.put("editorVoyage", new EditedVoyageAttribute("editorVoyage", "EditedVoyage"));
 		attributes.put("user", new UserAttribute("user", "User"));
 		attributes.put("savedState", new NumericAttribute("savedState", null, NumericAttribute.TYPE_INTEGER));
+		attributes.put("submissionEditors", new UserAttribute("submissionEditors", "SubmissionEditor"));
 	}
 	public static Attribute getAttribute(String name) {
 		return (Attribute)attributes.get(name);
@@ -205,6 +207,14 @@ public abstract class Submission
 
 	public void setSavedState(Integer savedState) {
 		this.savedState = savedState;
+	}
+
+	public Set getSubmissionEditors() {
+		return submissionEditors;
+	}
+
+	public void setSubmissionEditors(Set submissionEditors) {
+		this.submissionEditors = submissionEditors;
 	}
 
 

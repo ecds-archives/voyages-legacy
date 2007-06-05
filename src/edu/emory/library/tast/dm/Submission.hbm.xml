@@ -23,6 +23,11 @@
 			<one-to-many class="edu.emory.library.tast.dm.SubmissionSource" />
 		</set>
 		
+		<set name="submissionEditors">
+    		<key column="submission_id"/>
+		    <one-to-many class="edu.emory.library.tast.dm.SubmissionEditor"/>
+		</set>
+		
 		<joined-subclass name="edu.emory.library.tast.dm.SubmissionNew" table="submissions_new">
 			<key column="submission_id"/>
 			<many-to-one name="editorVoyage" column="editor_edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />			
@@ -125,6 +130,7 @@
 	
 		<property name="userName" column="name"/>
 		<property name="password" column="password"/>
+		<property name="chiefEditor" column="chief_editor"/>
 		<property name="editor" column="editor"/>
 		<property name="admin" column="admin"/>
 		<property name="enabled" column="enabled"/>
@@ -140,6 +146,18 @@
 			<many-to-many column="id" class="edu.emory.library.tast.dm.Submission" />
 		</set>
 		
+	</class>
+	
+	<class name="edu.emory.library.tast.dm.SubmissionEditor" table="submission_editors">
+	
+		<id name="id" column="id">
+	        <generator class="native"/>
+	    </id>
+	    
+	    <many-to-one name="submission" column="submission_id" class="edu.emory.library.tast.dm.Submission"/>	    
+	    <many-to-one name="editedVoyage" column="edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />
+	    <many-to-one name="user" column="user_id" class="edu.emory.library.tast.dm.User"/>
+	    
 	</class>
 
 </hibernate-mapping>

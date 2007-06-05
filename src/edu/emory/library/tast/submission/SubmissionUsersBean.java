@@ -58,6 +58,10 @@ public class SubmissionUsersBean {
 
 	private Boolean checkedActive;
 	
+	private Boolean checkedEditor;
+	
+	private Boolean checkedChiefEditor;
+	
 	private String checkedUserErrorMessage;
 
 	
@@ -118,7 +122,7 @@ public class SubmissionUsersBean {
 				return null;
 			}
 			this.errorMessage = "";
-			if (user.isAdmin() || user.isEditor()) {
+			if (user.isAdmin() || user.isEditor() || user.isChiefEditor()) {
 				this.adminSubmissionBean.setAuthenticateduser(user);
 				return "admin-logged-in";
 			} else {
@@ -135,13 +139,14 @@ public class SubmissionUsersBean {
 				new GridColumn("Last name"),
 				new GridColumn("E-mail"), 
 				new GridColumn("User active"),
+				new GridColumn("Editor"),
+				new GridColumn("Chief editor"),
 				new GridColumn("Number of requests") 
 		};
 	}
 
 	public GridRow[] getUserRows() {
 		Conditions c = new Conditions();
-		c.addCondition(User.getAttribute("editor"), new Boolean(false), Conditions.OP_EQUALS);
 		c.addCondition(User.getAttribute("admin"), new Boolean(false), Conditions.OP_EQUALS);
 		if ("2".equals(this.accountType)) {
 			c.addCondition(User.getAttribute("enabled"), new Boolean(true), Conditions.OP_EQUALS);
@@ -171,13 +176,23 @@ public class SubmissionUsersBean {
 					numPosts = ((Long) res[0]).toString();
 				}
 
+				
+				boolean editor = false;
+				boolean chiefEditor = false;
+				if (user.isChiefEditor()) {
+					chiefEditor = true;
+				} else if (user.isEditor()) {
+					editor = true;
+				}
 				response[i] = new GridRow(user.getId().toString(), 
 						new String[] { 
 							user.getUserName(), 
 							user.getFirstName(), 
 							user.getLastName(), 
 							user.getEmail(),
-							user.isEnabled() ? "Yes" : "No", 
+							user.isEnabled() ? "Yes" : "No",
+							editor ? "Yes" : "No",
+							chiefEditor ? "Yes" : "No",
 							numPosts 
 						});
 			}
@@ -233,33 +248,6 @@ public class SubmissionUsersBean {
 		this.newUserName = newUserName;
 	}
 
-	// public String getNewUserPassword() {
-	// return newUserPassword;
-	// }
-	//
-	// public void setNewUserPassword(String newUserPassword) {
-	// this.newUserPassword = newUserPassword;
-	// }
-	//	
-	// public String createNewUser() {
-	// if (StringUtils.isNullOrEmpty(this.newUserName) ||
-	// StringUtils.isNullOrEmpty(this.newUserPassword)) {
-	// return null;
-	// }
-	//		
-	// User user = new User(this.newUserName, this.newUserPassword);
-	// user.setEnabled(true);
-	// user.setCreateDate(new Date());
-	// Session session = HibernateUtil.getSession();
-	// Transaction t = session.beginTransaction();
-	// session.save(user);
-	// t.commit();
-	// session.close();
-	// this.newUserName = "";
-	// this.newUserPassword = "";
-	// return null;
-	// }
-
 	public void editUser(GridOpenRowEvent event) {
 		this.checkedUserId = new Long(event.getRowId());
 	}
@@ -282,6 +270,8 @@ public class SubmissionUsersBean {
 		this.checkedPassword = user.getPassword();
 		this.checkedDate = user.getCreateDate().toString();
 		this.checkedActive = new Boolean(user.isEnabled());
+		this.checkedEditor = new Boolean(user.isEditor());
+		this.checkedChiefEditor = new Boolean(user.isChiefEditor());
 		this.checkedFirstName = user.getFirstName();
 		this.checkedLastName = user.getLastName();
 		this.checkedInstitution = user.getInstitution();
@@ -317,9 +307,18 @@ public class SubmissionUsersBean {
 			return null;
 		}
 		user.setEnabled(this.checkedActive.booleanValue());
+		user.setEditor(this.checkedEditor.booleanValue());
+		boolean chiefEditor = this.checkedChiefEditor.booleanValue();
+		if (chiefEditor) {
+			user.setChiefEditor(chiefEditor);
+			user.setEditor(false);
+		}
 		user.setUserName(this.checkedUserName);
 		user.setPassword(this.checkedPassword);
-
+		user.setEmail(this.checkedEmail);
+		user.setFirstName(this.checkedFirstName);
+		user.setLastName(this.checkedLastName);
+		
 		t.commit();
 		session.close();
 		this.checkedUserId = null;
@@ -529,4 +528,33 @@ public class SubmissionUsersBean {
 		return checkedUserErrorMessage;
 	}
 
+	public SelectItem[] getEditorUsers() {
+		Conditions c = new Conditions();
+		c.addCondition(User.getAttribute("editor"), new Boolean(true), Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("User", c);
+		Object[] users = qValue.executeQuery();
+		SelectItem[] items = new SelectItem[users.length];
+		for (int i = 0; i < items.length; i++) {
+			items[i] = new SelectItem(((User)users[i]).getId().toString(), 
+					((User)users[i]).getUserName());
+		}
+		return items;
+	}
+
+	public Boolean getCheckedEditor() {
+		return checkedEditor;
+	}
+
+	public void setCheckedEditor(Boolean checkedEditor) {
+		this.checkedEditor = checkedEditor;
+	}
+
+	public Boolean getCheckedChiefEditor() {
+		return checkedChiefEditor;
+	}
+
+	public void setCheckedChiefEditor(Boolean checkedChiefEditor) {
+		this.checkedChiefEditor = checkedChiefEditor;
+	}
+	
 }

@@ -7,30 +7,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.admin.VoyageBean;
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
-import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.TabChangedEvent;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.dm.EditedVoyage;
-import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
+import edu.emory.library.tast.dm.SubmissionEditor;
 import edu.emory.library.tast.dm.SubmissionMerge;
 import edu.emory.library.tast.dm.SubmissionNew;
 import edu.emory.library.tast.dm.SubmissionSource;
@@ -41,7 +37,6 @@ import edu.emory.library.tast.dm.SubmissionSourcePrimary;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
@@ -188,6 +183,9 @@ public class AdminSubmissionBean {
 	 * Message that is shown after the publish button was pressed.
 	 */
 	private String message;
+	
+	private Boolean addingEditor = new Boolean(false);
+	private String newEditorUser = null;
 
 	/**
 	 * Constructor.
@@ -512,7 +510,7 @@ public class AdminSubmissionBean {
 		Transaction t = session.beginTransaction();
 
 		Conditions c = new Conditions();
-		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), Conditions.OP_EQUALS);
+		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), Conditions.OP_EQUALS);		
 		if (this.requestStatus.equals("2")) {
 			c.addCondition(Submission.getAttribute("editorVoyage"), null, Conditions.OP_IS_NOT);
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
@@ -527,6 +525,9 @@ public class AdminSubmissionBean {
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionNew submission = (SubmissionNew) subs[i];
+				if (!valid(submission)) {
+					continue;
+				}
 				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
 				if (submission.isSolved()) {
 					if (submission.isAccepted()) {
@@ -546,6 +547,9 @@ public class AdminSubmissionBean {
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionEdit submission = (SubmissionEdit) subs[i];
+				if (!valid(submission)) {
+					continue;
+				}
 				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
 				if (submission.isSolved()) {
 					if (submission.isAccepted()) {
@@ -566,6 +570,9 @@ public class AdminSubmissionBean {
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionMerge submission = (SubmissionMerge) subs[i];
+				if (!valid(submission)) {
+					continue;
+				}
 				String involvedStr = "";
 				Set involved = submission.getMergedVoyages();
 				boolean first = true;
@@ -594,6 +601,19 @@ public class AdminSubmissionBean {
 		session.close();
 
 		return (GridRow[]) l.toArray(new GridRow[] {});
+	}
+
+	private boolean valid(Submission submission) {
+		if (this.authenticateduser.isAdmin() || this.authenticateduser.isChiefEditor()) {
+			return true;
+		}
+		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter.hasNext();) {
+			SubmissionEditor element = (SubmissionEditor) iter.next();
+			if (element.getUser().getId().equals(this.authenticateduser.getId())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -919,6 +939,10 @@ public class AdminSubmissionBean {
 	public Boolean getIsAdmin() {
 		return new Boolean(this.authenticateduser.isAdmin());
 	}
+	
+	public Boolean getIsChiefEditor() {
+		return new Boolean(this.authenticateduser.isAdmin() || this.authenticateduser.isChiefEditor());
+	}
 
 	public boolean isDeleteMergeValid() {
 		return this.submissionId != null;
@@ -1052,4 +1076,45 @@ public class AdminSubmissionBean {
 		}
 	}
 	
+	public String addEditor() {
+		this.addingEditor = new Boolean(true);
+		return null;
+	}
+	
+	public String applyAddEditor() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+
+		try {
+			this.addingEditor = new Boolean(false);
+			User user = User.loadById(session, new Long(this.newEditorUser));
+			EditedVoyage eVoyage = new EditedVoyage();
+			SubmissionEditor editor = new SubmissionEditor();
+			editor.setSubmission(Submission.loadById(session, this.submissionId));
+			editor.setUser(user);
+			editor.setEditedVoyage(eVoyage);
+			session.save(editor);
+		} finally {
+			t.commit();
+			session.close();
+		}
+		return null;
+	}
+	
+	public String cancelAddEditor() {
+		this.addingEditor = new Boolean(false);
+		return null;
+	}
+	
+	public Boolean getAddingEditor() {
+		return this.addingEditor;
+	}
+
+	public String getNewEditorUser() {
+		return newEditorUser;
+	}
+
+	public void setNewEditorUser(String newEditorUser) {
+		this.newEditorUser = newEditorUser;
+	}
 }
