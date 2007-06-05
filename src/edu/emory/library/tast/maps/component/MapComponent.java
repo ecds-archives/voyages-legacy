@@ -17,6 +17,8 @@ import edu.emory.library.tast.util.StringUtils;
 public class MapComponent extends UIComponentBase
 {
 	
+	private static final int ZOOM_SLIDER_SLOT_WIDTH = 24;
+
 	private final static MapSize defaultMapSize = new MapSize(480, 320);
 
 	private boolean zoomLevelsSet = false;
@@ -188,15 +190,42 @@ public class MapComponent extends UIComponentBase
 		writer.endElement("td");
 	}
 
-	private void encodeToolZoomSlider(FacesContext context, ResponseWriter writer, String bgId, String knobId) throws IOException
+	private void encodeToolZoomSlider(FacesContext context, ResponseWriter writer, String contId, String knobId) throws IOException
 	{
+		
+		if (this.zoomLevels == null || this.zoomLevels.length <= 1)
+			return;
+		
+		int n = this.zoomLevels.length;
+		
 		writer.startElement("td", this);
-		writer.writeAttribute("id", bgId, null);
-		writer.writeAttribute("class", "map-zoom-slider-bg", null);
+		writer.writeAttribute("id", contId, null);
+		writer.writeAttribute("class", "map-zoom-slider", null);
+		writer.writeAttribute("style", "width: " + (n*ZOOM_SLIDER_SLOT_WIDTH) + "px;", null);
 		
 		writer.startElement("div", this);
-		writer.writeAttribute("class", "map-zoom-slider-bg", null);
-		
+		writer.writeAttribute("class", "map-zoom-slider-cont", null);
+		writer.writeAttribute("style", "width: " + (n*ZOOM_SLIDER_SLOT_WIDTH) + "px;", null);
+
+		for (int i = 0; i < n; i++)
+		{
+			writer.startElement("div", this);
+			if (i == 0)
+			{
+				writer.writeAttribute("class", "map-zoom-slider-left", null);
+			}
+			else if (i == this.zoomLevels.length - 1)
+			{
+				writer.writeAttribute("class", "map-zoom-slider-right", null);
+			}
+			else
+			{
+				writer.writeAttribute("class", "map-zoom-slider-middle", null);
+			}
+			writer.writeAttribute("style", "left: " + (i*ZOOM_SLIDER_SLOT_WIDTH) + "px;", null);
+			writer.endElement("div");
+		}
+
 		writer.startElement("div", this);
 		writer.writeAttribute("id", knobId, null);
 		writer.writeAttribute("class", "map-zoom-slider-knob", null);
@@ -206,6 +235,7 @@ public class MapComponent extends UIComponentBase
 		writer.endElement("div");
 		
 		writer.endElement("td");
+
 	}
 
 	private void encodeToolSepearator(FacesContext context, ResponseWriter writer) throws IOException
@@ -325,8 +355,6 @@ public class MapComponent extends UIComponentBase
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
 		
-		ZoomLevel[] zoomLevels = getZoomLevels();
-		
 		String mapId = getClientId(context);
 		String mapControlId = getClientId(context) + "_control";
 		String tilesContainerId = getClientId(context) + "_tiles_container";
@@ -335,7 +363,7 @@ public class MapComponent extends UIComponentBase
 		String toolsForwardId = getClientId(context) + "_forward";
 		String toolsZoomPlusId = getClientId(context) + "_zoom_plus";
 		String toolsZoomMinusId = getClientId(context) + "_zoom_minus";
-		String toolsSliderBgId = getClientId(context) + "_zoom_slider_bg";
+		String toolsSliderContId = getClientId(context) + "_zoom_slider_cont";
 		String toolsSliderKnobId = getClientId(context) + "_zoom_slider_knob";
 		String toolsPanId = getClientId(context) + "_pan";
 		String toolsZoomId = getClientId(context) + "_zoom";
@@ -358,6 +386,7 @@ public class MapComponent extends UIComponentBase
 		String contextPath = context.getExternalContext().getRequestContextPath();
 		
 		// from beans or prev values
+		zoomLevels = getZoomLevels();
 		mapSize = getMapSize();
 		mapSizes = getMapSizes();
 		PointOfInterest[] pointsOfInterest = getPointsOfInterest();
@@ -447,7 +476,9 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append(", ");
 		
 		// slider
-		jsRegister.append("'").append(toolsSliderBgId).append("'");
+		jsRegister.append(ZOOM_SLIDER_SLOT_WIDTH);
+		jsRegister.append(", ");
+		jsRegister.append("'").append(toolsSliderContId).append("'");
 		jsRegister.append(", ");
 		jsRegister.append("'").append(toolsSliderKnobId).append("'");
 		jsRegister.append(", ");
@@ -656,7 +687,7 @@ public class MapComponent extends UIComponentBase
 		// icons: zoom + / zoom -
 		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus");
 		encodeToolSepearator(context, writer);
-		encodeToolZoomSlider(context, writer, toolsSliderBgId, toolsSliderKnobId);
+		encodeToolZoomSlider(context, writer, toolsSliderContId, toolsSliderKnobId);
 		encodeToolSepearator(context, writer);
 		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus");
 		encodeToolSepearator(context, writer);

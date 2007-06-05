@@ -22,7 +22,8 @@ var MapsGlobal =
 		buttonForwardId, // forward button
 		buttonZoomPlusId, // zoom + button
 		buttonZoomMinusId, // zoom - button
-		sliderBgId, // slider background
+		sliderSlotWidth, // one zoom level width on the slider
+		slideContainerId, // slider container
 		sliderKnobId, // slider knob
 		buttonPanId, // pan button
 		buttonZoomId, // zoom button
@@ -118,8 +119,8 @@ var MapsGlobal =
 			new MapButtonZoomMinus(buttonZoomMinusId, map);
 			
 		// zoom slider
-		if (sliderBgId && sliderKnobId)
-			new MapZoomSlider(sliderBgId, sliderKnobId, map);
+		if (sliderSlotWidth && slideContainerId && sliderKnobId && zoomLevels.length > 1)
+			new MapZoomSlider(sliderSlotWidth, slideContainerId, sliderKnobId, map);
 			
 		// zoom: pan/zoom
 		if (buttonPanId && buttonZoomId)
@@ -2066,9 +2067,10 @@ MapZoomSize.prototype.click = function(event, mapSizeIndex)
 // slider
 /////////////////////////////////////////////////////////
 
-function MapZoomSlider(bgElementId, knobElementId, map)
+function MapZoomSlider(slotWidth, containerElementId, knobElementId, map)
 {
-	this.bgElementId = bgElementId;
+	this.slotWidth = slotWidth;
+	this.containerElementId = containerElementId;
 	this.knobElementId = knobElementId;
 	this.map = map;
 	this.scale = 0;
@@ -2080,17 +2082,13 @@ function MapZoomSlider(bgElementId, knobElementId, map)
 MapZoomSlider.prototype.init = function()
 {
 
-	this.bg = document.getElementById(this.bgElementId);
+	this.cont = document.getElementById(this.containerElementId);
 	this.knob = document.getElementById(this.knobElementId);
 	
 	this.knob.style.display = "block";
-
-	this.sliderWidth = ElementUtils.getOffsetWidth(this.bg);
-	this.knobWidth = ElementUtils.getOffsetWidth(this.knob);
-	this.sliderEffectiveWidth = this.bg.offsetWidth - this.knob.offsetWidth;
 	
 	EventAttacher.attach(this.knob, "mousedown", this, "mouseDown");
-	EventAttacher.attach(this.bg, "click", this, "click");
+	EventAttacher.attach(this.cont, "click", this, "click");
 	
 	this.zoomChanged();
 }
@@ -2102,42 +2100,31 @@ MapZoomSlider.prototype.capKnobPosition = function(knobLeft)
 	return knobLeft;
 }
 
-MapZoomSlider.prototype.setKnobNormalizedPosition = function(t)
+MapZoomSlider.prototype.setKnobPosition = function(zoomLevel)
 {
-	this.setKnobPosition(t * this.sliderEffectiveWidth);
-}
-
-MapZoomSlider.prototype.setKnobPosition = function(knobLeft)
-{
-	this.knob.style.left = this.capKnobPosition(knobLeft) + "px";
+	this.knob.style.left = (zoomLevel * this.slotWidth) + "px";
 }
 
 MapZoomSlider.prototype.click = function(event)
 {
-	alert("Not implemented yet");
-	return;
-	var pos = ElementUtils.getEventMouseElementX(event, this.bg);
-	this.setKnobPosition(pos - this.knobWidth / 2);
-	var capPos = this.capKnobPosition(pos - this.knobWidth / 2);
-	var t = capPos / this.sliderEffectiveWidth;
-	this.map.changeScaleNormalized(t, false);
+	var zoomLevel = parseInt(ElementUtils.getEventMouseElementX(event, this.cont) / this.slotWidth);
+	this.setKnobPosition(zoomLevel);
+	this.map.changeZoomLevel(zoomLevel, false);
 }
 
 MapZoomSlider.prototype.mouseDown = function(event)
 {
 	this.sliding = true;
-	this.startPos = event.clientX;
-	this.startOffsetLeft = this.knob.offsetLeft;
-	this.lastPos = this.startPos;
 	EventAttacher.attach(document, "mousemove", this, "mouseMove");
 	EventAttacher.attach(document, "mouseup", this, "mouseUp");
 }
 
 MapZoomSlider.prototype.mouseMove = function(event)
 {
-	var pos = event.clientX;
-	this.setKnobPosition(this.knob.offsetLeft + (pos - this.lastPos));
-	this.lastPos = pos;
+	var zoomLevel = parseInt(ElementUtils.getEventMouseElementX(event, this.cont) / this.slotWidth);
+	if (zoomLevel < 0) zoomLevel = 0;
+	if (zoomLevel >= this.map.zoomLevels.length) zoomLevel = this.map.zoomLevels.length - 1;
+	this.setKnobPosition(zoomLevel);
 }
 
 MapZoomSlider.prototype.mouseUp = function(event)
@@ -2148,5 +2135,5 @@ MapZoomSlider.prototype.mouseUp = function(event)
 
 MapZoomSlider.prototype.zoomChanged = function()
 {
-	// this.setKnobNormalizedPosition(this.map.getScaleNormalized());
+	this.setKnobPosition(this.map.zoomLevel);
 }

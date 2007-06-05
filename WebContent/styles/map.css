@@ -188,25 +188,47 @@ td.map-icon-size-2:hover {
 td.map-icon-size-2-off:hover {
 	background-position: 0px -24px; }		
 	
-td.map-zoom-slider-bg {
+td.map-zoom-slider {
 	vertical-align: top;
-	width: 80px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
 	background-image: url(../images/map-zoom-slider-bg.png); }	
 	
-div.map-zoom-slider-bg {
-	width: 80px;
+div.map-zoom-slider-cont {
 	height: 24px;
 	position: absolute; }
 	
+div.map-zoom-slider-left {
+	position: absolute;
+	overflow: hidden;
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	background-image: url(../images/map-zoom-slider-left.png); }	
+	
+div.map-zoom-slider-middle {
+	position: absolute;
+	overflow: hidden;
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	background-image: url(../images/map-zoom-slider-middle.png); }	
+
+div.map-zoom-slider-right {
+	position: absolute;
+	overflow: hidden;
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	background-image: url(../images/map-zoom-slider-right.png); }	
+
 div.map-zoom-slider-knob {
 	position: absolute;
 	left: 0px;
 	top: 0px;
-	cursor: pointer;
-	width: 13px;
+	cursor: default;
+	width: 24px;
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;

@@ -31,7 +31,7 @@ public class Slave {
 	
 	private long id;
 
-	private long voyageId;
+	private int voyageId;
 
 	private int age;
 
@@ -141,11 +141,11 @@ public class Slave {
 		this.source = source;
 	}
 
-	public long getVoyageId() {
+	public int getVoyageId() {
 		return voyageId;
 	}
 
-	public void setVoyageId(long voyageid) {
+	public void setVoyageId(int voyageid) {
 		this.voyageId = voyageid;
 	}
 	

@@ -47,6 +47,23 @@
 			</t:htmlTag>
 		
 			<t:htmlTag value="tr">
+			
+				<t:htmlTag value="td" styleClass="slaves-query-variable-title">
+					<h:outputText value="#{res.slaves_query_voyage_id}" />
+				</t:htmlTag>
+
+				<t:htmlTag value="td" styleClass="slaves-query-variable-controls">
+				
+					<h:inputText
+						style="width: 150px;"
+						value="#{SlavesBean.workingQuery.voyageId}"
+						onkeyup="SlavesSearch.searchFromBasicBox(true)" />
+					
+				</t:htmlTag>
+
+			</t:htmlTag>
+
+			<t:htmlTag value="tr">
 				<t:htmlTag value="td" styleClass="slaves-query-spacer"></t:htmlTag>
 			</t:htmlTag>
 			

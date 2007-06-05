@@ -39,6 +39,7 @@ public class SlavesQuery implements Cloneable
 	private Integer heightTo;
 	private Integer yearFrom;
 	private Integer yearTo;
+	private Integer voyageId;
 	private String slaveName;
 	private String shipName;
 	private Boolean boys;
@@ -63,6 +64,7 @@ public class SlavesQuery implements Cloneable
 		yearTo = null;
 		slaveName = null;
 		shipName = null;
+		voyageId = null;
 		boys = new Boolean(true);
 		men = new Boolean(true);
 		males = new Boolean(true);
@@ -179,6 +181,18 @@ public class SlavesQuery implements Cloneable
 			}
 		}
 		
+		if (this.voyageId != null)
+		{
+			c.addCondition(Slave.getAttribute("voyageId"), this.voyageId, Conditions.OP_EQUALS);
+		}
+		
+		if (querySummary != null && this.voyageId != null)
+		{
+			QuerySummaryItem querySummaryItem = new QuerySummaryItem(TastResource.getText("slaves_query_voyage_id"));
+			querySummary.add(querySummaryItem);
+			querySummaryItem.setValue(this.voyageId.toString());
+		}
+
 		if (this.yearFrom != null)
 		{
 			c.addCondition(Slave.getAttribute("datearr"), this.yearFrom, Conditions.OP_GREATER_OR_EQUAL);
@@ -709,6 +723,16 @@ public class SlavesQuery implements Cloneable
 	public void setYearTo(Integer yearTo)
 	{
 		this.yearTo = yearTo;
+	}
+
+	public Integer getVoyageId()
+	{
+		return voyageId;
+	}
+
+	public void setVoyageId(Integer voyageId)
+	{
+		this.voyageId = voyageId;
 	}
 
 }
