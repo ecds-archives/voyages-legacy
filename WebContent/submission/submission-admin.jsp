@@ -39,11 +39,9 @@
 	
 	<h:panelGroup rendered="#{AdminSubmissionBean.voyagesListSelected}">
 	
-		<t:htmlTag value="br"/>
-		<t:htmlTag value="br"/>
 		
 		<f:verbatim>
-		<div value="div" style="padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
+		<div value="div" style="margin-top: 10px; padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
 			
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -91,10 +89,8 @@
 	
 	<h:panelGroup rendered="#{AdminSubmissionBean.requestsListSelected}">
 	
-		<t:htmlTag value="br"/>
-		<t:htmlTag value="br"/>
 		<f:verbatim>
-		<div value="div" style="padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
+		<div value="div" style="margin-top: 10px; padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
 			
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -136,10 +132,8 @@
 
 	<h:panelGroup rendered="#{AdminSubmissionBean.usersListSelected}">
 	
-		<t:htmlTag value="br"/>
-		<t:htmlTag value="br"/>
 		<f:verbatim>
-		<div value="div" style="padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
+		<div value="div" style="margin-top: 10px; padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
 			
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -149,14 +143,15 @@
 			</tr>
 			</table>
 		</div>
-		<div style="height: 500px; overflow: auto;">
+		<div style="height: 500px; overflow: auto; padding-top: 10px;">
 		</f:verbatim>
 		
-		<s:grid id="voyges" 
+		<s:grid id="users"
 			columns="#{SubmissionUsersBean.userColumns}"
 			rows="#{SubmissionUsersBean.userRows}" 
 			action="#{SubmissionUsersBean.enterEditUser}"
-			onOpenRow="#{SubmissionUsersBean.editUser}" />
+			onOpenRow="#{SubmissionUsersBean.editUser}"
+			onColumnClick="#{SubmissionUsersBean.onGridColumnClick}" />
 		
 		<f:verbatim>
 		</div>
@@ -165,7 +160,6 @@
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{AdminSubmissionBean.publishSelected}">
-		<t:htmlTag value="br"/>
 		<t:htmlTag value="br"/>
 		<f:verbatim>
 			<h2>Warning!</h2>

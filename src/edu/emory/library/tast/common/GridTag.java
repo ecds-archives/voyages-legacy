@@ -14,6 +14,7 @@ public class GridTag extends UIComponentTag
 	private String columns;
 	private String action;
 	private String onOpenRow;
+	private String onColumnClick;
 
 	public String getComponentType()
 	{
@@ -53,6 +54,12 @@ public class GridTag extends UIComponentTag
 		{
 			MethodBinding mb = app.createMethodBinding(onOpenRow, new Class[] {GridOpenRowEvent.class});
 			grid.setOnOpenRow(mb);
+		}
+
+		if (onColumnClick != null && isValueReference(onColumnClick))
+		{
+			MethodBinding mb = app.createMethodBinding(onColumnClick, new Class[] {GridColumnClickEvent.class});
+			grid.setOnColumnClick(mb);
 		}
 
 	}
@@ -95,6 +102,16 @@ public class GridTag extends UIComponentTag
 	public void setOnOpenRow(String onOpenRow)
 	{
 		this.onOpenRow = onOpenRow;
+	}
+
+	public String getOnColumnClick()
+	{
+		return onColumnClick;
+	}
+
+	public void setOnColumnClick(String onColumnClick)
+	{
+		this.onColumnClick = onColumnClick;
 	}
 
 }

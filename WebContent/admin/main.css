@@ -26,6 +26,13 @@ table.grid td {
 table.grid tr.focused td {
 	background-color: #EEEEEE; }
 
+table.grid td.grid-sorted,
+table.grid th.grid-sorted {
+	background-color: #EEEEEE; }
+	
+table.grid th.grid-clickable {
+	cursor: pointer; }
+
 /**********************************
 * pager
 ***********************************/

@@ -756,6 +756,9 @@
 			<name>onOpenRow</name>
 		</attribute>
 		<attribute>
+			<name>onColumnClick</name>
+		</attribute>
+		<attribute>
 			<name>action</name>
 		</attribute>
 	</tag>

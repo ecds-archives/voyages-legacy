@@ -4,11 +4,11 @@ import java.util.Date;
 
 import javax.faces.model.SelectItem;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.common.GridColumn;
+import edu.emory.library.tast.common.GridColumnClickEvent;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
 import edu.emory.library.tast.dm.Submission;
@@ -26,6 +26,10 @@ public class SubmissionUsersBean {
 
 	public static final String ERROR_INACTIVE = "Your account is inactive, please contact us.";
 	
+	private static final String USER_NAME_COL_NAME = "user-name";
+	private static final String FIRST_NAME_COL_NAME = "first-name";
+	private static final String LAST_NAME_COL_NAME = "last-name";
+	private static final String SORTED_COLUMN_CSS_CLASS = "grid-sorted";
 	
 	private SubmissionBean submissionBean;
 
@@ -63,6 +67,8 @@ public class SubmissionUsersBean {
 	private Boolean checkedChiefEditor;
 	
 	private String checkedUserErrorMessage;
+	
+	private String userListSortedColumn = USER_NAME_COL_NAME;
 
 	
 	//////////////////////////////////
@@ -133,16 +139,44 @@ public class SubmissionUsersBean {
 	}
 
 	public GridColumn[] getUserColumns() {
-		return new GridColumn[] { 
-				new GridColumn("User name"), 
-				new GridColumn("First name"), 
-				new GridColumn("Last name"),
+		return new GridColumn[] {
+				
+				new GridColumn(
+						USER_NAME_COL_NAME,
+						"User name",
+						true,
+						USER_NAME_COL_NAME.equals(userListSortedColumn) ?
+								SORTED_COLUMN_CSS_CLASS : null), 
+				
+				new GridColumn( 
+						FIRST_NAME_COL_NAME,
+						"First name",
+						true,
+						FIRST_NAME_COL_NAME.equals(userListSortedColumn) ?
+								SORTED_COLUMN_CSS_CLASS : null), 
+				
+				new GridColumn(
+						LAST_NAME_COL_NAME,
+						"Last name",
+						true,
+						LAST_NAME_COL_NAME.equals(userListSortedColumn) ?
+								SORTED_COLUMN_CSS_CLASS : null), 
+				
 				new GridColumn("E-mail"), 
+				
 				new GridColumn("User active"),
+				
 				new GridColumn("Editor"),
+				
 				new GridColumn("Chief editor"),
+				
 				new GridColumn("Number of requests") 
 		};
+	}
+	
+	public void onGridColumnClick(GridColumnClickEvent event)
+	{
+		userListSortedColumn = event.getColumnName();
 	}
 
 	public GridRow[] getUserRows() {

@@ -12,6 +12,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringAggregator;
 import edu.emory.library.tast.util.StringUtils;
 
 public class GridComponent extends UICommand
@@ -24,6 +25,7 @@ public class GridComponent extends UICommand
 	private GridColumn[] columns;
 
 	private MethodBinding onOpenRow;
+	private MethodBinding onColumnClick;
 
 	public String getRendererType()
 	{
@@ -37,9 +39,10 @@ public class GridComponent extends UICommand
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[2];
+		Object[] values = new Object[4];
 		values[0] = super.saveState(context);
 		values[1] = saveAttachedState(context, onOpenRow);
+		values[2] = saveAttachedState(context, onColumnClick);
 		return values;
 	}
 	
@@ -48,11 +51,17 @@ public class GridComponent extends UICommand
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
 		onOpenRow = (MethodBinding) restoreAttachedState(context, values[1]);
+		onColumnClick = (MethodBinding) restoreAttachedState(context, values[2]);
 	}
 	
 	private String getHiddenFieldNameForToOpen(FacesContext context)
 	{
 		return getClientId(context) + "_to_open";
+	}
+
+	private String getHiddenFieldNameForColumnClick(FacesContext context)
+	{
+		return getClientId(context) + "_column_name_click";
 	}
 
 	public void decode(FacesContext context)
@@ -61,10 +70,18 @@ public class GridComponent extends UICommand
 		String toOpenRowId = JsfUtils.getParamString(context,
 				getHiddenFieldNameForToOpen(context));
 		
+		String coolumnNameClicked = JsfUtils.getParamString(context,
+				getHiddenFieldNameForColumnClick(context));
+
 		if (!StringUtils.isNullOrEmpty(toOpenRowId))
 		{
 			queueEvent(new ActionEvent(this));
 			queueEvent(new GridOpenRowEvent(this, toOpenRowId));
+		}
+
+		if (!StringUtils.isNullOrEmpty(coolumnNameClicked))
+		{
+			queueEvent(new GridColumnClickEvent(this, coolumnNameClicked));
 		}
 
 	}
@@ -78,6 +95,10 @@ public class GridComponent extends UICommand
 			if (onOpenRow != null)
 				onOpenRow.invoke(getFacesContext(), new Object[] {event});
 	
+		if (event instanceof GridColumnClickEvent)
+			if (onColumnClick != null)
+				onColumnClick.invoke(getFacesContext(), new Object[] {event});
+
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException
@@ -98,6 +119,13 @@ public class GridComponent extends UICommand
 		String rowIdField = getHiddenFieldNameForToOpen(context); 
 		JsfUtils.encodeHiddenInput(this, writer, rowIdField);
 		
+		// hidden field for column name to be clicked
+		String columnClickFieldName = getHiddenFieldNameForColumnClick(context); 
+		JsfUtils.encodeHiddenInput(this, writer, columnClickFieldName);
+		
+		// for styles
+		StringAggregator cssClassBuff = new StringAggregator(" "); 
+
 		// table
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
@@ -110,14 +138,31 @@ public class GridComponent extends UICommand
 		writer.writeAttribute("class", "grid-header", null);
 		for (int j = 0; j < columnsCount; j++)
 		{
+			
 			GridColumn col = columns[j];
+
+			cssClassBuff.reset();
+			cssClassBuff.appendIfNotNullOrEmpty(col.getCssClass());
+			cssClassBuff.appendConditionaly(col.isClickable(), "grid-clickable");
+			
 			writer.startElement("th", this);
-			if (col.hasCssClass()) writer.writeAttribute("class", col.getClass(), null);
+
+			if (!cssClassBuff.isEmpty())
+				writer.writeAttribute("class", cssClassBuff.toString(), null);
+			
+			if (col.isClickable())
+				writer.writeAttribute("onclick",
+						JsfUtils.generateSubmitJS(context, form,
+								columnClickFieldName, col.getName()), null);
+			
 			writer.write(col.getHeader());
 			writer.endElement("th");
+
 		}
 		writer.endElement("tr");
-
+		
+		
+		
 		// data
 		for (int i = 0; i < rows.length; i++)
 		{
@@ -129,7 +174,7 @@ public class GridComponent extends UICommand
 			
 			writer.startElement("tr", this);
 			if (row.hasCssClass()) writer.writeAttribute("class", row.getClass(), null);
-			writer.writeAttribute("class", row.getClass(), null);
+			writer.writeAttribute("class", row.getCssClass(), null);
 			writer.writeAttribute("onclick", onClick, null);
 			writer.writeAttribute("onmouseover", "this.className = 'focused'", null);
 			writer.writeAttribute("onmouseout", "this.className = ''", null);
@@ -141,7 +186,7 @@ public class GridComponent extends UICommand
 				String value = row.getNthValue(j);
 				
 				writer.startElement("td", this);
-				if (col.hasCssClass()) writer.writeAttribute("class", col.getClass(), null);
+				if (col.hasCssClass()) writer.writeAttribute("class", col.getCssClass(), null);
 				if (value != null) writer.write(value);
 				writer.endElement("td");
 				
@@ -195,6 +240,16 @@ public class GridComponent extends UICommand
 	public void setOnOpenRow(MethodBinding onOpenRow)
 	{
 		this.onOpenRow = onOpenRow;
+	}
+
+	public MethodBinding getOnColumnClick()
+	{
+		return onColumnClick;
+	}
+
+	public void setOnColumnClick(MethodBinding onColumnClick)
+	{
+		this.onColumnClick = onColumnClick;
 	}
 
 }
