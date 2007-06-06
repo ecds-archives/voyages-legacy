@@ -191,16 +191,16 @@
 				<h:outputText value="#{SourcesBean.modeLabel} primary source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 				<t:htmlTag value="tr">
+						<t:htmlTag value="td"><h:outputText value="Name of archive"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.name}"/></t:htmlTag>
+				</t:htmlTag>
+				<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Location"/></t:htmlTag>
 						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.location}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Series number or letter"/></t:htmlTag>
 						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.series}"/></t:htmlTag>
-					</t:htmlTag>
-					<t:htmlTag value="tr">
-						<t:htmlTag value="td"><h:outputText value="Name of archive"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.name}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Volume or box number"/></t:htmlTag>

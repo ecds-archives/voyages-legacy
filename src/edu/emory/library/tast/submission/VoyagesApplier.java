@@ -1,0 +1,731 @@
+package edu.emory.library.tast.submission;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import edu.emory.library.tast.common.GridColumn;
+import edu.emory.library.tast.common.GridOpenRowEvent;
+import edu.emory.library.tast.common.grideditor.Column;
+import edu.emory.library.tast.common.grideditor.Row;
+import edu.emory.library.tast.common.grideditor.RowGroup;
+import edu.emory.library.tast.common.grideditor.Value;
+import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.dm.EditedVoyage;
+import edu.emory.library.tast.dm.Submission;
+import edu.emory.library.tast.dm.SubmissionEdit;
+import edu.emory.library.tast.dm.SubmissionEditor;
+import edu.emory.library.tast.dm.SubmissionMerge;
+import edu.emory.library.tast.dm.SubmissionNew;
+import edu.emory.library.tast.dm.User;
+import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
+
+public class VoyagesApplier {
+	
+	public static final String COPY_LABEL = "Copy";
+	
+	public static final String ORYGINAL_VOYAGE_LABEL = "Original voyage";
+
+	public static final String CHANGED_VOYAGE_LABEL = "Suggested change";
+
+	public static final String NEW_VOYAGE_LABEL = "Suggested voyage";
+
+	public static final String CORRECTED_VOYAGE_LABEL = "Approved voyage";
+
+	public static final String MERGE_VOYAGE_LABEL = "Voyage indicated to merge";
+
+	public static final String DECIDED_VOYAGE_LABEL = "Final decision";
+
+	public static final String DECIDED_VOYAGE = "decided";
+
+	public static final String ORYGINAL_VOYAGE = "old";
+
+	public static final String CHANGED_VOYAGE = "new";
+
+	private static final String EDITOR_CHOICE = "editor_suggestion";
+
+	private static final String EDITOR_CHOICE_LABEL = "Suggestion of";
+	
+	/**
+	 * Attributes that are available for administrator/editor.
+	 */
+	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getSubmissionAttributes();
+
+	/**
+	 * Indicator is error occured (if wrong value was entered into any field).
+	 */
+	private boolean wasError = false;
+	
+	/**
+	 * Values for DataGrid component.
+	 */
+	private Values vals = null;
+
+	/**
+	 * Rows for DataGrid component.
+	 */
+	private RowGroup[] rowGroups;
+	
+	/**
+	 * Id of submission that is expanded.
+	 */
+	private Long submissionId = null;
+
+	/**
+	 * In case of edit request - one can have more than one submission solved at once.
+	 */
+	private Long[] editRequests = null;
+
+	/**
+	 * Main voyage id in merge request.
+	 */
+	private Long mergeMainVoyage = null;
+
+	/**
+	 * Reference to admin bean.
+	 */
+	private AdminSubmissionBean adminBean;
+	
+	public VoyagesApplier(AdminSubmissionBean bean) {
+		this.adminBean = bean;
+		List rowGroupsList = new ArrayList();
+		for (int i = 0; i < attrs.length; i++) {
+			if (!rowGroupsList.contains(attrs[i].getGroupName())) {
+				rowGroupsList.add(attrs[i].getGroupName());
+			}
+		}
+		this.rowGroups = new RowGroup[rowGroupsList.size()];
+		for (int i = 0; i < this.rowGroups.length; i++) {
+			String rowGroup = (String) rowGroupsList.get(i);
+			this.rowGroups[i] = new RowGroup(rowGroup, rowGroup);
+		}
+	}
+	
+	/**
+	 * Gets values for grid component.
+	 * If required - queries DB to fill in values.
+	 * @return
+	 */
+	public Values getValues() {
+
+		if (!wasError || vals == null) {
+			Session session = HibernateUtil.getSession();
+			Transaction t = session.beginTransaction();
+			Voyage[] toVals = null;
+			String[] cols = null;
+			Map[] attributeNotes = null;
+			EditedVoyage vNew = null;
+			Submission submission = Submission.loadById(session, this.submissionId);
+
+			if (submission instanceof SubmissionNew) {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
+					toVals = new Voyage[2];
+					cols = new String[2];
+					attributeNotes = new Map[2];
+				} else {
+					vNew = ((SubmissionNew) submission).getEditorVoyage();
+					toVals = new Voyage[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
+					cols = new String[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
+					attributeNotes = new Map[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
+				}
+				toVals[0] = Voyage.loadById(session, ((SubmissionNew) submission).getNewVoyage().getVoyage().getIid());
+				attributeNotes[0] = (((SubmissionNew) submission).getNewVoyage().getAttributeNotes());
+				cols[0] = ORYGINAL_VOYAGE;
+
+				if (!this.adminBean.getAuthenticateduser().isEditor()) {
+					Iterator iter = ((SubmissionNew) submission).getSubmissionEditors().iterator();
+					for (int i = 0; i < toVals.length - 2; i++) {
+						SubmissionEditor edit = (SubmissionEditor) iter.next();
+						if (edit.getEditedVoyage() != null) {
+							toVals[i + 1] = edit.getEditedVoyage().getVoyage();
+							attributeNotes[i + 1] = edit.getEditedVoyage().getAttributeNotes();
+						} else {
+							attributeNotes[i + 1] = new HashMap();
+						}
+						if (toVals[i + 1] == null) {
+							toVals[i + 1] = new Voyage();
+						}
+						cols[i + 1] = EDITOR_CHOICE + "_" + i;
+					}
+				}
+
+				if (vNew == null) {
+					toVals[toVals.length - 1] = new Voyage();
+					attributeNotes[attributeNotes.length - 1] = new HashMap();
+				} else {
+					toVals[toVals.length - 1] = vNew.getVoyage();
+					if (toVals[toVals.length - 1] == null) {
+						toVals[toVals.length - 1] = new Voyage();
+					}
+					attributeNotes[attributeNotes.length - 1] = vNew.getAttributeNotes();
+				}
+				cols[cols.length - 1] = DECIDED_VOYAGE;
+				
+			} else if (submission instanceof SubmissionEdit) {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
+					toVals = new Voyage[2 + this.editRequests.length];
+					cols = new String[2 + this.editRequests.length];
+					attributeNotes = new Map[2 + this.editRequests.length];
+				} else {
+					vNew = ((SubmissionEdit) submission).getEditorVoyage();
+					toVals = new Voyage[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+					cols = new String[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+					attributeNotes = new Map[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+				}
+				cols[0] = ORYGINAL_VOYAGE;
+				toVals[0] = Voyage.loadById(session, ((SubmissionEdit) submission).getOldVoyage().getVoyage().getIid());
+				attributeNotes[0] = ((SubmissionEdit) submission).getOldVoyage().getAttributeNotes();
+				for (int i = 1; i <= this.editRequests.length; i++) {
+					EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i - 1]);
+					toVals[i] = eV.getVoyage();
+					cols[i] = CHANGED_VOYAGE + "_" + i;
+					attributeNotes[i] = eV.getAttributeNotes();
+				}
+
+				if (!this.adminBean.getAuthenticateduser().isEditor()) {
+					Iterator iter = submission.getSubmissionEditors().iterator();
+					for (int i = 0; i < submission.getSubmissionEditors().size(); i++) {
+						EditedVoyage eV = ((SubmissionEditor) iter.next()).getEditedVoyage();
+						if (eV != null) {
+							toVals[i + this.editRequests.length + 1] = eV.getVoyage();
+							attributeNotes[i + this.editRequests.length + 1] = eV.getAttributeNotes();
+						}
+						if (toVals[i + this.editRequests.length + 1] == null) {
+							toVals[i + this.editRequests.length + 1] = new Voyage();
+						}
+						if (attributeNotes[i + this.editRequests.length + 1] == null) {
+							attributeNotes[i + this.editRequests.length + 1] = new HashMap();
+						}
+						cols[i + this.editRequests.length + 1] = EDITOR_CHOICE + "_" + i;
+					}
+				}
+
+				if (vNew == null) {
+					toVals[toVals.length - 1] = new Voyage();
+					attributeNotes[toVals.length - 1] = new HashMap();
+				} else {
+					toVals[toVals.length - 1] = vNew.getVoyage();
+					if (toVals[toVals.length - 1] == null) {
+						toVals[toVals.length - 1] = new Voyage();
+					}
+					attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
+				}
+				cols[cols.length - 1] = DECIDED_VOYAGE;
+			} else {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
+					toVals = new Voyage[2 + this.editRequests.length];
+					cols = new String[2 + this.editRequests.length];
+					attributeNotes = new Map[2 + this.editRequests.length];
+				} else {
+					vNew = ((SubmissionMerge) submission).getEditorVoyage();
+					toVals = new Voyage[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
+					cols = new String[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
+					attributeNotes = new Map[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
+				}
+				for (int i = 0; i < this.editRequests.length; i++) {
+					EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
+					toVals[i] = eV.getVoyage();
+					cols[i] = CHANGED_VOYAGE + "_" + i;
+					attributeNotes[i] = eV.getAttributeNotes();
+				}
+
+				if (!this.adminBean.getAuthenticateduser().isEditor()) {
+					Iterator iter = ((SubmissionMerge) submission).getSubmissionEditors().iterator();
+					for (int i = 0; i < ((SubmissionMerge) submission).getSubmissionEditors().size(); i++) {
+						SubmissionEditor editor = (SubmissionEditor) iter.next();
+						if (editor.getEditedVoyage() != null) {
+							toVals[this.editRequests.length + i] = editor.getEditedVoyage().getVoyage();
+							attributeNotes[this.editRequests.length + i] = editor.getEditedVoyage().getAttributeNotes();
+						}
+						if (toVals[i + this.editRequests.length] == null) {
+							toVals[i + this.editRequests.length] = new Voyage();
+						}
+						if (attributeNotes[i + this.editRequests.length] == null) {
+							attributeNotes[i + this.editRequests.length] = new HashMap();
+						}
+						cols[this.editRequests.length + i] = EDITOR_CHOICE + "_" + i;
+
+					}
+				}
+
+				EditedVoyage eV = EditedVoyage.loadById(session, this.mergeMainVoyage);
+				toVals[toVals.length - 2] = eV.getVoyage();
+				cols[cols.length - 2] = ORYGINAL_VOYAGE;
+				attributeNotes[toVals.length - 2] = eV.getAttributeNotes();
+				if (vNew == null) {
+					toVals[toVals.length - 1] = new Voyage();
+					attributeNotes[toVals.length - 1] = new HashMap();
+				} else {
+					toVals[toVals.length - 1] = vNew.getVoyage();
+					if (toVals[toVals.length - 1] == null) {
+						toVals[toVals.length - 1] = new Voyage();
+					}
+					attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
+				}
+				cols[cols.length - 1] = DECIDED_VOYAGE;
+			}
+			vals = new Values();
+			for (int n = 0; n < toVals.length; n++) {
+				for (int i = 0; i < attrs.length; i++) {
+					SubmissionAttribute attribute = attrs[i];
+					System.out.println("Attr: " + attrs[i]);
+					Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+					for (int j = 0; j < toBeFormatted.length; j++) {
+						toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());
+					}
+					Value value = attrs[i].getValue(toBeFormatted);
+					value.setNote((String) attributeNotes[n].get(attrs[i].getName()));
+					vals.setValue(cols[n], attrs[i].getName(), value);
+				}
+			}
+
+			t.commit();
+			session.close();
+
+		}
+
+		return vals;
+
+	}
+	
+	/**
+	 * Sets values when user returns form with GridComponent.
+	 * @param vals
+	 */
+	public void setValues(Values vals) {
+		this.vals = vals;
+	}
+	
+	/**
+	 * Gets columns for GridComponent. The result depends on type of submission that is handled. 
+	 * @return
+	 */
+	public Column[] getColumns() {
+		Column[] cols = null;
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+		if (lSubmisssion instanceof SubmissionNew) {
+			cols = this.getNewColumns((SubmissionNew)lSubmisssion, this.adminBean.getAuthenticateduser().isEditor());
+		} else if (lSubmisssion instanceof SubmissionEdit) {
+			cols = getEditColumns((SubmissionEdit)lSubmisssion, this.adminBean.getAuthenticateduser().isEditor());
+		} else {
+			cols = getMergeColumns((SubmissionMerge)lSubmisssion, this.adminBean.getAuthenticateduser().isEditor());
+		}
+		t.commit();
+		session.close();
+		return cols;
+	}
+
+	private Column[] getMergeColumns(SubmissionMerge submission, boolean editor) {
+		Column[] cols; 
+		if (editor) {
+			cols = new Column[2 + this.editRequests.length];
+		} else {
+			cols = new Column[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+		}
+		int i;
+		for (i = 0; i < this.editRequests.length; i++) {
+			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i + 1), true, DECIDED_VOYAGE, COPY_LABEL);
+		}
+		cols[i++] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
+		if (!editor) {
+			Iterator iter = submission.getSubmissionEditors().iterator();
+			for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
+				cols[i++] = new Column(EDITOR_CHOICE + "_" + j, EDITOR_CHOICE_LABEL + " " + ((SubmissionEditor)iter.next()).getUser().getUserName(), true);
+			}
+		}
+		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
+		return cols;
+	}
+
+	private Column[] getEditColumns(SubmissionEdit submission, boolean editor) {
+		Column[] cols;
+		if (editor) {
+			cols = new Column[2 + this.editRequests.length];
+		} else {
+			cols = new Column[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+		}
+		cols[0] = new Column(ORYGINAL_VOYAGE, ORYGINAL_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
+		int i;
+		for (i = 1; i <= this.editRequests.length; i++) {
+			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, CHANGED_VOYAGE_LABEL + " #" + i, true, DECIDED_VOYAGE, COPY_LABEL);
+		}
+		if (!editor) {
+			Iterator iter = submission.getSubmissionEditors().iterator();
+			for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
+				cols[i++] = new Column(EDITOR_CHOICE + "_" + j, EDITOR_CHOICE_LABEL + " " + ((SubmissionEditor)iter.next()).getUser().getUserName(), true);
+			}
+		}
+		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
+		return cols;
+	}
+	
+	private Column[] getNewColumns(SubmissionNew submission, boolean editor) {
+		Column[] cols;
+		if (editor) {
+			cols = new Column[2];
+		} else {
+			cols = new Column[2 + submission.getSubmissionEditors().size()];
+		}
+		cols[0] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
+		if (!editor) {
+			Iterator iter = submission.getSubmissionEditors().iterator();
+			for (int i = 0; i < submission.getSubmissionEditors().size(); i++) {
+				cols[i + 1] = new Column(EDITOR_CHOICE + "_" + i, EDITOR_CHOICE_LABEL + " " + ((SubmissionEditor)iter.next()).getUser().getUserName(), true);
+			}
+		}
+		cols[cols.length - 1] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
+		return cols;
+	}
+	
+	/**
+	 * Returns rows for GridComponent.
+	 * @return
+	 */
+	public Row[] getRows() {
+		Row[] rows = new Row[attrs.length];
+		for (int i = 0; i < rows.length; i++) {
+			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i].getUserLabel(), null, attrs[i].getGroupName());
+			rows[i].setNoteEnabled(true);
+		}
+		return rows;
+	}
+	
+	/**
+	 * Gets groups for rows - GridComponent requirement.
+	 * @return
+	 */
+	public RowGroup[] getRowGroups() {
+		return this.rowGroups;
+	}
+	
+	/**
+	 * Invoked when user clicks on any row of list showing requests.
+	 * Prepares data for request handling.
+	 * @param e
+	 */
+	public void newRequestId(GridOpenRowEvent e) {
+
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+
+		Conditions c = new Conditions();
+		c.addCondition(Submission.getAttribute("id"), new Long(e.getRowId().split("_")[1]), Conditions.OP_EQUALS);
+		QueryValue q = new QueryValue("Submission", c);
+
+		Object[] res = q.executeQuery(session);
+		if (res.length != 0) {
+			Submission lSubmission = (Submission) res[0];
+			this.submissionId = lSubmission.getId();
+			if (lSubmission instanceof SubmissionEdit) {
+				Integer vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage().getVoyageid();
+				c = new Conditions();
+				c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
+						EditedVoyage.getAttribute("voyage"), Voyage.getAttribute("voyageid") }), vid, Conditions.OP_EQUALS);
+				c.addCondition(SubmissionEdit.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
+				q = new QueryValue("SubmissionEdit", c);
+				Object[] rets = q.executeQuery(session);
+				editRequests = new Long[rets.length];
+				for (int i = 0; i < editRequests.length; i++) {
+					editRequests[i] = ((SubmissionEdit) rets[i]).getNewVoyage().getId();
+				}
+			} else if (lSubmission instanceof SubmissionMerge) {
+				Set voyagesToMerge = ((SubmissionMerge) lSubmission).getMergedVoyages();
+				editRequests = new Long[voyagesToMerge.size()];
+				Iterator iter = voyagesToMerge.iterator();
+				int i = 0;
+				while (iter.hasNext()) {
+					editRequests[i++] = ((EditedVoyage) iter.next()).getId();
+				}
+				this.mergeMainVoyage = ((SubmissionMerge) lSubmission).getProposedVoyage().getId();
+			}
+		} else {
+			this.submissionId = null;
+		}
+		t.commit();
+		session.close();
+	}
+	
+	public Boolean getRejectAvailable() {
+		Boolean avail = null;
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+		avail = new Boolean(!lSubmisssion.isSolved());
+		t.commit();
+		session.close();
+		return avail;
+
+	}
+	
+	/**
+	 * Action fired when reject button was pressed
+	 */
+	public String rejectSubmission() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+		if (lSubmisssion instanceof SubmissionEdit) {
+			Conditions c = new Conditions();
+			c.addCondition(SubmissionEdit.getAttribute("oldVoyage"), ((SubmissionEdit) lSubmisssion).getOldVoyage(), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("SubmissionEdit", c);
+			Object[] toUpdate = qValue.executeQuery(session);
+			for (int i = 0; i < toUpdate.length; i++) {
+				SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
+				edit.setSolved(true);
+				edit.setAccepted(false);
+				session.update(edit);
+			}
+		} else {
+			lSubmisssion.setSolved(true);
+			lSubmisssion.setAccepted(false);
+			session.update(lSubmisssion);
+		}
+		t.commit();
+		session.close();
+		return "back";
+	}
+	
+	public String submit() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Map newValues = vals.getColumnValues(DECIDED_VOYAGE);
+		Submission lSubmission = Submission.loadById(session, this.submissionId);
+
+		Voyage vNew = null;
+		Voyage mergedVoyage = updateMergedVoyage(session, lSubmission, newValues);
+
+		if (mergedVoyage == null) {
+			t.commit();
+			session.close();
+			return null;
+		}
+
+		if (lSubmission instanceof SubmissionMerge) {
+			System.out.println("Will delete all merged voyages");
+			Set voyagesToDelete = ((SubmissionMerge) lSubmission).getMergedVoyages();
+			for (Iterator iter = voyagesToDelete.iterator(); iter.hasNext();) {
+				EditedVoyage element = (EditedVoyage) iter.next();
+				Integer voyageId = element.getVoyage().getVoyageid();
+				Voyage voyage = Voyage.loadFutureRevision(session, voyageId.intValue());
+				if (voyage != null) {
+					session.delete(voyage);
+				}
+			}
+		}
+		Conditions cond = new Conditions();
+		cond.addCondition(Voyage.getAttribute("voyageid"), mergedVoyage.getVoyageid(), Conditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("Voyage", cond);
+		Object[] voyage = qValue.executeQuery(session);
+		if (voyage.length != 0) {
+			vNew = (Voyage) voyage[0];
+		} else {
+			vNew = new Voyage();
+			vNew.setRevision(-1);
+		}
+
+		wasError = false;
+		for (int i = 0; i < attrs.length; i++) {
+			Value val = (Value) newValues.get(attrs[i].getName());
+
+			if (val.isError()) {
+				val.setErrorMessage("Error in value!");
+				wasError = true;
+			}
+			Object[] vals = attrs[i].getValues(null, val);
+
+			if (attrs[i].getName().equals("voyageid") && vals[0] == null) {
+				val.setErrorMessage("This field is required!");
+				wasError = true;
+			}
+
+			for (int j = 0; j < vals.length; j++) {
+				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+			}
+		}
+		if (!wasError) {
+			vNew.saveOrUpdate();
+		}
+
+		if (lSubmission instanceof SubmissionEdit) {
+			Conditions c = new Conditions();
+			c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
+							EditedVoyage.getAttribute("voyage") }), ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage(),
+							Conditions.OP_EQUALS);
+			qValue = new QueryValue("SubmissionEdit", c);
+			Object[] toUpdate = qValue.executeQuery(session);
+			for (int i = 0; i < toUpdate.length; i++) {
+				SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
+				edit.setSolved(true);
+				edit.setAccepted(true);
+				session.update(edit);
+			}
+		} else {
+			lSubmission.setSolved(true);
+			lSubmission.setAccepted(true);
+			session.update(lSubmission);
+		}
+
+		System.out.println("Voyage submission saved");
+		t.commit();
+		session.close();
+		return "back";
+	}
+
+	/**
+	 * Action fired when accept button was pressed
+	 */
+	public String save() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session, this.submissionId);
+		Map newValues = vals.getColumnValues(DECIDED_VOYAGE);
+
+		if (updateMergedVoyage(session, lSubmisssion, newValues) == null) {
+			t.commit();
+			session.close();
+			return null;
+		}
+
+		t.commit();
+		session.close();
+		return "back";
+	}
+
+	private Voyage updateMergedVoyage(Session session, Submission submission, Map newValues) {
+
+		this.wasError = false;
+		Voyage vNew = null;
+		EditedVoyage editedVoyage = null;
+		SubmissionEditor editor = null;
+		if (this.adminBean.getAuthenticateduser().isEditor()) {
+			//we need to use editor's edited voyage
+			editor = getSubmissionEditor(submission, this.adminBean.getAuthenticateduser());
+			editedVoyage = editor.getEditedVoyage();
+			if (editedVoyage != null) {
+				vNew = editedVoyage.getVoyage();
+			}
+		} else if (submission instanceof SubmissionNew) {
+			editedVoyage = ((SubmissionNew) submission).getEditorVoyage();
+			if (editedVoyage != null) {
+				vNew = editedVoyage.getVoyage();
+			}
+		} else if (submission instanceof SubmissionEdit) {
+			editedVoyage = ((SubmissionEdit) submission).getEditorVoyage();
+			if (editedVoyage != null) {
+				vNew = editedVoyage.getVoyage();
+			}
+		} else {
+			editedVoyage = ((SubmissionMerge) submission).getEditorVoyage();
+			if (editedVoyage != null) {
+				vNew = editedVoyage.getVoyage();
+			}
+		}
+		if (vNew == null) {
+			vNew = new Voyage();
+		}
+		Map notes = new HashMap();
+		for (int i = 0; i < attrs.length; i++) {
+			Value val = (Value) newValues.get(attrs[i].getName());
+			if (!val.isCorrectValue()) {
+				val.setErrorMessage("Value incorrect");
+				wasError = true;
+			}
+			Object[] vals = attrs[i].getValues(session, val);
+			for (int j = 0; j < vals.length; j++) {
+				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+			}
+			if (!StringUtils.isNullOrEmpty(val.getNote())) {
+				notes.put(attrs[i].getName(), val.getNote());
+			}
+			if (attrs[i].getName().equals("voyageid") && vNew.getVoyageid() == null) {
+				wasError = true;
+				val.setErrorMessage("This field is required");
+			}
+		}
+		vNew.setSuggestion(true);
+		if (!wasError) {
+			session.saveOrUpdate(vNew);
+			if (editedVoyage == null) {
+				editedVoyage = new EditedVoyage(vNew, null);
+				editedVoyage.setAttributeNotes(notes);
+				session.save(editedVoyage);
+			} else {
+				editedVoyage.setVoyage(vNew);
+				editedVoyage.setAttributeNotes(notes);
+				session.update(editedVoyage);
+			}
+			if (submission instanceof SubmissionNew) {
+				if (!this.adminBean.getAuthenticateduser().isEditor()) {
+					((SubmissionNew) submission).setEditorVoyage(editedVoyage);
+					session.update(submission);
+				} else {
+					editor.setEditedVoyage(editedVoyage);
+					session.update(editor);
+				}				
+			} else if (submission instanceof SubmissionEdit) {
+				Conditions c = new Conditions();
+				c.addCondition(new SequenceAttribute(new Attribute[] { SubmissionEdit.getAttribute("oldVoyage"),
+						EditedVoyage.getAttribute("voyage") }), ((SubmissionEdit) submission).getOldVoyage().getVoyage(),
+						Conditions.OP_EQUALS);
+				QueryValue qValue = new QueryValue("SubmissionEdit", c);
+				Object[] toUpdate = qValue.executeQuery(session);
+				for (int i = 0; i < toUpdate.length; i++) {
+					if (!this.adminBean.getAuthenticateduser().isEditor()) {
+						SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
+						edit.setEditorVoyage(editedVoyage);
+						session.update(edit);
+					} else {
+						SubmissionEditor localeditor = this.getSubmissionEditor((Submission)toUpdate[i], this.adminBean.getAuthenticateduser());
+						localeditor.setEditedVoyage(editedVoyage);
+						session.update(localeditor);
+					}					
+				}
+			} else {
+				if (!this.adminBean.getAuthenticateduser().isEditor()) {
+					((SubmissionMerge) submission).setEditorVoyage(editedVoyage);
+					session.update(submission);
+				} else {
+					editor.setEditedVoyage(editedVoyage);
+					session.update(editor);
+				}
+			}
+
+			return vNew;
+		} else {
+			return null;
+		}
+	}
+
+	private SubmissionEditor getSubmissionEditor(Submission submission, User user) {
+		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter.hasNext();) {
+			SubmissionEditor element = (SubmissionEditor) iter.next();
+			if (element.getUser().getId().equals(user.getId())) {
+				return element;
+			}
+		}
+		return null;
+	}
+
+	public Long getSubmissionId() {
+		return this.submissionId;
+	}
+	
+}

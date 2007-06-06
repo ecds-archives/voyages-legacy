@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <submission-attributes>
 
-	<submission-attributes name="voyageid" group="Ship, nation, owners" editable="N" type="long" userLabel="Voyage identification number">
+	<submission-attributes name="voyageid" group="Ship, nation, owners" editable="N" type="integer" userLabel="Voyage identification number">
 		<attributes>
 			<attribute name="voyageid"/>
 		</attributes>
