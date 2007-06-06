@@ -31,6 +31,9 @@ div.error {
 	font-weight: bold;
 	color: White;
 	background-color: #FF5500; }
+	
+select.lookup-select {
+	width: 400px; }
 
 </style>
 	
@@ -185,7 +188,7 @@ div.error {
 
 		<br>
 
-		<div class="section">Database connections</div>
+		<div class="section">Database connections - voyages</div>
 		
 		<table border="0" cellspacing="0" cellpadding="0"><tr><td valign="top">
 		
@@ -205,7 +208,8 @@ div.error {
 
 		</td></tr></table>
 		
-		<!-- 
+		<div class="section">Database connections - ports and regions</div>
+
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td valign="top" style="padding-left: 5px; padding-right: 10px;">
@@ -230,7 +234,6 @@ div.error {
 			</td>
 		</tr>
 		</table>
-		 -->
 		
 		<div style="margin-top: 10px; border-bottom: 2px solid #CCCCCC; margin-bottom: 10px;"></div>
 		

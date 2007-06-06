@@ -15,6 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import edu.emory.library.tast.common.LookupSource;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 
 public class LookupSourcePorts implements LookupSource
 {
@@ -34,30 +35,40 @@ public class LookupSourcePorts implements LookupSource
 		return 0;
 	}
 	
-	public List getItemsByValues(String[] ids)
+	private List loadPortsIntoUI(Criteria crit)
+	{
+		List dbPorts = crit.list();
+		List uiPorts = new ArrayList(dbPorts.size());
+		for (Iterator iter = dbPorts.iterator(); iter.hasNext();)
+		{
+			Port dbPort = (Port) iter.next();
+			SelectItem item = new SelectItem();
+			item.setValue(String.valueOf(dbPort.getId()));
+			item.setLabel(dbPort.getRegion().getName() + " / " + dbPort.getName());
+			uiPorts.add(item);
+		}
+		return uiPorts;
+	}
+	
+	public List getItemsByValues(String[] idsStr)
 	{
 
 		// nothing to do
-		if (ids == null)
+		if (idsStr == null || idsStr.length == 0)
 			return new ArrayList();
+		
+		Long[] ids = StringUtils.parseLongArray(idsStr);
 
 		// open db
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		// prepare the list
-		List uiPorts = new ArrayList(ids.length);
-
-		// load one by one
-		for (int i = 0; i < ids.length; i++)
-		{
-			int portId = Integer.parseInt(ids[i]);
-			Port dbPort = Port.loadById(sess, portId);
-			SelectItem item = new SelectItem();
-			item.setValue(String.valueOf(dbPort.getId()));
-			item.setLabel(dbPort.getName());
-			uiPorts.add(item);
-		}
+		// load 
+		Criteria crit = sess.createCriteria(Port.class).createAlias("region", "r", Criteria.LEFT_JOIN).addOrder(Order.asc("r.name")).addOrder(Order.asc("name"));
+		crit.add(Restrictions.in("id", ids));
+		
+		// fill UI list
+		List uiPorts = loadPortsIntoUI(crit);
 		
 		// close db
 		transaction.commit();
@@ -81,21 +92,11 @@ public class LookupSourcePorts implements LookupSource
 		Transaction transaction = sess.beginTransaction();
 		
 		// load all ports
-		if (searchFor != null) searchFor = "%" + searchFor + "%";
 		Criteria crit = sess.createCriteria(Port.class).createAlias("region", "r", Criteria.LEFT_JOIN).addOrder(Order.asc("r.name")).addOrder(Order.asc("name"));
-		crit.add(Restrictions.ilike("name", searchFor));
-		List dbPorts = crit.list();
-		List uiPorts = new ArrayList(dbPorts.size());
+		if (searchFor != null) crit.add(Restrictions.ilike("name", "%" + searchFor + "%"));
 
 		// fill UI list
-		for (Iterator iter = dbPorts.iterator(); iter.hasNext();)
-		{
-			Port dbPort = (Port) iter.next();
-			SelectItem item = new SelectItem();
-			item.setValue(String.valueOf(dbPort.getId()));
-			item.setLabel(dbPort.getRegion().getName() + " / " + dbPort.getName());
-			uiPorts.add(item);
-		}
+		List uiPorts = loadPortsIntoUI(crit);
 		
 		// close db
 		transaction.commit();

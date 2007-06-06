@@ -87,8 +87,8 @@ public class LookupSelectComponent extends UIComponentBase
 
 		// render the list of items
 		writer.startElement("select", this);
+		writer.writeAttribute("class", "lookup-select", null);
 		writer.writeAttribute("name", selectName, null);
-		writer.writeAttribute("style", "width: 200px;", null);
 		writer.writeAttribute("size", "10", null);
 		writer.writeAttribute("multiple", "multiple", null);
 		for (Iterator iter = selectedItems.iterator(); iter.hasNext();)

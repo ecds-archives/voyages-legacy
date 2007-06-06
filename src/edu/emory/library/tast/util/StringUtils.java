@@ -290,6 +290,37 @@ public class StringUtils
 		return ints;
 	}
 
+	public static Long[] parseLongArray(String[] arr)
+	{
+		return parseLongArray(arr, false);
+	}
+
+	public static Long[] parseLongArray(String[] arr, boolean omitInvalid)
+	{
+		Long[] ints = new Long[arr.length];
+		if (arr != null)
+		{
+			for (int i = 0; i < arr.length; i++)
+			{
+				if (omitInvalid)
+				{
+					try
+					{
+						ints[i] = new Long(arr[i]);
+					}
+					catch (NumberFormatException nfe)
+					{
+					}
+				}
+				else
+				{
+					ints[i] = new Long(arr[i]);
+				}
+			}
+		}
+		return ints;
+	}
+
 	public static String[] removeEmpty(String[] arr)
 	{
 		if (arr == null)
