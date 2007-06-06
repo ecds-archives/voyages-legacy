@@ -192,8 +192,7 @@ td.map-zoom-slider {
 	vertical-align: top;
 	height: 24px;
 	overflow: hidden;
-	background-repeat: no-repeat;
-	background-image: url(../images/map-zoom-slider-bg.png); }	
+	background-repeat: no-repeat; }n
 	
 div.map-zoom-slider-cont {
 	height: 24px;
