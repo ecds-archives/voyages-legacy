@@ -9,6 +9,7 @@ public class Column
 	private String copyToColumn = null;
 	private String copyToLabel = null;
 	private boolean compareTo = false;
+	private ColumnAction[] actions = null;
 	
 	public Column(String name, String label)
 	{
@@ -73,6 +74,21 @@ public class Column
 	public boolean isCopyToEnabled()
 	{
 		return copyToColumn != null;
+	}
+	
+	public boolean hasActions()
+	{
+		return actions != null && actions.length != 0;
+	}
+
+	public ColumnAction[] getActions()
+	{
+		return actions;
+	}
+
+	public void setActions(ColumnAction[] actions)
+	{
+		this.actions = actions;
 	}
 
 	public String getCopyToColumn()

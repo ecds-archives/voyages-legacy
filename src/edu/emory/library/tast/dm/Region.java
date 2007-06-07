@@ -90,7 +90,9 @@ public class Region extends Location
 
 	public static Attribute getAttribute(String name)
 	{
-		return (Attribute)attributes.get(name);
+		Attribute attribute = (Attribute)attributes.get(name);
+		if (attribute == null) throw new RuntimeException("invalid region attribute '" + name + "'");
+		return attribute;
 	}
 
 	public static String[] regionNamesToArray(List regions)

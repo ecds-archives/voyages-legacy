@@ -56,6 +56,17 @@
 		margin-bottom: 0px;
 		padding: 3px; }
 
+	div.grid-editor-column-actions {
+		font-weight: normal; }
+
+	div.grid-editor-column-actions span {
+		color: #2288BB; }
+
+	div.grid-editor-column-actions span:hover {
+		cursor: pointer;
+		color: White;
+		background-color: #2288BB; }
+
 	</style>
 	
 </head>
@@ -63,13 +74,14 @@
 <f:view>
 	<h:form id="form">
 	
-		<s:gridEditor
+		<s:gridEditor 
 			id="grid"
 			rows="#{GridEditorTestBean.rows}"
 			rowGroups="#{GridEditorTestBean.rowGroups}"
 			columns="#{GridEditorTestBean.columns}"
 			values="#{GridEditorTestBean.values}"
-			fieldTypes="#{GridEditorTestBean.fieldTypes}" />
+			fieldTypes="#{GridEditorTestBean.fieldTypes}"
+			onColumnAction="#{GridEditorTestBean.columnAction}" />
 			
 		<h:commandButton value="Test submit" />
 		<h:commandButton value="Test error" action="#{GridEditorTestBean.testError}" />

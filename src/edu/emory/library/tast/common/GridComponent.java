@@ -70,7 +70,7 @@ public class GridComponent extends UICommand
 		String toOpenRowId = JsfUtils.getParamString(context,
 				getHiddenFieldNameForToOpen(context));
 		
-		String coolumnNameClicked = JsfUtils.getParamString(context,
+		String columnNameClicked = JsfUtils.getParamString(context,
 				getHiddenFieldNameForColumnClick(context));
 
 		if (!StringUtils.isNullOrEmpty(toOpenRowId))
@@ -79,9 +79,9 @@ public class GridComponent extends UICommand
 			queueEvent(new GridOpenRowEvent(this, toOpenRowId));
 		}
 
-		if (!StringUtils.isNullOrEmpty(coolumnNameClicked))
+		if (!StringUtils.isNullOrEmpty(columnNameClicked))
 		{
-			queueEvent(new GridColumnClickEvent(this, coolumnNameClicked));
+			queueEvent(new GridColumnClickEvent(this, columnNameClicked));
 		}
 
 	}

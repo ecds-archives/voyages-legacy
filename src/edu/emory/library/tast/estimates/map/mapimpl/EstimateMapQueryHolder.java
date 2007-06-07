@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
@@ -69,14 +71,14 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		this.addQuery("", this.estimateMapQuerys);
 	}
 
-	protected void performExecuteQuery(QueryValue[] querySet) {
+	protected void performExecuteQuery(Session session, QueryValue[] querySet) {
 		List allResults = new ArrayList();
 		AttributesMap attributes = new AttributesMap();
 		List list0 = new ArrayList();
 		List list1 = new ArrayList();
 		for (int i = 0; i < querySet.length; i++) {
 			int shift = allResults.size();
-			Object[] results = querySet[i].executeQuery();
+			Object[] results = querySet[i].executeQuery(session);
 			allResults.addAll(Arrays.asList(results));
 //			List list = new ArrayList();
 //			list.add(new AttributesRange(Estimate.getAttribute("expRegion"), shift,

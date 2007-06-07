@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.database.query.SearchBean;
@@ -14,6 +17,7 @@ import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -64,6 +68,9 @@ public class MapBean {
 	private int chosenMap = 1;
 
 	private void setMapData() {
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();		
 
 		if (!this.searchBean.getSearchParameters().getConditions().equals(
 				this.conditions)) {
@@ -87,7 +94,7 @@ public class MapBean {
 
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
-			queryHolder.executeQuery(this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
+			queryHolder.executeQuery(session, this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
 
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -95,6 +102,9 @@ public class MapBean {
 			
 			this.neededQuery = false;
 		}
+		
+		t.commit();
+		session.close();
 
 	}
 

@@ -3,6 +3,8 @@ package edu.emory.library.tast.database.table.mapimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
@@ -195,8 +197,8 @@ public class DetailQueryHolder extends AbstractTransformerQueryHolder {
 		this.addQuery("Voyage trail", new QueryValue[] {qValue});
 	}
 	
-	protected void performExecuteQuery(QueryValue[] queries) {
-		this.setRawQueryResponse(queries[0].executeQuery());
+	protected void performExecuteQuery(Session session, QueryValue[] queries) {
+		this.setRawQueryResponse(queries[0].executeQuery(session));
 	}
 
 }

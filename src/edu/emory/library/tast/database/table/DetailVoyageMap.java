@@ -1,11 +1,15 @@
 package edu.emory.library.tast.database.table;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import edu.emory.library.tast.database.table.mapimpl.DetailQueryHolder;
 import edu.emory.library.tast.database.table.mapimpl.DetailVoyageDataTransformer;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class DetailVoyageMap {
@@ -25,6 +29,9 @@ public class DetailVoyageMap {
 	}
 
 	public boolean refreshData() {
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
 
 		if (!this.queryNeeded) {
 			return true;
@@ -36,13 +43,17 @@ public class DetailVoyageMap {
 		conditions.addCondition(Voyage.getAttribute("iid"), new Long(iid), Conditions.OP_EQUALS);
 		
 		DetailQueryHolder queryHolder = new DetailQueryHolder(conditions);
-		queryHolder.executeQuery(0);
+		queryHolder.executeQuery(session, 0);
 		
 		if (queryHolder.getRawQueryResponse().length > 0) {
 
 			DetailVoyageDataTransformer transformer = new DetailVoyageDataTransformer(queryHolder.getAttributesMap());
 			this.mapData.setMapData(queryHolder, transformer);
 		}
+		
+		t.commit();
+		session.close();
+		
 		return true;
 	}
 	

@@ -3,6 +3,9 @@ package edu.emory.library.tast.estimates.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapDataTransformer;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapQueryHolder;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
@@ -11,6 +14,7 @@ import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -43,17 +47,25 @@ public class EstimatesMapBean {
 	}
 
 	private void setData() {
+		
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
 		if (!this.getEstimatesBean().getConditions().equals(this.conditions)) {
 			this.conditions = this.getEstimatesBean().getConditions();
 			this.pointsOfInterest.clear();
 			EstimateMapQueryHolder queryHolder = new EstimateMapQueryHolder(
 					conditions);
-			queryHolder.executeQuery(0);
+			queryHolder.executeQuery(session, 0);
 
 			EstimateMapDataTransformer transformer = new EstimateMapDataTransformer(
 					queryHolder.getAttributesMap());
 			this.mapData.setMapData(queryHolder, transformer);
 		}
+		
+		t.commit();
+		session.close();
+		
 	}
 
 	public LegendItemsGroup[] getLegend() {

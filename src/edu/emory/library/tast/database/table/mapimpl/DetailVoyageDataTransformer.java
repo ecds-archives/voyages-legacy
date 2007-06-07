@@ -10,7 +10,6 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Location;
@@ -25,7 +24,6 @@ import edu.emory.library.tast.maps.LegendItem;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapItemElement;
 import edu.emory.library.tast.maps.TransformerResponse;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Transformer used to transform mapping data for map of single voyage. It
@@ -50,7 +48,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 	/**
 	 * Transformes data for detail voyage info.
 	 */
-	public TransformerResponse transformData(AbstractTransformerQueryHolder data) {
+	public TransformerResponse transformData(Session session, AbstractTransformerQueryHolder data) {
 
 		// Retrieve first row
 		Object[] row = (Object[]) data.getRawQueryResponse()[0];
@@ -62,8 +60,6 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		// toMap.addAll(Arrays.asList(parseAmericas(row)));
 		// toMap.addAll(Arrays.asList(parseArrival(row)));
 		
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
 		List items = new ArrayList();
 
 		int symbolNumber = 1;
@@ -174,8 +170,6 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 				element.addLegendItem(legendItem);
 			}
 		}
-		t.commit();
-		session.close();
 
 		// Return result of transformation
 		return new TransformerResponse((AbstractMapItem[]) items

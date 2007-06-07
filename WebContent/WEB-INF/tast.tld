@@ -935,6 +935,9 @@
 			<name>values</name>
 		</attribute>
 		<attribute>
+			<name>onColumnAction</name>
+		</attribute>
+		<attribute>
 			<name>expandedGroups</name>
 		</attribute>
 	</tag>

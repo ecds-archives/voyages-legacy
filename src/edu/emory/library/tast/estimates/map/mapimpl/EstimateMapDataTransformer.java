@@ -8,8 +8,11 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.dm.EstimatesExportRegion;
+import edu.emory.library.tast.dm.EstimatesImportRegion;
+import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.maps.AbstractDataTransformer;
 import edu.emory.library.tast.maps.AbstractMapItem;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
@@ -19,11 +22,6 @@ import edu.emory.library.tast.maps.LegendItem;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapItemElement;
 import edu.emory.library.tast.maps.TransformerResponse;
-import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.TastResource;
-import edu.emory.library.tast.dm.EstimatesExportRegion;
-import edu.emory.library.tast.dm.EstimatesImportRegion;
-import edu.emory.library.tast.dm.Location;
 
 /**
  * Class providing parsing functionality of query response for 
@@ -42,12 +40,10 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		super(map);
 	}
 
-	public TransformerResponse transformData(
+	public TransformerResponse transformData(Session session,
 			AbstractTransformerQueryHolder holder) {
 		Object[] data = holder.getRawQueryResponse();
 		List mapDataItems = new ArrayList();
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
 		
 		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
 
@@ -186,9 +182,6 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 					new LegendItemsGroup[] {});
 		}
 
-		t.begin();
-		session.close();
-		
 		TransformerResponse response = new TransformerResponse(
 				(AbstractMapItem[]) mapDataItems
 						.toArray(new AbstractMapItem[] {}),

@@ -25,6 +25,11 @@ public class GridEditorTestBean
 
 	private Values values;
 	
+	public void columnAction(ColumnActionEvent event)
+	{
+		System.out.println("column = " + event.getColumnName() + " action = " + event.getActionName());
+	}
+	
 	public GridEditorTestBean()
 	{
 		
@@ -79,10 +84,16 @@ public class GridEditorTestBean
 
 	public Column[] getColumns()
 	{
-		return new Column[] {
-				new Column("old", "Old", true),
-				new Column("new", "New", false)
-		};
+		
+		Column oldColumn = new Column("old", "Old", true);
+		oldColumn.setActions(new ColumnAction[] {
+				new ColumnAction("action1", "Action 1"),
+				new ColumnAction("action2", "Action 2")});
+		
+		Column newColumn = new Column("new", "New", false);
+		
+		return new Column[] {oldColumn, newColumn};
+		
 	}
 	
 	public Map getFieldTypes()

@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.maps.AbstractDataTransformer;
 import edu.emory.library.tast.maps.AbstractMapItem;
@@ -50,10 +52,10 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	/**
 	 * Transforms data.
 	 */
-	public TransformerResponse transformData(AbstractTransformerQueryHolder data) {
+	public TransformerResponse transformData(Session session, AbstractTransformerQueryHolder data) {
 
 		//Get items
-		return this.getItems(data);
+		return this.getItems(session, data);
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 	 * @param ranges ranges of circles size.
 	 * @return
 	 */
-	private TransformerResponse getItems(AbstractTransformerQueryHolder holder) {
+	private TransformerResponse getItems(Session session, AbstractTransformerQueryHolder holder) {
 
 		Object[] data = holder.getRawQueryResponse();
 		

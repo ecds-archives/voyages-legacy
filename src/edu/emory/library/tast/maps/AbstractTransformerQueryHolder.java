@@ -3,6 +3,8 @@ package edu.emory.library.tast.maps;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.util.query.QueryValue;
 
 public abstract class AbstractTransformerQueryHolder {
@@ -22,15 +24,15 @@ public abstract class AbstractTransformerQueryHolder {
 		this.queries.add(querySet);
 	}
 	
-	public final void executeQuery(int queryNumber) {
+	public final void executeQuery(Session session, int queryNumber) {
 		if (queryNumber > queries.size()) {
 			throw new RuntimeException("Query number out of range!");
 		}
 		this.executedQuery = queryNumber;
-		performExecuteQuery((QueryValue[])this.queries.get(queryNumber));
+		performExecuteQuery(session, (QueryValue[])this.queries.get(queryNumber));
 	}
 	
-	protected abstract void performExecuteQuery(QueryValue[] querySet);
+	protected abstract void performExecuteQuery(Session session, QueryValue[] querySet);
 
 	public String[] getQueryLabels() {
 		return (String[])this.queryLabels.toArray(new String[] {});

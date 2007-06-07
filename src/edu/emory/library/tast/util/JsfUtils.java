@@ -62,19 +62,13 @@ public class JsfUtils
 		encodeJavaScriptBlock(component, writer, js.toString());
 	}
 
+	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form)
+	{
+		return appendSubmitJS(js, context, form, null, null);
+	}
+
 	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value)
 	{
-		/*
-		js.append("var inpt = document.createElement('input'); ");
-		js.append("inpt.type = 'hidden'; ");
-		js.append("inpt.name = '");
-		js.append(elementName);
-		js.append("'; ");
-
-		js.append("document.forms['");
-		js.append(form.getClientId(context));
-		js.append("'].appendChild(inpt); ");
-		*/
 		
 		js.append("if (typeof(saveScrolling) == 'function') ");
 		js.append("saveScrolling('" + form.getClientId(context) + "'); ");
@@ -93,6 +87,7 @@ public class JsfUtils
 		js.append("return false;");
 
 		return js;
+
 	}
 
 	public static String generateConditionalJS(FacesContext context, UIForm form, String elementName, String jsObjectAttributeName, String hiddenField, String trueValue, String falseValue) {
@@ -153,6 +148,14 @@ public class JsfUtils
 		return js;
 	}
 	
+	public static StringBuffer appendFormElementSetValJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value)
+	{
+		appendFormElementRefJS(js, context, form, elementName);
+		js.append(".value");
+		js.append(" = '").append(value).append("';");
+		return js;
+	}
+
 	public static StringBuffer appendElementRefJS(StringBuffer js, String elementId)
 	{
 		js.append("document.");

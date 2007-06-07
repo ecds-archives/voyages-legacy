@@ -15,7 +15,10 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -25,6 +28,7 @@ public class GridEditorComponent extends UIComponentBase
 
 	private static final String NOTE_COLLAPSED = "collapsed";
 	private static final String NOTE_EXPANDED = "expanded";
+	
 	private boolean rowsSet = false;
 	private Row[] rows;
 	
@@ -43,9 +47,26 @@ public class GridEditorComponent extends UIComponentBase
 	private boolean expandedGroupsSet = false;
 	private Set expandedGroups = null;
 	
+	private MethodBinding onColumnAction;
+	
 	public String getFamily()
 	{
 		return null;
+	}
+	
+	public Object saveState(FacesContext context)
+	{
+		Object[] values = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = saveAttachedState(context, onColumnAction);
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		onColumnAction = (MethodBinding) restoreAttachedState(context, values[1]);
 	}
 	
 	private String getRowFieldName(FacesContext context, int rowIndex)
@@ -131,6 +152,16 @@ public class GridEditorComponent extends UIComponentBase
 	private String getPastNoteFieldName(FacesContext context, String column, String row, int noteIndex)
 	{
 		return getClientId(context) + "_" + column + "_" + row + "_past_note_" + noteIndex;
+	}
+	
+	private String getColumnActionColumnNameFieldName(FacesContext context)
+	{
+		return getClientId(context) + "_column_action_column_name";
+	}
+
+	private String getColumnActionActionNameFieldName(FacesContext context)
+	{
+		return getClientId(context) + "_column_action_action_name";
 	}
 
 	public void decode(FacesContext context)
@@ -219,6 +250,7 @@ public class GridEditorComponent extends UIComponentBase
 
 		}
 		
+		// expanded groups
 		String expandedGroupsStr = (String) params.get(getExpandedGroupsFieldName(context));
 		expandedGroups = new HashSet();
 		if (!StringUtils.isNullOrEmpty(expandedGroupsStr))
@@ -230,6 +262,25 @@ public class GridEditorComponent extends UIComponentBase
 			}
 		}
 		
+		// column actions
+		String columnActionColumnName = (String) params.get(getColumnActionColumnNameFieldName(context));
+		String columnActionActionName = (String) params.get(getColumnActionActionNameFieldName(context));
+		if (!StringUtils.isNullOrEmpty(columnActionColumnName)&& !StringUtils.isNullOrEmpty(columnActionActionName))
+		{
+			queueEvent(new ColumnActionEvent(this, columnActionColumnName, columnActionActionName));
+		}
+		
+	}
+	
+	public void broadcast(FacesEvent event) throws AbortProcessingException
+	{
+
+		super.broadcast(event);
+		
+		if (event instanceof ColumnActionEvent)
+			if (onColumnAction != null)
+				onColumnAction.invoke(getFacesContext(), new Object[] {event});
+
 	}
 	
 	public void processUpdates(FacesContext context)
@@ -663,11 +714,53 @@ public class GridEditorComponent extends UIComponentBase
 		writer.startElement("th", this);
 		writer.endElement("th");
 
+		StringBuffer columnActionsJS = new StringBuffer(); 
+
 		for (int i = 0; i < columns.length; i++)
 		{
+			
+			Column column = columns[i];
+
 			writer.startElement("th", this);
-			writer.write(columns[i].getLabel());
+			
+			writer.write(column.getLabel());
+			
+			ColumnAction[] actions = column.getActions();
+			if (actions != null && actions.length != 0)
+			{
+				
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "grid-editor-column-actions", null);
+				
+				for (int j = 0; j < actions.length; j++)
+				{
+					
+					columnActionsJS.setLength(0);
+					
+					JsfUtils.appendFormElementSetValJS(columnActionsJS, context, form,
+							getColumnActionColumnNameFieldName(context),
+							column.getName()).append(" ");
+					
+					JsfUtils.appendFormElementSetValJS(columnActionsJS, context, form,
+							getColumnActionActionNameFieldName(context),
+							actions[j].getName()).append(" ");
+
+					JsfUtils.appendSubmitJS(columnActionsJS, context, form);
+
+					if (j > 0) writer.write(" | ");
+					writer.startElement("span", this);
+					writer.writeAttribute("onclick", columnActionsJS.toString(), null);
+					writer.write(actions[j].getLabel());
+					writer.endElement("span");
+					
+				}
+
+				writer.endElement("div");
+
+			}
+			
 			writer.endElement("th");
+
 		}
 
 		writer.endElement("tr");
@@ -830,6 +923,10 @@ public class GridEditorComponent extends UIComponentBase
 					getRowFieldName(context, i),
 					rows[i].getName());
 		
+		// hidden field for column actions
+		JsfUtils.encodeHiddenInput(this, writer, getColumnActionColumnNameFieldName(context));
+		JsfUtils.encodeHiddenInput(this, writer, getColumnActionActionNameFieldName(context));
+		
 		// hidden fields with row types
 		for (int i = 0; i < rows.length; i++)
 		{
@@ -940,6 +1037,16 @@ public class GridEditorComponent extends UIComponentBase
 	{
 		expandedGroupsSet = true;
 		this.expandedGroups = expandedGroups;
+	}
+
+	public MethodBinding getOnColumnAction()
+	{
+		return onColumnAction;
+	}
+
+	public void setOnColumnAction(MethodBinding onColumnAction)
+	{
+		this.onColumnAction = onColumnAction;
 	}
 
 }

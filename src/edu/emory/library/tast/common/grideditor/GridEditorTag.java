@@ -3,6 +3,7 @@ package edu.emory.library.tast.common.grideditor;
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
@@ -15,6 +16,17 @@ public class GridEditorTag extends UIComponentTag
 	private String fieldTypes;
 	private String rowGroups;
 	private String expandedGroups;
+	private String onColumnAction;
+
+	public String getOnColumnAction()
+	{
+		return onColumnAction;
+	}
+
+	public void setOnColumnAction(String onColumnAction)
+	{
+		this.onColumnAction = onColumnAction;
+	}
 
 	public String getComponentType()
 	{
@@ -66,6 +78,12 @@ public class GridEditorTag extends UIComponentTag
 		{
 			ValueBinding vb = app.createValueBinding(expandedGroups);
 			gridEditor.setValueBinding("expandedGroups", vb);
+		}
+		
+		if (onColumnAction != null && isValueReference(onColumnAction))
+		{
+			MethodBinding mb = app.createMethodBinding(onColumnAction, new Class[] {ColumnActionEvent.class});
+			gridEditor.setOnColumnAction(mb);
 		}
 
 	}

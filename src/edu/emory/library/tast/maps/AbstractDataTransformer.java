@@ -1,5 +1,7 @@
 package edu.emory.library.tast.maps;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 
 /**
@@ -35,7 +37,7 @@ public abstract class AbstractDataTransformer {
 	 * @param max maximal value in data
 	 * @return TransformResponse object
 	 */
-	public abstract TransformerResponse transformData(AbstractTransformerQueryHolder data);
+	public abstract TransformerResponse transformData(Session session, AbstractTransformerQueryHolder data);
 	
 	/**
 	 * Gets attribute that is in passed data in (i,j) position.
