@@ -614,7 +614,7 @@ public class SubmissionBean
 				val.setErrorMessage("Error in value!");
 				// wasError = true;
 			}
-			if (val.hasNote())
+			if (val.hasEditableNote())
 			{
 				notes.put(attrs[i].getName(), val.getNote().trim());
 			}

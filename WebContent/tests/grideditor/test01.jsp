@@ -48,6 +48,13 @@
 		
 	input.record-gridEditor-date-year {
 		width: 40px; }
+		
+	div.grid-editor-past-note {
+		background-color: #FFFFDD;
+		border: 1px solid #EEDD66;
+		margin-top: 3px;
+		margin-bottom: 0px;
+		padding: 3px; }
 
 	</style>
 	

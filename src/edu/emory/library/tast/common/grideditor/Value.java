@@ -8,6 +8,9 @@ abstract public class Value
 	private String errorMessage;
 	private String note;
 	private boolean noteExpanded;
+	private String[] pastNotes;
+	
+	public abstract boolean isCorrectValue();
 
 	public boolean isError()
 	{
@@ -24,7 +27,7 @@ abstract public class Value
 		this.errorMessage = errorMessage;
 	}
 	
-	public boolean hasNote()
+	public boolean hasEditableNote()
 	{
 		return !StringUtils.isNullOrEmpty(note);
 	}
@@ -48,7 +51,20 @@ abstract public class Value
 	{
 		this.noteExpanded = noteExpanded;
 	}
-	
-	public abstract boolean isCorrectValue();
+
+	public boolean hasReadOnlyNotes()
+	{
+		return pastNotes != null && pastNotes.length != 0;
+	}
+
+	public String[] getPastNotes()
+	{
+		return pastNotes;
+	}
+
+	public void setPastNotes(String[] readOnlyNotes)
+	{
+		this.pastNotes = readOnlyNotes;
+	}
 	
 }

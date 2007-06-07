@@ -30,14 +30,20 @@ public class GridEditorTestBean
 		
 		values = new Values();
 		
-		values.setValue("old", "firstName", new TextboxValue("Jan"));
+		TextboxValue firstNameReadOnly = new TextboxValue("Jan");
+		firstNameReadOnly.setPastNotes(new String[] {"First note.", "Some other note. Some other note. Some other note."});
+		
+		values.setValue("old", "firstName", firstNameReadOnly);
 		values.setValue("old", "lastName", new TextboxValue("Zich"));
 		values.setValue("old", "phone", new TextboxValue("111"));
 		values.setValue("old", "state", new ListValue(new String[] {"DS", "GA"}));
 		values.setValue("old", "description", new TextareaValue("We need all the exposure we can get. Make it your mission to convert as many of your friends, family members and coworkers as possible. If you're a student, get it distributed at your college. Submit a story to  Slashdot and other news sites about the release. Make some noise on your blog. Mass distribution via the Internet is possible."));
 		values.setValue("old", "dob", new DateValue("2000", "1", "1"));
 
-		values.setValue("new", "firstName", new TextboxValue("Bill"));
+		TextboxValue firstNameEdit = new TextboxValue("Bill");
+		firstNameEdit.setPastNotes(new String[] {"Some other note. Some other note. Some other note. First note."});
+		
+		values.setValue("new", "firstName", firstNameEdit);
 		values.setValue("new", "lastName", new TextboxValue("Gates"));
 		values.setValue("new", "phone", new TextboxValue("555"));
 		values.setValue("new", "state", new ListValue());
@@ -48,8 +54,12 @@ public class GridEditorTestBean
 	
 	public Row[] getRows()
 	{
+		
+		Row firstNameRow = new Row(FIELD_TYPE_NAME, "firstName", "First name", null, "name");
+		firstNameRow.setNoteEnabled(true);
+		
 		return new Row[] {
-				new Row(FIELD_TYPE_NAME, "firstName", "First name", null, "name"),
+				firstNameRow,
 				new Row(FIELD_TYPE_NAME, "lastName", "Last name", null, "name"),
 				new Row(FIELD_TYPE_PHONE, "phone", "Phone number", null, "contact"),
 				new Row(FIELD_TYPE_STATES, "state", "State", null, "contact"),

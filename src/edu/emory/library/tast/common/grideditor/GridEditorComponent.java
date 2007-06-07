@@ -93,7 +93,7 @@ public class GridEditorComponent extends UIComponentBase
 		return getClientId(context) + "_" + column + "_" + row + "_note_status";
 	}
 
-	private String getNoteFieldName(FacesContext context, String column, String row)
+	private String getEditableNoteFieldName(FacesContext context, String column, String row)
 	{
 		return getClientId(context) + "_" + column + "_" + row + "_note";
 	}
@@ -123,6 +123,16 @@ public class GridEditorComponent extends UIComponentBase
 		return getClientId(context) + "_" + column + "_" + row + "_note_edit_button";
 	}
 
+	private String getPastNotesCountFieldName(FacesContext context, String column, String row)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_past_notes_count";
+	}
+
+	private String getPastNoteFieldName(FacesContext context, String column, String row, int noteIndex)
+	{
+		return getClientId(context) + "_" + column + "_" + row + "_past_note_" + noteIndex;
+	}
+
 	public void decode(FacesContext context)
 	{
 		
@@ -149,7 +159,8 @@ public class GridEditorComponent extends UIComponentBase
 				String inputPrefix = getValueInputPrefix(context, columnName, rowName);
 				String errorFlagFieldName = getValueErrorFlagFieldName(context, columnName, rowName);
 				String errorMessageFieldName = getValueErrorMessageFieldName(context, columnName, rowName);
-				String noteFieldName = getNoteFieldName(context, columnName, rowName);
+				String pastNotesCountFieldName = getPastNotesCountFieldName(context, columnName, rowName);
+				String noteFieldName = getEditableNoteFieldName(context, columnName, rowName);
 				String noteExpandedStatusFieldName = getNoteExpandedStatusFieldName(context, columnName, rowName);
 
 				// decode value
@@ -186,11 +197,22 @@ public class GridEditorComponent extends UIComponentBase
 					return;
 				}
 				
+				// decode past notes
+				String pastNotesCountStr = (String) params.get(pastNotesCountFieldName);
+				if (pastNotesCountStr != null)
+				{
+					int pastNotesCount = Integer.parseInt(pastNotesCountStr); 
+					for (int i = 0; i < pastNotesCount; i++)
+					{
+						value.setNote((String) params.get(getPastNoteFieldName(context, columnName, rowName, i) ));					
+					}
+				}
+
 				// decode note
 				if (params.containsKey(noteFieldName) && params.containsKey(noteExpandedStatusFieldName))
 				{
-					value.setNoteExpanded(NOTE_EXPANDED.equals((String)params.get(noteExpandedStatusFieldName)));
-					value.setNote((String)params.get(noteFieldName));
+					value.setNoteExpanded(NOTE_EXPANDED.equals((String) params.get(noteExpandedStatusFieldName)));
+					value.setNote((String) params.get(noteFieldName));
 				}
 
 			}
@@ -451,11 +473,11 @@ public class GridEditorComponent extends UIComponentBase
 
 	}
 
-	private void encodeNoteEditable(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
+	private void encodeNoteInEditableMode(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
 	{
 		
 		String columnName = column.getName();
-		String noteFieldName = getNoteFieldName(context, columnName, rowName);
+		String noteFieldName = getEditableNoteFieldName(context, columnName, rowName);
 		String noteStatusFieldName = getNoteExpandedStatusFieldName(context, columnName, rowName);
 		String editBoxId = getNoteEditBoxId(context, columnName, rowName);
 		String readBoxId = getNoteReadBoxId(context, columnName, rowName);
@@ -466,8 +488,8 @@ public class GridEditorComponent extends UIComponentBase
 		String cssStyleEditMode = value.isNoteExpanded() ? "" : "display: none";
 		String cssStyleReadMode = value.isNoteExpanded() ? "display: none" : "";
 		
-		String cssStyleAddButton = value.hasNote() ? "display: none" : "";
-		String cssStyleEditButton = value.hasNote() ? "" : "display: none";
+		String cssStyleAddButton = value.hasEditableNote() ? "display: none" : "";
+		String cssStyleEditButton = value.hasEditableNote() ? "" : "display: none";
 
 		String onClickEdit = "GridEditorGlobals.editNote(" +
 			"'" + mainId + "', " +
@@ -542,8 +564,12 @@ public class GridEditorComponent extends UIComponentBase
 
 	}
 	
-	private void encodeNoteReadOnly(FacesContext context, ResponseWriter writer, Value value) throws IOException
+	private void encodeNoteInReadOnlyMode(FacesContext context, ResponseWriter writer, Column column, String rowName, Value value) throws IOException
 	{
+
+		JsfUtils.encodeHiddenInput(this, writer,
+				getEditableNoteFieldName(context, column.getName(), rowName),
+				value.getNote());
 
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "grid-editor-note-read-only", null);
@@ -552,14 +578,52 @@ public class GridEditorComponent extends UIComponentBase
 
 	}
 
-	private void encodeNote(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
+	private void encodePastNotes(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
 	{
-		if (!column.isReadOnly())
-			encodeNoteEditable(context, writer, mainId, column, rowName, value);
-		else
-			encodeNoteReadOnly(context, writer, value);
+		
+		String[] notes = value.getPastNotes();
+		int count = notes != null ? notes.length : 0;
+
+		JsfUtils.encodeHiddenInput(this, writer,
+				getPastNotesCountFieldName(context, column.getName(), rowName),
+				String.valueOf(count));
+		
+		if (count == 0)
+			return;
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "grid-editor-past-notes", null);
+
+		for (int i = 0; i < notes.length; i++)
+		{
+			
+			JsfUtils.encodeHiddenInput(this, writer,
+					getPastNoteFieldName(context, column.getName(), rowName, i),
+					notes[i]);
+			
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "grid-editor-past-note", null);
+			writer.write(notes[i]);
+			writer.endElement("div");
+
+		}
+
+		writer.endElement("div");
+
 	}
-	
+
+	private void encodeNotes(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
+	{
+		
+		encodePastNotes(context, writer, mainId, column, rowName, value);
+		
+		if (!column.isReadOnly())
+			encodeNoteInEditableMode(context, writer, mainId, column, rowName, value);
+		else
+			encodeNoteInReadOnlyMode(context, writer, column, rowName, value);
+		
+	}
+
 	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName) throws IOException
 	{
 
@@ -714,7 +778,7 @@ public class GridEditorComponent extends UIComponentBase
 							encodeCopyButton(context, writer, mainId, column, rowName);
 
 						if (row.isNoteEnabled())
-							encodeNote(context, writer, mainId, column, rowName, value);
+							encodeNotes(context, writer, mainId, column, rowName, value);
 						
 						writer.endElement("td");
 						
