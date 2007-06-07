@@ -28,9 +28,25 @@
 		rowGroups="#{AdminSubmissionBean.rowGroups}"/>
 	<br>
 	
+	<br>
+	<t:htmlTag value="div" 
+	           rendered="#{AdminSubmissionBean.isSourceDetailsVisible}" 
+	           style="border: 2px solid #CCCCCC; width: 400px; padding: 5px;" >
+        <h:outputText value="Source details"/>
+		<t:dataTable value="#{AdminSubmissionBean.sourceData}" var="data">	
+			<h:column>
+				<h:outputText value="#{data.name}"/>
+    		</h:column>
+    		<h:column>
+        		<h:outputText value="#{data.value}"/>
+    		</h:column>
+		</t:dataTable>
+		<h:commandButton value="Close" action="#{AdminSubmissionBean.closeDetails}"/>
+	</t:htmlTag>
+	
 	<h2>Submitted sources</h2>
 	
-	<s:grid id="voyges" 
+	<s:grid id="sources" 
 			columns="#{AdminSubmissionBean.sourcesColumns}"
 			rows="#{AdminSubmissionBean.sourcesRows}" 
 			onOpenRow="#{AdminSubmissionBean.openSourcesRow}" />

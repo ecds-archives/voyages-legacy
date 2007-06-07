@@ -128,6 +128,11 @@ public class AdminSubmissionBean {
 	private String newEditorUser = null;
 
 	/**
+	 * ID of source that is presented in details
+	 */
+	private Long sourceId;
+
+	/**
 	 * Constructor.
 	 * Creartes some basic structures like rows and row groups (for DataGrid component)
 	 *
@@ -736,5 +741,66 @@ public class AdminSubmissionBean {
 
 	public void setNewEditorUser(String newEditorUser) {
 		this.newEditorUser = newEditorUser;
+	}
+	
+	public void openSourcesRow(GridOpenRowEvent e) {
+		this.sourceId = new Long(e.getRowId());
+	}
+	
+	public String closeDetails() {
+		this.sourceId = null;
+		return null;
+	}
+	
+	public Boolean getIsSourceDetailsVisible() {
+		return new Boolean(this.sourceId != null);
+	}
+	
+	public SourceData[] getSourceData() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		List dataItems = new ArrayList();
+		try {
+			SubmissionSource source = SubmissionSource.loadById(session, this.sourceId);
+			if (source instanceof SubmissionSourcePrimary) {
+				SubmissionSourcePrimary primary = (SubmissionSourcePrimary)source;
+				dataItems.add(new SourceData("Source type", "Primary source"));
+				dataItems.add(new SourceData("Name", primary.getName()));
+				dataItems.add(new SourceData("Location", primary.getLocation()));
+				dataItems.add(new SourceData("Series number or letter", primary.getSeries()));
+				dataItems.add(new SourceData("Volume or box number", primary.getVolume()));
+				dataItems.add(new SourceData("Volume or box number", primary.getDetails()));
+				dataItems.add(new SourceData("Volume or box number", primary.getVolume()));
+			} else if (source instanceof SubmissionSourcePaper) {
+				SubmissionSourcePaper primary = (SubmissionSourcePaper)source;
+			} else if (source instanceof SubmissionSourceBook) {
+				SubmissionSourceBook primary = (SubmissionSourceBook)source;
+			} else if (source instanceof SubmissionSourceOther) {
+				SubmissionSourceOther primary = (SubmissionSourceOther)source;
+			}
+		} finally {
+			t.commit();
+			session.close();
+		}
+		return new SourceData[] {
+				new SourceData("Archive name", "fjskldafdfj fj as dsl fjskld"),
+				new SourceData("Archive location", "fjskldafdfj fj as dsl fjskld")
+		};
+	}
+	
+	public class SourceData {
+		private String name;
+		private String value;
+		public SourceData(String name, String value) {
+			this.name = name;
+			this.value = value;
+		}
+		public String getName() {
+			return name;
+		}
+		public String getValue() {
+			return value;
+		}
+		
 	}
 }

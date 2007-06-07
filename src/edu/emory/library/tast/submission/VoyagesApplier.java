@@ -9,8 +9,6 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
@@ -283,7 +281,6 @@ public class VoyagesApplier {
 			for (int n = 0; n < toVals.length; n++) {
 				for (int i = 0; i < attrs.length; i++) {
 					SubmissionAttribute attribute = attrs[i];
-					System.out.println("Attr: " + attrs[i]);
 					Object[] toBeFormatted = new Object[attribute.getAttribute().length];
 					for (int j = 0; j < toBeFormatted.length; j++) {
 						toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());

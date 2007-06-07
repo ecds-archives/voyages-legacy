@@ -357,7 +357,7 @@ public class SubmissionAttribute {
 		SubmissionAttribute attr = new SubmissionAttribute(name, 
 				(Attribute[]) attributesList.toArray(new Attribute[] {}), 
 				userLabel, group, comment, attrType, editable);
-		System.out.println("Added attribute: " + attr);
+		//System.out.println("Added attribute: " + attr);
 		return attr;
 	}
 	
