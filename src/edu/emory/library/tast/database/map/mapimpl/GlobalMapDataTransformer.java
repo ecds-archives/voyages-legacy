@@ -4,12 +4,14 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tast.dm.Location;
+import edu.emory.library.tast.dm.Image;
+import edu.emory.library.tast.dm.LocationWithImages;
 import edu.emory.library.tast.maps.AbstractDataTransformer;
 import edu.emory.library.tast.maps.AbstractMapItem;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
@@ -81,7 +83,17 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			Object[] row = (Object[]) data[i];
 			
 			//Get port
-			Location gisPort = (Location) (row)[0];
+			LocationWithImages location = (LocationWithImages) (row)[0];
+			
+			// collect images (just the names so far)
+			Set images =  location.getImages();
+			String[] imageUrls = new String[images.size()];
+			int imageIndex = 0;
+			for (Iterator iter = images.iterator(); iter.hasNext();)
+			{
+				Image image = (Image) iter.next();
+				imageUrls[imageIndex++] = image.getFileName(); 
+			}
 			
 			//Get color
 			int color = Integer.parseInt(row[2].toString());
@@ -91,7 +103,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 
 			//Get valaue
 			Number value = (Number) ((Object[]) data[i])[1];
-			if (gisPort != null) {
+			if (location != null) {
 				
 				if (min > value.doubleValue()) {
 					min = value.doubleValue();
@@ -101,8 +113,13 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 				}
 				//System.out.println("Color---: " + color + gisPort.getX() + " " + gisPort.getY());
 				//Create test item
-				GlobalMapDataItem testItem = new GlobalMapDataItem(gisPort.getX(), gisPort.getY(), gisPort
-						.getName(), color, i);
+				GlobalMapDataItem testItem = new GlobalMapDataItem(
+						location.getX(),
+						location.getY(),
+						location.getName(),
+						color, i,
+						imageUrls);
+
 				int index;
 
 				//System.out.println("i=" + i + "  Checking port: " + gisPort);
@@ -126,7 +143,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 					itemElement.addElement(el);
 					testItem.addMapItemElement(itemElement);
 					//double [] projXY = gisPort.getXYProjected();
-					testItem.setProjXY(gisPort.getX(), gisPort.getY());
+					testItem.setProjXY(location.getX(), location.getY());
 					items.add(testItem);
 				}
 			}

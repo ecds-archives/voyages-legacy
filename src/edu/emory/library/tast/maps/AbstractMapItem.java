@@ -45,6 +45,11 @@ public abstract class AbstractMapItem {
 	private String mainLabel;
 	
 	/**
+	 * Images
+	 */
+	private String[] imageUrls;
+	
+	/**
 	 * Legend item corresponding to map item.
 	 */
 	private List legendItems = new ArrayList();
@@ -178,5 +183,15 @@ public abstract class AbstractMapItem {
 
 	public void addLegendItem(LegendItem legendItem) {
 		this.legendItems.add(legendItem);
+	}
+
+	public String[] getImageUrls()
+	{
+		return imageUrls;
+	}
+
+	public void setImageUrls(String[] imageUrls)
+	{
+		this.imageUrls = imageUrls;
 	}
 }

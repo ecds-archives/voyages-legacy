@@ -203,17 +203,6 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>RestorePermlinkBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.query.RestorePermlinkBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>permlink</property-name>
-			<property-class>java.lang.String</property-class>
-			<value>#{param.permlink}</value>
-		</managed-property>
-	</managed-bean>
-	
-	<managed-bean>
 		<managed-bean-name>AdvancedStatisticsTabBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.stat.AdvancedStatisticsTabBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>

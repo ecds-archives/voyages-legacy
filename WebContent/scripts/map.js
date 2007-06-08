@@ -11,6 +11,8 @@ var MapsGlobal =
 		mapId, // unique id
 		fixedSize, // true/false
 		formName, // name of the form
+		actionNameFieldName, // custom action name (not used and not fully implemented now)
+		actionParamFieldName, // custom action param (not used and not fully implemented now)
 		mapControlId, // main container 
 		mapFrameId, // frame for the map
 		zoomLevels, // available zooms and their configurations
@@ -56,6 +58,8 @@ var MapsGlobal =
 		
 		// hidden fields for maitaining state
 		map.formName = formName;
+		map.actionNameFieldName = actionNameFieldName;
+		map.actionParamFieldName = actionParamFieldName;
 		map.fieldNameCenterX = fieldNameCenterX;
 		map.fieldNameCenterY = fieldNameCenterY;
 		map.fieldNameZoomLevel = fieldNameZoomLevel;
@@ -189,8 +193,14 @@ var MapsGlobal =
 	{
 		var map = MapsGlobal.maps[mapId];
 		if (map) map.setSize(width, height);
-	}
+	},
 	
+	invokeAction: function(name, param)
+	{
+		var map = MapsGlobal.maps[mapId];
+		if (map) map.invokeAction(name, param);
+	}
+
 }
 
 /////////////////////////////////////////////////////////
@@ -570,10 +580,12 @@ Map.prototype.scaleIndicatorInit = function()
 Map.prototype.mapStartDrag = function(event)
 {
 
+	// close label/bubble
+	this.hideLabels();
+
 	// set onMouseMove handler
 	EventAttacher.attach(document, "mousemove", this, "mapMouseMove");
 	EventAttacher.attach(document, "mouseup", this, "mapStopDrag");
-	this.forgetLabels();
 	
 	// init position
 	this.draggingStartX = ElementUtils.getEventMouseElementX(event, this.mapControl);
@@ -587,7 +599,6 @@ Map.prototype.mapStopDrag = function(event)
 	// cancel onMouseMove handler
 	EventAttacher.detach(document, "mousemove", this, "mapMouseMove");
 	EventAttacher.detach(document, "mouseup", this, "mapStopDrag");
-	this.watchForLabels();
 
 	// new position
 	var x = ElementUtils.getEventMouseElementX(event, this.mapControl);
@@ -857,6 +868,9 @@ Map.prototype.centerTo = function(x, y, saveState, notifyZoomChange, updateMainM
 // PRIVATE
 Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
+
+	// close label/bubble
+	this.hideLabels();
 
 	// make sure that the zoom level is ok
 	if (newZoomLevel < 0) newZoomLevel = 0;
@@ -1471,6 +1485,7 @@ Map.prototype.setMouseCursors = function()
 // points of interest
 /////////////////////////////////////////////////////////
 
+/*
 Map.prototype.showHideLabel = function(event)
 {
 
@@ -1501,6 +1516,7 @@ Map.prototype.forgetLabels = function()
 	this.hideLabel(null);
 	//EventAttacher.detach(this.frame, "mousemove", this, "showHideLabel");
 }
+*/
 
 Map.prototype.initPoints = function()
 {
@@ -1538,6 +1554,7 @@ Map.prototype.initPoints = function()
 			
 			EventAttacher.attach(symbolElement, "mouseover", this, "showLabel", i);
 			EventAttacher.attach(symbolElement, "mouseout", this, "hideLabel");
+			EventAttacher.attach(symbolElement, "click", this, "showAndFixLabel", i);
 
 			this.frame.appendChild(symbolElement);
 
@@ -1610,8 +1627,19 @@ Map.prototype.precomputePointsPositions = function()
 
 }
 
-Map.prototype.showLabel = function(event, pntIndex)
+Map.prototype.showAndFixLabel = function(event, pntIndex)
 {
+	this.showLabel(event, pntIndex, true);
+}
+
+Map.prototype.showLabel = function(event, pntIndex, fix)
+{
+
+	if (this.fixedLabel && !fix)
+		return;
+		
+	this.fixedLabel = !!fix;
+
 	var pnt = this.points[pntIndex];
 	
 	var x = this.fromRealToVportX(pnt.x);
@@ -1619,20 +1647,27 @@ Map.prototype.showLabel = function(event, pntIndex)
 
 	this.bubbleText.innerHTML = pnt.text;
 	this.bubble.style.display = "block";
-	
-	//pnt.circ.setAttributeNS(null, "r", "8");
 
 	this.bubble.style.left = (x + 5) + "px";
 	this.bubble.style.top = (y - 5 - this.bubble.offsetHeight) + "px";
-	
-	//this.frame.style.cursor = "pointer";
 
 }
- 
+
+Map.prototype.hideLabels = function()
+{
+	if (this.bubble)
+		this.bubble.style.display = "none";
+}
+
 Map.prototype.hideLabel = function(event)
 {
+
+	if (this.fixedLabel)
+		return;
+
 	this.setMouseCursors();
 	this.bubble.style.display = "none";
+
 }
 
 
@@ -1824,6 +1859,18 @@ Map.prototype.restoreState = function()
 }
 
 /////////////////////////////////////////////////////////
+// custom action management
+/////////////////////////////////////////////////////////
+
+Map.prototype.invokeAction = function(name, param)
+{
+	var frm = document.forms[this.formName];
+	frm.elements[this.actionNameFieldName].value = name;
+	frm.elements[this.actionParamFieldName].value = param;
+	frm.submit();
+}
+
+/////////////////////////////////////////////////////////
 // main init
 /////////////////////////////////////////////////////////
 
@@ -1855,10 +1902,7 @@ Map.prototype.init = function(restoreState)
 	
 	// show something
 	if (restoreState)
-	{
 		this.restoreState();
-		this.watchForLabels();
-	}
 	
 	// init minimap
 	this.initMiniMap();

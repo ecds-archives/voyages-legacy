@@ -10,13 +10,15 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.util.HibernateUtil;
 
-public class Region extends Location
+public class Region extends LocationWithImages
 {
 	
 	private static Map attributes = new HashMap();
@@ -140,9 +142,27 @@ public class Region extends Location
 		for (int i = 0; i < regionsArray.length; i++) newList.add(regionsArray[i]);
 		return newList;
 	}
-
 	
-	//	public static void main(String[] args)
+	public static void main(String[] args)
+	{
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		Region africa = Region.loadById(sess, 60000);
+		
+		for (Iterator iter = africa.getImages().iterator(); iter.hasNext();)
+		{
+			Image image = (Image) iter.next();
+			System.out.println(image.getTitle());
+		}
+		
+		transaction.commit();
+		sess.close();
+		
+	}
+	
+//	public static void main(String[] args)
 //	{
 //		
 //		Region[] regions = getRegions();

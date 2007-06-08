@@ -147,6 +147,16 @@ public class MapComponent extends UIComponentBase
 		return getClientId(context) + "_minimap_visible";
 	}
 
+	private String getHiddenFieldNameForActionName(FacesContext context)
+	{
+		return getClientId(context) + "_action";
+	}
+
+	private String getHiddenFieldNameForActionParam(FacesContext context)
+	{
+		return getClientId(context) + "_param";
+	}
+
 	public void decode(FacesContext context)
 	{
 		
@@ -425,6 +435,12 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append("'").append(form.getId()).append("'");
 		jsRegister.append(", ");
 		
+		// custom action (not used and not fully implemented now)
+		jsRegister.append("'").append(getHiddenFieldNameForActionName(context)).append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append(getHiddenFieldNameForActionParam(context)).append("'");
+		jsRegister.append(", ");
+
 		// main HTML elements
 		jsRegister.append("'").append(mapControlId).append("'");
 		jsRegister.append(", ");

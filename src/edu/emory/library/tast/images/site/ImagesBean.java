@@ -32,7 +32,7 @@ public class ImagesBean
 	private static final int POPUP_EXTRA_HEIGHT = 50;
 	private static final int POPUP_EXTRA_WIDTH = 30;
 	private static final int DETAIL_IMAGE_WIDTH = 600;
-
+	
 	private List categories = null;
 	
 	private GalleryImage[] galleryImages;
@@ -44,6 +44,11 @@ public class ImagesBean
 	private Integer searchQueryFrom = null;
 	private Integer searchQueryTo = null;
 	private Integer searchVoyageId = null;
+	
+	// this will have to be extended
+	private Long searchPortId = null;
+	private Long searchRegionId = null;
+	// -------------------------------
 	
 	private String imageId;
 	private String imageTitle;
@@ -63,6 +68,8 @@ public class ImagesBean
 		searchQueryDescription = "";
 		searchQueryFrom = null;
 		searchQueryTo = null;
+		searchPortId = null;
+		searchRegionId = null;
 	}
 	
 	private GalleryImage[] getSample(int catId, int size)
@@ -538,6 +545,20 @@ public class ImagesBean
 			conditionsCount++;
 		}
 		
+		if (searchPortId != null)
+		{
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append(":portId = some elements(ports)");
+			conditionsCount++;
+		}
+		
+		if (searchRegionId != null)
+		{
+			if (conditionsCount > 0) hqlWhere.append(" and ");
+			hqlWhere.append(":regionId = some elements(regions)");
+			conditionsCount++;
+		}
+		
 		if (searchVoyageId != null)
 		{
 			if (conditionsCount > 0) hqlWhere.append(" and ");
@@ -576,6 +597,12 @@ public class ImagesBean
 		if (searchVoyageId != null)
 			query.setParameter("voyageId", searchVoyageId);
 		
+		if (searchPortId != null)
+			query.setParameter("portId", searchPortId);
+
+		if (searchRegionId != null)
+			query.setParameter("regionId", searchRegionId);
+
 		List response = query.list();
 		galleryImages = new GalleryImage[response.size()];
 

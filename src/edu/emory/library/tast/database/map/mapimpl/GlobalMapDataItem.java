@@ -2,6 +2,9 @@ package edu.emory.library.tast.database.map.mapimpl;
 
 import java.text.MessageFormat;
 
+import javax.faces.context.FacesContext;
+
+import edu.emory.library.tast.images.ThumbnailServlet;
 import edu.emory.library.tast.maps.AbstractMapItem;
 import edu.emory.library.tast.maps.Element;
 import edu.emory.library.tast.maps.LegendItemsGroup;
@@ -15,6 +18,10 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
  * 
  */
 public class GlobalMapDataItem extends AbstractMapItem {
+
+	private static final int THUMB_WIDTH = 120;
+	private static final int THUMB_HEIGHT = 120;
+	private static final int THUMB_MAX_COUNT = 3;
 
 	/**
 	 * Used symbol prefix.
@@ -49,9 +56,10 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 * @param color
 	 *            color
 	 */
-	public GlobalMapDataItem(double x, double y, String mainLabel, int color,
-			int i) {
+	public GlobalMapDataItem(double x, double y, String mainLabel, int color, int i, String[] imageUrls)
+	{
 		super(x, y, mainLabel);
+		super.setImageUrls(imageUrls);
 		this.color = color;
 		this.i = i;
 	}
@@ -101,13 +109,17 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	/**
 	 * Gets tooltip text of map item.
 	 */
-	public PointOfInterest getTooltipText(LegendItemsGroup[] legend) {
+	public PointOfInterest getTooltipText(LegendItemsGroup[] legend)
+	{
+		
 		LegendItemsGroup types = legend[1];
 		LegendItemsGroup sizes = legend[0];
-		PointOfInterest point = new PointOfInterest(this.getProjectedY(), this
-				.getProjectedX());
+		
+		PointOfInterest point = new PointOfInterest(this.getProjectedY(), this .getProjectedX());
+		
 		point.setText(this.buildToolTipInfo());
 		Element[] elements = this.getMapItemElements()[0].getElements();
+		
 		if (elements.length > 1) {
 			if (!types.getItems()[0].isEnabled()
 					|| !types.getItems()[1].isEnabled()) {
@@ -148,10 +160,10 @@ public class GlobalMapDataItem extends AbstractMapItem {
 				}
 			}
 		} else {
-			point.setSymbols(new String[] { SYMBOL_NAME_PREFIX
-					+ elements[0].getColor() + "-" + elements[0].getSize() });
+			point.setSymbols(new String[] { SYMBOL_NAME_PREFIX + elements[0].getColor() + "-" + elements[0].getSize() });
 			point.setShowAtZoom(elements[0].getShowAtZoom());
 		}
+		
 		point.setLabel(this.getMainLabel());
 
 		return point;
@@ -161,12 +173,16 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 * Builds tooltip location.
 	 */
 	private String buildToolTipInfo() {
+		
+		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+		
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("<div style=\"white-space: nowrap\">");
-		buffer.append("<b>");
-		buffer.append("Location : ").append(this.getMainLabel());
-		buffer.append("</b><br/>");
+
+		buffer.append("<div><b>");
+		buffer.append(this.getMainLabel());
+		buffer.append("</b></div>");
 
 		Element[] elements = this.getMapItemElements()[0].getElements();
 		for (int i = 0; i < elements.length; i++) {
@@ -180,6 +196,28 @@ public class GlobalMapDataItem extends AbstractMapItem {
 											.doubleValue())) }))
 					.append("<br/>");
 		}
+		
+		String[] imageUrl = getImageUrls();
+		if (imageUrl != null && imageUrl.length != 0)
+		{
+			buffer.append("<div class=\"map-bubble-images\">");
+			buffer.append("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr>");
+			int thumbsCount = Math.min(THUMB_MAX_COUNT, imageUrl.length);
+			for (int i = 0; i < thumbsCount; i++)
+			{
+				buffer.append("<td ");
+				buffer.append("class=\"").append(i < thumbsCount - 1 ? "map-bubble-image" : "map-bubble-image-last").append("\">");
+				buffer.append("<img src=\"");
+				ThumbnailServlet.appendThumbnailUrl(buffer, contextPath, imageUrl[i], THUMB_WIDTH, THUMB_HEIGHT);
+				buffer.append("\" ");
+				buffer.append("width=\"").append(THUMB_WIDTH).append("\" ");
+				buffer.append("height=\"").append(THUMB_HEIGHT).append("\" ");
+				buffer.append("border=\"0\">");
+				buffer.append("</td>");
+			}
+			buffer.append("</tr></table>");
+		}
+		
 		buffer.append("</div>");
 
 		return buffer.toString();

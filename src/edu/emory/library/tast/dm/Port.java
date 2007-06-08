@@ -11,7 +11,7 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class Port extends Location
+public class Port extends LocationWithImages
 {
 	
 	private static Map attributes = new HashMap();

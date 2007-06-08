@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -98,6 +99,33 @@ public class ThumbnailServlet extends HttpServlet
 		// redirect to it
 		response.sendRedirect(request.getContextPath() + "/images-database/" + thumbnailFileName);
 
+	}
+	
+	public static String createThumbnailUrl(String imageName, int width, int height)
+	{
+		return createThumbnailUrl(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath(), imageName, width, height);
+	}
+
+	public static String createThumbnailUrl(FacesContext context, String imageName, int width, int height)
+	{
+		return createThumbnailUrl(context.getExternalContext().getRequestContextPath(), imageName, width, height);
+	}
+
+	public static String createThumbnailUrl(String contextPath, String imageName, int width, int height)
+	{
+		StringBuffer buff = new StringBuffer();
+		appendThumbnailUrl(buff, contextPath, imageName, width, height);
+		return buff.toString();
+	}
+
+	public static StringBuffer appendThumbnailUrl(StringBuffer buff, String contextPath, String imageName, int width, int height)
+	{
+		buff.append(contextPath);
+		buff.append("/servlet/thumbnail");
+		buff.append("?i=").append(imageName);
+		buff.append("&w=").append(width);
+		buff.append("&h=").append(height);
+		return buff;
 	}
 
 }

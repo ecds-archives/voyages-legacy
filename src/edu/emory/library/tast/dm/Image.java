@@ -25,7 +25,7 @@ import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
-public class Image
+public class Image implements Comparable
 {
 	
 	private static Map attributes = new HashMap();
@@ -498,6 +498,42 @@ public class Image
 		transaction.commit();
 		sess.close();
 
+	}
+
+	public int compareTo(Object obj)
+	{
+		Image that = (Image) obj;
+		if (this.date < that.date)
+		{
+			return -1;
+		}
+		else if (this.date > that.date)
+		{
+			return 1;
+		}
+		else
+		{
+			if (this.id < that.id)
+			{
+				return -1;
+			}
+			else if (this.id > that.id)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+	}
+	
+	public boolean equals(Object obj)
+	{
+		Image that = (Image) obj;
+		if (that.id == 0) return false;
+		if (this.id == 0) return false;
+		return that.id == this.id;
 	}
 
 }

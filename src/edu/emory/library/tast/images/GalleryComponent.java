@@ -109,6 +109,8 @@ public class GalleryComponent extends UICommand
 		columnsCount = getColumnsCount();
 		showLabels = isShowLabels();
 		selectedImageId = getSelectedImageId();
+		
+		String contextPath = context.getExternalContext().getRequestContextPath();
 
 		String thumbnailWidthString = String.valueOf(thumbnailWidth);
 		String thumbnailHeightString = String.valueOf(thumbnailHeight);
@@ -127,12 +129,10 @@ public class GalleryComponent extends UICommand
 			
 			GalleryImage image = images[i];
 			
-			String url =
-				context.getExternalContext().getRequestContextPath() +
-				"/servlet/thumbnail" +
-				"?i=" + image.getImageName() +
-				"&w=" + thumbnailWidthString +
-				"&h=" + thumbnailHeightString;
+			String url = ThumbnailServlet.createThumbnailUrl(contextPath,
+					image.getImageName(),
+					thumbnailWidth,
+					thumbnailHeight);
 			
 			if (column % columnsCount == 0)
 			{

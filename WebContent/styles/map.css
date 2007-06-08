@@ -192,7 +192,7 @@ td.map-zoom-slider {
 	vertical-align: top;
 	height: 24px;
 	overflow: hidden;
-	background-repeat: no-repeat; }n
+	background-repeat: no-repeat; }
 	
 div.map-zoom-slider-cont {
 	height: 24px;
@@ -310,8 +310,18 @@ td.map-bubble-33 {
 	height: 32px;
 	overflow: hidden;
 	background-repeat: no-repeat;
-	background-image: url(../images/bubble-33.png); }	
+	background-image: url(../images/bubble-33.png); }
 	
+div.map-bubble-images {
+	margin-top: 5px; }
+	
+td.map-bubble-image img,
+td.map-bubble-image-last img {
+	border: 1px solid White; }
+
+td.map-bubble-image {
+	padding-right: 5px; }
+
 div.map-scale-indicator-container {
 	position: absolute;
 	padding: 5px;
