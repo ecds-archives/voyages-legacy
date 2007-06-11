@@ -12,6 +12,7 @@ import java.util.Set;
 import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.engine.HibernateIterator;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
@@ -50,7 +51,8 @@ public class SubmissionBean
 	public static final int SUBMISSION_TYPE_NEW = 1;	
 	public static final int SUBMISSION_TYPE_EDIT = 2;	
 	public static final int SUBMISSION_TYPE_MERGE = 3;
-	private static final Integer STATE_ID = new Integer(1);	
+	public static final String SOURCES_STATE = "sources-restore";
+	public static final String SUBMISSION_STATE = "submission-restore";
 
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
 	
@@ -607,7 +609,7 @@ public class SubmissionBean
 		return "new-submission";
 	}
 	
-	private Submission createSubmission() {
+	private Submission createSubmission(String phase) {
 		Session sess = HibernateUtil.getSession();
 		Transaction trans = sess.beginTransaction();
 
@@ -638,7 +640,7 @@ public class SubmissionBean
 		// boolean wasError = false;
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
-			if (val.isError()) {
+			if (!val.isCorrectValue()) {
 				val.setErrorMessage("Error in value!");
 				// wasError = true;
 			}
@@ -652,6 +654,11 @@ public class SubmissionBean
 				voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 		}
+		
+		if (!doErrorChecking()) {
+			return null;
+		}
+		
 		Submission submission = null;
 		
 		sess.save(voyage);
@@ -710,7 +717,7 @@ public class SubmissionBean
 		
 		submission.setUser(this.authenticatedUser);
 		submission.setTime(new Date());
-		submission.setSavedState(STATE_ID);
+		submission.setSavedState(phase);
 		
 		sess.save(submission);
 		
@@ -720,18 +727,33 @@ public class SubmissionBean
 	}
 	
 	public String toSources() {	
-		if (!this.doErrorChecking()) {
-			return null;
-		}
 		if (this.submission == null) {
-			this.submission = this.createSubmission();
+			this.submission = this.createSubmission(SOURCES_STATE);
+			if (this.submission == null) {
+				return null;
+			}
 			this.sourcesBean.setSubmission(this.submission);
 		}
 		return "sources";
 	}
 
 	private boolean doErrorChecking() {
-		return false;
+		boolean wasError = false;
+		Map newValues = gridValues.getColumnValues(CHANGED_VOYAGE);
+		for (Iterator iter = newValues.values().iterator(); iter.hasNext();)
+		{
+			Value val = (Value) iter.next();
+
+			if (!val.isCorrectValue()) {
+				val.setErrorMessage("Error in value!");
+				wasError = true;
+			}
+		}
+		if (wasError) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public String bookSource() {
@@ -746,9 +768,46 @@ public class SubmissionBean
 		this.sourcesBean = sourcesBean;
 	}
 	
-	public String saveState() {
+	public String saveStateSubmission() {
+		if (this.submission == null) {
+			if (this.createSubmission(SUBMISSION_STATE) == null) {
+				return null;
+			}
+		} else {
+			Session session = HibernateUtil.getSession();
+			Transaction t = session.beginTransaction();			
+			try {
+				this.submission.setSavedState(SUBMISSION_STATE);
+				session.update(this.submission);
+			} finally {
+				t.commit();
+				session.close();
+			}
+		}
 		this.authenticatedUser = null;
-		this.createSubmission();
 		return null;
+	}
+	
+	public String saveStateSources() {
+		if (this.submission == null) {
+			this.createSubmission(SOURCES_STATE);
+		} else {
+			Session session = HibernateUtil.getSession();
+			Transaction t = session.beginTransaction();	
+			try {
+				this.submission.setSavedState(SOURCES_STATE);
+				session.update(this.submission);
+			} finally {
+				t.commit();
+				session.close();
+			}
+		}
+		this.authenticatedUser = null;
+		return null;
+	}
+
+	public void setSubmission(Submission submission) {
+		this.submission = submission;
+		this.sourcesBean.setSubmission(submission);
 	}
 }

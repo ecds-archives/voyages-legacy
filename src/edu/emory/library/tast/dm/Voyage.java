@@ -474,6 +474,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	{
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
 		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Voyage", c);
 		List res = qValue.executeQueryList(sess);
@@ -487,13 +488,14 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	
 	public static Voyage loadFutureRevision(Session sess, int voyageId) {
-		return loadFutureRevision(sess, new Long(voyageId));
+		return loadFutureRevision(sess, new Integer(voyageId));
 	}
 	
-	public static Voyage loadFutureRevision(Session sess, Long voyageId) {
+	public static Voyage loadFutureRevision(Session sess, Integer voyageId) {
 		
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
 		c.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Voyage", c);
 		List res = qValue.executeQueryList(sess);
@@ -514,6 +516,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	{
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("voyageid"), new Integer(voyageId), Conditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
 		c.addCondition(Voyage.getAttribute("revision"), new Integer(revisionId), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Voyage", c);
 		List res = qValue.executeQueryList(session);
@@ -535,137 +538,17 @@ public class Voyage extends AbstractDescriptiveObject {
 		else
 		{
 			return session.createCriteria(Voyage.class).
-			add(Restrictions.in("voyageid", voyageIds)).
-			add(Restrictions.eq("revision", new Integer(revisionId))).
-			addOrder(Order.asc("voyageid")).list();
+				add(Restrictions.in("voyageid", voyageIds)).
+				add(Restrictions.eq("revision", new Integer(revisionId))).
+				add(Restrictions.eq("suggestion", new Boolean(false))).
+				addOrder(Order.asc("voyageid")).list();
 		}
 	}
 	
 	public static List loadByVoyageIds(Session session, Collection voyageIds)
 	{
 		return loadByVoyageIds(session, voyageIds, getCurrentRevision());
-	}
-
-	//	/**
-//	 * Loads most recent (not necessary active) voyage with given ID.
-//	 * 
-//	 * @param voyageId
-//	 *            voyuage ID
-//	 * @return voyage object, null if there is no desired Voyage in DB
-//	 */
-//	public static Voyage loadMostRecent(Long voyageId) {
-//		Voyage localVoyage = new Voyage();
-//		localVoyage.setVoyageid(voyageId);
-//		return loadInternal(localVoyage,
-//				HibernateConnector.APPROVED_AND_NOT_APPROVED
-//						& HibernateConnector.WITHOUT_HISTORY);
-//	}
-//
-//	/**
-//	 * Loads most recent (not necessary active) voyage with given ID.
-//	 * 
-//	 * @param voyageId
-//	 *            voyuage ID
-//	 * @return voyage object, null if there is no desired Voyage in DB
-//	 */
-//	public static Voyage[] loadMostRecent(Long voyageId, int p_packetSize) {
-//		Voyage localVoyage = new Voyage();
-//		localVoyage.setVoyageid(voyageId);
-//
-//		Session session = HibernateUtil.getSession();
-//		// Load voyage from DB
-//		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-//				.getVoyagesIndexSet(
-//						session,
-//						localVoyage,
-//						p_packetSize,
-//						HibernateConnector.APPROVED_AND_NOT_APPROVED
-//								& HibernateConnector.WITHOUT_HISTORY);
-//
-//		Voyage[] ret = new Voyage[voyageIndex.length];
-//		// Prepare result
-//		for (int i = 0; i < voyageIndex.length; i++) {
-//			ret[i] = voyageIndex[i].getVoyage();
-//		}
-//		session.close();
-//		return ret;
-//	}
-//
-//	/**
-//	 * Loads a most reecnt voyages.
-//	 * 
-//	 * @param p_firstResult
-//	 *            first result
-//	 * @param p_fetchSize
-//	 *            suze of package
-//	 * @return
-//	 */
-//	public static Voyage[] loadAllMostRecent(int p_firstResult, int p_fetchSize) {
-//
-//		Session session = HibernateUtil.getSession();
-//		// Load voyage from DB
-//		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-//				.getVoyagesIndexSet(
-//						session,
-//						p_firstResult,
-//						p_fetchSize,
-//						HibernateConnector.APPROVED_AND_NOT_APPROVED
-//								& HibernateConnector.WITHOUT_HISTORY);
-//
-//		Voyage[] ret = new Voyage[voyageIndex.length];
-//		// Prepare result
-//		for (int i = 0; i < voyageIndex.length; i++) {
-//			ret[i] = voyageIndex[i].getVoyage();
-//
-//		}
-//		session.close();
-//		return ret;
-//	}
-
-	/**
-	 * Loads voyage with given ID and given revision ID.
-	 * 
-	 * @param voyageId
-	 *            voyuage ID
-	 * @return voyage object, null if there is no desired Voyage in DB
-	 */
-	public static Voyage loadByRevision(Session sess, long voyageId, int revisionId) {
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("voyageid"), new Long(voyageId), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(revisionId), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", c);
-		Object[] res = qValue.executeQuery(sess);
-		if (res.length == 0) return null;
-
-		return (Voyage)res[0];
-	}
-
-//	/**
-//	 * List all revis
-//	 * 
-//	 * @param voyageId
-//	 * @param approved
-//	 * @return
-//	 */
-//	public static List loadAllRevisions(Long voyageId, int p_option) {
-//		int option = p_option | HibernateConnector.WITH_HISTORY;
-//		Voyage localVoyage = new Voyage();
-//		localVoyage.setVoyageid(voyageId);
-//
-//		Session session = HibernateUtil.getSession();
-//		// Load info from DB
-//		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-//				.getVoyageIndexByVoyage(session, localVoyage, option);
-//		List list = new ArrayList();
-//		// Prepare result
-//		for (int i = 0; i < voyageIndex.length; i++) {
-//			Voyage v = voyageIndex[i].getVoyage();
-//			list.add(v);
-//		}
-//		session.close();
-//		// Return result
-//		return list;
-//	}
+	}	
 
 	/**
 	 * Saves voyage to DB.
@@ -2084,7 +1967,7 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 	
 	public void setChild5(Integer val) {
-		this.values.put("child4", val);
+		this.values.put("child5", val);
 	}
 
 	public void setFemale4(Integer val) {

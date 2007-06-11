@@ -22,6 +22,7 @@ import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
 import edu.emory.library.tast.common.TabChangedEvent;
 import edu.emory.library.tast.common.grideditor.Column;
+import edu.emory.library.tast.common.grideditor.ColumnActionEvent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
@@ -724,6 +725,7 @@ public class AdminSubmissionBean {
 			editor.setEditedVoyage(eVoyage);
 			session.save(eVoyage);
 			session.save(editor);
+			this.applier.setRequiredReload(true);
 		} finally {
 			t.commit();
 			session.close();
@@ -733,6 +735,7 @@ public class AdminSubmissionBean {
 	
 	public String cancelAddEditor() {
 		this.addingEditor = new Boolean(false);
+		this.applier.setRequiredReload(true);
 		return null;
 	}
 	
@@ -829,4 +832,9 @@ public class AdminSubmissionBean {
 	public Long getSubmissionId() {
 		return this.applier.getSubmissionId();
 	}
+	
+	public void columnAction(ColumnActionEvent event) {
+		this.applier.columnAction(event);
+	}
+	
 }

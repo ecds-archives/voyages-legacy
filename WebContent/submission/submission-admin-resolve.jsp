@@ -25,7 +25,8 @@
 		columns="#{AdminSubmissionBean.columns}"
 		values="#{AdminSubmissionBean.values}"
 		fieldTypes="#{AdminSubmissionBean.fieldTypes}"
-		rowGroups="#{AdminSubmissionBean.rowGroups}"/>
+		rowGroups="#{AdminSubmissionBean.rowGroups}"
+		onColumnAction="#{AdminSubmissionBean.columnAction}" />
 	<br>
 	
 	<br>

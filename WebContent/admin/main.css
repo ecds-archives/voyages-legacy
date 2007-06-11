@@ -60,3 +60,15 @@ table.pager td.pager-page:hover,
 table.pager td.pager-previous-enabled:hover,
 table.pager td.pager-next-enabled:hover {
 	background-color: #EEEEEE; }
+	
+div.grid-editor-column-actions {
+	font-weight: normal; }
+
+div.grid-editor-column-actions span {
+	color: #2288BB; }
+
+div.grid-editor-column-actions span:hover {
+	cursor: pointer;
+	color: White;
+	background-color: #2288BB; }
+

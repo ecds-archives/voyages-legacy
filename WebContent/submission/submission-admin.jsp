@@ -95,7 +95,10 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td style="padding-right: 5px">Type of request</td>
-				<td style="padding-right: 10px"></f:verbatim><h:selectOneMenu value="#{AdminSubmissionBean.requestType}"><f:selectItems value="#{AdminSubmissionBean.requestTypes}"/></h:selectOneMenu><f:verbatim></td>
+				<td style="padding-right: 10px">
+					</f:verbatim>
+					<h:selectOneMenu value="#{AdminSubmissionBean.requestType}"><f:selectItems value="#{AdminSubmissionBean.requestTypes}"/></h:selectOneMenu>
+					<f:verbatim></td>
 				<td style="padding-right: 5px">
 				
 				<td style="padding-right: 5px">Status of request</td>
@@ -112,9 +115,6 @@
 			</table>
 		</div>
 		<br>
-		</f:verbatim>
-	
-		<f:verbatim>
 		<div style="height: 500px; overflow: auto;">
 		</f:verbatim>
 		
@@ -126,7 +126,7 @@
 		
 		<f:verbatim>
 		</div>
-		</f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.nationId}"><f:selectItems value="#{AdminVoyagesListBean.nations}"/></h:selectOneMenu>
+		</f:verbatim>
 	
 	</h:panelGroup>
 

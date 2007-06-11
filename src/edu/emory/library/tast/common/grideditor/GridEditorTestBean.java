@@ -25,8 +25,7 @@ public class GridEditorTestBean
 
 	private Values values;
 	
-	public void columnAction(ColumnActionEvent event)
-	{
+	public void columnAction(ColumnActionEvent event) {
 		System.out.println("column = " + event.getColumnName() + " action = " + event.getActionName());
 	}
 	

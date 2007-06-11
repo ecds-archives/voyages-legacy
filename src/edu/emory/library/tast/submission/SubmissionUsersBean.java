@@ -136,9 +136,27 @@ public class SubmissionUsersBean {
 				return "admin-logged-in";
 			} else {
 				this.submissionBean.setAuthenticatedUser(user);
+				Submission submission = tryRestoreState(user);
+				if (submission != null) {
+					this.submissionBean.setSubmission(submission);
+					return submission.getSavedState();
+				}
 				return "logged-in";
 			}
 		}
+	}
+
+	private Submission tryRestoreState(User user) {
+		Conditions c = new Conditions();
+		c.addCondition(Submission.getAttribute("user"), user, Conditions.OP_EQUALS);
+		c.addCondition(Submission.getAttribute("submitted"), new Boolean(false), Conditions.OP_EQUALS);
+		c.addCondition(Submission.getAttribute("savedState"), null, Conditions.OP_IS_NOT);
+		QueryValue qValue = new QueryValue("Submission", c);
+		Object[] submissions = qValue.executeQuery();
+		if (submissions.length != 0) {
+			return (Submission) submissions[0];
+		}
+		return null;
 	}
 
 	public GridColumn[] getUserColumns() {

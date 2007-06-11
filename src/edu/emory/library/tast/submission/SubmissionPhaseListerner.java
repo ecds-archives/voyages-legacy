@@ -24,7 +24,7 @@ public class SubmissionPhaseListerner implements PhaseListener
 		
 		SubmissionBean bean = (SubmissionBean) fc.getApplication().createValueBinding("#{SubmissionBean}").getValue(fc);
 		AdminSubmissionBean adminBean = (AdminSubmissionBean) fc.getApplication().createValueBinding("#{AdminSubmissionBean}").getValue(fc);
-		
+		System.out.println("View: " + viewId);
 		if (viewId.equals("/submission/submission-select-voyage-edit.jsp"))
 		{
 			if (bean.getAuthenticatedUser() == null) {
@@ -102,6 +102,12 @@ public class SubmissionPhaseListerner implements PhaseListener
 		else if (viewId.equals("/submission/submission-admin-user.jsp"))
 		{
 			if (adminBean.getAuthenticateduser() == null) {
+				JsfUtils.navigateTo("login");
+			}
+		}
+		else if (viewId.equals("/submission/submission-sources.jsp"))
+		{
+			if (bean.getAuthenticatedUser() == null) {
 				JsfUtils.navigateTo("login");
 			}
 		}

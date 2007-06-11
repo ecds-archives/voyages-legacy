@@ -117,4 +117,5 @@ public class TextboxLongValue extends TextboxValue
 		}
 		return isValid();
 	}
+	
 }

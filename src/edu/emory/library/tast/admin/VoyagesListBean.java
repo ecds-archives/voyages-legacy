@@ -114,7 +114,7 @@ public class VoyagesListBean
 		if (voyageIdFrom != -1) {
 			conds.addCondition(
 				Voyage.getAttribute("voyageid"),
-				new Long(voyageIdFrom),
+				new Integer(voyageIdFrom),
 				Conditions.OP_GREATER_OR_EQUAL);
 		}
 		
@@ -122,7 +122,7 @@ public class VoyagesListBean
 		if (voyageIdTo != -1) {
 			conds.addCondition(
 				Voyage.getAttribute("voyageid"),
-				new Long(voyageIdTo),
+				new Integer(voyageIdTo),
 				Conditions.OP_SMALLER_OR_EQUAL);
 		}
 		

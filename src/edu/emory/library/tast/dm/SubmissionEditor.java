@@ -3,6 +3,8 @@ package edu.emory.library.tast.dm;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.Session;
+
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -10,6 +12,8 @@ import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.SubmissionAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
+import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.QueryValue;
 
 public class SubmissionEditor {
 	
@@ -53,6 +57,18 @@ public class SubmissionEditor {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public static SubmissionEditor loadById(Session session, Long editorId)
+	{
+		Conditions c = new Conditions();
+		c.addCondition(getAttribute("id"), editorId, Conditions.OP_EQUALS);
+		QueryValue qValue = new QueryValue("SubmissionEditor", c);
+		Object[] ret = qValue.executeQuery(session);
+		if (ret.length == 0) {
+			return null;
+		}
+		
+		return (SubmissionEditor) ret[0];
 	}
 	
 	

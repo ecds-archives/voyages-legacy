@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.grideditor.Column;
+import edu.emory.library.tast.common.grideditor.ColumnAction;
+import edu.emory.library.tast.common.grideditor.ColumnActionEvent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
@@ -33,6 +35,8 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class VoyagesApplier {
 	
+	private static final String REMOVE_EDITOR_ACTION = "removeEditor";
+
 	public static final String COPY_LABEL = "Copy";
 	
 	public static final String ORYGINAL_VOYAGE_LABEL = "Original voyage";
@@ -97,6 +101,8 @@ public class VoyagesApplier {
 	 */
 	private AdminSubmissionBean adminBean;
 	
+	private boolean requiredReload = false;
+	
 	public VoyagesApplier(AdminSubmissionBean bean) {
 		this.adminBean = bean;
 		List rowGroupsList = new ArrayList();
@@ -118,7 +124,8 @@ public class VoyagesApplier {
 	 * @return
 	 */
 	public Values getValues() {
-		if (vals == null) {
+		if (vals == null || requiredReload) {
+			requiredReload = false;
 			Session session = HibernateUtil.getSession();
 			Transaction t = session.beginTransaction();
 			Voyage[] toVals = null;
@@ -338,16 +345,20 @@ public class VoyagesApplier {
 		}
 		int i;
 		for (i = 0; i < this.editRequests.length; i++) {
-			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i + 1), true, DECIDED_VOYAGE, COPY_LABEL);
+			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i + 1), true, DECIDED_VOYAGE, COPY_LABEL, false);
 		}
-		cols[i++] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
+		cols[i++] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL, false);
 		if (!editor) {
 			Iterator iter = submission.getSubmissionEditors().iterator();
 			for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
-				cols[i++] = new Column(EDITOR_CHOICE + "_" + j, EDITOR_CHOICE_LABEL + " " + ((SubmissionEditor)iter.next()).getUser().getUserName(), true);
+				SubmissionEditor submissionEditor = (SubmissionEditor)iter.next();
+				cols[i] = new Column(EDITOR_CHOICE + "_" + j, 
+									   EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName(), 
+									   true, DECIDED_VOYAGE, COPY_LABEL, false);
+				cols[i++].setActions(new ColumnAction[] {new ColumnAction(REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(), "Remove")});
 			}
 		}
-		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
+		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false, true);
 		return cols;
 	}
 
@@ -358,18 +369,22 @@ public class VoyagesApplier {
 		} else {
 			cols = new Column[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
 		}
-		cols[0] = new Column(ORYGINAL_VOYAGE, ORYGINAL_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
+		cols[0] = new Column(ORYGINAL_VOYAGE, ORYGINAL_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL, false);
 		int i;
 		for (i = 1; i <= this.editRequests.length; i++) {
-			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, CHANGED_VOYAGE_LABEL + " #" + i, true, DECIDED_VOYAGE, COPY_LABEL);
+			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, CHANGED_VOYAGE_LABEL + " #" + i, true, DECIDED_VOYAGE, COPY_LABEL, false);
 		}
 		if (!editor) {
 			Iterator iter = submission.getSubmissionEditors().iterator();
 			for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
-				cols[i++] = new Column(EDITOR_CHOICE + "_" + j, EDITOR_CHOICE_LABEL + " " + ((SubmissionEditor)iter.next()).getUser().getUserName(), true);
+				SubmissionEditor submissionEditor = (SubmissionEditor)iter.next();
+				cols[i] = new Column(EDITOR_CHOICE + "_" + j, 
+						               EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName(), 
+						               true, DECIDED_VOYAGE, COPY_LABEL, false);
+				cols[i++].setActions(new ColumnAction[] {new ColumnAction(REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(), "Remove")});
 			}
 		}
-		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
+		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false, true);
 		return cols;
 	}
 	
@@ -380,15 +395,34 @@ public class VoyagesApplier {
 		} else {
 			cols = new Column[2 + submission.getSubmissionEditors().size()];
 		}
-		cols[0] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL);
+		cols[0] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL, false);
 		if (!editor) {
 			Iterator iter = submission.getSubmissionEditors().iterator();
 			for (int i = 0; i < submission.getSubmissionEditors().size(); i++) {
-				cols[i + 1] = new Column(EDITOR_CHOICE + "_" + i, EDITOR_CHOICE_LABEL + " " + ((SubmissionEditor)iter.next()).getUser().getUserName(), true);
+				SubmissionEditor submissionEditor = (SubmissionEditor)iter.next();
+				cols[i + 1] = new Column(EDITOR_CHOICE + "_" + i, 
+						                 EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName(), 
+						                 true, DECIDED_VOYAGE, COPY_LABEL, false);
+				cols[i + 1].setActions(new ColumnAction[] {new ColumnAction(REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(), "Remove")});
 			}
 		}
-		cols[cols.length - 1] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false);
+		cols[cols.length - 1] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false, true);
 		return cols;
+	}
+	
+	public void columnAction(ColumnActionEvent event) {
+		if (event.getActionName().startsWith(REMOVE_EDITOR_ACTION) && event.getColumnName().startsWith(EDITOR_CHOICE)) {
+			Long editorId = new Long(event.getActionName().substring(REMOVE_EDITOR_ACTION.length() + 1));
+			Session session = HibernateUtil.getSession();
+			Transaction t = session.beginTransaction();
+			try {
+				SubmissionEditor editor = SubmissionEditor.loadById(session, editorId);
+				session.delete(editor);
+			} finally {
+				t.commit();
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -521,7 +555,7 @@ public class VoyagesApplier {
 			for (Iterator iter = voyagesToDelete.iterator(); iter.hasNext();) {
 				EditedVoyage element = (EditedVoyage) iter.next();
 				Integer voyageId = element.getVoyage().getVoyageid();
-				Voyage voyage = Voyage.loadFutureRevision(session, voyageId.intValue());
+				Voyage voyage = Voyage.loadFutureRevision(session, voyageId);
 				if (voyage != null) {
 					session.delete(voyage);
 				}
@@ -543,7 +577,7 @@ public class VoyagesApplier {
 		for (int i = 0; i < attrs.length; i++) {
 			Value val = (Value) newValues.get(attrs[i].getName());
 
-			if (val.isError()) {
+			if (!val.isCorrectValue()) {
 				val.setErrorMessage("Error in value!");
 				wasError = true;
 			}
@@ -724,6 +758,11 @@ public class VoyagesApplier {
 
 	public Long getSubmissionId() {
 		return this.submissionId;
+	}
+
+	public void setRequiredReload(boolean requiredReload)
+	{
+		this.requiredReload = requiredReload;
 	}
 	
 }

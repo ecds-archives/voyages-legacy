@@ -15,6 +15,7 @@ import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
@@ -31,7 +32,7 @@ public abstract class Submission
 	private boolean accepted;
 	private boolean submitted;
 	private User user;
-	private Integer savedState;
+	private String savedState;
 	private Set submissionEditors;
 	
 	private static Map attributes = new HashMap();
@@ -43,7 +44,7 @@ public abstract class Submission
 		attributes.put("submitted", new BooleanAttribute("submitted", "Submission", null));
 		attributes.put("editorVoyage", new EditedVoyageAttribute("editorVoyage", "EditedVoyage"));
 		attributes.put("user", new UserAttribute("user", "User"));
-		attributes.put("savedState", new NumericAttribute("savedState", null, NumericAttribute.TYPE_INTEGER));
+		attributes.put("savedState", new StringAttribute("savedState", null));
 		attributes.put("submissionEditors", new UserAttribute("submissionEditors", "SubmissionEditor"));
 	}
 	public static Attribute getAttribute(String name) {
@@ -201,11 +202,11 @@ public abstract class Submission
 		this.submitted = submitted;
 	}
 
-	public Integer getSavedState() {
+	public String getSavedState() {
 		return savedState;
 	}
 
-	public void setSavedState(Integer savedState) {
+	public void setSavedState(String savedState) {
 		this.savedState = savedState;
 	}
 
