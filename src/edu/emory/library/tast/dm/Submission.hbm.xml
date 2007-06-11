@@ -18,7 +18,7 @@
 		
 		<many-to-one name="user" column="user_id" class="edu.emory.library.tast.dm.User"/>
 		
-		<set name="sources" inverse="true" cascade="all-delete-orphan">
+		<set name="sources" inverse="true" cascade="delete">
 			<key column="submission_id" />
 			<one-to-many class="edu.emory.library.tast.dm.SubmissionSource" />
 		</set>

@@ -1,6 +1,8 @@
 package edu.emory.library.tast.submission;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
@@ -12,6 +14,7 @@ import edu.emory.library.tast.common.GridColumnClickEvent;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
 import edu.emory.library.tast.dm.Submission;
+import edu.emory.library.tast.dm.SubmissionEditor;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -563,16 +566,37 @@ public class SubmissionUsersBean {
 	}
 
 	public SelectItem[] getEditorUsers() {
-		Conditions c = new Conditions();
-		c.addCondition(User.getAttribute("editor"), new Boolean(true), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("User", c);
-		Object[] users = qValue.executeQuery();
-		SelectItem[] items = new SelectItem[users.length];
-		for (int i = 0; i < items.length; i++) {
-			items[i] = new SelectItem(((User)users[i]).getId().toString(), 
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			Long id = this.adminSubmissionBean.getSubmissionId();
+			Submission submission = Submission.loadById(session, id);
+			Set currEditors = submission.getSubmissionEditors();
+			Object[] existingUsers = new Object[currEditors.size()];
+			Iterator iter = currEditors.iterator();
+			for (int i = 0; i < existingUsers.length; i++) {
+				existingUsers[i] = ((SubmissionEditor)iter.next()).getUser().getId();
+			}
+
+			Conditions c = new Conditions();
+			if (existingUsers.length != 0) {
+				Conditions cnot = new Conditions(Conditions.JOIN_NOT);
+				cnot.addCondition(User.getAttribute("id"), existingUsers, Conditions.OP_IN);
+				c.addCondition(cnot);
+			}
+			c.addCondition(User.getAttribute("editor"), new Boolean(true), Conditions.OP_EQUALS);
+			QueryValue qValue = new QueryValue("User", c);
+			Object[] users = qValue.executeQuery(session);
+			SelectItem[] items = new SelectItem[users.length];
+			for (int i = 0; i < items.length; i++) {
+				items[i] = new SelectItem(((User)users[i]).getId().toString(), 
 					((User)users[i]).getUserName());
+			}
+			return items;
+		} finally {
+			t.commit();
+			session.close();
 		}
-		return items;
 	}
 
 	public Boolean getCheckedEditor() {

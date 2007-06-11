@@ -31,11 +31,13 @@
 	<br>
 	<t:htmlTag value="div" 
 	           rendered="#{AdminSubmissionBean.isSourceDetailsVisible}" 
-	           style="border: 2px solid #CCCCCC; width: 400px; padding: 5px;" >
-        <h:outputText value="Source details"/>
-		<t:dataTable value="#{AdminSubmissionBean.sourceData}" var="data">	
+	           style="border: 2px solid #CCCCCC; width: 500px; padding: 5px;" >
+        <h:outputText style="padding-left: 4px; font-weight: bold; font-style: italic;" value="Source details"/>
+		<t:dataTable value="#{AdminSubmissionBean.sourceData}" var="data" style="padding-top: 10px;">	
 			<h:column>
-				<h:outputText value="#{data.name}"/>
+				<t:div style="width: 200px;">
+					<h:outputText style="font-weight: bold;" value="#{data.name}"/>
+				</t:div>
     		</h:column>
     		<h:column>
         		<h:outputText value="#{data.value}"/>

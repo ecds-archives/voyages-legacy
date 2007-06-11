@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import edu.emory.library.tast.common.GridOpenRowEvent;
@@ -117,8 +118,7 @@ public class VoyagesApplier {
 	 * @return
 	 */
 	public Values getValues() {
-
-		if (!wasError || vals == null) {
+		if (vals == null) {
 			Session session = HibernateUtil.getSession();
 			Transaction t = session.beginTransaction();
 			Voyage[] toVals = null;
@@ -455,6 +455,7 @@ public class VoyagesApplier {
 		} else {
 			this.submissionId = null;
 		}
+		this.vals = null;
 		t.commit();
 		session.close();
 	}
@@ -579,8 +580,7 @@ public class VoyagesApplier {
 			lSubmission.setAccepted(true);
 			session.update(lSubmission);
 		}
-
-		System.out.println("Voyage submission saved");
+		this.vals = null;
 		t.commit();
 		session.close();
 		return "back";
@@ -603,6 +603,7 @@ public class VoyagesApplier {
 
 		t.commit();
 		session.close();
+		this.vals = null;
 		return "back";
 	}
 
@@ -654,7 +655,7 @@ public class VoyagesApplier {
 			}
 			if (attrs[i].getName().equals("voyageid") && vNew.getVoyageid() == null) {
 				wasError = true;
-				val.setErrorMessage("This field is required");
+				val.setErrorMessage("This field is required and has to be a number");
 			}
 		}
 		vNew.setSuggestion(true);

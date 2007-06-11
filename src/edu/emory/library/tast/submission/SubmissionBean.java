@@ -24,6 +24,7 @@ import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
 import edu.emory.library.tast.dm.SubmissionMerge;
 import edu.emory.library.tast.dm.SubmissionNew;
+import edu.emory.library.tast.dm.SubmissionSource;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -76,6 +77,8 @@ public class SubmissionBean
 
 	private User authenticatedUser = null;
 	
+	private Submission submission;
+	
 	public SubmissionBean()
 	{
 		
@@ -99,6 +102,7 @@ public class SubmissionBean
 	
 	public String selectTypeNew()
 	{
+		cleanSubmission();
 		if (submissionType != SUBMISSION_TYPE_NEW)
 		{
 			submissionType = SUBMISSION_TYPE_NEW;
@@ -110,12 +114,14 @@ public class SubmissionBean
 	
 	public String selectTypeEdit()
 	{
+		cleanSubmission();
 		if (submissionType != SUBMISSION_TYPE_EDIT)
 		{
 			submissionType = SUBMISSION_TYPE_EDIT;
 			lookupVoyageId = null;
 			lookupPerformed = false;
 			expandedGridRows = null;
+			cleanSubmission();
 		}
 		else
 		{
@@ -130,6 +136,7 @@ public class SubmissionBean
 
 	public String selectTypeMerge()
 	{
+		cleanSubmission();
 		lookupPerformed = false;
 		lookedUpVoyage = null;
 		errorSelectAtLeastTwo = false;
@@ -137,10 +144,31 @@ public class SubmissionBean
 		{
 			submissionType = SUBMISSION_TYPE_MERGE;
 			expandedGridRows = null;
+			cleanSubmission();
 		}
 		return "merge";
 	}
 	
+	private void cleanSubmission() {
+		if (this.submission != null && !this.submission.isSubmitted()) {
+			Session session = HibernateUtil.getSession();
+			Transaction t = session.beginTransaction();
+			Submission localCopy = Submission.loadById(session, this.submission.getId());
+			try {
+				Set sources = localCopy.getSources();
+				for (Iterator iter = sources.iterator(); iter.hasNext();) {
+					SubmissionSource element = (SubmissionSource) iter.next();
+					session.delete(element);
+				}
+				session.delete(localCopy);
+			} finally {
+				t.commit();
+				session.close();
+			}
+		}
+		this.submission = null;
+	}
+
 	public String removeSelectedVoyageForMerge()
 	{
 		
@@ -691,9 +719,19 @@ public class SubmissionBean
 		return submission;
 	}
 	
-	public String toSources() {		
-		this.sourcesBean.setSubmission(this.createSubmission());		
+	public String toSources() {	
+		if (!this.doErrorChecking()) {
+			return null;
+		}
+		if (this.submission == null) {
+			this.submission = this.createSubmission();
+			this.sourcesBean.setSubmission(this.submission);
+		}
 		return "sources";
+	}
+
+	private boolean doErrorChecking() {
+		return false;
 	}
 
 	public String bookSource() {

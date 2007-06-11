@@ -1,5 +1,7 @@
 package edu.emory.library.tast.submission;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,6 +14,7 @@ import javax.faces.model.SelectItem;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.postgresql.jdbc2.optional.SimpleDataSource;
 
 import edu.emory.library.tast.admin.VoyageBean;
 import edu.emory.library.tast.common.GridColumn;
@@ -53,6 +56,8 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class AdminSubmissionBean {
 
+	private static final DateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
+	
 	private static final String REQUEST_MERGE_PREFIX = "merge_";
 
 	private static final String REQUEST_EDIT_PREFIX = "edit_";
@@ -327,12 +332,12 @@ public class AdminSubmissionBean {
 				}
 				if (!this.authenticateduser.isEditor()) {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
-						submission.getUser().getUserName(), submission.getTime().toString(), "New voyage - ID not yet assigned",
+						submission.getUser().getUserName(), formatter.format(submission.getTime()), "New voyage - ID not yet assigned",
 						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
-						submission.getUser().getUserName(), submission.getTime().toString(), "New voyage - ID not yet assigned",
+						submission.getUser().getUserName(), formatter.format(submission.getTime()), "New voyage - ID not yet assigned",
 						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", lastCol }));
 				}
 			}
@@ -356,13 +361,13 @@ public class AdminSubmissionBean {
 				}
 				if (!this.authenticateduser.isEditor()) {
 					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request",
-						submission.getUser().getUserName(), submission.getTime().toString(),
+						submission.getUser().getUserName(), formatter.format(submission.getTime()),
 						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
 						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request",
-						submission.getUser().getUserName(), submission.getTime().toString(),
+						submission.getUser().getUserName(), formatter.format(submission.getTime()),
 						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
 						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", lastCol }));
 				}
@@ -398,12 +403,12 @@ public class AdminSubmissionBean {
 				}
 				if (!this.authenticateduser.isEditor()) {
 					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request",
-						submission.getUser().getUserName(), submission.getTime().toString(), involvedStr,
+						submission.getUser().getUserName(), formatter.format(submission.getTime()), involvedStr,
 						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request",
-						submission.getUser().getUserName(), submission.getTime().toString(), involvedStr,
+						submission.getUser().getUserName(), formatter.format(submission.getTime()), involvedStr,
 						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", lastCol }));
 				}
 			}
@@ -417,7 +422,7 @@ public class AdminSubmissionBean {
 	private boolean revievedByEditor(Submission submission, User user) {
 		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter.hasNext();) {
 			SubmissionEditor element = (SubmissionEditor) iter.next();
-			if ((user == null || user.getId().equals(this.authenticateduser.getId())) && element.getEditedVoyage() != null && element.getEditedVoyage().getVoyage() != null) {
+			if ((user == null || user.getId().equals(element.getUser().getId())) && element.getEditedVoyage() != null && element.getEditedVoyage().getVoyage() != null) {
 				return true;
 			}
 		}
@@ -769,23 +774,40 @@ public class AdminSubmissionBean {
 				dataItems.add(new SourceData("Location", primary.getLocation()));
 				dataItems.add(new SourceData("Series number or letter", primary.getSeries()));
 				dataItems.add(new SourceData("Volume or box number", primary.getVolume()));
-				dataItems.add(new SourceData("Volume or box number", primary.getDetails()));
-				dataItems.add(new SourceData("Volume or box number", primary.getVolume()));
+				dataItems.add(new SourceData("Document details (page or folio, and/or date of document)", primary.getDetails()));
+				dataItems.add(new SourceData("Additional information", primary.getNote()));
 			} else if (source instanceof SubmissionSourcePaper) {
 				SubmissionSourcePaper primary = (SubmissionSourcePaper)source;
+				dataItems.add(new SourceData("Source type", "Publication"));
+				dataItems.add(new SourceData("Title", primary.getTitle()));
+				dataItems.add(new SourceData("Authors", primary.getAuthors()));
+				dataItems.add(new SourceData("Journal", primary.getJournal()));
+				dataItems.add(new SourceData("Year/Volume", primary.getYear() + "/" + primary.getVolume()));
+				dataItems.add(new SourceData("Pages", primary.getPageFrom() + " - " + primary.getPageTo()));
+				dataItems.add(new SourceData("Additional information", primary.getNote()));
 			} else if (source instanceof SubmissionSourceBook) {
 				SubmissionSourceBook primary = (SubmissionSourceBook)source;
+				dataItems.add(new SourceData("Source type", "Book"));
+				dataItems.add(new SourceData("Title", primary.getTitle()));
+				dataItems.add(new SourceData("Authors", primary.getAuthors()));
+				dataItems.add(new SourceData("Publisher", primary.getPublisher()));
+				dataItems.add(new SourceData("Place of publication", primary.getPlaceOfPublication()));
+				dataItems.add(new SourceData("Year", String.valueOf(primary.getYear())));
+				dataItems.add(new SourceData("Pages", primary.getPageFrom() + " - " + primary.getPageTo()));
+				dataItems.add(new SourceData("Additional information", primary.getNote()));
 			} else if (source instanceof SubmissionSourceOther) {
 				SubmissionSourceOther primary = (SubmissionSourceOther)source;
+				dataItems.add(new SourceData("Source type", "Other source"));
+				dataItems.add(new SourceData("Title", primary.getTitle()));
+				dataItems.add(new SourceData("Location", primary.getLocation()));
+				dataItems.add(new SourceData("Page or folio", primary.getFolioOrPage()));
+				dataItems.add(new SourceData("Additional information", primary.getNote()));
 			}
 		} finally {
 			t.commit();
 			session.close();
 		}
-		return new SourceData[] {
-				new SourceData("Archive name", "fjskldafdfj fj as dsl fjskld"),
-				new SourceData("Archive location", "fjskldafdfj fj as dsl fjskld")
-		};
+		return (SourceData[]) dataItems.toArray(new SourceData[] {});
 	}
 	
 	public class SourceData {
@@ -802,5 +824,9 @@ public class AdminSubmissionBean {
 			return value;
 		}
 		
+	}
+	
+	public Long getSubmissionId() {
+		return this.applier.getSubmissionId();
 	}
 }
