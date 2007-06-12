@@ -939,6 +939,7 @@
 	
 	<lifecycle>
 	   <phase-listener>edu.emory.library.tast.submission.SubmissionPhaseListerner</phase-listener>
+	   <phase-listener>edu.emory.library.tast.common.LinkRestorePhaseListerner</phase-listener>
 	</lifecycle>
 
 </faces-config>

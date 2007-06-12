@@ -4,6 +4,8 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
+<s:messageBar rendered="false" binding="#{SlavesBean.messageBar}" />
+
 <s:expandableBoxSet expandedId="basic">
 
 	<s:expandableBox text="#{res.slaves_query_title}" boxId="basic">
@@ -336,5 +338,9 @@
 	<s:querySummary
 		items="#{SlavesBean.querySummary}"
 		noQueryText="#{res.slaves_current_no_query}" />
+		
+	<t:div style="margin-top: 5px;">
+		<h:commandButton value="permlink" styleClass="button-save" action="#{SlavesBean.permLink}"/>
+	</t:div>
 	
 </s:expandableBox>

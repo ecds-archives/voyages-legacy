@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +13,11 @@ import org.ajaxanywhere.AAUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.w3c.dom.Node;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.LookupCheckboxItem;
+import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.table.ShowDetailsEvent;
 import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.common.table.TableData;
@@ -23,16 +26,20 @@ import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Area;
+import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Slave;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean.EstimatesSelection;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -75,11 +82,13 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 
 public class SlavesBean {
-
+	
 	private static final int AFRICA_ID = 60000;
 
 	private static final String ATTRIBUTE = "Attribute_";
 
+	private MessageBarComponent messageBar;
+	
 	private TableLinkManager pager;
 
 	private TableData tableData;
@@ -540,6 +549,45 @@ public class SlavesBean {
 		t.commit();
 		sess.close();
 		return null;
+	}
+	
+	public String permLink() {
+		
+		Configuration conf = new Configuration();
+		conf.addEntry("permlinkSlaves", this.workingQuery);
+		conf.save();
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
+		messageBar.setRendered(true);
+		
+		return null;
+	}
+	
+	public void restoreLink(Long configId) {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			Configuration conf = Configuration.loadConfiguration(configId);
+			if (conf == null)
+				return;
+
+			if (conf.getEntry("permlinkSlaves") != null) {
+				SlavesQuery selection = (SlavesQuery) conf.getEntry("permlinkEstimates");
+				this.currentQuery = this.workingQuery = selection;
+			}
+		} finally {
+			t.commit();
+			session.close();
+		}
+	}
+
+	public MessageBarComponent getMessageBar() {
+		return messageBar;
+	}
+
+	public void setMessageBar(MessageBarComponent messageBar) {
+		this.messageBar = messageBar;
 	}
 
 }

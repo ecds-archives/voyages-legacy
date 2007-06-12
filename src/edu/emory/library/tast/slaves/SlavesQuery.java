@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
+import org.w3c.dom.Node;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.QuerySummaryItem;
@@ -14,13 +15,14 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.SexAge;
 import edu.emory.library.tast.dm.Slave;
+import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.EqualsUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
-public class SlavesQuery implements Cloneable
+public class SlavesQuery implements Cloneable, XMLExportable
 {
 	
 	private static final int SIERRA_LEONE_ID = 60200;
@@ -735,4 +737,11 @@ public class SlavesQuery implements Cloneable
 		this.voyageId = voyageId;
 	}
 
+	public void restoreFromXML(Node entry) {	
+	}
+
+	public String toXML() {
+		return null;
+	}
+	
 }
