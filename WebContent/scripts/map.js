@@ -1655,8 +1655,10 @@ Map.prototype.showLabel = function(event, pntIndex, fix)
 
 Map.prototype.hideLabels = function()
 {
-	if (this.bubble)
+	if (this.bubble) {
+		this.fixedLabel = false;
 		this.bubble.style.display = "none";
+	}
 }
 
 Map.prototype.hideLabel = function(event)

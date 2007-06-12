@@ -48,7 +48,11 @@ public class MainMenuBean
 								new MainMenuBarPageItem(
 										"methodology",
 										"Understanding the database",
-										"database/methodology.faces")}),
+										"database/methodology.faces"),
+								new MainMenuBarPageItem(
+										"contribute",
+										"Contribute",
+										"submission/submission-login.faces")}),
 
 				new MainMenuBarSectionItem(
 						"resources",

@@ -79,7 +79,7 @@ public class TableData {
 		/**
 		 * VoyageID.
 		 */
-		public Long voyageId;
+		public Object voyageId;
 
 		/**
 		 * Voyage attributes.
@@ -92,7 +92,7 @@ public class TableData {
 		 * @param voyageId
 		 * @param row
 		 */
-		public DataTableItem(Long voyageId, Object[] row) {
+		public DataTableItem(Object voyageId, Object[] row) {
 			this.voyageId = voyageId;
 			this.dataRow = row;
 		}
@@ -451,9 +451,9 @@ public class TableData {
 			}
 
 			// Set data and additionalData if needed.
-			this.data.add(new DataTableItem((Long) ((Object[]) rawData[i])[0], dataColumn));
+			this.data.add(new DataTableItem(((Object[]) rawData[i])[0], dataColumn));
 			if (additionalDataColumn.length > 0) {
-				this.additionalData.add(new DataTableItem((Long) ((Object[]) rawData[i])[0], additionalDataColumn));
+				this.additionalData.add(new DataTableItem(((Object[]) rawData[i])[0], additionalDataColumn));
 			}
 		}
 	}

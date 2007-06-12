@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.engine.HibernateIterator;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.grideditor.Column;
@@ -102,71 +100,76 @@ public class SubmissionBean
 	// wizard logic
 	/////////////////////////////////////////////////////////////////////////////////
 	
-	public String selectTypeNew()
-	{
-		cleanSubmission();
-		if (submissionType != SUBMISSION_TYPE_NEW)
-		{
-			submissionType = SUBMISSION_TYPE_NEW;
-			expandedGridRows = null;
-			initNewVoyage();
+	public String selectTypeNew() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			cleanSubmission(session);
+			if (submissionType != SUBMISSION_TYPE_NEW) {
+				submissionType = SUBMISSION_TYPE_NEW;
+				expandedGridRows = null;
+				initNewVoyage();
+			}
+		} finally {
+			t.commit();
+			session.close();
 		}
 		return "form";
 	}
-	
-	public String selectTypeEdit()
-	{
-		cleanSubmission();
-		if (submissionType != SUBMISSION_TYPE_EDIT)
-		{
-			submissionType = SUBMISSION_TYPE_EDIT;
-			lookupVoyageId = null;
-			lookupPerformed = false;
-			expandedGridRows = null;
-			cleanSubmission();
-		}
-		else
-		{
-			if (selectedVoyageForEdit != null)
-			{
-				lookedUpVoyage = selectedVoyageForEdit;
-				lookupVoyageId = new Integer(selectedVoyageForEdit.getVoyageId());
+
+	public String selectTypeEdit() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			cleanSubmission(session);
+			if (submissionType != SUBMISSION_TYPE_EDIT) {
+				submissionType = SUBMISSION_TYPE_EDIT;
+				lookupVoyageId = null;
+				lookupPerformed = false;
+				expandedGridRows = null;
+				cleanSubmission(session);
+			} else {
+				if (selectedVoyageForEdit != null) {
+					lookedUpVoyage = selectedVoyageForEdit;
+					lookupVoyageId = new Integer(selectedVoyageForEdit.getVoyageId());
+				}
 			}
+		} finally {
+			t.commit();
+			session.close();
 		}
 		return "edit";
 	}
 
-	public String selectTypeMerge()
-	{
-		cleanSubmission();
-		lookupPerformed = false;
-		lookedUpVoyage = null;
-		errorSelectAtLeastTwo = false;
-		if (submissionType != SUBMISSION_TYPE_MERGE)
-		{
-			submissionType = SUBMISSION_TYPE_MERGE;
-			expandedGridRows = null;
-			cleanSubmission();
+	public String selectTypeMerge() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			cleanSubmission(session);
+			lookupPerformed = false;
+			lookedUpVoyage = null;
+			errorSelectAtLeastTwo = false;
+			if (submissionType != SUBMISSION_TYPE_MERGE) {
+				submissionType = SUBMISSION_TYPE_MERGE;
+				expandedGridRows = null;
+				cleanSubmission(session);
+			}
+		} finally {
+			t.commit();
+			session.close();
 		}
 		return "merge";
 	}
 	
-	private void cleanSubmission() {
+	private void cleanSubmission(Session session) {
 		if (this.submission != null && !this.submission.isSubmitted()) {
-			Session session = HibernateUtil.getSession();
-			Transaction t = session.beginTransaction();
 			Submission localCopy = Submission.loadById(session, this.submission.getId());
-			try {
 				Set sources = localCopy.getSources();
 				for (Iterator iter = sources.iterator(); iter.hasNext();) {
 					SubmissionSource element = (SubmissionSource) iter.next();
 					session.delete(element);
 				}
 				session.delete(localCopy);
-			} finally {
-				t.commit();
-				session.close();
-			}
 		}
 		this.submission = null;
 	}
@@ -297,11 +300,51 @@ public class SubmissionBean
 	
 	private void initColumnForNewVoyaye(Values values, String columnName)
 	{
-		for (int i = 0; i < attrs.length; i++)
-			values.setValue(
+		if (!prefillSuccess(values, columnName)) {
+			for (int i = 0; i < attrs.length; i++)
+				values.setValue(
 					columnName,
 					attrs[i].getName(),
 					attrs[i].getEmptyValue());
+		}
+	}
+	
+	private boolean prefillSuccess(Values values, String columnName) {
+		if (this.submission == null) {
+			return false;
+		}
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			Submission submission = Submission.loadById(session, this.submission.getId());
+			EditedVoyage storedEditedVoyage = null;
+			if (submission instanceof SubmissionEdit) {
+				storedEditedVoyage = ((SubmissionEdit) submission).getNewVoyage();
+			} else if (submission instanceof SubmissionMerge) {
+				storedEditedVoyage = ((SubmissionMerge) submission).getProposedVoyage();
+			} else if (submission instanceof SubmissionNew) {
+				storedEditedVoyage = ((SubmissionNew) submission).getNewVoyage();
+			}
+			if (storedEditedVoyage == null && storedEditedVoyage.getVoyage() != null) {
+				return false;
+			}
+			Voyage voyage = storedEditedVoyage.getVoyage();
+			Map attributeNotes = storedEditedVoyage.getAttributeNotes();
+			for (int i = 0; i < attrs.length; i++) {
+				SubmissionAttribute attribute = attrs[i];
+				Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+				for (int j = 0; j < toBeFormatted.length; j++) {
+					toBeFormatted[j] = voyage.getAttrValue(attribute.getAttribute()[j].getName());
+				}
+				Value value = attribute.getValue(toBeFormatted);
+				value.setNote((String) attributeNotes.get(attrs[i].getName()));
+				values.setValue(columnName, attribute.getName(), value);
+			}
+		} finally {
+			t.commit();
+			session.close();
+		}
+		return true;
 	}
 	
 	private boolean loadVoyageToColumn(Session session, int voyageId, Values values, String columnName)
@@ -613,6 +656,7 @@ public class SubmissionBean
 		Session sess = HibernateUtil.getSession();
 		Transaction trans = sess.beginTransaction();
 
+		try {
 		Map newValues = gridValues.getColumnValues(CHANGED_VOYAGE);
 		Voyage voyage = new Voyage();
 		
@@ -720,13 +764,19 @@ public class SubmissionBean
 		submission.setSavedState(phase);
 		
 		sess.save(submission);
+		this.cleanSubmission(sess);
 		
-		trans.commit();
-		sess.close();
+		} finally {
+			trans.commit();
+			sess.close();
+		}
 		return submission;
 	}
 	
-	public String toSources() {	
+	public String toSources() {
+		if (!doErrorChecking()) {
+			return null;
+		}
 		if (this.submission == null) {
 			this.submission = this.createSubmission(SOURCES_STATE);
 			if (this.submission == null) {
@@ -770,18 +820,10 @@ public class SubmissionBean
 	
 	public String saveStateSubmission() {
 		if (this.submission == null) {
-			if (this.createSubmission(SUBMISSION_STATE) == null) {
-				return null;
-			}
+			this.createSubmission(SUBMISSION_STATE);
 		} else {
-			Session session = HibernateUtil.getSession();
-			Transaction t = session.beginTransaction();			
-			try {
-				this.submission.setSavedState(SUBMISSION_STATE);
-				session.update(this.submission);
-			} finally {
-				t.commit();
-				session.close();
+			if (!this.updateSubmission(SUBMISSION_STATE)) {
+				return null;
 			}
 		}
 		this.authenticatedUser = null;
@@ -792,22 +834,84 @@ public class SubmissionBean
 		if (this.submission == null) {
 			this.createSubmission(SOURCES_STATE);
 		} else {
-			Session session = HibernateUtil.getSession();
-			Transaction t = session.beginTransaction();	
-			try {
-				this.submission.setSavedState(SOURCES_STATE);
-				session.update(this.submission);
-			} finally {
-				t.commit();
-				session.close();
+			if (!this.updateSubmission(SOURCES_STATE)) {
+				return null;
 			}
 		}
 		this.authenticatedUser = null;
 		return null;
 	}
 
+	
+	private boolean updateSubmission(String phase) {
+		Session sess = HibernateUtil.getSession();
+		Transaction trans = sess.beginTransaction();
+
+		try {
+
+			Submission submission = Submission.loadById(sess, this.submission.getId());
+			EditedVoyage storedEditedVoyage = null;
+			if (submission instanceof SubmissionEdit) {
+				storedEditedVoyage = ((SubmissionEdit) submission).getNewVoyage();
+			} else if (submission instanceof SubmissionMerge) {
+				storedEditedVoyage = ((SubmissionMerge) submission).getProposedVoyage();
+			} else if (submission instanceof SubmissionNew) {
+				storedEditedVoyage = ((SubmissionNew) submission).getNewVoyage();
+			}
+			if (storedEditedVoyage == null && storedEditedVoyage.getVoyage() != null) {
+				return false;
+			}
+			Voyage voyage = storedEditedVoyage.getVoyage();
+			
+			Map newValues = gridValues.getColumnValues(CHANGED_VOYAGE);
+
+			Map notes = new HashMap();
+
+			// boolean wasError = false;
+			for (int i = 0; i < attrs.length; i++) {
+				Value val = (Value) newValues.get(attrs[i].getName());
+				if (!val.isCorrectValue()) {
+					val.setErrorMessage("Error in value!");
+					// wasError = true;
+				}
+				if (val.hasEditableNote()) {
+					notes.put(attrs[i].getName(), val.getNote().trim());
+				}
+				Object[] vals = attrs[i].getValues(sess, val);
+				for (int j = 0; j < vals.length; j++) {
+					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+				}
+			}
+
+			if (!doErrorChecking()) {
+				return false;
+			}
+			
+			submission.setSavedState(phase);
+			storedEditedVoyage.setAttributeNotes(notes);
+			sess.update(voyage);
+			sess.update(storedEditedVoyage);
+			sess.update(submission);
+			
+		} finally {
+			trans.commit();
+			sess.close();
+		}
+		return true;
+	}
+
 	public void setSubmission(Submission submission) {
 		this.submission = submission;
 		this.sourcesBean.setSubmission(submission);
+		if (this.submission instanceof SubmissionNew) {
+			this.submissionType = SUBMISSION_TYPE_NEW;
+			this.initNewVoyage();
+		} else if (this.submission instanceof SubmissionEdit) {
+			this.submissionType = SUBMISSION_TYPE_EDIT;
+			this.initNewVoyage();
+		} else if (this.submission instanceof SubmissionMerge) {
+			this.submissionType = SUBMISSION_TYPE_MERGE;
+			this.initNewVoyage();
+		}
 	}
 }

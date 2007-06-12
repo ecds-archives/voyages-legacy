@@ -269,7 +269,7 @@ public class UITableResultTab extends UIOutput {
 				if (i == objs.length - 1)
 					rowClass.append(" grid-row-last");
 				
-				Long voyageId = objs[i].voyageId;
+				Object voyageId = objs[i].voyageId;
 				String voyageIdString;
 				if (voyageId == null)
 					voyageIdString = TastResource.getText("components_table_missingid");
