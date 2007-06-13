@@ -536,6 +536,7 @@ public class AdminSubmissionBean {
 	}
 
 	public void setAuthenticateduser(User authenticateduser) {
+		this.chosenTab = "voyages";
 		this.authenticateduser = authenticateduser;
 		if (this.authenticateduser.isEditor()) {
 			this.REQUESTS_LIST_COLS = new GridColumn[] { 
