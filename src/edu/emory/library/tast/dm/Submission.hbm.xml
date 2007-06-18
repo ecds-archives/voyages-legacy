@@ -154,6 +154,8 @@
 	        <generator class="native"/>
 	    </id>
 	    
+	    <property name="finished" />
+	    
 	    <many-to-one name="submission" column="submission_id" class="edu.emory.library.tast.dm.Submission"/>	    
 	    <many-to-one name="editedVoyage" column="edited_voyage_id" class="edu.emory.library.tast.dm.EditedVoyage" />
 	    <many-to-one name="user" column="user_id" class="edu.emory.library.tast.dm.User"/>

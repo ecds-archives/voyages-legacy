@@ -353,7 +353,7 @@ public class VoyagesApplier {
 			for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
 				SubmissionEditor submissionEditor = (SubmissionEditor)iter.next();
 				cols[i] = new Column(EDITOR_CHOICE + "_" + j, 
-									   EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName(), 
+									   EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName() + "(" + (submissionEditor.isFinished() ? "Finished": "Not finished") + ")", 
 									   true, DECIDED_VOYAGE, COPY_LABEL, false);
 				cols[i++].setActions(new ColumnAction[] {new ColumnAction(REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(), "Remove")});
 			}
@@ -379,7 +379,7 @@ public class VoyagesApplier {
 			for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
 				SubmissionEditor submissionEditor = (SubmissionEditor)iter.next();
 				cols[i] = new Column(EDITOR_CHOICE + "_" + j, 
-						               EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName(), 
+						               EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName() + "(" + (submissionEditor.isFinished() ? "Finished": "Not finished") + ")", 
 						               true, DECIDED_VOYAGE, COPY_LABEL, false);
 				cols[i++].setActions(new ColumnAction[] {new ColumnAction(REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(), "Remove")});
 			}
@@ -401,7 +401,7 @@ public class VoyagesApplier {
 			for (int i = 0; i < submission.getSubmissionEditors().size(); i++) {
 				SubmissionEditor submissionEditor = (SubmissionEditor)iter.next();
 				cols[i + 1] = new Column(EDITOR_CHOICE + "_" + i, 
-						                 EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName(), 
+						                 EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName() + "(" + (submissionEditor.isFinished() ? "Finished": "Not finished") + ")", 
 						                 true, DECIDED_VOYAGE, COPY_LABEL, false);
 				cols[i + 1].setActions(new ColumnAction[] {new ColumnAction(REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(), "Remove")});
 			}
@@ -464,6 +464,10 @@ public class VoyagesApplier {
 		if (res.length != 0) {
 			Submission lSubmission = (Submission) res[0];
 			this.submissionId = lSubmission.getId();
+			if (this.adminBean.getAuthenticateduser().isEditor()) {
+				SubmissionEditor editor = this.getSubmissionEditor(lSubmission, this.adminBean.getAuthenticateduser());
+				this.adminBean.setFinished(new Boolean(editor.isFinished()));
+			}
 			if (lSubmission instanceof SubmissionEdit) {
 				Integer vid = ((SubmissionEdit) lSubmission).getOldVoyage().getVoyage().getVoyageid();
 				c = new Conditions();
@@ -650,6 +654,7 @@ public class VoyagesApplier {
 		if (this.adminBean.getAuthenticateduser().isEditor()) {
 			//we need to use editor's edited voyage
 			editor = getSubmissionEditor(submission, this.adminBean.getAuthenticateduser());
+			editor.setFinished(this.adminBean.getFinished().booleanValue());
 			editedVoyage = editor.getEditedVoyage();
 			if (editedVoyage != null) {
 				vNew = editedVoyage.getVoyage();

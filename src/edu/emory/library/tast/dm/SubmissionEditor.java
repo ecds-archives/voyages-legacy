@@ -33,6 +33,7 @@ public class SubmissionEditor {
 	private Submission submission;
 	private EditedVoyage editedVoyage;
 	private User user;
+	private boolean finished;
 	
 	public EditedVoyage getEditedVoyage() {
 		return editedVoyage;
@@ -69,6 +70,12 @@ public class SubmissionEditor {
 		}
 		
 		return (SubmissionEditor) ret[0];
+	}
+	public boolean isFinished() {
+		return finished;
+	}
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 	
 	

@@ -573,8 +573,14 @@ public class SlavesBean {
 				return;
 
 			if (conf.getEntry("permlinkSlaves") != null) {
-				SlavesQuery selection = (SlavesQuery) conf.getEntry("permlinkEstimates");
-				this.currentQuery = this.workingQuery = selection;
+				SlavesQuery selection = (SlavesQuery) conf.getEntry("permlinkSlaves");
+				try {
+					this.currentQuery = (SlavesQuery) selection.clone();
+					this.workingQuery = (SlavesQuery) selection.clone();
+					loadData(true, true);
+				} catch (CloneNotSupportedException e) {
+					e.printStackTrace();
+				}
 			}
 		} finally {
 			t.commit();

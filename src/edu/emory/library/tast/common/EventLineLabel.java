@@ -71,15 +71,19 @@ public class EventLineLabel
 		}
 
 		int labelsCount = (int) (maxValue / minorSpacing) + 2;
-		EventLineLabel[] labels = new EventLineLabel[labelsCount];
+		if (labelsCount >= 0) {
+			EventLineLabel[] labels = new EventLineLabel[labelsCount];
 		
-		for (int i = 0; i < labelsCount; i++)
-			labels[i] = new EventLineLabel(
+			for (int i = 0; i < labelsCount; i++)
+				labels[i] = new EventLineLabel(
 					i * minorSpacing,
 					fmt.format(new Object[] {new Double(i * minorSpacing)}),
 					i % majorSpaceEvery == 0);
+			return labels;
+		} else {
+			return new EventLineLabel[0];
+		}
 		
-		return labels;
 
 	}
 

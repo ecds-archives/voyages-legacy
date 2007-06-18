@@ -20,6 +20,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.EqualsUtil;
 import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class SlavesQuery implements Cloneable, XMLExportable
@@ -535,7 +536,8 @@ public class SlavesQuery implements Cloneable, XMLExportable
 			EqualsUtil.areEqual(this.countries, that.countries) &&
 			EqualsUtil.areEqual(this.embPorts, that.embPorts) &&
 			EqualsUtil.areEqual(this.disembSierraLeone, that.disembSierraLeone) &&
-			EqualsUtil.areEqual(this.disembHavana, that.disembHavana);
+			EqualsUtil.areEqual(this.disembHavana, that.disembHavana) &&
+			EqualsUtil.areEqual(this.voyageId, that.voyageId);
 		
 	}
 	
@@ -738,10 +740,65 @@ public class SlavesQuery implements Cloneable, XMLExportable
 	}
 
 	public void restoreFromXML(Node entry) {	
+		System.out.println("Restore...: " + entry.getNodeName());
+		Node config = XMLUtils.getChildNode(entry, "config");
+		if (config != null) {
+			Node countries = XMLUtils.getChildNode(config, "countries");
+			Node embPorts = XMLUtils.getChildNode(config, "embPorts");
+			if (countries != null) {
+				Node set = XMLUtils.getChildNode(countries, "set");
+				this.countries = (String[]) XMLUtils.restoreSetOfStrings(set).toArray(new String[] {});
+			}
+			if (embPorts != null) {
+				Node set = XMLUtils.getChildNode(embPorts, "set");
+				this.embPorts = (String[]) XMLUtils.restoreSetOfStrings(set).toArray(new String[] {});
+			}
+			this.ageFrom = XMLUtils.getXMLPropertyInteger(config, "ageFrom");
+			this.ageTo = XMLUtils.getXMLPropertyInteger(config, "ageTo");
+			this.heightFrom = XMLUtils.getXMLPropertyInteger(config, "heightFrom");
+			this.heightTo = XMLUtils.getXMLPropertyInteger(config, "heightTo");
+			this.yearFrom = XMLUtils.getXMLPropertyInteger(config, "yearFrom");
+			this.yearTo = XMLUtils.getXMLPropertyInteger(config, "yearTo");
+			this.voyageId = XMLUtils.getXMLPropertyInteger(config, "voyageId");
+			this.slaveName = XMLUtils.getXMLProperty(config, "slaveName");
+			this.shipName = XMLUtils.getXMLProperty(config, "shipName");
+			this.boys = XMLUtils.getXMLPropertyBoolean(config, "boys");
+			this.men = XMLUtils.getXMLPropertyBoolean(config, "men");
+			this.males = XMLUtils.getXMLPropertyBoolean(config, "males");
+			this.girls = XMLUtils.getXMLPropertyBoolean(config, "girls");
+			this.women = XMLUtils.getXMLPropertyBoolean(config, "women");
+			this.females = XMLUtils.getXMLPropertyBoolean(config, "females");
+			this.disembHavana = XMLUtils.getXMLPropertyBoolean(config, "disembHavana");
+			this.disembSierraLeone = XMLUtils.getXMLPropertyBoolean(config, "disembSierraLeone");
+		}
 	}
 
 	public String toXML() {
-		return null;
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<config ");
+		XMLUtils.appendAttribute(buffer, "ageFrom", ageFrom);
+		XMLUtils.appendAttribute(buffer, "ageTo", ageTo);
+		XMLUtils.appendAttribute(buffer, "heightFrom", heightFrom);
+		XMLUtils.appendAttribute(buffer, "heightTo", heightTo);
+		XMLUtils.appendAttribute(buffer, "yearFrom", yearFrom);
+		XMLUtils.appendAttribute(buffer, "yearTo", yearTo);
+		XMLUtils.appendAttribute(buffer, "voyageId", voyageId);
+		XMLUtils.appendAttribute(buffer, "slaveName", slaveName);
+		XMLUtils.appendAttribute(buffer, "shipName", shipName);
+		XMLUtils.appendAttribute(buffer, "boys", boys);
+		XMLUtils.appendAttribute(buffer, "men", men);
+		XMLUtils.appendAttribute(buffer, "males", males);
+		XMLUtils.appendAttribute(buffer, "girls", girls);
+		XMLUtils.appendAttribute(buffer, "women", women);
+		XMLUtils.appendAttribute(buffer, "females", females);
+		XMLUtils.appendAttribute(buffer, "disembHavana", disembHavana);
+		XMLUtils.appendAttribute(buffer, "disembSierraLeone", disembSierraLeone);
+		buffer.append(">\n<countries>\n");
+		buffer.append("   ").append(XMLUtils.encodeArray(countries)).append("\n</countries>\n");
+		buffer.append("\n<embPorts>\n");
+		buffer.append("   ").append(XMLUtils.encodeArray(embPorts)).append("\n</embPorts>\n");
+		buffer.append("</config>");
+		return buffer.toString();
 	}
 	
 }

@@ -94,6 +94,7 @@ public class Configuration {
 		System.out.println("set entries");
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			System.out.println("XML is: " + entries);
 			Document document = builder.parse(new ReaderInputStream(new StringReader(entries)));
 			NodeList nodes = document.getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {

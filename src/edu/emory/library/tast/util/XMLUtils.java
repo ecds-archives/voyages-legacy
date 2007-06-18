@@ -78,6 +78,9 @@ public class XMLUtils {
 			throw new RuntimeException("Only set tag is supported!");
 		}
 		String values = getXMLProperty(node, "values");
+		if (StringUtils.isNullOrEmpty(values)) {
+			return new HashSet();
+		}
 		String[] vals = values.split(",");
 		Set out = new HashSet();
 		for (int i = 0; i < vals.length; i++) {
@@ -95,6 +98,7 @@ public class XMLUtils {
 			}
 			buffer.append(array[i]);
 		}
+		buffer.append("\"/>");
 		return buffer.toString();
 	}
 	
@@ -113,5 +117,21 @@ public class XMLUtils {
 			}
 		}
 		return null;
+	}
+
+	public static Integer getXMLPropertyInteger(Node node, String propertyName) {
+		String intStr = getXMLProperty(node, propertyName);
+		if (StringUtils.isNullOrEmpty(intStr)) {
+			return null;
+		}
+		return new Integer(intStr);
+	}
+	
+	public static Boolean getXMLPropertyBoolean(Node node, String propertyName) {
+		String intStr = getXMLProperty(node, propertyName);
+		if (StringUtils.isNullOrEmpty(intStr)) {
+			return null;
+		}
+		return new Boolean(intStr);
 	}
 }

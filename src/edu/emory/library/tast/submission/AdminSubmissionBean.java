@@ -132,6 +132,11 @@ public class AdminSubmissionBean {
 	 * ID of source that is presented in details
 	 */
 	private Long sourceId;
+	
+	/**
+	 * Indication of final decision about submission by editor
+	 */
+	private boolean finished = false;
 
 	/**
 	 * Constructor.
@@ -329,12 +334,13 @@ public class AdminSubmissionBean {
 				if (!this.authenticateduser.isEditor()) {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), "New voyage - ID not yet assigned",
-						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" : "No",
+						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), "New voyage - ID not yet assigned",
-						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", lastCol }));
+						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", 
+						this.getSubmissionEditor(submission, this.authenticateduser).isFinished() ? "Finished" : "Not finished", lastCol }));
 				}
 			}
 		}
@@ -359,13 +365,14 @@ public class AdminSubmissionBean {
 					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()),
 						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
-						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" : "No",
+						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()),
 						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
-						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", lastCol }));
+						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", 
+						this.getSubmissionEditor(submission, this.authenticateduser).isFinished() ? "Finished" : "Not finished", lastCol }));
 				}
 			}
 		}
@@ -400,12 +407,13 @@ public class AdminSubmissionBean {
 				if (!this.authenticateduser.isEditor()) {
 					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), involvedStr,
-						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" : "No",
+						this.getEditors(submission), this.revievedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), involvedStr,
-						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", lastCol }));
+						this.revievedByEditor(submission, this.authenticateduser) ? "Yes" : "No", 
+						this.getSubmissionEditor(submission, this.authenticateduser).isFinished() ? "Finished" : "Not finished", lastCol }));
 				}
 			}
 		}
@@ -413,6 +421,25 @@ public class AdminSubmissionBean {
 		session.close();
 
 		return (GridRow[]) l.toArray(new GridRow[] {});
+	}
+
+	private String infoString(Submission submission) {
+		
+		int all = 0;
+		int done = 0;
+		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter.hasNext();) {
+			SubmissionEditor element = (SubmissionEditor) iter.next();
+			all++;
+			if (element.isFinished()) {
+				done++;
+			}
+		}
+		
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(" (");
+		buffer.append("Review finished by ").append(done).append(" out of ").append(all).append(" reviewers") ;
+		buffer.append(")");
+		return buffer.toString();
 	}
 
 	private boolean revievedByEditor(Submission submission, User user) {
@@ -423,6 +450,16 @@ public class AdminSubmissionBean {
 			}
 		}
 		return false;
+	}
+	
+	private SubmissionEditor getSubmissionEditor(Submission submission, User user) {
+		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter.hasNext();) {
+			SubmissionEditor element = (SubmissionEditor) iter.next();
+			if (element.getUser().getId().equals(user.getId())) {
+				return element;
+			}
+		}
+		return null;
 	}
 
 	private String getEditors(Submission submission) {
@@ -544,7 +581,8 @@ public class AdminSubmissionBean {
 					new GridColumn("User"), 
 					new GridColumn("Date"),
 					new GridColumn("Involved voyages ID"),
-					new GridColumn("Reviewed"), 
+					new GridColumn("Reviewed"),
+					new GridColumn("Review finished"),
 					new GridColumn("Status"),
 				};
 		} else {
@@ -567,11 +605,6 @@ public class AdminSubmissionBean {
 	
 	public Boolean getIsChiefEditor() {
 		return new Boolean(this.authenticateduser.isAdmin() || this.authenticateduser.isChiefEditor());
-	}
-
-	public boolean isDeleteMergeValid() {
-		throw new RuntimeException("?????????????????????????????");
-		//return this.submissionId != null;
 	}
 
 	public boolean isEditValid() {
@@ -831,6 +864,14 @@ public class AdminSubmissionBean {
 	
 	public void columnAction(ColumnActionEvent event) {
 		this.applier.columnAction(event);
+	}
+
+	public Boolean getFinished() {
+		return new Boolean(finished);
+	}
+
+	public void setFinished(Boolean finished) {
+		this.finished = finished.booleanValue();
 	}
 	
 }

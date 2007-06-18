@@ -77,9 +77,6 @@ public class SubmissionPhaseListerner implements PhaseListener
 			if (adminBean.getAuthenticateduser() == null) {
 				JsfUtils.navigateTo("login");
 			}
-			if (!adminBean.isDeleteMergeValid()) {
-				JsfUtils.navigateTo("main-menu");
-			}
 		}
 		else if (viewId.equals("/submission/submission-admin-approve-delete-voyage.jsp"))
 		{
