@@ -17,7 +17,7 @@
 <f:view>
 <h:form id="main">
 
-	<h1>Slave voyages - Administration panel (<h:commandLink value="logout" action="#{AdminSubmissionBean.logout}"/>)</h1>
+	<h1>Slave voyages - <h:outputText value="Administration" rendered = "#{AdminSubmissionBean.isAdmin}"/><h:outputText value="Reviewer" rendered = "#{!AdminSubmissionBean.isAdmin}"/> panel (<h:commandLink value="logout" action="#{AdminSubmissionBean.logout}"/>)</h1>
 	
 	<br>
 	

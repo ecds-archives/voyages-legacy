@@ -64,3 +64,8 @@ div.grid-editor-error {
 	font-weight: bold;
 	color: red;
 }
+
+div.row-description {
+	font-size: 7pt;
+	font-weight: normal;
+}

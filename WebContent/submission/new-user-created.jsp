@@ -20,10 +20,7 @@
 	
 	<div style="font-weight: bold; font-size: 12pt">User created</div>
 	<div style="width: 400px;">
-	New user has been created. Your account is currently inactive. After we 
-	review your request and the account is activated, you will be able to login using 
-	<a href="submission-login.faces">login</a> page. We will notify you by e-mail when activation
-	us completed.
+	Thank you for requesting an account. We will notify you be e-mail when your account has been activated. 
 	</div>
 	</div>
 

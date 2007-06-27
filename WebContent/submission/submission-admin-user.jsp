@@ -52,11 +52,11 @@
 				<td><h:outputText value="#{SubmissionUsersBean.checkedDate}"/></td>
 			</tr>
 			<tr>
-				<td>Editor:</td>
+				<td>Reviewer:</td>
 				<td><h:selectBooleanCheckbox value="#{SubmissionUsersBean.checkedEditor}"/></td>
 			</tr>
 			<tr>
-				<td>Chief editor:</td>
+				<td>Chief editor (admin):</td>
 				<td><h:selectBooleanCheckbox value="#{SubmissionUsersBean.checkedChiefEditor}"/></td>
 			</tr>
 			<tr>

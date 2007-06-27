@@ -19,9 +19,10 @@
 
 	<table cellpadding="0" cellspacing="0">
 		<tr>
-			<td class="step-indicator-left">Type of submission</td>
-			<td class="step-indicator-middle">Submission content</td>
-			<td class="step-indicator-active-middle">Sources</td>
+			<td class="step-indicator-left">Type of contribution</td>
+			<td class="step-indicator-middle">Your voyage information</td>
+			<td class="step-indicator-active-middle">Your sources</td>
+			<td class="step-indicator-middle">Verify contribution</td>
 			<td class="step-indicator-right">Finish</td>
 		</tr>
 	</table>
@@ -34,45 +35,45 @@
 	<h:panelGroup rendered="#{SourcesBean.newSourceType==-1}">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
-			<h:commandButton style="width: 180px;" value="Add primary source" action="#{SourcesBean.primarySource}"/>
+			<h:commandButton style="width: 180px;" value="Primary source" action="#{SourcesBean.primarySource}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
-			<h:commandButton style="width: 180px;" value="Add article" action="#{SourcesBean.articleSource}"/>
+			<h:commandButton style="width: 180px;" value="Article" action="#{SourcesBean.articleSource}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">	
-			<h:commandButton style="width: 180px;" value="Add book" action="#{SourcesBean.bookSource}"/>
+			<h:commandButton style="width: 180px;" value="Book" action="#{SourcesBean.bookSource}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
-			<h:commandButton style="width: 180px;" value="Add other source" action="#{SourcesBean.otherSource}"/>
+			<h:commandButton style="width: 180px;" value="Add other type of source" action="#{SourcesBean.otherSource}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	</h:panelGroup>
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==1}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="#{SourcesBean.modeLabel} book source" style="font-weight: bold;"/>
+				<h:outputText value="Book source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Author(s)"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newBook.authors}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newBook.authors}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Book title"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newBook.title}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newBook.title}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Publisher"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newBook.publisher}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newBook.publisher}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Place of publication"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newBook.placeOfPublication}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newBook.placeOfPublication}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Year"/></t:htmlTag>
@@ -87,7 +88,7 @@
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Other information"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="#{SourcesBean.newBook.otherInfo}" /></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newBook.otherInfo}" /></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr" rendered="#{SourcesBean.errorMessage != null}">
 						<t:htmlTag value="td"></t:htmlTag>
@@ -107,19 +108,19 @@
 			</t:htmlTag>
 			
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==2}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="#{SourcesBean.modeLabel} article source" style="font-weight: bold;"/>
+				<h:outputText value="Article source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Author(s)"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newArticle.authors}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newArticle.authors}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Article title"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newArticle.title}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newArticle.title}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Journal"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newArticle.journal}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newArticle.journal}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Volume number"/></t:htmlTag>
@@ -138,7 +139,7 @@
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Other information"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="#{SourcesBean.newArticle.otherInfo}" /></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newArticle.otherInfo}" /></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr" rendered="#{SourcesBean.errorMessage != null}">
 						<t:htmlTag value="td"></t:htmlTag>
@@ -158,15 +159,15 @@
 			</t:htmlTag>
 			
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==3}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="#{SourcesBean.modeLabel} other source" style="font-weight: bold;"/>
+				<h:outputText value="Other source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Title"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newOther.title}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newOther.title}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Location"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newOther.location}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newOther.location}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Page"/></t:htmlTag>
@@ -174,7 +175,7 @@
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Information about source"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="#{SourcesBean.newOther.note}" /></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newOther.note}" /></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"></t:htmlTag>
@@ -188,31 +189,31 @@
 			</t:htmlTag>
 			
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==4}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
-				<h:outputText value="#{SourcesBean.modeLabel} primary source" style="font-weight: bold;"/>
+				<h:outputText value="Primary source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
 				<t:htmlTag value="tr">
-						<t:htmlTag value="td"><h:outputText value="Name of archive"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.name}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:outputText value="Name of library of archive"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newPrimary.name}"/></t:htmlTag>
 				</t:htmlTag>
 				<t:htmlTag value="tr">
-						<t:htmlTag value="td"><h:outputText value="Location"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.location}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:outputText value="Location of library/archive"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newPrimary.location}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td"><h:outputText value="Series number or letter"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 250px;" value="#{SourcesBean.newPrimary.series}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:outputText value="Series or collection"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newPrimary.series}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td"><h:outputText value="Volume or box number"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 30px;" value="#{SourcesBean.newPrimary.volume}"/></t:htmlTag>
+						<t:htmlTag value="td"><h:outputText value="Volume or box or bundle"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newPrimary.volume}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td"  style="width: 150px;"><h:outputText value="Document detail (page or folio number, and/or date of document)"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputText style="width: 80px;" value="#{SourcesBean.newPrimary.details}"/></t:htmlTag>
+						<t:htmlTag value="td"  style="width: 350px;"><h:outputText value="Document detail (page or folio number, and/or date of document)"/></t:htmlTag>
+						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newPrimary.details}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Information about source"/></t:htmlTag>
-						<t:htmlTag value="td"><h:inputTextarea style="width: 250px;" value="#{SourcesBean.newPrimary.note}" /></t:htmlTag>
+						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newPrimary.note}" /></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"></t:htmlTag>
@@ -231,7 +232,7 @@
 		<f:verbatim>
 		<tr>
 			<td>
-				<h2>Submitted sources</h2>
+				<h2>Contributed sources</h2>
 				</f:verbatim>
 				<s:grid id="voyges" 
 					columns="#{SourcesBean.columns}"

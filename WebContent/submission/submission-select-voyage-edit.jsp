@@ -14,7 +14,7 @@
 <f:view>
 <h:form id="main">
 
-	<h1>Submission - select voyage for edition</h1>
+	<h1>Select voyage for editing</h1>
 	
 	<br>
 	

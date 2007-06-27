@@ -411,6 +411,7 @@ public class ImagesBean
 			File file = null;
 			String fileName = null;
 			String imageDir = AppConfig.getConfiguration().getString(AppConfig.IMAGES_DIRECTORY);
+			//String imageDir = "C:";
 			do
 			{
 				fileName = new UidGenerator().generate() + "." + extension;
@@ -421,6 +422,7 @@ public class ImagesBean
 			// copy
 			FileOutputStream imgFileStream = new FileOutputStream(file);
 			int size = IOUtils.copy(uploadedImage.getInputStream(), imgFileStream);
+			imgFileStream.flush();
 			imgFileStream.close();
 			
 			// get image info
@@ -484,7 +486,17 @@ public class ImagesBean
 			transaction = sess.beginTransaction();
 			
 			// load image
-			Image image = Image.loadById(Integer.parseInt(selectedImageId), sess);
+			Image image = null;
+			if (selectedImageId != null) {
+				image = Image.loadById(Integer.parseInt(selectedImageId), sess);
+			} else {
+				image = new Image();
+				image.setTitle(imageTitle);
+				image.setSource(imageSource);
+				image.setCreator(imageCreator);
+				image.setReferences(imageReferences);
+				image.setEmoryLocation(imageEmoryLocation);
+			}
 			
 			// we will use it often
 			Configuration appConf = AppConfig.getConfiguration();
@@ -495,7 +507,7 @@ public class ImagesBean
 			image.setSize(imageSize);
 			image.setFileName(imageFileName);
 			image.setMimeType(imageMimeType);
-
+			
 			// title
 			String titleLocal = checkTextField(
 					image.getTitle(), "title",

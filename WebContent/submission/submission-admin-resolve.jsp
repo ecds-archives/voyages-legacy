@@ -18,7 +18,7 @@
 <f:view>
 <h:form id="main">
 
-	<h1>Request details</h1>
+	<h2>1. Request details</h2>
 
 	<s:gridEditor
 		rows="#{AdminSubmissionBean.rows}"
@@ -47,7 +47,7 @@
 		<h:commandButton value="Close" action="#{AdminSubmissionBean.closeDetails}"/>
 	</t:htmlTag>
 	
-	<h2>Submitted sources</h2>
+	<h2>2. Submitted sources</h2>
 	
 	<s:grid id="sources" 
 			columns="#{AdminSubmissionBean.sourcesColumns}"
@@ -56,7 +56,7 @@
 	<br>
 	<br>
 
-	<h:commandButton value="Add editor" 
+	<h:commandButton value="Add reviewer" 
 	                 rendered="#{AdminSubmissionBean.isChiefEditor && !AdminSubmissionBean.addingEditor}"
 					 action = "#{AdminSubmissionBean.addEditor}"/>
 	<t:htmlTag value="div" 
@@ -65,13 +65,27 @@
 		<h:selectOneMenu value="#{AdminSubmissionBean.newEditorUser}">
 			<f:selectItems value="#{SubmissionUsersBean.editorUsers}"/>
 		</h:selectOneMenu>
-		<h:commandButton value="Add editor" action="#{AdminSubmissionBean.applyAddEditor}"/>
+		<h:commandButton value="Add reviewer" action="#{AdminSubmissionBean.applyAddEditor}"/>
 		<h:commandButton value="Cancel" action="#{AdminSubmissionBean.cancelAddEditor}"/>
 	</t:htmlTag>
 	
 	<br>
 	<br>
-	
+	<t:htmlTag value="div" rendered="#{!AdminSubmissionBean.isChiefEditor}">
+		<f:verbatim><h2>3. Request status</h2>
+		<table>
+			<tr>
+				<td></f:verbatim>
+					<h:selectBooleanCheckbox value="#{AdminSubmissionBean.finished}"/><f:verbatim>
+				</td>
+				<td></f:verbatim>
+					<h:outputText value="I am done with this submission and it does not require my further attention"/><f:verbatim>
+				</td>
+			</tr>
+		</table></f:verbatim>
+	</t:htmlTag>
+	<br>
+	<br>
 	<h:commandButton value="< Back" action="back"/>
 	<h:commandButton value="Save" action="#{AdminSubmissionBean.save}" rendered="#{AdminSubmissionBean.rejectAvailable}"/>
 	<h:commandButton value="Apply changes" action="#{AdminSubmissionBean.submit}" rendered="#{AdminSubmissionBean.isAdmin}"/>

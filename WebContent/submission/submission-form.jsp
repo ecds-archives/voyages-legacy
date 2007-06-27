@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Submission - step 1</title>
+	<title>Edit voyage information</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
@@ -19,14 +19,15 @@
 
 	<table cellpadding="0" cellspacing="0">
 		<tr>
-			<td class="step-indicator-left">Type of submission</td>
-			<td class="step-indicator-active-middle">Submission content</td>
-			<td class="step-indicator-middle">Sources</td>
+			<td class="step-indicator-left">Type of contribution</td>
+			<td class="step-indicator-active-middle">Your voyage information</td>
+			<td class="step-indicator-middle">Your sources</td>
+			<td class="step-indicator-middle">Summary</td>
 			<td class="step-indicator-right">Finish</td>
 		</tr>
 	</table>
 
-	<h1>Submission content</h1>
+	<h1>Edit voyage information</h1>
 	
 	<br>
 	

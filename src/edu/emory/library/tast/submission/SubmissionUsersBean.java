@@ -187,7 +187,7 @@ public class SubmissionUsersBean {
 				
 				new GridColumn("User active"),
 				
-				new GridColumn("Editor"),
+				new GridColumn("Reviewer"),
 				
 				new GridColumn("Chief editor"),
 				
@@ -202,7 +202,7 @@ public class SubmissionUsersBean {
 
 	public GridRow[] getUserRows() {
 		Conditions c = new Conditions();
-		c.addCondition(User.getAttribute("admin"), new Boolean(false), Conditions.OP_EQUALS);
+		//c.addCondition(User.getAttribute("admin"), new Boolean(false), Conditions.OP_EQUALS);
 		if ("2".equals(this.accountType)) {
 			c.addCondition(User.getAttribute("enabled"), new Boolean(true), Conditions.OP_EQUALS);
 		} else if ("3".equals(this.accountType)) {
@@ -366,6 +366,7 @@ public class SubmissionUsersBean {
 		boolean chiefEditor = this.checkedChiefEditor.booleanValue();
 		if (chiefEditor) {
 			user.setChiefEditor(chiefEditor);
+			user.setAdmin(chiefEditor);
 			user.setEditor(false);
 		}
 		user.setUserName(this.checkedUserName);

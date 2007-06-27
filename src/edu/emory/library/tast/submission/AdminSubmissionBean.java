@@ -802,10 +802,10 @@ public class AdminSubmissionBean {
 			if (source instanceof SubmissionSourcePrimary) {
 				SubmissionSourcePrimary primary = (SubmissionSourcePrimary)source;
 				dataItems.add(new SourceData("Source type", "Primary source"));
-				dataItems.add(new SourceData("Name", primary.getName()));
-				dataItems.add(new SourceData("Location", primary.getLocation()));
-				dataItems.add(new SourceData("Series number or letter", primary.getSeries()));
-				dataItems.add(new SourceData("Volume or box number", primary.getVolume()));
+				dataItems.add(new SourceData("Name of  library or archive", primary.getName()));
+				dataItems.add(new SourceData("Location of library/archive", primary.getLocation()));
+				dataItems.add(new SourceData("Series or collection", primary.getSeries()));
+				dataItems.add(new SourceData("Volume or box or bundle", primary.getVolume()));
 				dataItems.add(new SourceData("Document details (page or folio, and/or date of document)", primary.getDetails()));
 				dataItems.add(new SourceData("Additional information", primary.getNote()));
 			} else if (source instanceof SubmissionSourcePaper) {

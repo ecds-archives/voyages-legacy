@@ -7,14 +7,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Submission - step 1</title>
+	<title>Select voyages</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 </head>
 <body style="margin: 15px;">
 <f:view>
 <h:form id="main">
 
-	<h1>Submission - selects voyage for merging</h1>
+	<h1>Select voyages</h1>
 	
 	<br>
 	
@@ -64,14 +64,14 @@
 	</t:htmlTag>
 	
 	<div style="width: 400px;">
-		Add more voyages for merge.
-		Please provide voyage ID and press Lookup.
+		Please provide voyage ID and click Lookup button.
 	</div>
 	
-	<div style="border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; margin-top: 5px; padding-bottom: 10px;">
+	
+	<t:div rendered="#{SubmissionBean.lessThanFive}" style="border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; margin-top: 5px; padding-bottom: 10px;">
 		<h:inputText value="#{SubmissionBean.lookupVoyageId}" />
 		<h:commandButton value="Lookup ..." action="#{SubmissionBean.lookupVoyage}" />
-	</div>
+	</t:div>
 
 	<t:htmlTag value="div" rendered="#{SubmissionBean.showLookupFailed}" style="border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; padding-bottom: 10px;">
 		<h:outputText value="No voyage with this Voyage ID found. Please try again." />

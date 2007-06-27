@@ -9,6 +9,7 @@
 	<title>Image</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-images-expanded.css" rel="stylesheet" type="text/css">
+	<link href="../styles/images-commons.css" rel="stylesheet" type="text/css">
 </head>
 <body id="image-expanded">
 <f:view>

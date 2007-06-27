@@ -206,6 +206,10 @@ public class SubmissionBean
 		return null;
 	}
 	
+	public Boolean getLessThanFive() {
+		return new Boolean(this.selectedVoyagesForMerge.size() < 5);
+	}
+	
 	public String mergeVoyages()
 	{
 		if (selectedVoyagesForMerge == null || selectedVoyagesForMerge.size() < 2)
@@ -435,8 +439,8 @@ public class SubmissionBean
 			Object[] voyageInfoDb = (Object[]) voyages.get(0);
 			lookedUpVoyage = new SelectedVoyageInfo(
 					lookupVoyageId.intValue(),
-					(String) voyageInfoDb[0],
 					(String) voyageInfoDb[1],
+					(String) voyageInfoDb[0],
 					voyageInfoDb[2] != null ? voyageInfoDb[2].toString() : "not known");
 		}
 		
@@ -515,13 +519,15 @@ public class SubmissionBean
 			
 			Column columns[] = new Column[selectedVoyagesForMerge.size() + 1];
 			
-			for (int i = 0; i < selectedVoyagesForMerge.size(); i++)
+			for (int i = 0; i < selectedVoyagesForMerge.size(); i++) {
+				SelectedVoyageInfo info = (SelectedVoyageInfo) selectedVoyagesForMerge.get(i);
 				columns[i] = new Column(
 						MERGED_VOYAGE_PREFIX + i,
-						ORIGINAL_VOYAGE_LABEL,
+						"VoyageID " + String.valueOf(info.getVoyageId()),
 						true,
 						CHANGED_VOYAGE,
 						"Copy >");
+			}
 			
 			columns[selectedVoyagesForMerge.size()] = new Column(
 					CHANGED_VOYAGE,
@@ -550,7 +556,7 @@ public class SubmissionBean
 					attrs[i].getType(),
 					attrs[i].getName(),
 					attrs[i].getUserLabel(),
-					null,
+					attrs[i].getComment(),
 					attrs[i].getGroupName());
 			
 			row.setNoteEnabled(true);

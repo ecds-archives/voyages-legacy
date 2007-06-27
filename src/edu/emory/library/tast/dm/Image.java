@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -68,11 +69,11 @@ public class Image implements Comparable
 	private int imageStatus = 0;
 	private int authorizationStatus = 0;
 	private boolean readyToGo = false;
-	private Set voyageIds;
+	private Set voyageIds = new HashSet();
 	private ImageCategory category;
 
-	private Set regions; 
-	private Set ports;
+	private Set regions = new HashSet(); 
+	private Set ports = new HashSet();
 	
 	public int getDate()
 	{

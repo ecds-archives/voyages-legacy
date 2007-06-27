@@ -137,9 +137,9 @@ public class SubmissionDictionaries {
 	
 	
 	private static ListItem[] fillIn(Session sessios, Class clazz) {
-		List dics = Dictionary.loadAll(clazz, sessios);
+		List dics = Dictionary.loadAll(clazz, sessios, "name");
 		ListItem[] items = new ListItem[dics.size() + 1];
-		items[0] = new ListItem("-1", "Unknown");
+		items[0] = new ListItem("-1", "Not selected");
 		int i = 1;
 		for (Iterator iter = dics.iterator(); iter.hasNext();) {
 			Dictionary element = (Dictionary) iter.next();

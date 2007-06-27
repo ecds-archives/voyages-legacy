@@ -455,7 +455,7 @@ public class SourcesBean {
 	
 	public String getApplyLabel() { 
 		if (!this.editMode) {
-			return "Add source";
+			return "Enter";
 		} else {
 			return "Apply changes";
 		} 

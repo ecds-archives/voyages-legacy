@@ -810,6 +810,12 @@ public class GridEditorComponent extends UIComponentBase
 		
 					writer.startElement("th", this);
 					writer.write(row.getLabel());
+					if (row.getDescription() != null) {
+						writer.startElement("div", this);
+						writer.writeAttribute("class", "row-description", null);
+						writer.write(row.getDescription());
+						writer.endElement("div");
+					}
 					writer.endElement("th");
 
 					Value compareToValue = null;
