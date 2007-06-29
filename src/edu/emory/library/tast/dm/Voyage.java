@@ -304,6 +304,8 @@ public class Voyage extends AbstractDescriptiveObject {
 				NumericAttribute.TYPE_INTEGER, "boy6"));
 		attributes.add(new NumericAttribute("girl6", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "girl6"));
+		attributes.add(new NumericAttribute("adult6", "Voyage",
+				NumericAttribute.TYPE_INTEGER, "adult6"));
 		attributes.add(new NumericAttribute("crew2", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "crew2"));
 		attributes.add(new NumericAttribute("infantm3", "Voyage",
@@ -1573,6 +1575,10 @@ public class Voyage extends AbstractDescriptiveObject {
 	public Integer getAdult1() {
 		return (Integer) this.values.get("adult1");
 	}
+	
+	public Integer getAdult6() {
+		return (Integer) this.values.get("adult6");
+	}
 
 	public Integer getChild1() {
 		return (Integer) this.values.get("child1");
@@ -1908,6 +1914,10 @@ public class Voyage extends AbstractDescriptiveObject {
 
 	public void setAdult2(Integer val) {
 		this.values.put("adult2", val);
+	}
+	
+	public void setAdult6(Integer val) {
+		this.values.put("adult6", val);
 	}
 
 	public void setFemale2(Integer val) {

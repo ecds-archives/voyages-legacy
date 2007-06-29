@@ -50,6 +50,7 @@ public class SubmissionDictionaries {
 	public static final String BOOLEAN = "boolean";
 	
 	public static Map fieldTypes = new HashMap();
+	public static Map simpleFieldTypes = new HashMap();
 	public static ListItem[] areas;	
 	public static ListItem[] ports;
 	public static ListItem[] rigs;
@@ -133,6 +134,14 @@ public class SubmissionDictionaries {
 		
 		t.commit();
 		session.close();
+		
+		
+		simpleFieldTypes.put(TextboxAdapter.TYPE, new TextboxFieldType(TextboxAdapter.TYPE));
+		simpleFieldTypes.put(TextboxIntegerAdapter.TYPE, new TextboxIntegerFieldType(TextboxIntegerAdapter.TYPE));
+		simpleFieldTypes.put(TextboxLongAdapter.TYPE, new TextboxLongFieldType(TextboxLongAdapter.TYPE));
+		simpleFieldTypes.put(TextboxFloatAdapter.TYPE, new TextboxFloatFieldType(TextboxFloatAdapter.TYPE));
+		simpleFieldTypes.put(DateAdapter.TYPE, new DateFieldType(DateAdapter.TYPE));
+		simpleFieldTypes.put(TextareaAdapter.TYPE, new TextareaFieldType(TextareaAdapter.TYPE, 10));
 	}
 	
 	

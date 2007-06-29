@@ -1,6 +1,9 @@
 package edu.emory.library.tast.common.grideditor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class Values
@@ -43,6 +46,15 @@ public class Values
 		
 		columnValues.put(rowName, value);
 
+	}
+
+	public List getValues() {
+		List vals = new ArrayList();
+		for (Iterator iter = columns.values().iterator(); iter.hasNext();) {
+			Map element = (Map) iter.next();
+			vals.addAll(element.values());
+		}
+		return vals;
 	}
 
 }

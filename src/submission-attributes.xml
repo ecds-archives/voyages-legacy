@@ -446,263 +446,268 @@
 			<attribute name="slamimp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="adult1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults leaving first port in Africa">
+	<submission-attributes name="adult1" key="e1,adult" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults leaving first port in Africa">
 		<attributes>
 			<attribute name="adult1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="child1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Children leaving first port in Africa">
+	<submission-attributes name="child1" key="e1,child" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Children leaving first port in Africa">
 		<attributes>
 			<attribute name="child1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="female1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Females leaving first port in Africa">
+	<submission-attributes name="female1" key="e1,female" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Females leaving first port in Africa">
 		<attributes>
 			<attribute name="female1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Males leaving first port in Africa">
+	<submission-attributes name="male1" key="e1,male" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Males leaving first port in Africa">
 		<attributes>
 			<attribute name="male1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="men1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Men leaving first port in Africa">
+	<submission-attributes name="men1" key="e1,men" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Men leaving first port in Africa">
 		<attributes>
 			<attribute name="men1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="women1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Women leaving first port in Africa">
+	<submission-attributes name="women1" key="e1,women" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Women leaving first port in Africa">
 		<attributes>
 			<attribute name="women1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boy1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Boys leaving first port in Africa">
+	<submission-attributes name="boy1" key="e1,boy" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Boys leaving first port in Africa">
 		<attributes>
 			<attribute name="boy1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girl1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Girls leaving first port in Africa">
+	<submission-attributes name="girl1" key="e1,girl" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Girls leaving first port in Africa">
 		<attributes>
 			<attribute name="girl1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="female2" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Females died on Middle Passage">
+	<submission-attributes name="female2" key="died,female" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Females died on Middle Passage">
 		<attributes>
 			<attribute name="female2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male2" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Males died on Middle Passage">
+	<submission-attributes name="male2" key="died,male" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Males died on Middle Passage">
 		<attributes>
 			<attribute name="male2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="child2" group="Other" editable="Y" type="integer" userLabel="Children died on middle passage">
+	<submission-attributes name="child2" key="died,child" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Children died on Middle Passage">
 		<attributes>
 			<attribute name="child2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="men2" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Men died on Middle Passage">
+	<submission-attributes name="men2" key="died,men" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Men died on Middle Passage">
 		<attributes>
 			<attribute name="men2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="women2" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Women died on Middle Passage">
+	<submission-attributes name="women2" key="died,women" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Women died on Middle Passage">
 		<attributes>
 			<attribute name="women2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boy2" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Boys died on Middle Passage">
+	<submission-attributes name="boy2" key="died,boy" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Boys died on Middle Passage">
 		<attributes>
 			<attribute name="boy2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girl2" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Girls died on Middle Passage">
+	<submission-attributes name="girl2" key="died,girl" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Girls died on Middle Passage">
 		<attributes>
 			<attribute name="girl2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="adult3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults at first disembarkation">
+	<submission-attributes name="adult3" key="d1,adult" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults at first disembarkation">
 		<attributes>
 			<attribute name="adult3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="men3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Men at first disembarkation">
+	<submission-attributes name="men3" key="d1,men" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Men at first disembarkation">
 		<attributes>
 			<attribute name="men3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="women3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Women at first disembarkation">
+	<submission-attributes name="women3" key="d1,women" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Women at first disembarkation">
 		<attributes>
 			<attribute name="women3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boy3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Boys at first disembarkation">
+	<submission-attributes name="boy3" key="d1,boy" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Boys at first disembarkation">
 		<attributes>
 			<attribute name="boy3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girl3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Girls at first disembarkation">
+	<submission-attributes name="girl3" key="d1,girl" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Girls at first disembarkation">
 		<attributes>
 			<attribute name="girl3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Males at first disembarkation">
+	<submission-attributes name="male3" key="d1,male" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Males at first disembarkation">
 		<attributes>
 			<attribute name="male3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="child3" group="Other" editable="Y" type="integer" userLabel="Children at first disembarkation">
+	<submission-attributes name="child3" key="d1,child" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Children at first disembarkation">
 		<attributes>
 			<attribute name="child3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="female3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Females at first disembarkation">
+	<submission-attributes name="female3" key="d1,female" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Females at first disembarkation">
 		<attributes>
 			<attribute name="female3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="female4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Females embarked at second port in Africa">
+	<submission-attributes name="female4" key="e2,female" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Females embarked at second port in Africa">
 		<attributes>
 			<attribute name="female4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Males embarked at second port in Africa">
+	<submission-attributes name="male4" key="e2,male" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Males embarked at second port in Africa">
 		<attributes>
 			<attribute name="male4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="child4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Children embarked at second port in Africa">
+	<submission-attributes name="child4" key="e2,child" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Children embarked at second port in Africa">
 		<attributes>
 			<attribute name="child4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="men4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Men embarked at second port in Africa">
+	<submission-attributes name="men4" key="e2,men" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Men embarked at second port in Africa">
 		<attributes>
 			<attribute name="men4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="women4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Women embarked at second port in Africa">
+	<submission-attributes name="women4" key="e2,women" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Women embarked at second port in Africa">
 		<attributes>
 			<attribute name="women4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boy4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Boys embarked at second port in Africa">
+	<submission-attributes name="boy4" key="e2,boy" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Boys embarked at second port in Africa">
 		<attributes>
 			<attribute name="boy4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girl4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls embarked at second port in Africa">
+	<submission-attributes name="girl4" key="e2,girl" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls embarked at second port in Africa">
 		<attributes>
 			<attribute name="girl4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="female6" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Females at second disembarkation">
+	<submission-attributes name="female6" key="d2,female" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Females at second disembarkation">
 		<attributes>
 			<attribute name="female6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male6" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Males at second disembarkation">
+	<submission-attributes name="male6" key="d2,male" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Males at second disembarkation">
 		<attributes>
 			<attribute name="male6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="child6" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Children at second disembarkation">
+	<submission-attributes name="child6" key="d2,child" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Children at second disembarkation">
 		<attributes>
 			<attribute name="child6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="men6" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Men at second disembarkation">
+	<submission-attributes name="men6" key="d2,men" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Men at second disembarkation">
 		<attributes>
 			<attribute name="men6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="women6" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Women at second disembarkation">
+	<submission-attributes name="women6" key="d2,women" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Women at second disembarkation">
 		<attributes>
 			<attribute name="women6"/>
 		</attributes>
 	</submission-attributes>
 	
-	<submission-attributes name="boy6" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Boys at second disembarkation">
+	<submission-attributes name="boy6" key="d2,boy" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Boys at second disembarkation">
 		<attributes>
 			<attribute name="boy6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girl6" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls at second disembarkation">
+	<submission-attributes name="girl6" key="d2,girl" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls at second disembarkation">
 		<attributes>
 			<attribute name="girl6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="infantm3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Male infants at first disembarkation">
+	<submission-attributes name="adult6" key="d2,adult" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Adults at second disembarkation">
+		<attributes>
+			<attribute name="adult6"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="infantm3" group="Other" editable="Y" type="integer" userLabel="Male infants at first disembarkation">
 		<attributes>
 			<attribute name="infantm3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="infantf3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Female infants at first disembarkation">
+	<submission-attributes name="infantf3" group="Other" editable="Y" type="integer" userLabel="Female infants at first disembarkation">
 		<attributes>
 			<attribute name="infantf3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="female5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Females embarked at third port in Africa">
+	<submission-attributes name="female5" key="e3,female" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Females embarked at third port in Africa">
 		<attributes>
 			<attribute name="female5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Males embarked at third port in Africa">
+	<submission-attributes name="male5" key="e3,male" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Males embarked at third port in Africa">
 		<attributes>
 			<attribute name="male5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="child5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Children embarked at third port in Africa">
+	<submission-attributes name="child5" key="e3,child" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Children embarked at third port in Africa">
 		<attributes>
 			<attribute name="child5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="men5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Men embarked at third port in Africa">
+	<submission-attributes name="men5" key="e3,men" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Men embarked at third port in Africa">
 		<attributes>
 			<attribute name="men5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="women5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Women embarked at third port in Africa">
+	<submission-attributes name="women5" key="e3,women" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Women embarked at third port in Africa">
 		<attributes>
 			<attribute name="women5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boy5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Boys embarked at third port in Africa">
+	<submission-attributes name="boy5" key="e3,boy" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Boys embarked at third port in Africa">
 		<attributes>
 			<attribute name="boy5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girl5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls embarked at third port in Africa">
+	<submission-attributes name="girl5" key="e3,girl" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls embarked at third port in Africa">
 		<attributes>
 			<attribute name="girl5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant3" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Infants at first disembarkation">
+	<submission-attributes name="infant3" group="Other" editable="Y" type="integer" userLabel="Infants at first disembarkation">
 		<attributes>
 			<attribute name="infant3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant1" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Infants leaving first port in Africa">
+	<submission-attributes name="infant1" group="Other" editable="Y" type="integer" userLabel="Infants leaving first port in Africa">
 		<attributes>
 			<attribute name="infant1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="adult5" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Adults embarked at third port in Africa">
+	<submission-attributes name="adult5" key="e3,adult" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Adults embarked at third port in Africa">
 		<attributes>
 			<attribute name="adult5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="adult2" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults died on middle passage">
+	<submission-attributes name="adult2" key="died,adult" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults died on middle passage">
 		<attributes>
 			<attribute name="adult2"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="adult4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Adults embarked at second port in Africa">
+	<submission-attributes name="adult4" key="e2,adult" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Adults embarked at second port in Africa">
 		<attributes>
 			<attribute name="adult4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant4" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls embarked at second port in Africa">
+	<submission-attributes name="infant4" group="Other" editable="N" type="integer" userLabel="Girls embarked at second port in Africa">
 		<attributes>
 			<attribute name="infant4"/>
 		</attributes>

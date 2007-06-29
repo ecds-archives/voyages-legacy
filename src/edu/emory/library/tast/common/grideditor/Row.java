@@ -8,6 +8,7 @@ public class Row
 	private String label;
 	private String description;
 	private String groupName;
+	private boolean readOnly = false;
 	private boolean noteEnabled = false;
 
 	public Row(String type, String name, String label, String description, String groupName)
@@ -17,6 +18,16 @@ public class Row
 		this.label = label;
 		this.description = description;
 		this.groupName = groupName;
+	}
+	
+	public Row(String type, String name, String label, String description, String groupName, boolean readOnly)
+	{
+		this.type = type;
+		this.name = name;
+		this.label = label;
+		this.description = description;
+		this.groupName = groupName;
+		this.readOnly = readOnly;
 	}
 
 	public Row(String type, String name, String label, String description)
@@ -32,6 +43,14 @@ public class Row
 		this.type = type;
 		this.name = name;
 		this.label = label;
+	}
+	
+	public Row(String type, String name, String label, boolean readOnly)
+	{
+		this.type = type;
+		this.name = name;
+		this.label = label;
+		this.readOnly = readOnly;
 	}
 
 	public String getDescription()
@@ -92,6 +111,14 @@ public class Row
 	public void setNoteEnabled(boolean noteEnabled)
 	{
 		this.noteEnabled = noteEnabled;
+	}
+
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 }

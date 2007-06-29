@@ -45,9 +45,10 @@ public class SubmissionAttribute {
 	private String type;
 	private String name;
 	private String group;
+	private String key;
 	private boolean editable = false;
 	
-	public SubmissionAttribute(String name, Attribute attr, String userLabel, String group, String comment, String type, boolean editable) {
+	public SubmissionAttribute(String name, Attribute attr, String userLabel, String group, String comment, String type, boolean editable, String key) {
 		this.name = name;
 		this.attribute = new Attribute[] {attr};
 		this.userLabel = userLabel;
@@ -55,9 +56,10 @@ public class SubmissionAttribute {
 		this.type = type;
 		this.editable = editable;
 		this.group = group;
+		this.key = key;
 	}
 	
-	public SubmissionAttribute(String name, Attribute[] attrs, String userLabel, String group, String comment, String type, boolean editable) {
+	public SubmissionAttribute(String name, Attribute[] attrs, String userLabel, String group, String comment, String type, boolean editable, String key) {
 		this.attribute = attrs;
 		this.userLabel = userLabel;
 		this.comment = comment;
@@ -65,6 +67,7 @@ public class SubmissionAttribute {
 		this.type = type;
 		this.editable = editable;
 		this.group = group;
+		this.key = key;
 	}
 	
 	public Attribute[] getAttribute() {
@@ -297,12 +300,16 @@ public class SubmissionAttribute {
 		String userLabel = node.getAttributes().getNamedItem("userLabel").getNodeValue();
 		String type = node.getAttributes().getNamedItem("type").getNodeValue();
 		String comment = null;
+		String key = null;
 		if (node.getAttributes().getNamedItem("comment") != null) {
 			comment = node.getAttributes().getNamedItem("comment").getNodeValue();
 		}
 		boolean editable = false;
 		if (node.getAttributes().getNamedItem("editable") != null) {
 			editable = node.getAttributes().getNamedItem("editable").getNodeValue().equals("Y");
+		}
+		if (node.getAttributes().getNamedItem("key") != null) {
+			key = node.getAttributes().getNamedItem("key").getNodeValue();
 		}
 		
 		List attributesList = new ArrayList();
@@ -356,7 +363,7 @@ public class SubmissionAttribute {
 		
 		SubmissionAttribute attr = new SubmissionAttribute(name, 
 				(Attribute[]) attributesList.toArray(new Attribute[] {}), 
-				userLabel, group, comment, attrType, editable);
+				userLabel, group, comment, attrType, editable, key);
 		//System.out.println("Added attribute: " + attr);
 		return attr;
 	}
@@ -371,6 +378,10 @@ public class SubmissionAttribute {
 
 	public String getGroupName() {
 		return this.group;
+	}
+
+	public Object getKey() {
+		return key;
 	}
 
 }

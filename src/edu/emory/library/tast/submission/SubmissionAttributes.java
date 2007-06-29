@@ -1,6 +1,8 @@
 package edu.emory.library.tast.submission;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -13,6 +15,7 @@ public class SubmissionAttributes {
 	private static SubmissionAttributes instance = null;
 	private SubmissionAttribute[] attributes;
 	private SubmissionAttribute[] attributesPublic;
+	private Map map = new HashMap();
 	
 	public synchronized static SubmissionAttributes getConfiguration() {
 		if (instance == null) {
@@ -63,7 +66,11 @@ public class SubmissionAttributes {
 					for (int j = 0; j < attrs.getLength(); j++) {
 						if (attrs.item(j).getNodeType() == Node.ELEMENT_NODE) {
 							SubmissionAttribute attr = SubmissionAttribute.fromXML(attrs.item(j));
-							list.add(attr);
+							if (attr.getKey() == null) {
+								list.add(attr);
+							} else {
+								map.put(attr.getKey(), attr);
+							}							
 						}
 					}
 				}
@@ -83,5 +90,8 @@ public class SubmissionAttributes {
 		return attributesPublic;
 	}
 	
+	public SubmissionAttribute getAttribute(String key) {
+		return (SubmissionAttribute) this.map.get(key);
+	}
 	
 }

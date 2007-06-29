@@ -39,6 +39,15 @@
 		fieldTypes="#{SubmissionBean.fieldTypes}"
 		rowGroups="#{SubmissionBean.rowGroups}"
 		expandedGroups="#{SubmissionBean.expandedGridRows}" />
+		
+	<s:gridEditor 
+		id="grid-slave"
+		rows="#{SubmissionBean.rowsSlave}"
+		columns="#{SubmissionBean.columnsSlave}"
+		values="#{SubmissionBean.valuesSlave}"
+		rowGroups="#{SubmissionBean.rowGroupsSlave}"
+		fieldTypes="#{SubmissionBean.fieldTypesSlave}"
+		expandedGroups="#{SubmissionBean.expandedGridRowsSlave}" />
 
 	<div style="margin-top: 10px; margin-bottom: 10px;">
 		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>

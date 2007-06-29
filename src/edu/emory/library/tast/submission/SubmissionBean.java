@@ -18,6 +18,8 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -52,6 +54,19 @@ public class SubmissionBean
 	public static final String SOURCES_STATE = "sources-restore";
 	public static final String SUBMISSION_STATE = "submission-restore";
 
+	public static final String[] SLAVE_CHAR_COLS = {"men", "women", "boy", "girl", "male", "female", "adult", "child"};
+	public static final String[] SLAVE_CHAR_COLS_LABELS = {"Men", "Women", "Boys", "Girls", "Males", "Females", "Adults", "Children"};
+	public static final String[] SLAVE_CHAR_ROWS = {"e1", "e2", "e3", "died", "d1", "d2"};
+	public static final String[] SLAVE_CHAR_ROWS_LABELS = {
+			"Embarked slaves (first port)",
+			"Embarked slaves (second port)",
+			"Embarked slaves (third port)",
+			"Died on voyage", 
+			"Disembarked slaves (first port)",
+			"Disembarked slaves (second port)",
+	};
+	
+	
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
 	
 	private SourcesBean sourcesBean = null;
@@ -59,6 +74,7 @@ public class SubmissionBean
 	private int submissionType = SUBMISSION_TYPE_NOT_SELECTED;
 	
 	private Values gridValues = null;
+	private Values slaveValues = null;
 	
 	private RowGroup[] rowGroups;
 
@@ -252,19 +268,39 @@ public class SubmissionBean
 	private void initNewVoyage()
 	{
 		gridValues = new Values();
-		initColumnForNewVoyaye(gridValues, CHANGED_VOYAGE);
+		slaveValues = new Values();
+		initColumnForNewVoyaye(CHANGED_VOYAGE);
 	}
 
 	private boolean loadVoyageForEdit()
 	{
 		
 		gridValues = new Values();
+		slaveValues = new Values();
 
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
 		
 		loadVoyageToColumn(session, selectedVoyageForEdit.getVoyageId(), gridValues, ORIGINAL_VOYAGE);
-		initColumnForNewVoyaye(gridValues, CHANGED_VOYAGE);
+		initColumnForNewVoyaye(CHANGED_VOYAGE);
+		
+		Voyage old = Voyage.loadCurrentRevision(session, selectedVoyageForEdit.getVoyageId());
+		for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+			for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+				SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(
+						SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+				if (attribute == null) {
+					throw new RuntimeException("SubmissionAttribute not found: " + SLAVE_CHAR_ROWS[j] + ","
+							+ SLAVE_CHAR_COLS[i]);
+				}
+				Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+				for (int k = 0; k < toBeFormatted.length; k++) {
+					toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
+				}
+				Value value = attribute.getValue(toBeFormatted);
+				slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_old", value);
+			}
+		}
 		
 		trans.commit();
 		session.close();
@@ -277,6 +313,7 @@ public class SubmissionBean
 	{
 		
 		gridValues = new Values();
+		slaveValues = new Values();
 
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
@@ -289,8 +326,30 @@ public class SubmissionBean
 			i++;
 		}
 
-		initColumnForNewVoyaye(gridValues, CHANGED_VOYAGE);
+		initColumnForNewVoyaye(CHANGED_VOYAGE);
 
+		for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();) {
+			SelectedVoyageInfo element = (SelectedVoyageInfo) iter.next();
+			Voyage old = Voyage.loadCurrentRevision(session, element.getVoyageId());
+			for (i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+				for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+					SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(
+							SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+					if (attribute == null) {
+						throw new RuntimeException("SubmissionAttribute not found: " + SLAVE_CHAR_ROWS[j] + ","
+								+ SLAVE_CHAR_COLS[i]);
+					}
+					Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+					for (int k = 0; k < toBeFormatted.length; k++) {
+						toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
+					}
+					Value value = attribute.getValue(toBeFormatted);
+					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_" + element.getVoyageId(), value);
+				}
+			}
+		}
+		
+		
 		trans.commit();
 		session.close();
 
@@ -302,18 +361,30 @@ public class SubmissionBean
 	// universal methods for loading data into a grid
 	/////////////////////////////////////////////////////////////////////////////////
 	
-	private void initColumnForNewVoyaye(Values values, String columnName)
+	private void initColumnForNewVoyaye(String columnName)
 	{
-		if (!prefillSuccess(values, columnName)) {
-			for (int i = 0; i < attrs.length; i++)
-				values.setValue(
+		if (!prefillSuccess(columnName)) {
+			for (int i = 0; i < attrs.length; i++) {
+				gridValues.setValue(
 					columnName,
 					attrs[i].getName(),
 					attrs[i].getEmptyValue());
+			}
+			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+				for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+					SubmissionAttribute attr = SubmissionAttributes.getConfiguration().getAttribute(
+							SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+					if (attr == null) {
+						throw new RuntimeException("SubmissionAttribute not found: " + SLAVE_CHAR_ROWS[j] + ","
+								+ SLAVE_CHAR_COLS[i]);
+					}
+					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j], attr.getEmptyValue());
+				}
+			}
 		}
 	}
 	
-	private boolean prefillSuccess(Values values, String columnName) {
+	private boolean prefillSuccess(String columnName) {
 		if (this.submission == null) {
 			return false;
 		}
@@ -342,7 +413,25 @@ public class SubmissionBean
 				}
 				Value value = attribute.getValue(toBeFormatted);
 				value.setNote((String) attributeNotes.get(attrs[i].getName()));
-				values.setValue(columnName, attribute.getName(), value);
+				gridValues.setValue(columnName, attribute.getName(), value);
+			}
+			
+			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+				for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+					SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(
+							SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+					if (attribute == null) {
+						throw new RuntimeException("SubmissionAttribute not found: " + SLAVE_CHAR_ROWS[j] + ","
+								+ SLAVE_CHAR_COLS[i]);
+					}
+					Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+					for (int k = 0; k < toBeFormatted.length; k++) {
+						toBeFormatted[k] = voyage.getAttrValue(attribute.getAttribute()[k].getName());
+					}
+					Value value = attribute.getValue(toBeFormatted);
+					value.setNote((String) attributeNotes.get(attribute.getName()));
+					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j], value);
+				}
 			}
 		} finally {
 			t.commit();
@@ -700,6 +789,25 @@ public class SubmissionBean
 					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 				}
 			}
+			
+			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+				for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+					SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(
+							SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+					if (attribute == null) {
+						throw new RuntimeException("SubmissionAttribute not found: " + SLAVE_CHAR_ROWS[j] + ","
+								+ SLAVE_CHAR_COLS[i]);
+					}
+					Value value = slaveValues.getValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j]);
+					if (value.hasEditableNote()) {
+						notes.put(attribute.getName(), value.getNote().trim());
+					}
+					Object[] vals = attribute.getValues(sess, value);
+					for (int k = 0; k < vals.length; k++) {
+						voyage.setAttrValue(attribute.getAttribute()[k].getName(), vals[k]);
+					}
+				}
+			}
 
 			if (!doErrorChecking()) {
 				return null;
@@ -795,6 +903,14 @@ public class SubmissionBean
 				wasError = true;
 			}
 		}
+		for (Iterator iter = slaveValues.getValues().iterator(); iter.hasNext();) {
+			Value val = (Value) iter.next();
+			if (!val.isCorrectValue()) {
+				val.setErrorMessage("Error in value!");
+				wasError = true;
+			}
+		}
+		
 		if (wasError) {
 			return false;
 		}
@@ -870,7 +986,6 @@ public class SubmissionBean
 				Value val = (Value) newValues.get(attrs[i].getName());
 				if (!val.isCorrectValue()) {
 					val.setErrorMessage("Error in value!");
-					// wasError = true;
 				}
 				if (val.hasEditableNote()) {
 					notes.put(attrs[i].getName(), val.getNote().trim());
@@ -878,6 +993,25 @@ public class SubmissionBean
 				Object[] vals = attrs[i].getValues(sess, val);
 				for (int j = 0; j < vals.length; j++) {
 					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+				}
+			}
+			
+			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+				for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+					SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(
+							SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+					Map columnValues = slaveValues.getColumnValues(SLAVE_CHAR_COLS[i]);
+					Value val = (Value) columnValues.get(SLAVE_CHAR_ROWS[j]);
+					if (!val.isCorrectValue()) {
+						val.setErrorMessage("Error in value!");
+					}
+					if (val.hasEditableNote()) {
+						notes.put(attrs[i].getName(), val.getNote().trim());
+					}
+					Object[] vals = attrs[i].getValues(sess, val);
+					for (int k = 0; k < vals.length; k++) {
+						voyage.setAttrValue(attribute.getAttribute()[k].getName(), vals[k]);
+					}
 				}
 			}
 
@@ -941,4 +1075,80 @@ public class SubmissionBean
 			session.close();
 		}
 	}
+	
+	public Row[] getRowsSlave() {
+		Row[] rows = null;
+		int groupsNumber;
+		if (this.submissionType == SUBMISSION_TYPE_EDIT) {
+			groupsNumber = 2;
+			rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+			for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
+				rows[i] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i] + "_old", SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics-old", true);
+			}
+		} else if (this.submissionType == SUBMISSION_TYPE_MERGE) {
+			groupsNumber = selectedVoyagesForMerge.size() + 1;
+			rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+			int j = 0;
+			for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();) {
+				SelectedVoyageInfo element = (SelectedVoyageInfo) iter.next();
+				for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
+					rows[j++] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i] + "_" + element.getVoyageId(), SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics-" + element.getVoyageId(), true);
+				}
+			}
+		} else {
+			groupsNumber = 1;
+			rows = new Row[SLAVE_CHAR_ROWS.length];
+		}
+		for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
+			rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i], SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics");
+		} 
+		return rows;
+	}
+	
+	public Column[] getColumnsSlave() {
+		Column[] cols = new Column[SLAVE_CHAR_COLS.length];
+		for (int i = 0; i < cols.length; i++) {
+			cols[i] = new Column(SLAVE_CHAR_COLS[i], SLAVE_CHAR_COLS_LABELS[i]);
+		}
+		return cols;
+	}
+	
+	public void setValuesSlave(Values values) {
+		this.slaveValues = values;
+	}
+	
+	public Values getValuesSlave() {
+		return slaveValues;
+	}
+	
+	public RowGroup[] getRowGroupsSlave() {
+		if (this.submissionType == SUBMISSION_TYPE_NEW) {
+			return new RowGroup[] {new RowGroup("characteristics", "Slaves (characteristics)")};
+		} else if (this.submissionType == SUBMISSION_TYPE_MERGE) {
+			RowGroup[] groups = new RowGroup[selectedVoyagesForMerge.size() + 1];
+			for (int i = 0; i < groups.length - 1; i++) {
+				SelectedVoyageInfo info = (SelectedVoyageInfo) selectedVoyagesForMerge.get(i);
+				groups[i] = new RowGroup("characteristics-" + info.getVoyageId(), "Slaves (characteristics) [VoyageID: " + info.getVoyageId() + "]");
+			}
+			groups[groups.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [New values]");
+			return groups;
+		} else {
+			RowGroup[] groups = new RowGroup[2];
+			groups[0] = new RowGroup("characteristics-old", "Slaves (characteristics) [Current values]");
+			groups[1] = new RowGroup("characteristics", "Slaves (characteristics) [New values]");
+			return groups;
+		}
+	}
+	
+	public Set getExpandedGridRowsSlave() {
+		return new HashSet();
+	}
+	
+	public void setExpandedGridRowsSlave(Set set) {
+	}
+	
+	public Map getFieldTypesSlave() {
+		return SubmissionDictionaries.simpleFieldTypes;
+	}
+	
 }

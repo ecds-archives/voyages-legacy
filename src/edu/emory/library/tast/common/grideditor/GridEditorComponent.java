@@ -374,6 +374,7 @@ public class GridEditorComponent extends UIComponentBase
 				
 				Column column = columns[j];
 				String columnName = column.getName();
+				System.out.println("Column: " + columnName + "  Row: " + rowName);
 				Value value = values.getValue(columnName, rowName);
 				
 				if (j > 0) regJS.append(", ");
@@ -863,7 +864,7 @@ public class GridEditorComponent extends UIComponentBase
 								column,
 								fieldType,
 								getValueInputPrefix(context, columnName, rowName),
-								value, column.isReadOnly(),
+								value, (column.isReadOnly() || row.isReadOnly()),
 								compareToColumn == column);
 						
 						JsfUtils.encodeHiddenInput(this, writer,

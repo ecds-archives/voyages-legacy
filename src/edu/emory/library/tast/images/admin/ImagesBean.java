@@ -335,6 +335,7 @@ public class ImagesBean
 	{
 		
 		editedImageId = 0;
+		selectedImageId = null;
 		
 		// we come from list -> detail
 		// so save the position in the list
@@ -355,6 +356,12 @@ public class ImagesBean
 		imageImageStatus = 0;
 		imageReadyToGo = false;
 		imageCategoryId = 0;
+		
+		imageFileName = null;
+		imageWidth = 0;
+		imageHeight = 0;
+		imageSize = 0;
+		imageMimeType = null;
 
 		// clean the list of regions
 		selectedRegionsIds = new String[0];
@@ -491,12 +498,15 @@ public class ImagesBean
 				image = Image.loadById(Integer.parseInt(selectedImageId), sess);
 			} else {
 				image = new Image();
-				image.setTitle(imageTitle);
-				image.setSource(imageSource);
-				image.setCreator(imageCreator);
-				image.setReferences(imageReferences);
-				image.setEmoryLocation(imageEmoryLocation);
 			}
+			
+			//restore some values
+			image.setTitle(imageTitle);
+			image.setSource(imageSource);
+			image.setCreator(imageCreator);
+			image.setReferences(imageReferences);
+			image.setEmoryLocation(imageEmoryLocation);
+			
 			
 			// we will use it often
 			Configuration appConf = AppConfig.getConfiguration();

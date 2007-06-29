@@ -187,6 +187,7 @@
 		<property name="women6" />
 		<property name="boy6" />
 		<property name="girl6" />
+		<property name="adult6" />
 		<property name="crew2" />
 		<property name="infantm3" />
 		<property name="infantf3" />
