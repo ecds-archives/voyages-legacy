@@ -39,6 +39,8 @@
 		fieldTypes="#{SubmissionBean.fieldTypes}"
 		rowGroups="#{SubmissionBean.rowGroups}"
 		expandedGroups="#{SubmissionBean.expandedGridRows}" />
+	
+	<br>
 		
 	<s:gridEditor 
 		id="grid-slave"

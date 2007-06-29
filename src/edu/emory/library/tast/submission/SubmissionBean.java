@@ -646,7 +646,8 @@ public class SubmissionBean
 					attrs[i].getName(),
 					attrs[i].getUserLabel(),
 					attrs[i].getComment(),
-					attrs[i].getGroupName());
+					attrs[i].getGroupName(),
+					false);
 			
 			row.setNoteEnabled(true);
 			rows[i] = row;
@@ -1083,7 +1084,7 @@ public class SubmissionBean
 			groupsNumber = 2;
 			rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
 			for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
-				rows[i] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i] + "_old", SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics-old", true);
+				rows[i] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i] + "_old", SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics-old", true, SLAVE_CHAR_ROWS[i], "Copy");
 			}
 		} else if (this.submissionType == SUBMISSION_TYPE_MERGE) {
 			groupsNumber = selectedVoyagesForMerge.size() + 1;
@@ -1092,7 +1093,7 @@ public class SubmissionBean
 			for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();) {
 				SelectedVoyageInfo element = (SelectedVoyageInfo) iter.next();
 				for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
-					rows[j++] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i] + "_" + element.getVoyageId(), SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics-" + element.getVoyageId(), true);
+					rows[j++] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i] + "_" + element.getVoyageId(), SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics-" + element.getVoyageId(), true, SLAVE_CHAR_ROWS[i], "Copy");
 				}
 			}
 		} else {
@@ -1100,7 +1101,7 @@ public class SubmissionBean
 			rows = new Row[SLAVE_CHAR_ROWS.length];
 		}
 		for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
-			rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i], SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics");
+			rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i], SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics", true);
 		} 
 		return rows;
 	}
@@ -1134,8 +1135,8 @@ public class SubmissionBean
 			return groups;
 		} else {
 			RowGroup[] groups = new RowGroup[2];
-			groups[0] = new RowGroup("characteristics-old", "Slaves (characteristics) [Current values]");
-			groups[1] = new RowGroup("characteristics", "Slaves (characteristics) [New values]");
+			groups[0] = new RowGroup("characteristics-old", "Slaves (characteristics) [Current voyage]");
+			groups[1] = new RowGroup("characteristics", "Slaves (characteristics) [Edited information]");
 			return groups;
 		}
 	}

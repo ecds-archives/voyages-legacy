@@ -18,6 +18,7 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -34,6 +35,18 @@ import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class VoyagesApplier {
+	
+	public static final String[] SLAVE_CHAR_COLS = {"men", "women", "boy", "girl", "male", "female", "adult", "child"};
+	public static final String[] SLAVE_CHAR_COLS_LABELS = {"Men", "Women", "Boys", "Girls", "Males", "Females", "Adults", "Children"};
+	public static final String[] SLAVE_CHAR_ROWS = {"e1", "e2", "e3", "died", "d1", "d2"};
+	public static final String[] SLAVE_CHAR_ROWS_LABELS = {
+			"Embarked slaves (first port)",
+			"Embarked slaves (second port)",
+			"Embarked slaves (third port)",
+			"Died on voyage", 
+			"Disembarked slaves (first port)",
+			"Disembarked slaves (second port)",
+	};
 	
 	private static final String REMOVE_EDITOR_ACTION = "removeEditor";
 
@@ -75,6 +88,8 @@ public class VoyagesApplier {
 	 * Values for DataGrid component.
 	 */
 	private Values vals = null;
+	
+	private Values valuesSlave;
 
 	/**
 	 * Rows for DataGrid component.
@@ -102,6 +117,7 @@ public class VoyagesApplier {
 	private AdminSubmissionBean adminBean;
 	
 	private boolean requiredReload = false;
+	private boolean requiredReloadSlave = false;
 	
 	public VoyagesApplier(AdminSubmissionBean bean) {
 		this.adminBean = bean;
@@ -126,185 +142,206 @@ public class VoyagesApplier {
 	public Values getValues() {
 		if (vals == null || requiredReload) {
 			requiredReload = false;
-			Session session = HibernateUtil.getSession();
-			Transaction t = session.beginTransaction();
-			Voyage[] toVals = null;
-			String[] cols = null;
-			Map[] attributeNotes = null;
-			EditedVoyage vNew = null;
-			Submission submission = Submission.loadById(session, this.submissionId);
-
-			if (submission instanceof SubmissionNew) {
-				if (this.adminBean.getAuthenticateduser().isEditor()) {
-					vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
-					toVals = new Voyage[2];
-					cols = new String[2];
-					attributeNotes = new Map[2];
-				} else {
-					vNew = ((SubmissionNew) submission).getEditorVoyage();
-					toVals = new Voyage[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
-					cols = new String[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
-					attributeNotes = new Map[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
-				}
-				toVals[0] = Voyage.loadById(session, ((SubmissionNew) submission).getNewVoyage().getVoyage().getIid());
-				attributeNotes[0] = (((SubmissionNew) submission).getNewVoyage().getAttributeNotes());
-				cols[0] = ORYGINAL_VOYAGE;
-
-				if (!this.adminBean.getAuthenticateduser().isEditor()) {
-					Iterator iter = ((SubmissionNew) submission).getSubmissionEditors().iterator();
-					for (int i = 0; i < toVals.length - 2; i++) {
-						SubmissionEditor edit = (SubmissionEditor) iter.next();
-						if (edit.getEditedVoyage() != null) {
-							toVals[i + 1] = edit.getEditedVoyage().getVoyage();
-							attributeNotes[i + 1] = edit.getEditedVoyage().getAttributeNotes();
-						} else {
-							attributeNotes[i + 1] = new HashMap();
-						}
-						if (toVals[i + 1] == null) {
-							toVals[i + 1] = new Voyage();
-						}
-						cols[i + 1] = EDITOR_CHOICE + "_" + i;
-					}
-				}
-
-				if (vNew == null) {
-					toVals[toVals.length - 1] = new Voyage();
-					attributeNotes[attributeNotes.length - 1] = new HashMap();
-				} else {
-					toVals[toVals.length - 1] = vNew.getVoyage();
-					if (toVals[toVals.length - 1] == null) {
-						toVals[toVals.length - 1] = new Voyage();
-					}
-					attributeNotes[attributeNotes.length - 1] = vNew.getAttributeNotes();
-				}
-				cols[cols.length - 1] = DECIDED_VOYAGE;
-				
-			} else if (submission instanceof SubmissionEdit) {
-				if (this.adminBean.getAuthenticateduser().isEditor()) {
-					vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
-					toVals = new Voyage[2 + this.editRequests.length];
-					cols = new String[2 + this.editRequests.length];
-					attributeNotes = new Map[2 + this.editRequests.length];
-				} else {
-					vNew = ((SubmissionEdit) submission).getEditorVoyage();
-					toVals = new Voyage[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
-					cols = new String[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
-					attributeNotes = new Map[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
-				}
-				cols[0] = ORYGINAL_VOYAGE;
-				toVals[0] = Voyage.loadById(session, ((SubmissionEdit) submission).getOldVoyage().getVoyage().getIid());
-				attributeNotes[0] = ((SubmissionEdit) submission).getOldVoyage().getAttributeNotes();
-				for (int i = 1; i <= this.editRequests.length; i++) {
-					EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i - 1]);
-					toVals[i] = eV.getVoyage();
-					cols[i] = CHANGED_VOYAGE + "_" + i;
-					attributeNotes[i] = eV.getAttributeNotes();
-				}
-
-				if (!this.adminBean.getAuthenticateduser().isEditor()) {
-					Iterator iter = submission.getSubmissionEditors().iterator();
-					for (int i = 0; i < submission.getSubmissionEditors().size(); i++) {
-						EditedVoyage eV = ((SubmissionEditor) iter.next()).getEditedVoyage();
-						if (eV != null) {
-							toVals[i + this.editRequests.length + 1] = eV.getVoyage();
-							attributeNotes[i + this.editRequests.length + 1] = eV.getAttributeNotes();
-						}
-						if (toVals[i + this.editRequests.length + 1] == null) {
-							toVals[i + this.editRequests.length + 1] = new Voyage();
-						}
-						if (attributeNotes[i + this.editRequests.length + 1] == null) {
-							attributeNotes[i + this.editRequests.length + 1] = new HashMap();
-						}
-						cols[i + this.editRequests.length + 1] = EDITOR_CHOICE + "_" + i;
-					}
-				}
-
-				if (vNew == null) {
-					toVals[toVals.length - 1] = new Voyage();
-					attributeNotes[toVals.length - 1] = new HashMap();
-				} else {
-					toVals[toVals.length - 1] = vNew.getVoyage();
-					if (toVals[toVals.length - 1] == null) {
-						toVals[toVals.length - 1] = new Voyage();
-					}
-					attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
-				}
-				cols[cols.length - 1] = DECIDED_VOYAGE;
-			} else {
-				if (this.adminBean.getAuthenticateduser().isEditor()) {
-					vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
-					toVals = new Voyage[2 + this.editRequests.length];
-					cols = new String[2 + this.editRequests.length];
-					attributeNotes = new Map[2 + this.editRequests.length];
-				} else {
-					vNew = ((SubmissionMerge) submission).getEditorVoyage();
-					toVals = new Voyage[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
-					cols = new String[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
-					attributeNotes = new Map[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
-				}
-				for (int i = 0; i < this.editRequests.length; i++) {
-					EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
-					toVals[i] = eV.getVoyage();
-					cols[i] = CHANGED_VOYAGE + "_" + i;
-					attributeNotes[i] = eV.getAttributeNotes();
-				}
-
-				if (!this.adminBean.getAuthenticateduser().isEditor()) {
-					Iterator iter = ((SubmissionMerge) submission).getSubmissionEditors().iterator();
-					for (int i = 0; i < ((SubmissionMerge) submission).getSubmissionEditors().size(); i++) {
-						SubmissionEditor editor = (SubmissionEditor) iter.next();
-						if (editor.getEditedVoyage() != null) {
-							toVals[this.editRequests.length + i] = editor.getEditedVoyage().getVoyage();
-							attributeNotes[this.editRequests.length + i] = editor.getEditedVoyage().getAttributeNotes();
-						}
-						if (toVals[i + this.editRequests.length] == null) {
-							toVals[i + this.editRequests.length] = new Voyage();
-						}
-						if (attributeNotes[i + this.editRequests.length] == null) {
-							attributeNotes[i + this.editRequests.length] = new HashMap();
-						}
-						cols[this.editRequests.length + i] = EDITOR_CHOICE + "_" + i;
-
-					}
-				}
-
-				EditedVoyage eV = EditedVoyage.loadById(session, this.mergeMainVoyage);
-				toVals[toVals.length - 2] = eV.getVoyage();
-				cols[cols.length - 2] = ORYGINAL_VOYAGE;
-				attributeNotes[toVals.length - 2] = eV.getAttributeNotes();
-				if (vNew == null) {
-					toVals[toVals.length - 1] = new Voyage();
-					attributeNotes[toVals.length - 1] = new HashMap();
-				} else {
-					toVals[toVals.length - 1] = vNew.getVoyage();
-					if (toVals[toVals.length - 1] == null) {
-						toVals[toVals.length - 1] = new Voyage();
-					}
-					attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
-				}
-				cols[cols.length - 1] = DECIDED_VOYAGE;
-			}
-			vals = new Values();
-			for (int n = 0; n < toVals.length; n++) {
-				for (int i = 0; i < attrs.length; i++) {
-					SubmissionAttribute attribute = attrs[i];
-					Object[] toBeFormatted = new Object[attribute.getAttribute().length];
-					for (int j = 0; j < toBeFormatted.length; j++) {
-						toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());
-					}
-					Value value = attrs[i].getValue(toBeFormatted);
-					value.setNote((String) attributeNotes[n].get(attrs[i].getName()));
-					vals.setValue(cols[n], attrs[i].getName(), value);
-				}
-			}
-
-			t.commit();
-			session.close();
-
+			fillInValues();
 		}
-
 		return vals;
 
+	}
+
+	private void fillInValues() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Voyage[] toVals = null;
+		String[] cols = null;
+		Map[] attributeNotes = null;
+		EditedVoyage vNew = null;
+		Submission submission = Submission.loadById(session, this.submissionId);
+
+		if (submission instanceof SubmissionNew) {
+			if (this.adminBean.getAuthenticateduser().isEditor()) {
+				vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
+				toVals = new Voyage[2];
+				cols = new String[2];
+				attributeNotes = new Map[2];
+			} else {
+				vNew = ((SubmissionNew) submission).getEditorVoyage();
+				toVals = new Voyage[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
+				cols = new String[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
+				attributeNotes = new Map[2 + ((SubmissionNew) submission).getSubmissionEditors().size()];
+			}
+			toVals[0] = Voyage.loadById(session, ((SubmissionNew) submission).getNewVoyage().getVoyage().getIid());
+			attributeNotes[0] = (((SubmissionNew) submission).getNewVoyage().getAttributeNotes());
+			cols[0] = ORYGINAL_VOYAGE;
+
+			if (!this.adminBean.getAuthenticateduser().isEditor()) {
+				Iterator iter = ((SubmissionNew) submission).getSubmissionEditors().iterator();
+				for (int i = 0; i < toVals.length - 2; i++) {
+					SubmissionEditor edit = (SubmissionEditor) iter.next();
+					if (edit.getEditedVoyage() != null) {
+						toVals[i + 1] = edit.getEditedVoyage().getVoyage();
+						attributeNotes[i + 1] = edit.getEditedVoyage().getAttributeNotes();
+					} else {
+						attributeNotes[i + 1] = new HashMap();
+					}
+					if (toVals[i + 1] == null) {
+						toVals[i + 1] = new Voyage();
+					}
+					cols[i + 1] = EDITOR_CHOICE + "_" + i;
+				}
+			}
+
+			if (vNew == null) {
+				toVals[toVals.length - 1] = new Voyage();
+				attributeNotes[attributeNotes.length - 1] = new HashMap();
+			} else {
+				toVals[toVals.length - 1] = vNew.getVoyage();
+				if (toVals[toVals.length - 1] == null) {
+					toVals[toVals.length - 1] = new Voyage();
+				}
+				attributeNotes[attributeNotes.length - 1] = vNew.getAttributeNotes();
+			}
+			cols[cols.length - 1] = DECIDED_VOYAGE;
+			
+		} else if (submission instanceof SubmissionEdit) {
+			if (this.adminBean.getAuthenticateduser().isEditor()) {
+				vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
+				toVals = new Voyage[2 + this.editRequests.length];
+				cols = new String[2 + this.editRequests.length];
+				attributeNotes = new Map[2 + this.editRequests.length];
+			} else {
+				vNew = ((SubmissionEdit) submission).getEditorVoyage();
+				toVals = new Voyage[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+				cols = new String[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+				attributeNotes = new Map[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+			}
+			cols[0] = ORYGINAL_VOYAGE;
+			toVals[0] = Voyage.loadById(session, ((SubmissionEdit) submission).getOldVoyage().getVoyage().getIid());
+			attributeNotes[0] = ((SubmissionEdit) submission).getOldVoyage().getAttributeNotes();
+			for (int i = 1; i <= this.editRequests.length; i++) {
+				EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i - 1]);
+				toVals[i] = eV.getVoyage();
+				cols[i] = CHANGED_VOYAGE + "_" + i;
+				attributeNotes[i] = eV.getAttributeNotes();
+			}
+
+			if (!this.adminBean.getAuthenticateduser().isEditor()) {
+				Iterator iter = submission.getSubmissionEditors().iterator();
+				for (int i = 0; i < submission.getSubmissionEditors().size(); i++) {
+					EditedVoyage eV = ((SubmissionEditor) iter.next()).getEditedVoyage();
+					if (eV != null) {
+						toVals[i + this.editRequests.length + 1] = eV.getVoyage();
+						attributeNotes[i + this.editRequests.length + 1] = eV.getAttributeNotes();
+					}
+					if (toVals[i + this.editRequests.length + 1] == null) {
+						toVals[i + this.editRequests.length + 1] = new Voyage();
+					}
+					if (attributeNotes[i + this.editRequests.length + 1] == null) {
+						attributeNotes[i + this.editRequests.length + 1] = new HashMap();
+					}
+					cols[i + this.editRequests.length + 1] = EDITOR_CHOICE + "_" + i;
+				}
+			}
+
+			if (vNew == null) {
+				toVals[toVals.length - 1] = new Voyage();
+				attributeNotes[toVals.length - 1] = new HashMap();
+			} else {
+				toVals[toVals.length - 1] = vNew.getVoyage();
+				if (toVals[toVals.length - 1] == null) {
+					toVals[toVals.length - 1] = new Voyage();
+				}
+				attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
+			}
+			cols[cols.length - 1] = DECIDED_VOYAGE;
+		} else {
+			if (this.adminBean.getAuthenticateduser().isEditor()) {
+				vNew = this.getSubmissionEditor(submission, this.adminBean.getAuthenticateduser()).getEditedVoyage();
+				toVals = new Voyage[2 + this.editRequests.length];
+				cols = new String[2 + this.editRequests.length];
+				attributeNotes = new Map[2 + this.editRequests.length];
+			} else {
+				vNew = ((SubmissionMerge) submission).getEditorVoyage();
+				toVals = new Voyage[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
+				cols = new String[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
+				attributeNotes = new Map[2 + this.editRequests.length + ((SubmissionMerge) submission).getSubmissionEditors().size()];
+			}
+			for (int i = 0; i < this.editRequests.length; i++) {
+				EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
+				toVals[i] = eV.getVoyage();
+				cols[i] = CHANGED_VOYAGE + "_" + i;
+				attributeNotes[i] = eV.getAttributeNotes();
+			}
+
+			if (!this.adminBean.getAuthenticateduser().isEditor()) {
+				Iterator iter = ((SubmissionMerge) submission).getSubmissionEditors().iterator();
+				for (int i = 0; i < ((SubmissionMerge) submission).getSubmissionEditors().size(); i++) {
+					SubmissionEditor editor = (SubmissionEditor) iter.next();
+					if (editor.getEditedVoyage() != null) {
+						toVals[this.editRequests.length + i] = editor.getEditedVoyage().getVoyage();
+						attributeNotes[this.editRequests.length + i] = editor.getEditedVoyage().getAttributeNotes();
+					}
+					if (toVals[i + this.editRequests.length] == null) {
+						toVals[i + this.editRequests.length] = new Voyage();
+					}
+					if (attributeNotes[i + this.editRequests.length] == null) {
+						attributeNotes[i + this.editRequests.length] = new HashMap();
+					}
+					cols[this.editRequests.length + i] = EDITOR_CHOICE + "_" + i;
+
+				}
+			}
+
+			EditedVoyage eV = EditedVoyage.loadById(session, this.mergeMainVoyage);
+			toVals[toVals.length - 2] = eV.getVoyage();
+			cols[cols.length - 2] = ORYGINAL_VOYAGE;
+			attributeNotes[toVals.length - 2] = eV.getAttributeNotes();
+			if (vNew == null) {
+				toVals[toVals.length - 1] = new Voyage();
+				attributeNotes[toVals.length - 1] = new HashMap();
+			} else {
+				toVals[toVals.length - 1] = vNew.getVoyage();
+				if (toVals[toVals.length - 1] == null) {
+					toVals[toVals.length - 1] = new Voyage();
+				}
+				attributeNotes[toVals.length - 1] = vNew.getAttributeNotes();
+			}
+			cols[cols.length - 1] = DECIDED_VOYAGE;
+		}
+		vals = new Values();
+		valuesSlave = new Values();
+		for (int n = 0; n < toVals.length; n++) {
+			for (int i = 0; i < attrs.length; i++) {
+				SubmissionAttribute attribute = attrs[i];
+				Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+				for (int j = 0; j < toBeFormatted.length; j++) {
+					toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());
+				}
+				Value value = attrs[i].getValue(toBeFormatted);
+				value.setNote((String) attributeNotes[n].get(attrs[i].getName()));
+				vals.setValue(cols[n], attrs[i].getName(), value);
+			}
+			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+				for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+					SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(
+							SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+					if (attribute == null) {
+						throw new RuntimeException("SubmissionAttribute not found: " + SLAVE_CHAR_ROWS[j] + ","
+								+ SLAVE_CHAR_COLS[i]);
+					}
+					Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+					for (int k = 0; k < toBeFormatted.length; k++) {
+						toBeFormatted[k] = toVals[n].getAttrValue(attribute.getAttribute()[k].getName());
+					}
+					Value value = attribute.getValue(toBeFormatted);
+					valuesSlave.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + (n != toVals.length - 1 ? "-" + n : "") , value);
+				}
+			}
+		}
+		
+		
+		
+		t.commit();
+		session.close();
 	}
 	
 	/**
@@ -333,6 +370,14 @@ public class VoyagesApplier {
 		}
 		t.commit();
 		session.close();
+		return cols;
+	}
+	
+	public Column[] getColumnsSlave() {
+		Column[] cols = new Column[SLAVE_CHAR_COLS.length];
+		for (int i = 0; i < cols.length; i++) {
+			cols[i] = new Column(SLAVE_CHAR_COLS[i], SLAVE_CHAR_COLS_LABELS[i]);
+		}
 		return cols;
 	}
 
@@ -432,8 +477,46 @@ public class VoyagesApplier {
 	public Row[] getRows() {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
-			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i].getUserLabel(), null, attrs[i].getGroupName());
+			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i].getUserLabel(), null, attrs[i].getGroupName(), false);
 			rows[i].setNoteEnabled(true);
+		}
+		return rows;
+	}
+	
+	public Row[] getRowsSlave() {
+		Row[] rows = null;
+		int groupsNumber;
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			Submission submission = Submission.loadById(session, getSubmissionId());
+			if (submission instanceof SubmissionEdit || submission instanceof SubmissionMerge) {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					groupsNumber = 2 + this.editRequests.length;
+				} else {
+					groupsNumber = 2 + this.editRequests.length + submission.getSubmissionEditors().size();
+				}
+				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++) {
+					rows[i] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length] + "-" + (i / SLAVE_CHAR_ROWS.length), SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length], null, "characteristics-" + (i / SLAVE_CHAR_ROWS.length), true, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+				}
+			} else {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					groupsNumber = 2;
+				} else {
+					groupsNumber = 2 + submission.getSubmissionEditors().size();
+				}
+				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++) {
+					rows[i] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length] + "-" + (int)(i / (double)SLAVE_CHAR_ROWS.length), SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length], null, "characteristics-" + (i / SLAVE_CHAR_ROWS.length), true, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+				}
+			}
+			for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
+				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i], SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics", true);
+			} 
+		} finally {
+			t.commit();
+			session.close();
 		}
 		return rows;
 	}
@@ -444,6 +527,54 @@ public class VoyagesApplier {
 	 */
 	public RowGroup[] getRowGroups() {
 		return this.rowGroups;
+	}
+	
+	public RowGroup[] getRowGroupsSlave() {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			Submission submission = Submission.loadById(session, getSubmissionId());
+			if (submission instanceof  SubmissionNew) {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					return new RowGroup[] {
+							new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested values]"),
+							new RowGroup("characteristics", "Slaves (characteristics) [Your choice]")
+					};
+				} else {
+					RowGroup[] response = new RowGroup[2 + submission.getSubmissionEditors().size()];
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested values]"); 
+					for (int i = 1; i < response.length - 1; i++) {
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+					}
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					return response;
+				}
+			} else if (submission instanceof SubmissionMerge || submission instanceof SubmissionEdit) {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					RowGroup[] response = new RowGroup[2 + this.editRequests.length];
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original values]"); 
+					for (int i = 1; i < response.length - 1; i++) {
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+					}
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					return response;
+				} else {
+					RowGroup[] response = new RowGroup[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested values]"); 
+					for (int i = 1; i < this.editRequests.length; i++) {
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+					}
+					for (int i = this.editRequests.length; i < this.editRequests.length + submission.getSubmissionEditors().size() - 1; i++) {
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+					}
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					return response;
+				}
+			}
+		} finally {
+			t.commit();
+			session.close();
+		}
 	}
 	
 	/**
@@ -494,6 +625,7 @@ public class VoyagesApplier {
 			this.submissionId = null;
 		}
 		this.vals = null;
+		this.valuesSlave = null;
 		t.commit();
 		session.close();
 	}
@@ -619,6 +751,10 @@ public class VoyagesApplier {
 			session.update(lSubmission);
 		}
 		this.vals = null;
+		
+		//TODO implement
+		this.valuesSlave = null;
+		
 		t.commit();
 		session.close();
 		return "back";
@@ -768,6 +904,19 @@ public class VoyagesApplier {
 	public void setRequiredReload(boolean requiredReload)
 	{
 		this.requiredReload = requiredReload;
+		this.requiredReloadSlave = requiredReload;
+	}
+
+	public void setValuesSlave(Values values) {
+		this.valuesSlave = values;
+	}
+	
+	public Values getValuesSlave() {
+		if (this.valuesSlave == null || requiredReload) {
+			requiredReload = false;
+			fillInValues();
+		}
+		return this.valuesSlave;
 	}
 	
 }

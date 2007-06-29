@@ -28,8 +28,19 @@
 		rowGroups="#{AdminSubmissionBean.rowGroups}"
 		onColumnAction="#{AdminSubmissionBean.columnAction}" />
 	<br>
+		
+	<s:gridEditor 
+		id="grid-slave"
+		rows="#{AdminSubmissionBean.rowsSlave}"
+		columns="#{AdminSubmissionBean.columnsSlave}"
+		values="#{AdminSubmissionBean.valuesSlave}"
+		rowGroups="#{AdminSubmissionBean.rowGroupsSlave}"
+		fieldTypes="#{AdminSubmissionBean.fieldTypesSlave}" />
+	
 	
 	<br>
+	<br>
+	
 	<t:htmlTag value="div" 
 	           rendered="#{AdminSubmissionBean.isSourceDetailsVisible}" 
 	           style="border: 2px solid #CCCCCC; width: 500px; padding: 5px;" >

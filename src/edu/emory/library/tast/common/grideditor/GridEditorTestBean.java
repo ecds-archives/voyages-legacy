@@ -59,16 +59,16 @@ public class GridEditorTestBean
 	public Row[] getRows()
 	{
 		
-		Row firstNameRow = new Row(FIELD_TYPE_NAME, "firstName", "First name", null, "name");
+		Row firstNameRow = new Row(FIELD_TYPE_NAME, "firstName", "First name", null, "name", false);
 		firstNameRow.setNoteEnabled(true);
 		
 		return new Row[] {
 				firstNameRow,
-				new Row(FIELD_TYPE_NAME, "lastName", "Last name", null, "name"),
-				new Row(FIELD_TYPE_PHONE, "phone", "Phone number", null, "contact"),
-				new Row(FIELD_TYPE_STATES, "state", "State", null, "contact"),
-				new Row(FIELD_TYPE_DESC, "description", "Description", null, "other"),
-				new Row(FIELD_TYPE_DATE, "dob", "Date of birth", null, "xyz")
+				new Row(FIELD_TYPE_NAME, "lastName", "Last name", null, "name", false),
+				new Row(FIELD_TYPE_PHONE, "phone", "Phone number", null, "contact", false),
+				new Row(FIELD_TYPE_STATES, "state", "State", null, "contact", false),
+				new Row(FIELD_TYPE_DESC, "description", "Description", null, "other", false),
+				new Row(FIELD_TYPE_DATE, "dob", "Date of birth", null, "xyz", false)
 		};
 	}
 	
@@ -89,7 +89,7 @@ public class GridEditorTestBean
 				new ColumnAction("action1", "Action 1"),
 				new ColumnAction("action2", "Action 2")});
 		
-		Column newColumn = new Column("new", "New", false);
+		Column newColumn = new Column("new", "New", false, true);
 		
 		return new Column[] {oldColumn, newColumn};
 		

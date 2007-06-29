@@ -313,6 +313,20 @@ public class GridEditorComponent extends UIComponentBase
 		return null;
 	}
 	
+	private Row[] getCompateToRows()
+	{
+		List rowsList = new ArrayList();
+		for (int i = 0; i < rows.length; i++)
+		{
+			Row row = rows[i];
+			if (row.isCompareTo())
+			{
+				rowsList.add(row);
+			}
+		}
+		return (Row[]) rowsList.toArray(new Row[] {});
+	}
+	
 	private void encodeRegJS(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
 	{
 
@@ -450,6 +464,23 @@ public class GridEditorComponent extends UIComponentBase
 			regJS.append("null");
 		}
 
+		Row[] compareToRows = getCompateToRows();
+		regJS.append(", {");
+		for (int j = 0; j < compareToRows.length; j++) {
+			if (j > 0) regJS.append(", ");
+			regJS.append("'").append(compareToRows[j].getName()).append("' : [");
+			boolean first = true;
+			for (int k = 0; k < rows.length; k++) {
+				if (compareToRows[j].getName().equals(rows[k].getCopyToRow())) {
+					if (!first) regJS.append(", ");
+					first = false;
+					regJS.append("'").append(rows[k].getName()).append("'");
+				}
+			}
+			regJS.append("]");
+		}
+		regJS.append("}");
+		
 		// end js registration
 		regJS.append("));");
 
@@ -676,32 +707,44 @@ public class GridEditorComponent extends UIComponentBase
 		
 	}
 
-	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName) throws IOException
+	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, Row row) throws IOException
 	{
 
-		String onClickCopy = "GridEditorGlobals.copy(" +
-			"'" + mainId + "', " +
-			"'" + column.getName() + "', " +
-			"'" + column.getCopyToColumn() + "', " +
-			"'" + rowName + "')";
+		if (column.getCopyToColumn() != null) {
+			String onClickCopy = "GridEditorGlobals.copy(" + "'" + mainId + "', " + "'" + column.getName() + "', "
+					+ "'" + column.getCopyToColumn() + "', " + "'" + row.getName() + "')";
 
-		writer.startElement("div", this);
-		writer.writeAttribute("class", "grid-editor-copy", null);
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "grid-editor-copy", null);
 
-		writer.startElement("span", this);
-		writer.writeAttribute("class", "grid-editor-copy-button", null);
-		writer.writeAttribute("onclick", onClickCopy, null);
-		writer.write(column.getCopyToLabel());
-		writer.endElement("span");
+			writer.startElement("span", this);
+			writer.writeAttribute("class", "grid-editor-copy-button", null);
+			writer.writeAttribute("onclick", onClickCopy, null);
+			writer.write(column.getCopyToLabel());
+			writer.endElement("span");
 
-		writer.endElement("div");
+			writer.endElement("div");
+		} else if (row.getCopyToRow() != null) {
+			String onClickCopy = "GridEditorGlobals.copyRow(" + "'" + mainId + "', " + "'" + column.getName() + "', "
+					+ "'" + row.getName() + "', " + "'" + row.getCopyToRow() + "')";
 
+			writer.startElement("div", this);
+			writer.writeAttribute("class", "grid-editor-copy", null);
+
+			writer.startElement("span", this);
+			writer.writeAttribute("class", "grid-editor-copy-button", null);
+			writer.writeAttribute("onclick", onClickCopy, null);
+			writer.write(row.getCopyToLabel());
+			writer.endElement("span");
+			writer.endElement("div");
+		}
 	}
 	
 	private void encodeGrid(FacesContext context, ResponseWriter writer, UIForm form, String mainId, String mainTableId, List internalGroups) throws IOException
 	{
 		
 		Column compareToColumn = getCompateToColumn();
+		Row[] compareToRows = getCompateToRows();
 		
 		writer.startElement("table", this);
 		writer.writeAttribute("id", mainTableId, null);
@@ -820,13 +863,21 @@ public class GridEditorComponent extends UIComponentBase
 					writer.endElement("th");
 
 					Value compareToValue = null;
-					if (compareToColumn != null)
+					if (compareToColumn != null) {
 						compareToValue = values.getValue(
 								compareToColumn.getName(),
 								rowName);
+					}
 
 					for (int j = 0; j < columns.length; j++)
 					{
+						if (compareToColumn == null && compareToRows != null) {
+							for (int i = 0; i < compareToRows.length; i++) {
+								if (compareToRows[i].getName().equals(row.getCopyToRow())) {
+									compareToValue = values.getValue(columns[j].getName(), compareToRows[i].getName());
+								}
+							}
+						}
 						Column column = columns[j];
 						String columnName = column.getName();
 						Value value = values.getValue(columnName, rowName);
@@ -855,7 +906,6 @@ public class GridEditorComponent extends UIComponentBase
 						writer.startElement("td", this);
 						writer.writeAttribute("class", cellCssClass, null);
 						writer.writeAttribute("id", getCellId(context, columnName, rowName), null);
-						
 						adapter.encode(context,
 								this,
 								mainId,
@@ -865,7 +915,7 @@ public class GridEditorComponent extends UIComponentBase
 								fieldType,
 								getValueInputPrefix(context, columnName, rowName),
 								value, (column.isReadOnly() || row.isReadOnly()),
-								compareToColumn == column);
+								compareToColumn == column || row.isCompareTo());
 						
 						JsfUtils.encodeHiddenInput(this, writer,
 								getValueErrorFlagFieldName(context, columnName, rowName),
@@ -874,8 +924,8 @@ public class GridEditorComponent extends UIComponentBase
 						if (value.isError())
 							encodeErrorMessage(context, writer, columnName, rowName, value);
 						
-						if (column.isCopyToEnabled())
-							encodeCopyButton(context, writer, mainId, column, rowName);
+						if (column.isCopyToEnabled() || row.isCopyEnabled())
+							encodeCopyButton(context, writer, mainId, column, row);
 
 						if (row.isNoteEnabled())
 							encodeNotes(context, writer, mainId, column, rowName, value);

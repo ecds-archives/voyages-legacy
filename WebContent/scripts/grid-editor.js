@@ -44,11 +44,25 @@ var GridEditorGlobals =
 		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
 		if (gridEditor) gridEditor.copy(srcColumnName, dstColumnName, rowName);
 	},
+	
+	copyRow: function(gridEditorId, columnName, srcRowName, dstRowName)
+	{
+		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
+		if (gridEditor) gridEditor.copyRow(columnName, srcRowName, dstRowName);
+	},
 
 	compare: function(gridEditorId, rowName, columnName)
 	{
 		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
-		if (gridEditor) gridEditor.compare(rowName, columnName);
+		if (gridEditor) {
+			gridEditor.compare(rowName, columnName);
+		}	
+	},
+	
+	compareRow: function(gridEditorId, rowName, columnName)
+	{
+		var gridEditor = GridEditorGlobals.gridEditors[gridEditorId];
+		if (gridEditor) gridEditor.compareRow(rowName, columnName);
 	}
 
 }
@@ -57,7 +71,7 @@ var GridEditorGlobals =
 * constructors
 *********************************************/
 
-function GridEditor(gridEditorId, formName, mainTableId, expandedGroupsFieldName, fieldTypes, fields, rowGroups, compareToColumn)
+function GridEditor(gridEditorId, formName, mainTableId, expandedGroupsFieldName, fieldTypes, fields, rowGroups, compareToColumn, compareToRows)
 {
 	this.gridEditorId = gridEditorId;
 	this.mainTableId = mainTableId;
@@ -67,6 +81,7 @@ function GridEditor(gridEditorId, formName, mainTableId, expandedGroupsFieldName
 	this.rowGroups = rowGroups;
 	this.expandedGroupsFieldName = expandedGroupsFieldName;
 	this.compareToColumn = compareToColumn;
+	this.compareToRows = compareToRows;
 }
 
 function GridEditorListFieldType(list)
@@ -168,7 +183,13 @@ GridEditor.prototype.listItemSelected = function(rowName, columnName, depth, inv
 	if (field)
 	{
 		field.itemSelected(this, depth, invokeCompare);
-		if (invokeCompare) this.compare(rowName, columnName);
+		if (invokeCompare) {
+			if (this.compareToColumn) {
+				this.compare(rowName, columnName);
+			} else {
+				this.compareRow(rowName, columnName);
+			}
+		}
 	}
 }
 
@@ -283,28 +304,70 @@ GridEditor.prototype.copy = function(srcColumnName, dstColumnName, rowName)
 
 }
 
+GridEditor.prototype.copyRow = function(columnName, srcRowName, dstRowName)
+{
+
+	var srcRow = this.fields[srcRowName];
+	if (!srcRow) return;
+
+	var dstRow = this.fields[dstRowName];
+	if (!dstRow) return;
+
+	var srcField = srcRow[columnName];
+	var dstField = dstRow[columnName];
+	if (!srcField || !dstField) return;
+	
+	var value = srcField.getValue(this);
+	dstField.setValue(this, value);
+	
+	if (this.compareToRows)
+		this.compareRow(dstRowName, columnName);
+
+}
+
 GridEditor.prototype.compare = function(rowName, columnName)
 {
 
-	var value = this.fields[rowName][columnName].getValue(this);
-
-	var rowFields = this.fields[rowName];
-	for (c in rowFields)
-	{
-		if (c != columnName)
+	if (!this.compareToColumn) {
+		this.compareRow(rowName, columnName);
+	} else {
+		var value = this.fields[rowName][columnName].getValue(this);
+	
+		var rowFields = this.fields[rowName];
+		for (c in rowFields)
 		{
-			var cell = document.getElementById(rowFields[c].cellId);
-			if (rowFields[c].compareTo(this, value))
+			if (c != columnName)
 			{
-				cell.className = "grid-editor-same-value";
-			}
-			else
-			{
-				cell.className = "grid-editor-dist-value";
+				var cell = document.getElementById(rowFields[c].cellId);
+				if (rowFields[c].compareTo(this, value))
+				{
+					cell.className = "grid-editor-same-value";
+				}
+				else
+				{
+					cell.className = "grid-editor-dist-value";
+				}
 			}
 		}
 	}
-	
+}
+
+GridEditor.prototype.compareRow = function(rowName, columnName)
+{
+	var value = this.fields[rowName][columnName].getValue(this);
+	var rowsToCheck = this.compareToRows[rowName];
+	for (row in rowsToCheck) {
+		var rowFields = this.fields[rowsToCheck[row]];
+		var cell = document.getElementById(rowFields[columnName].cellId);
+		if (rowFields[columnName].compareTo(this, value))
+		{
+			cell.className = "grid-editor-same-value";
+		}
+		else
+		{
+			cell.className = "grid-editor-dist-value";
+		}
+	}
 }
 
 /********************************************

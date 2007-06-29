@@ -24,6 +24,7 @@ import edu.emory.library.tast.common.grideditor.ColumnActionEvent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -52,6 +53,8 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class AdminSubmissionBean {
 
+
+	
 	private static final DateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
 	
 	private static final String REQUEST_MERGE_PREFIX = "merge_";
@@ -872,6 +875,30 @@ public class AdminSubmissionBean {
 
 	public void setFinished(Boolean finished) {
 		this.finished = finished.booleanValue();
+	}
+	
+	public Map getFieldTypesSlave() {
+		return SubmissionDictionaries.simpleFieldTypes;
+	}
+	
+	public Row[] getRowsSlave() {
+		return applier.getRowsSlave();
+	}
+	
+	public Column[] getColumnsSlave() {
+		return applier.getColumnsSlave();
+	}
+	
+	public void setValuesSlave(Values values) {
+		this.applier.setValuesSlave(values);
+	}
+	
+	public Values getValuesSlave() {
+		return this.applier.getValuesSlave();
+	}
+	
+	public RowGroup[] getRowGroupsSlave() {
+		return applier.getRowGroupsSlave();
 	}
 	
 }
