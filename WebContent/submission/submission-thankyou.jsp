@@ -25,6 +25,8 @@
 		</tr>
 	</table>
 
+	<br>
+
 	<h1>Submission completed</h1>
 	
 	<br>

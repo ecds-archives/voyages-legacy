@@ -272,9 +272,13 @@ public class VoyagesApplier {
 				attributeNotes[i] = eV.getAttributeNotes();
 			}
 
+			EditedVoyage eV = EditedVoyage.loadById(session, this.mergeMainVoyage);
+			toVals[this.editRequests.length] = eV.getVoyage();
+			cols[this.editRequests.length] = ORYGINAL_VOYAGE;
+			attributeNotes[this.editRequests.length] = eV.getAttributeNotes();			
 			if (!this.adminBean.getAuthenticateduser().isEditor()) {
 				Iterator iter = ((SubmissionMerge) submission).getSubmissionEditors().iterator();
-				for (int i = 0; i < ((SubmissionMerge) submission).getSubmissionEditors().size(); i++) {
+				for (int i = 1; i <= ((SubmissionMerge) submission).getSubmissionEditors().size(); i++) {
 					SubmissionEditor editor = (SubmissionEditor) iter.next();
 					if (editor.getEditedVoyage() != null) {
 						toVals[this.editRequests.length + i] = editor.getEditedVoyage().getVoyage();
@@ -286,15 +290,11 @@ public class VoyagesApplier {
 					if (attributeNotes[i + this.editRequests.length] == null) {
 						attributeNotes[i + this.editRequests.length] = new HashMap();
 					}
-					cols[this.editRequests.length + i] = EDITOR_CHOICE + "_" + i;
+					cols[this.editRequests.length + i] = EDITOR_CHOICE + "_" + (i - 1);
 
 				}
 			}
 
-			EditedVoyage eV = EditedVoyage.loadById(session, this.mergeMainVoyage);
-			toVals[toVals.length - 2] = eV.getVoyage();
-			cols[cols.length - 2] = ORYGINAL_VOYAGE;
-			attributeNotes[toVals.length - 2] = eV.getAttributeNotes();
 			if (vNew == null) {
 				toVals[toVals.length - 1] = new Voyage();
 				attributeNotes[toVals.length - 1] = new HashMap();
@@ -542,30 +542,59 @@ public class VoyagesApplier {
 					};
 				} else {
 					RowGroup[] response = new RowGroup[2 + submission.getSubmissionEditors().size()];
-					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested values]"); 
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original values]"); 
+					Iterator iter = submission.getSubmissionEditors().iterator();
 					for (int i = 1; i < response.length - 1; i++) {
-						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+						SubmissionEditor editor = (SubmissionEditor) iter.next();
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Reviewer's choice (by " + editor.getUser().getUserName() + ")]");
 					}
 					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
 					return response;
 				}
-			} else if (submission instanceof SubmissionMerge || submission instanceof SubmissionEdit) {
+			} else if (submission instanceof SubmissionEdit) {
 				if (this.adminBean.getAuthenticateduser().isEditor()) {
 					RowGroup[] response = new RowGroup[2 + this.editRequests.length];
 					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original values]"); 
 					for (int i = 1; i < response.length - 1; i++) {
-						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Submitted values]");
 					}
 					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
 					return response;
 				} else {
 					RowGroup[] response = new RowGroup[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
-					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested values]"); 
-					for (int i = 1; i < this.editRequests.length; i++) {
-						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original values]"); 
+					for (int i = 1; i < this.editRequests.length + 1; i++) {
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Submitted values]");
 					}
-					for (int i = this.editRequests.length; i < this.editRequests.length + submission.getSubmissionEditors().size() - 1; i++) {
-						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested values]");
+					Iterator iter = submission.getSubmissionEditors().iterator();
+					for (int i = this.editRequests.length; i < this.editRequests.length + submission.getSubmissionEditors().size(); i++) {
+						SubmissionEditor editor = (SubmissionEditor) iter.next();
+						response[i + 1] = new RowGroup("characteristics-" + (i + 1), "Slaves (characteristics) [Reviewer's choice (by " + editor.getUser().getUserName() + ")]");
+					}
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					return response;
+				}
+			} else {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					RowGroup[] response = new RowGroup[2 + this.editRequests.length]; 				
+					for (int i = 0; i < this.editRequests.length; i++) {
+						EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Voyageid " + eV.getVoyage().getVoyageid() + "]");
+					}
+					response[response.length - 2] = new RowGroup("characteristics-" + (response.length - 2), "Slaves (characteristics) [Submitted values]");
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					return response;
+				} else {
+					RowGroup[] response = new RowGroup[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
+					for (int i = 0; i < this.editRequests.length; i++) {
+						EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Voyageid " + eV.getVoyage().getVoyageid() + "]");
+					}
+					response[this.editRequests.length] = new RowGroup("characteristics-" + (this.editRequests.length), "Slaves (characteristics) [Submitted values]");
+					Iterator iter = submission.getSubmissionEditors().iterator();
+					for (int i = this.editRequests.length + 1; i < this.editRequests.length + submission.getSubmissionEditors().size() + 1; i++) {
+						SubmissionEditor editor = (SubmissionEditor) iter.next();
+						response[i] = new RowGroup("characteristics-" + (i), "Slaves (characteristics) [Reviewer's choice (by " + editor.getUser().getUserName() + ")]");
 					}
 					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
 					return response;
@@ -833,6 +862,29 @@ public class VoyagesApplier {
 				val.setErrorMessage("This field is required and has to be a number");
 			}
 		}
+		for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
+			for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++) {
+				SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(
+						SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
+				if (attribute == null) {
+					throw new RuntimeException("SubmissionAttribute not found: " + SLAVE_CHAR_ROWS[j] + ","
+							+ SLAVE_CHAR_COLS[i]);
+				}
+				Value value = valuesSlave.getValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j]);
+				if (!value.isCorrectValue()) {
+					value.setErrorMessage("Value incorrect");
+					wasError = true;
+				}
+				if (value.hasEditableNote()) {
+					notes.put(attribute.getName(), value.getNote().trim());
+				}
+				Object[] vals = attribute.getValues(session, value);
+				for (int k = 0; k < vals.length; k++) {
+					vNew.setAttrValue(attribute.getAttribute()[k].getName(), vals[k]);
+				}
+			}
+		}
+		
 		vNew.setSuggestion(true);
 		if (!wasError) {
 			session.saveOrUpdate(vNew);
@@ -867,8 +919,10 @@ public class VoyagesApplier {
 						session.update(edit);
 					} else {
 						SubmissionEditor localeditor = this.getSubmissionEditor((Submission)toUpdate[i], this.adminBean.getAuthenticateduser());
-						localeditor.setEditedVoyage(editedVoyage);
-						session.update(localeditor);
+						if (localeditor != null) {
+							localeditor.setEditedVoyage(editedVoyage);
+							session.update(localeditor);
+						}
 					}					
 				}
 			} else {

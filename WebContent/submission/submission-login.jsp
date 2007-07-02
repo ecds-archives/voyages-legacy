@@ -14,7 +14,9 @@
 <body style="margin: 15px;">
 <f:view>
 <h:form id="main">
-
+	
+	<br>
+	
 	<h1>Sign in</h1>
 	
 	<br>

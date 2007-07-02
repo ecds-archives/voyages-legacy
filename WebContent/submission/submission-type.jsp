@@ -25,6 +25,8 @@
 		</tr>
 	</table>
 
+	<br>
+
 	<h1>Choose type of submission</h1>
 	
 	<br>

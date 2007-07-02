@@ -167,8 +167,6 @@ public class AdminSubmissionBean {
 		applier.setValues(vals);
 	}
 
-	
-
 	/**
 	 * Gets columns for GridComponent. The result depends on type of submission that is handled. 
 	 * @return

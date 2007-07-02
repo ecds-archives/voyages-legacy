@@ -419,11 +419,21 @@
 			<property-name>sourcesBean</property-name>
 			<value>#{SourcesBean}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>verifyBean</property-name>
+			<value>#{SubmissionVerifyBean}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>SourcesBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.submission.SourcesBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>SubmissionVerifyBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.submission.SubmissionVerifyBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
@@ -766,11 +776,27 @@
 		<from-view-id>/submission/submission-sources.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>done</from-outcome>
-			<to-view-id>/submission/submission-thankyou.jsp</to-view-id>
+			<to-view-id>/submission/submission-verify.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>back</from-outcome>
 			<to-view-id>/submission/submission-form.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-verify.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>done</from-outcome>
+			<to-view-id>/submission/submission-thankyou.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>correct</from-outcome>
+			<to-view-id>/submission/submission-sources.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>login</from-outcome>

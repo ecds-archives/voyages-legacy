@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Submission - step 1</title>
+	<title>Sources for submission</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
 	<link href="../admin/main.css" rel="stylesheet" type="text/css">
@@ -26,7 +26,9 @@
 			<td class="step-indicator-right">Finish</td>
 		</tr>
 	</table>
-
+	
+	<br>
+	
 	<h1>Specify sources for your submission</h1>
 	
 	<br>
@@ -248,7 +250,7 @@
 	<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==-1}">
 		<h:commandButton value="< Previous" action="back"/>
 		<h:commandButton value="Save & logout" action="#{SubmissionBean.saveStateSources}"/>
-		<h:commandButton value="Submit" action="#{SubmissionBean.submit}"/>
+		<h:commandButton value="Next > " action="done"/>
 	</t:htmlTag>
 </h:form>
 </f:view>

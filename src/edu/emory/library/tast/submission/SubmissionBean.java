@@ -76,6 +76,8 @@ public class SubmissionBean
 	private Values gridValues = null;
 	private Values slaveValues = null;
 	
+	private SubmissionVerifyBean verifyBean;
+	
 	private RowGroup[] rowGroups;
 
 	private Integer lookupVoyageId = null;
@@ -277,7 +279,7 @@ public class SubmissionBean
 		
 		gridValues = new Values();
 		slaveValues = new Values();
-
+		
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
 		
@@ -314,7 +316,7 @@ public class SubmissionBean
 		
 		gridValues = new Values();
 		slaveValues = new Values();
-
+		
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
 
@@ -1007,9 +1009,9 @@ public class SubmissionBean
 						val.setErrorMessage("Error in value!");
 					}
 					if (val.hasEditableNote()) {
-						notes.put(attrs[i].getName(), val.getNote().trim());
+						notes.put(attribute.getName(), val.getNote().trim());
 					}
-					Object[] vals = attrs[i].getValues(sess, val);
+					Object[] vals = attribute.getValues(sess, val);
 					for (int k = 0; k < vals.length; k++) {
 						voyage.setAttrValue(attribute.getAttribute()[k].getName(), vals[k]);
 					}
@@ -1075,6 +1077,7 @@ public class SubmissionBean
 			t.commit();
 			session.close();
 		}
+		this.getColumns();
 	}
 	
 	public Row[] getRowsSlave() {
@@ -1150,6 +1153,15 @@ public class SubmissionBean
 	
 	public Map getFieldTypesSlave() {
 		return SubmissionDictionaries.simpleFieldTypes;
+	}
+	
+	public SubmissionVerifyBean getVerifyBean() {
+		return verifyBean;
+	}
+
+	public void setVerifyBean(SubmissionVerifyBean verifyBean) {
+		this.verifyBean = verifyBean;
+		this.verifyBean.setSubmissionBean(this);
 	}
 	
 }

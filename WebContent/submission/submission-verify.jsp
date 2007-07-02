@@ -10,6 +10,7 @@
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
+	<link href="../admin/main.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/utils.js" type="text/javascript" langiage="javascript"></script>
 	<script src="../scripts/grid-editor.js" type="text/javascript" langiage="javascript"></script>
 </head>
@@ -20,43 +21,53 @@
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="step-indicator-left">Type of contribution</td>
-			<td class="step-indicator-active-middle">Your voyage information</td>
+			<td class="step-indicator-middle">Your voyage information</td>
 			<td class="step-indicator-middle">Your sources</td>
-			<td class="step-indicator-middle">Summary</td>
+			<td class="step-indicator-active-middle">Verification</td>
 			<td class="step-indicator-right">Finish</td>
 		</tr>
 	</table>
 
 	<br>
-
-	<h1>Edit voyage information</h1>
+	
+	<h1>Verify submitted information</h1>
 	
 	<br>
-	
+
 	<s:gridEditor 
 		id="grid"
-		rows="#{SubmissionBean.rows}"
-		columns="#{SubmissionBean.columns}"
-		values="#{SubmissionBean.values}"
-		fieldTypes="#{SubmissionBean.fieldTypes}"
-		rowGroups="#{SubmissionBean.rowGroups}"
-		expandedGroups="#{SubmissionBean.expandedGridRows}" />
+		rows="#{SubmissionVerifyBean.verifyRows}"
+		columns="#{SubmissionVerifyBean.verifyColumns}"
+		values="#{SubmissionVerifyBean.verifyValues}"
+		fieldTypes="#{SubmissionVerifyBean.fieldTypes}"
+		rowGroups="#{SubmissionVerifyBean.verifyRowGroups}"
+		expandedGroups="#{SubmissionVerifyBean.verifyExpandedGridRows}" />
 	
-	<br>
-		
+	<br>	
+	
 	<s:gridEditor 
 		id="grid-slave"
-		rows="#{SubmissionBean.rowsSlave}"
-		columns="#{SubmissionBean.columnsSlave}"
-		values="#{SubmissionBean.valuesSlave}"
-		rowGroups="#{SubmissionBean.rowGroupsSlave}"
-		fieldTypes="#{SubmissionBean.fieldTypesSlave}"
-		expandedGroups="#{SubmissionBean.expandedGridRowsSlave}" />
+		rows="#{SubmissionVerifyBean.verifyRowsSlave}"
+		columns="#{SubmissionVerifyBean.verifyColumnsSlave}"
+		values="#{SubmissionVerifyBean.verifyValuesSlave}"
+		rowGroups="#{SubmissionVerifyBean.verifyRowGroupsSlave}"
+		fieldTypes="#{SubmissionVerifyBean.fieldTypesSlave}"
+		expandedGroups="#{SubmissionVerifyBean.verifyExpandedGridRowsSlave}" />
 
+	<br>
+	<br>
+	
+	<h1>Verify submitted sources</h1>
+	
+	<br>
+	
+	<s:grid id="sources" 
+					columns="#{SourcesBean.columns}"
+					rows="#{SourcesBean.rows}" />
+					
 	<div style="margin-top: 10px; margin-bottom: 10px;">
-		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>
-		<h:commandButton value="Save & logout" action="#{SubmissionBean.saveStateSubmission}"/>
-		<h:commandButton value="Next > " action="#{SubmissionBean.toSources}"/>
+		<h:commandButton value="< Correct information" action="correct"/>
+		<h:commandButton value="Submit" action="#{SubmissionBean.submit}"/>
 	</div>
 
 </h:form>
