@@ -32,8 +32,9 @@
 	<br>
 	
 	<div style="width: 400px;">
-	The submission process has been completed. Your submission
-	has been stored in the system, and it soon reviewed.
+	Thank you very much for your contribution. Your submission is now stored in the system and soon will be 
+	reviewed by the Editorial Board. We will contact you by e-mail once the review process is complete.<br>
+	Note: the website will be updated to incorporate new voyage information in three-year intervals, beginning in 2011.
 	</div>
 	
 	<h:commandLink value="Submit next request" action="#{SubmissionBean.submitNext}"/>

@@ -1105,6 +1105,7 @@ public class SubmissionBean
 		}
 		for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
 			rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i], SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics", true);
+			rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length].setNoteEnabled(true);
 		} 
 		return rows;
 	}

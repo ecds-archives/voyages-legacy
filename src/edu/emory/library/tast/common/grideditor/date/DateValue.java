@@ -135,7 +135,7 @@ public class DateValue extends Value
 	{
 		if (day == null)
 		{
-			return "";
+			return "DD";
 		}
 		else
 		{
@@ -158,7 +158,7 @@ public class DateValue extends Value
 	{
 		if (month == null)
 		{
-			return "";
+			return "MM";
 		}
 		else
 		{
@@ -181,7 +181,7 @@ public class DateValue extends Value
 	{
 		if (year == null)
 		{
-			return "";
+			return "YYYY";
 		}
 		else
 		{

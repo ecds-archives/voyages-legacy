@@ -76,12 +76,14 @@ public class DateAdapter extends Adapter
 				"'" + row.getName() + "', " +
 				"'" + column.getName() + "')";
 		
-		// day
+		// year
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getYearFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getYearOrEmpty(), null);
 		writer.writeAttribute("class", "grid-editor-date-year", null);
+		writer.writeAttribute("onfocus", "if (this.value == 'YYYY') this.value=''", null);
+		writer.writeAttribute("onblur", "if (this.value == '') this.value='YYYY'", null);
 		if (invokeCompare)
 		{
 			writer.writeAttribute("onkeyup", compareJS, null);
@@ -95,6 +97,8 @@ public class DateAdapter extends Adapter
 		writer.writeAttribute("name", getMonthFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getMonthOrEmpty(), null);
 		writer.writeAttribute("class", "grid-editor-date-month", null);
+		writer.writeAttribute("onfocus", "if (this.value == 'MM') this.value=''", null);
+		writer.writeAttribute("onblur", "if (this.value == '') this.value='MM'", null);
 		if (invokeCompare)
 		{
 			writer.writeAttribute("onkeyup", compareJS, null);
@@ -102,12 +106,14 @@ public class DateAdapter extends Adapter
 		}
 		writer.endElement("input");
 
-		// year
+		// day
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getDayFieldName(inputPrefix), null);
 		writer.writeAttribute("value", dateValue.getDayOrEmpty(), null);
 		writer.writeAttribute("class", "grid-editor-date-day", null);
+		writer.writeAttribute("onfocus", "if (this.value == 'DD') this.value=''", null);
+		writer.writeAttribute("onblur", "if (this.value == '') this.value='DD'", null);
 		if (invokeCompare)
 		{
 			writer.writeAttribute("onkeyup", compareJS, null);

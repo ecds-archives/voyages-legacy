@@ -66,5 +66,7 @@ abstract public class Value
 	{
 		this.pastNotes = readOnlyNotes;
 	}
+
+	public abstract boolean isEmpty();
 	
 }

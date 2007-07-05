@@ -257,4 +257,8 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 		return this.userCategory.isIn(category);
 	}
 
+	public Attribute getQueryAttribute() {
+		return this.attributes[0];
+	}
+
 }

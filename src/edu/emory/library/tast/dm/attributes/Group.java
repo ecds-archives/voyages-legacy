@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.Searchables;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
+import edu.emory.library.tast.database.tabscommon.StatisticalAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 
@@ -41,9 +42,13 @@ public class Group {
 	private VisibleAttributeInterface[] visibleAttributesAll;
 
 	private Map visibleAttributesbyUserCategories = new HashMap();
+	
+	private VisibleAttributeInterface[] statisticalAttributesAll;
+	
+	private static Map statisticalAttributes = new HashMap();
 
 	public Group(String id, String userLabel, SearchableAttribute[] all,
-			VisibleAttributeInterface[] visible) {
+			VisibleAttributeInterface[] visible, VisibleAttributeInterface[] statistical) {
 		this.id = id;
 		this.userLabel = userLabel;
 		this.searchableAttributesAll = all;
@@ -53,6 +58,10 @@ public class Group {
 		this.visibleAttributesAll = visible;
 		if (this.visibleAttributesAll == null) {
 			this.visibleAttributesAll = new VisibleAttributeInterface[] {};
+		}
+		this.statisticalAttributesAll = statistical;
+		if (this.statisticalAttributesAll == null) {
+			this.statisticalAttributesAll = new VisibleAttributeInterface[] {};
 		}
 		splitByUserCategories();
 	}
@@ -141,6 +150,10 @@ public class Group {
 	public VisibleAttributeInterface[] getAllVisibleAttributes() {
 		return visibleAttributesAll;
 	}
+	
+	public VisibleAttributeInterface[] getAllStatisticalAttributes() {
+		return statisticalAttributesAll;
+	}
 
 	public VisibleAttributeInterface[] getVisibleAttributesInUserCategory(
 			UserCategory category) {
@@ -190,7 +203,8 @@ public class Group {
 			// locate <searchable-attributes>
 			NodeList xmlAttrTypes = xmlGroup.getChildNodes();
 			NodeList xmlAttrs = null;
-			VisibleAttributeInterface[] visibleAttrs = null;
+			List visibleAttrs = new ArrayList();
+			List statisticalAttrs = new ArrayList();
 			SearchableAttribute[] searchableAttrs = null;
 
 			for (int k = 0; k < xmlAttrTypes.getLength(); k++) {
@@ -218,10 +232,9 @@ public class Group {
 				}
 				if ("table-attributes".equals(xmlAttrType.getNodeName())) {
 					xmlAttrs = xmlAttrType.getChildNodes();
-					visibleAttrs = new VisibleAttributeInterface[xmlAttrs.getLength()];
 					for (int j = 0; j < xmlAttrs.getLength(); j++) {
 						Node xmlAttr = xmlAttrs.item(j);
-						if (xmlAttr.getNodeType() != Node.COMMENT_NODE) {
+						if (xmlAttr.getNodeType() != Node.COMMENT_NODE && xmlAttr.getNodeName().equals("table-attribute")) {
 							String attrId = xmlAttr.getAttributes()
 									.getNamedItem("id").getNodeValue();
 							VisibleAttributeInterface attr = VisibleAttribute
@@ -232,15 +245,29 @@ public class Group {
 												+ id
 												+ "' contains a nonexistent attribute '"
 												+ attrId + "'");
-							visibleAttrs[j] = attr;
+							visibleAttrs.add(attr);
+							statisticalAttrs.add(attr);
+							statisticalAttributes.put(attr.getName(), attr);
+						}
+						if (xmlAttr.getNodeType() != Node.COMMENT_NODE && xmlAttr.getNodeName().equals("statistical-attribute")) {
+							String attrId = xmlAttr.getAttributes().getNamedItem("id").getNodeValue();
+							String function = xmlAttr.getAttributes().getNamedItem("function").getNodeValue();
+							String attribute = xmlAttr.getAttributes().getNamedItem("attribute").getNodeValue();
+							String label = xmlAttr.getAttributes().getNamedItem("label").getNodeValue();
+							String type = xmlAttr.getAttributes().getNamedItem("type").getNodeValue();
+							String[] attributes = attribute.split(",");
+							
+							VisibleAttributeInterface attr = new StatisticalAttribute(attrId, label, type, function, attributes);
+							statisticalAttrs.add(attr);
+							statisticalAttributes.put(attr.getName(), attr);
 						}
 					}
 				}
 
 			}
-
 			Group group = new Group(id, userLabel, searchableAttrs,
-					visibleAttrs);
+					(VisibleAttributeInterface[])visibleAttrs.toArray(new VisibleAttributeInterface[] {}),
+					(VisibleAttributeInterface[])statisticalAttrs.toArray(new VisibleAttributeInterface[] {}));
 
 			// add it to our collection
 			groups[i] = group;
@@ -282,6 +309,10 @@ public class Group {
 
 	public String toString() {
 		return this.userLabel == null ? this.id : this.userLabel;
+	}
+	
+	public static VisibleAttributeInterface getStatisticalAttribute(String name) {
+		return (VisibleAttributeInterface) statisticalAttributes.get(name);
 	}
 
 }

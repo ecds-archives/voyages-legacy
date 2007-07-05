@@ -43,7 +43,7 @@ public class QueryConditionDate extends QueryConditionRange
 	private String leYear;
 	private String eqMonth;
 	private String eqYear;
-	private boolean[] selectedMonths = null;
+	private boolean[] selectedMonths = new boolean[] {false,false,false,false,false,false,false,false,false, false,false, false};
 	
 	private transient boolean noOfSelectedMonthsDetermined = false; 
 	private transient int noOfSelectedMonths; 

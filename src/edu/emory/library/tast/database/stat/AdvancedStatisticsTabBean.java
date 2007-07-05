@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.TastResource;
@@ -19,6 +21,7 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -158,7 +161,7 @@ public class AdvancedStatisticsTabBean {
 	/**
 	 * Current attribute of x axis.
 	 */
-	private String xaxis;
+	private VisibleAttributeInterface xaxis;
 
 	/**
 	 * Current attribute on y axis (when adding to series list).
@@ -275,7 +278,7 @@ public class AdvancedStatisticsTabBean {
 	public AdvancedStatisticsTabBean() {
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slaximp"), "sum"));
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slamimp"), "sum"));
-		this.xaxis = VisibleAttribute.getAttribute("yearam").getName();
+		this.xaxis = VisibleAttribute.getAttribute("yearam");
 		this.statReady = new Boolean(true);
 	}
 	
@@ -303,7 +306,7 @@ public class AdvancedStatisticsTabBean {
 		
 		// We will use "v" prefix for Voyage object.
 		Conditions localCondition = (Conditions)this.conditions.clone();
-		localCondition.addCondition(Voyage.getAttribute(this.xaxis), null, Conditions.OP_IS_NOT);
+		localCondition.addCondition(this.xaxis.getQueryAttribute(), null, Conditions.OP_IS_NOT);
 		
 		// We will need join condition (to join VoyageIndex and Voyage).
 		//localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
@@ -311,7 +314,7 @@ public class AdvancedStatisticsTabBean {
 		QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localCondition);
 
 		// Get xAxis - consider attribute type (Dictionary, Number...)
-		Attribute xAxis = generator.getXAxisSelectOperator(Voyage.getAttribute(this.xaxis));
+		Attribute xAxis = generator.getXAxisSelectOperator(this.xaxis.getQueryAttribute());
 
 		// Set group by only if aggregates are enabled
 		if (this.aggregate.booleanValue()) {
@@ -356,7 +359,7 @@ public class AdvancedStatisticsTabBean {
 		int sel = Integer.parseInt(this.selectedChart);
 		AbstractChartGenerator generator = null;
 		String className = "edu.emory.library.tast.database.stat.charts." + chartGenerators[sel];
-		Attribute attr = Voyage.getAttribute(this.xaxis);
+		Attribute attr = this.xaxis.getQueryAttribute();
 		try {
 			// Invoke new AbstractChartGenerator(Attribute xAxis)
 			Class clazz = Class.forName(className);
@@ -687,7 +690,7 @@ public class AdvancedStatisticsTabBean {
 	 * @return
 	 */
 	public String getXaxis() {
-		return xaxis;
+		return xaxis.getName();
 	}
 
 	/**
@@ -699,7 +702,7 @@ public class AdvancedStatisticsTabBean {
 		if (xaxis != null && !xaxis.equals(this.xaxis)) {
 			this.neededQuery = true;
 		}
-		this.xaxis = xaxis;
+		this.xaxis = Group.getStatisticalAttribute(xaxis);
 	}
 
 	/**
@@ -707,32 +710,21 @@ public class AdvancedStatisticsTabBean {
 	 * 
 	 * @return List of SelectItems
 	 */
-	public List getVoyageSelectedAttributes() {
+	public SelectItem[] getVoyageSelectedAttributes() {
 
-		ArrayList list = new ArrayList();
-		// Look through attributes
-		for (int i = 0; i < attributes.length; i++) {
-			if (attributes[i].getAttributes().length != 1) {
-				continue;
+		Group[] groups = Group.getGroups();
+		SelectItem[] jsfGroups = new SelectItem[groups.length + 1];
+		jsfGroups[0] = new SelectItem("none", "Not selected");
+		for (int i = 0; i < groups.length; i++) {			
+			VisibleAttributeInterface[] attributes = groups[i].getAllStatisticalAttributes();
+			SelectItem[] items = new SelectItem[attributes.length]; 
+			for (int j = 0; j < items.length; j++) {
+				items[j] = new SelectItem(attributes[j].getName(), attributes[j].getUserLabelOrName());
 			}
-			boolean ok = false;
-			ok = true;
-			if (ok) {
-				String outString = null;
-				if (attributes[i].getUserLabel() == null || 
-						attributes[i].getUserLabel().equals("")) {
-					outString = attributes[i].getName();
-				} else {
-					outString = attributes[i].getUserLabel();
-				}
-				list.add(new ComparableSelectItem(attributes[i].getName(), outString));
-			}
+			jsfGroups[i + 1] = new SelectItemGroup(groups[i].getUserLabel(), null, true, items);
 		}
 
-		// Sort output
-		Collections.sort(list);
-
-		return list;
+		return jsfGroups;
 	}
 
 	/**
@@ -742,26 +734,23 @@ public class AdvancedStatisticsTabBean {
 	 */
 	public List getVoyageNumericAttributes() {
 
-		voyageAttributes = new ArrayList();
-		for (int i = 0; i < attributes.length; i++) {
-			VisibleAttributeInterface attr = attributes[i];
-			if (attr.getType().equals(VisibleAttributeInterface.NUMERIC_ATTRIBUTE) &&
-					attr.getAttributes().length == 1) {
-				String outString = attr.toString();
-				// if (attr.getUserLabel() == null
-				// || attr.getUserLabel().equals("")) {
-				// outString = attributes[i];
-				// } else {
-				// outString = attr.getUserLabel();
-				// }
-
-				voyageAttributes.add(new ComparableSelectItem(attributes[i].getAttributes()[0].getName(), outString));
-
+		Group[] groups = Group.getGroups();
+		List jsfGroups = new ArrayList();
+		jsfGroups.add(new SelectItem("none", "Not selected"));
+		for (int i = 0; i < groups.length; i++) {			
+			VisibleAttributeInterface[] attributes = groups[i].getAllStatisticalAttributes();
+			List list = new ArrayList();
+			for (int j = 0; j < attributes.length; j++) {
+				if (attributes[j].getType().equals(attributes[j].NUMERIC_ATTRIBUTE)) {
+					list.add(new SelectItem(attributes[j].getName(), attributes[j].getUserLabelOrName()));
+				}
+			}
+			if (list.size() != 0) {
+				jsfGroups.add(new SelectItemGroup(groups[i].getUserLabel(), null, true, (SelectItem[])list.toArray(new SelectItem[] {})));
 			}
 		}
-		Collections.sort(this.voyageAttributes);
 
-		return this.voyageAttributes;
+		return jsfGroups;
 
 	}
 
@@ -843,7 +832,7 @@ public class AdvancedStatisticsTabBean {
 	 *            y axis attribute
 	 */
 	public void setYaxis(String yaxis) {
-		this.yaxis = VisibleAttribute.getAttribute(yaxis);
+		this.yaxis = Group.getStatisticalAttribute(yaxis);
 	}
 
 	/**

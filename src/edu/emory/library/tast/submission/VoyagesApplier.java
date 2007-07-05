@@ -333,6 +333,7 @@ public class VoyagesApplier {
 						toBeFormatted[k] = toVals[n].getAttrValue(attribute.getAttribute()[k].getName());
 					}
 					Value value = attribute.getValue(toBeFormatted);
+					value.setNote((String) attributeNotes[n].get(attribute.getName()));
 					valuesSlave.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + (n != toVals.length - 1 ? "-" + n : "") , value);
 				}
 			}
@@ -382,28 +383,39 @@ public class VoyagesApplier {
 	}
 
 	private Column[] getMergeColumns(SubmissionMerge submission, boolean editor) {
-		Column[] cols; 
-		if (editor) {
-			cols = new Column[2 + this.editRequests.length];
-		} else {
-			cols = new Column[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
-		}
-		int i;
-		for (i = 0; i < this.editRequests.length; i++) {
-			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, MERGE_VOYAGE_LABEL + " #" + (i + 1), true, DECIDED_VOYAGE, COPY_LABEL, false);
-		}
-		cols[i++] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL, false);
-		if (!editor) {
-			Iterator iter = submission.getSubmissionEditors().iterator();
-			for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
-				SubmissionEditor submissionEditor = (SubmissionEditor)iter.next();
-				cols[i] = new Column(EDITOR_CHOICE + "_" + j, 
-									   EDITOR_CHOICE_LABEL + " " + submissionEditor.getUser().getUserName() + "(" + (submissionEditor.isFinished() ? "Finished": "Not finished") + ")", 
-									   true, DECIDED_VOYAGE, COPY_LABEL, false);
-				cols[i++].setActions(new ColumnAction[] {new ColumnAction(REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(), "Remove")});
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		Column[] cols;
+		try {
+			if (editor) {
+				cols = new Column[2 + this.editRequests.length];
+			} else {
+				cols = new Column[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
 			}
+			int i;
+			for (i = 0; i < this.editRequests.length; i++) {
+				EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
+				cols[i] = new Column(CHANGED_VOYAGE + "_" + i, "Voyageid " + eV.getVoyage().getVoyageid(), true,
+						DECIDED_VOYAGE, COPY_LABEL, false);
+			}
+			cols[i++] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true, DECIDED_VOYAGE, COPY_LABEL, false);
+			if (!editor) {
+				Iterator iter = submission.getSubmissionEditors().iterator();
+				for (int j = 0; j < submission.getSubmissionEditors().size(); j++) {
+					SubmissionEditor submissionEditor = (SubmissionEditor) iter.next();
+					cols[i] = new Column(EDITOR_CHOICE + "_" + j, EDITOR_CHOICE_LABEL + " "
+							+ submissionEditor.getUser().getUserName() + "("
+							+ (submissionEditor.isFinished() ? "Finished" : "Not finished") + ")", true,
+							DECIDED_VOYAGE, COPY_LABEL, false);
+					cols[i++].setActions(new ColumnAction[] { new ColumnAction(REMOVE_EDITOR_ACTION + "_"
+							+ submissionEditor.getId(), "Remove") });
+				}
+			}
+			cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false, true);
+		} finally {
+			t.commit();
+			session.close();
 		}
-		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false, true);
 		return cols;
 	}
 
@@ -499,6 +511,7 @@ public class VoyagesApplier {
 				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
 				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++) {
 					rows[i] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length] + "-" + (i / SLAVE_CHAR_ROWS.length), SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length], null, "characteristics-" + (i / SLAVE_CHAR_ROWS.length), true, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+					rows[i].setNoteEnabled(true);
 				}
 			} else {
 				if (this.adminBean.getAuthenticateduser().isEditor()) {
@@ -509,10 +522,12 @@ public class VoyagesApplier {
 				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
 				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++) {
 					rows[i] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length] + "-" + (int)(i / (double)SLAVE_CHAR_ROWS.length), SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length], null, "characteristics-" + (i / SLAVE_CHAR_ROWS.length), true, SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+					rows[i].setNoteEnabled(true);
 				}
 			}
 			for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
 				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i], SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics", true);
+				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length].setNoteEnabled(true);
 			} 
 		} finally {
 			t.commit();
@@ -537,41 +552,41 @@ public class VoyagesApplier {
 			if (submission instanceof  SubmissionNew) {
 				if (this.adminBean.getAuthenticateduser().isEditor()) {
 					return new RowGroup[] {
-							new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested values]"),
-							new RowGroup("characteristics", "Slaves (characteristics) [Your choice]")
+							new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested voyage]"),
+							new RowGroup("characteristics", "Slaves (characteristics) [Final decision]")
 					};
 				} else {
 					RowGroup[] response = new RowGroup[2 + submission.getSubmissionEditors().size()];
-					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original values]"); 
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Suggested voyage]"); 
 					Iterator iter = submission.getSubmissionEditors().iterator();
 					for (int i = 1; i < response.length - 1; i++) {
 						SubmissionEditor editor = (SubmissionEditor) iter.next();
-						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Reviewer's choice (by " + editor.getUser().getUserName() + ")]");
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggestion of " + editor.getUser().getUserName() + "]");
 					}
-					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Final decision]");
 					return response;
 				}
 			} else if (submission instanceof SubmissionEdit) {
 				if (this.adminBean.getAuthenticateduser().isEditor()) {
 					RowGroup[] response = new RowGroup[2 + this.editRequests.length];
-					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original values]"); 
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original voyage]"); 
 					for (int i = 1; i < response.length - 1; i++) {
-						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Submitted values]");
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested change #" + i + "]");
 					}
-					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Final decision]");
 					return response;
 				} else {
 					RowGroup[] response = new RowGroup[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
-					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original values]"); 
+					response[0] = new RowGroup("characteristics-0", "Slaves (characteristics) [Original voyage]"); 
 					for (int i = 1; i < this.editRequests.length + 1; i++) {
-						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Submitted values]");
+						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Suggested change #" + i + "]");
 					}
 					Iterator iter = submission.getSubmissionEditors().iterator();
 					for (int i = this.editRequests.length; i < this.editRequests.length + submission.getSubmissionEditors().size(); i++) {
 						SubmissionEditor editor = (SubmissionEditor) iter.next();
-						response[i + 1] = new RowGroup("characteristics-" + (i + 1), "Slaves (characteristics) [Reviewer's choice (by " + editor.getUser().getUserName() + ")]");
+						response[i + 1] = new RowGroup("characteristics-" + (i + 1), "Slaves (characteristics) [Suggestion of " + editor.getUser().getUserName() + "]");
 					}
-					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Final decision]");
 					return response;
 				}
 			} else {
@@ -581,8 +596,8 @@ public class VoyagesApplier {
 						EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
 						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Voyageid " + eV.getVoyage().getVoyageid() + "]");
 					}
-					response[response.length - 2] = new RowGroup("characteristics-" + (response.length - 2), "Slaves (characteristics) [Submitted values]");
-					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					response[response.length - 2] = new RowGroup("characteristics-" + (response.length - 2), "Slaves (characteristics) [Suggested voyage]");
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Final decision]");
 					return response;
 				} else {
 					RowGroup[] response = new RowGroup[2 + this.editRequests.length + submission.getSubmissionEditors().size()];
@@ -590,13 +605,13 @@ public class VoyagesApplier {
 						EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[i]);
 						response[i] = new RowGroup("characteristics-" + i, "Slaves (characteristics) [Voyageid " + eV.getVoyage().getVoyageid() + "]");
 					}
-					response[this.editRequests.length] = new RowGroup("characteristics-" + (this.editRequests.length), "Slaves (characteristics) [Submitted values]");
+					response[this.editRequests.length] = new RowGroup("characteristics-" + (this.editRequests.length), "Slaves (characteristics) [Suggested voyage]");
 					Iterator iter = submission.getSubmissionEditors().iterator();
 					for (int i = this.editRequests.length + 1; i < this.editRequests.length + submission.getSubmissionEditors().size() + 1; i++) {
 						SubmissionEditor editor = (SubmissionEditor) iter.next();
-						response[i] = new RowGroup("characteristics-" + (i), "Slaves (characteristics) [Reviewer's choice (by " + editor.getUser().getUserName() + ")]");
+						response[i] = new RowGroup("characteristics-" + (i), "Slaves (characteristics) [Suggestion of " + editor.getUser().getUserName() + "]");
 					}
-					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Your choice]");
+					response[response.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [Final decision]");
 					return response;
 				}
 			}

@@ -53,5 +53,9 @@ public class ListValue extends Value
 	public boolean isCorrectValue() {
 		return true;
 	}
+
+	public boolean isEmpty() {
+		return values == null || values.length == 0;
+	}
 	
 }

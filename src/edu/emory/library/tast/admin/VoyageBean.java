@@ -72,7 +72,7 @@ public class VoyageBean {
 	public Row[] getRows() {
 		Row[] rows = new Row[attrs.length];
 		for (int i = 0; i < rows.length; i++) {
-			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i].getUserLabel(), null, attrs[i].getGroupName());
+			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i].getUserLabel(), null, attrs[i].getGroupName(), false);
 			rows[i].setNoteEnabled(true);
 		}
 		return rows;

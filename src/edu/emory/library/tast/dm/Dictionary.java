@@ -74,7 +74,7 @@ public abstract class Dictionary
 			transaction = sess.beginTransaction();
 		}
 		
-		List rigs = sess.createCriteria(clazz).addOrder(Order.asc(orderBy)).list();
+		List rigs = sess.createCriteria(clazz).addOrder(Order.asc(orderBy)).add(Restrictions.ne("name", "hidden")).list();
 		
 		if (!sessionProvided)
 		{

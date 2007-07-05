@@ -527,11 +527,13 @@ public class EstimatesSelectionBean {
 		Conditions conditionNations = new Conditions(Conditions.JOIN_OR);
 		Conditions conditionExpRegions = new Conditions(Conditions.JOIN_OR);
 		Conditions conditionImpRegions = new Conditions(Conditions.JOIN_OR);
+		Conditions conditionRegions = new Conditions(Conditions.JOIN_OR);
 
 		geographicConditions = new Conditions(Conditions.JOIN_AND);
 		geographicConditions.addCondition(conditionNations);
-		geographicConditions.addCondition(conditionExpRegions);
-		geographicConditions.addCondition(conditionImpRegions);
+		geographicConditions.addCondition(conditionRegions);
+		conditionRegions.addCondition(conditionExpRegions);
+		conditionRegions.addCondition(conditionImpRegions);
 
 		selectedNationIds = new HashSet();
 		selectedExpRegionIds = new HashSet();

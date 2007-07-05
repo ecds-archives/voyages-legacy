@@ -63,6 +63,9 @@ public abstract class GrouperSimpleDictionary extends Grouper
 	public int lookupIndex(Object[] dataRow)
 	{
 		Long nationId = (Long) dataRow[resultIndex];
+		if (nationId == null || lookupTable.get(nationId) == null) {
+			return 0;
+		}
 		return ((Integer) lookupTable.get(nationId)).intValue();
 	}
 

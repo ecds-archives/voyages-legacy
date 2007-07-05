@@ -161,4 +161,8 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		return true;
 	}
 
+	public Attribute getQueryAttribute() {
+		return this.attributes[0];
+	}
+
 }

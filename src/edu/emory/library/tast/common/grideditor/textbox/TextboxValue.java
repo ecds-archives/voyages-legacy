@@ -54,4 +54,8 @@ public class TextboxValue extends Value
 	public boolean isCorrectValue() {
 		return true;
 	}
+
+	public boolean isEmpty() {
+		return text == null || text.length() == 0;
+	}
 }

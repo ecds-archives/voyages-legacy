@@ -83,4 +83,8 @@ public class TextareaValue extends Value
 		return true;
 	}
 
+	public boolean isEmpty() {
+		return texts == null || texts.length == 0;
+	}
+
 }

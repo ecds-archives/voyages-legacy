@@ -695,21 +695,23 @@ public class GridEditorComponent extends UIComponentBase
 
 	}
 
-	private void encodeNotes(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
+	private void encodeNotes(FacesContext context, ResponseWriter writer, String mainId, Column column, Row row, Value value) throws IOException
 	{
 		
-		encodePastNotes(context, writer, mainId, column, rowName, value);
+		encodePastNotes(context, writer, mainId, column, row.getName(), value);
 		
-		if (!column.isReadOnly())
-			encodeNoteInEditableMode(context, writer, mainId, column, rowName, value);
+		if (!column.isReadOnly() && !row.isReadOnly())
+			encodeNoteInEditableMode(context, writer, mainId, column, row.getName(), value);
 		else
-			encodeNoteInReadOnlyMode(context, writer, column, rowName, value);
+			encodeNoteInReadOnlyMode(context, writer, column, row.getName(), value);
 		
 	}
 
-	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, Row row) throws IOException
+	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, Row row, Value value) throws IOException
 	{
-
+		if (value.isEmpty()) {
+			return;
+		}
 		if (column.getCopyToColumn() != null) {
 			String onClickCopy = "GridEditorGlobals.copy(" + "'" + mainId + "', " + "'" + column.getName() + "', "
 					+ "'" + column.getCopyToColumn() + "', " + "'" + row.getName() + "')";
@@ -925,10 +927,10 @@ public class GridEditorComponent extends UIComponentBase
 							encodeErrorMessage(context, writer, columnName, rowName, value);
 						
 						if (column.isCopyToEnabled() || row.isCopyEnabled())
-							encodeCopyButton(context, writer, mainId, column, row);
+							encodeCopyButton(context, writer, mainId, column, row, value);
 
 						if (row.isNoteEnabled())
-							encodeNotes(context, writer, mainId, column, rowName, value);
+							encodeNotes(context, writer, mainId, column, row, value);
 						
 						writer.endElement("td");
 						

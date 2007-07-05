@@ -42,7 +42,6 @@ public class SubmissionPhaseListerner implements PhaseListener
 			if (!bean.isStateValidForSelectVoyagesForMerge())
 				JsfUtils.navigateTo("start");
 		}
-		
 		else if (viewId.equals("/submission/submission-form.jsp"))
 		{
 			if (bean.getAuthenticatedUser() == null) {
@@ -51,7 +50,29 @@ public class SubmissionPhaseListerner implements PhaseListener
 			if (!bean.isStateValidForForm())
 				JsfUtils.navigateTo("start");
 		}
+		else if (viewId.equals("/submission/submission-select-voyage-edit.jsp"))
+		{
+			if (bean.getAuthenticatedUser() == null) {
+				JsfUtils.navigateTo("login");
+			}
+			if (!bean.isStateValidForForm())
+				JsfUtils.navigateTo("start");
+		}
+		else if (viewId.equals("/submission/submission-select-voyages-merge.jsp"))
+		{
+			if (bean.getAuthenticatedUser() == null) {
+				JsfUtils.navigateTo("login");
+			}
+			if (!bean.isStateValidForForm())
+				JsfUtils.navigateTo("start");
+		}
 		else if (viewId.equals("/submission/submission-type.jsp"))
+		{
+			if (bean.getAuthenticatedUser() == null) {
+				JsfUtils.navigateTo("login");
+			}
+		}
+		else if (viewId.equals("/submission/submission-verify.jsp"))
 		{
 			if (bean.getAuthenticatedUser() == null) {
 				JsfUtils.navigateTo("login");
@@ -108,6 +129,13 @@ public class SubmissionPhaseListerner implements PhaseListener
 				JsfUtils.navigateTo("login");
 			}
 		}
+		else if (viewId.equals("/submission/submission-thankyou.jsp"))
+		{
+			if (bean.getAuthenticatedUser() == null) {
+				JsfUtils.navigateTo("login");
+			}
+		}
+		
 	}
 
 	public PhaseId getPhaseId()

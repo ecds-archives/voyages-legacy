@@ -108,6 +108,7 @@ public class SubmissionVerifyBean {
 					true,
 					rows[rows.length - 1 - i].getCopyToLabel(),
 					rows[rows.length - 1 - i].getCopyToRow());
+			newRow.setNoteEnabled(true);
 			rows[rows.length - 1 - i] = newRow;
 		}
 		return rows;
