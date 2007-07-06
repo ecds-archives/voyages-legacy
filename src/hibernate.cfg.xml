@@ -64,6 +64,8 @@
 		<mapping resource="edu/emory/library/tast/dm/Submission.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Revision.hbm.xml"/>
 
+		<mapping resource="edu/emory/library/tast/dm/SourceInformation.hbm.xml"/>
+
     </session-factory>
 
 </hibernate-configuration>

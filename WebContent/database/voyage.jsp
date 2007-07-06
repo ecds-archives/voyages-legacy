@@ -26,6 +26,7 @@
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 
 </head>
 <body>

@@ -129,7 +129,7 @@ public class SlavesBean {
 				return Slave.getDisembarkationCode((Port) object);
 			}
 
-			public String format(VisibleAttributeInterface attr, Object[] object) {
+			public String[] format(VisibleAttributeInterface attr, Object[] object) {
 				return null;
 			}
 

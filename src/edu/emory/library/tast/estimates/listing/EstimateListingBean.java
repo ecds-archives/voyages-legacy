@@ -69,8 +69,8 @@ public class EstimateListingBean {
 				return valuesFormat.format(new Object[] {new Long(Math.round(((Number)object).doubleValue()))});
 			}
 
-			public String format(VisibleAttributeInterface attr, Object[] object) {
-				return "";
+			public String[] format(VisibleAttributeInterface attr, Object[] object) {
+				return new String[] {""};
 			}
 			
 		});
@@ -81,8 +81,8 @@ public class EstimateListingBean {
 				return valuesFormat.format(new Object[] {new Long(Math.round((((Number)object).doubleValue())))});
 			}
 
-			public String format(VisibleAttributeInterface attr, Object[] object) {
-				return "";
+			public String[] format(VisibleAttributeInterface attr, Object[] object) {
+				return new String[] {""};
 			}
 			
 		});

@@ -43,28 +43,12 @@ public class SimpleDateAttributeFormatter extends AbstractAttributeFormatter {
 	/**
 	 * Formats array of Date values.
 	 */
-	public String format(VisibleAttributeInterface attr, Object[] object) {
-		StringBuffer buf = new StringBuffer();
-		boolean added = false;
-		buf.append("[");		
+	public String[] format(VisibleAttributeInterface attr, Object[] object) {
+		String[] ret = new String[object.length];
 		for (int i = 0; i < object.length; i++) {
-			if (object[i] != null) {
-				if (i > 0 && added) {
-					buf.append(", ");
-				}
-				buf.append("'");
-				if (object[i] instanceof Date) {
-					buf.append(dateFormat.format((Date)object[i]));
-				} else {
-					buf.append(object[i].toString());
-				}
-				buf.append("'");
-				added = true;
-			}
-
+			ret[i] = format(attr, object[i]);
 		}
-		buf.append("]");
-		return buf.toString();
+		return ret;
 	}
 
 }

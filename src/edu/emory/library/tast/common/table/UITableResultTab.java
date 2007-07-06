@@ -202,54 +202,7 @@ public class UITableResultTab extends UIOutput {
 			}
 		}
 		
-		writer.endElement("tr");				
-				
-				
-				
-// writer.startElement("table", this);
-// writer.writeAttribute("border", "0", null);
-// writer.writeAttribute("cellspacing", "0", null);
-// writer.writeAttribute("cellpadding", "0", null);
-// if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
-// writer.writeAttribute("class", "grid-header-right", null);
-// } else {
-// writer.writeAttribute("class", "grid-header", null);
-// }
-// writer.startElement("tr", this);
-//
-// writer.startElement("td", this);
-// if (populatedAttributes[i].getType().equals("NumericAttribute") && i != 0) {
-// writer.writeAttribute("class", "grid-header-text-right", null);
-// } else {
-// writer.writeAttribute("class", "grid-header-text", null);
-// }
-//				
-// writer.startElement("a", this);
-// writer.writeAttribute("href", "#", null);
-// writer.writeAttribute("onclick", jsSort, null);
-// writer.write(populatedAttributes[i].getUserLabelOrName());
-// writer.endElement("a");
-// writer.endElement("td");
-//
-// if (data.getOrderByColumn() != null
-// &&
-// data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
-//
-// //writer.startElement("td", this);
-// //writer.startElement("div", null);
-// if (data.getOrder() == QueryValue.ORDER_DESC) {
-// writer.writeAttribute("class", "grid-header-icon-desc", null);
-// //writer.write("<img src=\"up2.gif\" width=\"15\" height=\"15\">");
-// } else if (data.getOrder() == QueryValue.ORDER_ASC) {
-// writer.writeAttribute("class", "grid-header-icon-asc", null);
-// //writer.write("<img src=\"down2.gif\" width=\"15\" height=\"15\">");
-// }
-// writer.endElement("div");
-// writer.endElement("td");
-// }
-//
-// writer.endElement("tr");
-// writer.endElement("table");
+		writer.endElement("tr");
 
 
 		StringBuffer rowClass = new StringBuffer();
@@ -284,51 +237,104 @@ public class UITableResultTab extends UIOutput {
 				if (showDetails != null) writer.writeAttribute("onclick", jsClick, null);
 				Object[] values = objs[i].dataRow;
 				for (int j = 0; j < values.length; j++) {
-					String visibleLabel = null;
-					String visibleToolTop = null;
 					Object obj = values[j];
 					TableData.ColumnData columnData = (TableData.ColumnData)obj;
-					if (obj != null) {
-						if (columnData == null) {
-							visibleLabel = "empty";
-						} else if (columnData.toString().length() > TRIM_LENGTH) {
-							visibleLabel = columnData.toString().substring(0, TRIM_LENGTH) + " ...";
-							// visibleToolTop = objString.replaceAll(" ",
-							// "&nbsp;");
-							visibleToolTop = columnData.getToolTipText(data);
-						} else {
-							// visibleLabel = columnData.toString().replaceAll("
-							// ", "&nbsp;");
-							visibleLabel = columnData.toString();
-						}
-					}
 					writer.startElement("td", this);
-					if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
-						writer.writeAttribute("style", "text-align: right", null);
-					}
-					writer.writeAttribute("id", "cell_" + i + "_" + j, null);
-					if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
-					if (visibleToolTop != null) {
-						writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "', " + "'"
-								+ "cell_" + i + "_" + j + "')", null);
-						writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "')", null);
-					}
-
-					// Tooltip
-					if (visibleToolTop != null) {
-						writer.startElement("div", this);
-						writer.writeAttribute("id", "tooltip_" + i + "_" + j, null);
-						writer.writeAttribute("class", "grid-tooltip", null);
-						writer.startElement("div", this);
-						writer.write(visibleToolTop);
-						writer.endElement("div");
-						writer.endElement("div");
-					}
 					
-					if (visibleLabel != null) {						
-						writer.write(visibleLabel);						
+					if (columnData != null) {
+						String[] formatted = columnData.getDataToDisplay();
+						String[] rollovers = columnData.getRollovers();
+						
+						writer.startElement("table", this);
+						writer.writeAttribute("cellspacing", "0", null);
+						writer.writeAttribute("border", "0", null);
+						writer.writeAttribute("cellpadding", "0", null);
+						writer.writeAttribute("class", "multiline-attr-table", null);
+						for (int k = 0; k < formatted.length; k++) {
+							writer.startElement("tr", this);
+							writer.startElement("td", this);
+							writer.writeAttribute("id", "cell_" + i + "_" + j + "_" + k, null);
+							if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
+							
+							if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
+								writer.writeAttribute("style", "text-align: right", null);
+							}
+							
+							if (rollovers[k] != null) {
+								writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "', " + "'"
+										+ "cell_" + i + "_" + j + "_" + k + "')", null);
+								writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "')", null);
+								
+								writer.startElement("div", this);
+								writer.writeAttribute("id", "tooltip_" + i + "_" + j + "_" + k, null);
+								writer.writeAttribute("class", "grid-tooltip", null);
+								writer.startElement("table", this);
+								writer.writeAttribute("cellspacing", "0", null);
+								writer.writeAttribute("border", "0", null);
+								writer.writeAttribute("cellpadding", "0", null);
+								writer.startElement("tr", this);
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-11", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-12", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-13", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");								
+								writer.endElement("tr");
+								
+								
+								writer.startElement("tr", this);
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-21", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-22", null);								
+								writer.startElement("div", this);
+								writer.write(rollovers[k]);
+								writer.endElement("div");
+								writer.endElement("td");
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-23", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");								
+								writer.endElement("tr");
+								
+								
+								writer.startElement("tr", this);
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-31", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-32", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");
+								writer.startElement("td", this);
+								writer.writeAttribute("class", "bubble-33", null);
+								writer.startElement("div", this);writer.endElement("td");
+								writer.endElement("td");								
+								writer.endElement("tr");
+								writer.endElement("table");
+								
+								writer.endElement("div");
+								
+							}
+							
+							if (formatted[k] != null) {						
+								writer.write(formatted[k]);						
+							}
+							
+							writer.endElement("td");
+							writer.endElement("tr");
+						}
+						writer.endElement("table");												
 					}
-
 					writer.endElement("td");
 				}
 

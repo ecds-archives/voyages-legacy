@@ -68,6 +68,8 @@ public class TableData {
 	
 	private Attribute keyAttribute = null;
 	
+	private Map rollovers = new HashMap();
+	
 	/**
 	 * Container for raw data that is stored in data and additionalData.
 	 * 
@@ -143,14 +145,21 @@ public class TableData {
 
 		}
 
-		public String toString() {
+		public String[] getDataToDisplay() {
 			if (this.data.length == 1) {
-				return formatter.format(attribute, data[0]);
+				return new String[] {formatter.format(attribute, data[0])};
 			} else {
 				return formatter.format(attribute, data);
 			}
 		}
 
+		public String[] getRollovers() {
+			String[] rollovers = new String[data.length];
+			for (int i = 0; i < data.length; i++) {
+				rollovers[i] = TableData.this.getRollover(data[i]);
+			}
+			return rollovers;
+		}
 	}
 
 	/**
@@ -249,38 +258,6 @@ public class TableData {
 		}
 	}
 
-//	/**
-//	 * Gets all attributes for given compound attribute.
-//	 * 
-//	 * @param cAttr
-//	 * @return
-//	 */
-//	public List getAttrForCAttribute(VisibleAttribute cAttr) {
-//		ArrayList list = new ArrayList();
-//		Set attributes = cAttr.getAttributes();
-//		list.addAll(attributes);
-//		AbstractAttribute.sortByName(list);
-//		return list;
-//	}
-
-//	/**
-//	 * Gets all attributes for given group.
-//	 * 
-//	 * @param group
-//	 * @return
-//	 */
-//	public List getAttrForGroup(Group group) {
-//		ArrayList list = new ArrayList();
-//		Set cAttrs = group.getCompoundAttributes();
-//		for (Iterator iter = cAttrs.iterator(); iter.hasNext();) {
-//			CompoundAttribute element = (CompoundAttribute) iter.next();
-//			list.addAll(this.getAttrForCAttribute(element));
-//		}
-//		Set attributes = group.getAttributes();
-//		list.addAll(attributes);
-//		return list;
-//	}
-
 	/**
 	 * Gets attributes that should be used in query.
 	 * 
@@ -291,16 +268,6 @@ public class TableData {
 		
 		attributes.add(keyAttribute);
 		for (int i = 0; i < columns.size(); i++) {
-//			if (columns.get(i) instanceof Group) {
-//				Group group = (Group) columns.get(i);
-//				attributes.addAll(this.getAttrForGroup(group));
-//			} else if (columns.get(i) instanceof CompoundAttribute) {
-//				CompoundAttribute cAttr = (CompoundAttribute) columns.get(i);
-//				attributes.addAll(this.getAttrForCAttribute(cAttr));
-//			} else {
-//				Attribute attr = (Attribute) columns.get(i);
-//				attributes.add(attr);
-//			}
 			VisibleAttributeInterface attr = (VisibleAttributeInterface)columns.get(i);
 			attributes.addAll(Arrays.asList(attr.getAttributes()));
 		}
@@ -315,16 +282,6 @@ public class TableData {
 	public Attribute[] getAdditionalAttributesForQuery() {
 		ArrayList attributes = new ArrayList();
 		for (int i = 0; i < this.additionalColumns.size(); i++) {
-//			if (this.additionalColumns.get(i) instanceof Group) {
-//				Group group = (Group) this.additionalColumns.get(i);
-//				attributes.addAll(this.getAttrForGroup(group));
-//			} else if (this.additionalColumns.get(i) instanceof CompoundAttribute) {
-//				CompoundAttribute cAttr = (CompoundAttribute) this.additionalColumns.get(i);
-//				attributes.addAll(this.getAttrForCAttribute(cAttr));
-//			} else {
-//				Attribute attr = (Attribute) this.additionalColumns.get(i);
-//				attributes.add(attr);
-//			}
 			VisibleAttributeInterface attr = (VisibleAttributeInterface)additionalColumns.get(i);
 			attributes.addAll(Arrays.asList(attr.getAttributes()));
 		}
@@ -342,19 +299,6 @@ public class TableData {
 	 */
 	private Attribute[] getAttributesForColumn(List columns, int column) {
 		ArrayList attrs = new ArrayList();
-//		if (columns.get(column) instanceof Group) {
-//			// Group of attributes
-//			Group group = (Group) columns.get(column);
-//			attrs.addAll(this.getAttrForGroup(group));
-//		} else if (columns.get(column) instanceof CompoundAttribute) {
-//			// Compound attribute
-//			CompoundAttribute cAttr = (CompoundAttribute) columns.get(column);
-//			attrs.addAll(this.getAttrForCAttribute(cAttr));
-//		} else {
-//			// Simple attribute
-//			Attribute attr = (Attribute) columns.get(column);
-//			attrs.add(attr);
-//		}
 		VisibleAttributeInterface attr = (VisibleAttributeInterface)columns.get(column);
 		attrs.addAll(Arrays.asList(attr.getAttributes()));
 		return (Attribute[]) attrs.toArray(new Attribute[] {});
@@ -411,13 +355,6 @@ public class TableData {
 		Object[] tmp = getObjectTable(rawRow, rawCols);
 
 		return new ColumnData(column, tmp, this.getFormatter(column));
-
-		// //Execute appropriate formatter
-		// if (tmp.length > 1) {
-		// return this.getFormatter(column).format(tmp);
-		// } else {
-		// return this.getFormatter(column).format(tmp[0]);
-		// }
 	}
 
 	/**
@@ -539,6 +476,14 @@ public class TableData {
 
 	public Group[] loadAttrGroups() {
 		return Group.getGroups();
+	}
+
+	public void setRollover(Object object, String information) {
+		this.rollovers.put(object, information);
+	}
+	
+	public String getRollover(Object o) {
+		return (String)this.rollovers.get(o);
 	}
 
 }

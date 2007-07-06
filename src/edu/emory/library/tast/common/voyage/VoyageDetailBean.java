@@ -14,6 +14,7 @@ import edu.emory.library.tast.database.table.DetailVoyageMap;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Image;
+import edu.emory.library.tast.dm.SourceInformation;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
@@ -109,7 +110,22 @@ public class VoyageDetailBean
 		// Execute query
 		Object[] ret = qValue.executeQuery(sess);
 		this.detailData.setData(ret);
-
+		
+		//get additional info for sources
+		for (int i = 0; i < populatedAttributes.length; i++) {
+			if (populatedAttributes[i].getName().startsWith("source")) {
+				for (int j = 0; j < ret.length; j++) {						
+					if (((Object[])ret[j])[i] != null) {
+						SourceInformation info = SourceInformation.loadById(sess, (String)((Object[])ret[j])[i]);
+						if (info != null) {
+							detailData.setRollover(((Object[])ret[j])[i], info.getInformation());
+						}
+					}
+				}
+			}
+		}
+		
+		
 		// voyage id (is the last)
 		Object[] voyageValues = (Object[]) ret[0];
 		voyageId = ((Integer)(voyageValues[voyageValues.length - 1])).intValue();

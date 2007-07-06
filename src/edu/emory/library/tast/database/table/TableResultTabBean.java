@@ -22,6 +22,7 @@ import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeForma
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.dm.SourceInformation;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
@@ -185,17 +186,40 @@ public class TableResultTabBean {
 
 		QueryValue qValue = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
 
-		// Execute query
-		Object[] ret = qValue.executeQuery();
-		dataTable.setData(ret);
-
-		if (returnBasicInfo && ret.length > 0) {
-			int len = ((Object[]) ret[0]).length;
-			return new Object[][] {
-					{ VisibleAttribute.getAttribute("voyageid") },
-					{ ((Object[]) ret[0])[len - 1]} };
-		} else {
-			return new Object[][] {};
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		
+		try {
+			// Execute query
+			Object[] ret = qValue.executeQuery();
+			dataTable.setData(ret);
+	
+			//get additional info for sources
+			Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
+			for (int i = 0; i < populatedAttributes.length; i++) {
+				if (populatedAttributes[i].getName().startsWith("source")) {
+					for (int j = 0; j < ret.length; j++) {						
+						if (((Object[])ret[j])[i] != null) {
+							SourceInformation info = SourceInformation.loadById(session, (String)((Object[])ret[j])[i]);
+							if (info != null) {
+								data.setRollover(((Object[])ret[j])[i], info.getInformation());
+							}
+						}
+					}
+				}
+			}
+			
+			if (returnBasicInfo && ret.length > 0) {
+				int len = ((Object[]) ret[0]).length;
+				return new Object[][] {
+						{ VisibleAttribute.getAttribute("voyageid") },
+						{ ((Object[]) ret[0])[len - 1]} };
+			} else {
+				return new Object[][] {};
+			}
+		} finally {
+			t.commit();
+			session.close();
 		}
 	}
 
