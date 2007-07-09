@@ -41,7 +41,8 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			bean.restoreLink(new Long(permlink));
 		}
 		
-		if (viewId.equals("/resources/images.jsp") || viewId.equals("/resources/images-query.jsp")) {
+		if (viewId.equals("/resources/images.jsp") || viewId.equals("/resources/images-query.jsp") ||
+				viewId.equals("/resources/images-detail.jsp")) {
 			ImagesBean bean = (ImagesBean) fc.getApplication().createValueBinding("#{ImagesBean}").getValue(fc);
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();

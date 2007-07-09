@@ -4,6 +4,7 @@ import org.w3c.dom.Node;
 
 import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.util.EqualsUtil;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.XMLUtils;
 
 public class ImagesQuery implements XMLExportable {
@@ -97,6 +98,29 @@ public class ImagesQuery implements XMLExportable {
 	}
 	
 	public void restoreFromXML(Node entry) {
+		Node config = XMLUtils.getChildNode(entry, "config");
+		if (config != null) {
+			this.searchQueryTitle = XMLUtils.getXMLProperty(config, "searchQueryTitle");
+			this.searchQueryDescription = XMLUtils.getXMLProperty(config, "searchQueryDescription");
+			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchQueryCategory"))) {
+				this.searchQueryCategory = Long.parseLong(XMLUtils.getXMLProperty(config, "searchQueryCategory"));
+			}
+			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchQueryFrom"))) {
+				this.searchQueryFrom = new Integer(XMLUtils.getXMLProperty(config, "searchQueryFrom"));
+			}
+			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchQueryTo"))) {
+				this.searchQueryTo = new Integer(XMLUtils.getXMLProperty(config, "searchQueryTo"));
+			}
+			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchVoyageId"))) {
+				this.searchVoyageId = new Integer(XMLUtils.getXMLProperty(config, "searchVoyageId"));
+			}
+			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchPortId"))) {
+				this.searchPortId = new Long(XMLUtils.getXMLProperty(config, "searchPortId"));
+			}
+			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchRegionId"))) {
+				this.searchRegionId = new Long(XMLUtils.getXMLProperty(config, "searchRegionId"));
+			}
+		}
 	}
 	
 	public String toXML() {

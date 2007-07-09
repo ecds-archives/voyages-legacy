@@ -23,7 +23,6 @@ import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.images.GalleryImage;
-import edu.emory.library.tast.slaves.SlavesQuery;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
@@ -281,9 +280,9 @@ public class ImagesBean
 
 	public String search()
 	{
-		if (this.currentQuery.equals(this.workingQuery)) {
-			return null;
-		}
+//		if (this.currentQuery.equals(this.workingQuery)) {
+//			return null;
+//		}
 		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
 		loadGallery();
 		return "images-query";
@@ -708,7 +707,7 @@ public class ImagesBean
 		else if (selectedImageIndex - 1 + DETAIL_THUMBS_COUNT - 1 >= galleryImages.length)
 		{
 			startIndex = galleryImages.length - DETAIL_THUMBS_COUNT; 
-			endIndex = galleryImages.length - 1;
+			endIndex = galleryImages.length  - 1;
 		}
 		else
 		{
@@ -893,6 +892,15 @@ public class ImagesBean
 				ImagesQuery selection = (ImagesQuery) conf.getEntry("permlinkSlaves");
 				this.currentQuery = (ImagesQuery) selection.clone();
 				this.workingQuery = (ImagesQuery) selection.clone();
+				this.loadGallery();
+				//imageId = "0";
+				selectedImageIndex = 0;
+				if (this.getDetailThumbsImages().length != 0) {
+					imageId = this.getDetailThumbsImages()[0].getId();
+				} else {
+					imageId = "0";
+				}
+				this.loadDetail(false);
 			}
 		} finally {
 			t.commit();
