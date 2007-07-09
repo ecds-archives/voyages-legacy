@@ -30,6 +30,7 @@ import edu.emory.library.tast.dm.FateVessel;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.SourceInformation;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -89,7 +90,7 @@ public class SubmissionAttribute {
 		this.userLabel = userLabel;
 	}
 
-	public Value getValue(Object[] toBeFormatted) {
+	public Value getValue(Session session, Object[] toBeFormatted) {
 		if (type.equals(TextboxAdapter.TYPE)) {
 			if (toBeFormatted[0] == null) {
 				return new TextboxValue(null);
@@ -117,12 +118,24 @@ public class SubmissionAttribute {
 			return new TextboxFloatValue(toBeFormatted[0].toString());
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			String[] strArr = new String[toBeFormatted.length];
+			String[] sources = null;
+			if (this.attribute[0].getName().startsWith("source")) {
+				sources = new String[this.attribute.length];
+			}
 			for (int i = 0; i < strArr.length; i++) {
 				if (toBeFormatted[i] != null) {
 					strArr[i] = toBeFormatted[i].toString();
 				}
+				if (sources != null) {
+					SourceInformation info = SourceInformation.loadById(session, strArr[i]);
+					if (info != null) {
+						sources[i] = info.getInformation();
+					}
+				}
 			}
-			return new TextareaValue(strArr);
+			TextareaValue value = new TextareaValue(strArr);
+			value.setRollovers(sources);
+			return value;
 		} else if (type.equals(SubmissionBean.LOCATIONS)) {
 			if (toBeFormatted.length == 1) {
 				if (toBeFormatted[0] == null) {

@@ -8,7 +8,8 @@
 
 <s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
 
-<s:expandableBox text="#{res.database_search_selecttimeframe}">
+<s:expandableBoxSet expandedId="date">
+<s:expandableBox boxId="date" text="#{res.database_search_selecttimeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
@@ -34,6 +35,12 @@
 	</t:htmlTag>
 	
 </s:expandableBox>
+
+<s:expandableBox boxId="revision" text="#{res.database_search_selectrevision}">
+	<h:outputText value="Choose revision: " />
+	<h:selectOneMenu value="#{SearchBean.selectedRevision}"><f:selectItems value="#{SearchBean.revisions}"/></h:selectOneMenu>
+</s:expandableBox>
+</s:expandableBoxSet>
 <br>
 <s:expandableBoxSet expandedId="basic">
 <s:expandableBox boxId="basic" text="#{res.database_search_basic}">

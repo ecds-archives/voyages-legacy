@@ -103,8 +103,8 @@ public class VoyageBean {
 				for (int j = 0; j < toBeFormatted.length; j++) {
 					toBeFormatted[j] = voyage.getAttrValue(attribute.getAttribute()[j].getName());
 				}
-				Value valueOld = attrs[i].getValue(toBeFormatted);
-				Value valueNew = attrs[i].getValue(toBeFormatted);
+				Value valueOld = attrs[i].getValue(session, toBeFormatted);
+				Value valueNew = attrs[i].getValue(session, toBeFormatted);
 				values.setValue(COLUMN_OLD, attrs[i].getName(), valueOld);
 				values.setValue(COLUMN_NEW, attrs[i].getName(), valueNew);
 			}

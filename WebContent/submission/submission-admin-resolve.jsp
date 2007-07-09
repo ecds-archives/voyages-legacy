@@ -13,6 +13,7 @@
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/grid-editor.js" language="javascript" type="text/javascript"></script>
 	<link href="../admin/main.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/tooltip.js" type="text/javascript" langiage="javascript"></script>
 </head>
 <body>
 <f:view>

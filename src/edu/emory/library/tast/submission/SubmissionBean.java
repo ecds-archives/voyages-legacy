@@ -299,7 +299,7 @@ public class SubmissionBean
 				for (int k = 0; k < toBeFormatted.length; k++) {
 					toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
 				}
-				Value value = attribute.getValue(toBeFormatted);
+				Value value = attribute.getValue(session, toBeFormatted);
 				slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_old", value);
 			}
 		}
@@ -345,7 +345,7 @@ public class SubmissionBean
 					for (int k = 0; k < toBeFormatted.length; k++) {
 						toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
 					}
-					Value value = attribute.getValue(toBeFormatted);
+					Value value = attribute.getValue(session, toBeFormatted);
 					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_" + element.getVoyageId(), value);
 				}
 			}
@@ -413,7 +413,7 @@ public class SubmissionBean
 				for (int j = 0; j < toBeFormatted.length; j++) {
 					toBeFormatted[j] = voyage.getAttrValue(attribute.getAttribute()[j].getName());
 				}
-				Value value = attribute.getValue(toBeFormatted);
+				Value value = attribute.getValue(session, toBeFormatted);
 				value.setNote((String) attributeNotes.get(attrs[i].getName()));
 				gridValues.setValue(columnName, attribute.getName(), value);
 			}
@@ -430,7 +430,7 @@ public class SubmissionBean
 					for (int k = 0; k < toBeFormatted.length; k++) {
 						toBeFormatted[k] = voyage.getAttrValue(attribute.getAttribute()[k].getName());
 					}
-					Value value = attribute.getValue(toBeFormatted);
+					Value value = attribute.getValue(session, toBeFormatted);
 					value.setNote((String) attributeNotes.get(attribute.getName()));
 					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j], value);
 				}
@@ -471,7 +471,7 @@ public class SubmissionBean
 			{
 				toBeFormatted[j] = voyageAttrs[j + index];
 			}
-			gridValues.setValue(columnName, attrs[i].getName(), attrs[i].getValue(toBeFormatted));
+			gridValues.setValue(columnName, attrs[i].getName(), attrs[i].getValue(session, toBeFormatted));
 			index += attribute.getAttribute().length;
 		}
 		

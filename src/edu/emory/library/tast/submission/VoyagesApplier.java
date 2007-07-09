@@ -316,7 +316,7 @@ public class VoyagesApplier {
 				for (int j = 0; j < toBeFormatted.length; j++) {
 					toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());
 				}
-				Value value = attrs[i].getValue(toBeFormatted);
+				Value value = attrs[i].getValue(session, toBeFormatted);
 				value.setNote((String) attributeNotes[n].get(attrs[i].getName()));
 				vals.setValue(cols[n], attrs[i].getName(), value);
 			}
@@ -332,7 +332,7 @@ public class VoyagesApplier {
 					for (int k = 0; k < toBeFormatted.length; k++) {
 						toBeFormatted[k] = toVals[n].getAttrValue(attribute.getAttribute()[k].getName());
 					}
-					Value value = attribute.getValue(toBeFormatted);
+					Value value = attribute.getValue(session, toBeFormatted);
 					value.setNote((String) attributeNotes[n].get(attribute.getName()));
 					valuesSlave.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + (n != toVals.length - 1 ? "-" + n : "") , value);
 				}

@@ -24,7 +24,6 @@ import edu.emory.library.tast.common.grideditor.ColumnActionEvent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Values;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -140,6 +139,10 @@ public class AdminSubmissionBean {
 	 * Indication of final decision about submission by editor
 	 */
 	private boolean finished = false;
+
+	private static Object publishMonitor = new Object();
+
+	private boolean publishing = false;
 
 	/**
 	 * Constructor.
@@ -630,6 +633,14 @@ public class AdminSubmissionBean {
 
 	public String publish() {
 
+		synchronized (publishMonitor) {
+			if (publishing) {
+				this.message = "Publish operation is currently being processed - please be patient.";
+				return null;
+			}
+			this.publishing = true;
+		}
+		
 		if (this.revisionName == null || "".equals(this.revisionName)) {
 			this.message = "Revision name cannot be empty!";
 			return null;
@@ -650,6 +661,9 @@ public class AdminSubmissionBean {
 		}finally {
 			t.commit();
 			session.close();
+		}
+		synchronized (publishMonitor) {
+			publishing = false;
 		}
 		return null;
 	}

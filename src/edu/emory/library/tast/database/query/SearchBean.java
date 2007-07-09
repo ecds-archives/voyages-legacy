@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
 import org.w3c.dom.Node;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.MenuItem;
 import edu.emory.library.tast.common.MenuItemSection;
@@ -18,6 +20,7 @@ import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
 import edu.emory.library.tast.dm.Configuration;
+import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -49,6 +52,10 @@ public class SearchBean
 	private SearchParameters searchParameters;
 	
 	private MessageBarComponent messageBar;
+	
+	private String selectedRevision = AppConfig.getConfiguration().getString(AppConfig.DEFAULT_REVISION);
+	
+	private SelectItem[] revisions = null;
 	
 	public SearchBean()
 	{
@@ -143,7 +150,8 @@ public class SearchBean
 			boolean errors = workingQuery.addToDbConditions(false, dbConds);
 			if (errors) return;
 			
-			dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
+			//dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
+			dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(selectedRevision), Conditions.OP_EQUALS);
 			
 			searchParameters = new SearchParameters();
 			searchParameters.setConditions(dbConds);
@@ -191,7 +199,7 @@ public class SearchBean
 	{
 		
 		Conditions dbConds = new Conditions();
-		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
+		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), Conditions.OP_EQUALS);
 		workingQuery.addToDbConditions(false, dbConds);
 
 		QueryValue query = new QueryValue("Voyage", dbConds);
@@ -548,6 +556,26 @@ public class SearchBean
 			return "<storedSection id=\"" + this.sectionId + "\" />";
 		}
 		
+	}
+	
+	public String getSelectedRevision() {
+		return selectedRevision;
+	}
+	
+	public void setSelectedRevision(String selectedRevision) {
+		this.selectedRevision = selectedRevision;
+	}
+	
+	public SelectItem[] getRevisions() {
+		if (this.revisions == null) {
+			QueryValue query = new QueryValue("Revision");
+			Object[] rev = query.executeQuery();
+			this.revisions = new SelectItem[rev.length];
+			for (int i = 0; i < rev.length; i++) {
+				this.revisions[i] = new SelectItem(((Revision)rev[i]).getId().toString(), ((Revision)rev[i]).getName());
+			}
+		}
+		return this.revisions;
 	}
 
 }

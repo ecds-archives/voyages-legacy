@@ -249,6 +249,7 @@ public class UITableResultTab extends UIOutput {
 						writer.writeAttribute("cellspacing", "0", null);
 						writer.writeAttribute("border", "0", null);
 						writer.writeAttribute("cellpadding", "0", null);
+						writer.writeAttribute("style", "width: 100%;", null);
 						writer.writeAttribute("class", "multiline-attr-table", null);
 						for (int k = 0; k < formatted.length; k++) {
 							writer.startElement("tr", this);

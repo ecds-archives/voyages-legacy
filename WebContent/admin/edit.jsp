@@ -9,8 +9,10 @@
 	<title>Submission</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
+	<link href="../admin/main.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/grid-editor.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>

@@ -68,5 +68,6 @@ abstract public class Value
 	}
 
 	public abstract boolean isEmpty();
+
 	
 }

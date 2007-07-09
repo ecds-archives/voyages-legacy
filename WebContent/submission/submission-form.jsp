@@ -11,6 +11,7 @@
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
 	<script src="../scripts/utils.js" type="text/javascript" langiage="javascript"></script>
+	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/grid-editor.js" type="text/javascript" langiage="javascript"></script>
 </head>
 <body style="margin: 15px;">

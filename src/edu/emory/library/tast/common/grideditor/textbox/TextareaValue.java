@@ -7,7 +7,8 @@ public class TextareaValue extends Value
 {
 	
 	private String[] texts;
-
+	private String[] rollovers;
+	
 	public TextareaValue(String[] texts)
 	{
 		
@@ -85,6 +86,14 @@ public class TextareaValue extends Value
 
 	public boolean isEmpty() {
 		return texts == null || texts.length == 0;
+	}
+
+	public String[] getRollovers() {
+		return rollovers;
+	}
+
+	public void setRollovers(String[] rollovers) {
+		this.rollovers = rollovers;
 	}
 
 }
