@@ -42,7 +42,7 @@ public class LegendComponent extends UIComponentBase {
 		String mapTypeId = (String) params.get(getMapTypeHiddenFieldName(context));
 		if (mapTypeId != null) {
 			ValueBinding vb = this.getValueBinding("chosenMap");
-			vb.setValue(context, new Integer(mapTypeId));
+			vb.setValue(context, mapTypeId);
 		}
 		
 		String attrTypeId = (String) params.get(getAttrTypeHiddenFieldName(context));
@@ -107,7 +107,7 @@ public class LegendComponent extends UIComponentBase {
 	private void encodeMapsChoose(FacesContext context, ResponseWriter writer) throws IOException {
 
 		SelectItem[] maps = (SelectItem[]) this.getValueBinding(context, "availableMaps");
-		Integer selectedMap = (Integer)this.getValueBinding(context, "chosenMap");
+		String selectedMap = (String)this.getValueBinding(context, "chosenMap");
 		
 		if (maps != null && selectedMap != null) {
 			
@@ -131,7 +131,7 @@ public class LegendComponent extends UIComponentBase {
 			for (int i = 0; i < maps.length; i++) {
 				writer.startElement("option", this);
 				writer.writeAttribute("value", maps[i].getValue(), null);
-				if (selectedMap.intValue() == i) {
+				if (selectedMap.equals(maps[i].getValue())) {
 					writer.writeAttribute("selected", null, null);
 				}
 				writer.write(maps[i].getLabel());

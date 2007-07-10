@@ -94,7 +94,8 @@ public class MapBean {
 
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
-			queryHolder.executeQuery(session, this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
+			//queryHolder.executeQuery(session, this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
+			queryHolder.executeQuery(session, StandardMaps.getSelectedMap().contains("ports") ? 0 : 1);
 
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -154,24 +155,19 @@ public class MapBean {
 	 * Sets chosen map (regions/ports)
 	 * @param value
 	 */
-	public void setChosenMap(Integer value) {
-		if (this.chosenMap != value.intValue()) {
+	public void setChosenMap(String value) {
+		if (!value.equals(StandardMaps.getSelectedMap())) {
 			this.neededQuery = true;
 		}
-		this.chosenMap = value.intValue();
+		StandardMaps.setSelectedMapType(value);
 	}
 
-	public Integer getChosenMap() {
-		return new Integer(this.chosenMap);
+	public String getChosenMap() {
+		return StandardMaps.getSelectedMap();
 	}
 
 	public SelectItem[] getAvailableMaps() {
-		String[] maps = MAPS;
-		SelectItem[] items = new SelectItem[maps.length];
-		for (int i = 0; i < items.length; i++) {
-			items[i] = new SelectItem(new Integer(i), maps[i]);
-		}
-		return items;
+		return StandardMaps.getMapTypes();
 	}
 	
 	public ZoomLevel[] getZoomLevels() {
