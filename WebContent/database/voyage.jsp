@@ -49,13 +49,17 @@
 		<s:panelTabSet id="mainPanelSection" selectedSectionId="variables">
 		
 			<s:panelTab title="#{res.database_voyage_voyagevariables}" sectionId="variables">
-			
+				
 				<t:htmlTag value="div" styleClass="detail-title">
 					<h:outputText value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.voyageId}"/> 
 				</t:htmlTag>
 			
 				<t:htmlTag value="div" styleClass="detail-link-back">
 					<h:commandLink value="< go back" action="#{VoyageDetailBean.back}" />
+				</t:htmlTag>
+				
+				<t:htmlTag value="div" styleClass="detail-link-back">
+					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.link1}" />
 				</t:htmlTag>
 
 				<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
@@ -70,6 +74,10 @@
 			
 				<t:htmlTag value="div" styleClass="detail-link-back">
 					<h:commandLink value="< go back" action="#{VoyageDetailBean.back}" />
+				</t:htmlTag>
+
+				<t:htmlTag value="div" styleClass="detail-link-back">
+					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.link1}" />
 				</t:htmlTag>
 
 				<t:htmlTag value="table" style="border-collapse: collapse; margin: 0px 0px 0px 15px;">
@@ -114,7 +122,11 @@
 				<t:htmlTag value="div" styleClass="detail-link-back">
 					<h:commandLink value="< go back" action="#{VoyageDetailBean.back}" />
 				</t:htmlTag>
-
+				
+				<t:htmlTag value="div" styleClass="detail-link-back">
+					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.link1}" />
+				</t:htmlTag>
+				
 				<s:pictures
 					images="#{VoyageDetailBean.imagesGallery}"
 					columnsCount="5"
