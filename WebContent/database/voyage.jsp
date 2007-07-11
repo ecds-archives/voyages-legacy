@@ -46,7 +46,7 @@
 	
 	<div id="content">
 	
-		<s:panelTabSet id="mainPanelSection" selectedSectionId="variables">
+		<s:panelTabSet id="mainPanelSection" selectedSectionId="#{VoyageDetailBean.selectedTab}">
 		
 			<s:panelTab title="#{res.database_voyage_voyagevariables}" sectionId="variables">
 				

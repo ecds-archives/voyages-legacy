@@ -8,24 +8,29 @@ import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.w3c.dom.Node;
 
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.table.DetailVoyageMap;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.SourceInformation;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.images.GalleryImage;
 import edu.emory.library.tast.images.site.ImagesBean;
+import edu.emory.library.tast.images.site.ImagesQuery;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -42,6 +47,8 @@ public class VoyageDetailBean
 
 	private GalleryImage[] imagesGallery = new GalleryImage[0];
 	private String selectedImageId;
+	
+	private String selectedTab = "variables";
 	
 	public void openVoyage(long voyageIid)
 	{
@@ -223,6 +230,70 @@ public class VoyageDetailBean
 	public int getVoyageId()
 	{
 		return voyageId;
+	}
+	
+	public String link1() {
+		return null;
+	}
+	
+	public String link2() {
+		return null;
+	}
+	
+	public String link3() {
+		return null;
+	}
+	
+	public void restoreLink(Long id) {
+		Session session = HibernateUtil.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			Configuration conf = Configuration.loadConfiguration(id);
+			if (conf == null) {
+				return;
+			}
+
+			if (conf.getEntry("permlinkDetailVoyage") != null) {
+				DetailVoyageQuery selection = (DetailVoyageQuery) conf.getEntry("permlinkDetailVoyage");
+				this.selectedImageId = selection.tab;
+				openVoyage(selection.voyageIid.longValue());
+			}
+			
+		} finally {
+			t.commit();
+			session.close();
+		}
+	}
+	
+	public class DetailVoyageQuery implements XMLExportable {
+
+		public Long voyageIid;
+		public String tab;
+		
+		public void restoreFromXML(Node entry) {
+			Node config = XMLUtils.getChildNode(entry, "config");
+			if (config != null) {
+				this.voyageIid = new Long(XMLUtils.getXMLProperty(config, "voyageId"));
+				this.tab = XMLUtils.getXMLProperty(config, "tab");
+			}
+		}
+
+		public String toXML() {
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("<config ");
+			buffer.append("voyageId=\"").append(voyageIid).append("\" ");
+			buffer.append("tab=\"").append(tab).append("\" ");
+			buffer.append("/>");
+			return buffer.toString();
+		}
+	}
+
+	public String getSelectedTab() {
+		return selectedTab;
+	}
+
+	public void setSelectedTab(String selectedTab) {
+		this.selectedTab = selectedTab;
 	}
 
 }

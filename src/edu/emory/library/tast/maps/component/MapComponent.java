@@ -19,7 +19,7 @@ public class MapComponent extends UIComponentBase
 	
 	private static final int ZOOM_SLIDER_SLOT_WIDTH = 24;
 
-	private final static MapSize defaultMapSize = new MapSize(480, 320);
+	private final static MapSize defaultMapSize = new MapSize(800, 600);
 
 	private boolean zoomLevelsSet = false;
 	private ZoomLevel[] zoomLevels = null;
