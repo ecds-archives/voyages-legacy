@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.w3c.dom.Node;
 
+import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.table.DetailVoyageMap;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
@@ -30,6 +32,7 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -49,6 +52,13 @@ public class VoyageDetailBean
 	private String selectedImageId;
 	
 	private String selectedTab = "variables";
+	
+	private MessageBarComponent messageBar = null;
+	
+	/**
+	 * Provider of source rollovers.
+	 */
+	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
 	
 	public void openVoyage(long voyageIid)
 	{
@@ -123,7 +133,7 @@ public class VoyageDetailBean
 			if (populatedAttributes[i].getName().startsWith("source")) {
 				for (int j = 0; j < ret.length; j++) {						
 					if (((Object[])ret[j])[i] != null) {
-						SourceInformation info = SourceInformation.loadById(sess, (String)((Object[])ret[j])[i]);
+						SourceInformation info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
 						if (info != null) {
 							detailData.setRollover(((Object[])ret[j])[i], info.getInformation());
 						}
@@ -232,15 +242,19 @@ public class VoyageDetailBean
 		return voyageId;
 	}
 	
-	public String link1() {
-		return null;
-	}
-	
-	public String link2() {
-		return null;
-	}
-	
-	public String link3() {
+	public String saveLink() {
+		
+		Configuration conf = new Configuration();
+		DetailVoyageQuery query = new DetailVoyageQuery();
+		query.tab = selectedTab;
+		query.voyageIid = new Long(voyageIid);
+		conf.addEntry("permlinkDetailVoyage", query);
+		conf.save();
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
+		messageBar.setRendered(true);
+		
 		return null;
 	}
 	
@@ -255,7 +269,7 @@ public class VoyageDetailBean
 
 			if (conf.getEntry("permlinkDetailVoyage") != null) {
 				DetailVoyageQuery selection = (DetailVoyageQuery) conf.getEntry("permlinkDetailVoyage");
-				this.selectedImageId = selection.tab;
+				this.selectedTab = selection.tab;
 				openVoyage(selection.voyageIid.longValue());
 			}
 			
@@ -265,7 +279,7 @@ public class VoyageDetailBean
 		}
 	}
 	
-	public class DetailVoyageQuery implements XMLExportable {
+	public static class DetailVoyageQuery implements XMLExportable {
 
 		public Long voyageIid;
 		public String tab;
@@ -294,6 +308,14 @@ public class VoyageDetailBean
 
 	public void setSelectedTab(String selectedTab) {
 		this.selectedTab = selectedTab;
+	}
+
+	public MessageBarComponent getMessageBar() {
+		return messageBar;
+	}
+
+	public void setMessageBar(MessageBarComponent message) {
+		this.messageBar = message;
 	}
 
 }

@@ -45,7 +45,9 @@
 	</div>
 	
 	<div id="content">
-	
+		
+		<s:messageBar binding="#{VoyageDetailBean.messageBar}" rendered="false"/>
+		
 		<s:panelTabSet id="mainPanelSection" selectedSectionId="#{VoyageDetailBean.selectedTab}">
 		
 			<s:panelTab title="#{res.database_voyage_voyagevariables}" sectionId="variables">
@@ -59,7 +61,7 @@
 				</t:htmlTag>
 				
 				<t:htmlTag value="div" styleClass="detail-link-back">
-					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.link1}" />
+					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.saveLink}" />
 				</t:htmlTag>
 
 				<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
@@ -77,7 +79,7 @@
 				</t:htmlTag>
 
 				<t:htmlTag value="div" styleClass="detail-link-back">
-					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.link1}" />
+					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.saveLink}" />
 				</t:htmlTag>
 
 				<t:htmlTag value="table" style="border-collapse: collapse; margin: 0px 0px 0px 15px;">
@@ -124,7 +126,7 @@
 				</t:htmlTag>
 				
 				<t:htmlTag value="div" styleClass="detail-link-back">
-					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.link1}" />
+					<h:commandButton value="Get link to this page" action="#{VoyageDetailBean.saveLink}" />
 				</t:htmlTag>
 				
 				<s:pictures

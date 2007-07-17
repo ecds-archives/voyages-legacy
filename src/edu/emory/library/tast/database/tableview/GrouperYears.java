@@ -1,4 +1,4 @@
-package edu.emory.library.tast.estimates.table;
+package edu.emory.library.tast.database.tableview;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +8,7 @@ import java.util.Set;
 import edu.emory.library.tast.common.tableview.Grouper;
 import edu.emory.library.tast.common.tableview.Label;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -31,10 +32,10 @@ public class GrouperYears extends Grouper
 	{
 		if (period > 1)
 			return new FunctionAttribute("round_to_multiple",
-					new Attribute[] {Estimate.getAttribute("year"),
+					new Attribute[] {Voyage.getAttribute("yearam"),
 					new DirectValueAttribute("period", new Integer(period))});
 		else
-			return Estimate.getAttribute("year");
+			return Voyage.getAttribute("yearam");
 	}
 
 	public Attribute[] addExtraAttributes(int index)
@@ -42,8 +43,8 @@ public class GrouperYears extends Grouper
 		minYearInPeriodResultIndex = index + 0;
 		maxYearInPeriodResultIndex = index + 1;
 		return new Attribute[] {
-				new FunctionAttribute("min", new Attribute[] {Estimate.getAttribute("year")}),
-				new FunctionAttribute("max", new Attribute[] {Estimate.getAttribute("year")})};
+				new FunctionAttribute("min", new Attribute[] {Voyage.getAttribute("yearam")}),
+				new FunctionAttribute("max", new Attribute[] {Voyage.getAttribute("yearam")})};
 	}
 
 	public void initSlots(Object[] dataTable)

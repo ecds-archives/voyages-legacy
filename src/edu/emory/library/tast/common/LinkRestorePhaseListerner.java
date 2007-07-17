@@ -7,6 +7,7 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
+import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.images.site.ImagesBean;
 import edu.emory.library.tast.slaves.SlavesBean;
 import edu.emory.library.tast.util.StringUtils;
@@ -44,6 +45,20 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		if (viewId.equals("/resources/images.jsp") || viewId.equals("/resources/images-query.jsp") ||
 				viewId.equals("/resources/images-detail.jsp")) {
 			ImagesBean bean = (ImagesBean) fc.getApplication().createValueBinding("#{ImagesBean}").getValue(fc);
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map params = context.getExternalContext().getRequestParameterMap();
+			if (!params.containsKey("permlink"))
+				return;
+
+			String permlink = (String) params.get("permlink");
+			if (StringUtils.isNullOrEmpty(permlink))
+				return;
+			
+			bean.restoreLink(new Long(permlink));
+		}
+		
+		if (viewId.equals("/database/voyage.jsp")) {
+			VoyageDetailBean bean = (VoyageDetailBean) fc.getApplication().createValueBinding("#{VoyageDetailBean}").getValue(fc);
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
 			if (!params.containsKey("permlink"))

@@ -305,6 +305,16 @@
 		<managed-bean-class>edu.emory.library.tast.common.EventLineTestBean2</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>DatabaseTableBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.tableview.DatabaseTableviewBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
+	</managed-bean>	
 	
 	<managed-bean>
 		<managed-bean-name>EstimatesSelectionBean</managed-bean-name>

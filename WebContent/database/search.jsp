@@ -30,6 +30,7 @@
 	
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	<link href="../styles/timeline.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-search-tableview.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
@@ -80,6 +81,12 @@
 					<s:panelTab title="#{res.database_search_timeline}" sectionId="basic-graph">
 						<t:htmlTag value="div" styleClass="search-panel">
 							<%@ include file="search-tab-timeline.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+				
+					<s:panelTab title="#{res.database_search_tableview}" sectionId="tableview">
+						<t:htmlTag value="div" styleClass="search-panel">
+							<%@ include file="search-tab-tableview.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 				

@@ -1,4 +1,4 @@
-package edu.emory.library.tast.estimates.table;
+package edu.emory.library.tast.common.tableview;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 

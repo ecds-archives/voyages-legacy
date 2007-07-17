@@ -1,4 +1,4 @@
-package edu.emory.library.tast.estimates.table;
+package edu.emory.library.tast.database.tableview;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -10,10 +10,14 @@ import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.common.tableview.Grouper;
 import edu.emory.library.tast.common.tableview.Label;
+import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.specific.CaseNullToZeroAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
@@ -28,22 +32,23 @@ import edu.emory.library.tast.util.query.QueryValue;
  * method which generates the table is {@link #generateTableIfNecessary()}.
  * 
  */
-public class EstimatesTableBean
+public class DatabaseTableviewBean
 {
 	
 	private static final String CSS_CLASS_TD_LABEL = "tbl-label";
 	private static final String CSS_CLASS_TD_TOTAL = "tbl-total";
 	
-	private EstimatesSelectionBean selectionBean;
+	private SearchBean searchBean;
 	private Conditions conditions;
 	private boolean optionsChanged = true;
 	
 	private String rowGrouping = "years25";;
-	private String colGrouping = "nation";
+	private String colGrouping = "impRegion";
 	private boolean omitEmptyRowsAndColumns;
 	private String showMode = "exp";
 
 	private SimpleTableCell[][] table;
+	private String aggregate = "sum";
 	
 	/**
 	 * An internal method calle by {@link #refreshTable()}.
@@ -59,16 +64,9 @@ public class EstimatesTableBean
 	 * @param impAreas
 	 * @return
 	 */
-	private Grouper createGrouper(String groupBy, int resultIndex, List nations, List expRegions, List impRegions, List impAreas)
+	private Grouper createGrouper(String groupBy, int resultIndex, List expRegions, List impRegions, List impAreas)
 	{
-		if ("nation".equals(groupBy))
-		{
-			return new GrouperNations(
-					resultIndex,
-					omitEmptyRowsAndColumns,
-					nations);
-		}
-		else if ("expRegion".equals(groupBy))
+		if ("expRegion".equals(groupBy))
 		{
 			return new GrouperExportRegions(
 					resultIndex,
@@ -197,7 +195,7 @@ public class EstimatesTableBean
 	{
 		
 		// conditions from the left column (i.e. from select bean)
-		Conditions newConditions = selectionBean.getConditions();
+		Conditions newConditions = searchBean.getSearchParameters().getConditions();
 		
 		// check if we have to
 		if (!optionsChanged && newConditions.equals(conditions)) return;
@@ -209,30 +207,26 @@ public class EstimatesTableBean
 		Transaction transaction = sess.beginTransaction();
 		
 		// from select bean
-		List selectedNations = selectionBean.loadSelectedNations(sess);
-		List selectedExpRegions = selectionBean.loadSelectedExpRegions(sess);
-		List selectedImpRegions = selectionBean.loadSelectedImpRegions(sess);
-		List selectedImpAreas = selectionBean.loadSelectedImpAreas(sess);
+		//List selectedNations = selectionBean.loadSelectedNations(sess);
+		List expRegions = Region.loadAll(sess);
+		List impRegions = Region.loadAll(sess);
+		List impAreas = Area.loadAll(sess);
 		
 		// for grouping rows
-		Grouper rowGrouper = createGrouper(rowGrouping, 0,
-				selectedNations,
-				selectedExpRegions,
-				selectedImpRegions,
-				selectedImpAreas);
+		Grouper rowGrouper = createGrouper(rowGrouping, 0, expRegions, impRegions, impAreas);
 		
 		// for grouping cols
-		Grouper colGrouper = createGrouper(colGrouping, 1,
-				selectedNations,
-				selectedExpRegions,
-				selectedImpRegions,
-				selectedImpAreas);
+		Grouper colGrouper = createGrouper(colGrouping, 1, expRegions, impRegions, impAreas);
 
 		// start query
 		QueryValue query = new QueryValue(
-				new String[] {"Estimate"},
-				new String[] {"estimate"},
+				new String[] {"Voyage"},
+				new String[] {"voyage"},
 				conditions);
+		
+		//we want to restrict results so that it does not have nulls
+		conditions.addCondition(rowGrouper.getGroupingAttribute(), null, Conditions.OP_IS_NOT);
+		conditions.addCondition(colGrouper.getGroupingAttribute(), null, Conditions.OP_IS_NOT);
 
 		// set grouping in the query
 		query.setGroupBy(new Attribute[] {
@@ -244,24 +238,24 @@ public class EstimatesTableBean
 		query.addPopulatedAttribute(colGrouper.getGroupingAttribute());
 		
 		// ... and number of slaves exported
-		query.addPopulatedAttribute(
-				new FunctionAttribute("sum",
-						new Attribute[] {Estimate.getAttribute("slavExported")}));
+		query.addPopulatedAttribute(new CaseNullToZeroAttribute(
+				new FunctionAttribute(this.aggregate,
+						new Attribute[] {Voyage.getAttribute("slaximp")})));
 
 		// ... and number of slaves imported
-		query.addPopulatedAttribute(
-				new FunctionAttribute("sum",
-						new Attribute[] {Estimate.getAttribute("slavImported")}));
+		query.addPopulatedAttribute(new CaseNullToZeroAttribute(
+				new FunctionAttribute(this.aggregate,
+						new Attribute[] {Voyage.getAttribute("slamimp")})));
 
 		// row extra attributes
 		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(4);
 		for (int i = 0; i < rowExtraAttributes.length; i++)
-			query.addPopulatedAttribute(rowExtraAttributes[i]);
+			query.addPopulatedAttribute(new CaseNullToZeroAttribute(rowExtraAttributes[i]));
 		
 		// col extra attributes
 		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(4 + rowExtraAttributes.length);
 		for (int i = 0; i < colExtraAttributes.length; i++)
-			query.addPopulatedAttribute(colExtraAttributes[i]);
+			query.addPopulatedAttribute(new CaseNullToZeroAttribute(colExtraAttributes[i]));
 
 		// finally query the database 
 		Object[] result = query.executeQuery(sess);
@@ -365,12 +359,20 @@ public class EstimatesTableBean
 		}
 		
 		// labels for row totals
-		table[0][headerLeftColsCount + subCols*dataColCount + 0] = new SimpleTableCell(TastResource.getText("estimates_table_totals")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
+		if (!this.aggregate.equals("avg")) {
+			table[0][headerLeftColsCount + subCols*dataColCount + 0] = new SimpleTableCell(TastResource.getText("database_tableview_totals")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
+		} else {
+			table[0][headerLeftColsCount + subCols*dataColCount + 0] = new SimpleTableCell(TastResource.getText("database_tableview_averages")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(CSS_CLASS_TD_LABEL);
+		}
 		if (showExp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell(TastResource.getText("estimates_table_exported")).setCssClass(CSS_CLASS_TD_LABEL); 
 		if (showImp) table[headerTopRowsCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell(TastResource.getText("estimates_table_imported")).setCssClass(CSS_CLASS_TD_LABEL);
 		
 		// label for col totals
-		table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell(TastResource.getText("estimates_table_totals")).setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
+		if (!this.aggregate.equals("avg")) {
+			table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell(TastResource.getText("database_tableview_totals")).setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
+		} else {
+			table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell(TastResource.getText("database_tableview_averages")).setCssClass(CSS_CLASS_TD_LABEL).setColspan(headerLeftColsCount);
+		}
 
 		// how we want to displat it
 		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
@@ -388,8 +390,8 @@ public class EstimatesTableBean
 		{
 			
 			Object[] row = (Object[]) result[i];
-			Double exp = (Double) row[2];
-			Double imp = (Double) row[3];
+			Number exp = (Number) row[2];
+			Number imp = (Number) row[3];
 			
 			int rowIndex = rowGrouper.lookupIndex(row);
 			int colIndex = colGrouper.lookupIndex(row);
@@ -407,6 +409,17 @@ public class EstimatesTableBean
 			if (showExp) table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols*colIndex + expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{exp})); 
 			if (showImp) table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols*colIndex + impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{imp}));
 			
+		}
+		
+		if (this.aggregate.equals("avg")) {
+			for (int i = 0; i < colImpTotals.length; i++) {
+				colExpTotals[i] /= (double)dataRowCount;
+				colImpTotals[i] /= (double)dataRowCount;
+			}
+			for (int i = 0; i < rowImpTotals.length; i++) {
+				rowExpTotals[i] /= (double)dataColCount;
+				rowImpTotals[i] /= (double)dataColCount;
+			}
 		}
 		
 		// fill gaps
@@ -437,8 +450,13 @@ public class EstimatesTableBean
 		}
 		
 		// main totals
-		if (showExp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(expTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
-		if (showImp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(impTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+		if (!this.aggregate.equals("avg")) {
+			if (showExp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(expTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+			if (showImp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[]{new Double(impTotals)})).setCssClass(CSS_CLASS_TD_TOTAL);
+		} else {
+			if (showExp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + expColOffset] = new SimpleTableCell("N/A").setCssClass(CSS_CLASS_TD_TOTAL);
+			if (showImp) table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols*dataColCount + impColOffset] = new SimpleTableCell("N/A").setCssClass(CSS_CLASS_TD_TOTAL);
+		}
 
 	}
 	
@@ -452,28 +470,6 @@ public class EstimatesTableBean
 	{
 		optionsChanged = true;
 		return null;
-	}
-	
-	/**
-	 * Bound by faces-config.xml to
-	 * {@link #edu.emory.library.tast.estimates.selection.EstimatesSelectionBean}.
-	 * 
-	 * @return
-	 */
-	public EstimatesSelectionBean getSelectionBean()
-	{
-		return selectionBean;
-	}
-
-	/**
-	 * Bound by faces-config.xml to
-	 * {@link #edu.emory.library.tast.estimates.selection.EstimatesSelectionBean}.
-	 * 
-	 * @return
-	 */
-	public void setSelectionBean(EstimatesSelectionBean selectionBean)
-	{
-		this.selectionBean = selectionBean;
 	}
 
 	/**
@@ -588,6 +584,22 @@ public class EstimatesTableBean
 		t.commit();
 		session.close();
 		return null;
+	}
+
+	public SearchBean getSearchBean() {
+		return searchBean;
+	}
+
+	public void setSearchBean(SearchBean searchBean) {
+		this.searchBean = searchBean;
+	}
+	
+	public void setAggregateFunction(String aggregate) {
+		this.aggregate = aggregate;
+	}
+	
+	public String getAggregateFunction() {
+		return this.aggregate;
 	}
 
 }

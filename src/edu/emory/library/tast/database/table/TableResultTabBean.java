@@ -31,6 +31,7 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -128,6 +129,11 @@ public class TableResultTabBean {
 	private List actionsToPerform = new ArrayList();
 	
 	/**
+	 * Source information provider (for rollovers)
+	 */
+	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
+	
+	/**
 	 * Constructor.
 	 * It fills in default visible attributes in table and sets default sort column.
 	 */
@@ -200,7 +206,7 @@ public class TableResultTabBean {
 				if (populatedAttributes[i].getName().startsWith("source")) {
 					for (int j = 0; j < ret.length; j++) {						
 						if (((Object[])ret[j])[i] != null) {
-							SourceInformation info = SourceInformation.loadById(session, (String)((Object[])ret[j])[i]);
+							SourceInformation info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
 							if (info != null) {
 								data.setRollover(((Object[])ret[j])[i], info.getInformation());
 							}

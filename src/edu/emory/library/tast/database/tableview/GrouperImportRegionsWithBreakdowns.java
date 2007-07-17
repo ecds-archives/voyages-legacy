@@ -1,4 +1,4 @@
-package edu.emory.library.tast.estimates.table;
+package edu.emory.library.tast.database.tableview;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import edu.emory.library.tast.common.tableview.Label;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
@@ -32,7 +33,7 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 	public Attribute getGroupingAttribute()
 	{
 		 return new SequenceAttribute (new Attribute[] {
-					Estimate.getAttribute("impRegion"),
+					Voyage.getAttribute("mjselimp"),
 					Region.getAttribute("id")});
 	}
 
@@ -66,7 +67,7 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 		for (Iterator iter = regions.iterator(); iter.hasNext();)
 		{
 			
-			EstimatesImportRegion region = (EstimatesImportRegion) iter.next();
+			Region region = (Region) iter.next();
 			long areaId = region.getArea().getId().longValue();
 			Long regionId = region.getId();
 			
@@ -116,6 +117,9 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 	public int lookupIndex(Object[] dataRow)
 	{
 		Object regionId = dataRow[resultIndex];
+		if (lookupTable.get(regionId) == null) {
+			return 0;
+		}
 		return ((Integer) lookupTable.get(regionId)).intValue();
 	}
 

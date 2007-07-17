@@ -40,6 +40,9 @@ public class Area extends Location
 
 	public static Attribute getAttribute(String name)
 	{
+		if (!attributes.containsKey(name)) {
+			throw new RuntimeException("area attribute not defined: " + name);
+		}
 		return (Attribute)attributes.get(name);
 	}
 	

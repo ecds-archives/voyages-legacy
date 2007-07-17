@@ -37,6 +37,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.FateAttribute;
 import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
+import edu.emory.library.tast.util.SourceInformationUtils;
 
 public class SubmissionAttribute {
 	
@@ -90,7 +91,7 @@ public class SubmissionAttribute {
 		this.userLabel = userLabel;
 	}
 
-	public Value getValue(Session session, Object[] toBeFormatted) {
+	public Value getValue(Session session, Object[] toBeFormatted, SourceInformationUtils utils) {
 		if (type.equals(TextboxAdapter.TYPE)) {
 			if (toBeFormatted[0] == null) {
 				return new TextboxValue(null);
@@ -127,9 +128,11 @@ public class SubmissionAttribute {
 					strArr[i] = toBeFormatted[i].toString();
 				}
 				if (sources != null) {
-					SourceInformation info = SourceInformation.loadById(session, strArr[i]);
-					if (info != null) {
-						sources[i] = info.getInformation();
+					if (utils != null) {
+						SourceInformation info = utils.match(strArr[i]);
+						if (info != null) {
+							sources[i] = info.getInformation();
+						}	
 					}
 				}
 			}

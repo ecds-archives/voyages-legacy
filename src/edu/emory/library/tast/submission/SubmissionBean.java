@@ -31,6 +31,7 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -96,6 +97,8 @@ public class SubmissionBean
 	private User authenticatedUser = null;
 	
 	private Submission submission;
+	
+	private SourceInformationUtils sourceInformationUtils = SourceInformationUtils.createSourceInformationUtils();
 	
 	public SubmissionBean()
 	{
@@ -299,7 +302,7 @@ public class SubmissionBean
 				for (int k = 0; k < toBeFormatted.length; k++) {
 					toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
 				}
-				Value value = attribute.getValue(session, toBeFormatted);
+				Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
 				slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_old", value);
 			}
 		}
@@ -345,7 +348,7 @@ public class SubmissionBean
 					for (int k = 0; k < toBeFormatted.length; k++) {
 						toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
 					}
-					Value value = attribute.getValue(session, toBeFormatted);
+					Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
 					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_" + element.getVoyageId(), value);
 				}
 			}
@@ -413,7 +416,7 @@ public class SubmissionBean
 				for (int j = 0; j < toBeFormatted.length; j++) {
 					toBeFormatted[j] = voyage.getAttrValue(attribute.getAttribute()[j].getName());
 				}
-				Value value = attribute.getValue(session, toBeFormatted);
+				Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
 				value.setNote((String) attributeNotes.get(attrs[i].getName()));
 				gridValues.setValue(columnName, attribute.getName(), value);
 			}
@@ -430,7 +433,7 @@ public class SubmissionBean
 					for (int k = 0; k < toBeFormatted.length; k++) {
 						toBeFormatted[k] = voyage.getAttrValue(attribute.getAttribute()[k].getName());
 					}
-					Value value = attribute.getValue(session, toBeFormatted);
+					Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
 					value.setNote((String) attributeNotes.get(attribute.getName()));
 					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j], value);
 				}
@@ -471,7 +474,7 @@ public class SubmissionBean
 			{
 				toBeFormatted[j] = voyageAttrs[j + index];
 			}
-			gridValues.setValue(columnName, attrs[i].getName(), attrs[i].getValue(session, toBeFormatted));
+			gridValues.setValue(columnName, attrs[i].getName(), attrs[i].getValue(session, toBeFormatted, sourceInformationUtils));
 			index += attribute.getAttribute().length;
 		}
 		

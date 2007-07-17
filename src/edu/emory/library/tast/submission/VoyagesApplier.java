@@ -30,6 +30,7 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -118,6 +119,8 @@ public class VoyagesApplier {
 	
 	private boolean requiredReload = false;
 	private boolean requiredReloadSlave = false;
+	
+	private SourceInformationUtils sourceInformationUtils = SourceInformationUtils.createSourceInformationUtils();
 	
 	public VoyagesApplier(AdminSubmissionBean bean) {
 		this.adminBean = bean;
@@ -316,7 +319,7 @@ public class VoyagesApplier {
 				for (int j = 0; j < toBeFormatted.length; j++) {
 					toBeFormatted[j] = toVals[n].getAttrValue(attribute.getAttribute()[j].getName());
 				}
-				Value value = attrs[i].getValue(session, toBeFormatted);
+				Value value = attrs[i].getValue(session, toBeFormatted, sourceInformationUtils);
 				value.setNote((String) attributeNotes[n].get(attrs[i].getName()));
 				vals.setValue(cols[n], attrs[i].getName(), value);
 			}
@@ -332,7 +335,7 @@ public class VoyagesApplier {
 					for (int k = 0; k < toBeFormatted.length; k++) {
 						toBeFormatted[k] = toVals[n].getAttrValue(attribute.getAttribute()[k].getName());
 					}
-					Value value = attribute.getValue(session, toBeFormatted);
+					Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
 					value.setNote((String) attributeNotes[n].get(attribute.getName()));
 					valuesSlave.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + (n != toVals.length - 1 ? "-" + n : "") , value);
 				}

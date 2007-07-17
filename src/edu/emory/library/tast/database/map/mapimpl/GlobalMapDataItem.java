@@ -203,12 +203,29 @@ public class GlobalMapDataItem extends AbstractMapItem {
 			buffer.append("<div class=\"map-bubble-images\">");
 			buffer.append("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr>");
 			int thumbsCount = Math.min(THUMB_MAX_COUNT, imageUrl.length);
+			boolean[] used = new boolean[thumbsCount];
+			for (int i = 0; i < used.length; i++) {
+				used[i] = false;
+			}
 			for (int i = 0; i < thumbsCount; i++)
 			{
+				int index = i;
+				if (thumbsCount != imageUrl.length) {
+					while (true) {
+						double rand = Math.random();
+						if (rand == 1) continue;
+						int nindex = (int)(rand * (double)thumbsCount);
+						if (!used[nindex]) {
+							used[nindex] = true;
+							index = nindex;
+							break;
+						}
+					}
+				}
 				buffer.append("<td ");
 				buffer.append("class=\"").append(i < thumbsCount - 1 ? "map-bubble-image" : "map-bubble-image-last").append("\">");
 				buffer.append("<img src=\"");
-				ThumbnailServlet.appendThumbnailUrl(buffer, contextPath, imageUrl[i], THUMB_WIDTH, THUMB_HEIGHT);
+				ThumbnailServlet.appendThumbnailUrl(buffer, contextPath, imageUrl[index], THUMB_WIDTH, THUMB_HEIGHT);
 				buffer.append("\" ");
 				buffer.append("width=\"").append(THUMB_WIDTH).append("\" ");
 				buffer.append("height=\"").append(THUMB_HEIGHT).append("\" ");
@@ -216,6 +233,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 				buffer.append("</td>");
 			}
 			buffer.append("</tr></table>");
+			//buffer.append("<a href=\"\"/>See all images ></a>");
 		}
 		
 		buffer.append("</div>");

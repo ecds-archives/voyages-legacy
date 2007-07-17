@@ -18,6 +18,7 @@ import edu.emory.library.tast.submission.SubmissionAttribute;
 import edu.emory.library.tast.submission.SubmissionAttributes;
 import edu.emory.library.tast.submission.SubmissionDictionaries;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.SourceInformationUtils;
 
 public class VoyageBean {
 
@@ -38,6 +39,8 @@ public class VoyageBean {
 	private Values values;
 
 	private RowGroup[] rowGroups;
+	
+	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
 
 	public VoyageBean() {
 		List rowGroupsList = new ArrayList();
@@ -103,8 +106,8 @@ public class VoyageBean {
 				for (int j = 0; j < toBeFormatted.length; j++) {
 					toBeFormatted[j] = voyage.getAttrValue(attribute.getAttribute()[j].getName());
 				}
-				Value valueOld = attrs[i].getValue(session, toBeFormatted);
-				Value valueNew = attrs[i].getValue(session, toBeFormatted);
+				Value valueOld = attrs[i].getValue(session, toBeFormatted, sourceInfoUtils);
+				Value valueNew = attrs[i].getValue(session, toBeFormatted, sourceInfoUtils);
 				values.setValue(COLUMN_OLD, attrs[i].getName(), valueOld);
 				values.setValue(COLUMN_NEW, attrs[i].getName(), valueNew);
 			}

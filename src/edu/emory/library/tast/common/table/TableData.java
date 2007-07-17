@@ -13,6 +13,7 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
+import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
