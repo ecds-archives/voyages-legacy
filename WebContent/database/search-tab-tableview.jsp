@@ -13,6 +13,8 @@
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:selectOneMenu value="#{DatabaseTableBean.rowGrouping}">
+				<f:selectItem itemLabel="#{res.database_tableview_expports}" itemValue="expPorts" />
+				<f:selectItem itemLabel="#{res.database_tableview_impports}" itemValue="impPorts" />
 				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
 				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
 				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
@@ -29,6 +31,8 @@
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:selectOneMenu value="#{DatabaseTableBean.colGrouping}">
+				<f:selectItem itemLabel="#{res.database_tableview_expports}" itemValue="expPorts" />
+				<f:selectItem itemLabel="#{res.database_tableview_impports}" itemValue="impPorts" />
 				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
 				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
 				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
