@@ -3,6 +3,9 @@ package edu.emory.library.tast.database.tableview;
 import java.text.MessageFormat;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -12,7 +15,6 @@ import edu.emory.library.tast.common.tableview.Grouper;
 import edu.emory.library.tast.common.tableview.Label;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.dm.Area;
-import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
@@ -35,6 +37,38 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class DatabaseTableviewBean {
 
+	private static class AvailableOption {
+		
+		private Attribute[] attributes;
+		private String userLabel;
+		private String id;
+		private String[] labels;
+		
+		public AvailableOption(String id, String userLabel, Attribute[] attrs, String[] colLabels) {
+			this.id = id;
+			this.userLabel = userLabel;
+			this.attributes = attrs;
+			this.labels = colLabels;
+		}
+
+		public Attribute[] getAttributes() {
+			return attributes;
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public String getUserLabel() {
+			return userLabel;
+		}
+
+		public String[] getLabels() {
+			return labels;
+		}
+		
+	}
+	
 	private static final String CSS_CLASS_TD_LABEL = "tbl-label";
 
 	private static final String CSS_CLASS_TD_TOTAL = "tbl-total";
@@ -51,11 +85,23 @@ public class DatabaseTableviewBean {
 
 	private boolean omitEmptyRowsAndColumns = true;
 
-	private String showMode = "exp";
-
 	private SimpleTableCell[][] table;
 
 	private String aggregate = "sum";
+	
+	private static AvailableOption[] options = new AvailableOption[] {
+			new AvailableOption("exp", "Exported slaves", new Attribute[] {Voyage.getAttribute("slaximp")}, new String[] {"Exported"}),
+			new AvailableOption("imp", "Imported slaves", new Attribute[] {Voyage.getAttribute("slamimp")}, new String[] {"Imported"}),
+			new AvailableOption("both", "Exported/Imported slaves", new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")}, new String[] {"Exported", "Imported"}),
+			new AvailableOption("sexratio", "Sex ratio", new Attribute[] {Voyage.getAttribute("malrat7")}, new String[] {"Sex ratio"}),
+			new AvailableOption("childratio", "Child ratio", new Attribute[] {Voyage.getAttribute("chilrat7")}, new String[] {"Child ratio"}),
+			new AvailableOption("mortality", "Mortality rate", new Attribute[] {Voyage.getAttribute("vymrtrat")}, new String[] {"Mortality rate"}),
+			new AvailableOption("middlepassage", "Middle passage (days)", new Attribute[] {Voyage.getAttribute("voy2imp")}, new String[] {"Middle passage (days)"}),
+			new AvailableOption("standarizedtonnage", "Standarized tonnage", new Attribute[] {Voyage.getAttribute("tonmod")}, new String[] {"Standarized tonnage"}),
+	};
+	
+	private AvailableOption chosenOption = options[0];
+	
 
 	/**
 	 * An internal method calle by {@link #refreshTable()}.
@@ -219,21 +265,18 @@ public class DatabaseTableviewBean {
 		query.addPopulatedAttribute(rowGrouper.getGroupingAttribute());
 		query.addPopulatedAttribute(colGrouper.getGroupingAttribute());
 
-		// ... and number of slaves exported
-		query.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute(this.aggregate,
-				new Attribute[] { Voyage.getAttribute("slaximp") })));
-
-		// ... and number of slaves imported
-		query.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute(this.aggregate,
-				new Attribute[] { Voyage.getAttribute("slamimp") })));
+		// ... and populated attributes
+		for (int i = 0; i < chosenOption.getAttributes().length; i++) {
+			query.addPopulatedAttribute(new FunctionAttribute(this.aggregate, new Attribute[] { chosenOption.getAttributes()[i] }));
+		}
 
 		// row extra attributes
-		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(4);
+		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(2 + chosenOption.getAttributes().length);
 		for (int i = 0; i < rowExtraAttributes.length; i++)
 			query.addPopulatedAttribute(new CaseNullToZeroAttribute(rowExtraAttributes[i]));
 
 		// col extra attributes
-		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(4 + rowExtraAttributes.length);
+		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(2 + chosenOption.getAttributes().length + rowExtraAttributes.length);
 		for (int i = 0; i < colExtraAttributes.length; i++)
 			query.addPopulatedAttribute(new CaseNullToZeroAttribute(colExtraAttributes[i]));
 
@@ -249,34 +292,13 @@ public class DatabaseTableviewBean {
 		sess.close();
 
 		// what to show
-		boolean showExp = true;
-		boolean showImp = true;
 		int subCols = 2;
 		int extraHeaderRows = 1;
-		int expColOffset = 0;
-		int impColOffset = 1;
-		if ("exp".equals(showMode)) {
-			showExp = true;
-			showImp = false;
-			subCols = 1;
-			extraHeaderRows = 0;
-			expColOffset = 0;
-			impColOffset = 0;
-		} else if ("imp".equals(showMode)) {
-			showExp = false;
-			showImp = true;
-			subCols = 1;
-			extraHeaderRows = 0;
-			expColOffset = 0;
-			impColOffset = 0;
-		} else {
-			showExp = true;
-			showImp = true;
-			subCols = 2;
-			extraHeaderRows = 1;
-			expColOffset = 0;
-			impColOffset = 1;
-		}
+		//int expColOffset = 0;
+		//int impColOffset = 1;
+		
+		extraHeaderRows = chosenOption.attributes.length > 1 ? 1 : 0; 
+		subCols = chosenOption.attributes.length;
 
 		// dimensions of the table
 		int dataRowCount = rowGrouper.getLeaveLabelsCount();
@@ -322,12 +344,12 @@ public class DatabaseTableviewBean {
 		}
 
 		// extra row with exported/imported labels
-		if (showExp && showImp) {
+		if (extraHeaderRows != 0) {
 			for (int j = 0; j < dataColCount; j++) {
-				table[headerTopRowsCount][headerLeftColsCount + subCols * j + expColOffset] = new SimpleTableCell(
-						TastResource.getText("estimates_table_exported")).setCssClass(CSS_CLASS_TD_LABEL);
-				table[headerTopRowsCount][headerLeftColsCount + subCols * j + impColOffset] = new SimpleTableCell(
-						TastResource.getText("estimates_table_imported")).setCssClass(CSS_CLASS_TD_LABEL);
+				for (int i = 0; i < chosenOption.getAttributes().length; i++) {
+					table[headerTopRowsCount][headerLeftColsCount + subCols * j + i] = new SimpleTableCell(
+							chosenOption.getLabels()[i]).setCssClass(CSS_CLASS_TD_LABEL);
+				}
 			}
 		}
 
@@ -341,12 +363,11 @@ public class DatabaseTableviewBean {
 					.getText("database_tableview_averages")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(
 					CSS_CLASS_TD_LABEL);
 		}
-		if (showExp)
-			table[headerTopRowsCount][headerLeftColsCount + subCols * dataColCount + expColOffset] = new SimpleTableCell(
-					TastResource.getText("estimates_table_exported")).setCssClass(CSS_CLASS_TD_LABEL);
-		if (showImp)
-			table[headerTopRowsCount][headerLeftColsCount + subCols * dataColCount + impColOffset] = new SimpleTableCell(
-					TastResource.getText("estimates_table_imported")).setCssClass(CSS_CLASS_TD_LABEL);
+		
+		for (int i = 0; i < chosenOption.attributes.length; i++) {
+			table[headerTopRowsCount][headerLeftColsCount + subCols * dataColCount + i] = new SimpleTableCell(
+					chosenOption.getLabels()[i]).setCssClass(CSS_CLASS_TD_LABEL);
+		}
 
 		// label for col totals
 		if (!this.aggregate.equals("avg")) {
@@ -360,55 +381,50 @@ public class DatabaseTableviewBean {
 		}
 
 		// how we want to displat it
-		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
+		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###.##}");
 
 		// for totals
-		double[] rowExpTotals = new double[dataRowCount];
-		double[] rowImpTotals = new double[dataRowCount];
-		double[] colExpTotals = new double[dataColCount];
-		double[] colImpTotals = new double[dataColCount];
-		double expTotals = 0;
-		double impTotals = 0;
+		double[][] rowTotals = new double[dataRowCount][chosenOption.attributes.length];
+		double[][] colTotals = new double[dataColCount][chosenOption.attributes.length];
+		double[] totals = new double[chosenOption.attributes.length];
 
 		// fill in the data
 		for (int i = 0; i < result.length; i++) {
 
 			Object[] row = (Object[]) result[i];
-			Number exp = (Number) row[2];
-			Number imp = (Number) row[3];
+			Number[] numbers = new Number[chosenOption.attributes.length];
+			for (int j = 0; j < numbers.length; j++) {
+				Number n = (Number) row[2 + j];
+				numbers[j] = n;
+				if (numbers[j] == null) {
+					numbers[j] = new Double(0.0);
+				}
+			}
+			
 
 			int rowIndex = rowGrouper.lookupIndex(row);
 			int colIndex = colGrouper.lookupIndex(row);
 
-			if (imp == null)
-				imp = new Double(0.0);
-			if (exp == null)
-				exp = new Double(0.0);
-
-			rowExpTotals[rowIndex] += exp.doubleValue();
-			rowImpTotals[rowIndex] += imp.doubleValue();
-			colExpTotals[colIndex] += exp.doubleValue();
-			colImpTotals[colIndex] += imp.doubleValue();
-			expTotals += exp.doubleValue();
-			impTotals += imp.doubleValue();
-
-			if (showExp)
+			for (int j = 0; j < chosenOption.attributes.length; j++) {
+				rowTotals[rowIndex][j] += numbers[j].doubleValue();
+				colTotals[colIndex][j] += numbers[j].doubleValue();
+				totals[j] += numbers[j].doubleValue();
 				table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
-						+ expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[] { exp }));
-			if (showImp)
-				table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
-						+ impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[] { imp }));
+				                               	+ j] = new SimpleTableCell(valuesFormat.format(new Object[] { numbers[j] }));
+			}
 
 		}
 
 		if (this.aggregate.equals("avg")) {
-			for (int i = 0; i < colImpTotals.length; i++) {
-				colExpTotals[i] /= (double) dataRowCount;
-				colImpTotals[i] /= (double) dataRowCount;
+			for (int i = 0; i < colTotals.length; i++) {
+				for (int j = 0; j < colTotals[i].length; j++) {
+					colTotals[i][j] /= (double) dataRowCount;
+				}
 			}
-			for (int i = 0; i < rowImpTotals.length; i++) {
-				rowExpTotals[i] /= (double) dataColCount;
-				rowImpTotals[i] /= (double) dataColCount;
+			for (int i = 0; i < rowTotals.length; i++) {
+				for (int j = 0; j < rowTotals[i].length; j++) {
+					rowTotals[i][j] /= (double) dataColCount;
+				}
 			}
 		}
 
@@ -425,45 +441,34 @@ public class DatabaseTableviewBean {
 
 		// insert row totals
 		for (int i = 0; i < dataRowCount; i++) {
-			if (showExp)
+			for (int j = 0; j < rowTotals[i].length; j++) {
 				table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + subCols * dataColCount
-						+ expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
-						rowExpTotals[i]) })).setCssClass(CSS_CLASS_TD_TOTAL);
-			if (showImp)
-				table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + subCols * dataColCount
-						+ impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
-						rowImpTotals[i]) })).setCssClass(CSS_CLASS_TD_TOTAL);
+				                        + j] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
+				                        rowTotals[i][j]) })).setCssClass(CSS_CLASS_TD_TOTAL);
+			}
 		}
 
 		// insert col totals
 		for (int j = 0; j < dataColCount; j++) {
-			if (showExp)
+			for (int i = 0; i < colTotals[i].length; i++) {
 				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * j
-						+ expColOffset] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
-						colExpTotals[j]) })).setCssClass(CSS_CLASS_TD_TOTAL);
-			if (showImp)
-				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * j
-						+ impColOffset] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
-						colImpTotals[j]) })).setCssClass(CSS_CLASS_TD_TOTAL);
+				                        + i] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
+				                        colTotals[j][i]) })).setCssClass(CSS_CLASS_TD_TOTAL);
+			}
 		}
 
 		// main totals
 		if (!this.aggregate.equals("avg")) {
-			if (showExp)
+			for (int i = 0; i < totals.length; i++) {
 				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount
-						+ expColOffset] = new SimpleTableCell(valuesFormat
-						.format(new Object[] { new Double(expTotals) })).setCssClass(CSS_CLASS_TD_TOTAL);
-			if (showImp)
-				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount
-						+ impColOffset] = new SimpleTableCell(valuesFormat
-						.format(new Object[] { new Double(impTotals) })).setCssClass(CSS_CLASS_TD_TOTAL);
+				                           + i] = new SimpleTableCell(valuesFormat
+				                           .format(new Object[] { new Double(totals[i]) })).setCssClass(CSS_CLASS_TD_TOTAL);
+			}
 		} else {
-			if (showExp)
+			for (int i = 0; i < totals.length; i++) {
 				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount
-						+ expColOffset] = new SimpleTableCell("N/A").setCssClass(CSS_CLASS_TD_TOTAL);
-			if (showImp)
-				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount
-						+ impColOffset] = new SimpleTableCell("N/A").setCssClass(CSS_CLASS_TD_TOTAL);
+				                               + i] = new SimpleTableCell("N/A").setCssClass(CSS_CLASS_TD_TOTAL);
+			}
 		}
 
 	}
@@ -555,7 +560,7 @@ public class DatabaseTableviewBean {
 	 * @return
 	 */
 	public String getShowMode() {
-		return showMode;
+		return chosenOption.id;
 	}
 
 	/**
@@ -564,7 +569,12 @@ public class DatabaseTableviewBean {
 	 * @return
 	 */
 	public void setShowMode(String showMode) {
-		this.showMode = showMode;
+		for (int i = 0; i < options.length; i++) {
+			if (showMode.equals(options[i].id)) {
+				this.chosenOption = options[i];
+				break;
+			}
+		}		
 	}
 
 	public String getFileAllData() {
@@ -590,6 +600,16 @@ public class DatabaseTableviewBean {
 
 	public SearchBean getSearchBean() {
 		return searchBean;
+	}
+	
+	public SelectItem[] getAvailableAttributes() {
+		System.out.println("Returning this....");
+		SelectItem[] items = new SelectItem[options.length];
+		for (int i = 0; i < items.length; i++) {
+			items[i] = new SelectItem(options[i].getId(), options[i].getUserLabel());
+		}
+		System.out.println("Returning this....");
+		return items;
 	}
 
 	public void setSearchBean(SearchBean searchBean) {

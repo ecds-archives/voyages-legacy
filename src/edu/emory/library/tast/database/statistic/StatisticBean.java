@@ -1,6 +1,7 @@
 package edu.emory.library.tast.database.statistic;
 
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.text.NumberFormat;
 
 import org.hibernate.Session;
@@ -49,6 +50,8 @@ public class StatisticBean {
 	
 	private SimpleTableCell[][] cells;
 	
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###.00}");
+	
 	/**
 	 * This method queries the database if required and calculates statistics
 	 * defined for voyages.
@@ -79,17 +82,19 @@ public class StatisticBean {
 		//prepare cells in statistical table
 		cells = new SimpleTableCell[elements.length + 1][];
 		
-		cells[0] = new SimpleTableCell[4];
+		cells[0] = new SimpleTableCell[5];
 		cells[0][0] = new SimpleTableCell("", "search-simple-stat-h_c1", null);
 		cells[0][1] = new SimpleTableCell(TastResource.getText("components_statistictab_total_slaves"), "search-simple-stat-h_c2", null);
 		cells[0][2] = new SimpleTableCell(TastResource.getText("components_statistictab_total_voyages"), "search-simple-stat-h_c3", null);
 		cells[0][3] = new SimpleTableCell(TastResource.getText("components_statistictab_average"), "search-simple-stat-h_c4", null);
+		cells[0][4] = new SimpleTableCell(TastResource.getText("components_statistictab_deviation"), "search-simple-stat-h_c4", null);
 		for (int i = 1; i < cells.length; i++) {
-			cells[i] = new SimpleTableCell[4];
+			cells[i] = new SimpleTableCell[5];
 			cells[i][0] = new SimpleTableCell(elements[i-1].getName(), "search-simple-stat-c_c1", null);
 			cells[i][1] = new SimpleTableCell(elements[i-1].getTotal(), "search-simple-stat-c_c2", null);
 			cells[i][2] = new SimpleTableCell(elements[i-1].getSampleTotal(), "search-simple-stat-c_c3", null);
 			cells[i][3] = new SimpleTableCell(elements[i-1].getAvrg(), "search-simple-stat-c_c4", null);
+			cells[i][4] = new SimpleTableCell(elements[i-1].getDev(), "search-simple-stat-c_c4", null);
 		}
 		
 		return cells;
@@ -115,28 +120,32 @@ public class StatisticBean {
 				cond2);
 		query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute(attribute)}));
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
+		query.addPopulatedAttribute(new FunctionAttribute("stddev", new Attribute[] {Voyage.getAttribute(attribute)}));
 		Object[] results = query.executeQuery();
 		if (results.length > 0) {
 			Object[] row = (Object[])results[0];
 			if (row[0] == null || row[1] == null) {
-				elements[i] = new StatisticElement(statNames[i], TastResource.getText("components_statistictab_notavailable"), TastResource.getText("components_statistictab_notavailable"), TastResource.getText("components_statistictab_notavailable"));
+				elements[i] = new StatisticElement(statNames[i], TastResource.getText("components_statistictab_notavailable"), TastResource.getText("components_statistictab_notavailable"), TastResource.getText("components_statistictab_notavailable"), TastResource.getText("components_statistictab_notavailable"));
 			} else {
 				String stat = "";
+				String dev = "";
 				if (percent) {
-					stat = String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue())) + "%";
+					stat = valuesFormat.format(new Object[] {new Double(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue() * 10000) / (double)100)}) + "%";
+					dev = valuesFormat.format(new Object[] {new Double(Math.round(((Number)row[2]).doubleValue() * 10000) / (double)100)}) + "%";
 				} else {
-					stat = String.valueOf(Math.round(((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue()));						
+					stat = valuesFormat.format(new Object[] {new Double((((Number)row[0]).doubleValue()/((Number)row[1]).doubleValue() * 100) / (double) 100)});
+					dev = valuesFormat.format(new Object[] {new Double((((Number)row[2]).doubleValue() * 100) / (double)100)});
 				}
 				if (showTotal) {	
 					elements[i] = new StatisticElement(statNames[i], 
 							format.format((Number)row[0]), 
 							format.format((Number)row[1]),
-							stat);
+							stat, dev);
 				} else {
 					elements[i] = new StatisticElement(statNames[i], 
 							"",
 							format.format((Number)row[1]),
-							stat);
+							stat, dev);
 				}
 			}
 		}

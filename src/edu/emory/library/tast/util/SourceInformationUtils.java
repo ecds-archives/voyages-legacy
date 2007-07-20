@@ -115,6 +115,7 @@ public class SourceInformationUtils {
 		Transaction t = session.beginTransaction();
 		try {
 			FileOutputStream os = new FileOutputStream("c:\\sources-matched.csv");
+			FileOutputStream osnm = new FileOutputStream("c:\\sources-not-matched.csv");
 			os.write("\"source name\", \"source code (from rollovers file)\", \"source rollover\"\n".getBytes());
 			SourceInformationUtils utils = SourceInformationUtils.createSourceInformationUtils();
 			List response = session.createSQLQuery("select distinct a.s from (select distinct sourcea as s from voyages where revision=1 union select distinct sourceb as s from voyages where revision=1 union select distinct sourcec as s from voyages where revision=1 union select distinct sourced as s from voyages where revision=1 union select distinct sourcee as s from voyages where revision=1 union select distinct sourcef as s from voyages where revision=1 union select distinct sourceg as s from voyages where revision=1 union select distinct sourceh as s from voyages where revision=1 union select distinct sourcei as s from voyages where revision=1 union select distinct sourcej as s from voyages where revision=1 union select distinct sourcek as s from voyages where revision=1 union select distinct sourcel as s from voyages where revision=1 union select distinct sourcem as s from voyages where revision=1 union select distinct sourcen as s from voyages where revision=1 union select distinct sourceo as s from voyages where revision=1 union select distinct sourcep as s from voyages where revision=1 union select distinct sourceq as s from voyages where revision=1 union select distinct sourcer as s from voyages where revision=1) a order by a.s").list();
@@ -123,8 +124,16 @@ public class SourceInformationUtils {
 				SourceInformation info = utils.match(source);
 				if (info != null) {
 					os.write(("\"" + source + "\",\"" + info.getId() + "\",\"" + info.getInformation() + "\"\n").getBytes());
+				} else if (source != null) {
+					osnm.write(("\"" + source + "\"\n").getBytes());
 				}
 			}
+			
+			os.flush();
+			osnm.flush();
+			os.close();
+			osnm.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

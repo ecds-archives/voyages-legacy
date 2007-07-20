@@ -12,12 +12,14 @@ public class StatisticElement {
 	private String total;
 	private String sampleTotal;
 	private String avrg;
+	private String dev;
 	
-	public StatisticElement(String name, String total, String sampleTotal, String avrg) {
+	public StatisticElement(String name, String total, String sampleTotal, String avrg, String deviation) {
 		this.name = name;
 		this.total = total;
 		this.sampleTotal = sampleTotal;
 		this.avrg = avrg;
+		this.dev = deviation;
 	}
 	
 	public String getAvrg() {
@@ -43,6 +45,9 @@ public class StatisticElement {
 	}
 	public void setTotal(String total) {
 		this.total = total;
+	}
+	public String getDev() {
+		return dev;
 	}
 	
 	

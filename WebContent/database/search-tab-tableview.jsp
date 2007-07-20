@@ -50,9 +50,7 @@
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:selectOneMenu value="#{DatabaseTableBean.showMode}">
-				<f:selectItem itemLabel="#{res.estimates_table_expimp}" itemValue="both" />
-				<f:selectItem itemLabel="#{res.estimates_table_onlyexp}" itemValue="exp" />
-				<f:selectItem itemLabel="#{res.estimates_table_onlyimp}" itemValue="imp" />
+				<f:selectItems value="#{DatabaseTableBean.availableAttributes}" />
 			</h:selectOneMenu>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
