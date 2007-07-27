@@ -49,6 +49,8 @@ public abstract class AbstractMapItem {
 	 */
 	private String[] imageUrls;
 	
+	private String imagesQuery;
+	
 	/**
 	 * Legend item corresponding to map item.
 	 */
@@ -193,5 +195,13 @@ public abstract class AbstractMapItem {
 	public void setImageUrls(String[] imageUrls)
 	{
 		this.imageUrls = imageUrls;
+	}
+
+	public String getImagesQuery() {
+		return imagesQuery;
+	}
+
+	public void setImagesQuery(String imagesQuery) {
+		this.imagesQuery = imagesQuery;
 	}
 }

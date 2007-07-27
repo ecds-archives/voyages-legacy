@@ -16,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.CategoryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.PortAttribute;
@@ -45,6 +46,7 @@ public class Image implements Comparable
 		attributes.put("order", new NumericAttribute("order", "Image", NumericAttribute.TYPE_INTEGER));
 		attributes.put("category", new CategoryAttribute("category", "Image"));
 		attributes.put("date", new NumericAttribute("date", "Image", NumericAttribute.TYPE_INTEGER));
+		attributes.put("ready", new BooleanAttribute("readyToGo", "Image"));
 	}
 	
 	private int id;

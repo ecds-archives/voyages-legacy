@@ -76,6 +76,7 @@ public class ImagesBean
 		
 		Conditions cond = new Conditions();
 		cond.addCondition(Image.getAttribute("category"), cat, Conditions.OP_EQUALS);
+		cond.addCondition(Image.getAttribute("ready"), new Boolean(true), Conditions.OP_EQUALS);
 		QueryValue qValue = new QueryValue("Image", cond);
 		
 		qValue.setLimit(size);
@@ -564,6 +565,10 @@ public class ImagesBean
 			conditionsCount++;
 		}
 		
+		if (conditionsCount > 0) hqlWhere.append(" and ");
+		hqlWhere.append("readyToGo = true");
+		conditionsCount++;
+		
 		StringBuffer hsql = new StringBuffer();
 		hsql.append("select id, fileName, title, date from Image");
 		if (hqlWhere.length() > 0)
@@ -916,4 +921,32 @@ public class ImagesBean
 		this.messageBar = messageBar;
 	}
 
+	public void restoreToPortId(Long id) {
+		this.currentQuery = new ImagesQuery();
+		this.currentQuery.setSearchPortId(id);
+		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
+		this.loadGallery();
+		selectedImageIndex = 0;
+		if (this.getDetailThumbsImages().length != 0) {
+			imageId = this.getDetailThumbsImages()[0].getId();
+		} else {
+			imageId = "0";
+		}
+		this.loadDetail(false);
+	}
+
+	public void restoreToRegionId(Long id) {
+		this.currentQuery = new ImagesQuery();
+		this.currentQuery.setSearchRegionId(id);
+		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
+		this.loadGallery();
+		selectedImageIndex = 0;
+		if (this.getDetailThumbsImages().length != 0) {
+			imageId = this.getDetailThumbsImages()[0].getId();
+		} else {
+			imageId = "0";
+		}
+		this.loadDetail(false);
+	}
+	
 }

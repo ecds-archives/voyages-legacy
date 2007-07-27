@@ -151,7 +151,7 @@ public class Region extends LocationWithImages
 		
 		Region africa = Region.loadById(sess, 60000);
 		
-		for (Iterator iter = africa.getImages().iterator(); iter.hasNext();)
+		for (Iterator iter = africa.getReadyToGoImages().iterator(); iter.hasNext();)
 		{
 			Image image = (Image) iter.next();
 			System.out.println(image.getTitle());

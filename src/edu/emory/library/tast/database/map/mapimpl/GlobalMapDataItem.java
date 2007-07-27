@@ -56,10 +56,11 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 * @param color
 	 *            color
 	 */
-	public GlobalMapDataItem(double x, double y, String mainLabel, int color, int i, String[] imageUrls)
+	public GlobalMapDataItem(double x, double y, String mainLabel, int color, int i, String[] imageUrls, String imagesQuery)
 	{
 		super(x, y, mainLabel);
 		super.setImageUrls(imageUrls);
+		super.setImagesQuery(imagesQuery);
 		this.color = color;
 		this.i = i;
 	}
@@ -233,7 +234,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 				buffer.append("</td>");
 			}
 			buffer.append("</tr></table>");
-			//buffer.append("<a href=\"\"/>See all images ></a>");
+			buffer.append("<a href=\"/tast/resources/images-query.faces?" + this.getImagesQuery() + "\"/>See all images ></a>");
 		}
 		
 		buffer.append("</div>");

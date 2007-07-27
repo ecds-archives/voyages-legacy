@@ -12,6 +12,7 @@ import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.LocationWithImages;
+import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.maps.AbstractDataTransformer;
 import edu.emory.library.tast.maps.AbstractMapItem;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
@@ -85,8 +86,16 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			//Get port
 			LocationWithImages location = (LocationWithImages) (row)[0];
 			
+			String queryImages = null;
+			if (location instanceof Port) {
+				queryImages = "port=";
+			} else {
+				queryImages = "region=";
+			}
+			queryImages += location.getId();
+			
 			// collect images (just the names so far)
-			Set images =  location.getImages();
+			Set images =  location.getReadyToGoImages();
 			String[] imageUrls = new String[images.size()];
 			int imageIndex = 0;
 			for (Iterator iter = images.iterator(); iter.hasNext();)
@@ -118,7 +127,8 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 						location.getY(),
 						location.getName(),
 						color, i,
-						imageUrls);
+						imageUrls,
+						queryImages);
 
 				int index;
 

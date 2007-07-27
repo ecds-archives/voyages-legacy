@@ -47,14 +47,21 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			ImagesBean bean = (ImagesBean) fc.getApplication().createValueBinding("#{ImagesBean}").getValue(fc);
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
-			if (!params.containsKey("permlink"))
-				return;
-
-			String permlink = (String) params.get("permlink");
-			if (StringUtils.isNullOrEmpty(permlink))
-				return;
 			
-			bean.restoreLink(new Long(permlink));
+			if (viewId.equals("/resources/images-query.jsp") && params.containsKey("port")) {
+				String id = (String) params.get("port");
+				bean.restoreToPortId(new Long(id));
+			} else if (viewId.equals("/resources/images-query.jsp") && params.containsKey("region")) {
+				String id = (String) params.get("region");
+				bean.restoreToRegionId(new Long(id));
+			} else {			
+				if (!params.containsKey("permlink"))
+					return;
+				String permlink = (String) params.get("permlink");
+				if (StringUtils.isNullOrEmpty(permlink))
+					return;			
+				bean.restoreLink(new Long(permlink));
+			}
 		}
 		
 		if (viewId.equals("/database/voyage.jsp")) {
