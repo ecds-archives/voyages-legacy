@@ -43,12 +43,14 @@ public class DatabaseTableviewBean {
 		private String userLabel;
 		private String id;
 		private String[] labels;
+		private MessageFormat format;
 		
-		public AvailableOption(String id, String userLabel, Attribute[] attrs, String[] colLabels) {
+		public AvailableOption(String id, String userLabel, Attribute[] attrs, String[] colLabels, MessageFormat format) {
 			this.id = id;
 			this.userLabel = userLabel;
 			this.attributes = attrs;
 			this.labels = colLabels;
+			this.format = format;
 		}
 
 		public Attribute[] getAttributes() {
@@ -65,6 +67,10 @@ public class DatabaseTableviewBean {
 
 		public String[] getLabels() {
 			return labels;
+		}
+
+		public MessageFormat getFormat() {
+			return format;
 		}
 		
 	}
@@ -90,14 +96,14 @@ public class DatabaseTableviewBean {
 	private String aggregate = "sum";
 	
 	private static AvailableOption[] options = new AvailableOption[] {
-			new AvailableOption("exp", "Exported slaves", new Attribute[] {Voyage.getAttribute("slaximp")}, new String[] {"Exported"}),
-			new AvailableOption("imp", "Imported slaves", new Attribute[] {Voyage.getAttribute("slamimp")}, new String[] {"Imported"}),
-			new AvailableOption("both", "Exported/Imported slaves", new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")}, new String[] {"Exported", "Imported"}),
-			new AvailableOption("sexratio", "Sex ratio", new Attribute[] {Voyage.getAttribute("malrat7")}, new String[] {"Sex ratio"}),
-			new AvailableOption("childratio", "Child ratio", new Attribute[] {Voyage.getAttribute("chilrat7")}, new String[] {"Child ratio"}),
-			new AvailableOption("mortality", "Mortality rate", new Attribute[] {Voyage.getAttribute("vymrtrat")}, new String[] {"Mortality rate"}),
-			new AvailableOption("middlepassage", "Middle passage (days)", new Attribute[] {Voyage.getAttribute("voy2imp")}, new String[] {"Middle passage (days)"}),
-			new AvailableOption("standarizedtonnage", "Standarized tonnage", new Attribute[] {Voyage.getAttribute("tonmod")}, new String[] {"Standarized tonnage"}),
+			new AvailableOption("exp", "Exported slaves", new Attribute[] {Voyage.getAttribute("slaximp")}, new String[] {"Exported"}, new MessageFormat("{0,number,#,###,###}")),
+			new AvailableOption("imp", "Imported slaves", new Attribute[] {Voyage.getAttribute("slamimp")}, new String[] {"Imported"}, new MessageFormat("{0,number,#,###,###}")),
+			new AvailableOption("both", "Exported/Imported slaves", new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")}, new String[] {"Exported", "Imported"}, new MessageFormat("{0,number,#,###,###}")),
+			new AvailableOption("sexratio", "Percentage male", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0.00}%")),
+			new AvailableOption("childratio", "Percentage children", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,##0.00}%")),
+			new AvailableOption("mortality", "Percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.00}%")),
+			new AvailableOption("middlepassage", "Middle passage (days)", new Attribute[] {Voyage.getAttribute("voy2imp")}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}")),
+			new AvailableOption("standarizedtonnage", "Standarized tonnage", new Attribute[] {Voyage.getAttribute("tonmod")}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}")),
 	};
 	
 	private AvailableOption chosenOption = options[0];
@@ -281,6 +287,8 @@ public class DatabaseTableviewBean {
 			query.addPopulatedAttribute(new CaseNullToZeroAttribute(colExtraAttributes[i]));
 
 		// finally query the database
+		System.out.println(query.toStringWithParams().conditionString);
+		System.out.println("params: " + query.toStringWithParams().properties);
 		Object[] result = query.executeQuery(sess);
 
 		// init groupers
@@ -381,7 +389,7 @@ public class DatabaseTableviewBean {
 		}
 
 		// how we want to displat it
-		MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###.##}");
+		MessageFormat valuesFormat = this.chosenOption.getFormat();
 
 		// for totals
 		double[][] rowTotals = new double[dataRowCount][chosenOption.attributes.length];

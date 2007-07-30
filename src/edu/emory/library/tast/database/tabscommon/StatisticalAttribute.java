@@ -76,4 +76,8 @@ public class StatisticalAttribute implements VisibleAttributeInterface {
 		return new FunctionAttribute(this.function, this.attributes);
 	}
 
+	public String getFormat() {
+		return null;
+	}
+
 }

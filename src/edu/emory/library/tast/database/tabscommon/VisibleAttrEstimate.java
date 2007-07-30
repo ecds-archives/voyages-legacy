@@ -165,4 +165,8 @@ public class VisibleAttrEstimate implements VisibleAttributeInterface {
 		return this.attributes[0];
 	}
 
+	public String getFormat() {
+		return null;
+	}
+
 }

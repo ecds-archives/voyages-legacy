@@ -22,6 +22,14 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 		if (object == null) {
 			return "";
 		} else {
+			if (attr.getFormat() != null) {
+				if (attr.getFormat().endsWith("%")) {
+					double d = ((Number)object).doubleValue();
+					d *= 100;
+					object = new Double(d);
+				}
+				return new MessageFormat(attr.getFormat()).format(new Object[] {object});
+			}
 			if (!attr.isDate()) {
 				if (object instanceof Number) {
 					return formatter.format(new Object[] {object}); 

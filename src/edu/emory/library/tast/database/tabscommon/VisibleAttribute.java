@@ -21,6 +21,7 @@ import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.util.StringUtils;
 
 public class VisibleAttribute implements VisibleAttributeInterface {
 
@@ -41,6 +42,8 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 	private int[] validity;
 	
 	private boolean date;
+	
+	private String format;
 
 	public static VisibleAttributeInterface[] loadVisibleAttributes(int tabType) {
 		if (visibleAttributes.isEmpty()) {
@@ -94,6 +97,11 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 				.getNodeValue();
 		String userLabel = node.getAttributes().getNamedItem("userLabel")
 				.getNodeValue();
+		String format = null;
+		if (node.getAttributes().getNamedItem("format") != null) {
+			format = node.getAttributes().getNamedItem("format").getNodeValue();
+		}
+		
 		boolean date = false;
 		if (node.getAttributes().getNamedItem("date") != null) {
 			date = "true".equals(node.getAttributes().getNamedItem("date").getNodeValue());
@@ -131,7 +139,14 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 		attr.setUserCategories(cat);
 		attr.setUserLabel(userLabel);
 		attr.setDate(date);
+		if (!StringUtils.isNullOrEmpty(format)) {
+			attr.setFormat(format);
+		}
 		return attr;
+	}
+
+	private void setFormat(String format) {
+		this.format = format;
 	}
 
 	public VisibleAttribute(String name, int[] validity, Attribute[] attributes) {
@@ -259,6 +274,10 @@ public class VisibleAttribute implements VisibleAttributeInterface {
 
 	public Attribute getQueryAttribute() {
 		return this.attributes[0];
+	}
+
+	public String getFormat() {
+		return format;
 	}
 
 }

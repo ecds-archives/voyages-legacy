@@ -40,5 +40,7 @@ public interface VisibleAttributeInterface {
 	public abstract boolean isInUserCategory(UserCategory category);
 
 	public abstract Attribute getQueryAttribute();
+	
+	public String getFormat();
 
 }

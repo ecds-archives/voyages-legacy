@@ -57,7 +57,7 @@
 							<li>The African Impact on the Tranatlatic Slave Trade</li>
 							<li>The English Plantation Americas in Comparative Perspective</li>
 							<li>Ethnicity in the Early Modern Atlatic World</li>
-							<li>Eurpe and the Atlantic Slave systems</li>
+							<li>Europe and the Atlantic Slave systems</li>
 						</ol>
 					</f:verbatim>
 				</s:expandableBox>

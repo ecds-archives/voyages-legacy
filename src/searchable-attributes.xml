@@ -732,7 +732,7 @@
 		type="simple"
 		subType="ratio"
 		id="menrat7"
-		userLabel="Percent men*">
+		userLabel="Percentage men*">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -746,7 +746,7 @@
 		type="simple"
 		subType="ratio"
 		id="womrat7"
-		userLabel="Percent women*">
+		userLabel="Percentage women*">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -760,7 +760,7 @@
 		type="simple"
 		subType="ratio"
 		id="boyrat7"
-		userLabel="Percent boys*">
+		userLabel="Percentage boys*">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -774,7 +774,7 @@
 		type="simple"
 		subType="ratio"
 		id="girlrat7"
-		userLabel="Percent girls*">
+		userLabel="Percentage girls*">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -788,7 +788,7 @@
 		type="simple"
 		subType="ratio"
 		id="malrat7"
-		userLabel="Sex ratio*">
+		userLabel="Percentage male*">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -802,7 +802,7 @@
 		type="simple"
 		subType="ratio"
 		id="chilrat7"
-		userLabel="Child ratio*">
+		userLabel="Percentage children*">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

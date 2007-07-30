@@ -224,37 +224,37 @@ public class TimeLineResultTabBean {
 		
 		this.availableStats.add(new StatOption(
 				"AVG(menrat7)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("menrat7")}),
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("menrat7")})}),
 				TastResource.getText("components_timeline_stat_percentmen"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(womrat7)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("womrat7")}),
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("womrat7")})}),
 				TastResource.getText("components_timeline_stat_percentwomen"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(boyrat7)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("boyrat7")}),
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("boyrat7")})}),
 				TastResource.getText("components_timeline_stat_percentboys"),
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(girlrat7)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("girlrat7")}),
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("girlrat7")})}),
 				TastResource.getText("components_timeline_stat_percentgirls"),
 				"{0,number,#,###,##0.0}%"));
 		
 		this.availableStats.add(new StatOption(
 				"AVG(malrat7)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("malrat7")}),
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})}),
 				TastResource.getText("components_timeline_stat_percentmales"),
 				"{0,number,#,###,##0.0}%"));
 
 		this.availableStats.add(new StatOption(
 				"AVG(chilrat7)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("chilrat7")}),
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})}),
 				TastResource.getText("components_timeline_stat_percentchildren"),
 				"{0,number,#,###,##0.0}%"));
 		
@@ -278,7 +278,7 @@ public class TimeLineResultTabBean {
 		
 		this.availableStats.add(new StatOption(
 				"AVG(vymrtrat)",
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("vymrtrat")}),
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})}),
 				TastResource.getText("components_timeline_stat_mortrate"),
 				"{0,number,#,###,##0.0}%"));
 

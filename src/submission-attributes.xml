@@ -446,6 +446,38 @@
 			<attribute name="slamimp"/>
 		</attributes>
 	</submission-attributes>
+	
+	<submission-attributes name="malrat7" group="Slaves (numbers)" editable="N" type="float" userLabel="Ratio male">
+		<attributes>
+			<attribute name="malrat7"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chilrat7" group="Slaves (numbers)" editable="N" type="float" userLabel="Ratio children">
+		<attributes>
+			<attribute name="chilrat7"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="womrat7" group="Slaves (numbers)" editable="N" type="float" userLabel="Ratio women">
+		<attributes>
+			<attribute name="womrat7"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="menrat7" group="Slaves (numbers)" editable="N" type="float" userLabel="Ratio men">
+		<attributes>
+			<attribute name="menrat7"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="girlrat7" group="Slaves (numbers)" editable="N" type="float" userLabel="Ratio girls">
+		<attributes>
+			<attribute name="girlrat7"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="boyrat7" group="Slaves (numbers)" editable="N" type="float" userLabel="Ratio boys">
+		<attributes>
+			<attribute name="boyrat7"/>
+		</attributes>
+	</submission-attributes>
+	
 	<submission-attributes name="adult1" key="e1,adult" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults leaving first port in Africa">
 		<attributes>
 			<attribute name="adult1"/>
