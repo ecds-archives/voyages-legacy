@@ -527,7 +527,7 @@ public class EstimatesSelectionBean {
 		Conditions conditionNations = new Conditions(Conditions.JOIN_OR);
 		Conditions conditionExpRegions = new Conditions(Conditions.JOIN_OR);
 		Conditions conditionImpRegions = new Conditions(Conditions.JOIN_OR);
-		Conditions conditionRegions = new Conditions(Conditions.JOIN_OR);
+		Conditions conditionRegions = new Conditions(Conditions.JOIN_AND);
 
 		geographicConditions = new Conditions(Conditions.JOIN_AND);
 		geographicConditions.addCondition(conditionNations);
