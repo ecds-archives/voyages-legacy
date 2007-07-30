@@ -603,12 +603,10 @@ public class DatabaseTableviewBean {
 	}
 	
 	public SelectItem[] getAvailableAttributes() {
-		System.out.println("Returning this....");
 		SelectItem[] items = new SelectItem[options.length];
 		for (int i = 0; i < items.length; i++) {
 			items[i] = new SelectItem(options[i].getId(), options[i].getUserLabel());
 		}
-		System.out.println("Returning this....");
 		return items;
 	}
 
