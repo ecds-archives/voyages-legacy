@@ -40,6 +40,9 @@ public class DateValue extends Value
 	
 	public boolean isEmpty()
 	{
+		if ("DD".equals(day) && "MM".equals(month) && "YYYY".equals(year)) {
+			return true;
+		}
 		return
 			StringUtils.isNullOrEmpty(day) &&
 			StringUtils.isNullOrEmpty(month) &&
@@ -50,6 +53,9 @@ public class DateValue extends Value
 	{
 		if (!parsed)
 		{
+//			if ("DD".equals(day)) day = "" ;
+//			if ("MM".equals(month)) month = "" ;
+//			if ("YYYY".equals(year)) year = "" ;
 			try
 			{
 				dayInt = Integer.parseInt(StringUtils.trimAndUnNull(day));
@@ -145,6 +151,9 @@ public class DateValue extends Value
 
 	public void setDay(String day)
 	{
+		if ("DD".equals(day)) {
+			day = "";
+		}
 		parsed = false;
 		this.day = day;
 	}
@@ -168,6 +177,9 @@ public class DateValue extends Value
 
 	public void setMonth(String month)
 	{
+		if ("MM".equals(month)) {
+			month = "";
+		}
 		parsed = false;
 		this.month = month;
 	}
@@ -191,6 +203,10 @@ public class DateValue extends Value
 
 	public void setYear(String year)
 	{
+		System.out.println("Setting year: " + year);
+		if ("YYYY".equals(year)) {
+			year = "";
+		}
 		parsed = false;
 		this.year = year;
 	}
@@ -225,7 +241,10 @@ public class DateValue extends Value
 	}
 
 	public boolean isCorrectValue() {
-		if (StringUtils.isNullOrEmpty(this.year) && 
+		if (isEmpty()) {
+			return true;
+		}
+		if (StringUtils.isNullOrEmpty(this.year) &&
 				StringUtils.isNullOrEmpty(this.month) && 
 				StringUtils.isNullOrEmpty(this.day)) {
 			return true;

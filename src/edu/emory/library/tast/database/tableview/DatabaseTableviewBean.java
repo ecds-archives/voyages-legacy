@@ -279,12 +279,12 @@ public class DatabaseTableviewBean {
 		// row extra attributes
 		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(2 + chosenOption.getAttributes().length);
 		for (int i = 0; i < rowExtraAttributes.length; i++)
-			query.addPopulatedAttribute(new CaseNullToZeroAttribute(rowExtraAttributes[i]));
+			query.addPopulatedAttribute(rowExtraAttributes[i]);
 
 		// col extra attributes
 		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(2 + chosenOption.getAttributes().length + rowExtraAttributes.length);
 		for (int i = 0; i < colExtraAttributes.length; i++)
-			query.addPopulatedAttribute(new CaseNullToZeroAttribute(colExtraAttributes[i]));
+			query.addPopulatedAttribute(colExtraAttributes[i]);
 
 		// finally query the database
 		System.out.println(query.toStringWithParams().conditionString);

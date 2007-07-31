@@ -57,6 +57,8 @@ public class SearchBean
 	
 	private SelectItem[] revisions = null;
 	
+	private String expandedGroup = "basic";
+	
 	public SearchBean()
 	{
 		history = new History();
@@ -576,6 +578,14 @@ public class SearchBean
 			}
 		}
 		return this.revisions;
+	}
+
+	public String getExpandedGroup() {
+		return expandedGroup;
+	}
+
+	public void setExpandedGroup(String expandedGroup) {
+		this.expandedGroup = expandedGroup;
 	}
 
 }

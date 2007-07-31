@@ -35,7 +35,7 @@
 			<attribute name="yrreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="natinimp" userCategory="beginners,general" userLabel="National carrier">
+	<table-attribute tabs="1,2" id="natinimp" userCategory="beginners,general" userLabel="Flag">
 		<attributes>
 			<attribute name="natinimp"/>
 		</attributes>

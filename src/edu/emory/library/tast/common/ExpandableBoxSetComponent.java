@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
 
@@ -24,7 +25,8 @@ public class ExpandableBoxSetComponent extends UIComponentBase {
 
 	public static final String expandedNone = "";
 	
-	private String expandedId = null;
+	private String expandedId = "";
+	private boolean expandedIdSet = false;
 	
 	public String getFamily() {
 		return null;
@@ -35,9 +37,10 @@ public class ExpandableBoxSetComponent extends UIComponentBase {
 	}
 	
 	public Object saveState(FacesContext context) {
-		Object[] values = new Object[2];
+		Object[] values = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = expandedId;
+		values[2] = new Boolean(expandedIdSet);
 		return values;
 	}
 
@@ -45,11 +48,19 @@ public class ExpandableBoxSetComponent extends UIComponentBase {
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
 		expandedId = (String) values[1];
+		expandedIdSet = ((Boolean)values[2]).booleanValue();
 	}
 	
 	public void decode(FacesContext context) {
 		Map params = context.getExternalContext().getRequestParameterMap();
-		this.expandedId = (String) params.get(getSelectedBoxHiddenFieldName(context));
+		expandedId = (String) params.get(getSelectedBoxHiddenFieldName(context));
+	}
+	
+	public void processUpdates(FacesContext context) {
+		ValueBinding vb = getValueBinding("expandedId");
+		if (vb != null)
+			vb.setValue(context, expandedId);
+		super.processUpdates(context);
 	}
 
 	private String getSelectedBoxHiddenFieldName(FacesContext context) {
@@ -60,7 +71,7 @@ public class ExpandableBoxSetComponent extends UIComponentBase {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("div", this);
 		
-		JsfUtils.encodeHiddenInput(this, writer, getSelectedBoxHiddenFieldName(context), this.expandedId);
+		JsfUtils.encodeHiddenInput(this, writer, getSelectedBoxHiddenFieldName(context), getExpandedId());
 		
 	}
 
@@ -69,7 +80,7 @@ public class ExpandableBoxSetComponent extends UIComponentBase {
 		for (int i = 0; i < children.size(); i++) {
 			ExpandableBoxComponent sect = (ExpandableBoxComponent) children.get(i);
 			sect.setFieldId(this.getSelectedBoxHiddenFieldName(context));
-			sect.setExpanded(!this.expandedId.equals(sect.getBoxId()));
+			sect.setExpanded(!this.getExpandedId().equals(sect.getBoxId()));
 			if (i == 0) {
 				sect.setPositionType(ExpandableBoxComponent.SET_TOP_BOX);
 			} else if (i < children.size() - 1) {
@@ -85,9 +96,20 @@ public class ExpandableBoxSetComponent extends UIComponentBase {
 		ResponseWriter writer = arg0.getResponseWriter();
 		writer.endElement("div");
 	}
+	
+	public String getExpandedId() {
+		if (this.expandedIdSet) {
+			return this.expandedId;
+		}
+		ValueBinding vb = getValueBinding("expandedId");
+		if (vb == null)
+			return expandedId;
+		return (String) vb.getValue(getFacesContext());
+	}
 
 	public void setExpandedId(String expandedId) {
 		this.expandedId = expandedId;
+		this.expandedIdSet = true;
 	}
 
 }

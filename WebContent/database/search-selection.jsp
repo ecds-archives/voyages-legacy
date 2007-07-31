@@ -42,7 +42,7 @@
 </s:expandableBox>
 </s:expandableBoxSet>
 <br>
-<s:expandableBoxSet expandedId="basic">
+<s:expandableBoxSet expandedId="#{SearchBean.expandedGroup}">
 <s:expandableBox boxId="basic" text="#{res.database_search_basic}">
 
 	<s:menuPopup
