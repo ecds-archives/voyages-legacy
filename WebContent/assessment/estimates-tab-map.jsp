@@ -23,7 +23,9 @@
 		<s:legend id="mapLegend-component" 
 			styleClass="map-legend-div"
 			legend="#{EstimatesMapBean.legend}"
-			refreshAction="#{EstimatesMapBean.refresh}" /> 
+			refreshAction="#{EstimatesMapBean.refresh}" 
+			maps="#{EstimatesMapBean.availableMaps}"
+			chosenMap="#{EstimatesMapBean.chosenMap}"/> 
 	</t:htmlTag>
 		
 </t:htmlTag>

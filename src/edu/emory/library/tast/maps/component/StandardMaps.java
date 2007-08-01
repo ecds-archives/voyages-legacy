@@ -38,10 +38,16 @@ public class StandardMaps
 		return new ZoomLevel[] {
 				new ZoomLevel(
 						160, 120,
-						-110.83, -61.83,
-						7, 7,
-						1.0/6.54,
-						contextPath + "/map-assets/tiles/" + chosenMap + "05"),
+						-110.79, -61.85,
+						5, 5,
+						1.0/4.69,
+						contextPath + "/map-assets/tiles/03"),
+//				new ZoomLevel(
+//						160, 120,
+//						-110.83, -61.83,
+//						8, 8,
+//						1.0/3.54,
+//						contextPath + "/map-assets/tiles/" + chosenMap + "03"),
 				new ZoomLevel(
 						160, 120,
 						-110.83, -61.83,

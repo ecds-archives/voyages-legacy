@@ -40,6 +40,8 @@
 	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/tigra_hints.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/map-hints.js" language="javascript" type="text/javascript"></script>
 	
 	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/attributes-menu.js" language="javascript" type="text/javascript"></script>

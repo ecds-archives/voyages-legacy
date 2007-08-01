@@ -192,9 +192,11 @@ public class MapComponent extends UIComponentBase
 		writer.startElement("tr", this);
 	}
 	
-	private void encodeTool(FacesContext context, ResponseWriter writer, String id, String className) throws IOException
+	private void encodeTool(FacesContext context, ResponseWriter writer, String id, String className, int hintId) throws IOException
 	{
 		writer.startElement("td", this);
+		writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
+		writer.writeAttribute("onmouseout", "myHint.hide()", null);
 		writer.writeAttribute("id", id, null);
 		writer.writeAttribute("class", className, null);
 		writer.endElement("td");
@@ -336,9 +338,11 @@ public class MapComponent extends UIComponentBase
 		
 	}
 	
-	private void encodeScaleIndicator(FacesContext context, ResponseWriter writer, String scaleIndicatorTextId, String scaleIndicatorBarId) throws IOException
+	private void encodeScaleIndicator(FacesContext context, ResponseWriter writer, String scaleIndicatorTextId, String scaleIndicatorBarId, int hintId) throws IOException
 	{
 		writer.startElement("div", this);
+		writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
+		writer.writeAttribute("onmouseout", "myHint.hide()", null);
 		writer.writeAttribute("class", "map-scale-indicator-container", null);
 
 		writer.startElement("div", this);
@@ -690,22 +694,22 @@ public class MapComponent extends UIComponentBase
 		encodeToolStart(writer);
 		
 		// icons: < / >
-		encodeTool(context, writer, toolsBackId, zoomHistory.canGoBack() ? "map-icon-back" : "map-icon-back-off");
+		encodeTool(context, writer, toolsBackId, zoomHistory.canGoBack() ? "map-icon-back" : "map-icon-back-off", 0);
 		encodeToolSepearator(context, writer);
-		encodeTool(context, writer, toolsForwardId, zoomHistory.canGoForward() ? "map-icon-forward" : "map-icon-forward-off");
+		encodeTool(context, writer, toolsForwardId, zoomHistory.canGoForward() ? "map-icon-forward" : "map-icon-forward-off", 1);
 		encodeToolSepearator(context, writer);
 		
 		// icons: zoom / pan
-		encodeTool(context, writer, toolsPanId, mouseMode.isPan() ? "map-icon-pan" : "map-icon-pan-off");
-		encodeTool(context, writer, toolsZoomId, mouseMode.isZoom() ? "map-icon-zoom" : "map-icon-zoom-off");
+		encodeTool(context, writer, toolsPanId, mouseMode.isPan() ? "map-icon-pan" : "map-icon-pan-off", 2);
+		encodeTool(context, writer, toolsZoomId, mouseMode.isZoom() ? "map-icon-zoom" : "map-icon-zoom-off", 3);
 		encodeToolSepearator(context, writer);
 		
 		// icons: zoom + / zoom -
-		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus");
+		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus", 4);
 		encodeToolSepearator(context, writer);
 		encodeToolZoomSlider(context, writer, toolsSliderContId, toolsSliderKnobId);
 		encodeToolSepearator(context, writer);
-		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus");
+		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus", 5);
 		encodeToolSepearator(context, writer);
 		
 		// icons: sizes
@@ -714,12 +718,12 @@ public class MapComponent extends UIComponentBase
 			MapSize ms = getMapSizes()[i];
 			String className = "map-icon-size-" + i;
 			if (!ms.equals(mapSize)) className += "-off";
-			encodeTool(context, writer, getElementIdForMapSize(context, i), className);
+			encodeTool(context, writer, getElementIdForMapSize(context, i), className, 6);
 		}
 		encodeToolEnd(writer);
 		
 		// scale indicator
-		encodeScaleIndicator(context, writer, scaleIndicatorTextId, scaleIndicatorBarId);
+		encodeScaleIndicator(context, writer, scaleIndicatorTextId, scaleIndicatorBarId, 7);
 		
 		// minimap
 		if (miniMap)
@@ -750,6 +754,8 @@ public class MapComponent extends UIComponentBase
 			writer.startElement("div", this);
 			writer.writeAttribute("id", miniMapToggleId, null);
 			writer.writeAttribute("class", miniMapPosition.getCssClassForToggleButton(miniMapVisible), null);
+			writer.writeAttribute("onmouseover", "myHint.show(" + 8 + ",this)", null);
+			writer.writeAttribute("onmouseout", "myHint.hide()", null);
 			writer.endElement("div");
 		
 		}

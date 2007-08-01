@@ -445,3 +445,13 @@ div.minimap-toggle-sw-expanded {
 	bottom: 0px;
 	background-image: url(../images/minimap-corner-arrow-sw.png);
 	position: absolute; }
+	
+	
+div.hintsClass {
+	/*font-family: tahoma, verdana, arial;
+	font-size: 8px;*/
+	background-color: #f0f0f0;
+	color: #000000;
+	border: 1px solid #808080;
+	padding: 5px;
+}

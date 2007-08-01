@@ -229,8 +229,7 @@ public class DatabaseTableviewBean {
 	 * are supposed to be hidden, a grouper needs to first scan the data in
 	 * order to determine the used nations and regions.
 	 */
-	private void generateTableIfNecessary() {
-
+	private void generateTableIfNecessary() { 
 		// conditions from the left column (i.e. from select bean)
 		Conditions newConditions = searchBean.getSearchParameters().getConditions();
 

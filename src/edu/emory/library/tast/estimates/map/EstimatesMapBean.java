@@ -3,6 +3,8 @@ package edu.emory.library.tast.estimates.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -85,5 +87,17 @@ public class EstimatesMapBean {
 	public ZoomLevel getMiniMapZoomLevel() {
 		
 		return StandardMaps.getMiniMapZoomLevel();
+	}
+	
+	public void setChosenMap(String value) {
+		StandardMaps.setSelectedMapType(value);
+	}
+
+	public String getChosenMap() {
+		return StandardMaps.getSelectedMap();
+	}
+
+	public SelectItem[] getAvailableMaps() {
+		return StandardMaps.getMapTypes();
 	}
 }
