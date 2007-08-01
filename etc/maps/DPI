@@ -1,0 +1,168 @@
+Based on Database
+
+Methodology: Look up latitude and longitude of points in the database. Calculate how many degrees apart they are from each other. Calculate how many pixels this means they should be apart at the desired degree to pixel ratio (eg 1:60). Determine how many pixels they are actually apart using a png rendered at 500DPI. Calculate what the DPI should actually be to place them the desired pixels apart.
+
+"Charleston" lat=32.780961, lon=-79.935535
+"Philadelphia" lat=39.9522, lon=-75.1642
+"New York" lat=40.703068, lon-74.011117
+"Boston" lat=42.361657, lon=-71.059467
+
+Latitude
+Charleston to Philadelphia	7.171239
+Charleston to New York		7.922107
+Charleston to Boston		9.580696
+Philadelphia to New York	0.750868
+Philadelphia to Boston		2.409457
+New York to Boston			1.658589
+
+Longitude
+Charleston to Philadelphia	4.771335
+Charleston to New York		5.924418
+Charleston to Boston		8.876068
+Philadelphia to New York	1.153083
+Philadelphia to Boston		4.104733
+New York to Boston			2.95165
+
+Proper Y-Axis Distance
+Charleston to Philadelphia	430.27434
+Charleston to New York		475.32642
+Charleston to Boston		574.84176
+Philadelphia to New York	45.05208
+Philadelphia to Boston		144.56742
+New York to Boston			99.51534
+
+Proper X-Axis Distance
+Charleston to Philadelphia	286.2801
+Charleston to New York		355.46508
+Charleston to Boston		532.56408
+Philadelphia to New York	69.18498
+Philadelphia to Boston		246.28398
+New York to Boston			177.099
+
+Coordinates at 500DPI
+"Charleston" x=1011, y=869
+"Philadelphia" x=1164, y=639
+"New York" x=1201, y=615
+"Boston" x=1296, y=561
+
+Y-Axis Distance at 500DPI
+Charleston to Philadelphia	230
+Charleston to New York		254
+Charleston to Boston		308
+Philadelphia to New York	24
+Philadelphia to Boston		78
+New York to Boston			54
+
+X-Axis Distance at 500DPI
+Charleston to Philadelphia	153
+Charleston to New York		190
+Charleston to Boston		285
+Philadelphia to New York	37
+Philadelphia to Boston		132
+New York to Boston			95
+
+Multiplication Factor to get Proper Y-Axis Distance
+Charleston to Philadelphia	1.870758
+Charleston to New York		1.871363858
+Charleston to Boston		1.866369351
+Philadelphia to New York	1.87717
+Philadelphia to Boston		1.853428462
+New York to Boston			1.842876667
+
+Multiplication Factor to get Proper x-Axis Distance
+Charleston to Philadelphia	1.871111765
+Charleston to New York		1.870868842
+Charleston to Boston		1.868645895
+Philadelphia to New York	1.869864324
+Philadelphia to Boston		1.865787727
+New York to Boston			1.8642
+
+1.87 yields DPI of 935
+1.86 yields DPI of 930
+
+[tast@wilson maps]$ ./tile.py 935.png
+tiles x       =  64
+tiles y       =  64
+offset left   =  74
+offset right  =  75
+offset top    =  56
+offset bottom =  56
+
+Coordinates at 935DPI
+"Charleston" x=1925, y=2058
+"Boston" x=2458, y=1483
+"Bottom Corner" x=74, y=7736
+
+X Distance
+Charleston to Bottom:	1851
+Boston to Bottom:		2384
+
+Y Distance
+Charleston to Bottom: 	5678
+Boston to Bottom:		6253
+
+Latitude Distance
+Charleston to Bottom: 	94.6333
+Boston to Bottom:		104.2166
+
+Longitude Distance
+Charleston to Bottom:	30.8500
+Boston to Bottom:		39.7333
+
+Bottom Corner could be
+lat=-61.852339, long=-110.785535
+lat=-61.854943, long=-110.792767
+we'll say it's long=-110.79, lat=-61.85
+
+make 1:30 DPI be 467
+
+./tile.py 467.png
+tiles x       =  32
+tiles y       =  32
+offset left   =  34
+offset right  =  35
+offset top    =  26
+offset bottom =  26
+
+Coordinates at 467DPI
+"Charleston" x=961, y=1028
+"Boston" x=1227, y=740
+"Bottom Corner" x=34, y=3866
+
+X Distance
+Charleston to Bottom:	927
+Boston to Bottom:		1193
+
+Y Distance
+Charleston to Bottom: 	2838
+Boston to Bottom:		3126
+
+Latitude Distance
+Charleston to Bottom: 	94.6
+Boston to Bottom:		104.2
+
+Longitude Distance
+Charleston to Bottom:	30.9
+Boston to Bottom:		39.766666667
+
+Bottom Corner could be
+lat=-61.819039, long=-110.835535
+lat=-61.838343, long=-110.826133667
+we'll say it's long=-110.83, lat=-61.83
+
+we want the smallest map to fit the largest viewport
+the largest viewport is 1024x768
+the closet size divisible by 160x120 is 1120x840
+this is 7x7 tiles
+935 DPI produced 10389x7792
+this was 64x64 tiles (10240 x 7680)
+smallest DPI should be 102
+this makes 6.54 pixels per degree
+
+./tile.py 102.png
+tiles x       =  7
+tiles y       =  7
+offset left   =  6
+offset right  =  7
+offset top    =  5
+offset bottom =  5
