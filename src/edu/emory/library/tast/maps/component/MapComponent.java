@@ -536,39 +536,42 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("[");
 			for (int i = 0; i < pointsOfInterest.length; i++)
 			{
-				PointOfInterest pnt = pointsOfInterest[i];
-				String[] symbols = pnt.getSymbols();
-				if (i > 0) jsRegister.append(", ");
-				jsRegister.append("new PointOfInterest(");
-				jsRegister.append(pnt.getX());
-				jsRegister.append(", ");
-				jsRegister.append(pnt.getY());
-				jsRegister.append(", ");
-				jsRegister.append(pnt.getShowAtZoom());
-				jsRegister.append(", ");
-				jsRegister.append("'").append(pnt.getLabelJavaScriptSafe()).append("'");
-				jsRegister.append(", ");
-				jsRegister.append("'").append(pnt.getTextJavaScriptSafe());
-				jsRegister.append("', [");
-				for (int j = 0; j < symbols.length; j++)
-				{
-					Symbol symbol = Symbol.get(symbols[j]);
-					if (j > 0) jsRegister.append(", ");
-					jsRegister.append("new MapSymbol(");
-					jsRegister.append("'").append(symbol.getName()).append("'");
+				
+
+					PointOfInterest pnt = pointsOfInterest[i];
+					String[] symbols = pnt.getSymbols();
+					if (i > 0)
+						jsRegister.append(", ");
+					jsRegister.append("new PointOfInterest(");
+					jsRegister.append(pnt.getX());
 					jsRegister.append(", ");
-					jsRegister.append("'").append(contextPath).append(symbol.getUrl()).append("'");
+					jsRegister.append(pnt.getY());
 					jsRegister.append(", ");
-					jsRegister.append(symbol.getWidth());
+					jsRegister.append(pnt.getShowAtZoom());
 					jsRegister.append(", ");
-					jsRegister.append(symbol.getHeight());
+					jsRegister.append("'").append(pnt.getLabelJavaScriptSafe()).append("'");
 					jsRegister.append(", ");
-					jsRegister.append(symbol.getCenterX());
-					jsRegister.append(", ");
-					jsRegister.append(symbol.getCenterY());
-					jsRegister.append(")");
-				}
-				jsRegister.append("]");
+					jsRegister.append("'").append(pnt.getTextJavaScriptSafe());
+					jsRegister.append("', [");
+					for (int j = 0; j < symbols.length; j++) {
+						Symbol symbol = Symbol.get(symbols[j]);
+						if (j > 0)
+							jsRegister.append(", ");
+						jsRegister.append("new MapSymbol(");
+						jsRegister.append("'").append(symbol.getName()).append("'");
+						jsRegister.append(", ");
+						jsRegister.append("'").append(contextPath).append(symbol.getUrl()).append("'");
+						jsRegister.append(", ");
+						jsRegister.append(symbol.getWidth());
+						jsRegister.append(", ");
+						jsRegister.append(symbol.getHeight());
+						jsRegister.append(", ");
+						jsRegister.append(symbol.getCenterX());
+						jsRegister.append(", ");
+						jsRegister.append(symbol.getCenterY());
+						jsRegister.append(")");
+					}
+					jsRegister.append("]");
 				jsRegister.append(")");
 			}
 			jsRegister.append("]");

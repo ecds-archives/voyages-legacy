@@ -17,6 +17,7 @@ import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
+import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
@@ -40,8 +41,6 @@ public class MapBean {
 
 	public static int PORT_BOTH = 5;
 
-	private static final String[] MAPS = new String[] { "Places", "Regions" };
-	
 	/**
 	 * Reference to Search bean.
 	 */
@@ -55,17 +54,11 @@ public class MapBean {
 	//indicates if requery is required
 	private boolean neededQuery = false;
 
-//	//Map creator - provides link between JSF and MapServer
-//	private MapFileCreator creator = new MapFileCreator();
-
 	//Information show on-mouse-over (when mouse is over given point)
 	private List pointsOfInterest = new ArrayList();
 
 	//Data that is in map
 	private MapData mapData = new MapData();
-
-	//Ports or regions
-	private int chosenMap = 1;
 
 	private void setMapData() {
 		
@@ -77,13 +70,13 @@ public class MapBean {
 
 			SearchParameters params = this.searchBean.getSearchParameters();
 			this.conditions = (Conditions) params.getConditions().clone();
-			if (params.getMapElements() != SearchParameters.NOT_SPECIFIED) {
-				if (params.getMapElements() == SearchParameters.MAP_PORTS) {
-					this.chosenMap = 0;
-				} else {
-					this.chosenMap = 1;
-				}
-			}
+//			if (params.getMapElements() != SearchParameters.NOT_SPECIFIED) {
+//				if (params.getMapElements() == SearchParameters.MAP_PORTS) {
+//					this.chosenMap = 0;
+//				} else {
+//					this.chosenMap = 1;
+//				}
+//			}
 
 			neededQuery = true;
 		}
@@ -95,7 +88,7 @@ public class MapBean {
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
 			//queryHolder.executeQuery(session, this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
-			queryHolder.executeQuery(session, StandardMaps.getSelectedMap().contains("ports") ? 0 : 1);
+			queryHolder.executeQuery(session, StandardMaps.getSelectedMap(this).mapPath.contains("ports") ? 0 : 1);
 
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -156,27 +149,34 @@ public class MapBean {
 	 * @param value
 	 */
 	public void setChosenMap(String value) {
-		if (!value.equals(StandardMaps.getSelectedMap())) {
+		if (!value.equals(StandardMaps.getSelectedMap(this).mapPath)) {
 			this.neededQuery = true;
+			StandardMaps.setSelectedMapType(this, value);
+			MapIdent map = StandardMaps.getSelectedMap(this);
+			this.searchBean.setYearFrom(map.yearFrom);
+			this.searchBean.setYearTo(map.yearTo);
+			
+			this.searchBean.lockYears(true);
 		}
-		StandardMaps.setSelectedMapType(value);
+		StandardMaps.setSelectedMapType(this, value);
 	}
 
 	public String getChosenMap() {
-		return StandardMaps.getSelectedMap();
+		this.searchBean.lockYears(false);
+		return ((MapIdent)StandardMaps.getSelectedMap(this)).mapPath;
 	}
 
 	public SelectItem[] getAvailableMaps() {
-		return StandardMaps.getMapTypes();
+		return StandardMaps.getMapTypes(this);
 	}
 	
 	public ZoomLevel[] getZoomLevels() {
 		setMapData();
-		return StandardMaps.getZoomLevels();
+		return StandardMaps.getZoomLevels(this);
 	}
 	
 	public ZoomLevel getMiniMapZoomLevel() {
 		setMapData();
-		return StandardMaps.getMiniMapZoomLevel();
+		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 }

@@ -90,6 +90,7 @@ var MapsGlobal =
 			miniMap.mainMap = map;
 			miniMap.zoomLevels = [miniMapZoomLevel];
 			miniMap.zoomLevel = 0;
+			miniMap.blockMove = false;
 			
 			map.miniMap = miniMap;
 			map.fieldNameMiniMapVisibility = fieldNameMiniMapVisibility;
@@ -270,6 +271,9 @@ function Map()
 	// selector mode,
 	// the border around the map
 	this.selectorBorder = 30;
+	
+	//By default prevent moving map out of view
+	this.blockMove = true;
 	
 	// init handler
 	this.initListeners = new EventQueue();
@@ -768,6 +772,9 @@ Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
 	
 	// center
 	this.setZoomAndCenterTo(newZoomLevel, cx, cy, true, notifyZoomChange, true, true);
+	
+	//alert('here');
+	//document.forms[0].submit();
 
 }
 
@@ -947,6 +954,7 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 	// notify change of zoom
 	if (notifyZoomChange)
 		this.notifyZoomChange();
+		
 		
 }
 
@@ -1162,7 +1170,7 @@ Map.prototype.panMapBy = function(dx, dy)
 		while (0 < this.bottomLeftTileVportX)
 		{
 		
-			if (this.bottomLeftTileCol == 0)
+			if (this.bottomLeftTileCol == 0 && this.blockMove)
 			{
 				this.bottomLeftTileVportX = 0;
 				break;
@@ -1183,7 +1191,7 @@ Map.prototype.panMapBy = function(dx, dy)
 		while (this.bottomLeftTileVportX + (this.visibleCols + 1) * tileWidth < this.vportWidth)
 		{
 		
-			if (tilesNumX - this.bottomLeftTileCol == this.visibleCols + 1)
+			if (tilesNumX - this.bottomLeftTileCol == this.visibleCols + 1  && this.blockMove)
 			{
 				this.bottomLeftTileVportX = this.vportWidth - (this.visibleCols + 1) * tileWidth;
 				break;
@@ -1212,7 +1220,7 @@ Map.prototype.panMapBy = function(dx, dy)
 		while (0 < this.bottomLeftTileVportY)
 		{
 		
-			if (this.bottomLeftTileRow == 0)
+			if (this.bottomLeftTileRow == 0 && this.blockMove)
 			{
 				this.bottomLeftTileVportY = 0;
 				break;
@@ -1229,8 +1237,8 @@ Map.prototype.panMapBy = function(dx, dy)
 		// move rows from top to bottom
 		while (this.bottomLeftTileVportY + (this.visibleRows + 1) * tileHeight < this.vportHeight)
 		{
-		
-			if (tilesNumY - this.bottomLeftTileRow == this.visibleRows + 1)
+			
+			if (tilesNumY - this.bottomLeftTileRow == this.visibleRows + 1  && this.blockMove)
 			{
 				this.bottomLeftTileVportY = this.vportHeight - (this.visibleRows + 1) * tileHeight;
 				break;
@@ -1836,7 +1844,6 @@ Map.prototype.hiddenFieldsInit = function()
 
 Map.prototype.restoreState = function()
 {
-
 	// zoom
 	if (this.hasHiddenExtendFields)
 	{

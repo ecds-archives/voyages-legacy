@@ -153,11 +153,11 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		}
 
 		// /Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2
+		LegendItem emb = new LegendItem("circle-2-\\d", contextPath + "/map-assets/symbols/circle-" + 2
 				+ "-4.png", TastResource.getText("estimates_map_leg_embplace"));
-		LegendItem disemb = new LegendItem("circle-3-\\d", "symbols/circle-"
+		LegendItem disemb = new LegendItem("circle-3-\\d", contextPath + "/map-assets/symbols/circle-"
 				+ 3 + "-4.png", TastResource.getText("estimates_map_leg_disembplace"));
-		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5
+		LegendItem both = new LegendItem("circle-5-\\d", contextPath + "/map-assets/symbols/circle-" + 5
 				+ "-4.png", TastResource.getText("estimates_map_leg_bothplaces"));
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);

@@ -16,6 +16,7 @@ import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
+import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
@@ -81,23 +82,31 @@ public class EstimatesMapBean {
 	
 	public ZoomLevel[] getZoomLevels() {
 		
-		return StandardMaps.getZoomLevels();
+		return StandardMaps.getZoomLevels(this);
 	}
 	
 	public ZoomLevel getMiniMapZoomLevel() {
 		
-		return StandardMaps.getMiniMapZoomLevel();
+		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 	
 	public void setChosenMap(String value) {
-		StandardMaps.setSelectedMapType(value);
+		if (!StandardMaps.getSelectedMap(this).mapPath.equals(value)) {
+			StandardMaps.setSelectedMapType(this, value);
+			MapIdent map = StandardMaps.getSelectedMap(this);
+			this.estimatesBean.setYearFrom(map.yearFrom);
+			this.estimatesBean.setYearTo(map.yearTo);
+			this.estimatesBean.changeSelection();
+			this.estimatesBean.lockYears(true);
+		}
 	}
 
 	public String getChosenMap() {
-		return StandardMaps.getSelectedMap();
+		this.estimatesBean.lockYears(false);
+		return StandardMaps.getSelectedMap(this).mapPath;
 	}
 
 	public SelectItem[] getAvailableMaps() {
-		return StandardMaps.getMapTypes();
+		return StandardMaps.getMapTypes(this);
 	}
 }

@@ -33,6 +33,9 @@
 	<script src="../scripts/checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/checkbox-list-popup.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
+	
+	<script src="../scripts/tigra_hints.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/map-hints.js" language="javascript" type="text/javascript"></script>
 
 </head>
 <body>

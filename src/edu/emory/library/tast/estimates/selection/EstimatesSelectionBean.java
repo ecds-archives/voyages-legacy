@@ -199,6 +199,8 @@ public class EstimatesSelectionBean {
 	private int yearTo = TIME_SPAN_INITIAL_TO;
 
 	private String selectedTab = "table";
+
+	private boolean lockedYears = false;
 	
 	public EstimatesSelectionBean() {
 		initDefaultValues();
@@ -1115,6 +1117,7 @@ public class EstimatesSelectionBean {
 	 * @return
 	 */
 	public void setYearFrom(int yearFrom) {
+		if (lockedYears) return;
 		this.yearFrom = yearFrom;
 	}
 
@@ -1133,6 +1136,7 @@ public class EstimatesSelectionBean {
 	 * @return
 	 */
 	public void setYearTo(int yearTo) {
+		if (lockedYears) return;
 		this.yearTo = yearTo;
 	}
 
@@ -1221,6 +1225,10 @@ public class EstimatesSelectionBean {
 
 	public void setSelectedTab(String selectedTab) {
 		this.selectedTab = selectedTab;
+	}
+
+	public void lockYears(boolean b) {
+		lockedYears  = b;
 	}
 
 }

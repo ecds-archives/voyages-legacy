@@ -12,14 +12,14 @@ import edu.emory.library.tast.util.HibernateUtil;
 public class TestMapBean
 {
 	
-	public ZoomLevel[] getZoomLevels()
+	public ZoomLevel[] getZoomLevels(Object key)
 	{
-		return StandardMaps.getZoomLevels();
+		return StandardMaps.getZoomLevels(key);
 	}
 	
-	public ZoomLevel getMiniMapZoomLevel()
+	public ZoomLevel getMiniMapZoomLevel(Object key)
 	{
-		return StandardMaps.getMiniMapZoomLevel();
+		return StandardMaps.getMiniMapZoomLevel(key);
 	}
 	
 	public PointOfInterest[] getCities()

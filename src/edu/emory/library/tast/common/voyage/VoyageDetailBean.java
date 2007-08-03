@@ -214,12 +214,12 @@ public class VoyageDetailBean
 
 	public ZoomLevel[] getZoomLevels()
 	{
-		return StandardMaps.getZoomLevels();
+		return StandardMaps.getZoomLevels(this);
 	}
 	
 	public ZoomLevel getMiniMapZoomLevel()
 	{
-		return StandardMaps.getMiniMapZoomLevel();
+		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 
 	public String getSelectedImageId()

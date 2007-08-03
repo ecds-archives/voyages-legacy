@@ -58,6 +58,7 @@ public class SearchBean
 	private SelectItem[] revisions = null;
 	
 	private String expandedGroup = "basic";
+	private boolean yearsLocked = false;
 	
 	public SearchBean()
 	{
@@ -511,6 +512,7 @@ public class SearchBean
 	 */
 	public void setYearFrom(int yearFrom)
 	{
+		if (yearsLocked) return;
 		workingQuery.setYearFrom(yearFrom);
 	}
 
@@ -529,6 +531,7 @@ public class SearchBean
 	 */
 	public void setYearTo(int yearTo)
 	{
+		if (yearsLocked) return;
 		workingQuery.setYearTo(yearTo);
 	}
 	
@@ -588,4 +591,7 @@ public class SearchBean
 		this.expandedGroup = expandedGroup;
 	}
 
+	public void lockYears(boolean b) {
+		this.yearsLocked = b;
+	}
 }
