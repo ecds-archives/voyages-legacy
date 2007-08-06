@@ -211,8 +211,8 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		}
 		
 		///Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-2-\\d", "symbols/circle-" + 2 + "-4.png", "Place of embarkation");
-		LegendItem disemb = new LegendItem("circle-3-\\d", "symbols/circle-" + 3 + "-4.png", "Place of disembarkation");
+		LegendItem emb = new LegendItem("circle-2-\\d", contextPath + "/map-assets/symbols/circle-" + 2 + "-4.png", "Place of embarkation");
+		LegendItem disemb = new LegendItem("circle-3-\\d", contextPath + "/map-assets/symbols/circle-" + 3 + "-4.png", "Place of disembarkation");
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
