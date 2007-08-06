@@ -11,6 +11,7 @@ import org.hibernate.Session;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
+import edu.emory.library.tast.dm.EstimatesImportArea;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.maps.AbstractDataTransformer;
@@ -59,6 +60,9 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 				exp = EstimatesExportRegion.loadById(session, expTmp.longValue());
 				if (exp == null) {
 					exp = EstimatesImportRegion.loadById(session, expTmp.longValue());
+				}
+				if (exp == null) {
+					exp = EstimatesImportArea.loadById(session, expTmp.longValue());
 				}
 			}
 			if (exp != null) {

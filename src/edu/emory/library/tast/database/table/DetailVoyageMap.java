@@ -43,7 +43,7 @@ public class DetailVoyageMap {
 		conditions.addCondition(Voyage.getAttribute("iid"), new Long(iid), Conditions.OP_EQUALS);
 		
 		DetailQueryHolder queryHolder = new DetailQueryHolder(conditions);
-		queryHolder.executeQuery(session, 0);
+		queryHolder.executeQuery(session, 0, -1);
 		
 		if (queryHolder.getRawQueryResponse().length > 0) {
 

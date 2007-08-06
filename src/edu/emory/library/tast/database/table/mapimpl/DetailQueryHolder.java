@@ -197,7 +197,7 @@ public class DetailQueryHolder extends AbstractTransformerQueryHolder {
 		this.addQuery("Voyage trail", new QueryValue[] {qValue});
 	}
 	
-	protected void performExecuteQuery(Session session, QueryValue[] queries) {
+	protected void performExecuteQuery(Session session, QueryValue[] queries, int type) {
 		this.setRawQueryResponse(queries[0].executeQuery(session));
 	}
 

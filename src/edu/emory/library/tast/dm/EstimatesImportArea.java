@@ -46,9 +46,9 @@ public class EstimatesImportArea extends Location
 		return Dictionary.loadAll(EstimatesImportArea.class, sess, "order");
 	}
 	
-	public static Area loadById(Session sess, long portId)
+	public static EstimatesImportArea loadById(Session sess, long portId)
 	{
-		return (Area) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
+		return (EstimatesImportArea) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
 	}
 	
 	public static Area loadById(Session sess, String portId)

@@ -35,6 +35,12 @@ public class EstimatesMapBean {
 	private List pointsOfInterest = new ArrayList();
 
 	private Conditions conditions;
+	
+	private int zoomLevel;
+
+	private boolean forceQuery = false;
+	
+	private int type = -1;
 
 	public EstimatesSelectionBean getEstimatesBean() {
 		return estimatesBean;
@@ -54,12 +60,13 @@ public class EstimatesMapBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		if (!this.getEstimatesBean().getConditions().equals(this.conditions)) {
+		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || forceQuery) {
 			this.conditions = this.getEstimatesBean().getConditions();
+			forceQuery  = false;
 			this.pointsOfInterest.clear();
 			EstimateMapQueryHolder queryHolder = new EstimateMapQueryHolder(
 					conditions);
-			queryHolder.executeQuery(session, 0);
+			queryHolder.executeQuery(session, zoomLevel, type);
 
 			EstimateMapDataTransformer transformer = new EstimateMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -75,9 +82,25 @@ public class EstimatesMapBean {
 		return this.mapData.getLegend();
 	}
 	
-	public String refresh() {	
+	public String refresh() {
+		type = determineType();
+		forceQuery = true;
 		this.setData();
 		return null;
+	}
+	
+	private int determineType() {
+		if (this.mapData.getLegend() == null || this.mapData.getLegend().length < 2) {
+			return -1;
+		}
+		LegendItemsGroup legend = this.mapData.getLegend()[1];
+		if (legend.getItems()[0].isEnabled() && legend.getItems()[1].isEnabled()) {
+			return -1;
+		} else if (legend.getItems()[0].isEnabled()) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 	
 	public ZoomLevel[] getZoomLevels() {
@@ -108,5 +131,16 @@ public class EstimatesMapBean {
 
 	public SelectItem[] getAvailableMaps() {
 		return StandardMaps.getMapTypes(this);
+	}
+
+	public int getZoomLevel() {
+		return zoomLevel;
+	}
+
+	public void setZoomLevel(int zoomLevel) {
+		if (this.zoomLevel != zoomLevel) {
+			forceQuery = true;
+		}
+		this.zoomLevel = zoomLevel;
 	}
 }

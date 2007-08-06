@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
+import edu.emory.library.tast.dm.EstimatesImportArea;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
@@ -26,7 +27,8 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 
-	public QueryValue[] estimateMapQuerys = null;
+	public QueryValue[] estimateMapQuerysAreas = null;
+	public QueryValue[] estimateMapQuerysRegions = null;
 
 	public EstimateMapQueryHolder(Conditions conditions) {
 		
@@ -66,17 +68,66 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}));
 		qValue2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("id") }) });
+		this.estimateMapQuerysRegions = new QueryValue[] { qValue1, qValue2 };
+		
+		
+		
+		
+		c = new Conditions();
+		c.addCondition(conditions);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
+		qValue1 = new QueryValue(new String[] { "Estimate" },
+				new String[] { "e" }, c);
+		qValue1
+				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
+						Estimate.getAttribute("expRegion"),
+						EstimatesExportRegion.getAttribute("id") }));
+		qValue1.addPopulatedAttribute(new FunctionAttribute("sum",
+				new Attribute[] { Estimate.getAttribute("slavExported") }));
+		qValue1.addPopulatedAttribute(new DirectValueAttribute("2"));
+		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}));
+		qValue1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }) });
 
-		this.estimateMapQuerys = new QueryValue[] { qValue1, qValue2 };
-		this.addQuery("", this.estimateMapQuerys);
+		c = new Conditions();
+		c.addCondition(conditions);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("longitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("latitude")}),
+				new Double(0), Conditions.OP_IS_NOT);
+		qValue2 = new QueryValue(new String[] { "Estimate" },
+				new String[] { "e" }, c);
+		qValue2
+				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
+						Estimate.getAttribute("impRegion"),
+						EstimatesImportRegion.getAttribute("area"),
+						EstimatesImportArea.getAttribute("id") }));
+		qValue2.addPopulatedAttribute(new FunctionAttribute("sum",
+				new Attribute[] { Estimate.getAttribute("slavImported") }));
+		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
+		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}));
+		qValue2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("id") }) });
+		this.estimateMapQuerysAreas = new QueryValue[] { qValue1, qValue2 };
+		
+		
+		
+		this.addQuery("", this.estimateMapQuerysAreas);
+		this.addQuery("", this.estimateMapQuerysRegions);
+		this.addQuery("", this.estimateMapQuerysRegions);
+		
 	}
 
-	protected void performExecuteQuery(Session session, QueryValue[] querySet) {
+	protected void performExecuteQuery(Session session, QueryValue[] querySet, int type) {
 		List allResults = new ArrayList();
 		AttributesMap attributes = new AttributesMap();
 		List list0 = new ArrayList();
 		List list1 = new ArrayList();
 		for (int i = 0; i < querySet.length; i++) {
+			if (type != -1 && type != i) {
+				continue;
+			}
 			int shift = allResults.size();
 			Object[] results = querySet[i].executeQuery(session);
 			allResults.addAll(Arrays.asList(results));

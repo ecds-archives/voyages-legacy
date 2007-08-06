@@ -16,7 +16,8 @@ public class MapTag extends UIComponentTag
 	private String miniMapPosition;
 	private String miniMapWidth;
 	private String miniMapHeight;
-
+	private String zoomLevel;
+	
 	public String getComponentType()
 	{
 		return "Map";
@@ -102,6 +103,22 @@ public class MapTag extends UIComponentTag
 			{
 			}
 		}
+		
+		if (zoomLevel != null && isValueReference(zoomLevel))
+		{
+			ValueBinding vb = app.createValueBinding(zoomLevel);
+			component.setValueBinding("zoomLevel", vb);
+		}
+		else
+		{
+			try
+			{
+				map.setZoomLevel(Integer.parseInt(zoomLevel));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
+		}
 
 	}
 
@@ -173,6 +190,14 @@ public class MapTag extends UIComponentTag
 	public void setMiniMapZoomLevel(String miniMapZoomLevel)
 	{
 		this.miniMapZoomLevel = miniMapZoomLevel;
+	}
+
+	public String getZoomLevel() {
+		return zoomLevel;
+	}
+
+	public void setZoomLevel(String zoomLevel) {
+		this.zoomLevel = zoomLevel;
 	}
 
 }

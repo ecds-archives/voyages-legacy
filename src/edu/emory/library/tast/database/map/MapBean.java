@@ -7,6 +7,7 @@ import javax.faces.model.SelectItem;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.hql.ast.tree.QueryNode;
 
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapQueryHolder;
@@ -59,6 +60,10 @@ public class MapBean {
 
 	//Data that is in map
 	private MapData mapData = new MapData();
+	
+	private int zoomLevelId = 0;
+
+	private int type = -1;
 
 	private void setMapData() {
 		
@@ -88,7 +93,8 @@ public class MapBean {
 			this.pointsOfInterest.clear();
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
 			//queryHolder.executeQuery(session, this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
-			queryHolder.executeQuery(session, StandardMaps.getSelectedMap(this).mapPath.contains("ports") ? 0 : 1);
+			
+			queryHolder.executeQuery(session, zoomLevelId, type);
 
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -102,11 +108,27 @@ public class MapBean {
 
 	}
 
+	private int determineType() {
+		if (this.mapData.getLegend() == null || this.mapData.getLegend().length < 2) {
+			return -1;
+		}
+		LegendItemsGroup legend = this.mapData.getLegend()[1];
+		if (legend.getItems()[0].isEnabled() && legend.getItems()[1].isEnabled()) {
+			return -1;
+		} else if (legend.getItems()[0].isEnabled()) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+
 	/**
 	 * Refreshes any data in map. It queries the database if needed.
 	 * @return
 	 */
 	public String refresh() {
+		type = determineType();
+		neededQuery = true;
 		this.setMapData();
 		return null;
 	}
@@ -178,5 +200,16 @@ public class MapBean {
 	public ZoomLevel getMiniMapZoomLevel() {
 		setMapData();
 		return StandardMaps.getMiniMapZoomLevel(this);
+	}
+
+	public int getZoomLevel() {
+		return zoomLevelId;
+	}
+
+	public void setZoomLevel(int zoomLevelId) {
+		if (this.zoomLevelId != zoomLevelId) {
+			this.neededQuery = true;
+		}
+		this.zoomLevelId = zoomLevelId;
 	}
 }

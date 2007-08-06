@@ -33,6 +33,7 @@ public class MapData {
 	 * Legend - keept as legend groups.
 	 */
 	private LegendItemsGroup[] legendItems = new LegendItemsGroup[] {};
+	private LegendItemsGroup[] oldLegend;
 	
 	/**
 	 * Constructs empty map data object.
@@ -62,7 +63,15 @@ public class MapData {
 		this.items = response.getItems();
 		
 		//Set legend
+		this.oldLegend = legendItems;
 		this.legendItems = response.getLegendItems();
+		if (oldLegend != null) {
+			for (int i = 0; i < oldLegend.length; i++) {
+				for (int j = 0; j < oldLegend[i].getItems().length; j++) {
+					legendItems[i].getItems()[j].setEnabled(oldLegend[i].getItems()[j].isEnabled());
+				}
+			}
+		}
 		
 		t.commit();
 		session.close();

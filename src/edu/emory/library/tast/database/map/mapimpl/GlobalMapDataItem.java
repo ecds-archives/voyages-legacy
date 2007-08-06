@@ -188,8 +188,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 		Element[] elements = this.getMapItemElements()[0].getElements();
 		for (int i = 0; i < elements.length; i++) {
 			Element element = elements[i];
-			buffer.append(element.getAttribute().getUserLabelOrName()).append(
-					": ");
+			buffer.append(element.getAttribute().getUserLabelOrName()).append(": ");
 			buffer.append(
 					valuesFormat
 							.format(new Object[] { new Long(Math

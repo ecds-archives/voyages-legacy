@@ -24,15 +24,15 @@ public abstract class AbstractTransformerQueryHolder {
 		this.queries.add(querySet);
 	}
 	
-	public final void executeQuery(Session session, int queryNumber) {
+	public final void executeQuery(Session session, int queryNumber, int type) {
 		if (queryNumber > queries.size()) {
 			throw new RuntimeException("Query number out of range!");
 		}
 		this.executedQuery = queryNumber;
-		performExecuteQuery(session, (QueryValue[])this.queries.get(queryNumber));
+		performExecuteQuery(session, (QueryValue[])this.queries.get(queryNumber), type);
 	}
 	
-	protected abstract void performExecuteQuery(Session session, QueryValue[] querySet);
+	protected abstract void performExecuteQuery(Session session, QueryValue[] querySet, int type);
 
 	public String[] getQueryLabels() {
 		return (String[])this.queryLabels.toArray(new String[] {});

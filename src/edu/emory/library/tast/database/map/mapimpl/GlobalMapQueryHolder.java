@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
@@ -31,8 +32,9 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 	
 	QueryValue[] querySetPorts;
 	QueryValue[] querySetRegions;
-	QueryValue[] querySetPortsAdj;
-	QueryValue[] querySetRegionsAdj;
+	QueryValue[] querySetAreas;
+	
+	QueryValue[][] queriesAll = null;
 	
 	public GlobalMapQueryHolder(Conditions conditions) {
 		
@@ -49,6 +51,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		QueryValue query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
+		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showAtZoom")}));
 		query1.setGroupBy(
@@ -70,6 +73,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
+		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("showAtZoom")}));
 		query2.setGroupBy(
 				new Attribute[] {
@@ -92,6 +96,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("showAtZoom")}));
 		query1.setGroupBy(
 				new Attribute[] {
@@ -112,6 +117,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
+		query2.addPopulatedAttribute(new DirectValueAttribute("1"));
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("showAtZoom")}));
 		query2.setGroupBy(
 				new Attribute[] {
@@ -121,14 +127,57 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[1] = query2;
+		
+		
+		querySetAreas = new QueryValue[2];
+		c = new Conditions();
+		if (!conditions.isEmpty()) {
+			c.addCondition(conditions);
+		}
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
+		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
+		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query1.addPopulatedAttribute(new DirectValueAttribute("0"));
+		query1.setGroupBy(
+				new Attribute[] {
+						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("id")})
+				});
+		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
+		query1.setOrder(QueryValue.ORDER_ASC);
+		querySetAreas[0] = query1;
+			
+		c = new Conditions();
+		if (!conditions.isEmpty()) {
+			c.addCondition(conditions);
+		}
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
+		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
+		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
+		query2.addPopulatedAttribute(new DirectValueAttribute("0"));
+		query2.setGroupBy(
+				new Attribute[] {
+						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("id")})
+				});
+		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
+		query2.setOrder(QueryValue.ORDER_ASC);
+		querySetAreas[1] = query2;
 			
 		
-		this.addQuery(availableQuerySets[0], querySetPorts);
+		this.addQuery(availableQuerySets[0], querySetAreas);
 		this.addQuery(availableQuerySets[1], querySetRegions);
+		this.addQuery(availableQuerySets[2], querySetPorts);
+		
+		queriesAll = new QueryValue[][] {querySetAreas, querySetRegions, querySetPorts};
 
 	}
 	
-	protected void performExecuteQuery(Session session, QueryValue[] queries) {
+	protected void performExecuteQuery(Session session, QueryValue[] queries, int type) {
 
 		AttributesMap map = new AttributesMap();
 		List col1 = new ArrayList();
@@ -136,18 +185,21 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		ArrayList response = new ArrayList();
 		int beginSize = response.size();
 		
-		boolean ports = false;
-		if (queries == querySetPorts || queries == querySetPortsAdj) {
-			ports = true;
+		int id = -1;
+		if (queries == querySetPorts) {
+			id = 0;
+		} else if (queries == querySetRegions) {
+			id = 1;
+		} else {
+			id = 2;
 		}
 		
 		for (int i = 0; i < queries.length; i++) {
-		
-//			Object[] voyages = queries[i].executeQuery(session);
-//			response.addAll(Arrays.asList(voyages));
-
-			executeMapQuery(session, response, queries[i], ports);
-			if (i == 0) {
+			if (type != -1 && type != i) {
+				continue;
+			}
+			executeMapQuery(session, response, queries[i], id);
+			if (i % 2 == 0) {
 				col1.add(new AttributesRange(VisibleAttribute.getAttribute("mjbyptimp"), beginSize, beginSize + response.size() - 1));
 				col2.add(new AttributesRange(VisibleAttribute.getAttribute("slaximp"), beginSize, beginSize + response.size() - 1));
 			} else {
@@ -160,23 +212,29 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 			beginSize += response.size();
 		}
 		
-		this.setAttributesMap(map);
+		this.setAttributesMap(map);		
 		this.setRawQueryResponse(response.toArray());
 	}
 	
-	private void executeMapQuery(Session session, List response, QueryValue query, boolean ports) {
+	private void executeMapQuery(Session session, List response, QueryValue query, int what) {
 
 		Object[] voyages = query.executeQuery(session);
-		if (!ports) {
+		if (what == 1) {
 			for (int i = 0; i < voyages.length; i++) {
 				if (((Object[])voyages[i])[0] != null) {
 					((Object[])voyages[i])[0] = Region.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
 				}
 			}
-		} else {
+		} else if (what == 0) {
 			for (int i = 0; i < voyages.length; i++) {
 				if (((Object[])voyages[i])[0] != null) {
 					((Object[])voyages[i])[0] = Port.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
+				}
+			}
+		} else {
+			for (int i = 0; i < voyages.length; i++) {
+				if (((Object[])voyages[i])[0] != null) {
+					((Object[])voyages[i])[0] = Area.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
 				}
 			}
 		}

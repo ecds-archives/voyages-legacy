@@ -2,8 +2,10 @@ package edu.emory.library.tast.database.map.mapimpl;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.FacesContext;
@@ -11,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.Image;
+import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.LocationWithImages;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.maps.AbstractDataTransformer;
@@ -83,81 +86,79 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			
 			Object[] row = (Object[]) data[i];
 			
-			//Get port
-			LocationWithImages location = (LocationWithImages) (row)[0];
-			
+			String[] imageUrls = new String[0];
 			String queryImages = null;
-			if (location instanceof Port) {
-				queryImages = "port=";
-			} else {
-				queryImages = "region=";
-			}
-			queryImages += location.getId();
 			
-			// collect images (just the names so far)
-			Set images =  location.getReadyToGoImages();
-			String[] imageUrls = new String[images.size()];
-			int imageIndex = 0;
-			for (Iterator iter = images.iterator(); iter.hasNext();)
-			{
-				Image image = (Image) iter.next();
-				imageUrls[imageIndex++] = image.getFileName(); 
-			}
-			
-			//Get color
+			//Get port
+			Location location = (Location) (row)[0];
+			if (location instanceof LocationWithImages) {
+					if (location instanceof Port) {
+						queryImages = "port=";
+					} else {
+						queryImages = "region=";
+					}
+					queryImages += location.getId();
+					
+					// collect images (just the names so far)
+					Set images =  ((LocationWithImages)location).getReadyToGoImages();
+					imageUrls = new String[images.size()];
+					int imageIndex = 0;
+					for (Iterator iter = images.iterator(); iter.hasNext();)
+					{
+						Image image = (Image) iter.next();
+						imageUrls[imageIndex++] = image.getFileName(); 
+					}
+				}
+				// Get color
 			int color = Integer.parseInt(row[2].toString());
-			
-			//Get zoom
-			int showAtzoom = ((Integer)row[3]).intValue();
 
-			//Get valaue
+			// Get zoom
+			int showAtzoom = Integer.parseInt(((String) row[3]));
+
+			// Get valaue
 			Number value = (Number) ((Object[]) data[i])[1];
 			if (location != null) {
-				
+
 				if (min > value.doubleValue()) {
 					min = value.doubleValue();
 				}
 				if (max < value.doubleValue()) {
 					max = value.doubleValue();
 				}
-				//System.out.println("Color---: " + color + gisPort.getX() + " " + gisPort.getY());
-				//Create test item
-				GlobalMapDataItem testItem = new GlobalMapDataItem(
-						location.getX(),
-						location.getY(),
-						location.getName(),
-						color, i,
-						imageUrls,
-						queryImages);
+				// System.out.println("Color---: " + color + gisPort.getX() + "
+				// " + gisPort.getY());
+				// Create test item
+				GlobalMapDataItem testItem = new GlobalMapDataItem(location.getX(), location.getY(),
+						location.getName(), color, i, imageUrls, queryImages);
 
 				int index;
 
-				//System.out.println("i=" + i + "  Checking port: " + gisPort);
-				
-				//Check if test item is among map items that have already been added
+				// System.out.println("i=" + i + " Checking port: " + gisPort);
+
+				// Check if test item is among map items that have already been
+				// added
 				if ((index = items.indexOf(testItem)) != -1) {
-					//If so - add Element to existing item
+					// If so - add Element to existing item
 					GlobalMapDataItem item = (GlobalMapDataItem) items.get(index);
 					Element el = new Element(getAttribute(i, 1), new Double(value.doubleValue()));
 					item.getMapItemElements()[0].addElement(el);
 					el.setColor(color);
 					el.setShowAtZoom(showAtzoom);
 					item.setSymbolColor(DOUBLE_COLOR);
-					//System.out.println("Equals to: " + item.getI());
+					// System.out.println("Equals to: " + item.getI());
 				} else {
-					//If no - add test item to map items
+					// If no - add test item to map items
 					MapItemElement itemElement = new MapItemElement(getAttribute(i, 0));
 					Element el = new Element(getAttribute(i, 1), new Double(value.doubleValue()));
 					el.setColor(color);
 					el.setShowAtZoom(showAtzoom);
 					itemElement.addElement(el);
 					testItem.addMapItemElement(itemElement);
-					//double [] projXY = gisPort.getXYProjected();
+					// double [] projXY = gisPort.getXYProjected();
 					testItem.setProjXY(location.getX(), location.getY());
 					items.add(testItem);
 				}
 			}
-
 		}
 
 		double[] ranges = new double[CIRCLE_RANGES + 1];
@@ -240,5 +241,6 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		return new TransformerResponse((AbstractMapItem[]) items.toArray(new AbstractMapItem[] {}), 
 										new LegendItemsGroup[] {legendSizes, legendColors});
 	}
+
 
 }

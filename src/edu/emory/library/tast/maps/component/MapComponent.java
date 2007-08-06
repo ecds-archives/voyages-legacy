@@ -9,6 +9,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.util.JsfUtils;
@@ -180,6 +181,16 @@ public class MapComponent extends UIComponentBase
 		
 		miniMapVisible = JsfUtils.getParamBoolean(params, getHiddenFieldNameForMiniMapVisibility(context), miniMapVisible);
 		
+	}
+	
+	public void processUpdates(FacesContext context) {
+		
+		ValueBinding vb = getValueBinding("zoomLevel");
+		if (vb != null) {
+			vb.setValue(context, new Integer(zoomLevel));
+		}
+		
+		super.processUpdates(context);
 	}
 	
 	private void encodeToolStart(ResponseWriter writer) throws IOException
@@ -885,6 +896,10 @@ public class MapComponent extends UIComponentBase
 	{
 		miniMapZoomLevelSet = true;
 		this.miniMapZoomLevel = miniMapZoomLevel;
+	}
+
+	public void setZoomLevel(int i) {
+		
 	}
 
 }
