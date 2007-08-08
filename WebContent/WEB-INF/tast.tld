@@ -386,6 +386,10 @@
 		<attribute>
 			<name>miniMapHeight</name>
 		</attribute>
+		<attribute>
+			<name>zoomLevel</name>
+		</attribute>
+		
 	</tag>
 	
 	<tag>

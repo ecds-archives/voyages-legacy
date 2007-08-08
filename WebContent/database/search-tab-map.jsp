@@ -18,7 +18,8 @@
 			miniMapZoomLevel="#{MapBean.miniMapZoomLevel}"
 			miniMapHeight="100"
 			miniMapWidth="100"
-			miniMapPosition="bottom right"/>
+			miniMapPosition="bottom right"
+			zoomLevel="#{MapBean.zoomLevel}" />
 
 	</t:htmlTag>
 

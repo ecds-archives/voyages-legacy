@@ -44,7 +44,8 @@ var MapsGlobal =
 		fieldNameMiniMapVisibility,
 		miniMapPosition,
 		miniMapWidth,
-		miniMapHeight
+		miniMapHeight,
+		placesListBox
 	)
 	{
 	
@@ -78,6 +79,8 @@ var MapsGlobal =
 		// scale indicator
 		map.scaleBarIndicatorId = scaleIndicatorBarId;
 		map.scaleTextIndicatorId = scaleIndicatorTextId;
+		
+		map.placesListBox = placesListBox;
 		
 		// minimap
 		if (miniMapControlId && miniMapFrameId)
@@ -138,6 +141,11 @@ var MapsGlobal =
 		// call init after page loads
 		EventAttacher.attachOnWindowEvent("load", map, "init", false);
 	
+	},
+	
+	clickedShowMap: function(mapId) {
+		var map = MapsGlobal.maps[mapId];
+		if (map) map.clickedShowPort();
 	},
 	
 	setMouseModeToPan: function(mapId)
@@ -274,6 +282,10 @@ function Map()
 	
 	//By default prevent moving map out of view
 	this.blockMove = true;
+	
+	this.placesListBox = '';
+	
+	this.first = true;
 	
 	// init handler
 	this.initListeners = new EventQueue();
@@ -754,6 +766,7 @@ Map.prototype.registerZoomSlider = function(zoomSlider)
 Map.prototype.notifyZoomChange = function()
 {
 	if (this.zoomSlider) this.zoomSlider.zoomChanged();
+	document.forms[0].submit();
 }
 
 Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
@@ -774,7 +787,6 @@ Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
 	this.setZoomAndCenterTo(newZoomLevel, cx, cy, true, notifyZoomChange, true, true);
 	
 	//alert('here');
-	//document.forms[0].submit();
 
 }
 
@@ -1531,11 +1543,17 @@ Map.prototype.initPoints = function()
 
 	if (!this.points)
 		return;
-
+	var combo = null;
+	var array = new Array();
+	if (this.first) {
+		this.first = false;
+		combo = document.getElementById(this.placesListBox);
+	}
 	for (var i = this.points.length - 1; 0 <= i; i--)
 	{
 	
 		var pnt = this.points[i];
+		array[i] = pnt.label;
 
 		var labelElement = pnt.labelElement = document.createElement("div");
 		labelElement.innerHTML = pnt.label;
@@ -1569,7 +1587,42 @@ Map.prototype.initPoints = function()
 		}
 
 	}
+	
+	if (combo != null) {
+		var n;
+		var y=document.createElement('option');
+		y.text = "--- Select place ---";
+		try {
+			combo.add(y, null);
+		} catch (ex) {
+			combo.add(y);
+		}		
+		array.sort();
+		for (n = 0; n < array.length; n++) {
+			y=document.createElement('option');
+			y.text = array[n];
+			try {
+				combo.add(y, null);
+			} catch (ex) {
+				combo.add(y);
+			}
+		}
+	}
 
+}
+
+Map.prototype.clickedShowPort = function() {
+	var combo = document.getElementById(this.placesListBox);
+	var selectedOption = combo.options[combo.selectedIndex];
+	for (var i = 0; i < this.points.length; i++) {
+		var pnt = this.points[i];
+		if (pnt.label == selectedOption.text) {
+			//alert("found: " + selectedOption.text);
+			this.setZoomAndCenterTo(this.zoomLevel, pnt.x, pnt.y, true, false, true, true);
+			this.showLabel(null, i, true);
+			break;
+		}
+	}
 }
 
 Map.prototype.precomputePointsPositions = function()
@@ -1580,6 +1633,8 @@ Map.prototype.precomputePointsPositions = function()
 
 	var vportWidth = this.getVportWidth();
 	var vportHeight = this.getVportHeight();
+
+	
 
 	var scaleRat = (this.scale - 1) / (this.scaleMax - 1) * 100;
 	//var eps = 0.005;
@@ -1593,7 +1648,7 @@ Map.prototype.precomputePointsPositions = function()
 		pnt.vx = this.fromRealToVportX(pnt.x);
 		pnt.vy = this.fromRealToVportY(pnt.y);
 
-		if (0 <= pnt.vx && pnt.vx < vportWidth && 0 <= pnt.vy && pnt.vy < vportHeight)
+		if (0 <= pnt.vx && pnt.vx < vportWidth && 0 <= pnt.vy && pnt.vy < vportHeight/* && (pnt.showAtZoom == this.zoomLevel || pnt.showAtZoom == -1)*/)
 		{
 		
 			for (var j = 0; j < pnt.symbols.length; j++)
@@ -2163,6 +2218,7 @@ MapZoomSlider.prototype.click = function(event)
 	var zoomLevel = parseInt(ElementUtils.getEventMouseElementX(event, this.cont) / this.slotWidth);
 	this.setKnobPosition(zoomLevel);
 	this.map.changeZoomLevel(zoomLevel, false);
+	document.forms[0].submit();
 }
 
 MapZoomSlider.prototype.mouseDown = function(event)
