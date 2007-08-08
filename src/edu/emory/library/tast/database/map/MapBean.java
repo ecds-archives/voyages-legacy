@@ -18,6 +18,7 @@ import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
+import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
@@ -64,6 +65,8 @@ public class MapBean {
 	private int zoomLevelId = 0;
 
 	private int type = -1;
+	
+	private boolean zoomLevelLocked = false;
 
 	private void setMapData() {
 		
@@ -75,14 +78,6 @@ public class MapBean {
 
 			SearchParameters params = this.searchBean.getSearchParameters();
 			this.conditions = (Conditions) params.getConditions().clone();
-//			if (params.getMapElements() != SearchParameters.NOT_SPECIFIED) {
-//				if (params.getMapElements() == SearchParameters.MAP_PORTS) {
-//					this.chosenMap = 0;
-//				} else {
-//					this.chosenMap = 1;
-//				}
-//			}
-
 			neededQuery = true;
 		}
 
@@ -171,21 +166,22 @@ public class MapBean {
 	 * @param value
 	 */
 	public void setChosenMap(String value) {
-		if (!value.equals(StandardMaps.getSelectedMap(this).mapPath)) {
+		if (!value.equals(StandardMaps.getSelectedMap(this).encodeMapId())) {
 			this.neededQuery = true;
 			StandardMaps.setSelectedMapType(this, value);
-			MapIdent map = StandardMaps.getSelectedMap(this);
-			this.searchBean.setYearFrom(map.yearFrom);
-			this.searchBean.setYearTo(map.yearTo);
-			
+			ChosenMap map = StandardMaps.getSelectedMap(this);
+			this.zoomLevelId = map.mapId;
+			this.searchBean.setYearFrom(map.ident.yearFrom);
+			this.searchBean.setYearTo(map.ident.yearTo);
 			this.searchBean.lockYears(true);
+			zoomLevelLocked = true;
 		}
 		StandardMaps.setSelectedMapType(this, value);
 	}
 
 	public String getChosenMap() {
 		this.searchBean.lockYears(false);
-		return ((MapIdent)StandardMaps.getSelectedMap(this)).mapPath;
+		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
 	public SelectItem[] getAvailableMaps() {
@@ -203,11 +199,16 @@ public class MapBean {
 	}
 
 	public int getZoomLevel() {
+		zoomLevelLocked = false;
 		return zoomLevelId;
 	}
 
 	public void setZoomLevel(int zoomLevelId) {
+		if (zoomLevelLocked) {
+			return;
+		}
 		if (this.zoomLevelId != zoomLevelId) {
+			StandardMaps.zoomChanged(this, zoomLevelId);
 			this.neededQuery = true;
 		}
 		this.zoomLevelId = zoomLevelId;

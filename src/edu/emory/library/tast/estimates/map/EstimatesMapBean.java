@@ -16,6 +16,7 @@ import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
+import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
@@ -37,6 +38,8 @@ public class EstimatesMapBean {
 	private Conditions conditions;
 	
 	private int zoomLevel;
+	
+	private boolean zoomLevelLocked = true;
 
 	private boolean forceQuery = false;
 	
@@ -114,11 +117,13 @@ public class EstimatesMapBean {
 	}
 	
 	public void setChosenMap(String value) {
-		if (!StandardMaps.getSelectedMap(this).mapPath.equals(value)) {
+		if (!StandardMaps.getSelectedMap(this).encodeMapId().equals(value)) {
 			StandardMaps.setSelectedMapType(this, value);
-			MapIdent map = StandardMaps.getSelectedMap(this);
-			this.estimatesBean.setYearFrom(map.yearFrom);
-			this.estimatesBean.setYearTo(map.yearTo);
+			ChosenMap map = StandardMaps.getSelectedMap(this);
+			this.zoomLevel = map.mapId;
+			this.zoomLevelLocked = true;
+			this.estimatesBean.setYearFrom(map.ident.yearFrom);
+			this.estimatesBean.setYearTo(map.ident.yearTo);
 			this.estimatesBean.changeSelection();
 			this.estimatesBean.lockYears(true);
 		}
@@ -126,7 +131,7 @@ public class EstimatesMapBean {
 
 	public String getChosenMap() {
 		this.estimatesBean.lockYears(false);
-		return StandardMaps.getSelectedMap(this).mapPath;
+		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
 	public SelectItem[] getAvailableMaps() {
@@ -134,12 +139,17 @@ public class EstimatesMapBean {
 	}
 
 	public int getZoomLevel() {
+		this.zoomLevelLocked = false;
 		return zoomLevel;
 	}
 
 	public void setZoomLevel(int zoomLevel) {
+		if (zoomLevelLocked) {
+			return;
+		}
 		if (this.zoomLevel != zoomLevel) {
 			forceQuery = true;
+			StandardMaps.zoomChanged(this, zoomLevel);
 		}
 		this.zoomLevel = zoomLevel;
 	}

@@ -13,6 +13,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 
 import edu.emory.library.tast.maps.LegendItem;
 import edu.emory.library.tast.maps.LegendItemsGroup;
@@ -130,13 +131,11 @@ public class LegendComponent extends UIComponentBase {
 			//JsfUtils.appendSubmitJS(js, context, form, elementName, value)
 			writer.writeAttribute("onchange", buffer.toString(), null);
 			for (int i = 0; i < maps.length; i++) {
-				writer.startElement("option", this);
-				writer.writeAttribute("value", maps[i].getValue(), null);
-				if (selectedMap.equals(maps[i].getValue())) {
-					writer.writeAttribute("selected", null, null);
+				if (maps[i] instanceof SelectItemGroup) {
+					encodeGroup((SelectItemGroup)maps[i], selectedMap, writer);
+				} else {
+					encodeOption(maps[i], selectedMap, writer);
 				}
-				writer.write(maps[i].getLabel());
-				writer.endElement("option");
 			}
 			writer.endElement("select");
 			
@@ -152,6 +151,27 @@ public class LegendComponent extends UIComponentBase {
 	}
 
 	
+	
+	private void encodeOption(SelectItem item, String selectedMap, ResponseWriter writer) throws IOException {
+		writer.startElement("option", this);
+		writer.writeAttribute("value", item.getValue(), null);
+		if (selectedMap.equals(item.getValue())) {
+			writer.writeAttribute("selected", null, null);
+		}
+		writer.write(item.getLabel());
+		writer.endElement("option");
+	}
+
+	private void encodeGroup(SelectItemGroup item, String selectedMap, ResponseWriter writer) throws IOException {
+		writer.startElement("optgroup", this);
+		writer.writeAttribute("label", item.getLabel(), null);
+		SelectItem[] subItems = item.getSelectItems();
+		for (int i = 0; i < subItems.length; i++) {
+			this.encodeOption(subItems[i], selectedMap, writer);
+		}
+		writer.endElement("option");
+	}
+
 	private void encodeAttrsChoose(FacesContext context, ResponseWriter writer) throws IOException {
 		
 		SelectItem[] attrs = (SelectItem[]) this.getValueBinding(context, "availableAttributes");

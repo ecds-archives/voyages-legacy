@@ -158,6 +158,11 @@ public class MapComponent extends UIComponentBase
 		return getClientId(context) + "_param";
 	}
 
+	private String getHiddenFieldNameForPlacesListBox(FacesContext context)
+	{
+		return getClientId(context) + "_placesListBox";
+	}
+	
 	public void decode(FacesContext context)
 	{
 		
@@ -652,6 +657,8 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("null");
 		}
 		
+		jsRegister.append(",'").append(this.getHiddenFieldNameForPlacesListBox(context)).append("'");
+		
 		// end of init JS
 		jsRegister.append(");");
 		
@@ -663,7 +670,7 @@ public class MapComponent extends UIComponentBase
 		// hidden fields for extend
 		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameCenterX, String.valueOf(centerX));
 		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameCenterY, String.valueOf(centerY));
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameZoomLevel, String.valueOf(zoomLevel));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameZoomLevel, String.valueOf(getZoomLevel(context)));
 		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForMiniMapVisibility, String.valueOf(miniMapVisible));
 		
 		// hidden field: mouse mod
@@ -777,9 +784,30 @@ public class MapComponent extends UIComponentBase
 		// bubble
 		encodeBubble(context, writer, bubbleId, bubbleTextId);
 		
-		// end main div
+		//end main div
 		writer.endElement("div");
 		
+		writer.write("List of visible places: ");
+		writer.startElement("select", this);
+		writer.writeAttribute("id", this.getHiddenFieldNameForPlacesListBox(context), null);
+		writer.endElement("select");
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("MapsGlobal.clickedShowMap(");
+		buffer.append("'").append(mapId).append("'");
+		buffer.append("); return false;");
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "button", null);
+		writer.writeAttribute("value", "Show place", null);
+		writer.writeAttribute("onClick", buffer.toString(), null);
+		writer.endElement("input");
+	}
+
+	private int getZoomLevel(FacesContext ctx) {
+		ValueBinding vb = getValueBinding("zoomLevel");
+		if (vb != null) {
+			zoomLevel = ((Integer)vb.getValue(ctx)).intValue();
+		}
+		return zoomLevel;
 	}
 
 	public void encodeChildren(FacesContext context) throws IOException
