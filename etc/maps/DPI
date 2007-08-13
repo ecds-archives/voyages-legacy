@@ -1,3 +1,33 @@
+----Update by Pawel, those are just conclusions from original document below-----
+
+To get slices for zoom levels 20, 3 and 1:
+all images should have size 11.11135in x 8.33401inch (w x h)
+level 1: set DPI to 935 dpi, such an image should be provided as argument for tile.py
+level 3: set DPI to 467 dpi, such an image should be provided as argument for tile.py
+level 20: set DPI to 73 dpi, such an image should be provided as argument for tile.py
+
+if you need to calculate new zoom level, from all the information above, you need to figure out
+the scale of image and DPI (to be able to define it in the StandardMaps.java file).
+in general, you should pick width and height of image as factor of 120x160px.
+If you know your desired size of image (in px):
+number of tiles = (width / 160) or (height / 120)
+dpi = 935 x 5 / [number of tiles]
+
+To figure out zoom level, you need to find Charleston on your map after converting it to dpi calculated above.
+Then, find number of pixels from Charleston to the bottom of image and solve following:
+x = [Charleston distance to the bottom] / 94.7
+then, scale = 1/x
+
+You may need to adjust the x a bit (+- few %) as there might be some error which causes points are a bit off - after few trials you should
+find correct value.
+
+
+
+
+
+
+----Original document by Brian----
+
 Based on Database
 
 Methodology: Look up latitude and longitude of points in the database. Calculate how many degrees apart they are from each other. Calculate how many pixels this means they should be apart at the desired degree to pixel ratio (eg 1:60). Determine how many pixels they are actually apart using a png rendered at 500DPI. Calculate what the DPI should actually be to place them the desired pixels apart.
