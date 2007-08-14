@@ -26,7 +26,6 @@ import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.images.GalleryImage;
 import edu.emory.library.tast.images.site.ImagesBean;
-import edu.emory.library.tast.images.site.ImagesQuery;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
@@ -37,22 +36,50 @@ import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+/**
+ * Bean which features functionality for details of given voyage.
+ * It's main role is to query database for given voyage (provided by method openVoyage).
+ *
+ */
 public class VoyageDetailBean
 {
 
+	/**
+	 * Data visible in table.
+	 */
 	private TableData detailData = new TableData();
+	
+	/**
+	 * Map data for voyage.
+	 */
 	private DetailVoyageMap detailVoyageMap = new DetailVoyageMap();
 	
+	/**
+	 * Voyage ids (global and internal)
+	 */
 	private long voyageIid;
 	private int voyageId;
 	
+	/**
+	 * Remembers last view - the one which should be restored when 'go back' is hit
+	 */
 	private String previousViewId;
 
+	/**
+	 * Images associated with voyage
+	 * 
+	 */
 	private GalleryImage[] imagesGallery = new GalleryImage[0];
 	private String selectedImageId;
 	
+	/**
+	 * Selected tab (variables/map/images)
+	 */
 	private String selectedTab = "variables";
 	
+	/**
+	 * Message bar to show link information
+	 */
 	private MessageBarComponent messageBar = null;
 	
 	/**
@@ -60,6 +87,11 @@ public class VoyageDetailBean
 	 */
 	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
 	
+	/**
+	 * Opens given voyage - main function in this bean.
+	 * Called when one clicks on given voyage in table.
+	 * @param voyageIid
+	 */
 	public void openVoyage(long voyageIid)
 	{
 		
@@ -166,6 +198,10 @@ public class VoyageDetailBean
 
 	}
 
+	/**
+	 * Go back button
+	 *
+	 */
 	public void back()
 	{
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -178,6 +214,10 @@ public class VoyageDetailBean
 		return null;
 	}
 	
+	/**
+	 * Opens image detail for voyage's image
+	 * @return
+	 */
 	public String openImageDetail()
 	{
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -186,21 +226,37 @@ public class VoyageDetailBean
 		return "images-detail";
 	}
 	
+	/**
+	 * Returns data visible in variables table
+	 * @return
+	 */
 	public TableData getDetailData()
 	{
 		return detailData;
 	}
 
+	/**
+	 * Gets points visible on map.
+	 * @return
+	 */
 	public PointOfInterest[] getPointsOfInterest()
 	{
 		return this.detailVoyageMap.getPointsOfInterest();
 	}
 
+	/**
+	 * Gets legend for map
+	 * @return
+	 */
 	public LegendItemsGroup[] getLegend()
 	{
 		return this.detailVoyageMap.getLegend();
 	}
 	
+	/**
+	 * Sets previous view.
+	 * @param viewId
+	 */
 	public void setPreviousView(String viewId)
 	{
 		this.previousViewId = viewId;
@@ -212,21 +268,37 @@ public class VoyageDetailBean
 		this.previousViewId = context.getViewRoot().getViewId();
 	}
 
+	/**
+	 * Gets zoom level of map.
+	 * @return
+	 */
 	public ZoomLevel[] getZoomLevels()
 	{
 		return StandardMaps.getZoomLevels(this);
 	}
 	
+	/**
+	 * Gets minimap
+	 * @return
+	 */
 	public ZoomLevel getMiniMapZoomLevel()
 	{
 		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 
+	/**
+	 * gets id of selected image
+	 * @return
+	 */
 	public String getSelectedImageId()
 	{
 		return selectedImageId;
 	}
 
+	/**
+	 * sets id of selected image
+	 * @param selectedImageId
+	 */
 	public void setSelectedImageId(String selectedImageId)
 	{
 		this.selectedImageId = selectedImageId;

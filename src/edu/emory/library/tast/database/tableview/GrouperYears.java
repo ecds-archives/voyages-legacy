@@ -7,12 +7,17 @@ import java.util.Set;
 
 import edu.emory.library.tast.common.tableview.Grouper;
 import edu.emory.library.tast.common.tableview.Label;
-import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 
+/**
+ * Grouper for time variables.
+ * Provides by 5,10 and 25 years feature.
+ * Groupers are used in tables.
+ *
+ */
 public class GrouperYears extends Grouper
 {
 	

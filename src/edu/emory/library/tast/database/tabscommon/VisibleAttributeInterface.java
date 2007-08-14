@@ -4,7 +4,8 @@ import edu.emory.library.tast.database.query.searchables.UserCategory;
 import edu.emory.library.tast.dm.attributes.Attribute;
 
 /**
- * Instances of this interface are used in table component.
+ * Instances of this interface are used in components.
+ * Provide mapping from datamodel attribute to properties presented to users in web interface.
  * Each visible attribute has user label which is visible
  * in the header of table component. It also has name, which 
  * is optional. VisibleAttributeInterface should keep list of attributes

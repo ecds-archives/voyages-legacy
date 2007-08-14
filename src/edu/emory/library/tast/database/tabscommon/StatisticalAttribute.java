@@ -6,6 +6,11 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 
+/**
+ * Attribute which is used in statistics table.
+ * It provides used attributes and aggregate function that should be used.
+ *
+ */
 public class StatisticalAttribute implements VisibleAttributeInterface {
 
 	private String id;

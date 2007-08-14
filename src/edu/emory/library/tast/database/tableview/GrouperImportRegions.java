@@ -4,14 +4,16 @@ import java.util.List;
 
 import edu.emory.library.tast.common.tableview.GrouperSimpleDictionary;
 import edu.emory.library.tast.dm.Area;
-import edu.emory.library.tast.dm.Estimate;
-import edu.emory.library.tast.dm.EstimatesImportArea;
-import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
+/**
+ * Grouper for import regions.
+ * Groupers are used in tables.
+ *
+ */
 public class GrouperImportRegions extends GrouperSimpleDictionary
 {
 	

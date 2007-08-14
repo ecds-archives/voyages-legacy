@@ -181,7 +181,7 @@ public class LegendComponent extends UIComponentBase {
 			
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "map-legend-section-title", null);
-			writer.write("Values");
+			writer.write("Select visible places");
 			writer.endElement("div");
 			
 			writer.startElement("div", this);

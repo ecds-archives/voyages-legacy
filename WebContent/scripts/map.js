@@ -766,7 +766,7 @@ Map.prototype.registerZoomSlider = function(zoomSlider)
 Map.prototype.notifyZoomChange = function()
 {
 	if (this.zoomSlider) this.zoomSlider.zoomChanged();
-	document.forms[0].submit();
+	//document.forms[0].submit();
 }
 
 Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
@@ -1656,8 +1656,12 @@ Map.prototype.precomputePointsPositions = function()
 				var symbol = pnt.symbols[j];
 				var symbolElementStyle = symbol.element.style;
 				symbolElementStyle.display = "";
-				symbolElementStyle.left = (pnt.vx - symbol.width + symbol.centerX) + "px";
-				symbolElementStyle.top = (pnt.vy - symbol.height + symbol.centerY) + "px";
+				var shift = 0;
+				if (pnt.symbols.length > 1) {
+					shift = -2 + 4*j;
+				}
+				symbolElementStyle.left = (pnt.vx - symbol.width + symbol.centerX + shift) + "px";
+				symbolElementStyle.top = (pnt.vy - symbol.height + symbol.centerY + shift) + "px";
 			}
 
 			var labelElementStyle = pnt.labelElement.style;
@@ -2218,7 +2222,7 @@ MapZoomSlider.prototype.click = function(event)
 	var zoomLevel = parseInt(ElementUtils.getEventMouseElementX(event, this.cont) / this.slotWidth);
 	this.setKnobPosition(zoomLevel);
 	this.map.changeZoomLevel(zoomLevel, false);
-	document.forms[0].submit();
+	//document.forms[0].submit();
 }
 
 MapZoomSlider.prototype.mouseDown = function(event)

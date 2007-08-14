@@ -138,19 +138,38 @@ public class EstimatesMapBean {
 		return StandardMaps.getMapTypes(this);
 	}
 
-	public int getZoomLevel() {
-		this.zoomLevelLocked = false;
-		return zoomLevel;
+//	public int getZoomLevel() {
+//		this.zoomLevelLocked = false;
+//		return zoomLevel;
+//	}
+//
+//	public void setZoomLevel(int zoomLevel) {
+//		if (zoomLevelLocked) {
+//			return;
+//		}
+//		if (this.zoomLevel != zoomLevel) {
+//			forceQuery = true;
+//			StandardMaps.zoomChanged(this, zoomLevel);
+//		}
+//		this.zoomLevel = zoomLevel;
+//	}
+	
+	public SelectItem[] getAvailableAttributes() {
+		return new SelectItem[] {
+				new SelectItem("0", "Broad regions"),
+				new SelectItem("1", "Regions"),
+		};
 	}
-
-	public void setZoomLevel(int zoomLevel) {
-		if (zoomLevelLocked) {
-			return;
+	
+	public Integer getChosenAttribute() {
+		return new Integer(zoomLevel);
+	}
+	
+	public void setChosenAttribute(Integer id) {
+		if (this.zoomLevel != id.intValue()) {
+			StandardMaps.zoomChanged(this, id.intValue());
+			this.forceQuery = true;
 		}
-		if (this.zoomLevel != zoomLevel) {
-			forceQuery = true;
-			StandardMaps.zoomChanged(this, zoomLevel);
-		}
-		this.zoomLevel = zoomLevel;
+		zoomLevel = id.intValue();
 	}
 }

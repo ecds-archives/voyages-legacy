@@ -13,7 +13,6 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
@@ -102,12 +101,27 @@ public class TableData {
 
 	}
 
+	/**
+	 * A class that represents visible data in the table.
+	 * The class has three important fields: data (data that will be visible), attribute (attribute name/configuration)
+	 * and formatter (that will be used to render data visible for user).
+	 * The class also features tooltip creation which should be visible when mouse is over given table cell.
+	 */
 	public class ColumnData {
 
+		/**
+		 * Raw data in column
+		 */
 		private Object[] data;
 
+		/**
+		 * Attribute visible in column
+		 */
 		private VisibleAttributeInterface attribute;
 
+		/**
+		 * formatter used for rendering visible data
+		 */
 		private AbstractAttributeFormatter formatter;
 
 		public ColumnData(VisibleAttributeInterface attribute, Object[] data, AbstractAttributeFormatter formatter) {
@@ -116,6 +130,11 @@ public class TableData {
 			this.formatter = formatter;
 		}
 
+		/**
+		 * Gets tool tip that will be visible "onmouseover".
+		 * @param table
+		 * @return
+		 */
 		public String getToolTipText(TableData table) {
 
 			List list = new ArrayList();

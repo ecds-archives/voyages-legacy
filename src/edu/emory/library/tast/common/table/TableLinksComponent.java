@@ -14,6 +14,11 @@ import edu.emory.library.tast.common.table.links.LinkElement;
 import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.util.JsfUtils;
 
+/**
+ * The component which features links between results below the table.
+ * It encodes all the buttons (first, last result, go to given result page etc).
+ *
+ */
 public class TableLinksComponent extends UIOutput {
 
 	private LinkElement[] links;

@@ -10,13 +10,16 @@ import java.util.Set;
 
 import edu.emory.library.tast.common.tableview.Grouper;
 import edu.emory.library.tast.common.tableview.Label;
-import edu.emory.library.tast.dm.Estimate;
-import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
+/**
+ * Grouper for import regions (import regions are broken down to ports).
+ * Groupers are used in tables.
+ *
+ */
 public class GrouperImportRegionsWithBreakdowns extends Grouper
 {
 	

@@ -46,34 +46,6 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 	 * Formats output that will be shown to user for Object array.
 	 */
 	public String[] format(VisibleAttributeInterface attr, Object[] object) {
-//		StringBuffer buf = new StringBuffer();
-//		boolean added = false;		
-//		buf.append("<table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" class=\"multiline-attr-table\">");
-//		for (int i = 0; i < object.length; i++) {
-//			if (object[i] != null && !String.valueOf(object[i]).trim().equals("")) {
-//				
-//				buf.append("<tr><td>");
-//				added = true;
-//				if (!attr.isDate()) {
-//					if (object[i] instanceof Number) {
-//						buf.append(formatter.format(new Object[] {object[i]}));
-//					} else {
-//						buf.append(object[i].toString());
-//					}
-//				} else {
-//					buf.append(object[i].toString());
-//				}
-//
-//				buf.append("</td></tr>\n");
-//				added = true;
-//			}
-//
-//		}
-//		if (!added) {
-//			buf.append("<tr><td> \n");
-//			buf.append("</td></tr>\n");
-//		}
-//		buf.append("</table>");
 		
 		String[] ret = new String[object.length];
 		for (int i = 0; i < object.length; i++) {
@@ -82,40 +54,4 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 		return ret;
 	}
 
-	
-//	/**
-//	 * Formats output that will be shown to user for Object array.
-//	 */
-//	public String format(VisibleAttributeInterface attr, Object[] object) {
-//		StringBuffer buf = new StringBuffer();
-//		boolean added = false;
-//		buf.append("[");		
-//		for (int i = 0; i < object.length; i++) {
-//			if (object[i] != null) {
-//				if (i > 0 && added) {
-//					buf.append(", ");
-//				}
-//				buf.append("'");
-////				if (object[i] instanceof Number) {
-////					buf.append(formatter.format(new Object[] {object[i]}));
-////				} else {
-////				}
-//				if (!attr.isDate()) {
-//					if (object[i] instanceof Number) {
-//						buf.append(formatter.format(new Object[] {object[i]}));
-//					} else {
-//						buf.append(object[i].toString());
-//					}
-//				} else {
-//					buf.append(object[i].toString());
-//				}
-//
-//				buf.append("'");
-//				added = true;
-//			}
-//
-//		}
-//		buf.append("]");
-//		return buf.toString();
-//	}
 }

@@ -12,14 +12,25 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
+/**
+ * Bean for map of detail voyage view.
+ *
+ */
 public class DetailVoyageMap {
 
+	//IID of presented voyage
 	private long iid;
 
+	//Indication if query is needed.
 	private boolean queryNeeded = false;
 
+	//Map data.
 	private MapData mapData = new MapData();
 
+	/**
+	 * Invoked when new voyage is initialized.
+	 * @param iid
+	 */
 	public void setVoyageIid(long iid) {
 		if (iid != this.iid) {
 			this.iid = iid;
@@ -28,6 +39,11 @@ public class DetailVoyageMap {
 		this.refreshData();
 	}
 
+	/**
+	 * Refreshes data - queries DB
+	 * Actually, it does not do much - the whole logic of map is stored in mapimpl subpackage.
+	 * @return
+	 */
 	public boolean refreshData() {
 		
 		Session session = HibernateUtil.getSession();
@@ -57,15 +73,27 @@ public class DetailVoyageMap {
 		return true;
 	}
 	
+	/**
+	 * Invoked when user hit refresh.
+	 *
+	 */
 	public void refresh() {
 		this.refreshData();
 	}
 
+	/**
+	 * Returns points visible on the map.
+	 * @return
+	 */
 	public PointOfInterest[] getPointsOfInterest() {
 		this.refreshData();
 		return this.mapData.getToolTip();
 	}
 
+	/**
+	 * Return legend.
+	 * @return
+	 */
 	public LegendItemsGroup[] getLegend() {
 		return this.mapData.getLegend();
 	}

@@ -18,8 +18,7 @@
 			miniMapZoomLevel="#{MapBean.miniMapZoomLevel}"
 			miniMapHeight="100"
 			miniMapWidth="100"
-			miniMapPosition="bottom right"
-			zoomLevel="#{MapBean.zoomLevel}" />
+			miniMapPosition="bottom right" />
 
 	</t:htmlTag>
 
@@ -30,6 +29,8 @@
 			legend="#{MapBean.legend}"
 			refreshAction="#{MapBean.refresh}" 
 			maps="#{MapBean.availableMaps}"
+			availableAttributes="#{MapBean.availableAttributes}"
+			chosenAttribute="#{MapBean.chosenAttribute}"
 			chosenMap="#{MapBean.chosenMap}"/>
 			
 	</t:htmlTag>

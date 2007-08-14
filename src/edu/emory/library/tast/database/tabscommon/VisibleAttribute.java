@@ -23,6 +23,10 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.StringUtils;
 
+/**
+ * Attribute used in table.
+ *
+ */
 public class VisibleAttribute implements VisibleAttributeInterface {
 
 	public static final int ATTRIBUTE_TABLE_TAB = 1;

@@ -473,6 +473,10 @@ public class TimeLineResultTabBean {
 		return verticalLabels;
 	}
 	
+	/**
+	 * Prepares ZIP file with current data.
+	 * @return
+	 */
 	public String getFileAllData() {	
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();

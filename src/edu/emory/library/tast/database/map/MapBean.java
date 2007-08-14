@@ -68,6 +68,12 @@ public class MapBean {
 	
 	private boolean zoomLevelLocked = false;
 
+	/**
+	 * Sets current map data - points on the map.
+	 * The type of visible points depends on:
+	 * 1. zoom level which has been chosen
+	 * 2. selected ports (embarkation/disembarkation) 
+	 */
 	private void setMapData() {
 		
 		Session session = HibernateUtil.getSession();
@@ -103,6 +109,10 @@ public class MapBean {
 
 	}
 
+	/**
+	 * Checks whether embarkation.disembarkation or both port types are selected.
+	 * @return
+	 */
 	private int determineType() {
 		if (this.mapData.getLegend() == null || this.mapData.getLegend().length < 2) {
 			return -1;
@@ -179,38 +189,83 @@ public class MapBean {
 		StandardMaps.setSelectedMapType(this, value);
 	}
 
+	/**
+	 * Chosen map
+	 * @return
+	 */
 	public String getChosenMap() {
 		this.searchBean.lockYears(false);
 		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
+	/**
+	 * Map options (geophysical maps, 1650, 1750...)
+	 * @return
+	 */
 	public SelectItem[] getAvailableMaps() {
 		return StandardMaps.getMapTypes(this);
 	}
 	
+	/**
+	 * Configuration for zoom levels on the map.
+	 * @return
+	 */
 	public ZoomLevel[] getZoomLevels() {
 		setMapData();
 		return StandardMaps.getZoomLevels(this);
 	}
 	
+	/**
+	 * Mini map zoom level
+	 * @return
+	 */
 	public ZoomLevel getMiniMapZoomLevel() {
 		setMapData();
 		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 
-	public int getZoomLevel() {
-		zoomLevelLocked = false;
-		return zoomLevelId;
+//	/**
+//	 * Zoom level on the map
+//	 * @return
+//	 */
+//	public int getZoomLevel() {
+//		zoomLevelLocked = false;
+//		return zoomLevelId;
+//	}
+//
+//	/**
+//	 * Registers change of zoom level.
+//	 * Ugly hack to handle feedback between zoom level and visible places (broad regions/regions/ports)
+//	 * @param zoomLevelId
+//	 */
+//	public void setZoomLevel(int zoomLevelId) {
+//		if (zoomLevelLocked) {
+//			return;
+//		}
+//		if (this.zoomLevelId != zoomLevelId) {
+//			StandardMaps.zoomChanged(this, zoomLevelId);
+//			this.neededQuery = true;
+//		}
+//		this.zoomLevelId = zoomLevelId;
+//	}
+	
+	public SelectItem[] getAvailableAttributes() {
+		return new SelectItem[] {
+				new SelectItem("0", "Broad regions"),
+				new SelectItem("1", "Regions"),
+				new SelectItem("2", "Ports"),
+		};
 	}
-
-	public void setZoomLevel(int zoomLevelId) {
-		if (zoomLevelLocked) {
-			return;
-		}
-		if (this.zoomLevelId != zoomLevelId) {
-			StandardMaps.zoomChanged(this, zoomLevelId);
+	
+	public Integer getChosenAttribute() {
+		return new Integer(zoomLevelId);
+	}
+	
+	public void setChosenAttribute(Integer id) {
+		if (this.zoomLevelId != id.intValue()) {
+			StandardMaps.zoomChanged(this, id.intValue());
 			this.neededQuery = true;
 		}
-		this.zoomLevelId = zoomLevelId;
+		zoomLevelId = id.intValue();
 	}
 }

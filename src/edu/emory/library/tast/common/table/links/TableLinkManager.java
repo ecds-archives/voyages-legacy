@@ -38,21 +38,6 @@ public class TableLinkManager {
 	
 	public LinkElement[] getLinks() {
 		ArrayList list = new ArrayList();
-//		if (this.numberOfResults != null) {
-//			if (current + step < this.numberOfResults.intValue()
-//					&& this.searchBean.getSearchParameters().getConditions() != null) {
-//				current += step;
-//				this.needQuery = true;
-//			}
-//		}
-//		if (current > 0 && this.searchBean.getSearchParameters().getConditions() != null) {
-//			current -= step;
-//			if (current < 0) {
-//				current = 0;
-//			}
-//			this.needQuery = true;
-//		}
-//	}
 		
 		int i = 0;
 		
@@ -101,10 +86,6 @@ public class TableLinkManager {
 		return currentFirstRecord;
 	}
 
-//	public int getCurrentVisibleTab() {
-//		return currentVisibleTab;
-//	}
-
 	public int getResultsNumber() {
 		return resultsNumber;
 	}
@@ -113,13 +94,6 @@ public class TableLinkManager {
 		this.step = step;
 		this.modified = true;
 	}
-
-//	public void setCurrentTab(int i) {
-//		if (i != this.currentVisibleTab) {
-//			this.modified = true;
-//		}
-//		this.currentFirstRecord = i * this.step;
-//	}
 	
 	public void reset() {
 		this.currentFirstRecord = 0;

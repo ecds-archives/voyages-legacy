@@ -24,8 +24,6 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class UITableResultTab extends UIOutput {
 
-	private static final int TRIM_LENGTH = 300005;
-
 	/**
 	 * Sort changed binding.
 	 */

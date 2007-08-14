@@ -13,6 +13,10 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.render.Renderer;
 
+/**
+ * Not used?
+ *
+ */
 public class UIAdvancedStatisticsTab extends UIComponent {
 
 	public Map getAttributes() {

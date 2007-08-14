@@ -10,13 +10,17 @@ import java.util.Set;
 
 import edu.emory.library.tast.common.tableview.GrouperSimpleDictionary;
 import edu.emory.library.tast.common.tableview.Label;
-import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
+/**
+ * Grouper for import ports attribute.
+ * Groupers are used in tables.
+ *
+ */
 public class GrouperImportPorts extends GrouperSimpleDictionary
 {
 	

@@ -16,8 +16,7 @@
 			miniMap="true"
 			miniMapWidth="100"
 			miniMapHeight="100"
-			miniMapPosition="bottom right"
-			zoomLevel="#{EstimatesMapBean.zoomLevel}"/>
+			miniMapPosition="bottom right"/>
 	</t:htmlTag>
 	
 	<t:htmlTag value="td" style="padding: 0px 0px 0px 10px; vertical-align: top;">
@@ -26,7 +25,9 @@
 			legend="#{EstimatesMapBean.legend}"
 			refreshAction="#{EstimatesMapBean.refresh}" 
 			maps="#{EstimatesMapBean.availableMaps}"
-			chosenMap="#{EstimatesMapBean.chosenMap}"/> 
+			chosenMap="#{EstimatesMapBean.chosenMap}"
+			availableAttributes="#{EstimatesMapBean.availableAttributes}"
+			chosenAttribute="#{EstimatesMapBean.chosenAttribute}"/> 
 	</t:htmlTag>
 		
 </t:htmlTag>

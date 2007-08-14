@@ -171,7 +171,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	}
 
 	/**
-	 * Builds tooltip location.
+	 * Builds tooltip location. It builds HTML that includes descriptions, images, links etc.
 	 */
 	private String buildToolTipInfo() {
 		
@@ -197,6 +197,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 					.append("<br/>");
 		}
 		
+		//handle images
 		String[] imageUrl = getImageUrls();
 		if (imageUrl != null && imageUrl.length != 0)
 		{
@@ -233,6 +234,7 @@ public class GlobalMapDataItem extends AbstractMapItem {
 				buffer.append("</td>");
 			}
 			buffer.append("</tr></table>");
+			//see all link
 			buffer.append("<a href=\"/tast/resources/images-query.faces?" + this.getImagesQuery() + "\"/>See all images ></a>");
 		}
 		

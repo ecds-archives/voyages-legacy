@@ -24,7 +24,8 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Query for map. Prepares query that will be executed for maps purposes.
- *
+ * There are three groups of queries. First group (first two queries) is for embarkation and disembarkation ports.
+ * Second group is for embarkation/disembarkation region. The last group is for major regions (also emb/disemb).
  */
 public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 
@@ -45,6 +46,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 			c.addCondition(conditions);
 		}
 		
+		//Query for ports
 		querySetPorts = new QueryValue[2];
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
@@ -84,7 +86,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetPorts[1] = query2;
 		
-	
+		//Query for regions
 		querySetRegions = new QueryValue[2];
 		c = new Conditions();
 		if (!conditions.isEmpty()) {
@@ -128,7 +130,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2.setOrder(QueryValue.ORDER_ASC);
 		querySetRegions[1] = query2;
 		
-		
+		//Query for broad regions
 		querySetAreas = new QueryValue[2];
 		c = new Conditions();
 		if (!conditions.isEmpty()) {
@@ -177,6 +179,10 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 
 	}
 	
+	/**
+	 * Executes query
+	 * Type is indication of place type (embarkation/disembarkation or both).
+	 */
 	protected void performExecuteQuery(Session session, QueryValue[] queries, int type) {
 
 		AttributesMap map = new AttributesMap();
@@ -216,6 +222,14 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		this.setRawQueryResponse(response.toArray());
 	}
 	
+	/**
+	 * Internal function. It loads results with ports/regions/major regions as basic query does not return
+	 * those objects, but ids.
+	 * @param session
+	 * @param response
+	 * @param query
+	 * @param what
+	 */
 	private void executeMapQuery(Session session, List response, QueryValue query, int what) {
 
 		Object[] voyages = query.executeQuery(session);

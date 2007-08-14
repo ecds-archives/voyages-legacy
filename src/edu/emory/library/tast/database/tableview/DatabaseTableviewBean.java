@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -19,7 +18,6 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.CaseNullToZeroAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -584,6 +582,10 @@ public class DatabaseTableviewBean {
 		}		
 	}
 
+	/**
+	 * Gets zip file with data visible in table.
+	 * @return
+	 */
 	public String getFileAllData() {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
