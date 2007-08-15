@@ -23,7 +23,8 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 /**
  * Class providing query for estimates map.
- *
+ * There are two groups of query - first group queries for emb/disemb. regions and the second group
+ * of queries is for broad regions of emb/disemb.
  */
 public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 
@@ -32,7 +33,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 
 	public EstimateMapQueryHolder(Conditions conditions) {
 		
-		
+		//Query for regions
 		Conditions c = new Conditions();
 		c.addCondition(conditions);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
@@ -72,7 +73,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		
 		
 		
-		
+		//Query for broad regions
 		c = new Conditions();
 		c.addCondition(conditions);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
@@ -119,11 +120,16 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		
 	}
 
+	/**
+	 * Executes query of given type (type indcates which type of places (emb/disemb/both) should be
+	 * queried.
+	 */
 	protected void performExecuteQuery(Session session, QueryValue[] querySet, int type) {
 		List allResults = new ArrayList();
 		AttributesMap attributes = new AttributesMap();
 		List list0 = new ArrayList();
 		List list1 = new ArrayList();
+		
 		for (int i = 0; i < querySet.length; i++) {
 			if (type != -1 && type != i) {
 				continue;
@@ -131,14 +137,6 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 			int shift = allResults.size();
 			Object[] results = querySet[i].executeQuery(session);
 			allResults.addAll(Arrays.asList(results));
-//			List list = new ArrayList();
-//			list.add(new AttributesRange(Estimate.getAttribute("expRegion"), shift,
-//					shift + results.length - 1));
-//			attributes.addColumn(list);
-//			list = new ArrayList();
-//			list.add(new AttributesRange(Estimate.getAttribute("impRegion"), shift,
-//					shift + results.length - 1));
-//			attributes.addColumn(list);
 			
 			list0.add(new AttributesRange(VisibleAttrEstimate.getAttributeForTable(i == 0 ? "expRegion" : "impRegion"),
 					shift, shift + results.length - 1));

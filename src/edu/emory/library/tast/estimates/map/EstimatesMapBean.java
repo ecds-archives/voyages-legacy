@@ -8,6 +8,7 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapDataTransformer;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapQueryHolder;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
@@ -29,21 +30,44 @@ import edu.emory.library.tast.util.query.Conditions;
  */
 public class EstimatesMapBean {
 
+	/**
+	 * Reference to estimates bean
+	 */
 	private EstimatesSelectionBean estimatesBean;
 
+	/**
+	 * Map data.
+	 */
 	private MapData mapData = new MapData();
 
+	/**
+	 * Points of interest - points visible on map
+	 */
 	private List pointsOfInterest = new ArrayList();
 
+	/**
+	 * Current conditions
+	 */
 	private Conditions conditions;
 	
-	private int zoomLevel;
+	/**
+	 * Type of point of interest (ports/regions/broad regions);
+	 */
+	private int poiType;
 	
-	private boolean zoomLevelLocked = true;
+	private int zoomLevel = 0;
 
+	/**
+	 * Forces query when setData called
+	 */
 	private boolean forceQuery = false;
 	
+	/**
+	 * Type of visible points (emb/disembarkation)
+	 */
 	private int type = -1;
+
+	private boolean zoomLevelLocked = false;
 
 	public EstimatesSelectionBean getEstimatesBean() {
 		return estimatesBean;
@@ -58,18 +82,22 @@ public class EstimatesMapBean {
 		return this.mapData.getToolTip();
 	}
 
+	/**
+	 * Queries the database and sets currently visible points on the map
+	 */
 	private void setData() {
 		
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
+		//Check whether query is required
 		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || forceQuery) {
 			this.conditions = this.getEstimatesBean().getConditions();
 			forceQuery  = false;
 			this.pointsOfInterest.clear();
 			EstimateMapQueryHolder queryHolder = new EstimateMapQueryHolder(
 					conditions);
-			queryHolder.executeQuery(session, zoomLevel, type);
+			queryHolder.executeQuery(session, poiType, type);
 
 			EstimateMapDataTransformer transformer = new EstimateMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -85,6 +113,10 @@ public class EstimatesMapBean {
 		return this.mapData.getLegend();
 	}
 	
+	/**
+	 * When Refresh button clicked.
+	 * @return
+	 */
 	public String refresh() {
 		type = determineType();
 		forceQuery = true;
@@ -92,6 +124,10 @@ public class EstimatesMapBean {
 		return null;
 	}
 	
+	/**
+	 * Finds type of visible ports
+	 * @return
+	 */
 	private int determineType() {
 		if (this.mapData.getLegend() == null || this.mapData.getLegend().length < 2) {
 			return -1;
@@ -106,16 +142,28 @@ public class EstimatesMapBean {
 		}
 	}
 	
+	/**
+	 * Returns information of zoom levels for map
+	 * @return
+	 */
 	public ZoomLevel[] getZoomLevels() {
 		
 		return StandardMaps.getZoomLevels(this);
 	}
 	
+	/**
+	 * Returns information on zoom level for minimap
+	 * @return
+	 */
 	public ZoomLevel getMiniMapZoomLevel() {
 		
 		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 	
+	/**
+	 * Sets active map.
+	 * @param value
+	 */
 	public void setChosenMap(String value) {
 		if (!StandardMaps.getSelectedMap(this).encodeMapId().equals(value)) {
 			StandardMaps.setSelectedMapType(this, value);
@@ -129,47 +177,66 @@ public class EstimatesMapBean {
 		}
 	}
 
+	/**
+	 * Returns id of chosen map
+	 * @return
+	 */
 	public String getChosenMap() {
 		this.estimatesBean.lockYears(false);
 		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
+	/**
+	 * Gets list of available maps.
+	 * @return
+	 */
 	public SelectItem[] getAvailableMaps() {
 		return StandardMaps.getMapTypes(this);
 	}
 
-//	public int getZoomLevel() {
-//		this.zoomLevelLocked = false;
-//		return zoomLevel;
-//	}
-//
-//	public void setZoomLevel(int zoomLevel) {
-//		if (zoomLevelLocked) {
-//			return;
-//		}
-//		if (this.zoomLevel != zoomLevel) {
-//			forceQuery = true;
-//			StandardMaps.zoomChanged(this, zoomLevel);
-//		}
-//		this.zoomLevel = zoomLevel;
-//	}
+	public int getZoomLevel() {
+		this.zoomLevelLocked = false;
+		return zoomLevel;
+	}
+
+	public void setZoomLevel(int zoomLevel) {
+		if (zoomLevelLocked) {
+			return;
+		}
+		if (this.zoomLevel != zoomLevel) {
+			forceQuery = true;
+			StandardMaps.zoomChanged(this, zoomLevel);
+		}
+		this.zoomLevel = zoomLevel;
+	}
 	
+	/**
+	 * Gets list of available place types
+	 */
 	public SelectItem[] getAvailableAttributes() {
 		return new SelectItem[] {
-				new SelectItem("0", "Broad regions"),
-				new SelectItem("1", "Regions"),
+				new SelectItem("0", TastResource.getText("estimates_components_map_broadregions")),
+				new SelectItem("1", TastResource.getText("estimates_components_map_regions")),
 		};
 	}
 	
+	/**
+	 * Gets chosen place type
+	 * @return
+	 */
 	public Integer getChosenAttribute() {
-		return new Integer(zoomLevel);
+		return new Integer(poiType);
 	}
 	
+	/**
+	 * Sets chosen place type
+	 * @param id
+	 */
 	public void setChosenAttribute(Integer id) {
-		if (this.zoomLevel != id.intValue()) {
+		if (this.poiType != id.intValue()) {
 			StandardMaps.zoomChanged(this, id.intValue());
 			this.forceQuery = true;
 		}
-		zoomLevel = id.intValue();
+		poiType = id.intValue();
 	}
 }

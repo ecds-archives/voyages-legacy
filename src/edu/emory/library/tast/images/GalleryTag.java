@@ -6,6 +6,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+/**
+ * Tag used for gallery component.
+ * Follows general structure for JSF components tag.
+ *
+ */
 public class GalleryTag extends UIComponentTag
 {
 	

@@ -16,7 +16,8 @@
 			miniMap="true"
 			miniMapWidth="100"
 			miniMapHeight="100"
-			miniMapPosition="bottom right"/>
+			miniMapPosition="bottom right"
+			zoomLevel="#{EstimatesMapBean.zoomLevel}"/>
 	</t:htmlTag>
 	
 	<t:htmlTag value="td" style="padding: 0px 0px 0px 10px; vertical-align: top;">

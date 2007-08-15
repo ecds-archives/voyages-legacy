@@ -2,6 +2,11 @@ package edu.emory.library.tast.images;
 
 import edu.emory.library.tast.util.StringUtils;
 
+/**
+ * Just class which represents image.
+ * It has a bunch of properties and getters/setters.
+ *
+ */
 public class GalleryImage
 {
 	

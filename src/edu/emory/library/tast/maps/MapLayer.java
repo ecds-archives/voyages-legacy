@@ -1,5 +1,10 @@
 package edu.emory.library.tast.maps;
 
+/**
+ * Left after using map server. Not used any more
+ * @author pjurczy
+ *
+ */
 public class MapLayer {
 	
 	private String key;

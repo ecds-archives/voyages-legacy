@@ -41,6 +41,9 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		super(map);
 	}
 
+	/**
+	 * Parses data from given query response
+	 */
 	public TransformerResponse transformData(Session session,
 			AbstractTransformerQueryHolder holder) {
 		Object[] data = holder.getRawQueryResponse();
@@ -51,6 +54,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		double min = Double.MAX_VALUE;
 		double max = Double.MIN_VALUE;
 
+		//parse row by row
 		for (int i = 0; i < data.length; i++) {
 			Object[] row = (Object[]) data[i];
 			Long expTmp = (Long) row[0];
@@ -66,7 +70,6 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 				}
 			}
 			if (exp != null) {
-				//System.out.println(i);
 				double numberExp = Math
 						.round(((Number) row[1]).doubleValue() * 100)
 						/ (double) 100;
@@ -84,9 +87,6 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 				if (max < numberExp) {
 					max = numberExp;
 				}
-				// if (expTmp.intValue() == 4) {
-				// System.out.println("Spain!");
-				// }
 
 				int index;
 				if ((index = mapDataItems.indexOf(expDataItem)) != -1) {
@@ -103,6 +103,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			}
 		}
 
+		//prepare ranges for dots
 		double[] ranges = new double[CIRCLE_RANGES + 1];
 		double step = (max - min) / CIRCLE_RANGES;
 		for (int i = 0; i < CIRCLE_RANGES; i++) {
@@ -110,6 +111,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		}
 		ranges[0] = min;
 
+		//correct number ranges
 		this.round(ranges);
 
 		// Set size of each of items created above
@@ -138,6 +140,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			dataItem.setSize(maxSize);
 		}
 
+		//prepare legend
 		LegendItemsGroup legendSizes = new LegendItemsGroup(TastResource.getText("estimates_map_leg_slavnum"));
 		LegendItemsGroup legendColors = new LegendItemsGroup(TastResource.getText("estimates_map_leg_places"));
 

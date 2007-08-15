@@ -14,6 +14,10 @@ import javax.faces.event.ActionEvent;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
+/**
+ * Component which is used for gallery.
+ *
+ */
 public class GalleryComponent extends UICommand
 {
 	

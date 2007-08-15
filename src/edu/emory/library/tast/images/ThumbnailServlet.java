@@ -17,6 +17,10 @@ import org.apache.commons.io.FilenameUtils;
 
 import edu.emory.library.tast.AppConfig;
 
+/**
+ * Servlet which provides data for thumbnail images.
+ *
+ */
 public class ThumbnailServlet extends HttpServlet
 {
 	

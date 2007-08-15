@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.hql.ast.tree.QueryNode;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.database.query.SearchBean;
@@ -62,10 +63,12 @@ public class MapBean {
 	//Data that is in map
 	private MapData mapData = new MapData();
 	
-	private int zoomLevelId = 0;
+	private int attributeId = 0;
 
 	private int type = -1;
-	
+
+	private int zoomLevelId;
+
 	private boolean zoomLevelLocked = false;
 
 	/**
@@ -95,7 +98,7 @@ public class MapBean {
 			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
 			//queryHolder.executeQuery(session, this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
 			
-			queryHolder.executeQuery(session, zoomLevelId, type);
+			queryHolder.executeQuery(session, attributeId, type);
 
 			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
 					queryHolder.getAttributesMap());
@@ -224,48 +227,48 @@ public class MapBean {
 		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 
-//	/**
-//	 * Zoom level on the map
-//	 * @return
-//	 */
-//	public int getZoomLevel() {
-//		zoomLevelLocked = false;
-//		return zoomLevelId;
-//	}
-//
-//	/**
-//	 * Registers change of zoom level.
-//	 * Ugly hack to handle feedback between zoom level and visible places (broad regions/regions/ports)
-//	 * @param zoomLevelId
-//	 */
-//	public void setZoomLevel(int zoomLevelId) {
-//		if (zoomLevelLocked) {
-//			return;
-//		}
-//		if (this.zoomLevelId != zoomLevelId) {
-//			StandardMaps.zoomChanged(this, zoomLevelId);
-//			this.neededQuery = true;
-//		}
-//		this.zoomLevelId = zoomLevelId;
-//	}
+	/**
+	 * Zoom level on the map
+	 * @return
+	 */
+	public int getZoomLevel() {
+		zoomLevelLocked  = false;
+		return zoomLevelId;
+	}
+
+	/**
+	 * Registers change of zoom level.
+	 * Ugly hack to handle feedback between zoom level and visible places (broad regions/regions/ports)
+	 * @param zoomLevelId
+	 */
+	public void setZoomLevel(int zoomLevelId) {
+		if (zoomLevelLocked) {
+			return;
+		}
+		if (this.zoomLevelId != zoomLevelId) {
+			StandardMaps.zoomChanged(this, zoomLevelId);
+			this.neededQuery = true;
+		}
+		this.zoomLevelId = zoomLevelId;
+	}
 	
 	public SelectItem[] getAvailableAttributes() {
 		return new SelectItem[] {
-				new SelectItem("0", "Broad regions"),
-				new SelectItem("1", "Regions"),
-				new SelectItem("2", "Ports"),
+				new SelectItem("0", TastResource.getText("database_components_map_broadregions")),
+				new SelectItem("1", TastResource.getText("database_components_map_regions")),
+				new SelectItem("2", TastResource.getText("database_components_map_ports")),
 		};
 	}
 	
 	public Integer getChosenAttribute() {
-		return new Integer(zoomLevelId);
+		return new Integer(attributeId);
 	}
 	
 	public void setChosenAttribute(Integer id) {
-		if (this.zoomLevelId != id.intValue()) {
+		if (this.attributeId != id.intValue()) {
 			StandardMaps.zoomChanged(this, id.intValue());
 			this.neededQuery = true;
 		}
-		zoomLevelId = id.intValue();
+		attributeId = id.intValue();
 	}
 }

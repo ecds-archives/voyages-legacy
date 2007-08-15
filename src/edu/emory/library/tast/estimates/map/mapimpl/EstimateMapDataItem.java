@@ -41,6 +41,9 @@ public class EstimateMapDataItem extends AbstractMapItem {
 		return new String[] { this.symbolName };
 	}
 
+	/**
+	 * Gets point of interest for this map data item.
+	 */
 	public PointOfInterest getTooltipText(LegendItemsGroup[] legend) {
 
 		PointOfInterest point = new PointOfInterest(this.getY(), this.getX());
@@ -75,6 +78,10 @@ public class EstimateMapDataItem extends AbstractMapItem {
 
 	}
 
+	/**
+	 * Gets contents of mouse-over box.
+	 * @return
+	 */
 	private String buildToolTipInfo() {
 		StringBuffer buffer = new StringBuffer();
 
