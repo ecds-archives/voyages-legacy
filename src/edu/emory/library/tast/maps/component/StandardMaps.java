@@ -66,7 +66,7 @@ public class StandardMaps
 	private static final MapIdent[] mapsDatabase = new MapIdent[] {
 		new MapIdent("geophysical", "Geophysical maps", 1501, 1867, new ZoomLevel[] {levelGeo20, levelGeo3, levelGeo1}, new String[] {"Geophysical map, brad regions", "Geophysical map, regions", "Geophysical map, ports"}),
 		new MapIdent("h_1650", "Historical maps: 1650 (1501-1641)", 1501, 1641, new ZoomLevel[] {levelGeo20, level1650_3, level1650_1}, new String[] {"Historical map (1650), broad regions", "Historical map (1650), regions", "Historical map (1650), ports"}),
-		new MapIdent("h_1750", "Historical maps: 1750 (1642-1807)", 1642, 1807, new ZoomLevel[] {levelGeo20, level1750_3, level1750_1}, new String[] {"Historical map (1750), broad regions", "Historical map (1750), regions", "Historical map (1650), ports"}),
+		new MapIdent("h_1750", "Historical maps: 1750 (1642-1807)", 1642, 1807, new ZoomLevel[] {levelGeo20, level1750_3, level1750_1}, new String[] {"Historical map (1750), broad regions", "Historical map (1750), regions", "Historical map (1750), ports"}),
 		new MapIdent("h_1850", "Historical maps: 1850 (1808-1867)", 1808, 1867, new ZoomLevel[] {levelGeo20, level1850_3, level1850_1}, new String[] {"Historical map (1850), broad regions", "Historical map (1850), regions", "Historical map (1850), ports"})
 	};
 	

@@ -5,6 +5,7 @@
 
 <t:htmlTag value="h1"><h:outputText value="Map of regions and ports" /></t:htmlTag>
 
+
 <t:htmlTag value="table" style="border-collapse: collapse;">
 <t:htmlTag value="tr">
 
@@ -19,21 +20,22 @@
 			miniMapHeight="100"
 			miniMapWidth="100"
 			miniMapPosition="bottom right" 
-			zoomLevel="#{MapBean.zoomLevel}"/>
+			zoomLevel="#{MapBean.zoomLevel}"
+			onZoomChanged="#{MapBean.onZoomChanged}" />
 
 	</t:htmlTag>
 
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px; border-left: 0px solid #895D03;">
-		
-		<s:legend id="mapLegend-component" 
-			styleClass="map-legend-div"
-			legend="#{MapBean.legend}"
-			refreshAction="#{MapBean.refresh}" 
-			maps="#{MapBean.availableMaps}"
-			availableAttributes="#{MapBean.availableAttributes}"
-			chosenAttribute="#{MapBean.chosenAttribute}"
-			chosenMap="#{MapBean.chosenMap}"/>
-			
+		<aa:zoneJSF id="map-legend">
+			<s:legend id="mapLegend-component" 
+				styleClass="map-legend-div"
+				legend="#{MapBean.legend}"
+				refreshAction="#{MapBean.refresh}" 
+				maps="#{MapBean.availableMaps}"
+				availableAttributes="#{MapBean.availableAttributes}"
+				chosenAttribute="#{MapBean.chosenAttribute}"
+				chosenMap="#{MapBean.chosenMap}"/>
+		</aa:zoneJSF>
 	</t:htmlTag>
 	
 </t:htmlTag>

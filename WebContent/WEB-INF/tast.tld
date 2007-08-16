@@ -388,7 +388,10 @@
 		</attribute>
 		<attribute>
 			<name>zoomLevel</name>
-		</attribute>
+		</attribute>		
+		<attribute>
+			<name>onZoomChanged</name>
+		</attribute>				
 		
 	</tag>
 	

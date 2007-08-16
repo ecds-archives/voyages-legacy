@@ -6,6 +6,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
+import org.apache.myfaces.el.MethodBindingImpl;
+
 public class MapTag extends UIComponentTag
 {
 	
@@ -17,6 +19,7 @@ public class MapTag extends UIComponentTag
 	private String miniMapWidth;
 	private String miniMapHeight;
 	private String zoomLevel;
+	private String onZoomChanged;
 	
 	public String getComponentType()
 	{
@@ -119,6 +122,9 @@ public class MapTag extends UIComponentTag
 			{
 			}
 		}
+		if (onZoomChanged != null) {
+			map.setOnZoomChanged(new MethodBindingImpl(app, onZoomChanged, new Class[] {ZoomChangedEvent.class}));
+		}
 
 	}
 
@@ -198,6 +204,14 @@ public class MapTag extends UIComponentTag
 
 	public void setZoomLevel(String zoomLevel) {
 		this.zoomLevel = zoomLevel;
+	}
+
+	public String getOnZoomChanged() {
+		return onZoomChanged;
+	}
+
+	public void setOnZoomChanged(String onZoomChanged) {
+		this.onZoomChanged = onZoomChanged;
 	}
 
 }

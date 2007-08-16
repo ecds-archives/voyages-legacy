@@ -3,8 +3,11 @@ package edu.emory.library.tast.estimates.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 
+import org.ajaxanywhere.AAUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -16,6 +19,7 @@ import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
+import edu.emory.library.tast.maps.component.ZoomChangedEvent;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
@@ -238,5 +242,13 @@ public class EstimatesMapBean {
 			this.forceQuery = true;
 		}
 		poiType = id.intValue();
+	}
+	
+	public void onZoomChanged(ZoomChangedEvent e) {
+		System.out.println("Zoom was changed!");
+		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		if (AAUtils.isAjaxRequest(request)) {
+			AAUtils.addZonesToRefresh(request, "map-legend");
+		}
 	}
 }

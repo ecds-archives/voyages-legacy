@@ -3,8 +3,11 @@ package edu.emory.library.tast.database.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 
+import org.ajaxanywhere.AAUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.hql.ast.tree.QueryNode;
@@ -18,6 +21,7 @@ import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
+import edu.emory.library.tast.maps.component.ZoomChangedEvent;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
@@ -188,8 +192,8 @@ public class MapBean {
 			this.searchBean.setYearTo(map.ident.yearTo);
 			this.searchBean.lockYears(true);
 			zoomLevelLocked = true;
+			StandardMaps.setSelectedMapType(this, value);
 		}
-		StandardMaps.setSelectedMapType(this, value);
 	}
 
 	/**
@@ -270,5 +274,13 @@ public class MapBean {
 			this.neededQuery = true;
 		}
 		attributeId = id.intValue();
+	}
+	
+	public void onZoomChanged(ZoomChangedEvent e) {
+		System.out.println("Zoom was changed!");
+		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		if (AAUtils.isAjaxRequest(request)) {
+			AAUtils.addZonesToRefresh(request, "map-legend");
+		}
 	}
 }

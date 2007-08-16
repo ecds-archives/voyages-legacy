@@ -45,7 +45,9 @@ var MapsGlobal =
 		miniMapPosition,
 		miniMapWidth,
 		miniMapHeight,
-		placesListBox
+		placesListBox,
+		onZoomChange,
+		updateFieldId
 	)
 	{
 	
@@ -81,6 +83,9 @@ var MapsGlobal =
 		map.scaleTextIndicatorId = scaleIndicatorTextId;
 		
 		map.placesListBox = placesListBox;
+		
+		map.onZoomChange = onZoomChange;
+		map.updateFieldId = updateFieldId;
 		
 		// minimap
 		if (miniMapControlId && miniMapFrameId)
@@ -289,6 +294,9 @@ function Map()
 	
 	// init handler
 	this.initListeners = new EventQueue();
+	
+	this.onZoomChange = null;
+	this.updateFieldId = null;
 	
 }
 
@@ -766,6 +774,7 @@ Map.prototype.registerZoomSlider = function(zoomSlider)
 Map.prototype.notifyZoomChange = function()
 {
 	if (this.zoomSlider) this.zoomSlider.zoomChanged();
+	this.zoomChanged();
 	//document.forms[0].submit();
 }
 
@@ -1980,6 +1989,13 @@ Map.prototype.init = function(restoreState)
 	
 }
 
+Map.prototype.zoomChanged = function() {
+	if (!ajaxAnywhere) return;
+	//document.forms[this.formName].elements[this.updateFieldId].value = "true";
+	ajaxAnywhere.submitAJAX(null, null);
+}
+
+
 /////////////////////////////////////////////////////////
 // zoom + button
 /////////////////////////////////////////////////////////
@@ -2222,6 +2238,7 @@ MapZoomSlider.prototype.click = function(event)
 	var zoomLevel = parseInt(ElementUtils.getEventMouseElementX(event, this.cont) / this.slotWidth);
 	this.setKnobPosition(zoomLevel);
 	this.map.changeZoomLevel(zoomLevel, false);
+	this.zoomChanged();
 	//document.forms[0].submit();
 }
 
