@@ -33,11 +33,28 @@
 	</div>
 	
 	<div id="content">
-		<t:div style="margin: 20px;">
-			<h:outputText value="To download the database, click "/>
-			<h:commandLink action="#{DownloadDatabaseBean.getFileAllData}" value="here"/>
-			<h:outputText value="."/>
-		</t:div>
+		<div style="margin: 20px;">
+			<table>
+				<tr>
+					<td> 
+						<h:outputText value="Choose database revision: "/>
+					</td>
+					<td>
+						<h:selectOneListbox value="#{DownloadDatabaseBean.revision}">
+							<f:selectItems value="#{DownloadDatabaseBean.revisions}"/>
+						</h:selectOneListbox>
+					</td>
+				</tr>
+				<tr>
+					<td> 
+						<h:outputText value="To download the database, click "/>
+						<h:commandLink action="#{DownloadDatabaseBean.getFileAllData}" value="here"/>
+						<h:outputText value="."/>
+					</td>
+				</tr>
+			
+			</table>
+		</div>
 	</div>
 
 </h:form>
