@@ -42,13 +42,15 @@ public class DatabaseTableviewBean {
 		private String id;
 		private String[] labels;
 		private MessageFormat format;
+		private String zeroValue;
 		
-		public AvailableOption(String id, String userLabel, Attribute[] attrs, String[] colLabels, MessageFormat format) {
+		public AvailableOption(String id, String userLabel, Attribute[] attrs, String[] colLabels, MessageFormat format, String zeroValue) {
 			this.id = id;
 			this.userLabel = userLabel;
 			this.attributes = attrs;
 			this.labels = colLabels;
 			this.format = format;
+			this.zeroValue = zeroValue;
 		}
 
 		public Attribute[] getAttributes() {
@@ -69,6 +71,14 @@ public class DatabaseTableviewBean {
 
 		public MessageFormat getFormat() {
 			return format;
+		}
+
+		public String getZeroValue() {
+			return zeroValue;
+		}
+
+		public void setZeroValue(String zeroValue) {
+			this.zeroValue = zeroValue;
 		}
 		
 	}
@@ -94,14 +104,14 @@ public class DatabaseTableviewBean {
 	private String aggregate = "sum";
 	
 	private static AvailableOption[] options = new AvailableOption[] {
-			new AvailableOption("exp", "Exported slaves", new Attribute[] {Voyage.getAttribute("slaximp")}, new String[] {"Exported"}, new MessageFormat("{0,number,#,###,###}")),
-			new AvailableOption("imp", "Imported slaves", new Attribute[] {Voyage.getAttribute("slamimp")}, new String[] {"Imported"}, new MessageFormat("{0,number,#,###,###}")),
-			new AvailableOption("both", "Exported/Imported slaves", new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")}, new String[] {"Exported", "Imported"}, new MessageFormat("{0,number,#,###,###}")),
-			new AvailableOption("sexratio", "Percentage male", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0.00}%")),
-			new AvailableOption("childratio", "Percentage children", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,##0.00}%")),
-			new AvailableOption("mortality", "Percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.00}%")),
-			new AvailableOption("middlepassage", "Middle passage (days)", new Attribute[] {Voyage.getAttribute("voy2imp")}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}")),
-			new AvailableOption("standarizedtonnage", "Standarized tonnage", new Attribute[] {Voyage.getAttribute("tonmod")}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}")),
+			new AvailableOption("exp", "Exported slaves", new Attribute[] {Voyage.getAttribute("slaximp")}, new String[] {"Exported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("imp", "Imported slaves", new Attribute[] {Voyage.getAttribute("slamimp")}, new String[] {"Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("both", "Exported/Imported slaves", new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")}, new String[] {"Exported", "Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("sexratio", "Percentage male", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
+			new AvailableOption("childratio", "Percentage children", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
+			new AvailableOption("mortality", "Percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
+			new AvailableOption("middlepassage", "Middle passage (days)", new Attribute[] {Voyage.getAttribute("voy2imp")}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("standarizedtonnage", "Standarized tonnage", new Attribute[] {Voyage.getAttribute("tonmod")}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"), "0"),
 	};
 	
 	private AvailableOption chosenOption = options[0];
@@ -229,7 +239,7 @@ public class DatabaseTableviewBean {
 	 */
 	private void generateTableIfNecessary() { 
 		// conditions from the left column (i.e. from select bean)
-		Conditions newConditions = searchBean.getSearchParameters().getConditions();
+		Conditions newConditions = (Conditions) searchBean.getSearchParameters().getConditions().clone();
 
 		// check if we have to
 		if (!optionsChanged && newConditions.equals(conditions))
@@ -414,8 +424,13 @@ public class DatabaseTableviewBean {
 				rowTotals[rowIndex][j] += numbers[j].doubleValue();
 				colTotals[colIndex][j] += numbers[j].doubleValue();
 				totals[j] += numbers[j].doubleValue();
-				table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
+				if (numbers[j].doubleValue() == 0.0) {
+					table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
+					       				                               	+ j] = new SimpleTableCell(chosenOption.getZeroValue());
+				} else {
+					table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
 				                               	+ j] = new SimpleTableCell(valuesFormat.format(new Object[] { numbers[j] }));
+				}
 			}
 
 		}
@@ -434,7 +449,7 @@ public class DatabaseTableviewBean {
 		}
 
 		// fill gaps
-		String zeroValue = valuesFormat.format(new Object[] { new Double(0) });
+		String zeroValue = chosenOption.getZeroValue();
 		for (int i = 0; i < dataRowCount; i++) {
 			for (int j = 0; j < subCols * dataColCount; j++) {
 				if (table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + j] == null) {

@@ -178,6 +178,7 @@ public class EstimatesMapBean {
 			this.estimatesBean.setYearTo(map.ident.yearTo);
 			this.estimatesBean.changeSelection();
 			this.estimatesBean.lockYears(true);
+			this.estimatesBean.changeSelection();
 		}
 	}
 

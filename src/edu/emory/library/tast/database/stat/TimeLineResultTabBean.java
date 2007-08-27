@@ -282,7 +282,7 @@ public class TimeLineResultTabBean {
 				TastResource.getText("components_timeline_stat_mortrate"),
 				"{0,number,#,###,##0.0}%"));
 
-		this.chosenOption = (StatOption)this.availableStats.get(0);
+		this.chosenOption = (StatOption)this.availableStats.get(15);
 		
 	}
 

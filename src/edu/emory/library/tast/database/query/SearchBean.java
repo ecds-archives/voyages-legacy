@@ -446,7 +446,7 @@ public class SearchBean
 	 */
 	public SearchParameters getSearchParameters()
 	{
-		return searchParameters;
+		return (SearchParameters) searchParameters.clone();
 	}
 
 	/**

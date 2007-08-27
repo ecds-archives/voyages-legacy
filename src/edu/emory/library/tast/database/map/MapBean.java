@@ -193,6 +193,7 @@ public class MapBean {
 			this.searchBean.lockYears(true);
 			zoomLevelLocked = true;
 			StandardMaps.setSelectedMapType(this, value);
+			this.searchBean.search();
 		}
 	}
 

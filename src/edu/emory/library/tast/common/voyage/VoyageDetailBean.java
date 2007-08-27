@@ -1,5 +1,6 @@
 package edu.emory.library.tast.common.voyage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.w3c.dom.Node;
 import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.table.DetailVoyageMap;
+import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Configuration;
@@ -110,6 +112,9 @@ public class VoyageDetailBean
 		{
 			VisibleAttributeInterface column = attrs[i];
 			validAttrs.add(column);
+			if (column.getType().equals(VisibleAttribute.DATE_ATTRIBUTE)) {
+				this.detailData.setFormatter(column, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
+			}
 		}
 		this.detailData.setVisibleColumns(validAttrs);
 		

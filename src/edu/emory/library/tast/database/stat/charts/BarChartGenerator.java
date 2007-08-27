@@ -1,16 +1,42 @@
 package edu.emory.library.tast.database.stat.charts;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Rectangle2D;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.event.ChartChangeEvent;
+import org.jfree.chart.event.ChartChangeListener;
+import org.jfree.chart.event.RendererChangeListener;
+import org.jfree.chart.labels.CategoryItemLabelGenerator;
+import org.jfree.chart.labels.CategoryToolTipGenerator;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.plot.CategoryMarker;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.CategoryItemRendererState;
+import org.jfree.chart.renderer.category.DefaultCategoryItemRenderer;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.urls.CategoryURLGenerator;
+import org.jfree.data.Range;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import edu.emory.library.tast.TastResource;

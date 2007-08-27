@@ -13,7 +13,8 @@
 <!ATTLIST searchable-attribute
 	id CDATA #REQUIRED
 	userLabel CDATA #REQUIRED
-	type (simple|port) #REQUIRED
+	type (simple|port|percent) #REQUIRED
+	defaultOption (equals) #IMPLIED
 	subType (general|year|ratio) #IMPLIED>
 
 <!ATTLIST port
@@ -34,6 +35,7 @@
 
 	<searchable-attribute
 		type="simple"
+		defaultOption="equals"
 		id="voyageid"
 		userLabel="Voyage identification number">
 		<user-categories>
@@ -729,7 +731,7 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="percent"
 		subType="ratio"
 		id="menrat7"
 		userLabel="Percentage men*">
@@ -743,7 +745,7 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="percent"
 		subType="ratio"
 		id="womrat7"
 		userLabel="Percentage women*">
@@ -757,7 +759,7 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="percent"
 		subType="ratio"
 		id="boyrat7"
 		userLabel="Percentage boys*">
@@ -771,7 +773,7 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="percent"
 		subType="ratio"
 		id="girlrat7"
 		userLabel="Percentage girls*">
@@ -785,7 +787,7 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="percent"
 		subType="ratio"
 		id="malrat7"
 		userLabel="Percentage male*">
@@ -799,7 +801,7 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="percent"
 		subType="ratio"
 		id="chilrat7"
 		userLabel="Percentage children*">

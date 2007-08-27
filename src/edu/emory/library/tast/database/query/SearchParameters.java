@@ -89,5 +89,9 @@ public class SearchParameters
 	{
 		this.mapElements = mapElements;
 	}
+	
+	public Object clone() {
+		return new SearchParameters((Conditions) this.conditions.clone());
+	}
 
 }

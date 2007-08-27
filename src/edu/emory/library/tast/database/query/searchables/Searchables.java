@@ -78,6 +78,10 @@ public class Searchables
 			String id = xmlSearchableAttr.getAttributes().getNamedItem("id").getNodeValue();
 			String type = xmlSearchableAttr.getAttributes().getNamedItem("type").getNodeValue();
 			String userLabel = xmlSearchableAttr.getAttributes().getNamedItem("userLabel").getNodeValue();
+			String defaultOption = null;
+			if (xmlSearchableAttr.getAttributes().getNamedItem("defaultOption") != null) {
+				defaultOption = xmlSearchableAttr.getAttributes().getNamedItem("defaultOption").getNodeValue();
+			}
 			
 			// substype
 			Node xmlSubType = xmlSearchableAttr.getAttributes().getNamedItem("subType");
@@ -97,7 +101,7 @@ public class Searchables
 			}
 
 			// simple attribute -> read list of db attriutes
-			if ("simple".equals(type))
+			if ("simple".equals(type) || "percent".equals(type))
 			{
 				NodeList xmlAttrs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
 				Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
@@ -159,7 +163,7 @@ public class Searchables
 					}
 					searchableAttribute =
 						new SearchableAttributeSimpleNumeric(
-							id, userLabel, userCats, attrs, subType);
+							id, userLabel, userCats, attrs, subType, type.equals("percent"), defaultOption);
 				}
 				else if (firstAttr instanceof DateAttribute)
 				{		
@@ -208,6 +212,8 @@ public class Searchables
 
 				}
 				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCats, locs);
+			} else {
+				throw new RuntimeException("Unsupported type: " + type);
 			}
 			
 			// add it to our collection

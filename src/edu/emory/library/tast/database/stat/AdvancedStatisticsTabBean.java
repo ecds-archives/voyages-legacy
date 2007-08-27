@@ -219,11 +219,6 @@ public class AdvancedStatisticsTabBean {
 	private List availableCharts;
 
 	/**
-	 * Avaialble attributes of Voyage.
-	 */
-	private VisibleAttributeInterface[] attributes = prepareAttributes();
-
-	/**
 	 * Actions that will be performed when rollback is required by user.
 	 */
 	private List rollbackActions = new ArrayList();
@@ -337,8 +332,8 @@ public class AdvancedStatisticsTabBean {
 		for (Iterator iter = this.series.iterator(); iter.hasNext();) {
 			AdvancedStatisticsTabBean.SeriesItem element = (AdvancedStatisticsTabBean.SeriesItem) iter.next();
 			Attribute out = null;
-			if (element.aggregate != null) {
-				out = new FunctionAttribute(element.aggregate, element.attribute.getAttributes());
+			if (element.aggregate != null) {				
+				out = new FunctionAttribute(element.aggregate, element.attribute.getAttributes());				
 			} else {
 				out = element.attribute.getAttributes()[0];
 			}
@@ -513,6 +508,19 @@ public class AdvancedStatisticsTabBean {
 				
 				// Add results to chart
 				generator.correctAndCompleteData(objs);
+				
+				//Ugly hack to fix percents!!!!
+				if (this.series.size() != 0) {
+					for (int i = 0; i < objs.length; i++) {
+						Object[] row = (Object[]) objs[i];
+						for (int j = 1; j < row.length; j++) {
+							if (((SeriesItem)this.series.get(j - 1)).attribute.getFormat() != null && row[j] != null) {
+								row[j] = new Double(((Number)row[j]).doubleValue() * 100);
+							}
+						}
+					}
+				}
+				
 				generator.addRowToDataSet(objs, this.series.toArray());
 
 				// Put chart in session

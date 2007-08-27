@@ -15,6 +15,8 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 	final public static int TYPE_RATIO = 2;
 	
 	private int type = TYPE_GENERAL;
+	private boolean percent = false;
+	private int typeOfCondition = QueryConditionNumeric.TYPE_BETWEEN;
 
 	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int type)
 	{
@@ -22,15 +24,19 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 		this.type = type;
 	}
 
-	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
+	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int subType, boolean isPercent, String defaultOption)
 	{
 		super(id, userLabel, userCategories, attributes);
 		this.type = TYPE_GENERAL;
+		this.percent = isPercent;
+		if (defaultOption != null && defaultOption.equals("equals")) {
+			this.typeOfCondition = QueryConditionNumeric.TYPE_EQ;
+		}
 	}
 
 	public QueryCondition createQueryCondition()
 	{
-		return new QueryConditionNumeric(getId());
+		return new QueryConditionNumeric(getId(), typeOfCondition);
 	}
 	
 	private void addSingleAttributeToConditions(QueryConditionNumeric queryConditionNumeric, Attribute attribute, Conditions conditions, Object fromConverted, Object toConverted, Object leConverted, Object geConverted, Object eqConverted)
@@ -73,7 +79,11 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 				return new Integer(number);
 			
 			case NumericAttribute.TYPE_FLOAT:
-				return new Float(number);
+				double div = 1;
+				if (percent) {
+					div = 100;
+				}
+				return new Float(Float.parseFloat(number) / div);
 			
 			case NumericAttribute.TYPE_LONG:
 				return new Long(number);
