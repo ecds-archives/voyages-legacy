@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,8 +33,11 @@
 	</div>
 	
 	<div id="content">
-
-		
+		<t:div style="margin: 20px;">
+			<h:outputText value="To download the database, click "/>
+			<h:commandLink action="#{DownloadDatabaseBean.getFileAllData}" value="here"/>
+			<h:outputText value="."/>
+		</t:div>
 	</div>
 
 </h:form>

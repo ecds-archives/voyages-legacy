@@ -76,7 +76,9 @@ public class CSVUtils {
 			fc.responseComplete();
 		} catch (IOException io) {
 			io.printStackTrace();
-		}finally {
+		} catch (OutOfMemoryError e) {
+			e.printStackTrace();
+		} finally {
 			if (reader != null) {
 				try {
 					reader.close();

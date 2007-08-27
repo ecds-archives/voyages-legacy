@@ -360,6 +360,12 @@
 	</managed-bean>
 	
 	<managed-bean>
+		<managed-bean-name>DownloadDatabaseBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.download.DownloadDatabaseBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
 		<managed-bean-name>EstimatesMapBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.estimates.map.EstimatesMapBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
