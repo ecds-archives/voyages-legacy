@@ -68,7 +68,9 @@ public class MapData {
 		if (oldLegend != null) {
 			for (int i = 0; i < oldLegend.length; i++) {
 				for (int j = 0; j < oldLegend[i].getItems().length; j++) {
-					legendItems[i].getItems()[j].setEnabled(oldLegend[i].getItems()[j].isEnabled());
+					if (legendItems[i].getItems().length < j) {
+						legendItems[i].getItems()[j].setEnabled(oldLegend[i].getItems()[j].isEnabled());
+					}
 				}
 			}
 		}
