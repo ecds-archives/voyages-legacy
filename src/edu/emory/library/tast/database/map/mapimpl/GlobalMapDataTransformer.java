@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.LocationWithImages;
@@ -210,8 +211,8 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 		}
 		
 		///Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-2-\\d", contextPath + "/map-assets/symbols/circle-" + 2 + "-4.png", "Place of embarkation");
-		LegendItem disemb = new LegendItem("circle-3-\\d", contextPath + "/map-assets/symbols/circle-" + 3 + "-4.png", "Place of disembarkation");
+		LegendItem emb = new LegendItem("circle-2-\\d", contextPath + "/map-assets/symbols/circle-" + 2 + "-4.png", TastResource.getText("estimates_map_leg_embplace"));
+		LegendItem disemb = new LegendItem("circle-3-\\d", contextPath + "/map-assets/symbols/circle-" + 3 + "-4.png", TastResource.getText("estimates_map_leg_disembplace"));
 		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
