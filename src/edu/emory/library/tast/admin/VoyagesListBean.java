@@ -193,6 +193,10 @@ public class VoyagesListBean
 		
 	}
 
+	/**
+	 * Columns visible in the list of all voyages
+	 * @return
+	 */
 	public GridColumn[] getColumns()
 	{
 		return new GridColumn[] {
@@ -207,6 +211,10 @@ public class VoyagesListBean
 		};
 	}
 	
+	/**
+	 * Available nations.
+	 * @return
+	 */
 	public SelectItem[] getNations()
 	{
 		
@@ -231,29 +239,49 @@ public class VoyagesListBean
 		dataValid = false;
 	}
 	
+	/**
+	 * Gets rows containing voyages.
+	 * @return
+	 */
 	public GridRow[] getRows()
 	{
 		loadDataIfNecessary();
 		return rows;
 	}
 
+	/**
+	 * Gets first visible voyage
+	 * @return
+	 */
 	public int getFirstRecordIndex()
 	{
 		return firstRecordIndex;
 	}
 
+	/**
+	 * Gets last visible voyage.
+	 * @return
+	 */
 	public int getLastRecordIndex()
 	{
 		loadDataIfNecessary();
 		return lastRecordIndex;
 	}
 	
+	/**
+	 * Gets index of current page.
+	 * @return
+	 */
 	public int getCurrentPage()
 	{
 		loadDataIfNecessary();
 		return currentPage;
 	}
 
+	/**
+	 * Sets current visible page.
+	 * @param currentPage
+	 */
 	public void setCurrentPage(int currentPage)
 	{
 		if (currentPage != this.currentPage)
@@ -263,26 +291,46 @@ public class VoyagesListBean
 		}
 	}
 
+	/**
+	 * Gets reference to voyage bean
+	 * @return
+	 */
 	public VoyageBean getVoyageBean()
 	{
 		return voyageBean;
 	}
 
+	/**
+	 * Sets reference to vouyage bean
+	 * @param voyageBean
+	 */
 	public void setVoyageBean(VoyageBean voyageBean)
 	{
 		this.voyageBean = voyageBean;
 	}
 
+	/**
+	 * Gets number of voyages per page.
+	 * @return
+	 */
 	public int getPageSize()
 	{
 		return pageSize;
 	}
 
+	/**
+	 * Gets chosen nation
+	 * @return
+	 */
 	public String getNationId()
 	{
 		return nationId;
 	}
 
+	/**
+	 * Sets chosen nation
+	 * @param nationId
+	 */
 	public void setNationId(String nationId)
 	{
 		if (!StringUtils.compareStrings(nationId, this.nationId))
@@ -292,6 +340,10 @@ public class VoyagesListBean
 		}
 	}
 
+	/**
+	 * Gets chosen year from.
+	 * @return
+	 */
 	public String getYearFrom()
 	{
 		if (yearFrom == -1) {
@@ -300,6 +352,9 @@ public class VoyagesListBean
 		return String.valueOf(yearFrom);
 	}
 
+	/**
+	 * Sets chosen year from
+	 */
 	public void setYearFrom(String yearFrom)
 	{
 		if (StringUtils.isNullOrEmpty(yearFrom)){
@@ -315,6 +370,10 @@ public class VoyagesListBean
 		}
 	}
 
+	/**
+	 * Gets year to
+	 * @return
+	 */
 	public String getYearTo()
 	{
 		if (yearTo == -1) {
@@ -323,6 +382,10 @@ public class VoyagesListBean
 		return String.valueOf(yearTo);
 	}
 
+	/**
+	 * Sets year to.
+	 * @param yearTo
+	 */
 	public void setYearTo(String yearTo)
 	{
 		if (StringUtils.isNullOrEmpty(yearTo)) {
@@ -339,6 +402,10 @@ public class VoyagesListBean
 		}
 	}
 
+	/**
+	 * Gets voyage id from
+	 * @return
+	 */
 	public String getVoyageIdFrom() {
 		if (voyageIdFrom == -1) {
 			return "";
@@ -346,6 +413,10 @@ public class VoyagesListBean
 		return String.valueOf(voyageIdFrom);
 	}
 
+	/**
+	 * Sets voyage id from
+	 * @param voyageIdFrom
+	 */
 	public void setVoyageIdFrom(String voyageIdFrom) {
 		if (StringUtils.isNullOrEmpty(voyageIdFrom)) {
 			this.voyageIdFrom = -1;
@@ -361,6 +432,10 @@ public class VoyagesListBean
 		return String.valueOf(voyageIdTo);
 	}
 
+	/**
+	 * Sets voyage id to
+	 * @param voyageIdTo
+	 */
 	public void setVoyageIdTo(String voyageIdTo) {
 		if (StringUtils.isNullOrEmpty(voyageIdTo)) {
 			this.voyageIdTo = -1;
@@ -369,6 +444,10 @@ public class VoyagesListBean
 		this.voyageIdTo = Integer.parseInt(voyageIdTo);
 	}
 	
+	/**
+	 * Gets available revisions.
+	 * @return
+	 */
 	public SelectItem[] getRevisions() {
 		QueryValue qValue = new QueryValue("Revision");
 		qValue.setOrderBy(new Attribute[] {Revision.getAttribute("id")});
@@ -381,10 +460,18 @@ public class VoyagesListBean
 		return revs;
 	}
 
+	/**
+	 * Gets chosen revision
+	 * @return
+	 */
 	public String getRevision() {
 		return String.valueOf(revision);
 	}
 
+	/**
+	 * Sets chosen revision
+	 * @param revision
+	 */
 	public void setRevision(String revision) {
 		this.revision = Integer.parseInt(revision);
 	}

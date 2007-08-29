@@ -59,8 +59,8 @@ public class VoyageDetailBean
 	/**
 	 * Voyage ids (global and internal)
 	 */
-	private long voyageIid;
-	private int voyageId;
+	private long voyageIid = -1;
+	private int voyageId = -1;
 	
 	/**
 	 * Remembers last view - the one which should be restored when 'go back' is hit
@@ -393,6 +393,10 @@ public class VoyageDetailBean
 
 	public void setMessageBar(MessageBarComponent message) {
 		this.messageBar = message;
+	}
+
+	public long getVoyageIid() {
+		return voyageIid;
 	}
 
 }

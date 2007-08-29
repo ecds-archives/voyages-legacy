@@ -13,6 +13,10 @@ import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
+/**
+ * Class which contains attributes configuration for slaves.
+ * The class defines which attributes are visible in slaves table.
+ */
 public class VisibleAttrSlave {
 	private static HashMap visibleAttributes = new HashMap();
 

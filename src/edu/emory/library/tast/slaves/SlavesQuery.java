@@ -23,6 +23,15 @@ import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
+/**
+ * This class represents query for slaves. Each field corresponds to some GUI options.
+ * For more details plese see web page: resources->names database.
+ * The selection options you see on the left are saved in this class.
+ * 
+ * This slass also implements XMLExportable so that it can be saved in configuration.
+ * For more details about it see SlavesBean.permLink() and SlavesBean.restoreLink() 
+ *
+ */
 public class SlavesQuery implements Cloneable, XMLExportable
 {
 	
@@ -739,6 +748,9 @@ public class SlavesQuery implements Cloneable, XMLExportable
 		this.voyageId = voyageId;
 	}
 
+	/**
+	 * Decodes SlaveQuery object from xml node (read from configuration).
+	 */
 	public void restoreFromXML(Node entry) {	
 		System.out.println("Restore...: " + entry.getNodeName());
 		Node config = XMLUtils.getChildNode(entry, "config");
@@ -773,6 +785,9 @@ public class SlavesQuery implements Cloneable, XMLExportable
 		}
 	}
 
+	/**
+	 * Creates XML encoding of this query.
+	 */
 	public String toXML() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<config ");

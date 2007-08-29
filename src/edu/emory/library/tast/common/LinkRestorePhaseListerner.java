@@ -10,8 +10,14 @@ import javax.faces.event.PhaseListener;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.images.site.ImagesBean;
 import edu.emory.library.tast.slaves.SlavesBean;
+import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
+/**
+ * This class is responsible for handling permanent link restore feature.
+ * It also checks correctness of requests for some cases
+ *
+ */
 public class LinkRestorePhaseListerner implements PhaseListener
 {
 
@@ -68,8 +74,12 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			VoyageDetailBean bean = (VoyageDetailBean) fc.getApplication().createValueBinding("#{VoyageDetailBean}").getValue(fc);
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
-			if (!params.containsKey("permlink"))
+			if (!params.containsKey("permlink")) {
+				if (bean.getVoyageIid() == -1) {
+					JsfUtils.navigateTo("database");
+				}
 				return;
+			}
 
 			String permlink = (String) params.get("permlink");
 			if (StringUtils.isNullOrEmpty(permlink))

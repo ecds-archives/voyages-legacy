@@ -654,6 +654,14 @@
 	</navigation-rule>
 	
 	<navigation-rule>
+		<from-view-id>/database/voyage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>database</from-outcome>
+			<to-view-id>/database/search.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>images-query</from-outcome>
 			<to-view-id>/resources/images-query.jsp</to-view-id>

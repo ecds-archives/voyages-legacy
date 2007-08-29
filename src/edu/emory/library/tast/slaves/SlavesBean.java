@@ -105,6 +105,9 @@ public class SlavesBean {
 
 	private int firstVisibleRecord = -1;
 
+	/**
+	 * Reference to voyage bean
+	 */
 	private VoyageDetailBean voyageBean;
 
 	public SlavesBean() {
@@ -150,6 +153,11 @@ public class SlavesBean {
 		return ret;
 	}
 
+	/**
+	 * Loads data to table.
+	 * @param refreshCount - indicates if number of results should be recalculated
+	 * @param refreshText
+	 */
 	private void loadData(boolean refreshCount, boolean refreshText) {
 
 		this.firstVisibleRecord = this.pager.getCurrentFirstRecord();
@@ -179,6 +187,14 @@ public class SlavesBean {
 
 	}
 
+	
+	/**
+	 * Prepares query for slaves.
+	 * @param conditions
+	 * @param first
+	 * @param limit
+	 * @return
+	 */
 	private QueryValue getQuery(Conditions conditions, int first, int limit) {
 		QueryValue queryValueTable = new QueryValue(new String[] { "Slave" }, new String[] { "s" }, conditions);
 
@@ -194,6 +210,10 @@ public class SlavesBean {
 		return queryValueTable;
 	}
 
+	/**
+	 * Updates count of expected results.
+	 *
+	 */
 	private void updateExpectedCount() {
 
 		Session sess = HibernateUtil.getSession();
@@ -441,6 +461,11 @@ public class SlavesBean {
 
 	}
 
+	/**
+	 * Action invoked when row in table is clocked.
+	 * @param event
+	 * @return
+	 */
 	public String showDetails(ShowDetailsEvent event)
 	{
 		
@@ -469,22 +494,42 @@ public class SlavesBean {
 		return null;
 	}
 
+	/**
+	 * Returns data which is placed in table.
+	 * @return
+	 */
 	public TableData getTableData() {
 		return this.tableData;
 	}
 
+	/**
+	 * Gets link manager for table (the component which provides switching between results)
+	 * @return
+	 */
 	public TableLinkManager getTableManager() {
 		return this.pager;
 	}
 
+	/**
+	 * Gets current working qurery (query which has been sent to DB)
+	 * @return
+	 */
 	public SlavesQuery getWorkingQuery() {
 		return workingQuery;
 	}
 
+	/**
+	 * start record of currently visible data set
+	 * @return
+	 */
 	public int getFirstDisplayed() {
 		return this.pager.getCurrentFirstRecord() + 1;
 	}
 
+	/**
+	 * last record currently visible.
+	 * @return
+	 */
 	public int getLastDisplayed() {
 		if (this.pager.getResultsNumber() == 0)
 			return 0;
@@ -492,26 +537,50 @@ public class SlavesBean {
 			return this.pager.getCurrentFirstRecord() + 1 + (this.tableData.getData() != null ? this.tableData.getData().length - 1 : 0);
 	}
 
+	/**
+	 * Gets step size (10, 20, 50 records...)
+	 * @return
+	 */
 	public String getStep() {
 		return String.valueOf(this.pager.getStep());
 	}
 
+	/**
+	 * Total number of records returned by query
+	 * @return
+	 */
 	public int getTotalRows() {
 		return this.pager.getResultsNumber();
 	}
 
+	/**
+	 * Gets embarkation export ports.
+	 * @return
+	 */
 	public String[] getExpandedEmbPorts() {
 		return expandedEmbPorts;
 	}
 
+	/**
+	 * Sets expanded export ports.
+	 * @param expandedExpPorts
+	 */
 	public void setExpandedEmbPorts(String[] expandedExpPorts) {
 		this.expandedEmbPorts = expandedExpPorts;
 	}
 
+	/**
+	 * Gets query which is being built (this is query before search is pressed)
+	 * @return
+	 */
 	public SlavesQuery getCurrentQuery() {
 		return currentQuery;
 	}
 
+	/**
+	 * Gets query summary
+	 * @return
+	 */
 	public List getQuerySummary() {
 		return querySummary;
 	}
@@ -524,11 +593,19 @@ public class SlavesBean {
 		this.voyageBean = voyageBean;
 	}
 
+	/**
+	 * Gets text for number of expected results.
+	 * @return
+	 */
 	public String getNumberOfExpectedResultsText() {
 		MessageFormat fmt = new MessageFormat(TastResource.getText("database_search_expected"));
 		return fmt.format(new Object[] { new Integer(expectedResults) });
 	}
 
+	/**
+	 * Saves currently visible results into table.
+	 * @return
+	 */
 	public String getFileCurrentData() {
 		Session sess = HibernateUtil.getSession();
 		Transaction t = sess.beginTransaction();
@@ -540,6 +617,10 @@ public class SlavesBean {
 		return null;
 	}
 
+	/**
+	 * Saves all the results returned by current query
+	 * @return
+	 */
 	public String getFileAllData() {
 		Session sess = HibernateUtil.getSession();
 		Transaction t = sess.beginTransaction();
@@ -551,6 +632,10 @@ public class SlavesBean {
 		return null;
 	}
 	
+	/**
+	 * Saves permanent link.
+	 * @return
+	 */
 	public String permLink() {
 		
 		Configuration conf = new Configuration();
@@ -564,6 +649,10 @@ public class SlavesBean {
 		return null;
 	}
 	
+	/**
+	 * Restores permanent link (see LinkRestorePhaseListener in common package).
+	 * @param configId
+	 */
 	public void restoreLink(Long configId) {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
@@ -588,6 +677,10 @@ public class SlavesBean {
 		}
 	}
 
+	/**
+	 * Message bar to display link.
+	 * @return
+	 */
 	public MessageBarComponent getMessageBar() {
 		return messageBar;
 	}

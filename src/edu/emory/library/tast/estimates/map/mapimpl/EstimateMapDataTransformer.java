@@ -136,6 +136,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 				if (index + 1 > maxSize) {
 					maxSize = index + 1; 
 				}
+				
 			}
 			dataItem.setSize(maxSize);
 		}

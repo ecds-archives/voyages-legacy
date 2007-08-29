@@ -20,6 +20,10 @@ import edu.emory.library.tast.submission.SubmissionDictionaries;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.SourceInformationUtils;
 
+/**
+ * 
+ *
+ */
 public class VoyageBean {
 
 	private static final String COLUMN_NEW_LABEL = "New values";
