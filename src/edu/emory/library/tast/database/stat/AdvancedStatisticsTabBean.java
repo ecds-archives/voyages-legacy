@@ -403,7 +403,7 @@ public class AdvancedStatisticsTabBean {
 		String aggregate = this.selectedAggregate;
 		SeriesItem tmpSeries;
 		
-		if ("none".equals(this.yaxis)) {
+		if ("none".equals(this.yaxis) || this.yaxis == null) {
 			return null;
 		}
 
