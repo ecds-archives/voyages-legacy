@@ -402,6 +402,10 @@ public class AdvancedStatisticsTabBean {
 		// Current series and aggregate to add
 		String aggregate = this.selectedAggregate;
 		SeriesItem tmpSeries;
+		
+		if ("none".equals(this.yaxis)) {
+			return null;
+		}
 
 		// Create appropriate series item
 		if (this.aggregate.booleanValue()) {
