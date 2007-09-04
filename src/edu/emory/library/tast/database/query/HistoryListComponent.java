@@ -348,7 +348,7 @@ public class HistoryListComponent extends UIComponentBase
 						writer.startElement("div", this);
 						writer.writeAttribute("id", this.getId() + "_divquery_" + id + "_" + item.getId(), null);
 						writer.writeAttribute("onmouseover", "showToolTipOff('" + this.getId() + "_tooltip_" + id + "_" + item.getId() + "', " + "'" + 
-								this.getId() + "_divquery_" + id + "_" + item.getId() + "',350)", null);
+								this.getId() + "_divquery_" + id + "_" + item.getId() + "',450)", null);
 						writer.writeAttribute("onmouseout", "hideToolTip('" + this.getId() + "_tooltip_" + id + "_" + item.getId() + "')", null);
 						writer.write(text);
 						writer.endElement("div");
