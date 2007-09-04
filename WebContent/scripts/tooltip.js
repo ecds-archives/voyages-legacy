@@ -30,7 +30,40 @@ function xstooltip_findPosY(obj)
     return curtop;
 }
 
-function showToolTip(tooltipId, parentId)
+function showToolTip(tooltipId, parentId) {
+
+	it = document.getElementById(tooltipId);
+ 
+	var posX = 0;
+	var posY = 0;
+	
+	posX = -it.offsetWidth + 10;
+	posY = -it.offsetHeight + 10;
+	    
+    if ((it.style.top == '' || it.style.top == 0) 
+        && (it.style.left == '' || it.style.left == 0))
+    {
+        // need to fixate default size (MSIE problem)
+        it.style.width = it.offsetWidth + 'px';
+        it.style.height = it.offsetHeight + 'px';
+        
+        img = document.getElementById(parentId); 
+    
+        // if tooltip is too wide, shift left to be within parent 
+        //if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
+        // if (posX < 0 ) posX = 0; 
+        
+        x = xstooltip_findPosX(img) + posX;
+        y = xstooltip_findPosY(img) + posY;
+        
+        it.style.top = y + 'px';
+        it.style.left = x + 'px';
+    }
+    
+    it.style.visibility = 'visible'; 
+}
+
+function showToolTipOff(tooltipId, parentId, offset)
 {
 
     it = document.getElementById(tooltipId);
@@ -38,8 +71,8 @@ function showToolTip(tooltipId, parentId)
 	var posX = 0;
 	var posY = 0;
 	
-	posX = -it.offsetWidth + 10;
-	posY = -it.offsetHeight + 10;
+	posX = -it.offsetWidth + 10 + offset;
+	posY = -it.offsetHeight + 5;
 	    
     if ((it.style.top == '' || it.style.top == 0) 
         && (it.style.left == '' || it.style.left == 0))

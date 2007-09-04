@@ -371,7 +371,19 @@ QueryBuilder.prototype.closeList = function(attributeId)
 	var displayDiv = document.getElementById(cond.showListElementId);
 	if (names.length > 0)
 	{
-		displayDiv.innerHTML = names.join(", ");
+		if (names.length > 5) {
+			var i;
+			var str = "";
+			for (i = 0; i < 5; i++) {
+				str += names[i];
+				if (i < 4) {
+					str += ", ";
+				}
+			}
+			displayDiv.innerHTML = str + " ... ";
+		} else {
+			displayDiv.innerHTML = names.join(", ");
+		}
 	}
 	else
 	{

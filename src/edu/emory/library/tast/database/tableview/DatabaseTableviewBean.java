@@ -470,7 +470,7 @@ public class DatabaseTableviewBean {
 
 		// insert col totals
 		for (int j = 0; j < dataColCount; j++) {
-			for (int i = 0; i < colTotals[i].length; i++) {
+			for (int i = 0; i < colTotals[j].length; i++) {
 				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * j
 				                        + i] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
 				                        colTotals[j][i]) })).setCssClass(CSS_CLASS_TD_TOTAL);

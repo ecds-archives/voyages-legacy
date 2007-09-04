@@ -39,6 +39,7 @@ import edu.emory.library.tast.util.StringUtils;
 public class HistoryListComponent extends UIComponentBase
 {
 	
+	private static final int MAX_LENGTH = 20;
 	private History history;
 	private MethodBinding onDelete;
 	private MethodBinding onRestore;
@@ -306,9 +307,10 @@ public class HistoryListComponent extends UIComponentBase
 		
 		writer.startElement("br", this);
 		writer.endElement("br");
-
+		int id = 0;
 		for (Iterator iterQueryCondition = builderQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
+			id++;
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
 			writer.write(queryCondition.getSearchableAttribute().getUserLabel());
 			
@@ -334,8 +336,25 @@ public class HistoryListComponent extends UIComponentBase
 				writer.write(" " + TastResource.getText("components_search_is") + " ");
 				if (queryConditionText.isNonEmpty())
 				{
+					String toolTip = null;
+					String text = queryConditionText.getValue();
+					if (text.length() > MAX_LENGTH) {
+						toolTip = text;
+						text = text.substring(0, MAX_LENGTH) + " ... ";						
+					}
 					writer.startElement("b", this);
-					writer.write(queryConditionText.getValue());
+					if (toolTip != null) {
+						writeToolTip(writer, this.getId() + "_tooltip_" + id + "_" + item.getId(), toolTip);
+						writer.startElement("div", this);
+						writer.writeAttribute("id", this.getId() + "_divquery_" + id + "_" + item.getId(), null);
+						writer.writeAttribute("onmouseover", "showToolTipOff('" + this.getId() + "_tooltip_" + id + "_" + item.getId() + "', " + "'" + 
+								this.getId() + "_divquery_" + id + "_" + item.getId() + "',350)", null);
+						writer.writeAttribute("onmouseout", "hideToolTip('" + this.getId() + "_tooltip_" + id + "_" + item.getId() + "')", null);
+						writer.write(text);
+						writer.endElement("div");
+					} else {
+						writer.write(text);
+					}					
 					writer.endElement("b");
 				}
 				else
@@ -393,17 +412,40 @@ public class HistoryListComponent extends UIComponentBase
 				writer.write(" " + TastResource.getText("components_search_isequal") + " ");
 				if (queryConditionList.getSelectedIds().size() > 0)
 				{
+					StringBuffer buffer = new StringBuffer();
 					for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
 					{
 						QueryConditionListItem listItem = itemsSource.getItemByFullId(session, (String) iter.next());
 						if (listItem != null)
 						{
-							writer.startElement("b", this);
-							writer.write(listItem.getText());
-							writer.endElement("b");
-							if (iter.hasNext()) writer.write(" " + TastResource.getText("components_search_or") + " ");
+							buffer.append("<b>");
+							buffer.append(listItem.getText());
+							buffer.append("</b>");
+							if (iter.hasNext()) buffer.append(" " + TastResource.getText("components_search_or") + " ");
 						}
 					}
+					String toolTip = null;
+					String text = buffer.toString();
+					if (text.length() > MAX_LENGTH) {
+						toolTip = text;
+						int index = text.indexOf("</b>", MAX_LENGTH);
+						if (index < 0) {
+							index = MAX_LENGTH;
+						} else {
+							index += "</b>".length();
+						}
+						text = text.substring(0, index) + " ... ";						
+						writeToolTip(writer, this.getId() + "_tooltip_" + id + "_" + item.getId(), toolTip);
+						writer.startElement("div", this);
+						writer.writeAttribute("id", this.getId() + "_divquery_" + id + "_" + item.getId(), null);
+						writer.writeAttribute("onmouseover", "showToolTipOff('" + this.getId() + "_tooltip_" + id + "_" + item.getId() + "', " + "'" + 
+								this.getId() + "_divquery_" + id + "_" + item.getId() + "',450)", null);
+						writer.writeAttribute("onmouseout", "hideToolTip('" + this.getId() + "_tooltip_" + id + "_" + item.getId() + "')", null);
+						writer.write(text);
+						writer.endElement("div");
+					} else {
+						writer.write(text);
+					}			
 				}
 				else
 				{
@@ -430,6 +472,67 @@ public class HistoryListComponent extends UIComponentBase
 		
 		writer.endElement("div");
 		
+	}
+	
+	public void writeToolTip(ResponseWriter writer, String id, String text) throws IOException {
+		writer.startElement("div", this);
+		writer.writeAttribute("id", id, null);
+		writer.writeAttribute("class", "grid-tooltip", null);
+		writer.startElement("table", this);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.startElement("tr", this);
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-11l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-12l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-13l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");								
+		writer.endElement("tr");
+		
+		
+		writer.startElement("tr", this);
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-21l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-22l", null);								
+		writer.startElement("div", this);
+		writer.write(text);
+		writer.endElement("div");
+		writer.endElement("td");
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-23l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");								
+		writer.endElement("tr");
+		
+		
+		writer.startElement("tr", this);
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-31l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-32l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "bubble-33l", null);
+		writer.startElement("div", this);writer.endElement("td");
+		writer.endElement("td");								
+		writer.endElement("tr");
+		writer.endElement("table");
+		
+		writer.endElement("div");
 	}
 
 	/**

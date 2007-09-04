@@ -23,6 +23,8 @@
 	<link href="../styles/images-search-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/images-commons.css" rel="stylesheet" type="text/css">
 	
+	
+	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	
 </head>

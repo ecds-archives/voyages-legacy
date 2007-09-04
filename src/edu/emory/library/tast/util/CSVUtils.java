@@ -24,7 +24,7 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class CSVUtils {
 	
 	private static void getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream) throws FileNotFoundException, IOException {
-		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream));
+		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ';');
 		ScrollableResults queryResponse = null;
 		
 		try {
@@ -107,7 +107,7 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS));
+			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS), ';');
 			for (int i = 0; i < data.length; i++) {
 				writer.writeNext(data[i]);
 			}
