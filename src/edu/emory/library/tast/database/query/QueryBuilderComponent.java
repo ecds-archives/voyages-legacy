@@ -71,6 +71,8 @@ public class QueryBuilderComponent extends UIComponentBase
 	private QueryBuilderQuery setQuery;
 	private boolean querySet = false;
 	private MethodBinding onUpdateTotal;
+	
+	private int appended = 0;
 
 	public String getFamily()
 	{
@@ -1324,8 +1326,13 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 		if (queryCondition.containsId(fullId))
 		{
-			if (displayedText.length() > 0) displayedText.append(", ");
-			displayedText.append(item.getText());
+			if (displayedText.length() > 0 && appended < 6) displayedText.append(", ");
+			if (appended < 5) {
+				displayedText.append(item.getText());
+			} else if (appended == 5) {
+				displayedText.append("...");
+			}
+			appended++;
 		}
 		
 		if (item.getChildrenCount() > 0)
@@ -1482,6 +1489,7 @@ public class QueryBuilderComponent extends UIComponentBase
 
 		// selected items text
 		StringBuffer displayList = new StringBuffer();
+		this.appended = 0;
 		for (int i = 0; i < allItems.length; i++)
 			appendSelectedItems(displayList, queryCondition, allItems[i], "");
 		
