@@ -19,8 +19,8 @@ var HINTS_ITEMS = [
 	'Next',
 	'Pan mode',
 	'Zoom mode',
-	'Zoom in',
 	'Zoom out',
+	'Zoom in',
 	'Map size',
 	'Zoom level',
 	'Enable/disable mini-map'
