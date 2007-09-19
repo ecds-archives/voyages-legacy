@@ -61,8 +61,12 @@ public class LinkRestorePhaseListerner implements PhaseListener
 				String id = (String) params.get("region");
 				bean.restoreToRegionId(new Long(id));
 			} else {			
-				if (!params.containsKey("permlink"))
-					return;
+				if (!params.containsKey("permlink")) {
+					if ((bean.getImageId() == null && viewId.equals("/resources/images-detail.jsp")) ||
+							(bean.getGalleryImages() == null && viewId.equals("/resources/images-query.jsp"))) {
+						JsfUtils.navigateTo("images");
+					}
+				}
 				String permlink = (String) params.get("permlink");
 				if (StringUtils.isNullOrEmpty(permlink))
 					return;			
@@ -87,6 +91,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			
 			bean.restoreLink(new Long(permlink));
 		}
+		
 	}
 
 	public PhaseId getPhaseId()

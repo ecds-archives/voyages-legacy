@@ -674,6 +674,10 @@
 			<from-outcome>images-detail</from-outcome>
 			<to-view-id>/resources/images-detail.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>images</from-outcome>
+			<to-view-id>/resources/images.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
@@ -689,6 +693,10 @@
 		<navigation-case>
 			<from-outcome>images-back</from-outcome>
 			<to-view-id>/resources/images-query.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>images</from-outcome>
+			<to-view-id>/resources/images.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
