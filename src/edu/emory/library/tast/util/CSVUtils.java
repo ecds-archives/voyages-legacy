@@ -1,13 +1,9 @@
 package edu.emory.library.tast.util;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -18,12 +14,13 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class CSVUtils {
 	
-	private static void getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream) throws FileNotFoundException, IOException {
+	private static void getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream, boolean codes) throws FileNotFoundException, IOException {
 		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ';');
 		ScrollableResults queryResponse = null;
 		
@@ -44,7 +41,15 @@ public class CSVUtils {
 					if (result[j] == null) {
 						row[j - 1] = "";
 					} else {
-						row[j - 1] = result[j].toString();
+						if (!codes) {
+							row[j - 1] = result[j].toString();
+						} else {
+							if (result[j] instanceof Dictionary) {
+								row[j - 1] = ((Dictionary)result[j]).getId().toString();
+							} else {
+								row[j - 1] = result[j].toString();
+							}
+						}
 					}
 				}
 				writer.writeNext(row);
@@ -60,6 +65,10 @@ public class CSVUtils {
 	}
 
 	public static void writeResponse(Session sess, QueryValue qValue) {
+		writeResponse(sess, qValue, false);
+	}
+	
+	public static void writeResponse(Session sess, QueryValue qValue, boolean codes) {
 		
 		ZipOutputStream zipOS = null;
 		BufferedReader reader = null;
@@ -71,7 +80,7 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			getAllData(sess, qValue, zipOS);
+			getAllData(sess, qValue, zipOS, codes);
 			zipOS.close();
 			fc.responseComplete();
 		} catch (IOException io) {
