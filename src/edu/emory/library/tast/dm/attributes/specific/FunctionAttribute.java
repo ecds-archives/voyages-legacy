@@ -77,4 +77,8 @@ public class FunctionAttribute extends Attribute {
 	public Object getValueToCondition(Object value) {
 		return value;
 	}
+
+	public String getFunctionName() {
+		return functionName;
+	}
 }

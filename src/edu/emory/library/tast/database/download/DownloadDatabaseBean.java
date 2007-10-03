@@ -17,6 +17,7 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class DownloadDatabaseBean {
 	
 	private String revision;
+	private Boolean codes = new Boolean(true);
 	private static SelectItem[] revisions;
 	private static Object monitor = new Object();
 	
@@ -42,13 +43,21 @@ public class DownloadDatabaseBean {
 		this.revision = revision;
 	}
 	
+	public Boolean getCodes() {
+		return codes ;
+	}
+	
+	public void setCodes(Boolean codes) {
+		this.codes = codes;
+	}
+	
 	public String getFileAllData() {
 		
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
 		QueryValue q = this.getQuery();
-		CSVUtils.writeResponse(session, q, true);	
+		CSVUtils.writeResponse(session, q, !codes.booleanValue());	
 		
 		t.commit();
 		session.close();

@@ -101,17 +101,35 @@ public class DatabaseTableviewBean {
 
 	private SimpleTableCell[][] table;
 
-	private String aggregate = "sum";
+	//private String aggregate = "sum";
 	
 	private static AvailableOption[] options = new AvailableOption[] {
-			new AvailableOption("exp", "Exported slaves", new Attribute[] {Voyage.getAttribute("slaximp")}, new String[] {"Exported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("imp", "Imported slaves", new Attribute[] {Voyage.getAttribute("slamimp")}, new String[] {"Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("both", "Exported/Imported slaves", new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")}, new String[] {"Exported", "Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("sexratio", "Percentage male", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
-			new AvailableOption("childratio", "Percentage children", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
-			new AvailableOption("mortality", "Percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
-			new AvailableOption("middlepassage", "Middle passage (days)", new Attribute[] {Voyage.getAttribute("voy2imp")}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("standarizedtonnage", "Standarized tonnage", new Attribute[] {Voyage.getAttribute("tonmod")}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("expSum", "Sum of exported slaves", new Attribute[] {new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})}, new String[] {"Exported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("expAvg", "Average number of exported slaves", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slaximp")})}, new String[] {"Exported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("expCnt", "Number of cases - exported slaves", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slaximp")})}, new String[] {"Exported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			
+			new AvailableOption("impSum", "Sum of imported slaves", new Attribute[] {new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("impAvg", "Average number of imported slaves", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("impCnt", "Number of cases - imported slaves", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			
+			new AvailableOption("bothSum", "Sum of exported/imported slaves", new Attribute[] {new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}), new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Exported", "Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("bothAcg", "Average number of exported/imported slaves", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slaximp")}), new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Exported", "Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("bothCnt", "Number of cases - exported/imported slaves", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slaximp")}), new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Exported", "Imported"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			
+			new AvailableOption("sexratioAvg", "Average percentage male", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
+			new AvailableOption("sexratioCnt", "Number of cases - percentage male", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("malrat7")})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,###}"), ""),
+			
+			new AvailableOption("childratioAvg", "Average percentage children", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
+			new AvailableOption("childratioCnt", "Number of cases - percentage children", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("chilrat7")})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,###}"), ""),
+			
+			new AvailableOption("mortalityAvg", "Average percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.00}%"), ""),
+			new AvailableOption("mortalityCnt", "Number of cases - percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("vymrtrat")})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,###}"), ""),
+			
+			new AvailableOption("middlepassageAvg", "Average middle passage (days)", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("voy2imp")})}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("middlepassageCnt", "Number of cases - middle passage (days)", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voy2imp")})}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			
+			new AvailableOption("standarizedtonnageAvg", "Average standarized tonnage", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("tonmod")})}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+			new AvailableOption("standarizedtonnageCnt", "Number of cases - standarized tonnage", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("tonmod")})}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"), "0"),
 	};
 	
 	private AvailableOption chosenOption = options[0];
@@ -145,6 +163,12 @@ public class DatabaseTableviewBean {
 			return new GrouperImportPorts(resultIndex, omitEmptyRowsAndColumns, ports);
 		} else if ("expPorts".equals(groupBy)) {
 			return new GrouperExportPorts(resultIndex, omitEmptyRowsAndColumns, ports);
+		} else if ("departureBroad".equals(groupBy)) {
+			return new GrouperBroadDepartureRegions(resultIndex, omitEmptyRowsAndColumns, impAreas);
+		} else if ("departureRegion".equals(groupBy)) {
+			return new GrouperDepartureRegions(resultIndex, omitEmptyRowsAndColumns, expRegions);
+		} else if ("departure".equals(groupBy)) {
+			return new GrouperDeparturePorts(resultIndex, omitEmptyRowsAndColumns, ports);
 		} else {
 			throw new RuntimeException("invalid group by value");
 		}
@@ -280,7 +304,8 @@ public class DatabaseTableviewBean {
 
 		// ... and populated attributes
 		for (int i = 0; i < chosenOption.getAttributes().length; i++) {
-			query.addPopulatedAttribute(new FunctionAttribute(this.aggregate, new Attribute[] { chosenOption.getAttributes()[i] }));
+			//query.addPopulatedAttribute(new FunctionAttribute(this.aggregate, new Attribute[] { chosenOption.getAttributes()[i] }));
+			query.addPopulatedAttribute(chosenOption.getAttributes()[i]);
 		}
 
 		// row extra attributes
@@ -368,8 +393,10 @@ public class DatabaseTableviewBean {
 			}
 		}
 
+		String aggregate = ((FunctionAttribute)chosenOption.getAttributes()[0]).getFunctionName();
+		
 		// labels for row totals
-		if (!this.aggregate.equals("avg")) {
+		if (!aggregate.equals("avg")) {
 			table[0][headerLeftColsCount + subCols * dataColCount + 0] = new SimpleTableCell(TastResource
 					.getText("database_tableview_totals")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(
 					CSS_CLASS_TD_LABEL);
@@ -385,7 +412,7 @@ public class DatabaseTableviewBean {
 		}
 
 		// label for col totals
-		if (!this.aggregate.equals("avg")) {
+		if (!aggregate.equals("avg")) {
 			table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell(TastResource
 					.getText("database_tableview_totals")).setCssClass(CSS_CLASS_TD_LABEL).setColspan(
 					headerLeftColsCount);
@@ -435,7 +462,7 @@ public class DatabaseTableviewBean {
 
 		}
 
-		if (this.aggregate.equals("avg")) {
+		if (aggregate.equals("avg")) {
 			for (int i = 0; i < colTotals.length; i++) {
 				for (int j = 0; j < colTotals[i].length; j++) {
 					colTotals[i][j] /= (double) dataRowCount;
@@ -478,7 +505,7 @@ public class DatabaseTableviewBean {
 		}
 
 		// main totals
-		if (!this.aggregate.equals("avg")) {
+		if (!aggregate.equals("avg")) {
 			for (int i = 0; i < totals.length; i++) {
 				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount
 				                           + i] = new SimpleTableCell(valuesFormat
@@ -638,12 +665,12 @@ public class DatabaseTableviewBean {
 		this.searchBean = searchBean;
 	}
 
-	public void setAggregateFunction(String aggregate) {
-		this.aggregate = aggregate;
-	}
-
-	public String getAggregateFunction() {
-		return this.aggregate;
-	}
+//	public void setAggregateFunction(String aggregate) {
+//		this.aggregate = aggregate;
+//	}
+//
+//	public String getAggregateFunction() {
+//		return this.aggregate;
+//	}
 
 }
