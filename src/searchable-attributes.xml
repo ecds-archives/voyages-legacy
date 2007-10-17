@@ -75,7 +75,7 @@
 	<searchable-attribute
 		type="port"
 		id="placcons"
-		userLabel="Place/region constructed">
+		userLabel="Place constructed">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -100,7 +100,7 @@
 	<searchable-attribute
 		type="port"
 		id="placreg"
-		userLabel="Place/region registered">
+		userLabel="Place registered">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -276,7 +276,7 @@
 	<searchable-attribute
 		type="port"
 		id="ptdepimp"
-		userLabel="Place/region* where voyage began">
+		userLabel="Place* where voyage began">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -289,7 +289,7 @@
 	<searchable-attribute
 		type="port"
 		id="plac1tra"
-		userLabel="First place/region* of slave purchase">
+		userLabel="First place* of slave purchase">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -301,7 +301,7 @@
 	<searchable-attribute
 		type="port"
 		id="plac2tra"
-		userLabel="Second place/region* of slave purchase">
+		userLabel="Second place* of slave purchase">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -313,7 +313,7 @@
 	<searchable-attribute
 		type="port"
 		id="plac3tra"
-		userLabel="Third place/region* of slave purchase">
+		userLabel="Third place* of slave purchase">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -325,7 +325,7 @@
 	<searchable-attribute
 		type="port"
 		id="mjbyptimp"
-		userLabel="Principal place*/region* of slave purchase">
+		userLabel="Principal place* of slave purchase">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -350,7 +350,7 @@
 	<searchable-attribute
 		type="port"
 		id="sla1port"
-		userLabel="First place/region* of slave landing">
+		userLabel="First place* of slave landing">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -362,7 +362,7 @@
 	<searchable-attribute
 		type="port"
 		id="adpsale1"
-		userLabel="Second place/region* of slave landing">
+		userLabel="Second place* of slave landing">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -374,7 +374,7 @@
 	<searchable-attribute
 		type="port"
 		id="adpsale2"
-		userLabel="Third place/region* of slave landing">
+		userLabel="Third place* of slave landing">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -386,7 +386,7 @@
 	<searchable-attribute
 		type="port"
 		id="mjslptimp"
-		userLabel="Principal place*/region* of slave landing">
+		userLabel="Principal place* of slave landing">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -399,7 +399,7 @@
 	<searchable-attribute
 		type="port"
 		id="portret"
-		userLabel="Place/region* where voyage ended">
+		userLabel="Place* where voyage ended">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

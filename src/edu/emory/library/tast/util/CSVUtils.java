@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -20,9 +25,16 @@ import edu.emory.library.tast.util.query.QueryValue;
 
 public class CSVUtils {
 	
-	private static void getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream, boolean codes) throws FileNotFoundException, IOException {
-		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ';');
+	private static class DictionaryInfo {
+		public Class dictionary;
+		public List attributes = new ArrayList();
+	}
+	
+	private static DictionaryInfo[] getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream, boolean codes) throws FileNotFoundException, IOException {
+		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ',');
 		ScrollableResults queryResponse = null;
+		
+		Map dictionaries = new HashMap();
 		
 		try {
 			queryResponse = qValue.executeScrollableQuery(sess);
@@ -43,9 +55,33 @@ public class CSVUtils {
 					} else {
 						if (!codes) {
 							row[j - 1] = result[j].toString();
+							if (result[j] instanceof Dictionary) {
+								if (dictionaries.containsKey(populatedAttrs[j].toString())) {
+									DictionaryInfo info = (DictionaryInfo) dictionaries.get(populatedAttrs[j].toString());
+									if (!info.attributes.contains(populatedAttrs[j])) {
+										info.attributes.add(populatedAttrs[j]);
+									}
+								} else {
+									DictionaryInfo info = new DictionaryInfo();
+									info.attributes.add(populatedAttrs[j]);
+									info.dictionary = result[j].getClass();
+									dictionaries.put(populatedAttrs[j].toString(), info);
+								}
+							}
 						} else {
 							if (result[j] instanceof Dictionary) {
 								row[j - 1] = ((Dictionary)result[j]).getId().toString();
+								if (dictionaries.containsKey(populatedAttrs[j].toString())) {
+									DictionaryInfo info = (DictionaryInfo) dictionaries.get(populatedAttrs[j].toString());
+									if (!info.attributes.contains(populatedAttrs[j])) {
+										info.attributes.add(populatedAttrs[j]);
+									}
+								} else {
+									DictionaryInfo info = new DictionaryInfo();
+									info.attributes.add(populatedAttrs[j]);
+									info.dictionary = result[j].getClass();
+									dictionaries.put(populatedAttrs[j].toString(), info);
+								}
 							} else {
 								row[j - 1] = result[j].toString();
 							}
@@ -54,12 +90,12 @@ public class CSVUtils {
 				}
 				writer.writeNext(row);
 			}
+			writer.flush();
+			return (DictionaryInfo[]) dictionaries.values().toArray(new DictionaryInfo[] {});
+			
 		} finally {
 			if (queryResponse != null) {
 				queryResponse.close();
-			}
-			if (writer != null) {
-				writer.close();
 			}
 		}
 	}
@@ -80,7 +116,9 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			getAllData(sess, qValue, zipOS, codes);
+			DictionaryInfo[] dicts = getAllData(sess, qValue, zipOS, codes);
+			zipOS.putNextEntry(new ZipEntry("codebook.csv"));
+			getDictionaryInfo(zipOS, sess, dicts);
 			zipOS.close();
 			fc.responseComplete();
 		} catch (IOException io) {
@@ -97,12 +135,46 @@ public class CSVUtils {
 			}
 			if (zipOS != null) {
 				try {
+					zipOS.flush();
 					zipOS.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
+	}
+
+	private static void getDictionaryInfo(ZipOutputStream zipStream, Session session, DictionaryInfo[] dicts) {
+		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ',');
+		for (int i = 0; i < dicts.length; i++) {
+			writer.writeNext(new String[] {"Attribute names:", decodeDictAttrs(dicts[i])});
+			writer.writeNext(new String[] {"Code", "Name"});
+			List object = Dictionary.loadAll(dicts[i].dictionary, session);
+			for (Iterator iter = object.iterator(); iter.hasNext();) {
+				Dictionary element = (Dictionary) iter.next();
+				writer.writeNext(new String[] {element.getId().toString(), element.getName()});
+			}
+			writer.writeNext(new String[] {});
+		}
+		try {
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static String decodeDictAttrs(DictionaryInfo info) {
+		StringBuffer buffer = new StringBuffer();
+		int i = 0;
+		for (Iterator iter = info.attributes.iterator(); iter.hasNext();) {
+			if (i != 0) {
+				buffer.append(", ");
+			}
+			Attribute attr = (Attribute) iter.next();
+			buffer.append(attr.getName());
+			i++;
+		}
+		return buffer.toString();
 	}
 
 	public static void writeResponse(Session session, String[][] data) {
