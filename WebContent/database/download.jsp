@@ -46,15 +46,32 @@
 					</td>
 				</tr>
 				<tr>
+					<td>
+					</td>
+					<td>
+						<h:selectBooleanCheckbox value="#{DownloadDatabaseBean.codes}">
+							<h:outputText value="Resolve codes to names"/>
+						</h:selectBooleanCheckbox>
+					</td>
+				</tr>
+				<tr>
 					<td> 
 						<h:outputText value="To download the database, click "/>
 						<h:commandLink action="#{DownloadDatabaseBean.getFileAllData}" value="here"/>
 						<h:outputText value="."/>
 					</td>
 				</tr>
+		
+				<tr>
+					<td>
+					<a href="../TSTD67.sav">Download</a> static SPSS file.
+					</td>
+				</tr>
 			
 			</table>
 		</div>
+		
+		
 	</div>
 
 </h:form>

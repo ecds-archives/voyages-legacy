@@ -425,6 +425,12 @@ public class DatabaseTableviewBean {
 		// how we want to displat it
 		MessageFormat valuesFormat = this.chosenOption.getFormat();
 
+		//totals for average - vertical
+		int[][] totalV = new int[dataColCount][chosenOption.attributes.length];
+		
+		//totals for average - horizontal
+		int[][] totalH = new int[dataRowCount][chosenOption.attributes.length];
+		
 		// for totals
 		double[][] rowTotals = new double[dataRowCount][chosenOption.attributes.length];
 		double[][] colTotals = new double[dataColCount][chosenOption.attributes.length];
@@ -450,6 +456,12 @@ public class DatabaseTableviewBean {
 			for (int j = 0; j < chosenOption.attributes.length; j++) {
 				rowTotals[rowIndex][j] += numbers[j].doubleValue();
 				colTotals[colIndex][j] += numbers[j].doubleValue();
+				
+				if (aggregate.equals("avg") && row[2 + j] != null) {
+					totalH[rowIndex][j] += 1;
+					totalV[colIndex][j] += 1;
+				}
+				
 				totals[j] += numbers[j].doubleValue();
 				if (numbers[j].doubleValue() == 0.0) {
 					table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
@@ -465,12 +477,12 @@ public class DatabaseTableviewBean {
 		if (aggregate.equals("avg")) {
 			for (int i = 0; i < colTotals.length; i++) {
 				for (int j = 0; j < colTotals[i].length; j++) {
-					colTotals[i][j] /= (double) dataRowCount;
+					colTotals[i][j] /= (double) totalV[i][j];
 				}
 			}
 			for (int i = 0; i < rowTotals.length; i++) {
 				for (int j = 0; j < rowTotals[i].length; j++) {
-					rowTotals[i][j] /= (double) dataColCount;
+					rowTotals[i][j] /= (double) totalH[i][j];
 				}
 			}
 		}
@@ -633,7 +645,7 @@ public class DatabaseTableviewBean {
 		Transaction t = session.beginTransaction();
 
 		String[][] data = new String[this.table.length][this.table[0].length];
-		for (int i = 0; i < data.length - 1; i++) {
+		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < this.table[i].length; j++) {
 				if (this.table[i][j] != null) {
 					data[i][j] = this.table[i][j].getText();

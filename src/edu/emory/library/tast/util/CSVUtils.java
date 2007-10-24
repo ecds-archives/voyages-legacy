@@ -188,7 +188,7 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS), ';');
+			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS), ',');
 			for (int i = 0; i < data.length; i++) {
 				writer.writeNext(data[i]);
 			}

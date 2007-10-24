@@ -13,7 +13,7 @@
 <!ATTLIST searchable-attribute
 	id CDATA #REQUIRED
 	userLabel CDATA #REQUIRED
-	type (simple|port|percent) #REQUIRED
+	type (simple|port|percent|nation) #REQUIRED
 	defaultOption (equals) #IMPLIED
 	subType (general|year|ratio) #IMPLIED>
 
@@ -123,15 +123,15 @@
 	</searchable-attribute>
 
 	<searchable-attribute
-		type="simple"
+		type="nation"
 		id="natinimp"
-		userLabel="Flag">
+		userLabel="Flag*">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
-			<attribute name="e_natinimp" />
+			<attribute name="natinimp" />
 		</attributes>
 	</searchable-attribute>
 
