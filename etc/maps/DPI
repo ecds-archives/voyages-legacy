@@ -11,7 +11,7 @@ the scale of image and DPI (to be able to define it in the StandardMaps.java fil
 in general, you should pick width and height of image as factor of 120x160px.
 If you know your desired size of image (in px):
 number of tiles = (width / 160) or (height / 120)
-dpi = 935 x 5 / [number of tiles]
+dpi = 935 x [number of tiles] / 64
 
 To figure out zoom level, you need to find Charleston on your map after converting it to dpi calculated above.
 Then, find number of pixels from Charleston to the bottom of image and solve following:

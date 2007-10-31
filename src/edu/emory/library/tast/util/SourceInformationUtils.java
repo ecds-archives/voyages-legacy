@@ -86,6 +86,7 @@ public class SourceInformationUtils {
 	public SourceInformation searchSmallerMatch(int position, String source) {
 		if (position > 0) {
 			int testPosition = position - 1;
+			System.out.println("testing " + position + " of source " + source + "");
 			if (sourceNames[position].startsWith(sourceNames[testPosition].substring(0, 1))) {
 				if (source.startsWith(sources[index[testPosition].getPosition()].getId())) {
 					return sources[index[testPosition].getPosition()];
