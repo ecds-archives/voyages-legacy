@@ -49,7 +49,7 @@ public class CSVUtils {
 			while (queryResponse.next()) {
 				Object[] result = queryResponse.get();
 				row = new String[populatedAttrs.length - 1];
-				for (int j = 1; j < row.length; j++) {
+				for (int j = 1; j < populatedAttrs.length; j++) {
 					if (result[j] == null) {
 						row[j - 1] = "";
 					} else {

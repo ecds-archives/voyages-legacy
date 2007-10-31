@@ -677,12 +677,5 @@ public class DatabaseTableviewBean {
 		this.searchBean = searchBean;
 	}
 
-//	public void setAggregateFunction(String aggregate) {
-//		this.aggregate = aggregate;
-//	}
-//
-//	public String getAggregateFunction() {
-//		return this.aggregate;
-//	}
 
 }

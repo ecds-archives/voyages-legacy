@@ -134,6 +134,18 @@
 			<attribute name="natinimp" />
 		</attributes>
 	</searchable-attribute>
+	
+	<searchable-attribute
+		type="nation"
+		id="national"
+		userLabel="Flag">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="national" />
+		</attributes>
+	</searchable-attribute>
 
 	<searchable-attribute
 		type="simple"

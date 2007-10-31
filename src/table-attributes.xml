@@ -35,9 +35,14 @@
 			<attribute name="yrreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="natinimp" userCategory="beginners,general" userLabel="Flag">
+	<table-attribute tabs="1,2" id="natinimp" userCategory="beginners,general" userLabel="Flag*">
 		<attributes>
 			<attribute name="natinimp"/>
+		</attributes>
+	</table-attribute>
+	<table-attribute tabs="1,2" id="national" userCategory="beginners,general" userLabel="Flag">
+		<attributes>
+			<attribute name="national"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="rig" userCategory="beginners,general" userLabel="Rig">
@@ -387,7 +392,7 @@
 			<attribute name="vymrtimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners,general" userLabel="Percentage of slaves embarked who died during voyage*">
+	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners,general" userLabel="Percentage of slaves embarked who died during voyage*" format="{0,number,##0.00}%">
 		<attributes>
 			<attribute name="vymrtrat"/>
 		</attributes>
