@@ -36,6 +36,8 @@
 
 </head>
 <body>
+<a name="top"></a>
+
 <f:view>
 <h:form id="form">
 
@@ -57,6 +59,7 @@
 <!-- last update: -->	
 <h4>Under construction: last updated at 2:18PM January 11, 2008</h4>
 
+
 <!-- first map -->
 <t:htmlTag value="table" styleClass="images-category">
 <t:htmlTag value="tr">
@@ -65,7 +68,7 @@
 		<h:outputText value="Map 1: Overview of the slave trade out of Africa, 1500-1900" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_001_Slave_Trade_Overview_preview.PNG" onclick="return popitup('../newMaps/YP1_001_Slave_Trade_Overview_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -81,7 +84,8 @@
 		The map shows the transatlantic movement of these captives in comparative perspective for the centuries 
 		since 1500 only. Estimates of the ocean-borne trade are more robust than are those for the trans-Saharan, 
 		Red sea and Persian Gulf routes, but it is thought that for the period from the end of the Roman Empire 
-		to 1900 about the same number of captives crossed the Atlantic than left Africa by all other routes combined.
+		to 1900 about the same number of captives crossed the Atlantic than left Africa by all other routes 
+		combined.
 </font>
 </td>
 <td width="300" align="right">
@@ -101,7 +105,7 @@
 		<h:outputText value="Map 2: The Migration of sugar cultivation from Asia into the Atlantic" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_002_Migration_Sugar_Cultivation_preview.PNG" onClick = "return popitup('../newMaps/YP1_002_Migration_Sugar_Cultivation_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -136,7 +140,7 @@
 		<h:outputText value="Map 3: Old World Slave Trade Routes in the Atlantic before 1759" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_003_Old_World_SlaveTrade_preview.PNG" onclick="return popitup('../newMaps/YP1_003_Old_World_SlaveTrade_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -152,7 +156,7 @@
 		were taken to Europe as well as to the Atlantic islands and between African ports. It is hard to 
 		get precise estimates of these flows, but they were certainly much smaller than the transatlantic 
 		traffic. Many of the captives involved in this traffic were subsequently carried to sugar 
-		lantations in the Old World. 
+		lantations in the Old World.
 </font>
 </td>
 <td width="300" align="right">
@@ -174,7 +178,7 @@
 		<h:outputText value="Map 4: Wind and ocean currents of the Atlantic basins" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_004_Wind_currents_preview.PNG" onClick = "return popitup('../newMaps/YP1_004_Wind_currents_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -210,7 +214,7 @@
 		<h:outputText value="Map 5: Major regions and ports involved in the transatlantic slave trade, all years" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_005_Atlantic_Basin_preview.PNG" onClick = "return popitup('../newMaps/YP1_005_Atlantic_Basin_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -244,7 +248,7 @@
 		<h:outputText value="Map 6: Ports in the Atlantic where slave voyages were organized, all years" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_006_Europe_Overview_preview.PNG" onClick = "return popitup('../newMaps/YP1_006_Europe_Overview_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -292,7 +296,7 @@
 		<h:outputText value="Map 7: Major coastal regions from which captives left Africa, all years" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_007_Africa_Overview_preview.PNG" onClick = "return popitup('../newMaps/YP1_007_Africa_Overview_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -314,7 +318,7 @@
 	largest regional departure point for captives through most the slave trade era. Regions closer 
 	to the Americas and Europe generated a relatively small share of the total carried across the 
 	Atlantic. Note that voyage length was determined as much by wind and ocean currents as by relative 
-	proximity (see map 4).   <br/> 
+	proximity (see map 4).   <br/>
 	<br></br>
 	<table border="1" style="margin-left: 20px">
 	<tr>
@@ -345,7 +349,7 @@
 		<h:outputText value="Map 8: Major regions where captives disembarked, all years" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_008_Americas_Overview_preview.PNG" onClick = "return popitup('../newMaps/YP1_008_Americas_Overview_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
@@ -360,7 +364,7 @@
 	The Caribbean and South Americas accounted for 95 percent of the slaves arriving in the Americas. 
 	Some captives disembarked in Africa rather than the Americas because their transatlantic voyage was 
 	diverted as a result of a slave rebellion or, during the era of suppression, because of capture by 
-	patrolling naval cruisers.   <br/> 
+	patrolling naval cruisers. <br/>
 	<br></br>
 	<table border="1" style="margin-left: 20px">
 	<tr>
@@ -390,7 +394,7 @@
 		<h:outputText value="Map 8A: Volume and direction of the transatlantic slave trade from all African to all American regions" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
-		<a href ="../newMaps/YP1_008A_Transatlantic_preview.PNG" onClick = "return popitup('../newMaps/YP1_008A_Transatlantic_preview.PNG')">Click here for the map.</a>
+	<a href = "#top">Return to the top</a>	
 	</t:htmlTag>
 </div>
 </t:htmlTag>
