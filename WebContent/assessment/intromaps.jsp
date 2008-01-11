@@ -57,7 +57,7 @@
 	<div id="content" style="padding-left: 20px">
 
 <!-- last update: -->	
-<h4>Under construction: last updated at 2:18PM January 11, 2008</h4>
+<h4>Under construction: last updated at 2:48PM January 11, 2008</h4>
 
 
 <!-- first map -->
@@ -391,7 +391,7 @@
 <t:htmlTag value="tr">
 <div style="padding-top: 20px; ">
 	<t:htmlTag value="td" styleClass="images-category-name">
-		<h:outputText value="Map 8A: Volume and direction of the transatlantic slave trade from all African to all American regions" />
+		<h:outputText value="Map 9: Volume and direction of the transatlantic slave trade from all African to all American regions" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
 	<a href = "#top">Return to the top</a>	
