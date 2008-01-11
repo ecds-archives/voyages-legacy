@@ -38,16 +38,26 @@ public class CSVUtils {
 		
 		try {
 			queryResponse = qValue.executeScrollableQuery(sess);
+			
+			
+			
 			Attribute[] populatedAttrs = qValue.getPopulatedAttributes();
 			String[] row = new String[populatedAttrs.length - 1];
 			for (int i = 1; i < populatedAttrs.length; i++) {
 				row[i - 1] = populatedAttrs[i].getName();
 			}
-
+			
 			writer.writeNext(row);
 
+			
+			int cnt = 0;
+			
 			while (queryResponse.next()) {
+				
+				cnt++;
+				
 				Object[] result = queryResponse.get();
+			
 				row = new String[populatedAttrs.length - 1];
 				for (int j = 1; j < populatedAttrs.length; j++) {
 					if (result[j] == null) {
@@ -90,6 +100,10 @@ public class CSVUtils {
 				}
 				writer.writeNext(row);
 			}
+			
+			writer.writeNext(new String[] {"The number of total records: " + cnt});
+			//System.out.println("*********"+cnt);
+			
 			writer.flush();
 			return (DictionaryInfo[]) dictionaries.values().toArray(new DictionaryInfo[] {});
 			
