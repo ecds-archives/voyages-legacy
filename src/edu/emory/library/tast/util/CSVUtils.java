@@ -50,7 +50,7 @@ public class CSVUtils {
 			writer.writeNext(row);
 
 			
-			int cnt = 0;
+			int cnt = 0; // cnt is a counter to indicate the row number of the table
 			
 			while (queryResponse.next()) {
 				
@@ -101,9 +101,9 @@ public class CSVUtils {
 				writer.writeNext(row);
 			}
 			
+			//this is to show the total number of rows in the downloaded file:
 			writer.writeNext(new String[] {"The number of total records: " + cnt});
-			//System.out.println("*********"+cnt);
-			
+
 			writer.flush();
 			return (DictionaryInfo[]) dictionaries.values().toArray(new DictionaryInfo[] {});
 			
