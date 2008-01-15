@@ -1,11 +1,11 @@
 <html>
 <head>
-<title> 2_Migration_Sugar_Cultivation.jpg </title>
+<title> Migration Sugar Cultivation </title>
 </head>
 <body>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "../newMaps/2_Migration_Sugar_Cultivation.jpg" width="1383px" height="883"></img>
+<img name="testmap" src = "../newMaps/2_Migration_Sugar_Cultivation.gif" width="1251px" height="954px"></img>
 
 <script type="text/javascript">
 <!--

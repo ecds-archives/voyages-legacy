@@ -1,11 +1,11 @@
 <html>
 <head>
-<title> 1_Slave_Trade_Overview.jpg </title>
+<title> Slave Trade Overview </title>
 </head>
 <body>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "1_Slave_Trade_Overview.gif" width="4979px" height="3187px"></img>
+<img name="testmap" src = "1_Slave_Trade_Overview.gif" width="1494px" height="956px"></img>
 
 <script type="text/javascript">
 <!--
