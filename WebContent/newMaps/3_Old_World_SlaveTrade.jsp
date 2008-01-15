@@ -1,11 +1,11 @@
 <html>
 <head>
-<title> 3_Old_World_SlaveTrade.jpg </title>
+<title> Old World SlaveTrade </title>
 </head>
-<body>
+<body bgcolor=gray>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "../newMaps/3_Old_World_SlaveTrade.jpg" width="1383px" height="883"></img>
+<img name="testmap" src = "../newMaps/3_Old_World_SlaveTrade.gif" width="1016px" height="1168"></img>
 
 <script type="text/javascript">
 <!--

@@ -1,11 +1,11 @@
 <html>
 <head>
-<title> 4_Wind_currents.jpg </title>
+<title> Wind currents </title>
 </head>
-<body>
+<body bgcolor=gray>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "../newMaps/4_Wind_currents.jpg" width="1383px" height="883"></img>
+<img name="testmap" src = "../newMaps/4_Wind_currents.gif" width="894px" height="980"></img>
 
 <script type="text/javascript">
 <!--

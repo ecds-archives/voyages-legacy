@@ -15,7 +15,7 @@ SET_DHTML("testmap");
 //-->
 </script>
 
-test
+haha
 
 </body>
 </html>

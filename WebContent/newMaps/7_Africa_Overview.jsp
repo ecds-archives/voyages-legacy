@@ -1,11 +1,11 @@
 <html>
 <head>
-<title> 7_Africa_Overview.jpg </title>
+<title> Africa Overview </title>
 </head>
-<body>
+<body bgcolor=gray>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "../newMaps/7_Africa_Overview.jpg" width="1383px" height="883"></img>
+<img name="testmap" src = "../newMaps/7_Africa_Overview.gif" width="1002px" height="1066"></img>
 
 <script type="text/javascript">
 <!--

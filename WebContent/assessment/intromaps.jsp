@@ -25,10 +25,11 @@
 
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/wz_dragdrop.js" language="javascript" type="text/javascript"></script>
 	
 	<script language="javascript" type="text/javascript">
 	function popitup(url) {
-		newwindow=window.open(url,'name','height=600,width=800,resizable, scrollbars');
+		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars');
 		if (window.focus) {newwindow.focus()}
 		return false;
 	}
@@ -54,10 +55,9 @@
 
 	
 	
-	<div id="content" style="padding-left: 20px">
+		<div id="content" style="padding-left: 20px">
 
-<!-- last update: -->	
-<h4>Under construction: last updated at 2:48PM January 11, 2008</h4>
+<!-- last update: -->
 
 
 <!-- first map -->
@@ -89,8 +89,9 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_001_Slave_Trade_Overview_preview.PNG" onclick="return popitup('../newMaps/YP1_001_Slave_Trade_Overview_preview.PNG')">
-<img src = "../newMaps/YP1_001_Slave_Trade_Overview_preview.jpg" width="200px"></img>
+<a href ="../newMaps/1_Slave_Trade_Overview.jsp" onclick="return popitup('../newMaps/1_Slave_Trade_Overview.jsp')">
+<img src = "../newMaps/1_Slave_Trade_Overview.gif" width="200px"></img>
+
 </a>
 </td>
 </tr>
@@ -124,8 +125,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_002_Migration_Sugar_Cultivation_preview.PNG" onClick = "return popitup('../newMaps/YP1_002_Migration_Sugar_Cultivation_preview.PNG')">
-<img src = "../newMaps/YP1_002_Migration_Sugar_Cultivation_preview.jpg" width="200px"></img>
+<a href ="../newMaps/2_Migration_Sugar_Cultivation.jsp" onClick = "return popitup('../newMaps/2_Migration_Sugar_Cultivation.jsp')">
+<img src = "../newMaps/2_Migration_Sugar_Cultivation.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -160,8 +161,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_003_Old_World_SlaveTrade_preview.PNG" onclick="return popitup('../newMaps/YP1_003_Old_World_SlaveTrade_preview.PNG')">
-<img src = "../newMaps/YP1_003_Old_World_SlaveTrade_preview.jpg" width="200px"></img>
+<a href ="../newMaps/3_Old_World_SlaveTrade.jsp" onclick="return popitup('../newMaps/3_Old_World_SlaveTrade.jsp')">
+<img src = "../newMaps/3_Old_World_SlaveTrade.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -196,8 +197,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_004_Wind_currents_preview.PNG" onClick = "return popitup('../newMaps/YP1_004_Wind_currents_preview.PNG')">
-<img src = "../newMaps/YP1_004_Wind_currents_preview.jpg" width="200px"></img>
+<a href ="../newMaps/4_Wind_currents.jsp" onClick = "return popitup('../newMaps/4_Wind_currents.jsp')">
+<img src = "../newMaps/4_Wind_currents.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -231,8 +232,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_005_Atlantic_Basin_preview.PNG" onClick = "return popitup('../newMaps/YP1_005_Atlantic_Basin_preview.PNG')">
-<img src = "../newMaps/YP1_005_Atlantic_Basin_preview.jpg" width="200px"></img>
+<a href ="../newMaps/5_Atlantic_Basin.jsp" onClick = "return popitup('../newMaps/5_Atlantic_Basin.jsp')">
+<img src = "../newMaps/5_Atlantic_Basin.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -279,8 +280,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_006_Europe_Overview_preview.PNG" onClick = "return popitup('../newMaps/YP1_006_Europe_Overview_preview.PNG')">
-<img src = "../newMaps/YP1_006_Europe_Overview_preview.jpg" width="200px"></img>
+<a href ="../newMaps/6_Europe_Overview.jsp" onClick = "return popitup('../newMaps/6_Europe_Overview.jsp')">
+<img src = "../newMaps/6_Europe_Overview.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -331,8 +332,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_007_Africa_Overview_preview.PNG" onClick = "return popitup('../newMaps/YP1_007_Africa_Overview_preview.PNG')">
-<img src = "../newMaps/YP1_007_Africa_Overview_preview.jpg" width="200px"></img>
+<a href ="../newMaps/7_Africa_Overview.jsp" onClick = "return popitup('../newMaps/7_Africa_Overview.jsp')">
+<img src = "../newMaps/7_Africa_Overview.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -377,8 +378,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_008_Americas_Overview_preview.PNG" onClick = "return popitup('../newMaps/YP1_008_Americas_Overview_preview.PNG')">
-<img src = "../newMaps/YP1_008_Americas_Overview_preview.jpg" width="200px"></img>
+<a href ="../newMaps/7_Africa_Overview.jsp" onClick = "return popitup('../newMaps/7_Africa_Overview.jsp')">
+<img src = "../newMaps/7_Africa_Overview.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -417,8 +418,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/YP1_008A_Transatlantic_preview.PNG" onClick = "return popitup('../newMaps/YP1_008A_Transatlantic_preview.PNG')">
-<img src = "../newMaps/YP1_008A_Transatlantic_preview.jpg" width="200px"></img>
+<a href ="../newMaps/8A_Transatlantic.jsp" onClick = "return popitup('../newMaps/8A_Transatlantic.jsp')">
+<img src = "../newMaps/8A_Transatlantic.gif" width="200px"></img>
 </a>
 </td>
 </tr>
@@ -431,5 +432,14 @@
 </h:form>
 	
 </f:view>
+
+
+<script type="text/javascript">
+<!--
+
+SET_DHTML("testmap");
+
+//-->
+</script>
 </body>
 </html>

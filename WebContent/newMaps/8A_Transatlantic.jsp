@@ -1,11 +1,11 @@
 <html>
 <head>
-<title> 8A_Transatlantic.jpg </title>
+<title> Transatlantic </title>
 </head>
-<body>
+<body bgcolor=gray>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "../newMaps/8A_Transatlantic.jpg" width="1383px" height="883"></img>
+<img name="testmap" src = "../newMaps/8A_Transatlantic.gif" width="1992px" height="1276"></img>
 
 <script type="text/javascript">
 <!--

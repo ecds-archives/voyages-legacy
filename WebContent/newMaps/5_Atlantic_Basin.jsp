@@ -1,11 +1,11 @@
 <html>
 <head>
-<title> 5_Atlantic_Basin.jpg </title>
+<title> Atlantic Basin </title>
 </head>
-<body>
+<body bgcolor=gray>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "../newMaps/5_Atlantic_Basin.jpg" width="1383px" height="883"></img>
+<img name="testmap" src = "../newMaps/5_Atlantic_Basin.gif" width="2421" height="1590"></img>
 
 <script type="text/javascript">
 <!--
