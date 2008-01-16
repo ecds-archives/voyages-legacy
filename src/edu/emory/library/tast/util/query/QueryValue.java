@@ -177,6 +177,7 @@ public class QueryValue {
 		this.firstResult = FIRST_NO_FIRST;
 		for (int i = 0; i < aliases.length; i++) {
 			this.bindings.put(objTypes[i], aliases[i]);
+//			System.out.println(objects[i].toString()+"*****DEBUG******"+aliases[i]);
 		}
 	}
 

@@ -120,7 +120,7 @@ public class SlavesBean {
 				VisibleAttrSlave.getAttributeForTable("height"), VisibleAttrSlave.getAttributeForTable("datearr"),
 				VisibleAttrSlave.getAttributeForTable("source"), VisibleAttrSlave.getAttributeForTable("sexage"),
 				VisibleAttrSlave.getAttributeForTable("country"), VisibleAttrSlave.getAttributeForTable("majselpt"),
-				VisibleAttrSlave.getAttributeForTable("majbuypt") };
+				VisibleAttrSlave.getAttributeForTable("majbuypt") }; 
 
 		tableData = new TableData();
 		tableData.setKeyAttribute(Slave.getAttribute("voyageId"));
@@ -164,10 +164,9 @@ public class SlavesBean {
 
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
-
+		
 		if (refreshText)
 			querySummary = new ArrayList();
-
 		Conditions conditions = currentQuery.createConditions(sess, refreshText ? querySummary : null);
 
 		QueryValue queryValueTable = getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
@@ -248,7 +247,6 @@ public class SlavesBean {
 
 			// and update count
 			updateExpectedCount();
-
 		} else {
 
 			// nothing has changed
@@ -283,7 +281,7 @@ public class SlavesBean {
 		// restore default query
 		workingQuery = new SlavesQuery();
 		currentQuery = new SlavesQuery();
-
+		
 		// reset pager
 		this.pager.reset();
 
@@ -336,17 +334,23 @@ public class SlavesBean {
 	 * 
 	 * @return
 	 */
-	public void setStep(String step) {
-
-		// get value
-		int newStep = "all".equals(step) ? Integer.MAX_VALUE : Integer.parseInt(step);
-
-		// changed?
-		if (newStep != this.pager.getStep() || this.firstVisibleRecord != this.pager.getCurrentFirstRecord()) {
+//	public void setStep(String step) {
+//
+//		// get value
+//		int newStep = "all".equals(step) ? Integer.MAX_VALUE : Integer.parseInt(step);
+//
+//		// changed?
+//		if (newStep != this.pager.getStep() || this.firstVisibleRecord != this.pager.getCurrentFirstRecord()) {
+//			this.pager.setStep(newStep);
+//			loadData(false, false);
+//		}
+//
+//	}
+	public void setStep(int newStep){
+		if (newStep != this.pager.getStep() || this.firstVisibleRecord != this.pager.getCurrentFirstRecord()){
 			this.pager.setStep(newStep);
 			loadData(false, false);
 		}
-
 	}
 
 	/**
@@ -541,8 +545,11 @@ public class SlavesBean {
 	 * Gets step size (10, 20, 50 records...)
 	 * @return
 	 */
-	public String getStep() {
-		return String.valueOf(this.pager.getStep());
+//	public String getStep() {
+//		return String.valueOf(this.pager.getStep());
+//	}
+	public int getStep(){
+		return this.pager.getStep();
 	}
 
 	/**

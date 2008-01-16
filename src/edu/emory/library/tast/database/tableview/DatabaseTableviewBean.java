@@ -14,6 +14,7 @@ import edu.emory.library.tast.common.tableview.Grouper;
 import edu.emory.library.tast.common.tableview.Label;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.dm.Area;
+import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
@@ -25,7 +26,7 @@ import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
- * This bean is responsible for managing the cross-table in the estimates. It
+ * This bean is responsible for managing the cross-table in the database. It
  * has a reference to
  * {@link #edu.emory.library.tast.estimates.selection.EstimatesSelectionBean}.
  * It holds the entire table in {@link #table}. The table is refreshed every
@@ -149,7 +150,7 @@ public class DatabaseTableviewBean {
 	 * @param impAreas
 	 * @return
 	 */
-	private Grouper createGrouper(String groupBy, int resultIndex, List expRegions, List impRegions, List impAreas, List ports) {
+	private Grouper createGrouper(String groupBy, int resultIndex, List expRegions, List impRegions, List impAreas, List ports, List nations) {
 		if ("expRegion".equals(groupBy)) {
 			return new GrouperExportRegions(resultIndex, omitEmptyRowsAndColumns, expRegions);
 		} else if ("impRegion".equals(groupBy)) {
@@ -169,7 +170,9 @@ public class DatabaseTableviewBean {
 			return new GrouperDepartureRegions(resultIndex, omitEmptyRowsAndColumns, expRegions);
 		} else if ("departure".equals(groupBy)) {
 			return new GrouperDeparturePorts(resultIndex, omitEmptyRowsAndColumns, ports);
-		} else {
+		} else if ("flagStar".equals(groupBy)){
+			return new GrouperNations(resultIndex, omitEmptyRowsAndColumns, nations);
+		}else {
 			throw new RuntimeException("invalid group by value");
 		}
 	}
@@ -281,12 +284,13 @@ public class DatabaseTableviewBean {
 		List impRegions = expRegions;
 		List impAreas = Area.loadAll(sess);
 		List ports = Port.loadAll(sess);
+		List nations = Nation.loadAll(sess);
 
 		// for grouping rows
-		Grouper rowGrouper = createGrouper(rowGrouping, 0, expRegions, impRegions, impAreas, ports);
+		Grouper rowGrouper = createGrouper(rowGrouping, 0, expRegions, impRegions, impAreas, ports, nations);
 
 		// for grouping cols
-		Grouper colGrouper = createGrouper(colGrouping, 1, expRegions, impRegions, impAreas, ports);
+		Grouper colGrouper = createGrouper(colGrouping, 1, expRegions, impRegions, impAreas, ports, nations);
 
 		// start query
 		QueryValue query = new QueryValue(new String[] { "Voyage" }, new String[] { "voyage" }, conditions);

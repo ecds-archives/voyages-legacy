@@ -7,8 +7,6 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
