@@ -29,7 +29,7 @@
 	
 	<script language="javascript" type="text/javascript">
 	function popitup(url) {
-		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars');
+		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars, location=0');
 		if (window.focus) {newwindow.focus()}
 		return false;
 	}
@@ -89,8 +89,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/1_Slave_Trade_Overview.jsp" onclick="return popitup('../newMaps/1_Slave_Trade_Overview.jsp')">
-<img src = "../newMaps/1_Slave_Trade_Overview.gif" width="200px"></img>
+<a href ="../newMaps/1_Slave_Trade_Overview_preview.jsp" onclick="return popitup('../newMaps/1_Slave_Trade_Overview_preview.jsp')">
+<img src = "../newMaps/1_Slave_Trade_Overview.gif" width="200px" border=0></img>
 
 </a>
 </td>
@@ -125,8 +125,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/2_Migration_Sugar_Cultivation.jsp" onClick = "return popitup('../newMaps/2_Migration_Sugar_Cultivation.jsp')">
-<img src = "../newMaps/2_Migration_Sugar_Cultivation.gif" width="200px"></img>
+<a href ="../newMaps/2_Migration_Sugar_Cultivation_preview.jsp" onClick = "return popitup('../newMaps/2_Migration_Sugar_Cultivation_preview.jsp')">
+<img src = "../newMaps/2_Migration_Sugar_Cultivation.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -161,8 +161,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/3_Old_World_SlaveTrade.jsp" onclick="return popitup('../newMaps/3_Old_World_SlaveTrade.jsp')">
-<img src = "../newMaps/3_Old_World_SlaveTrade.gif" width="200px"></img>
+<a href ="../newMaps/3_Old_World_SlaveTrade_preview.jsp" onclick="return popitup('../newMaps/3_Old_World_SlaveTrade_preview.jsp')">
+<img src = "../newMaps/3_Old_World_SlaveTrade.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -197,8 +197,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/4_Wind_currents.jsp" onClick = "return popitup('../newMaps/4_Wind_currents.jsp')">
-<img src = "../newMaps/4_Wind_currents.gif" width="200px"></img>
+<a href ="../newMaps/4_Wind_currents_preview.jsp" onClick = "return popitup('../newMaps/4_Wind_currents_preview.jsp')">
+<img src = "../newMaps/4_Wind_currents.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -232,8 +232,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/5_Atlantic_Basin.jsp" onClick = "return popitup('../newMaps/5_Atlantic_Basin.jsp')">
-<img src = "../newMaps/5_Atlantic_Basin.gif" width="200px"></img>
+<a href ="../newMaps/5_Atlantic_Basin_preview.jsp" onClick = "return popitup('../newMaps/5_Atlantic_Basin_preview.jsp')">
+<img src = "../newMaps/5_Atlantic_Basin.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -280,8 +280,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/6_Europe_Overview.jsp" onClick = "return popitup('../newMaps/6_Europe_Overview.jsp')">
-<img src = "../newMaps/6_Europe_Overview.gif" width="200px"></img>
+<a href ="../newMaps/6_Europe_Overview_preview.jsp" onClick = "return popitup('../newMaps/6_Europe_Overview_preview.jsp')">
+<img src = "../newMaps/6_Europe_Overview.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -332,8 +332,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/7_Africa_Overview.jsp" onClick = "return popitup('../newMaps/7_Africa_Overview.jsp')">
-<img src = "../newMaps/7_Africa_Overview.gif" width="200px"></img>
+<a href ="../newMaps/7_Africa_Overview_preview.jsp" onClick = "return popitup('../newMaps/7_Africa_Overview_preview.jsp')">
+<img src = "../newMaps/7_Africa_Overview.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -378,8 +378,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/7_Africa_Overview.jsp" onClick = "return popitup('../newMaps/7_Africa_Overview.jsp')">
-<img src = "../newMaps/7_Africa_Overview.gif" width="200px"></img>
+<a href ="../newMaps/8_Americas_Overview_preview.jsp" onClick = "return popitup('../newMaps/8_Americas_Overview_preview.jsp')">
+<img src = "../newMaps/8_Americas_Overview.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -418,8 +418,8 @@
 </font>
 </td>
 <td width="300" align="right">
-<a href ="../newMaps/8A_Transatlantic.jsp" onClick = "return popitup('../newMaps/8A_Transatlantic.jsp')">
-<img src = "../newMaps/8A_Transatlantic.gif" width="200px"></img>
+<a href ="../newMaps/8A_Transatlantic_preview.jsp" onClick = "return popitup('../newMaps/8A_Transatlantic_preview.jsp')">
+<img src = "../newMaps/8A_Transatlantic.gif" width="200px" border=0></img>
 </a>
 </td>
 </tr>

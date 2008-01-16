@@ -13,11 +13,11 @@
 
 <body bgcolor=gray>
 
+<a href="1_Slave_Trade_Overview.jsp" onclick="window.open(1_Slave_Trade_Overview.jsp)"> 
 
+<img name="testmap" src = "1_Slave_Trade_Overview.gif" width="1000" height="640" border=0></img>
 
-<img name="testmap" src = "1_Slave_Trade_Overview.gif" width="1000" height="640" onclick="window.open(1_Slave_Trade_Overview.jsp)"></img>
-
-
+</a>
 
 </body>
 </html>
