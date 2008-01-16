@@ -12,21 +12,12 @@
 </head>
 
 <body bgcolor=gray>
-<script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<a href="1_Slave_Trade_Overview.jsp" onclick="return popitup('1_Slave_Trade_Overview.jsp')"> 
 
-<img name="testmap" src = "1_Slave_Trade_Overview.gif" width="1000" height="640" ></img>
 
-</a>
+<img name="testmap" src = "1_Slave_Trade_Overview.gif" width="1000" height="640" onclick="window.open(1_Slave_Trade_Overview.jsp)"></img>
 
-<script type="text/javascript">
-<!--
 
-SET_DHTML("testmap");
-
-//-->
-</script>
 
 </body>
 </html>
