@@ -166,7 +166,7 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 
 </script>
 
-<s:expandableBox text="#{res.database_search_history}">
+<s:expandableBox text="#{res.database_search_history}" collapsed="true">
 	
 	<s:historyList
 		id="history"
