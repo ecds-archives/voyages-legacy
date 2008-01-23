@@ -574,7 +574,7 @@ public class EstimatesTableBean
 		Transaction t = session.beginTransaction();
 		
 		String[][] data = new String[this.table.length][this.table[0].length];
-		for (int i = 0; i < data.length - 1; i++) {
+		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < this.table[i].length; j++) {
 				if (this.table[i][j] != null) {
 					data[i][j] = this.table[i][j].getText();
