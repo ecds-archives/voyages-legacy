@@ -206,7 +206,6 @@ public class CSVUtils {
 			for (int i = 0; i < data.length; i++) {
 				writer.writeNext(data[i]);
 			}
-			writer.writeNext(new String[] {"The number of total records: "+(data.length-1)});
 			writer.close();
 			zipOS.close();
 			fc.responseComplete();
