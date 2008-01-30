@@ -13,7 +13,7 @@ public class QueryConditionBoolean extends QueryCondition
 	public static final String TYPE = "boolean";
 	
 	private boolean checked = true;
-
+	
 	public QueryConditionBoolean(String searchableAttributeId)
 	{
 		super(searchableAttributeId);
