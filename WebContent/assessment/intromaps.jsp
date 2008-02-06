@@ -84,7 +84,7 @@
 		The map shows the transatlantic movement of these captives in comparative perspective for the centuries 
 		since 1500 only. Estimates of the ocean-borne trade are more robust than are those for the trans-Saharan, 
 		Red sea and Persian Gulf routes, but it is thought that for the period from the end of the Roman Empire 
-		to 1900 about the same number of captives crossed the Atlantic than left Africa by all other routes 
+		to 1900 about the same number of captives crossed the Atlantic as left Africa by all other routes 
 		combined.
 </font>
 </td>
@@ -103,7 +103,7 @@
 <t:htmlTag value="tr">
 <div style="padding-top: 20px; ">
 	<t:htmlTag value="td" styleClass="images-category-name">
-		<h:outputText value="Map 2: The Migration of sugar cultivation from Asia into the Atlantic" />
+		<h:outputText value="Map 2: Migration of sugar cultivation from Asia into the Atlantic" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
 	<a href = "#top">Return to the top</a>	
@@ -118,7 +118,7 @@
 <tr>
 <td align="left" width="530px" valign="top">	
 <font size="3">
-		Sugar cultivation began in the Pacific Island in the pre-Christian era and gradually 
+		Sugar cultivation began in the Pacific in the pre-Christian era and gradually 
 		spread to the eastern Mediterranean, the Gulf of Guinea, then to Brazil, before entering 
 		the Caribbean in the mid-seventeenth century. Eighty percent of all captives carried from 
 		Africa were taken to sugar-growing areas. 
@@ -138,7 +138,7 @@
 <t:htmlTag value="tr">
 <div style="padding-top: 20px; ">
 	<t:htmlTag value="td" styleClass="images-category-name">
-		<h:outputText value="Map 3: Old World Slave Trade Routes in the Atlantic before 1759" />
+		<h:outputText value="Map 3: Old World slave trade routes in the Atlantic before 1759" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
 	<a href = "#top">Return to the top</a>	
@@ -157,7 +157,7 @@
 		were taken to Europe as well as to the Atlantic islands and between African ports. It is hard to 
 		get precise estimates of these flows, but they were certainly much smaller than the transatlantic 
 		traffic. Many of the captives involved in this traffic were subsequently carried to sugar 
-		lantations in the Old World.
+		plantations in the Old World.
 </font>
 </td>
 <td width="300" align="right">
@@ -192,8 +192,8 @@
 <td align="left" width="530px" valign="top">	
 <font size="3">
 	In the age of sail, winds and ocean currents shaped the direction of the transatlantic slave trade, 
-	effectively creating two separate slave trading systems – one in the north with voyages originating 
-	in Europe and North America, and one in the south with voyages originating in Brazil.
+	effectively creating two separate slave-trading systems – one in the north with voyages originating 
+	in Europe and North America, the other in the south with voyages originating in Brazil.
 </font>
 </td>
 <td width="300" align="right">
@@ -227,8 +227,8 @@
 <tr>
 <td align="left" width="530px" valign="top">	
 <font size="3">
-	Few commercial centers in the Atlantic world were untouched by the slave trade, 
-	and all the major ports had strong connections with the traffic. 
+	Few commercial centers in the Atlantic world were untouched by the slave 
+	trade, and all the major ports had strong connections with the traffic. 
 </font>
 </td>
 <td width="300" align="right">
@@ -246,7 +246,7 @@
 <t:htmlTag value="tr">
 <div style="padding-top: 20px; ">
 	<t:htmlTag value="td" styleClass="images-category-name">
-		<h:outputText value="Map 6: Ports in the Atlantic where slave voyages were organized, all years" />
+		<h:outputText value="Map 6: Ports in the Atlantic where slave voyages were organized, three periods" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
 	<a href = "#top">Return to the top</a>	
@@ -310,7 +310,7 @@
 <td align="left" width="530px" valign="top">	
 <font size="3">
 	The limits of the regions shown here are “Senegambia,” anywhere north of the Rio Nunez. 
-	“Sierra Leone region comprises the Rio Nunez to just short of Cape Mount. The Windward Coast 
+	Sierra Leone region comprises the Rio Nunez to just short of Cape Mount. The Windward Coast 
 	is defined as Cape Mount south-east to and including the Assini river. The Gold Coast runs east 
 	of here up to and including the Volta River. Bight of Benin covers the Rio Volta to Rio Nun, and 
 	the Bight of Biafra, east of the Nun to Cape Lopez inclusive. West-central Africa is defined as 
@@ -318,8 +318,8 @@
 	anywhere from and to the north and east of the Cape of Good Hope. West-Central Africa was the 
 	largest regional departure point for captives through most the slave trade era. Regions closer 
 	to the Americas and Europe generated a relatively small share of the total carried across the 
-	Atlantic. Note that voyage length was determined as much by wind and ocean currents as by relative 
-	proximity (see map 4).   <br/>
+	Atlantic. Voyage length was determined as much by wind and ocean currents shown in Map 4 as by 
+	relative proximity of ports of embarkation and disembarkation.    <br/>
 	<br></br>
 	<table border="1" style="margin-left: 20px">
 	<tr>
@@ -362,10 +362,11 @@
 <tr>
 <td align="left" width="530px" valign="top">	
 <font size="3">
-	The Caribbean and South Americas accounted for 95 percent of the slaves arriving in the Americas. 
-	Some captives disembarked in Africa rather than the Americas because their transatlantic voyage was 
-	diverted as a result of a slave rebellion or, during the era of suppression, because of capture by 
-	patrolling naval cruisers. <br/>
+	The Caribbean and South America received 95 percent of the slaves arriving in the Americas. 
+	Some captives disembarked in Africa rather than the Americas because their transatlantic 
+	voyage was diverted as a result of a slave rebellion or, during the era of suppression, 
+	because of capture by patrolling naval cruisers.  Less than 4 percent disembarked in North 
+	America, and only just over 10,000 in Europe. <br/>
 	<br></br>
 	<table border="1" style="margin-left: 20px">
 	<tr>
@@ -407,14 +408,12 @@
 <tr>
 <td align="left" width="530px" valign="top">	
 <font size="3">
-	This map summarizes and combines the many different paths by which captives left Africa and 
-	reached the Americas. While sections B and C of this Atlas demonstrate the strong connections 
-	between particular embarkation and disembarkation regions, it was also the case that captives 
-	from any of the major regions of Africa could disembark in almost any of the major regions of 
-	the Americas. Even captives leaving Southeast Africa, the region most remote from the Americas, 
-	could disembark in mainland North America, as well as the Caribbean and South America. The data 
-	in the map are based on estimates of the total slave trade rather than documented departures 
-	and arrivals.
+	This map summarizes and combines the many different paths by which captives left Africa and reached the Americas. 
+	While there were strong connections between particular embarkation and disembarkation regions, it was also the case 
+	that captives from any of the major regions of Africa could disembark in almost any of the major regions of the Americas. 
+	Even captives leaving Southeast Africa, the region most remote from the Americas, could disembark in mainland North America, 
+	as well as the Caribbean and South America. The data in this map are based on estimates of the total slave trade rather than 
+	documented departures and arrivals.
 </font>
 </td>
 <td width="300" align="right">
