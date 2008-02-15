@@ -22,7 +22,7 @@
 		<property name="yrcons" column="yrcons" />
 		<many-to-one name="placreg" column="placreg" class="edu.emory.library.tast.dm.Port" />
 		<property name="yrreg" column="yrreg" />
-		<many-to-one name="natinimp" column="natinimp" class="edu.emory.library.tast.dm.Estimates_Nation" />
+		<many-to-one name="natinimp" column="natinimp" class="edu.emory.library.tast.dm.Nation" />
 		<many-to-one name="rig" column="rig" class="edu.emory.library.tast.dm.VesselRig" />
 		<property name="tonnage" column="tonnage" />
 		<property name="tonmod" column="tonmod" />
