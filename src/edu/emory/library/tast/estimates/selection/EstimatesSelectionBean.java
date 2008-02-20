@@ -37,6 +37,7 @@ import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
+
 /**
  * This bean is responsible for managing the query on the left hand side in the
  * estimates. It does not do the actuall searching, it is only connected to the
@@ -307,7 +308,7 @@ public class EstimatesSelectionBean {
 		int regionsCount = regions.size();
 
 		List tempIds = new ArrayList();
-
+		
 		while (i < regionsCount) {
 
 			EstimatesImportRegion region = (EstimatesImportRegion) regions.get(i);
@@ -334,7 +335,7 @@ public class EstimatesSelectionBean {
 
 		checkedImpRegions = new String[tempIds.size()];
 		tempIds.toArray(checkedImpRegions);
-
+	
 	}
 
 	/**
@@ -733,7 +734,7 @@ public class EstimatesSelectionBean {
 	private void updateSelectedImpRegionsInfo(Session sess) {
 
 		StringBuffer selectedImpRegionsBuff = new StringBuffer();
-
+		
 		if (totalImpRegionsCount > selectedImpRegionIds.size()) {
 
 			int i = 0;
@@ -746,15 +747,18 @@ public class EstimatesSelectionBean {
 			String lastAreaName = region.getArea().getName();
 
 			StringBuffer selectedImpRegionsInAreaBuff = new StringBuffer();
-
+			boolean allSelected;
+			boolean noSelected;
+			int j = 0;
+			
 			while (iter.hasNext()) {
-
-				int j = 0;
-				boolean allSelected = true;
-				boolean noSelected = true;
+				
+				j=0;
+				allSelected = true;
+				noSelected = true;
 
 				lastAreaName = region.getArea().getName();
-
+			
 				selectedImpRegionsInAreaBuff.setLength(0);
 
 				while (iter.hasNext()) {
@@ -768,9 +772,8 @@ public class EstimatesSelectionBean {
 					} else {
 						allSelected = false;
 					}
-
 					region = (EstimatesImportRegion) iter.next();
-
+					
 					int areaId = region.getArea().getId().intValue();
 					if (lastAreaId != areaId) {
 						lastAreaId = areaId;
@@ -778,14 +781,14 @@ public class EstimatesSelectionBean {
 					}
 
 				}
-
+				
 				if (allSelected || !noSelected) {
 
 					if (i > 0)
 						selectedImpRegionsBuff.append("<br>");
 
 					selectedImpRegionsBuff.append("<i>");
-					selectedImpRegionsBuff.append(lastAreaName);
+					selectedImpRegionsBuff.append(lastAreaName);					
 					selectedImpRegionsBuff.append("</i>: ");
 
 					if (allSelected) {
@@ -797,8 +800,37 @@ public class EstimatesSelectionBean {
 					i++;
 
 				}
-
 			}
+				
+			allSelected = true;
+			noSelected = true;
+			lastAreaName = region.getArea().getName();
+			if (selectedImpRegionIds.contains(region.getId())) {
+				if (j > 0)
+					selectedImpRegionsInAreaBuff.append(", ");
+				selectedImpRegionsInAreaBuff.append(region.getName());
+				noSelected = false;
+				j++;
+			} else {
+				allSelected = false;
+			}
+			if (allSelected || !noSelected) {
+
+				if (i > 0)
+					selectedImpRegionsBuff.append("<br>");
+
+				selectedImpRegionsBuff.append("<i>");
+				selectedImpRegionsBuff.append(lastAreaName);					
+				selectedImpRegionsBuff.append("</i>: ");
+
+				if (allSelected) {
+					selectedImpRegionsBuff.append("all regions");
+				} else {
+					selectedImpRegionsBuff.append(selectedImpRegionsInAreaBuff);
+				}
+				i++;
+			}
+
 		} else {
 			selectedImpRegionsBuff.append("<i>all</i>");
 		}
