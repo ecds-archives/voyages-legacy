@@ -6,7 +6,7 @@
 <t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 <t:htmlTag value="tr">
 	<t:htmlTag value="td">
-		<t:htmlTag value="h1"><h:outputText value="Timeline" /></t:htmlTag>
+		<t:htmlTag value="h1"><h:outputText value="Timeline: Number of Captives Embarked and Disembarked per Year" /></t:htmlTag>
 	</t:htmlTag>
 	<t:htmlTag value="td" style="text-align: right;">
 	</t:htmlTag>

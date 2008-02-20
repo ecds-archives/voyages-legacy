@@ -75,15 +75,15 @@
 						</t:htmlTag>
 					</s:panelTab>
 					
-					<s:panelTab title="#{res.estimates_main_map}" sectionId="map">
-						<t:htmlTag value="div" styleClass="results-panel">
-							<%@ include file="estimates-tab-map.jsp" %>
-						</t:htmlTag>
-					</s:panelTab>
-				
 					<s:panelTab title="#{res.estimates_main_timeline}" sectionId="timeline">
 						<t:htmlTag value="div" styleClass="results-panel">
 							<%@ include file="estimates-tab-timeline.jsp" %>
+						</t:htmlTag>
+					</s:panelTab>
+					
+					<s:panelTab title="#{res.estimates_main_map}" sectionId="map">
+						<t:htmlTag value="div" styleClass="results-panel">
+							<%@ include file="estimates-tab-map.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 				
