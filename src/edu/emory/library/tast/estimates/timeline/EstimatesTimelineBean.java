@@ -242,8 +242,8 @@ public class EstimatesTimelineBean
 		
 		String[][] data = new String[this.graphImp.getX().length + 1][3];
 		data[0][0] = "year";
-		data[0][1] = "imported";
-		data[0][2] = "exported";
+		data[0][1] = "disembarked";
+		data[0][2] = "embarked";
 		for (int i = 0; i < data.length - 1; i++) {
 			data[i+1][0] = String.valueOf(this.graphImp.getX()[i]);
 			data[i+1][1] = String.valueOf(this.graphImp.getY()[i]);
