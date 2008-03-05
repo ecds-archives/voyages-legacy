@@ -1,20 +1,37 @@
 /* main index */
 
 body {
-	background-color: #C0E0EA; }
+/*	height: 768px;*/
+	background-color: #C0E0EA;
+	background-image: url(../new-images/background.png); 
+	background-repeat: repeat-x;
+ }
+ 
+div.index-middle-left{
+	width: 500 px;
+}
+
+div.index-middle-right{
+	margin-left:520px;
+	background-image: url(../images/index-middle-bg.png); 
+	background-repeat: repeat-x;
+}
 
 div.index-middle {
-	height: 300px;
+/*	height: 300px;
 	background-color: #A4C7C5;
 	background-image: url(../images/index-middle-bg.png); 
-	background-repeat: repeat-x; }
+	background-repeat: repeat-x; */
+}
 	
 div.index-middle-img {
-	height: 300px;
+/*	height: 300px;
 	background-image: url(../images/index-middle-img.png); 
-	background-repeat: no-repeat; }
+	background-repeat: no-repeat; */
+	}
 	
 div.index-bottom {
+
 	margin-left: 660px;
 	width: 430px;
 	background-image: url(../images/index-blue-gradient.png); 
@@ -43,90 +60,112 @@ div.index-highlight-text {
 
 table.welcome-map {
 	margin-top: 20px;
-	margin-left: 320px; }
+	margin-left: 116px; }
 	
 td.welcome-map {
-	vertical-align: top; }
+	background-image: url(../new-images/index-maptext-bg.png);
+	padding-left: 116px;	
+	padding-top: 0px;
+/*	vertical-align: top; */
+	width: 378px;
+ }
 
 td.welcome-map-text {
-	padding-top: 10px;
-	padding-left: 10px;
-	vertical-align: top;
-	width: 320px; }
+	background-image: url(../new-images/index-maptext-bg.png);
+	padding-left: 116px;	
+	padding-top: 0px;
+/*	vertical-align: top; */
+	width: 378px;
+		
+/*	vertical-align: top;*/
+}
 	
 td.welcome-map-top-left {
-	background-image: url(../images/welcome-map-top-left.png);
+/*	background-image: url(../images/welcome-map-top-left.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
 	width: 10px;
-	height: 10px; }
+	height: 10px; */
+}
 	
 td.welcome-map-top-middle {
-	background-image: url(../images/welcome-map-top-middle.png);
+/*	background-image: url(../images/welcome-map-top-middle.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
-	height: 10px; }
+	height: 10px; */
+}
 	
 td.welcome-map-top-right {
-	background-image: url(../images/welcome-map-top-right.png);
+/*	background-image: url(../images/welcome-map-top-right.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
 	width: 10px;
-	height: 10px; }
+	height: 10px; */
+}
 	
 td.welcome-map-middle-left {
-	background-image: url(../images/welcome-map-middle-left.png);
+/*	background-image: url(../images/welcome-map-middle-left.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
-	width: 10px; }
+	width: 10px; */
+}
 	
 td.welcome-map-image {
 	vertical-align: top; }
 	
 td.welcome-map-middle-right {
-	background-image: url(../images/welcome-map-middle-right.png);
+/*	background-image: url(../images/welcome-map-middle-right.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
-	width: 10px; }
+	width: 10px; */
+}
 
 td.welcome-map-bottom-left {
-	background-image: url(../images/welcome-map-bottom-left.png);
+/*	background-image: url(../images/welcome-map-bottom-left.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
 	width: 10px;
-	height: 10px; }
+	height: 10px; */
+}
 	
 td.welcome-map-bottom-middle {
-	background-image: url(../images/welcome-map-bottom-middle.png);
+/*	background-image: url(../images/welcome-map-bottom-middle.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
-	height: 10px; }
+	height: 10px; */
+}
 	
 td.welcome-map-bottom-right {
-	background-image: url(../images/welcome-map-bottom-right.png);
+/*	background-image: url(../images/welcome-map-bottom-right.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
 	width: 10px;
-	height: 10px; }
+	height: 10px; */
+}
 	
 img.welcome-map-place {
 	cursor: pointer; }
 	
 div.welcome-main-text {
+/*
 	border-top: 1px solid #48605F;
 	font-size: 8pt;
 	line-height: 130%;
 	padding-top: 5px;
-	margin-top: 5px; }
+	margin-top: 5px; */
+}
 	
 div.welcome-place-title {
+/*
 	border-top: 1px solid #48605F;
 	font-size: 8pt;
 	font-weight: bold;
 	padding-top: 5px;
 	margin-top: 5px;
-	line-height: 130%; }
+	line-height: 130%; */
+}
 
 div.welcome-place-text {
-	font-size: 8pt;
-	line-height: 130%; }
+/*	font-size: 8pt;
+	line-height: 130%; */
+}
