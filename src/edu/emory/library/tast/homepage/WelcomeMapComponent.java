@@ -257,16 +257,16 @@ public class WelcomeMapComponent extends UIComponentBase
 		
 		writer.startElement("tr", this);
 
-		writer.startElement("td", this);
+		writer.startElement("div", this);
 		writer.writeAttribute("class", "welcome-map", null);
 		encodeMap(context, writer, textElementId);
-		writer.endElement("td");
+		writer.endElement("div");
 		
-		writer.startElement("td", this);
+		writer.startElement("div", this);
 		writer.writeAttribute("id", textElementId, null);
 		writer.writeAttribute("class", "welcome-map-text", null);
 		writer.write(initialText);
-		writer.endElement("td");
+		writer.endElement("div");
 		
 		writer.endElement("tr");
 		writer.endElement("table");
