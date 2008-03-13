@@ -43,6 +43,9 @@ public class MapComponent extends UIComponentBase
 	private boolean pointsOfInterestSet = false;
 	private PointOfInterest[] pointsOfInterest = null;
 
+	private boolean linesSet = false;
+	private Line[] lines = null;
+
 	private double centerX = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_CENTER_X);
 	private double centerY = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_CENTER_Y);
 	private int zoomLevel = 0;
@@ -231,8 +234,8 @@ public class MapComponent extends UIComponentBase
 	private void encodeTool(FacesContext context, ResponseWriter writer, String id, String className, int hintId) throws IOException
 	{
 		writer.startElement("td", this);
-		writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
-		writer.writeAttribute("onmouseout", "myHint.hide()", null);
+		//writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
+		//writer.writeAttribute("onmouseout", "myHint.hide()", null);
 		writer.writeAttribute("id", id, null);
 		writer.writeAttribute("class", className, null);
 		writer.endElement("td");
@@ -377,8 +380,8 @@ public class MapComponent extends UIComponentBase
 	private void encodeScaleIndicator(FacesContext context, ResponseWriter writer, String scaleIndicatorTextId, String scaleIndicatorBarId, int hintId) throws IOException
 	{
 		writer.startElement("div", this);
-		writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
-		writer.writeAttribute("onmouseout", "myHint.hide()", null);
+		//writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
+		//writer.writeAttribute("onmouseout", "myHint.hide()", null);
 		writer.writeAttribute("class", "map-scale-indicator-container", null);
 
 		writer.startElement("div", this);
@@ -433,13 +436,14 @@ public class MapComponent extends UIComponentBase
 		String hiddenFieldNameForMapSize = getHiddenFieldNameForMapSize(context);
 		String hiddenFieldNameForMiniMapVisibility = getHiddenFieldNameForMiniMapVisibility(context);
 		
-		String contextPath = context.getExternalContext().getRequestContextPath();
+		String mapAssetsBaseUrl = AppConfig.getConfiguration().getString(AppConfig.MAP_URL);
 		
 		// from beans or prev values
 		zoomLevels = getZoomLevels();
 		mapSize = getMapSize();
 		mapSizes = getMapSizes();
 		PointOfInterest[] pointsOfInterest = getPointsOfInterest();
+		Line[] lines = getLines();
 		miniMap = isMiniMap();
 		miniMapZoomLevel = getMiniMapZoomLevel();
 		miniMapPosition = getMiniMapPosition();
@@ -572,42 +576,82 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("[");
 			for (int i = 0; i < pointsOfInterest.length; i++)
 			{
-				
-
-					PointOfInterest pnt = pointsOfInterest[i];
-					String[] symbols = pnt.getSymbols();
-					if (i > 0)
-						jsRegister.append(", ");
-					jsRegister.append("new PointOfInterest(");
-					jsRegister.append(pnt.getX());
+				PointOfInterest pnt = pointsOfInterest[i];
+				String[] symbols = pnt.getSymbols();
+				if (i > 0) jsRegister.append(", ");
+				jsRegister.append("new PointOfInterest(");
+				jsRegister.append(pnt.getX());
+				jsRegister.append(", ");
+				jsRegister.append(pnt.getY());
+				jsRegister.append(", ");
+				jsRegister.append(pnt.getShowAtZoom());
+				jsRegister.append(", ");
+				jsRegister.append("'").append(pnt.getLabelJavaScriptSafe()).append("'");
+				jsRegister.append(", ");
+				jsRegister.append("'").append(pnt.getTextJavaScriptSafe());
+				jsRegister.append("', [");
+				for (int j = 0; j < symbols.length; j++)
+				{
+					Symbol symbol = Symbol.get(symbols[j]);
+					if (j > 0) jsRegister.append(", ");
+					jsRegister.append("new MapSymbol(");
+					jsRegister.append("'").append(symbol.getName()).append("'");
 					jsRegister.append(", ");
-					jsRegister.append(pnt.getY());
+					jsRegister.append("'").append(mapAssetsBaseUrl).append(symbol.getUrl()).append("'");
 					jsRegister.append(", ");
-					jsRegister.append(pnt.getShowAtZoom());
+					jsRegister.append(symbol.getWidth());
 					jsRegister.append(", ");
-					jsRegister.append("'").append(pnt.getLabelJavaScriptSafe()).append("'");
+					jsRegister.append(symbol.getHeight());
 					jsRegister.append(", ");
-					jsRegister.append("'").append(pnt.getTextJavaScriptSafe());
-					jsRegister.append("', [");
-					for (int j = 0; j < symbols.length; j++) {
-						Symbol symbol = Symbol.get(symbols[j]);
-						if (j > 0)
-							jsRegister.append(", ");
-						jsRegister.append("new MapSymbol(");
-						jsRegister.append("'").append(symbol.getName()).append("'");
-						jsRegister.append(", ");
-						jsRegister.append("'").append(contextPath).append(symbol.getUrl()).append("'");
-						jsRegister.append(", ");
-						jsRegister.append(symbol.getWidth());
-						jsRegister.append(", ");
-						jsRegister.append(symbol.getHeight());
-						jsRegister.append(", ");
-						jsRegister.append(symbol.getCenterX());
-						jsRegister.append(", ");
-						jsRegister.append(symbol.getCenterY());
-						jsRegister.append(")");
-					}
-					jsRegister.append("]");
+					jsRegister.append(symbol.getCenterX());
+					jsRegister.append(", ");
+					jsRegister.append(symbol.getCenterY());
+					jsRegister.append(")");
+				}
+				jsRegister.append("]");
+				jsRegister.append(")");
+			}
+			jsRegister.append("]");
+		}
+		else
+		{
+			jsRegister.append("null");
+		}
+		jsRegister.append(", ");
+		
+		// lines
+		if (lines != null)
+		{
+			jsRegister.append("[");
+			for (int i = 0; i < lines.length; i++)
+			{
+				Line line = lines[i];
+				Symbol symbol = Symbol.get(line.getSymbol());
+				if (i > 0) jsRegister.append(", ");
+				jsRegister.append("new MapLine(");
+				jsRegister.append(line.getX1());
+				jsRegister.append(", ");
+				jsRegister.append(line.getY1());
+				jsRegister.append(", ");
+				jsRegister.append(line.getX2());
+				jsRegister.append(", ");
+				jsRegister.append(line.getY2());
+				jsRegister.append(", ");
+				jsRegister.append(line.getSymbolSpacing());
+				jsRegister.append(", ");
+				jsRegister.append("new MapSymbol(");
+				jsRegister.append("'").append(symbol.getName()).append("'");
+				jsRegister.append(", ");
+				jsRegister.append("'").append(mapAssetsBaseUrl).append(symbol.getUrl()).append("'");
+				jsRegister.append(", ");
+				jsRegister.append(symbol.getWidth());
+				jsRegister.append(", ");
+				jsRegister.append(symbol.getHeight());
+				jsRegister.append(", ");
+				jsRegister.append(symbol.getCenterX());
+				jsRegister.append(", ");
+				jsRegister.append(symbol.getCenterY());
+				jsRegister.append(")");
 				jsRegister.append(")");
 			}
 			jsRegister.append("]");
@@ -795,8 +839,8 @@ public class MapComponent extends UIComponentBase
 			writer.startElement("div", this);
 			writer.writeAttribute("id", miniMapToggleId, null);
 			writer.writeAttribute("class", miniMapPosition.getCssClassForToggleButton(miniMapVisible), null);
-			writer.writeAttribute("onmouseover", "myHint.show(" + 8 + ",this)", null);
-			writer.writeAttribute("onmouseout", "myHint.hide()", null);
+			//writer.writeAttribute("onmouseover", "myHint.show(" + 8 + ",this)", null);
+			//writer.writeAttribute("onmouseout", "myHint.hide()", null);
 			writer.endElement("div");
 		
 		}
@@ -807,6 +851,7 @@ public class MapComponent extends UIComponentBase
 		//end main div
 		writer.endElement("div");
 		
+		/*
 		writer.write("List of visible places: ");
 		writer.startElement("select", this);
 		writer.writeAttribute("id", this.getHiddenFieldNameForPlacesListBox(context), null);
@@ -820,6 +865,7 @@ public class MapComponent extends UIComponentBase
 		writer.writeAttribute("value", "Show place", null);
 		writer.writeAttribute("onClick", buffer.toString(), null);
 		writer.endElement("input");
+		*/
 	}
 
 	private int getZoomLevel(FacesContext ctx) {
@@ -872,6 +918,18 @@ public class MapComponent extends UIComponentBase
 	{
 		return (PointOfInterest[]) JsfUtils.getCompPropObject(this, getFacesContext(),
 				"pointsOfInterest", pointsOfInterestSet, pointsOfInterest);
+	}
+
+	public void setLines(Line[] lines)
+	{
+		linesSet = true;
+		this.lines = lines;
+	}
+
+	public Line[] getLines()
+	{
+		return (Line[]) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"lines", linesSet, lines);
 	}
 
 	public void setMiniMap(boolean miniMap)

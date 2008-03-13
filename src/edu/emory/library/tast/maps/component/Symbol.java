@@ -113,7 +113,12 @@ public class Symbol
 	public static Symbol get(String name)
 	{
 		ensureLoaded();
-		return (Symbol) lookupByName.get(name);
+		
+		Symbol symbol = (Symbol) lookupByName.get(name);
+		if (symbol == null)
+			throw new RuntimeException("symbol '" + name + "' not found");
+		
+		return symbol;
 	}
 
 	private static void ensureLoaded()

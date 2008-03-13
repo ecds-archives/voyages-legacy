@@ -1,0 +1,6 @@
+div.popup-blackout {
+	background-image: url(../images/popup-bg.png); }
+	
+div.popup-content {
+	border: 5px solid #333333;
+	background-color: White; }

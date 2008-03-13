@@ -72,6 +72,11 @@ public class Query implements Cloneable, XMLExportable {
 		return errors;
 
 	}
+	
+	public boolean isEmpty()
+	{
+		return builderQuery.getConditionCount() == 0;
+	}
 
 	public void setBuilderQuery(QueryBuilderQuery builderQuery) {
 		this.builderQuery = builderQuery;

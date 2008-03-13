@@ -51,6 +51,8 @@ public class ExpandableBoxTag extends UIComponentTag
 			box.setBoxId(boxId);
 		}
 		
+		super.setProperties(component);
+		
 	}
 
 	public String getComponentType()

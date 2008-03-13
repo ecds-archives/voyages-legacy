@@ -3,11 +3,12 @@ package edu.emory.library.tast.maps.component;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.estimates.map.EstimatesMapBean;
+import edu.emory.library.tast.util.StringUtils;
 
 public class StandardMaps
 {
@@ -40,31 +41,32 @@ public class StandardMaps
 		}
 	}
 	
-	private static String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-	private static ZoomLevel levelMini = new ZoomLevel(160, 120, -110.83, -61.83, 1, 1, 1.0/0.95, contextPath + "/map-assets/tiles/minimap");
-	private static ZoomLevel levelGeo20 = new ZoomLevel(160, 120, -110.79, -61.85, 5, 5, 1.0/4.69, contextPath + "/map-assets/tiles/20");
-	private static ZoomLevel levelGeo3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/geo/regions/3"); 
-	//private static ZoomLevel levelGeo3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/geo/regions/1");
-	private static ZoomLevel levelGeo1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/geo/ports/1");
-	private static ZoomLevel level1650_3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/1650/regions/3"); 
-	//private static ZoomLevel level1650_3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/1650/regions/1");
-	private static ZoomLevel level1650_1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/1650/ports/1"); 
-	private static ZoomLevel level1750_3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/1750/regions/3");
-	//private static ZoomLevel level1750_3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/1750/regions/1");
-	private static ZoomLevel level1750_1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/1750/ports/1");;
-	private static ZoomLevel level1850_3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/1850/regions/3"); 
-	//private static ZoomLevel level1850_3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/1850/regions/1");
-	private static ZoomLevel level1850_1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/1850/ports/1");;
+	private static String baseMapUrl = StringUtils.trimEnd(AppConfig.getConfiguration().getString(AppConfig.MAP_URL), '/');
+	
+	private static ZoomLevel levelMini = new ZoomLevel(160, 120, -110.83, -61.83, 1, 1, 1.0/0.95, baseMapUrl + "/tiles/minimap");
+	private static ZoomLevel levelGeo20 = new ZoomLevel(160, 120, -110.79, -61.85, 5, 5, 1.0/4.69, baseMapUrl + "/tiles/20");
+	private static ZoomLevel levelGeo3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/geo/regions/3"); 
+	//private static ZoomLevel levelGeo3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/tiles/geo/regions/1");
+	private static ZoomLevel levelGeo1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/geo/ports/1");
+	private static ZoomLevel level1650_3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/1650/regions/3"); 
+	//private static ZoomLevel level1650_3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/tiles/1650/regions/1");
+	private static ZoomLevel level1650_1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/1650/ports/1"); 
+	private static ZoomLevel level1750_3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/1750/regions/3");
+	//private static ZoomLevel level1750_3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/tiles/1750/regions/1");
+	private static ZoomLevel level1750_1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/1750/ports/1");;
+	private static ZoomLevel level1850_3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/1850/regions/3"); 
+	//private static ZoomLevel level1850_3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/tiles/1850/regions/1");
+	private static ZoomLevel level1850_1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/1850/ports/1");;
 	
 	
-	private static ZoomLevel levelGeoE3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/estimates/geo/regions/3"); 
-	private static ZoomLevel levelGeoE1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/estimates/geo/ports/1");
-	private static ZoomLevel level1650E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/estimates/1650/regions/3"); 
-	private static ZoomLevel level1650E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/estimates/1650/ports/1"); 
-	private static ZoomLevel level1750E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/estimates/1750/regions/3");
-	private static ZoomLevel level1750E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/estimates/1750/ports/1");;
-	private static ZoomLevel level1850E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	contextPath + "/map-assets/tiles/estimates/1850/regions/3"); 
-	private static ZoomLevel level1850E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	contextPath + "/map-assets/tiles/estimates/1850/ports/1");;
+	private static ZoomLevel levelGeoE3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/geo/regions/3"); 
+	private static ZoomLevel levelGeoE1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/geo/ports/1");
+	private static ZoomLevel level1650E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1650/regions/3"); 
+	private static ZoomLevel level1650E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1650/ports/1"); 
+	private static ZoomLevel level1750E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1750/regions/3");
+	private static ZoomLevel level1750E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1750/ports/1");;
+	private static ZoomLevel level1850E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1850/regions/3"); 
+	private static ZoomLevel level1850E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1850/ports/1");;
 	
 	
 	

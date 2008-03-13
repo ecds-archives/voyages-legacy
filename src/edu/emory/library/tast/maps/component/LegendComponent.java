@@ -18,7 +18,6 @@ import javax.faces.model.SelectItemGroup;
 import edu.emory.library.tast.maps.LegendItem;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapLayer;
-import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
 import edu.emory.library.tast.util.JsfUtils;
 
 public class LegendComponent extends UIComponentBase {

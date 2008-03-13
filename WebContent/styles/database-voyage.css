@@ -163,3 +163,28 @@ td.bubble-33 {
 	background-repeat: no-repeat;
 	background-image: url(../images/bubble-31-right.png); }
 	
+div.voyage-route-popup-place-name {
+	font-weight: bold;
+	font-size: 12pt; }
+	
+div.voyage-route-legend {
+	margin-left: 10px; }
+	
+div.voyage-route-legend-leg {
+	padding-top: 10px;
+	padding-bottom: 5px;
+	border-top: 1px solid #4C5966; }
+	
+div.voyage-route-legend-place {
+	padding-top: 5px;
+	padding-left: 35px;
+	padding-bottom: 5px;
+	background-repeat: no-repeat; }
+	
+div.voyage-route-legend-place-event {
+	}
+
+div.voyage-route-legend-place-name {
+	font-weight: bold;
+	font-size: 11pt; }
+

@@ -291,44 +291,28 @@ var ElementUtils =
 		}
 	},
 	
-	getScrollLeft: function(el)
+	getPageScrollLeft: function()
 	{
-		var offset = 0;
-		if (el.offsetParent != null)	// IE
+		if (document.documentElement != null)
 		{
-			var actual = el;
-			while(actual)
-			{
-				if (actual.scrollLeft != null)
-					offset += actual.scrollLeft;
-				actual=actual.offsetParent;
-			}
+			return document.documentElement.scrollLeft;
 		}
-		else // all other IE
+		else
 		{
-			offset = document.body.scrollLeft;
+			return document.body.scrollLeft;
 		}
-		return offset;
 	},
 	
-	getScrollTop: function(el)
+	getPageScrollTop: function()
 	{
-		var offset = 0;
-		if (el.offsetParent != null)	// IE
+		if (document.documentElement != null)
 		{
-			var actual = el;
-			while(actual)
-			{
-				if (actual.scrollTop != null)
-					offset += actual.scrollTop;
-				actual=actual.offsetParent;
-			}
+			return document.documentElement.scrollTop;
 		}
-		else // all other IE
+		else
 		{
-			offset = document.body.scrollTop;
+			return document.body.scrollTop;
 		}
-		return offset;
 	},
 	
 	addOption: function(sel, value, text)

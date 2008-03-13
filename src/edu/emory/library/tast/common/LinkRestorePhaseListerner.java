@@ -89,7 +89,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			if (StringUtils.isNullOrEmpty(permlink))
 				return;
 			
-			bean.restoreLink(new Long(permlink));
+			// bean.restoreLink(new Long(permlink));
 		}
 		
 	}

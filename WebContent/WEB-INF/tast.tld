@@ -117,6 +117,9 @@
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>rendered</name>
+		</attribute>
+		<attribute>
 			<name>text</name>
 		</attribute>
 		<attribute>
@@ -370,6 +373,9 @@
 		</attribute>
 		<attribute>
 			<name>pointsOfInterest</name>
+		</attribute>
+		<attribute>
+			<name>lines</name>
 		</attribute>
 		<attribute>
 			<name>miniMap</name>
@@ -946,6 +952,74 @@
 		</attribute>
 		<attribute>
 			<name>expandedGroups</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>popup</name>
+		<tag-class>
+			edu.emory.library.tast.common.PopupTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>binding</name>
+		</attribute>
+		<attribute>
+			<name>width</name>
+		</attribute>
+		<attribute>
+			<name>height</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>copyToClipboardButton</name>
+		<tag-class>
+			edu.emory.library.tast.common.CopyToClipboardButtonTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>binding</name>
+		</attribute>
+		<attribute>
+			<name>text</name>
+		</attribute>
+		<attribute>
+			<name>data</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>infoBox</name>
+		<tag-class>
+			edu.emory.library.tast.common.InfoBoxTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>binding</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>voyageRouteLegend</name>
+		<tag-class>
+			edu.emory.library.tast.common.voyage.VoyageRouteLegendTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>route</name>
 		</attribute>
 	</tag>
 

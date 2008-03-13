@@ -541,8 +541,8 @@ public class HistoryListComponent extends UIComponentBase
 	 * JavaScript. Each hidden field holds the ID of the history item which
 	 * caused the event. Then this method gets the history list by calling
 	 * {@link #getItems()}, which, unless somebody has set the history list by
-	 * explicitelly calling {@link #setItems(History)}, pulls it out from the
-	 * seach bean. Finally, this method calls
+	 * explicitly calling {@link #setItems(History)}, pulls it out from the
+	 * search bean. Finally, this method calls
 	 * {@link #encodeHistoryItem(HistoryItem, ResponseWriter, FacesContext, UIForm)}
 	 * for each history item.
 	 */
@@ -576,9 +576,9 @@ public class HistoryListComponent extends UIComponentBase
 
 	/**
 	 * Gets the current history list from the linked bean, unless somebody has
-	 * in this postback set the history list by explicitelly calling
+	 * in this postback set the history list by explicitly calling
 	 * {@link #setItems(History)}, in which case it just returns the
-	 * explicitelly set value.
+	 * explicitly set value.
 	 * 
 	 * @return The current history list.
 	 */

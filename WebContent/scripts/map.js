@@ -33,6 +33,7 @@ var MapsGlobal =
 		mapSizes, // available map sizes
 		fieldNameForMapSize, // hidden field for selected map size
 		pointsOfInterest, // array of points with labels
+		lines, // array of lines
 		bubbleId, // bubble <table>
 		bubbleTextId, // inner <td> for the text in the bubble
 		scaleIndicatorTextId,
@@ -71,8 +72,9 @@ var MapsGlobal =
 		// zooms
 		map.zoomLevels = zoomLevels;
 
-		// points
+		// points and lines
 		map.points = pointsOfInterest;
+		map.lines = lines;
 		
 		// bubble
 		map.bubbleId = bubbleId;
@@ -328,6 +330,16 @@ function PointOfInterest(x, y, showAtZoom, label, text, symbols)
 	this.label = label;
 	this.text = text;
 	this.symbols = symbols;
+}
+
+function MapLine(x1, y1, x2, y2, symbolSpacing, symbol)
+{
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+	this.symbolSpacing = symbolSpacing;
+	this.symbol = symbol;
 }
 
 function MapSymbol(name, url, width, height, centerX, centerY)
@@ -656,7 +668,8 @@ Map.prototype.mapStopDrag = function(event)
 		case MapsGlobal.MAP_TOOL_SELECTOR:
 		
 			// precompute points position w.r.t. the new vport
-			this.precomputePointsPositions();
+			this.updatePoints();
+			this.updateLines(false);
 			
 			// update associated map
 			this.updateMainMap();
@@ -700,8 +713,9 @@ Map.prototype.mapMouseMove = function(event)
 				this.selectorY2 = this.fromVportToRealX(this.selectorVportY2);
 			}
 
-			// ?			
-			this.precomputePointsPositions();
+			// update points and lines			
+			this.updatePoints();
+			this.updateLines(false);
 			
 			break;
 			
@@ -774,7 +788,7 @@ Map.prototype.registerZoomSlider = function(zoomSlider)
 Map.prototype.notifyZoomChange = function()
 {
 	if (this.zoomSlider) this.zoomSlider.zoomChanged();
-	this.zoomChanged();
+	//this.zoomChanged();
 	//document.forms[0].submit();
 }
 
@@ -948,8 +962,9 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 		this.bottomLeftTileVportY = Math.round(((this.bottomLeftTileRow * tileRealHeight + zoomLevelObj.bottomLeftTileY) - vportBottomLeftRealY) / zoomLevelObj.scale);
 	}
 
-	// points of interest
-	this.precomputePointsPositions();
+	// points of interest and lines
+	this.updatePoints();
+	this.updateLines(true);
 	
 	// draw all tiles
 	this.positionTiles();
@@ -1514,51 +1529,21 @@ Map.prototype.setMouseCursors = function()
 // points of interest
 /////////////////////////////////////////////////////////
 
-/*
-Map.prototype.showHideLabel = function(event)
-{
-
-	var x = ElementUtils.getEventMouseElementX(event, this.mapControl);
-	var y = ElementUtils.getEventMouseElementY(event, this.mapControl);
-	
-	for (var i=0; i<this.points.length; i++)
-	{
-		var pnt = this.points[i];
-		if (MapUtils.computeLengthSquared(x-pnt.vx, y-pnt.vy) <= 25)
-		{
-			this.showLabel(null, i);
-			return;
-		}
-	}
-	this.hideLabel(null);
-}
-
-Map.prototype.watchForLabels = function()
-{
-	if (!this.points) return;
-	//EventAttacher.attach(this.frame, "mousemove", this, "showHideLabel");
-}
-
-Map.prototype.forgetLabels = function()
-{
-	if (!this.points) return;
-	this.hideLabel(null);
-	//EventAttacher.detach(this.frame, "mousemove", this, "showHideLabel");
-}
-*/
-
 Map.prototype.initPoints = function()
 {
 
 	if (!this.points)
 		return;
+		
 	var combo = null;
 	var array = new Array();
-	if (this.first) {
+	if (this.first)
+	{
 		this.first = false;
 		combo = document.getElementById(this.placesListBox);
 	}
-	for (var i = this.points.length - 1; 0 <= i; i--)
+	
+	for (var i = 0; i < this.points.length; i++)
 	{
 	
 		var pnt = this.points[i];
@@ -1571,7 +1556,7 @@ Map.prototype.initPoints = function()
 		labelElement.style.backgroundColor = "White";
 		labelElement.style.position = "absolute";
 		labelElement.style.display = "";
-
+		
 		this.frame.appendChild(labelElement);
 
 		for (var j = 0; j < pnt.symbols.length; j++)
@@ -1634,7 +1619,7 @@ Map.prototype.clickedShowPort = function() {
 	}
 }
 
-Map.prototype.precomputePointsPositions = function()
+Map.prototype.updatePoints = function()
 {
 
 	if (!this.points)
@@ -1642,8 +1627,6 @@ Map.prototype.precomputePointsPositions = function()
 
 	var vportWidth = this.getVportWidth();
 	var vportHeight = this.getVportHeight();
-
-	
 
 	var scaleRat = (this.scale - 1) / (this.scaleMax - 1) * 100;
 	//var eps = 0.005;
@@ -1665,12 +1648,8 @@ Map.prototype.precomputePointsPositions = function()
 				var symbol = pnt.symbols[j];
 				var symbolElementStyle = symbol.element.style;
 				symbolElementStyle.display = "";
-				var shift = 0;
-				if (pnt.symbols.length > 1) {
-					shift = -2 + 4*j;
-				}
-				symbolElementStyle.left = (pnt.vx - symbol.width + symbol.centerX + shift) + "px";
-				symbolElementStyle.top = (pnt.vy - symbol.height + symbol.centerY + shift) + "px";
+				symbolElementStyle.left = (pnt.vx - symbol.centerX) + "px";
+				symbolElementStyle.top = (pnt.vy - symbol.centerY) + "px";
 			}
 
 			var labelElementStyle = pnt.labelElement.style;
@@ -1748,6 +1727,97 @@ Map.prototype.hideLabel = function(event)
 
 }
 
+/////////////////////////////////////////////////////////
+// points of interest
+/////////////////////////////////////////////////////////
+
+Map.prototype.updateLines = function(zoomChanged)
+{
+
+	if (!this.lines)
+		return;
+		
+	var firstSymbol = this.points ?
+		this.points[0].symbols[0].element : null;
+
+	var vportWidth = this.getVportWidth();
+	var vportHeight = this.getVportHeight();
+
+	for (var i = 0; i < this.lines.length; i++)
+	{
+	
+		var line = this.lines[i];
+		var cx = line.symbol.centerX;
+		var cy = line.symbol.centerY;
+		
+		if (!line.dots) line.dots = new Array();
+	
+		var x1 = this.fromRealToVportX(line.x1);
+		var y1 = this.fromRealToVportY(line.y1);
+		var x2 = this.fromRealToVportX(line.x2);
+		var y2 = this.fromRealToVportY(line.y2);
+		
+		var dx = x2 - x1;
+		var dy = y2 - y1;
+		var len = Math.sqrt(dx*dx + dy*dy);
+		
+		var dots = Math.floor(len / line.symbolSpacing);
+		var offset = (len - dots * line.symbolSpacing) / 2;
+		
+		var dt = line.symbolSpacing / len;
+		var t0 = offset / len;
+		
+		for (var j = 0; j < dots; j++)
+		{
+		
+			var t = t0 + j*dt;
+			var x = x1 + t * dx - cx;
+			var y = y1 + t * dy - cy;
+			
+			var insideViewPort =
+				0 <= x && x < vportWidth &&
+				0 <= y && y < vportHeight;
+				
+			if (!insideViewPort)
+			{
+				if (j < line.dots.length)
+					line.dots[j].style.display = "none";
+				continue;
+			}
+
+			var dot;			
+			if (j < line.dots.length)
+			{
+				dot = line.dots[j];
+			}
+			else
+			{
+				dot = document.createElement("img");
+				line.dots.push(dot);
+				dot.src = line.symbol.url;
+				dot.width = line.symbol.width;
+				dot.height = line.symbol.height;
+				dot.style.position = "absolute";
+				if (firstSymbol)
+					this.frame.insertBefore(dot, firstSymbol);
+				else
+					this.frame.appendChild(dot);
+			}
+			
+			dot.style.display = "";
+			dot.style.left = x + "px";
+			dot.style.top = y + "px";
+			
+		}
+		
+		for (var j = dots; j < line.dots.length; j++)
+		{
+			line.dots[j].style.display = "none";
+		} 
+		
+	}
+
+}
 
 /////////////////////////////////////////////////////////
 // map control: resizing and init
@@ -1988,13 +2058,13 @@ Map.prototype.init = function(restoreState)
 	this.initListeners.invoke();
 	
 }
-
-Map.prototype.zoomChanged = function() {
+/*
+Map.prototype.zoomChanged = function()
+{
 	if (!ajaxAnywhere) return;
-	//document.forms[this.formName].elements[this.updateFieldId].value = "true";
 	ajaxAnywhere.submitAJAX(null, null);
 }
-
+*/
 
 /////////////////////////////////////////////////////////
 // zoom + button
@@ -2238,7 +2308,7 @@ MapZoomSlider.prototype.click = function(event)
 	var zoomLevel = parseInt(ElementUtils.getEventMouseElementX(event, this.cont) / this.slotWidth);
 	this.setKnobPosition(zoomLevel);
 	this.map.changeZoomLevel(zoomLevel, false);
-	this.zoomChanged();
+	//this.zoomChanged();
 	//document.forms[0].submit();
 }
 

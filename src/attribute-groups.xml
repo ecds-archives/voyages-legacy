@@ -6,6 +6,7 @@
 <!ELEMENT searchable-attributes (searchable-attribute*)>
 <!ELEMENT table-attributes (table-attribute|statistical-attribute)*>
 <!ELEMENT searchable-attribute EMPTY>
+<!ELEMENT statistical-attribute EMPTY>
 <!ELEMENT table-attribute EMPTY>
 
 <!ATTLIST group

@@ -50,6 +50,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		querySetPorts = new QueryValue[2];
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showOnMainMap")}), new Boolean(true), Conditions.OP_EQUALS);
 		QueryValue query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));

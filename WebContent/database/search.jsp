@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
@@ -21,6 +20,9 @@
 	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-tabs.css" rel="stylesheet" type="text/css">
 	
+	<link href="../styles/info-box.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-no-results-info-box.css" rel="stylesheet" type="text/css">
+
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-search.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-search-menu.css" rel="stylesheet" type="text/css">
@@ -33,6 +35,9 @@
 	<link href="../styles/timeline.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-search-tableview.css" rel="stylesheet" type="text/css">
 	
+	<link href="../styles/popup.css" rel="stylesheet" type="text/css">
+	<link href="../styles/popup-permlink.css" rel="stylesheet" type="text/css">
+
 	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
@@ -41,9 +46,7 @@
 	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/tigra_hints.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/map-hints.js" language="javascript" type="text/javascript"></script>
-	
+	<script src="../scripts/popup.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/attributes-menu.js" language="javascript" type="text/javascript"></script>
 
@@ -52,6 +55,7 @@
 <f:view>
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
+	<h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
 	<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
@@ -76,38 +80,56 @@
 				<s:panelTabSet id="mainPanelSection" selectedSectionId="#{SearchBean.mainSectionId}">
 
 					<s:panelTab title="#{res.database_search_listing}" sectionId="listing">
-						<t:htmlTag value="div" styleClass="search-panel">
+						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-table.jsp" %>
+						</t:htmlTag>
+						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
+							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 					
 					<s:panelTab title="#{res.database_search_timeline}" sectionId="basic-graph">
-						<t:htmlTag value="div" styleClass="search-panel">
+						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-timeline.jsp" %>
+						</t:htmlTag>
+						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
+							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 				
 					<s:panelTab title="#{res.database_search_tableview}" sectionId="tableview">
-						<t:htmlTag value="div" styleClass="search-panel">
+						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-tableview.jsp" %>
+						</t:htmlTag>
+						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
+							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 				
 					<s:panelTab title="#{res.database_search_customgraphs}" sectionId="custom-graphs">
-						<t:htmlTag value="div" styleClass="search-panel">
+						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-graph.jsp" %>
+						</t:htmlTag>
+						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
+							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 				
 					<s:panelTab title="#{res.database_search_summarystats}" sectionId="basic-statistics">
-						<t:htmlTag value="div" styleClass="search-panel">
+						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-summary.jsp" %>
+						</t:htmlTag>
+						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
+							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 					
 					<s:panelTab title="#{res.database_search_maps}" sectionId="map-ports">
-						<t:htmlTag value="div" styleClass="search-panel">
+						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-map.jsp" %>
+						</t:htmlTag>
+						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
+							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
 				

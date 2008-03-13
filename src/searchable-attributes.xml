@@ -9,6 +9,7 @@
 <!ELEMENT attribute EMPTY>
 <!ELEMENT location EMPTY>
 <!ELEMENT port EMPTY>
+<!ELEMENT category EMPTY>
 
 <!ATTLIST searchable-attribute
 	id CDATA #REQUIRED

@@ -630,7 +630,12 @@ public class TableResultTabBean {
 	 * @return
 	 */
 	public Integer getResultSize() {
+		this.getResultsDB();
 		return new Integer(this.data.getData() != null ? this.data.getData().length : 0);
+	}
+
+	public boolean isNoResult() {
+		return getResultSize().intValue() == 0;
 	}
 
 	/**

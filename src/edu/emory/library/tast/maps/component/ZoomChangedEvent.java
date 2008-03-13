@@ -6,6 +6,8 @@ import javax.faces.event.FacesListener;
 
 public class ZoomChangedEvent extends FacesEvent {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int zoomLevel;
 
 	public ZoomChangedEvent(UIComponent uiComponent, int newZoom) {

@@ -4,11 +4,8 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
-<h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
-
 <s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
 
-<%/*<s:expandableBoxSet expandedId="date">*/%>
 <s:expandableBox boxId="date" text="#{res.database_search_selecttimeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
@@ -36,12 +33,8 @@
 	
 </s:expandableBox>
 
-<%/*<s:expandableBox boxId="revision" text="#{res.database_search_selectrevision}">
-	<h:outputText value="Choose revision: " />
-	<h:selectOneMenu value="#{SearchBean.selectedRevision}"><f:selectItems value="#{SearchBean.revisions}"/></h:selectOneMenu>
-</s:expandableBox>
-</s:expandableBoxSet>*/%>
 <br>
+
 <s:expandableBoxSet expandedId="#{SearchBean.expandedGroup}">
 <s:expandableBox boxId="basic" text="#{res.database_search_basic}">
 
@@ -165,6 +158,44 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 }
 
 </script>
+
+<t:div rendered="#{SearchBean.showPermLinkTool}">
+
+	<s:expandableBox text="#{res.database_search_permlink}" collapsed="true">
+	
+		<t:htmlTag value="div" styleClass="permlink-info">
+			<t:outputText value="#{res.database_search_permlink_info}" />
+		</t:htmlTag>
+		
+		<h:commandButton
+			id="buttonPermlink"
+			action="#{SearchBean.createPermlink}"
+			value="#{res.database_search_permlink_button}" />
+			
+		<s:popup binding="#{SearchBean.permlinkPopup}" width="420" height="150">
+			<t:htmlTag value="div" styleClass="permlink-info">
+				<t:div styleClass="permlink-title">
+					<t:outputText value="#{res.database_search_permlink_title}" />
+				</t:div>
+				<t:div styleClass="permlink-desc">
+					<t:outputText value="#{res.database_search_permlink_desc}" />
+				</t:div>
+				<t:div styleClass="permlink-link">
+					<t:outputText value="#{SearchBean.permLink}" />
+				</t:div>
+				<t:div styleClass="permlink-close">
+					<h:commandButton value="#{res.database_search_permlink_close}" styleClass="permlink-close-button" />
+					<h:outputText value=" "/>
+					<s:copyToClipboardButton text="#{res.database_search_permlink_copy}" data="#{SearchBean.permLink}" />
+				</t:div>
+			</t:htmlTag>
+		</s:popup>
+		
+	</s:expandableBox>
+	
+	<t:htmlTag value="br" />
+
+</t:div>
 
 <s:expandableBox text="#{res.database_search_history}" collapsed="true">
 	

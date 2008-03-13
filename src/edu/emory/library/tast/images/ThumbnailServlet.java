@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 
 import edu.emory.library.tast.AppConfig;
+import edu.emory.library.tast.util.StringUtils;
 
 /**
  * Servlet which provides data for thumbnail images.
@@ -28,6 +29,10 @@ public class ThumbnailServlet extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		
+		// location of images
+		String baseUrl = AppConfig.getConfiguration().getString(AppConfig.IMAGES_URL);
+		baseUrl = StringUtils.trimEnd(baseUrl, '/');
 		
 		// image name and size
 		String imageFileName = request.getParameter("i");
@@ -46,7 +51,7 @@ public class ThumbnailServlet extends HttpServlet
 		File thumbnailFile = new File(imagesDir, thumbnailFileName);
 		if (thumbnailFile.exists())
 		{
-			response.sendRedirect(request.getContextPath() + "/images-database/" + thumbnailFileName);
+			response.sendRedirect(baseUrl + "/" + thumbnailFileName);
 			return;
 		}
 
@@ -101,7 +106,7 @@ public class ThumbnailServlet extends HttpServlet
 		ImageIO.write(thumbnail, "png", thumbnailFile);
 		
 		// redirect to it
-		response.sendRedirect(request.getContextPath() + "/images-database/" + thumbnailFileName);
+		response.sendRedirect(baseUrl + "/" + thumbnailFileName);
 
 	}
 	

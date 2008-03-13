@@ -8,25 +8,22 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import edu.emory.library.tast.common.MessageBarComponent;
+import edu.emory.library.tast.AppConfig;
+import edu.emory.library.tast.common.PopupComponent;
 import edu.emory.library.tast.common.SelectItem;
 import edu.emory.library.tast.common.SelectItemWithImage;
-import edu.emory.library.tast.database.query.HistoryItem;
-import edu.emory.library.tast.database.query.Query;
 import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportArea;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
 import edu.emory.library.tast.dm.EstimatesNation;
-import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -63,9 +60,9 @@ import edu.emory.library.tast.util.query.QueryValue;
  * <p>
  * The prepared databases query are stored in two fields:
  * {@link #timeFrameConditions} and {@link #geographicConditions}, and they are
- * recomputed whenever the user presess the Change Selection button. The reason
+ * recomputed whenever the user presses the Change Selection button. The reason
  * for this splitting is that the timeline tab should not be restricted by the
- * choise of the time frame. So it gets only the geographical part of the query.
+ * choice of the time frame. So it gets only the geographical part of the query.
  * <p>
  * The ids of import regions in {@link #checkedImpRegions} are stored in the
  * following format. If the item is an area which has more than one region, its
@@ -76,139 +73,52 @@ import edu.emory.library.tast.util.query.QueryValue;
  * than one region), its id is just R followed by the id of the region, i.e. R4,
  * R6, ... The reason for this encoding is that, in the interface, we need don't
  * want to have areas which would expand only to one region. So areas with only
- * one regions appear as one non-expadable item, and we need to decode from it
+ * one regions appear as one non-expandable item, and we need to decode from it
  * (without going to the database) which region does it represent.
  */
 
 public class EstimatesSelectionBean {
 
 	private static final int TIME_SPAN_INITIAL_FROM = 1500;
-
 	private static final int TIME_SPAN_INITIAL_TO = 1900;
 
-	public static class EstimatesSelection implements XMLExportable {
-
-		private int yearFrom;
-
-		private int yearTo;
-
-		private Set selectedNationIds;
-
-		private Set selectedExpRegionIds;
-
-		private Set selectedImpRegionIds;
-
-		private Set selectedImpAreaIds;
-		
-		private String selectedTab;
-
-		public EstimatesSelection() {
-		}
-
-		public EstimatesSelection(EstimatesSelectionBean bean) {
-			this.yearFrom = bean.yearFrom;
-			this.yearTo = bean.yearTo;
-			this.selectedNationIds = bean.selectedNationIds;
-			this.selectedExpRegionIds = bean.selectedExpRegionIds;
-			this.selectedImpRegionIds = bean.selectedImpRegionIds;
-			this.selectedImpAreaIds = bean.selectedImpAreaIds;
-			this.selectedTab = bean.selectedTab;
-		}
-
-		public void restoreFromXML(Node entry) {
-
-			Node estimatesSelection = XMLUtils.getChildNode(entry, "estimatesSelection");
-			if (estimatesSelection != null) {
-				this.yearFrom = Integer.parseInt(XMLUtils.getXMLProperty(estimatesSelection, "yearFrom"));
-				this.yearTo = Integer.parseInt(XMLUtils.getXMLProperty(estimatesSelection, "yearTo"));
-				this.selectedTab = XMLUtils.getXMLProperty(estimatesSelection, "selectedTab");
-				NodeList list = estimatesSelection.getChildNodes();
-				for (int i = 0; i < list.getLength(); i++) {
-					Node child = list.item(i);
-					if (child.getNodeType() == Node.ELEMENT_NODE && child.getNodeName().equals("set")) {
-						String setName = XMLUtils.getXMLProperty(child, "name");
-						Set set = XMLUtils.restoreSetOfLongs(child);
-						if (setName.equals("nations")) {
-							this.selectedNationIds = set;
-						} else if (setName.equals("exported")) {
-							this.selectedExpRegionIds = set;
-						} else if (setName.equals("impAreas")) {
-							this.selectedImpAreaIds = set;
-						} else {
-							this.selectedImpRegionIds = set;
-						}
-					}
-				}
-			}
-
-		}
-
-		public String toXML() {
-			StringBuffer buffer = new StringBuffer();
-			buffer.append("<estimatesSelection ");
-			XMLUtils.appendAttribute(buffer, "yearFrom", String.valueOf(this.yearFrom));
-			XMLUtils.appendAttribute(buffer, "yearTo", String.valueOf(this.yearTo));
-			XMLUtils.appendAttribute(buffer, "selectedTab", this.selectedTab);
-			buffer.append(">/n");
-			buffer.append(XMLUtils.encodeSet("nations", this.selectedNationIds));
-			buffer.append(XMLUtils.encodeSet("exported", this.selectedExpRegionIds));
-			buffer.append(XMLUtils.encodeSet("impAreas", this.selectedImpAreaIds));
-			buffer.append(XMLUtils.encodeSet("impRegions", this.selectedImpRegionIds));
-			buffer.append("</estimatesSelection>\n");
-			return buffer.toString();
-		}
-	}
-
-	private MessageBarComponent messageBar;
-
 	private Conditions timeFrameConditions;
-
 	private Conditions geographicConditions;
 
 	private String[] checkedNations;
-
 	private String[] checkedExpRegions;
-
 	private String[] checkedImpRegions;
-
 	private String[] expandedExpRegions;
-
 	private String[] expandedImpRegions;
 
 	private int totalNationsCount;
-
 	private int totalExpRegionsCount;
-
 	private int totalImpRegionsCount;
-
+	
 	private Set selectedNationIds;
-
 	private Set selectedExpRegionIds;
-
 	private Set selectedImpRegionIds;
-
 	private Set selectedImpAreaIds;
-
 	private String selectedNationsAsText;
-
 	private String selectedExpRegionsAsText;
-
 	private String selectedImpRegionsAsText;
 
 	private int yearFrom = TIME_SPAN_INITIAL_FROM;
-
 	private int yearTo = TIME_SPAN_INITIAL_TO;
 
 	private String selectedTab = "table";
 
 	private boolean lockedYears = false;
 	
+	private PopupComponent permlinkPopup = null;
+	private String lastPermLink = null;
+	
 	public EstimatesSelectionBean() {
 		initDefaultValues();
 	}
 
 	/**
-	 * Used only during inicialization and when user presses the Reset button.
+	 * Used only during initialisation and when user presses the Reset button.
 	 * Load the default values, i.e. all nations and regions are selected and
 	 * the time frame is set to the min and max year determined from the
 	 * database. It uses {@link #checkAllNationsAndRegions} and
@@ -232,7 +142,7 @@ public class EstimatesSelectionBean {
 	}
 
 	/**
-	 * Used only during inicialization and when user presses the Reset button.
+	 * Used only during initialisation and when user presses the Reset button.
 	 * 
 	 * @param sess
 	 */
@@ -339,7 +249,7 @@ public class EstimatesSelectionBean {
 	}
 
 	/**
-	 * Used only during inicialization and when user presses the Reset button.
+	 * Used only during initialisation and when user presses the Reset button.
 	 * 
 	 * @param sess
 	 */
@@ -504,7 +414,7 @@ public class EstimatesSelectionBean {
 	}
 
 	/**
-	 * Bound to the Change Selection buttons. Calles {@link #createConditions()}
+	 * Bound to the Change Selection buttons. Cales {@link #createConditions()}
 	 * and {@link #updateSelectionInfo()}.
 	 * 
 	 * @return
@@ -907,7 +817,7 @@ public class EstimatesSelectionBean {
 	/**
 	 * Bound to UI. It loads all import regions from the database and convert
 	 * them to an array or {@link #edu.emory.library.tast.common.SelectItem}.
-	 * See {@link EstimatesSelectionBean} for more information about endocoding
+	 * See {@link EstimatesSelectionBean} for more information about encoding
 	 * of ids.
 	 * 
 	 * @return
@@ -1172,28 +1082,20 @@ public class EstimatesSelectionBean {
 		this.yearTo = yearTo;
 	}
 
-	public String createPermanentLink() {
-
-		// UidGenerator generator = new UidGenerator();
-		// String uid = generator.generate();
+	public String createPermlink()
+	{
 
 		Configuration conf = new Configuration();
 		conf.addEntry("permlinkEstimates", new EstimatesSelection(this));
 		conf.save();
-
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
-		messageBar.setRendered(true);
-
+		
+		lastPermLink =
+			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) +
+			"?permlink=" + conf.getId();
+		
+		this.permlinkPopup.display();
 		return null;
-	}
-
-	public MessageBarComponent getMessageBar() {
-		return messageBar;
-	}
-
-	public void setMessageBar(MessageBarComponent messageBar) {
-		this.messageBar = messageBar;
+		
 	}
 
 	/**
@@ -1261,6 +1163,94 @@ public class EstimatesSelectionBean {
 
 	public void lockYears(boolean b) {
 		lockedYears  = b;
+	}
+	
+	public PopupComponent getPermlinkPopup()
+	{
+		return permlinkPopup;
+	}
+
+	public void setPermlinkPopup(PopupComponent permlinkPopup)
+	{
+		this.permlinkPopup = permlinkPopup;
+	}
+
+	public String getPermLink()
+	{
+		return lastPermLink;
+	}
+
+	public static class EstimatesSelection implements XMLExportable {
+
+		private int yearFrom;
+
+		private int yearTo;
+
+		private Set selectedNationIds;
+
+		private Set selectedExpRegionIds;
+
+		private Set selectedImpRegionIds;
+
+		private Set selectedImpAreaIds;
+		
+		private String selectedTab;
+
+		public EstimatesSelection() {
+		}
+
+		public EstimatesSelection(EstimatesSelectionBean bean) {
+			this.yearFrom = bean.yearFrom;
+			this.yearTo = bean.yearTo;
+			this.selectedNationIds = bean.selectedNationIds;
+			this.selectedExpRegionIds = bean.selectedExpRegionIds;
+			this.selectedImpRegionIds = bean.selectedImpRegionIds;
+			this.selectedImpAreaIds = bean.selectedImpAreaIds;
+			this.selectedTab = bean.selectedTab;
+		}
+
+		public void restoreFromXML(Node entry) {
+
+			Node estimatesSelection = XMLUtils.getChildNode(entry, "estimatesSelection");
+			if (estimatesSelection != null) {
+				this.yearFrom = Integer.parseInt(XMLUtils.getXMLProperty(estimatesSelection, "yearFrom"));
+				this.yearTo = Integer.parseInt(XMLUtils.getXMLProperty(estimatesSelection, "yearTo"));
+				this.selectedTab = XMLUtils.getXMLProperty(estimatesSelection, "selectedTab");
+				NodeList list = estimatesSelection.getChildNodes();
+				for (int i = 0; i < list.getLength(); i++) {
+					Node child = list.item(i);
+					if (child.getNodeType() == Node.ELEMENT_NODE && child.getNodeName().equals("set")) {
+						String setName = XMLUtils.getXMLProperty(child, "name");
+						Set set = XMLUtils.restoreSetOfLongs(child);
+						if (setName.equals("nations")) {
+							this.selectedNationIds = set;
+						} else if (setName.equals("exported")) {
+							this.selectedExpRegionIds = set;
+						} else if (setName.equals("impAreas")) {
+							this.selectedImpAreaIds = set;
+						} else {
+							this.selectedImpRegionIds = set;
+						}
+					}
+				}
+			}
+
+		}
+
+		public String toXML() {
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("<estimatesSelection ");
+			XMLUtils.appendAttribute(buffer, "yearFrom", String.valueOf(this.yearFrom));
+			XMLUtils.appendAttribute(buffer, "yearTo", String.valueOf(this.yearTo));
+			XMLUtils.appendAttribute(buffer, "selectedTab", this.selectedTab);
+			buffer.append(">/n");
+			buffer.append(XMLUtils.encodeSet("nations", this.selectedNationIds));
+			buffer.append(XMLUtils.encodeSet("exported", this.selectedExpRegionIds));
+			buffer.append(XMLUtils.encodeSet("impAreas", this.selectedImpAreaIds));
+			buffer.append(XMLUtils.encodeSet("impRegions", this.selectedImpRegionIds));
+			buffer.append("</estimatesSelection>\n");
+			return buffer.toString();
+		}
 	}
 
 }

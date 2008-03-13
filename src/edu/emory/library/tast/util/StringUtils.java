@@ -381,4 +381,24 @@ public class StringUtils
 		return removeEmpty(splitByLines(str));
 	}
 
+	public static String trimEnd(String str, char toTrim)
+	{
+		if (str == null)
+		{
+			return null;
+		}
+		else
+		{
+			int i = 0;
+			for (i = str.length() - 1; 0 <= i; i--)
+			{
+				if (str.charAt(i) != toTrim)
+				{
+					break;
+				}
+			}
+			return str.substring(0, i + 1);
+		}
+	}
+
 }

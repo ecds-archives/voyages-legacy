@@ -7,8 +7,6 @@
 
 <h:inputHidden value="#{EstimatesSelectionBean.fakeHiddenForPermlinkRestore}" />
 
-<s:messageBar rendered="false" binding="#{EstimatesSelectionBean.messageBar}" />
-
 <s:expandableBoxSet expandedId="time-frame">
 <s:expandableBox boxId="time-frame" text="#{res.estimates_left_timeframe}">
 
@@ -121,6 +119,7 @@
 <br>
 
 <s:expandableBox text="#{res.estimates_left_currentquery}">
+
 	<t:div>
 		<t:div style="font-weight: bold;"><h:outputText value="#{res.estimates_left_selectednations}"/></t:div>
 		<h:outputText value="#{EstimatesSelectionBean.selectedNationsAsText}" escape="false" />
@@ -135,6 +134,31 @@
 	</t:div>
 	
 	<t:div style="margin-top: 5px;">
-		<h:commandButton value="permlink" styleClass="button-save" action="#{EstimatesSelectionBean.createPermanentLink}"/>
+
+		<h:commandButton
+			id="buttonPermlink"
+			action="#{EstimatesSelectionBean.createPermlink}"
+			value="#{res.estimates_main_permlink_button}" />
+			
+		<s:popup binding="#{EstimatesSelectionBean.permlinkPopup}" width="420" height="150">
+			<t:htmlTag value="div" styleClass="permlink-info">
+				<t:div styleClass="permlink-title">
+					<t:outputText value="#{res.estimates_main_permlink_title}" />
+				</t:div>
+				<t:div styleClass="permlink-desc">
+					<t:outputText value="#{res.estimates_main_permlink_desc}" />
+				</t:div>
+				<t:div styleClass="permlink-link">
+					<t:outputText value="#{EstimatesSelectionBean.permLink}" />
+				</t:div>
+				<t:div styleClass="permlink-close">
+					<h:commandButton value="#{res.estimates_main_permlink_close}" styleClass="permlink-close-button" />
+					<h:outputText value=" "/>
+					<s:copyToClipboardButton text="#{res.estimates_main_permlink_copy}" data="#{estimatesselectionbean.permLink}" />
+				</t:div>
+			</t:htmlTag>
+		</s:popup>
+
 	</t:div>
+	
 </s:expandableBox>

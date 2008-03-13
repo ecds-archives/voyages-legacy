@@ -6,10 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.faces.context.FacesContext;
-
 import org.hibernate.Session;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Location;
@@ -73,7 +72,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 
 		Object[] data = holder.getRawQueryResponse();
 		
-		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+		String mapAssetsBaseUrl = AppConfig.getConfiguration().getString(AppConfig.MAP_URL);
 		
 		List items = new ArrayList();
 
@@ -205,15 +204,15 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			long to = Math.round(ranges[i+1]);
 			long from = Math.round(ranges[i]);
 			from++;
-			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", contextPath + "/map-assets/symbols/circle-1-" + (i + 1) + ".png", 
+			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$", mapAssetsBaseUrl + "/symbols/circle-1-" + (i + 1) + ".png", 
 					"" + valuesFormat.format(new Object[] {new Long(from)}) + " - " + valuesFormat.format(new Object[] {new Long(to)}));
 			legendSizes.addItemToGroup(item);
 		}
 		
 		///Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-2-\\d", contextPath + "/map-assets/symbols/circle-" + 2 + "-4.png", TastResource.getText("estimates_map_leg_embplace"));
-		LegendItem disemb = new LegendItem("circle-3-\\d", contextPath + "/map-assets/symbols/circle-" + 3 + "-4.png", TastResource.getText("estimates_map_leg_disembplace"));
-		LegendItem both = new LegendItem("circle-5-\\d", "symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
+		LegendItem emb = new LegendItem("circle-2-\\d", mapAssetsBaseUrl + "/symbols/circle-" + 2 + "-4.png", TastResource.getText("estimates_map_leg_embplace"));
+		LegendItem disemb = new LegendItem("circle-3-\\d", mapAssetsBaseUrl + "/symbols/circle-" + 3 + "-4.png", TastResource.getText("estimates_map_leg_disembplace"));
+		LegendItem both = new LegendItem("circle-5-\\d", mapAssetsBaseUrl + "/symbols/circle-" + 5 + "-4.png", "Place of embarkatrion / disembarkation");
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);
 		//legendColors.addItemToGroup(both);

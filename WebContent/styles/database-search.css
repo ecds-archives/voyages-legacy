@@ -46,21 +46,8 @@ td.search-side-panel td.box-set-upper-row-bottom-middle {
 div.search-panel {
 	padding: 10px; }
 
-/* message */
-
-div.message-bar {
-	color: White;
-	margin-bottom: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-color: #CF5435; }
-	
-td.message-bar-button {
-	padding-left: 10px; }
-
-
+div.permlink-info {
+	margin-bottom: 5px; }
 
 div.chart-back-button {
 	position: absolute; 
@@ -71,12 +58,10 @@ div.chart-back-button {
 	height: 24px;
 	overflow: hidden;
 	background-repeat: no-repeat;
-	background-image: url(map-icon-back.png); 
-}
+	background-image: url(map-icon-back.png); }
 
 div.chart-back-button:hover {
-	background-position: 0px -24px; 
-}
+	background-position: 0px -24px; }
 
 div.detailTab {
 	padding-top: 5px;

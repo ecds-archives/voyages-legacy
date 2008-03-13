@@ -6,20 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.w3c.dom.Node;
 
-import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.table.TableData;
-import edu.emory.library.tast.database.table.DetailVoyageMap;
 import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Image;
+import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.SourceInformation;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.XMLExportable;
@@ -28,7 +25,7 @@ import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.images.GalleryImage;
 import edu.emory.library.tast.images.site.ImagesBean;
-import edu.emory.library.tast.maps.LegendItemsGroup;
+import edu.emory.library.tast.maps.component.Line;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
@@ -50,11 +47,6 @@ public class VoyageDetailBean
 	 * Data visible in table.
 	 */
 	private TableData detailData = new TableData();
-	
-	/**
-	 * Map data for voyage.
-	 */
-	private DetailVoyageMap detailVoyageMap = new DetailVoyageMap();
 	
 	/**
 	 * Voyage ids (global and internal)
@@ -80,15 +72,12 @@ public class VoyageDetailBean
 	private String selectedTab = "variables";
 	
 	/**
-	 * Message bar to show link information
-	 */
-	private MessageBarComponent messageBar = null;
-	
-	/**
 	 * Provider of source rollovers.
 	 */
 	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
 	
+	private VoyageRoute route;
+
 	/**
 	 * Opens given voyage - main function in this bean.
 	 * Called when one clicks on given voyage in table.
@@ -98,10 +87,21 @@ public class VoyageDetailBean
 	{
 		
 		this.voyageIid = voyageIid;
-		this.detailVoyageMap.setVoyageIid(voyageIid);
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
+		
+		loadVoyageData(sess);
+		loadVoyageMapData(sess);
+		loadRelatedImages(sess);
+
+		transaction.commit();
+		sess.close();
+
+	}
+
+	private void loadVoyageData(Session sess)
+	{
 		
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("iid"), new Long(this.voyageIid), Conditions.OP_EQUALS);
@@ -183,8 +183,11 @@ public class VoyageDetailBean
 		// voyage id (is the last)
 		Object[] voyageValues = (Object[]) ret[0];
 		voyageId = ((Integer)(voyageValues[voyageValues.length - 1])).intValue();
+	}
+
+	private void loadRelatedImages(Session sess)
+	{
 		
-		// load related images
 		List images = Image.getImagesByVoyageId(sess, voyageId);
 		imagesGallery = new GalleryImage[images.size()];
 		int imageIndex = 0;
@@ -196,10 +199,183 @@ public class VoyageDetailBean
 					image.getFileName(),
 					image.getTitle());
 		}
+		
+	}
+	
+	private Port loadVoyagePlace(Session sess, String place)
+	{
+		
+		String hqlImages =
+			"select v." + place + " " +
+			"from Voyage as v " +
+			"where v.iid = " + voyageIid + " and " +
+			"v." + place + ".showOnVoyageMap = '1'";
+		
+		List lst = sess.createQuery(hqlImages).list();
+		if (lst.size() == 0)
+			return null;
+		else
+			return (Port) lst.get(0);
 
-		// done with db
-		transaction.commit();
-		sess.close();
+	}
+
+	/*
+	private void addPointOfInterest(
+			ArrayList pointsOfInterest,
+			Port port,
+			String symbol)
+	{
+		pointsOfInterest.add(
+				new PointOfInterest(
+						port.getLongitude(),
+						port.getLatitude(),
+						new String[]{symbol},
+						port.getName(),
+						port.getName()));
+	}
+	*/
+	
+	private void loadVoyageMapData(Session sess)
+	{
+		
+		// load ports from database
+		Port departurePort = loadVoyagePlace(sess, "ptdepimp");
+		Port prchPort1 = loadVoyagePlace(sess, "plac1tra");
+		Port prchPort2 = loadVoyagePlace(sess, "plac2tra");
+		Port prchPort3 = loadVoyagePlace(sess, "plac3tra");
+		Port prchPortPrincipal = loadVoyagePlace(sess, "mjbyptimp");
+		Port sellPort1 = loadVoyagePlace(sess, "sla1port");
+		Port sellPort2 = loadVoyagePlace(sess, "adpsale1");
+		Port sellPort3 = loadVoyagePlace(sess, "adpsale2");
+		Port sellPortPrincipal = loadVoyagePlace(sess, "mjslptimp");
+		Port returnPort = loadVoyagePlace(sess, "portret");
+		
+		// create a new route
+		route = new VoyageRoute();
+		
+		// place where voyage began
+		if (departurePort != null)
+		{
+			VoyageRouteLeg startLeg = new VoyageRouteLeg(); 
+			route.addLeg(startLeg);
+			startLeg.addPlace(new VoyageRoutePlace(
+					departurePort.getId().longValue(),
+					departurePort.getName(),
+					"Place where voyage began",
+					departurePort.getLongitude(),
+					departurePort.getLatitude(),
+					new VoyageRouteSymbolBegin()));
+			
+		}
+		
+		// ports of purchases
+		if (prchPort1 != null || prchPort2 != null || prchPort3 != null || prchPortPrincipal != null)
+		{
+			VoyageRouteLeg purchasesLeg = new VoyageRouteLeg(); 
+			route.addLeg(purchasesLeg);
+			
+			if (prchPort1 != null)
+				purchasesLeg.addPlace(new VoyageRoutePlace(
+						prchPort1.getId().longValue(),
+						prchPort1.getName(),
+						"First place of slave purchase",
+						prchPort1.getLongitude(),
+						prchPort1.getLatitude(),
+						new VoyageRouteSymbolPurchase(0,
+								prchPort1.equals(prchPortPrincipal))));
+			
+			if (prchPort2 != null)
+				purchasesLeg.addPlace(new VoyageRoutePlace(
+						prchPort2.getId().longValue(),
+						prchPort2.getName(),
+						"Second place of slave purchase",
+						prchPort2.getLongitude(),
+						prchPort2.getLatitude(),
+						new VoyageRouteSymbolPurchase(1,
+								prchPort2.equals(prchPortPrincipal))));
+			
+			if (prchPort3 != null)
+				purchasesLeg.addPlace(new VoyageRoutePlace(
+						prchPort3.getId().longValue(),
+						prchPort3.getName(),
+						"Third place of slave purchase",
+						prchPort3.getLongitude(),
+						prchPort3.getLatitude(),
+						new VoyageRouteSymbolPurchase(2,
+								prchPort3.equals(prchPortPrincipal))));
+			
+			if (prchPort1 == null && prchPort2 == null && prchPort3 == null)
+				purchasesLeg.addPlace(new VoyageRoutePlace(
+						prchPortPrincipal.getId().longValue(),
+						prchPortPrincipal.getName(),
+						"Principal place of slave purchase",
+						prchPortPrincipal.getLongitude(),
+						prchPortPrincipal.getLatitude(),
+						new VoyageRouteSymbolPurchasePrincipal()));
+
+		}
+		
+		// port of sells
+		if (sellPort1 != null || sellPort2 != null || sellPort3 != null || sellPortPrincipal != null)
+		{
+			VoyageRouteLeg sellsLeg = new VoyageRouteLeg(); 
+			route.addLeg(sellsLeg);
+			
+			if (sellPort1 != null)
+				sellsLeg.addPlace(new VoyageRoutePlace(
+						sellPort1.getId().longValue(),
+						sellPort1.getName(),
+						"First place of slave purchase",
+						sellPort1.getLongitude(),
+						sellPort1.getLatitude(),
+						new VoyageRouteSymbolSell(0,
+								sellPort1.equals(sellPortPrincipal))));
+			
+			if (sellPort2 != null)
+				sellsLeg.addPlace(new VoyageRoutePlace(
+						sellPort2.getId().longValue(),
+						sellPort2.getName(),
+						"Second place of slave purchase",
+						sellPort2.getLongitude(),
+						sellPort2.getLatitude(),
+						new VoyageRouteSymbolSell(1,
+								sellPort2.equals(sellPortPrincipal))));
+			
+			if (sellPort3 != null)
+				sellsLeg.addPlace(new VoyageRoutePlace(
+						sellPort3.getId().longValue(),
+						sellPort3.getName(),
+						"Third place of slave purchase",
+						sellPort3.getLongitude(),
+						sellPort3.getLatitude(),
+						new VoyageRouteSymbolSell(2,
+								sellPort3.equals(sellPortPrincipal))));
+			
+			if (sellPort1 == null && sellPort2 == null && sellPort3 == null)
+				sellsLeg.addPlace(new VoyageRoutePlace(
+						sellPortPrincipal.getId().longValue(),
+						sellPortPrincipal.getName(),
+						"Principal place of slave purchase",
+						sellPortPrincipal.getLongitude(),
+						sellPortPrincipal.getLatitude(),
+						new VoyageRouteSymbolSellPrincipal()));
+			
+		}
+		
+		// place where voyage ended
+		if (returnPort != null)
+		{
+			VoyageRouteLeg endLeg = new VoyageRouteLeg(); 
+			route.addLeg(endLeg);
+			endLeg.addPlace(new VoyageRoutePlace(
+					returnPort.getId().longValue(),
+					returnPort.getName(),
+					"Place where voyage ended",
+					returnPort.getLongitude(),
+					returnPort.getLatitude(),
+					new VoyageRouteSymbolEnd()));
+			
+		}
 
 	}
 
@@ -213,9 +389,9 @@ public class VoyageDetailBean
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, this.previousViewId);
 	}
 
-	public String refresh()
+	public String refreshMap()
 	{
-		this.detailVoyageMap.refresh();
+		// TODO refresh map 
 		return null;
 	}
 	
@@ -244,20 +420,21 @@ public class VoyageDetailBean
 	 * Gets points visible on map.
 	 * @return
 	 */
-	public PointOfInterest[] getPointsOfInterest()
+	public PointOfInterest[] getVoyageMapPoints()
 	{
-		return this.detailVoyageMap.getPointsOfInterest();
+		return route.createMapPointsOfInterest();
 	}
 
-	/**
-	 * Gets legend for map
-	 * @return
-	 */
-	public LegendItemsGroup[] getLegend()
+	public Line[] getVoyageMapLines()
 	{
-		return this.detailVoyageMap.getLegend();
+		return route.createMapLines();
 	}
-	
+
+	public VoyageRoute getVoyageRoute()
+	{
+		return route;
+	}
+
 	/**
 	 * Sets previous view.
 	 * @param viewId
@@ -319,43 +496,18 @@ public class VoyageDetailBean
 		return voyageId;
 	}
 	
-	public String saveLink() {
-		
-		Configuration conf = new Configuration();
-		DetailVoyageQuery query = new DetailVoyageQuery();
-		query.tab = selectedTab;
-		query.voyageIid = new Long(voyageIid);
-		conf.addEntry("permlinkDetailVoyage", query);
-		conf.save();
-
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
-		messageBar.setRendered(true);
-		
-		return null;
+	public String getSelectedTab() {
+		return selectedTab;
 	}
-	
-	public void restoreLink(Long id) {
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
-		try {
-			Configuration conf = Configuration.loadConfiguration(id);
-			if (conf == null) {
-				return;
-			}
 
-			if (conf.getEntry("permlinkDetailVoyage") != null) {
-				DetailVoyageQuery selection = (DetailVoyageQuery) conf.getEntry("permlinkDetailVoyage");
-				this.selectedTab = selection.tab;
-				openVoyage(selection.voyageIid.longValue());
-			}
-			
-		} finally {
-			t.commit();
-			session.close();
-		}
+	public void setSelectedTab(String selectedTab) {
+		this.selectedTab = selectedTab;
 	}
-	
+
+	public long getVoyageIid() {
+		return voyageIid;
+	}
+
 	public static class DetailVoyageQuery implements XMLExportable {
 
 		public Long voyageIid;
@@ -377,26 +529,6 @@ public class VoyageDetailBean
 			buffer.append("/>");
 			return buffer.toString();
 		}
-	}
-
-	public String getSelectedTab() {
-		return selectedTab;
-	}
-
-	public void setSelectedTab(String selectedTab) {
-		this.selectedTab = selectedTab;
-	}
-
-	public MessageBarComponent getMessageBar() {
-		return messageBar;
-	}
-
-	public void setMessageBar(MessageBarComponent message) {
-		this.messageBar = message;
-	}
-
-	public long getVoyageIid() {
-		return voyageIid;
 	}
 
 }

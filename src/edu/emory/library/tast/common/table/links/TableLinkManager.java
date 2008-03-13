@@ -22,7 +22,7 @@ public class TableLinkManager {
 	
 	public void setResultsNumber(int resultsNumber) {
 		this.resultsNumber = resultsNumber;
-		this.modified = true;
+		//this.modified = true;
 		//this.currentFirstRecord = 0;
 	}
 

@@ -190,6 +190,26 @@
 		<component-class>edu.emory.library.tast.common.grideditor.GridEditorComponent</component-class>
 	</component>
 
+	<component>
+		<component-type>Popup</component-type>
+		<component-class>edu.emory.library.tast.common.PopupComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>CopyToClipboardButton</component-type>
+		<component-class>edu.emory.library.tast.common.CopyToClipboardButtonComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>InfoBox</component-type>
+		<component-class>edu.emory.library.tast.common.InfoBoxComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>VoyageRouteLegend</component-type>
+		<component-class>edu.emory.library.tast.common.voyage.VoyageRouteLegendComponent</component-class>
+	</component>
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.query.SearchBean</managed-bean-class>

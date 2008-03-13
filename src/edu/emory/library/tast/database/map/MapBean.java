@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.ajaxanywhere.AAUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.hql.ast.tree.QueryNode;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
@@ -24,7 +23,6 @@ import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomChangedEvent;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
-import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 

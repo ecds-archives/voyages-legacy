@@ -17,6 +17,7 @@ import edu.emory.library.tast.common.MenuItem;
 import edu.emory.library.tast.common.MenuItemSection;
 import edu.emory.library.tast.common.MenuItemSelectedEvent;
 import edu.emory.library.tast.common.MessageBarComponent;
+import edu.emory.library.tast.common.PopupComponent;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
 import edu.emory.library.tast.dm.Configuration;
@@ -26,13 +27,14 @@ import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
 /**
- * This bean is used to manage the list of groups, atributes, the
+ * This bean is used to manage the list of groups, attributes, the
  * currently built query and the history list. It passes search parameters (the
  * current query and the current list of attributes) to other beans and
  * components in {@link SearchParameters}. When a user clicks the search
@@ -44,8 +46,15 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class SearchBean
 {
 	
+	public static final String TAB_ID_LISTING = "listing";
+	public static final String TAB_ID_BASIC_GRAPH = "basic-graph";
+	public static final String TAB_ID_TABLE = "tableview";
+	public static final String TAB_ID_CUSTOM_GRAPHS = "custom-graphs";
+	public static final String TAB_ID_BASIC_STATS = "basic-statistics";
+	public static final String TAB_ID_MAP = "map-ports";
+	
 	private UserCategory selectedCategory = UserCategory.General;
-	private String mainSectionId = "listing";
+	private String mainSectionId = TAB_ID_LISTING;
 
 	private History history;
 	private Query workingQuery;
@@ -60,15 +69,18 @@ public class SearchBean
 	private String expandedGroup = "basic";
 	private boolean yearsLocked = false;
 	
+	private PopupComponent permlinkPopup = null;
+	private String lastPermLink = null;
+	private int numberOfResults;
+	
 	public SearchBean()
 	{
 		history = new History();
 		initNewQuery();
-		searchInternal(false);
 	}
 	
 	/**
-	 * Reininitializes the working query to its default state, i.e. it creates a
+	 * Reinitialises the working query to its default state, i.e. it creates a
 	 * new one. Also determines min and max year. Used in the constructor and
 	 * when the user presses the "Reset to defaults" button.
 	 */
@@ -120,6 +132,7 @@ public class SearchBean
 	{
 		initNewQuery();
 		searchInternal(false);
+		mainSectionId = TAB_ID_LISTING;
 		return null;
 	}
 	
@@ -135,8 +148,8 @@ public class SearchBean
 	}
 	
 	/**
-	 * This invokes the search. It consruct the database query first. When there
-	 * are any errors it stops. Then it stores the consturcted query in
+	 * This invokes the search. It constructs the database query first. When there
+	 * are any errors it stops. Then it stores the constructed query in
 	 * {@link #searchParameters}. Finally, it compares {@link #workingQuery}
 	 * with the latest query in the history, and if they differ it adds
 	 * {@link #workingQuery} to the history.
@@ -159,6 +172,8 @@ public class SearchBean
 			searchParameters = new SearchParameters();
 			searchParameters.setConditions(dbConds);
 			searchParameters.setColumns(null);
+			
+			updateNumberOfResults();
 	
 			if (storeToHistory && !workingQuery.equals(history.getLatestQuery()))
 			{
@@ -186,19 +201,13 @@ public class SearchBean
 	{
 		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
 		if (AAUtils.isAjaxRequest(request))
-			AAUtils.addZonesToRefresh(request, "total"); 
+		{
+			updateNumberOfResults();
+			AAUtils.addZonesToRefresh(request, "total");
+		}
 	}
 	
-	/**
-	 * Bound to UI. Calculates the number of expected results based on
-	 * {@link #workingQuery}. It is called everytime the page is reloaded.
-	 * Also, when the page is requested by AJAX via
-	 * {@link #updateTotal(QueryUpdateTotalEvent)}, this is only part of bean
-	 * which is invoked.
-	 * 
-	 * @return
-	 */
-	public String getNumberOfResultsText()
+	private void updateNumberOfResults()
 	{
 		
 		Conditions dbConds = new Conditions();
@@ -208,13 +217,26 @@ public class SearchBean
 		QueryValue query = new QueryValue("Voyage", dbConds);
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = query.executeQuery();
-		int numberOfResults = ((Number)ret[0]).intValue();
-		
-		MessageFormat fmt = new MessageFormat(TastResource.getText("slaves_search_expected"));
-		return fmt.format(new Object[] {new Integer(numberOfResults)});
+		numberOfResults = ((Number)ret[0]).intValue();
 
 	}
 	
+	public String getNumberOfResultsText()
+	{
+		MessageFormat fmt = new MessageFormat(TastResource.getText("slaves_search_expected"));
+		return fmt.format(new Object[] {new Integer(numberOfResults)});
+	}
+	
+	public int getNumberOfResults()
+	{
+		return numberOfResults;
+	}
+
+	public boolean isNoResult()
+	{
+		return numberOfResults == 0;
+	}
+
 	/**
 	 * Bound to UI. Deletes a chosen history item. Called by the history list
 	 * component.
@@ -246,6 +268,22 @@ public class SearchBean
 		}
 	}
 	
+	public void createPermlink()
+	{
+
+		Configuration conf = new Configuration();
+		conf.addEntry("permlink", workingQuery);
+		conf.addEntry("section", new StoredSection(this.mainSectionId));
+		conf.save();
+		
+		lastPermLink =
+			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) +
+			"?permlink=" + conf.getId();
+		
+		this.permlinkPopup.display();
+
+	}
+	
 	/**
 	 * Bound to UI. Creates a permlink of a selected history item, and shows on
 	 * the page. Called by the history list component.
@@ -271,25 +309,25 @@ public class SearchBean
 		
 	}
 	
-	/**
-	 * Ugly trick (because of limitations of JSF). This is called every time the
-	 * page is reloaded (because it is bound to a textbox). Calls
-	 * {@link #restorePermlinkIfAny()}.
-	 * 
-	 * @return
-	 */
 	public String getFakeHiddenForPermlinkRestore()
 	{
-		restorePermlinkIfAny();
+		
+		// if POST -> don't do anything here
+		if (!JsfUtils.isGetRequest())
+			return null;
+			
+		// try to restore a permlink
+		if (restorePermlinkIfAny())
+			return null;
+		
+		// otherwise, reset query
+		initNewQuery();
+		searchInternal(false);
+		
 		return null;
+
 	}
 
-	/**
-	 * Ugly trick (because of limitations of JSF). See
-	 * {@link #getFakeHiddenForPermlinkRestore()}.
-	 * 
-	 * @return
-	 */
 	public void setFakeHiddenForPermlinkRestore(String value)
 	{
 	}
@@ -299,21 +337,21 @@ public class SearchBean
 	 * corresponding query is retrieved from the database, {@link #workingQuery}
 	 * is set to it, and search is invoked.
 	 */
-	private void restorePermlinkIfAny()
+	private boolean restorePermlinkIfAny()
 	{
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map params = context.getExternalContext().getRequestParameterMap();
 		if (!params.containsKey("permlink"))
-			return;
+			return false;
 		
 		String permlink = (String)params.get("permlink");
 		if (StringUtils.isNullOrEmpty(permlink))
-			return;
+			return false;
 
 		Configuration conf = Configuration.loadConfiguration(permlink);
 		if (conf == null)
-			return;
+			return false;
 		
 		workingQuery = (Query) conf.getEntry("permlink");
 		StoredSection section = (StoredSection) conf.getEntry("section");
@@ -322,6 +360,8 @@ public class SearchBean
 		}
 		history.clear();
 		searchInternal(true);
+		
+		return true;
 
 	}
 	
@@ -594,4 +634,25 @@ public class SearchBean
 	public void lockYears(boolean b) {
 		this.yearsLocked = b;
 	}
+
+	public PopupComponent getPermlinkPopup()
+	{
+		return permlinkPopup;
+	}
+
+	public void setPermlinkPopup(PopupComponent permlinkPopup)
+	{
+		this.permlinkPopup = permlinkPopup;
+	}
+
+	public boolean isShowPermLinkTool()
+	{
+		return !workingQuery.isEmpty();
+	}
+
+	public String getPermLink()
+	{
+		return lastPermLink;
+	}
+
 }

@@ -13,6 +13,8 @@
 		<property name="longitude" />
 		<property name="order" column="order_num" />
 		<property name="showAtZoom" column="show_at_zoom" />
+		<property name="showOnMainMap" column="show_on_main_map" />
+		<property name="showOnVoyageMap" column="show_on_voyage_map" />
 
 		<many-to-one name="region" column="region_id" class="edu.emory.library.tast.dm.Region" />
 		

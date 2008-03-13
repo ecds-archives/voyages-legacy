@@ -13,6 +13,7 @@ public class MapTag extends UIComponentTag
 	
 	private String zoomLevels;
 	private String pointsOfInterest;
+	private String lines;
 	private String miniMap;
 	private String miniMapZoomLevel;
 	private String miniMapPosition;
@@ -47,6 +48,12 @@ public class MapTag extends UIComponentTag
 		{
 			ValueBinding vb = app.createValueBinding(pointsOfInterest);
 			component.setValueBinding("pointsOfInterest", vb);
+		}
+
+		if (lines != null && isValueReference(lines))
+		{
+			ValueBinding vb = app.createValueBinding(lines);
+			component.setValueBinding("lines", vb);
 		}
 
 		if (miniMap != null && isValueReference(miniMap))
@@ -212,6 +219,16 @@ public class MapTag extends UIComponentTag
 
 	public void setOnZoomChanged(String onZoomChanged) {
 		this.onZoomChanged = onZoomChanged;
+	}
+
+	public String getLines()
+	{
+		return lines;
+	}
+
+	public void setLines(String lines)
+	{
+		this.lines = lines;
 	}
 
 }

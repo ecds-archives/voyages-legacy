@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
@@ -24,9 +25,13 @@ public class Port extends LocationWithImages
 		attributes.put("region", new RegionAttribute("region", "Port"));
 		attributes.put("order", new NumericAttribute("order", "Port", NumericAttribute.TYPE_INTEGER));
 		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "Port", NumericAttribute.TYPE_INTEGER));
+		attributes.put("showOnMainMap", new BooleanAttribute("showOnMainMap", "Port"));
+		attributes.put("showOnVoyageMap", new BooleanAttribute("showOnVoyageMap", "Port"));
 	}
 
 	private Region region;
+	private boolean showOnMainMap;
+	private boolean showOnVoyageMap;
 
 	public Region getRegion()
 	{
@@ -60,7 +65,29 @@ public class Port extends LocationWithImages
 
 	public static Attribute getAttribute(String name)
 	{
-		return (Attribute)attributes.get(name);
+		Attribute attr = (Attribute)attributes.get(name);
+		if (attr == null) throw new RuntimeException("attribute '" + name + "' of Port does not exist");
+		return attr;
+	}
+
+	public boolean isShowOnMainMap()
+	{
+		return showOnMainMap;
+	}
+
+	public void setShowOnMainMap(boolean showOnMainMap)
+	{
+		this.showOnMainMap = showOnMainMap;
+	}
+
+	public boolean isShowOnVoyageMap()
+	{
+		return showOnVoyageMap;
+	}
+
+	public void setShowOnVoyageMap(boolean showOnVoyageMap)
+	{
+		this.showOnVoyageMap = showOnVoyageMap;
 	}
 
 }

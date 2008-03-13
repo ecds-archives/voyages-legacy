@@ -9,6 +9,7 @@ import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
+import javax.servlet.http.HttpServletRequest;
 
 
 public class JsfUtils
@@ -494,6 +495,25 @@ public class JsfUtils
 	{
 		FacesContext fc = FacesContext.getCurrentInstance(); 
 		fc.getApplication().getNavigationHandler().handleNavigation(fc, fromAction, outcome);
+	}
+	
+	public static boolean isGetRequest()
+	{
+		return isGetRequest(null);
+	}
+
+	public static boolean isGetRequest(FacesContext context)
+	{
+		
+		if (context == null)
+			context = FacesContext.getCurrentInstance();
+		
+		HttpServletRequest request =
+			(HttpServletRequest) FacesContext.getCurrentInstance().
+			getExternalContext().getRequest();
+		
+		return "GET".equals(request.getMethod()); 
+
 	}
 
 }
