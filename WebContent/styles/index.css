@@ -104,7 +104,7 @@ td.footer-image img {
 }
 
 /* highlights */
-
+/*
 div.index-highlight {
 	margin: 15px 0px 10px 20px;
 	background-repeat: no-repeat;
@@ -121,11 +121,11 @@ div.index-highlight-title a {
 div.index-highlight-text {
 	padding-right: 10px;
 	padding-left: 75px; }
-
+*/
 /* welcome map */
 
 td.index-middle-left div.welcome-map-text{	
-	background-image: url(../new-images/welcome-maps/index-maptext-bg.png);
+	background-image: url(../new-images/index-maptext-bg.png);
 	background-repeat: repeat-x;
 	margin-left: 116px;	
 	margin-top: -15px;
@@ -174,29 +174,35 @@ div.index-bottom-right {
 	height: 313px;
 }
 
+td.index-bottom-text{
+	padding-top: 20px;
+
+}
+
 div.index-bottom-right img {
 	margin : 20px 10px 5px 20px;
+	line-height: 20%;
 }
 
 div.index-bottom-right a {	
     text-decoration: none;
 	color: #335555;
-	font-size: 12px;
-	line-height: 20%;
+	font-size: 8pt;
+
 }
 
 div.index-bottom-right h{
-	font-family: Arial Black;
+	font-family: Verdana;
+	font-weight: 900;
 	padding-left:8px;
 }
 
 div.index-bottom-right p{
-	font-family: Arial;
-	line-height: 120%;
-	letter-spacing :0em;
-	font-weight: bold;
+	font-family: Verdana;	
+	letter-spacing : 0em;
+	font-weight: 500;
 	padding-left:8px;
-	padding-right: 60px;
+	padding-right: 20px;
 }
 
 
