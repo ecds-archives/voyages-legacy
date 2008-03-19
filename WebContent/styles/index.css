@@ -167,8 +167,39 @@ div.welcome-place-text {
 /* bottom right */
 
 div.index-bottom-right {
-	margin-left:525 px;
-	margin-top:30px;
-	background-image: url(../new-images/index-bottom-bg.png");
+	background-image: url(../new-images/index-bottom-bg.png);
+	margin-left: 525px;
+	margin-top: 42px;	
+	width: 455px;
+	height: 313px;
 }
 
+div.index-bottom-right img {
+	margin : 20px 10px 5px 20px;
+}
+
+div.index-bottom-right a {	
+    text-decoration: none;
+	color: #335555;
+	font-size: 12px;
+	line-height: 20%;
+}
+
+div.index-bottom-right h{
+	font-family: Arial Black;
+	padding-left:8px;
+}
+
+div.index-bottom-right p{
+	font-family: Arial;
+	line-height: 120%;
+	letter-spacing :0em;
+	font-weight: bold;
+	padding-left:8px;
+	padding-right: 60px;
+}
+
+
+div.index-bottom-right a:hover {
+	color: #008CA8;
+}
