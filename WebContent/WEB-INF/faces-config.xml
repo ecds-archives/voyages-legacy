@@ -209,7 +209,17 @@
 		<component-type>VoyageRouteLegend</component-type>
 		<component-class>edu.emory.library.tast.common.voyage.VoyageRouteLegendComponent</component-class>
 	</component>
+	
+	<component>
+		<component-type>GlossaryList</component-type>
+		<component-class>edu.emory.library.tast.glossary.GlossaryListComponent</component-class>
+	</component>
 
+	<component>
+		<component-type>GlossaryLetters</component-type>
+		<component-class>edu.emory.library.tast.glossary.GlossaryLettersComponent</component-class>
+	</component>	
+	
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.query.SearchBean</managed-bean-class>
@@ -441,6 +451,12 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
+	<managed-bean>
+		<managed-bean-name>GlossaryBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.glossary.GlossaryBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
 	<managed-bean>
 		<managed-bean-name>GridEditorTestBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.common.grideditor.GridEditorTestBean</managed-bean-class>

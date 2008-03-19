@@ -1,0 +1,103 @@
+body {
+	background-image: none; }
+	
+td#glossary-side-panel {
+	border-right: 1px solid #09367C;
+	background-position: 0px 0px;
+	background-image: url(../images/lessons-bg.png);
+	background-repeat: repeat-x; }
+	
+td#glossary-side-panel {
+	width: 160px;
+	vertical-align: top; }
+	
+td#glossary-main-panel {
+	vertical-align: top; }
+	
+div#glossary-search-label {
+	font-weight: bold;
+	padding-top: 15px;
+	padding-left: 15px; }
+	
+div#glossary-search-box {
+	padding-left: 15px; }
+
+div#glossary-search-box input {
+	width: 120px; }
+
+div#glossary-search-button {
+	padding-top: 5px;
+	padding-left: 15px; }
+	
+div.glossary-term {
+	padding-top: 5px;
+	margin-right: 10px;
+	color: #09367C;
+	font-weight: bold; }
+
+div.glossary-description {
+	padding-top: 2px;
+	padding-bottom: 5px;
+	margin-right: 10px;
+	border-bottom: 1px dotted #CCCCCC; }
+
+td.glossary-letter-info {
+	padding-left: 10px;
+	width: 50px;
+	vertical-align: top; }
+
+div.glossary-letter {
+	width: 36px;
+	height: 36px;
+	text-align: center;
+	color: White;
+	line-height: 36px;
+	font-weight: bold;
+	font-size: 14pt;
+	background-image: url(../images/glossary-big-letter.png);
+	background-repeat: no-repeat; } 
+	
+div.glossary-counts {
+	width: 36px;
+	text-align: center; }
+
+div#glossary-title {
+	padding: 10px 0px 10px 10px;
+	font-size: 16pt; }
+	
+table.glossary-selector-letters {
+	padding-top: 10px;
+	padding-left: 15px; }
+	
+td.glossary-selector-letter {
+	padding-right: 2px;
+	padding-bottom: 2px; }
+	
+a.glossary-selector-letter-normal {
+	text-decoration: none;
+	display: block;
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	color: White;
+	font-weight: bold;
+	line-height: 24px;
+	background-image: url(../images/glossary-small-letter-normal.png);
+	background-repeat: no-repeat; } 
+
+a.glossary-selector-letter-normal:hover {
+	background-image: url(../images/glossary-small-letter-focused.png); }
+
+div.glossary-selector-letter-dimmed {
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	color: White;
+	font-weight: bold;
+	line-height: 24px;
+	background-image: url(../images/glossary-small-letter-dimmed.png);
+	background-repeat: no-repeat; }
+	
+span.search-keyword {
+	padding: 0px 2px 0px 2px;
+	background-color: #FFEE66; }

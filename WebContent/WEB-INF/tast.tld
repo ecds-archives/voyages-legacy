@@ -1023,4 +1023,35 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<name>glossaryList</name>
+		<tag-class>
+			edu.emory.library.tast.glossary.GlossaryListTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>terms</name>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>glossaryLetters</name>
+		<tag-class>
+			edu.emory.library.tast.glossary.GlossaryLettersTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>columns</name>
+		</attribute>
+		<attribute>
+			<name>letters</name>
+		</attribute>
+	</tag>
+	
 </taglib>

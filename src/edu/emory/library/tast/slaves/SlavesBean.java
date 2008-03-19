@@ -70,7 +70,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  * It is refreshed by {@link #loadData(boolean, boolean)} as indicated above.
  * Current page a the number of results is held in {@link #pager}.
  * <p>
- * The values of the compoments in the left seach column are linked directly to
+ * The values of the components in the left seach column are linked directly to
  * {@link #workingQuery} by exposing {@link #workingQuery} via
  * {@link #getWorkingQuery()}. The only two compoments which need some
  * additional data are the selection box for countries and the selection box
