@@ -1,6 +1,7 @@
 package edu.emory.library.tast.common.voyage;
 
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.w3c.dom.Node;
 
+import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
@@ -55,6 +57,9 @@ public class VoyageDetailBean
 	private long voyageIid = -1;
 	private int voyageId = -1;
 	
+	private String shipName;
+	private Integer year;
+	
 	/**
 	 * Remembers last view - the one which should be restored when 'go back' is hit
 	 */
@@ -92,13 +97,25 @@ public class VoyageDetailBean
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
+		// Load the entire voyage. We will need it several times.
+		Voyage voyage = Voyage.loadById(sess, voyageIid);
+
+		loadGeneralInfo(sess, voyage);
 		loadVoyageData(sess);
-		loadVoyageMapData(sess);
+		loadVoyageMapData(sess, voyage);
 		loadRelatedImages(sess);
 
 		transaction.commit();
 		sess.close();
 
+	}
+
+	private void loadGeneralInfo(Session sess, Voyage voyage)
+	{
+		
+		this.shipName = voyage.getShipname();
+		this.year = voyage.getYearam();
+		
 	}
 
 	private void loadVoyageData(Session sess)
@@ -203,18 +220,11 @@ public class VoyageDetailBean
 		
 	}
 
-	private void loadVoyageMapData(Session sess)
+	private void loadVoyageMapData(Session sess, Voyage voyage)
 	{
 		
 		SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
 		DecimalFormat slavesFmt = new DecimalFormat(",#,###,###");
-		
-		// Load the entire voyage. Originally, I tried to
-		// load only the necessary fields from it, but it turned
-		// out that we need about 20 fields to load, and
-		// nobody wants to use constantly things like
-		// ((Port)(Object[])result[4]).getName() ...
-		Voyage voyage = Voyage.loadById(sess, voyageIid);
 		
 		// load ports from database
 		Port departurePort = voyage.getPtdepimp();
@@ -668,6 +678,26 @@ public class VoyageDetailBean
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, this.previousViewId);
 	}
+	
+	public String getBackLinkText()
+	{
+		if ("search-interface".equals(this.previousViewId))
+		{
+			return TastResource.getText("database_voyage_detail_prev_database");
+		}
+		else if ("images-interface".equals(this.previousViewId))
+		{
+			return TastResource.getText("database_voyage_detail_prev_image");
+		}
+		else if ("names-interface".equals(this.previousViewId))
+		{
+			return TastResource.getText("database_voyage_detail_prev_slaves");
+		}
+		else
+		{
+			return null;
+		}
+	}
 
 	public String refreshMap()
 	{
@@ -774,6 +804,22 @@ public class VoyageDetailBean
 	public int getVoyageId()
 	{
 		return voyageId;
+	}
+	
+	public String getPageTitle()
+	{
+		if (year != null)
+		{
+			return MessageFormat.format(
+					TastResource.getText("database_voyage_detail_with_year"),
+					new Object[] {shipName, year});
+		}
+		else
+		{
+			return MessageFormat.format(
+					TastResource.getText("database_voyage_detail_without_year"),
+					new Object[] {shipName});
+		}
 	}
 	
 	public String getSelectedTab() {

@@ -1,10 +1,11 @@
 div.detail-title {
 	font-size: 16pt;
-	margin-top: 10px;
+	margin-bottom: 10px;
 	margin-left: 15px; }
 	
 div.detail-link-back {
-	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 2px;
 	margin-left: 15px; }
 	
 table.detail {

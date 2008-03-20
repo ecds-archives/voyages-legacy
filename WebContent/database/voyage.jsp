@@ -8,34 +8,24 @@
 <html>
 <head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Voyage</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<link href="../styles/main.css" rel="stylesheet" type="text/css">
-<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-
-<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
-<link href="../styles/database-tabs.css" rel="stylesheet"
-	type="text/css">
-
-<link href="../styles/database.css" rel="stylesheet" type="text/css">
-<link href="../styles/database-voyage.css" rel="stylesheet"
-	type="text/css">
-
-<link href="../styles/map.css" rel="stylesheet" type="text/css">
-
-<script src="../scripts/lib/prototype.js" type="text/javascript"
-	language="javascript"></script>
-<script src="../scripts/lib/scriptaculous.js" type="text/javascript"
-	language="javascript"></script>
-<script src="../scripts/utils.js" language="javascript"
-	type="text/javascript"></script>
-<script src="../scripts/main-menu.js" language="javascript"
-	type="text/javascript"></script>
-<script src="../scripts/map.js" language="javascript"
-	type="text/javascript"></script>
-<script src="../scripts/tooltip.js" language="javascript"
-	type="text/javascript"></script>
+	<title>Voyage</title>
+	
+	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
+	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-tabs.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-voyage.css" rel="stylesheet" type="text/css">
+	<link href="../styles/map.css" rel="stylesheet" type="text/css">
+	
+	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 
 </head>
 <body>
@@ -47,10 +37,8 @@
 		<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td><a href="../index.faces"><img src="../images/logo.png"
-					border="0" width="300" height="100"></a></td>
-				<td class="main-menu-container"><s:mainMenuBar
-					menuItems="#{MainMenuBean.mainMenu}" activeSectionId="database" /></td>
+				<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
+				<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="database" /></td>
 			</tr>
 		</table>
 		</div>
@@ -58,16 +46,15 @@
 		<div id="content"><s:panelTabSet id="mainPanelSection"
 			selectedSectionId="#{VoyageDetailBean.selectedTab}">
 
-			<s:panelTab title="#{res.database_voyage_voyagevariables}"
-				sectionId="variables">
-
-				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText
-						value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.voyageId}" />
-				</t:htmlTag>
+			<s:panelTab title="#{res.database_voyage_voyagevariables}" sectionId="variables">
 
 				<t:htmlTag value="div" styleClass="detail-link-back">
-					<h:commandLink value="< go back" action="#{VoyageDetailBean.back}" />
+					<h:commandLink value="#{VoyageDetailBean.backLinkText}" action="#{VoyageDetailBean.back}" />
+					<h:outputText value=" / Voyage detail" />
+				</t:htmlTag>
+
+				<t:htmlTag value="div" styleClass="detail-title">
+					<h:outputText value="#{VoyageDetailBean.pageTitle}" />
 				</t:htmlTag>
 
 				<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
@@ -75,14 +62,14 @@
 			</s:panelTab>
 
 			<s:panelTab title="#{res.database_voyage_voyagemap}" sectionId="map">
-
-				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText
-						value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.voyageId}" />
+			
+				<t:htmlTag value="div" styleClass="detail-link-back">
+					<h:commandLink value="#{VoyageDetailBean.backLinkText}" action="#{VoyageDetailBean.back}" />
+					<h:outputText value=" / Voyage detail" />
 				</t:htmlTag>
 
-				<t:htmlTag value="div" styleClass="detail-link-back">
-					<h:commandLink value="< go back" action="#{VoyageDetailBean.back}" />
+				<t:htmlTag value="div" styleClass="detail-title">
+					<h:outputText value="#{VoyageDetailBean.pageTitle}" />
 				</t:htmlTag>
 
 				<t:htmlTag value="table"
@@ -113,16 +100,15 @@
 
 			</s:panelTab>
 
-			<s:panelTab title="#{res.database_voyage_voyageimages}"
-				sectionId="images">
-
-				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText
-						value="#{res.database_voyage_voyagedetail} #{VoyageDetailBean.voyageId}" />
+			<s:panelTab title="#{res.database_voyage_voyageimages}" sectionId="images">
+				
+				<t:htmlTag value="div" styleClass="detail-link-back">
+					<h:commandLink value="#{VoyageDetailBean.backLinkText}" action="#{VoyageDetailBean.back}" />
+					<h:outputText value=" / Voyage detail" />
 				</t:htmlTag>
 
-				<t:htmlTag value="div" styleClass="detail-link-back">
-					<h:commandLink value="< go back" action="#{VoyageDetailBean.back}" />
+				<t:htmlTag value="div" styleClass="detail-title">
+					<h:outputText value="#{VoyageDetailBean.pageTitle}" />
 				</t:htmlTag>
 
 				<s:pictures images="#{VoyageDetailBean.imagesGallery}"
