@@ -3,6 +3,7 @@ package edu.emory.library.tast.common.voyage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import edu.emory.library.tast.maps.component.Line;
 import edu.emory.library.tast.maps.component.PointOfInterest;
@@ -33,7 +34,7 @@ public class VoyageRoute
 		
 		int pointIdx = 0;
 		HashMap placeIdPointIdx = new HashMap();
-		ArrayList pointsList = new ArrayList();
+		List pointsList = new ArrayList();
 		
 		for (Iterator legIter = legs.iterator(); legIter.hasNext();)
 		{
@@ -65,7 +66,6 @@ public class VoyageRoute
 		}
 		
 		
-		// now build the map points of interest 
 		StringBuffer text = new StringBuffer(); 
 		PointOfInterest[] points = new PointOfInterest[pointsList.size()];
 		for (int i = 0; i < pointsList.size(); i++)
@@ -78,7 +78,7 @@ public class VoyageRoute
 
 			text.setLength(0);
 			text.append("<div class=\"voyage-route-popup-place-name\">");
-			text.append(firstPlace.getPlaceName());
+			text.append(firstPlace.getName());
 			text.append("</div>");
 			
 			for (int j = 0; j < places.size(); j++)
@@ -93,7 +93,7 @@ public class VoyageRoute
 					symbolsList.add(placeSymbols[k]);
 				
 				text.append("<div class=\"voyage-route-popup-event\">");
-				text.append(place.getEventDescription());
+				text.append(place.getPurpose());
 				text.append("</div>");
 			}
 			
@@ -104,12 +104,11 @@ public class VoyageRoute
 					firstPlace.getLongitude(),
 					firstPlace.getLatitude(),
 					symbols,
-					firstPlace.getPlaceName(),
+					firstPlace.getName(),
 					text.toString());				
 		
 		}
 
-		// done
 		return points;
 
 	}

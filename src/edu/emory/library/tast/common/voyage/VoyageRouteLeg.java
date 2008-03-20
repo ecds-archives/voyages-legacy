@@ -1,11 +1,12 @@
 package edu.emory.library.tast.common.voyage;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class VoyageRouteLeg
 {
 	
-	private ArrayList places = new ArrayList();
+	private List places;
 	
 	public VoyageRouteLeg()
 	{
@@ -13,11 +14,12 @@ public class VoyageRouteLeg
 
 	public void addPlace(VoyageRoutePlace place)
 	{
-		places.add(place);
+		getPlaces().add(place);
 	}
 
-	public ArrayList getPlaces()
+	public List getPlaces()
 	{
+		if (places == null) places = new LinkedList();
 		return places;
 	}
 	

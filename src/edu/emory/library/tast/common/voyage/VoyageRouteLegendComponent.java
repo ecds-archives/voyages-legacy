@@ -58,17 +58,34 @@ public class VoyageRouteLegendComponent extends UIComponentBase
 				writer.writeAttribute("class", "voyage-route-legend-place", null);
 				writer.writeAttribute("style", cssStyle, null);
 				
-				// event
-				writer.startElement("div", this);
-				writer.writeAttribute("class", "voyage-route-legend-place-event", null);
-				writer.write(place.getEventDescription());
-				writer.endElement("div");
-
 				// place name
 				writer.startElement("div", this);
 				writer.writeAttribute("class", "voyage-route-legend-place-name", null);
-				writer.write(place.getPlaceName());
+				writer.write(place.getName());
 				writer.endElement("div");
+
+				// purpose
+				writer.startElement("div", this);
+				writer.writeAttribute("class", "voyage-route-legend-place-purpose", null);
+				writer.write(place.getPurpose());
+				writer.endElement("div");
+				
+				// info lines
+				for (Iterator iterator = place.getInfoLines().iterator(); iterator.hasNext();)
+				{
+					VoyageRouteInfoLine info = (VoyageRouteInfoLine) iterator.next();
+					writer.startElement("div", this);
+					writer.startElement("span", this);
+					writer.writeAttribute("class", "voyage-route-legend-info-line-name", null);
+					writer.write(info.getName());
+					writer.endElement("span");
+					writer.write(": ");
+					writer.startElement("span", this);
+					writer.writeAttribute("class", "voyage-route-legend-info-line-value", null);
+					writer.write(info.getValue());
+					writer.endElement("span");
+					writer.endElement("div");
+				}
 
 				// place
 				writer.endElement("div");

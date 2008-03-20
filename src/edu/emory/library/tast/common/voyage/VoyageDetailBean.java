@@ -1,5 +1,6 @@
 package edu.emory.library.tast.common.voyage;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -201,54 +202,31 @@ public class VoyageDetailBean
 		}
 		
 	}
-	
-	private Port loadVoyagePlace(Session sess, String place)
-	{
-		
-		String hqlImages =
-			"select v." + place + " " +
-			"from Voyage as v " +
-			"where v.iid = " + voyageIid + " and " +
-			"v." + place + ".showOnVoyageMap = '1'";
-		
-		List lst = sess.createQuery(hqlImages).list();
-		if (lst.size() == 0)
-			return null;
-		else
-			return (Port) lst.get(0);
 
-	}
-
-	/*
-	private void addPointOfInterest(
-			ArrayList pointsOfInterest,
-			Port port,
-			String symbol)
-	{
-		pointsOfInterest.add(
-				new PointOfInterest(
-						port.getLongitude(),
-						port.getLatitude(),
-						new String[]{symbol},
-						port.getName(),
-						port.getName()));
-	}
-	*/
-	
 	private void loadVoyageMapData(Session sess)
 	{
 		
+		SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
+		DecimalFormat slavesFmt = new DecimalFormat(",#,###,###");
+		
+		// Load the entire voyage. Originally, I tried to
+		// load only the necessary fields from it, but it turned
+		// out that we need about 20 fields to load, and
+		// nobody wants to use constantly things like
+		// ((Port)(Object[])result[4]).getName() ...
+		Voyage voyage = Voyage.loadById(sess, voyageIid);
+		
 		// load ports from database
-		Port departurePort = loadVoyagePlace(sess, "ptdepimp");
-		Port prchPort1 = loadVoyagePlace(sess, "plac1tra");
-		Port prchPort2 = loadVoyagePlace(sess, "plac2tra");
-		Port prchPort3 = loadVoyagePlace(sess, "plac3tra");
-		Port prchPortPrincipal = loadVoyagePlace(sess, "mjbyptimp");
-		Port sellPort1 = loadVoyagePlace(sess, "sla1port");
-		Port sellPort2 = loadVoyagePlace(sess, "adpsale1");
-		Port sellPort3 = loadVoyagePlace(sess, "adpsale2");
-		Port sellPortPrincipal = loadVoyagePlace(sess, "mjslptimp");
-		Port returnPort = loadVoyagePlace(sess, "portret");
+		Port departurePort = voyage.getPtdepimp();
+		Port prchPort1 = voyage.getPlac1tra();
+		Port prchPort2 = voyage.getPlac2tra();
+		Port prchPort3 = voyage.getPlac3tra();
+		Port prchPortPrincipal = voyage.getMjbyptimp();
+		Port sellPort1 = voyage.getSla1port();
+		Port sellPort2 = voyage.getAdpsale1();
+		Port sellPort3 = voyage.getAdpsale2();
+		Port sellPortPrincipal = voyage.getMjslptimp();
+		Port returnPort = voyage.getPortret();
 		
 		// create a new route
 		route = new VoyageRoute();
@@ -256,109 +234,401 @@ public class VoyageDetailBean
 		// place where voyage began
 		if (departurePort != null)
 		{
+			
 			VoyageRouteLeg startLeg = new VoyageRouteLeg(); 
 			route.addLeg(startLeg);
-			startLeg.addPlace(new VoyageRoutePlace(
+
+			VoyageRoutePlace departurePlace = new VoyageRoutePlace(
 					departurePort.getId().longValue(),
 					departurePort.getName(),
-					"Place where voyage began",
 					departurePort.getLongitude(),
 					departurePort.getLatitude(),
-					new VoyageRouteSymbolBegin()));
+					new VoyageRouteSymbolBegin());
 			
+			departurePlace.setPurpose(
+					"Place where voyage began");
+			
+			departurePlace.addInfoLine(
+					"Date that voyage began",
+					dateFmt.format(voyage.getDatedep()));
+			
+			startLeg.addPlace(departurePlace);
+		
 		}
 		
 		// ports of purchases
-		if (prchPort1 != null || prchPort2 != null || prchPort3 != null || prchPortPrincipal != null)
+		if (	
+				prchPort1 != null ||
+				prchPort2 != null ||
+				prchPort3 != null ||
+				prchPortPrincipal != null)
 		{
 			VoyageRouteLeg purchasesLeg = new VoyageRouteLeg(); 
 			route.addLeg(purchasesLeg);
 			
 			if (prchPort1 != null)
-				purchasesLeg.addPlace(new VoyageRoutePlace(
+			{
+				
+				boolean isPrincipal = prchPort1.equals(prchPortPrincipal);
+
+				VoyageRoutePlace prchPlace1 = new VoyageRoutePlace(
 						prchPort1.getId().longValue(),
 						prchPort1.getName(),
-						"First place of slave purchase",
 						prchPort1.getLongitude(),
 						prchPort1.getLatitude(),
-						new VoyageRouteSymbolPurchase(0,
-								prchPort1.equals(prchPortPrincipal))));
+						new VoyageRouteSymbolPurchase(0, isPrincipal));
+				
+				if (!isPrincipal)
+					prchPlace1.setPurpose(
+							"First place of slave purchase");
+				else
+					prchPlace1.setPurpose(
+							"First (and major) place of slave purchase");
+				
+				if (voyage.getDatebuy() != null)
+					prchPlace1.addInfoLine(
+							"Date that slave purchase began",
+							dateFmt.format(voyage.getDatebuy()));
+				
+				if (voyage.getDateleftafr() != null && prchPort2 == null)
+					prchPlace1.addInfoLine(
+							"Date that vessel left",
+							dateFmt.format(voyage.getDateleftafr()));
+				
+				if (voyage.getSlintend() != null)
+					prchPlace1.addInfoLine(
+							"Intended number of slaves to purchase",
+							slavesFmt.format(voyage.getSlintend()));
+				
+				if (voyage.getNcar13() != null)
+					prchPlace1.addInfoLine(
+							"Slaves purchased",
+							slavesFmt.format(voyage.getNcar13()));
+				
+				if (isPrincipal)
+				{
+					if (voyage.getTslavesd() != null)
+						prchPlace1.addInfoLine(
+								"Total slaves purchased",
+								slavesFmt.format(voyage.getTslavesd()));
+					
+					if (voyage.getSlaximp() != null)
+						prchPlace1.addInfoLine(
+								"Total slaves embarked",
+								slavesFmt.format(voyage.getSlaximp()));					
+				}
+
+				purchasesLeg.addPlace(prchPlace1);
+				
+			}
 			
 			if (prchPort2 != null)
-				purchasesLeg.addPlace(new VoyageRoutePlace(
+			{
+				
+				boolean isPrincipal = prchPort2.equals(prchPortPrincipal);
+				
+				VoyageRoutePlace prchPlace2 = new VoyageRoutePlace(
 						prchPort2.getId().longValue(),
 						prchPort2.getName(),
-						"Second place of slave purchase",
 						prchPort2.getLongitude(),
 						prchPort2.getLatitude(),
-						new VoyageRouteSymbolPurchase(1,
-								prchPort2.equals(prchPortPrincipal))));
+						new VoyageRouteSymbolPurchase(1, isPrincipal));
+				
+				if (!isPrincipal)
+					prchPlace2.setPurpose(
+							"Second place of slave purchase");
+				else
+					prchPlace2.setPurpose(
+							"Second (and major) place of slave purchase");
+				
+				if (voyage.getDateleftafr() != null && prchPort3 == null)
+					prchPlace2.addInfoLine(
+							"Date that vessel left",
+							dateFmt.format(voyage.getDateleftafr()));
+				
+				if (voyage.getNcar15() != null)
+					prchPlace2.addInfoLine(
+							"Slaves purchased",
+							slavesFmt.format(voyage.getNcar15()));
+				
+				if (isPrincipal)
+				{
+					if (voyage.getTslavesd() != null)
+						prchPlace2.addInfoLine(
+								"Total slaves purchased",
+								slavesFmt.format(voyage.getTslavesd()));
+					
+					if (voyage.getSlaximp() != null)
+						prchPlace2.addInfoLine(
+								"Total slaves embarked",
+								slavesFmt.format(voyage.getSlaximp()));					
+				}
+				
+				purchasesLeg.addPlace(prchPlace2);
+				
+			}
 			
 			if (prchPort3 != null)
-				purchasesLeg.addPlace(new VoyageRoutePlace(
+			{
+				
+				boolean isPrincipal = prchPort3.equals(prchPortPrincipal);
+				
+				VoyageRoutePlace prchPlace3 = new VoyageRoutePlace(
 						prchPort3.getId().longValue(),
 						prchPort3.getName(),
-						"Third place of slave purchase",
 						prchPort3.getLongitude(),
 						prchPort3.getLatitude(),
-						new VoyageRouteSymbolPurchase(2,
-								prchPort3.equals(prchPortPrincipal))));
+						new VoyageRouteSymbolPurchase(2, isPrincipal));
+				
+				if (!isPrincipal)
+					prchPlace3.setPurpose(
+							"Third place of slave purchase");
+				else
+					prchPlace3.setPurpose(
+							"Third (and major) place of slave purchase");
+				
+				if (voyage.getDateleftafr() != null)
+					prchPlace3.addInfoLine(
+							"Date that vessel left",
+							dateFmt.format(voyage.getDateleftafr()));
+				
+				if (voyage.getNcar17() != null)
+					prchPlace3.addInfoLine(
+							"Slaves purchased",
+							slavesFmt.format(voyage.getNcar17()));
+				
+				if (isPrincipal)
+				{
+					if (voyage.getTslavesd() != null)
+						prchPlace3.addInfoLine(
+								"Total slaves purchased",
+								slavesFmt.format(voyage.getTslavesd()));
+					
+					if (voyage.getSlaximp() != null)
+						prchPlace3.addInfoLine(
+								"Total slaves embarked",
+								slavesFmt.format(voyage.getSlaximp()));					
+				}
+				
+				purchasesLeg.addPlace(prchPlace3);
+				
+			}
 			
 			if (prchPort1 == null && prchPort2 == null && prchPort3 == null)
-				purchasesLeg.addPlace(new VoyageRoutePlace(
+			{
+				
+				VoyageRoutePlace prchPlacePrincipal = new VoyageRoutePlace(
 						prchPortPrincipal.getId().longValue(),
 						prchPortPrincipal.getName(),
-						"Principal place of slave purchase",
 						prchPortPrincipal.getLongitude(),
 						prchPortPrincipal.getLatitude(),
-						new VoyageRouteSymbolPurchasePrincipal()));
+						new VoyageRouteSymbolPurchasePrincipal());
+				
+				prchPlacePrincipal.setPurpose(
+						"Principal place of slave purchase");
+				
+				if (voyage.getDatebuy() != null)
+					prchPlacePrincipal.addInfoLine(
+							"Date that slave purchase began",
+							dateFmt.format(voyage.getDatebuy()));
+				
+				if (voyage.getDateleftafr() != null)
+					prchPlacePrincipal.addInfoLine(
+							"Date that vessel left last slaving port",
+							dateFmt.format(voyage.getDatebuy()));
+				
+				if (voyage.getTslavesd() != null)
+					prchPlacePrincipal.addInfoLine(
+							"Total slaves purchased",
+							slavesFmt.format(voyage.getTslavesd()));
+				
+				if (voyage.getSlaximp() != null)
+					prchPlacePrincipal.addInfoLine(
+							"Total slaves embarked",
+							slavesFmt.format(voyage.getSlaximp()));					
+				
+				purchasesLeg.addPlace(prchPlacePrincipal);
+				
+			}
 
 		}
 		
 		// port of sells
-		if (sellPort1 != null || sellPort2 != null || sellPort3 != null || sellPortPrincipal != null)
+		if (
+				sellPort1 != null ||
+				sellPort2 != null ||
+				sellPort3 != null ||
+				sellPortPrincipal != null)
 		{
 			VoyageRouteLeg sellsLeg = new VoyageRouteLeg(); 
 			route.addLeg(sellsLeg);
 			
 			if (sellPort1 != null)
-				sellsLeg.addPlace(new VoyageRoutePlace(
+			{
+				
+				boolean isPrincipal = sellPort1.equals(sellPortPrincipal);
+				
+				VoyageRoutePlace sellPlace1 = new VoyageRoutePlace(
 						sellPort1.getId().longValue(),
 						sellPort1.getName(),
-						"First place of slave purchase",
 						sellPort1.getLongitude(),
 						sellPort1.getLatitude(),
-						new VoyageRouteSymbolSell(0,
-								sellPort1.equals(sellPortPrincipal))));
+						new VoyageRouteSymbolSell(0, isPrincipal));
+				
+				if (!isPrincipal)
+					sellPlace1.setPurpose(
+							"First place of slave landing");
+				else
+					sellPlace1.setPurpose(
+							"First (and major) place of slave landing");
+				
+				sellPlace1.setPurpose("First place of slave landing");
+				
+				if (voyage.getDateland1() != null)
+					sellPlace1.addInfoLine(
+							"Date of landing",
+							dateFmt.format(voyage.getDateland1()));
+				
+				if (voyage.getDatedepam() != null && sellPort2 == null)
+					sellPlace1.addInfoLine(
+							"Date left on return voyage",
+							dateFmt.format(voyage.getDatedepam()));
+				
+				if (voyage.getSlaarriv() != null)
+					sellPlace1.addInfoLine(
+							"Slaves arrived",
+							slavesFmt.format(voyage.getSlaarriv()));
+				
+				if (voyage.getSlas32() != null)
+					sellPlace1.addInfoLine(
+							"Slaves disembarked",
+							slavesFmt.format(voyage.getSlas32()));		
+				
+				if (isPrincipal)
+					if (voyage.getSlamimp() != null)
+						sellPlace1.addInfoLine(
+								"Total slaves disembarked",
+								slavesFmt.format(voyage.getSlamimp()));				
+				
+
+				sellsLeg.addPlace(sellPlace1);
+
+			}
 			
 			if (sellPort2 != null)
-				sellsLeg.addPlace(new VoyageRoutePlace(
+			{
+			
+				boolean isPrincipal = sellPort2.equals(sellPortPrincipal);
+				
+				VoyageRoutePlace sellPlace2 = new VoyageRoutePlace(
 						sellPort2.getId().longValue(),
 						sellPort2.getName(),
-						"Second place of slave purchase",
 						sellPort2.getLongitude(),
 						sellPort2.getLatitude(),
-						new VoyageRouteSymbolSell(1,
-								sellPort2.equals(sellPortPrincipal))));
+						new VoyageRouteSymbolSell(1, isPrincipal));
+				
+				if (!isPrincipal)
+					sellPlace2.setPurpose(
+							"Second place of slave landing");
+				else
+					sellPlace2.setPurpose(
+							"Second (and major) place of slave landing");
+
+				if (voyage.getDateland2() != null)
+					sellPlace2.addInfoLine(
+							"Date of landing",
+							dateFmt.format(voyage.getDateland2()));
+				
+				if (voyage.getDatedepam() != null && sellPort3 == null)
+					sellPlace2.addInfoLine(
+							"Date left on return voyage",
+							dateFmt.format(voyage.getDatedepam()));
+				
+				if (voyage.getSlas36() != null)
+					sellPlace2.addInfoLine(
+							"Slaves disembarked",
+							slavesFmt.format(voyage.getSlas36()));
+				
+				if (isPrincipal)
+					if (voyage.getSlamimp() != null)
+						sellPlace2.addInfoLine(
+								"Total slaves disembarked",
+								slavesFmt.format(voyage.getSlamimp()));				
+				
+				sellsLeg.addPlace(sellPlace2);
+			
+			}
 			
 			if (sellPort3 != null)
-				sellsLeg.addPlace(new VoyageRoutePlace(
+			{
+				
+				boolean isPrincipal = sellPort3.equals(sellPortPrincipal);
+				
+				VoyageRoutePlace sellPlace3 = new VoyageRoutePlace(
 						sellPort3.getId().longValue(),
 						sellPort3.getName(),
-						"Third place of slave purchase",
 						sellPort3.getLongitude(),
 						sellPort3.getLatitude(),
-						new VoyageRouteSymbolSell(2,
-								sellPort3.equals(sellPortPrincipal))));
+						new VoyageRouteSymbolSell(2, isPrincipal));
+				
+				if (!isPrincipal)
+					sellPlace3.setPurpose(
+							"Third place of slave landing");
+				else
+					sellPlace3.setPurpose(
+							"Third (and major) place of slave landing");
+
+				if (voyage.getDateland3() != null)
+					sellPlace3.addInfoLine(
+							"Date of landing",
+							dateFmt.format(voyage.getDateland3()));
+				
+				if (voyage.getDatedepam() != null)
+					sellPlace3.addInfoLine(
+							"Date left on return voyage",
+							dateFmt.format(voyage.getDatedepam()));
+				
+				if (voyage.getSlas39() != null)
+					sellPlace3.addInfoLine(
+							"Slaves disembarked",
+							slavesFmt.format(voyage.getSlas39()));				
+
+				if (isPrincipal)
+					if (voyage.getSlamimp() != null)
+						sellPlace3.addInfoLine(
+								"Total slaves disembarked",
+								slavesFmt.format(voyage.getSlamimp()));				
+				
+				sellsLeg.addPlace(sellPlace3);
+				
+			}
 			
 			if (sellPort1 == null && sellPort2 == null && sellPort3 == null)
-				sellsLeg.addPlace(new VoyageRoutePlace(
+			{
+				
+				VoyageRoutePlace sellPlacePricipal = new VoyageRoutePlace(
 						sellPortPrincipal.getId().longValue(),
 						sellPortPrincipal.getName(),
-						"Principal place of slave purchase",
 						sellPortPrincipal.getLongitude(),
 						sellPortPrincipal.getLatitude(),
-						new VoyageRouteSymbolSellPrincipal()));
+						new VoyageRouteSymbolSellPrincipal());
+				
+				sellPlacePricipal.setPurpose(
+						"Principal place of slave landing");
+				
+				if (voyage.getDatedepam() != null)
+					sellPlacePricipal.addInfoLine(
+							"Date left on return voyage",
+							dateFmt.format(voyage.getDatedepam()));
+				
+				if (voyage.getSlamimp() != null)
+					sellPlacePricipal.addInfoLine(
+							"Total slaves disembarked",
+							slavesFmt.format(voyage.getSlamimp()));				
+				
+				sellsLeg.addPlace(sellPlacePricipal);
+			
+			}
 			
 		}
 		
@@ -367,13 +637,23 @@ public class VoyageDetailBean
 		{
 			VoyageRouteLeg endLeg = new VoyageRouteLeg(); 
 			route.addLeg(endLeg);
-			endLeg.addPlace(new VoyageRoutePlace(
+			
+			VoyageRoutePlace returnPlace = new VoyageRoutePlace(
 					returnPort.getId().longValue(),
 					returnPort.getName(),
-					"Place where voyage ended",
 					returnPort.getLongitude(),
 					returnPort.getLatitude(),
-					new VoyageRouteSymbolEnd()));
+					new VoyageRouteSymbolEnd());
+			
+			returnPlace.setPurpose(
+					"Place place of slave landing");
+
+			if (voyage.getDateend() != null)
+				returnPlace.addInfoLine(
+						"Date when voyage completed",
+						dateFmt.format(voyage.getDateend()));
+			
+			endLeg.addPlace(returnPlace);
 			
 		}
 

@@ -505,6 +505,10 @@ public class Voyage extends AbstractDescriptiveObject {
 		return (Voyage)res.get(0);
 	}
 	
+	public static Voyage loadById(Session session, long iid) {
+		return loadById(session, new Long(iid));
+	}
+
 	public static Voyage loadById(Session session, Long iid) {
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("iid"), iid, Conditions.OP_EQUALS);
