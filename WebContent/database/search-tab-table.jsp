@@ -55,10 +55,10 @@
 </t:htmlTag>
 
 <t:htmlTag value="div" style="margin-top: 5px;" rendered="#{TableResultTabBean.resultsMode}">
-	<t:commandButton value="Save results into csv file (only current view)" action="#{TableResultTabBean.getFileCurrentData}"
+	<t:commandButton value="Download current view" action="#{TableResultTabBean.getFileCurrentData}"
 		styleClass="button-save"/>
 	<t:outputText escape="false" value="&nbsp;&nbsp;"/>
-	<t:commandButton value="Save results into csv file (all results)" action="#{TableResultTabBean.getFileAllData}"
+	<t:commandButton value="Download all results" action="#{TableResultTabBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>
 
