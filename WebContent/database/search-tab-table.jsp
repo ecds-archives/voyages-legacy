@@ -23,7 +23,7 @@
 	data="#{TableResultTabBean.data}"
 	componentVisible="#{TableResultTabBean.componentVisible}"
 	sortChanged="#{TableResultTabBean.sortChanged}"
-	style="overflow: auto;" />
+	style="overflow: auto; text-align: right" />
 
 <t:htmlTag value="div" styleClass="table-bottom-tools" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
