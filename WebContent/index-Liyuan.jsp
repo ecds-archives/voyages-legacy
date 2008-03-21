@@ -148,10 +148,10 @@
 				Maecenas hendrerit, sem at ornare semper, tellus ante tempor est, vel viverra nunc orci eget lectus.
 				Morbi sapien felis, semper at, blandit non, fermentum in, eros.  Duis consequat tellus nec leo.</div>
 		</div>
-		
-		*/ %>
+	
 	</div>
 	
+	*/ %>
 
 	<div class="index-footer">
 		<table border="0" cellspacing="0" cellpadding="0">
