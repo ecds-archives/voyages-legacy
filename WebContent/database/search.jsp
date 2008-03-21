@@ -88,15 +88,15 @@
 						</t:htmlTag>
 					</s:panelTab>
 					
-					<s:panelTab title="#{res.database_search_timeline}" sectionId="basic-graph">
+					<s:panelTab title="#{res.database_search_summarystats}" sectionId="basic-statistics">
 						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
-							<%@ include file="search-tab-timeline.jsp" %>
+							<%@ include file="search-tab-summary.jsp" %>
 						</t:htmlTag>
 						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
 							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
-				
+					
 					<s:panelTab title="#{res.database_search_tableview}" sectionId="tableview">
 						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-tableview.jsp" %>
@@ -115,15 +115,15 @@
 						</t:htmlTag>
 					</s:panelTab>
 				
-					<s:panelTab title="#{res.database_search_summarystats}" sectionId="basic-statistics">
+					<s:panelTab title="#{res.database_search_timeline}" sectionId="basic-graph">
 						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
-							<%@ include file="search-tab-summary.jsp" %>
+							<%@ include file="search-tab-timeline.jsp" %>
 						</t:htmlTag>
 						<t:htmlTag value="div" styleClass="no-result" rendered="#{SearchBean.noResult}">
 							<%@ include file="search-no-results.jsp" %>
 						</t:htmlTag>
 					</s:panelTab>
-					
+				
 					<s:panelTab title="#{res.database_search_maps}" sectionId="map-ports">
 						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
 							<%@ include file="search-tab-map.jsp" %>
