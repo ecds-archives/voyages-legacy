@@ -56,14 +56,22 @@ public class Query implements Cloneable, XMLExportable {
 
 	}
 
-	public boolean addToDbConditions(boolean markErrors, Conditions dbConds) {
+	public boolean addToDbConditions(boolean markErrors, Conditions dbConds)
+	{
+		
+		dbConds.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearFrom),
+				Conditions.OP_GREATER_OR_EQUAL);
 
-		dbConds.addCondition(Voyage.getAttribute("yearam"), new Integer(yearFrom), Conditions.OP_GREATER_OR_EQUAL);
-
-		dbConds.addCondition(Voyage.getAttribute("yearam"), new Integer(yearTo), Conditions.OP_SMALLER_OR_EQUAL);
+		dbConds.addCondition(
+				Voyage.getAttribute("yearam"),
+				new Integer(yearTo),
+				Conditions.OP_SMALLER_OR_EQUAL);
 
 		boolean errors = false;
-		for (Iterator iterQueryCondition = builderQuery.getConditions().iterator(); iterQueryCondition.hasNext();) {
+		for (Iterator iterQueryCondition = builderQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
+		{
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
 			if (!queryCondition.addToConditions(dbConds, markErrors))
 				errors = true;

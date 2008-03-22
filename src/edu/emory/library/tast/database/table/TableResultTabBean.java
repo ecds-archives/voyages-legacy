@@ -18,6 +18,7 @@ import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.database.query.SearchParameters;
 import edu.emory.library.tast.database.stat.ComparableSelectItem;
 import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
@@ -164,12 +165,13 @@ public class TableResultTabBean {
 	 */
 	private void getResultsDB() {
 		needQuery = this.linkManager.wasModified();
-		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
+		SearchParameters searchParams = this.searchBean.getSearchParameters(); 
+		if (!searchParams.getConditions().equals(this.conditions)) {
 			this.linkManager.reset();
-			this.conditions = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
+			this.conditions = (Conditions) searchParams.getConditions().clone();
 			needQuery = true;
 		}
-		if (this.searchBean.getSearchParameters().getConditions() != null && needQuery) {
+		if (searchParams.getConditions() != null && needQuery) {
 			this.queryAndFillInData(null, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
 			this.setNumberOfResults();
 			needQuery = false;
@@ -196,7 +198,6 @@ public class TableResultTabBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		try {
 			// Execute query
 			Object[] ret = qValue.executeQuery();
 			dataTable.setData(ret);
@@ -218,16 +219,16 @@ public class TableResultTabBean {
 			
 			if (returnBasicInfo && ret.length > 0) {
 				int len = ((Object[]) ret[0]).length;
+				t.commit();
+				session.close();
 				return new Object[][] {
 						{ VisibleAttribute.getAttribute("voyageid") },
 						{ ((Object[]) ret[0])[len - 1]} };
 			} else {
+				t.commit();
+				session.close();
 				return new Object[][] {};
 			}
-		} finally {
-			t.commit();
-			session.close();
-		}
 	}
 
 	private QueryValue getQuery(Conditions subCondition, TableData dataTable, int start, int length, boolean returnBasicInfo) {
@@ -630,8 +631,9 @@ public class TableResultTabBean {
 	 * @return
 	 */
 	public Integer getResultSize() {
-		this.getResultsDB();
-		return new Integer(this.data.getData() != null ? this.data.getData().length : 0);
+		return new Integer(
+				this.data.getData() != null ?
+						this.data.getData().length :0);
 	}
 
 	public boolean isNoResult() {
