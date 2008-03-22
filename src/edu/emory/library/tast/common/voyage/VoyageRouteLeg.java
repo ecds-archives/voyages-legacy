@@ -7,6 +7,7 @@ public class VoyageRouteLeg
 {
 	
 	private List places;
+	private List infoLines;
 	
 	public VoyageRouteLeg()
 	{
@@ -21,6 +22,23 @@ public class VoyageRouteLeg
 	{
 		if (places == null) places = new LinkedList();
 		return places;
+	}
+	
+	public void addInfoLine(String name, String value)
+	{
+		getInfoLines().add(
+				new VoyageRouteInfoLine(name, value));
+	}
+	
+	public List getInfoLines()
+	{
+		if (infoLines == null) infoLines = new LinkedList();
+		return infoLines;
+	}
+	
+	public void setInfoLines(List infoLines)
+	{
+		this.infoLines = infoLines;
 	}
 	
 }

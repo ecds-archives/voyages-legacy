@@ -219,50 +219,99 @@ public class VoyageDetailBean
 		}
 		
 	}
-
+	
 	private void loadVoyageMapData(Session sess, Voyage voyage)
 	{
 		
 		SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
 		DecimalFormat slavesFmt = new DecimalFormat(",#,###,###");
 		
-		// load ports from database
-		Port departurePort = voyage.getPtdepimp();
-		Port prchPort1 = voyage.getPlac1tra();
-		Port prchPort2 = voyage.getPlac2tra();
-		Port prchPort3 = voyage.getPlac3tra();
-		Port prchPortPrincipal = voyage.getMjbyptimp();
-		Port sellPort1 = voyage.getSla1port();
-		Port sellPort2 = voyage.getAdpsale1();
-		Port sellPort3 = voyage.getAdpsale2();
-		Port sellPortPrincipal = voyage.getMjslptimp();
-		Port returnPort = voyage.getPortret();
+		Port departurePort =
+			voyage.getPtdepimp() != null &&
+			voyage.getPtdepimp().isShowOnVoyageMap() ?
+					voyage.getPtdepimp() : null;
+
+		Port prchPort1 =
+			voyage.getPlac1tra() != null &&
+			voyage.getPlac1tra().isShowOnVoyageMap() ?
+					voyage.getPlac1tra() : null;
+		
+		Port prchPort2 =
+			voyage.getPlac2tra() != null &&
+			voyage.getPlac2tra().isShowOnVoyageMap() ?
+					voyage.getPlac2tra() : null;
+		
+		Port prchPort3 = 
+			voyage.getPlac3tra() != null &&
+			voyage.getPlac3tra().isShowOnVoyageMap() ?
+					voyage.getPlac3tra() : null;
+		
+		Port prchPortPrincipal = 
+			voyage.getMjbyptimp() != null &&
+			voyage.getMjbyptimp().isShowOnVoyageMap() ?
+					voyage.getMjbyptimp() : null;
+		
+		Port sellPort1 = 
+			voyage.getSla1port() != null &&
+			voyage.getSla1port().isShowOnVoyageMap() ?
+					voyage.getSla1port() : null;
+		
+		Port sellPort2 = 
+			voyage.getAdpsale1() != null &&
+			voyage.getAdpsale1().isShowOnVoyageMap() ?
+					voyage.getAdpsale1() : null;
+		
+		Port sellPort3 = 
+			voyage.getAdpsale2() != null &&
+			voyage.getAdpsale2().isShowOnVoyageMap() ?
+					voyage.getAdpsale2() : null;
+		
+		Port sellPortPrincipal = 
+			voyage.getMjslptimp() != null &&
+			voyage.getMjslptimp().isShowOnVoyageMap() ?
+					voyage.getMjslptimp() : null;
+		
+		Port returnPort = 
+			voyage.getPortret() != null &&
+			voyage.getPortret().isShowOnVoyageMap() ?
+					voyage.getPortret() : null;
 		
 		// create a new route
 		route = new VoyageRoute();
 		
 		// place where voyage began
-		if (departurePort != null)
+		if (departurePort != null || voyage.getSlintend() != null)
 		{
 			
 			VoyageRouteLeg startLeg = new VoyageRouteLeg(); 
 			route.addLeg(startLeg);
+			
+			if (departurePort != null)
+			{
 
-			VoyageRoutePlace departurePlace = new VoyageRoutePlace(
-					departurePort.getId().longValue(),
-					departurePort.getName(),
-					departurePort.getLongitude(),
-					departurePort.getLatitude(),
-					new VoyageRouteSymbolBegin());
+				VoyageRoutePlace departurePlace = new VoyageRoutePlace(
+						departurePort.getId().longValue(),
+						departurePort.getName(),
+						departurePort.getLongitude(),
+						departurePort.getLatitude(),
+						new VoyageRouteSymbolBegin());
+				
+				departurePlace.setPurpose(
+						"Place where voyage began");
+				
+				if (voyage.getDatedep() != null)
+					departurePlace.addInfoLine(
+							"Date that voyage began",
+							dateFmt.format(voyage.getDatedep()));
+				
+				startLeg.addPlace(departurePlace);
+
+			}
 			
-			departurePlace.setPurpose(
-					"Place where voyage began");
-			
-			departurePlace.addInfoLine(
-					"Date that voyage began",
-					dateFmt.format(voyage.getDatedep()));
-			
-			startLeg.addPlace(departurePlace);
+			if (voyage.getSlintend() != null)
+				startLeg.addInfoLine(
+						"Intended number of slaves to purchase",
+						slavesFmt.format(voyage.getSlintend()));
 		
 		}
 		
@@ -271,7 +320,8 @@ public class VoyageDetailBean
 				prchPort1 != null ||
 				prchPort2 != null ||
 				prchPort3 != null ||
-				prchPortPrincipal != null)
+				prchPortPrincipal != null ||
+				voyage.getSlaximp() != null)
 		{
 			VoyageRouteLeg purchasesLeg = new VoyageRouteLeg(); 
 			route.addLeg(purchasesLeg);
@@ -305,29 +355,11 @@ public class VoyageDetailBean
 							"Date that vessel left",
 							dateFmt.format(voyage.getDateleftafr()));
 				
-				if (voyage.getSlintend() != null)
-					prchPlace1.addInfoLine(
-							"Intended number of slaves to purchase",
-							slavesFmt.format(voyage.getSlintend()));
-				
 				if (voyage.getNcar13() != null)
 					prchPlace1.addInfoLine(
 							"Slaves purchased",
 							slavesFmt.format(voyage.getNcar13()));
 				
-				if (isPrincipal)
-				{
-					if (voyage.getTslavesd() != null)
-						prchPlace1.addInfoLine(
-								"Total slaves purchased",
-								slavesFmt.format(voyage.getTslavesd()));
-					
-					if (voyage.getSlaximp() != null)
-						prchPlace1.addInfoLine(
-								"Total slaves embarked",
-								slavesFmt.format(voyage.getSlaximp()));					
-				}
-
 				purchasesLeg.addPlace(prchPlace1);
 				
 			}
@@ -360,19 +392,6 @@ public class VoyageDetailBean
 					prchPlace2.addInfoLine(
 							"Slaves purchased",
 							slavesFmt.format(voyage.getNcar15()));
-				
-				if (isPrincipal)
-				{
-					if (voyage.getTslavesd() != null)
-						prchPlace2.addInfoLine(
-								"Total slaves purchased",
-								slavesFmt.format(voyage.getTslavesd()));
-					
-					if (voyage.getSlaximp() != null)
-						prchPlace2.addInfoLine(
-								"Total slaves embarked",
-								slavesFmt.format(voyage.getSlaximp()));					
-				}
 				
 				purchasesLeg.addPlace(prchPlace2);
 				
@@ -407,24 +426,15 @@ public class VoyageDetailBean
 							"Slaves purchased",
 							slavesFmt.format(voyage.getNcar17()));
 				
-				if (isPrincipal)
-				{
-					if (voyage.getTslavesd() != null)
-						prchPlace3.addInfoLine(
-								"Total slaves purchased",
-								slavesFmt.format(voyage.getTslavesd()));
-					
-					if (voyage.getSlaximp() != null)
-						prchPlace3.addInfoLine(
-								"Total slaves embarked",
-								slavesFmt.format(voyage.getSlaximp()));					
-				}
-				
 				purchasesLeg.addPlace(prchPlace3);
 				
 			}
 			
-			if (prchPort1 == null && prchPort2 == null && prchPort3 == null)
+			if (
+					prchPort1 == null &&
+					prchPort2 == null &&
+					prchPort3 == null &&
+					prchPortPrincipal != null)
 			{
 				
 				VoyageRoutePlace prchPlacePrincipal = new VoyageRoutePlace(
@@ -445,7 +455,7 @@ public class VoyageDetailBean
 				if (voyage.getDateleftafr() != null)
 					prchPlacePrincipal.addInfoLine(
 							"Date that vessel left last slaving port",
-							dateFmt.format(voyage.getDatebuy()));
+							dateFmt.format(voyage.getDateleftafr()));
 				
 				if (voyage.getTslavesd() != null)
 					prchPlacePrincipal.addInfoLine(
@@ -460,6 +470,11 @@ public class VoyageDetailBean
 				purchasesLeg.addPlace(prchPlacePrincipal);
 				
 			}
+		
+			if (voyage.getSlaximp() != null)
+				purchasesLeg.addInfoLine(
+						"Total slaves embarked",
+						slavesFmt.format(voyage.getSlaximp()));
 
 		}
 		
@@ -468,7 +483,8 @@ public class VoyageDetailBean
 				sellPort1 != null ||
 				sellPort2 != null ||
 				sellPort3 != null ||
-				sellPortPrincipal != null)
+				sellPortPrincipal != null ||
+				voyage.getSlamimp() != null)
 		{
 			VoyageRouteLeg sellsLeg = new VoyageRouteLeg(); 
 			route.addLeg(sellsLeg);
@@ -514,13 +530,6 @@ public class VoyageDetailBean
 							"Slaves disembarked",
 							slavesFmt.format(voyage.getSlas32()));		
 				
-				if (isPrincipal)
-					if (voyage.getSlamimp() != null)
-						sellPlace1.addInfoLine(
-								"Total slaves disembarked",
-								slavesFmt.format(voyage.getSlamimp()));				
-				
-
 				sellsLeg.addPlace(sellPlace1);
 
 			}
@@ -529,7 +538,7 @@ public class VoyageDetailBean
 			{
 			
 				boolean isPrincipal = sellPort2.equals(sellPortPrincipal);
-				
+
 				VoyageRoutePlace sellPlace2 = new VoyageRoutePlace(
 						sellPort2.getId().longValue(),
 						sellPort2.getName(),
@@ -558,12 +567,6 @@ public class VoyageDetailBean
 					sellPlace2.addInfoLine(
 							"Slaves disembarked",
 							slavesFmt.format(voyage.getSlas36()));
-				
-				if (isPrincipal)
-					if (voyage.getSlamimp() != null)
-						sellPlace2.addInfoLine(
-								"Total slaves disembarked",
-								slavesFmt.format(voyage.getSlamimp()));				
 				
 				sellsLeg.addPlace(sellPlace2);
 			
@@ -603,17 +606,15 @@ public class VoyageDetailBean
 							"Slaves disembarked",
 							slavesFmt.format(voyage.getSlas39()));				
 
-				if (isPrincipal)
-					if (voyage.getSlamimp() != null)
-						sellPlace3.addInfoLine(
-								"Total slaves disembarked",
-								slavesFmt.format(voyage.getSlamimp()));				
-				
 				sellsLeg.addPlace(sellPlace3);
 				
 			}
 			
-			if (sellPort1 == null && sellPort2 == null && sellPort3 == null)
+			if (
+					sellPort1 == null &&
+					sellPort2 == null &&
+					sellPort3 == null &&
+					sellPortPrincipal != null)
 			{
 				
 				VoyageRoutePlace sellPlacePricipal = new VoyageRoutePlace(
@@ -631,14 +632,14 @@ public class VoyageDetailBean
 							"Date left on return voyage",
 							dateFmt.format(voyage.getDatedepam()));
 				
-				if (voyage.getSlamimp() != null)
-					sellPlacePricipal.addInfoLine(
-							"Total slaves disembarked",
-							slavesFmt.format(voyage.getSlamimp()));				
-				
 				sellsLeg.addPlace(sellPlacePricipal);
 			
 			}
+			
+			if (voyage.getSlamimp() != null)
+				sellsLeg.addInfoLine(
+						"Total slaves disembarked",
+						slavesFmt.format(voyage.getSlamimp()));				
 			
 		}
 		
@@ -656,7 +657,7 @@ public class VoyageDetailBean
 					new VoyageRouteSymbolEnd());
 			
 			returnPlace.setPurpose(
-					"Place place of slave landing");
+					"Place where voyage ended");
 
 			if (voyage.getDateend() != null)
 				returnPlace.addInfoLine(
@@ -699,12 +700,6 @@ public class VoyageDetailBean
 		}
 	}
 
-	public String refreshMap()
-	{
-		// TODO refresh map 
-		return null;
-	}
-	
 	/**
 	 * Opens image detail for voyage's image
 	 * @return
@@ -737,7 +732,9 @@ public class VoyageDetailBean
 
 	public Line[] getVoyageMapLines()
 	{
-		return route.createMapLines();
+		// for now, they don't like the straight lines
+		// return route.createMapLines();
+		return null;
 	}
 
 	public VoyageRoute getVoyageRoute()

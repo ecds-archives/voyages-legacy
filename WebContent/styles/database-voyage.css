@@ -5,7 +5,7 @@ div.detail-title {
 	
 div.detail-link-back {
 	margin-top: 10px;
-	margin-bottom: 2px;
+	margin-bottom: epx;
 	margin-left: 15px; }
 	
 table.detail {
@@ -171,7 +171,7 @@ div.voyage-route-legend {
 	margin-left: 10px; }
 	
 div.voyage-route-legend-leg {
-	padding-top: 10px;
+	padding-top: 5px;
 	padding-bottom: 5px;
 	border-top: 1px solid #4C5966; }
 	
@@ -188,5 +188,6 @@ div.voyage-route-legend-place-name {
 div.voyage-route-legend-place-purpose {
 	}
 
-
-
+div.voyage-route-legend-leg-info-lines {
+	padding-top: 5px;
+	border-top: 1px dotted #4C5966; }

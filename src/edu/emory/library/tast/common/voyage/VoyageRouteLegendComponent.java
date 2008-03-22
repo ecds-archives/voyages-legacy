@@ -70,18 +70,19 @@ public class VoyageRouteLegendComponent extends UIComponentBase
 				writer.write(place.getPurpose());
 				writer.endElement("div");
 				
-				// info lines
+				// info lines for place
 				for (Iterator iterator = place.getInfoLines().iterator(); iterator.hasNext();)
 				{
 					VoyageRouteInfoLine info = (VoyageRouteInfoLine) iterator.next();
 					writer.startElement("div", this);
+					writer.writeAttribute("class", "voyage-route-legend-place-info-line", null);
 					writer.startElement("span", this);
-					writer.writeAttribute("class", "voyage-route-legend-info-line-name", null);
+					writer.writeAttribute("class", "voyage-route-legend-place-info-line-name", null);
 					writer.write(info.getName());
 					writer.endElement("span");
 					writer.write(": ");
 					writer.startElement("span", this);
-					writer.writeAttribute("class", "voyage-route-legend-info-line-value", null);
+					writer.writeAttribute("class", "voyage-route-legend-place-info-line-value", null);
 					writer.write(info.getValue());
 					writer.endElement("span");
 					writer.endElement("div");
@@ -92,6 +93,37 @@ public class VoyageRouteLegendComponent extends UIComponentBase
 				
 			}
 
+			// info lines for place
+			if (leg.getInfoLines().size() != 0)
+			{
+				writer.startElement("div", this);
+				if (leg.getPlaces().size() != 0)
+				{
+					writer.writeAttribute("class", "voyage-route-legend-leg-info-lines", null);
+				}
+				else
+				{
+					writer.writeAttribute("class", "voyage-route-legend-leg-info-lines-no-places", null);
+				}
+				for (Iterator iterator = leg.getInfoLines().iterator(); iterator.hasNext();)
+				{
+					VoyageRouteInfoLine info = (VoyageRouteInfoLine) iterator.next();
+					writer.startElement("div", this);
+					writer.writeAttribute("class", "voyage-route-legend-leg-info-line", null);
+					writer.startElement("span", this);
+					writer.writeAttribute("class", "voyage-route-legend-leg-info-line-name", null);
+					writer.write(info.getName());
+					writer.endElement("span");
+					writer.write(": ");
+					writer.startElement("span", this);
+					writer.writeAttribute("class", "voyage-route-legend-leg-info-line-value", null);
+					writer.write(info.getValue());
+					writer.endElement("span");
+					writer.endElement("div");
+				}
+				writer.endElement("div");
+			}
+			
 			// leg frame
 			writer.endElement("div");
 		

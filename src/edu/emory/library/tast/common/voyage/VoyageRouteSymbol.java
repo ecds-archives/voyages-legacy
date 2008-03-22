@@ -60,7 +60,7 @@ abstract class VoyageRouteNumberedSymbol extends VoyageRouteSymbol
 		return new String[] {
 				baseName + "-" +
 				"no" + (index + 1) +
-				(principal ? "-circle-" : "") + "-" +
+				(principal ? "-circle" : "") + "-" +
 				(n + 1)};
 	}
 	

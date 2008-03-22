@@ -80,6 +80,7 @@ public class VoyageRoutePlace
 	{
 		this.infoLines = infoLines;
 	}
+
 	public void setPurpose(String purpose)
 	{
 		this.purpose = purpose;

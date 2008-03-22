@@ -54,7 +54,7 @@
 				</t:htmlTag>
 
 				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText value="#{VoyageDetailBean.pageTitle}" />
+					<h:outputText escape="false" value="#{VoyageDetailBean.pageTitle}" />
 				</t:htmlTag>
 
 				<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
@@ -69,7 +69,7 @@
 				</t:htmlTag>
 
 				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText value="#{VoyageDetailBean.pageTitle}" />
+					<h:outputText escape="false" value="#{VoyageDetailBean.pageTitle}" />
 				</t:htmlTag>
 
 				<t:htmlTag value="table"
@@ -108,7 +108,7 @@
 				</t:htmlTag>
 
 				<t:htmlTag value="div" styleClass="detail-title">
-					<h:outputText value="#{VoyageDetailBean.pageTitle}" />
+					<h:outputText escape="false" value="#{VoyageDetailBean.pageTitle}" />
 				</t:htmlTag>
 
 				<s:pictures images="#{VoyageDetailBean.imagesGallery}"
