@@ -33,8 +33,8 @@ SlidingBox.prototype.init = function()
 	
 	var boxHeight = ElementUtils.getOffsetHeight(box);
 	
-	this.columnTop = ElementUtils.getOffsetTop(column);
-	this.lowerBound = ElementUtils.getOffsetTop(box);
+	this.columnTop = ElementUtils.getPosTop(column);
+	this.lowerBound = ElementUtils.getPosTop(box);
 	this.upperBound = this.columnTop + ElementUtils.getOffsetHeight(column) - boxHeight;
 	
 	box.style.position = "absolute";
@@ -74,7 +74,7 @@ SlidingBox.prototype.reposition = function()
 	if (this.slide)
 	{
 	
-		this.currentPos = ElementUtils.getOffsetTop(box);
+		this.currentPos = ElementUtils.getPosTop(box);
 		this.targetPos = newTop;
 		
 		box.style.display = "none";

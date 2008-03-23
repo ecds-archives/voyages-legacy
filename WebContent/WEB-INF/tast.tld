@@ -317,6 +317,9 @@
 		<attribute>
 			<name>sectionId</name>
 		</attribute>
+		<attribute>
+			<name>href</name>
+		</attribute>
 	</tag>
 
 	<tag>

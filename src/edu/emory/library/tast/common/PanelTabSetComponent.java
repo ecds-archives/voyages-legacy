@@ -11,9 +11,10 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 /**
- * This component groups some number of panel tabls and provides synchronization
+ * This component groups some number of panel tabs and provides synchronization
  * between them. Basically, it provides tabs functionality to our application.
  * As children of this component one can put panelTab elements. Each panelTab element
  * provides one panel and one tab. The component allows only one panelTab to be opened
@@ -29,7 +30,8 @@ public class PanelTabSetComponent extends UIComponentBase {
 
 	private boolean selectedSectionIdSet = false;
 
-	public Object saveState(FacesContext context) {
+	public Object saveState(FacesContext context)
+	{
 		Object[] values = new Object[3];
 		values[0] = super.saveState(context);
 		values[1] = title;
@@ -37,7 +39,8 @@ public class PanelTabSetComponent extends UIComponentBase {
 		return values;
 	}
 
-	public void restoreState(FacesContext context, Object state) {
+	public void restoreState(FacesContext context, Object state)
+	{
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[0]);
 		title = (String) values[1];
@@ -49,22 +52,26 @@ public class PanelTabSetComponent extends UIComponentBase {
 		return true;
 	}
 	
-	public String getFamily() {
+	public String getFamily()
+	{
 		return null;
 	}
 
-	private String getSelectedTabHiddenFieldName(FacesContext context) {
+	private String getSelectedTabHiddenFieldName(FacesContext context)
+	{
 		return getClientId(context) + "_selected_tab";
 	}
 
-	public void decode(FacesContext context) {
+	public void decode(FacesContext context)
+	{
 
 		Map params = context.getExternalContext().getRequestParameterMap();
-
-		String newSelectedTabId = (String) params
-				.get(getSelectedTabHiddenFieldName(context));
-		if (newSelectedTabId != null && newSelectedTabId.length() > 0) {
-			if (!newSelectedTabId.equals(selectedSectionId)) {
+		String newSelectedTabId = (String) params.get(getSelectedTabHiddenFieldName(context));
+		
+		if (!StringUtils.isNullOrEmpty(newSelectedTabId))
+		{
+			if (!newSelectedTabId.equals(selectedSectionId))
+			{
 				queueEvent(new TabChangedEvent(this, newSelectedTabId));
 				selectedSectionId = newSelectedTabId;
 			}
@@ -72,18 +79,19 @@ public class PanelTabSetComponent extends UIComponentBase {
 
 	}
 
-	public void processUpdates(FacesContext context) {
+	public void processUpdates(FacesContext context)
+	{
 		ValueBinding vb = getValueBinding("selectedSectionId");
-		if (vb != null)
-			vb.setValue(context, selectedSectionId);
+		if (vb != null) vb.setValue(context, selectedSectionId);
 		super.processUpdates(context);
 	}
 
-	private void encodeTabsTitle(FacesContext context, ResponseWriter writer,
-			UIForm form, String selectedSectionId) throws IOException {
+	private void encodeTabsTitle(FacesContext context, ResponseWriter writer, UIForm form, String selectedSectionId) throws IOException
+	{
 
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "tabs-selection", null);
+		
 		writer.startElement("table", this);
 		writer.writeAttribute("border", "0", null);
 		writer.writeAttribute("cellspacing", "0", null);
@@ -91,48 +99,76 @@ public class PanelTabSetComponent extends UIComponentBase {
 		writer.writeAttribute("class", "tabs-selection", null);
 		writer.startElement("tr", this);
 		
-		writeSimpleTd(writer, "tabs-tab-first-filler");
-		
-		for (Iterator iter = getChildren().iterator(); iter.hasNext();) {
+		writer.startElement("td", null);
+		writer.writeAttribute("class", "tabs-tab-first-filler", null);
+		writer.endElement("td");
+
+		int tabIdx = 0;
+		for (Iterator iter = getChildren().iterator(); iter.hasNext();)
+		{
+			
 			PanelTabComponent sect = (PanelTabComponent) iter.next();
 			boolean isSelected = selectedSectionId.equals(sect.getSectionId());
+			String cssClassSelectedSuffix = isSelected ? "-selected" : "";
 
-			writeSimpleTd(writer, "tabs-tab-left" + (isSelected ? "-selected" : ""));
-			String tabClass = "tabs-tab-middle" + (isSelected ? "-selected" : "");
+			String href = sect.getHref();
+			String jsOnClick;
+			
+			if (href == null)
+			{
+				jsOnClick = JsfUtils.generateSubmitJS(
+						context, form,
+						getSelectedTabHiddenFieldName(context),
+						sect.getSectionId());
+			}
+			else
+			{
+				jsOnClick = JsfUtils.generateHrefLocationJS(
+						href);
+			}
 
-			String jsOnClick = JsfUtils
-					.generateSubmitJS(context, form,
-							getSelectedTabHiddenFieldName(context), sect
-									.getSectionId());
+			if (tabIdx > 0)
+			{
+				writer.startElement("td", null);
+				writer.writeAttribute("class", "tabs-tab-filler", null);
+				writer.endElement("td");
+			}
+			
+			writer.startElement("td", null);
+			writer.writeAttribute("class", "tabs-tab-left" + cssClassSelectedSuffix, null);
+			writer.endElement("td");
 
 			writer.startElement("td", this);
-			writer.writeAttribute("class", tabClass, null);
+			writer.writeAttribute("class", "tabs-tab-middle" + cssClassSelectedSuffix, null);
 			writer.writeAttribute("onclick", jsOnClick, null);
 			writer.write(sect.getTitle());
 			writer.endElement("td");
 			
-			writeSimpleTd(writer, "tabs-tab-right" + (isSelected ? "-selected" : ""));
-			writeSimpleTd(writer, "tabs-tab-filler");
+			writer.startElement("td", null);
+			writer.writeAttribute("class", "tabs-tab-right" + cssClassSelectedSuffix, null);
+			writer.endElement("td");
+			
+			tabIdx++;
+			
 		}
+		
+		writer.startElement("td", null);
+		writer.writeAttribute("class", "tabs-tab-last-filler", null);
+		writer.endElement("td");
 
 		writer.endElement("tr");
 		writer.endElement("table");
+		
 		writer.endElement("div");
 
 	}
 	
-	private void writeSimpleTd(ResponseWriter writer, String styleClass) throws IOException {
-		writer.startElement("td", null);
-		writer.writeAttribute("class", styleClass, null);
-		writer.endElement("td");
-	}
-
 	public void encodeChildren(FacesContext context) throws IOException {
 
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
 
-		String selectedSectionId = getSelectedTabId();
+		String selectedSectionId = getSelectedSectionId();
 		if (selectedSectionId == null)
 			selectedSectionId = "";
 
@@ -152,30 +188,25 @@ public class PanelTabSetComponent extends UIComponentBase {
 
 	}
 
-	public String getTitle() {
-		String val = JsfUtils.getCompPropString(this, this.getFacesContext(),
+	public String getTitle()
+	{
+		return JsfUtils.getCompPropString(this, this.getFacesContext(),
 				"title", false, title);
-		return val;
 	}
 
-	public String getSelectedSectionId() {
-		return selectedSectionId;
+	public String getSelectedSectionId()
+	{
+		return JsfUtils.getCompPropString(this, this.getFacesContext(),
+				"selectedSectionId", selectedSectionIdSet, selectedSectionId);
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 
-	public String getSelectedTabId() {
-		if (selectedSectionIdSet)
-			return selectedSectionId;
-		ValueBinding vb = getValueBinding("selectedSectionId");
-		if (vb == null)
-			return selectedSectionId;
-		return (String) vb.getValue(getFacesContext());
-	}
-
-	public void setSelectedSectionId(String selectedSectionId) {
+	public void setSelectedSectionId(String selectedSectionId)
+	{
 		this.selectedSectionId = selectedSectionId;
 		this.selectedSectionIdSet = true;
 	}

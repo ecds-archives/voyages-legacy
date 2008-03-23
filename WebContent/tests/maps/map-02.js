@@ -2429,7 +2429,7 @@ MapZoomSlider.prototype.init = function()
 
 	this.sliderWidth = ElementUtils.getOffsetWidth(this.bg);
 	this.knobWidth = ElementUtils.getOffsetWidth(this.knob);
-	this.sliderOffsetLeft = ElementUtils.getOffsetLeft(this.bg);
+	this.sliderOffsetLeft = ElementUtils.getPosLeft(this.bg);
 	this.sliderEffectiveWidth = this.bg.offsetWidth - this.knob.offsetWidth;
 	
 	EventAttacher.attach(this.knob, "mousedown", this, "mouseDown");

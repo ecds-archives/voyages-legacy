@@ -21,8 +21,12 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 	
-	<f:param value="index" binding="#{HelpMenuBean.activeSectionParam}" />
+	<f:param value="glossary" binding="#{HelpMenuBean.activeSectionParam}" />
 	<%@ include file="top-bar.jsp" %>
+	
+	<div>
+	
+	</div>
 	
 </h:form>
 </f:view>

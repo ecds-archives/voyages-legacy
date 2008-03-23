@@ -1,5 +1,6 @@
 package edu.emory.library.tast.common;
 
+import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
@@ -11,18 +12,20 @@ import javax.faces.webapp.UIComponentTag;
  * sectionId - id of this tab (used to recognize selected tab; see PanelTabSetTag for more information)
  *
  */
-public class PanelTabTag extends UIComponentTag {
+public class PanelTabTag extends UIComponentTag
+{
 
 	private String title;
 	private String sectionId;
+	private String href;
 
 	public String getComponentType()
 	{
 		return "PanelTab";
 	}
 
-	public String getRendererType() {
-		// TODO Auto-generated method stub
+	public String getRendererType()
+	{
 		return null;
 	}
 
@@ -30,20 +33,38 @@ public class PanelTabTag extends UIComponentTag {
 	{
 		
 		PanelTabComponent section = (PanelTabComponent) component;
+		Application app = getFacesContext().getApplication();
 
-		if (title != null) {
-			if (isValueReference(title)) {
-				ValueBinding vb = getFacesContext().getApplication()
-						.createValueBinding(title);
-				component.setValueBinding("title", vb);
-			} else {
-				component.getAttributes().put("title", title);
-			}
+		if (title != null && isValueReference(title))
+		{
+			ValueBinding vb = app.createValueBinding(title);
+			component.setValueBinding("title", vb);
+		}
+		else
+		{
+			section.setTitle(title);
 		}
 		
-		//section.setTitle(title);
-		section.setSectionId(sectionId);
-		
+		if (sectionId != null && isValueReference(sectionId))
+		{
+			ValueBinding vb = app.createValueBinding(sectionId);
+			component.setValueBinding("sectionId", vb);
+		}
+		else
+		{
+			section.setSectionId(sectionId);
+		}
+
+		if (href != null && isValueReference(href))
+		{
+			ValueBinding vb = app.createValueBinding(href);
+			component.setValueBinding("href", vb);
+		}
+		else
+		{
+			section.setHref(href);
+		}
+
 	}
 
 	public String getSectionId()
@@ -64,5 +85,15 @@ public class PanelTabTag extends UIComponentTag {
 	public void setTitle(String title)
 	{
 		this.title = title;
+	}
+
+	public String getHref()
+	{
+		return href;
+	}
+
+	public void setHref(String href)
+	{
+		this.href = href;
 	}
 }

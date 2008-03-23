@@ -172,12 +172,12 @@ var ElementUtils =
 
 	getEventMouseElementX: function(event, el)
 	{
-		return ElementUtils.getEventMouseX(event) - ElementUtils.getOffsetLeft(el);
+		return ElementUtils.getEventMouseX(event) - ElementUtils.getPosLeft(el);
 	},
 
 	getEventMouseElementY: function(event, el)
 	{
-		return ElementUtils.getEventMouseY(event) - ElementUtils.getOffsetTop(el);
+		return ElementUtils.getEventMouseY(event) - ElementUtils.getPosTop(el);
 	},
 
 	getOffsetWidth: function(el)
@@ -213,8 +213,30 @@ var ElementUtils =
 			return window.innerWidth;
 		}
 	},
+	
+	getOffsetLeft: function(el, rel)
+	{
+		var curleft = 0;
+		while (el.offsetParent && el != rel)
+		{
+			curleft += el.offsetLeft
+			el = el.offsetParent;
+		}
+		return curleft;
+	},
 
-	getOffsetLeft: function(el)
+	getOffsetTop: function(el, rel)
+	{
+		var curtop = 0;
+		while (el.offsetParent && el != rel)
+		{
+			curtop += el.offsetTop
+			el = el.offsetParent;
+		}
+		return curtop;
+	},
+
+	getPosLeft: function(el)
 	{
 		// IE
 		if (el.clientLeft)
@@ -233,7 +255,7 @@ var ElementUtils =
 		
 	},
 	
-	getOffsetTop: function(el)
+	getPosTop: function(el)
 	{
 	
 		// IE

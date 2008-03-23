@@ -6,10 +6,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
-public class GlossaryLettersTag extends UIComponentTag
+public class GlossaryLettersTagV1 extends UIComponentTag
 {
 	
 	private String letters;
+	private String columns;
 
 	public String getComponentType()
 	{
@@ -33,6 +34,15 @@ public class GlossaryLettersTag extends UIComponentTag
 			glossaryLetters.setValueBinding("letters", vb);
 		}
 		
+		if (columns != null && isValueReference(columns))
+		{
+			ValueBinding vb = app.createValueBinding(columns);
+			glossaryLetters.setValueBinding("columns", vb);
+		}
+		else
+		{
+		}
+		
 	}
 
 	public String getLetters()
@@ -43,6 +53,16 @@ public class GlossaryLettersTag extends UIComponentTag
 	public void setLetters(String letters)
 	{
 		this.letters = letters;
+	}
+
+	public String getColumns()
+	{
+		return columns;
+	}
+
+	public void setColumns(String columns)
+	{
+		this.columns = columns;
 	}
 
 }

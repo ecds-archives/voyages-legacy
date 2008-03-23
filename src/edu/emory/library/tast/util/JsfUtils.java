@@ -120,6 +120,11 @@ public class JsfUtils
 		return js.toString();
 	}
 	
+	public static String generateHrefLocationJS(String href)
+	{
+		return "location.href = '" + href + "'";
+	}
+
 	public static StringBuffer appendFormRefJS(StringBuffer js, FacesContext context, UIForm form)
 	{
 		js.append("document.");

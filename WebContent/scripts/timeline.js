@@ -29,7 +29,7 @@ Timeline.prototype.init = function()
 	this.rightExtentField = form.elements[this.rightExtentFieldName];
 	this.table = document.getElementById(this.timelineId);
 	
-	this.tableOffsetLeft = ElementUtils.getOffsetLeft(this.table.rows[0].cells[0]);
+	this.tableOffsetLeft = ElementUtils.getPosLeft(this.table.rows[0].cells[0]);
 
 	var cells = this.table.rows[0].cells;
 	for (var i = 0; i < this.markersCount; i++)

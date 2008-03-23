@@ -14,21 +14,30 @@ import edu.emory.library.tast.util.JsfUtils;
  * For more details see PanelTabSetComponent.
  *
  */
-public class PanelTabComponent extends UIComponentBase {
+public class PanelTabComponent extends UIComponentBase
+{
 
+	private boolean titleSet = false;
 	private String title;
+	
+	private boolean sectionIdSet = false;
 	private String sectionId;
 	
-	public String getFamily() {
+	private boolean hrefSet = false;
+	private String href;
+	
+	public String getFamily()
+	{
 		return null;
 	}
 
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[3];
+		Object[] values = new Object[4];
 		values[0] = super.saveState(context);
 		values[1] = title;
 		values[2] = sectionId;
+		values[3] = href;
 		return values;
 	}
 	
@@ -38,24 +47,43 @@ public class PanelTabComponent extends UIComponentBase {
 		super.restoreState(context, values[0]);
 		title = (String) values[1];
 		sectionId = (String) values[2];
+		href = (String) values[3];
 	}
 	
-	public String getSectionId() {
-		return sectionId;
+	public String getSectionId()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"sectionId", sectionIdSet, sectionId);
 	}
 
-	public void setSectionId(String sectionId) {
+	public void setSectionId(String sectionId)
+	{
+		this.sectionIdSet = true;
 		this.sectionId = sectionId;
 	}
 
 	public String getTitle()
 	{
-		String val = JsfUtils.getCompPropString(this, this.getFacesContext(), "title", false, title);
-		return val;
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"title", titleSet, title);
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(String title)
+	{
+		this.titleSet = true;
 		this.title = title;
+	}
+
+	public String getHref()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"href", hrefSet, href);
+	}
+
+	public void setHref(String href)
+	{
+		this.hrefSet = true;
+		this.href = href;
 	}
 
 }
