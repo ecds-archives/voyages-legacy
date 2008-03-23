@@ -22,4 +22,8 @@ public class HelpMenuBean
 		return (String) activeSectionParam.getValue();
 	}
 
+	public void setActiveSection(String activeSection)
+	{
+	}
+
 }

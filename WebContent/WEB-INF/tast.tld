@@ -1038,6 +1038,9 @@
 		<attribute>
 			<name>terms</name>
 		</attribute>
+		<attribute>
+			<name>binding</name>
+		</attribute>
 	</tag>
 	
 	<tag>
@@ -1050,10 +1053,10 @@
 			<name>id</name>
 		</attribute>
 		<attribute>
-			<name>columns</name>
+			<name>letters</name>
 		</attribute>
 		<attribute>
-			<name>letters</name>
+			<name>glossaryListId</name>
 		</attribute>
 	</tag>
 	

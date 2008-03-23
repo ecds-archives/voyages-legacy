@@ -6,8 +6,7 @@
 <t:htmlTag value="table" styleClass="top-bar">
 <t:htmlTag value="tr">
 
-	<t:htmlTag value="td" styleClass="top-bar-logo">
-	</t:htmlTag>
+	<t:htmlTag value="td" styleClass="top-bar-logo"><t:graphicImage url="../images/help-logo.png" width="240" height="60" border="0" /></t:htmlTag>
 
 	<t:htmlTag value="td" styleClass="top-bar-menu">
 		<t:div styleClass="top-bar-menu">

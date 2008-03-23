@@ -10,6 +10,7 @@ public class GlossaryLettersTag extends UIComponentTag
 {
 	
 	private String letters;
+	private String glossaryListId;
 
 	public String getComponentType()
 	{
@@ -24,7 +25,7 @@ public class GlossaryLettersTag extends UIComponentTag
 	protected void setProperties(UIComponent component)
 	{
 		
-		GlossaryLettersComponentV1 glossaryLetters = (GlossaryLettersComponentV1) component;
+		GlossaryLettersComponent glossaryLetters = (GlossaryLettersComponent) component;
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		
 		if (letters != null && isValueReference(letters))
@@ -33,6 +34,16 @@ public class GlossaryLettersTag extends UIComponentTag
 			glossaryLetters.setValueBinding("letters", vb);
 		}
 		
+		if (glossaryListId != null && isValueReference(glossaryListId))
+		{
+			ValueBinding vb = app.createValueBinding(glossaryListId);
+			glossaryLetters.setValueBinding("glossaryListId", vb);
+		}
+		else
+		{
+			glossaryLetters.setGlossaryListId(glossaryListId);
+		}
+
 	}
 
 	public String getLetters()
@@ -43,6 +54,16 @@ public class GlossaryLettersTag extends UIComponentTag
 	public void setLetters(String letters)
 	{
 		this.letters = letters;
+	}
+
+	public String getGlossaryListId()
+	{
+		return glossaryListId;
+	}
+
+	public void setGlossaryListId(String glossaryListId)
+	{
+		this.glossaryListId = glossaryListId;
 	}
 
 }

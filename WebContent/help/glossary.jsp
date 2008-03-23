@@ -12,8 +12,12 @@
 	<title>Help</title>
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
-	<link href="../styles/main-help.css" rel="stylesheet" type="text/css">
-
+	<link href="../styles/help-main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/help-glossary.css" rel="stylesheet" type="text/css">
+	
+	<script src="../scripts/utils.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/glossary-list.js" type="text/javascript" language="javascript"></script>
+	
 </head>
 <body>
 <f:view>
@@ -24,10 +28,37 @@
 	<f:param value="glossary" binding="#{HelpMenuBean.activeSectionParam}" />
 	<%@ include file="top-bar.jsp" %>
 	
-	<div>
-	
+	<div id="help-section-title"><img src="../images/help-glossary-title.png" width="240" height="50" border="0" alt="Demos"></div>
+
+	<div class="glossary-letters-and-search">
+		<table border="0" cellspacing="0" cellpadding="0" class="glossary-letters-and-search">
+		<tr>
+			<td>
+				<s:glossaryLetters
+					id="letters"
+					letters="#{GlossaryBean.letters}"
+					glossaryListId="form:glossary" />
+			</td>
+			<td style="padding-top: 3px; padding-bottom: 3px;">
+			
+				<table border="0" cellspacing="0" cellpadding="0" style="margin-left: auto; margin-right: 10px;">
+				<tr>
+					<td style="padding-right: 5px;"><h:inputText styleClass="glossary-search-box" value="#{GlossaryBean.searchTerm}" /></td>
+					<td><h:commandButton value="Search" /></td>
+				</tr>
+				</table>
+				
+			</td>
+		</tr>
+		</table>
 	</div>
 	
+	<div>
+		<s:glossaryList
+			id="glossary"
+			terms="#{GlossaryBean.terms}" />
+	</div>
+
 </h:form>
 </f:view>
 </body>

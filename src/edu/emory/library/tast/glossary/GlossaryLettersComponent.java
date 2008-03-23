@@ -11,9 +11,27 @@ import edu.emory.library.tast.util.JsfUtils;
 public class GlossaryLettersComponent extends UIComponentBase
 {
 	
+	private boolean glossaryListIdSet = false;
+	private String glossaryListId;
+	
 	public String getFamily()
 	{
 		return null;
+	}
+	
+	public Object saveState(FacesContext context)
+	{
+		Object[] values = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = glossaryListId;
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		glossaryListId = (String) values[1];
 	}
 	
 	public void encodeBegin(FacesContext context) throws IOException
@@ -24,6 +42,9 @@ public class GlossaryLettersComponent extends UIComponentBase
 		
 		// get data from bean
 		GlossaryLetter[] letters = getLetters();
+		
+		// id of the glossary list (we need this for JS)
+		glossaryListId = getGlossaryListId();
 		
 		// main table
 		writer.startElement("table", this);
@@ -38,29 +59,31 @@ public class GlossaryLettersComponent extends UIComponentBase
 		{
 			GlossaryLetter letter = letters[i];
 			
-			// cell itself
+			// cell
 			writer.startElement("td", this);
 			writer.writeAttribute("class", "glossary-selector-letter", null);
+
+			// start div in it
+			writer.startElement("div", this);
 			if (letter.isMatched())
 			{
-				writer.startElement("a", this);
-				writer.writeAttribute("class", "glossary-selector-letter-normal", null);
-				writer.writeAttribute("href", "#" + letter.getLetter(), null);
+				String onclick =
+					"GlossaryListGlobals.scrollTo(" +
+					"'" + glossaryListId + "', " +
+					"'" + letter.getLetter() + "')";
+				writer.writeAttribute("class", "glossary-selector-letter", null);
+				writer.writeAttribute("onclick", onclick, null);
 			}
 			else
 			{
-				writer.startElement("div", this);
 				writer.writeAttribute("class", "glossary-selector-letter-dimmed", null);
 			}
+			
+			// letter
 			writer.write(letter.getLetter());
-			if (letter.isMatched())
-			{
-				writer.endElement("a");
-			}
-			else
-			{
-				writer.endElement("div");
-			}
+			
+			// div and td end
+			writer.endElement("div");
 			writer.endElement("td");
 			
 		}
@@ -75,6 +98,18 @@ public class GlossaryLettersComponent extends UIComponentBase
 	{
 		return (GlossaryLetter[]) JsfUtils.getCompPropObject(this, getFacesContext(),
 				"letters", false, null);
+	}
+
+	public String getGlossaryListId()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"glossaryListId", glossaryListIdSet, glossaryListId);
+	}
+
+	public void setGlossaryListId(String glossaryListId)
+	{
+		this.glossaryListIdSet = true;
+		this.glossaryListId = glossaryListId;
 	}
 
 }

@@ -12,7 +12,7 @@
 	<title>Help</title>
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
-	<link href="../styles/main-help.css" rel="stylesheet" type="text/css">
+	<link href="../styles/help-main.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -23,6 +23,8 @@
 	
 	<f:param value="index" binding="#{HelpMenuBean.activeSectionParam}" />
 	<%@ include file="top-bar.jsp" %>
+	
+	<div id="help-section-title"><img src="../images/help-index-title.png" width="240" height="50" border="0" alt="Demos"></div>
 	
 </h:form>
 </f:view>

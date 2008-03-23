@@ -18,43 +18,78 @@ public class GlossaryListComponent extends UIComponentBase
 		return null;
 	}
 	
-	public void encodeBegin(FacesContext context) throws IOException
+	private String createLetterElementId(FacesContext context, GlossaryListLetter letter)
+	{
+		return getClientId(context).replace(":", "_") + "_" + letter.getLetter();
+	}
+	
+	private void renderJavaScript(ResponseWriter writer, FacesContext context, String mainId, String frameId, GlossaryList terms) throws IOException
 	{
 		
-		// standard stuff
-		ResponseWriter writer = context.getResponseWriter();
+		// registration script
+		StringBuffer regJS = new StringBuffer();
+		regJS.append("GlossaryListGlobals.registerGlossaryList(new GlossaryList(");
 		
-		// get terms from bean
-		GlossaryList terms = getTerms();
+		// main and frame id
+		regJS.append("'").append(mainId).append("', ");
+		regJS.append("'").append(frameId).append("', ");
+		
+		// letter -> element id's
+		regJS.append("{");
+		int letterIdx = 0;
+		for (Iterator letterIt = terms.getLetters().iterator(); letterIt.hasNext();)
+		{
+			GlossaryListLetter letter = (GlossaryListLetter) letterIt.next();
+			if (letterIdx > 0) regJS.append(", ");
+			regJS.append("'").append(letter.getLetter()).append("'");
+			regJS.append(": ");
+			regJS.append("'").append(createLetterElementId(context, letter)).append("'");
+			letterIdx++;
+		}
+		regJS.append("}");
+		
+		// end of JS
+		regJS.append("))");
+		
+		// render
+		JsfUtils.encodeJavaScriptBlock(this, writer, regJS);
+		
+	}
+
+	private void renderHTML(ResponseWriter writer, FacesContext context, String frameId, GlossaryList terms) throws IOException
+	{
 		
 		// if search -> prepare regex for highlighting
 		KeywordHighlighter highlighter = new KeywordHighlighter(
 				terms.getKeywords(),
 				"span", "search-keyword");
 		
+		// for position: fixed
+		writer.startElement("div", this);
+		writer.writeAttribute("id", frameId, null);
+		writer.writeAttribute("class", "glossary-terms", null);
+
+		// all has to be one big table, unfortunately
+		writer.startElement("table", this);
+		writer.writeAttribute("class", "glossary-terms", null);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.startElement("tr", this);
+
+		// iterate over letters
 		for (Iterator letterIt = terms.getLetters().iterator(); letterIt.hasNext();)
 		{
 			GlossaryListLetter letter = (GlossaryListLetter) letterIt.next();
 			
-			// anchor
-			writer.startElement("a", this);
-			writer.writeAttribute("name", String.valueOf(letter.getLetter()), null);
-			writer.endElement("a");
-
-			// container for table for all terms corresponding to one letter
-			writer.startElement("div", this);
-			writer.writeAttribute("class", "glossary-terms", null);
-
-			// table for all terms corresponding to one letter
-			writer.startElement("table", this);
-			writer.writeAttribute("class", "glossary-terms", null);
-			writer.writeAttribute("border", "0", null);
-			writer.writeAttribute("cellspacing", "0", null);
-			writer.writeAttribute("cellpadding", "0", null);
+			// start row
 			writer.startElement("tr", this);
 			
+			// start letter cell
 			writer.startElement("td", this);
-			writer.writeAttribute("class", "glossary-letter-info", null);
+			writer.writeAttribute("id", createLetterElementId(context, letter), null);
+			writer.writeAttribute("class", "glossary-letter", null);
+			writer.writeAttribute("rowspan", String.valueOf(letter.getMatchesTermsCount()), null);
 
 			// the letter itself
 			writer.startElement("div", this);
@@ -62,58 +97,60 @@ public class GlossaryListComponent extends UIComponentBase
 			writer.write(letter.getLetter());
 			writer.endElement("div");
 
-			// total number of terms / matched number of terms
-			writer.startElement("div", this);
-			writer.writeAttribute("class", "glossary-counts", null);
-			if (terms.isListingAll())
-			{
-				writer.write(String.valueOf(letter.getTotalTermsCount()));
-			}
-			else
-			{
-				writer.write(String.valueOf(letter.getMatchesTermsCount()));
-				writer.write("&nbsp;/&nbsp;");
-				writer.write(String.valueOf(letter.getTotalTermsCount()));
-			}
-			writer.endElement("div");
-
+			// end letter cell
 			writer.endElement("td");
 
-			// td containing all terms
-			writer.startElement("td", this);
-			writer.writeAttribute("class", "glossary-terms", null);
-
 			// terms
+			int termIdx = 0;
 			for (Iterator termIt = letter.getTerms().iterator(); termIt.hasNext();)
 			{
 				GlossaryListTerm term = (GlossaryListTerm) termIt.next();
 
+				// start row
+				if (termIdx > 0) writer.startElement("tr", this);
+
 				// term
-				writer.startElement("div", this);
+				writer.startElement("td", this);
 				writer.writeAttribute("class", "glossary-term", null);
 				writer.write(highlighter.highlight(term.getTerm()));
-				writer.endElement("div");
+				writer.endElement("td");
 			
 				// description
-				writer.startElement("div", this);
+				writer.startElement("td", this);
 				writer.writeAttribute("class", "glossary-description", null);
 				writer.write(highlighter.highlight(term.getDescription()));
-				writer.endElement("div");
+				writer.endElement("td");
+				
+				// end row
+				writer.endElement("tr");
+				termIdx++;
 
 			}
-			
-			// end of td containing all terms of one letter
-			writer.endElement("td");
-
-			// end of table for all terms corresponding of one letter
-			writer.endElement("tr");
-			writer.endElement("table");
-			writer.endElement("div");
 		
 		}
 		
+		// end of main table
+		writer.endElement("table");
+		writer.endElement("div");
 	}
+	
+	public void encodeBegin(FacesContext context) throws IOException
+	{
+		
+		// standard stuff
+		ResponseWriter writer = context.getResponseWriter();
+		
+		// main parameters
+		GlossaryList terms = getTerms();
+		String mainId = getClientId(context);
+		String frameId = mainId + "_frame";  
 
+		// and now the main methods
+		renderJavaScript(writer, context, mainId, frameId, terms);
+		renderHTML(writer, context, frameId, terms);
+
+	}
+	
 	public GlossaryList getTerms()
 	{
 		return (GlossaryList) JsfUtils.getCompPropObject(this, getFacesContext(),
