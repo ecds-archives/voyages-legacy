@@ -671,6 +671,9 @@
 		<attribute>
 			<name>expandedValues</name>
 		</attribute>
+		<attribute>
+			<name>showSelectAll</name>
+		</attribute>
 	</tag>
 	
 	<tag>
@@ -694,29 +697,9 @@
 		<attribute>
 			<name>expandedValues</name>
 		</attribute>
-	</tag>
-
-	<tag>
-		<name>checkboxListExpandable</name>
-		<tag-class>
-			edu.emory.library.tast.common.CheckboxListExpandableTag
-		</tag-class>
-		<body-content>JSP</body-content>
 		<attribute>
-			<name>id</name>
-		</attribute>
-		<attribute>
-			<name>rendered</name>
-		</attribute>
-		<attribute>
-			<name>items</name>
-		</attribute>
-		<attribute>
-			<name>selectedValues</name>
-		</attribute>
-		<attribute>
-			<name>expandedValues</name>
-		</attribute>
+			<name>showSelectAll</name>
+		</attribute>		
 	</tag>
 
 	<tag>

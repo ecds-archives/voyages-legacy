@@ -3,6 +3,7 @@ package edu.emory.library.tast.dm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 
@@ -10,7 +11,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class ImageCategory extends Dictionary {
+public class ImageCategory extends Dictionary
+{
 	
 	private static Map attributes = new HashMap();
 	static
@@ -18,6 +20,8 @@ public class ImageCategory extends Dictionary {
 		attributes.put("id", new NumericAttribute("id", "ImageCategory", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "ImageCategory"));
 	}
+	
+	private Set images;
 	
 	public static List loadAll(Session sess, String orderBy)
 	{
@@ -42,5 +46,15 @@ public class ImageCategory extends Dictionary {
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
+	}
+
+	public Set getImages()
+	{
+		return images;
+	}
+
+	public void setImages(Set images)
+	{
+		this.images = images;
 	}
 }

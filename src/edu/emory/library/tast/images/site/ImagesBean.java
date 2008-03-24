@@ -5,19 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.component.UIData;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
-import edu.emory.library.tast.common.MessageBarComponent;
-import edu.emory.library.tast.common.QuerySummaryItem;
+import edu.emory.library.tast.common.SelectItem;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
-import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Voyage;
@@ -31,23 +27,21 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class ImagesBean
 {
 
-	public static final long ALL_CATEGORIES_ID = 0;
+	private static final int INDEX_GALLERY_SAMPLE = 4;
 
 	public static final int DETAIL_THUMBS_COUNT = 8;
 	public static final int POPUP_EXTRA_HEIGHT = 50;
 	public static final int POPUP_EXTRA_WIDTH = 30;
-	public static final int DETAIL_IMAGE_WIDTH = 600;
+	public static final int DETAIL_IMAGE_WIDTH = 440;
 	
-	private List categories = null;
+	private SelectItem[] categories = null;
+	private String[] allCategoryIds = null;
 	
 	private GalleryImage[] galleryImages;
 	private int selectedImageIndex;
 	
-	private MessageBarComponent messageBar;
-	
-	private ImagesQuery currentQuery = new ImagesQuery();
-	private ImagesQuery workingQuery = new ImagesQuery();
-	// -------------------------------
+	private ImagesQuery currentQuery;
+	private ImagesQuery workingQuery;
 	
 	private String imageId;
 	private String imageTitle;
@@ -60,10 +54,21 @@ public class ImagesBean
 	private UIData linkedVoyagesTable;
 	private VoyageDetailBean voyageBean;
 	
+	public ImagesBean()
+	{
+		resetSearchParameters();
+	}
+	
 	private void resetSearchParameters()
 	{
+		
 		this.currentQuery = new ImagesQuery();
 		this.workingQuery = new ImagesQuery();
+		
+		ensureCategoriesLoaded();
+		this.currentQuery.setCategories(this.allCategoryIds);
+		this.workingQuery.setCategories(this.allCategoryIds);
+		
 	}
 	
 	private GalleryImage[] getSample(int catId, int size)
@@ -110,190 +115,184 @@ public class ImagesBean
 
 	}
 	
-	public String getQueryTitle()
+//	public String getQueryTitle()
+//	{
+//		
+//		StringBuffer title = new StringBuffer();
+//		
+//		String titleImages = TastResource.getText("images_query_showing");
+//		String titleContaining = TastResource.getText("images_query_title_title");
+//		String titleFrom = TastResource.getText("images_query_title_from");
+//		String titleOriginated = TastResource.getText("images_query_title_originated");
+//		String titleBefore = TastResource.getText("images_query_title_before");
+//		String titleAfter = TastResource.getText("images_query_title_after");
+//		
+//		title.append(titleImages);
+//		
+//		if (workingQuery.getKeyword() != null)
+//		{
+//			String query = workingQuery.getKeyword().trim();
+//			if (workingQuery.getKeyword().length() != 0)
+//			{
+//				title.append(" ");
+//				title.append(titleContaining);
+//				title.append(" '");
+//				title.append(query);
+//				title.append("'");
+//			}
+//		}
+//		
+//		ImageCategory cat = ImageCategory.loadById(null, workingQuery.getCategory());
+//		if (cat != null)
+//		{
+//			title.append(" ");
+//			title.append(titleFrom);
+//			title.append(" ");
+//			title.append(cat.getName());
+//		}
+//
+//		if (workingQuery.getYearFrom() != null && workingQuery.getYearTo() != null)
+//		{
+//			title.append(" ");
+//			title.append(titleOriginated);
+//			title.append(" ");
+//			title.append(workingQuery.getYearFrom());
+//			title.append(" - ");
+//			title.append(workingQuery.getYearTo());
+//		}
+//		else if (workingQuery.getYearFrom() != null)
+//		{
+//			title.append(" ");
+//			title.append(titleOriginated);
+//			title.append(" ");
+//			title.append(titleAfter);
+//			title.append(" ");
+//			title.append(workingQuery.getYearFrom());
+//		}
+//		else if (workingQuery.getYearTo() != null)
+//		{
+//			title.append(" ");
+//			title.append(titleOriginated);
+//			title.append(" ");
+//			title.append(titleBefore);
+//			title.append(" ");
+//			title.append(workingQuery.getYearTo());
+//		}
+//
+//		return title.toString();
+//
+//	}
+
+	public GalleryImage[] getSampleVessels()
 	{
-		
-		StringBuffer title = new StringBuffer();
-		
-		String titleImages = TastResource.getText("images_query_showing");
-		String titleContaining = TastResource.getText("images_query_title_title");
-		String descriptionContaining = TastResource.getText("images_query_title_description");
-		String titleFrom = TastResource.getText("images_query_title_from");
-		String titleOriginated = TastResource.getText("images_query_title_originated");
-		String titleBefore = TastResource.getText("images_query_title_before");
-		String titleAfter = TastResource.getText("images_query_title_after");
-		String titleVoyageId = TastResource.getText("images_query_title_voyage_id");
-		
-		title.append(titleImages);
-		
-		if (workingQuery.getSearchQueryTitle() != null)
-		{
-			String query = workingQuery.getSearchQueryTitle().trim();
-			if (workingQuery.getSearchQueryTitle().length() != 0)
-			{
-				title.append(" ");
-				title.append(titleContaining);
-				title.append(" '");
-				title.append(query);
-				title.append("'");
-			}
-		}
-		
-		if (workingQuery.getSearchQueryDescription() != null)
-		{
-			String query = workingQuery.getSearchQueryDescription().trim();
-			if (workingQuery.getSearchQueryDescription().length() != 0)
-			{
-				title.append(" ");
-				title.append(descriptionContaining);
-				title.append(" '");
-				title.append(query);
-				title.append("'");
-			}
-		}
-
-		ImageCategory cat = ImageCategory.loadById(null, workingQuery.getSearchQueryCategory());
-		if (cat != null)
-		{
-			title.append(" ");
-			title.append(titleFrom);
-			title.append(" ");
-			title.append(cat.getName());
-		}
-
-		if (workingQuery.getSearchVoyageId() != null)
-		{
-			title.append(" ");
-			title.append(titleVoyageId);
-			title.append(" '");
-			title.append(workingQuery.getSearchVoyageId());
-			title.append("'");
-		}
-
-		if (workingQuery.getSearchQueryFrom() != null && workingQuery.getSearchQueryTo() != null)
-		{
-			title.append(" ");
-			title.append(titleOriginated);
-			title.append(" ");
-			title.append(workingQuery.getSearchQueryFrom());
-			title.append(" - ");
-			title.append(workingQuery.getSearchQueryTo());
-		}
-		else if (workingQuery.getSearchQueryFrom() != null)
-		{
-			title.append(" ");
-			title.append(titleOriginated);
-			title.append(" ");
-			title.append(titleAfter);
-			title.append(" ");
-			title.append(workingQuery.getSearchQueryFrom());
-		}
-		else if (workingQuery.getSearchQueryTo() != null)
-		{
-			title.append(" ");
-			title.append(titleOriginated);
-			title.append(" ");
-			title.append(titleBefore);
-			title.append(" ");
-			title.append(workingQuery.getSearchQueryTo());
-		}
-
-		return title.toString();
-
-	}
-
-	public GalleryImage[] getSampleVessels() {
-		return this.getSample(1, 5);
+		return this.getSample(1, INDEX_GALLERY_SAMPLE);
 	}
 	
-	public GalleryImage[] getSampleSlaves() {
-		return this.getSample(2, 5);
+	public GalleryImage[] getSampleSlaves()
+	{
+		return this.getSample(2, INDEX_GALLERY_SAMPLE);
 	}
 	
-	public GalleryImage[] getSampleSlavers() {
-		return this.getSample(3, 5);
+	public GalleryImage[] getSampleSlavers()
+	{
+		return this.getSample(3, INDEX_GALLERY_SAMPLE);
 	}
 	
-	public GalleryImage[] getSamplePorts() {
-		return this.getSample(4, 5);
+	public GalleryImage[] getSamplePorts()
+	{
+		return this.getSample(4, INDEX_GALLERY_SAMPLE);
 	}
 	
-	public GalleryImage[] getSampleRegions() {
-		return this.getSample(5, 5);
+	public GalleryImage[] getSampleRegions()
+	{
+		return this.getSample(5, INDEX_GALLERY_SAMPLE);
 	}
 
-	public GalleryImage[] getSampleManuscripts() {
-		return this.getSample(6, 5);
+	public GalleryImage[] getSampleManuscripts()
+	{
+		return this.getSample(6, INDEX_GALLERY_SAMPLE);
 	}
 
-	public GalleryImage[] getSamplePresentation() {
-		return this.getSample(99, 5);
+	public GalleryImage[] getSamplePresentation()
+	{
+		return this.getSample(99, INDEX_GALLERY_SAMPLE);
 	}
 	
-	public String seeVessels() {
+	public String seeVessels()
+	{
 		resetSearchParameters();
-		workingQuery.setSearchQueryCategory(1);
-		loadGallery();
+		currentQuery.setCategory(1);
+		search();
 		return "images-query";
 	}
 
-	public String seeSlaves() {
+	public String seeSlaves()
+	{
 		resetSearchParameters();
-		workingQuery.setSearchQueryCategory(2);
-		loadGallery();
+		currentQuery.setCategory(2);
+		search();
 		return "images-query";
 	}
 
-	public String seeSlavers() {
+	public String seeSlavers()
+	{
 		resetSearchParameters();
-		workingQuery.setSearchQueryCategory(3);
-		loadGallery();
+		currentQuery.setCategory(3);
+		search();
 		return "images-query";
 	}
 	
-	public String seePorts() {
+	public String seePorts()
+	{
 		resetSearchParameters();
-		workingQuery.setSearchQueryCategory(4);
-		loadGallery();
+		currentQuery.setCategory(4);
+		search();
 		return "images-query";
 	}
 	
-	public String seeRegions() {
+	public String seeRegions()
+	{
 		resetSearchParameters();
-		workingQuery.setSearchQueryCategory(5);
-		loadGallery();
+		currentQuery.setCategory(5);
+		search();
 		return "images-query";
 	}
 	
-	public String seeManuscripts() {
+	public String seeManuscripts()
+	{
 		resetSearchParameters();
-		workingQuery.setSearchQueryCategory(6);
-		loadGallery();
+		currentQuery.setCategory(6);
+		search();
 		return "images-query";
 	}
 
-	public String seePresentation() {
+	public String seePresentation()
+	{
 		resetSearchParameters();
-		workingQuery.setSearchQueryCategory(99);
-		loadGallery();
+		currentQuery.setCategory(99);
+		search();
 		return "images-query";
 	}
 
 	public String search()
 	{
-//		if (this.currentQuery.equals(this.workingQuery)) {
-//			return null;
-//		}
 		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
 		loadGallery();
 		return "images-query";
 	}
 	
+	public String startAgain()
+	{
+		resetSearchParameters();
+		search();
+		return "images";
+	}
+
 	public void openImageFromVoyageDetail(int voyageId, String imageId)
 	{
 		resetSearchParameters();
 		this.imageId = imageId;
-		workingQuery.setSearchVoyageId(new Integer(voyageId));
+		// workingQuery.setSearchVoyageId(new Integer(voyageId));
 		loadGallery();
 	}
 
@@ -404,6 +403,9 @@ public class ImagesBean
 	private void loadDetail(boolean setCategory)
 	{
 
+		String imagesBaseUrl = AppConfig.getConfiguration().getString(AppConfig.IMAGES_URL);
+		imagesBaseUrl = StringUtils.trimEnd(imagesBaseUrl, '/');
+
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 
@@ -420,13 +422,13 @@ public class ImagesBean
 				"&w=" + DETAIL_IMAGE_WIDTH +
 				"&h=0";
 			
-			imageExpandedURL = "../images-database/" +
+			imageExpandedURL = imagesBaseUrl + "/" +
 				img.getFileName();
 			
 			if (setCategory)
 			{
 				ImageCategory cat = img.getCategory();
-				if (cat != null) workingQuery.setSearchQueryCategory(cat.getId().intValue());
+				if (cat != null) workingQuery.setCategory(cat.getId().intValue());
 			}
 
 			imageInfo = new ArrayList();
@@ -493,51 +495,48 @@ public class ImagesBean
 		StringBuffer hqlWhere = new StringBuffer();
 		int conditionsCount = 0;
 
-		String[] keywordsTitle = StringUtils.extractQueryKeywords(workingQuery.getSearchQueryTitle(), true);
-		if (keywordsTitle.length > 0)
+		String[] keywords = StringUtils.extractQueryKeywords(workingQuery.getKeyword(), true);
+		if (keywords.length > 0)
 		{
 			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("(");
-			for (int i = 0; i < keywordsTitle.length; i++)
+			for (int i = 0; i < keywords.length; i++)
 			{
 				if (i > 0) hqlWhere.append(" and ");
+				hqlWhere.append("(");
 				hqlWhere.append("remove_accents(upper(title)) like ");
-				hqlWhere.append("remove_accents(upper(:title").append(i).append("))");
+				hqlWhere.append("remove_accents(upper(:keyword").append(i).append("))");
+				hqlWhere.append(" or ");
+				hqlWhere.append("remove_accents(upper(description)) like ");
+				hqlWhere.append("remove_accents(upper(:keyword").append(i).append("))");
+				hqlWhere.append(")");
 			}
 			hqlWhere.append(")");
 			conditionsCount++;
 		}
 
-		String[] keywordsDescripton = StringUtils.extractQueryKeywords(workingQuery.getSearchQueryDescription(), true);
-		if (keywordsDescripton.length > 0)
+		String[] categories = workingQuery.getCategories();
+		if (categories != null && categories.length != 0)
 		{
 			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("(");
-			for (int i = 0; i < keywordsDescripton.length; i++)
+			for (int i = 0; i < categories.length; i++)
 			{
-				if (i > 0) hqlWhere.append(" and ");
-				hqlWhere.append("remove_accents(upper(description)) like ");
-				hqlWhere.append("remove_accents(upper(:description").append(i).append("))");
+				if (i > 0) hqlWhere.append(" or ");
+				hqlWhere.append("category.id = :categoryId").append(i);
 			}
 			hqlWhere.append(")");
 			conditionsCount++;
 		}
 		
-		if (workingQuery.getSearchQueryCategory() != ALL_CATEGORIES_ID)
-		{
-			if (conditionsCount > 0) hqlWhere.append(" and ");
-			hqlWhere.append("category.id = :categoryId");
-			conditionsCount++;
-		}
-		
-		if (workingQuery.getSearchQueryFrom() != null)
+		if (workingQuery.getYearFrom() != null)
 		{
 			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("date >= :dateFrom");
 			conditionsCount++;
 		}
 		
-		if (workingQuery.getSearchQueryTo() != null)
+		if (workingQuery.getYearTo() != null)
 		{
 			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("date <= :dateTo");
@@ -558,12 +557,12 @@ public class ImagesBean
 			conditionsCount++;
 		}
 		
-		if (workingQuery.getSearchVoyageId() != null)
-		{
-			if (conditionsCount > 0) hqlWhere.append(" and ");
-			hqlWhere.append(":voyageId = some elements(voyageIds)");
-			conditionsCount++;
-		}
+//		if (workingQuery.getSearchVoyageId() != null)
+//		{
+//			if (conditionsCount > 0) hqlWhere.append(" and ");
+//			hqlWhere.append(":voyageId = some elements(voyageIds)");
+//			conditionsCount++;
+//		}
 		
 		if (conditionsCount > 0) hqlWhere.append(" and ");
 		hqlWhere.append("readyToGo = true");
@@ -582,24 +581,19 @@ public class ImagesBean
 		
 		Query query = sess.createQuery(hsql.toString());
 		
-		for (int i = 0; i < keywordsTitle.length; i++)
-			query.setParameter("title" + i, "%" + keywordsTitle[i] + "%");
+		for (int i = 0; i < keywords.length; i++)
+			query.setParameter("keyword" + i, "%" + keywords[i] + "%");
 		
-		for (int i = 0; i < keywordsDescripton.length; i++)
-			query.setParameter("description" + i, "%" + keywordsDescripton[i] + "%");
+		if (categories != null)
+			for (int i = 0; i < categories.length; i++)
+				query.setParameter("categoryId" + i, new Long(categories[i]));
 		
-		if (workingQuery.getSearchQueryCategory() != ALL_CATEGORIES_ID)
-			query.setParameter("categoryId", new Long(workingQuery.getSearchQueryCategory()));
-		
-		if (workingQuery.getSearchQueryFrom() != null)
-			query.setParameter("dateFrom", workingQuery.getSearchQueryFrom());
+		if (workingQuery.getYearFrom() != null)
+			query.setParameter("dateFrom", workingQuery.getYearFrom());
 
-		if (workingQuery.getSearchQueryTo() != null)
-			query.setParameter("dateTo", workingQuery.getSearchQueryTo());
-
-		if (workingQuery.getSearchVoyageId() != null)
-			query.setParameter("voyageId", workingQuery.getSearchVoyageId());
-		
+		if (workingQuery.getYearTo() != null)
+			query.setParameter("dateTo", workingQuery.getYearTo());
+	
 		if (workingQuery.getSearchPortId() != null)
 			query.setParameter("portId", workingQuery.getSearchPortId());
 
@@ -674,20 +668,79 @@ public class ImagesBean
 		
 	}
 	
-	public List getCategories()
+//	public List getCategories()
+//	{
+//		if (categories == null)
+//		{
+//			categories = new ArrayList();
+//			categories.add(new SelectItem(String.valueOf(ALL_CATEGORIES_ID), TastResource.getText("images_all_categories")));
+//			List cats = ImageCategory.loadAll(HibernateUtil.getSession(), "id");
+//			Iterator iter = cats.iterator();
+//			while (iter.hasNext())
+//			{
+//				ImageCategory cat = (ImageCategory)iter.next();
+//				categories.add(new SelectItem(cat.getId() + "", cat.getName()));
+//			}
+//		}
+//		return categories;
+//	}
+	
+	private void ensureCategoriesLoaded()
 	{
-		if (categories == null)
+		
+		if (categories != null && allCategoryIds != null)
+			return;
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		
+		String hql =
+			"select img.category.id, img.category.name, count(img) " +
+			"from Image img " +
+			"where img.readyToGo = true " +
+			"group by img.category.id, img.category.name " +
+			"order by img.category.name";
+		
+		List cats = sess.createQuery(hql).list();
+		
+		categories = new SelectItem[cats.size()];
+		allCategoryIds = new String[cats.size()];
+		
+		int catIdx = 0;
+		Iterator iter = cats.iterator();
+		while (iter.hasNext())
 		{
-			categories = new ArrayList();
-			categories.add(new SelectItem(String.valueOf(ALL_CATEGORIES_ID), TastResource.getText("images_all_categories")));
-			List cats = ImageCategory.loadAll(HibernateUtil.getSession(), "id");
-			Iterator iter = cats.iterator();
-			while (iter.hasNext())
-			{
-				ImageCategory cat = (ImageCategory)iter.next();
-				categories.add(new SelectItem(cat.getId() + "", cat.getName()));
-			}
+			Object[] row = (Object[])iter.next();
+			
+			String catId = String.valueOf(row[0]);
+			long imagesCount = ((Long)row[2]).longValue();
+			
+			String label = (String) row[1];
+			if (imagesCount == 1)
+				label += " " +
+						"<span class=\"images-count\">" +
+						"(1 image)" +
+						"</span>";
+			else
+				label += " " +
+						"<span class=\"images-count\">" +
+						"(" + imagesCount + " images)" +
+						"</span>";
+			
+			allCategoryIds[catIdx] = catId;
+			categories[catIdx] = new SelectItem(label, catId);
+			
+			catIdx++;
 		}
+		
+		transaction.commit();
+		sess.close();
+
+	}
+	
+	public SelectItem[] getCategories()
+	{
+		ensureCategoriesLoaded();
 		return categories;
 	}
 	
@@ -821,132 +874,135 @@ public class ImagesBean
 		return DETAIL_THUMBS_COUNT;
 	}
 
-	public List getQuerySummary() {
-		
-		List query = new ArrayList();
-	
-		if (!StringUtils.isNullOrEmpty(this.workingQuery.getSearchQueryTitle())) {
-			query.add(new QuerySummaryItem("Description containing", this.workingQuery.getSearchQueryTitle()));
-		}
-
-		if (!StringUtils.isNullOrEmpty(this.workingQuery.getSearchQueryDescription())) {
-			query.add(new QuerySummaryItem("Description containing", this.workingQuery.getSearchQueryDescription()));
-		}
-
-		if (this.workingQuery.getSearchVoyageId() != null) {
-			query.add(new QuerySummaryItem("Voyage ID", this.workingQuery.getSearchVoyageId().toString()));
-		}
-
-		if (this.workingQuery.getSearchQueryCategory() == ALL_CATEGORIES_ID) {
-			query.add(new QuerySummaryItem("Category of images", "All categories"));
-		} else {
-			for (Iterator iter = categories.iterator(); iter.hasNext();) {
-				SelectItem element = (SelectItem) iter.next();
-				if (element.getValue().equals(String.valueOf(this.workingQuery.getSearchQueryCategory()))) {
-					query.add(new QuerySummaryItem("Category of images", element.getLabel()));
-					break;
-				}
-			}
-		}
-
-		if (this.workingQuery.getSearchQueryFrom() != null || this.workingQuery.getSearchQueryTo() != null) {
-			String label = null;
-			if (this.workingQuery.getSearchQueryFrom() == null) {
-				label = "? - " + this.workingQuery.getSearchQueryTo();
-			} else if (this.workingQuery.getSearchQueryTo() == null) {
-				label = this.workingQuery.getSearchQueryFrom() + " - ?";
-			} else {
-				label = this.workingQuery.getSearchQueryFrom() + " - " + this.workingQuery.getSearchQueryTo();
-			}
-			query.add(new QuerySummaryItem("Date range", label));
-		}
-			
-		return query;
-	}
-
-	public ImagesQuery getCurrentQuery() {
+	public ImagesQuery getCurrentQuery()
+	{
 		return currentQuery;
 	}
 
-	public void setCurrentQuery(ImagesQuery currentQuery) {
+	public void setCurrentQuery(ImagesQuery currentQuery)
+	{
 		this.currentQuery = currentQuery;
-	}
-	
-	public String permLink() {
-		
-		Configuration conf = new Configuration();
-		conf.addEntry("permlinkSlaves", this.workingQuery);
-		conf.save();
+	}	
 
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
-		messageBar.setRendered(true);
-		
-		return null;
-	}
-	
-	public void restoreLink(Long configId) {
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
-		try {
-			Configuration conf = Configuration.loadConfiguration(configId);
-			if (conf == null)
-				return;
-
-			if (conf.getEntry("permlinkSlaves") != null) {
-				ImagesQuery selection = (ImagesQuery) conf.getEntry("permlinkSlaves");
-				this.currentQuery = (ImagesQuery) selection.clone();
-				this.workingQuery = (ImagesQuery) selection.clone();
-				this.loadGallery();
-				//imageId = "0";
-				selectedImageIndex = 0;
-				if (this.getDetailThumbsImages().length != 0) {
-					imageId = this.getDetailThumbsImages()[0].getId();
-				} else {
-					imageId = "0";
-				}
-				this.loadDetail(false);
-			}
-		} finally {
-			t.commit();
-			session.close();
-		}
-	}
-
-	public MessageBarComponent getMessageBar() {
-		return messageBar;
-	}
-
-	public void setMessageBar(MessageBarComponent messageBar) {
-		this.messageBar = messageBar;
-	}
-
-	public void restoreToPortId(Long id) {
-		this.currentQuery = new ImagesQuery();
-		this.currentQuery.setSearchPortId(id);
-		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
-		this.loadGallery();
-		selectedImageIndex = 0;
-		if (this.getDetailThumbsImages().length != 0) {
-			imageId = this.getDetailThumbsImages()[0].getId();
-		} else {
-			imageId = "0";
-		}
-		this.loadDetail(false);
-	}
-
-	public void restoreToRegionId(Long id) {
-		this.currentQuery = new ImagesQuery();
-		this.currentQuery.setSearchRegionId(id);
-		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
-		this.loadGallery();
-		selectedImageIndex = 0;
-		if (this.getDetailThumbsImages().length != 0) {
-			imageId = this.getDetailThumbsImages()[0].getId();
-		} else {
-			imageId = "0";
-		}
-		this.loadDetail(false);
-	}
+//	public List getQuerySummary() {
+//		
+//		List query = new ArrayList();
+//	
+//		if (!StringUtils.isNullOrEmpty(this.workingQuery.getSearchQueryTitle())) {
+//			query.add(new QuerySummaryItem("Description containing", this.workingQuery.getSearchQueryTitle()));
+//		}
+//
+//		if (!StringUtils.isNullOrEmpty(this.workingQuery.getSearchQueryDescription())) {
+//			query.add(new QuerySummaryItem("Description containing", this.workingQuery.getSearchQueryDescription()));
+//		}
+//
+//		if (this.workingQuery.getSearchVoyageId() != null) {
+//			query.add(new QuerySummaryItem("Voyage ID", this.workingQuery.getSearchVoyageId().toString()));
+//		}
+//
+//		if (this.workingQuery.getSearchQueryCategory() == ALL_CATEGORIES_ID) {
+//			query.add(new QuerySummaryItem("Category of images", "All categories"));
+//		} else {
+//			for (Iterator iter = categories.iterator(); iter.hasNext();) {
+//				SelectItem element = (SelectItem) iter.next();
+//				if (element.getValue().equals(String.valueOf(this.workingQuery.getSearchQueryCategory()))) {
+//					query.add(new QuerySummaryItem("Category of images", element.getLabel()));
+//					break;
+//				}
+//			}
+//		}
+//
+//		if (this.workingQuery.getSearchQueryFrom() != null || this.workingQuery.getSearchQueryTo() != null) {
+//			String label = null;
+//			if (this.workingQuery.getSearchQueryFrom() == null) {
+//				label = "? - " + this.workingQuery.getSearchQueryTo();
+//			} else if (this.workingQuery.getSearchQueryTo() == null) {
+//				label = this.workingQuery.getSearchQueryFrom() + " - ?";
+//			} else {
+//				label = this.workingQuery.getSearchQueryFrom() + " - " + this.workingQuery.getSearchQueryTo();
+//			}
+//			query.add(new QuerySummaryItem("Date range", label));
+//		}
+//			
+//		return query;
+//	}
+//
+//	
+//	public String permLink() {
+//		
+//		Configuration conf = new Configuration();
+//		conf.addEntry("permlinkSlaves", this.workingQuery);
+//		conf.save();
+//
+//		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
+//		messageBar.setRendered(true);
+//		
+//		return null;
+//	}
+//	
+//	public void restoreLink(Long configId) {
+//		Session session = HibernateUtil.getSession();
+//		Transaction t = session.beginTransaction();
+//		try {
+//			Configuration conf = Configuration.loadConfiguration(configId);
+//			if (conf == null)
+//				return;
+//
+//			if (conf.getEntry("permlinkSlaves") != null) {
+//				ImagesQuery selection = (ImagesQuery) conf.getEntry("permlinkSlaves");
+//				this.currentQuery = (ImagesQuery) selection.clone();
+//				this.workingQuery = (ImagesQuery) selection.clone();
+//				this.loadGallery();
+//				//imageId = "0";
+//				selectedImageIndex = 0;
+//				if (this.getDetailThumbsImages().length != 0) {
+//					imageId = this.getDetailThumbsImages()[0].getId();
+//				} else {
+//					imageId = "0";
+//				}
+//				this.loadDetail(false);
+//			}
+//		} finally {
+//			t.commit();
+//			session.close();
+//		}
+//	}
+//
+//	public MessageBarComponent getMessageBar() {
+//		return messageBar;
+//	}
+//
+//	public void setMessageBar(MessageBarComponent messageBar) {
+//		this.messageBar = messageBar;
+//	}
+//
+//	public void restoreToPortId(Long id) {
+//		this.currentQuery = new ImagesQuery();
+//		this.currentQuery.setSearchPortId(id);
+//		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
+//		this.loadGallery();
+//		selectedImageIndex = 0;
+//		if (this.getDetailThumbsImages().length != 0) {
+//			imageId = this.getDetailThumbsImages()[0].getId();
+//		} else {
+//			imageId = "0";
+//		}
+//		this.loadDetail(false);
+//	}
+//
+//	public void restoreToRegionId(Long id) {
+//		this.currentQuery = new ImagesQuery();
+//		this.currentQuery.setSearchRegionId(id);
+//		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
+//		this.loadGallery();
+//		selectedImageIndex = 0;
+//		if (this.getDetailThumbsImages().length != 0) {
+//			imageId = this.getDetailThumbsImages()[0].getId();
+//		} else {
+//			imageId = "0";
+//		}
+//		this.loadDetail(false);
+//	}
 	
 }

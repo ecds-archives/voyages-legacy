@@ -15,14 +15,33 @@ public abstract class CheckboxListComponent extends UIComponentBase
 
 	private boolean selectedValuesSet = false;
 	protected String selectedValues[];
+	
 	private boolean itemsSet = false;
 	private SelectItem[] items;
+
+	private boolean showSelectAllSet = false;
+	protected boolean showSelectAll = true;
 
 	public String getFamily()
 	{
 		return null;
 	}
 
+	public Object saveState(FacesContext context)
+	{
+		Object[] values = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = new Boolean(showSelectAll);
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		showSelectAll = ((Boolean) values[1]).booleanValue();
+	}
+	
 	protected String getHtmlNameForSelectemValues(FacesContext context)
 	{
 		return getClientId(context);
@@ -147,6 +166,18 @@ public abstract class CheckboxListComponent extends UIComponentBase
 	{
 		selectedValuesSet = true;
 		this.selectedValues = selectedValues;
+	}
+
+	public boolean isShowSelectAll()
+	{
+		return JsfUtils.getCompPropBoolean(this, getFacesContext(),
+				"showSelectAll", showSelectAllSet, showSelectAll);
+	}
+
+	public void setShowSelectAll(boolean showSelectAll)
+	{
+		this.showSelectAllSet = true;
+		this.showSelectAll = showSelectAll;
 	}
 
 }

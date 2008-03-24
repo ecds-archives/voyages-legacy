@@ -6,8 +6,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Resources - image detail</title>
+	<title>Resources - Image Detail</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
@@ -16,9 +18,12 @@
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/images-search-expandable-box.css" rel="stylesheet" type="text/css">
-	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<link href="../styles/images-commons.css" rel="stylesheet" type="text/css">
-	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
+
+	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/checkbox-list.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
+
 </head>
 <body>
 <f:view>
@@ -26,7 +31,7 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-		<div id="top-bar">
+	<div id="top-bar">
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
@@ -52,8 +57,8 @@
 		</tr>
 		</table>
 	</div>
-</h:form>
 	
+</h:form>
 </f:view>
 </body>
 </html>

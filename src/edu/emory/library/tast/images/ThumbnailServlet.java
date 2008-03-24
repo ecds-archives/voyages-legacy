@@ -3,6 +3,9 @@ package edu.emory.library.tast.images;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
 
@@ -60,6 +63,8 @@ public class ThumbnailServlet extends HttpServlet
 		BufferedImage image = ImageIO.read(imageFile);
 		int imageWidth = image.getWidth();
 		int imageHeight = image.getHeight();
+		BufferedImage imageCopy = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_BGR);
+		imageCopy.getGraphics().drawImage(image, 0, 0, imageWidth, imageHeight, 0, 0, imageWidth, imageHeight, null);
 
 		// height is calculated automatically
 		if (thumbnailHeight == 0)
@@ -70,9 +75,10 @@ public class ThumbnailServlet extends HttpServlet
 			thumbnailWidth = (int) ((double)thumbnailHeight / (double)imageHeight * (double)imageWidth);  
 
 		// create an empty thumbnail
-		BufferedImage thumbnail = new BufferedImage(thumbnailWidth, thumbnailHeight, BufferedImage.TYPE_INT_RGB);
+		BufferedImage thumbnail = new BufferedImage(thumbnailWidth, thumbnailHeight, BufferedImage.TYPE_INT_BGR);
 		Graphics2D gr = thumbnail.createGraphics();
-		gr.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		gr.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		gr.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
 		// determine the piece of the image which we want to clip
 		int clipX1, clipX2, clipY1, clipY2; 
@@ -95,9 +101,29 @@ public class ThumbnailServlet extends HttpServlet
 			clipY1 = imgCenterY - clipHeight / 2;
 			clipY2 = imgCenterY + clipHeight / 2;
 		}
+		
+		// we filter the image first to get better results when shrinking
+		if (2*thumbnailWidth < clipX2 - clipX1 || 2*thumbnailHeight < clipY2 - clipY1)
+		{
+			
+			int kernelDimX = (clipX2 - clipX1) / (thumbnailWidth);
+			int kernelDimY = (clipY2 - clipY1) / (thumbnailHeight);
+			
+			if (kernelDimX % 2 == 0) kernelDimX++;
+			if (kernelDimY % 2 == 0) kernelDimY++;
 
+			float[] blurKernel = new float[kernelDimX * kernelDimY];
+			for (int i = 0; i < kernelDimX; i++)
+				for (int j = 0; j < kernelDimY; j++)
+					blurKernel[i * kernelDimX + j] = 1.0f/(float)(kernelDimX * kernelDimY); 
+			
+			BufferedImageOp op = new ConvolveOp(new Kernel(kernelDimX, kernelDimY, blurKernel));
+			imageCopy = op.filter(imageCopy, null);
+			
+		}
+		
 		// draw the thumbnail
-		gr.drawImage(image,
+		gr.drawImage(imageCopy,
 				0, 0, thumbnailWidth, thumbnailHeight,
 				clipX1, clipY1, clipX2, clipY2, null);
 		

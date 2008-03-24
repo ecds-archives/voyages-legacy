@@ -9,6 +9,11 @@
 		</id>
 		
 		<property name="name" column="name" />
+		
+		<set name="images" inverse="true" order-by="date asc">
+			<key column="category" />
+			<one-to-many class="edu.emory.library.tast.dm.Image" />
+		</set>
 
 	</class>
 </hibernate-mapping>

@@ -12,6 +12,7 @@ public class CheckboxListPopupTag extends UIComponentTag
 	private String items;
 	private String selectedValues;
 	private String expandedValues;
+	private String showSelectAll;
 
 	public String getComponentType()
 	{
@@ -27,26 +28,36 @@ public class CheckboxListPopupTag extends UIComponentTag
 	{
 		
 		Application app = FacesContext.getCurrentInstance().getApplication();
-		CheckboxListComponent eventLine = (CheckboxListComponent) component;
+		CheckboxListComponent checkboxList = (CheckboxListComponent) component;
 		
 		if (items != null && isValueReference(items))
 		{
 			ValueBinding vb = app.createValueBinding(items);
-			eventLine.setValueBinding("items", vb);
+			checkboxList.setValueBinding("items", vb);
 		}
 		
 		if (selectedValues != null && isValueReference(selectedValues))
 		{
 			ValueBinding vb = app.createValueBinding(selectedValues);
-			eventLine.setValueBinding("selectedValues", vb);
+			checkboxList.setValueBinding("selectedValues", vb);
 		}
 
 		if (expandedValues != null && isValueReference(expandedValues))
 		{
 			ValueBinding vb = app.createValueBinding(expandedValues);
-			eventLine.setValueBinding("expandedValues", vb);
+			checkboxList.setValueBinding("expandedValues", vb);
 		}
 
+		if (showSelectAll != null && isValueReference(showSelectAll))
+		{
+			ValueBinding vb = app.createValueBinding(showSelectAll);
+			checkboxList.setValueBinding("showSelectAll", vb);
+		}
+		else
+		{
+			checkboxList.setShowSelectAll(Boolean.parseBoolean(showSelectAll));
+		}
+		
 	}
 
 	public String getItems()
@@ -77,6 +88,16 @@ public class CheckboxListPopupTag extends UIComponentTag
 	public void setExpandedValues(String expandedValues)
 	{
 		this.expandedValues = expandedValues;
+	}
+
+	public String getShowSelectAll()
+	{
+		return showSelectAll;
+	}
+
+	public void setShowSelectAll(String showSelectAll)
+	{
+		this.showSelectAll = showSelectAll;
 	}
 
 }

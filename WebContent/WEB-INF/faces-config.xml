@@ -705,6 +705,13 @@
 	
 	<navigation-rule>
 		<navigation-case>
+			<from-outcome>images</from-outcome>
+			<to-view-id>/resources/images.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
 			<from-outcome>images-query</from-outcome>
 			<to-view-id>/resources/images-query.jsp</to-view-id>
 		</navigation-case>

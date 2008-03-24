@@ -191,6 +191,7 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 		String[] expandedValues = getExpandedValues();
 		Set selectedValuesLookup = StringUtils.toStringSet(getSelectedValues());
 		Set expandedValuesLookup = StringUtils.toStringSet(expandedValues);
+		showSelectAll = isShowSelectAll(); 
 		
 		// main id for JS
 		String mainId = getClientId(context); 
@@ -224,7 +225,8 @@ public class CheckboxListExpandableComponent extends CheckboxListComponent
 				expandedValuesLookup, 0);
 		
 		// select/deselect all
-		encodeSelectDeselectAll(writer, mainId);
+		if (showSelectAll)
+			encodeSelectDeselectAll(writer, mainId);
 		
 	}
 

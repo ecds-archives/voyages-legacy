@@ -12,20 +12,17 @@
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
-	
 	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-images.css" rel="stylesheet" type="text/css">
-	
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/images-search-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/images-commons.css" rel="stylesheet" type="text/css">
-	
-	
-	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
+
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/checkbox-list.js" language="javascript" type="text/javascript"></script>
+	<script src="../scripts/checkbox-list-expandable.js" language="javascript" type="text/javascript"></script>
 	
 </head>
 <body>
