@@ -50,7 +50,7 @@ public class StatisticBean {
 	
 	private SimpleTableCell[][] cells;
 	
-	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###.00}");
+	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###.0}");
 	
 	/**
 	 * This method queries the database if required and calculates statistics
