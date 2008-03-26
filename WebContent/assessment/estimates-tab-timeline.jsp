@@ -29,6 +29,6 @@
 </t:div>
 
 <t:htmlTag value="div" style="margin-top: 5px;">
-	<t:commandButton value="Save timeline data" action="#{EstimatesTimelineBean.getFileAllData}"
+	<t:commandButton value="Download timeline data" action="#{EstimatesTimelineBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>

@@ -88,8 +88,8 @@
 						<li>sources in which evidence of the voyage was found</li>
 					</ol>
 					The interface of the query section is designed to be as intuitive as possible, but more detailed instructions about how to use it are given in the“Methodology” sub-section to which there is a link below.
+					</p>					
 					
-					</p>
 
 				</div>
 

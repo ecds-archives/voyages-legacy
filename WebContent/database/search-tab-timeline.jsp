@@ -8,9 +8,11 @@
 <t:htmlTag value="div" styleClass="database-graph-options">
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
+	<%/*
 		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
 			<h:outputText value="#{res.database_search_yaxisval} " />
 		</t:htmlTag>
+	*/%>
 		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
 			<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAttribute}" id="tLAttributes">
 				<f:selectItems value="#{TimeLineResultTabBean.voyageNumericAttributes}" />
@@ -36,6 +38,6 @@
 	verticalLabels="#{TimeLineResultTabBean.verticalLabels}" />
 	
 <t:htmlTag value="div" style="margin-top: 5px;">
-	<t:commandButton value="Save timeline data" action="#{TimeLineResultTabBean.getFileAllData}"
+	<t:commandButton value="Download timeline data" action="#{TimeLineResultTabBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>

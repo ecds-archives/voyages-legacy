@@ -47,7 +47,7 @@
 			</h:selectOneMenu>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
-			<h:outputText value="#{res.estimates_table_show}"/>
+			<h:outputText value="#{res.estimates_table_cell}"/>
 		</t:htmlTag>
 		<% /* 
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">

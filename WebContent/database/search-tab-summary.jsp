@@ -10,6 +10,6 @@
 	rows="#{StatisticBean.statisticElements}"/>
 
 <t:htmlTag value="div" style="margin-top: 5px;">
-	<t:commandButton value="Save table data" action="#{StatisticBean.getFileAllData}"
+	<t:commandButton value="Download table data" action="#{StatisticBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>
