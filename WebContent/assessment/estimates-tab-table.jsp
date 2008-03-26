@@ -64,6 +64,6 @@
 </t:htmlTag>
 
 <t:htmlTag value="div" style="margin-top: 5px;">
-	<t:commandButton value="Save table data" action="#{EstimatesTableBean.getFileAllData}"
+	<t:commandButton value="Download table data" action="#{EstimatesTableBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>

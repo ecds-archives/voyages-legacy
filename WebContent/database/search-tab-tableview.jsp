@@ -80,6 +80,6 @@
 </t:htmlTag>
 
 <t:htmlTag value="div" style="margin-top: 5px;">
-	<t:commandButton value="Save table data" action="#{DatabaseTableBean.getFileAllData}"
+	<t:commandButton value="Download table data" action="#{DatabaseTableBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>
