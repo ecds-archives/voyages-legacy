@@ -63,7 +63,7 @@ public class ThumbnailServlet extends HttpServlet
 		BufferedImage image = ImageIO.read(imageFile);
 		int imageWidth = image.getWidth();
 		int imageHeight = image.getHeight();
-		BufferedImage imageCopy = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_BGR);
+		BufferedImage imageCopy = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
 		imageCopy.getGraphics().drawImage(image, 0, 0, imageWidth, imageHeight, 0, 0, imageWidth, imageHeight, null);
 
 		// height is calculated automatically
@@ -75,7 +75,7 @@ public class ThumbnailServlet extends HttpServlet
 			thumbnailWidth = (int) ((double)thumbnailHeight / (double)imageHeight * (double)imageWidth);  
 
 		// create an empty thumbnail
-		BufferedImage thumbnail = new BufferedImage(thumbnailWidth, thumbnailHeight, BufferedImage.TYPE_INT_BGR);
+		BufferedImage thumbnail = new BufferedImage(thumbnailWidth, thumbnailHeight, BufferedImage.TYPE_INT_RGB);
 		Graphics2D gr = thumbnail.createGraphics();
 		gr.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 		gr.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -111,7 +111,10 @@ public class ThumbnailServlet extends HttpServlet
 			
 			if (kernelDimX % 2 == 0) kernelDimX++;
 			if (kernelDimY % 2 == 0) kernelDimY++;
-
+			
+			if (kernelDimX < kernelDimY) kernelDimX = kernelDimY;
+			if (kernelDimY < kernelDimX) kernelDimY = kernelDimX;
+			
 			float[] blurKernel = new float[kernelDimX * kernelDimY];
 			for (int i = 0; i < kernelDimX; i++)
 				for (int j = 0; j < kernelDimY; j++)
