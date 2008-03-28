@@ -326,8 +326,7 @@ public class Voyage extends AbstractDescriptiveObject {
 				NumericAttribute.TYPE_INTEGER, "sladied6"));
 		attributes.add(new NumericAttribute("insurrec", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "insurrec"));
-		attributes.add(new NumericAttribute("evgreen", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "evgreen"));
+		attributes.add(new StringAttribute("evgreen", "Voyage","evgreen"));
 		attributes.add(new NumericAttribute("female5", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "female5"));
 		attributes.add(new NumericAttribute("male5", "Voyage",
@@ -1764,8 +1763,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		return (Integer) this.values.get("insurrec");
 	}
 
-	public Integer getEvgreen() {
-		return (Integer) this.values.get("evgreen");
+	public String getEvgreen() {
+		return (String) this.values.get("evgreen");
 	}
 
 	public Integer getFemale5() {
@@ -2076,7 +2075,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		this.values.put("insurrec", val);
 	}
 
-	public void setEvgreen(Integer val) {
+	public void setEvgreen(String val) {
 		this.values.put("evgreen", val);
 	}
 

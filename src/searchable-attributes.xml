@@ -50,13 +50,13 @@
 
 	<searchable-attribute
 		type="simple"
-		id="cd"
+		id="evgreen"
 		userLabel="Voyage in 1999 CD-ROM">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
 		<attributes>
-			<attribute name="cd" />
+			<attribute name="evgreen" />
 		</attributes>
 	</searchable-attribute>
 

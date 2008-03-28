@@ -32,7 +32,7 @@
 	<group id="ship" userLabel="Ship, nation, owners">
 		<searchable-attributes>
 			<searchable-attribute id="voyageid"/>
-			<searchable-attribute id="cd"/>
+			<searchable-attribute id="evgreen"/>
 			<searchable-attribute id="shipname"/>
 			<searchable-attribute id="placcons"/>
 			<searchable-attribute id="yrcons"/>
@@ -48,7 +48,7 @@
 		</searchable-attributes>
 		<table-attributes>
 			<table-attribute id="voyageid"/>
-			<table-attribute id="cd"/>
+			<table-attribute id="evgreen"/>
 			<table-attribute id="shipname"/>
 			<table-attribute id="placcons"/>
 			<table-attribute id="yrcons"/>

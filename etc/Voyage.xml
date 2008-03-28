@@ -180,7 +180,7 @@
     <attribute name="insurre2" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="timslave" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="toncateg" type="Integer" userLabel="" importType="numeric"/> 
-    <attribute name="evgreen" type="Integer" userLabel="" importType="numeric"/> 
+    <attribute name="evgreen" type="string" userLabel="" importType="string" length="3"/> 
     <attribute name="womrat1" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="womrat3" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="womrat7" type="Float" userLabel="" importType="numeric"/> 

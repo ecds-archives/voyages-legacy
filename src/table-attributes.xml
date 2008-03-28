@@ -5,9 +5,9 @@
 			<attribute name="voyageid"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="cd" userCategory="beginners,general" userLabel="Voyage in 1999 CD-ROM">
+	<table-attribute tabs="1,2" id="evgreen" userCategory="beginners,general" userLabel="Voyage in 1999 CD-ROM">
 		<attributes>
-			<attribute name="cd"/>
+			<attribute name="evgreen"/>
 		</attributes>
 	</table-attribute>	
 	<table-attribute tabs="1,2" id="shipname" userCategory="beginners,general" userLabel="Vessel name">
