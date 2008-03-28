@@ -5,35 +5,29 @@ public class HomePageBean
 	
 	public int getWelcomeMapHeight()
 	{
-		return 362;
+		return 240;
 	}
 	
 	public int getWelcomeMapWidth()
 	{
-		return 378;
+		return 320;
 	}
 	
 	public String getWelcomeMapImage()
 	{
-		return "./new-images/map2.png"; 
+		return "./images/welcome-maps/02/map.png"; 
 	}
 
 	public String getWelcomeMapInitialText()
 	{
-	
 		return
-/*			"<div><img src=\"./new-images/index-maptext-bg.png\" width=\"378\" height=\"291\" border=\"0\" alt=\"Welcome\"></div>" +*/
-			"<div class=\"welcome-place-text\">"+
-			"Source: Nova totius terrarum orbis geographica ac hydrographica"+
-			"tabula. 1680. John Cater Brown Library, Brown University"+
+			"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 			"<div class=\"welcome-main-text\">" +
 			"When the trans-Atlantic slave trade ended in 1867, over 12 million Africans had been forcibly relocated. " +
 			"Though little trace is left of the individual histories of these displaced peoples, thousands of records " +
 			"remain of the voyages that brought them to the Americas. This database, with information on over 35,000 " +
 			"voyages, offers descendants, researchers, students, and the general public a chance to rediscover the " +
-			"reality of one of the largest movements of peoples in world history.</div>";
-	
-		
+			"reality of one of the largest movements of peoples in world history.</div>"; 
 	}
 
 	public WelcomeMapPlace[] getWelcomeMapPlaces()
@@ -84,13 +78,10 @@ public class HomePageBean
 
 		return new WelcomeMapPlace[] {
 
-				new WelcomeMapPlace(0, 0, 166, 142,
-						"./new-images/north-america.png",
-						"./new-images/north-america-highlighted.png",
-/*						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" + */
-						"<div class=\"welcome-place-text\">"+
-						"Source: Nova totius terrarum orbis geographica ac hydrographica"+
-						"tabula. 1680. John Cater Brown Library, Brown University"+
+				new WelcomeMapPlace(0, 0, 140, 105,
+						"./images/welcome-maps/02/north-america.png",
+						"./images/welcome-maps/02/north-america-highlighted.png",
+						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">North American</div>" +
 						"<div class=\"welcome-place-text\">" +
 						"The North American mainland played a relatively minor role in the transatlantic " +
@@ -102,12 +93,10 @@ public class HomePageBean
 						"of the region on coerced migrants." +
 						"</div>"),
 						
-				new WelcomeMapPlace(166, 0, 202, 119,
-						"./new-images/europe.png",
-						"./new-images/europe-highlighted.png",
-						"<div class=\"welcome-place-text\">"+
-						"Source: Nova totius terrarum orbis geographica ac hydrographica"+
-						"tabula. 1680. John Cater Brown Library, Brown University"+						
+				new WelcomeMapPlace(140, 0, 180, 85,
+						"./images/welcome-maps/02/europe.png",
+						"./images/welcome-maps/02/europe-highlighted.png",
+						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Europe</div>" +
 						"<div class=\"welcome-place-text\">" +
 						"Europe was the starting point for about half all transatlantic slaving voyages. " +
@@ -119,12 +108,10 @@ public class HomePageBean
 						"of transatlantic slave trading." +
 						"</div>"),
 
-				new WelcomeMapPlace(166, 119, 202, 71,
-						"./new-images/africa.png",
-						"./new-images/africa-highlighted.png",						
-						"<div class=\"welcome-place-text\">"+
-						"Source: Nova totius terrarum orbis geographica ac hydrographica"+
-						"tabula. 1680. John Cater Brown Library, Brown University"+
+				new WelcomeMapPlace(200, 85, 120, 155,
+						"./images/welcome-maps/02/africa.png",
+						"./images/welcome-maps/02/africa-highlighted.png",
+						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Africa</div>" +
 						"<div class=\"welcome-place-text\">" +
 						"Sub-Saharan Africa lost over twelve and a half million people to the " +
@@ -138,12 +125,10 @@ public class HomePageBean
 						"though many smaller ports also supplied slaves." +
 						"</div>"),
 
-				new WelcomeMapPlace(0, 142, 166, 47,
-						"./new-images/carribean.png",
-						"./new-images/carribean-highlighted.png",						
-						"<div class=\"welcome-place-text\">"+
-						"Source: Nova totius terrarum orbis geographica ac hydrographica"+
-						"tabula. 1680. John Cater Brown Library, Brown University"+
+				new WelcomeMapPlace(0, 105, 150, 40,
+						"./images/welcome-maps/02/caribbean.png",
+						"./images/welcome-maps/02/caribbean-highlighted.png",
+						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Caribbean</div>" +
 						"<div class=\"welcome-place-text\">" +
 						"The Caribbean was one of the two major broad regional markets for slaves from " +
@@ -156,12 +141,10 @@ public class HomePageBean
 						"expeditions to Africa than did the North American mainland ports." +
 						"</div>"),
 
-				new WelcomeMapPlace(0, 189, 189, 96,
-						"./new-images/brazil.png",
-						"./new-images/brazil-highlighted.png",						
-						"<div class=\"welcome-place-text\">"+
-						"Source: Nova totius terrarum orbis geographica ac hydrographica"+
-						"tabula. 1680. John Cater Brown Library, Brown University"+
+				new WelcomeMapPlace(0, 160, 160, 80,
+						"./images/welcome-maps/02/brazil.png",
+						"./images/welcome-maps/02/brazil-highlighted.png",
+						"<div><img src=\"./images/index-welcome.png\" width=\"300\" height=\"50\" border=\"0\" alt=\"Welcome\"></div>" +
 						"<div class=\"welcome-place-title\">Brazil</div>" +
 						"<div class=\"welcome-place-text\">" +
 						"Brazil was the center of the slave trade carried on under the Portuguese " +

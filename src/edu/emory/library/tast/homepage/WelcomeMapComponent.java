@@ -147,7 +147,7 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.writeAttribute("cellpadding", "0", null);
 		
 		writer.startElement("tr", this);
-	/*	
+		
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "welcome-map-top-left", null);
 		writer.endElement("td");
@@ -167,7 +167,7 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "welcome-map-middle-left", null);
 		writer.endElement("td");
-		*/
+		
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "welcome-map-image", null);
 		writer.writeAttribute("style", cssStyleMainCell, null);
@@ -182,7 +182,7 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.endElement("div");
 
 		writer.endElement("td");
-/*
+
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "welcome-map-middle-right", null);
 		writer.endElement("td");
@@ -202,7 +202,7 @@ public class WelcomeMapComponent extends UIComponentBase
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "welcome-map-bottom-right", null);
 		writer.endElement("td");
-*/
+
 		writer.endElement("tr");
 
 		writer.endElement("table");
@@ -257,16 +257,16 @@ public class WelcomeMapComponent extends UIComponentBase
 		
 		writer.startElement("tr", this);
 
-		writer.startElement("div", this);
+		writer.startElement("td", this);
 		writer.writeAttribute("class", "welcome-map", null);
 		encodeMap(context, writer, textElementId);
-		writer.endElement("div");
+		writer.endElement("td");
 		
-		writer.startElement("div", this);
+		writer.startElement("td", this);
 		writer.writeAttribute("id", textElementId, null);
 		writer.writeAttribute("class", "welcome-map-text", null);
 		writer.write(initialText);
-		writer.endElement("div");
+		writer.endElement("td");
 		
 		writer.endElement("tr");
 		writer.endElement("table");

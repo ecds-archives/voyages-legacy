@@ -1,69 +1,37 @@
 div#top-bar {
-	background-image: url(../new-images/menu-bg.png);
-	background-repeat: repeat-x;
-/*	background-color: #008CA8; */
-}
-
-div.top-bar-logo {	
-	background-image: url(../new-images/logo.png);
-	width: 300px;
-	height: 127px;
-/*	background-color: #008CA8; */
-}
-
-div.top-bar-right {
-	background-image: url(../new-images/menu-right.png);
-	height: 127px;
-	/*	background-color: #008CA8; */
-}
+	background-image: url(../images/menu-bg.png);
+	background-repeat: no-repeat;
+	background-color: #008CA8; }
 
 td.main-menu-section {
 	vertical-align: top; }
 	
 div.main-menu-section-image {
-	padding-left: 0px;
- }
+	margin-right: 5px; }
 	
 img.main-menu-section-image {
 	cursor: pointer; }
 	
-div.main-menu-pages {	
-	text-align: center;
-/*	margin-left: 32px;
-	margin-left: 0px;
-	margin-right: 0px; 
-	margin-right: 5px; */
-}
+div.main-menu-pages {
+	margin-top: 0px;
+	margin-left: 32px;
+	margin-right: 5px; }
 
-div.main-menu-pages a:hover {	
+div.main-menu-pages a {
+	text-decoration: none;
 	color: White; }
 	
-div.main-menu-pages a {	
-	text-decoration: none;	
-	color: #93CED9;  
+div.main-menu-pages a:hover {
+	color: #93CED9; }
 
-	
-	}
-
-div.main-menu-container {
+td.main-menu-container {
 	line-height: 130%;
-/*	vertical-align: top;*/
-	padding-left: 0px;
+	vertical-align: top;
+	padding-left: 15px;
 	padding-top: 10px; }
-	
-div.main-menu-help {
-    padding-left: 640px;  
-    padding-top : 20px; 
- }
-	
-	}
 	
 div.main-menu-page-normal {
 	}
 	
 div.main-menu-page-active {
-	background-image: url(../new-images/main-menu-help-background.png);
-	width: 76;
-	height: 70;
-	font-weight: bold; 
-}
+	font-weight: bold; }
