@@ -131,11 +131,6 @@ public class TableResultTabBean {
 	private List actionsToPerform = new ArrayList();
 	
 	/**
-	 * Source information provider (for rollovers)
-	 */
-	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
-	
-	/**
 	 * Constructor.
 	 * It fills in default visible attributes in table and sets default sort column.
 	 */
@@ -197,6 +192,8 @@ public class TableResultTabBean {
 
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
+		
+		SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils(session);
 		
 			// Execute query
 			Object[] ret = qValue.executeQuery();

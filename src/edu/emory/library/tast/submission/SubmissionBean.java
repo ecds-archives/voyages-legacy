@@ -19,7 +19,6 @@ import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -97,8 +96,6 @@ public class SubmissionBean
 	private User authenticatedUser = null;
 	
 	private Submission submission;
-	
-	private SourceInformationUtils sourceInformationUtils = SourceInformationUtils.createSourceInformationUtils();
 	
 	public SubmissionBean()
 	{
@@ -286,7 +283,10 @@ public class SubmissionBean
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
 		
-		loadVoyageToColumn(session, selectedVoyageForEdit.getVoyageId(), gridValues, ORIGINAL_VOYAGE);
+		SourceInformationUtils sourceInformationUtils =
+			SourceInformationUtils.createSourceInformationUtils(session);
+		
+		loadVoyageToColumn(session, selectedVoyageForEdit.getVoyageId(), gridValues, ORIGINAL_VOYAGE, sourceInformationUtils);
 		initColumnForNewVoyaye(CHANGED_VOYAGE);
 		
 		Voyage old = Voyage.loadCurrentRevision(session, selectedVoyageForEdit.getVoyageId());
@@ -322,12 +322,15 @@ public class SubmissionBean
 		
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
+		
+		SourceInformationUtils sourceInformationUtils =
+			SourceInformationUtils.createSourceInformationUtils(session);
 
 		int i = 0;
 		for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();)
 		{
 			SelectedVoyageInfo voyage = (SelectedVoyageInfo) iter.next();
-			loadVoyageToColumn(session, voyage.getVoyageId(), gridValues, MERGED_VOYAGE_PREFIX + i);
+			loadVoyageToColumn(session, voyage.getVoyageId(), gridValues, MERGED_VOYAGE_PREFIX + i, sourceInformationUtils);
 			i++;
 		}
 
@@ -349,7 +352,7 @@ public class SubmissionBean
 						toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
 					}
 					Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
-					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_" + element.getVoyageId(), value);
+//					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_" + element.getVoyageId(), value);
 				}
 			}
 		}
@@ -395,6 +398,10 @@ public class SubmissionBean
 		}
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
+		
+		SourceInformationUtils sourceInformationUtils =
+			SourceInformationUtils.createSourceInformationUtils(session);
+		
 		try {
 			Submission submission = Submission.loadById(session, this.submission.getId());
 			EditedVoyage storedEditedVoyage = null;
@@ -445,7 +452,7 @@ public class SubmissionBean
 		return true;
 	}
 	
-	private boolean loadVoyageToColumn(Session session, int voyageId, Values values, String columnName)
+	private boolean loadVoyageToColumn(Session session, int voyageId, Values values, String columnName, SourceInformationUtils sourceInformationUtils)
 	{
 		
 		Conditions cond = new Conditions();

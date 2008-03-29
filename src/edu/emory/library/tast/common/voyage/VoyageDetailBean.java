@@ -77,11 +77,6 @@ public class VoyageDetailBean
 	 */
 	private String selectedTab = "variables";
 	
-	/**
-	 * Provider of source rollovers.
-	 */
-	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
-	
 	private VoyageRoute route;
 
 	/**
@@ -120,6 +115,8 @@ public class VoyageDetailBean
 
 	private void loadVoyageData(Session sess)
 	{
+		
+		SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils(sess);
 		
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("iid"), new Long(this.voyageIid), Conditions.OP_EQUALS);

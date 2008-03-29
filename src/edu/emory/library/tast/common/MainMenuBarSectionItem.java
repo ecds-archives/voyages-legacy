@@ -10,8 +10,9 @@ public class MainMenuBarSectionItem
 	private int imageWidth;
 	private int imageHeight;
 	private MainMenuBarPageItem[] subItems;
+	private String boxCssClass;
 	
-	public MainMenuBarSectionItem(String id, String url, String imageUrlNormal, String imageUrlActive, int imageWidth, int imageHeight, MainMenuBarPageItem[] subItems)
+	public MainMenuBarSectionItem(String id, String url, String imageUrlNormal, String imageUrlActive, int imageWidth, int imageHeight, String boxCssClass, MainMenuBarPageItem[] subItems)
 	{
 		this.id = id;
 		this.url = url;
@@ -19,6 +20,7 @@ public class MainMenuBarSectionItem
 		this.imageUrlActive = imageUrlActive;
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
+		this.boxCssClass = boxCssClass;
 		this.subItems = subItems;
 	}
 
@@ -90,6 +92,16 @@ public class MainMenuBarSectionItem
 	public void setUrl(String url)
 	{
 		this.url = url;
+	}
+
+	public String getBoxCssClass()
+	{
+		return boxCssClass;
+	}
+
+	public void setBoxCssClass(String boxCssClass)
+	{
+		this.boxCssClass = boxCssClass;
 	}
 
 }

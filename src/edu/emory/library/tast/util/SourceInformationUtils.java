@@ -1,20 +1,15 @@
 package edu.emory.library.tast.util;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.SourceInformation;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class SourceInformationUtils {
+	
+	private static SourceInformationUtils cachedInst = null;
 	
 	public char[] stopChars = new char[] {';', ',', ':'};
 	
@@ -46,9 +41,9 @@ public class SourceInformationUtils {
 		
 	}
 	
-	private SourceInformationUtils() {
+	private SourceInformationUtils(Session sess) {
 		QueryValue qValue = new QueryValue("SourceInformation");
-		Object[] response = qValue.executeQuery();
+		Object[] response = qValue.executeQuery(sess);
 		sources = new SourceInformation[response.length];
 		index = new SourceIndexPosition[sources.length];
 		for (int i = 0; i < response.length; i++) {
@@ -64,8 +59,10 @@ public class SourceInformationUtils {
 		}
 	}
 	
-	public static SourceInformationUtils createSourceInformationUtils() {
-		return new SourceInformationUtils();
+	public synchronized static SourceInformationUtils createSourceInformationUtils(Session sess)
+	{
+		if (cachedInst == null) cachedInst = new SourceInformationUtils(sess); 
+		return cachedInst;
 	}
 	
 	public SourceInformation match(String source) {
@@ -111,36 +108,36 @@ public class SourceInformationUtils {
 //		return matchIndex;
 //	}
 	
-	public static void main(String[] args) {
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
-		try {
-			FileOutputStream os = new FileOutputStream("c:\\sources-matched.csv");
-			FileOutputStream osnm = new FileOutputStream("c:\\sources-not-matched.csv");
-			os.write("\"source name\", \"source code (from rollovers file)\", \"source rollover\"\n".getBytes());
-			SourceInformationUtils utils = SourceInformationUtils.createSourceInformationUtils();
-			List response = session.createSQLQuery("select distinct a.s from (select distinct sourcea as s from voyages where revision=1 union select distinct sourceb as s from voyages where revision=1 union select distinct sourcec as s from voyages where revision=1 union select distinct sourced as s from voyages where revision=1 union select distinct sourcee as s from voyages where revision=1 union select distinct sourcef as s from voyages where revision=1 union select distinct sourceg as s from voyages where revision=1 union select distinct sourceh as s from voyages where revision=1 union select distinct sourcei as s from voyages where revision=1 union select distinct sourcej as s from voyages where revision=1 union select distinct sourcek as s from voyages where revision=1 union select distinct sourcel as s from voyages where revision=1 union select distinct sourcem as s from voyages where revision=1 union select distinct sourcen as s from voyages where revision=1 union select distinct sourceo as s from voyages where revision=1 union select distinct sourcep as s from voyages where revision=1 union select distinct sourceq as s from voyages where revision=1 union select distinct sourcer as s from voyages where revision=1) a order by a.s").list();
-			for (Iterator iter = response.iterator(); iter.hasNext();) {
-				String source = (String) iter.next();
-				SourceInformation info = utils.match(source);
-				if (info != null) {
-					os.write(("\"" + source + "\",\"" + info.getId() + "\",\"" + info.getInformation() + "\"\n").getBytes());
-				} else if (source != null) {
-					osnm.write(("\"" + source + "\"\n").getBytes());
-				}
-			}
-			
-			os.flush();
-			osnm.flush();
-			os.close();
-			osnm.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			t.commit();
-			session.close();
-		}
-	}
+//	public static void main(String[] args) {
+//		Session session = HibernateUtil.getSession();
+//		Transaction t = session.beginTransaction();
+//		try {
+//			FileOutputStream os = new FileOutputStream("c:\\sources-matched.csv");
+//			FileOutputStream osnm = new FileOutputStream("c:\\sources-not-matched.csv");
+//			os.write("\"source name\", \"source code (from rollovers file)\", \"source rollover\"\n".getBytes());
+//			SourceInformationUtils utils = SourceInformationUtils.createSourceInformationUtils();
+//			List response = session.createSQLQuery("select distinct a.s from (select distinct sourcea as s from voyages where revision=1 union select distinct sourceb as s from voyages where revision=1 union select distinct sourcec as s from voyages where revision=1 union select distinct sourced as s from voyages where revision=1 union select distinct sourcee as s from voyages where revision=1 union select distinct sourcef as s from voyages where revision=1 union select distinct sourceg as s from voyages where revision=1 union select distinct sourceh as s from voyages where revision=1 union select distinct sourcei as s from voyages where revision=1 union select distinct sourcej as s from voyages where revision=1 union select distinct sourcek as s from voyages where revision=1 union select distinct sourcel as s from voyages where revision=1 union select distinct sourcem as s from voyages where revision=1 union select distinct sourcen as s from voyages where revision=1 union select distinct sourceo as s from voyages where revision=1 union select distinct sourcep as s from voyages where revision=1 union select distinct sourceq as s from voyages where revision=1 union select distinct sourcer as s from voyages where revision=1) a order by a.s").list();
+//			for (Iterator iter = response.iterator(); iter.hasNext();) {
+//				String source = (String) iter.next();
+//				SourceInformation info = utils.match(source);
+//				if (info != null) {
+//					os.write(("\"" + source + "\",\"" + info.getId() + "\",\"" + info.getInformation() + "\"\n").getBytes());
+//				} else if (source != null) {
+//					osnm.write(("\"" + source + "\"\n").getBytes());
+//				}
+//			}
+//			
+//			os.flush();
+//			osnm.flush();
+//			os.close();
+//			osnm.close();
+//			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//			t.commit();
+//			session.close();
+//		}
+//	}
 	
 }

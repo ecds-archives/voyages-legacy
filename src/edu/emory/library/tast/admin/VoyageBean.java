@@ -44,8 +44,6 @@ public class VoyageBean {
 
 	private RowGroup[] rowGroups;
 	
-	private SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils();
-
 	public VoyageBean() {
 		List rowGroupsList = new ArrayList();
 		for (int i = 0; i < attrs.length; i++) {
@@ -101,6 +99,9 @@ public class VoyageBean {
 		if (values == null) {
 			Session session = HibernateUtil.getSession();
 			Transaction t = session.beginTransaction();
+			
+			SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils(session);
+			
 			values = new Values();
 
 			Voyage voyage = Voyage.loadById(session, this.rowId);
