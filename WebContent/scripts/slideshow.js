@@ -80,6 +80,12 @@ function Slideshow(
 	this.wrap = wrap;
 	this.images = images;
 	
+	if (this.loadingImageUrl)
+	{
+		var tmp = new Image(this.loadingImageWidth, this.loadingImageHeight);
+		tmp.src = this.loadingImageUrl;
+	}
+	
 	this.currentSlideIdx = 0;
 	this.loadingImage = null;
 	

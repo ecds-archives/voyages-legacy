@@ -21,6 +21,7 @@ td.main-menu-section {
 	padding-right: 5px; }
 
 div.main-menu-box {
+	z-index: 99;
 	position: absolute; }
 	
 td.main-menu-box-top-left {
