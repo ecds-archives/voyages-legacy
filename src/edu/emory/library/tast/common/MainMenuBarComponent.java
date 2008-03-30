@@ -52,8 +52,11 @@ public class MainMenuBarComponent extends UIComponentBase
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "main-menu-section-image", null);
 		
-		writer.startElement("a", this);
-		writer.writeAttribute("href", baseUrl + "/" + section.getUrl(), null);
+		if (section.getUrl() != null)
+		{
+			writer.startElement("a", this);
+			writer.writeAttribute("href", baseUrl + "/" + section.getUrl(), null);
+		}
 
 		writer.startElement("img", this);
 		writer.writeAttribute("id", sectionImgId, null);
@@ -73,7 +76,10 @@ public class MainMenuBarComponent extends UIComponentBase
 		}
 		writer.endElement("img");
 		
-		writer.endElement("a");
+		if (section.getUrl() != null)
+		{
+			writer.endElement("a");
+		}
 
 		writer.endElement("div");
 		

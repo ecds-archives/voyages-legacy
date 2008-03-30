@@ -13,7 +13,7 @@ public class MainMenuBean
 		
 		new MainMenuBarSectionItem(
 				"assessment",
-				"assessment/index.faces",
+				null,
 				"images/main-menu/assessment.png",
 				"images/main-menu/assessment-highlighted.png",
 				"images/main-menu/assessment-active.png", 170,
@@ -38,7 +38,7 @@ public class MainMenuBean
 				
 		new MainMenuBarSectionItem(
 				"database",
-				"database/index.faces",
+				null,
 				"images/main-menu/database.png",
 				"images/main-menu/database-highlighted.png",
 				"images/main-menu/database-active.png", 100,
@@ -63,7 +63,7 @@ public class MainMenuBean
 
 		new MainMenuBarSectionItem(
 				"resources",
-				"resources/index.faces",
+				null,
 				"images/main-menu/resources.png",
 				"images/main-menu/resources-highlighted.png",
 				"images/main-menu/resources-active.png", 85,
@@ -80,7 +80,7 @@ public class MainMenuBean
 				
 		new MainMenuBarSectionItem(
 				"lessons",
-				"lessons/index.faces",
+				null,
 				"images/main-menu/lessons.png",
 				"images/main-menu/lessons-highlighted.png",
 				"images/main-menu/lessons-active.png",
@@ -93,15 +93,11 @@ public class MainMenuBean
 					new MainMenuBarPageItem(
 							"map",
 							"Lesson Maps",
-							"lessons/map.faces"),
-					new MainMenuBarPageItem(
-							"glossary",
-							"Glossary",
-							"lessons/glossary.faces")}),
+							"lessons/map.faces")}),
 
 		new MainMenuBarSectionItem(
 				"about",
-				"about/index.faces",
+				null,
 				"images/main-menu/about.png",
 				"images/main-menu/about-highlighted.png",
 				"images/main-menu/about-active.png",
@@ -150,12 +146,19 @@ public class MainMenuBean
 		}
 	}
 	
+	private static String getContextPath()
+	{
+		return FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+	}
+
 	public String getLogoImageUrl()
 	{
-		return
-			FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() +
-			"/images/main-menu/menu-bg.png";
-		
+		return getContextPath() + "/images/main-menu/menu-bg.png";
+	}
+
+	public String getIndexUrl()
+	{
+		return getContextPath() + "/index.faces";
 	}
 
 }

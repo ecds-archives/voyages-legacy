@@ -43,8 +43,22 @@
 						<td align="right" valign="top">
 							<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td style="padding-right: 5px;"><img class="welcome-image-nav-button" src="./images/index/prev-image.png" width="22" height="22" border="0" onclick="SlideshowGlobals.prevSlide('welcome-slideshow')" /></td>
-								<td><img class="welcome-image-nav-button" src="./images/index/next-image.png" width="22" height="22" border="0" onclick="SlideshowGlobals.nextSlide('welcome-slideshow')" /></td>
+								<td style="padding-right: 5px;"><img
+									id="welcome-slideshow-prev-button"
+									class="welcome-image-nav-button"
+									src="./images/index/prev-image.png"
+									width="22" height="22" border="0"
+									onmouseover="SlideshowGlobals.prevButtonMouseOver('welcome-slideshow')"
+									onmouseout="SlideshowGlobals.prevButtonMouseOut('welcome-slideshow')"
+									onclick="SlideshowGlobals.prevSlide('welcome-slideshow')" /></td>
+								<td><img
+									id="welcome-slideshow-next-button"
+									class="welcome-image-nav-button"
+									src="./images/index/next-image.png"
+									width="22" height="22" border="0"
+									onmouseover="SlideshowGlobals.nextButtonMouseOver('welcome-slideshow')"
+									onmouseout="SlideshowGlobals.nextButtonMouseOut('welcome-slideshow')"
+									onclick="SlideshowGlobals.nextSlide('welcome-slideshow')" /></td>
 							</tr>
 							</table>
 						</td>
@@ -73,13 +87,13 @@
 		"welcome-image-frame",
 		"welcome-image",
 		"welcome-image-caption",
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
+		"welcome-slideshow-prev-button",
+		"welcome-slideshow-next-button",
+		"./images/index/prev-image.png",
+		"./images/index/next-image.png",
+		"./images/index/prev-image-highlighted.png",
+		"./images/index/next-image-highlighted.png",
+		"./images/ajax-loader.gif", 16, 16,
 		true,
 		[
 			new SlideshowImage(
@@ -116,9 +130,9 @@
 				an exact match. 
 			</div>
 			<ul class="featured-section-links">
-				<li><a href="#">Browse and Search the Database</a></li>
-				<li><a href="#">Introduction to the Database</a></li>
-				<li><a href="#">How can I contribute</a></li>
+				<li><a href="./database/search.faces">Browse and Search the Database</a></li>
+				<li><a href="./database/methodology.faces">Understanding the Database</a></li>
+				<li><a href="./database/search.faces">How can I contribute</a></li>
 			</ul>
 		
 		</td>
@@ -182,15 +196,23 @@
 	</table>
 	
 	<div class="footer">
+	
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
+			<td colspan="3"><div class="footer-section">Sponsors</div></td>
+			<td colspan="4" xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><div class="footer-section">Partners</div></td>
+		</tr>
+		<tr>
 			<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo.png" width="82" height="32" border="0" /></a></td>
-			<td><a href="#" class="footer-link">Woodruff Library<br>Digital Programs (USA)</a></td>
-			<td><a href="#" class="footer-link">The University<br>of Hull (UK)</a></td>
-			<td><a href="#" class="footer-link">Universidad of Federal<br>do Rio de Janeiro (Brazil)</a></td>
-			<td><a href="#" class="footer-link">Victoria University<br>of Wellington (New Zealand)</a></td>
+			<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
+			<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Hardward, USA)</a></td>
+			<td xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
+			<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>
+			<td><a href="http://www.ufrj.br" class="footer-link">Universidade Federal do<br>Rio de Janeiro (Brazil)</a></td>
+			<td><a href="http://www.vuw.ac.nz" class="footer-link">Victoria University of<br>Wellington (New Zealand)</a></td>
 		</tr>
 		</table>
+		
 	</div>
 
 </f:view>

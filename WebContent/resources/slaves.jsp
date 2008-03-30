@@ -36,14 +36,8 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-	<div id="top-bar">
-		<table border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
-			<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="resources" activePageId="slaves" /></td>
-		</tr>
-		</table>
-	</div>
+	<f:param value="resources" binding="#{MainMenuBean.activeSectionParam}" />
+	<%@ include file="../top-bar.jsp" %>
 	
 	<div id="content">
 	

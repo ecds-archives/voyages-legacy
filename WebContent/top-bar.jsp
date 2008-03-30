@@ -9,7 +9,7 @@
 	<t:htmlTag value="tr">
 	
 		<t:htmlTag value="td" styleClass="top-bar-logo">
-			<h:outputLink value="index.faces">
+			<h:outputLink value="#{MainMenuBean.indexUrl}">
 				<h:graphicImage
 					value="/images/main-menu/logo.png"
 					width="260" height="60" />

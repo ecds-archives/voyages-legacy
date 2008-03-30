@@ -36,3 +36,8 @@ a.footer-link {
 	
 a.footer-link:hover {
 	color: #333333; }
+
+div.footer-section {
+	/* border-bottom: 1px dotted #CCCCCC; 
+	padding-bottom: 5px; */
+	margin-bottom: 5px; } 

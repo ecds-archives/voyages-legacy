@@ -45,7 +45,7 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-	<f:param value="estimates" binding="#{MainMenuBean.activeSectionParam}" />
+	<f:param value="assessment" binding="#{MainMenuBean.activeSectionParam}" />
 	<%@ include file="../top-bar.jsp" %>
 	
 	<div id="content">

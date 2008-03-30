@@ -58,6 +58,8 @@ function Slideshow(
 	prevButtonHighlightedUrl,
 	nextButtonHighlightedUrl,
 	loadingImageUrl,
+	loadingImageWidth,
+	loadingImageHeight,
 	wrap,
 	images)
 {
@@ -73,6 +75,8 @@ function Slideshow(
 	this.prevButtonHighlightedUrl = prevButtonHighlightedUrl;
 	this.nextButtonHighlightedUrl = nextButtonHighlightedUrl;
 	this.loadingImageUrl = loadingImageUrl;
+	this.loadingImageWidth = loadingImageWidth;
+	this.loadingImageHeight = loadingImageHeight;
 	this.wrap = wrap;
 	this.images = images;
 	
@@ -117,8 +121,9 @@ Slideshow.prototype.ensureLoadingImage = function()
 	var width = ElementUtils.getOffsetWidth(frame);
 	var height = ElementUtils.getOffsetHeight(frame);
 	
-	this.loadingImage = document.createElement("image");
+	this.loadingImage = document.createElement("img");
 	
+	this.loadingImage.src = this.loadingImageUrl;
 	this.loadingImage.width = this.loadingImageWidth; 
 	this.loadingImage.height = this.loadingImageHeight;
 	this.loadingImage.border = 0;
@@ -141,7 +146,7 @@ Slideshow.prototype.gotoSlide = function(slideIdx)
 	if (!this.loadingImageUrl)
 	{
 	
-		this.changeImage();
+		this.changeImage(true, true);
 		
 	}
 	else
@@ -154,6 +159,8 @@ Slideshow.prototype.gotoSlide = function(slideIdx)
 		img.style.visibility = "hidden";
 		this.loadingImage.style.display = "";
 		
+		this.changeImage(true, false);
+		
 		EventAttacher.attach(img, "load", this, "slideLoaded");
 	
 	}
@@ -162,18 +169,55 @@ Slideshow.prototype.gotoSlide = function(slideIdx)
 
 Slideshow.prototype.slideLoaded = function()
 {
+	
+	var img = document.getElementById(this.imageId);
+
 	this.loadingImage.style.display = "none";
-	this.changeImage();
+	img.style.visibility = "visible";
+	
+	this.changeImage(false, true);
+	
 	EventAttacher.detach(img, "load", this, "slideLoaded");
+	
 }
 
-Slideshow.prototype.changeImage = function()
+Slideshow.prototype.changeImage = function(changeImg, changeCaption)
 {
 
-	var imgage = document.getElementById(this.imageId);
-	var caption = document.getElementById(this.captionId);
+	if (changeImg)
+	{
+		var image = document.getElementById(this.imageId);
+		image.src = this.images[this.currentSlideIdx].imageUrl;
+	}
 	
-	imgage.src = this.images[this.currentSlideIdx].imageUrl;
-	caption.innerHTML = this.images[this.currentSlideIdx].caption;
+	if (changeCaption)
+	{
+		var caption = document.getElementById(this.captionId);
+		caption.innerHTML = this.images[this.currentSlideIdx].caption;
+	}
 	
+}
+
+Slideshow.prototype.prevButtonMouseOver = function()
+{
+	var prevButton = document.getElementById(this.prevButtonId);
+	prevButton.src = this.prevButtonHighlightedUrl;
+}
+
+Slideshow.prototype.prevButtonMouseOut = function()
+{
+	var prevButton = document.getElementById(this.prevButtonId);
+	prevButton.src = this.prevButtonImageUrl;
+}
+
+Slideshow.prototype.nextButtonMouseOver = function()
+{
+	var nextButton = document.getElementById(this.nextButtonId);
+	nextButton.src = this.nextButtonHighlightedUrl;
+}
+
+Slideshow.prototype.nextButtonMouseOut = function()
+{
+	var nextButton = document.getElementById(this.nextButtonId);
+	nextButton.src = this.nextButtonImageUrl;
 }
