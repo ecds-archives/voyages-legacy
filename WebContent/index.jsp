@@ -6,14 +6,50 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Trans-Atlantic Slave Trade</title>
+	
 	<link href="./styles/main.css" rel="stylesheet" type="text/css">
 	<link href="./styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="./styles/index.css" rel="stylesheet" type="text/css">
+	
 	<script src="./scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="./scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="./scripts/slideshow.js" language="javascript" type="text/javascript"></script>
+	
+	<script language="javascript" type="text/javascript">
+	
+	function openDemos()
+	{
+		openPopup("./help/demos.faces");
+	}
+
+	function openSitemap()
+	{
+		openPopup("./help/sitemap.faces");
+	}
+
+	function openGlossary()
+	{
+		openPopup("./help/glossary.faces");
+	}
+
+	function openPopup(pageUrl)
+	{
+		window.open(
+			pageUrl,
+			"tastPopupHelp",
+			"resizable=yes, " +
+			"location=no, " +
+			"status=no, " +
+			"scrollbars=yes, " +
+			"width=600, " +
+			"height=400"); 
+	}
+	
+	</script>
+	
 </head>
 <body>
 <f:view>
@@ -22,7 +58,20 @@
 	<%@ include file="top-bar.jsp" %>
 	
 	<div style="background-color: #05768A; color: White; padding: 4px 0px 4px 10px;">
-		You are now on the homepage of the Trans-Atlantic Slave Trade Database
+		<table border="0" cellspacing="0" cellpadding="0" style="width: 900px;">
+		<tr>
+			<td>You are now on the homepage of the Trans-Atlantic Slave Trade Database</td>
+			<td align="right">
+				<table border="0" cellspacing="0" cellpadding="0" class="popup-links">
+				<tr>
+					<td><a href="javascript:openDemos()">Demos</a></td>
+					<td><a href="javascript:openSitemap()">Sitemap</a></td>
+					<td><a href="javascript:openGlossary()">Glossary</a></td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
 	</div>
 	
 	<div class="welcome-band">

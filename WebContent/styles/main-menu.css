@@ -129,4 +129,17 @@ div.about td.main-menu-box-top div {
 	height: 8px;
 	overflow: none;
 	background-image: url(../images/main-menu/about-box-top.png);
-	background-repeat: no-repeat; }		
+	background-repeat: no-repeat; }
+	
+/* popup links */
+
+table.popup-links td {
+	padding-left: 10px; }
+
+table.popup-links a {
+	text-decoration: none;
+	color: White; }
+
+table.popup-links a:hover {
+	text-decoration: underline;
+	color: #C0E0EA; }
