@@ -57,14 +57,8 @@
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 	<h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
-	<div id="top-bar">
-		<table border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
-			<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="database" activePageId="search" /></td>
-		</tr>
-		</table>
-	</div>
+	<f:param value="database" binding="#{MainMenuBean.activeSectionParam}" />
+	<%@ include file="../top-bar.jsp" %>
 
 	<h:form id="form" style="margin: 0px;">
 	

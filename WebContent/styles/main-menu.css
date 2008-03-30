@@ -1,37 +1,131 @@
-div#top-bar {
-	background-image: url(../images/menu-bg.png);
-	background-repeat: no-repeat;
-	background-color: #008CA8; }
+div.top-bar {
+	background-color: #008CA8;
+	background-image: url(../images/main-menu/menu-bg.png);
+	background-repeat: no-repeat; }
+	
+table.top-bar {
+	border-collapse: collapse; }
+	
+td.top-bar-logo {
+	padding: 0px; }
+
+td.top-bar-menu {
+	padding: 0px; }
+
+td.top-bar-logo img {
+	border-style: none; }
+	
+/* menu */
 
 td.main-menu-section {
-	vertical-align: top; }
-	
-div.main-menu-section-image {
-	margin-right: 5px; }
-	
-img.main-menu-section-image {
-	cursor: pointer; }
-	
-div.main-menu-pages {
-	margin-top: 0px;
-	margin-left: 32px;
-	margin-right: 5px; }
+	padding-right: 5px; }
 
-div.main-menu-pages a {
+div.main-menu-box {
+	position: absolute; }
+	
+td.main-menu-box-top-left {
+	width: 8px;
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-top-left.png);
+	background-repeat: no-repeat; }
+	
+td.main-menu-box-top {
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-top.png);
+	background-repeat: repeat-x; }
+
+td.main-menu-box-top-right {
+	height: 8px;
+	width: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-top-right.png);
+	background-repeat: no-repeat; }
+	
+td.main-menu-box-left {
+	width: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-left.png);
+	background-repeat: repeat-y; }
+
+td.main-menu-box-center {
+	background-color: #005B6F;
+	padding-bottom: 0px; }
+
+div.main-menu-box-link {
+	}
+
+div.main-menu-box-link a {
+	padding-left: 5px;
+	padding-right: 20px;
+	padding-bottom: 5px;
+	display: block;
 	text-decoration: none;
 	color: White; }
-	
-div.main-menu-pages a:hover {
-	color: #93CED9; }
 
-td.main-menu-container {
-	line-height: 130%;
-	vertical-align: top;
-	padding-left: 15px;
-	padding-top: 10px; }
+div.main-menu-box-link a:hover {
+	color: #C0E0EA;
+	text-decoration: underline;
+	/* background-color: #008CA8; */ }
+
+td.main-menu-box-right {
+	width: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-right.png);
+	background-repeat: repeat-y; }
+
+td.main-menu-box-bottom-left {
+	width: 8px;
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-bottom-left.png);
+	background-repeat: no-repeat; }
 	
-div.main-menu-page-normal {
-	}
+td.main-menu-box-bottom {
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-bottom.png);
+	background-repeat: repeat-x; }
+
+td.main-menu-box-bottom-right {
+	height: 8px;
+	width: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/box-bottom-right.png);
+	background-repeat: no-repeat; }	
+
+div.assessment td.main-menu-box-top div {
+	width: 170px;
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/assessment-box-top.png);
+	background-repeat: no-repeat; }	
+
+div.database td.main-menu-box-top div {
+	width: 100px;
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/database-box-top.png);
+	background-repeat: no-repeat; }	
+
+div.resources td.main-menu-box-top div {
+	width: 85px;
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/resources-box-top.png);
+	background-repeat: no-repeat; }	
+
+div.lessons td.main-menu-box-top div {
+	width: 155px;
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/lessons-box-top.png);
+	background-repeat: no-repeat; }	
 	
-div.main-menu-page-active {
-	font-weight: bold; }
+div.about td.main-menu-box-top div {
+	width: 130px;
+	height: 8px;
+	overflow: none;
+	background-image: url(../images/main-menu/about-box-top.png);
+	background-repeat: no-repeat; }		

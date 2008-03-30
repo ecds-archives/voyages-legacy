@@ -24,7 +24,6 @@ public class SubmissionPhaseListerner implements PhaseListener
 		
 		SubmissionBean bean = (SubmissionBean) fc.getApplication().createValueBinding("#{SubmissionBean}").getValue(fc);
 		AdminSubmissionBean adminBean = (AdminSubmissionBean) fc.getApplication().createValueBinding("#{AdminSubmissionBean}").getValue(fc);
-		System.out.println("View: " + viewId);
 		if (viewId.equals("/submission/submission-select-voyage-edit.jsp"))
 		{
 			if (bean.getAuthenticatedUser() == null) {

@@ -1,7 +1,82 @@
-/* main index */
+div.welcome-band {
+	height: 270px;
+	background-color: #595446;
+	background-image: url(../images/index/top-band.png); 
+	background-repeat: repeat-x; }
+	
+table.welcome-band {
+	margin-top: 20px;
+	margin-left: 20px; }
 
-body {
-	background-color: #C0E0EA; }
+div#welcome-image-frame {
+	background-color: White;
+	width: 320px;
+	height: 180px;
+	border: 2px solid Black; }
+	
+div.welcome-image-caption-and-buttons {
+	width: 324px;
+	margin-top: 5px; }
+	
+table.welcome-image-caption-and-buttons {
+	width: 324px; }
+	
+img.welcome-image-nav-button {
+	cursor: pointer; }
+
+div#welcome-image-caption {
+	padding-left: 2px;
+	color: White; }
+	
+div.welcome-text-big {
+	margin-left: 25px; }
+
+div.welcome-text-small {
+	font-size: 11pt;
+	line-height: 140%;
+	color: White;
+	width: 560px;
+	margin-left: 25px; }
+
+div.featured-sections-title {
+	margin-top: 5px;
+	margin-left: 20px; }
+
+/* feature sections */
+
+table.featured-sections {
+	margin-top: 10px;
+	margin-left: 20px; }
+
+div.featured-section-image {
+	background-color: #E8E3CA;
+	width: 200px;
+	height: 60px; }
+
+div.featured-section-caption {
+	color: #595446; 
+	font-size: 11pt;
+	font-weight: bold;
+	margin-top: 10px; }
+
+div.featured-section-description {
+	margin-top: 5px;
+	width: 200px;
+	margin-right: 20px; }
+	
+ul.featured-section-links {
+	width: 200px;
+	margin: 5px 0px 0px 0px;
+	padding: 0px; }
+	
+ul.featured-section-links li {
+	margin-left: 15px; }
+	
+ul.featured-section-links li a {
+	text-decoration: none;
+	color: #008CA8; }
+
+/* main index */
 
 div.index-middle {
 	height: 300px;
@@ -130,3 +205,6 @@ div.welcome-place-title {
 div.welcome-place-text {
 	font-size: 8pt;
 	line-height: 130%; }
+
+	
+	

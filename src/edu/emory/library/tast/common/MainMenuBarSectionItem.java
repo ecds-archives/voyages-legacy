@@ -5,18 +5,20 @@ public class MainMenuBarSectionItem
 	
 	private String id;
 	private String imageUrlNormal;
+	private String imageUrlHighlighted;
 	private String imageUrlActive;
-	private String url;
 	private int imageWidth;
 	private int imageHeight;
+	private String url;
 	private MainMenuBarPageItem[] subItems;
 	private String boxCssClass;
 	
-	public MainMenuBarSectionItem(String id, String url, String imageUrlNormal, String imageUrlActive, int imageWidth, int imageHeight, String boxCssClass, MainMenuBarPageItem[] subItems)
+	public MainMenuBarSectionItem(String id, String url, String imageUrlNormal, String imageUrlHighlighted, String imageUrlActive, int imageWidth, int imageHeight, String boxCssClass, MainMenuBarPageItem[] subItems)
 	{
 		this.id = id;
 		this.url = url;
 		this.imageUrlNormal = imageUrlNormal;
+		this.imageUrlHighlighted = imageUrlHighlighted;
 		this.imageUrlActive = imageUrlActive;
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
@@ -102,6 +104,16 @@ public class MainMenuBarSectionItem
 	public void setBoxCssClass(String boxCssClass)
 	{
 		this.boxCssClass = boxCssClass;
+	}
+
+	public String getImageUrlHighlighted()
+	{
+		return imageUrlHighlighted;
+	}
+
+	public void setImageUrlHighlighted(String imageUrlHighlighted)
+	{
+		this.imageUrlHighlighted = imageUrlHighlighted;
 	}
 
 }
