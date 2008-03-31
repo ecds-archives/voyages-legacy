@@ -49,7 +49,7 @@ table.featured-sections {
 	margin-left: 20px; }
 
 div.featured-section-image {
-	background-color: #E8E3CA;
+	border: 1px solid #575344;
 	width: 200px;
 	height: 60px; }
 
@@ -57,16 +57,18 @@ div.featured-section-caption {
 	color: #595446; 
 	font-size: 11pt;
 	font-weight: bold;
-	margin-top: 10px; }
+	margin-top: 10px;
+	margin-left: 3px; }
 
 div.featured-section-description {
 	margin-top: 5px;
 	width: 200px;
-	margin-right: 20px; }
+	margin-right: 20px;
+	margin-left: 3px; }
 	
 ul.featured-section-links {
 	width: 200px;
-	margin: 5px 0px 0px 0px;
+	margin: 5px 0px 0px 3px;
 	padding: 0px; }
 	
 ul.featured-section-links li {

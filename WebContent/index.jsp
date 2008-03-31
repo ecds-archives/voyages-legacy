@@ -168,7 +168,7 @@
 		<td valign="top">
 		
 			<div class="featured-section-image">
-			
+				<img src="./images/index/icon-voyages.png" width="200" height="60" border="0" />
 			</div>
 			<div class="featured-section-caption">
 				Database of Voyages
@@ -188,7 +188,7 @@
 		<td valign="top">
 		
 			<div class="featured-section-image">
-			
+				<img src="./images/index/icon-estimates.png" width="200" height="60" border="0" />
 			</div>
 			<div class="featured-section-caption">
 				Slave Trade Estimates
@@ -207,7 +207,7 @@
 		<td valign="top">
 		
 			<div class="featured-section-image">
-			
+				<img src="./images/index/icon-slaves.png" width="200" height="60" border="0" />
 			</div>
 			<div class="featured-section-caption">
 				Database of Slaves
@@ -226,7 +226,7 @@
 		<td valign="top">
 		
 			<div class="featured-section-image">
-			
+				<img src="./images/index/icon-images.png" width="200" height="60" border="0" />
 			</div>
 			<div class="featured-section-caption">
 				Historical Images
