@@ -3,6 +3,8 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
+
+
 <t:htmlTag value="div" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 	<t:htmlTag value="tr">
@@ -23,7 +25,7 @@
 	data="#{TableResultTabBean.data}"
 	componentVisible="#{TableResultTabBean.componentVisible}"
 	sortChanged="#{TableResultTabBean.sortChanged}"
-	style="overflow: auto; text-align: right" />
+	style="overflow: auto; text-align: left" />
 
 <t:htmlTag value="div" styleClass="table-bottom-tools" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
