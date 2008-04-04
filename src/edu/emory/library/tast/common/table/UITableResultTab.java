@@ -157,7 +157,13 @@ public class UITableResultTab extends UIOutput {
 						populatedAttributes[i].encodeToString());
 
 				writer.startElement("th", this);
+		/*		writer.writeAttribute("onmouseover", "showToolTipOff('"  + "test!" +  "', " + "tooltip" + 
+						 "',450)", null);
+				writer.writeAttribute("onmouseout", "hideToolTip('"  + "tooltip" +  "')", null);
+			*/	
 				writer.startElement("div", null);
+				
+	//			writer.writeAttribute("id", "tooltip" , null);
 				
 				String classStr = "";
 				if (i == 0) classStr = this.appendStyle(classStr, "grid-first-column"); 
@@ -172,7 +178,7 @@ public class UITableResultTab extends UIOutput {
 							classStr = this.appendStyle(classStr, "grid-header-icon-asc");
 						}
 					}
-					classStr = this.appendStyle(classStr, "grid-header-text-right");
+					classStr = this.appendStyle(classStr, "grid-header-text-left");
 				} else {
 					if (data.getOrderByColumn() != null
 							&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
@@ -187,6 +193,7 @@ public class UITableResultTab extends UIOutput {
 				}
 				writer.writeAttribute("class", classStr, null);
 				
+			
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.writeAttribute("onclick", jsSort, null);
@@ -204,8 +211,7 @@ public class UITableResultTab extends UIOutput {
 
 
 		StringBuffer rowClass = new StringBuffer();
-		TableData.DataTableItem[] objs = data.getData();
-		
+		TableData.DataTableItem[] objs = data.getData();		
 		// Encode data.
 		if (objs != null) {
 			for (int i = 0; i < objs.length; i++) {
@@ -233,6 +239,8 @@ public class UITableResultTab extends UIOutput {
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
 				if (showDetails != null) writer.writeAttribute("onclick", jsClick, null);
+				
+				
 				Object[] values = objs[i].dataRow;
 				for (int j = 0; j < values.length; j++) {
 					Object obj = values[j];
@@ -256,7 +264,7 @@ public class UITableResultTab extends UIOutput {
 							if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
 							
 							if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
-								writer.writeAttribute("style", "text-align: right", null);
+								writer.writeAttribute("style", "text-align: left", null);
 							}
 							
 							if (rollovers[k] != null) {
