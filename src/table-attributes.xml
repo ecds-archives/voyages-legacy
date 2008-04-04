@@ -35,16 +35,16 @@
 			<attribute name="yrreg"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="natinimp" userCategory="beginners,general" userLabel="Flag*">
-		<attributes>
-			<attribute name="natinimp"/>
-		</attributes>
-	</table-attribute>
 	<table-attribute tabs="1,2" id="national" userCategory="beginners,general" userLabel="Flag">
 		<attributes>
 			<attribute name="national"/>
 		</attributes>
 	</table-attribute>
+	<table-attribute tabs="1,2" id="natinimp" userCategory="beginners,general" userLabel="Flag*">
+		<attributes>
+			<attribute name="natinimp"/>
+		</attributes>
+	</table-attribute>	
 	<table-attribute tabs="1,2" id="rig" userCategory="beginners,general" userLabel="Rig">
 		<attributes>
 			<attribute name="rig"/>
@@ -352,32 +352,32 @@
 			<attribute name="slaximp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="boyrat7" userCategory="beginners,general" userLabel="Percentage boys*" format="{0,number,##0.00}%">
+	<table-attribute tabs="1,2" id="boyrat7" userCategory="beginners,general" userLabel="Percentage boys*" format="{0,number,##0.0}%">
 		<attributes>
 			<attribute name="boyrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="girlrat7" userCategory="beginners,general" userLabel="Percentage girls*" format="{0,number,##0.00}%">
+	<table-attribute tabs="1,2" id="girlrat7" userCategory="beginners,general" userLabel="Percentage girls*" format="{0,number,##0.0}%">
 		<attributes>
 			<attribute name="girlrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="menrat7" userCategory="beginners,general" userLabel="Percentage men*" format="{0,number,##0.00}%">
+	<table-attribute tabs="1,2" id="menrat7" userCategory="beginners,general" userLabel="Percentage men*" format="{0,number,##0.0}%">
 		<attributes>
 			<attribute name="menrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="womrat7" userCategory="beginners,general" userLabel="Percentage women*" format="{0,number,##0.00}%">
+	<table-attribute tabs="1,2" id="womrat7" userCategory="beginners,general" userLabel="Percentage women*" format="{0,number,##0.0}%">
 		<attributes>
 			<attribute name="womrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="chilrat7" userCategory="beginners,general" userLabel="Percentage children*" format="{0,number,##0.00}%">
+	<table-attribute tabs="1,2" id="chilrat7" userCategory="beginners,general" userLabel="Percentage children*" format="{0,number,##0.0}%">
 		<attributes>
 			<attribute name="chilrat7"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="malrat7" userCategory="beginners,general" userLabel="Percentage male*" format="{0,number,##0.00}%">
+	<table-attribute tabs="1,2" id="malrat7" userCategory="beginners,general" userLabel="Percentage male*" format="{0,number,##0.0}%">
 		<attributes>
 			<attribute name="malrat7"/>
 		</attributes>
@@ -392,7 +392,7 @@
 			<attribute name="vymrtimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners,general" userLabel="Percentage of slaves embarked who died during voyage*" format="{0,number,##0.00}%">
+	<table-attribute tabs="1,2" id="vymrtrat" userCategory="beginners,general" userLabel="Percentage of slaves embarked who died during voyage*" format="{0,number,##0.0}%">
 		<attributes>
 			<attribute name="vymrtrat"/>
 		</attributes>
