@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Map</title>
+	<title>Lesson Plans</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
@@ -19,8 +19,11 @@
 <f:view>
 <h:form id="main">
 
-	<f:param value="lessons" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="../top-bar.jsp" %>
+	<s:siteHeader activeSectionId="lessons">
+		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputLink value="index.faces"><h:outputText value="Educational Materials" /></h:outputLink>
+		<h:outputText value="Lesson Plans" />
+	</s:siteHeader>
 	
 	<div id="content">
 	

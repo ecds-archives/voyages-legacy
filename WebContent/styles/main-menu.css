@@ -131,15 +131,32 @@ div.about td.main-menu-box-top div {
 	background-image: url(../images/main-menu/about-box-top.png);
 	background-repeat: no-repeat; }
 	
-/* popup links */
+/* secondary bar */
 
-table.popup-links td {
-	padding-left: 10px; }
-
-table.popup-links a {
+div.secondary-bar {
+	background-color: #05768A;
+	color: White;
+	padding: 4px 0px 4px 10px; }
+	
+div.secondary-bar a {
 	text-decoration: none;
 	color: White; }
-
-table.popup-links a:hover {
+		
+div.secondary-bar a:hover {
 	text-decoration: underline;
 	color: #C0E0EA; }
+
+table.secondary-bar {
+	width: 900px; }
+	
+td.secondary-bar-breadcrumb a {
+	}
+	
+table.secondary-bar-help-links {
+	margin-left: auto;
+	margin-right: 0px; }
+	
+
+td.secondary-bar-help-link {
+	padding-left: 10px; }
+

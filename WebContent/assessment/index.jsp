@@ -19,8 +19,10 @@
 <f:view>
 <h:form id="main">
 
-	<f:param value="estimates" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="../top-bar.jsp" %>
+	<s:siteHeader activeSectionId="assessment">
+		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputText value="Assessing the Slave Trade" />
+	</s:siteHeader>
 	
 	<div id="content">
 	

@@ -19,8 +19,10 @@
 <f:view>
 <h:form id="main">
 
-	<f:param value="lessons" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="../top-bar.jsp" %>
+	<s:siteHeader activeSectionId="lessons">
+		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputText value="Educational Materials" />
+	</s:siteHeader>
 	
 	<div id="content">
 	

@@ -31,8 +31,11 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-	<f:param value="resources" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="../top-bar.jsp" %>
+	<s:siteHeader activeSectionId="resources">
+		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputLink value="slaves.faces"><h:outputText value="Resources" /></h:outputLink>
+		<h:outputText value="Images" />
+	</s:siteHeader>
 	
 	<div id="content">
 	

@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common;
+package edu.emory.library.tast.master;
 
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;

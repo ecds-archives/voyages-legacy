@@ -405,9 +405,9 @@
 	</tag>
 	
 	<tag>
-		<name>divbutton</name>
+		<name>simpleButton</name>
 		<tag-class>
-			edu.emory.library.tast.common.DivButtonTag
+			edu.emory.library.tast.common.SimpleButtonTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -1043,4 +1043,18 @@
 		</attribute>
 	</tag>
 	
+	<tag>
+		<name>siteHeader</name>
+		<tag-class>
+			edu.emory.library.tast.master.SiteHeaderTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>activeSectionId</name>
+		</attribute>
+	</tag>
+
 </taglib>

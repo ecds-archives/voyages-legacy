@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common;
+package edu.emory.library.tast.master;
 
 public class MainMenuBarPageItem
 {

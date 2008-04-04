@@ -3,8 +3,6 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-
-
 <t:htmlTag value="div" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">
 	<t:htmlTag value="tr">
@@ -12,7 +10,7 @@
 			<t:htmlTag value="h1"><h:outputText value="List of voyages" /></t:htmlTag>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="text-align: right;">
-			<h:commandLink value="Configure columns of the table >" action="#{TableResultTabBean.configurationMode}" />
+			<h:commandLink value="Configure columns of the table>" action="#{TableResultTabBean.configurationMode}" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
@@ -24,8 +22,7 @@
 	rendered="#{TableResultTabBean.resultsMode}"
 	data="#{TableResultTabBean.data}"
 	componentVisible="#{TableResultTabBean.componentVisible}"
-	sortChanged="#{TableResultTabBean.sortChanged}"
-	style="overflow: auto; text-align: left" />
+	sortChanged="#{TableResultTabBean.sortChanged}" />
 
 <t:htmlTag value="div" styleClass="table-bottom-tools" rendered="#{TableResultTabBean.resultsMode}">
 	<t:htmlTag value="table" style="border-collapse: collapse; width: 100%;">

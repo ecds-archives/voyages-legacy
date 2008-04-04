@@ -157,6 +157,6 @@
 </h:panelGroup>
 
 <t:htmlTag rendered="#{AdvancedStatisticsTabBean.statReady}" value="div">
-	<s:divbutton id="chart-back-button-id" action="#{AdvancedStatisticsTabBean.prev}" styleClass="chart-back-button"/>
-	<s:divbutton id="chart-forward-button-id" action="#{AdvancedStatisticsTabBean.next}" styleClass="chart-forward-button"/>
+	<s:simpleButton id="chart-back-button-id" action="#{AdvancedStatisticsTabBean.prev}" styleClass="chart-back-button"/>
+	<s:simpleButton id="chart-forward-button-id" action="#{AdvancedStatisticsTabBean.next}" styleClass="chart-forward-button"/>
 </t:htmlTag>

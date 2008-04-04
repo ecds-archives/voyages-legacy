@@ -90,8 +90,8 @@
 	</component>
 	
 	<component>
-		<component-type>DivButton</component-type>
-		<component-class>edu.emory.library.tast.common.UIDivButton</component-class>
+		<component-type>SimpleButton</component-type>
+		<component-class>edu.emory.library.tast.common.SimpleButtonComponent</component-class>
 	</component>
 
 	<component>
@@ -157,7 +157,7 @@
 	
 	<component>
 		<component-type>MainMenuBar</component-type>
-		<component-class>edu.emory.library.tast.common.MainMenuBarComponent</component-class>
+		<component-class>edu.emory.library.tast.master.MainMenuBarComponent</component-class>
 	</component>
 	
 	<component>
@@ -218,6 +218,11 @@
 	<component>
 		<component-type>GlossaryLetters</component-type>
 		<component-class>edu.emory.library.tast.glossary.GlossaryLettersComponent</component-class>
+	</component>	
+	
+	<component>
+		<component-type>SiteHeader</component-type>
+		<component-class>edu.emory.library.tast.master.SiteHeaderComponent</component-class>
 	</component>	
 	
 	<managed-bean>

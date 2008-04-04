@@ -11,7 +11,7 @@ import org.apache.myfaces.el.MethodBindingImpl;
 import edu.emory.library.tast.common.table.ClickEvent;
 
 
-public class DivButtonTag extends UIComponentTag {
+public class SimpleButtonTag extends UIComponentTag {
 
 	private String style;
 	private String styleClass;
@@ -51,8 +51,8 @@ public class DivButtonTag extends UIComponentTag {
 				component.getAttributes().put("id", id);
 			}
 		}
-		if (component instanceof UIDivButton && action != null) {
-			UIDivButton tab = (UIDivButton)component;
+		if (component instanceof SimpleButtonComponent && action != null) {
+			SimpleButtonComponent tab = (SimpleButtonComponent)component;
 			Application app = FacesContext.getCurrentInstance().getApplication();
 			tab.setAction(new MethodBindingImpl(app, action, new Class[] {ClickEvent.class}));
 		}
@@ -60,7 +60,7 @@ public class DivButtonTag extends UIComponentTag {
 	}
 	
 	public String getComponentType() {
-		return "DivButton";
+		return "SimpleButton";
 	}
 
 	public String getRendererType() {

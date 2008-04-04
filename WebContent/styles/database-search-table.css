@@ -4,6 +4,9 @@ table.grid {
 	border-collapse: collapse; 
 	border: 1px solid #895D03; }
 
+table.grid td {
+	white-space: nowrap; }
+
 table.grid th {
 	padding: 5px;
 	text-align: left;
@@ -34,8 +37,7 @@ tr.grid-row-last {
 tr.grid-row-even:hover,
 tr.grid-row-odd:hover,
 tr.grid-row-last:hover {
-	background-color: #F7EAC7; 	
-}
+	background-color: #F7EAC7; }
 	
 table.multiline-attr-table {
 }
@@ -57,12 +59,6 @@ table.grid-header-right {
 div.grid-header-text-right {
 	padding: 0px; 
 	text-align: right;
-}
-
-
-div.grid-header-text-left {
-	padding: 0px; 
-	text-align: left;
 }
 
 div.grid-header-icon-asc {

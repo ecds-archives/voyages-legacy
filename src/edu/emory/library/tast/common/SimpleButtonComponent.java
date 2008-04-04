@@ -14,7 +14,7 @@ import javax.faces.event.FacesEvent;
 import edu.emory.library.tast.common.table.ClickEvent;
 import edu.emory.library.tast.util.JsfUtils;
 
-public class UIDivButton extends UIOutput {
+public class SimpleButtonComponent extends UIOutput {
 
 	private static final String PRESSED = "pressed";
 	/**
@@ -26,7 +26,7 @@ public class UIDivButton extends UIOutput {
 	 * Default constructor.
 	 *
 	 */
-	public UIDivButton() {
+	public SimpleButtonComponent() {
 		super();
 	}
 

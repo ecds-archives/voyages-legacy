@@ -53,33 +53,17 @@
 </head>
 <body>
 <f:view>
-	
-	<f:param value="-" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="top-bar.jsp" %>
-	
-	<div style="background-color: #05768A; color: White; padding: 4px 0px 4px 10px;">
-		<table border="0" cellspacing="0" cellpadding="0" style="width: 900px;">
-		<tr>
-			<td>You are now on the homepage of the Trans-Atlantic Slave Trade Database</td>
-			<td align="right">
-				<table border="0" cellspacing="0" cellpadding="0" class="popup-links">
-				<tr>
-					<td><a href="javascript:openDemos()">Demos</a></td>
-					<td><a href="javascript:openSitemap()">Sitemap</a></td>
-					<td><a href="javascript:openGlossary()">Glossary</a></td>
-				</tr>
-				</table>
-			</td>
-		</tr>
-		</table>
-	</div>
+
+	<s:siteHeader>
+		<h:outputText value="Home page" />
+	</s:siteHeader>
 	
 	<div class="welcome-band">
 	
 		<table border="0" cellspacing="0" cellpadding="0" class="welcome-band">
 		<tr>
 			<td valign="top">
-				<div id="welcome-image-frame"><img id="welcome-image" src="./images/index/slideshow-solomon.png" width="320" height="180" border="0" /></div>
+				<div id="welcome-image-frame"><img id="welcome-image" src="./images/index/slideshow-map2.png" width="320" height="180" border="0" /></div>
 				<div class="welcome-image-caption-and-buttons">
 					<table border="0" cellspacing="0" cellpadding="0" class="welcome-image-caption-and-buttons">
 					<tr>
@@ -146,10 +130,13 @@
 		true,
 		[
 			new SlideshowImage(
+				"./images/index/slideshow-map2.png",
+				"Did you know that ...? And now some really smart question. I cannot think of any."),
+			new SlideshowImage(
 				"./images/index/slideshow-solomon.png",
 				"Image of Job Ben Solomon, a well know slave who himself Royal African Company in Gambia."),
 			new SlideshowImage(
-				"./images/index/slideshow-map.png",
+				"./images/index/slideshow-map1.png",
 				"Some different image. Some different image. Some different image. Some different image."),
 			new SlideshowImage(
 				"./images/index/slideshow-ship.png",

@@ -57,8 +57,11 @@
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 	<h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
-	<f:param value="database" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="../top-bar.jsp" %>
+	<s:siteHeader activeSectionId="database">
+		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
+		<h:outputText value="Search" />
+	</s:siteHeader>
 
 	<h:form id="form" style="margin: 0px;">
 	

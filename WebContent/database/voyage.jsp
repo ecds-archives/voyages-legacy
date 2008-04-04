@@ -33,9 +33,12 @@
 	<h:form id="form">
 
 		<f:loadBundle basename="SlaveTradeResources" var="res" />
-
-		<f:param value="database" binding="#{MainMenuBean.activeSectionParam}" />
-		<%@ include file="../top-bar.jsp" %>
+		
+		<s:siteHeader>
+			<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+			<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
+			<h:outputText value="Voyage Detail" />
+		</s:siteHeader>
 
 		<div id="content"><s:panelTabSet id="mainPanelSection"
 			selectedSectionId="#{VoyageDetailBean.selectedTab}">

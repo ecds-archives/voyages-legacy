@@ -1,11 +1,11 @@
 div.results-panel {
 	padding: 10px;}
 	
-div.estimates-table-options {
-	margin-bottom: 10px;
-	background-color: #ECD698;
-	border: 1px solid #895D03;
-	padding: 5px 10px 5px 10px;	}
+div.database-table-options {
+	margin-bottom: 15px;
+	border-bottom: 1px solid #EEDAA2;
+	border-top: 1px solid #EEDAA2;
+	padding: 5px 10px 5px 0px;	}
 
 div.estimates-table table.simple-table {
 	border-collapse: collapse; }

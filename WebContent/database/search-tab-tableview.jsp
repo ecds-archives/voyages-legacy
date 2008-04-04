@@ -3,9 +3,9 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<t:htmlTag value="h1"><h:outputText value="Table" /></t:htmlTag>
+<t:htmlTag value="h1" styleClass="with-subtitle"><h:outputText value="Table" /></t:htmlTag>
 
-<t:div styleClass="estimates-table-options">
+<t:div styleClass="database-table-options">
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
@@ -30,6 +30,8 @@
 				<f:selectItem itemLabel="#{res.estimates_table_100years}" itemValue="years100" />
 			</h:selectOneMenu>
 		</t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
 			<h:outputText value="#{res.estimates_table_columns}"/>
 		</t:htmlTag>
@@ -46,17 +48,11 @@
 				<f:selectItem itemLabel="#{res.estimates_table_departure}" itemValue="departure" />
 			</h:selectOneMenu>
 		</t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="tr">
 		<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
 			<h:outputText value="#{res.estimates_table_cell}"/>
 		</t:htmlTag>
-		<% /* 
-		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:selectOneMenu value="#{DatabaseTableBean.aggregateFunction}">
-				<f:selectItem itemLabel="#{res.database_tableview_sum}" itemValue="sum" />
-				<f:selectItem itemLabel="#{res.database_tableview_avg}" itemValue="avg" />
-				<f:selectItem itemLabel="#{res.database_tableview_count}" itemValue="count" />
-			</h:selectOneMenu>
-		</t:htmlTag>*/ %>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:selectOneMenu value="#{DatabaseTableBean.showMode}">
 				<f:selectItems value="#{DatabaseTableBean.availableAttributes}" />
@@ -67,6 +63,10 @@
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding-right: 10px;">
 			<h:outputText value="#{res.estimates_table_omitempty}"/>
+		</t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td">
 		</t:htmlTag>
 		<t:htmlTag value="td">
 			<h:commandButton action="#{DatabaseTableBean.refreshTable}" value="#{res.estimates_table_show}" />

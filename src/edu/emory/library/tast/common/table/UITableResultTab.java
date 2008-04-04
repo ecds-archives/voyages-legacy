@@ -157,13 +157,7 @@ public class UITableResultTab extends UIOutput {
 						populatedAttributes[i].encodeToString());
 
 				writer.startElement("th", this);
-		/*		writer.writeAttribute("onmouseover", "showToolTipOff('"  + "test!" +  "', " + "tooltip" + 
-						 "',450)", null);
-				writer.writeAttribute("onmouseout", "hideToolTip('"  + "tooltip" +  "')", null);
-			*/	
 				writer.startElement("div", null);
-				
-	//			writer.writeAttribute("id", "tooltip" , null);
 				
 				String classStr = "";
 				if (i == 0) classStr = this.appendStyle(classStr, "grid-first-column"); 
@@ -178,7 +172,7 @@ public class UITableResultTab extends UIOutput {
 							classStr = this.appendStyle(classStr, "grid-header-icon-asc");
 						}
 					}
-					classStr = this.appendStyle(classStr, "grid-header-text-left");
+					classStr = this.appendStyle(classStr, "grid-header-text-right");
 				} else {
 					if (data.getOrderByColumn() != null
 							&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
@@ -193,7 +187,6 @@ public class UITableResultTab extends UIOutput {
 				}
 				writer.writeAttribute("class", classStr, null);
 				
-			
 				writer.startElement("a", this);
 				writer.writeAttribute("href", "#", null);
 				writer.writeAttribute("onclick", jsSort, null);
@@ -211,7 +204,8 @@ public class UITableResultTab extends UIOutput {
 
 
 		StringBuffer rowClass = new StringBuffer();
-		TableData.DataTableItem[] objs = data.getData();		
+		TableData.DataTableItem[] objs = data.getData();
+		
 		// Encode data.
 		if (objs != null) {
 			for (int i = 0; i < objs.length; i++) {
@@ -239,35 +233,40 @@ public class UITableResultTab extends UIOutput {
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
 				if (showDetails != null) writer.writeAttribute("onclick", jsClick, null);
-				
-				
 				Object[] values = objs[i].dataRow;
 				for (int j = 0; j < values.length; j++) {
 					Object obj = values[j];
 					TableData.ColumnData columnData = (TableData.ColumnData)obj;
 					writer.startElement("td", this);
 					
-					if (columnData != null) {
+					if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
+						writer.writeAttribute("style", "text-align: right", null);
+					}
+
+					if (columnData != null)
+					{
 						String[] formatted = columnData.getDataToDisplay();
 						String[] rollovers = columnData.getRollovers();
 						
-						writer.startElement("table", this);
-						writer.writeAttribute("cellspacing", "0", null);
-						writer.writeAttribute("border", "0", null);
-						writer.writeAttribute("cellpadding", "0", null);
-						writer.writeAttribute("style", "width: 100%;", null);
-						writer.writeAttribute("class", "multiline-attr-table", null);
-						for (int k = 0; k < formatted.length; k++) {
-							writer.startElement("tr", this);
-							writer.startElement("td", this);
-							writer.writeAttribute("id", "cell_" + i + "_" + j + "_" + k, null);
-							if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
+//						writer.startElement("table", this);
+//						writer.writeAttribute("cellspacing", "0", null);
+//						writer.writeAttribute("border", "0", null);
+//						writer.writeAttribute("cellpadding", "0", null);
+//						writer.writeAttribute("style", "width: 100%;", null);
+//						writer.writeAttribute("class", "multiline-attr-table", null);
+						
+						if (formatted.length > 1)
+							writer.startElement("div", this);
+						
+						for (int k = 0; k < formatted.length; k++)
+						{
+//							writer.startElement("tr", this);
+//							writer.startElement("td", this);
+//							writer.writeAttribute("id", "cell_" + i + "_" + j + "_" + k, null);
+//							if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
 							
-							if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
-								writer.writeAttribute("style", "text-align: left", null);
-							}
-							
-							if (rollovers[k] != null) {
+							if (rollovers[k] != null)
+							{
 								writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "', " + "'"
 										+ "cell_" + i + "_" + j + "_" + k + "')", null);
 								writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "')", null);
@@ -275,6 +274,7 @@ public class UITableResultTab extends UIOutput {
 								writer.startElement("div", this);
 								writer.writeAttribute("id", "tooltip_" + i + "_" + j + "_" + k, null);
 								writer.writeAttribute("class", "grid-tooltip", null);
+
 								writer.startElement("table", this);
 								writer.writeAttribute("cellspacing", "0", null);
 								writer.writeAttribute("border", "0", null);
@@ -294,7 +294,6 @@ public class UITableResultTab extends UIOutput {
 								writer.endElement("td");								
 								writer.endElement("tr");
 								
-								
 								writer.startElement("tr", this);
 								writer.startElement("td", this);
 								writer.writeAttribute("class", "bubble-21", null);
@@ -311,7 +310,6 @@ public class UITableResultTab extends UIOutput {
 								writer.startElement("div", this);writer.endElement("td");
 								writer.endElement("td");								
 								writer.endElement("tr");
-								
 								
 								writer.startElement("tr", this);
 								writer.startElement("td", this);
@@ -337,10 +335,13 @@ public class UITableResultTab extends UIOutput {
 								writer.write(formatted[k]);						
 							}
 							
-							writer.endElement("td");
-							writer.endElement("tr");
+							if (formatted.length > 1)
+								writer.endElement("div");
+							
+//							writer.endElement("td");
+//							writer.endElement("tr");
 						}
-						writer.endElement("table");												
+//						writer.endElement("table");												
 					}
 					writer.endElement("td");
 				}
