@@ -1,5 +1,6 @@
 package edu.emory.library.tast.glossary;
 
+
 public class GlossaryLetter implements Comparable
 {
 	
@@ -29,7 +30,8 @@ public class GlossaryLetter implements Comparable
 
 	public int compareTo(Object otherObj)
 	{
-		return new Character(letter).compareTo(otherObj);
+		if (!(otherObj instanceof GlossaryLetter)) throw new RuntimeException("expected GlossaryLetter to compare");
+		return new Character(letter).compareTo((Character) otherObj);
 	}
 
 }
