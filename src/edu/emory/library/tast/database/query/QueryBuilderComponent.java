@@ -365,117 +365,18 @@ public class QueryBuilderComponent extends UIComponentBase
 		jsDelete.append("'").append(getClientId(context)).append("', ");
 		jsDelete.append("'").append(attributeId).append("'");
 		jsDelete.append(")");
-//		jsDelete.append("var cond = ");
-//		UtilsJSF.appendElementRefJS(jsDelete, conditionDivId).append("; ");
-//		jsDelete.append("var attrListField = ");
-//		UtilsJSF.appendFormElementRefJS(jsDelete, context, form, attrListFieldName).append("; ");
-//		jsDelete.append("var attrs = attrListField.value.split(','); ");
-//		jsDelete.append("for (var i=0; i<attrs.length; i++) {");
-//		{
-//			jsDelete.append("if (attrs[i] == '").append(attributeId).append("') {");
-//			{
-//				jsDelete.append("attrs.splice(i, 1); ");
-//				jsDelete.append("attrListField.value = attrs.join(','); ");
-//				jsDelete.append("if (Scriptaculous) {");
-//				{
-//					jsDelete.append("new Effect.Opacity(");
-//					jsDelete.append("cond, ");
-//					jsDelete.append("{");
-//					{
-//						jsDelete.append("from: 1.0, ");
-//						jsDelete.append("to: 0.0, ");
-//						jsDelete.append("duration: 0.5, ");
-//						jsDelete.append("afterFinishInternal: function(effect) ");
-//						jsDelete.append("{effect.element.parentNode.removeChild(effect.element);}");
-//					}
-//					jsDelete.append("}");
-//					jsDelete.append(");");
-//				}
-//				jsDelete.append("} else {");
-//				{
-//					jsDelete.append("cond.parentNode.removeChild(cond);");
-//				}
-//				jsDelete.append("}");
-//				jsDelete.append("return;");
-//			}
-//			jsDelete.append("}");
-//		}
-//		jsDelete.append("}");
-
 
 		StringBuffer jsMoveUp = new StringBuffer();
 		jsMoveUp.append("QueryBuilderGlobals.moveConditionUp(");
 		jsMoveUp.append("'").append(getClientId(context)).append("', ");
 		jsMoveUp.append("'").append(attributeId).append("'");
 		jsMoveUp.append(")");
-//		jsMoveUp.append("var cond = ");
-//		UtilsJSF.appendElementRefJS(jsMoveUp, conditionDivId).append("; ");
-//		jsMoveUp.append("var attrListField = ");
-//		UtilsJSF.appendFormElementRefJS(jsMoveUp, context, form, attrListFieldName).append("; ");
-//		jsMoveUp.append("var attrs = attrListField.value.split(','); ");
-//		jsMoveUp.append("for (var i=0; i<attrs.length; i++) {");
-//		{
-//			jsMoveUp.append("if (attrs[i] == '").append(conditionId).append("') {");
-//			{
-//				jsMoveUp.append("if (i != 0) {");
-//				{
-//					jsMoveUp.append("var prevCond = cond.previousSibling; ");
-//					jsMoveUp.append("var parent = cond.parentNode; ");
-//					jsMoveUp.append("parent.removeChild(cond); ");
-//					jsMoveUp.append("parent.insertBefore(cond, prevCond); ");
-//					jsMoveUp.append("attrs[i] = attrs[i-1]; ");
-//					jsMoveUp.append("attrs[i-1] = '").append(conditionId).append("'; ");
-//					jsMoveUp.append("attrListField.value = attrs.join(',');");
-//					jsMoveUp.append("if (Scriptaculous) {");
-//					{
-//						jsMoveUp.append("Element.setOpacity(cond, 0); ");
-//						jsMoveUp.append("Effect.Appear(cond, {duration: 0.5});");
-//					}
-//					jsMoveUp.append("} ");
-//				}
-//				jsMoveUp.append("} ");
-//				jsMoveUp.append("return;");
-//			}
-//			jsMoveUp.append("}");
-//		}
-//		jsMoveUp.append("}");
 		
 		StringBuffer jsMoveDown = new StringBuffer();
 		jsMoveDown.append("QueryBuilderGlobals.moveConditionDown(");
 		jsMoveDown.append("'").append(getClientId(context)).append("', ");
 		jsMoveDown.append("'").append(attributeId).append("'");
 		jsMoveDown.append(")");
-//		jsMoveDown.append("var cond = ");
-//		UtilsJSF.appendElementRefJS(jsMoveDown, conditionDivId).append("; ");
-//		jsMoveDown.append("var attrListField = ");
-//		UtilsJSF.appendFormElementRefJS(jsMoveDown, context, form, attrListFieldName).append("; ");
-//		jsMoveDown.append("var attrs = attrListField.value.split(','); ");
-//		jsMoveDown.append("for (var i=0; i<attrs.length; i++) {");
-//		{
-//			jsMoveDown.append("if (attrs[i] == '").append(attributeId).append("') {");
-//			{
-//				jsMoveDown.append("if (i != attrs.length-1) {");
-//				{
-//					jsMoveDown.append("var nextNextCond = cond.nextSibling.nextSibling; ");
-//					jsMoveDown.append("var parent = cond.parentNode; ");
-//					jsMoveDown.append("parent.removeChild(cond); ");
-//					jsMoveDown.append("parent.insertBefore(cond, nextNextCond); ");
-//					jsMoveDown.append("attrs[i] = attrs[i+1]; ");
-//					jsMoveDown.append("attrs[i+1] = '").append(attributeId).append("'; ");
-//					jsMoveDown.append("attrListField.value = attrs.join(',');");
-//					jsMoveDown.append("if (Scriptaculous) {");
-//					{
-//						jsMoveDown.append("Element.setOpacity(cond, 0); ");
-//						jsMoveDown.append("Effect.Appear(cond, {duration: 0.5});");
-//					}
-//					jsMoveDown.append("}");
-//				}
-//				jsMoveDown.append("} ");
-//				jsMoveDown.append("return;");
-//			}
-//			jsMoveDown.append("}");
-//		}
-//		jsMoveDown.append("}");
 
 		encodeConditionButtonsStart(writer);
 		encodeConditionButton(writer, "../images/icon-move-up.png", jsMoveUp.toString());

@@ -286,10 +286,10 @@ public class HistoryListComponent extends UIComponentBase
 				getToRestoreHiddenFieldName(context),
 				item.getId());
 		
-		String jsToPermlink = JsfUtils.generateSubmitJS(
-				context, form,
-				getToPermlinkHiddenFieldName(context),
-				item.getId());
+//		String jsToPermlink = JsfUtils.generateSubmitJS(
+//				context, form,
+//				getToPermlinkHiddenFieldName(context),
+//				item.getId());
 
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
@@ -466,8 +466,8 @@ public class HistoryListComponent extends UIComponentBase
 		encodeIcon(writer, "icon-remove.png", jsToDelete, TastResource.getText("components_search_delete"));
 		encodeIconSeparator(writer);
 		encodeIcon(writer, "icon-restore.png", jsToRestore, TastResource.getText("components_search_restore"));
-		encodeIconSeparator(writer);
-		encodeIcon(writer, "icon-permlink.png", jsToPermlink, TastResource.getText("components_search_permlink"));
+		//encodeIconSeparator(writer);
+		//encodeIcon(writer, "icon-permlink.png", jsToPermlink, TastResource.getText("components_search_permlink"));
 		encodeIconsEnd(writer);
 		
 		writer.endElement("div");

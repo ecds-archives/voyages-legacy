@@ -32,10 +32,12 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		FacesContext fc = event.getFacesContext();
 		String viewId = fc.getViewRoot().getViewId();
 		
-		if (viewId.equals("/resources/slaves.jsp")) {
-			SlavesBean bean = (SlavesBean) fc.getApplication().createValueBinding("#{SlavesBean}").getValue(fc);
+		if (viewId.equals("/resources/slaves.jsp"))
+		{
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
+			
 			if (!params.containsKey("permlink"))
 				return;
 
@@ -43,7 +45,9 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			if (StringUtils.isNullOrEmpty(permlink))
 				return;
 			
+			SlavesBean bean = (SlavesBean) fc.getApplication().createValueBinding("#{SlavesBean}").getValue(fc);
 			bean.restoreLink(new Long(permlink));
+			
 		}
 
 //		if (viewId.equals("/resources/images.jsp") || viewId.equals("/resources/images-query.jsp") ||
@@ -72,20 +76,21 @@ public class LinkRestorePhaseListerner implements PhaseListener
 //			}
 //		}
 		
-		if (viewId.equals("/database/voyage.jsp")) {
-			VoyageDetailBean bean = (VoyageDetailBean) fc.getApplication().createValueBinding("#{VoyageDetailBean}").getValue(fc);
+		if (viewId.equals("/database/voyage.jsp"))
+		{
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
-			if (!params.containsKey("permlink")) {
-				if (bean.getVoyageIid() == -1) {
-					JsfUtils.navigateTo("database");
-				}
+			String permlink = (String) params.get("permlink");
+
+			// go to default search if no permlink
+			if (StringUtils.isNullOrEmpty(permlink))
+			{
+				VoyageDetailBean bean = (VoyageDetailBean) fc.getApplication().createValueBinding("#{VoyageDetailBean}").getValue(fc);
+				if (bean.getVoyageIid() == -1) JsfUtils.navigateTo("database");
 				return;
 			}
-
-			String permlink = (String) params.get("permlink");
-			if (StringUtils.isNullOrEmpty(permlink))
-				return;
+			
 		}
 		
 	}
