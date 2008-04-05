@@ -14,39 +14,46 @@
 	<link href="./styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="./styles/index.css" rel="stylesheet" type="text/css">
 	
-	<script src="./scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="./scripts/utils.js" language="javascript" type="text/javascript"></script>
-	<script src="./scripts/slideshow.js" language="javascript" type="text/javascript"></script>
+	<script src="./scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	<script src="./scripts/welcome-map.js" language="javascript" type="text/javascript"></script>
 	
 	<script language="javascript" type="text/javascript">
 	
-	function openDemos()
-	{
-		openPopup("./help/demos.faces");
-	}
+	WelcomeMapGlobals.register(new WelcomeMap(
+		"main", "map-hint", [
+			
+			new WelcomeMapPlace(
+				"map_north_america_label",
+				"./images/index/map-north-america.png",
+				"./images/index/map-north-america-active.png",
+				"map_north_america_text"),
+			
+			new WelcomeMapPlace(
+				"map_caribbean_label",
+				"./images/index/map-caribbean.png",
+				"./images/index/map-caribbean-active.png",
+				"map_caribbean_text"),
+			
+			new WelcomeMapPlace(
+				"map_brazil_label",
+				"./images/index/map-brazil.png",
+				"./images/index/map-brazil-active.png",
+				"map_brazil_text"),
+				
+			new WelcomeMapPlace(
+				"map_europe_label",
+				"./images/index/map-europe.png",
+				"./images/index/map-europe-active.png",
+				"map_europe_text"),
 
-	function openSitemap()
-	{
-		openPopup("./help/sitemap.faces");
-	}
-
-	function openGlossary()
-	{
-		openPopup("./help/glossary.faces");
-	}
-
-	function openPopup(pageUrl)
-	{
-		window.open(
-			pageUrl,
-			"tastPopupHelp",
-			"resizable=yes, " +
-			"location=no, " +
-			"status=no, " +
-			"scrollbars=yes, " +
-			"width=600, " +
-			"height=400"); 
-	}
+			new WelcomeMapPlace(
+				"map_africa_label",
+				"./images/index/map-africa.png",
+				"./images/index/map-africa-active.png",
+				"map_africa_text")
+				
+		]));
 	
 	</script>
 	
@@ -58,197 +65,245 @@
 		<h:outputText value="Home page" />
 	</s:siteHeader>
 	
-	<div class="welcome-band">
-	
+	<div class="main-content">
+		
 		<table border="0" cellspacing="0" cellpadding="0" class="welcome-band">
 		<tr>
 			<td valign="top">
-				<div id="welcome-image-frame"><img id="welcome-image" src="./images/index/slideshow-map2.png" width="320" height="180" border="0" /></div>
-				<div class="welcome-image-caption-and-buttons">
-					<table border="0" cellspacing="0" cellpadding="0" class="welcome-image-caption-and-buttons">
+			
+				<div id="welcome-map">
+					
+					<img
+						style="position: absolute; top: 0px; left: 0px;"
+						id="welcome-image"
+						src="./images/index/map.png"
+						width="430" height="340" border="0" />
+						
+					<img
+						style="position: absolute; top: 50px; left: 50px;"
+						id="map_north_america_label"
+						src="./images/index/map-north-america.png"
+						width="120" height="80" border="0"  />
+					
+					<img
+						style="position: absolute; top: 200px; left: 100px;"
+						id="map_brazil_label"
+						src="./images/index/map-brazil.png"
+						width="100" height="60" border="0"  />
+					
+					<img
+						style="position: absolute; top: 125px; left: 95px;"
+						id="map_caribbean_label"
+						src="./images/index/map-caribbean.png"
+						width="120" height="60" border="0"  />
+					
+					<img
+						style="position: absolute; top: 50px; left: 260px;"
+						id="map_europe_label"
+						src="./images/index/map-europe.png"
+						width="100" height="60" border="0"  />
+					
+					<img
+						style="position: absolute; top: 130px; left: 270px;"
+						id="map_africa_label"
+						src="./images/index/map-africa.png"
+						width="100" height="60" border="0"  />
+				
+				</div>
+				
+				<div id="welcome-map-region-placeholder">
+				
+					<div id="map-hint">
+					Roll over names of designated regions on the map
+					above for descriptions of the role of each in
+					the trans-Atlantic slave trade.					
+					</div>
+				
+					<div class="welcome-map-region-text" id="map_north_america_text" style="display: none">
+						<div class="welcome-map-region-name"><img src="./images/index/map-north-america-title.png" border="0" width="180" height="40" align="top" alt="" /></div>
+						<div class="welcome-map-region-desc">
+						The North American mainland played a relatively minor role in the transatlantic
+						slave. Its ports sent out less than five percent of all known voyages, and its
+						slave markets absorbed less than four percent of all slaves carried off from Africa.
+						An intra-American trade in slaves – originating in the Caribbean - supplied additional
+						slaves however. This region was exceptional in the Americas in that a positive rate
+						of natural population growth began relatively early, thus reducing the dependence
+						of the region on coerced migrants.
+						</div>
+					</div>
+					
+					<div class="welcome-map-region-text" id="map_caribbean_text" style="display: none">
+						<div class="welcome-map-region-name"><img src="./images/index/map-carebbian-title.png" border="0" width="120" height="40" align="top" alt="" /></div>
+						<div class="welcome-map-region-desc">
+							The Caribbean was one of the two major broad regional markets for slaves from
+							Africa. Over the two centuries when the trade was at its height, the major
+							locations for sugar production, and therefore the major slave markets, shifted
+							from the eastern Caribbean to the west. Here, first Jamaica, then St Domingue
+							and finally in the 19th century, Cuba absorbed most of the slaves brought into
+							the region. As this implies, few islands developed self-sustaining populations
+							at any point in the slave trade era. Caribbean ports also sent out more slaving
+							expeditions to Africa than did the North American mainland ports.
+						</div>
+					</div>
+	
+					<div class="welcome-map-region-text" id="map_brazil_text" style="display: none">
+						<div class="welcome-map-region-name"><img src="./images/index/map-brazil-title.png" border="0" width="75" height="40" align="top" alt="" /></div>
+						<div class="welcome-map-region-desc">
+							Brazil was the center of the slave trade carried on under the Portuguese
+							flag, both before and after Brazilian independence in 1822 - and Portugal was by
+							far the largest of the national carriers. Brazil dominated the slave trade in the
+							sense that Rio de Janeiro and Bahia sent out more slaving voyages than any port in
+							Europe, and certainly many times more than did Lisbon. Over nearly three centuries
+							between 1560 and 1852, Brazil was consistently the largest destination for slaves
+							in the Americas. Almost all the slaves coming in to the region came from just two
+							coastal areas in Africa, the Bight of Benin and West-central Africa.
+						</div>
+					</div>
+	
+					<div class="welcome-map-region-text" id="map_europe_text" style="display: none">
+						<div class="welcome-map-region-name"><img src="./images/index/map-europe-title.png" border="0" width="90" height="40" align="top" alt="" /></div>
+						<div class="welcome-map-region-desc">
+							Europe was the starting point for about half all transatlantic slaving voyages.
+							This traffic dominated the West African to Caribbean section of the slave trade.
+							The major ports were at first located in the Iberian peninsular but by the eighteenth
+							century northern European ports had become dominant. After 1807, France and the
+							Iberian ports sent out the great majority of European-based slaving voyages.
+							The European consumers’ demand for sugar was the driving force behind 350 years
+							of transatlantic slave trading.
+						</div>
+					</div>
+	
+					<div class="welcome-map-region-text" id="map_africa_text" style="display: none">
+						<div class="welcome-map-region-name"><img src="./images/index/map-africa-title.png" border="0" width="80" height="40" align="top" alt="" /></div>
+						<div class="welcome-map-region-desc">
+							Sub-Saharan Africa lost over twelve and a half million people to the
+							transatlantic slave trade alone between 1526 and 1867. Perhaps as many
+							again were carried of to slave markets across the Sahara and the Indian Ocean.
+							Over forty percent of captives left from West-central Africa alone with most of
+							the remainder leaving from the Bight of Benin, the Bight of Biafra and the Gold
+							Coast. About one in eight died on board the slave vessel and many others died
+							prior to departure and after arrival. Departures were channeled through a dozen
+							or so major embarkation points such as Whydah, Bonny, Loango, Luanda and Benguela,
+							though many smaller ports also supplied slaves.
+	  					</div>
+					</div>
+					
+				</div>
+
+			</td>
+			<td valign="top">
+			
+				<div id="welcome-text">
+					<div id="welcome-text-big"><img src="./images/index/welcome-text.png" width="530" height="80" border="0" /></div>
+					<div id="welcome-text-small">
+						forcibly transporting over 12 million Africans to the
+						Americas between the sixteenth and the nineteenth centuries. It
+						offers descendants, researchers, students, and the general public a
+						chance to rediscover the reality of one of the largest movements of
+						peoples in world history.				
+					</div>
+				</div>
+				
+				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections">
+				<tr>
+					<td class="featured-section-image">
+						<a href="./database/search.faces">
+							<img src="./images/index/link-database.png" width="124" height="64" border="0" />
+						</a>
+					</td>
+					<td class="featured-section-text">
+						<div class="featured-section-caption">
+							<a href="./database/search.faces">
+							Search the Database of Voyages
+							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
+							</a>
+						</div>
+						<div class="featured-section-description">
+							The database contains records about more than 
+							35,000 trans-atlantic slave voyages and
+							was collected over the past 20 years.
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="featured-section-image">
+						<a href="./assessment/estimates.faces">
+							<img src="./images/index/link-estimates.png" width="124" height="64" border="0" />
+						</a>
+					</td>
+					<td class="featured-section-text">
+						<div class="featured-section-caption">
+							<a href="./assessment/estimates.faces">
+							View our Estimates of the Slave Trade
+							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
+							</a>
+						</div>
+						<div class="featured-section-description">
+							The estimates were obtained by combining
+							the voyage database with other sources in order
+							to compensate for the missing information
+							in the voyage database.
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="featured-section-image">
+						<a href="./resources/slaves.faces">
+							<img src="./images/index/link-slaves.png" width="124" height="64" border="0" />
+						</a>
+					</td>
+					<td class="featured-section-text">
+						<div class="featured-section-caption">
+							<a href="./resources/slaves.faces">
+							Explore the Database of Slaves
+							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
+							</a>
+						</div>
+						<div class="featured-section-description">
+							Explore the database of names of Africans liberated
+							from slave vessels in Sierra Leone and Havana.
+						</div>
+					</td>
+				</tr>
+				</table>
+				
+				<div id="other-links">
+					<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td valign="top">
-							<div id="welcome-image-caption">
-							Image of Job Ben Solomon, a well know slave
-							who himself Royal African Company in Gambia
-							</div>
-						</td>
-						<td align="right" valign="top">
-							<table border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td style="padding-right: 5px;"><img
-									id="welcome-slideshow-prev-button"
-									class="welcome-image-nav-button"
-									src="./images/index/prev-image.png"
-									width="22" height="22" border="0"
-									onmouseover="SlideshowGlobals.prevButtonMouseOver('welcome-slideshow')"
-									onmouseout="SlideshowGlobals.prevButtonMouseOut('welcome-slideshow')"
-									onclick="SlideshowGlobals.prevSlide('welcome-slideshow')" /></td>
-								<td><img
-									id="welcome-slideshow-next-button"
-									class="welcome-image-nav-button"
-									src="./images/index/next-image.png"
-									width="22" height="22" border="0"
-									onmouseover="SlideshowGlobals.nextButtonMouseOver('welcome-slideshow')"
-									onmouseout="SlideshowGlobals.nextButtonMouseOut('welcome-slideshow')"
-									onclick="SlideshowGlobals.nextSlide('welcome-slideshow')" /></td>
-							</tr>
-							</table>
-						</td>
+						<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory maps</a></td>
+						<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+						<td style="padding-left: 5px;"><a href="#">Timeline</a></td>
 					</tr>
 					</table>
 				</div>
-			</td>
-			<td valign="top">
-				<div class="welcome-text-big"><img src="./images/index/welcome-text.png" width="560" height="70" border="0" /></div>
-				<div class="welcome-text-small">
-					forcibly transporting over 12 million Africans to the Americas.
-					It offers descendants, researchers, students and the general public
-					a chance to rediscover the reality of one of the largest movements
-					of people in the world history.
-				</div>
-			</td>
-		</tr>
-		</table>
-	
-	</div>
-	
-	<script language="javascript" type="text/javascript">
 
-	SlideshowGlobals.registerSlideshow(new Slideshow(
-		"welcome-slideshow",
-		"welcome-image-frame",
-		"welcome-image",
-		"welcome-image-caption",
-		"welcome-slideshow-prev-button",
-		"welcome-slideshow-next-button",
-		"./images/index/prev-image.png",
-		"./images/index/next-image.png",
-		"./images/index/prev-image-highlighted.png",
-		"./images/index/next-image-highlighted.png",
-		"./images/ajax-loader.gif", 16, 16,
-		true,
-		[
-			new SlideshowImage(
-				"./images/index/slideshow-map2.png",
-				"Did you know that ...? And now some really smart question. I cannot think of any."),
-			new SlideshowImage(
-				"./images/index/slideshow-solomon.png",
-				"Image of Job Ben Solomon, a well know slave who himself Royal African Company in Gambia."),
-			new SlideshowImage(
-				"./images/index/slideshow-map1.png",
-				"Some different image. Some different image. Some different image. Some different image."),
-			new SlideshowImage(
-				"./images/index/slideshow-ship.png",
-				"Description of another image. Description of another image. Description of another image.")
-		]
-		));
-	
-	</script>
-	
-	<div class="featured-sections-title">
-		<img src="./images/index/discover-the-site.png" width="210" height="40" border="0">
-	</div>
-	
-	<table border="0" cellspacing="0" cellpadding="0" class="featured-sections">
-	<tr>
-		<td valign="top">
-		
-			<div class="featured-section-image">
-				<img src="./images/index/icon-voyages.png" width="200" height="60" border="0" />
-			</div>
-			<div class="featured-section-caption">
-				Database of Voyages
-			</div>
-			<div class="featured-section-description">
-				When you want to use a color that already exists in an
-				object or document, you can sample the color to achieve
-				an exact match. 
-			</div>
-			<ul class="featured-section-links">
-				<li><a href="./database/search.faces">Browse and Search the Database</a></li>
-				<li><a href="./database/methodology.faces">Understanding the Database</a></li>
-				<li><a href="./database/search.faces">How can I contribute</a></li>
-			</ul>
-		
-		</td>
-		<td valign="top">
-		
-			<div class="featured-section-image">
-				<img src="./images/index/icon-estimates.png" width="200" height="60" border="0" />
-			</div>
-			<div class="featured-section-caption">
-				Slave Trade Estimates
-			</div>
-			<div class="featured-section-description">
-				You may find that the colors displayed on your monitor don’t
-				match the colors of a scanned image or of a printer’s
-				output. 
-			</div>
-			<ul class="featured-section-links">
-				<li><a href="#">Browse Estimates</a></li>
-				<li><a href="#">How is this different from the database?</a></li>
-			</ul>
-		
-		</td>
-		<td valign="top">
-		
-			<div class="featured-section-image">
-				<img src="./images/index/icon-slaves.png" width="200" height="60" border="0" />
-			</div>
-			<div class="featured-section-caption">
-				Database of Slaves
-			</div>
-			<div class="featured-section-description">
-				Color management lets you reproduce colors accurately
-				by using color profiles and by correcting colors for display.
-				output.
-			</div>
-			<ul class="featured-section-links">
-				<li><a href="#">Browse the Names Database</a></li>
-				<li><a href="#">Introduction to the Names Database</a></li>
-			</ul>
-		
-		</td>
-		<td valign="top">
-		
-			<div class="featured-section-image">
-				<img src="./images/index/icon-images.png" width="200" height="60" border="0" />
-			</div>
-			<div class="featured-section-caption">
-				Historical Images
-			</div>
-			<div class="featured-section-description">
-				You may find that the colors displayed on your monitor don’t
-				match the colors of a scanned image or of a printer’s
-				output. 
-			</div>
-			<ul class="featured-section-links">
-				<li><a href="#">Browse the Historical Images</a></li>
-			</ul>
-		
-		</td>
-	</tr>
-	</table>
-	
-	<div class="footer">
-	
-		<table border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td colspan="3"><div class="footer-section">Sponsors</div></td>
-			<td colspan="4" xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><div class="footer-section">Partners</div></td>
-		</tr>
-		<tr>
-			<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo.png" width="82" height="32" border="0" /></a></td>
-			<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
-			<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Hardward, USA)</a></td>
-			<td xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
-			<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>
-			<td><a href="http://www.ufrj.br" class="footer-link">Universidade Federal do<br>Rio de Janeiro (Brazil)</a></td>
-			<td><a href="http://www.vuw.ac.nz" class="footer-link">Victoria University of<br>Wellington (New Zealand)</a></td>
+			</td>
 		</tr>
 		</table>
 		
+		<!-- 
+		<div class="footer">
+		
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td colspan="3"><div class="footer-section">Sponsors</div></td>
+				<td colspan="4" xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><div class="footer-section">Partners</div></td>
+			</tr>
+			<tr>
+				<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo.png" width="82" height="32" border="0" /></a></td>
+				<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
+				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Hardward, USA)</a></td>
+				<td xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
+				<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>
+				<td><a href="http://www.ufrj.br" class="footer-link">Universidade Federal do<br>Rio de Janeiro (Brazil)</a></td>
+				<td><a href="http://www.vuw.ac.nz" class="footer-link">Victoria University of<br>Wellington (New Zealand)</a></td>
+			</tr>
+			</table>
+			
+		</div>
+		 -->
+	
 	</div>
 
 </f:view>

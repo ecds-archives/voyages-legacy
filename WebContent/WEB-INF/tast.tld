@@ -835,35 +835,6 @@
 	</tag>
 
 	<tag>
-		<name>welcomeMap</name>
-		<tag-class>
-			edu.emory.library.tast.homepage.WelcomeMapTag
-		</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>id</name>
-		</attribute>
-		<attribute>
-			<name>rendered</name>
-		</attribute>
-		<attribute>
-			<name>imageUrl</name>
-		</attribute>
-		<attribute>
-			<name>imageWidth</name>
-		</attribute>
-		<attribute>
-			<name>imageHeight</name>
-		</attribute>
-		<attribute>
-			<name>places</name>
-		</attribute>
-		<attribute>
-			<name>initialText</name>
-		</attribute>
-	</tag>
-
-	<tag>
 		<name>lookupCheckboxList</name>
 		<tag-class>
 			edu.emory.library.tast.common.LookupCheckboxListTag

@@ -6,56 +6,136 @@ var WelcomeMapGlobals =
 	register: function(welcomeMap)
 	{
 		WelcomeMapGlobals.welcomeMaps[welcomeMap.welcomeMapId] = welcomeMap;
-	},
-
-	showPlace: function(welcomeMapId, placeIndex)
-	{
-		var welcomeMap = WelcomeMapGlobals.welcomeMaps[welcomeMapId];
-		if (welcomeMap) welcomeMap.showPlace(placeIndex);
-	},
-
-	hidePlace: function(welcomeMapId, placeIndex)
-	{
-		var welcomeMap = WelcomeMapGlobals.welcomeMaps[welcomeMapId];
-		if (welcomeMap) welcomeMap.hidePlace(placeIndex);
 	}
 
 }
 
-function WelcomeMap(welcomeMapId, initialText, textElementId, places)
+function WelcomeMap(welcomeMapId, defaultElementId, places)
 {
+
 	this.welcomeMapId = welcomeMapId;
-	this.initialText = initialText;
-	this.textElementId = textElementId;
+	this.defaultElementId = defaultElementId;
 	this.places = places;
+	
+	this.currentPlaceIndex = -1;
+	this.showDefaultTextDelayHandle = null;
+	
+	EventAttacher.attachOnWindowEvent("load", this, "init");
+	
 }
 
-function WelcomeMapPlace(imageElementId, normalUrl, highlightedUrl, text)
+function WelcomeMapPlace(imageElementId, imageNormalSrc, imageHighlightedSrc, descElementId)
 {
+
 	this.imageElementId = imageElementId;
-	this.normalUrl = normalUrl;
-	this.highlightedUrl = highlightedUrl;
-	this.text = text;
+	this.imageNormalSrc = imageNormalSrc;
+	this.imageHighlightedSrc = imageHighlightedSrc;
+	this.descElementId = descElementId;
+	
+	this.active = false;
+	
+}
+
+WelcomeMap.prototype.init = function()
+{
+
+	for (var i = 0; i < this.places.length; i++)
+	{
+		var place = this.places[i];
+		
+		var img = document.getElementById(place.imageElementId);
+		
+		var preloadNomalImage = new Image();
+		preloadNomalImage.src = place.imageNormalSrc;
+		
+		var preloadHighlightedSrc = new Image();
+		preloadHighlightedSrc.src = place.imageHighlightedSrc;
+
+		EventAttacher.attach(img, "mouseover", this, "onMouseOver", i);
+		EventAttacher.attach(img, "mouseout", this, "onMouseOut", i);
+		
+	}
+
 }
 
 WelcomeMap.prototype.showPlace = function(placeIndex)
 {
 
-	var textElement = document.getElementById(this.textElementId);
-	var imageElement = document.getElementById(this.places[placeIndex].imageElementId);
+	var place = this.places[placeIndex];
+
+	var desc = document.getElementById(place.descElementId);
+	var img = document.getElementById(place.imageElementId);
 	
-	textElement.innerHTML = this.places[placeIndex].text;
-	imageElement.src = this.places[placeIndex].highlightedUrl;
+	img.src = place.imageHighlightedSrc;
+
+	if (false && Scriptaculous)
+	{
+		new Effect.BlindDown(desc, {duration: 0.25});
+	}
+	else
+	{
+		desc.style.display = "";
+	}
 
 }
 
-WelcomeMap.prototype.hidePlace = function(placeIndex)
+WelcomeMap.prototype.hidePlace = function(placeIndex, rightNow)
 {
 
-	var textElement = document.getElementById(this.textElementId);
-	var imageElement = document.getElementById(this.places[placeIndex].imageElementId);
+	var place = this.places[placeIndex];
+
+	var desc = document.getElementById(place.descElementId);
+	var img = document.getElementById(place.imageElementId);
 	
-	textElement.innerHTML = this.initialText;
-	imageElement.src = this.places[placeIndex].normalUrl;
+	img.src = place.imageNormalSrc;
+	
+	if (false && !rightNow && Scriptaculous)
+	{
+		new Effect.Fade(desc);
+	}
+	else
+	{
+		desc.style.display = "none";
+	}
+
+}
+
+WelcomeMap.prototype.showDefaultText = function()
+{
+	var text = document.getElementById(this.defaultElementId);
+	text.style.display = "";
+}
+
+WelcomeMap.prototype.hideDefaultText = function()
+{
+	var text = document.getElementById(this.defaultElementId);
+	text.style.display = "none";
+}
+
+WelcomeMap.prototype.onMouseOver = function(event, placeIndex)
+{
+
+	if (this.currentPlaceIndex != -1)
+		this.hidePlace(currentPlaceIndex);
+		
+	Timer.cancelCall(this.showDefaultTextDelayHandle);
+	this.hideDefaultText();
+
+	this.currentPlaceIndex = placeIndex;
+	this.showPlace(placeIndex);
+
+}
+
+WelcomeMap.prototype.onMouseOut = function(event, placeIndex)
+{
+
+	if (this.currentPlaceIndex != -1)
+		this.hidePlace(this.currentPlaceIndex, false);
+	
+	this.showDefaultTextDelayHandle = Timer.extendCall(
+		this.showDefaultTextDelayHandle,
+		this, "showDefaultText", 1000)
+		
+	this.currentPlaceIndex = -1;
 
 }

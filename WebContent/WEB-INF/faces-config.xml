@@ -166,11 +166,6 @@
 	</component>
 
 	<component>
-		<component-type>WelcomeMap</component-type>
-		<component-class>edu.emory.library.tast.homepage.WelcomeMapComponent</component-class>
-	</component>
-
-	<component>
 		<component-type>LookupCheckboxList</component-type>
 		<component-class>edu.emory.library.tast.common.LookupCheckboxListComponent</component-class>
 	</component>

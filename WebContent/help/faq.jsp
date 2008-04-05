@@ -9,7 +9,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	<title>Help</title>
+	<title>FAQ</title>
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/help-main.css" rel="stylesheet" type="text/css">
@@ -21,7 +21,7 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 	
-	<f:param value="index" binding="#{HelpMenuBean.activeSectionParam}" />
+	<f:param value="faq" binding="#{HelpMenuBean.activeSectionParam}" />
 	<%@ include file="top-bar.jsp" %>
 	
 	<div id="help-section-title"><img src="../images/help-index-title.png" width="240" height="50" border="0" alt="Demos"></div>
