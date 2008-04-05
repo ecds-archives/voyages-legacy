@@ -122,13 +122,13 @@
 					<div class="welcome-map-region-text" id="map_north_america_text" style="display: none">
 						<div class="welcome-map-region-name"><img src="./images/index/map-north-america-title.png" border="0" width="180" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
-						The North American mainland played a relatively minor role in the transatlantic
-						slave. Its ports sent out less than five percent of all known voyages, and its
-						slave markets absorbed less than four percent of all slaves carried off from Africa.
-						An intra-American trade in slaves – originating in the Caribbean - supplied additional
-						slaves however. This region was exceptional in the Americas in that a positive rate
-						of natural population growth began relatively early, thus reducing the dependence
-						of the region on coerced migrants.
+							The North American mainland played a relatively minor role in the transatlantic
+							slave. Its ports sent out less than five percent of all known voyages, and its
+							slave markets absorbed less than four percent of all slaves carried off from Africa.
+							An intra-American trade in slaves – originating in the Caribbean - supplied additional
+							slaves however. This region was exceptional in the Americas in that a positive rate
+							of natural population growth began relatively early, thus reducing the dependence
+							of the region on coerced migrants.
 						</div>
 					</div>
 					
@@ -193,14 +193,17 @@
 			</td>
 			<td valign="top">
 			
+				<!-- This is ugly, but it's the only way to make sure that each
+				browser renders the text exactly on the same number of lines.
+				Alternatively, we could create this as an image. -->
+			
 				<div id="welcome-text">
 					<div id="welcome-text-big"><img src="./images/index/welcome-text.png" width="530" height="80" border="0" /></div>
 					<div id="welcome-text-small">
-						forcibly transporting over 12 million Africans to the
-						Americas between the sixteenth and the nineteenth centuries. It
-						offers descendants, researchers, students, and the general public a
-						chance to rediscover the reality of one of the largest movements of
-						peoples in world history.				
+						<div>forcibly transporting over 12 million Africans to the Americas between</div>
+						<div>the sixteenth and the nineteenth centuries. It offers descendants,</div>
+						<div>researchers, students, and the general public a chance to rediscover</div>
+						<div>the reality of one of the largest movements of peoples in world history.</div>
 					</div>
 				</div>
 				
@@ -273,7 +276,7 @@
 						<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
 						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory maps</a></td>
 						<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="#">Timeline</a></td>
+						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline</a></td>
 					</tr>
 					</table>
 				</div>
@@ -282,19 +285,18 @@
 		</tr>
 		</table>
 		
-		<!-- 
 		<div class="footer">
 		
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td colspan="3"><div class="footer-section">Sponsors</div></td>
-				<td colspan="4" xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><div class="footer-section">Partners</div></td>
+				<td colspan="4"><div class="footer-section">Partners</div></td>
 			</tr>
 			<tr>
-				<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo.png" width="82" height="32" border="0" /></a></td>
+				<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo-index.png" width="82" height="32" border="0" /></a></td>
 				<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
 				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Hardward, USA)</a></td>
-				<td xstyle="border-left: 1px solid #CCCCCC; padding-left: 10px;"><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
+				<td><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
 				<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>
 				<td><a href="http://www.ufrj.br" class="footer-link">Universidade Federal do<br>Rio de Janeiro (Brazil)</a></td>
 				<td><a href="http://www.vuw.ac.nz" class="footer-link">Victoria University of<br>Wellington (New Zealand)</a></td>
@@ -302,7 +304,6 @@
 			</table>
 			
 		</div>
-		 -->
 	
 	</div>
 

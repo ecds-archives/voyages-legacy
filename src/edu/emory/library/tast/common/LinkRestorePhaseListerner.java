@@ -8,6 +8,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
+import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.slaves.SlavesBean;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -47,6 +48,24 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			
 			SlavesBean bean = (SlavesBean) fc.getApplication().createValueBinding("#{SlavesBean}").getValue(fc);
 			bean.restoreLink(new Long(permlink));
+			
+		}
+		
+		if (viewId.equals("/assessment/estimates.jsp"))
+		{
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map params = context.getExternalContext().getRequestParameterMap();
+			
+			if (!params.containsKey("module"))
+				return;
+
+			String module = (String) params.get("module");
+			if (StringUtils.isNullOrEmpty(module))
+				return;
+			
+			EstimatesSelectionBean bean = (EstimatesSelectionBean) fc.getApplication().createValueBinding("#{EstimatesSelectionBean}").getValue(fc);
+			bean.setSelectedTab(module);
 			
 		}
 

@@ -6,18 +6,19 @@ div.main-content {
 	background-repeat: repeat-x; }
 	
 div#welcome-text {
-	height: 230px; }
+	height: 245px; }
 
 div#welcome-text-big {
-	margin-top: 15px;
-	margin-left: 0px; }
+	padding-top: 15px; }
 
 div#welcome-text-small {
 	color: #404A49;
 	font-size: 12pt;
 	line-height: 140%;
-	width: 480px;
 	margin-left: 30px; }
+	
+div#welcome-text-small div {
+	white-space: nowrap; }
 	
 /* feature sections */
 
@@ -52,31 +53,12 @@ div.featured-section-description {
 	margin-top: 5px;
 	margin-right: 20px; }
 	
-ul.featured-section-links {
-	width: 200px;
-	margin: 5px 0px 0px 3px;
-	padding: 0px; }
-	
-ul.featured-section-links li {
-	margin-left: 15px; }
-	
-ul.featured-section-links li a {
-	text-decoration: none;
-	color: #008CA8; }
-	
 div#other-links {
 	padding-top: 20px;
-	padding-left: 135px;
+	padding-left: 5px;
 	margin-left: 30px;
 	background-image: url(../images/index/divider.png);
 	background-repeat: no-repeat; }
-
-div#other-links div {
-	background-image: url(../images/index/link-arrow.png);
-	background-repeat: no-repeat;
-	padding-left: 20px;
-	margin-left: 130px;
-	margin-top: 5px; }  
 
 div#other-links a {
 	text-decoration: none;
@@ -114,3 +96,14 @@ div.welcome-map-region-text {
 	
 div.welcome-map-region-desc {
 	line-height: 140%; }
+
+	
+/* special treatment for footer */
+
+div.footer {
+	border-top: 1px solid #D2E2E1;
+	margin-top: 30px;
+	margin-left: 20px; }
+	
+a.footer-link {
+	color: #96AAA8; }
