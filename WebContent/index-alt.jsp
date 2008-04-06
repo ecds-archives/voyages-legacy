@@ -114,9 +114,22 @@
 				<div id="welcome-map-region-placeholder">
 				
 					<div id="map-hint">
-					Roll over names of designated regions on the map
-					above for descriptions of the role of each in
-					the trans-Atlantic slave trade.					
+					
+						Roll over names of designated regions on the map
+						above for descriptions of the role of each in
+						the trans-Atlantic slave trade.
+						
+						<div id="other-links" style="background: none; margin: 0px;">
+							<table border="0" cellspacing="0" cellpadding="0" align="center" style="margin-top: 5px;">
+							<tr>
+								<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+								<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory maps</a></td>
+								<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+								<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline</a></td>
+							</tr>
+							</table>
+						</div>
+					
 					</div>
 				
 					<div class="welcome-map-region-text" id="map_north_america_text" style="display: none">
@@ -269,17 +282,6 @@
 					</td>
 				</tr>
 				</table>
-				
-				<div id="other-links">
-					<table border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory maps</a></td>
-						<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline</a></td>
-					</tr>
-					</table>
-				</div>
 
 			</td>
 		</tr>

@@ -145,9 +145,9 @@ public class SiteHeaderComponent extends UIComponentBase
 		};
 	
 	private static HelpLink[] helpLinks = {
+		new HelpLink("Sitemap", "javascript:openSitemap()"),
 		new HelpLink("FAQ", "javascript:openFAQ()"),
 		new HelpLink("Demos", "javascript:openDemos()"),
-		new HelpLink("Sitemap", "javascript:openSitemap()"),
 		new HelpLink("Glossary", "javascript:openGlossary()") };
 
 	public String getFamily()
