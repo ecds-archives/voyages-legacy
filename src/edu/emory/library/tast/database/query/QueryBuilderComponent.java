@@ -19,7 +19,6 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.database.query.searchables.ListItemsSource;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleDate;
-import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleNumeric;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleRange;
 import edu.emory.library.tast.database.query.searchables.Searchables;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -638,7 +637,7 @@ public class QueryBuilderComponent extends UIComponentBase
 	private void encodeNumericCondition(QueryConditionNumeric queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 
-		SearchableAttributeSimpleNumeric attribute = (SearchableAttributeSimpleNumeric)queryCondition.getSearchableAttribute();
+		SearchableAttributeSimpleRange attribute = (SearchableAttributeSimpleRange)queryCondition.getSearchableAttribute();
 		
 		String tdFromId = getClientId(context) + "_" + attribute.getId() + "_td_from";
 		String tdDashId = getClientId(context) + "_" + attribute.getId() + "_td_dash";

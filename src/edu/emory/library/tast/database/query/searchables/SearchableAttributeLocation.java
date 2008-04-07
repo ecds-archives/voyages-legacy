@@ -23,9 +23,9 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 
 	private Location[] locations;
 
-	public SearchableAttributeLocation(String id, String userLabel, UserCategories userCategories, Location[] locations)
+	public SearchableAttributeLocation(String id, String userLabel, UserCategories userCategories, Location[] locations, String spssName, String listDescription, boolean inEstimates)
 	{
-		super(id, userLabel, userCategories);
+		super(id, userLabel, userCategories, spssName, listDescription, inEstimates);
 		this.locations = locations != null ? locations : new Location[0];
 	}
 

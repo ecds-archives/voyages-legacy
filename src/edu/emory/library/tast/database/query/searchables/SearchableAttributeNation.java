@@ -19,9 +19,9 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SearchableAttributeNation extends SearchableAttributeSimple implements ListItemsSource
 {
 	
-	public SearchableAttributeNation(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
+	public SearchableAttributeNation(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{
-		super(id, userLabel, userCategories, attributes);
+		super(id, userLabel, userCategories, attributes, spssName, listDescription, inEstimates);
 	}
 
 	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)

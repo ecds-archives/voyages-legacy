@@ -15,9 +15,9 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRange
 {
 
-	public SearchableAttributeSimpleDate(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
+	public SearchableAttributeSimpleDate(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int typeOfCondition, String spssName, String listDescription, boolean inEstimates)
 	{
-		super(id, userLabel, userCategories, attributes);
+		super(id, userLabel, userCategories, attributes, typeOfCondition, spssName, listDescription, inEstimates);
 	}
 
 	private Date parseDate(String monthStr, String yearStr, int roundDirection)

@@ -15,8 +15,8 @@ import edu.emory.library.tast.util.JsfUtils;
  * a component should always have a single purpose. However,
  * for the site main header it seems that the most efficient
  * solution is to pack everything in one huge component. Then it's
- * easy to use it because it's repesented by just a single tag.
- * I'll try to seperate the logical pieces into reasoable chunks
+ * easy to use it because it's represented by just a single tag.
+ * I'll try to separate the logical pieces into reasonable chunks
  * at least.
  *  
  * @author Jan Zich
@@ -31,6 +31,10 @@ public class SiteHeaderComponent extends UIComponentBase
 	private static final String LOGO_SRC = "images/main-menu/logo.png";
 	private static final int LOGO_HEIGHT = 60;
 	private static final int LOGO_WIDTH = 260;
+
+	private static final String BREADCRUMB_SEPARATOR_SRC = "images/main-menu/breadcrumb-separator.png";
+	private static final int BREADCRUMB_SEPARATOR_WIDTH = 10;
+	private static final int BREADCRUMB_SEPARATOR_HEIGHT = 10;
 	
 	private boolean activeSectionIdSet = false;
 	private String activeSectionId;
@@ -80,8 +84,12 @@ public class SiteHeaderComponent extends UIComponentBase
 							"database/download.faces"),
 					new MainMenuBarPageItem(
 							"methodology",
-							"Understanding the database",
+							"Understanding the Database",
 							"database/methodology.faces"),
+					new MainMenuBarPageItem(
+							"variable-list",
+							"Variable List",
+							"database/variable-list.faces"),
 					new MainMenuBarPageItem(
 							"contribute",
 							"Contribute",
@@ -146,7 +154,7 @@ public class SiteHeaderComponent extends UIComponentBase
 	
 	private static HelpLink[] helpLinks = {
 		new HelpLink("Sitemap", "javascript:openSitemap()"),
-		new HelpLink("FAQ", "javascript:openFAQ()"),
+		new HelpLink("FAQs", "javascript:openFAQ()"),
 		new HelpLink("Demos", "javascript:openDemos()"),
 		new HelpLink("Glossary", "javascript:openGlossary()") };
 
@@ -431,14 +439,40 @@ public class SiteHeaderComponent extends UIComponentBase
 	private void encodeBreadcrumbBar(FacesContext context, ResponseWriter writer, String baseUrl) throws IOException
 	{
 		
+		writer.startElement("table", this);
+		writer.writeAttribute("border", "0", null);
+		writer.writeAttribute("cellspacing", "0", null);
+		writer.writeAttribute("cellpadding", "0", null);
+		writer.writeAttribute("class", "breadcrumb", null);
+		writer.startElement("tr", this);
+		
 		int pathPartIdx = 0;
 		for (Iterator iter = getChildren().iterator(); iter.hasNext();)
 		{
 			UIComponent cmp = (UIComponent) iter.next();
-			if (pathPartIdx > 0) writer.write(" / ");
+			
+			if (pathPartIdx > 0)
+			{
+				writer.startElement("td", this);
+				writer.writeAttribute("class", "breadcrumb-separator", null);
+				writer.startElement("img", this);
+				writer.writeAttribute("src", baseUrl + "/" + BREADCRUMB_SEPARATOR_SRC, null);
+				writer.writeAttribute("width", String.valueOf(BREADCRUMB_SEPARATOR_WIDTH), null);
+				writer.writeAttribute("height", String.valueOf(BREADCRUMB_SEPARATOR_HEIGHT), null);
+				writer.writeAttribute("border", "0", null);
+				writer.endElement("img");
+				writer.endElement("td");
+			}
+			
+			writer.startElement("td", this);
 			JsfUtils.renderChild(context, cmp);
+			writer.endElement("td");
+			
 			pathPartIdx++;
 		}
+		
+		writer.endElement("tr");
+		writer.endElement("table");
 		
 	}
 	

@@ -115,16 +115,10 @@
 				
 					<div id="map-hint" style="text-align: left; padding: 10px 0px 0px 0px;">
 					
-						<div>
 						Roll over names of designated regions on the map
 						above for descriptions of the role of each in
-						the trans-Atlantic slave trade.
-						</div>
-						
-						<div style="margin-top: 10px;">
-						Click on the links below to view two special features
-						of the <i>Voyages</i> website:
-						</div>
+						the trans-Atlantic slave trade. Click on the links
+						below to view two special features of the Voyages website:
 						
 						<div id="other-links" style="background: none; margin: 0px; padding: 15px 0px 0px 0px">
 							<table border="0" cellspacing="0" cellpadding="0" style="margin-top: 0px;">

@@ -9,12 +9,18 @@ public abstract class SearchableAttribute
 	private String userLabel;
 	private String id;
 	private UserCategories userCategories;
+	private String spssName;
+	private String listDescription;
+	private boolean inEstimates;
 	
-	public SearchableAttribute(String id, String userLabel, UserCategories userCategories)
+	public SearchableAttribute(String id, String userLabel, UserCategories userCategories, String spssName, String listDescription, boolean inEstimates)
 	{
 		this.id = id;
 		this.userLabel = userLabel;
 		this.userCategories = userCategories;
+		this.inEstimates = inEstimates;
+		this.listDescription = listDescription;
+		this.spssName = spssName;
 	}
 
 	public String getUserLabel()
@@ -35,6 +41,21 @@ public abstract class SearchableAttribute
 	public boolean isInUserCategory(UserCategory category)
 	{
 		return userCategories.isIn(category);
+	}
+
+	public String getSpssName()
+	{
+		return spssName;
+	}
+
+	public String getListDescription()
+	{
+		return listDescription;
+	}
+
+	public boolean isInEstimates()
+	{
+		return inEstimates;
 	}
 
 	public abstract QueryCondition createQueryCondition();

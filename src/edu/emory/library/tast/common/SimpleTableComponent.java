@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 public class SimpleTableComponent extends UIComponentBase
 {
@@ -51,7 +52,7 @@ public class SimpleTableComponent extends UIComponentBase
 					if (cell.getColspan() != 1) writer.writeAttribute("colspan", String.valueOf(cell.getColspan()), null);
 					if (cell.getRowspan() != 1) writer.writeAttribute("rowspan", String.valueOf(cell.getRowspan()), null);
 					if (cell.getCssClass() != null) writer.writeAttribute("class", cell.getCssClass(), null);
-					writer.write(cell.getText());
+					writer.write(StringUtils.coalesce(cell.getText(), ""));
 					writer.endElement("td");
 				}
 			}

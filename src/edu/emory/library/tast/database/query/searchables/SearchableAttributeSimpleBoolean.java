@@ -8,9 +8,9 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 {
 
-	public SearchableAttributeSimpleBoolean(String id, String userLabel, UserCategories userCategories, Attribute[] attributes)
+	public SearchableAttributeSimpleBoolean(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{
-		super(id, userLabel, userCategories, attributes);
+		super(id, userLabel, userCategories, attributes, spssName, listDescription, inEstimates);
 	}
 
 	public QueryCondition createQueryCondition()

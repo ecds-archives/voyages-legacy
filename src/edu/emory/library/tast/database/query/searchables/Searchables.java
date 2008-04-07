@@ -14,6 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import edu.emory.library.tast.database.query.QueryConditionNumeric;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
@@ -78,17 +79,54 @@ public class Searchables
 			String id = xmlSearchableAttr.getAttributes().getNamedItem("id").getNodeValue();
 			String type = xmlSearchableAttr.getAttributes().getNamedItem("type").getNodeValue();
 			String userLabel = xmlSearchableAttr.getAttributes().getNamedItem("userLabel").getNodeValue();
-			String defaultOption = null;
-			if (xmlSearchableAttr.getAttributes().getNamedItem("defaultOption") != null) {
-				defaultOption = xmlSearchableAttr.getAttributes().getNamedItem("defaultOption").getNodeValue();
-			}
-			
-			// substype
-			Node xmlSubType = xmlSearchableAttr.getAttributes().getNamedItem("subType");
 			
 			// check id uniqueness
 			if (searchableAttributesByIds.containsKey(id))
 				throw new RuntimeException("duplicate attribute id '" + id + "'");
+
+			// sub type
+			Node xmlSubType = xmlSearchableAttr.getAttributes().getNamedItem("subType");
+
+			// SPSS name
+			Node xmlSpssName = xmlSearchableAttr.getAttributes().getNamedItem("xmlSpssName");
+			String spssName = xmlSpssName != null ? spssName = xmlSpssName.getNodeValue() : id;
+
+			// is in estimates
+			boolean inEstimates = false;
+			Node xmlInEstimates = xmlSearchableAttr.getAttributes().getNamedItem("inEstimates");
+			if (xmlInEstimates != null) inEstimates = "true".equals(xmlInEstimates.getNodeValue());
+
+			// list description
+			String listDescription = null;
+			Node xmlListDescription = xmlSearchableAttr.getAttributes().getNamedItem("listDescription");
+			if (xmlListDescription != null) listDescription = xmlListDescription.getNodeValue();
+
+			// default option
+			int defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
+			Node xmlDefaultRangeSearchType = xmlSearchableAttr.getAttributes().getNamedItem("defaultRangeSearchType");
+			if (xmlDefaultRangeSearchType != null)
+			{
+				if ("between".equals(xmlDefaultRangeSearchType.getNodeValue()))
+				{
+					defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
+				}
+				else if ("eq".equals(xmlDefaultRangeSearchType.getNodeValue()))
+				{
+					defaultRangeSearchType = QueryConditionNumeric.TYPE_EQ;
+				}
+				else if ("le".equals(xmlDefaultRangeSearchType.getNodeValue()))
+				{
+					defaultRangeSearchType = QueryConditionNumeric.TYPE_LE;
+				}
+				else if ("ge".equals(xmlDefaultRangeSearchType.getNodeValue()))
+				{
+					defaultRangeSearchType = QueryConditionNumeric.TYPE_GE;
+				}
+				else
+				{
+					defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
+				}
+			}
 			
 			// read categories
 			NodeList xmlUserCats = xmlSearchableAttr.getChildNodes().item(0).getChildNodes();
@@ -100,7 +138,7 @@ public class Searchables
 				if (category != null) userCats.addTo(category);
 			}
 
-			// simple attribute -> read list of db attriutes
+			// simple attribute -> read list of database attributes
 			if ("simple".equals(type) || "percent".equals(type))
 			{
 				NodeList xmlAttrs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
@@ -134,13 +172,15 @@ public class Searchables
 				{
 					searchableAttribute =
 						new SearchableAttributeSimpleDictionary(
-							id, userLabel, userCats, attrs);
+							id, userLabel, userCats, attrs,
+							spssName, listDescription, inEstimates);
 				}
 				else if (firstAttr instanceof StringAttribute) 
 				{
 					searchableAttribute =
 						new SearchableAttributeSimpleText(
-							id, userLabel, userCats, attrs);
+							id, userLabel, userCats, attrs,
+							spssName, listDescription, inEstimates);
 				}
 				else if (firstAttr instanceof NumericAttribute) 
 				{
@@ -163,19 +203,23 @@ public class Searchables
 					}
 					searchableAttribute =
 						new SearchableAttributeSimpleNumeric(
-							id, userLabel, userCats, attrs, subType, type.equals("percent"), defaultOption);
+							id, userLabel, userCats, attrs, subType,
+							"percent".equals(type), defaultRangeSearchType,
+							spssName, listDescription, inEstimates);							
 				}
 				else if (firstAttr instanceof DateAttribute)
 				{		
 					searchableAttribute =
 						new SearchableAttributeSimpleDate(
-							id, userLabel, userCats, attrs);
+							id, userLabel, userCats, attrs, defaultRangeSearchType,
+							spssName, listDescription, inEstimates);							
 				}
 				else if (firstAttr instanceof BooleanAttribute)
 				{		
 					searchableAttribute =
 						new SearchableAttributeSimpleBoolean(
-							id, userLabel, userCats, attrs);
+							id, userLabel, userCats, attrs,
+							spssName, listDescription, inEstimates);							
 				}
 				else
 				{
@@ -214,7 +258,8 @@ public class Searchables
 
 				searchableAttribute =
 					new SearchableAttributeNation(
-						id, userLabel, userCats, attrs);
+						id, userLabel, userCats, attrs,
+						spssName, listDescription, inEstimates);						
 				
 			}
 			
@@ -245,8 +290,12 @@ public class Searchables
 					locs[j] = new Location(attrPort, attrRegion);
 
 				}
-				searchableAttribute = new SearchableAttributeLocation(id, userLabel, userCats, locs);
-			} else {
+				searchableAttribute = new SearchableAttributeLocation(
+						id, userLabel, userCats, locs,
+						spssName, listDescription, inEstimates);						
+			}
+			else
+			{
 				throw new RuntimeException("Unsupported type: " + type);
 			}
 			

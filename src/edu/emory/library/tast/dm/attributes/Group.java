@@ -133,6 +133,10 @@ public class Group {
 		return searchableAttributesAll;
 	}
 
+	public int getNoOfAllSearchableAttributes() {
+		return searchableAttributesAll.length;
+	}
+
 	public SearchableAttribute[] getSearchableAttributesInUserCategory(
 			UserCategory category) {
 		return (SearchableAttribute[]) searchableAttributesbyUserCategories

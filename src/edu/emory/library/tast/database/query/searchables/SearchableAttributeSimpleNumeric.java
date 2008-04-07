@@ -16,27 +16,23 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 	
 	private int type = TYPE_GENERAL;
 	private boolean percent = false;
-	private int typeOfCondition = QueryConditionNumeric.TYPE_BETWEEN;
-
-	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int type)
+	
+	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int type, int defaultSearchType, String spssName, String listDescription, boolean inEstimates)
 	{
-		super(id, userLabel, userCategories, attributes);
+		super(id, userLabel, userCategories, attributes, defaultSearchType, spssName, listDescription, inEstimates);
 		this.type = type;
 	}
 
-	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int subType, boolean isPercent, String defaultOption)
+	public SearchableAttributeSimpleNumeric(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, int subType, boolean isPercent, int defaultSearchType, String spssName, String listDescription, boolean inEstimates)
 	{
-		super(id, userLabel, userCategories, attributes);
+		super(id, userLabel, userCategories, attributes, defaultSearchType, spssName, listDescription, inEstimates);
 		this.type = TYPE_GENERAL;
 		this.percent = isPercent;
-		if (defaultOption != null && defaultOption.equals("equals")) {
-			this.typeOfCondition = QueryConditionNumeric.TYPE_EQ;
-		}
 	}
 
 	public QueryCondition createQueryCondition()
 	{
-		return new QueryConditionNumeric(getId(), typeOfCondition);
+		return new QueryConditionNumeric(getId(), defaultSearchType);
 	}
 	
 	private void addSingleAttributeToConditions(QueryConditionNumeric queryConditionNumeric, Attribute attribute, Conditions conditions, Object fromConverted, Object toConverted, Object leConverted, Object geConverted, Object eqConverted)

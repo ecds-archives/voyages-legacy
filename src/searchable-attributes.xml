@@ -15,8 +15,11 @@
 	id CDATA #REQUIRED
 	userLabel CDATA #REQUIRED
 	type (simple|port|percent|nation) #REQUIRED
-	defaultOption (equals) #IMPLIED
-	subType (general|year|ratio) #IMPLIED>
+	defaultRangeSearchType (between|eq|le|ge) #IMPLIED
+	subType (general|year|ratio) #IMPLIED
+	spssName CDATA #IMPLIED
+	inEstimates (true|false) #IMPLIED
+	listDescription CDATA #IMPLIED>
 
 <!ATTLIST port
 	port CDATA #REQUIRED
@@ -36,8 +39,8 @@
 
 	<searchable-attribute
 		type="simple"
-		defaultOption="equals"
 		id="voyageid"
+		defaultRangeSearchType="eq"
 		userLabel="Voyage identification number">
 		<user-categories>
 			<category name="beginners" />
@@ -88,7 +91,9 @@
 	<searchable-attribute
 		type="nation"
 		id="natinimp"
-		userLabel="Flag*">
+		userLabel="Flag*"
+		inEstimates="true"
+		listDescription="Flag regrouped into seven major national carriers">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -175,7 +180,8 @@
 	<searchable-attribute
 		type="simple"
 		id="tonmod"
-		userLabel="Standardized tonnage*">
+		userLabel="Standardized tonnage*"
+		listDescription="Converted to pre-1786 British registered tons">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -238,7 +244,8 @@
 	<searchable-attribute
 		type="simple"
 		id="fate2"
-		userLabel="Outcome of voyage for slaves*">
+		userLabel="Outcome of voyage for slaves*"
+		listDescription="Derived from particular outcome">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -251,7 +258,8 @@
 	<searchable-attribute
 		type="simple"
 		id="fate4"
-		userLabel="Outcome of voyage for owner*">
+		userLabel="Outcome of voyage for owner*"
+		listDescription="Derived from particular outcome">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -264,7 +272,8 @@
 	<searchable-attribute
 		type="simple"
 		id="fate3"
-		userLabel="Outcome of voyage if ship captured*">
+		userLabel="Outcome of voyage if ship captured*"
+		listDescription="Derived from particular outcome">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -289,7 +298,8 @@
 	<searchable-attribute
 		type="port"
 		id="ptdepimp"
-		userLabel="Place where voyage began*">
+		userLabel="Place where voyage began*"
+		listDescription="Same as data variable in most cases, but derived from port of return for certain Brazilian voyages">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -338,7 +348,9 @@
 	<searchable-attribute
 		type="port"
 		id="mjbyptimp"
-		userLabel="Principal place of slave purchase*">
+		userLabel="Principal place of slave purchase*"
+		inEstimates="true"
+		listDescription="Place where largest number of captives embarked">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -399,7 +411,9 @@
 	<searchable-attribute
 		type="port"
 		id="mjslptimp"
-		userLabel="Principal place of slave landing*">
+		userLabel="Principal place of slave landing*"
+		inEstimates="true"
+		listDescription="Place where largest number of captives disembarked">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -426,7 +440,9 @@
 		type="simple"
 		subType="year"
 		id="yearam"
-		userLabel="Year arrived with slaves*">
+		userLabel="Year arrived with slaves*"
+		inEstimates="true"
+		listDescription="Standard variable for classification by year of voyage">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -439,7 +455,8 @@
 	<searchable-attribute
 		type="simple"
 		id="datedep"
-		userLabel="Date voyage began">
+		userLabel="Date voyage began"
+		spssName="date_dep">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -451,7 +468,8 @@
 	<searchable-attribute
 		type="simple"
 		id="datebuy"
-		userLabel="Date trade began in Africa">
+		userLabel="Date trade began in Africa"
+		spssName="date_buy">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -463,7 +481,8 @@
 	<searchable-attribute
 		type="simple"
 		id="dateleftafr"
-		userLabel="Date vessel departed Africa">
+		userLabel="Date vessel departed Africa"
+		spssName="date_leftAfr">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -475,7 +494,8 @@
 	<searchable-attribute
 		type="simple"
 		id="dateland1"
-		userLabel="Date vessel arrived with slaves">
+		userLabel="Date vessel arrived with slaves"
+		spssName="date_land1">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -511,7 +531,8 @@
 	<searchable-attribute
 		type="simple"
 		id="datedepam"
-		userLabel="Date vessel departed for home port">
+		userLabel="Date vessel departed for home port"
+		spssName="date_depam">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -523,7 +544,8 @@
 	<searchable-attribute
 		type="simple"
 		id="dateend"
-		userLabel="Date voyage completed">
+		userLabel="Date voyage completed"
+		spssName="date_end">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -535,7 +557,8 @@
 	<searchable-attribute
 		type="simple"
 		id="voy1imp"
-		userLabel="Voyage length, home port to slaves landing (days)*">
+		userLabel="Voyage length, home port to slaves landing (days)*"
+		listDescription="Difference between date voyage began and date vessel arrived with slaves">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -547,7 +570,8 @@
 	<searchable-attribute
 		type="simple"
 		id="voy2imp"
-		userLabel="Middle passage (days)">
+		userLabel="Middle passage (days)"
+		listDescription="Difference between date vessel left Africa and date it arrived with slaves">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -720,7 +744,9 @@
 	<searchable-attribute
 		type="simple"
 		id="slaximp"
-		userLabel="Total slaves embarked*">
+		userLabel="Total slaves embarked*"
+		inEstimates="true"
+		listDescription="Estimated embarkations">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -733,7 +759,9 @@
 	<searchable-attribute
 		type="simple"
 		id="slamimp"
-		userLabel="Total slaves disembarked*">
+		userLabel="Total slaves disembarked*"
+		inEstimates="true"
+		listDescription="Estimated disembarkations">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -747,7 +775,8 @@
 		type="percent"
 		subType="ratio"
 		id="menrat7"
-		userLabel="Percentage men*">
+		userLabel="Percentage men*"
+		listDescription="Captives identified by age and gender">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -761,7 +790,8 @@
 		type="percent"
 		subType="ratio"
 		id="womrat7"
-		userLabel="Percentage women*">
+		userLabel="Percentage women*"
+		listDescription="Captives identified by age and gender">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -775,7 +805,8 @@
 		type="percent"
 		subType="ratio"
 		id="boyrat7"
-		userLabel="Percentage boys*">
+		userLabel="Percentage boys*"
+		listDescription="Captives identified by age and gender">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -789,7 +820,8 @@
 		type="percent"
 		subType="ratio"
 		id="girlrat7"
-		userLabel="Percentage girls*">
+		userLabel="Percentage girls*"
+		listDescription="Captives identified by age and gender">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -803,7 +835,8 @@
 		type="percent"
 		subType="ratio"
 		id="malrat7"
-		userLabel="Percentage male*">
+		userLabel="Percentage male*"
+		listDescription="Captives identified by gender (males/females)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -817,7 +850,8 @@
 		type="percent"
 		subType="ratio"
 		id="chilrat7"
-		userLabel="Percentage children*">
+		userLabel="Percentage children*"
+		listDescription="Captives identified by age group (adults/children)">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -830,7 +864,8 @@
 	<searchable-attribute
 		type="simple"
 		id="jamcaspr"
-		userLabel="Sterling cash price in Jamaica*">
+		userLabel="Sterling cash price in Jamaica*"
+		listDescription="Sterling cash price in Jamaica">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -842,7 +877,9 @@
 	<searchable-attribute
 		type="simple"
 		id="vymrtimp"
-		userLabel="Slave deaths during middle passage*">
+		userLabel="Slave deaths during middle passage*"
+		spssName="sladvoy"
+		listDescription="Documented or difference between embarked and disembarked captives (data variables)">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -855,7 +892,9 @@
 		type="simple"
 		subType="ratio"
 		id="vymrtrat"
-		userLabel="Mortality rate*">
+		userLabel="Mortality rate*"
+		spssName="vymrtimp"
+		listDescription="Slave deaths during Middle Passage divided by number of captives leaving Africa">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
