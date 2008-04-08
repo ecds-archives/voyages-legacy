@@ -60,5 +60,6 @@ public abstract class SearchableAttribute
 
 	public abstract QueryCondition createQueryCondition();
 	public abstract boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition);
+	public abstract String getNonNullSqlQuerySelectPart(String voyagePrefix);
 
 }

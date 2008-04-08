@@ -6,7 +6,6 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 {
 	
 	private Attribute[] attributes;
-	//private String attributeType;
 
 	public SearchableAttributeSimple(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{
@@ -14,12 +13,10 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 		if (attributes == null || attributes.length == 0)
 		{
 			this.attributes = new Attribute[0];
-			//this.attributeType = null;
 		}
 		else
 		{
 			this.attributes = attributes;
-			//this.attributeType = Attribute.decodeType(attributes[0]);
 		}
 	}
 	
@@ -32,10 +29,20 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 	{
 		return attributes;
 	}
-
-//	public String getAttributeType()
-//	{
-//		return attributeType;
-//	}
+	
+	public String getNonNullSqlQuerySelectPart(String voyagePrefix)
+	{
+		StringBuffer select = new StringBuffer();
+		select.append("COALESCE(");
+		for (int i = 0; i < attributes.length; i++)
+		{
+			if (i > 0) select.append(", ");
+			if (voyagePrefix != null) select.append(voyagePrefix).append(".");
+			select.append(attributes[i].getName());
+			break;
+		}
+		select.append(")");
+		return select.toString();
+	}
 
 }

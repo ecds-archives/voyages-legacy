@@ -272,4 +272,31 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 		}
 	}
 
+	public String getNonNullSqlQuerySelectPart(String prefix)
+	{
+		StringBuffer select = new StringBuffer();
+		select.append("COALESCE(");
+		for (int i = 0; i < locations.length; i++)
+		{
+			if (i > 0) select.append(" + ");
+			Location location = locations[i];
+			if (location.getRegion() != null)
+			{
+				if (prefix != null) select.append(prefix).append(".");
+				select.append(location.getRegion().getName());
+			}
+			if (location.getRegion() != null && location.getPort() != null)
+			{
+				select.append(", ");
+			}
+			if (location.getPort() != null)
+			{
+				if (prefix != null) select.append(prefix).append(".");
+				select.append(location.getPort().getName());
+			}
+		}
+		select.append(")");
+		return select.toString();
+	}
+	
 }
