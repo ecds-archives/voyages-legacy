@@ -86,7 +86,7 @@ public class SearchBean
 	 */
 	private void initNewQuery()
 	{
-		workingQuery = new Query();
+		workingQuery = new Query();		
 		determineTimeFrameExtent();
 	}
 	
