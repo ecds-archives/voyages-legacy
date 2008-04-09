@@ -172,7 +172,7 @@ public class UITableResultTab extends UIOutput {
 							classStr = this.appendStyle(classStr, "grid-header-icon-asc");
 						}
 					}
-					classStr = this.appendStyle(classStr, "grid-header-text-right");
+					classStr = this.appendStyle(classStr, "grid-header-text-left");
 				} else {
 					if (data.getOrderByColumn() != null
 							&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {

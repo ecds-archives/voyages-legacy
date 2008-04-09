@@ -61,6 +61,11 @@ div.grid-header-text-right {
 	text-align: right;
 }
 
+div.grid-header-text-left {
+	padding: 0px; 
+	text-align: left;
+}
+
 div.grid-header-icon-asc {
 	margin-right: 5px;
 	padding-right: 15px;
