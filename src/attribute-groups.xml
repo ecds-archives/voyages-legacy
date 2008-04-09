@@ -185,11 +185,11 @@
 			<table-attribute id="ncar15"/>
 			<table-attribute id="ncar17"/>
 			<table-attribute id="tslavesd"/>
+			<table-attribute id="slaximp"/>
 			<table-attribute id="slaarriv"/>
 			<table-attribute id="slas32"/>
 			<table-attribute id="slas36"/>
 			<table-attribute id="slas39"/>
-			<table-attribute id="slaximp"/>
 			<table-attribute id="slamimp"/>
 		</table-attributes>
 	</group>
