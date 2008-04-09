@@ -8,7 +8,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	<title>Methodology</title>
+	<title>Tutorial</title>
 
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
@@ -26,7 +26,7 @@
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
 		<h:outputText value="Understanding the database" />
-		<h:outputText value="Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods" />
+		<h:outputText value="Tutorial" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -46,7 +46,7 @@
 			</td>			
 			<td valign="top">
 
-				<h1>Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods</h1>
+				<h1>Tutorial</h1>
 
 			</td>
 			

@@ -35,7 +35,7 @@
 		<f:loadBundle basename="SlaveTradeResources" var="res" />
 		
 		<s:siteHeader>
-			<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+			<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 			<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
 			<h:outputText value="Voyage Detail" />
 		</s:siteHeader>

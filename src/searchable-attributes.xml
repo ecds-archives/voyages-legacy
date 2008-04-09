@@ -205,7 +205,8 @@
 	<searchable-attribute
 		type="simple"
 		id="anyowner"
-		userLabel="Vessel owners">
+		userLabel="Vessel owners"
+		spssName="owner">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -583,7 +584,8 @@
 	<searchable-attribute
 		type="simple"
 		id="anycaptain"
-		userLabel="Captain's name">
+		userLabel="Captain's name"
+		spssName="captain">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -907,7 +909,8 @@
 	<searchable-attribute
 		type="simple"
 		id="anysource"
-		userLabel="Sources">
+		userLabel="Sources"
+		spssName="source">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

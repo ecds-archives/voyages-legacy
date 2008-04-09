@@ -58,7 +58,7 @@
 	<h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
 	<s:siteHeader activeSectionId="database">
-		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
 		<h:outputText value="Search" />
 	</s:siteHeader>

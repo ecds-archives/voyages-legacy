@@ -20,7 +20,7 @@
 <h:form id="main">
 
 	<s:siteHeader activeSectionId="lessons">
-		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="index.faces"><h:outputText value="Educational Materials" /></h:outputLink>
 		<h:outputText value="Lesson Plans" />
 	</s:siteHeader>

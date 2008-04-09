@@ -57,12 +57,22 @@
 	
 	</script>
 	
+	<style>
+	
+	.footer a {
+		color: #57807B; }
+	
+	div#other-links a {
+		color: #57807B; }
+
+	</style>
+	
 </head>
 <body>
 <f:view>
 
 	<s:siteHeader>
-		<h:outputText value="Home page" />
+		<h:outputText value="Home"/>
 	</s:siteHeader>
 	
 	<div class="main-content">
@@ -113,7 +123,7 @@
 				
 				<div id="welcome-map-region-placeholder" style="margin-left: 30px;">
 				
-					<div id="map-hint" style="text-align: left; padding: 10px 0px 0px 0px;">
+					<div id="map-hint" style="text-align: left; padding: 10px 0px 0px 0px; color: Black;">
 					
 						<div>
 						Roll over names of designated regions on the map
@@ -122,8 +132,7 @@
 						</div>
 						
 						<div style="margin-top: 10px;">
-						Click on the links below to view two special features
-						of the <i>Voyages</i> website:
+						To start learning about the slave trade, we also recommend: 
 						</div>
 						
 						<div id="other-links" style="background: none; margin: 0px; padding: 15px 0px 0px 0px">
@@ -132,7 +141,7 @@
 								<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
 								<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
 								<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-								<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Estimates Timeline</a></td>
+								<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timelines and Graphs</a></td>
 							</tr>
 							</table>
 						</div>

@@ -1,5 +1,6 @@
 package edu.emory.library.tast.database;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,8 @@ public class VariableListBean
 	public SimpleTableCell[][] getTable()
 	{
 		
+		MessageFormat voyagesCountFormat = new MessageFormat("{0,number,#,###,###}");
+		
 		Map nonNullVoyages = getNumberOfNonNullVoyages();
 		
 		Group[] groups = Group.getGroups();
@@ -107,10 +110,11 @@ public class VariableListBean
 				String cssCell =
 					j == 0 ? "first" : j % 2 == 0 ? "odd" : "even";
 				
+				
 				tableRows[rowIndex++] = new SimpleTableCell[] {
 					new SimpleTableCell(attr.getUserLabel(), cssCell),
 					new SimpleTableCell(attr.getSpssName(), cssCell),
-					new SimpleTableCell(String.valueOf(nonNullVoyages.get(attr.getId())), cssCell + " number"),
+					new SimpleTableCell(voyagesCountFormat.format(new Object[]{nonNullVoyages.get(attr.getId())}), cssCell + " number"),
 					new SimpleTableCell(attr.isInEstimates() ? CHECK_SYMBOL : "", cssCell + " check"),
 					new SimpleTableCell(attr.getUserCategories().isIn(UserCategory.Beginners) ? CHECK_SYMBOL : "", cssCell + " check"),
 					new SimpleTableCell(attr.getUserCategories().isIn(UserCategory.General) ? CHECK_SYMBOL : "", cssCell + " check"),

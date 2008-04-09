@@ -42,74 +42,73 @@ public class SiteHeaderComponent extends UIComponentBase
 	private static MainMenuBarSectionItem[] menuItems = new MainMenuBarSectionItem[] {
 		
 		new MainMenuBarSectionItem(
-				"assessment",
-				"assessment/index.faces",
-				"images/main-menu/assessment.png",
-				"images/main-menu/assessment-highlighted.png",
-				"images/main-menu/assessment-active.png", 170,
-				28,
-				"assessment", new MainMenuBarPageItem[] {
-					new MainMenuBarPageItem(
-							"essays",
-							"Historical Essays",
-							"assessment/essays-intro.faces"),
-					new MainMenuBarPageItem(
-							"estimates",
-							"Estimates of Imported/Exported Slaves",
-							"assessment/estimates.faces"),
-					new MainMenuBarPageItem(
-							"intromaps",
-							"Introductory Maps",
-							"assessment/intromaps.faces"),
-					new MainMenuBarPageItem(
-							"furtherstudy",
-							"Further Study",
-							"assessment/furtherstudy.faces")}),
-				
-		new MainMenuBarSectionItem(
 				"database",
 				"database/index.faces",
 				"images/main-menu/database.png",
 				"images/main-menu/database-highlighted.png",
-				"images/main-menu/database-active.png", 100,
-				28,
-				"database", new MainMenuBarPageItem[] {
+				"images/main-menu/database-active.png",
+				100, 28,
+				"database",
+				new MainMenuBarPageItem[] {
+					new MainMenuBarPageItem(
+							"methodology",
+							"Understanding the database",
+							"database/tutorial.faces"),
 					new MainMenuBarPageItem(
 							"search",
-							"Search the Database",
+							"Search the database",
 							"database/search.faces"),
 					new MainMenuBarPageItem(
 							"download",
-							"Download the Database",
+							"Downloads",
 							"database/download.faces"),
-					new MainMenuBarPageItem(
-							"methodology",
-							"Understanding the Database",
-							"database/methodology.faces"),
-					new MainMenuBarPageItem(
-							"variable-list",
-							"Variable List",
-							"database/variable-list.faces"),
 					new MainMenuBarPageItem(
 							"contribute",
 							"Contribute",
 							"submission/submission-login.faces")}),
 
 		new MainMenuBarSectionItem(
+				"assessment",
+				"assessment/index.faces",
+				"images/main-menu/assessment.png",
+				"images/main-menu/assessment-highlighted.png",
+				"images/main-menu/assessment-active.png",
+				170, 28,
+				"assessment",
+				new MainMenuBarPageItem[] {
+					new MainMenuBarPageItem(
+							"essays",
+							"Essays",
+							"assessment/essays-intro.faces"),
+					new MainMenuBarPageItem(
+							"estimates",
+							"Estimates",
+							"assessment/estimates.faces"),
+					new MainMenuBarPageItem(
+							"intromaps",
+							"Introductory maps",
+							"assessment/intromaps.faces"),
+					new MainMenuBarPageItem(
+							"furtherstudy",
+							"Further study",
+							"assessment/furtherstudy.faces")}),
+							
+		new MainMenuBarSectionItem(
 				"resources",
 				"resources/index.faces",
 				"images/main-menu/resources.png",
 				"images/main-menu/resources-highlighted.png",
-				"images/main-menu/resources-active.png", 85,
-				28,
-				"resources", new MainMenuBarPageItem[] {
+				"images/main-menu/resources-active.png",
+				85, 28,
+				"resources",
+				new MainMenuBarPageItem[] {
 					new MainMenuBarPageItem(
 							"images",
 							"Images",
 							"resources/images.faces"),
 					new MainMenuBarPageItem(
 							"slaves",
-							"Names Database",
+							"Names database",
 							"resources/slaves.faces")}),
 				
 		new MainMenuBarSectionItem(
@@ -119,10 +118,11 @@ public class SiteHeaderComponent extends UIComponentBase
 				"images/main-menu/lessons-highlighted.png",
 				"images/main-menu/lessons-active.png",
 				155, 28,
-				"lessons", new MainMenuBarPageItem[] {
+				"lessons",
+				new MainMenuBarPageItem[] {
 					new MainMenuBarPageItem(
 							"lesson-plans",
-							"Lesson Plans",
+							"Lesson plans",
 							"lessons/lesson-plans.faces"),
 					new MainMenuBarPageItem(
 							"links",
@@ -136,19 +136,24 @@ public class SiteHeaderComponent extends UIComponentBase
 				"images/main-menu/about-highlighted.png",
 				"images/main-menu/about-active.png",
 				130, 28,
-				"about", new MainMenuBarPageItem[] {
-					new MainMenuBarPageItem(
-							"bios",
-							"Bios of Researchers",
-							"about/bios.faces"),
-					new MainMenuBarPageItem(
-							"about",
-							"About the Grand and Partners",
-							"about/about.faces"),
-					new MainMenuBarPageItem(
-							"contact",
-							"Contact Us",
-							"about/contact.faces")}),
+				"about",
+				new MainMenuBarPageItem[] {
+						new MainMenuBarPageItem(
+								"history",
+								"History",
+								"about/history.faces"),
+						new MainMenuBarPageItem(
+								"bios",
+								"Project development team",
+								"about/team.faces"),
+						new MainMenuBarPageItem(
+								"acknowledgements",
+								"Acknowledgements",
+								"about/acknowledgements.faces"),
+						new MainMenuBarPageItem(
+								"contact",
+								"Contact Us",
+								"about/contact.faces")}),
 
 		};
 	

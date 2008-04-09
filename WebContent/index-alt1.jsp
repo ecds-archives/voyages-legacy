@@ -62,7 +62,7 @@
 <f:view>
 
 	<s:siteHeader>
-		<h:outputText value="Home page" />
+		<h:outputText value="Home"/>
 	</s:siteHeader>
 	
 	<div class="main-content">

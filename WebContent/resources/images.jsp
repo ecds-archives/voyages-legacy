@@ -32,7 +32,7 @@
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
 	<s:siteHeader activeSectionId="resources">
-		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="slaves.faces"><h:outputText value="Resources" /></h:outputLink>
 		<h:outputText value="Images" />
 	</s:siteHeader>

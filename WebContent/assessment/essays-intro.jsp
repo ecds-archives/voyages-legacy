@@ -31,7 +31,7 @@
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
 	<s:siteHeader activeSectionId="assessment">
-		<h:outputLink value="../index.faces"><h:outputText value="Home page" /></h:outputLink>
+		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Assessing the Slave Trade" /></h:outputLink>
 		<h:outputText value="Essays" />
 	</s:siteHeader>
