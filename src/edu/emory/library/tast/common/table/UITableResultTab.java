@@ -240,7 +240,7 @@ public class UITableResultTab extends UIOutput {
 					writer.startElement("td", this);
 					
 					if (populatedAttributes[j].getType().equals("NumericAttribute") && j != 0) {
-						writer.writeAttribute("style", "text-align: right", null);
+						writer.writeAttribute("style", "text-align: left", null);
 					}
 
 					if (columnData != null)
