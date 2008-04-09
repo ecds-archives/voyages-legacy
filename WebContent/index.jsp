@@ -236,7 +236,7 @@
 					</div>
 				</div>
 				
-				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections">
+				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections" style="margin-bottom: 35px;">
 				<tr>
 					<td class="featured-section-image">
 						<a href="./database/search.faces">
