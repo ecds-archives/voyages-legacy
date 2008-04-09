@@ -291,6 +291,8 @@ public class HistoryListComponent extends UIComponentBase
 //				getToPermlinkHiddenFieldName(context),
 //				item.getId());
 
+		writer.startElement("br", this);
+		writer.endElement("br");
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "side-box", null);
 		
@@ -310,6 +312,8 @@ public class HistoryListComponent extends UIComponentBase
 		int id = 0;
 		for (Iterator iterQueryCondition = builderQuery.getConditions().iterator(); iterQueryCondition.hasNext();)
 		{
+			writer.startElement("br", this);
+			writer.endElement("br");
 			id++;
 			QueryCondition queryCondition = (QueryCondition) iterQueryCondition.next();
 			writer.write(queryCondition.getSearchableAttribute().getUserLabel());
@@ -461,7 +465,8 @@ public class HistoryListComponent extends UIComponentBase
 				writer.endElement("br");
 			}
 		}
-		
+		writer.startElement("br", this);
+		writer.endElement("br");
 		encodeIconsStart(writer);
 		encodeIcon(writer, "icon-remove.png", jsToDelete, TastResource.getText("components_search_delete"));
 		encodeIconSeparator(writer);
