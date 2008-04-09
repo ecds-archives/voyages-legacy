@@ -120,42 +120,47 @@
 			<attribute name="ptdepimp"/>
 		</attributes>
 	</table-attribute>
+
 	<table-attribute tabs="1,2" id="deptregimp" userCategory="beginners,general" userLabel="Region where voyage began*">
 		<attributes>
 			<attribute name="deptregimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="plac1tra" userCategory="beginners,general" userLabel="First place of slave purchase*">
+
+
+	<table-attribute tabs="1,2" id="plac1tra" userCategory="beginners,general" userLabel="First place of slave purchase">
 		<attributes>
 			<attribute name="plac1tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="plac2tra" userCategory="beginners,general" userLabel="Second place of slave purchase*">
+	<table-attribute tabs="1,2" id="plac2tra" userCategory="beginners,general" userLabel="Second place of slave purchase">
 		<attributes>
 			<attribute name="plac2tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="plac3tra" userCategory="beginners,general" userLabel="Third place of slave purchase*">
+	<table-attribute tabs="1,2" id="plac3tra" userCategory="beginners,general" userLabel="Third place of slave purchase">
 		<attributes>
 			<attribute name="plac3tra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="beginners,general" userLabel="Principal place of slave purchase">
+	<table-attribute tabs="1,2" id="mjbyptimp" userCategory="beginners,general" userLabel="Principal place of slave purchase*">
 		<attributes>
 			<attribute name="mjbyptimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regem1" userCategory="beginners,general" userLabel="First region of slave purchase*">
+
+
+	<table-attribute tabs="1,2" id="regem1" userCategory="beginners,general" userLabel="First region of slave purchase">
 		<attributes>
 			<attribute name="regem1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regem2" userCategory="beginners,general" userLabel="Second region* of slave purchase*">
+	<table-attribute tabs="1,2" id="regem2" userCategory="beginners,general" userLabel="Second region of slave purchase">
 		<attributes>
 			<attribute name="regem2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regem3" userCategory="beginners,general" userLabel="Third region of slave purchase*">
+	<table-attribute tabs="1,2" id="regem3" userCategory="beginners,general" userLabel="Third region of slave purchase">
 		<attributes>
 			<attribute name="regem3"/>
 		</attributes>
@@ -165,22 +170,23 @@
 			<attribute name="majbyimp"/>
 		</attributes>
 	</table-attribute>
+
 	<table-attribute tabs="1,2" id="npafttra" userCategory="beginners,general" userLabel="Places of call before Atlantic crossing">
 		<attributes>
 			<attribute name="npafttra"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="sla1port" userCategory="beginners,general" userLabel="First place of slave landing*">
+	<table-attribute tabs="1,2" id="sla1port" userCategory="beginners,general" userLabel="First place of slave landing">
 		<attributes>
 			<attribute name="sla1port"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="adpsale1" userCategory="beginners,general" userLabel="Second place of slave landing*">
+	<table-attribute tabs="1,2" id="adpsale1" userCategory="beginners,general" userLabel="Second place of slave landing">
 		<attributes>
 			<attribute name="adpsale1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="adpsale2" userCategory="beginners,general" userLabel="Third place of slave landing*">
+	<table-attribute tabs="1,2" id="adpsale2" userCategory="beginners,general" userLabel="Third place of slave landing">
 		<attributes>
 			<attribute name="adpsale2"/>
 		</attributes>
@@ -190,17 +196,18 @@
 			<attribute name="mjslptimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis1" userCategory="beginners,general" userLabel="First region of slave landing*">
+
+	<table-attribute tabs="1,2" id="regdis1" userCategory="beginners,general" userLabel="First region of slave landing">
 		<attributes>
 			<attribute name="regdis1"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis2" userCategory="beginners,general" userLabel="Second region of slave landing*">
+	<table-attribute tabs="1,2" id="regdis2" userCategory="beginners,general" userLabel="Second region of slave landing">
 		<attributes>
 			<attribute name="regdis2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="regdis3" userCategory="beginners,general" userLabel="Third region of slave landing*">
+	<table-attribute tabs="1,2" id="regdis3" userCategory="beginners,general" userLabel="Third region of slave landing">
 		<attributes>
 			<attribute name="regdis3"/>
 		</attributes>
@@ -210,16 +217,20 @@
 			<attribute name="mjselimp"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="portret" userCategory="beginners,general" userLabel="Place where voyage ended*">
+
+
+	<table-attribute tabs="1,2" id="portret" userCategory="beginners,general" userLabel="Place where voyage ended">
 		<attributes>
 			<attribute name="portret"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="retrnreg" userCategory="beginners,general" userLabel="Region where voyage ended*">
+
+	<table-attribute tabs="1,2" id="retrnreg" userCategory="beginners,general" userLabel="Region where voyage ended">
 		<attributes>
 			<attribute name="retrnreg"/>
 		</attributes>
 	</table-attribute>
+
 	<table-attribute tabs="1,2" id="yearam" userCategory="beginners,general" userLabel="Year arrived with slaves*" date="true">
 		<attributes>
 			<attribute name="yearam"/>
