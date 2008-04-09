@@ -16,6 +16,8 @@ import edu.emory.library.tast.util.HibernateUtil;
 public class VariableListBean
 {
 	
+	private static final String CHECK_SYMBOL = "&bull;";
+
 	private Map getNumberOfNonNullVoyages()
 	{
 		
@@ -76,55 +78,44 @@ public class VariableListBean
 		for (int i = 0; i < groups.length; i++)
 			searchableAttrsCount += groups[i].getNoOfAllSearchableAttributes();
 		
-		int headerRowsCount = 1;
-		SimpleTableCell[][] tableRows = new SimpleTableCell[searchableAttrsCount + headerRowsCount][];
+		SimpleTableCell[][] tableRows = new SimpleTableCell[searchableAttrsCount + 2 * groups.length][];
 		
-		tableRows[0] = new SimpleTableCell[] {
-			new SimpleTableCell("Categories", "header"),
-			new SimpleTableCell("Variables", "header"),
-			new SimpleTableCell("SPSS variable name", "header"),
-			new SimpleTableCell("Number of voyages with information on variable", "header"),
-			new SimpleTableCell("Estimates", "header"),
-			new SimpleTableCell("Basic selection", "header"),
-			new SimpleTableCell("General selection", "header"),
-			new SimpleTableCell("Method of imputation", "header")};
-
-		int rowIndex = headerRowsCount;
+		int rowIndex = 0;
 		for (int i = 0; i < groups.length; i++)
 		{
 			Group group = groups[i];
 			SearchableAttribute[] attributes = group.getAllSearchableAttributes();
 
-			tableRows[rowIndex] = new SimpleTableCell[8];
+			tableRows[rowIndex] = new SimpleTableCell[7];
 			
-			tableRows[rowIndex][0] = new SimpleTableCell(
-					group.getUserLabel(),
-					group.getNoOfAllSearchableAttributes(), 1);
+			tableRows[rowIndex++] = new SimpleTableCell[] {
+					new SimpleTableCell(group.getUserLabel(), null, "header-group", 1, 7)};
+
+			tableRows[rowIndex++] = new SimpleTableCell[] {
+					new SimpleTableCell("Variables", "header"),
+					new SimpleTableCell("SPSS", "header"),
+					new SimpleTableCell("Voyages", "header"),
+					new SimpleTableCell("Estimates", "header"),
+					new SimpleTableCell("Basic", "header"),
+					new SimpleTableCell("General", "header"),
+					new SimpleTableCell("Note", "header")};
 
 			for (int j = 0; j < attributes.length; j++)
 			{
 				SearchableAttribute attr = attributes[j];
 				
-				int cellOffset;
-				if (j == 0)
-				{
-					cellOffset = 1;
-				}
-				else
-				{
-					cellOffset = 0;
-					tableRows[rowIndex] = new SimpleTableCell[7];
-				}
+				String cssCell =
+					j == 0 ? "first" : j % 2 == 0 ? "odd" : "even";
 				
-				tableRows[rowIndex][cellOffset+0] = new SimpleTableCell(attr.getUserLabel());
-				tableRows[rowIndex][cellOffset+1] = new SimpleTableCell(attr.getSpssName());
-				tableRows[rowIndex][cellOffset+2] = new SimpleTableCell(String.valueOf(nonNullVoyages.get(attr.getId())));
-				tableRows[rowIndex][cellOffset+3] = new SimpleTableCell(attr.isInEstimates() ? "yes" : "");
-				tableRows[rowIndex][cellOffset+4] = new SimpleTableCell(attr.getUserCategories().isIn(UserCategory.Beginners) ? "yes" : "");
-				tableRows[rowIndex][cellOffset+5] = new SimpleTableCell(attr.getUserCategories().isIn(UserCategory.General) ? "yes" : "");
-				tableRows[rowIndex][cellOffset+6] = new SimpleTableCell(attr.getListDescription());
-				
-				rowIndex++;
+				tableRows[rowIndex++] = new SimpleTableCell[] {
+					new SimpleTableCell(attr.getUserLabel(), cssCell),
+					new SimpleTableCell(attr.getSpssName(), cssCell),
+					new SimpleTableCell(String.valueOf(nonNullVoyages.get(attr.getId())), cssCell + " number"),
+					new SimpleTableCell(attr.isInEstimates() ? CHECK_SYMBOL : "", cssCell + " check"),
+					new SimpleTableCell(attr.getUserCategories().isIn(UserCategory.Beginners) ? CHECK_SYMBOL : "", cssCell + " check"),
+					new SimpleTableCell(attr.getUserCategories().isIn(UserCategory.General) ? CHECK_SYMBOL : "", cssCell + " check"),
+					new SimpleTableCell(attr.getListDescription(), cssCell)};
+
 			}
 		
 		}
