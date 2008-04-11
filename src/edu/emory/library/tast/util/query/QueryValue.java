@@ -371,9 +371,7 @@ public class QueryValue {
 		}
 		
 		//Set cache info
-		q.setCacheable(this.isCacheable());
-
-		//System.out.println(response.conditionString);
+		q.setCacheable(this.isCacheable());	
 		
 		return q;
 	}

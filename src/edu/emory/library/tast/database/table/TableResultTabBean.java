@@ -234,7 +234,7 @@ public class TableResultTabBean {
 		if (subCondition != null) {
 			localCond.addCondition(subCondition);
 		}
-		
+		System.out.println(localCond.toString());
 		// Build query
 		QueryValue qValue = new QueryValue("Voyage", localCond);
 		if (length != -1) {
@@ -929,8 +929,11 @@ public class TableResultTabBean {
 		Transaction t = session.beginTransaction();
 		
 		QueryValue q = this.getQuery(this.conditions, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
-		CSVUtils.writeResponse(session, q);
-		
+	   System.out.println("**************************************");
+	   System.out.println(this.conditions.toString());	   
+	   System.out.println(this.linkManager.getCurrentFirstRecord());
+	   System.out.println(this.linkManager.getStep());
+		CSVUtils.writeResponse(session, q,this.conditions.toString());		
 		t.commit();
 		session.close();
 		return null;
@@ -942,7 +945,7 @@ public class TableResultTabBean {
 		Transaction t = session.beginTransaction();
 		
 		QueryValue q = this.getQuery(this.conditions, this.data, 0, -1, false);
-		CSVUtils.writeResponse(session, q);	
+		CSVUtils.writeResponse(session, q,this.conditions.toString());	
 		
 		t.commit();
 		session.close();

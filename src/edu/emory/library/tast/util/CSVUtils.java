@@ -30,7 +30,7 @@ public class CSVUtils {
 		public List attributes = new ArrayList();
 	}
 	
-	private static DictionaryInfo[] getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream, boolean codes) throws FileNotFoundException, IOException {
+	private static DictionaryInfo[] getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream, boolean codes , String conditions) throws FileNotFoundException, IOException {
 		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ',');
 		ScrollableResults queryResponse = null;
 		
@@ -42,9 +42,14 @@ public class CSVUtils {
 			
 			
 			Attribute[] populatedAttrs = qValue.getPopulatedAttributes();
-			String[] row = new String[populatedAttrs.length - 1];
+			
+			String[] con= new String[1];			
+			con [0]=conditions;
+			writer.writeNext(con);
+			
+			String[] row = new String[populatedAttrs.length-1 ];
 			for (int i = 1; i < populatedAttrs.length; i++) {
-				row[i - 1] = populatedAttrs[i].getName();
+				row[i-1] = populatedAttrs[i].getName();
 			}
 			
 			writer.writeNext(row);
@@ -114,11 +119,11 @@ public class CSVUtils {
 		}
 	}
 
-	public static void writeResponse(Session sess, QueryValue qValue) {
-		writeResponse(sess, qValue, false);
+	public static void writeResponse(Session sess, QueryValue qValue, String conditions) {
+		writeResponse(sess, qValue, false,conditions);
 	}
 	
-	public static void writeResponse(Session sess, QueryValue qValue, boolean codes) {
+	public static void writeResponse(Session sess, QueryValue qValue, boolean codes, String conditions) {
 		
 		ZipOutputStream zipOS = null;
 		BufferedReader reader = null;
@@ -130,7 +135,7 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			DictionaryInfo[] dicts = getAllData(sess, qValue, zipOS, codes);
+			DictionaryInfo[] dicts = getAllData(sess, qValue, zipOS, codes,conditions);
 	//		zipOS.putNextEntry(new ZipEntry("codebook.csv"));
 	//		getDictionaryInfo(zipOS, sess, dicts);
 			zipOS.close();
