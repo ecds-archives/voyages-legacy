@@ -57,6 +57,16 @@
 	
 	</script>
 	
+	<style>
+	
+	.footer a {
+		color: #57807B; }
+	
+	div#other-links a {
+		color: #57807B; }
+
+	</style>
+	
 </head>
 <body>
 <f:view>
@@ -111,12 +121,31 @@
 				
 				</div>
 				
-				<div id="welcome-map-region-placeholder">
+				<div id="welcome-map-region-placeholder" style="margin-left: 30px;">
 				
-					<div id="map-hint">
-					Roll over names of designated regions on the map
-					above for descriptions of the role of each in
-					the trans-Atlantic slave trade.					
+					<div id="map-hint" style="text-align: left; padding: 10px 0px 0px 0px; color: Black;">
+					
+						<div>
+						Roll over names of designated regions on the map
+						above for descriptions of the role of each in
+						the trans-Atlantic slave trade.
+						</div>
+						
+						<div style="margin-top: 10px;">
+						To start learning about the slave trade, we also recommend: 
+						</div>
+						
+						<div id="other-links" style="background: none; margin: 0px; padding: 15px 0px 0px 0px">
+							<table border="0" cellspacing="0" cellpadding="0" style="margin-top: 0px;">
+							<tr>
+								<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+								<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
+								<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+								<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timelines and Graphs</a></td>
+							</tr>
+							</table>
+						</div>
+					
 					</div>
 				
 					<div class="welcome-map-region-text" id="map_north_america_text" style="display: none">
@@ -207,7 +236,7 @@
 					</div>
 				</div>
 				
-				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections">
+				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections" style="margin-bottom: 35px;">
 				<tr>
 					<td class="featured-section-image">
 						<a href="./database/search.faces">
@@ -269,17 +298,6 @@
 					</td>
 				</tr>
 				</table>
-				
-				<div id="other-links">
-					<table border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
-						<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline</a></td>
-					</tr>
-					</table>
-				</div>
 
 			</td>
 		</tr>

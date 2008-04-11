@@ -6,11 +6,11 @@
 <t:htmlTag value="div" styleClass="images-nav-path" >
 	<h:commandLink value="Images homepage" action="images" />
 	<h:outputText value="/" />
-	<h:outputText value="Found images" />
+	<h:outputText value="Search results" />
 </t:htmlTag>
 
 <t:htmlTag value="div" styleClass="images-query-title" >
-	<h:outputText value="Found images" />
+	<h:outputText value="Search results" />
 </t:htmlTag>
 
 <%

@@ -61,11 +61,11 @@ div#other-links {
 	background-repeat: no-repeat; }
 
 div#other-links a {
-	text-decoration: none;
-	color: Black; }
+	color: #57807B;
+	text-decoration: none; }
 	
 div#other-links a:hover {
-	color: #759F9A; }
+	color: Black; }
 	
 /* map */
 
@@ -106,4 +106,4 @@ div.footer {
 	margin-left: 20px; }
 	
 a.footer-link {
-	color: #96AAA8; }
+	color: #57807B; }

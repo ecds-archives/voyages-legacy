@@ -57,16 +57,6 @@
 	
 	</script>
 	
-	<style>
-	
-	.footer a {
-		color: #57807B; }
-	
-	div#other-links a {
-		color: #57807B; }
-
-	</style>
-	
 </head>
 <body>
 <f:view>
@@ -121,31 +111,12 @@
 				
 				</div>
 				
-				<div id="welcome-map-region-placeholder" style="margin-left: 30px;">
+				<div id="welcome-map-region-placeholder">
 				
-					<div id="map-hint" style="text-align: left; padding: 10px 0px 0px 0px; color: Black;">
-					
-						<div>
-						Roll over names of designated regions on the map
-						above for descriptions of the role of each in
-						the trans-Atlantic slave trade.
-						</div>
-						
-						<div style="margin-top: 10px;">
-						To start learning about the slave trade, we also recommend: 
-						</div>
-						
-						<div id="other-links" style="background: none; margin: 0px; padding: 15px 0px 0px 0px">
-							<table border="0" cellspacing="0" cellpadding="0" style="margin-top: 0px;">
-							<tr>
-								<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-								<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
-								<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-								<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timelines and Graphs</a></td>
-							</tr>
-							</table>
-						</div>
-					
+					<div id="map-hint">
+					Roll over names of designated regions on the map
+					above for descriptions of the role of each in
+					the trans-Atlantic slave trade.					
 					</div>
 				
 					<div class="welcome-map-region-text" id="map_north_america_text" style="display: none">
@@ -236,7 +207,7 @@
 					</div>
 				</div>
 				
-				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections" style="margin-bottom: 35px;">
+				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections">
 				<tr>
 					<td class="featured-section-image">
 						<a href="./database/search.faces">
@@ -298,6 +269,17 @@
 					</td>
 				</tr>
 				</table>
+				
+				<div id="other-links">
+					<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
+						<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline</a></td>
+					</tr>
+					</table>
+				</div>
 
 			</td>
 		</tr>
@@ -314,7 +296,7 @@
 				<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo-index.png" width="82" height="32" border="0" alt="Emory" /></a></td>
 				<td style="padding-right: 5px;"><a href="http://www.neh.gov"><img src="./images/neh-logo.png" width="32" height="32" border="0" alt="NEH" /></a></td>
 				<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
-				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Hardward, USA)</a></td>
+				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Harvard, USA)</a></td>
 				<td><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
 				<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>
 				<td><a href="http://www.ufrj.br" class="footer-link">Universidade Federal do<br>Rio de Janeiro (Brazil)</a></td>

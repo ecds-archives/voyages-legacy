@@ -31,14 +31,11 @@
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
 
-	<div id="top-bar">
-		<table border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td><a href="../index.faces"><img src="../images/logo.png" border="0" width="300" height="100"></a></td>
-			<td class="main-menu-container"><s:mainMenuBar menuItems="#{MainMenuBean.mainMenu}" activeSectionId="resources" activePageId="images" /></td>
-		</tr>
-		</table>
-	</div>
+	<s:siteHeader activeSectionId="resources">
+		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
+		<h:outputLink value="slaves.faces"><h:outputText value="Resources" /></h:outputLink>
+		<h:outputText value="Search results" />
+	</s:siteHeader>
 	
 	<div id="content">
 	
