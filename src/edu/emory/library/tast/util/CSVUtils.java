@@ -131,8 +131,8 @@ public class CSVUtils {
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
 			DictionaryInfo[] dicts = getAllData(sess, qValue, zipOS, codes);
-			zipOS.putNextEntry(new ZipEntry("codebook.csv"));
-			getDictionaryInfo(zipOS, sess, dicts);
+	//		zipOS.putNextEntry(new ZipEntry("codebook.csv"));
+	//		getDictionaryInfo(zipOS, sess, dicts);
 			zipOS.close();
 			fc.responseComplete();
 		} catch (IOException io) {
@@ -166,7 +166,7 @@ public class CSVUtils {
 			List object = Dictionary.loadAll(dicts[i].dictionary, session);
 			for (Iterator iter = object.iterator(); iter.hasNext();) {
 				Dictionary element = (Dictionary) iter.next();
-				writer.writeNext(new String[] {element.getId().toString(), element.getName()});
+				writer.writeNext(new String[] {element.getId().toString(), element.getName()});			
 			}
 			writer.writeNext(new String[] {});
 		}
@@ -202,9 +202,9 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS), ',');
+			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS), ',');			
 			for (int i = 0; i < data.length; i++) {
-				writer.writeNext(data[i]);
+				writer.writeNext(data[i]);			
 			}
 			writer.close();
 			zipOS.close();
