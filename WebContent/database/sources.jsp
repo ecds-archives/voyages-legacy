@@ -27,7 +27,7 @@
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
 		<h:outputText value="Understanding the database" />
-		<h:outputText value="Sources" />
+		<h:outputText value="#{SourcesListBean.pageTitle}" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -41,13 +41,21 @@
 					<li><a href="tutorial.faces">Tutorial</a></li>
 					<li><a href="methodology.faces">Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods</a></li>
 					<li><a href="variable-list.faces">Variable list</a></li>
-					<li><a href="sources.faces">Sources</a></li>
+				</ul>	
+					
+				<div class="left-menu-title" style="margin-top: 10px;">Sources</div>
+				<ul class="left-menu">					
+					<li><a href="sources.faces?type=documentary">Documentary Sources</a></li>
+					<li><a href="sources.faces?type=newspapers">Newspapers</a></li>
+					<li><a href="sources.faces?type=published">Published Sources</a></li>
+					<li><a href="sources.faces?type=unpublished">Unpublished Secondary Sources</a></li>
+					<li><a href="sources.faces?type=private">Private Notes and Collections</a></li>
 				</ul>
 			
 			</td>			
 			<td valign="top">
 
-				<h1>Sources</h1>
+				<h1><h:outputText value="#{SourcesListBean.pageTitle}" /></h1>
 				
 				<div id="sources">
 					<s:simpleTable rows="#{SourcesListBean.sources}" />

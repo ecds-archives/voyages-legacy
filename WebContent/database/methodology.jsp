@@ -40,7 +40,15 @@
 					<li><a href="tutorial.faces">Tutorial</a></li>
 					<li><a href="methodology.faces">Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods</a></li>
 					<li><a href="variable-list.faces">Variable list</a></li>
-					<li><a href="sources.faces">Sources</a></li>
+				</ul>
+
+				<div class="left-menu-title" style="margin-top: 10px;">Sources</div>
+				<ul class="left-menu">					
+					<li><a href="sources.faces?type=documentary">Documentary Sources</a></li>
+					<li><a href="sources.faces?type=newspapers">Newspapers</a></li>
+					<li><a href="sources.faces?type=published">Published Sources</a></li>
+					<li><a href="sources.faces?type=unpublished">Unpublished Secondary Sources</a></li>
+					<li><a href="sources.faces?type=private">Private Notes and Collections</a></li>
 				</ul>
 			
 			</td>			

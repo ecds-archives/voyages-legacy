@@ -531,7 +531,7 @@
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>type</property-name>
-			<value>#{request.type}</value>
+			<value>#{param.type}</value>
 		</managed-property>
 	</managed-bean>
 

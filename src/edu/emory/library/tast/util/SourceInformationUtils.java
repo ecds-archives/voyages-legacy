@@ -42,7 +42,7 @@ public class SourceInformationUtils {
 	}
 	
 	private SourceInformationUtils(Session sess) {
-		QueryValue qValue = new QueryValue("SourceInformation");
+		QueryValue qValue = new QueryValue("Source");
 		Object[] response = qValue.executeQuery(sess);
 		sources = new Source[response.length];
 		index = new SourceIndexPosition[sources.length];

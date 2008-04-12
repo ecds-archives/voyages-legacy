@@ -18,11 +18,15 @@ public class VariableListBean
 {
 	
 	private static final String CHECK_SYMBOL = "&bull;";
+	private static Map nonNullVoyages = null; 
 
-	private Map getNumberOfNonNullVoyages()
+	private synchronized Map getNumberOfNonNullVoyages()
 	{
 		
-		Map nonNullVoyages = new HashMap();
+		if (nonNullVoyages != null)
+			return nonNullVoyages;
+		
+		nonNullVoyages = new HashMap();
 		
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT ");

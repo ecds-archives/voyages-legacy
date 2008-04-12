@@ -88,7 +88,7 @@ public class Searchables
 			Node xmlSubType = xmlSearchableAttr.getAttributes().getNamedItem("subType");
 
 			// SPSS name
-			Node xmlSpssName = xmlSearchableAttr.getAttributes().getNamedItem("xmlSpssName");
+			Node xmlSpssName = xmlSearchableAttr.getAttributes().getNamedItem("spssName");
 			String spssName = xmlSpssName != null ? spssName = xmlSpssName.getNodeValue() : id;
 
 			// is in estimates

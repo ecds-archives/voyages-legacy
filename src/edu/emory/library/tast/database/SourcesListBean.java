@@ -17,10 +17,68 @@ import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.util.HibernateUtil;
 
+class SouceTypeDescriptor
+{
+	
+	private int type;
+	private String urlId;
+	private String pageTitle;
+	
+	public SouceTypeDescriptor(int type, String urlId, String pageTitle)
+	{
+		this.type = type;
+		this.urlId = urlId;
+		this.pageTitle = pageTitle;
+	}
+
+	public int getType()
+	{
+		return type;
+	}
+
+	public String getUrlId()
+	{
+		return urlId;
+	}
+
+	public String getPageTitle()
+	{
+		return pageTitle;
+	}
+	
+}
+
 public class SourcesListBean
 {
 
 	private String type;
+	
+	private static SouceTypeDescriptor[] typeDescriptors = new SouceTypeDescriptor[] {
+		
+		new SouceTypeDescriptor(
+				Source.TYPE_DOCUMENTARY_SOURCE,
+				"documentary",
+				"Documentary Sources"),
+				
+		new SouceTypeDescriptor(
+				Source.TYPE_NEWSPAPER,
+				"newspapers",
+				"Newspapers"),
+				
+		new SouceTypeDescriptor(
+				Source.TYPE_PUBLISHED_SOURCE,
+				"published",
+				"Published Sources"),
+		
+		new SouceTypeDescriptor(
+				Source.TYPE_UNPUBLISHED_SECONDARY_SOURCE,
+				"unpublished",
+				"Unpublished Secondary Sources"),
+		
+		new SouceTypeDescriptor(
+				Source.TYPE_PRIVATE_NOTE_OR_COLLECTION,
+				"private",
+				"Private Notes and Collections") };
 	
 	private SimpleTableCell[][] loadSimpleSources(Session sess, int type)
 	{
@@ -43,7 +101,7 @@ public class SourcesListBean
 			
 		}
 		
-		return null;
+		return table;
 		
 	}
 	
@@ -53,7 +111,7 @@ public class SourcesListBean
 		//long start = System.currentTimeMillis();
 		
 		//Pattern sourceRegEx = Pattern.compile("^[^\\(\\)]+\\(([^\\,]+),\\s*([^\\,]+),\\s*([^\\,]+)\\)");
-		Pattern sourceRegEx = Pattern.compile("[^\\(\\)]+\\(([^\\,]+),\\s*([^\\,]+)\\).+");
+		Pattern sourceRegEx = Pattern.compile("[^\\(\\)]+\\(([^\\,\\(\\)]+(?:,\\s*[^\\,\\(\\)]+)?),\\s*([^\\,\\(\\)]+)\\).*");
 		
 		Map countriesToCities = new TreeMap();
 		
@@ -152,11 +210,11 @@ public class SourcesListBean
 		
 		SimpleTableCell[][] table;
 		
-		int typeInt = getTypeAsInt(); 
-		if (typeInt == Source.TYPE_DOCUMENTARY_SOURCE)
+		SouceTypeDescriptor typeDesc = getTypeDescriptor(type); 
+		if (typeDesc.getType() == Source.TYPE_DOCUMENTARY_SOURCE)
 			table = loadDocumentarySources(sess);
 		else
-			table = loadSimpleSources(sess, typeInt);
+			table = loadSimpleSources(sess, typeDesc.getType());
 
 		trans.commit();
 		sess.close();
@@ -165,18 +223,14 @@ public class SourcesListBean
 	
 	}
 	
-	private int getTypeAsInt()
+	private SouceTypeDescriptor getTypeDescriptor(String urlId)
 	{
-		if ("newspapers".equals(type))
-			return Source.TYPE_NEWSPAPER;
-		else if ("published".equals(type))
-			return Source.TYPE_PUBLISHED_SOURCE;
-		else if ("unpublished".equals(type))
-			return Source.TYPE_UNPUBLISHED_SECONDARY_SOURCE;
-		else if ("private".equals(type))
-			return Source.TYPE_PRIVATE_NOTE_OR_COLLECTION;
-		else
-			return Source.TYPE_DOCUMENTARY_SOURCE;
+		for (int i = 0; i < typeDescriptors.length; i++)
+		{
+			SouceTypeDescriptor desc = typeDescriptors[i];
+			if (desc.getUrlId().equals(type)) return desc; 
+		}
+		return typeDescriptors[0];
 	}
 
 	public String getType()
@@ -187,6 +241,11 @@ public class SourcesListBean
 	public void setType(String type)
 	{
 		this.type = type;
+	}
+	
+	public String getPageTitle()
+	{
+		return getTypeDescriptor(type).getPageTitle();
 	}
 
 }

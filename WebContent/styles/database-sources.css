@@ -6,7 +6,7 @@ div#sources table.simple-table {
 	
 div#sources table.simple-table td {
 	vertical-align: top;
-	padding: 2px 0px; }
+	padding: 5px 0px; }
 	
 div#sources table.simple-table td.sources-country {
 	font-weight: bold;
@@ -24,7 +24,8 @@ div#sources table.simple-table td.sources-city {
 	
 div#sources table.simple-table td.source-name {
 	padding-right: 10px;
-	border-bottom: 1px solid #DDCA9D; }
+	/* border-bottom: 1px solid #DDCA9D; */ }
 	
 div#sources table.simple-table td.source-id {
-	border-bottom: 1px solid #DDCA9D; }
+	font-weight: bold;
+	/* border-bottom: 1px solid #DDCA9D; */ }
