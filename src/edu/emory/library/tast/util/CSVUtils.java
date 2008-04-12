@@ -233,4 +233,8 @@ public class CSVUtils {
 			}
 		}
 	}
+
+	public static void writeResponse(Session sess, QueryValue q)
+	{
+	}
 }

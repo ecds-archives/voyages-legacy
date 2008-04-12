@@ -1,0 +1,30 @@
+div#sources {
+	margin-left: 20px; }
+
+div#sources table.simple-table {
+	width: 680px; }
+	
+div#sources table.simple-table td {
+	vertical-align: top;
+	padding: 2px 0px; }
+	
+div#sources table.simple-table td.sources-country {
+	font-weight: bold;
+	padding-top: 15px;
+	padding-left: 0px;
+	font-size: 12pt;
+	border-bottom: 1px solid Black; }	
+	
+div#sources table.simple-table td.sources-city {
+	/* background-color: #F2DA9E; */
+	/* background-color: White; */
+	padding-top: 15px;
+	font-weight: bold;
+	border-bottom: 1px dotted Black; }	
+	
+div#sources table.simple-table td.source-name {
+	padding-right: 10px;
+	border-bottom: 1px solid #DDCA9D; }
+	
+div#sources table.simple-table td.source-id {
+	border-bottom: 1px solid #DDCA9D; }

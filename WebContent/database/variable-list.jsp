@@ -14,54 +14,9 @@
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-info.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-variables.css" rel="stylesheet" type="text/css">
+	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
-	
-	<style type="text/css">
-	
-	div#variables-list table.simple-table {
-		width: 600px; }
-
-	div#variables-list table.simple-table {
-		border-collapse: collapse; }
-	
-	div#variables-list table.simple-table td {
-		padding: 2px 5px; }
-
-	div#variables-list table.simple-table td.check {
-		text-align: center; }
-
-	div#variables-list table.simple-table td.number {
-		text-align: right; }
-
-	div#variables-list table.simple-table td.header-group {
-		font-weight: bold;
-		padding-top: 15px;
-		font-size: 12pt;
-		border-bottom: 1px solid Black; }
-
-	div#variables-list table.simple-table td.header {
-		background-color: White;
-		padding-top: 5px;
-		padding-bottom: 5px;
-		font-weight: bold;
-		border-top: 1px solid Black;
-		border-bottom: 1px dotted Black; }
-
-	div#variables-list table.simple-table td.first {
-		background-color: White;
-		border-bottom: 1px solid #DDCA9D; }
-
-	div#variables-list table.simple-table td.odd {
-		background-color: White;
-		border-top: 1px solid #DDCA9D;
-		border-bottom: 1px solid #DDCA9D; }
-
-	div#variables-list table.simple-table td.even {
-		background-color: #FFF5C2;
-		border-top: 1px solid #DDCA9D;
-		border-bottom: 1px solid #DDCA9D; }
-		
-	</style>
 	
 </head>
 <body>
@@ -92,7 +47,7 @@
 			</td>			
 			<td valign="top">
 
-				<h1 style="margin-left: 20px; padding-top: 0px; margin-bottom: 0px;">Variable list</h1>
+				<h1 style="margin-left: 15px; padding-top: 0px; margin-bottom: 0px;">Variable list</h1>
 
 				<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -105,7 +60,7 @@
 					</td>
 					<td valign="top" style="padding-left: 20px;">
 					
-						<div style="font-weight: bold; font-size: 12pt; padding-top: 15px; border-bottom: 1px solid Black; padding-left: 10px; padding-bottom: 2px;">Commentary</div>
+						<div style="font-weight: bold; font-size: 12pt; padding-top: 15px; border-bottom: 1px solid Black; padding-left: 0px; padding-bottom: 2px;">Commentary</div>
 
 						<div style="width: 170px; background-color: White; border-bottom: 1px solid #DDCA9D; padding: 10px;">
 				

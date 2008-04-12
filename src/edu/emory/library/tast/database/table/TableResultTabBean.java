@@ -24,7 +24,7 @@ import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeForma
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.dm.SourceInformation;
+import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
@@ -205,9 +205,9 @@ public class TableResultTabBean {
 				if (populatedAttributes[i].getName().startsWith("source")) {
 					for (int j = 0; j < ret.length; j++) {						
 						if (((Object[])ret[j])[i] != null) {
-							SourceInformation info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
+							Source info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
 							if (info != null) {
-								data.setRollover(((Object[])ret[j])[i], info.getInformation());
+								data.setRollover(((Object[])ret[j])[i], info.getName());
 							}
 						}
 					}

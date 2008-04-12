@@ -34,7 +34,7 @@
 		<mapping resource="edu/emory/library/tast/dm/Submission.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/Revision.hbm.xml"/>
 
-		<mapping resource="edu/emory/library/tast/dm/SourceInformation.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/Source.hbm.xml"/>
 
 		<mapping resource="edu/emory/library/tast/dm/GlossaryTerm.hbm.xml"/>
 

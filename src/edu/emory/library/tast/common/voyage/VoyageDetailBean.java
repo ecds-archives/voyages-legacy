@@ -20,7 +20,7 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Port;
-import edu.emory.library.tast.dm.SourceInformation;
+import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -185,9 +185,9 @@ public class VoyageDetailBean
 			if (populatedAttributes[i].getName().startsWith("source")) {
 				for (int j = 0; j < ret.length; j++) {						
 					if (((Object[])ret[j])[i] != null) {
-						SourceInformation info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
+						Source info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
 						if (info != null) {
-							detailData.setRollover(((Object[])ret[j])[i], info.getInformation());
+							detailData.setRollover(((Object[])ret[j])[i], info.getName());
 						}
 					}
 				}

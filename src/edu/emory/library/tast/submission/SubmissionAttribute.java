@@ -30,7 +30,7 @@ import edu.emory.library.tast.dm.FateVessel;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.dm.SourceInformation;
+import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -129,9 +129,9 @@ public class SubmissionAttribute {
 				}
 				if (sources != null) {
 					if (utils != null) {
-						SourceInformation info = utils.match(strArr[i]);
+						Source info = utils.match(strArr[i]);
 						if (info != null) {
-							sources[i] = info.getInformation();
+							sources[i] = info.getName();
 						}	
 					}
 				}

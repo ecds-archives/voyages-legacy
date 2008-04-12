@@ -14,6 +14,7 @@
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-info.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-sources.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
@@ -46,7 +47,11 @@
 			</td>			
 			<td valign="top">
 
-				<h1>Sources (bibliography)</h1>
+				<h1>Sources</h1>
+				
+				<div id="sources">
+					<s:simpleTable rows="#{SourcesListBean.sources}" />
+				</div>
 
 			</td>
 			

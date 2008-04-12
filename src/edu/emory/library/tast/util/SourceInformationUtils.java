@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tast.dm.SourceInformation;
+import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class SourceInformationUtils {
@@ -13,7 +13,7 @@ public class SourceInformationUtils {
 	
 	public char[] stopChars = new char[] {';', ',', ':'};
 	
-	private SourceInformation[] sources;
+	private Source[] sources;
 	private String[] sourceNames;
 	private SourceIndexPosition[] index;
 	
@@ -44,10 +44,10 @@ public class SourceInformationUtils {
 	private SourceInformationUtils(Session sess) {
 		QueryValue qValue = new QueryValue("SourceInformation");
 		Object[] response = qValue.executeQuery(sess);
-		sources = new SourceInformation[response.length];
+		sources = new Source[response.length];
 		index = new SourceIndexPosition[sources.length];
 		for (int i = 0; i < response.length; i++) {
-			sources[i] = (SourceInformation) response[i];
+			sources[i] = (Source) response[i];
 			index[i] = new SourceIndexPosition(sources[i].getId(), i);
 		}
 		
@@ -65,7 +65,7 @@ public class SourceInformationUtils {
 		return cachedInst;
 	}
 	
-	public SourceInformation match(String source) {
+	public Source match(String source) {
 		if (source == null) {
 			return null;
 		}
@@ -80,7 +80,7 @@ public class SourceInformationUtils {
 		}
 	}
 	
-	public SourceInformation searchSmallerMatch(int position, String source) {
+	public Source searchSmallerMatch(int position, String source) {
 		if (position > 0) {
 			int testPosition = position - 1;
 			System.out.println("testing " + position + " of source " + source + "");

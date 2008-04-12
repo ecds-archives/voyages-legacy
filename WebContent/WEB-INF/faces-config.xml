@@ -524,6 +524,16 @@
 		<managed-bean-class>edu.emory.library.tast.database.VariableListBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>SourcesListBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.SourcesListBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>type</property-name>
+			<value>#{request.type}</value>
+		</managed-property>
+	</managed-bean>
 
 	<navigation-rule>
 		<from-view-id>/reports.jsp</from-view-id>

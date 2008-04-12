@@ -110,7 +110,6 @@ public class VariableListBean
 				String cssCell =
 					j == 0 ? "first" : j % 2 == 0 ? "odd" : "even";
 				
-				
 				tableRows[rowIndex++] = new SimpleTableCell[] {
 					new SimpleTableCell(attr.getUserLabel(), cssCell),
 					new SimpleTableCell(attr.getSpssName(), cssCell),
