@@ -1,20 +1,16 @@
 table.essays-layout {
-	margin-top: 15px;
-	margin-left: 15px; }
+	margin-top: 10px;
+	margin-left: 10px; }
 
 table.essays-layout td {
 	vertical-align: top; }
 	
-td.essays-left-column {
-	padding-right: 15px;
-	width: 290px; }
+td#essays-left-column {
+	padding-right: 10px;
+	width: 240px; }
 
-td.essays-right-column {
-	border-left-color: #115676;
-	border-left-style: solid;
-	border-left-width: 1px;
-	padding-left: 20px;
-	padding-right: 10px; }
+td#essays-right-column {
+	width: 650px; }
 
 td.essays-left-column table.box-main-table {
 	width: 280px; }
@@ -32,5 +28,34 @@ ol.toc li.current-essay {
 	font-weight: bold; }
 
 p {
-	width: 600px;
 	line-height: 160%; }
+	
+div.left-menu-title {
+	border-bottom: 1px solid Black;
+	padding-bottom: 4px; }	
+	
+div.left-menu-box a {
+	display: block;
+	color: Black;
+	text-decoration: none; }
+
+div.left-menu-box a:hover {
+	background-color: #E0F5F5; }
+
+div.secondary-menu-item-0 a {
+	background-image: url(../images/secondary-menu-symbol-0.png);
+	background-repeat: no-repeat;
+	background-position: 2px 4px;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #73C5E9; }
+	
+div.secondary-menu-item-1 a {
+	background-image: url(../images/secondary-menu-symbol-1.png);
+	background-repeat: no-repeat;
+	background-position: 16px 4px;
+	padding-left: 30px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #73C5E9; }

@@ -8,13 +8,12 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	<title>Sources (bibliography)</title>
+	<title>Tutorial</title>
 
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-info.css" rel="stylesheet" type="text/css">
-	<link href="../styles/database-sources.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
@@ -27,7 +26,7 @@
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
 		<h:outputText value="Understanding the database" />
-		<h:outputText value="#{SourcesListBean.pageTitle}" />
+		<h:outputText value="Guide" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -35,24 +34,14 @@
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td valign="top" id="left-column">
-			
 				<%@ include file="secondary-menu.jsp" %>
-			
 			</td>			
 			<td valign="top" id="main-content">
-			
 				<s:simpleBox>
-
-					<h1><h:outputText value="#{SourcesListBean.pageTitle}" /></h1>
-					
-					<div id="sources">
-						<s:simpleTable rows="#{SourcesListBean.sources}" />
-					</div>
-				
+					<h1>Guide</h1>
+					<div style="height: 600px;"></div>
 				</s:simpleBox>
-
 			</td>
-			
 		</tr>
 		</table>
 		

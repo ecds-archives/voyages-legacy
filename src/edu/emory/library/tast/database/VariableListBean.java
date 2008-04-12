@@ -96,7 +96,7 @@ public class VariableListBean
 			tableRows[rowIndex] = new SimpleTableCell[7];
 			
 			tableRows[rowIndex++] = new SimpleTableCell[] {
-					new SimpleTableCell(group.getUserLabel(), null, "header-group", 1, 7)};
+					new SimpleTableCell(group.getUserLabel(), null, i == 0 ? "header-group-first" : "header-group", 1, 7)};
 
 			tableRows[rowIndex++] = new SimpleTableCell[] {
 					new SimpleTableCell("Variables", "header"),

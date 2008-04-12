@@ -110,11 +110,6 @@
 	</component>
 	
 	<component>
-		<component-type>Gallery</component-type>
-		<component-class>edu.emory.library.tast.images.site.GalleryComponent</component-class>
-	</component>
-
-	<component>
 		<component-type>EventLine</component-type>
 		<component-class>edu.emory.library.tast.common.EventLineComponent</component-class>
 	</component>
@@ -127,6 +122,11 @@
 	<component>
 		<component-type>SimpleTable</component-type>
 		<component-class>edu.emory.library.tast.common.SimpleTableComponent</component-class>
+	</component>
+
+	<component>
+		<component-type>SimpleList</component-type>
+		<component-class>edu.emory.library.tast.common.SimpleListComponent</component-class>
 	</component>
 
 	<component>
@@ -220,6 +220,21 @@
 		<component-class>edu.emory.library.tast.master.SiteHeaderComponent</component-class>
 	</component>	
 	
+	<component>
+		<component-type>SecondaryMenu</component-type>
+		<component-class>edu.emory.library.tast.master.SecondaryMenuComponent</component-class>
+	</component>	
+
+	<component>
+		<component-type>SecondaryMenuItem</component-type>
+		<component-class>edu.emory.library.tast.master.SecondaryMenuItemComponent</component-class>
+	</component>	
+
+	<component>
+		<component-type>SimpleBox</component-type>
+		<component-class>edu.emory.library.tast.common.SimpleBoxComponent</component-class>
+	</component>	
+
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.query.SearchBean</managed-bean-class>

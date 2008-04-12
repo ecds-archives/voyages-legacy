@@ -88,20 +88,19 @@ public class SourcesListBean
 			add(Restrictions.eq("type", new Integer(type))).
 			addOrder(Order.asc("name")).list();
 		
-		SimpleTableCell[][] table = new SimpleTableCell[sourcesDb.size()][];
+		SimpleTableCell[][] sources = new SimpleTableCell[sourcesDb.size()][];
 		
 		int rowIndex = 0;
 		for (Iterator sourceIt = sourcesDb.iterator(); sourceIt.hasNext();)
 		{
 			Source source = (Source) sourceIt.next();
-			
-			table[rowIndex++] = new SimpleTableCell[] {
-					new SimpleTableCell(source.getName(), "source-name"),
-					new SimpleTableCell(source.getId(), "source-id")};
-			
+			String cssClassParity = rowIndex % 2 == 0 ? "even" : "odd";
+			sources[rowIndex++] = new SimpleTableCell[] {
+					new SimpleTableCell(source.getId(), "source-id-" + cssClassParity),
+					new SimpleTableCell(source.getName(), "source-name-" + cssClassParity)};
 		}
 		
-		return table;
+		return sources;
 		
 	}
 	
@@ -154,7 +153,7 @@ public class SourcesListBean
 			{
 				sourcesInCity = new LinkedList();
 				citiesToSources.put(city, sourcesInCity);
-				tableRowsCount++;
+				//tableRowsCount++;
 			}
 			
 			sourcesInCity.add(source);
@@ -165,33 +164,66 @@ public class SourcesListBean
 		SimpleTableCell[][] table = new SimpleTableCell[tableRowsCount][];
 		
 		int rowIndex = 0;
+		int countryIdx = 0;
 		for (Iterator countriesIt = countriesToCities.keySet().iterator(); countriesIt.hasNext();)
 		{
 			String country = (String) countriesIt.next();
 			Map citiesToSources = (Map) countriesToCities.get(country);
 			
-			table[rowIndex++] = new SimpleTableCell[] {
-					new SimpleTableCell(country, null, "sources-country", 1, 2)};
+			String countryCssClassSuffix = countryIdx == 0 ? "-first" : "";
 			
+			table[rowIndex++] = new SimpleTableCell[] {
+					new SimpleTableCell(country, null, "sources-country" + countryCssClassSuffix, 1, 3)};
+
+			int cityIdx = 0;
+			int souceInCountryIdx = 0;
 			for (Iterator citiesIt = citiesToSources.keySet().iterator(); citiesIt.hasNext();)
 			{
 				String city = (String) citiesIt.next();
 				List sources = (List) citiesToSources.get(city);
+				int sourcesCount = sources.size();
 				
-				table[rowIndex++] = new SimpleTableCell[] {
-						new SimpleTableCell(city, null, "sources-city", 1, 2)};
+				String cityCssClassSuffix = cityIdx == 0 ? "-first" : "";
 				
+				table[rowIndex] = new SimpleTableCell[3];
+				table[rowIndex][0] = new SimpleTableCell(city, null, "sources-city" + cityCssClassSuffix, sourcesCount, 1);
+				
+				int sourceIdx = 0;
 				for (Iterator sourceIt = sources.iterator(); sourceIt.hasNext();)
 				{
 					Source source = (Source) sourceIt.next();
 					
-					table[rowIndex++] = new SimpleTableCell[] {
-							new SimpleTableCell(source.getName(), "source-name"),
-							new SimpleTableCell(source.getId(), "source-id")};
+					String cssClassSuffix =
+						souceInCountryIdx == 0 ? "first" :
+							souceInCountryIdx % 2 == 0 ? "even" :
+								"odd";
+					
+					SimpleTableCell cellId = new SimpleTableCell(source.getId(), "source-id-" + cssClassSuffix);
+					SimpleTableCell cellName = new SimpleTableCell(source.getName(), "source-name-" + cssClassSuffix);
+					
+					if (sourceIdx > 0)
+					{
+						table[rowIndex] = new SimpleTableCell[2];
+						table[rowIndex][0] = cellId;
+						table[rowIndex][1] = cellName;
+					}
+					else
+					{
+						table[rowIndex][1] = cellId;
+						table[rowIndex][2] = cellName;
+					}
+					rowIndex++;
+					
+					sourceIdx++;
+					souceInCountryIdx++;
 					
 				}
 				
+				cityIdx++;
+				
 			}
+			
+			countryIdx++;
 			
 		}
 		
@@ -208,18 +240,18 @@ public class SourcesListBean
 		Session sess = HibernateUtil.getSession();
 		Transaction trans = sess.beginTransaction();
 		
-		SimpleTableCell[][] table;
+		SimpleTableCell[][] sources;
 		
 		SouceTypeDescriptor typeDesc = getTypeDescriptor(type); 
 		if (typeDesc.getType() == Source.TYPE_DOCUMENTARY_SOURCE)
-			table = loadDocumentarySources(sess);
+			sources = loadDocumentarySources(sess);
 		else
-			table = loadSimpleSources(sess, typeDesc.getType());
+			sources = loadSimpleSources(sess, typeDesc.getType());
 
 		trans.commit();
 		sess.close();
 		
-		return table;
+		return sources;
 	
 	}
 	

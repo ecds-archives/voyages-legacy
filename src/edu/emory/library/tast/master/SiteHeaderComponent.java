@@ -51,9 +51,9 @@ public class SiteHeaderComponent extends UIComponentBase
 				"database",
 				new MainMenuBarPageItem[] {
 					new MainMenuBarPageItem(
-							"methodology",
+							"guide",
 							"Understanding the database",
-							"database/tutorial.faces"),
+							"database/guide.faces"),
 					new MainMenuBarPageItem(
 							"search",
 							"Search the database",

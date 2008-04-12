@@ -1,31 +1,55 @@
-div#sources {
-	margin-left: 20px; }
+table.simple-table {
+	border-collapse: collapse; }
 
-div#sources table.simple-table {
-	width: 680px; }
-	
-div#sources table.simple-table td {
-	vertical-align: top;
-	padding: 5px 0px; }
-	
-div#sources table.simple-table td.sources-country {
+td.sources-country,
+td.sources-country-first {
 	font-weight: bold;
-	padding-top: 15px;
-	padding-left: 0px;
 	font-size: 12pt;
-	border-bottom: 1px solid Black; }	
+	border-bottom: 1px solid Black;
+	padding-bottom: 5px; }
 	
-div#sources table.simple-table td.sources-city {
-	/* background-color: #F2DA9E; */
-	/* background-color: White; */
-	padding-top: 15px;
-	font-weight: bold;
-	border-bottom: 1px dotted Black; }	
+td.sources-country {
+	padding-top: 15px; }
 	
-div#sources table.simple-table td.source-name {
-	padding-right: 10px;
-	/* border-bottom: 1px solid #DDCA9D; */ }
+td.sources-city-first,
+td.sources-city {
+	vertical-align: top;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	font-weight: bold; }
 	
-div#sources table.simple-table td.source-id {
-	font-weight: bold;
-	/* border-bottom: 1px solid #DDCA9D; */ }
+td.sources-city {
+	border-top: 1px solid #DDCA9D; }	
+
+td.source-id-odd,
+td.source-id-even,
+td.source-id-first,
+td.source-id-first {
+	vertical-align: top;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: bold; }
+
+td.source-name-odd, 
+td.source-name-even, 
+td.source-name-first, 
+td.source-name-first {
+	vertical-align: top;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 15px; }
+	
+td.source-id-first,
+td.source-name-first {
+	border-bottom: 1px solid #DDCA9D;
+	background-color: #FFF8CE; }
+
+td.source-id-even,
+td.source-name-even {
+	border-top: 1px solid #DDCA9D;
+	border-bottom: 1px solid #DDCA9D;
+	background-color: #FFF8CE; }
+	

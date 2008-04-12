@@ -1,51 +1,5 @@
-body {
-	background-position: 0px 60px;
-	background-image: url(../images/database-bg.png);
-	background-repeat: repeat-x; }
-
-div#content {
-	padding-top: 10px; }
-
-h1 {
-	padding: 0px;
-	margin: 0px 0px 10px 0px; }
-
-div.left-menu-box {
-	padding-left: 10px;
-	padding-right: 10px; }
-	
-div.left-menu-box a {
-	display: block;
-	color: Black;
-	text-decoration: none; }
-
-div.left-menu-box a:hover {
-	background-color: #FFF5C2; }
-
-div.secondary-menu-item-0 a {
-	background-image: url(../images/secondary-menu-symbol-0.png);
-	background-repeat: no-repeat;
-	background-position: 2px 4px;
-	padding-left: 15px;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	border-bottom: 1px solid #E4D6B1; }
-	
-div.secondary-menu-item-1 a {
-	background-image: url(../images/secondary-menu-symbol-1.png);
-	background-repeat: no-repeat;
-	background-position: 16px 4px;
-	padding-left: 30px;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	border-bottom: 1px solid #E4D6B1; }
-
-div.left-menu-title {
-	border-bottom: 1px solid Black;
-	padding-bottom: 4px; }
-
 td.simple-box-11 {
-	background-image: url(../images/database-simple-box-11.png);
+	background-image: url(../images/assessment-simple-box-11.png);
 	background-repeat: no-repeat;
 	width: 6px;
 	height: 6px;
@@ -57,7 +11,7 @@ td.simple-box-11 div {
 	overflow: hidden; }
 
 td.simple-box-12 {
-	background-image: url(../images/database-simple-box-12.png);
+	background-image: url(../images/assessment-simple-box-12.png);
 	background-repeat: repeat-x;
 	background-color: White;
 	height: 6px;
@@ -68,7 +22,7 @@ td.simple-box-12 div {
 	overflow: hidden; }
 
 td.simple-box-13 {
-	background-image: url(../images/database-simple-box-13.png);
+	background-image: url(../images/assessment-simple-box-13.png);
 	background-repeat: no-repeat;
 	width: 6px;
 	height: 6px;
@@ -80,7 +34,7 @@ td.simple-box-12 div {
 	overflow: hidden; }
 
 td.simple-box-21 {
-	background-image: url(../images/database-simple-box-21.png);
+	background-image: url(../images/assessment-simple-box-21.png);
 	background-repeat: repeat-y;
 	width: 6px;
 	overflow: hidden; }
@@ -103,7 +57,7 @@ td#main-content td.simple-box-22 {
 	width: 670px; }
 
 td.simple-box-23 {
-	background-image: url(../images/database-simple-box-23.png);
+	background-image: url(../images/assessment-simple-box-23.png);
 	background-repeat: repeat-y;
 	width: 6px;
 	overflow: hidden; }
@@ -113,7 +67,7 @@ td.simple-box-23 div {
 	overflow: hidden; }
 
 td.simple-box-31 {
-	background-image: url(../images/database-simple-box-31.png);
+	background-image: url(../images/assessment-simple-box-31.png);
 	background-repeat: no-repeat;
 	width: 6px;
 	height: 6px;
@@ -125,7 +79,7 @@ td.simple-box-31 div {
 	overflow: hidden; }
 
 td.simple-box-32 {
-	background-image: url(../images/database-simple-box-32.png);
+	background-image: url(../images/assessment-simple-box-32.png);
 	background-repeat: repeat-x;
 	background-color: White;
 	height: 6px;
@@ -136,7 +90,7 @@ td.simple-box-32 div {
 	overflow: hidden; }
 
 td.simple-box-33 {
-	background-image: url(../images/database-simple-box-33.png);
+	background-image: url(../images/assessment-simple-box-33.png);
 	background-repeat: no-repeat;
 	width: 6px;
 	height: 6px;

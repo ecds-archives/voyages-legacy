@@ -1,5 +1,5 @@
 div#variables-list table.simple-table {
-	width: 600px; }
+	}
 
 div#variables-list table.simple-table {
 	border-collapse: collapse; }
@@ -13,12 +13,15 @@ div#variables-list table.simple-table td.check {
 div#variables-list table.simple-table td.number {
 	text-align: right; }
 
-div#variables-list table.simple-table td.header-group {
+div#variables-list table.simple-table td.header-group,
+div#variables-list table.simple-table td.header-group-first {
 	font-weight: bold;
-	padding-top: 15px;
 	padding-left: 0px;
 	font-size: 12pt;
 	border-bottom: 1px solid Black; }
+
+div#variables-list table.simple-table td.header-group {
+	padding-top: 15px; }
 
 div#variables-list table.simple-table td.header {
 	background-color: #F2DA9E;
@@ -42,3 +45,6 @@ div#variables-list table.simple-table td.even {
 	background-color: #FFF5C2;
 	border-top: 1px solid #DDCA9D;
 	border-bottom: 1px solid #DDCA9D; }
+
+p.into {
+	margin: 0px 0px 15px 0px; }

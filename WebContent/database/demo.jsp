@@ -26,38 +26,22 @@
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
 		<h:outputText value="Understanding the database" />
-		<h:outputText value="Tutorial" />
+		<h:outputText value="Demo" />
 	</s:siteHeader>
 	
 	<div id="content">
 	
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
-			<td valign="top" class="left-column">
-
-				<div class="left-menu-title">Understanding the Database</div>
-				<ul class="left-menu">
-					<li><a href="tutorial.faces">Tutorial</a></li>
-					<li><a href="methodology.faces">Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods</a></li>
-					<li><a href="variable-list.faces">Variable list</a></li>
-				</ul>
-			
-				<div class="left-menu-title" style="margin-top: 10px;">Sources</div>
-				<ul class="left-menu">					
-					<li><a href="sources.faces?type=documentary">Documentary Sources</a></li>
-					<li><a href="sources.faces?type=newspapers">Newspapers</a></li>
-					<li><a href="sources.faces?type=published">Published Sources</a></li>
-					<li><a href="sources.faces?type=unpublished">Unpublished Secondary Sources</a></li>
-					<li><a href="sources.faces?type=private">Private Notes and Collections</a></li>
-				</ul>
-
+			<td valign="top" id="left-column">
+				<%@ include file="secondary-menu.jsp" %>
 			</td>			
-			<td valign="top">
-
-				<h1>Tutorial</h1>
-
+			<td valign="top" id="main-content">
+				<s:simpleBox>
+					<h1>Demo</h1>
+					<div style="height: 600px;"></div>
+				</s:simpleBox>
 			</td>
-			
 		</tr>
 		</table>
 		
