@@ -45,6 +45,12 @@
 
 					<h1><h:outputText value="#{SourcesListBean.pageTitle}" /></h1>
 					
+					<div style="margin-bottom: 10px;">
+						<h:outputLink value="#{SourcesListBean.switchLayoutLink}">
+							<h:outputText value="Switch layout" />
+						</h:outputLink>
+					</div>
+					
 					<div id="sources">
 						<s:simpleTable rows="#{SourcesListBean.sources}" />
 					</div>

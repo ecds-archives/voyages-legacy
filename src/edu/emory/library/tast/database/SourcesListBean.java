@@ -16,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.util.StringUtils;
 
 class SouceTypeDescriptor
 {
@@ -52,6 +53,7 @@ public class SourcesListBean
 {
 
 	private String type;
+	private boolean idColumnFirst = true;
 	
 	private static SouceTypeDescriptor[] typeDescriptors = new SouceTypeDescriptor[] {
 		
@@ -86,7 +88,7 @@ public class SourcesListBean
 		List sourcesDb = sess.
 			createCriteria(Source.class).
 			add(Restrictions.eq("type", new Integer(type))).
-			addOrder(Order.asc("name")).list();
+			addOrder(Order.asc(idColumnFirst ? "id" : "name")).list();
 		
 		SimpleTableCell[][] sources = new SimpleTableCell[sourcesDb.size()][];
 		
@@ -95,12 +97,84 @@ public class SourcesListBean
 		{
 			Source source = (Source) sourceIt.next();
 			String cssClassParity = rowIndex % 2 == 0 ? "even" : "odd";
-			sources[rowIndex++] = new SimpleTableCell[] {
-					new SimpleTableCell(source.getId(), "source-id-" + cssClassParity),
-					new SimpleTableCell(source.getName(), "source-name-" + cssClassParity)};
+			
+			SimpleTableCell cellId = new SimpleTableCell(source.getId(), "source-id-" + cssClassParity);
+			SimpleTableCell cellName = new SimpleTableCell(source.getName(), "source-name-" + cssClassParity);
+			
+			sources[rowIndex] = new SimpleTableCell[2];
+			sources[rowIndex][0] = idColumnFirst ? cellId : cellName; 
+			sources[rowIndex][1] = idColumnFirst ? cellName : cellId; 
+			rowIndex++;
+			
 		}
 		
 		return sources;
+		
+	}
+	
+	private SimpleTableCell[][] loadPublishedSources(Session sess)
+	{
+
+		List sourcesDb = sess.
+			createCriteria(Source.class).
+			add(Restrictions.eq("type", new Integer(Source.TYPE_PUBLISHED_SOURCE))).
+			addOrder(Order.asc(idColumnFirst ? "id" : "name")).list();
+		
+		Map soucesByLetters = new TreeMap();
+		for (Iterator sourceIt = sourcesDb.iterator(); sourceIt.hasNext();)
+		{
+			Source source = (Source) sourceIt.next();
+			Character firstLetter = new Character(Character.toUpperCase(
+					StringUtils.getFirstLetter(
+							idColumnFirst ? source.getId() : source.getName())));
+			
+			List sources = (List) soucesByLetters.get(firstLetter); 			
+			if (sources == null)
+			{
+				sources = new LinkedList();
+				soucesByLetters.put(firstLetter, sources);
+			}
+			
+			sources.add(source);
+			
+		}
+		
+		SimpleTableCell[][] table = new SimpleTableCell[sourcesDb.size() + soucesByLetters.size()][];
+		
+		int rowIndex = 0;
+		for (Iterator letterId = soucesByLetters.keySet().iterator(); letterId.hasNext();)
+		{
+			Character letter = (Character) letterId.next();
+			List sources = (List) soucesByLetters.get(letter);
+			
+			table[rowIndex] = new SimpleTableCell[] {
+					new SimpleTableCell(String.valueOf(letter),
+							null, "sources-letter" + (rowIndex == 0 ? "-first" : ""),
+							1, 2)};
+			
+			rowIndex++;
+			
+			int sourceIdx = 0;
+			for (Iterator sourceIt = sources.iterator(); sourceIt.hasNext();)
+			{
+				Source source = (Source) sourceIt.next();
+				
+				String cssClassParity = sourceIdx % 2 == 0 ? "even" : "odd";
+				sourceIdx++;
+
+				SimpleTableCell cellId = new SimpleTableCell(source.getId(), "source-id-" + cssClassParity);
+				SimpleTableCell cellName = new SimpleTableCell(source.getName(), "source-name-" + cssClassParity);
+				
+				table[rowIndex] = new SimpleTableCell[2];
+				table[rowIndex][0] = idColumnFirst ? cellId : cellName; 
+				table[rowIndex][1] = idColumnFirst ? cellName : cellId; 
+				rowIndex++;
+				
+			}
+			
+		}
+		
+		return table;
 		
 	}
 	
@@ -117,7 +191,7 @@ public class SourcesListBean
 		List sourcesDb = sess.
 			createCriteria(Source.class).
 			add(Restrictions.eq("type", new Integer(Source.TYPE_DOCUMENTARY_SOURCE))).
-			addOrder(Order.asc("name")).list();
+			addOrder(Order.asc(idColumnFirst ? "id" : "name")).list();
 		
 		int tableRowsCount = 0;
 		
@@ -204,13 +278,13 @@ public class SourcesListBean
 					if (sourceIdx > 0)
 					{
 						table[rowIndex] = new SimpleTableCell[2];
-						table[rowIndex][0] = cellId;
-						table[rowIndex][1] = cellName;
+						table[rowIndex][0] = idColumnFirst ? cellId : cellName;
+						table[rowIndex][1] = idColumnFirst ? cellName : cellId;
 					}
 					else
 					{
-						table[rowIndex][1] = cellId;
-						table[rowIndex][2] = cellName;
+						table[rowIndex][1] = idColumnFirst ? cellId : cellName;
+						table[rowIndex][2] = idColumnFirst ? cellName : cellId;
 					}
 					rowIndex++;
 					
@@ -242,11 +316,18 @@ public class SourcesListBean
 		
 		SimpleTableCell[][] sources;
 		
-		SouceTypeDescriptor typeDesc = getTypeDescriptor(type); 
-		if (typeDesc.getType() == Source.TYPE_DOCUMENTARY_SOURCE)
-			sources = loadDocumentarySources(sess);
-		else
-			sources = loadSimpleSources(sess, typeDesc.getType());
+		SouceTypeDescriptor typeDesc = getTypeDescriptor(type);
+		switch (typeDesc.getType())
+		{
+			case Source.TYPE_DOCUMENTARY_SOURCE:
+				sources = loadDocumentarySources(sess);
+				break;
+			case Source.TYPE_PUBLISHED_SOURCE:
+				sources = loadPublishedSources(sess);
+				break;
+			default:
+				sources = loadSimpleSources(sess, typeDesc.getType());
+		}
 
 		trans.commit();
 		sess.close();
@@ -254,7 +335,7 @@ public class SourcesListBean
 		return sources;
 	
 	}
-	
+
 	private SouceTypeDescriptor getTypeDescriptor(String urlId)
 	{
 		for (int i = 0; i < typeDescriptors.length; i++)
@@ -278,6 +359,23 @@ public class SourcesListBean
 	public String getPageTitle()
 	{
 		return getTypeDescriptor(type).getPageTitle();
+	}
+
+	public String getIdColumnFirst()
+	{
+		return idColumnFirst ? "true" : "false";
+	}
+
+	public void setIdColumnFirst(String idColumnFirst)
+	{
+		this.idColumnFirst = idColumnFirst == null || idColumnFirst.equals("true");
+	}
+	
+	public String getSwitchLayoutLink()
+	{
+		return "sources.faces?" +
+			"type=" + getTypeDescriptor(type).getUrlId() + "&" +
+			"idColumnFirst=" + (idColumnFirst ? "false" : "true");
 	}
 
 }

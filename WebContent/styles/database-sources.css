@@ -1,5 +1,16 @@
 table.simple-table {
 	border-collapse: collapse; }
+	
+td.sources-letter,
+td.sources-letter-first {
+	font-weight: bold;
+	font-size: 12pt;
+	border-bottom: 1px solid Black;
+	padding-left: 5px;
+	padding-bottom: 5px; }	
+
+td.sources-letter {
+	padding-top: 15px; }
 
 td.sources-country,
 td.sources-country-first {
@@ -30,6 +41,7 @@ td.source-id-first {
 	padding-left: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	padding-right: 15px;
 	font-weight: bold; }
 
 td.source-name-odd, 
@@ -37,10 +49,10 @@ td.source-name-even,
 td.source-name-first, 
 td.source-name-first {
 	vertical-align: top;
-	padding-right: 5px;
+	padding-right: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	padding-left: 15px; }
+	padding-left: 5px; }
 	
 td.source-id-first,
 td.source-name-first {

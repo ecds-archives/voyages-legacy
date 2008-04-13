@@ -548,6 +548,10 @@
 			<property-name>type</property-name>
 			<value>#{param.type}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>idColumnFirst</property-name>
+			<value>#{param.idColumnFirst}</value>
+		</managed-property>
 	</managed-bean>
 
 	<navigation-rule>

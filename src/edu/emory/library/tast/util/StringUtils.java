@@ -400,5 +400,16 @@ public class StringUtils
 			return str.substring(0, i + 1);
 		}
 	}
+	
+	public static char getFirstLetter(String str)
+	{
+		if (str == null) return '-';
+		for (int i = 0; i < str.length(); i++)
+		{
+			char c = str.charAt(i);
+			if (Character.isLetter(c)) return c;
+		}
+		return ' ';
+	}
 
 }
