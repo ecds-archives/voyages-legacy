@@ -82,6 +82,29 @@ public class SourcesListBean
 				"private",
 				"Private Notes and Collections") };
 	
+	private class ArchiveDocument
+	{
+		
+		private String id;
+		private String name;
+		
+		public ArchiveDocument(String id, String name)
+		{
+			this.id = id;
+			this.name = name;
+		}
+
+		public String getId()
+		{
+			return id;
+		}
+		
+		public String getName()
+		{
+			return name;
+		}
+	}
+
 	private SimpleTableCell[][] loadSimpleSources(Session sess, int type)
 	{
 		
@@ -148,10 +171,10 @@ public class SourcesListBean
 			List sources = (List) soucesByLetters.get(letter);
 			
 			table[rowIndex] = new SimpleTableCell[] {
-					new SimpleTableCell(String.valueOf(letter),
+					new SimpleTableCell("<span>" + String.valueOf(letter) + "</span>",
 							null, "sources-letter" + (rowIndex == 0 ? "-first" : ""),
 							1, 2)};
-			
+
 			rowIndex++;
 			
 			int sourceIdx = 0;
@@ -181,17 +204,19 @@ public class SourcesListBean
 	private SimpleTableCell[][] loadDocumentarySources(Session sess)
 	{
 		
-		//long start = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		
 		//Pattern sourceRegEx = Pattern.compile("^[^\\(\\)]+\\(([^\\,]+),\\s*([^\\,]+),\\s*([^\\,]+)\\)");
-		Pattern sourceRegEx = Pattern.compile("[^\\(\\)]+\\(([^\\,\\(\\)]+(?:,\\s*[^\\,\\(\\)]+)?),\\s*([^\\,\\(\\)]+)\\).*");
+		Pattern sourceRegEx = Pattern.compile("(<i>[^\\(\\)]+</i>)\\s*\\(([^\\,\\(\\)]+(?:,\\s*[^\\,\\(\\)]+)?),\\s*([^\\,\\(\\)]+)\\)\\s*(.*)");
 		
 		Map countriesToCities = new TreeMap();
 		
 		List sourcesDb = sess.
 			createCriteria(Source.class).
 			add(Restrictions.eq("type", new Integer(Source.TYPE_DOCUMENTARY_SOURCE))).
-			addOrder(Order.asc(idColumnFirst ? "id" : "name")).list();
+			addOrder(Order.asc(idColumnFirst ? "id" : "name")).
+			addOrder(Order.asc(idColumnFirst ? "name" : "id")).
+			list();
 		
 		int tableRowsCount = 0;
 		
@@ -203,34 +228,52 @@ public class SourcesListBean
 			
 			String country;
 			String city;
+			String archive;
+			String document;
 			if (matcher.matches())
 			{
-				city = matcher.group(1);
-				country = matcher.group(2);
+				archive = matcher.group(1);
+				city = matcher.group(2);
+				country = matcher.group(3);
+				document = matcher.group(4);
 			}
 			else
 			{
 				country = "uncategorized";
 				city = "uncategorized";
+				archive = source.getName();
+				document = "";
 			}
+			
+			boolean isDocument = !StringUtils.isNullOrEmpty(document);
 
-			Map citiesToSources = (Map) countriesToCities.get(country);
-			if (citiesToSources == null)
+			Map citiesToArchives = (Map) countriesToCities.get(country);
+			if (citiesToArchives == null)
 			{
-				citiesToSources = new TreeMap();
-				countriesToCities.put(country, citiesToSources);
+				citiesToArchives = new TreeMap();
+				countriesToCities.put(country, citiesToArchives);
 				tableRowsCount++;
 			}
 			
-			List sourcesInCity = (List) citiesToSources.get(city);
-			if (sourcesInCity == null)
+			Map archivesToDocuments = (Map) citiesToArchives.get(city);
+			if (archivesToDocuments == null)
 			{
-				sourcesInCity = new LinkedList();
-				citiesToSources.put(city, sourcesInCity);
-				//tableRowsCount++;
+				archivesToDocuments = new TreeMap();
+				citiesToArchives.put(city, archivesToDocuments);
 			}
 			
-			sourcesInCity.add(source);
+			LinkedList documents = (LinkedList) archivesToDocuments.get(archive);
+			if (documents == null)
+			{
+				documents = new LinkedList();
+				archivesToDocuments.put(archive, documents);
+			}
+			
+			if (isDocument)
+				documents.addLast(new ArchiveDocument(source.getId(), document));
+			else
+				documents.addFirst(new ArchiveDocument(source.getId(), archive));
+			
 			tableRowsCount++;
 
 		}
@@ -242,54 +285,73 @@ public class SourcesListBean
 		for (Iterator countriesIt = countriesToCities.keySet().iterator(); countriesIt.hasNext();)
 		{
 			String country = (String) countriesIt.next();
-			Map citiesToSources = (Map) countriesToCities.get(country);
+			Map citiesToArchives = (Map) countriesToCities.get(country);
 			
 			String countryCssClassSuffix = countryIdx == 0 ? "-first" : "";
 			
 			table[rowIndex++] = new SimpleTableCell[] {
-					new SimpleTableCell(country, null, "sources-country" + countryCssClassSuffix, 1, 3)};
+					new SimpleTableCell(country, null,
+							"sources-country" + countryCssClassSuffix, 1, 3)};
 
 			int cityIdx = 0;
-			int souceInCountryIdx = 0;
-			for (Iterator citiesIt = citiesToSources.keySet().iterator(); citiesIt.hasNext();)
+			int sourceIdxInCountry = 0;
+			for (Iterator cityIt = citiesToArchives.keySet().iterator(); cityIt.hasNext();)
 			{
-				String city = (String) citiesIt.next();
-				List sources = (List) citiesToSources.get(city);
-				int sourcesCount = sources.size();
+				String city = (String) cityIt.next();
+				Map archives = (Map) citiesToArchives.get(city);
 				
+				int documentsInCity = 0;
+				for (Iterator archivesIt = archives.values().iterator(); archivesIt.hasNext();)
+					documentsInCity += ((List)archivesIt.next()).size(); 
+
 				String cityCssClassSuffix = cityIdx == 0 ? "-first" : "";
-				
+
 				table[rowIndex] = new SimpleTableCell[3];
-				table[rowIndex][0] = new SimpleTableCell(city, null, "sources-city" + cityCssClassSuffix, sourcesCount, 1);
+				table[rowIndex][0] = new SimpleTableCell(
+						city, null,
+						"sources-city" + cityCssClassSuffix,
+						documentsInCity, 1);
 				
-				int sourceIdx = 0;
-				for (Iterator sourceIt = sources.iterator(); sourceIt.hasNext();)
+				int sourceIdxInCity = 0;
+				for (Iterator archiveIt = archives.keySet().iterator(); archiveIt.hasNext();)
 				{
-					Source source = (Source) sourceIt.next();
+					String archive = (String) archiveIt.next();
+					List documents = (List) archives.get(archive);
 					
-					String cssClassSuffix =
-						souceInCountryIdx == 0 ? "first" :
-							souceInCountryIdx % 2 == 0 ? "even" :
-								"odd";
-					
-					SimpleTableCell cellId = new SimpleTableCell(source.getId(), "source-id-" + cssClassSuffix);
-					SimpleTableCell cellName = new SimpleTableCell(source.getName(), "source-name-" + cssClassSuffix);
-					
-					if (sourceIdx > 0)
+					for (Iterator documentIt = documents.iterator(); documentIt.hasNext();)
 					{
-						table[rowIndex] = new SimpleTableCell[2];
-						table[rowIndex][0] = idColumnFirst ? cellId : cellName;
-						table[rowIndex][1] = idColumnFirst ? cellName : cellId;
+						ArchiveDocument document = (ArchiveDocument) documentIt.next();
+						
+						String cssClassSuffix =
+							sourceIdxInCountry == 0 ? "first" :
+								sourceIdxInCountry % 2 == 0 ? "even" :
+									"odd";
+						
+						SimpleTableCell cellId = new SimpleTableCell(
+								StringUtils.unNull(document.getId()),
+								"source-id-" + cssClassSuffix);
+						
+						SimpleTableCell cellName = new SimpleTableCell(
+								document.getName(),
+								"source-name-" + cssClassSuffix);
+						
+						if (sourceIdxInCity > 0)
+						{
+							table[rowIndex] = new SimpleTableCell[2];
+							table[rowIndex][0] = idColumnFirst ? cellId : cellName;
+							table[rowIndex][1] = idColumnFirst ? cellName : cellId;
+						}
+						else
+						{
+							table[rowIndex][1] = idColumnFirst ? cellId : cellName;
+							table[rowIndex][2] = idColumnFirst ? cellName : cellId;
+						}
+						rowIndex++;
+						
+						sourceIdxInCountry++;
+						sourceIdxInCity++;
+						
 					}
-					else
-					{
-						table[rowIndex][1] = idColumnFirst ? cellId : cellName;
-						table[rowIndex][2] = idColumnFirst ? cellName : cellId;
-					}
-					rowIndex++;
-					
-					sourceIdx++;
-					souceInCountryIdx++;
 					
 				}
 				
@@ -301,8 +363,8 @@ public class SourcesListBean
 			
 		}
 		
-		//long stop = System.currentTimeMillis();
-		//System.out.println((stop - start) + " ms");
+		long stop = System.currentTimeMillis();
+		System.out.println((stop - start) + " ms");
 		
 		return table;
 		

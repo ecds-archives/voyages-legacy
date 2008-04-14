@@ -4,6 +4,7 @@ package edu.emory.library.tast.dm;
 public class Source
 {
 	
+	private long iid;
 	private String id;
 	private String name;
 	private int type;
@@ -42,6 +43,16 @@ public class Source
 	public void setType(int type)
 	{
 		this.type = type;
+	}
+
+	public long getIid()
+	{
+		return iid;
+	}
+
+	public void setIid(long iid)
+	{
+		this.iid = iid;
 	}
 	
 }

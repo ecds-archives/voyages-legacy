@@ -3,7 +3,10 @@
 
 <hibernate-mapping>
 	<class name="edu.emory.library.tast.dm.Source" table="sources">
-		<id name="id" />
+		<id name="iid">
+			<generator class="native"/>
+		</id>
+		<property name="id" />
 		<property name="name" />
 		<property name="type" />
 	</class>
