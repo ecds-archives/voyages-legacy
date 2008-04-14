@@ -1,15 +1,17 @@
-package edu.emory.library.tast.util;
+package edu.emory.library.tast.database;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.dm.Source;
-import edu.emory.library.tast.util.query.QueryValue;
 
-public class SourceInformationUtils {
+public class SourceInformationLookup {
 	
-	private static SourceInformationUtils cachedInst = null;
+	private static SourceInformationLookup cachedInst = null;
 	
 	public char[] stopChars = new char[] {';', ',', ':'};
 	
@@ -41,27 +43,32 @@ public class SourceInformationUtils {
 		
 	}
 	
-	private SourceInformationUtils(Session sess) {
-		QueryValue qValue = new QueryValue("Source");
-		Object[] response = qValue.executeQuery(sess);
-		sources = new Source[response.length];
-		index = new SourceIndexPosition[sources.length];
-		for (int i = 0; i < response.length; i++) {
-			sources[i] = (Source) response[i];
-			index[i] = new SourceIndexPosition(sources[i].getId(), i);
+	private SourceInformationLookup(Session sess)
+	{
+		List response = sess.createCriteria(Source.class, "s").add(
+				Restrictions.not(Restrictions.isNull("s.sourceId"))).list();
+		sources = new Source[response.size()];
+		index = new SourceIndexPosition[response.size()];
+		int i = 0;
+		for (Iterator sourceIt = response.iterator(); sourceIt.hasNext();)
+		{
+			Source source = (Source) sourceIt.next();
+			sources[i] = source;
+			index[i] = new SourceIndexPosition(source.getSourceId(), i);
+			i++;
 		}
 		
 		Arrays.sort(index);
 		
-		sourceNames = new String[response.length];
-		for (int i = 0; i < index.length; i++) {
-			sourceNames[i] = index[i].getSourceName();
+		sourceNames = new String[response.size()];
+		for (int j = 0; j < index.length; j++) {
+			sourceNames[j] = index[j].getSourceName();
 		}
 	}
 	
-	public synchronized static SourceInformationUtils createSourceInformationUtils(Session sess)
+	public synchronized static SourceInformationLookup createSourceInformationUtils(Session sess)
 	{
-		if (cachedInst == null) cachedInst = new SourceInformationUtils(sess); 
+		if (cachedInst == null) cachedInst = new SourceInformationLookup(sess); 
 		return cachedInst;
 	}
 	
@@ -73,7 +80,7 @@ public class SourceInformationUtils {
 		if (bestMatch < 0) {
 			bestMatch = -(bestMatch) - 2; 
 		}
-		if (bestMatch >= 0 && source.startsWith(sources[index[bestMatch].getPosition()].getId())) {
+		if (bestMatch >= 0 && source.startsWith(sources[index[bestMatch].getPosition()].getSourceId())) {
 			return sources[index[bestMatch].getPosition()];
 		} else {
 			return searchSmallerMatch(bestMatch, source);
@@ -85,7 +92,7 @@ public class SourceInformationUtils {
 			int testPosition = position - 1;
 			System.out.println("testing " + position + " of source " + source + "");
 			if (sourceNames[position].startsWith(sourceNames[testPosition].substring(0, 1))) {
-				if (source.startsWith(sources[index[testPosition].getPosition()].getId())) {
+				if (source.startsWith(sources[index[testPosition].getPosition()].getSourceId())) {
 					return sources[index[testPosition].getPosition()];
 				} else {
 					return searchSmallerMatch(testPosition, source);

@@ -6,7 +6,7 @@
 		<id name="iid">
 			<generator class="native"/>
 		</id>
-		<property name="id" />
+		<property name="sourceId" column="id" />
 		<property name="name" />
 		<property name="type" />
 	</class>

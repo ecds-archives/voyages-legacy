@@ -1,4 +1,5 @@
 table.simple-table {
+	width: 100%;
 	border-collapse: collapse; }
 	
 td.sources-letter,

@@ -19,6 +19,7 @@ import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
+import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -30,7 +31,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
-import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -283,8 +283,8 @@ public class SubmissionBean
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
 		
-		SourceInformationUtils sourceInformationUtils =
-			SourceInformationUtils.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInformationUtils =
+			SourceInformationLookup.createSourceInformationUtils(session);
 		
 		loadVoyageToColumn(session, selectedVoyageForEdit.getVoyageId(), gridValues, ORIGINAL_VOYAGE, sourceInformationUtils);
 		initColumnForNewVoyaye(CHANGED_VOYAGE);
@@ -323,8 +323,8 @@ public class SubmissionBean
 		Session session = HibernateUtil.getSession();
 		Transaction trans = session.beginTransaction();
 		
-		SourceInformationUtils sourceInformationUtils =
-			SourceInformationUtils.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInformationUtils =
+			SourceInformationLookup.createSourceInformationUtils(session);
 
 		int i = 0;
 		for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();)
@@ -399,8 +399,8 @@ public class SubmissionBean
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		SourceInformationUtils sourceInformationUtils =
-			SourceInformationUtils.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInformationUtils =
+			SourceInformationLookup.createSourceInformationUtils(session);
 		
 		try {
 			Submission submission = Submission.loadById(session, this.submission.getId());
@@ -452,7 +452,7 @@ public class SubmissionBean
 		return true;
 	}
 	
-	private boolean loadVoyageToColumn(Session session, int voyageId, Values values, String columnName, SourceInformationUtils sourceInformationUtils)
+	private boolean loadVoyageToColumn(Session session, int voyageId, Values values, String columnName, SourceInformationLookup sourceInformationUtils)
 	{
 		
 		Conditions cond = new Conditions();

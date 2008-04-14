@@ -15,6 +15,7 @@ import org.w3c.dom.Node;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.table.TableData;
+import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
@@ -33,7 +34,6 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -116,7 +116,7 @@ public class VoyageDetailBean
 	private void loadVoyageData(Session sess)
 	{
 		
-		SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils(sess);
+		SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(sess);
 		
 		Conditions c = new Conditions();
 		c.addCondition(Voyage.getAttribute("iid"), new Long(this.voyageIid), Conditions.OP_EQUALS);

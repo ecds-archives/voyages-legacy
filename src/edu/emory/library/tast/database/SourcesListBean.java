@@ -121,7 +121,7 @@ public class SourcesListBean
 			Source source = (Source) sourceIt.next();
 			String cssClassParity = rowIndex % 2 == 0 ? "even" : "odd";
 			
-			SimpleTableCell cellId = new SimpleTableCell(source.getId(), "source-id-" + cssClassParity);
+			SimpleTableCell cellId = new SimpleTableCell(source.getSourceId(), "source-id-" + cssClassParity);
 			SimpleTableCell cellName = new SimpleTableCell(source.getName(), "source-name-" + cssClassParity);
 			
 			sources[rowIndex] = new SimpleTableCell[2];
@@ -149,7 +149,7 @@ public class SourcesListBean
 			Source source = (Source) sourceIt.next();
 			Character firstLetter = new Character(Character.toUpperCase(
 					StringUtils.getFirstLetter(
-							idColumnFirst ? source.getId() : source.getName())));
+							idColumnFirst ? source.getSourceId() : source.getName())));
 			
 			List sources = (List) soucesByLetters.get(firstLetter); 			
 			if (sources == null)
@@ -185,7 +185,7 @@ public class SourcesListBean
 				String cssClassParity = sourceIdx % 2 == 0 ? "even" : "odd";
 				sourceIdx++;
 
-				SimpleTableCell cellId = new SimpleTableCell(source.getId(), "source-id-" + cssClassParity);
+				SimpleTableCell cellId = new SimpleTableCell(source.getSourceId(), "source-id-" + cssClassParity);
 				SimpleTableCell cellName = new SimpleTableCell(source.getName(), "source-name-" + cssClassParity);
 				
 				table[rowIndex] = new SimpleTableCell[2];
@@ -270,9 +270,9 @@ public class SourcesListBean
 			}
 			
 			if (isDocument)
-				documents.addLast(new ArchiveDocument(source.getId(), document));
+				documents.addLast(new ArchiveDocument(source.getSourceId(), document));
 			else
-				documents.addFirst(new ArchiveDocument(source.getId(), archive));
+				documents.addFirst(new ArchiveDocument(source.getSourceId(), archive));
 			
 			tableRowsCount++;
 

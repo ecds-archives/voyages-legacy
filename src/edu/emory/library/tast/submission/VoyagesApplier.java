@@ -19,6 +19,7 @@ import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
+import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -30,7 +31,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -164,7 +164,7 @@ public class VoyagesApplier
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		SourceInformationUtils sourceInformationUtils = SourceInformationUtils.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInformationUtils = SourceInformationLookup.createSourceInformationUtils(session);
 		
 		Voyage[] toVals = null;
 		String[] cols = null;

@@ -5,7 +5,7 @@ public class Source
 {
 	
 	private long iid;
-	private String id;
+	private String sourceId;
 	private String name;
 	private int type;
 	
@@ -24,16 +24,6 @@ public class Source
 	{
 		this.name = description;
 	}
-	
-	public String getId()
-	{
-		return id;
-	}
-	
-	public void setId(String id)
-	{
-		this.id = id;
-	}
 
 	public int getType()
 	{
@@ -50,9 +40,19 @@ public class Source
 		return iid;
 	}
 
-	public void setIid(long iid)
+	public void setIid(long internalId)
 	{
-		this.iid = iid;
+		this.iid = internalId;
+	}
+
+	public String getSourceId()
+	{
+		return sourceId;
+	}
+
+	public void setSourceId(String souceId)
+	{
+		this.sourceId = souceId;
 	}
 	
 }

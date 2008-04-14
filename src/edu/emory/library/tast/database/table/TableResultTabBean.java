@@ -17,6 +17,7 @@ import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
+import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.query.SearchParameters;
 import edu.emory.library.tast.database.stat.ComparableSelectItem;
@@ -33,7 +34,6 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.SourceInformationUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -193,7 +193,7 @@ public class TableResultTabBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(session);
 		
 			// Execute query
 			Object[] ret = qValue.executeQuery();

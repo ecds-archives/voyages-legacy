@@ -22,6 +22,7 @@ import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
+import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Fate;
 import edu.emory.library.tast.dm.FateOwner;
@@ -37,7 +38,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.FateAttribute;
 import edu.emory.library.tast.dm.attributes.NationAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
-import edu.emory.library.tast.util.SourceInformationUtils;
 
 public class SubmissionAttribute {
 	
@@ -91,7 +91,7 @@ public class SubmissionAttribute {
 		this.userLabel = userLabel;
 	}
 
-	public Value getValue(Session session, Object[] toBeFormatted, SourceInformationUtils utils) {
+	public Value getValue(Session session, Object[] toBeFormatted, SourceInformationLookup utils) {
 		if (type.equals(TextboxAdapter.TYPE)) {
 			if (toBeFormatted[0] == null) {
 				return new TextboxValue(null);

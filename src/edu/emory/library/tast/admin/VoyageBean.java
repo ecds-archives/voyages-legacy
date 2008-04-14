@@ -13,12 +13,12 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.submission.SubmissionAttribute;
 import edu.emory.library.tast.submission.SubmissionAttributes;
 import edu.emory.library.tast.submission.SubmissionDictionaries;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.SourceInformationUtils;
 
 /**
  * 
@@ -100,7 +100,7 @@ public class VoyageBean {
 			Session session = HibernateUtil.getSession();
 			Transaction t = session.beginTransaction();
 			
-			SourceInformationUtils sourceInfoUtils = SourceInformationUtils.createSourceInformationUtils(session);
+			SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(session);
 			
 			values = new Values();
 
