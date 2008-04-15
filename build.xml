@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="TAST" basedir="." default="jar">
+<project name="TAST" basedir="." default="war">
 	
 	<property name="webdir" location="WebContent" />
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
-	<property name="build" location="build/classes" />
+	<property name="build" location="F:\Emory\TAST\testbuild" />
 	<property name="servletlib" location="C:\Program Files\Apache Software Foundation\Tomcat 5.5\common\lib" />
 	<property name="src" location="src" />
 
 	<target name="clean">
-		<delete dir="build"/>
+		<delete dir="${build}"/>
 		<delete file="tast.war"/>
 		<delete file="tast.jar"/>
 	</target>
 	
 	<target name="compile">
-		<javac srcdir="${src}" destdir="${build}">
+		<mkdir dir="${build}" />
+		<javac srcdir="${src}" destdir="${build}" target="1.4" source="1.4">
 			<classpath>
 				<fileset dir="${libdir}">
 					<include name="*.jar" />
@@ -31,6 +32,7 @@
 		<jar destfile="tast.jar" basedir="${build}">
 			<fileset dir="${src}" includes="edu/emory/library/tast/dm/*.hbm.xml" />
 			<exclude name="tast.properties" />
+			<exclude name="hibernate.properties" />
 			<exclude name="symbols.xml" />
 			<exclude name="languages.xml" />
 			<exclude name="SlaveTradeResources.properties" />
@@ -48,6 +50,7 @@
 			<lib file="tast.jar" />
 			<classes dir="${src}">
 				<include name="tast.properties" />
+				<include name="hibernate.properties" />
 				<include name="symbols.xml" />
 				<include name="languages.xml" />
 				<include name="SlaveTradeResources.properties" />
