@@ -71,3 +71,32 @@ td.source-name-even {
 	border-bottom: 1px solid #DDCA9D;
 	background-color: #FFF8CE; }
 	
+div.switch-layout {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #C8AF77; }
+
+div.switch-layout table {
+	margin-left: auto;
+	margin-right: 0px; }
+
+div.switch-layout a {
+	display: block;
+	color: Black;
+	padding: 2px 5px 2px 5px;
+	border-color: #C8AF77;
+	border-style: solid;
+	border-width: 1px 1px 0px 1px;
+	text-decoration: none;
+	background-color: #FFF8CE; }
+	
+div.switch-layout a.active {
+	color: White;
+ 	background-color: #C8AF77; }
+
+td.switch-layout-first-link {
+	}
+	
+td.switch-layout-second-link {
+	padding-right: 10px;
+	padding-left: 5px; }
+	

@@ -45,10 +45,24 @@
 
 					<h1><h:outputText value="#{SourcesListBean.pageTitle}" /></h1>
 					
-					<div style="margin-bottom: 10px;">
-						<h:outputLink value="#{SourcesListBean.switchLayoutLink}">
-							<h:outputText value="Switch layout" />
-						</h:outputLink>
+					<div class="switch-layout">
+						<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="switch-layout-first-link">
+								<h:outputLink
+									styleClass="#{SourcesListBean.sortByNameLinkCssClass}"
+									value="#{SourcesListBean.sortByNameLink}">
+									<h:outputText value="Sort by long reference" />
+								</h:outputLink>
+							</td>						
+							<td class="switch-layout-second-link">
+								<h:outputLink
+									styleClass="#{SourcesListBean.sortByIdLinkCssClass}"
+									value="#{SourcesListBean.sortByIdLink}">
+									<h:outputText value="Sort by short reference" />
+								</h:outputLink>
+							</td>
+						</table>
 					</div>
 					
 					<div id="sources">

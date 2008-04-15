@@ -207,7 +207,7 @@ public class SourcesListBean
 		long start = System.currentTimeMillis();
 		
 		//Pattern sourceRegEx = Pattern.compile("^[^\\(\\)]+\\(([^\\,]+),\\s*([^\\,]+),\\s*([^\\,]+)\\)");
-		Pattern sourceRegEx = Pattern.compile("(<i>[^\\(\\)]+</i>)\\s*\\(([^\\,\\(\\)]+(?:,\\s*[^\\,\\(\\)]+)?),\\s*([^\\,\\(\\)]+)\\)\\s*(.*)");
+		Pattern sourceRegEx = Pattern.compile("(<i>.+</i>)\\s*\\(([^\\,\\(\\)]+(?:,\\s*[^\\,\\(\\)]+)?),\\s*([^\\,\\(\\)]+)\\)\\s*(.*)");
 		
 		Map countriesToCities = new TreeMap();
 		
@@ -369,7 +369,7 @@ public class SourcesListBean
 		return table;
 		
 	}
-
+	
 	public SimpleTableCell[][] getSources()
 	{
 
@@ -433,11 +433,29 @@ public class SourcesListBean
 		this.idColumnFirst = idColumnFirst == null || idColumnFirst.equals("true");
 	}
 	
-	public String getSwitchLayoutLink()
+	public String getSortByNameLink()
 	{
 		return "sources.faces?" +
 			"type=" + getTypeDescriptor(type).getUrlId() + "&" +
-			"idColumnFirst=" + (idColumnFirst ? "false" : "true");
+			"idColumnFirst=false";
+	}
+
+	public String getSortByNameLinkCssClass()
+	{
+		return idColumnFirst ? "" : "active";
+	}
+
+	public String getSortByIdLink()
+	{
+		return "sources.faces?" +
+			"type=" + getTypeDescriptor(type).getUrlId() + "&" +
+			"idColumnFirst=true";
+	}
+
+	public String getSortByIdLinkCssClass()
+	{
+		return !idColumnFirst ? "" : "active";
 	}
 
 }
+
