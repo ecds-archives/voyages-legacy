@@ -660,6 +660,8 @@ public class ImagesBean
 		js.append("status=no");
 		js.append(", ");
 		js.append("toolbar=no");
+		js.append(", ");
+		js.append("scrollbars=yes");
 		js.append("'");
 
 		js.append(");");
