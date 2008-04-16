@@ -32,8 +32,8 @@ public class MapComponent extends UIComponentBase
 
 	private boolean mapSizesSet = false;
 	private MapSize[] mapSizes = new MapSize[] {
-		new MapSize(480, 320),
-		new MapSize(800, 600),
+		new MapSize(480, 320),	
+		new MapSize(800, 600),	
 		new MapSize(1024, 768)
 	};
 	
