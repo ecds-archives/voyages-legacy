@@ -239,4 +239,9 @@ public class CSVUtils {
 	{
 		writeResponse(sess, q, false,"");
 	}
+	
+	public static void writeResponse(Session sess, QueryValue q, boolean codes)
+	{
+		writeResponse(sess, q, codes ,"");
+	}
 }
