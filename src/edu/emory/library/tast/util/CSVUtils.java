@@ -43,10 +43,11 @@ public class CSVUtils {
 			
 			Attribute[] populatedAttrs = qValue.getPopulatedAttributes();
 			
+			if (conditions!=""){
 			String[] con= new String[1];			
 			con [0]=conditions;
 			writer.writeNext(con);
-			
+			}
 			String[] row = new String[populatedAttrs.length-1 ];
 			for (int i = 1; i < populatedAttrs.length; i++) {
 				row[i-1] = populatedAttrs[i].getName();
@@ -236,5 +237,6 @@ public class CSVUtils {
 
 	public static void writeResponse(Session sess, QueryValue q)
 	{
+		writeResponse(sess, q, false,"");
 	}
 }
