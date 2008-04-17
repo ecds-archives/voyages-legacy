@@ -35,6 +35,6 @@ function openPopup(pageUrl)
 		"status=no, " +
 		"scrollbars=yes, " +
 		"width=600, " +
-		"height=400"); 
+		"height=400").focus();
 }
 
