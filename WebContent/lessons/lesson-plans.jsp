@@ -9,7 +9,6 @@
 	<title>Lesson Plans</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/lessons.css" rel="stylesheet" type="text/css">
 	<link href="../styles/lessons-info.css" rel="stylesheet" type="text/css">
 	<link href="../styles/lessons-lesson-plans.css" rel="stylesheet" type="text/css">
@@ -30,9 +29,10 @@
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td valign="top" style="width: 210px;">
+			
 				<div class="left-menu-box">
 					<s:simpleBox>
-						<div class="left-menu-title">LESSON PLANS</div>
+						<div class="left-menu-title">LINKS PLANS</div>
 						<s:secondaryMenu>
 							<s:secondaryMenuItem label="The 1808 Slave Trade Abolition Deadline" menuId="slave-trade-abolition" href="#slave-trade-abolition" />
 							<s:secondaryMenuItem label="One Country’s Slave Trade" menuId="one-country-trade" href="#one-country-trade" />
@@ -43,6 +43,7 @@
 						</s:secondaryMenu>
 					</s:simpleBox>
 				</div>
+				
 			</td>
 			<td valign="top" style="width: 680px;">
 
