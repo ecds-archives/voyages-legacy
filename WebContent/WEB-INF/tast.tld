@@ -734,6 +734,9 @@
 		<attribute>
 			<name>elements</name>
 		</attribute>
+		<attribute>
+			<name>listStyle</name>
+		</attribute>
 	</tag>
 
 	<tag>

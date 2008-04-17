@@ -10,6 +10,7 @@ public class SimpleListTag extends UIComponentTag
 {
 	
 	private String elements;
+	private String listStyle;
 
 	public String getComponentType()
 	{
@@ -33,6 +34,16 @@ public class SimpleListTag extends UIComponentTag
 			list.setValueBinding("elements", vb);
 		}
 
+		if (listStyle != null && isValueReference(listStyle))
+		{
+			ValueBinding vb = app.createValueBinding(listStyle);
+			list.setValueBinding("listStyle", vb);
+		}
+		else
+		{
+			list.setListStyle(SimpleListStyle.parse(listStyle));
+		}
+
 	}
 
 	public String getElements()
@@ -43,6 +54,16 @@ public class SimpleListTag extends UIComponentTag
 	public void setElements(String elements)
 	{
 		this.elements = elements;
+	}
+
+	public String getListStyle()
+	{
+		return listStyle;
+	}
+
+	public void setListStyle(String listStyle)
+	{
+		this.listStyle = listStyle;
 	}
 
 }

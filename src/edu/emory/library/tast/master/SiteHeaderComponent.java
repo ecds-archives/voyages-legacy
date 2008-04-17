@@ -39,129 +39,11 @@ public class SiteHeaderComponent extends UIComponentBase
 	private boolean activeSectionIdSet = false;
 	private String activeSectionId;
 	
-	private static MainMenuBarSectionItem[] menuItems = new MainMenuBarSectionItem[] {
-		
-		new MainMenuBarSectionItem(
-				"database",
-				"database/index.faces",
-				"images/main-menu/database.png",
-				"images/main-menu/database-highlighted.png",
-				"images/main-menu/database-active.png",
-				100, 28,
-				"database",
-				new MainMenuBarPageItem[] {
-					new MainMenuBarPageItem(
-							"guide",
-							"Understanding the database",
-							"database/guide.faces"),
-					new MainMenuBarPageItem(
-							"search",
-							"Search the database",
-							"database/search.faces"),
-					new MainMenuBarPageItem(
-							"download",
-							"Downloads",
-							"database/download.faces"),
-					new MainMenuBarPageItem(
-							"contribute",
-							"Contribute",
-							"submission/submission-login.faces")}),
-
-		new MainMenuBarSectionItem(
-				"assessment",
-				"assessment/index.faces",
-				"images/main-menu/assessment.png",
-				"images/main-menu/assessment-highlighted.png",
-				"images/main-menu/assessment-active.png",
-				170, 28,
-				"assessment",
-				new MainMenuBarPageItem[] {
-					new MainMenuBarPageItem(
-							"essays",
-							"Essays",
-							"assessment/essays-intro.faces"),
-					new MainMenuBarPageItem(
-							"estimates",
-							"Estimates",
-							"assessment/estimates.faces"),
-					new MainMenuBarPageItem(
-							"intromaps",
-							"Introductory maps",
-							"assessment/intromaps.faces"),
-					new MainMenuBarPageItem(
-							"furtherstudy",
-							"Further study",
-							"assessment/furtherstudy.faces")}),
-							
-		new MainMenuBarSectionItem(
-				"resources",
-				"resources/index.faces",
-				"images/main-menu/resources.png",
-				"images/main-menu/resources-highlighted.png",
-				"images/main-menu/resources-active.png",
-				85, 28,
-				"resources",
-				new MainMenuBarPageItem[] {
-					new MainMenuBarPageItem(
-							"images",
-							"Images",
-							"resources/images.faces"),
-					new MainMenuBarPageItem(
-							"slaves",
-							"Names database",
-							"resources/slaves.faces")}),
-				
-		new MainMenuBarSectionItem(
-				"lessons",
-				"lessons/index.faces",
-				"images/main-menu/lessons.png",
-				"images/main-menu/lessons-highlighted.png",
-				"images/main-menu/lessons-active.png",
-				155, 28,
-				"lessons",
-				new MainMenuBarPageItem[] {
-					new MainMenuBarPageItem(
-							"lesson-plans",
-							"Lesson plans",
-							"lessons/lesson-plans.faces"),
-					new MainMenuBarPageItem(
-							"links",
-							"Links",
-							"lessons/links.faces")}),
-
-		new MainMenuBarSectionItem(
-				"about",
-				"about/index.faces",
-				"images/main-menu/about.png",
-				"images/main-menu/about-highlighted.png",
-				"images/main-menu/about-active.png",
-				130, 28,
-				"about",
-				new MainMenuBarPageItem[] {
-						new MainMenuBarPageItem(
-								"history",
-								"History",
-								"about/history.faces"),
-						new MainMenuBarPageItem(
-								"bios",
-								"Project development team",
-								"about/team.faces"),
-						new MainMenuBarPageItem(
-								"acknowledgements",
-								"Acknowledgements",
-								"about/acknowledgements.faces"),
-						new MainMenuBarPageItem(
-								"contact",
-								"Contact Us",
-								"about/contact.faces")}),
-
-		};
-	
 	private static HelpLink[] helpLinks = {
-		new HelpLink("Sitemap", "javascript:openSitemap()"),
-		new HelpLink("FAQs", "javascript:openFAQ()"),
-		new HelpLink("Demos", "javascript:openDemos()"),
-		new HelpLink("Glossary", "javascript:openGlossary()") };
+		new HelpLink("Sitemap", "help/sitemap.faces"),
+		new HelpLink("FAQs", "help/faq.faces"),
+		new HelpLink("Demos", "help/demos.faces"),
+		new HelpLink("Glossary", "help/glossary.faces") };
 
 	public String getFamily()
 	{
@@ -385,6 +267,7 @@ public class SiteHeaderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		// sections
+		MainMenuBarSectionItem[] menuItems = MainMenu.getMainMenu();
 		for (int i = 0; i < menuItems.length; i++)
 			encodeMenuItem(writer, context, baseUrl, menuItems[i]);
 		
@@ -498,7 +381,7 @@ public class SiteHeaderComponent extends UIComponentBase
 			writer.writeAttribute("class", i == 0 ? "secondary-bar-help-link-first" : "secondary-bar-help-link", null);
 			
 			writer.startElement("a", this);
-			writer.writeAttribute("href", helpLinks[i].getHref(), null);
+			writer.writeAttribute("href", "javascript:openPopup('" + baseUrl + "/" + helpLinks[i].getHref() + "')", null);
 			writer.write(helpLinks[i].getLabel());
 			writer.endElement("a");
 			

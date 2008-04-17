@@ -4,6 +4,7 @@ public class MainMenuBarSectionItem
 {
 	
 	private String id;
+	private String userLabel;
 	private String imageUrlNormal;
 	private String imageUrlHighlighted;
 	private String imageUrlActive;
@@ -13,9 +14,10 @@ public class MainMenuBarSectionItem
 	private MainMenuBarPageItem[] subItems;
 	private String boxCssClass;
 	
-	public MainMenuBarSectionItem(String id, String url, String imageUrlNormal, String imageUrlHighlighted, String imageUrlActive, int imageWidth, int imageHeight, String boxCssClass, MainMenuBarPageItem[] subItems)
+	public MainMenuBarSectionItem(String id, String userLabel, String url, String imageUrlNormal, String imageUrlHighlighted, String imageUrlActive, int imageWidth, int imageHeight, String boxCssClass, MainMenuBarPageItem[] subItems)
 	{
 		this.id = id;
+		this.userLabel = userLabel;
 		this.url = url;
 		this.imageUrlNormal = imageUrlNormal;
 		this.imageUrlHighlighted = imageUrlHighlighted;
@@ -81,6 +83,11 @@ public class MainMenuBarSectionItem
 		return subItems;
 	}
 	
+	public int getSubItemsCount()
+	{
+		return subItems == null ? 0 : subItems.length;
+	}
+
 	public void setSubItems(MainMenuBarPageItem[] subItems)
 	{
 		this.subItems = subItems;
@@ -114,6 +121,16 @@ public class MainMenuBarSectionItem
 	public void setImageUrlHighlighted(String imageUrlHighlighted)
 	{
 		this.imageUrlHighlighted = imageUrlHighlighted;
+	}
+
+	public String getLabel()
+	{
+		return userLabel;
+	}
+
+	public void setUserLabel(String userLabel)
+	{
+		this.userLabel = userLabel;
 	}
 
 }

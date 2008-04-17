@@ -9,10 +9,23 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	<title>Help</title>
+	<title>Sitemap</title>
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/help-main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/help-sitemap.css" rel="stylesheet" type="text/css">
+	
+	<script language="javascript" type="text/javascript">
+	
+	function openPage(url)
+	{
+		if (window.opener)
+			window.opener.location.href = url;
+		else
+			window.open(url);
+	}
+	
+	</script>
 
 </head>
 <body>
@@ -25,6 +38,22 @@
 	<%@ include file="top-bar.jsp" %>
 	
 	<div id="help-section-title"><img src="../images/help-sitemap-title.png" width="240" height="50" border="0" alt="Demos"></div>
+	
+	<div id="sitemap">
+	<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="sitemap-col-1">
+			<s:simpleList
+				listStyle="ul"
+				elements="#{SitemapBean.sitemapCol1}" />
+		</td>
+		<td class="sitemap-col-2">
+			<s:simpleList
+				listStyle="ul"
+				elements="#{SitemapBean.sitemapCol2}" />
+		</td>
+	</tr>
+	</table>
 	
 </h:form>
 </f:view>

@@ -89,13 +89,7 @@ public class MapTag extends UIComponentTag
 		}
 		else
 		{
-			try
-			{
-				map.setMiniMapWidth(Integer.parseInt(miniMapWidth));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
+			map.setMiniMapWidth(Integer.parseInt(miniMapWidth));
 		}
 
 		if (miniMapHeight != null && isValueReference(miniMapHeight))
@@ -105,13 +99,7 @@ public class MapTag extends UIComponentTag
 		}
 		else
 		{
-			try
-			{
-				map.setMiniMapHeight(Integer.parseInt(miniMapHeight));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
+			map.setMiniMapHeight(Integer.parseInt(miniMapHeight));
 		}
 		
 		if (zoomLevel != null && isValueReference(zoomLevel))
@@ -121,13 +109,7 @@ public class MapTag extends UIComponentTag
 		}
 		else
 		{
-			try
-			{
-				map.setZoomLevel(Integer.parseInt(zoomLevel));
-			}
-			catch (NumberFormatException nfe)
-			{
-			}
+			map.setZoomLevel(Integer.parseInt(zoomLevel));
 		}
 		if (onZoomChanged != null) {
 			map.setOnZoomChanged(new MethodBindingImpl(app, onZoomChanged, new Class[] {ZoomChangedEvent.class}));

@@ -1,11 +1,13 @@
 package edu.emory.library.tast.common;
 
+
 public class SimpleListElement
 {
 	
 	private String text;
 	private String cssClass;
 	private String cssStyle;
+	private SimpleListElement[] subElements;
 	
 	public SimpleListElement(String text)
 	{
@@ -53,6 +55,27 @@ public class SimpleListElement
 	public void setCssStyle(String cssStyle)
 	{
 		this.cssStyle = cssStyle;
+	}
+
+	public SimpleListElement[] getSubElements()
+	{
+		return subElements;
+	}
+
+	public void setSubElements(SimpleListElement[] subElements)
+	{
+		this.subElements = subElements;
+	}
+
+	public int getSubElementsLength()
+	{
+		if (subElements == null) return 0;
+		return subElements.length;
+	}
+
+	public boolean hasSubelements()
+	{
+		return getSubElementsLength() != 0;
 	}
 
 }

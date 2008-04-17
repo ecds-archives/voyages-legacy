@@ -14,31 +14,73 @@ public class SimpleListComponent extends UIComponentBase
 	private boolean elementsSet = false;
 	private SimpleListElement[] elements;
 
+	private boolean listStyleSet = false;
+	private SimpleListStyle listStyle = SimpleListStyle.Plain;
+
 	public String getFamily()
 	{
 		return null;
 	}
 	
-	public void encodeBegin(FacesContext context) throws IOException
+	public Object saveState(FacesContext context)
+	{
+		Object[] values = new Object[2];
+		values[0] = super.saveState(context);
+		values[1] = listStyle;
+		return values;
+	}
+	
+	public void restoreState(FacesContext context, Object state)
+	{
+		Object[] values = (Object[]) state;
+		super.restoreState(context, values[0]);
+		listStyle = (SimpleListStyle) values[1];
+	}
+	
+	private void renderLevel(ResponseWriter writer, SimpleListElement[] elements, SimpleListStyle listStyle, int level) throws IOException
 	{
 		
-		ResponseWriter writer = context.getResponseWriter();
+		String itemHtmlElement =
+			listStyle.equals(SimpleListStyle.Plain) ? "div" :
+				"li";
 		
-		SimpleListElement[] elements = getElements();
+		String mainHtmlElement = 		
+			listStyle.equals(SimpleListStyle.UnorderedList) ? "ul" : 
+				listStyle.equals(SimpleListStyle.OrderedList) ? "ol" :
+					"div";
+		
+		writer.startElement(mainHtmlElement, this);
 		
 		for (int i = 0; i < elements.length; i++)
 		{
 			SimpleListElement element = elements[i];
 			if (element.getText() != null) 
 			{
-				writer.startElement("div", this);
+				writer.startElement(itemHtmlElement, this);
 				if (element.getCssClass() != null) writer.writeAttribute("class", element.getCssClass(), null);
 				if (element.getCssStyle() != null) writer.writeAttribute("style", element.getCssStyle(), null);
-				writer.writeAttribute("style", element.getCssStyle(), null);
 				writer.write(element.getText());
-				writer.endElement("div");
+				writer.endElement(itemHtmlElement);
+				if (element.hasSubelements())
+				{
+					renderLevel(writer, element.getSubElements(), listStyle, level+1);
+				}
 			}
 		}
+		
+		writer.endElement(mainHtmlElement);
+
+	}
+
+	public void encodeBegin(FacesContext context) throws IOException
+	{
+		
+		listStyle = getListStyle();
+		
+		ResponseWriter writer = context.getResponseWriter();
+		
+		SimpleListElement[] elements = getElements();
+		if (elements != null) renderLevel(writer, elements, listStyle, 0);
 	
 	}
 
@@ -52,6 +94,18 @@ public class SimpleListComponent extends UIComponentBase
 	{
 		elementsSet = true;
 		this.elements = elements;
+	}
+
+	public SimpleListStyle getListStyle()
+	{
+		return (SimpleListStyle) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"listStyle", listStyleSet, listStyle);
+	}
+
+	public void setListStyle(SimpleListStyle listStyle)
+	{
+		listStyleSet = true;
+		this.listStyle = listStyle;
 	}
 
 }

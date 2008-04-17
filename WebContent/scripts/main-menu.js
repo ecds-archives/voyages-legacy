@@ -25,36 +25,16 @@ var MainMenuBar =
 
 }
 
-	function openFAQ()
-	{
-		openPopup("./help/faq.faces");
-	}
+function openPopup(pageUrl)
+{
+	window.open(
+		pageUrl,
+		"tastPopupHelp",
+		"resizable=yes, " +
+		"location=no, " +
+		"status=no, " +
+		"scrollbars=yes, " +
+		"width=600, " +
+		"height=400"); 
+}
 
-	function openDemos()
-	{
-		openPopup("./help/demos.faces");
-	}
-
-	function openSitemap()
-	{
-		openPopup("./help/sitemap.faces");
-	}
-
-	function openGlossary()
-	{
-		openPopup("./help/glossary.faces");
-	}
-
-	function openPopup(pageUrl)
-	{
-		window.open(
-			pageUrl,
-			"tastPopupHelp",
-			"resizable=yes, " +
-			"location=no, " +
-			"status=no, " +
-			"scrollbars=yes, " +
-			"width=600, " +
-			"height=400"); 
-	}
-	

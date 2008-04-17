@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
@@ -514,11 +515,28 @@ public class JsfUtils
 			context = FacesContext.getCurrentInstance();
 		
 		HttpServletRequest request =
-			(HttpServletRequest) FacesContext.getCurrentInstance().
-			getExternalContext().getRequest();
+			(HttpServletRequest) context.getExternalContext().getRequest();
 		
 		return "GET".equals(request.getMethod()); 
 
+	}
+	
+	public static String getContextPath()
+	{
+		return getContextPath(null); 
+	}
+
+	public static String getContextPath(FacesContext context)
+	{
+
+		if (context == null)
+			context = FacesContext.getCurrentInstance();
+		
+		ExternalContext request =
+			context.getExternalContext();
+		
+		return request.getRequestContextPath();
+		
 	}
 
 }
