@@ -737,7 +737,7 @@ public class ImagesBean
 	{
 		if (imageFileName != null)
 		{
-			return "images-database/" + imageFileName;
+			return "tast-images-database/" + imageFileName;
 		}
 		else
 		{
