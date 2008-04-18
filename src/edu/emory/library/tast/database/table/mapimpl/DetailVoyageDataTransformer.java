@@ -164,7 +164,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 			String[] legendSymbols = element.getLegendSymbolNames();
 			for (int j = 0; j < legendSymbols.length; j++) {
 				LegendItem legendItem = new LegendItem(legendSymbols[j],
-						contextPath + "/map-assets/symbols/" + legendSymbols[j] + ".png",
+						contextPath + "/tast-map-assets/symbols/" + legendSymbols[j] + ".png",
 						element.getLegendTexts()[j]);
 				legend.addItemToGroup(legendItem);
 				element.addLegendItem(legendItem);
