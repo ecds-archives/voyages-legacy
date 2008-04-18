@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-
 import org.hibernate.Session;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportArea;
@@ -23,6 +22,7 @@ import edu.emory.library.tast.maps.LegendItem;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapItemElement;
 import edu.emory.library.tast.maps.TransformerResponse;
+import edu.emory.library.tast.util.StringUtils;
 
 /**
  * Class providing parsing functionality of query response for 
@@ -49,8 +49,9 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		Object[] data = holder.getRawQueryResponse();
 		List mapDataItems = new ArrayList();
 		
-		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-
+		String baseUrl = AppConfig.getConfiguration().getString(AppConfig.MAP_URL);
+		baseUrl = StringUtils.trimEnd(baseUrl, '/');
+	
 		double min = Double.MAX_VALUE;
 		double max = Double.MIN_VALUE;
 
@@ -151,7 +152,7 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 			long from = Math.round(ranges[i]);
 			from++;
 			LegendItem item = new LegendItem("circle.*-" + (i + 1) + "$",
-					contextPath + "/tast-map-assets/symbols/circle-1-" + (i + 1) + ".png", ""
+					baseUrl + "/symbols/circle-1-" + (i + 1) + ".png", ""
 							+ valuesFormat
 									.format(new Object[] { new Long(from) })
 							+ " - "
@@ -161,11 +162,11 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 		}
 
 		// /Prepare legend about colors
-		LegendItem emb = new LegendItem("circle-2-\\d", contextPath + "/tast-map-assets/symbols/circle-" + 2
+		LegendItem emb = new LegendItem("circle-2-\\d", baseUrl + "/symbols/circle-" + 2
 				+ "-4.png", TastResource.getText("estimates_map_leg_embplace"));
-		LegendItem disemb = new LegendItem("circle-3-\\d", contextPath + "/tast-map-assets/symbols/circle-"
+		LegendItem disemb = new LegendItem("circle-3-\\d", baseUrl + "/symbols/circle-"
 				+ 3 + "-4.png", TastResource.getText("estimates_map_leg_disembplace"));
-		LegendItem both = new LegendItem("circle-5-\\d", contextPath + "/tast-map-assets/symbols/circle-" + 5
+		LegendItem both = new LegendItem("circle-5-\\d", baseUrl + "/symbols/circle-" + 5
 				+ "-4.png", TastResource.getText("estimates_map_leg_bothplaces"));
 		legendColors.addItemToGroup(emb);
 		legendColors.addItemToGroup(disemb);

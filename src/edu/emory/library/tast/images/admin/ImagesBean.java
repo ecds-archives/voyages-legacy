@@ -737,7 +737,9 @@ public class ImagesBean
 	{
 		if (imageFileName != null)
 		{
-			return "tast-images-database/" + imageFileName;
+			String baseUrl = AppConfig.getConfiguration().getString(AppConfig.IMAGES_URL);
+			baseUrl = StringUtils.trimEnd(baseUrl, '/');
+			return baseUrl + "/" + imageFileName;
 		}
 		else
 		{

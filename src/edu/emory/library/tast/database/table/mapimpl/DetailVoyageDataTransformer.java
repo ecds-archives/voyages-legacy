@@ -7,10 +7,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-
 import org.hibernate.Session;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Location;
 import edu.emory.library.tast.dm.Port;
@@ -24,6 +23,7 @@ import edu.emory.library.tast.maps.LegendItem;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapItemElement;
 import edu.emory.library.tast.maps.TransformerResponse;
+import edu.emory.library.tast.util.StringUtils;
 
 /**
  * Transformer used to transform mapping data for map of single voyage. It
@@ -54,7 +54,8 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 		Object[] row = (Object[]) data.getRawQueryResponse()[0];
 		List rowList = Arrays.asList(row);
 		
-		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+		String mapAssetsBaseUrl = AppConfig.getConfiguration().getString(AppConfig.MAP_URL);
+		mapAssetsBaseUrl = StringUtils.trimEnd(mapAssetsBaseUrl, '/');
 
 		// toMap.addAll(Arrays.asList(parseAfrica(row)));
 		// toMap.addAll(Arrays.asList(parseAmericas(row)));
@@ -164,7 +165,7 @@ public class DetailVoyageDataTransformer extends AbstractDataTransformer {
 			String[] legendSymbols = element.getLegendSymbolNames();
 			for (int j = 0; j < legendSymbols.length; j++) {
 				LegendItem legendItem = new LegendItem(legendSymbols[j],
-						contextPath + "/tast-map-assets/symbols/" + legendSymbols[j] + ".png",
+						mapAssetsBaseUrl + "/symbols/" + legendSymbols[j] + ".png",
 						element.getLegendTexts()[j]);
 				legend.addItemToGroup(legendItem);
 				element.addLegendItem(legendItem);
