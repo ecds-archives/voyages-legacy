@@ -42,48 +42,37 @@
 			</td>
 			<td id="essays-right-column">
 				<s:simpleBox>
-
-					<h1>Essays</h1>
+			
+					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
 					
-					<ul class="essays-list">
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
 					
-						<li>
-							<div class="essay-title">Catherine Zimmermann-Mulgrave: A Message of Hope</div>
-							<div class="essay-info">
-								<span class="essay-author">Domingues da Silva, Daniel</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">August 2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">Job Ben Solomon and the Curse of Slavery in the Atlantic World</div>
-							<div class="essay-info">
-								<span class="essay-author">Domingues da Silva, Daniel</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">July 2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">A Brief Overview of the Transatlantic Slave Trade</div>
-							<div class="essay-info">
-								<span class="essay-author">David Eltis</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">Voyages and Applied History</div>
-							<div class="essay-info">
-								<span class="essay-author">Jelmer Vos</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">2007</span>
-							</div>
-						</li>
-					
-					</ul>
+					<p>The transatlantic slave trade was the largest long-distance
+					coerced movement of people in history and, prior to the
+					mid-nineteenth century, formed the major demographic well-spring
+					for the re-peopling of the Americas following the collapse of the
+					Amerindian population. Cumulatively, as late as 1820, nearly four
+					Africans had crossed the Atlantic for every European, and, given
+					the differences in the sex ratios between European and African
+					migrant streams, about four out of every five females that
+					traversed the Atlantic were from Africa. From the late fifteenth
+					century the Atlantic Ocean, once a formidable barrier that
+					prevented regular interaction between those peoples inhabiting the
+					four continents it touched, became a commercial highway that
+					integrated the histories of Africa, Europe, and the Americas for
+					the first time. As the above figures suggest, slavery and the slave
+					trade were the linchpins of this process. With the decline of the
+					Amerindian population labor from Africa formed the basis of the
+					exploitation of the gold and agricultural resources of the export
+					sectors of the Americas, with sugar plantations absorbing well over
+					two thirds of slaves carried across the Atlantic by the major
+					European and Euro-American powers. For several centuries slaves
+					were the most important reason for contact between Europeans and
+					Africans.</p>
 
 				</s:simpleBox>
 			</td>

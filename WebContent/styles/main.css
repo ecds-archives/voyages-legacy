@@ -15,6 +15,10 @@ h1 {
 	margin: 0px;
 	font-size: 16pt;
 	font-weight: normal; }
+	
+h2 {
+	font-size: 11pt;
+	font-weight: bold; }	
 
 /* footer */
 

@@ -42,48 +42,34 @@
 			</td>
 			<td id="essays-right-column">
 				<s:simpleBox>
+			
+					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
+					
+					<h2>New Products for Trade in the Americas</h2>
 
-					<h1>Essays</h1>
-					
-					<ul class="essays-list">
-					
-						<li>
-							<div class="essay-title">Catherine Zimmermann-Mulgrave: A Message of Hope</div>
-							<div class="essay-info">
-								<span class="essay-author">Domingues da Silva, Daniel</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">August 2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">Job Ben Solomon and the Curse of Slavery in the Atlantic World</div>
-							<div class="essay-info">
-								<span class="essay-author">Domingues da Silva, Daniel</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">July 2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">A Brief Overview of the Transatlantic Slave Trade</div>
-							<div class="essay-info">
-								<span class="essay-author">David Eltis</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">Voyages and Applied History</div>
-							<div class="essay-info">
-								<span class="essay-author">Jelmer Vos</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">2007</span>
-							</div>
-						</li>
-					
-					</ul>
+					<p>What can explain this extraordinary migration organized
+					initially on a continent where the institution of slavery had
+					declined or totally disappeared in the centuries prior to Columbian
+					contact, and where, even when it had existed, slavery had never
+					been confined to one group of people? To pose the question
+					differently, why slavery, and why were the slaves carried across
+					the Atlantic exclusively African? The short answer to the first of
+					these two questions is that European expansion to the Americas was
+					to mainly tropical and semi-tropical areas. Several products that
+					were either unknown to Europeans (like tobacco), or occupied a
+					luxury niche in pre-expansion European tastes (like gold or sugar),
+					now fell within the capacity of Europeans to produce more
+					abundantly. But while Europeans could control the production of
+					such exotic goods, it became apparent in the first two centuries
+					after Columbian contact that they chose not to supply the labor
+					that would make such output possible. Free European migrants and
+					indentured servants never traveled across the Atlantic in
+					sufficient numbers to meet the labor needs of expanding
+					plantations. Convicts and prisoners – the only Europeans that were
+					ever forced to migrate – were much fewer in numbers again. Slavery,
+					or some form of coerced labor was the only possible option if
+					European consumers were to gain access to more tropical produce and
+					precious metals.</p>
 
 				</s:simpleBox>
 			</td>

@@ -7,25 +7,13 @@ table.essays-layout td {
 	
 td#essays-left-column {
 	padding-right: 10px;
-	width: 240px; }
+	width: 300px; }
 
 td#essays-right-column {
-	width: 650px; }
-
-td.essays-left-column table.box-main-table {
-	width: 280px; }
+	width: 580px; }
 	
-ol.toc {
-	line-height: 130%;
-	padding: 0px;
-	margin: 0px; }
-	
-ol.toc li {
-	margin-bottom: 0.5em;
-	margin-left: 20px; }
-	
-ol.toc li.current-essay {
-	font-weight: bold; }
+td#essays-right-column table.simple-box {
+	width: 100%; }
 
 p {
 	line-height: 160%; }
@@ -43,19 +31,64 @@ div.left-menu-box a:hover {
 	background-color: #E0F5F5; }
 
 div.secondary-menu-item-0 a {
+	font-weight: bold;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #B8E7E8; }
+	
+div.secondary-menu-item-1 a {
 	background-image: url(../images/secondary-menu-symbol-0.png);
 	background-repeat: no-repeat;
 	background-position: 2px 4px;
 	padding-left: 15px;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	border-bottom: 1px dotted #73C5E9; }
+	border-bottom: 1px dotted #B8E7E8; }
 	
-div.secondary-menu-item-1 a {
+div.secondary-menu-item-2 a {
+	color: #05768A;
 	background-image: url(../images/secondary-menu-symbol-1.png);
 	background-repeat: no-repeat;
-	background-position: 16px 4px;
-	padding-left: 30px;
+	background-position: 17px 4px;
+	padding-left: 35px;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	border-bottom: 1px dotted #73C5E9; }
+	border-bottom: 1px dotted #B8E7E8; }
+	
+div.essay-info {
+	xborder-top: 1px solid Black; 
+	border-bottom: 1px solid Black;
+	padding-bottom: 10px; }
+	
+div.essay-info span.essay-author {
+	font-weight: bold; }	
+
+div.essay-info span.essay-date {
+	font-style: italic; }	
+
+/* essays landing page */
+
+ul.essays-list {
+	padding: 0px 0px 0px 20px;
+	margin: 10px 0px 0px 0px; }
+
+ul.essays-list li {
+	padding: 0px 0px 0px 0px;
+	margin: 0px; }
+
+ul.essays-list div.essay-title {
+	font-weight: bold; }
+	
+ul.essays-list div.essay-info {
+	border-style: none;
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px 0px 10px 0px; }
+
+ul.essays-list span.essay-author {
+	font-weight: normal;
+	font-style: italic; }
+	
+ul.essays-list span.essay-date {
+	font-style: normal; }	
+	
