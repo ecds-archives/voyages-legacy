@@ -38,6 +38,7 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="essays-layout">
 		<tr>
 			<td id="essays-left-column">
+				<f:param value="essays-intro-12" binding="#{EssaysBean.paramActiveMenuId}" />
 				<%@ include file="essays-toc.jsp" %>
 			</td>
 			<td id="essays-right-column">

@@ -12,7 +12,7 @@
 			<h:outputText value="ESSAYS" />
 		</t:div>
 		
-		<s:secondaryMenu>
+		<s:secondaryMenu activeItemId="#{EssaysBean.activeMenuId}">
 		
 			<s:secondaryMenuItem
 				label="Interpretations"
@@ -65,8 +65,8 @@
 	
 					<s:secondaryMenuItem
 						label="The Middle Passage"
-						href="essays-intro-12.faces"
-						menuId="essays-intro-12" />
+						href="essays-intro-09.faces"
+						menuId="essays-intro-09" />
 	
 					<s:secondaryMenuItem
 						label="The Decline of the Slave Trade"
@@ -94,12 +94,12 @@
 				<s:secondaryMenuItem
 					label="Job Ben Solomon and the Curse of Slavery in the Atlantic World"
 					href="essays-solomon.faces"
-					menuId="solomon"/>
+					menuId="essays-solomon"/>
 				
 				<s:secondaryMenuItem
 					label="Catherine Zimmermann-Mulgrave: A Message of Hope"
 					href="essays-message-of-hope.faces"
-					menuId="message-of-hope"/>
+					menuId="essays-message-of-hope"/>
 				
 			</s:secondaryMenuItem>
 
@@ -110,7 +110,7 @@
 				<s:secondaryMenuItem
 					label="Voyages and Applied History"
 					href="essays-applied-history.faces"
-					menuId="applied-history"/>
+					menuId="essays-applied-history"/>
 			
 			</s:secondaryMenuItem>
 

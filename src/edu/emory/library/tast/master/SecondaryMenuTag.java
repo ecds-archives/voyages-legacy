@@ -34,7 +34,7 @@ public class SecondaryMenuTag extends UIComponentTag
 		}
 		else
 		{
-			menu.setActiveMenuItemId(activeItemId);
+			menu.setActiveItemId(activeItemId);
 		}
 		
 	}

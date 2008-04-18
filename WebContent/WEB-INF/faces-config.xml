@@ -560,6 +560,12 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
+	<managed-bean>
+		<managed-bean-name>EssaysBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.essays.EssaysBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
 	<navigation-rule>
 		<from-view-id>/reports.jsp</from-view-id>
 		<navigation-case>

@@ -9,12 +9,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 public class SecondaryMenuComponent extends UIComponentBase
 {
 	
-	private boolean activeMenuItemIdSet = false;
-	private String activeMenuItemId;
+	private boolean activeItemIdSet = false;
+	private String activeItemId;
 
 	public String getFamily()
 	{
@@ -37,12 +38,20 @@ public class SecondaryMenuComponent extends UIComponentBase
 			if (activeMenuItemId != null && activeMenuItemId.equals(menuItem.getMenuId()))
 				menuItemCssClass += "-selected";
 			
+			boolean hasLink = !StringUtils.isNullOrEmpty(menuItem.getHref());
+			
 			writer.startElement("div", this);
-			writer.writeAttribute("class", "secondary-menu-item-" + level, null);
-			writer.startElement("a", this);
-			writer.writeAttribute("href", menuItem.getHref(), null);
+			writer.writeAttribute("class", menuItemCssClass, null);
+			if (hasLink)
+			{
+				writer.startElement("a", this);
+				writer.writeAttribute("href", menuItem.getHref(), null);
+			}
 			writer.write(menuItem.getLabel());
-			writer.endElement("a");
+			if (hasLink)
+			{
+				writer.endElement("a");
+			}
 			writer.endElement("div");
 			
 			List subItems = menuItem.getChildren();
@@ -61,20 +70,20 @@ public class SecondaryMenuComponent extends UIComponentBase
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		ResponseWriter writer = context.getResponseWriter();
-		activeMenuItemId = getActiveMenuItemId();
-		encodeItems(context, writer, getChildren(), 0, activeMenuItemId);
+		activeItemId = getActiveItemId();
+		encodeItems(context, writer, getChildren(), 0, activeItemId);
 	}
 
-	public String getActiveMenuItemId()
+	public String getActiveItemId()
 	{
 		return JsfUtils.getCompPropString(this, getFacesContext(),
-				"activeMenuItemId", activeMenuItemIdSet, activeMenuItemId);
+				"activeItemId", activeItemIdSet, activeItemId);
 	}
 
-	public void setActiveMenuItemId(String activeMenuItemId)
+	public void setActiveItemId(String activeMenuItemId)
 	{
-		activeMenuItemIdSet = true;
-		this.activeMenuItemId = activeMenuItemId;
+		activeItemIdSet = true;
+		this.activeItemId = activeMenuItemId;
 	}
 
 }

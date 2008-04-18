@@ -30,13 +30,14 @@ div.left-menu-box a {
 div.left-menu-box a:hover {
 	background-color: #E0F5F5; }
 
-div.secondary-menu-item-0 a {
+div.secondary-menu-item-0 {
 	font-weight: bold;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	border-bottom: 1px dotted #B8E7E8; }
 	
-div.secondary-menu-item-1 a {
+div.secondary-menu-item-1 a,
+div.secondary-menu-item-1-selected a {
 	background-image: url(../images/secondary-menu-symbol-0.png);
 	background-repeat: no-repeat;
 	background-position: 2px 4px;
@@ -45,7 +46,8 @@ div.secondary-menu-item-1 a {
 	padding-bottom: 3px;
 	border-bottom: 1px dotted #B8E7E8; }
 	
-div.secondary-menu-item-2 a {
+div.secondary-menu-item-2 a,
+div.secondary-menu-item-2-selected a {
 	color: #05768A;
 	background-image: url(../images/secondary-menu-symbol-1.png);
 	background-repeat: no-repeat;
@@ -55,6 +57,10 @@ div.secondary-menu-item-2 a {
 	padding-bottom: 3px;
 	border-bottom: 1px dotted #B8E7E8; }
 	
+div.secondary-menu-item-1-selected a,
+div.secondary-menu-item-2-selected a {
+	background-color: #F0FAFA; }
+
 div.essay-info {
 	xborder-top: 1px solid Black; 
 	border-bottom: 1px solid Black;
