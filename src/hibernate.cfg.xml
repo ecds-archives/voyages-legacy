@@ -7,36 +7,6 @@
 
     <session-factory>
 
-        <!-- Database connection settings -->
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-
-        <property name="connection.url">jdbc:postgresql://wilson.library.emory.edu/tast</property>
-        
-        <property name="connection.username">tast</property>
-        <property name="connection.password">tast</property>
-
-        <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
-
-        <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-
-        <!-- Enable Hibernate's automatic session context management -->
-        <property name="current_session_context_class">thread</property>
-
-        <!-- Enable the second-level cache  -->
-        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-		<property name="hibernate.cache.use_query_cache">false</property>
-
-        <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">true</property>
-        
-        <!-- statistics -->
-        <property name="hibernate.generate_statistics">false</property>
-
-        <!-- Drop and re-create the database schema on startup -->
-        <!--property name="hbm2ddl.auto">create</property-->
-
 		<mapping resource="edu/emory/library/tast/dm/Configuration.hbm.xml"/>
 
         <mapping resource="edu/emory/library/tast/dm/Voyage.hbm.xml"/>
@@ -67,6 +37,7 @@
 		<mapping resource="edu/emory/library/tast/dm/Source.hbm.xml"/>
 
 		<mapping resource="edu/emory/library/tast/dm/GlossaryTerm.hbm.xml"/>
+
     </session-factory>
 
 </hibernate-configuration>
