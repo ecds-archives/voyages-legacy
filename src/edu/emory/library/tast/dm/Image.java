@@ -1,10 +1,8 @@
 package edu.emory.library.tast.dm;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,41 +13,13 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.Languages;
-import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.BooleanAttribute;
-import edu.emory.library.tast.dm.attributes.CategoryAttribute;
-import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.dm.attributes.PortAttribute;
-import edu.emory.library.tast.dm.attributes.RegionAttribute;
-import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
 
 public class Image implements Comparable
 {
 	
-	private static Map attributes = new HashMap();
-	static
-	{
-		attributes.put("id", new StringAttribute("id", "Image"));
-		attributes.put("title", new StringAttribute("title", "Image"));
-		attributes.put("description", new StringAttribute("description", "Image"));
-		attributes.put("fileName", new StringAttribute("fileName", "Image"));
-		attributes.put("width", new NumericAttribute("width", "Image", NumericAttribute.TYPE_INTEGER));
-		attributes.put("height", new NumericAttribute("height", "Image", NumericAttribute.TYPE_INTEGER));
-		attributes.put("mimeType", new StringAttribute("mimeType", "Image"));
-		attributes.put("regions", new RegionAttribute("regions", "Image"));
-		attributes.put("ports", new PortAttribute("ports", "Image"));
-		attributes.put("voyageid", new NumericAttribute("voyageid", "Image", NumericAttribute.TYPE_INTEGER));
-		attributes.put("order", new NumericAttribute("order", "Image", NumericAttribute.TYPE_INTEGER));
-		attributes.put("category", new CategoryAttribute("category", "Image"));
-		attributes.put("date", new NumericAttribute("date", "Image", NumericAttribute.TYPE_INTEGER));
-		attributes.put("ready", new BooleanAttribute("readyToGo", "Image"));
-	}
-	
 	private int id;
+	private String externalId;
 	private int width;
 	private int height;
 	private int size;
@@ -302,49 +272,46 @@ public class Image implements Comparable
 		this.order = order;
 	}
 
-	public static Image[] getImagesArray()
+	public ImageCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(ImageCategory category) {
+		this.category = category;
+	}
+
+	public Set getVoyageIds()
 	{
-		List list = getImagesList();
-		Image[] images = new Image[list.size()];
-		list.toArray(images);
-		return images;
+		return voyageIds;
+	}
+
+	public void setVoyageIds(Set voyageids)
+	{
+		this.voyageIds = voyageids;
 	}
 	
-	public static List getImagesList()
-	{			
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-		List list = getImagesList(sess);
-		transaction.commit();
-		sess.close();
-		return list;
+	public String getExternalId()
+	{
+		return externalId;
 	}
 
-	public static List getImagesList(Session sess)
+	public void setExternalId(String externalId)
 	{
-		return getImagesList(sess, null);
+		this.externalId = externalId;
+	}
+	
+	public static Image loadById(int imageId, Session sess)
+	{
+		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
+		if (list == null || list.size() == 0) return null;
+		return (Image) list.get(0);
 	}
 
-	public static List getImagesList(Session sess, String searchFor)
+	public static Image loadByExternalId(String imageExternalId, Session sess)
 	{
-//		return sess.createCriteria(Image.class).addOrder(Order.asc("name")).list();
-
-		QueryValue query = null;
-		if (!StringUtils.isNullOrEmpty(searchFor))
-		{
-			searchFor = "%" + searchFor + "%";
-			Conditions conds = new Conditions(Conditions.JOIN_AND);
-			conds.addCondition(getAttribute("title"), searchFor, Conditions.OP_LIKE);
-			query = new QueryValue("Image", conds);
-		}
-		else
-		{
-			query = new QueryValue("Image");
-		}
-		
-		query.setOrderBy(new Attribute[] {getAttribute("title")});
-		query.setOrder(QueryValue.ORDER_ASC);
-		return query.executeQueryList(sess);
+		List list = sess.createCriteria(Image.class).add(Restrictions.eq("externalId", imageExternalId)).list();
+		if (list == null || list.size() == 0) return null;
+		return (Image) list.get(0);
 	}
 
 	public static Image loadById(int imageId)
@@ -357,6 +324,16 @@ public class Image implements Comparable
 		return image;
 	}
 	
+	public static Image loadByExternalId(String imageExternalId)
+	{
+		Session sess = HibernateUtil.getSession();
+		Transaction transaction = sess.beginTransaction();
+		Image image = loadByExternalId(imageExternalId, sess);
+		transaction.commit();
+		sess.close();
+		return image;
+	}
+
 	public static List getImagesByVoyageId(Session sess, int voyageId)
 	{
 
@@ -367,18 +344,6 @@ public class Image implements Comparable
 
 		return sess.createQuery(hqlImages).list();
 
-	}
-
-	public static Image loadById(int imageId, Session sess)
-	{
-		List list = sess.createCriteria(Image.class).add(Restrictions.eq("id", new Integer(imageId))).list();
-		if (list == null || list.size() == 0) return null;
-		return (Image) list.get(0);
-	}
-	
-	public static Attribute getAttribute(String name)
-	{
-		return (Attribute)attributes.get(name);
 	}
 	
 	public static boolean checkDate(String date)
@@ -407,22 +372,40 @@ public class Image implements Comparable
 		
 	}
 
-	public ImageCategory getCategory() {
-		return category;
-	}
-
-	public void setCategory(ImageCategory category) {
-		this.category = category;
-	}
-
-	public Set getVoyageIds()
+	public int compareTo(Object obj)
 	{
-		return voyageIds;
+		Image that = (Image) obj;
+		if (this.date < that.date)
+		{
+			return -1;
+		}
+		else if (this.date > that.date)
+		{
+			return 1;
+		}
+		else
+		{
+			if (this.id < that.id)
+			{
+				return -1;
+			}
+			else if (this.id > that.id)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
 	}
-
-	public void setVoyageIds(Set voyageids)
+	
+	public boolean equals(Object obj)
 	{
-		this.voyageIds = voyageids;
+		Image that = (Image) obj;
+		if (that.id == 0) return false;
+		if (this.id == 0) return false;
+		return that.id == this.id;
 	}
 	
 	public static void main(String[] args)
@@ -501,42 +484,6 @@ public class Image implements Comparable
 		transaction.commit();
 		sess.close();
 
-	}
-
-	public int compareTo(Object obj)
-	{
-		Image that = (Image) obj;
-		if (this.date < that.date)
-		{
-			return -1;
-		}
-		else if (this.date > that.date)
-		{
-			return 1;
-		}
-		else
-		{
-			if (this.id < that.id)
-			{
-				return -1;
-			}
-			else if (this.id > that.id)
-			{
-				return 1;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-	}
-	
-	public boolean equals(Object obj)
-	{
-		Image that = (Image) obj;
-		if (that.id == 0) return false;
-		if (this.id == 0) return false;
-		return that.id == this.id;
 	}
 
 }

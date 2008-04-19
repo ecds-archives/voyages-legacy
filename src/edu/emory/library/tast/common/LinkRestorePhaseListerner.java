@@ -9,6 +9,7 @@ import javax.faces.event.PhaseListener;
 
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
+import edu.emory.library.tast.images.site.ImagesBean;
 import edu.emory.library.tast.slaves.SlavesBean;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -68,32 +69,23 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			bean.setSelectedTab(module);
 			
 		}
+		
+		if (viewId.equals("/resources/images-detail.jsp"))
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map params = context.getExternalContext().getRequestParameterMap();
+			
+			if (!params.containsKey("image"))
+				return;
 
-//		if (viewId.equals("/resources/images.jsp") || viewId.equals("/resources/images-query.jsp") ||
-//				viewId.equals("/resources/images-detail.jsp")) {
-//			ImagesBean bean = (ImagesBean) fc.getApplication().createValueBinding("#{ImagesBean}").getValue(fc);
-//			FacesContext context = FacesContext.getCurrentInstance();
-//			Map params = context.getExternalContext().getRequestParameterMap();
-//			
-//			if (viewId.equals("/resources/images-query.jsp") && params.containsKey("port")) {
-//				String id = (String) params.get("port");
-//				bean.restoreToPortId(new Long(id));
-//			} else if (viewId.equals("/resources/images-query.jsp") && params.containsKey("region")) {
-//				String id = (String) params.get("region");
-//				bean.restoreToRegionId(new Long(id));
-//			} else {			
-//				if (!params.containsKey("permlink")) {
-//					if ((bean.getImageId() == null && viewId.equals("/resources/images-detail.jsp")) ||
-//							(bean.getGalleryImages() == null && viewId.equals("/resources/images-query.jsp"))) {
-//						JsfUtils.navigateTo("images");
-//					}
-//				}
-//				String permlink = (String) params.get("permlink");
-//				if (StringUtils.isNullOrEmpty(permlink))
-//					return;			
-//				bean.restoreLink(new Long(permlink));
-//			}
-//		}
+			String image = (String) params.get("image");
+			if (StringUtils.isNullOrEmpty(image))
+				return;
+
+			ImagesBean bean = (ImagesBean) fc.getApplication().createValueBinding("#{ImagesBean}").getValue(fc);
+			bean.gotoImageFromUrl(image);
+			
+		}
 		
 		if (viewId.equals("/database/voyage.jsp"))
 		{

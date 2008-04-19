@@ -34,12 +34,13 @@ public class SecondaryMenuComponent extends UIComponentBase
 		{
 			SecondaryMenuItemComponent menuItem = (SecondaryMenuItemComponent) iterator.next();
 			
-			String menuItemCssClass = "secondary-menu-item-" + level;
-			if (activeMenuItemId != null && activeMenuItemId.equals(menuItem.getMenuId()))
-				menuItemCssClass += "-selected";
-			
 			boolean hasLink = !StringUtils.isNullOrEmpty(menuItem.getHref());
 			
+			String menuItemCssClass = "secondary-menu-item-" + level;
+			
+			if (activeMenuItemId != null && activeMenuItemId.equals(menuItem.getMenuId()))
+				menuItemCssClass += "-selected";
+
 			writer.startElement("div", this);
 			writer.writeAttribute("class", menuItemCssClass, null);
 			if (hasLink)

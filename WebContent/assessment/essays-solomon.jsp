@@ -78,7 +78,8 @@
 					Indeed, one of Solomon’s letters still survives in the British
 					Library and his religious convictions inspired images portraying
 					him, such as the one available in our gallery of images, published
-					originally in 1750 in the <i>Gentleman’s Magazine</i>.</p>
+					originally in 1750 in the
+					<a href="../resources/images-detail.faces?image=solomon">Gentleman’s Magazine</a>.</p>
 
 					<p>Bluett’s memoirs, published in 1734, provide one of the most
 					complete accounts of Solomon’s life. Another is available by

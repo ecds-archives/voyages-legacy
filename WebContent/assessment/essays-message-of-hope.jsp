@@ -101,8 +101,8 @@
 					the first time in 1843 a man named Georg Peter Thompson, and had
 					two children with him; Rosie and Georg. In 1849, she divorced
 					Thompson, and two years later, in 1851, she married Zimmermann, and
-					formed the new family pictured in the image available in our
-					gallery of images. [INSERT Image. LINK TO Image.] Catherine
+					formed the new family pictured <a href="../resources/images-detail.faces?image=mulgrave">
+					in the image</a> available in our gallery of images. Catherine
 					eventually became a teacher and returned to Africa to help her
 					husband in his missionary work in Ghana, offering the world a
 					message of hope from a survivor of the Middle Passage.</p>

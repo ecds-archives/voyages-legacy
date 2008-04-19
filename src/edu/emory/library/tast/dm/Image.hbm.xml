@@ -8,6 +8,8 @@
 			<generator class="native"/>
 		</id>
 		
+		<property name="externalId" column="external_id" />
+
 		<property name="fileName" column="file_name" />
 		<property name="width" column="width" />
 		<property name="height" column="height" />

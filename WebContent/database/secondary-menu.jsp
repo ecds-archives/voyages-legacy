@@ -16,7 +16,8 @@
 		
 			<s:secondaryMenuItem
 				label="Getting started"
-				menuId="start">
+				menuId="start"
+				href="guide.faces">
 			
 				<s:secondaryMenuItem
 					label="Guide"
@@ -47,7 +48,8 @@
 		
 			<s:secondaryMenuItem
 				label="Sources"
-				menuId="sources">
+				menuId="sources"
+				href="sources.faces?type=documentary">
 			
 				<s:secondaryMenuItem
 					label="Documentary Sources"

@@ -17,12 +17,9 @@ import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.images.GalleryImage;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
 
 public class ImagesBean
 {
@@ -77,30 +74,19 @@ public class ImagesBean
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		ImageCategory cat = ImageCategory.loadById(sess, catId);
+		String hql =
+			"select img.id, img.fileName, img.title, img.date " +
+			"from Image img " +
+			"where img.readyToGo = true and img.category.id = " + catId + " " +
+			"order by img.date, img.id";
 		
-		Conditions cond = new Conditions();
-		cond.addCondition(Image.getAttribute("category"), cat, Conditions.OP_EQUALS);
-		cond.addCondition(Image.getAttribute("ready"), new Boolean(true), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Image", cond);
-		
-		qValue.setLimit(size);
-		
-		qValue.addPopulatedAttribute(Image.getAttribute("id"));
-		qValue.addPopulatedAttribute(Image.getAttribute("fileName"));
-		qValue.addPopulatedAttribute(Image.getAttribute("title"));
-		qValue.addPopulatedAttribute(Image.getAttribute("date"));
-		
-		qValue.setOrderBy(new Attribute[] {Image.getAttribute("date"), Image.getAttribute("id")});
-		qValue.setOrder(QueryValue.ORDER_ASC);
-		
-		Object[] images = (Object[])qValue.executeQuery(sess);
-		size = Math.min(size, images.length);
+		List images = sess.createQuery(hql).setMaxResults(size).list();
+		size = Math.min(size, images.size());
 		GalleryImage[] ret = new GalleryImage[size];
-
+		
 		for (int i = 0; i < size; i++)
 		{
-			Object[] row = (Object[])images[i];
+			Object[] row = (Object[])images.get(i);
 			ret[i] = new GalleryImage(
 					row[0].toString(),
 					(String)row[1],
@@ -115,74 +101,6 @@ public class ImagesBean
 
 	}
 	
-//	public String getQueryTitle()
-//	{
-//		
-//		StringBuffer title = new StringBuffer();
-//		
-//		String titleImages = TastResource.getText("images_query_showing");
-//		String titleContaining = TastResource.getText("images_query_title_title");
-//		String titleFrom = TastResource.getText("images_query_title_from");
-//		String titleOriginated = TastResource.getText("images_query_title_originated");
-//		String titleBefore = TastResource.getText("images_query_title_before");
-//		String titleAfter = TastResource.getText("images_query_title_after");
-//		
-//		title.append(titleImages);
-//		
-//		if (workingQuery.getKeyword() != null)
-//		{
-//			String query = workingQuery.getKeyword().trim();
-//			if (workingQuery.getKeyword().length() != 0)
-//			{
-//				title.append(" ");
-//				title.append(titleContaining);
-//				title.append(" '");
-//				title.append(query);
-//				title.append("'");
-//			}
-//		}
-//		
-//		ImageCategory cat = ImageCategory.loadById(null, workingQuery.getCategory());
-//		if (cat != null)
-//		{
-//			title.append(" ");
-//			title.append(titleFrom);
-//			title.append(" ");
-//			title.append(cat.getName());
-//		}
-//
-//		if (workingQuery.getYearFrom() != null && workingQuery.getYearTo() != null)
-//		{
-//			title.append(" ");
-//			title.append(titleOriginated);
-//			title.append(" ");
-//			title.append(workingQuery.getYearFrom());
-//			title.append(" - ");
-//			title.append(workingQuery.getYearTo());
-//		}
-//		else if (workingQuery.getYearFrom() != null)
-//		{
-//			title.append(" ");
-//			title.append(titleOriginated);
-//			title.append(" ");
-//			title.append(titleAfter);
-//			title.append(" ");
-//			title.append(workingQuery.getYearFrom());
-//		}
-//		else if (workingQuery.getYearTo() != null)
-//		{
-//			title.append(" ");
-//			title.append(titleOriginated);
-//			title.append(" ");
-//			title.append(titleBefore);
-//			title.append(" ");
-//			title.append(workingQuery.getYearTo());
-//		}
-//
-//		return title.toString();
-//
-//	}
-
 	public GalleryImage[] getSampleVessels()
 	{
 		return this.getSample(1, INDEX_GALLERY_SAMPLE);
@@ -296,22 +214,28 @@ public class ImagesBean
 		loadGallery();
 	}
 
+	public String gotoImageFromUrl(String externalId)
+	{
+		loadDetail(null, externalId, false);
+		return "images-detail";
+	}
+
 	public String gotoDetailFromGallery()
 	{
-		loadDetail(false);
+		loadDetail(imageId, null, false);
 		return "images-detail";
 	}
 	
 	public String gotoDetailFromDetail()
 	{
-		loadDetail(false);
+		loadDetail(imageId, null, false);
 		return "images-detail";
 	}
 
 	public String gotoDetailFromHomepage()
 	{
 		resetSearchParameters();
-		loadDetail(true);
+		loadDetail(imageId, null, true);
 		loadGallery();
 		return "images-detail";
 	}
@@ -355,7 +279,7 @@ public class ImagesBean
 		{
 			selectedImageIndex--;
 			imageId = galleryImages[selectedImageIndex].getId();
-			loadDetail(false);
+			loadDetail(imageId, null, false);
 		}
 		return null;
 		/*
@@ -378,7 +302,7 @@ public class ImagesBean
 		{
 			selectedImageIndex++;
 			imageId = galleryImages[selectedImageIndex].getId();
-			loadDetail(false);
+			loadDetail(imageId, null, false);
 		}
 		return null;
 		/*
@@ -400,7 +324,7 @@ public class ImagesBean
 		return "images-back";
 	}
 	
-	private void loadDetail(boolean setCategory)
+	private void loadDetail(String imageId, String imageExternalId, boolean setCategory)
 	{
 
 		String imagesBaseUrl = AppConfig.getConfiguration().getString(AppConfig.IMAGES_URL);
@@ -408,12 +332,15 @@ public class ImagesBean
 
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
-
-		Image img = Image.loadById(Integer.parseInt(imageId), sess);
+		
+		Image img = imageId != null ?
+				Image.loadById(Integer.parseInt(imageId), sess) :
+					Image.loadByExternalId(imageExternalId, sess);
 
 		if (img != null)
 		{
 			
+			imageId = this.imageId = String.valueOf(img.getId()); 
 			imageTitle = img.getTitle();
 			imageDescription = img.getDescription();
 			
@@ -885,126 +812,5 @@ public class ImagesBean
 	{
 		this.currentQuery = currentQuery;
 	}	
-
-//	public List getQuerySummary() {
-//		
-//		List query = new ArrayList();
-//	
-//		if (!StringUtils.isNullOrEmpty(this.workingQuery.getSearchQueryTitle())) {
-//			query.add(new QuerySummaryItem("Description containing", this.workingQuery.getSearchQueryTitle()));
-//		}
-//
-//		if (!StringUtils.isNullOrEmpty(this.workingQuery.getSearchQueryDescription())) {
-//			query.add(new QuerySummaryItem("Description containing", this.workingQuery.getSearchQueryDescription()));
-//		}
-//
-//		if (this.workingQuery.getSearchVoyageId() != null) {
-//			query.add(new QuerySummaryItem("Voyage ID", this.workingQuery.getSearchVoyageId().toString()));
-//		}
-//
-//		if (this.workingQuery.getSearchQueryCategory() == ALL_CATEGORIES_ID) {
-//			query.add(new QuerySummaryItem("Category of images", "All categories"));
-//		} else {
-//			for (Iterator iter = categories.iterator(); iter.hasNext();) {
-//				SelectItem element = (SelectItem) iter.next();
-//				if (element.getValue().equals(String.valueOf(this.workingQuery.getSearchQueryCategory()))) {
-//					query.add(new QuerySummaryItem("Category of images", element.getLabel()));
-//					break;
-//				}
-//			}
-//		}
-//
-//		if (this.workingQuery.getSearchQueryFrom() != null || this.workingQuery.getSearchQueryTo() != null) {
-//			String label = null;
-//			if (this.workingQuery.getSearchQueryFrom() == null) {
-//				label = "? - " + this.workingQuery.getSearchQueryTo();
-//			} else if (this.workingQuery.getSearchQueryTo() == null) {
-//				label = this.workingQuery.getSearchQueryFrom() + " - ?";
-//			} else {
-//				label = this.workingQuery.getSearchQueryFrom() + " - " + this.workingQuery.getSearchQueryTo();
-//			}
-//			query.add(new QuerySummaryItem("Date range", label));
-//		}
-//			
-//		return query;
-//	}
-//
-//	
-//	public String permLink() {
-//		
-//		Configuration conf = new Configuration();
-//		conf.addEntry("permlinkSlaves", this.workingQuery);
-//		conf.save();
-//
-//		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
-//		messageBar.setRendered(true);
-//		
-//		return null;
-//	}
-//	
-//	public void restoreLink(Long configId) {
-//		Session session = HibernateUtil.getSession();
-//		Transaction t = session.beginTransaction();
-//		try {
-//			Configuration conf = Configuration.loadConfiguration(configId);
-//			if (conf == null)
-//				return;
-//
-//			if (conf.getEntry("permlinkSlaves") != null) {
-//				ImagesQuery selection = (ImagesQuery) conf.getEntry("permlinkSlaves");
-//				this.currentQuery = (ImagesQuery) selection.clone();
-//				this.workingQuery = (ImagesQuery) selection.clone();
-//				this.loadGallery();
-//				//imageId = "0";
-//				selectedImageIndex = 0;
-//				if (this.getDetailThumbsImages().length != 0) {
-//					imageId = this.getDetailThumbsImages()[0].getId();
-//				} else {
-//					imageId = "0";
-//				}
-//				this.loadDetail(false);
-//			}
-//		} finally {
-//			t.commit();
-//			session.close();
-//		}
-//	}
-//
-//	public MessageBarComponent getMessageBar() {
-//		return messageBar;
-//	}
-//
-//	public void setMessageBar(MessageBarComponent messageBar) {
-//		this.messageBar = messageBar;
-//	}
-//
-//	public void restoreToPortId(Long id) {
-//		this.currentQuery = new ImagesQuery();
-//		this.currentQuery.setSearchPortId(id);
-//		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
-//		this.loadGallery();
-//		selectedImageIndex = 0;
-//		if (this.getDetailThumbsImages().length != 0) {
-//			imageId = this.getDetailThumbsImages()[0].getId();
-//		} else {
-//			imageId = "0";
-//		}
-//		this.loadDetail(false);
-//	}
-//
-//	public void restoreToRegionId(Long id) {
-//		this.currentQuery = new ImagesQuery();
-//		this.currentQuery.setSearchRegionId(id);
-//		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
-//		this.loadGallery();
-//		selectedImageIndex = 0;
-//		if (this.getDetailThumbsImages().length != 0) {
-//			imageId = this.getDetailThumbsImages()[0].getId();
-//		} else {
-//			imageId = "0";
-//		}
-//		this.loadDetail(false);
-//	}
 	
 }
