@@ -74,6 +74,16 @@
 					European and Euro-American powers. For several centuries slaves
 					were the most important reason for contact between Europeans and
 					Africans.</p>
+					
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-02.faces">New Products for Trade in the Americas</a>
+						</td>
+					</tr>
+					</table>
 
 				</s:simpleBox>
 			</td>

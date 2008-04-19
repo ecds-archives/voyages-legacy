@@ -46,6 +46,12 @@
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
 					
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
+					
 					<h2>The Enslavement of Africans</h2>
 
 					<p>But why were the slaves always African? One possible answer
@@ -95,7 +101,18 @@
 					was thus a product of differing constructions of social identity
 					and the ocean-going technology that brought Atlantic societies into
 					sudden contact with each other.</p>
-
+					
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-02.faces">New Products for Trade in the Americas</a>
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-04.faces">Currents Driving the Trade</a>
+						</td>
+					</tr>
+					</table>
+					
 				</s:simpleBox>
 			</td>
 		</tr>

@@ -46,6 +46,12 @@
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
 
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
+
 					<h2>The Decline of the Slave Trade</h2>
 
 					<p>When the transatlantic slave trade came to an end, it did so
@@ -111,6 +117,17 @@
 					centuries, Europe and Africa simply had different conceptions of
 					the peoples for whom slavery (and the slave trade) were
 					inappropriate.</p>
+					
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-09.faces">The Middle Passage</a>
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-11.faces">A Brief Overview of the Trans-Atlantic Slave Trade</a>
+						</td>
+					</tr>
+					</table>
 
 				</s:simpleBox>
 			</td>

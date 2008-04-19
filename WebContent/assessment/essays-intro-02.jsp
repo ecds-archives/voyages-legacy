@@ -45,6 +45,12 @@
 				<s:simpleBox>
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
+
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
 					
 					<h2>New Products for Trade in the Americas</h2>
 
@@ -71,6 +77,17 @@
 					or some form of coerced labor was the only possible option if
 					European consumers were to gain access to more tropical produce and
 					precious metals.</p>
+					
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-01.faces">Introduction</a>
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-03.faces">The Enslavement of Africans</a>
+						</td>
+					</tr>
+					</table>
 
 				</s:simpleBox>
 			</td>

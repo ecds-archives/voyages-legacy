@@ -46,6 +46,12 @@
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
 					
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
+					
 					<h2>African Agency and Resistance</h2>
 
 					<p>If demand for slave-grown produce, social identity, and the
@@ -76,6 +82,17 @@
 					traders avoided this part of the African coast except in those
 					years when demand for slaves, and their prices were particularly
 					high.</p>
+
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-04.faces">Currents Driving the Trade</a>
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-06.faces">Early Slaving Voyages</a>
+						</td>
+					</tr>
+					</table>
 
 				</s:simpleBox>
 			</td>

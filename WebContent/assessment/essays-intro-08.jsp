@@ -46,6 +46,12 @@
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
 
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
+
 					<h2>The African Side of the Trade</h2>
 
 					<p>On the African side, the sheer human and environmental
@@ -112,6 +118,18 @@
 					region. Most American import regions fell between these examples,
 					drawing on a mix of coastal regions that diversified as the trade
 					from Africa grew to incorporate new peoples.</p>
+					
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-07.faces">National Sponsors of Slaving Voyages</a>
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-09.faces">The Enslavement of Africans</a>
+						</td>
+					</tr>
+					</table>
+					
 
 				</s:simpleBox>
 			</td>

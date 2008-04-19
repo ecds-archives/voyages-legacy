@@ -46,6 +46,12 @@
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
 					
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
+					
 					<h2>Currents Driving the Trade</h2>
 
 					<p>The transatlantic slave trade therefore grew from a strong
@@ -79,6 +85,18 @@
 					Gold Coast predominating. Just as Brazil overlapped on the northern
 					system by drawing on the Bight of Benin, the English, French and
 					Dutch carried some slaves from northern Angola into the Caribbean.</p>
+
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-03.faces">The Enslavement of Africans</a>
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-05.faces">The Enslavement of Africans</a>
+						</td>
+					</tr>
+					</table>
+
 
 				</s:simpleBox>
 			</td>

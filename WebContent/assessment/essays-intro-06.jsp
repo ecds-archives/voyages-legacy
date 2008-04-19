@@ -45,6 +45,12 @@
 				<s:simpleBox>
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
+
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
 					
 					<h2>Early Slaving Voyages</h2>
 
@@ -101,6 +107,17 @@
 					thousand a century later. More than eight out of ten Africans
 					pulled into the traffic in the era of the slave trade made their
 					journeys in the century and a half after 1700.</p>
+
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-05.faces">African Agency and Resistance</a>
+						</td>
+						<td class="essay-next">
+							<a href="essays-intro-07.faces">National Sponsors of Slaving Voyages</a>
+						</td>
+					</tr>
+					</table>
 
 				</s:simpleBox>
 			</td>

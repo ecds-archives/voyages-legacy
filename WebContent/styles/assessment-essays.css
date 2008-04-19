@@ -98,3 +98,34 @@ ul.essays-list span.essay-author {
 ul.essays-list span.essay-date {
 	font-style: normal; }	
 	
+/* prev/next */
+
+table.essay-prev-next {
+	margin-bottom: 10px;
+	width: 100%; }
+
+td.essay-prev {
+	padding-left: 5px;
+	text-align: left; }
+
+td.essay-next {
+	padding-right: 5px;
+	text-align: right; }
+
+table.essay-prev-next td.essay-prev a {
+	background-image: url(../images/assessment-icon-arrow-left.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 10px;
+	text-decoration: none; }
+	
+table.essay-prev-next td.essay-next a {
+	background-image: url(../images/assessment-icon-arrow-right.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+	padding-right: 10px;
+	text-decoration: none; }
+
+table.essay-prev-next td.essay-prev a:hover,
+table.essay-prev-next td.essay-next a:hover {
+	text-decoration: underline; }

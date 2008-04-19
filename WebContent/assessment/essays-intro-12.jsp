@@ -45,6 +45,12 @@
 				<s:simpleBox>
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
+
+					<div class="essay-info">
+						<span class="essay-author">David Eltis</span>
+						<span class="essay-location">(Emory University)</span>,
+						<span class="essay-date">2007</span>
+					</div>
 					
 					<h2>Eventual Abolition</h2>
 
@@ -97,6 +103,16 @@
 					illegal laborers into developed countries, often under terms debt
 					slavery, it is inconceivable that a slave traffic could reappear as
 					a central social institution.</p>
+
+					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
+					<tr>
+						<td class="essay-prev">
+							<a href="essays-intro-11.faces">A Brief Overview of the Trans-Atlantic Slave Trade</a>
+						</td>
+						<td class="essay-next">
+						</td>
+					</tr>
+					</table>
 
 				</s:simpleBox>
 			</td>
