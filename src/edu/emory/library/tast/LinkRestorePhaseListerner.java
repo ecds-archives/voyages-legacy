@@ -74,7 +74,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 				return;
 
 			ImagesBean bean = (ImagesBean) JsfUtils.getSessionBean(fc, "ImagesBean");
-			bean.openImageFromopeUrl(image);
+			bean.openImageFromUrl(image);
 			
 		}
 		

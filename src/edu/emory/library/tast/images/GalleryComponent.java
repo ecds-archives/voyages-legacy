@@ -15,7 +15,18 @@ import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
 /**
- * Component which is used for gallery.
+ * There is an important thing to keep in ming in this component.
+ * The problem is that if this component is used in a repeater,
+ * such as t:dataList, there seems to be only one instance created.
+ * This happens only on the images landing page, and all galleries
+ * are mostly the same, so it does not matter so much. But the
+ * problem is in decode and processUpdates. It's important not
+ * to set selectedImageId to null in decode. Otherwise, the
+ * it may be overwritten by the other galleries in t:dataList.
+ * So we not doing something right, but it's too late to fix
+ * it now.
+ * 
+ * @author Jan Zich
  *
  */
 public class GalleryComponent extends UICommand
@@ -87,15 +98,18 @@ public class GalleryComponent extends UICommand
 		{
 			selectedImageId = imageId;
 			queueEvent(new ActionEvent(this));
-		} else {
-			selectedImageId = null;
+		}
+		else
+		{
+			//selectedImageId = null;
 		}
 
 	}
 	
 	public void processUpdates(FacesContext context)
 	{
-		if (selectedImageId != null) {
+		if (selectedImageId != null)
+		{
 			ValueBinding vb = getValueBinding("selectedImageId");
         	if (vb != null) vb.setValue(context, selectedImageId);
 		}

@@ -9,7 +9,7 @@
 
 <t:htmlTag value="div" styleClass="images-gallery-query">
 
-	<s:pictures
+	<s:gallery
 		images="#{ImagesBean.galleryImages}"
 		showLabels="true"
 		columnsCount="5"

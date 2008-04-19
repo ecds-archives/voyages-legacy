@@ -3,10 +3,12 @@ package edu.emory.library.tast.images.site;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIData;
+import javax.faces.model.ListDataModel;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,9 +33,9 @@ public class ImagesBean
 	public static final int DETAIL_THUMBS_COUNT = 8;
 	public static final int POPUP_EXTRA_HEIGHT = 50;
 	public static final int POPUP_EXTRA_WIDTH = 30;
-	public static final int DETAIL_IMAGE_WIDTH = 440;
+	public static final int DETAIL_IMAGE_WIDTH = 400;
 
-	private SelectItem[] categories = null;
+	private ImageCategoryDescriptor categories[] = null;
 	private String[] allCategoryIds = null;
 	private Map categoryNames = new HashMap();
 
@@ -53,6 +55,8 @@ public class ImagesBean
 
 	private UIData linkedVoyagesTable;
 	private VoyageDetailBean voyageBean;
+	
+	private ListDataModel homepageGallerySamples = null;
 
 	public ImagesBean()
 	{
@@ -73,66 +77,41 @@ public class ImagesBean
 
 	}
 
-	// public List getCategories()
-	// {
-	// if (categories == null)
-	// {
-	// categories = new ArrayList();
-	// categories.add(new SelectItem(String.valueOf(ALL_CATEGORIES_ID),
-	// TastResource.getText("images_all_categories")));
-	// List cats = ImageCategory.loadAll(HibernateUtil.getSession(), "id");
-	// Iterator iter = cats.iterator();
-	// while (iter.hasNext())
-	// {
-	// ImageCategory cat = (ImageCategory)iter.next();
-	// categories.add(new SelectItem(cat.getId() + "", cat.getName()));
-	// }
-	// }
-	// return categories;
-	// }
-
 	private void ensureCategoriesLoaded()
 	{
 
-		if (categories != null && allCategoryIds != null)
+		if (categories != null)
 			return;
 
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 
-		String hql = "select img.category.id, img.category.name, count(img) "
-				+ "from Image img " + "where img.readyToGo = true "
-				+ "group by img.category.id, img.category.name "
-				+ "order by img.category.name";
+		String hql =
+			"select img.category.id, img.category.name, count(img) " +
+			"from Image img " +
+			"where img.readyToGo = true " +
+			"group by img.category.id, img.category.name " +
+			"order by img.category.name";
 
 		List cats = sess.createQuery(hql).list();
-
-		categories = new SelectItem[cats.size()];
-		allCategoryIds = new String[cats.size()];
+		
+		allCategoryIds = new String[cats.size()]; 
+		categories = new ImageCategoryDescriptor[cats.size()];
 		categoryNames.clear();
-
+		
 		int catIdx = 0;
 		Iterator iter = cats.iterator();
 		while (iter.hasNext())
 		{
 			Object[] row = (Object[]) iter.next();
 
-			String catId = String.valueOf(row[0]);
+			long catId = ((Long)row[0]).longValue();
 			long imagesCount = ((Long) row[2]).longValue();
+			String name = (String) row[1];
 
-			String label = (String) row[1];
-			if (imagesCount == 1)
-				label += " " + "<span class=\"images-count\">" + "(1 image)"
-						+ "</span>";
-			else
-				label += " " + "<span class=\"images-count\">" + "("
-						+ imagesCount + " images)" + "</span>";
-
-			System.out.println("adding: " + row[0] + " -> " + row[1]);
-
-			categoryNames.put(row[0], row[1]);
-			allCategoryIds[catIdx] = catId;
-			categories[catIdx] = new SelectItem(label, catId);
+			allCategoryIds[catIdx] = String.valueOf(catId);
+			categoryNames.put(new Long(catId), name);
+			categories[catIdx] = new ImageCategoryDescriptor(catId, name, imagesCount);
 
 			catIdx++;
 		}
@@ -142,16 +121,14 @@ public class ImagesBean
 
 	}
 
-	private GalleryImage[] getSample(int catId, int size)
+	private GalleryImage[] getSample(Session sess, long catId, int size)
 	{
 
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-
-		String hql = "select img.id, img.fileName, img.title, img.date "
-				+ "from Image img "
-				+ "where img.readyToGo = true and img.category.id = " + catId
-				+ " " + "order by img.date, img.id";
+		String hql =
+			"select img.id, img.fileName, img.title, img.date " +
+			"from Image img " +
+			"where img.readyToGo = true and img.category.id = " + catId + " " +
+			"order by img.date, img.id";
 
 		List images = sess.createQuery(hql).setMaxResults(size).list();
 		size = Math.min(size, images.size());
@@ -160,133 +137,76 @@ public class ImagesBean
 		for (int i = 0; i < size; i++)
 		{
 			Object[] row = (Object[]) images.get(i);
-			ret[i] = new GalleryImage(row[0].toString(), (String) row[1],
-					(String) row[2], ((Integer) row[3]).intValue() != 0 ? "("
-							+ row[3] + ")" : null);
+			ret[i] = new GalleryImage(
+					row[0].toString(),
+					(String) row[1],
+					(String) row[2],
+					((Integer) row[3]).intValue() != 0 ? "(" + row[3] + ")" : null);
 		}
-
-		transaction.commit();
-		sess.close();
 
 		return ret;
 
 	}
 
-	public GalleryImage[] getSampleVessels()
+	private synchronized void ensureHomepageGallerySamplesLoaded()
 	{
-		return this.getSample(1, INDEX_GALLERY_SAMPLE);
+		
+		if (homepageGallerySamples != null)
+			return;
+		
+		List samples = new LinkedList();
+		homepageGallerySamples = new ListDataModel(samples);
+		
+		Session sess = HibernateUtil.getSession();
+		Transaction trans = sess.beginTransaction();
+		
+		
+			for (int i = 0; i < categories.length; i++)
+			{
+			ImageCategoryDescriptor cat = categories[i];
+			long catId = cat.getId();
+			GalleryImage[] images = getSample(sess, catId, INDEX_GALLERY_SAMPLE);
+			samples.add(new GallerySample(cat.getName(), catId, images));
+		}
+		
+		trans.commit();
+		sess.close();
+		
 	}
 
-	public GalleryImage[] getSampleSlaves()
+	public String openCategoryFromHomepage()
 	{
-		return this.getSample(2, INDEX_GALLERY_SAMPLE);
-	}
-
-	public GalleryImage[] getSampleSlavers()
-	{
-		return this.getSample(3, INDEX_GALLERY_SAMPLE);
-	}
-
-	public GalleryImage[] getSamplePorts()
-	{
-		return this.getSample(4, INDEX_GALLERY_SAMPLE);
-	}
-
-	public GalleryImage[] getSampleRegions()
-	{
-		return this.getSample(5, INDEX_GALLERY_SAMPLE);
-	}
-
-	public GalleryImage[] getSampleManuscripts()
-	{
-		return this.getSample(6, INDEX_GALLERY_SAMPLE);
-	}
-
-	public GalleryImage[] getSamplePresentation()
-	{
-		return this.getSample(99, INDEX_GALLERY_SAMPLE);
-	}
-
-	public String seeVessels()
-	{
+		
+		if (homepageGallerySamples == null)
+			return "images";
+		
+		ensureCategoriesLoaded();
+		
 		resetSearchParameters();
-		currentQuery.setCategory(1);
+		
+		ImageCategoryDescriptor cat = categories[homepageGallerySamples.getRowIndex()]; 
+		workingQuery.setCategory(cat.getId());
+		
 		search();
+		
 		return "images-list";
+		
 	}
 
-	public String seeSlaves()
+	public String openDetailFromHomepage()
 	{
-		resetSearchParameters();
-		currentQuery.setCategory(2);
-		search();
-		return "images-list";
-	}
-
-	public String seeSlavers()
-	{
-		resetSearchParameters();
-		currentQuery.setCategory(3);
-		search();
-		return "images-list";
-	}
-
-	public String seePorts()
-	{
-		resetSearchParameters();
-		currentQuery.setCategory(4);
-		search();
-		return "images-list";
-	}
-
-	public String seeRegions()
-	{
-		resetSearchParameters();
-		currentQuery.setCategory(5);
-		search();
-		return "images-list";
-	}
-
-	public String seeManuscripts()
-	{
-		resetSearchParameters();
-		currentQuery.setCategory(6);
-		search();
-		return "images-list";
-	}
-
-	public String seePresentation()
-	{
-		resetSearchParameters();
-		currentQuery.setCategory(99);
-		search();
-		return "images-list";
-	}
-
-	public String search()
-	{
-		this.workingQuery = (ImagesQuery) this.currentQuery.clone();
-		loadList();
-		return "images-list";
-	}
-
-	public String startAgain()
-	{
-		resetSearchParameters();
-		search();
-		return "images";
+		loadDetail(imageId, null, true);
+		return "images-detail";
 	}
 
 	public void openImageFromVoyageDetail(String imageId)
 	{
-		loadDetail(imageId, null, false);
-		resetSearchParameters();
+		loadDetail(imageId, null, true);
 	}
 
-	public void openImageFromopeUrl(String externalId)
+	public void openImageFromUrl(String externalId)
 	{
-		loadDetail(null, externalId, false);
-		resetSearchParameters();
+		loadDetail(null, externalId, true);
 	}
 
 	public String gotoDetailFromGallery()
@@ -294,25 +214,26 @@ public class ImagesBean
 		loadDetail(imageId, null, false);
 		return "images-detail";
 	}
-
-	public String gotoDetailFromHomepage()
-	{
-		resetSearchParameters();
-		loadDetail(imageId, null, true);
-		return "images-detail";
-	}
-
+	
 	public String gotoVoyage()
 	{
-
-		ImageLinkedVoyageInfo voyageInfo = (ImageLinkedVoyageInfo) linkedVoyagesTable
-				.getRowData();
-
+		ImageLinkedVoyageInfo voyageInfo = (ImageLinkedVoyageInfo) linkedVoyagesTable.getRowData();
 		voyageBean.openVoyageByIid(voyageInfo.getVoyageIid());
 		voyageBean.setPreviousView("images-detail");
-
 		return "voyage-detail";
+	}
+	
+	public String search()
+	{
+		this.currentQuery = (ImagesQuery) this.workingQuery.clone();
+		loadList();
+		return "images-list";
+	}
 
+	public String startAgain()
+	{
+		resetSearchParameters();
+		return "images";
 	}
 
 	private void loadDetail(String imageId, String imageExternalId, boolean setCategory)
@@ -348,6 +269,7 @@ public class ImagesBean
 				ImageCategory cat = img.getCategory();
 				if (cat != null)
 				{
+					resetSearchParameters();
 					workingQuery.setCategory(cat.getId().intValue());
 					currentQuery = (ImagesQuery) workingQuery.clone(); 
 				}
@@ -419,25 +341,20 @@ public class ImagesBean
 		StringBuffer hqlWhere = new StringBuffer();
 		int conditionsCount = 0;
 
-		String[] keywords = StringUtils.extractQueryKeywords(workingQuery
-				.getKeyword(), true);
+		String[] keywords = StringUtils.extractQueryKeywords(workingQuery.getKeyword(), true);
 		if (keywords.length > 0)
 		{
-			if (conditionsCount > 0)
-				hqlWhere.append(" and ");
+			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("(");
 			for (int i = 0; i < keywords.length; i++)
 			{
-				if (i > 0)
-					hqlWhere.append(" and ");
+				if (i > 0) hqlWhere.append(" and ");
 				hqlWhere.append("(");
 				hqlWhere.append("remove_accents(upper(title)) like ");
-				hqlWhere.append("remove_accents(upper(:keyword").append(i)
-						.append("))");
+				hqlWhere.append("remove_accents(upper(:keyword").append(i).append("))");
 				hqlWhere.append(" or ");
 				hqlWhere.append("remove_accents(upper(description)) like ");
-				hqlWhere.append("remove_accents(upper(:keyword").append(i)
-						.append("))");
+				hqlWhere.append("remove_accents(upper(:keyword").append(i).append("))");
 				hqlWhere.append(")");
 			}
 			hqlWhere.append(")");
@@ -447,13 +364,11 @@ public class ImagesBean
 		String[] categories = workingQuery.getCategories();
 		if (categories != null && categories.length != 0)
 		{
-			if (conditionsCount > 0)
-				hqlWhere.append(" and ");
+			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("(");
 			for (int i = 0; i < categories.length; i++)
 			{
-				if (i > 0)
-					hqlWhere.append(" or ");
+				if (i > 0) hqlWhere.append(" or ");
 				hqlWhere.append("category.id = :categoryId").append(i);
 			}
 			hqlWhere.append(")");
@@ -462,32 +377,28 @@ public class ImagesBean
 
 		if (workingQuery.getYearFrom() != null)
 		{
-			if (conditionsCount > 0)
-				hqlWhere.append(" and ");
+			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("date >= :dateFrom");
 			conditionsCount++;
 		}
 
 		if (workingQuery.getYearTo() != null)
 		{
-			if (conditionsCount > 0)
-				hqlWhere.append(" and ");
+			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append("date <= :dateTo");
 			conditionsCount++;
 		}
 
 		if (workingQuery.getSearchPortId() != null)
 		{
-			if (conditionsCount > 0)
-				hqlWhere.append(" and ");
+			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append(":portId = some elements(ports)");
 			conditionsCount++;
 		}
 
 		if (workingQuery.getSearchRegionId() != null)
 		{
-			if (conditionsCount > 0)
-				hqlWhere.append(" and ");
+			if (conditionsCount > 0) hqlWhere.append(" and ");
 			hqlWhere.append(":regionId = some elements(regions)");
 			conditionsCount++;
 		}
@@ -499,8 +410,7 @@ public class ImagesBean
 		// conditionsCount++;
 		// }
 
-		if (conditionsCount > 0)
-			hqlWhere.append(" and ");
+		if (conditionsCount > 0) hqlWhere.append(" and ");
 		hqlWhere.append("readyToGo = true");
 		conditionsCount++;
 
@@ -513,7 +423,6 @@ public class ImagesBean
 		}
 		hsql.append(" order by date asc, id asc");
 
-		System.out.println(hsql.toString());
 
 		Query query = sess.createQuery(hsql.toString());
 
@@ -544,9 +453,11 @@ public class ImagesBean
 		{
 			Object[] row = (Object[]) iter.next();
 			String galleryImageId = row[0].toString();
-			galleryImages[imageIndex++] = new GalleryImage(galleryImageId,
-					(String) row[1], (String) row[2], ((Integer) row[3])
-							.intValue() != 0 ? "(" + row[3] + ")" : null);
+			galleryImages[imageIndex++] = new GalleryImage(
+					galleryImageId,
+					(String) row[1],
+					(String) row[2],
+					((Integer) row[3]).intValue() != 0 ? "(" + row[3] + ")" : null);
 		}
 
 		transaction.commit();
@@ -601,7 +512,7 @@ public class ImagesBean
 
 		boolean allCategories =
 			currentQuery.getCategories() != null &&
-			currentQuery.getCategories().length == allCategoryIds.length;
+			currentQuery.getCategories().length == categories.length;
 
 		boolean hasConditions =
 			!StringUtils.isNullOrEmpty(currentQuery .getKeyword())
@@ -703,14 +614,38 @@ public class ImagesBean
 
 	public SelectItem[] getCategories()
 	{
+		
 		ensureCategoriesLoaded();
-		return categories;
+		
+		SelectItem[] categoriesUi = new SelectItem[categories.length]; 
+		
+		for (int i = 0; i < categories.length; i++)
+		{
+			
+			ImageCategoryDescriptor cat = categories[i];
+			String label = cat.getName();
+
+			if (cat.getImagesCount() == 1)
+				label += " " +
+					"<span class=\"images-count\">" +
+					"(1 image)" + "</span>";
+			else
+				label += " " +
+					"<span class=\"images-count\">" +
+					"(" + cat.getImagesCount() + " images)" + "</span>";
+			
+			categoriesUi[i] = new SelectItem(
+					label,
+					String.valueOf(cat.getId()));
+			
+		}
+		
+		return categoriesUi;
 	}
 
 	public GalleryImage[] getGalleryImages()
 	{
-		if (galleryImages == null)
-			search();
+		if (galleryImages == null) loadList();
 		return galleryImages;
 	}
 
@@ -727,6 +662,12 @@ public class ImagesBean
 	public void setCurrentQuery(ImagesQuery currentQuery)
 	{
 		this.currentQuery = currentQuery;
+	}
+
+	public ListDataModel getHomepageGallerySamples()
+	{
+		ensureHomepageGallerySamplesLoaded();
+		return homepageGallerySamples;
 	}
 
 }
