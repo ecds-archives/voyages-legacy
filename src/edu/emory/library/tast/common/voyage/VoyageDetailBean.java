@@ -721,7 +721,7 @@ public class VoyageDetailBean
 	{
 		FacesContext context = FacesContext.getCurrentInstance();
 		ImagesBean imagesBean = (ImagesBean) context.getApplication().createValueBinding("#{ImagesBean}").getValue(context);
-		imagesBean.openImageFromVoyageDetail(this.voyageId, this.selectedImageId);
+		imagesBean.openImageFromVoyageDetail(this.selectedImageId);
 		return "images-detail";
 	}
 	

@@ -33,8 +33,9 @@
 
 	<s:siteHeader activeSectionId="resources">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
-		<h:outputLink value="slaves.faces"><h:outputText value="Resources" /></h:outputLink>
-		<h:outputText value="Search results" />
+		<h:outputLink value="./index.faces"><h:outputText value="Resources" /></h:outputLink>
+		<h:outputLink value="./images.faces"><h:outputText value="Images"/></h:outputLink>
+		<h:outputText value="#{ImagesBean.listTitle}" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -47,7 +48,7 @@
 				</div>
 			</td>
 			<td class="td-main-panel">
-				<%@ include file="images-query-main-panel.jsp" %>
+				<%@ include file="images-list-main-panel.jsp" %>
 			</td>
 		</tr>
 		</table>

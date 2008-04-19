@@ -3,6 +3,8 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
+<% /*
+
 <t:htmlTag value="div" styleClass="images-nav-path" >
 	<h:commandLink value="Images homepage" action="images" />
 	<h:outputText value="/" />
@@ -10,6 +12,8 @@
 	<h:outputText value="/" />
 	<h:outputText value="Image Detail" />
 </t:htmlTag>
+
+*/ %>
 
 <t:htmlTag value="div" styleClass="image-title">
 	<h:outputText value="#{ImagesBean.imageTitle}" />
@@ -57,7 +61,10 @@
 <t:htmlTag value="tr">
 
 	<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
-		<h:graphicImage url="#{ImagesBean.imageURL}" styleClass="image-detail" onclick="#{ImagesBean.expandJavaScript}"/>
+		<h:graphicImage
+			url="#{ImagesBean.imageURL}"
+			styleClass="image-detail"
+			onclick="#{ImagesBean.expandJavaScript}"/>
 	</t:htmlTag>
 
 	<t:htmlTag value="td" style="padding: 0px 10px 0px 10px; vertical-align: top;">

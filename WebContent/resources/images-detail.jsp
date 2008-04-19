@@ -33,9 +33,10 @@
 
 	<s:siteHeader activeSectionId="resources">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
+		<h:outputLink value="./index.faces"><h:outputText value="Resources" /></h:outputLink>
 		<h:outputLink value="./images.faces"><h:outputText value="Images"/></h:outputLink>
-		<h:outputLink value="./images-query.faces"><h:outputText value="Search results"/></h:outputLink>
-		<h:outputText value="Image detail" />
+		<h:outputLink value="./images-list.faces"><h:outputText value="#{ImagesBean.listTitle}"/></h:outputLink>
+		<h:outputText value="#{ImagesBean.detailTitle}" />
 	</s:siteHeader>
 	
 	<div id="content">

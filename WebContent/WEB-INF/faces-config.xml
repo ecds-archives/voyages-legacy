@@ -759,13 +759,13 @@
 
 	<navigation-rule>
 		<navigation-case>
-			<from-outcome>images-query</from-outcome>
-			<to-view-id>/resources/images-query.jsp</to-view-id>
+			<from-outcome>images-list</from-outcome>
+			<to-view-id>/resources/images-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
-		<from-view-id>/resources/images-query.jsp</from-view-id>
+		<from-view-id>/resources/images-list.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>images-detail</from-outcome>
 			<to-view-id>/resources/images-detail.jsp</to-view-id>
@@ -788,7 +788,7 @@
 		<from-view-id>/resources/images-detail.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>images-back</from-outcome>
-			<to-view-id>/resources/images-query.jsp</to-view-id>
+			<to-view-id>/resources/images-list.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>images</from-outcome>
@@ -805,7 +805,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/resources/images-query.jsp</from-view-id>
+		<from-view-id>/resources/images-list.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>images-back</from-outcome>
 			<to-view-id>/resources/images.jsp</to-view-id>
