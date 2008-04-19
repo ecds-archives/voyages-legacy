@@ -44,7 +44,7 @@
 			<td id="essays-right-column">
 				<s:simpleBox>
 			
-					<h1>Catherine Zimmermann-Mulgrave: A Message of Hope</h1>
+					<h1>Voyages and Applied history</h1>
 
 					<div class="essay-info">
 						<span class="essay-author">Jelmer Vos</span>
@@ -83,28 +83,29 @@
 					that the Rotterdam banking firm of Chabot brokered insurance on
 					cargo carried by the ship Vrouw Maria Isabella, commanded by
 					Carsten Edebool, in 1774. The database confirmed that this vessel
-					set out on a slaving voyage to Africa and Surinam (voyage id 10830
-					[INSERT LINK TO VoyageId 10830]). Moreover, comparing entries from
-					the account books of Mallet Frères with vessel names in the
-					database, it was found that this French predecessor held interests
-					in several vessels connected with the transatlantic slave trade
-					during the late 1700s. Examples of slaving vessels in which Mallet
-					had invested included the Infant d’Angole (owned by Dubois le
-					jeune), La Dame Cécile (owned by J. R. Wirtz & Cie) as well as the
-					Madame, Henri Quatre and Madeleine (all owned by A. F. Delaville &
-					Barthelemy). Similarly, the house of Mallet as well as another
-					French predecessor, Banque André, had business dealings with
-					numerous persons and firms which the database identified as
-					outfitters of slaving voyages. For example, the Nantes houses of
-					Ambroise Perrotin, Auguste Simon, and Fruchard Fils all received
-					substantial loans from Mallet at the time they organized slaving
-					voyages to Africa. Meantime, in 1819 the bank of André negotiated a
-					loan of FF 15,000 with Vasse-Mancel from Le Havre, who five years
-					later organized a slaving voyage to Senegal (voyage id 34411
-					[INSERT LINK TO VoyageId 34411]), while in 1823 they arranged
-					payments on behalf of Philippon & Cie from Le Havre for purchases
-					in Liverpool for a slaving voyage to Brazil (voyage id 34376
-					[INSERT LINK TO VoyageId 34376]).</p>
+					set out on a slaving voyage to Africa and Surinam (<a
+						href="../database/voyage.faces?voyageId=10830">Voyage ID 10830</a>).
+					Moreover, comparing entries from the account books of Mallet Frères
+					with vessel names in the database, it was found that this French
+					predecessor held interests in several vessels connected with the
+					transatlantic slave trade during the late 1700s. Examples of
+					slaving vessels in which Mallet had invested included the Infant
+					d’Angole (owned by Dubois le jeune), La Dame Cécile (owned by J. R.
+					Wirtz & Cie) as well as the Madame, Henri Quatre and Madeleine (all
+					owned by A. F. Delaville & Barthelemy). Similarly, the house of
+					Mallet as well as another French predecessor, Banque André, had
+					business dealings with numerous persons and firms which the
+					database identified as outfitters of slaving voyages. For example,
+					the Nantes houses of Ambroise Perrotin, Auguste Simon, and Fruchard
+					Fils all received substantial loans from Mallet at the time they
+					organized slaving voyages to Africa. Meantime, in 1819 the bank of
+					André negotiated a loan of FF 15,000 with Vasse-Mancel from Le
+					Havre, who five years later organized a slaving voyage to Senegal (<a
+						href="../database/voyage.faces?voyageId=34411">Voyage ID 34411</a>),
+					while in 1823 they arranged payments on behalf of Philippon & Cie
+					from Le Havre for purchases in Liverpool for a slaving voyage to
+					Brazil (<a href="../database/voyage.faces?voyageId=34376">Voyage
+					ID 34376</a>).</p>
 
 					<p>The study by History Associates made use of only three basic
 					variables in the database: vessel, captain, and owner names.

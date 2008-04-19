@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common;
+package edu.emory.library.tast;
 
 import java.util.Map;
 
@@ -40,14 +40,11 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
 			
-			if (!params.containsKey("permlink"))
-				return;
-
 			String permlink = (String) params.get("permlink");
 			if (StringUtils.isNullOrEmpty(permlink))
 				return;
 			
-			SlavesBean bean = (SlavesBean) fc.getApplication().createValueBinding("#{SlavesBean}").getValue(fc);
+			SlavesBean bean = (SlavesBean) JsfUtils.getSessionBean(fc, "SlavesBean");
 			bean.restoreLink(new Long(permlink));
 			
 		}
@@ -58,14 +55,11 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
 			
-			if (!params.containsKey("module"))
-				return;
-
 			String module = (String) params.get("module");
 			if (StringUtils.isNullOrEmpty(module))
 				return;
 			
-			EstimatesSelectionBean bean = (EstimatesSelectionBean) fc.getApplication().createValueBinding("#{EstimatesSelectionBean}").getValue(fc);
+			EstimatesSelectionBean bean = (EstimatesSelectionBean) JsfUtils.getSessionBean(fc, "EstimatesSelectionBean");
 			bean.setSelectedTab(module);
 			
 		}
@@ -75,14 +69,11 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
 			
-			if (!params.containsKey("image"))
-				return;
-
 			String image = (String) params.get("image");
 			if (StringUtils.isNullOrEmpty(image))
 				return;
 
-			ImagesBean bean = (ImagesBean) fc.getApplication().createValueBinding("#{ImagesBean}").getValue(fc);
+			ImagesBean bean = (ImagesBean) JsfUtils.getSessionBean(fc, "ImagesBean");
 			bean.gotoImageFromUrl(image);
 			
 		}
@@ -92,15 +83,32 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
-			String permlink = (String) params.get("permlink");
 
-			// go to default search if no permlink
-			if (StringUtils.isNullOrEmpty(permlink))
+			// go to database search if no link
+			String voyageId = (String) params.get("voyageId");
+			if (StringUtils.isNullOrEmpty(voyageId))
 			{
-				VoyageDetailBean bean = (VoyageDetailBean) fc.getApplication().createValueBinding("#{VoyageDetailBean}").getValue(fc);
-				if (bean.getVoyageIid() == -1) JsfUtils.navigateTo("database");
+				// JsfUtils.navigateTo("database");
 				return;
 			}
+			
+			// convert to an integer, again fall back to db if nonsense
+			int voyageIdInt = 0;
+			try
+			{
+				voyageIdInt = Integer.parseInt(voyageId);
+			}
+			catch (NumberFormatException nfe)
+			{
+				// JsfUtils.navigateTo("database");
+				return;
+			}
+			
+			// and open pretending that we have came from db search
+			VoyageDetailBean bean = (VoyageDetailBean) JsfUtils.getSessionBean(fc, "VoyageDetailBean");
+			bean.setPreviousView("search-interface");
+			bean.setSelectedTab("variables");
+			bean.openVoyageByVoyageId(voyageIdInt);
 			
 		}
 		

@@ -512,7 +512,7 @@ public class TableResultTabBean {
 	 */
 	public void showDetails(ShowDetailsEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		voyageBean.openVoyage(event.getVoyageId().intValue());
+		voyageBean.openVoyageByIid(event.getVoyageId().intValue());
 		voyageBean.setPreviousView("search-interface");
 		
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");

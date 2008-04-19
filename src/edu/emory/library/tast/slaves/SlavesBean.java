@@ -487,7 +487,7 @@ public class SlavesBean {
 		if (iid != -1)
 		{
 
-			voyageBean.openVoyage(iid);
+			voyageBean.openVoyageByIid(iid);
 			voyageBean.setPreviousView("names-interface");
 
 			FacesContext context = FacesContext.getCurrentInstance();

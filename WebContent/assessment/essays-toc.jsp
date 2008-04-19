@@ -98,8 +98,8 @@
 				
 				<s:secondaryMenuItem
 					label="Catherine Zimmermann-Mulgrave: A Message of Hope"
-					href="essays-message-of-hope.faces"
-					menuId="essays-message-of-hope"/>
+					href="essays-mulgrave.faces"
+					menuId="essays-mulgrave"/>
 				
 			</s:secondaryMenuItem>
 
@@ -112,6 +112,11 @@
 					href="essays-applied-history.faces"
 					menuId="essays-applied-history"/>
 			
+				<s:secondaryMenuItem
+					label="Seasonality and the Slave Trade"
+					href="essays-seasonality.faces"
+					menuId="essays-seasonality"/>
+
 			</s:secondaryMenuItem>
 
 		</s:secondaryMenu>

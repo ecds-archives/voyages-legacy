@@ -38,7 +38,7 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="essays-layout">
 		<tr>
 			<td id="essays-left-column">
-				<f:param value="essays-message-of-hope" binding="#{EssaysBean.paramActiveMenuId}" />
+				<f:param value="essays-mulgrave" binding="#{EssaysBean.paramActiveMenuId}" />
 				<%@ include file="essays-toc.jsp" %>
 			</td>
 			<td id="essays-right-column">
@@ -61,7 +61,8 @@
 					off the normal shipping route to Cuba. Contemporary records say
 					that only four slaves had drowned in the wreck, but many more had
 					died at sea, during the Middle Passage. (For additional details,
-					see VoyageID 41890). [LINK TO VoyageId 41890]
+					see <a href="../database/voyage.faces?voyageId=41890">VoyageID
+					41890</a>).
 					
 					<p>Catherine left no accounts of her own life. Most details
 					known about her came from letters authored by her second husband,

@@ -79,7 +79,8 @@
 					Library and his religious convictions inspired images portraying
 					him, such as the one available in our gallery of images, published
 					originally in 1750 in the
-					<a href="../resources/images-detail.faces?image=solomon">Gentleman’s Magazine</a>.</p>
+					<a href="../resources/images-detail.faces?image=solomon">Gentleman’s
+					Magazine</a>.</p>
 
 					<p>Bluett’s memoirs, published in 1734, provide one of the most
 					complete accounts of Solomon’s life. Another is available by
@@ -88,8 +89,9 @@
 					Bluett and Moore, it is possible to trace in the archives the
 					vessel in which Solomon crossed the Atlantic. He sailed in the ship
 					“Arabella,” commanded by the said Captain Pike and owned by William
-					and Henry Hunt, merchants of London. (For more details see VoyageID
-					75094).</p>
+					and Henry Hunt, merchants of London. (For more details see 
+					<a href="../database/voyage.faces?voyageId=75094">VoyageID
+					75094</a>).</p>
 
 					<p>Despite his life trajectory, Solomon’s story has received
 					much less attention than have other known survivors of the Middle

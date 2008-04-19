@@ -11,7 +11,6 @@ import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.w3c.dom.Node;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.table.TableData;
@@ -23,7 +22,6 @@ import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
@@ -34,7 +32,6 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -79,21 +76,40 @@ public class VoyageDetailBean
 	
 	private VoyageRoute route;
 
+	private int mapZoomLevel;
+
 	/**
 	 * Opens given voyage - main function in this bean.
 	 * Called when one clicks on given voyage in table.
 	 * @param voyageIid
 	 */
-	public void openVoyage(long voyageIid)
+	public void openVoyageByIid(long iid)
 	{
-		
-		this.voyageIid = voyageIid;
+		loadVoyage(true, iid, 0);
+	}
+	
+	/**
+	 * This is called when opening the voyage directly from URL.
+	 * @param voyageId
+	 */
+
+	public void openVoyageByVoyageId(int voyageId)
+	{
+		loadVoyage(false, 0, voyageId);
+	}
+
+	private void loadVoyage(boolean loadByIid, long iid, int voyageId)
+	{
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
-		// Load the entire voyage. We will need it several times.
-		Voyage voyage = Voyage.loadById(sess, voyageIid);
+		Voyage voyage = loadByIid ?
+				Voyage.loadById(sess, iid) : 
+					Voyage.loadByVoyageId(sess, voyageId); 
+
+		this.voyageId = voyage.getVoyageid().intValue();
+		this.voyageIid = voyage.getIid().longValue();
 
 		loadGeneralInfo(sess, voyage);
 		loadVoyageData(sess);
@@ -102,7 +118,7 @@ public class VoyageDetailBean
 
 		transaction.commit();
 		sess.close();
-
+		
 	}
 
 	private void loadGeneralInfo(Session sess, Voyage voyage)
@@ -763,6 +779,16 @@ public class VoyageDetailBean
 		return StandardMaps.getZoomLevels(this);
 	}
 	
+	public int getZoomLevel()
+	{
+		return mapZoomLevel;
+	}
+
+	public void setZoomLevel(int mapZoomLevel)
+	{
+		this.mapZoomLevel = mapZoomLevel;
+	}
+
 	/**
 	 * Gets minimap
 	 * @return
@@ -826,29 +852,6 @@ public class VoyageDetailBean
 
 	public long getVoyageIid() {
 		return voyageIid;
-	}
-
-	public static class DetailVoyageQuery implements XMLExportable {
-
-		public Long voyageIid;
-		public String tab;
-		
-		public void restoreFromXML(Node entry) {
-			Node config = XMLUtils.getChildNode(entry, "config");
-			if (config != null) {
-				this.voyageIid = new Long(XMLUtils.getXMLProperty(config, "voyageId"));
-				this.tab = XMLUtils.getXMLProperty(config, "tab");
-			}
-		}
-
-		public String toXML() {
-			StringBuffer buffer = new StringBuffer();
-			buffer.append("<config ");
-			buffer.append("voyageId=\"").append(voyageIid).append("\" ");
-			buffer.append("tab=\"").append(tab).append("\" ");
-			buffer.append("/>");
-			return buffer.toString();
-		}
 	}
 
 }

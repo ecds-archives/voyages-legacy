@@ -38,61 +38,21 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="essays-layout">
 		<tr>
 			<td id="essays-left-column">
+				<f:param value="essays-seasonality " binding="#{EssaysBean.paramActiveMenuId}" />
 				<%@ include file="essays-toc.jsp" %>
 			</td>
 			<td id="essays-right-column">
 				<s:simpleBox>
+			
+					<h1>Seasonality and the Slave Trade</h1>
 
-					<h1>Essays</h1>
+					<div class="essay-info">
+						<span class="essay-author">Steve Behrendt</span>
+						<span class="essay-location">(Victoria University of Wellington)</span>,
+						<span class="essay-date">2008</span>
+					</div>
 					
-					<ul class="essays-list">
-					
-						<li>
-							<div class="essay-title">Catherine Zimmermann-Mulgrave: A Message of Hope</div>
-							<div class="essay-info">
-								<span class="essay-author">Domingues da Silva, Daniel</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">August 2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">Job Ben Solomon and the Curse of Slavery in the Atlantic World</div>
-							<div class="essay-info">
-								<span class="essay-author">Domingues da Silva, Daniel</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">July 2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">A Brief Overview of the Transatlantic Slave Trade</div>
-							<div class="essay-info">
-								<span class="essay-author">David Eltis</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">2007</span>
-							</div>
-						</li>
-						
-						<li>
-							<div class="essay-title">Voyages and Applied History</div>
-							<div class="essay-info">
-								<span class="essay-author">Jelmer Vos</span>,
-								<span class="essay-location">(Emory University)</span>,
-								<span class="essay-date">2007</span>
-							</div>
-						</li>
-					
-						<li>
-							<div class="essay-title">Seasonality and the Slave Trade</div>
-							<div class="essay-info">
-								<span class="essay-author">Steve Behrendt</span>
-								<span class="essay-location">(Victoria University of Wellington)</span>,
-								<span class="essay-date">2008</span>
-							</div>
-						</li>
-
-					</ul>
+					<p style="height: 600px;">TBD ...</p>
 
 				</s:simpleBox>
 			</td>

@@ -538,5 +538,15 @@ public class JsfUtils
 		return request.getRequestContextPath();
 		
 	}
+	
+	public static Object getSessionBean(FacesContext context, String beanName)
+	{
+		return context.getApplication().createValueBinding("#{" + beanName + "}").getValue(context);
+	}
+
+	public static Object getSessionBean(String beanName)
+	{
+		return getSessionBean(FacesContext.getCurrentInstance(), beanName);
+	}
 
 }

@@ -554,7 +554,7 @@ public class ImagesBean
 		
 		ImageLinkedVoyageInfo voyageInfo = (ImageLinkedVoyageInfo) linkedVoyagesTable.getRowData();
 		
-		voyageBean.openVoyage(voyageInfo.getVoyageIid());
+		voyageBean.openVoyageByIid(voyageInfo.getVoyageIid());
 		voyageBean.setPreviousView("images-detail");
 		
 		return "voyage-detail";
