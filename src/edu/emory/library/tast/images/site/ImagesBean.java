@@ -299,7 +299,6 @@ public class ImagesBean
 	{
 		resetSearchParameters();
 		loadDetail(imageId, null, true);
-		loadList();
 		return "images-detail";
 	}
 
@@ -316,19 +315,18 @@ public class ImagesBean
 
 	}
 
-	private void loadDetail(String imageId, String imageExternalId,
-			boolean setCategory)
+	private void loadDetail(String imageId, String imageExternalId, boolean setCategory)
 	{
 
-		String imagesBaseUrl = AppConfig.getConfiguration().getString(
-				AppConfig.IMAGES_URL);
+		String imagesBaseUrl = AppConfig.getConfiguration().getString(AppConfig.IMAGES_URL);
 		imagesBaseUrl = StringUtils.trimEnd(imagesBaseUrl, '/');
 
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 
-		Image img = imageId != null ? Image.loadById(Integer.parseInt(imageId),
-				sess) : Image.loadByExternalId(imageExternalId, sess);
+		Image img = imageId != null ?
+				Image.loadById(Integer.parseInt(imageId), sess) :
+					Image.loadByExternalId(imageExternalId, sess);
 
 		if (img != null)
 		{
@@ -338,8 +336,10 @@ public class ImagesBean
 			imageDescription = img.getDescription();
 			imageDate = String.valueOf(img.getDate());
 
-			imageUrl = "../servlet/thumbnail" + "?i=" + img.getFileName()
-					+ "&w=" + DETAIL_IMAGE_WIDTH + "&h=0";
+			imageUrl = "../servlet/thumbnail" +
+				"?i=" + img.getFileName() +
+				"&w=" + DETAIL_IMAGE_WIDTH +
+				"&h=0";
 
 			imageExpandedURL = imagesBaseUrl + "/" + img.getFileName();
 
@@ -347,25 +347,25 @@ public class ImagesBean
 			{
 				ImageCategory cat = img.getCategory();
 				if (cat != null)
+				{
 					workingQuery.setCategory(cat.getId().intValue());
+					currentQuery = (ImagesQuery) workingQuery.clone(); 
+				}
 			}
 
 			imageInfo = new ArrayList();
 
 			if (img.getDate() != 0)
-				imageInfo.add(new ImageDetailInfo("Date:", String.valueOf(img
-						.getDate())));
+				imageInfo.add(new ImageDetailInfo("Year:", String.valueOf(img.getDate())));
 
 			if (!StringUtils.isNullOrEmpty(img.getCreator()))
-				imageInfo
-						.add(new ImageDetailInfo("Creator:", img.getCreator()));
+				imageInfo.add(new ImageDetailInfo("Creator:", img.getCreator()));
 
 			if (!StringUtils.isNullOrEmpty(img.getSource()))
 				imageInfo.add(new ImageDetailInfo("Source:", img.getSource()));
 
 			if (!StringUtils.isNullOrEmpty(img.getLanguage(), true))
-				imageInfo.add(new ImageDetailInfo("Language:", img
-						.getLanguageName()));
+				imageInfo.add(new ImageDetailInfo("Language:", img.getLanguageName()));
 
 			imageVoyagesInfo = new ArrayList();
 
@@ -595,25 +595,29 @@ public class ImagesBean
 
 		ensureCategoriesLoaded();
 
-		boolean oneCategory = currentQuery.getCategories() != null
-				&& currentQuery.getCategories().length == 1;
+		boolean oneCategory =
+			currentQuery.getCategories() != null &&
+			currentQuery.getCategories().length == 1;
 
-		boolean allCategories = currentQuery.getCategories() != null
-				&& currentQuery.getCategories().length == allCategoryIds.length;
+		boolean allCategories =
+			currentQuery.getCategories() != null &&
+			currentQuery.getCategories().length == allCategoryIds.length;
 
-		boolean hasConditions = !StringUtils.isNullOrEmpty(currentQuery
-				.getKeyword())
+		boolean hasConditions =
+			!StringUtils.isNullOrEmpty(currentQuery .getKeyword())
 				|| currentQuery.getYearFrom() != null
 				|| currentQuery.getYearTo() != null;
 
 		if (allCategories && !hasConditions)
 		{
 			return "All images";
-		} else if (oneCategory && !hasConditions)
+		}
+		else if (oneCategory && !hasConditions)
 		{
 			Long catId = new Long(currentQuery.getCategories()[0]);
 			return "Images of " + categoryNames.get(catId);
-		} else
+		}
+		else
 		{
 			return "Search results";
 		}
@@ -622,7 +626,14 @@ public class ImagesBean
 
 	public String getDetailTitle()
 	{
-		return imageTitle + " (" + imageDate + ")";
+		if (StringUtils.isNullOrEmpty(imageDate))
+		{
+			return imageTitle;
+		}
+		else
+		{
+			return imageTitle + " (" + imageDate + ")";
+		}
 	}
 
 	public String getImageId()
