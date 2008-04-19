@@ -705,18 +705,10 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/images-detail.jsp</from-view-id>
+		<from-view-id>/resources/images-detail.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>list</from-outcome>
-			<to-view-id>/images-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/database/galleryp.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>gotosearch</from-outcome>
-			<to-view-id>/database/search.jsp</to-view-id>
+			<to-view-id>/resources/images-list.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

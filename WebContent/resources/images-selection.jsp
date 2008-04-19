@@ -14,7 +14,7 @@
 				<h:outputText value="Keyword"/>
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px">
-				<h:inputText style="width: 150px;" value="#{ImagesBean.currentQuery.keyword}"/>
+				<h:inputText style="width: 150px;" value="#{ImagesBean.workingQuery.keyword}"/>
 			</t:htmlTag>
 		</t:htmlTag>
 		
@@ -23,9 +23,9 @@
 				<h:outputText value="Time frame"/>
 			</t:htmlTag>
 			<t:htmlTag value="td" style="padding: 5px 0px">
-				<h:inputText style="width: 40px;" value="#{ImagesBean.currentQuery.yearFrom}"/>
+				<h:inputText style="width: 40px;" value="#{ImagesBean.workingQuery.yearFrom}"/>
 				<h:outputText escape="false" value="&nbsp;-&nbsp;"/>
-				<h:inputText style="width: 40px;" value="#{ImagesBean.currentQuery.yearTo}"/>
+				<h:inputText style="width: 40px;" value="#{ImagesBean.workingQuery.yearTo}"/>
 			</t:htmlTag>
 		</t:htmlTag>
 		
@@ -40,7 +40,7 @@
 	<t:htmlTag value="div" style="margin: 5px 0px 0px 0px;">
 		<s:checkboxListExpandable
 			items="#{ImagesBean.categories}"
-			selectedValues="#{ImagesBean.currentQuery.categories}" 
+			selectedValues="#{ImagesBean.workingQuery.categories}" 
 			showSelectAll="false" />
 	</t:htmlTag>
 

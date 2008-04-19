@@ -3,59 +3,28 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<% /*
-
-<t:htmlTag value="div" styleClass="images-nav-path" >
-	<h:commandLink value="Images homepage" action="images" />
-	<h:outputText value="/" />
-	<h:commandLink value="Found images" action="images-query" />
-	<h:outputText value="/" />
-	<h:outputText value="Image Detail" />
-</t:htmlTag>
-
-*/ %>
-
 <t:htmlTag value="div" styleClass="image-title">
 	<h:outputText value="#{ImagesBean.imageTitle}" />
 </t:htmlTag>
 
-<% /*
-
-<t:htmlTag value="table" style="border-collapse: collapse;" styleClass="image-navigation">
-	<t:htmlTag value="tr">
-		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
-			<h:commandLink value="#{res.images_back}" action="#{ImagesBean.back}" styleClass="link-images"/>
-		</t:htmlTag>				
-		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
-			<h:commandLink value="#{res.images_prev_detail_image}" action="#{ImagesBean.gotoPrev}" styleClass="link-images"/>
+<t:htmlTag value="div" styleClass="image-navigation">
+	<t:htmlTag value="table" styleClass="image-navigation">
+		<t:htmlTag value="tr">
+			<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
+				<h:commandLink value="#{ImagesBean.backFromDetailTitle}" action="list" styleClass="link-back-to-list"/>
+			</t:htmlTag>				
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 0px;">
+				<h:commandLink value="#{res.images_prev_detail_image}" action="#{ImagesBean.gotoPrev}" styleClass="link-prev-image"/>
+			</t:htmlTag>
+			<t:htmlTag value="td" style="padding: 0px 10px 0px 10px">
+				<h:outputText value="#{ImagesBean.galleryPositionIndicator}" />
+			</t:htmlTag>				
+			<t:htmlTag value="td" style="padding: 0px;">
+				<h:commandLink value="#{res.images_next_detail_image}" action="#{ImagesBean.gotoNext}" styleClass="link-next-image"/>
+			</t:htmlTag>				
 		</t:htmlTag>
-		<t:htmlTag value="td" style="padding: 0px;">
-			<h:commandLink value="#{res.images_next_detail_image}" action="#{ImagesBean.gotoNext}" styleClass="link-images"/>
-		</t:htmlTag>				
-		<t:htmlTag value="td" style="padding: 0px 0px 0px 10px;">
-			<h:outputText value="#{ImagesBean.galleryPositionIndicator}" />
-		</t:htmlTag>				
 	</t:htmlTag>
 </t:htmlTag>
-
-*/ %>
-
-<% /*
-
-<t:htmlTag value="div" styleClass="images-gallery-detail">
-
-	<s:pictures
-		images="#{ImagesBean.detailThumbsImages}"
-		columnsCount="#{ImagesBean.detailThumbsCount}"
-		showLabels="false"
-		thumbnailHeight="75"
-		thumbnailWidth="75"
-		action="#{ImagesBean.gotoDetailFromDetail}" 
-		selectedImageId="#{ImagesBean.imageId}" />
-
-</t:htmlTag>
-
-*/ %>
 
 <t:htmlTag value="table" style="border-collapse: collapse;">
 <t:htmlTag value="tr">

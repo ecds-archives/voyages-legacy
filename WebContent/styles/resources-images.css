@@ -84,12 +84,58 @@ span.images-count {
 /* query */
 
 div.images-query-title {
-	border-bottom: 1px dotted #165B31; 
 	font-size: 14pt;
 	padding-bottom: 0px;
-	margin-bottom: 10px; }
+	margin-bottom: 0px; }
 	
-/* detail */	
+/* navigation */
+
+div.image-navigation {
+	margin-top: 0px;
+	margin-bottom: 10px;
+	border-bottom: 1px dotted #165B31;
+	border-top: 1px dotted #165B31; }
+
+table.image-navigation {
+	border-collapse: collapse; }
+	
+table.image-navigation a {
+	color: Black;
+	text-decoration: none;
+	display: block;
+	padding-top: 2px;
+	padding-bottom: 2px; }
+	
+table.image-navigation a:hover {
+	text-decoration: underline; }
+
+a.link-back-to-list {
+	padding-left: 15px;
+	padding-right: 5px;
+	background-image: url(../images/resources-icon-arrow-up.png);
+	background-repeat: no-repeat;
+	background-position: left center; }
+
+a.link-prev-image {
+	padding-left: 10px;
+	padding-right: 5px;
+	background-image: url(../images/resources-icon-arrow-left.png);
+	background-repeat: no-repeat;
+	background-position: left center; }
+
+a.link-next-image {
+	padding-left: 5px;
+	padding-right: 10px;
+	background-image: url(../images/resources-icon-arrow-right.png);
+	background-repeat: no-repeat;
+	background-position: right center; }
+	
+/* detail */
+
+div.image-title {
+	font-size: 14pt;
+	padding-bottom: 0px;
+	margin-bottom: 0px; }
 	
 div.images-gallery-detail {
 	margin-bottom: 5px; }
@@ -116,11 +162,7 @@ a.link-images {
 img.image-detail {
 	cursor: pointer;
 	border: 1px solid #165B31; }
-	
-div.image-title {
-	font-size: 14pt;
-	margin-bottom: 10px; }
-	
+
 div.image-description {
 	margin-top: 0px; }
 
@@ -158,123 +200,3 @@ div.images-query {
 div.images-query a {
 	text-decoration: none; }
 
-table.image-navigation {
-	margin-top: 5px;
-	margin-bottom: 5px; }
-	
-table.image-navigation a {
-	border: 1px solid #165B31;
-	background-color: #DEEFE8;
-	color: Black;
-	text-decoration: none;
-	display: block;
-	padding: 2px 5px 2px 5px; }
-	
-table.image-navigation a:hover {
-	background-color: White; }
-	
-div.query-summary-item {
-	border-bottom: 1px solid #B4D6CD;
-	padding-bottom: 5px;
-	margin-bottom: 5px; }
-	
-div.query-summary-item-last {
-	}
-	
-span.query-summary-variable {
-	font-weight: bold; }
-	
-	
-input.button-save {	
-	border:1px solid; 
-	text-decoration:none; 
-	background-color: white; 
-	border-color: #165B31; 
-	background-color: white;}
-
-input.button-save:hover {	
-	background-color: #B4D6CD;}
-	
-	
-div.grid-tooltip {
-    visibility: hidden; 
-    position: absolute; 
-    top: 0;  
-    left: 0; 
-    z-index: 2; 
-    font: normal 8pt sans-serif; 
-    
-}
-
-
-
-table.bubble {
-	display: none;
-	position: absolute; }
- 
-td.bubble-11 {
-	width: 12px;
-	height: 12px;
-	overflow: hidden;
-	background-repeat: no-repeat;
-	background-image: url(../images/bubble-11.png); }	
-	
-td.bubble-11 div {
-	width: 12px;
-	height: 12px; }
-	
-td.bubble-12 {
-	height: 12px;
-	overflow: hidden;
-	background-repeat: repeat-x;
-	background-image: url(../images/bubble-12.png); }	
-	
-td.bubble-13 {
-	width: 32px;
-	height: 12px;
-	overflow: hidden;
-	background-repeat: no-repeat;
-	background-image: url(../images/bubble-13.png); }	
-
-td.bubble-13 div {
-	width: 32px;
-	height: 12px; }
-
-td.bubble-21 {
-	width: 12px;
-	overflow: hidden;
-	background-repeat: repeat-y;
-	background-image: url(../images/bubble-21.png); }	
-	
-td.bubble-22 {
-	color: White;
-	width: 250px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-image: url(../images/bubble-22.png); }	
-	
-td.bubble-23 {
-	width: 32px;
-	overflow: hidden;
-	background-repeat: repeat-y;
-	background-image: url(../images/bubble-23.png); }	
-	
-td.bubble-33 {
-	width: 12px;
-	height: 32px;
-	overflow: hidden;
-	background-repeat: no-repeat;
-	background-image: url(../images/bubble-33.png); }	
-	
-td.bubble-32 {
-	height: 32px;
-	overflow: hidden;
-	background-repeat: repeat-x;
-	background-image: url(../images/bubble-32.png); }	
-	
-td.bubble-31 {
-	width: 32px;
-	height: 32px;
-	overflow: hidden;
-	background-repeat: no-repeat;
-	background-image: url(../images/bubble-31.png); }
