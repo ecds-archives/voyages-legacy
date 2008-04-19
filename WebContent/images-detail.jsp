@@ -101,6 +101,10 @@ select.lookup-select {
 				<td>Description</td>
 				<td><h:inputTextarea rows="5" style="width: 300px;" value="#{AdminImagesBean.imageDescription}" /></td>
 			</tr>
+			<tr>
+				<td>ID for link</td>
+				<td><h:inputText style="width: 300px;" value="#{AdminImagesBean.imageExternalId}" /></td>
+			</tr>
 			</table>
 		
 		</td><td style="width: 20px;"></td><td valign="top">

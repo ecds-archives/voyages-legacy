@@ -84,6 +84,7 @@ public class ImagesBean
 	private String sortBy = "cat.name";
 	
 	private int editedImageId;
+	private String imageExternalId;
 	private String imageTitle;
 	private String imageDescription;
 	private String imageCreator;
@@ -276,6 +277,7 @@ public class ImagesBean
 		// load basic info to bean members
 		imageTitle = image.getTitle();
 		imageDescription = image.getDescription();
+		imageExternalId = image.getExternalId();
 		imageSource = image.getSource();
 		imageDate = image.getDate();
 		imageCreator = image.getCreator();
@@ -418,7 +420,6 @@ public class ImagesBean
 			File file = null;
 			String fileName = null;
 			String imageDir = AppConfig.getConfiguration().getString(AppConfig.IMAGES_DIRECTORY);
-			//String imageDir = "C:";
 			do
 			{
 				fileName = new UidGenerator().generate() + "." + extension;
@@ -500,13 +501,13 @@ public class ImagesBean
 				image = new Image();
 			}
 			
-			//restore some values
+			// basic image metadata
 			image.setTitle(imageTitle);
 			image.setSource(imageSource);
 			image.setCreator(imageCreator);
 			image.setReferences(imageReferences);
 			image.setEmoryLocation(imageEmoryLocation);
-			
+			image.setExternalId(imageExternalId);
 			
 			// we will use it often
 			Configuration appConf = AppConfig.getConfiguration();
@@ -1114,6 +1115,16 @@ public class ImagesBean
 	public void setEditedImageId(int editedImageId)
 	{
 		this.editedImageId = editedImageId;
+	}
+
+	public String getImageExternalId()
+	{
+		return imageExternalId;
+	}
+
+	public void setImageExternalId(String imageExternalId)
+	{
+		this.imageExternalId = imageExternalId;
 	}
 
 }
