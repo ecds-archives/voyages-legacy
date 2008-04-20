@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.SourceInformationLookup;
@@ -132,6 +133,8 @@ public class VoyageDetailBean
 	private void loadVoyageData(Session sess)
 	{
 		
+		String formatDate = AppConfig.getConfiguration().getString(AppConfig.FORMAT_DATE);
+		
 		SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(sess);
 		
 		Conditions c = new Conditions();
@@ -144,7 +147,7 @@ public class VoyageDetailBean
 			VisibleAttributeInterface column = attrs[i];
 			validAttrs.add(column);
 			if (column.getType().equals(VisibleAttribute.DATE_ATTRIBUTE)) {
-				this.detailData.setFormatter(column, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
+				this.detailData.setFormatter(column, new SimpleDateAttributeFormatter(new SimpleDateFormat(formatDate)));
 			}
 		}
 		this.detailData.setVisibleColumns(validAttrs);

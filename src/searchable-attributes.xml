@@ -880,8 +880,7 @@
 		type="simple"
 		id="vymrtimp"
 		userLabel="Slave deaths during middle passage*"
-		spssName="sladvoy"
-		listDescription="Documented or difference between embarked and disembarked captives (data variables)">
+ 		listDescription="Documented or difference between embarked and disembarked captives (data variables)">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
@@ -895,7 +894,6 @@
 		subType="ratio"
 		id="vymrtrat"
 		userLabel="Mortality rate*"
-		spssName="vymrtimp"
 		listDescription="Slave deaths during Middle Passage divided by number of captives leaving Africa">
 		<user-categories>
 			<category name="beginners" />

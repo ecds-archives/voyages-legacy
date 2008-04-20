@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.common.table.ShowDetailsEvent;
 import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.common.table.TableData;
@@ -643,10 +644,11 @@ public class TableResultTabBean {
 	 * @param list
 	 */
 	private void setVisibleAttributesList(List list) {
+		String formatDate = AppConfig.getConfiguration().getString(AppConfig.FORMAT_DATE);
 		for (Iterator iter = list.iterator(); iter.hasNext();) {
 			VisibleAttributeInterface element = (VisibleAttributeInterface) iter.next();
 			if (element.getType().equals("DateAttribute")) {
-				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat("yyyy-MM-dd")));
+				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat(formatDate)));
 			}
 		}
 

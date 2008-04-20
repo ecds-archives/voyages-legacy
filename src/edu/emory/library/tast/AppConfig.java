@@ -11,6 +11,9 @@ public class AppConfig
 	private static Configuration conf = null;
 	
 	public static final String SITE_URL = "site.url";
+	
+	public static final String FORMAT_DATE = "format.date.cvs";
+	public static final String FORMAT_DATE_CVS = "format.date.cvs";
 
 	public static final String IMPORT_CLASSPATH = "import.classpath";
 	public static final String IMPORT_JAVA_MEMORY = "import.java.memory";
