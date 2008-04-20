@@ -705,6 +705,14 @@
 	</navigation-rule>
 
 	<navigation-rule>
+		<from-view-id>/images-detail.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>list</from-outcome>
+			<to-view-id>/images-list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
 		<from-view-id>/resources/images-detail.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>list</from-outcome>

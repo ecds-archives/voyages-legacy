@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.query.QueryValue;
@@ -31,6 +34,10 @@ public class CSVUtils {
 	}
 	
 	private static DictionaryInfo[] getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream, boolean codes , String conditions) throws FileNotFoundException, IOException {
+		
+	    SimpleDateFormat dateFormatter = new SimpleDateFormat(
+	    		AppConfig.getConfiguration().getString(AppConfig.FORMAT_DATE_CVS));
+		
 		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ',');
 		ScrollableResults queryResponse = null;
 		
@@ -70,7 +77,10 @@ public class CSVUtils {
 						row[j - 1] = "";
 					} else {
 						if (!codes) {
-							row[j - 1] = result[j].toString();
+							if (result[j] instanceof Date)
+								row[j - 1] = dateFormatter.format(result[j]);	
+							else
+								row[j - 1] = result[j].toString();	
 							if (result[j] instanceof Dictionary) {
 								if (dictionaries.containsKey(populatedAttrs[j].toString())) {
 									DictionaryInfo info = (DictionaryInfo) dictionaries.get(populatedAttrs[j].toString());
@@ -99,7 +109,10 @@ public class CSVUtils {
 									dictionaries.put(populatedAttrs[j].toString(), info);
 								}
 							} else {
-								row[j - 1] = result[j].toString();
+								if (result[j] instanceof Date)
+									row[j - 1] = dateFormatter.format(result[j]);	
+								else
+									row[j - 1] = result[j].toString();	
 							}
 						}
 					}

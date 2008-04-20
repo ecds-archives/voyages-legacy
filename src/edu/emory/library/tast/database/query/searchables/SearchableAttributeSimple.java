@@ -39,7 +39,6 @@ public abstract class SearchableAttributeSimple extends SearchableAttribute
 			if (i > 0) select.append(", ");
 			if (voyagePrefix != null) select.append(voyagePrefix).append(".");
 			select.append(attributes[i].getName());
-			break;
 		}
 		select.append(")");
 		return select.toString();
