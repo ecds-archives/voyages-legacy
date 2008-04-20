@@ -45,38 +45,94 @@
 				<s:simpleBox>
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
-
+					
 					<div class="essay-info">
 						<span class="essay-author">David Eltis</span>
 						<span class="essay-location">(Emory University)</span>,
 						<span class="essay-date">2007</span>
 					</div>
 					
-					<h2>New Products for Trade in the Americas</h2>
+					<h2>The Enslavement of Africans</h2>
 
-					<p>What can explain this extraordinary migration organized
-					initially on a continent where the institution of slavery had
-					declined or totally disappeared in the centuries prior to Columbian
-					contact, and where, even when it had existed, slavery had never
-					been confined to one group of people? To pose the question
-					differently, why slavery, and why were the slaves carried across
-					the Atlantic exclusively African? The short answer to the first of
-					these two questions is that European expansion to the Americas was
-					to mainly tropical and semi-tropical areas. Several products that
-					were either unknown to Europeans (like tobacco), or occupied a
-					luxury niche in pre-expansion European tastes (like gold or sugar),
-					now fell within the capacity of Europeans to produce more
-					abundantly. But while Europeans could control the production of
-					such exotic goods, it became apparent in the first two centuries
-					after Columbian contact that they chose not to supply the labor
-					that would make such output possible. Free European migrants and
-					indentured servants never traveled across the Atlantic in
-					sufficient numbers to meet the labor needs of expanding
-					plantations. Convicts and prisoners – the only Europeans that were
-					ever forced to migrate – were much fewer in numbers again. Slavery,
-					or some form of coerced labor was the only possible option if
-					European consumers were to gain access to more tropical produce and
-					precious metals.</p>
+					<p>But why were the slaves always African? One possible answer
+					draws on the different values of societies around the Atlantic and,
+					more particularly, the way groups of people involved in creating a
+					transatlantic community saw themselves in relation to others – in
+					short, how they defined their identity. Ocean-going technology
+					brought Europeans into large scale face-to-face contact with
+					peoples who were culturally and physically more different from
+					themselves than any others with whom they had interacted in the
+					previous millennium. In neither Africa, nor Asia could Europeans
+					initially threaten territorial control - with the single and
+					limited exception of western Angola. African capacity to resist
+					Europeans ensured that sugar plantations were established in the
+					Americas rather than in Africa. But if Africans, aided by tropical
+					pathogens, were able to resist the potential invaders, some
+					Africans were prepared to sell slaves to Europeans for use in the
+					Americas. As this suggests, European domination of Amerindians was
+					complete. Indeed, from the European perspective it was much too
+					complete. The epidemiological impact of the Old World destroyed not
+					only native American societies, but also a potential labor supply.</p>
+
+					<p>Every society in history before 1900 provided at least an
+					unthinking answer to the question of which groups are to be
+					considered eligible for enslavement, and normally they did not
+					recruit heavily from their own community. A revolution in
+					ocean-going technology gave Europeans the ability to get continuous
+					access to remote peoples and move them against their will over very
+					long distances. Strikingly, it was much cheaper to obtain slaves in
+					Europe than to send a vessel to an epidemiological hostile coast in
+					Africa without proper harbors and remote from European political
+					financial and military power. That this option was never seriously
+					considered suggests a European inability to enslave other
+					Europeans. Except for a few social deviants, neither Africans nor
+					Europeans would enslave members of their own societies, but in the
+					early modern period, Africans had a somewhat narrower conception of
+					who was eligible for enslavement than had Europeans. It was this
+					difference in definitions in eligibility for enslavement which
+					explains the dramatic rise of the transatlantic slave trade.
+					Slavery, which had disappeared from north-west Europe long before
+					this point, exploded into a far greater significance and intensity
+					than it had possessed at any point in human history. The major
+					cause was a dissonance in African and European ideas of eligibility
+					for enslavement at the root of which lies culture or societal
+					norms, not easily tied to economics. Without this dissonance, there
+					would have been no African slavery in the Americas. The slave trade
+					was thus a product of differing constructions of social identity
+					and the ocean-going technology that brought Atlantic societies into
+					sudden contact with each other.</p>
+					
+					<p>The transatlantic slave trade therefore grew from a strong
+					demand for labor in the Americas driven consumers of plantation
+					produce and precious metals, initially in Europe. Because
+					Amerindians died in large numbers, and insufficient numbers of
+					European were prepared to cross the Atlantic, the form that this
+					demand took was shaped by conceptions of social identity on four
+					continents which ensured that the labor would comprise mainly
+					slaves from Africa. But the central question of which peoples from
+					Africa went to a given region of the Americas, and which group of
+					Europeans or their descendants organized such a movement cannot be
+					answered without an understanding of the wind and ocean currents of
+					the North and South Atlantics. There are two systems of wind and
+					ocean currents in the North and South Atlantic that follow the
+					pattern of giant wheels - one lies north of the equator turns
+					clockwise, while its counterpart to the south turns
+					counterclockwise.i The northern wheel largely shaped the north
+					European slave trade and was dominated by the English. The southern
+					wheel shaped the huge traffic to Brazil which for three centuries
+					was almost the almost exclusive preserve of the largest slave
+					traders of all, the Portuguese.ii Despite their use of the
+					Portuguese flag, slave traders using the southern wheel ran their
+					business from ports in Brazil, not in Portugal. Winds and currents
+					thus ensured two major slave trades – the first rooted in Europe,
+					the second in Brazil. Winds and currents also ensured that Africans
+					carried to Brazil came overwhelmingly from Angola, with south-east
+					Africa and the Bight of Benin playing smaller roles, and that
+					Africans carried to North America, including the Caribbean, left
+					from mainly West Africa with the Bights of Biafra and Benin and the
+					Gold Coast predominating. Just as Brazil overlapped on the northern
+					system by drawing on the Bight of Benin, the English, French and
+					Dutch carried some slaves from northern Angola into the Caribbean.</p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
@@ -84,11 +140,11 @@
 							<a href="essays-intro-01.faces">Introduction</a>
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-03.faces">The Enslavement of Africans</a>
+							<a href="essays-intro-03.faces">African Agency and Resistance</a>
 						</td>
 					</tr>
 					</table>
-
+					
 				</s:simpleBox>
 			</td>
 		</tr>

@@ -45,51 +45,68 @@
 				<s:simpleBox>
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
-					
+
 					<div class="essay-info">
 						<span class="essay-author">David Eltis</span>
 						<span class="essay-location">(Emory University)</span>,
 						<span class="essay-date">2007</span>
 					</div>
 					
-					<h2>African Agency and Resistance</h2>
+					<h2>Empire and Slavery</h2>
 
-					<p>If demand for slave-grown produce, social identity, and the
-					Atlantic environment were three key factors shaping the traffic,
-					the agency of Africans comprised a fourth major influence, but one
-					which has received less attention from historians. The merchants
-					who traded slaves on the coast to European ship captains – for
-					example the Vili traders north of the Congo, the Efik in the Bight
-					of Biafra - and behind them the groups that supplied the slaves,
-					such as the Kingdom of Dahomey, the Aro network and further south,
-					the Imbangala, all had strict conceptions of what made an
-					individual eligible for enslavement. Among such criteria were
-					constructions of gender, definitions of criminal behavior, and
-					conventions for dealing with prisoners of war. The make up of
-					slaves purchased on the Atlantic coast thus reflected whom Africans
-					were prepared to sell as much as whom Euro-American plantation
-					owners wanted to buy. But the victims of the slave trade also had a
-					major impact on the trade. Probably about one in ten slaving
-					voyages experienced major rebellions, the attempts to control which
-					increased the costs of a slave voyage to the point where far fewer
-					slaves entered the traffic than would have been the case without
-					resistance. In addition, vessels from some regions on the coast
-					appear to have been more prone to experience slave uprisings than
-					those from other regions. The rebellion-prone areas were precisely
-					those regions, broadly comprising Upper Guinea (Senegambia, Sierra
-					Leone, and the Windward Coast) which had the least participation in
-					the slave trade. The strong inference is that European slave
-					traders avoided this part of the African coast except in those
-					years when demand for slaves, and their prices were particularly
-					high.</p>
+					<p>In the second half of the eighteenth century six imperial
+					systems straddled the Atlantic each one sustained by a slave trade.
+					The English, French, Portuguese, Spanish, Dutch, and Danish all
+					operated behind trade barriers (termed mercantilistic restrictions)
+					and produced a range of plantation produce - sugar, rice, indigo,
+					coffee, tobacco, alcohol and some precious metals - though with
+					sugar usually the most valuable. It is extraordinary that
+					consumers’ pursuit of this limited range of exotic consumer goods
+					which collectively added so little human welfare could have
+					generated for so long the horrors and misery of the middle passage
+					and plantation slavery. Given the dominance of Portuguese and
+					British slave traders, it is not surprising that Brazil and the
+					British Americas received the most Africans, though both nations
+					became adept at supplying foreign slave systems as well. Throughout
+					the slave trade, more than seven out of every ten slaves went to
+					these regions. The French Americas imported about half the slaves
+					that the British did, with the majority going to Saint-Domingue.
+					The Spanish flag, having dominated in the earliest phase of the
+					trade, before retreating in the face of competition, began to
+					expand again in the late nineteenth century with the growth of the
+					Cuban sugar economy.</p>
+
+					<p>Yet, in the next century - between 1750 and 1850 – every one
+					of these empires had either disappeared or become severely
+					truncated. A massive shift to freer trade meant that instead of six
+					plantation empires controlled from Europe there were now only three
+					plantation complexes, two of which—Brazil and the United
+					States—were independent, and the third, Cuba, was far wealthier and
+					more dynamic than its European owner. Extreme specialization now
+					saw the United States producing most of the world’s cotton, Cuba
+					most of the world’s sugar; and Brazil with a similar dominance in
+					coffee. Slaves thus might disembark in six separate jurisdictions
+					in the Americas in the eighteenth century, but by 1850 they went
+					overwhelmingly to only two areas, Brazil and Cuba, given that
+					American cotton planters drew on Africa for almost none of their
+					labor needs, relying instead on natural population growth and a
+					domestic slave trade. Indeed, overall the United States absorbed
+					only 5 percent of the slaves arriving in the Americas. This massive
+					reorganization of the traffic and the rapid natural growth of the
+					US slave population had little immediate impact on the size of the
+					slave trade. The British, US, Danish and Dutch dropped out of the
+					slave trade, but the decade 1821 to 1830 still saw over 80,000
+					people a year leaving Africa in slave ships. Well over a million
+					more – one tenth of the volume carried off in the slave trade era -
+					followed in the next twenty years.</p>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
-							<a href="essays-intro-04.faces">Currents Driving the Trade</a>
+							<a href="essays-intro-04.faces">Early Slaving Voyages</a>
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-06.faces">Early Slaving Voyages</a>
+							<a href="essays-intro-06.faces">The African Side of the Trade</a>
 						</td>
 					</tr>
 					</table>

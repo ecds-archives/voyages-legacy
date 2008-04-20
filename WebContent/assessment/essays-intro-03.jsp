@@ -52,67 +52,48 @@
 						<span class="essay-date">2007</span>
 					</div>
 					
-					<h2>The Enslavement of Africans</h2>
+					<h2>African Agency and Resistance</h2>
 
-					<p>But why were the slaves always African? One possible answer
-					draws on the different values of societies around the Atlantic and,
-					more particularly, the way groups of people involved in creating a
-					transatlantic community saw themselves in relation to others – in
-					short, how they defined their identity. Ocean-going technology
-					brought Europeans into large scale face-to-face contact with
-					peoples who were culturally and physically more different from
-					themselves than any others with whom they had interacted in the
-					previous millennium. In neither Africa, nor Asia could Europeans
-					initially threaten territorial control - with the single and
-					limited exception of western Angola. African capacity to resist
-					Europeans ensured that sugar plantations were established in the
-					Americas rather than in Africa. But if Africans, aided by tropical
-					pathogens, were able to resist the potential invaders, some
-					Africans were prepared to sell slaves to Europeans for use in the
-					Americas. As this suggests, European domination of Amerindians was
-					complete. Indeed, from the European perspective it was much too
-					complete. The epidemiological impact of the Old World destroyed not
-					only native American societies, but also a potential labor supply.</p>
+					<p>If demand for slave-grown produce, social identity, and the
+					Atlantic environment were three key factors shaping the traffic,
+					the agency of Africans comprised a fourth major influence, but one
+					which has received less attention from historians. The merchants
+					who traded slaves on the coast to European ship captains – for
+					example the Vili traders north of the Congo, the Efik in the Bight
+					of Biafra - and behind them the groups that supplied the slaves,
+					such as the Kingdom of Dahomey, the Aro network and further south,
+					the Imbangala, all had strict conceptions of what made an
+					individual eligible for enslavement. Among such criteria were
+					constructions of gender, definitions of criminal behavior, and
+					conventions for dealing with prisoners of war. The make up of
+					slaves purchased on the Atlantic coast thus reflected whom Africans
+					were prepared to sell as much as whom Euro-American plantation
+					owners wanted to buy. But the victims of the slave trade also had a
+					major impact on the trade. Probably about one in ten slaving
+					voyages experienced major rebellions, the attempts to control which
+					increased the costs of a slave voyage to the point where far fewer
+					slaves entered the traffic than would have been the case without
+					resistance. In addition, vessels from some regions on the coast
+					appear to have been more prone to experience slave uprisings than
+					those from other regions. The rebellion-prone areas were precisely
+					those regions, broadly comprising Upper Guinea (Senegambia, Sierra
+					Leone, and the Windward Coast) which had the least participation in
+					the slave trade. The strong inference is that European slave
+					traders avoided this part of the African coast except in those
+					years when demand for slaves, and their prices were particularly
+					high.</p>
 
-					<p>Every society in history before 1900 provided at least an
-					unthinking answer to the question of which groups are to be
-					considered eligible for enslavement, and normally they did not
-					recruit heavily from their own community. A revolution in
-					ocean-going technology gave Europeans the ability to get continuous
-					access to remote peoples and move them against their will over very
-					long distances. Strikingly, it was much cheaper to obtain slaves in
-					Europe than to send a vessel to an epidemiological hostile coast in
-					Africa without proper harbors and remote from European political
-					financial and military power. That this option was never seriously
-					considered suggests a European inability to enslave other
-					Europeans. Except for a few social deviants, neither Africans nor
-					Europeans would enslave members of their own societies, but in the
-					early modern period, Africans had a somewhat narrower conception of
-					who was eligible for enslavement than had Europeans. It was this
-					difference in definitions in eligibility for enslavement which
-					explains the dramatic rise of the transatlantic slave trade.
-					Slavery, which had disappeared from north-west Europe long before
-					this point, exploded into a far greater significance and intensity
-					than it had possessed at any point in human history. The major
-					cause was a dissonance in African and European ideas of eligibility
-					for enslavement at the root of which lies culture or societal
-					norms, not easily tied to economics. Without this dissonance, there
-					would have been no African slavery in the Americas. The slave trade
-					was thus a product of differing constructions of social identity
-					and the ocean-going technology that brought Atlantic societies into
-					sudden contact with each other.</p>
-					
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
-							<a href="essays-intro-02.faces">New Products for Trade in the Americas</a>
+							<a href="essays-intro-02.faces">The Enslavement of Africans</a>
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-04.faces">Currents Driving the Trade</a>
+							<a href="essays-intro-04.faces">Early Slaving Voyages</a>
 						</td>
 					</tr>
 					</table>
-					
+
 				</s:simpleBox>
 			</td>
 		</tr>

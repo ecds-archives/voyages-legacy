@@ -51,62 +51,52 @@
 						<span class="essay-location">(Emory University)</span>,
 						<span class="essay-date">2007</span>
 					</div>
-					
-					<h2>National Sponsors of Slaving Voyages</h2>
 
-					<p>In the second half of the eighteenth century six imperial
-					systems straddled the Atlantic each one sustained by a slave trade.
-					The English, French, Portuguese, Spanish, Dutch, and Danish all
-					operated behind trade barriers (termed mercantilistic restrictions)
-					and produced a range of plantation produce - sugar, rice, indigo,
-					coffee, tobacco, alcohol and some precious metals - though with
-					sugar usually the most valuable. It is extraordinary that
-					consumers’ pursuit of this limited range of exotic consumer goods
-					which collectively added so little human welfare could have
-					generated for so long the horrors and misery of the middle passage
-					and plantation slavery. Given the dominance of Portuguese and
-					British slave traders, it is not surprising that Brazil and the
-					British Americas received the most Africans, though both nations
-					became adept at supplying foreign slave systems as well. Throughout
-					the slave trade, more than seven out of every ten slaves went to
-					these regions. The French Americas imported about half the slaves
-					that the British did, with the majority going to Saint-Domingue.
-					The Spanish flag, having dominated in the earliest phase of the
-					trade, before retreating in the face of competition, began to
-					expand again in the late nineteenth century with the growth of the
-					Cuban sugar economy.</p>
-
-					<p>Yet, in the next century - between 1750 and 1850 – every one
-					of these empires had either disappeared or become severely
-					truncated. A massive shift to freer trade meant that instead of six
-					plantation empires controlled from Europe there were now only three
-					plantation complexes, two of which—Brazil and the United
-					States—were independent, and the third, Cuba, was far wealthier and
-					more dynamic than its European owner. Extreme specialization now
-					saw the United States producing most of the world’s cotton, Cuba
-					most of the world’s sugar; and Brazil with a similar dominance in
-					coffee. Slaves thus might disembark in six separate jurisdictions
-					in the Americas in the eighteenth century, but by 1850 they went
-					overwhelmingly to only two areas, Brazil and Cuba, given that
-					American cotton planters drew on Africa for almost none of their
-					labor needs, relying instead on natural population growth and a
-					domestic slave trade. Indeed, overall the United States absorbed
-					only 5 percent of the slaves arriving in the Americas. This massive
-					reorganization of the traffic and the rapid natural growth of the
-					US slave population had little immediate impact on the size of the
-					slave trade. The British, US, Danish and Dutch dropped out of the
-					slave trade, but the decade 1821 to 1830 still saw over 80,000
-					people a year leaving Africa in slave ships. Well over a million
-					more – one tenth of the volume carried off in the slave trade era -
-					followed in the next twenty years.</p>
+					<h2>The Middle Passage</h2>
+			
+					<p>Whatever the route taken, conditions on board reflected the
+					outsider status of those held below deck. No European, whether
+					convict, indentured servant or destitute free migrant, was ever
+					subjected to the environment which greeted the typical African
+					slave upon embarkation. The sexes were separated, kept naked,
+					packed close together and the men were chained for long periods. No
+					less than 26 percent of those on board were classed as children, a
+					ratio that no other pre 20th C migration could come close to
+					matching. Except for the illegal period of the trade when
+					conditions at times became even worse, slave traders typically
+					packed two slaves per ton. While a few voyages sailing from Upper
+					Guinea could make a passage to the Americas in three weeks, the
+					average duration from all regions of Africa was just over two
+					months. Most of the space on a slave ship was absorbed by casks of
+					water.vii Crowded vessels sailing to the Caribbean from West Africa
+					first had to sail south before turning north-west and passing
+					through the doldrums. In the nineteenth century improvements in
+					sailing technology eventually cut the time in half, but mortality
+					remained high in this period because of the illegal nature of the
+					business. Throughout the slave trade era, filthy conditions ensured
+					endemic gastro-intestinal diseases, and a range of epidemic
+					pathogens that together with periodic breakouts of violent
+					resistance meant that between 12 and 13 percent of those embarked
+					did not survive the voyage. Modal mortality fell well below mean
+					mortality as catastrophes on a relatively few voyages drove up
+					average shipboard deaths. Crew mortality as a percentage of those
+					going on board, matched slave mortality over the course of the
+					voyage, but as slaves were there for a shorter period of time than
+					the crew, mortality rates for slaves (over time) were the more
+					severe. The eighteenth century world was violent and
+					life-expectancy was short everywhere given that the global
+					mortality revolution was still over the horizon, but the human
+					misery quotient generated by the forced movement of millions of
+					people in slave ships cannot have been matched by any other human
+					activity.</p>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
-							<a href="essays-intro-06.faces">Early Slaving Voyages</a>
+							<a href="essays-intro-06.faces">The African Side of the Trade</a>
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-08.faces">The African Side of the Trade</a>
+							<a href="essays-intro-08.faces">The Ending of the Slave Trade</a>
 						</td>
 					</tr>
 					</table>

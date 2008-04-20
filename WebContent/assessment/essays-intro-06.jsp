@@ -51,73 +51,85 @@
 						<span class="essay-location">(Emory University)</span>,
 						<span class="essay-date">2007</span>
 					</div>
+
+					<h2>The African Side of the Trade</h2>
+
+					<p>On the African side, the sheer human and environmental
+					diversity of the continent makes it difficult to examine the trade
+					from Africa as a whole. The slave trade did not expand, nor,
+					indeed, decline, in all areas of Africa at the same time. Rather, a
+					series of marked expansions (and declines) in individual regions
+					contributed to a more gradual composite trend for sub-Saharan
+					Africa as a whole. Each region that exported slaves experienced a
+					marked upswing in the amount of slaves it supplied for the
+					transatlantic trade and, from that point, the normal pattern was
+					for a region to continue to export large numbers of slaves for a
+					century or more. The three regions that provided the fewest slaves
+					– Senegambia, Sierra Leone, the Windward Coast – reached these
+					higher levels for much shorter periods.</p>
+
+					<p>By the third quarter of the eighteenth century, all regions
+					had undergone an intense expansion of slave exports. A cargo of
+					slaves could be sought at particular points along the entire
+					Western African coast. As the Brazilian coffee and sugar boom got
+					under way near the end of the eighteenth century, slavers rounded
+					the Cape of Good Hope and traveled as far as southeast Africa to
+					fill their vessel’s hold. But while the slave trade pervaded much
+					of the African coast, its focus was no less concentrated in
+					particular African regions than it was among European carriers.
+					West Central Africa, the long stretch of coast south of Cape Lopez
+					and stretching to Benguela, sent more slaves than any other part of
+					Africa every quarter century with the exception of a fifty-year
+					period between 1676 and 1725. From 1751 to 1850, this region
+					supplied nearly half of the entire African labor force in the
+					Americas; in the half century after 1800, West Central Africa sent
+					more slaves than all of the other African regions combined.
+					Overall, the center of gravity of the volume of the trade was
+					located in West Central Africa by 1600. It then shifted northward
+					slowly until about 1730 before gradually returning to its starting
+					point by the mid-nineteenth century.</p>
+
+					<p>Further, slaves left from relatively few ports of
+					embarkation within each African region, even though their origins
+					and ethnicities could be highly diverse. Although Whydah, on the
+					Slave Coast, was once considered the busiest African slaving port
+					on the continent, it now appears that it was surpassed by Luanda,
+					in West Central Africa, and by Bonny, in the Bight of Biafra.
+					Luanda alone dispatched some 1.3 million slaves and these three
+					most active ports together accounted for 2.2 million slave
+					departures. The trade from each of these ports assumed a unique
+					character and followed very different temporal profiles. Luanda
+					actively participated in the slave trade from as early as the
+					1570s, when the Portuguese established a foothold there, through
+					the nineteenth century. Whydah supplied slaves over a shorter
+					period, for about two centuries, and was a dominant port for only
+					thirty years prior to 1727. Bonny, probably the second largest
+					point of embarkation in Africa, sent four out of every five of all
+					the slaves it ever exported in just the eighty years between 1760
+					and 1840. It is not surprising therefore that some systematic links
+					between Africa and the Americas can be perceived. As research on
+					the issue of transatlantic connections has progressed, it has
+					become clear that the distribution of Africans in the New World is
+					no more random than the distribution of Europeans. Eighty percent
+					of the slaves who went to southeast Brazil were taken from West
+					Central Africa. Bahia traded in similar proportions with the Bight
+					of Benin. Cuba represents the other extreme: no African region
+					supplied more than 28 percent of the slave population in this
+					region. Most American import regions fell between these examples,
+					drawing on a mix of coastal regions that diversified as the trade
+					from Africa grew to incorporate new peoples.</p>
 					
-					<h2>Early Slaving Voyages</h2>
-
-					<p>With the key forces shaping the traffic briefly described,
-					we can now turn to a short narrative of the slave trade. The first
-					Africans forced to work in the New World left from Europe at the
-					beginning of the sixteenth century, not from Africa. There were few
-					vessels that carried only slaves on this early route, so that most
-					would have crossed the Atlantic in smaller groups on vessels
-					carrying many other commodities, rather than dedicated slave ships.
-					Such a slave route was possible because an extensive traffic in
-					African slaves from Africa to Europe and the Atlantic islands had
-					existed for half a century before Columbian contact such that ten
-					percent of the population of Lisbon was black in 1455,iii and black
-					slaves were common on large estates in the Portuguese Algarve. The
-					first slave voyage direct from Africa to the Americas probably
-					sailed in 1526.iv Before mid-century, all transatlantic slave ships
-					sold their slaves in the Spanish Caribbean, with the gold mines in
-					Cibao on Hispaniola emerging as a major purchaser. Cartagena, in
-					modern Columbia, appears as the first mainland Spanish American
-					destination for a slave vessel - in the year 1549.v On the African
-					side the great majority of people entering the early slave trade
-					came from the Upper Guinea coast, and moved through Portuguese
-					factories initially in Arguim, and later the Cape Verde islands.
-					Nevertheless, the 1526 voyage set out from the other major
-					Portuguese factory in West Africa - Sao Tome in the Bight of Biafra
-					– though the slaves almost certainly originated in the Congo.</p>
-
-					<p>The slave traffic to Brazil, eventually accounting for about
-					forty percent of the trade, got underway around 1560. Sugar drove
-					this traffic, as Africans gradually replaced the Amerindian labor
-					force on which the early sugar mills (called engenhos) had drawn
-					over the period 1560 to 1620. By the time the Dutch invaded Brazil
-					in 1630, Pernambuco, Bahia and Rio de Janeiro were supplying almost
-					all of the sugar consumed in Europe and almost all the slaves
-					producing it were African. Consistent with the earlier discussion
-					of Atlantic wind and ocean currents, there were by 1640 two major
-					branches of the transatlantic slave trade operating, one to Brazil,
-					and the other to the mainland Spanish Americas, but together they
-					accounted for less 7,500 departures a year from the whole of
-					sub-Saharan Africa, almost all of them by 1600 from west-central
-					Africa. The sugar complex spread to the eastern Caribbean from the
-					beginning of the 1640s. Sugar consumption steadily increased in
-					Europe, and the slave system began two centuries of westward
-					expansion across tropical and sub-tropical North America.vi At the
-					end of the seventeenth century, gold discoveries in first, Minas
-					Gerais and later in Goias and other parts of Brazil began a
-					transformation of the slave trade which triggered further expansion
-					of the business. In Africa, the Bights of Benin and Biafra became
-					major sources of supply, in addition to Angola, and were joined
-					later by the more marginal provenance zones of Sierra Leone, the
-					Windward Coast and South-east Africa. The volume of slaves carried
-					off reached thirty thousand per annum in the 1690s and eighty-five
-					thousand a century later. More than eight out of ten Africans
-					pulled into the traffic in the era of the slave trade made their
-					journeys in the century and a half after 1700.</p>
-
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
-							<a href="essays-intro-05.faces">African Agency and Resistance</a>
+							<a href="essays-intro-05.faces">Empire and Slavery</a>
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-07.faces">National Sponsors of Slaving Voyages</a>
+							<a href="essays-intro-07.faces">The Middle Passage</a>
 						</td>
 					</tr>
 					</table>
+					
 
 				</s:simpleBox>
 			</td>

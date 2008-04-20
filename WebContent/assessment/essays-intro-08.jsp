@@ -52,84 +52,82 @@
 						<span class="essay-date">2007</span>
 					</div>
 
-					<h2>The African Side of the Trade</h2>
+					<h2>The Ending of the Slave Trade</h2>
 
-					<p>On the African side, the sheer human and environmental
-					diversity of the continent makes it difficult to examine the trade
-					from Africa as a whole. The slave trade did not expand, nor,
-					indeed, decline, in all areas of Africa at the same time. Rather, a
-					series of marked expansions (and declines) in individual regions
-					contributed to a more gradual composite trend for sub-Saharan
-					Africa as a whole. Each region that exported slaves experienced a
-					marked upswing in the amount of slaves it supplied for the
-					transatlantic trade and, from that point, the normal pattern was
-					for a region to continue to export large numbers of slaves for a
-					century or more. The three regions that provided the fewest slaves
-					– Senegambia, Sierra Leone, the Windward Coast – reached these
-					higher levels for much shorter periods.</p>
+					<p>When the transatlantic slave trade came to an end, it did so
+					rather suddenly. When the Brazilian authorities began arresting
+					slave ships at the end of 1850, the volume of the traffic of the
+					traffic slipped back to levels not seen for two centuries, and the
+					last transatlantic slave expedition – to Cuba and probably from the
+					Congo River – completed its voyage in 1867. For the last two
+					decades of the traffic, only the Bight of Benin and the Congo
+					region were heavily engaged in the trade. Nevertheless over the
+					whole period of the trade some 12.5 million slaves had been shipped
+					from Africa and 10.7 million had arrived in the Americas, likely
+					the most costly in human life of all of long-distance global
+					migrations. Why the rather sudden end to a business which despite
+					its high morbidity and mortality, had been seen as no different
+					from any other until the late eighteenth century? This is a very
+					large question which it would be presumptuous to attempt to answer
+					here given the massive literature on the topic. One point is clear,
+					the traffic did not fade away; rather it was suppressed at a time
+					when the prices of slaves were rising to levels that had never
+					previously attained. The economic imperatives clearly pointed to a
+					continuation of the trade and without attempts to suppress it, the
+					majority of the millions of people who crossed the Atlantic between
+					1820 and 1920 might well have been African rather than European,
+					and enslaved rather than free. As it was by the 1850s, for most in
+					the Atlantic world, the slave trade had become a despised and
+					illegal traffic. By the 1840s, the British had committed ten
+					percent of their naval resources to suppressing the trade; a scant
+					half century earlier they were the leading slave trading nation.</p>
 
-					<p>By the third quarter of the eighteenth century, all regions
-					had undergone an intense expansion of slave exports. A cargo of
-					slaves could be sought at particular points along the entire
-					Western African coast. As the Brazilian coffee and sugar boom got
-					under way near the end of the eighteenth century, slavers rounded
-					the Cape of Good Hope and traveled as far as southeast Africa to
-					fill their vessel’s hold. But while the slave trade pervaded much
-					of the African coast, its focus was no less concentrated in
-					particular African regions than it was among European carriers.
-					West Central Africa, the long stretch of coast south of Cape Lopez
-					and stretching to Benguela, sent more slaves than any other part of
-					Africa every quarter century with the exception of a fifty-year
-					period between 1676 and 1725. From 1751 to 1850, this region
-					supplied nearly half of the entire African labor force in the
-					Americas; in the half century after 1800, West Central Africa sent
-					more slaves than all of the other African regions combined.
-					Overall, the center of gravity of the volume of the trade was
-					located in West Central Africa by 1600. It then shifted northward
-					slowly until about 1730 before gradually returning to its starting
-					point by the mid-nineteenth century.</p>
-
-					<p>Further, slaves left from relatively few ports of
-					embarkation within each African region, even though their origins
-					and ethnicities could be highly diverse. Although Whydah, on the
-					Slave Coast, was once considered the busiest African slaving port
-					on the continent, it now appears that it was surpassed by Luanda,
-					in West Central Africa, and by Bonny, in the Bight of Biafra.
-					Luanda alone dispatched some 1.3 million slaves and these three
-					most active ports together accounted for 2.2 million slave
-					departures. The trade from each of these ports assumed a unique
-					character and followed very different temporal profiles. Luanda
-					actively participated in the slave trade from as early as the
-					1570s, when the Portuguese established a foothold there, through
-					the nineteenth century. Whydah supplied slaves over a shorter
-					period, for about two centuries, and was a dominant port for only
-					thirty years prior to 1727. Bonny, probably the second largest
-					point of embarkation in Africa, sent four out of every five of all
-					the slaves it ever exported in just the eighty years between 1760
-					and 1840. It is not surprising therefore that some systematic links
-					between Africa and the Americas can be perceived. As research on
-					the issue of transatlantic connections has progressed, it has
-					become clear that the distribution of Africans in the New World is
-					no more random than the distribution of Europeans. Eighty percent
-					of the slaves who went to southeast Brazil were taken from West
-					Central Africa. Bahia traded in similar proportions with the Bight
-					of Benin. Cuba represents the other extreme: no African region
-					supplied more than 28 percent of the slave population in this
-					region. Most American import regions fell between these examples,
-					drawing on a mix of coastal regions that diversified as the trade
-					from Africa grew to incorporate new peoples.</p>
+					<p>One contributing factor to this shift is an extension of an
+					argument made earlier in this essay. In one sense abolition was a
+					shift in conceptions of who was eligible for enslavement. The
+					definition of eligibility had certainly included other Europeans
+					prior to the thirteenth century as a thriving slave trade within
+					Europe saw people from the North captured by other Europeans and
+					carried for sale in the South, many, ultimately, to the prosperous
+					Islamic areas. This situation was little different from what
+					existed in Africa, but, as already noted, by the time of Columbian
+					contact, eligibility had come to exclude other Europeans. Africa
+					was a much larger land mass and home to human populations of more
+					diversity than could be found in any other area of similar size on
+					the globe. It is not surprising that Africans did not have a
+					continent-wide conception of insidership – that is peoples whom one
+					could not enslave. In one sense, the massive and unprecedented flow
+					of racially exclusive coerced labor across the Atlantic is perhaps
+					the result of the differential pace in the evolution of a cultural
+					pan-Europeanness on the one hand, and a pan-Africanism on the
+					other. An interlude of two or three centuries between the former
+					and the latter provided a window of opportunity in which the slave
+					trade rose and fell dramatically. For four centuries from the
+					mid-fifteenth century to 1867, Europeans were not prepared to
+					enslave each other, but were prepared to buy Africans and keep them
+					and their descendants enslaved. Given that “Africa“ scarcely
+					existed as a concept for Africans in any sense before the
+					nineteenth century, most people living in the sub-continent south
+					of the Sahara (as in Europe) were prepared to enslave others from
+					adjacent or distant societies. The corollary of this is that all
+					peoples in history – even the most energetic of slave traders -
+					have had strict definitions of eligibility – and thus
+					ineligibility. “Ineligibility” implies that some basis for
+					abolition has always existed. Between the fifteenth and nineteenth
+					centuries, Europe and Africa simply had different conceptions of
+					the peoples for whom slavery (and the slave trade) were
+					inappropriate.</p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
-							<a href="essays-intro-07.faces">National Sponsors of Slaving Voyages</a>
+							<a href="essays-intro-07.faces">The Middle Passage</a>
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-09.faces">The Enslavement of Africans</a>
+							<a href="essays-intro-09.faces">The Trade’s Influence on Ethnic and Racial Identity</a>
 						</td>
 					</tr>
 					</table>
-					
 
 				</s:simpleBox>
 			</td>

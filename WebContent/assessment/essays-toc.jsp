@@ -29,60 +29,50 @@
 						menuId="essays-intro-01" />
 					
 					<s:secondaryMenuItem
-						label="New Products for Trade in the Americas"
+						label="The Enslavement of Africans"
 						href="essays-intro-02.faces"
 						menuId="essays-intro-02" />
 					
 					<s:secondaryMenuItem
-						label="The Enslavement of Africans"
+						label="African Agency and Resistance"
 						href="essays-intro-03.faces"
 						menuId="essays-intro-03" />
 				
 					<s:secondaryMenuItem
-						label="Currents Driving the Trade"
+						label="Early Slaving Voyages"
 						href="essays-intro-04.faces"
 						menuId="essays-intro-04" />
 				
 					<s:secondaryMenuItem
-						label="African Agency and Resistance"
+						label="Empire and Slavery"
 						href="essays-intro-05.faces"
 						menuId="essays-intro-05" />
 					
 					<s:secondaryMenuItem
-						label="Early Slaving Voyages"
+						label="The African Side of the Trade"
 						href="essays-intro-06.faces"
 						menuId="essays-intro-06" />
 					
 					<s:secondaryMenuItem
-						label="National Sponsors of Slaving Voyages"
+						label="The Middle Passage"
 						href="essays-intro-07.faces"
 						menuId="essays-intro-07" />
 						
 					<s:secondaryMenuItem
-						label="The African Side of the Trade"
+						label="The Ending of the Slave Trade"
 						href="essays-intro-08.faces"
 						menuId="essays-intro-08" />
 	
 					<s:secondaryMenuItem
-						label="The Middle Passage"
+						label="The Trade’s Influence on Ethnic and Racial Identity"
 						href="essays-intro-09.faces"
 						menuId="essays-intro-09" />
 	
 					<s:secondaryMenuItem
-						label="The Decline of the Slave Trade"
+						label="Eventual Abolition"
 						href="essays-intro-10.faces"
 						menuId="essays-intro-10" />
 						
-					<s:secondaryMenuItem
-						label="The Trade’s Influence on Ethnic and Racial Identity"
-						href="essays-intro-11.faces"
-						menuId="essays-intro-11" />
-					
-					<s:secondaryMenuItem
-						label="Eventual Abolition"
-						href="essays-intro-12.faces"
-						menuId="essays-intro-12" />
-
 				</s:secondaryMenuItem>
 				
 			</s:secondaryMenuItem>

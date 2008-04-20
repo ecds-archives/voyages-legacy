@@ -74,13 +74,37 @@
 					European and Euro-American powers. For several centuries slaves
 					were the most important reason for contact between Europeans and
 					Africans.</p>
+
+					<p>What can explain this extraordinary migration organized
+					initially on a continent where the institution of slavery had
+					declined or totally disappeared in the centuries prior to Columbian
+					contact, and where, even when it had existed, slavery had never
+					been confined to one group of people? To pose the question
+					differently, why slavery, and why were the slaves carried across
+					the Atlantic exclusively African? The short answer to the first of
+					these two questions is that European expansion to the Americas was
+					to mainly tropical and semi-tropical areas. Several products that
+					were either unknown to Europeans (like tobacco), or occupied a
+					luxury niche in pre-expansion European tastes (like gold or sugar),
+					now fell within the capacity of Europeans to produce more
+					abundantly. But while Europeans could control the production of
+					such exotic goods, it became apparent in the first two centuries
+					after Columbian contact that they chose not to supply the labor
+					that would make such output possible. Free European migrants and
+					indentured servants never traveled across the Atlantic in
+					sufficient numbers to meet the labor needs of expanding
+					plantations. Convicts and prisoners – the only Europeans that were
+					ever forced to migrate – were much fewer in numbers again. Slavery,
+					or some form of coerced labor was the only possible option if
+					European consumers were to gain access to more tropical produce and
+					precious metals.</p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-02.faces">New Products for Trade in the Americas</a>
+							<a href="essays-intro-02.faces">The Enslavement of Africans</a>
 						</td>
 					</tr>
 					</table>

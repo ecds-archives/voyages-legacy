@@ -45,7 +45,7 @@ public class MainMenu
 				new MainMenuBarPageItem(
 						"essays",
 						"Essays",
-						"assessment/essays-intro.faces"),
+						"assessment/essays-intro-01.faces"),
 				new MainMenuBarPageItem(
 						"estimates",
 						"Estimates",

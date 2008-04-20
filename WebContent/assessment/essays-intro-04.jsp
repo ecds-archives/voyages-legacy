@@ -45,58 +45,79 @@
 				<s:simpleBox>
 			
 					<h1>A Brief Overview of the Trans-Atlantic Slave Trade</h1>
-					
+
 					<div class="essay-info">
 						<span class="essay-author">David Eltis</span>
 						<span class="essay-location">(Emory University)</span>,
 						<span class="essay-date">2007</span>
 					</div>
 					
-					<h2>Currents Driving the Trade</h2>
+					<h2>Early Slaving Voyages</h2>
 
-					<p>The transatlantic slave trade therefore grew from a strong
-					demand for labor in the Americas driven consumers of plantation
-					produce and precious metals, initially in Europe. Because
-					Amerindians died in large numbers, and insufficient numbers of
-					European were prepared to cross the Atlantic, the form that this
-					demand took was shaped by conceptions of social identity on four
-					continents which ensured that the labor would comprise mainly
-					slaves from Africa. But the central question of which peoples from
-					Africa went to a given region of the Americas, and which group of
-					Europeans or their descendants organized such a movement cannot be
-					answered without an understanding of the wind and ocean currents of
-					the North and South Atlantics. There are two systems of wind and
-					ocean currents in the North and South Atlantic that follow the
-					pattern of giant wheels - one lies north of the equator turns
-					clockwise, while its counterpart to the south turns
-					counterclockwise.i The northern wheel largely shaped the north
-					European slave trade and was dominated by the English. The southern
-					wheel shaped the huge traffic to Brazil which for three centuries
-					was almost the almost exclusive preserve of the largest slave
-					traders of all, the Portuguese.ii Despite their use of the
-					Portuguese flag, slave traders using the southern wheel ran their
-					business from ports in Brazil, not in Portugal. Winds and currents
-					thus ensured two major slave trades – the first rooted in Europe,
-					the second in Brazil. Winds and currents also ensured that Africans
-					carried to Brazil came overwhelmingly from Angola, with south-east
-					Africa and the Bight of Benin playing smaller roles, and that
-					Africans carried to North America, including the Caribbean, left
-					from mainly West Africa with the Bights of Biafra and Benin and the
-					Gold Coast predominating. Just as Brazil overlapped on the northern
-					system by drawing on the Bight of Benin, the English, French and
-					Dutch carried some slaves from northern Angola into the Caribbean.</p>
+					<p>With the key forces shaping the traffic briefly described,
+					we can now turn to a short narrative of the slave trade. The first
+					Africans forced to work in the New World left from Europe at the
+					beginning of the sixteenth century, not from Africa. There were few
+					vessels that carried only slaves on this early route, so that most
+					would have crossed the Atlantic in smaller groups on vessels
+					carrying many other commodities, rather than dedicated slave ships.
+					Such a slave route was possible because an extensive traffic in
+					African slaves from Africa to Europe and the Atlantic islands had
+					existed for half a century before Columbian contact such that ten
+					percent of the population of Lisbon was black in 1455,iii and black
+					slaves were common on large estates in the Portuguese Algarve. The
+					first slave voyage direct from Africa to the Americas probably
+					sailed in 1526.iv Before mid-century, all transatlantic slave ships
+					sold their slaves in the Spanish Caribbean, with the gold mines in
+					Cibao on Hispaniola emerging as a major purchaser. Cartagena, in
+					modern Columbia, appears as the first mainland Spanish American
+					destination for a slave vessel - in the year 1549.v On the African
+					side the great majority of people entering the early slave trade
+					came from the Upper Guinea coast, and moved through Portuguese
+					factories initially in Arguim, and later the Cape Verde islands.
+					Nevertheless, the 1526 voyage set out from the other major
+					Portuguese factory in West Africa - Sao Tome in the Bight of Biafra
+					– though the slaves almost certainly originated in the Congo.</p>
+
+					<p>The slave traffic to Brazil, eventually accounting for about
+					forty percent of the trade, got underway around 1560. Sugar drove
+					this traffic, as Africans gradually replaced the Amerindian labor
+					force on which the early sugar mills (called engenhos) had drawn
+					over the period 1560 to 1620. By the time the Dutch invaded Brazil
+					in 1630, Pernambuco, Bahia and Rio de Janeiro were supplying almost
+					all of the sugar consumed in Europe and almost all the slaves
+					producing it were African. Consistent with the earlier discussion
+					of Atlantic wind and ocean currents, there were by 1640 two major
+					branches of the transatlantic slave trade operating, one to Brazil,
+					and the other to the mainland Spanish Americas, but together they
+					accounted for less 7,500 departures a year from the whole of
+					sub-Saharan Africa, almost all of them by 1600 from west-central
+					Africa. The sugar complex spread to the eastern Caribbean from the
+					beginning of the 1640s. Sugar consumption steadily increased in
+					Europe, and the slave system began two centuries of westward
+					expansion across tropical and sub-tropical North America.vi At the
+					end of the seventeenth century, gold discoveries in first, Minas
+					Gerais and later in Goias and other parts of Brazil began a
+					transformation of the slave trade which triggered further expansion
+					of the business. In Africa, the Bights of Benin and Biafra became
+					major sources of supply, in addition to Angola, and were joined
+					later by the more marginal provenance zones of Sierra Leone, the
+					Windward Coast and South-east Africa. The volume of slaves carried
+					off reached thirty thousand per annum in the 1690s and eighty-five
+					thousand a century later. More than eight out of ten Africans
+					pulled into the traffic in the era of the slave trade made their
+					journeys in the century and a half after 1700.</p>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
-							<a href="essays-intro-03.faces">The Enslavement of Africans</a>
+							<a href="essays-intro-03.faces">African Agency and Resistance</a>
 						</td>
 						<td class="essay-next">
-							<a href="essays-intro-05.faces">The Enslavement of Africans</a>
+							<a href="essays-intro-05.faces">Empire and Slavery</a>
 						</td>
 					</tr>
 					</table>
-
 
 				</s:simpleBox>
 			</td>
