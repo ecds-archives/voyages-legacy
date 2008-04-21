@@ -26,17 +26,6 @@
 			</h:selectOneMenu>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
-			<h:outputText value="#{res.estimates_table_columns}"/>
-		</t:htmlTag>
-		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:selectOneMenu value="#{EstimatesTableBean.colGrouping}">
-				<f:selectItem itemLabel="#{res.estimates_table_natcarier}" itemValue="nation" />
-				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
-				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
-				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
-			</h:selectOneMenu>
-		</t:htmlTag>
-		<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
 			<h:outputText value="#{res.estimates_table_cell}"/>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
@@ -52,7 +41,24 @@
 		<t:htmlTag value="td" style="padding-right: 10px;">
 			<h:outputText value="#{res.estimates_table_omitempty}"/>
 		</t:htmlTag>
-		<t:htmlTag value="td">
+	</t:htmlTag>
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" style="padding: 5px 10px 5px 0px;">
+			<h:outputText value="#{res.estimates_table_columns}"/>
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
+			<h:selectOneMenu value="#{EstimatesTableBean.colGrouping}">
+				<f:selectItem itemLabel="#{res.estimates_table_natcarier}" itemValue="nation" />
+				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
+				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
+				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
+			</h:selectOneMenu>
+		</t:htmlTag>
+	</t:htmlTag>
+	<t:htmlTag value="tr">
+		<t:htmlTag value="td" style="padding: 0px;">
+		</t:htmlTag>
+		<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
 			<h:commandButton action="#{EstimatesTableBean.refreshTable}" value="#{res.estimates_table_show}" />
 		</t:htmlTag>
 	</t:htmlTag>

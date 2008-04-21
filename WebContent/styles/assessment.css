@@ -2,18 +2,6 @@ body {
 	background-position: 0px 60px;
 	background-image: url(../images/assessment-bg.png);
 	background-repeat: repeat-x; }
-	
-div#content {
-	}
-	
-td.section-index-right-column {
-	border-left-color: #115676; }
-	
-div.section-index-intro-blank-icon {
-	background-image: url(../images/assessment-index-icon.png); }
-	
-div.section-index-intro-icon-title {
-	color: #115676; }
-	
+
 a {
 	color: #05768A; }

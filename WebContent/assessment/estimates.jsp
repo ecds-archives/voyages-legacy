@@ -13,7 +13,6 @@
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	
 	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/assessment-expandable-box.css" rel="stylesheet" type="text/css">

@@ -81,8 +81,9 @@ div.results-panel {
 	padding: 10px;}
 	
 div.estimates-table-options {
+	margin-top: -5px;
 	margin-bottom: 10px;
-	background-color: #D0EFF0;
+	background-color: #E9F7F8;
 	border: 1px solid #115676;
 	padding: 5px 10px 5px 10px;	}
 

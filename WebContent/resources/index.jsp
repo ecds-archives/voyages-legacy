@@ -27,41 +27,44 @@
 	
 	<div id="content">
 	
-		<table border="0" cellspacing="0" cellpadding="0" class="section-index-layout">
-		<tr>
-			<td class="section-index-left-column">
-				
-				<s:expandableBox text="Quick Start">
-					<h:outputText value="" />
-				</s:expandableBox>
-			</td>
-			<td class="section-index-right-column">
+		<img src="../images/resources-index-title.png" width="350" height="40" border="0" alt="Resources">
 
-				<img src="../images/resources-index-title.png" width="350" height="40" border="0" alt="Resources">
-				
-				<p class="section-index-intro">The Voyages website provides resources that offer some context to the information available in the database of transatlantic slave trading voyages. The slave trade was an activity that involved peoples, places, tools as well as practices that today are unfamiliar to most, or no longer exist. In this page, you will find resources that will help you visualize or imagine these features of the transatlantic slave trade era. The materials are divided into a database of images contemporary to the slave trade and a database of names of Africans rescued from slave vessels in the nineteenth century, during the period of suppression. With permission from various archives and libraries, the images displayed here can be used to observe details of people, places, artifacts and vessels of this time and make connections with the relevant voyages in the main database. The names database was built with documents from the Foreign Office, Series 84 and 313, held by the British National Archives. The details of the vessels from which the liberated Africans were rescued are listed in the voyages database. </p>
+		<p>The Voyages website provides resources that offer some context
+		to the information available in the database of transatlantic slave
+		trading voyages. The slave trade was an activity that involved
+		peoples, places, tools as well as practices that today are unfamiliar
+		to most, or no longer exist. In this page, you will find resources
+		that will help you visualize or imagine these features of the
+		transatlantic slave trade era. The materials are divided into a
+		database of images contemporary to the slave trade and a database of
+		names of Africans rescued from slave vessels in the nineteenth
+		century, during the period of suppression. With permission from
+		various archives and libraries, the images displayed here can be used
+		to observe details of people, places, artifacts and vessels of this
+		time and make connections with the relevant voyages in the main
+		database. The names database was built with documents from the Foreign
+		Office, Series 84 and 313, held by the British National Archives. The
+		details of the vessels from which the liberated Africans were rescued
+		are listed in the voyages database.</p>
 
-				
-				<div class="section-index-intro-icon section-index-intro-blank-icon">
-				
-					<div class="section-index-intro-icon-title"><a href="#">Images</a></div>
-				
-					<p class="section-index-intro">The transatlantic slave trade was an activity that lasted for centuries. As a consequence, the ways it became represented changed through time. Here, you will find images contemporary to the transatlantic slave trade representing places, vessels and artifacts as well as of slavers and slaves.</p>
+		<h2><a href="#">Images</a></h2>
 
-				</div>
+		<p>The transatlantic slave trade was an activity that lasted for
+		centuries. As a consequence, the ways it became represented changed
+		through time. Here, you will find images contemporary to the
+		transatlantic slave trade representing places, vessels and artifacts
+		as well as of slavers and slaves.</p>
 
-				<div class="section-index-intro-icon section-index-intro-blank-icon">
-				
-					<div class="section-index-intro-icon-title"><a href="#">Names Database</a></div>
-				
-					<p class="section-index-intro">The transatlantic slave trade culminated in the age of abolition. In the nineteenth century, mixed-commissioned courts were created around the Atlantic basins to adjudicate vessels illegally engaged in the slave trade. The names database offers a compilation of lists of liberated Africans from slave vessels captured by British cruisers between 1819 and 1845, and taken for adjudication in the courts established in Freetown, Sierra Leone, and in Havana, Cuba.</p>
+		<h2><a href="#">Names Database</a></h2>
 
-				</div>
+		<p>The transatlantic slave trade culminated in the age of
+		abolition. In the nineteenth century, mixed-commissioned courts were
+		created around the Atlantic basins to adjudicate vessels illegally
+		engaged in the slave trade. The names database offers a compilation of
+		lists of liberated Africans from slave vessels captured by British
+		cruisers between 1819 and 1845, and taken for adjudication in the
+		courts established in Freetown, Sierra Leone, and in Havana, Cuba.</p>
 
-			</td>
-		</tr>
-		</table>
-		
 	</div>
 
 </h:form>
