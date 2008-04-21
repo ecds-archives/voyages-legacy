@@ -36,7 +36,7 @@
 		<tr>
 			<td valign="top" id="left-column">
 
-				<%@ include file="secondary-menu.jsp" %>
+				<%@ include file="guide-menu.jsp" %>
 
 			</td>			
 			<td valign="top" id="main-content">
