@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
 <t:htmlTag value="h1"><h:outputText value="Map of regions and ports" /></t:htmlTag>
 
@@ -37,6 +38,6 @@
 				chosenMap="#{MapBean.chosenMap}"/>
 		</aa:zoneJSF>
 	</t:htmlTag>
-	
+
 </t:htmlTag>
 </t:htmlTag>
