@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
-<%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
 <t:htmlTag value="h1"><h:outputText value="Map of regions and ports" /></t:htmlTag>
 
@@ -27,16 +26,14 @@
 	</t:htmlTag>
 
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px; border-left: 0px solid #895D03;">
-		<aa:zoneJSF id="map-legend">
-			<s:legend id="mapLegend-component" 
-				styleClass="map-legend-div"
-				legend="#{MapBean.legend}"
-				refreshAction="#{MapBean.refresh}" 
-				maps="#{MapBean.availableMaps}"
-				availableAttributes="#{MapBean.availableAttributes}"
-				chosenAttribute="#{MapBean.chosenAttribute}"
-				chosenMap="#{MapBean.chosenMap}"/>
-		</aa:zoneJSF>
+		<s:legend id="mapLegend-component" 
+			styleClass="map-legend-div"
+			legend="#{MapBean.legend}"
+			refreshAction="#{MapBean.refresh}" 
+			maps="#{MapBean.availableMaps}"
+			availableAttributes="#{MapBean.availableAttributes}"
+			chosenAttribute="#{MapBean.chosenAttribute}"
+			chosenMap="#{MapBean.chosenMap}"/>
 	</t:htmlTag>
 
 </t:htmlTag>

@@ -94,8 +94,16 @@ public class MainMenu
 						"lessons/lesson-plans.faces"),
 				new MainMenuBarPageItem(
 						"links",
-						"Links",
-						"lessons/links.faces")}),
+						"Links to other resources",
+						"lessons/links.faces"),
+				new MainMenuBarPageItem(
+						"other-resources",
+						"Books",
+						"lessons/books.faces"),
+				new MainMenuBarPageItem(
+						"further-reading",
+						"Further Reading",
+						"lessons/further-reading.faces")}),
 	
 	new MainMenuBarSectionItem(
 			"about",

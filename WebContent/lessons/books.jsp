@@ -21,7 +21,7 @@
 	<s:siteHeader activeSectionId="lessons">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="index.faces"><h:outputText value="Educational Materials" /></h:outputLink>
-		<h:outputText value="Links to other resources" />
+		<h:outputText value="Books" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -32,7 +32,7 @@
 			
 				<div class="left-menu-box">
 					<s:simpleBox>
-						<div class="left-menu-title">LINKS TO OTHER RESOURCES</div>
+						<div class="left-menu-title">BOOKS</div>
 						<s:secondaryMenu>
 							<s:secondaryMenuItem label="In Motion: African-American Migration Experience Schomburg Center (NYPL)" menuId="inmotionaame" href="#inmotionaame" />
 							<s:secondaryMenuItem label="YES / College Board" menuId="collegeboard" href="#collegeboard" />
@@ -47,11 +47,11 @@
 				</div>
 				
 			</td>
-			<td valign="top" style="width: 720px;">
+			<td valign="top" style="width: 680px;">
 
 				<s:simpleBox>
 				
-					<h1>Links to other resources</h1>
+					<h1>Links</h1>
 					
 					<a name="inmotionaame"></a>
 			
