@@ -5,10 +5,28 @@ body {
 
 div#content {
 	padding-top: 10px; }
+	
+table#education-layout {
+	}
+	
+td#education-left-column {
+	vertical-align: top; }
+
+td#education-left-column table.simple-box td.simple-box-22 {
+	width: 180px; }
+
+td#education-right-column {
+	vertical-align: top; }
+
+td#education-right-column table.simple-box td.simple-box-22 {
+	width: 680px; }
 
 h1 {
 	padding: 0px;
 	margin: 0px 0px 10px 0px; }
+	
+p {
+	line-height: 140%; }
 
 div.left-menu-box {
 	padding-left: 10px;

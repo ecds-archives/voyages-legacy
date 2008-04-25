@@ -5,14 +5,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
 	<title>Lesson Plans</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/lessons.css" rel="stylesheet" type="text/css">
-	<link href="../styles/lessons-info.css" rel="stylesheet" type="text/css">
-	<link href="../styles/lessons-lesson-plans.css" rel="stylesheet" type="text/css">
+	<link href="../styles/education.css" rel="stylesheet" type="text/css">
+	<link href="../styles/education-info.css" rel="stylesheet" type="text/css">
+	<link href="../styles/education-lesson-plans.css" rel="stylesheet" type="text/css">
+	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	
 </head>
 <body>
 <f:view>
@@ -26,36 +31,35 @@
 	
 	<div id="content">
 	
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table border="0" cellspacing="0" cellpadding="0" id="education-layout">
 		<tr>
-			<td valign="top" style="width: 210px;">
-			
-				<div class="left-menu-box">
-					<s:simpleBox>
-						<div class="left-menu-title">LINKS PLANS</div>
-						<s:secondaryMenu>
-							<s:secondaryMenuItem label="The 1808 Slave Trade Abolition Deadline" menuId="slave-trade-abolition" href="#slave-trade-abolition" />
-							<s:secondaryMenuItem label="One Country’s Slave Trade" menuId="one-country-trade" href="#one-country-trade" />
-							<s:secondaryMenuItem label="The Countries of the Slave Trade" menuId="countries-of-the-slave-trade" href="#countries-of-the-slave-trade" />
-							<s:secondaryMenuItem label="Slave Trade Memorial" menuId="middle-passage-memorial" href="#middle-passage-memorial" />
-							<s:secondaryMenuItem label="Finding Historical Evidence" menuId="historical-evidence" href="#historical-evidence" />
-							<s:secondaryMenuItem label="Database Scavenger Hunt" menuId="database-scavenger-hunt" href="#database-scavenger-hunt" />
-						</s:secondaryMenu>
-					</s:simpleBox>
-				</div>
-				
+			<td id="education-left-column">
+				<%@ include file="education-menu.jsp" %>
 			</td>
-			<td valign="top" style="width: 680px;">
-
+			<td id="education-right-column">
 				<s:simpleBox>
 				
 					<h1>Lesson plans</h1>
-					
+
+					<p>In order to present the trans-Atlantic slave trade database
+					to a broader audience, particularly a 6-12 grade audience, a
+					dedicated team of teachers and curriculum developers from around
+					the United States developed lesson plans that explore the database.
+					Utilizing the various resources of the website, these lessons plans
+					allow students to engage the history and legacy of the Atlantic
+					slave trade in diverse and meaningful ways. The lessons are all
+					aligned with national standards in history (National Center for
+					History in the Schools), social studies (National Council for the
+					Social Studies), and geography (National Council for Geography
+					Education) and range in both their grade levels and activities. The
+					lessons also suggest readings for more information about the Slave
+					Trade.</p>
+
 					<a name="slave-trade-abolition"></a>
 			
 					<div class="lesson-plan-title">
 						The 1808 Slave Trade Abolition Deadline
-						<span class="download">(<a href="lesson-plans/slave-trade-abolition.pdf">Download in PDF</a>, 152KB)</span>
+						<span class="download">(<a href="lesson-plans/slave-trade-abolition.pdf">Download</a>, PDF, 152KB)</span>
 					</div>
 					<div  class="lesson-plan-detail">
 						<div class="lesson-plan-author">
@@ -129,7 +133,7 @@
 					
 					<div class="lesson-plan-title">
 						One Country’s Slave Trade 
-						<span class="download">(<a href="lesson-plans/one-country-trade.pdf">Download in PDF</a>, 104KB)</span>
+						<span class="download">(<a href="lesson-plans/one-country-trade.pdf">Download</a>, PDF, 104KB)</span>
 					</div>
 					<div class="lesson-plan-detail">
 						<div class="lesson-plan-author">
@@ -201,7 +205,7 @@
 		
 					<div class="lesson-plan-title">
 						The Countries of the Slave Trade 
-						<span class="download">(<a href="lesson-plans/countries-of-the-slave-trade.pdf">Download in PDF</a>, 108KB)</span>
+						<span class="download">(<a href="lesson-plans/countries-of-the-slave-trade.pdf">Download</a>, PDF, 108KB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
@@ -254,7 +258,7 @@
 		
 					<div class="lesson-plan-title">
 						Slave Trade Memorial 
-						<span class="download">(<a href="lesson-plans/middle-passage-memorial.pdf">Download in PDF</a>, 168KB; <a href="lesson-plans/middle-passage-memorial.pdf">Download presentation</a>, 1.2MB)</span>
+						<span class="download">(<a href="lesson-plans/middle-passage-memorial.pdf">Download</a>, PDF, 168KB; <a href="lesson-plans/middle-passage-memorial.pdf">Download presentation</a>, PPT, 1.2MB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
@@ -319,7 +323,7 @@
 		
 					<div class="lesson-plan-title">
 						Finding Historical Evidence
-						<span class="download">(<a href="lesson-plans/historical-evidence.pdf">Download in PDF</a>, 112KB)</span>
+						<span class="download">(<a href="lesson-plans/historical-evidence.pdf">Download</a>, PDF, 112KB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
@@ -400,7 +404,7 @@
 		
 					<div class="lesson-plan-title">
 						Database Scavenger Hunt 
-						<span class="download">(<a href="lesson-plans/database-scavenger-hunt.pdf">Download in PDF</a>, 96KB)</span>
+						<span class="download">(<a href="lesson-plans/database-scavenger-hunt.pdf">Download</a>, PDF, 96KB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
@@ -466,7 +470,6 @@
 					</div>
 		
 				</s:simpleBox>
-
 			</td>
 		</tr>
 		</table>

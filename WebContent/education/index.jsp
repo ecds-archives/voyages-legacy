@@ -13,7 +13,7 @@
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
-	<link href="../styles/lessons.css" rel="stylesheet" type="text/css">
+	<link href="../styles/education.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	

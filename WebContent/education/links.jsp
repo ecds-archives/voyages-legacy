@@ -5,14 +5,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
 	<title>Links</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/lessons.css" rel="stylesheet" type="text/css">
-	<link href="../styles/lessons-info.css" rel="stylesheet" type="text/css">
-	<link href="../styles/lessons-links.css" rel="stylesheet" type="text/css">
+	<link href="../styles/education.css" rel="stylesheet" type="text/css">
+	<link href="../styles/education-info.css" rel="stylesheet" type="text/css">
+	<link href="../styles/education-links.css" rel="stylesheet" type="text/css">
+	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+
 </head>
 <body>
 <f:view>
@@ -26,29 +31,12 @@
 	
 	<div id="content">
 	
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table border="0" cellspacing="0" cellpadding="0" id="education-layout">
 		<tr>
-			<td valign="top" style="width: 210px;">
-			
-				<div class="left-menu-box">
-					<s:simpleBox>
-						<div class="left-menu-title">LINKS TO OTHER RESOURCES</div>
-						<s:secondaryMenu>
-							<s:secondaryMenuItem label="In Motion: African-American Migration Experience Schomburg Center (NYPL)" menuId="inmotionaame" href="#inmotionaame" />
-							<s:secondaryMenuItem label="YES / College Board" menuId="collegeboard" href="#collegeboard" />
-							<s:secondaryMenuItem label="Thirteen / National Teacher Training Institute" menuId="thirteen" href="#thirteen" />
-							<s:secondaryMenuItem label="National Center for History in the Schools" menuId="nchs" href="#nchs" />
-							<s:secondaryMenuItem label="Slavery in America" menuId="slaveryinamerica" href="#slaveryinamerica" />
-							<s:secondaryMenuItem label="Breaking the Silence / Anti-Slavery" menuId="antislavery" href="#antislavery" />
-							<s:secondaryMenuItem label="Understanding Slavery" menuId="understandingslavery" href="#understandingslavery" />
-							<s:secondaryMenuItem label="Abolition of the Slave Trade / BBC" menuId="bbc" href="#bbc" />
-						</s:secondaryMenu>
-					</s:simpleBox>
-				</div>
-				
+			<td id="education-left-column">
+				<%@ include file="education-menu.jsp" %>
 			</td>
-			<td valign="top" style="width: 720px;">
-
+			<td id="education-right-column">
 				<s:simpleBox>
 				
 					<h1>Links to other resources</h1>
@@ -266,7 +254,6 @@
 					</table>
 
 				</s:simpleBox>
-
 			</td>
 		</tr>
 		</table>
