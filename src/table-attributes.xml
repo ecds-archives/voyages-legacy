@@ -95,14 +95,14 @@
 			<attribute name="fate2"/>
 		</attributes>
 	</table-attribute>
-	<table-attribute tabs="1,2" id="fate4" userCategory="beginners,general" userLabel="Outcome of voyage if ship captured*">
-		<attributes>
-			<attribute name="fate4"/>
-		</attributes>
-	</table-attribute>		
-	<table-attribute tabs="1,2" id="fate3" userCategory="beginners,general" userLabel="Outcome of voyage for owner*">
+	<table-attribute tabs="1,2" id="fate3" userCategory="beginners,general" userLabel="Outcome of voyage if ship captured*">
 		<attributes>
 			<attribute name="fate3"/>
+		</attributes>
+	</table-attribute>		
+	<table-attribute tabs="1,2" id="fate4" userCategory="beginners,general" userLabel="Outcome of voyage for owner*">
+		<attributes>
+			<attribute name="fate4"/>
 		</attributes>
 	</table-attribute>
 	<table-attribute tabs="1,2" id="resistance" userCategory="beginners,general" userLabel="African resistance">
