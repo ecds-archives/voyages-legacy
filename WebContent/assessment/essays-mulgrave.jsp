@@ -47,7 +47,7 @@
 					<h1>Catherine Zimmermann-Mulgrave: A Message of Hope</h1>
 					
 					<div class="essay-info">
-						<span class="essay-author">Domingues da Silva, Daniel</span>
+						<span class="essay-author">Daniel Domingues da Silva</span>
 						<span class="essay-location">(Emory University)</span>,
 						<span class="essay-date">August 2007</span>
 					</div>
