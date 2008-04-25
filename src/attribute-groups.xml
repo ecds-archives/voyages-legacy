@@ -99,23 +99,23 @@
 			<table-attribute id="plac2tra"/>
 			<table-attribute id="plac3tra"/>
 			<table-attribute id="mjbyptimp"/>
-	<!-- 	<table-attribute id="regem1"/>
-			<table-attribute id="regem2"/>
-			<table-attribute id="regem3"/>
-			<table-attribute id="majbyimp"/>-->
 			<table-attribute id="npafttra"/>
 			<table-attribute id="sla1port"/>
 			<table-attribute id="adpsale1"/>
 			<table-attribute id="adpsale2"/>
 			<table-attribute id="mjslptimp"/>
-	<!-- 
+			<table-attribute id="portret"/>
+			<!-- All Regions Below Were Disabled (Enabled by Paul's request on 04/23/2008 by Pawel) -->
+			<table-attribute id="deptregimp"/>
+	    	<table-attribute id="regem1"/>
+			<table-attribute id="regem2"/>
+			<table-attribute id="regem3"/>
+			<table-attribute id="majbyimp"/>
 			<table-attribute id="regdis1"/>
 			<table-attribute id="regdis2"/>
 			<table-attribute id="regdis3"/>
-			<table-attribute id="mjselimp"/>-->
-			<table-attribute id="portret"/>
-<!-- 			
-			<table-attribute id="retrnreg"/>-->
+			<table-attribute id="mjselimp"/>
+			<table-attribute id="retrnreg"/>
 		</table-attributes>
 	</group>
 	<group id="dates" userLabel="Voyage Dates">
