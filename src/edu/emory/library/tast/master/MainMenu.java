@@ -81,7 +81,7 @@ public class MainMenu
 	new MainMenuBarSectionItem(
 			"lessons",
 			"Educational Materials",
-			"lessons/index.faces",
+			"education/index.faces",
 			"images/main-menu/lessons.png",
 			"images/main-menu/lessons-highlighted.png",
 			"images/main-menu/lessons-active.png",
@@ -89,21 +89,21 @@ public class MainMenu
 			"lessons",
 			new MainMenuBarPageItem[] {
 				new MainMenuBarPageItem(
-						"lesson-plans",
+						"education-lesson-plans",
 						"Lesson plans",
-						"lessons/lesson-plans.faces"),
+						"education/lesson-plans.faces"),
 				new MainMenuBarPageItem(
-						"links",
+						"education-links",
 						"Links to other resources",
-						"lessons/links.faces"),
+						"education/links.faces"),
 				new MainMenuBarPageItem(
-						"other-resources",
+						"education-other-resources",
 						"Books",
-						"lessons/books.faces"),
+						"education/books.faces"),
 				new MainMenuBarPageItem(
-						"further-reading",
+						"education-further-reading",
 						"Further Reading",
-						"lessons/further-reading.faces")}),
+						"education/further-reading.faces")}),
 	
 	new MainMenuBarSectionItem(
 			"about",
@@ -121,7 +121,7 @@ public class MainMenu
 							"about/history.faces"),
 					new MainMenuBarPageItem(
 							"bios",
-							"Project development team",
+							"Project team",
 							"about/team.faces"),
 					new MainMenuBarPageItem(
 							"acknowledgements",
