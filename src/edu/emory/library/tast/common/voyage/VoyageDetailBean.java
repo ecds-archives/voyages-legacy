@@ -831,17 +831,29 @@ public class VoyageDetailBean
 	
 	public String getPageTitle()
 	{
-		if (year != null)
+		if (year != null && shipName != null)
 		{
 			return MessageFormat.format(
-					TastResource.getText("database_voyage_detail_with_year"),
-					new Object[] {shipName, year});
+					TastResource.getText("database_voyage_detail"),
+					new Object[] {shipName, year, new Integer(voyageId)});
+		}
+		else if (year != null)
+		{
+			return MessageFormat.format(
+					TastResource.getText("database_voyage_detail_without_shipname"),
+					new Object[] {year, new Integer(voyageId)});
+		}
+		else if (shipName != null)
+		{
+			return MessageFormat.format(
+					TastResource.getText("database_voyage_detail_without_year"),
+					new Object[] {shipName, new Integer(voyageId)});
 		}
 		else
 		{
 			return MessageFormat.format(
-					TastResource.getText("database_voyage_detail_without_year"),
-					new Object[] {shipName});
+					TastResource.getText("database_voyage_detail_without_shipname_and_year"),
+					new Object[] {new Integer(voyageId)});
 		}
 	}
 	
