@@ -835,19 +835,19 @@ public class VoyageDetailBean
 		{
 			return MessageFormat.format(
 					TastResource.getText("database_voyage_detail"),
-					new Object[] {shipName, year, new Integer(voyageId)});
+					new Object[] {new Integer(voyageId), shipName, year});
 		}
 		else if (year != null)
 		{
 			return MessageFormat.format(
 					TastResource.getText("database_voyage_detail_without_shipname"),
-					new Object[] {year, new Integer(voyageId)});
+					new Object[] {new Integer(voyageId), year});
 		}
 		else if (shipName != null)
 		{
 			return MessageFormat.format(
 					TastResource.getText("database_voyage_detail_without_year"),
-					new Object[] {shipName, new Integer(voyageId)});
+					new Object[] {new Integer(voyageId), shipName});
 		}
 		else
 		{
