@@ -18,8 +18,6 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
 {
 	
-	private static QueryConditionListItem queryConditionItems[];
-	
 	public SearchableAttributeSimpleDictionary(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{
 		super(id, userLabel, userCategories, attributes, spssName, listDescription, inEstimates);
@@ -63,12 +61,15 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		return new QueryConditionList(getId());
 	}
 	
-	public synchronized QueryConditionListItem[] getAvailableItems(Session session)
+	public QueryConditionListItem[] getAvailableItems(Session session)
 	{
+		
+		QueryConditionListItem[] queryConditionItems =
+			ListItemsCache.getCachedListItems(getId());
 		
 		if (queryConditionItems == null)
 		{
-			
+		
 			Attribute[] attributes = (Attribute[]) getAttributes();
 			DictionaryAttribute firstAttr = (DictionaryAttribute) attributes[0];
 			
@@ -86,6 +87,8 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 			}
 			hql.append(") ");
 			hql.append("order by d.id");
+			
+			System.out.println(hql);
 	
 			List dictItems = session.createQuery(hql.toString()).list();
 			queryConditionItems = new QueryConditionListItem[dictItems.size()];
@@ -99,6 +102,8 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 						dictItem.getName());
 			}
 			
+			ListItemsCache.setCachedListItems(getId(), queryConditionItems);
+		
 		}
 
 		return queryConditionItems;

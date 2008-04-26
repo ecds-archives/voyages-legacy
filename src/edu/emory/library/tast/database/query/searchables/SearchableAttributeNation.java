@@ -65,24 +65,34 @@ public class SearchableAttributeNation extends SearchableAttributeSimple impleme
 	public QueryConditionListItem[] getAvailableItems(Session session)
 	{
 		
-		DictionaryAttribute firstAttr = (DictionaryAttribute)(getAttributes()[0]);
-
-		String hsql =
-			"from edu.emory.library.tast.dm.Nation p " +
-			"where p in (select v." + firstAttr.getName() + " from Voyage v) ";
+		QueryConditionListItem[] items =
+			ListItemsCache.getCachedListItems(getId());
 		
-		Query query = session.createQuery(hsql);
-		List dictItems = query.list();
-		
-		QueryConditionListItem items[] = new QueryConditionListItem[dictItems.size()];
-		
-		int i = 0;
-		for (Iterator iter = dictItems.iterator(); iter.hasNext();)
+		if (items == null)
 		{
-			Dictionary dictItem = (Dictionary) iter.next();
-			items[i++] = new QueryConditionListItem(
-					dictItem.getId().toString(),
-					dictItem.getName());
+		
+			DictionaryAttribute firstAttr = (DictionaryAttribute)(getAttributes()[0]);
+	
+			String hsql =
+				"from edu.emory.library.tast.dm.Nation p " +
+				"where p in (select v." + firstAttr.getName() + " from Voyage v) ";
+			
+			Query query = session.createQuery(hsql);
+			List dictItems = query.list();
+			
+			items = new QueryConditionListItem[dictItems.size()];
+			
+			int i = 0;
+			for (Iterator iter = dictItems.iterator(); iter.hasNext();)
+			{
+				Dictionary dictItem = (Dictionary) iter.next();
+				items[i++] = new QueryConditionListItem(
+						dictItem.getId().toString(),
+						dictItem.getName());
+			}
+			
+			ListItemsCache.setCachedListItems(getId(), items);
+			
 		}
 
 		return items;

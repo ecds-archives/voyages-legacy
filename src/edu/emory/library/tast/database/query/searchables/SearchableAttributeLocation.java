@@ -22,8 +22,6 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 {
 
 	private Location[] locations;
-	
-	private static QueryConditionListItem queryConditionItems[];
 
 	public SearchableAttributeLocation(String id, String userLabel, UserCategories userCategories, Location[] locations, String spssName, String listDescription, boolean inEstimates)
 	{
@@ -107,6 +105,9 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 	
 	public synchronized QueryConditionListItem[] getAvailableItems(Session session)
 	{
+		
+		QueryConditionListItem[] queryConditionItems =
+			ListItemsCache.getCachedListItems(getId());
 		
 		if (queryConditionItems == null)
 		{
@@ -212,6 +213,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 			tmpAreas.toArray(areaItems);
 			
 			queryConditionItems = areaItems;
+			ListItemsCache.setCachedListItems(getId(), queryConditionItems);
 			
 		}
 		
