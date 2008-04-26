@@ -107,6 +107,11 @@
 					href="essays-seasonality.faces"
 					menuId="essays-seasonality"/>
 
+				<s:secondaryMenuItem
+					label="Venture Smith"
+					href="essays-smith.faces"
+					menuId="essays-smith"/>
+
 			</s:secondaryMenuItem>
 
 		</s:secondaryMenu>
