@@ -39,5 +39,10 @@ public class PortAttribute extends DictionaryAttribute
 	{
 		return (NumericAttribute) Port.getAttribute("id");
 	}
+
+	public Class getDictionayClass()
+	{
+		return Port.class;
+	}
 	
 }

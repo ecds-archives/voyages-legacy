@@ -67,6 +67,7 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 
 	public abstract Dictionary loadObjectById(Session sess, long id);
 	public abstract List loadAllObjects(Session sess);
+	public abstract Class getDictionayClass();
 
 	/*
 	protected long parseId(String value) throws InvalidNumberException

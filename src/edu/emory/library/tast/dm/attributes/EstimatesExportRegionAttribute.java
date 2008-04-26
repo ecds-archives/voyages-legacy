@@ -39,5 +39,10 @@ public class EstimatesExportRegionAttribute extends DictionaryAttribute
 	{
 		return (NumericAttribute) EstimatesExportRegion.getAttribute("id");
 	}
+
+	public Class getDictionayClass()
+	{
+		return EstimatesExportRegion.class;
+	}
 	
 }

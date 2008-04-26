@@ -40,4 +40,9 @@ public class FateAttribute extends DictionaryAttribute
 		return (NumericAttribute) Fate.getAttribute("id");
 	}
 
+	public Class getDictionayClass()
+	{
+		return Fate.class;
+	}
+
 }

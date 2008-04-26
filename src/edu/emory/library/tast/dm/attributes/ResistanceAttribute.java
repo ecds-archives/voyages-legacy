@@ -40,4 +40,9 @@ public class ResistanceAttribute extends DictionaryAttribute
 		return (NumericAttribute) Resistance.getAttribute("id");
 	}
 
+	public Class getDictionayClass()
+	{
+		return Resistance.class;
+	}
+
 }

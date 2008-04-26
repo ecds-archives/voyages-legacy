@@ -39,5 +39,10 @@ public class RegionAttribute extends DictionaryAttribute
 	{
 		return (NumericAttribute) Region.getAttribute("id");
 	}
+
+	public Class getDictionayClass()
+	{
+		return Region.class;
+	}
 	
 }

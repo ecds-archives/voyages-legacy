@@ -29,4 +29,9 @@ public class SexAgeAttribute extends DictionaryAttribute {
 		return null;
 	}
 
+	public Class getDictionayClass()
+	{
+		return SexAge.class;
+	}
+
 }

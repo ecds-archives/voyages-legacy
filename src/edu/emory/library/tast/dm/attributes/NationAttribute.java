@@ -40,4 +40,9 @@ public class NationAttribute extends DictionaryAttribute
 		return (NumericAttribute) Nation.getAttribute("id");
 	}
 
+	public Class getDictionayClass()
+	{
+		return Nation.class;
+	}
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.Dictionary;
+import edu.emory.library.tast.dm.User;
 
 public class UserAttribute extends DictionaryAttribute {
 
@@ -28,6 +29,11 @@ public class UserAttribute extends DictionaryAttribute {
 
 	public Dictionary loadObjectById(Session sess, long id) {
 		return null;
+	}
+
+	public Class getDictionayClass()
+	{
+		return User.class;
 	}
 
 }

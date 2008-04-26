@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.Dictionary;
+import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Voyage;
 
 public class EditedVoyageAttribute extends DictionaryAttribute {
@@ -30,6 +31,11 @@ public class EditedVoyageAttribute extends DictionaryAttribute {
 
 	public Dictionary loadObjectById(Session sess, long id) {
 		return null;
+	}
+
+	public Class getDictionayClass()
+	{
+		return EditedVoyage.class;
 	}
 
 }

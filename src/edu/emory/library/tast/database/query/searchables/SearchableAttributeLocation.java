@@ -22,6 +22,8 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 {
 
 	private Location[] locations;
+	
+	private static QueryConditionListItem queryConditionItems[];
 
 	public SearchableAttributeLocation(String id, String userLabel, UserCategories userCategories, Location[] locations, String spssName, String listDescription, boolean inEstimates)
 	{
@@ -103,102 +105,117 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 
 	}
 	
-	public QueryConditionListItem[] getAvailableItems(Session session)
+	public synchronized QueryConditionListItem[] getAvailableItems(Session session)
 	{
 		
-		String attrName = locations[0].getPort().getName();
-
-		String hsql =
-			"from Port p " +
-			"where p in (select v." + attrName + " from Voyage v) " +
-			"order by p.region.area.order, p.region.order, p.order";
-		
-		Query query = session.createQuery(hsql);
-		List portsDb = query.list();
-		
-		int portsCount = portsDb.size();
-
-		Port port = (Port) portsDb.get(0);
-		Region region = port.getRegion();
-		Area area = region.getArea();
-		
-		List tmpAreas = new ArrayList();
-		List tmpRegions = new ArrayList();
-		List tmpPorts = new ArrayList();
-
-		int i = 0;
-		while (i < portsCount)
+		if (queryConditionItems == null)
 		{
-			Area groupArea = area;
 			
-			QueryConditionListItem areaItem = new QueryConditionListItem();
-			areaItem.setId("A" + area.getId());
-			areaItem.setText(area.getName());
-			areaItem.setExpandable(true);
-			areaItem.setExpanded(false);
+			StringBuffer hql = new StringBuffer();
 			
-			tmpAreas.add(areaItem);
-			tmpRegions.clear();
-
-			while (i < portsCount && groupArea.equals(area))
+			hql.append("from Port p ");
+			hql.append("where ");
+			hql.append("(");
+			for (int i = 0; i < locations.length; i++)
 			{
-				Region groupRegion = region;
+				if (i > 0) hql.append(" or ");
+				hql.append("p in (select v.");
+				hql.append(locations[i].getPort().getName());
+				hql.append(" from Voyage v)");
+			}
+			hql.append(") ");
+			hql.append("order by p.region.area.order, p.region.order, p.order");
+			
+			Query query = session.createQuery(hql.toString());
+			List portsDb = query.list();
+			
+			int portsCount = portsDb.size();
+	
+			Port port = (Port) portsDb.get(0);
+			Region region = port.getRegion();
+			Area area = region.getArea();
+			
+			List tmpAreas = new ArrayList();
+			List tmpRegions = new ArrayList();
+			List tmpPorts = new ArrayList();
+	
+			int i = 0;
+			while (i < portsCount)
+			{
+				Area groupArea = area;
 				
-				QueryConditionListItem regionItem = new QueryConditionListItem();
-				regionItem.setId("R" + region.getId());
-				regionItem.setText(region.getName());
-				regionItem.setExpandable(true);
-				regionItem.setExpanded(false);
+				QueryConditionListItem areaItem = new QueryConditionListItem();
+				areaItem.setId("A" + area.getId());
+				areaItem.setText(area.getName());
+				areaItem.setExpandable(true);
+				areaItem.setExpanded(false);
 				
-				tmpRegions.add(regionItem);
-				tmpPorts.clear();
-
-				while (i < portsCount && groupRegion.equals(region))
+				tmpAreas.add(areaItem);
+				tmpRegions.clear();
+	
+				while (i < portsCount && groupArea.equals(area))
 				{
+					Region groupRegion = region;
 					
-					tmpPorts.add(new QueryConditionListItem(
-							"P" + port.getId(),
-							port.getName()));
-
-					if (++i < portsCount)
+					QueryConditionListItem regionItem = new QueryConditionListItem();
+					regionItem.setId("R" + region.getId());
+					regionItem.setText(region.getName());
+					regionItem.setExpandable(true);
+					regionItem.setExpanded(false);
+					
+					tmpRegions.add(regionItem);
+					tmpPorts.clear();
+	
+					while (i < portsCount && groupRegion.equals(region))
 					{
-						port = (Port) portsDb.get(i);
-						region = port.getRegion();
-						area = region.getArea();
+						
+						tmpPorts.add(new QueryConditionListItem(
+								"P" + port.getId(),
+								port.getName()));
+	
+						if (++i < portsCount)
+						{
+							port = (Port) portsDb.get(i);
+							region = port.getRegion();
+							area = region.getArea();
+						}
+	
 					}
-
+					
+					// 6/12/2006 disabled
+	//				if (tmpPorts.size() == 1 && false) 
+	//				{
+	//					QueryConditionListItem singlePort = (QueryConditionListItem) tmpPorts.get(0);
+	//					regionItem.setText(singlePort.getText());
+	//					regionItem.setId(singlePort.getId());
+	//				}
+	//				else
+	//				{
+	//					QueryConditionListItem portItems[] = new QueryConditionListItem[tmpPorts.size()];
+	//					tmpPorts.toArray(portItems);
+	//					regionItem.setChildren(portItems);
+	//				}
+	
+					QueryConditionListItem portItems[] = new QueryConditionListItem[tmpPorts.size()];
+					tmpPorts.toArray(portItems);
+					regionItem.setChildren(portItems);
+	
 				}
 				
-				// 6/12/2006 disabled
-//				if (tmpPorts.size() == 1 && false) 
-//				{
-//					QueryConditionListItem singlePort = (QueryConditionListItem) tmpPorts.get(0);
-//					regionItem.setText(singlePort.getText());
-//					regionItem.setId(singlePort.getId());
-//				}
-//				else
-//				{
-//					QueryConditionListItem portItems[] = new QueryConditionListItem[tmpPorts.size()];
-//					tmpPorts.toArray(portItems);
-//					regionItem.setChildren(portItems);
-//				}
-
-				QueryConditionListItem portItems[] = new QueryConditionListItem[tmpPorts.size()];
-				tmpPorts.toArray(portItems);
-				regionItem.setChildren(portItems);
-
+				QueryConditionListItem regionItems[] = new QueryConditionListItem[tmpRegions.size()];
+				tmpRegions.toArray(regionItems);
+				areaItem.setChildren(regionItems);
+				
 			}
 			
-			QueryConditionListItem regionItems[] = new QueryConditionListItem[tmpRegions.size()];
-			tmpRegions.toArray(regionItems);
-			areaItem.setChildren(regionItems);
+			QueryConditionListItem areaItems[] = new QueryConditionListItem[tmpAreas.size()];
+			tmpAreas.toArray(areaItems);
+			
+			queryConditionItems = areaItems;
 			
 		}
 		
-		QueryConditionListItem areaItems[] = new QueryConditionListItem[tmpAreas.size()];
-		tmpAreas.toArray(areaItems);
-
-		return areaItems;
+		return queryConditionItems;
 
 	}
 	

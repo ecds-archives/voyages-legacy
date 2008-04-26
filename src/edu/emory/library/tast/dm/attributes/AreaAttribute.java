@@ -40,4 +40,9 @@ public class AreaAttribute extends DictionaryAttribute
 		return (NumericAttribute) Area.getAttribute("id");
 	}
 
+	public Class getDictionayClass()
+	{
+		return Area.class;
+	}
+
 }

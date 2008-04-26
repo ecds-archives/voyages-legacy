@@ -18,6 +18,8 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
 {
 	
+	private static QueryConditionListItem queryConditionItems[];
+	
 	public SearchableAttributeSimpleDictionary(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{
 		super(id, userLabel, userCategories, attributes, spssName, listDescription, inEstimates);
@@ -61,24 +63,45 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		return new QueryConditionList(getId());
 	}
 	
-	public QueryConditionListItem[] getAvailableItems(Session session)
+	public synchronized QueryConditionListItem[] getAvailableItems(Session session)
 	{
 		
-		DictionaryAttribute firstAttr = (DictionaryAttribute)(getAttributes()[0]);
-
-		List dictItems = firstAttr.loadAllObjects(session);
-		QueryConditionListItem items[] = new QueryConditionListItem[dictItems.size()];
-		
-		int i = 0;
-		for (Iterator iter = dictItems.iterator(); iter.hasNext();)
+		if (queryConditionItems == null)
 		{
-			Dictionary dictItem = (Dictionary) iter.next();
-			items[i++] = new QueryConditionListItem(
-					dictItem.getId().toString(),
-					dictItem.getName());
+			
+			Attribute[] attributes = (Attribute[]) getAttributes();
+			DictionaryAttribute firstAttr = (DictionaryAttribute) attributes[0];
+			
+			StringBuffer hql = new StringBuffer();
+			
+			hql.append("from " + firstAttr.getDictionayClass().getCanonicalName() + " d ");
+			hql.append("where ");
+			hql.append("(");
+			for (int i = 0; i < attributes.length; i++)
+			{
+				if (i > 0) hql.append(" or ");
+				hql.append("d in (select v.");
+				hql.append(attributes[i].getName());
+				hql.append(" from Voyage v)");
+			}
+			hql.append(") ");
+			hql.append("order by d.id");
+	
+			List dictItems = session.createQuery(hql.toString()).list();
+			queryConditionItems = new QueryConditionListItem[dictItems.size()];
+	
+			int i = 0;
+			for (Iterator iter = dictItems.iterator(); iter.hasNext();)
+			{
+				Dictionary dictItem = (Dictionary) iter.next();
+				queryConditionItems[i++] = new QueryConditionListItem(
+						dictItem.getId().toString(),
+						dictItem.getName());
+			}
+			
 		}
 
-		return items;
+		return queryConditionItems;
 
 	}
 

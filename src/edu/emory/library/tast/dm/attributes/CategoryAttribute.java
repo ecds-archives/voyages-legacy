@@ -40,5 +40,10 @@ public class CategoryAttribute extends DictionaryAttribute
 	{
 		return (NumericAttribute) Port.getAttribute("id");
 	}
+
+	public Class getDictionayClass()
+	{
+		return ImageCategory.class;
+	}
 	
 }

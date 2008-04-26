@@ -29,4 +29,9 @@ public class CountryAttribute extends DictionaryAttribute {
 		return null;
 	}
 
+	public Class getDictionayClass()
+	{
+		return Country.class;
+	}
+
 }
