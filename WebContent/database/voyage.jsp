@@ -36,7 +36,7 @@
 		
 		<s:siteHeader>
 			<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
-			<h:outputLink value="search.faces"><h:outputText value="Voyage Database" /></h:outputLink>
+			<h:commandLink action="database"><h:outputText value="Voyage Database" /></h:commandLink>
 			<h:outputText value="Voyage Detail" />
 		</s:siteHeader>
 

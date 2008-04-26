@@ -188,7 +188,7 @@
 								</li>
 								<li>
 									<span class="person">David Richardson</span>
-									<span class="place">(Department of History, The University of Hull, United Kingdom)</span>
+									<span class="place">(Department of History, The University of Hull, UK)</span>
 								</li>
 							</ul>
 						</li>

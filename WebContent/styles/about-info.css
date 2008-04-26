@@ -25,6 +25,9 @@ h1 {
 	padding: 0px;
 	margin: 0px 0px 10px 0px; }
 
+p {
+	line-height: 140%; }
+
 div.left-menu-box {
 	padding-left: 10px;
 	padding-right: 10px; }

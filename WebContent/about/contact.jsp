@@ -15,6 +15,7 @@
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/about.css" rel="stylesheet" type="text/css">
 	<link href="../styles/about-info.css" rel="stylesheet" type="text/css">
+	<link href="../styles/about-team.css" rel="stylesheet" type="text/css">
 
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
@@ -36,7 +37,6 @@
 		<table border="0" cellspacing="0" cellpadding="0" id="about-layout">
 		<tr>
 			<td id="about-left-column">
-				<% /* <f:param value="essays-solomon" binding="#{EssaysBean.paramActiveMenuId}" /> */ %>
 				<%@ include file="about-menu.jsp" %>
 			</td>
 			<td id="about-right-column">
@@ -44,7 +44,75 @@
 			
 					<h1>Contact Us</h1>
 					
-					<div style="height: 600px;">TBD ...</div>
+					<ul id="team">
+
+						<li><div class="group">VOYAGES EDITORIAL BOARD</div>
+							<ul>
+								<li>
+									<span class="person"><a href="mailto:lachance1943@rogers.com">Paul Lachance</a></span> &ndash;
+									<span class="function">Managing Editor</span>
+									<span class="place">
+										(Professor,
+										Department of History,
+										University of Ottawa,
+										Canada)</span>
+								</li>
+								<li>
+									<span class="person">Manuel Barcia Paz</span>
+									<span class="place">
+										(Lecturer,
+										Department of Spanish, Portuguese and Latin American Studies,
+										University of Leeds,
+										UK)</span>
+								</li>
+								<li>
+									<span class="person">Steve Behrendt</span>
+									<span class="place">
+										(Senior Lecturer,
+										History Programme,
+										Victoria University of Wellington,
+										New Zealand)</span>
+								</li>
+								<li>
+									<span class="person">David Eltis</span>
+									<span class="place">
+										(Professor, 
+										Robert W. Woodruff Professor of History,
+										Atlanta, Georgia, USA)</span>
+								</li>
+								<li>
+									<span class="person">Manolo Florentino</span>
+									<span class="place">
+										(Professor,
+										Departamento de História,
+										Universidade Federal do Rio de Janeiro,
+										Brazil)</span>
+								</li>
+								<li>
+									<span class="person">Antonio Mendes</span>
+									<span class="place">
+										(MISSING INFORMATION)</span>
+								</li>
+								<li>
+									<span class="person">David Richardson</span>
+									<span class="place">
+										(Director,
+										Wilberforce Institute for the study of Slavery and Emancipation at The University of Hull,
+										UK)</span>
+								</li>
+							</ul>
+						</li>
+						
+						<li><div class="group">VOYAGES WEBSITE ADMINISTRATION</div>
+							<ul>
+								<li>
+									<span class="person"><a href="mailto:jfenton@emory.edu">Kyle Fenton</a></span> &ndash;
+									<span class="function">Web Development Team Leader</span>
+								</li>
+							</ul>
+						</li>
+
+					</ul>
 
 				</s:simpleBox>
 			</td>
