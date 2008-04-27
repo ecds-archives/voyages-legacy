@@ -5,13 +5,12 @@
 
 <t:htmlTag value="h1"><h:outputText value="Map of regions and ports" /></t:htmlTag>
 
-
 <t:htmlTag value="table" style="border-collapse: collapse;">
 <t:htmlTag value="tr">
 
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px;">
 	
-		<s:map
+		<s:map 
 			id="map"
 			zoomLevels="#{MapBean.zoomLevels}"
 			pointsOfInterest="#{MapBean.pointsOfInterest}"
@@ -21,11 +20,12 @@
 			miniMapWidth="100"
 			miniMapPosition="bottom right" 
 			zoomLevel="#{MapBean.zoomLevel}"
-			onZoomChanged="#{MapBean.onZoomChanged}" />
+			pointsSelectId="map_places" />
 
 	</t:htmlTag>
 
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px; border-left: 0px solid #895D03;">
+	
 		<s:legend id="mapLegend-component" 
 			styleClass="map-legend-div"
 			legend="#{MapBean.legend}"
@@ -33,7 +33,16 @@
 			maps="#{MapBean.availableMaps}"
 			availableAttributes="#{MapBean.availableAttributes}"
 			chosenAttribute="#{MapBean.chosenAttribute}"
-			chosenMap="#{MapBean.chosenMap}"/>
+			chosenMap="#{MapBean.chosenMap}" />
+			
+		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
+			<h:outputText value="Highlight place" />
+		</t:htmlTag>
+		
+		<t:htmlTag value="div" styleClass="map-legend-section">
+			<t:selectOneMenu forceId="true" id="map_places" />
+		</t:htmlTag>
+			
 	</t:htmlTag>
 
 </t:htmlTag>

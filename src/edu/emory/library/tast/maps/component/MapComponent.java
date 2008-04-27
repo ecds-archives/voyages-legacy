@@ -9,12 +9,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.FacesEvent;
-
-import org.apache.myfaces.el.MethodBindingImpl;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.util.JsfUtils;
@@ -25,15 +20,15 @@ public class MapComponent extends UIComponentBase
 	
 	private static final int ZOOM_SLIDER_SLOT_WIDTH = 24;
 
-	private final static MapSize defaultMapSize = new MapSize(480,320);
+	private final static MapSize defaultMapSize = new MapSize(420, 420);
 
 	private boolean zoomLevelsSet = false;
 	private ZoomLevel[] zoomLevels = null;
 
 	private boolean mapSizesSet = false;
 	private MapSize[] mapSizes = new MapSize[] {
-		new MapSize(480, 320),	
-		new MapSize(800, 600),	
+		new MapSize(420, 420),	
+		new MapSize(650, 600),	
 		new MapSize(1024, 768)
 	};
 	
@@ -69,8 +64,9 @@ public class MapComponent extends UIComponentBase
 
 	private ZoomHistory zoomHistory = new ZoomHistory();
 	private MouseMode mouseMode = MouseMode.Pan;
-
-	private MethodBinding onZoomChanged;
+	
+	private boolean pointsSelectIdSet = false;
+	private String pointsSelectId;
 	
 	public String getFamily()
 	{
@@ -100,7 +96,7 @@ public class MapComponent extends UIComponentBase
 			miniMapPosition,
 			new Integer(miniMapWidth),
 			new Integer(miniMapHeight),
-			saveAttachedState(context, onZoomChanged)};
+			pointsSelectId};
 	}
 	
 	public void restoreState(FacesContext context, Object state)
@@ -122,7 +118,7 @@ public class MapComponent extends UIComponentBase
 		miniMapPosition = (MiniMapPosition) values[i++];
 		miniMapWidth = ((Integer)values[i++]).intValue();
 		miniMapHeight = ((Integer)values[i++]).intValue();
-		onZoomChanged = (MethodBinding) restoreAttachedState(context, values[i++]);
+		pointsSelectId = (String) values[i++];
 	}
 	
 	private String getHiddenFieldNameForCenterX(FacesContext context)
@@ -170,14 +166,8 @@ public class MapComponent extends UIComponentBase
 		return getClientId(context) + "_param";
 	}
 
-	private String getHiddenFieldNameForPlacesListBox(FacesContext context)
-	{
-		return getClientId(context) + "_placesListBox";
-	}
-	
 	public void decode(FacesContext context)
 	{
-		int oldZoom = zoomLevel;
 		Map params = context.getExternalContext().getRequestParameterMap();
 		
 		centerX = JsfUtils.getParamDouble(params, getHiddenFieldNameForCenterX(context), centerX);
@@ -198,17 +188,6 @@ public class MapComponent extends UIComponentBase
 			mapSize = MapSize.parse(mapSizeStr, true);
 		
 		miniMapVisible = JsfUtils.getParamBoolean(params, getHiddenFieldNameForMiniMapVisibility(context), miniMapVisible);
-		System.out.println("Zoom levels: " + oldZoom + "  " + zoomLevel);
-		if (onZoomChanged != null) {
-			queueEvent(new ZoomChangedEvent(this, zoomLevel));
-		}
-	}
-	
-	public void broadcast(FacesEvent event) throws AbortProcessingException {
-		super.broadcast(event);
-		if (event instanceof ZoomChangedEvent && onZoomChanged != null) {
-			onZoomChanged.invoke(getFacesContext(), new Object[] { event });
-		}
 	}
 	
 	public void processUpdates(FacesContext context) {
@@ -231,11 +210,10 @@ public class MapComponent extends UIComponentBase
 		writer.startElement("tr", this);
 	}
 	
-	private void encodeTool(FacesContext context, ResponseWriter writer, String id, String className, int hintId) throws IOException
+	private void encodeTool(FacesContext context, ResponseWriter writer, String id, String className, String tooltip) throws IOException
 	{
 		writer.startElement("td", this);
-		//writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
-		//writer.writeAttribute("onmouseout", "myHint.hide()", null);
+		writer.writeAttribute("title", tooltip, null);
 		writer.writeAttribute("id", id, null);
 		writer.writeAttribute("class", className, null);
 		writer.endElement("td");
@@ -377,11 +355,10 @@ public class MapComponent extends UIComponentBase
 		
 	}
 	
-	private void encodeScaleIndicator(FacesContext context, ResponseWriter writer, String scaleIndicatorTextId, String scaleIndicatorBarId, int hintId) throws IOException
+	private void encodeScaleIndicator(FacesContext context, ResponseWriter writer, String scaleIndicatorTextId, String scaleIndicatorBarId) throws IOException
 	{
 		writer.startElement("div", this);
-		//writer.writeAttribute("onmouseover", "myHint.show(" + hintId + ",this)", null);
-		//writer.writeAttribute("onmouseout", "myHint.hide()", null);
+		writer.writeAttribute("title", "Enable/disable mini-map", null);
 		writer.writeAttribute("class", "map-scale-indicator-container", null);
 
 		writer.startElement("div", this);
@@ -449,6 +426,7 @@ public class MapComponent extends UIComponentBase
 		miniMapPosition = getMiniMapPosition();
 		miniMapWidth = getMiniMapWidth();
 		miniMapHeight = getMiniMapHeight();
+		pointsSelectId = getPointsSelectId();
 
 		// sort points of interest
 		Arrays.sort(pointsOfInterest, new Comparator() {
@@ -456,7 +434,8 @@ public class MapComponent extends UIComponentBase
 			{
 				PointOfInterest pnt0 = (PointOfInterest) arg0;
 				PointOfInterest pnt1 = (PointOfInterest) arg1;
-				return pnt0.getShowAtZoom() == pnt1.getShowAtZoom() ? 0 : pnt0.getShowAtZoom() < pnt1.getShowAtZoom() ? 1 : -1;
+				// return pnt0.getShowAtZoom() == pnt1.getShowAtZoom() ? 0 : pnt0.getShowAtZoom() < pnt1.getShowAtZoom() ? 1 : -1;
+				return pnt0.getLabel().compareTo(pnt1.getLabel());
 			}});
 
 		// at least the default map size
@@ -721,7 +700,12 @@ public class MapComponent extends UIComponentBase
 			jsRegister.append("null");
 		}
 		
-		jsRegister.append(",'").append(this.getHiddenFieldNameForPlacesListBox(context)).append("'");
+		// select with the list of places
+		jsRegister.append(", ");
+		if (pointsSelectId != null)
+			jsRegister.append("'").append(pointsSelectId).append("'");
+		else
+			jsRegister.append("null");
 		
 		// end of init JS
 		jsRegister.append(");");
@@ -779,22 +763,22 @@ public class MapComponent extends UIComponentBase
 		encodeToolStart(writer);
 		
 		// icons: < / >
-		encodeTool(context, writer, toolsBackId, zoomHistory.canGoBack() ? "map-icon-back" : "map-icon-back-off", 0);
+		encodeTool(context, writer, toolsBackId, zoomHistory.canGoBack() ? "map-icon-back" : "map-icon-back-off", "Previous view/zoom");
 		encodeToolSepearator(context, writer);
-		encodeTool(context, writer, toolsForwardId, zoomHistory.canGoForward() ? "map-icon-forward" : "map-icon-forward-off", 1);
+		encodeTool(context, writer, toolsForwardId, zoomHistory.canGoForward() ? "map-icon-forward" : "map-icon-forward-off", "Next view/zoom");
 		encodeToolSepearator(context, writer);
 		
 		// icons: zoom / pan
-		encodeTool(context, writer, toolsPanId, mouseMode.isPan() ? "map-icon-pan" : "map-icon-pan-off", 2);
-		encodeTool(context, writer, toolsZoomId, mouseMode.isZoom() ? "map-icon-zoom" : "map-icon-zoom-off", 3);
+		encodeTool(context, writer, toolsPanId, mouseMode.isPan() ? "map-icon-pan" : "map-icon-pan-off", "Pan view");
+		encodeTool(context, writer, toolsZoomId, mouseMode.isZoom() ? "map-icon-zoom" : "map-icon-zoom-off", "Zoom view by rectangle");
 		encodeToolSepearator(context, writer);
 		
 		// icons: zoom + / zoom -
-		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus", 4);
+		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus", "Zoom out");
 		encodeToolSepearator(context, writer);
 		encodeToolZoomSlider(context, writer, toolsSliderContId, toolsSliderKnobId);
 		encodeToolSepearator(context, writer);
-		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus", 5);
+		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus", "Zoom in");
 		encodeToolSepearator(context, writer);
 		
 		// icons: sizes
@@ -803,12 +787,12 @@ public class MapComponent extends UIComponentBase
 			MapSize ms = getMapSizes()[i];
 			String className = "map-icon-size-" + i;
 			if (!ms.equals(mapSize)) className += "-off";
-			encodeTool(context, writer, getElementIdForMapSize(context, i), className, 6);
+			encodeTool(context, writer, getElementIdForMapSize(context, i), className, "Map size");
 		}
 		encodeToolEnd(writer);
 		
 		// scale indicator
-		encodeScaleIndicator(context, writer, scaleIndicatorTextId, scaleIndicatorBarId, 7);
+		encodeScaleIndicator(context, writer, scaleIndicatorTextId, scaleIndicatorBarId);
 		
 		// minimap
 		if (miniMap)
@@ -1008,8 +992,16 @@ public class MapComponent extends UIComponentBase
 		
 	}
 
-	public void setOnZoomChanged(MethodBindingImpl onChange) {
-		this.onZoomChanged = onChange;
+	public String getPointsSelectId()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"pointsSelectId", pointsSelectIdSet, pointsSelectId);
+	}
+
+	public void setPointsSelectId(String placesSelectId)
+	{
+		pointsSelectIdSet = true;
+		this.pointsSelectId = placesSelectId;
 	}
 
 }

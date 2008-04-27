@@ -10,7 +10,9 @@
 <t:htmlTag value="tr">
 
 	<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
-		<s:map id="estimates-map-compo"
+
+		<s:map
+			id="estimates-map-compo"
 			pointsOfInterest="#{EstimatesMapBean.pointsOfInterest}"
 			zoomLevels="#{EstimatesMapBean.zoomLevels}"
 			miniMapZoomLevel="#{EstimatesMapBean.miniMapZoomLevel}"
@@ -19,20 +21,29 @@
 			miniMapHeight="100"
 			miniMapPosition="bottom right"
 			zoomLevel="#{EstimatesMapBean.zoomLevel}"
-			onZoomChanged="#{EstimatesMapBean.onZoomChanged}"/>
+			pointsSelectId="map_places" />
+			
 	</t:htmlTag>
 	
 	<t:htmlTag value="td" style="padding: 0px 0px 0px 10px; vertical-align: top;">
-		<aa:zoneJSF id="map-legend">
-			<s:legend id="mapLegend-component" 
-				styleClass="map-legend-div"
-				legend="#{EstimatesMapBean.legend}"
-				refreshAction="#{EstimatesMapBean.refresh}" 
-				maps="#{EstimatesMapBean.availableMaps}"
-				chosenMap="#{EstimatesMapBean.chosenMap}"
-				availableAttributes="#{EstimatesMapBean.availableAttributes}"
-				chosenAttribute="#{EstimatesMapBean.chosenAttribute}"/> 
-		</aa:zoneJSF>
+	
+		<s:legend id="mapLegend-component" 
+			styleClass="map-legend-div"
+			legend="#{EstimatesMapBean.legend}"
+			refreshAction="#{EstimatesMapBean.refresh}" 
+			maps="#{EstimatesMapBean.availableMaps}"
+			chosenMap="#{EstimatesMapBean.chosenMap}"
+			availableAttributes="#{EstimatesMapBean.availableAttributes}"
+			chosenAttribute="#{EstimatesMapBean.chosenAttribute}"/>
+			
+		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
+			<h:outputText value="Highlight place" />
+		</t:htmlTag>
+		
+		<t:htmlTag value="div" styleClass="map-legend-section">
+			<t:selectOneMenu forceId="true" id="map_places" />
+		</t:htmlTag>
+			 
 	</t:htmlTag>
 		
 </t:htmlTag>

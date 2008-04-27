@@ -46,9 +46,7 @@ var MapsGlobal =
 		miniMapPosition,
 		miniMapWidth,
 		miniMapHeight,
-		placesListBox,
-		onZoomChange,
-		updateFieldId
+		pointsSelectId
 	)
 	{
 	
@@ -83,11 +81,9 @@ var MapsGlobal =
 		// scale indicator
 		map.scaleBarIndicatorId = scaleIndicatorBarId;
 		map.scaleTextIndicatorId = scaleIndicatorTextId;
-		
-		map.placesListBox = placesListBox;
-		
-		map.onZoomChange = onZoomChange;
-		map.updateFieldId = updateFieldId;
+
+		// list of places		
+		map.pointsSelectId = pointsSelectId;
 		
 		// minimap
 		if (miniMapControlId && miniMapFrameId)
@@ -288,11 +284,7 @@ function Map()
 	this.selectorBorder = 30;
 	
 	//By default prevent moving map out of view
-	this.blockMove = true;
-	
-	this.placesListBox = '';
-	
-	this.first = true;
+	this.blockMove = false;
 	
 	// init handler
 	this.initListeners = new EventQueue();
@@ -319,7 +311,6 @@ function MapTile(img)
 	this.points = null;
 	this.url = "";
 	this.oldUrl = "";
-	//this.valid = false;
 }
 
 function PointOfInterest(x, y, showAtZoom, label, text, symbols)
@@ -713,10 +704,6 @@ Map.prototype.mapMouseMove = function(event)
 				this.selectorY2 = this.fromVportToRealX(this.selectorVportY2);
 			}
 
-			// update points and lines			
-			this.updatePoints();
-			this.updateLines(false);
-			
 			break;
 			
 		case MapsGlobal.MAP_TOOL_ZOOM:
@@ -779,7 +766,6 @@ Map.prototype.getScaleNormalized = function()
 }
 */
 
-
 Map.prototype.registerZoomSlider = function(zoomSlider)
 {
 	this.zoomSlider = zoomSlider;
@@ -788,8 +774,6 @@ Map.prototype.registerZoomSlider = function(zoomSlider)
 Map.prototype.notifyZoomChange = function()
 {
 	if (this.zoomSlider) this.zoomSlider.zoomChanged();
-	//this.zoomChanged();
-	//document.forms[0].submit();
 }
 
 Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
@@ -962,13 +946,14 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 		this.bottomLeftTileVportY = Math.round(((this.bottomLeftTileRow * tileRealHeight + zoomLevelObj.bottomLeftTileY) - vportBottomLeftRealY) / zoomLevelObj.scale);
 	}
 
+	// draw all tiles; this can also fix the position
+	// if it's outside the correct range
+	this.positionTiles();
+	
 	// points of interest and lines
 	this.updatePoints();
 	this.updateLines(true);
-	
-	// draw all tiles
-	this.positionTiles();
-	
+
 	// position selector (if in selector mode)
 	if (this.mouseMode == MapsGlobal.MAP_TOOL_SELECTOR)
 	{
@@ -1152,23 +1137,17 @@ Map.prototype.saveState = function()
 	}
 }
 
-Map.prototype.positionTiles = function(rowFrom, rowTo, colFrom, colTo)
+Map.prototype.positionTiles = function()
 {
+
+	var tileWidth = this.getTileWidth();
+	var tileHeight = this.getTileHeight();
 
 	this.saveState();
 	
-	if (rowFrom == null) rowFrom = 0;
-	if (rowTo == null) rowTo = this.visibleRows;
-	if (colFrom == null) colFrom = 0;
-	if (colTo == null) colTo = this.visibleCols;
-	
-	var tileWidth = this.getTileWidth();
-	var tileHeight = this.getTileHeight();
-	
-	var needPosponedUpdate = false;
-	for (var i = rowFrom; i <= rowTo; i++)
+	for (var i = 0; i <= this.visibleRows; i++)
 	{
-		for (var j = colFrom; j <= colTo; j++)
+		for (var j = 0; j <= this.visibleCols; j++)
 		{
 			var tile = this.tilesMap[i][j];
 			var col = this.bottomLeftTileCol + j;
@@ -1195,48 +1174,58 @@ Map.prototype.panMapBy = function(dx, dy)
 	var tilesNumY = this.zoomLevels[this.zoomLevel].tilesNumY;
 	var tileWidth = this.getTileWidth();
 	var tileHeight = this.getTileHeight();
+	var vportWidth = this.getVportWidth();
+	var vportHeight = this.getVportHeight();
 	
 	// more only if the map is bigger than the viewport
-	if (tilesNumX * tileWidth > this.vportWidth)
-	{
+	// if (tilesNumX * tileWidth > this.vportWidth)
+	// {
 	
+		// move the viewport
 		this.bottomLeftTileVportX += dx;
-	
+		
+		if (this.blockMove)
+		{
+		
+			// position of the viewport w.r.t. map in px
+			var vportX1 = this.bottomLeftTileCol * tileWidth - this.bottomLeftTileVportX; 
+			var vportX2 = vportX1 + vportWidth;
+			
+			// viewport needs to bu moved right
+			if (vportX1 < 0)
+				this.bottomLeftTileVportX =
+					this.bottomLeftTileCol * tileWidth;
+		
+			// viewport needs to bu moved left
+			else if (tilesNumX * tileWidth < vportX2)
+				this.bottomLeftTileVportX =
+					(this.bottomLeftTileCol - tilesNumX) * tileWidth + vportWidth;
+
+		}
+
 		// move columns from right to left
 		while (0 < this.bottomLeftTileVportX)
 		{
 		
-			if (this.bottomLeftTileCol == 0 && this.blockMove)
-			{
-				this.bottomLeftTileVportX = 0;
-				break;
-			}
-		
 			this.bottomLeftTileVportX -= tileWidth;
-			this.bottomLeftTileCol --;
+			this.bottomLeftTileCol--;
 			
-			for (var i=0; i<this.visibleRows+1; i++)
+			for (var i = 0; i < this.visibleRows + 1; i++)
 			{
 				var mapTile = this.tilesMap[i].pop();
 				this.tilesMap[i].unshift(mapTile);
 			}
 			
 		}
-	
+
 		// move columns from left to right
-		while (this.bottomLeftTileVportX + (this.visibleCols + 1) * tileWidth < this.vportWidth)
+		while (this.bottomLeftTileVportX + (this.visibleCols+1) * tileWidth < this.vportWidth)
 		{
 		
-			if (tilesNumX - this.bottomLeftTileCol == this.visibleCols + 1  && this.blockMove)
-			{
-				this.bottomLeftTileVportX = this.vportWidth - (this.visibleCols + 1) * tileWidth;
-				break;
-			}
-	
 			this.bottomLeftTileVportX += tileWidth;
-			this.bottomLeftTileCol ++;
+			this.bottomLeftTileCol++;
 			
-			for (var i=0; i<this.visibleRows+1; i++)
+			for (var i = 0; i < this.visibleRows + 1; i++)
 			{
 				var mapTile = this.tilesMap[i].shift();
 				this.tilesMap[i].push(mapTile);
@@ -1244,23 +1233,37 @@ Map.prototype.panMapBy = function(dx, dy)
 			
 		}
 		
-	}
+	// }
 	
 	// more only if the map is bigger than the viewport
-	if (tilesNumY * tileHeight > this.vportHeight)
-	{
+	// if (tilesNumY * tileHeight > this.vportHeight)
+	// {
 	
+		// move the viewport
 		this.bottomLeftTileVportY += dy;
+		
+		if (this.blockMove)
+		{
+		
+			// position of the viewport w.r.t. map in px
+			var vportY1 = this.bottomLeftTileRow * tileHeight - this.bottomLeftTileVportY; 
+			var vportY2 = vportY1 + vportHeight;
+			
+			// viewport needs to bu moved right
+			if (vportY1 < 0)
+				this.bottomLeftTileVportY =
+					this.bottomLeftTileRow * tileHeight;
+		
+			// viewport needs to bu moved left
+			else if (tilesNumY * tileHeight < vportY2)
+				this.bottomLeftTileVportY =
+					(this.bottomLeftTileRow - tilesNumY) * tileHeight + vportHeight;
+				
+		}
 
 		// move rows from bottom to top
 		while (0 < this.bottomLeftTileVportY)
 		{
-		
-			if (this.bottomLeftTileRow == 0 && this.blockMove)
-			{
-				this.bottomLeftTileVportY = 0;
-				break;
-			}
 		
 			this.bottomLeftTileVportY -= tileHeight;
 			this.bottomLeftTileRow --;
@@ -1273,13 +1276,7 @@ Map.prototype.panMapBy = function(dx, dy)
 		// move rows from top to bottom
 		while (this.bottomLeftTileVportY + (this.visibleRows + 1) * tileHeight < this.vportHeight)
 		{
-			
-			if (tilesNumY - this.bottomLeftTileRow == this.visibleRows + 1  && this.blockMove)
-			{
-				this.bottomLeftTileVportY = this.vportHeight - (this.visibleRows + 1) * tileHeight;
-				break;
-			}
-	
+		
 			this.bottomLeftTileVportY += tileHeight;
 			this.bottomLeftTileRow ++;
 			
@@ -1287,12 +1284,16 @@ Map.prototype.panMapBy = function(dx, dy)
 			this.tilesMap.push(lastMapRow);
 			
 		}
+
+	// }
 	
-	}
-	
-	// position last unchanged rectangle of tiles
-	// false means = do not change URLs of them
+	// draw all tiles; this can also fix the position
+	// if it's outside the correct range
 	this.positionTiles();
+
+	// update points and lines			
+	this.updatePoints();
+	this.updateLines(false);
 
 }
 
@@ -1535,19 +1536,10 @@ Map.prototype.initPoints = function()
 	if (!this.points)
 		return;
 		
-	var combo = null;
-	var array = new Array();
-	if (this.first)
-	{
-		this.first = false;
-		combo = document.getElementById(this.placesListBox);
-	}
-	
 	for (var i = 0; i < this.points.length; i++)
 	{
 	
 		var pnt = this.points[i];
-		array[i] = pnt.label;
 
 		var labelElement = pnt.labelElement = document.createElement("div");
 		labelElement.innerHTML = pnt.label;
@@ -1582,41 +1574,47 @@ Map.prototype.initPoints = function()
 
 	}
 	
-	if (combo != null) {
-		var n;
-		var y=document.createElement('option');
-		y.text = "--- Select place ---";
-		try {
-			combo.add(y, null);
-		} catch (ex) {
-			combo.add(y);
-		}		
-		array.sort();
-		for (n = 0; n < array.length; n++) {
-			y=document.createElement('option');
-			y.text = array[n];
-			try {
-				combo.add(y, null);
-			} catch (ex) {
-				combo.add(y);
-			}
-		}
+	this.initListOfPoints();
+	
+}
+
+Map.prototype.initListOfPoints = function()
+{
+
+	if (!this.pointsSelectId)
+		return;
+		
+	var pointsSelect = document.getElementById(this.pointsSelectId);
+	if (!pointsSelect)
+		return;
+	
+	ElementUtils.addOption(
+		pointsSelect,
+		"-1", "Select place");
+
+	for (var i = 0; i < this.points.length; i++)
+	{
+		ElementUtils.addOption(
+			pointsSelect,
+			i, this.points[i].label);
 	}
+	
+	EventAttacher.attach(pointsSelect, "change", this, "pointsSelectChanged");
 
 }
 
-Map.prototype.clickedShowPort = function() {
-	var combo = document.getElementById(this.placesListBox);
-	var selectedOption = combo.options[combo.selectedIndex];
-	for (var i = 0; i < this.points.length; i++) {
-		var pnt = this.points[i];
-		if (pnt.label == selectedOption.text) {
-			//alert("found: " + selectedOption.text);
-			this.setZoomAndCenterTo(this.zoomLevel, pnt.x, pnt.y, true, false, true, true);
-			this.showLabel(null, i, true);
-			break;
-		}
-	}
+Map.prototype.pointsSelectChanged = function()
+{
+
+	var pointsSelect = document.getElementById(this.pointsSelectId);
+	
+	var pntIdx = parseInt(pointsSelect.options[pointsSelect.selectedIndex].value);
+	if (pntIdx == -1) return;
+	
+	var pnt = this.points[pntIdx];
+	this.setZoomAndCenterTo(this.zoomLevel, pnt.x, pnt.y, true, false, true, true);
+	this.showLabel(null, pntIdx, true);
+
 }
 
 Map.prototype.updatePoints = function()
@@ -1653,7 +1651,7 @@ Map.prototype.updatePoints = function()
 			}
 
 			var labelElementStyle = pnt.labelElement.style;
-			if (pnt.showAtZoom <= scaleRat)
+			if (true && pnt.showAtZoom <= scaleRat)
 			{
 				labelElementStyle.display = "";
 				labelElementStyle.left = pnt.vx + "px";
@@ -1710,9 +1708,21 @@ Map.prototype.showLabel = function(event, pntIndex, fix)
 
 Map.prototype.hideLabels = function()
 {
-	if (this.bubble) {
+	if (this.bubble)
+	{
+	
 		this.fixedLabel = false;
 		this.bubble.style.display = "none";
+		
+		if (this.pointsSelectId)
+		{
+			var pointsSelect = document.getElementById(this.pointsSelectId);
+			if (pointsSelect)
+			{
+				// pointsSelect.selectedIndex = 0;
+			}
+		}
+		
 	}
 }
 
@@ -1918,7 +1928,6 @@ Map.prototype.initMapControls = function()
 	if (this.bubble) this.bubble.style.position = "absolute";
 
 	this.frame = document.getElementById(this.frameId);
-	this.frame.style.backgroundColor = "White";
 	this.frame.style.position = "absolute";
 	this.frame.style.overflow = "hidden";
 	this.frame.unselectable = "on";
@@ -2058,13 +2067,6 @@ Map.prototype.init = function(restoreState)
 	this.initListeners.invoke();
 	
 }
-/*
-Map.prototype.zoomChanged = function()
-{
-	if (!ajaxAnywhere) return;
-	ajaxAnywhere.submitAJAX(null, null);
-}
-*/
 
 /////////////////////////////////////////////////////////
 // zoom + button

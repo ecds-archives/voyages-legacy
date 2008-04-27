@@ -275,11 +275,4 @@ public class MapBean {
 		attributeId = id.intValue();
 	}
 	
-	public void onZoomChanged(ZoomChangedEvent e) {
-		System.out.println("Zoom was changed!");
-		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
-		if (AAUtils.isAjaxRequest(request)) {
-			AAUtils.addZonesToRefresh(request, "map-legend");
-		}
-	}
 }

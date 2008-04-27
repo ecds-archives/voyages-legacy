@@ -399,9 +399,8 @@
 			<name>zoomLevel</name>
 		</attribute>		
 		<attribute>
-			<name>onZoomChanged</name>
-		</attribute>				
-		
+			<name>pointsSelectId</name>
+		</attribute>		
 	</tag>
 	
 	<tag>

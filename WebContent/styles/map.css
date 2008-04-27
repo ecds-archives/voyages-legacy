@@ -2,6 +2,7 @@ div.map-control {
 	margin-left: auto;
 	margin-right: auto;
 	border: 1px solid #4C5966;
+	background-color: #05768A;
 	overflow: visible; }
 
 table.map-tools {
@@ -372,6 +373,7 @@ div.minimap-control-sw {
 	overflow: hidden; }
 	
 div.minimap-frame {
+	background-color: #05768A;
 	position: absolute; }
 	
 div.minimap-toggle-nw-collapsed {

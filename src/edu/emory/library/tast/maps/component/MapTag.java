@@ -6,8 +6,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
-import org.apache.myfaces.el.MethodBindingImpl;
-
 public class MapTag extends UIComponentTag
 {
 	
@@ -21,6 +19,7 @@ public class MapTag extends UIComponentTag
 	private String miniMapHeight;
 	private String zoomLevel;
 	private String onZoomChanged;
+	private String pointsSelectId;
 	
 	public String getComponentType()
 	{
@@ -111,8 +110,15 @@ public class MapTag extends UIComponentTag
 		{
 			map.setZoomLevel(Integer.parseInt(zoomLevel));
 		}
-		if (onZoomChanged != null) {
-			map.setOnZoomChanged(new MethodBindingImpl(app, onZoomChanged, new Class[] {ZoomChangedEvent.class}));
+		
+		if (pointsSelectId != null && isValueReference(pointsSelectId))
+		{
+			ValueBinding vb = app.createValueBinding(pointsSelectId);
+			component.setValueBinding("pointsSelectId", vb);
+		}
+		else
+		{
+			map.setPointsSelectId(pointsSelectId);
 		}
 
 	}
@@ -211,6 +217,16 @@ public class MapTag extends UIComponentTag
 	public void setLines(String lines)
 	{
 		this.lines = lines;
+	}
+
+	public String getPointsSelectId()
+	{
+		return pointsSelectId;
+	}
+
+	public void setPointsSelectId(String placesSelectId)
+	{
+		this.pointsSelectId = placesSelectId;
 	}
 
 }

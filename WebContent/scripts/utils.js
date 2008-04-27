@@ -4,7 +4,7 @@ var GK = navigator.userAgent.indexOf("Gecko") != -1;
 function debug(text)
 {
 	var el = document.getElementById("debug");
-	if (el) el.innerHTML += text + "<br>";
+	if (el) el.innerHTML += text + " ";
 }
 
 function Animation(element, steps, duration, callWhenDone, functionArg)
