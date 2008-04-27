@@ -608,7 +608,7 @@ Map.prototype.mapStartDrag = function(event)
 {
 
 	// close label/bubble
-	this.hideLabels();
+	this.hideLabels(true);
 
 	// set onMouseMove handler
 	EventAttacher.attach(document, "mousemove", this, "mapMouseMove");
@@ -791,9 +791,7 @@ Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
 	var cy = this.getCenterY();
 	
 	// center
-	this.setZoomAndCenterTo(newZoomLevel, cx, cy, true, notifyZoomChange, true, true);
-	
-	//alert('here');
+	this.setZoomAndCenterTo(newZoomLevel, cx, cy, true, notifyZoomChange, true, true, true);
 
 }
 
@@ -831,7 +829,8 @@ Map.prototype.zoomMapToInternal = function(x1, y1, x2, y2, border, saveState, no
 		saveState,
 		notifyZoomChange,
 		updateMainMap,
-		updateMiniMap);
+		updateMiniMap,
+		true);
 
 }
 
@@ -888,15 +887,16 @@ Map.prototype.centerTo = function(x, y, saveState, notifyZoomChange, updateMainM
 		saveState,
 		notifyZoomChange,
 		updateMainMap,
-		updateMiniMap);
+		updateMiniMap,
+		true);
 }
 
 // PRIVATE
-Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
+Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notifyZoomChange, updateMainMap, updateMiniMap, resetSelectedPoint)
 {
 
 	// close label/bubble
-	this.hideLabels();
+	this.hideLabels(resetSelectedPoint);
 
 	// make sure that the zoom level is ok
 	if (newZoomLevel < 0) newZoomLevel = 0;
@@ -1612,7 +1612,7 @@ Map.prototype.pointsSelectChanged = function()
 	if (pntIdx == -1) return;
 	
 	var pnt = this.points[pntIdx];
-	this.setZoomAndCenterTo(this.zoomLevel, pnt.x, pnt.y, true, false, true, true);
+	this.setZoomAndCenterTo(this.zoomLevel, pnt.x, pnt.y, true, false, true, true, false);
 	this.showLabel(null, pntIdx, true);
 
 }
@@ -1706,24 +1706,23 @@ Map.prototype.showLabel = function(event, pntIndex, fix)
 
 }
 
-Map.prototype.hideLabels = function()
+Map.prototype.hideLabels = function(resetSelectedPlace)
 {
-	if (this.bubble)
-	{
+	if (!this.bubble)
+		return;
 	
-		this.fixedLabel = false;
-		this.bubble.style.display = "none";
+	this.fixedLabel = false;
+	this.bubble.style.display = "none";
 		
-		if (this.pointsSelectId)
+	if (resetSelectedPlace && this.pointsSelectId)
+	{
+		var pointsSelect = document.getElementById(this.pointsSelectId);
+		if (pointsSelect)
 		{
-			var pointsSelect = document.getElementById(this.pointsSelectId);
-			if (pointsSelect)
-			{
-				// pointsSelect.selectedIndex = 0;
-			}
+			pointsSelect.selectedIndex = 0;
 		}
-		
 	}
+
 }
 
 Map.prototype.hideLabel = function(event)
@@ -1848,6 +1847,7 @@ Map.prototype.setSize = function(width, height)
 		true,
 		false,
 		false,
+		true,
 		true);
 
 }
@@ -1996,14 +1996,14 @@ Map.prototype.restoreState = function()
 	{
 		var cx = parseFloat(this.fieldCenterX.value);
 		var cy = parseFloat(this.fieldCenterY.value);
-		this.setZoomAndCenterTo(this.zoomLevel, cx, cy, false, false, false, true);
+		this.setZoomAndCenterTo(this.zoomLevel, cx, cy, false, false, false, true, true);
 	}
 	
 	// in case that the server components is not interested
 	// in saving the max extent -> so we show the minimal
 	else
 	{
-		this.setZoomAndCenterTo(0, 0, 0, false, false, false, true);
+		this.setZoomAndCenterTo(0, 0, 0, false, false, false, true, true);
 	}
 	
 	// and init history if empty
