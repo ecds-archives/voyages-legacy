@@ -26,7 +26,8 @@
 
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 10px 0px; border-left: 0px solid #895D03;">
 	
-		<s:legend id="mapLegend-component" 
+		<s:legend
+			id="mapLegend" 
 			styleClass="map-legend-div"
 			legend="#{MapBean.legend}"
 			refreshAction="#{MapBean.refresh}" 
@@ -40,7 +41,7 @@
 		</t:htmlTag>
 		
 		<t:htmlTag value="div" styleClass="map-legend-section">
-			<t:selectOneMenu forceId="true" id="map_places" />
+			<t:htmlTag value="select" forceId="true" id="map_places" />
 		</t:htmlTag>
 			
 	</t:htmlTag>

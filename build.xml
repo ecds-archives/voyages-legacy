@@ -27,28 +27,12 @@
 			</classpath>
 		</javac>
 	</target>
-
-	<target name="jar" depends="compile">
-		<jar destfile="tast.jar" basedir="${build}">
-			<fileset dir="${src}" includes="edu/emory/library/tast/dm/*.hbm.xml" />
-			<exclude name="tast.properties" />
-			<exclude name="hibernate.properties" />
-			<exclude name="symbols.xml" />
-			<exclude name="languages.xml" />
-			<exclude name="SlaveTradeResources.properties" />
-			<exclude name="hibernate.cfg.xml" />
-			<exclude name="log4j.properties" />
-			<exclude name="attribute-groups.xml" />
-			<exclude name="searchable-attributes.xml" />
-			<exclude name="table-attributes.xml" />
-			<exclude name="submission-attributes.xml" />
-		</jar>
-	</target>
-
-	<target name="war" depends="jar,compile">
+	
+	<target name="war" depends="compile">
 		<war warfile="tast.war" webxml="${webdir}/WEB-INF/web.xml">
-			<lib file="tast.jar" />
+			<classes dir="${build}" />
 			<classes dir="${src}">
+				<include name="edu/emory/library/tast/dm/*.hbm.xml" />
 				<include name="tast.properties" />
 				<include name="hibernate.properties" />
 				<include name="symbols.xml" />
