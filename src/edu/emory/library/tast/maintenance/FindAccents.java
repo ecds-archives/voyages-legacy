@@ -17,6 +17,11 @@ public class FindAccents
 	
 	private static char goodChars[] = "abcdefghijklmnopqrtsuvwxyzABCDEFGHIJKLMNOPQRTSUVWXYZ0123456789()_'-,?.&/[]\" /\\*’¡+".toCharArray();
 	
+	private static final String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";
+	private static final String DB_USER = "tast";
+	private static final String DB_PASS = "tast";
+	
+	
 	private static boolean isAscii(char ch)
 	{
 		for (int k = 0; k < goodChars.length; k++)
@@ -67,7 +72,7 @@ public class FindAccents
 		}
 		sql.append(" FROM voyages");
 
-		Connection conn = DriverManager.getConnection("jdbc:postgresql://wilson.library.emory.edu/tast_import", "tast", "tast");
+		Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);
 		
 		Statement st = conn.createStatement();
 		ResultSet rs = st.executeQuery(sql.toString());
