@@ -52,7 +52,16 @@
 						<span class="essay-date">July 2007</span>
 					</div>
 
-					<p>Before the nineteenth century, most people in the world
+					<p>
+					<div class="essay-image-left">
+						<a href="../resources/images-detail.faces?image=solomon"><img src="essays-images/solomon.jpg" width="150" height="170" border="0" alt="Job Ben Solomon in in the Gentleman’s Magazine (1750)"></a>
+						<div style="width: 150px;">
+							<div class="caption">
+								Job Ben Solomon in in the Gentleman’s Magazine (1750)
+							</div>
+						</div>
+					</div>
+					Before the nineteenth century, most people in the world
 					lived under some type of dependency. Slavery was just one of them.
 					The story of Ayuba Suleiman Diallo provides an insight into a world
 					where slavery was just another form of social relationship.
@@ -78,8 +87,7 @@
 					Indeed, one of Solomon’s letters still survives in the British
 					Library and his religious convictions inspired images portraying
 					him, such as the one available in our gallery of images, published
-					originally in 1750 in the
-					<a href="../resources/images-detail.faces?image=solomon">Gentleman’s
+					originally in 1750 in the <a href="../resources/images-detail.faces?image=solomon">Gentleman’s
 					Magazine</a>.</p>
 
 					<p>Bluett’s memoirs, published in 1734, provide one of the most

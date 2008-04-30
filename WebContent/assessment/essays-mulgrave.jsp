@@ -52,7 +52,16 @@
 						<span class="essay-date">August 2007</span>
 					</div>
 					
-					<p>The Middle Passage experience generally marked its survivors
+					<p>
+					<div class="essay-image-left">
+						<a href="../resources/images-detail.faces?image=mulgrave"><img src="essays-images/mulgrave.jpg" width="200" height="180" border="0" alt="Catherine Zimmermann-Mulgrave (1873)"></a>
+						<div style="width: 200px;">
+							<div class="caption">
+								Catherine Zimmermann-Mulgrave (1873)
+							</div>
+						</div>
+					</div>
+					The Middle Passage experience generally marked its survivors
 					for life, but Catherine Zimmermann-Mulgrave gives a lesson of hope.
 					Catherine was a survivor of the Portuguese Schooner “Heroína”,
 					which wrecked off the coast of Jamaica in 1833. The vessel had

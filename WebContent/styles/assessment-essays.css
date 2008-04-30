@@ -129,3 +129,20 @@ table.essay-prev-next td.essay-next a {
 table.essay-prev-next td.essay-prev a:hover,
 table.essay-prev-next td.essay-next a:hover {
 	text-decoration: underline; }
+	
+div.essay-image-right {
+	float: right;
+	margin: 3px 0px 5px 10px; 
+	border: 1px solid Black; }
+
+div.essay-image-left {
+	float: left;
+	margin: 3px 10px 5px 0px; 
+	border: 1px solid Black; }
+
+div.essay-image-left div.caption,
+div.essay-image-right div.caption {
+	background-color: #444444;
+	color: White;
+	text-align: center; 
+	padding: 2px 5px 1px 5px; }
