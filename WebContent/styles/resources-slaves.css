@@ -6,7 +6,7 @@ td.td-main-panel {
 td.td-side-panel {
 	background-image: url(../images/resources-bg.png);
 	background-repeat: repeat-x;
-	width: 280px; 
+	width: 290px; 
 	vertical-align: top;
 	border-right: 1px solid #165B31; }
 	
@@ -40,7 +40,7 @@ td.td-side-panel td.box-set-upper-row-middle-middle-collapsed,
 td.td-side-panel td.box-set-upper-row-middle-middle, 
 td.td-side-panel td.box-set-upper-row-bottom-middle-collapsed,
 td.td-side-panel td.box-set-upper-row-bottom-middle {	
-	width: 240px; }
+	width: 250px; }
 	
 td.lookup-checkbox-list-quicksearch {
 	margin-bottom: 5px; }

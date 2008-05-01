@@ -35,8 +35,8 @@ public class AppConfig
 	public static final String IMAGES_EMORYLOCATION_MAXLEN = "images.emorylocation.maxlen";
 	public static final String DEFAULT_REVISION = "database.defaultrevision";
 
-	//	public static final String IMAGES_THUMBNAIL_WIDTH = "images.thumbnail.width";	
-//	public static final String IMAGES_THUMBNAIL_HEIGHT = "images.thumbnail.height";	
+	public static final String SLAVES_SIERRA_LEONE_ID = "slaves.sierra_leone.id";
+	public static final String SLAVES_HAVANA_ID = "slaves.havana.id";
 
 	private static void load()
 	{

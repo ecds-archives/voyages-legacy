@@ -7,6 +7,7 @@ import java.util.Set;
 import org.hibernate.Session;
 import org.w3c.dom.Node;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.QuerySummaryItem;
 import edu.emory.library.tast.dm.Area;
@@ -35,8 +36,8 @@ import edu.emory.library.tast.util.query.Conditions;
 public class SlavesQuery implements Cloneable, XMLExportable
 {
 	
-	private static final int SIERRA_LEONE_ID = 60200;
-	private static final int HAVANA_ID = 31312;
+	private static final int SIERRA_LEONE_ID = AppConfig.getConfiguration().getInt(AppConfig.SLAVES_SIERRA_LEONE_ID);
+	private static final int HAVANA_ID = AppConfig.getConfiguration().getInt(AppConfig.SLAVES_HAVANA_ID);
 
 	private static final int WOMAN_ID = 5;
 	private static final int MAN_ID = 1;

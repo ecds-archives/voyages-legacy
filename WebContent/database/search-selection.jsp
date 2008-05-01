@@ -6,7 +6,7 @@
 
 <s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
 
-<s:expandableBox boxId="date" text="#{res.database_search_selecttimeframe}">
+<s:expandableBox boxId="date" text="#{res.database_search_selecttimeframe}" rendered="false">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
@@ -32,8 +32,6 @@
 	</t:htmlTag>
 	
 </s:expandableBox>
-
-<br>
 
 <s:expandableBoxSet expandedId="#{SearchBean.expandedGroup}">
 <s:expandableBox boxId="basic" text="#{res.database_search_basic}">

@@ -1,5 +1,9 @@
 AjaxAnywhere.prototype.showLoadingMessage = function()
 {
+	// ElementUtils.hide(
+	// 	"totalBoxBasicTd",
+	// 	"totalBoxCountryTd",
+	// 	"totalBoxPlacesTd");
 	ElementUtils.show(
 		"totalUpdateIndicatorBoxBasic",
 		"totalUpdateIndicatorBoxCountry",
@@ -8,6 +12,10 @@ AjaxAnywhere.prototype.showLoadingMessage = function()
 
 AjaxAnywhere.prototype.hideLoadingMessage = function()
 {
+	// ElementUtils.show(
+	// 	"totalBoxBasicTd",
+	// 	"totalBoxCountryTd",
+	// 	"totalBoxPlacesTd");
 	ElementUtils.hide(
 		"totalUpdateIndicatorBoxBasic",
 		"totalUpdateIndicatorBoxCountry",
