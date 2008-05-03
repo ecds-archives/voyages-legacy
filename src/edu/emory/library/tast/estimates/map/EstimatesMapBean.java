@@ -22,7 +22,6 @@ import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomChangedEvent;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
-import edu.emory.library.tast.maps.component.StandardMaps.MapIdent;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 
@@ -174,8 +173,8 @@ public class EstimatesMapBean {
 			ChosenMap map = StandardMaps.getSelectedMap(this);
 			this.zoomLevel = map.mapId;
 			this.zoomLevelLocked = true;
-			this.estimatesBean.setYearFrom(map.ident.yearFrom);
-			this.estimatesBean.setYearTo(map.ident.yearTo);
+			this.estimatesBean.setYearFrom(String.valueOf(map.ident.yearFrom));
+			this.estimatesBean.setYearTo(String.valueOf(map.ident.yearTo));
 			this.estimatesBean.changeSelection();
 			this.estimatesBean.lockYears(true);
 			this.estimatesBean.changeSelection();

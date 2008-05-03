@@ -2,12 +2,12 @@ package edu.emory.library.tast.images.site;
 
 import org.w3c.dom.Node;
 
-import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.util.EqualsUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.XMLUtils;
 
-public class ImagesQuery implements XMLExportable {
+public class ImagesQuery
+{
 	
 	private String keyword = "";
 	private Integer yearFrom = null;

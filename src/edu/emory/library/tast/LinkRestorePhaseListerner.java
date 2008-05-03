@@ -11,7 +11,6 @@ import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.images.site.ImagesBean;
-import edu.emory.library.tast.slaves.SlavesBean;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
@@ -41,27 +40,13 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		if (viewId.equals("/database/search.jsp"))
 		{
 			
-			Map params = fc.getExternalContext().getRequestParameterValuesMap();
+			Map paramValues = fc.getExternalContext().getRequestParameterValuesMap();
 			
-			if (params.size() != 0)
+			if (paramValues.size() != 0)
 			{
 				SearchBean bean = (SearchBean) JsfUtils.getSessionBean(fc, "SearchBean");
-				bean.restoreQueryFromUrl(params);
+				bean.restoreQueryFromUrl(paramValues);
 			}
-			
-		}
-
-		else if (viewId.equals("/resources/slaves.jsp"))
-		{
-			
-			Map params = fc.getExternalContext().getRequestParameterMap();
-			
-			String permlink = (String) params.get("permlink");
-			if (StringUtils.isNullOrEmpty(permlink))
-				return;
-			
-			SlavesBean bean = (SlavesBean) JsfUtils.getSessionBean(fc, "SlavesBean");
-			bean.restoreLink(permlink);
 			
 		}
 		
@@ -69,16 +54,19 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		{
 			
 			Map params = fc.getExternalContext().getRequestParameterMap();
-			
-			String module = (String) params.get("module");
-			if (StringUtils.isNullOrEmpty(module))
-				return;
+			Map paramValues = fc.getExternalContext().getRequestParameterValuesMap();
 			
 			EstimatesSelectionBean bean = (EstimatesSelectionBean) JsfUtils.getSessionBean(fc, "EstimatesSelectionBean");
-			bean.setSelectedTab(module);
+
+			String module = (String) params.get("module");
+			if (!StringUtils.isNullOrEmpty(module))
+				bean.setSelectedTab(module);
+			
+			if (params.containsKey("module") && params.size() > 1 || params.size() > 0)
+				bean.restoreQueryFromUrl(paramValues);
 			
 		}
-		
+
 		else if (viewId.equals("/resources/images-detail.jsp"))
 		{
 			Map params = fc.getExternalContext().getRequestParameterMap();

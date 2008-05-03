@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tast.SimpleCache;
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionList;
 import edu.emory.library.tast.database.query.QueryConditionListItem;
@@ -67,7 +68,8 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 	{
 		
 		QueryConditionListItem[] queryConditionItems =
-			ListItemsCache.getCachedListItems(getId());
+			(QueryConditionListItem[]) SimpleCache.get(
+					SimpleCache.VOYAGES_PREFIX + getId());
 		
 		if (queryConditionItems == null)
 		{
@@ -102,7 +104,9 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 						dictItem.getName());
 			}
 			
-			ListItemsCache.setCachedListItems(getId(), queryConditionItems);
+			SimpleCache.set(
+					SimpleCache.VOYAGES_PREFIX + getId(),
+					queryConditionItems);
 		
 		}
 

@@ -24,7 +24,6 @@ import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Area;
-import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.Port;
@@ -633,52 +632,6 @@ public class SlavesBean {
 		sess.close();
 		return null;
 	}
-	
-	/**
-	 * Saves permanent link.
-	 * @return
-	 */
-	public String permLink() {
-		
-		Configuration conf = new Configuration();
-		conf.addEntry("permlinkSlaves", this.workingQuery);
-		conf.save();
-
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
-		messageBar.setRendered(true);
-		
-		return null;
-	}
-	
-	/**
-	 * Restores permanent link (see LinkRestorePhaseListener in common package).
-	 * @param configId
-	 */
-	public void restoreLink(String configId) {
-		Session session = HibernateUtil.getSession();
-		Transaction t = session.beginTransaction();
-		try {
-			Configuration conf = Configuration.loadConfiguration(configId);
-			if (conf == null)
-				return;
-
-			if (conf.getEntry("permlinkSlaves") != null) {
-				SlavesQuery selection = (SlavesQuery) conf.getEntry("permlinkSlaves");
-				try {
-					this.currentQuery = (SlavesQuery) selection.clone();
-					this.workingQuery = (SlavesQuery) selection.clone();
-					loadData(true, true);
-				} catch (CloneNotSupportedException e) {
-					e.printStackTrace();
-				}
-			}
-		} finally {
-			t.commit();
-			session.close();
-		}
-	}
-
 	/**
 	 * Message bar to display link.
 	 * @return

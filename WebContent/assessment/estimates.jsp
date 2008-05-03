@@ -25,6 +25,9 @@
 	
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	
+	<link href="../styles/popup.css" rel="stylesheet" type="text/css">
+	<link href="../styles/popup-permlink.css" rel="stylesheet" type="text/css">
+	
 	<script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>

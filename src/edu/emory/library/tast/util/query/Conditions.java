@@ -140,10 +140,9 @@ public class Conditions {
 	 * Constructor. Uses by default JOIN_AND.
 	 * 
 	 */
-	public Conditions() {
-
+	public Conditions()
+	{
 		this.joinCondition = JOIN_AND;
-
 	}
 
 	/**
@@ -152,7 +151,8 @@ public class Conditions {
 	 * @param joinCondition
 	 *            join operator.
 	 */
-	public Conditions(int joinCondition) {
+	public Conditions(int joinCondition)
+	{
 		this.joinCondition = joinCondition;
 	}
 
@@ -166,7 +166,8 @@ public class Conditions {
 	 * @param op
 	 *            operator
 	 */
-	public void addCondition(Attribute attrName, Object value, int op) {
+	public void addCondition(Attribute attrName, Object value, int op)
+	{
 		String opStr = null;
 
 		// Recognize operator
@@ -219,7 +220,8 @@ public class Conditions {
 	 * @param subCond
 	 *            subcondition
 	 */
-	public void addCondition(Conditions subCond) {
+	public void addCondition(Conditions subCond)
+	{
 		this.subConditions.add(subCond);
 	}
 
@@ -228,12 +230,23 @@ public class Conditions {
 	 * 
 	 * @return ConditionResponse object.
 	 */
-	public ConditionResponse getConditionHQL(Map bindings) {
+	public ConditionResponse getConditionHQL(Map bindings)
+	{
 
 		// Check the number of items.
 		int size = this.conditions.size() + this.subConditions.size();
+		
+		if (size == 0)
+		{
+			ConditionResponse res = new ConditionResponse();
+			StringBuffer ret = new StringBuffer();
+			ret.append("1 = 1");
+			res.conditionString = ret;
+			return res;
+		}
 
-		if (this.joinCondition == JOIN_NOT && size != 1) {
+		if (this.joinCondition == JOIN_NOT && size != 1)
+		{
 			throw new RuntimeException(
 					"With JOIN_NOT only one condition allowable!");
 		}
@@ -242,7 +255,8 @@ public class Conditions {
 		StringBuffer ret = new StringBuffer();
 
 		// Handle not
-		if (this.joinCondition == JOIN_NOT) {
+		if (this.joinCondition == JOIN_NOT)
+		{
 			ret.append("not (");
 		}
 

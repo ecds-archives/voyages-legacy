@@ -217,12 +217,30 @@ public class StringUtils
 
 	public static Set toLongSet(String[] arr)
 	{
+		return toLongSet(arr, false);
+	}
+
+	public static Set toLongSet(String[] arr, boolean omitInvalid)
+	{
 		Set set = new HashSet();
 		if (arr != null)
 		{
 			for (int i = 0; i < arr.length; i++)
 			{
-				set.add(new Long(arr[i]));
+				if (omitInvalid)
+				{
+					try
+					{
+						set.add(new Long(arr[i]));
+					}
+					catch (NumberFormatException nfe)
+					{
+					}
+				}
+				else
+				{
+					set.add(new Long(arr[i]));
+				}
 			}
 		}
 		return set;

@@ -5,8 +5,6 @@
 
 <div id="debug"></div>
 
-<h:inputHidden value="#{EstimatesSelectionBean.fakeHiddenForPermlinkRestore}" />
-
 <s:expandableBoxSet expandedId="time-frame">
 <s:expandableBox boxId="time-frame" text="#{res.estimates_left_timeframe}">
 
@@ -140,7 +138,7 @@
 			action="#{EstimatesSelectionBean.createPermlink}"
 			value="#{res.estimates_main_permlink_button}" />
 			
-		<s:popup binding="#{EstimatesSelectionBean.permlinkPopup}" width="420" height="150">
+		<s:popup binding="#{EstimatesSelectionBean.permlinkPopup}" width="420" height="200">
 			<t:htmlTag value="div" styleClass="permlink-info">
 				<t:div styleClass="permlink-title">
 					<t:outputText value="#{res.estimates_main_permlink_title}" />
@@ -149,7 +147,9 @@
 					<t:outputText value="#{res.estimates_main_permlink_desc}" />
 				</t:div>
 				<t:div styleClass="permlink-link">
+					<t:outputText escape="false" value="<textarea rows='4' wrap='virtual'>" />
 					<t:outputText value="#{EstimatesSelectionBean.permLink}" />
+					<t:outputText escape="false" value="</textarea>" />
 				</t:div>
 				<t:div styleClass="permlink-close">
 					<h:commandButton value="#{res.estimates_main_permlink_close}" styleClass="permlink-close-button" />

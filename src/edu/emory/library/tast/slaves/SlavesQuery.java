@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.w3c.dom.Node;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
@@ -16,12 +15,10 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.SexAge;
 import edu.emory.library.tast.dm.Slave;
-import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.EqualsUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
 /**
@@ -33,7 +30,7 @@ import edu.emory.library.tast.util.query.Conditions;
  * For more details about it see SlavesBean.permLink() and SlavesBean.restoreLink() 
  *
  */
-public class SlavesQuery implements Cloneable, XMLExportable
+public class SlavesQuery implements Cloneable
 {
 	
 	private static final int SIERRA_LEONE_ID = AppConfig.getConfiguration().getInt(AppConfig.SLAVES_SIERRA_LEONE_ID);
@@ -747,74 +744,6 @@ public class SlavesQuery implements Cloneable, XMLExportable
 	public void setVoyageId(Integer voyageId)
 	{
 		this.voyageId = voyageId;
-	}
-
-	/**
-	 * Decodes SlaveQuery object from xml node (read from configuration).
-	 */
-	public void restoreFromXML(Node entry) {	
-		System.out.println("Restore...: " + entry.getNodeName());
-		Node config = XMLUtils.getChildNode(entry, "config");
-		if (config != null) {
-			Node countries = XMLUtils.getChildNode(config, "countries");
-			Node embPorts = XMLUtils.getChildNode(config, "embPorts");
-			if (countries != null) {
-				Node set = XMLUtils.getChildNode(countries, "set");
-				this.countries = (String[]) XMLUtils.restoreSetOfStrings(set).toArray(new String[] {});
-			}
-			if (embPorts != null) {
-				Node set = XMLUtils.getChildNode(embPorts, "set");
-				this.embPorts = (String[]) XMLUtils.restoreSetOfStrings(set).toArray(new String[] {});
-			}
-			this.ageFrom = XMLUtils.getXMLPropertyInteger(config, "ageFrom");
-			this.ageTo = XMLUtils.getXMLPropertyInteger(config, "ageTo");
-			this.heightFrom = XMLUtils.getXMLPropertyInteger(config, "heightFrom");
-			this.heightTo = XMLUtils.getXMLPropertyInteger(config, "heightTo");
-			this.yearFrom = XMLUtils.getXMLPropertyInteger(config, "yearFrom");
-			this.yearTo = XMLUtils.getXMLPropertyInteger(config, "yearTo");
-			this.voyageId = XMLUtils.getXMLPropertyInteger(config, "voyageId");
-			this.slaveName = XMLUtils.getXMLProperty(config, "slaveName");
-			this.shipName = XMLUtils.getXMLProperty(config, "shipName");
-			this.boys = XMLUtils.getXMLPropertyBoolean(config, "boys");
-			this.men = XMLUtils.getXMLPropertyBoolean(config, "men");
-			this.males = XMLUtils.getXMLPropertyBoolean(config, "males");
-			this.girls = XMLUtils.getXMLPropertyBoolean(config, "girls");
-			this.women = XMLUtils.getXMLPropertyBoolean(config, "women");
-			this.females = XMLUtils.getXMLPropertyBoolean(config, "females");
-			this.disembHavana = XMLUtils.getXMLPropertyBoolean(config, "disembHavana");
-			this.disembSierraLeone = XMLUtils.getXMLPropertyBoolean(config, "disembSierraLeone");
-		}
-	}
-
-	/**
-	 * Creates XML encoding of this query.
-	 */
-	public String toXML() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<config ");
-		XMLUtils.appendAttribute(buffer, "ageFrom", ageFrom);
-		XMLUtils.appendAttribute(buffer, "ageTo", ageTo);
-		XMLUtils.appendAttribute(buffer, "heightFrom", heightFrom);
-		XMLUtils.appendAttribute(buffer, "heightTo", heightTo);
-		XMLUtils.appendAttribute(buffer, "yearFrom", yearFrom);
-		XMLUtils.appendAttribute(buffer, "yearTo", yearTo);
-		XMLUtils.appendAttribute(buffer, "voyageId", voyageId);
-		XMLUtils.appendAttribute(buffer, "slaveName", slaveName);
-		XMLUtils.appendAttribute(buffer, "shipName", shipName);
-		XMLUtils.appendAttribute(buffer, "boys", boys);
-		XMLUtils.appendAttribute(buffer, "men", men);
-		XMLUtils.appendAttribute(buffer, "males", males);
-		XMLUtils.appendAttribute(buffer, "girls", girls);
-		XMLUtils.appendAttribute(buffer, "women", women);
-		XMLUtils.appendAttribute(buffer, "females", females);
-		XMLUtils.appendAttribute(buffer, "disembHavana", disembHavana);
-		XMLUtils.appendAttribute(buffer, "disembSierraLeone", disembSierraLeone);
-		buffer.append(">\n<countries>\n");
-		buffer.append("   ").append(XMLUtils.encodeArray(countries)).append("\n</countries>\n");
-		buffer.append("\n<embPorts>\n");
-		buffer.append("   ").append(XMLUtils.encodeArray(embPorts)).append("\n</embPorts>\n");
-		buffer.append("</config>");
-		return buffer.toString();
 	}
 	
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import edu.emory.library.tast.SimpleCache;
 import edu.emory.library.tast.database.query.QueryBuilderComponent;
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionList;
@@ -193,7 +194,8 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 	{
 		
 		QueryConditionListItem[] queryConditionItems =
-			ListItemsCache.getCachedListItems(getId());
+			(QueryConditionListItem[]) SimpleCache.get(
+					SimpleCache.VOYAGES_PREFIX + getId());
 		
 		if (queryConditionItems == null)
 		{
@@ -299,7 +301,9 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 			tmpAreas.toArray(areaItems);
 			
 			queryConditionItems = areaItems;
-			ListItemsCache.setCachedListItems(getId(), queryConditionItems);
+			SimpleCache.set(
+					SimpleCache.VOYAGES_PREFIX + getId(),
+					queryConditionItems);
 			
 		}
 		
