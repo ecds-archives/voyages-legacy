@@ -660,7 +660,7 @@ public class SlavesBean {
 	 * Restores permanent link (see LinkRestorePhaseListener in common package).
 	 * @param configId
 	 */
-	public void restoreLink(Long configId) {
+	public void restoreLink(String configId) {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		try {

@@ -235,7 +235,6 @@ public class TableResultTabBean {
 		if (subCondition != null) {
 			localCond.addCondition(subCondition);
 		}
-		System.out.println(localCond.toString());
 		// Build query
 		QueryValue qValue = new QueryValue("Voyage", localCond);
 		if (length != -1) {

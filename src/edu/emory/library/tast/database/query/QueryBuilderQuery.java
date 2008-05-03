@@ -6,11 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import edu.emory.library.tast.dm.XMLExportable;
-
 /**
  * Holds the list of conditions, i.e. objects of types
  * {@link edu.emory.library.tast.database.query.QueryCondition}. Represents the currently
@@ -22,7 +17,7 @@ import edu.emory.library.tast.dm.XMLExportable;
  * @author Jan Zich
  * 
  */
-public class QueryBuilderQuery implements Cloneable, XMLExportable
+public class QueryBuilderQuery implements Cloneable
 {
 
 	private static final long serialVersionUID = 5986829888479480030L;
@@ -120,39 +115,6 @@ public class QueryBuilderQuery implements Cloneable, XMLExportable
 		}
 		
 		return true;
-	}
-
-	public String toXML() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<queryBuilderQuery>\n");
-		Iterator iter = this.conditions.iterator();
-		while (iter.hasNext()) {
-			QueryCondition qC = (QueryCondition) iter.next();
-			buffer.append(qC.toXML());
-		}
-		buffer.append("</queryBuilderQuery>\n");
-		return buffer.toString();
-	}
-
-	public void restoreFromXML(Node xmlNode) {
-		NodeList childNodes = xmlNode.getChildNodes();
-		for (int i = 0; i < childNodes.getLength(); i++) {
-			Node node = childNodes.item(i);
-			if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("condition")) {
-				String type = node.getAttributes().getNamedItem("type").getNodeValue();								
-				if (type.equals(QueryConditionBoolean.TYPE)) {					
-					this.addCondition(QueryConditionBoolean.fromXML(node));
-				} else if (type.equals(QueryConditionDate.TYPE)) {
-					this.addCondition(QueryConditionDate.fromXML(node));
-				} else if (type.equals(QueryConditionList.TYPE)) {
-					this.addCondition(QueryConditionList.fromXML(node));
-				} else if (type.equals(QueryConditionNumeric.TYPE)) {
-					this.addCondition(QueryConditionNumeric.fromXML(node));
-				} else if (type.equals(QueryConditionText.TYPE)) {
-					this.addCondition(QueryConditionText.fromXML(node));
-				}
-			}
-		}
 	}
 
 }

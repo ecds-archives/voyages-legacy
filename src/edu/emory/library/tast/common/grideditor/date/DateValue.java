@@ -203,7 +203,6 @@ public class DateValue extends Value
 
 	public void setYear(String year)
 	{
-		System.out.println("Setting year: " + year);
 		if ("YYYY".equals(year)) {
 			year = "";
 		}

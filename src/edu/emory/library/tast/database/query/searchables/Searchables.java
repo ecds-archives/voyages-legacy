@@ -228,41 +228,6 @@ public class Searchables
 
 			}
 			
-			//nation
-			else if ("nation".equals(type)) {
-				NodeList xmlAttrs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
-				Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
-				
-				// read the db attributes
-				Attribute firstAttr = null;
-				for (int j = 0; j < xmlAttrs.getLength(); j++)
-				{
-					Node xmlAttr = xmlAttrs.item(j);
-					String name = xmlAttr.getAttributes().getNamedItem("name").getNodeValue();
-					Attribute attr = Voyage.getAttribute(name);
-					if (attr == null)
-					{
-						throw new RuntimeException("searchable attribute '" + name + "' not found");
-					}
-					else if (j == 0)
-					{
-						firstAttr = attr;
-					}
-					else
-					{
-						if (firstAttr.getClass() != attr.getClass())
-							throw new RuntimeException("searchable attribute '" + id + "' contains invalid attributes");
-					}
-					attrs[j] = attr;
-				}
-
-				searchableAttribute =
-					new SearchableAttributeNation(
-						id, userLabel, userCats, attrs,
-						spssName, listDescription, inEstimates);						
-				
-			}
-			
 			// location -> read list of locations
 			else if ("port".equals(type))
 			{
@@ -347,7 +312,8 @@ public class Searchables
 		sa.loadConfiguration();
 	}
 	
-	public static SearchableAttribute getById(String attrId) {
+	public static SearchableAttribute getById(String attrId)
+	{
 		return getCurrent().getSearchableAttributeById(attrId);
 	}
 

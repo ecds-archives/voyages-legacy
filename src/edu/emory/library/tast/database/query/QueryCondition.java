@@ -65,6 +65,6 @@ public abstract class QueryCondition implements Serializable
 		return Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
 	}
 
-	public abstract String toXML();
+	public abstract UrlParam[] createUrlParamValue();
 	
 }

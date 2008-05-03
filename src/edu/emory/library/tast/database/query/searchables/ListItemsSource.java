@@ -8,4 +8,5 @@ public interface ListItemsSource
 {
 	QueryConditionListItem[] getAvailableItems(Session session);
 	QueryConditionListItem getItemByFullId(Session session, String id);
+	Long getItemRealId(String id);
 }

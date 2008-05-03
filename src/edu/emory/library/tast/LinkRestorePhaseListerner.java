@@ -8,6 +8,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
+import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.images.site.ImagesBean;
 import edu.emory.library.tast.slaves.SlavesBean;
@@ -34,7 +35,21 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		FacesContext fc = event.getFacesContext();
 		String viewId = fc.getViewRoot().getViewId();
 		
-		if (viewId.equals("/resources/slaves.jsp"))
+		if (viewId.equals("/database/search.jsp"))
+		{
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map params = context.getExternalContext().getRequestParameterValuesMap();
+			
+			if (params.size() != 0)
+			{
+				SearchBean bean = (SearchBean) JsfUtils.getSessionBean(fc, "SearchBean");
+				bean.restoreQueryFromUrl(params);
+			}
+			
+		}
+
+		else if (viewId.equals("/resources/slaves.jsp"))
 		{
 			
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -45,11 +60,11 @@ public class LinkRestorePhaseListerner implements PhaseListener
 				return;
 			
 			SlavesBean bean = (SlavesBean) JsfUtils.getSessionBean(fc, "SlavesBean");
-			bean.restoreLink(new Long(permlink));
+			bean.restoreLink(permlink);
 			
 		}
 		
-		if (viewId.equals("/assessment/estimates.jsp"))
+		else if (viewId.equals("/assessment/estimates.jsp"))
 		{
 			
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -64,7 +79,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			
 		}
 		
-		if (viewId.equals("/resources/images-detail.jsp"))
+		else if (viewId.equals("/resources/images-detail.jsp"))
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map params = context.getExternalContext().getRequestParameterMap();
@@ -78,7 +93,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			
 		}
 		
-		if (viewId.equals("/database/voyage.jsp"))
+		else if (viewId.equals("/database/voyage.jsp"))
 		{
 			
 			FacesContext context = FacesContext.getCurrentInstance();

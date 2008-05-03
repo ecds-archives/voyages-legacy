@@ -394,4 +394,12 @@ public class StringUtils
 		return ' ';
 	}
 
+	public static String getFirstElement(String[] arr)
+	{
+		if (arr == null || arr.length == 0)
+			return null;
+		else
+			return arr[0];
+	}
+
 }

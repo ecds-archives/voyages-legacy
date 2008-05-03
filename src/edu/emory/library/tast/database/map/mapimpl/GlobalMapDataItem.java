@@ -76,7 +76,6 @@ public class GlobalMapDataItem extends AbstractMapItem {
 	 */
 	public void setSymbolColor(int color) {
 		this.color = color;
-		// System.out.println("Color: " + this.color);
 	}
 
 	/**

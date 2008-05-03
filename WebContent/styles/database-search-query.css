@@ -109,17 +109,17 @@ td.query-builder-range-slash {
 	width: 10px; }
 
 td.query-builder-range-year {
-	width: 40px; }
+	width: 35px; }
 
 td.query-builder-range-year input {
 	background-color: #F1E7C8;
 	border: 0px;
 	padding: 2px;
-	width: 36px; }
+	width: 31px; }
 
 table.query-builder-range-months {
 	margin-top: 5px;
-	width: 280px; }
+	width: 270px; }
 	
 td.query-builder-range-month-delected {
 	padding-top: 2px;

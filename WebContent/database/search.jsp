@@ -55,7 +55,6 @@
 <f:view>
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
-	<h:inputHidden value="#{SearchBean.fakeHiddenForPermlinkRestore}" />
 
 	<s:siteHeader activeSectionId="database">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>

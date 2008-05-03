@@ -1,10 +1,6 @@
 package edu.emory.library.tast.database.query;
 
-import org.w3c.dom.Node;
-
-import edu.emory.library.tast.util.XMLUtils;
-
-
+import edu.emory.library.tast.util.StringUtils;
 
 public class QueryConditionNumeric extends QueryConditionRange
 {
@@ -105,11 +101,31 @@ public class QueryConditionNumeric extends QueryConditionRange
 		return eq;
 	}
 	
-	private boolean compareTextFields(String val1, String val2)
+	public UrlParam[] createUrlParamValue()
 	{
-		return
-			(val1 == null && val2 == null) ||
-			(val1 != null && val1.equals(val2));
+		String attrId = getSearchableAttributeId();
+		switch (getType())
+		{
+			case QueryConditionRange.TYPE_BETWEEN:
+				return new UrlParam[] {
+						new UrlParam(attrId + "From",String.valueOf(from)),
+						new UrlParam(attrId + "To", String.valueOf(to))};
+			
+			case QueryConditionRange.TYPE_EQ:
+				return new UrlParam[] {
+						new UrlParam(attrId, String.valueOf(eq))};
+			
+			case QueryConditionRange.TYPE_LE:
+				return new UrlParam[] {
+						new UrlParam(attrId + "To", String.valueOf(le))};
+			
+			case QueryConditionRange.TYPE_GE:
+				return new UrlParam[] {
+						new UrlParam(attrId + "From", String.valueOf(ge))};
+				
+			default:
+				throw new RuntimeException("unexpected type");
+		}
 	}
 	
 	public boolean equals(Object obj)
@@ -120,11 +136,11 @@ public class QueryConditionNumeric extends QueryConditionRange
 		QueryConditionNumeric queryConditionRange = (QueryConditionNumeric) obj;
 		return
 			type == queryConditionRange.getType() &&
-			compareTextFields(from, queryConditionRange.getFrom()) &&
-			compareTextFields(to, queryConditionRange.getTo()) &&
-			compareTextFields(le, queryConditionRange.getLe()) &&
-			compareTextFields(ge, queryConditionRange.getGe()) &&
-			compareTextFields(eq, queryConditionRange.getEq());
+			StringUtils.compareStrings(from, queryConditionRange.getFrom()) &&
+			StringUtils.compareStrings(to, queryConditionRange.getTo()) &&
+			StringUtils.compareStrings(le, queryConditionRange.getLe()) &&
+			StringUtils.compareStrings(ge, queryConditionRange.getGe()) &&
+			StringUtils.compareStrings(eq, queryConditionRange.getEq());
 	}
 	
 	protected Object clone()
@@ -138,30 +154,5 @@ public class QueryConditionNumeric extends QueryConditionRange
 		newQueryCondition.setEq(eq);
 		return newQueryCondition;
 	}
-
-	public String toXML() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<condition ");
-		XMLUtils.appendAttribute(buffer, "type", TYPE);
-		XMLUtils.appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
-		XMLUtils.appendAttribute(buffer, "from", from);
-		XMLUtils.appendAttribute(buffer, "to", to);
-		XMLUtils.appendAttribute(buffer, "ge", ge);
-		XMLUtils.appendAttribute(buffer, "le", le);
-		XMLUtils.appendAttribute(buffer, "eq", eq);
-		XMLUtils.appendAttribute(buffer, "querytype", new Integer(this.type));
-		buffer.append("/>\n");
-		return buffer.toString();
-	}
 	
-	public static QueryCondition fromXML(Node node) {
-		QueryConditionNumeric qc = new QueryConditionNumeric(XMLUtils.getXMLProperty(node, "attribute"));
-		qc.from = XMLUtils.getXMLProperty(node, "from");
-		qc.to = XMLUtils.getXMLProperty(node, "to");
-		qc.ge = XMLUtils.getXMLProperty(node, "ge");
-		qc.le = XMLUtils.getXMLProperty(node, "le");
-		qc.eq = XMLUtils.getXMLProperty(node, "eq");
-		qc.type = Integer.parseInt(XMLUtils.getXMLProperty(node, "querytype"));
-		return qc;
-	}
 }

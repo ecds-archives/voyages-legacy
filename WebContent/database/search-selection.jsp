@@ -6,7 +6,7 @@
 
 <s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
 
-<s:expandableBox boxId="date" text="#{res.database_search_selecttimeframe}" rendered="false">
+<s:expandableBox boxId="date" text="#{res.database_search_selecttimeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
@@ -32,6 +32,8 @@
 	</t:htmlTag>
 	
 </s:expandableBox>
+
+<br>
 
 <s:expandableBoxSet expandedId="#{SearchBean.expandedGroup}">
 <s:expandableBox boxId="basic" text="#{res.database_search_basic}">
@@ -170,7 +172,7 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 			action="#{SearchBean.createPermlink}"
 			value="#{res.database_search_permlink_button}" />
 			
-		<s:popup binding="#{SearchBean.permlinkPopup}" width="420" height="150">
+		<s:popup binding="#{SearchBean.permlinkPopup}" width="420" height="200">
 			<t:htmlTag value="div" styleClass="permlink-info">
 				<t:div styleClass="permlink-title">
 					<t:outputText value="#{res.database_search_permlink_title}" />
@@ -179,7 +181,9 @@ AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 					<t:outputText value="#{res.database_search_permlink_desc}" />
 				</t:div>
 				<t:div styleClass="permlink-link">
+					<t:outputText escape="false" value="<textarea rows='4' wrap='virtual'>" />
 					<t:outputText value="#{SearchBean.permLink}" />
+					<t:outputText escape="false" value="</textarea>" />
 				</t:div>
 				<t:div styleClass="permlink-close">
 					<h:commandButton value="#{res.database_search_permlink_close}" styleClass="permlink-close-button" />

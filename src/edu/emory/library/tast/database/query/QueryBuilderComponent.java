@@ -1244,7 +1244,16 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 	
-	private void encodeListItem(SearchableAttribute attribute, int level, FacesContext context, ResponseWriter writer, String jsUpdateTotal, QueryConditionList queryCondition, QueryConditionListItem item, String parentId) throws IOException
+	private void encodeListItem(
+			SearchableAttribute attribute,
+			int level,
+			FacesContext context,
+			ResponseWriter writer,
+			String jsUpdateTotal,
+			QueryConditionList queryCondition,
+			QueryConditionListItem item,
+			String parentId,
+			boolean forceSelect) throws IOException
 	{
 		
 		String fullId;
@@ -1252,6 +1261,10 @@ public class QueryBuilderComponent extends UIComponentBase
 			fullId = item.getId();
 		else
 			fullId = parentId + ID_SEPARATOR + item.getId();
+		
+		boolean thisSelected =
+			forceSelect ||
+			queryCondition.containsId(fullId);
 		
 		boolean showArrow = 
 			item.isExpandable() &&
@@ -1303,7 +1316,7 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.writeAttribute("value", fullId, null);
 			writer.writeAttribute("onclick", jsCheckboxClick, null);
 			writer.writeAttribute("name", getHtmlNameForList(attribute, context), null);
-			if (queryCondition.containsId(fullId)) writer.writeAttribute("checked", "checked", null);
+			if (thisSelected) writer.writeAttribute("checked", "checked", null);
 			writer.endElement("input");
 		}
 		writer.endElement("td");
@@ -1337,7 +1350,16 @@ public class QueryBuilderComponent extends UIComponentBase
 			writer.startElement("tr", this);
 			for (int i = 0; i < children.length; i++)
 			{
-				encodeListItem(attribute, level+1, context, writer, jsUpdateTotal, queryCondition, children[i], fullId);
+				encodeListItem(
+						attribute,
+						level+1,
+						context,
+						writer,
+						jsUpdateTotal,
+						queryCondition,
+						children[i],
+						fullId,
+						queryCondition.isAutoSelection() && thisSelected);
 			}
 			writer.endElement("table");
 			writer.endElement("td");
@@ -1503,7 +1525,7 @@ public class QueryBuilderComponent extends UIComponentBase
 		// actual list
 		for (int i = 0; i < allItems.length; i++)
 			encodeListItem(attribute, 0, context, writer, jsUpdateTotalPostponed,
-					queryCondition, allItems[i], "");
+					queryCondition, allItems[i], "", false);
 		
 		// list: end
 		writer.endElement("table");

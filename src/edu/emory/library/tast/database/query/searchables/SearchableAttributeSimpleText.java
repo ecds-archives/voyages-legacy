@@ -1,5 +1,9 @@
 package edu.emory.library.tast.database.query.searchables;
 
+import java.util.Map;
+
+import org.hibernate.Session;
+
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionText;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -68,6 +72,19 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 		// all OK
 		return true;
 	
+	}
+
+	public QueryCondition restoreFromUrl(Session session, Map params)
+	{
+		
+		String value = StringUtils.getFirstElement((String[]) params.get(getId()));
+		if (StringUtils.isNullOrEmpty(value))
+			return null;
+		
+		QueryConditionText queryCondition = new QueryConditionText(getId());
+		queryCondition.setValue(value);
+		return queryCondition;
+
 	}
 
 }

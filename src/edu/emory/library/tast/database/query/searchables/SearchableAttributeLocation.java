@@ -3,6 +3,8 @@ package edu.emory.library.tast.database.query.searchables;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -16,6 +18,7 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class SearchableAttributeLocation extends SearchableAttribute implements ListItemsSource
@@ -48,23 +51,72 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 	
 	private Long extractPortId(String fullId)
 	{
-		if (fullId == null || fullId.length() == 0)
-		{
+		
+		if (StringUtils.isNullOrEmpty(fullId))
 			return null;
+
+		String[] ids = fullId.split(QueryBuilderComponent.ID_SEPARATOR);
+		String lastId = ids[ids.length - 1];
+		
+		if (!lastId.startsWith("P"))
+			return null;
+		
+		try {return new Long(lastId.substring(1));}
+		catch (NumberFormatException nfe) {return null;}
+		
+	}
+	
+	private Long[] extractLocationIds(String fullId)
+	{
+
+		if (StringUtils.isNullOrEmpty(fullId))
+			return null;
+		
+		String[] idComponents = fullId.split(QueryBuilderComponent.ID_SEPARATOR);
+		
+		if (idComponents.length < 1 || 3 < idComponents.length)
+			return null;
+		
+		Long[] splitIds = new Long[idComponents.length];
+		
+		if (idComponents[0] != null && idComponents[0].startsWith("A"))
+		{
+			try {splitIds[0] = new Long(idComponents[0].substring(1));}
+			catch (NumberFormatException nfe) {return null;}
 		}
 		else
 		{
-			String[] ids = fullId.split(QueryBuilderComponent.ID_SEPARATOR);
-			String lastId = ids[ids.length - 1];
-			if (lastId.startsWith("P"))
+			return null;
+		}
+
+		if (idComponents.length > 1)
+		{
+			if (idComponents[1] != null && idComponents[1].startsWith("R"))
 			{
-				return new Long(lastId.substring(1));  
+				try {splitIds[1] = new Long(idComponents[1].substring(1));}
+				catch (NumberFormatException nfe) {return null;}
 			}
 			else
 			{
 				return null;
 			}
 		}
+		
+		if (idComponents.length > 2)
+		{
+			if (idComponents[2] != null && idComponents[2].startsWith("P"))
+			{
+				try {splitIds[2] = new Long(idComponents[2].substring(1));}
+				catch (NumberFormatException nfe) {return null;}
+			}
+			else
+			{
+				return null;
+			}
+		}
+
+		return splitIds;
+
 	}
 
 	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
@@ -82,22 +134,56 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 		if (queryConditionList.getSelectedIdsCount() == 0)
 			return true;
 		
+		// extra just the minimal set to create reasonable queries
+		Set minimalSelectedIds = queryConditionList.getSelectedIds();
+		
 		// add locations to the query
 		Conditions subCond = new Conditions(Conditions.JOIN_OR);
-		for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
+		for (Iterator iter = minimalSelectedIds.iterator(); iter.hasNext();)
 		{
-			Long portId = extractPortId((String) iter.next());
-			if (portId != null)
+			String fullId = (String) iter.next();
+			Long[] idComponents = extractLocationIds(fullId);
+			if (idComponents != null && idComponents.length == 1)
 			{
 				for (int j = 0; j < locations.length; j++)
 				{
 					subCond.addCondition(
-							new SequenceAttribute(new Attribute[] {locations[j].getPort(), Port.getAttribute("id")}),
-							portId, Conditions.OP_EQUALS);
+							new SequenceAttribute(new Attribute[] {
+									locations[j].getPort(),
+									Port.getAttribute("region"),
+									Region.getAttribute("area"),
+									Area.getAttribute("id")}),
+									idComponents[0],
+									Conditions.OP_EQUALS);
+				}
+			}
+			else if (idComponents != null && idComponents.length == 2)
+			{
+				for (int j = 0; j < locations.length; j++)
+				{
+					subCond.addCondition(
+							new SequenceAttribute(new Attribute[] {
+									locations[j].getPort(),
+									Port.getAttribute("region"),
+									Region.getAttribute("id")}),
+									idComponents[1],
+									Conditions.OP_EQUALS);
+				}
+			}
+			else if (idComponents != null && idComponents.length == 3)
+			{
+				for (int j = 0; j < locations.length; j++)
+				{
+					subCond.addCondition(
+							new SequenceAttribute(new Attribute[] {
+									locations[j].getPort(),
+									Port.getAttribute("id")}),
+									idComponents[2],
+									Conditions.OP_EQUALS);
 				}
 			}
 		}
-		conditions.addCondition(subCond);
+		if (!subCond.isEmpty()) conditions.addCondition(subCond);
 		
 		return true;
 
@@ -221,60 +307,6 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 
 	}
 	
-/*	
-	public QueryConditionListItem[] getAvailableItems1(Session session)
-	{
-		
-		List areas = Area.loadAll(session);
-		QueryConditionListItem[] areasItems = new QueryConditionListItem[areas.size()];
-
-		int k = 0;
-		for (Iterator areaIter = areas.iterator(); areaIter.hasNext();)
-		{
-			Area area = (Area) areaIter.next();
-			
-			QueryConditionListItem areaItem = new QueryConditionListItem(
-					String.valueOf(area.getId()),
-					area.getName());
-			
-			QueryConditionListItem[] regionsItems =
-				new QueryConditionListItem[area.getRegions().size()];
-
-			int i = 0;
-			for (Iterator regionIter = area.getRegions().iterator(); regionIter.hasNext();)
-			{
-				Region region = (Region) regionIter.next();
-				
-				QueryConditionListItem regionItem = new QueryConditionListItem(
-						String.valueOf(region.getId()),
-						region.getName());
-				
-				QueryConditionListItem[] portItems =
-					new QueryConditionListItem[region.getPorts().size()];
-
-				int j = 0;
-				for (Iterator iterPort = region.getPorts().iterator(); iterPort.hasNext();)
-				{
-					Port port = (Port) iterPort.next();
-					portItems[j++] = new QueryConditionListItem(
-							String.valueOf(port.getId()),
-							port.getName());
-				}
-				
-				regionItem.setChildren(portItems);
-				regionsItems[i++] = regionItem;
-
-			}
-			
-			areaItem.setChildren(regionsItems);
-			areasItems[k++] = areaItem;
-
-		}
-		
-		return areasItems;
-
-	}
-*/
 	public QueryConditionListItem getItemByFullId(Session session, String fullId)
 	{
 		Long portId = extractPortId(fullId);
@@ -316,6 +348,66 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 		}
 		select.append(")");
 		return select.toString();
+	}
+
+	public QueryCondition restoreFromUrl(Session session, Map params)
+	{
+		
+		String urlValue = StringUtils.getFirstElement((String[]) params.get(getId()));
+		if (StringUtils.isNullOrEmpty(urlValue))
+			return null;
+		
+		QueryConditionList queryCondition = (QueryConditionList) createQueryCondition();
+		
+		String[] idsStrArr = urlValue.split("\\s*[,\\.]\\s*");
+		for (int i = 0; i < idsStrArr.length; i++)
+		{
+			long id = -1;
+			try {id = Long.parseLong(idsStrArr[i]);}
+			catch (NumberFormatException nfe){}
+			if (0 <= id && id <= 999999)
+			{
+				if (id % 10000 == 0)
+				{
+					queryCondition.addId("A" + id);
+				}
+				else if (id % 100 == 0)
+				{
+					queryCondition.addId(
+							"A" + (id / 10000) * 10000 +
+							QueryBuilderComponent.ID_SEPARATOR +
+							"R" + id);
+				}
+				else
+				{
+					queryCondition.addId(
+						"A" + (id / 10000) * 10000 +
+						QueryBuilderComponent.ID_SEPARATOR +
+						"R" + (id / 100) * 100 +
+						QueryBuilderComponent.ID_SEPARATOR +
+						"P" + id);
+				}
+			}
+		}
+		
+		return queryCondition;
+
+	}
+
+	public Long getItemRealId(String fullId)
+	{
+		
+		if (StringUtils.isNullOrEmpty(fullId))
+			return null;
+		
+		String[] ids = fullId.split(QueryBuilderComponent.ID_SEPARATOR);
+		String lastId = ids[ids.length - 1];
+
+		if (lastId.startsWith("P") || lastId.startsWith("R") || lastId.startsWith("A"))
+			return new Long(lastId.substring(1));
+		
+		return null;
+		
 	}
 	
 }

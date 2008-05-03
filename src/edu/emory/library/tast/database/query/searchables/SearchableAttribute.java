@@ -1,5 +1,9 @@
 package edu.emory.library.tast.database.query.searchables;
 
+import java.util.Map;
+
+import org.hibernate.Session;
+
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.util.query.Conditions;
 
@@ -60,6 +64,7 @@ public abstract class SearchableAttribute
 
 	public abstract QueryCondition createQueryCondition();
 	public abstract boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition);
+	public abstract QueryCondition restoreFromUrl(Session session, Map params);
 	public abstract String getNonNullSqlQuerySelectPart(String voyagePrefix);
 
 }

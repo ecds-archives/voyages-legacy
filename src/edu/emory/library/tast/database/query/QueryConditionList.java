@@ -3,10 +3,11 @@ package edu.emory.library.tast.database.query;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
-import org.w3c.dom.Node;
-
-import edu.emory.library.tast.util.XMLUtils;
+import edu.emory.library.tast.database.query.searchables.ListItemsSource;
+import edu.emory.library.tast.database.query.searchables.Searchables;
+import edu.emory.library.tast.util.StringUtils;
 
 public class QueryConditionList extends QueryCondition
 {
@@ -113,6 +114,61 @@ public class QueryConditionList extends QueryCondition
 		selectedIds.clear();
 		for (int i = 0; i < ids.length; i++) selectedIds.add(ids[i]);
 	}
+	
+	public Set getMinimalSelectedIds()
+	{
+		
+		if (!autoSelection)
+			return selectedIds;
+		
+		StringBuffer idPart = new StringBuffer(); 
+		
+		Set minSelectedIds = new HashSet();
+		
+		for (Iterator iterator = selectedIds.iterator(); iterator.hasNext();)
+		{
+			
+			String id = (String) iterator.next();
+			String[] idComponents = id.split(QueryBuilderComponent.ID_SEPARATOR);
+			
+			idPart.setLength(0);
+			boolean isExtraneous = false;
+			for (int i = 0; i < idComponents.length - 1 && !isExtraneous; i++)
+			{
+				if (i > 0) idPart.append(QueryBuilderComponent.ID_SEPARATOR);
+				idPart.append(idComponents[i]);
+				if (selectedIds.contains(idPart.toString())) isExtraneous = true;
+			}
+			
+			if (!isExtraneous)
+				minSelectedIds.add(id);
+			
+		}
+		
+		return minSelectedIds;
+		
+	}
+
+	public UrlParam[] createUrlParamValue()
+	{
+		
+		ListItemsSource listSource = (ListItemsSource) Searchables.getById(getSearchableAttributeId());
+		
+		Set minimalSelectedIds = getMinimalSelectedIds();
+
+		Set realSelectedIds = new TreeSet();
+		for (Iterator iterator = minimalSelectedIds.iterator(); iterator.hasNext();)
+		{
+			String id = (String) iterator.next();
+			realSelectedIds.add(listSource.getItemRealId(id));
+		}
+		
+		return new UrlParam[] {
+				new UrlParam(
+						getSearchableAttributeId(),
+						StringUtils.join(".", realSelectedIds))};
+		
+	}
 
 	public boolean equals(Object obj)
 	{
@@ -144,51 +200,5 @@ public class QueryConditionList extends QueryCondition
 		
 		return newQueryCondition;
 	}
-
-	public String toXML() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<condition ");
-		XMLUtils.appendAttribute(buffer, "type", TYPE);
-		XMLUtils.appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
-		XMLUtils.appendAttribute(buffer, "edit", new Boolean(this.edit));
-		XMLUtils.appendAttribute(buffer, "auto", new Boolean(this.autoSelection));
-		XMLUtils.appendAttribute(buffer, "expanded", getIDs(this.expandedIds));
-		XMLUtils.appendAttribute(buffer, "selected", getIDs(this.selectedIds));
-		buffer.append("/>\n");
-		return buffer.toString();
-	}
-
-	private static Object getIDs(Set ids) {
-		StringBuffer buffer = new StringBuffer();
-		Iterator iter = ids.iterator();
-		boolean first = true;
-		while (iter.hasNext()) {
-			if (!first) {
-				buffer.append(",");
-			}
-			first = false;
-			buffer.append(iter.next());
-		}
-		return buffer.toString();
-	}
 	
-	private static void restoreIDs(Set dst, String ids) {
-		if (ids == null) {
-			return;
-		}
-		String[] idsTable = ids.split(",");
-		for (int i = 0; i < idsTable.length; i++) {
-			dst.add(idsTable[i]);
-		}
-	}
-	
-	public static QueryCondition fromXML(Node node) {
-		QueryConditionList qc = new QueryConditionList(XMLUtils.getXMLProperty(node, "attribute"));
-		qc.edit = Boolean.parseBoolean(XMLUtils.getXMLProperty(node, "edit"));
-		qc.autoSelection = Boolean.parseBoolean(XMLUtils.getXMLProperty(node, "auto"));
-		restoreIDs(qc.expandedIds, XMLUtils.getXMLProperty(node, "expanded"));
-		restoreIDs(qc.selectedIds, XMLUtils.getXMLProperty(node, "selected"));
-		return qc;
-	}
-
 }

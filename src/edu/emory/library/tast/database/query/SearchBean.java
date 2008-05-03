@@ -9,7 +9,6 @@ import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
-import org.w3c.dom.Node;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
@@ -20,16 +19,11 @@ import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.PopupComponent;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
-import edu.emory.library.tast.dm.Configuration;
 import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.XMLExportable;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.util.JsfUtils;
-import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.XMLUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -77,6 +71,7 @@ public class SearchBean
 	{
 		history = new History();
 		initNewQuery();
+		searchInternal(false);
 	}
 	
 	/**
@@ -270,66 +265,13 @@ public class SearchBean
 	
 	public void createPermlink()
 	{
-
-		Configuration conf = new Configuration();
-		conf.addEntry("permlink", workingQuery);
-		conf.addEntry("section", new StoredSection(this.mainSectionId));
-		conf.save();
 		
 		lastPermLink =
-			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) +
-			"?permlink=" + conf.getId();
+			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) + "?" +
+			workingQuery.createUrl();
 		
 		this.permlinkPopup.display();
 
-	}
-	
-	/**
-	 * Bound to UI. Creates a permlink of a selected history item, and shows on
-	 * the page. Called by the history list component.
-	 * 
-	 * @param event
-	 */
-	public void historyItemPermlink(HistoryItemPermlinkEvent event)
-	{
-
-		HistoryItem historyItem = history.getHistoryItem(event.getHistoryId());
-		
-		//UidGenerator generator = new UidGenerator();
-		//String uid = generator.generate();
-		
-		Configuration conf = new Configuration();
-		conf.addEntry("permlink", historyItem.getQuery());
-		conf.addEntry("section", new StoredSection(this.mainSectionId));
-		conf.save();
-
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		messageBar.setMessage(request.getRequestURL() + "?permlink=" + conf.getId());
-		messageBar.setRendered(true);
-		
-	}
-	
-	public String getFakeHiddenForPermlinkRestore()
-	{
-		
-		// if POST -> don't do anything here
-		if (!JsfUtils.isGetRequest())
-			return null;
-			
-		// try to restore a permlink
-		if (restorePermlinkIfAny())
-			return null;
-		
-		// otherwise, reset query
-		initNewQuery();
-		searchInternal(false);
-		
-		return null;
-
-	}
-
-	public void setFakeHiddenForPermlinkRestore(String value)
-	{
 	}
 	
 	/**
@@ -337,29 +279,16 @@ public class SearchBean
 	 * corresponding query is retrieved from the database, {@link #workingQuery}
 	 * is set to it, and search is invoked.
 	 */
-	private boolean restorePermlinkIfAny()
+	public boolean restoreQueryFromUrl(Map params)
 	{
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map params = context.getExternalContext().getRequestParameterMap();
-		if (!params.containsKey("permlink"))
-			return false;
-		
-		String permlink = (String)params.get("permlink");
-		if (StringUtils.isNullOrEmpty(permlink))
-			return false;
+		Query newQuery = Query.restoreFromUrl(params);
 
-		Configuration conf = Configuration.loadConfiguration(permlink);
-		if (conf == null)
-			return false;
-		
-		workingQuery = (Query) conf.getEntry("permlink");
-		StoredSection section = (StoredSection) conf.getEntry("section");
-		if (section != null) {
-			this.mainSectionId = section.getTabId();
+		if (newQuery != null)
+		{
+			workingQuery = newQuery;
+			searchInternal(true);
 		}
-		history.clear();
-		searchInternal(true);
 		
 		return true;
 
@@ -573,34 +502,6 @@ public class SearchBean
 	{
 		if (yearsLocked) return;
 		workingQuery.setYearTo(yearTo);
-	}
-	
-	public static class StoredSection implements XMLExportable {
-
-		private String sectionId = null;
-		
-		public StoredSection() {
-		}
-		
-		public StoredSection(String sectionId) {
-			this.sectionId = sectionId;
-		}
-		
-		public String getTabId() {
-			return this.sectionId;
-		}
-
-		public void restoreFromXML(Node entry) {
-			Node section = XMLUtils.getChildNode(entry, "storedSection");
-			if (section != null) {
-				this.sectionId = XMLUtils.getXMLProperty(section, "id");
-			}
-		}
-
-		public String toXML() {
-			return "<storedSection id=\"" + this.sectionId + "\" />";
-		}
-		
 	}
 	
 	public String getSelectedRevision() {

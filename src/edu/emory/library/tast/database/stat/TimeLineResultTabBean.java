@@ -328,8 +328,6 @@ public class TimeLineResultTabBean {
 			qValue.setOrderBy(new Attribute[] {Voyage.getAttribute("yearam")});
 			qValue.setOrder(QueryValue.ORDER_ASC);
 			
-			System.out.println(qValue.toStringWithParams().conditionString);
-			
 			List ret = qValue.executeQueryList(sess);
 			
 			MessageFormat fmt = new MessageFormat(chosenOption.formatString);

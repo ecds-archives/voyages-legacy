@@ -2,6 +2,7 @@ package edu.emory.library.tast.database.query.searchables;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 
@@ -13,6 +14,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
@@ -88,8 +90,6 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 			hql.append(") ");
 			hql.append("order by d.id");
 			
-			System.out.println(hql);
-	
 			List dictItems = session.createQuery(hql.toString()).list();
 			queryConditionItems = new QueryConditionListItem[dictItems.size()];
 	
@@ -120,6 +120,38 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 				dictItem.getId().toString(),
 				dictItem.getName());
 
+	}
+
+	public QueryCondition restoreFromUrl(Session session, Map params)
+	{
+		
+		String urlValue = StringUtils.getFirstElement((String[]) params.get(getId()));
+		if (StringUtils.isNullOrEmpty(urlValue))
+			return null;
+		
+		QueryConditionList queryCondition = new QueryConditionList(getId());
+		
+		// I know this is not very nice, but we have to be sure that
+		// pass inside only numerical values.
+		String[] idsStrArr = urlValue.split("\\s*[,\\.]\\s*");
+		for (int i = 0; i < idsStrArr.length; i++)
+		{
+			try
+			{
+				long id = Long.parseLong(idsStrArr[i]);
+				queryCondition.addId(String.valueOf(id));
+			}
+			catch (NumberFormatException nfe)
+			{
+			}
+		}
+		 
+		return queryCondition;
+	}
+
+	public Long getItemRealId(String id)
+	{
+		return new Long(id);
 	}
 	
 }

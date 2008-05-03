@@ -1,10 +1,16 @@
 package edu.emory.library.tast.database.query.searchables;
 
+import java.util.Map;
+
+import org.hibernate.Session;
+
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionNumeric;
+import edu.emory.library.tast.database.query.QueryConditionRange;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
 public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleRange
@@ -153,6 +159,50 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 		}
 		
 		return true;
+		
+	}
+	
+	public QueryCondition restoreFromUrl(Session session, Map params)
+	{
+		
+		String valueEq = StringUtils.getFirstElement((String[]) params.get(getId()));
+		String valueLe = StringUtils.getFirstElement((String[]) params.get(getId() + "To"));
+		String valueGe = StringUtils.getFirstElement((String[]) params.get(getId() + "From"));
+		
+		if (!StringUtils.isNullOrEmpty(valueEq))
+		{
+			QueryConditionNumeric queryCondition = new QueryConditionNumeric(getId());
+			queryCondition.setType(QueryConditionRange.TYPE_EQ);
+			queryCondition.setEq(valueEq);
+			return queryCondition;
+		}
+		
+		if (!StringUtils.isNullOrEmpty(valueLe) && !StringUtils.isNullOrEmpty(valueGe))
+		{
+			QueryConditionNumeric queryCondition = new QueryConditionNumeric(getId());
+			queryCondition.setType(QueryConditionRange.TYPE_BETWEEN);
+			queryCondition.setFrom(valueGe);
+			queryCondition.setTo(valueLe);
+			return queryCondition;
+		}
+
+		if (!StringUtils.isNullOrEmpty(valueGe))
+		{
+			QueryConditionNumeric queryCondition = new QueryConditionNumeric(getId());
+			queryCondition.setType(QueryConditionRange.TYPE_GE);
+			queryCondition.setGe(valueGe);
+			return queryCondition;
+		}
+
+		if (!StringUtils.isNullOrEmpty(valueLe))
+		{
+			QueryConditionNumeric queryCondition = new QueryConditionNumeric(getId());
+			queryCondition.setType(QueryConditionRange.TYPE_LE);
+			queryCondition.setLe(valueLe);
+			return queryCondition;
+		}
+
+		return null;
 		
 	}
 	

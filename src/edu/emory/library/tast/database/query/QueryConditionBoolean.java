@@ -1,8 +1,5 @@
 package edu.emory.library.tast.database.query;
 
-import org.w3c.dom.Node;
-
-import edu.emory.library.tast.util.XMLUtils;
 
 
 public class QueryConditionBoolean extends QueryCondition
@@ -50,19 +47,11 @@ public class QueryConditionBoolean extends QueryCondition
 		return newQueryCondition;
 	}
 
-	public String toXML() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<condition >");
-		XMLUtils.appendAttribute(buffer, "type", TYPE);
-		XMLUtils.appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
-		XMLUtils.appendAttribute(buffer, "value", new Boolean(this.checked));
-		buffer.append("/>\n");
-		return buffer.toString();
+	public UrlParam[] createUrlParamValue()
+	{
+		return new UrlParam[] {new UrlParam(
+				getSearchableAttributeId(),
+				checked ? "yes" : "no")};
 	}
-
-	public static QueryCondition fromXML(Node node) {
-		QueryConditionBoolean qc = new QueryConditionBoolean(XMLUtils.getXMLProperty(node, "attribute"));
-		qc.checked = Boolean.parseBoolean(XMLUtils.getXMLProperty(node, "value"));
-		return qc;
-	}
+	
 }

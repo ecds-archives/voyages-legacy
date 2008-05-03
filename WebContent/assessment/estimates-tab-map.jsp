@@ -37,7 +37,7 @@
 			chosenAttribute="#{EstimatesMapBean.chosenAttribute}"/>
 			
 		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
-			<h:outputText value="Highlight place" />
+			<h:outputText value="Find visible place" />
 		</t:htmlTag>
 		
 		<t:htmlTag value="div" styleClass="map-legend-section">

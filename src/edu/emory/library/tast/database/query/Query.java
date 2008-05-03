@@ -1,19 +1,20 @@
 package edu.emory.library.tast.database.query;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.Map;
 
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleDate;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleNumeric;
 import edu.emory.library.tast.database.query.searchables.Searchables;
 import edu.emory.library.tast.dm.Voyage;
-import edu.emory.library.tast.dm.XMLExportable;
+import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.query.Conditions;
 
-public class Query implements Cloneable, XMLExportable {
+public class Query implements Cloneable
+{
 
 	private static final long serialVersionUID = 6693392749775025817L;
 
@@ -23,11 +24,13 @@ public class Query implements Cloneable, XMLExportable {
 
 	private int yearTo;
 
-	public QueryBuilderQuery getBuilderQuery() {
+	public QueryBuilderQuery getBuilderQuery()
+	{
 		return builderQuery;
 	}
 
-	public void addConditionOn(String searchableAttributeId) {
+	public void addConditionOn(String searchableAttributeId)
+	{
 
 		if (builderQuery.containsConditionOn(searchableAttributeId))
 			return;
@@ -35,7 +38,8 @@ public class Query implements Cloneable, XMLExportable {
 		SearchableAttribute searchableAttribute = Searchables.getCurrent().getSearchableAttributeById(searchableAttributeId);
 		QueryCondition queryCondition = searchableAttribute.createQueryCondition();
 
-		if (searchableAttribute instanceof SearchableAttributeSimpleDate) {
+		if (searchableAttribute instanceof SearchableAttributeSimpleDate)
+		{
 			QueryConditionDate queryConditionDate = (QueryConditionDate) queryCondition;
 			queryConditionDate.setFromMonth("01");
 			queryConditionDate.setFromYear(String.valueOf(yearFrom));
@@ -43,9 +47,11 @@ public class Query implements Cloneable, XMLExportable {
 			queryConditionDate.setToYear(String.valueOf(yearTo));
 		}
 
-		if (searchableAttribute instanceof SearchableAttributeSimpleNumeric) {
+		if (searchableAttribute instanceof SearchableAttributeSimpleNumeric)
+		{
 			SearchableAttributeSimpleNumeric searchableAttributeNumeric = (SearchableAttributeSimpleNumeric) searchableAttribute;
-			if (searchableAttributeNumeric.getType() == SearchableAttributeSimpleNumeric.TYPE_YEAR) {
+			if (searchableAttributeNumeric.getType() == SearchableAttributeSimpleNumeric.TYPE_YEAR)
+			{
 				QueryConditionNumeric queryConditionNumeric = (QueryConditionNumeric) queryCondition;
 				queryConditionNumeric.setFrom(String.valueOf(yearFrom));
 				queryConditionNumeric.setTo(String.valueOf(yearTo));
@@ -54,6 +60,16 @@ public class Query implements Cloneable, XMLExportable {
 
 		builderQuery.addCondition(queryCondition);
 
+	}
+	
+	public void addCondition(QueryCondition queryCondition)
+	{
+		
+		if (builderQuery.containsConditionOn(queryCondition.getSearchableAttributeId()))
+			return;
+		
+		builderQuery.addCondition(queryCondition);
+		
 	}
 
 	public boolean addToDbConditions(boolean markErrors, Conditions dbConds)
@@ -86,27 +102,33 @@ public class Query implements Cloneable, XMLExportable {
 		return builderQuery.getConditionCount() == 0;
 	}
 
-	public void setBuilderQuery(QueryBuilderQuery builderQuery) {
+	public void setBuilderQuery(QueryBuilderQuery builderQuery)
+	{
 		this.builderQuery = builderQuery;
 	}
 
-	public int getYearFrom() {
+	public int getYearFrom()
+	{
 		return yearFrom;
 	}
 
-	public void setYearFrom(int yearFrom) {
+	public void setYearFrom(int yearFrom)
+	{
 		this.yearFrom = yearFrom;
 	}
 
-	public int getYearTo() {
+	public int getYearTo()
+	{
 		return yearTo;
 	}
 
-	public void setYearTo(int yearTo) {
+	public void setYearTo(int yearTo)
+	{
 		this.yearTo = yearTo;
 	}
 
-	protected Object clone() throws CloneNotSupportedException {
+	protected Object clone() throws CloneNotSupportedException
+	{
 		Query newQuery = new Query();
 		newQuery.setYearFrom(yearFrom);
 		newQuery.setYearTo(yearTo);
@@ -114,7 +136,8 @@ public class Query implements Cloneable, XMLExportable {
 		return newQuery;
 	}
 
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (!(obj instanceof Query))
 			return false;
 
@@ -132,7 +155,106 @@ public class Query implements Cloneable, XMLExportable {
 		return true;
 
 	}
+	
+	public String createUrl()
+	{
+		
+		StringBuffer url = new StringBuffer();
 
+		try
+		{
+			
+			int i = 0;
+
+			if (i > 0) url.append("&");
+			url.append("yearFrom");
+			url.append("=");
+			url.append(URLEncoder.encode(String.valueOf(yearFrom), "UTF-8"));
+			i++;
+
+			if (i > 0) url.append("&");
+			url.append("yearTo");
+			url.append("=");
+			url.append(URLEncoder.encode(String.valueOf(yearTo), "UTF-8"));
+			i++;
+			
+			for (Iterator iterator = builderQuery.getConditions().iterator(); iterator.hasNext();)
+			{
+				QueryCondition queryCondition = (QueryCondition) iterator.next();
+				UrlParam[] params = queryCondition.createUrlParamValue();
+				if (params != null)
+				{
+					for (int j = 0; j < params.length; j++)
+					{
+						if (i > 0) url.append("&");
+						url.append(params[j].getName());
+						url.append("=");
+						url.append(URLEncoder.encode(params[j].getValue(), "UTF-8"));
+						i++;
+					}
+				}
+			}
+
+		}
+		catch (UnsupportedEncodingException e)
+		{
+		}
+		
+		return url.toString();
+		
+	}
+	
+	public static Query restoreFromUrl(Map params)
+	{
+		
+		Query newQuery = new Query();
+		
+		SearchableAttribute[] attrs = Searchables.getCurrent().getSearchableAttributes(); 
+		for (int i = 0; i < attrs.length; i++)
+		{
+			QueryCondition queryCondition = attrs[i].restoreFromUrl(null, params);
+			if (queryCondition != null)
+			{
+				newQuery.addCondition(queryCondition);
+			}
+		}
+		
+		boolean yearFromOk = false;
+		String yearFromStr = StringUtils.getFirstElement((String[]) params.get("yearFrom")); 
+		if (yearFromStr != null)
+		{
+			try
+			{
+				newQuery.setYearFrom(Integer.parseInt(yearFromStr));
+				yearFromOk = true;
+			}
+			catch (NumberFormatException nfe) {}
+		}
+		
+		boolean yearToOk = false;
+		String yearToStr = StringUtils.getFirstElement((String[]) params.get("yearTo")); 
+		if (yearFromStr != null)
+		{
+			try
+			{
+				newQuery.setYearTo(Integer.parseInt(yearToStr));
+				yearToOk = true;
+			}
+			catch (NumberFormatException nfe) {}
+		}
+		
+		if (newQuery.getBuilderQuery().getConditionCount() != 0 || yearFromOk || yearToOk)
+		{
+			return newQuery;
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+
+	/*
 	public void restoreFromXML(Node xmlNode) {
 		NodeList children = xmlNode.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
@@ -160,5 +282,6 @@ public class Query implements Cloneable, XMLExportable {
 		xml.append("</query>\n");
 		return xml.toString();
 	}
+	*/
 
 }

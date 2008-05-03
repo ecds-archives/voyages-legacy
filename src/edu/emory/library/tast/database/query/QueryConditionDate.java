@@ -1,12 +1,15 @@
 package edu.emory.library.tast.database.query;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-
-import org.w3c.dom.Node;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleDate;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.XMLUtils;
 
 public class QueryConditionDate extends QueryConditionRange
 {
@@ -28,7 +31,6 @@ public class QueryConditionDate extends QueryConditionRange
 		TastResource.getText("components_search_oct"),
 		TastResource.getText("components_search_nov"),
 		TastResource.getText("components_search_dec")};
-
 	
 	public static final String EMPTY_MONTH = "MM";
 	public static final String EMPTY_YEAR = "YYYY";
@@ -43,7 +45,9 @@ public class QueryConditionDate extends QueryConditionRange
 	private String leYear;
 	private String eqMonth;
 	private String eqYear;
-	private boolean[] selectedMonths = new boolean[] {false,false,false,false,false,false,false,false,false, false,false, false};
+	
+	private boolean[] selectedMonths = new boolean[] {
+			true, true, true, true, true, true, true, true, true, true, true, true};
 	
 	private transient boolean noOfSelectedMonthsDetermined = false; 
 	private transient int noOfSelectedMonths; 
@@ -147,7 +151,7 @@ public class QueryConditionDate extends QueryConditionRange
 	public void setMonthStatus(int month, boolean selected)
 	{
 		ensureMonths();
-		if (selectedMonths[month] != selected)
+		if (0 <= month && month < 12 && selectedMonths[month] != selected)
 		{
 			resetPrecomputedMonthsInfo();
 			selectedMonths[month] = selected;
@@ -175,6 +179,12 @@ public class QueryConditionDate extends QueryConditionRange
 		this.selectedMonths = selectedMonths;
 	}
 	
+	public void selectedAllMonths()
+	{
+		selectedMonths = null;
+		resetPrecomputedMonthsInfo();
+	}
+	
 	public String getEqMonth()
 	{
 		return eqMonth;
@@ -188,6 +198,18 @@ public class QueryConditionDate extends QueryConditionRange
 	public String getEqYear()
 	{
 		return eqYear;
+	}
+
+	public void setEq(Date date)
+	{
+		
+		Calendar cal = Calendar.getInstance();
+		
+		cal.clear();
+		cal.setTime(date);
+		eqMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+		eqYear = String.valueOf(cal.get(Calendar.YEAR));
+		
 	}
 
 	public void setEqYear(String eqYear)
@@ -204,7 +226,24 @@ public class QueryConditionDate extends QueryConditionRange
 	{
 		this.fromMonth = fromMonth;
 	}
+	
+	public void setFromTo(Date dateFrom, Date dateTo)
+	{
+		
+		Calendar cal = Calendar.getInstance();
 
+		cal.clear();
+		cal.setTime(dateFrom);
+		fromMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+		fromYear = String.valueOf(cal.get(Calendar.YEAR));
+
+		cal.clear();
+		cal.setTime(dateTo);
+		toMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+		toYear = String.valueOf(cal.get(Calendar.YEAR));
+
+	}
+	
 	public String getFromYear()
 	{
 		return fromYear;
@@ -228,6 +267,18 @@ public class QueryConditionDate extends QueryConditionRange
 	public String getGeYear()
 	{
 		return geYear;
+	}
+	
+	public void setGe(Date date)
+	{
+		
+		Calendar cal = Calendar.getInstance();
+		
+		cal.clear();
+		cal.setTime(date);
+		geMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+		geYear = String.valueOf(cal.get(Calendar.YEAR));
+		
 	}
 
 	public void setGeYear(String geYear)
@@ -253,6 +304,18 @@ public class QueryConditionDate extends QueryConditionRange
 	public void setLeYear(String leYear)
 	{
 		this.leYear = leYear;
+	}
+	
+	public void setLe(Date date)
+	{
+		
+		Calendar cal = Calendar.getInstance();
+		
+		cal.clear();
+		cal.setTime(date);
+		leMonth = String.valueOf(cal.get(Calendar.MONTH));
+		leYear = String.valueOf(cal.get(Calendar.YEAR));
+		
 	}
 
 	public String getToMonth()
@@ -318,11 +381,56 @@ public class QueryConditionDate extends QueryConditionRange
 		return formatDateForDisplay(eqMonth, eqYear);
 	}
 
-	private boolean compareTextFields(String val1, String val2)
+
+	public UrlParam[] createUrlParamValue()
 	{
-		return
-			(val1 == null && val2 == null) ||
-			(val1 != null && val1.equals(val2));
+		
+		List params = new LinkedList();
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy.MM");
+		String attrId = getSearchableAttributeId();
+		
+		switch (getType())
+		{
+			case QueryConditionRange.TYPE_BETWEEN:
+				Date fromRange = SearchableAttributeSimpleDate.parseDate(fromMonth, fromYear, 0);
+				Date toRange = SearchableAttributeSimpleDate.parseDate(toMonth, toYear, 0);
+				if (fromRange == null || toRange == null) return null;
+				params.add(new UrlParam(attrId + "From", fmt.format(fromRange)));
+				params.add(new UrlParam(attrId + "To", fmt.format(toRange)));
+				break;
+			
+			case QueryConditionRange.TYPE_EQ:
+				Date eq = SearchableAttributeSimpleDate.parseDate(eqMonth, eqYear, 0);
+				if (eq == null) return null;
+				params.add(new UrlParam(attrId, fmt.format(eq)));
+				break;
+			
+			case QueryConditionRange.TYPE_LE:
+				Date le = SearchableAttributeSimpleDate.parseDate(leMonth, leYear, 0);
+				if (le == null) return null;
+				params.add(new UrlParam(attrId + "To", fmt.format(le)));
+				break;
+			
+			case QueryConditionRange.TYPE_GE:
+				Date ge = SearchableAttributeSimpleDate.parseDate(geMonth, geYear, 0);
+				if (ge == null) return null;
+				params.add(new UrlParam(attrId + "From", fmt.format(ge)));
+				break;
+			
+			default:
+				throw new RuntimeException("unexpected type");
+		}
+		
+		if (!areAllMonthsSelected() && !noMonthSelected())
+			for (int i = 0; i < 12; i++)
+				if (selectedMonths[i])
+					params.add(new UrlParam(attrId + "Month", MONTH_NAMES[i]));
+		
+		UrlParam paramsArr[] = new UrlParam[params.size()];
+		params.toArray(paramsArr);
+		
+		return paramsArr;
+		
 	}
 	
 	public boolean equals(Object obj)
@@ -334,16 +442,16 @@ public class QueryConditionDate extends QueryConditionRange
 		return
 			type == queryConditionRange.getType() &&
 			Arrays.equals(selectedMonths, queryConditionRange.getSelectedMonths()) &&
-			compareTextFields(fromMonth, queryConditionRange.getFromMonth()) &&
-			compareTextFields(fromYear, queryConditionRange.getFromYear()) &&
-			compareTextFields(toMonth, queryConditionRange.getToMonth()) &&
-			compareTextFields(toYear, queryConditionRange.getToYear()) &&
-			compareTextFields(leMonth, queryConditionRange.getLeMonth()) &&
-			compareTextFields(leYear, queryConditionRange.getLeYear()) &&
-			compareTextFields(geMonth, queryConditionRange.getGeMonth()) &&
-			compareTextFields(geYear, queryConditionRange.getGeYear()) &&
-			compareTextFields(eqMonth, queryConditionRange.getEqMonth()) &&
-			compareTextFields(eqYear, queryConditionRange.getEqYear());
+			StringUtils.compareStrings(fromMonth, queryConditionRange.getFromMonth()) &&
+			StringUtils.compareStrings(fromYear, queryConditionRange.getFromYear()) &&
+			StringUtils.compareStrings(toMonth, queryConditionRange.getToMonth()) &&
+			StringUtils.compareStrings(toYear, queryConditionRange.getToYear()) &&
+			StringUtils.compareStrings(leMonth, queryConditionRange.getLeMonth()) &&
+			StringUtils.compareStrings(leYear, queryConditionRange.getLeYear()) &&
+			StringUtils.compareStrings(geMonth, queryConditionRange.getGeMonth()) &&
+			StringUtils.compareStrings(geYear, queryConditionRange.getGeYear()) &&
+			StringUtils.compareStrings(eqMonth, queryConditionRange.getEqMonth()) &&
+			StringUtils.compareStrings(eqYear, queryConditionRange.getEqYear());
 	}
 
 	protected Object clone()
@@ -368,62 +476,5 @@ public class QueryConditionDate extends QueryConditionRange
 		
 		return newQueryCondition;
 	}
-
-	public String toXML() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<condition ");
-		XMLUtils.appendAttribute(buffer, "type", TYPE);
-		XMLUtils.appendAttribute(buffer, "attribute", this.getSearchableAttributeId());
-		XMLUtils.appendAttribute(buffer, "fromMonth", fromMonth);
-		XMLUtils.appendAttribute(buffer, "fromYear", fromYear);
-		XMLUtils.appendAttribute(buffer, "toMonth", toMonth);
-		XMLUtils.appendAttribute(buffer, "toYear", toYear);
-		XMLUtils.appendAttribute(buffer, "leMonth", leMonth);
-		XMLUtils.appendAttribute(buffer, "leYear", leYear);
-		XMLUtils.appendAttribute(buffer, "geMonth", geMonth);
-		XMLUtils.appendAttribute(buffer, "geYear", geYear);
-		XMLUtils.appendAttribute(buffer, "eqMonth", eqMonth);
-		XMLUtils.appendAttribute(buffer, "eqYear", eqYear);
-		XMLUtils.appendAttribute(buffer, "querytype", new Integer(type));
-		XMLUtils.appendAttribute(buffer, "selected", prepareList(selectedMonths));
-		buffer.append("/>\n");
-		return buffer.toString();
-	}
-
-	private static String prepareList(boolean []list) {
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i < list.length; i++) {
-			if (i != 0) {
-				buffer.append(",");
-			}
-			buffer.append(list[i]);
-		}
-		return buffer.toString();
-	}
 	
-	private static boolean[] parseListBack(String list) {
-		String[] elements = list.split(",");
-		boolean []ret = new boolean[elements.length];
-		for (int i = 0; i < ret.length; i++) {
-			ret[i] = Boolean.parseBoolean(elements[i]);
-		}
-		return ret;
-	}
-	
-	public static QueryCondition fromXML(Node node) {
-		QueryConditionDate qc = new QueryConditionDate(XMLUtils.getXMLProperty(node, "attribute"));
-		qc.fromMonth = XMLUtils.getXMLProperty(node, "fromMonth");
-		qc.fromYear = XMLUtils.getXMLProperty(node, "fromYear");
-		qc.toMonth = XMLUtils.getXMLProperty(node, "toMonth");
-		qc.toYear = XMLUtils.getXMLProperty(node, "toYear");
-		qc.leMonth = XMLUtils.getXMLProperty(node, "leMonth");
-		qc.leYear = XMLUtils.getXMLProperty(node, "leYear");
-		qc.geMonth = XMLUtils.getXMLProperty(node, "geMonth");
-		qc.geYear = XMLUtils.getXMLProperty(node, "geYear");
-		qc.eqMonth = XMLUtils.getXMLProperty(node, "eqMonth");
-		qc.eqYear = XMLUtils.getXMLProperty(node, "eqYear");
-		qc.type = Integer.parseInt(XMLUtils.getXMLProperty(node, "querytype"));
-		qc.setSelectedMonths(parseListBack(XMLUtils.getXMLProperty(node, "selected")));
-		return qc;
-	}
 }
