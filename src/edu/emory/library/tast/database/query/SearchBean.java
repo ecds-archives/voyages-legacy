@@ -101,8 +101,8 @@ public class SearchBean
 		if (ret != null && ret.size() == 1)
 		{
 			Object[] row = (Object[]) ret.get(0);
-			workingQuery.setYearFrom(((Integer) row[0]).intValue());
-			workingQuery.setYearTo(((Integer) row[1]).intValue());
+			workingQuery.setYearFrom(row[0] != null ? row[0].toString() : null);
+			workingQuery.setYearTo(row[1] != null ? row[1].toString() : null);
 		}
 
 	}
@@ -267,8 +267,8 @@ public class SearchBean
 	{
 		
 		lastPermLink =
-			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) + "?" +
-			workingQuery.createUrl();
+			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) + 
+			"/database/search.faces?" + workingQuery.createUrl();
 		
 		this.permlinkPopup.display();
 
@@ -283,13 +283,11 @@ public class SearchBean
 	{
 		
 		Query newQuery = Query.restoreFromUrl(params);
-
-		if (newQuery != null)
-		{
-			workingQuery = newQuery;
-			searchInternal(true);
-		}
+		if (newQuery == null || newQuery.isEmpty())
+			return false;
 		
+		workingQuery = newQuery;
+		searchInternal(true);
 		return true;
 
 	}
@@ -470,7 +468,7 @@ public class SearchBean
 	 * Wrapper for the starting year of {@link #workingQuery}. 
 	 * @return
 	 */
-	public int getYearFrom()
+	public String getYearFrom()
 	{
 		return workingQuery.getYearFrom();
 	}
@@ -479,7 +477,7 @@ public class SearchBean
 	 * Wrapper for the starting year of {@link #workingQuery}. 
 	 * @return
 	 */
-	public void setYearFrom(int yearFrom)
+	public void setYearFrom(String  yearFrom)
 	{
 		if (yearsLocked) return;
 		workingQuery.setYearFrom(yearFrom);
@@ -489,7 +487,7 @@ public class SearchBean
 	 * Wrapper for the ending year of {@link #workingQuery}. 
 	 * @return
 	 */
-	public int getYearTo()
+	public String  getYearTo()
 	{
 		return workingQuery.getYearTo();
 	}
@@ -498,7 +496,7 @@ public class SearchBean
 	 * Wrapper for the ending year of {@link #workingQuery}. 
 	 * @return
 	 */
-	public void setYearTo(int yearTo)
+	public void setYearTo(String  yearTo)
 	{
 		if (yearsLocked) return;
 		workingQuery.setYearTo(yearTo);

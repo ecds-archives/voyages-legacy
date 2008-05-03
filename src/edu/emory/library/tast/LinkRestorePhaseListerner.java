@@ -35,11 +35,13 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		FacesContext fc = event.getFacesContext();
 		String viewId = fc.getViewRoot().getViewId();
 		
+		if (!JsfUtils.isGetRequest(fc))
+			return;
+		
 		if (viewId.equals("/database/search.jsp"))
 		{
 			
-			FacesContext context = FacesContext.getCurrentInstance();
-			Map params = context.getExternalContext().getRequestParameterValuesMap();
+			Map params = fc.getExternalContext().getRequestParameterValuesMap();
 			
 			if (params.size() != 0)
 			{
@@ -52,8 +54,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		else if (viewId.equals("/resources/slaves.jsp"))
 		{
 			
-			FacesContext context = FacesContext.getCurrentInstance();
-			Map params = context.getExternalContext().getRequestParameterMap();
+			Map params = fc.getExternalContext().getRequestParameterMap();
 			
 			String permlink = (String) params.get("permlink");
 			if (StringUtils.isNullOrEmpty(permlink))
@@ -67,8 +68,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		else if (viewId.equals("/assessment/estimates.jsp"))
 		{
 			
-			FacesContext context = FacesContext.getCurrentInstance();
-			Map params = context.getExternalContext().getRequestParameterMap();
+			Map params = fc.getExternalContext().getRequestParameterMap();
 			
 			String module = (String) params.get("module");
 			if (StringUtils.isNullOrEmpty(module))
@@ -81,8 +81,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		
 		else if (viewId.equals("/resources/images-detail.jsp"))
 		{
-			FacesContext context = FacesContext.getCurrentInstance();
-			Map params = context.getExternalContext().getRequestParameterMap();
+			Map params = fc.getExternalContext().getRequestParameterMap();
 			
 			String image = (String) params.get("image");
 			if (StringUtils.isNullOrEmpty(image))
@@ -96,8 +95,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 		else if (viewId.equals("/database/voyage.jsp"))
 		{
 			
-			FacesContext context = FacesContext.getCurrentInstance();
-			Map params = context.getExternalContext().getRequestParameterMap();
+			Map params = fc.getExternalContext().getRequestParameterMap();
 
 			// go to database search if no link
 			String voyageId = (String) params.get("voyageId");
