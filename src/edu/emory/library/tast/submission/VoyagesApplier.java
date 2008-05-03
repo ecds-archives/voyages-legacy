@@ -121,7 +121,7 @@ public class VoyagesApplier
 	private AdminSubmissionBean adminBean;
 
 	private boolean requiredReload = false;
-	private boolean requiredReloadSlave = false;
+	//private boolean requiredReloadSlave = false;
 
 	public VoyagesApplier(AdminSubmissionBean bean)
 	{
@@ -1374,7 +1374,7 @@ public class VoyagesApplier
 	public void setRequiredReload(boolean requiredReload)
 	{
 		this.requiredReload = requiredReload;
-		this.requiredReloadSlave = requiredReload;
+		//this.requiredReloadSlave = requiredReload;
 	}
 
 	public void setValuesSlave(Values values)

@@ -98,7 +98,7 @@ public class SubmissionVerifyBean {
 
 	public Row[] getVerifyRowsSlave() {
 		Row[] rows = this.submissionBean.getRowsSlave();
-		for (int i = 0; i < this.submissionBean.SLAVE_CHAR_ROWS.length; i++) {
+		for (int i = 0; i < SubmissionBean.SLAVE_CHAR_ROWS.length; i++) {
 			Row newRow = new Row(
 					rows[rows.length - 1 - i].getType(), 
 					rows[rows.length - 1 - i].getName(),

@@ -35,9 +35,6 @@ import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.dm.attributes.FateAttribute;
-import edu.emory.library.tast.dm.attributes.NationAttribute;
-import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 
 public class SubmissionAttribute {
 	

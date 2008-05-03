@@ -1,38 +1,29 @@
 package edu.emory.library.tast.util;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import edu.emory.library.tast.AppConfig;
-import edu.emory.library.tast.dm.Dictionary;
-import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.query.QueryValue;
 
 public class CSVUtils {
 	
+	/*
 	private static class DictionaryInfo {
 		public Class dictionary;
 		public List attributes = new ArrayList();
 	}
-	
+	*/
+
+	/*
 	private static DictionaryInfo[] getAllData(Session sess, QueryValue qValue, ZipOutputStream zipStream, boolean codes , String conditions) throws FileNotFoundException, IOException {
 		
 	    SimpleDateFormat dateFormatter = new SimpleDateFormat(
@@ -132,6 +123,7 @@ public class CSVUtils {
 			}
 		}
 	}
+	*/
 
 	public static void writeResponse(Session sess, QueryValue qValue, String conditions) {
 		writeResponse(sess, qValue, false,conditions);
@@ -149,7 +141,7 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			DictionaryInfo[] dicts = getAllData(sess, qValue, zipOS, codes,conditions);
+			//DictionaryInfo[] dicts = getAllData(sess, qValue, zipOS, codes,conditions);
 	//		zipOS.putNextEntry(new ZipEntry("codebook.csv"));
 	//		getDictionaryInfo(zipOS, sess, dicts);
 			zipOS.close();
@@ -177,6 +169,7 @@ public class CSVUtils {
 		}
 	}
 
+	/*
 	private static void getDictionaryInfo(ZipOutputStream zipStream, Session session, DictionaryInfo[] dicts) {
 		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ',');
 		for (int i = 0; i < dicts.length; i++) {
@@ -195,7 +188,9 @@ public class CSVUtils {
 			e.printStackTrace();
 		}
 	}
+	*/
 
+	/*
 	private static String decodeDictAttrs(DictionaryInfo info) {
 		StringBuffer buffer = new StringBuffer();
 		int i = 0;
@@ -209,6 +204,7 @@ public class CSVUtils {
 		}
 		return buffer.toString();
 	}
+	*/
 
 	public static void writeResponse(Session session, String[][] data) {
 		ZipOutputStream zipOS = null;
