@@ -11,7 +11,6 @@ import java.util.Set;
 import edu.emory.library.tast.common.tableview.GrouperSimpleDictionary;
 import edu.emory.library.tast.common.tableview.Label;
 import edu.emory.library.tast.dm.Port;
-import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
@@ -25,20 +24,20 @@ public class GrouperDeparturePorts extends GrouperSimpleDictionary
 {
 	
 	private Label[] labels;
-	private List regions;
+	private List ports;
 	private Map lookupTable;
 	
-	public GrouperDeparturePorts(int resultIndex, boolean omitEmpty, List regions)
+	public GrouperDeparturePorts(int resultIndex, boolean omitEmpty, List ports)
 	{
-		super(resultIndex, omitEmpty, regions);
-		this.regions = regions;
+		super(resultIndex, omitEmpty, ports);
+		this.ports = ports;
 	}
 	
 	public Attribute getGroupingAttribute()
 	{
 		 return new SequenceAttribute (new Attribute[] {
 					Voyage.getAttribute("ptdepimp"),
-					Region.getAttribute("id")});
+					Port.getAttribute("id")});
 	}
 
 	
@@ -50,82 +49,73 @@ public class GrouperDeparturePorts extends GrouperSimpleDictionary
 	public void initSlots(Object[] dataTable)
 	{
 
-		Set regionsIdsInTable = new HashSet();
+		Set portsIdsInTable = new HashSet();
 		if (omitEmpty)
 		{
 			for (int i = 0; i < dataTable.length; i++)
 			{
 				Object regionId = ((Object[]) dataTable[i])[resultIndex];
-				regionsIdsInTable.add(regionId);
+				portsIdsInTable.add(regionId);
 			}
 		}
 		
 		lookupTable = new HashMap();
 		
-		List areas = new ArrayList();
-		List regionsInArea = new ArrayList();
+		List regions = new ArrayList();
+		List portsInRegion = new ArrayList();
 		
 		int i = 0;
-		long lastAreaId = 0;
-		Label areaLabel = null;
+		long lastRegionId = 0;
+		Label regionLabel = null;
 		
-		for (Iterator iter = regions.iterator(); iter.hasNext();)
+		for (Iterator iter = ports.iterator(); iter.hasNext();)
 		{
-			
 			Port port = (Port) iter.next();
-			long areaId = port.getRegion().getId().longValue();
-			Long regionId = port.getId();
+			Long portId = port.getId();
+			long regionId = port.getRegion().getId().longValue();
 			
-			if (!omitEmpty || regionsIdsInTable.contains(regionId))
+			if (!omitEmpty || portsIdsInTable.contains(portId))
 			{
 				
-				if (areaId != lastAreaId)
+				if (regionId != lastRegionId)
 				{
-					if (areaLabel != null)
+					if (regionLabel != null)
 					{
-						if (regionsInArea.size() > 1)
-						{
-							Label[] regionsArray = new Label[regionsInArea.size()];
-							regionsInArea.toArray(regionsArray);
-							areaLabel.setBreakdown(regionsArray);
-						}
+						Label[] regionsArray = new Label[portsInRegion.size()];
+						portsInRegion.toArray(regionsArray);
+						regionLabel.setBreakdown(regionsArray);
 					}
-					areaLabel = new Label(port.getRegion().getName());
-					areas.add(areaLabel);
-					regionsInArea.clear();
-					lastAreaId = areaId;
+					regionLabel = new Label(port.getRegion().getName());
+					regions.add(regionLabel);
+					portsInRegion.clear();
+					lastRegionId = regionId;
 				}
 				
-				regionsInArea.add(new Label(port.getName()));
-				lookupTable.put(regionId, new Integer(i));
+				portsInRegion.add(new Label(port.getName()));
+				lookupTable.put(portId, new Integer(i));
 				i++;
 				
 			}
 
 		}
 
-		if (areaLabel != null)
+		if (regionLabel != null)
 		{
-			if (regionsInArea.size() > 1)
-			{
-				Label[] regionsArray = new Label[regionsInArea.size()];
-				regionsInArea.toArray(regionsArray);
-				areaLabel.setBreakdown(regionsArray);
-			}
+			Label[] regionsArray = new Label[portsInRegion.size()];
+			portsInRegion.toArray(regionsArray);
+			regionLabel.setBreakdown(regionsArray);
 		}
 
-		labels = new Label[areas.size()];
-		areas.toArray(labels);
+		labels = new Label[regions.size()];
+		regions.toArray(labels);
 
 	}
 
 	public int lookupIndex(Object[] dataRow)
 	{
-		Object regionId = dataRow[resultIndex];
-		if (lookupTable.get(regionId) == null) {
-			return 0;
-		}
-		return ((Integer) lookupTable.get(regionId)).intValue();
+		Object portId = dataRow[resultIndex];
+		if (lookupTable.get(portId) == null) return 0;
+		return ((Integer) lookupTable.get(portId)).intValue();
 	}
 
 	public int getLeaveLabelsCount()

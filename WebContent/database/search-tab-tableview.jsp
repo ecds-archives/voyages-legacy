@@ -14,14 +14,14 @@
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:selectOneMenu value="#{DatabaseTableBean.rowGrouping}">
 				<f:selectItem itemLabel="Flag*" itemValue="flagStar"/>
-				<f:selectItem itemLabel="#{res.database_tableview_expports}" itemValue="expPorts" />
-				<f:selectItem itemLabel="#{res.database_tableview_impports}" itemValue="impPorts" />
-				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
-				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
-				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
 				<f:selectItem itemLabel="#{res.estimates_table_departureBroad}" itemValue="departureBroad" />
 				<f:selectItem itemLabel="#{res.estimates_table_departureRegion}" itemValue="departureRegion" />
 				<f:selectItem itemLabel="#{res.estimates_table_departure}" itemValue="departure" />
+				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
+				<f:selectItem itemLabel="#{res.database_tableview_expports}" itemValue="expPorts" />
+				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
+				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
+				<f:selectItem itemLabel="#{res.database_tableview_impports}" itemValue="impPorts" />
 				<f:selectItem itemLabel="#{res.estimates_table_individualyears}" itemValue="years1" />
 				<f:selectItem itemLabel="#{res.estimates_table_5years}" itemValue="years5" />
 				<f:selectItem itemLabel="#{res.estimates_table_10years}" itemValue="years10" />
@@ -38,14 +38,14 @@
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
 			<h:selectOneMenu value="#{DatabaseTableBean.colGrouping}">
 				<f:selectItem itemLabel="Flag*" itemValue="flagStar"/>
-				<f:selectItem itemLabel="#{res.database_tableview_expports}" itemValue="expPorts" />
-				<f:selectItem itemLabel="#{res.database_tableview_impports}" itemValue="impPorts" />
-				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
-				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
-				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
 				<f:selectItem itemLabel="#{res.estimates_table_departureBroad}" itemValue="departureBroad" />
 				<f:selectItem itemLabel="#{res.estimates_table_departureRegion}" itemValue="departureRegion" />
 				<f:selectItem itemLabel="#{res.estimates_table_departure}" itemValue="departure" />
+				<f:selectItem itemLabel="#{res.estimates_table_expregions}" itemValue="expRegion" />
+				<f:selectItem itemLabel="#{res.database_tableview_expports}" itemValue="expPorts" />
+				<f:selectItem itemLabel="#{res.estimates_table_impregionsbreakdown}" itemValue="impRegionBreakdowns" />
+				<f:selectItem itemLabel="#{res.estimates_table_impregions}" itemValue="impRegion" />
+				<f:selectItem itemLabel="#{res.database_tableview_impports}" itemValue="impPorts" />
 			</h:selectOneMenu>
 		</t:htmlTag>
 	</t:htmlTag>

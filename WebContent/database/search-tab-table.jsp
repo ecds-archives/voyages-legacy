@@ -128,21 +128,6 @@
 			</t:htmlTag>
 		</t:htmlTag>
 
-		<% /* 
-		<t:htmlTag value="div" style="margin-top: 10px;">
-			<t:htmlTag value="table" style="border-collapse: collapse;">
-				<t:htmlTag value="tr">
-					<t:htmlTag value="td" style="padding: 0px;">
-						<h:selectBooleanCheckbox onchange="submit();" value="#{TableResultTabBean.attachSearchedParams}" />
-					</t:htmlTag>
-					<t:htmlTag value="td" style="padding-left: 5px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;">
-						<h:outputText value="#{res.database_search_qattachresultstoattrs}" />
-					</t:htmlTag>
-				</t:htmlTag>
-			</t:htmlTag>
-		</t:htmlTag>
-		*/ %>
-
 	</t:htmlTag>
 
 	<t:htmlTag value="div" styleClass="database-configure-columns-buttons">

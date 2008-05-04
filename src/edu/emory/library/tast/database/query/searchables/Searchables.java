@@ -74,205 +74,207 @@ public class Searchables
 			Node xmlSearchableAttr = xmlSearchableAttrs.item(i);
 			
 			// main properties
-			if (xmlSearchableAttr.getNodeType() != Node.COMMENT_NODE) {
-			SearchableAttribute searchableAttribute = null;
-			String id = xmlSearchableAttr.getAttributes().getNamedItem("id").getNodeValue();
-			String type = xmlSearchableAttr.getAttributes().getNamedItem("type").getNodeValue();
-			String userLabel = xmlSearchableAttr.getAttributes().getNamedItem("userLabel").getNodeValue();
-			
-			// check id uniqueness
-			if (searchableAttributesByIds.containsKey(id))
-				throw new RuntimeException("duplicate attribute id '" + id + "'");
-
-			// sub type
-			Node xmlSubType = xmlSearchableAttr.getAttributes().getNamedItem("subType");
-
-			// SPSS name
-			Node xmlSpssName = xmlSearchableAttr.getAttributes().getNamedItem("spssName");
-			String spssName = xmlSpssName != null ? spssName = xmlSpssName.getNodeValue() : id;
-
-			// is in estimates
-			boolean inEstimates = false;
-			Node xmlInEstimates = xmlSearchableAttr.getAttributes().getNamedItem("inEstimates");
-			if (xmlInEstimates != null) inEstimates = "true".equals(xmlInEstimates.getNodeValue());
-
-			// list description
-			String listDescription = null;
-			Node xmlListDescription = xmlSearchableAttr.getAttributes().getNamedItem("listDescription");
-			if (xmlListDescription != null) listDescription = xmlListDescription.getNodeValue();
-
-			// default option
-			int defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
-			Node xmlDefaultRangeSearchType = xmlSearchableAttr.getAttributes().getNamedItem("defaultRangeSearchType");
-			if (xmlDefaultRangeSearchType != null)
+			if (xmlSearchableAttr.getNodeType() != Node.COMMENT_NODE)
 			{
-				if ("between".equals(xmlDefaultRangeSearchType.getNodeValue()))
-				{
-					defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
-				}
-				else if ("eq".equals(xmlDefaultRangeSearchType.getNodeValue()))
-				{
-					defaultRangeSearchType = QueryConditionNumeric.TYPE_EQ;
-				}
-				else if ("le".equals(xmlDefaultRangeSearchType.getNodeValue()))
-				{
-					defaultRangeSearchType = QueryConditionNumeric.TYPE_LE;
-				}
-				else if ("ge".equals(xmlDefaultRangeSearchType.getNodeValue()))
-				{
-					defaultRangeSearchType = QueryConditionNumeric.TYPE_GE;
-				}
-				else
-				{
-					defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
-				}
-			}
-			
-			// read categories
-			NodeList xmlUserCats = xmlSearchableAttr.getChildNodes().item(0).getChildNodes();
-			UserCategories userCats = new UserCategories();
-			for (int j = 0; j < xmlUserCats.getLength(); j++)
-			{
-				Node xmlUserCat = xmlUserCats.item(j);
-				UserCategory category = UserCategory.parse(xmlUserCat.getAttributes().getNamedItem("name").getNodeValue());
-				if (category != null) userCats.addTo(category);
-			}
-
-			// simple attribute -> read list of database attributes
-			if ("simple".equals(type) || "percent".equals(type))
-			{
-				NodeList xmlAttrs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
-				Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
 				
-				// read the db attributes
-				Attribute firstAttr = null;
-				for (int j = 0; j < xmlAttrs.getLength(); j++)
+				SearchableAttribute searchableAttribute = null;
+				String id = xmlSearchableAttr.getAttributes().getNamedItem("id").getNodeValue();
+				String type = xmlSearchableAttr.getAttributes().getNamedItem("type").getNodeValue();
+				String userLabel = xmlSearchableAttr.getAttributes().getNamedItem("userLabel").getNodeValue();
+				
+				// check id uniqueness
+				if (searchableAttributesByIds.containsKey(id))
+					throw new RuntimeException("duplicate attribute id '" + id + "'");
+	
+				// sub type
+				Node xmlSubType = xmlSearchableAttr.getAttributes().getNamedItem("subType");
+	
+				// SPSS name
+				Node xmlSpssName = xmlSearchableAttr.getAttributes().getNamedItem("spssName");
+				String spssName = xmlSpssName != null ? spssName = xmlSpssName.getNodeValue() : id;
+	
+				// is in estimates
+				boolean inEstimates = false;
+				Node xmlInEstimates = xmlSearchableAttr.getAttributes().getNamedItem("inEstimates");
+				if (xmlInEstimates != null) inEstimates = "true".equals(xmlInEstimates.getNodeValue());
+	
+				// list description
+				String listDescription = null;
+				Node xmlListDescription = xmlSearchableAttr.getAttributes().getNamedItem("listDescription");
+				if (xmlListDescription != null) listDescription = xmlListDescription.getNodeValue();
+	
+				// default option
+				int defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
+				Node xmlDefaultRangeSearchType = xmlSearchableAttr.getAttributes().getNamedItem("defaultRangeSearchType");
+				if (xmlDefaultRangeSearchType != null)
 				{
-					Node xmlAttr = xmlAttrs.item(j);
-					String name = xmlAttr.getAttributes().getNamedItem("name").getNodeValue();
-					Attribute attr = Voyage.getAttribute(name);
-					if (attr == null)
+					if ("between".equals(xmlDefaultRangeSearchType.getNodeValue()))
 					{
-						throw new RuntimeException("searchable attribute '" + name + "' not found");
+						defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
 					}
-					else if (j == 0)
+					else if ("eq".equals(xmlDefaultRangeSearchType.getNodeValue()))
 					{
-						firstAttr = attr;
+						defaultRangeSearchType = QueryConditionNumeric.TYPE_EQ;
+					}
+					else if ("le".equals(xmlDefaultRangeSearchType.getNodeValue()))
+					{
+						defaultRangeSearchType = QueryConditionNumeric.TYPE_LE;
+					}
+					else if ("ge".equals(xmlDefaultRangeSearchType.getNodeValue()))
+					{
+						defaultRangeSearchType = QueryConditionNumeric.TYPE_GE;
 					}
 					else
 					{
-						if (firstAttr.getClass() != attr.getClass())
-							throw new RuntimeException("searchable attribute '" + id + "' contains invalid attributes");
+						defaultRangeSearchType = QueryConditionNumeric.TYPE_BETWEEN;
 					}
-					attrs[j] = attr;
 				}
-
-				// create the corresponding searchable attribute
-				if (firstAttr instanceof DictionaryAttribute)
+				
+				// read categories
+				NodeList xmlUserCats = xmlSearchableAttr.getChildNodes().item(0).getChildNodes();
+				UserCategories userCats = new UserCategories();
+				for (int j = 0; j < xmlUserCats.getLength(); j++)
 				{
-					searchableAttribute =
-						new SearchableAttributeSimpleDictionary(
-							id, userLabel, userCats, attrs,
-							spssName, listDescription, inEstimates);
+					Node xmlUserCat = xmlUserCats.item(j);
+					UserCategory category = UserCategory.parse(xmlUserCat.getAttributes().getNamedItem("name").getNodeValue());
+					if (category != null) userCats.addTo(category);
 				}
-				else if (firstAttr instanceof StringAttribute) 
+	
+				// simple attribute -> read list of database attributes
+				if ("simple".equals(type) || "percent".equals(type))
 				{
-					searchableAttribute =
-						new SearchableAttributeSimpleText(
-							id, userLabel, userCats, attrs,
-							spssName, listDescription, inEstimates);
-				}
-				else if (firstAttr instanceof NumericAttribute) 
-				{
-					int subType;
-					if (xmlSubType == null)
+					NodeList xmlAttrs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
+					Attribute[] attrs = new Attribute[xmlAttrs.getLength()];
+					
+					// read the db attributes
+					Attribute firstAttr = null;
+					for (int j = 0; j < xmlAttrs.getLength(); j++)
 					{
-						subType = SearchableAttributeSimpleNumeric.TYPE_GENERAL;
+						Node xmlAttr = xmlAttrs.item(j);
+						String name = xmlAttr.getAttributes().getNamedItem("name").getNodeValue();
+						Attribute attr = Voyage.getAttribute(name);
+						if (attr == null)
+						{
+							throw new RuntimeException("searchable attribute '" + name + "' not found");
+						}
+						else if (j == 0)
+						{
+							firstAttr = attr;
+						}
+						else
+						{
+							if (firstAttr.getClass() != attr.getClass())
+								throw new RuntimeException("searchable attribute '" + id + "' contains invalid attributes");
+						}
+						attrs[j] = attr;
 					}
-					else if (xmlSubType.getNodeValue().equals("ratio"))
+	
+					// create the corresponding searchable attribute
+					if (firstAttr instanceof DictionaryAttribute)
 					{
-						subType = SearchableAttributeSimpleNumeric.TYPE_RATIO;
+						searchableAttribute =
+							new SearchableAttributeSimpleDictionary(
+								id, userLabel, userCats, attrs,
+								spssName, listDescription, inEstimates);
 					}
-					else if (xmlSubType.getNodeValue().equals("year"))
+					else if (firstAttr instanceof StringAttribute) 
 					{
-						subType = SearchableAttributeSimpleNumeric.TYPE_YEAR;
+						searchableAttribute =
+							new SearchableAttributeSimpleText(
+								id, userLabel, userCats, attrs,
+								spssName, listDescription, inEstimates);
+					}
+					else if (firstAttr instanceof NumericAttribute) 
+					{
+						int subType;
+						if (xmlSubType == null)
+						{
+							subType = SearchableAttributeSimpleNumeric.TYPE_GENERAL;
+						}
+						else if (xmlSubType.getNodeValue().equals("ratio"))
+						{
+							subType = SearchableAttributeSimpleNumeric.TYPE_RATIO;
+						}
+						else if (xmlSubType.getNodeValue().equals("year"))
+						{
+							subType = SearchableAttributeSimpleNumeric.TYPE_YEAR;
+						}
+						else
+						{
+							subType = SearchableAttributeSimpleNumeric.TYPE_GENERAL;	
+						}
+						searchableAttribute =
+							new SearchableAttributeSimpleNumeric(
+								id, userLabel, userCats, attrs, subType,
+								"percent".equals(type), defaultRangeSearchType,
+								spssName, listDescription, inEstimates);							
+					}
+					else if (firstAttr instanceof DateAttribute)
+					{		
+						searchableAttribute =
+							new SearchableAttributeSimpleDate(
+								id, userLabel, userCats, attrs, defaultRangeSearchType,
+								spssName, listDescription, inEstimates);							
+					}
+					else if (firstAttr instanceof BooleanAttribute)
+					{	
+						searchableAttribute =
+							new SearchableAttributeSimpleBoolean(
+								id, userLabel, userCats, attrs,
+								spssName, listDescription, inEstimates);							
 					}
 					else
 					{
-						subType = SearchableAttributeSimpleNumeric.TYPE_GENERAL;	
+						throw new RuntimeException("unsupported type for searchable attribute '" + id + "'");					
 					}
-					searchableAttribute =
-						new SearchableAttributeSimpleNumeric(
-							id, userLabel, userCats, attrs, subType,
-							"percent".equals(type), defaultRangeSearchType,
-							spssName, listDescription, inEstimates);							
+	
 				}
-				else if (firstAttr instanceof DateAttribute)
-				{		
-					searchableAttribute =
-						new SearchableAttributeSimpleDate(
-							id, userLabel, userCats, attrs, defaultRangeSearchType,
-							spssName, listDescription, inEstimates);							
-				}
-				else if (firstAttr instanceof BooleanAttribute)
-				{		
-					searchableAttribute =
-						new SearchableAttributeSimpleBoolean(
-							id, userLabel, userCats, attrs,
-							spssName, listDescription, inEstimates);							
+				
+				// location -> read list of locations
+				else if ("port".equals(type))
+				{
+					NodeList xmlLocs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
+					Location[] locs = new Location[xmlLocs.getLength()];
+					for (int j = 0; j < xmlLocs.getLength(); j++)
+					{
+						Node xmlLoc = xmlLocs.item(j);
+	
+						String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
+						Attribute attrPort = Voyage.getAttribute(port);
+						if (!(attrPort instanceof PortAttribute))
+							throw new RuntimeException("searchable attribute '" + id + "' invalid port attribute");
+	
+						Node xmlRegion = xmlLoc.getAttributes().getNamedItem("region");
+						Attribute attrRegion = null;
+						if (xmlRegion != null)
+						{
+							String region = xmlRegion.getNodeValue();
+							attrRegion = Voyage.getAttribute(region);
+							if (!(attrRegion instanceof RegionAttribute))
+								throw new RuntimeException("searchable attribute '" + id + "' invalid region attribute");
+						}
+						
+						locs[j] = new Location(attrPort, attrRegion);
+	
+					}
+					searchableAttribute = new SearchableAttributeLocation(
+							id, userLabel, userCats, locs,
+							spssName, listDescription, inEstimates);						
 				}
 				else
 				{
-					throw new RuntimeException("unsupported type for searchable attribute '" + id + "'");					
+					throw new RuntimeException("Unsupported type: " + type);
 				}
-
-			}
-			
-			// location -> read list of locations
-			else if ("port".equals(type))
-			{
-				NodeList xmlLocs = xmlSearchableAttr.getChildNodes().item(1).getChildNodes();
-				Location[] locs = new Location[xmlLocs.getLength()];
-				for (int j = 0; j < xmlLocs.getLength(); j++)
+				
+				// add it to our collection
+				if (searchableAttribute != null)
 				{
-					Node xmlLoc = xmlLocs.item(j);
-
-					String port = xmlLoc.getAttributes().getNamedItem("port").getNodeValue();
-					Attribute attrPort = Voyage.getAttribute(port);
-					if (!(attrPort instanceof PortAttribute))
-						throw new RuntimeException("searchable attribute '" + id + "' invalid port attribute");
-
-					Node xmlRegion = xmlLoc.getAttributes().getNamedItem("region");
-					Attribute attrRegion = null;
-					if (xmlRegion != null)
-					{
-						String region = xmlRegion.getNodeValue();
-						attrRegion = Voyage.getAttribute(region);
-						if (!(attrRegion instanceof RegionAttribute))
-							throw new RuntimeException("searchable attribute '" + id + "' invalid region attribute");
-					}
-					
-					locs[j] = new Location(attrPort, attrRegion);
-
+					searchableAttributes[i] = searchableAttribute;
+					searchableAttributesByIds.put(id, searchableAttribute);
 				}
-				searchableAttribute = new SearchableAttributeLocation(
-						id, userLabel, userCats, locs,
-						spssName, listDescription, inEstimates);						
-			}
-			else
-			{
-				throw new RuntimeException("Unsupported type: " + type);
-			}
-			
-			// add it to our collection
-			if (searchableAttribute != null)
-			{
-				searchableAttributes[i] = searchableAttribute;
-				searchableAttributesByIds.put(id, searchableAttribute);
+				
 			}
 		}
-		}
-		
 	}
 
 

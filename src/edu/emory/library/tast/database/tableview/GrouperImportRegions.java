@@ -9,11 +9,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
-/**
- * Grouper for import regions.
- * Groupers are used in tables.
- *
- */
 public class GrouperImportRegions extends GrouperSimpleDictionary
 {
 	

@@ -83,12 +83,9 @@ public class GrouperExportPorts extends GrouperSimpleDictionary
 				{
 					if (areaLabel != null)
 					{
-						if (regionsInArea.size() > 1)
-						{
-							Label[] regionsArray = new Label[regionsInArea.size()];
-							regionsInArea.toArray(regionsArray);
-							areaLabel.setBreakdown(regionsArray);
-						}
+						Label[] regionsArray = new Label[regionsInArea.size()];
+						regionsInArea.toArray(regionsArray);
+						areaLabel.setBreakdown(regionsArray);
 					}
 					areaLabel = new Label(port.getRegion().getName());
 					areas.add(areaLabel);
@@ -106,12 +103,9 @@ public class GrouperExportPorts extends GrouperSimpleDictionary
 
 		if (areaLabel != null)
 		{
-			if (regionsInArea.size() > 1)
-			{
-				Label[] regionsArray = new Label[regionsInArea.size()];
-				regionsInArea.toArray(regionsArray);
-				areaLabel.setBreakdown(regionsArray);
-			}
+			Label[] regionsArray = new Label[regionsInArea.size()];
+			regionsInArea.toArray(regionsArray);
+			areaLabel.setBreakdown(regionsArray);
 		}
 
 		labels = new Label[areas.size()];

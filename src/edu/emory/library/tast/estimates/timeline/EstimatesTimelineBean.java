@@ -157,7 +157,7 @@ public class EstimatesTimelineBean
 				new EventLineEvent(1808, "Abolition of British and US slave trades takes effect"),
 				new EventLineEvent(1830, "Anglo-Brazilian anti-slave trade treaty"),
 				new EventLineEvent(1850, "Brazil suppresses slave trade"),
-				new EventLineEvent(1867, "Last transatlantic slave voyage sails")};
+				new EventLineEvent(1867, "Last transatlantic slave voyage arrives in Americas")};
 			
 		}
 		else if (expRegions.size() == 1 && expRegions.contains(new Long(5)))
