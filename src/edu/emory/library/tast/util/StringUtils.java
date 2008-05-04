@@ -5,10 +5,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 public class StringUtils
 {
+	
+	public static final int CREATE_HASH_SET = 1;
+	public static final int CREATE_TREE_SET = 2;
+	private static final int DEFAULT_SET_TYPE = 1;
 	
 	private final static Pattern sepRegex = Pattern.compile("[^a-zA-Z_0-9]+");
 	
@@ -201,10 +206,20 @@ public class StringUtils
 		}
 		return res.toString();
 	}
-
-	public static Set toStringSet(String[] arr)
+	
+	private static Set createSet(int setType)
 	{
-		Set set = new HashSet();
+		switch (setType)
+		{
+			case CREATE_HASH_SET: return new HashSet();
+			case CREATE_TREE_SET: return new TreeSet();
+			default: return createSet(DEFAULT_SET_TYPE);
+		}
+	}
+
+	public static Set toStringSet(String[] arr, int setType)
+	{
+		Set set = createSet(setType);
 		if (arr != null)
 		{
 			for (int i = 0; i < arr.length; i++)
@@ -215,12 +230,12 @@ public class StringUtils
 		return set;
 	}
 
-	public static Set toLongSet(String[] arr)
+	public static Set toStringSet(String[] arr)
 	{
-		return toLongSet(arr, false);
+		return toStringSet(arr, DEFAULT_SET_TYPE);
 	}
 
-	public static Set toLongSet(String[] arr, boolean omitInvalid)
+	public static Set toLongSet(String[] arr, boolean omitInvalid, int setType)
 	{
 		Set set = new HashSet();
 		if (arr != null)
@@ -245,10 +260,20 @@ public class StringUtils
 		}
 		return set;
 	}
-
-	public static Set toIntegerSet(String[] arr)
+	
+	public static Set toLongSet(String[] arr, boolean omitInvalid)
 	{
-		Set set = new HashSet();
+		return toLongSet(arr, omitInvalid, DEFAULT_SET_TYPE);
+	}
+	
+	public static Set toLongSet(String[] arr)
+	{
+		return toLongSet(arr, false, DEFAULT_SET_TYPE);
+	}
+
+	public static Set toIntegerSet(String[] arr, int hashSet)
+	{
+		Set set = createSet(hashSet);
 		if (arr != null)
 		{
 			for (int i = 0; i < arr.length; i++)
@@ -259,6 +284,11 @@ public class StringUtils
 		return set;
 	}
 	
+	public static Set toIntegerSet(String[] arr)
+	{
+		return toIntegerSet(arr, DEFAULT_SET_TYPE);
+	}
+
 	public static Integer[] parseIntegerArray(String[] arr)
 	{
 		return parseIntegerArray(arr, false);

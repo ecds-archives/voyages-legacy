@@ -91,10 +91,6 @@ public class EstimatesSelectionBean
 	private String[] expandedExpRegions;
 	private String[] expandedImpRegions;
 
-	private int totalNationsCount;
-	private int totalExpRegionsCount;
-	private int totalImpRegionsCount;
-	
 	private Set selectedNationIds;
 	private Set selectedExpRegionIds;
 	private Set selectedImpRegionIds;
@@ -166,7 +162,7 @@ public class EstimatesSelectionBean
 
 	/**
 	 * General method, which changes {@link #checkedNations} by the given list
-	 * of nations from the database. Now used only during inicialization and
+	 * of nations from the database. Now used only during initialisation and
 	 * when user presses the Reset button.
 	 * 
 	 * @param nations
@@ -175,7 +171,6 @@ public class EstimatesSelectionBean
 	private void checkNations(List nations)
 	{
 
-		totalNationsCount = nations.size();
 		checkedNations = new String[nations.size()];
 
 		int i = 0;
@@ -237,7 +232,7 @@ public class EstimatesSelectionBean
 			while (area.equals(region.getArea()))
 			{
 				lastRegionId = region.getId();
-				tempIds.add("R" + lastRegionId);
+				tempIds.add(createImpRegionOnlyId(lastRegionId.toString()));
 				regionsInArea++;
 				if (++i == regionsCount) break;
 				region = (EstimatesImportRegion) regions.get(i);
@@ -245,18 +240,18 @@ public class EstimatesSelectionBean
 
 			if (regionsInArea > 1)
 			{
-				tempIds.add("A" + area.getId());
+				tempIds.add(createImpAreaOnlyId(area.getId().toString()));
 			}
 			else
 			{
-				tempIds.add("A" + area.getId() + IMP_REGIONS_ID_SEPATATOR + "R" + lastRegionId);
+				tempIds.add(createImpAreaRegionId(area.getId().toString(), lastRegionId.toString()));
 			}
 
 		}
 
 		checkedImpRegions = new String[tempIds.size()];
 		tempIds.toArray(checkedImpRegions);
-	
+		
 	}
 
 	/**
@@ -270,10 +265,6 @@ public class EstimatesSelectionBean
 		List allNations = EstimatesNation.loadAll(sess);
 		List allExpRegions = EstimatesExportRegion.loadAll(sess);
 		List allImpRegions = EstimatesImportRegion.loadAll(sess);
-
-		totalNationsCount = allNations.size();
-		totalExpRegionsCount = allExpRegions.size();
-		totalImpRegionsCount = allImpRegions.size();
 
 		checkNations(allNations);
 		checkExpRegions(allExpRegions);
@@ -366,12 +357,6 @@ public class EstimatesSelectionBean
 
 	}
 
-	/**
-	 * Bound to the Change Selection buttons. Cales {@link #createConditions()}
-	 * and {@link #updateSelectionInfo()}.
-	 * 
-	 * @return
-	 */
 	public String changeSelection()
 	{
 		createConditions();
@@ -379,11 +364,6 @@ public class EstimatesSelectionBean
 		return null;
 	}
 
-	/**
-	 * Uses {@link #checkedNations}, {@link #checkedExpRegions},
-	 * {@link #checkedImpRegions}, {@link #yearFrom} and {@link #yearTo} to
-	 * create the current query.
-	 */
 	private void createConditions()
 	{
 		
@@ -470,82 +450,6 @@ public class EstimatesSelectionBean
 	}
 
 	/**
-	 * Restores proper conditions after using permanent link
-	 * 
-	 */
-	/*
-	public void restoreConditions(Session session)
-	{
-		
-		timeFrameConditions = new Conditions(Conditions.JOIN_AND);
-		timeFrameConditions.addCondition(Estimate.getAttribute("year"), new Integer(yearFrom), Conditions.OP_GREATER_OR_EQUAL);
-		timeFrameConditions.addCondition(Estimate.getAttribute("year"), new Integer(yearTo), Conditions.OP_SMALLER_OR_EQUAL);
-
-		Conditions conditionNations = new Conditions(Conditions.JOIN_OR);
-		Conditions conditionExpRegions = new Conditions(Conditions.JOIN_OR);
-		Conditions conditionImpRegions = new Conditions(Conditions.JOIN_OR);
-
-		geographicConditions = new Conditions(Conditions.JOIN_AND);
-		geographicConditions.addCondition(conditionNations);
-		geographicConditions.addCondition(conditionExpRegions);
-		geographicConditions.addCondition(conditionImpRegions);
-
-		Attribute nationIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("nation"),
-				EstimatesNation.getAttribute("id") });
-
-		Iterator iter = this.selectedNationIds.iterator();
-		this.checkedNations = new String[this.selectedNationIds.size()];
-		int i = 0;
-		while (iter.hasNext()) {
-			Long nationId = (Long) iter.next();
-			this.checkedNations[i++] = String.valueOf(nationId);
-			conditionNations.addCondition(nationIdAttr, nationId, Conditions.OP_EQUALS);
-		}
-
-		Attribute regionExpIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"),
-				EstimatesExportRegion.getAttribute("id") });
-
-		iter = this.selectedExpRegionIds.iterator();
-		this.checkedExpRegions = new String[this.selectedExpRegionIds.size()];
-		i = 0;
-		while (iter.hasNext()) {
-			Long regionId = (Long) iter.next();
-			this.checkedExpRegions[i++] = regionId.toString();
-			conditionExpRegions.addCondition(regionExpIdAttr, regionId, Conditions.OP_EQUALS);
-		}
-
-		Attribute regionImpIdAttr = new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"),
-				EstimatesImportRegion.getAttribute("id") });
-
-		iter = this.selectedImpRegionIds.iterator();
-		List tmpList = new ArrayList();
-		List addedAreas = new ArrayList();
-		while (iter.hasNext()) {
-			Long regionId = (Long) iter.next();
-			EstimatesImportRegion region = EstimatesImportRegion.loadById(session, regionId.longValue());
-			EstimatesImportArea area = region.getArea();
-			if (area.getRegions().size() == 1) {
-				tmpList.add("A" + area.getId() + "_R" + regionId);
-				addedAreas.add(area.getId());
-			} else {
-				tmpList.add("R" + regionId);
-			}
-			conditionImpRegions.addCondition(regionImpIdAttr, regionId, Conditions.OP_EQUALS);
-		}
-		
-		iter = this.selectedImpAreaIds.iterator();
-		while (iter.hasNext()) {
-			Long areaId = (Long) iter.next();
-			if (!addedAreas.contains(areaId)) {
-				tmpList.add("A" + areaId);
-			}
-		}
-		
-		this.checkedImpRegions = (String[]) tmpList.toArray(new String[] {});
-	}
-	*/
-
-	/**
 	 * Recalculates {@link #selectedNationsAsText},
 	 * {@link #selectedExpRegionsAsText} and {@link #selectedImpRegionsAsText}
 	 * based on {@link #selectedExpRegionIds}, {@link #selectedExpRegionIds},
@@ -576,7 +480,7 @@ public class EstimatesSelectionBean
 
 		StringBuffer selectedNationsBuff = new StringBuffer();
 
-		if (totalNationsCount > selectedNationIds.size())
+		if (selectedNationIds.size() < getTotalNationsCount())
 		{
 			int i = 0;
 			List selectedNations = loadSelectedNations(sess);
@@ -607,7 +511,7 @@ public class EstimatesSelectionBean
 
 		StringBuffer selectedExpRegionsBuff = new StringBuffer();
 
-		if (totalExpRegionsCount > selectedExpRegionIds.size())
+		if (selectedExpRegionIds.size() < getTotalExpRegionsCount())
 		{
 			int i = 0;
 			List selectedExpRegions = loadSelectedExpRegions(sess);
@@ -638,7 +542,7 @@ public class EstimatesSelectionBean
 
 		StringBuffer selectedImpRegionsBuff = new StringBuffer();
 		
-		if (totalImpRegionsCount > selectedImpRegionIds.size())
+		if (selectedImpRegionIds.size() < getTotalImpRegionsCount())
 		{
 
 			int i = 0;
@@ -655,31 +559,33 @@ public class EstimatesSelectionBean
 			boolean noSelected;
 			int j = 0;
 			
-			while (iter.hasNext()) {
-				
+			while (iter.hasNext())
+			{
 				j=0;
 				allSelected = true;
 				noSelected = true;
 
 				lastAreaName = region.getArea().getName();
-			
 				selectedImpRegionsInAreaBuff.setLength(0);
 
-				while (iter.hasNext()) {
-
-					if (selectedImpRegionIds.contains(region.getId())) {
-						if (j > 0)
-							selectedImpRegionsInAreaBuff.append(", ");
+				while (iter.hasNext())
+				{
+					if (selectedImpRegionIds.contains(region.getId()))
+					{
+						if (j > 0) selectedImpRegionsInAreaBuff.append(", ");
 						selectedImpRegionsInAreaBuff.append(region.getName());
 						noSelected = false;
 						j++;
-					} else {
+					}
+					else
+					{
 						allSelected = false;
 					}
 					region = (EstimatesImportRegion) iter.next();
 					
 					int areaId = region.getArea().getId().intValue();
-					if (lastAreaId != areaId) {
+					if (lastAreaId != areaId)
+					{
 						lastAreaId = areaId;
 						break;
 					}
@@ -838,15 +744,7 @@ public class EstimatesSelectionBean
 		return regionsUi;
 		
 	}
-
-	/**
-	 * Bound to UI. It loads all import regions from the database and convert
-	 * them to an array or {@link #edu.emory.library.tast.common.SelectItem}.
-	 * See {@link EstimatesSelectionBean} for more information about encoding
-	 * of ids.
-	 * 
-	 * @return
-	 */
+	
 	public SelectItem[] getAllImpRegions()
 	{
 		
@@ -871,6 +769,7 @@ public class EstimatesSelectionBean
 			{
 	
 				EstimatesImportRegion region = (EstimatesImportRegion) regionsDb.get(i);
+				Long lastRegionId = region.getId();
 				EstimatesImportArea area = region.getArea();
 	
 				regionsTemp.clear();
@@ -879,38 +778,42 @@ public class EstimatesSelectionBean
 				{
 					regionsTemp.add(new SelectItemWithImage(
 							region.getName(),
-							"R" + region.getId(),
-							"regions/region-" + region.getId() + ".png"));
+							createImpRegionOnlyId(region.getId().toString()),
+							null));
+					
 					if (++i == regionsCount) break;
+					lastRegionId = region.getId();
 					region = (EstimatesImportRegion) regionsDb.get(i);
 				}
 	
-				SelectItemWithImage areaItem = new SelectItemWithImage(area.getName(), null, "regions/area-" + area.getId() + ".png");
+				SelectItemWithImage areaItem =
+					new SelectItemWithImage(area.getName(), null, null);
 	
 				areaItem.setSelectable(true);
 				areasTemp.add(areaItem);
 	
 				if (regionsTemp.size() > 1)
 				{
-					SelectItemWithImage[] regionsUi = new SelectItemWithImage[regionsTemp.size()];
+					SelectItem[] regionsUi = new SelectItemWithImage[regionsTemp.size()];
 					regionsTemp.toArray(regionsUi);
 					areaItem.setSubItems(regionsUi);
-					areaItem.setValue("A" + area.getId());
+					areaItem.setValue(
+							createImpAreaOnlyId(
+									area.getId().toString()));
 				}
 				else
 				{
-					SelectItemWithImage singleRegion = (SelectItemWithImage) regionsTemp.get(0);
 					areaItem.setValue(
-							"A" + area.getId() +
-							IMP_REGIONS_ID_SEPATATOR +
-							singleRegion.getValue());
+							createImpAreaRegionId(
+									area.getId().toString(),
+									lastRegionId.toString()));
 				}
 	
 			}
 	
 			transaction.commit();
 			sess.close();
-	
+			
 			areasUi = new SelectItemWithImage[areasTemp.size()];
 			areasTemp.toArray(areasUi);
 			
@@ -1023,6 +926,139 @@ public class EstimatesSelectionBean
 		return null;
 		
 	}
+	
+	private boolean restoreNationsFromUrl(Map params)
+	{
+		
+		String nationsFromUrl = 
+			StringUtils.getFirstElement(
+				(String[]) params.get("flag"));
+		
+		if (nationsFromUrl == null)
+			return false;
+		
+		Set nationsFromUrlSet = 
+			StringUtils.toStringSet(
+					nationsFromUrl.split("\\."));
+		
+		List newCheckedNations = new ArrayList();
+		
+		SelectItem[] nations = getAllNations();
+		for (int i = 0; i < nations.length; i++)
+		{
+			String nationId = nations[i].getValue();
+			if (nationsFromUrlSet.contains(nationId))
+			{
+				newCheckedNations.add(nationId);
+			}
+		}
+		
+		if (newCheckedNations.size() == 0)
+			return false;
+		
+		checkedNations = new String[newCheckedNations.size()];
+		newCheckedNations.toArray(checkedNations);
+
+		return true;
+		
+	}
+	
+	private boolean restoreExpRegionsFromUrl(Map params)
+	{
+		
+		String expRegionsFromUrl = 
+			StringUtils.getFirstElement(
+				(String[]) params.get("embarkation"));
+		
+		if (expRegionsFromUrl == null)
+			return false;
+		
+		Set expRegionsFromUrlSet = 
+			StringUtils.toStringSet(
+					expRegionsFromUrl.split("\\."));
+		
+		List newCheckedExpRegions = new ArrayList();
+		
+		SelectItem[] expRegions = getAllExpRegions();
+		for (int i = 0; i < expRegions.length; i++)
+		{
+			String regionId = expRegions[i].getValue();
+			if (expRegionsFromUrlSet.contains(regionId))
+			{
+				newCheckedExpRegions.add(regionId);
+			}
+		}
+		
+		if (newCheckedExpRegions.size() == 0)
+			return false;
+		
+		checkedExpRegions = new String[newCheckedExpRegions.size()];
+		newCheckedExpRegions.toArray(checkedExpRegions);
+
+		return true;
+		
+	}
+	
+	private boolean restoreImpRegionsFromUrl(Map params)
+	{
+		
+		String impRegionsFromUrl = 
+			StringUtils.getFirstElement(
+				(String[]) params.get("disembarkation"));
+		
+		if (impRegionsFromUrl == null)
+			return false;
+		
+		Set impRegionsFromUrlSet = 
+			StringUtils.toStringSet(
+					impRegionsFromUrl.split("\\."));
+		
+		List newCheckedImpRegions = new ArrayList();
+		
+		SelectItem[] impAreas = getAllImpRegions();
+		for (int i = 0; i < impAreas.length; i++)
+		{
+			SelectItem area = impAreas[i];
+			if (!area.hasSubItems())
+			{
+				String ids[] = area.getValue().split(IMP_REGIONS_ID_SEPATATOR);
+				if (impRegionsFromUrlSet.contains(ids[1].substring(1)))
+				{
+					newCheckedImpRegions.add(area.getValue());
+				}
+			}
+			else
+			{
+				boolean selectedAllRegions = true;
+				SelectItem[] impRegions = area.getSubItems();
+				for (int k = 0; k < impRegions.length; k++)
+				{
+					String regionId = impRegions[k].getValue();
+					if (impRegionsFromUrlSet.contains(regionId.substring(1)))
+					{
+						newCheckedImpRegions.add(regionId);
+					}
+					else
+					{
+						selectedAllRegions = false;
+					}
+				}
+				if (selectedAllRegions)
+				{
+					newCheckedImpRegions.add(area.getValue());
+				}
+			}
+		}
+		
+		if (newCheckedImpRegions.size() == 0)
+			return false;
+		
+		checkedImpRegions = new String[newCheckedImpRegions.size()];
+		newCheckedImpRegions.toArray(checkedImpRegions);
+		
+		return true;
+		
+	}
 
 	public boolean restoreQueryFromUrl(Map params)
 	{
@@ -1037,28 +1073,13 @@ public class EstimatesSelectionBean
 			StringUtils.getFirstElement(
 				(String[]) params.get("yearTo"));
 		
-		String selectedNationIdsStr =
-			StringUtils.getFirstElement(
-				(String[]) params.get("flag"));
+		boolean nationsOk = restoreNationsFromUrl(params);
+		boolean expRegionsOk = restoreExpRegionsFromUrl(params);
+		boolean impRegionsOk = restoreImpRegionsFromUrl(params);
 		
-		if (selectedNationIdsStr != null)
-			checkedNations = selectedNationIdsStr.split("\\.");
-		
-		String selectedExpRegionIdsStr =
-			StringUtils.getFirstElement(
-				(String[]) params.get("embarkation"));
-		
-		if (selectedExpRegionIdsStr != null)
-			checkedExpRegions = selectedExpRegionIdsStr.split("\\.");
-
-		/*
-		String selectedImpRegionIdsStr =
-			StringUtils.getFirstElement(
-				(String[]) params.get("disembarkation"));
-
-		if (selectedImpRegionIdsStr != null)
-			checkedImpRegions = selectedImpRegionIdsStr.split("\\.");
-		*/
+		if (yearFrom == null && yearTo == null &&
+				!nationsOk && !expRegionsOk &&!impRegionsOk)
+			return false;
 		
 		changeSelection();
 		
@@ -1066,9 +1087,42 @@ public class EstimatesSelectionBean
 		
 	}
 	
+	private static String createImpRegionOnlyId(String regionId)
+	{
+		return "R" + regionId; 
+	}
+
+	private static String createImpAreaOnlyId(String areaId)
+	{
+		return "A" + areaId; 
+	}
+
+	private static String createImpAreaRegionId(String areaId, String regionId)
+	{
+		return "A" + areaId + IMP_REGIONS_ID_SEPATATOR + "R" + regionId; 
+	}
+	
+	public int getTotalNationsCount()
+	{
+		SelectItem[] nations = getAllNations(); 
+		return nations == null ? 0 : nations.length;
+	}
+	
+	public int getTotalExpRegionsCount()
+	{
+		SelectItem[] expRegions = getAllExpRegions(); 
+		return expRegions == null ? 0 : expRegions.length;
+	}
+
+	public int getTotalImpRegionsCount()
+	{
+		SelectItem[] impRegions = getAllImpRegions(); 
+		return impRegions == null ? 0 : impRegions.length;
+	}
+
 	public boolean isAllNationsSelected()
 	{
-		return totalNationsCount == selectedNationIds.size();
+		return getTotalNationsCount() == selectedNationIds.size();
 	}
 
 	public boolean isNoNationSelected()
@@ -1078,7 +1132,7 @@ public class EstimatesSelectionBean
 
 	public boolean isAllExpRegionsSelected()
 	{
-		return totalExpRegionsCount == selectedExpRegionIds.size();
+		return getTotalExpRegionsCount() == selectedExpRegionIds.size();
 	}
 
 	public boolean isNoExpRegionSelected()
@@ -1088,7 +1142,7 @@ public class EstimatesSelectionBean
 
 	public boolean isAllImpRegionsSelected()
 	{
-		return totalImpRegionsCount == selectedImpRegionIds.size();
+		return getTotalImpRegionsCount() == selectedImpRegionIds.size();
 	}
 
 	public boolean isNoImpRegionSelected()
