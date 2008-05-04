@@ -98,6 +98,7 @@ public class EstimatesSelectionBean
 	private String selectedNationsAsText;
 	private String selectedExpRegionsAsText;
 	private String selectedImpRegionsAsText;
+	private boolean allImpRegionseSelected = false;
 
 	private String yearFrom = String.valueOf(TIME_SPAN_INITIAL_FROM);
 	private String yearTo = String.valueOf(TIME_SPAN_INITIAL_TO);
@@ -112,7 +113,7 @@ public class EstimatesSelectionBean
 	private String minYear;
 
 	private String maxYear;
-	
+
 	public EstimatesSelectionBean()
 	{
 		initDefaultValues(true);
@@ -479,17 +480,9 @@ public class EstimatesSelectionBean
 	 */
 	private void updateSelectionInfo()
 	{
-
-		Session sess = HibernateUtil.getSession();
-		Transaction transaction = sess.beginTransaction();
-
-		updateSelectedNationsInfo(sess);
-		updateSelectedExpRegionsInfo(sess);
-		updateSelectedImpRegionsInfo(sess);
-
-		transaction.commit();
-		sess.close();
-
+		updateSelectedNationsInfo();
+		updateSelectedExpRegionsInfo();
+		updateSelectedImpRegionsInfo();
 	}
 
 	/**
@@ -497,7 +490,7 @@ public class EstimatesSelectionBean
 	 * 
 	 * @param sess
 	 */
-	private void updateSelectedNationsInfo(Session sess)
+	private void updateSelectedNationsInfo()
 	{
 
 		StringBuffer selectedNationsBuff = new StringBuffer();
@@ -505,13 +498,16 @@ public class EstimatesSelectionBean
 		if (selectedNationIds.size() < getTotalNationsCount())
 		{
 			int i = 0;
-			List selectedNations = loadSelectedNations(sess);
-			for (Iterator iter = selectedNations.iterator(); iter.hasNext();)
+			SelectItem nations[] = getAllNations();
+			for (int j = 0; j < nations.length; j++)
 			{
-				EstimatesNation nation = (EstimatesNation) iter.next();
-				if (i > 0) selectedNationsBuff.append(", ");
-				selectedNationsBuff.append(nation.getName());
-				i++;
+				SelectItem nation = nations[j];
+				if (selectedNationIds.contains(new Long(nation.getValue())))
+				{
+					if (i > 0) selectedNationsBuff.append(", ");
+					selectedNationsBuff.append(nation.getText());
+					i++;
+				}
 			}
 		}
 		else
@@ -528,7 +524,7 @@ public class EstimatesSelectionBean
 	 * 
 	 * @param sess
 	 */
-	private void updateSelectedExpRegionsInfo(Session sess)
+	private void updateSelectedExpRegionsInfo()
 	{
 
 		StringBuffer selectedExpRegionsBuff = new StringBuffer();
@@ -536,13 +532,16 @@ public class EstimatesSelectionBean
 		if (selectedExpRegionIds.size() < getTotalExpRegionsCount())
 		{
 			int i = 0;
-			List selectedExpRegions = loadSelectedExpRegions(sess);
-			for (Iterator iter = selectedExpRegions.iterator(); iter.hasNext();)
+			SelectItem expRegions[] = getAllExpRegions();
+			for (int j = 0; j < expRegions.length; j++)
 			{
-				EstimatesExportRegion region = (EstimatesExportRegion) iter.next();
-				if (i > 0) selectedExpRegionsBuff.append(", ");
-				selectedExpRegionsBuff.append(region.getName());
-				i++;
+				SelectItem region = expRegions[j];
+				if (selectedExpRegionIds.contains(new Long(region.getValue())))
+				{
+					if (i > 0) selectedExpRegionsBuff.append(", ");
+					selectedExpRegionsBuff.append(region.getText());
+					i++;
+				}
 			}
 		}
 		else
@@ -559,122 +558,85 @@ public class EstimatesSelectionBean
 	 * 
 	 * @param sess
 	 */
-	private void updateSelectedImpRegionsInfo(Session sess)
+	private void updateSelectedImpRegionsInfo()
 	{
 
 		StringBuffer selectedImpRegionsBuff = new StringBuffer();
+		SelectItem impRegions[] = getAllImpRegions();
 		
-		if (selectedImpRegionIds.size() < getTotalImpRegionsCount())
+		allImpRegionseSelected = true;
+		
+		for (int i = 0; i < impRegions.length; i++)
 		{
-
-			int i = 0;
-
-			List selectedImpRegions = EstimatesImportRegion.loadAll(sess);
-
-			Iterator iter = selectedImpRegions.iterator();
-			EstimatesImportRegion region = (EstimatesImportRegion) iter.next();
-			int lastAreaId = region.getArea().getId().intValue();
-			String lastAreaName = region.getArea().getName();
-
-			StringBuffer selectedImpRegionsInAreaBuff = new StringBuffer();
-			boolean allSelected;
-			boolean noSelected;
-			int j = 0;
+			SelectItem area = impRegions[i];
 			
-			while (iter.hasNext())
+			if (!area.hasSubItems())
 			{
-				j=0;
-				allSelected = true;
-				noSelected = true;
-
-				lastAreaName = region.getArea().getName();
-				selectedImpRegionsInAreaBuff.setLength(0);
-
-				while (iter.hasNext())
-				{
-					if (selectedImpRegionIds.contains(region.getId()))
-					{
-						if (j > 0) selectedImpRegionsInAreaBuff.append(", ");
-						selectedImpRegionsInAreaBuff.append(region.getName());
-						noSelected = false;
-						j++;
-					}
-					else
-					{
-						allSelected = false;
-					}
-					region = (EstimatesImportRegion) iter.next();
-					
-					int areaId = region.getArea().getId().intValue();
-					if (lastAreaId != areaId)
-					{
-						lastAreaId = areaId;
-						break;
-					}
-
-				}
 				
-				if (allSelected || !noSelected)
+				String ids[] = area.getValue().split(IMP_REGIONS_ID_SEPATATOR);
+				if (selectedImpRegionIds.contains(new Long((ids[1].substring(1)))))
 				{
-
-					if (i > 0) selectedImpRegionsBuff.append("<br>");
+					if (selectedImpRegionsBuff.length() > 0) selectedImpRegionsBuff.append("<br>");
 					selectedImpRegionsBuff.append("<i>");
-					selectedImpRegionsBuff.append(lastAreaName);					
-					selectedImpRegionsBuff.append("</i>: ");
-
-					if (allSelected)
-					{
-						selectedImpRegionsBuff.append("all regions");
-					}
-					else
-					{
-						selectedImpRegionsBuff.append(selectedImpRegionsInAreaBuff);
-					}
-
-					i++;
-
-				}
-			}
-				
-			allSelected = true;
-			noSelected = true;
-			lastAreaName = region.getArea().getName();
-			if (selectedImpRegionIds.contains(region.getId()))
-			{
-				if (j > 0) selectedImpRegionsInAreaBuff.append(", ");
-				selectedImpRegionsInAreaBuff.append(region.getName());
-				noSelected = false;
-				j++;
-			}
-			else
-			{
-				allSelected = false;
-			}
-			
-			if (allSelected || !noSelected)
-			{
-
-				if (i > 0) selectedImpRegionsBuff.append("<br>");
-
-				selectedImpRegionsBuff.append("<i>");
-				selectedImpRegionsBuff.append(lastAreaName);					
-				selectedImpRegionsBuff.append("</i>: ");
-
-				if (allSelected)
-				{
-					selectedImpRegionsBuff.append("all regions");
+					selectedImpRegionsBuff.append(area.getText());					
+					selectedImpRegionsBuff.append("</i>");
 				}
 				else
 				{
-					selectedImpRegionsBuff.append(selectedImpRegionsInAreaBuff);
+					allImpRegionseSelected = false;
 				}
 				
-				i++;
 			}
-
+			else
+			{
+				
+				int selectedCount = 0;
+				SelectItem[] regions = area.getSubItems();
+				for (int k = 0; k < regions.length; k++)
+				{
+					String regionId = regions[k].getValue().substring(1);
+					if (selectedImpRegionIds.contains(new Long(regionId))) selectedCount++;
+				}
+				
+				if (selectedCount < regions.length)
+					allImpRegionseSelected = false;
+				
+				if (0 < selectedCount)
+				{
+					if (selectedImpRegionsBuff.length() > 0) selectedImpRegionsBuff.append("<br>");
+					selectedImpRegionsBuff.append("<i>");
+					selectedImpRegionsBuff.append(area.getText());					
+					selectedImpRegionsBuff.append("</i>");
+					selectedImpRegionsBuff.append(": ");
+				}
+				
+				if (selectedCount == regions.length)
+				{
+					selectedImpRegionsBuff.append("all regions");
+				}
+				
+				else if (0 < selectedCount)
+				{
+					int l = 0;
+					for (int k = 0; k < regions.length; k++)
+					{
+						SelectItem region = regions[k];
+						String regionId = region.getValue().substring(1);
+						if (selectedImpRegionIds.contains(new Long(regionId)))
+						{
+							if (l > 0) selectedImpRegionsBuff.append(", ");
+							selectedImpRegionsBuff.append(region.getText());
+							l++;
+						}
+					}
+				}
+				
+			}
 		}
-		else
+		
+		if (allImpRegionseSelected)
 		{
+			selectedImpRegionsBuff.setLength(0);
 			selectedImpRegionsBuff.append("<i>all</i>");
 		}
 
@@ -1164,7 +1126,7 @@ public class EstimatesSelectionBean
 
 	public boolean isAllImpRegionsSelected()
 	{
-		return getTotalImpRegionsCount() == selectedImpRegionIds.size();
+		return allImpRegionseSelected;
 	}
 
 	public boolean isNoImpRegionSelected()
@@ -1324,8 +1286,9 @@ public class EstimatesSelectionBean
 	public String getTimeFrameExtentHint()
 	{
 		return
-		"Note: The full time frame extent covered by estimates is:" +
-		minYear + " &ndash; " + maxYear;
+			"Note: " +
+			"The full extent of time covered by estimates is " +
+			minYear + " &ndash; " + maxYear;
 	}
 
 }

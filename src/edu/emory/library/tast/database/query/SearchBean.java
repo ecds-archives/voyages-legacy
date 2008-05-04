@@ -564,8 +564,9 @@ public class SearchBean
 	public String getTimeFrameExtentHint()
 	{
 		return
-		"Note: The full extent given by the first and last voyage " +
-		"in the database is: " + minYear + " &ndash; " + maxYear;
+			"Note: " +
+			"The full extent of time from the first to the last voyage is " +
+			minYear + " &ndash; " + maxYear;
 	}
 
 }
