@@ -108,10 +108,14 @@ public class EstimatesSelectionBean
 	
 	private PopupComponent permlinkPopup = null;
 	private String lastPermLink = null;
+
+	private String minYear;
+
+	private String maxYear;
 	
 	public EstimatesSelectionBean()
 	{
-		initDefaultValues();
+		initDefaultValues(true);
 	}
 
 	/**
@@ -123,14 +127,14 @@ public class EstimatesSelectionBean
 	 * 
 	 * @param sess
 	 */
-	private void initDefaultValues()
+	private void initDefaultValues(boolean firstTime)
 	{
 
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		checkAllNationsAndRegions(sess);
-		initDefaultTimeFrame(sess);
+		initDefaultTimeFrame(sess, firstTime);
 
 		transaction.commit();
 		sess.close();
@@ -144,19 +148,27 @@ public class EstimatesSelectionBean
 	 * 
 	 * @param sess
 	 */
-	private void initDefaultTimeFrame(Session sess)
+	private void initDefaultTimeFrame(Session sess, boolean firstTime)
 	{
+		
+		if (firstTime)
+		{
 
-		QueryValue query = new QueryValue("edu.emory.library.tast.dm.Estimate");
+			QueryValue query = new QueryValue("edu.emory.library.tast.dm.Estimate");
+	
+			query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] { Estimate.getAttribute("year") }));
+			query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] { Estimate.getAttribute("year") }));
+	
+			Object[] result = query.executeQuery();
+			Object[] firsrRow = (Object[]) result[0];
+			
+			minYear = firsrRow[0] != null ? firsrRow[0].toString() : "";
+			maxYear = firsrRow[1] != null ? firsrRow[1].toString() : "";
+		
+		}
 
-		query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] { Estimate.getAttribute("year") }));
-		query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] { Estimate.getAttribute("year") }));
-
-		Object[] result = query.executeQuery();
-		Object[] firsrRow = (Object[]) result[0];
-
-		yearFrom = firsrRow[0] != null ? firsrRow[0].toString() : "";
-		yearTo = firsrRow[1] != null ? firsrRow[1].toString() : "";
+		yearFrom = minYear;
+		yearTo = maxYear;
 
 	}
 
@@ -362,6 +374,16 @@ public class EstimatesSelectionBean
 		createConditions();
 		updateSelectionInfo();
 		return null;
+	}
+	
+	public String restoreDefaultTimeFrameExtent()
+	{
+		
+		yearFrom = minYear;
+		yearTo = maxYear;
+		
+		return null;
+		
 	}
 
 	private void createConditions()
@@ -667,7 +689,7 @@ public class EstimatesSelectionBean
 	 */
 	public String resetSelection()
 	{
-		initDefaultValues();
+		initDefaultValues(false);
 		return null;
 	}
 
@@ -1063,7 +1085,7 @@ public class EstimatesSelectionBean
 	public boolean restoreQueryFromUrl(Map params)
 	{
 		
-		initDefaultValues();
+		initDefaultValues(false);
 		
 		yearFrom =
 			StringUtils.getFirstElement(
@@ -1297,6 +1319,13 @@ public class EstimatesSelectionBean
 	public String getPermLink()
 	{
 		return lastPermLink;
+	}
+	
+	public String getTimeFrameExtentHint()
+	{
+		return
+		"Note: The full time frame extent covered by estimates is:" +
+		minYear + " &ndash; " + maxYear;
 	}
 
 }

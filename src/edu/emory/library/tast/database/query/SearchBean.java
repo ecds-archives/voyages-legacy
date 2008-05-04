@@ -15,7 +15,6 @@ import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.MenuItem;
 import edu.emory.library.tast.common.MenuItemSection;
 import edu.emory.library.tast.common.MenuItemSelectedEvent;
-import edu.emory.library.tast.common.MessageBarComponent;
 import edu.emory.library.tast.common.PopupComponent;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
@@ -47,14 +46,15 @@ public class SearchBean
 	public static final String TAB_ID_BASIC_STATS = "basic-statistics";
 	public static final String TAB_ID_MAP = "map-ports";
 	
+	private String minYear;
+	private String maxYear;
+	
 	private UserCategory selectedCategory = UserCategory.General;
 	private String mainSectionId = TAB_ID_LISTING;
 
 	private History history;
 	private Query workingQuery;
 	private SearchParameters searchParameters;
-	
-	private MessageBarComponent messageBar;
 	
 	private String selectedRevision = AppConfig.getConfiguration().getString(AppConfig.DEFAULT_REVISION);
 	
@@ -94,19 +94,36 @@ public class SearchBean
 
 		QueryValue query = new QueryValue("Voyage");
 		
-		query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] {Voyage.getAttribute("yearam")}));
-		query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] {Voyage.getAttribute("yearam")}));
+		query.addPopulatedAttribute(
+				new FunctionAttribute("min",
+						new Attribute[] {Voyage.getAttribute("yearam")}));
+		
+		query.addPopulatedAttribute(
+				new FunctionAttribute("max",
+						new Attribute[] {Voyage.getAttribute("yearam")}));
 		
 		List ret = query.executeQueryList();
 		if (ret != null && ret.size() == 1)
 		{
 			Object[] row = (Object[]) ret.get(0);
-			workingQuery.setYearFrom(row[0] != null ? row[0].toString() : null);
-			workingQuery.setYearTo(row[1] != null ? row[1].toString() : null);
+			minYear = row[0] != null ? row[0].toString() : null;
+			maxYear = row[1] != null ? row[1].toString() : null;
+			workingQuery.setYearFrom(minYear);
+			workingQuery.setYearTo(maxYear);
 		}
 
 	}
 
+	public String restoreDefaultTimeFrameExtent()
+	{
+		
+		workingQuery.setYearFrom(minYear);
+		workingQuery.setYearTo(maxYear);
+		
+		return null;
+
+	}
+	
 	/**
 	 * Bound to UI. Event handler for adding a new condition to the current
 	 * working query.
@@ -137,7 +154,6 @@ public class SearchBean
 	 */
 	public String search()
 	{
-		messageBar.setRendered(false);
 		searchInternal(true);
 		return null;
 	}
@@ -420,15 +436,6 @@ public class SearchBean
 	 * Wrapper for {@link #searchParameters}. 
 	 * @return
 	 */
-	public MessageBarComponent getMessageBar()
-	{
-		return messageBar;
-	}
-
-	public void setMessageBar(MessageBarComponent messageBar)
-	{
-		this.messageBar = messageBar;
-	}
 
 	public String getSelectedCategory()
 	{
@@ -552,6 +559,13 @@ public class SearchBean
 	public String getPermLink()
 	{
 		return lastPermLink;
+	}
+	
+	public String getTimeFrameExtentHint()
+	{
+		return
+		"Note: The full extent given by the first and last voyage " +
+		"in the database is: " + minYear + " &ndash; " + maxYear;
 	}
 
 }

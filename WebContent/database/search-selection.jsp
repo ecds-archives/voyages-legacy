@@ -4,8 +4,6 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 
-<s:messageBar rendered="false" binding="#{SearchBean.messageBar}" />
-
 <s:expandableBox boxId="date" text="#{res.database_search_selecttimeframe}">
 
 	<t:htmlTag value="table" style="border-collapse: collapse;">
@@ -29,6 +27,15 @@
 				onkeypress="QueryBuilderGlobals.updateTotal('form:queryBuilder', 1000)" />
 		</t:htmlTag>
 	</t:htmlTag>
+	</t:htmlTag>
+	
+	<t:htmlTag value="div" style="padding: 5px 0px 0px 0px; font-style: italic;">
+		<h:outputText escape="false" value="#{SearchBean.timeFrameExtentHint}" />
+		<h:outputText escape="false" value=" (" />
+		<h:commandLink action="#{SearchBean.restoreDefaultTimeFrameExtent}">
+			<h:outputText value="restore it" />
+		</h:commandLink>			
+		<h:outputText escape="false" value=")." />
 	</t:htmlTag>
 	
 </s:expandableBox>

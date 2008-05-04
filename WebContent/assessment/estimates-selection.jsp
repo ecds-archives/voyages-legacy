@@ -24,6 +24,15 @@
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
+	
+	<t:htmlTag value="div" style="padding: 5px 0px 0px 0px; font-style: italic;">
+		<h:outputText escape="false" value="#{EstimatesSelectionBean.timeFrameExtentHint}" />
+		<h:outputText escape="false" value=" (" />
+		<h:commandLink action="#{EstimatesSelectionBean.restoreDefaultTimeFrameExtent}">
+			<h:outputText value="restore it" />
+		</h:commandLink>			
+		<h:outputText escape="false" value=")." />
+	</t:htmlTag>
 
 	<t:htmlTag value="div" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #9EDEE0;">
 
