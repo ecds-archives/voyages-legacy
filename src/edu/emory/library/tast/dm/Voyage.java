@@ -58,7 +58,6 @@ public class Voyage extends AbstractDescriptiveObject {
 				NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("iid", "Voyage",
 				NumericAttribute.TYPE_LONG, null));
-		attributes.add(new BooleanAttribute("cd", "Voyage", "cd"));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
 		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
 		attributes.add(new NumericAttribute("yrcons", "Voyage",
@@ -326,7 +325,7 @@ public class Voyage extends AbstractDescriptiveObject {
 				NumericAttribute.TYPE_INTEGER, "sladied6"));
 		attributes.add(new NumericAttribute("insurrec", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "insurrec"));
-		attributes.add(new StringAttribute("evgreen", "Voyage","evgreen"));
+		attributes.add(new BooleanAttribute("evgreen", "Voyage","evgreen"));
 		attributes.add(new NumericAttribute("female5", "Voyage",
 				NumericAttribute.TYPE_INTEGER, "female5"));
 		attributes.add(new NumericAttribute("male5", "Voyage",
@@ -1763,8 +1762,8 @@ public class Voyage extends AbstractDescriptiveObject {
 		return (Integer) this.values.get("insurrec");
 	}
 
-	public String getEvgreen() {
-		return (String) this.values.get("evgreen");
+	public Boolean getEvgreen() {
+		return (Boolean) this.values.get("evgreen");
 	}
 
 	public Integer getFemale5() {
@@ -2075,7 +2074,7 @@ public class Voyage extends AbstractDescriptiveObject {
 		this.values.put("insurrec", val);
 	}
 
-	public void setEvgreen(String val) {
+	public void setEvgreen(Boolean val) {
 		this.values.put("evgreen", val);
 	}
 

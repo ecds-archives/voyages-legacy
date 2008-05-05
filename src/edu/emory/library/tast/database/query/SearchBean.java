@@ -224,8 +224,9 @@ public class SearchBean
 		Conditions dbConds = new Conditions();
 		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), Conditions.OP_EQUALS);
 		workingQuery.addToDbConditions(false, dbConds);
-
+		
 		QueryValue query = new QueryValue("Voyage", dbConds);
+		System.out.println(dbConds.toString());
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = query.executeQuery();
 		numberOfResults = ((Number)ret[0]).intValue();

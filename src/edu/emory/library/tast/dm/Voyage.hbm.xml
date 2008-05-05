@@ -198,7 +198,7 @@
 		<property name="sladied5" />
 		<property name="sladied6" />
 		<property name="insurrec" />
-		<property name="evgreen" column="evgreen"/>
+		<property name="evgreen" />
 		<property name="female5" />
 		<property name="male5" />
 		<property name="child5" />
