@@ -225,12 +225,13 @@ public class Conditions {
 		this.subConditions.add(subCond);
 	}
 
-	/**
-	 * Gets HQL for conditions.
-	 * 
-	 * @return ConditionResponse object.
-	 */
 	public ConditionResponse getConditionHQL(Map bindings)
+	{
+		Map usedParamNames = new HashMap();
+		return getConditionHQL(bindings, usedParamNames);
+	}
+
+	public ConditionResponse getConditionHQL(Map bindings, Map usedParamNames)
 	{
 
 		// Check the number of items.
@@ -266,35 +267,46 @@ public class Conditions {
 		Iterator iter = this.conditions.iterator();
 		while (iter.hasNext()) {
 			Condition c = (Condition) iter.next();
-			if (c.value == null) {
+			if (c.value == null)
+			{
 				// Handle null request
 				String attr = c.attribute.getHQLWherePath(bindings);
 				processed++;
 				ret.append(attr);
 				ret.append(c.op);
 				ret.append("null");
-			} else if (c.op.equals(" in ")) {
+			}
+			else if (c.op.equals(" in "))
+			{
 				// Handle in request
+				
 				Attribute attr = c.attribute;
-				String val = (attr.getHQLParamName() + attr.hashCode() + c.value
-						.hashCode()).replace('-', '_');
-				if (c.value instanceof Object[]) {
+				
+				String paramName = attr.getHQLParamName();
+				Integer nextSuffix = (Integer) usedParamNames.get(paramName);
+				if (nextSuffix == null) nextSuffix = new Integer(0);
+				nextSuffix = new Integer(nextSuffix.intValue() + 1);
+				usedParamNames.put(paramName, nextSuffix);
+				paramName += "_" + nextSuffix; 
+
+				if (c.value instanceof Object[])
+				{
 					Object[] values = (Object[]) c.value;
 					processed++;
 					ret.append(attr.getHQLWherePath(bindings));
 					ret.append(c.op);
 					ret.append("(");
-					for (int i = 0; i < values.length; i++) {
+					for (int i = 0; i < values.length; i++)
+					{
 						ret.append(" :");
-						ret.append(val + "_" + i);
-						retMap.put(val + "_" + i, attr
-								.getValueToCondition(values[i]));
-						if (i < values.length - 1) {
-							ret.append(", ");
-						}
+						ret.append(paramName + "_" + i);
+						retMap.put(paramName + "_" + i, attr.getValueToCondition(values[i]));
+						if (i < values.length - 1) ret.append(", ");
 					}
 					ret.append(") ");
-				} else {
+				}
+				else
+				{
 					Attribute attribute1 = (Attribute) c.attribute;
 					Attribute attribute2 = (Attribute) c.value;
 					processed++;
@@ -302,27 +314,39 @@ public class Conditions {
 					ret.append(c.op);
 					ret.append(attribute2.getHQLWherePath(bindings));
 				}
-			} else if (!(c.value instanceof DirectValue)) {
+			}
+			else if (!(c.value instanceof DirectValue))
+			{
 				// Handle anything except direct value - avoid using :param
 				// notation.
 				Attribute attr = c.attribute;
-				String val = (attr.getHQLParamName() + attr.hashCode() + c.value
-						.hashCode()).replace('-', '_');
+				
+				String paramName = attr.getHQLParamName();
+				Integer nextSuffix = (Integer) usedParamNames.get(paramName);
+				if (nextSuffix == null) nextSuffix = new Integer(0);
+				nextSuffix = new Integer(nextSuffix.intValue() + 1);
+				usedParamNames.put(paramName, nextSuffix);
+				paramName += "_" + nextSuffix; 
+				
 				Object value = c.value;
 				processed++;
 				ret.append(attr.getHQLWherePath(bindings));
 				ret.append(c.op);
 				ret.append(" :");
-				ret.append(val);
-				retMap.put(val, attr.getValueToCondition(value));
-			} else {
+				ret.append(paramName);
+				retMap.put(paramName, attr.getValueToCondition(value));
+
+			}
+			else
+			{
 				// Handle direct value - avoid using :param notation.
 				processed++;
 				ret.append(c.attribute.getHQLWherePath(bindings));
 				ret.append(c.op);
 				ret.append(((DirectValue) c.value).toString(bindings));
 			}
-			if (processed < size) {
+			if (processed < size)
+			{
 				ret.append(this.joinCondition == AND ? " and " : " or ");
 			}
 		}
@@ -331,11 +355,11 @@ public class Conditions {
 		iter = this.subConditions.iterator();
 		while (iter.hasNext()) {
 			processed++;
-			ConditionResponse child = ((Conditions) iter.next())
-					.getConditionHQL(bindings);
+			ConditionResponse child = ((Conditions) iter.next()).getConditionHQL(bindings);
 			ret.append("(").append(child.conditionString).append(")");
 			retMap.putAll(child.properties);
-			if (processed < size) {
+			if (processed < size)
+			{
 				ret.append(this.joinCondition == AND ? " and " : " or ");
 			}
 		}
