@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common.table;
+package edu.emory.library.tast.common.listing;
 
 import java.util.ArrayList;
 import java.util.Arrays;

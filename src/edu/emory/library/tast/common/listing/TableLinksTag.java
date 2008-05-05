@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common.table;
+package edu.emory.library.tast.common.listing;
 
 import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;

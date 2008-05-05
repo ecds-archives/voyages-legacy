@@ -13,10 +13,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.AppConfig;
-import edu.emory.library.tast.common.table.ShowDetailsEvent;
-import edu.emory.library.tast.common.table.SortChangeEvent;
-import edu.emory.library.tast.common.table.TableData;
-import edu.emory.library.tast.common.table.links.TableLinkManager;
+import edu.emory.library.tast.common.listing.ShowDetailsEvent;
+import edu.emory.library.tast.common.listing.SortChangeEvent;
+import edu.emory.library.tast.common.listing.TableData;
+import edu.emory.library.tast.common.listing.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.database.graphs.ComparableSelectItem;

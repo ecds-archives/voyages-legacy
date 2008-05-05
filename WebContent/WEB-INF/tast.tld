@@ -18,7 +18,7 @@
 	<tag>
 		<name>table</name>
 		<tag-class>
-			edu.emory.library.tast.common.table.TableResultTag
+			edu.emory.library.tast.common.listing.TableResultTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -181,7 +181,7 @@
 	<tag>
 		<name>voyageDetail</name>
 		<tag-class>
-			edu.emory.library.tast.common.table.DetailTag
+			edu.emory.library.tast.common.listing.DetailTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -444,7 +444,7 @@
 	<tag>
 		<name>tablelinks</name>
 		<tag-class>
-			edu.emory.library.tast.common.table.TableLinksTag
+			edu.emory.library.tast.common.listing.TableLinksTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

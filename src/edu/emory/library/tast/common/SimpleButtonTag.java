@@ -8,7 +8,7 @@ import javax.faces.webapp.UIComponentTag;
 
 import org.apache.myfaces.el.MethodBindingImpl;
 
-import edu.emory.library.tast.common.table.ClickEvent;
+import edu.emory.library.tast.common.listing.ClickEvent;
 
 
 public class SimpleButtonTag extends UIComponentTag {

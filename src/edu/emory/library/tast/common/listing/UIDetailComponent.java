@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common.table;
+package edu.emory.library.tast.common.listing;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tast.common.table.TableData.ColumnData;
+import edu.emory.library.tast.common.listing.TableData.ColumnData;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.attributes.Group;
 

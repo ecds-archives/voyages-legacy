@@ -5,9 +5,9 @@ import java.text.MessageFormat;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.common.table.SortChangeEvent;
-import edu.emory.library.tast.common.table.TableData;
-import edu.emory.library.tast.common.table.links.TableLinkManager;
+import edu.emory.library.tast.common.listing.SortChangeEvent;
+import edu.emory.library.tast.common.listing.TableData;
+import edu.emory.library.tast.common.listing.links.TableLinkManager;
 import edu.emory.library.tast.database.listing.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;

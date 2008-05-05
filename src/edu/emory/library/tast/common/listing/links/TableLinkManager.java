@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common.table.links;
+package edu.emory.library.tast.common.listing.links;
 
 import java.util.ArrayList;
 
