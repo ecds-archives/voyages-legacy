@@ -5,7 +5,7 @@
 
 <t:htmlTag value="h1" style="margin: 0px 0px 10px 0px;"><h:outputText value="#{res.slaves_listing_title}" /></t:htmlTag>
 
-<s:tabletab id="listingEstimates" 
+<s:table id="listingEstimates" 
 	data="#{SlavesBean.tableData}"
 	sortChanged="#{SlavesBean.sortChanged}" 
 	onclick="#{SlavesBean.showDetails}"/>

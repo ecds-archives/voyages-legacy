@@ -42,7 +42,7 @@
 		</t:htmlTag>
 		
 		<t:htmlTag value="div" styleClass="map-legend-section">
-			<t:selectOneMenu forceId="true" id="map_places" />
+			<t:htmlTag value="select" forceId="true" id="map_places" />
 		</t:htmlTag>
 			 
 	</t:htmlTag>

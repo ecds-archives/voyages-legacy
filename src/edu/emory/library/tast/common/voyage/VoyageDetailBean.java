@@ -524,8 +524,6 @@ public class VoyageDetailBean
 					sellPlace1.setPurpose(
 							"First (and major) place of slave landing");
 				
-				sellPlace1.setPurpose("First place of slave landing");
-				
 				if (voyage.getDateland1() != null)
 					sellPlace1.addInfoLine(
 							"Date of landing",
