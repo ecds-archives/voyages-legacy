@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.emory.library.tast.common.tableview.GrouperSimpleDictionary;
-import edu.emory.library.tast.common.tableview.Label;
+import edu.emory.library.tast.common.table.GrouperSimpleDictionary;
+import edu.emory.library.tast.common.table.Label;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;

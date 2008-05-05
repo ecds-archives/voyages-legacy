@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import edu.emory.library.tast.common.tableview.Grouper;
-import edu.emory.library.tast.common.tableview.Label;
+import edu.emory.library.tast.common.table.Grouper;
+import edu.emory.library.tast.common.table.Label;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;

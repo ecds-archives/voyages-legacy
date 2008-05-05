@@ -10,8 +10,8 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
-import edu.emory.library.tast.common.tableview.Grouper;
-import edu.emory.library.tast.common.tableview.Label;
+import edu.emory.library.tast.common.table.Grouper;
+import edu.emory.library.tast.common.table.Label;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Nation;

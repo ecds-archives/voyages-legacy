@@ -1,4 +1,4 @@
-package edu.emory.library.tast.common.tableview;
+package edu.emory.library.tast.common.table;
 
 import java.util.HashMap;
 import java.util.HashSet;

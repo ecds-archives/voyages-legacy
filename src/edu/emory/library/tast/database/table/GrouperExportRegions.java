@@ -2,7 +2,7 @@ package edu.emory.library.tast.database.table;
 
 import java.util.List;
 
-import edu.emory.library.tast.common.tableview.GrouperSimpleDictionary;
+import edu.emory.library.tast.common.table.GrouperSimpleDictionary;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
