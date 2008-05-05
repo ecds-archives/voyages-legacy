@@ -610,10 +610,6 @@ public class Voyage extends AbstractDescriptiveObject {
 		this.values.put("voyageid", voyageId);
 	}
 
-	public void setCd(Boolean cd) {
-		this.values.put("cd", cd);
-	}
-
 	public void setSlas32(Integer slas32) {
 		this.values.put("slas32", slas32);
 	}
@@ -1120,10 +1116,6 @@ public class Voyage extends AbstractDescriptiveObject {
 
 	public Integer getVoyageid() {
 		return (Integer) this.values.get("voyageid");
-	}
-
-	public Boolean getCd() {
-		return (Boolean) this.values.get("cd");
 	}
 
 	public String getShipname() {

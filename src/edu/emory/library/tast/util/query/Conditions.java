@@ -353,9 +353,10 @@ public class Conditions {
 
 		// Handle subconditions
 		iter = this.subConditions.iterator();
-		while (iter.hasNext()) {
+		while (iter.hasNext())
+		{
 			processed++;
-			ConditionResponse child = ((Conditions) iter.next()).getConditionHQL(bindings);
+			ConditionResponse child = ((Conditions) iter.next()).getConditionHQL(bindings, usedParamNames);
 			ret.append("(").append(child.conditionString).append(")");
 			retMap.putAll(child.properties);
 			if (processed < size)

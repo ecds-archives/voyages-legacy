@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.stat.charts;
+package edu.emory.library.tast.database.graphs.charts;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.RectangleInsets;

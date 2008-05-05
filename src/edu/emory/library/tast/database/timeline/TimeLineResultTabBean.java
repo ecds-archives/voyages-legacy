@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.stat;
+package edu.emory.library.tast.database.timeline;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

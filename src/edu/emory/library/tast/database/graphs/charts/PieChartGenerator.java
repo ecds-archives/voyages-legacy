@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.stat.charts;
+package edu.emory.library.tast.database.graphs.charts;
 
 import java.awt.Color;
 

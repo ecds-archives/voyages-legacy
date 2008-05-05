@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.stat;
+package edu.emory.library.tast.database.graphs;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.table.ClickEvent;
+import edu.emory.library.tast.database.graphs.charts.AbstractChartGenerator;
 import edu.emory.library.tast.database.query.SearchBean;
-import edu.emory.library.tast.database.stat.charts.AbstractChartGenerator;
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
@@ -351,7 +351,7 @@ public class AdvancedStatisticsTabBean {
 		// Get AbstractChartGenerator subclass name
 		int sel = Integer.parseInt(this.selectedChart);
 		AbstractChartGenerator generator = null;
-		String className = "edu.emory.library.tast.database.stat.charts." + chartGenerators[sel];
+		String className = "edu.emory.library.tast.database.graphs.charts." + chartGenerators[sel];
 		Attribute attr = this.xaxis.getQueryAttribute();
 		try {
 			// Invoke new AbstractChartGenerator(Attribute xAxis)

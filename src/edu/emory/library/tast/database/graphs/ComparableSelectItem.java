@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.stat;
+package edu.emory.library.tast.database.graphs;
 
 import javax.faces.model.SelectItem;
 

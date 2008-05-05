@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.stat.charts;
+package edu.emory.library.tast.database.graphs.charts;
 
 import java.awt.Color;
 import java.util.Calendar;
@@ -12,50 +12,84 @@ import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.Dataset;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 
 /**
- * Generator for bar charts.
- * @author Pawel Jurczyk
- *
+ * Generator for XY charts.
  */
-public class BarChartGenerator extends AbstractChartGenerator {
+public class XYChartGenerator extends AbstractChartGenerator {
 
 	/**
-	 * Dataset of chart.
+	 * Dataset.
 	 */
-	private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-	
+	private Dataset dataset;
+
 	/**
-	 * Constructor.
+	 * @inheritDoc
 	 */
-	public BarChartGenerator(Attribute xAxis) {
+	public XYChartGenerator(Attribute xAxis) {
 		super(xAxis);
+		dataset = new DefaultCategoryDataset();
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public JFreeChart getChart(String title, boolean showLegend) {
-		
-		//Create chart
-		JFreeChart chart = ChartFactory.createBarChart(title,
-				getXAxis(), TastResource.getText("components_charts_barvalue"), dataset, PlotOrientation.VERTICAL,
-			 showLegend, true, false);
-				
-		//Update chart
+		if (this.getXAxisAttribute() instanceof DateAttribute) {
+			return prepareChart(this.prepareDateChart(title, showLegend));
+		} else {
+			return prepareChart(this.prepareXYChart(title, showLegend));
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public JFreeChart getChart() {
+		return getChart(null, true);
+	}
+
+	/**
+	 * Prepares XY chart with other than Date data
+	 * @param title title of chart
+	 * @param showLegend true if legend is desired
+	 * @return
+	 */
+	private JFreeChart prepareXYChart(String title, boolean showLegend) {
+		JFreeChart chart = ChartFactory.createLineChart(title, getXAxis(), TastResource.getText("components_charts_xyvalue"), (DefaultCategoryDataset) dataset,
+				PlotOrientation.VERTICAL, showLegend, true, false);
+
 		CategoryPlot xyplot = (CategoryPlot) chart.getPlot();
 		CategoryAxis axis = xyplot.getDomainAxis();
+		
 		SkippableCategoryAxis newAxis = new SkippableCategoryAxis(axis);
-		newAxis.setMaximumCategoryLabelLines(5);
-		newAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
+		newAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
 		xyplot.setDomainAxis(newAxis);
 		chart.setBackgroundPaint(Color.white);
+		return chart;
+	}
+
+	/**
+	 * Prepares chart with Date data
+	 */
+	private JFreeChart prepareDateChart(String title, boolean showLegend) {
+
+		JFreeChart chart = ChartFactory.createLineChart(title, getXAxis(), "Value", (DefaultCategoryDataset) dataset,
+				PlotOrientation.VERTICAL, showLegend, true, false);
+
+		CategoryPlot xyplot = (CategoryPlot) chart.getPlot();
+		CategoryAxis axis = xyplot.getDomainAxis();
 		
-		return prepareChart(chart);
+		SkippableCategoryAxis newAxis = new SkippableCategoryAxis(axis);
+		newAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
+		xyplot.setDomainAxis(newAxis);
+		chart.setBackgroundPaint(Color.white);
+		return chart;
 	}
 
 	/**
@@ -63,10 +97,8 @@ public class BarChartGenerator extends AbstractChartGenerator {
 	 */
 	public void addRowToDataSet(Object[] data, Object[] series) {
 		if (this.getXAxisAttribute() instanceof DateAttribute) {
-			//Date data
 			addDateRowToDataSet(data, series);
 		} else {
-			//Other type data
 			addSimpleDataRowToDataSet(data, series);
 		}
 
@@ -89,7 +121,7 @@ public class BarChartGenerator extends AbstractChartGenerator {
 
 	/**
 	 * Adds date data to chart.
-	 * @param data rows of data
+	 * @param data Rows of data
 	 * @param series series of chart
 	 */
 	private void addDateRowToDataSet(Object[] data, Object[] series) {
@@ -104,6 +136,5 @@ public class BarChartGenerator extends AbstractChartGenerator {
 			}
 		}
 	}
-
 
 }

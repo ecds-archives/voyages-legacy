@@ -12,7 +12,6 @@
 		</id>
 
 		<property name="voyageid" column="voyageid"/>
-		<property name="cd" column="cd" />
 		<property name="suggestion" />
 		<property name="revision"  />
 		
