@@ -14,12 +14,12 @@
 		</t:htmlTag>
 	*/%>
 		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
-			<h:selectOneMenu value="#{TimeLineResultTabBean.chosenAttribute}" id="tLAttributes">
-				<f:selectItems value="#{TimeLineResultTabBean.voyageNumericAttributes}" />
+			<h:selectOneMenu value="#{TimelineBean.chosenAttribute}" id="tLAttributes">
+				<f:selectItems value="#{TimelineBean.voyageNumericAttributes}" />
 			</h:selectOneMenu>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
-			<h:commandButton id="showStat" value="#{res.database_search_show}" action="#{TimeLineResultTabBean.showTimeLine}" />
+			<h:commandButton id="showStat" value="#{res.database_search_show}" action="#{TimelineBean.showTimeLine}" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
@@ -31,13 +31,13 @@
 	zoomLevel="0"
 	offset="1600"
 	selectorOffset="1500"
-	viewportHeight="#{TimeLineResultTabBean.viewportHeight}"
-	graphs="#{TimeLineResultTabBean.graphs}"
-	events="#{TimeLineResultTabBean.events}" 
-	zoomLevels="#{TimeLineResultTabBean.zoomLevels}"
-	verticalLabels="#{TimeLineResultTabBean.verticalLabels}" />
+	viewportHeight="#{TimelineBean.viewportHeight}"
+	graphs="#{TimelineBean.graphs}"
+	events="#{TimelineBean.events}" 
+	zoomLevels="#{TimelineBean.zoomLevels}"
+	verticalLabels="#{TimelineBean.verticalLabels}" />
 	
 <t:htmlTag value="div" style="margin-top: 5px;">
-	<t:commandButton value="Download timeline data" action="#{TimeLineResultTabBean.getFileAllData}"
+	<t:commandButton value="Download timeline data" action="#{TimelineBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>

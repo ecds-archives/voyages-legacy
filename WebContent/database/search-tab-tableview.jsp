@@ -12,7 +12,7 @@
 			<h:outputText value="#{res.estimates_table_rows}"/>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:selectOneMenu value="#{DatabaseTableBean.rowGrouping}">
+			<h:selectOneMenu value="#{TableBean.rowGrouping}">
 				<f:selectItem itemLabel="Flag*" itemValue="flagStar"/>
 				<f:selectItem itemLabel="#{res.estimates_table_departureBroad}" itemValue="departureBroad" />
 				<f:selectItem itemLabel="#{res.estimates_table_departureRegion}" itemValue="departureRegion" />
@@ -36,7 +36,7 @@
 			<h:outputText value="#{res.estimates_table_columns}"/>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:selectOneMenu value="#{DatabaseTableBean.colGrouping}">
+			<h:selectOneMenu value="#{TableBean.colGrouping}">
 				<f:selectItem itemLabel="Flag*" itemValue="flagStar"/>
 				<f:selectItem itemLabel="#{res.estimates_table_departureBroad}" itemValue="departureBroad" />
 				<f:selectItem itemLabel="#{res.estimates_table_departureRegion}" itemValue="departureRegion" />
@@ -54,12 +54,12 @@
 			<h:outputText value="#{res.estimates_table_cell}"/>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 0px 10px 0px 0px;">
-			<h:selectOneMenu value="#{DatabaseTableBean.showMode}">
-				<f:selectItems value="#{DatabaseTableBean.availableAttributes}" />
+			<h:selectOneMenu value="#{TableBean.showMode}">
+				<f:selectItems value="#{TableBean.availableAttributes}" />
 			</h:selectOneMenu>
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding: 5px 0px 5px 0px;">
-			<h:selectBooleanCheckbox value="#{DatabaseTableBean.omitEmptyRowsAndColumns}" />
+			<h:selectBooleanCheckbox value="#{TableBean.omitEmptyRowsAndColumns}" />
 		</t:htmlTag>
 		<t:htmlTag value="td" style="padding-right: 10px;">
 			<h:outputText value="#{res.estimates_table_omitempty}"/>
@@ -69,17 +69,17 @@
 		<t:htmlTag value="td">
 		</t:htmlTag>
 		<t:htmlTag value="td">
-			<h:commandButton action="#{DatabaseTableBean.refreshTable}" value="#{res.estimates_table_show}" />
+			<h:commandButton action="#{TableBean.refreshTable}" value="#{res.estimates_table_show}" />
 		</t:htmlTag>
 	</t:htmlTag>
 	</t:htmlTag>
 </t:div>
 
 <t:htmlTag value="div" styleClass="estimates-table">
-	<s:simpleTable rows="#{DatabaseTableBean.table}" />
+	<s:simpleTable rows="#{TableBean.table}" />
 </t:htmlTag>
 
 <t:htmlTag value="div" style="margin-top: 5px;">
-	<t:commandButton value="Download table data" action="#{DatabaseTableBean.getFileAllData}"
+	<t:commandButton value="Download table data" action="#{TableBean.getFileAllData}"
 		styleClass="button-save"/>
 </t:htmlTag>

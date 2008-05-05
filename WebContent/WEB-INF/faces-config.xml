@@ -253,8 +253,8 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>TableResultTabBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.listing.TableResultTabBean</managed-bean-class>
+		<managed-bean-name>ListingBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.listing.ListingBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -267,8 +267,8 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>TimeLineResultTabBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.timeline.TimeLineResultTabBean</managed-bean-class>
+		<managed-bean-name>TimelineBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.timeline.TimelineBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -285,6 +285,26 @@
 			<value>#{SearchBean}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>StatisticBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.statistic.StatisticBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>TableBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.table.TableBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
+	</managed-bean>	
 	
 	<managed-bean>
 		<managed-bean-name>TestMapBean</managed-bean-name>
@@ -313,26 +333,6 @@
 			<value>#{VoyageDetailBean}</value>
 		</managed-property>
 	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>StatisticBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.statistic.StatisticBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>searchBean</property-name>
-			<value>#{SearchBean}</value>
-		</managed-property>
-	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>DatabaseTableBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.table.DatabaseTableviewBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>searchBean</property-name>
-			<value>#{SearchBean}</value>
-		</managed-property>
-	</managed-bean>	
 	
 	<managed-bean>
 		<managed-bean-name>EstimatesSelectionBean</managed-bean-name>
