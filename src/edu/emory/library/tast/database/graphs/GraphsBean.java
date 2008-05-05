@@ -268,13 +268,29 @@ public class GraphsBean {
 	 * Current default chart shows number of embarked/disembarked slaves per year.
 	 *
 	 */
-	public GraphsBean() {
+	public GraphsBean()
+	{
+		resetToDefault();
+	}
+	
+	public void resetToDefault()
+	{
+		
+		chartHeight = DEFAULT_CHART_HEIGHT;
+		chartWidth = DEFAULT_CHART_WIDTH;
+		
+		selectedChart = "1";
+		aggregate = new Boolean(true);
+		selectedAggregate = null;
+		
+		this.series = new ArrayList();
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slaximp"), "sum"));
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slamimp"), "sum"));
 		this.xaxis = VisibleAttribute.getAttribute("yearam");
+		
 		this.statReady = new Boolean(true);
 	}
-	
+
 	/**
 	 * Gets list of attributes of Voyage.
 	 * 

@@ -25,7 +25,7 @@ import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
-public class DatabaseTableviewBean
+public class TableBean
 {
 	
 	private static final String CSS_CLASS_TD_LABEL = "tbl-label";
@@ -35,12 +35,12 @@ public class DatabaseTableviewBean
 
 	private Conditions conditions;
 
-	private boolean optionsChanged = true;
+	private boolean optionsChanged;
 
-	private String rowGrouping = "years25";;
-	private String colGrouping = "impRegion";
+	private String rowGrouping;
+	private String colGrouping;
 
-	private boolean omitEmptyRowsAndColumns = true;
+	private boolean omitEmptyRowsAndColumns;
 
 	private SimpleTableCell[][] table;
 
@@ -219,6 +219,25 @@ public class DatabaseTableviewBean
 				"0"),
 				
 	};
+	
+	public TableBean()
+	{
+		
+		resetToDefault();
+
+	}
+	
+	public void resetToDefault()
+	{
+		
+		optionsChanged = true;
+
+		rowGrouping = "years25";;
+		colGrouping = "impRegion";
+		
+		omitEmptyRowsAndColumns = true;
+		
+	}
 
 	/**
 	 * An internal method calle by {@link #refreshTable()}.
@@ -795,6 +814,5 @@ public class DatabaseTableviewBean
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
 	}
-
 
 }

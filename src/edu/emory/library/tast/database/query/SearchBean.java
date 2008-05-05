@@ -16,13 +16,19 @@ import edu.emory.library.tast.common.MenuItem;
 import edu.emory.library.tast.common.MenuItemSection;
 import edu.emory.library.tast.common.MenuItemSelectedEvent;
 import edu.emory.library.tast.common.PopupComponent;
+import edu.emory.library.tast.database.graphs.GraphsBean;
+import edu.emory.library.tast.database.listing.ListingBean;
+import edu.emory.library.tast.database.map.MapBean;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
+import edu.emory.library.tast.database.table.TableBean;
+import edu.emory.library.tast.database.timeline.TimelineBean;
 import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
@@ -142,10 +148,26 @@ public class SearchBean
 	 */
 	public String startAgain()
 	{
+		
+		ListingBean listingBean = (ListingBean) JsfUtils.getSessionBean("ListingBean");
+		MapBean mapBean  = (MapBean) JsfUtils.getSessionBean("MapBean");
+		TimelineBean timelineBean = (TimelineBean) JsfUtils.getSessionBean("TimelineBean");
+		TableBean tableBean = (TableBean) JsfUtils.getSessionBean("TableBean");
+		GraphsBean graphsBean = (GraphsBean) JsfUtils.getSessionBean("GraphsBean");
+
+		listingBean.resetToDefault();
+		mapBean.resetToDefault();
+		timelineBean.resetToDefault();
+		tableBean.resetToDefault();
+		graphsBean.resetToDefault();
+
+		mainSectionId = TAB_ID_LISTING;
+		
 		initNewQuery();
 		searchInternal(false);
-		mainSectionId = TAB_ID_LISTING;
+		
 		return null;
+		
 	}
 	
 	/**

@@ -13,7 +13,8 @@ import edu.emory.library.tast.util.StringUtils;
 public class StandardMaps
 {
 	
-	public static class MapIdent {
+	public static class MapIdent
+	{
 		public String mapPath;
 		public String mapLabel;
 		public int yearFrom;
@@ -21,7 +22,8 @@ public class StandardMaps
 		public ZoomLevel levels[];
 		public String[] zoomLabels;
 		
-		private MapIdent(String path, String label, int yearFrom, int yearTo, ZoomLevel[] levels, String[] zoomLabels) {
+		private MapIdent(String path, String label, int yearFrom, int yearTo, ZoomLevel[] levels, String[] zoomLabels)
+		{
 			this.mapLabel = label;
 			this.mapPath = path;
 			this.yearFrom = yearFrom;
@@ -31,12 +33,13 @@ public class StandardMaps
 		}
 	}
 	
-	public static class ChosenMap {
+	public static class ChosenMap
+	{
 		public MapIdent ident;
 		int mapIdentId;
 		public int mapId;
-		
-		public String encodeMapId() {
+		public String encodeMapId()
+		{
 			return "map-" + mapIdentId + "_" + mapId;
 		}
 	}
@@ -62,7 +65,6 @@ public class StandardMaps
 	//private static ZoomLevel level1850_3_1 = new ZoomLevel(160, 120, -110.83, -61.83, 64, 64, 1.0/60.0,	contextPath + "/tiles/1850/regions/1");
 	private static ZoomLevel level1850_1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/1850/ports/1");;
 	
-	
 	private static ZoomLevel levelGeoE3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/geo/regions/3"); 
 	private static ZoomLevel levelGeoE1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/geo/ports/1");
 	private static ZoomLevel level1650E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1650/regions/3"); 
@@ -71,8 +73,6 @@ public class StandardMaps
 	private static ZoomLevel level1750E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1750/ports/1");;
 	private static ZoomLevel level1850E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1850/regions/3"); 
 	private static ZoomLevel level1850E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1850/ports/1");;
-	
-	
 	
 	private static final MapIdent[] mapsEstimates = new MapIdent[] {
 		new MapIdent("geophysical", "Geophysical maps", 1501, 1867, new ZoomLevel[] {levelGeo20,levelGeo6, levelGeoE3, levelGeoE1}, new String[] {"Geophysical map, broad regions", "Geophysical map, regions"}),
@@ -99,7 +99,6 @@ public class StandardMaps
 	public static ZoomLevel getMiniMapZoomLevel(Object key)
 	{
 		return levelMini;
-
 	}
 	
 	public static SelectItem[] getMapTypes(Object key) {

@@ -48,7 +48,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  * This bean has a reference to search bean which provides current conditions
  * that should be satisfied by results visible in the table.
  */
-public class TableResultTabBean {
+public class ListingBean {
 
 	private static final String ATTRIBUTE = "Attribute_";
 
@@ -135,7 +135,17 @@ public class TableResultTabBean {
 	 * Constructor.
 	 * It fills in default visible attributes in table and sets default sort column.
 	 */
-	public TableResultTabBean() {
+	public ListingBean()
+	{
+		resetToDefault();
+	}
+	
+	public void resetToDefault()
+	{
+		
+		configurationMode = new Boolean(false);
+		resultsMode = new Boolean(true);
+		attachSearchedParams = new Boolean(true);
 
 		// Setup default columns
 		VisibleAttributeInterface[] attrs = new VisibleAttributeInterface[6];
@@ -146,12 +156,14 @@ public class TableResultTabBean {
 		attrs[4] = VisibleAttribute.getAttributeForTable("majbyimp");
 		attrs[5] = VisibleAttribute.getAttributeForTable("mjselimp");
 
-		if (attrs[2] == null) {
+		if (attrs[2] == null)
+		{
 			attrs[2] = VisibleAttribute.getAttributeForTable("captaina");
 		}
 
 		data.setVisibleColumns(attrs);
 		this.visibleColumns = Arrays.asList(attrs);
+		
 	}
 
 	/**
@@ -159,7 +171,8 @@ public class TableResultTabBean {
 	 * Otherwise, it does nothing.
 	 * 
 	 */
-	private void getResultsDB() {
+	private void getResultsDB()
+	{
 		needQuery = this.linkManager.wasModified();
 		SearchParameters searchParams = this.searchBean.getSearchParameters(); 
 		if (!searchParams.getConditions().equals(this.conditions)) {
@@ -876,7 +889,7 @@ public class TableResultTabBean {
 			
 			this.actionsToPerform.add(new MemorizedAction (new Object[] {new Boolean(!attachSearchedParams.booleanValue())}) {
 				public void performAction() {
-					TableResultTabBean.this.attachSearchedParams = (Boolean)this.params[0];
+					ListingBean.this.attachSearchedParams = (Boolean)this.params[0];
 					setVisibleColumns();
 				}
 			});

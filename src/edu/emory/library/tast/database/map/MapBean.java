@@ -34,13 +34,12 @@ import edu.emory.library.tast.util.query.Conditions;
  * 
  * 
  */
-public class MapBean {
+public class MapBean
+{
 
-	public static int PORT_DEPARTURE = 2;
-
-	public static int PORT_ARRIVAL = 3;
-
-	public static int PORT_BOTH = 5;
+	public static final int PORT_DEPARTURE = 2;
+	public static final int PORT_ARRIVAL = 3;
+	public static final int PORT_BOTH = 5;
 
 	/**
 	 * Reference to Search bean.
@@ -68,6 +67,18 @@ public class MapBean {
 	private int zoomLevelId;
 
 	private boolean zoomLevelLocked = false;
+	
+	public void resetToDefault()
+	{
+		mapData = new MapData();
+		pointsOfInterest = new ArrayList();
+		type = -1;
+		zoomLevelLocked = false;
+		zoomLevelId = 0;
+		conditions = null;
+		attributeId = 0;
+		setChosenMap("map-0_0");
+	}
 
 	/**
 	 * Sets current map data - points on the map.
@@ -75,20 +86,21 @@ public class MapBean {
 	 * 1. zoom level which has been chosen
 	 * 2. selected ports (embarkation/disembarkation) 
 	 */
-	private void setMapData() {
+	private void setMapData()
+	{
 		
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();		
 
-		if (!this.searchBean.getSearchParameters().getConditions().equals(
-				this.conditions)) {
-
+		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions))
+		{
 			SearchParameters params = this.searchBean.getSearchParameters();
 			this.conditions = (Conditions) params.getConditions().clone();
 			neededQuery = true;
 		}
 
-		if (this.neededQuery) {
+		if (this.neededQuery)
+		{
 
 			Conditions conditions = (Conditions) this.conditions.clone();
 
@@ -98,8 +110,7 @@ public class MapBean {
 			
 			queryHolder.executeQuery(session, attributeId, type);
 
-			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(
-					queryHolder.getAttributesMap());
+			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(queryHolder.getAttributesMap());
 			this.mapData.setMapData(queryHolder, transformer);
 			
 			this.neededQuery = false;
@@ -143,7 +154,8 @@ public class MapBean {
 	 * Returns list of points of interests. Point of interest shows some description on-mouse-over event.
 	 * @return
 	 */
-	public PointOfInterest[] getPointsOfInterest() {
+	public PointOfInterest[] getPointsOfInterest()
+	{
 		setMapData();
 		return this.mapData.getToolTip();
 	}
@@ -152,7 +164,8 @@ public class MapBean {
 	 * Gets legend of current map.
 	 * @return
 	 */
-	public LegendItemsGroup[] getLegend() {
+	public LegendItemsGroup[] getLegend()
+	{
 		return this.mapData.getLegend();
 	}
 
@@ -160,7 +173,8 @@ public class MapBean {
 	 * Gets search bean instance for current application.
 	 * @return
 	 */
-	public SearchBean getSearchBean() {
+	public SearchBean getSearchBean()
+	{
 		return searchBean;
 	}
 
@@ -168,7 +182,8 @@ public class MapBean {
 	 * Invoked by JSF - sets search bean instance for current application context
 	 * @param searchBean
 	 */
-	public void setSearchBean(SearchBean searchBean) {
+	public void setSearchBean(SearchBean searchBean)
+	{
 		this.searchBean = searchBean;
 	}
 
@@ -176,18 +191,20 @@ public class MapBean {
 	 * Sets chosen map (regions/ports)
 	 * @param value
 	 */
-	public void setChosenMap(String value) {
-		if (!value.equals(StandardMaps.getSelectedMap(this).encodeMapId())) {
+	public void setChosenMap(String value)
+	{
+		if (!value.equals(StandardMaps.getSelectedMap(this).encodeMapId()))
+		{
 			this.neededQuery = true;
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);
 			this.zoomLevelId = map.mapId;
-			this.searchBean.setYearFrom(String.valueOf(map.ident.yearFrom));
-			this.searchBean.setYearTo(String.valueOf(map.ident.yearTo));
-			this.searchBean.lockYears(true);
+			// this.searchBean.setYearFrom(String.valueOf(map.ident.yearFrom));
+			// this.searchBean.setYearTo(String.valueOf(map.ident.yearTo));
+			// this.searchBean.lockYears(true);
 			zoomLevelLocked = true;
-			StandardMaps.setSelectedMapType(this, value);
-			this.searchBean.search();
+			//StandardMaps.setSelectedMapType(this, value);
+			//this.searchBean.search();
 		}
 	}
 
@@ -204,7 +221,8 @@ public class MapBean {
 	 * Map options (geophysical maps, 1650, 1750...)
 	 * @return
 	 */
-	public SelectItem[] getAvailableMaps() {
+	public SelectItem[] getAvailableMaps()
+	{
 		return StandardMaps.getMapTypes(this);
 	}
 	
@@ -230,8 +248,9 @@ public class MapBean {
 	 * Zoom level on the map
 	 * @return
 	 */
-	public int getZoomLevel() {
-		zoomLevelLocked  = false;
+	public int getZoomLevel()
+	{
+		zoomLevelLocked = false;
 		return zoomLevelId;
 	}
 
@@ -240,7 +259,8 @@ public class MapBean {
 	 * Ugly hack to handle feedback between zoom level and visible places (broad regions/regions/ports)
 	 * @param zoomLevelId
 	 */
-	public void setZoomLevel(int zoomLevelId) {
+	public void setZoomLevel(int zoomLevelId)
+	{
 		if (zoomLevelLocked) {
 			return;
 		}
@@ -251,7 +271,8 @@ public class MapBean {
 		this.zoomLevelId = zoomLevelId;
 	}
 	
-	public SelectItem[] getAvailableAttributes() {
+	public SelectItem[] getAvailableAttributes()
+	{
 		return new SelectItem[] {
 				new SelectItem("0", TastResource.getText("database_components_map_broadregions")),
 				new SelectItem("1", TastResource.getText("database_components_map_regions")),

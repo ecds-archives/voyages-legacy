@@ -36,7 +36,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  * documentation of TimeLine component.
  *
  */
-public class TimeLineResultTabBean {
+public class TimelineBean {
 
 	/**
 	 * List of voyage attributes.
@@ -110,13 +110,8 @@ public class TimeLineResultTabBean {
 
 	}
 	
-	/**
-	 * Default constructor.
-	 * This constructor fills in available statistics by putting into availableStats 
-	 * different StatOptions.
-	 */
-	public TimeLineResultTabBean() {
-		
+	public TimelineBean()
+	{
 		
 		this.availableStats = new ArrayList();
 		
@@ -281,11 +276,21 @@ public class TimeLineResultTabBean {
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})}),
 				TastResource.getText("components_timeline_stat_mortrate"),
 				"{0,number,#,###,##0.0}%"));
+		
+		resetToDefault();
+
+	}
+	
+	public void resetToDefault()
+	{
+		
+		attributesChanged = false;
+		needQuery = false;
 
 		this.chosenOption = (StatOption)this.availableStats.get(15);
 		
 	}
-
+	
 	/**
 	 * Gets available list of statistics for voyages.
 	 * @return
@@ -492,4 +497,5 @@ public class TimeLineResultTabBean {
 		session.close();
 		return null;
 	}
+
 }
