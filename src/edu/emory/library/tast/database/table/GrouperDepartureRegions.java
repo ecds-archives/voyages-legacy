@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.tableview;
+package edu.emory.library.tast.database.table;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
  * Groupers are used in tables.
  *
  */
-public class GrouperExportRegions extends GrouperSimpleDictionary
+public class GrouperDepartureRegions extends GrouperSimpleDictionary
 {
 	
-	public GrouperExportRegions(int resultIndex, boolean omitEmpty, List regions)
+	public GrouperDepartureRegions(int resultIndex, boolean omitEmpty, List regions)
 	{
 		super(resultIndex, omitEmpty, regions);
 	}
@@ -24,7 +24,7 @@ public class GrouperExportRegions extends GrouperSimpleDictionary
 	public Attribute getGroupingAttribute()
 	{
 		 return new SequenceAttribute (new Attribute[] {
-					Voyage.getAttribute("majbyimp"),
+					Voyage.getAttribute("deptregimp"),
 					Region.getAttribute("id")});
 	}
 

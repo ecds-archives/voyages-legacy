@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.table;
+package edu.emory.library.tast.database.listing;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ import edu.emory.library.tast.common.table.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.database.graphs.ComparableSelectItem;
+import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.query.SearchParameters;
-import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;

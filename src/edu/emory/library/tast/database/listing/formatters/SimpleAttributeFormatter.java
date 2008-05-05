@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.table.formatters;
+package edu.emory.library.tast.database.listing.formatters;
 
 import java.text.MessageFormat;
 

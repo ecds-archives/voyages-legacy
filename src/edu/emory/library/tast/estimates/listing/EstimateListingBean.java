@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.common.table.SortChangeEvent;
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.common.table.links.TableLinkManager;
-import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
+import edu.emory.library.tast.database.listing.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Estimate;

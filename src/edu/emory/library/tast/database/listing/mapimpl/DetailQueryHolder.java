@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.table.mapimpl;
+package edu.emory.library.tast.database.listing.mapimpl;
 
 import java.util.ArrayList;
 import java.util.List;

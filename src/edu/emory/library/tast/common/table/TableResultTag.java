@@ -25,9 +25,9 @@ import org.apache.myfaces.el.MethodBindingImpl;
  * 			   style="overflow:auto;" />
  *
  */
-public class TableResultTabTag extends UIComponentTag {
+public class TableResultTag extends UIComponentTag {
 	
-	private static final String TABLE_RESULT_TAB = "TableResultTab";
+	private static final String TABLE_RESULT_TAB = "TableResultComponent";
 
 	/**
 	 * Sort changed event mapping.
@@ -100,14 +100,14 @@ public class TableResultTabTag extends UIComponentTag {
 			}
 		}	
 		
-		if (component instanceof UITableResultTab && sortChanged != null) {
-			UITableResultTab tab = (UITableResultTab)component;
+		if (component instanceof TableResultComponent && sortChanged != null) {
+			TableResultComponent tab = (TableResultComponent)component;
 			Application app = FacesContext.getCurrentInstance().getApplication();
 			tab.setSortChanged(new MethodBindingImpl(app, sortChanged, new Class[] {SortChangeEvent.class}));
 		}
 		
-		if (component instanceof UITableResultTab && onclick != null) {
-			UITableResultTab tab = (UITableResultTab)component;
+		if (component instanceof TableResultComponent && onclick != null) {
+			TableResultComponent tab = (TableResultComponent)component;
 			Application app = FacesContext.getCurrentInstance().getApplication();
 			tab.setShowDetails(new MethodBindingImpl(app, onclick, new Class[] {ShowDetailsEvent.class}));
 		}

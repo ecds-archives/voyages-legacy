@@ -16,7 +16,7 @@ import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.table.TableData;
 import edu.emory.library.tast.database.SourceInformationLookup;
-import edu.emory.library.tast.database.table.formatters.SimpleDateAttributeFormatter;
+import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Image;

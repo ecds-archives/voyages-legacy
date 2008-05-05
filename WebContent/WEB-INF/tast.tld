@@ -16,9 +16,9 @@
 	-->
 
 	<tag>
-		<name>tabletab</name>
+		<name>table</name>
 		<tag-class>
-			edu.emory.library.tast.common.table.TableResultTabTag
+			edu.emory.library.tast.common.table.TableResultTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -44,26 +44,6 @@
 		</attribute>
 		<attribute>
 			<name>onclick</name>
-		</attribute>
-	</tag>
-
-	<tag>
-		<name>stattab</name>
-		<tag-class>
-			edu.emory.library.tast.database.stat.TimeLineResultTabTag
-		</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>rendered</name>
-		</attribute>
-		<attribute>
-			<name>style</name>
-		</attribute>
-		<attribute>
-			<name>styleClass</name>
-		</attribute>
-		<attribute>
-			<name>componentVisible</name>
 		</attribute>
 	</tag>
 

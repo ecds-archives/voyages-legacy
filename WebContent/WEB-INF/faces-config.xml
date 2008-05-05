@@ -5,13 +5,8 @@
 <faces-config>
 
 	<component>
-		<component-type>TableResultTab</component-type>
-		<component-class>edu.emory.library.tast.common.table.UITableResultTab</component-class>
-	</component>
-
-	<component>
-		<component-type>TimeLineResultTab</component-type>
-		<component-class>edu.emory.library.tast.database.stat.UITimeLineResultTab</component-class>
+		<component-type>TableResultComponent</component-type>
+		<component-class>edu.emory.library.tast.common.table.TableResultComponent</component-class>
 	</component>
 
 	<component>
@@ -249,7 +244,7 @@
 
 	<managed-bean>
 		<managed-bean-name>AdvancedStatisticsTabBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.stat.AdvancedStatisticsTabBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.database.graphs.AdvancedStatisticsTabBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -259,7 +254,7 @@
 
 	<managed-bean>
 		<managed-bean-name>TableResultTabBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.table.TableResultTabBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.database.listing.TableResultTabBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -273,7 +268,7 @@
 
 	<managed-bean>
 		<managed-bean-name>TimeLineResultTabBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.stat.TimeLineResultTabBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.database.timeline.TimeLineResultTabBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -295,16 +290,6 @@
 		<managed-bean-name>TestMapBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.maps.component.TestMapBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>ReportBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.common.reports.ReportBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>searchBean</property-name>
-			<value>#{SearchBean}</value>
-		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -330,12 +315,6 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>EventLineTestBean1</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.common.EventLineTestBean1</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
 		<managed-bean-name>StatisticBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.statistic.StatisticBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
@@ -346,14 +325,8 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>EventLineTestBean2</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.common.EventLineTestBean2</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
 		<managed-bean-name>DatabaseTableBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.tableview.DatabaseTableviewBean</managed-bean-class>
+		<managed-bean-class>edu.emory.library.tast.database.table.DatabaseTableviewBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>
@@ -452,18 +425,6 @@
 			<property-name>voyageBean</property-name>
 			<value>#{VoyageDetailBean}</value>
 		</managed-property>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>MainMenuBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.common.MainMenuBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>HomePageBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.homepage.HomePageBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>

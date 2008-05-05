@@ -16,7 +16,7 @@
 	</t:htmlTag>
 </t:htmlTag>
 
-<s:tabletab
+<s:table
 	id="tableResults"
 	onclick="#{TableResultTabBean.showDetails}"
 	rendered="#{TableResultTabBean.resultsMode}"

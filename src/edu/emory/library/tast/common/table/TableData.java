@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import edu.emory.library.tast.TastResource;
-import edu.emory.library.tast.database.table.formatters.AbstractAttributeFormatter;
-import edu.emory.library.tast.database.table.formatters.SimpleAttributeFormatter;
+import edu.emory.library.tast.database.listing.formatters.AbstractAttributeFormatter;
+import edu.emory.library.tast.database.listing.formatters.SimpleAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.attributes.Attribute;

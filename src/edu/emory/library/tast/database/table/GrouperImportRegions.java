@@ -1,4 +1,4 @@
-package edu.emory.library.tast.database.tableview;
+package edu.emory.library.tast.database.table;
 
 import java.util.List;
 
@@ -9,15 +9,10 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
-/**
- * Grouper for import regions.
- * Groupers are used in tables.
- *
- */
-public class GrouperBroadDepartureRegions extends GrouperSimpleDictionary
+public class GrouperImportRegions extends GrouperSimpleDictionary
 {
 	
-	public GrouperBroadDepartureRegions(int resultIndex, boolean omitEmpty, List areas)
+	public GrouperImportRegions(int resultIndex, boolean omitEmpty, List areas)
 	{
 		super(resultIndex, omitEmpty, areas);
 	}
@@ -25,7 +20,7 @@ public class GrouperBroadDepartureRegions extends GrouperSimpleDictionary
 	public Attribute getGroupingAttribute()
 	{
 		 return new SequenceAttribute (new Attribute[] {
-					Voyage.getAttribute("deptregimp"),
+					Voyage.getAttribute("mjselimp"),
 					Region.getAttribute("area"),
 					Area.getAttribute("id")});
 					

@@ -64,7 +64,7 @@
 
 	<servlet>
 		<servlet-name>ImageFeederServlet</servlet-name>
-		<servlet-class>edu.emory.library.tast.database.stat.ImageFeederServlet</servlet-class>
+		<servlet-class>edu.emory.library.tast.database.graphs.ImageFeederServlet</servlet-class>
 	</servlet>
 
 	<servlet>

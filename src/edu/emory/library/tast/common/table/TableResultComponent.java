@@ -22,7 +22,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  * 
  * 
  */
-public class UITableResultTab extends UIOutput {
+public class TableResultComponent extends UIOutput {
 
 	/**
 	 * Sort changed binding.
@@ -38,7 +38,7 @@ public class UITableResultTab extends UIOutput {
 	 * Default constructor.
 	 * 
 	 */
-	public UITableResultTab() {
+	public TableResultComponent() {
 		super();
 	}
 
