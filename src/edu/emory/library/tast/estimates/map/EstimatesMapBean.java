@@ -93,7 +93,6 @@ public class EstimatesMapBean {
 		//Check whether query is required
 		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || forceQuery)
 		{
-			System.out.println("setData");
 			this.conditions = this.getEstimatesBean().getConditions();
 			forceQuery = false;
 			this.pointsOfInterest.clear();
@@ -170,7 +169,6 @@ public class EstimatesMapBean {
 	{
 		if (!StandardMaps.getSelectedMap(this).encodeMapId().equals(value))
 		{
-			System.out.println("setChosenMap");
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);
 			this.zoomLevel = map.mapId;
@@ -246,7 +244,6 @@ public class EstimatesMapBean {
 	{
 		if (this.poiType != id.intValue())
 		{
-			System.out.println("setChosenAttribute");
 			StandardMaps.zoomChanged(this, id.intValue());
 			this.forceQuery = true;
 		}
