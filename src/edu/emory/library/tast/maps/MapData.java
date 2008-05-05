@@ -92,16 +92,16 @@ public class MapData {
 	 * Gets tooltips that will appear on map.
 	 * @return
 	 */
-	public PointOfInterest[] getToolTip() {
+	public PointOfInterest[] getPointsOfInterest() {
 		
 		//Prepare tooltips
 		List localPoints = new ArrayList();
-		for (int i = 0; i < this.items.length; i++) {
-			if (this.items[i].isPointEnabled()) {
+		for (int i = 0; i < this.items.length; i++)
+		{
+			if (this.items[i].isPointEnabled())
+			{
 				PointOfInterest pt = this.items[i].getTooltipText(legendItems);
-				if (pt != null) {
-					localPoints.add(pt);
-				}
+				if (pt != null) localPoints.add(pt);
 			}
 		}			
 		this.points = (PointOfInterest[])localPoints.toArray(new PointOfInterest[] {});

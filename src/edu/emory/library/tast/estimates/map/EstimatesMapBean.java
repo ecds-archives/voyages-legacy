@@ -82,7 +82,7 @@ public class EstimatesMapBean {
 
 	public PointOfInterest[] getPointsOfInterest() {
 		this.setData();
-		return this.mapData.getToolTip();
+		return this.mapData.getPointsOfInterest();
 	}
 
 	/**

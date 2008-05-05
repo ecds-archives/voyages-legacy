@@ -157,7 +157,7 @@ public class MapBean
 	public PointOfInterest[] getPointsOfInterest()
 	{
 		setMapData();
-		return this.mapData.getToolTip();
+		return this.mapData.getPointsOfInterest();
 	}
 
 	/**
