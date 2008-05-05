@@ -243,8 +243,8 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>AdvancedStatisticsTabBean</managed-bean-name>
-		<managed-bean-class>edu.emory.library.tast.database.graphs.AdvancedStatisticsTabBean</managed-bean-class>
+		<managed-bean-name>GraphsBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.graphs.GraphsBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>searchBean</property-name>

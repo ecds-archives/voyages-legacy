@@ -3,12 +3,12 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
 
-<t:htmlTag value="div" style="padding: 2px;" rendered="#{AdvancedStatisticsTabBean.errorPresent || AdvancedStatisticsTabBean.warningPresent}">
-	<t:htmlTag value="div" id="div_error" style="background: red;" rendered="#{AdvancedStatisticsTabBean.errorPresent}">
+<t:htmlTag value="div" style="padding: 2px;" rendered="#{GraphsBean.errorPresent || GraphsBean.warningPresent}">
+	<t:htmlTag value="div" id="div_error" style="background: red;" rendered="#{GraphsBean.errorPresent}">
 		<h:panelGrid columns="3">
-			<h:outputText value="#{AdvancedStatisticsTabBean.errorMessage}" />
-			<h:commandButton id="fixError" value="#{res.database_search_fixerror}" action="#{AdvancedStatisticsTabBean.fixError}" />
-			<h:commandButton id="goBackOnError" value="#{res.database_search_back}" action="#{AdvancedStatisticsTabBean.rollback}" />
+			<h:outputText value="#{GraphsBean.errorMessage}" />
+			<h:commandButton id="fixError" value="#{res.database_search_fixerror}" action="#{GraphsBean.fixError}" />
+			<h:commandButton id="goBackOnError" value="#{res.database_search_back}" action="#{GraphsBean.rollback}" />
 		</h:panelGrid>
 	</t:htmlTag>
 </t:htmlTag>
@@ -29,8 +29,8 @@
 			</t:htmlTag>
 
 			<t:htmlTag value="td" style="padding: 0px">
-				<h:selectOneMenu onchange="submit()" style="width: 300px;" value="#{AdvancedStatisticsTabBean.selectedChart}" disabled="#{AdvancedStatisticsTabBean.errorPresent}">
-					<f:selectItems value="#{AdvancedStatisticsTabBean.availableCharts}" />
+				<h:selectOneMenu onchange="submit()" style="width: 300px;" value="#{GraphsBean.selectedChart}" disabled="#{GraphsBean.errorPresent}">
+					<f:selectItems value="#{GraphsBean.availableCharts}" />
 				</h:selectOneMenu>
 			</t:htmlTag>
 
@@ -42,8 +42,8 @@
 			</t:htmlTag>
 			
 			<t:htmlTag value="td" style="padding: 0px;">
-				<h:selectOneMenu style="width: 300px;" value="#{AdvancedStatisticsTabBean.xaxis}" id="xaxis_select">
-					<f:selectItems value="#{AdvancedStatisticsTabBean.voyageSelectedAttributes}" />
+				<h:selectOneMenu style="width: 300px;" value="#{GraphsBean.xaxis}" id="xaxis_select">
+					<f:selectItems value="#{GraphsBean.voyageSelectedAttributes}" />
 				</h:selectOneMenu>
 			</t:htmlTag>
 		
@@ -55,8 +55,8 @@
 			</t:htmlTag>
 		
 			<t:htmlTag value="td" style="padding: 0px;">
-				<h:selectOneMenu id="stat-select-y" style="width: 300px;" value="#{AdvancedStatisticsTabBean.order}" id="order_select">
-					<f:selectItems value="#{AdvancedStatisticsTabBean.availableOrders}" />
+				<h:selectOneMenu id="stat-select-y" style="width: 300px;" value="#{GraphsBean.order}" id="order_select">
+					<f:selectItems value="#{GraphsBean.availableOrders}" />
 				</h:selectOneMenu>
 			</t:htmlTag>
 
@@ -69,12 +69,12 @@
 
 			<t:htmlTag value="td" style="padding: 0px;">
 				<t:htmlTag value="div">
-					<h:selectOneMenu style="width: 50px;" disabled="#{AdvancedStatisticsTabBean.notAggregate}"
-						value="#{AdvancedStatisticsTabBean.selectedAggregate}" id="aggregate_select">
-						<f:selectItems value="#{AdvancedStatisticsTabBean.aggregateFunctions}" />
+					<h:selectOneMenu style="width: 50px;" disabled="#{GraphsBean.notAggregate}"
+						value="#{GraphsBean.selectedAggregate}" id="aggregate_select">
+						<f:selectItems value="#{GraphsBean.aggregateFunctions}" />
 					</h:selectOneMenu>
-					<h:selectOneMenu style="width: 250px;" value="#{AdvancedStatisticsTabBean.yaxis}" id="yaxis_select">
-						<f:selectItems value="#{AdvancedStatisticsTabBean.voyageNumericAttributes}" />
+					<h:selectOneMenu style="width: 250px;" value="#{GraphsBean.yaxis}" id="yaxis_select">
+						<f:selectItems value="#{GraphsBean.voyageNumericAttributes}" />
 					</h:selectOneMenu>
 				</t:htmlTag>
 			</t:htmlTag>
@@ -89,17 +89,17 @@
 
 				<h:commandButton
 					id="addSeries"
-					disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+					disabled="#{GraphsBean.errorPresent}"
 					value="#{res.database_search_addseries}"
-					action="#{AdvancedStatisticsTabBean.addSeries}" />
+					action="#{GraphsBean.addSeries}" />
 					
 				<h:outputText value=" " />
 					
 				<h:commandButton
 					id="showGraph"
 					value="#{res.database_search_show}"
-					disabled="#{AdvancedStatisticsTabBean.errorPresent}"
-					action="#{AdvancedStatisticsTabBean.showGraph}" />
+					disabled="#{GraphsBean.errorPresent}"
+					action="#{GraphsBean.showGraph}" />
 					
 			</t:htmlTag>
 
@@ -113,17 +113,17 @@
 			<h:outputText value="#{res.database_search_currentseries}" />
 		</t:htmlTag>
 	
-		<t:htmlTag value="div" rendered="#{AdvancedStatisticsTabBean.seriesAdded}">
-			<h:selectManyCheckbox id="to_remove_check" layout="pageDirection" value="#{AdvancedStatisticsTabBean.toRemove}">
-				<f:selectItems value="#{AdvancedStatisticsTabBean.series}" />
+		<t:htmlTag value="div" rendered="#{GraphsBean.seriesAdded}">
+			<h:selectManyCheckbox id="to_remove_check" layout="pageDirection" value="#{GraphsBean.toRemove}">
+				<f:selectItems value="#{GraphsBean.series}" />
 			</h:selectManyCheckbox>
 			<h:commandButton id="removeSeries"
-				disabled="#{AdvancedStatisticsTabBean.errorPresent}"
+				disabled="#{GraphsBean.errorPresent}"
 				value="#{res.database_search_remseries}"
-				action="#{AdvancedStatisticsTabBean.removeSeries}" />
+				action="#{GraphsBean.removeSeries}" />
 		</t:htmlTag>
 		
-		<t:htmlTag value="div" rendered="#{!AdvancedStatisticsTabBean.seriesAdded}">
+		<t:htmlTag value="div" rendered="#{!GraphsBean.seriesAdded}">
 			<h:outputText value="#{res.database_search_noseriesmsg}" />
 		</t:htmlTag>
 		
@@ -138,25 +138,25 @@
 <t:htmlTag value="div"
 	id="div_warning"
 	style="margin: 3px; background: #E2873B; length: 640px;"
-	rendered="#{AdvancedStatisticsTabBean.warningPresent}">
-	<h:outputText id="warning_text" value="#{AdvancedStatisticsTabBean.warningMessage}" />
+	rendered="#{GraphsBean.warningPresent}">
+	<h:outputText id="warning_text" value="#{GraphsBean.warningMessage}" />
 </t:htmlTag>
 
 <t:htmlTag value="div"
 	style="margin-top: 4px; width: 640px; height: 480px; overflow:auto; width: 100%; height: 500px"
-	rendered="#{AdvancedStatisticsTabBean.statReady}">
-	<h:graphicImage value="#{AdvancedStatisticsTabBean.chartPath}" />
+	rendered="#{GraphsBean.statReady}">
+	<h:graphicImage value="#{GraphsBean.chartPath}" />
 </t:htmlTag>
 
-<h:panelGroup rendered="#{AdvancedStatisticsTabBean.statReady}">
+<h:panelGroup rendered="#{GraphsBean.statReady}">
 	<h:outputText value="#{res.database_search_width} " />
-	<h:inputText value="#{AdvancedStatisticsTabBean.chartWidth}" style="width: 40px;" />
+	<h:inputText value="#{GraphsBean.chartWidth}" style="width: 40px;" />
 	<h:outputText value="#{res.database_search_height} " />
-	<h:inputText value="#{AdvancedStatisticsTabBean.chartHeight}" style="width: 40px;" />
-	<h:commandButton id="enlargeStat" value="#{res.database_search_changesize}" action="#{AdvancedStatisticsTabBean.setNewView}" />
+	<h:inputText value="#{GraphsBean.chartHeight}" style="width: 40px;" />
+	<h:commandButton id="enlargeStat" value="#{res.database_search_changesize}" action="#{GraphsBean.setNewView}" />
 </h:panelGroup>
 
-<t:htmlTag rendered="#{AdvancedStatisticsTabBean.statReady}" value="div">
-	<s:simpleButton id="chart-back-button-id" action="#{AdvancedStatisticsTabBean.prev}" styleClass="chart-back-button"/>
-	<s:simpleButton id="chart-forward-button-id" action="#{AdvancedStatisticsTabBean.next}" styleClass="chart-forward-button"/>
+<t:htmlTag rendered="#{GraphsBean.statReady}" value="div">
+	<s:simpleButton id="chart-back-button-id" action="#{GraphsBean.prev}" styleClass="chart-back-button"/>
+	<s:simpleButton id="chart-forward-button-id" action="#{GraphsBean.next}" styleClass="chart-forward-button"/>
 </t:htmlTag>

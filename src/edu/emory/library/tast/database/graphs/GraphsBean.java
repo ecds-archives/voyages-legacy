@@ -38,7 +38,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  * Each of generators above uses JFreeCharts appropriately and generates graph represented as image.
  * 
  */
-public class AdvancedStatisticsTabBean {
+public class GraphsBean {
 
 	private static final String STAT_OBJECT_NAME = "__stat__object";
 
@@ -268,7 +268,7 @@ public class AdvancedStatisticsTabBean {
 	 * Current default chart shows number of embarked/disembarked slaves per year.
 	 *
 	 */
-	public AdvancedStatisticsTabBean() {
+	public GraphsBean() {
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slaximp"), "sum"));
 		this.series.add(new SeriesItem(VisibleAttribute.getAttribute("slamimp"), "sum"));
 		this.xaxis = VisibleAttribute.getAttribute("yearam");
@@ -328,7 +328,7 @@ public class AdvancedStatisticsTabBean {
 
 		// Add series of chart to query
 		for (Iterator iter = this.series.iterator(); iter.hasNext();) {
-			AdvancedStatisticsTabBean.SeriesItem element = (AdvancedStatisticsTabBean.SeriesItem) iter.next();
+			GraphsBean.SeriesItem element = (GraphsBean.SeriesItem) iter.next();
 			Attribute out = null;
 			if (element.aggregate != null) {				
 				out = new FunctionAttribute(element.aggregate, element.attribute.getAttributes());				
@@ -638,14 +638,14 @@ public class AdvancedStatisticsTabBean {
 		if (this.errorPresent.booleanValue() && !aggregate.equals(this.aggregate)) {
 			MemorizedAction action = new MemorizedAction(new Object[] { this.aggregate }) {
 				public void performAction() {
-					AdvancedStatisticsTabBean.this.aggregate = (Boolean) this.params[0];
+					GraphsBean.this.aggregate = (Boolean) this.params[0];
 				}
 			};
 			this.rollbackActions.add(action);
 
 			action = new MemorizedAction(new Object[] {}) {
 				public void performAction() {
-					AdvancedStatisticsTabBean.this.series = new ArrayList();
+					GraphsBean.this.series = new ArrayList();
 				}
 			};
 			this.fixErrorActions.add(action);
