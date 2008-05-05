@@ -51,7 +51,8 @@ public class MapData {
 	 * @param max max value in data
 	 * @param transformer data  trasformer implementation that should be used
 	 */
-	public void setMapData(AbstractTransformerQueryHolder data, AbstractDataTransformer transformer) {
+	public void setMapData(AbstractTransformerQueryHolder data, AbstractDataTransformer transformer)
+	{
 		
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
@@ -65,12 +66,16 @@ public class MapData {
 		//Set legend
 		this.oldLegend = legendItems;
 		this.legendItems = response.getLegendItems();
-		if (oldLegend != null) {
-			for (int i = 0; i < oldLegend.length; i++) {
-				for (int j = 0; j < oldLegend[i].getItems().length; j++) {
-					if (legendItems[i].getItems().length < j) {
-						legendItems[i].getItems()[j].setEnabled(oldLegend[i].getItems()[j].isEnabled());
-					}
+		if (this.oldLegend != null && this.legendItems != null && this.legendItems.length == this.oldLegend.length)
+		for (int i = 0; i < oldLegend.length; i++)
+		{
+			LegendItem[] oldLegendItems = oldLegend[i].getItems();
+			LegendItem[] newLegendItems = legendItems[i].getItems();
+			if (oldLegendItems != null && newLegendItems != null && newLegendItems.length == oldLegendItems.length)
+			{
+				for (int j = 0; j < oldLegend[i].getItems().length; j++)
+				{
+					newLegendItems[j].setEnabled(oldLegendItems[j].isEnabled());
 				}
 			}
 		}
@@ -112,7 +117,8 @@ public class MapData {
 	 * Gets legend of map.
 	 * @return
 	 */
-	public LegendItemsGroup[] getLegend() {
+	public LegendItemsGroup[] getLegend()
+	{
 		return this.legendItems;
 	}
 	

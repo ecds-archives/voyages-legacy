@@ -3,11 +3,8 @@ package edu.emory.library.tast.estimates.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
 
-import org.ajaxanywhere.AAUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -19,7 +16,6 @@ import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
-import edu.emory.library.tast.maps.component.ZoomChangedEvent;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -88,22 +84,22 @@ public class EstimatesMapBean {
 	/**
 	 * Queries the database and sets currently visible points on the map
 	 */
-	private void setData() {
+	private void setData()
+	{
 		
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
 		//Check whether query is required
-		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || forceQuery) {
+		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || forceQuery)
+		{
+			System.out.println("setData");
 			this.conditions = this.getEstimatesBean().getConditions();
-			forceQuery  = false;
+			forceQuery = false;
 			this.pointsOfInterest.clear();
-			EstimateMapQueryHolder queryHolder = new EstimateMapQueryHolder(
-					conditions);
+			EstimateMapQueryHolder queryHolder = new EstimateMapQueryHolder(conditions);
 			queryHolder.executeQuery(session, poiType, type);
-
-			EstimateMapDataTransformer transformer = new EstimateMapDataTransformer(
-					queryHolder.getAttributesMap());
+			EstimateMapDataTransformer transformer = new EstimateMapDataTransformer(queryHolder.getAttributesMap());
 			this.mapData.setMapData(queryHolder, transformer);
 		}
 		
@@ -112,7 +108,8 @@ public class EstimatesMapBean {
 		
 	}
 
-	public LegendItemsGroup[] getLegend() {
+	public LegendItemsGroup[] getLegend()
+	{
 		return this.mapData.getLegend();
 	}
 	
@@ -120,7 +117,8 @@ public class EstimatesMapBean {
 	 * When Refresh button clicked.
 	 * @return
 	 */
-	public String refresh() {
+	public String refresh()
+	{
 		type = determineType();
 		forceQuery = true;
 		this.setData();
@@ -131,7 +129,8 @@ public class EstimatesMapBean {
 	 * Finds type of visible ports
 	 * @return
 	 */
-	private int determineType() {
+	private int determineType()
+	{
 		if (this.mapData.getLegend() == null || this.mapData.getLegend().length < 2) {
 			return -1;
 		}
@@ -149,8 +148,8 @@ public class EstimatesMapBean {
 	 * Returns information of zoom levels for map
 	 * @return
 	 */
-	public ZoomLevel[] getZoomLevels() {
-		
+	public ZoomLevel[] getZoomLevels()
+	{
 		return StandardMaps.getZoomLevels(this);
 	}
 	
@@ -158,8 +157,8 @@ public class EstimatesMapBean {
 	 * Returns information on zoom level for minimap
 	 * @return
 	 */
-	public ZoomLevel getMiniMapZoomLevel() {
-		
+	public ZoomLevel getMiniMapZoomLevel()
+	{
 		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 	
@@ -167,8 +166,11 @@ public class EstimatesMapBean {
 	 * Sets active map.
 	 * @param value
 	 */
-	public void setChosenMap(String value) {
-		if (!StandardMaps.getSelectedMap(this).encodeMapId().equals(value)) {
+	public void setChosenMap(String value)
+	{
+		if (!StandardMaps.getSelectedMap(this).encodeMapId().equals(value))
+		{
+			System.out.println("setChosenMap");
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);
 			this.zoomLevel = map.mapId;
@@ -185,7 +187,8 @@ public class EstimatesMapBean {
 	 * Returns id of chosen map
 	 * @return
 	 */
-	public String getChosenMap() {
+	public String getChosenMap()
+	{
 		this.estimatesBean.lockYears(false);
 		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
@@ -194,7 +197,8 @@ public class EstimatesMapBean {
 	 * Gets list of available maps.
 	 * @return
 	 */
-	public SelectItem[] getAvailableMaps() {
+	public SelectItem[] getAvailableMaps()
+	{
 		return StandardMaps.getMapTypes(this);
 	}
 
@@ -203,11 +207,11 @@ public class EstimatesMapBean {
 		return zoomLevel;
 	}
 
-	public void setZoomLevel(int zoomLevel) {
-		if (zoomLevelLocked) {
-			return;
-		}
-		if (this.zoomLevel != zoomLevel) {
+	public void setZoomLevel(int zoomLevel)
+	{
+		if (zoomLevelLocked) return;
+		if (this.zoomLevel != zoomLevel)
+		{
 			forceQuery = true;
 			StandardMaps.zoomChanged(this, zoomLevel);
 		}
@@ -217,7 +221,8 @@ public class EstimatesMapBean {
 	/**
 	 * Gets list of available place types
 	 */
-	public SelectItem[] getAvailableAttributes() {
+	public SelectItem[] getAvailableAttributes()
+	{
 		return new SelectItem[] {
 				new SelectItem("0", TastResource.getText("estimates_components_map_broadregions")),
 				new SelectItem("1", TastResource.getText("estimates_components_map_regions")),
@@ -228,7 +233,8 @@ public class EstimatesMapBean {
 	 * Gets chosen place type
 	 * @return
 	 */
-	public Integer getChosenAttribute() {
+	public Integer getChosenAttribute()
+	{
 		return new Integer(poiType);
 	}
 	
@@ -236,19 +242,17 @@ public class EstimatesMapBean {
 	 * Sets chosen place type
 	 * @param id
 	 */
-	public void setChosenAttribute(Integer id) {
-		if (this.poiType != id.intValue()) {
+	public void setChosenAttribute(Integer id)
+	{
+		if (this.poiType != id.intValue())
+		{
+			System.out.println("setChosenAttribute");
 			StandardMaps.zoomChanged(this, id.intValue());
 			this.forceQuery = true;
 		}
 		poiType = id.intValue();
 	}
 	
-	public void onZoomChanged(ZoomChangedEvent e) {
-		System.out.println("Zoom was changed!");
-		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
-		if (AAUtils.isAjaxRequest(request)) {
-			AAUtils.addZonesToRefresh(request, "map-legend");
-		}
-	}
 }
+	
+

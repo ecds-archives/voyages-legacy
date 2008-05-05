@@ -69,6 +69,7 @@ public class LegendComponent extends UIComponentBase {
 			LegendItemsGroup[] legend = (LegendItemsGroup[])this.getValueBinding(context, "legend");
 			
 			legend[legendGroup].getItems()[legendItem].setEnabled(value.equals("selected"));
+			System.out.println(field + ": " + value.equals("selected") + " (" + legend + ")");
 			
 		} else if (field.indexOf("_layers_") != -1) {
 			String[] layers = field.split("_");
@@ -246,6 +247,7 @@ public class LegendComponent extends UIComponentBase {
 					writer.startElement("td", this);
 					writer.writeAttribute("class", "map-legend-checkbox", null);
 					encodeCheckbox(context, writer, "_legend_" + i + "_" + j, items[j].isEnabled());
+					System.out.println("_legend_" + i + "_" + j + ": " + items[j].isEnabled() + " (" + legendGroups + ")");
 					writer.endElement("td");
 					
 					writer.startElement("td", this);
