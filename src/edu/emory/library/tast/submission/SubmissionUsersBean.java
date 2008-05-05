@@ -599,7 +599,7 @@ public class SubmissionUsersBean {
 
 			Conditions c = new Conditions();
 			if (existingUsers.length != 0) {
-				Conditions cnot = new Conditions(Conditions.JOIN_NOT);
+				Conditions cnot = new Conditions(Conditions.NOT);
 				cnot.addCondition(User.getAttribute("id"), existingUsers, Conditions.OP_IN);
 				c.addCondition(cnot);
 			}

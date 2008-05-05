@@ -21,11 +21,11 @@ public class Conditions {
 	 * JOIN_ operators are used as constructor of Conditions class. It tells how
 	 * to connect attributes/subconditions.
 	 */
-	public static final int JOIN_AND = 1;
+	public static final int AND = 1;
 
-	public static final int JOIN_OR = 2;
+	public static final int OR = 2;
 
-	public static final int JOIN_NOT = 0;
+	public static final int NOT = 0;
 
 	/**
 	 * OP_ operators are operators (like == or != etc.)
@@ -55,7 +55,7 @@ public class Conditions {
 	/**
 	 * Operator used to join conditions/subconditions
 	 */
-	private int joinCondition = JOIN_AND;
+	private int joinCondition = AND;
 
 	/**
 	 * Array of simple conditions (Keeps Condition objects).
@@ -142,7 +142,7 @@ public class Conditions {
 	 */
 	public Conditions()
 	{
-		this.joinCondition = JOIN_AND;
+		this.joinCondition = AND;
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class Conditions {
 			return res;
 		}
 
-		if (this.joinCondition == JOIN_NOT && size != 1)
+		if (this.joinCondition == NOT && size != 1)
 		{
 			throw new RuntimeException(
 					"With JOIN_NOT only one condition allowable!");
@@ -255,7 +255,7 @@ public class Conditions {
 		StringBuffer ret = new StringBuffer();
 
 		// Handle not
-		if (this.joinCondition == JOIN_NOT)
+		if (this.joinCondition == NOT)
 		{
 			ret.append("not (");
 		}
@@ -323,7 +323,7 @@ public class Conditions {
 				ret.append(((DirectValue) c.value).toString(bindings));
 			}
 			if (processed < size) {
-				ret.append(this.joinCondition == JOIN_AND ? " and " : " or ");
+				ret.append(this.joinCondition == AND ? " and " : " or ");
 			}
 		}
 
@@ -336,11 +336,11 @@ public class Conditions {
 			ret.append("(").append(child.conditionString).append(")");
 			retMap.putAll(child.properties);
 			if (processed < size) {
-				ret.append(this.joinCondition == JOIN_AND ? " and " : " or ");
+				ret.append(this.joinCondition == AND ? " and " : " or ");
 			}
 		}
 
-		if (this.joinCondition == JOIN_NOT) {
+		if (this.joinCondition == NOT) {
 			ret.append(")");
 		}
 

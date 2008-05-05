@@ -38,7 +38,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		if (queryConditionList.getSelectedIdsCount() == 0)
 			return true;
 		
-		Conditions subCond = new Conditions(Conditions.JOIN_OR);
+		Conditions subCond = new Conditions(Conditions.OR);
 		
 		for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
 		{

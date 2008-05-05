@@ -9,12 +9,20 @@ public class FunctionAttribute extends Attribute {
 	private Attribute[] attributes; 
 	private String functionName;
 	
-	public FunctionAttribute(String functionName, Attribute[] attributes) {
+	public FunctionAttribute(String functionName, Attribute[] attributes)
+	{
 		super("FunctionAttribute", null);
 		this.attributes = attributes;
 		this.functionName = functionName;
 	}
 	
+	public FunctionAttribute(String functionName, Attribute attribute)
+	{
+		super("FunctionAttribute", null);
+		this.attributes = new Attribute[] {attribute};
+		this.functionName = functionName;
+	}
+
 	public String getTypeDisplayName() {
 		return null;
 	}

@@ -143,7 +143,7 @@ public class HibernateTest {
 //				
 //				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
 			} else if ("tload".equalsIgnoreCase(command)) {
-				Conditions c = new Conditions(Conditions.JOIN_AND);
+				Conditions c = new Conditions(Conditions.AND);
 				QueryValue qValue = new QueryValue("Group", c);
 				Object [] ret = qValue.executeQuery();
 				for (int i = 0; i < ret.length; i++) {

@@ -44,7 +44,7 @@ public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 		}
 		else
 		{
-			Conditions orCond = new Conditions(Conditions.JOIN_OR);
+			Conditions orCond = new Conditions(Conditions.OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
 				orCond.addCondition(attributes[i],

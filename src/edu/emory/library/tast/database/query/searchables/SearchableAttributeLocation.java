@@ -139,7 +139,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 		Set minimalSelectedIds = queryConditionList.getSelectedIds();
 		
 		// add locations to the query
-		Conditions subCond = new Conditions(Conditions.JOIN_OR);
+		Conditions subCond = new Conditions(Conditions.OR);
 		for (Iterator iter = minimalSelectedIds.iterator(); iter.hasNext();)
 		{
 			String fullId = (String) iter.next();

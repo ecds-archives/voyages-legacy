@@ -209,7 +209,7 @@ public class VoyageIndex {
 	 * @return
 	 */
 	public static Conditions getRecentApproved() {
-		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		Conditions cond = new Conditions(Conditions.AND);
 		cond.addCondition(VoyageIndex.getAttribute("latest_approved"), new Integer(1), Conditions.OP_EQUALS);
 		return cond;
 	}
@@ -219,7 +219,7 @@ public class VoyageIndex {
 	 * @return
 	 */
 	public static Conditions getRecent() {
-		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		Conditions cond = new Conditions(Conditions.AND);
 		cond.addCondition(VoyageIndex.getAttribute("latest"), new Integer(1), Conditions.OP_EQUALS);
 		return cond;
 	}
@@ -229,7 +229,7 @@ public class VoyageIndex {
 	 * @return
 	 */
 	public static Conditions getApproved() {
-		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		Conditions cond = new Conditions(Conditions.AND);
 		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(1), Conditions.OP_EQUALS);
 		return cond;
 	}
@@ -239,7 +239,7 @@ public class VoyageIndex {
 	 * @return
 	 */
 	public static Conditions getNotApproved() {
-		Conditions cond = new Conditions(Conditions.JOIN_AND);
+		Conditions cond = new Conditions(Conditions.AND);
 		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(0), Conditions.OP_EQUALS);
 		return cond;
 	}

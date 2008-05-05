@@ -25,67 +25,10 @@ import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.query.Conditions;
 import edu.emory.library.tast.util.query.QueryValue;
 
-/**
- * This bean is responsible for managing the cross-table in the database. It
- * has a reference to
- * {@link #edu.emory.library.tast.estimates.selection.EstimatesSelectionBean}.
- * It holds the entire table in {@link #table}. The table is refreshed every
- * time the query is changed or the user clicks to the refresh button. The main
- * method which generates the table is {@link #generateTableIfNecessary()}.
- * 
- */
-public class DatabaseTableviewBean {
-
-	private static class AvailableOption {
-		
-		private Attribute[] attributes;
-		private String userLabel;
-		private String id;
-		private String[] labels;
-		private MessageFormat format;
-		private String zeroValue;
-		
-		public AvailableOption(String id, String userLabel, Attribute[] attrs, String[] colLabels, MessageFormat format, String zeroValue) {
-			this.id = id;
-			this.userLabel = userLabel;
-			this.attributes = attrs;
-			this.labels = colLabels;
-			this.format = format;
-			this.zeroValue = zeroValue;
-		}
-
-		public Attribute[] getAttributes() {
-			return attributes;
-		}
-
-		public String getId() {
-			return id;
-		}
-
-		public String getUserLabel() {
-			return userLabel;
-		}
-
-		public String[] getLabels() {
-			return labels;
-		}
-
-		public MessageFormat getFormat() {
-			return format;
-		}
-
-		public String getZeroValue() {
-			return zeroValue;
-		}
-
-		public void setZeroValue(String zeroValue) {
-			this.zeroValue = zeroValue;
-		}
-		
-	}
+public class DatabaseTableviewBean
+{
 	
 	private static final String CSS_CLASS_TD_LABEL = "tbl-label";
-
 	private static final String CSS_CLASS_TD_TOTAL = "tbl-total";
 
 	private SearchBean searchBean;
@@ -95,46 +38,187 @@ public class DatabaseTableviewBean {
 	private boolean optionsChanged = true;
 
 	private String rowGrouping = "years25";;
-
 	private String colGrouping = "impRegion";
 
 	private boolean omitEmptyRowsAndColumns = true;
 
 	private SimpleTableCell[][] table;
 
-	//private String aggregate = "sum";
+	private CellVariable cellValuesDesc = options[0];
 	
-	private static AvailableOption[] options = new AvailableOption[] {
-			new AvailableOption("expSum", "Sum of embarked slaves", new Attribute[] {new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})}, new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("expAvg", "Average number of embarked slaves", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slaximp")})}, new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("expCnt", "Number of voyages - embarked slaves", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slaximp")})}, new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			
-			new AvailableOption("impSum", "Sum of disembarked slaves", new Attribute[] {new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("impAvg", "Average number of disembarked slaves", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("impCnt", "Number of voyages - disembarked slaves", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			
-			new AvailableOption("bothSum", "Sum of embarked/disembarked slaves", new Attribute[] {new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}), new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("bothAcg", "Average number of embarked/disembarked slaves", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slaximp")}), new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("bothCnt", "Number of voyages - embarked/disembarked slaves", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slaximp")}), new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("slamimp")})}, new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			
-			new AvailableOption("sexratioAvg", "Average percentage male", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0.0}%"), ""),
-			new AvailableOption("sexratioCnt", "Number of voyages - percentage male", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("malrat7")})}, new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,###}"), ""),
-			
-			new AvailableOption("childratioAvg", "Average percentage children", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,##0.0}%"), ""),
-			new AvailableOption("childratioCnt", "Number of voyages - percentage children", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("chilrat7")})}, new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,###}"), ""),
-			
-			new AvailableOption("mortalityAvg", "Average percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.0}%"), ""),
-			new AvailableOption("mortalityCnt", "Number of voyages - percentage of slaves embarked who died during voyage", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("vymrtrat")})}, new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,###}"), ""),
-			
-			new AvailableOption("middlepassageAvg", "Average middle passage (days)", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("voy2imp")})}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("middlepassageCnt", "Number of voyages - middle passage (days)", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("voy2imp")})}, new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			
-			new AvailableOption("standarizedtonnageAvg", "Average standarized tonnage", new Attribute[] {new FunctionAttribute("avg", new Attribute[] {Voyage.getAttribute("tonmod")})}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"), "0"),
-			new AvailableOption("standarizedtonnageCnt", "Number of voyages - standarized tonnage", new Attribute[] {new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("tonmod")})}, new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"), "0"),
+	private static CellVariable[] options = new CellVariable[] {
+		
+			new CellVariable(
+				"expSum",
+				CellVariable.SUM,
+				"Sum of embarked slaves",
+				new Attribute[] {new FunctionAttribute("sum", Voyage.getAttribute("slaximp"))},
+				new Attribute[] {Voyage.getAttribute("slaximp")},
+				new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+
+			new CellVariable(
+				"expAvg",
+				CellVariable.AVG,
+				"Average number of embarked slaves",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp")), new FunctionAttribute("sum", Voyage.getAttribute("slaximp"))},
+				new Attribute[] {Voyage.getAttribute("slaximp")},
+				new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"expCnt",
+				CellVariable.COUNT,
+				"Number of voyages - embarked slaves",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp"))},
+				new Attribute[] {Voyage.getAttribute("slaximp")},
+				new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"impSum",
+				CellVariable.SUM,
+				"Sum of disembarked slaves",
+				new Attribute[] {new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
+				new Attribute[] {Voyage.getAttribute("slamimp")},
+				new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"impAvg",
+				CellVariable.AVG,
+				"Average number of disembarked slaves",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slamimp")), new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
+				new Attribute[] {Voyage.getAttribute("slamimp")},
+				new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"impCnt",
+				CellVariable.COUNT,
+				"Number of voyages - disembarked slaves",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slamimp"))},
+				new Attribute[] {Voyage.getAttribute("slamimp")},
+				new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"bothSum",
+				CellVariable.SUM,
+				"Sum of embarked/disembarked slaves",
+				new Attribute[] {new FunctionAttribute("sum", Voyage.getAttribute("slaximp")), new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
+				new Attribute[] {Voyage.getAttribute("slaximp")},
+				new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"bothAcg",
+				CellVariable.AVG,
+				"Average number of embarked/disembarked slaves",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp")), new FunctionAttribute("sum", Voyage.getAttribute("slaximp")), new FunctionAttribute("count", Voyage.getAttribute("slamimp")), new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
+				new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")},
+				new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"bothCnt",
+				CellVariable.COUNT,
+				"Number of voyages - embarked/disembarked slaves",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp")), new FunctionAttribute("count", Voyage.getAttribute("slamimp"))},
+				new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")},
+				new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"sexratioAvg",
+				CellVariable.AVG,
+				"Average percentage male",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("malrat7")), new FunctionAttribute("sum", new FunctionAttribute("crop_to_0_100", Voyage.getAttribute("malrat7")))},
+				new Attribute[] {Voyage.getAttribute("malrat7")},
+				new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0}%"),
+				""),
+				
+			new CellVariable(
+				"sexratioCnt",
+				CellVariable.COUNT,
+				"Number of voyages - percentage male",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("malrat7"))},
+				new Attribute[] {Voyage.getAttribute("malrat7")},
+				new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,###}"),
+				""),
+				
+			new CellVariable(
+				"childratioAvg",
+				CellVariable.AVG,
+				"Average percentage children",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("chilrat7")), new FunctionAttribute("sum", new FunctionAttribute("crop_to_0_100", Voyage.getAttribute("chilrat7")))},
+				new Attribute[] {Voyage.getAttribute("chilrat7")},
+				new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,##0.0}%"),
+				""),
+				
+			new CellVariable(
+				"childratioCnt",
+				CellVariable.COUNT,
+				"Number of voyages - percentage children",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("chilrat7"))},
+				new Attribute[] {Voyage.getAttribute("chilrat7")},
+				new String[] {"Percentage children"}, new MessageFormat("{0,number,#,###,###}"), ""),
+				
+			new CellVariable(
+				"mortalityAvg",
+				CellVariable.AVG,
+				"Average percentage of slaves embarked who died during voyage",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("vymrtrat")), new FunctionAttribute("sum", new FunctionAttribute("crop_to_0_100", Voyage.getAttribute("vymrtrat")))},
+				new Attribute[] {Voyage.getAttribute("vymrtrat")},
+				new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.0}%"),
+				""),
+				
+			new CellVariable(
+				"mortalityCnt",
+				CellVariable.COUNT,
+				"Number of voyages - percentage of slaves embarked who died during voyage",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("vymrtrat"))},
+				new Attribute[] {Voyage.getAttribute("vymrtrat")},
+				new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,###}"),
+				""),
+				
+			new CellVariable(
+				"middlepassageAvg",
+				CellVariable.AVG,
+				"Average middle passage (days)",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("voy2imp")), new FunctionAttribute("sum", Voyage.getAttribute("voy2imp"))},
+				new Attribute[] {Voyage.getAttribute("voy2imp")},
+				new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"),
+				""),
+				
+			new CellVariable(
+				"middlepassageCnt",
+				CellVariable.COUNT,
+				"Number of voyages - middle passage (days)",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("voy2imp"))},
+				new Attribute[] {Voyage.getAttribute("voy2imp")},
+				new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
+			new CellVariable(
+				"standarizedtonnageAvg",
+				CellVariable.AVG,
+				"Average standarized tonnage",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("tonmod")), new FunctionAttribute("sum", Voyage.getAttribute("tonmod"))},
+				new Attribute[] {Voyage.getAttribute("tonmod")},
+				new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"),
+				""),
+				
+			new CellVariable(
+				"standarizedtonnageCnt",
+				CellVariable.COUNT,
+				"Number of voyages - standarized tonnage",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("tonmod"))},
+				new Attribute[] {Voyage.getAttribute("tonmod")},
+				new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+				
 	};
-	
-	private AvailableOption chosenOption = options[0];
-	
 
 	/**
 	 * An internal method calle by {@link #refreshTable()}.
@@ -241,36 +325,14 @@ public class DatabaseTableviewBean {
 
 	}
 
-	/**
-	 * The main method of the bean. Generates the data for the table stores it
-	 * in {@link #table}. First, it checks if it is really necessary. Then
-	 * creates a grouper for columns and rows depending on the choice of values
-	 * in columns and rows. Finally, it queries the database and uses the
-	 * groupers to fill the table.
-	 * <p>
-	 * The main of a grouper is to find a row (or column) given the id of an
-	 * item (port or nation). It also helps to construct the GROUP BY part of
-	 * the query for the database. When the data for the table are loaded from
-	 * the database they are not sorted in any particular way. The records are
-	 * read one by one and the two groupes are used to determine the row and
-	 * column which should hold the given value (the imported/exported slaves).
-	 * <p>
-	 * The groupers for nations and regions do not require any special
-	 * initializations except providing the list of ports or nations which
-	 * should appear in the rows/columns. The only exception is the grouper for
-	 * years. It has to use the result from the database to determine the min
-	 * and max year. That is why the {@link Grouper#initSlots(Object[])} needs
-	 * to have an access to the data from the database. Also, when empty cells
-	 * are supposed to be hidden, a grouper needs to first scan the data in
-	 * order to determine the used nations and regions.
-	 */
-	private void generateTableIfNecessary() { 
+	private void generateTableIfNecessary()
+	
+	{ 
 		// conditions from the left column (i.e. from select bean)
 		Conditions newConditions = (Conditions) searchBean.getSearchParameters().getConditions().clone();
 
 		// check if we have to
-		if (!optionsChanged && newConditions.equals(conditions))
-			return;
+		if (!optionsChanged && newConditions.equals(conditions)) return;
 		optionsChanged = false;
 		conditions = newConditions;
 
@@ -278,8 +340,7 @@ public class DatabaseTableviewBean {
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
 
-		// from select bean
-		// List selectedNations = selectionBean.loadSelectedNations(sess);
+		// ugly!
 		List expRegions = Region.loadAll(sess);
 		List impRegions = expRegions;
 		List impAreas = Area.loadAll(sess);
@@ -298,33 +359,44 @@ public class DatabaseTableviewBean {
 		// we want to restrict results so that it does not have nulls
 		conditions.addCondition(rowGrouper.getGroupingAttribute(), null, Conditions.OP_IS_NOT);
 		conditions.addCondition(colGrouper.getGroupingAttribute(), null, Conditions.OP_IS_NOT);
-
-		// set grouping in the query
-		query.setGroupBy(new Attribute[] { rowGrouper.getGroupingAttribute(), colGrouper.getGroupingAttribute() });
-
-		// we want to see: row ID, row Name, col ID, col Name
-		query.addPopulatedAttribute(rowGrouper.getGroupingAttribute());
-		query.addPopulatedAttribute(colGrouper.getGroupingAttribute());
-
-		// ... and populated attributes
-		for (int i = 0; i < chosenOption.getAttributes().length; i++) {
-			//query.addPopulatedAttribute(new FunctionAttribute(this.aggregate, new Attribute[] { chosenOption.getAttributes()[i] }));
-			query.addPopulatedAttribute(chosenOption.getAttributes()[i]);
+		
+		// also eliminate rows from the result which would produce empty rows or columns
+		Attribute[] nonNullAttributes = cellValuesDesc.getNonNullAttributes();
+		if (nonNullAttributes != null && nonNullAttributes.length > 0)
+		{
+			Conditions condNonNull = new Conditions(Conditions.OR); 
+			for (int i = 0; i < nonNullAttributes.length; i++)
+			{
+				condNonNull.addCondition(nonNullAttributes[i], null, Conditions.OP_IS_NOT);
+			}
+			conditions.addCondition(condNonNull);
 		}
 
+		// set grouping in the query
+		query.setGroupBy(new Attribute[] {
+				rowGrouper.getGroupingAttribute(),
+				colGrouper.getGroupingAttribute() });
+
+		// first comes: row ID, col ID
+		query.addPopulatedAttribute(rowGrouper.getGroupingAttribute());
+		query.addPopulatedAttribute(colGrouper.getGroupingAttribute());
+		
+		// and the real values depending on the selection
+		Attribute[] attributes = cellValuesDesc.getAttributes();
+		for (int i = 0; i < attributes.length; i++)
+			query.addPopulatedAttribute(attributes[i]);
+
 		// row extra attributes
-		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(2 + chosenOption.getAttributes().length);
+		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(2 + cellValuesDesc.getAttributes().length);
 		for (int i = 0; i < rowExtraAttributes.length; i++)
 			query.addPopulatedAttribute(rowExtraAttributes[i]);
 
 		// col extra attributes
-		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(2 + chosenOption.getAttributes().length + rowExtraAttributes.length);
+		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(2 + cellValuesDesc.getAttributes().length + rowExtraAttributes.length);
 		for (int i = 0; i < colExtraAttributes.length; i++)
 			query.addPopulatedAttribute(colExtraAttributes[i]);
 
 		// finally query the database
-		System.out.println(query.toStringWithParams().conditionString);
-		System.out.println("params: " + query.toStringWithParams().properties);
 		Object[] result = query.executeQuery(sess);
 
 		// init groupers
@@ -335,16 +407,9 @@ public class DatabaseTableviewBean {
 		transaction.commit();
 		sess.close();
 
-		// what to show
-		int subCols = 2;
-		int extraHeaderRows = 1;
-		//int expColOffset = 0;
-		//int impColOffset = 1;
-		
-		extraHeaderRows = chosenOption.attributes.length > 1 ? 1 : 0; 
-		subCols = chosenOption.attributes.length;
-
 		// dimensions of the table
+		int subCols = cellValuesDesc.getValuesCount();
+		int extraHeaderRows = cellValuesDesc.getValuesCount() > 1 ? 1 : 0; 
 		int dataRowCount = rowGrouper.getLeaveLabelsCount();
 		int dataColCount = colGrouper.getLeaveLabelsCount();
 		int headerTopRowsCount = colGrouper.getBreakdownDepth();
@@ -362,14 +427,15 @@ public class DatabaseTableviewBean {
 		table[0][0] = topLeftCell;
 
 		// get column labels and make sure that the number
-		// of children is precalculated
+		// of children is pre-calculated
 		Label[] colLabels = colGrouper.getLabels();
 		for (int j = 0; j < colLabels.length; j++)
 			colLabels[j].calculateLeaves();
 
 		// fill them using labels
 		int colIdx = headerLeftColsCount;
-		for (int j = 0; j < colLabels.length; j++) {
+		for (int j = 0; j < colLabels.length; j++)
+		{
 			addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount, subCols);
 			colIdx += subCols * colLabels[j].getLeavesCount();
 		}
@@ -382,156 +448,205 @@ public class DatabaseTableviewBean {
 
 		// fill them using labels
 		int rowIdx = headerTopRowsCount + extraHeaderRows;
-		for (int i = 0; i < rowLabels.length; i++) {
+		for (int i = 0; i < rowLabels.length; i++)
+		{
 			addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount);
 			rowIdx += rowLabels[i].getLeavesCount();
 		}
 
 		// extra row with exported/imported labels
-		if (extraHeaderRows != 0) {
-			for (int j = 0; j < dataColCount; j++) {
-				for (int i = 0; i < chosenOption.getAttributes().length; i++) {
-					table[headerTopRowsCount][headerLeftColsCount + subCols * j + i] = new SimpleTableCell(
-							chosenOption.getLabels()[i]).setCssClass(CSS_CLASS_TD_LABEL);
+		if (extraHeaderRows != 0)
+		{
+			for (int j = 0; j < dataColCount; j++)
+			{
+				for (int i = 0; i < cellValuesDesc.getValuesCount(); i++)
+				{
+					table[headerTopRowsCount][headerLeftColsCount + subCols * j + i] =
+						new SimpleTableCell(cellValuesDesc.getLabels()[i]).setCssClass(CSS_CLASS_TD_LABEL);
 				}
 			}
 		}
 
-		String aggregate = ((FunctionAttribute)chosenOption.getAttributes()[0]).getFunctionName();
-		
-		// labels for row totals
-		if (!aggregate.equals("avg")) {
-			table[0][headerLeftColsCount + subCols * dataColCount + 0] = new SimpleTableCell(TastResource
-					.getText("database_tableview_totals")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(
-					CSS_CLASS_TD_LABEL);
-		} else {
-			table[0][headerLeftColsCount + subCols * dataColCount + 0] = new SimpleTableCell(TastResource
-					.getText("database_tableview_averages")).setColspan(2).setRowspan(headerTopRowsCount).setCssClass(
-					CSS_CLASS_TD_LABEL);
+		boolean isAvg = cellValuesDesc.isAvg();
+		if (!isAvg)
+		{
+			table[0][headerLeftColsCount + subCols * dataColCount + 0] =
+				new SimpleTableCell(TastResource.getText("database_tableview_totals")).
+				setColspan(2).
+				setRowspan(headerTopRowsCount).
+				setCssClass(CSS_CLASS_TD_LABEL);
+		}
+		else
+		{
+			table[0][headerLeftColsCount + subCols * dataColCount + 0] =
+				new SimpleTableCell(TastResource.getText("database_tableview_averages")).
+				setColspan(2).
+				setRowspan(headerTopRowsCount).
+				setCssClass(CSS_CLASS_TD_LABEL);
 		}
 		
-		for (int i = 0; i < chosenOption.attributes.length; i++) {
-			table[headerTopRowsCount][headerLeftColsCount + subCols * dataColCount + i] = new SimpleTableCell(
-					chosenOption.getLabels()[i]).setCssClass(CSS_CLASS_TD_LABEL);
+		for (int i = 0; i < cellValuesDesc.getValuesCount(); i++)
+		{
+			table[headerTopRowsCount][headerLeftColsCount + subCols * dataColCount + i] =
+				new SimpleTableCell(cellValuesDesc.getLabels()[i]).
+				setCssClass(CSS_CLASS_TD_LABEL);
 		}
 
 		// label for col totals
-		if (!aggregate.equals("avg")) {
-			table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell(TastResource
-					.getText("database_tableview_totals")).setCssClass(CSS_CLASS_TD_LABEL).setColspan(
-					headerLeftColsCount);
-		} else {
-			table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] = new SimpleTableCell(TastResource
-					.getText("database_tableview_averages")).setCssClass(CSS_CLASS_TD_LABEL).setColspan(
-					headerLeftColsCount);
+		if (!isAvg)
+		{
+			table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] =
+				new SimpleTableCell(TastResource.getText("database_tableview_totals")).
+				setColspan(headerLeftColsCount).
+				setCssClass(CSS_CLASS_TD_LABEL);
+		}
+		else
+		{
+			table[headerTopRowsCount + extraHeaderRows + dataRowCount][0] =
+				new SimpleTableCell(TastResource.getText("database_tableview_averages")).
+				setColspan(headerLeftColsCount).
+				setCssClass(CSS_CLASS_TD_LABEL);
 		}
 
 		// how we want to displat it
-		MessageFormat valuesFormat = this.chosenOption.getFormat();
+		MessageFormat valuesFormat = this.cellValuesDesc.getFormat();
 
-		//totals for average - vertical
-		int[][] totalV = new int[dataColCount][chosenOption.attributes.length];
-		
-		//totals for average - horizontal
-		int[][] totalH = new int[dataRowCount][chosenOption.attributes.length];
+		// count totals (used for average)
+		int[][] colTotalCount = new int[dataColCount][cellValuesDesc.getValuesCount()];
+		int[][] rowTotalCounts = new int[dataRowCount][cellValuesDesc.getValuesCount()];
+		int[] totalCounts = new int[cellValuesDesc.getValuesCount()];
 		
 		// for totals
-		double[][] rowTotals = new double[dataRowCount][chosenOption.attributes.length];
-		double[][] colTotals = new double[dataColCount][chosenOption.attributes.length];
-		double[] totals = new double[chosenOption.attributes.length];
+		double[][] rowTotals = new double[dataRowCount][cellValuesDesc.getValuesCount()];
+		double[][] colTotals = new double[dataColCount][cellValuesDesc.getValuesCount()];
+		double[] totals = new double[cellValuesDesc.getValuesCount()];
 
 		// fill in the data
-		for (int i = 0; i < result.length; i++) {
-
+		for (int i = 0; i < result.length; i++)
+		{
 			Object[] row = (Object[]) result[i];
-			Number[] numbers = new Number[chosenOption.attributes.length];
-			for (int j = 0; j < numbers.length; j++) {
-				Number n = (Number) row[2 + j];
-				numbers[j] = n;
-				if (numbers[j] == null) {
-					numbers[j] = new Double(0.0);
-				}
-			}
-			
 
 			int rowIndex = rowGrouper.lookupIndex(row);
 			int colIndex = colGrouper.lookupIndex(row);
 
-			for (int j = 0; j < chosenOption.attributes.length; j++) {
-				rowTotals[rowIndex][j] += numbers[j].doubleValue();
-				colTotals[colIndex][j] += numbers[j].doubleValue();
+			for (int k = 0; k < cellValuesDesc.getValuesCount(); k++)
+			{
 				
-				if (aggregate.equals("avg") && row[2 + j] != null) {
-					totalH[rowIndex][j] += 1;
-					totalV[colIndex][j] += 1;
-				}
+				double val = 0.0; 
 				
-				totals[j] += numbers[j].doubleValue();
-				if (numbers[j].doubleValue() == 0.0) {
-					table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
-					       				                               	+ j] = new SimpleTableCell(chosenOption.getZeroValue());
-				} else {
-					table[headerTopRowsCount + extraHeaderRows + rowIndex][headerLeftColsCount + subCols * colIndex
-				                               	+ j] = new SimpleTableCell(valuesFormat.format(new Object[] { numbers[j] }));
+				if (!isAvg)
+				{
+				
+					Number valObj = (Number) row[2 + k];
+					val = valObj == null ? 0.0 : valObj.doubleValue();
+					
+					rowTotals[rowIndex][k] += val;
+					colTotals[colIndex][k] += val;
+					totals[k] += val;
+					
 				}
+				else
+				{
+
+					Long cntObj = (Long) row[2 + 2*k + 0];
+					Number valObj = (Number) row[2 + 2*k + 1];
+
+					long cnt = cntObj == null ? 0 : cntObj.longValue();
+					val = valObj == null ? 0.0 : valObj.doubleValue();
+					
+					if (cnt != 0)
+					{
+						rowTotals[rowIndex][k] += val;
+						colTotals[colIndex][k] += val;
+						totals[k] += val;
+						rowTotalCounts[rowIndex][k] += cnt;
+						colTotalCount[colIndex][k] += cnt;
+						totalCounts[k] += cnt;
+						val /= cnt;
+					}
+					
+				}
+
+				int innerRowIdx = headerTopRowsCount + extraHeaderRows + rowIndex;
+				int innerColIdx = headerLeftColsCount + subCols * colIndex + k;
+
+				String cellValue = valuesFormat.format(new Object[] {new Double(val)});
+				
+				table[innerRowIdx][innerColIdx] = new SimpleTableCell(cellValue);
+				
 			}
 
 		}
 
-		if (aggregate.equals("avg")) {
-			for (int i = 0; i < colTotals.length; i++) {
-				for (int j = 0; j < colTotals[i].length; j++) {
-					colTotals[i][j] /= (double) totalV[i][j];
+		// adjust total in case of averages
+		if (isAvg)
+		{
+			for (int j = 0; j < colTotals.length; j++)
+			{
+				for (int k = 0; k <  cellValuesDesc.getValuesCount(); k++)
+				{
+					if (colTotalCount[j][k] > 0)
+						colTotals[j][k] /= (double) colTotalCount[j][k];
 				}
 			}
-			for (int i = 0; i < rowTotals.length; i++) {
-				for (int j = 0; j < rowTotals[i].length; j++) {
-					rowTotals[i][j] /= (double) totalH[i][j];
+			for (int i = 0; i < rowTotals.length; i++)
+			{
+				for (int k = 0; k < cellValuesDesc.getValuesCount(); k++)
+				{
+					if (rowTotalCounts[i][k] > 0)
+						rowTotals[i][k] /= (double) rowTotalCounts[i][k];
 				}
+			}
+			for (int k = 0; k < cellValuesDesc.getValuesCount(); k++)
+			{
+				if (totalCounts[k] > 0)
+					totals[k] /= (double) totalCounts[k];
 			}
 		}
 
 		// fill gaps
-		String zeroValue = chosenOption.getZeroValue();
-		for (int i = 0; i < dataRowCount; i++) {
-			for (int j = 0; j < subCols * dataColCount; j++) {
-				if (table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + j] == null) {
-					table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + j] = new SimpleTableCell(
-							zeroValue);
+		// String zeroValue = cellValuesDesc.getZeroValue();
+		for (int i = 0; i < dataRowCount; i++)
+		{
+			int innerRowIdx = headerTopRowsCount + extraHeaderRows + i;
+			for (int j = 0; j < subCols * dataColCount; j++)
+			{
+				int innerColIdx = headerLeftColsCount + j;
+				if (table[innerRowIdx][innerColIdx] == null)
+				{
+					table[innerRowIdx][innerColIdx] = new SimpleTableCell("");
 				}
 			}
 		}
 
 		// insert row totals
-		for (int i = 0; i < dataRowCount; i++) {
-			for (int j = 0; j < rowTotals[i].length; j++) {
-				table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + subCols * dataColCount
-				                        + j] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
-				                        rowTotals[i][j]) })).setCssClass(CSS_CLASS_TD_TOTAL);
+		for (int i = 0; i < dataRowCount; i++)
+		{
+			for (int j = 0; j < rowTotals[i].length; j++)
+			{
+				table[headerTopRowsCount + extraHeaderRows + i][headerLeftColsCount + subCols * dataColCount + j] =
+					new SimpleTableCell(valuesFormat.format(new Object[] { new Double(rowTotals[i][j]) })).
+				    setCssClass(CSS_CLASS_TD_TOTAL);
 			}
 		}
 
 		// insert col totals
-		for (int j = 0; j < dataColCount; j++) {
-			for (int i = 0; i < colTotals[j].length; i++) {
-				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * j
-				                        + i] = new SimpleTableCell(valuesFormat.format(new Object[] { new Double(
-				                        colTotals[j][i]) })).setCssClass(CSS_CLASS_TD_TOTAL);
+		for (int j = 0; j < dataColCount; j++)
+		{
+			for (int i = 0; i < colTotals[j].length; i++)
+			{
+				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * j + i] =
+					new SimpleTableCell(valuesFormat.format(new Object[] { new Double(colTotals[j][i]) })).
+					setCssClass(CSS_CLASS_TD_TOTAL);
 			}
 		}
 
 		// main totals
-		if (!aggregate.equals("avg")) {
-			for (int i = 0; i < totals.length; i++) {
-				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount
-				                           + i] = new SimpleTableCell(valuesFormat
-				                           .format(new Object[] { new Double(totals[i]) })).setCssClass(CSS_CLASS_TD_TOTAL);
-			}
-		} else {
-			for (int i = 0; i < totals.length; i++) {
-				table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount
-				                               + i] = new SimpleTableCell("N/A").setCssClass(CSS_CLASS_TD_TOTAL);
-			}
+		for (int i = 0; i < totals.length; i++)
+		{
+			table[headerTopRowsCount + extraHeaderRows + dataRowCount][headerLeftColsCount + subCols * dataColCount + i] =
+		    	  new SimpleTableCell(valuesFormat.format(new Object[] { new Double(totals[i]) })).
+		    	  setCssClass(CSS_CLASS_TD_TOTAL);
 		}
 
 	}
@@ -623,7 +738,7 @@ public class DatabaseTableviewBean {
 	 * @return
 	 */
 	public String getShowMode() {
-		return chosenOption.id;
+		return cellValuesDesc.getId();
 	}
 
 	/**
@@ -633,8 +748,8 @@ public class DatabaseTableviewBean {
 	 */
 	public void setShowMode(String showMode) {
 		for (int i = 0; i < options.length; i++) {
-			if (showMode.equals(options[i].id)) {
-				this.chosenOption = options[i];
+			if (showMode.equals(options[i].getId())) {
+				this.cellValuesDesc = options[i];
 				break;
 			}
 		}		

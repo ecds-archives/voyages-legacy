@@ -295,7 +295,7 @@ public class EstimatesSelectionBean
 	public List loadSelectedNations(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.JOIN_OR);
+		Conditions cond = new Conditions(Conditions.OR);
 		for (Iterator iter = selectedNationIds.iterator(); iter.hasNext();)
 			cond.addCondition(EstimatesNation.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
 
@@ -316,7 +316,7 @@ public class EstimatesSelectionBean
 	public List loadSelectedExpRegions(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.JOIN_OR);
+		Conditions cond = new Conditions(Conditions.OR);
 		for (Iterator iter = selectedExpRegionIds.iterator(); iter.hasNext();)
 			cond.addCondition(EstimatesExportRegion.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
 
@@ -337,7 +337,7 @@ public class EstimatesSelectionBean
 	public List loadSelectedImpRegions(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.JOIN_OR);
+		Conditions cond = new Conditions(Conditions.OR);
 		for (Iterator iter = selectedImpRegionIds.iterator(); iter.hasNext();)
 			cond.addCondition(EstimatesImportRegion.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
 
@@ -358,7 +358,7 @@ public class EstimatesSelectionBean
 	public List loadSelectedImpAreas(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.JOIN_OR);
+		Conditions cond = new Conditions(Conditions.OR);
 		for (Iterator iter = selectedImpAreaIds.iterator(); iter.hasNext();)
 			cond.addCondition(EstimatesImportArea.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
 
@@ -393,7 +393,7 @@ public class EstimatesSelectionBean
 		Integer yearFromInt = ConversionUtils.toInteger(yearFrom);
 		Integer yearToInt = ConversionUtils.toInteger(yearTo);
 
-		timeFrameConditions = new Conditions(Conditions.JOIN_AND);
+		timeFrameConditions = new Conditions(Conditions.AND);
 		
 		if (yearFromInt == null || yearToInt == null || yearFromInt.compareTo(yearToInt) < 0)
 		{
@@ -411,12 +411,12 @@ public class EstimatesSelectionBean
 						Conditions.OP_SMALLER_OR_EQUAL);
 		}
 
-		Conditions conditionNations = new Conditions(Conditions.JOIN_OR);
-		Conditions conditionExpRegions = new Conditions(Conditions.JOIN_OR);
-		Conditions conditionImpRegions = new Conditions(Conditions.JOIN_OR);
-		Conditions conditionRegions = new Conditions(Conditions.JOIN_AND);
+		Conditions conditionNations = new Conditions(Conditions.OR);
+		Conditions conditionExpRegions = new Conditions(Conditions.OR);
+		Conditions conditionImpRegions = new Conditions(Conditions.OR);
+		Conditions conditionRegions = new Conditions(Conditions.AND);
 
-		geographicConditions = new Conditions(Conditions.JOIN_AND);
+		geographicConditions = new Conditions(Conditions.AND);
 		geographicConditions.addCondition(conditionNations);
 		geographicConditions.addCondition(conditionRegions);
 		conditionRegions.addCondition(conditionExpRegions);
@@ -682,7 +682,7 @@ public class EstimatesSelectionBean
 	 */
 	public Conditions getConditions()
 	{
-		Conditions conds = new Conditions(Conditions.JOIN_AND);
+		Conditions conds = new Conditions(Conditions.AND);
 		conds.addCondition(geographicConditions);
 		conds.addCondition(timeFrameConditions);
 		return conds;

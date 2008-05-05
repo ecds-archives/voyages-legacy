@@ -109,7 +109,7 @@ public class SlavesQuery implements Cloneable
 		if (allSelected || allDeselected)
 			return null;
 		
-		Conditions conditions = new Conditions(Conditions.JOIN_OR);
+		Conditions conditions = new Conditions(Conditions.OR);
 		
 		StringBuffer querySummaryValue = null;
 		if (querySummary != null)
@@ -323,7 +323,7 @@ public class SlavesQuery implements Cloneable
 			
 			Set countriesSet = StringUtils.toLongSet(countries);
 			
-			Conditions condCountries = new Conditions(Conditions.JOIN_OR);
+			Conditions condCountries = new Conditions(Conditions.OR);
 
 			String allCountriesHQL =
 				"from Country c " +
@@ -371,7 +371,7 @@ public class SlavesQuery implements Cloneable
 			
 			Set embPortsSet = StringUtils.toStringSet(embPorts);
 
-			Conditions condPorts = new Conditions(Conditions.JOIN_OR);
+			Conditions condPorts = new Conditions(Conditions.OR);
 			
 			String allEmbPortsHQL =
 				"from Port p " +

@@ -92,7 +92,7 @@ public class VoyagesListBean
 		Transaction tran = sess.beginTransaction();
 		
 		// prepare conditions
-		Conditions conds = new Conditions(Conditions.JOIN_AND);
+		Conditions conds = new Conditions(Conditions.AND);
 
 		// year to
 		if (yearFrom != -1) {

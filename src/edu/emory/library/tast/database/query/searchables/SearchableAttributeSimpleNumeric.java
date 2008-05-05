@@ -150,7 +150,7 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 		}
 		else
 		{
-			Conditions orCond = new Conditions(Conditions.JOIN_OR);
+			Conditions orCond = new Conditions(Conditions.OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
 				addSingleAttributeToConditions(queryConditionNumeric,

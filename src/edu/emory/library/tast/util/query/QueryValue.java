@@ -123,7 +123,7 @@ public class QueryValue {
 	 * @param objType object type
 	 */
 	public QueryValue(String objType) {
-		this(objType, new Conditions(Conditions.JOIN_AND));
+		this(objType, new Conditions(Conditions.AND));
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class QueryValue {
 	 * @param objType object type
 	 */
 	public QueryValue(String [] objTypes, String[] aliases) {
-		this(objTypes, aliases, new Conditions(Conditions.JOIN_AND));
+		this(objTypes, aliases, new Conditions(Conditions.AND));
 	}
 
 	/**

@@ -45,13 +45,13 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			return false;
 
 		// add keywords to query
-		Conditions subCond = new Conditions(Conditions.JOIN_AND);
+		Conditions subCond = new Conditions(Conditions.AND);
 		Attribute[] attributes = getAttributes();
 		for (int i = 0; i < keywords.length; i++)
 		{
 			
 			String keyword = "%" + keywords[i] + "%";
-			Conditions kewordCond = new Conditions(Conditions.JOIN_OR);
+			Conditions kewordCond = new Conditions(Conditions.OR);
 			
 			for (int j = 0; j < attributes.length; j++)
 			{
