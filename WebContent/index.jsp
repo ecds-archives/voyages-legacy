@@ -200,10 +200,10 @@
 				<div id="welcome-text">
 					<div id="welcome-text-big"><img src="./images/index/welcome-text.png" width="530" height="80" border="0" /></div>
 					<div id="welcome-text-small">
-						<div>forcibly transporting over 12 million Africans to the Americas between</div>
-						<div>the sixteenth and the nineteenth centuries. It offers descendants,</div>
-						<div>researchers, students, and the general public a chance to rediscover</div>
-						<div>the reality of one of the largest movements of peoples in world history.</div>
+						<div>forcibly embarking over 10 million Africans for transport to the Americas</div>
+						<div>between the sixteenth and nineteenth centuries.  It offers researchers, </div>
+						<div>students and the general public a chance to rediscover the reality of </div>
+						<div>one of the largest forced movement of peoples in world history.</div>
 					</div>
 				</div>
 				
@@ -222,9 +222,9 @@
 							</a>
 						</div>
 						<div class="featured-section-description">
-							The database contains records about more than 
-							35,000 trans-atlantic slave voyages and
-							was collected over the past 20 years.
+						    Look for particular voyages in this database of documented slaving 
+						    expeditions.  Create listings, tables, charts, and maps using 
+						    information from the database.							
 						</div>
 					</td>
 				</tr>
@@ -237,15 +237,14 @@
 					<td class="featured-section-text">
 						<div class="featured-section-caption">
 							<a href="./assessment/estimates.faces">
-							View our Estimates of the Slave Trade
+							Explore Estimates of the Trade
 							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
 							</a>
 						</div>
 						<div class="featured-section-description">
-							The estimates were obtained by combining
-							the voyage database with other sources in order
-							to compensate for the missing information
-							in the voyage database.
+							Slaves on documented voyages represent four-fifths of the number 
+							who were actually transported.  Use the interactive estimates page 
+							to analyze the full volume and multiple routes of the slave trade.  							
 						</div>
 					</td>
 				</tr>
@@ -258,13 +257,14 @@
 					<td class="featured-section-text">
 						<div class="featured-section-caption">
 							<a href="./resources/slaves.faces">
-							Explore the Database of Slaves
+							Explore the Names Database
 							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
 							</a>
 						</div>
 						<div class="featured-section-description">
-							Explore the database of names of Africans liberated
-							from slave vessels in Sierra Leone and Havana.
+							This database identifies 67,000 Africans aboard slave ships 
+							intercepted by naval cruisers, by name, age, gender, origin, 
+							and place of embarkation.  							
 						</div>
 					</td>
 				</tr>
@@ -276,7 +276,7 @@
 						<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
 						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
 						<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline</a></td>
+						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline and Chronology</a></td>
 					</tr>
 					</table>
 				</div>
