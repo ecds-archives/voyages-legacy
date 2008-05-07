@@ -67,18 +67,21 @@ public class StandardMaps
 	
 	private static ZoomLevel levelGeoE3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/geo/regions/3"); 
 	private static ZoomLevel levelGeoE1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/geo/ports/1");
+	private static ZoomLevel level1650E6 = new ZoomLevel(160, 120, -110.83, -61.83, 16, 16, 1.0/15.0,	baseMapUrl + "/tiles/estimates/1650/regions/6");
 	private static ZoomLevel level1650E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1650/regions/3"); 
 	private static ZoomLevel level1650E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1650/ports/1"); 
+	private static ZoomLevel level1750E6 = new ZoomLevel(160, 120, -110.83, -61.83, 16, 16, 1.0/15.0,	baseMapUrl + "/tiles/estimates/1750/regions/6");
 	private static ZoomLevel level1750E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1750/regions/3");
 	private static ZoomLevel level1750E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1750/ports/1");;
+	private static ZoomLevel level1850E6 = new ZoomLevel(160, 120, -110.83, -61.83, 16, 16, 1.0/15.0,	baseMapUrl + "/tiles/estimates/1850/regions/6");
 	private static ZoomLevel level1850E3 = new ZoomLevel(160, 120, -110.83, -61.83, 32, 32, 1.0/30.0,	baseMapUrl + "/tiles/estimates/1850/regions/3"); 
 	private static ZoomLevel level1850E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1850/ports/1");;
 	
 	private static final MapIdent[] mapsEstimates = new MapIdent[] {
 		new MapIdent("geophysical", "Geophysical maps", 1501, 1867, new ZoomLevel[] {levelGeo20,levelGeo6, levelGeoE3, levelGeoE1}, new String[] {"Geophysical map, broad regions", "Geophysical map, regions"}),
-		new MapIdent("h_1650", "Historical maps: 1650 (1501-1641)", 1501, 1641, new ZoomLevel[] {levelGeo20, level1650_6, level1650E3, level1650E1}, new String[] {"Historical map (1650), broad regions", "Historical map (1650), regions"}),
-		new MapIdent("h_1750", "Historical maps: 1750 (1642-1807)", 1642, 1807, new ZoomLevel[] {levelGeo20, level1750_6, level1750E3, level1750E1}, new String[] {"Historical map (1750), broad regions", "Historical map (1750), regions"}),
-		new MapIdent("h_1850", "Historical maps: 1850 (1808-1867)", 1808, 1867, new ZoomLevel[] {levelGeo20, level1850_6, level1850E3, level1850E1}, new String[] {"Historical map (1850), broad regions", "Historical map (1850), regions"})		
+		new MapIdent("h_1650", "Historical maps: 1650 (1501-1641)", 1501, 1641, new ZoomLevel[] {levelGeo20, level1650E6, level1650E3, level1650E1}, new String[] {"Historical map (1650), broad regions", "Historical map (1650), regions"}),
+		new MapIdent("h_1750", "Historical maps: 1750 (1642-1807)", 1642, 1807, new ZoomLevel[] {levelGeo20, level1750E6, level1750E3, level1750E1}, new String[] {"Historical map (1750), broad regions", "Historical map (1750), regions"}),
+		new MapIdent("h_1850", "Historical maps: 1850 (1808-1867)", 1808, 1867, new ZoomLevel[] {levelGeo20, level1850E6, level1850E3, level1850E1}, new String[] {"Historical map (1850), broad regions", "Historical map (1850), regions"})		
 	};
 	
 	private static final MapIdent[] mapsDatabase = new MapIdent[] {
