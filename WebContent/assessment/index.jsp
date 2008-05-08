@@ -45,7 +45,7 @@
 		suppression.  Several vignettes describe the personal experience of Africans 
 		carried to the Americas on slave ships.  Finally, research notes focus on 
 		more specialized topics.  Other “Essays” will be added as the website develops.  
-		Its editorial board [link to Contacts] will consider for publication in the 
+		<a href="../about/contact.faces">Its editorial board</a> will consider for publication in the 
 		“Essays” section any text that uses databases on the website as a major source.</p>
 
 		<h2><a href="estimates.faces">Estimates</a></h2>
