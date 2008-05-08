@@ -17,7 +17,7 @@
 	<script src="./scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="./scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="./scripts/welcome-map.js" language="javascript" type="text/javascript"></script>
-	
+
 	<script language="javascript" type="text/javascript">
 	
 	WelcomeMapGlobals.register(new WelcomeMap(
@@ -308,6 +308,6 @@
 	
 	</div>
 
-</f:view>
+</f:view>  
 </body>
 </html>
