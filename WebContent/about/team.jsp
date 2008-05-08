@@ -29,7 +29,7 @@
 	<s:siteHeader activeSectionId="about">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="./index.faces"><h:outputText value="About the Project" /></h:outputLink>
-		<h:outputText value="Project development team" />
+		<h:outputText value="Project team" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -66,7 +66,7 @@
 							</ul>
 						</li>
 					
-						<li><div class="group">PROJECT DEVELOPMENT TEAM</div>
+						<li><div class="group">PROJECT TEAM</div>
 							<ul>
 								<li>
 									<span class="person">Franky Abbott</span> &ndash;
