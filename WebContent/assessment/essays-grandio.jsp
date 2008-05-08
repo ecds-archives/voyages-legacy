@@ -262,36 +262,38 @@
 					</div>
 					
 					<p class="note"> 1 Leslie Bethell, "The Mixed Commissions for the Suppression of the Transatlantic Slave Trade in 
-					the Nineteenth Century." <font style="font-style: italic;">Journal of African History 7 </font>(1966): 79-93; David Murray, Odious Commerce: (Cambridge, 1972).</p>
+					the Nineteenth Century." <font style="font-style: italic;">Journal of African History 7 </font>(1966): 79-93; David Murray, 
+					<font style="text-decoration:underline">Odious Commerce:</font> (Cambridge, 1972).</p>
 					
 					<p class="note">2 AHN, Estado, Esclavitud, Legajo: 8034/21.</p>
 					
 					<p class="note">3 The term seems to come from the Gbangá River in Sierra Leone or a toponimic that refers to the 
 					zone of Gbangbama, where that river come into the sea. See Basso Ortiz, A. (2001). "Los Gangá Longobá: el Nacimiento 
-					de los Dioses." Boletín Antropológico. Universidad de Los Andes. Mérida. II(52): 195-208.	 </p>
+					de los Dioses." <font style="text-decoration:underline">Boletín Antropológico. Universidad de Los Andes. Mérida. </font>II(52): 195-208.	 </p>
 					
 					<p class="note">4 On Gola see: de Azevedo, W. L. (1969). "A Tribal Reaction to Nationalism (Part I)." 
-					Liberian Studies Journal I(2): 1-21; Holsoe, S. E. (1971). "A Study of Relations between Settlers and 
-					Indigenous People in Western Liberia, 1821-1847." African Historical Studies 4(2): 331-62.</p>
+					<font style="text-decoration:underline">Liberian Studies Journal </font>I(2): 1-21; Holsoe, S. E. (1971). 
+					"A Study of Relations between Settlers and Indigenous People in Western Liberia, 1821-1847." 
+					<font style="text-decoration:underline">African Historical Studies</font> 4(2): 331-62.</p>
 					
-					<p class="note">5 Calvo L. Novás, Pedro Blanco, el Negrero (Barcelona, 1999); Riddell, W. R. (1930). 
-					"Observation on Slavery and Privateering." The Journal of Negro History 15(3): 337-71.</p>
+					<p class="note">5 Calvo L. Novás, <font style="text-decoration:underline">Pedro Blanco, el Negrero </font>(Barcelona, 1999); Riddell, W. R. (1930). 
+					"Observation on Slavery and Privateering." <font style="text-decoration:underline">The Journal of Negro History</font> 15(3): 337-71.</p>
 					
 					<p class="note">6 See: Holsoe, S. E. (1969). "Chiefdoms and Clan Maps of Western Liberia." 
-					Liberian Studies Journal 1 (1969): 23-39.	</p>
+					<font style="text-decoration:underline">Liberian Studies Journal </font>1 (1969): 23-39.	</p>
 					
 					<p class="note">7 On Vai see: Holsoe, S. E. (1967). The cassava-leaf people: An ethno-historical study of the 
 					Vai people with particular emphasis on the Tewo chiefdom. Ph.D. dissertation, Boston University.	</p>
 					
 					<p class="note">8 Sierra Leone and Liberia see: Holsoe, S. E. (1977). Slavery and Economic Response among the 
-					Vai (Liberia and Sierra Leone). Slavery in Africa: Historical and Anthropological Perspectives. 
+					Vai (Liberia and Sierra Leone).<font style="text-decoration:underline"> Slavery in Africa: Historical and Anthropological Perspectives</font>. 
 					S. Miers and I. Kopytoff. Madison, 287-303.	</p>
 					
 					<p class="note">9 For slavery in Africa see: Kopytoff, I. and S. Miers, "African ‘Slavery’ as an Institution of Marginality," 
-					Kopytoff and and Miers, Slavery in Africa, 3-78.	</p>
+					Kopytoff and and Miers, <font style="text-decoration:underline">Slavery in Africa</font>, 3-78.	</p>
 					
-					<p class="note">10 See: de la Concha, J. (1861). Memoria sobre el ramo de emancipados de la Isla de Cuba. 
-					Madrid, Imprenta de la América.	</p>
+					<p class="note">10 See: de la Concha, J. (1861). <font style="text-decoration:underline">Memoria sobre el ramo de emancipados de la 
+					Isla de Cuba</font>. Madrid, Imprenta de la América.	</p>
 					
 					<p class="note">11 Some reports have mentioned that Spanish officials were selling emancipados in Havana 
 					during the 1830s at nine gold ounces, or about one-third of the cost of a slave. Archivo Nacional de Cuba 
@@ -300,7 +302,7 @@
 					<p class="note">12 AHN, Estado, Esclavitud, Legajo: 8019/39</p>
 					
 					<p class="note">13 Roldán de Montaud, I. (1982). "Origen, evolución y supresión del grupo de negros 'emancipados' 
-					en Cuba (1817-1870)." Revista de Indias 42(July-December): 580 </p>
+					en Cuba (1817-1870)." <font style="text-decoration:underline">Revista de Indias </font>42(July-December): 580 </p>
 					
 					<p class="note">14 BFSP, vol. XXIII, The treaty of 1835, 343-71; AHN, Ultramar, Legajo 3547/6.	</p>
 					
@@ -311,10 +313,12 @@
 					<p class="note">17 Ibid. AHN, Estado, Esclavitud, Legajo: 8019/39/1-7</p>
 					
 					<p class="note">18 Before his apointment as Bristish Consul in Havana Turnbull spent almost two years travelling 
-					in Cuba and writing his best known book, Travels in the West: Cuba; with Notices of Porto Rico and the Slave Trade (London, 1840).	</p>
+					in Cuba and writing his best known book, <font style="font-style: italic;">Travels in the West: Cuba; with Notices 
+					of Porto Rico and the Slave Trade</font> (London, 1840).	</p>
 					
 					<p class="note">19 Turnbull would return to Cuba in 1842 from Bahamas and accompanied by several 
-					free blacks, hoping to free some emancipados who were held as slaves. For his arrest and deportation see Thomas, The Slave Trade, 668</p>
+					free blacks, hoping to free some emancipados who were held as slaves. For his arrest and deportation see Thomas, 
+					<font style="font-style: italic;">The Slave Trade,</font> 668</p>
 					
 					<p class="note">20 AHN, Estado, Esclavitud, Legajo: 8019/39/10</p>
 					

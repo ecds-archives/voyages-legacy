@@ -30,12 +30,27 @@
 		<h:outputText value="Download" />
 	</s:siteHeader>
 	
-	<div id="content">
-		<div style="margin: 20px;">
-			<table>
+	<div id="content">		
+		
+			<h1>DOWNLOADS</h1> 
+			
+			<h2>The Trans-Atlantic Slave Trade SPSS Database (expanded version)<h2>
+				
+			<p>The 2008 version of the Trans-Atlantic Slave Trade Database contains 8,374 voyages 
+			added since the CD-Rom was published in 1999 and additional information on 19,320 voyages.  
+			The complete data set has 276 variables, compared with 99 in the Voyages version.  Users 
+			interested in working with this larger dataset can download it in a file formatted for use 
+			with SPSS software, selecting the edition year from the drop-down menu below.  A variable 
+			in this dataset (EVGREEN) identifies voyages on the CD-ROM version published in 1999.  
+			Recognizing that some users will find it useful to view data as it existed in 1999, 
+			the CD version can also be selected for download.  A codebook describing all variable names, 
+			variable labels, and values of the expanded dataset can be downloaded as a separate PDF document.  
+			With only a few exceptions, it retains variable names in the original CD-ROM version.</p>
+		
+			<table>	
 				<tr>
 					<td> 
-						<h:outputText value="Choose database revision: "/>
+						<h:outputText value="Select edition year: "/>
 					</td>
 					<td>
 						<h:selectOneListbox value="#{DownloadDatabaseBean.revision}">
@@ -67,7 +82,7 @@
 				</tr>
 			
 			</table>
-		</div>
+		
 		
 		
 	</div>
