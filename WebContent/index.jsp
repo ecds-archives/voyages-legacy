@@ -198,7 +198,7 @@
 				Alternatively, we could create this as an image. -->
 			
 				<div id="welcome-text">
-					<div id="welcome-text-big"><img src="./images/index/welcome-text.png" width="530" height="80" border="0" /></div>
+					<div id="welcome-text-big"><img src="./images/index/welcome-text3.png" width="529" height="60" border="0" /></div>
 					<div id="welcome-text-small">
 						<div>forcibly embarking over 10 million Africans for transport to the Americas</div>
 						<div>between the sixteenth and nineteenth centuries.  It offers researchers, </div>
