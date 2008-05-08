@@ -75,6 +75,10 @@
 						
 				</s:secondaryMenuItem>
 				
+				<s:secondaryMenuItem
+					label="Dobo: A Liberated African in Nineteenth Century Havana"
+					href="essays-grandio.faces"
+					menuId="essays-grandio"/>
 			</s:secondaryMenuItem>
 			
 			<s:secondaryMenuItem
@@ -110,12 +114,8 @@
 				<s:secondaryMenuItem
 					label="Venture Smith"
 					href="essays-smith.faces"
-					menuId="essays-smith"/>
-					
-				<s:secondaryMenuItem
-					label="Dobo: A Liberated African in Nineteenth Century Havana"
-					href="essays-grandio.faces"
-					menuId="essays-grandio"/>
+					menuId="essays-smith"/>			
+				
 
 			</s:secondaryMenuItem>
 

@@ -34,7 +34,7 @@
 		
 			<h1>DOWNLOADS</h1> 
 			
-			<h2>The Trans-Atlantic Slave Trade SPSS Database (expanded version)<h2>
+			<h2>The Trans-Atlantic Slave Trade SPSS Database (expanded version)</h2>
 				
 			<p>The 2008 version of the Trans-Atlantic Slave Trade Database contains 8,374 voyages 
 			added since the CD-Rom was published in 1999 and additional information on 19,320 voyages.  
@@ -47,43 +47,46 @@
 			variable labels, and values of the expanded dataset can be downloaded as a separate PDF document.  
 			With only a few exceptions, it retains variable names in the original CD-ROM version.</p>
 		
-			<table>	
-				<tr>
-					<td> 
-						<h:outputText value="Select edition year: "/>
-					</td>
-					<td>
-						<h:selectOneListbox value="#{DownloadDatabaseBean.revision}">
-							<f:selectItems value="#{DownloadDatabaseBean.revisions}"/>
-						</h:selectOneListbox>
-					</td>
-				</tr>
-				<tr>
-					<td>
-					</td>
-					<td>
-						<h:selectBooleanCheckbox value="#{DownloadDatabaseBean.codes}">
-							<h:outputText value="Resolve codes to names"/>
-						</h:selectBooleanCheckbox>
-					</td>
-				</tr>
-				<tr>
-					<td> 
-						<h:outputText value="To download the database, click "/>
-						<h:commandLink action="#{DownloadDatabaseBean.getFileAllData}" value="here"/>
-						<h:outputText value="."/>
-					</td>
-				</tr>
-		
-				<tr>
-					<td>
-					<a href="../TSTD67.sav">Download</a> static SPSS file.
-					</td>
-				</tr>
+			<h3>Download:</h3>
+				<ul>
+					<li><a href="#">tastdb-exp-2008.sav</a></li>
+					<li><a href="#">tatsdb-1999.sav</a></li>
+					<li><a href="#">SPSS codebook</a></li>
+				</ul>		
+					
 			
-			</table>
-		
-		
+			<h2>The Trans-Atlantic Slave Trade Database (Voyages version)</h2>
+			
+			<p>This version of the Trans-Atlantic Slave Trade Database contains the 99 variables available 
+			through the Voyages website database.  It is made available in three formats: SPSS (.sav), comma 
+			delimited (.csv), and dBase (.dbf).  Users interested in working with this dataset with their 
+			preferred software may select an edition year and file format below. </p>
+			
+			<h3>Download:</h3>
+				<ul>
+					<li><a href="#">tastdb-2008.sav</a></li>
+					<li><a href="#">tatsdb-2008.cvs</a></li>
+					<li><a href="#">tast-db-2008.dbf</a></li>
+				</ul>
+				
+			<h2>Estimates spreadsheet</h2>
+			
+			<p>The Estimates section uses data from the expanded Trans-Atlantic Slave Trade Database dataset, 
+			aggregated by regions of embarkation and disembarkation, but also incorporates published series 
+			of embarkations and disembarkations for particular regions when these data provide more accurate 
+			estimates than the database itself. Users interested in exploring the complex methodology involved 
+			in generating the estimates, or in testing the extent to which alternative assumptions lower or 
+			augment estimates of the full volume of the slave trade (in its entirety or for a national carrier 
+			or period of time), can download an Excel-formatted copy of the spreadsheet below. </p>
+
+			<h3>Download:</h3>
+				<ul>
+					<li><a href="#">Estimate.xls</a></li>
+				</ul>
+				
+			<br>	
+			<h3>Questions about downloading or using these datasets? Please contact <a href="mailto:voyages@emory.edu">voyages@emory.edu</a>.</h3>
+			
 		
 	</div>
 
