@@ -27,83 +27,50 @@
 	<div id="content"><img src="../images/assessment-index-title.png"
 			width="350" height="40" border="0" alt="Assessing the Slave Trade">
 
-		<p>The Trans-Atlantic Slave Trade
-		Database in the second section of this website contains all slaving
-		expeditions documented up until now. It consists of information about
-		34,000 voyages embarking over 10,000,000 Africans and delivering alive
-		8,800,000 to markets for slave labor in the New World from North
-		America to South-east Brazil and the Rio de Plata estuary.
-		Nevertheless, the main database cannot claim to be complete. Records
-		of many voyages have disappeared, in some cases irretrievably, while
-		other documents remain to be discovered in public and private
-		archives. Thus the first section of the website provides “Estimates”
-		of how large the slave trade actually was.</p>
+		<p>The Trans-Atlantic Slave Trade Database in the first section of the 
+		website contains all slaving expeditions documented up until now.  
+		“Assessing the Slave Trade,” the second section of the website, presents 
+		three ways historians and researchers use information from the database 
+		to interpret the slave trade: essays, quantitative analysis, and maps.  
+		In the second, “Estimates” of the full volume of the slave trade by year, 
+		national carrier, and routes of slaving expeditions, interactive features 
+		enable users to raise their own questions about the data and obtain answers 
+		in the form of tables, a timeline, or maps. </p>
 
-		<p>The estimates are derived for the
-		most part from the main database, but also incorporate findings from
-		recent scholarship on the slave trade, such as the series developed by
-		António de Almeida Mendes showing arrivals of slaves in the Spanish
-		Americas in the sixteenth and early seventeenth centuries and the
-		comprehensive studies by Per Hernæs of the Danish slave trade from
-		West Africa. Careful evaluation has been made of gaps in coverage of
-		the slave trade of each national carrier. Taking relative completeness
-		of coverage into account, the data provided in the “Estimates” section
-		adjusts upwards the number of slaves exported and imported each year
-		in the main database. It may be considered the most reliable appraisal
-		available today of the actual magnitude of the trans-Atlantic slave
-		trade. Altogether, the estimates are about 20 percent higher than
-		unadjusted numbers in the main database. They raise the final totals
-		to over 12,500,000 Africans forced to undertake the Middle Passage and
-		nearly 10,800,000 who completed it, the largest forced migration in
-		modern history.</p>
+		<h2><a href="essays-intro-01.faces">Essays</a></h2>
 
-		<p>The quality of data, and therefore
-		of estimates derived from them, varies considerably over time and
-		space. To facilitate the user’s ability to specify periods of
-		analysis, estimates are provided of the annual number of slaves
-		shipped by a national carrier from 8 regions in Africa to 7 larger
-		regions and 34 more precisely defined regions in the Americas. In
-		addition, the dataset also shows the smaller number of captives
-		shipped instead to Europe or disembarked in Africa and Atlantic
-		islands, mostly in the nineteenth century after British abolition of
-		the international slave trade and deployment of naval squadrons to
-		enforce this measure. For the eighteenth century, when the slave trade
-		reached its apogee, estimates for individual years are based on a
-		large enough number of voyages to capture annual fluctuations. For the
-		sixteenth century, on the other hand, patterns observed 5 and 25 year
-		periods are more meaningful that statistics for single years.</p>
-
-		<h2><a href="essays-intro.faces">Essays</a></h2>
-
-		<p>This sub-section contains a short
-		“Introductory essay” by David Eltis summarizing his description and
-		interpretation of the volume and structure of the trans-Atlantic slave
-		trade from inception to suppression. It updates an earlier assessment
-		based on the version of the Trans-Atlantic Slave Trade Database
-		published as a CD-ROM in 1998. The reader will note that the figures
-		given by Eltis correspond to those which can be calculated in the
-		“Estimates” section of the website. The “Essays” sub-section also
-		contains a bibliography of published and unpublished scholarly studies
-		citing the Trans-Atlantic Slave Trade Database as a major source, with
-		links to the complete text of several which illustrate how to observe
-		patterns in the slave trade using the estimates.</p>
+		<p>This sub-section contains interpretations in traditional text format.  
+		An introductory essay provides a broad interpretation and overview of the 
+		volume and structure of the trans-Atlantic slave trade from inception to 
+		suppression.  Several vignettes describe the personal experience of Africans 
+		carried to the Americas on slave ships.  Finally, research notes focus on 
+		more specialized topics.  Other “Essays” will be added as the website develops.  
+		Its editorial board [link to Contacts] will consider for publication in the 
+		“Essays” section any text that uses databases on the website as a major source.</p>
 
 		<h2><a href="estimates.faces">Estimates</a></h2>
 
-		<p>Here you will find a table showing,
-		by quarter-century, how many slaves are estimated to have been
-		exported by the seven major slave-trading nations between 1501 and
-		1867. It is generated by the default parameters in the frame to its
-		left. Users can focus on a particular part of the trans-Atlantic slave
-		trade by specifying a shorter time frame, one or several of the
-		national carriers, and a region or group of regions where slaves were
-		embarked and/or disembarked. The current query box indicates
-		selections as they are made. Presentation of results is controlled by
-		selecting parameters in boxes for rows and columns and whether you
-		wish to see the number of slaves exported or imported or both.
-		Finally, tabs at the top of the default “Table” allow for choosing
-		another way of representing results for voyages selected by criteria
-		to the left – as a listing of cases, or on a map, or in a timeline.</p>
+		<p>Although the Trans-Atlantic Slave Trade Database includes all slave 
+		voyages that have been documented up to now, it cannot claim to be complete. 
+		Records of many voyages have disappeared, in some cases irretrievably, 
+		while other documents remain to be discovered in public and private archives. 
+		The “Estimates,” on the other hand, provide an educated guess of how large 
+		the slave trade actually was.  Altogether, the estimates are about 25 percent 
+		higher than unadjusted numbers in the main database. They raise the final 
+		totals to over 12,500,000 Africans forced to undertake the Middle Passage 
+		and around 10,700,000 who completed it, the largest forced migration in modern history.</p>
+		
+		<h2><a href="intromaps.faces">Introductary Maps</a></h2>
+		
+		<p>A third way of using the Trans-Atlantic Slave Trade Database to interpret 
+		the slave trade is to represent statistics derived from it on historical maps.  
+		A project is now underway to create an Atlas of the Slave Trade showing 
+		cartographically patterns and trends documented in the database.  Yale 
+		University Press, the publisher of the atlas, and Mapping Specialists, Ltd., 
+		have given the Voyages website permission to preview 9 of over 200 maps that 
+		will make up the Atlas.  They depict the origins of the Atlantic slave trade, 
+		its development over time, how wind and ocean currents shaped its routes, and 
+		how it affected regions and ports in Africa and the Americas.</p>
 
 		</div>
 		
