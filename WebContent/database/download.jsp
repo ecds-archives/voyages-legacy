@@ -87,7 +87,6 @@
 			<br>	
 			<h3>Questions about downloading or using these datasets? Please contact <a href="mailto:voyages@emory.edu">voyages@emory.edu</a>.</h3>
 			
-		
 	</div>
 
 </h:form>

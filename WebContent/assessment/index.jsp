@@ -45,7 +45,7 @@
 		suppression.  Several vignettes describe the personal experience of Africans 
 		carried to the Americas on slave ships.  Finally, research notes focus on 
 		more specialized topics.  Other “Essays” will be added as the website develops.  
-		<a href="../about/contact.faces">Its editorial board</a> will consider for publication in the 
+		Its <a href="../about/contact.faces">editorial board</a> will consider for publication in the 
 		“Essays” section any text that uses databases on the website as a major source.</p>
 
 		<h2><a href="estimates.faces">Estimates</a></h2>
@@ -60,15 +60,15 @@
 		totals to over 12,500,000 Africans forced to undertake the Middle Passage 
 		and around 10,700,000 who completed it, the largest forced migration in modern history.</p>
 		
-		<h2><a href="intromaps.faces">Introductary Maps</a></h2>
+		<h2><a href="intromaps.faces">Introductory Maps</a></h2>
 		
 		<p>A third way of using the Trans-Atlantic Slave Trade Database to interpret 
 		the slave trade is to represent statistics derived from it on historical maps.  
-		A project is now underway to create an Atlas of the Slave Trade showing 
-		cartographically patterns and trends documented in the database.  Yale 
+		A project is now underway to create an <font style="font-style: italic;">Atlas</font> of 
+		the Slave Trade showing cartographically patterns and trends documented in the database.  Yale 
 		University Press, the publisher of the atlas, and Mapping Specialists, Ltd., 
 		have given the Voyages website permission to preview 9 of over 200 maps that 
-		will make up the Atlas.  They depict the origins of the Atlantic slave trade, 
+		will make up the <font style="font-style: italic;">Atlas</font>. They depict the origins of the Atlantic slave trade, 
 		its development over time, how wind and ocean currents shaped its routes, and 
 		how it affected regions and ports in Africa and the Americas.</p>
 
