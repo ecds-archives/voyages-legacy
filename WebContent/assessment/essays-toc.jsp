@@ -86,12 +86,12 @@
 				menuId="vignettes">
 				
 				<s:secondaryMenuItem
-					label="Job Ben Solomon and the Curse of Slavery in the Atlantic World"
+					label="Ayuba Suleiman Diallo and Slavery in the Atlantic World"
 					href="essays-solomon.faces"
 					menuId="essays-solomon"/>
 				
 				<s:secondaryMenuItem
-					label="Catherine Zimmermann-Mulgrave: A Message of Hope"
+					label="Catherine  Zimmermann-Mulgrave: A Slave Odyssey"
 					href="essays-mulgrave.faces"
 					menuId="essays-mulgrave"/>
 				

@@ -44,7 +44,7 @@
 			<td id="essays-right-column">
 				<s:simpleBox>
 			
-					<h1>Job Ben Solomon and the Curse of Slavery in the Atlantic World</h1>
+					<h1>Ayuba Suleiman Diallo and Slavery in the Atlantic World</h1>
 					
 					<div class="essay-info">
 						<span class="essay-author">Daniel Domingues da Silva</span>

@@ -44,7 +44,7 @@
 			<td id="essays-right-column">
 				<s:simpleBox>
 			
-					<h1>Catherine Zimmermann-Mulgrave: A Message of Hope</h1>
+					<h1>Catherine  Zimmermann-Mulgrave: A Slave Odyssey</h1>
 					
 					<div class="essay-info">
 						<span class="essay-author">Daniel Domingues da Silva</span>
