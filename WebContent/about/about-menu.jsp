@@ -18,8 +18,7 @@
 			<s:secondaryMenuItem label="Acknowledgements" menuId="acknowledgements" href="acknowledgements.faces" />
 			<s:secondaryMenuItem label="Contact Us" menuId="contact" href="contact.faces" />
 			<s:secondaryMenuItem label="Legal" menuId="legal" href="legal.faces" />
-		</s:secondaryMenu>
-		
-	</s:simpleBox>
+		</s:secondaryMenu>		
 
+	</s:simpleBox>
 </t:div>
