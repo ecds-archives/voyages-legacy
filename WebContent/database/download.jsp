@@ -50,8 +50,8 @@
 			<h3>Download:</h3>
 				<ul>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb_exp_2008.sav">tastdb-exp-2008.sav</a></li>
-					<li><a href="#">tatsdb-1999.sav</a></li>
-					<li><a href="http://www.slavevoyages.org/downloads/Cole.sav">SPSS codebook</a></li>
+					<li><a href="http://www.slavevoyages.org/downloads/Cole.sav">tatsdb-1999.sav</a></li>
+					<li><a href="#">SPSS codebook</a></li>
 				</ul>		
 					
 			
