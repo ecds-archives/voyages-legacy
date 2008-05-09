@@ -203,7 +203,7 @@
 						<div>forcibly embarking over 10 million Africans for transport to the Americas</div>
 						<div>between the sixteenth and nineteenth centuries.  It offers researchers, </div>
 						<div>students and the general public a chance to rediscover the reality of </div>
-						<div>one of the largest forced movement of peoples in world history.</div>
+						<div>one of the largest forced movements of peoples in world history.</div>
 					</div>
 				</div>
 				
@@ -273,9 +273,10 @@
 				<div id="other-links">
 					<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
-						<td style="padding-left: 15px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+						<td style="font-size: 11pt;font-weight: bold;">Special features:</a></td>
+						<td style="padding-left: 10px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+						<td style="padding-left: 15px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
+						<td style="padding-left: 20px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
 						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline and Chronology</a></td>
 					</tr>
 					</table>
