@@ -140,15 +140,6 @@
 			<table-attribute id="dateend"/>
 			<table-attribute id="voy1imp"/>
 			<table-attribute id="voy2imp"/>
-			<statistical-attribute id="datedep-month" label="Month voyage began" type="date" function="date_part" attribute="'month',datedep"/>
-			<statistical-attribute id="datebuy-month" label="Month trade began Africa" type="date" function="date_part" attribute="'month',datebuy"/>
-			<statistical-attribute id="dateleftafr-month" label="Month vessel departed Africa" type="date" function="date_part" attribute="'month',dateleftafr"/>
-			<statistical-attribute id="dateland1-month" label="Month vessel arrived with slaves" type="date" function="date_part" attribute="'month',dateland1"/>
-			<statistical-attribute id="datedepam-month" label="Month vessel departed for home port" type="date" function="date_part" attribute="'month',datedepam"/>
-			<statistical-attribute id="dateend-month" label="Month voyage completed" type="date" function="date_part" attribute="'month',dateend"/>
-			<statistical-attribute id="yearam-5" label="Year arrived with slaves (5 year persiods)" type="date" function="period" attribute="yearam,5"/>
-			<statistical-attribute id="yearam-10" label="Year arrived with slaves (10 year persiods)" type="date" function="period" attribute="yearam,10"/>
-			<statistical-attribute id="yearam-25" label="Year arrived with slaves (25 year persiods)" type="date" function="period" attribute="yearam,25"/>
 		</table-attributes>
 	</group>
 	<group id="crew" userLabel="Captain and Crew">

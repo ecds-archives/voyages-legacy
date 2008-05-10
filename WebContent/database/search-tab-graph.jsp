@@ -3,16 +3,6 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
 
-<t:htmlTag value="div" style="padding: 2px;" rendered="#{GraphsBean.errorPresent || GraphsBean.warningPresent}">
-	<t:htmlTag value="div" id="div_error" style="background: red;" rendered="#{GraphsBean.errorPresent}">
-		<h:panelGrid columns="3">
-			<h:outputText value="#{GraphsBean.errorMessage}" />
-			<h:commandButton id="fixError" value="#{res.database_search_fixerror}" action="#{GraphsBean.fixError}" />
-			<h:commandButton id="goBackOnError" value="#{res.database_search_back}" action="#{GraphsBean.rollback}" />
-		</h:panelGrid>
-	</t:htmlTag>
-</t:htmlTag>
-
 <t:htmlTag value="table" style="border-collapse: collapse;">
 <t:htmlTag value="tr">
 	<t:htmlTag value="td" style="vertical-align: top; padding: 0px 10px 0px 0px;">
@@ -29,9 +19,9 @@
 			</t:htmlTag>
 
 			<t:htmlTag value="td" style="padding: 0px">
-				<h:selectOneMenu onchange="submit()" style="width: 300px;" value="#{GraphsBean.selectedChart}" disabled="#{GraphsBean.errorPresent}">
-					<f:selectItems value="#{GraphsBean.availableCharts}" />
-				</h:selectOneMenu>
+				<h:commandButton action="#{GraphsBean.switchToXY}" value="XY graph" />
+				<h:commandButton action="#{GraphsBean.switchToBar}" value="Bar graph" />
+				<h:commandButton action="#{GraphsBean.switchToPie}" value="Pie graph" />
 			</t:htmlTag>
 
 		</t:htmlTag>
@@ -42,24 +32,11 @@
 			</t:htmlTag>
 			
 			<t:htmlTag value="td" style="padding: 0px;">
-				<h:selectOneMenu style="width: 300px;" value="#{GraphsBean.xaxis}" id="xaxis_select">
-					<f:selectItems value="#{GraphsBean.voyageSelectedAttributes}" />
+				<h:selectOneMenu onchange="submit()" style="width: 300px;" value="#{GraphsBean.selectedIndependentVariableId}">
+					<f:selectItems value="#{GraphsBean.independentVariables}" />
 				</h:selectOneMenu>
 			</t:htmlTag>
 		
-		</t:htmlTag>
-		<t:htmlTag value="tr">
-
-			<t:htmlTag value="td" style="padding: 5px 10px 5px 5px;">
-				<h:outputText value="#{res.database_search_order}" />
-			</t:htmlTag>
-		
-			<t:htmlTag value="td" style="padding: 0px;">
-				<h:selectOneMenu id="stat-select-y" style="width: 300px;" value="#{GraphsBean.order}" id="order_select">
-					<f:selectItems value="#{GraphsBean.availableOrders}" />
-				</h:selectOneMenu>
-			</t:htmlTag>
-
 		</t:htmlTag>
 		<t:htmlTag value="tr">
 
@@ -68,15 +45,9 @@
 			</t:htmlTag>
 
 			<t:htmlTag value="td" style="padding: 0px;">
-				<t:htmlTag value="div">
-					<h:selectOneMenu style="width: 50px;" disabled="#{GraphsBean.notAggregate}"
-						value="#{GraphsBean.selectedAggregate}" id="aggregate_select">
-						<f:selectItems value="#{GraphsBean.aggregateFunctions}" />
-					</h:selectOneMenu>
-					<h:selectOneMenu style="width: 250px;" value="#{GraphsBean.yaxis}" id="yaxis_select">
-						<f:selectItems value="#{GraphsBean.voyageNumericAttributes}" />
-					</h:selectOneMenu>
-				</t:htmlTag>
+				<h:selectOneMenu style="width: 300px;" value="#{GraphsBean.selectedDependentVariableId}" id="yaxis_select">
+					<f:selectItems value="#{GraphsBean.dependentVariables}" />
+				</h:selectOneMenu>
 			</t:htmlTag>
 
 		</t:htmlTag>
@@ -89,7 +60,6 @@
 
 				<h:commandButton
 					id="addSeries"
-					disabled="#{GraphsBean.errorPresent}"
 					value="#{res.database_search_addseries}"
 					action="#{GraphsBean.addSeries}" />
 					
@@ -98,7 +68,6 @@
 				<h:commandButton
 					id="showGraph"
 					value="#{res.database_search_show}"
-					disabled="#{GraphsBean.errorPresent}"
 					action="#{GraphsBean.showGraph}" />
 					
 			</t:htmlTag>
@@ -113,17 +82,16 @@
 			<h:outputText value="#{res.database_search_currentseries}" />
 		</t:htmlTag>
 	
-		<t:htmlTag value="div" rendered="#{GraphsBean.seriesAdded}">
+		<t:htmlTag value="div" rendered="#{GraphsBean.haveSeries}">
 			<h:selectManyCheckbox id="to_remove_check" layout="pageDirection" value="#{GraphsBean.toRemove}">
 				<f:selectItems value="#{GraphsBean.series}" />
 			</h:selectManyCheckbox>
 			<h:commandButton id="removeSeries"
-				disabled="#{GraphsBean.errorPresent}"
 				value="#{res.database_search_remseries}"
 				action="#{GraphsBean.removeSeries}" />
 		</t:htmlTag>
 		
-		<t:htmlTag value="div" rendered="#{!GraphsBean.seriesAdded}">
+		<t:htmlTag value="div" style="padding: 5px;" rendered="#{!GraphsBean.haveSeries}">
 			<h:outputText value="#{res.database_search_noseriesmsg}" />
 		</t:htmlTag>
 		
@@ -136,27 +104,6 @@
 </t:htmlTag>
 
 <t:htmlTag value="div"
-	id="div_warning"
-	style="margin: 3px; background: #E2873B; length: 640px;"
-	rendered="#{GraphsBean.warningPresent}">
-	<h:outputText id="warning_text" value="#{GraphsBean.warningMessage}" />
-</t:htmlTag>
-
-<t:htmlTag value="div"
-	style="margin-top: 4px; width: 640px; height: 480px; overflow:auto; width: 100%; height: 500px"
-	rendered="#{GraphsBean.statReady}">
+	style="margin-top: 4px; width: 640px; height: 480px; overflow:auto; width: 100%; height: 500px">
 	<h:graphicImage value="#{GraphsBean.chartPath}" />
-</t:htmlTag>
-
-<h:panelGroup rendered="#{GraphsBean.statReady}">
-	<h:outputText value="#{res.database_search_width} " />
-	<h:inputText value="#{GraphsBean.chartWidth}" style="width: 40px;" />
-	<h:outputText value="#{res.database_search_height} " />
-	<h:inputText value="#{GraphsBean.chartHeight}" style="width: 40px;" />
-	<h:commandButton id="enlargeStat" value="#{res.database_search_changesize}" action="#{GraphsBean.setNewView}" />
-</h:panelGroup>
-
-<t:htmlTag rendered="#{GraphsBean.statReady}" value="div">
-	<s:simpleButton id="chart-back-button-id" action="#{GraphsBean.prev}" styleClass="chart-back-button"/>
-	<s:simpleButton id="chart-forward-button-id" action="#{GraphsBean.next}" styleClass="chart-forward-button"/>
 </t:htmlTag>

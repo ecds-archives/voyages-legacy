@@ -47,7 +47,7 @@ public class TableData {
 	/**
 	 * Column used to order results.
 	 */
-	private VisibleAttributeInterface orderByColumn = VisibleAttribute.getAttributeForTable("voyageId");
+	private VisibleAttributeInterface orderByColumn = VisibleAttribute.getAttribute("voyageId");
 
 	/**
 	 * Current order.
