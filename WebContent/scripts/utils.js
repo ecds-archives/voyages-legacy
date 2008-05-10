@@ -341,7 +341,7 @@ var ElementUtils =
 	{
 		var opt = document.createElement("option");
 		opt.value = value;
-		opt.text = text;
+		opt.appendChild(document.createTextNode(text));
 		sel.appendChild(opt);
 	},
 	
