@@ -16,6 +16,7 @@ import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.listing.TableData;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.database.listing.formatters.BooleanAttributeFormatter;
 import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
@@ -148,6 +149,9 @@ public class VoyageDetailBean
 			validAttrs.add(column);
 			if (column.getType().equals(VisibleAttribute.DATE_ATTRIBUTE)) {
 				this.detailData.setFormatter(column, new SimpleDateAttributeFormatter(new SimpleDateFormat(formatDate)));
+			}
+			else if (column.getType().equals(VisibleAttribute.BOOLEAN_ATTRIBUTE)) {
+				this.detailData.setFormatter(column, new BooleanAttributeFormatter());
 			}
 		}
 		this.detailData.setVisibleColumns(validAttrs);

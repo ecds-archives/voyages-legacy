@@ -40,15 +40,4 @@ public class SimpleDateAttributeFormatter extends AbstractAttributeFormatter {
 		}
 	}
 
-	/**
-	 * Formats array of Date values.
-	 */
-	public String[] format(VisibleAttributeInterface attr, Object[] object) {
-		String[] ret = new String[object.length];
-		for (int i = 0; i < object.length; i++) {
-			ret[i] = format(attr, object[i]);
-		}
-		return ret;
-	}
-
 }

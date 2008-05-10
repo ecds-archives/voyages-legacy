@@ -19,6 +19,7 @@ import edu.emory.library.tast.common.listing.TableData;
 import edu.emory.library.tast.common.listing.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.database.listing.formatters.BooleanAttributeFormatter;
 import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.query.SearchParameters;
@@ -657,9 +658,12 @@ public class ListingBean {
 	private void setVisibleAttributesList(List list) {
 		String formatDate = AppConfig.getConfiguration().getString(AppConfig.FORMAT_DATE);
 		for (Iterator iter = list.iterator(); iter.hasNext();) {
-			VisibleAttributeInterface element = (VisibleAttributeInterface) iter.next();
-			if (element.getType().equals("DateAttribute")) {
-				this.data.setFormatter(element, new SimpleDateAttributeFormatter(new SimpleDateFormat(formatDate)));
+			VisibleAttributeInterface attr = (VisibleAttributeInterface) iter.next();
+			if (attr.getType().equals(VisibleAttributeInterface.DATE_ATTRIBUTE)) {
+				this.data.setFormatter(attr, new SimpleDateAttributeFormatter(new SimpleDateFormat(formatDate)));
+			}
+			else if (attr.getType().equals(VisibleAttributeInterface.BOOLEAN_ATTRIBUTE)) {
+				this.data.setFormatter(attr, new BooleanAttributeFormatter());
 			}
 		}
 

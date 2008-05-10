@@ -23,6 +23,13 @@ public abstract class AbstractAttributeFormatter {
 	 * @param object
 	 * @return
 	 */
-	public abstract String[] format(VisibleAttributeInterface attr, Object[] object);
+	public String[] format(VisibleAttributeInterface attr, Object[] object)
+	{
+		String[] ret = new String[object.length];
+		for (int i = 0; i < object.length; i++) {
+			ret[i] = format(attr, object[i]);
+		}
+		return ret;
+	}
 	
 }

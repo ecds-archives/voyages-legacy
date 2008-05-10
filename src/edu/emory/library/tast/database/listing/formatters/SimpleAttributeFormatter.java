@@ -42,16 +42,4 @@ public class SimpleAttributeFormatter extends AbstractAttributeFormatter {
 		}
 	}
 
-	/**
-	 * Formats output that will be shown to user for Object array.
-	 */
-	public String[] format(VisibleAttributeInterface attr, Object[] object) {
-		
-		String[] ret = new String[object.length];
-		for (int i = 0; i < object.length; i++) {
-			ret[i] = format(attr, object[i]);
-		}
-		return ret;
-	}
-
 }

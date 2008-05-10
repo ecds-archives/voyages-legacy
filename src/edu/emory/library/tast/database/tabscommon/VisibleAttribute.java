@@ -79,7 +79,7 @@ public class VisibleAttribute implements VisibleAttributeInterface
 
 	public static VisibleAttributeInterface[] getAllAttributes()
 	{
-		return (VisibleAttributeInterface[]) ((Map) visibleAttributes.get(new Integer(1))).values().toArray(new VisibleAttributeInterface[] {});
+		return (VisibleAttributeInterface[]) visibleAttributes.values().toArray(new VisibleAttributeInterface[] {});
 	}
 
 	private static VisibleAttribute fromXML(Node node)
