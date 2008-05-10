@@ -29,8 +29,8 @@ public class GraphsBean
 	
 	public static final String GRAPHS_SERVLET = "../servlet/graph";
 	public static final String SESSION_KEY_GRAPH = "graph";
-	private static final String DEFAULT_CHART_HEIGHT = "480";
-	private static final String DEFAULT_CHART_WIDTH = "640";
+	private static final int DEFAULT_CHART_HEIGHT = 480;
+	private static final int DEFAULT_CHART_WIDTH = 640;
 	
 	private static final Pattern REGEX_DEP_VARIABLE = Pattern.compile("(.+)-(count|avg|sum|min|max)");
 	
@@ -40,9 +40,6 @@ public class GraphsBean
 	private boolean needRefresh = false;
 
 	private List toRemove;
-
-	private String chartHeight = DEFAULT_CHART_HEIGHT;
-	private String chartWidth = DEFAULT_CHART_WIDTH;
 
 	private static final IndependentVariable[] independentVariablesXY = new IndependentVariable[] {
 		IndependentVariable.createForInteger("yearam", "Year arrived with slaves*", "yearam"),
@@ -163,9 +160,6 @@ public class GraphsBean
 	
 	public void resetToDefault()
 	{
-		
-		chartHeight = DEFAULT_CHART_HEIGHT;
-		chartWidth = DEFAULT_CHART_WIDTH;
 		
 		selectedGraph = graphs[XY_GRAPH_TYPE_INDEX];
 		selectedGraph.removeAllSeries();
@@ -399,8 +393,8 @@ public class GraphsBean
 	{
 		this.refreshGraphIfNeeded();
 		return GRAPHS_SERVLET + "?" +
-			"height=" + this.chartHeight + "&" +
-			"width=" + this.chartWidth;
+			"height=" + DEFAULT_CHART_HEIGHT + "&" +
+			"width=" + DEFAULT_CHART_WIDTH;
 	}
 
 	public List getToRemove()
@@ -411,26 +405,6 @@ public class GraphsBean
 	public void setToRemove(List toRemove)
 	{
 		this.toRemove = toRemove;
-	}
-
-	public String getChartHeight()
-	{
-		return chartHeight;
-	}
-
-	public void setChartHeight(String chartHeight)
-	{
-		this.chartHeight = chartHeight;
-	}
-
-	public String getChartWidth()
-	{
-		return chartWidth;
-	}
-
-	public void setChartWidth(String chartWidth)
-	{
-		this.chartWidth = chartWidth;
 	}
 
 	public String getSelectedIndependentVariableId()

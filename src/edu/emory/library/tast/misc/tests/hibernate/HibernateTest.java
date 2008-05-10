@@ -29,7 +29,7 @@ public class HibernateTest {
 		//HibernateConnector connector = HibernateConnector.getConnector();
 		
 		System.out.println(Voyage.getAttributes().length);
-		System.out.println(VisibleAttribute.loadVisibleAttributes(VisibleAttribute.ATTRIBUTE_CHART_TAB).length);
+		System.out.println(VisibleAttribute.loadVisibleAttributes().length);
 		System.out.println(Group.getGroups().length);
 		
 		System.out.print("command:>");

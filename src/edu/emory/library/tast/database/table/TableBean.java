@@ -44,9 +44,9 @@ public class TableBean
 
 	private SimpleTableCell[][] table;
 
-	private CellVariable cellValuesDesc = options[0];
+	private CellVariable cellValuesDesc = variables[0];
 	
-	private static CellVariable[] options = new CellVariable[] {
+	private static final CellVariable[] variables = new CellVariable[] {
 		
 			new CellVariable(
 				"expSum",
@@ -766,9 +766,9 @@ public class TableBean
 	 * @return
 	 */
 	public void setShowMode(String showMode) {
-		for (int i = 0; i < options.length; i++) {
-			if (showMode.equals(options[i].getId())) {
-				this.cellValuesDesc = options[i];
+		for (int i = 0; i < variables.length; i++) {
+			if (showMode.equals(variables[i].getId())) {
+				this.cellValuesDesc = variables[i];
 				break;
 			}
 		}		
@@ -804,9 +804,9 @@ public class TableBean
 	}
 	
 	public SelectItem[] getAvailableAttributes() {
-		SelectItem[] items = new SelectItem[options.length];
+		SelectItem[] items = new SelectItem[variables.length];
 		for (int i = 0; i < items.length; i++) {
-			items[i] = new SelectItem(options[i].getId(), options[i].getUserLabel());
+			items[i] = new SelectItem(variables[i].getId(), variables[i].getUserLabel());
 		}
 		return items;
 	}

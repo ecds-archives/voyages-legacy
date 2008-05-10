@@ -17,30 +17,26 @@ import org.jfree.chart.JFreeChart;
  * @author Pawel Jurczyk
  *
  */
-public class ImageFeederServlet extends HttpServlet {
+public class GraphsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		
 		HttpSession session = request.getSession();
 		OutputStream stream = response.getOutputStream();
 		
-		//Redeem attributes passed in path
 		int width = Integer.parseInt(request.getParameter("width"));
 		int height = Integer.parseInt(request.getParameter("height"));
-		String path = request.getParameter("path");
 		
-		if (path != null) {
-			//Prepare image
-			JFreeChart chart = (JFreeChart)session.getAttribute(path);
-			if (chart != null) {
-				response.setContentType("image/png");
-				//Write image
-				ChartUtilities.writeChartAsPNG(stream, chart, width, height);
-			}
+		JFreeChart chart = (JFreeChart)session.getAttribute(GraphsBean.SESSION_KEY_GRAPH);
+		
+		if (chart != null)
+		{
+			response.setContentType("image/png");
+			ChartUtilities.writeChartAsPNG(stream, chart, width, height);
 		}
-		//close streams
-		stream.close();			
+
 	}
 }

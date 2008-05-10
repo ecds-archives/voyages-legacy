@@ -81,21 +81,21 @@ public class VoyageIndex {
 	private static Map attributes = new HashMap();
 	static {	
 		Attribute attr = new NumericAttribute("revisionId", "VoyageIndex", NumericAttribute.TYPE_INTEGER);
-		VisibleAttribute visibleAttr = new VisibleAttribute("revisionId", new int [] {1, 2}, new Attribute[] {attr});
+		VisibleAttribute visibleAttr = new VisibleAttribute("revisionId", new Attribute[] {attr});
 		visibleAttr.setUserLabel("Revision #");
 		visibleAttributes.put("revisionId", visibleAttr);
 		attributes.put(attr.getName(), attr);
 		
 		attr = new DateAttribute("revisionDate", "VoyageIndex");
 		attr.setName("revisionDate");
-		visibleAttr = new VisibleAttribute("revisionDate", new int [] {1, 2}, new Attribute[] {attr});
+		visibleAttr = new VisibleAttribute("revisionDate", new Attribute[] {attr});
 		visibleAttr.setUserLabel("Modification date");
 		visibleAttributes.put("revisionDate", visibleAttr);
 		attributes.put(attr.getName(), attr);
 		
 		attr = new NumericAttribute("flag", "VoyageIndex", NumericAttribute.TYPE_INTEGER);
 		attr.setName("flag");
-		visibleAttr = new VisibleAttribute("flag", new int [] {1, 2}, new Attribute[] {attr});
+		visibleAttr = new VisibleAttribute("flag", new Attribute[] {attr});
 		visibleAttr.setUserLabel("Approved");
 		visibleAttributes.put("flag", visibleAttr);
 		attributes.put(attr.getName(), attr);

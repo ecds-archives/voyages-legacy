@@ -3,11 +3,11 @@ package edu.emory.library.tast.database.listing;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-//import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,7 +19,6 @@ import edu.emory.library.tast.common.listing.TableData;
 import edu.emory.library.tast.common.listing.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.SourceInformationLookup;
-import edu.emory.library.tast.database.graphs.ComparableSelectItem;
 import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFormatter;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.query.SearchParameters;
@@ -149,16 +148,16 @@ public class ListingBean {
 
 		// Setup default columns
 		VisibleAttributeInterface[] attrs = new VisibleAttributeInterface[6];
-		attrs[0] = VisibleAttribute.getAttributeForTable("voyageid");
-		attrs[1] = VisibleAttribute.getAttributeForTable("shipname");
-		attrs[2] = VisibleAttribute.getAttributeForTable("anycaptain");
-		attrs[3] = VisibleAttribute.getAttributeForTable("yearam");
-		attrs[4] = VisibleAttribute.getAttributeForTable("majbyimp");
-		attrs[5] = VisibleAttribute.getAttributeForTable("mjselimp");
+		attrs[0] = VisibleAttribute.getAttribute("voyageid");
+		attrs[1] = VisibleAttribute.getAttribute("shipname");
+		attrs[2] = VisibleAttribute.getAttribute("anycaptain");
+		attrs[3] = VisibleAttribute.getAttribute("yearam");
+		attrs[4] = VisibleAttribute.getAttribute("majbyimp");
+		attrs[5] = VisibleAttribute.getAttribute("mjselimp");
 
 		if (attrs[2] == null)
 		{
-			attrs[2] = VisibleAttribute.getAttributeForTable("captaina");
+			attrs[2] = VisibleAttribute.getAttribute("captaina");
 		}
 
 		data.setVisibleColumns(attrs);
@@ -736,7 +735,7 @@ public class ListingBean {
 		for (int i = 0; i < groupSets.length; i++) {
 			Group set = groupSets[i];
 			//if (set.noOfAttributesInCategory(this.searchBean.getSearchParameters().getCategory()) > 0) {
-				res.add(new ComparableSelectItem("" + set.getId(), set.toString()));
+				res.add(new SelectItem(set.getId(), set.toString()));
 			//}
 		}
 		if (this.selectedGroupSet == null && groupSets.length > 0) {
@@ -759,7 +758,7 @@ public class ListingBean {
 			for (int i = 0; i < attrs.length; i++) {
 				VisibleAttributeInterface attr = attrs[i];
 				//if (attr.getCategory() == this.searchBean.getSearchParameters().getCategory()) {
-					res.add(new ComparableSelectItem(attr.encodeToString(), attr.toString()));
+					res.add(new SelectItem(attr.encodeToString(), attr.toString()));
 				//}
 			}
 		}
@@ -778,7 +777,7 @@ public class ListingBean {
 		// VisibleColumn[] cols = this.data.getVisibleAttributes();
 		for (Iterator iter = this.visibleColumns.iterator(); iter.hasNext();) {
 			VisibleAttributeInterface element = (VisibleAttributeInterface) iter.next();
-			list.add(new ComparableSelectItem(element.encodeToString(), element.toString()));
+			list.add(new SelectItem(element.encodeToString(), element.toString()));
 		}
 		return list;
 	}
