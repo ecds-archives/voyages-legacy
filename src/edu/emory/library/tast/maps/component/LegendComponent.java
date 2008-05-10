@@ -69,7 +69,6 @@ public class LegendComponent extends UIComponentBase {
 			LegendItemsGroup[] legend = (LegendItemsGroup[])this.getValueBinding(context, "legend");
 			
 			legend[legendGroup].getItems()[legendItem].setEnabled(value.equals("selected"));
-			System.out.println(field + ": " + value.equals("selected") + " (" + legend + ")");
 			
 		} else if (field.indexOf("_layers_") != -1) {
 			String[] layers = field.split("_");
