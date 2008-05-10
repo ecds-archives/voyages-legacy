@@ -54,7 +54,8 @@ public class TableBean
 				"Sum of embarked slaves",
 				new Attribute[] {new FunctionAttribute("sum", Voyage.getAttribute("slaximp"))},
 				new Attribute[] {Voyage.getAttribute("slaximp")},
-				new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Embarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 
 			new CellVariable(
@@ -63,7 +64,8 @@ public class TableBean
 				"Average number of embarked slaves",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp")), new FunctionAttribute("sum", Voyage.getAttribute("slaximp"))},
 				new Attribute[] {Voyage.getAttribute("slaximp")},
-				new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Embarked"}, 
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -72,7 +74,8 @@ public class TableBean
 				"Number of voyages - embarked slaves",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp"))},
 				new Attribute[] {Voyage.getAttribute("slaximp")},
-				new String[] {"Embarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Embarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -81,7 +84,8 @@ public class TableBean
 				"Sum of disembarked slaves",
 				new Attribute[] {new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
 				new Attribute[] {Voyage.getAttribute("slamimp")},
-				new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Disembarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -90,7 +94,8 @@ public class TableBean
 				"Average number of disembarked slaves",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slamimp")), new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
 				new Attribute[] {Voyage.getAttribute("slamimp")},
-				new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Disembarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -99,7 +104,8 @@ public class TableBean
 				"Number of voyages - disembarked slaves",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slamimp"))},
 				new Attribute[] {Voyage.getAttribute("slamimp")},
-				new String[] {"Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Disembarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -108,7 +114,8 @@ public class TableBean
 				"Sum of embarked/disembarked slaves",
 				new Attribute[] {new FunctionAttribute("sum", Voyage.getAttribute("slaximp")), new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
 				new Attribute[] {Voyage.getAttribute("slaximp")},
-				new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Embarked", "Disembarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -117,7 +124,8 @@ public class TableBean
 				"Average number of embarked/disembarked slaves",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp")), new FunctionAttribute("sum", Voyage.getAttribute("slaximp")), new FunctionAttribute("count", Voyage.getAttribute("slamimp")), new FunctionAttribute("sum", Voyage.getAttribute("slamimp"))},
 				new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")},
-				new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Embarked", "Disembarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -126,7 +134,8 @@ public class TableBean
 				"Number of voyages - embarked/disembarked slaves",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("slaximp")), new FunctionAttribute("count", Voyage.getAttribute("slamimp"))},
 				new Attribute[] {Voyage.getAttribute("slaximp"), Voyage.getAttribute("slamimp")},
-				new String[] {"Embarked", "Disembarked"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Embarked", "Disembarked"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -135,7 +144,8 @@ public class TableBean
 				"Average percentage male",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("malrat7")), new FunctionAttribute("sum", new FunctionAttribute("crop_to_0_100", Voyage.getAttribute("malrat7")))},
 				new Attribute[] {Voyage.getAttribute("malrat7")},
-				new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,##0}%"),
+				new String[] {"Percentage male"},
+				new MessageFormat("{0,number,#,###,##0.0}%"),
 				""),
 				
 			new CellVariable(
@@ -144,7 +154,8 @@ public class TableBean
 				"Number of voyages - percentage male",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("malrat7"))},
 				new Attribute[] {Voyage.getAttribute("malrat7")},
-				new String[] {"Percentage male"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Percentage male"},
+				new MessageFormat("{0,number,#,###,###}"),
 				""),
 				
 			new CellVariable(
@@ -170,7 +181,8 @@ public class TableBean
 				"Average percentage of slaves embarked who died during voyage",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("vymrtrat")), new FunctionAttribute("sum", new FunctionAttribute("crop_to_0_100", Voyage.getAttribute("vymrtrat")))},
 				new Attribute[] {Voyage.getAttribute("vymrtrat")},
-				new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,##0.0}%"),
+				new String[] {"Percentage of slaves embarked who died during voyage"},
+				new MessageFormat("{0,number,#,###,##0.0}%"),
 				""),
 				
 			new CellVariable(
@@ -179,7 +191,8 @@ public class TableBean
 				"Number of voyages - percentage of slaves embarked who died during voyage",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("vymrtrat"))},
 				new Attribute[] {Voyage.getAttribute("vymrtrat")},
-				new String[] {"Percentage of slaves embarked who died during voyage"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Percentage of slaves embarked who died during voyage"},
+				new MessageFormat("{0,number,#,###,###}"),
 				""),
 				
 			new CellVariable(
@@ -188,7 +201,8 @@ public class TableBean
 				"Average middle passage (days)",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("voy2imp")), new FunctionAttribute("sum", Voyage.getAttribute("voy2imp"))},
 				new Attribute[] {Voyage.getAttribute("voy2imp")},
-				new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Middle passage (days)"},
+				new MessageFormat("{0,number,#,###,###0.0}"),
 				""),
 				
 			new CellVariable(
@@ -197,7 +211,8 @@ public class TableBean
 				"Number of voyages - middle passage (days)",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("voy2imp"))},
 				new Attribute[] {Voyage.getAttribute("voy2imp")},
-				new String[] {"Middle passage (days)"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Middle passage (days)"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 			new CellVariable(
@@ -206,7 +221,8 @@ public class TableBean
 				"Average standarized tonnage",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("tonmod")), new FunctionAttribute("sum", Voyage.getAttribute("tonmod"))},
 				new Attribute[] {Voyage.getAttribute("tonmod")},
-				new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Standarized tonnage"},
+				new MessageFormat("{0,number,#,###,###.0}"),
 				""),
 				
 			new CellVariable(
@@ -215,7 +231,8 @@ public class TableBean
 				"Number of voyages - standarized tonnage",
 				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("tonmod"))},
 				new Attribute[] {Voyage.getAttribute("tonmod")},
-				new String[] {"Standarized tonnage"}, new MessageFormat("{0,number,#,###,###}"),
+				new String[] {"Standarized tonnage"},
+				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
 	};
