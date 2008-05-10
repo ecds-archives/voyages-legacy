@@ -11,7 +11,7 @@ public abstract class GraphType
 	private String id;
 	private IndependentVariable[] independentVariables;
 	private DependentVariable[] dependentVariables;
-	private String aggregate;
+	private int aggregate;
 	private int selectedIndependentVariableIdx;
 	private int selectedDependentVariableIdx;
 	private List dataSeries = new LinkedList();
@@ -112,12 +112,12 @@ public abstract class GraphType
 		return independentVariables[selectedIndependentVariableIdx];
 	}
 
-	public String getSelectedAggregate()
+	public int getSelectedAggregate()
 	{
 		return aggregate;
 	}
 
-	public void setSelectedAggregate(String aggregate)
+	public void setSelectedAggregate(int aggregate)
 	{
 		this.aggregate = aggregate;
 	}

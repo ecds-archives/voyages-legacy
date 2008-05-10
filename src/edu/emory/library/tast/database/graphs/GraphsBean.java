@@ -32,12 +32,21 @@ public class GraphsBean
 	private static final int DEFAULT_CHART_HEIGHT = 480;
 	private static final int DEFAULT_CHART_WIDTH = 640;
 	
-	private static final Pattern REGEX_DEP_VARIABLE = Pattern.compile("(.+)-(count|avg|sum|min|max)");
+	private static final Pattern REGEX_DEP_VARIABLE = Pattern.compile(
+			"(.+)-(" +
+			DependentVariable.aggregateToString(DependentVariable.COUNT) + "|" +
+			DependentVariable.aggregateToString(DependentVariable.AVG) + "|" +
+			DependentVariable.aggregateToString(DependentVariable.SUM) + "|" +
+			DependentVariable.aggregateToString(DependentVariable.MIN) + "|" +
+			DependentVariable.aggregateToString(DependentVariable.MAX) +
+			")");
 	
 	private SearchBean searchBean = null;
 	private Conditions conditions = null;
 	
 	private boolean needRefresh = false;
+	
+	private int nextUrlSeq = 0;
 
 	private List toRemove;
 
@@ -165,21 +174,21 @@ public class GraphsBean
 		selectedGraph.removeAllSeries();
 		selectedGraph.setSelectedIndependentVariableId("voy2imp");
 		selectedGraph.setSelectedDependentVariableId("vymrtrat");
-		selectedGraph.setSelectedAggregate("avg");
+		selectedGraph.setSelectedAggregate(DependentVariable.AVG);
 		addSeries();
 		
 		selectedGraph = graphs[BAR_GRAPH_TYPE_INDEX];
 		selectedGraph.removeAllSeries();
 		selectedGraph.setSelectedIndependentVariableId("mjbyptimp-region");
 		selectedGraph.setSelectedDependentVariableId("chilrat7");
-		selectedGraph.setSelectedAggregate("avg");
+		selectedGraph.setSelectedAggregate(DependentVariable.AVG);
 		addSeries();
 		
 		selectedGraph = graphs[PIE_GRAPH_TYPE_INDEX];
 		selectedGraph.removeAllSeries();
 		selectedGraph.setSelectedIndependentVariableId("natinimp");
 		selectedGraph.setSelectedDependentVariableId("iid");
-		selectedGraph.setSelectedAggregate("count");
+		selectedGraph.setSelectedAggregate(DependentVariable.COUNT);
 		addSeries();
 		
 		selectedGraph = graphs[XY_GRAPH_TYPE_INDEX];
@@ -190,7 +199,7 @@ public class GraphsBean
 	{
 
 		DependentVariable depVar = selectedGraph.getSelectedDependentVariable();
-		String aggregate = selectedGraph.getSelectedAggregate();
+		int aggregate = selectedGraph.getSelectedAggregate();
 		
 		if (!selectedGraph.canHaveMoreSeries())
 			selectedGraph.removeAllSeries();
@@ -205,7 +214,7 @@ public class GraphsBean
 
 		return null;
 	}
-
+	
 	public String removeSeries()
 	{
 		if (this.toRemove != null)
@@ -217,12 +226,12 @@ public class GraphsBean
 				if (matcher.matches())
 				{
 					String varId = matcher.group(1); 
-					String aggregate = matcher.group(2); 
+					int aggregate = DependentVariable.parseAggregateType(matcher.group(2), true); 
 					for (int i = 0; i < series.size(); i++)
 					{
 						DataSeries dataSeries = ((DataSeries)series.get(i));
 						if (dataSeries.getVariable().getId().equals(varId) &&
-								dataSeries.getAggregate().equals(aggregate))
+								dataSeries.getAggregate() == aggregate)
 						{
 							series.remove(i);
 							needRefresh = true;
@@ -261,7 +270,7 @@ public class GraphsBean
 			DataSeries element = (DataSeries) iter.next();
 			qValue.addPopulatedAttribute(
 					new FunctionAttribute(
-							element.aggregate,
+							DependentVariable.aggregateToHQL(element.aggregate),
 							element.getVariable().getSelectAttribute()));
 		}
 		
@@ -289,7 +298,27 @@ public class GraphsBean
 	{
 		return null;
 	}
+	
+	public String switchToXY()
+	{
+		selectedGraph = graphs[XY_GRAPH_TYPE_INDEX];
+		needRefresh = true;
+		return null;
+	}
 
+	public String switchToBar()
+	{
+		selectedGraph = graphs[BAR_GRAPH_TYPE_INDEX];
+		needRefresh = true;
+		return null;
+	}
+
+	public String switchToPie()
+	{
+		selectedGraph = graphs[PIE_GRAPH_TYPE_INDEX];
+		needRefresh = true;
+		return null;
+	}
 	
 	public List getSeries()
 	{
@@ -300,8 +329,9 @@ public class GraphsBean
 			{
 				DataSeries element = (DataSeries) iter.next();
 				list.add(new SelectItem(
-						element.getVariable().getId() + "-" + element.getAggregate(), 
-						element.getAggregate() + " of " + element.getVariable().getLabel()));
+						element.getVariable().getId() + "-" +
+							DependentVariable.aggregateToString(element.getAggregate()), 
+						element.formatForDisplay()));
 			}
 		}
 		return list;
@@ -336,28 +366,28 @@ public class GraphsBean
 			
 			if (var.hasCount())
 				itemsList.add(new SelectItem(
-						var.getId() + "-count",
-						var.getLabel()));
+						var.getId() + "-" + DependentVariable.aggregateToString(DependentVariable.COUNT),
+						var.formatVariableForDisplay(DependentVariable.COUNT)));
 			
 			if (var.hasSum())
 				itemsList.add(new SelectItem(
-						var.getId() + "-sum",
-						"Total sum of " + var.getLabel()));
+						var.getId() + "-" + DependentVariable.aggregateToString(DependentVariable.SUM),
+						var.formatVariableForDisplay(DependentVariable.SUM)));
 
 			if (var.hasAvg())
 				itemsList.add(new SelectItem(
-						var.getId() + "-avg",
-						"Average of " + var.getLabel()));
+						var.getId() + "-" + DependentVariable.aggregateToString(DependentVariable.AVG),
+						var.formatVariableForDisplay(DependentVariable.AVG)));
 
 			if (var.hasMin())
 				itemsList.add(new SelectItem(
-						var.getId() + "-min",
-						"Minimum of " + var.getLabel()));
+						var.getId() + "-" + DependentVariable.aggregateToString(DependentVariable.MIN),
+						var.formatVariableForDisplay(DependentVariable.MIN)));
 
 			if (var.hasMax())
 				itemsList.add(new SelectItem(
-						var.getId() + "-max",
-						"Maximum of " + var.getLabel()));
+						var.getId() + "-" + DependentVariable.aggregateToString(DependentVariable.MAX),
+						var.formatVariableForDisplay(DependentVariable.MAX)));
 			
 		}
 		
@@ -367,34 +397,15 @@ public class GraphsBean
 		return items;
 		
 	}
-	
-	public String switchToXY()
-	{
-		selectedGraph = graphs[XY_GRAPH_TYPE_INDEX];
-		needRefresh = true;
-		return null;
-	}
-
-	public String switchToBar()
-	{
-		selectedGraph = graphs[BAR_GRAPH_TYPE_INDEX];
-		needRefresh = true;
-		return null;
-	}
-
-	public String switchToPie()
-	{
-		selectedGraph = graphs[PIE_GRAPH_TYPE_INDEX];
-		needRefresh = true;
-		return null;
-	}
 
 	public String getChartPath()
 	{
 		this.refreshGraphIfNeeded();
+		nextUrlSeq++;
 		return GRAPHS_SERVLET + "?" +
 			"height=" + DEFAULT_CHART_HEIGHT + "&" +
-			"width=" + DEFAULT_CHART_WIDTH;
+			"width=" + DEFAULT_CHART_WIDTH + "&" +
+			"seq=" + nextUrlSeq;
 	}
 
 	public List getToRemove()
@@ -424,9 +435,13 @@ public class GraphsBean
 		Matcher matcher = REGEX_DEP_VARIABLE.matcher(id);
 		if (matcher.matches())
 		{
-			selectedGraph.setSelectedAggregate(matcher.group(2));
-			selectedGraph.setSelectedDependentVariableId(matcher.group(1));
-			needRefresh = true;
+			int aggregate = DependentVariable.parseAggregateType(matcher.group(2), true);
+			if (aggregate != DependentVariable.INVALID_AGGREGATE)
+			{
+				selectedGraph.setSelectedAggregate(aggregate);
+				selectedGraph.setSelectedDependentVariableId(matcher.group(1));
+				needRefresh = true;
+			}
 		}
 	}
 

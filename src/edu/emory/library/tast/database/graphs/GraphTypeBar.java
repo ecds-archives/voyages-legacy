@@ -57,7 +57,7 @@ public class GraphTypeBar extends GraphType
 		for (int j = 0; j < allDataSeries.size(); j++)
 		{
 			DataSeries dataSearies = (DataSeries) allDataSeries.get(j);
-			String dataSeriesLabel = dataSearies.getVariable().getLabel();
+			String dataSeriesLabel = dataSearies.formatForDisplay();
 			for (int i = 0; i < data.length; i++)
 			{
 				Object [] row = (Object[])data[i];
