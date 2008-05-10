@@ -198,7 +198,7 @@
 				Alternatively, we could create this as an image. -->
 			
 				<div id="welcome-text">
-					<div id="welcome-text-big"><img src="./images/index/welcome-text3.png" width="529" height="60" border="0" /></div>
+					<div id="welcome-text-big"><img src="./images/index/welcome-text.png" width="530" height="75" border="0" /></div>
 					<div id="welcome-text-small">
 						<div>forcibly embarking over 10 million Africans for transport to the Americas</div>
 						<div>between the sixteenth and nineteenth centuries.  It offers researchers, </div>
@@ -273,9 +273,9 @@
 				<div id="other-links">
 					<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td style="font-size: 11pt;font-weight: bold;">Special features:</a></td>
-						<td style="padding-left: 10px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 15px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
+						<td><div class="special-features-title">Special features</div></td>
+						<td style="padding-left: 20px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
+						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
 						<td style="padding-left: 20px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
 						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline and Chronology</a></td>
 					</tr>

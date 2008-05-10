@@ -15,7 +15,7 @@ div#welcome-text-small {
 	color: #404A49;
 	font-size: 12pt;
 	line-height: 140%;
-	margin-left: 10px; }
+	margin-left: 5px; }
 	
 div#welcome-text-small div {
 	white-space: nowrap; }
@@ -66,6 +66,10 @@ div#other-links a {
 	
 div#other-links a:hover {
 	color: Black; }
+	
+div.special-features-title {
+	/* font-size: 11pt; */
+	font-weight: bold; }
 	
 /* map */
 
