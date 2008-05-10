@@ -323,7 +323,7 @@ public class HistoryListComponent extends UIComponentBase
 				QueryConditionBoolean queryConditionBoolean = (QueryConditionBoolean) queryCondition;
 				writer.write(": ");
 				writer.startElement("b", this);
-				if (queryConditionBoolean.isChecked())
+				if (queryConditionBoolean.isYesChecked())
 				{
 					writer.write(TastResource.getText("components_search_yes"));
 				}

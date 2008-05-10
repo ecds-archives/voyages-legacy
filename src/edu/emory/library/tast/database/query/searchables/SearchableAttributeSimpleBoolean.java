@@ -23,6 +23,25 @@ public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 		return new QueryConditionBoolean(getId());
 	}
 
+	private void addForOneAttribute(QueryConditionBoolean queryConditionBoolean, Attribute attribute, Conditions cond)
+	{
+		if (queryConditionBoolean.isYesChecked() && queryConditionBoolean.isNoChecked())
+		{
+			Conditions orCond = new Conditions(Conditions.OR);
+			orCond.addCondition(attribute, new Boolean(true), Conditions.OP_EQUALS);
+			orCond.addCondition(attribute, new Boolean(false), Conditions.OP_EQUALS);
+			cond.addCondition(orCond);
+		}
+		else if (queryConditionBoolean.isYesChecked())
+		{
+			cond.addCondition(attribute, new Boolean(true), Conditions.OP_EQUALS);
+		}
+		else if (queryConditionBoolean.isNoChecked())
+		{
+			cond.addCondition(attribute, new Boolean(false), Conditions.OP_EQUALS);
+		}
+	}
+	
 	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
 	{
 		
@@ -33,23 +52,23 @@ public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 		// cast
 		QueryConditionBoolean queryConditionBoolean =
 			(QueryConditionBoolean) queryCondition;
+		
+		// nothing to do
+		if (!queryConditionBoolean.isYesChecked() && !queryConditionBoolean.isNoChecked())
+			return true;
 
 		// create db conditions
 		Attribute[] attributes = getAttributes();
 		if (attributes.length == 1)
 		{
-			conditions.addCondition(attributes[0],
-					new Boolean(queryConditionBoolean.isChecked()),
-					Conditions.OP_EQUALS);
+			addForOneAttribute(queryConditionBoolean, attributes[0], conditions);
 		}
 		else
 		{
 			Conditions orCond = new Conditions(Conditions.OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
-				orCond.addCondition(attributes[i],
-						new Boolean(queryConditionBoolean.isChecked()),
-						Conditions.OP_EQUALS);
+				addForOneAttribute(queryConditionBoolean, attributes[i], orCond);
 		}
 		
 		// all OK
@@ -65,13 +84,22 @@ public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 			return null;
 		
 		QueryConditionBoolean queryCondition = new QueryConditionBoolean(getId());
-		queryCondition.setChecked(
+		
+		queryCondition.setYesChecked(
+				"present".equalsIgnoreCase(urlValue) ||
 				"yes".equalsIgnoreCase(urlValue) ||
 				"true".equalsIgnoreCase(urlValue) ||
 				"ok".equalsIgnoreCase(urlValue) ||
 				"on".equalsIgnoreCase(urlValue) ||
 				"1".equalsIgnoreCase(urlValue));
 		
+		queryCondition.setNoChecked(
+				"present".equalsIgnoreCase(urlValue) ||
+				"no".equalsIgnoreCase(urlValue) ||
+				"false".equalsIgnoreCase(urlValue) ||
+				"off".equalsIgnoreCase(urlValue) ||
+				"0".equalsIgnoreCase(urlValue));
+
 		return queryCondition;
 
 	}

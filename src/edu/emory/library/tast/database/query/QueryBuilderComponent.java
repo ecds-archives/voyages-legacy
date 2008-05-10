@@ -492,6 +492,16 @@ public class QueryBuilderComponent extends UIComponentBase
 		
 	}
 	
+	private String getHtmlNameForBooleanTrue(SearchableAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_true";
+	}
+	
+	private String getHtmlNameForBooleanFalse(SearchableAttribute attribute, FacesContext context)
+	{
+		return getClientId(context) + "_" + attribute.getId() + "_false";
+	}
+
 	private void encodeBooleanCondition(QueryConditionBoolean queryCondition, FacesContext context, UIForm form, ResponseWriter writer, String jsUpdateTotalPostponed, String jsUpdateTotalImmediate, StringBuffer regJS) throws IOException
 	{
 		
@@ -504,18 +514,35 @@ public class QueryBuilderComponent extends UIComponentBase
 		writer.startElement("tr", this);
 		
 		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-checkbox-first", null);
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "checkbox", null);
 		writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
-		writer.writeAttribute("name", getHtmlNameForSimpleValue(attribute, context), null);
-		writer.writeAttribute("value", "true", null);
-		if (queryCondition.isChecked()) writer.writeAttribute("checked", "checked", null);
+		writer.writeAttribute("name", getHtmlNameForBooleanTrue(attribute, context), null);
+		writer.writeAttribute("value", "checked", null);
+		if (queryCondition.isYesChecked()) writer.writeAttribute("checked", "checked", null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
 		writer.startElement("td", this);
 		writer.writeAttribute("class", "query-checkbox-label", null);
 		writer.write(TastResource.getText("components_search_yes"));
+		writer.endElement("td");
+
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-checkbox-second", null);
+		writer.startElement("input", this);
+		writer.writeAttribute("type", "checkbox", null);
+		writer.writeAttribute("onclick", jsUpdateTotalPostponed, null);
+		writer.writeAttribute("name", getHtmlNameForBooleanFalse(attribute, context), null);
+		writer.writeAttribute("value", "checked", null);
+		if (queryCondition.isNoChecked()) writer.writeAttribute("checked", "checked", null);
+		writer.endElement("input");
+		writer.endElement("td");
+		
+		writer.startElement("td", this);
+		writer.writeAttribute("class", "query-checkbox-label", null);
+		writer.write(TastResource.getText("components_search_no"));
 		writer.endElement("td");
 
 		writer.endElement("tr");
@@ -526,12 +553,17 @@ public class QueryBuilderComponent extends UIComponentBase
 	private boolean decodeBooleanCondition(QueryConditionBoolean queryCondition, FacesContext context)
 	{
 		
-		String fieldName = getHtmlNameForSimpleValue(queryCondition.getSearchableAttribute(), context); 
+		String fieldNameTrue = getHtmlNameForBooleanTrue(queryCondition.getSearchableAttribute(), context); 
+		String fieldNameFalse = getHtmlNameForBooleanFalse(queryCondition.getSearchableAttribute(), context); 
 		
 		Map params = context.getExternalContext().getRequestParameterMap();
-		String value = (String) params.get(fieldName);
-		queryCondition.setChecked(value != null && value.equals("true"));
 		
+		String valueTrue = (String) params.get(fieldNameTrue);
+		queryCondition.setYesChecked(valueTrue != null && valueTrue.equals("checked"));
+		
+		String valueFalse = (String) params.get(fieldNameFalse);
+		queryCondition.setNoChecked(valueFalse != null && valueFalse.equals("checked"));
+
 		return true;
 		
 	}

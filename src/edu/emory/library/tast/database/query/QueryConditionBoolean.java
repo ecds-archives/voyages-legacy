@@ -1,7 +1,5 @@
 package edu.emory.library.tast.database.query;
 
-
-
 public class QueryConditionBoolean extends QueryCondition
 {
 	
@@ -9,49 +7,69 @@ public class QueryConditionBoolean extends QueryCondition
 
 	public static final String TYPE = "boolean";
 	
-	private boolean checked = true;
+	private boolean yesChecked = true;
+	private boolean noChecked = true;
 	
 	public QueryConditionBoolean(String searchableAttributeId)
 	{
 		super(searchableAttributeId);
-		this.checked = false;
+		this.yesChecked = false;
+		this.noChecked = false;
 	}
 
 	public QueryConditionBoolean(String searchableAttributeId, boolean checked)
 	{
 		super(searchableAttributeId);
-		this.checked = checked;
+		this.yesChecked = checked;
 	}
 	
-	public boolean isChecked()
+	public boolean isYesChecked()
 	{
-		return checked;
+		return yesChecked;
 	}
 
-	public void setChecked(boolean checked)
+	public void setYesChecked(boolean checked)
 	{
-		this.checked = checked;
+		this.yesChecked = checked;
+	}
+
+	public boolean isNoChecked()
+	{
+		return noChecked;
+	}
+
+	public void setNoChecked(boolean noChecked)
+	{
+		this.noChecked = noChecked;
 	}
 
 	public boolean equals(Object obj)
 	{
 		if (!super.equals(obj) || !(obj instanceof QueryConditionBoolean)) return false;
 		QueryConditionBoolean queryConditionBoolean = (QueryConditionBoolean) obj;
-		return queryConditionBoolean.checked == this.checked;
+		return 
+			queryConditionBoolean.yesChecked == this.yesChecked &&
+			queryConditionBoolean.noChecked == this.noChecked;
 	}
 	
 	protected Object clone()
 	{
 		QueryConditionBoolean newQueryCondition = new QueryConditionBoolean(getSearchableAttributeId());
-		newQueryCondition.setChecked(checked);
+		newQueryCondition.setYesChecked(yesChecked);
+		newQueryCondition.setNoChecked(noChecked);
 		return newQueryCondition;
 	}
 
 	public UrlParam[] createUrlParamValue()
 	{
+		if (!noChecked && !yesChecked)
+			return null;
+		
 		return new UrlParam[] {new UrlParam(
 				getSearchableAttributeId(),
-				checked ? "yes" : "no")};
+				yesChecked && noChecked ? "present" :
+					yesChecked ? "true" :
+						noChecked ? "false" : null)};
 	}
 	
 }
