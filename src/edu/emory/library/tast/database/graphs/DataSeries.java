@@ -5,12 +5,10 @@ public class DataSeries
 {
 	
 	private DependentVariable variable;
-	public int aggregate;
 
-	public DataSeries(DependentVariable variable, int aggregate)
+	public DataSeries(DependentVariable variable)
 	{
 		this.variable = variable;
-		this.aggregate = aggregate;
 	}
 
 	public DependentVariable getVariable()
@@ -18,14 +16,9 @@ public class DataSeries
 		return variable;
 	}
 
-	public int getAggregate()
-	{
-		return aggregate;
-	}
-
 	public String formatForDisplay()
 	{
-		return variable.formatVariableForDisplay(aggregate);
+		return variable.getLabel();
 	}
 
 	public boolean equals(Object obj)
@@ -37,8 +30,6 @@ public class DataSeries
 		if (getClass() != obj.getClass())
 			return false;
 		final DataSeries other = (DataSeries) obj;
-		if (aggregate != other.aggregate)
-			return false;
 		if (variable == null)
 		{
 			if (other.variable != null)
@@ -48,7 +39,5 @@ public class DataSeries
 			return false;
 		return true;
 	}
-
-	
 
 }

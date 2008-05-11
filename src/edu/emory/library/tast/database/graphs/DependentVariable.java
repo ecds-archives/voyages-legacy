@@ -17,24 +17,30 @@ public class DependentVariable
 	private String label;
 	private Attribute selectAttribute;
 	private DependentVariableTransformer transformer;
-	private int agregates;
+	private int aggregate;
 	
-	private DependentVariable(String id, String label, Attribute selectAttribute, DependentVariableTransformer transformer, int agregates)
+	private DependentVariable(String id, String label, Attribute selectAttribute, DependentVariableTransformer transformer, int aggregate)
 	{
 		this.id = id;
 		this.selectAttribute = selectAttribute;
 		this.transformer = transformer;
-		this.agregates = agregates;
 		this.label = label;
+		this.aggregate = aggregate;
 	}
 	
-	public static DependentVariable createStandard(String id, String label, String name)
+	public static DependentVariable createAvg(String id, String label, String name)
 	{
 		Attribute attr = Voyage.getAttribute(name);
-		return new DependentVariable(id, label, attr, new DependentVariableTransformerSimple(), SUM + MIN + MAX + AVG);
+		return new DependentVariable(id, label, attr, new DependentVariableTransformerSimple(), AVG);
 	}
 
-	public static DependentVariable createCounter(String id, String label,  String name)
+	public static DependentVariable createSum(String id, String label, String name)
+	{
+		Attribute attr = Voyage.getAttribute(name);
+		return new DependentVariable(id, label, attr, new DependentVariableTransformerSimple(), SUM);
+	}
+
+	public static DependentVariable createCount(String id, String label,  String name)
 	{
 		Attribute attr = Voyage.getAttribute(name);
 		return new DependentVariable(id, label, attr, new DependentVariableTransformerSimple(), COUNT);
@@ -43,31 +49,7 @@ public class DependentVariable
 	public static DependentVariable createPercentage(String id, String label, String name)
 	{
 		Attribute attr = Voyage.getAttribute(name);
-		return new DependentVariable(id, label, attr, new DependentVariableTransformerPercentage(), MIN + MAX + AVG);
-	}
-
-	public String formatVariableForDisplay(int aggregate)
-	{
-		switch (aggregate)
-		{
-		case COUNT:
-			return label;
-		case SUM:
-			return "Sum of " + label;
-		case MIN:
-			return "Minimum of " + label;
-		case MAX:
-			return "Maximum of " + label;
-		case AVG:
-			return "Average of " + label;
-		default:
-			throw new RuntimeException("invalid aggregate " + aggregate);
-		}
-	}
-	
-	public static int parseAggregateType(String aggregate)
-	{
-		return parseAggregateType(aggregate, false);
+		return new DependentVariable(id, label, attr, new DependentVariableTransformerPercentage(), AVG);
 	}
 
 	public static int parseAggregateType(String aggregate, boolean lenient)
@@ -120,6 +102,33 @@ public class DependentVariable
 		return id;
 	}
 	
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final DependentVariable other = (DependentVariable) obj;
+		if (id == null)
+		{
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
 	public String getLabel()
 	{
 		return label;
@@ -135,36 +144,11 @@ public class DependentVariable
 		return transformer;
 	}
 
-	public boolean hasOnlyCount()
+	public int getAggregate()
 	{
-		return agregates == COUNT;
+		return aggregate;
 	}
-
-	public boolean hasCount()
-	{
-		return (agregates & COUNT) != 0;
-	}
-
-	public boolean hasMin()
-	{
-		return (agregates & MIN) != 0;
-	}
-
-	public boolean hasMax()
-	{
-		return (agregates & MAX) != 0;
-	}
-
-	public boolean hasAvg()
-	{
-		return (agregates & AVG) != 0;
-	}
-
-	public boolean hasSum()
-	{
-		return (agregates & SUM) != 0;
-	}
-
+	
 }
 
 abstract class DependentVariableTransformer
