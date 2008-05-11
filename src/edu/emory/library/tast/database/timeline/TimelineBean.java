@@ -46,7 +46,7 @@ public class TimelineBean {
 	/**
 	 * Chosen attribute name.
 	 */
-	private StatOption chosenOption = null;
+	private TimelineVariable chosenOption = null;
 
 	/**
 	 * Current search bean reference.
@@ -91,21 +91,28 @@ public class TimelineBean {
 	 * statistic can be computed. I also provide information about format that should be used by output values.
 	 *
 	 */
-	private class StatOption
+	private class TimelineVariable
 	{
 
 		public String userLabel;
-		public String sqlValue;
 		public Object sqlWhere = null;
 		public String formatString;
 		public Attribute attributeValue;
+		public boolean isPercentage = false;
 		
-		public StatOption(String sqlValue, Attribute valueAttribute, String userLabel, String formatString)
+		public TimelineVariable(Attribute valueAttribute, String userLabel, String formatString)
 		{
-			this.sqlValue = sqlValue;
 			this.attributeValue = valueAttribute;
 			this.userLabel = userLabel;
 			this.formatString = formatString;
+		}
+
+		public TimelineVariable(Attribute valueAttribute, String userLabel, String formatString, boolean isPercentage)
+		{
+			this.attributeValue = valueAttribute;
+			this.userLabel = userLabel;
+			this.formatString = formatString;
+			this.isPercentage = isPercentage;
 		}
 
 	}
@@ -115,167 +122,149 @@ public class TimelineBean {
 		
 		this.availableStats = new ArrayList();
 		
-		this.availableStats.add(new StatOption(
-				"COUNT(voyageid)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("COUNT", new Attribute[] {Voyage.getAttribute("voyageid")}),
 				TastResource.getText("components_timeline_stat_numofvoyages"),
 				"{0,number,#,###,###}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(tonnage)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonnage")}),
 				TastResource.getText("components_timeline_stat_averagetonnage"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(tonmod)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonmod")}),
 				TastResource.getText("components_timeline_stat_averagetonnagestand"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(guns)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("guns")}),
 				TastResource.getText("components_timeline_stat_averageguns"),
 				"{0,number,#,###,###.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(LEAST(COALESCE(resistance, 0), 1)) * 100",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})}),
 				TastResource.getText("components_timeline_stat_rateresistance"),
 				"{0,number,#,###,##0.0}%"));
 
-		this.availableStats.add(new StatOption(
-				"AVG(voy1imp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy1imp")}),
 				TastResource.getText("components_timeline_stat_averagedurationfirst"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(voy2imp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy2imp")}),
 				TastResource.getText("components_timeline_stat_averagedurationmiddle"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(crew1)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonnage")}),
 				TastResource.getText("components_timeline_stat_averagecrew"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(crew30)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crew3")}),
 				TastResource.getText("components_timeline_stat_averagecrewfirst"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"SUM(crewdied)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("crewdied")}),
 				TastResource.getText("components_timeline_stat_crewdeaths"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(crewdied)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crewdied")}),
 				TastResource.getText("components_timeline_stat_averagecrewdeaths"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"SUM(slintend)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slintend")}),
 				TastResource.getText("components_timeline_stat_intnumpurchases"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(slintend)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slintend")}),
 				TastResource.getText("components_timeline_stat_averageintpurchases"),
 				"{0,number,#,###,###.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"SUM(slaximp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slaximp")}),
 				TastResource.getText("components_timeline_stat_totalnumcaptivesemb"),
 				"{0,number,#,###,###}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(slaximp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slaximp")}),
 				TastResource.getText("components_timeline_stat_averagenumcaptivesemb"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"SUM(slamimp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("slamimp")}),
 				TastResource.getText("components_timeline_stat_totalnumcaptivesdisemb"),
 				"{0,number,#,###,###}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(slamimp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("slamimp")}),
 				TastResource.getText("components_timeline_stat_averagenumcaptivesdisemb"),
 				"{0,number,#,###,##0.0}"));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(menrat7)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("menrat7")})}),
 				TastResource.getText("components_timeline_stat_percentmen"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 
-		this.availableStats.add(new StatOption(
-				"AVG(womrat7)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("womrat7")})}),
 				TastResource.getText("components_timeline_stat_percentwomen"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 
-		this.availableStats.add(new StatOption(
-				"AVG(boyrat7)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("boyrat7")})}),
 				TastResource.getText("components_timeline_stat_percentboys"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(girlrat7)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("girlrat7")})}),
 				TastResource.getText("components_timeline_stat_percentgirls"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(malrat7)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("malrat7")})}),
 				TastResource.getText("components_timeline_stat_percentmales"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 
-		this.availableStats.add(new StatOption(
-				"AVG(chilrat7)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("chilrat7")})}),
 				TastResource.getText("components_timeline_stat_percentchildren"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(jamcaspr)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("jamcaspr")}),
 				TastResource.getText("components_timeline_stat_averageprice"),
 				"{0,number,#,###,##0.0}"));
 
-		this.availableStats.add(new StatOption(
-				"SUM(vymrtimp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("vymrtimp")}),
 				TastResource.getText("components_timeline_stat_numdeaths"),
-				"{0,number,#,###,###}"));
+				"{0,number,#,###,###}",
+				true));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(vymrtimp)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("vymrtimp")}),
 				TastResource.getText("components_timeline_stat_averagedeaths"),
-				"{0,number,#,###,##0.0}"));
+				"{0,number,#,###,##0.0}",
+				true));
 		
-		this.availableStats.add(new StatOption(
-				"AVG(vymrtrat)",
+		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("crop_to_0_100", new Attribute[] {Voyage.getAttribute("vymrtrat")})}),
 				TastResource.getText("components_timeline_stat_mortrate"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 		
 		resetToDefault();
 
@@ -287,7 +276,7 @@ public class TimelineBean {
 		attributesChanged = false;
 		needQuery = false;
 
-		this.chosenOption = (StatOption)this.availableStats.get(15);
+		this.chosenOption = (TimelineVariable)this.availableStats.get(15);
 		
 	}
 	
@@ -300,7 +289,7 @@ public class TimelineBean {
 		this.voyageAttributes = new ArrayList();
 		Iterator iter = this.availableStats.iterator();
 		while (iter.hasNext()) {
-			StatOption option = (StatOption)iter.next();
+			TimelineVariable option = (TimelineVariable)iter.next();
 			this.voyageAttributes.add(new SelectItem(String.valueOf(option.hashCode()), option.userLabel));
 		}
 		
@@ -352,6 +341,8 @@ public class TimelineBean {
 				{
 					valueHolder[0] = row[1];
 					values[i] = ((Number)row[1]).doubleValue();
+					if (this.chosenOption.isPercentage)
+						values[i] = Math.min(100.0, values[i]);
 				}
 				else
 				{
@@ -369,6 +360,9 @@ public class TimelineBean {
 			graph.setLabels(stringValues);
 			graph.setBaseCssClass("timeline-color");
 			
+			if (this.chosenOption.isPercentage)
+				graph.setExplicitMax(100.0);
+			
 			tran.commit();
 			sess.close();
 			
@@ -376,7 +370,9 @@ public class TimelineBean {
 
 			if (maxValue > 0)
 			{
-				verticalLabels = EventLineLabel.createStandardLabels(maxValue, fmt);
+				verticalLabels = this.chosenOption.isPercentage ?
+						EventLineLabel.createPercentualLabels(fmt) :
+						EventLineLabel.createStandardLabels(maxValue, fmt);
 				viewportHeight = verticalLabels[verticalLabels.length - 1].getValue();
 			}
 			else
@@ -411,7 +407,7 @@ public class TimelineBean {
 		if (chosenAttribute != null) {
 			Iterator iter = this.availableStats.iterator();
 			while (iter.hasNext()) {
-				StatOption option = (StatOption) iter.next();
+				TimelineVariable option = (TimelineVariable) iter.next();
 				if (option.hashCode() == Integer.parseInt(chosenAttribute)) {
 					this.chosenOption = option;
 					break;

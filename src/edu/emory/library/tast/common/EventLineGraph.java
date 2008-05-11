@@ -15,24 +15,39 @@ public class EventLineGraph
 	private double maxY = 0;
 	private double minY = 0;
 	
+	private double explicitMax;
+	private double explicitMin;
+	private boolean explicitMaxSet = false;
+	private boolean explicitMinSet = false;
+	
 	private void ensureMaxMin()
 	{
 		if (!maxMinComputed)
 		{
-			if (y != null)
+			if (explicitMaxSet && explicitMinSet)
 			{
-				maxY = Double.MIN_VALUE;
-				minY = Double.MAX_VALUE;
-				for (int i = 0; i < y.length; i++)
-				{
-					if (y[i] > maxY) maxY = y[i];
-					if (y[i] < minY) minY = y[i];
-				}
+				minY = explicitMin;
+				maxY = explicitMax;
 			}
 			else
 			{
-				minY = Double.MIN_VALUE;
-				maxY = Double.MAX_VALUE;
+				if (y != null)
+				{
+					maxY = Double.MIN_VALUE;
+					minY = Double.MAX_VALUE;
+					for (int i = 0; i < y.length; i++)
+					{
+						if (y[i] > maxY) maxY = y[i];
+						if (y[i] < minY) minY = y[i];
+					}
+				}
+				else
+				{
+					minY = Double.MIN_VALUE;
+					maxY = Double.MAX_VALUE;
+				}
+				if (explicitMaxSet) maxY = explicitMax;
+				if (explicitMinSet) maxY = explicitMin;
 			}
 			maxMinComputed = true;
 		}
@@ -115,6 +130,42 @@ public class EventLineGraph
 	public void setLabels(String[] labels)
 	{
 		this.labels = labels;
+	}
+
+	public void unsetExplicitMax()
+	{
+		this.explicitMaxSet = false;
+		maxMinComputed = false;
+	}
+
+	public void unsetExplicitMin()
+	{
+		this.explicitMaxSet = false;
+		maxMinComputed = false;
+	}
+
+	public void setExplicitMax(double explicitMax)
+	{
+		this.explicitMaxSet = true;
+		this.explicitMax = explicitMax;
+		maxMinComputed = false;
+	}
+
+	public void setExplicitMin(double explicitMin)
+	{
+		this.explicitMinSet = true;
+		this.explicitMin = explicitMin;
+		maxMinComputed = false;
+	}
+
+	public boolean isExplicitMaxSet()
+	{
+		return explicitMaxSet;
+	}
+
+	public boolean isExplicitMinSet()
+	{
+		return explicitMinSet;
 	}
 	
 }

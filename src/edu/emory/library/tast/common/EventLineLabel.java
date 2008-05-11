@@ -48,6 +48,21 @@ public class EventLineLabel
 		this.value = value;
 	}
 	
+	static public EventLineLabel[] createPercentualLabels(MessageFormat fmt)
+	{
+		
+		EventLineLabel[] labels = new EventLineLabel[11];
+		
+		for (int i = 0; i <= 10; i++)
+			labels[i] = new EventLineLabel(
+					(double)(i*10),
+					fmt.format(new Object[] {new Integer(i*10)}),
+					i == 5);
+		
+		return labels;
+		
+	}
+
 	static public EventLineLabel[] createStandardLabels(double maxValue, MessageFormat fmt)
 	{
 		
@@ -71,19 +86,18 @@ public class EventLineLabel
 		}
 
 		int labelsCount = (int) (maxValue / minorSpacing) + 2;
-		if (labelsCount >= 0) {
-			EventLineLabel[] labels = new EventLineLabel[labelsCount];
-		
-			for (int i = 0; i < labelsCount; i++)
-				labels[i] = new EventLineLabel(
-					i * minorSpacing,
-					fmt.format(new Object[] {new Double(i * minorSpacing)}),
-					i % majorSpaceEvery == 0);
-			return labels;
-		} else {
+		if (labelsCount < 0)
 			return new EventLineLabel[0];
-		}
+
+		EventLineLabel[] labels = new EventLineLabel[labelsCount];
 		
+		for (int i = 0; i < labelsCount; i++)
+			labels[i] = new EventLineLabel(
+				i * minorSpacing,
+				fmt.format(new Object[] {new Double(i * minorSpacing)}),
+				i % majorSpaceEvery == 0);
+		
+		return labels;
 
 	}
 

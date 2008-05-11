@@ -8,11 +8,9 @@
 <t:htmlTag value="div" styleClass="database-graph-options">
 	<t:htmlTag value="table" style="border-collapse: collapse;">
 	<t:htmlTag value="tr">
-	<%/*
-		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
-			<h:outputText value="#{res.database_search_yaxisval} " />
+		<t:htmlTag value="td" style="padding: 0px 15px 0px 0px;">
+			<h:outputText value="Display variable" />
 		</t:htmlTag>
-	*/%>
 		<t:htmlTag value="td" style="padding: 0px 5px 0px 0px;">
 			<h:selectOneMenu value="#{TimelineBean.chosenAttribute}" id="tLAttributes">
 				<f:selectItems value="#{TimelineBean.voyageNumericAttributes}" />
