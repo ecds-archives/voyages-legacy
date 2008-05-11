@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -51,24 +53,43 @@ public class GraphTypeBar extends GraphType
 		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
 		chart.setBackgroundPaint(Color.white);
 		
-		Format format = getSelectedIndependentVariable().getFormat();
+		Format formatter = getSelectedIndependentVariable().getFormat();
 		
 		List allDataSeries = getDataSeries();
 		for (int j = 0; j < allDataSeries.size(); j++)
 		{
+			
 			DataSeries dataSearies = (DataSeries) allDataSeries.get(j);
 			String dataSeriesLabel = dataSearies.formatForDisplay();
+			
 			for (int i = 0; i < data.length; i++)
 			{
 				Object [] row = (Object[])data[i];
+				
+				String cat = formatter == null ?
+						row[0].toString() :
+							formatter.format(row[0]);
+						
 				dataset.addValue(
 						(Number) row[j+1],
 						dataSeriesLabel,
-						format.format(new Object[] {row[0]}));
+						cat);
+			}
+		}
+		
+		LegendItemCollection legendItems = chart.getPlot().getLegendItems();
+		for (int i = 0; i < legendItems.getItemCount(); i++)
+		{
+			LegendItem legendItem = legendItems.get(i);
+			DataSeries dataSearies = (DataSeries) allDataSeries.get(i);
+			if (legendItem.getFillPaint() instanceof Color)
+			{
+				dataSearies.setColor(((Color)legendItem.getFillPaint()));
 			}
 		}
 		
 		return chart;
+
 	}
 
 }

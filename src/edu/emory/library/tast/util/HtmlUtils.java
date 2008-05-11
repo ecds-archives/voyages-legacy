@@ -1,5 +1,6 @@
 package edu.emory.library.tast.util;
 
+import java.awt.Color;
 import java.io.PrintWriter;
 
 public class HtmlUtils
@@ -39,6 +40,11 @@ public class HtmlUtils
 		if (showInBody) out.println("Redirect to: " + URL);
 		out.println("</body>");
 		out.println("</html>");
+	}
+	
+	public static String formatHtmlColor(Color color)
+	{
+		return "#" + Integer.toHexString(color.getRGB() & 0x00FFFFFF);
 	}
 	
 }

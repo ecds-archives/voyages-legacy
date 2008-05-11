@@ -1,6 +1,5 @@
 package edu.emory.library.tast.database.graphs;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.jfree.chart.JFreeChart;
 
 import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.query.Conditions;
@@ -37,13 +37,10 @@ public class GraphsBean
 	
 	private int nextUrlSeq = 0;
 
-	private List toRemove;
-
 	private static final IndependentVariable[] independentVariablesXY = new IndependentVariable[] {
-		IndependentVariable.createForInteger("yearam", "Year arrived with slaves*", "yearam"),
+		IndependentVariable.createForYear("yearam", "Year arrived with slaves*", "yearam"),
 		IndependentVariable.createForInteger("voy1imp", "Voyage length, home port to slaves landing (days)*", "voy1imp"),
 		IndependentVariable.createForInteger("voy2imp", "Middle passage (days)*", "voy2imp"),
-		IndependentVariable.createForInteger("tonmod", "Standardized tonnage*", "tonmod"),
 		IndependentVariable.createForInteger("crew1", "Crew at voyage outset", "crew1"),
 		IndependentVariable.createForInteger("crew3", "Crew at first landing of slaves", "crew3"),
 		IndependentVariable.createForInteger("slaximp", "Slaves embarked", "slaximp"),
@@ -70,6 +67,7 @@ public class GraphsBean
 		DependentVariable.createPercentage("chilrat7", "Percentage children*", "chilrat7"),
 		DependentVariable.createPercentage("malrat7", "Percentage male*", "malrat7"),
 		DependentVariable.createAvg("jamcaspr", "Sterling cash price in Jamaica*", "jamcaspr"),
+		DependentVariable.createCustomAvg("resistance-rate", "Rate of resistance", new FunctionAttribute("coalesce_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})),
 		DependentVariable.createPercentage("vymrtrat", "Percentage of slaves embarked who died during voyage*", "vymrtrat"),
 	};
 
@@ -82,6 +80,8 @@ public class GraphsBean
 		IndependentVariable.createForFateSlaves("fate2", "Outcome for slaves*", "fate2"),
 		IndependentVariable.createForFateOwner("fate4", "Outcome for owner*", "fate4"),
 		IndependentVariable.createForFateVessel("fate3", "Outcome if ship captured*", "fate3"),
+		
+		IndependentVariable.createForResistance("resistance", "African resistance", "resistance"),
 		
 		IndependentVariable.createForPort("ptdepimp", "Place where voyage began*", "ptdepimp"),
 		IndependentVariable.createForRegion("ptdepimp-region", "Region where voyage began*", "ptdepimp"),
@@ -121,6 +121,7 @@ public class GraphsBean
 		DependentVariable.createPercentage("chilrat7", "Percentage children*", "chilrat7"),
 		DependentVariable.createPercentage("malrat7", "Percentage male*", "chilrat7"),
 		DependentVariable.createAvg("jamcaspr", "Sterling cash price in Jamaica*", "jamcaspr"),
+		DependentVariable.createCustomAvg("resistance-rate", "Rate of resistance", new FunctionAttribute("coalesce_to_0_100", Voyage.getAttribute("resistance"))),
 		DependentVariable.createPercentage("vymrtrat", "Percentage of slaves embarked who died during voyage*", "vymrtrat")
 	};
 	
@@ -133,6 +134,8 @@ public class GraphsBean
 		IndependentVariable.createForFateSlaves("fate2", "Outcome for slaves*", "fate2"),
 		IndependentVariable.createForFateOwner("fate4", "Outcome for owner*", "fate4"),
 		IndependentVariable.createForFateVessel("fate3", "Outcome if ship captured*", "fate3"),
+		
+		IndependentVariable.createForResistance("resistance", "African resistance", "resistance"),
 		
 		IndependentVariable.createForPort("ptdepimp", "Place where voyage began*", "ptdepimp"),
 		IndependentVariable.createForRegion("ptdepimp-region", "Region where voyage began*", "ptdepimp"),
@@ -158,7 +161,7 @@ public class GraphsBean
 	private GraphType[] graphs = new GraphType[] {
 		new GraphTypeXY("xy", independentVariablesXY, dependentVariablesXY),
 		new GraphTypeBar("bar", independentVariablesBar, dependentVariablesBar),
-		new GraphPie("xy", independentVariablesPie, dependentVariablesPie),
+		new GraphPie("pie", independentVariablesPie, dependentVariablesPie),
 	};
 	
 	private GraphType selectedGraph;
@@ -208,28 +211,21 @@ public class GraphsBean
 		selectedGraph.getDataSeries().add(newSeries);
 		
 		needRefresh = true;
-
 		return null;
+
 	}
 	
-	public String removeSeries()
+	public String removeSelectedSeries()
 	{
-		if (this.toRemove != null)
+		List allDataSeries = selectedGraph.getDataSeries();
+		for (int i = 0; i < allDataSeries.size(); i++)
 		{
-			List series = selectedGraph.getDataSeries();
-			for (Iterator iter = toRemove.iterator(); iter.hasNext();)
+			DataSeries dataSeries = ((DataSeries)allDataSeries.get(i));
+			if (dataSeries.isSelected())
 			{
-				String varId = (String) iter.next();
-				for (int i = 0; i < series.size(); i++)
-				{
-					DataSeries dataSeries = ((DataSeries)series.get(i));
-					if (dataSeries.getVariable().getId().equals(varId))
-					{
-						series.remove(i);
-						needRefresh = true;
-						break;
-					}
-				}
+				allDataSeries.remove(i);
+				i--;
+				needRefresh = true;
 			}
 		}
 		return null;
@@ -259,10 +255,7 @@ public class GraphsBean
 		for (Iterator iter = selectedGraph.getDataSeries().iterator(); iter.hasNext();)
 		{
 			DataSeries ser = (DataSeries) iter.next();
-			qValue.addPopulatedAttribute(
-					new FunctionAttribute(
-							DependentVariable.aggregateToHQL(ser.getVariable().getAggregate()),
-							ser.getVariable().getSelectAttribute()));
+			qValue.addPopulatedAttribute(ser.getVariable().getSelectAttribute());
 		}
 		
 		qValue.setGroupBy(indepVar.getGroupByAttributes());
@@ -270,10 +263,13 @@ public class GraphsBean
 		qValue.setOrderBy(new Attribute[] {indepVar.getOrderAttribute()});
 		qValue.setOrder(QueryValue.ORDER_ASC);
 		
+		// query db
 		Object[] data = qValue.executeQuery();
-		
+
+		// create graph
 		JFreeChart chart = selectedGraph.createChart(data);
 
+		// put the graph into the session
 		ExternalContext servletContext = FacesContext.getCurrentInstance().getExternalContext();
 		((HttpSession) servletContext.getSession(true)).setAttribute(SESSION_KEY_GRAPH, chart);
 
@@ -284,49 +280,7 @@ public class GraphsBean
 		this.needRefresh = true;
 		return null;
 	}
-
-	public String setNewView()
-	{
-		return null;
-	}
 	
-	public String switchToXY()
-	{
-		selectedGraph = graphs[XY_GRAPH_TYPE_INDEX];
-		needRefresh = true;
-		return null;
-	}
-
-	public String switchToBar()
-	{
-		selectedGraph = graphs[BAR_GRAPH_TYPE_INDEX];
-		needRefresh = true;
-		return null;
-	}
-
-	public String switchToPie()
-	{
-		selectedGraph = graphs[PIE_GRAPH_TYPE_INDEX];
-		needRefresh = true;
-		return null;
-	}
-	
-	public List getSeries()
-	{
-		List list = new ArrayList();
-		if (selectedGraph.getDataSeries() != null)
-		{
-			for (Iterator iter = selectedGraph.getDataSeries().iterator(); iter.hasNext();)
-			{
-				DataSeries ser = (DataSeries) iter.next();
-				list.add(new SelectItem(
-						ser.getVariable().getId(), 
-						ser.formatForDisplay()));
-			}
-		}
-		return list;
-	}
-
 	public SelectItem[] getIndependentVariables()
 	{
 		
@@ -363,6 +317,12 @@ public class GraphsBean
 		
 	}
 
+	public List getSeries()
+	{
+		this.refreshGraphIfNeeded();
+		return selectedGraph.getDataSeries();
+	}
+	
 	public String getChartPath()
 	{
 		this.refreshGraphIfNeeded();
@@ -373,14 +333,23 @@ public class GraphsBean
 			"seq=" + nextUrlSeq;
 	}
 
-	public List getToRemove()
+	public void setSelectedDependentVariableId(String id)
 	{
-		return toRemove;
+		selectedGraph.setSelectedDependentVariableId(id);
+		needRefresh = true;
 	}
 
-	public void setToRemove(List toRemove)
+	public void setGraphTypeId(String graphTypeId)
 	{
-		this.toRemove = toRemove;
+		for (int i = 0; i < graphs.length; i++)
+		{
+			if (graphs[i].getId().equals(graphTypeId))
+			{
+				selectedGraph = graphs[i]; 
+				needRefresh = true;
+				return;
+			}
+		}
 	}
 
 	public String getSelectedIndependentVariableId()
@@ -391,12 +360,6 @@ public class GraphsBean
 	public String getSelectedDependentVariableId()
 	{
 		return selectedGraph.getSelectedDependentVariableId();
-	}
-
-	public void setSelectedDependentVariableId(String id)
-	{
-		selectedGraph.setSelectedDependentVariableId(id);
-		needRefresh = true;
 	}
 
 	public void setSelectedIndependentVariableId(String id)
@@ -422,6 +385,11 @@ public class GraphsBean
 	public void setSearchBean(SearchBean searchBean)
 	{
 		this.searchBean = searchBean;
+	}
+
+	public String getGraphTypeId()
+	{
+		return selectedGraph.getId();
 	}
 
 }

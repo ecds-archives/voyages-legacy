@@ -9,7 +9,7 @@ td.tabs-tab-left {
 td.tabs-tab-middle-selected,
 td.tabs-tab-middle {
 	text-align: center;
-	vertical-align: bottom !important;
+	vertical-align: bottom;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-repeat: repeat-x; }

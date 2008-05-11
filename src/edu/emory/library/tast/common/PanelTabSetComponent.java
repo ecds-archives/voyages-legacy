@@ -26,9 +26,8 @@ public class PanelTabSetComponent extends UIComponentBase {
 
 	private String title;
 
-	private String selectedSectionId;
-
 	private boolean selectedSectionIdSet = false;
+	private String selectedSectionId;
 
 	public Object saveState(FacesContext context)
 	{
@@ -107,11 +106,16 @@ public class PanelTabSetComponent extends UIComponentBase {
 		for (Iterator iter = getChildren().iterator(); iter.hasNext();)
 		{
 			
-			PanelTabComponent sect = (PanelTabComponent) iter.next();
-			boolean isSelected = selectedSectionId.equals(sect.getSectionId());
+			PanelTabComponent tab = (PanelTabComponent) iter.next();
+			boolean isSelected = selectedSectionId.equals(tab.getSectionId());
 			String cssClassSelectedSuffix = isSelected ? "-selected" : "";
+			
+			String explicitCssClass = tab.getCssClass();
+			String middleCssClass =
+				!StringUtils.isNullOrEmpty(explicitCssClass) ?
+					explicitCssClass : "tabs-tab-middle";
 
-			String href = sect.getHref();
+			String href = tab.getHref();
 			String jsOnClick;
 			
 			if (href == null)
@@ -119,7 +123,7 @@ public class PanelTabSetComponent extends UIComponentBase {
 				jsOnClick = JsfUtils.generateSubmitJS(
 						context, form,
 						getSelectedTabHiddenFieldName(context),
-						sect.getSectionId());
+						tab.getSectionId());
 			}
 			else
 			{
@@ -139,9 +143,9 @@ public class PanelTabSetComponent extends UIComponentBase {
 			writer.endElement("td");
 
 			writer.startElement("td", this);
-			writer.writeAttribute("class", "tabs-tab-middle" + cssClassSelectedSuffix, null);
+			writer.writeAttribute("class", middleCssClass + cssClassSelectedSuffix, null);
 			writer.writeAttribute("onclick", jsOnClick, null);
-			writer.write(sect.getTitle());
+			writer.write(tab.getTitle());
 			writer.endElement("td");
 			
 			writer.startElement("td", null);

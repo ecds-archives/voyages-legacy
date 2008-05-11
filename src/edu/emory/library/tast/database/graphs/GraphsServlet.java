@@ -32,11 +32,19 @@ public class GraphsServlet extends HttpServlet {
 		
 		JFreeChart chart = (JFreeChart)session.getAttribute(GraphsBean.SESSION_KEY_GRAPH);
 		
-		if (chart != null)
+		if (chart == null)
 		{
-			response.setContentType("image/png");
-			ChartUtilities.writeChartAsPNG(stream, chart, width, height);
+			response.encodeRedirectURL("../../images/blank.png");
+			return;
 		}
+		
+	    response.setHeader("Cache-Control", "no-cache");
+	    response.setHeader("Cache-Control", "max-age=0");
+	    response.setHeader("Pragma", "no-cache");
+	    response.setDateHeader("Expires", 0);		
+		
+		response.setContentType("image/png");
+		ChartUtilities.writeChartAsPNG(stream, chart, width, height);
 
 	}
 }

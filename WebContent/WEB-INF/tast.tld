@@ -300,6 +300,9 @@
 		<attribute>
 			<name>href</name>
 		</attribute>
+		<attribute>
+			<name>cssClass</name>
+		</attribute>
 	</tag>
 
 	<tag>

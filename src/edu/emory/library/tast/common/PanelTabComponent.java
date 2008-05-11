@@ -26,6 +26,9 @@ public class PanelTabComponent extends UIComponentBase
 	private boolean hrefSet = false;
 	private String href;
 	
+	private boolean cssClassSet = false;
+	private String cssClass;
+
 	public String getFamily()
 	{
 		return null;
@@ -33,11 +36,12 @@ public class PanelTabComponent extends UIComponentBase
 
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[4];
+		Object[] values = new Object[5];
 		values[0] = super.saveState(context);
 		values[1] = title;
 		values[2] = sectionId;
 		values[3] = href;
+		values[4] = cssClass;
 		return values;
 	}
 	
@@ -48,6 +52,7 @@ public class PanelTabComponent extends UIComponentBase
 		title = (String) values[1];
 		sectionId = (String) values[2];
 		href = (String) values[3];
+		cssClass = (String) values[4];
 	}
 	
 	public String getSectionId()
@@ -84,6 +89,18 @@ public class PanelTabComponent extends UIComponentBase
 	{
 		this.hrefSet = true;
 		this.href = href;
+	}
+
+	public String getCssClass()
+	{
+		return JsfUtils.getCompPropString(this, getFacesContext(),
+				"cssClass", cssClassSet, cssClass);
+	}
+
+	public void setCssClass(String cssClass)
+	{
+		this.cssClassSet = true;
+		this.cssClass = cssClass;
 	}
 
 }

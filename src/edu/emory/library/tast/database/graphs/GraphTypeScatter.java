@@ -1,14 +1,11 @@
 package edu.emory.library.tast.database.graphs;
 
 import java.awt.Color;
-import java.text.Format;
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -16,10 +13,16 @@ import org.jfree.data.xy.CategoryTableXYDataset;
 
 import edu.emory.library.tast.TastResource;
 
-public class GraphTypeXY extends GraphType
+/**
+ * Not used currently. May be used in future.
+ * 
+ * @author Jan Zich
+ *
+ */
+public class GraphTypeScatter extends GraphType
 {
 
-	protected GraphTypeXY(String id, IndependentVariable[] independetVariables, DependentVariable[] dependetVariables)
+	protected GraphTypeScatter(String id, IndependentVariable[] independetVariables, DependentVariable[] dependetVariables)
 	{
 		super(id, independetVariables, dependetVariables);
 	}
@@ -34,7 +37,7 @@ public class GraphTypeXY extends GraphType
 
 		CategoryTableXYDataset dataset = new CategoryTableXYDataset();
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		JFreeChart chart = ChartFactory.createScatterPlot(
 				null,
 				getSelectedIndependentVariable().getLabel(),
 				TastResource.getText("components_charts_barvalue"),
@@ -44,12 +47,11 @@ public class GraphTypeXY extends GraphType
 				true,
 				false);
 		
-		Format formatter = getSelectedIndependentVariable().getFormat();
+		//getSelectedIndependentVariable().getFormat();
 		
 		XYPlot plot = chart.getXYPlot();
-		if (formatter != null)
-			((NumberAxis)plot.getDomainAxis()).setNumberFormatOverride(
-					(NumberFormat) formatter);
+		((NumberAxis)plot.getDomainAxis()).setNumberFormatOverride(
+				new DecimalFormat("0"));
 		
 		chart.setBackgroundPaint(Color.white);
 		
@@ -68,17 +70,6 @@ public class GraphTypeXY extends GraphType
 							x.doubleValue(),
 							y.doubleValue(),
 							dataSeriesLabel);
-			}
-		}
-		
-		LegendItemCollection legendItems = chart.getPlot().getLegendItems();
-		for (int i = 0; i < legendItems.getItemCount(); i++)
-		{
-			LegendItem legendItem = legendItems.get(i);
-			DataSeries dataSearies = (DataSeries) allDataSeries.get(i);
-			if (legendItem.getFillPaint() instanceof Color)
-			{
-				dataSearies.setColor(((Color)legendItem.getFillPaint()));
 			}
 		}
 		

@@ -78,3 +78,112 @@ div.event-line-grid-minor {
 	background-color: #F1E7C8;
 	background-color: #F1E7C8; }
 	
+div.database-graphs-legend-box {
+	overflow: hidden;
+	width: 10px;
+	height: 10px;
+	border: 1px solid Black; }
+
+div.database-graphs-frame {
+	border-left: 1px solid #EEDAA2;
+	border-bottom: 1px solid #EEDAA2;
+	border-right: 1px solid #EEDAA2;
+	padding: 15px 10px 10px 10px; }
+
+div.database-graphs-tabs div.tabs-selection {
+	margin-top: 5px; }
+
+div.database-graphs-tabs div.tabs-selection {
+	background-image: url(../images/database-inner-tabs-bg.png);
+	background-position: bottom left;
+	background-repeat: repeat-x; }
+	
+div.database-graphs-tabs td.tabs-tab-left-selected {
+	padding: 0px;
+	height: 26px;
+	width: 10px;
+	overflow: hidden;
+	background-image: url(../images/database-inner-tabs-selected-left.png);
+	background-repeat: no-repeat; }
+
+div.database-graphs-tabs td.tabs-tab-middle-selected {
+	padding: 0px;
+	vertical-align: middle;
+	height: 26px;
+	background-image: url(../images/database-inner-tabs-selected-center.png);
+	background-repeat: repeat-x; }	
+	
+div.database-graphs-tabs td.tabs-tab-right-selected {
+	padding: 0px;
+	height: 26px;
+	width: 10px;
+	overflow: hidden;
+	background-image: url(../images/database-inner-tabs-selected-right.png);
+	background-repeat: no-repeat; }
+	
+div.database-graphs-tabs td.tabs-tab-left {
+	padding: 0px;
+	height: 26px;
+	width: 10px;
+	overflow: hidden;
+	background-image: url(../images/database-inner-tabs-left.png);
+	background-repeat: no-repeat; }
+
+div.database-graphs-tabs td.tabs-tab-middle {
+	padding: 0px;
+	vertical-align: middle;
+	height: 26px;
+	background-image: url(../images/database-inner-tabs-center.png);
+	background-repeat: repeat-x; }	
+	
+div.database-graphs-tabs td.tabs-tab-right {
+	padding: 0px;
+	height: 26px;
+	width: 10px;
+	overflow: hidden;
+	background-image: url(../images/database-inner-tabs-right.png);
+	background-repeat: no-repeat; }
+	
+td.database-graps-tab-xy {
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 0px 0px 0px 30px;
+	background-image: url(../images/database-graps-tab-xy.png);
+	background-repeat: no-repeat; }
+	
+td.database-graps-tab-bar {
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 0px 0px 0px 30px;
+	background-image: url(../images/database-graps-tab-bar.png);
+	background-repeat: no-repeat; }
+	
+td.database-graps-tab-pie {
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 0px 0px 0px 30px;
+	background-image: url(../images/database-graps-tab-pie.png);
+	background-position: top left;
+	background-repeat: no-repeat; }
+	
+td.database-graps-tab-xy-selected {
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 0px 0px 0px 30px;
+	background-image: url(../images/database-graps-tab-xy-selected.png);
+	background-repeat: no-repeat; }
+	
+td.database-graps-tab-bar-selected {
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 0px 0px 0px 30px;
+	background-image: url(../images/database-graps-tab-bar-selected.png);
+	background-repeat: no-repeat; }
+	
+td.database-graps-tab-pie-selected {
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 0px 0px 0px 30px;
+	background-image: url(../images/database-graps-tab-pie-selected.png);
+	background-position: top left;
+	background-repeat: no-repeat; }

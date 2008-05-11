@@ -33,12 +33,17 @@ public class GraphPie extends GraphType
 		if (dataSeries.size() == 0)
 			return null;
 		
-		Format format = getSelectedIndependentVariable().getFormat();
+		Format formatter = getSelectedIndependentVariable().getFormat();
 		
 		for (int i = 0; i < data.length; i++)
 		{
 			Object [] row = (Object[])data[i];
-			pieDataset.setValue(format.format(new Object[] {row[0]}), (Number)row[1]);
+			
+			String cat = formatter == null ?
+					row[0].toString() :
+						formatter.format(row[0]);
+			
+			pieDataset.setValue(cat, (Number)row[1]);
 		}
 		
 		return chart;

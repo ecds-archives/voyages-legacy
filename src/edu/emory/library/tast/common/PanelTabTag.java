@@ -18,6 +18,7 @@ public class PanelTabTag extends UIComponentTag
 	private String title;
 	private String sectionId;
 	private String href;
+	private String cssClass;
 
 	public String getComponentType()
 	{
@@ -64,7 +65,17 @@ public class PanelTabTag extends UIComponentTag
 		{
 			section.setHref(href);
 		}
-
+		
+		if (cssClass != null && isValueReference(cssClass))
+		{
+			ValueBinding vb = app.createValueBinding(cssClass);
+			component.setValueBinding("cssClass", vb);
+		}
+		else
+		{
+			section.setCssClass(cssClass);
+		}
+		
 	}
 
 	public String getSectionId()
@@ -96,4 +107,15 @@ public class PanelTabTag extends UIComponentTag
 	{
 		this.href = href;
 	}
+
+	public String getCssClass()
+	{
+		return cssClass;
+	}
+
+	public void setCssClass(String cssClass)
+	{
+		this.cssClass = cssClass;
+	}
+
 }
