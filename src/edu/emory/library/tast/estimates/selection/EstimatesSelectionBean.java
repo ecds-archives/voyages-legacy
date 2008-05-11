@@ -104,8 +104,6 @@ public class EstimatesSelectionBean
 	private String yearTo = String.valueOf(TIME_SPAN_INITIAL_TO);
 
 	private String selectedTab = "table";
-
-	private boolean lockedYears = false;
 	
 	private PopupComponent permlinkPopup = null;
 	private String lastPermLink = null;
@@ -1238,7 +1236,6 @@ public class EstimatesSelectionBean
 
 	public void setYearFrom(String yearFrom)
 	{
-		if (lockedYears) return;
 		this.yearFrom = yearFrom;
 	}
 
@@ -1249,7 +1246,6 @@ public class EstimatesSelectionBean
 
 	public void setYearTo(String yearTo)
 	{
-		if (lockedYears) return;
 		this.yearTo = yearTo;
 	}
 
@@ -1261,11 +1257,6 @@ public class EstimatesSelectionBean
 	public void setSelectedTab(String selectedTab)
 	{
 		this.selectedTab = selectedTab;
-	}
-
-	public void lockYears(boolean b)
-	{
-		lockedYears  = b;
 	}
 	
 	public PopupComponent getPermlinkPopup()

@@ -118,10 +118,18 @@ public class EstimatesMapBean {
 	 */
 	public String refresh()
 	{
+		
+		ChosenMap map = StandardMaps.getSelectedMap(this);
+		this.estimatesBean.setYearFrom(String.valueOf(map.ident.yearFrom));
+		this.estimatesBean.setYearTo(String.valueOf(map.ident.yearTo));
+		this.estimatesBean.changeSelection();
+		
 		type = determineType();
 		forceQuery = true;
 		this.setData();
+		
 		return null;
+		
 	}
 	
 	/**
@@ -173,11 +181,6 @@ public class EstimatesMapBean {
 			ChosenMap map = StandardMaps.getSelectedMap(this);
 			this.zoomLevel = map.mapId;
 			this.zoomLevelLocked = true;
-			this.estimatesBean.setYearFrom(String.valueOf(map.ident.yearFrom));
-			this.estimatesBean.setYearTo(String.valueOf(map.ident.yearTo));
-			this.estimatesBean.changeSelection();
-			this.estimatesBean.lockYears(true);
-			this.estimatesBean.changeSelection();
 		}
 	}
 
@@ -187,7 +190,6 @@ public class EstimatesMapBean {
 	 */
 	public String getChosenMap()
 	{
-		this.estimatesBean.lockYears(false);
 		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
