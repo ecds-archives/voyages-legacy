@@ -12,6 +12,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.PhaseId;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -36,8 +37,11 @@ public class LegendComponent extends UIComponentBase {
 
 		Map params = context.getExternalContext().getRequestParameterMap();
 		String refreshClicked = (String) params.get(getLegendHiddenFieldName(context));
-		if (refreshClicked != null && refreshClicked.length() > 0) {
-			this.queueEvent(new ActionEvent(this));
+		if (refreshClicked != null && refreshClicked.length() > 0)
+		{
+			ActionEvent actionEvent = new ActionEvent(this);
+			actionEvent.setPhaseId(PhaseId.INVOKE_APPLICATION);
+			this.queueEvent(actionEvent);
 		}
 		
 		String mapTypeId = (String) params.get(getMapTypeHiddenFieldName(context));
@@ -246,7 +250,6 @@ public class LegendComponent extends UIComponentBase {
 					writer.startElement("td", this);
 					writer.writeAttribute("class", "map-legend-checkbox", null);
 					encodeCheckbox(context, writer, "_legend_" + i + "_" + j, items[j].isEnabled());
-					System.out.println("_legend_" + i + "_" + j + ": " + items[j].isEnabled() + " (" + legendGroups + ")");
 					writer.endElement("td");
 					
 					writer.startElement("td", this);

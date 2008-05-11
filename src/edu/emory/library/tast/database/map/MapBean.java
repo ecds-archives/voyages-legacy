@@ -143,11 +143,21 @@ public class MapBean
 	 * Refreshes any data in map. It queries the database if needed.
 	 * @return
 	 */
-	public String refresh() {
+	public String refresh()
+	{
+		
 		type = determineType();
 		neededQuery = true;
+		
+		ChosenMap map = StandardMaps.getSelectedMap(this);
+		this.zoomLevelId = map.mapId;
+		this.searchBean.setYearFrom(String.valueOf(map.ident.yearFrom));
+		this.searchBean.setYearTo(String.valueOf(map.ident.yearTo));
+		this.searchBean.search();
+		
 		this.setMapData();
 		return null;
+
 	}
 
 	/**
@@ -199,12 +209,8 @@ public class MapBean
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);
 			this.zoomLevelId = map.mapId;
-			// this.searchBean.setYearFrom(String.valueOf(map.ident.yearFrom));
-			// this.searchBean.setYearTo(String.valueOf(map.ident.yearTo));
-			// this.searchBean.lockYears(true);
 			zoomLevelLocked = true;
-			//StandardMaps.setSelectedMapType(this, value);
-			//this.searchBean.search();
+			this.searchBean.search();
 		}
 	}
 
@@ -213,7 +219,6 @@ public class MapBean
 	 * @return
 	 */
 	public String getChosenMap() {
-		this.searchBean.lockYears(false);
 		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
