@@ -62,6 +62,7 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 		int i = 0;
 		long lastAreaId = 0;
 		Label areaLabel = null;
+		EstimatesImportRegion prevRegion = null;
 		
 		for (Iterator iter = regions.iterator(); iter.hasNext();)
 		{
@@ -77,7 +78,7 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 				{
 					if (areaLabel != null)
 					{
-						if (regionsInArea.size() > 1)
+						if (prevRegion.getArea().getRegions().size() > 1)
 						{
 							Label[] regionsArray = new Label[regionsInArea.size()];
 							regionsInArea.toArray(regionsArray);
@@ -94,13 +95,15 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 				lookupTable.put(regionId, new Integer(i));
 				i++;
 				
+				prevRegion = region;
+				
 			}
 
 		}
 
 		if (areaLabel != null)
 		{
-			if (regionsInArea.size() > 1)
+			if (prevRegion.getArea().getRegions().size() > 1)
 			{
 				Label[] regionsArray = new Label[regionsInArea.size()];
 				regionsInArea.toArray(regionsArray);
