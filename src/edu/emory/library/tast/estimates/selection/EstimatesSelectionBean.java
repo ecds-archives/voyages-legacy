@@ -393,7 +393,7 @@ public class EstimatesSelectionBean
 
 		timeFrameConditions = new Conditions(Conditions.AND);
 		
-		if (yearFromInt == null || yearToInt == null || yearFromInt.compareTo(yearToInt) < 0)
+		if (yearFromInt == null || yearToInt == null || yearFromInt.compareTo(yearToInt) <= 0)
 		{
 
 			if (yearFromInt != null)

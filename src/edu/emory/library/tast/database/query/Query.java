@@ -81,7 +81,7 @@ public class Query implements Cloneable
 		Integer yearFromInt = ConversionUtils.toInteger(yearFrom);
 		Integer yearToInt = ConversionUtils.toInteger(yearTo);
 		
-		if (yearFromInt == null || yearToInt == null || yearFromInt.compareTo(yearToInt) < 0)
+		if (yearFromInt == null || yearToInt == null || yearFromInt.compareTo(yearToInt) <= 0)
 		{
 			if (yearFromInt != null)
 				dbConds.addCondition(
