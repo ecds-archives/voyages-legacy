@@ -1,4 +1,5 @@
 div.popup-blackout {
+	z-index: 1;
 	background-image: url(../images/popup-bg.png); }
 	
 div.popup-content {
