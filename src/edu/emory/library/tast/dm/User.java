@@ -12,8 +12,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class User {
 	
@@ -100,9 +100,9 @@ public class User {
 	}
 	
 	public static User loadByName(Session session, String newUserName) {
-		Conditions c = new Conditions();
-		c.addCondition(getAttribute("userName"), newUserName, Conditions.OP_EQUALS);
-		QueryValue qVal = new QueryValue("User", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(getAttribute("userName"), newUserName, TastDbConditions.OP_EQUALS);
+		TastDbQuery qVal = new TastDbQuery("User", c);
 		Object[] objects = qVal.executeQuery(session);
 		if (objects.length == 0) {
 			return null;

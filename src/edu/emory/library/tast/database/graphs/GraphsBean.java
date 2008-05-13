@@ -15,8 +15,8 @@ import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class GraphsBean
 {
@@ -31,7 +31,7 @@ public class GraphsBean
 	private static final int DEFAULT_CHART_WIDTH = 640;
 	
 	private SearchBean searchBean = null;
-	private Conditions conditions = null;
+	private TastDbConditions conditions = null;
 	
 	private boolean needRefresh = false;
 	
@@ -234,21 +234,21 @@ public class GraphsBean
 	public void refreshGraphIfNeeded()
 	{
 		
-		Conditions searchBeanConditions = this.searchBean.getSearchParameters().getConditions();
+		TastDbConditions searchBeanConditions = this.searchBean.getSearchParameters().getConditions();
 		if (searchBeanConditions.equals(this.conditions) && !this.needRefresh)
 			return;
 		
 		IndependentVariable indepVar = selectedGraph.getSelectedIndependentVariable();
 		if (indepVar == null) return;
 
-		this.conditions = (Conditions)searchBeanConditions.clone();
+		this.conditions = (TastDbConditions)searchBeanConditions.clone();
 		this.needRefresh = false;
 
-		Conditions localConditions = (Conditions)this.conditions.clone();
+		TastDbConditions localConditions = (TastDbConditions)this.conditions.clone();
 		
-		localConditions.addCondition(indepVar.getSelectAttribute(), null, Conditions.OP_IS_NOT);
+		localConditions.addCondition(indepVar.getSelectAttribute(), null, TastDbConditions.OP_IS_NOT);
 		
-		QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, localConditions);
+		TastDbQuery qValue = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, localConditions);
 		
 		qValue.addPopulatedAttribute(indepVar.getSelectAttribute());
 		
@@ -261,7 +261,7 @@ public class GraphsBean
 		qValue.setGroupBy(indepVar.getGroupByAttributes());
 		
 		qValue.setOrderBy(new Attribute[] {indepVar.getOrderAttribute()});
-		qValue.setOrder(QueryValue.ORDER_ASC);
+		qValue.setOrder(TastDbQuery.ORDER_ASC);
 		
 		// query db
 		Object[] data = qValue.executeQuery();

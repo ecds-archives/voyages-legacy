@@ -19,8 +19,8 @@ import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.maps.AttributesMap;
 import edu.emory.library.tast.maps.AttributesRange;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Query for map. Prepares query that will be executed for maps purposes.
@@ -31,27 +31,27 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 
 	public static String[] availableQuerySets = new String[] {"Ports", "Regions", "Adjusted ports", "Adjusted regions"};
 	
-	QueryValue[] querySetPorts;
-	QueryValue[] querySetRegions;
-	QueryValue[] querySetAreas;
+	TastDbQuery[] querySetPorts;
+	TastDbQuery[] querySetRegions;
+	TastDbQuery[] querySetAreas;
 	
-	QueryValue[][] queriesAll = null;
+	TastDbQuery[][] queriesAll = null;
 	
-	public GlobalMapQueryHolder(Conditions conditions) {
+	public GlobalMapQueryHolder(TastDbConditions conditions) {
 		
 		// We will need join condition (to join VoyageIndex and Voyage).
 		//localCondition.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
-		Conditions c = new Conditions();
+		TastDbConditions c = new TastDbConditions();
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
 		
 		//Query for ports
-		querySetPorts = new QueryValue[2];
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showOnMainMap")}), new Boolean(true), Conditions.OP_EQUALS);
-		QueryValue query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		querySetPorts = new TastDbQuery[2];
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showOnMainMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
+		TastDbQuery query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
@@ -63,17 +63,17 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")})
 				});
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
-		query1.setOrder(QueryValue.ORDER_ASC);
+		query1.setOrder(TastDbQuery.ORDER_ASC);
 		querySetPorts[0] = query1;
 				
-		c = new Conditions();
+		c = new TastDbConditions();
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("showOnMainMap")}), new Boolean(true), Conditions.OP_EQUALS);
-		QueryValue query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("showOnMainMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
+		TastDbQuery query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
@@ -85,18 +85,18 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")})
 				});
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
-		query2.setOrder(QueryValue.ORDER_ASC);
+		query2.setOrder(TastDbQuery.ORDER_ASC);
 		querySetPorts[1] = query2;
 		
 		//Query for regions
-		querySetRegions = new QueryValue[2];
-		c = new Conditions();
+		querySetRegions = new TastDbQuery[2];
+		c = new TastDbConditions();
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
@@ -108,16 +108,16 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")})
 				});
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
-		query1.setOrder(QueryValue.ORDER_ASC);
+		query1.setOrder(TastDbQuery.ORDER_ASC);
 		querySetRegions[0] = query1;
 			
-		c = new Conditions();
+		c = new TastDbConditions();
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
@@ -129,18 +129,18 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("id")})
 				});
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
-		query2.setOrder(QueryValue.ORDER_ASC);
+		query2.setOrder(TastDbQuery.ORDER_ASC);
 		querySetRegions[1] = query2;
 		
 		//Query for broad regions
-		querySetAreas = new QueryValue[2];
-		c = new Conditions();
+		querySetAreas = new TastDbQuery[2];
+		c = new TastDbConditions();
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		query1 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
 		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
@@ -150,16 +150,16 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("id")})
 				});
 		query1.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")}))});
-		query1.setOrder(QueryValue.ORDER_ASC);
+		query1.setOrder(TastDbQuery.ORDER_ASC);
 		querySetAreas[0] = query1;
 			
-		c = new Conditions();
+		c = new TastDbConditions();
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), Conditions.OP_NOT_EQUALS);
-		query2 = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, c);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
 		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
@@ -169,7 +169,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("id")})
 				});
 		query2.setOrderBy(new Attribute[] {new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")}))});
-		query2.setOrder(QueryValue.ORDER_ASC);
+		query2.setOrder(TastDbQuery.ORDER_ASC);
 		querySetAreas[1] = query2;
 			
 		
@@ -177,7 +177,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		this.addQuery(availableQuerySets[1], querySetRegions);
 		this.addQuery(availableQuerySets[2], querySetPorts);
 		
-		queriesAll = new QueryValue[][] {querySetAreas, querySetRegions, querySetPorts};
+		queriesAll = new TastDbQuery[][] {querySetAreas, querySetRegions, querySetPorts};
 
 	}
 	
@@ -185,7 +185,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 	 * Executes query
 	 * Type is indication of place type (embarkation/disembarkation or both).
 	 */
-	protected void performExecuteQuery(Session session, QueryValue[] queries, int type) {
+	protected void performExecuteQuery(Session session, TastDbQuery[] queries, int type) {
 
 		AttributesMap map = new AttributesMap();
 		List col1 = new ArrayList();
@@ -232,7 +232,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 	 * @param query
 	 * @param what
 	 */
-	private void executeMapQuery(Session session, List response, QueryValue query, int what) {
+	private void executeMapQuery(Session session, List response, TastDbQuery query, int what) {
 
 		Object[] voyages = query.executeQuery(session);
 		if (what == 1) {

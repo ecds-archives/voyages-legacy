@@ -18,8 +18,8 @@ import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.maps.AttributesMap;
 import edu.emory.library.tast.maps.AttributesRange;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Class providing query for estimates map.
@@ -28,19 +28,19 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 
-	public QueryValue[] estimateMapQuerysAreas = null;
-	public QueryValue[] estimateMapQuerysRegions = null;
+	public TastDbQuery[] estimateMapQuerysAreas = null;
+	public TastDbQuery[] estimateMapQuerysRegions = null;
 
-	public EstimateMapQueryHolder(Conditions conditions) {
+	public EstimateMapQueryHolder(TastDbConditions conditions) {
 		
 		//Query for regions
-		Conditions c = new Conditions();
+		TastDbConditions c = new TastDbConditions();
 		c.addCondition(conditions);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
+				new Double(0), TastDbConditions.OP_IS_NOT);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
-		QueryValue qValue1 = new QueryValue(new String[] { "Estimate" },
+				new Double(0), TastDbConditions.OP_IS_NOT);
+		TastDbQuery qValue1 = new TastDbQuery(new String[] { "Estimate" },
 				new String[] { "e" }, c);
 		qValue1
 				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
@@ -52,13 +52,13 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}));
 		qValue1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }) });
 
-		c = new Conditions();
+		c = new TastDbConditions();
 		c.addCondition(conditions);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesExportRegion.getAttribute("longitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
+				new Double(0), TastDbConditions.OP_IS_NOT);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesExportRegion.getAttribute("latitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
-		QueryValue qValue2 = new QueryValue(new String[] { "Estimate" },
+				new Double(0), TastDbConditions.OP_IS_NOT);
+		TastDbQuery qValue2 = new TastDbQuery(new String[] { "Estimate" },
 				new String[] { "e" }, c);
 		qValue2
 				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
@@ -69,18 +69,18 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}));
 		qValue2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("id") }) });
-		this.estimateMapQuerysRegions = new QueryValue[] { qValue1, qValue2 };
+		this.estimateMapQuerysRegions = new TastDbQuery[] { qValue1, qValue2 };
 		
 		
 		
 		//Query for broad regions
-		c = new Conditions();
+		c = new TastDbConditions();
 		c.addCondition(conditions);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
+				new Double(0), TastDbConditions.OP_IS_NOT);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
-		qValue1 = new QueryValue(new String[] { "Estimate" },
+				new Double(0), TastDbConditions.OP_IS_NOT);
+		qValue1 = new TastDbQuery(new String[] { "Estimate" },
 				new String[] { "e" }, c);
 		qValue1
 				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
@@ -92,13 +92,13 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}));
 		qValue1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }) });
 
-		c = new Conditions();
+		c = new TastDbConditions();
 		c.addCondition(conditions);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("longitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
+				new Double(0), TastDbConditions.OP_IS_NOT);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("latitude")}),
-				new Double(0), Conditions.OP_IS_NOT);
-		qValue2 = new QueryValue(new String[] { "Estimate" },
+				new Double(0), TastDbConditions.OP_IS_NOT);
+		qValue2 = new TastDbQuery(new String[] { "Estimate" },
 				new String[] { "e" }, c);
 		qValue2
 				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
@@ -110,7 +110,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
 		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}));
 		qValue2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("id") }) });
-		this.estimateMapQuerysAreas = new QueryValue[] { qValue1, qValue2 };
+		this.estimateMapQuerysAreas = new TastDbQuery[] { qValue1, qValue2 };
 		
 		
 		
@@ -124,7 +124,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
 	 * Executes query of given type (type indcates which type of places (emb/disemb/both) should be
 	 * queried.
 	 */
-	protected void performExecuteQuery(Session session, QueryValue[] querySet, int type) {
+	protected void performExecuteQuery(Session session, TastDbQuery[] querySet, int type) {
 		List allResults = new ArrayList();
 		AttributesMap attributes = new AttributesMap();
 		List list0 = new ArrayList();

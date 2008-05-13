@@ -15,8 +15,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 
 /**
@@ -40,7 +40,7 @@ public class StatisticBean {
 		TastResource.getText("components_statistictab_crewatoutset")};
 	
 	//previously used conditions
-	private Conditions prevConditions = null;
+	private TastDbConditions prevConditions = null;
 	
 	//search bean reference
 	private SearchBean searchBean = null;
@@ -64,7 +64,7 @@ public class StatisticBean {
 				!prevConditions.equals(searchBean.getSearchParameters().getConditions())) {
 			prevConditions = searchBean.getSearchParameters().getConditions();
 			
-			Conditions conditions = (Conditions)prevConditions.clone();
+			TastDbConditions conditions = (TastDbConditions)prevConditions.clone();
 			
 			elements = new StatisticElement[7];
 			
@@ -110,12 +110,12 @@ public class StatisticBean {
 	 * @param showTotal
 	 * @param percent
 	 */
-	private void prepareEstimate(int i, String attribute, Conditions conditions, boolean showTotal, boolean percent) {
-		Conditions cond2 = (Conditions)conditions.clone();
-		cond2.addCondition(Voyage.getAttribute(attribute), null, Conditions.OP_IS_NOT);
+	private void prepareEstimate(int i, String attribute, TastDbConditions conditions, boolean showTotal, boolean percent) {
+		TastDbConditions cond2 = (TastDbConditions)conditions.clone();
+		cond2.addCondition(Voyage.getAttribute(attribute), null, TastDbConditions.OP_IS_NOT);
 		
 		NumberFormat format = DecimalFormat.getInstance();
-		QueryValue query = new QueryValue(new String[] {"Voyage"}, 
+		TastDbQuery query = new TastDbQuery(new String[] {"Voyage"}, 
 				new String[] {"v"}, 
 				cond2);
 		query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute(attribute)}));

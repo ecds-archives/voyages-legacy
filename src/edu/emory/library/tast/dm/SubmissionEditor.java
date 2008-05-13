@@ -12,8 +12,8 @@ import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.SubmissionAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SubmissionEditor {
 	
@@ -61,9 +61,9 @@ public class SubmissionEditor {
 	}
 	public static SubmissionEditor loadById(Session session, Long editorId)
 	{
-		Conditions c = new Conditions();
-		c.addCondition(getAttribute("id"), editorId, Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("SubmissionEditor", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(getAttribute("id"), editorId, TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("SubmissionEditor", c);
 		Object[] ret = qValue.executeQuery(session);
 		if (ret.length == 0) {
 			return null;

@@ -22,8 +22,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class TableBean
 {
@@ -33,7 +33,7 @@ public class TableBean
 
 	private SearchBean searchBean;
 
-	private Conditions conditions;
+	private TastDbConditions conditions;
 
 	private boolean optionsChanged;
 
@@ -365,7 +365,7 @@ public class TableBean
 	
 	{ 
 		// conditions from the left column (i.e. from select bean)
-		Conditions newConditions = (Conditions) searchBean.getSearchParameters().getConditions().clone();
+		TastDbConditions newConditions = (TastDbConditions) searchBean.getSearchParameters().getConditions().clone();
 
 		// check if we have to
 		if (!optionsChanged && newConditions.equals(conditions)) return;
@@ -390,20 +390,20 @@ public class TableBean
 		Grouper colGrouper = createGrouper(colGrouping, 1, expRegions, impRegions, impAreas, ports, nations);
 
 		// start query
-		QueryValue query = new QueryValue(new String[] { "Voyage" }, new String[] { "voyage" }, conditions);
+		TastDbQuery query = new TastDbQuery(new String[] { "Voyage" }, new String[] { "voyage" }, conditions);
 
 		// we want to restrict results so that it does not have nulls
-		conditions.addCondition(rowGrouper.getGroupingAttribute(), null, Conditions.OP_IS_NOT);
-		conditions.addCondition(colGrouper.getGroupingAttribute(), null, Conditions.OP_IS_NOT);
+		conditions.addCondition(rowGrouper.getGroupingAttribute(), null, TastDbConditions.OP_IS_NOT);
+		conditions.addCondition(colGrouper.getGroupingAttribute(), null, TastDbConditions.OP_IS_NOT);
 		
 		// also eliminate rows from the result which would produce empty rows or columns
 		Attribute[] nonNullAttributes = cellValuesDesc.getNonNullAttributes();
 		if (nonNullAttributes != null && nonNullAttributes.length > 0)
 		{
-			Conditions condNonNull = new Conditions(Conditions.OR); 
+			TastDbConditions condNonNull = new TastDbConditions(TastDbConditions.OR); 
 			for (int i = 0; i < nonNullAttributes.length; i++)
 			{
-				condNonNull.addCondition(nonNullAttributes[i], null, Conditions.OP_IS_NOT);
+				condNonNull.addCondition(nonNullAttributes[i], null, TastDbConditions.OP_IS_NOT);
 			}
 			conditions.addCondition(condNonNull);
 		}

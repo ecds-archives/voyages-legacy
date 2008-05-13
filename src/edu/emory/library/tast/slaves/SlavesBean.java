@@ -34,8 +34,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * This bean coordinates everything in the names database. It is a session scope
@@ -161,14 +161,14 @@ public class SlavesBean {
 		
 		if (refreshText)
 			querySummary = new ArrayList();
-		Conditions conditions = currentQuery.createConditions(sess, refreshText ? querySummary : null);
+		TastDbConditions conditions = currentQuery.createConditions(sess, refreshText ? querySummary : null);
 
-		QueryValue queryValueTable = getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
+		TastDbQuery queryValueTable = getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
 
 		this.tableData.setData(queryValueTable.executeQuery(sess));
 
 		if (refreshCount) {
-			QueryValue queryValueCount = new QueryValue(new String[] { "Slave" }, new String[] { "e" }, conditions);
+			TastDbQuery queryValueCount = new TastDbQuery(new String[] { "Slave" }, new String[] { "e" }, conditions);
 			queryValueCount.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] { Estimate.getAttribute("id") }));
 			Object[] ret = queryValueCount.executeQuery();
 			this.pager.setResultsNumber(((Number) ret[0]).intValue());
@@ -188,8 +188,8 @@ public class SlavesBean {
 	 * @param limit
 	 * @return
 	 */
-	private QueryValue getQuery(Conditions conditions, int first, int limit) {
-		QueryValue queryValueTable = new QueryValue(new String[] { "Slave" }, new String[] { "s" }, conditions);
+	private TastDbQuery getQuery(TastDbConditions conditions, int first, int limit) {
+		TastDbQuery queryValueTable = new TastDbQuery(new String[] { "Slave" }, new String[] { "s" }, conditions);
 
 		Attribute[] attrs = this.tableData.getAttributesForQuery();
 		for (int i = 0; i < attrs.length; i++)
@@ -212,9 +212,9 @@ public class SlavesBean {
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 
-		Conditions conditions = workingQuery.createConditions(sess, null);
+		TastDbConditions conditions = workingQuery.createConditions(sess, null);
 
-		QueryValue queryValueCount = new QueryValue(new String[] { "Slave" }, new String[] { "e" }, conditions);
+		TastDbQuery queryValueCount = new TastDbQuery(new String[] { "Slave" }, new String[] { "e" }, conditions);
 		queryValueCount.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] { Estimate.getAttribute("id") }));
 		Object[] ret = queryValueCount.executeQuery();
 		expectedResults = ((Number) ret[0]).intValue();
@@ -300,19 +300,19 @@ public class SlavesBean {
 		// set appropriate order
 		if (this.tableData.getOrderByColumn().getName().equals(attr.getName())) {
 			switch (this.tableData.getOrder()) {
-			case QueryValue.ORDER_ASC:
-				this.tableData.setOrder(QueryValue.ORDER_DESC);
+			case TastDbQuery.ORDER_ASC:
+				this.tableData.setOrder(TastDbQuery.ORDER_DESC);
 				break;
-			case QueryValue.ORDER_DESC:
-				this.tableData.setOrder(QueryValue.ORDER_DEFAULT);
+			case TastDbQuery.ORDER_DESC:
+				this.tableData.setOrder(TastDbQuery.ORDER_DEFAULT);
 				break;
-			case QueryValue.ORDER_DEFAULT:
-				this.tableData.setOrder(QueryValue.ORDER_ASC);
+			case TastDbQuery.ORDER_DEFAULT:
+				this.tableData.setOrder(TastDbQuery.ORDER_ASC);
 				break;
 			}
 		} else {
 			this.tableData.setOrderByColumn(attr);
-			this.tableData.setOrder(QueryValue.ORDER_ASC);
+			this.tableData.setOrder(TastDbQuery.ORDER_ASC);
 		}
 
 		// reset pager
@@ -610,8 +610,8 @@ public class SlavesBean {
 	public String getFileCurrentData() {
 		Session sess = HibernateUtil.getSession();
 		Transaction t = sess.beginTransaction();
-		Conditions conditions = currentQuery.createConditions(sess, null);
-		QueryValue q = this.getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
+		TastDbConditions conditions = currentQuery.createConditions(sess, null);
+		TastDbQuery q = this.getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
 		CSVUtils.writeResponse(sess, q);
 		t.commit();
 		sess.close();
@@ -625,8 +625,8 @@ public class SlavesBean {
 	public String getFileAllData() {
 		Session sess = HibernateUtil.getSession();
 		Transaction t = sess.beginTransaction();
-		Conditions conditions = currentQuery.createConditions(sess, null);
-		QueryValue q = this.getQuery(conditions, 0, -1);
+		TastDbConditions conditions = currentQuery.createConditions(sess, null);
+		TastDbQuery q = this.getQuery(conditions, 0, -1);
 		CSVUtils.writeResponse(sess, q);
 		t.commit();
 		sess.close();

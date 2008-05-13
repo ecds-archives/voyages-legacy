@@ -20,7 +20,7 @@ import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeLocation extends SearchableAttribute implements ListItemsSource
 {
@@ -120,7 +120,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 
 	}
 
-	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
+	public boolean addToConditions(boolean markErrors, TastDbConditions conditions, QueryCondition queryCondition)
 	{
 
 		// check
@@ -139,7 +139,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 		Set minimalSelectedIds = queryConditionList.getSelectedIds();
 		
 		// add locations to the query
-		Conditions subCond = new Conditions(Conditions.OR);
+		TastDbConditions subCond = new TastDbConditions(TastDbConditions.OR);
 		for (Iterator iter = minimalSelectedIds.iterator(); iter.hasNext();)
 		{
 			String fullId = (String) iter.next();
@@ -155,7 +155,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 									Region.getAttribute("area"),
 									Area.getAttribute("id")}),
 									idComponents[0],
-									Conditions.OP_EQUALS);
+									TastDbConditions.OP_EQUALS);
 				}
 			}
 			else if (idComponents != null && idComponents.length == 2)
@@ -168,7 +168,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 									Port.getAttribute("region"),
 									Region.getAttribute("id")}),
 									idComponents[1],
-									Conditions.OP_EQUALS);
+									TastDbConditions.OP_EQUALS);
 				}
 			}
 			else if (idComponents != null && idComponents.length == 3)
@@ -180,7 +180,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 									locations[j].getPort(),
 									Port.getAttribute("id")}),
 									idComponents[2],
-									Conditions.OP_EQUALS);
+									TastDbConditions.OP_EQUALS);
 				}
 			}
 		}

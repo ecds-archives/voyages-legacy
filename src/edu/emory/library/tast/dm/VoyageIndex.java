@@ -11,7 +11,7 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * Object that helps to keep track of changes in Voyages.
@@ -208,9 +208,9 @@ public class VoyageIndex {
 	 * Gets condition for voyage index that is recent approved object.
 	 * @return
 	 */
-	public static Conditions getRecentApproved() {
-		Conditions cond = new Conditions(Conditions.AND);
-		cond.addCondition(VoyageIndex.getAttribute("latest_approved"), new Integer(1), Conditions.OP_EQUALS);
+	public static TastDbConditions getRecentApproved() {
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.AND);
+		cond.addCondition(VoyageIndex.getAttribute("latest_approved"), new Integer(1), TastDbConditions.OP_EQUALS);
 		return cond;
 	}
 	
@@ -218,9 +218,9 @@ public class VoyageIndex {
 	 * Gets condition for voyage index that is recent object (not necessary approved).
 	 * @return
 	 */
-	public static Conditions getRecent() {
-		Conditions cond = new Conditions(Conditions.AND);
-		cond.addCondition(VoyageIndex.getAttribute("latest"), new Integer(1), Conditions.OP_EQUALS);
+	public static TastDbConditions getRecent() {
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.AND);
+		cond.addCondition(VoyageIndex.getAttribute("latest"), new Integer(1), TastDbConditions.OP_EQUALS);
 		return cond;
 	}
 	
@@ -228,9 +228,9 @@ public class VoyageIndex {
 	 * Gets condition for voyage index that is approved object (not necessary recent).
 	 * @return
 	 */
-	public static Conditions getApproved() {
-		Conditions cond = new Conditions(Conditions.AND);
-		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(1), Conditions.OP_EQUALS);
+	public static TastDbConditions getApproved() {
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.AND);
+		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(1), TastDbConditions.OP_EQUALS);
 		return cond;
 	}
 	
@@ -238,9 +238,9 @@ public class VoyageIndex {
 	 * Gets condition for voyage index that is not approved object (not necessary recent).
 	 * @return
 	 */
-	public static Conditions getNotApproved() {
-		Conditions cond = new Conditions(Conditions.AND);
-		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(0), Conditions.OP_EQUALS);
+	public static TastDbConditions getNotApproved() {
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.AND);
+		cond.addCondition(VoyageIndex.getAttribute("flag"), new Integer(0), TastDbConditions.OP_EQUALS);
 		return cond;
 	}
 

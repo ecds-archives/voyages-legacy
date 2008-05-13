@@ -28,8 +28,8 @@ import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Voyage object.
@@ -472,11 +472,11 @@ public class Voyage extends AbstractDescriptiveObject {
 
 	public static Voyage loadCurrentRevision(Session sess, Integer voyageId)
 	{
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, TastDbConditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), TastDbConditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Voyage", c);
 		List res = qValue.executeQueryList(sess);
 		if (res.size() == 0) return null;
 		return (Voyage)res.get(0);
@@ -493,11 +493,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	
 	public static Voyage loadFutureRevision(Session sess, Integer voyageId) {
 		
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(-1), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Voyage.getAttribute("voyageid"), voyageId, TastDbConditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), TastDbConditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(-1), TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Voyage", c);
 		List res = qValue.executeQueryList(sess);
 		if (res.size() == 0) return null;
 		return (Voyage)res.get(0);
@@ -508,9 +508,9 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 
 	public static Voyage loadById(Session session, Long iid) {
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("iid"), iid, Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Voyage.getAttribute("iid"), iid, TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Voyage", c);
 		List res = qValue.executeQueryList(session);
 		if (res.size() == 0) return null;
 		return (Voyage)res.get(0);
@@ -518,11 +518,11 @@ public class Voyage extends AbstractDescriptiveObject {
 	
 	public static Voyage loadByVoyageId(Session session, int voyageId, int revisionId)
 	{
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("voyageid"), new Integer(voyageId), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(revisionId), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Voyage.getAttribute("voyageid"), new Integer(voyageId), TastDbConditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), TastDbConditions.OP_EQUALS);
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(revisionId), TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Voyage", c);
 		List res = qValue.executeQueryList(session);
 		if (res.size() == 0) return null;
 		return (Voyage)res.get(0);

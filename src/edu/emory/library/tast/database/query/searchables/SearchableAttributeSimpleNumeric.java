@@ -11,7 +11,7 @@ import edu.emory.library.tast.database.query.QueryConditionRange;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleRange
 {
@@ -41,25 +41,25 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 		return new QueryConditionNumeric(getId(), defaultSearchType);
 	}
 	
-	private void addSingleAttributeToConditions(QueryConditionNumeric queryConditionNumeric, Attribute attribute, Conditions conditions, Object fromConverted, Object toConverted, Object leConverted, Object geConverted, Object eqConverted)
+	private void addSingleAttributeToConditions(QueryConditionNumeric queryConditionNumeric, Attribute attribute, TastDbConditions conditions, Object fromConverted, Object toConverted, Object leConverted, Object geConverted, Object eqConverted)
 	{
 		switch (queryConditionNumeric.getType())
 		{
 			case QueryConditionNumeric.TYPE_BETWEEN:
-				conditions.addCondition(attribute, fromConverted, Conditions.OP_GREATER_OR_EQUAL);
-				conditions.addCondition(attribute, toConverted, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, fromConverted, TastDbConditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, toConverted, TastDbConditions.OP_SMALLER_OR_EQUAL);
 				break;
 
 			case QueryConditionNumeric.TYPE_LE:
-				conditions.addCondition(attribute, leConverted, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, leConverted, TastDbConditions.OP_SMALLER_OR_EQUAL);
 				break;
 				
 			case QueryConditionNumeric.TYPE_GE:
-				conditions.addCondition(attribute, geConverted, Conditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, geConverted, TastDbConditions.OP_GREATER_OR_EQUAL);
 				break;
 
 			case QueryConditionNumeric.TYPE_EQ:
-				conditions.addCondition(attribute, eqConverted, Conditions.OP_EQUALS);
+				conditions.addCondition(attribute, eqConverted, TastDbConditions.OP_EQUALS);
 				break;
 		}
 	}
@@ -96,7 +96,7 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 
 	}
 
-	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
+	public boolean addToConditions(boolean markErrors, TastDbConditions conditions, QueryCondition queryCondition)
 	{
 
 		if (!(queryCondition instanceof QueryConditionNumeric))
@@ -150,7 +150,7 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 		}
 		else
 		{
-			Conditions orCond = new Conditions(Conditions.OR);
+			TastDbConditions orCond = new TastDbConditions(TastDbConditions.OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
 				addSingleAttributeToConditions(queryConditionNumeric,

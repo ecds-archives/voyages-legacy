@@ -16,7 +16,7 @@ import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
 {
@@ -26,7 +26,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		super(id, userLabel, userCategories, attributes, spssName, listDescription, inEstimates);
 	}
 
-	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
+	public boolean addToConditions(boolean markErrors, TastDbConditions conditions, QueryCondition queryCondition)
 	{
 
 		if (!(queryCondition instanceof QueryConditionList))
@@ -38,7 +38,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		if (queryConditionList.getSelectedIdsCount() == 0)
 			return true;
 		
-		Conditions subCond = new Conditions(Conditions.OR);
+		TastDbConditions subCond = new TastDbConditions(TastDbConditions.OR);
 		
 		for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
 		{
@@ -50,7 +50,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 			{
 				DictionaryAttribute attribute = (DictionaryAttribute) attributes[i];
 				NumericAttribute idAttr = attribute.getItAttribute();
-				subCond.addCondition(new SequenceAttribute(new Attribute[] {attribute, idAttr}), id, Conditions.OP_EQUALS);
+				subCond.addCondition(new SequenceAttribute(new Attribute[] {attribute, idAttr}), id, TastDbConditions.OP_EQUALS);
 			}
 			
 		}

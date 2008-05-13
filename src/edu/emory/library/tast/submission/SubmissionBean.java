@@ -31,8 +31,8 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SubmissionBean
 {
@@ -455,10 +455,10 @@ public class SubmissionBean
 	private boolean loadVoyageToColumn(Session session, int voyageId, Values values, String columnName, SourceInformationLookup sourceInformationUtils)
 	{
 		
-		Conditions cond = new Conditions();
-		cond.addCondition(Voyage.getAttribute("voyageid"), new Integer(voyageId), Conditions.OP_EQUALS);
-		cond.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", cond);
+		TastDbConditions cond = new TastDbConditions();
+		cond.addCondition(Voyage.getAttribute("voyageid"), new Integer(voyageId), TastDbConditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Voyage", cond);
 
 		for (int i = 0; i < attrs.length; i++)
 		{
@@ -523,10 +523,10 @@ public class SubmissionBean
 		Session sess = HibernateUtil.getSession();
 		Transaction trans = sess.beginTransaction();
 		
-		Conditions cond = new Conditions();
-		cond.addCondition(Voyage.getAttribute("voyageid"), lookupVoyageId, Conditions.OP_EQUALS);
+		TastDbConditions cond = new TastDbConditions();
+		cond.addCondition(Voyage.getAttribute("voyageid"), lookupVoyageId, TastDbConditions.OP_EQUALS);
 		
-		QueryValue query = new QueryValue("Voyage", cond);
+		TastDbQuery query = new TastDbQuery("Voyage", cond);
 		query.setLimit(1);
 		
 		query.addPopulatedAttribute(Voyage.getAttribute("shipname"));

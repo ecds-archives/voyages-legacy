@@ -5,7 +5,7 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.query.QueryCondition;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public abstract class SearchableAttribute
 {
@@ -63,7 +63,7 @@ public abstract class SearchableAttribute
 	}
 
 	public abstract QueryCondition createQueryCondition();
-	public abstract boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition);
+	public abstract boolean addToConditions(boolean markErrors, TastDbConditions conditions, QueryCondition queryCondition);
 	public abstract QueryCondition restoreFromUrl(Session session, Map params);
 	public abstract String getNonNullSqlQuerySelectPart(String voyagePrefix);
 

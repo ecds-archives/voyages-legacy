@@ -16,8 +16,8 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * This bean is responsible for managing the cross-table in the estimates. It
@@ -35,7 +35,7 @@ public class EstimatesTableBean
 	private static final String CSS_CLASS_TD_TOTAL = "tbl-total";
 	
 	private EstimatesSelectionBean selectionBean;
-	private Conditions conditions;
+	private TastDbConditions conditions;
 	private boolean optionsChanged = true;
 	
 	private String rowGrouping = "years25";;
@@ -197,7 +197,7 @@ public class EstimatesTableBean
 	{
 		
 		// conditions from the left column (i.e. from select bean)
-		Conditions newConditions = selectionBean.getConditions();
+		TastDbConditions newConditions = selectionBean.getConditions();
 		
 		// check if we have to
 		if (!optionsChanged && newConditions.equals(conditions)) return;
@@ -229,7 +229,7 @@ public class EstimatesTableBean
 				selectedImpAreas);
 
 		// start query
-		QueryValue query = new QueryValue(
+		TastDbQuery query = new TastDbQuery(
 				new String[] {"Estimate"},
 				new String[] {"estimate"},
 				conditions);

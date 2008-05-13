@@ -32,10 +32,20 @@
 			legend="#{MapBean.legend}"
 			refreshAction="#{MapBean.refresh}" 
 			maps="#{MapBean.availableMaps}"
+			chosenMap="#{MapBean.chosenMap}" />
+
+		<% /*			
+		<s:legend
+			id="mapLegend" 
+			styleClass="map-legend-div"
+			legend="#{MapBean.legend}"
+			refreshAction="#{MapBean.refresh}" 
+			maps="#{MapBean.availableMaps}"
 			availableAttributes="#{MapBean.availableAttributes}"
 			chosenAttribute="#{MapBean.chosenAttribute}"
 			chosenMap="#{MapBean.chosenMap}" />
-			
+		*/ %>
+
 		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
 			<h:outputText value="Find visible place" />
 		</t:htmlTag>

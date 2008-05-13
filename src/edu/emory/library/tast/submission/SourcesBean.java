@@ -20,8 +20,8 @@ import edu.emory.library.tast.submission.sources.SourceBook;
 import edu.emory.library.tast.submission.sources.SourceOther;
 import edu.emory.library.tast.submission.sources.SourcePrimary;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SourcesBean {
 
@@ -340,9 +340,9 @@ public class SourcesBean {
 		
 		int i = 0;
 		
-		Conditions c = new Conditions();
-		c.addCondition(SubmissionSource.getAttribute("submission"), this.submission, Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("SubmissionSource", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(SubmissionSource.getAttribute("submission"), this.submission, TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("SubmissionSource", c);
 		List list = qValue.executeQueryList();
 		Iterator iter = list.iterator();
 		

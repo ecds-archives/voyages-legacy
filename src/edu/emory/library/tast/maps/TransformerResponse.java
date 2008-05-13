@@ -16,7 +16,6 @@ public class TransformerResponse {
 	 * Map legend.
 	 */
 	private LegendItemsGroup[] legendItems;
-	//private LegendItemsGroup[] oldLegend;
 
 	/**
 	 * Constructor of object.

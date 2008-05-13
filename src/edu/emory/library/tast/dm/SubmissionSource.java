@@ -14,8 +14,8 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.SubmissionAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SubmissionSource
 {
@@ -98,9 +98,9 @@ public class SubmissionSource
 	}
 
 	public static SubmissionSource loadById(Session session, Long id) {
-		Conditions c = new Conditions();
-		c.addCondition(getAttribute("id"), id, Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("SubmissionSource", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(getAttribute("id"), id, TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("SubmissionSource", c);
 		Object[] response = qValue.executeQuery(session);
 		if (response.length != 0) {
 			return (SubmissionSource)response[0];		

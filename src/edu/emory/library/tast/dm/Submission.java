@@ -18,8 +18,8 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public abstract class Submission
 {
@@ -167,9 +167,9 @@ public abstract class Submission
 	}
 
 	public static Submission loadById(Session session, Long id) {
-		Conditions c = new Conditions();
-		c.addCondition(getAttribute("id"), id, Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Submission", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(getAttribute("id"), id, TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Submission", c);
 		Object[] ret = qValue.executeQuery(session);
 		if (ret.length == 0) {
 			return null;

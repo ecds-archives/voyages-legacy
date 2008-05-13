@@ -20,8 +20,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SubmissionUsersBean {
 
@@ -116,10 +116,10 @@ public class SubmissionUsersBean {
 	}
 	
 	public String auth() {
-		Conditions c = new Conditions();
-		c.addCondition(User.getAttribute("userName"), userName, Conditions.OP_EQUALS);
-		c.addCondition(User.getAttribute("password"), password, Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("User", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(User.getAttribute("userName"), userName, TastDbConditions.OP_EQUALS);
+		c.addCondition(User.getAttribute("password"), password, TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("User", c);
 		Object[] users = qValue.executeQuery();
 		if (users.length == 0) {
 			this.errorMessage = ERROR_LOGIN;
@@ -147,11 +147,11 @@ public class SubmissionUsersBean {
 	}
 
 	private Submission tryRestoreState(User user) {
-		Conditions c = new Conditions();
-		c.addCondition(Submission.getAttribute("user"), user, Conditions.OP_EQUALS);
-		c.addCondition(Submission.getAttribute("submitted"), new Boolean(false), Conditions.OP_EQUALS);
-		c.addCondition(Submission.getAttribute("savedState"), null, Conditions.OP_IS_NOT);
-		QueryValue qValue = new QueryValue("Submission", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Submission.getAttribute("user"), user, TastDbConditions.OP_EQUALS);
+		c.addCondition(Submission.getAttribute("submitted"), new Boolean(false), TastDbConditions.OP_EQUALS);
+		c.addCondition(Submission.getAttribute("savedState"), null, TastDbConditions.OP_IS_NOT);
+		TastDbQuery qValue = new TastDbQuery("Submission", c);
 		Object[] submissions = qValue.executeQuery();
 		if (submissions.length != 0) {
 			return (Submission) submissions[0];
@@ -201,17 +201,17 @@ public class SubmissionUsersBean {
 	}
 
 	public GridRow[] getUserRows() {
-		Conditions c = new Conditions();
+		TastDbConditions c = new TastDbConditions();
 		//c.addCondition(User.getAttribute("admin"), new Boolean(false), Conditions.OP_EQUALS);
 		if ("2".equals(this.accountType)) {
-			c.addCondition(User.getAttribute("enabled"), new Boolean(true), Conditions.OP_EQUALS);
+			c.addCondition(User.getAttribute("enabled"), new Boolean(true), TastDbConditions.OP_EQUALS);
 		} else if ("3".equals(this.accountType)) {
-			c.addCondition(User.getAttribute("enabled"), new Boolean(false), Conditions.OP_EQUALS);
+			c.addCondition(User.getAttribute("enabled"), new Boolean(false), TastDbConditions.OP_EQUALS);
 		}
 		
-		QueryValue qValue = new QueryValue("User", c);
+		TastDbQuery qValue = new TastDbQuery("User", c);
 		qValue.setOrderBy(new Attribute[] { User.getAttribute("userName") });
-		qValue.setOrder(QueryValue.ORDER_ASC);
+		qValue.setOrder(TastDbQuery.ORDER_ASC);
 		Object[] users = qValue.executeQuery();
 		if (users.length == 0) {
 			return new GridRow[] {};
@@ -221,9 +221,9 @@ public class SubmissionUsersBean {
 			for (int i = 0; i < response.length; i++) {
 				User user = (User) users[i];
 
-				c = new Conditions();
-				c.addCondition(Submission.getAttribute("user"), user, Conditions.OP_EQUALS);
-				qValue = new QueryValue("Submission", c);
+				c = new TastDbConditions();
+				c.addCondition(Submission.getAttribute("user"), user, TastDbConditions.OP_EQUALS);
+				qValue = new TastDbQuery("Submission", c);
 				qValue.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] { Submission.getAttribute("id") }));
 				Object[] res = qValue.executeQuery();
 				String numPosts = "N/A";
@@ -597,14 +597,14 @@ public class SubmissionUsersBean {
 				existingUsers[i] = ((SubmissionEditor)iter.next()).getUser().getId();
 			}
 
-			Conditions c = new Conditions();
+			TastDbConditions c = new TastDbConditions();
 			if (existingUsers.length != 0) {
-				Conditions cnot = new Conditions(Conditions.NOT);
-				cnot.addCondition(User.getAttribute("id"), existingUsers, Conditions.OP_IN);
+				TastDbConditions cnot = new TastDbConditions(TastDbConditions.NOT);
+				cnot.addCondition(User.getAttribute("id"), existingUsers, TastDbConditions.OP_IN);
 				c.addCondition(cnot);
 			}
-			c.addCondition(User.getAttribute("editor"), new Boolean(true), Conditions.OP_EQUALS);
-			QueryValue qValue = new QueryValue("User", c);
+			c.addCondition(User.getAttribute("editor"), new Boolean(true), TastDbConditions.OP_EQUALS);
+			TastDbQuery qValue = new TastDbQuery("User", c);
 			Object[] users = qValue.executeQuery(session);
 			SelectItem[] items = new SelectItem[users.length];
 			for (int i = 0; i < items.length; i++) {

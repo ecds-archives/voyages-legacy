@@ -32,8 +32,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class VoyagesApplier
 {
@@ -921,10 +921,10 @@ public class VoyagesApplier
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 
-		Conditions c = new Conditions();
+		TastDbConditions c = new TastDbConditions();
 		c.addCondition(Submission.getAttribute("id"), new Long(e.getRowId()
-				.split("_")[1]), Conditions.OP_EQUALS);
-		QueryValue q = new QueryValue("Submission", c);
+				.split("_")[1]), TastDbConditions.OP_EQUALS);
+		TastDbQuery q = new TastDbQuery("Submission", c);
 
 		Object[] res = q.executeQuery(session);
 		if (res.length != 0)
@@ -941,15 +941,15 @@ public class VoyagesApplier
 			{
 				Integer vid = ((SubmissionEdit) lSubmission).getOldVoyage()
 						.getVoyage().getVoyageid();
-				c = new Conditions();
+				c = new TastDbConditions();
 				c.addCondition(new SequenceAttribute(new Attribute[] {
 						SubmissionEdit.getAttribute("oldVoyage"),
 						EditedVoyage.getAttribute("voyage"),
 						Voyage.getAttribute("voyageid") }), vid,
-						Conditions.OP_EQUALS);
+						TastDbConditions.OP_EQUALS);
 				c.addCondition(SubmissionEdit.getAttribute("solved"),
-						new Boolean(false), Conditions.OP_EQUALS);
-				q = new QueryValue("SubmissionEdit", c);
+						new Boolean(false), TastDbConditions.OP_EQUALS);
+				q = new TastDbQuery("SubmissionEdit", c);
 				Object[] rets = q.executeQuery(session);
 				editRequests = new Long[rets.length];
 				for (int i = 0; i < editRequests.length; i++)
@@ -1006,11 +1006,11 @@ public class VoyagesApplier
 				this.submissionId);
 		if (lSubmisssion instanceof SubmissionEdit)
 		{
-			Conditions c = new Conditions();
+			TastDbConditions c = new TastDbConditions();
 			c.addCondition(SubmissionEdit.getAttribute("oldVoyage"),
 					((SubmissionEdit) lSubmisssion).getOldVoyage(),
-					Conditions.OP_EQUALS);
-			QueryValue qValue = new QueryValue("SubmissionEdit", c);
+					TastDbConditions.OP_EQUALS);
+			TastDbQuery qValue = new TastDbQuery("SubmissionEdit", c);
 			Object[] toUpdate = qValue.executeQuery(session);
 			for (int i = 0; i < toUpdate.length; i++)
 			{
@@ -1065,12 +1065,12 @@ public class VoyagesApplier
 				}
 			}
 		}
-		Conditions cond = new Conditions();
+		TastDbConditions cond = new TastDbConditions();
 		cond.addCondition(Voyage.getAttribute("voyageid"), mergedVoyage
-				.getVoyageid(), Conditions.OP_EQUALS);
+				.getVoyageid(), TastDbConditions.OP_EQUALS);
 		cond.addCondition(Voyage.getAttribute("revision"), new Integer(-1),
-				Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("Voyage", cond);
+				TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Voyage", cond);
 		Object[] voyage = qValue.executeQuery(session);
 		if (voyage.length != 0)
 		{
@@ -1113,13 +1113,13 @@ public class VoyagesApplier
 
 		if (lSubmission instanceof SubmissionEdit)
 		{
-			Conditions c = new Conditions();
+			TastDbConditions c = new TastDbConditions();
 			c.addCondition(new SequenceAttribute(new Attribute[] {
 					SubmissionEdit.getAttribute("oldVoyage"),
 					EditedVoyage.getAttribute("voyage") }),
 					((SubmissionEdit) lSubmission).getOldVoyage().getVoyage(),
-					Conditions.OP_EQUALS);
-			qValue = new QueryValue("SubmissionEdit", c);
+					TastDbConditions.OP_EQUALS);
+			qValue = new TastDbQuery("SubmissionEdit", c);
 			Object[] toUpdate = qValue.executeQuery(session);
 			for (int i = 0; i < toUpdate.length; i++)
 			{
@@ -1303,13 +1303,13 @@ public class VoyagesApplier
 				}
 			} else if (submission instanceof SubmissionEdit)
 			{
-				Conditions c = new Conditions();
+				TastDbConditions c = new TastDbConditions();
 				c.addCondition(new SequenceAttribute(new Attribute[] {
 						SubmissionEdit.getAttribute("oldVoyage"),
 						EditedVoyage.getAttribute("voyage") }),
 						((SubmissionEdit) submission).getOldVoyage()
-								.getVoyage(), Conditions.OP_EQUALS);
-				QueryValue qValue = new QueryValue("SubmissionEdit", c);
+								.getVoyage(), TastDbConditions.OP_EQUALS);
+				TastDbQuery qValue = new TastDbQuery("SubmissionEdit", c);
 				Object[] toUpdate = qValue.executeQuery(session);
 				for (int i = 0; i < toUpdate.length; i++)
 				{

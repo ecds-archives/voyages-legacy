@@ -34,8 +34,8 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Bean which features functionality for details of given voyage.
@@ -138,8 +138,8 @@ public class VoyageDetailBean
 		
 		SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(sess);
 		
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("iid"), new Long(this.voyageIid), Conditions.OP_EQUALS);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Voyage.getAttribute("iid"), new Long(this.voyageIid), TastDbConditions.OP_EQUALS);
 		
 		List validAttrs = new ArrayList();
 		VisibleAttributeInterface[] attrs = VisibleAttribute.getAllAttributes();
@@ -157,7 +157,7 @@ public class VoyageDetailBean
 		this.detailData.setVisibleColumns(validAttrs);
 		
 		// Build query
-		QueryValue qValue = new QueryValue("Voyage", c);
+		TastDbQuery qValue = new TastDbQuery("Voyage", c);
 		
 		// Dictionaries - list of columns with dictionaries.
 		this.detailData.setKeyAttribute(Voyage.getAttribute("iid"));

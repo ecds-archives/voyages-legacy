@@ -10,8 +10,8 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.maps.AttributesMap;
 import edu.emory.library.tast.maps.AttributesRange;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Query holder for map tab in database.
@@ -20,7 +20,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  */
 public class DetailQueryHolder extends AbstractTransformerQueryHolder {
 
-	public DetailQueryHolder(Conditions conditions) {
+	public DetailQueryHolder(TastDbConditions conditions) {
 		/**
 		 * 1. portdep Port of Departure 2. deptreg Region of departure
 		 * 
@@ -38,11 +38,11 @@ public class DetailQueryHolder extends AbstractTransformerQueryHolder {
 		 * 
 		 * 14.portret Port at which voyage ended
 		 */
-		Conditions localConditions = (Conditions)conditions.clone();
+		TastDbConditions localConditions = (TastDbConditions)conditions.clone();
 		//localConditions.addCondition(VoyageIndex.getApproved());
 
 		//localConditions.addCondition(VoyageIndex.getAttribute("remoteVoyageId"), new DirectValue(Voyage.getAttribute("iid")), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String [] {"v"}, localConditions);
+		TastDbQuery qValue = new TastDbQuery(new String[] {"Voyage"}, new String [] {"v"}, localConditions);
 
 		qValue.addPopulatedAttribute(VisibleAttribute.getAttribute("portdep").getAttributes()[0]);
 		qValue.addPopulatedAttribute(VisibleAttribute.getAttribute("deptregimp").getAttributes()[0]);
@@ -194,10 +194,10 @@ public class DetailQueryHolder extends AbstractTransformerQueryHolder {
 		attrsMap.addColumn(col);
 		
 		this.setAttributesMap(attrsMap);
-		this.addQuery("Voyage trail", new QueryValue[] {qValue});
+		this.addQuery("Voyage trail", new TastDbQuery[] {qValue});
 	}
 	
-	protected void performExecuteQuery(Session session, QueryValue[] queries, int type) {
+	protected void performExecuteQuery(Session session, TastDbQuery[] queries, int type) {
 		this.setRawQueryResponse(queries[0].executeQuery(session));
 	}
 

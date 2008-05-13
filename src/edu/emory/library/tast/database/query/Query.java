@@ -12,7 +12,7 @@ import edu.emory.library.tast.database.query.searchables.Searchables;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.util.ConversionUtils;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class Query implements Cloneable
 {
@@ -73,7 +73,7 @@ public class Query implements Cloneable
 		
 	}
 
-	public boolean addToDbConditions(boolean markErrors, Conditions dbConds)
+	public boolean addToDbConditions(boolean markErrors, TastDbConditions dbConds)
 	{
 		
 		boolean errors = false;
@@ -87,13 +87,13 @@ public class Query implements Cloneable
 				dbConds.addCondition(
 					Voyage.getAttribute("yearam"),
 					yearFromInt,
-					Conditions.OP_GREATER_OR_EQUAL);
+					TastDbConditions.OP_GREATER_OR_EQUAL);
 			
 			if (yearToInt != null)
 				dbConds.addCondition(
 					Voyage.getAttribute("yearam"),
 					yearToInt,
-					Conditions.OP_SMALLER_OR_EQUAL);
+					TastDbConditions.OP_SMALLER_OR_EQUAL);
 		}
 		else
 		{

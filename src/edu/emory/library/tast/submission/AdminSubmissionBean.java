@@ -39,8 +39,8 @@ import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * The bean that is responsible for requests administration/user administration and new revisions publishingl.
@@ -308,19 +308,19 @@ public class AdminSubmissionBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 
-		Conditions c = new Conditions();
-		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), Conditions.OP_EQUALS);		
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), TastDbConditions.OP_EQUALS);		
 		if (this.requestStatus.equals("2")) {
-			c.addCondition(Submission.getAttribute("editorVoyage"), null, Conditions.OP_IS_NOT);
-			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
+			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS_NOT);
+			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
 		} else if (this.requestStatus.equals("3")) {
-			c.addCondition(Submission.getAttribute("editorVoyage"), null, Conditions.OP_IS);
-			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), Conditions.OP_EQUALS);
+			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS);
+			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
 		} else if (this.requestStatus.equals("4")) {
-			c.addCondition(Submission.getAttribute("solved"), new Boolean(true), Conditions.OP_EQUALS);
+			c.addCondition(Submission.getAttribute("solved"), new Boolean(true), TastDbConditions.OP_EQUALS);
 		}
 		if (this.requestType.equals("1") || this.requestType.equals("2")) {
-			QueryValue q = new QueryValue("SubmissionNew", c);
+			TastDbQuery q = new TastDbQuery("SubmissionNew", c);
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionNew submission = (SubmissionNew) subs[i];
@@ -350,7 +350,7 @@ public class AdminSubmissionBean {
 		}
 
 		if (this.requestType.equals("1") || this.requestType.equals("3")) {
-			QueryValue q = new QueryValue("SubmissionEdit", c);
+			TastDbQuery q = new TastDbQuery("SubmissionEdit", c);
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionEdit submission = (SubmissionEdit) subs[i];
@@ -382,7 +382,7 @@ public class AdminSubmissionBean {
 		}
 
 		if (this.requestType.equals("1") || this.requestType.equals("4")) {
-			QueryValue q = new QueryValue("SubmissionMerge", c);
+			TastDbQuery q = new TastDbQuery("SubmissionMerge", c);
 			Object[] subs = q.executeQuery(session);
 			for (int i = 0; i < subs.length; i++) {
 				SubmissionMerge submission = (SubmissionMerge) subs[i];
@@ -691,9 +691,9 @@ public class AdminSubmissionBean {
 		
 		int i = 0;
 		
-		Conditions c = new Conditions();
-		c.addCondition(new SequenceAttribute(new Attribute[] {SubmissionSource.getAttribute("submission"), Submission.getAttribute("id")}), this.applier.getSubmissionId(), Conditions.OP_EQUALS);
-		QueryValue qValue = new QueryValue("SubmissionSource", c);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(new SequenceAttribute(new Attribute[] {SubmissionSource.getAttribute("submission"), Submission.getAttribute("id")}), this.applier.getSubmissionId(), TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("SubmissionSource", c);
 		List list = qValue.executeQueryList();
 		Iterator iter = list.iterator();
 		

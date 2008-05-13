@@ -51,7 +51,7 @@ import edu.emory.library.tast.util.HibernateConnector;
  * @author Pawel Jurczyk
  *
  */
-public class QueryValue {
+public class TastDbQuery {
 
 	public static final int LIMIT_NO_LIMIT = -1;
 
@@ -76,7 +76,7 @@ public class QueryValue {
 	/**
 	 * Conditions for query.
 	 */
-	private Conditions conditions;
+	private TastDbConditions conditions;
 
 	/**
 	 * Group by expression.
@@ -122,16 +122,16 @@ public class QueryValue {
 	 * Constructor. Will use empty conditions.
 	 * @param objType object type
 	 */
-	public QueryValue(String objType) {
-		this(objType, new Conditions(Conditions.AND));
+	public TastDbQuery(String objType) {
+		this(objType, new TastDbConditions(TastDbConditions.AND));
 	}
 	
 	/**
 	 * Constructor. Will use empty conditions.
 	 * @param objType object type
 	 */
-	public QueryValue(String [] objTypes, String[] aliases) {
-		this(objTypes, aliases, new Conditions(Conditions.AND));
+	public TastDbQuery(String [] objTypes, String[] aliases) {
+		this(objTypes, aliases, new TastDbConditions(TastDbConditions.AND));
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class QueryValue {
 	 * @param objType
 	 * @param cond
 	 */
-	public QueryValue(String objType, Conditions cond) {
+	public TastDbQuery(String objType, TastDbConditions cond) {
 		this(new String[] {objType}, new String[] {}, cond, LIMIT_NO_LIMIT);
 	}
 	
@@ -148,7 +148,7 @@ public class QueryValue {
 	 * @param objType
 	 * @param cond
 	 */
-	public QueryValue(String [] objTypes, String [] aliases, Conditions cond) {
+	public TastDbQuery(String [] objTypes, String [] aliases, TastDbConditions cond) {
 		this(objTypes, aliases, cond, LIMIT_NO_LIMIT);
 	}
 
@@ -158,7 +158,7 @@ public class QueryValue {
 	 * @param cond
 	 * @param limit
 	 */
-	public QueryValue(String [] objTypes, String [] aliases, Conditions cond, int limit) {
+	public TastDbQuery(String [] objTypes, String [] aliases, TastDbConditions cond, int limit) {
 		if (aliases.length == 0) {
 			aliases = new String[objTypes.length];
 			for (int i = 0; i < aliases.length; i++) {
@@ -225,7 +225,7 @@ public class QueryValue {
 	 * Sets cinditions used in query.
 	 * @param cond
 	 */
-	public void setConditions(Conditions cond) {
+	public void setConditions(TastDbConditions cond) {
 		this.conditions = cond;
 	}
 

@@ -8,7 +8,7 @@ import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionBoolean;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 {
@@ -23,26 +23,26 @@ public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 		return new QueryConditionBoolean(getId());
 	}
 
-	private void addForOneAttribute(QueryConditionBoolean queryConditionBoolean, Attribute attribute, Conditions cond)
+	private void addForOneAttribute(QueryConditionBoolean queryConditionBoolean, Attribute attribute, TastDbConditions cond)
 	{
 		if (queryConditionBoolean.isYesChecked() && queryConditionBoolean.isNoChecked())
 		{
-			Conditions orCond = new Conditions(Conditions.OR);
-			orCond.addCondition(attribute, new Boolean(true), Conditions.OP_EQUALS);
-			orCond.addCondition(attribute, new Boolean(false), Conditions.OP_EQUALS);
+			TastDbConditions orCond = new TastDbConditions(TastDbConditions.OR);
+			orCond.addCondition(attribute, new Boolean(true), TastDbConditions.OP_EQUALS);
+			orCond.addCondition(attribute, new Boolean(false), TastDbConditions.OP_EQUALS);
 			cond.addCondition(orCond);
 		}
 		else if (queryConditionBoolean.isYesChecked())
 		{
-			cond.addCondition(attribute, new Boolean(true), Conditions.OP_EQUALS);
+			cond.addCondition(attribute, new Boolean(true), TastDbConditions.OP_EQUALS);
 		}
 		else if (queryConditionBoolean.isNoChecked())
 		{
-			cond.addCondition(attribute, new Boolean(false), Conditions.OP_EQUALS);
+			cond.addCondition(attribute, new Boolean(false), TastDbConditions.OP_EQUALS);
 		}
 	}
 	
-	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
+	public boolean addToConditions(boolean markErrors, TastDbConditions conditions, QueryCondition queryCondition)
 	{
 		
 		// check
@@ -65,7 +65,7 @@ public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 		}
 		else
 		{
-			Conditions orCond = new Conditions(Conditions.OR);
+			TastDbConditions orCond = new TastDbConditions(TastDbConditions.OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
 				addForOneAttribute(queryConditionBoolean, attributes[i], orCond);

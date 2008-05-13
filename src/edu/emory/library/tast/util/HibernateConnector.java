@@ -12,7 +12,7 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class HibernateConnector {
 
@@ -427,7 +427,7 @@ public class HibernateConnector {
 	 * @param p_query QueryValue object
 	 * @return results of execution of QueryValue
 	 */
-	public Object[] loadObjects(QueryValue p_query) {
+	public Object[] loadObjects(TastDbQuery p_query) {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		Object[] ret = loadObjects(session, p_query);
@@ -441,7 +441,7 @@ public class HibernateConnector {
 	 * @param p_query QueryValue object
 	 * @return results of execution of QueryValue
 	 */
-	public List loadObjectList(QueryValue p_query) {
+	public List loadObjectList(TastDbQuery p_query) {
 		Session session = HibernateUtil.getSession();
 		Transaction transaction = session.beginTransaction();
 		List list = loadObjectList(session, p_query);
@@ -456,7 +456,7 @@ public class HibernateConnector {
 	 * @param p_query QueryValue object
 	 * @return results of execution of QueryValue
 	 */
-	public Object[] loadObjects(Session p_session, QueryValue p_query)
+	public Object[] loadObjects(Session p_session, TastDbQuery p_query)
 	{
 		//Transaction transaction = p_session.beginTransaction();
 		List list = p_query.getQuery(p_session).list();
@@ -469,7 +469,7 @@ public class HibernateConnector {
 		}
 	}
 	
-	public ScrollableResults loadScroll(Session p_session, QueryValue p_query)
+	public ScrollableResults loadScroll(Session p_session, TastDbQuery p_query)
 	{
 		//Transaction transaction = p_session.beginTransaction();
 		ScrollableResults list = p_query.getQuery(p_session).scroll();
@@ -484,7 +484,7 @@ public class HibernateConnector {
 	 * @param p_query QueryValue object
 	 * @return results of execution of QueryValue
 	 */
-	public List loadObjectList(Session p_session, QueryValue p_query)
+	public List loadObjectList(Session p_session, TastDbQuery p_query)
 	{
 		//Transaction transaction = p_session.beginTransaction();
 		List list = p_query.getQuery(p_session).list();

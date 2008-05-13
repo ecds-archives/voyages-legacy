@@ -1,8 +1,5 @@
 package edu.emory.library.tast.estimates.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.model.SelectItem;
 
 import org.hibernate.Session;
@@ -19,7 +16,7 @@ import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * Backing bean for map tab in estimates.
@@ -40,14 +37,9 @@ public class EstimatesMapBean {
 	private MapData mapData = new MapData();
 
 	/**
-	 * Points of interest - points visible on map
-	 */
-	private List pointsOfInterest = new ArrayList();
-
-	/**
 	 * Current conditions
 	 */
-	private Conditions conditions;
+	private TastDbConditions conditions;
 	
 	/**
 	 * Type of point of interest (ports/regions/broad regions);
@@ -59,14 +51,12 @@ public class EstimatesMapBean {
 	/**
 	 * Forces query when setData called
 	 */
-	private boolean forceQuery = false;
+	private boolean needRefresh = false;
 	
 	/**
 	 * Type of visible points (emb/disembarkation)
 	 */
 	private int type = -1;
-
-	private boolean zoomLevelLocked = false;
 
 	public EstimatesSelectionBean getEstimatesBean() {
 		return estimatesBean;
@@ -91,11 +81,10 @@ public class EstimatesMapBean {
 		Transaction t = session.beginTransaction();
 		
 		//Check whether query is required
-		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || forceQuery)
+		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || needRefresh)
 		{
 			this.conditions = this.getEstimatesBean().getConditions();
-			forceQuery = false;
-			this.pointsOfInterest.clear();
+			needRefresh = false;
 			EstimateMapQueryHolder queryHolder = new EstimateMapQueryHolder(conditions);
 			queryHolder.executeQuery(session, poiType, type);
 			EstimateMapDataTransformer transformer = new EstimateMapDataTransformer(queryHolder.getAttributesMap());
@@ -125,7 +114,7 @@ public class EstimatesMapBean {
 		this.estimatesBean.changeSelection();
 		
 		type = determineType();
-		forceQuery = true;
+		needRefresh = true;
 		this.setData();
 		
 		return null;
@@ -177,10 +166,11 @@ public class EstimatesMapBean {
 	{
 		if (!StandardMaps.getSelectedMap(this).encodeMapId().equals(value))
 		{
+			needRefresh = true;
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);
-			this.zoomLevel = map.mapId;
-			this.zoomLevelLocked = true;
+			poiType = map.mapId;
+			// this.zoomLevel = map.mapId;
 		}
 	}
 
@@ -203,18 +193,16 @@ public class EstimatesMapBean {
 	}
 
 	public int getZoomLevel() {
-		this.zoomLevelLocked = false;
 		return zoomLevel;
 	}
 
 	public void setZoomLevel(int zoomLevel)
 	{
-		if (zoomLevelLocked) return;
-		if (this.zoomLevel != zoomLevel)
-		{
-			forceQuery = true;
-			StandardMaps.zoomChanged(this, zoomLevel);
-		}
+//		if (this.zoomLevel != zoomLevel)
+//		{
+//			forceQuery = true;
+//			StandardMaps.zoomChanged(this, zoomLevel);
+//		}
 		this.zoomLevel = zoomLevel;
 	}
 	
@@ -229,28 +217,20 @@ public class EstimatesMapBean {
 		};
 	}
 	
-	/**
-	 * Gets chosen place type
-	 * @return
-	 */
-	public Integer getChosenAttribute()
-	{
-		return new Integer(poiType);
-	}
+//	public Integer getChosenAttribute()
+//	{
+//		return new Integer(poiType);
+//	}
 	
-	/**
-	 * Sets chosen place type
-	 * @param id
-	 */
-	public void setChosenAttribute(Integer id)
-	{
-		if (this.poiType != id.intValue())
-		{
-			StandardMaps.zoomChanged(this, id.intValue());
-			this.forceQuery = true;
-		}
-		poiType = id.intValue();
-	}
+//	public void setChosenAttribute(Integer id)
+//	{
+//		if (this.poiType != id.intValue())
+//		{
+//			StandardMaps.zoomChanged(this, id.intValue());
+//			this.needRefresh = true;
+//		}
+//		poiType = id.intValue();
+//	}
 	
 }
 	

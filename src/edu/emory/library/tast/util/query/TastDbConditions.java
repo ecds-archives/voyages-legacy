@@ -15,7 +15,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
  * @author Pawel Jurczyk
  * 
  */
-public class Conditions {
+public class TastDbConditions {
 
 	/**
 	 * JOIN_ operators are used as constructor of Conditions class. It tells how
@@ -140,7 +140,7 @@ public class Conditions {
 	 * Constructor. Uses by default JOIN_AND.
 	 * 
 	 */
-	public Conditions()
+	public TastDbConditions()
 	{
 		this.joinCondition = AND;
 	}
@@ -151,7 +151,7 @@ public class Conditions {
 	 * @param joinCondition
 	 *            join operator.
 	 */
-	public Conditions(int joinCondition)
+	public TastDbConditions(int joinCondition)
 	{
 		this.joinCondition = joinCondition;
 	}
@@ -220,7 +220,7 @@ public class Conditions {
 	 * @param subCond
 	 *            subcondition
 	 */
-	public void addCondition(Conditions subCond)
+	public void addCondition(TastDbConditions subCond)
 	{
 		this.subConditions.add(subCond);
 	}
@@ -356,7 +356,7 @@ public class Conditions {
 		while (iter.hasNext())
 		{
 			processed++;
-			ConditionResponse child = ((Conditions) iter.next()).getConditionHQL(bindings, usedParamNames);
+			ConditionResponse child = ((TastDbConditions) iter.next()).getConditionHQL(bindings, usedParamNames);
 			ret.append("(").append(child.conditionString).append(")");
 			retMap.putAll(child.properties);
 			if (processed < size)
@@ -381,8 +381,8 @@ public class Conditions {
 	 * of subconditions, attributes and are joined using the same join operator.
 	 */
 	public boolean equals(Object o) {
-		if (o instanceof Conditions) {
-			Conditions that = (Conditions) o;
+		if (o instanceof TastDbConditions) {
+			TastDbConditions that = (TastDbConditions) o;
 			return (this.conditions.equals(that.conditions)
 					&& this.joinCondition == that.joinCondition && this.subConditions
 					.equals(that.subConditions));
@@ -394,7 +394,7 @@ public class Conditions {
 	 * Clones conditions.
 	 */
 	public Object clone() {
-		Conditions newC = new Conditions();
+		TastDbConditions newC = new TastDbConditions();
 		newC.conditions = (ArrayList) this.conditions.clone();
 		newC.joinCondition = this.joinCondition;
 		newC.subConditions = (ArrayList) this.subConditions.clone();

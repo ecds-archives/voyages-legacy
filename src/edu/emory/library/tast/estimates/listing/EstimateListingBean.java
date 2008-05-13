@@ -17,8 +17,8 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 /**
   * Backing bean for table visible in estimates.
   * This bean fills in TableData object with current 
@@ -33,7 +33,7 @@ public class EstimateListingBean {
 	
 	private EstimatesSelectionBean estimatesBean;
 	private TableData tableData;
-	private Conditions conditions = null;
+	private TastDbConditions conditions = null;
 	private boolean requery = false;
 	private TableLinkManager linkManager = new TableLinkManager(10);
 	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
@@ -89,7 +89,7 @@ public class EstimateListingBean {
 
 	public TableData getTableData() {
 		if (!this.getEstimatesBean().getConditions().equals(this.conditions) || requery) {
-			QueryValue qValue = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());
+			TastDbQuery qValue = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());
 			this.tableData.setData(qValue.executeQuery());
 			this.setNumberOfResults();
 			this.requery = false;
@@ -97,9 +97,9 @@ public class EstimateListingBean {
 		return tableData;
 	}
 
-	private QueryValue getQuery(int first, int limit) {
+	private TastDbQuery getQuery(int first, int limit) {
 		this.conditions = this.getEstimatesBean().getConditions();
-		QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
+		TastDbQuery qValue = new TastDbQuery(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
 		Attribute[] attrs = this.tableData.getAttributesForQuery();
 		for (int i = 0; i < attrs.length; i++) {
 			qValue.addPopulatedAttribute(attrs[i]);
@@ -113,7 +113,7 @@ public class EstimateListingBean {
 	
 	private void setNumberOfResults() {
 		this.conditions = this.getEstimatesBean().getConditions();
-		QueryValue qValue = new QueryValue(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
+		TastDbQuery qValue = new TastDbQuery(new String[] {"Estimate"}, new String[] {"e"}, this.conditions);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Estimate.getAttribute("id")}));
 		Object[] ret = qValue.executeQuery();
 		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
@@ -131,19 +131,19 @@ public class EstimateListingBean {
 		// Set appropriate order
 		if (this.getTableData().getOrderByColumn().getName().equals(attr.getName())) {
 			switch (this.getTableData().getOrder()) {
-			case QueryValue.ORDER_ASC:
-				this.getTableData().setOrder(QueryValue.ORDER_DESC);
+			case TastDbQuery.ORDER_ASC:
+				this.getTableData().setOrder(TastDbQuery.ORDER_DESC);
 				break;
-			case QueryValue.ORDER_DESC:
-				this.getTableData().setOrder(QueryValue.ORDER_DEFAULT);
+			case TastDbQuery.ORDER_DESC:
+				this.getTableData().setOrder(TastDbQuery.ORDER_DEFAULT);
 				break;
-			case QueryValue.ORDER_DEFAULT:
-				this.getTableData().setOrder(QueryValue.ORDER_ASC);
+			case TastDbQuery.ORDER_DEFAULT:
+				this.getTableData().setOrder(TastDbQuery.ORDER_ASC);
 				break;
 			}
 		} else {
 			this.getTableData().setOrderByColumn(attr);
-			this.getTableData().setOrder(QueryValue.ORDER_ASC);
+			this.getTableData().setOrder(TastDbQuery.ORDER_ASC);
 		}
 
 		// Indicate need of query
@@ -214,7 +214,7 @@ public class EstimateListingBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		QueryValue q = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());;
+		TastDbQuery q = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());;
 		CSVUtils.writeResponse(session, q);
 		
 		t.commit();
@@ -227,7 +227,7 @@ public class EstimateListingBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		QueryValue q = getQuery(0, -1);
+		TastDbQuery q = getQuery(0, -1);
 		CSVUtils.writeResponse(session, q);
 		
 		t.commit();

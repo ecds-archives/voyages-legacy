@@ -19,7 +19,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.EqualsUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * This class represents query for slaves. Each field corresponds to some GUI options.
@@ -88,7 +88,7 @@ public class SlavesQuery implements Cloneable
 		
 	}
 	
-	private Conditions prepareMultiselectConditions(Attribute attr, Boolean[] states, Object[] values, List querySummary, String variableName, String[] labels)
+	private TastDbConditions prepareMultiselectConditions(Attribute attr, Boolean[] states, Object[] values, List querySummary, String variableName, String[] labels)
 	{
 
 		boolean allSelected = true;
@@ -109,7 +109,7 @@ public class SlavesQuery implements Cloneable
 		if (allSelected || allDeselected)
 			return null;
 		
-		Conditions conditions = new Conditions(Conditions.OR);
+		TastDbConditions conditions = new TastDbConditions(TastDbConditions.OR);
 		
 		StringBuffer querySummaryValue = null;
 		if (querySummary != null)
@@ -125,7 +125,7 @@ public class SlavesQuery implements Cloneable
 					if (j > 0) querySummaryValue.append(", ");
 					querySummaryValue.append(labels[i]);
 				}
-				conditions.addCondition(attr, values[i], Conditions.OP_EQUALS);
+				conditions.addCondition(attr, values[i], TastDbConditions.OP_EQUALS);
 				j++;
 			}
 		}
@@ -138,7 +138,7 @@ public class SlavesQuery implements Cloneable
 
 	}
 	
-	public Conditions createConditions(Session sess, List querySummary)
+	public TastDbConditions createConditions(Session sess, List querySummary)
 	{
 		
 		Port portHavana = Port.loadById(sess, HAVANA_ID);
@@ -151,7 +151,7 @@ public class SlavesQuery implements Cloneable
 		SexAge genderMan = SexAge.loadById(sess, MAN_ID);
 		SexAge genderWoman = SexAge.loadById(sess, WOMAN_ID);
 		
-		Conditions c = new Conditions();
+		TastDbConditions c = new TastDbConditions();
 		
 		FunctionAttribute slaveNameUpperAttr = new FunctionAttribute(
 				"remove_accents", new Attribute[] {
@@ -162,7 +162,7 @@ public class SlavesQuery implements Cloneable
 			String[] s = StringUtils.extractQueryKeywords(this.slaveName, true);
 			for (int i = 0; i < s.length; i++)
 			{
-				c.addCondition(slaveNameUpperAttr, "%" + s[i] + "%", Conditions.OP_LIKE);
+				c.addCondition(slaveNameUpperAttr, "%" + s[i] + "%", TastDbConditions.OP_LIKE);
 			}
 			if (querySummary != null && s.length > 0)
 			{
@@ -181,7 +181,7 @@ public class SlavesQuery implements Cloneable
 			String[] s = StringUtils.extractQueryKeywords(this.shipName, true);
 			for (int i = 0; i < s.length; i++)
 			{
-				c.addCondition(shipNameUpperAttr, "%" + s[i] + "%", Conditions.OP_LIKE);
+				c.addCondition(shipNameUpperAttr, "%" + s[i] + "%", TastDbConditions.OP_LIKE);
 			}
 			if (querySummary != null && s.length > 0)
 			{
@@ -193,7 +193,7 @@ public class SlavesQuery implements Cloneable
 		
 		if (this.voyageId != null)
 		{
-			c.addCondition(Slave.getAttribute("voyageId"), this.voyageId, Conditions.OP_EQUALS);
+			c.addCondition(Slave.getAttribute("voyageId"), this.voyageId, TastDbConditions.OP_EQUALS);
 		}
 		
 		if (querySummary != null && this.voyageId != null)
@@ -205,12 +205,12 @@ public class SlavesQuery implements Cloneable
 
 		if (this.yearFrom != null)
 		{
-			c.addCondition(Slave.getAttribute("datearr"), this.yearFrom, Conditions.OP_GREATER_OR_EQUAL);
+			c.addCondition(Slave.getAttribute("datearr"), this.yearFrom, TastDbConditions.OP_GREATER_OR_EQUAL);
 		}
 		
 		if (this.yearTo != null)
 		{
-			c.addCondition(Slave.getAttribute("datearr"), this.yearTo, Conditions.OP_SMALLER_OR_EQUAL);
+			c.addCondition(Slave.getAttribute("datearr"), this.yearTo, TastDbConditions.OP_SMALLER_OR_EQUAL);
 		}
 		
 		if (querySummary != null && (this.yearFrom != null || this.yearTo != null))
@@ -242,7 +242,7 @@ public class SlavesQuery implements Cloneable
 			c.addCondition(
 					Slave.getAttribute("age"),
 					this.ageFrom,
-					Conditions.OP_GREATER_OR_EQUAL);
+					TastDbConditions.OP_GREATER_OR_EQUAL);
 		}
 		
 		if (this.ageTo != null)
@@ -250,7 +250,7 @@ public class SlavesQuery implements Cloneable
 			c.addCondition(
 					Slave.getAttribute("age"),
 					this.ageTo,
-					Conditions.OP_SMALLER_OR_EQUAL);
+					TastDbConditions.OP_SMALLER_OR_EQUAL);
 		}
 		
 		if (querySummary != null && (this.ageFrom != null || this.ageTo != null))
@@ -282,7 +282,7 @@ public class SlavesQuery implements Cloneable
 			c.addCondition(
 					Slave.getAttribute("height"),
 					new Double(this.heightFrom.intValue()),
-					Conditions.OP_GREATER_OR_EQUAL);
+					TastDbConditions.OP_GREATER_OR_EQUAL);
 		}
 		
 		if (this.heightTo != null)
@@ -290,7 +290,7 @@ public class SlavesQuery implements Cloneable
 			c.addCondition(
 					Slave.getAttribute("height"),
 					new Double(this.heightTo.intValue()),
-					Conditions.OP_SMALLER_OR_EQUAL);
+					TastDbConditions.OP_SMALLER_OR_EQUAL);
 		}
 		
 		if (querySummary != null && (this.heightFrom != null || this.heightTo != null))
@@ -323,7 +323,7 @@ public class SlavesQuery implements Cloneable
 			
 			Set countriesSet = StringUtils.toLongSet(countries);
 			
-			Conditions condCountries = new Conditions(Conditions.OR);
+			TastDbConditions condCountries = new TastDbConditions(TastDbConditions.OR);
 
 			String allCountriesHQL =
 				"from Country c " +
@@ -354,7 +354,7 @@ public class SlavesQuery implements Cloneable
 						if (i > 0) countriesBuff.append(", ");
 						countriesBuff.append(country.getName());
 					}
-					condCountries.addCondition(Slave.getAttribute("country"), country, Conditions.OP_EQUALS);
+					condCountries.addCondition(Slave.getAttribute("country"), country, TastDbConditions.OP_EQUALS);
 					i++;
 				}
 			}
@@ -371,7 +371,7 @@ public class SlavesQuery implements Cloneable
 			
 			Set embPortsSet = StringUtils.toStringSet(embPorts);
 
-			Conditions condPorts = new Conditions(Conditions.OR);
+			TastDbConditions condPorts = new TastDbConditions(TastDbConditions.OR);
 			
 			String allEmbPortsHQL =
 				"from Port p " +
@@ -416,7 +416,7 @@ public class SlavesQuery implements Cloneable
 						
 						if (embPortsSet.contains(area.getId() + ":" + region.getId() + ":" + port.getId()))
 						{
-							condPorts.addCondition(Slave.getAttribute("majbuypt"), port, Conditions.OP_EQUALS);
+							condPorts.addCondition(Slave.getAttribute("majbuypt"), port, TastDbConditions.OP_EQUALS);
 							if (querySummary != null)
 							{
 								if (portsInRegionBuffItems > 0) portsInRegionBuff.append(", ");
@@ -467,7 +467,7 @@ public class SlavesQuery implements Cloneable
 
 		}
 		
-		Conditions subGender = prepareMultiselectConditions(
+		TastDbConditions subGender = prepareMultiselectConditions(
 				Slave.getAttribute("sexage"),
 				new Boolean[] {
 					boys,
@@ -496,7 +496,7 @@ public class SlavesQuery implements Cloneable
 		if (subGender != null)
 			c.addCondition(subGender);
 		
-		Conditions subDisembarkation = prepareMultiselectConditions(
+		TastDbConditions subDisembarkation = prepareMultiselectConditions(
 				Slave.getAttribute("majselpt"),
 				new Boolean[] {
 					disembHavana,

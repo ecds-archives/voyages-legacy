@@ -1,8 +1,5 @@
 package edu.emory.library.tast.database.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.model.SelectItem;
 
 import org.hibernate.Session;
@@ -20,7 +17,7 @@ import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * The bean provides support for map tab in the database part of the system. It is used
@@ -40,91 +37,58 @@ public class MapBean
 	public static final int PORT_DEPARTURE = 2;
 	public static final int PORT_ARRIVAL = 3;
 	public static final int PORT_BOTH = 5;
-
-	/**
-	 * Reference to Search bean.
-	 */
-	private SearchBean searchBean = null;
-
-	/**
-	 * Conditions used in query.
-	 */
-	private Conditions conditions = null;
-
-	//indicates if requery is required
-	private boolean neededQuery = false;
-
-	//Information show on-mouse-over (when mouse is over given point)
-	private List pointsOfInterest = new ArrayList();
-
-	//Data that is in map
-	private MapData mapData = new MapData();
 	
-	private int attributeId = 0;
+	private SearchBean searchBean = null;
+	private TastDbConditions conditions = null;
+	private boolean needQuery = true;
+
+	private MapData mapData = new MapData();
 
 	private int type = -1;
-
+	private int attributeId = 0;
 	private int zoomLevelId;
-
-	private boolean zoomLevelLocked = false;
+	
+	public MapBean()
+	{
+		resetToDefault();
+	}
 	
 	public void resetToDefault()
 	{
 		mapData = new MapData();
-		pointsOfInterest = new ArrayList();
 		type = -1;
-		zoomLevelLocked = false;
 		zoomLevelId = 0;
 		conditions = null;
 		attributeId = 0;
 		setChosenMap("map-0_0");
 	}
 
-	/**
-	 * Sets current map data - points on the map.
-	 * The type of visible points depends on:
-	 * 1. zoom level which has been chosen
-	 * 2. selected ports (embarkation/disembarkation) 
-	 */
 	private void setMapData()
 	{
 		
+		SearchParameters searchConditions = this.searchBean.getSearchParameters();
+		if (!needQuery && searchConditions.getConditions().equals(this.conditions))
+			return;
+		
+		needQuery = false;
+		this.conditions = (TastDbConditions) searchConditions.getConditions().clone();
+		
+		TastDbConditions conditions = (TastDbConditions) this.conditions.clone();
+
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();		
 
-		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions))
-		{
-			SearchParameters params = this.searchBean.getSearchParameters();
-			this.conditions = (Conditions) params.getConditions().clone();
-			neededQuery = true;
-		}
+		GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
+		queryHolder.executeQuery(session, attributeId, type);
 
-		if (this.neededQuery)
-		{
-
-			Conditions conditions = (Conditions) this.conditions.clone();
-
-			this.pointsOfInterest.clear();
-			GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);
-			//queryHolder.executeQuery(session, this.chosenMap/* + this.chosenAttribute * ATTRS.length*/);
-			
-			queryHolder.executeQuery(session, attributeId, type);
-
-			GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(queryHolder.getAttributesMap());
-			this.mapData.setMapData(queryHolder, transformer);
-			
-			this.neededQuery = false;
-		}
+		GlobalMapDataTransformer transformer = new GlobalMapDataTransformer(queryHolder.getAttributesMap());
+		this.mapData.setMapData(queryHolder, transformer);
 		
 		t.commit();
 		session.close();
 
 	}
 
-	/**
-	 * Checks whether embarkation.disembarkation or both port types are selected.
-	 * @return
-	 */
 	private int determineType() {
 		if (this.mapData.getLegend() == null || this.mapData.getLegend().length < 2) {
 			return -1;
@@ -139,140 +103,71 @@ public class MapBean
 		}
 	}
 
-	/**
-	 * Refreshes any data in map. It queries the database if needed.
-	 * @return
-	 */
 	public String refresh()
 	{
 		
 		type = determineType();
-		neededQuery = true;
 		
 		ChosenMap map = StandardMaps.getSelectedMap(this);
-		this.zoomLevelId = map.mapId;
+		// this.zoomLevelId = map.mapId;
+
 		this.searchBean.setYearFrom(String.valueOf(map.ident.yearFrom));
 		this.searchBean.setYearTo(String.valueOf(map.ident.yearTo));
 		this.searchBean.search();
 		
+		needQuery = true;
 		this.setMapData();
 		return null;
 
 	}
 
-	/**
-	 * Returns list of points of interests. Point of interest shows some description on-mouse-over event.
-	 * @return
-	 */
-	public PointOfInterest[] getPointsOfInterest()
-	{
-		setMapData();
-		return this.mapData.getPointsOfInterest();
-	}
-
-	/**
-	 * Gets legend of current map.
-	 * @return
-	 */
-	public LegendItemsGroup[] getLegend()
-	{
-		return this.mapData.getLegend();
-	}
-
-	/**
-	 * Gets search bean instance for current application.
-	 * @return
-	 */
-	public SearchBean getSearchBean()
-	{
-		return searchBean;
-	}
-
-	/**
-	 * Invoked by JSF - sets search bean instance for current application context
-	 * @param searchBean
-	 */
-	public void setSearchBean(SearchBean searchBean)
-	{
-		this.searchBean = searchBean;
-	}
-
-	/**
-	 * Sets chosen map (regions/ports)
-	 * @param value
-	 */
 	public void setChosenMap(String value)
 	{
 		if (!value.equals(StandardMaps.getSelectedMap(this).encodeMapId()))
 		{
-			this.neededQuery = true;
+			this.needQuery = true;
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);
-			this.zoomLevelId = map.mapId;
-			zoomLevelLocked = true;
-			this.searchBean.search();
+			attributeId = map.mapId; 
+			// zoomLevelId = map.mapId;
 		}
 	}
 
-	/**
-	 * Chosen map
-	 * @return
-	 */
-	public String getChosenMap() {
+	public String getChosenMap()
+	{
+		System.out.println("getChosenMap = " + StandardMaps.getSelectedMap(this).encodeMapId());
 		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
-	/**
-	 * Map options (geophysical maps, 1650, 1750...)
-	 * @return
-	 */
 	public SelectItem[] getAvailableMaps()
 	{
 		return StandardMaps.getMapTypes(this);
 	}
 	
-	/**
-	 * Configuration for zoom levels on the map.
-	 * @return
-	 */
-	public ZoomLevel[] getZoomLevels() {
+	public ZoomLevel[] getZoomLevels()
+	{
 		setMapData();
 		return StandardMaps.getZoomLevels(this);
 	}
 	
-	/**
-	 * Mini map zoom level
-	 * @return
-	 */
-	public ZoomLevel getMiniMapZoomLevel() {
+	public ZoomLevel getMiniMapZoomLevel()
+	{
 		setMapData();
 		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 
-	/**
-	 * Zoom level on the map
-	 * @return
-	 */
 	public int getZoomLevel()
 	{
-		zoomLevelLocked = false;
 		return zoomLevelId;
 	}
 
-	/**
-	 * Registers change of zoom level.
-	 * Ugly hack to handle feedback between zoom level and visible places (broad regions/regions/ports)
-	 * @param zoomLevelId
-	 */
 	public void setZoomLevel(int zoomLevelId)
 	{
-		if (zoomLevelLocked) {
-			return;
-		}
-		if (this.zoomLevelId != zoomLevelId) {
-			StandardMaps.zoomChanged(this, zoomLevelId);
-			this.neededQuery = true;
-		}
+//		if (this.zoomLevelId != zoomLevelId)
+//		{
+//			StandardMaps.zoomChanged(this, zoomLevelId);
+//			this.needQuery = true;
+//		}
 		this.zoomLevelId = zoomLevelId;
 	}
 	
@@ -281,20 +176,43 @@ public class MapBean
 		return new SelectItem[] {
 				new SelectItem("0", TastResource.getText("database_components_map_broadregions")),
 				new SelectItem("1", TastResource.getText("database_components_map_regions")),
-				new SelectItem("2", TastResource.getText("database_components_map_ports")),
-		};
+				new SelectItem("2", TastResource.getText("database_components_map_ports"))};
 	}
 	
-	public Integer getChosenAttribute() {
+	public Integer getChosenAttribute()
+	{
 		return new Integer(attributeId);
 	}
 	
-	public void setChosenAttribute(Integer id) {
-		if (this.attributeId != id.intValue()) {
-			StandardMaps.zoomChanged(this, id.intValue());
-			this.neededQuery = true;
-		}
-		attributeId = id.intValue();
+	public void setChosenAttribute(Integer id)
+	{
+//		if (this.attributeId != id.intValue())
+//		{
+//			StandardMaps.zoomChanged(this, id.intValue());
+//			this.needQuery = true;
+//		}
+//		attributeId = id.intValue();
 	}
 	
+	public PointOfInterest[] getPointsOfInterest()
+	{
+		setMapData();
+		return this.mapData.getPointsOfInterest();
+	}
+
+	public LegendItemsGroup[] getLegend()
+	{
+		return this.mapData.getLegend();
+	}
+
+	public SearchBean getSearchBean()
+	{
+		return searchBean;
+	}
+
+	public void setSearchBean(SearchBean searchBean)
+	{
+		this.searchBean = searchBean;
+	}
+
 }

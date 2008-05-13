@@ -28,8 +28,8 @@ import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.ConversionUtils;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 
 /**
@@ -82,8 +82,8 @@ public class EstimatesSelectionBean
 	private static final int TIME_SPAN_INITIAL_FROM = 1500;
 	private static final int TIME_SPAN_INITIAL_TO = 1900;
 
-	private Conditions timeFrameConditions;
-	private Conditions geographicConditions;
+	private TastDbConditions timeFrameConditions;
+	private TastDbConditions geographicConditions;
 
 	private String[] checkedNations;
 	private String[] checkedExpRegions;
@@ -153,7 +153,7 @@ public class EstimatesSelectionBean
 		if (firstTime)
 		{
 
-			QueryValue query = new QueryValue("edu.emory.library.tast.dm.Estimate");
+			TastDbQuery query = new TastDbQuery("edu.emory.library.tast.dm.Estimate");
 	
 			query.addPopulatedAttribute(new FunctionAttribute("min", new Attribute[] { Estimate.getAttribute("year") }));
 			query.addPopulatedAttribute(new FunctionAttribute("max", new Attribute[] { Estimate.getAttribute("year") }));
@@ -293,13 +293,13 @@ public class EstimatesSelectionBean
 	public List loadSelectedNations(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.OR);
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.OR);
 		for (Iterator iter = selectedNationIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesNation.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+			cond.addCondition(EstimatesNation.getAttribute("id"), iter.next(), TastDbConditions.OP_EQUALS);
 
-		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesNation", cond);
+		TastDbQuery query = new TastDbQuery("edu.emory.library.tast.dm.EstimatesNation", cond);
 		query.setOrderBy(new Attribute[] { EstimatesNation.getAttribute("order") });
-		query.setOrder(QueryValue.ORDER_ASC);
+		query.setOrder(TastDbQuery.ORDER_ASC);
 
 		return query.executeQueryList(session);
 
@@ -314,13 +314,13 @@ public class EstimatesSelectionBean
 	public List loadSelectedExpRegions(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.OR);
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.OR);
 		for (Iterator iter = selectedExpRegionIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesExportRegion.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+			cond.addCondition(EstimatesExportRegion.getAttribute("id"), iter.next(), TastDbConditions.OP_EQUALS);
 
-		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesExportRegion", cond);
+		TastDbQuery query = new TastDbQuery("edu.emory.library.tast.dm.EstimatesExportRegion", cond);
 		query.setOrderBy(new Attribute[] { EstimatesExportRegion.getAttribute("order") });
-		query.setOrder(QueryValue.ORDER_ASC);
+		query.setOrder(TastDbQuery.ORDER_ASC);
 
 		return query.executeQueryList(session);
 
@@ -335,13 +335,13 @@ public class EstimatesSelectionBean
 	public List loadSelectedImpRegions(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.OR);
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.OR);
 		for (Iterator iter = selectedImpRegionIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesImportRegion.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+			cond.addCondition(EstimatesImportRegion.getAttribute("id"), iter.next(), TastDbConditions.OP_EQUALS);
 
-		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesImportRegion", cond);
+		TastDbQuery query = new TastDbQuery("edu.emory.library.tast.dm.EstimatesImportRegion", cond);
 		query.setOrderBy(new Attribute[] { EstimatesImportRegion.getAttribute("order") });
-		query.setOrder(QueryValue.ORDER_ASC);
+		query.setOrder(TastDbQuery.ORDER_ASC);
 
 		return query.executeQueryList(session);
 
@@ -356,13 +356,13 @@ public class EstimatesSelectionBean
 	public List loadSelectedImpAreas(Session session)
 	{
 
-		Conditions cond = new Conditions(Conditions.OR);
+		TastDbConditions cond = new TastDbConditions(TastDbConditions.OR);
 		for (Iterator iter = selectedImpAreaIds.iterator(); iter.hasNext();)
-			cond.addCondition(EstimatesImportArea.getAttribute("id"), iter.next(), Conditions.OP_EQUALS);
+			cond.addCondition(EstimatesImportArea.getAttribute("id"), iter.next(), TastDbConditions.OP_EQUALS);
 
-		QueryValue query = new QueryValue("edu.emory.library.tast.dm.EstimatesImportArea", cond);
+		TastDbQuery query = new TastDbQuery("edu.emory.library.tast.dm.EstimatesImportArea", cond);
 		query.setOrderBy(new Attribute[] { EstimatesImportRegion.getAttribute("order") });
-		query.setOrder(QueryValue.ORDER_ASC);
+		query.setOrder(TastDbQuery.ORDER_ASC);
 
 		return query.executeQueryList(session);
 
@@ -391,7 +391,7 @@ public class EstimatesSelectionBean
 		Integer yearFromInt = ConversionUtils.toInteger(yearFrom);
 		Integer yearToInt = ConversionUtils.toInteger(yearTo);
 
-		timeFrameConditions = new Conditions(Conditions.AND);
+		timeFrameConditions = new TastDbConditions(TastDbConditions.AND);
 		
 		if (yearFromInt == null || yearToInt == null || yearFromInt.compareTo(yearToInt) <= 0)
 		{
@@ -400,21 +400,21 @@ public class EstimatesSelectionBean
 				timeFrameConditions.addCondition(
 						Estimate.getAttribute("year"),
 						yearFromInt,
-						Conditions.OP_GREATER_OR_EQUAL);
+						TastDbConditions.OP_GREATER_OR_EQUAL);
 			
 			if (yearToInt != null)
 				timeFrameConditions.addCondition(
 						Estimate.getAttribute("year"),
 						yearToInt,
-						Conditions.OP_SMALLER_OR_EQUAL);
+						TastDbConditions.OP_SMALLER_OR_EQUAL);
 		}
 
-		Conditions conditionNations = new Conditions(Conditions.OR);
-		Conditions conditionExpRegions = new Conditions(Conditions.OR);
-		Conditions conditionImpRegions = new Conditions(Conditions.OR);
-		Conditions conditionRegions = new Conditions(Conditions.AND);
+		TastDbConditions conditionNations = new TastDbConditions(TastDbConditions.OR);
+		TastDbConditions conditionExpRegions = new TastDbConditions(TastDbConditions.OR);
+		TastDbConditions conditionImpRegions = new TastDbConditions(TastDbConditions.OR);
+		TastDbConditions conditionRegions = new TastDbConditions(TastDbConditions.AND);
 
-		geographicConditions = new Conditions(Conditions.AND);
+		geographicConditions = new TastDbConditions(TastDbConditions.AND);
 		geographicConditions.addCondition(conditionNations);
 		geographicConditions.addCondition(conditionRegions);
 		conditionRegions.addCondition(conditionExpRegions);
@@ -433,7 +433,7 @@ public class EstimatesSelectionBean
 		{
 			Long nationId = new Long(checkedNations[i]);
 			selectedNationIds.add(nationId);
-			conditionNations.addCondition(nationIdAttr, nationId, Conditions.OP_EQUALS);
+			conditionNations.addCondition(nationIdAttr, nationId, TastDbConditions.OP_EQUALS);
 		}
 
 		Attribute regionExpIdAttr = new SequenceAttribute(new Attribute[] {
@@ -444,7 +444,7 @@ public class EstimatesSelectionBean
 		{
 			Long regionId = new Long(checkedExpRegions[i]);
 			selectedExpRegionIds.add(regionId);
-			conditionExpRegions.addCondition(regionExpIdAttr, regionId, Conditions.OP_EQUALS);
+			conditionExpRegions.addCondition(regionExpIdAttr, regionId, TastDbConditions.OP_EQUALS);
 		}
 
 		Attribute regionImpIdAttr = new SequenceAttribute(new Attribute[] {
@@ -464,7 +464,7 @@ public class EstimatesSelectionBean
 				else
 				{
 					selectedImpRegionIds.add(id);
-					conditionImpRegions.addCondition(regionImpIdAttr, id, Conditions.OP_EQUALS);
+					conditionImpRegions.addCondition(regionImpIdAttr, id, TastDbConditions.OP_EQUALS);
 				}
 			}
 		}
@@ -658,7 +658,7 @@ public class EstimatesSelectionBean
 	 * 
 	 * @return
 	 */
-	public Conditions getTimeFrameConditions()
+	public TastDbConditions getTimeFrameConditions()
 	{
 		return timeFrameConditions;
 	}
@@ -668,7 +668,7 @@ public class EstimatesSelectionBean
 	 * 
 	 * @return
 	 */
-	public Conditions getGeographicConditions()
+	public TastDbConditions getGeographicConditions()
 	{
 		return geographicConditions;
 	}
@@ -678,9 +678,9 @@ public class EstimatesSelectionBean
 	 * 
 	 * @return
 	 */
-	public Conditions getConditions()
+	public TastDbConditions getConditions()
 	{
-		Conditions conds = new Conditions(Conditions.AND);
+		TastDbConditions conds = new TastDbConditions(TastDbConditions.AND);
 		conds.addCondition(geographicConditions);
 		conds.addCondition(timeFrameConditions);
 		return conds;

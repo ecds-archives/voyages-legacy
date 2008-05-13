@@ -9,8 +9,8 @@ import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class DownloadDatabaseBean {
 	
@@ -22,7 +22,7 @@ public class DownloadDatabaseBean {
 	public SelectItem[] getRevisions() {
 		synchronized (monitor) {
 			if (revisions == null) {
-				QueryValue qValue = new QueryValue("Revision");
+				TastDbQuery qValue = new TastDbQuery("Revision");
 				Object[] revs = qValue.executeQuery();
 				revisions = new SelectItem[revs.length];
 				for (int i = 0; i < revs.length; i++) {
@@ -54,7 +54,7 @@ public class DownloadDatabaseBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		QueryValue q = this.getQuery();
+		TastDbQuery q = this.getQuery();
 		CSVUtils.writeResponse(session, q, !codes.booleanValue(), "");	
 		
 		t.commit();
@@ -62,12 +62,12 @@ public class DownloadDatabaseBean {
 		return null;
 	}
 
-	private QueryValue getQuery() {
+	private TastDbQuery getQuery() {
 		
-		Conditions c = new Conditions();
-		c.addCondition(Voyage.getAttribute("revision"), new Integer(revision), Conditions.OP_EQUALS);
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(Voyage.getAttribute("revision"), new Integer(revision), TastDbConditions.OP_EQUALS);
 		
-		QueryValue q = new QueryValue("Voyage", c);
+		TastDbQuery q = new TastDbQuery("Voyage", c);
 		String[] attrs = Voyage.getAllAttrNames();
 		for (int i = 0; i < attrs.length; i++) {
 			q.addPopulatedAttribute(Voyage.getAttribute(attrs[i]));

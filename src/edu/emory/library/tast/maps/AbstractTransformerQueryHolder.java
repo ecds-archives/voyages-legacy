@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Abstract class that holds queries that should be executed for given map implementation.
@@ -47,7 +47,7 @@ public abstract class AbstractTransformerQueryHolder {
 	 * @param userLabel
 	 * @param querySet
 	 */
-	protected void addQuery(String userLabel, QueryValue[] querySet) {
+	protected void addQuery(String userLabel, TastDbQuery[] querySet) {
 		this.queryLabels.add(userLabel);
 		this.queries.add(querySet);
 	}
@@ -63,7 +63,7 @@ public abstract class AbstractTransformerQueryHolder {
 			throw new RuntimeException("Query number out of range!");
 		}
 		this.executedQuery = queryNumber;
-		performExecuteQuery(session, (QueryValue[])this.queries.get(queryNumber), type);
+		performExecuteQuery(session, (TastDbQuery[])this.queries.get(queryNumber), type);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public abstract class AbstractTransformerQueryHolder {
 	 * @param querySet
 	 * @param type
 	 */
-	protected abstract void performExecuteQuery(Session session, QueryValue[] querySet, int type);
+	protected abstract void performExecuteQuery(Session session, TastDbQuery[] querySet, int type);
 
 	/**
 	 * Gets query labels - problably not used currently.

@@ -29,8 +29,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.JsfUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * This bean is used to manage the list of groups, attributes, the
@@ -39,7 +39,7 @@ import edu.emory.library.tast.util.query.QueryValue;
  * components in {@link SearchParameters}. When a user clicks the search
  * button, an internal representation of the query, represented by
  * {@link QueryBuilderQuery}, is converted to a database query represented by
- * {@link edu.emory.library.tast.util.query.Conditions} and stored in
+ * {@link edu.emory.library.tast.util.query.TastDbConditions} and stored in
  * {@link #searchParameters}.
  */
 public class SearchBean
@@ -97,7 +97,7 @@ public class SearchBean
 	private void determineTimeFrameExtent()
 	{
 
-		QueryValue query = new QueryValue("Voyage");
+		TastDbQuery query = new TastDbQuery("Voyage");
 		
 		query.addPopulatedAttribute(
 				new FunctionAttribute("min",
@@ -194,12 +194,12 @@ public class SearchBean
 		try
 		{
 		
-			Conditions dbConds = new Conditions();
+			TastDbConditions dbConds = new TastDbConditions();
 			boolean errors = workingQuery.addToDbConditions(false, dbConds);
 			if (errors) return;
 			
 			//dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
-			dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(selectedRevision), Conditions.OP_EQUALS);
+			dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(selectedRevision), TastDbConditions.OP_EQUALS);
 			
 			searchParameters = new SearchParameters();
 			searchParameters.setConditions(dbConds);
@@ -242,11 +242,11 @@ public class SearchBean
 	private void updateNumberOfResults()
 	{
 		
-		Conditions dbConds = new Conditions();
-		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), Conditions.OP_EQUALS);
+		TastDbConditions dbConds = new TastDbConditions();
+		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), TastDbConditions.OP_EQUALS);
 		workingQuery.addToDbConditions(false, dbConds);
 		
-		QueryValue query = new QueryValue("Voyage", dbConds);
+		TastDbQuery query = new TastDbQuery("Voyage", dbConds);
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = query.executeQuery();
 		numberOfResults = ((Number)ret[0]).intValue();
@@ -538,7 +538,7 @@ public class SearchBean
 	
 	public SelectItem[] getRevisions() {
 		if (this.revisions == null) {
-			QueryValue query = new QueryValue("Revision");
+			TastDbQuery query = new TastDbQuery("Revision");
 			Object[] rev = query.executeQuery();
 			this.revisions = new SelectItem[rev.length];
 			for (int i = 0; i < rev.length; i++) {

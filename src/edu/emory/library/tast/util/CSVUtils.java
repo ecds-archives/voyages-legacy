@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class CSVUtils {
 	
@@ -125,11 +125,11 @@ public class CSVUtils {
 	}
 	*/
 
-	public static void writeResponse(Session sess, QueryValue qValue, String conditions) {
+	public static void writeResponse(Session sess, TastDbQuery qValue, String conditions) {
 		writeResponse(sess, qValue, false,conditions);
 	}
 	
-	public static void writeResponse(Session sess, QueryValue qValue, boolean codes, String conditions) {
+	public static void writeResponse(Session sess, TastDbQuery qValue, boolean codes, String conditions) {
 		
 		ZipOutputStream zipOS = null;
 		BufferedReader reader = null;
@@ -244,12 +244,12 @@ public class CSVUtils {
 		}
 	}
 
-	public static void writeResponse(Session sess, QueryValue q)
+	public static void writeResponse(Session sess, TastDbQuery q)
 	{
 		writeResponse(sess, q, false,"");
 	}
 	
-	public static void writeResponse(Session sess, QueryValue q, boolean codes)
+	public static void writeResponse(Session sess, TastDbQuery q, boolean codes)
 	{
 		writeResponse(sess, q, codes ,"");
 	}

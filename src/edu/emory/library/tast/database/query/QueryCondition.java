@@ -5,7 +5,7 @@ import java.io.Serializable;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.Searchables;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * This class represents one condition in the list of conditions, represented by
@@ -27,7 +27,7 @@ public abstract class QueryCondition implements Serializable
 
 	protected abstract Object clone();
 
-	public boolean addToConditions(Conditions conditions, boolean markErrors)
+	public boolean addToConditions(TastDbConditions conditions, boolean markErrors)
 	{
 		return getSearchableAttribute().addToConditions(markErrors, conditions, this);
 	}

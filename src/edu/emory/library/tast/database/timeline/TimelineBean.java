@@ -21,8 +21,8 @@ import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Bean for time line.
@@ -56,7 +56,7 @@ public class TimelineBean {
 	/**
 	 * Conditions used in query last time.
 	 */
-	private Conditions conditions = null;
+	private TastDbConditions conditions = null;
 	
 	/**
 	 * Need of query indication.
@@ -305,7 +305,7 @@ public class TimelineBean {
 	public String showTimeLine() {
 		
 		if (!this.searchBean.getSearchParameters().getConditions().equals(this.conditions)) {
-			this.conditions = (Conditions)this.searchBean.getSearchParameters().getConditions().clone();
+			this.conditions = (TastDbConditions)this.searchBean.getSearchParameters().getConditions().clone();
 			needQuery = true;
 		}
 		
@@ -315,12 +315,12 @@ public class TimelineBean {
 			Session sess = HibernateUtil.getSession();
 			Transaction tran = sess.beginTransaction();
 
-			QueryValue qValue = new QueryValue(new String[] {"Voyage"}, new String[] {"v"}, this.searchBean.getSearchParameters().getConditions());
+			TastDbQuery qValue = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, this.searchBean.getSearchParameters().getConditions());
 			qValue.setGroupBy(new Attribute[] {Voyage.getAttribute("yearam")});
 			qValue.addPopulatedAttribute(Voyage.getAttribute("yearam"));
 			qValue.addPopulatedAttribute(this.chosenOption.attributeValue);
 			qValue.setOrderBy(new Attribute[] {Voyage.getAttribute("yearam")});
-			qValue.setOrder(QueryValue.ORDER_ASC);
+			qValue.setOrder(TastDbQuery.ORDER_ASC);
 			
 			List ret = qValue.executeQueryList(sess);
 			

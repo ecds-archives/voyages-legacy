@@ -15,7 +15,7 @@ import javax.faces.event.FacesEvent;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.util.JsfUtils;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Component used for presenting table result.
@@ -166,9 +166,9 @@ public class TableResultComponent extends UIOutput {
 					if (data.getOrderByColumn() != null
 							&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
 
-						if (data.getOrder() == QueryValue.ORDER_DESC) {
+						if (data.getOrder() == TastDbQuery.ORDER_DESC) {
 							classStr = this.appendStyle(classStr, "grid-header-icon-desc");
-						} else if (data.getOrder() == QueryValue.ORDER_ASC) {
+						} else if (data.getOrder() == TastDbQuery.ORDER_ASC) {
 							classStr = this.appendStyle(classStr, "grid-header-icon-asc");
 						}
 					}
@@ -177,9 +177,9 @@ public class TableResultComponent extends UIOutput {
 					if (data.getOrderByColumn() != null
 							&& data.getOrderByColumn().getName().equals(populatedAttributes[i].getName())) {
 
-						if (data.getOrder() == QueryValue.ORDER_DESC) {
+						if (data.getOrder() == TastDbQuery.ORDER_DESC) {
 							classStr = this.appendStyle(classStr, "grid-header-icon-desc");
-						} else if (data.getOrder() == QueryValue.ORDER_ASC) {
+						} else if (data.getOrder() == TastDbQuery.ORDER_ASC) {
 							classStr = this.appendStyle(classStr, "grid-header-icon-asc");
 						}
 					}

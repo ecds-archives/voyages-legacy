@@ -19,8 +19,8 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class VoyagesListBean
 {
@@ -92,14 +92,14 @@ public class VoyagesListBean
 		Transaction tran = sess.beginTransaction();
 		
 		// prepare conditions
-		Conditions conds = new Conditions(Conditions.AND);
+		TastDbConditions conds = new TastDbConditions(TastDbConditions.AND);
 
 		// year to
 		if (yearFrom != -1) {
 			conds.addCondition(
 				Voyage.getAttribute("yearam"),
 				new Integer(yearFrom),
-				Conditions.OP_GREATER_OR_EQUAL);
+				TastDbConditions.OP_GREATER_OR_EQUAL);
 		}
 		
 		// year to
@@ -107,7 +107,7 @@ public class VoyagesListBean
 			conds.addCondition(
 				Voyage.getAttribute("yearam"),
 				new Integer(yearTo),
-				Conditions.OP_SMALLER_OR_EQUAL);
+				TastDbConditions.OP_SMALLER_OR_EQUAL);
 		}
 		
 		//voyage id From
@@ -115,7 +115,7 @@ public class VoyagesListBean
 			conds.addCondition(
 				Voyage.getAttribute("voyageid"),
 				new Integer(voyageIdFrom),
-				Conditions.OP_GREATER_OR_EQUAL);
+				TastDbConditions.OP_GREATER_OR_EQUAL);
 		}
 		
 		// voyage id to
@@ -123,7 +123,7 @@ public class VoyagesListBean
 			conds.addCondition(
 				Voyage.getAttribute("voyageid"),
 				new Integer(voyageIdTo),
-				Conditions.OP_SMALLER_OR_EQUAL);
+				TastDbConditions.OP_SMALLER_OR_EQUAL);
 		}
 		
 		// nation
@@ -131,13 +131,13 @@ public class VoyagesListBean
 			conds.addCondition(
 					new SequenceAttribute(new Attribute[] {Voyage.getAttribute("natinimp"), Nation.getAttribute("id")}),
 					new Long(nationId),
-					Conditions.OP_EQUALS);
+					TastDbConditions.OP_EQUALS);
 
 		// load voyages
-		conds.addCondition(Voyage.getAttribute("revision"), new Integer(this.revision), Conditions.OP_EQUALS);
-		conds.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), Conditions.OP_EQUALS);
-		QueryValue query = new QueryValue("Voyage", conds);
-		query.setOrder(QueryValue.ORDER_ASC);
+		conds.addCondition(Voyage.getAttribute("revision"), new Integer(this.revision), TastDbConditions.OP_EQUALS);
+		conds.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), TastDbConditions.OP_EQUALS);
+		TastDbQuery query = new TastDbQuery("Voyage", conds);
+		query.setOrder(TastDbQuery.ORDER_ASC);
 		query.setOrderBy(new Attribute[] {Voyage.getAttribute("voyageid")});
 		query.setFirstResult((currentPage-1) * pageSize);
 		query.setLimit(pageSize);
@@ -182,7 +182,7 @@ public class VoyagesListBean
 		}
 
 		// determine total count
-		QueryValue queryCount = new QueryValue("Voyage", conds);
+		TastDbQuery queryCount = new TastDbQuery("Voyage", conds);
 		queryCount.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = queryCount.executeQuery();
 		lastRecordIndex = ((Number)ret[0]).intValue();
@@ -449,7 +449,7 @@ public class VoyagesListBean
 	 * @return
 	 */
 	public SelectItem[] getRevisions() {
-		QueryValue qValue = new QueryValue("Revision");
+		TastDbQuery qValue = new TastDbQuery("Revision");
 		qValue.setOrderBy(new Attribute[] {Revision.getAttribute("id")});
 		Object[] revisions = qValue.executeQuery();
 		SelectItem[] revs = new SelectItem[revisions.length + 1];

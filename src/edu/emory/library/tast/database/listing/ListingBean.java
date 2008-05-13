@@ -35,8 +35,8 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Backing bean for table results presented in web interface.
@@ -124,7 +124,7 @@ public class ListingBean {
 	/**
 	 * Conditions used in query last time.
 	 */
-	private Conditions conditions = null;
+	private TastDbConditions conditions = null;
 	
 	/**
 	 * A list of actions that will be performed after apply configuration was pressed.
@@ -177,7 +177,7 @@ public class ListingBean {
 		SearchParameters searchParams = this.searchBean.getSearchParameters(); 
 		if (!searchParams.getConditions().equals(this.conditions)) {
 			this.linkManager.reset();
-			this.conditions = (Conditions) searchParams.getConditions().clone();
+			this.conditions = (TastDbConditions) searchParams.getConditions().clone();
 			needQuery = true;
 		}
 		if (searchParams.getConditions() != null && needQuery) {
@@ -199,10 +199,10 @@ public class ListingBean {
 	 * @param length
 	 *            number of columns
 	 */
-	private Object[][] queryAndFillInData(Conditions subCondition, TableData dataTable, int start, int length,
+	private Object[][] queryAndFillInData(TastDbConditions subCondition, TableData dataTable, int start, int length,
 			boolean returnBasicInfo) {
 
-		QueryValue qValue = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
+		TastDbQuery qValue = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
 
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
@@ -242,14 +242,14 @@ public class ListingBean {
 			}
 	}
 
-	private QueryValue getQuery(Conditions subCondition, TableData dataTable, int start, int length, boolean returnBasicInfo) {
+	private TastDbQuery getQuery(TastDbConditions subCondition, TableData dataTable, int start, int length, boolean returnBasicInfo) {
 		// Build condition
-		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
+		TastDbConditions localCond = (TastDbConditions) this.searchBean.getSearchParameters().getConditions().clone();
 		if (subCondition != null) {
 			localCond.addCondition(subCondition);
 		}
 		// Build query
-		QueryValue qValue = new QueryValue("Voyage", localCond);
+		TastDbQuery qValue = new TastDbQuery("Voyage", localCond);
 		if (length != -1) {
 			qValue.setLimit(length);
 		}
@@ -498,19 +498,19 @@ public class ListingBean {
 		// Set appropriate order
 		if (this.data.getOrderByColumn().getName().equals(attr.getName())) {
 			switch (this.data.getOrder()) {
-			case QueryValue.ORDER_ASC:
-				this.data.setOrder(QueryValue.ORDER_DESC);
+			case TastDbQuery.ORDER_ASC:
+				this.data.setOrder(TastDbQuery.ORDER_DESC);
 				break;
-			case QueryValue.ORDER_DESC:
-				this.data.setOrder(QueryValue.ORDER_DEFAULT);
+			case TastDbQuery.ORDER_DESC:
+				this.data.setOrder(TastDbQuery.ORDER_DEFAULT);
 				break;
-			case QueryValue.ORDER_DEFAULT:
-				this.data.setOrder(QueryValue.ORDER_ASC);
+			case TastDbQuery.ORDER_DEFAULT:
+				this.data.setOrder(TastDbQuery.ORDER_ASC);
 				break;
 			}
 		} else {
 			this.data.setOrderByColumn(attr);
-			this.data.setOrder(QueryValue.ORDER_ASC);
+			this.data.setOrder(TastDbQuery.ORDER_ASC);
 		}
 
 		// Indicate need of query
@@ -920,8 +920,8 @@ public class ListingBean {
 	 */
 	private void setNumberOfResults() {
 
-		Conditions localCond = (Conditions) this.searchBean.getSearchParameters().getConditions().clone();
-		QueryValue qValue = new QueryValue("Voyage", localCond);
+		TastDbConditions localCond = (TastDbConditions) this.searchBean.getSearchParameters().getConditions().clone();
+		TastDbQuery qValue = new TastDbQuery("Voyage", localCond);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
 		Object[] ret = qValue.executeQuery();
 		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
@@ -945,7 +945,7 @@ public class ListingBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		QueryValue q = this.getQuery(this.conditions, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
+		TastDbQuery q = this.getQuery(this.conditions, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
 	   System.out.println("**************************************");
 	   System.out.println(this.conditions.toString());	   
 	   System.out.println(this.linkManager.getCurrentFirstRecord());
@@ -961,7 +961,7 @@ public class ListingBean {
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
-		QueryValue q = this.getQuery(this.conditions, this.data, 0, -1, false);
+		TastDbQuery q = this.getQuery(this.conditions, this.data, 0, -1, false);
 		CSVUtils.writeResponse(session, q,this.conditions.toString());	
 		
 		t.commit();

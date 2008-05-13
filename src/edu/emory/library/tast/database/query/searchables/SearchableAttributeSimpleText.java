@@ -9,7 +9,7 @@ import edu.emory.library.tast.database.query.QueryConditionText;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 {
@@ -24,7 +24,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 		return new QueryConditionText(getId());
 	}
 
-	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
+	public boolean addToConditions(boolean markErrors, TastDbConditions conditions, QueryCondition queryCondition)
 	{
 		
 		// check
@@ -45,13 +45,13 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			return false;
 
 		// add keywords to query
-		Conditions subCond = new Conditions(Conditions.AND);
+		TastDbConditions subCond = new TastDbConditions(TastDbConditions.AND);
 		Attribute[] attributes = getAttributes();
 		for (int i = 0; i < keywords.length; i++)
 		{
 			
 			String keyword = "%" + keywords[i] + "%";
-			Conditions kewordCond = new Conditions(Conditions.OR);
+			TastDbConditions kewordCond = new TastDbConditions(TastDbConditions.OR);
 			
 			for (int j = 0; j < attributes.length; j++)
 			{
@@ -60,7 +60,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 					new FunctionAttribute("remove_accents", new Attribute[] {
 								new FunctionAttribute("upper", new Attribute[]{attributes[j]})});
 				
-				kewordCond.addCondition(attr, keyword, Conditions.OP_LIKE);
+				kewordCond.addCondition(attr, keyword, TastDbConditions.OP_LIKE);
 
 			}
 			

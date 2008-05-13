@@ -15,7 +15,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.Conditions;
+import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRange
 {
@@ -73,22 +73,22 @@ public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRang
 		
 	}
 
-	private void addSingleAttributeToConditions(QueryConditionDate queryConditionDate, Attribute attribute, Conditions conditions, Date fromDateQuery, Date toDateQuery)
+	private void addSingleAttributeToConditions(QueryConditionDate queryConditionDate, Attribute attribute, TastDbConditions conditions, Date fromDateQuery, Date toDateQuery)
 	{
 		switch (queryConditionDate.getType())
 		{
 			case QueryConditionNumeric.TYPE_BETWEEN:
 			case QueryConditionNumeric.TYPE_EQ:
-				conditions.addCondition(attribute, fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
-				conditions.addCondition(attribute, toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, fromDateQuery, TastDbConditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, toDateQuery, TastDbConditions.OP_SMALLER_OR_EQUAL);
 				break;
 
 			case QueryConditionNumeric.TYPE_LE:
-				conditions.addCondition(attribute, toDateQuery, Conditions.OP_SMALLER_OR_EQUAL);
+				conditions.addCondition(attribute, toDateQuery, TastDbConditions.OP_SMALLER_OR_EQUAL);
 				break;
 				
 			case QueryConditionNumeric.TYPE_GE:
-				conditions.addCondition(attribute, fromDateQuery, Conditions.OP_GREATER_OR_EQUAL);
+				conditions.addCondition(attribute, fromDateQuery, TastDbConditions.OP_GREATER_OR_EQUAL);
 				break;
 
 		}
@@ -97,11 +97,11 @@ public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRang
 			conditions.addCondition(
 					new FunctionAttribute("date_part", new Attribute[] {new DirectValueAttribute("month"), attribute}),
 					queryConditionDate.getSelectedMonthsAsArray(),
-					Conditions.OP_IN);
+					TastDbConditions.OP_IN);
 		
 	}
 	
-	public boolean addToConditions(boolean markErrors, Conditions conditions, QueryCondition queryCondition)
+	public boolean addToConditions(boolean markErrors, TastDbConditions conditions, QueryCondition queryCondition)
 	{
 		
 		if (!(queryCondition instanceof QueryConditionDate))
@@ -170,7 +170,7 @@ public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRang
 		}
 		else
 		{
-			Conditions orCond = new Conditions(Conditions.OR);
+			TastDbConditions orCond = new TastDbConditions(TastDbConditions.OR);
 			conditions.addCondition(orCond);
 			for (int i = 0; i < attributes.length; i++)
 				addSingleAttributeToConditions(queryConditionDate, attributes[i],

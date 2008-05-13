@@ -33,9 +33,19 @@
 			legend="#{EstimatesMapBean.legend}"
 			refreshAction="#{EstimatesMapBean.refresh}" 
 			maps="#{EstimatesMapBean.availableMaps}"
+			chosenMap="#{EstimatesMapBean.chosenMap}" />
+
+		<% /*
+		<s:legend
+			id="estimatesMapLegend" 
+			styleClass="map-legend-div"
+			legend="#{EstimatesMapBean.legend}"
+			refreshAction="#{EstimatesMapBean.refresh}" 
+			maps="#{EstimatesMapBean.availableMaps}"
 			chosenMap="#{EstimatesMapBean.chosenMap}"
 			availableAttributes="#{EstimatesMapBean.availableAttributes}"
 			chosenAttribute="#{EstimatesMapBean.chosenAttribute}"/>
+		*/  %>
 			
 		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
 			<h:outputText value="Find visible place" />

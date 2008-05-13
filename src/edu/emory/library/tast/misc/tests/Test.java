@@ -14,7 +14,7 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class Test
 {
@@ -49,14 +49,14 @@ public class Test
 			"where p in (select v.mjbyptimp from Voyage v) or (select v.mjbyptimp from Voyage v) " +
 			"order by p.region.area.order, p.region.order, p.order";
 
-		QueryValue qv = new QueryValue("Voyage");
+		TastDbQuery qv = new TastDbQuery("Voyage");
 		qv.setDistinct(true);
 
 		qv.addPopulatedAttribute(Voyage.getAttribute("mjbyptimp"));
 		qv.addPopulatedAttribute(new SequenceAttribute( new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("region")}));
 		qv.addPopulatedAttribute(new SequenceAttribute( new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("region"), Region.getAttribute("area")}));
 
-		qv.setOrder(QueryValue.ORDER_ASC);
+		qv.setOrder(TastDbQuery.ORDER_ASC);
 		qv.setOrderBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("region"), Region.getAttribute("area"), Area.getAttribute("order")}),
 				new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("region"), Region.getAttribute("order")}),

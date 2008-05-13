@@ -17,14 +17,14 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class EstimatesTimelineBean
 {
 	
 	private EstimatesSelectionBean selectionBean;
-	private Conditions conditions;
+	private TastDbConditions conditions;
 	private EventLineGraph graphImp;
 	private EventLineGraph graphExp;
 	private EventLineLabel[] verticalLabels;
@@ -36,7 +36,7 @@ public class EstimatesTimelineBean
 		
 		// conditions from the left column (i.e. from select bean),
 		// and check we we have to regenerate the graphs
-		Conditions newConditions = selectionBean.getConditions();
+		TastDbConditions newConditions = selectionBean.getConditions();
 		if (newConditions.equals(conditions)) return;
 
 		// yes, we have to
@@ -50,7 +50,7 @@ public class EstimatesTimelineBean
 	{
 		
 		// start query
-		QueryValue query = new QueryValue(
+		TastDbQuery query = new TastDbQuery(
 				new String[] {"Estimate"},
 				new String[] {"estimate"},
 				conditions);
@@ -60,7 +60,7 @@ public class EstimatesTimelineBean
 				Estimate.getAttribute("year")});
 		
 		// group by years
-		query.setOrder(QueryValue.ORDER_ASC);
+		query.setOrder(TastDbQuery.ORDER_ASC);
 		query.setOrderBy(new Attribute[] {
 				Estimate.getAttribute("year")});
 

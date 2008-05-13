@@ -13,7 +13,7 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Data that is presented in results (Result table or detail table).
@@ -52,7 +52,7 @@ public class TableData {
 	/**
 	 * Current order.
 	 */
-	private int order = QueryValue.ORDER_ASC;
+	private int order = TastDbQuery.ORDER_ASC;
 
 	/**
 	 * Additional columns (optional).
@@ -192,7 +192,7 @@ public class TableData {
 		this.columns.addAll(columns);
 		if (this.columns.size() > 0) {
 			this.setOrderByColumn((VisibleAttributeInterface) this.columns.get(0));
-			this.setOrder(QueryValue.ORDER_ASC);
+			this.setOrder(TastDbQuery.ORDER_ASC);
 		}
 	}
 
@@ -208,7 +208,7 @@ public class TableData {
 		}
 		if (this.columns.size() > 0) {
 			this.setOrderByColumn((VisibleAttributeInterface) this.columns.get(0));
-			this.setOrder(QueryValue.ORDER_ASC);
+			this.setOrder(TastDbQuery.ORDER_ASC);
 		}
 	}
 

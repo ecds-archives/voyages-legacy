@@ -19,8 +19,8 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 
 /**
@@ -31,7 +31,7 @@ import edu.emory.library.tast.util.query.QueryValue;
 public class EstimatesLoader {
 	
 	private class EstimateResponse {
-		QueryValue qValue;
+		TastDbQuery qValue;
 		int wiggleRoom;
 	}
 	
@@ -357,7 +357,7 @@ public class EstimatesLoader {
 		}
 
 		// prepare conditions
-		Conditions conditions = new Conditions();
+		TastDbConditions conditions = new TastDbConditions();
 		if (position.getPort() != null) {
 			int[] portIds = position.getPort();
 			Port[] ports = new Port[portIds.length];
@@ -365,7 +365,7 @@ public class EstimatesLoader {
 				ports[j] = Port.loadById(session, portIds[j]);
 			}
 			conditions.addCondition(Voyage.getAttribute("portdep"), ports,
-					Conditions.OP_IN);
+					TastDbConditions.OP_IN);
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
 			EstimatesImportRegion[] ports = new EstimatesImportRegion[portIds.length];
@@ -373,23 +373,23 @@ public class EstimatesLoader {
 				ports[j] = EstimatesImportRegion.loadById(session, portIds[j]);
 			}
 			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), ports,
-					Conditions.OP_IN);
+					TastDbConditions.OP_IN);
 		}
 		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 				position.getYear() + yearWiggleRoom),
-				Conditions.OP_SMALLER_OR_EQUAL);
+				TastDbConditions.OP_SMALLER_OR_EQUAL);
 		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 				position.getYear() - yearWiggleRoom),
-				Conditions.OP_GREATER_OR_EQUAL);
+				TastDbConditions.OP_GREATER_OR_EQUAL);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("e_natinimp"),
 				EstimatesNation.getAttribute("id") }), new Long(position
-				.getNatimp()), Conditions.OP_EQUALS);
-		conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, Conditions.OP_IS_NOT);
-		conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, Conditions.OP_IS_NOT);
+				.getNatimp()), TastDbConditions.OP_EQUALS);
+		conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, TastDbConditions.OP_IS_NOT);
+		conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, TastDbConditions.OP_IS_NOT);
 		
 		//Prepare full query
-		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
+		TastDbQuery qValue = new TastDbQuery(new String[] { "Voyage" },
 				new String[] { "v" }, conditions);
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
@@ -453,7 +453,7 @@ public class EstimatesLoader {
 		}
 		
 		//Prepare conditions
-		Conditions conditions = new Conditions();
+		TastDbConditions conditions = new TastDbConditions();
 		if (position.getPort() != null) {
 			int[] portIds = position.getPort();
 			Port[] ports = new Port[portIds.length];
@@ -461,7 +461,7 @@ public class EstimatesLoader {
 				ports[j] = Port.loadById(session, portIds[j]);
 			}
 			conditions.addCondition(Voyage.getAttribute("portdep"), ports,
-					Conditions.OP_IN);
+					TastDbConditions.OP_IN);
 		} else if (position.getMajselimp() != null) {
 			int[] portIds = position.getMajselimp();
 			EstimatesImportRegion[] ports = new EstimatesImportRegion[portIds.length];
@@ -469,24 +469,24 @@ public class EstimatesLoader {
 				ports[j] = EstimatesImportRegion.loadById(session, portIds[j]);
 			}
 			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), ports,
-					Conditions.OP_IN);
+					TastDbConditions.OP_IN);
 		}
 		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 				position.getYear() + yearWiggleRoom),
-				Conditions.OP_SMALLER_OR_EQUAL);
+				TastDbConditions.OP_SMALLER_OR_EQUAL);
 		conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 				position.getYear() - yearWiggleRoom),
-				Conditions.OP_GREATER_OR_EQUAL);
+				TastDbConditions.OP_GREATER_OR_EQUAL);
 		conditions.addCondition(new SequenceAttribute(new Attribute[] {
 				Voyage.getAttribute("e_natinimp"),
-				EstimatesNation.getAttribute("id") }), new Long(position.getNatimp()), Conditions.OP_EQUALS);
+				EstimatesNation.getAttribute("id") }), new Long(position.getNatimp()), TastDbConditions.OP_EQUALS);
 		if (useWiggleRoom) {
-			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, Conditions.OP_IS_NOT);
-			conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, Conditions.OP_IS_NOT);
+			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, TastDbConditions.OP_IS_NOT);
+			conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, TastDbConditions.OP_IS_NOT);
 		}
 		
 		//Prepare query
-		QueryValue qValue = new QueryValue(new String[] { "Voyage" },
+		TastDbQuery qValue = new TastDbQuery(new String[] { "Voyage" },
 				new String[] { "v" }, conditions);
 		qValue.setGroupBy(new Attribute[] {
 				new SequenceAttribute(new Attribute[] {
@@ -560,30 +560,30 @@ public class EstimatesLoader {
 		//Find wiggle room
 		while (currentWiggleRoom < 200 && currentResults < minVoyages) {
 			currentWiggleRoom += wiggleRoomExpand;
-			Conditions conditions = new Conditions();
+			TastDbConditions conditions = new TastDbConditions();
 			if (inP != null) {
 				conditions.addCondition(Voyage.getAttribute("portdep"), inP,
-						Conditions.OP_IN);
+						TastDbConditions.OP_IN);
 			}
 			if (inR != null) {
 				conditions.addCondition(Voyage.getAttribute("e_mjselimp"), inR,
-						Conditions.OP_IN);
+						TastDbConditions.OP_IN);
 			}
 
 			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 					position.getYear() + currentWiggleRoom),
-					Conditions.OP_SMALLER_OR_EQUAL);
+					TastDbConditions.OP_SMALLER_OR_EQUAL);
 			conditions.addCondition(Voyage.getAttribute("yearam"), new Integer(
 					position.getYear() - currentWiggleRoom),
-					Conditions.OP_GREATER_OR_EQUAL);
+					TastDbConditions.OP_GREATER_OR_EQUAL);
 			conditions.addCondition(new SequenceAttribute(new Attribute[] {
 					Voyage.getAttribute("e_natinimp"),
 					EstimatesNation.getAttribute("id") }), new Long(
-					position.getNatimp()), Conditions.OP_EQUALS);
-			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, Conditions.OP_IS_NOT);
-			conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, Conditions.OP_IS_NOT);
+					position.getNatimp()), TastDbConditions.OP_EQUALS);
+			conditions.addCondition(Voyage.getAttribute("e_mjselimp"), null, TastDbConditions.OP_IS_NOT);
+			conditions.addCondition(Voyage.getAttribute("e_majbyimp"), null, TastDbConditions.OP_IS_NOT);
 
-			QueryValue qValue = new QueryValue(new String[] { "Voyage" },
+			TastDbQuery qValue = new TastDbQuery(new String[] { "Voyage" },
 					new String[] { "v" }, conditions);
 			qValue.addPopulatedAttribute(new FunctionAttribute("count",
 					new Attribute[] { Voyage.getAttribute("iid") }));

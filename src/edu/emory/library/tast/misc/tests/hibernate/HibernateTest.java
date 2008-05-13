@@ -12,8 +12,8 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.Conditions;
-import edu.emory.library.tast.util.query.QueryValue;
+import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class HibernateTest {
 
@@ -52,9 +52,9 @@ public class HibernateTest {
 				
 				//v.save();
 			} else if (command.equals("list")) {
-				Conditions conditions = new Conditions();
-				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), Conditions.OP_EQUALS);
-				QueryValue val = new QueryValue("Voyage", conditions);
+				TastDbConditions conditions = new TastDbConditions();
+				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), TastDbConditions.OP_EQUALS);
+				TastDbQuery val = new TastDbQuery("Voyage", conditions);
 				Object[] ret = val.executeQuery();
 				Voyage v = (Voyage)ret[0];
 			} else if (command.startsWith("modify")) {
@@ -83,10 +83,10 @@ public class HibernateTest {
 //				}
 			} else if (command.equals("query")) {
 				
-				Conditions conditions = new Conditions();
-				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), Conditions.OP_EQUALS);
+				TastDbConditions conditions = new TastDbConditions();
+				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), TastDbConditions.OP_EQUALS);
 				conditions.addCondition(VoyageIndex.getApproved());
-				QueryValue qValue = new QueryValue(new String [] {"VoyageIndex", "Voyage"},
+				TastDbQuery qValue = new TastDbQuery(new String [] {"VoyageIndex", "Voyage"},
 						new String[] {"v", "vi"}, conditions);
 				qValue.addPopulatedAttribute(Voyage.getAttribute("arrport"));
 				qValue.addPopulatedAttribute(Voyage.getAttribute("shipname"));
@@ -143,15 +143,15 @@ public class HibernateTest {
 //				
 //				ChartUtilities.saveChartAsPNG(new File("chart.png"), chart, 4000, 2000);
 			} else if ("tload".equalsIgnoreCase(command)) {
-				Conditions c = new Conditions(Conditions.AND);
-				QueryValue qValue = new QueryValue("Group", c);
+				TastDbConditions c = new TastDbConditions(TastDbConditions.AND);
+				TastDbQuery qValue = new TastDbQuery("Group", c);
 				Object [] ret = qValue.executeQuery();
 				for (int i = 0; i < ret.length; i++) {
 					System.out.println("Has: " + ret[i]);
 				}
 			} else if ("cload".equalsIgnoreCase(command)) {
-				Conditions c = new Conditions();
-				QueryValue qValue = new QueryValue("Configuration", c);
+				TastDbConditions c = new TastDbConditions();
+				TastDbQuery qValue = new TastDbQuery("Configuration", c);
 				System.out.println("Query: " + qValue.toStringWithParams().conditionString);
 				Object[] ret = qValue.executeQuery();
 				for (int i = 0; i < ret.length; i++) {
@@ -164,8 +164,8 @@ public class HibernateTest {
 				//conf.addEntry("my2", "secondEntry_" + System.currentTimeMillis());
 				//conf.save();
 			} else if ("gis".equalsIgnoreCase(command)) {
-				Conditions c = new Conditions();
-				QueryValue qValue = new QueryValue("GISPortLocation", c);
+				TastDbConditions c = new TastDbConditions();
+				TastDbQuery qValue = new TastDbQuery("GISPortLocation", c);
 				Object[] ret = qValue.executeQuery();
 				for (int i = 0; i < ret.length && i < 20; i++) {
 					Object object = ret[i];
