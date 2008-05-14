@@ -241,7 +241,7 @@
 <t:htmlTag value="tr">
 <div style="padding-top: 20px; ">
 	<t:htmlTag value="td" styleClass="images-category-name">
-		<h:outputText value="Map 6: Ports in the Atlantic where slave voyages were organized, three periods" />
+		<h:outputText value="Map 6: Countries and Regions in the Atlantic World where Slave Voyages Organized, by slave of captures carried off from Arfica" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
 	<a href = "#top">Return to the top</a>	
@@ -276,7 +276,7 @@
 </td>
 <td width="300" align="right">
 <a href ="../newMaps/6_Europe_Overview_preview.jsp" onClick = "return popitup('../newMaps/6_Europe_Overview_preview.jsp')">
-<img src = "../newMaps/6_Europe_Overview.gif" width="200px" border=0></img>
+<img src = "../newMaps/s006_A_Broad_Regions.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>

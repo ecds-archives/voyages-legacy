@@ -5,7 +5,7 @@
 <body bgcolor=gray>
 <script src="../scripts/wz_dragdrop.js" type="text/javascript"></script>
 
-<img name="testmap" src = "../newMaps/3_Old_World_SlaveTrade.gif" width="1016px" height="1168"></img>
+<img name="testmap" src = "../newMaps/003_Old_World_SlaveTrade.jpg" width="2539" height="2955"></img>
 
 <script type="text/javascript">
 <!--

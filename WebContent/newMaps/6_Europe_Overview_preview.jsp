@@ -5,7 +5,7 @@
 <body bgcolor=gray>
 
 <a href="6_Europe_Overview.jsp">
-<img name="testmap" src = "../newMaps/6_Europe_Overview.gif" width="592" height="750" border="0"></img>
+<img name="testmap" src = "../newMaps/s006_A_Broad_Regions.jpg" width="626" height="795" border="0"></img>
 </a>
 
 </body>
