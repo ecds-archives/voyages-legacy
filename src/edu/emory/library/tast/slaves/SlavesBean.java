@@ -163,9 +163,9 @@ public class SlavesBean {
 			querySummary = new ArrayList();
 		TastDbConditions conditions = currentQuery.createConditions(sess, refreshText ? querySummary : null);
 
-		TastDbQuery queryValueTable = getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
+		TastDbQuery queryTable = getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
 
-		this.tableData.setData(queryValueTable.executeQuery(sess));
+		this.tableData.setData(queryTable.executeQuery(sess));
 
 		if (refreshCount) {
 			TastDbQuery queryValueCount = new TastDbQuery(new String[] { "Slave" }, new String[] { "e" }, conditions);
