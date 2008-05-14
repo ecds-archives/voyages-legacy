@@ -280,6 +280,9 @@
 		<attribute>
 			<name>selectedSectionId</name>
 		</attribute>
+		<attribute>
+			<name>rendered</name>
+		</attribute>
 	</tag>
 
 	<tag>

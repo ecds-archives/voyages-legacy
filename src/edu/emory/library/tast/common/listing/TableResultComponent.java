@@ -11,6 +11,7 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.PhaseId;
 
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
@@ -63,23 +64,24 @@ public class TableResultComponent extends UIOutput {
 		return values;
 	}
 
-	/**
-	 * Decode overload.
-	 */
-	public void decode(FacesContext context) {
+	public void decode(FacesContext context)
+	{
 
 		Map params = context.getExternalContext().getRequestParameterMap();
 
-		String newSelectedTabId = (String) params
-				.get(getSortHiddenFieldName(context));
-		if (newSelectedTabId != null && newSelectedTabId.length() > 0) {
-			queueEvent(new SortChangeEvent(this, newSelectedTabId));
+		String newSelectedTabId = (String) params.get(getSortHiddenFieldName(context));
+		if (newSelectedTabId != null && newSelectedTabId.length() > 0)
+		{
+			SortChangeEvent sortChangeEvent = new SortChangeEvent(this, newSelectedTabId);
+			queueEvent(sortChangeEvent);
 		}
 
-		String newSelectedVoyageId = (String) params
-				.get(getClickIdHiddenFieldName(context));
-		if (newSelectedVoyageId != null && newSelectedVoyageId.length() > 0) {
-			queueEvent(new ShowDetailsEvent(this, new Long(newSelectedVoyageId)));
+		String newSelectedVoyageId = (String) params.get(getClickIdHiddenFieldName(context));
+		if (newSelectedVoyageId != null && newSelectedVoyageId.length() > 0)
+		{
+			ShowDetailsEvent showDetailsEvent = new ShowDetailsEvent(this, new Long(newSelectedVoyageId));
+			showDetailsEvent.setPhaseId(PhaseId.INVOKE_APPLICATION);
+			queueEvent(showDetailsEvent);
 		}
 
 	}

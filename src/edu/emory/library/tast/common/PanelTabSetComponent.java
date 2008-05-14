@@ -9,6 +9,8 @@ import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.FacesEvent;
 
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
@@ -167,7 +169,8 @@ public class PanelTabSetComponent extends UIComponentBase {
 
 	}
 	
-	public void encodeChildren(FacesContext context) throws IOException {
+	public void encodeChildren(FacesContext context) throws IOException
+	{
 
 		ResponseWriter writer = context.getResponseWriter();
 		UIForm form = JsfUtils.getForm(this, context);
@@ -176,16 +179,21 @@ public class PanelTabSetComponent extends UIComponentBase {
 		if (selectedSectionId == null)
 			selectedSectionId = "";
 
-		JsfUtils.encodeHiddenInput(this, writer, getSelectedTabHiddenFieldName(context), selectedSectionId);
+		JsfUtils.encodeHiddenInput(this, writer,
+				getSelectedTabHiddenFieldName(context), selectedSectionId);
 
 		encodeTabsTitle(context, writer, form, selectedSectionId);
 
-		for (Iterator iter = getChildren().iterator(); iter.hasNext();) {
+		for (Iterator iter = getChildren().iterator(); iter.hasNext();)
+		{
 			PanelTabComponent sect = (PanelTabComponent) iter.next();
-			if (selectedSectionId.equals(sect.getSectionId())) {
+			if (selectedSectionId.equals(sect.getSectionId()))
+			{
 				sect.setRendered(true);
 				JsfUtils.renderChild(context, sect);
-			} else {
+			}
+			else
+			{
 				sect.setRendered(false);
 			}
 		}

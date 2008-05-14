@@ -27,17 +27,12 @@ public class PanelTabSetTag extends UIComponentTag {
 		return null;
 	}
 	
-	
 	protected void setProperties(UIComponent component)
 	{
 		
 		PanelTabSetComponent tabSet = (PanelTabSetComponent) component;
 		Application app = FacesContext.getCurrentInstance().getApplication();
 		
-//		tabSet.setBackgroundStyle(backgroundStyle);
-//		tabSet.setTabsStyle(tabsStyle);
-//		tabSet.setButtonsStyle(buttonsStyle);
-
 		if (title != null) {
 			if (isValueReference(title)) {
 				ValueBinding vb = getFacesContext().getApplication()
@@ -47,7 +42,6 @@ public class PanelTabSetTag extends UIComponentTag {
 				component.getAttributes().put("title", title);
 			}
 		}
-		//sectionGroup.setTitle(title);
 		
 		if (selectedSectionId != null && isValueReference(selectedSectionId))
 		{
@@ -58,26 +52,11 @@ public class PanelTabSetTag extends UIComponentTag {
 		{
 			tabSet.setSelectedSectionId(selectedSectionId);
 		}
+		
+		super.setProperties(component);
 	
 	}
 	
-
-//	public String getBackgroundStyle() {
-//		return backgroundStyle;
-//	}
-//
-//	public void setBackgroundStyle(String backgroundStyle) {
-//		this.backgroundStyle = backgroundStyle;
-//	}
-//
-//	public String getButtonsStyle() {
-//		return buttonsStyle;
-//	}
-//
-//	public void setButtonsStyle(String buttonsStyle) {
-//		this.buttonsStyle = buttonsStyle;
-//	}
-
 	public String getSelectedSectionId() {
 		return selectedSectionId;
 	}
@@ -85,14 +64,6 @@ public class PanelTabSetTag extends UIComponentTag {
 	public void setSelectedSectionId(String selectedSectionId) {
 		this.selectedSectionId = selectedSectionId;
 	}
-
-//	public String getTabsStyle() {
-//		return tabsStyle;
-//	}
-//
-//	public void setTabsStyle(String tabsStyle) {
-//		this.tabsStyle = tabsStyle;
-//	}
 
 	public String getTitle() {
 		return title;

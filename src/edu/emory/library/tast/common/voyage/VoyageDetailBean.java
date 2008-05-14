@@ -18,6 +18,7 @@ import edu.emory.library.tast.common.listing.TableData;
 import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.database.listing.formatters.BooleanAttributeFormatter;
 import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFormatter;
+import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.Image;
@@ -45,6 +46,8 @@ import edu.emory.library.tast.util.query.TastDbQuery;
 public class VoyageDetailBean
 {
 
+	private static final String DEFAULT_TAB_ID = "variables";
+
 	private TableData detailData = new TableData();
 	
 	private long voyageIid = -1;
@@ -56,19 +59,25 @@ public class VoyageDetailBean
 	private GalleryImage[] imagesGallery = new GalleryImage[0];
 	private String selectedImageId;
 	
-	private String selectedTab = "variables";
+	private String selectedTab = DEFAULT_TAB_ID;
 	
 	private VoyageRoute route;
 
 	private int mapZoomLevel;
+	
+	private SearchBean searchBean;
 
 	public void openVoyageByIid(long iid)
 	{
+		selectedTab = DEFAULT_TAB_ID;
+		searchBean.setShowVoygeDetail(true);
 		loadVoyage(true, iid, 0);
 	}
 	
 	public void openVoyageByVoyageId(int voyageId)
 	{
+		selectedTab = DEFAULT_TAB_ID;
+		searchBean.setShowVoygeDetail(true);
 		loadVoyage(false, 0, voyageId);
 	}
 
@@ -758,16 +767,39 @@ public class VoyageDetailBean
 		}
 	}
 	
-	public String getSelectedTab() {
+	public String getSelectedTab()
+	{
 		return selectedTab;
 	}
 
-	public void setSelectedTab(String selectedTab) {
-		this.selectedTab = selectedTab;
+	public void setSelectedTab(String selectedTab)
+	{
+		if (selectedTab != null)
+		{
+			if ("backToList".equals(selectedTab))
+			{
+				searchBean.setShowVoygeDetail(false);
+				this.selectedTab = DEFAULT_TAB_ID;
+			}
+			else
+			{
+				this.selectedTab = selectedTab;
+			}
+		}
 	}
 
 	public long getVoyageIid() {
 		return voyageIid;
 	}
 
-}
+	public SearchBean getSearchBean()
+	{
+		return searchBean;
+	}
+
+	public void setSearchBean(SearchBean searchBean)
+	{
+		this.searchBean = searchBean;
+	}
+
+} 

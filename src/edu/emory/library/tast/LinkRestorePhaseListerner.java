@@ -88,10 +88,7 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			// go to database search if no link
 			String voyageId = (String) params.get("voyageId");
 			if (StringUtils.isNullOrEmpty(voyageId))
-			{
-				// JsfUtils.navigateTo("database");
 				return;
-			}
 			
 			// convert to an integer, again fall back to db if nonsense
 			int voyageIdInt = 0;
@@ -101,14 +98,18 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			}
 			catch (NumberFormatException nfe)
 			{
-				// JsfUtils.navigateTo("database");
 				return;
 			}
 			
 			// and open pretending that we have came from db search
-			VoyageDetailBean bean = (VoyageDetailBean) JsfUtils.getSessionBean(fc, "VoyageDetailBean");
-			bean.setSelectedTab("variables");
-			bean.openVoyageByVoyageId(voyageIdInt);
+			VoyageDetailBean voyageBean = (VoyageDetailBean) JsfUtils.getSessionBean(fc, "VoyageDetailBean");
+			SearchBean searchBean = (SearchBean) JsfUtils.getSessionBean(fc, "SearchBean");
+			voyageBean.setSelectedTab("variables");
+			voyageBean.openVoyageByVoyageId(voyageIdInt);
+			searchBean.setShowVoygeDetail(true);
+			
+			// and goto database
+			JsfUtils.navigateTo("search-interface");
 			
 		}
 		

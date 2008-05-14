@@ -22,6 +22,8 @@
 	
 	<link href="../styles/info-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-no-results-info-box.css" rel="stylesheet" type="text/css">
+	
+	<link href="../styles/database-voyage.css" rel="stylesheet" type="text/css">
 
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-search.css" rel="stylesheet" type="text/css">
@@ -73,7 +75,10 @@
 			</td>
 			<td class="search-main-panel">
 			
-				<s:panelTabSet id="mainPanelSection" selectedSectionId="#{SearchBean.mainSectionId}">
+				<s:panelTabSet
+					id="voyagesListTabs"
+					selectedSectionId="#{SearchBean.mainSectionId}"
+					rendered="#{!SearchBean.showVoygeDetail}">
 
 					<s:panelTab title="#{res.database_search_listing}" sectionId="listing">
 						<t:htmlTag value="div" styleClass="search-panel" rendered="#{!SearchBean.noResult}">
@@ -131,6 +136,76 @@
 				
 				</s:panelTabSet>
 				
+				<s:panelTabSet
+					id="voyageDetailTabs"
+					selectedSectionId="#{VoyageDetailBean.selectedTab}"
+					rendered="#{SearchBean.showVoygeDetail}">
+		
+					<s:panelTab title="Back to the list of voyages" sectionId="backToList" cssClass="back-to-list" />
+
+					<s:panelTab title="#{res.database_voyage_voyagevariables}" sectionId="variables">
+		
+						<t:htmlTag value="div" styleClass="detail-title">
+							<h:outputText escape="false" value="#{VoyageDetailBean.pageTitle}" />
+						</t:htmlTag>
+						
+						<t:div style="margin-right: 10px;">
+							<s:voyageDetail data="#{VoyageDetailBean.detailData}" />
+						</t:div>
+		
+					</s:panelTab>
+		
+					<s:panelTab title="#{res.database_voyage_voyagemap}" sectionId="map">
+		
+						<t:htmlTag value="div" styleClass="detail-title">
+							<h:outputText escape="false" value="#{VoyageDetailBean.pageTitle}" />
+						</t:htmlTag>
+		
+						<t:htmlTag value="table"
+							style="border-collapse: collapse; margin: 0px 0px 0px 15px;">
+		
+							<t:htmlTag value="tr">
+		
+								<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
+		
+									<s:map id="map"
+										zoomLevels="#{VoyageDetailBean.zoomLevels}"
+										zoomLevel="#{VoyageDetailBean.zoomLevel}"
+										pointsOfInterest="#{VoyageDetailBean.voyageMapPoints}"
+										lines="#{VoyageDetailBean.voyageMapLines}" miniMap="true"
+										miniMap="true"
+										miniMapZoomLevel="#{VoyageDetailBean.miniMapZoomLevel}"
+										miniMapHeight="100" miniMapWidth="100"
+										miniMapPosition="bottom right" />
+		
+								</t:htmlTag>
+		
+								<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
+								
+									<s:voyageRouteLegend route="#{VoyageDetailBean.voyageRoute}" />
+								
+								</t:htmlTag>
+		
+							</t:htmlTag>
+						</t:htmlTag>
+		
+					</s:panelTab>
+		
+					<s:panelTab title="#{res.database_voyage_voyageimages}" sectionId="images">
+		
+						<t:htmlTag value="div" styleClass="detail-title">
+							<h:outputText escape="false" value="#{VoyageDetailBean.pageTitle}" />
+						</t:htmlTag>
+		
+						<s:gallery images="#{VoyageDetailBean.imagesGallery}"
+							columnsCount="5" showLabels="true" thumbnailHeight="100"
+							thumbnailWidth="100" action="#{VoyageDetailBean.openImageDetail}"
+							selectedImageId="#{VoyageDetailBean.selectedImageId}" />
+		
+					</s:panelTab>
+		
+				</s:panelTabSet>
+						
 			</td>
 		</tr>
 		</table>

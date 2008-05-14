@@ -415,6 +415,10 @@
 		<managed-bean-name>VoyageDetailBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.common.voyage.VoyageDetailBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>searchBean</property-name>
+			<value>#{SearchBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -528,136 +532,6 @@
 	</managed-bean>
 
 	<navigation-rule>
-		<from-view-id>/reports.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>showreport</from-outcome>
-			<to-view-id>/search.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/gallery.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>showinfo</from-outcome>
-			<to-view-id>/search.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/schema-group-list.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>edit</from-outcome>
-			<to-view-id>/schema-group-edit.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/schema-group-edit.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/schema-group-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/schema-attribute-list.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>edit</from-outcome>
-			<to-view-id>/schema-attribute-edit.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/schema-attribute-edit.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/schema-attribute-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/schema-compound-attribute-list.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>edit</from-outcome>
-			<to-view-id>/schema-compound-attribute-edit.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/schema-compound-attribute-edit.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<navigation-case>
-			<from-outcome>voyages-groups</from-outcome>
-			<to-view-id>/schema-group-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<navigation-case>
-			<from-outcome>slaves-groups</from-outcome>
-			<to-view-id>/schema-group-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<navigation-case>
-			<from-outcome>voyages-attributes</from-outcome>
-			<to-view-id>/schema-attribute-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<navigation-case>
-			<from-outcome>slaves-attributes</from-outcome>
-			<to-view-id>/schema-attribute-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<navigation-case>
-			<from-outcome>voyages-compound-attributes</from-outcome>
-			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<navigation-case>
-			<from-outcome>slaves-compound-attributes</from-outcome>
-			<to-view-id>/schema-compound-attribute-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/import-list.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>detail</from-outcome>
-			<to-view-id>/import-detail.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/import-detail.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/import-list.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/import-upload-done.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>detail</from-outcome>
-			<to-view-id>/import-detail.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
 		<from-view-id>/images-list.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>detail</from-outcome>
@@ -696,21 +570,6 @@
 		</navigation-case>
 	</navigation-rule>
 
-	<navigation-rule>
-		<navigation-case>
-			<from-outcome>voyage-detail</from-outcome>
-			<to-view-id>/database/voyage.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/database/voyage.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>database</from-outcome>
-			<to-view-id>/database/search.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>images</from-outcome>

@@ -72,6 +72,8 @@ public class SearchBean
 	private String lastPermLink = null;
 	private int numberOfResults;
 	
+	private boolean showVoygeDetail = false;
+	
 	public SearchBean()
 	{
 		history = new History();
@@ -159,7 +161,8 @@ public class SearchBean
 		timelineBean.resetToDefault();
 		tableBean.resetToDefault();
 		graphsBean.resetToDefault();
-
+		
+		showVoygeDetail = false;
 		mainSectionId = TAB_ID_LISTING;
 		
 		initNewQuery();
@@ -175,6 +178,7 @@ public class SearchBean
 	 */
 	public String search()
 	{
+		showVoygeDetail = false;
 		searchInternal(true);
 		return null;
 	}
@@ -489,6 +493,7 @@ public class SearchBean
 	 */
 	public void setMainSectionId(String mainSectionId)
 	{
+		if (mainSectionId == null) return;
 		this.mainSectionId = mainSectionId;
 	}
 
@@ -582,6 +587,16 @@ public class SearchBean
 			"Note: " +
 			"The full extent of time from the first to the last voyage is " +
 			minYear + " &ndash; " + maxYear;
+	}
+
+	public boolean isShowVoygeDetail()
+	{
+		return showVoygeDetail;
+	}
+
+	public void setShowVoygeDetail(boolean showVoygeDetail)
+	{
+		this.showVoygeDetail = showVoygeDetail;
 	}
 
 }

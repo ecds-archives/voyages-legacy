@@ -192,3 +192,6 @@ div.voyage-route-legend-place-purpose {
 div.voyage-route-legend-leg-info-lines {
 	padding-top: 5px;
 	border-top: 1px dotted #4C5966; }
+	
+span.detail-data-rollover {
+	color: Gray; }

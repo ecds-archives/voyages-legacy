@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.hibernate.Session;
@@ -523,11 +522,12 @@ public class ListingBean {
 	 * 
 	 * @param event
 	 */
-	public void showDetails(ShowDetailsEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
+	public void showDetails(ShowDetailsEvent event)
+	{
 		voyageBean.openVoyageByIid(event.getVoyageId().intValue());
-		
-		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
+		searchBean.setShowVoygeDetail(true);
+		//FacesContext context = FacesContext.getCurrentInstance();
+		// context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
 	}
 	
 	public String cancelConfiguration() {
