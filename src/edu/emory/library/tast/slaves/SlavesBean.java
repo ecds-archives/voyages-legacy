@@ -482,7 +482,6 @@ public class SlavesBean {
 		{
 
 			voyageBean.openVoyageByIid(iid);
-			voyageBean.setPreviousView("names-interface");
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");

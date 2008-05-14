@@ -107,7 +107,6 @@ public class LinkRestorePhaseListerner implements PhaseListener
 			
 			// and open pretending that we have came from db search
 			VoyageDetailBean bean = (VoyageDetailBean) JsfUtils.getSessionBean(fc, "VoyageDetailBean");
-			bean.setPreviousView("search-interface");
 			bean.setSelectedTab("variables");
 			bean.openVoyageByVoyageId(voyageIdInt);
 			

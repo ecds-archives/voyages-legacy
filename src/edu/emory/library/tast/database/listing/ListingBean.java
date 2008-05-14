@@ -526,7 +526,6 @@ public class ListingBean {
 	public void showDetails(ShowDetailsEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		voyageBean.openVoyageByIid(event.getVoyageId().intValue());
-		voyageBean.setPreviousView("search-interface");
 		
 		context.getApplication().getNavigationHandler().handleNavigation(context, null, "voyage-detail");
 	}

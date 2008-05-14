@@ -45,56 +45,28 @@ import edu.emory.library.tast.util.query.TastDbQuery;
 public class VoyageDetailBean
 {
 
-	/**
-	 * Data visible in table.
-	 */
 	private TableData detailData = new TableData();
 	
-	/**
-	 * Voyage ids (global and internal)
-	 */
 	private long voyageIid = -1;
 	private int voyageId = -1;
 	
 	private String shipName;
 	private Integer year;
 	
-	/**
-	 * Remembers last view - the one which should be restored when 'go back' is hit
-	 */
-	private String previousViewId;
-
-	/**
-	 * Images associated with voyage
-	 * 
-	 */
 	private GalleryImage[] imagesGallery = new GalleryImage[0];
 	private String selectedImageId;
 	
-	/**
-	 * Selected tab (variables/map/images)
-	 */
 	private String selectedTab = "variables";
 	
 	private VoyageRoute route;
 
 	private int mapZoomLevel;
 
-	/**
-	 * Opens given voyage - main function in this bean.
-	 * Called when one clicks on given voyage in table.
-	 * @param voyageIid
-	 */
 	public void openVoyageByIid(long iid)
 	{
 		loadVoyage(true, iid, 0);
 	}
 	
-	/**
-	 * This is called when opening the voyage directly from URL.
-	 * @param voyageId
-	 */
-
 	public void openVoyageByVoyageId(int voyageId)
 	{
 		loadVoyage(false, 0, voyageId);
@@ -688,40 +660,6 @@ public class VoyageDetailBean
 
 	}
 
-	/**
-	 * Go back button
-	 *
-	 */
-	public void back()
-	{
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.getApplication().getNavigationHandler().handleNavigation(context, null, this.previousViewId);
-	}
-	
-	public String getBackLinkText()
-	{
-		if ("search-interface".equals(this.previousViewId))
-		{
-			return TastResource.getText("database_voyage_detail_prev_database");
-		}
-		else if ("images-interface".equals(this.previousViewId))
-		{
-			return TastResource.getText("database_voyage_detail_prev_image");
-		}
-		else if ("names-interface".equals(this.previousViewId))
-		{
-			return TastResource.getText("database_voyage_detail_prev_slaves");
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	/**
-	 * Opens image detail for voyage's image
-	 * @return
-	 */
 	public String openImageDetail()
 	{
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -730,19 +668,11 @@ public class VoyageDetailBean
 		return "images-detail";
 	}
 	
-	/**
-	 * Returns data visible in variables table
-	 * @return
-	 */
 	public TableData getDetailData()
 	{
 		return detailData;
 	}
 
-	/**
-	 * Gets points visible on map.
-	 * @return
-	 */
 	public PointOfInterest[] getVoyageMapPoints()
 	{
 		return route.createMapPointsOfInterest();
@@ -760,25 +690,6 @@ public class VoyageDetailBean
 		return route;
 	}
 
-	/**
-	 * Sets previous view.
-	 * @param viewId
-	 */
-	public void setPreviousView(String viewId)
-	{
-		this.previousViewId = viewId;
-	}
-
-	public void setBackPageToCurrentView()
-	{
-		FacesContext context = FacesContext.getCurrentInstance();
-		this.previousViewId = context.getViewRoot().getViewId();
-	}
-
-	/**
-	 * Gets zoom level of map.
-	 * @return
-	 */
 	public ZoomLevel[] getZoomLevels()
 	{
 		return StandardMaps.getZoomLevels(this);
@@ -794,28 +705,16 @@ public class VoyageDetailBean
 		this.mapZoomLevel = mapZoomLevel;
 	}
 
-	/**
-	 * Gets minimap
-	 * @return
-	 */
 	public ZoomLevel getMiniMapZoomLevel()
 	{
 		return StandardMaps.getMiniMapZoomLevel(this);
 	}
 
-	/**
-	 * gets id of selected image
-	 * @return
-	 */
 	public String getSelectedImageId()
 	{
 		return selectedImageId;
 	}
 
-	/**
-	 * sets id of selected image
-	 * @param selectedImageId
-	 */
 	public void setSelectedImageId(String selectedImageId)
 	{
 		this.selectedImageId = selectedImageId;
