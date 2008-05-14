@@ -15,7 +15,7 @@ public class StringUtils
 	public static final int CREATE_TREE_SET = 2;
 	private static final int DEFAULT_SET_TYPE = 1;
 	
-	private final static Pattern sepRegex = Pattern.compile("[^a-zA-Z_0-9]+");
+	private final static Pattern keywordSepRegex = Pattern.compile("[^a-zA-Z_/0-9]+");
 	
 	public static int indexOf(String key, String[] haystack)
 	{
@@ -382,7 +382,7 @@ public class StringUtils
 		if (upperCase)
 			query = query.toUpperCase();
 		
-		String[] keywords = sepRegex.split(query);
+		String[] keywords = keywordSepRegex.split(query);
 		if (keywords.length == 1 && keywords[0].length() == 0)
 		{
 			return new String[0];

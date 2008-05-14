@@ -145,7 +145,8 @@ public class TimelineBean {
 		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("coalesce_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})}),
 				TastResource.getText("components_timeline_stat_rateresistance"),
-				"{0,number,#,###,##0.0}%"));
+				"{0,number,#,###,##0.0}%",
+				true));
 
 		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy1imp")}),

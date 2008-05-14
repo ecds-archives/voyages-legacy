@@ -255,81 +255,81 @@ public class TableResultComponent extends UIOutput {
 //						writer.writeAttribute("style", "width: 100%;", null);
 //						writer.writeAttribute("class", "multiline-attr-table", null);
 						
-						if (formatted.length > 1)
-							writer.startElement("div", this);
-						
 						for (int k = 0; k < formatted.length; k++)
 						{
+
+							if (formatted.length > 1)
+								writer.startElement("div", this);
+							
 //							writer.startElement("tr", this);
 //							writer.startElement("td", this);
 //							writer.writeAttribute("id", "cell_" + i + "_" + j + "_" + k, null);
 //							if (j == 0) writer.writeAttribute("class", "grid-first-column", null);
 							
-							if (rollovers[k] != null)
-							{
-								writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "', " + "'"
-										+ "cell_" + i + "_" + j + "_" + k + "')", null);
-								writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "')", null);
-								
-								writer.startElement("div", this);
-								writer.writeAttribute("id", "tooltip_" + i + "_" + j + "_" + k, null);
-								writer.writeAttribute("class", "grid-tooltip", null);
-
-								writer.startElement("table", this);
-								writer.writeAttribute("cellspacing", "0", null);
-								writer.writeAttribute("border", "0", null);
-								writer.writeAttribute("cellpadding", "0", null);
-								writer.startElement("tr", this);
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-11", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-12", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-13", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");								
-								writer.endElement("tr");
-								
-								writer.startElement("tr", this);
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-21", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-22", null);								
-								writer.startElement("div", this);
-								writer.write(rollovers[k]);
-								writer.endElement("div");
-								writer.endElement("td");
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-23", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");								
-								writer.endElement("tr");
-								
-								writer.startElement("tr", this);
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-31", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-32", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");
-								writer.startElement("td", this);
-								writer.writeAttribute("class", "bubble-33", null);
-								writer.startElement("div", this);writer.endElement("td");
-								writer.endElement("td");								
-								writer.endElement("tr");
-								writer.endElement("table");
-								
-								writer.endElement("div");
-								
-							}
+//							if (rollovers[k] != null)
+//							{
+//								writer.writeAttribute("onmouseover", "showToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "', " + "'" + "cell_" + i + "_" + j + "_" + k + "')", null);
+//								writer.writeAttribute("onmouseout", "hideToolTip('" + "tooltip_" + i + "_" + j + "_" + k + "')", null);
+//								
+//								writer.startElement("div", this);
+//								writer.writeAttribute("id", "tooltip_" + i + "_" + j + "_" + k, null);
+//								writer.writeAttribute("class", "grid-tooltip", null);
+//
+//								writer.startElement("table", this);
+//								writer.writeAttribute("cellspacing", "0", null);
+//								writer.writeAttribute("border", "0", null);
+//								writer.writeAttribute("cellpadding", "0", null);
+//								writer.startElement("tr", this);
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-11", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-12", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-13", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");								
+//								writer.endElement("tr");
+//								
+//								writer.startElement("tr", this);
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-21", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-22", null);								
+//								writer.startElement("div", this);
+//								writer.write(rollovers[k]);
+//								writer.endElement("div");
+//								writer.endElement("td");
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-23", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");								
+//								writer.endElement("tr");
+//								
+//								writer.startElement("tr", this);
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-31", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-32", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");
+//								writer.startElement("td", this);
+//								writer.writeAttribute("class", "bubble-33", null);
+//								writer.startElement("div", this);writer.endElement("td");
+//								writer.endElement("td");								
+//								writer.endElement("tr");
+//								writer.endElement("table");
+//								
+//								writer.endElement("div");
+//								
+//							}
 							
 							if (formatted[k] != null) {						
 								writer.write(formatted[k]);						

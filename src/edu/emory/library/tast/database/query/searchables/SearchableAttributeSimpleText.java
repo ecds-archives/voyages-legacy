@@ -45,29 +45,29 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			return false;
 
 		// add keywords to query
-		TastDbConditions subCond = new TastDbConditions(TastDbConditions.AND);
+		TastDbConditions attrCond = new TastDbConditions(TastDbConditions.OR);
 		Attribute[] attributes = getAttributes();
-		for (int i = 0; i < keywords.length; i++)
+		for (int j = 0; j < attributes.length; j++)
 		{
 			
-			String keyword = "%" + keywords[i] + "%";
-			TastDbConditions kewordCond = new TastDbConditions(TastDbConditions.OR);
+			TastDbConditions keywordCond = new TastDbConditions(TastDbConditions.AND);
 			
-			for (int j = 0; j < attributes.length; j++)
+			for (int i = 0; i < keywords.length; i++)
 			{
+				String keyword = "%" + keywords[i] + "%";
 				
 				FunctionAttribute attr =
 					new FunctionAttribute("remove_accents", new Attribute[] {
 								new FunctionAttribute("upper", new Attribute[]{attributes[j]})});
 				
-				kewordCond.addCondition(attr, keyword, TastDbConditions.OP_LIKE);
+				keywordCond.addCondition(attr, keyword, TastDbConditions.OP_LIKE);
 
 			}
 			
-			subCond.addCondition(kewordCond);
+			attrCond.addCondition(keywordCond);
 
 		}
-		conditions.addCondition(subCond);
+		conditions.addCondition(attrCond);
 		
 		// all OK
 		return true;
