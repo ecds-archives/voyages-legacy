@@ -171,3 +171,7 @@
 	</t:div>
 	
 </s:expandableBox>
+
+<p style="font-style: italic;margin: 10px 10px 0px 10px;">Note: For purposes of calculation, estimates of 
+embarked and disembarked slaves in tables, the timeline, and maps have not been rounded.  When users cite 
+any number, they are advised to round it to the nearest hundred.</p>
