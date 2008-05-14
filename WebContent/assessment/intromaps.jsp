@@ -241,7 +241,7 @@
 <t:htmlTag value="tr">
 <div style="padding-top: 20px; ">
 	<t:htmlTag value="td" styleClass="images-category-name">
-		<h:outputText value="Map 6: Countries and Regions in the Atlantic World where Slave Voyages Organized, by slave of captures carried off from Arfica" />
+		<h:outputText value="Map 6: Countries and Regions in the Atlantic World where Slave Voyages Organized, by slave of captures carried off from Africa" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
 	<a href = "#top">Return to the top</a>	
