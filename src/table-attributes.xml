@@ -393,7 +393,7 @@
 			<attribute name="malrat7"/>
 		</attributes>
 	</table-attribute>
-	 <table-attribute id="jamcaspr" userCategory="beginners,general" userLabel="Sterling cash price in Jamaica*">
+	 <table-attribute id="jamcaspr" userCategory="beginners,general" userLabel="Sterling cash price in Jamaica*" format="{0,number,##0.00}">
 		<attributes>
 			<attribute name="jamcaspr"/>
 		</attributes>
