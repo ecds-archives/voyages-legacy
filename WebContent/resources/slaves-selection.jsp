@@ -339,9 +339,5 @@
 	<s:querySummary
 		items="#{SlavesBean.querySummary}"
 		noQueryText="#{res.slaves_current_no_query}" />
-		
-	<t:div style="margin-top: 5px;">
-		<h:commandButton value="permlink" styleClass="button-save" action="#{SlavesBean.permLink}"/>
-	</t:div>
 	
 </s:expandableBox>
