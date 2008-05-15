@@ -301,7 +301,7 @@ public class EventLineComponent extends UIComponentBase
 				writer.startElement("tr", this);
 				writer.startElement("td", this);
 				writer.writeAttribute("class", "event-line-event-space", null);
-				writer.endElement("tr");
+				writer.endElement("td");
 				writer.endElement("tr");
 			}
 			
@@ -334,6 +334,8 @@ public class EventLineComponent extends UIComponentBase
 			writer.endElement("tr");
 			
 		}
+		
+		writer.endElement("table");
 
 		writer.endElement("td");
 		writer.endElement("tr");
