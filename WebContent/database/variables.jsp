@@ -51,7 +51,6 @@
 						
 							<p class="into">The variable list provides summary information on variables of the Trans-Atlantic Slave Trade database in the "Search the Database" section. The variables are displayed here in the form of short labels.  The third column gives their equivalents in the downloadable SPSS version of the database, where variable names take the form of acronyms.  These names are also used in downloads of data for listings, tables and graphics from the website.</p>							
 							<p class="into">Variables without an asterisk are "data variables" - information as found in a primary source documenting a slaving voyage.  Variables followed by an asterisk are "imputed variables."  They include information, such as the mortality rate on slave voyages, that is calculated from data variables as well as information which, although not directly documented, can be supplied on the basis of patterns observed in data variables.  							</p>
-							<p class="into">Clicking on the row for any variable takes the user to paragraphs relevant to it in the essay on "Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods."  The entire essay can be accessed through the link in the left frame.  							</p>
 					
 							<div id="variables-list">
 								<s:simpleTable rows="#{VariableListBean.table}" />
@@ -69,9 +68,8 @@
 							<p style="margin-top: 10px;">Variables without an asterisk are "data variables" - information as found in a primary source documenting a slaving voyage.  Variables followed by an asterisk are "imputed variables."  They include information, such as the mortality rate on slave voyages, that is calculated from data variables as well as information which, although not directly documented, can be supplied on the basis of patterns observed in data variables.  							</p>
 							<p style="margin: 0px;">Clicking on the row for any variable takes the user to paragraphs relevant to it in the essay on "Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods."  The entire essay can be accessed through the link in the left frame.  							</p>
 							
-							 -->
-							
 							</div>
+							 -->							
 	
 						</td>	
 					</tr>

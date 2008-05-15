@@ -17,24 +17,7 @@
 			<s:secondaryMenuItem
 				label="Getting started"
 				menuId="start"
-				href="guide.faces">
-			
-				<s:secondaryMenuItem
-					label="Guide"
-					menuId="guide"
-					href="guide.faces" />
-				
-				<s:secondaryMenuItem
-					label="Demo"
-					menuId="demo"
-					href="demo.faces" />
-				
-				<s:secondaryMenuItem
-					label="FAQs"
-					menuId="faq"
-					href="faq.faces" />
-			
-			</s:secondaryMenuItem>
+				href="guide.faces"/>			
 			
 			<s:secondaryMenuItem
 				label="Methodology"
