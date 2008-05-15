@@ -25,10 +25,11 @@
 		<h:outputText value="Resources" />
 	</s:siteHeader>
 	
+	
 	<div id="content">
 	
 		<img src="../images/resources-index-title.png" width="350" height="40" border="0" alt="Resources">
-
+		
 		<p>The Voyages website provides resources that offer some context
 		to the information available in the database of transatlantic slave
 		trading voyages. The slave trade was an activity that involved
@@ -42,12 +43,12 @@
 		various archives and libraries, the images displayed here can be used
 		to observe details of people, places, artifacts and vessels of this
 		time and make connections with the relevant voyages in the main
-		database. The names database was built with documents from the Foreign
+		database. The african names database was built with documents from the Foreign
 		Office, Series 84 and 313, held by the British National Archives. The
 		details of the vessels from which the liberated Africans were rescued
 		are listed in the voyages database.</p>
 
-		<h2><a href="#">Images</a></h2>
+		<h2><a href="images.faces">Images</a></h2>
 
 		<p>The transatlantic slave trade was an activity that lasted for
 		centuries. As a consequence, the ways it became represented changed
@@ -55,12 +56,12 @@
 		transatlantic slave trade representing places, vessels and artifacts
 		as well as of slavers and slaves.</p>
 
-		<h2><a href="#">Names Database</a></h2>
+		<h2><a href="slaves.faces">African Names Database</a></h2>
 
 		<p>The transatlantic slave trade culminated in the age of
 		abolition. In the nineteenth century, mixed-commissioned courts were
 		created around the Atlantic basins to adjudicate vessels illegally
-		engaged in the slave trade. The names database offers a compilation of
+		engaged in the slave trade. The african names database offers a compilation of
 		lists of liberated Africans from slave vessels captured by British
 		cruisers between 1819 and 1845, and taken for adjudication in the
 		courts established in Freetown, Sierra Leone, and in Havana, Cuba.</p>

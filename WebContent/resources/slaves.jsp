@@ -39,7 +39,7 @@
 	<s:siteHeader activeSectionId="resources">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="slaves.faces"><h:outputText value="Resources" /></h:outputLink>
-		<h:outputText value="Names Database" />
+		<h:outputText value="African Names Database" />
 	</s:siteHeader>
 	
 	<div id="content">
