@@ -85,7 +85,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/1_Slave_Trade_Overview_preview.jsp" onclick="return popitup('./intro-maps/1_Slave_Trade_Overview_preview.jsp')">
-<img src = "./intro-maps/1_Slave_Trade_Overview.gif" width="200px" border=0></img>
+<img src = "./intro-maps/001_Slave_Trade_Overview_pre.jpg" width="200px" border=0></img>
 
 </a>
 </td>
@@ -121,7 +121,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/2_Migration_Sugar_Cultivation_preview.jsp" onClick = "return popitup('./intro-maps/2_Migration_Sugar_Cultivation_preview.jsp')">
-<img src = "./intro-maps/2_Migration_Sugar_Cultivation.gif" width="200px" border=0></img>
+<img src = "./intro-maps/002_Migration_pre.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -157,7 +157,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/3_Old_World_SlaveTrade_preview.jsp" onclick="return popitup('./intro-maps/3_Old_World_SlaveTrade_preview.jsp')">
-<img src = "./intro-maps/3_Old_World_SlaveTrade.gif" width="200px" border=0></img>
+<img src = "./intro-maps/003_Old_World_SlaveTrade_pre.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -193,7 +193,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/4_Wind_currents_preview.jsp" onClick = "return popitup('./intro-maps/4_Wind_currents_preview.jsp')">
-<img src = "./intro-maps/4_Wind_currents.gif" width="200px" border=0></img>
+<img src = "./intro-maps/004_Wind_currents_pre.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -228,7 +228,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/5_Atlantic_Basin_preview.jsp" onClick = "return popitup('./intro-maps/5_Atlantic_Basin_preview.jsp')">
-<img src = "./intro-maps/5_Atlantic_Basin.gif" width="200px" border=0></img>
+<img src = "./intro-maps/005_Atlantic_Basin_pre.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -241,7 +241,7 @@
 <t:htmlTag value="tr">
 <div style="padding-top: 20px; ">
 	<t:htmlTag value="td" styleClass="images-category-name">
-		<h:outputText value="Map 6: Countries and Regions in the Atlantic World where Slave Voyages Organized, by slave of captures carried off from Africa" />
+		<h:outputText value="Map 6: Countries and Regions in the Atlantic World where Slave Voyages were Organized, by Share of Captives Carried off from Africa" />
 	</t:htmlTag>
 	<t:htmlTag value="td" styleClass="images-category-link">
 	<a href = "#top">Return to the top</a>	
@@ -328,7 +328,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/7_Africa_Overview_preview.jsp" onClick = "return popitup('./intro-maps/7_Africa_Overview_preview.jsp')">
-<img src = "./intro-maps/7_Africa_Overview.gif" width="200px" border=0></img>
+<img src = "./intro-maps/007_Africa_Overview_pre.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -375,7 +375,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/8_Americas_Overview_preview.jsp" onClick = "return popitup('./intro-maps/8_Americas_Overview_preview.jsp')">
-<img src = "./intro-maps/8_Americas_Overview.gif" width="200px" border=0></img>
+<img src = "./intro-maps/008_Americas_Overview_pre.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>
@@ -413,7 +413,7 @@
 </td>
 <td width="300" align="right">
 <a href ="./intro-maps/8A_Transatlantic_preview.jsp" onClick = "return popitup('./intro-maps/8A_Transatlantic_preview.jsp')">
-<img src = "./intro-maps/8A_Transatlantic.gif" width="200px" border=0></img>
+<img src = "./intro-maps/008A_Transatlantic_pre.jpg" width="200px" border=0></img>
 </a>
 </td>
 </tr>
