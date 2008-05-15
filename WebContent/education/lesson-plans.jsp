@@ -41,19 +41,14 @@
 				
 					<h1>Lesson plans</h1>
 
-					<p>In order to present the trans-Atlantic slave trade database
-					to a broader audience, particularly a 6-12 grade audience, a
-					dedicated team of teachers and curriculum developers from around
-					the United States developed lesson plans that explore the database.
-					Utilizing the various resources of the website, these lessons plans
-					allow students to engage the history and legacy of the Atlantic
-					slave trade in diverse and meaningful ways. The lessons are all
-					aligned with national standards in history (National Center for
-					History in the Schools), social studies (National Council for the
-					Social Studies), and geography (National Council for Geography
-					Education) and range in both their grade levels and activities. The
-					lessons also suggest readings for more information about the Slave
-					Trade.</p>
+					<p>In order to present the trans-Atlantic slave trade database to a broader audience, particularly 
+					a 6-12 grade audience, a dedicated team of teachers and curriculum developers from around the United 
+					States developed lesson plans that explore the database.  Utilizing the various resources of the website, 
+					these lessons plans allow students to engage the history and legacy of the Atlantic slave trade in diverse 
+					and meaningful ways.  The lessons are all aligned with national standards in history (National Center for 
+					History in the Schools), social studies (National Council for the Social Studies), and geography (National 
+					Council for Geography Education) and range in both their grade levels and activities.  The lessons also 
+					suggest readings for more information about the Slave Trade.</p>
 
 					<a name="slave-trade-abolition"></a>
 			

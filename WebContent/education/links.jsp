@@ -44,7 +44,9 @@
 					<a name="inmotionaame"></a>
 			
 					<div class="link-title">
-						In Motion: African-American Migration Experience Schomburg Center (NYPL)
+						In Motion: African-American Migration Experience 
+						<br>
+						<font style="font-size: 8pt;">Schomburg Center, New York Public Library</font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -55,23 +57,14 @@
 						<td class="link-info-label">WWW address</td>
 						<td class="link-info"><a href="http://www.inmotionaame.org">http://www.inmotionaame.org</a></td>
 					</tr>
-					<tr>
-						<td class="link-info-label">Contact info</td>
-						<td class="link-info">
-							<a href="mailto:digital@nypl.org">digital@nypl.org</a><br>
-							Digital Library Program<br>
-							The New York Public Library<br>
-							188 Madison Avenue<br>
-							New York NY 10016<br>
-							212-592-7185
-						</td>
-					</tr>
 					</table>
 		
 					<a name="collegeboard"></a>
 			
 					<div class="link-title">
-						YES / College Board
+						YES 
+						<br>
+						<font style="font-size: 8pt;"> College Board</font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -81,26 +74,15 @@
 					<tr>
 						<td class="link-info-label">WWW address</td>
 						<td class="link-info"><a href="http://www.collegeboard.com/prod_downloads/yes/4297_MODULE_12.pdf">http://www.collegeboard.com/prod_downloads/yes/4297_MODULE_12.pdf</a></td>
-					</tr>
-					<tr>
-						<td class="link-info-label">Contact info</td>
-						<td class="link-info">
-							Jennifer Topiel<br>
-							Associate Director, Public Affairs<br>
-							The College Board<br>
-							45 Columbus Avenue<br>
-							New York, NY 10023-6992<br>
-							Tel: (212) 713-8183<br>
-							Fax: (212) 713-8184<br>
-							Email: <a href="mailto:jtopiel@collegeboard.org">jtopiel@collegeboard.org</a>
-						</td>
-					</tr>
+					</tr>					
 					</table>
 
 					<a name="thirteen"></a>
 			
 					<div class="link-title">
-						Thirteen / National Teacher Training Institute
+						Thirteen 
+						<br>
+						<font style="font-size: 8pt;"> National Teacher Training Institute</font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -110,12 +92,6 @@
 					<tr>
 						<td class="link-info-label">WWW address</td>
 						<td class="link-info"><a href="http://www.thirteen.org/edonline/ntti/resources/lessons/h_economy">http://www.thirteen.org/edonline/ntti/resources/lessons/h_economy</a></td>
-					</tr>
-					<tr>
-						<td class="link-info-label">Contact info</td>
-						<td class="link-info">
-							Email: <a href="mailto:ntti@thirteen.org">ntti@thirteen.org</a>
-						</td>
 					</tr>
 					</table>
 
@@ -134,12 +110,6 @@
 						<td class="link-info">
 							<a href="http://nchs.ucla.edu/NH175-preview.pdf">http://nchs.ucla.edu/NH175-preview.pdf</a><br>
 							<a href="http://www.learner.org/channel/courses/amerhistory/pdf/AtlanticSlaveTrade_LOne.pdf">http://www.learner.org/channel/courses/amerhistory/pdf/AtlanticSlaveTrade_LOne.pdf</a> (First lesson included)
-						</td>
-					</tr>
-					<tr>
-						<td class="link-info-label">Contact info</td>
-						<td class="link-info">
-							Email: <a href="mailto:nchs@history.ucla.edu">nchs@history.ucla.edu</a>
 						</td>
 					</tr>
 					</table>
@@ -165,18 +135,14 @@
 							<a href="http://www.slaveryinamerica.org/history/hs_lp_slaveports.htm">http://www.slaveryinamerica.org/history/hs_lp_slaveports.htm</a>  (West African ports)
 						</td>
 					</tr>
-					<tr>
-						<td class="link-info-label">Contact info</td>
-						<td class="link-info">
-							Email: <a href="mailto:nchs@history.ucla.edu">nchs@history.ucla.edu</a>
-						</td>
-					</tr>
 					</table>
 
 					<a name="antislavery"></a>
 			
 					<div class="link-title">
-						Breaking the Silence / Anti-Slavery
+						Breaking the Silence 
+						<br>
+						<font style="font-size: 8pt;"> Anti-Slavery</font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -189,20 +155,6 @@
 						<td class="link-info-label">WWW address</td>
 						<td class="link-info">
 							<a href="http://www.antislavery.org/breakingthesilence/index.shtml">http://www.antislavery.org/breakingthesilence/index.shtml</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="link-info-label">Contact info</td>
-						<td class="link-info">
-							Michaela Alfred-Kamara<br>
-							Education Department<br>
-							Thomas Clarkson House<br>
-							The Stableyard<br>
-							Broomgrove Road<br>
-							London SW9 9TL<br>
-							Tel: +44 (0) 20 7501 8935<br>
-							Fax: +44 (0) 20 7738 4110<br>
-							Email: <a href="mailto:m.alfred-kamara@antislavery.org">m.alfred-kamara@antislavery.org</a>
 						</td>
 					</tr>
 					</table>
@@ -225,18 +177,14 @@
 							<a href="http://www.understandingslavery.com">http://www.understandingslavery.com</a>
 						</td>
 					</tr>
-					<tr>
-						<td class="link-info-label">Contact info</td>
-						<td class="link-info">
-							<a href="mailto:understandingslavery@nmm.ac.uk">understandingslavery@nmm.ac.uk</a>
-						</td>
-					</tr>
 					</table>
 
 					<a name="bbc"></a>
 			
 					<div class="link-title">
-						Abolition of the Slave Trade / BBC
+						Abolition of the Slave Trade 
+						<br>
+						<font style="font-size: 8pt;"> BBC </font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>

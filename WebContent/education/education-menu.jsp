@@ -14,8 +14,10 @@
 		
 		<s:secondaryMenu>
 			<s:secondaryMenuItem label="Lesson plans" menuId="lesson-plans" href="lesson-plans.faces" />
-			<s:secondaryMenuItem label="Links to other resources" menuId="links" href="links.faces" />			
-			<s:secondaryMenuItem label="Further Reading" menuId="further-reading" href="further-reading.faces" />
+			<s:secondaryMenuItem label="Other resources" menuId="others" href="others.faces">			
+				<s:secondaryMenuItem label="Links" menuId="links" href="links.faces" />
+				<s:secondaryMenuItem label="Further Reading" menuId="further-reading" href="further-reading.faces" />				
+			</s:secondaryMenuItem>
 		</s:secondaryMenu>
 		
 	</s:simpleBox>
