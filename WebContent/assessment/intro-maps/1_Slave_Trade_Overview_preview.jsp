@@ -2,13 +2,7 @@
 <head>
 <title> Slave Trade Overview </title>
 
-<script language="javascript" type="text/javascript">
-	function popitup(url) {
-		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars');
-		if (window.focus) {newwindow.focus()}
-		return false;
-	}
-</script>
+
 </head>
 
 <body bgcolor=gray>
