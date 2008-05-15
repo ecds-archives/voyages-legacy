@@ -116,9 +116,13 @@ public class MainMenu
 							"History",
 							"about/history.faces"),
 					new MainMenuBarPageItem(
-							"bios",
+							"team",
 							"Project team",
 							"about/team.faces"),
+					new MainMenuBarPageItem(
+							"contributors",
+							"Contributors of data",
+							"about/data.faces"),
 					new MainMenuBarPageItem(
 							"acknowledgements",
 							"Acknowledgements",

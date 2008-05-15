@@ -49,7 +49,7 @@
 						<li><div class="group">VOYAGES EDITORIAL BOARD</div>
 							<ul>
 								<li>
-									<span class="person"><a href="mailto:lachance1943@rogers.com">Paul Lachance</a></span> &ndash;
+									<span class="person">Paul Lachance</span> &ndash;
 									<span class="function">Managing Editor</span>
 									<span class="place">
 										(Professor,
@@ -100,16 +100,20 @@
 										Wilberforce Institute for the study of Slavery and Emancipation at The University of Hull,
 										UK)</span>
 								</li>
+								<li>
+									<span class="person">Jelmer Vos</span>
+									<span class="place">
+										(Centro de História de Além-Mar, Universidade Nova de Lisboa, Portugal)</span>
+								</li>
+							
 							</ul>
 						</li>
 						
-						<li><div class="group">VOYAGES WEBSITE ADMINISTRATION</div>
-							<ul>
-								<li>
-									<span class="person"><a href="mailto:jfenton@emory.edu">Kyle Fenton</a></span> &ndash;
-									<span class="function">Web Development Team Leader</span>
-								</li>
-							</ul>
+						<li><div class="group">Questions or Comments</div>							
+							<p>Please address all questions and comments regarding the content, 
+							appearance, and functioning of this website as well as questions about contributing new 
+							data to <a href="mailto:voyages@emory.edu">voyages@emory.edu</a>.</p>
+							
 						</li>
 
 					</ul>

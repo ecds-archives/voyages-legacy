@@ -217,7 +217,7 @@
 					<td class="featured-section-text">
 						<div class="featured-section-caption">
 							<a href="./database/search.faces">
-							Search the Database of Voyages
+							Search the Voyages Database
 							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
 							</a>
 						</div>
@@ -257,7 +257,7 @@
 					<td class="featured-section-text">
 						<div class="featured-section-caption">
 							<a href="./resources/slaves.faces">
-							Explore the Names Database
+							Explore the African Names Database
 							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
 							</a>
 						</div>
