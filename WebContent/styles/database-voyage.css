@@ -16,6 +16,7 @@ table.detail {
 
 td.detail-label-main,
 td.detail-label {
+	white-space: nowrap;
 	border: 1px solid #895D03;
 	padding: 5px;
 	font-weight: bold;
