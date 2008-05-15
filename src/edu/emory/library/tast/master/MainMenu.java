@@ -71,7 +71,7 @@ public class MainMenu
 						"resources/images.faces"),
 				new MainMenuBarPageItem(
 						"slaves",
-						"Names database",
+						"African names database",
 						"resources/slaves.faces")}),
 			
 	new MainMenuBarSectionItem(
@@ -89,9 +89,13 @@ public class MainMenu
 						"Lesson plans",
 						"education/lesson-plans.faces"),
 				new MainMenuBarPageItem(
+						"education-other-resources",
+						"Other resources",
+						"education/others.faces"),
+				new MainMenuBarPageItem(
 						"education-links",
-						"Links to other resources",
-						"education/links.faces"),
+						"Links",
+						"education/links.faces"),										
 				new MainMenuBarPageItem(
 						"education-further-reading",
 						"Further Reading",
