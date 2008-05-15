@@ -137,10 +137,14 @@ div.event-line-graph {
 	
 div.event-line-selector {
 	-moz-opacity: 0.3;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
 	background-color: #A9E1E2; }
 
 div.event-line-indicator {
 	-moz-opacity: 0.3;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
 	background-color: #333333; }
 	
 div.event-line-indicator-container {

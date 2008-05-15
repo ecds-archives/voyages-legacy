@@ -239,10 +239,12 @@ var ElementUtils =
 	getPosLeft: function(el)
 	{
 		// IE
+		/*
 		if (el.clientLeft)
 		{
 			return el.clientLeft;
 		}
+		*/
 		
 		// others
 		var curleft = 0;
@@ -259,10 +261,12 @@ var ElementUtils =
 	{
 	
 		// IE
+		/*
 		if (el.clientTop)
 		{
 			return el.clientTop;
 		}
+		*/
 		
 		// others
 		var curtop = 0;

@@ -783,8 +783,8 @@ EventLine.prototype.getSelectorRightPx = function()
 EventLine.prototype.selectorMouseDown = function(event)
 {
 	this.startDragX = event.clientX;
-	EventAttacher.attachOnWindowEvent("mouseup", this, "selectorMouseUp");
-	EventAttacher.attachOnWindowEvent("mousemove", this, "selectorMouseMove");
+	EventAttacher.attach(document, "mouseup", this, "selectorMouseUp");
+	EventAttacher.attach(document, "mousemove", this, "selectorMouseMove");
 }
 
 EventLine.prototype.selectorMouseMove = function(event)
@@ -815,15 +815,15 @@ EventLine.prototype.selectorMouseUp = function(event)
 		
 	this.refresh(this.zoomLevel, newOffset);
 	
-	EventAttacher.detachOnWindowEvent("mouseup", this, "selectorMouseUp");
-	EventAttacher.detachOnWindowEvent("mousemove", this, "selectorMouseMove");
+	EventAttacher.detach(document, "mouseup", this, "selectorMouseUp");
+	EventAttacher.detach(document, "mousemove", this, "selectorMouseMove");
 	
 }
 
 EventLine.prototype.leftSelectorMouseDown = function(event)
 {
-	EventAttacher.attachOnWindowEvent("mouseup", this, "leftSelectorMouseUp");
-	EventAttacher.attachOnWindowEvent("mousemove", this, "leftSelectorMouseMove");
+	EventAttacher.attach(document, "mouseup", this, "leftSelectorMouseUp");
+	EventAttacher.attach(document, "mousemove", this, "leftSelectorMouseMove");
 }
 
 EventLine.prototype.leftSelectorMouseMove = function(event)
@@ -857,15 +857,15 @@ EventLine.prototype.leftSelectorMouseUp = function(event)
 	
 	this.refresh(newZoomLevel, newOffset);
 	
-	EventAttacher.detachOnWindowEvent("mouseup", this, "leftSelectorMouseUp");
-	EventAttacher.detachOnWindowEvent("mousemove", this, "leftSelectorMouseMove");
+	EventAttacher.detach(document, "mouseup", this, "leftSelectorMouseUp");
+	EventAttacher.detach(document, "mousemove", this, "leftSelectorMouseMove");
 	
 }
 
 EventLine.prototype.rightSelectorMouseDown = function(event)
 {
-	EventAttacher.attachOnWindowEvent("mouseup", this, "rightSelectorMouseUp");
-	EventAttacher.attachOnWindowEvent("mousemove", this, "rightSelectorMouseMove");
+	EventAttacher.attach(document, "mouseup", this, "rightSelectorMouseUp");
+	EventAttacher.attach(document, "mousemove", this, "rightSelectorMouseMove");
 }
 
 EventLine.prototype.rightSelectorMouseMove = function(event)
@@ -901,8 +901,8 @@ EventLine.prototype.rightSelectorMouseUp = function(event)
 	
 	this.refresh(newZoomLevel, newOffset);
 	
-	EventAttacher.detachOnWindowEvent("mouseup", this, "rightSelectorMouseUp");
-	EventAttacher.detachOnWindowEvent("mousemove", this, "rightSelectorMouseMove");
+	EventAttacher.detach(document, "mouseup", this, "rightSelectorMouseUp");
+	EventAttacher.detach(document, "mousemove", this, "rightSelectorMouseMove");
 	
 }
 
