@@ -87,3 +87,12 @@ div.map-legend-section {
 
 input.map-legend-refresh {
 	margin-top: 0px; }
+
+div.tooltip {
+	width: 300px;
+	background-color: #EEFFFF;
+	padding: 5px;
+	border: 1px solid #2299AA; }
+
+span.grid-value-with-tooltip {
+	border-bottom: 1px dotted #895D03; } 

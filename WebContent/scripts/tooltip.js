@@ -1,139 +1,44 @@
-function xstooltip_findPosX(obj) 
+function tooltipShow(event, tooltipId)
 {
-  var curleft = 0;
-  if (obj.offsetParent) 
-  {
-    while (obj.offsetParent) 
-        {
-            curleft += obj.offsetLeft
-            obj = obj.offsetParent;
-        }
-    }
-    else if (obj.x)
-        curleft += obj.x;
-    return curleft;
+ 	var tooltip = document.getElementById(tooltipId);
+ 	tooltipMove(event, tooltipId);
+ 	tooltip.style.visibility = "visible";
 }
 
-function xstooltip_findPosY(obj) 
+function tooltipHide(event, tooltipId)
 {
-    var curtop = 0;
-    if (obj.offsetParent) 
-    {
-        while (obj.offsetParent) 
-        {
-            curtop += obj.offsetTop
-            obj = obj.offsetParent;
-        }
-    }
-    else if (obj.y)
-        curtop += obj.y;
-    return curtop;
+ 	var tooltip = document.getElementById(tooltipId);
+ 	tooltip.style.visibility = "hidden";
 }
 
-function showToolTip(tooltipId, parentId) {
-
-	it = document.getElementById(tooltipId);
+function tooltipMove(event, tooltipId)
+{
  
-	var posX = 0;
-	var posY = 0;
+ 	var tooltip = document.getElementById(tooltipId);
+ 	if (!event) event = window.event;
+ 	
+ 	var x = ElementUtils.getEventMouseX(event);
+ 	var y = ElementUtils.getEventMouseY(event);
+ 	
+	var vportWidth = ElementUtils.getPageWidth();
+	var vportHeight = ElementUtils.getPageHeight();
+	var vportLeft = ElementUtils.getPageScrollLeft();
+	var vportTop = ElementUtils.getPageScrollTop();
 	
-	posX = -it.offsetWidth + 10;
-	posY = -it.offsetHeight + 10;
-	    
-    if ((it.style.top == '' || it.style.top == 0) 
-        && (it.style.left == '' || it.style.left == 0))
-    {
-        // need to fixate default size (MSIE problem)
-        it.style.width = it.offsetWidth + 'px';
-        it.style.height = it.offsetHeight + 'px';
-        
-        img = document.getElementById(parentId); 
-    
-        // if tooltip is too wide, shift left to be within parent 
-        //if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
-        // if (posX < 0 ) posX = 0; 
-        
-        x = xstooltip_findPosX(img) + posX;
-        y = xstooltip_findPosY(img) + posY;
-        
-        it.style.top = y + 'px';
-        it.style.left = x + 'px';
-    }
-    
-    it.style.visibility = 'visible'; 
-}
-
-function showToolTipOff(tooltipId, parentId, offset)
-{
-
-    it = document.getElementById(tooltipId);
- 
-	var posX = 0;
-	var posY = 0;
+	var width = ElementUtils.getOffsetWidth(tooltip);
+	var height = ElementUtils.getOffsetHeight(tooltip);
 	
-	posX = -it.offsetWidth + 10 + offset;
-	posY = -it.offsetHeight + 5;
-	    
-    if ((it.style.top == '' || it.style.top == 0) 
-        && (it.style.left == '' || it.style.left == 0))
-    {
-        // need to fixate default size (MSIE problem)
-        it.style.width = it.offsetWidth + 'px';
-        it.style.height = it.offsetHeight + 'px';
-        
-        img = document.getElementById(parentId); 
-    
-        // if tooltip is too wide, shift left to be within parent 
-        //if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
-        // if (posX < 0 ) posX = 0; 
-        
-        x = xstooltip_findPosX(img) + posX;
-        y = xstooltip_findPosY(img) + posY;
-        
-        it.style.top = y + 'px';
-        it.style.left = x + 'px';
-    }
-    
-    it.style.visibility = 'visible'; 
-}
+	if (vportLeft + vportWidth - 10 < x + width)
+		x = x - width - 5;
+	else
+		x = x + 25;
+ 	
+	if (vportTop + vportHeight - 10 < y + height)
+		y = y - height - 5;
+	else
+		y = y + 10;
 
-function showToolTipOnRight(tooltipId, parentId)
-{
+ 	tooltip.style.left = x + "px";
+ 	tooltip.style.top = y + "px";
 
-    it = document.getElementById(tooltipId);
- 
-	var posX = 0;
-	var posY = 0;
-	
-	posX = it.offsetWidth/2;
-	//posX = 10;
-	posY = -it.offsetHeight + 10;
-	    
-    if ((it.style.top == '' || it.style.top == 0) 
-        && (it.style.left == '' || it.style.left == 0))
-    {
-        // need to fixate default size (MSIE problem)
-        it.style.width = it.offsetWidth + 'px';
-        it.style.height = it.offsetHeight + 'px';
-        
-        img = document.getElementById(parentId); 
-    
-        // if tooltip is too wide, shift left to be within parent 
-        //if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
-        // if (posX < 0 ) posX = 0; 
-        
-        x = xstooltip_findPosX(img) + posX;
-        y = xstooltip_findPosY(img) + posY;
-        
-        it.style.top = y + 'px';
-        it.style.left = x + 'px';
-    }
-    
-    it.style.visibility = 'visible'; 
-}
-
-function hideToolTip(id)
-{
-    it = document.getElementById(id); 
-    it.style.visibility = 'hidden'; 
 }
