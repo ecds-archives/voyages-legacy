@@ -224,14 +224,7 @@
 								
 							</div>
 					
-						</li>
-						
-					</ul>
-
-					<h2>AFFILIATES</h2>
-					
-					<ul class="sponsors">
-					
+						</li>				
 						<li>
 
 							<img class="sponsor-logo" src="logos/yale-press.png"
