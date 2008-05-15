@@ -44,7 +44,7 @@
 					<a name="inmotionaame"></a>
 			
 					<div class="link-title">
-						In Motion: African-American Migration Experience 
+						In Motion: African-American Migration Experience
 						<br>
 						<font style="font-size: 8pt;">Schomburg Center, New York Public Library</font>
 					</div>
@@ -64,7 +64,7 @@
 					<div class="link-title">
 						YES 
 						<br>
-						<font style="font-size: 8pt;"> College Board</font>
+						<font style="font-size: 8pt;">College Board</font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -82,7 +82,7 @@
 					<div class="link-title">
 						Thirteen 
 						<br>
-						<font style="font-size: 8pt;"> National Teacher Training Institute</font>
+						<font style="font-size: 8pt;">National Teacher Training Institute</font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -184,7 +184,7 @@
 					<div class="link-title">
 						Abolition of the Slave Trade 
 						<br>
-						<font style="font-size: 8pt;"> BBC </font>
+						<font style="font-size: 8pt;">BBC </font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>

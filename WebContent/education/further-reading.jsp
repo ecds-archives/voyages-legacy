@@ -47,8 +47,7 @@
 					additional context to the Atlantic slave trade, a list of scholarly
 					books are also provided to users. These titles are just a few of
 					the numerous works related to the forced migration of millions of
-					Africans. A more thorough annotated bibliography is available in
-					the “Further Study” section of the website.</p>
+					Africans.</p>
 
 					<ul id="further-reading">
 						<li>

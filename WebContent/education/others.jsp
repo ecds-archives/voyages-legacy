@@ -40,7 +40,6 @@
 				<s:simpleBox>
 				
 					<h1>Other Resources</h1>
-
 					<p>The websites listed here provide a variety of resources, including but not limited to lesson 
 					plans, interactive maps, and narratives of enslaved Africans. To help give additional context to 
 					the Atlantic slave trade, a list of scholarly books are also provided to users.  These titles are 
