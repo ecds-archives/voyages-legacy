@@ -53,11 +53,7 @@ public class MainMenu
 				new MainMenuBarPageItem(
 						"intromaps",
 						"Introductory maps",
-						"assessment/intromaps.faces"),
-				new MainMenuBarPageItem(
-						"furtherstudy",
-						"Further study",
-						"assessment/furtherstudy.faces")}),
+						"assessment/intromaps.faces")}),
 						
 	new MainMenuBarSectionItem(
 			"resources",
@@ -96,10 +92,6 @@ public class MainMenu
 						"education-links",
 						"Links to other resources",
 						"education/links.faces"),
-				new MainMenuBarPageItem(
-						"education-other-resources",
-						"Books",
-						"education/books.faces"),
 				new MainMenuBarPageItem(
 						"education-further-reading",
 						"Further Reading",

@@ -14,8 +14,7 @@
 		
 		<s:secondaryMenu>
 			<s:secondaryMenuItem label="Lesson plans" menuId="lesson-plans" href="lesson-plans.faces" />
-			<s:secondaryMenuItem label="Links to other resources" menuId="links" href="links.faces" />
-			<s:secondaryMenuItem label="Books" menuId="books" href="books.faces" />
+			<s:secondaryMenuItem label="Links to other resources" menuId="links" href="links.faces" />			
 			<s:secondaryMenuItem label="Further Reading" menuId="further-reading" href="further-reading.faces" />
 		</s:secondaryMenu>
 		
