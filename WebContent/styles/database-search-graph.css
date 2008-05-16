@@ -27,11 +27,13 @@ div.event-line-graph {
 	-background-color: #EEFFFF; }
 	
 div.event-line-selector {
-	-moz-opacity: 0.5;
+	opacity: 0.5;
+	filter: alpha(opacity = 50);
 	background-color: #F1E7C8; }
 
 div.event-line-indicator {
-	-moz-opacity: 0.3;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
 	background-color: #333333; }
 	
 div.event-line-indicator-container {
@@ -44,8 +46,7 @@ div.event-line-indicator-label {
 
 .timeline-color {
 	background-color: #F1E7C8;
-	background-color: #CA4223;
-}
+	background-color: #CA4223; }
 
 div.event-line-graph-container,
 div.event-line-selector-container {
