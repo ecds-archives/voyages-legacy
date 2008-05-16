@@ -5,6 +5,7 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapQueryHolder;
@@ -46,7 +47,11 @@ public class MapBean
 
 	private int type = -1;
 	private int attributeId = 0;
-	private int zoomLevelId;
+	
+	private double mapX1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X1);
+	private double mapY1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y1);
+	private double mapX2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X2);
+	private double mapY2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y2);
 	
 	public MapBean()
 	{
@@ -57,7 +62,6 @@ public class MapBean
 	{
 		mapData = new MapData();
 		type = -1;
-		zoomLevelId = 0;
 		conditions = null;
 		attributeId = 0;
 		setChosenMap("map-0_0");
@@ -109,16 +113,46 @@ public class MapBean
 		type = determineType();
 		
 		ChosenMap map = StandardMaps.getSelectedMap(this);
-		// this.zoomLevelId = map.mapId;
 
 		this.searchBean.setYearFrom(String.valueOf(map.ident.yearFrom));
 		this.searchBean.setYearTo(String.valueOf(map.ident.yearTo));
 		this.searchBean.search();
 		
 		needQuery = true;
-		this.setMapData();
+
+		setMapData();
+		adjustMapExtentByPointsOfInterest();
+		
 		return null;
 
+	}
+
+	private void adjustMapExtentByPointsOfInterest()
+	{
+		
+		PointOfInterest[] pointsOfInterest = mapData.getPointsOfInterest();
+		if (pointsOfInterest == null || pointsOfInterest.length == 0)
+			return;
+		
+		double minX = Double.MAX_VALUE;
+		double minY  = Double.MAX_VALUE;
+		double maxX = Double.MIN_VALUE;
+		double maxY  = Double.MIN_VALUE;
+		
+		for (int i = 0; i < pointsOfInterest.length; i++)
+		{
+			PointOfInterest point = pointsOfInterest[i];
+			minX = Math.min(point.getX(), minX);
+			maxX = Math.max(point.getX(), maxX);
+			minY = Math.min(point.getY(), minY);
+			maxY = Math.max(point.getY(), maxY);
+		}
+		
+		mapX1 = Math.max(minX, -180);
+		mapX2 = Math.min(maxX, +180);
+		mapY1 = Math.max(minY, -90);
+		mapY2 = Math.min(maxY, +90);
+		
 	}
 
 	public void setChosenMap(String value)
@@ -129,13 +163,11 @@ public class MapBean
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);
 			attributeId = map.mapId; 
-			// zoomLevelId = map.mapId;
 		}
 	}
 
 	public String getChosenMap()
 	{
-		System.out.println("getChosenMap = " + StandardMaps.getSelectedMap(this).encodeMapId());
 		return StandardMaps.getSelectedMap(this).encodeMapId();
 	}
 
@@ -154,21 +186,6 @@ public class MapBean
 	{
 		setMapData();
 		return StandardMaps.getMiniMapZoomLevel(this);
-	}
-
-	public int getZoomLevel()
-	{
-		return zoomLevelId;
-	}
-
-	public void setZoomLevel(int zoomLevelId)
-	{
-//		if (this.zoomLevelId != zoomLevelId)
-//		{
-//			StandardMaps.zoomChanged(this, zoomLevelId);
-//			this.needQuery = true;
-//		}
-		this.zoomLevelId = zoomLevelId;
 	}
 	
 	public SelectItem[] getAvailableAttributes()
@@ -213,6 +230,46 @@ public class MapBean
 	public void setSearchBean(SearchBean searchBean)
 	{
 		this.searchBean = searchBean;
+	}
+
+	public double getMapX1()
+	{
+		return mapX1;
+	}
+
+	public void setMapX1(double mapX1)
+	{
+		this.mapX1 = mapX1;
+	}
+
+	public double getMapY1()
+	{
+		return mapY1;
+	}
+
+	public void setMapY1(double mapY1)
+	{
+		this.mapY1 = mapY1;
+	}
+
+	public double getMapX2()
+	{
+		return mapX2;
+	}
+
+	public void setMapX2(double mapX2)
+	{
+		this.mapX2 = mapX2;
+	}
+
+	public double getMapY2()
+	{
+		return mapY2;
+	}
+
+	public void setMapY2(double mapY2)
+	{
+		this.mapY2 = mapY2;
 	}
 
 }

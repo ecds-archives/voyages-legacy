@@ -7,14 +7,6 @@
 	<short-name>s</short-name>
 	<uri>http://tas.library.emory.edu</uri>
 	
-	<!--
-	<tag>
-		<name>main</name>
-		<tag-class>edu.emory.library.tas.jsf.components.StatMainTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	-->
-
 	<tag>
 		<name>table</name>
 		<tag-class>
@@ -382,10 +374,22 @@
 			<name>miniMapHeight</name>
 		</attribute>
 		<attribute>
-			<name>zoomLevel</name>
+			<name>zoomHistory</name>
 		</attribute>		
 		<attribute>
 			<name>pointsSelectId</name>
+		</attribute>		
+		<attribute>
+			<name>x1</name>
+		</attribute>		
+		<attribute>
+			<name>x2</name>
+		</attribute>		
+		<attribute>
+			<name>y1</name>
+		</attribute>		
+		<attribute>
+			<name>y2</name>
 		</attribute>		
 	</tag>
 	

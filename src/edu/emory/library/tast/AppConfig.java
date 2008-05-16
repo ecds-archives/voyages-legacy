@@ -15,16 +15,14 @@ public class AppConfig
 	public static final String FORMAT_DATE = "format.date.cvs";
 	public static final String FORMAT_DATE_CVS = "format.date.cvs";
 
-	public static final String IMPORT_CLASSPATH = "import.classpath";
-	public static final String IMPORT_JAVA_MEMORY = "import.java.memory";
 	public static final String IMPORT_STATTRANSFER = "import.stattransfer";
 	public static final String IMPORT_ROOTDIR = "import.rootdir";
-	public static final String IMPORT_DATEFORMAT = "import.dateformat";
-	public static final String IMPORT_LOGITEM_DATEFORMAT = "import.logitem.dateformat";
 	
 	public static final String MAP_URL = "map.url";
-	public static final String MAP_DEFAULT_CENTER_X = "map.default.center.x";
-	public static final String MAP_DEFAULT_CENTER_Y = "map.default.center.y";
+	public static final String MAP_DEFAULT_X1 = "map.default.x1";
+	public static final String MAP_DEFAULT_Y1 = "map.default.y1";
+	public static final String MAP_DEFAULT_X2 = "map.default.x2";
+	public static final String MAP_DEFAULT_Y2 = "map.default.y2";
 	
 	public static final String IMAGES_URL = "images.url";
 	public static final String IMAGES_DIRECTORY = "images.dir";

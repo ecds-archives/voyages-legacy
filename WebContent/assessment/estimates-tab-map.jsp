@@ -20,7 +20,6 @@
 			miniMapWidth="100"
 			miniMapHeight="100"
 			miniMapPosition="bottom right"
-			zoomLevel="#{EstimatesMapBean.zoomLevel}"
 			pointsSelectId="map_places" />
 			
 	</t:htmlTag>
@@ -35,18 +34,6 @@
 			maps="#{EstimatesMapBean.availableMaps}"
 			chosenMap="#{EstimatesMapBean.chosenMap}" />
 
-		<% /*
-		<s:legend
-			id="estimatesMapLegend" 
-			styleClass="map-legend-div"
-			legend="#{EstimatesMapBean.legend}"
-			refreshAction="#{EstimatesMapBean.refresh}" 
-			maps="#{EstimatesMapBean.availableMaps}"
-			chosenMap="#{EstimatesMapBean.chosenMap}"
-			availableAttributes="#{EstimatesMapBean.availableAttributes}"
-			chosenAttribute="#{EstimatesMapBean.chosenAttribute}"/>
-		*/  %>
-			
 		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
 			<h:outputText value="Find visible place" />
 		</t:htmlTag>

@@ -16,9 +16,10 @@ var MapsGlobal =
 		mapControlId, // main container 
 		mapFrameId, // frame for the map
 		zoomLevels, // available zooms and their configurations
-		fieldNameCenterX, // name of the hidden field for center x
-		fieldNameCenterY, // name of the hidden field for center y
-		fieldNameZoomLevel, // name of the hidden field for center y
+		fieldNameX1, // name of the hidden field for x1
+		fieldNameY1, // name of the hidden field for y1
+		fieldNameX2, // name of the hidden field for x2
+		fieldNameY2, // name of the hidden field for y2
 		fieldNameZoomHistory, // field for serialized zoom history 
 		buttonBackId, // back button
 		buttonForwardId, // forward button
@@ -62,9 +63,10 @@ var MapsGlobal =
 		map.formName = formName;
 		map.actionNameFieldName = actionNameFieldName;
 		map.actionParamFieldName = actionParamFieldName;
-		map.fieldNameCenterX = fieldNameCenterX;
-		map.fieldNameCenterY = fieldNameCenterY;
-		map.fieldNameZoomLevel = fieldNameZoomLevel;
+		map.fieldNameX1 = fieldNameX1;
+		map.fieldNameY1 = fieldNameY1;
+		map.fieldNameX2 = fieldNameX2;
+		map.fieldNameY2 = fieldNameY2;
 		map.fieldNameZoomHistory = fieldNameZoomHistory;
 
 		// zooms
@@ -264,6 +266,8 @@ var MapUtils =
 function Map()
 {
 
+	this.zoomLevel = 0;
+
 	// for numbering of tiles,
 	// the number of digits in a tile number
 	this.tilesNameNumberLength = 2;
@@ -298,11 +302,12 @@ function Map()
 // some internal objects
 /////////////////////////////////////////////////////////
 
-function MapZoomState(scale, cx, cy)
+function MapZoomState(x1, x2, y1, y2)
 {
-	this.scale = scale;
-	this.cx = cx;
-	this.cy = cy;
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
 }
 
 function MapTile(img)
@@ -1129,11 +1134,12 @@ Map.prototype.updateMainMap = function()
 
 Map.prototype.saveState = function()
 {
-	if (this.hasHiddenExtendFields)
+	if (this.hasHiddenExtentsFields)
 	{
-		this.fieldCenterX.value = this.getCenterX();
-		this.fieldCenterY.value = this.getCenterY();
-		this.fieldZoomLevel.value = this.zoomLevel;
+		this.fieldX1.value = this.getMapX1();
+		this.fieldX2.value = this.getMapX2();
+		this.fieldY1.value = this.getMapY1();
+		this.fieldY2.value = this.getMapY2();
 	}
 }
 
@@ -1320,9 +1326,10 @@ Map.prototype.zoomSaveState = function()
 	
 	// current state
 	var state = new MapZoomState(
-		this.zoomLevels[this.zoomLevel].scale,
-		this.getCenterX(),
-		this.getCenterY());
+		this.getMapX1(),
+		this.getMapX2(),
+		this.getMapY1(),
+		this.getMapY2());
 
 	// delete elements after current element
 	while (this.zoomHistoryPos+1 < this.zoomHistory.length)
@@ -1359,14 +1366,15 @@ Map.prototype.zoomHistoryMoveAndRestore = function(dir)
 	var state = this.zoomHistory[new_pos];
 	
 	// find the best zoom and zoom to it
-	this.setZoomAndCenterTo(
-		this.getClosestZoomLevel(state.scale),
-		state.cx,
-		state.cy,
-		false,
-		true,
-		false,
-		true);
+	this.zoomMapTo(
+		state.x1,
+		state.y1,
+		state.x2,
+		state.y2,
+		false, // saveState
+		true,  // notifyZoomChange
+		false, // updateMainMap
+		true); // resetSelectedPoint
 
 	// goto
 	this.zoomHistoryPos = new_pos;
@@ -1396,9 +1404,10 @@ Map.prototype.zoomHistorySave = function()
 	for (var i = 0; i < this.zoomHistory.length; i++)
 	{
 		var state = this.zoomHistory[i];
-		str.push(state.scale);
-		str.push(state.cx);
-		str.push(state.cy);
+		str.push(state.x1);
+		str.push(state.y1);
+		str.push(state.x2);
+		str.push(state.y2);
 	}
 	
 	// store
@@ -1968,23 +1977,15 @@ Map.prototype.hiddenFieldsInit = function()
 	var form = document.forms[this.formName];
 	if (!form)
 	{
-		this.hasHiddenExtendFields = false;
+		this.hasHiddenExtentsFields = false;
 	}
 	else
 	{
-		this.fieldCenterX = form.elements[this.fieldNameCenterX];
-		this.fieldCenterY = form.elements[this.fieldNameCenterY];
-		this.fieldZoomLevel = form.elements[this.fieldNameZoomLevel];
-		this.hasHiddenExtendFields = !!(this.fieldCenterX && this.fieldCenterY && this.fieldZoomLevel);
-	}
-	
-	if (this.hasHiddenExtendFields)
-	{
-		this.zoomLevel = parseInt(this.fieldZoomLevel.value);
-	}
-	else
-	{
-		this.zoomLevel = 0;
+		this.fieldX1 = form.elements[this.fieldNameX1];
+		this.fieldY1 = form.elements[this.fieldNameY1];
+		this.fieldX2 = form.elements[this.fieldNameX2];
+		this.fieldY2 = form.elements[this.fieldNameY2];
+		this.hasHiddenExtentsFields = !!(this.fieldX1 && this.fieldY1 && this.fieldX2 && this.fieldY2);
 	}
 	
 }
@@ -1992,11 +1993,13 @@ Map.prototype.hiddenFieldsInit = function()
 Map.prototype.restoreState = function()
 {
 	// zoom
-	if (this.hasHiddenExtendFields)
+	if (this.hasHiddenExtentsFields)
 	{
-		var cx = parseFloat(this.fieldCenterX.value);
-		var cy = parseFloat(this.fieldCenterY.value);
-		this.setZoomAndCenterTo(this.zoomLevel, cx, cy, false, false, false, true, true);
+		var x1 = parseFloat(this.fieldX1.value);
+		var y1 = parseFloat(this.fieldY1.value);
+		var x2 = parseFloat(this.fieldX2.value);
+		var y2 = parseFloat(this.fieldY2.value);
+		this.zoomMapTo(x1, y1, x2, y2, false, false, false, true, true);
 	}
 	
 	// in case that the server components is not interested

@@ -19,11 +19,21 @@ public class MapComponent extends UIComponentBase
 {
 	
 	private static final int ZOOM_SLIDER_SLOT_WIDTH = 24;
+	
+	private boolean x1Set = false;
+	private boolean x2Set = false;
+	private boolean y1Set = false;
+	private boolean y2Set = false;
 
-	private final static MapSize defaultMapSize = new MapSize(420, 420);
+	private double x1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X1);
+	private double y1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y1);
+	private double x2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X2);
+	private double y2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y2);
 
 	private boolean zoomLevelsSet = false;
 	private ZoomLevel[] zoomLevels = null;
+
+	private final static MapSize defaultMapSize = new MapSize(420, 420);
 
 	private boolean mapSizesSet = false;
 	private MapSize[] mapSizes = new MapSize[] {
@@ -41,10 +51,6 @@ public class MapComponent extends UIComponentBase
 	private boolean linesSet = false;
 	private Line[] lines = null;
 
-	private double centerX = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_CENTER_X);
-	private double centerY = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_CENTER_Y);
-	private int zoomLevel = 0;
-	
 	private boolean miniMapZoomLevelSet = false;
 	private ZoomLevel miniMapZoomLevel = null;
 	
@@ -62,7 +68,9 @@ public class MapComponent extends UIComponentBase
 	private boolean miniMapHeightSet = false;
 	private int miniMapHeight = 100;
 
+	private boolean zoomHistorySet = false;
 	private ZoomHistory zoomHistory = new ZoomHistory();
+	
 	private MouseMode mouseMode = MouseMode.Pan;
 	
 	private boolean pointsSelectIdSet = false;
@@ -83,9 +91,10 @@ public class MapComponent extends UIComponentBase
 		return new Object[] {
 			super.saveState(context),
 			zoomLevels,
-			new Double(centerX),
-			new Double(centerY),
-			new Integer(zoomLevel),
+			new Double(x1),
+			new Double(y1),
+			new Double(x2),
+			new Double(y2),
 			mouseMode,
 			mapSizes,
 			mapSize,
@@ -105,9 +114,10 @@ public class MapComponent extends UIComponentBase
 		Object[] values = (Object[]) state;
 		super.restoreState(context, values[i++]);
 		zoomLevels = (ZoomLevel[]) values[i++];
-		centerX = ((Double)values[i++]).doubleValue();
-		centerY = ((Double)values[i++]).doubleValue();
-		zoomLevel = ((Integer)values[i++]).intValue();
+		x1 = ((Double)values[i++]).doubleValue();
+		y1 = ((Double)values[i++]).doubleValue();
+		x2 = ((Double)values[i++]).doubleValue();
+		y2 = ((Double)values[i++]).doubleValue();
 		mouseMode = (MouseMode)values[i++];
 		mapSizes = (MapSize[]) values[i++];
 		mapSize = (MapSize) values[i++];
@@ -121,19 +131,24 @@ public class MapComponent extends UIComponentBase
 		pointsSelectId = (String) values[i++];
 	}
 	
-	private String getHiddenFieldNameForCenterX(FacesContext context)
+	private String getHiddenFieldNameForX1(FacesContext context)
 	{
-		return getClientId(context) + "_center_x";
+		return getClientId(context) + "_x1";
 	}
 	
-	private String getHiddenFieldNameForCenterY(FacesContext context)
+	private String getHiddenFieldNameForY1(FacesContext context)
 	{
-		return getClientId(context) + "_center_y";
+		return getClientId(context) + "_y1";
 	}
 
-	private String getHiddenFieldNameForZoomLevel(FacesContext context)
+	private String getHiddenFieldNameForX2(FacesContext context)
 	{
-		return getClientId(context) + "_zoom_level";
+		return getClientId(context) + "_x2";
+	}
+	
+	private String getHiddenFieldNameForY2(FacesContext context)
+	{
+		return getClientId(context) + "_y2";
 	}
 
 	private String getHiddenFieldNameForMouseMode(FacesContext context)
@@ -170,10 +185,10 @@ public class MapComponent extends UIComponentBase
 	{
 		Map params = context.getExternalContext().getRequestParameterMap();
 		
-		centerX = JsfUtils.getParamDouble(params, getHiddenFieldNameForCenterX(context), centerX);
-		centerY = JsfUtils.getParamDouble(params, getHiddenFieldNameForCenterY(context), centerY);
-		
-		zoomLevel = JsfUtils.getParamInt(params, getHiddenFieldNameForZoomLevel(context), zoomLevel);
+		x1 = JsfUtils.getParamDouble(params, getHiddenFieldNameForX1(context), x1);
+		y1 = JsfUtils.getParamDouble(params, getHiddenFieldNameForY1(context), y1);
+		x2 = JsfUtils.getParamDouble(params, getHiddenFieldNameForX2(context), x2);
+		y2 = JsfUtils.getParamDouble(params, getHiddenFieldNameForY2(context), y2);
 		
 		String mouseModeStr = JsfUtils.getParamString(params, getHiddenFieldNameForMouseMode(context));
 		if (!StringUtils.isNullOrEmpty(mouseModeStr))
@@ -190,14 +205,11 @@ public class MapComponent extends UIComponentBase
 		miniMapVisible = JsfUtils.getParamBoolean(params, getHiddenFieldNameForMiniMapVisibility(context), miniMapVisible);
 	}
 	
-	public void processUpdates(FacesContext context) {
+	public void processUpdates(FacesContext context)
+	{
 		
-		ValueBinding vb = getValueBinding("zoomLevel");
-		if (vb != null) {
-			vb.setValue(context, new Integer(zoomLevel));
-		}
-		
-		super.processUpdates(context);
+		ValueBinding vb = getValueBinding("zoomHistory");
+		if (vb != null) vb.setValue(context, zoomHistory);
 	}
 	
 	private void encodeToolStart(ResponseWriter writer) throws IOException
@@ -405,9 +417,10 @@ public class MapComponent extends UIComponentBase
 		String miniMapFrameId = getClientId(context) + "_minimap_frame";
 		String miniMapToggleId = getClientId(context) + "_minimap_toggle";
 
-		String hiddenFieldNameCenterX = getHiddenFieldNameForCenterX(context);
-		String hiddenFieldNameCenterY = getHiddenFieldNameForCenterY(context);
-		String hiddenFieldNameZoomLevel = getHiddenFieldNameForZoomLevel(context);
+		String hiddenFieldNameX1 = getHiddenFieldNameForX1(context);
+		String hiddenFieldNameY1 = getHiddenFieldNameForY1(context);
+		String hiddenFieldNameX2 = getHiddenFieldNameForX2(context);
+		String hiddenFieldNameY2 = getHiddenFieldNameForY2(context);
 		String hiddenFieldNameForMouseMode = getHiddenFieldNameForMouseMode(context);
 		String hiddenFieldNameForZoomHistory = getHiddenFieldNameForZoomHistory(context);
 		String hiddenFieldNameForMapSize = getHiddenFieldNameForMapSize(context);
@@ -427,6 +440,10 @@ public class MapComponent extends UIComponentBase
 		miniMapWidth = getMiniMapWidth();
 		miniMapHeight = getMiniMapHeight();
 		pointsSelectId = getPointsSelectId();
+		x1 = getX1();
+		y1 = getY1();
+		x2 = getX2();
+		y2 = getY2();
 
 		// sort points of interest
 		Arrays.sort(pointsOfInterest, new Comparator() {
@@ -491,11 +508,13 @@ public class MapComponent extends UIComponentBase
 		jsRegister.append(", ");
 
 		// hidden fields: extends
-		jsRegister.append("'").append(hiddenFieldNameCenterX).append("'");
+		jsRegister.append("'").append(hiddenFieldNameX1).append("'");
 		jsRegister.append(", ");
-		jsRegister.append("'").append(hiddenFieldNameCenterY).append("'");
+		jsRegister.append("'").append(hiddenFieldNameY1).append("'");
 		jsRegister.append(", ");
-		jsRegister.append("'").append(hiddenFieldNameZoomLevel).append("'");
+		jsRegister.append("'").append(hiddenFieldNameX2).append("'");
+		jsRegister.append(", ");
+		jsRegister.append("'").append(hiddenFieldNameY2).append("'");
 		jsRegister.append(", ");
 		
 		// zoom history
@@ -716,9 +735,10 @@ public class MapComponent extends UIComponentBase
 		JsfUtils.encodeJavaScriptEnd(this, writer);
 		
 		// hidden fields for extend
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameCenterX, String.valueOf(centerX));
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameCenterY, String.valueOf(centerY));
-		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameZoomLevel, String.valueOf(getZoomLevel(context)));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameX1, String.valueOf(x1));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameY1, String.valueOf(y1));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameX2, String.valueOf(x2));
+		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameY2, String.valueOf(y2));
 		JsfUtils.encodeHiddenInput(this, writer, hiddenFieldNameForMiniMapVisibility, String.valueOf(miniMapVisible));
 		
 		// hidden field: mouse mod
@@ -852,14 +872,6 @@ public class MapComponent extends UIComponentBase
 		*/
 	}
 
-	private int getZoomLevel(FacesContext ctx) {
-		ValueBinding vb = getValueBinding("zoomLevel");
-		if (vb != null) {
-			zoomLevel = ((Integer)vb.getValue(ctx)).intValue();
-		}
-		return zoomLevel;
-	}
-
 	public void encodeChildren(FacesContext context) throws IOException
 	{
 	}
@@ -988,10 +1000,6 @@ public class MapComponent extends UIComponentBase
 		this.miniMapZoomLevel = miniMapZoomLevel;
 	}
 
-	public void setZoomLevel(int i) {
-		
-	}
-
 	public String getPointsSelectId()
 	{
 		return JsfUtils.getCompPropString(this, getFacesContext(),
@@ -1002,6 +1010,66 @@ public class MapComponent extends UIComponentBase
 	{
 		pointsSelectIdSet = true;
 		this.pointsSelectId = placesSelectId;
+	}
+
+	public ZoomHistory getZoomHistory()
+	{
+		return (ZoomHistory) JsfUtils.getCompPropObject(this, getFacesContext(),
+				"zoomHistory", zoomHistorySet, zoomHistory);
+	}
+
+	public void setZoomHistory(ZoomHistory zoomHistory)
+	{
+		zoomHistorySet = true;
+		this.zoomHistory = zoomHistory;
+	}
+
+	public double getX1()
+	{
+		return JsfUtils.getCompPropDouble(this, getFacesContext(),
+				"x1", x1Set, x1);
+	}
+
+	public void setX1(double x1)
+	{
+		x1Set = true;
+		this.x1 = x1;
+	}
+
+	public double getY1()
+	{
+		return JsfUtils.getCompPropDouble(this, getFacesContext(),
+				"y1", y1Set, y1);
+	}
+
+	public void setY1(double y1)
+	{
+		y1Set = true;
+		this.y1 = y1;
+	}
+
+	public double getX2()
+	{
+		return JsfUtils.getCompPropDouble(this, getFacesContext(),
+				"x2", x2Set, x2);
+	}
+
+	public void setX2(double x2)
+	{
+		x2Set = true;
+		this.x2 = x2;
+	}
+
+	public double getY2()
+	{
+		return JsfUtils.getCompPropDouble(this, getFacesContext(),
+				"y2", y2Set, y2);
+	}
+
+	public void setY2(double y2)
+	{
+		y2Set = true;
+		this.y2 = y2;
 	}
 
 }

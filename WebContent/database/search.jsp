@@ -170,7 +170,6 @@
 		
 									<s:map id="map"
 										zoomLevels="#{VoyageDetailBean.zoomLevels}"
-										zoomLevel="#{VoyageDetailBean.zoomLevel}"
 										pointsOfInterest="#{VoyageDetailBean.voyageMapPoints}"
 										lines="#{VoyageDetailBean.voyageMapLines}" miniMap="true"
 										miniMap="true"

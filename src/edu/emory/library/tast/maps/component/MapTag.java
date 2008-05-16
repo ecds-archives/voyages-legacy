@@ -17,9 +17,12 @@ public class MapTag extends UIComponentTag
 	private String miniMapPosition;
 	private String miniMapWidth;
 	private String miniMapHeight;
-	private String zoomLevel;
-	private String onZoomChanged;
 	private String pointsSelectId;
+	private String zoomHistory;
+	private String x1;
+	private String y1;
+	private String x2;
+	private String y2;
 	
 	public String getComponentType()
 	{
@@ -101,16 +104,6 @@ public class MapTag extends UIComponentTag
 			map.setMiniMapHeight(Integer.parseInt(miniMapHeight));
 		}
 		
-		if (zoomLevel != null && isValueReference(zoomLevel))
-		{
-			ValueBinding vb = app.createValueBinding(zoomLevel);
-			component.setValueBinding("zoomLevel", vb);
-		}
-		else
-		{
-			map.setZoomLevel(Integer.parseInt(zoomLevel));
-		}
-		
 		if (pointsSelectId != null && isValueReference(pointsSelectId))
 		{
 			ValueBinding vb = app.createValueBinding(pointsSelectId);
@@ -120,6 +113,52 @@ public class MapTag extends UIComponentTag
 		{
 			map.setPointsSelectId(pointsSelectId);
 		}
+		
+		if (zoomHistory != null && isValueReference(zoomHistory))
+		{
+			ValueBinding vb = app.createValueBinding(zoomHistory);
+			component.setValueBinding("zoomHistory", vb);
+		}
+
+		if (x1 != null && isValueReference(x1))
+		{
+			ValueBinding vb = app.createValueBinding(x1);
+			component.setValueBinding("x1", vb);
+		}
+		else if (x1 != null)
+		{
+			map.setX1(Double.parseDouble(x1));
+		}
+		
+		if (x2 != null && isValueReference(x2))
+		{
+			ValueBinding vb = app.createValueBinding(x2);
+			component.setValueBinding("x2", vb);
+		}
+		else if (x2 != null)
+		{
+			map.setX2(Double.parseDouble(x2));
+		}
+
+		if (y1 != null && isValueReference(y1))
+		{
+			ValueBinding vb = app.createValueBinding(y1);
+			component.setValueBinding("y1", vb);
+		}
+		else if (y1 != null)
+		{
+			map.setY1(Double.parseDouble(y1));
+		}
+		
+		if (y2 != null && isValueReference(x2))
+		{
+			ValueBinding vb = app.createValueBinding(y2);
+			component.setValueBinding("y2", vb);
+		}
+		else if (y2 != null)
+		{
+			map.setY2(Double.parseDouble(y2));
+		}
 
 	}
 
@@ -128,9 +167,9 @@ public class MapTag extends UIComponentTag
 		return zoomLevels;
 	}
 
-	public void setZoomLevels(String serverBaseUrl)
+	public void setZoomLevels(String zoomLevels)
 	{
-		this.zoomLevels = serverBaseUrl;
+		this.zoomLevels = zoomLevels;
 	}
 
 	public String getPointsOfInterest()
@@ -193,22 +232,6 @@ public class MapTag extends UIComponentTag
 		this.miniMapZoomLevel = miniMapZoomLevel;
 	}
 
-	public String getZoomLevel() {
-		return zoomLevel;
-	}
-
-	public void setZoomLevel(String zoomLevel) {
-		this.zoomLevel = zoomLevel;
-	}
-
-	public String getOnZoomChanged() {
-		return onZoomChanged;
-	}
-
-	public void setOnZoomChanged(String onZoomChanged) {
-		this.onZoomChanged = onZoomChanged;
-	}
-
 	public String getLines()
 	{
 		return lines;
@@ -227,6 +250,56 @@ public class MapTag extends UIComponentTag
 	public void setPointsSelectId(String placesSelectId)
 	{
 		this.pointsSelectId = placesSelectId;
+	}
+
+	public String getZoomHistory()
+	{
+		return zoomHistory;
+	}
+
+	public void setZoomHistory(String zoomHistory)
+	{
+		this.zoomHistory = zoomHistory;
+	}
+
+	public String getX1()
+	{
+		return x1;
+	}
+
+	public void setX1(String x1)
+	{
+		this.x1 = x1;
+	}
+
+	public String getY1()
+	{
+		return y1;
+	}
+
+	public void setY1(String y1)
+	{
+		this.y1 = y1;
+	}
+
+	public String getX2()
+	{
+		return x2;
+	}
+
+	public void setX2(String x2)
+	{
+		this.x2 = x2;
+	}
+
+	public String getY2()
+	{
+		return y2;
+	}
+
+	public void setY2(String y2)
+	{
+		this.y2 = y2;
 	}
 
 }

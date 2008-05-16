@@ -12,6 +12,10 @@
 	
 		<s:map 
 			id="map"
+			x1="#{MapBean.mapX1}"
+			y1="#{MapBean.mapY1}"
+			x2="#{MapBean.mapX2}"
+			y2="#{MapBean.mapY2}"
 			zoomLevels="#{MapBean.zoomLevels}"
 			pointsOfInterest="#{MapBean.pointsOfInterest}"
 			miniMap="true"
@@ -19,7 +23,6 @@
 			miniMapHeight="100"
 			miniMapWidth="100"
 			miniMapPosition="bottom right" 
-			zoomLevel="#{MapBean.zoomLevel}"
 			pointsSelectId="map_places" />
 
 	</t:htmlTag>
@@ -33,18 +36,6 @@
 			refreshAction="#{MapBean.refresh}" 
 			maps="#{MapBean.availableMaps}"
 			chosenMap="#{MapBean.chosenMap}" />
-
-		<% /*			
-		<s:legend
-			id="mapLegend" 
-			styleClass="map-legend-div"
-			legend="#{MapBean.legend}"
-			refreshAction="#{MapBean.refresh}" 
-			maps="#{MapBean.availableMaps}"
-			availableAttributes="#{MapBean.availableAttributes}"
-			chosenAttribute="#{MapBean.chosenAttribute}"
-			chosenMap="#{MapBean.chosenMap}" />
-		*/ %>
 
 		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
 			<h:outputText value="Find visible place" />

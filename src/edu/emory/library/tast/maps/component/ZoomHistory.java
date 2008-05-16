@@ -10,7 +10,7 @@ public class ZoomHistory implements Serializable
 	
 	private static final long serialVersionUID = 5731386622192110293L;
 	
-	private List items = (List) new ArrayList();
+	private List items = new ArrayList();
 	private int position = -1;
 	
 	public void addItem(ZoomHistoryItem item)
@@ -18,9 +18,9 @@ public class ZoomHistory implements Serializable
 		items.add(item);
 	}
 	
-	void addItem(int scale, double cx, double cy)
+	public void addItem(double x1, double y1, double x2, double y2)
 	{
-		items.add(new ZoomHistoryItem(scale, cx, cy));
+		items.add(new ZoomHistoryItem(x1, y1, x2, y2));
 	}
 
 	public List getItems()
@@ -62,9 +62,10 @@ public class ZoomHistory implements Serializable
 		{
 			ZoomHistoryItem item = (ZoomHistoryItem) iter.next();
 			if (str.length() > 0) str.append(" ");
-			str.append(item.getScale()).append(" ");
-			str.append(item.getCenterX()).append(" ");
-			str.append(item.getCenterY());
+			str.append(item.getX1()).append(" ");
+			str.append(item.getY1()).append(" ");
+			str.append(item.getX2()).append(" ");
+			str.append(item.getY2());
 		}
 		return str.toString();
 	}
@@ -76,8 +77,8 @@ public class ZoomHistory implements Serializable
 		
 		String[] values = str.trim().split("\\s+");
 		
-		if (values == null || values.length % 3 != 1)
-			throw new RuntimeException("invalid number of arguments zoom history");
+		if (values == null || values.length % 4 != 1)
+			throw new RuntimeException("invalid number of arguments in zoom history");
 		
 		ZoomHistory history = new ZoomHistory();
 		try
@@ -85,13 +86,14 @@ public class ZoomHistory implements Serializable
 			
 			history.setPosition(Integer.parseInt(values[0]));
 			
-			int n = (values.length - 1) / 3;
+			int n = (values.length - 1) / 4;
 			for (int i = 0; i < n; i++)
 			{
-				ZoomHistoryItem item = new ZoomHistoryItem();
-				item.setScale(Double.parseDouble(values[3*i+1]));
-				item.setCenterX(Double.parseDouble(values[3*i+2]));
-				item.setCenterY(Double.parseDouble(values[3*i+3]));
+				ZoomHistoryItem item = new ZoomHistoryItem(
+						Double.parseDouble(values[4 * i + 1]),
+						Double.parseDouble(values[4 * i + 2]),
+						Double.parseDouble(values[4 * i + 3]),
+						Double.parseDouble(values[4 * i + 4]));
 				history.addItem(item);
 			}
 		}
