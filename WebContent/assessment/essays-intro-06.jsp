@@ -62,7 +62,7 @@
 					contributed to a more gradual composite trend for sub-Saharan
 					Africa as a whole. Each region that exported slaves experienced a
 					marked upswing in the amount of slaves it supplied for the
-					transatlantic trade and, from that point, the normal pattern was
+					trans-atlantic trade and, from that point, the normal pattern was
 					for a region to continue to export large numbers of slaves for a
 					century or more. The three regions that provided the fewest slaves
 					– Senegambia, Sierra Leone, the Windward Coast – reached these

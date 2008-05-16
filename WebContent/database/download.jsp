@@ -27,7 +27,7 @@
 	<s:siteHeader activeSectionId="database">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyages Database" /></h:outputLink>
-		<h:outputText value="Download" />
+		<h:outputText value="Downloads" />
 	</s:siteHeader>
 	
 	<div id="content">		
@@ -47,7 +47,7 @@
 			variable labels, and values of the expanded dataset can be downloaded as a separate PDF document.  
 			With only a few exceptions, it retains variable names in the original CD-ROM version.</p>
 		
-			<h3>Download:</h3>
+			<h3>Downloads:</h3>
 				<ul>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb_exp_2008.sav">tastdb-exp-2008.sav</a></li>
 					<li><a href="http://www.slavevoyages.org/downloads/Cole.sav">tatsdb-1999.sav</a></li>
@@ -62,7 +62,7 @@
 			delimited (.csv), and dBase (.dbf).  Users interested in working with this dataset with their 
 			preferred software may select an edition year and file format below. </p>
 			
-			<h3>Download:</h3>
+			<h3>Downloads:</h3>
 				<ul>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb_2008.sav">tastdb-2008.sav</a></li>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb_2008.cvs">tatsdb-2008.cvs</a></li>

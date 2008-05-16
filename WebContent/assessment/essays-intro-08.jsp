@@ -54,7 +54,7 @@
 
 					<h2>The Ending of the Slave Trade</h2>
 
-					<p>When the transatlantic slave trade came to an end, it did so
+					<p>When the trans-atlantic slave trade came to an end, it did so
 					rather suddenly. When the Brazilian authorities began arresting
 					slave ships at the end of 1850, the volume of the traffic of the
 					traffic slipped back to levels not seen for two centuries, and the

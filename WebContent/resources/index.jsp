@@ -31,7 +31,7 @@
 		<img src="../images/resources-index-title.png" width="350" height="40" border="0" alt="Resources">
 		
 		<p>The Voyages website provides resources that offer some context
-		to the information available in the database of transatlantic slave
+		to the information available in the database of trans-atlantic slave
 		trading voyages. The slave trade was an activity that involved
 		peoples, places, tools as well as practices that today are unfamiliar
 		to most, or no longer exist. In this page, you will find resources

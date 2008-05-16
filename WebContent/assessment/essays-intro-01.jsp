@@ -52,7 +52,7 @@
 						<span class="essay-date">2007</span>
 					</div>
 					
-					<p>The transatlantic slave trade was the largest long-distance
+					<p>The trans-atlantic slave trade was the largest long-distance
 					coerced movement of people in history and, prior to the
 					mid-nineteenth century, formed the major demographic well-spring
 					for the re-peopling of the Americas following the collapse of the
