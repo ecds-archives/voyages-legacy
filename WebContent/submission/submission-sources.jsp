@@ -237,8 +237,7 @@
 	
 	<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==-1}">
 		<f:verbatim>
-		<tr>
-			<td>
+		
 				<h2>Contributed sources</h2>
 				</f:verbatim>
 				<s:grid id="voyges" 
@@ -246,8 +245,6 @@
 					rows="#{SourcesBean.rows}" 
 					onOpenRow="#{SourcesBean.openRow}" />
 				<f:verbatim>
-			</td>
-		</tr>
 		</f:verbatim>
 	</t:htmlTag>
 	</table>

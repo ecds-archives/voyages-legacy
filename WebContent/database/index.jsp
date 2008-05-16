@@ -22,7 +22,7 @@
 
 		<s:siteHeader activeSectionId="database">
 			<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
-			<h:outputText value="Voyage Database" />
+			<h:outputText value="Voyages Database" />
 		</s:siteHeader>
 
 		<div id="content"><img src="../images/database-index-title.png" width="350" height="40" border="0" alt="The Database">

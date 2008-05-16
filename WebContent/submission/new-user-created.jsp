@@ -69,7 +69,6 @@
 	<div style="width: 400px;">
 	Thank you for requesting an account. We will notify you be e-mail when your account has been activated. 
 	</div>
-	</div>
 				
 
 			</td>

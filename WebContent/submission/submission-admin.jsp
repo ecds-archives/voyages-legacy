@@ -115,17 +115,18 @@
 			</table>
 		</div>
 		<br>
-		<div style="height: 500px; overflow: auto;">
 		</f:verbatim>
+		<div style="height: 500px; overflow: auto;">
+		
 		
 		<s:grid id="voyges" 
 			columns="#{AdminSubmissionBean.requestColumns}"
 			rows="#{AdminSubmissionBean.requestRows}" 
 			onOpenRow="#{AdminSubmissionBean.newRequestId}"
 			action="#{AdminSubmissionBean.resolveRequest}" />
-		
+		</div>		
 		<f:verbatim>
-		</div>
+
 		</f:verbatim>
 	
 	</h:panelGroup>
@@ -143,8 +144,9 @@
 			</tr>
 			</table>
 		</div>
-		<div style="height: 500px; overflow: auto; padding-top: 10px;">
 		</f:verbatim>
+		<div style="height: 500px; overflow: auto; padding-top: 10px;">
+		
 		
 		<s:grid id="users"
 			columns="#{SubmissionUsersBean.userColumns}"
@@ -152,9 +154,9 @@
 			action="#{SubmissionUsersBean.enterEditUser}"
 			onOpenRow="#{SubmissionUsersBean.editUser}"
 			onColumnClick="#{SubmissionUsersBean.onGridColumnClick}" />
-		
-		<f:verbatim>
 		</div>
+		<f:verbatim>
+		
 		</f:verbatim>
 	
 	</h:panelGroup>
