@@ -25,7 +25,8 @@
 			<h:outputText value="Voyages Database" />
 		</s:siteHeader>
 
-		<div id="content"><img src="../images/database-index-title.png" width="350" height="40" border="0" alt="The Voyages Database">
+		<div id="content">
+		<h1 style="color: #6c4e28;font-size:18pt;">The Voyages Database</h1>
 
 		<p>The Trans-Atlantic Slave Trade Database comprises nearly 35,000 
 		individual slaving expeditions between 1514 and 1866. Records of the 
