@@ -7,7 +7,7 @@ public class MainMenu
 	
 	new MainMenuBarSectionItem(
 			"database",
-			"Database",
+			"Voyages Database",
 			"database/index.faces",
 			"images/main-menu/database.png",
 			"images/main-menu/database-highlighted.png",

@@ -122,7 +122,7 @@
 					<div class="welcome-map-region-text" id="map_north_america_text" style="display: none">
 						<div class="welcome-map-region-name"><img src="./images/index/map-north-america-title.png" border="0" width="180" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
-							The North American mainland played a relatively minor role in the transatlantic
+							The North American mainland played a relatively minor role in the trans-atlantic
 							slave. Its ports sent out less than five percent of all known voyages, and its
 							slave markets absorbed less than four percent of all slaves carried off from Africa.
 							An intra-American trade in slaves – originating in the Caribbean - supplied additional
@@ -163,13 +163,13 @@
 					<div class="welcome-map-region-text" id="map_europe_text" style="display: none">
 						<div class="welcome-map-region-name"><img src="./images/index/map-europe-title.png" border="0" width="90" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
-							Europe was the starting point for about half all transatlantic slaving voyages.
+							Europe was the starting point for about half all trans-atlantic slaving voyages.
 							This traffic dominated the West African to Caribbean section of the slave trade.
 							The major ports were at first located in the Iberian peninsular but by the eighteenth
 							century northern European ports had become dominant. After 1807, France and the
 							Iberian ports sent out the great majority of European-based slaving voyages.
 							The European consumers’ demand for sugar was the driving force behind 350 years
-							of transatlantic slave trading.
+							of trans-atlantic slave trading.
 						</div>
 					</div>
 	
@@ -177,7 +177,7 @@
 						<div class="welcome-map-region-name"><img src="./images/index/map-africa-title.png" border="0" width="80" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
 							Sub-Saharan Africa lost over twelve and a half million people to the
-							transatlantic slave trade alone between 1526 and 1867. Perhaps as many
+							trans-atlantic slave trade alone between 1526 and 1867. Perhaps as many
 							again were carried of to slave markets across the Sahara and the Indian Ocean.
 							Over forty percent of captives left from West-central Africa alone with most of
 							the remainder leaving from the Bight of Benin, the Bight of Biafra and the Gold
