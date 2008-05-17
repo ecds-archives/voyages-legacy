@@ -168,6 +168,7 @@ public class MapBean
 	{
 		if (!value.equals(StandardMaps.getSelectedMap(this).encodeMapId()))
 		{
+			System.out.println(value);
 			this.needQuery = true;
 			StandardMaps.setSelectedMapType(this, value);
 			ChosenMap map = StandardMaps.getSelectedMap(this);

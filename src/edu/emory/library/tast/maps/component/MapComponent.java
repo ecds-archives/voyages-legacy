@@ -208,8 +208,21 @@ public class MapComponent extends UIComponentBase
 	public void processUpdates(FacesContext context)
 	{
 		
-		ValueBinding vb = getValueBinding("zoomHistory");
-		if (vb != null) vb.setValue(context, zoomHistory);
+		ValueBinding vbZoomHistory = getValueBinding("zoomHistory");
+		if (vbZoomHistory != null) vbZoomHistory.setValue(context, zoomHistory);
+		
+		ValueBinding vbX1 = getValueBinding("x1");
+		if (vbX1 != null) vbX1.setValue(context, new Double(x1));
+		
+		ValueBinding vbX2 = getValueBinding("x2");
+		if (vbX2 != null) vbX2.setValue(context, new Double(x2));
+
+		ValueBinding vbY1 = getValueBinding("y1");
+		if (vbY1 != null) vbY1.setValue(context, new Double(y1));
+		
+		ValueBinding vbY2 = getValueBinding("y2");
+		if (vbY2 != null) vbY2.setValue(context, new Double(y2));
+
 	}
 	
 	private void encodeToolStart(ResponseWriter writer) throws IOException
@@ -231,7 +244,7 @@ public class MapComponent extends UIComponentBase
 		writer.endElement("td");
 	}
 
-	private void encodeToolZoomSlider(FacesContext context, ResponseWriter writer, String contId, String knobId) throws IOException
+	private void encodeToolZoomSlider(FacesContext context, ResponseWriter writer, String contId, String knobId, String tooltip) throws IOException
 	{
 		
 		if (this.zoomLevels == null || this.zoomLevels.length <= 1)
@@ -240,6 +253,7 @@ public class MapComponent extends UIComponentBase
 		int n = this.zoomLevels.length;
 		
 		writer.startElement("td", this);
+		writer.writeAttribute("title", tooltip, null);
 		writer.writeAttribute("id", contId, null);
 		writer.writeAttribute("class", "map-zoom-slider", null);
 		writer.writeAttribute("style", "width: " + (n*ZOOM_SLIDER_SLOT_WIDTH) + "px;", null);
@@ -796,7 +810,7 @@ public class MapComponent extends UIComponentBase
 		// icons: zoom + / zoom -
 		encodeTool(context, writer, toolsZoomMinusId, "map-icon-zoom-minus", "Zoom out");
 		encodeToolSepearator(context, writer);
-		encodeToolZoomSlider(context, writer, toolsSliderContId, toolsSliderKnobId);
+		encodeToolZoomSlider(context, writer, toolsSliderContId, toolsSliderKnobId, "Adjust zoom");
 		encodeToolSepearator(context, writer);
 		encodeTool(context, writer, toolsZoomPlusId, "map-icon-zoom-plus", "Zoom in");
 		encodeToolSepearator(context, writer);

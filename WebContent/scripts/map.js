@@ -848,6 +848,49 @@ Map.prototype.zoomMapToInternal = function(x1, y1, x2, y2, border, saveState, no
 	var vportWidth = this.getVportWidth();
 	var vportHeight = this.getVportHeight();
 	
+	// make sure that requested rectangle has the same ratio as the vport
+	if ((x2 - x1) / (y2 - y1) > vportWidth / vportHeight)
+	{
+		var newDy = (x2 - x1) * (vportHeight / vportWidth);
+		var cy = (y1+y2)/2; 
+		y1 = cy - newDy/2; 
+		y2 = cy + newDy/2; 
+	}
+	else
+	{
+		var newDx = (y2 - y1) * (vportWidth / vportHeight);
+		var cx = (x1+x2)/2; 
+		x1 = cx - newDx/2; 
+		x2 = cx + newDx/2; 
+	}
+	
+	// find the best scale
+	var targetScale =  (x2-x1) / vportWidth;
+	var bestScaleDist;
+	var newZoomLevel = -1;
+	for (var i = 0; i < this.zoomLevels.length; i++)
+	{
+		var thisDist = Math.abs(this.zoomLevels[i].scale - targetScale);
+		if (newZoomLevel == -1 || thisDist < bestScaleDist)
+		{
+			bestScaleDist = thisDist;
+			newZoomLevel = i;
+		}
+	}
+	
+	// zoom
+	this.setZoomAndCenterTo(
+		newZoomLevel,
+		(x1 + x2) / 2,
+		(y1 + y2) / 2,
+		saveState,
+		notifyZoomChange,
+		updateMainMap,
+		updateMiniMap,
+		true);
+	
+	/*
+	
 	// the given extents can change (due the the actual size of the map)
 	var adjustedX1; 
 	var adjustedX2; 
@@ -891,6 +934,8 @@ Map.prototype.zoomMapToInternal = function(x1, y1, x2, y2, border, saveState, no
 		updateMiniMap,
 		true);
 
+	*/
+	
 }
 
 // PUBLIC
