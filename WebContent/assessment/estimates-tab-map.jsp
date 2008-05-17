@@ -13,8 +13,12 @@
 
 		<s:map
 			id="estimatesMap"
-			pointsOfInterest="#{EstimatesMapBean.pointsOfInterest}"
+			x1="#{EstimatesMapBean.mapX1}"
+			y1="#{EstimatesMapBean.mapY1}"
+			x2="#{EstimatesMapBean.mapX2}"
+			y2="#{EstimatesMapBean.mapY2}"
 			zoomLevels="#{EstimatesMapBean.zoomLevels}"
+			pointsOfInterest="#{EstimatesMapBean.pointsOfInterest}"
 			miniMapZoomLevel="#{EstimatesMapBean.miniMapZoomLevel}"
 			miniMap="true"
 			miniMapWidth="100"
