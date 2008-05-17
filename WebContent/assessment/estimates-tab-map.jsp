@@ -26,6 +26,8 @@
 			miniMapPosition="bottom right"
 			pointsSelectId="map_places" />
 			
+		<t:div forceId="true" id="mapDebugCoordinates" />
+			
 	</t:htmlTag>
 	
 	<t:htmlTag value="td" style="padding: 0px 0px 0px 10px; vertical-align: top;">

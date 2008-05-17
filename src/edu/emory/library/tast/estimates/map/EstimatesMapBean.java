@@ -136,9 +136,9 @@ public class EstimatesMapBean {
 			return;
 		
 		double minX = Double.MAX_VALUE;
+		double maxX = -Double.MAX_VALUE;
 		double minY  = Double.MAX_VALUE;
-		double maxX = Double.MIN_VALUE;
-		double maxY  = Double.MIN_VALUE;
+		double maxY  = -Double.MAX_VALUE;
 		
 		for (int i = 0; i < pointsOfInterest.length; i++)
 		{
@@ -153,6 +153,9 @@ public class EstimatesMapBean {
 		mapX2 = Math.min(maxX, +180);
 		mapY1 = Math.max(minY, -90);
 		mapY2 = Math.min(maxY, +90);
+		
+		System.out.println("long = " + mapX1 + " .. " + mapX2);
+		System.out.println("lat = " + mapY1 + " .. " + mapY2);
 		
 	}
 	

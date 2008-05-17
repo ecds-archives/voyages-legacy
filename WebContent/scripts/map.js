@@ -14,7 +14,7 @@ var MapsGlobal =
 		actionNameFieldName, // custom action name (not used and not fully implemented now)
 		actionParamFieldName, // custom action param (not used and not fully implemented now)
 		mapControlId, // main container 
-		mapFrameId, // frame for the map
+		mapTilesContainerId, // frame for the map
 		zoomLevels, // available zooms and their configurations
 		fieldNameX1, // name of the hidden field for x1
 		fieldNameY1, // name of the hidden field for y1
@@ -40,7 +40,7 @@ var MapsGlobal =
 		scaleIndicatorTextId,
 		scaleIndicatorBarId,
 		miniMapControlId,
-		miniMapFrameId,
+		miniMapTilesContainerId,
 		miniMapZoomLevel,
 		miniMapToggleId,
 		fieldNameMiniMapVisibility,
@@ -57,7 +57,7 @@ var MapsGlobal =
 		// HTML
 		map.fixedSize = fixedSize;
 		map.mapControlId = mapControlId;
-		map.frameId = mapFrameId;
+		map.tilesContainerId = mapTilesContainerId;
 		
 		// hidden fields for maitaining state
 		map.formName = formName;
@@ -68,7 +68,10 @@ var MapsGlobal =
 		map.fieldNameX2 = fieldNameX2;
 		map.fieldNameY2 = fieldNameY2;
 		map.fieldNameZoomHistory = fieldNameZoomHistory;
-
+		
+		// debug
+		map.debug = location.href.indexOf("?debug-map") != -1;
+		
 		// zooms
 		map.zoomLevels = zoomLevels;
 
@@ -88,13 +91,13 @@ var MapsGlobal =
 		map.pointsSelectId = pointsSelectId;
 		
 		// minimap
-		if (miniMapControlId && miniMapFrameId)
+		if (miniMapControlId && miniMapTilesContainerId)
 		{
 
 			var miniMap = new Map();
 			miniMap.fixedSize = true;
 			miniMap.mapControlId = miniMapControlId;
-			miniMap.frameId = miniMapFrameId;
+			miniMap.tilesContainerId = miniMapTilesContainerId;
 			miniMap.mainMap = map;
 			miniMap.zoomLevels = [miniMapZoomLevel];
 			miniMap.zoomLevel = 0;
@@ -146,11 +149,6 @@ var MapsGlobal =
 		// call init after page loads
 		EventAttacher.attachOnWindowEvent("load", map, "init", false);
 	
-	},
-	
-	clickedShowMap: function(mapId) {
-		var map = MapsGlobal.maps[mapId];
-		if (map) map.clickedShowPort();
 	},
 	
 	setMouseModeToPan: function(mapId)
@@ -614,6 +612,10 @@ Map.prototype.mapStartDrag = function(event)
 
 	// close label/bubble
 	this.hideLabels(true);
+	
+	// disable debug
+	if (this.debug)
+		this.disableDebugShowCoordinates();
 
 	// set onMouseMove handler
 	EventAttacher.attach(document, "mousemove", this, "mapMouseMove");
@@ -674,6 +676,10 @@ Map.prototype.mapStopDrag = function(event)
 			break;
 			
 	}
+	
+	// enable debug
+	if (this.debug)
+		this.enableDebugShowCoordinates();
 	
 }
 
@@ -1515,22 +1521,22 @@ Map.prototype.setMouseCursors = function()
 {
 	if (this.mouseMode == MapsGlobal.MAP_TOOL_PAN)
 	{
-		this.frame.style.cursor = "move";
+		this.tilesContainer.style.cursor = "move";
 		this.selector.style.cursor = "default";
 	}
 	else if (this.mouseMode == MapsGlobal.MAP_TOOL_ZOOM)
 	{
-		this.frame.style.cursor = "crosshair";
+		this.tilesContainer.style.cursor = "crosshair";
 		this.selector.style.cursor = "default";
 	}
 	else if (this.mouseMode == MapsGlobal.MAP_TOOL_SELECTOR)
 	{
-		this.frame.style.cursor = "move";
+		this.tilesContainer.style.cursor = "move";
 		this.selector.style.cursor = "move";
 	}
 	else
 	{
-		this.frame.style.cursor = "default";
+		this.tilesContainer.style.cursor = "default";
 		this.selector.style.cursor = "default";
 	}
 }
@@ -1558,7 +1564,7 @@ Map.prototype.initPoints = function()
 		labelElement.style.position = "absolute";
 		labelElement.style.display = "";
 		
-		this.frame.appendChild(labelElement);
+		this.tilesContainer.appendChild(labelElement);
 
 		for (var j = 0; j < pnt.symbols.length; j++)
 		{
@@ -1577,7 +1583,7 @@ Map.prototype.initPoints = function()
 			EventAttacher.attach(symbolElement, "mouseout", this, "hideLabel");
 			EventAttacher.attach(symbolElement, "click", this, "showAndFixLabel", i);
 
-			this.frame.appendChild(symbolElement);
+			this.tilesContainer.appendChild(symbolElement);
 
 		}
 
@@ -1817,9 +1823,9 @@ Map.prototype.updateLines = function(zoomChanged)
 				dot.height = line.symbol.height;
 				dot.style.position = "absolute";
 				if (firstSymbol)
-					this.frame.insertBefore(dot, firstSymbol);
+					this.tilesContainer.insertBefore(dot, firstSymbol);
 				else
-					this.frame.appendChild(dot);
+					this.tilesContainer.appendChild(dot);
 			}
 			
 			dot.style.display = "";
@@ -1877,10 +1883,10 @@ Map.prototype.updateMapControlsLayout = function()
 	this.mapControl.style.height = this.vportHeight + "px";
 	
 	// map itself
-	this.frame.style.left = "0px";
-	this.frame.style.top = "0px";
-	this.frame.style.width = (this.vportWidth) + "px";
-	this.frame.style.height = (this.vportHeight) + "px";
+	this.tilesContainer.style.left = "0px";
+	this.tilesContainer.style.top = "0px";
+	this.tilesContainer.style.width = (this.vportWidth) + "px";
+	this.tilesContainer.style.height = (this.vportHeight) + "px";
 	
 	// number of tiles needed
 	this.visibleCols = Math.floor(this.vportWidth / tileWidth) + 1;
@@ -1894,8 +1900,8 @@ Map.prototype.updateMapControlsLayout = function()
 			for (var j=0; j<this.tilesMap[i].length; j++)
 			{
 				var tile = this.tilesMap[i][j];
-				this.frame.removeChild(tile.img);
-				if (tile.points) this.frame.removeChild(tile.points.getRoot());
+				this.tilesContainer.removeChild(tile.img);
+				if (tile.points) this.tilesContainer.removeChild(tile.points.getRoot());
 			}
 		}
 	}
@@ -1921,7 +1927,7 @@ Map.prototype.updateMapControlsLayout = function()
 			tile.style.left = (j * tileWidth) + "px";
 			tile.style.top = (i * tileHeight) + "px";
 			tile.points = null;
-			this.frame.insertBefore(tile, this.selector);
+			this.tilesContainer.insertBefore(tile, this.selector);
 		}
 	}
 	
@@ -1935,19 +1941,19 @@ Map.prototype.initMapControls = function()
 	this.bubble = document.getElementById(this.bubbleId)
 	this.bubbleText = document.getElementById(this.bubbleTextId)
 	if (this.bubble) this.bubble.style.position = "absolute";
-
-	this.frame = document.getElementById(this.frameId);
-	this.frame.style.position = "absolute";
-	this.frame.style.overflow = "hidden";
-	this.frame.unselectable = "on";
-	this.frame.style.MozUserFocus = "none";
-	this.frame.style.MozUserSelect = "none";
+	
+	this.tilesContainer = document.getElementById(this.tilesContainerId);
+	this.tilesContainer.style.position = "absolute";
+	this.tilesContainer.style.overflow = "hidden";
+	this.tilesContainer.unselectable = "on";
+	this.tilesContainer.style.MozUserFocus = "none";
+	this.tilesContainer.style.MozUserSelect = "none";
 	
 	this.vportWidth = this.mapControl.offsetWidth;
 	this.vportHeight = this.mapControl.offsetHeight;
 
-	EventAttacher.attach(this.frame, "mousedown", this, "mapStartDrag");
-	if (IE) EventAttacher.attach(this.frame, "mousewheel", this, "mapMouseWheel");
+	EventAttacher.attach(this.tilesContainer, "mousedown", this, "mapStartDrag");
+	if (IE) EventAttacher.attach(this.tilesContainer, "mousewheel", this, "mapMouseWheel");
 
 	this.selector = document.createElement("DIV");
 	this.selector.style.position = "absolute";
@@ -1959,7 +1965,7 @@ Map.prototype.initMapControls = function()
 	this.selector.style.top = "0px";
 	this.selector.style.width = "200px";
 	this.selector.style.height = "200px";
-	this.frame.appendChild(this.selector);
+	this.tilesContainer.appendChild(this.selector);
 	
 	var bg = document.createElement("DIV");
 	bg.style.width = "100%";
@@ -2018,6 +2024,38 @@ Map.prototype.restoreState = function()
 }
 
 /////////////////////////////////////////////////////////
+// debug functionality
+/////////////////////////////////////////////////////////
+
+Map.prototype.enableDebugShowCoordinates = function()
+{
+
+	EventAttacher.attach(this.tilesContainer, "mousemove", this, "debugMouseMove");
+
+}
+
+Map.prototype.disableDebugShowCoordinates = function()
+{
+
+	EventAttacher.detach(this.tilesContainer, "mousemove", this, "debugMouseMove");
+
+}
+
+Map.prototype.debugMouseMove = function(event)
+{
+
+	var x = ElementUtils.getEventMouseElementX(event, this.mapControl);
+	var y = ElementUtils.getEventMouseElementY(event, this.mapControl);
+	
+	var mapDebugCoordinates = document.getElementById("mapDebugCoordinates");
+	if (mapDebugCoordinates)
+		mapDebugCoordinates.innerHTML =
+			"long = " + this.fromVportToRealX(x) + ", " +
+			"lat = " + this.fromVportToRealY(y);
+
+}
+
+/////////////////////////////////////////////////////////
 // custom action management
 /////////////////////////////////////////////////////////
 
@@ -2068,6 +2106,10 @@ Map.prototype.init = function(restoreState)
 		
 	// let others know that we are done
 	this.initListeners.invoke();
+	
+	// debug mode
+	if (this.debug)
+		this.enableDebugShowCoordinates();
 	
 }
 
@@ -2313,8 +2355,6 @@ MapZoomSlider.prototype.click = function(event)
 	var zoomLevel = parseInt(ElementUtils.getEventMouseElementX(event, this.cont) / this.slotWidth);
 	this.setKnobPosition(zoomLevel);
 	this.map.changeZoomLevel(zoomLevel, false);
-	//this.zoomChanged();
-	//document.forms[0].submit();
 }
 
 MapZoomSlider.prototype.mouseDown = function(event)
