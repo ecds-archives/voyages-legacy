@@ -423,9 +423,6 @@
 			<name>id</name>
 		</attribute>
 		<attribute>
-			<name>refreshAction</name>
-		</attribute>
-		<attribute>
 			<name>style</name>
 		</attribute>
 		<attribute>

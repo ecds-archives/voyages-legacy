@@ -33,16 +33,25 @@
 			id="mapLegend" 
 			styleClass="map-legend-div"
 			legend="#{MapBean.legend}"
-			refreshAction="#{MapBean.refresh}" 
 			maps="#{MapBean.availableMaps}"
 			chosenMap="#{MapBean.chosenMap}" />
 
-		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 15px;">
+		<t:htmlTag value="div" style="margin-left: 5px;">
+			<h:commandButton value="Refresh" action="#{MapBean.refresh}" />
+		</t:htmlTag>
+
+		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 50px;">
 			<h:outputText value="Find visible place" />
 		</t:htmlTag>
 		
 		<t:htmlTag value="div" styleClass="map-legend-section">
+
 			<t:htmlTag value="select" forceId="true" id="map_places" />
+			
+			<t:htmlTag value="div" style="margin-top: 5px;">
+				<h:commandButton value="Zoom to all places" action="#{MapBean.zoomToAll}" />
+			</t:htmlTag>
+			
 		</t:htmlTag>
 			
 	</t:htmlTag>

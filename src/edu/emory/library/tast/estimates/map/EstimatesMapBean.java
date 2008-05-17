@@ -105,15 +105,10 @@ public class EstimatesMapBean {
 		return this.mapData.getLegend();
 	}
 	
-	/**
-	 * When Refresh button clicked.
-	 * @return
-	 */
 	public String refresh()
 	{
 		
 		ChosenMap map = StandardMaps.getSelectedMap(this);
-
 		this.estimatesBean.setYearFrom(String.valueOf(map.ident.yearFrom));
 		this.estimatesBean.setYearTo(String.valueOf(map.ident.yearTo));
 		this.estimatesBean.changeSelection();
@@ -122,12 +117,21 @@ public class EstimatesMapBean {
 		needRefresh = true;
 		
 		setData();
-		adjustMapExtentByPointsOfInterest();
 		
 		return null;
 		
 	}
 	
+	public String zoomToAll()
+	{
+		
+		setData();
+		adjustMapExtentByPointsOfInterest();
+		
+		return null;
+		
+	}
+
 	private void adjustMapExtentByPointsOfInterest()
 	{
 		
@@ -153,9 +157,6 @@ public class EstimatesMapBean {
 		mapX2 = Math.min(maxX, +180);
 		mapY1 = Math.max(minY, -90);
 		mapY2 = Math.min(maxY, +90);
-		
-		System.out.println("long = " + mapX1 + " .. " + mapX2);
-		System.out.println("lat = " + mapY1 + " .. " + mapY2);
 		
 	}
 	

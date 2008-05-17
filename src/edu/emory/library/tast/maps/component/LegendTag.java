@@ -6,8 +6,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
 
-import org.apache.myfaces.el.MethodBindingImpl;
-
 public class LegendTag extends UIComponentTag {
 
 	private String id;
@@ -20,8 +18,6 @@ public class LegendTag extends UIComponentTag {
 
 	private String layers;
 
-	private String refreshAction;
-	
 	private String availableMaps;
 	
 	private String chosenMap;
@@ -96,11 +92,6 @@ public class LegendTag extends UIComponentTag {
 		} else  if (availableAttributes != null)  {
 			component.getAttributes().put("availableAttributes", availableAttributes);
 		}
-		
-		if (component instanceof LegendComponent && refreshAction != null) {
-			LegendComponent tab = (LegendComponent)component;
-			tab.setRefreshAction(new MethodBindingImpl(app, refreshAction, new Class[] {}));
-		}
 	}
 
 	public String getComponentType() {
@@ -133,14 +124,6 @@ public class LegendTag extends UIComponentTag {
 
 	public void setLegend(String legendItems) {
 		this.legend = legendItems;
-	}
-
-	public String getRefreshAction() {
-		return refreshAction;
-	}
-
-	public void setRefreshAction(String refreshAction) {
-		this.refreshAction = refreshAction;
 	}
 
 	public String getStyle() {

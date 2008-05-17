@@ -7,11 +7,8 @@ import java.util.Map;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -23,13 +20,18 @@ import edu.emory.library.tast.util.JsfUtils;
 
 public class LegendComponent extends UIComponentBase {
 
-	private MethodBinding refreshAction;
+//	private MethodBinding refreshAction;
 	
-	public void broadcast(FacesEvent event) throws AbortProcessingException {
-		super.broadcast(event);
-		if (event instanceof ActionEvent && refreshAction != null) {
-			refreshAction.invoke(getFacesContext(), new Object[] {});
-		}
+//	public void broadcast(FacesEvent event) throws AbortProcessingException {
+//		super.broadcast(event);
+//		if (event instanceof ActionEvent && refreshAction != null) {
+//			refreshAction.invoke(getFacesContext(), new Object[] {});
+//		}
+//	}
+	
+	public String getFamily()
+	{
+		return null;
 	}
 
 	public void decode(FacesContext context) {
@@ -105,7 +107,7 @@ public class LegendComponent extends UIComponentBase {
 		this.encodeAttrsChoose(context, writer);
 		this.encodeMapsChoose(context, writer);
 		this.encodeLegend(context, writer);
-		this.encodeComponentButton(context, writer);
+//		this.encodeComponentButton(context, writer);
 
 	}
 	
@@ -336,47 +338,43 @@ public class LegendComponent extends UIComponentBase {
 		writer.endElement("input");
 	}
 
-	private void encodeComponentButton(FacesContext context, ResponseWriter writer) throws IOException {
-		JsfUtils.encodeHiddenInput(this, writer, getLegendHiddenFieldName(context));
-		writer.startElement("input", this);
-		writer.writeAttribute("id", this.getButtonName(context), null);
-		writer.writeAttribute("type", "button", null);
-		writer.writeAttribute("onClick", JsfUtils.generateSubmitJS(context, JsfUtils.getForm(this, context), 
-				this.getLegendHiddenFieldName(context), "clicked"), null);
-		writer.writeAttribute("value", "Refresh", null);
-		writer.writeAttribute("class", "map-legend-refresh", null);
-		writer.endElement("input");
-	}
+//	private void encodeComponentButton(FacesContext context, ResponseWriter writer) throws IOException {
+//		JsfUtils.encodeHiddenInput(this, writer, getLegendHiddenFieldName(context));
+//		writer.startElement("input", this);
+//		writer.writeAttribute("id", this.getButtonName(context), null);
+//		writer.writeAttribute("type", "button", null);
+//		writer.writeAttribute("onClick", JsfUtils.generateSubmitJS(context, JsfUtils.getForm(this, context), 
+//				this.getLegendHiddenFieldName(context), "clicked"), null);
+//		writer.writeAttribute("value", "Refresh", null);
+//		writer.writeAttribute("class", "map-legend-refresh", null);
+//		writer.endElement("input");
+//	}
 
 	public void encodeEnd(FacesContext context) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.endElement("div");
 	}
 
-	public void restoreState(FacesContext context, Object state) {
-		Object[] values = (Object[]) state;
-		super.restoreState(context, values[0]);
-		this.refreshAction = (MethodBinding) restoreAttachedState(context, values[1]);
-	}
+//	public void restoreState(FacesContext context, Object state) {
+//		Object[] values = (Object[]) state;
+//		super.restoreState(context, values[0]);
+//		this.refreshAction = (MethodBinding) restoreAttachedState(context, values[1]);
+//	}
 
-	public Object saveState(FacesContext context) {
-		Object[] values = new Object[2];
-		values[0] = super.saveState(context);
-		values[1] = saveAttachedState(context, refreshAction);
-		return values;
-	}
+//	public Object saveState(FacesContext context) {
+//		Object[] values = new Object[2];
+//		values[0] = super.saveState(context);
+//		values[1] = saveAttachedState(context, refreshAction);
+//		return values;
+//	}
 
-	public String getFamily() {
-		return null;
-	}
+//	public MethodBinding getRefreshAction() {
+//		return refreshAction;
+//	}
 
-	public MethodBinding getRefreshAction() {
-		return refreshAction;
-	}
-
-	public void setRefreshAction(MethodBinding refreshAction) {
-		this.refreshAction = refreshAction;
-	}
+//	public void setRefreshAction(MethodBinding refreshAction) {
+//		this.refreshAction = refreshAction;
+//	}
 
 	private Object getValueBinding(FacesContext context, String valueName) {
 		ValueBinding vb = this.getValueBinding(valueName);
@@ -411,7 +409,8 @@ public class LegendComponent extends UIComponentBase {
 		return this.getId() + "_hiddenField";
 	}
 	
-	private String getButtonName(FacesContext context) {
-		return this.getId() + "_button";
-	}
+//	private String getButtonName(FacesContext context) {
+//		return this.getId() + "_button";
+//	}
+	
 }

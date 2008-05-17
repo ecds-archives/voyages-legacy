@@ -121,6 +121,15 @@ public class MapBean
 		needQuery = true;
 
 		setMapData();
+		
+		return null;
+
+	}
+
+	public String zoomToAll()
+	{
+		
+		setMapData();
 		adjustMapExtentByPointsOfInterest();
 		
 		return null;
