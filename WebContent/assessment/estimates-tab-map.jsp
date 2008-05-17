@@ -52,10 +52,14 @@
 			<t:htmlTag value="div">
 				<t:htmlTag value="select" forceId="true" id="map_places" />
 			</t:htmlTag>
+			
+			<% /*
 
 			<t:htmlTag value="div" style="margin-top: 5px;">
 				<h:commandButton value="Zoom to all places" action="#{EstimatesMapBean.zoomToAll}" />
 			</t:htmlTag>
+			
+			*/ %>
 
 		</t:htmlTag>
 
