@@ -1295,31 +1295,26 @@ Map.prototype.panMapBy = function(dx, dy)
 	var vportHeight = this.getVportHeight();
 	
 	// more only if the map is bigger than the viewport
-	// if (tilesNumX * tileWidth > this.vportWidth)
-	// {
+	if (tilesNumX * tileWidth > this.vportWidth)
+	{
 	
 		// move the viewport
 		this.bottomLeftTileVportX += dx;
-		
-		if (this.blockMove)
+
+		// make sure that we are not outside the map		
+		var zoomLevelObj = this.zoomLevels[this.zoomLevel];
+		if (this.getMapX1() < zoomLevelObj.getMapX1())
 		{
-		
-			// position of the viewport w.r.t. map in px
-			var vportX1 = this.bottomLeftTileCol * tileWidth - this.bottomLeftTileVportX; 
-			var vportX2 = vportX1 + vportWidth;
-			
-			// viewport needs to bu moved right
-			if (vportX1 < 0)
-				this.bottomLeftTileVportX =
-					this.bottomLeftTileCol * tileWidth;
-		
-			// viewport needs to bu moved left
-			else if (tilesNumX * tileWidth < vportX2)
-				this.bottomLeftTileVportX =
-					(this.bottomLeftTileCol - tilesNumX) * tileWidth + vportWidth;
-
+			this.bottomLeftTileVportX =
+				this.bottomLeftTileCol * tileWidth;
 		}
-
+		else if (zoomLevelObj.getMapX2() < this.getMapX2())
+		{
+			this.bottomLeftTileVportX =
+				(this.bottomLeftTileCol * tileWidth) -
+				(tilesNumX * tileWidth - vportWidth); 
+		}
+		
 		// move columns from right to left
 		while (0 < this.bottomLeftTileVportX)
 		{
@@ -1350,32 +1345,27 @@ Map.prototype.panMapBy = function(dx, dy)
 			
 		}
 		
-	// }
+	}
 	
 	// more only if the map is bigger than the viewport
-	// if (tilesNumY * tileHeight > this.vportHeight)
-	// {
+	if (tilesNumY * tileHeight > this.vportHeight)
+	{
 	
 		// move the viewport
 		this.bottomLeftTileVportY += dy;
 		
-		if (this.blockMove)
+		// make sure that we are not outside the map		
+		var zoomLevelObj = this.zoomLevels[this.zoomLevel];
+		if (this.getMapY1() < zoomLevelObj.getMapY1())
 		{
-		
-			// position of the viewport w.r.t. map in px
-			var vportY1 = this.bottomLeftTileRow * tileHeight - this.bottomLeftTileVportY; 
-			var vportY2 = vportY1 + vportHeight;
-			
-			// viewport needs to bu moved right
-			if (vportY1 < 0)
-				this.bottomLeftTileVportY =
-					this.bottomLeftTileRow * tileHeight;
-		
-			// viewport needs to bu moved left
-			else if (tilesNumY * tileHeight < vportY2)
-				this.bottomLeftTileVportY =
-					(this.bottomLeftTileRow - tilesNumY) * tileHeight + vportHeight;
-				
+			this.bottomLeftTileVportY =
+				this.bottomLeftTileRow * tileHeight;
+		}
+		else if (zoomLevelObj.getMapY2() < this.getMapY2())
+		{
+			this.bottomLeftTileVportY =
+				(this.bottomLeftTileRow * tileHeight) -
+				(tilesNumY * tileHeight - vportHeight); 
 		}
 
 		// move rows from bottom to top
@@ -1402,7 +1392,7 @@ Map.prototype.panMapBy = function(dx, dy)
 			
 		}
 
-	// }
+	}
 	
 	// draw all tiles; this can also fix the position
 	// if it's outside the correct range
@@ -2075,8 +2065,8 @@ Map.prototype.initMapControls = function()
 	var bg = document.createElement("DIV");
 	bg.style.width = "100%";
 	bg.style.height = "100%";
-	bg.style.filter = "progid:DXImageTransform.Microsoft.Alpha(opacity=" + this.selectorOpacity + ")";
-	bg.style.MozOpacity = this.selectorOpacity / 100;
+	bg.style.filter = "alpha(opacity = " + this.selectorOpacity + ")";
+	bg.style.opacity = this.selectorOpacity / 100;
 	bg.style.backgroundColor = this.selectorColor;
 	this.selector.appendChild(bg);
 
