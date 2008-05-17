@@ -358,6 +358,26 @@ function MapZoomLevel(tileWidth, tileHeight, bottomLeftTileX, bottomLeftTileY, t
 	this.tilesDir = tilesDir;
 }
 
+MapZoomLevel.prototype.getMapX1 = function() 
+{
+	return this.bottomLeftTileX; 
+}
+
+MapZoomLevel.prototype.getMapX2 = function() 
+{
+	return this.bottomLeftTileX + this.tilesNumX * this.tileWidth * this.scale; 
+}
+
+MapZoomLevel.prototype.getMapY1 = function() 
+{
+	return this.bottomLeftTileY; 
+}
+
+MapZoomLevel.prototype.getMapY2 = function() 
+{
+	return this.bottomLeftTileY + this.tilesNumY * this.tileHeight * this.scale; 
+}
+
 /////////////////////////////////////////////////////////
 // generic functions for coordinates etc.
 /////////////////////////////////////////////////////////
@@ -810,33 +830,61 @@ Map.prototype.changeZoomLevel = function(newZoomLevel, notifyZoomChange)
 Map.prototype.zoomMapToInternal = function(x1, y1, x2, y2, border, saveState, notifyZoomChange, updateMainMap, updateMiniMap)
 {
 
-	// requested real width and height
-	var widthReal = Math.abs(x2 - x1);
-	var heightReal = Math.abs(y2 - y1);
+	// make sure that x1 < x2 and y1 < y2
+	if (x1 > x2)
+	{
+		var tmp = x1;
+		x1 = x2;
+		x2 = tmp;
+	}
+	if (y1 > y2)
+	{
+		var tmp = y1;
+		y1 = y2;
+		y2 = tmp;
+	}
 	
 	// current viewport size (in pixels)
 	var vportWidth = this.getVportWidth();
 	var vportHeight = this.getVportHeight();
 	
+	// the given extents can change (due the the actual size of the map)
+	var adjustedX1; 
+	var adjustedX2; 
+	var adjustedY1; 
+	var adjustedY2;
+
 	// find optimal zoom level, i.e. the closest
 	// one which contains all, or the first one
 	var newZoomLevel = 0;
 	for (var i = this.zoomLevels.length - 1; 0 <= i; i--)
 	{
-		var widthPx = widthReal / this.zoomLevels[i].scale;
-		var heightPx = heightReal / this.zoomLevels[i].scale;
+		var zoomLevelObj = this.zoomLevels[i]; 
+
+		// adjust x1, y1, x2, y2 so that they do not fall outside the map itself
+		var adjustedX1 = Math.max(zoomLevelObj.getMapX1(), x1); 
+		var adjustedX2 = Math.min(zoomLevelObj.getMapX2(), x2); 
+		var adjustedY1 = Math.max(zoomLevelObj.getMapY1(), y1); 
+		var adjustedY2 = Math.min(zoomLevelObj.getMapY2(), y2);
+		
+		// calculate the px width and height 
+		var widthPx = (adjustedX2 - adjustedX1) / zoomLevelObj.scale;
+		var heightPx = (adjustedY2 - adjustedY1) / zoomLevelObj.scale;
+		
+		// does it fit?
 		if (widthPx + 2*border <= vportWidth && heightPx + 2*border <= vportHeight)
 		{
 			newZoomLevel = i;
 			break;
 		}
+		
 	}
 	
 	// zoom
 	this.setZoomAndCenterTo(
 		newZoomLevel,
-		(x1 + x2) / 2,
-		(y1 + y2) / 2,
+		(adjustedX1 + adjustedX2) / 2,
+		(adjustedY1 + adjustedY2) / 2,
 		saveState,
 		notifyZoomChange,
 		updateMainMap,
@@ -911,7 +959,8 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 
 	// make sure that the zoom level is ok
 	if (newZoomLevel < 0) newZoomLevel = 0;
-	if (this.zoomLevels.length <= newZoomLevel) newZoomLevel = this.zoomLevels.length - 1;
+	if (this.zoomLevels.length <= newZoomLevel)
+		newZoomLevel = this.zoomLevels.length - 1;
 	
 	// has the zoom changed?
 	if (this.zoomLevel != newZoomLevel)
@@ -933,26 +982,37 @@ Map.prototype.setZoomAndCenterTo = function(newZoomLevel, x, y, saveState, notif
 	var vportRealHeight = zoomLevelObj.scale * this.vportHeight;
 	var tileRealWidth = zoomLevelObj.scale * zoomLevelObj.tileWidth;
 	var tileRealHeight = zoomLevelObj.scale * zoomLevelObj.tileHeight;
-	var vportBottomLeftRealX = x - vportRealWidth / 2;
-	var vportBottomLeftRealY = y - vportRealHeight / 2;
+	
+	// special case, map it smaller than the viewport in X
 	if (zoomLevelObj.tilesNumX * tileRealWidth <= vportRealWidth)
 	{
 		this.bottomLeftTileCol = 0;
 		this.bottomLeftTileVportX = Math.round((vportRealWidth - zoomLevelObj.tilesNumX * tileRealWidth) / zoomLevelObj.scale / 2);
 	}
+	
+	// map is bigger than the viewport in X
 	else
 	{
+		x = Math.min(x, zoomLevelObj.getMapX2() - vportRealWidth / 2);
+		x = Math.max(x, zoomLevelObj.getMapX1() + vportRealWidth / 2);
+		var vportBottomLeftRealX = x - vportRealWidth / 2;
 		this.bottomLeftTileCol = Math.floor((vportBottomLeftRealX - zoomLevelObj.bottomLeftTileX) / tileRealWidth);
 		this.bottomLeftTileVportX = Math.round(((this.bottomLeftTileCol * tileRealWidth + zoomLevelObj.bottomLeftTileX) - vportBottomLeftRealX) / zoomLevelObj.scale);
 	}
 	
+	// special case, map it smaller than the viewport in Y
 	if (zoomLevelObj.tilesNumY * tileRealHeight <= vportRealHeight)
 	{
 		this.bottomLeftTileRow = 0;
 		this.bottomLeftTileVportY = Math.round((vportRealHeight - zoomLevelObj.tilesNumY * tileRealHeight) / zoomLevelObj.scale / 2);
 	}
+
+	// map is bigger than the viewport in Y
 	else
 	{
+		y = Math.min(y, zoomLevelObj.getMapY2() - vportRealHeight / 2);
+		y = Math.max(y, zoomLevelObj.getMapY1() + vportRealHeight / 2);
+		var vportBottomLeftRealY = y - vportRealHeight / 2;
 		this.bottomLeftTileRow = Math.floor((vportBottomLeftRealY - zoomLevelObj.bottomLeftTileY) / tileRealHeight);
 		this.bottomLeftTileVportY = Math.round(((this.bottomLeftTileRow * tileRealHeight + zoomLevelObj.bottomLeftTileY) - vportBottomLeftRealY) / zoomLevelObj.scale);
 	}
