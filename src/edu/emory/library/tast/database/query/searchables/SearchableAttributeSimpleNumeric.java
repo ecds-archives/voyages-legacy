@@ -8,10 +8,10 @@ import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionNumeric;
 import edu.emory.library.tast.database.query.QueryConditionRange;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleRange
 {

@@ -8,10 +8,10 @@ import java.util.Set;
 
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * Object that helps to keep track of changes in Voyages.

@@ -9,10 +9,10 @@ import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleDate;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleNumeric;
 import edu.emory.library.tast.database.query.searchables.Searchables;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.util.ConversionUtils;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class Query implements Cloneable
 {

@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -28,8 +30,6 @@ import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 import edu.emory.library.tast.util.HibernateConnector;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Voyage object.

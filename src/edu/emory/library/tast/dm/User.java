@@ -8,12 +8,12 @@ import java.util.Set;
 import org.apache.tools.ant.types.CommandlineJava;
 import org.hibernate.Session;
 
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class User {
 	

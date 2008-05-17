@@ -3,7 +3,7 @@ package edu.emory.library.tast.database.query;
 
 import edu.emory.library.tast.database.query.searchables.UserCategory;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
-import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.db.TastDbConditions;
 
 /**
  * Used by the bean {@link edu.emory.library.tast.database.query.SearchBean} in order to

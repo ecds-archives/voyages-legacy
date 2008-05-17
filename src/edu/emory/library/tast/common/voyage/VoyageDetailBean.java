@@ -21,6 +21,8 @@ import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFor
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Source;
@@ -35,8 +37,6 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Bean which features functionality for details of given voyage.

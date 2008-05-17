@@ -11,11 +11,11 @@ import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionDate;
 import edu.emory.library.tast.database.query.QueryConditionNumeric;
 import edu.emory.library.tast.database.query.QueryConditionRange;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleDate extends SearchableAttributeSimpleRange
 {

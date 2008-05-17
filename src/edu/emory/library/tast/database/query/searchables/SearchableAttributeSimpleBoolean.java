@@ -6,9 +6,9 @@ import org.hibernate.Session;
 
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionBoolean;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleBoolean extends SearchableAttributeSimple
 {

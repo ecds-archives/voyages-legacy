@@ -6,6 +6,8 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.query.QueryCondition;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -14,8 +16,6 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.SubmissionAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SubmissionSource
 {

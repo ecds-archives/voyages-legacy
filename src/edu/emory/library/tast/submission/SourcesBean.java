@@ -9,6 +9,8 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionSource;
 import edu.emory.library.tast.dm.SubmissionSourceBook;
@@ -20,8 +22,6 @@ import edu.emory.library.tast.submission.sources.SourceBook;
 import edu.emory.library.tast.submission.sources.SourceOther;
 import edu.emory.library.tast.submission.sources.SourcePrimary;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SourcesBean {
 

@@ -11,6 +11,7 @@ import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.query.SearchParameters;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
 import edu.emory.library.tast.maps.component.PointOfInterest;
@@ -18,7 +19,6 @@ import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * The bean provides support for map tab in the database part of the system. It is used

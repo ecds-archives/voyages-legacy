@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
@@ -19,8 +21,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 
 /**

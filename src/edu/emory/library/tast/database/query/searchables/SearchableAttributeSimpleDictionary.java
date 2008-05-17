@@ -10,13 +10,13 @@ import edu.emory.library.tast.SimpleCache;
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionList;
 import edu.emory.library.tast.database.query.QueryConditionListItem;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
 {

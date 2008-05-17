@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import edu.emory.library.tast.util.query.TastDbQuery;
+import edu.emory.library.tast.db.TastDbQuery;
 
 public class CSVUtils {
 	

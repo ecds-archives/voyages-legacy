@@ -11,14 +11,14 @@ import edu.emory.library.tast.common.EventLineEvent;
 import edu.emory.library.tast.common.EventLineGraph;
 import edu.emory.library.tast.common.EventLineLabel;
 import edu.emory.library.tast.common.EventLineZoomLevel;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class EstimatesTimelineBean
 {

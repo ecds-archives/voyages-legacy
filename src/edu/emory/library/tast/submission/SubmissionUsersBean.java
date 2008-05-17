@@ -13,6 +13,8 @@ import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridColumnClickEvent;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEditor;
 import edu.emory.library.tast.dm.User;
@@ -20,8 +22,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class SubmissionUsersBean {
 

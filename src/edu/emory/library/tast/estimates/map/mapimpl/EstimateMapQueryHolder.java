@@ -7,6 +7,8 @@ import java.util.List;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportArea;
@@ -18,8 +20,6 @@ import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.maps.AttributesMap;
 import edu.emory.library.tast.maps.AttributesRange;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Class providing query for estimates map.

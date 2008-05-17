@@ -20,6 +20,8 @@ import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -32,8 +34,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class VoyagesApplier
 {

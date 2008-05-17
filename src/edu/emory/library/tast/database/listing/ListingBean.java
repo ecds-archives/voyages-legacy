@@ -25,6 +25,8 @@ import edu.emory.library.tast.database.query.SearchParameters;
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -34,8 +36,6 @@ import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Backing bean for table results presented in web interface.

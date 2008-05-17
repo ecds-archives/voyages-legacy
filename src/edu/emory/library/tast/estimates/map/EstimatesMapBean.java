@@ -5,7 +5,9 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapDataTransformer;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapQueryHolder;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
@@ -16,7 +18,6 @@ import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * Backing bean for map tab in estimates.
@@ -35,7 +36,12 @@ public class EstimatesMapBean {
 	 * Map data.
 	 */
 	private MapData mapData = new MapData();
-
+	
+	private double mapX1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X1);
+	private double mapY1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y1);
+	private double mapX2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X2);
+	private double mapY2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y2);
+	
 	/**
 	 * Current conditions
 	 */
@@ -45,8 +51,6 @@ public class EstimatesMapBean {
 	 * Type of point of interest (ports/regions/broad regions);
 	 */
 	private int poiType;
-	
-	private int zoomLevel = 0;
 
 	/**
 	 * Forces query when setData called
@@ -109,15 +113,46 @@ public class EstimatesMapBean {
 	{
 		
 		ChosenMap map = StandardMaps.getSelectedMap(this);
+
 		this.estimatesBean.setYearFrom(String.valueOf(map.ident.yearFrom));
 		this.estimatesBean.setYearTo(String.valueOf(map.ident.yearTo));
 		this.estimatesBean.changeSelection();
 		
 		type = determineType();
 		needRefresh = true;
-		this.setData();
+		
+		setData();
+		adjustMapExtentByPointsOfInterest();
 		
 		return null;
+		
+	}
+	
+	private void adjustMapExtentByPointsOfInterest()
+	{
+		
+		PointOfInterest[] pointsOfInterest = mapData.getPointsOfInterest();
+		if (pointsOfInterest == null || pointsOfInterest.length == 0)
+			return;
+		
+		double minX = Double.MAX_VALUE;
+		double minY  = Double.MAX_VALUE;
+		double maxX = Double.MIN_VALUE;
+		double maxY  = Double.MIN_VALUE;
+		
+		for (int i = 0; i < pointsOfInterest.length; i++)
+		{
+			PointOfInterest point = pointsOfInterest[i];
+			minX = Math.min(point.getX(), minX);
+			maxX = Math.max(point.getX(), maxX);
+			minY = Math.min(point.getY(), minY);
+			maxY = Math.max(point.getY(), maxY);
+		}
+		
+		mapX1 = Math.max(minX, -180);
+		mapX2 = Math.min(maxX, +180);
+		mapY1 = Math.max(minY, -90);
+		mapY2 = Math.min(maxY, +90);
 		
 	}
 	
@@ -192,23 +227,6 @@ public class EstimatesMapBean {
 		return StandardMaps.getMapTypes(this);
 	}
 
-	public int getZoomLevel() {
-		return zoomLevel;
-	}
-
-	public void setZoomLevel(int zoomLevel)
-	{
-//		if (this.zoomLevel != zoomLevel)
-//		{
-//			forceQuery = true;
-//			StandardMaps.zoomChanged(this, zoomLevel);
-//		}
-		this.zoomLevel = zoomLevel;
-	}
-	
-	/**
-	 * Gets list of available place types
-	 */
 	public SelectItem[] getAvailableAttributes()
 	{
 		return new SelectItem[] {
@@ -216,21 +234,46 @@ public class EstimatesMapBean {
 				new SelectItem("1", TastResource.getText("estimates_components_map_regions")),
 		};
 	}
-	
-//	public Integer getChosenAttribute()
-//	{
-//		return new Integer(poiType);
-//	}
-	
-//	public void setChosenAttribute(Integer id)
-//	{
-//		if (this.poiType != id.intValue())
-//		{
-//			StandardMaps.zoomChanged(this, id.intValue());
-//			this.needRefresh = true;
-//		}
-//		poiType = id.intValue();
-//	}
+
+	public double getMapX1()
+	{
+		return mapX1;
+	}
+
+	public void setMapX1(double mapX1)
+	{
+		this.mapX1 = mapX1;
+	}
+
+	public double getMapY1()
+	{
+		return mapY1;
+	}
+
+	public void setMapY1(double mapY1)
+	{
+		this.mapY1 = mapY1;
+	}
+
+	public double getMapX2()
+	{
+		return mapX2;
+	}
+
+	public void setMapX2(double mapX2)
+	{
+		this.mapX2 = mapX2;
+	}
+
+	public double getMapY2()
+	{
+		return mapY2;
+	}
+
+	public void setMapY2(double mapY2)
+	{
+		this.mapY2 = mapY2;
+	}
 	
 }
 	

@@ -24,6 +24,8 @@ import edu.emory.library.tast.common.grideditor.ColumnActionEvent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
@@ -39,8 +41,6 @@ import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * The bean that is responsible for requests administration/user administration and new revisions publishingl.

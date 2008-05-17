@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -18,8 +20,6 @@ import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public abstract class Submission
 {

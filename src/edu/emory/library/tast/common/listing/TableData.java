@@ -11,9 +11,9 @@ import edu.emory.library.tast.database.listing.formatters.AbstractAttributeForma
 import edu.emory.library.tast.database.listing.formatters.SimpleAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Data that is presented in results (Result table or detail table).

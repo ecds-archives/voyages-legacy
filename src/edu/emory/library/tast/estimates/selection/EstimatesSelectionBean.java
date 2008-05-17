@@ -17,6 +17,8 @@ import edu.emory.library.tast.SimpleCache;
 import edu.emory.library.tast.common.PopupComponent;
 import edu.emory.library.tast.common.SelectItem;
 import edu.emory.library.tast.common.SelectItemWithImage;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportArea;
@@ -28,8 +30,6 @@ import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.ConversionUtils;
 import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 
 /**

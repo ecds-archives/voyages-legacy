@@ -5,12 +5,12 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class DownloadDatabaseBean {
 	

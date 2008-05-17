@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.Searchables;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 /**
  * This class represents one condition in the list of conditions, represented by

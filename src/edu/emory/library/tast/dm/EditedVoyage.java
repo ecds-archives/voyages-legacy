@@ -5,11 +5,11 @@ import java.util.Map;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.VoyageAttribute;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class EditedVoyage {
 	

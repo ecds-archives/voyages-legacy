@@ -17,8 +17,8 @@ import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.Tooltip;
 import edu.emory.library.tast.common.listing.TableData.ColumnData;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.util.JsfUtils;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Component used for presenting table result.

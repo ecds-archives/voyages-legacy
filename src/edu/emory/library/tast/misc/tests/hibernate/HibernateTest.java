@@ -8,12 +8,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class HibernateTest {
 

@@ -10,9 +10,9 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class HibernateConnector {
 

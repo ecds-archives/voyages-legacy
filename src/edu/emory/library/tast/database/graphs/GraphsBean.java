@@ -12,11 +12,11 @@ import javax.servlet.http.HttpSession;
 import org.jfree.chart.JFreeChart;
 
 import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class GraphsBean
 {

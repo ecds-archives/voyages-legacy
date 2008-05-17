@@ -6,12 +6,12 @@ import java.util.List;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.maps.AttributesMap;
 import edu.emory.library.tast.maps.AttributesRange;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Query holder for map tab in database.

@@ -14,13 +14,13 @@ import edu.emory.library.tast.database.query.QueryBuilderComponent;
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionList;
 import edu.emory.library.tast.database.query.QueryConditionListItem;
+import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
 
 public class SearchableAttributeLocation extends SearchableAttribute implements ListItemsSource
 {

@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
@@ -14,7 +15,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 public class Test
 {

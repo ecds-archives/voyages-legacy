@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import edu.emory.library.tast.util.query.TastDbQuery;
+import edu.emory.library.tast.db.TastDbQuery;
 
 /**
  * Abstract class that holds queries that should be executed for given map implementation.

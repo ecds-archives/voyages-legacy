@@ -5,7 +5,7 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.query.QueryCondition;
-import edu.emory.library.tast.util.query.TastDbConditions;
+import edu.emory.library.tast.db.TastDbConditions;
 
 public abstract class SearchableAttribute
 {

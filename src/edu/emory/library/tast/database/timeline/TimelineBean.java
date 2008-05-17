@@ -18,11 +18,11 @@ import edu.emory.library.tast.common.EventLineGraph;
 import edu.emory.library.tast.common.EventLineLabel;
 import edu.emory.library.tast.common.EventLineZoomLevel;
 import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * Bean for time line.

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.emory.library.tast.util.query;
+package edu.emory.library.tast.db;
 
 import java.util.HashMap;
 

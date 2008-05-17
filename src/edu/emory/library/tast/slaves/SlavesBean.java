@@ -23,6 +23,8 @@ import edu.emory.library.tast.common.listing.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.listing.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Country;
 import edu.emory.library.tast.dm.Estimate;
@@ -34,8 +36,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * This bean coordinates everything in the names database. It is a session scope

@@ -23,14 +23,14 @@ import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
 import edu.emory.library.tast.database.table.TableBean;
 import edu.emory.library.tast.database.timeline.TimelineBean;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.JsfUtils;
-import edu.emory.library.tast.util.query.TastDbConditions;
-import edu.emory.library.tast.util.query.TastDbQuery;
 
 /**
  * This bean is used to manage the list of groups, attributes, the
@@ -39,7 +39,7 @@ import edu.emory.library.tast.util.query.TastDbQuery;
  * components in {@link SearchParameters}. When a user clicks the search
  * button, an internal representation of the query, represented by
  * {@link QueryBuilderQuery}, is converted to a database query represented by
- * {@link edu.emory.library.tast.util.query.TastDbConditions} and stored in
+ * {@link edu.emory.library.tast.db.TastDbConditions} and stored in
  * {@link #searchParameters}.
  */
 public class SearchBean
