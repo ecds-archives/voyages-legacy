@@ -364,7 +364,7 @@ public class SourcesListBean
 		}
 		
 		long stop = System.currentTimeMillis();
-		System.out.println((stop - start) + " ms");
+		// System.out.println((stop - start) + " ms");
 		
 		return table;
 		
