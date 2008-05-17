@@ -46,7 +46,7 @@ public class StandardMaps
 	
 	private static String baseMapUrl = StringUtils.trimEnd(AppConfig.getConfiguration().getString(AppConfig.MAP_URL), '/');
 	
-	private static ZoomLevel levelMini = new ZoomLevel(160, 120, -110.83, -61.83, 1, 1, 1.0/0.95, baseMapUrl + "/tiles/minimap");
+	private static ZoomLevel levelMini = new ZoomLevel(400, 300, -110.83 - 122/0.95, -61.83 - 92/0.95, 1, 1, 1.0/0.95, baseMapUrl + "/tiles/minimap");
 	
 	private static ZoomLevel levelGeo20 = new ZoomLevel(160, 120, -110.79, -61.85, 5, 5, 1.0/4.69, baseMapUrl + "/tiles/20");
 
