@@ -1433,7 +1433,7 @@ Map.prototype.zoomSaveState = function()
 		this.getMapY2());
 
 	// delete elements after current element
-	while (this.zoomHistoryPos+1 < this.zoomHistory.length)
+	while (this.zoomHistoryPos + 1 < this.zoomHistory.length)
 		this.zoomHistory.pop();
 	
 	// save the state
@@ -1531,20 +1531,21 @@ Map.prototype.zoomHistoryRestore = function()
 	var values = this.fieldZoomHistory.value.split(/\s+/);
 	
 	// simple check
-	if (values.length % 3 != 1)
+	if (values.length % 4 != 1)
 		return;
 		
 	// history position
 	this.zoomHistoryPos = parseInt(values[0]);
 	
 	// history states
-	var n = (values.length - 1) / 3;
+	var n = (values.length - 1) / 4;
 	for (var i = 0; i < n; i++)
 		this.zoomHistory.push(
 			new MapZoomState(
-				parseInt(values[3*i+0]),
-				parseFloat(values[3*i+1]),
-				parseFloat(values[3*i+2])));
+				parseFloat(values[4*i+1]),
+				parseFloat(values[4*i+2]),
+				parseFloat(values[4*i+3]),
+				parseFloat(values[4*i+4])));
 
 	// let buttons know
 	this.zoomHistoryFireEvents();

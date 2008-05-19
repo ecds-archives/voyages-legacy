@@ -48,10 +48,10 @@ public class MapBean
 	private int type = -1;
 	private int attributeId = 0;
 	
-	private double mapX1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X1);
-	private double mapY1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y1);
-	private double mapX2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X2);
-	private double mapY2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y2);
+	private double mapX1;
+	private double mapY1;
+	private double mapX2;
+	private double mapY2;
 	
 	public MapBean()
 	{
@@ -64,6 +64,10 @@ public class MapBean
 		type = -1;
 		conditions = null;
 		attributeId = 0;
+		mapX1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X1);
+		mapY1 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y1);
+		mapX2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_X2);
+		mapY2 = AppConfig.getConfiguration().getDouble(AppConfig.MAP_DEFAULT_Y2);
 		setChosenMap("map-0_0");
 	}
 
