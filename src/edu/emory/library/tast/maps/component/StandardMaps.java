@@ -83,16 +83,44 @@ public class StandardMaps
 	private static ZoomLevel level1850E1 = new ZoomLevel(160, 120, -110.85, -61.82, 64, 64, 1.0/60.0,	baseMapUrl + "/tiles/estimates/1850/ports/1");;
 	
 	private static final MapIdent[] mapsEstimates = new MapIdent[] {
-		new MapIdent("geophysical", "Geophysical maps", 1501, 1867, new ZoomLevel[] {levelGeo20,levelGeoE6, levelGeoE3, levelGeoE1}, new String[] {"Geophysical map, broad regions", "Geophysical map, regions"}),
-		new MapIdent("h_1650", "Historical maps: 1650 (1501-1641)", 1501, 1641, new ZoomLevel[] {levelGeo20, level1650E6, level1650E3, level1650E1}, new String[] {"Historical map (1650), broad regions", "Historical map (1650), regions"}),
-		new MapIdent("h_1750", "Historical maps: 1750 (1642-1807)", 1642, 1807, new ZoomLevel[] {levelGeo20, level1750E6, level1750E3, level1750E1}, new String[] {"Historical map (1750), broad regions", "Historical map (1750), regions"}),
-		new MapIdent("h_1850", "Historical maps: 1850 (1808-1867)", 1808, 1867, new ZoomLevel[] {levelGeo20, level1850E6, level1850E3, level1850E1}, new String[] {"Historical map (1850), broad regions", "Historical map (1850), regions"})		
+		new MapIdent(
+				"geophysical", "All periods (1514-1866)", 1501, 1867, new ZoomLevel[] {
+				levelGeo20,
+				levelGeoE6,
+				levelGeoE3,
+				levelGeoE1}, new String[] {
+				"Broad regions",
+				"Regions"}),
+		new MapIdent("h_1650",
+				"1650 (1514-1641)", 1501, 1641, new ZoomLevel[] {
+				levelGeo20,
+				level1650E6,
+				level1650E3,
+				level1650E1}, new String[] {
+				"Broad regions",
+				"Regions"}),
+		new MapIdent("h_1750",
+				"1750 (1642-1807)", 1642, 1807, new ZoomLevel[] {
+				levelGeo20,
+				level1750E6,
+				level1750E3,
+				level1750E1}, new String[] {
+				"Broad regions",
+				"Regions"}),
+		new MapIdent("h_1850",
+				"1850 (1808-1866)", 1808, 1867, new ZoomLevel[] {
+				levelGeo20,
+				level1850E6,
+				level1850E3,
+				level1850E1}, new String[] {
+				"Broad regions",
+				"Regions"})		
 	};
 	
 	private static final MapIdent[] mapsDatabase = new MapIdent[] {
 
 		new MapIdent("geophysical",
-				"Geophysical maps",
+				"All periods (1514-1866)",
 				1501, 1867,
 				new ZoomLevel[] {
 					levelGeo20,
@@ -100,12 +128,12 @@ public class StandardMaps
 					levelGeoD3,
 					levelGeoD1},
 				new String[] {
-					"Geophysical map, broad regions", 
-					"Geophysical map, regions",
-					"Geophysical map, ports"}),
+					"Broad regions",
+					"Regions",
+					"Ports"}),
 
 		new MapIdent("h_1650",
-				"Historical maps: 1650 (1501-1641)",
+				"1650 (1514-1641)",
 				1501, 1641,
 				new ZoomLevel[] {
 					levelGeo20,
@@ -113,12 +141,12 @@ public class StandardMaps
 					level1650D3,
 					level1650D1},
 				new String[] {
-					"Historical map (1650), broad regions",
-					"Historical map (1650), regions",
-					"Historical map (1650), ports"}),
+					"Broad regions",
+					"Regions",
+					"Ports"}),
 		
 		new MapIdent("h_1750",
-				"Historical maps: 1750 (1642-1807)",
+				"1750 (1642-1807)",
 				1642, 1807,
 				new ZoomLevel[] {
 					levelGeo20,
@@ -126,12 +154,12 @@ public class StandardMaps
 					level1750D3,
 					level1750D1},
 				new String[] {
-					"Historical map (1750), broad regions",
-					"Historical map (1750), regions",
-					"Historical map (1750), ports"}),
+					"Broad regions",
+					"Regions",
+					"Ports"}),
 		
 		new MapIdent("h_1850",
-				"Historical maps: 1850 (1808-1867)",
+				"1850 (1808-1866)",
 				1808, 1867,
 				new ZoomLevel[] {
 					levelGeo20,
@@ -139,9 +167,9 @@ public class StandardMaps
 					level1850D3,
 					level1850D1},
 				new String[] {
-					"Historical map (1850), broad regions",
-					"Historical map (1850), regions",
-					"Historical map (1850), ports"})
+					"Broad regions",
+					"Regions",
+					"Ports"})
 	};
 	
 	private static Map chosenMaps = new HashMap();
