@@ -1,10 +1,6 @@
 package edu.emory.library.tast.images.site;
 
-import org.w3c.dom.Node;
-
 import edu.emory.library.tast.util.EqualsUtil;
-import edu.emory.library.tast.util.StringUtils;
-import edu.emory.library.tast.util.XMLUtils;
 
 public class ImagesQuery
 {
@@ -83,34 +79,4 @@ public class ImagesQuery
 		return query;
 	}
 	
-	public void restoreFromXML(Node entry) {
-		Node config = XMLUtils.getChildNode(entry, "config");
-		if (config != null) {
-			this.keyword = XMLUtils.getXMLProperty(config, "searchQueryTitle");
-			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchQueryFrom"))) {
-				this.yearFrom = new Integer(XMLUtils.getXMLProperty(config, "searchQueryFrom"));
-			}
-			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchQueryTo"))) {
-				this.yearTo = new Integer(XMLUtils.getXMLProperty(config, "searchQueryTo"));
-			}
-			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchPortId"))) {
-				this.searchPortId = new Long(XMLUtils.getXMLProperty(config, "searchPortId"));
-			}
-			if (!StringUtils.isNullOrEmpty(XMLUtils.getXMLProperty(config, "searchRegionId"))) {
-				this.searchRegionId = new Long(XMLUtils.getXMLProperty(config, "searchRegionId"));
-			}
-		}
-	}
-	
-	public String toXML() {
-		StringBuffer buffer = new StringBuffer();		
-		buffer.append("<config ");
-		XMLUtils.appendAttribute(buffer, "searchQueryTitle", keyword);
-		XMLUtils.appendAttribute(buffer, "searchQueryFrom", yearFrom);
-		XMLUtils.appendAttribute(buffer, "searchQueryTo", yearTo);
-		XMLUtils.appendAttribute(buffer, "searchPortId", searchPortId);
-		XMLUtils.appendAttribute(buffer, "searchRegionId", searchRegionId);
-		buffer.append("/>\n");
-		return buffer.toString();
-	}
 }
