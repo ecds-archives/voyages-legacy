@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -33,11 +34,18 @@ public class ImportFAQs
 		Class.forName("org.postgresql.Driver");
 		
 		Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);
-		Statement st = conn.createStatement();
+		conn.setAutoCommit(false);
+		
+		Statement stTruncateFaqs = conn.createStatement();
+		stTruncateFaqs.execute("DELETE FROM faqs");
+
+		Statement stTruncateCategories = conn.createStatement();
+		stTruncateCategories.execute("DELETE FROM faqs_categories");
+	
+		PreparedStatement stInsertCategory = conn.prepareStatement("INSERT INTO faqs_categories (id, name) VALUES (?, ?)");		
+		PreparedStatement stInsertFaq = conn.prepareStatement("INSERT INTO faqs (id, cat_id, question, answer) VALUES (?, ?, ?, ?)");		
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		//factory.setValidating(true);
-		//factory.setIgnoringElementContentWhitespace(true);
 
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document document = builder.parse(new File(FAQ_HTML));
@@ -49,6 +57,13 @@ public class ImportFAQs
 		StringBuffer answer = new StringBuffer();
 		Node node = body.getFirstChild();
 		
+		long cat_id = 0;
+		long faq_id = 0;
+		
+		int maxCategoryLen = 0;
+		int maxQuestionLen = 0;
+		int maxAnswerLen = 0;
+		
 		while (node != null)
 		{
 			node = XMLUtils.findSibling(node, "h1");
@@ -57,7 +72,14 @@ public class ImportFAQs
 			{
 				categoryName = XMLUtils.nodeToString(node.getFirstChild());
 				node = node.getNextSibling();
-			
+				
+				if (maxCategoryLen < categoryName.length())
+					maxCategoryLen = categoryName.length();
+				
+				stInsertCategory.setLong(1, ++cat_id);
+				stInsertCategory.setString(2, categoryName);
+				stInsertCategory.execute();
+				
 				while (!(node == null ||
 						(node.getNodeType() == Node.ELEMENT_NODE &&
 						(node.getNodeName().equals("h1")))))
@@ -79,9 +101,21 @@ public class ImportFAQs
 							node = node.getNextSibling();
 						}
 						
-						System.out.println("C: " + categoryName);
+						// System.out.println("C: " + categoryName);
 						System.out.println("Q: " + question);
-						System.out.println("A: " + answer.toString().trim());
+						// System.out.println("A: " + answer.toString().trim());
+						
+						if (maxQuestionLen < question.length())
+							maxQuestionLen = question.length();
+						
+						if (maxAnswerLen < answer.length())
+							maxAnswerLen = answer.length();
+
+						stInsertFaq.setLong(1, ++faq_id);
+						stInsertFaq.setLong(2, cat_id);
+						stInsertFaq.setString(3, question);
+						stInsertFaq.setString(4, answer.toString().trim());
+						stInsertFaq.execute();
 						
 					}
 					
@@ -90,6 +124,12 @@ public class ImportFAQs
 			}
 		
 		}
+		
+		conn.commit();
+		
+		System.out.println("max category len = " + maxCategoryLen);
+		System.out.println("max question len = " + maxQuestionLen);
+		System.out.println("max answer len   = " + maxAnswerLen);
 		
 	}
 
