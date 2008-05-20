@@ -21,7 +21,7 @@ public class MainMenu
 						"database/guide.faces"),
 				new MainMenuBarPageItem(
 						"search",
-						"Search the database",
+						"Search the Voyages database",
 						"database/search.faces"),
 				new MainMenuBarPageItem(
 						"download",
