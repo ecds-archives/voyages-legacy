@@ -35,6 +35,7 @@
 		<mapping resource="edu/emory/library/tast/dm/Source.hbm.xml"/>
 
 		<mapping resource="edu/emory/library/tast/dm/GlossaryTerm.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/FAQ.hbm.xml"/>
 
     </session-factory>
 

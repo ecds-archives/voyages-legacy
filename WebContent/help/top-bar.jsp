@@ -12,7 +12,7 @@
 		<t:div styleClass="top-bar-menu">
 			<s:panelTabSet id="helpMenu" selectedSectionId="#{HelpMenuBean.activeSection}">
 				<s:panelTab title="#{res.help_box_menu_sitemap}" sectionId="sitemap" href="sitemap.faces" />
-				<s:panelTab title="#{res.help_box_menu_faq}" sectionId="faq" href="faq.faces" />
+				<s:panelTab title="#{res.help_box_menu_faq}" sectionId="faqs" href="faq.faces" />
 				<s:panelTab title="#{res.help_box_menu_demos}" sectionId="demos" href="demos.faces" />
 				<s:panelTab title="#{res.help_box_menu_glossary}" sectionId="glossary" href="glossary.faces" />
 			</s:panelTabSet>

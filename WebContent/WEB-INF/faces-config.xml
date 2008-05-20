@@ -228,7 +228,12 @@
 	<component>
 		<component-type>SimpleBox</component-type>
 		<component-class>edu.emory.library.tast.common.SimpleBoxComponent</component-class>
-	</component>	
+	</component>
+	
+	<component>
+		<component-type>FAQList</component-type>
+		<component-class>edu.emory.library.tast.faq.FAQListComponent</component-class>
+	</component>
 
 	<managed-bean>
 		<managed-bean-name>SearchBean</managed-bean-name>
@@ -440,6 +445,12 @@
 	<managed-bean>
 		<managed-bean-name>HelpMenuBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.help.HelpMenuBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>FAQBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.faq.FAQBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 

@@ -53,11 +53,9 @@
 		</table>
 	</div>
 	
-	<div>
-		<s:glossaryList
-			id="glossary"
-			terms="#{GlossaryBean.terms}" />
-	</div>
+	<s:glossaryList
+		id="glossary"
+		terms="#{GlossaryBean.terms}" />
 
 </h:form>
 </f:view>
