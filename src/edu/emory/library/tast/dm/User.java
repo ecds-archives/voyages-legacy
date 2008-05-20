@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.tools.ant.types.CommandlineJava;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.db.TastDbConditions;

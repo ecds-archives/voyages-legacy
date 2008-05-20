@@ -2,7 +2,6 @@ package edu.emory.library.tast.common.grideditor.textbox;
 
 import java.io.IOException;
 
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;

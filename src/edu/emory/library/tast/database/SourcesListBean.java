@@ -204,7 +204,7 @@ public class SourcesListBean
 	private SimpleTableCell[][] loadDocumentarySources(Session sess)
 	{
 		
-		long start = System.currentTimeMillis();
+		//long start = System.currentTimeMillis();
 		
 		//Pattern sourceRegEx = Pattern.compile("^[^\\(\\)]+\\(([^\\,]+),\\s*([^\\,]+),\\s*([^\\,]+)\\)");
 		Pattern sourceRegEx = Pattern.compile("(<i>.+</i>)\\s*\\(([^\\,\\(\\)]+(?:,\\s*[^\\,\\(\\)]+)?),\\s*([^\\,\\(\\)]+)\\)\\s*(.*)");
@@ -363,7 +363,7 @@ public class SourcesListBean
 			
 		}
 		
-		long stop = System.currentTimeMillis();
+		//long stop = System.currentTimeMillis();
 		// System.out.println((stop - start) + " ms");
 		
 		return table;

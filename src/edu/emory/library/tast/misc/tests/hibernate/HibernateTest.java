@@ -54,9 +54,9 @@ public class HibernateTest {
 			} else if (command.equals("list")) {
 				TastDbConditions conditions = new TastDbConditions();
 				conditions.addCondition(Voyage.getAttribute("voyageId"), new Long(1), TastDbConditions.OP_EQUALS);
-				TastDbQuery val = new TastDbQuery("Voyage", conditions);
-				Object[] ret = val.executeQuery();
-				Voyage v = (Voyage)ret[0];
+				//TastDbQuery val = new TastDbQuery("Voyage", conditions);
+				//Object[] ret = val.executeQuery();
+				//Voyage v = (Voyage)ret[0];
 			} else if (command.startsWith("modify")) {
 //				Long id = new Long(command.split(" ")[1]);
 //				Voyage v = Voyage.loadMostRecent(id);

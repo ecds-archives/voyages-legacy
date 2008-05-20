@@ -8,7 +8,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.util.HibernateUtil;
 
 public class QueryTest
@@ -70,12 +69,12 @@ public class QueryTest
 	public static void main(String[] args)
 	{
 		
-		Voyage[] voyages = null;
+		//Voyage[] voyages = null;
 		
 		long startTime = System.currentTimeMillis();
 		
-		int pageSize = 100;
-		int firstRecord = 0;
+		//int pageSize = 100;
+		//int firstRecord = 0;
 //		while ((voyages = Voyage.loadAllMostRecent(firstRecord, pageSize)).length > 0)
 //		{
 //			for (int i = 0; i < voyages.length; i++)
