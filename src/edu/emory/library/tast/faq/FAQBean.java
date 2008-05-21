@@ -65,7 +65,7 @@ public class FAQBean
 		StringBuffer hql = new StringBuffer();
 		hql.append("from FAQ f left join f.category c ");
 		createHqlWhere(hql, "f", keywords);
-		hql.append(" order by c.name asc, c.id asc");
+		hql.append(" order by c.id asc, f.id asc");
 		Query query = sess.createQuery(hql.toString());
 		
 		// execute query

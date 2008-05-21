@@ -18,6 +18,11 @@ public class FAQListComponent extends UIComponentBase
 		return null;
 	}
 	
+	private String createCategoryUrlFragment(int catIdx)
+	{
+		return "faq" + catIdx;
+	}
+	
 	public void encodeBegin(FacesContext context) throws IOException
 	{
 		
@@ -31,11 +36,39 @@ public class FAQListComponent extends UIComponentBase
 
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "faq-list", null);
+		
+		writer.startElement("ul", this);
+		writer.writeAttribute("class", "faq-toc", null);
 
-		for (Iterator catIt = faqList.getCategories().iterator(); catIt.hasNext();)
+		int catIdx = 0;
+		for (Iterator catIt = faqList.getCategories().iterator(); catIt.hasNext(); catIdx++)
 		{
 			FAQListCategory cat = (FAQListCategory) catIt.next();
 			
+			writer.startElement("li", this);
+			writer.writeAttribute("class", "faq-category", null);
+			writer.startElement("a", this);
+			writer.writeAttribute("href", "#" + createCategoryUrlFragment(catIdx), null);
+			writer.write(cat.getName());
+			writer.endElement("a");
+			writer.endElement("li");
+
+		}
+
+		writer.endElement("ul");
+
+		writer.startElement("div", this);
+		writer.writeAttribute("class", "faq-main", null);
+
+		catIdx = 0;
+		for (Iterator catIt = faqList.getCategories().iterator(); catIt.hasNext(); catIdx++)
+		{
+			FAQListCategory cat = (FAQListCategory) catIt.next();
+			
+			writer.startElement("a", this);
+			writer.writeAttribute("name", createCategoryUrlFragment(catIdx), null);
+			writer.endElement("a");
+
 			writer.startElement("div", this);
 			writer.writeAttribute("class", "faq-category", null);
 			writer.write(cat.getName());
@@ -64,6 +97,8 @@ public class FAQListComponent extends UIComponentBase
 
 		}
 		
+		writer.endElement("div");
+
 		writer.endElement("div");
 
 	}
