@@ -55,7 +55,9 @@
 					distributing materials from this website, including an assessment of fair 
 					use rights in light of intended use.</p>
 					
-					<p>Please contact <a href="mailto:voyages@emory.edu">the Voyages website administrator</a>
+					<p>Please contact 
+					<a href="mailto:&#118;&#111;&#121;a&#103;&#101;s&#64;&#101;&#109;o&#114;&#121;&#46;&#101;d&#117;">
+					the Voyages website administrator</a>
 					 for information about the copyright status and any restrictions on the use of particular 
 					 images or texts. Requests for reproductions and a license to use the materials from this 
 					 website should also be directed to the administrator. Permission to reproduce or license 

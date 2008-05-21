@@ -85,7 +85,9 @@
 				</ul>
 				
 			<br>	
-			<h3>Questions about downloading or using these datasets? Please contact <a href="mailto:voyages@emory.edu">voyages@emory.edu</a>.</h3>
+			<h3>Questions about downloading or using these datasets? Please contact 
+			<a href="mailto:&#118;&#111;&#121;a&#103;&#101;s&#64;&#101;&#109;o&#114;&#121;&#46;&#101;d&#117;">
+			&#118;&#111;&#121;&#97;&#103;&#101;s&#64;&#101;mo&#114;y&#46;&#101;&#100;&#117;</a>.</h3>
 			
 	</div>
 
