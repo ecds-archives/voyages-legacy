@@ -16,7 +16,7 @@ import org.w3c.dom.NodeList;
 public class XMLUtils
 {
 	
-	public static String nodeToString(Node node) throws TransformerException
+	public static void nodeToString(Node node, StringBuffer buf) throws TransformerException
 	{
 		
 		TransformerFactory transFactory = TransformerFactory.newInstance();
@@ -28,10 +28,34 @@ public class XMLUtils
 		StreamResult sr = new StreamResult(sw);
 		transformer.transform(dSource, sr);
 		StringWriter anotherSW = (StringWriter) sr.getWriter();
-		StringBuffer sBuffer = anotherSW.getBuffer();
 		
-		return sBuffer.toString();
+		buf.append(anotherSW.getBuffer());
 		
+	}
+
+	public static String nodeToString(Node node, boolean inner) throws TransformerException
+	{
+		if (!inner)
+		{
+			return nodeToString(node);
+		}
+		else
+		{
+			StringBuffer buf = new StringBuffer();
+			NodeList nodeList = node.getChildNodes();
+			for (int i = 0; i < nodeList.getLength(); i++)
+			{
+				nodeToString(nodeList.item(i), buf);
+			}
+			return buf.toString();
+		}
+	}
+	
+	public static String nodeToString(Node node) throws TransformerException
+	{
+		StringBuffer buf = new StringBuffer();
+		nodeToString(node, buf);
+		return buf.toString();
 	}
 	
 	public static int indexOf(NodeList nodeList, String tagName, int startIdx)

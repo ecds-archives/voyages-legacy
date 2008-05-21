@@ -70,7 +70,7 @@ public class ImportFAQs
 
 			if (node != null)
 			{
-				categoryName = XMLUtils.nodeToString(node.getFirstChild());
+				categoryName = XMLUtils.nodeToString(node, true);
 				node = node.getNextSibling();
 				
 				if (maxCategoryLen < categoryName.length())
@@ -88,7 +88,7 @@ public class ImportFAQs
 					
 					if (node != null)
 					{
-						question = XMLUtils.nodeToString(node.getFirstChild());
+						question = XMLUtils.nodeToString(node, true);
 						node = node.getNextSibling();
 						
 						answer.setLength(0);
@@ -101,9 +101,7 @@ public class ImportFAQs
 							node = node.getNextSibling();
 						}
 						
-						// System.out.println("C: " + categoryName);
 						System.out.println("Q: " + question);
-						// System.out.println("A: " + answer.toString().trim());
 						
 						if (maxQuestionLen < question.length())
 							maxQuestionLen = question.length();
