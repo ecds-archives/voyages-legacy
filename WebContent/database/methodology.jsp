@@ -94,7 +94,7 @@
 					trades after 1750 are also relatively complete, and information on the earlier period for these regions is vastly 
 					greater than it was ten years ago. For a country by country assessment of the completeness of the data, readers are 
 					referred to Chapter 1 of <span onmouseover=tooltipShow() onmouseout=tooltipHide(event,"")>
-					Extending the Frontiers</span> and the spreadsheets downloadable from this web site that underpin 
+					Extending the Frontiers(i)</span> and the spreadsheets downloadable from this web site that underpin 
 					our estimates of the overall size of the slave trade. Our estimate of the total volume of slaves carried off from 
 					Africa to the Americas is 12.5 million, and that the total number of voyages that set out to obtain captives was 
 					43,600. New information will certainly emerge from the archives, but we think it unlikely that future scholars will 
@@ -181,7 +181,7 @@
 					British trade.(5) Sources</p>
 					
 					<p>Table 1. Select Summary of Information Contained in the Trans-Atlantic Slave Voyage Data Set</p>
-					<table>
+					<table style="text-align:right;">
 						<tr><td>34,941</td>
 							<td>Number of slave voyages in the data set</td></tr>
 						<tr><td>33,337</td>
