@@ -235,6 +235,26 @@ public class TableBean
 				new MessageFormat("{0,number,#,###,###}"),
 				"0"),
 				
+			new CellVariable(
+				"jamcasprAvg",
+				CellVariable.AVG,
+				"Sterling cash price in Jamaica",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("jamcaspr")), new FunctionAttribute("sum", Voyage.getAttribute("jamcaspr"))},
+				new Attribute[] {Voyage.getAttribute("jamcaspr")},
+				new String[] {"Sterling cash price in Jamaica"},
+				new MessageFormat("{0,number,#,###,##0.0}"),
+				""),
+					
+			new CellVariable(
+				"jamcasprCnt",
+				CellVariable.COUNT,
+				"Number of voyages - sterling cash price in Jamaica",
+				new Attribute[] {new FunctionAttribute("count", Voyage.getAttribute("jamcaspr"))},
+				new Attribute[] {Voyage.getAttribute("jamcaspr")},
+				new String[] {"Sterling cash price in Jamaica"},
+				new MessageFormat("{0,number,#,###,###}"),
+				"0"),
+			
 	};
 	
 	public TableBean()
