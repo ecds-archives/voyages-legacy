@@ -97,10 +97,12 @@ td.simple-box-22 {
 	background-color: White; }
 	
 td#left-column td.simple-box-22 {
-	width: 180px; }
+	padding-right: 10px;
+	width: 270px; }
+	
 	
 td#main-content td.simple-box-22 {
-	width: 670px; }
+	width: 560px; }
 
 td.simple-box-23 {
 	background-image: url(../images/database-simple-box-23.png);
@@ -147,12 +149,15 @@ td.simple-box-32 div {
 	height: 6px;
 	overflow: hidden; }
 	
+p {
+	line-height: 160%; }
+	
 td.number {
-	padding-right:20px;
+
 	text-align: right;
 }
 
-span.superscript{
+span.superscript{/*
 	vertical-align:super;
-	font-size: 6pt;
+	font-size: 6pt;*/
 }

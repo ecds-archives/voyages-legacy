@@ -94,7 +94,7 @@
 					trades after 1750 are also relatively complete, and information on the earlier period for these regions is vastly 
 					greater than it was ten years ago. For a country by country assessment of the completeness of the data, readers are 
 					referred to Chapter 1 of Extending the Frontiers <span onmouseover=tooltipShow() onmouseout=tooltipHide(event,"") 
-					class="superscript">i</span> and the spreadsheets downloadable from this web site that underpin 
+					class="superscript">(1)</span> and the spreadsheets downloadable from this web site that underpin 
 					our estimates of the overall size of the slave trade. Our estimate of the total volume of slaves carried off from 
 					Africa to the Americas is 12.5 million, and that the total number of voyages that set out to obtain captives was 
 					43,600. New information will certainly emerge from the archives, but we think it unlikely that future scholars will 
@@ -114,10 +114,10 @@
 					Leone and St. Helena as part of the attempt to suppress the trade. A further 167 sank after leaving Africa with the 
 					loss of their slaves. In all, the database contains some record of almost 80 percent of vessels disembarking captives. 
 					Of course, there are other estimates of the volume of the trans-Atlantic slave trade. If we take a higher estimate of, 
-					say, 15.4 million departures,<span class="superscript">ii</span>  then the Voyages Database documents two-thirds of all slaving voyages that sailed 
-					between 1514 and 1866.</p>
+					say, 15.4 million departures,<span class="superscript">(2)</span> then the Voyages Database documents 
+					two-thirds of all slaving voyages that sailed between 1514 and 1866.</p>
 					
-					<h2><a href="sources.faces">NATURE OF SOURCES</a></h2>					
+					<h2>Nature of Sources</h2>					
 					<p>Much of what is new in this data set lies in the sources, which call for some discussion. The published data 
 					draw on a wide range of published and archival information. Postma, Mettas, and Richardson used new material in 
 					the preparation of their published catalogues of voyages. Our data set does not reproduce all the sources that 
@@ -132,8 +132,8 @@
 					by London merchants operating independently of the Royal African Company (RAC) in the 1670s and 1680s obtained their 
 					slaves in South-east Africa, outside the RAC’s English monopoly and where the English East India Company had little 
 					physical presence. Because almost all these ships called at the Cape before beginning their trans-Atlantic journeys, 
-					several of them appear in the Dutch Cape of Good Hope archives.<span class="superscript">iii
-					</span> Portuguese ships leaving Bahia in Brazil for the "Mina" 
+					several of them appear in the Dutch Cape of Good Hope archives.<span class="superscript">(3
+					)</span> Portuguese ships leaving Bahia in Brazil for the "Mina" 
 					coast appear in English Cape Coast Castle material at the Public Record Office. Slave ships of every nationality appear 
 					in Lloyd’s Lists, and of course the hundreds of slave ships captured in the many European wars are often carefully 
 					documented in the archives of the captors, as well as in the records of the nations to which the ships belonged. Indeed, 
@@ -182,7 +182,7 @@
 					or Luanda, before they were able to reach their intended American destinations. These we included. Or even more confusing, the 
 					1,060 slaves awaiting shipment in barracoons in Ambriz, Angola, in May 1842, but carried off in British cruisers to St. Helena 
 					and Sierra Leone and never subjected to court proceedings of any kind, because they had never been on board a slave ship (excluded).
-					<span class="superscript">iv</span>
+					<span class="superscript">(4)</span>
 					Limits had to be established, but the data set provides a basis for those who disagree with those limits to use our work to create their 
 					own data sets. A total of 65 variables are made available on the search the database interface, general category, and 293 variables are 
 					available in the downloadable version of the database. , Users should note, though, that the website set combines all sources into one 
@@ -199,7 +199,7 @@
 					on which analysis can be conducted, the imputed variables produce more statistically significant results in using the options in 
 					the “Search the database” interface to create tables and custom graphs. They form the basis of the tables and graphs that users can build. </p>
 					
-					<h2>DATA VARIABLES</h2>					
+					<h2>Data Variables</h2>					
 					<p>The variables include information that, for convenience, have been grouped into eight categories: (1) vessel characteristics 
 					(name, tonnage, rig, guns, place and year of construction, owners); (2) the outcome of the voyage (3) the itinerary of the voyage; 
 					(4) the dates at which the vessel left or arrived; (5) the captain and crew of the vessel; (6) the numbers of captives; (7) the 
@@ -210,10 +210,10 @@
 					
 					<p>Generally, we attempted to preserve the written documentary record in adding to the data variables. Numeric variables, such 
 					as vessel tonnage, numbers of crew, and numbers of slaves, demanded a ranking of sources, particularly for the well-documented 
-					British trade <span class="superscript">v</span> Sources.</p>
+					British trade <span class="superscript">(5)</span> Sources.</p>
 					
 					<p>Table 1. Select Summary of Information Contained in the Trans-Atlantic Slave Voyage Data Set</p>
-					<table>
+					<table border="1">
 						<tr><td class="number">34,941</td>
 							<td>Number of slave voyages in the data set</td></tr>
 						<tr><td class="number">33,337</td>
@@ -261,7 +261,7 @@
 					For slave arrivals recorded in customs documents or shipping gazettes, we decided to use maximum totals where there was 
 					conflicting information, under the assumption that these differences might indicate deaths of slaves before slaves disembarked.</p>
 					
-					<p>Age categories must also be used with care.<span class="superscript">vi</span> 
+					<p>Age categories must also be used with care.<span class="superscript">(6)</span> 
 					The Voyages database includes variables for adult males ("men"), adult 
 					females ("women"), male children ("boys"), female children ("girls"), adults, children, and infants (reported often as 
 					"infants at the breast"). Unfortunately, age and sex definitions changed over time and among carriers. Arrivals in the 
@@ -301,7 +301,7 @@
 					or (in select cases) month of arrival, when the evidence was clear from the timing of gazette listings. Bristol and Liverpool 
 					muster rolls frequently record the dates the crew deserted ship or were discharged from pay in the Americas. For many voyages 
 					we assumed that these were arrival dates. When multiple dates were reported in the sources, the editors chose the latest dates 
-					for departures and the earliest dates for arrivals.<span class="superscript">vii</span> </p>
+					for departures and the earliest dates for arrivals.<span class="superscript">(7)</span> </p>
 					
 					<p>Orthography is also a major issue in any historical database. For most voyage entries in the new data set, we maintained 
 					the spelling or wording of the names of vessels, captains, and merchants. Exceptions include corrections of obvious mistakes 
@@ -344,7 +344,7 @@
 					<p>Ownership information contained in the French slave trade documents presents additional problems for the researcher. Unlike the 
 					British trade, in which many records of extended partnerships survive, French documents usually list single armateurs who organized 
 					slave voyages. According to Stein, an armateur was "the merchant who organized and usually financed a large part of the slaving 
-					expedition."<span class="superscript">viii</span>  
+					expedition."<span class="superscript">(8)</span>  
 					Other merchant-investors, therefore, are not recorded in the documents. In cases in which additional owners are 
 					suggested by the words "company" (Compagnie or Cie.) or "associates" (consorts), we inserted an asterisk. Many French slave 
 					voyages were organized by family members. French documents include these familial relationships: brother(s) (frères), father (père), 
@@ -378,7 +378,7 @@
 					vessel was likely a war prize. Vessels reported as "French prizes," on the other hand, may not have been built in France. These 
 					ships could in fact have been built in Britain and subsequently captured and renamed by French merchants.</p>
 					
-					<h2>IMPUTED VARIABLES</h2>
+					<h2>Imputed Variables</h2>
 					<p>The second group of variables are Imputed Variables.  In the “Search the Voyages Database” interface, users can choose 22 
 					of these imputed variables to facilitate searches. The imputed variables are derived directly from the data set. The assumptions 
 					underlying these derivations are based are explained more fully below, but mostly the derived variables are amalgamations or 
@@ -475,8 +475,8 @@
 					Dutch and British, the two nations that carried on the largest trades in African produce. We have identified produce (as opposed 
 					to slave) vessels sometimes on the basis of their voyage histories, sometimes on the known activities of their captains and 
 					sometimes on the basis of small crew-to-tonnage ratios, suggesting they were not vessels that required additional crew to control 
-					slaves.  Both the produce traders and the doubtful traders are held in a separate file and in the former case will be used as the 
-					basis for separate work on the African produce traffic. </p>
+					slaves.<span class="superscript">(9)</span> Both the produce traders and the doubtful traders are held in a separate file and in 
+					the former case will be used as the basis for separate work on the African produce traffic. </p>
 					
 					<p>Similarly, on the American side of the Atlantic, the editors often had to decide whether vessels carrying slaves 
 					were trans-Atlantic or inter-colonial slavers. For a few hundred ships arriving at ports in the Americas, doubts remain. 
@@ -534,7 +534,7 @@
 					coefficient of 0.83 (n=9,541). A similar procedure for region of trade in Africa and intended region of trade produced 
 					a Pearson product moment correlation of 0.714 (n=13,951). Ii should also be kept in mind that merchandise always had to 
 					be loaded in Europe and the Americas for a specific African region and was often impossible to sell in another region. 
-					It was unusual to find a specific manufactured good selling in more than one region.<span class="superscript">x</span> 
+					It was unusual to find a specific manufactured good selling in more than one region.<span class="superscript">(10)</span> 
 					Taken together, this evidence 
 					appears sufficiently strong to allow some modest inferences for those voyages that we know purchased slaves in Africa, 
 					or subsequently disembarked slaves in other parts of the Atlantic world, and for which the intended but not the actual 
@@ -547,7 +547,7 @@
 					From 1815, slave ships arriving in Bahia, which had strong trading relations with the Bight of Benin or Slave Coast (north 
 					of the equator), usually reported their African port of departure as Cabinda or Malemba, ports just north of the Congo. 
 					British officials in Bahia, as well as naval officers patrolling the African coast, were convinced that all Bahian ships 
-					nevertheless continued to trade on the Slave Coast.<span class="superscript">xi</span></p>
+					nevertheless continued to trade on the Slave Coast.<span class="superscript">(11)</span></p>
 					
 					<p>A second set of inferences is suggested by the data on numbers of slaves leaving Africa and arriving in the New (and 
 					in some cases, the Old) World. Although 25,288 voyages in the data set arrived with slaves, and a further 7,500 could 
@@ -569,7 +569,7 @@
 					<p>Table 2. Slaves died on board ships reaching the Americas as a percentage of those embarked, by African region 
 					of embarkation, 1527-1866 </p>
 					
-					<table>
+					<table border="1">
 					<tr>
 						<td></td>
 						<td class="number">Deaths/Embarked(%)</td>
@@ -726,7 +726,7 @@
 					both ends depending on availability, and where information has survived on both we gave precedence to 
 					the ratios at the point of disembarkation. This procedure was justified by the fact that shipboard 
 					mortality was only modestly age and sex specific, and those users who wish to eliminate these modest 
-					effects should download that database first<span class="superscript">xii</span>.</p>
+					effects should download that database first<span class="superscript">(12)</span>.</p>
 					
 					<p>We have also made some assumptions in order to project a fuller picture of national carriers in the trade. 
 					The set identifies the national affiliations of 25,570 or 73 percent of the voyages in the data set are identified. 
@@ -758,7 +758,7 @@
 					the trade was conducted over time and between major ports and carriers. The reasons for the relative unreliability 
 					of this variable begin with the differences between deadweight tonnage, tons burden (for loose-packed cargo), and 
 					freight tons (for merchandise). But even within these types, jurisdictions often had their own methods of computation.
-					<span class="superscript">xiii</span>  
+					<span class="superscript">(13)</span>  
 					Sometimes more than one method was used simultaneously, and in most countries the various methods changed over time. 
 					In England, for example, the Royal African Company, the Naval Office shipping returns, the Royal Navy, and Lloyd’s 
 					Registers of Shipping all appear to have computed tons differently until 1786, when the measured ton became standard 
@@ -770,25 +770,25 @@
 
 					<p>The standard adopted here is the one established by the British--the largest of national traders when the slave 
 					trade was at its height. Beginning in 1773, British ships were required to use measured tons as well as registered 
-					tons in their official documentation; from 1786, measured tons alone became the standard.<span class="superscript">xiv</span> 
+					tons in their official documentation; from 1786, measured tons alone became the standard.<span class="superscript">(14)</span> 
 					After 1807, slave ships were not usually of British origin, but reports of their activities originated from or were 
 					transmitted through British channels. Much of the data were converted into British tons in the process. Reports from 
 					the British Vice Admiralty Courts almost invariably list British tonnage, and in 1840 the Foreign Office instructed 
 					its overseas "observers" to give tonnages as provided in the ships’ papers where possible, as well as in British tons.
-					<span class="superscript">xv</span> Many tonnage data, however, are from non-British jurisdictions. 
+					<span class="superscript">(15)</span> Many tonnage data, however, are from non-British jurisdictions. 
 					Several independent contemporary observers suggested that the Portuguese (and Brazilian) ton was perhaps 5 percent 
-					smaller than its 1773–1835 British counterpart, and the Spanish ton 50 percent larger.<span class="superscript">xvi</span> 
+					smaller than its 1773–1835 British counterpart, and the Spanish ton 50 percent larger.<span class="superscript">(16)</span> 
 					The differences between Portuguese and British tonnage for the nineteenth century, at least, seem small enough to 
 					disregard. A regression equation is estimated for converting Spanish into British tons that suggests that the 
 					former was perhaps two-thirds larger, with the difference varying somewhat by size of ship. United States tonnages 
 					are taken to be the so-called "Custom House Measure" of 1789, which was modeled on the British formula. Although 
 					some differences existed in the application of this rule among American ports, no adjustment is made here.
-					<span class="superscript">xvii</span></p>
+					<span class="superscript">(17)</span></p>
 	
 					<p>For the period before 1786, a further regression equation is estimated for converting Royal African Company 
-					tonnages into the pre-1786 registered ton.<span class="superscript">xviii</span>  Also for this period, 
+					tonnages into the pre-1786 registered ton.<span class="superscript">(18)</span>  Also for this period, 
 					the Dutch ton, or last, is taken to be double the size of the British registered ton, and the French tonneau 
-					de mer is treated as equivalent to the British registered ton.<span class="superscript">xix</span> In addition to 
+					de mer is treated as equivalent to the British registered ton.<span class="superscript">(19)</span> In addition to 
 					these adjustments, it is, of course, necessary to convert all pre-1786 tonnages to the standard British measured 
 					ton adopted for the set. Once more the British registered-to-measured conversion formulae are called into service. 
 					There remain several tonnages for British ships between 1714 and 1786, the provenance of which we are not certain. 
@@ -803,18 +803,18 @@
 					
 					<p>One last tonnage adjustment (not made here) is required for known bias. Tonnages of French slave ships 
 					between 1784 and 1792 were inflated (that is to say the size of the ton was deflated) substantially, as the 
-					French government based their subsidy of the slave trade on tonnages.<span class="superscript">xx</span> 
+					French government based their subsidy of the slave trade on tonnages.<span class="superscript">(20)</span> 
 					The size of the bias is unknown and tonnages of French ships in this period are simply ignored in the conversion 
 					procedure. A second bias (also not made here) is apparent in Portuguese tonnages between 1815 and 1830. A 
 					Portuguese law of 1684, and clauses in the 1815 and 1817 Anglo-Portuguese slave trade treaties, limited 
 					Portuguese and later Brazilian ships to a ratio of between 2.5 and 3.5 slaves per ton, depending on the 
-					construction of the ship.<span class="superscript">xxi</span> Ratios were normally lower than this in 
+					construction of the ship.<span class="superscript">(21)</span> Ratios were normally lower than this in 
 					every branch of the trade for which data survive, and the regulation must have had little practical 
 					impact. As pressure to suppress the trade mounted in the nineteenth century and conditions on board 
 					deteriorated, it is possible that these strictures began to have some application. In any event, British 
 					officials in Brazil between 1815 and 1830 (after which the complete Brazilian trade was illegal and such 
 					regulations became moot) became convinced that the Portuguese tonnage measurements were being inflated by 
-					60 percent on average so that more slaves could be confined on board.<span class="superscript">xxii</span> 
+					60 percent on average so that more slaves could be confined on board.<span class="superscript">(22)</span> 
 					The issue cannot be resolved on the available evidence and no adjustment is made here, but users have been warned.</p>
 					
 					<p>Finally, we consider two variables that will attract more attention than most. First, we use the data variable 
@@ -824,13 +824,13 @@
 					cash price (of slaves) in Jamaica” variable (JAMCASPR), which may be used to track the price paid for slaves in 
 					the Americas as they were sold from the vessel. The Voyages Database contains prices for those on board 959 voyages. 
 					The full derivation of these data is described elsewhere, but a summary description is appropriate here.
-					<span class="superscript">xxiii</span> Prices for human beings in the Americas were subject to as many 
+					<span class="superscript">(23)</span> Prices for human beings in the Americas were subject to as many 
 					influences as were prices in any other market. Key factors included the characteristics of the person being 
 					sold, the distance between slave markets in the Americas and Africa and the price of the captive in Africa. 
 					This variable attempts to adjust for several of these factors so that the underlying price trends become 
 					apparent to the user of Voyages. In most cases the data are taken from the slave traders’ accounts and 
 					correspondence. Our first goal was to ensure that we recorded a single category of captive – what was 
-					frequently referred to at the time as “a prime male”.<span class="superscript">xxiv</span> Second, we adjusted 
+					frequently referred to at the time as “a prime male”.<span class="superscript">(24)</span> Second, we adjusted 
 					that price for the price differential between the market in which the slave was actually sold and the price in 
 					Jamaica. Thus, if the captive was sold in one of the eastern Caribbean islands we would make a small adjustment 
 					upwards to reflect the ten extra days extra sailing time it would take to reach Jamaica. Third, we converted all 
@@ -848,69 +848,107 @@
 					<p style="text-align: center;">Derivation of Estimated number of Captives Carried on Vessels in the Voyages 
 					Database for which such Information cannot be obtained from the Sources </p>
 					
-					<table>
-					</table>
+					<table border="1">
+					<tr>
+						<td>Voyage groupings for estimating imputed slaves</td>
+						<td>Average number of captives embarked</td>
+						<td>number</td>
+						<td>Sd</td>
+						<td>Average number of captives disembarked</td>
+						<td>number</td>
+						<td>sd</td>
+					</tr>
+					<tr>
+						<td>Spanish, America, pre-1626</td>
+						<td class="number">200.1</td>
+						<td class="number">202</td>
+						<td class="number">91.0</td>
+						<td class="number">166.7</td>
+						<td class="number">202</td>
+						<td class="number">91.0</td>
+					</tr>
+					<tr>
+						<td>Spanish, America, 1626-41</td>
+						<td class="number">194.0</td>
+						<td class="number">6</td>
+						<td class="number">148.6</td>
+						<td class="number">152.9</td>
+						<td class="number">148</td>
+						<td class="number">98.4</td>
+					</tr>
+					<tr>	
+						<td>Steamer</td>
+						<td class="number">897.3</td>
+						<td class="number">6</td>
+						<td class="number">259.8</td>
+						<td class="number">1004.5</td>
+						<td class="number">17</td>
+						<td class="number">399.9</td>
+					</tr>
+					</table>	
+			
 					
 					<div style="border-top: 1px solid #CCCCCC;width:180px;"></div>
-					<p><span class="superscript">i</span> David Eltis and David Richardson (eds.), Extending the Frontiers: 
-					Essays on the New Transatlantic Slave trade Database (New Haven, 2008).</p>
+					<p><span class="superscript">1</span> David Eltis and David Richardson (eds.), <font style="font-style: italic;">Extending the Frontiers: 
+					Essays on the New Transatlantic Slave trade Database</font> (New Haven, 2008).</p>
 					
-					<p><span class="superscript">ii</span> Joseph Inikori has given "a preferred global figure of 15.4 million 
+					<p><span class="superscript">2</span> Joseph Inikori has given "a preferred global figure of 15.4 million 
 					for the European slave trade." Adjusting for those carried to the offshore islands and Europe, this implies 
-					14.9 million headed for the Americas. See Cahiers d’Etudes africaines, 32 (1993):686</p>
+					14.9 million headed for the Americas. See <font style="font-style: italic;">Cahiers d’Etudes africaines</font>, 32 (1993):686</p>
 					
-					<p><span class="superscript">iii</span> H.C.V. Leibbrandt, Precis of the Archives of the Cape of Good Hope, 
-					Vol. 14, Journal 1662–1670 (Cape Town, 1901), 127–8</p>
+					<p><span class="superscript">3</span> H.C.V. Leibbrandt, <font style="font-style: italic;">Precis of the Archives of the Cape of Good Hope
+					</font>, Vol. 14, Journal 1662–1670 (Cape Town, 1901), 127–8</p>
 					
-					<p><span class="superscript">iv</span> British slave ships trading from Africa to Lisbon include the 
-					Kent (1731), the Mary (1737) and the Betsey and Hennie (1755). For sources see the data set. For the 
-					removal of slaves from Ambriz to St. Helena and Sierra Leone, see Kelly Muspratt to Aberdeen, 31 July 1843, 
+					<p><span class="superscript">4</span> British slave ships trading from Africa to Lisbon include the 
+					Kent (1731), the Mary (1737) and the <font style="font-style: italic;">Betsey</font> and <font style="font-style: italic;">Hennie</font> (1755). 
+					For sources see the data set. For the removal of slaves from Ambriz to St. Helena and Sierra Leone, see Kelly Muspratt to Aberdeen, 31 July 1843, 
 					British National Archives (henceforth BNA), FO84/501.</p>
 					
-					<p><span class="superscript">v</span> A separate discussion of tonnage is to be found below.</p>
+					<p><span class="superscript">5</span> A separate discussion of tonnage is to be found below.</p>
 					
-					<p><span class="superscript">vi</span> One frequently cited shipping list reports that there were no 
+					<p><span class="superscript">6</span> One frequently cited shipping list reports that there were no 
 					children on board several British slave voyages in the 1790s (House of Lords Record Office, House of Lords, 
 					Main Papers, 28 July 1800). This document, however, omitted to report the children embarked (cf. BNA, T70/1574; 
 					House of Lords Record Office, House of Lords, Main Papers, 14, 25 June 1799). In Luanda and Benguela Portuguese 
 					customs reports of departures for Brazil report very low numbers of children embarked. But in this instance 
 					“children” refers to infants only and was above a tax category that indicated exemption from customs duties.</p>
 					
-					<p><span class="superscript">vii</span> Mediterranean passes were issued by most European nations as a result of 
+					<p><span class="superscript">7</span> Mediterranean passes were issued by most European nations as a result of 
 					treaties with the Barbary powers. In theory, these documents allowed the vessels of the signing nation to pass 
 					freely through the "Mediterranean" waters frequented by Barbary corsairs. The passes record vessel and captain’s 
 					names, tonnage, the date the pass was issued, and intended trading location, such as "Africa" or "Africa and the 
-					Americas" or "Barbary" or "Madeira." See David Richardson, The Mediterranean Passes (Wakefield, 1981). On different 
+					Americas" or "Barbary" or "Madeira." See David Richardson, <font style="font-style: italic;">The Mediterranean Passes</font> 
+					(Wakefield, 1981). On different 
 					numbers reported in the Americas, in the date given for the arrival of slave vessels might be the date the vessel 
 					cleared customs, but in fact this could easily occur 2–4 weeks after the actual arrival.</p>
 					
-					<p><span class="superscript">viii</span> Robert Louis Stein, The French Slave Trade in the Eighteenth Century: 
-					An Old Regime Business, (Madison, Wisc, 1979), p. xv. Some armateurs also may have owned the vessel. French 
+					<p><span class="superscript">8</span> Robert Louis Stein, <font style="font-style: italic;">The French Slave Trade in the Eighteenth Century: 
+					An Old Regime Business</font>, (Madison, Wisc, 1979), p. xv. Some armateurs also may have owned the vessel. French 
 					dictionaries define armateurs firstly as those merchants who fit out the ship or expedition and secondly as 
 					(ship)owners (E. Littré, Dictionnaire de la Langue Française (Paris, 1881), I, 194).</p>
 					
-					<p><span class="superscript">ix</span> One major aid in identifying produce vessels is the Seaman’s Sixpence 
+					<p><span class="superscript">9</span> One major aid in identifying produce vessels is the Seaman’s Sixpence 
 					ledgers (BNA, ADM 68 series). One of our team, Jelmer Vos went through this large series with great care. </p>
 					
-					<p><span class="superscript">x</span> One of the most widely used contemporary surveys of African regional 
+					<p><span class="superscript">10</span> One of the most widely used contemporary surveys of African regional 
 					preferences was Lt. Edward Bold, The Merchants and Mariners’ African Guide (London, 1819). For a very detailed 
 					private record see the manuscript in the Sidney Jones Library, University of Liverpool, "Memorandum of African 
 					Trade, 1830–1840," for W.A. Maxwell and Co.</p>
 					
-					<p><span class="superscript">xi</span> See Pierre Verger, Trade Relations Between Bahia de Todos os Santos and 
-					the Bight of Benin, 17th to the 19th Century (Ibadan, 1976), pp. 358–61, and David Eltis, "The Export of Slaves 
+					<p><span class="superscript">11</span> See Pierre Verger, <font style="font-style: italic;">Trade Relations Between Bahia de Todos os Santos and 
+					the Bight of Benin, 17th to the 19th Century</font> (Ibadan, 1976), pp. 358–61, and David Eltis, "The Export of Slaves 
 					from Africa, 1820–43," Journal of Economic History, 37 (1977), 417–20, for a fuller discussion.</p>
 					
-					<p><span class="superscript">xii</span> In the downloadable version they would use the data variables 
+					<p><span class="superscript">12</span> In the downloadable version they would use the data variables 
 					“Percentage male embarked*” (MALRAT1), “Percentage male disembarked*” (MALRAT3), “Percentage children embarked*” 
 					(CHILRAT1) and “Percentage children disembarked*” (CHILRAT3) variables instead of the variables, “Percentage male*” 
 					(MALRAT7) and “Percentage children*” CHILRAT7.</p>
 					
-					<p><span class="superscript">xiii</span> For discussion of the general problem see Frederick C. Lane, "Tonnages, 
-					Medieval and Modern," Economic History Review, 17 (1964–5), 213–33.</p>
+					<p><span class="superscript">13</span> For discussion of the general problem see Frederick C. Lane, "Tonnages, 
+					Medieval and Modern," <font style="font-style: italic;">Economic History Review</font>, 17 (1964–5), 213–33.</p>
 					
-					<p><span class="superscript">xiv</span> The 1773 legislation is 13 Geo III, c. 74. See W. Salisbury, "Early 
-					Tonnage Measurements in England: I, H.M. Customs and Statutory Rules," Mariner’s Mirror, 52 (1966), 329–40. 
+					<p><span class="superscript">14</span> The 1773 legislation is 13 Geo III, c. 74. See W. Salisbury, "Early 
+					Tonnage Measurements in England: I, H.M. Customs and Statutory Rules," <font style="font-style: italic;">Mariner’s Mirror</font>, 52 (1966), 329–40. 
 					To convert registered tons into measured tons, we used the formulae in Christopher J. French, "Eighteenth 
 					Century Shipping Tonnage Measurements," Journal of Economic History, 33 (1973), 434–43. The 1786 act is 26 
 					Geo III, c. 60, and its 1835 counterpart is 5 and 6 Will IV, c. 56, which introduced different rules for 
@@ -920,41 +958,42 @@
 					Y = 52.86 + (1.22 x X)   N = 63, R² = 0.77 <br>
 					where Y = measured tons, 1773–1835, and X = measured tons after 1835.</p>
 					
-					<p><span class="superscript">xv</span> Palmerston to Kennedy, May 4, 1840 (circular dispatch), BNA, FO84/312</p>
+					<p><span class="superscript">15</span> Palmerston to Kennedy, May 4, 1840 (circular dispatch), BNA, FO84/312</p>
 					
-					<p><span class="superscript">xvi</span> H. Chamberlain to Canning, 18 Sept. 1824 (enc.), FO84/31; W. Cole and 
+					<p><span class="superscript">16</span> H. Chamberlain to Canning, 18 Sept. 1824 (enc.), FO84/31; W. Cole and 
 					H. W. Macaulay to Palmerston, 1 Jan. 1835 (enc.), BNA, FO84/169; W. W. Lewis and R. Docherty to Palmerston, 
 					9 Sept. 1837 (enc.), BNA, FO84/214; J. Barrow to Aberdeen, 16 May 1842 (enc.), BNA, FO84/439; G. Jackson and 
 					F. Grigg to Aberdeen, 2 Jan. 1841 (enc.), BNA, FO84/350.</p>
 					
-					<p><span class="superscript">xvii</span> For Spanish into British tonnage data are limited. The equation is:<br>
+					<p><span class="superscript">17</span> For Spanish into British tonnage data are limited. The equation is:<br>
 				    Y = 71 + (0.86 x X)   N = 32, R² = 0.66.<br>
 				    Where Y = British measured tons, 1773–1835, and X = Spanish tons.<br> 
-					For US and British see United States Statutes at Large, Vol. 1, p. 55. For a discussion see W. Salisbury, 
-					"Early Tonnage Measurements in England: IV, Rules Used by Shipwrights and Merchants," Mariner’s Mirror, 
+					For US and British see <font style="font-style: italic;">United States Statutes at Large</font>, Vol. 1, p. 55. For a discussion see W. Salisbury, 
+					"Early Tonnage Measurements in England: IV, Rules Used by Shipwrights and Merchants," <font style="font-style: italic;">Mariner’s Mirror</font>, 
 					53 (1967): 260–64.</p>
 					
-					<p><span class="superscript">xviii</span> See David Eltis and David Richardson, "Productivity in the 
-					Transatlantic Slave Trade," Explorations in Economic History, 32 (1995), 481, for the formula and a discussion.</p>
+					<p><span class="superscript">18</span> See David Eltis and David Richardson, "Productivity in the 
+					Transatlantic Slave Trade," <font style="font-style: italic;">Explorations in Economic History</font>, 32 (1995), 
+					481, for the formula and a discussion.</p>
 					
-					<p><span class="superscript">xix</span> See Lane, "Tonnages, Medieval and Modern," 217–33 for a discussion.</p>
+					<p><span class="superscript">19</span> See Lane, "Tonnages, Medieval and Modern," 217–33 for a discussion.</p>
 					
-					<p><span class="superscript">xx</span>  Stein, French Slave Trade, 40–1; Patrick Villiers, "The Slave and Colonial 
-					Trade in France just before the Revolution," in Babara Solow and Stanley L. Engerman (eds.), Slavery and the Rise 
-					of the Atlantic System (Cambridge, 1991), p. 228.</p>
+					<p><span class="superscript">20</span>  Stein, French Slave Trade, 40–1; Patrick Villiers, "The Slave and Colonial 
+					Trade in France just before the Revolution," in Babara Solow and Stanley L. Engerman (eds.), <font style="font-style: italic;">Slavery and the Rise 
+					of the Atlantic System</font> (Cambridge, 1991), p. 228.</p>
 					
-					<p><span class="superscript">xxi</span> See Herbert S. Klein, The Middle Passage: Comparative Studies in the Atlantic 
-					Slave Trade (Princeton, 1978), p. 29–31.</p>
+					<p><span class="superscript">21</span> See Herbert S. Klein, The <font style="font-style: italic;">Middle Passage: Comparative Studies in the Atlantic 
+					Slave Trade</font> (Princeton, 1978), p. 29–31.</p>
 					
-					<p><span class="superscript">xxii</span> See for example H. Chamberlain to Canning, 7 July 1824 (enc.), BNA, FO84/31.</p>
+					<p><span class="superscript">22</span> See for example H. Chamberlain to Canning, 7 July 1824 (enc.), BNA, FO84/31.</p>
 					
-					<p><span class="superscript">xxiii</span> David Eltis and David Richardson, ASlave Prices of Newly Arrived Africans 
-					in the Americas, 1673-1807: A Quinquennial Series," in Susan Carter, Scott Gartner et al. (eds.), Historical 
-					Statistics of the United States (Cambridge, 2006), 5: 690-1, idem, AMarkets for Newly Arrived Slaves in the 
-					Americas, 1673-1864,@ in David Eltis, Frank Lewis and Kenneth Sokoloff (eds.), Slavery in the Development of 
-					the Americas (Cambridge, 2004), pp, 183-221.</p>
+					<p><span class="superscript">23</span> David Eltis and David Richardson, ASlave Prices of Newly Arrived Africans 
+					in the Americas, 1673-1807: A Quinquennial Series," in Susan Carter, Scott Gartner et al. (eds.), <font style="text-decoration:underline">Historical 
+					Statistics of the United States</font> (Cambridge, 2006), 5: 690-1, idem, AMarkets for Newly Arrived Slaves in the 
+					Americas, 1673-1864,@ in David Eltis, Frank Lewis and Kenneth Sokoloff (eds.), <font style="text-decoration:underline">Slavery in the Development of 
+					the Americas</font> (Cambridge, 2004), pp, 183-221.</p>
 					
-					<p><span class="superscript">xxiv</span> More specifically, the price presented here is the average of the first ten 
+					<p><span class="superscript">24</span> More specifically, the price presented here is the average of the first ten 
 					males sold off the vessel.</p>				
 					
 				</s:simpleBox>
