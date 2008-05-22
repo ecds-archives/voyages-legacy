@@ -146,3 +146,13 @@ td.simple-box-32 div {
 	width: 6px;
 	height: 6px;
 	overflow: hidden; }
+	
+td.number {
+	padding-right:20px;
+	text-align: right;
+}
+
+span.superscript{
+	vertical-align:super;
+	font-size: 6pt;
+}
