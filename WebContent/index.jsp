@@ -237,7 +237,7 @@
 					<td class="featured-section-text">
 						<div class="featured-section-caption">
 							<a href="./assessment/estimates.faces">
-							Explore Estimates of the Trade
+							Examine Estimates of the Slave Trade
 							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
 							</a>
 						</div>
