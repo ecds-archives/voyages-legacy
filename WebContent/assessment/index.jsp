@@ -64,11 +64,11 @@
 		
 		<p>A third way of using the Trans-Atlantic Slave Trade Database to interpret 
 		the slave trade is to represent statistics derived from it on historical maps.  
-		A project is now underway to create an <font style="font-style: italic;">Yale Atlas of 
-		the Slave Trade</font> showing cartographically patterns and trends documented in the database.  Yale 
+		A project is now underway to create an atlas of 
+		the slave trade showing cartographically patterns and trends documented in the database.  Yale 
 		University Press, the publisher of the atlas, and Mapping Specialists, Ltd., 
 		have given the Voyages website permission to preview 9 of over 200 maps that 
-		will make up the <font style="font-style: italic;">Atlas</font>. They depict the origins of the Atlantic slave trade, 
+		will make up the atlas. They depict the origins of the Atlantic slave trade, 
 		its development over time, how wind and ocean currents shaped its routes, and 
 		how it affected regions and ports in Africa and the Americas.</p>
 
