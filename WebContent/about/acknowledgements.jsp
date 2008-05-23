@@ -224,7 +224,24 @@
 								
 							</div>
 					
-						</li>				
+						</li>			
+						<li>		
+
+							<img class="sponsor-logo" src="logos/cambridge-press.gif"
+							width="150" height="32" alt="Cambridge University Press" border="0" />
+
+							<div class="sponsor-text">
+
+								<div class="sponsor-name"><a href="http://www.cambridge.org/americas/default.asp ">Cambridge University Press</a></div>
+			
+								<div class="sponsor-desc">Cambridge University Press of New York, the publishers of the 1999 CD-ROM, 
+								The Trans-Atlantic Slave Trade: A Database on CD-ROM, provided the Voyages project with full access 
+								to the programming code and allowed us to draw on sections of the Introduction that appeared in this 
+								original publication.</div>
+								
+							</div>
+					
+						</li>		
 						<li>
 
 							<img class="sponsor-logo" src="logos/yale-press.png"
