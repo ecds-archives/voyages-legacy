@@ -19,14 +19,6 @@
 	<link href="../styles/assessment-intro-maps.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
-	
-	<script language="javascript" type="text/javascript">
-	function popitup(url) {
-		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars, location=0');
-		if (window.focus) {newwindow.focus()}
-		return false;
-	}
-	</script>
 
 </head>
 <body>
