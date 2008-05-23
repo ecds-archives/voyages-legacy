@@ -52,16 +52,17 @@
 						<span class="essay-date">August 2007</span>
 					</div>
 					
-					<p>
+					
 					<div class="essay-image-left">
-						<a href="../resources/images-detail.faces?image=mulgrave"><img src="essays-images/mulgrave.jpg" width="200" height="180" border="0" alt="Catherine Zimmermann-Mulgrave (1873)"></a>
+						<a href="../resources/images-detail.faces?image=mulgrave"><img src="essays-images/mulgrave.jpg" width="200" height="180" border="0" alt="Catherine Zimmermann-Mulgrave (1873)"/></a>
 						<div style="width: 200px;">
 							<div class="caption">
 								Catherine Zimmermann-Mulgrave (1873)
 							</div>
 						</div>
-					</div>
-					The Middle Passage experience generally marked its survivors
+					</div>			
+
+					<p style="line-height: 160%;">The Middle Passage experience generally marked its survivors
 					for life, but Catherine Zimmermann-Mulgrave gives a lesson of hope.
 					Catherine was a survivor of the Portuguese Schooner “Heroína”,
 					which wrecked off the coast of Jamaica in 1833. The vessel had
@@ -71,8 +72,8 @@
 					that only four slaves had drowned in the wreck, but many more had
 					died at sea, during the Middle Passage. (For additional details,
 					see <a href="../database/voyage.faces?voyageId=41890">VoyageID
-					41890</a>).
-					
+					41890</a>).</p>
+	
 					<p>Catherine left no accounts of her own life. Most details
 					known about her came from letters authored by her second husband,
 					Johannes Zimmermann, a missionary at Ghana from the Basel Mission
@@ -123,8 +124,7 @@
 		</table>
 	</div>
 
-</h:form>
-	
+</h:form>	
 </f:view>
 </body>
 </html>
