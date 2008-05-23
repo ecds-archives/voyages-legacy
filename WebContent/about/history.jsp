@@ -53,7 +53,7 @@
 						records of approximately 11,000 individual trans-Atlantic voyages in sixteen separate data sets, not all 
 						of which were trans-Atlantic, nor, as it turned out, slave voyages. And of course, some sets overlapped 
 						others. Several listings of voyages extracted from more than one source had appeared in hard copy form, 
-						notably three volumes of voyages from French ports published by Jean Mettas and Serge and Michle Daget 
+						notably three volumes of voyages from French ports published by Jean Mettas and Serge and Michelle Daget 
 						and two volumes of Bristol voyages (expanded to four by 1996) authored by David Richardson. The basis for 
 						each data set was usually the records of a specific European nation or the particular port where slaving 
 						voyages originated, with the information available reflecting the nature of the records that had survived 

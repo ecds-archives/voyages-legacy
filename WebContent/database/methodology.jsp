@@ -885,6 +885,33 @@
 						<td class="number">17</td>
 						<td class="number">399.9</td>
 					</tr>
+					<tr>		
+						<td>pre1716 French</td>
+						<td class="number">337.7</td>
+						<td class="number">77</td>
+						<td class="number">166.6</td>
+						<td class="number">241.5</td>
+						<td class="number">103</td>
+						<td class="number">134.0</td>
+					</tr>
+					<tr>		
+						<td>Sumaca, pre-1751</td>
+						<td class="number">211.5</td>
+						<td class="number">14</td>
+						<td class="number">68.1</td>
+						<td class="number">229.6</td>
+						<td class="number">25</td>
+						<td class="number">170.4</td>
+					</tr>
+					<tr>	
+						<td>Steamer</td>
+						<td class="number">897.3</td>
+						<td class="number">6</td>
+						<td class="number">259.8</td>
+						<td class="number">1004.5</td>
+						<td class="number">17</td>
+						<td class="number">399.9</td>
+					</tr>
 					</table>	
 			
 					
