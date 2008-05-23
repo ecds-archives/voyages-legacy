@@ -541,6 +541,13 @@
 		<managed-bean-class>edu.emory.library.tast.essays.EssaysBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>voyage-detail</from-outcome>
+			<to-view-id>/database/search.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<from-view-id>/images-list.jsp</from-view-id>
