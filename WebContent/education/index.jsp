@@ -42,7 +42,7 @@
 		located on other websites have also been identified, to help educators build a broad study of the 
 		trans-Atlantic slave trade into their curriculum. </p>
 
-		<h2><a href="lesson-plans.faces">Lesson Plan</a></h2>
+		<h2><a href="lesson-plans.faces">Lesson Plans</a></h2>
 
 		<p>In order to present the trans-Atlantic slave trade database to a broader audience, particularly 
 		a 6-12 grade audience, a dedicated team of teachers and curriculum developers from around the United 
@@ -53,13 +53,12 @@
 		Council for Geography Education) and range in both their grade levels and activities.  The lessons also 
 		suggest readings for more information about the Slave Trade.</p>
 
-		<h2><a href="others.faces">Other Resources</a></h2>
+		<h2><a href="others.faces">Web Resources</a></h2>
 
 		<p>The websites listed here provide a variety of resources, including but not limited to lesson 
-		plans, interactive maps, and narratives of enslaved Africans. To help give additional context to 
-		the Atlantic slave trade, a list of scholarly books are also provided to users.  These titles are 
-		just a few of the numerous works related to the forced migration of millions of Africans.</p>
-
+		plans, interactive maps, and narratives of enslaved Africans.</p>
+		
+<% /*
 		<h2><a href="further-reading.faces">Further Reading</a></h2>
 		
 			<ul id="further-reading">
@@ -109,7 +108,7 @@
 							<span class="title">(2001)</span>
 						</li>
 			</ul>
-		
+	*/ %>	
 		</div>
 
 </h:form>

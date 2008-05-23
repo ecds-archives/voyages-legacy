@@ -91,15 +91,7 @@ public class MainMenu
 				new MainMenuBarPageItem(
 						"education-other-resources",
 						"Other resources",
-						"education/others.faces"),
-				new MainMenuBarPageItem(
-						"education-links",
-						"Links",
-						"education/links.faces"),										
-				new MainMenuBarPageItem(
-						"education-further-reading",
-						"Further Reading",
-						"education/further-reading.faces")}),
+						"education/others.faces")}),
 	
 	new MainMenuBarSectionItem(
 			"about",

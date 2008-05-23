@@ -26,7 +26,7 @@
 	<s:siteHeader activeSectionId="lessons">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="index.faces"><h:outputText value="Educational Materials" /></h:outputLink>
-		<h:outputText value="Links to other resources" />
+		<h:outputText value="Links to web resources" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -39,7 +39,7 @@
 			<td id="education-right-column">
 				<s:simpleBox>
 				
-					<h1>Links to other resources</h1>
+					<h1>Links to web resources</h1>
 					
 					<a name="inmotionaame"></a>
 			
