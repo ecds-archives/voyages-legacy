@@ -53,7 +53,7 @@ public class MainMenu
 				new MainMenuBarPageItem(
 						"intromaps",
 						"Introductory maps",
-						"assessment/intromaps.faces")}),
+						"assessment/intro-maps.faces")}),
 						
 	new MainMenuBarSectionItem(
 			"resources",
