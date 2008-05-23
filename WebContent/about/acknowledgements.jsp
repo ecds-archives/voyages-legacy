@@ -149,7 +149,7 @@
 						<li>		
 		
 							<img class="sponsor-logo" src="logos/hull.png"
-							width="150" height="75" alt=">The Wilberforce Institute for the Study of Slavery and Emancipation (WISE) at The University of Hull" border="0" />
+							width="150" height="75" alt="The Wilberforce Institute for the Study of Slavery and Emancipation (WISE) at The University of Hull" border="0" />
 
 							<div class="sponsor-text">
 
