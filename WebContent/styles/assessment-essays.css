@@ -151,8 +151,6 @@ div.essay-note {
 	xborder-top: 1px solid Black; 
 	border-bottom: 1px solid Black;
 	padding-bottom: 10px; }	
-
 	
 p.note{
-	font-size:smaller;
-}
+	font-size:smaller; }
