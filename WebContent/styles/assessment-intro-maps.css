@@ -71,7 +71,8 @@ div.map-caption a {
 	padding: 4px 5px 4px 20px; }
 
 div.map-caption a:hover {
-	text-decoration: underline; }
+	background-image: url(../images/intro-maps-expand-selected.png);
+	color: #B8E7E8; }
 
 div.map-description {
 	margin: 15px 0px 15px 15px;	
