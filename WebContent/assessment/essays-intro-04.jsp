@@ -67,7 +67,7 @@
 					percent of the population of Lisbon was black in 1455,iii and black
 					slaves were common on large estates in the Portuguese Algarve. The
 					first slave voyage direct from Africa to the Americas probably
-					sailed in 1526.iv Before mid-century, all trans-atlantic slave ships
+					sailed in 1526.iv Before mid-century, all trans-Atlantic slave ships
 					sold their slaves in the Spanish Caribbean, with the gold mines in
 					Cibao on Hispaniola emerging as a major purchaser. Cartagena, in
 					modern Columbia, appears as the first mainland Spanish American

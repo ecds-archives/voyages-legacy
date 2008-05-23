@@ -57,7 +57,7 @@
 					<p>But why were the slaves always African? One possible answer
 					draws on the different values of societies around the Atlantic and,
 					more particularly, the way groups of people involved in creating a
-					trans-atlantic community saw themselves in relation to others – in
+					trans-Atlantic community saw themselves in relation to others – in
 					short, how they defined their identity. Ocean-going technology
 					brought Europeans into large scale face-to-face contact with
 					peoples who were culturally and physically more different from

@@ -69,7 +69,7 @@
 					adjustment could not keep pace with transportation technology. The
 					result was first the rise, and then, as perceptions of the
 					insider-outsider divide slowly changed, the fall, of the
-					trans-atlantic trade in enslaved Africans.</p>
+					trans-Atlantic trade in enslaved Africans.</p>
 
 					<p>During the long coercive interlude of forced transatlantic
 					migration European and African conceptions of self and community

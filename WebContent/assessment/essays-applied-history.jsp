@@ -88,7 +88,7 @@
 					Moreover, comparing entries from the account books of Mallet Frères
 					with vessel names in the database, it was found that this French
 					predecessor held interests in several vessels connected with the
-					trans-atlantic slave trade during the late 1700s. Examples of
+					trans-Atlantic slave trade during the late 1700s. Examples of
 					slaving vessels in which Mallet had invested included the Infant
 					d’Angole (owned by Dubois le jeune), La Dame Cécile (owned by J. R.
 					Wirtz & Cie) as well as the Madame, Henri Quatre and Madeleine (all

@@ -73,7 +73,7 @@
 
 		<h2><a href="../submission/submission-login.faces">Contribute</a></h2>
 
-		<p>TThe “Contribute” section consists of data entry forms by which 
+		<p>The “Contribute” section consists of data entry forms by which 
 		users of the website can supply new information or revise existing 
 		information on trans-Atlantic slaving voyages.  Specialists on the 
 		slave trade will review submissions of new or revised information.  

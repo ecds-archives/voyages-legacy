@@ -52,7 +52,7 @@
 						<span class="essay-date">July 2007</span>
 					</div>
 
-					<p>
+					
 					<div class="essay-image-left">
 						<a href="../resources/images-detail.faces?image=solomon"><img src="essays-images/solomon.jpg" width="150" height="170" border="0" alt="Job Ben Solomon in in the Gentleman’s Magazine (1750)"></a>
 						<div style="width: 150px;">
@@ -61,7 +61,8 @@
 							</div>
 						</div>
 					</div>
-					Before the nineteenth century, most people in the world
+					
+					<p>Before the nineteenth century, most people in the world
 					lived under some type of dependency. Slavery was just one of them.
 					The story of Ayuba Suleiman Diallo provides an insight into a world
 					where slavery was just another form of social relationship.

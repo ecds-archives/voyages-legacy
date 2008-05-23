@@ -15,7 +15,7 @@
 		<s:secondaryMenu>
 		
 			<s:secondaryMenuItem
-				label="Getting started"
+				label="Guide"
 				menuId="start"
 				href="guide.faces"/>			
 			
