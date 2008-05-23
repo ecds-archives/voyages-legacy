@@ -73,11 +73,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/1_Slave_Trade_Overview.jsp">
-									<img src="./intro-maps/01-thumb.png" width="200" height="160" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/1_Slave_Trade_Overview.jsp"><img src="./intro-maps/01-thumb.png" width="200" height="160" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/1_Slave_Trade_Overview.jsp">
 									Show detail
@@ -107,11 +103,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/2_Migration_Sugar_Cultivation.jsp">
-									<img src="./intro-maps/02-thumb.png" width="200" height="160" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/2_Migration_Sugar_Cultivation.jsp"><img src="./intro-maps/02-thumb.png" width="200" height="160" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/2_Migration_Sugar_Cultivation.jsp">
 									Show detail
@@ -138,11 +130,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/3_Old_World_SlaveTrade.jsp">
-									<img src="./intro-maps/03-thumb.png" width="200" height="160" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/3_Old_World_SlaveTrade.jsp"><img src="./intro-maps/03-thumb.png" width="200" height="160" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/3_Old_World_SlaveTrade.jsp">
 									Show detail
@@ -171,11 +159,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/4_Wind_currents.jsp">
-									<img src="./intro-maps/04-thumb.png" width="200" height="160" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/4_Wind_currents.jsp"><img src="./intro-maps/04-thumb.png" width="200" height="160" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/4_Wind_currents.jsp">
 									Show detail
@@ -202,11 +186,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/5_Atlantic_Basin.jsp">
-									<img src="./intro-maps/05-thumb.png" width="200" height="160" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/5_Atlantic_Basin.jsp"><img src="./intro-maps/05-thumb.png" width="200" height="160" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/5_Atlantic_Basin.jsp">
 									Show detail
@@ -230,11 +210,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/6_Europe_Overview.jsp">
-									<img src="./intro-maps/06-thumb.png" width="200" height="200" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/6_Europe_Overview.jsp"><img src="./intro-maps/06-thumb.png" width="200" height="200" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/6_Europe_Overview.jsp">
 									Show detail
@@ -274,11 +250,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/7_Africa_Overview.jsp">
-									<img src="./intro-maps/07-thumb.png" width="200" height="200" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/7_Africa_Overview.jsp"><img src="./intro-maps/07-thumb.png" width="200" height="200" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/7_Africa_Overview.jsp">
 									Show detail
@@ -322,11 +294,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/8_Americas_Overview.jsp">
-									<img src="./intro-maps/08-thumb.png" width="200" height="160" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/8_Americas_Overview.jsp"><img src="./intro-maps/08-thumb.png" width="200" height="160" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/8_Americas_Overview.jsp">
 									Show detail
@@ -360,11 +328,7 @@
 					<div class="map">
 					
 						<div class="map-thumbnail">
-							<div class="map-img">
-								<a href="./intro-maps/8A_Transatlantic.jsp">
-									<img src="./intro-maps/09-thumb.png" width="200" height="160" border="0" />
-								</a>
-							</div>
+							<div class="map-img"><a href="./intro-maps/8A_Transatlantic.jsp"><img src="./intro-maps/09-thumb.png" width="200" height="160" border="0" /></a></div>
 							<div class="map-caption">
 								<a href="./intro-maps/8A_Transatlantic.jsp">
 									Show detail
