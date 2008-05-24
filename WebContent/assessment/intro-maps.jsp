@@ -19,6 +19,27 @@
 	<link href="../styles/assessment-intro-maps.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	
+	<script language="javascript" type="text/javascript">
+	
+	function openImageDetail(href, width, height)
+	{
+		
+		var params = [
+			"width=" + (width + 50),
+			"height=" + (height + 60),
+			"menubar=no",
+			"resizable=yes",
+			"status=no",
+			"toolbar=no",
+			"scrollbars=yes" ];
+			
+		var win = window.open(href, "mapdetail", params.join(", "));
+		if (win) win.focus();	
+		
+	}
+	
+	</script>
 
 </head>
 <body>
@@ -72,13 +93,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/01.jsp"><img src="./intro-maps/01-thumb.png" width="200" height="160" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/01.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('intro-maps/01.jsp', 1203, 768)">
+							<div class="map-img"><img src="./intro-maps/01-thumb.png" width="200" height="160" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -102,13 +119,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/02.jsp"><img src="./intro-maps/02-thumb.png" width="200" height="160" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/02.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('intro-maps/02.jsp', 1010, 768)">
+							<div class="map-img"><img src="./intro-maps/02-thumb.png" width="200" height="160" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -129,13 +142,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/03.jsp"><img src="./intro-maps/03-thumb.png" width="200" height="160" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/03.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('./intro-maps/03.jsp', 768, 906)">
+							<div class="map-img"><img src="./intro-maps/03-thumb.png" width="200" height="160" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -158,13 +167,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/04.jsp"><img src="./intro-maps/04-thumb.png" width="200" height="160" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/04.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('./intro-maps/04.jsp', 682, 768)">
+							<div class="map-img"><img src="./intro-maps/04-thumb.png" width="200" height="160" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -185,13 +190,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/05.jsp"><img src="./intro-maps/05-thumb.png" width="200" height="160" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/05.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('./intro-maps/05.jsp', 1024, 676)">
+							<div class="map-img"><img src="./intro-maps/05-thumb.png" width="200" height="160" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -209,13 +210,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/06.jsp"><img src="./intro-maps/06-thumb.png" width="200" height="200" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/06.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('./intro-maps/06.jsp', 605, 768)">
+							<div class="map-img"><img src="./intro-maps/06-thumb.png" width="200" height="200" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -249,13 +246,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/07.jsp"><img src="./intro-maps/07-thumb.png" width="200" height="200" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/07.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('./intro-maps/07.jsp', 725, 768)">
+							<div class="map-img"><img src="./intro-maps/07-thumb.png" width="200" height="200" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -293,13 +286,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/08.jsp"><img src="./intro-maps/08-thumb.png" width="200" height="160" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/08.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('./intro-maps/08.jsp', 821, 768)">
+							<div class="map-img"><img src="./intro-maps/08-thumb.png" width="200" height="160" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">
@@ -327,13 +316,9 @@
 					
 					<div class="map">
 					
-						<div class="map-thumbnail">
-							<div class="map-img"><a href="./intro-maps/09.jsp"><img src="./intro-maps/09-thumb.png" width="200" height="160" border="0" /></a></div>
-							<div class="map-caption">
-								<a href="./intro-maps/09.jsp">
-									Show detail
-								</a>
-							</div>
+						<div class="map-thumbnail" onclick="openImageDetail('./intro-maps/09.jsp', 1024, 654)">
+							<div class="map-img"><img src="./intro-maps/09-thumb.png" width="200" height="160" border="0" /></div>
+							<div class="map-caption">Show detail</div>
 						</div>
 	
 						<div class="map-description">

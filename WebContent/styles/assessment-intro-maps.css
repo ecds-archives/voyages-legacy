@@ -52,6 +52,7 @@ h2 {
 	margin: 0px; }
 
 div.map-thumbnail {
+	cursor: pointer;
 	margin: 15px 0px 15px 0px;
 	float: left;
 	border-top: 1px solid #444444;
@@ -59,9 +60,7 @@ div.map-thumbnail {
 	border-right: 1px solid #444444; }
 	
 div.map-caption {
-	background-color: #444444; }
-
-div.map-caption a {
+	background-color: #444444;
 	display: block;
 	color: White;
 	text-decoration: none;
@@ -70,7 +69,7 @@ div.map-caption a {
 	background-position: 4px center;
 	padding: 4px 5px 4px 20px; }
 
-div.map-caption a:hover {
+div.map-thumbnail:hover div.map-caption {
 	background-image: url(../images/intro-maps-expand-selected.png);
 	color: #B8E7E8; }
 
