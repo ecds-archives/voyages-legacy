@@ -75,7 +75,7 @@
 							<s:secondaryMenuItem label="Map 3: Old World slave trade routes in the Atlantic before 1759" menuId="map3" href="#map3"/>
 							<s:secondaryMenuItem label="Map 4: Wind and ocean currents of the Atlantic basins" menuId="map4" href="#map4"/>
 							<s:secondaryMenuItem label="Map 5: Major regions and ports involved in the transatlantic slave trade, all years" menuId="map5" href="#map5"/>
-							<s:secondaryMenuItem label="Map 6: Countries and Regions in the Atlantic World where Slave Voyages were Organized, by Share of Captives Carried off from Africa" menuId="map6" href="#map6"/>
+							<s:secondaryMenuItem label="Map 6: Countries and regions in the Atlantic World where slave voyages were organized, by share of captives carried off from Africa" menuId="map6" href="#map6"/>
 							<s:secondaryMenuItem label="Map 7: Major coastal regions from which captives left Africa, all years" menuId="map7" href="#map7"/>
 							<s:secondaryMenuItem label="Map 8: Major regions where captives disembarked, all years" menuId="map8" href="#map8"/>
 							<s:secondaryMenuItem label="Map 9: Volume and direction of the transatlantic slave trade from all African to all American regions" menuId="map9" href="#map9"/>
@@ -217,9 +217,8 @@
 	
 						<div class="map-description">
 	
-							<h2>Map 6: Countries and Regions in the Atlantic World where
-							Slave Voyages were Organized, by Share of Captives Carried
-							off from Africa</h2>
+							<h2>Map 6: Countries and regions in the Atlantic World where slave
+							voyages were organized, by share of captives carried off from Africa</h2>
 		
 							<p>Slave voyages were organized and left from all major
 							Atlantic ports at some point over the nearly four centuries of the

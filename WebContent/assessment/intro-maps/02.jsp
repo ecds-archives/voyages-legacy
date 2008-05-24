@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<h1>Map 1: Overview of the slave trade out of Africa, 1500-1900</h1>
+<h1>Map 2: Migration of sugar cultivation from Asia into the Atlantic</h1>
 
 <div id="map">
 	<img

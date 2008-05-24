@@ -7,19 +7,19 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Map 6: Countries and Regions in the Atlantic World where Slave Voyages were Organized, by Share of Captives Carried off from Africa</title>
+	<title>Map 6: Countries and regions in the Atlantic World where slave voyages were organized, by share of captives carried off from Africa</title>
 	<link href="../../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../../styles/assessment-intro-map-detail.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-<h1>Map 6: Countries and Regions in the Atlantic World where Slave Voyages were Organized, by Share of Captives Carried off from Africa</h1>
+<h1>Map 6: Countries and regions in the Atlantic World where slave voyages were organized, by share of captives carried off from Africa</h1>
 
 <div id="map">
 	<img
 		src="06.jpg"
 		width="605" height="768" border="0"
-		alt="Map 6: Countries and Regions in the Atlantic World where Slave Voyages were Organized, by Share of Captives Carried off from Africa" />
+		alt="Map 6: Countries and regions in the Atlantic World where slave voyages were organized, by share of captives carried off from Africa" />
 </div>
 
 </body>
