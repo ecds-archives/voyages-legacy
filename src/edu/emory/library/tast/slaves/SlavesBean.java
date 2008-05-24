@@ -108,13 +108,19 @@ public class SlavesBean {
 
 		pager = new TableLinkManager(20);
 
-		VisibleAttributeInterface[] visibleAttrs = { VisibleAttrSlave.getAttributeForTable("id"),
-				VisibleAttrSlave.getAttributeForTable("voyageId"), VisibleAttrSlave.getAttributeForTable("name"),
-				VisibleAttrSlave.getAttributeForTable("shipname"), VisibleAttrSlave.getAttributeForTable("age"),
-				VisibleAttrSlave.getAttributeForTable("height"), VisibleAttrSlave.getAttributeForTable("datearr"),
-				VisibleAttrSlave.getAttributeForTable("source"), VisibleAttrSlave.getAttributeForTable("sexage"),
-				VisibleAttrSlave.getAttributeForTable("country"), VisibleAttrSlave.getAttributeForTable("majselpt"),
-				VisibleAttrSlave.getAttributeForTable("majbuypt") }; 
+		VisibleAttributeInterface[] visibleAttrs = {
+				VisibleAttrSlave.getAttributeForTable("id"),
+				VisibleAttrSlave.getAttributeForTable("name"),
+				VisibleAttrSlave.getAttributeForTable("age"),
+				VisibleAttrSlave.getAttributeForTable("height"),
+				VisibleAttrSlave.getAttributeForTable("sexage"),
+				VisibleAttrSlave.getAttributeForTable("country"),
+				VisibleAttrSlave.getAttributeForTable("voyageId"),
+				VisibleAttrSlave.getAttributeForTable("shipname"),
+				VisibleAttrSlave.getAttributeForTable("datearr"),
+				VisibleAttrSlave.getAttributeForTable("majbuypt"), 
+				VisibleAttrSlave.getAttributeForTable("majselpt"),
+				VisibleAttrSlave.getAttributeForTable("source") };
 
 		tableData = new TableData();
 		tableData.setKeyAttribute(Slave.getAttribute("voyageId"));
