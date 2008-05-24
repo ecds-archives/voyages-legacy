@@ -364,12 +364,6 @@ public class TableResultComponent extends UIOutput
 		return this.getClientId(context) + "_click_id";
 	}
 
-	public void encodeEnd(FacesContext context) throws IOException
-	{
-		ResponseWriter writer = context.getResponseWriter();
-		writer.endElement("div");
-	}
-
 	public void broadcast(FacesEvent event) throws AbortProcessingException
 	{
 		super.broadcast(event);

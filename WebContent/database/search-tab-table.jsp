@@ -61,7 +61,6 @@
 		styleClass="button-save"/>
 </t:htmlTag>
 
-
 <t:htmlTag value="h1" styleClass="with-subtitle" rendered="#{ListingBean.configurationMode}"><h:outputText value="List of voyages" /></t:htmlTag>
 <t:htmlTag value="div" styleClass="subtitle" rendered="#{ListingBean.configurationMode}"><h:outputText value="Configure columns" /></t:htmlTag>
 

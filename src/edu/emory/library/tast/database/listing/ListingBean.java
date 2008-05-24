@@ -940,21 +940,21 @@ public class ListingBean {
 		this.voyageBean = voyageBean;
 	}
 	
-	public String getFileCurrentData() {
+	public String getFileCurrentData()
+	{
+
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = this.getQuery(this.conditions, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
-	   System.out.println("**************************************");
-	   System.out.println(this.conditions.toString());	   
-	   System.out.println(this.linkManager.getCurrentFirstRecord());
-	   System.out.println(this.linkManager.getStep());
-		CSVUtils.writeResponse(session, q,this.conditions.toString());		
+		CSVUtils.writeResponse(session, q, this.conditions.toString());
+		
 		t.commit();
 		session.close();
+		
 		return null;
+		
 	}
-	
 	
 	public String getFileAllData() {	
 		Session session = HibernateUtil.getSession();
