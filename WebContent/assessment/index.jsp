@@ -60,7 +60,7 @@
 		totals to over 12,500,000 Africans forced to undertake the Middle Passage 
 		and around 10,700,000 who completed it, the largest forced migration in modern history.</p>
 		
-		<h2><a href="intromaps.faces">Introductory Maps</a></h2>
+		<h2><a href="intro-maps.faces">Introductory Maps</a></h2>
 		
 		<p>A third way of using the Trans-Atlantic Slave Trade Database to interpret 
 		the slave trade is to represent statistics derived from it on historical maps.  
