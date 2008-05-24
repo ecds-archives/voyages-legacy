@@ -275,7 +275,7 @@
 					<tr>
 						<td><div class="special-features-title">Special features</div></td>
 						<td style="padding-left: 20px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
-						<td style="padding-left: 5px;"><a href="./assessment/intromaps.faces">Introductory Maps</a></td>
+						<td style="padding-left: 5px;"><a href="./assessment/intro-maps.faces">Introductory Maps</a></td>
 						<td style="padding-left: 20px;"><img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" /></td>
 						<td style="padding-left: 5px;"><a href="./assessment/estimates.faces?module=timeline">Timeline and Chronology</a></td>
 					</tr>
