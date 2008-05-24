@@ -64,11 +64,9 @@
 	</t:htmlTag>
 	</t:htmlTag>
 </t:div>
-<%/*
 <t:htmlTag value="div" styleClass="estimates-table">
 	<s:simpleTable rows="#{EstimatesTableBean.table}" />
 </t:htmlTag>
-*/ %>
 <t:htmlTag value="div" style="margin-top: 5px;">
 	<t:commandButton value="Download table data" action="#{EstimatesTableBean.getFileAllData}"
 		styleClass="button-save"/>
