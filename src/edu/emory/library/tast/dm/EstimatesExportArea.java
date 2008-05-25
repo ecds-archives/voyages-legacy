@@ -11,17 +11,17 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class EstimatesImportArea extends Location
+public class EstimatesExportArea extends Location
 {
 
 	private static Map attributes = new HashMap();
 	static
 	{
-		attributes.put("id", new NumericAttribute("id", "EstimatesImportArea", NumericAttribute.TYPE_LONG));
-		attributes.put("name", new StringAttribute("name", "EstimatesImportArea"));
-		attributes.put("longitude", new NumericAttribute("longitude", "EstimatesImportArea", NumericAttribute.TYPE_FLOAT));
-		attributes.put("latitude", new NumericAttribute("latitude", "EstimatesImportArea", NumericAttribute.TYPE_FLOAT));
-		attributes.put("order", new NumericAttribute("order", "EstimatesImportArea", NumericAttribute.TYPE_INTEGER));
+		attributes.put("id", new NumericAttribute("id", "EstimatesExportArea", NumericAttribute.TYPE_LONG));
+		attributes.put("name", new StringAttribute("name", "EstimatesExportArea"));
+		attributes.put("order", new NumericAttribute("order", "EstimatesExportArea", NumericAttribute.TYPE_INTEGER));
+		attributes.put("longitude", new NumericAttribute("longitude", "EstimatesExportArea", NumericAttribute.TYPE_FLOAT));
+		attributes.put("latitude", new NumericAttribute("latitude", "EstimatesExportArea", NumericAttribute.TYPE_FLOAT));
 	}
 	
 	private Set regions;
@@ -43,24 +43,24 @@ public class EstimatesImportArea extends Location
 	
 	public static List loadAll(Session sess)
 	{
-		return Dictionary.loadAll(EstimatesImportArea.class, sess, "order");
+		return Dictionary.loadAll(EstimatesExportArea.class, sess, "order");
 	}
 	
 	public static EstimatesImportArea loadById(Session sess, long portId)
 	{
-		return (EstimatesImportArea) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
+		return (EstimatesImportArea) Dictionary.loadById(EstimatesExportArea.class, sess, portId);
 	}
 	
 	public static Area loadById(Session sess, String portId)
 	{
-		return (Area) Dictionary.loadById(EstimatesImportArea.class, sess, portId);
+		return (Area) Dictionary.loadById(EstimatesExportArea.class, sess, portId);
 	}
 
 	public boolean equals(Object that)
 	{
-		if (that instanceof EstimatesImportArea)
+		if (that instanceof EstimatesExportArea)
 		{
-			EstimatesImportArea thatArea = (EstimatesImportArea) that;
+			EstimatesExportArea thatArea = (EstimatesExportArea) that;
 			return getId().equals(thatArea.getId());
 		}
 		else

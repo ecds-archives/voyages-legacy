@@ -20,6 +20,7 @@
 		<mapping resource="edu/emory/library/tast/dm/ImageCategory.hbm.xml"/>
 
 		<mapping resource="edu/emory/library/tast/dm/Estimate.hbm.xml"/>
+		<mapping resource="edu/emory/library/tast/dm/EstimatesExportArea.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/EstimatesExportRegion.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/EstimatesImportArea.hbm.xml"/>
 		<mapping resource="edu/emory/library/tast/dm/EstimatesImportRegion.hbm.xml"/>

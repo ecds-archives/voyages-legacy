@@ -19,9 +19,11 @@ public class EstimatesImportRegion extends Location
 	{
 		attributes.put("id", new NumericAttribute("id", "EstimatesImportRegion", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesImportRegion"));
-		attributes.put("order", new NumericAttribute("order", "EstimatesImportRegion", NumericAttribute.TYPE_INTEGER));
 		attributes.put("area", new EstimatesImportAreaAttribute("area", "EstimatesImportRegion"));
+		attributes.put("order", new NumericAttribute("order", "EstimatesImportRegion", NumericAttribute.TYPE_INTEGER));
 		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "EstimatesImportRegion", NumericAttribute.TYPE_INTEGER));
+		attributes.put("longitude", new NumericAttribute("longitude", "EstimatesImportRegion", NumericAttribute.TYPE_FLOAT));
+		attributes.put("latitude", new NumericAttribute("latitude", "EstimatesImportRegion", NumericAttribute.TYPE_FLOAT));
 	}
 	
 	private EstimatesImportArea area;

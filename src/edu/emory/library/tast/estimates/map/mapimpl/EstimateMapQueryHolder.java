@@ -10,6 +10,7 @@ import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
+import edu.emory.library.tast.dm.EstimatesExportArea;
 import edu.emory.library.tast.dm.EstimatesExportRegion;
 import edu.emory.library.tast.dm.EstimatesImportArea;
 import edu.emory.library.tast.dm.EstimatesImportRegion;
@@ -21,128 +22,103 @@ import edu.emory.library.tast.maps.AbstractTransformerQueryHolder;
 import edu.emory.library.tast.maps.AttributesMap;
 import edu.emory.library.tast.maps.AttributesRange;
 
-/**
- * Class providing query for estimates map.
- * There are two groups of query - first group queries for emb/disemb. regions and the second group
- * of queries is for broad regions of emb/disemb.
- */
-public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder {
+public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder
+{
 
-	public TastDbQuery[] estimateMapQuerysAreas = null;
-	public TastDbQuery[] estimateMapQuerysRegions = null;
+	public TastDbQuery[] estimateMapQueriesAreas = null;
+	public TastDbQuery[] estimateMapQueriesRegions = null;
 
-	public EstimateMapQueryHolder(TastDbConditions conditions) {
-		
-		//Query for regions
+	public EstimateMapQueryHolder(TastDbConditions conditions)
+	{
+
+		// export regions
+
 		TastDbConditions c = new TastDbConditions();
 		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		TastDbQuery qValue1 = new TastDbQuery(new String[] { "Estimate" },
-				new String[] { "e" }, c);
-		qValue1
-				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
-						Estimate.getAttribute("expRegion"),
-						EstimatesExportRegion.getAttribute("id") }));
-		qValue1.addPopulatedAttribute(new FunctionAttribute("sum",
-				new Attribute[] { Estimate.getAttribute("slavExported") }));
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		TastDbQuery qValue1 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
+		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }));
+		qValue1.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavExported") }));
 		qValue1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}));
-		qValue1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }) });
+		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom") }));
+		qValue1.setGroupBy(new Attribute[] {
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom") }),
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }) });
+		
+		// import regions
 
 		c = new TastDbConditions();
 		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesExportRegion.getAttribute("longitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesExportRegion.getAttribute("latitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		TastDbQuery qValue2 = new TastDbQuery(new String[] { "Estimate" },
-				new String[] { "e" }, c);
-		qValue2
-				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
-						Estimate.getAttribute("impRegion"),
-						EstimatesImportRegion.getAttribute("id") }));
-		qValue2.addPopulatedAttribute(new FunctionAttribute("sum",
-				new Attribute[] { Estimate.getAttribute("slavImported") }));
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		TastDbQuery qValue2 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
+		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("id") }));
+		qValue2.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavImported") }));
 		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}));
-		qValue2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("id") }) });
-		this.estimateMapQuerysRegions = new TastDbQuery[] { qValue1, qValue2 };
+		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom") }));
+		qValue2.setGroupBy(new Attribute[] {
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom") }),
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("id") }) });
+		this.estimateMapQueriesRegions = new TastDbQuery[] { qValue1, qValue2 };
 		
-		
-		
-		//Query for broad regions
-		c = new TastDbConditions();
-		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		qValue1 = new TastDbQuery(new String[] { "Estimate" },
-				new String[] { "e" }, c);
-		qValue1
-				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
-						Estimate.getAttribute("expRegion"),
-						EstimatesExportRegion.getAttribute("id") }));
-		qValue1.addPopulatedAttribute(new FunctionAttribute("sum",
-				new Attribute[] { Estimate.getAttribute("slavExported") }));
-		qValue1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}));
-		qValue1.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }) });
+		// export areas
 
 		c = new TastDbConditions();
 		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("longitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("latitude")}),
-				new Double(0), TastDbConditions.OP_IS_NOT);
-		qValue2 = new TastDbQuery(new String[] { "Estimate" },
-				new String[] { "e" }, c);
-		qValue2
-				.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {
-						Estimate.getAttribute("impRegion"),
-						EstimatesImportRegion.getAttribute("area"),
-						EstimatesImportArea.getAttribute("id") }));
-		qValue2.addPopulatedAttribute(new FunctionAttribute("sum",
-				new Attribute[] { Estimate.getAttribute("slavImported") }));
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		qValue1 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
+		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("id") }));
+		qValue1.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavExported") }));
+		qValue1.addPopulatedAttribute(new DirectValueAttribute("2"));
+		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom") }));
+		qValue1.setGroupBy(new Attribute[] {
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showAtZoom") }),
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("id") }) });
+
+		// import areas
+
+		c = new TastDbConditions();
+		c.addCondition(conditions);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		qValue2 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
+		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("id") }));
+		qValue2.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavImported") }));
 		qValue2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}));
-		qValue2.setGroupBy(new Attribute[] {new SequenceAttribute(new Attribute[] {Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom")}), new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("id") }) });
-		this.estimateMapQuerysAreas = new TastDbQuery[] { qValue1, qValue2 };
-		
-		
-		
-		this.addQuery("", this.estimateMapQuerysAreas);
-		this.addQuery("", this.estimateMapQuerysRegions);
-		this.addQuery("", this.estimateMapQuerysRegions);
-		
+		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom") }));
+		qValue2.setGroupBy(new Attribute[] {
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showAtZoom") }),
+				new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("id") }) });
+		this.estimateMapQueriesAreas = new TastDbQuery[] { qValue1, qValue2 };
+
+		this.addQuery("", this.estimateMapQueriesAreas);
+		this.addQuery("", this.estimateMapQueriesRegions);
+		this.addQuery("", this.estimateMapQueriesRegions);
+
 	}
 
-	/**
-	 * Executes query of given type (type indcates which type of places (emb/disemb/both) should be
-	 * queried.
-	 */
-	protected void performExecuteQuery(Session session, TastDbQuery[] querySet, int type) {
+	protected void performExecuteQuery(Session session, TastDbQuery[] querySet, int type)
+	{
 		List allResults = new ArrayList();
 		AttributesMap attributes = new AttributesMap();
 		List list0 = new ArrayList();
 		List list1 = new ArrayList();
-		
-		for (int i = 0; i < querySet.length; i++) {
-			if (type != -1 && type != i) {
+
+		for (int i = 0; i < querySet.length; i++)
+		{
+			if (type != -1 && type != i)
+			{
 				continue;
 			}
 			int shift = allResults.size();
 			Object[] results = querySet[i].executeQuery(session);
 			allResults.addAll(Arrays.asList(results));
-			
-			list0.add(new AttributesRange(VisibleAttrEstimate.getAttributeForTable(i == 0 ? "expRegion" : "impRegion"),
-					shift, shift + results.length - 1));
-			
-			list1.add(new AttributesRange(VisibleAttrEstimate.getAttributeForTable(i == 0 ? "slavExported" : "slavImported"),
-					shift, shift + results.length - 1));
+
+			list0.add(new AttributesRange(VisibleAttrEstimate.getAttributeForTable(i == 0 ? "expRegion" : "impRegion"), shift, shift + results.length - 1));
+
+			list1.add(new AttributesRange(VisibleAttrEstimate.getAttributeForTable(i == 0 ? "slavExported" : "slavImported"), shift, shift + results.length - 1));
 		}
 		attributes.addColumn(list0);
 		attributes.addColumn(list1);

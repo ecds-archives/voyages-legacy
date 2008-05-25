@@ -7,23 +7,37 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.EstimatesExportAreaAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
 public class EstimatesExportRegion extends Location
 {
-
+	
 	private static Map attributes = new HashMap();
 	static
 	{
 		attributes.put("id", new NumericAttribute("id", "EstimatesExportRegion", NumericAttribute.TYPE_LONG));
 		attributes.put("name", new StringAttribute("name", "EstimatesExportRegion"));
-		attributes.put("longitude", new StringAttribute("longitude", "Port"));
-		attributes.put("latitude", new StringAttribute("latitude", "Port"));
+		attributes.put("area", new EstimatesExportAreaAttribute("area", "EstimatesExportRegion"));
 		attributes.put("order", new NumericAttribute("order", "EstimatesExportRegion", NumericAttribute.TYPE_INTEGER));
+		attributes.put("longitude", new NumericAttribute("longitude", "EstimatesExportRegion", NumericAttribute.TYPE_FLOAT));
+		attributes.put("latitude", new NumericAttribute("latitude", "EstimatesExportRegion", NumericAttribute.TYPE_FLOAT));
 		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "EstimatesExportRegion", NumericAttribute.TYPE_INTEGER));
 	}
 	
+	private EstimatesExportArea area;
+
+	public EstimatesExportArea getArea()
+	{
+		return area;
+	}
+
+	public void setArea(EstimatesExportArea area)
+	{
+		this.area = area;
+	}
+
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
@@ -43,4 +57,5 @@ public class EstimatesExportRegion extends Location
 	{
 		return (EstimatesExportRegion) Dictionary.loadById(EstimatesExportRegion.class, sess, portId);
 	}
+
 }
