@@ -12,6 +12,7 @@ import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.common.table.Grouper;
 import edu.emory.library.tast.common.table.Label;
+import edu.emory.library.tast.common.table.TableUtils;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
@@ -277,7 +278,7 @@ public class TableBean
 	}
 
 	/**
-	 * An internal method calle by {@link #refreshTable()}.
+	 * An internal method called by {@link #refreshTable()}.
 	 * {@link #refreshTable()} needs to create two groupers: one for columns and
 	 * one for rows. This method creates the instances a grouper based on the
 	 * given parameters.
@@ -290,99 +291,56 @@ public class TableBean
 	 * @param impAreas
 	 * @return
 	 */
-	private Grouper createGrouper(String groupBy, int resultIndex, List expRegions, List impRegions, List impAreas, List ports, List nations) {
-		if ("expRegion".equals(groupBy)) {
+	private Grouper createGrouper(String groupBy, int resultIndex, List expRegions, List impRegions, List impAreas, List ports, List nations)
+	{
+		if ("expRegion".equals(groupBy))
+		{
 			return new GrouperExportRegions(resultIndex, omitEmptyRowsAndColumns, expRegions);
-		} else if ("impRegion".equals(groupBy)) {
+		}
+		else if ("impRegion".equals(groupBy))
+		{
 			return new GrouperImportRegions(resultIndex, omitEmptyRowsAndColumns, impAreas);
-		} else if ("impRegionBreakdowns".equals(groupBy)) {
+		}
+		else if ("impRegionBreakdowns".equals(groupBy))
+		{
 			return new GrouperImportRegionsWithBreakdowns(resultIndex, omitEmptyRowsAndColumns, impRegions);
-		} else if (groupBy != null && groupBy.startsWith("years")) {
+		}
+		else if (groupBy != null && groupBy.startsWith("years"))
+		{
 			int period = Integer.parseInt(rowGrouping.substring(5));
 			return new GrouperYears(resultIndex, omitEmptyRowsAndColumns, period);
-		} else if ("impPorts".equals(groupBy)) {
+		}
+		else if ("impPorts".equals(groupBy))
+		{
 			return new GrouperImportPorts(resultIndex, omitEmptyRowsAndColumns, ports);
-		} else if ("expPorts".equals(groupBy)) {
+		}
+		else if ("expPorts".equals(groupBy))
+		{
 			return new GrouperExportPorts(resultIndex, omitEmptyRowsAndColumns, ports);
-		} else if ("departureBroad".equals(groupBy)) {
+		}
+		else if ("departureBroad".equals(groupBy))
+		{
 			return new GrouperBroadDepartureRegions(resultIndex, omitEmptyRowsAndColumns, impAreas);
-		} else if ("departureRegion".equals(groupBy)) {
+		}
+		else if ("departureRegion".equals(groupBy))
+		{
 			return new GrouperDepartureRegions(resultIndex, omitEmptyRowsAndColumns, expRegions);
-		} else if ("departure".equals(groupBy)) {
+		}
+		else if ("departure".equals(groupBy))
+		{
 			return new GrouperDeparturePorts(resultIndex, omitEmptyRowsAndColumns, ports);
-		} else if ("flagStar".equals(groupBy)){
+		}
+		else if ("flagStar".equals(groupBy))
+		{
 			return new GrouperNations(resultIndex, omitEmptyRowsAndColumns, nations);
-		}else {
+		}
+		else
+		{
 			throw new RuntimeException("invalid group by value");
 		}
 	}
 
-	/**
-	 * Adds column labels to {@link #table}. It is recursive because label can
-	 * be generally broken down to sub-labels.
-	 * 
-	 * @param table
-	 * @param label
-	 * @param rowIdx
-	 * @param colIdx
-	 * @param depth
-	 * @param maxDepth
-	 * @param subCols
-	 */
-	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth,
-			int maxDepth, int subCols) {
-
-		SimpleTableCell cell = new SimpleTableCell(label.getText());
-		cell.setColspan(subCols * label.getLeavesCount());
-		cell.setCssClass(CSS_CLASS_TD_LABEL);
-		if (!label.hasBreakdown())
-			cell.setRowspan(maxDepth - depth + 1);
-		table[rowIdx][colIdx] = cell;
-
-		if (label.hasBreakdown()) {
-			int colOffset = 0;
-			Label[] breakdown = label.getBreakdown();
-			for (int j = 0; j < breakdown.length; j++) {
-				addColumnLabel(table, breakdown[j], rowIdx + 1, colIdx + colOffset, depth + 1, maxDepth, subCols);
-				colOffset += subCols * breakdown[j].getLeavesCount();
-			}
-		}
-
-	}
-
-	/**
-	 * Adds column labels to {@link #table}. It is recursive because label can
-	 * be generally broken down to sub-labels.
-	 * 
-	 * @param table
-	 * @param label
-	 * @param rowIdx
-	 * @param colIdx
-	 * @param depth
-	 * @param maxDepth
-	 */
-	private void addRowLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth) {
-
-		SimpleTableCell cell = new SimpleTableCell(label.getText());
-		cell.setRowspan(label.getLeavesCount());
-		cell.setCssClass(CSS_CLASS_TD_LABEL);
-		if (!label.hasBreakdown())
-			cell.setColspan(maxDepth - depth + 1);
-		table[rowIdx][colIdx] = cell;
-
-		if (label.hasBreakdown()) {
-			int rowOffset = 0;
-			Label[] breakdown = label.getBreakdown();
-			for (int i = 0; i < breakdown.length; i++) {
-				addRowLabel(table, breakdown[i], rowIdx + rowOffset, colIdx + 1, depth + 1, maxDepth);
-				rowOffset += breakdown[i].getLeavesCount();
-			}
-		}
-
-	}
-
 	private void generateTableIfNecessary()
-	
 	{ 
 		// conditions from the left column (i.e. from select bean)
 		TastDbConditions newConditions = (TastDbConditions) searchBean.getSearchParameters().getConditions().clone();
@@ -492,7 +450,7 @@ public class TableBean
 		int colIdx = headerLeftColsCount;
 		for (int j = 0; j < colLabels.length; j++)
 		{
-			addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount, subCols);
+			TableUtils.addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount, subCols, CSS_CLASS_TD_LABEL);
 			colIdx += subCols * colLabels[j].getLeavesCount();
 		}
 
@@ -506,7 +464,7 @@ public class TableBean
 		int rowIdx = headerTopRowsCount + extraHeaderRows;
 		for (int i = 0; i < rowLabels.length; i++)
 		{
-			addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount);
+			TableUtils.addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount, CSS_CLASS_TD_LABEL);
 			rowIdx += rowLabels[i].getLeavesCount();
 		}
 

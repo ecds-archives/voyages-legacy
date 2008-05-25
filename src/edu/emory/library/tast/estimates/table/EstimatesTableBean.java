@@ -10,6 +10,7 @@ import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.common.table.Grouper;
 import edu.emory.library.tast.common.table.Label;
+import edu.emory.library.tast.common.table.TableUtils;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
@@ -101,73 +102,6 @@ public class EstimatesTableBean
 		{
 			throw new RuntimeException("invalid group by value");
 		}
-	}
-	
-	/**
-	 * Adds column labels to {@link #table}. It is recursive because label can
-	 * be generally broken down to sub-labels.
-	 * 
-	 * @param table
-	 * @param label
-	 * @param rowIdx
-	 * @param colIdx
-	 * @param depth
-	 * @param maxDepth
-	 * @param subCols
-	 */
-	private void addColumnLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth, int subCols)
-	{
-		
-		SimpleTableCell cell = new SimpleTableCell(label.getText());
-		cell.setColspan(subCols*label.getLeavesCount());
-		cell.setCssClass(CSS_CLASS_TD_LABEL);
-		if (!label.hasBreakdown()) cell.setRowspan(maxDepth - depth + 1);
-		table[rowIdx][colIdx] = cell;
-		
-		if (label.hasBreakdown())
-		{
-			int colOffset = 0;
-			Label[] breakdown = label.getBreakdown();
-			for (int j = 0; j < breakdown.length; j++)
-			{
-				addColumnLabel(table, breakdown[j], rowIdx + 1, colIdx + colOffset, depth + 1, maxDepth, subCols);
-				colOffset += subCols*breakdown[j].getLeavesCount();
-			}
-		}
-
-	}
-	
-	/**
-	 * Adds column labels to {@link #table}. It is recursive because label can
-	 * be generally broken down to sub-labels.
-
-	 * @param table
-	 * @param label
-	 * @param rowIdx
-	 * @param colIdx
-	 * @param depth
-	 * @param maxDepth
-	 */
-	private void addRowLabel(SimpleTableCell table[][], Label label, int rowIdx, int colIdx, int depth, int maxDepth)
-	{
-		
-		SimpleTableCell cell = new SimpleTableCell(label.getText());
-		cell.setRowspan(label.getLeavesCount());
-		cell.setCssClass(CSS_CLASS_TD_LABEL);
-		if (!label.hasBreakdown()) cell.setColspan(maxDepth - depth + 1);
-		table[rowIdx][colIdx] = cell;
-		
-		if (label.hasBreakdown())
-		{
-			int rowOffset = 0;
-			Label[] breakdown = label.getBreakdown();
-			for (int i = 0; i < breakdown.length; i++)
-			{
-				addRowLabel(table, breakdown[i], rowIdx + rowOffset, colIdx + 1, depth + 1, maxDepth);
-				rowOffset += breakdown[i].getLeavesCount();
-			}
-		}
-
 	}
 	
 	/**
@@ -336,7 +270,7 @@ public class EstimatesTableBean
 		int colIdx = headerLeftColsCount;
 		for (int j = 0; j < colLabels.length; j++)
 		{
-			addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount, subCols);
+			TableUtils.addColumnLabel(table, colLabels[j], 0, colIdx, 1, headerTopRowsCount, subCols, CSS_CLASS_TD_LABEL);
 			colIdx += subCols*colLabels[j].getLeavesCount();
 		}
 
@@ -350,7 +284,7 @@ public class EstimatesTableBean
 		int rowIdx = headerTopRowsCount + extraHeaderRows;
 		for (int i = 0; i < rowLabels.length; i++)
 		{
-			addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount);
+			TableUtils.addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount, CSS_CLASS_TD_LABEL);
 			rowIdx += rowLabels[i].getLeavesCount();
 		}
 
