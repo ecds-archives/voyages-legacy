@@ -446,7 +446,7 @@ public class EstimatesSelectionBean
 				else
 				{
 					selectedExpRegionIds.add(id);
-					conditionImpRegions.addCondition(regionExpIdAttr, id, TastDbConditions.OP_EQUALS);
+					conditionExpRegions.addCondition(regionExpIdAttr, id, TastDbConditions.OP_EQUALS);
 				}
 			}
 		}
