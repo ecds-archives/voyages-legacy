@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.database.listing.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.listing.formatters.SimpleAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
@@ -22,6 +21,9 @@ import edu.emory.library.tast.dm.attributes.Group;
  * 
  */
 public class TableData {
+
+	public static final int LINK_ON_ROWS = 1;
+	public static final int LINK_ON_COLUMN = 2;
 
 	/**
 	 * Default formatter - calls to string (for lists creates ['val a', ....,
@@ -69,6 +71,9 @@ public class TableData {
 	private Attribute keyAttribute = null;
 	
 	private Map rollovers = new HashMap();
+	
+	private int linkStyle = LINK_ON_ROWS;
+	private int linkColumnIndex = 0;
 	
 	/**
 	 * Container for raw data that is stored in data and additionalData.
@@ -128,41 +133,6 @@ public class TableData {
 			this.attribute = attribute;
 			this.data = data;
 			this.formatter = formatter;
-		}
-
-		/**
-		 * Gets tool tip that will be visible "onmouseover".
-		 * @param table
-		 * @return
-		 */
-		public String getToolTipText(TableData table) {
-
-			List list = new ArrayList();
-			list.add(attribute);
-			Attribute[] attributes = table.getAttributesForColumn(list, 0);
-			StringBuffer buffer = new StringBuffer();
-
-			if (attributes.length > 1) {
-
-				buffer.append("<table class=\"tooltip-class\">");
-				buffer.append("<tr><td><b>" + TastResource.getText("components_table_compoundattr") + ": ");
-				buffer.append(attribute.getUserLabelOrName()).append("</b></td></tr>");
-				for (int i = 0; i < attributes.length; i++) {
-					if (data[i] == null || "".equals(data[i])) {
-						break;
-					}
-					//Attribute attribute = attributes[i];
-					//buffer.append("<tr><td>").append(attribute.getUserLabelOrName()).append(":</td>");
-					//buffer.append("<td>").append(data[i] == null ? "" : data[i]).append("</td></tr>");
-					buffer.append("<tr><td>").append(data[i]).append("</td></tr>");
-				}
-				buffer.append("</table>");
-			} else {
-				buffer.append(attribute.getUserLabelOrName()).append(": ");
-				buffer.append(data[0] == null ? "" : data[0]);
-			}
-			return buffer.toString();
-
 		}
 
 		public String[] getDataToDisplay() {
@@ -504,6 +474,26 @@ public class TableData {
 	
 	public String getRollover(Object o) {
 		return (String)this.rollovers.get(o);
+	}
+
+	public int getLinkStyle()
+	{
+		return linkStyle;
+	}
+
+	public void setLinkStyle(int linkStyle)
+	{
+		this.linkStyle = linkStyle;
+	}
+
+	public int getLinkColumnIndex()
+	{
+		return linkColumnIndex;
+	}
+
+	public void setLinkColumnIndex(int linkColumnIndex)
+	{
+		this.linkColumnIndex = linkColumnIndex;
 	}
 
 }

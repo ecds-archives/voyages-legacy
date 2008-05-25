@@ -26,23 +26,7 @@ tr.grid-row-even td {
 		
 tr.grid-row-last {
 	border-bottom-style: none; }
-	
 
-tr.grid-row-even:hover,
-tr.grid-row-odd:hover,
-tr.grid-row-last:hover {
-	background-color: #c6e7da; }
-
-
-table.multiline-attr-table {
-}
-	
-table.multiline-attr-table td {
-	border: 0px !important;
-	padding: 0px !important;
-	white-space: nowrap;
-}
-	
 div.grid-header-text {
 	padding: 0px; }
 
@@ -125,23 +109,8 @@ td.pager-fast-back a:hover,
 td.pager-back a:hover	{
 	background-color: #E3F2EC; }
 	
-div.database-configure-columns-pane {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	margin-left: 0px;
-	margin-right: 10px;
-	border-top: 1px solid #EEDAA2;
-	border-bottom: 1px solid #EEDAA2; }
-
-div.database-configure-columns-buttons {
-	margin-left: 0px;
-	margin-right: 10px;
-	padding-top: 10px;
-	padding-bottom: 10px; }
-	
-	
 input.button-save {	
-	border:1px solid; 
+	border: 1px solid; 
 	text-decoration:none; 
 	background-color: white; 
 	border-color: #B4D6CD; 
@@ -150,3 +119,8 @@ input.button-save {
 input.button-save:hover {	
 	background-color: #B4D6CD;}
 	
+table.grid td a {
+	background-image: url(../images/resources-icon-arrow-right.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 10px; }

@@ -112,9 +112,9 @@ public class TableResultComponent extends UIOutput
 	{
 		
 		TableData data = null;
-		
 		ValueBinding vb = this.getValueBinding("data");
 		if (vb != null) data = (TableData) vb.getValue(context);
+		int columnLinkIdx = data.getLinkColumnIndex(); 
 		
 		StringBuffer rowClass = new StringBuffer();
 		TableData.DataTableItem[] rows = data.getData();
@@ -283,10 +283,10 @@ public class TableResultComponent extends UIOutput
 				if (i == rows.length - 1)
 					rowClass.append(" grid-row-last");
 
-				Object voyageId = rows[i].voyageId;
-				String voyageIdString = voyageId == null ? 
+				Object rowId = rows[i].voyageId;
+				String voyageIdString = rowId == null ? 
 					TastResource.getText("components_table_missingid") :
-					voyageId.toString();
+					rowId.toString();
 
 				String jsClick = JsfUtils.generateSubmitJS(
 						context, form,
@@ -294,7 +294,9 @@ public class TableResultComponent extends UIOutput
 
 				writer.startElement("tr", this);
 				writer.writeAttribute("class", rowClass.toString(), null);
-				if (showDetails != null) writer.writeAttribute("onclick", jsClick, null);
+
+				if (showDetails != null && data.getLinkStyle() == TableData.LINK_ON_ROWS)
+					writer.writeAttribute("onclick", jsClick, null);
 
 				Object[] columns = rows[i].dataRow;
 				for (int j = 0; j < columns.length; j++)
@@ -315,12 +317,24 @@ public class TableResultComponent extends UIOutput
 
 							if (formatted[k] == null)
 								continue;
-
+							
+							boolean linkHere =
+								showDetails != null &&
+								columnLinkIdx == j &&
+								data.getLinkStyle() == TableData.LINK_ON_COLUMN;
+							
 							Tooltip tooltip = rollovers[k] != null ?
 								tooltip = tooltips[i][j][k] : null;
 								
 							if (formatted.length > 1)
 								writer.startElement("div", this);
+							
+							if (linkHere)
+							{
+								writer.startElement("a", this);
+								writer.writeAttribute("href", "#", null);
+								writer.writeAttribute("onclick", jsClick, null);
+							}
 							
 							if (tooltip != null)
 							{
@@ -330,6 +344,9 @@ public class TableResultComponent extends UIOutput
 							}
 
 							writer.write(formatted[k]);
+
+							if (linkHere)
+								writer.endElement("a");
 
 							if (tooltip != null)
 								writer.endElement("span");

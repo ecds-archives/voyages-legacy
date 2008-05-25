@@ -791,7 +791,7 @@ public class GridEditorComponent extends UIComponentBase
 							getColumnActionActionNameFieldName(context),
 							actions[j].getName()).append(" ");
 
-					JsfUtils.appendSubmitJS(columnActionsJS, context, form);
+					JsfUtils.appendSubmitJS(columnActionsJS, context, form, true);
 
 					if (j > 0) writer.write(" | ");
 					writer.startElement("span", this);

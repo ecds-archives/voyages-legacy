@@ -64,16 +64,24 @@ public class JsfUtils
 		encodeJavaScriptBlock(component, writer, js.toString());
 	}
 
-	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form)
+	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, boolean withSaveScroll)
 	{
-		return appendSubmitJS(js, context, form, null, null);
+		return appendSubmitJS(js, context, form, null, null, withSaveScroll);
 	}
 
 	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value)
 	{
+		return appendSubmitJS(js, context, form, elementName, value, false);
+	}
+
+	public static StringBuffer appendSubmitJS(StringBuffer js, FacesContext context, UIForm form, String elementName, String value, boolean withSaveScroll)
+	{
 		
-		js.append("if (typeof(saveScrolling) == 'function') ");
-		js.append("saveScrolling('" + form.getClientId(context) + "'); ");
+		if (withSaveScroll)
+		{
+			js.append("if (typeof(saveScrolling) == 'function') ");
+			js.append("saveScrolling('" + form.getClientId(context) + "'); ");
+		}
 		
 		if (elementName != null && value != null)
 		{
@@ -116,11 +124,16 @@ public class JsfUtils
 	
 	public static String generateSubmitJS(FacesContext context, UIForm form, String elementName, String value)
 	{
-		StringBuffer js = new StringBuffer();
-		appendSubmitJS(js, context, form, elementName, value);
-		return js.toString();
+		return generateSubmitJS(context, form, elementName, value, false);
 	}
 	
+	public static String generateSubmitJS(FacesContext context, UIForm form, String elementName, String value, boolean withSaveScroll)
+	{
+		StringBuffer js = new StringBuffer();
+		appendSubmitJS(js, context, form, elementName, value, withSaveScroll);
+		return js.toString();
+	}
+
 	public static String generateHrefLocationJS(String href)
 	{
 		return "location.href = '" + href + "'";

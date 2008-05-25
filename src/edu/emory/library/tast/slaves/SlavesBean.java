@@ -165,15 +165,18 @@ public class SlavesBean {
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
 		
-		if (refreshText)
-			querySummary = new ArrayList();
+		if (refreshText) querySummary = new ArrayList();
 		TastDbConditions conditions = currentQuery.createConditions(sess, refreshText ? querySummary : null);
 
 		TastDbQuery queryTable = getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
-
+	
 		this.tableData.setData(queryTable.executeQuery(sess));
 
-		if (refreshCount) {
+		this.tableData.setLinkStyle(TableData.LINK_ON_COLUMN);
+		this.tableData.setLinkColumnIndex(6);
+
+		if (refreshCount)
+		{
 			TastDbQuery queryValueCount = new TastDbQuery(new String[] { "Slave" }, new String[] { "e" }, conditions);
 			queryValueCount.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] { Estimate.getAttribute("id") }));
 			Object[] ret = queryValueCount.executeQuery();
@@ -329,23 +332,6 @@ public class SlavesBean {
 
 	}
 
-	/**
-	 * Bound to select with the sizes of pages.
-	 * 
-	 * @return
-	 */
-//	public void setStep(String step) {
-//
-//		// get value
-//		int newStep = "all".equals(step) ? Integer.MAX_VALUE : Integer.parseInt(step);
-//
-//		// changed?
-//		if (newStep != this.pager.getStep() || this.firstVisibleRecord != this.pager.getCurrentFirstRecord()) {
-//			this.pager.setStep(newStep);
-//			loadData(false, false);
-//		}
-//
-//	}
 	public void setStep(int newStep){
 		if (newStep != this.pager.getStep() || this.firstVisibleRecord != this.pager.getCurrentFirstRecord()){
 			this.pager.setStep(newStep);
@@ -391,8 +377,10 @@ public class SlavesBean {
 	 */
 	public LookupCheckboxItem[] getExpPorts() {
 
-		String hsql = "from Port p " + "where p in (select s.majbuypt from Slave s group by s.majbuypt) "
-				+ "order by p.region.area.order, p.region.order, p.order";
+		String hsql =
+			"from Port p " +
+			"where p in (select s.majbuypt from Slave s group by s.majbuypt) " +
+			"order by p.region.area.order, p.region.order, p.order";
 
 		Session sess = HibernateUtil.getSession();
 		Transaction tran = sess.beginTransaction();
