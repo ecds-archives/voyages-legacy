@@ -13,7 +13,7 @@ import edu.emory.library.tast.common.listing.TableData.ColumnData;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.dm.attributes.Group;
 
-public class UIDetailComponent extends UIComponentBase
+public class ResultDetailComponent extends UIComponentBase
 {
 
 	public String getFamily()

@@ -11,7 +11,7 @@ import javax.faces.webapp.UIComponentTag;
  * @author Pawel Jurczyk
  *
  */
-public class DetailTag extends UIComponentTag {
+public class ResultDetailTag extends UIComponentTag {
 
 	/**
 	 * Data source.
@@ -40,7 +40,7 @@ public class DetailTag extends UIComponentTag {
 	 * Gets component type.
 	 */
 	public String getComponentType() {
-		return "VoyageDetail";
+		return "ResultDetail";
 	}
 
 	/**
