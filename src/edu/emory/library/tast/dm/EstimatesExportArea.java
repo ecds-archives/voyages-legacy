@@ -3,7 +3,6 @@ package edu.emory.library.tast.dm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.Session;
 
@@ -11,7 +10,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class EstimatesExportArea extends Location
+public class EstimatesExportArea extends EstimatesArea
 {
 
 	private static Map attributes = new HashMap();
@@ -22,18 +21,6 @@ public class EstimatesExportArea extends Location
 		attributes.put("order", new NumericAttribute("order", "EstimatesExportArea", NumericAttribute.TYPE_INTEGER));
 		attributes.put("longitude", new NumericAttribute("longitude", "EstimatesExportArea", NumericAttribute.TYPE_FLOAT));
 		attributes.put("latitude", new NumericAttribute("latitude", "EstimatesExportArea", NumericAttribute.TYPE_FLOAT));
-	}
-	
-	private Set regions;
-	
-	public Set getRegions()
-	{
-		return regions;
-	}
-
-	public void setRegions(Set regions)
-	{
-		this.regions = regions;
 	}
 	
 	public static Attribute getAttribute(String name)

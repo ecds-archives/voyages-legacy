@@ -7,7 +7,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.el.ValueBinding;
 
-import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.util.JsfUtils;
 
 public abstract class CheckboxListComponent extends UIComponentBase
@@ -113,10 +112,10 @@ public abstract class CheckboxListComponent extends UIComponentBase
 		writer.startElement("tr", this);
 
 		// label
-		writer.startElement("td", this);
-		writer.writeAttribute("class", "checkbox-list-select-deselect-all-label", null);
-		writer.write(TastResource.getText("checkbox_list_select_deselect_all"));
-		writer.endElement("td");
+//		writer.startElement("td", this);
+//		writer.writeAttribute("class", "checkbox-list-select-deselect-all-label", null);
+//		writer.write(TastResource.getText("checkbox_list_select_deselect_all"));
+//		writer.endElement("td");
 
 		// select all
 		writer.startElement("td", this);
@@ -124,7 +123,7 @@ public abstract class CheckboxListComponent extends UIComponentBase
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("onclick", selectAllJS, null);
-		writer.writeAttribute("value", "+", null);
+		writer.writeAttribute("value", "Select all", null);
 		writer.endElement("input");
 		writer.endElement("td");
 		
@@ -134,7 +133,7 @@ public abstract class CheckboxListComponent extends UIComponentBase
 		writer.startElement("input", this);
 		writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("onclick", deselectAllJS, null);
-		writer.writeAttribute("value", "-", null);
+		writer.writeAttribute("value", "Deselect all", null);
 		writer.endElement("input");
 		writer.endElement("td");
 

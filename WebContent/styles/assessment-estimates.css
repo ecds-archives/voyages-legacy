@@ -18,32 +18,39 @@ h1 {
 * selection
 ***********************************/
 
-div.import-region-list {
+div.region-title {
+	font-weight: bold;
+	margin-bottom: 5px; }
+
+div.region-list {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #9EDEE0;
 	padding-right: 5px; }
 
-div.import-region-list table.checkbox-list-table-0 {
+div.region-list table.checkbox-list-table-0 {
 	width: 100%; }
 	
-div.import-region-list td.checkbox-list-label-0 {
+div.region-list td.checkbox-list-label-0 {
 	width: 100%; }
 
-div.import-region-list td.checkbox-list-label-0-expandable {
+div.region-list td.checkbox-list-label-0-expandable {
 	width: 100%;
 	background-image: url(../images/assessment-icon-arrow-right.png);
 	background-repeat: no-repeat;
 	background-position: center right; }
 
-div.import-region-list td.checkbox-list-label-1 {
+div.region-list td.checkbox-list-label-1 {
 	padding-right: 10px; }
 
-div.import-region-list tr.checkbox-list-item-0-active {
+div.region-list tr.checkbox-list-item-0-active {
 	background-color: #9EDEE0; }
 	
-div.import-region-list tr.checkbox-list-item-1-active {
+div.region-list tr.checkbox-list-item-1-active {
 	padding-right: 5px;
 	background-color: #9EDEE0; }
 
-div.import-region-list div.checkbox-list-popup {
+div.region-list div.checkbox-list-popup {
 	z-index: 1;
 	border: 1px solid #115676;
 	background-color: White;
@@ -52,8 +59,8 @@ div.import-region-list div.checkbox-list-popup {
 	left: 230px;
 	position: absolute; }
 	
-td.checkbox-list-select-deselect-all-label {
-	padding-right: 5px; }
+table.checkbox-list-select-deselect-all {
+	margin-top: 5px; }
 
 td.checkbox-list-select-all {
 	padding-right: 5px; }

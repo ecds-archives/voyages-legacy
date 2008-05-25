@@ -11,7 +11,7 @@ import edu.emory.library.tast.dm.attributes.EstimatesExportAreaAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
-public class EstimatesExportRegion extends Location
+public class EstimatesExportRegion extends EstimatesRegion
 {
 	
 	private static Map attributes = new HashMap();
@@ -27,7 +27,7 @@ public class EstimatesExportRegion extends Location
 	}
 	
 	private EstimatesExportArea area;
-
+	
 	public EstimatesExportArea getArea()
 	{
 		return area;
@@ -37,7 +37,12 @@ public class EstimatesExportRegion extends Location
 	{
 		this.area = area;
 	}
-
+	
+	public EstimatesArea getAbstractArea()
+	{
+		return area;
+	}
+	
 	public static Attribute getAttribute(String name)
 	{
 		return (Attribute)attributes.get(name);
