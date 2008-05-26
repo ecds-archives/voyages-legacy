@@ -8,6 +8,7 @@ import java.util.Set;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 
@@ -24,9 +25,21 @@ public class Area extends Location
 		attributes.put("regions", new NumericAttribute("regions", "Area", NumericAttribute.TYPE_LONG));
 		attributes.put("order", new NumericAttribute("order", "Area", NumericAttribute.TYPE_INTEGER));
 		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "Area", NumericAttribute.TYPE_INTEGER));
+		attributes.put("showOnMap", new BooleanAttribute("showOnMap", "Area"));
 	}
 	
 	private Set regions;
+	private boolean showOnMap;
+
+	public boolean isShowOnMap()
+	{
+		return showOnMap;
+	}
+
+	public void setShowOnMap(boolean showOnMap)
+	{
+		this.showOnMap = showOnMap;
+	}
 
 	public Set getRegions()
 	{

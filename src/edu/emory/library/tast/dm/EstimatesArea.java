@@ -6,7 +6,18 @@ public class EstimatesArea extends Location
 {
 	
 	private Set regions;
+	private boolean showOnMap;
 	
+	public boolean isShowOnMap()
+	{
+		return showOnMap;
+	}
+
+	public void setShowOnMap(boolean showOnMap)
+	{
+		this.showOnMap = showOnMap;
+	}
+
 	public Set getRegions()
 	{
 		return regions;

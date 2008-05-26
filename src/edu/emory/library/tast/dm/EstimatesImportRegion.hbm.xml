@@ -18,6 +18,7 @@
 		<property name="name" column="name" />
 		<property name="order" column="order_num" />
 		<property name="showAtZoom" column="show_at_zoom" />
+		<property name="showOnMap" column="show_on_map" />
 		
 		<many-to-one name="area" column="area_id" />
 

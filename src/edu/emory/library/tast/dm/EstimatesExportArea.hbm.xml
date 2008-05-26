@@ -17,6 +17,7 @@
 		<property name="latitude" />
 		<property name="longitude" />
 		<property name="showAtZoom" column="show_at_zoom" />
+		<property name="showOnMap" column="show_on_map" />
 
 		<set name="regions" inverse="true" order-by="order_num asc">
 			<key column="area_id" />

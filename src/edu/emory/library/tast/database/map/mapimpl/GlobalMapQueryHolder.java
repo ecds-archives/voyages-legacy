@@ -48,8 +48,6 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		
 		//Query for ports
 		querySetPorts = new TastDbQuery[2];
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showOnMainMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
 		TastDbQuery query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
@@ -70,8 +68,6 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
 		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("showOnMainMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
 		TastDbQuery query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
@@ -94,8 +90,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("showOnMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
 		query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
@@ -115,8 +110,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("showOnMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
 		query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
@@ -138,8 +132,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("showOnMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
 		query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
@@ -157,8 +150,7 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		if (!conditions.isEmpty()) {
 			c.addCondition(conditions);
 		}
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("latitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
-		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("longitude")}), new Double(0), TastDbConditions.OP_NOT_EQUALS);
+		c.addCondition(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("showOnMap")}), new Boolean(true), TastDbConditions.OP_EQUALS);
 		query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));

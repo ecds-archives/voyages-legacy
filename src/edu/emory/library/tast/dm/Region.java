@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -34,11 +35,13 @@ public class Region extends LocationWithImages
 		attributes.put("area", new AreaAttribute("area", "Region"));
 		attributes.put("order", new NumericAttribute("order", "Region", NumericAttribute.TYPE_INTEGER));
 		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "Region", NumericAttribute.TYPE_INTEGER));
+		attributes.put("showOnMap", new BooleanAttribute("showOnMap", "Region"));
 	}
 	
 	private Set ports;
 	private Area area;
 	private int order;
+	private boolean showOnMap;
 	
 	public Area getArea()
 	{
@@ -160,6 +163,16 @@ public class Region extends LocationWithImages
 		transaction.commit();
 		sess.close();
 		
+	}
+
+	public boolean isShowOnMap()
+	{
+		return showOnMap;
+	}
+
+	public void setShowOnMap(boolean showOnMap)
+	{
+		this.showOnMap = showOnMap;
 	}
 	
 //	public static void main(String[] args)

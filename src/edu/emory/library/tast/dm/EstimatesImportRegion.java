@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesImportAreaAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
@@ -24,6 +25,7 @@ public class EstimatesImportRegion extends EstimatesRegion
 		attributes.put("showAtZoom", new NumericAttribute("showAtZoom", "EstimatesImportRegion", NumericAttribute.TYPE_INTEGER));
 		attributes.put("longitude", new NumericAttribute("longitude", "EstimatesImportRegion", NumericAttribute.TYPE_FLOAT));
 		attributes.put("latitude", new NumericAttribute("latitude", "EstimatesImportRegion", NumericAttribute.TYPE_FLOAT));
+		attributes.put("showOnMap", new BooleanAttribute("showOnMap", "EstimatesImportRegion"));
 	}
 
 	private EstimatesImportArea area;

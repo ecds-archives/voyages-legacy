@@ -13,11 +13,10 @@
 		</id>
 		
 		<property name="name" />
-
 		<property name="latitude" />
 		<property name="longitude" />
 		<property name="showAtZoom" column="show_at_zoom" />
-
+		<property name="showOnMap" column="show_on_map" />
 		<property name="order" column="order_num" />
 
 		<set name="regions" inverse="true" order-by="order_num asc">

@@ -35,8 +35,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder
 
 		TastDbConditions c = new TastDbConditions();
 		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("showOnMap") }), new Boolean(true), TastDbConditions.OP_EQUALS);
 		TastDbQuery qValue1 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
 		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("id") }));
 		qValue1.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavExported") }));
@@ -50,8 +49,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder
 
 		c = new TastDbConditions();
 		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("showOnMap") }), new Boolean(true), TastDbConditions.OP_EQUALS);
 		TastDbQuery qValue2 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
 		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("id") }));
 		qValue2.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavImported") }));
@@ -66,8 +64,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder
 
 		c = new TastDbConditions();
 		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("showOnMap") }), new Boolean(true), TastDbConditions.OP_EQUALS);
 		qValue1 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
 		qValue1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("expRegion"), EstimatesExportRegion.getAttribute("area"), EstimatesExportArea.getAttribute("id") }));
 		qValue1.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavExported") }));
@@ -81,8 +78,7 @@ public class EstimateMapQueryHolder extends AbstractTransformerQueryHolder
 
 		c = new TastDbConditions();
 		c.addCondition(conditions);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("longitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
-		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("latitude") }), new Double(0), TastDbConditions.OP_IS_NOT);
+		c.addCondition(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("showOnMap") }), new Boolean(true), TastDbConditions.OP_EQUALS);
 		qValue2 = new TastDbQuery(new String[] { "Estimate" }, new String[] { "e" }, c);
 		qValue2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] { Estimate.getAttribute("impRegion"), EstimatesImportRegion.getAttribute("area"), EstimatesImportArea.getAttribute("id") }));
 		qValue2.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Estimate.getAttribute("slavImported") }));
