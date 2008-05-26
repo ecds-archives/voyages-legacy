@@ -8,6 +8,7 @@ import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
@@ -48,6 +49,8 @@ public class VariableListBean
 		}
 		
 		hql.append(" FROM voyages v");
+		hql.append(" WHERE v.revision = ");
+		hql.append(AppConfig.getConfiguration().getString(AppConfig.DEFAULT_REVISION));
 		
 		Session sess = HibernateUtil.getSession();
 		Transaction transaction = sess.beginTransaction();
