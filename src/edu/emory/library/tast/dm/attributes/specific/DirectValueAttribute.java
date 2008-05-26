@@ -4,52 +4,64 @@ import java.util.Map;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
 
-public class DirectValueAttribute extends Attribute {
+public class DirectValueAttribute extends Attribute
+{
 
 	Object value;
-	
-	public DirectValueAttribute(String value) {
-		super(value, null);
+
+	public DirectValueAttribute(Object value)
+	{
+		super(null, null);
 		this.value = value;
 	}
 
-	public DirectValueAttribute(String name, Object value) {
+	public DirectValueAttribute(String name, Object value)
+	{
 		super(name, null);
 		this.value = value;
 	}
 
-	public String getTypeDisplayName() {
-		// TODO Auto-generated method stub
+	public String getTypeDisplayName()
+	{
 		return null;
 	}
 
-	public boolean isOuterjoinable() {
+	public boolean isOuterjoinable()
+	{
 		return false;
 	}
 
-	public String getHQLSelectPath(Map bindings) {
+	public String getHQLSelectPath(Map bindings)
+	{
 		StringBuffer buffer = new StringBuffer();
-		if (this.value instanceof String) {
+		if (this.value instanceof String)
+		{
 			buffer.append("'").append(value).append("'");
-		} else {
+		}
+		else
+		{
 			buffer.append(value);
 		}
 		return buffer.toString();
 	}
 
-	public String getHQLWherePath(Map bindings) {
+	public String getHQLWherePath(Map bindings)
+	{
 		return this.getHQLSelectPath(bindings);
 	}
-	
-	public String getHQLParamName() {
+
+	public String getHQLParamName()
+	{
 		return getName();
 	}
-	
-	public String getHQLOuterJoinPath(Map bindings) {
+
+	public String getHQLOuterJoinPath(Map bindings)
+	{
 		return null;
 	}
 
-	public Object getValueToCondition(Object value) {
+	public Object getValueToCondition(Object value)
+	{
 		return value;
 	}
 }
