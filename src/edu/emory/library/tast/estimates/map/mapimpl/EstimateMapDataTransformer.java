@@ -22,6 +22,8 @@ import edu.emory.library.tast.util.StringUtils;
 
 public class EstimateMapDataTransformer extends AbstractDataTransformer {
 
+	private static int DOUBLE_COLOR = 5;
+	
 	private static final int CIRCLE_RANGES = 5;
 
 	MessageFormat valuesFormat = new MessageFormat("{0,number,#,###,###}");
@@ -61,12 +63,19 @@ public class EstimateMapDataTransformer extends AbstractDataTransformer {
 
 			if (min > numberExp) min = numberExp;
 			if (max < numberExp) max = numberExp;
-
-			MapItemElement expElement = new MapItemElement(this.getAttribute(i, 1));
-			expElement.addElement(element);
-			expDataItem.addMapItemElement(expElement);
-			expDataItem.setColor(color);
-			mapDataItems.add(expDataItem);
+			
+			int index;
+			if ((index = mapDataItems.indexOf(expDataItem)) != -1) {
+				EstimateMapDataItem item = (EstimateMapDataItem) mapDataItems.get(index);
+				item.getMapItemElements()[0].addElement(element);
+				item.setColor(DOUBLE_COLOR);
+			} else {
+				MapItemElement expElement = new MapItemElement(this.getAttribute(i, 1));
+				expElement.addElement(element);
+				expDataItem.addMapItemElement(expElement);
+				expDataItem.setColor(color);
+				mapDataItems.add(expDataItem);
+			}
 
 		}
 

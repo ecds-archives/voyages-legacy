@@ -147,14 +147,9 @@ public abstract class AbstractMapItem {
 	 * Compares coordinates of map item.
 	 */
 	public boolean equals(Object o) {
-		if (!(o instanceof AbstractMapItem)) {
-			return false;
-		}
+		if (!(o instanceof AbstractMapItem)) return false;
 		AbstractMapItem that = (AbstractMapItem)o;
 		boolean ret = this.x == that.x && this.y == that.y;
-//		if (ret) {
-//			System.out.println("EQUALS!!!");
-//		}
 		return ret;
 	}
 
