@@ -14,7 +14,7 @@ public abstract class Grouper
 	public abstract int lookupIndex(Object[] dataRow);
 
 	public abstract Label[] getLabels();
-	public abstract int getLeaveLabelsCount();
+	public abstract int getLeafLabelsCount();
 	public abstract int getBreakdownDepth();
 	
 	public Grouper(int resultIndex, boolean omitEmpty)

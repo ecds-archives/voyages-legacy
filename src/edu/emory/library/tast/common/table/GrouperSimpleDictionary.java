@@ -69,7 +69,7 @@ public abstract class GrouperSimpleDictionary extends Grouper
 		return ((Integer) lookupTable.get(nationId)).intValue();
 	}
 
-	public int getLeaveLabelsCount()
+	public int getLeafLabelsCount()
 	{
 		return labels.length;
 	}

@@ -119,7 +119,7 @@ public class GrouperImportPorts extends GrouperSimpleDictionary
 		return ((Integer) lookupTable.get(regionId)).intValue();
 	}
 
-	public int getLeaveLabelsCount()
+	public int getLeafLabelsCount()
 	{
 		return lookupTable.size();
 	}

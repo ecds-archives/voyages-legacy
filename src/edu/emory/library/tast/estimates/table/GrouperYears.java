@@ -138,7 +138,7 @@ public class GrouperYears extends Grouper
 		return ((Integer) lookupTable.get(year)).intValue();
 	}
 
-	public int getLeaveLabelsCount()
+	public int getLeafLabelsCount()
 	{
 		return labels.length;
 	}

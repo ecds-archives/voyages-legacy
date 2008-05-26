@@ -118,7 +118,7 @@ public class GrouperDeparturePorts extends GrouperSimpleDictionary
 		return ((Integer) lookupTable.get(portId)).intValue();
 	}
 
-	public int getLeaveLabelsCount()
+	public int getLeafLabelsCount()
 	{
 		return lookupTable.size();
 	}

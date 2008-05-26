@@ -244,8 +244,8 @@ public class EstimatesTableBean
 		}
 
 		// dimensions of the table
-		int dataRowCount = rowGrouper.getLeaveLabelsCount();
-		int dataColCount = colGrouper.getLeaveLabelsCount();
+		int dataRowCount = rowGrouper.getLeafLabelsCount();
+		int dataColCount = colGrouper.getLeafLabelsCount();
 		int headerTopRowsCount = colGrouper.getBreakdownDepth();
 		int headerLeftColsCount = rowGrouper.getBreakdownDepth();
 		int totalRows = headerTopRowsCount + extraHeaderRows + dataRowCount + 1;

@@ -122,7 +122,7 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 		return ((Integer) lookupTable.get(regionId)).intValue();
 	}
 
-	public int getLeaveLabelsCount()
+	public int getLeafLabelsCount()
 	{
 		return lookupTable.size();
 	}
