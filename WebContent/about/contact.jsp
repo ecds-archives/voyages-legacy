@@ -91,7 +91,7 @@
 								<li>
 									<span class="person">Antonio Mendes</span>
 									<span class="place">
-										(MISSING INFORMATION)</span>
+										(Centro de História de Além-Mar, Universidade Nova de Lisboa, Portugal)</span>
 								</li>
 								<li>
 									<span class="person">David Richardson</span>
