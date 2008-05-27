@@ -511,6 +511,12 @@
 	</managed-bean>
 	
 	<managed-bean>
+		<managed-bean-name>MethodAppendixBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.database.MethodAppendixBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
 		<managed-bean-name>VariableListBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.VariableListBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>

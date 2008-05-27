@@ -914,7 +914,7 @@
 					</tr>
 					</table>	
 					
-					<s:simpleTable rows="#{MethodAppendixBean.datas}" />
+
 					
 					<br>
 					<div style="border-top: 1px solid #CCCCCC;width:180px;"></div>
