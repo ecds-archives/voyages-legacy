@@ -218,9 +218,15 @@
 
 								<div class="sponsor-name"><a href="http://www.vuw.ac.nz">Victoria University of Wellington</a></div>
 			
-								<div class="sponsor-desc">Victoria University of Wellington, founded in 1897, is
-								an independent university with an international reputation for
-								humanities research.</div>
+								<div class="sponsor-desc">Victoria University of Wellington, New Zealand, founded in 1897, enjoys an 
+								international reputation for humanities research. It is home to the Treaty of Waitangi Research Unit 
+								(TOWRU) at the Stout Research Centre for New Zealand Studies, which contributes to the resolution of 
+								Maori claims under the Treaty of Waitangi (1840), to equitable and harmonious ethnic relationships 
+								within Aotearoa/New Zealand, and to international comparative scholarship on the historical (especially 
+								coercive) relationships between states and indigenous peoples. The Victoria University Library holds the 
+								largest collection of slave-trade materials in Australasia. A digital copy of the Voyages Database will 
+								be stored at Victoria University of Wellington, under the direction of Steering Committee member 
+								Stephen D. Behrendt. </div>
 								
 							</div>
 					
