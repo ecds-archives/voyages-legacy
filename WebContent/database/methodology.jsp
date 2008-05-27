@@ -913,8 +913,10 @@
 						<td class="number">399.9</td>
 					</tr>
 					</table>	
-			
 					
+					<s:simpleTable rows="#{MethodAppendixBean.datas}" />
+					
+					<br>
 					<div style="border-top: 1px solid #CCCCCC;width:180px;"></div>
 					<p><span class="superscript">1</span> David Eltis and David Richardson (eds.), <font style="font-style: italic;">Extending the Frontiers: 
 					Essays on the New Transatlantic Slave trade Database</font> (New Haven, 2008).</p>

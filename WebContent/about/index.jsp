@@ -14,6 +14,7 @@
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/about.css" rel="stylesheet" type="text/css">
+	<link href="../styles/about-index.css" rel="stylesheet" type="text/css">
 
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	
@@ -31,27 +32,45 @@
 	
 	<div id="content">
 	
-		<img src="../images/about-index-title.png" width="350" height="40" border="0" alt="The Database">
+		<h1 style="color: #606060;font-size:18pt;">About the Project</h1>
 
-		<p>Over 34,000 individual slaving expeditions between 1527 and 1866
-		that have been identified and verified to have actually occurred make
-		up the Trans-Atlantic Slave Trade Database. Records of the voyages
-		have been found in multiple archival sources which are listed in a
-		variable in the dataset. These records provide details about vessels,
-		enslaved peoples, slave traders and owners, and trading routes. The
-		database enables users to search for information about a particular
-		voyage or group of voyages and it provides full interactive capability
-		to analyze the data and report results in the form of statistical
-		tables, graphs, maps, or on a timeline. In addition to information in
-		the database itself, specific voyages are linked to images and to
-		copies of primary sources in the “Resources” section, and “Educational
-		materials” like lesson-plans are linked in turn to relevant voyages in
-		the main database. Users are encouraged to compare findings from the
-		main database with “Estimates” in the first section. The latter are
-		somewhat higher because they represent an attempt to take into account
-		the number of slaves on voyages for which information is lacking or
-		not yet included in the main database.</p>
+		<p>The Trans-Atlantic Slave Trade Database is the culmination of several decades of 
+		independent and collaborative research by scholars drawing upon data in libraries and 
+		archives around the Atlantic world.  The Voyages website itself is the product of two 
+		years of development by a multi-disciplinary team of historians, librarians, curriculum 
+		specialists, cartographers, computer programmers, and web designers, in consultation with 
+		scholars of the slave trade from universities in Europe, Africa, South America, and North 
+		America.  With principal sponsorship by the National Endowment for the Humanities, is the 
+		principal sponsor of this project, which was also  Emory University Libraries.  </p>
 	
+		<h2><a href="history.faces">History</a></h2>
+		
+		<p>A brief account of the origins of a single multi-source dataset of the trans-Atlantic 
+		slave trade and its realization first as a CD-ROM published by Cambridge University Press 
+		in 1999 and now, in an expanded version, on the Voyages website.</p>
+		
+		<h2><a href="team.faces">Project Team</a></h2>
+		
+		<p>Names of the principal investigators, of members of the project development team, and 
+		of individuals serving on its steering committee and advisory board.</p>
+		
+		<h2><a href="data.faces">Contributors of data</a></h2>
+		
+		<p>Names of scholars and researchers whose findings on the trans-Atlantic slave trade 
+		have been incorporated into the Voyages Database.</p>
+		
+		<h2><a href="acknowledgements.faces">Acknowledgements</a></h2>
+		
+		<p>Major sponsors and institutional partners of the Voyages website, as well as other 
+		organizations and individuals who have assisted the work of the project team.</p>
+		
+		<h2><a href="contact.faces">Contact us</a></h2>
+		
+		<p>Members of the Voyages editorial board and the email address for contacting the website.</p>
+		
+		<h2><a href="legal.faces">Legal</a></h2>
+		
+		<p>Copyright restrictions and permission to reproduce or use materials found on the website.</p>
 	</div>
 
 </h:form>

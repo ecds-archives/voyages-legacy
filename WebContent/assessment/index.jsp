@@ -27,15 +27,12 @@
 	<div id="content"><img src="../images/assessment-index-title.png"
 			width="350" height="40" border="0" alt="Assessing the Slave Trade">
 
-		<p>The Trans-Atlantic Slave Trade Database in the first section of the 
-		website contains all slaving expeditions documented up until now.  
-		“Assessing the Slave Trade,” the second section of the website, presents 
-		three ways historians and researchers use information from the database 
-		to interpret the slave trade: essays, quantitative analysis, and maps.  
-		In the second, “Estimates” of the full volume of the slave trade by year, 
-		national carrier, and routes of slaving expeditions, interactive features 
-		enable users to raise their own questions about the data and obtain answers 
-		in the form of tables, a timeline, or maps. </p>
+		<p>This section of the Voyages website is organized around three ways historians 
+		and researchers have used the Trans-Atlantic Slave Trade Database to interpret 
+		the slave trade: essays, quantitative analysis, and maps.  Interactive features 
+		of the “Estimates” sub-section enable users to raise their own questions about 
+		the full volume of the slave trade by year, national carrier, and routes of 
+		slaving expeditions, and obtain answers in the form of tables, a timeline, or maps.</p>
 
 		<h2><a href="essays-intro-01.faces">Essays</a></h2>
 
