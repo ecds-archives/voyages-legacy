@@ -914,8 +914,53 @@
 					</tr>
 					</table>	
 					
-
-					
+					<%/*
+					<h:dataTable value="#{MethodAppendixBean.datalist}" var="m" style="border: 1px solid #CCCCCC;">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Voyage groupings for estimating imputed slaves"/>
+							</f:facet>
+ 							<h:outputText value="#{m.group}"/>		
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Average number of captives embarked"/>
+							</f:facet>
+ 							<h:outputText value="#{m.ave_em}"/>		
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="number"/>
+							</f:facet>
+							<h:outputText value="#{m.number_em}"/>		
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Sd"/>
+							</f:facet>
+							<h:outputText value="#{m.sd_em}"/>		
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Average number of captives disembarked"/>
+							</f:facet>
+							<h:outputText value="#{m.ave_disem}"/>		
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="number"/>
+							</f:facet>
+							<h:outputText value="#{m.number_disem}"/>		
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Sd"/>
+							</f:facet>
+							<h:outputText value="#{m.sd_disem}"/>		
+						</h:column>						
+					</h:dataTable>
+					*/%>	
+						
 					<br>
 					<div style="border-top: 1px solid #CCCCCC;width:180px;"></div>
 					<p><span class="superscript">1</span> David Eltis and David Richardson (eds.), <font style="font-style: italic;">Extending the Frontiers: 
