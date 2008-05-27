@@ -85,6 +85,10 @@
 									<span class="function">SIRE Undergraduate Research Fellow</span>
 								</li>
 								<li>
+									<span class="person">Robin Conner</span> &ndash;
+									<span class="function">Digital Programs Administrative Assistant</span>
+								</li>
+								<li>
 									<span class="person">Heather Dahl</span> &ndash;
 									<span class="function">Curriculum Development Team Member</span>
 								</li>
@@ -142,19 +146,27 @@
 									<span class="function">Project Manager</span>
 								</li>
 								<li>
+									<span class="person">Brian Pitts</span> &ndash;
+									<span class="function">Programmer</span>
+								</li>
+								<li>
 									<span class="person">Michael Poreda</span> &ndash;
 									<span class="function">Curriculum Development Team Member</span>
 									<span class="place">(Bernardsville, New Jersey, USA)</span>
 								</li>
 								<li>
-									<span class="person">Katherine Skinner</span> &ndash;
-									<span class="function">Digital Preservation Coordinator </span>
-								</li>
-								<li>
 									<span class="person">Nicholas J. Radburn</span> &ndash;
 									<span class="function">Research Assistant</span>
-									<span class="place">(Victorian University of Wellington, New Zealand)</span>
+									<span class="place">(Victoria University of Wellington, New Zealand)</span>
 								</li>
+								<li>
+									<span class="person">Chris Roddy </span> &ndash;
+									<span class="function">Applications Developer & Analyst</span>
+								</li>
+								<li>
+									<span class="person">Katherine Skinner</span> &ndash;
+									<span class="function">Digital Preservation Coordinator </span>
+								</li>								
 								<li>
 									<span class="person">Kathleen Turaski</span> &ndash;
 									<span class="function">Web Design Consultant</span>
