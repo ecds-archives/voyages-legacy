@@ -37,10 +37,11 @@
 				<%@ include file="guide-menu.jsp" %>
 			</td>			
 			<td valign="top" id="main-content">
+			<% /*
 				<s:simpleBox>
 					<h1>Guide</h1>
 					<div style="height: 600px;"></div>
-				</s:simpleBox>
+				</s:simpleBox>*/ %>
 			</td>
 		</tr>
 		</table>
