@@ -13,6 +13,18 @@ public class MethodAppendix
 	private double sd_disem;	
 	
 	
+	public MethodAppendix(String name,double ave1,int num1,double sd1,double ave2, int num2, double sd2)
+	{
+		this.group=name;
+		this.ave_em=ave1;
+		this.number_em=num1;
+		this.sd_em=sd1;
+		this.ave_disem=ave2;
+		this.number_disem=num2;
+		this.sd_disem=sd2;	
+	}
+	
+	
 	public String getGroup()
 	{
 		return group;

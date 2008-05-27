@@ -513,7 +513,7 @@
 	<managed-bean>
 		<managed-bean-name>MethodAppendixBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.MethodAppendixBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>

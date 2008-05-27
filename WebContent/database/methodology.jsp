@@ -914,7 +914,7 @@
 					</tr>
 					</table>	
 					
-					<%/*
+				<%/*
 					<h:dataTable value="#{MethodAppendixBean.datalist}" var="m" style="border: 1px solid #CCCCCC;">
 						<h:column>
 							<f:facet name="header">
@@ -959,8 +959,8 @@
 							<h:outputText value="#{m.sd_disem}"/>		
 						</h:column>						
 					</h:dataTable>
-					*/%>	
-						
+					
+				*/ %>		
 					<br>
 					<div style="border-top: 1px solid #CCCCCC;width:180px;"></div>
 					<p><span class="superscript">1</span> David Eltis and David Richardson (eds.), <font style="font-style: italic;">Extending the Frontiers: 
