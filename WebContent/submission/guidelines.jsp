@@ -37,7 +37,7 @@
 			<td valign="top" id="main-content">
 				<s:simpleBox>
 				
-					<h1>GUIDELINES FOR CONTRIBUTORS</h1>
+					<h1>Guidelines for Contributors</h1>
 					
 					<p>Every three years, beginning 1 September 2011, an editorial board will produce 
 					a revised edition of Voyages, incorporating new slaving voyage information located 
@@ -141,7 +141,7 @@
 					some explanation of that data (for example, why the name of the slave ship may have appeared under different 
 					names and thus lead to the assumption of different voyages).</p>
 					
-					<h1>REMINDERS</h1>
+					<h1>Reminders</h1>
 					
 					<p>Have you checked whether your potential slaving venture is included in the Voyages Database?</p>
 					

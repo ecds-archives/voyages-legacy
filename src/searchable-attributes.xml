@@ -860,8 +860,7 @@
 	<searchable-attribute
 		type="simple"
 		id="jamcaspr"
-		userLabel="Sterling cash price in Jamaica*"
-		listDescription="Sterling cash price in Jamaica">
+		userLabel="Sterling cash price in Jamaica*">
 		<user-categories>
 			<category name="general" />
 		</user-categories>
