@@ -51,7 +51,7 @@
 				<ul>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb-1999.sav">tastdb-1999.sav</a></li>
-					<li><a href="#">SPSS codebook</a></li>
+					<li><a href="http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf">SPSS codebook</a></li>
 				</ul>		
 					
 			
