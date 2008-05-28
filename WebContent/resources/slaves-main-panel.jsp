@@ -3,7 +3,6 @@
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<t:htmlTag value="h1" style="margin: 0px 0px 10px 0px;"><h:outputText value="#{res.slaves_listing_title}" /></t:htmlTag>
 
 <s:table id="listingEstimates" 
 	data="#{SlavesBean.tableData}"
