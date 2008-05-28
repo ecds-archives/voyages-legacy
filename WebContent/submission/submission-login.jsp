@@ -95,7 +95,7 @@
 				<div style="text-align:center">
 					If you don't have an account, <a href="new-user.faces">click here</a>.
 				</div>
-			</div>
+		
 			</td>
 		</tr>
 	</table>
