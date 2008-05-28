@@ -89,6 +89,10 @@
 									<span class="function">Digital Programs Administrative Assistant</span>
 								</li>
 								<li>
+									<span class="person">Peter Carter</span> &ndash;
+									<span class="function">Research Assistant (Victoria University of Wellington, New Zealand)</span>
+								</li>
+								<li>
 									<span class="person">Heather Dahl</span> &ndash;
 									<span class="function">Curriculum Development Team Member</span>
 								</li>
