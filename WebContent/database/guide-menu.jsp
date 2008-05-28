@@ -16,8 +16,8 @@
 		
 			<s:secondaryMenuItem
 				label="Guide"
-				menuId="start"
-				href="guide/VoyagesGuide.pdf"/>			
+				menuId="guide"
+				href="guide.faces"/>			
 			
 			<s:secondaryMenuItem
 				label="Methodology"

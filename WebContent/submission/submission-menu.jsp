@@ -9,7 +9,7 @@
 	<s:simpleBox>
 	
 		<t:div styleClass="left-menu-title">
-			<h:outputText value="Contribute" />
+			<h:outputText value="CONTRIBUTE" />
 		</t:div>
 		
 		<s:secondaryMenu>

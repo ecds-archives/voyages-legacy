@@ -17,6 +17,14 @@
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
+	<script language="javascript" type="text/javascript">
+	function popitup(url) {
+		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars, location=0');
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+	</script>
+	
 </head>
 <body>
 <f:view>
@@ -37,11 +45,24 @@
 				<%@ include file="guide-menu.jsp" %>
 			</td>			
 			<td valign="top" id="main-content">
-			<% /*
+			
 				<s:simpleBox>
-					<h1>Guide</h1>
-					<div style="height: 600px;"></div>
-				</s:simpleBox>*/ %>
+					<h1>A Guide to Understanding and Using the Online Database and Website</h1>
+					
+					<p>This 40-page guide, prepared by Liz Milewicz and Nafees Khan, provides both an 
+					introduction and tutorial to how to use the four databases on the Voyages website: 
+					the Voyages Database, the Estimates Database, the Images Database, and the African 
+					Names Database.  It also contains a section on how to add new information to the Voyages  
+					Database through the data submission form in Contribute.</p>
+					
+					<p>The guide is provided as a PDF file to facilitate reference to it in a separate window 
+					or downloading to print in its entirety.</p>
+					
+					<ul>
+						<li><a href="guide/VoyagesGuide.pdf" onclick="return popitup('guide/VoyagesGuide.pdf')">VoyagesGuide.pdf</a></li>
+					</ul>
+					
+				</s:simpleBox>
 			</td>
 		</tr>
 		</table>

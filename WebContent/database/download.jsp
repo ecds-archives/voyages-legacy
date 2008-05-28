@@ -19,6 +19,14 @@
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	
+	<script language="javascript" type="text/javascript">
+	function popitup(url) {
+		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars, location=0');
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+	</script>
+	
 </head>
 <body>
 <f:view>
@@ -51,7 +59,10 @@
 				<ul>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
 					<li><a href="http://www.slavevoyages.org/downloads/tastdb-1999.sav">tastdb-1999.sav</a></li>
-					<li><a href="http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf">SPSS codebook</a></li>
+					<li>
+						<a href="http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf" 
+						   onclick="return popitup('http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf')">SPSS codebook</a>
+					</li>
 				</ul>		
 					
 			

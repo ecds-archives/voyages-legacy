@@ -40,8 +40,8 @@
 		years of development by a multi-disciplinary team of historians, librarians, curriculum 
 		specialists, cartographers, computer programmers, and web designers, in consultation with 
 		scholars of the slave trade from universities in Europe, Africa, South America, and North 
-		America.  With principal sponsorship by the National Endowment for the Humanities, is the 
-		principal sponsor of this project, which was also  Emory University Libraries.  </p>
+		America. The National Endowment for the Humanities is the principal sponsor of the project, 
+		and it is an Emory University Digital Library Research Initiative.  </p>
 	
 		<h2><a href="history.faces">History</a></h2>
 		
