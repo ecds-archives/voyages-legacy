@@ -90,7 +90,7 @@ public class MainMenu
 						"education/lesson-plans.faces"),
 				new MainMenuBarPageItem(
 						"education-other-resources",
-						"Other resources",
+						"Web resources",
 						"education/others.faces")}),
 	
 	new MainMenuBarSectionItem(
