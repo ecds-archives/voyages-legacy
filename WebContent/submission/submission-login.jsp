@@ -34,7 +34,7 @@
 			<td valign="top">
 				<div style="width:560px;">
 			
-				<h1>Contribute Voyage Information</h1>
+				<h1 style="text-align:center">Contribute Voyage Information</h1>
 				
 				<p>The Contribute section contains data entry forms by which users of the website can 
 				supply new information or revise existing information in the Voyages Database. A team 
