@@ -161,3 +161,45 @@ span.superscript{/*
 	vertical-align:super;
 	font-size: 6pt;*/
 }
+
+table.method-prev-next {
+	margin-bottom: 10px;
+	width: 100%; }
+
+td.method-prev {
+	padding-left: 5px;
+	text-align: left; }
+
+td.method-next {
+	padding-right: 5px;
+	text-align: right; }
+
+table.method-prev-next td.method-prev a {
+	background-image: url(../images/assessment-icon-arrow-left.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 10px;
+	text-decoration: none; }
+	
+table.method-prev-next td.method-next a {
+	background-image: url(../images/assessment-icon-arrow-right.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+	padding-right: 10px;
+	text-decoration: none; }
+
+table.method-prev-next td.method-prev a:hover,
+table.method-prev-next td.method-next a:hover {
+	text-decoration: underline; }
+	
+div.method-info {
+	xborder-top: 1px solid Black; 
+	border-bottom: 1px solid Black;
+	padding-bottom: 10px; }
+	
+div.method-info span.method-author {
+	font-weight: bold; }	
+
+div.method-info span.method-date {
+	font-style: italic; }	
+	
