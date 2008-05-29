@@ -12,7 +12,7 @@
 
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
-	<link href="../styles/database.css" rel="stylesheet" type="text/css">
+
 	<link href="../styles/database-info.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
