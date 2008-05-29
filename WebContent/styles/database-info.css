@@ -175,14 +175,14 @@ td.method-next {
 	text-align: right; }
 
 table.method-prev-next td.method-prev a {
-	background-image: url(../images/assessment-icon-arrow-left.png);
+	background-image: url(../images/database-icon-arrow-left.PNG);
 	background-position: left center;
 	background-repeat: no-repeat;
 	padding-left: 10px;
 	text-decoration: none; }
 	
 table.method-prev-next td.method-next a {
-	background-image: url(../images/assessment-icon-arrow-right.png);
+	background-image: url(../images/database-icon-arrow-right.PNG);
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 10px;
