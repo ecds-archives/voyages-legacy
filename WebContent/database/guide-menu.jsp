@@ -105,7 +105,7 @@
 					menuId="methodology-20"
 					href="methodology-20.faces"/>
 				<s:secondaryMenuItem
-					label="Note"
+					label="Notes"
 					menuId="methodology-21"
 					href="methodology-21.faces"/>															
 			</s:secondaryMenuItem>								

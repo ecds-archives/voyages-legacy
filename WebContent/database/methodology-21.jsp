@@ -46,7 +46,7 @@
 						<span class="method-date">2007</span>
 					</div>
 					
-					<p style="text-align: center;">Note</p>
+					<p style="text-align: center;">Notes</p>
 					
 					<p><span class="superscript">1</span> David Eltis and David Richardson (eds.), <font style="font-style: italic;">Extending the Frontiers:
 					Essays on the New Transatlantic Slave trade Database</font> (New Haven, 2008).</p>

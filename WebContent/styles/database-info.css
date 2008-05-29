@@ -205,3 +205,7 @@ div.method-info span.method-date {
 	
 a {
 	color: #8A5D04; }
+	
+table.methodborder {
+	border-collapse: collapse
+}

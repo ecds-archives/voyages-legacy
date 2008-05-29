@@ -60,10 +60,10 @@
 					as vessel tonnage, numbers of crew, and numbers of slaves, demanded a ranking of sources, particularly for the well-documented
 					British trade. <span class="superscript">(5)</span></p>
 					
-					<p>Table 1. Select Summary of Information Contained in the Trans-Atlantic Slave Voyage Data Set</p>
-					
 					<center>
-					<table border="1">
+					<p style="font-weight: bold;">Table 1. Select Summary of Information Contained in the Trans-Atlantic Slave Voyage Data Set</p>					
+					
+					<table border="1" cellspacing="0" cellpadding="3" class="methodborder">
 						<tr><td class="number">34,941</td>
 
 							<td>Number of slave voyages in the data set</td></tr>

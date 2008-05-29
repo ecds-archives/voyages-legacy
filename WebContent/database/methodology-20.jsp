@@ -184,7 +184,7 @@
 							<a href="methodology-19.faces">Resistance and Price of Slaves</a>
 						</td>
 						<td class="method-next">
-							<a href="methodology-21.faces">Note</a>
+							<a href="methodology-21.faces">Notes</a>
 						</td>
 					</tr>
 					</table>

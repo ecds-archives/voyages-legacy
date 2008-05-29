@@ -65,12 +65,12 @@
 					calculated). Deaths as a proportion of those embarked differed markedly by African region of embarkation. Table 2
 					shows breakdowns of shipboard mortality as a percentage of those slaves taken on board.</p>
 
-					
-					<p>Table 2. Slaves died on board ships reaching the Americas as a percentage of those embarked, by African region
-					of embarkation, 1527-1866 </p>
-					
 					<center>
-					<table border="1">
+					
+					<p style="font-weight:bold">Table 2. Slaves died on board ships reaching the Americas as a percentage of those embarked, by African region
+					of embarkation, 1527-1866 </p>					
+					
+					<table border="1" cellpadding="2" class="methodborder">
 					<tr>
 						<td></td>
 						<td class="number">Deaths/Embarked(%)</td>
@@ -81,69 +81,64 @@
 					<tr>
 						<td>Senegambia</td>
 						<td class="number">10.7%</td>
-						<td class="number">13.5</td>
+						<td class="number">13.5%</td>
 						<td class="number">413</td>
 					</tr>
 
 					<tr>
 						<td>Sierra Leone</td>
 						<td class="number">9.5%</td>
-						<td class="number">15.6</td>
+						<td class="number">15.6%</td>
 						<td class="number">226</td>
 					</tr>
 					<tr>
 
 						<td>Windward Coast</td>
 						<td class="number">9.3%</td>
-						<td class="number">11.9</td>
+						<td class="number">11.9%</td>
 						<td class="number">108</td>
 					</tr>
 					<tr>
 						<td>Gold Coast</td>
 
 						<td class="number">11.8%</td>
-						<td class="number">12.8</td>
+						<td class="number">12.8%</td>
 						<td class="number">640</td>
 					</tr>
 					<tr>
 						<td>Bight of Benin</td>
 						<td class="number">11.7%</td>
-
-						<td class="number">14.3</td>
+						<td class="number">14.3%</td>
 						<td class="number">1,194</td>
 					</tr>
 					<tr>
 						<td>Bight of Biafra</td>
 						<td class="number">19.0%</td>
-						<td class="number">18.7</td>
-
+						<td class="number">18.7%</td>
 						<td class="number">637</td>
 					</tr>
 					<tr>
 						<td>West-central Africa</td>
 						<td class="number">9.1%</td>
-						<td class="number">11.7</td>
+						<td class="number">11.7%</td>
 						<td class="number">2,442</td>
-
 					</tr>
 					<tr>
 						<td>South-east Africa</td>
 						<td class="number">18.9%</td>
-						<td class="number">16.3</td>
+						<td class="number">16.3%</td>
 						<td class="number">334</td>
 					</tr>
-
 					<tr>
 						<td>Region cannot be identified</td>
 						<td class="number">17.4%</td>
-						<td class="number">17.7</td>
+						<td class="number">17.7%</td>
 						<td class="number">338</td>
 					</tr>
 					<tr>
-
 						<td>All Africa</td>
 						<td class="number">11.9%</td>
-						<td class="number">14.2</td>
+						<td class="number">14.2%</td>
 						<td class="number">6,332</td>
 					</tr>						
 					</table>	
