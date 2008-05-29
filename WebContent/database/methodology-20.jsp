@@ -46,7 +46,7 @@
 						<span class="method-date">2007</span>
 					</div>
 					
-					<p style="text-align: center;">Appendix</p>
+					<h2 style="text-align:center;">Appendix</h2>
 					<p style="text-align: center;">Derivation of Estimated number of Captives Carried on Vessels in the Voyages
 					Database for which such Information cannot be obtained from the Sources </p>
 					
