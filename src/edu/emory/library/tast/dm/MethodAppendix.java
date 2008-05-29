@@ -12,6 +12,8 @@ public class MethodAppendix
 	private int number_disem;
 	private double sd_disem;	
 	
+	public MethodAppendix(){
+	}
 	
 	public MethodAppendix(String name,double ave1,int num1,double sd1,double ave2, int num2, double sd2)
 	{
