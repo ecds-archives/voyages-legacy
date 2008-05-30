@@ -1034,6 +1034,9 @@
 		<attribute>
 			<name>href</name>
 		</attribute>
+		<attribute>
+			<name>expanded</name>
+		</attribute>
 	</tag>
 
 	<tag>

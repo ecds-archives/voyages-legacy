@@ -132,12 +132,12 @@ table.essay-prev-next td.essay-next a:hover {
 	
 div.essay-image-right {
 	float: right;
-	margin: 3px 0px 5px 10px; 
+	margin: 13px 0px 5px 10px; 
 	border: 1px solid Black; }
 
 div.essay-image-left {
 	float: left;
-	margin: 3px 10px 5px 0px; 
+	margin: 13px 10px 5px 0px; 
 	border: 1px solid Black; }
 
 div.essay-image-left div.caption,

@@ -24,4 +24,16 @@ public class EssaysBean
 		this.paramActiveMenuId = paramActiveMenuId;
 	}
 
+	public boolean isIntroExpanded()
+	{
+		String activeMenuId = getActiveMenuId();
+		return activeMenuId != null && activeMenuId.startsWith("essays-intro");
+	}
+
+	public boolean isSeasonalityExpanded()
+	{
+		String activeMenuId = getActiveMenuId();
+		return activeMenuId != null && activeMenuId.startsWith("essays-seasonality");
+	}
+
 }

@@ -21,7 +21,8 @@
 				<s:secondaryMenuItem
 					label="A Brief Overview of the Trans-Atlantic Slave Trade"
 					href="essays-intro-01.faces"
-					menuId="essays-intro">
+					menuId="essays-intro"
+					expanded="#{EssaysBean.introExpanded}">
 				
 					<s:secondaryMenuItem
 						label="Introduction"
@@ -76,9 +77,63 @@
 				</s:secondaryMenuItem>
 				
 				<s:secondaryMenuItem
+					label="Seasonality in the Trans-Atlantic Slave Trade"
+					href="essays-seasonality-01.faces"
+					menuId="essays-seasonality"
+					expanded="#{EssaysBean.seasonalityExpanded}">
+					
+					<s:secondaryMenuItem
+						label="Introduction"
+						href="essays-seasonality-01.faces"
+						menuId="essays-seasonality-01" />
+					
+					<s:secondaryMenuItem
+						label="Agriculture in the era of the trans-Atlantic slave trade"
+						href="essays-seasonality-02.faces"
+						menuId="essays-seasonality-02" />
+					
+					<s:secondaryMenuItem
+						label="Seasonal rainfall in the Atlantic slaving world"
+						href="essays-seasonality-03.faces"
+						menuId="essays-seasonality-03" />
+				
+					<s:secondaryMenuItem
+						label="Rainfall, crop type and agricultural calendars"
+						href="essays-seasonality-04.faces"
+						menuId="essays-seasonality-04" />
+				
+					<s:secondaryMenuItem
+						label="Agricultural calendars and labor requirements"
+						href="essays-seasonality-05.faces"
+						menuId="essays-seasonality-05" />
+					
+					<s:secondaryMenuItem
+						label="Provisioning-slaving seasons"
+						href="essays-seasonality-06.faces"
+						menuId="essays-seasonality-06" />
+					
+					<s:secondaryMenuItem
+						label="Slave-trading seasonality: case studies"
+						href="essays-seasonality-07.faces"
+						menuId="essays-seasonality-07" />
+						
+					<s:secondaryMenuItem
+						label="Trans-Atlantic pathways and harvest cycles"
+						href="essays-seasonality-08.faces"
+						menuId="essays-seasonality-08" />
+	
+					<s:secondaryMenuItem
+						label="Conclusion"
+						href="essays-seasonality-09.faces"
+						menuId="essays-seasonality-09" />
+				
+				</s:secondaryMenuItem>
+				
+				<s:secondaryMenuItem
 					label="Dobo: A Liberated African in Nineteenth Century Havana"
 					href="essays-grandio.faces"
 					menuId="essays-grandio"/>
+
 			</s:secondaryMenuItem>
 			
 			<s:secondaryMenuItem
@@ -106,11 +161,6 @@
 					href="essays-applied-history.faces"
 					menuId="essays-applied-history"/>
 			
-				<s:secondaryMenuItem
-					label="Seasonality and the Slave Trade"
-					href="essays-seasonality.faces"
-					menuId="essays-seasonality"/>
-
 				<s:secondaryMenuItem
 					label="Venture Smith"
 					href="essays-smith.faces"

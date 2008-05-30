@@ -17,6 +17,9 @@ public class SecondaryMenuItemComponent extends UIComponentBase
 	private boolean hrefSet = false;
 	private String href;
 
+	private boolean expandedSet = false;
+	private boolean expanded = true;
+
 	public String getFamily()
 	{
 		return null;
@@ -24,21 +27,23 @@ public class SecondaryMenuItemComponent extends UIComponentBase
 	
 	public Object saveState(FacesContext context)
 	{
-		Object[] values = new Object[4];
-		values[0] = super.saveState(context);
-		values[1] = getMenuId();
-		values[2] = getLabel();
-		values[3] = getHref();
-		return values;
+		return new Object[] {
+			super.saveState(context),
+			getMenuId(),
+			getLabel(),
+			getHref(),
+			new Boolean(isExpanded())};
 	}
 	
 	public void restoreState(FacesContext context, Object state)
 	{
+		int i = 0;
 		Object[] values = (Object[]) state;
-		super.restoreState(context, values[0]);
-		menuId = (String) values[1];
-		label = (String) values[2];
-		href = (String) values[3];
+		super.restoreState(context, values[i++]);
+		menuId = (String) values[i++];
+		label = (String) values[i++];
+		href = (String) values[i++];
+		expanded = ((Boolean) values[i++]).booleanValue();
 	}
 
 	public String getLabel()
@@ -75,6 +80,18 @@ public class SecondaryMenuItemComponent extends UIComponentBase
 	{
 		hrefSet = true;
 		this.href = href;
+	}
+
+	public boolean isExpanded()
+	{
+		return JsfUtils.getCompPropBoolean(this, getFacesContext(),
+				"expanded", expandedSet, expanded);
+	}
+
+	public void setExpanded(boolean expanded)
+	{
+		expandedSet = true;
+		this.expanded = expanded;
 	}
 	
 }

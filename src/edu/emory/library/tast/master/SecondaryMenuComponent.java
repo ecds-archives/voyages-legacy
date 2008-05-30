@@ -33,7 +33,7 @@ public class SecondaryMenuComponent extends UIComponentBase
 		for (Iterator iterator = menuItems.iterator(); iterator.hasNext();)
 		{
 			SecondaryMenuItemComponent menuItem = (SecondaryMenuItemComponent) iterator.next();
-			
+
 			boolean hasLink = !StringUtils.isNullOrEmpty(menuItem.getHref());
 			
 			String menuItemCssClass = "secondary-menu-item-" + level;
@@ -55,13 +55,16 @@ public class SecondaryMenuComponent extends UIComponentBase
 			}
 			writer.endElement("div");
 			
-			List subItems = menuItem.getChildren();
-			if (!subItems.isEmpty())
+			if (menuItem.isExpanded())
 			{
-				writer.startElement("div", this);
-				writer.writeAttribute("class", "secondary-menu-subitems-" + level, null);
-				encodeItems(context, writer, subItems, level + 1, activeMenuItemId);
-				writer.endElement("div");
+				List subItems = menuItem.getChildren();
+				if (!subItems.isEmpty())
+				{
+					writer.startElement("div", this);
+					writer.writeAttribute("class", "secondary-menu-subitems-" + level, null);
+					encodeItems(context, writer, subItems, level + 1, activeMenuItemId);
+					writer.endElement("div");
+				}
 			}
 
 		}

@@ -12,6 +12,7 @@ public class SecondaryMenuItemTag extends UIComponentTag
 	private String menuId;
 	private String label;
 	private String href;
+	private String expanded;
 
 	public String getComponentType()
 	{
@@ -53,6 +54,16 @@ public class SecondaryMenuItemTag extends UIComponentTag
 		{
 			menu.setHref(href);
 		}
+		
+		if (expanded != null && isValueReference(expanded))
+		{
+			ValueBinding vb = app.createValueBinding(expanded);
+			menu.setValueBinding("expanded", vb);
+		}
+		else if (expanded != null)
+		{
+			menu.setExpanded(Boolean.parseBoolean(expanded));
+		}
 
 	}
 
@@ -89,6 +100,16 @@ public class SecondaryMenuItemTag extends UIComponentTag
 	public void setHref(String href)
 	{
 		this.href = href;
+	}
+
+	public String getExpanded()
+	{
+		return expanded;
+	}
+
+	public void setExpanded(String expanded)
+	{
+		this.expanded = expanded;
 	}
 
 }
