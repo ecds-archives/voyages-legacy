@@ -86,6 +86,16 @@
 		<servlet-name>ThumbnailServlet</servlet-name>
 		<url-pattern>/servlet/thumbnail</url-pattern>
 	</servlet-mapping>
+	
+	<error-page> 
+	    <error-code>404</error-code> 
+	    <location>/error.jsp</location> 
+	</error-page>	
+
+	<error-page> 
+	    <error-code>500</error-code> 
+	    <location>/error.jsp</location> 
+	</error-page>	
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
