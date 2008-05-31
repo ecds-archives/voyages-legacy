@@ -104,7 +104,7 @@ a {
 	<div id="header-outer">
 		<div id="header-inner">
 			<div id="header-text">
-				Page not found or an error occurred
+				An error has occurred
 			</div>
 		</div>
 	</div>
@@ -119,14 +119,14 @@ a {
 					<div id="message-text">
 				
 						<p>
-						A error record was logged and we will address the problem on the
-						shortest possible notice. If you are able to reproduce the error,
-						we would appreciate if you send us a description of the problems with
-						steps to reproduce.
+						Please inform us about the time and nature of the error.
+						If you are able to reproduce the steps leading to the error
+						message, please provide us with this information.
+						We will address the problem as soon as possible. 
 						</p>
 						
 						<ul>
-							<li><a href="mailto:mailto:&#118;&#111;&#121;a&#103;&#101;s&#64;&#101;&#109;o&#114;&#121;&#46;&#101;d&#117;">Voyages website administrator email</a></li>
+							<li><a href="mailto:&#118;&#111;&#121;a&#103;&#101;s&#64;&#101;&#109;o&#114;&#121;&#46;&#101;d&#117;">Voyages website administrator email</a></li>
 						</ul>
 						
 						<p>
@@ -142,7 +142,7 @@ a {
 						</ul>
 						
 						<p>
-						We apologise for the inconvenience.
+						We apologize for the inconvenience.
 						</p> 
 		
 					</div>

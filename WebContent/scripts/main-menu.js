@@ -34,7 +34,7 @@ function openPopup(pageUrl)
 		"location=no, " +
 		"status=no, " +
 		"scrollbars=yes, " +
-		"width=600, " +
-		"height=400").focus();
+		"width=680, " +
+		"height=680").focus();
 }
 
