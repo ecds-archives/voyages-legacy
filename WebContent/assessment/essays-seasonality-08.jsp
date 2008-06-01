@@ -81,7 +81,7 @@
 					they decided increasingly to sell slaves in the British West
 					Indies. Northern planters infrequently purchased enslaved Africans
 					shipped from the Bight of Biafra’s fall provisioning-slaving season
-					(Figure 3).</p>
+					(<a href="essays-seasonality-fig-1.pdf" target="_blank">Figure 3</a>).</p>
 
 					<p>French and Portuguese slave traders also shifted
 					agricultural workers between trans-Atlantic harvest cycles. Cap

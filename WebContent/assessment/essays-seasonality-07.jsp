@@ -70,7 +70,8 @@
 					late 1600s the island-colony produced more high-quality sugar per
 					acre than any region in the Atlantic world.</p>
 
-					<p>Between 1654 and 1851, the <a href="../database/search.faces">Voyages Database</a> documents 315
+					<p>Between 1654 and 1851, the <a
+						href="../database/search.faces">Voyages Database</a> documents 315
 					slaving trips that departed New Calabar for the Americas. Of these,
 					one can estimate months of departure for 257 voyages, and plot
 					departure months against the estimated number of slaves embarked.
@@ -79,10 +80,12 @@
 					hinterland, and then exports rose sharply in August as workers
 					harvested yams, peaking during the main harvest in October. They
 					then decreased by February-March, a period that coincides with
-					declining yam stocks (Figure 1). In 1677-78 Arthur Doegood
-					captained one of the RAC slaving voyages to New Calabar
-					<a href="../database/voyage.faces?voyageId=9990">VoyageID 9990</a>
-					and his <a href="http://www.nationalarchives.gov.uk/slavery/pdf/Arthur_Translation.pdf">logbook</a>
+					declining yam stocks (<a href="essays-seasonality-fig-1.pdf"
+						target="_blank">Figure 1</a>). In 1677-78 Arthur Doegood captained
+					one of the RAC slaving voyages to New Calabar <a
+						href="../database/voyage.faces?voyageId=9990">VoyageID 9990</a>
+					and his <a
+						href="http://www.nationalarchives.gov.uk/slavery/pdf/Arthur_Translation.pdf">logbook</a>
 					survives in the National Archives in London. Doegood anchored at
 					New Calabar in mid-February 1678, after the optimal fall
 					provisioning-slaving season. Within a week his supercargo, George
@@ -104,7 +107,8 @@
 					that slave imports into Barbados began increasing towards the
 					beginning of the “in crop” provisions and sugar season, and then
 					began declining in March after provisions’ harvests and as less and
-					less sugar needed to be cut and processed (Figure 2).</p>
+					less sugar needed to be cut and processed (<a
+						href="essays-seasonality-fig-2.pdf" target="_blank">Figure 2</a>).</p>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
