@@ -14,9 +14,12 @@ import edu.emory.library.tast.util.HibernateUtil;
 
 public class MethodAppendixBean
 {
-	private MethodAppendix[] datalist;
+	private List datalist;
+	
+	public MethodAppendixBean(){
+	}
 	 
-	public MethodAppendix[] getDatalist()
+	public List getDatalist()
 	{		
 		 
 		System.out.println("---------------------begin---------------------");
@@ -29,31 +32,17 @@ public class MethodAppendixBean
 		
 		System.out.println("------------------------size-------------");
 		System.out.println(result.size());
-		datalist=new MethodAppendix[result.size()];
-		int rows=0;
+		datalist=new ArrayList();
+		
 		for (Iterator dataIt = result.iterator(); dataIt.hasNext();)
 		{
 			MethodAppendix item=(MethodAppendix)dataIt.next();
-			datalist[rows]=new MethodAppendix(item.getGroup(),item.getAve_em(),item.getNumber_em(),item.getSd_em(),
-											item.getAve_disem(),item.getNumber_disem(),item.getSd_disem());
-			rows++;
+			datalist.add(new MethodAppendix(item.getGroup(),item.getAve_em(),item.getNumber_em(),item.getSd_em(),
+											item.getAve_disem(),item.getNumber_disem(),item.getSd_disem()));
+			
 		}
 			
-		/*
-		SimpleTableCell[][] datas = new SimpleTableCell[result.size()][];
-
-		System.out.println("------------------------size-------------");
-		System.out.println(result.size());
-		int rowIndex = 0;
-		for (Iterator dataIt = result.iterator(); dataIt.hasNext();)
-		{	
-			MethodAppendix data=(MethodAppendix)dataIt.next();
-			System.out.println("-------------------group----------------------  "+data.getGroup());
-			datas[rowIndex++] = new SimpleTableCell[] {
-					new SimpleTableCell(data.getGroup())
-					};
-
-		}*/
+		
 		transaction.commit();
 		sess.close();
 		return datalist;
