@@ -31,7 +31,8 @@ div.secondary-menu-item-0 a {
 	padding-bottom: 3px;
 	border-bottom: 1px solid #E4D6B1; }
 
-div.secondary-menu-item-1 a {
+div.secondary-menu-item-1 a,
+div.secondary-menu-item-1-selected a {
 	background-image: url(../images/secondary-menu-symbol-1.png);
 	background-repeat: no-repeat;
 	background-position: 16px 4px;
@@ -39,6 +40,38 @@ div.secondary-menu-item-1 a {
 	padding-top: 3px;
 	padding-bottom: 3px;
 	border-bottom: 1px solid #E4D6B1; }
+/*	
+div.secondary-menu-item-0 {
+	font-weight: bold;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #B8E7E8; }
+
+div.secondary-menu-item-1 a,
+div.secondary-menu-item-1-selected a {
+	background-image: url(../images/secondary-menu-symbol-0.png);
+	background-repeat: no-repeat;
+	background-position: 2px 4px;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #B8E7E8; }*/
+	
+div.secondary-menu-item-2 a,
+div.secondary-menu-item-2-selected a {
+	color: #E4D6B1;
+	background-image: url(../images/secondary-menu-symbol-1.png);
+	background-repeat: no-repeat;
+	background-position: 17px 4px;
+	padding-left: 35px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #E4D6B1; }
+	
+div.secondary-menu-item-1-selected a,
+div.secondary-menu-item-2-selected a {
+	background-color: #FFF5C2; }
+
 
 div.left-menu-title {
 	border-bottom: 1px solid Black;
