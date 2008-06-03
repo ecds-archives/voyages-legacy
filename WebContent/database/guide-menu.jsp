@@ -12,7 +12,7 @@
 			<h:outputText value="UNDERSTANDING THE DATABASE" />
 		</t:div>
 		
-		<s:secondaryMenu>
+		<s:secondaryMenu activeItemId="#{EssaysBean.activeMenuId}">
 		
 			<s:secondaryMenuItem
 				label="Guide"
