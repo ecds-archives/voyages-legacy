@@ -154,7 +154,7 @@
 					slave entrepot in the area, the Galinhas River between the Mano and Moa Rivers. At Cape Mount 
 					several slave depots operated in the 1820s and 1830s, including one owned by Pedro Blanco. 
 					Once the exchange of slaves for merchandise was made, Dobo and 60 others were taken on board 
-					the slaver by canoes. The “Fingal”, a very small vessel, was not well suited to a trans-Atlantic 
+					the slaver by canoes. The “Fingal,” a very small vessel, was not well suited to a trans-Atlantic 
 					voyage, and the conditions must have been horrifying. Three slaves died during the Atlantic crossing. </p>
 					
 					<p>As already noted the treaty of 1817 clearly stipulated that emancipados, once disembarked, came under 

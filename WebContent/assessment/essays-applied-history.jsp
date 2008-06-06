@@ -52,7 +52,7 @@
 						<span class="essay-date">2007</span>
 					</div>
 
-					<p>The Transatlantic Slave Trade Database has the potential to
+					<p>The Voyages Database has the potential to
 					be of value to those interested in current affairs, as well as to
 					scholars involved in strictly academic research. One area where the
 					database can be useful is the debate over the payment of
@@ -63,7 +63,7 @@
 					predecessors of a major international financial institution, the
 					Dutch bank ABN AMRO, and African slavery in the Americas. It proved
 					especially helpful in tracing the bank’s historical involvement in
-					various financial aspects of the slave trade. Employing some of
+					various financial aspects of the slave trade. Employing some of the
 					database’s basic variables, this recent piece of research provides
 					an example of how the database can be effectively used in applied
 					history, a joint endeavor in which academically-trained historians
@@ -74,7 +74,7 @@
 					Incorporated conducted a study of the Dutch bank’s predecessors to
 					determine historical connections to African slavery in the United
 					States and elsewhere in the Americas. In combination with archival
-					research, the Transatlantic Slave Trade Database substantiated
+					research, the Voyages Database substantiated
 					evidence that some of the bank’s predecessors provided insurance
 					for slaving voyages, purchased interest in slaving voyages, or
 					supplied credit to clients participating in the slave trade.</p>
