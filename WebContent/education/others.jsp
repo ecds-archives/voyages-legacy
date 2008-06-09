@@ -43,7 +43,25 @@
 					<h1>Web Resources</h1>
 					<p>The websites listed here provide a variety of resources, including but not limited to lesson 
 					plans, interactive maps, and narratives of enslaved Africans.</p>
-
+	
+					<a name="hitchcock"></a>
+					
+					<div class="link-title">
+						The Atlantic Slave Trade and Slave Life in the Americas: A Visual Record
+						<br>
+						<font style="font-size: 8pt;">The Virginia Foundation for the Humanities</font>
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
+					<tr>
+						<td class="link-info-label">Content</td>
+						<td class="link-info">Historical images, text</td>
+					</tr>
+					<tr>
+						<td class="link-info-label">WWW address</td>
+						<td class="link-info"><a href="http://hitchcock.itc.virginia.edu/Slavery/index.php">http://hitchcock.itc.virginia.edu/Slavery/index.php</a></td>
+					</tr>
+					</table>
+					
 					<a name="inmotionaame"></a>
 			
 					<div class="link-title">
