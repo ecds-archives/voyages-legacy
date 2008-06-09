@@ -33,35 +33,35 @@
 		<p>The Voyages website provides resources that offer some context
 		to the information available in the database of trans-Atlantic slave
 		trading voyages. The slave trade was an activity that involved
-		peoples, places, tools as well as practices that today are unfamiliar
+		peoples, places, and tools as well as practices that today are unfamiliar
 		to most, or no longer exist. In this page, you will find resources
 		that will help you visualize or imagine these features of the
-		transatlantic slave trade era. The materials are divided into a
+		trans-Atlantic slave trade era. The materials are divided into a
 		database of images contemporary to the slave trade and a database of
 		names of Africans rescued from slave vessels in the nineteenth
 		century, during the period of suppression. With permission from
 		various archives and libraries, the images displayed here can be used
 		to observe details of people, places, artifacts and vessels of this
 		time and make connections with the relevant voyages in the main
-		database. The african names database was built with documents from the Foreign
+		database. The African Names Database was built with documents from the Foreign
 		Office, Series 84 and 313, held by the British National Archives. The
 		details of the vessels from which the liberated Africans were rescued
 		are listed in the voyages database.</p>
 
 		<h2><a href="images.faces">Images</a></h2>
 
-		<p>The transatlantic slave trade was an activity that lasted for
+		<p>The trans-Atlantic slave trade was an activity that lasted for
 		centuries. As a consequence, the ways it became represented changed
 		through time. Here, you will find images contemporary to the
-		transatlantic slave trade representing places, vessels and artifacts
-		as well as of slavers and slaves.</p>
+		trans-Atlantic slave trade representing places, vessels and artifacts
+		as well as slavers and slaves.</p>
 
 		<h2><a href="slaves.faces">African Names Database</a></h2>
 
-		<p>The transatlantic slave trade culminated in the age of
+		<p>The trans-Atlantic slave trade culminated in the age of
 		abolition. In the nineteenth century, mixed-commissioned courts were
 		created around the Atlantic basins to adjudicate vessels illegally
-		engaged in the slave trade. The african names database offers a compilation of
+		engaged in the slave trade. The African Names Database offers a compilation of
 		lists of liberated Africans from slave vessels captured by British
 		cruisers between 1819 and 1845, and taken for adjudication in the
 		courts established in Freetown, Sierra Leone, and in Havana, Cuba.</p>

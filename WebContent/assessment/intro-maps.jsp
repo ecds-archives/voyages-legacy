@@ -74,11 +74,11 @@
 							<s:secondaryMenuItem label="Map 2: Migration of sugar cultivation from Asia into the Atlantic" menuId="map2" href="#map2"/>
 							<s:secondaryMenuItem label="Map 3: Old World slave trade routes in the Atlantic before 1759" menuId="map3" href="#map3"/>
 							<s:secondaryMenuItem label="Map 4: Wind and ocean currents of the Atlantic basins" menuId="map4" href="#map4"/>
-							<s:secondaryMenuItem label="Map 5: Major regions and ports involved in the transatlantic slave trade, all years" menuId="map5" href="#map5"/>
+							<s:secondaryMenuItem label="Map 5: Major regions and ports involved in the trans-Atlantic slave trade, all years" menuId="map5" href="#map5"/>
 							<s:secondaryMenuItem label="Map 6: Countries and regions in the Atlantic World where slave voyages were organized, by share of captives carried off from Africa" menuId="map6" href="#map6"/>
 							<s:secondaryMenuItem label="Map 7: Major coastal regions from which captives left Africa, all years" menuId="map7" href="#map7"/>
 							<s:secondaryMenuItem label="Map 8: Major regions where captives disembarked, all years" menuId="map8" href="#map8"/>
-							<s:secondaryMenuItem label="Map 9: Volume and direction of the transatlantic slave trade from all African to all American regions" menuId="map9" href="#map9"/>
+							<s:secondaryMenuItem label="Map 9: Volume and direction of the trans-Atlantic slave trade from all African to all American regions" menuId="map9" href="#map9"/>
 						</s:secondaryMenu>						
 					
 					</s:simpleBox>
@@ -155,7 +155,7 @@
 							thereafter, some African captives were taken to Europe as well as
 							to the Atlantic islands and between African ports. It is hard to
 							get precise estimates of these flows, but they were certainly much
-							smaller than the transatlantic traffic. Many of the captives
+							smaller than the trans-Atlantic traffic. Many of the captives
 							involved in this traffic were subsequently carried to sugar
 							plantations in the Old World.</p>
 
@@ -177,7 +177,7 @@
 							<h2>Map 4: Wind and ocean currents of the Atlantic basins</h2>
 		
 							<p>In the age of sail, winds and ocean currents shaped the
-							direction of the transatlantic slave trade, effectively creating
+							direction of the trans-Atlantic slave trade, effectively creating
 							two separate slave-trading systems – one in the north with voyages
 							originating in Europe and North America, the other in the south
 							with voyages originating in Brazil.</p>
@@ -197,7 +197,7 @@
 	
 						<div class="map-description">
 	
-							<h2>Map 5: Major regions and ports involved in the transatlantic slave trade, all years</h2>
+							<h2>Map 5: Major regions and ports involved in the trans-Atlantic slave trade, all years</h2>
 
 							<p>Few commercial centers in the Atlantic world were untouched by the slave 
 							trade, and all the major ports had strong connections with the traffic.</p>
@@ -222,7 +222,7 @@
 		
 							<p>Slave voyages were organized and left from all major
 							Atlantic ports at some point over the nearly four centuries of the
-							transatlantic slave trade. Nevertheless, vessels from the largest
+							trans-Atlantic slave trade. Nevertheless, vessels from the largest
 							seven ports, Rio de Janeiro, Bahia, Liverpool, London, Nantes,
 							Bristol, and Pernambuco carried off almost three-quarters of all
 							captives removed from Africa via the Atlantic Ocean. There was a
@@ -296,7 +296,7 @@
 
 							<p>The Caribbean and South America received 95 percent of the
 							slaves arriving in the Americas. Some captives disembarked in
-							Africa rather than the Americas because their transatlantic voyage
+							Africa rather than the Americas because their trans-Atlantic voyage
 							was diverted as a result of a slave rebellion or, during the era of
 							suppression, because of capture by patrolling naval cruisers. Less
 							than 4 percent disembarked in North America, and only just over
@@ -322,7 +322,7 @@
 	
 						<div class="map-description">
 	
-							<h2>Map 9: Volume and direction of the transatlantic slave
+							<h2>Map 9: Volume and direction of the trans-Atlantic slave
 							trade from all African to all American regions</h2>
 
 							<p>This map summarizes and combines the many different paths by

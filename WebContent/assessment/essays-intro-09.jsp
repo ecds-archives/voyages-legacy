@@ -71,7 +71,7 @@
 					insider-outsider divide slowly changed, the fall, of the
 					trans-Atlantic trade in enslaved Africans.</p>
 
-					<p>During the long coercive interlude of forced transatlantic
+					<p>During the long coercive interlude of forced trans-Atlantic
 					migration European and African conceptions of self and community
 					(and eligibility for ensalvement) did not remain static. On the
 					African side, the major effect of the African-European exchange was

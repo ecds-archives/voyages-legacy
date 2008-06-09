@@ -32,7 +32,7 @@
 	
 		<img src="../images/lessons-index-title.png" width="350" height="40" border="0" alt="Educational Material">
 
-		<p>One of the goals of the Trans Atlantic Slave Trade Online Database has been to bring the work 
+		<p>One of the goals of the Trans-Atlantic Slave Trade Database has been to bring the work 
 		of historians to a primary and secondary school audience, allowing students to engage in the 
 		process of historical inquiry. To that end, a variety of lesson plans spanning a range of grade 
 		levels have been developed to offer teachers diverse approaches from which to teach students about 
@@ -44,7 +44,7 @@
 
 		<h2><a href="lesson-plans.faces">Lesson Plans</a></h2>
 
-		<p>In order to present the trans-Atlantic slave trade database to a broader audience, particularly 
+		<p>In order to present the Trans-Atlantic Slave Trade Database to a broader audience, particularly 
 		a 6-12 grade audience, a dedicated team of teachers and curriculum developers from around the United 
 		States developed lesson plans that explore the database.  Utilizing the various resources of the website, 
 		these lessons plans allow students to engage the history and legacy of the Atlantic slave trade in diverse 

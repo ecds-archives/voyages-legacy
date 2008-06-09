@@ -90,7 +90,7 @@
 					early modern period, Africans had a somewhat narrower conception of
 					who was eligible for enslavement than had Europeans. It was this
 					difference in definitions in eligibility for enslavement which
-					explains the dramatic rise of the transatlantic slave trade.
+					explains the dramatic rise of the trans-Atlantic slave trade.
 					Slavery, which had disappeared from north-west Europe long before
 					this point, exploded into a far greater significance and intensity
 					than it had possessed at any point in human history. The major
@@ -102,7 +102,7 @@
 					and the ocean-going technology that brought Atlantic societies into
 					sudden contact with each other.</p>
 					
-					<p>The transatlantic slave trade therefore grew from a strong
+					<p>The trans-Atlantic slave trade therefore grew from a strong
 					demand for labor in the Americas driven consumers of plantation
 					produce and precious metals, initially in Europe. Because
 					Amerindians died in large numbers, and insufficient numbers of

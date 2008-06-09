@@ -78,7 +78,7 @@
 					
 					<p>1) New voyage</p>
 					
-					<p>The Voyages Database contains information on 34,941 transatlantic slaving voyages, 1514-1866. The 
+					<p>The Voyages Database contains information on 34,941 trans-Atlantic slaving voyages, 1514-1866. The 
 					editors estimate that the file contains 90-95% of all transatlantic ventures, and there are thus 
 					between 1,750 and 3,500 slaving voyages not recorded in the set.</p>
 					

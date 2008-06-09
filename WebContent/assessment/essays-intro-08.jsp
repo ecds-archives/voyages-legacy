@@ -58,7 +58,7 @@
 					rather suddenly. When the Brazilian authorities began arresting
 					slave ships at the end of 1850, the volume of the traffic of the
 					traffic slipped back to levels not seen for two centuries, and the
-					last transatlantic slave expedition – to Cuba and probably from the
+					last trans-Atlantic slave expedition – to Cuba and probably from the
 					Congo River – completed its voyage in 1867. For the last two
 					decades of the traffic, only the Bight of Benin and the Congo
 					region were heavily engaged in the trade. Nevertheless over the

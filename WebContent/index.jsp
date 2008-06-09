@@ -123,7 +123,7 @@
 						<div class="welcome-map-region-name"><img src="./images/index/map-north-america-title.png" border="0" width="180" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
 							The North American mainland played a relatively minor role in the trans-Atlantic
-							slave. Its ports sent out less than five percent of all known voyages, and its
+							slave trade. Its ports sent out less than five percent of all known voyages, and its
 							slave markets absorbed less than four percent of all slaves carried off from Africa.
 							An intra-American trade in slaves – originating in the Caribbean - supplied additional
 							slaves however. This region was exceptional in the Americas in that a positive rate
@@ -138,8 +138,8 @@
 							The Caribbean was one of the two major broad regional markets for slaves from
 							Africa. Over the two centuries when the trade was at its height, the major
 							locations for sugar production, and therefore the major slave markets, shifted
-							from the eastern Caribbean to the west. Here, first Jamaica, then St Domingue
-							and finally in the 19th century, Cuba absorbed most of the slaves brought into
+							from the eastern Caribbean to the west. Here, first Jamaica, then St. Domingue,
+							and finally in the nineteenth century, Cuba, absorbed most of the slaves brought into
 							the region. As this implies, few islands developed self-sustaining populations
 							at any point in the slave trade era. Caribbean ports also sent out more slaving
 							expeditions to Africa than did the North American mainland ports.
@@ -165,8 +165,8 @@
 						<div class="welcome-map-region-desc">
 							Europe was the starting point for about half all trans-Atlantic slaving voyages.
 							This traffic dominated the West African to Caribbean section of the slave trade.
-							The major ports were at first located in the Iberian peninsular but by the eighteenth
-							century northern European ports had become dominant. After 1807, France and the
+							The major ports were at first located in the Iberian peninsula but by the eighteenth
+							century, northern European ports had become dominant. After 1807, France and the
 							Iberian ports sent out the great majority of European-based slaving voyages.
 							The European consumers’ demand for sugar was the driving force behind 350 years
 							of trans-Atlantic slave trading.

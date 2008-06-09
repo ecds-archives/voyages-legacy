@@ -88,7 +88,7 @@
 					all of the sugar consumed in Europe and almost all the slaves
 					producing it were African. Consistent with the earlier discussion
 					of Atlantic wind and ocean currents, there were by 1640 two major
-					branches of the transatlantic slave trade operating, one to Brazil,
+					branches of the trans-Atlantic slave trade operating, one to Brazil,
 					and the other to the mainland Spanish Americas, but together they
 					accounted for less 7,500 departures a year from the whole of
 					sub-Saharan Africa, almost all of them by 1600 from west-central

@@ -108,7 +108,7 @@
 					the slaves it ever exported in just the eighty years between 1760
 					and 1840. It is not surprising therefore that some systematic links
 					between Africa and the Americas can be perceived. As research on
-					the issue of transatlantic connections has progressed, it has
+					the issue of trans-Atlantic connections has progressed, it has
 					become clear that the distribution of Africans in the New World is
 					no more random than the distribution of Europeans. Eighty percent
 					of the slaves who went to southeast Brazil were taken from West

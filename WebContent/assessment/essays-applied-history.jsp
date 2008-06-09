@@ -111,7 +111,7 @@
 					variables in the database: vessel, captain, and owner names.
 					Nevertheless, the database was essential in establishing important
 					connections that existed between the European world of high finance
-					and the transatlantic slave trade in the eighteenth and early
+					and the trans-Atlantic slave trade in the eighteenth and early
 					nineteenth centuries.</p>
 
 				</s:simpleBox>
