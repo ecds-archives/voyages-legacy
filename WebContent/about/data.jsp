@@ -43,7 +43,66 @@
 				<s:simpleBox>
 			
 					<h1>Contributors of data</h1>					
-			
+				
+					<p>The following have added data to the Voyages Database since the publication of 
+					the 1999 CD-ROM, <font style="font-style: italic;">The Trans-Atlantic Slave Trade: A Database on CD-ROM:</font> </p>
+
+					
+					<ul>
+						<li>Rosanne Adderley</li>
+						<li>Richard A Arzill</li>
+						<li>Joseph Avitable</li>
+						<li>James G. Basker</li>
+						<li>Stephen D. Behrendt</li>
+						<li>Franz Binder</li>
+						<li>Richard Birkett</li>
+						<li>Ernst van den Boogart</li>
+						<li>Alex Borucki</li>
+						<li>Angela J Campbell</li>
+						<li>James Campbell</li>
+						<li>Mariana Pinho Candido</li>
+						<li>Jose Capela</li>
+						<li>John C. Coombs</li>
+						<li>Jose Curto</li>
+						<li>Daniel B. Domingues da Silva</li>
+						<li>David Eltis</li>
+						<li>Roquinaldo Ferreira</li>
+						<li>Manolo Florentino</li>
+						<li>Charles Foy</li>
+						<li>David Geggus</li>
+						<li>Oscar Grandío Moráguez</li>
+						<li>Jerome Handler</li>
+						<li>Robert Harms</li>
+						<li>Candice Harrison</li>
+						<li>Henk den Heijer</li>
+						<li>Willem Klooster</li>
+						<li>Ruud Koopman</li>
+						<li>Robin Law</li>
+						<li>Richard Lédée</li>
+						<li>Jean-Pierre Le Glaunec</li>
+						<li>Pedro Machado</li>
+						<li>Antonio de Almeida Mendes</li>
+						<li>Philp Misevich</li>
+						<li>Greg O’Malley</li>
+						<li>Cláudia Paixão</li>
+						<li>Manuel Barcia Paz</li>
+						<li>Janaína Perrayon Lopes</li>
+						<li>David Pettee</li>
+						<li>Johannes Postma</li>
+						<li>Fabricio Prado</li>
+						<li>James Pritchard</li>
+						<li>Vanessa Ramos</li>
+						<li>Alexandre Vieira Ribeiro</li>
+						<li>David Richardson</li>
+						<li>Justin Roberts</li>
+						<li>Jelmer Vos</li>
+						<li>Lorena Walsh</li>
+						<li>Andrea Weindl</li>
+						<li>Rik van Welie</li>
+						<li>David Wheat</li>
+					</ul>
+
+						
 
 				</s:simpleBox>
 			</td>
