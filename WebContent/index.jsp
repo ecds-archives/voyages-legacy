@@ -200,7 +200,7 @@
 				<div id="welcome-text">
 					<div id="welcome-text-big"><img src="./images/index/welcome-text.png" width="530" height="75" border="0" /></div>
 					<div id="welcome-text-small">
-						<div>forcibly embarking over 10 million Africans for transport to the Americas</div>
+						<div>that forcibly embarked over 10 million Africans for transport to the Americas</div>
 						<div>between the sixteenth and nineteenth centuries.  It offers researchers, </div>
 						<div>students and the general public a chance to rediscover the reality of </div>
 						<div>one of the largest forced movements of peoples in world history.</div>
