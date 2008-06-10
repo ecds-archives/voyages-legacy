@@ -106,7 +106,7 @@
 							to other parts of the world. The map shows the trans-Atlantic
 							movement of these captives in comparative perspective for the
 							centuries since 1500 only. Estimates of the ocean-borne trade are
-							more robust than are those for the trans-Saharan, Red sea and
+							more robust than are those for the trans-Saharan, Red Sea and
 							Persian Gulf routes, but it is thought that for the period from the
 							end of the Roman Empire to 1900 about the same number of captives
 							crossed the Atlantic as left Africa by all other routes combined.</p>
