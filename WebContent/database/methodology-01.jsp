@@ -65,7 +65,7 @@
 					of some millions of Africans and their descendants who helped shape the modern Americas culturally as well as in
 					the material sense.</p>
 					
-					<p>The genesis and history of Voyages database is laid out on a separate page. In this essay we wish to alert users
+					<p>The genesis and history of Voyages Database is laid out on a separate page. In this essay we wish to alert users
 					to its structure and to its limitations as well as its strengths. The data set contains thousands of names of ship
 					owners and ship captains, but it contains no names of the millions of slaves carried to the Americas. On the other
 					hand, this web site does provide the African names of and personal information about 67,004 captives who were found
@@ -78,8 +78,8 @@
 					new, basic information useful in examining the relationships among slaving, warfare—in both Africa and Europe—political
 					instability, and climatic and ecological change, among other forces. The data set in its earlier manifestations has already
 					provided new impetus to assessments of the volume and demographic structure of the trans-Atlantic slave trade, and, when the
-					names database is properly interpreted, it will contribute as well to our understanding of slaving routes from the interior
-					to the coast. </p>
+					African Names Database is properly interpreted, it will contribute as well to our understanding of slaving routes from the African
+					interior to the coast. </p>
 					
 					<p>For European societies located on either side of the Atlantic, the data set contains new information on ship
 					construction and registration and relatively extensive records of owners’ and captains’ names. It will now be
@@ -87,7 +87,7 @@
 					Researchers should be able to unravel trends in long-distance shipping activities, particularly important
 					because no comparable body of data exists for other transoceanic trades. Data on crew mortality are abundant.
 					The implications for new assessments of the social as well as the economic role of the slave trade in the regions
-					where the slave voyage originated are obvious. In short, the major aim of this Emory supported Voyages web site is
+					where the slave voyage originated are obvious. In short, the major aim of this Emory supported Voyages web resource is
 					to facilitate and stimulate new research on the slave trade, the implications of which reach far beyond the slave
 					trade itself.</p>
 					

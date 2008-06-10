@@ -55,7 +55,7 @@
 					characteristics of the captives and their experience of mortality; and (8) the sources for the record. The Variable List in the
 					“Understanding the database” section presents a complete listing of the data variables as well as the imputed variables in the
 					data set. Imputed variables are always marked with an asterisk. No voyage, however, includes information for all data or imputed
-					variables. –. Table 1 provides a summary of the coverage for some of the more important data variables. </p>
+					variables. Table 1 provides a summary of the coverage for some of the more important data variables. </p>
 					
 					<p>Generally, we attempted to preserve the written documentary record in adding to the data variables. Numeric variables, such
 					as vessel tonnage, numbers of crew, and numbers of slaves, demanded a ranking of sources, particularly for the well-documented
@@ -122,7 +122,7 @@
 				
 					<p>Age categories must also be used with care.<span class="superscript">(6)</span>
 
-					The Voyages database includes variables for adult males ("men"), adult
+					The Voyages Database includes variables for adult males ("men"), adult
 					females ("women"), male children ("boys"), female children ("girls"), adults, children, and infants (reported often as
 					"infants at the breast"). Unfortunately, age and sex definitions changed over time and among carriers. Arrivals in the
 					early Iberian Americas were assigned a ratio of what a prime male slave would cost—the latter being termed a pieça da

@@ -48,7 +48,7 @@
 		the user will find a comprehensive bibliography of primary and 
 		secondary sources consulted in creating the database.</p>
 
-		<h2><a href="search.faces">Search the Voyages database</a></h2>
+		<h2><a href="search.faces">Search the Voyages Database</a></h2>
 
 		<p>This link takes you to the page for querying the main database. 
 		You can search for information about a specific voyage, a small group 

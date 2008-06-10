@@ -72,7 +72,7 @@
 					trade. Merchants often purchased ships from other trades and converted them to slavers. The British slaving fleet also included
 					prizes captured from the French, Spanish, Dutch, or Americans during the many wars of the eighteenth century. Shipping sources,
 					such as Lloyd’s Registers of Shipping, often do not distinguish whether a vessel was "French-built" or a "French prize." Similarly,
-					the year of construction in the documents may refer to the year the vessel was captured,made free or rebuilt. As it is unlikely
+					the year of construction in the documents may refer to the year the vessel was captured, made free or rebuilt. As it is unlikely
 					that many British merchants purchased vessels built in France in an open market, the user should assume that a "French-built"
 					vessel was likely a war prize. Vessels reported as "French prizes," on the other hand, may not have been built in France. These
 					ships could in fact have been built in Britain and subsequently captured and renamed by French merchants.</p>

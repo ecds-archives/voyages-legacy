@@ -53,7 +53,7 @@
 					built, registered, cleared for a slaving voyage, embarked or disembarked slaves are grouped into seven broad regions and 90
 					specific regions. A full listing of these places is contained in the code book, but space constraints prevent all these from
 					being represented in the maps. We have adopted a convention that a geographical placename, such as London or Luanda or Charleston,
-					needs to be mentioned five times in the historical sources in order to appear on the online maps, Those wishing to use alternative
+					needs to be mentioned five times in the historical sources in order to appear on the online maps. Those wishing to use alternative
 					groupings of ports and places into regions and broad regions may use the geographic appendix to the SPSS code book. For Europe and
 					the Americas, the groupings are self- explanatory. For Africa eight regional definitions are employed, following conventions in the
 					literature. Senegambia is anywhere north of the Rio Nunez. Sierra Leone comprises the Rio Nunez to just west of Cape Mount inclusive.
@@ -67,12 +67,12 @@
 					
 					<p>On maps accompanying the “Search the database” interface, the default is “Broad Regions” at the lowest zoom level (20).
 					“Specific regions,” labelled in large font, are best viewed at mid-range zoom levels (3 and 6). “Port” locations are shown
-					by black dots and labels at the highest zoom level (1).  To change zoom level, use icons at the top of the main area map.
+					by black dots and labels at the highest zoom level (1).  To change zoom level, use icons at the top of the main map area.
 					Drop-down menus to the right of the map area offer a choice among geophysical and historical map backgrounds co-ordinated
 					with broad regions, specific regions, and ports.  Red and yellow dots are data points activated by a mouse rollover.  Maps
 					center in the middle of the Atlantic ocean.  To view detail, either use the positioning map at the bottom right to move the
 					map display over a land or island area facing the ocean or center the map on an exact location by means of the drop-down list
-					under “Find a visible place.” “Estimates” maps have a similar structure except that no data are provided for ports, and broad
+					under “Find a visible place.” Estimates maps have a similar structure except that no data are provided for ports, and broad
 					and specific regions have definitions that differ slightly from those in the main database interface. </p>
 					
 					<p>In the query frame to the left, broad and specific regional groupings of ports each become a new variable that appears in

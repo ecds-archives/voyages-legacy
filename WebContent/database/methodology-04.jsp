@@ -57,7 +57,7 @@
 					began their slaving activities in the Indian Ocean, but then on the same voyage brought slaves to the Americas after selling
 					some Africans in Bourbon and the Cape of Good Hope. What to do with the British ships that carried hundreds of children from
 					the Upper Guinea coast to Lisbon in the mid-eighteenth century? These we included on the basis of length of voyage. Should
-					one include the Portuguese trade to o São Tomé in the Bight of Biafra—probably the most enduring branch of the Atlantic slave
+					one include the Portuguese trade to São Tomé in the Bight of Biafra—probably the most enduring branch of the Atlantic slave
 					trade? (excluded on the same basis). Then there were the more than 1,200 slave ships engaged in trans-Atlantic voyages, nearly
 					half with slaves on board, that the British captured and carried into Sierra Leone, the Cape of Good Hope, St. Helena, Fernando Po,
 					or Luanda, before they were able to reach their intended American destinations. These we included. Or even more confusing, the
@@ -76,7 +76,7 @@
 					asterisk, are mainly imputed from knowledge of the relevant voyage or adjacent voyages, calculated directly from data encountered
 					in archival or published sources, or inferred from patterns observed in data variables when not documented directly in primary
 					sources.  An example of an imputed variable is the “Region of Slave Disembarkation Broadly Defined,” a variable that allows one to
-					group voyages to Jamaica or Cuba or St. Domingue into the broadly defined region “Caribbean”. In augmenting the number of voyages
+					group voyages to Jamaica or Cuba or St. Domingue into the broadly defined region “Caribbean.” In augmenting the number of voyages
 					on which analysis can be conducted, the imputed variables produce more statistically significant results in using the options in
 					the “Search the database” interface to create tables and custom graphs. They form the basis of the tables and graphs that users can build. </p>
 

@@ -49,12 +49,12 @@
 					
 					<h2>Imputed Variables</h2>
 
-					<p>The second group of variables are Imputed Variables.  In the “Voyages Database” interface, users can choose 22
+					<p>The second group of variables are Imputed Variables.  In the Voyages Database interface, users can choose 22
 					of these imputed variables to facilitate searches. The imputed variables are derived directly from the data set. The assumptions
-					underlying these derivations are based are explained more fully below, but mostly the derived variables are amalgamations or
+					underlying these derivations are explained more fully below, but mostly the derived variables are amalgamations or
 					regroupings of the historical data from the first group of variables. To make the imputed variables as transparent as possible
 					and to facilitate refinements, alternative assessments, and corrections that users might think necessary, we have included a
-					download page which makes the database available to users in various formats. Indeed, it provides with the data needed to create
+					download page which makes the database available to users in various formats. Indeed, it provides users with the data needed to create
 					their own imputed variables.</p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="method-prev-next">

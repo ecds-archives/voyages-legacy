@@ -52,7 +52,7 @@
 					<p>Orthography is also a major issue in any historical database. For most voyage entries in the new data set, we maintained
 					the spelling or wording of the names of vessels, captains, and merchants. Exceptions include corrections of obvious mistakes
 					arising from the fact that the recorder of the information was often less than fluent in the language of the nation to which
-					the vessel belonged. And in the Portuguese and Brazilian cases we took the more drastic step of standardized all entries according
+					the vessel belonged. And in the Portuguese and Brazilian cases we took the more drastic step of standardizing all entries according
 					to modern Portuguese conventions. Even without these problems, variations of spelling were, of course, common before the nineteenth
 					century and, as discussed below, we have standardized some spellings to facilitate sorting. We removed the definite article from
 					vessel names in all languages. Occasionally sources reported different names for the same vessel. The Pretty Betty is also identified,
@@ -72,7 +72,7 @@
 					indicated in the index to the two-volume French set. Double surnames and indicators of rank (Sieur, Chevalier, de, de la) pose
 					problems singular to the organization of the French subset. In short, the spelling of names is not fixed in the French language.
 					We followed the spellings preferred in the index, though we transcribed first-name abbreviations as indicated in the documentary
-					evidence. To facilitate sorting the Voyages database’ file by captains’ names, we maintained the ordering of surnames as indicated
+					evidence. To facilitate sorting the Voyages Database’ file by captains’ names, we maintained the ordering of surnames as indicated
 					in the published index. </p>
 					
 					<p>Similarly, we followed, as closely as possible, the spelling and ordering of ship owners’ names given in the documentary evidence.
@@ -95,11 +95,11 @@
 					suggested by the words "company" (Compagnie or Cie.) or "associates" (consorts), we inserted an asterisk. Many French slave
 					voyages were organized by family members. French documents include these familial relationships: brother(s) (frères), father (père),
 					wife (épouse), widow (veuve or vve), eldest son (fils aîné), and son(s) (fils). These relationships are integral to the archival
-					record and have been maintained in the Voyages database. Because the French words frères and fils can imply multiple brothers and
+					record and have been maintained in the Voyages Database. Because the French words frères and fils can imply multiple brothers and
 					sons, we inserted an asterisk in the second ownership column, as in "Portier (Frères)*." In some cases, the document may record
 					owners as "Brunaud Frères et Compagnie." For these few cases, we inserted a double asterisk as in "Brunaud (Frères)**." Some
 					documents report the names of the propriéteurs who hired out their vessels to the armateurs, the affreteurs who freighted the
-					slave ships, or the local agents who transacted business for absentee armateurs. We excluded these names from Voyages database.
+					slave ships, or the local agents who transacted business for absentee armateurs. We excluded these names from Voyages Database.
 					French owners’ names often include complex double surnames and aristocratic titles. As in the case of French captains’ names,
 					we attempted to preserve the spelling in the original documents while following the Mettas-Daget index to standardize the basic
 					spelling and name ordering. We did this to allow the user to analyze ownership patterns easily through an A–Z owner–variable

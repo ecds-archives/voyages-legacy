@@ -67,10 +67,10 @@
 					dramatically increase the  size or scale of the trans-Atlantic slave trade. </p>
 
 					<p>The 34,941 trans-Atlantic voyages contained in the database allows us to infer the total number of voyages
-					carrying slaves from Africa. The “Estimates” page suggests that 12 ½  million captives (12,520,000) departed
+					carrying slaves from Africa. The Estimates page suggests that 12 ½  million captives (12,520,000) departed
 					Africa for the Americas. Dividing this total by the average number of people embarked per voyage, 304 individuals,
-					yields 41,190 voyages. Similarly, the “Estimates” pages suggests that 10,7 million enslaved Africans disembarked,
-					mainly in the Americas. Given the average number disembarked per voyage,265 people, yields an estimated 40,380
+					yields 41,190 voyages. Similarly, the Estimates pages suggests that 10.7 million enslaved Africans disembarked,
+					mainly in the Americas. Given the average number disembarked per voyage, 265 people, yields an estimated 40,380
 					voyages arriving. Not all 34,941 voyages in the database carried slaves from Africa. A total of 1,536 ships (4.4%)
 					never reached the African coast because they were lost at sea, captured or suffered some other misfortune. After
 					removing these voyages, the database contains some trace of 81 percent of voyages that embarked captives. The

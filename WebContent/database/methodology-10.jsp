@@ -52,7 +52,7 @@
 					<p>There are also imputed variables for both voyage dates and on numbers of captives. Because most slaving voyages lasted for
 					many months or even years, and no voyages have complete information for all ten date variables, we have created three definitions
 					of "year" in the full downloadable database from which users can choose for purposes of analysis: the year in which the voyage
-					originated, the year of embarkation of slaves, or the year of arrival at point of disembarkation. In the Voyages database only
+					originated, the year of embarkation of slaves, or the year of arrival at point of disembarkation. In the Voyages Database only
 					“YEARAM” or “year of arrival” is provided.  We created imputed year values when the sources did not record the years when voyages
 					departed their homeport, or departed the African coast, or the year when vessels arrived in the Americas. If a London-based vessel
 					arrived in Jamaica in September 1770, for example, the year 1770 becomes the imputed African departure year, and the year 1769
@@ -62,7 +62,7 @@
 					are added, the creation of which is discussed more fully below. Researchers can of course make their own estimates and these,
 					like the inferences on which alternative estimates are based, may well be different from what we regard as optimal. We would
 					like to emphasize that in many cases the optimal solution is not obvious, and one researcher’s estimates (and inferences) may
-					be different from, but as good as, another’s, despite the fact that all are working with the same data base. Anyone using the
+					be different from, but as good as, another’s, despite the fact that all are working with the same data set. Anyone using the
 					data, including ourselves, therefore needs to specify clearly the assumptions he or she is using.</p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="method-prev-next">
