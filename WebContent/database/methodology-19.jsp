@@ -65,7 +65,7 @@
 					frequently referred to at the time as “a prime male”.<span class="superscript">(24)</span> Second, we adjusted
 					that price for the price differential between the market in which the slave was actually sold and the price in
 					Jamaica. Thus, if the captive was sold in one of the eastern Caribbean islands we would make a small adjustment
-					upwards to reflect the ten extra days extra sailing time it would take to reach Jamaica. Third, we converted all
+					upwards to reflect the ten extra days sailing time it would take to reach Jamaica. Third, we converted all
 					prices into pounds sterling. What we did not do was to express the price in constant pounds (adjusted for
 					inflation) – in other words, in real terms. This variable is thus based on archival data, but the adjustments
 					we have made in the interests of making it intelligible for users have the effect of converting this into an
@@ -75,7 +75,7 @@
 					<p>The above discussion is not exhaustive in the sense that we not have touched on and explained every single
 					variable in either the Voyages interface or the two databases offered for downloading. Many of the variables
 					need no more explanation than is available on the Variable List page and readers are referred to this page
-					for any missing in the preceding pages. </p>
+					for any missing explanations in the preceding pages. </p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="method-prev-next">
 					<tr>

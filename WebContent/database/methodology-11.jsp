@@ -49,11 +49,11 @@
 					
 					<h2>Classification as a Trans-Atlantic Slaving Voyage</h2>
 					
-					<p>One important problem slave-trade researchers need to address is whether vessels bound for “Africa” are slaving
+					<p>One important problem slave-trade researchers need to address is whether vessels bound for “Africa” in the sources are slaving
 					vessels.  As late as the end of the seventeenth century, slaves formed less than half of trade by value between the
 					Atlantic world and Africa. Many captains sailed to  Africa to purchase gold, ivory, dyewoods, or spices., Numerous
 					naval vessels, troop transports or storeships sailed from Lisbon to the Portuguese forts at Benguela or Luanda, and
-					other European powers needed to supply their trading forts as well.. For most of the French, Portuguese and Dutch
+					other European powers needed to supply their trading forts as well. For most of the French, Portuguese and Dutch
 					voyages to Africa, researchers other than ourselves have made the decision on whether or not a ship was a slaver,
 					though we have uncovered a few additional voyages from these nations where the object of the voyage remains unclear.
 					It might be noted that records of ship departures have typically survived better in the historical record than
@@ -80,7 +80,7 @@
 					quite certain, are not great. </p>
 					
 					<p>There remains the question of produce ships—defined as ships that sailed to Africa to trade for animal products, agricultural
-					commodities or minerals. . We have identified 1,450 voyages that departed Africa without obtaining slaves. In some cases they
+					commodities or minerals. We have identified 1,450 voyages that departed Africa without obtaining slaves. In some cases they
 					carried supplies for the European castles on the coast, but in the majority of instances they traded for African produce before
 					returning directly to Europe. In addition, there were always a few "tenders" each year that went to the coast to supply slaves
 					for a larger ship, but did not themselves carry slaves across the Atlantic. The great majority of these non-slaving ships were

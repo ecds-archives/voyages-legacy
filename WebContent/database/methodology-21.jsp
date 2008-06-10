@@ -54,14 +54,15 @@
 					
 					<p><span class="superscript">2</span> Joseph Inikori has given "a preferred global figure of 15.4 million
 					for the European slave trade." Adjusting for those carried to the offshore islands and Europe, this implies
-					14.9 million headed for the Americas. See <font style="font-style: italic;">Cahiers d’Etudes africaines</font>, 32 (1993):686</p>
+					14.9 million headed for the Americas. See <font style="font-style: italic;">Cahiers d’Etudes africaines</font>, 32 (1993):686.</p>
 
 					
 					<p><span class="superscript">3</span> H.C.V. Leibbrandt, <font style="font-style: italic;">Precis of the Archives of the Cape of Good Hope
-					</font>, Vol. 14, Journal 1662–1670 (Cape Town, 1901), 127–8</p>
+					</font>, Vol. 14, Journal 1662–1670 (Cape Town, 1901), 127–8.</p>
 					
 					<p><span class="superscript">4</span> British slave ships trading from Africa to Lisbon include the
-					Kent (1731), the Mary (1737) and the <font style="font-style: italic;">Betsey</font> and <font style="font-style: italic;">Hennie</font> (1755).
+					<font style="font-style: italic;">Kent</font> (1731), the <font style="font-style: italic;">Mary</font> (1737) and 
+					the <font style="font-style: italic;">Betsey</font> and <font style="font-style: italic;">Hennie</font> (1755).
 					For sources see the data set. For the removal of slaves from Ambriz to St. Helena and Sierra Leone, see Kelly Muspratt to Aberdeen, 31 July 1843,
 					British National Archives (henceforth BNA), FO84/501.</p>
 
@@ -123,7 +124,7 @@
 					Y = 52.86 + (1.22 x X)   N = 63, R² = 0.77 <br>
 					where Y = measured tons, 1773–1835, and X = measured tons after 1835.</p>
 					
-					<p><span class="superscript">15</span> Palmerston to Kennedy, May 4, 1840 (circular dispatch), BNA, FO84/312</p>
+					<p><span class="superscript">15</span> Palmerston to Kennedy, May 4, 1840 (circular dispatch), BNA, FO84/312.</p>
 
 					
 					<p><span class="superscript">16</span> H. Chamberlain to Canning, 18 Sept. 1824 (enc.), FO84/31; W. Cole and

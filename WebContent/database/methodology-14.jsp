@@ -63,7 +63,7 @@
 					but for a further 2,404 we have the figure for departures alone and for 12,279 numbers arrived alone. Imputed totals
 					for the missing information may be made from the large subset of voyages that provide information on deaths during
 					the passage. The Voyages Database contains 6,332 voyages for which a ratio of deaths to slaves embarked may be
-					calculated). Deaths as a proportion of those embarked differed markedly by African region of embarkation. Table 2
+					calculated. Deaths as a proportion of those embarked differed markedly by African region of embarkation. Table 2
 					shows breakdowns of shipboard mortality as a percentage of those slaves taken on board.</p>
 
 					<center>
@@ -150,7 +150,7 @@
 					at arrival in the Americas are known.</p>
 
 					
-					<p>There remain 12,819 voyages with no information about the numbers of slaves on board ship.. Indeed, we do
+					<p>There remain 12,819 voyages with no information about the numbers of slaves on board ship. Indeed, we do
 					not even know if some of these ships carried slaves. The CD-ROM database divided such unknowns into just two
 					groups, one sailing from North American ports and the other departing from all other ports in the Atlantic.
 					Behind such categorization was the recognition that the slave vessels from North America were substantially
@@ -168,9 +168,9 @@
 					and estimates of captives for these are classed as “No rig” in the Appendix table. The means for these 142
 					categories were added to voyage records, as appropriate, whenever data on slaves could not be extracted from
 					the sources. Users should note that in all cases these averages might be termed “running” in the sense that
-					that as we added data tothe database we recalculated the statistics reported in the Appendix table. And as
+					that as we added data to the database we recalculated the statistics reported in the Appendix table. And as
 					augmentation of the dataset is set to continue then the imputed values will vary as data are added in the
-					future as well. Users should thus not expect to find that the imputed values assigned to any given ship
+					future. Users should thus not expect to find that the imputed values assigned to any given ship
 					type are always the same or, indeed, will remain the same. </p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="method-prev-next">

@@ -57,8 +57,8 @@
 					values available for “Slaves carried from first port of purchase” (NCAR13), “Slaves carried from second port
 					of purchase” (NCAR15), and “Slaves carried from third port of purchase” (NCAR17)--in other words, the slaves
 					embarked at up to three ports in Africa where these are available. If these data are incomplete or missing
-					then SLAXIMP draws from the data variable “Number of slaves arriving at first place of landing” (SLAARRIV) a
-					djusted for voyage mortality (imputed, if necessary), and finally, if this is not available then “Total slaves
+					then SLAXIMP draws from the data variable “Number of slaves arriving at first place of landing” (SLAARRIV) 
+					adjusted for voyage mortality (imputed, if necessary), and finally, if this is not available then “Total slaves
 					purchased” (TSLAVESP) – a variable available only in the downloadable database is used. Only if none of these
 					data variables can provide adequate information, does SLAXIMP incorporate one of the imputed values in the
 					Appendix table. Similarly SLAMIMP is derived first from SLAARRIV, then, if necessary, from the sum of “Number

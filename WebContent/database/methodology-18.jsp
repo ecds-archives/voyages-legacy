@@ -50,9 +50,9 @@
 					<h2>Tonnage</h2>
 
 					
-					<p>Perhaps the most difficult of the imputed variables developed for the Voyages database is “Standardized tonnage”
+					<p>Perhaps the most difficult of the imputed variables developed for the Voyages Database is “Standardized tonnage”
 					(TONMOD) derived from the data variable “Tonnage.” This may be the least reliable of the imputed variables provided
-					in the Voyages database. It is offered here as a guide to ship size and to provide a crude basis for calculating
+					in the Voyages Database. It is offered here as a guide to ship size and to provide a crude basis for calculating
 					indices of crowding on ships for both slaves and crew, as well as a basis for examining the efficiency with which
 					the trade was conducted over time and between major ports and carriers. The reasons for the relative unreliability
 					of this variable begin with the differences between deadweight tonnage, tons burden (for loose-packed cargo), and

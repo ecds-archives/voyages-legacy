@@ -77,7 +77,7 @@
 					both ends depending on availability, and where information has survived on both we gave precedence to
 					the ratios at the point of disembarkation. This procedure was justified by the fact that shipboard
 					mortality was only modestly age and sex specific, and those users who wish to eliminate these modest
-					effects should download that database first<span class="superscript">(12)</span>.</p>
+					effects should download that database first.<span class="superscript">(12)</span></p>
 					
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="method-prev-next">

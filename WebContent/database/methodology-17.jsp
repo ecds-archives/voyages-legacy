@@ -50,7 +50,7 @@
 					<h2>National Carriers</h2>
 					
 					<p>We have also made some assumptions in order to project a fuller picture of national carriers in the trade.
-					The set identifies the national affiliations of 25,570 or 73 percent of the voyages in the data set are identified.
+					The set identifies the national affiliations of 25,570 or 73 percent of the voyages in the data set.
 					The variable that carries this information is “Flag” (NATIONAL). For a further 7,705 ventures, the context of the
 					voyage and the name of the ship owner or captain make inferences about place of registration possible, and thus we
 					created an imputed variable of national affiliation that contains affiliations for 33,275 voyages. This is “Flag*”

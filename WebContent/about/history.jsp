@@ -96,7 +96,7 @@
 						holdings of the Bodleian and British Libraries. But while this was happening scholars unconnected with the project continued 
 						to give generously of their time and the archival data that they themselves have collected   While the range and depth of work 
 						completed before the year 2000 was impressive, the size and scope of this post 1999 research effort can be gauged by the fact 
-						that no less than sixty percent of the slave voyages in the Voyages database contain information unavailable in 1999. As the 
+						that no less than sixty percent of the slave voyages in the Voyages Database contain information unavailable in 1999. As the 
 						core data set expanded, and called on greater varieties of sources, the problem of double-counting grew ever larger and more 
 						complicated. In this period we reached the point at which almost as many resources had to be devoted to this as to gathering 
 						the data in the first place. </p>
