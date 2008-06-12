@@ -100,8 +100,10 @@
 					yames very scarse.” By April many of the yams he bought were
 					“rotten” and he was forced to buy unripe “green plantins.”</p>
 
+					<center>
 					<a href="essays-seasonality-fig-1.png" onclick="return popitup('essays-seasonality-fig-1.png')">
 						<img src="essays-seasonality-fig-1.png" width="550"/></a>
+					</center>
 					
 					<p>Two months after departing New Calabar, Doegood arrived in
 					Carlisle Bay, Barbados when slaves were producing the last barrels
@@ -118,8 +120,10 @@
 					began declining in March after provisions’ harvests and as less and
 					less sugar needed to be cut and processed (Figure 2).</p>
 					
+					<center>
 					<a href="essays-seasonality-fig-2.png" onclick="return popitup('essays-seasonality-fig-2.png')">
 						<img src="essays-seasonality-fig-2.png" width="550"/></a>
+					</center>
 					<br><br>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
