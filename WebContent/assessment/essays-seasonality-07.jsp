@@ -120,7 +120,7 @@
 					
 					<a href="essays-seasonality-fig-2.png" onclick="return popitup('essays-seasonality-fig-2.png')">
 						<img src="essays-seasonality-fig-2.png" width="550"/></a>
-					
+					<br><br>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>

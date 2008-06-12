@@ -20,6 +20,14 @@
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
+	<script language="javascript" type="text/javascript">
+	function popitup(url) {
+		newwindow=window.open(url,'name','height=552,width=550,resizable, scrollbars, location=0');
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+	</script>
+	
 </head>
 <body>
 <f:view>
@@ -81,7 +89,10 @@
 					they decided increasingly to sell slaves in the British West
 					Indies. Northern planters infrequently purchased enslaved Africans
 					shipped from the Bight of Biafra’s fall provisioning-slaving season
-					(<a href="essays-seasonality-fig-3.pdf" target="_blank">Figure 3</a>).</p>
+					(Figure 3).</p>
+					
+					<a href="essays-seasonality-fig-3.png" onclick="return popitup('essays-seasonality-fig-3.png')">
+						<img src="essays-seasonality-fig-3.png" width="550"/></a>
 
 					<p>French and Portuguese slave traders also shifted
 					agricultural workers between trans-Atlantic harvest cycles. Cap
