@@ -202,6 +202,7 @@
 		userLabel="Vessel owners"
 		spssName="owner">
 		<user-categories>
+			<category name="beginners" />
 			<category name="general" />
 		</user-categories>
 		<attributes>
