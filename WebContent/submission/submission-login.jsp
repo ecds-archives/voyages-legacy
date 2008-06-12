@@ -66,7 +66,7 @@
 				<br>
 	
 				<div style="text-align:center">
-					In order to be able to access prortected contents, please sign in.
+					In order to be able to access protected contents, please sign in.
 				</div>
 	
 				<br>
