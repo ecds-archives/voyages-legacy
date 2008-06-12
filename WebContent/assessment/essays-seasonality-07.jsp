@@ -20,6 +20,13 @@
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 
+	<script language="javascript" type="text/javascript">
+	function popitup(url) {
+		newwindow=window.open(url,'name','height=535,width=550,resizable, scrollbars, location=0');
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+	</script>
 </head>
 <body>
 <f:view>
@@ -80,8 +87,7 @@
 					hinterland, and then exports rose sharply in August as workers
 					harvested yams, peaking during the main harvest in October. They
 					then decreased by February-March, a period that coincides with
-					declining yam stocks (<a href="essays-seasonality-fig-1.pdf"
-						target="_blank">Figure 1</a>). In 1677-78 Arthur Doegood captained
+					declining yam stocks (Figure 1). In 1677-78 Arthur Doegood captained
 					one of the RAC slaving voyages to New Calabar <a
 						href="../database/voyage.faces?voyageId=9990">VoyageID 9990</a>
 					and his <a
@@ -94,6 +100,9 @@
 					yames very scarse.” By April many of the yams he bought were
 					“rotten” and he was forced to buy unripe “green plantins.”</p>
 
+					<a href="essays-seasonality-fig-1.png" onclick="return popitup('essays-seasonality-fig-1.png')">
+						<img src="essays-seasonality-fig-1.png" width="550"/></a>
+					
 					<p>Two months after departing New Calabar, Doegood arrived in
 					Carlisle Bay, Barbados when slaves were producing the last barrels
 					of sugar. Agent Hingston’s journal entry on 30-31 May 1678
@@ -107,8 +116,11 @@
 					that slave imports into Barbados began increasing towards the
 					beginning of the “in crop” provisions and sugar season, and then
 					began declining in March after provisions’ harvests and as less and
-					less sugar needed to be cut and processed (<a
-						href="essays-seasonality-fig-2.pdf" target="_blank">Figure 2</a>).</p>
+					less sugar needed to be cut and processed (Figure 2).</p>
+					
+					<a href="essays-seasonality-fig-2.png" onclick="return popitup('essays-seasonality-fig-2.png')">
+						<img src="essays-seasonality-fig-2.png" width="550"/></a>
+					
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
