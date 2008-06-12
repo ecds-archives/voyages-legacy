@@ -47,16 +47,15 @@
 			<td valign="top" id="main-content">
 			
 				<s:simpleBox>
-					<h1>A Guide to Understanding and Using the Online Database and Website</h1>
+					<h1>A Guide to Understanding and Using the Voyages Database and Website</h1>
 					
-					<p>This 40-page guide, prepared by Liz Milewicz and Nafees Khan, provides both an 
-					introduction and tutorial to how to use the four databases on the Voyages website: 
-					the Voyages Database, the Estimates Database, the Images Database, and the African 
-					Names Database.  It also contains a section on how to add new information to the Voyages  
-					Database through the data submission form in Contribute.</p>
+					<p>This 40-page guide, prepared by Liz Milewicz and Nafees Khan, provides tutorials on 
+					how to navigate the website and use the four databases: the Voyages Database, the Estimates 
+					Database, the Images Database, and the African Names Database. It concludes with a section 
+					on how to contribute new information to the Voyages Database.</p>
 					
-					<p>The guide is provided as a PDF file to facilitate reference to it in a separate window 
-					or downloading to print in its entirety.</p>
+					<p>The guide is provided as a PDF file to allow users to reference it in a separate window 
+					or to download and print it.</p>
 					
 					<ul>
 						<li><a href="guide/VoyagesGuide.pdf" onclick="return popitup('guide/VoyagesGuide.pdf')">VoyagesGuide.pdf</a></li>
