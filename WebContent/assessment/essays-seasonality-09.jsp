@@ -115,7 +115,7 @@
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
 						<td class="essay-prev">
-							<a href="essays-seasonality-08.faces">The Enslavement of Africans</a>
+							<a href="essays-seasonality-08.faces">Trans-Atlantic pathways and harvest cycles</a>
 						</td>
 						<td class="essay-next">
 						</td>
