@@ -102,7 +102,7 @@
 
 					<center>
 					<a href="essays-seasonality-fig-1.png" onclick="return popitup('essays-seasonality-fig-1.png')">
-						<img src="essays-seasonality-fig-1.png" width="550"/></a>
+						<img src="essays-seasonality-fig-1.png" width="500"/></a>
 					</center>
 					
 					<p>Two months after departing New Calabar, Doegood arrived in
@@ -122,7 +122,7 @@
 					
 					<center>
 					<a href="essays-seasonality-fig-2.png" onclick="return popitup('essays-seasonality-fig-2.png')">
-						<img src="essays-seasonality-fig-2.png" width="550"/></a>
+						<img src="essays-seasonality-fig-2.png" width="500"/></a>
 					</center>
 					<br><br>
 
