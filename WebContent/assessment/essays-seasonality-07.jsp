@@ -22,7 +22,7 @@
 
 	<script language="javascript" type="text/javascript">
 	function popitup(url) {
-		newwindow=window.open(url,'name','height=535,width=550,resizable, scrollbars, location=0');
+		newwindow=window.open(url,'name','height=486,width=500,resizable, scrollbars, location=0');
 		if (window.focus) {newwindow.focus()}
 		return false;
 	}

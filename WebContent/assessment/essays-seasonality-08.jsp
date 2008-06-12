@@ -22,7 +22,7 @@
 
 	<script language="javascript" type="text/javascript">
 	function popitup(url) {
-		newwindow=window.open(url,'name','height=552,width=550,resizable, scrollbars, location=0');
+		newwindow=window.open(url,'name','height=502,width=500,resizable, scrollbars, location=0');
 		if (window.focus) {newwindow.focus()}
 		return false;
 	}
@@ -31,6 +31,7 @@
 </head>
 <body>
 <f:view>
+
 <h:form id="form">
 
 	<f:loadBundle basename="SlaveTradeResources" var="res"/>
@@ -49,6 +50,7 @@
 				<f:param value="essays-seasonality-08" binding="#{EssaysBean.paramActiveMenuId}" />
 				<%@ include file="essays-toc.jsp" %>
 			</td>
+			
 			<td id="essays-right-column">
 				<s:simpleBox>
 			
@@ -91,9 +93,11 @@
 					shipped from the Bight of Biafra’s fall provisioning-slaving season
 					(Figure 3).</p>
 					
+					<center>
 					<a href="essays-seasonality-fig-3.png" onclick="return popitup('essays-seasonality-fig-3.png')">
-						<img src="essays-seasonality-fig-3.png" width="550"/></a>
-
+						<img src="essays-seasonality-fig-3.png" width="500"/></a>
+					</center>
+					
 					<p>French and Portuguese slave traders also shifted
 					agricultural workers between trans-Atlantic harvest cycles. Cap
 					Français, the largest French West Indian port and the principal
@@ -129,8 +133,7 @@
 		</table>
 	</div>
 
-</h:form>
-	
+</h:form>	
 </f:view>
 </body>
 </html>
