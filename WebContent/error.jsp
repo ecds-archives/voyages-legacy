@@ -27,17 +27,17 @@ div#header-outer {
 	margin-left: auto;
 	margin-right: auto;
 	width: 500px;
-	background-image: url(./images/error-top-left.png);
+	background-image: url(<%= request.getContextPath() %>/images/error-top-left.png);
 	background-position: left top;
 	background-repeat: no-repeat; }
 	
 div#header-inner {
-	background-image: url(./images/error-top-right.png);
+	background-image: url(<%= request.getContextPath() %>/images/error-top-right.png);
 	background-position: right top;
 	background-repeat: no-repeat; }
 	
 div#header-text {
-	background-image: url(./images/error-icon.png);
+	background-image: url(<%= request.getContextPath() %>/images/error-icon.png);
 	background-position: 15px center;
 	background-repeat: no-repeat;
 	padding-top: 15px;
@@ -52,22 +52,22 @@ div#message-frame-1 {
 	margin-left: auto;
 	margin-right: auto;
 	width: 500px;
-	background-image: url(./images/error-middle-left.png);
+	background-image: url(<%= request.getContextPath() %>/images/error-middle-left.png);
 	background-position: left top;
 	background-repeat: no-repeat; }
 	
 div#message-frame-2 {
-	background-image: url(./images/error-middle-right.png);
+	background-image: url(<%= request.getContextPath() %>/images/error-middle-right.png);
 	background-position: right top;
 	background-repeat: no-repeat; }	
 	
 div#message-frame-3 {
-	background-image: url(./images/error-bottom-left.png);
+	background-image: url(<%= request.getContextPath() %>/images/error-bottom-left.png);
 	background-position: left bottom;
 	background-repeat: no-repeat; }	
 
 div#message-frame-4 {
-	background-image: url(./images/error-bottom-right.png);
+	background-image: url(<%= request.getContextPath() %>/images/error-bottom-right.png);
 	background-position: right bottom;
 	background-repeat: no-repeat; }	
 
