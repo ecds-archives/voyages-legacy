@@ -56,7 +56,7 @@
 				<td class="section-title"><a href="history.faces">History</a></td>
 				<td class="section-title"><a href="team.faces">Project Team</a></td>
 				<td class="section-title"><a href="data.faces">Contributors of data</a></td>
-				<td class="section-title"><a href="acknowledgements.faces">Acknowledge-ments</a></td>
+				<td class="section-title"><a href="acknowledgements.faces">Acknowledge-<br>ments</a></td>
 				<td class="section-title"><a href="contact.faces">Contact us</a></td>
 				<td class="section-title"><a href="legal.faces">Legal</a></td>
 			</tr>
