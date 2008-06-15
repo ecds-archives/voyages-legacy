@@ -5,10 +5,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>The Database</title>
+	<title>Contribute</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
+	
+	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-info.css" rel="stylesheet" type="text/css">
 
@@ -31,10 +35,10 @@
 			<td valign="top" id="left-column">
 				<%@ include file="submission-menu.jsp" %>
 			</td>			
-			<td valign="top">
-				<div style="width:560px;">
+			<td valign="top" id="main-content">
+				<s:simpleBox>
 			
-				<h1 style="text-align:center">Contribute Voyage Information</h1>
+				<h1>Contribute Voyage Information</h1>
 				
 				<p>The Contribute section contains data entry forms by which users of the website can 
 				supply new information or revise existing information in the Voyages Database. A team 
@@ -61,41 +65,35 @@
 				When your registration is confirmed, signing in below will enable you to access the data entry forms.</p>
 				
 	
-				<h1 style="text-align:center">Sign in</h1>
+				<h2>Sign in</h2>
 	
-				<br>
-	
-				<div style="text-align:center">
-					In order to be able to access protected contents, please sign in.
-				</div>
-	
-				<br>
-				<center>
-					<table cellpadding="0" cellspacing="0" border="0">
-						<tr>
-							<td>User name:</td>
-							<td><h:inputText value="#{SubmissionUsersBean.userName}"/></td>
-						</tr>
-						<tr>
-							<td>Password:</td>
-							<td><h:inputSecret value="#{SubmissionUsersBean.password}"/></td>
-						</tr>					
-						<tr>
-							<td></td>
-							<td><h:commandButton value="Sign in" action="#{SubmissionUsersBean.auth}"/></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><h:outputText value="#{SubmissionUsersBean.errorMessage}"/></td>
-						</tr>			
-					</table>
-				</center>
-				<br>
+				<p>In order to be able to access protected contents, please sign in.</p>
 				
-				<div style="text-align:center">
-					If you don't have an account, <a href="new-user.faces">click here</a>.
+				<div style="padding: 5px; background-color: #FFF8CE; border-top: 1px solid #DDCA9D; border-bottom: 1px solid #DDCA9D;">
+				
+					<table cellpadding="0" cellspacing="5" border="0" align="center">
+					<tr>
+						<td>User name</td>
+						<td><h:inputText style="width: 200px;" value="#{SubmissionUsersBean.userName}"/></td>
+					</tr>
+					<tr>
+						<td>Password</td>
+						<td><h:inputSecret style="width: 200px;" value="#{SubmissionUsersBean.password}"/></td>
+					</tr>					
+					<tr>
+						<td></td>
+						<td>
+							<h:commandButton value="Sign in" action="#{SubmissionUsersBean.auth}"/>&nbsp;&nbsp;
+							<h:outputText style="font-weight: bold;" value="#{SubmissionUsersBean.errorMessage}"/>
+						</td>
+					</tr>
+					</table>
+				
 				</div>
+				
+				<p>If you don't have an account, <a href="new-user.faces">click here</a>.</p>
 		
+				</s:simpleBox>
 			</td>
 		</tr>
 	</table>
