@@ -54,7 +54,7 @@
 			
 					<div class="lesson-plan-title">
 						The 1808 Slave Trade Abolition Deadline
-						<span class="download">(<a href="lesson-plans/SlaveTradeAbolition.pdf">Download</a>, PDF, 152KB)</span>
+						<span class="download">(<a href="lesson-plans/slave-trade-abolition.pdf">Download</a>, PDF, 152KB)</span>
 					</div>
 					<div  class="lesson-plan-detail">
 						<div class="lesson-plan-author">
@@ -128,7 +128,7 @@
 					
 					<div class="lesson-plan-title">
 						One Country’s Slave Trade 
-						<span class="download">(<a href="lesson-plans/OneCountry'sTrade.pdf">Download</a>, PDF, 104KB)</span>
+						<span class="download">(<a href="lesson-plans/one-countrys-trade.pdf">Download</a>, PDF, 104KB)</span>
 					</div>
 					<div class="lesson-plan-detail">
 						<div class="lesson-plan-author">
@@ -200,7 +200,7 @@
 		
 					<div class="lesson-plan-title">
 						The Countries of the Slave Trade 
-						<span class="download">(<a href="lesson-plans/CountriesoftheSlaveTrade.pdf">Download</a>, PDF, 108KB)</span>
+						<span class="download">(<a href="lesson-plans/countries-of-the-slave-trade.pdf">Download</a>, PDF, 108KB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
@@ -253,7 +253,7 @@
 		
 					<div class="lesson-plan-title">
 						Slave Trade Memorial 
-						<span class="download">(<a href="lesson-plans/MiddlePassageMemorial.pdf">Download</a>, PDF, 168KB; <a href="lesson-plans/middle-passage-memorial.pdf">Download presentation</a>, PPT, 1.2MB)</span>
+						<span class="download">(<a href="lesson-plans/middle-passage-memorial.pdf">Download</a>, PDF, 168KB; <a href="lesson-plans/middle-passage-memorial.pdf">Download presentation</a>, PPT, 1.2MB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
@@ -318,7 +318,7 @@
 		
 					<div class="lesson-plan-title">
 						Finding Historical Evidence
-						<span class="download">(<a href="lesson-plans/HistoricalEvidence.pdf">Download</a>, PDF, 112KB)</span>
+						<span class="download">(<a href="lesson-plans/historical-evidence.pdf">Download</a>, PDF, 112KB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
@@ -399,7 +399,7 @@
 		
 					<div class="lesson-plan-title">
 						Database Scavenger Hunt 
-						<span class="download">(<a href="lesson-plans/DatabaseScavengerHunt.pdf">Download</a>, PDF, 96KB)</span>
+						<span class="download">(<a href="lesson-plans/database-scavenger-hunt.pdf">Download</a>, PDF, 96KB)</span>
 					</div>
 					<div class="lesson-plan-detail">			
 						<div class="lesson-plan-author">
