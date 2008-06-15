@@ -85,95 +85,45 @@ public class StandardMaps
 	private static final MapIdent[] mapsEstimates = new MapIdent[] {
 		new MapIdent(
 				"geophysical", "All periods (1514-1866)", 1501, 1867,
-				new ZoomLevel[] {
-				levelGeo20,
-				levelGeoE6,
-				levelGeoE3,
-				levelGeoE1}, new String[] {
-				"Broad regions (all periods)",
-				"Regions (all periods)"}),
-		new MapIdent("h_1650",
-				"1650 (1514-1641)", 1501, 1641,
-				new ZoomLevel[] {
-				levelGeo20,
-				level1650E6,
-				level1650E3,
-				level1650E1}, new String[] {
-				"Broad regions (1650)",
-				"Regions (1650)"}),
-		new MapIdent("h_1750",
-				"1750 (1642-1807)", 1642, 1807,
-				new ZoomLevel[] {
-				levelGeo20,
-				level1750E6,
-				level1750E3,
-				level1750E1}, new String[] {
-				"Broad regions (1750)",
-				"Regions (1750)"}),
-		new MapIdent("h_1850",
-				"1850 (1808-1866)", 1808, 1867,
-				new ZoomLevel[] {
-				levelGeo20,
-				level1850E6,
-				level1850E3,
-				level1850E1}, new String[] {
-				"Broad regions (1850)",
-				"Regions (1850)"})		
+				new ZoomLevel[] {levelGeo20, levelGeoE6, levelGeoE3},
+				new String[] {"Broad regions (all periods)", "Regions (all periods)"}),
+		new MapIdent(
+				"h_1650",
+				"1650 (1514-1641)",
+				1501, 1641,
+				new ZoomLevel[] {levelGeo20, level1650E6, level1650E3},
+				new String[] {"Broad regions (1650)", "Regions (1650)"}),
+		new MapIdent(
+				"h_1750", "1750 (1642-1807)", 1642, 1807,
+				new ZoomLevel[] {levelGeo20, level1750E6, level1750E3},
+				new String[] {"Broad regions (1750)", "Regions (1750)"}),
+		new MapIdent(
+				"h_1850", "1850 (1808-1866)", 1808, 1867,
+				new ZoomLevel[] {levelGeo20, level1850E6, level1850E3},
+				new String[] { "Broad regions (1850)", "Regions (1850)"})		
 	};
 	
 	private static final MapIdent[] mapsDatabase = new MapIdent[] {
 
-		new MapIdent("geophysical",
-				"All periods (1514-1866)",
-				1501, 1867,
-				new ZoomLevel[] {
-					levelGeo20,
-					levelGeoD6,
-					levelGeoD3,
-					levelGeoD1},
-				new String[] {
-					"Broad regions (all periods)",
-					"Regions (all periods)",
-					"Ports (all periods)"}),
+		new MapIdent(
+				"geophysical", "All periods (1514-1866)", 1501, 1867,
+				new ZoomLevel[] {levelGeo20, levelGeoD6, levelGeoD3, levelGeoD1},
+				new String[] {"Broad regions (all periods)", "Regions (all periods)", "Ports (all periods)"}),
 
-		new MapIdent("h_1650",
-				"1650 (1514-1641)",
-				1501, 1641,
-				new ZoomLevel[] {
-					levelGeo20,
-					level1650D6,
-					level1650D3,
-					level1650D1},
-				new String[] {
-					"Broad regions (1650)",
-					"Regions (1650)",
-					"Ports (1650)"}),
+		new MapIdent(
+				"h_1650", "1650 (1514-1641)", 1501, 1641,
+				new ZoomLevel[] {levelGeo20, level1650D6, level1650D3, level1650D1},
+				new String[] {"Broad regions (1650)", "Regions (1650)", "Ports (1650)"}),
 		
-		new MapIdent("h_1750",
-				"1750 (1642-1807)",
-				1642, 1807,
-				new ZoomLevel[] {
-					levelGeo20,
-					level1750D6,
-					level1750D3,
-					level1750D1},
-				new String[] {
-					"Broad regions (1750)",
-					"Regions (1750)",
-					"Ports (1750)"}),
+		new MapIdent(
+				"h_1750", "1750 (1642-1807)", 1642, 1807,
+				new ZoomLevel[] {levelGeo20, level1750D6, level1750D3, level1750D1},
+				new String[] {"Broad regions (1750)", "Regions (1750)", "Ports (1750)"}),
 		
-		new MapIdent("h_1850",
-				"1850 (1808-1866)",
-				1808, 1867,
-				new ZoomLevel[] {
-					levelGeo20,
-					level1850D6,
-					level1850D3,
-					level1850D1},
-				new String[] {
-					"Broad regions (1850)",
-					"Regions (1850)",
-					"Ports (1850)"})
+		new MapIdent(
+				"h_1850", "1850 (1808-1866)", 1808, 1867,
+				new ZoomLevel[] {levelGeo20, level1850D6, level1850D3, level1850D1},
+				new String[] {"Broad regions (1850)", "Regions (1850)", "Ports (1850)"})
 	};
 	
 	private static Map chosenMaps = new HashMap();
