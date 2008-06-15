@@ -46,7 +46,6 @@
 						<span class="method-location">(Emory University)</span>,
 						<span class="method-date">2007</span>
 					</div>
-
 					
 					<p>It is difficult to believe in the first decade of the twenty-first century that just over two centuries
 					ago, for those Europeans who thought about the issue, the shipping of enslaved Africans across the Atlantic
