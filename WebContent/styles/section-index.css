@@ -1,31 +1,36 @@
-div#content {
-	margin-top: 10px;
-	margin-left: 250px;
-	width: 640px; }
-
-h1 {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	margin-left: 15px; }
+div#index-intro-band {
+	padding-left: 15px;
+	padding-top: 10px;
+	padding-bottom: 20px; }
 	
-h2 {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	margin-left: 15px; }
-	
-h3 {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	margin-left: 15px; }
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
+div#index-intro-text {
+	font-size: 10pt;
 	line-height: 130%;
-	margin-left: 15px; }
+	width: 880px;
+	padding-top: 5px;
+	color: White; }
 
-ul {
+div#section-titles {
+	padding-left: 15px;
+	font-size: 11pt; }
+
+div#section-descs {
+	padding-left: 15px;
+	font-size: 8pt;
 	line-height: 130%; }
+
+td.section-title,
+td.section-desc {
+	vertical-align: top;
+	padding-right: 15px;
+	padding-left: 10px; }
+
+td.section-title {
+	padding-bottom: 5px; }
+
+td.section-desc {
+	padding-top: 10px; }
 	
-ul li {
-	}
+div#section-titles a {
+	text-decoration: none; }
+	

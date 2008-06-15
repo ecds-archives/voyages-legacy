@@ -5,66 +5,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Images database</title>
+	<title>Resources</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
+	
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources.css" rel="stylesheet" type="text/css">
 	<link href="../styles/resources-index.css" rel="stylesheet" type="text/css">
-	<link href="../styles/expandable-box.css" rel="stylesheet" type="text/css">
-	<link href="../styles/resources-expandable-box.css" rel="stylesheet" type="text/css">
+	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+
 </head>
 <body>
 <f:view>
-<h:form id="main">
+	<h:form id="main">
 
-	<s:siteHeader activeSectionId="resources">
-		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
-		<h:outputText value="Resources" />
-	</s:siteHeader>
-	
-	
-	<div id="content">
-	
-		<img src="../images/resources-index-title.png" width="350" height="40" border="0" alt="Resources">
+		<s:siteHeader activeSectionId="resources">
+			<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
+			<h:outputText value="Resources" />
+		</s:siteHeader>
 		
-		<p>The Voyages website provides resources that offer some context
-		to the information available in the database of trans-Atlantic slave
-		trading voyages. The slave trade was an activity that involved
-		peoples, places, and tools as well as practices that today are unfamiliar
-		to most, or no longer exist. In this page, you will find resources
-		that will help you visualize or imagine these features of the
-		trans-Atlantic slave trade era. The materials are divided into a
-		database of images contemporary to the slave trade and a database of
-		names of Africans rescued from slave vessels in the nineteenth
-		century, during the period of suppression. With permission from
-		various archives and libraries, the images displayed here can be used
-		to observe details of people, places, artifacts and vessels of this
-		time and make connections with the relevant voyages in the main
-		database. The African Names Database was built with documents from the Foreign
-		Office, Series 84 and 313, held by the British National Archives. The
-		details of the vessels from which the liberated Africans were rescued
-		are listed in the voyages database.</p>
+		<div id="index-intro-band">
+		
+			<div id="index-intro-title">
+				<img src="../images/resources-index-title.png" width="140" height="40" border="0" alt="Resources">
+			</div>
+	
+			<div id="index-intro-text">The Voyages website provides
+			resources that offer some context to the information available in the
+			database of trans-Atlantic slave trading voyages. The slave trade was
+			an activity that involved peoples, places, and tools as well as
+			practices that today are unfamiliar to most, or no longer exist. In
+			this page, you will find resources that will help you visualize or
+			imagine these features of the trans-Atlantic slave trade era. The
+			materials are divided into a database of images contemporary to the
+			slave trade and a database of names of Africans rescued from slave
+			vessels in the nineteenth century, during the period of suppression.
+			With permission from various archives and libraries, the images
+			displayed here can be used to observe details of people, places,
+			artifacts and vessels of this time and make connections with the
+			relevant voyages in the main database. The African Names Database was
+			built with documents from the Foreign Office, Series 84 and 313, held
+			by the British National Archives. The details of the vessels from
+			which the liberated Africans were rescued are listed in the voyages
+			database.</div>
+	
+		</div>
+		
+		<div id="section-titles">
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td class="section-title"><a href="images.faces">Images</a></td>
+				<td class="section-title"><a href="slaves.faces">African Names Database</a></td>
+			</tr>
+			</table>
+		</div>
+		
+		<div id="section-descs">
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
 
-		<h2><a href="images.faces">Images</a></h2>
+				<td class="section-desc">The trans-Atlantic slave trade was an
+				activity that lasted for centuries. As a consequence, the ways it
+				became represented changed through time. Here, you will find images
+				contemporary to the trans-Atlantic slave trade representing places,
+				vessels and artifacts as well as slavers and slaves.</td>
 
-		<p>The trans-Atlantic slave trade was an activity that lasted for
-		centuries. As a consequence, the ways it became represented changed
-		through time. Here, you will find images contemporary to the
-		trans-Atlantic slave trade representing places, vessels and artifacts
-		as well as slavers and slaves.</p>
+				<td class="section-desc">The trans-Atlantic slave trade
+				culminated in the age of abolition. In the nineteenth century,
+				mixed-commissioned courts were created around the Atlantic basins to
+				adjudicate vessels illegally engaged in the slave trade. The African
+				Names Database offers a compilation of lists of liberated Africans
+				from slave vessels captured by British cruisers between 1819 and
+				1845, and taken for adjudication in the courts established in
+				Freetown, Sierra Leone, and in Havana, Cuba.</td>
 
-		<h2><a href="slaves.faces">African Names Database</a></h2>
-
-		<p>The trans-Atlantic slave trade culminated in the age of
-		abolition. In the nineteenth century, mixed-commissioned courts were
-		created around the Atlantic basins to adjudicate vessels illegally
-		engaged in the slave trade. The African Names Database offers a compilation of
-		lists of liberated Africans from slave vessels captured by British
-		cruisers between 1819 and 1845, and taken for adjudication in the
-		courts established in Freetown, Sierra Leone, and in Havana, Cuba.</p>
+			</tr>
+			</table>
+		</div>
 
 	</div>
 

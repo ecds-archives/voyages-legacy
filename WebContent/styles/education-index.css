@@ -1,21 +1,21 @@
 div#index-intro-band {
-	background-color: #7B919C; }
+	background-color: #88AACC; }
 
 div#section-titles {
-	background-color: #7B919C; }
+	background-color: #88AACC; }
 
 div#section-titles a {
 	color: White; }
 
 div#section-titles a:hover {
-	color: #C6ECED; }
+	color: #D6E1EF; }
 	
 td.section-title {
 	border-left: 1px solid White; }
 
 td.section-desc {
-	border-left: 1px solid #7B919C; }
+	border-left: 1px solid #88AACC; }
 
 td.section-title,
 td.section-desc {
-	width: 120px; }
+	width: 300px; }
