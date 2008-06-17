@@ -57,61 +57,52 @@
 						<a href="../resources/images-detail.faces?image=solomon"><img src="essays-images/solomon.jpg" width="150" height="170" border="0" alt="Job Ben Solomon in in the Gentleman’s Magazine (1750)"></a>
 						<div style="width: 150px;">
 							<div class="caption">
-								Job Ben Solomon in in the Gentleman’s Magazine (1750)
+								Ayuba Suleiman Diallo in the Gentleman’s Magazine (1750) 
 							</div>
 						</div>
 					</div>
 					
-					<p>Before the nineteenth century, most people in the world
-					lived under some type of dependency. Slavery was just one of them.
-					The story of Ayuba Suleiman Diallo provides an insight into a world
-					where slavery was just another form of social relationship.
-					Suleiman was a Fulbe Muslim better known as Job Ben Solomon. In
-					1731, he traveled from Bondu to sell two slaves upon his father’s
-					request at River Gambia. There he tried to sell the slaves to a
-					Captain Pike but they could not agree on a price, so Solomon sold
-					the slaves for cows to another African trader. Ironically, on the
-					way home Solomon was captured by raiders and sold to the same
-					captain he had met previously. Captain Pike embarked Solomon to
-					Maryland, one of the British colonies on the North American
-					mainland, where he spent about a year as a slave before returning
-					to Africa via England.</p>
+					<p>Before the nineteenth century most people in the world lived under 
+					some type of dependency of which slavery was just one form. The story 
+					of Ayuba Suleiman Diallo provides insight into a world where slavery 
+					was just another social relationship. Ayuba was a Fulbe Muslim known 
+					as Job Ben Solomon to Europeans. In 1731, he traveled from Bondu to 
+					the Gambia River to sell two slaves at his father’s request. He tried 
+					to sell the slaves to a Captain Pike but they could not agree on a 
+					price, so Ayuba sold the slaves for cows to another African trader. 
+					Ironically, on the way home Ayuba was captured by raiders and sold to 
+					the same captain with whom he had recently haggled. Captain Pike carried 
+					Ayuba off to Maryland, one of the British colonies on the North American 
+					mainland, where he spent about a year as a slave before returning to Africa via England.</p>
 
-					<p>In the Americas, Solomon was able to share some of the
-					experiences of many enslaved Africans, and like many of his fellow
-					Africans he attempted to run away. Solomon was a slave at the
-					tobacco plantations of Kent Island, Maryland. He had probably never
-					worked under a labor regime comparable to that held in the American
-					plantations. On one of his attempts to escape, he met Thomas
-					Bluett, an Englishmen, who, impressed by Solomon’s Muslim
-					education, helped him gain his liberty and return to Africa.
-					Indeed, one of Solomon’s letters still survives in the British
-					Library and his religious convictions inspired images portraying
-					him, such as the one available in our gallery of images, published
-					originally in 1750 in the <a href="../resources/images-detail.faces?image=solomon">Gentleman’s
+					<p>In the Americas, Ayuba shared the experiences of many enslaved Africans, 
+					and like many of his fellow Africans he attempted to run away. Ayuba was a 
+					slave at the tobacco plantations of Kent Island, Maryland. He had probably 
+					never worked under a labor regime that approached what was the norm on 
+					American plantations. During one of his attempts to escape, he met Thomas 
+					Bluett, an Englishmen, who, impressed by Ayuba’s Muslim education, helped 
+					him gain his liberty and return to Africa. Indeed, one of Ayuba’s letters 
+					still survives in the British Library and his religious convictions inspired 
+					images such as the one available in our gallery of images, published originally 
+					in 1750 in the  <a href="../resources/images-detail.faces?image=solomon">Gentleman’s
 					Magazine</a>.</p>
 
-					<p>Bluett’s memoirs, published in 1734, provide one of the most
-					complete accounts of Solomon’s life. Another is available by
-					Francis Moore, who in 1744 published his accounts of travel up the
-					River Gambia, where he met Solomon. Thanks to the accounts of
-					Bluett and Moore, it is possible to trace in the archives the
-					vessel in which Solomon crossed the Atlantic. He sailed in the ship
-					“Arabella,” commanded by the said Captain Pike and owned by William
-					and Henry Hunt, merchants of London. (For more details see 
+					<p>Bluett’s memoirs, published in 1734, provide one of the most complete accounts 
+					of Ayuba’s life. Another is available by Francis Moore, who in 1744 published his 
+					accounts of travel up the River Gambia, where he met Ayuba. Thanks to the accounts 
+					of Bluett and Moore, it is possible to trace in the archives the vessel in which 
+					Ayuba crossed the Atlantic. This was the ship “Arabella,” commanded by the said 
+					Captain Pike and owned by William and Henry Hunt, merchants of London. (For more details see  
 					<a href="../database/voyage.faces?voyageId=75094">VoyageID
 					75094</a>).</p>
 
-					<p>Despite his life trajectory, Solomon’s story has received
-					much less attention than have other known survivors of the Middle
-					Passage, such as Olaudah Equiano or Venture Smith. Job Ben Solomon
-					was clearly a victim of the traffic as well as a trader in slaves,
-					and indeed he resumed his slave trading activities when he returned
-					to Africa, participating in the activities of the famous Royal
-					African Company. Perhaps, the most important lesson to be drawn
-					from Solomon’s life was that, while slavery in Africa was very
-					different from slavery in the Americas, slavery was widely accepted
-					in the mid-eighteenth century among both Europeans and Africans.</p>
+					<p>Despite his life trajectory, Ayuba’s story has received much less attention 
+					than have other known survivors of the Middle Passage such as Olaudah Equiano or 
+					Venture Smith. Ayuba Suleiman Diallo was clearly a victim of the traffic as well 
+					as a trader in slaves, and indeed he resumed his slave trading activities when he 
+					returned to Africa, working for the English Royal African Company. An important 
+					lesson to be drawn from Ayuba’s life is that slavery was widely accepted in the 
+					mid-eighteenth century among both Europeans and Africans.</p>
 
 				</s:simpleBox>
 			</td>
