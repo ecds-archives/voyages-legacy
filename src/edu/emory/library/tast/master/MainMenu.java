@@ -12,7 +12,7 @@ public class MainMenu
 			"images/main-menu/database.png",
 			"images/main-menu/database-highlighted.png",
 			"images/main-menu/database-active.png",
-			100, 28,
+			125, 28,
 			"database",
 			new MainMenuBarPageItem[] {
 				new MainMenuBarPageItem(

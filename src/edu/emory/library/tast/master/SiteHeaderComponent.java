@@ -30,7 +30,7 @@ public class SiteHeaderComponent extends UIComponentBase
 
 	private static final String LOGO_SRC = "images/main-menu/logo.png";
 	private static final int LOGO_HEIGHT = 60;
-	private static final int LOGO_WIDTH = 260;
+	private static final int LOGO_WIDTH = 240;
 
 	private static final String BREADCRUMB_SEPARATOR_SRC = "images/main-menu/breadcrumb-separator.png";
 	private static final int BREADCRUMB_SEPARATOR_WIDTH = 10;
