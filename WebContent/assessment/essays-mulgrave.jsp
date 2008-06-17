@@ -62,61 +62,53 @@
 						</div>
 					</div>			
 
-					<p>The Middle Passage experience generally marked its survivors
-					for life, but Catherine Zimmermann-Mulgrave gives a lesson of hope.
-					Catherine was a survivor of the Portuguese Schooner “Heroína,”
-					which wrecked off the coast of Jamaica in 1833. The vessel had
-					embarked 303 slaves on the coast of Angola, intending to sail for
-					Cuba, but apparently it became lost, given that Jamaica was well
-					off the normal shipping route to Cuba. Contemporary records say
-					that only four slaves had drowned in the wreck, but many more had
-					died at sea, during the Middle Passage. (For additional details,
-					see <a href="../database/voyage.faces?voyageId=41890">VoyageID
+					<p>Catherine Zimmermann-Mulgrave’s life experiences after imprisonment 
+					on a slave vessel were highly unusual when measured against the stories 
+					of most captive Africans. She was an eight year old survivor of the 
+					Portuguese Schooner “Heroína,” shipwrecked on the coast of Jamaica in 
+					1833. The vessel had embarked 303 slaves on the coast of Angola, and 
+					was intended for Cuba. Contemporary records indicate that only four 
+					slaves had drowned in the wreck, but many more had died the transatlantic 
+					crossing. (For additional details, see  <a href="../database/voyage.faces?voyageId=41890">VoyageID
 					41890</a>).</p>
 	
-					<p>Catherine left no accounts of her own life. Most details
-					known about her came from letters authored by her second husband,
-					Johannes Zimmermann, a missionary at Ghana from the Basel Mission
-					of Switzerland, and a few accounts about the shipwreck of the
-					“Heroína” in Jamaica. Catherine received her western name after the
-					Governor of Jamaica at the time of the shipwreck, the Earl of
-					Mulgrave. However, Zimmermann recalls that her African name was
-					Gewe, and that she descended from a family of chiefs by her
-					father’s side, and belonged to a prominent family of mulattos by
-					her mother’s side. Catherine described her home town to Zimmermann
-					as a major seaport, where several Europeans lived. Much of the
-					details she provided to him indicate that she grew up at Luanda, a
-					Portuguese port located on the coast of Angola, but, although the
-					“Heroína” departed from that coast, no clear references allow us to
-					assume that Luanda was her place of birth.</p>
+					<p>The shipwreck occurred on what was then British soil and, under 
+					the terms of the 1807 act abolishing the slave trade, she and the 
+					other survivors of the wreck were freed and apprenticed – in her 
+					case to members of the Moravian church. Catherine left no memoirs, 
+					and details of her life come from letters written by her second 
+					husband, Johannes Zimmermann, a missionary from the Basel Mission 
+					of Switzerland who eventually lived in what is today Ghana, and 
+					from accounts of the shipwreck. Catherine’s African name was Gewe, 
+					and she was apparently renamed after the Earl of Mulgrave, the 
+					Governor of Jamaica at the time of the shipwreck. She was descended 
+					from a family of chiefs on her father’s side, and belonged to a 
+					prominent family of mulattos on her mother’s side. Catherine described 
+					her home town to Zimmermann as a major seaport where several Europeans 
+					lived. Many of the details she provided indicate that she may have been 
+					born and spent her early years in Luanda, a Portuguese port located on 
+					the coast of Angola, although we cannot verify this.</p>
 					
-					<p>Sometime around 1833, Catherine was kidnapped on the way to
-					school. She was still a little girl, when she and her friends were
-					attracted by some European sailors who offered them candies.
-					Promises of candies eventually turned into a forced invitation, and
-					Catherine, together with her friends, was carried away from the
-					coast of Angola. She reported to her husband that the captain had
-					treated her well all the way to the Americas, and that she did not
-					travel chained in the hold with the other slaves. Nevertheless,
-					Catherine witnessed the every day life on board a slave vessel.
-					Zimmermann tells that Catherine saw a slave beaten badly because he
-					had attempted to commit suicide, and that the slaves were brought
-					from the hold daily to enjoy some fresh air, though no doubt the
-					conditions in that hold were appalling.</p>
+					<p>Sometime around 1833, Catherine was kidnapped on the way to school 
+					along with a group of friends. The group was lured to the “Heroína,” 
+					by sailors who offered them candies. Catherine, together with her 
+					friends, was carried away from the coast of Angola. She reported to 
+					her husband that the captain had treated her well all the way to the 
+					Americas, and, like many other children caught up in the slave trade, 
+					she did not travel chained in the hold with the other slaves. Nevertheless, 
+					Catherine must have witnessed every day life on board a slave vessel. 
+					Zimmermann tells that Catherine saw a slave badly beaten because he had 
+					attempted to commit suicide, and that slaves were brought from the hold 
+					daily for air. Conditions in that hold were no doubt appalling.</p>
 					
-					<p>Catherine, therefore, avoided the heat of a slave hold, but
-					felt the fear of being kidnapped and carried to a strange land with
-					just a few friends; a dreadful experience to any child. However,
-					she survived the Middle Passage as she survived its miserable
-					memories. In the Americas, she was able to grow up and married for
-					the first time in 1843 a man named Georg Peter Thompson, and had
-					two children with him; Rosie and Georg. In 1849, she divorced
-					Thompson, and two years later, in 1851, she married Zimmermann, and
-					formed the new family pictured <a href="../resources/images-detail.faces?image=mulgrave">
-					in the image</a> available in our gallery of images. Catherine
-					eventually became a teacher and returned to Africa to help her
-					husband in his missionary work in Ghana, offering the world a
-					message of hope from a survivor of the Middle Passage.</p>
+					<p>Catherine may have avoided the slave hold, but undoubtedly felt the 
+					fear of being kidnapped and carried to a strange land. In the Americas, 
+					she married for the first time in 1843 to Georg Peter Thompson, by whom 
+					she had two children, Rosie and Georg. In 1849, she divorced Thompson, 
+					and two years later, in 1851, married Zimmermann. <a href="../resources/images-detail.faces?image=mulgrave">The image</a> available 
+					in our gallery of images is a photograph of the new family showing her 
+					husband standing behind her chair. Catherine became a teacher and returned 
+					to Africa with her husband to engage in missionary work in Ghana.</p>
 
 				</s:simpleBox>
 			</td>
