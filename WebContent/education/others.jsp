@@ -49,7 +49,7 @@
 					<div class="link-title">
 						The Atlantic Slave Trade and Slave Life in the Americas: A Visual Record
 						<br>
-						<font style="font-size: 8pt;">The Virginia Foundation for the Humanities</font>
+						<font style="font-size: 8pt;">The Virginia Foundation for the Humanities, the Digital Media Lab at the University of Virginia Library</font>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
