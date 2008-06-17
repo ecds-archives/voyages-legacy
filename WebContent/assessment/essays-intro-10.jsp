@@ -55,7 +55,7 @@
 					<h2>Eventual Abolition</h2>
 
 					<p>Awareness of the insider-outsider divide within Europe
-					coincided with the onset of the struggle to suppress first, the
+					coincided with the onset of the struggle to suppress first the
 					slave trade, and then slavery itself. Early in the British campaign
 					to suppress the slave trade, Charles James Fox, a British
 					statesman, posed a question for the House of Commons that he
@@ -66,7 +66,7 @@
 					sold for slaves?” The very posing of this question – and this is
 					the earliest documented example from someone close to power – meant
 					that the issue was not whether the system was to be questioned, but
-					rather when it would end. In the same year, the Danes passed
+					rather, when it would end. In the same year, the Danes passed
 					legislation ensuring their own slave trade would become illegal in
 					1802. In 1807, the British and US governments made the trade
 					illegal. Beginning in 1810, the British established a network of
@@ -78,29 +78,29 @@
 					halted only by the intervention of the governments of regions that
 					were either exporting or importing slaves; it could not be halted
 					by naval action alone. Nevertheless, naval intervention did result
-					in the capture of nearly 2,000 slave vessels after 1808.ix Only 544
+					in the capture of nearly 2,000 slave vessels after 1808. Only 544
 					of these had slaves on board at the time of capture, but their
-					125,000 captives (or strictly, re-captives) were diverted from the
+					<a href="../resources/slaves.faces">125,000 captives</a> (or strictly, re-captives) were diverted from the
 					sugar and coffee plantations for which they were intended, and for
 					the most part ended their lives with choices they did not have
 					prior to their re-capture.</p>
 
 					<p>Between the 1840s and 1850s, the traffic declined from an
-					average of 50,000 a year to 16,000 and after 1860 to half this. It
+					average of 50,000 a year to 16,000, and after 1860, to half this. It
 					was carried on under the Spanish and Portuguese flags, and
 					sometimes under no flag at all. By now all governments were
-					cooperating to suppress the traffic. From one perspective the slave
+					cooperating to suppress the traffic. From one perspective, the slave
 					trade dragged on for many decades after the first action was taken
 					against it in 1792. From another, it disappeared in less than a
 					century after millennia during which slavery and slave trading had
 					been regarded as normal as growing food. Not surprisingly, a few
 					decades beyond 1867 saw other (though much smaller) varieties of
 					long-distance movement of coerced labor disappear as well. The flow
-					of contract laborers from Asia to the Americas ended in 1917, the
+					of contract laborers from Asia to the Americas ended in 1917; the
 					last convict dispatched to exile in the Americas returned from
 					Devil’s Island to France in 1952. Notwithstanding the horrors of
 					forced labor of the twentieth century and the ongoing smuggling of
-					illegal laborers into developed countries, often under terms debt
+					illegal laborers into developed countries, often under terms of debt
 					slavery, it is inconceivable that a slave traffic could reappear as
 					a central social institution.</p>
 

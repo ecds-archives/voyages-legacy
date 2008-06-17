@@ -61,13 +61,13 @@
 					the differences in the sex ratios between European and African
 					migrant streams, about four out of every five females that
 					traversed the Atlantic were from Africa. From the late fifteenth
-					century the Atlantic Ocean, once a formidable barrier that
+					century, the Atlantic Ocean, once a formidable barrier that
 					prevented regular interaction between those peoples inhabiting the
 					four continents it touched, became a commercial highway that
 					integrated the histories of Africa, Europe, and the Americas for
 					the first time. As the above figures suggest, slavery and the slave
 					trade were the linchpins of this process. With the decline of the
-					Amerindian population labor from Africa formed the basis of the
+					Amerindian population, labor from Africa formed the basis of the
 					exploitation of the gold and agricultural resources of the export
 					sectors of the Americas, with sugar plantations absorbing well over
 					two thirds of slaves carried across the Atlantic by the major
@@ -75,7 +75,7 @@
 					were the most important reason for contact between Europeans and
 					Africans.</p>
 
-					<p>What can explain this extraordinary migration organized
+					<p>What can explain this extraordinary migration, organized
 					initially on a continent where the institution of slavery had
 					declined or totally disappeared in the centuries prior to Columbian
 					contact, and where, even when it had existed, slavery had never
@@ -93,8 +93,8 @@
 					that would make such output possible. Free European migrants and
 					indentured servants never traveled across the Atlantic in
 					sufficient numbers to meet the labor needs of expanding
-					plantations. Convicts and prisoners – the only Europeans that were
-					ever forced to migrate – were much fewer in numbers again. Slavery,
+					plantations. Convicts and prisoners – the only Europeans who were
+					ever forced to migrate – were much fewer in numbers again. Slavery
 					or some form of coerced labor was the only possible option if
 					European consumers were to gain access to more tropical produce and
 					precious metals.</p>

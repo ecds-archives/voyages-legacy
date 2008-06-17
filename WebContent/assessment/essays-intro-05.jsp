@@ -59,11 +59,11 @@
 					The English, French, Portuguese, Spanish, Dutch, and Danish all
 					operated behind trade barriers (termed mercantilistic restrictions)
 					and produced a range of plantation produce - sugar, rice, indigo,
-					coffee, tobacco, alcohol and some precious metals - though with
+					coffee, tobacco, alcohol, and some precious metals - though with
 					sugar usually the most valuable. It is extraordinary that
-					consumers’ pursuit of this limited range of exotic consumer goods
-					which collectively added so little human welfare could have
-					generated for so long the horrors and misery of the middle passage
+					consumers’ pursuit of this limited range of exotic consumer goods,
+					which collectively added so little to human welfare, could have
+					generated for so long the horrors and misery of the Middle Passage
 					and plantation slavery. Given the dominance of Portuguese and
 					British slave traders, it is not surprising that Brazil and the
 					British Americas received the most Africans, though both nations
@@ -71,20 +71,20 @@
 					the slave trade, more than seven out of every ten slaves went to
 					these regions. The French Americas imported about half the slaves
 					that the British did, with the majority going to Saint-Domingue.
-					The Spanish flag, having dominated in the earliest phase of the
-					trade, before retreating in the face of competition, began to
+					The Spanish flag, which dominated in the earliest phase of the
+					trade before retreating in the face of competition, began to
 					expand again in the late nineteenth century with the growth of the
 					Cuban sugar economy.</p>
 
 					<p>Yet, in the next century - between 1750 and 1850 – every one
 					of these empires had either disappeared or become severely
 					truncated. A massive shift to freer trade meant that instead of six
-					plantation empires controlled from Europe there were now only three
+					plantation empires controlled from Europe, there were now only three
 					plantation complexes, two of which—Brazil and the United
 					States—were independent, and the third, Cuba, was far wealthier and
 					more dynamic than its European owner. Extreme specialization now
 					saw the United States producing most of the world’s cotton, Cuba
-					most of the world’s sugar; and Brazil with a similar dominance in
+					most of the world’s sugar, and Brazil with a similar dominance in
 					coffee. Slaves thus might disembark in six separate jurisdictions
 					in the Americas in the eighteenth century, but by 1850 they went
 					overwhelmingly to only two areas, Brazil and Cuba, given that
@@ -94,7 +94,7 @@
 					only 5 percent of the slaves arriving in the Americas. This massive
 					reorganization of the traffic and the rapid natural growth of the
 					US slave population had little immediate impact on the size of the
-					slave trade. The British, US, Danish and Dutch dropped out of the
+					slave trade. The British, Americans, Danish, and Dutch dropped out of the
 					slave trade, but the decade 1821 to 1830 still saw over 80,000
 					people a year leaving Africa in slave ships. Well over a million
 					more – one tenth of the volume carried off in the slave trade era -

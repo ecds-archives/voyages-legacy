@@ -59,11 +59,11 @@
 					more particularly, the way groups of people involved in creating a
 					trans-Atlantic community saw themselves in relation to others – in
 					short, how they defined their identity. Ocean-going technology
-					brought Europeans into large scale face-to-face contact with
+					brought Europeans into large-scale face-to-face contact with
 					peoples who were culturally and physically more different from
 					themselves than any others with whom they had interacted in the
-					previous millennium. In neither Africa, nor Asia could Europeans
-					initially threaten territorial control - with the single and
+					previous millennium. In neither Africa nor Asia could Europeans
+					initially threaten territorial control, with the single and
 					limited exception of western Angola. African capacity to resist
 					Europeans ensured that sugar plantations were established in the
 					Americas rather than in Africa. But if Africans, aided by tropical
@@ -81,17 +81,17 @@
 					ocean-going technology gave Europeans the ability to get continuous
 					access to remote peoples and move them against their will over very
 					long distances. Strikingly, it was much cheaper to obtain slaves in
-					Europe than to send a vessel to an epidemiological hostile coast in
-					Africa without proper harbors and remote from European political
-					financial and military power. That this option was never seriously
+					Europe than to send a vessel to an epidemiologically coast in
+					Africa without proper harbors and remote from European political,
+					financial, and military power. That this option was never seriously
 					considered suggests a European inability to enslave other
 					Europeans. Except for a few social deviants, neither Africans nor
 					Europeans would enslave members of their own societies, but in the
 					early modern period, Africans had a somewhat narrower conception of
 					who was eligible for enslavement than had Europeans. It was this
-					difference in definitions in eligibility for enslavement which
+					difference in definitions of eligibility for enslavement which
 					explains the dramatic rise of the trans-Atlantic slave trade.
-					Slavery, which had disappeared from north-west Europe long before
+					Slavery, which had disappeared from northwest Europe long before
 					this point, exploded into a far greater significance and intensity
 					than it had possessed at any point in human history. The major
 					cause was a dissonance in African and European ideas of eligibility
@@ -103,25 +103,25 @@
 					sudden contact with each other.</p>
 					
 					<p>The trans-Atlantic slave trade therefore grew from a strong
-					demand for labor in the Americas driven consumers of plantation
+					demand for labor in the Americas, driven by consumers of plantation
 					produce and precious metals, initially in Europe. Because
 					Amerindians died in large numbers, and insufficient numbers of
-					European were prepared to cross the Atlantic, the form that this
+					Europeans were prepared to cross the Atlantic, the form that this
 					demand took was shaped by conceptions of social identity on four
-					continents which ensured that the labor would comprise mainly
+					continents, which ensured that the labor would comprise mainly
 					slaves from Africa. But the central question of which peoples from
 					Africa went to a given region of the Americas, and which group of
 					Europeans or their descendants organized such a movement cannot be
 					answered without an understanding of the wind and ocean currents of
 					the North and South Atlantics. There are two systems of wind and
 					ocean currents in the North and South Atlantic that follow the
-					pattern of giant wheels - one lies north of the equator turns
+					pattern of <a href="intro-maps.faces#map4">giant wheels</a> - one lies north of the equator turns
 					clockwise, while its counterpart to the south turns
-					counterclockwise.i The northern wheel largely shaped the north
+					counterclockwise. The northern wheel largely shaped the north
 					European slave trade and was dominated by the English. The southern
 					wheel shaped the huge traffic to Brazil which for three centuries
 					was almost the almost exclusive preserve of the largest slave
-					traders of all, the Portuguese.ii Despite their use of the
+					traders of all, the Portuguese.(1) Despite their use of the
 					Portuguese flag, slave traders using the southern wheel ran their
 					business from ports in Brazil, not in Portugal. Winds and currents
 					thus ensured two major slave trades – the first rooted in Europe,
@@ -129,9 +129,9 @@
 					carried to Brazil came overwhelmingly from Angola, with south-east
 					Africa and the Bight of Benin playing smaller roles, and that
 					Africans carried to North America, including the Caribbean, left
-					from mainly West Africa with the Bights of Biafra and Benin and the
+					from mainly West Africa, with the Bights of Biafra and Benin and the
 					Gold Coast predominating. Just as Brazil overlapped on the northern
-					system by drawing on the Bight of Benin, the English, French and
+					system by drawing on the Bight of Benin, the English, French, and
 					Dutch carried some slaves from northern Angola into the Caribbean.</p>
 					
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">

@@ -74,7 +74,7 @@
 					Western African coast. As the Brazilian coffee and sugar boom got
 					under way near the end of the eighteenth century, slavers rounded
 					the Cape of Good Hope and traveled as far as southeast Africa to
-					fill their vessel’s hold. But while the slave trade pervaded much
+					fill their vessels’ holds. But while the slave trade pervaded much
 					of the African coast, its focus was no less concentrated in
 					particular African regions than it was among European carriers.
 					West Central Africa, the long stretch of coast south of Cape Lopez
@@ -86,7 +86,7 @@
 					more slaves than all of the other African regions combined.
 					Overall, the center of gravity of the volume of the trade was
 					located in West Central Africa by 1600. It then shifted northward
-					slowly until about 1730 before gradually returning to its starting
+					slowly until about 1730, before gradually returning to its starting
 					point by the mid-nineteenth century.</p>
 
 					<p>Further, slaves left from relatively few ports of
@@ -95,7 +95,7 @@
 					Slave Coast, was once considered the busiest African slaving port
 					on the continent, it now appears that it was surpassed by Luanda,
 					in West Central Africa, and by Bonny, in the Bight of Biafra.
-					Luanda alone dispatched some 1.3 million slaves and these three
+					Luanda alone dispatched some 1.3 million slaves, and these three
 					most active ports together accounted for 2.2 million slave
 					departures. The trade from each of these ports assumed a unique
 					character and followed very different temporal profiles. Luanda
@@ -106,7 +106,7 @@
 					thirty years prior to 1727. Bonny, probably the second largest
 					point of embarkation in Africa, sent four out of every five of all
 					the slaves it ever exported in just the eighty years between 1760
-					and 1840. It is not surprising therefore that some systematic links
+					and 1840. It is not surprising, therefore, that some systematic links
 					between Africa and the Americas can be perceived. As research on
 					the issue of trans-Atlantic connections has progressed, it has
 					become clear that the distribution of Africans in the New World is

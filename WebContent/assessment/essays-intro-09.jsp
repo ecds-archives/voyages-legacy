@@ -54,7 +54,7 @@
 
 					<h2>The Trade’s Influence on Ethnic and Racial Identity</h2>
 
-					<p>In the Atlantic after 1492 oceans that had hermetically
+					<p>In the Atlantic after 1492, oceans that had hermetically
 					sealed peoples and cultures from each other sprouted sea-lanes
 					almost overnight. Cultural accommodation between peoples, in this
 					case between Europeans and non-Europeans, always took time. The big
@@ -73,24 +73,24 @@
 
 					<p>During the long coercive interlude of forced trans-Atlantic
 					migration European and African conceptions of self and community
-					(and eligibility for ensalvement) did not remain static. On the
+					(and eligibility for enslavement) did not remain static. On the
 					African side, the major effect of the African-European exchange was
 					to encourage an elementary pan-Africanism, at least among victims.
 					The initial and unintentional impact of European sea-borne contact
 					was to force non-elite Africans to think of themselves as part of a
 					wider African group. Initially, this group might be Igbo, or
 					Yoruba, and soon, in addition, blacks as opposed to whites. At the
-					most elemental level by the late eighteenth century the slaves at
-					James Island vowed to drink the blood of the Awhitemen@. In Gorée,
+					most elemental level, by the late eighteenth century, the slaves at
+					James Island vowed to drink the blood of the whitemen. In Gorée,
 					a little later, one third of the slaves in a carefully planned
-					conspiracy, Awould go in the village and be dispersed to massacre
-					the whites@. When asked “[w]hether it were true that they had
+					conspiracy, “would go in the village and be dispersed to massacre
+					the whites”. When asked “[w]hether it were true that they had
 					planned to massacre all the whites of the island....[t]he two
 					leaders, far from denying the fact or looking for prevarication,
-					answered with boldness and courage: that nothing was truer”.viii
+					answered with boldness and courage: that nothing was truer”.(3)
 					Many similar incidents could be cited from the Americas side of the
 					Atlantic. And on board a slave ship with all the slaves always
-					black, and the crew largely white, skin colour defined ethnicity.</p>
+					black, and the crew largely white, skin color defined ethnicity.</p>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">
 					<tr>
