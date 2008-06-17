@@ -63,8 +63,8 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td class="section-desc">
-					This part of “The Database” contains a guide and a demo to help 
-					newcomers get started in using the database.   An essay explains in 
+					This part of “The Database” contains a guide to help 
+					newcomers start using the database.   An essay explains in 
 					detail the sources and methods used in constructing the database and 
 					creating the set of estimates based on it.  A list of the variables 
 					in the version of the database on this website is provided.  Lastly, 
@@ -74,23 +74,23 @@
 				<td class="section-desc">
 					This link takes you to the page for querying the main database. 
 					You can search for information about a specific voyage, a small group 
-					of voyages, or a large subset of the data set such as all voyages under 
+					of voyages, or a large subset of the data set, such as all voyages under 
 					the Portuguese flag. There is a choice between a smaller “basic” set of 
-					24 variables and a larger “general” set of 64 variables. Each set groups 
+					25 variables and a larger “general” set of 64 variables. Each set groups 
 					variables into the same eight categories. The interface of the query 
 					section is designed to be as intuitive as possible, but many of the 
 					FAQs are about how to use its features.
 				</td>
 				<td class="section-desc">
-					The variables accessible on-line 
+					The variables accessible online 
 					cover the full range of information available in the database.  
 					Some users will want to work with variables that have not been 
-					included in the selection for the website and use spreadsheets or 
+					included in the selection for the website and/or use spreadsheets or 
 					statistics software to analyze the data. This link takes you to a 
 					page with buttons to download the full set of variables in the 
 					Trans-Atlantic Slave Trade Database in SPSS format, a PDF copy of 
-					the SPSS codebook, the website version of the database in three 
-					formats (SPSS, csv, and dBase), and the Excel spreadsheet used in making “Estimates.”
+					the SPSS codebook, and the website version of the database in three 
+					formats (SPSS, csv, and dBase).
 				</td>
 				<td class="section-desc">
 					The “Contribute” section consists of data entry forms by which 

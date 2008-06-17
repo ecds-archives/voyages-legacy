@@ -42,7 +42,7 @@
 					<h1>Lesson plans</h1>
 
 					<p>In order to present the trans-Atlantic slave trade database to a broader audience, particularly 
-					a 6-12 grade audience, a dedicated team of teachers and curriculum developers from around the United 
+					a grade 6-12 audience, a dedicated team of teachers and curriculum developers from around the United 
 					States developed lesson plans that explore the database.  Utilizing the various resources of the website, 
 					these lessons plans allow students to engage the history and legacy of the Atlantic slave trade in diverse 
 					and meaningful ways.  The lessons are all aligned with national standards in history (National Center for 
@@ -118,7 +118,7 @@
 							reveal to students a steep incline before 1808 and, in fact, a continuation of
 							imported enslaved Africans after the slave trade was abolished in the United
 							States and Great Britain. Students will also examine perspectives on slavery,
-							as the deadline for ending the slave trade approaches and passes. The lesson
+							as the deadline for ending the slave trade approached and passed. The lesson
 							allows students to develop their own conclusions about both the intention and
 							impact of the 1808 deadline on the overall history of slavery.
 						</div>
@@ -243,9 +243,9 @@
 						<div class="lesson-plan-abstract">
 							This lesson is a comparative look at the number of enslaved people
 							transported by each of the seven flag countries listed on the database
-							and also an examination of the ordeal of the middle passage.
+							and also an examination of the ordeal of the Middle Passage.
 							Students will gain an understanding of the immensity of the international
-							slave trade but will also focus on the human experience of the middle passage.
+							slave trade but will also focus on the human experience of the Middle Passage.
 						</div>
 					</div>
 					
@@ -310,7 +310,7 @@
 							of history should get a public memorial, and how that memorial should be expressed
 							in words and image. The lesson uses mortality statistics from the database to help
 							students gain an understanding of how many people died on a voyage, as well as
-							reading comprehension questions and a PowerPoint Presentation of various Monuments.
+							reading comprehension questions and a PowerPoint Presentation of various monuments.
 						</div>
 					</div>
 					
@@ -336,7 +336,7 @@
 						<div class="lesson-plan-course">
 							Course:
 							<span class="lesson-plan-course">
-								AP World History; African and African American Studies
+								AP World History; African and African-American Studies
 							</span>
 						</div>
 						<div class="lesson-plan-keywords">
