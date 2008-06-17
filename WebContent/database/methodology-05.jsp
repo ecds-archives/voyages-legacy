@@ -26,7 +26,7 @@
 	<s:siteHeader activeSectionId="database">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyages Database" /></h:outputLink>
-		<h:outputText value="Understanding the database" />
+		<h:outputText value="Understanding the Satabase" />
 		<h:outputText value="Methodology" />
 	</s:siteHeader>
 	
@@ -53,7 +53,7 @@
 					(name, tonnage, rig, guns, place and year of construction, owners); (2) the outcome of the voyage (3) the itinerary of the voyage;
 					(4) the dates at which the vessel left or arrived; (5) the captain and crew of the vessel; (6) the numbers of captives; (7) the
 					characteristics of the captives and their experience of mortality; and (8) the sources for the record. The Variable List in the
-					“Understanding the database” section presents a complete listing of the data variables as well as the imputed variables in the
+					“Understanding the Database” section presents a complete listing of the data variables as well as the imputed variables in the
 					data set. Imputed variables are always marked with an asterisk. No voyage, however, includes information for all data or imputed
 					variables. Table 1 provides a summary of the coverage for some of the more important data variables. </p>
 					

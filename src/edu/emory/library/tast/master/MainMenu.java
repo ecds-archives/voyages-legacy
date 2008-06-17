@@ -17,11 +17,11 @@ public class MainMenu
 			new MainMenuBarPageItem[] {
 				new MainMenuBarPageItem(
 						"guide",
-						"Understanding the database",
+						"Understanding the Database",
 						"database/guide.faces"),
 				new MainMenuBarPageItem(
 						"search",
-						"Search the Voyages database",
+						"Search the Voyages Database",
 						"database/search.faces"),
 				new MainMenuBarPageItem(
 						"download",
@@ -52,7 +52,7 @@ public class MainMenu
 						"assessment/estimates.faces"),
 				new MainMenuBarPageItem(
 						"intromaps",
-						"Introductory maps",
+						"Introductory Maps",
 						"assessment/intro-maps.faces")}),
 						
 	new MainMenuBarSectionItem(
@@ -71,7 +71,7 @@ public class MainMenu
 						"resources/images.faces"),
 				new MainMenuBarPageItem(
 						"slaves",
-						"African names database",
+						"African Names Database",
 						"resources/slaves.faces")}),
 			
 	new MainMenuBarSectionItem(
@@ -86,11 +86,11 @@ public class MainMenu
 			new MainMenuBarPageItem[] {
 				new MainMenuBarPageItem(
 						"education-lesson-plans",
-						"Lesson plans",
+						"Lesson Plans",
 						"education/lesson-plans.faces"),
 				new MainMenuBarPageItem(
 						"education-other-resources",
-						"Web resources",
+						"Web Resources",
 						"education/others.faces")}),
 	
 	new MainMenuBarSectionItem(
@@ -109,7 +109,7 @@ public class MainMenu
 							"about/history.faces"),
 					new MainMenuBarPageItem(
 							"team",
-							"Project team",
+							"Project Team",
 							"about/team.faces"),
 					new MainMenuBarPageItem(
 							"contributors",

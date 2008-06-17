@@ -27,7 +27,7 @@
 	<s:siteHeader activeSectionId="lessons">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="index.faces"><h:outputText value="Educational Materials" /></h:outputLink>
-		<h:outputText value="Web resources" />
+		<h:outputText value="Web Resources" />
 	</s:siteHeader>
 	
 	<div id="content">

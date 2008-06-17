@@ -29,7 +29,7 @@
 	<s:siteHeader activeSectionId="about">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="./index.faces"><h:outputText value="About the Project" /></h:outputLink>
-		<h:outputText value="Project team" />
+		<h:outputText value="Project Team" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -42,7 +42,7 @@
 			<td id="about-right-column">
 				<s:simpleBox>
 			
-					<h1>Project team</h1>
+					<h1>Project Team</h1>
 
 					<p>Many people contributed to the creation and implementation
 					of this site. They include the following (unless otherwise

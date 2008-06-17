@@ -61,7 +61,7 @@
 	<s:siteHeader activeSectionId="database">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyages Database" /></h:outputLink>
-		<h:outputText value="Search" />
+		<h:outputText value="Search the Voyages Database" />
 	</s:siteHeader>
 
 	<h:form id="form" style="margin: 0px;">

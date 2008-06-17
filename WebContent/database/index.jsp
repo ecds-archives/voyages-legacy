@@ -52,7 +52,7 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td class="section-title"><a href="guide.faces">Understanding the Database</a></td>
-				<td class="section-title"><a href="search.faces">Search the Database</a></td>
+				<td class="section-title"><a href="search.faces">Search the Voyages Database</a></td>
 				<td class="section-title"><a href="download.faces">Downloads</a></td>
 				<td class="section-title"><a href="../submission/submission-login.faces">Contribute</a></td>
 			</tr>

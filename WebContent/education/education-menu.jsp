@@ -14,7 +14,7 @@
 		
 		<s:secondaryMenu>
 			<s:secondaryMenuItem label="Lesson plans" menuId="lesson-plans" href="lesson-plans.faces" />
-			<s:secondaryMenuItem label="Web resources" menuId="others" href="others.faces"/>							
+			<s:secondaryMenuItem label="Web Resources" menuId="others" href="others.faces"/>							
 		</s:secondaryMenu>
 		
 	</s:simpleBox>

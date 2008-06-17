@@ -33,7 +33,7 @@
 	<s:siteHeader activeSectionId="database">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="search.faces"><h:outputText value="Voyages Database" /></h:outputLink>
-		<h:outputText value="Understanding the database" />
+		<h:outputText value="Understanding the Database" />
 		<h:outputText value="Guide" />
 	</s:siteHeader>
 	
