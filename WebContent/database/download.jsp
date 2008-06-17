@@ -48,18 +48,18 @@
 					<s:simpleBox>
 					
 						<t:div styleClass="left-menu-title">
-							<h:outputText value="DOWNLOADS" />
+							<h:outputText value="Downloads" />
 						</t:div>
 						
 						<s:secondaryMenu>
 						
 							<s:secondaryMenuItem
-								label="The Trans-Atlantic Slave Trade SPSS Database (expanded version)"
+								label="The Trans-Atlantic Slave Trade SPSS Database (expanded data set)"
 								menuId="extended"
 								href="#extended"/>			
 							
 							<s:secondaryMenuItem
-								label="The Trans-Atlantic Slave Trade Database (Voyages version)"
+								label="The Trans-Atlantic Slave Trade Database (Voyages data set)"
 								menuId="voyages"
 								href="#voyages"/>
 								
@@ -80,24 +80,24 @@
 					
 					<a name="extended"></a> 
 					
-					<h2>The Trans-Atlantic Slave Trade SPSS Database (expanded version)</h2>
+					<h2>The Trans-Atlantic Slave Trade SPSS Database (expanded data set)</h2>
 						
 					<p>The 2008 version of the Trans-Atlantic Slave Trade Database contains 8,374 voyages 
-					added since the CD-Rom was published in 1999 and additional information on 19,320 voyages.  
-					The complete data set has 276 variables, compared with 99 in the Voyages version.  Users 
-					interested in working with this larger dataset can download it in a file formatted for use 
-					with SPSS software, selecting the edition year from the drop-down menu below.  A variable 
-					in this dataset (EVGREEN) identifies voyages on the CD-ROM version published in 1999.  
-					Recognizing that some users will find it useful to view data as it existed in 1999, 
-					the CD version can also be selected for download.  A codebook describing all variable names, 
-					variable labels, and values of the expanded dataset can be downloaded as a separate PDF document.  
-					With only a few exceptions, it retains variable names in the original CD-ROM version.</p>
+					added since the CD-Rom was published in 1999 and additional information on 19,320 voyages. 
+					The expanded data set has 276 variables, compared with 99 in the Voyages Database available 
+					online. Users interested in working with this larger data set can download it in a file 
+					formatted for use with SPSS software. A variable in this dataset (EVGREEN) identifies 
+					voyages on the CD-ROM version published in 1999. Because some users may find it useful 
+					to view data as it existed in 1999, the CD-ROM version can also be selected for download. 
+					A codebook describing all variable names, variable labels, and values of the expanded 
+					dataset can be downloaded as a separate PDF document. With only a few exceptions, it 
+					retains variable names in the original 1999 CD-ROM version.</p>
 				
 					<h3>Downloads:</h3>
 					<ul>
-						<li><a href="http://www.slavevoyages.org/downloads/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
-						<li><a href="http://www.slavevoyages.org/downloads/tastdb-1999.sav">tastdb-1999.sav</a></li>
-						<li>
+						<li>Expanded dataset (2008, SPSS format): <a href="http://www.slavevoyages.org/downloads/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
+						<li>Original CD-ROM dataset (1999, SPSS format): <a href="http://www.slavevoyages.org/downloads/tastdb-1999.sav">tastdb-1999.sav</a></li>
+						<li>Codebook: 
 							<a href="http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf" 
 							   onclick="return popitup('http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf')">SPSS codebook</a>
 						</li>
@@ -105,18 +105,19 @@
 					
 					<a name="voyages"></a> 
 					
-					<h2>The Trans-Atlantic Slave Trade Database (Voyages version)</h2>
+					<h2>The Trans-Atlantic Slave Trade Database (Voyages data set)</h2>
 					
-					<p>This version of the Trans-Atlantic Slave Trade Database contains the 99 variables available 
-					through the Voyages website database.  It is made available in three formats: SPSS (.sav), comma 
-					delimited (.csv), and dBase (.dbf).  Users interested in working with this dataset with their 
-					preferred software may select an edition year and file format below. </p>
+					<p>This data set of the Trans-Atlantic Slave Trade Database contains the 99 variables 
+					available through the Voyages Database on this website. It is made available in three 
+					formats: SPSS (.sav), comma delimited (.csv), and dBase (.dbf). Users interested in 
+					working with this data set with their preferred software may select an edition year 
+					and file format below. </p>
 					
 					<h3>Downloads:</h3>
 					<ul>
-						<li><a href="http://www.slavevoyages.org/downloads/tastdb-2008.sav">tastdb-2008.sav</a></li>
-						<li><a href="http://www.slavevoyages.org/downloads/tastdb-2008.csv">tastdb-2008.cvs</a></li>
-						<li><a href="http://www.slavevoyages.org/downloads/tastdb-2008.dbf">tastdb-2008.dbf</a></li>
+						<li>2008, SPSS: <a href="http://www.slavevoyages.org/downloads/tastdb-2008.sav">tastdb-2008.sav</a></li>
+						<li>2008, comma-delimited: <a href="http://www.slavevoyages.org/downloads/tastdb-2008.csv">tastdb-2008.cvs</a></li>
+						<li>2008, dBase: <a href="http://www.slavevoyages.org/downloads/tastdb-2008.dbf">tastdb-2008.dbf</a></li>
 					</ul>
 						
 					<a name="estimates"></a> 
@@ -133,7 +134,7 @@
 		
 					<h3>Download:</h3>
 					<ul>
-						<li><a href="#">Estimate.xls</a></li>
+						<li>2008 Estimates, Excel: <a href="#">2008-Estimates.xls</a></li>
 					</ul>
 		
 					Questions about downloading or using these datasets? Please contact 
