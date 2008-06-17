@@ -38,36 +38,34 @@
 			<td valign="top" id="main-content">
 				<s:simpleBox>
 			
-				<h1>Contribute Voyage Information</h1>
+				<h1>Contribute</h1>
 				
-				<p>The Contribute section contains data entry forms by which users of the website can 
-				supply new information or revise existing information in the Voyages Database. A team 
-				of slave trade scholars will review each contribution, as part of the peer-review 
-				process. Once confirmed, the new or revised information will be incorporated in the 
-				next revision of the online Voyages Database. We anticipate releasing a new version 
-				every three years.</p>
+				<p>The Contribute section of the Voyages website contains data entry forms by which users 
+				of the website can supply revise existing information in the Voyages Database or supply 
+				new data. A team of slave trade scholars will review each contribution, as part of the 
+				peer-review process. Once confirmed, the new or revised information will be incorporated 
+				in the next version of the Voyages Database. We anticipate releasing a new version every 
+				three years.</p>
 				
 				<p>The Contribution entry forms take advantage of possibilities offered by the internet 
 				to continuously improve the store of knowledge, whether in the traditional form of written 
 				documents or in the new form of collections of machine-readable data. The Voyages Database 
 				is itself the product of extensive revisions since the publication of the CD-ROM version of 
-				the dataset in 1999.  The Contribute section will allow the database to evolve in a way that 
+				the dataset in 1999. The Contribute section will allow the database to evolve in a way that 
 				respects the high standards of scholarship governing the construction of the original database.</p>
 				
 				<p>Step-by-step instructions on how to use the data entry forms are provided in the Voyages 
-				Guide, a PDF file accessible in <a href="../database/guide.faces">“Understanding the Database”</a>. In addition, 
-				we ask you to read our <a href="guidelines.faces">“Guidelines for Contributors.”</a></p> 
+				Guide, a PDF file accessible in <a href="../database/guide.faces">“Understanding the Database”</a>. 
+				For advice on contributing new data, we ask you to read our <a href="guidelines.faces">“Guidelines for Contributors.”</a></p> 
 
-				<p>For purposes of managing contributions to the website, contributors are asked to register, 
-				choose a user name and password, and provide an e-mail address for communication. Please send 
-				a message to <a href="mailto:&#118;&#111;&#121;a&#103;&#101;s&#64;&#101;&#109;o&#114;&#121;&#46;&#101;d&#117;">
-							&#118;&#111;&#121;&#97;&#103;&#101;s&#64;&#101;mo&#114;y&#46;&#101;&#100;&#117;</a>. 
-				When your registration is confirmed, signing in below will enable you to access the data entry forms.</p>
-				
-	
+				<p>For purposes of managing contributions to the website, contributors are asked to register 
+				for an account and provide an email address for communication. Once your registration is 
+				confirmed, you will receive an email with your user name and password, which you can use 
+				to access the Contribute section (below). </p>
+					
 				<h2>Sign in</h2>
 	
-				<p>In order to be able to access protected contents, please sign in.</p>
+				<p>In order to access the Contribute section, please sign in.</p>
 				
 				<div style="padding: 5px; background-color: #FFF8CE; border-top: 1px solid #DDCA9D; border-bottom: 1px solid #DDCA9D;">
 				
