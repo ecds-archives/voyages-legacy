@@ -34,24 +34,10 @@
 				<img src="../images/resources-index-title.png" width="140" height="40" border="0" alt="Resources">
 			</div>
 	
-			<div id="index-intro-text">The Voyages website provides
-			resources that offer some context to the information available in the
-			database of trans-Atlantic slave trading voyages. The slave trade was
-			an activity that involved peoples, places, and tools as well as
-			practices that today are unfamiliar to most, or no longer exist. In
-			this page, you will find resources that will help you visualize or
-			imagine these features of the trans-Atlantic slave trade era. The
-			materials are divided into a database of images contemporary to the
-			slave trade and a database of names of Africans rescued from slave
-			vessels in the nineteenth century, during the period of suppression.
-			With permission from various archives and libraries, the images
-			displayed here can be used to observe details of people, places,
-			artifacts and vessels of this time and make connections with the
-			relevant voyages in the main database. The African Names Database was
-			built with documents from the Foreign Office, Series 84 and 313, held
-			by the British National Archives. The details of the vessels from
-			which the liberated Africans were rescued are listed in the voyages
-			database.</div>
+			<div id="index-intro-text">This section of the Voyages website provides resources for putting 
+			information in the databases into historical context.  The materials presently consist of a 
+			database of images contemporary to the slave trade and a database of names of Africans rescued 
+			from slave vessels in the nineteenth century, during the period of suppression. </div>
 	
 		</div>
 		
@@ -68,20 +54,22 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 
-				<td class="section-desc">The trans-Atlantic slave trade was an
-				activity that lasted for centuries. As a consequence, the ways it
-				became represented changed through time. Here, you will find images
-				contemporary to the trans-Atlantic slave trade representing places,
-				vessels and artifacts as well as slavers and slaves.</td>
+				<td class="section-desc">Representations of the trans-Atlantic slave trade, 
+				an activity that lasted for centuries, changed over time. With permission 
+				from various archives and libraries, selected images enable one to picture 
+				people, places, artifacts and vessels of the slave trade era.  Links are 
+				provided to relevant voyages in the Voyages Database.</td>
 
-				<td class="section-desc">The trans-Atlantic slave trade
-				culminated in the age of abolition. In the nineteenth century,
-				mixed-commissioned courts were created around the Atlantic basins to
-				adjudicate vessels illegally engaged in the slave trade. The African
-				Names Database offers a compilation of lists of liberated Africans
-				from slave vessels captured by British cruisers between 1819 and
-				1845, and taken for adjudication in the courts established in
-				Freetown, Sierra Leone, and in Havana, Cuba.</td>
+				<td class="section-desc">The trans-Atlantic slave trade culminated in the 
+				age of abolition. In the nineteenth century, mixed-commissioned courts 
+				created around the Atlantic basins adjudicated cases of vessels detained 
+				for illegally engaging in the slave trade. The African Names Database was 
+				built with documents from the Foreign Office, Series 84 and 313, held by 
+				the British National Archives. It offers a compilation of lists of liberated 
+				Africans from slave vessels captured by British cruisers between 1819 and 
+				1845, and taken for adjudication in the courts established in Freetown, 
+				Sierra Leone, and in Havana, Cuba.  Links are provided to ships in the 
+				Voyages Database from which the liberated Africans were rescued.</td>
 
 			</tr>
 			</table>
