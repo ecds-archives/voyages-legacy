@@ -119,19 +119,16 @@ a {
 					<div id="message-text">
 				
 						<p>
-						Please inform us about the time and nature of the error.
+						Please email us about the time and nature of the error.
 						If you are able to reproduce the steps leading to the error
 						message, please provide us with this information.
 						We will address the problem as soon as possible. 
 						</p>
 						
-						<ul>
-							<li><a href="mailto:&#118;&#111;&#121;a&#103;&#101;s&#64;&#101;&#109;o&#114;&#121;&#46;&#101;d&#117;">Voyages website administrator email</a></li>
-						</ul>
 						
 						<p>
-						To continue using the application, you session information has been
-						reset. Use the following links to get back to track:
+						So that you can continue using the application, your session information has been
+						reset. Use the following links to get back into the voyages website:
 						</p>
 						
 						<ul>
