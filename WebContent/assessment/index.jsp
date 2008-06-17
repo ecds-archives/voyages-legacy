@@ -63,7 +63,7 @@
 				of the volume and structure of the trans-Atlantic slave trade from 
 				inception to suppression, an examination of seasonality in the 
 				trans-Atlantic slave trade, and a study of an African liberated 
-				in Cuba from a slave ship captured by the British cruiser in 1826. 
+				in Cuba from a slave ship captured by a British cruiser in 1826. 
 				Vignettes and research notes focus on more specialized topics.  
 				Other essays will be added as the website develops.  The 
 				<a href="../about/contact.faces">editorial board</a> will consider 

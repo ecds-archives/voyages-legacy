@@ -75,7 +75,7 @@
 
 				<td class="section-desc">Names of the principal investigators,
 				of members of the project development team, and of individuals
-				serving on its steering committee and advisory board.</td>
+				serving on the steering committee and advisory board.</td>
 
 				<td class="section-desc">Names of scholars and researchers
 				whose findings on the trans-Atlantic slave trade have been
