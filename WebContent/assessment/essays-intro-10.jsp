@@ -110,6 +110,7 @@
 							<a href="essays-intro-09.faces">The Trade’s Influence on Ethnic and Racial Identity</a>
 						</td>
 						<td class="essay-next">
+							<a href="essays-intro-11.faces">Notes</a>
 						</td>
 					</tr>
 					</table>

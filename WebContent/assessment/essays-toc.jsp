@@ -74,6 +74,11 @@
 						href="essays-intro-10.faces"
 						menuId="essays-intro-10" />
 						
+					<s:secondaryMenuItem
+						label="Notes"
+						href="essays-intro-11.faces"
+						menuId="essays-intro-11" />
+						
 				</s:secondaryMenuItem>
 				
 				<s:secondaryMenuItem
