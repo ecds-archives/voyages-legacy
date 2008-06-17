@@ -58,26 +58,29 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 
-				<td class="section-desc">This sub-section contains
-				interpretations in traditional text format. An introductory essay
-				provides a broad interpretation and overview of the volume and
-				structure of the trans-Atlantic slave trade from inception to
-				suppression. Several vignettes describe the personal experience of
-				Africans carried to the Americas on slave ships. Finally, research
-				notes focus on more specialized topics. Other “Essays” will be added
-				as the website develops. Its <a href="../about/contact.faces">editorial
-				board</a> will consider for publication in the “Essays” section any text
-				that uses databases on the website as a major source.</td>
+				<td class="section-desc">Three essays offer an introduction to the 
+				Voyages website in the form of a broad interpretation and overview 
+				of the volume and structure of the trans-Atlantic slave trade from 
+				inception to suppression, an examination of seasonality in the 
+				trans-Atlantic slave trade, and a study of an African liberated 
+				in Cuba from a slave ship captured by the British cruiser in 1826. 
+				Vignettes and research notes focus on more specialized topics.  
+				Other essays will be added as the website develops.  The 
+				<a href="../about/contact.faces">editorial board</a> will consider 
+				for publication in the “Essays” section any text that uses databases 
+				on the website as a major source.</td>
 				
-				<td class="section-desc">This link takes you to the page for
-				querying the main database. You can search for information about a
-				specific voyage, a small group of voyages, or a large subset of the
-				data set such as all voyages under the Portuguese flag. There is a
-				choice between a smaller “basic” set of 24 variables and a larger
-				“general” set of 64 variables. Each set groups variables into the
-				same eight categories. The interface of the query section is
-				designed to be as intuitive as possible, but many of the FAQs are
-				about how to use its features.</td>
+				<td class="section-desc">Although the Trans-Atlantic Slave Trade 
+				Database includes all slave voyages that have been documented up 
+				to now, it cannot claim to be complete. Records of many voyages 
+				have disappeared, in some cases irretrievably, while other 
+				documents remain to be discovered in public and private archives. 
+				The “Estimates,” on the other hand, provide an educated guess of 
+				how large the slave trade actually was.  Altogether, the estimates 
+				are about 25 percent higher than unadjusted numbers in the main 
+				database. They raise the final totals to over 12,500,000 Africans 
+				forced to undertake the Middle Passage and around 10,700,000 who 
+				completed it, the largest forced migration in modern history.</td>
 				
 				<td class="section-desc">A third way of using the
 				Trans-Atlantic Slave Trade Database to interpret the slave trade is
