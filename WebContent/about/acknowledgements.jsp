@@ -176,19 +176,11 @@
 
 								<div class="sponsor-name"><a href="http://www.yorku.ca/tubman/Home/index.html">The Harriet Tubman Institute for Research on the Global Migrations of African Peoples at York University</a></div>
 			
-								<div class="sponsor-desc">The Tubman Institute at York University is proud to be
-								part of an international network of research centers committed to
-								overcoming injustice and inequity as a result of slavery. Its
-								leading-edge research focuses on the forced and voluntary movement
-								of African peoples around the world. As a social innovator, the
-								Institute's mandate is to promote a greater understanding of the
-								history of slavery and its legacy. The Institute fosters debate,
-								informs public policy and strives to resolve current social
-								injustices. Digital archiving technology enables the preservation
-								of documents and other materials for easy access to historical
-								records. A digital copy of the expanded online database will be
-								stored at York University, under the direction of Advisory Board
-								member Paul Lovejoy.</div>
+								<div class="sponsor-desc">The Tubman Institute at York University researches the forced 
+								and voluntary movement of African peoples around the world, as part of its mission to 
+								promote a greater understanding of the history of slavery and its legacy. A digital 
+								copy of the expanded online database will be stored at York University, under the 
+								direction of Advisory Board member Paul Lovejoy.</div>
 								
 							</div>
 		
@@ -202,9 +194,13 @@
 
 								<div class="sponsor-name"><a href="http://www.ufrj.br">Universidade Federal do Rio de Janeiro</a></div>
 			
-								<div class="sponsor-desc">The largest federal university in Brazil, the Federal
-								University of Rio de Janeiro boasts an international reputation for
-								its work in slavery and slave trade research.</div>
+								<div class="sponsor-desc">The largest federal university in Brazil, the Federal University 
+								of Rio de Janeiro boasts an international reputation for its work in slavery and slave trade 
+								research. It hosts the largest concentration of slave-trade specialists in Brazil, as well 
+								as a journal that has become a major Portuguese language outlet for research on slavery and 
+								the slave trade in the Atlantic world. A digital copy of the Voyages Database will be stored 
+								at the Federal University of Rio de Janeiro, under the direction of Steering Committee member 
+								Manolo Florentino.</div>
 								
 							</div>
 		
@@ -321,30 +317,29 @@
 					or anonymous, who graciously gave their time and expertise, we
 					would like to especially acknowledge the following individuals.</p>
 
-					<p>Many individuals at Emory University’s Robert W. Woodruff
-					Library took time out of their busy schedules to answer our
-					questions, assist with various project tasks, and generally support
-					the life of the project. Naomi Nelson and Teresa Burk of MARBL
-					shepherded rare materials for digitizing [THIS DOES NOT SEEM FINISHED, JAN].</p>
-					
-					<ul class="special-thanks">
-						<li>
-							<span class="institution"><a href="http://marbl.library.emory.edu">Manuscript,
-								Archives, and Rare Book Library at Emory University
-								Libraries (MARBL)</a></span>:
-							<span class="people">Naomi Nelson, Teresa Burk</span>
-						</li>
-						<li>
-							<span class="institution"><a href="http://web.library.emory.edu/preservation">Preservation
-								Office at Emory University Libraries</a></span>:
-							<span class="people">Anne Frellsen</span>
-						</li>
-						<li>
-							<span class="institution">Library Development
-								Office at Emory University Libraries</span>:
-							<span class="people">Ginger Cain, Marcia Wade</span>
-						</li>
-					</ul>
+					<p>Many individuals at Emory University’s Robert W. Woodruff Library 
+					took time outside of their already busy schedules and routine work in 
+					order to answer our questions, assist with various project tasks, and 
+					generally support the life of the project. Rob Riley’s early advice on 
+					and examples of database systems sparked ideas for our own database. 
+					Naomi Nelson and Teresa Burk of MARBL (<a href="http://marbl.library.emory.edu">Manuscript, Archives, and Rare 
+					Book Library</a>) helped locate and prepare rare materials for digitizing 
+					as well as for various presentations on the project. Anne Frellsen, of 
+					the <a href="http://web.library.emory.edu/preservation">Preservation Office at Emory University Libraries</a>, assisted also with 
+					digitizing efforts and met with members of our team to discuss best practices 
+					for photographing and digitizing historical artifacts. Lisa Macklin’s advice 
+					on copyright helped guide the collection of images for the site. At the 
+					insistence of Lea McLees, the library’s Director of Communications, we 
+					documented our work on the project – a task greatly aided by Francine Thurston, 
+					Matt Miller, and Sarah Toton, who all gave generously of their time and abilities 
+					in photography, videography, and video editing, respectively. Jim Kruse, 
+					Shannon O’Daniel, and other members of both <a href="http://cet.emory.edu/ecit/">Emory’s Center for Interactive 
+					Teaching (ECIT)</a> and <a href="http://it.emory.edu/showdoc.cfm?docid=8129">University Technology Services (UTS)</a> regularly and 
+					graciously gave their time, tools and resources, and expertise to help 
+					ensure that all team members – both on site and off – could fully participate 
+					in project meetings. Finally, Ginger Cain’s enthusiasm and energy for sharing 
+					information about the project continues to put us in touch with new people 
+					interested in the project and new possibilities for continuing this work.</p>		
 
 				</s:simpleBox>
 			</td>
