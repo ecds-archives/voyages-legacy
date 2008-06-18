@@ -1192,8 +1192,7 @@ public class EstimatesSelectionBean
 	
 	public String getTimeFrameExtentHint()
 	{
-		return
-			"Note: " +
+		return			
 			"The full extent of time covered by estimates is " +
 			minYear + " &ndash; " + maxYear;
 	}

@@ -8,7 +8,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
-	<title>Further reading</title>
+	<title>Web Resources</title>
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">

@@ -8,7 +8,7 @@
 <head>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Slaves database</title>
+	<title>African Names Database</title>
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">

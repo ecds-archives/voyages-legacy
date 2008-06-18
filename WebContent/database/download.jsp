@@ -9,7 +9,7 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
-	<title>Download</title>
+	<title>Downloads</title>
 	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
