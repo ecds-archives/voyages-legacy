@@ -40,7 +40,11 @@
 			<h:commandButton value="Refresh" action="#{MapBean.refresh}" />
 		</t:htmlTag>
 
-		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 50px;">
+		<t:htmlTag value="div" styleClass="map-legend-note" style="margin-top: 10px;">
+			<h:outputText value="Zoom in to view historical background and labels of regions and ports." />
+		</t:htmlTag>
+		
+		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 20px;">
 			<h:outputText value="Find visible place" />
 		</t:htmlTag>
 		

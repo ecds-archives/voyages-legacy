@@ -39,11 +39,15 @@
 			maps="#{EstimatesMapBean.availableMaps}"
 			chosenMap="#{EstimatesMapBean.chosenMap}" />
 			
-		<t:htmlTag value="div" style="margin-left: 5px;">
+		<t:htmlTag value="div" style="margin-left: 5px;" >
 			<h:commandButton value="Refresh" action="#{EstimatesMapBean.refresh}" />
 		</t:htmlTag>
-
-		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 50px;">
+		
+		<t:htmlTag value="div" styleClass="map-legend-note" style="margin-top: 10px;">
+			<h:outputText value="Zoom in to view historical background and labels of regions." />
+		</t:htmlTag>
+		
+		<t:htmlTag value="div" styleClass="map-legend-section-title" style="margin-top: 20px;">
 			<h:outputText value="Find visible place" />
 		</t:htmlTag>
 		
