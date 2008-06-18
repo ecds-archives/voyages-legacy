@@ -85,7 +85,7 @@ public class StandardMaps
 	private static final MapIdent[] mapsEstimates = new MapIdent[] {
 		new MapIdent(
 				"geophysical", "All periods (1514-1866)", 1501, 1867,
-				new ZoomLevel[] {levelGeo20, levelGeoE6, levelGeoE3},
+				new ZoomLevel[] {levelGeo20, level1750E6, level1750E3},
 				new String[] {"Broad regions (all periods)", "Regions (all periods)"}),
 		new MapIdent(
 				"h_1650",
@@ -107,7 +107,7 @@ public class StandardMaps
 
 		new MapIdent(
 				"geophysical", "All periods (1514-1866)", 1501, 1867,
-				new ZoomLevel[] {levelGeo20, levelGeoD6, levelGeoD3, levelGeoD1},
+				new ZoomLevel[] {levelGeo20, level1750D6, level1750D3, level1750D1},
 				new String[] {"Broad regions (all periods)", "Regions (all periods)", "Ports (all periods)"}),
 
 		new MapIdent(
