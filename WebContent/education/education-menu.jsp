@@ -13,7 +13,7 @@
 		</t:div>
 		
 		<s:secondaryMenu>
-			<s:secondaryMenuItem label="Lesson plans" menuId="lesson-plans" href="lesson-plans.faces" />
+			<s:secondaryMenuItem label="Lesson Plans" menuId="lesson-plans" href="lesson-plans.faces" />
 			<s:secondaryMenuItem label="Web Resources" menuId="others" href="others.faces"/>							
 		</s:secondaryMenu>
 		
