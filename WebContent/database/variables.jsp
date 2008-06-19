@@ -35,7 +35,7 @@
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td valign="top" id="left-column">
-
+				<f:param value="variables" binding="#{EssaysBean.paramActiveMenuId}" />
 				<%@ include file="guide-menu.jsp" %>
 
 			</td>			

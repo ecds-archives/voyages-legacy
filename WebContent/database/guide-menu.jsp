@@ -22,7 +22,8 @@
 			<s:secondaryMenuItem
 				label="Methodology"
 				menuId="methodology"
-				href="methodology-01.faces">
+				href="methodology-01.faces"
+			>
 				
 				<s:secondaryMenuItem
 					label="Introduction"

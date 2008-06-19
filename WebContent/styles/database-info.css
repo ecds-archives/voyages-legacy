@@ -22,7 +22,8 @@ div.left-menu-box a {
 div.left-menu-box a:hover {
 	background-color: #FFF5C2; }
 
-div.secondary-menu-item-0 a {
+div.secondary-menu-item-0 a,
+div.secondary-menu-item-0-selected a{
 	background-image: url(../images/secondary-menu-symbol-0.png);
 	background-repeat: no-repeat;
 	background-position: 2px 4px;

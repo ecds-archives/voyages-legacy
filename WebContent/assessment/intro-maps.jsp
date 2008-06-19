@@ -110,6 +110,9 @@
 							Persian Gulf routes, but it is thought that for the period from the
 							end of the Roman Empire to 1900 about the same number of captives
 							crossed the Atlantic as left Africa by all other routes combined.</p>
+							
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
 	
 						</div>
 					
@@ -134,6 +137,9 @@
 							mid-seventeenth century. Eighty percent of all captives carried
 							from Africa were taken to sugar-growing areas.</p>
 
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
+	
 						</div>
 
 					</div>
@@ -159,6 +165,9 @@
 							involved in this traffic were subsequently carried to sugar
 							plantations in the Old World.</p>
 
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
+
 						</div>
 						
 					</div>
@@ -181,6 +190,9 @@
 							two separate slave-trading systems – one in the north with voyages
 							originating in Europe and North America, the other in the south
 							with voyages originating in Brazil.</p>
+
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
 		
 						</div>
 						
@@ -201,6 +213,9 @@
 
 							<p>Few commercial centers in the Atlantic world were untouched by the slave 
 							trade, and all the major ports had strong connections with the traffic.</p>
+
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
 
 						</div>
 						
@@ -231,11 +246,14 @@
 							ports in southern Europe. A similar, but less pronounced shift may
 							be observed in the Americas from South to North and then back
 							again.</p>
-							
+						
 							<p>
 								Total documented embarkations: <b>8,973,701 captives</b><br>	
 								Percent of estimated embarkations: <b>72.1%</b>
 							</p>
+
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
 		
 						</div>
 						
@@ -276,6 +294,9 @@
 								Total documented embarkations: <b>7,878,500 captives</b><br>	
 								Percent of estimated embarkations: <b>63.3%</b>
 							</p>
+
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
 		
 						</div>
 						
@@ -306,6 +327,9 @@
 								Total documented embarkations: <b>9,371,001 captives</b><br>	
 								Percent of estimated embarkations: <b>88.5%</b>
 							</p>
+
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
 		
 						</div>
 						
@@ -335,6 +359,9 @@
 							in mainland North America, as well as the Caribbean and South
 							America. The data in this map are based on estimates of the total
 							slave trade rather than documented departures and arrivals.</p>
+
+							<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
+							Transatlantic Slave Trade</font> (New Haven: Yale University Press, 2009)</p>
 		
 						</div>
 						
