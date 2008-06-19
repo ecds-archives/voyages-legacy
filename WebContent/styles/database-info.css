@@ -33,6 +33,7 @@ div.secondary-menu-item-0 a {
 
 div.secondary-menu-item-1 a,
 div.secondary-menu-item-1-selected a {
+	color: #8A5D04;
 	background-image: url(../images/secondary-menu-symbol-1.png);
 	background-repeat: no-repeat;
 	background-position: 16px 4px;
@@ -43,7 +44,6 @@ div.secondary-menu-item-1-selected a {
 	
 div.secondary-menu-item-2 a,
 div.secondary-menu-item-2-selected a {
-	color: #E4D6B1;
 	background-image: url(../images/secondary-menu-symbol-1.png);
 	background-repeat: no-repeat;
 	background-position: 17px 4px;
