@@ -162,92 +162,95 @@
 					fell victim to corruption and fraud. Trustees often kept them in servitude and paid them only 
 					nominal monthly wages after the expiration of their term.</p>
 					
-					<p>Dobo was consigned for five years to Luisa Aper de la Paz, a rich widow from Havana, who after having 
-					paid 612 pesos as a bribe to the authorities, used Dobo, now Gabino, as a water-carrier for a salary of 
-					one peso a day.(11) After the end of the five-year term, further bribes extended Dobo’s services for another 
-					two consecutive five-year terms.(12) For Donna Aper de la Paz these arrangements provided her greater flexibility 
-					than absolute ownership of a slave, with its large outlays of cash and the risk of loss in the case of the 
-					slave's death or escape to freedom. In Havana, free labor was not only very expensive, but also very mobile 
-					and unreliable. Emancipados like Dobo represented a more controllable and easier to exploit form of labor 
-					than free wage workers. They enabled their “trustees” to obtain labor at below-market rates and avoid the 
-					long-term commitments, preoccupations, and maintenance costs associated with slavery. </p>
+					<p>Dobo was consigned for five years to Luisa Aper de la Paz, a rich widow from Havana. She paid 
+					612 pesos to bribe the authorities, and used Dobo, now named Gabino, as a water-carrier, and paid 
+					him only one peso per day. (11) After the end of his five-year term, she paid further bribes to 
+					extend Gabino’s services for two more five-year terms. (12) Extending Gabino’s involuntary servitude 
+					gave Donna Aper de la Paz greater financial flexibility than purchasing a slave: slaves required 
+					large outlays of cash, and owners bore the risk that slaves would die or escape. Hiring free 
+					laborers in Havana was also very expensive, and wageworkers could not be controlled or exploited 
+					like emancipados. The emancipado system enabled “trustees” to obtain labor at below-market rates 
+					and avoid the long-term commitments, preoccupations, and maintenance costs associated with slavery. </p>
 					
-					<p>As an emancipado Dobo was in a limbo status, neither free nor slave. Dobo’s legal status and his 
-					day-to-day existence combined the worst of two worlds. He did not enjoy the freedoms and higher wages 
-					of free persons of color, nor did he have the few legal and material protections that most slaves could 
-					reasonably expect. As if this were not enough, emancipados had to pay taxes to the colonial government. 
-					Dobo’s pay of a dollar per day was thus reduced by two-thirds. His situation was further damaged by his 
-					isolation as an emancipado from the slave community in Havana, which devised their own solidarity 
-					mechanisms for survival, resistance, and the pursuit of freedom. Neither slaves nor free, emancipados 
-					were the object of contempt of both free blacks and slaves. In fact, blacks in Cuba used “emancipado” 
-					as a derogatory term.(13) People like Dobo were at the bottom of the Cuban’s social ladder. They had no 
-					protection in the Cuban colonial legal system, and their only hope was getting the attention of a foreign official.</p>
+					<p>As an emancipado, Gabino was in limbo, neither free nor slave. His legal status and day-to-day 
+					existence combined the worst of two worlds. He did not enjoy the freedoms and higher wages of free 
+					persons of color, nor did he have the few legal and material protections that most slaves could 
+					reasonably expect. Further, Gabino needed to pay taxes to the colonial government. After taxes, 
+					he lost two-thirds of his one-dollar per day salary. Gabino also was isolated from the slave 
+					community in Havana, which devised their own solidarity mechanisms to survive, resist and 
+					pursue freedom. Emancipados were the object of contempt to both free blacks and slaves. In 
+					fact, blacks in Cuba used “emancipado” as a derogatory term (13), and people like Gabino were 
+					at the bottom of Cuba’s social ladder. They had no protection in the Cuban colonial legal 
+					system, and their only hope for redress was to gain the attention of a foreign official, 
+					such as the Superintendent of Liberated Africans in Havana.</p>
 					
-					<p>The Superintendent of Liberated Africans in Havana was one such official. The post was created by 
-					additional Anglo-Spanish anti-slave trade treaty signed in 1835. The new treaty allowed the adjudication 
-					of vessels with slave trading equipment on board but no slaves.(14) It also reflected a renewed interest of 
-					the British government in the welfare of the emancipados. It stipulated that emancipados would hereafter 
-					come under the authority of the capturing nation rather than under the nation in whose territory the court 
-					was located. Spanish officials also were to provide the Havana Mixed Commission with updated registers of 
-					emancipados every six months.(15) The new measures had an immediate effect: the British government ceased to 
-					hand over emancipados to the Spanish authorities and began relocating them to several of its Caribbean 
-					possessions, in which, coincidentally, slavery had just been abolished. A Superintendent was appointed to 
-					oversee these arrangements.</p>
+					<p>The post of Superintendent was created by an additional Anglo-Spanish anti-slave trade 
+					treaty signed in 1835. The new treaty allowed the adjudication of vessels with slave trading 
+					equipment on board—vessels thus could be seized before they embarked slaves. (14) The treaty 
+					reflected the British government’s renewed interest in the welfare of emancipados. It stipulated 
+					that emancipados would hereafter come under the authority of the capturing nation. Further, every 
+					six months Spanish officials were required to provide the Havana Mixed Commission with updated 
+					registers of emancipados. (15) The new measures had an immediate impact: British officials no 
+					longer transferred emancipados to Spanish colonial authorities; they instead began relocating 
+					them to several British Caribbean possessions, in which slavery had been abolished (1834). 
+					A Superintendent was appointed to oversee these arrangements.</p>
 					
-					<p>From the mid 1830s until 1841 the post was occupied in sequence by two well-known British abolitionists: 
-					Dr. Richard Robert Madden and David Turnbull. The two were members of the British and Foreign Anti-Slavery 
-					Society and came to Cuba ideologically committed to the interests of liberated Africans. Turnbull replaced 
-					Madden in 1840 and also held the position of British Consul in Havana. His instructions from the British foreign 
-					secretary were to persuade the Cuban authorities to obey the treaties of 1817 and 1835 and to investigate the 
-					conditions of the emancipados and protect their rights. However, emancipados like Dobo, landed in Havana before 
-					1835, were under the jurisdiction of Spanish law, and subject to Spanish officials. The Superintendent could do 
-					no more than investigate and denounce cases that were in clear violation of the earlier treaty. Many emancipados 
-					learned of the Superintendent’s position and sought his assistance. One of them was Dobo.</p>
+					<p>From the mid-1830s until 1841 two well-known British abolitionists, Dr. Richard Robert Madden 
+					and David Turnbull, occupied the post of Superintendent. The two were members of the British and 
+					Foreign Anti-Slavery Society and came to Cuba ideologically committed to the interests of liberated 
+					Africans. Turnbull replaced Madden in 1840 and also held the position of British Consul in Havana. 
+					The British foreign secretary instructed Turnbull to persuade Cuban authorities to obey the treaties 
+					of 1817 and 1835, and to investigate the conditions of the emancipados and protect their rights. 
+					However, emancipados like Gabino, landed in Havana before 1835, remained under the jurisdiction of 
+					Spanish law and Spanish officials. The Superintendent could do no more than investigate and denounce 
+					cases that were in clear violation of the earlier treaty. Many emancipados learned of the Superintendent’s 
+					position and sought his assistance. One of them was Gabino.</p>
 					
-					<p>When Mrs. Aper de la Paz died in 1840, Dobo’s position deteriorated. Felix Pinero, who inherited the 
-					widow’s property, cut off Dobo’s tiny remuneration as a water-carrier, in violation of all the conventions 
-					regarding liberated Africans.(16) Dobo’s desperation led him to appeal to Turnbull.  In his declaration to the 
-					Superintendent of Liberated Africans, Dobo, who identified himself as Gabino, narrated the abuse to which he 
-					had been subjected since his arrival to the Havana’s harbor. Turnbull immediately sent a strong note of protest 
-					to the Cuban government claiming for him “the immediate and unconditional enjoyment of the freedom which was 
-					guaranteed to him by the treaties in force between Spain and Great Britain.” By this time, Dobo had been in 
-					Cuba for fifteen years, and understood that the Spanish legal system was closed to him. He searched for an 
-					alternative and apparently found one. </p>
+					<p>When Mrs. Aper de la Paz died in 1840, Gabino’s livelihood deteriorated. Felix Piñero, who inherited 
+					the widow’s property, cut off Dobo’s tiny remuneration as a water-carrier, in violation of all conventions 
+					regarding liberated Africans. (16) Gabino’s desperation led him to appeal to Superintendent Turnbull. In his 
+					declaration, Gabino narrated the abuse to which he had been subjected since his arrival in Havana, then as 
+					Dobo. Turnbull immediately sent a strong note of protest to Cuban officials claiming for him “the immediate 
+					and unconditional enjoyment of the freedom which was guaranteed to him by the treaties in force between 
+					Spain and Great Britain.” By 1841, Gabino had been in Cuba for fifteen years, and understood that the Spanish 
+					legal system was closed to him. He searched for an alternative method of redress and found one.</p>
 					
-					<p>In his note to the Captain General, Turnbull also claimed the full repayment of the money earned by Dobo 
-					during the years he was unlawfully held. The petition was not well received by Captain General of Cuba, 
-					Principe de Anglona, who sent a letter to Turnbull in which he was declared as “persona non grata” for 
-					being a danger to the island's security because of his links with “the people of color”. He was also 
-					told in this letter that his intervention in Dobo’s case “supposes that you are qualified to listen to 
-					complaints and to offer protection to the people of color, and to support their pretensions.” The Captain 
-					General feared that “such a state of things might loosen the ties of subordination and obedience among 
-					emancipados.”(17) The Captain General thus opposed Turnbull’s defense of emancipados’ rights, without addressing 
-					the specifics of Dobo’s case.(18) Turnbull had in fact previously traveled through the island to check on the 
-					conditions of the emancipados working on plantations, and had listened to the complaints of many other 
-					emancipados in Havana. He was also seen accompanied by white Cubans who openly opposed slavery in the island. 
-					The Cuban colonial government wanted Turnbull out of the island, and his official complaint in Dobo’s case gave 
-					them the opportunity. He had to abandon his offices at the British Consulate in Havana and move to a British 
-					vessel anchored in the harbor, as he was not allowed to remain on Spanish soil. Eventually, he had to leave 
-					the island for Jamaica.(19) </p>
+					<p>In his note to the Captain General in Havana, Principe de Anglona, Turnbull also claimed that Gabino 
+					was entitled to all monies held from him unlawfully. The Captain General responded by declaring Turnbull 
+					to be a “persona non grata,” a danger to the island’s security because of his links with “the people of 
+					color.” Turnbull was also told in this letter that his intervention in Gabino’s case “supposes that you 
+					are qualified to listen to complaints and to offer protection to the people of color, and to support 
+					their pretensions.” The Captain General feared that “such a state of things might loosen the ties of 
+					subordination and obedience among emancipados.” (17) The Captain General thus opposed Turnbull’s defense 
+					of emancipados’ rights, without addressing the specifics of Gabino’s case. (18) Turnbull had in fact 
+					previously traveled through the island to check on the conditions of the emancipados working on plantations, 
+					and had listened to the complaints of many other emancipados in Havana. He was also seen accompanied by 
+					white Cubans who openly opposed slavery in the island. The Cuban colonial government wanted Turnbull to 
+					leave the island, and his official complaint in Gabino’s case gave them the opportunity. The Superintendent 
+					was forced to abandon his offices at the British Consulate in Havana and move to a British vessel anchored 
+					in the harbor, as he was not allowed to remain on Spanish soil. Eventually, he had to sail to Jamaica. (19)  </p>
 					
-					<p>But while Turnbull had to leave Cuba, his immediate objective was achieved: Dobo, at the age of 25, 
-					won his freedom. A letter from the Anglona’s successor as Cuban Captain General, Geronimo Valdes, to the 
-					British Consulate, dated June 23, 1841, stated that a letter of emancipation had been issued for Gabino, 
-					who was now a free man. The report also mentioned that Dobo had married a slave, Candelaria.(20) Dobo had 
-					achieved the nearly impossible: he had overcome all the barriers imposed on emancipados by the Spanish 
-					colonial government. Dobo’s decision to bypass the Spanish legal system also produced a diplomatic crisis 
-					between two European governments. </p>
+					<p>Turnbull, though forced to leave Cuba, achieved his immediate objective: Gabino, at the age of 25, won 
+					his freedom. A letter from the Anglona’s successor as Captain General, Geronimo Valdes, to the British Consulate, 
+					dated June 23, 1841, stated that a letter of emancipation had been issued for Gabino. The report also mentioned 
+					that Gabino had married a slave, Candelaria. (20) Gabino had achieved the nearly impossible: he had overcome all 
+					the barriers imposed on emancipados by the Spanish colonial government and gained his freedom. His decision to 
+					bypass the Spanish legal system, importantly, produced a diplomatic crisis between the British and Spanish governments. </p>
 					
-					<p>Dobo now began a new life as a free black man with a wife. However, the colonial government did not forget Dobo. 
-					A few months after his letter of emancipation was issued, he was accused of conspiracy to foment a black uprising, 
-					and condemned to eight years in prison. The sentence would be served in Ceuta, a Spanish enclave north of Morocco, 
-					far from his wife. Paradoxically, Dobo now returned to the African continent as a captive. His freedom had not 
-					lasted long. In November 1841 he left Havana on board a Spanish naval war, <font style="font-style:italic;">Correo 4</font>. It was the second time 
-					that Dobo crossed the Atlantic, in both cases under conditions as a captive. The conditions on board the <font style="font-style:italic;">Correo 4</font> 
-					were likely as bad as those on a slave vessel. When the vessel arrived at Cadiz, Dobo was gravely ill. A few days 
-					after disembarkation in Cadiz, Dobo died in the military prison.(21) He never reached the African continent. Dobo’s 
-					story is an example of the fate of thousands of liberated Africans in Cuba. Dobo did not arrive in Cuba as a slave, 
-					but like thousands of other emancipados, he became like one of them. </p>
+					<p>In late June 1841 Gabino began a new life as a free black man with a wife, but the Spanish colonial government 
+					did not forget him. A few months after his letter of emancipation, he was accused of conspiracy to foment a black 
+					uprising and condemned to eight years in prison. He would need to serve his sentence in a prison in Ceuta, a Spanish 
+					enclave in northern Morocco, far from his wife. Paradoxically, Gabino now returned to the African continent as a 
+					captive. His freedom had lasted only a few months. In November 1841 he left Havana imprisoned on board the Spanish 
+					naval warship <font style="font-style:italic;">Correo 4</font>. It was the second time that Gabino crossed the 
+					Atlantic, in both cases as a captive. The conditions on board the <font style="font-style:italic;">Correo 4</font> 
+					were undoubtedly as bad as those on the slaving vessel Fingal. Gabino was gravely ill when the naval ship arrived 
+					at the Spanish port Cadiz. A few days after disembarkation, he died in the military prison. (21) Gabino, born Dobo, 
+					never reached the African continent. His story in Africa and in the Americas illustrates the fate of thousands of 
+					liberated Africans in Cuba. Dobo did not arrive in Cuba as a slave, but like other emancipados, he lost his African 
+					name, had his rights ignored, and was not remunerated for his work. Dobo, a free youth from Gola, became Gabino, a 
+					de-facto slave in Cuba.Dobo now began a new life as a free black man with a wife. However, the colonial government 
+					did not forget Dobo.</p>
 					
 					<br>
 					
