@@ -52,122 +52,115 @@
 						<span class="essay-date"></span>
 					</div>
 
-					<p>In the sixty years after 1807, many former slave trading nations, 
-					in particular, the British, launched a major effort to suppress the slave 
-					trade. In this era, the Voyages Database shows that naval cruisers captured 
-					1,985 slave ships and conferred liberated African status on 177,000 of the 
-					slaves found on board some of these vessels. The fate of these “re-captives,” 
-					as they were called, varied considerably. The majority spent lives as self-sufficient 
-					farmers or fishermen, with only occasional involvement in the free labor market. 
-					About one quarter of the group went to the British West Indies as contract laborers. 
-					For a few thousand others, there was a life little different from slavery. 
-					The story which follows is for one of the latter group. It is a story which 
-					the search interfaces of this site have helped reconstruct.</p>
+					<p>In the sixty years after 1807, many former slave trading nations, in particular the 
+					British, launched a major effort to suppress the slave trade. In this era, the Voyages 
+					Database shows that naval cruisers captured 1,985 slave ships and conferred liberated 
+					African status on 177,000 of those slaves found on board some of these vessels. The fate 
+					of these “re-captives,” as they were called, varied considerably. The majority spent their 
+					lives as self-sufficient farmers or fishermen. About one quarter of the group migrated to 
+					the British West Indies to work as contract laborers. For a few thousand others, they lived 
+					as de-facto slaves. The story that follows is for one of the latter group. It is a story 
+					that the search interfaces of the Voyages Database have helped reconstruct.</p>
 
-					<p>In March, 1826 HMS <font style="font-style:italic;">“Speedwell”</font> detained a 
+					<p>In March, 1826 HMS <font style="font-style:italic;">Speedwell</font> detained a 
 					small Spanish schooner named <font style="font-style:italic;">Fingal</font> 
-					off the Cuban coast with 58 slaves, the survivors of 61, en route from Cape Mount, 
-					near Galinhas. After detention, the slaver, its crew, and human cargo were taken into 
-					Havana, where the slaves disembarked. In the Voyages Database the details of the voyage 
-					are recorded under voyageid 558. British and Spanish officials interviewed the captives 
-					and recorded their names, ages, and places of habitation. The officials added data on height, 
-					sex, and a description of the most obvious cicatrisation. From the docks, the newly disembarked 
-					Africans were taken to a nearby barracon, where they were held by the Cuban colonial government 
-					prior to their transfer as emancipated Africans to residents of the island from whom they were 
-					supposed to receive religious and work training. After a five-year term, they were to be 
-					integrated into Cuban society as free persons.</p>
+					off the Cuban coast with 58 slaves, the survivors of 61, en route from 
+					Cape Mount (modern-day Liberia). After detention, the slaver, its crew, and 
+					human cargo were taken into Havana, where the slaves disembarked. In the 
+					Voyages Database the details of the voyage are found in VoyageID 558. British 
+					and Spanish officials interviewed the captives and recorded their names, ages, 
+					and places of habitation. The officials added data on height, sex, and a 
+					description of the most obvious cicatrization. From the docks, the newly 
+					disembarked Africans were taken to a nearby barracoon and held there by 
+					Cuban colonial officials. They then transferred, as emancipated Africans, 
+					to residents of the island from whom they were supposed to receive religious 
+					and occupational training. After a five-year term, they were to be integrated 
+					into Cuban society as free persons.</p>
 
-					<p>The <font style="font-style:italic;">Fingal</font> was one of many slavers adjudicated at the Havana Court of Mixed 
-					Commission which, under the 1817 Anglo-Spanish treaty, was one of the courts 
-					established to adjudicate suspected slave vessels detained under the Spanish 
-					or British flags and to declare any slaves on board to be emancipados or liberated 
-					Africans.  Under the provisions of the treaty, the two governments agreed that the 
-					emancipados should become free people in the territory where the adjudication took 
-					place. It soon became clear, however, that the lives of the liberated Africans on 
-					the island were little different from those of slaves.(2) Certainly the Cuban 
-					authorities did not welcome the responsibility of distributing and monitoring 
-					thousands of free Africans. </p>
+					<p>The <font style="font-style:italic;">Fingal</font> was one of many slavers 
+					adjudicated at the Havana Court of Mixed Commission which, under the 1817 
+					Anglo-Spanish treaty, was one of the courts established to interrogate 
+					suspected slave vessels detained under the Spanish or British flags and 
+					to declare any slaves on board to be emancipados, or liberated Africans. 
+					Under the provisions of the treaty, the two governments agreed that the 
+					emancipados should become free people in the territory where the adjudication 
+					took place. (1) It soon became clear, however, that the lives of the liberated 
+					Africans on the island were little different from those of slaves. (2) Certainly, 
+					the Cuban authorities did not want to distribute and monitor thousands of free Africans. </p>
 
-					<p>The story of one of the Africans on board the <font style="font-style:italic;">Fingal</font> disembarked in Havana would prove 
-					how difficult was living in Cuba for all emancipados who fell under the Spanish government 
-					jurisdiction. This African was Dobo, a ten-year-old boy from the Galinhas hinterland who was 
-					one of the unfortunate souls on board the <font style="font-style:italic;">Fingal</font>. Dobo’s story, or Gabino, as he was renamed 
-					after his arrival in Cuba, is one of the most revealing accounts of the trauma and re-identification 
-					that accompanied each of the liberated Africans who had the unfortunate fate having been enslaved in 
-					Africa, shipped off to Cuba as a slave, and then, after apparent rescue, became a Cuban emancipado. 
-					His personal story offers insight into how the slave trade was conducted in Africa, and how emancipated 
-					Africans in Cuba were effectively slaves.</p>
+					<p>The story of one of the Africans on board the <font style="font-style:italic;">Fingal</font>, 
+					a ten-year old boy named Dobo, illustrates the difficulties emancipados faced living under 
+					Spanish jurisdiction. Dobo’s story, or Gabino as he was renamed after his arrival in Cuba, 
+					is one of the most revealing accounts of the trauma and re-identification experienced by 
+					those enslaved in Africa and then “emancipated.” His personal story offers insight into 
+					how the slave trade was conducted in Africa, and how emancipated Africans in Cuba lived 
+					and worked effectively as slaves.</p>
 					
-					<p>When the youth was landed in Havana, court officials interviewed him. Because Dobo’s 
-					slaver took slaves on the Windward coast, at Cape Mount, near Galinhas, he was described 
-					as a Ganga, a term given in Cuba to all people embarked at ports from the Sierra Leone 
-					and Windward Coasts.(3) But Dobo also identified himself as a member of the Kongoba nation 
-					and entered the Court’s Liberated African register as “Ganga-longová”. This register is 
-					one of the two sources for the African Names Database and in it Dobo has a slaveid of 70345.  
-					He came from the interior of Galinhas, from an area occupied by Gola people, an ethnolinguistic 
-					subgroup of Mel speakers that during the seventeenth and eighteenth centuries 
-					had spread to the Galinhas hinterland from their northern homeland in the Kongba 
-					region – this is the reason they called themselves Kongoba. They eventually occupied 
-					a large section of the region between the Lofa and Cape Mount, displacing in their 
-					expansion Dei groups who formerly occupied the area.(4)</p>
+					<p>After the African youth landed in Havana, court officials interviewed him.  Because Dobo’s 
+					slaver embarked slaves at Cape Mount, he was described as a Ganga, a term given in Cuba to all 
+					African peoples embarked at ports from the Sierra Leone and Windward Coasts. (3) But Dobo also 
+					identified himself as a member of the Kongoba nation, and he entered the Court’s Liberated African 
+					register as “Ganga-longová” (African Names Database, ID 70345). Dobo came from the interior of 
+					Galinhas, an area occupied by Gola people, an ethnolinguistic subgroup of Mel speakers who migrated 
+					south to the Galinhas hinterland from the Kongba region (and called themselves Kongoba). They 
+					eventually occupied a large section of the region between Lofa and Cape Mount, displacing in 
+					their expansion Dei groups. (4)</p>
 					
-					<p>By the time Dobo was shipped to Cuba, Spanish slave agents were very active in the Galinhas 
-					coast, and traded extensively with local chiefs, especially from the Dei and the Gola, who were 
-					at war with each other. The Spanish obtained prisoners from both sides.(5) Dei people belonged to 
-					the Kwa linguistic family, who occupied in the nineteenth century an area that extended from the 
-					coast to the hinterland of Galinhas. Being gradually displaced from the hinterland by the continuous 
-					expansion toward the coast of Gola groups, Dei by the nineteenth century had a conflictive relationship 
-					with their Gola neighbors.(6) The results of constant skirmishes between the two parties was reflected in 
-					the permanent production of captives who were eagerly exchanged for imported goods at coastal entrepots 
-					operated by Spanish agents, the most notorious of whom was Pedro Blanco. Vai traders, who belonged to the 
-					Mande linguistic family and who inhabited the coastal area of Galinhas, acted as middlemen between European 
-					traders and Dei and Gola slave traders.(7) Blanco and other Spanish traders had struck up a profitable and 
-					efficient working relationship with local Vai chiefs, while rapidly expanding the scope of their operations, 
-					stationing agents at Cape Mount, Shebar, Digby (near Monrovia), Young Sestos, and elsewhere. </p>
+					<p>In 1826, when Dobo was shipped to Cuba, Spanish slave agents were very active on the Galinhas 
+					coast, and they traded extensively with local chiefs, especially those from the warring Dei and 
+					Gola peoples. The Spanish obtained prisoners of war from both groups. (5) The Dei belonged to the 
+					Kwa linguistic family, who occupied in the nineteenth century an area that extended from the coast 
+					to the hinterland of Galinhas. Gola expansion in the early nineteenth century displaced the Dei, 
+					causing friction and eventually war. (6) Constant skirmishes between the two parties produced 
+					continual lots of captives who were marched to the coast. Spanish agents—including the notorious 
+					slave trader Pedro Blanco—stockpiled imported goods in coastal entrepôts and maintained small sailing 
+					craft to shuttle slaves along the Sierra Leone and Windward Coasts. Vai merchants, who belonged to the 
+					Mande linguistic family and who inhabited the coastal area of Galinhas, acted as middlemen between the 
+					Europeans and the Dei and Gola slave traders. (7) Blanco and other Spanish brokers had built a profitable 
+					working relationship with local Vai chiefs, and rapidly expanded their operations by stationing agents at 
+					Cape Mount, Shebar, Digby (near Monrovia), Young Sestos, and nearby outlets.</p>
 					
-					<p>Young Dobo was traded by one of these slave trader networks. There is no information available 
-					on how he entered slavery in his Gola homeland. Probably he was a victim of a Dei raid to a Gola 
-					settlement, was sold by relatives, or was born as a slave and traded out of his original masters’ 
-					community. It was common for Dei or Gola rulers who desired imported goods to raid neighboring peoples 
-					and send their captives to the coast in exchange for such items as salt, tobacco, and various metals, 
-					particularly brass objects. However, not all slaves traded from the interior were victims of raids or 
-					prisoners of war. There were several ways in which people became slaves in the hinterland of the 
-					Galinhas region.(8) One of the more important was through birth. People born of slave parents 
-					automatically were considered slaves. People were not born as slaves, but might become so through 
-					being orphaned. The practice of bartering children and even sometimes adults for food during 
-					famines - to save the rest of the community - was not unknown. Children were also usually used 
-					as payment to another kin group to compensate for homicides and other crimes committed by their 
-					relatives. Adults expelled from their original kin groups might also risk enslavement when forced 
-					to leave their own kin groups because of quarrels, threats, hunger, or criminal activity. Dobo 
-					could have entered slavery in any one of these ways.</p>
+					<p>There is no information on how young Dobo entered slavery in his Gola homeland. He might have been 
+					a victim of a Dei raid on a Gola settlement, or sold by relatives, or born as a slave and traded from 
+					his original community. It was common for Dei or Gola rulers who desired imported goods to raid 
+					neighboring peoples and send their captives to the coast in exchange for items such as salt, 
+					tobacco, and various metals, particularly brass objects. Not all slaves traded from the interior, 
+					however, were captured in raids or prisoners of war. Some people in the Galinhas hinterland 
+					were born into slavery; some entered slave status by being orphaned. The practice of bartering 
+					children—and even sometimes adults—forfood during famines was not unknown. Children were also 
+					sold to compensate for homicides and other crimes committed by relatives. Adults expelled from 
+					their original kin groups might also risk enslavement when forced to leave their own kin groups 
+					because of quarrels, threats, hunger, or criminal activity. Dobo could have entered slavery in 
+					any one of these ways. (8)</p>
 					
-					<p>Before reaching Galinhas coast, Dobo had to travel many miles from the Gola hinterland, and 
-					almost certainly he was bought and sold more than once during his journey. From the moment he 
-					was captured or sold for the first time, Dobo found himself surrounded by strangers. As Vai 
-					traders acted as middlemen in the coastal slave trade, Dobo could have been transferred from 
-					Gola or Dei traders to Vai merchants who brought him to the coast. As a newcomer in alien 
-					communities and separated from his own ethnic group, Dobo must have had to redefine a new 
-					identity, social personality, and status. New surroundings usually implied new customs, languages, or dialects.(9) </p>
+					<p>Before reaching the Galinhas coast, Dobo had to travel many hundred miles from the 
+					Gola hinterland, and almost certainly he was bought and sold more than once during his 
+					journey. From his first capture, Dobo found himself surrounded by strangers. Dobo was 
+					probably transferred from Gola or Dei traders to Vai middlemen who marched him to the 
+					coast. As a newcomer in alien communities and separated from his own ethnic group, Dobo 
+					must have had to redefine a new identity, social personality, and status. New surroundings 
+					usually implied new customs, languages, or dialects. (9) </p>
 					
-					<p>When he arrived to the coast, he was probably housed in a slave factory belonging to one of 
-					the Spanish factors around Galinhas before being traded for imported commodities. Cape Mount, 
-					from whence the <font style="style-font:italic;">Fingal</font> had sailed, functioned as an auxiliary shipping point of the main 
-					slave entrepot in the area, the Galinhas River between the Mano and Moa Rivers. At Cape Mount, 
-					several slave depots operated in the 1820s and 1830s, including one owned by Pedro Blanco. 
-					Once the exchange of slaves for merchandise was made, Dobo and 60 others were taken on board 
-					the slaver by canoes. The <font style="font-style:italic;">Fingal</font>, a very small vessel, was not well suited to a trans-Atlantic 
-					voyage, and the conditions must have been horrifying. Three slaves died during the Atlantic crossing. </p>
+					<p>When he arrived on the coast, Dobo was housed in a slave factory belonging to one of the 
+					Spanish factors around Galinhas before he was traded for imported commodities. Cape Mount, 
+					from whence the <font style="font-style:italic;">Fingal</font> had sailed, functioned as an 
+					auxiliary shipping point of the main slave entrepôt in the area, the Galinhas River, between 
+					the Mano and Moa Rivers. At Cape Mount, several slave depots operated in the 1820s and 1830s, 
+					including one owned by Pedro Blanco. Once he was bartered for merchandise, Dobo and 60 others 
+					were taken on board the slaver by canoes. Conditions must have been horrific on the schooner 
+					<font style="font-style:italic;">Fingal</font>, and three slaves died during the Atlantic crossing.</p>
 					
-					<p>As already noted, the treaty of 1817 clearly stipulated that emancipados, once disembarked, came under 
-					the jurisdiction of the nation in whose territory the court was located. Dobo and his African companions 
-					thus remained under the custody of Spain after registration. They were assigned a new “Christian” name 
-					and a tin ticket for identification, and began a five-year labor term under some responsible trustee 
-					“to ease their transition to civilization.” But these terms could be legally extended to a maximum of 
-					three more years, and beyond that other mechanisms existed to prolong servitude indefinitely. Spanish 
-					colonial law also established that emancipados were to be fed, clothed, and given medical attention by 
-					their trustees, in addition to religious instruction and training in some trade.(10) However, as Dobo’s story 
-					shows, many, if not most emancipados fell victim to corruption and fraud. The most common practice was to 
-					keep them in servitude and pay only nominal monthly wages after the expiration of their nominal term. </p>
+					<p>The treaty of 1817 clearly stipulated that emancipados, once disembarked, came under the 
+					jurisdiction of the nation in whose territory the court was located. Dobo and his African 
+					companions thus remained under the custody of Spain after registration. They were assigned 
+					a new “Christian” name and a tin ticket for identification, and began a five-year labor 
+					term under some responsible trustee “to ease their transition to civilization.” But these 
+					terms could be extended legally to a maximum of three more years, and other mechanisms 
+					existed to prolong servitude indefinitely. Spanish colonial law also decreed that trustees 
+					needed to feed and clothe their emancipados, provide medical care, instruction in Catholicism 
+					and train them in an occupation. . (10) As Dobo’s story will show, many, if not most emancipados, 
+					fell victim to corruption and fraud. Trustees often kept them in servitude and paid them only 
+					nominal monthly wages after the expiration of their term.</p>
 					
 					<p>Dobo was consigned for five years to Luisa Aper de la Paz, a rich widow from Havana, who after having 
 					paid 612 pesos as a bribe to the authorities, used Dobo, now Gabino, as a water-carrier for a salary of 
