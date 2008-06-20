@@ -35,5 +35,17 @@ public class EssaysBean
 		String activeMenuId = getActiveMenuId();
 		return activeMenuId != null && activeMenuId.startsWith("essays-seasonality");
 	}
+	
+	public boolean isSourcesExpanded()
+	{
+		String activeMenuId = getActiveMenuId();
+		return activeMenuId != null && activeMenuId.startsWith("sources");
+	}
+	
+	public boolean isMethodExpanded()
+	{
+		String activeMenuId = getActiveMenuId();
+		return activeMenuId != null && activeMenuId.startsWith("methodology");
+	}
 
 }
