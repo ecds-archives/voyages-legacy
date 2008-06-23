@@ -62,8 +62,8 @@
 					as de-facto slaves. The story that follows is for one of the latter group. It is a story 
 					that the search interfaces of the Voyages Database have helped reconstruct.</p>
 
-					<p>In March, 1826 HMS <font style="font-style:italic;">Speedwell</font> detained a 
-					small Spanish schooner named <font style="font-style:italic;">Fingal</font> 
+					<p>In March, 1826 HMS <font style="font-style:italic;">Speedwell</font> detained the 
+					small Spanish schooner named<font style="font-style:italic;">Fingal</font> 
 					off the Cuban coast with 58 slaves, the survivors of 61, en route from 
 					Cape Mount (modern-day Liberia). After detention, the slaver, its crew, and 
 					human cargo were taken into Havana, where the slaves disembarked. In the 
@@ -158,7 +158,7 @@
 					terms could be extended legally to a maximum of three more years, and other mechanisms 
 					existed to prolong servitude indefinitely. Spanish colonial law also decreed that trustees 
 					needed to feed and clothe their emancipados, provide medical care, instruction in Catholicism 
-					and train them in an occupation. . (10) As Dobo’s story will show, many, if not most emancipados, 
+					and train them in an occupation. (10) As Dobo’s story will show, many, if not most emancipados, 
 					fell victim to corruption and fraud. Trustees often kept them in servitude and paid them only 
 					nominal monthly wages after the expiration of their term.</p>
 					
@@ -249,8 +249,7 @@
 					never reached the African continent. His story in Africa and in the Americas illustrates the fate of thousands of 
 					liberated Africans in Cuba. Dobo did not arrive in Cuba as a slave, but like other emancipados, he lost his African 
 					name, had his rights ignored, and was not remunerated for his work. Dobo, a free youth from Gola, became Gabino, a 
-					de-facto slave in Cuba.Dobo now began a new life as a free black man with a wife. However, the colonial government 
-					did not forget Dobo.</p>
+					de-facto slave in Cuba.</p>
 					
 					<br>
 					
@@ -260,11 +259,12 @@
 					
 					<p class="note">1 Leslie Bethell, "The Mixed Commissions for the Suppression of the Transatlantic Slave Trade in the Nineteenth Century," 
 					<font style="font-style: italic;">Journal of African History 7 </font>(1966): 79-93; David R. Murray, 
-					<font style="font-style: italic;">Odious Commerce: : Britain, Spain, and the abolition of the Cuban slave trade </font> (Cambridge, Cambridge University Press, 1972).</p>
+					<font style="font-style: italic;">Odious Commerce: Britain, Spain, and the abolition of the Cuban slave trade </font> 
+					(Cambridge, UK: Cambridge University Press, 1972).</p>
 					
-					<p class="note">2 Archivo Histórico Nacional (hereafter AHN), Madrid, Spain, Estado, Esclavitud, Legajo: 8034/21.</p>
+					<p class="note">2 Archivo Histórico Nacional, Madrid (hereafter AHNM), Estado, Esclavitud, Legajo: 8034/21.</p>
 					
-					<p class="note">3 The term seems to come from the Gbangá River in Sierra Leone or a toponimic that refers to the zone of Gbangbama, 
+					<p class="note">3 The term seems to come from the Gbangá River in Sierra Leone or a toponymic that refers to the zone of Gbangbama, 
 					where that river comes into the sea. See Alessandra Basso Ortiz, “Los Gangá Longobá: el Nacimiento de los Dioses,”  
 					<font style="font-style: italic;">Boletín Antropológico </font>52 (2001): 195-208. </p>
 					
@@ -283,46 +283,45 @@
 					the Vai people with particular emphasis on the Tewo chiefdom,” (Ph.D. diss., Boston University, 1967).</p>
 					
 					<p class="note">8 For Sierra Leone and Liberia, see Svend E. Holsoe, “Slavery and Economic Response among the Vai 
-					(Liberia and Sierra Leone)” in <font style="font-style: italic;">Slavery in Africa: Historical and Anthropological Perspectives, </font>. 
+					(Liberia and Sierra Leone)” in <font style="font-style: italic;">Slavery in Africa: Historical and Anthropological Perspectives, </font>
 					eds. Suzanne Miers and Igor Kopytoff (Madison: University of Wisconsin Press, 1977), 287-303. </p>
 					
 					<p class="note">9 For slavery in Africa, see: Igor Kopytoff and Suzanne Miers, “African ‘Slavery’ as an Institution of Marginality,” 
-					in <font style="font-style: italic;">Slavery in Africa: Historical and Anthropological Perspectives, </font>eds. Suzanne Miers and 
-					Igor Kopytoff (Madison: University of Wisconsin Press, 1977), 3-78. </p>
+					in <font style="font-style: italic;">Slavery in Africa, </font>eds. Miers and Kopytoff, 3-78. </p>
 					
 					<p class="note">10 See: José Gutierrez de la Concha Habana, <font style="font-style: italic;">Memoria sobre el ramo de 
 					emancipados de la Isla de Cuba, </font>(Madrid: Imprenta de la América, 1861).</p>
 					
-					<p class="note">11 Some reports have mentioned that Spanish officials were selling emancipados in Havana during the 1830s at nine 
-					gold ounces, or about one-third of the cost of a slave. Archivo Nacional de Cuba (hereafter ANC), Gobierno Superior Civil, Legajo 
+					<p class="note">11 Some reports have mentioned that Spanish officials were selling emancipados in Havana during the 1830s for 
+					nine ounces of gold, or about one-third the cost of a slave.  Archivo Nacional de Cuba (hereafter ANC), Gobierno Superior Civil, Legajo 
 					105/5363; ANC, Reales Órdenes y Cédulas, Legajo 100/14. </p>
 					
-					<p class="note">12 AHN, Estado, Esclavitud, Legajo: 8019/39</p>
+					<p class="note">12 AHNM, Estado, Esclavitud, Legajo: 8019/39.</p>
 					
 					<p class="note">13 Inés Roldán de Montaud, “Origen, evolución y supresión del grupo de negros ‘emancipados’ en Cuba, 1817-1870,” 
-					<font style="font-style: italic;">Revista de Indias </font>42 (1982): 580 </p>
+					<font style="font-style: italic;">Revista de Indias </font>42 (1982): 580. </p>
 					
 					<p class="note">14 Foreign Office, “Great Britain: Treaty between His Majesty and the Queen Regent of Spain, during the minority 
 					of her daughter, Donna Isabella the Second, Queen of Spain, for the Abolition of the Slave Trade, signed at Madrid, June 28, 1835,” 
-					<font style="font-style: italic;">British and Foreign State Papers, </font>1834-35, 23: 343-71; AHN, Ultramar, Legajo 3547/6. </p>
+					<font style="font-style: italic;">British and Foreign State Papers, </font>1834-35, 23: 343-71; AHNM, Ultramar, Legajo 3547/6. </p>
 					
 					<p class="note">15 ANC, Reales Órdenes y Cédulas, Legajo 51/123.</p>
 					
-					<p class="note">16 This paragraph from AHN, Estado, Esclavitud, Legajo: 8019/39/4</p>
+					<p class="note">16 This paragraph from AHNM, Estado, Esclavitud, Legajo: 8019/39/4.</p>
 					
-					<p class="note">17 Ibid., 8019/39/1-7</p>
+					<p class="note">17 Ibid., 8019/39/1-7.</p>
 					
 					<p class="note">18 Before his appointment as British Consul in Havana, Turnbull spent almost two years traveling in Cuba and 
 					writing his best known book, <font style="font-style: italic;">Travels in the West: Cuba; with Notices 
 					of Porto Rico and the Slave Trade, </font>(London: Longman, Orme, Brown, Green, and Longmans, 1840). </p>
 					
-					<p class="note">19 Turnbull would return to Cuba in 1842 from the Bahamas, accompanied by several free blacks and hoping to 
+					<p class="note">19 Turnbull would return to Cuba in 1842 from the Bahamas.  Accompanied by several free blacks, he hoped to  
 					free some emancipados who were held as slaves. For his arrest and deportation, see Hugh Thomas,  
-					<font style="font-style: italic;">The Slave Trade: the story of the Atlantic slave trade, 1440-1870, </font>(New York: Simon and Schuster, 1997), 668</p>
+					<font style="font-style: italic;">The Slave Trade: the story of the Atlantic slave trade, 1440-1870, </font>(New York: Simon and Schuster, 1997), 668.</p>
 					
-					<p class="note">20 AHN, Estado, Esclavitud, Legajo: 8019/39/10</p>
+					<p class="note">20 AHNM, Estado, Esclavitud, Legajo: 8019/39/10.</p>
 					
-					<p class="note">21 AHN, Estado, Esclavitud, Legajo: 8019/39/15-18</p>				
+					<p class="note">21 AHNM, Estado, Esclavitud, Legajo: 8019/39/15-18.</p>				
 					
 				</s:simpleBox>
 			</td>
