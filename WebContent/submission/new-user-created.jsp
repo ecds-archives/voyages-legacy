@@ -22,8 +22,11 @@
 <f:view>
 <h:form id="main">
 
-	<f:param value="database" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="../top-bar.jsp" %>
+	<s:siteHeader activeSectionId="database">
+		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
+		<h:outputLink value="submission-login.faces"><h:outputText value="Contribute" /></h:outputLink>
+		<h:outputText value="Resgister" />
+	</s:siteHeader>
 	
 	<div id="content">
 	
