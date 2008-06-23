@@ -6,7 +6,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>The Database</title>
+	<title>Register</title>
+	
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
 	<link href="../styles/section-index.css" rel="stylesheet" type="text/css">
@@ -16,50 +17,30 @@
 	<link href="../styles/database-expandable-box.css" rel="stylesheet" type="text/css">
 	<link href="../styles/tabs.css" rel="stylesheet" type="text/css">
 	<link href="../styles/database-tabs.css" rel="stylesheet" type="text/css">
+	<link href="../styles/database-info.css" rel="stylesheet" type="text/css">
+
+	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <f:view>
 <h:form id="main">
+	
+	<s:siteHeader activeSectionId="database">
+		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
+		<h:outputLink value="submission-login.faces"><h:outputText value="Contribute" /></h:outputLink>
+		<h:outputText value="Resgister" />
+	</s:siteHeader>
 
-	<f:param value="database" binding="#{MainMenuBean.activeSectionParam}" />
-	<%@ include file="../top-bar.jsp" %>
-	
 	<div id="content">
-	
-		<table border="0" cellspacing="0" cellpadding="0" class="section-index-layout">
+	<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
-			<td class="section-index-left-column">
+			<td valign="top" id="left-column">
+				<%@ include file="submission-menu.jsp" %>
+			</td>		
 			
-				<s:expandableBox text="Quick Start">
-					<f:verbatim escape="false">
-						<a href="../../tast/database/search.faces">Click here</a> to go directly to the query page for searching information in the main database.
-					</f:verbatim>
-				</s:expandableBox>
-				
-				<br>
-				<% /* 
-				<s:expandableBox text="Sample Queries">
-					<f:verbatim escape="false">
-						<ul class="box">
-							<li>What was the first country to get slaves from Africa?</li>
-							<li>How did the atlantic slave trade effect the economy of Europe, Africa, and America?</li>
-							<li>Why did European interest in Africa turn from the slave trade to colonization?</li>
-							<li>Where were they taken to?</li>
-							<li>Which European country was the first to engage in the slave trade in Central Africa?</li>
-							<li>Who sold the slaves to the European slavers?</li>
-							<li>Has there ever been evidence of a slave earning his freedom and returning to Africa in their lifetime?</li>
-							<li>Why were the slaves taken from Africa?</li>
-							<li>How long did it take to transport slaves fom Africa to America?</li>
-							<li>Which country brought more slaves from Africa than any other country?</li>
-							<li>How long did it take to transport slaves fom Africa to America?</li>
-							<li>show me more queries...</li>
-						</ul>
-					</f:verbatim>
-				</s:expandableBox>
-				*/ %>
-			</td>
-			<td class="section-index-right-column">
+			<td valign="top" id="main-content">
+				<s:simpleBox>
 
 					<h1>New user registration</h1>
 	
@@ -100,13 +81,13 @@
 		<td></td><td><h:commandButton value="Register" action="#{SubmissionUsersBean.createNewUser}"/></td>
 	</tr>
 	</table>
-
+</s:simpleBox>
 			</td>
 		</tr>
 		</table>
 		
-	</div>
 
+</div>
 </h:form>
 </f:view>
 </body>
