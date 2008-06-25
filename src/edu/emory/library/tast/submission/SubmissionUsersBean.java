@@ -197,11 +197,11 @@ public class SubmissionUsersBean {
 				
 				new GridColumn("E-mail"), 
 				
-				new GridColumn("Telephone Number1"),
+				new GridColumn("Telephone1"),
 				
-				new GridColumn("Telephone Number2"),
+				new GridColumn("Telephone2"),
 				
-				new GridColumn("Brief description of new material and sources"),
+				new GridColumn("Brief description"),
 				
 				new GridColumn("User active"),
 				
@@ -263,6 +263,9 @@ public class SubmissionUsersBean {
 							user.getFirstName(), 
 							user.getLastName(), 
 							user.getEmail(),
+							user.getPhone1(),
+							user.getPhone2(),
+							user.getDescription(),
 							user.isEnabled() ? "Yes" : "No",
 							editor ? "Yes" : "No",
 							chiefEditor ? "Yes" : "No",
