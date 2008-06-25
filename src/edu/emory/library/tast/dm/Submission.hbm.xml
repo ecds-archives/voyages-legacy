@@ -140,6 +140,9 @@
 		<property name="lastName" column="last_name"/>
 		<property name="institution" column="institution"/>
 		<property name="email" column="email"/>
+		<property name="phone1" column="phone1"/>
+		<property name="phone2" column="phone2"/>
+		<property name="description" column="description"/>
 		
 		<set name="submissions" table="submissions" inverse="true">
 			<key column="user_id" />

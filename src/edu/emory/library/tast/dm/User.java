@@ -29,6 +29,9 @@ public class User {
 	private String lastName;
 	private String institution;
 	private String email;
+	private String phone1;
+	private String phone2;
+	private String description;
 	
 	private Set submissions;
 	
@@ -124,7 +127,23 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getPhone1() {
+		return phone1;
+	}
 
+	public void setPhone1(String phone1) {
+		this.phone1=phone1;
+	}
+
+	public String getPhone2() {
+		return phone2;
+	}
+
+	public void setPhone2(String phone2) {
+		this.phone2=phone2;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -149,6 +168,14 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description=description;
+	}
+	
 	public Set getSubmissions() {
 		return submissions;
 	}	

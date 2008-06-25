@@ -69,6 +69,15 @@
 		<td>E-mail address: </td><td><h:inputText value="#{SubmissionUsersBean.newUserEmail}"/></td>
 	</tr>
 	<tr>
+		<td>Telephone number1: </td><td><h:inputText value="#{SubmissionUsersBean.newUserPhone1}"/></td>
+	</tr>
+	<tr>
+		<td>Telephone number2: </td><td><h:inputText value="#{SubmissionUsersBean.newUserPhone2}"/></td>
+	</tr>
+	<tr>
+		<td>Brief description of new material and sources: </td><td><h:inputText value="#{SubmissionUsersBean.newUserDescription}"/></td>
+	</tr>
+	<tr>
 		<td>Verification word: </td><td><h:outputText value="#{SubmissionUsersBean.verificationString}"/></td>
 	</tr>
 	<tr>

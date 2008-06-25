@@ -59,6 +59,12 @@ public class SubmissionUsersBean {
 	
 	private String checkedEmail;
 	
+	private String checkedPhone1;
+	
+	private String checkedPhone2;
+	
+	private String checkedDescription;
+	
 	private String checkedInstitution;
 	
 	private String checkedDate;
@@ -85,6 +91,12 @@ public class SubmissionUsersBean {
 	private String newUserInstitution;
 
 	private String newUserEmail;
+	
+	private String newUserPhone1;
+	
+	private String newUserPhone2;
+	
+	private String newUserDescription;
 
 	private String newUserVerificationString;
 
@@ -184,6 +196,12 @@ public class SubmissionUsersBean {
 								SORTED_COLUMN_CSS_CLASS : null), 
 				
 				new GridColumn("E-mail"), 
+				
+				new GridColumn("Telephone Number1"),
+				
+				new GridColumn("Telephone Number2"),
+				
+				new GridColumn("Brief description of new material and sources"),
 				
 				new GridColumn("User active"),
 				
@@ -331,6 +349,9 @@ public class SubmissionUsersBean {
 		this.checkedLastName = user.getLastName();
 		this.checkedInstitution = user.getInstitution();
 		this.checkedEmail = user.getEmail();
+		this.checkedPhone1 = user.getPhone1();
+		this.checkedPhone2 = user.getPhone2();
+		this.checkedDescription = user.getDescription();
 		this.checkedUserErrorMessage = null;
 		t.commit();
 		session.close();
@@ -374,6 +395,9 @@ public class SubmissionUsersBean {
 		user.setEmail(this.checkedEmail);
 		user.setFirstName(this.checkedFirstName);
 		user.setLastName(this.checkedLastName);
+		user.setPhone1(this.checkedPhone1);
+		user.setPhone2(this.checkedPhone2);
+		user.setDescription(this.checkedDescription);
 		
 		t.commit();
 		session.close();
@@ -431,6 +455,30 @@ public class SubmissionUsersBean {
 
 	public void setNewUserEmail(String newUserEmail) {
 		this.newUserEmail = newUserEmail;
+	}
+
+	public String getNewUserPhone1() {
+		return newUserPhone1;
+	}
+
+	public void setNewUserPhone1(String newUserPhone1) {
+		this.newUserPhone1 = newUserPhone1;
+	}
+
+	public String getNewUserPhone2() {
+		return newUserPhone2;
+	}
+
+	public void setNewUserPhone2(String newUserPhone2) {
+		this.newUserPhone2 = newUserPhone2;
+	}
+
+	public String getNewUserDescription() {
+		return newUserDescription;
+	}
+
+	public void setNewUserDescription(String newUserDescription) {
+		this.newUserDescription = newUserDescription;
 	}
 
 	public String getNewUserFirstName() {
@@ -528,6 +576,9 @@ public class SubmissionUsersBean {
 		user.setFirstName(this.newUserFirstName);
 		user.setLastName(this.newUserLastName);
 		user.setInstitution(this.newUserInstitution);
+		user.setPhone1(this.newUserPhone1);
+		user.setPhone2(this.newUserPhone2);
+		user.setDescription(this.newUserDescription);
 		this.newUserErrorMessage = "";
 		session.save(user);
 		t.commit();
@@ -554,6 +605,31 @@ public class SubmissionUsersBean {
 
 	public void setCheckedEmail(String checkedEmail) {
 		this.checkedEmail = checkedEmail;
+	}
+
+	
+	public String getCheckedPhone1() {
+		return checkedPhone1;
+	}
+
+	public void setCheckedPhone1(String checkedPhone1) {
+		this.checkedPhone1 = checkedPhone1;
+	}
+
+	public String getCheckedPhone2() {
+		return checkedPhone2;
+	}
+
+	public void setCheckedPhone2(String checkedPhone2) {
+		this.checkedPhone2 = checkedPhone2;
+	}
+
+	public String getCheckedDescription() {
+		return checkedDescription;
+	}
+
+	public void setCheckedDescription(String checkedDescription) {
+		this.checkedDescription = checkedDescription;
 	}
 
 	public String getCheckedFirstName() {
