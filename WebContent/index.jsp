@@ -126,7 +126,7 @@
 							slave trade. Its ports sent out less than five percent of all known voyages, and its
 							slave markets absorbed less than four percent of all slaves carried off from Africa.
 							An intra-American trade in slaves – originating in the Caribbean - supplied additional
-							slaves however. This region was exceptional in the Americas in that a positive rate
+							slaves, however. This region was exceptional in the Americas in that a positive rate
 							of natural population growth began relatively early, thus reducing the dependence
 							of the region on coerced migrants.
 						</div>
@@ -150,23 +150,23 @@
 						<div class="welcome-map-region-name"><img src="./images/index/map-brazil-title.png" border="0" width="75" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
 							Brazil was the center of the slave trade carried on under the Portuguese
-							flag, both before and after Brazilian independence in 1822 - and Portugal was by
+							flag, both before and after Brazilian independence in 1822, and Portugal was by
 							far the largest of the national carriers. Brazil dominated the slave trade in the
 							sense that Rio de Janeiro and Bahia sent out more slaving voyages than any port in
 							Europe, and certainly many times more than did Lisbon. Over nearly three centuries
 							between 1560 and 1852, Brazil was consistently the largest destination for slaves
-							in the Americas. Almost all the slaves coming in to the region came from just two
-							coastal areas in Africa, the Bight of Benin and West-central Africa.
+							in the Americas. Almost all the slaves coming into the region came from just two
+							coastal areas in Africa: the Bight of Benin and West-central Africa.
 						</div>
 					</div>
 	
 					<div class="welcome-map-region-text" id="map_europe_text" style="display: none">
 						<div class="welcome-map-region-name"><img src="./images/index/map-europe-title.png" border="0" width="90" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
-							Europe was the starting point for about half all trans-Atlantic slaving voyages.
+							Europe was the starting point for about half of all trans-Atlantic slaving voyages.
 							This traffic dominated the West African to Caribbean section of the slave trade.
-							The major ports were at first located in the Iberian peninsula but by the eighteenth
-							century, northern European ports had become dominant. After 1807, France and the
+							The major ports were at first located in the Iberian peninsula, but by the eighteenth
+							century northern European ports had become dominant. After 1807, France and the
 							Iberian ports sent out the great majority of European-based slaving voyages.
 							The European consumers’ demand for sugar was the driving force behind 350 years
 							of trans-Atlantic slave trading.
@@ -178,12 +178,12 @@
 						<div class="welcome-map-region-desc">
 							Sub-Saharan Africa lost over twelve and a half million people to the
 							trans-Atlantic slave trade alone between 1526 and 1867. Perhaps as many
-							again were carried of to slave markets across the Sahara and the Indian Ocean.
+							again were carried off to slave markets across the Sahara and the Indian Ocean.
 							Over forty percent of captives left from West-central Africa alone with most of
-							the remainder leaving from the Bight of Benin, the Bight of Biafra and the Gold
+							the remainder leaving from the Bight of Benin, the Bight of Biafra, and the Gold
 							Coast. About one in eight died on board the slave vessel and many others died
 							prior to departure and after arrival. Departures were channeled through a dozen
-							or so major embarkation points such as Whydah, Bonny, Loango, Luanda and Benguela,
+							or so major embarkation points such as Whydah, Bonny, Loango, Luanda, and Benguela,
 							though many smaller ports also supplied slaves.
 	  					</div>
 					</div>
@@ -262,8 +262,7 @@
 							</a>
 						</div>
 						<div class="featured-section-description">
-							This database identifies 67,000 Africans aboard slave ships 
-							intercepted by naval cruisers, by name, age, gender, origin, 
+							This database identifies 67,000 over Africans aboard slave ships, using name, age, gender, origin, 
 							and place of embarkation.  							
 						</div>
 					</td>
@@ -297,7 +296,7 @@
 				<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo-index.png" width="82" height="32" border="0" alt="Emory" /></a></td>
 				<td style="padding-right: 5px;"><a href="http://www.neh.gov"><img src="./images/neh-logo.png" width="32" height="32" border="0" alt="NEH" /></a></td>
 				<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
-				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Harvard, USA)</a></td>
+				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Harvard University)</a></td>
 				<td><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
 				<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>
 				<td><a href="http://www.ufrj.br" class="footer-link">Universidade Federal do<br>Rio de Janeiro (Brazil)</a></td>
