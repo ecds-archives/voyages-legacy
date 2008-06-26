@@ -48,6 +48,19 @@
 				<td><h:inputText value="#{SubmissionUsersBean.checkedEmail}"/></td>
 			</tr>
 			<tr>
+				<td>Telephone number1:</td>
+				<td><h:inputText value="#{SubmissionUsersBean.checkedPhone1}"/></td>
+			</tr>
+			<tr>
+				<td>Telephone number2:</td>
+				<td><h:inputText value="#{SubmissionUsersBean.checkedPhone2}"/></td>
+			</tr>
+			<tr>
+				<td>Brief description of new material and sources:</td>
+				<td><h:inputText value="#{SubmissionUsersBean.checkedDescription}"/></td>
+			</tr>
+
+			<tr>
 				<td>Date created:</td>
 				<td><h:outputText value="#{SubmissionUsersBean.checkedDate}"/></td>
 			</tr>
