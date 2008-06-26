@@ -62,7 +62,7 @@
 					as de-facto slaves. The story that follows is for one of the latter group. It is a story 
 					that the search interfaces of the Voyages Database have helped reconstruct.</p>
 
-					<p>In March, 1826 HMS <font style="font-style:italic;">Speedwell</font> detained the 
+					<p>In March 1826 HMS <font style="font-style:italic;">Speedwell</font> detained the 
 					small Spanish schooner named<font style="font-style:italic;">Fingal</font> 
 					off the Cuban coast with 58 slaves, the survivors of 61, en route from 
 					Cape Mount (modern-day Liberia). After detention, the slaver, its crew, and 
@@ -127,7 +127,7 @@
 					tobacco, and various metals, particularly brass objects. Not all slaves traded from the interior, 
 					however, were captured in raids or prisoners of war. Some people in the Galinhas hinterland 
 					were born into slavery; some entered slave status by being orphaned. The practice of bartering 
-					children—and even sometimes adults—forfood during famines was not unknown. Children were also 
+					children—and even sometimes adults—for food during famines was not unknown. Children were also 
 					sold to compensate for homicides and other crimes committed by relatives. Adults expelled from 
 					their original kin groups might also risk enslavement when forced to leave their own kin groups 
 					because of quarrels, threats, hunger, or criminal activity. Dobo could have entered slavery in 
@@ -257,12 +257,12 @@
 						<p style="text-align:center">Notes</p>																		
 					</div>
 					
-					<p class="note">1 Leslie Bethell, "The Mixed Commissions for the Suppression of the Transatlantic Slave Trade in the Nineteenth Century," 
+					<p class="note">1 Leslie Bethell, “The Mixed Commissions for the Suppression of the Transatlantic Slave Trade in the Nineteenth Century,”  
 					<font style="font-style: italic;">Journal of African History 7 </font>(1966): 79-93; David R. Murray, 
 					<font style="font-style: italic;">Odious Commerce: Britain, Spain, and the abolition of the Cuban slave trade </font> 
 					(Cambridge, UK: Cambridge University Press, 1972).</p>
 					
-					<p class="note">2 Archivo Histórico Nacional, Madrid (hereafter AHNM), Estado, Esclavitud, Legajo: 8034/21.</p>
+					<p class="note">2 Archivo Histórico Nacional, Madrid (hereafter AHNM), Estado, Esclavitud, Legajo 8034/21.</p>
 					
 					<p class="note">3 The term seems to come from the Gbangá River in Sierra Leone or a toponymic that refers to the zone of Gbangbama, 
 					where that river comes into the sea. See Alessandra Basso Ortiz, “Los Gangá Longobá: el Nacimiento de los Dioses,”  
@@ -280,7 +280,7 @@
 					<font style="font-style: italic;">Liberian Studies Journal </font>1 (1969): 23-39.	</p>
 					
 					<p class="note">7 On Vai, see: Svend E. Holsoe, “The cassava-leaf people: An ethno-historical study of 
-					the Vai people with particular emphasis on the Tewo chiefdom,” (Ph.D. diss., Boston University, 1967).</p>
+					the Vai people with particular emphasis on the Tewo chiefdom” (Ph.D. diss., Boston University, 1967).</p>
 					
 					<p class="note">8 For Sierra Leone and Liberia, see Svend E. Holsoe, “Slavery and Economic Response among the Vai 
 					(Liberia and Sierra Leone)” in <font style="font-style: italic;">Slavery in Africa: Historical and Anthropological Perspectives, </font>
@@ -290,13 +290,13 @@
 					in <font style="font-style: italic;">Slavery in Africa, </font>eds. Miers and Kopytoff, 3-78. </p>
 					
 					<p class="note">10 See: José Gutierrez de la Concha Habana, <font style="font-style: italic;">Memoria sobre el ramo de 
-					emancipados de la Isla de Cuba, </font>(Madrid: Imprenta de la América, 1861).</p>
+					emancipados de la Isla de Cuba </font>(Madrid: Imprenta de la América, 1861).</p>
 					
 					<p class="note">11 Some reports have mentioned that Spanish officials were selling emancipados in Havana during the 1830s for 
 					nine ounces of gold, or about one-third the cost of a slave.  Archivo Nacional de Cuba (hereafter ANC), Gobierno Superior Civil, Legajo 
 					105/5363; ANC, Reales Órdenes y Cédulas, Legajo 100/14. </p>
 					
-					<p class="note">12 AHNM, Estado, Esclavitud, Legajo: 8019/39.</p>
+					<p class="note">12 AHNM, Estado, Esclavitud, Legajo 8019/39.</p>
 					
 					<p class="note">13 Inés Roldán de Montaud, “Origen, evolución y supresión del grupo de negros ‘emancipados’ en Cuba, 1817-1870,” 
 					<font style="font-style: italic;">Revista de Indias </font>42 (1982): 580. </p>
@@ -307,22 +307,22 @@
 					
 					<p class="note">15 ANC, Reales Órdenes y Cédulas, Legajo 51/123.</p>
 					
-					<p class="note">16 This paragraph from AHNM, Estado, Esclavitud, Legajo: 8019/39/4.</p>
+					<p class="note">16 This paragraph from AHNM, Estado, Esclavitud, Legajo 8019/39/4.</p>
 					
 					<p class="note">17 Ibid., 8019/39/1-7.</p>
 					
 					<p class="note">18 Before his appointment as British Consul in Havana, Turnbull spent almost two years traveling in Cuba and 
-					writing his best known book, <font style="font-style: italic;">Travels in the West: Cuba; with Notices 
-					of Porto Rico and the Slave Trade, </font>(London: Longman, Orme, Brown, Green, and Longmans, 1840). </p>
+					writing his best-known book, <font style="font-style: italic;">Travels in the West: Cuba; with Notices 
+					of Porto Rico and the Slave Trade </font>(London: Longman, Orme, Brown, Green, and Longmans, 1840). </p>
 					
 					<p class="note">19 Turnbull would return to Cuba in 1842 from the Bahamas.  Accompanied by several free blacks, he hoped to  
 					free some emancipados who were held as slaves. For his arrest and deportation, see Hugh Thomas,  
-					<font style="font-style: italic;">The Slave Trade: the story of the Atlantic slave trade, 1440-1870, </font>(New York: Simon and Schuster, 1997), 668.</p>
+					<font style="font-style: italic;">The Slave Trade: the story of the Atlantic slave trade, 1440-1870 </font>(New York: Simon and Schuster, 1997), 668.</p>
 					
-					<p class="note">20 AHNM, Estado, Esclavitud, Legajo: 8019/39/10.</p>
+					<p class="note">20 AHNM, Estado, Esclavitud, Legajo 8019/39/10.</p>
 					
-					<p class="note">21 AHNM, Estado, Esclavitud, Legajo: 8019/39/15-18.</p>				
-					
+					<p class="note">21 AHNM, Estado, Esclavitud, Legajo 8019/39/15-18.</p>				
+				
 				</s:simpleBox>
 			</td>
 		</tr>
