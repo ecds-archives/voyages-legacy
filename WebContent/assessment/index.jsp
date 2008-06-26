@@ -24,7 +24,7 @@
 
 		<s:siteHeader activeSectionId="assessment">
 			<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
-			<h:outputText value="Assessing the Slave Trade" />
+			<h:outputText value="Assessing the Slave Trade" /> 
 		</s:siteHeader>
 	
 		<div id="index-intro-band">
