@@ -49,19 +49,19 @@
 					
 					<h2 style="text-align:center;">Notes</h2>
 					
-					<p><span class="superscript">1</span> David Eltis and David Richardson (eds.), <font style="font-style: italic;">Extending the Frontiers:
-					Essays on the New Transatlantic Slave trade Database</font> (New Haven, 2008).</p>
+					<p><span class="superscript">1</span> David Eltis and David Richardson, eds., <font style="font-style: italic;">Extending the Frontiers:
+					Essays on the New Transatlantic Slave trade Database</font> (New Haven: Yale University Press, 2008).</p>
 					
-					<p><span class="superscript">2</span> Joseph Inikori has given "a preferred global figure of 15.4 million
-					for the European slave trade." Adjusting for those carried to the offshore islands and Europe, this implies
+					<p><span class="superscript">2</span> Joseph Inikori has given “a preferred global figure of 15.4 million for the European 
+					slave trade.” Adjusting for those carried to the offshore islands and Europe, this implies
 					14.9 million headed for the Americas. See <font style="font-style: italic;">Cahiers d’Etudes africaines</font>, 32 (1993):686.</p>
 
 					
 					<p><span class="superscript">3</span> H.C.V. Leibbrandt, <font style="font-style: italic;">Precis of the Archives of the Cape of Good Hope
-					</font>, Vol. 14, Journal 1662–1670 (Cape Town, 1901), 127–8.</p>
+					: Journal 1662–1670</font> (Cape Town: Richards, Government Printers, 1901), 127-128.</p>
 					
 					<p><span class="superscript">4</span> British slave ships trading from Africa to Lisbon include the
-					<font style="font-style: italic;">Kent</font> (1731), the <font style="font-style: italic;">Mary</font> (1737) and 
+					<font style="font-style: italic;">Kent</font> (1731), the <font style="font-style: italic;">Mary</font> (1737), and 
 					the <font style="font-style: italic;">Betsey</font> and <font style="font-style: italic;">Hennie</font> (1755).
 					For sources see the data set. For the removal of slaves from Ambriz to St. Helena and Sierra Leone, see Kelly Muspratt to Aberdeen, 31 July 1843,
 					British National Archives (henceforth BNA), FO84/501.</p>
@@ -73,17 +73,17 @@
 					children on board several British slave voyages in the 1790s (House of Lords Record Office, House of Lords,
 					Main Papers, 28 July 1800). This document, however, omitted to report the children embarked (cf. BNA, T70/1574;
 					House of Lords Record Office, House of Lords, Main Papers, 14, 25 June 1799). In Luanda and Benguela Portuguese
-					customs reports of departures for Brazil report very low numbers of children embarked. But in this instance
+					customs reports of departures for Brazil report very low numbers of children embarked. But in this instance,
 					“children” refers to infants only and was above a tax category that indicated exemption from customs duties.</p>
 					
 					<p><span class="superscript">7</span> Mediterranean passes were issued by most European nations as a result of
 					treaties with the Barbary powers. In theory, these documents allowed the vessels of the signing nation to pass
-					freely through the "Mediterranean" waters frequented by Barbary corsairs. The passes record vessel and captain’s
-					names, tonnage, the date the pass was issued, and intended trading location, such as "Africa" or "Africa and the
-					Americas" or "Barbary" or "Madeira." See David Richardson, <font style="font-style: italic;">The Mediterranean Passes</font>
-					(Wakefield, 1981). On different
-					numbers reported in the Americas, in the date given for the arrival of slave vessels might be the date the vessel
-					cleared customs, but in fact this could easily occur 2–4 weeks after the actual arrival.</p>
+					freely through the “Mediterranean” waters frequented by Barbary corsairs. The passes record vessels’ and 
+					captain’s names, tonnage, the date the pass was issued, and intended trading location, such as “Africa” 
+					or “Africa and the Americas” or “Barbary” or “Madeira.” See David Richardson, <font style="font-style: italic;">
+					The Mediterranean Passes in the Public Records Office </font> (East Ardsley, UK: EP Microform Ltd., 1981). On 
+					different numbers reported in the Americas, in the date given for the arrival of slave vessels might be the 
+					date the vessel cleared customs, but in fact this could easily occur 2-4 weeks after the actual arrival.</p>
 
 					
 					<p><span class="superscript">8</span> Robert Louis Stein, <font style="font-style: italic;">The French Slave Trade in the Eighteenth Century:
